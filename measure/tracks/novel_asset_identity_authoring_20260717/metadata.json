@@ -1,0 +1,46 @@
+{
+  "track_id": "novel_asset_identity_authoring_20260717",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-07-17T12:37:24Z",
+  "updated_at": "2026-07-17T12:37:24Z",
+  "description": "Enable bounded creation of new semantic asset identities from discoverable kit templates",
+  "estimated_tasks": 20,
+  "actual_tasks": null,
+  "deviation_notes": "Prerequisites: llm_authoring_workflow_hardening_20260717 and character_accessory_library_20260717 must complete before implementation begins.",
+  "sprint": {
+    "goal": "Allow a fresh LLM to create distinct, versioned character and standalone prop identities from the public template grammar without source edits or complete hand-authored documents.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Create New Asset Identities",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Compose From Public Grammar",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Revise Novel Assemblies Safely",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S4",
+        "title": "Prove Novel Asset Workflows",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}

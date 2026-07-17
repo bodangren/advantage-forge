@@ -1,0 +1,53 @@
+{
+  "track_id": "rigid_animation_sprite_pipeline_20260717",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-07-17T12:37:24Z",
+  "updated_at": "2026-07-17T12:37:24Z",
+  "description": "Add bounded rigid-part animation clips and deterministic transparent sprite-atlas production",
+  "estimated_tasks": 25,
+  "actual_tasks": null,
+  "deviation_notes": "Prerequisites: llm_authoring_workflow_hardening_20260717, character_accessory_library_20260717, and novel_asset_identity_authoring_20260717 must complete before implementation begins.",
+  "sprint": {
+    "goal": "Let an LLM author, inspect, validate, render, and export five readable rigid-part character clips as a deterministic transparent sprite atlas with trustworthy metadata.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Define Rigid Clip Contracts",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Author Clips Through Tools",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Render Deterministic Atlases",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S4",
+        "title": "Deliver Reference Animation Set",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S5",
+        "title": "Prove Animation Product Fitness",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}

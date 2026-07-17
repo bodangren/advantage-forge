@@ -1,0 +1,46 @@
+{
+  "track_id": "character_accessory_library_20260717",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-07-17T12:37:24Z",
+  "updated_at": "2026-07-17T12:37:24Z",
+  "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
+  "estimated_tasks": 20,
+  "actual_tasks": null,
+  "deviation_notes": "Prerequisite: llm_authoring_workflow_hardening_20260717 must complete before implementation begins.",
+  "sprint": {
+    "goal": "Let an LLM discover, equip, validate, and visually approve a useful bounded library of rustic character accessories without source knowledge or bespoke engine logic.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Define Accessory Grammar",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Build Initial Accessory Library",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Equip Through Public Tools",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S4",
+        "title": "Verify Character Readability",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}
