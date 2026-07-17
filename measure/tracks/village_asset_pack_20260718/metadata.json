@@ -1,0 +1,53 @@
+{
+  "track_id": "village_asset_pack_20260718",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-07-17T22:10:26Z",
+  "updated_at": "2026-07-17T22:10:26Z",
+  "description": "Assemble a bounded village asset pack end-to-end with deterministic exports and pack-level evidence",
+  "estimated_tasks": 20,
+  "actual_tasks": null,
+  "deviation_notes": "Prerequisite: rigid_animation_sprite_pipeline_20260717 (and transitively the three upstream authoring tracks) must complete before implementation begins.",
+  "sprint": {
+    "goal": "Let an LLM assemble, validate, and export one coherent game-ready village starter pack — characters, equipment, props, vegetation, and structures — as versioned documents, sprite sheets, atlases, and GLBs under a single digested pack manifest.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Define Pack Contracts",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Author Pack Membership Through Tools",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Produce Deterministic Pack Outputs",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S4",
+        "title": "Deliver the Reference Village Pack",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S5",
+        "title": "Prove Pack Product Fitness",
+        "size": "M",
+        "priority": "Must",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}
