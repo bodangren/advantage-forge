@@ -18,6 +18,7 @@ describe('sprite render profile', () => {
       paddingPixels: 6,
       transparent: true,
       minimumFeaturePixels: 3,
+      requiredFeaturePartIds: ['torso'],
     });
     expect(validateRenderProfile(MVP_RENDER_PROFILE)).toEqual([]);
   });
@@ -50,7 +51,7 @@ describe('sprite render profile', () => {
     ).toEqual([
       'id must not be empty',
       'paddingPixels must leave a positive drawable frame',
-      'minimumFeaturePixels must be a positive integer',
+      'minimumFeaturePixels must be an integer between 1 and 64',
     ]);
   });
 
@@ -64,6 +65,7 @@ describe('sprite render profile', () => {
         directions: 2 as 8,
         paddingPixels: -1,
         minimumFeaturePixels: 1.5,
+        requiredFeaturePartIds: [],
       }),
     ).toEqual([
       'widthPixels must be an integer between 16 and 2048',
@@ -71,7 +73,8 @@ describe('sprite render profile', () => {
       'elevationDegrees must be greater than 0 and less than 90',
       'directions must be 1, 4, or 8',
       'paddingPixels must leave a positive drawable frame',
-      'minimumFeaturePixels must be a positive integer',
+      'minimumFeaturePixels must be an integer between 1 and 64',
+      'requiredFeaturePartIds must contain 1 to 32 unique semantic IDs',
     ]);
   });
 });

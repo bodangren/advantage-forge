@@ -60,7 +60,8 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   },
   {
     name: 'validate_asset',
-    description: 'Validate contracts and evaluate a semantic scene summary.',
+    description:
+      'Validate contracts, triangle budget, and a semantic scene summary.',
     mutates: false,
   },
   {

@@ -39,25 +39,25 @@ Kit ID: `rustic-human`
 
 | Material | Family | Color | Roughness | Metalness |
 |---|---|---|---:|---:|
-| `skin.warm` | skin | `#b97850` | 0.9 | 0 |
-| `cloth.moss` | cloth | `#46563b` | 0.95 | 0 |
-| `cloth.umber` | cloth | `#604331` | 0.95 | 0 |
-| `leather.dark` | leather | `#35261f` | 0.88 | 0 |
-| `wood.oak` | wood | `#76512f` | 0.9 | 0 |
-| `wood.dark` | wood | `#3f2b20` | 0.92 | 0 |
-| `iron.weathered` | iron | `#7d8280` | 0.68 | 0.72 |
-| `stone.lime` | stone | `#8e8978` | 1 | 0 |
-| `foliage.pine` | foliage | `#334f36` | 1 | 0 |
-| `hair.chestnut` | fur | `#4b3025` | 1 | 0 |
-| `bronze.aged` | bronze | `#8a633d` | 0.72 | 0.66 |
+| `skin.warm` | skin | `#d29368` | 0.9 | 0 |
+| `cloth.moss` | cloth | `#667a51` | 0.95 | 0 |
+| `cloth.umber` | cloth | `#865d42` | 0.95 | 0 |
+| `leather.dark` | leather | `#594035` | 0.88 | 0 |
+| `wood.oak` | wood | `#a46d38` | 0.9 | 0 |
+| `wood.dark` | wood | `#684634` | 0.92 | 0 |
+| `iron.weathered` | iron | `#a7afac` | 0.68 | 0.72 |
+| `stone.lime` | stone | `#b6ae96` | 1 | 0 |
+| `foliage.pine` | foliage | `#53784f` | 1 | 0 |
+| `hair.chestnut` | fur | `#714838` | 1 | 0 |
+| `bronze.aged` | bronze | `#b17e45` | 0.72 | 0.66 |
 | `bone.ivory` | bone | `#c8b995` | 0.9 | 0 |
 | `crystal.arcane` | crystal | `#7f73b8` | 0.28 | 0.08 |
 
 ## Canonical References
 
-| Reference | Asset ID | Parts | Variants | Poses |
-|---|---|---:|---:|---:|
-| `adventurer` | `adventurer.rustic` | 19 | 6 | 2 |
-| `crate` | `crate.rustic` | 3 | 0 | 0 |
-| `tree` | `tree.rustic` | 8 | 0 | 0 |
-| `cottage` | `cottage.rustic` | 11 | 0 | 0 |
+| Reference | Asset ID | Parts | Variants | Poses | Triangle budget | Required feature parts |
+|---|---|---:|---:|---:|---:|---|
+| adventurer | adventurer.rustic | 19 | 6 | 2 | 2000 | torso |
+| crate | crate.rustic | 3 | 0 | 0 | 2000 | crate.body |
+| tree | tree.rustic | 8 | 0 | 0 | 2000 | tree.branch.east |
+| cottage | cottage.rustic | 11 | 0 | 0 | 2000 | chimney |

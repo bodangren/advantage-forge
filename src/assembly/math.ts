@@ -39,6 +39,15 @@ export function composeTransforms(
 }
 
 export function invertTransform(transform: Transform): Transform {
+  const [scaleX, scaleY, scaleZ] = transform.scale;
+  if (
+    Math.abs(scaleX - scaleY) > EPSILON ||
+    Math.abs(scaleX - scaleZ) > EPSILON
+  ) {
+    throw new RangeError(
+      'Transform inversion supports only uniform scale; use unit-scale rigid port frames.',
+    );
+  }
   const inverseRotation = conjugateQuaternion(
     normalizeQuaternion(transform.rotation),
   );
@@ -110,15 +119,19 @@ export function mirrorTransform(
   axis: 'x' | 'y' | 'z',
 ): Transform {
   const position: [number, number, number] = [...transform.position];
+  const scale: [number, number, number] = [...transform.scale];
   switch (axis) {
     case 'x':
       position[0] *= -1;
+      scale[0] *= -1;
       break;
     case 'y':
       position[1] *= -1;
+      scale[1] *= -1;
       break;
     case 'z':
       position[2] *= -1;
+      scale[2] *= -1;
       break;
   }
   const [x, y, z, w] = transform.rotation;
@@ -131,6 +144,7 @@ export function mirrorTransform(
     ...transform,
     position,
     rotation: rotationByAxis[axis],
+    scale,
   });
 }
 

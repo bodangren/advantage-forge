@@ -132,7 +132,7 @@ function kitCatalogMarkdown(): string {
   const referenceRows = Object.entries(referenceDocuments)
     .map(
       ([name, document]) =>
-        `| \`${name}\` | \`${document.id}\` | ${document.assembly.parts.length} | ${document.variants.length} | ${document.poses.length} |`,
+        `| ${name} | ${document.id} | ${document.assembly.parts.length} | ${document.variants.length} | ${document.poses.length} | ${document.triangleBudget} | ${document.renderProfiles[0]?.requiredFeaturePartIds.join(', ') ?? 'none'} |`,
     )
     .join('\n');
   return [
@@ -156,8 +156,8 @@ function kitCatalogMarkdown(): string {
     '',
     '## Canonical References',
     '',
-    '| Reference | Asset ID | Parts | Variants | Poses |',
-    '|---|---|---:|---:|---:|',
+    '| Reference | Asset ID | Parts | Variants | Poses | Triangle budget | Required feature parts |',
+    '|---|---|---:|---:|---:|---:|---|',
     referenceRows,
     '',
   ].join('\n');
@@ -196,6 +196,7 @@ function outputContractsMarkdown(): string {
     `- Directions: ${MVP_RENDER_PROFILE.directions} in ${SPRITE_DIRECTIONS.join(' -> ')} order`,
     `- Padding: ${MVP_RENDER_PROFILE.paddingPixels}px`,
     `- Minimum feature: ${MVP_RENDER_PROFILE.minimumFeaturePixels}px`,
+    `- Required feature evidence: ${MVP_RENDER_PROFILE.requiredFeaturePartIds.join(', ')}`,
     '',
     '## Coordinate system',
     '',
@@ -205,6 +206,7 @@ function outputContractsMarkdown(): string {
     '',
     '## Mechanical validation',
     '',
+    '- Every asset declares a positive integer triangle budget; `validate_asset` rejects evaluated scenes above it.',
     '- Reports occupied bounds, transparent and occupied pixel counts, clipped edges, exact ground-anchor deviation, and representative silhouette-feature width.',
     '- Emits one PNG per direction plus a labeled contact sheet associated with the canonical asset revision.',
     '',

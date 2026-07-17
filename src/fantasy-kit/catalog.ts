@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { mirrorTransform } from '../assembly/index.js';
 import {
   AssetDocumentSchema,
   PartTemplateDefinitionSchema,
@@ -58,77 +59,77 @@ export const rusticMaterials: readonly MaterialDefinition[] = [
   {
     id: 'skin.warm',
     family: 'skin',
-    color: '#b97850',
+    color: '#d29368',
     roughness: 0.9,
     metalness: 0,
   },
   {
     id: 'cloth.moss',
     family: 'cloth',
-    color: '#46563b',
+    color: '#667a51',
     roughness: 0.95,
     metalness: 0,
   },
   {
     id: 'cloth.umber',
     family: 'cloth',
-    color: '#604331',
+    color: '#865d42',
     roughness: 0.95,
     metalness: 0,
   },
   {
     id: 'leather.dark',
     family: 'leather',
-    color: '#35261f',
+    color: '#594035',
     roughness: 0.88,
     metalness: 0,
   },
   {
     id: 'wood.oak',
     family: 'wood',
-    color: '#76512f',
+    color: '#a46d38',
     roughness: 0.9,
     metalness: 0,
   },
   {
     id: 'wood.dark',
     family: 'wood',
-    color: '#3f2b20',
+    color: '#684634',
     roughness: 0.92,
     metalness: 0,
   },
   {
     id: 'iron.weathered',
     family: 'iron',
-    color: '#7d8280',
+    color: '#a7afac',
     roughness: 0.68,
     metalness: 0.72,
   },
   {
     id: 'stone.lime',
     family: 'stone',
-    color: '#8e8978',
+    color: '#b6ae96',
     roughness: 1,
     metalness: 0,
   },
   {
     id: 'foliage.pine',
     family: 'foliage',
-    color: '#334f36',
+    color: '#53784f',
     roughness: 1,
     metalness: 0,
   },
   {
     id: 'hair.chestnut',
     family: 'fur',
-    color: '#4b3025',
+    color: '#714838',
     roughness: 1,
     metalness: 0,
   },
   {
     id: 'bronze.aged',
     family: 'bronze',
-    color: '#8a633d',
+    color: '#b17e45',
     roughness: 0.72,
     metalness: 0.66,
   },
@@ -323,17 +324,17 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
   template(
     'prop.crate',
     'prop.container',
-    { kind: 'beveledBox', width: 0.9, height: 0.75, depth: 0.8, bevel: 0.055 },
+    { kind: 'beveledBox', width: 0.9, height: 0.8, depth: 0.8, bevel: 0.015 },
     ['wood'],
     [
-      port('band.low', [0, -0.2, 0], ['prop.mount'], ['prop.attach']),
-      port('band.high', [0, 0.2, 0], ['prop.mount'], ['prop.attach']),
+      port('band.low', [-0.25, 0, 0.43], ['prop.mount'], ['prop.attach']),
+      port('band.high', [0.25, 0, 0.43], ['prop.mount'], ['prop.attach']),
     ],
   ),
   template(
     'prop.crate-band',
     'prop.reinforcement',
-    { kind: 'beveledBox', width: 0.96, height: 0.1, depth: 0.86, bevel: 0.018 },
+    { kind: 'beveledBox', width: 0.1, height: 0.78, depth: 0.06, bevel: 0.01 },
     ['metal'],
     [port('crate.attach', [0, 0, 0], ['prop.attach'], ['prop.mount'])],
   ),
@@ -679,14 +680,17 @@ const part = (
   transform: Transform = identity(),
   slot = rusticTemplates.find((entry) => entry.id === templateId)
     ?.materialSlots[0] ?? 'body',
+  handedness?: PartInstance['handedness'],
 ): PartInstance => ({
   id,
   templateId,
-  handedness: id.endsWith('.left')
-    ? 'left'
-    : id.endsWith('.right')
-      ? 'right'
-      : 'neutral',
+  handedness:
+    handedness ??
+    (id.endsWith('.left')
+      ? 'left'
+      : id.endsWith('.right')
+        ? 'right'
+        : 'neutral'),
   transform,
   materialBindings: [bind(slot, materialId)],
   visible: true,
@@ -877,13 +881,19 @@ export const adventurerPoses: readonly PoseDefinition[] = [
   },
 ];
 
-const documentBase = (id: string, name: string, seed: number) => ({
+const documentBase = (
+  id: string,
+  name: string,
+  seed: number,
+  requiredFeaturePartIds: readonly string[],
+) => ({
   schemaVersion: '1.0.0' as const,
   id,
   name,
   unit: 'meter' as const,
   seed,
   kitId: RUSTIC_KIT_ID,
+  triangleBudget: 2_000,
   materials: [...rusticMaterials],
   templates: [...rusticTemplates],
   variants: [] as VariantDefinition[],
@@ -898,6 +908,7 @@ const documentBase = (id: string, name: string, seed: number) => ({
       paddingPixels: 6,
       transparent: true as const,
       minimumFeaturePixels: 3,
+      requiredFeaturePartIds: [...requiredFeaturePartIds],
     },
   ],
 });
@@ -905,7 +916,7 @@ const parseDocument = (value: unknown): AssetDocument =>
   AssetDocumentSchema.parse(value);
 
 export const adventurerDocument = parseDocument({
-  ...documentBase('adventurer.rustic', 'Rustic Adventurer', 4096),
+  ...documentBase('adventurer.rustic', 'Rustic Adventurer', 4096, ['torso']),
   assembly: {
     id: 'adventurer.assembly',
     parts: adventurerParts,
@@ -917,7 +928,7 @@ export const adventurerDocument = parseDocument({
   activePoseId: 'idle',
 });
 export const crateDocument = parseDocument({
-  ...documentBase('crate.rustic', 'Iron-Banded Crate', 101),
+  ...documentBase('crate.rustic', 'Iron-Banded Crate', 101, ['crate.body']),
   assembly: {
     id: 'crate.assembly',
     parts: [
@@ -944,21 +955,31 @@ export const crateDocument = parseDocument({
   },
 });
 export const treeDocument = parseDocument({
-  ...documentBase('tree.rustic', 'Old Roadside Tree', 202),
+  ...documentBase('tree.rustic', 'Old Roadside Tree', 202, [
+    'tree.branch.east',
+  ]),
   assembly: {
     id: 'tree.assembly',
     parts: [
       part('trunk.main', 'tree.trunk', 'wood.dark', at(0, 1.16, 0)),
       part('tree.root.east', 'tree.root', 'wood.dark'),
-      part('tree.root.west', 'tree.root', 'wood.dark', {
-        ...identity(),
-        scale: [-1, 1, 1],
-      }),
+      part(
+        'tree.root.west',
+        'tree.root',
+        'wood.dark',
+        mirrorTransform(identity(), 'x'),
+        undefined,
+        'left',
+      ),
       part('tree.branch.east', 'tree.branch', 'wood.dark'),
-      part('tree.branch.west', 'tree.branch', 'wood.dark', {
-        ...identity(),
-        scale: [-1, 1, 1],
-      }),
+      part(
+        'tree.branch.west',
+        'tree.branch',
+        'wood.dark',
+        mirrorTransform(identity(), 'x'),
+        undefined,
+        'left',
+      ),
       part('tree.crown', 'tree.foliage', 'foliage.pine'),
       part('tree.crown.east', 'tree.foliage', 'foliage.pine', {
         ...identity(),
@@ -1023,7 +1044,7 @@ export const treeDocument = parseDocument({
   },
 });
 export const cottageDocument = parseDocument({
-  ...documentBase('cottage.rustic', 'Wayside Timber Cottage', 303),
+  ...documentBase('cottage.rustic', 'Wayside Timber Cottage', 303, ['chimney']),
   assembly: {
     id: 'cottage.assembly',
     parts: [

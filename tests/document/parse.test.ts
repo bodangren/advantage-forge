@@ -81,9 +81,34 @@ describe('asset document parsing', () => {
       ).toBe(true);
   });
 
+  it('rejects render profiles with no drawable area or unknown required features', () => {
+    const impossiblePadding = assetFixture();
+    impossiblePadding.renderProfiles[0]!.widthPixels = 16;
+    impossiblePadding.renderProfiles[0]!.heightPixels = 16;
+    impossiblePadding.renderProfiles[0]!.paddingPixels = 8;
+    const paddingResult = parseAssetDocument(impossiblePadding);
+    expect(paddingResult.ok).toBe(false);
+    if (!paddingResult.ok)
+      expect(paddingResult.issues[0]?.path).toBe(
+        '$.renderProfiles[0].paddingPixels',
+      );
+
+    const missingFeature = assetFixture();
+    missingFeature.renderProfiles[0]!.requiredFeaturePartIds = ['part.missing'];
+    const featureResult = parseAssetDocument(missingFeature);
+    expect(featureResult.ok).toBe(false);
+    if (!featureResult.ok)
+      expect(featureResult.issues[0]?.path).toBe(
+        '$.renderProfiles[0].requiredFeaturePartIds[0]',
+      );
+  });
+
   it('rejects duplicate semantic IDs', () => {
     const input = structuredClone(assetFixture());
     input.assembly.parts[1]!.id = input.assembly.parts[0]!.id;
+    input.renderProfiles[0]!.requiredFeaturePartIds = [
+      input.assembly.parts[0]!.id,
+    ];
     const result = parseAssetDocument(input);
     expect(result.ok).toBe(false);
     if (!result.ok) expect(result.issues[0]?.code).toBe('DUPLICATE_ID');

@@ -29,6 +29,17 @@ describe('Three.js scene adapter', () => {
       disposeCompiledScene(compiled);
     }
   });
+  it('excludes invisible variant parts from compiled bounds', () => {
+    const compiled = compileThreeScene({
+      ...adventurerDocument,
+      activeVariantId: 'unequipped',
+    });
+    expect(compiled.group.getObjectByName('sword')?.visible).toBe(false);
+    expect(compiled.bounds.min.toArray()).toEqual(compiled.summary.bounds.min);
+    expect(compiled.bounds.max.toArray()).toEqual(compiled.summary.bounds.max);
+    disposeCompiledScene(compiled);
+  });
+
   it('creates deterministic orthographic framing for all direction counts', () => {
     const compiled = compileThreeScene(adventurerDocument);
     const first = createOrthographicCamera(

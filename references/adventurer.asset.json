@@ -664,6 +664,13 @@
             "slot": "body"
           }
         ],
+        "shape": {
+          "bevel": 0.05,
+          "depth": 0.28,
+          "height": 0.72,
+          "kind": "beveledBox",
+          "width": 0.55
+        },
         "templateId": "human.torso",
         "transform": {
           "position": [
@@ -678,8 +685,8 @@
             1
           ],
           "scale": [
-            1.05,
-            1.08,
+            1,
+            1,
             1
           ]
         },
@@ -788,21 +795,21 @@
       "roughness": 0.9
     },
     {
-      "color": "#8a633d",
+      "color": "#b17e45",
       "family": "bronze",
       "id": "bronze.aged",
       "metalness": 0.66,
       "roughness": 0.72
     },
     {
-      "color": "#46563b",
+      "color": "#667a51",
       "family": "cloth",
       "id": "cloth.moss",
       "metalness": 0,
       "roughness": 0.95
     },
     {
-      "color": "#604331",
+      "color": "#865d42",
       "family": "cloth",
       "id": "cloth.umber",
       "metalness": 0,
@@ -817,56 +824,56 @@
       "roughness": 0.28
     },
     {
-      "color": "#334f36",
+      "color": "#53784f",
       "family": "foliage",
       "id": "foliage.pine",
       "metalness": 0,
       "roughness": 1
     },
     {
-      "color": "#4b3025",
+      "color": "#714838",
       "family": "fur",
       "id": "hair.chestnut",
       "metalness": 0,
       "roughness": 1
     },
     {
-      "color": "#7d8280",
+      "color": "#a7afac",
       "family": "iron",
       "id": "iron.weathered",
       "metalness": 0.72,
       "roughness": 0.68
     },
     {
-      "color": "#35261f",
+      "color": "#594035",
       "family": "leather",
       "id": "leather.dark",
       "metalness": 0,
       "roughness": 0.88
     },
     {
-      "color": "#b97850",
+      "color": "#d29368",
       "family": "skin",
       "id": "skin.warm",
       "metalness": 0,
       "roughness": 0.9
     },
     {
-      "color": "#8e8978",
+      "color": "#b6ae96",
       "family": "stone",
       "id": "stone.lime",
       "metalness": 0,
       "roughness": 1
     },
     {
-      "color": "#3f2b20",
+      "color": "#684634",
       "family": "wood",
       "id": "wood.dark",
       "metalness": 0,
       "roughness": 0.92
     },
     {
-      "color": "#76512f",
+      "color": "#a46d38",
       "family": "wood",
       "id": "wood.oak",
       "metalness": 0,
@@ -922,6 +929,9 @@
       "id": "sprite.default",
       "minimumFeaturePixels": 3,
       "paddingPixels": 6,
+      "requiredFeaturePartIds": [
+        "torso"
+      ],
       "transparent": true,
       "widthPixels": 128
     }
@@ -2396,9 +2406,9 @@
           "cardinality": "single",
           "frame": {
             "position": [
+              0.25,
               0,
-              0.2,
-              0
+              0.43
             ],
             "rotation": [
               0,
@@ -2424,9 +2434,9 @@
           "cardinality": "single",
           "frame": {
             "position": [
+              -0.25,
               0,
-              -0.2,
-              0
+              0.43
             ],
             "rotation": [
               0,
@@ -2448,9 +2458,9 @@
       ],
       "role": "prop.container",
       "shape": {
-        "bevel": 0.055,
+        "bevel": 0.015,
         "depth": 0.8,
-        "height": 0.75,
+        "height": 0.8,
         "kind": "beveledBox",
         "width": 0.9
       }
@@ -2492,11 +2502,11 @@
       ],
       "role": "prop.reinforcement",
       "shape": {
-        "bevel": 0.018,
-        "depth": 0.86,
-        "height": 0.1,
+        "bevel": 0.01,
+        "depth": 0.06,
+        "height": 0.78,
         "kind": "beveledBox",
-        "width": 0.96
+        "width": 0.1
       }
     },
     {
@@ -2874,6 +2884,7 @@
       }
     }
   ],
+  "triangleBudget": 2000,
   "unit": "meter",
   "variants": [
     {

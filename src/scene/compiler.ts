@@ -105,7 +105,7 @@ export function compileThreeScene(
     group.add(mesh);
   }
   group.updateMatrixWorld(true);
-  const bounds = new THREE.Box3().setFromObject(group);
+  const bounds = threeBounds(summary.bounds);
   return { group, summary, bounds };
 }
 

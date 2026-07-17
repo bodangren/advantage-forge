@@ -5,6 +5,7 @@ import {
   PartInstanceSchema,
   PoseDefinitionSchema,
   SemanticIdSchema,
+  ShapeDefinitionSchema,
   SpriteRenderProfileSchema,
   TransformSchema,
   VariantDefinitionSchema,
@@ -24,6 +25,11 @@ export const SemanticOperationSchema = z.discriminatedUnion('operation', [
     operation: z.literal('setPartTransform'),
     partId: SemanticIdSchema,
     transform: TransformSchema,
+  }),
+  z.strictObject({
+    operation: z.literal('setPartShapeParameters'),
+    partId: SemanticIdSchema,
+    shape: ShapeDefinitionSchema,
   }),
   z.strictObject({
     operation: z.literal('setPartVisibility'),
@@ -165,6 +171,44 @@ export function applySemanticPatch(
             : operation.operation === 'setPartTransform'
               ? { ...candidate, transform: operation.transform }
               : { ...candidate, visible: operation.visible },
+        );
+        affected.add(operation.partId);
+        break;
+      }
+      case 'setPartShapeParameters': {
+        const part = next.assembly.parts.find(
+          ({ id }) => id === operation.partId,
+        );
+        if (!part)
+          return failure(
+            '$.operations',
+            `Part ${operation.partId} was not found.`,
+          );
+        const template = next.templates.find(
+          ({ id }) => id === part.templateId,
+        );
+        if (!template)
+          return failure(
+            '$.operations',
+            `Template ${part.templateId} was not found.`,
+          );
+        const currentShape = part.shape ?? template.shape;
+        if (currentShape.kind !== operation.shape.kind)
+          return failure(
+            '$.operations',
+            'Localized shape edits cannot change the template generator kind.',
+            operation.shape.kind,
+          );
+        if (JSON.stringify(currentShape) === JSON.stringify(operation.shape))
+          return failure(
+            '$.operations',
+            `Part ${operation.partId} already has the requested shape parameters.`,
+            operation.shape,
+          );
+        next.assembly.parts = next.assembly.parts.map((candidate) =>
+          candidate.id === operation.partId
+            ? { ...candidate, shape: operation.shape }
+            : candidate,
         );
         affected.add(operation.partId);
         break;

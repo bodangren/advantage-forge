@@ -118,6 +118,17 @@ describe('semantic domain tools', () => {
         operations: [
           { operation: 'setActiveVariant', variantId: 'unequipped' },
           {
+            operation: 'setPartShapeParameters',
+            partId: 'torso',
+            shape: {
+              kind: 'beveledBox',
+              width: 0.55,
+              height: 0.72,
+              depth: 0.28,
+              bevel: 0.05,
+            },
+          },
+          {
             operation: 'setMaterialBinding',
             partId: 'torso',
             slot: 'body',
@@ -129,12 +140,38 @@ describe('semantic domain tools', () => {
     expect(changed.ok).toBe(true);
     expect(changed.affectedIds).toEqual(['torso', 'unequipped']);
     expect(changed.data).toMatchObject({
-      patchSummary: { operationCount: 2 },
+      patchSummary: { operationCount: 3 },
     });
     expect(
       (await revisions.getCurrent('adventurer.rustic'))?.document
         .activeVariantId,
     ).toBe('unequipped');
+    const shaped = await revisions.getCurrent('adventurer.rustic');
+    expect(
+      shaped?.document.assembly.parts.find(({ id }) => id === 'torso')?.shape,
+    ).toMatchObject({ kind: 'beveledBox', width: 0.55 });
+    const noOp = await handlers.applyOperations({
+      assetId: 'adventurer.rustic',
+      expectedRevisionId: shaped!.revisionId,
+      dryRun: false,
+      patch: {
+        operations: [
+          {
+            operation: 'setPartShapeParameters',
+            partId: 'torso',
+            shape: {
+              kind: 'beveledBox',
+              width: 0.55,
+              height: 0.72,
+              depth: 0.28,
+              bevel: 0.05,
+            },
+          },
+        ],
+      },
+    });
+    expect(noOp.ok).toBe(false);
+    expect(await revisions.getCurrent('adventurer.rustic')).toEqual(shaped);
   });
 
   it('returns stable paths for invalid and out-of-scope tool payloads without mutation', async () => {
@@ -178,6 +215,25 @@ describe('semantic domain tools', () => {
     expect(rejected.ok).toBe(false);
     expect(await revisions.getCurrent('crate.rustic')).toEqual(before);
   });
+  it('reports and rejects assets over their explicit triangle budget', async () => {
+    const revisions = new MemoryRevisions();
+    const handlers = createToolHandlers({ revisions });
+    await handlers.createAsset({ reference: 'crate' });
+    const current = await revisions.getCurrent('crate.rustic');
+    await revisions.save(
+      { ...current!.document, triangleBudget: 1 },
+      current!.revisionId,
+    );
+    const result = await handlers.validateAsset({ assetId: 'crate.rustic' });
+    expect(result.ok).toBe(false);
+    expect(result.issues[0]).toMatchObject({
+      code: 'TRIANGLE_BUDGET_EXCEEDED',
+      path: '$.triangleBudget',
+      actual: 132,
+      expected: 'at most 1',
+    });
+  });
+
   it('orchestrates render and export through narrow service ports', async () => {
     const revisions = new MemoryRevisions();
     const handlers = createToolHandlers({

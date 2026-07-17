@@ -1,0 +1,263 @@
+{
+  "assetId": "cottage.rustic",
+  "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 25,
+          "minY": 34,
+          "maxX": 102,
+          "maxY": 121,
+          "width": 78,
+          "height": 88
+        },
+        "occupiedPixelCount": 6564,
+        "occupiedRatio": 0.400634765625,
+        "transparentPixelCount": 9820,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 4,
+        "minimumVerticalRunPixels": 52,
+        "representativeFeaturePixels": 73,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 16,
+          "minY": 19,
+          "maxX": 113,
+          "maxY": 121,
+          "width": 98,
+          "height": 103
+        },
+        "occupiedPixelCount": 7043,
+        "occupiedRatio": 0.42987060546875,
+        "transparentPixelCount": 9341,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 25,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "E",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 32,
+          "minY": 28,
+          "maxX": 95,
+          "maxY": 121,
+          "width": 64,
+          "height": 94
+        },
+        "occupiedPixelCount": 5228,
+        "occupiedRatio": 0.319091796875,
+        "transparentPixelCount": 11156,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 61,
+        "representativeFeaturePixels": 45,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 16,
+          "minY": 39,
+          "maxX": 113,
+          "maxY": 121,
+          "width": 98,
+          "height": 83
+        },
+        "occupiedPixelCount": 5917,
+        "occupiedRatio": 0.36114501953125,
+        "transparentPixelCount": 10467,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 23,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "S",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 25,
+          "minY": 44,
+          "maxX": 102,
+          "maxY": 121,
+          "width": 78,
+          "height": 78
+        },
+        "occupiedPixelCount": 5101,
+        "occupiedRatio": 0.31134033203125,
+        "transparentPixelCount": 11283,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 4,
+        "minimumVerticalRunPixels": 31,
+        "representativeFeaturePixels": 12,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 14,
+          "minY": 28,
+          "maxX": 111,
+          "maxY": 121,
+          "width": 98,
+          "height": 94
+        },
+        "occupiedPixelCount": 6011,
+        "occupiedRatio": 0.36688232421875,
+        "transparentPixelCount": 10373,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 12,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "W",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 32,
+          "minY": 27,
+          "maxX": 95,
+          "maxY": 121,
+          "width": 64,
+          "height": 95
+        },
+        "occupiedPixelCount": 5346,
+        "occupiedRatio": 0.3262939453125,
+        "transparentPixelCount": 11038,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 61,
+        "representativeFeaturePixels": 29,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 14,
+          "minY": 19,
+          "maxX": 111,
+          "maxY": 121,
+          "width": 98,
+          "height": 103
+        },
+        "occupiedPixelCount": 7047,
+        "occupiedRatio": 0.43011474609375,
+        "transparentPixelCount": 9337,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 25,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "chimney",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    }
+  ],
+  "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/contact-sheet.png"
+}

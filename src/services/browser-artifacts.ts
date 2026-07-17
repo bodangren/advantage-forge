@@ -6,11 +6,15 @@ import type { Page } from '@playwright/test';
 import type { AssetDocument } from '../contracts/index.js';
 import type { ExportService, RenderService } from '../tools/index.js';
 
+type PageRunner = <Value>(
+  callback: (page: Page) => Promise<Value>,
+) => Promise<Value>;
 interface BrowserArtifactServiceOptions {
   readonly workspaceRoot: string;
   readonly inspectorUrl?: string;
   readonly outputDirectory?: string;
   readonly executablePath?: string;
+  readonly pageRunner?: PageRunner;
 }
 interface BrowserRenderArtifact {
   readonly frames: readonly {
@@ -71,6 +75,7 @@ export class LocalBrowserArtifactService
   readonly #outputRoot: string;
   readonly #inspectorUrl: string;
   readonly #executablePath: string;
+  readonly #pageRunner: PageRunner | undefined;
 
   constructor(options: BrowserArtifactServiceOptions) {
     const resolvedWorkspaceRoot = resolve(options.workspaceRoot);
@@ -83,6 +88,7 @@ export class LocalBrowserArtifactService
     );
     this.#inspectorUrl = options.inspectorUrl ?? 'http://127.0.0.1:4173';
     assertLoopbackInspectorUrl(this.#inspectorUrl);
+    this.#pageRunner = options.pageRunner;
     this.#executablePath =
       options.executablePath ?? '/opt/google/chrome/chrome';
     if (!isInside(this.#workspaceRoot, this.#outputRoot))
@@ -208,6 +214,7 @@ export class LocalBrowserArtifactService
   async #withPage<Value>(
     callback: (page: Page) => Promise<Value>,
   ): Promise<Value> {
+    if (this.#pageRunner !== undefined) return this.#pageRunner(callback);
     const browser = await chromium.launch({
       executablePath: this.#executablePath,
       headless: true,

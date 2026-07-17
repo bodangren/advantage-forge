@@ -13,7 +13,7 @@ const config = {
       name: 'domain-does-not-import-adapters',
       severity: 'error',
       from: {
-        path: '^src/(contracts|document|geometry|assembly|fantasy-kit|scene|render|export|validation)(?:/|$)',
+        path: '^src/(?!document/browser\\.ts$)(contracts|document|geometry|assembly|fantasy-kit|scene|render|export|validation)/(?!index\\.ts$).+',
       },
       to: { path: '^src/(tools|mcp|inspector)(?:/|$)' },
     },
@@ -22,7 +22,7 @@ const config = {
       severity: 'error',
       from: { path: '^src/(tools|mcp|inspector)(?:/|$)' },
       to: {
-        path: '^src/(contracts|document|geometry|assembly|fantasy-kit|scene|render|export|validation)/(?!index\\.ts$).+',
+        path: '^src/(?!document/browser[.]ts$)(contracts|document|geometry|assembly|fantasy-kit|scene|render|export|validation)/(?!index[.]ts$).+',
       },
     },
     {

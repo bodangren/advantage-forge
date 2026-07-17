@@ -399,8 +399,29 @@ export const SpriteRenderProfileSchema = z
     paddingPixels: z.number().int().min(0).max(512),
     transparent: z.literal(true),
     minimumFeaturePixels: z.number().int().min(1).max(64),
+    requiredFeaturePartIds: z.array(SemanticIdSchema).min(1).max(32),
   })
-  .strict();
+  .strict()
+  .superRefine((profile, context) => {
+    if (
+      profile.paddingPixels * 2 >=
+      Math.min(profile.widthPixels, profile.heightPixels)
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['paddingPixels'],
+        message: 'Padding must leave a positive drawable frame.',
+      });
+    if (
+      new Set(profile.requiredFeaturePartIds).size !==
+      profile.requiredFeaturePartIds.length
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['requiredFeaturePartIds'],
+        message: 'Required feature part IDs must be unique.',
+      });
+  });
 
 export const AssetDocumentSchema = z
   .object({
@@ -410,6 +431,7 @@ export const AssetDocumentSchema = z
     unit: z.literal(WORLD_UNIT),
     seed: z.number().int().min(0).max(2_147_483_647),
     kitId: SemanticIdSchema,
+    triangleBudget: z.number().int().min(1).max(1_000_000),
     materials: z.array(MaterialDefinitionSchema).min(1).max(256),
     templates: z.array(PartTemplateDefinitionSchema).min(1).max(2_000),
     assembly: AssemblyDefinitionSchema,
@@ -419,7 +441,26 @@ export const AssetDocumentSchema = z
     activeVariantId: SemanticIdSchema.optional(),
     activePoseId: SemanticIdSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((document, context) => {
+    const partIds = new Set(document.assembly.parts.map(({ id }) => id));
+    for (const [profileIndex, profile] of document.renderProfiles.entries())
+      for (const [
+        featureIndex,
+        partId,
+      ] of profile.requiredFeaturePartIds.entries())
+        if (!partIds.has(partId))
+          context.addIssue({
+            code: 'custom',
+            path: [
+              'renderProfiles',
+              profileIndex,
+              'requiredFeaturePartIds',
+              featureIndex,
+            ],
+            message: `Required feature part ${partId} does not exist in the assembly.`,
+          });
+  });
 
 export const ValidationErrorCodeSchema = z.enum([
   'UNKNOWN_FIELD',
@@ -437,6 +478,7 @@ export const ValidationErrorCodeSchema = z.enum([
   'NOT_FOUND',
   'PATCH_REJECTED',
   'INVALID_ASSEMBLY',
+  'TRIANGLE_BUDGET_EXCEEDED',
   'SERVICE_UNAVAILABLE',
   'RESPONSE_TOO_LARGE',
   'REPOSITORY_ERROR',

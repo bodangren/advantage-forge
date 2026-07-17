@@ -8,6 +8,7 @@ export function assetFixture(): AssetDocument {
     unit: 'meter',
     seed: 42,
     kitId: 'kit.rustic',
+    triangleBudget: 2_000,
     materials: [
       {
         id: 'material.cloth',
@@ -80,6 +81,7 @@ export function assetFixture(): AssetDocument {
         paddingPixels: 6,
         transparent: true,
         minimumFeaturePixels: 3,
+        requiredFeaturePartIds: ['part.head'],
       },
     ],
   };

@@ -21,6 +21,44 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
     () => document.querySelectorAll('.contact-frame').length === 8,
   );
 
+  const revisionLabel = page.locator('#revision-label');
+  await expect(revisionLabel).toHaveText(/^revision\.[a-f0-9]{64}$/);
+  const initialRevision = await revisionLabel.textContent();
+
+  await page.getByLabel('Selected semantic part').selectOption('torso');
+  await expect(page.getByText(/shoulder\.left.*anatomy\.mount/)).toBeVisible();
+  const shoulderPortVisible = await page.evaluate(
+    () =>
+      (
+        window as unknown as {
+          fantasyAssetForge: {
+            scene: { getObjectByName: (name: string) => unknown };
+          };
+        }
+      ).fantasyAssetForge.scene.getObjectByName('port:torso:shoulder.left') !==
+      undefined,
+  );
+  expect(shoulderPortVisible).toBe(true);
+
+  const injectedName = '<img id="inspector-injection" src="x">';
+  await page.evaluate((name) => {
+    const forge = (
+      window as unknown as {
+        fantasyAssetForge: {
+          document: Record<string, unknown>;
+          loadDocument: (asset: Record<string, unknown>) => void;
+        };
+      }
+    ).fantasyAssetForge;
+    forge.loadDocument({ ...forge.document, name });
+  }, injectedName);
+  await expect(page.locator('#inspector-injection')).toHaveCount(0);
+  await expect(page.getByText(injectedName, { exact: true })).toBeVisible();
+  await expect(revisionLabel).toHaveText(/^revision\.[a-f0-9]{64}$/);
+  await expect
+    .poll(() => revisionLabel.textContent())
+    .not.toBe(initialRevision);
+
   const frameEvidence = await page.evaluate(() => {
     const forge = (
       window as unknown as {
@@ -32,6 +70,12 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
               clippedEdges: readonly string[];
               groundAnchorDeviationPixels: number | null;
               representativeFeaturePixels: number | null;
+              requiredFeatureEvidence: readonly {
+                partId: string;
+                silhouetteWidthPixels: number | null;
+                minimumPixels: number;
+                passes: boolean;
+              }[];
             };
           }[];
         };
@@ -66,6 +110,18 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
         representativeFeaturePixels >= 3,
     ),
   ).toBe(true);
+  expect(
+    frameEvidence.every(
+      ({ requiredFeatureEvidence }) =>
+        requiredFeatureEvidence.length > 0 &&
+        requiredFeatureEvidence.every(
+          ({ silhouetteWidthPixels, minimumPixels, passes }) =>
+            passes &&
+            silhouetteWidthPixels !== null &&
+            silhouetteWidthPixels >= minimumPixels,
+        ),
+    ),
+  ).toBe(true);
   const directionCounts = await page.evaluate(() => {
     const forge = (
       window as unknown as {
@@ -90,6 +146,33 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
     'width',
     '128',
   );
+  const actualFrameBox = await page
+    .locator('.contact-frame canvas')
+    .first()
+    .boundingBox();
+  expect(actualFrameBox).not.toBeNull();
+  expect(actualFrameBox?.width).toBe(128);
+  expect(actualFrameBox?.height).toBe(128);
+
+  await expect(page.getByLabel('Selected pose')).toHaveValue('idle');
+  await expect(page.getByLabel('Selected variant')).toHaveValue('equipped');
+  await page.getByLabel('Selected pose').selectOption('action');
+  await page.getByLabel('Selected variant').selectOption('unequipped');
+  await page.getByRole('button', { name: 'Compare' }).click();
+  await expect(page.locator('.contact-sheet.comparison')).toBeVisible();
+  await expect(page.locator('.contact-frame')).toHaveCount(16);
+  await expect(
+    page
+      .locator('.contact-frame')
+      .first()
+      .getByText(/action · equipped/),
+  ).toBeVisible();
+  await expect(
+    page
+      .locator('.contact-frame')
+      .nth(8)
+      .getByText(/action · unequipped/),
+  ).toBeVisible();
 
   await page.getByRole('button', { name: /Timber Cottage/ }).click();
   await page.waitForFunction(
@@ -98,14 +181,14 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
         .fantasyAssetForge.selected === 'cottage',
   );
   await expect(page.getByText('cottage.rustic', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Selected pose')).toBeDisabled();
+  await expect(page.getByLabel('Selected variant')).toBeDisabled();
+  await expect(page.locator('.contact-frame')).toHaveCount(8);
   await page.getByLabel('Selected semantic part').selectOption('wall.front');
   await expect(page.getByLabel('Selected semantic part')).toHaveValue(
     'wall.front',
   );
   await expect(page.getByText('stone.lime', { exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Compare' }).click();
-  await expect(page.locator('.contact-sheet.comparison')).toBeVisible();
-  await expect(page.locator('.contact-frame')).toHaveCount(16);
 
   const glb = await page.evaluate(async () => {
     const forge = (

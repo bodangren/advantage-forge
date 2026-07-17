@@ -4,3 +4,8 @@ export type {
   PixelBounds,
   PixelMetrics,
 } from './pixels.js';
+export {
+  assertRenderArtifactAcceptance,
+  validateRenderArtifactAcceptance,
+  type RenderAcceptanceProfile,
+} from './render-artifacts.js';

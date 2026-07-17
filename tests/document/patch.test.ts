@@ -70,6 +70,75 @@ describe('semantic document patches', () => {
     ).toBe(false);
   });
 
+  it('edits one part shape locally and rejects no-op or generator changes', () => {
+    const document = assetFixture();
+    const templateBefore = JSON.stringify(document.templates);
+    const siblingBefore = JSON.stringify(document.assembly.parts[1]);
+    const changed = applySemanticPatch(document, {
+      operations: [
+        {
+          operation: 'setPartShapeParameters',
+          partId: 'part.torso',
+          shape: { kind: 'box', width: 0.6, height: 0.7, depth: 0.3 },
+        },
+      ],
+    });
+    expect(changed.ok).toBe(true);
+    if (!changed.ok) return;
+    expect(
+      changed.document.assembly.parts.find(({ id }) => id === 'part.torso')
+        ?.shape,
+    ).toEqual({ kind: 'box', width: 0.6, height: 0.7, depth: 0.3 });
+    expect(JSON.stringify(changed.document.templates)).toBe(templateBefore);
+    expect(JSON.stringify(changed.document.assembly.parts[1])).toBe(
+      siblingBefore,
+    );
+    expect(document.assembly.parts[0]?.shape).toBeUndefined();
+    expect(changed.affectedIds).toEqual(['part.torso']);
+
+    const noOp = applySemanticPatch(document, {
+      operations: [
+        {
+          operation: 'setPartShapeParameters',
+          partId: 'part.torso',
+          shape: { kind: 'box', width: 0.5, height: 0.7, depth: 0.3 },
+        },
+      ],
+    });
+    expect(noOp.ok).toBe(false);
+    expect(document.assembly.parts[0]?.shape).toBeUndefined();
+    expect(
+      applySemanticPatch(document, {
+        operations: [
+          {
+            operation: 'setPartShapeParameters',
+            partId: 'part.torso',
+            shape: {
+              kind: 'ellipsoid',
+              radiusX: 0.2,
+              radiusY: 0.2,
+              radiusZ: 0.2,
+              widthSegments: 8,
+              heightSegments: 6,
+            },
+          },
+        ],
+      }).ok,
+    ).toBe(false);
+    expect(
+      validateSemanticPatch({
+        operations: [
+          {
+            operation: 'setPartShapeParameters',
+            partId: 'part.torso',
+            shape: { kind: 'box', width: 0.6, height: 0.7, depth: 0.3 },
+            rawMesh: [],
+          },
+        ],
+      }),
+    ).toBe(false);
+  });
+
   it('upserts named poses without replacing unrelated values', () => {
     const result = applySemanticPatch(assetFixture(), {
       operations: [
@@ -144,6 +213,7 @@ describe('semantic document patches', () => {
             paddingPixels: 4,
             transparent: true,
             minimumFeaturePixels: 3,
+            requiredFeaturePartIds: ['part.head'],
           },
         },
       ],

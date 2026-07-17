@@ -131,6 +131,26 @@ describe('MCP adapter', () => {
       expect(created.revisionId).toMatch(/^revision\.[a-f0-9]{64}$/);
       await call('inspect_asset', { assetId: 'adventurer.rustic' });
 
+      const reshaped = await call('apply_operations', {
+        assetId: 'adventurer.rustic',
+        expectedRevisionId: created.revisionId,
+        patch: {
+          operations: [
+            {
+              operation: 'setPartShapeParameters',
+              partId: 'torso',
+              shape: {
+                kind: 'beveledBox',
+                width: 0.55,
+                height: 0.72,
+                depth: 0.28,
+                bevel: 0.05,
+              },
+            },
+          ],
+        },
+      });
+      expect(reshaped.affectedIds).toEqual(['torso']);
       const originalConnection =
         revisions.current.get('adventurer.rustic')?.document.assembly
           .connections[0];
@@ -138,7 +158,7 @@ describe('MCP adapter', () => {
         throw new Error('Expected the adventurer reference connection.');
       const disconnected = await call('apply_operations', {
         assetId: 'adventurer.rustic',
-        expectedRevisionId: created.revisionId,
+        expectedRevisionId: reshaped.revisionId,
         patch: {
           operations: [
             {
@@ -164,7 +184,44 @@ describe('MCP adapter', () => {
       await call('render_preview', { assetId: 'adventurer.rustic' });
       await call('export_asset', { assetId: 'adventurer.rustic' });
 
-      expect([...called].sort()).toEqual([...PUBLIC_TOOL_NAMES].sort());
+      expect([...new Set(called)].sort()).toEqual(
+        [...PUBLIC_TOOL_NAMES].sort(),
+      );
+    } finally {
+      await client.close();
+      await server.close();
+    }
+  });
+
+  it('returns triangle-budget failures through the MCP envelope', async () => {
+    const revisions = new MemoryRevisions();
+    const { client, server } = await connectProtocol({ revisions });
+    try {
+      await client.callTool({
+        name: 'create_asset',
+        arguments: { reference: 'crate' },
+      });
+      const current = await revisions.getCurrent('crate.rustic');
+      await revisions.save(
+        { ...current!.document, triangleBudget: 1 },
+        current!.revisionId,
+      );
+      const response = await client.callTool({
+        name: 'validate_asset',
+        arguments: { assetId: 'crate.rustic' },
+      });
+      expect(response.isError).toBe(true);
+      expect(parseEnvelope(response)).toMatchObject({
+        ok: false,
+        issues: [
+          {
+            code: 'TRIANGLE_BUDGET_EXCEEDED',
+            path: '$.triangleBudget',
+            actual: 132,
+            expected: 'at most 1',
+          },
+        ],
+      });
     } finally {
       await client.close();
       await server.close();

@@ -4,44 +4,44 @@
 
 Verified on 2026-07-17 in the repository's pinned Node/pnpm environment.
 
-| Gate                                             | Result                                                                                                                                                                                                     |
-| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm format:check`                              | Pass                                                                                                                                                                                                       |
-| `pnpm typecheck`                                 | Pass                                                                                                                                                                                                       |
-| `pnpm lint`                                      | Pass; no dependency-cruiser violations across 47 modules and 75 dependencies                                                                                                                               |
-| `pnpm test:coverage`                             | Pass; 15 files and 140 tests                                                                                                                                                                               |
-| Coverage                                         | 91.85% statements, 82.17% branches, 95.09% functions, 92.43% lines                                                                                                                                         |
-| `pnpm build`                                     | Pass; Vite production bundle emitted                                                                                                                                                                       |
-| `pnpm test:browser`                              | Pass; 3D inspector, selected-part evidence, comparison mode, 1/4/8 direction rendering, transparent sprites, exact ground alignment, no clipping, actual-size view, deep GLB reload, and no console errors |
-| `pnpm reference:build`                           | Pass; all canonical references and three adventurer state/pose variants regenerated through public handlers                                                                                                |
-| `pnpm generate`                                  | Pass; architecture, route, kit, tool, and output facts regenerated                                                                                                                                         |
-| `pnpm doctor`                                    | Pass; generated facts current and excluded dependencies absent                                                                                                                                             |
-| `node scripts/generate-architecture.mjs --check` | Pass; source-derived architecture facts current                                                                                                                                                            |
+| Gate                                             | Result                                                                                                                                                                                                                 |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm format:check`                              | Pass                                                                                                                                                                                                                   |
+| `pnpm typecheck`                                 | Pass                                                                                                                                                                                                                   |
+| `pnpm lint`                                      | Pass; no dependency-cruiser violations across 50 modules and 83 dependencies                                                                                                                                           |
+| `pnpm test:coverage`                             | Pass; 18 files and 156 tests                                                                                                                                                                                           |
+| Coverage                                         | 94.17% statements, 83.76% branches, 97.03% functions, 94.82% lines; browser-artifact adapter 80.21% statements and 81.6% lines                                                                                         |
+| `pnpm build`                                     | Pass; Vite production bundle emitted                                                                                                                                                                                   |
+| `pnpm test:browser`                              | Pass; source-isolated inspector, content revision IDs, safe document rendering, named port frames, semantic state comparison, 1/4/8 directions, named required-feature evidence, exact 128px view, and deep GLB parity |
+| `pnpm reference:build`                           | Pass; all canonical references and three adventurer state/pose variants regenerated through public handlers                                                                                                            |
+| `pnpm generate`                                  | Pass; architecture, route, kit, tool, and output facts regenerated                                                                                                                                                     |
+| `pnpm doctor`                                    | Pass; generated facts current and excluded dependencies absent                                                                                                                                                         |
+| `node scripts/generate-architecture.mjs --check` | Pass; source-derived architecture facts current                                                                                                                                                                        |
 
-The browser fallback was Playwright because the optional `agent-browser` executable was not installed in this environment. The committed Playwright acceptance path exercised the real inspector, WebGL renderer, sprite pipeline, and GLB export/reload path.
+The committed Playwright runner starts an isolated Vite server on a process-specific port, so acceptance cannot silently reuse a stale human-facing development server. It exercises the real inspector, WebGL renderer, sprite pipeline, and GLB export/reload path.
 
 ## Reference evidence
 
-| Asset/state                   | Revision                                                                    | Frames | Clipped edges | Ground deviation | Representative feature | GLB bytes | Semantic nodes |
-| ----------------------------- | --------------------------------------------------------------------------- | -----: | ------------: | ---------------: | ---------------------: | --------: | -------------: |
-| Adventurer, idle equipped     | `revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b` |      8 |             0 |              0px |             5px to 7px |         — |              — |
-| Adventurer, action equipped   | `revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b` |      8 |             0 |              0px |             4px to 5px |    59,356 |             20 |
-| Adventurer, action unequipped | `revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd` |      8 |             0 |              0px |             4px to 5px |         — |              — |
-| Crate                         | `revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6` |      8 |             0 |              0px |           11px to 80px |    11,400 |              4 |
-| Tree                          | `revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007` |      8 |             0 |              0px |             5px to 8px |    18,256 |              9 |
-| Cottage                       | `revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04` |      8 |             0 |              0px |           12px to 73px |    33,784 |             12 |
+| Asset/state                   | Revision                                                                    | Frames | Clipped edges | Ground deviation | Representative feature | Named feature | GLB bytes | Semantic nodes |
+| ----------------------------- | --------------------------------------------------------------------------- | -----: | ------------: | ---------------: | ---------------------: | ------------: | --------: | -------------: |
+| Adventurer, idle equipped     | `revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b` |      8 |             0 |              0px |             5px to 7px |   9px to 18px |         — |              — |
+| Adventurer, action equipped   | `revision.02ee4a5682675f49d494f6f99ea5cb1b9b5e1805ac0c30ee5b300ceaa7136561` |      8 |             0 |              0px |             4px to 6px |   8px to 16px |    58,936 |             20 |
+| Adventurer, action unequipped | `revision.760a31918520da7b3ca40078cdc2f1f1575d6bb1a3173111bdc41b561c990ed6` |      8 |             0 |              0px |             4px to 5px |   8px to 17px |         — |              — |
+| Crate                         | `revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6` |      8 |             0 |              0px |           40px to 80px | 71px to 104px |    11,448 |              4 |
+| Tree                          | `revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb` |      8 |             0 |              0px |             5px to 8px |   7px to 20px |    18,236 |              9 |
+| Cottage                       | `revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0` |      8 |             0 |              0px |           12px to 73px |   9px to 12px |    33,784 |             12 |
 
-Every frame contains both occupied and transparent pixels. All 48 frames have exact declared ground alignment, no clipped edge, and representative feature width at or above the 3-pixel contract.
+Every frame contains both occupied and transparent pixels. All 48 frames have exact declared ground alignment and no clipped edge. Every profile-named semantic part has isolated silhouette evidence above the 3-pixel contract in every direction.
 
 Every exported GLB passed deep reload comparison:
 
 - the semantic node-name sets match exactly;
 - world position, rotation, and scale match within `1e-5`;
-- material-name sets match;
+- material-name sets and standard-material properties match, with zero measured property deviation;
 - visible bounds and meter unit scale match their tolerance;
 - animation, texture, unsupported material/shader, skin, camera, and light counts are all zero.
 
-Visual QA confirms that the adventurer, crate, tree, and cottage silhouettes are recognizable across all eight directions and that pose/equipment differences are visible. The deliberately dark rustic palette and material separation remain owner-judgement items.
+Root-level visual inspection found the four silhouettes and adventurer pose/equipment changes discernible after increasing palette separation and replacing the crate's horizontal slabs with a sharp body and vertical iron straps. This is implementation evidence, not owner approval; final visual taste remains an explicit owner gate.
 
 Evidence:
 
@@ -61,6 +61,7 @@ Evidence:
 - The rustic kit is data and composition over the shared grammar; humanoid, prop, tree, and cottage use the same execution path.
 - Runtime kit manifests, generator parameters, material references, port tags, variants, poses, and document references are schema-validated.
 - Exactly ten public tools expose bounded discovery, creation, semantic mutation, connection, pose, validation, render, and export operations.
+- Localized geometry edits use the closed `setPartShapeParameters` operation, and `validate_asset` enforces each document's explicit triangle budget.
 - MCP is a response-budgeted thin adapter over transport-independent handlers.
 - No public tool exposes shell, arbitrary code, unrestricted filesystem, network retrieval, UI automation, raw mesh mutation, or Blender.
 - Revision and artifact paths reject traversal and symlink escapes; inspector URLs are credential-free loopback HTTP only.

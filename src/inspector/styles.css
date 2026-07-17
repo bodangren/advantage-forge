@@ -182,13 +182,21 @@ button.primary {
   padding: 4px 8px;
   border-bottom: 1px solid var(--hairline);
   background: var(--panel);
+  overflow-x: auto;
 }
 
+.semantic-controls {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 8px;
+  margin-left: auto;
+}
 .part-control {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-left: auto;
+  margin-left: 0;
   color: var(--muted);
   font-size: 11px;
 }
@@ -200,6 +208,11 @@ button.primary {
   border-radius: 5px;
   color: var(--ink);
   background: var(--panel-raised);
+}
+
+#pose-select,
+#variant-select {
+  max-width: 104px;
 }
 
 .view-tabs button {
@@ -336,8 +349,21 @@ button.primary {
 
 .contact-frame canvas {
   width: 100%;
-  height: 100%;
+  height: auto;
   image-rendering: pixelated;
+}
+
+.contact-sheet.actual {
+  align-content: start;
+  justify-content: start;
+  gap: 8px;
+  padding: 8px;
+}
+
+.contact-sheet.actual .contact-frame,
+.contact-sheet.actual .contact-frame canvas {
+  width: 128px;
+  height: 128px;
 }
 
 .contact-frame span {

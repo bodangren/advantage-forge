@@ -360,6 +360,10 @@ describe('variants, mirroring, and rigid poses', () => {
     expect(
       mirrored.parts.find((part) => part.id === 'body.arm.left')?.handedness,
     ).toBe('right');
+    expect(
+      mirrored.parts.find((part) => part.id === 'body.arm.left')?.transform
+        .scale,
+    ).toEqual([-1, 1, 1]);
     expect(mirrored.parts.find((part) => part.id === 'body.torso')).toBe(
       moved.parts.find((part) => part.id === 'body.torso'),
     );
@@ -437,6 +441,52 @@ describe('variants, mirroring, and rigid poses', () => {
       3,
     );
     expect(() => mirrorSubassembly(assembly, ['missing'], 'x')).toThrowError(
+      AssemblyEvaluationError,
+    );
+  });
+
+  it('rejects non-rigid port frames and unhanded negative-scale parts', () => {
+    const assembly = validAssembly();
+    const unhanded: AssemblyDefinition = {
+      ...assembly,
+      parts: assembly.parts.map((part, index) =>
+        index === 0
+          ? {
+              ...part,
+              handedness: 'neutral',
+              transform: { ...part.transform, scale: [-1, 1, 1] },
+            }
+          : part,
+      ),
+    };
+    expect(validateAssembly(unhanded, templates)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'INVALID_NEGATIVE_SCALE' }),
+      ]),
+    );
+
+    const scaledPorts: readonly PartTemplateDefinition[] = templates.map(
+      (template, index) =>
+        index === 0
+          ? {
+              ...template,
+              ports: template.ports.map((port, portIndex) =>
+                portIndex === 0
+                  ? {
+                      ...port,
+                      frame: { ...port.frame, scale: [2, 2, 2] },
+                    }
+                  : port,
+              ),
+            }
+          : template,
+    );
+    expect(validateAssembly(assembly, scaledPorts)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: 'NON_UNIT_PORT_SCALE' }),
+      ]),
+    );
+    expect(() => evaluateAssembly(assembly, scaledPorts)).toThrowError(
       AssemblyEvaluationError,
     );
   });

@@ -1,0 +1,78 @@
+{
+  "assetId": "crate.rustic",
+  "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+  "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/crate.rustic.glb",
+  "format": "glb",
+  "byteLength": 11448,
+  "nodeNames": [
+    "crate.band.high",
+    "crate.band.low",
+    "crate.body",
+    "crate.rustic"
+  ],
+  "materialNames": [
+    "iron.weathered",
+    "wood.oak"
+  ],
+  "unit": "meter",
+  "reloadNodeNames": [
+    "AuxScene",
+    "crate.band.high",
+    "crate.band.low",
+    "crate.body",
+    "crate.rustic"
+  ],
+  "reloadMaterialNames": [
+    "iron.weathered",
+    "wood.oak"
+  ],
+  "materialNamesMatch": true,
+  "materialPropertiesMatch": true,
+  "materialPropertyMismatchNames": [],
+  "maximumMaterialPropertyDeviation": 0,
+  "materialPropertyTolerance": 0.00001,
+  "semanticNodeCount": 4,
+  "reloadSemanticNodeCount": 4,
+  "missingSemanticNodeNames": [],
+  "unexpectedSemanticNodeNames": [],
+  "transformMismatchCount": 0,
+  "scaleMismatchCount": 0,
+  "maximumPositionDeviation": 0,
+  "maximumRotationDeviationRadians": 0,
+  "maximumScaleDeviation": 0,
+  "transformTolerance": 0.00001,
+  "bounds": {
+    "sourceMin": [
+      -0.44999998807907104,
+      -0.020000005960464473,
+      -0.4000000059604645
+    ],
+    "sourceMax": [
+      0.44999998807907104,
+      0.7800000059604645,
+      0.45999999932944774
+    ],
+    "reloadMin": [
+      -0.44999998807907104,
+      -0.020000005960464473,
+      -0.4000000059604645
+    ],
+    "reloadMax": [
+      0.44999998807907104,
+      0.7800000059604645,
+      0.45999999932944774
+    ],
+    "maximumDeviation": 0,
+    "tolerance": 0.00001,
+    "matches": true
+  },
+  "unitScaleDeviation": 0,
+  "unitScaleTolerance": 0.00001,
+  "textureCount": 0,
+  "unsupportedMaterialCount": 0,
+  "unsupportedShaderCount": 0,
+  "skinCount": 0,
+  "cameraCount": 0,
+  "lightCount": 0,
+  "animationCount": 0
+}

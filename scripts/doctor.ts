@@ -55,7 +55,11 @@ async function boundaryViolations(): Promise<string[]> {
       const crossModule = target.match(
         /\.\.\/(contracts|document|geometry|assembly|fantasy-kit|scene|render|export|validation|tools|mcp|inspector)\/(.+)/,
       );
-      if (crossModule && crossModule[2] !== 'index.js')
+      if (
+        crossModule &&
+        crossModule[2] !== 'index.js' &&
+        !(crossModule[1] === 'document' && crossModule[2] === 'browser.js')
+      )
         violations.push(
           `${relative(ROOT, file)}: cross-module import bypasses ${crossModule[1]}/index.ts`,
         );

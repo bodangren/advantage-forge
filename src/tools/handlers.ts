@@ -88,12 +88,23 @@ const fail = (
   message: string,
   path = '$',
   guidance = 'Inspect the tool schema and current revision before retrying.',
+  details: { readonly actual?: unknown; readonly expected?: unknown } = {},
 ): ToolResultEnvelope =>
   ToolResultEnvelopeSchema.parse({
     ok: false,
     affectedIds: [],
     summary: message,
-    issues: [{ code, severity: 'error', path, message, guidance }],
+    issues: [
+      {
+        code,
+        severity: 'error',
+        path,
+        message,
+        guidance,
+        actual: details.actual,
+        expected: details.expected,
+      },
+    ],
   });
 const invalid = (result: z.ZodSafeParseError<unknown>): ToolResultEnvelope => {
   const issue = result.error.issues[0];
@@ -390,6 +401,17 @@ export function createToolHandlers(context: ToolHandlerContext) {
       );
     try {
       const scene = evaluateDocument(revision.document);
+      if (scene.triangleCount > revision.document.triangleBudget)
+        return fail(
+          'TRIANGLE_BUDGET_EXCEEDED',
+          `Asset uses ${scene.triangleCount} triangles, exceeding its ${revision.document.triangleBudget}-triangle budget.`,
+          '$.triangleBudget',
+          'Reduce primitive segments, simplify part geometry, or raise the explicit asset budget before validation.',
+          {
+            actual: scene.triangleCount,
+            expected: `at most ${revision.document.triangleBudget}`,
+          },
+        );
       return ok(
         'Document and assembly validation passed.',
         {
@@ -398,6 +420,9 @@ export function createToolHandlers(context: ToolHandlerContext) {
             id: scene.id,
             bounds: scene.bounds,
             triangleCount: scene.triangleCount,
+            triangleBudget: revision.document.triangleBudget,
+            remainingTriangleBudget:
+              revision.document.triangleBudget - scene.triangleCount,
             parts: bounded(
               scene.parts.map(({ id, templateId, role, bounds, visible }) => ({
                 id,

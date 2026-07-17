@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 const TRANSFORM_TOLERANCE = 1e-5;
 const MINIMUM_BOUNDS_TOLERANCE = 1e-5;
 type Tuple3 = readonly [number, number, number];
+const MATERIAL_TOLERANCE = 1e-5;
 
 export interface GlbManifest {
   readonly format: 'glb';
@@ -13,6 +14,10 @@ export interface GlbManifest {
   readonly materialNames: readonly string[];
   readonly reloadNodeNames: readonly string[];
   readonly reloadMaterialNames: readonly string[];
+  readonly materialPropertiesMatch: boolean;
+  readonly materialPropertyMismatchNames: readonly string[];
+  readonly maximumMaterialPropertyDeviation: number;
+  readonly materialPropertyTolerance: number;
   readonly materialNamesMatch: boolean;
   readonly semanticNodeCount: number;
   readonly reloadSemanticNodeCount: number;
@@ -54,6 +59,7 @@ interface TransformEvidence {
 interface SceneEvidence {
   readonly nodeNames: readonly string[];
   readonly materialNames: readonly string[];
+  readonly standardMaterials: ReadonlyMap<string, THREE.MeshStandardMaterial>;
   readonly semanticTransforms: ReadonlyMap<string, TransformEvidence>;
   readonly bounds: THREE.Box3;
   readonly textureCount: number;
@@ -79,10 +85,36 @@ function maximumComponentDelta(
   );
 }
 
+function maximumColorDelta(left: THREE.Color, right: THREE.Color): number {
+  return Math.max(
+    Math.abs(left.r - right.r),
+    Math.abs(left.g - right.g),
+    Math.abs(left.b - right.b),
+  );
+}
+
+export function standardMaterialPropertyDeviation(
+  left: THREE.MeshStandardMaterial,
+  right: THREE.MeshStandardMaterial,
+): number {
+  const categoricalMismatch =
+    left.transparent !== right.transparent || left.side !== right.side;
+  return Math.max(
+    categoricalMismatch ? 1 : 0,
+    maximumColorDelta(left.color, right.color),
+    maximumColorDelta(left.emissive, right.emissive),
+    Math.abs(left.roughness - right.roughness),
+    Math.abs(left.metalness - right.metalness),
+    Math.abs(left.opacity - right.opacity),
+    Math.abs(left.alphaTest - right.alphaTest),
+  );
+}
+
 function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
   root.updateMatrixWorld(true);
   const nodeNames = new Set<string>();
   const materialNames = new Set<string>();
+  const standardMaterials = new Map<string, THREE.MeshStandardMaterial>();
   const semanticTransforms = new Map<string, TransformEvidence>();
   const textureIds = new Set<string>();
   const materials = new Set<THREE.Material>();
@@ -130,6 +162,8 @@ function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
       if (materials.has(material)) continue;
       materials.add(material);
       if (material.name) materialNames.add(material.name);
+      if (material.name && material instanceof THREE.MeshStandardMaterial)
+        standardMaterials.set(material.name, material);
       if (!(material instanceof THREE.MeshStandardMaterial))
         unsupportedMaterialCount += 1;
       if (
@@ -145,6 +179,7 @@ function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
   return {
     nodeNames: [...nodeNames].sort(),
     materialNames: [...materialNames].sort(),
+    standardMaterials,
     semanticTransforms,
     bounds,
     textureCount: textureIds.size,
@@ -226,6 +261,32 @@ export async function exportSceneToGlb(
   const materialNamesMatch =
     JSON.stringify(source.materialNames) ===
     JSON.stringify(reload.materialNames);
+  const materialPropertyDeviations = [
+    ...new Set([
+      ...source.standardMaterials.keys(),
+      ...reload.standardMaterials.keys(),
+    ]),
+  ]
+    .sort()
+    .map((name) => {
+      const sourceMaterial = source.standardMaterials.get(name);
+      const reloadMaterial = reload.standardMaterials.get(name);
+      return {
+        name,
+        deviation:
+          sourceMaterial === undefined || reloadMaterial === undefined
+            ? 1
+            : standardMaterialPropertyDeviation(sourceMaterial, reloadMaterial),
+      };
+    });
+  const materialPropertyMismatchNames = materialPropertyDeviations
+    .filter(({ deviation }) => deviation > MATERIAL_TOLERANCE)
+    .map(({ name }) => name);
+  const maximumMaterialPropertyDeviation = materialPropertyDeviations.reduce(
+    (maximum, { deviation }) => Math.max(maximum, deviation),
+    0,
+  );
+  const materialPropertiesMatch = materialPropertyMismatchNames.length === 0;
   const animationCount = reloaded.animations.length;
   const policyFailures: string[] = [];
   if (missingSemanticNodeNames.length > 0)
@@ -235,6 +296,8 @@ export async function exportSceneToGlb(
   if (transformMismatchCount > 0) policyFailures.push('transform mismatch');
   if (scaleMismatchCount > 0) policyFailures.push('scale mismatch');
   if (!materialNamesMatch) policyFailures.push('material-name mismatch');
+  if (!materialPropertiesMatch)
+    policyFailures.push('material-property mismatch');
   if (boundsMaximumDeviation > boundsTolerance)
     policyFailures.push('bounds mismatch');
   if (unitScaleDeviation > boundsTolerance)
@@ -264,6 +327,10 @@ export async function exportSceneToGlb(
       reloadNodeNames: reload.nodeNames,
       reloadMaterialNames: reload.materialNames,
       materialNamesMatch,
+      materialPropertiesMatch,
+      materialPropertyMismatchNames,
+      maximumMaterialPropertyDeviation,
+      materialPropertyTolerance: MATERIAL_TOLERANCE,
       semanticNodeCount: sourceIds.length,
       reloadSemanticNodeCount: reloadIds.length,
       missingSemanticNodeNames,

@@ -242,6 +242,8 @@ function issueGuidance(code: DocumentErrorCode): string {
     INVALID_MATERIAL_SLOT: 'Use a slot declared by the selected template.',
     ALREADY_EXISTS:
       'Inspect and revise the existing asset instead of recreating it.',
+    TRIANGLE_BUDGET_EXCEEDED:
+      'Reduce evaluated geometry or raise the explicit asset triangle budget.',
     INVALID_ASSEMBLY:
       'Correct the reported assembly, port, variant, or pose issue.',
     SERVICE_UNAVAILABLE: 'Start the configured local service and retry.',

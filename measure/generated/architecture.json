@@ -32,10 +32,12 @@
       "name": "document",
       "publicEntry": "src/document/index.ts",
       "sourceFiles": [
+        "src/document/browser.ts",
         "src/document/canonical.ts",
         "src/document/index.ts",
         "src/document/parse.ts",
         "src/document/patch.ts",
+        "src/document/revision-id.ts",
         "src/document/revisions.ts"
       ],
       "projectDependencies": [
@@ -65,6 +67,7 @@
         "src/fantasy-kit/index.ts"
       ],
       "projectDependencies": [
+        "assembly",
         "contracts"
       ],
       "externalDependencies": [
@@ -91,7 +94,9 @@
         "src/inspector/main.ts"
       ],
       "projectDependencies": [
+        "assembly",
         "contracts",
+        "document",
         "export",
         "fantasy-kit",
         "render",
@@ -189,7 +194,8 @@
       "publicEntry": "src/validation/index.ts",
       "sourceFiles": [
         "src/validation/index.ts",
-        "src/validation/pixels.ts"
+        "src/validation/pixels.ts",
+        "src/validation/render-artifacts.ts"
       ],
       "projectDependencies": [],
       "externalDependencies": []

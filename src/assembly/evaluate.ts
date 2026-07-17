@@ -35,6 +35,8 @@ export type AssemblyErrorCode =
   | 'OCCUPIED_PORT'
   | 'DUPLICATE_PARENT'
   | 'ASSEMBLY_CYCLE'
+  | 'INVALID_NEGATIVE_SCALE'
+  | 'NON_UNIT_PORT_SCALE'
   | 'JOINT_LIMIT'
   | 'MISSING_OVERRIDE_PART';
 
@@ -114,6 +116,48 @@ export function validateAssembly(
           'Select a registered template.',
         ),
       );
+    }
+  }
+
+  for (const [index, part] of assembly.parts.entries()) {
+    if (
+      part.transform.scale.some((scale) => scale < 0) &&
+      part.handedness !== 'left' &&
+      part.handedness !== 'right'
+    ) {
+      issues.push(
+        issue(
+          'INVALID_NEGATIVE_SCALE',
+          'parts[' + index + '].transform.scale',
+          "Part '" +
+            part.id +
+            "' uses negative scale without explicit handedness.",
+          'Create mirrored geometry through mirrorSubassembly so handedness is explicit.',
+        ),
+      );
+    }
+  }
+
+  for (const [templateIndex, template] of templates.entries()) {
+    for (const [portIndex, port] of template.ports.entries()) {
+      if (port.frame.scale.some((scale) => Math.abs(scale - 1) > 1e-12)) {
+        issues.push(
+          issue(
+            'NON_UNIT_PORT_SCALE',
+            'templates[' +
+              templateIndex +
+              '].ports[' +
+              portIndex +
+              '].frame.scale',
+            "Port '" +
+              port.id +
+              "' on template '" +
+              template.id +
+              "' is not a unit-scale rigid frame.",
+            'Use [1, 1, 1] scale for port frames and scale part geometry instead.',
+          ),
+        );
+      }
     }
   }
 

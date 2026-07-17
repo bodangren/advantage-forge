@@ -4,12 +4,8 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 import { z } from 'zod';
 
 import { AssetDocumentSchema, type AssetDocument } from '../contracts/index.js';
-import {
-  canonicalSerialize,
-  contentRevisionId,
-  deepFreeze,
-  freezeDocument,
-} from './canonical.js';
+import { canonicalSerialize, deepFreeze, freezeDocument } from './canonical.js';
+import { contentRevisionId } from './revision-id.js';
 import { parseAssetDocumentJson } from './parse.js';
 
 export const RevisionRecordSchema = z

@@ -11,7 +11,7 @@
 | `apply_operations` | yes | Apply one or more closed semantic operations with revision preconditions. |
 | `connect_parts` | yes | Connect two compatible named part ports. |
 | `set_pose` | yes | Select a declared rigid pose by stable ID. |
-| `validate_asset` | no | Validate contracts and evaluate a semantic scene summary. |
+| `validate_asset` | no | Validate contracts, triangle budget, and a semantic scene summary. |
 | `render_preview` | no | Render bounded directional sprite previews for the current revision. |
 | `export_asset` | no | Export the current revision as a workspace-contained GLB. |
 

@@ -12,7 +12,7 @@
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "test:browser": "playwright test",
+    "test:browser": "node --import tsx scripts/test-browser.ts",
     "lint": "eslint . && dependency-cruiser src --config dependency-cruiser.config.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

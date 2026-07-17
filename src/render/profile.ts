@@ -20,6 +20,7 @@ export interface SpriteRenderProfile {
   readonly paddingPixels: number;
   readonly transparent: true;
   readonly minimumFeaturePixels: number;
+  readonly requiredFeaturePartIds: readonly string[];
 }
 
 export const MVP_RENDER_PROFILE: SpriteRenderProfile = Object.freeze({
@@ -31,6 +32,7 @@ export const MVP_RENDER_PROFILE: SpriteRenderProfile = Object.freeze({
   paddingPixels: 6,
   transparent: true,
   minimumFeaturePixels: 3,
+  requiredFeaturePartIds: ['torso'],
 });
 
 const DIRECTION_YAW_DEGREES: Readonly<Record<SpriteDirection, number>> =
@@ -103,9 +105,20 @@ export function validateRenderProfile(
   }
   if (
     !Number.isInteger(profile.minimumFeaturePixels) ||
-    profile.minimumFeaturePixels < 1
+    profile.minimumFeaturePixels < 1 ||
+    profile.minimumFeaturePixels > 64
   ) {
-    issues.push('minimumFeaturePixels must be a positive integer');
+    issues.push('minimumFeaturePixels must be an integer between 1 and 64');
   }
+  if (
+    profile.requiredFeaturePartIds.length < 1 ||
+    profile.requiredFeaturePartIds.length > 32 ||
+    profile.requiredFeaturePartIds.some((id) => !id.trim()) ||
+    new Set(profile.requiredFeaturePartIds).size !==
+      profile.requiredFeaturePartIds.length
+  )
+    issues.push(
+      'requiredFeaturePartIds must contain 1 to 32 unique semantic IDs',
+    );
   return issues;
 }

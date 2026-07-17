@@ -8,6 +8,7 @@ import {
 import { referenceDocuments } from '../src/fantasy-kit/index.js';
 import { LocalBrowserArtifactService } from '../src/services/index.js';
 import { createToolHandlers } from '../src/tools/index.js';
+import { assertRenderArtifactAcceptance } from '../src/validation/index.js';
 
 const workspaceRoot = process.cwd();
 const port = 4174;
@@ -51,6 +52,11 @@ try {
       const idleEquipped = await handlers.renderPreview({ assetId });
       if (!idleEquipped.ok)
         throw new Error(`Failed idle equipped render: ${idleEquipped.summary}`);
+      assertRenderArtifactAcceptance(
+        idleEquipped.data,
+        referenceDocuments.adventurer.renderProfiles[0]!,
+        'adventurer idle equipped',
+      );
       const idleEquippedRevisionId = revisionId;
       const unequipped = await handlers.applyOperations({
         assetId,
@@ -85,12 +91,14 @@ try {
         patch: {
           operations: [
             {
-              operation: 'setPartTransform',
+              operation: 'setPartShapeParameters',
               partId: 'torso',
-              transform: {
-                position: [0, 1.42, 0],
-                rotation: [0, 0, 0, 1],
-                scale: [1.05, 1.08, 1],
+              shape: {
+                kind: 'beveledBox',
+                width: 0.55,
+                height: 0.72,
+                depth: 0.28,
+                bevel: 0.05,
               },
             },
           ],
@@ -132,6 +140,11 @@ try {
     const exported = await handlers.exportAsset({ assetId });
     if (!validated.ok || !rendered.ok || !exported.ok)
       throw new Error(`Reference workflow failed for ${reference}.`);
+    assertRenderArtifactAcceptance(
+      rendered.data,
+      current.document.renderProfiles[0]!,
+      `${reference} current revision`,
+    );
     if (reference === 'adventurer') {
       const actionEquippedRevisionId = revisionId;
       const unequipped = await handlers.applyOperations({
@@ -154,6 +167,11 @@ try {
         throw new Error(
           `Failed action unequipped render: ${actionUnequipped.summary}`,
         );
+      assertRenderArtifactAcceptance(
+        actionUnequipped.data,
+        current.document.renderProfiles[0]!,
+        'adventurer action unequipped',
+      );
       const restored = await handlers.applyOperations({
         assetId,
         expectedRevisionId: revisionId,

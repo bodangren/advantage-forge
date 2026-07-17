@@ -1,0 +1,88 @@
+{
+  "assetId": "tree.rustic",
+  "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+  "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/tree.rustic.glb",
+  "format": "glb",
+  "byteLength": 18236,
+  "nodeNames": [
+    "tree.branch.east",
+    "tree.branch.west",
+    "tree.crown",
+    "tree.crown.east",
+    "tree.crown.west",
+    "tree.root.east",
+    "tree.root.west",
+    "tree.rustic",
+    "trunk.main"
+  ],
+  "materialNames": [
+    "foliage.pine",
+    "wood.dark"
+  ],
+  "unit": "meter",
+  "reloadNodeNames": [
+    "AuxScene",
+    "tree.branch.east",
+    "tree.branch.west",
+    "tree.crown",
+    "tree.crown.east",
+    "tree.crown.west",
+    "tree.root.east",
+    "tree.root.west",
+    "tree.rustic",
+    "trunk.main"
+  ],
+  "reloadMaterialNames": [
+    "foliage.pine",
+    "wood.dark"
+  ],
+  "materialNamesMatch": true,
+  "materialPropertiesMatch": true,
+  "materialPropertyMismatchNames": [],
+  "maximumMaterialPropertyDeviation": 0,
+  "materialPropertyTolerance": 0.00001,
+  "semanticNodeCount": 9,
+  "reloadSemanticNodeCount": 9,
+  "missingSemanticNodeNames": [],
+  "unexpectedSemanticNodeNames": [],
+  "transformMismatchCount": 0,
+  "scaleMismatchCount": 0,
+  "maximumPositionDeviation": 0,
+  "maximumRotationDeviationRadians": 5.960464477539063e-8,
+  "maximumScaleDeviation": 0,
+  "transformTolerance": 0.00001,
+  "bounds": {
+    "sourceMin": [
+      -1.0656331539154054,
+      -0.08720396935939789,
+      -0.6499730944633484
+    ],
+    "sourceMax": [
+      1.097199993133545,
+      3.000000011920929,
+      0.6499730944633484
+    ],
+    "reloadMin": [
+      -1.0656331539154054,
+      -0.08720396935939789,
+      -0.6499730944633484
+    ],
+    "reloadMax": [
+      1.097199993133545,
+      3.000000011920929,
+      0.6499730944633484
+    ],
+    "maximumDeviation": 0,
+    "tolerance": 0.000030872039812803274,
+    "matches": true
+  },
+  "unitScaleDeviation": 0,
+  "unitScaleTolerance": 0.000030872039812803274,
+  "textureCount": 0,
+  "unsupportedMaterialCount": 0,
+  "unsupportedShaderCount": 0,
+  "skinCount": 0,
+  "cameraCount": 0,
+  "lightCount": 0,
+  "animationCount": 0
+}

@@ -10,6 +10,7 @@
 - Directions: 8 in N -> NE -> E -> SE -> S -> SW -> W -> NW order
 - Padding: 6px
 - Minimum feature: 3px
+- Required feature evidence: torso
 
 ## Coordinate system
 
@@ -19,6 +20,7 @@
 
 ## Mechanical validation
 
+- Every asset declares a positive integer triangle budget; `validate_asset` rejects evaluated scenes above it.
 - Reports occupied bounds, transparent and occupied pixel counts, clipped edges, exact ground-anchor deviation, and representative silhouette-feature width.
 - Emits one PNG per direction plus a labeled contact sheet associated with the canonical asset revision.
 

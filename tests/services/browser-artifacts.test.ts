@@ -1,6 +1,7 @@
-import { mkdtemp, readdir, symlink } from 'node:fs/promises';
+import { mkdtemp, readFile, readdir, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import type { Page } from '@playwright/test';
 import { assetFixture } from '../document/fixture.js';
 import { describe, expect, it } from 'vitest';
 import { LocalBrowserArtifactService } from '../../src/services/index.js';
@@ -55,5 +56,81 @@ describe('local browser artifact service', () => {
       ),
     ).rejects.toThrow(/symbolic links/);
     expect(await readdir(outside)).toEqual([]);
+  });
+
+  it('persists render frames and a revision manifest through an injected page runner', async () => {
+    const workspaceRoot = await mkdtemp(join(tmpdir(), 'forge-render-'));
+    const dataUrl = `data:image/png;base64,${Buffer.from('PNG').toString('base64')}`;
+    const fakePage = {
+      evaluate: async () => ({
+        frames: [
+          {
+            direction: 'S',
+            dataUrl,
+            metrics: { occupiedPixelCount: 1 },
+          },
+        ],
+        contactSheetDataUrl: dataUrl,
+      }),
+    } as unknown as Page;
+    const service = new LocalBrowserArtifactService({
+      workspaceRoot,
+      outputDirectory: 'artifacts',
+      pageRunner: (callback) => callback(fakePage),
+    });
+    const result = (await service.render(
+      assetFixture(),
+      'revision.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+    )) as {
+      manifestPath: string;
+      contactSheetPath: string;
+      frames: { path: string }[];
+    };
+
+    expect(await readFile(result.frames[0]!.path, 'utf8')).toBe('PNG');
+    expect(await readFile(result.contactSheetPath, 'utf8')).toBe('PNG');
+    expect(
+      JSON.parse(await readFile(result.manifestPath, 'utf8')),
+    ).toMatchObject({
+      assetId: 'asset.hero',
+      revisionId:
+        'revision.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+      frames: [{ direction: 'S' }],
+    });
+    await expect(
+      service.render(
+        { ...assetFixture(), renderProfiles: [] },
+        'revision.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',
+      ),
+    ).rejects.toThrow(/does not declare a render profile/);
+  });
+
+  it('persists exported GLB bytes and rejects invalid artifact identities', async () => {
+    const workspaceRoot = await mkdtemp(join(tmpdir(), 'forge-export-'));
+    const fakePage = {
+      evaluate: async () => ({
+        bytes: [1, 2, 3],
+        manifest: { format: 'glb' },
+      }),
+    } as unknown as Page;
+    const service = new LocalBrowserArtifactService({
+      workspaceRoot,
+      pageRunner: (callback) => callback(fakePage),
+    });
+    const document = assetFixture();
+    const result = (await service.export(
+      document,
+      'revision.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    )) as { glbPath: string; manifestPath: string };
+
+    expect([...new Uint8Array(await readFile(result.glbPath))]).toEqual([
+      1, 2, 3,
+    ]);
+    expect(
+      JSON.parse(await readFile(result.manifestPath, 'utf8')),
+    ).toMatchObject({ assetId: 'asset.hero', format: 'glb' });
+    await expect(service.render(document, 'invalid-revision')).rejects.toThrow(
+      /Invalid artifact identity/,
+    );
   });
 });

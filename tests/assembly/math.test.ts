@@ -29,7 +29,7 @@ describe('assembly transform math', () => {
     ).toEqual([0, 0, -1]);
   });
 
-  it('mirrors transforms without introducing negative scale', () => {
+  it('mirrors geometry with an explicit negative determinant', () => {
     const mirrored = mirrorTransform(
       {
         position: [-2, 1, 0],
@@ -39,8 +39,25 @@ describe('assembly transform math', () => {
       'x',
     );
     expect(mirrored.position).toEqual([2, 1, 0]);
-    expect(mirrored.scale).toEqual([1, 2, 1]);
+    expect(mirrored.scale).toEqual([-1, 2, 1]);
     expect(mirrored.rotation[2]).toBeLessThan(0);
+  });
+
+  it('rejects inversion outside the supported uniform-scale subset', () => {
+    expect(() =>
+      invertTransform({
+        position: [1, 2, 3],
+        rotation: quaternionFromAxisAngle([0, 0, 1], 45),
+        scale: [2, 3, 4],
+      }),
+    ).toThrow('supports only uniform scale');
+    expect(() =>
+      invertTransform({
+        position: [0, 0, 0],
+        rotation: [0, 0, 0, 1],
+        scale: [-1, 1, 1],
+      }),
+    ).toThrow('supports only uniform scale');
   });
 
   it('rejects degenerate transform math and supports empty bounds unions', () => {

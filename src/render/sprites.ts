@@ -8,14 +8,22 @@ import {
   type SpriteRenderProfile,
 } from './profile.js';
 
+export interface RequiredFeatureEvidence {
+  readonly partId: string;
+  readonly silhouetteWidthPixels: number | null;
+  readonly minimumPixels: number;
+  readonly passes: boolean;
+}
+
 export interface SpriteFrame {
   readonly direction: SpriteDirection;
   readonly width: number;
   readonly height: number;
   readonly pixels: Uint8ClampedArray;
-  readonly metrics: PixelMetrics;
+  readonly metrics: PixelMetrics & {
+    readonly requiredFeatureEvidence: readonly RequiredFeatureEvidence[];
+  };
 }
-
 function flipRows(
   source: Uint8Array,
   width: number,
@@ -31,7 +39,7 @@ function flipRows(
   return target;
 }
 
-function alignGroundRow(
+export function normalizeGroundRow(
   pixels: Uint8ClampedArray,
   width: number,
   height: number,
@@ -47,13 +55,97 @@ function alignGroundRow(
   const stride = width * 4;
   for (let sourceY = 0; sourceY < height; sourceY += 1) {
     const targetY = sourceY + offset;
-    if (targetY < 0 || targetY >= height) continue;
+    if (targetY < 0 || targetY >= height) {
+      const sourceOffset = sourceY * stride;
+      const discardsOccupiedPixel = Array.from(
+        { length: width },
+        (_, x) => pixels[sourceOffset + x * 4 + 3],
+      ).some((alpha) => alpha !== 0);
+      if (discardsOccupiedPixel) {
+        throw new RangeError(
+          'Ground-row normalization would discard occupied pixels.',
+        );
+      }
+      continue;
+    }
     aligned.set(
       pixels.subarray(sourceY * stride, (sourceY + 1) * stride),
       targetY * stride,
     );
   }
   return aligned;
+}
+
+export function requiredFeatureEvidenceFromPixels(
+  partId: string,
+  pixels: Uint8Array | Uint8ClampedArray,
+  width: number,
+  height: number,
+  minimumPixels: number,
+): RequiredFeatureEvidence {
+  const bounds = analyzeRgbaPixels(pixels, width, height, {
+    alphaThreshold: 128,
+  }).occupiedBounds;
+  const silhouetteWidthPixels =
+    bounds === null ? null : Math.min(bounds.width, bounds.height);
+  return {
+    partId,
+    silhouetteWidthPixels,
+    minimumPixels,
+    passes:
+      silhouetteWidthPixels !== null && silhouetteWidthPixels >= minimumPixels,
+  };
+}
+
+function measureRequiredFeatures(
+  renderer: THREE.WebGLRenderer,
+  scene: THREE.Scene,
+  camera: THREE.OrthographicCamera,
+  target: THREE.WebGLRenderTarget,
+  profile: SpriteRenderProfile,
+): readonly RequiredFeatureEvidence[] {
+  const semanticMeshes: THREE.Object3D[] = [];
+  scene.traverse((node) => {
+    if (
+      node instanceof THREE.Mesh &&
+      typeof node.userData['semanticId'] === 'string'
+    )
+      semanticMeshes.push(node);
+  });
+  const originalVisibility = new Map(
+    semanticMeshes.map((mesh) => [mesh, mesh.visible] as const),
+  );
+  try {
+    return profile.requiredFeaturePartIds.map((partId) => {
+      for (const mesh of semanticMeshes)
+        mesh.visible =
+          originalVisibility.get(mesh) === true &&
+          mesh.userData['semanticId'] === partId;
+      renderer.setRenderTarget(target);
+      renderer.clear(true, true, true);
+      renderer.render(scene, camera);
+      const raw = new Uint8Array(
+        profile.widthPixels * profile.heightPixels * 4,
+      );
+      renderer.readRenderTargetPixels(
+        target,
+        0,
+        0,
+        profile.widthPixels,
+        profile.heightPixels,
+        raw,
+      );
+      return requiredFeatureEvidenceFromPixels(
+        partId,
+        flipRows(raw, profile.widthPixels, profile.heightPixels),
+        profile.widthPixels,
+        profile.heightPixels,
+        profile.minimumFeaturePixels,
+      );
+    });
+  } finally {
+    for (const [mesh, visible] of originalVisibility) mesh.visible = visible;
+  }
 }
 
 export function renderDirectionalSprites(
@@ -98,18 +190,21 @@ export function renderDirectionalSprites(
       );
       const expectedGroundPixelY =
         profile.heightPixels - profile.paddingPixels - 1;
-      const pixels = alignGroundRow(
+      const pixels = normalizeGroundRow(
         flipRows(raw, profile.widthPixels, profile.heightPixels),
         profile.widthPixels,
         profile.heightPixels,
         expectedGroundPixelY,
       );
-      frames.push({
-        direction,
-        width: profile.widthPixels,
-        height: profile.heightPixels,
-        pixels,
-        metrics: analyzeRgbaPixels(
+      const requiredFeatureEvidence = measureRequiredFeatures(
+        renderer,
+        scene,
+        camera,
+        target,
+        profile,
+      );
+      const metrics = {
+        ...analyzeRgbaPixels(
           pixels,
           profile.widthPixels,
           profile.heightPixels,
@@ -118,6 +213,14 @@ export function renderDirectionalSprites(
             expectedGroundPixelY,
           },
         ),
+        requiredFeatureEvidence,
+      };
+      frames.push({
+        direction,
+        width: profile.widthPixels,
+        height: profile.heightPixels,
+        pixels,
+        metrics,
       });
     }
   } finally {
