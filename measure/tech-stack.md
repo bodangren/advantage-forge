@@ -6,26 +6,25 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 
 ## Runtime and Language
 
-- **TypeScript, strict mode:** Shared contracts across documents, tools, geometry, rendering, validation, and export.
-- **Node.js Active LTS:** Local tool server, filesystem project storage, deterministic builds, tests, and CLI workflows. Pin the exact version when implementation begins.
+- **TypeScript 6.0.2, strict mode:** Shared contracts across documents, tools, geometry, rendering, validation, and export.
+- **Node.js 22.22.2 or newer in the Node 22-24 range:** Local tool server, filesystem project storage, deterministic builds, tests, and CLI workflows.
 - **Browser WebGL:** Interactive inspection and sprite rendering through the same scene compiler used by exports.
-- **pnpm:** Dependency management and reproducible scripts.
+- **pnpm 11.8.0:** Dependency management and reproducible scripts.
 
 ## Core Libraries
 
-- **Zod:** Closed runtime schemas for versioned asset documents and domain tool inputs/outputs.
-- **Three.js:** Scene graph, constrained geometry output, materials, orthographic cameras, browser rendering, render targets, and GLB export.
-- **Model Context Protocol TypeScript SDK:** Thin local adapter exposing the project-owned domain tools. MCP is transport, not the asset model or engine.
-- **Vite:** Minimal vanilla-TypeScript inspector application and development server. React is intentionally excluded from the MVP unless interaction complexity proves it necessary.
+- **Zod 4.4.3:** Closed runtime schemas for versioned asset documents and domain tool inputs/outputs.
+- **Three.js 0.185.1:** Scene graph, constrained geometry output, materials, orthographic cameras, renderer targets, and GLB export/reload.
+- **Model Context Protocol TypeScript SDK 1.29.0:** Thin local adapter exposing the project-owned domain tools. MCP is transport, not the asset model or engine.
+- **Vite 8.1.4:** Minimal vanilla-TypeScript inspector application and development server. React is intentionally excluded from the MVP.
 
 ## Testing and Quality
 
-- **Vitest:** Unit and contract tests for schemas, generators, port resolution, transforms, variants, and validation.
-- **Playwright:** Browser rendering integration tests and deterministic reference workflow checks.
+- **Vitest 4.1.10:** Unit and contract tests for schemas, generators, port resolution, transforms, variants, and validation.
+- **Playwright 1.61.1:** Browser rendering integration tests and deterministic reference workflow checks.
 - **PNG pixel analysis utilities:** Project-owned checks for transparency, frame occupancy, ground anchor, silhouette width, and contact-sheet layout.
-- **TypeScript compiler:** Strict type checking with no emit in CI.
-- **ESLint and dependency-cruiser:** Code quality and enforceable module boundaries when implementation scaffolding is created.
-- **Prettier:** Mechanical formatting only.
+- **ESLint 10.7.0 and dependency-cruiser 18.1.0:** Code quality and enforceable module boundaries.
+- **Prettier 3.9.5:** Mechanical formatting only.
 
 ## Storage and Formats
 
@@ -34,7 +33,7 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - **PNG:** Transparent sprite frames and contact sheets.
 - **Local filesystem:** Projects, revisions, previews, and exports. No database, authentication, hosted service, or cloud storage in the MVP.
 
-## Planned Module Boundaries
+## Module Boundaries
 
 ```text
 src/

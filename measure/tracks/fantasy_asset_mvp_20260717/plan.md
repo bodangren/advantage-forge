@@ -3,9 +3,10 @@
 The plan is the execution source of truth. Tasks run sequentially unless a phase explicitly identifies independent test fixtures. Every task follows `measure/workflow.md`: contract first, failing tests, minimum implementation, verification, atomic commit, Git note, and recorded plan SHA.
 
 ## Phase S1: Establish Asset Contracts
+
 _Story ref: spec.md#story-s1_
 
-- [ ] Task: Define the canonical document and result contracts
+- [~] Task: Define the canonical document and result contracts
   - [ ] Specify coordinate system, meters, stable ID grammar, schema version, deterministic seed, and canonical key ordering.
   - [ ] Define closed Zod schemas for asset, part instance, transform, material binding, pose, render profile, revision, validation issue, and tool result envelopes.
   - [ ] Define stable error codes and semantic document-path conventions.
@@ -33,6 +34,7 @@ _Story ref: spec.md#story-s1_
 - [ ] Task: Measure - User Manual Verification 'Phase S1: Establish Asset Contracts' (Protocol in workflow.md)
 
 ## Phase S2: Compile Parts and Assemblies
+
 _Story ref: spec.md#story-s2_
 
 - [ ] Task: Define geometry, part, port, assembly, variant, and pose contracts
@@ -67,6 +69,7 @@ _Story ref: spec.md#story-s2_
 - [ ] Task: Measure - User Manual Verification 'Phase S2: Compile Parts and Assemblies' (Protocol in workflow.md)
 
 ## Phase S3: Author Rustic Fantasy Kit
+
 _Story ref: spec.md#story-s3_
 
 - [ ] Task: Define fantasy-kit manifests and style contracts
@@ -94,6 +97,7 @@ _Story ref: spec.md#story-s3_
 - [ ] Task: Measure - User Manual Verification 'Phase S3: Author Rustic Fantasy Kit' (Protocol in workflow.md)
 
 ## Phase S4: Expose LLM Domain Tools
+
 _Story ref: spec.md#story-s4_
 
 - [ ] Task: Define the public domain tool catalog
@@ -126,6 +130,7 @@ _Story ref: spec.md#story-s4_
 - [ ] Task: Measure - User Manual Verification 'Phase S4: Expose LLM Domain Tools' (Protocol in workflow.md)
 
 ## Phase S5: Render and Export Assets
+
 _Story ref: spec.md#story-s5_
 
 - [ ] Task: Define scene, render, pixel-metric, and GLB contracts
@@ -167,6 +172,7 @@ _Story ref: spec.md#story-s5_
 - [ ] Task: Measure - User Manual Verification 'Phase S5: Render and Export Assets' (Protocol in workflow.md)
 
 ## Phase S6: Verify Reference Vertical Slice
+
 _Story ref: spec.md#story-s6_
 
 - [ ] Task: Define the reference workflow and evidence manifest

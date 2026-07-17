@@ -13,21 +13,21 @@ The design adapts the Figma-derived system's strong monochrome structure, clear 
 
 # Color Palette & Roles
 
-| Token | Value | Role |
-|---|---:|---|
-| `canvas` | `#171815` | Main application background |
-| `panel` | `#22231F` | Sidebars, tool output, inspector |
-| `panel-raised` | `#2B2C27` | Selected cards and dialogs |
-| `viewport` | `#B9B5A8` | Neutral 3D preview ground/background |
-| `ink` | `#F2EFE6` | Primary text on dark surfaces |
-| `ink-muted` | `#AAA79D` | Secondary metadata |
-| `hairline` | `#3B3C35` | Dividers and inactive borders |
-| `forge-amber` | `#D99A43` | Primary action and active revision |
-| `moss` | `#7E9B62` | Valid state and vegetation family |
-| `arcane-violet` | `#9782C8` | LLM proposal and pending patch |
-| `iron-blue` | `#6E8792` | Structural metadata and 3D export |
-| `warning` | `#D27355` | Validation warning |
-| `error` | `#E05D54` | Failed build or invalid contract |
+| Token           |     Value | Role                                 |
+| --------------- | --------: | ------------------------------------ |
+| `canvas`        | `#171815` | Main application background          |
+| `panel`         | `#22231F` | Sidebars, tool output, inspector     |
+| `panel-raised`  | `#2B2C27` | Selected cards and dialogs           |
+| `viewport`      | `#B9B5A8` | Neutral 3D preview ground/background |
+| `ink`           | `#F2EFE6` | Primary text on dark surfaces        |
+| `ink-muted`     | `#AAA79D` | Secondary metadata                   |
+| `hairline`      | `#3B3C35` | Dividers and inactive borders        |
+| `forge-amber`   | `#D99A43` | Primary action and active revision   |
+| `moss`          | `#7E9B62` | Valid state and vegetation family    |
+| `arcane-violet` | `#9782C8` | LLM proposal and pending patch       |
+| `iron-blue`     | `#6E8792` | Structural metadata and 3D export    |
+| `warning`       | `#D27355` | Validation warning                   |
+| `error`         | `#E05D54` | Failed build or invalid contract     |
 
 Use `forge-amber` for a single primary action per surface. Domain colors label material families and output types; they must not become decorative gradients. Validation colors always retain their semantic meaning.
 

@@ -1,7 +1,195 @@
 {
-  "generated_at": "2026-07-17T00:00:00Z",
-  "status": "planning-only",
-  "measure_zone": "src",
-  "modules": [],
-  "note": "No implementation source exists. Story S1 will establish enforced module boundaries and regenerate this file."
+  "formatVersion": 1,
+  "sourceRoot": "src",
+  "modules": [
+    {
+      "name": "assembly",
+      "publicEntry": "src/assembly/index.ts",
+      "sourceFiles": [
+        "src/assembly/evaluate.ts",
+        "src/assembly/index.ts",
+        "src/assembly/math.ts"
+      ],
+      "projectDependencies": [
+        "contracts",
+        "geometry"
+      ],
+      "externalDependencies": []
+    },
+    {
+      "name": "contracts",
+      "publicEntry": "src/contracts/index.ts",
+      "sourceFiles": [
+        "src/contracts/index.ts",
+        "src/contracts/schemas.ts"
+      ],
+      "projectDependencies": [],
+      "externalDependencies": [
+        "zod"
+      ]
+    },
+    {
+      "name": "document",
+      "publicEntry": "src/document/index.ts",
+      "sourceFiles": [
+        "src/document/canonical.ts",
+        "src/document/index.ts",
+        "src/document/parse.ts",
+        "src/document/patch.ts",
+        "src/document/revisions.ts"
+      ],
+      "projectDependencies": [
+        "contracts"
+      ],
+      "externalDependencies": [
+        "zod"
+      ]
+    },
+    {
+      "name": "export",
+      "publicEntry": "src/export/index.ts",
+      "sourceFiles": [
+        "src/export/glb.ts",
+        "src/export/index.ts"
+      ],
+      "projectDependencies": [],
+      "externalDependencies": [
+        "three"
+      ]
+    },
+    {
+      "name": "fantasy-kit",
+      "publicEntry": "src/fantasy-kit/index.ts",
+      "sourceFiles": [
+        "src/fantasy-kit/catalog.ts",
+        "src/fantasy-kit/index.ts"
+      ],
+      "projectDependencies": [
+        "contracts"
+      ],
+      "externalDependencies": []
+    },
+    {
+      "name": "geometry",
+      "publicEntry": "src/geometry/index.ts",
+      "sourceFiles": [
+        "src/geometry/generators.ts",
+        "src/geometry/index.ts",
+        "src/geometry/mesh.ts"
+      ],
+      "projectDependencies": [
+        "contracts"
+      ],
+      "externalDependencies": []
+    },
+    {
+      "name": "inspector",
+      "publicEntry": null,
+      "sourceFiles": [
+        "src/inspector/main.ts"
+      ],
+      "projectDependencies": [
+        "contracts",
+        "export",
+        "fantasy-kit",
+        "render",
+        "scene"
+      ],
+      "externalDependencies": [
+        "three"
+      ]
+    },
+    {
+      "name": "mcp",
+      "publicEntry": "src/mcp/index.ts",
+      "sourceFiles": [
+        "src/mcp/index.ts",
+        "src/mcp/server.ts",
+        "src/mcp/stdio.ts"
+      ],
+      "projectDependencies": [
+        "document",
+        "tools"
+      ],
+      "externalDependencies": [
+        "@modelcontextprotocol/sdk"
+      ]
+    },
+    {
+      "name": "render",
+      "publicEntry": "src/render/index.ts",
+      "sourceFiles": [
+        "src/render/camera.ts",
+        "src/render/index.ts",
+        "src/render/profile.ts",
+        "src/render/sprites.ts"
+      ],
+      "projectDependencies": [
+        "contracts",
+        "validation"
+      ],
+      "externalDependencies": [
+        "three"
+      ]
+    },
+    {
+      "name": "scene",
+      "publicEntry": "src/scene/index.ts",
+      "sourceFiles": [
+        "src/scene/compiler.ts",
+        "src/scene/index.ts"
+      ],
+      "projectDependencies": [
+        "assembly",
+        "contracts",
+        "geometry"
+      ],
+      "externalDependencies": [
+        "three"
+      ]
+    },
+    {
+      "name": "services",
+      "publicEntry": "src/services/index.ts",
+      "sourceFiles": [
+        "src/services/browser-artifacts.ts",
+        "src/services/index.ts"
+      ],
+      "projectDependencies": [
+        "contracts",
+        "tools"
+      ],
+      "externalDependencies": [
+        "@playwright/test"
+      ]
+    },
+    {
+      "name": "tools",
+      "publicEntry": "src/tools/index.ts",
+      "sourceFiles": [
+        "src/tools/catalog.ts",
+        "src/tools/handlers.ts",
+        "src/tools/index.ts"
+      ],
+      "projectDependencies": [
+        "assembly",
+        "contracts",
+        "document",
+        "fantasy-kit"
+      ],
+      "externalDependencies": [
+        "zod"
+      ]
+    },
+    {
+      "name": "validation",
+      "publicEntry": "src/validation/index.ts",
+      "sourceFiles": [
+        "src/validation/index.ts",
+        "src/validation/pixels.ts"
+      ],
+      "projectDependencies": [],
+      "externalDependencies": []
+    }
+  ]
 }

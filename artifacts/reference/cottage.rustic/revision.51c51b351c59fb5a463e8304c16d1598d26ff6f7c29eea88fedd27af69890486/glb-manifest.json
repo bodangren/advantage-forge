@@ -1,0 +1,45 @@
+{
+  "assetId": "cottage.rustic",
+  "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+  "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/cottage.rustic.glb",
+  "format": "glb",
+  "byteLength": 33784,
+  "nodeNames": [
+    "chimney",
+    "cottage.rustic",
+    "door.front",
+    "roof.main",
+    "timber.left",
+    "timber.right",
+    "wall.back",
+    "wall.front",
+    "wall.left",
+    "wall.right",
+    "window.left",
+    "window.right"
+  ],
+  "materialNames": [
+    "cloth.umber",
+    "iron.weathered",
+    "stone.lime",
+    "wood.dark",
+    "wood.oak"
+  ],
+  "unit": "meter",
+  "reloadNodeNames": [
+    "AuxScene",
+    "chimney",
+    "cottage.rustic",
+    "door.front",
+    "roof.main",
+    "timber.left",
+    "timber.right",
+    "wall.back",
+    "wall.front",
+    "wall.left",
+    "wall.right",
+    "window.left",
+    "window.right"
+  ],
+  "animationCount": 0
+}

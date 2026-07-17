@@ -1,0 +1,1280 @@
+{
+  "assembly": {
+    "connections": [],
+    "id": "crate.assembly",
+    "parts": [
+      {
+        "id": "crate.band.high",
+        "materialBindings": [
+          {
+            "materialId": "iron.weathered",
+            "slot": "metal"
+          }
+        ],
+        "templateId": "prop.crate-band",
+        "transform": {
+          "position": [
+            0,
+            0.58,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visible": true
+      },
+      {
+        "id": "crate.band.low",
+        "materialBindings": [
+          {
+            "materialId": "iron.weathered",
+            "slot": "metal"
+          }
+        ],
+        "templateId": "prop.crate-band",
+        "transform": {
+          "position": [
+            0,
+            0.18,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visible": true
+      },
+      {
+        "id": "crate.body",
+        "materialBindings": [
+          {
+            "materialId": "wood.oak",
+            "slot": "wood"
+          }
+        ],
+        "templateId": "prop.crate",
+        "transform": {
+          "position": [
+            0,
+            0.38,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "visible": true
+      }
+    ]
+  },
+  "id": "crate.rustic",
+  "kitId": "rustic-human",
+  "materials": [
+    {
+      "color": "#46563b",
+      "family": "cloth",
+      "id": "cloth.moss",
+      "metalness": 0,
+      "roughness": 0.95
+    },
+    {
+      "color": "#604331",
+      "family": "cloth",
+      "id": "cloth.umber",
+      "metalness": 0,
+      "roughness": 0.95
+    },
+    {
+      "color": "#334f36",
+      "family": "foliage",
+      "id": "foliage.pine",
+      "metalness": 0,
+      "roughness": 1
+    },
+    {
+      "color": "#4b3025",
+      "family": "fur",
+      "id": "hair.chestnut",
+      "metalness": 0,
+      "roughness": 1
+    },
+    {
+      "color": "#7d8280",
+      "family": "iron",
+      "id": "iron.weathered",
+      "metalness": 0.72,
+      "roughness": 0.68
+    },
+    {
+      "color": "#35261f",
+      "family": "leather",
+      "id": "leather.dark",
+      "metalness": 0,
+      "roughness": 0.88
+    },
+    {
+      "color": "#b97850",
+      "family": "skin",
+      "id": "skin.warm",
+      "metalness": 0,
+      "roughness": 0.9
+    },
+    {
+      "color": "#8e8978",
+      "family": "stone",
+      "id": "stone.lime",
+      "metalness": 0,
+      "roughness": 1
+    },
+    {
+      "color": "#3f2b20",
+      "family": "wood",
+      "id": "wood.dark",
+      "metalness": 0,
+      "roughness": 0.92
+    },
+    {
+      "color": "#76512f",
+      "family": "wood",
+      "id": "wood.oak",
+      "metalness": 0,
+      "roughness": 0.9
+    }
+  ],
+  "name": "Iron-Banded Crate",
+  "poses": [],
+  "renderProfiles": [
+    {
+      "directions": 8,
+      "elevationDegrees": 24,
+      "heightPixels": 128,
+      "id": "sprite.default",
+      "minimumFeaturePixels": 2,
+      "paddingPixels": 8,
+      "transparent": true,
+      "widthPixels": 128
+    }
+  ],
+  "schemaVersion": "1.0.0",
+  "seed": 101,
+  "templates": [
+    {
+      "id": "cottage.chimney",
+      "materialSlots": [
+        "stone"
+      ],
+      "ports": [],
+      "role": "structure.chimney",
+      "shape": {
+        "bevel": 0.04,
+        "depth": 0.38,
+        "height": 1.35,
+        "kind": "beveledBox",
+        "width": 0.38
+      }
+    },
+    {
+      "id": "cottage.door",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "structure.door",
+      "shape": {
+        "bevel": 0.035,
+        "depth": 0.14,
+        "height": 1.35,
+        "kind": "beveledBox",
+        "width": 0.76
+      }
+    },
+    {
+      "id": "cottage.roof",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [],
+      "role": "structure.roof",
+      "shape": {
+        "depth": 2.55,
+        "height": 1.05,
+        "kind": "wedge",
+        "width": 3.25
+      }
+    },
+    {
+      "id": "cottage.side-wall",
+      "materialSlots": [
+        "stone"
+      ],
+      "ports": [],
+      "role": "structure.wall",
+      "shape": {
+        "bevel": 0.035,
+        "depth": 0.22,
+        "height": 1.8,
+        "kind": "beveledBox",
+        "width": 2.2
+      }
+    },
+    {
+      "id": "cottage.timber",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "structure.timber-frame",
+      "shape": {
+        "bevel": 0.025,
+        "depth": 0.28,
+        "height": 1.95,
+        "kind": "beveledBox",
+        "width": 0.16
+      }
+    },
+    {
+      "id": "cottage.wall",
+      "materialSlots": [
+        "stone"
+      ],
+      "ports": [],
+      "role": "structure.wall",
+      "shape": {
+        "bevel": 0.035,
+        "depth": 0.22,
+        "height": 1.8,
+        "kind": "beveledBox",
+        "width": 2.8
+      }
+    },
+    {
+      "id": "cottage.window",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [],
+      "role": "structure.window",
+      "shape": {
+        "height": 0.6,
+        "kind": "flatCard",
+        "width": 0.52
+      }
+    },
+    {
+      "id": "equipment.shield",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -0.07
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.shield",
+      "shape": {
+        "height": 0.08,
+        "kind": "prism",
+        "radius": 0.34,
+        "sides": 8
+      }
+    },
+    {
+      "id": "equipment.sword",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.48,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.sword",
+      "shape": {
+        "depth": 0.035,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.055,
+            -0.42
+          ],
+          [
+            0.055,
+            -0.42
+          ],
+          [
+            0.04,
+            0.31
+          ],
+          [
+            0,
+            0.5
+          ],
+          [
+            -0.04,
+            0.31
+          ]
+        ]
+      }
+    },
+    {
+      "id": "human.foot",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.09,
+              -0.07
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "ankle.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.foot",
+      "shape": {
+        "depth": 0.37,
+        "height": 0.17,
+        "kind": "wedge",
+        "width": 0.21
+      }
+    },
+    {
+      "id": "human.forearm",
+      "materialSlots": [
+        "skin"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.23,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "elbow.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.23,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wrist",
+          "tags": [
+            "anatomy.mount"
+          ]
+        }
+      ],
+      "role": "anatomy.forearm",
+      "shape": {
+        "capSegments": 4,
+        "cylinderHeight": 0.3,
+        "kind": "capsule",
+        "radialSegments": 8,
+        "radius": 0.082
+      }
+    },
+    {
+      "id": "human.hair",
+      "materialSlots": [
+        "hair"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.08,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "head.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "clothing.hair-mass",
+      "shape": {
+        "heightSegments": 5,
+        "kind": "ellipsoid",
+        "radiusX": 0.205,
+        "radiusY": 0.14,
+        "radiusZ": 0.195,
+        "widthSegments": 9
+      }
+    },
+    {
+      "id": "human.hand",
+      "materialSlots": [
+        "skin"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.grip"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.04,
+              0.09
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "equipment",
+          "tags": [
+            "equipment.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.11,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wrist.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.hand",
+      "shape": {
+        "bevel": 0.025,
+        "depth": 0.1,
+        "height": 0.2,
+        "kind": "beveledBox",
+        "width": 0.13
+      }
+    },
+    {
+      "id": "human.head",
+      "materialSlots": [
+        "skin"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.08,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "hair",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.22,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "neck.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.head",
+      "shape": {
+        "heightSegments": 6,
+        "kind": "ellipsoid",
+        "radiusX": 0.19,
+        "radiusY": 0.23,
+        "radiusZ": 0.18,
+        "widthSegments": 10
+      }
+    },
+    {
+      "id": "human.pelvis",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -0.15,
+              -0.17,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "leg.left",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0.15,
+              -0.17,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "leg.right",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.18,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "torso.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.pelvis",
+      "shape": {
+        "bevel": 0.04,
+        "depth": 0.27,
+        "height": 0.3,
+        "kind": "beveledBox",
+        "width": 0.46
+      }
+    },
+    {
+      "id": "human.shin",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.29,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "ankle",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.29,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "knee.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.shin",
+      "shape": {
+        "capSegments": 4,
+        "cylinderHeight": 0.4,
+        "kind": "capsule",
+        "radialSegments": 8,
+        "radius": 0.1
+      }
+    },
+    {
+      "id": "human.thigh",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.31,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "hip.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.31,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "knee",
+          "tags": [
+            "anatomy.mount"
+          ]
+        }
+      ],
+      "role": "anatomy.thigh",
+      "shape": {
+        "capSegments": 4,
+        "cylinderHeight": 0.42,
+        "kind": "capsule",
+        "radialSegments": 8,
+        "radius": 0.12
+      }
+    },
+    {
+      "id": "human.torso",
+      "materialSlots": [
+        "body"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.39,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "hip",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.39,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "neck",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -0.32,
+              0.24,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "shoulder.left",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0.32,
+              0.24,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "shoulder.right",
+          "tags": [
+            "anatomy.mount"
+          ]
+        }
+      ],
+      "role": "anatomy.torso",
+      "shape": {
+        "bevel": 0.05,
+        "depth": 0.28,
+        "height": 0.68,
+        "kind": "beveledBox",
+        "width": 0.52
+      }
+    },
+    {
+      "id": "human.tunic",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [],
+      "role": "clothing.tunic-shell",
+      "shape": {
+        "depth": 0.33,
+        "height": 0.73,
+        "kind": "wedge",
+        "width": 0.59
+      }
+    },
+    {
+      "id": "human.upper-arm",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "anatomy.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.25,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "elbow",
+          "tags": [
+            "anatomy.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "anatomy.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.25,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "shoulder.attach",
+          "tags": [
+            "anatomy.attach"
+          ]
+        }
+      ],
+      "role": "anatomy.upper-arm",
+      "shape": {
+        "capSegments": 4,
+        "cylinderHeight": 0.32,
+        "kind": "capsule",
+        "radialSegments": 8,
+        "radius": 0.095
+      }
+    },
+    {
+      "id": "prop.crate",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "prop.container",
+      "shape": {
+        "bevel": 0.055,
+        "depth": 0.8,
+        "height": 0.75,
+        "kind": "beveledBox",
+        "width": 0.9
+      }
+    },
+    {
+      "id": "prop.crate-band",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [],
+      "role": "prop.reinforcement",
+      "shape": {
+        "bevel": 0.018,
+        "depth": 0.86,
+        "height": 0.1,
+        "kind": "beveledBox",
+        "width": 0.96
+      }
+    },
+    {
+      "id": "tree.branch",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "vegetation.branch",
+      "shape": {
+        "kind": "tubePath",
+        "path": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.45,
+            0.22,
+            0
+          ],
+          [
+            0.82,
+            0.32,
+            0.06
+          ]
+        ],
+        "radialSegments": 7,
+        "radius": 0.095
+      }
+    },
+    {
+      "id": "tree.foliage",
+      "materialSlots": [
+        "foliage"
+      ],
+      "ports": [],
+      "role": "vegetation.foliage-cluster",
+      "shape": {
+        "heightSegments": 6,
+        "kind": "ellipsoid",
+        "radiusX": 0.76,
+        "radiusY": 0.55,
+        "radiusZ": 0.66,
+        "widthSegments": 9
+      }
+    },
+    {
+      "id": "tree.root",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "vegetation.root",
+      "shape": {
+        "kind": "tubePath",
+        "path": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0.45,
+            -0.08,
+            0.1
+          ],
+          [
+            0.8,
+            -0.12,
+            0.18
+          ]
+        ],
+        "radialSegments": 7,
+        "radius": 0.09
+      }
+    },
+    {
+      "id": "tree.trunk",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [],
+      "role": "vegetation.trunk",
+      "shape": {
+        "height": 2.35,
+        "kind": "cone",
+        "radialSegments": 9,
+        "radius": 0.36
+      }
+    }
+  ],
+  "unit": "meter",
+  "variants": []
+}

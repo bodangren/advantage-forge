@@ -16,6 +16,9 @@
 
 - [Generated Architecture](./generated/architecture.json)
 - [Generated Routes](./generated/routes.md)
+- [Generated Kit Catalog](./generated/kit-catalog.md)
+- [Generated Tool Catalog](./generated/tool-catalog.md)
+- [Generated Output Contracts](./generated/output-contracts.md)
 
 ## Learning & Continuity
 

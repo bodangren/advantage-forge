@@ -6,4 +6,4 @@
 > **Status:** `Open` | `Resolved`
 
 | Date | Track | Item | Severity | Status | Notes |
-|---|---|---|---|---|---|
+| ---- | ----- | ---- | -------- | ------ | ----- |

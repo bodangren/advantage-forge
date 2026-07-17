@@ -1,0 +1,778 @@
+import {
+  AssetDocumentSchema,
+  type AssetDocument,
+  type ConnectionDefinition,
+  type MaterialDefinition,
+  type PartInstance,
+  type PartTemplateDefinition,
+  type PortDefinition,
+  type PoseDefinition,
+  type Transform,
+  type VariantDefinition,
+} from '../contracts/index.js';
+
+export const RUSTIC_KIT_ID = 'rustic-human' as const;
+const identity = (): Transform => ({
+  position: [0, 0, 0],
+  rotation: [0, 0, 0, 1],
+  scale: [1, 1, 1],
+});
+const at = (x: number, y: number, z: number): Transform => ({
+  ...identity(),
+  position: [x, y, z],
+});
+const port = (
+  id: string,
+  position: [number, number, number],
+  tags: string[],
+  accepts: string[],
+  cardinality: 'single' | 'multiple' = 'single',
+): PortDefinition => ({
+  id,
+  frame: at(...position),
+  tags,
+  accepts,
+  cardinality,
+});
+const anatomyPort = (
+  id: string,
+  position: [number, number, number],
+): PortDefinition => port(id, position, ['anatomy.mount'], ['anatomy.attach']);
+const attachPort = (
+  id: string,
+  position: [number, number, number],
+): PortDefinition => port(id, position, ['anatomy.attach'], ['anatomy.mount']);
+const template = (
+  id: string,
+  role: string,
+  shape: PartTemplateDefinition['shape'],
+  materialSlots: string[],
+  ports: PortDefinition[] = [],
+): PartTemplateDefinition => ({ id, role, shape, materialSlots, ports });
+
+export const rusticMaterials: readonly MaterialDefinition[] = [
+  {
+    id: 'skin.warm',
+    family: 'skin',
+    color: '#b97850',
+    roughness: 0.9,
+    metalness: 0,
+  },
+  {
+    id: 'cloth.moss',
+    family: 'cloth',
+    color: '#46563b',
+    roughness: 0.95,
+    metalness: 0,
+  },
+  {
+    id: 'cloth.umber',
+    family: 'cloth',
+    color: '#604331',
+    roughness: 0.95,
+    metalness: 0,
+  },
+  {
+    id: 'leather.dark',
+    family: 'leather',
+    color: '#35261f',
+    roughness: 0.88,
+    metalness: 0,
+  },
+  {
+    id: 'wood.oak',
+    family: 'wood',
+    color: '#76512f',
+    roughness: 0.9,
+    metalness: 0,
+  },
+  {
+    id: 'wood.dark',
+    family: 'wood',
+    color: '#3f2b20',
+    roughness: 0.92,
+    metalness: 0,
+  },
+  {
+    id: 'iron.weathered',
+    family: 'iron',
+    color: '#7d8280',
+    roughness: 0.68,
+    metalness: 0.72,
+  },
+  {
+    id: 'stone.lime',
+    family: 'stone',
+    color: '#8e8978',
+    roughness: 1,
+    metalness: 0,
+  },
+  {
+    id: 'foliage.pine',
+    family: 'foliage',
+    color: '#334f36',
+    roughness: 1,
+    metalness: 0,
+  },
+  {
+    id: 'hair.chestnut',
+    family: 'fur',
+    color: '#4b3025',
+    roughness: 1,
+    metalness: 0,
+  },
+];
+
+export const rusticTemplates: readonly PartTemplateDefinition[] = [
+  template(
+    'human.torso',
+    'anatomy.torso',
+    { kind: 'beveledBox', width: 0.52, height: 0.68, depth: 0.28, bevel: 0.05 },
+    ['body'],
+    [
+      anatomyPort('neck', [0, 0.39, 0]),
+      anatomyPort('hip', [0, -0.39, 0]),
+      anatomyPort('shoulder.left', [-0.32, 0.24, 0]),
+      anatomyPort('shoulder.right', [0.32, 0.24, 0]),
+    ],
+  ),
+  template(
+    'human.head',
+    'anatomy.head',
+    {
+      kind: 'ellipsoid',
+      radiusX: 0.19,
+      radiusY: 0.23,
+      radiusZ: 0.18,
+      widthSegments: 10,
+      heightSegments: 6,
+    },
+    ['skin'],
+    [
+      attachPort('neck.attach', [0, -0.22, 0]),
+      anatomyPort('hair', [0, 0.08, 0]),
+    ],
+  ),
+  template(
+    'human.hair',
+    'clothing.hair-mass',
+    {
+      kind: 'ellipsoid',
+      radiusX: 0.205,
+      radiusY: 0.14,
+      radiusZ: 0.195,
+      widthSegments: 9,
+      heightSegments: 5,
+    },
+    ['hair'],
+    [attachPort('head.attach', [0, -0.08, 0])],
+  ),
+  template(
+    'human.pelvis',
+    'anatomy.pelvis',
+    { kind: 'beveledBox', width: 0.46, height: 0.3, depth: 0.27, bevel: 0.04 },
+    ['cloth'],
+    [
+      attachPort('torso.attach', [0, 0.18, 0]),
+      anatomyPort('leg.left', [-0.15, -0.17, 0]),
+      anatomyPort('leg.right', [0.15, -0.17, 0]),
+    ],
+  ),
+  template(
+    'human.upper-arm',
+    'anatomy.upper-arm',
+    {
+      kind: 'capsule',
+      radius: 0.095,
+      cylinderHeight: 0.32,
+      radialSegments: 8,
+      capSegments: 4,
+    },
+    ['cloth'],
+    [
+      attachPort('shoulder.attach', [0, 0.25, 0]),
+      anatomyPort('elbow', [0, -0.25, 0]),
+    ],
+  ),
+  template(
+    'human.forearm',
+    'anatomy.forearm',
+    {
+      kind: 'capsule',
+      radius: 0.082,
+      cylinderHeight: 0.3,
+      radialSegments: 8,
+      capSegments: 4,
+    },
+    ['skin'],
+    [
+      attachPort('elbow.attach', [0, 0.23, 0]),
+      anatomyPort('wrist', [0, -0.23, 0]),
+    ],
+  ),
+  template(
+    'human.hand',
+    'anatomy.hand',
+    { kind: 'beveledBox', width: 0.13, height: 0.2, depth: 0.1, bevel: 0.025 },
+    ['skin'],
+    [
+      attachPort('wrist.attach', [0, 0.11, 0]),
+      port(
+        'equipment',
+        [0, -0.04, 0.09],
+        ['equipment.mount'],
+        ['equipment.grip'],
+      ),
+    ],
+  ),
+  template(
+    'human.thigh',
+    'anatomy.thigh',
+    {
+      kind: 'capsule',
+      radius: 0.12,
+      cylinderHeight: 0.42,
+      radialSegments: 8,
+      capSegments: 4,
+    },
+    ['cloth'],
+    [
+      attachPort('hip.attach', [0, 0.31, 0]),
+      anatomyPort('knee', [0, -0.31, 0]),
+    ],
+  ),
+  template(
+    'human.shin',
+    'anatomy.shin',
+    {
+      kind: 'capsule',
+      radius: 0.1,
+      cylinderHeight: 0.4,
+      radialSegments: 8,
+      capSegments: 4,
+    },
+    ['cloth'],
+    [
+      attachPort('knee.attach', [0, 0.29, 0]),
+      anatomyPort('ankle', [0, -0.29, 0]),
+    ],
+  ),
+  template(
+    'human.foot',
+    'anatomy.foot',
+    { kind: 'wedge', width: 0.21, height: 0.17, depth: 0.37 },
+    ['leather'],
+    [attachPort('ankle.attach', [0, 0.09, -0.07])],
+  ),
+  template(
+    'human.tunic',
+    'clothing.tunic-shell',
+    { kind: 'wedge', width: 0.59, height: 0.73, depth: 0.33 },
+    ['cloth'],
+  ),
+  template(
+    'equipment.sword',
+    'equipment.sword',
+    {
+      kind: 'extrudedProfile',
+      profile: [
+        [-0.055, -0.42],
+        [0.055, -0.42],
+        [0.04, 0.31],
+        [0, 0.5],
+        [-0.04, 0.31],
+      ],
+      depth: 0.035,
+    },
+    ['metal'],
+    [port('grip', [0, -0.48, 0], ['equipment.grip'], ['equipment.mount'])],
+  ),
+  template(
+    'equipment.shield',
+    'equipment.shield',
+    { kind: 'prism', radius: 0.34, height: 0.08, sides: 8 },
+    ['wood'],
+    [port('grip', [0, 0, -0.07], ['equipment.grip'], ['equipment.mount'])],
+  ),
+  template(
+    'prop.crate',
+    'prop.container',
+    { kind: 'beveledBox', width: 0.9, height: 0.75, depth: 0.8, bevel: 0.055 },
+    ['wood'],
+  ),
+  template(
+    'prop.crate-band',
+    'prop.reinforcement',
+    { kind: 'beveledBox', width: 0.96, height: 0.1, depth: 0.86, bevel: 0.018 },
+    ['metal'],
+  ),
+  template(
+    'tree.trunk',
+    'vegetation.trunk',
+    { kind: 'cone', radius: 0.36, height: 2.35, radialSegments: 9 },
+    ['wood'],
+  ),
+  template(
+    'tree.root',
+    'vegetation.root',
+    {
+      kind: 'tubePath',
+      path: [
+        [0, 0, 0],
+        [0.45, -0.08, 0.1],
+        [0.8, -0.12, 0.18],
+      ],
+      radius: 0.09,
+      radialSegments: 7,
+    },
+    ['wood'],
+  ),
+  template(
+    'tree.branch',
+    'vegetation.branch',
+    {
+      kind: 'tubePath',
+      path: [
+        [0, 0, 0],
+        [0.45, 0.22, 0],
+        [0.82, 0.32, 0.06],
+      ],
+      radius: 0.095,
+      radialSegments: 7,
+    },
+    ['wood'],
+  ),
+  template(
+    'tree.foliage',
+    'vegetation.foliage-cluster',
+    {
+      kind: 'ellipsoid',
+      radiusX: 0.76,
+      radiusY: 0.55,
+      radiusZ: 0.66,
+      widthSegments: 9,
+      heightSegments: 6,
+    },
+    ['foliage'],
+  ),
+  template(
+    'cottage.wall',
+    'structure.wall',
+    { kind: 'beveledBox', width: 2.8, height: 1.8, depth: 0.22, bevel: 0.035 },
+    ['stone'],
+  ),
+  template(
+    'cottage.side-wall',
+    'structure.wall',
+    { kind: 'beveledBox', width: 2.2, height: 1.8, depth: 0.22, bevel: 0.035 },
+    ['stone'],
+  ),
+  template(
+    'cottage.timber',
+    'structure.timber-frame',
+    {
+      kind: 'beveledBox',
+      width: 0.16,
+      height: 1.95,
+      depth: 0.28,
+      bevel: 0.025,
+    },
+    ['wood'],
+  ),
+  template(
+    'cottage.door',
+    'structure.door',
+    {
+      kind: 'beveledBox',
+      width: 0.76,
+      height: 1.35,
+      depth: 0.14,
+      bevel: 0.035,
+    },
+    ['wood'],
+  ),
+  template(
+    'cottage.window',
+    'structure.window',
+    { kind: 'flatCard', width: 0.52, height: 0.6 },
+    ['metal'],
+  ),
+  template(
+    'cottage.roof',
+    'structure.roof',
+    { kind: 'wedge', width: 3.25, height: 1.05, depth: 2.55 },
+    ['cloth'],
+  ),
+  template(
+    'cottage.chimney',
+    'structure.chimney',
+    { kind: 'beveledBox', width: 0.38, height: 1.35, depth: 0.38, bevel: 0.04 },
+    ['stone'],
+  ),
+];
+
+export interface KitTemplateManifest {
+  readonly template: PartTemplateDefinition;
+  readonly parameterBounds: Readonly<Record<string, readonly [number, number]>>;
+  readonly intendedReferences: readonly string[];
+}
+const numericBounds = (
+  entry: PartTemplateDefinition,
+): Record<string, [number, number]> =>
+  Object.fromEntries(
+    Object.entries(entry.shape)
+      .filter(([key, value]) => key !== 'kind' && typeof value === 'number')
+      .map(([key]) => [key, [0.001, 1_000]]),
+  );
+export const rusticManifest: readonly KitTemplateManifest[] =
+  rusticTemplates.map((entry) => ({
+    template: entry,
+    parameterBounds: numericBounds(entry),
+    intendedReferences:
+      entry.id.startsWith('human.') || entry.id.startsWith('equipment.')
+        ? ['adventurer']
+        : [entry.id.split('.')[0]!],
+  }));
+
+const bind = (slot: string, materialId: string) => ({ slot, materialId });
+const part = (
+  id: string,
+  templateId: string,
+  materialId: string,
+  transform: Transform = identity(),
+  slot = rusticTemplates.find((entry) => entry.id === templateId)
+    ?.materialSlots[0] ?? 'body',
+): PartInstance => ({
+  id,
+  templateId,
+  transform,
+  materialBindings: [bind(slot, materialId)],
+  visible: true,
+});
+const connect = (
+  id: string,
+  parentPartId: string,
+  parentPortId: string,
+  childPartId: string,
+  childPortId: string,
+  joint?: ConnectionDefinition['joint'],
+): ConnectionDefinition => ({
+  id,
+  parentPartId,
+  parentPortId,
+  childPartId,
+  childPortId,
+  ...(joint === undefined ? {} : { joint }),
+});
+const hinge = {
+  kind: 'hinge' as const,
+  axis: [0, 0, 1] as [number, number, number],
+  minDegrees: -95,
+  maxDegrees: 95,
+};
+
+const adventurerParts: PartInstance[] = [
+  part('torso', 'human.torso', 'cloth.moss', at(0, 1.42, 0)),
+  part('head', 'human.head', 'skin.warm'),
+  part('hair', 'human.hair', 'hair.chestnut'),
+  part('pelvis', 'human.pelvis', 'cloth.umber'),
+  part('upper-arm.left', 'human.upper-arm', 'cloth.moss'),
+  part('upper-arm.right', 'human.upper-arm', 'cloth.moss'),
+  part('forearm.left', 'human.forearm', 'skin.warm'),
+  part('forearm.right', 'human.forearm', 'skin.warm'),
+  part('hand.left', 'human.hand', 'skin.warm'),
+  part('hand.right', 'human.hand', 'skin.warm'),
+  part('thigh.left', 'human.thigh', 'cloth.umber'),
+  part('thigh.right', 'human.thigh', 'cloth.umber'),
+  part('shin.left', 'human.shin', 'cloth.moss'),
+  part('shin.right', 'human.shin', 'cloth.moss'),
+  part('foot.left', 'human.foot', 'leather.dark'),
+  part('foot.right', 'human.foot', 'leather.dark'),
+  part('tunic', 'human.tunic', 'cloth.moss', at(0, 1.4, 0.01)),
+  part('sword', 'equipment.sword', 'iron.weathered'),
+  part('shield', 'equipment.shield', 'wood.oak'),
+];
+const adventurerConnections: ConnectionDefinition[] = [
+  connect('torso-head', 'torso', 'neck', 'head', 'neck.attach'),
+  connect('head-hair', 'head', 'hair', 'hair', 'head.attach'),
+  connect('torso-pelvis', 'torso', 'hip', 'pelvis', 'torso.attach'),
+  connect(
+    'shoulder-left',
+    'torso',
+    'shoulder.left',
+    'upper-arm.left',
+    'shoulder.attach',
+    hinge,
+  ),
+  connect(
+    'shoulder-right',
+    'torso',
+    'shoulder.right',
+    'upper-arm.right',
+    'shoulder.attach',
+    hinge,
+  ),
+  connect(
+    'elbow-left',
+    'upper-arm.left',
+    'elbow',
+    'forearm.left',
+    'elbow.attach',
+    hinge,
+  ),
+  connect(
+    'elbow-right',
+    'upper-arm.right',
+    'elbow',
+    'forearm.right',
+    'elbow.attach',
+    hinge,
+  ),
+  connect('wrist-left', 'forearm.left', 'wrist', 'hand.left', 'wrist.attach'),
+  connect(
+    'wrist-right',
+    'forearm.right',
+    'wrist',
+    'hand.right',
+    'wrist.attach',
+  ),
+  connect('hip-left', 'pelvis', 'leg.left', 'thigh.left', 'hip.attach', hinge),
+  connect(
+    'hip-right',
+    'pelvis',
+    'leg.right',
+    'thigh.right',
+    'hip.attach',
+    hinge,
+  ),
+  connect('knee-left', 'thigh.left', 'knee', 'shin.left', 'knee.attach', hinge),
+  connect(
+    'knee-right',
+    'thigh.right',
+    'knee',
+    'shin.right',
+    'knee.attach',
+    hinge,
+  ),
+  connect('ankle-left', 'shin.left', 'ankle', 'foot.left', 'ankle.attach'),
+  connect('ankle-right', 'shin.right', 'ankle', 'foot.right', 'ankle.attach'),
+  connect('equip-sword', 'hand.right', 'equipment', 'sword', 'grip'),
+  connect('equip-shield', 'hand.left', 'equipment', 'shield', 'grip'),
+];
+
+export const adventurerVariants: readonly VariantDefinition[] = [
+  {
+    id: 'short',
+    overrides: [
+      { partId: 'torso', transform: { ...identity(), scale: [1, 0.86, 1] } },
+      {
+        partId: 'thigh.left',
+        transform: { ...identity(), scale: [1, 0.82, 1] },
+      },
+      {
+        partId: 'thigh.right',
+        transform: { ...identity(), scale: [1, 0.82, 1] },
+      },
+    ],
+  },
+  {
+    id: 'tall',
+    overrides: [
+      { partId: 'torso', transform: { ...identity(), scale: [1, 1.14, 1] } },
+      {
+        partId: 'shin.left',
+        transform: { ...identity(), scale: [1, 1.18, 1] },
+      },
+      {
+        partId: 'shin.right',
+        transform: { ...identity(), scale: [1, 1.18, 1] },
+      },
+    ],
+  },
+  {
+    id: 'broad',
+    overrides: [
+      { partId: 'torso', transform: { ...identity(), scale: [1.2, 1, 1.08] } },
+      { partId: 'pelvis', transform: { ...identity(), scale: [1.12, 1, 1] } },
+    ],
+  },
+  {
+    id: 'slender',
+    overrides: [
+      {
+        partId: 'torso',
+        transform: { ...identity(), scale: [0.82, 1.05, 0.88] },
+      },
+      { partId: 'pelvis', transform: { ...identity(), scale: [0.88, 1, 0.9] } },
+    ],
+  },
+  { id: 'equipped', overrides: [] },
+  {
+    id: 'unequipped',
+    overrides: [
+      { partId: 'sword', visible: false },
+      { partId: 'shield', visible: false },
+    ],
+  },
+];
+export const adventurerPoses: readonly PoseDefinition[] = [
+  {
+    id: 'idle',
+    overrides: [
+      { partId: 'upper-arm.left', jointValueDegrees: -8 },
+      { partId: 'upper-arm.right', jointValueDegrees: 8 },
+    ],
+  },
+  {
+    id: 'action',
+    overrides: [
+      { partId: 'upper-arm.left', jointValueDegrees: -48 },
+      { partId: 'upper-arm.right', jointValueDegrees: 62 },
+      { partId: 'forearm.right', jointValueDegrees: -42 },
+      { partId: 'thigh.left', jointValueDegrees: 14 },
+      { partId: 'thigh.right', jointValueDegrees: -14 },
+    ],
+  },
+];
+
+const documentBase = (id: string, name: string, seed: number) => ({
+  schemaVersion: '1.0.0' as const,
+  id,
+  name,
+  unit: 'meter' as const,
+  seed,
+  kitId: RUSTIC_KIT_ID,
+  materials: [...rusticMaterials],
+  templates: [...rusticTemplates],
+  variants: [] as VariantDefinition[],
+  poses: [] as PoseDefinition[],
+  renderProfiles: [
+    {
+      id: 'sprite.default',
+      widthPixels: 128,
+      heightPixels: 128,
+      elevationDegrees: 24,
+      directions: 8 as const,
+      paddingPixels: 8,
+      transparent: true as const,
+      minimumFeaturePixels: 2,
+    },
+  ],
+});
+const parseDocument = (value: unknown): AssetDocument =>
+  AssetDocumentSchema.parse(value);
+
+export const adventurerDocument = parseDocument({
+  ...documentBase('adventurer.rustic', 'Rustic Adventurer', 4096),
+  assembly: {
+    id: 'adventurer.assembly',
+    parts: adventurerParts,
+    connections: adventurerConnections,
+  },
+  variants: [...adventurerVariants],
+  poses: [...adventurerPoses],
+  activeVariantId: 'equipped',
+  activePoseId: 'idle',
+});
+export const crateDocument = parseDocument({
+  ...documentBase('crate.rustic', 'Iron-Banded Crate', 101),
+  assembly: {
+    id: 'crate.assembly',
+    parts: [
+      part('crate.body', 'prop.crate', 'wood.oak', at(0, 0.38, 0)),
+      part(
+        'crate.band.low',
+        'prop.crate-band',
+        'iron.weathered',
+        at(0, 0.18, 0),
+      ),
+      part(
+        'crate.band.high',
+        'prop.crate-band',
+        'iron.weathered',
+        at(0, 0.58, 0),
+      ),
+    ],
+    connections: [],
+  },
+});
+export const treeDocument = parseDocument({
+  ...documentBase('tree.rustic', 'Old Roadside Tree', 202),
+  assembly: {
+    id: 'tree.assembly',
+    parts: [
+      part('trunk.main', 'tree.trunk', 'wood.dark', at(0, 1.16, 0)),
+      part('tree.root.east', 'tree.root', 'wood.dark', at(0, 0.12, 0)),
+      part('tree.root.west', 'tree.root', 'wood.dark', {
+        ...at(0, 0.12, 0),
+        scale: [-1, 1, 1],
+      }),
+      part('tree.branch.east', 'tree.branch', 'wood.dark', at(0, 1.65, 0)),
+      part('tree.branch.west', 'tree.branch', 'wood.dark', {
+        ...at(0, 1.85, 0),
+        scale: [-1, 1, 1],
+      }),
+      part('tree.crown', 'tree.foliage', 'foliage.pine', at(0, 2.45, 0)),
+      part('tree.crown.east', 'tree.foliage', 'foliage.pine', {
+        ...at(0.55, 2.15, 0.05),
+        scale: [0.72, 0.72, 0.72],
+      }),
+      part('tree.crown.west', 'tree.foliage', 'foliage.pine', {
+        ...at(-0.58, 2.25, -0.02),
+        scale: [0.68, 0.68, 0.68],
+      }),
+    ],
+    connections: [],
+  },
+});
+export const cottageDocument = parseDocument({
+  ...documentBase('cottage.rustic', 'Wayside Timber Cottage', 303),
+  assembly: {
+    id: 'cottage.assembly',
+    parts: [
+      part('wall.front', 'cottage.wall', 'stone.lime', at(0, 0.91, 1.1)),
+      part('wall.back', 'cottage.wall', 'stone.lime', at(0, 0.91, -1.1)),
+      part('wall.left', 'cottage.side-wall', 'stone.lime', {
+        ...at(-1.4, 0.91, 0),
+        rotation: [0, 0.70710678, 0, 0.70710678],
+      }),
+      part('wall.right', 'cottage.side-wall', 'stone.lime', {
+        ...at(1.4, 0.91, 0),
+        rotation: [0, 0.70710678, 0, 0.70710678],
+      }),
+      part('timber.left', 'cottage.timber', 'wood.dark', at(-1.05, 0.98, 1.24)),
+      part('timber.right', 'cottage.timber', 'wood.dark', at(1.05, 0.98, 1.24)),
+      part('door.front', 'cottage.door', 'wood.oak', at(0, 0.68, 1.25)),
+      part(
+        'window.left',
+        'cottage.window',
+        'iron.weathered',
+        at(-0.78, 1.04, 1.26),
+      ),
+      part(
+        'window.right',
+        'cottage.window',
+        'iron.weathered',
+        at(0.78, 1.04, 1.26),
+      ),
+      part('roof.main', 'cottage.roof', 'cloth.umber', at(0, 2.2, 0)),
+      part('chimney', 'cottage.chimney', 'stone.lime', at(0.82, 2.45, -0.28)),
+    ],
+    connections: [],
+  },
+});
+
+export const referenceDocuments = Object.freeze({
+  adventurer: adventurerDocument,
+  crate: crateDocument,
+  tree: treeDocument,
+  cottage: cottageDocument,
+});
+export function listKitTemplates(): readonly KitTemplateManifest[] {
+  return rusticManifest;
+}
+export function getReferenceDocument(
+  id: keyof typeof referenceDocuments,
+): AssetDocument {
+  return referenceDocuments[id];
+}
