@@ -1,0 +1,7 @@
+{
+  "generated_at": "2026-07-17T00:00:00Z",
+  "status": "planning-only",
+  "measure_zone": "src",
+  "modules": [],
+  "note": "No implementation source exists. Story S1 will establish enforced module boundaries and regenerate this file."
+}
