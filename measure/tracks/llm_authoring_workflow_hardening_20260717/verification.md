@@ -2,7 +2,7 @@
 
 ## Phase S1: Expose Complete Current State
 
-Status: automated verification passed; explicit owner confirmation pending.
+Status: approved by the owner on 2026-07-17 after automated verification passed.
 
 ### Automated evidence
 
@@ -41,4 +41,4 @@ Using the repository MCP server and its existing `adventurer.rustic` revision hi
 5. Compare base revision `revision.710000881f0fa51b34ea4aa206228240c60d45121d07b0c176403f13288398f1` to current revision `revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523`; confirm localized field changes and preserved IDs are both reported.
 6. Request a second page using `nextOffset`, then try an out-of-range offset and an unknown field; confirm deterministic continuation and actionable rejection.
 
-Owner decision requested: approve Phase S1, or identify a concrete inspection/comparison gap before the S1 checkpoint.
+Owner decision: approved. No additional S1 inspection or comparison gap was identified.

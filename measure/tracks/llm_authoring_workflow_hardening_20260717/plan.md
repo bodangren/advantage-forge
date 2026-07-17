@@ -21,7 +21,7 @@ _Story ref: spec.md#story-s1_
 - [x] Task: Generate inspection documentation and run quality gates [commits: 4b35d82, 18ddcab, 9edfeb4]
   - [x] Regenerate tool and architecture facts.
   - [x] Run focused tests, full tests, coverage, typecheck, lint, generate, doctor, and `pnpm check`.
-- [~] Task: Measure - User Manual Verification 'Phase S1: Expose Complete Current State' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S1: Expose Complete Current State' (Protocol in workflow.md) [approved: 2026-07-17]
 
 ## Phase S2: Publish Honest Capabilities
 
