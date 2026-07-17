@@ -507,6 +507,117 @@ export const ToolResultEnvelopeSchema = z
   })
   .strict();
 
+export const InspectionSectionSchema = z.enum([
+  'overview',
+  'parts',
+  'connections',
+  'variants',
+  'poses',
+  'renderProfiles',
+]);
+
+export const PageRequestSchema = z
+  .object({
+    offset: z.number().int().nonnegative().default(0),
+    limit: z.number().int().min(1).max(100).default(20),
+  })
+  .strict();
+
+export const PageInfoSchema = z
+  .object({
+    total: z.number().int().nonnegative(),
+    offset: z.number().int().nonnegative(),
+    limit: z.number().int().min(1).max(100),
+    truncated: z.boolean(),
+    nextOffset: z.number().int().nonnegative().optional(),
+  })
+  .strict();
+
+export const AssetInspectionPartStateSchema = z
+  .object({
+    shape: ShapeDefinitionSchema,
+    transform: TransformSchema,
+    worldTransform: TransformSchema.optional(),
+    materialBindings: z.array(MaterialBindingSchema).min(1).max(16),
+    visible: z.boolean(),
+    jointValueDegrees: FiniteNumberSchema.optional(),
+  })
+  .strict();
+
+export const AssetInspectionPartSchema = z
+  .object({
+    id: SemanticIdSchema,
+    templateId: SemanticIdSchema,
+    role: SemanticIdSchema,
+    handedness: z.enum(['neutral', 'left', 'right']),
+    shapeSource: z.enum(['template', 'part']),
+    base: AssetInspectionPartStateSchema,
+    effective: AssetInspectionPartStateSchema,
+    ports: z.array(PortDefinitionSchema).max(32),
+  })
+  .strict();
+
+export const AssetInspectionConnectionSchema =
+  ConnectionDefinitionSchema.extend({
+    parentPort: PortDefinitionSchema,
+    childPort: PortDefinitionSchema,
+  }).strict();
+
+export const AssetInspectionItemSchema = z.union([
+  AssetInspectionPartSchema,
+  AssetInspectionConnectionSchema,
+  VariantDefinitionSchema,
+  PoseDefinitionSchema,
+  SpriteRenderProfileSchema,
+]);
+
+export const AssetInspectionDataSchema = z
+  .object({
+    id: SemanticIdSchema,
+    name: z.string().min(1).max(120),
+    kitId: SemanticIdSchema,
+    unit: z.literal(WORLD_UNIT),
+    seed: z.number().int().nonnegative(),
+    triangleBudget: z.number().int().positive(),
+    activeVariantId: SemanticIdSchema.optional(),
+    activePoseId: SemanticIdSchema.optional(),
+    section: InspectionSectionSchema,
+    counts: z
+      .object({
+        parts: z.number().int().nonnegative(),
+        connections: z.number().int().nonnegative(),
+        variants: z.number().int().nonnegative(),
+        poses: z.number().int().nonnegative(),
+        renderProfiles: z.number().int().nonnegative(),
+      })
+      .strict(),
+    page: PageInfoSchema.optional(),
+    items: z.array(AssetInspectionItemSchema).max(100).optional(),
+  })
+  .strict();
+
+export const SemanticChangeSchema = z
+  .object({
+    path: z.string().min(1).max(1_000),
+    kind: z.enum(['added', 'removed', 'changed']),
+    semanticId: SemanticIdSchema.optional(),
+    before: z.unknown().optional(),
+    after: z.unknown().optional(),
+  })
+  .strict();
+
+export const SemanticRevisionComparisonSchema = z
+  .object({
+    assetId: SemanticIdSchema,
+    baseRevisionId: SemanticIdSchema,
+    targetRevisionId: SemanticIdSchema,
+    affectedIds: z.array(SemanticIdSchema).max(2_000),
+    preservedIds: z.array(SemanticIdSchema).max(2_000),
+    page: PageInfoSchema,
+    changes: z.array(SemanticChangeSchema).max(100),
+  })
+  .strict();
+
 export const GeometryMaterialGroupSchema = z
   .object({
     materialSlot: SemanticIdSchema,
@@ -569,6 +680,20 @@ export type AssetDocument = z.infer<typeof AssetDocumentSchema>;
 export type ValidationErrorCode = z.infer<typeof ValidationErrorCodeSchema>;
 export type ValidationIssue = z.infer<typeof ValidationIssueSchema>;
 export type ToolResultEnvelope = z.infer<typeof ToolResultEnvelopeSchema>;
+export type InspectionSection = z.infer<typeof InspectionSectionSchema>;
+export type PageInfo = z.infer<typeof PageInfoSchema>;
+export type AssetInspectionPartState = z.infer<
+  typeof AssetInspectionPartStateSchema
+>;
+export type AssetInspectionPart = z.infer<typeof AssetInspectionPartSchema>;
+export type AssetInspectionConnection = z.infer<
+  typeof AssetInspectionConnectionSchema
+>;
+export type AssetInspectionData = z.infer<typeof AssetInspectionDataSchema>;
+export type SemanticChange = z.infer<typeof SemanticChangeSchema>;
+export type SemanticRevisionComparison = z.infer<
+  typeof SemanticRevisionComparisonSchema
+>;
 export type GeometryMaterialGroup = z.infer<typeof GeometryMaterialGroupSchema>;
 export type IndexedGeometry = z.infer<typeof IndexedGeometrySchema>;
 
