@@ -31,11 +31,11 @@ _Story ref: spec.md#story-s2_
   - [x] Represent asset families, templates, operations, outputs, render profiles, and explicit exclusions.
   - [x] Define supported, partial, unsupported, and not-assessed results with remediation guidance.
   - [x] Decide whether to extend discovery or add a dedicated bounded read tool and update the public catalog deliberately.
-- [~] Task: Write failing capability consistency tests
-  - [ ] Cover current static references, sword/shield, GLB, directional sprites, and revisions as supported.
-  - [ ] Cover new identities, unavailable accessories, animation, atlases, unsupported anatomy, and raw mesh as unsupported.
-  - [ ] Fail when generated documentation and runtime capability facts drift.
-- [ ] Task: Implement capability discovery through domain tools and MCP
+- [x] Task: Write failing capability consistency tests
+  - [x] Cover current static references, sword/shield, GLB, directional sprites, and revisions as supported.
+  - [x] Cover new identities, unavailable accessories, animation, atlases, unsupported anatomy, and raw mesh as unsupported.
+  - [x] Fail when generated documentation and runtime capability facts drift.
+- [~] Task: Implement capability discovery through domain tools and MCP
   - [ ] Derive facts from registered contracts and kit/output manifests rather than duplicated prose.
   - [ ] Keep responses concise and source-layout independent.
   - [ ] Return actionable limitation guidance without suggesting hidden internal routes.

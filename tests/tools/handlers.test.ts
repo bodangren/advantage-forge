@@ -51,6 +51,7 @@ describe('semantic domain tools', () => {
   it('advertises only the bounded public catalog', () => {
     expect(PUBLIC_TOOL_NAMES).toEqual([
       'list_kits',
+      'inspect_capabilities',
       'inspect_template',
       'inspect_asset',
       'compare_revisions',
