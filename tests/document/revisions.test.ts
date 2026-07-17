@@ -1,4 +1,11 @@
-import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  readdir,
+  symlink,
+  writeFile,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -91,5 +98,39 @@ describe('file revision repository', () => {
     await expect(repository.get('asset.hero', revisionId)).rejects.toThrow(
       /failed validation/,
     );
+  });
+
+  it('rejects symlink traversal before writing outside the workspace', async () => {
+    const workspaceRoot = await mkdtemp(join(tmpdir(), 'forge-revisions-'));
+    const outside = await mkdtemp(join(tmpdir(), 'forge-outside-'));
+    await mkdir(join(workspaceRoot, '.forge'), { recursive: true });
+    await symlink(outside, join(workspaceRoot, '.forge/revisions'), 'dir');
+    const repository = new FileRevisionRepository({ workspaceRoot });
+
+    await expect(repository.save(assetFixture())).rejects.toThrow(
+      /symbolic links/,
+    );
+    expect(await readdir(outside)).toEqual([]);
+  });
+
+  it('rejects metadata identities that disagree with the requested revision', async () => {
+    const workspaceRoot = await mkdtemp(join(tmpdir(), 'forge-revisions-'));
+    const repository = new FileRevisionRepository({ workspaceRoot });
+    const saved = await repository.save(assetFixture());
+    const revisionPath = join(
+      workspaceRoot,
+      '.forge/revisions/asset.hero',
+      `${saved.revisionId}.json`,
+    );
+    const stored = JSON.parse(await readFile(revisionPath, 'utf8')) as Record<
+      string,
+      unknown
+    >;
+    stored['assetId'] = 'asset.other';
+    await writeFile(revisionPath, JSON.stringify(stored), 'utf8');
+
+    await expect(
+      repository.get('asset.hero', saved.revisionId),
+    ).rejects.toThrow(/identity/);
   });
 });

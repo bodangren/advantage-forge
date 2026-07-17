@@ -2,11 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { AssetDocumentSchema } from '../../src/contracts/index.js';
 import { evaluateAssembly } from '../../src/assembly/index.js';
 import {
+  KitTemplateManifestSchema,
   adventurerDocument,
   adventurerPoses,
   adventurerVariants,
   referenceDocuments,
   rusticManifest,
+  rusticMaterials,
 } from '../../src/fantasy-kit/index.js';
 
 describe('rustic fantasy kit', () => {
@@ -62,5 +64,32 @@ describe('rustic fantasy kit', () => {
     expect(JSON.stringify(referenceDocuments)).not.toMatch(
       /boolean|eval|script|rawMesh|vertices/i,
     );
+  });
+
+  it('runtime-validates exact bounds and intended reference mappings', () => {
+    for (const entry of rusticManifest) {
+      expect(KitTemplateManifestSchema.parse(entry)).toEqual(entry);
+      for (const [minimum, maximum] of Object.values(entry.parameterBounds))
+        expect(minimum).toBeLessThan(maximum);
+    }
+    expect(
+      rusticManifest.find(({ template }) => template.id === 'prop.crate')
+        ?.intendedReferences,
+    ).toEqual(['crate']);
+  });
+
+  it('includes the bounded fantasy palette and connected non-humanoid assemblies', () => {
+    expect(rusticMaterials.map(({ family }) => family)).toEqual(
+      expect.arrayContaining(['bronze', 'bone', 'crystal']),
+    );
+    for (const reference of ['crate', 'tree', 'cottage'] as const) {
+      const document = referenceDocuments[reference];
+      expect(document.assembly.connections.length, reference).toBeGreaterThan(
+        0,
+      );
+      expect(() =>
+        evaluateAssembly(document.assembly, document.templates),
+      ).not.toThrow();
+    }
   });
 });

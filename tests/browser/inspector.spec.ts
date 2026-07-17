@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import type { GlbManifest } from '../../src/export/index.js';
 
 test('inspector renders semantic assets, transparent sprites, and valid GLB evidence', async ({
   page,
@@ -29,6 +30,8 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
               transparentPixelCount: number;
               occupiedPixelCount: number;
               clippedEdges: readonly string[];
+              groundAnchorDeviationPixels: number | null;
+              representativeFeaturePixels: number | null;
             };
           }[];
         };
@@ -49,6 +52,34 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
     frameEvidence.every(({ clippedEdges }) => clippedEdges.length === 0),
   ).toBe(true);
 
+  expect(
+    frameEvidence.every(
+      ({ groundAnchorDeviationPixels }) =>
+        groundAnchorDeviationPixels !== null &&
+        Math.abs(groundAnchorDeviationPixels) <= 1,
+    ),
+  ).toBe(true);
+  expect(
+    frameEvidence.every(
+      ({ representativeFeaturePixels }) =>
+        representativeFeaturePixels !== null &&
+        representativeFeaturePixels >= 3,
+    ),
+  ).toBe(true);
+  const directionCounts = await page.evaluate(() => {
+    const forge = (
+      window as unknown as {
+        fantasyAssetForge: {
+          renderDirections: (count: 1 | 4 | 8) => readonly unknown[];
+        };
+      }
+    ).fantasyAssetForge;
+    return ([1, 4, 8] as const).map(
+      (count) => forge.renderDirections(count).length,
+    );
+  });
+  expect(directionCounts).toEqual([1, 4, 8]);
+
   await page.getByRole('button', { name: 'Contact Sheet' }).click();
   await expect(page.getByLabel('Eight direction contact sheet')).toBeVisible();
   await page.screenshot({
@@ -67,21 +98,20 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
         .fantasyAssetForge.selected === 'cottage',
   );
   await expect(page.getByText('cottage.rustic', { exact: true })).toBeVisible();
+  await page.getByLabel('Selected semantic part').selectOption('wall.front');
+  await expect(page.getByLabel('Selected semantic part')).toHaveValue(
+    'wall.front',
+  );
+  await expect(page.getByText('stone.lime', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Compare' }).click();
+  await expect(page.locator('.contact-sheet.comparison')).toBeVisible();
+  await expect(page.locator('.contact-frame')).toHaveCount(16);
+
   const glb = await page.evaluate(async () => {
     const forge = (
       window as unknown as {
         fantasyAssetForge: {
-          exportGlb: () => Promise<{
-            manifest: {
-              format: string;
-              byteLength: number;
-              nodeNames: string[];
-              materialNames: string[];
-              reloadNodeNames: string[];
-              animationCount: number;
-              unit: string;
-            };
-          }>;
+          exportGlb: () => Promise<{ manifest: GlbManifest }>;
         };
       }
     ).fantasyAssetForge;
@@ -95,5 +125,29 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
   expect(glb.reloadNodeNames).toContain('roof.main');
   expect(glb.animationCount).toBe(0);
   expect(glb.materialNames.length).toBeGreaterThan(0);
+  expect(glb.reloadMaterialNames).toEqual(glb.materialNames);
+  expect(glb.materialNamesMatch).toBe(true);
+  expect(glb.semanticNodeCount).toBeGreaterThan(0);
+  expect(glb.reloadSemanticNodeCount).toBe(glb.semanticNodeCount);
+  expect(glb.missingSemanticNodeNames).toEqual([]);
+  expect(glb.unexpectedSemanticNodeNames).toEqual([]);
+  expect(glb.transformMismatchCount).toBe(0);
+  expect(glb.scaleMismatchCount).toBe(0);
+  expect(glb.maximumPositionDeviation).toBeLessThanOrEqual(
+    glb.transformTolerance,
+  );
+  expect(glb.maximumRotationDeviationRadians).toBeLessThanOrEqual(
+    glb.transformTolerance,
+  );
+  expect(glb.maximumScaleDeviation).toBeLessThanOrEqual(glb.transformTolerance);
+  expect(glb.bounds.matches).toBe(true);
+  expect(glb.bounds.maximumDeviation).toBeLessThanOrEqual(glb.bounds.tolerance);
+  expect(glb.unitScaleDeviation).toBeLessThanOrEqual(glb.unitScaleTolerance);
+  expect(glb.textureCount).toBe(0);
+  expect(glb.unsupportedMaterialCount).toBe(0);
+  expect(glb.unsupportedShaderCount).toBe(0);
+  expect(glb.skinCount).toBe(0);
+  expect(glb.cameraCount).toBe(0);
+  expect(glb.lightCount).toBe(0);
   expect(consoleErrors).toEqual([]);
 });

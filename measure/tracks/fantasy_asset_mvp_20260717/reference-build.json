@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-17T03:02:07.885Z",
+  "generatedAt": "2026-07-17T04:31:55.110Z",
   "workflow": [
     "create_asset",
     "inspect_asset",
@@ -13,10 +13,10 @@
     {
       "reference": "adventurer",
       "assetId": "adventurer.rustic",
-      "revisionId": "revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523",
+      "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
       "inspected": {
         "ok": true,
-        "revisionId": "revision.710000881f0fa51b34ea4aa206228240c60d45121d07b0c176403f13288398f1",
+        "revisionId": "revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b",
         "affectedIds": [],
         "summary": "Inspected adventurer.rustic.",
         "issues": [],
@@ -24,65 +24,192 @@
           "id": "adventurer.rustic",
           "name": "Rustic Adventurer",
           "kitId": "rustic-human",
-          "partIds": [
-            "foot.left",
-            "foot.right",
-            "forearm.left",
-            "forearm.right",
-            "hair",
-            "hand.left",
-            "hand.right",
-            "head",
-            "pelvis",
-            "shield",
-            "shin.left",
-            "shin.right",
-            "sword",
-            "thigh.left",
-            "thigh.right",
-            "torso",
-            "tunic",
-            "upper-arm.left",
-            "upper-arm.right"
-          ],
-          "connectionIds": [
-            "ankle-left",
-            "ankle-right",
-            "elbow-left",
-            "elbow-right",
-            "equip-shield",
-            "equip-sword",
-            "head-hair",
-            "hip-left",
-            "hip-right",
-            "knee-left",
-            "knee-right",
-            "shoulder-left",
-            "shoulder-right",
-            "torso-head",
-            "torso-pelvis",
-            "wrist-left",
-            "wrist-right"
-          ],
-          "variants": [
-            "broad",
-            "equipped",
-            "short",
-            "slender",
-            "tall",
-            "unequipped"
-          ],
-          "poses": [
-            "action",
-            "idle"
-          ],
+          "parts": {
+            "items": [
+              {
+                "id": "foot.left",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "foot.right",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "forearm.left",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "forearm.right",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "hair",
+                "templateId": "human.hair"
+              },
+              {
+                "id": "hand.left",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "hand.right",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "head",
+                "templateId": "human.head"
+              },
+              {
+                "id": "pelvis",
+                "templateId": "human.pelvis"
+              },
+              {
+                "id": "shield",
+                "templateId": "equipment.shield"
+              },
+              {
+                "id": "shin.left",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "shin.right",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "sword",
+                "templateId": "equipment.sword"
+              },
+              {
+                "id": "thigh.left",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "thigh.right",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "torso",
+                "templateId": "human.torso"
+              },
+              {
+                "id": "tunic",
+                "templateId": "human.tunic"
+              },
+              {
+                "id": "upper-arm.left",
+                "templateId": "human.upper-arm"
+              },
+              {
+                "id": "upper-arm.right",
+                "templateId": "human.upper-arm"
+              }
+            ],
+            "total": 19,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "ankle-left"
+              },
+              {
+                "id": "ankle-right"
+              },
+              {
+                "id": "elbow-left"
+              },
+              {
+                "id": "elbow-right"
+              },
+              {
+                "id": "equip-shield"
+              },
+              {
+                "id": "equip-sword"
+              },
+              {
+                "id": "head-hair"
+              },
+              {
+                "id": "hip-left"
+              },
+              {
+                "id": "hip-right"
+              },
+              {
+                "id": "knee-left"
+              },
+              {
+                "id": "knee-right"
+              },
+              {
+                "id": "shoulder-left"
+              },
+              {
+                "id": "shoulder-right"
+              },
+              {
+                "id": "torso-head"
+              },
+              {
+                "id": "torso-pelvis"
+              },
+              {
+                "id": "wrist-left"
+              },
+              {
+                "id": "wrist-right"
+              }
+            ],
+            "total": 17,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [
+              {
+                "id": "broad"
+              },
+              {
+                "id": "equipped"
+              },
+              {
+                "id": "short"
+              },
+              {
+                "id": "slender"
+              },
+              {
+                "id": "tall"
+              },
+              {
+                "id": "unequipped"
+              }
+            ],
+            "total": 6,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [
+              {
+                "id": "action"
+              },
+              {
+                "id": "idle"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
           "activeVariantId": "equipped",
           "activePoseId": "idle"
         }
       },
       "validated": {
         "ok": true,
-        "revisionId": "revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523",
+        "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
         "affectedIds": [],
         "summary": "Document and assembly validation passed.",
         "issues": [],
@@ -90,825 +217,6 @@
           "validation": "valid",
           "scene": {
             "id": "adventurer.assembly",
-            "parts": [
-              {
-                "id": "foot.left",
-                "templateId": "human.foot",
-                "role": "anatomy.foot",
-                "worldTransform": {
-                  "position": [
-                    0.17954558495,
-                    -0.731016005848,
-                    0.07
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.050362051112,
-                    -0.84676104251,
-                    -0.115
-                  ],
-                  "max": [
-                    0.308729118788,
-                    -0.615270969186,
-                    0.255
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "leather",
-                    "materialId": "leather.dark"
-                  }
-                ],
-                "triangleCount": 8,
-                "visible": true
-              },
-              {
-                "id": "foot.right",
-                "templateId": "human.foot",
-                "role": "anatomy.foot",
-                "worldTransform": {
-                  "position": [
-                    -0.17954558495,
-                    -0.731016005848,
-                    0.07
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.308729118788,
-                    -0.84676104251,
-                    -0.115
-                  ],
-                  "max": [
-                    -0.050362051112,
-                    -0.615270969186,
-                    0.255
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "leather",
-                    "materialId": "leather.dark"
-                  }
-                ],
-                "triangleCount": 8,
-                "visible": true
-              },
-              {
-                "id": "forearm.left",
-                "templateId": "human.forearm",
-                "role": "anatomy.forearm",
-                "worldTransform": {
-                  "position": [
-                    -0.921895380407,
-                    1.151657429946,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.406736643076,
-                    0.913545457643
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.165709893086,
-                    0.920015295743,
-                    -0.082
-                  ],
-                  "max": [
-                    -0.678080867728,
-                    1.383299564149,
-                    0.082
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "skin",
-                    "materialId": "skin.warm"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "forearm.right",
-                "templateId": "human.forearm",
-                "role": "anatomy.forearm",
-                "worldTransform": {
-                  "position": [
-                    0.897749503746,
-                    1.192265709093,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.173648177667,
-                    0.984807753012
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.731145401985,
-                    0.927368391689,
-                    -0.082
-                  ],
-                  "max": [
-                    1.064353605507,
-                    1.457163026497,
-                    0.082
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "skin",
-                    "materialId": "skin.warm"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "hair",
-                "templateId": "human.hair",
-                "role": "clothing.hair-mass",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    2.2516,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.192369095115,
-                    2.1004,
-                    -0.182638527006
-                  ],
-                  "max": [
-                    0.204714915133,
-                    2.4028,
-                    0.182638527006
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "hair",
-                    "materialId": "hair.chestnut"
-                  }
-                ],
-                "triangleCount": 72,
-                "visible": true
-              },
-              {
-                "id": "hand.left",
-                "templateId": "human.hand",
-                "role": "anatomy.hand",
-                "worldTransform": {
-                  "position": [
-                    -1.194778160323,
-                    0.905952671291,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.406736643076,
-                    0.913545457643
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.320705965359,
-                    0.782966931465,
-                    -0.05
-                  ],
-                  "max": [
-                    -1.068850355287,
-                    1.028938411117,
-                    0.05
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "skin",
-                    "materialId": "skin.warm"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "hand.right",
-                "templateId": "human.hand",
-                "role": "anatomy.hand",
-                "worldTransform": {
-                  "position": [
-                    1.023339300375,
-                    0.847210578741,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.173648177667,
-                    0.984807753012
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.922267103527,
-                    0.722380900914,
-                    -0.05
-                  ],
-                  "max": [
-                    1.124411497223,
-                    0.972040256568,
-                    0.05
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "skin",
-                    "materialId": "skin.warm"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "head",
-                "templateId": "human.head",
-                "role": "anatomy.head",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    2.0788,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.1995,
-                    1.8304,
-                    -0.171190172933
-                  ],
-                  "max": [
-                    0.1995,
-                    2.3272,
-                    0.171190172933
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "skin",
-                    "materialId": "skin.warm"
-                  }
-                ],
-                "triangleCount": 100,
-                "visible": true
-              },
-              {
-                "id": "pelvis",
-                "templateId": "human.pelvis",
-                "role": "anatomy.pelvis",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.8044,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.2415,
-                    0.6424,
-                    -0.135
-                  ],
-                  "max": [
-                    0.2415,
-                    0.9664,
-                    0.135
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.umber"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "shield",
-                "templateId": "equipment.shield",
-                "role": "equipment.shield",
-                "worldTransform": {
-                  "position": [
-                    -1.226882016784,
-                    0.877046229096,
-                    0.16
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.406736643076,
-                    0.913545457643
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.497865499715,
-                    0.582837084206,
-                    -0.18
-                  ],
-                  "max": [
-                    -0.955898533853,
-                    1.171255373986,
-                    0.5
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.oak"
-                  }
-                ],
-                "triangleCount": 28,
-                "visible": true
-              },
-              {
-                "id": "shin.left",
-                "templateId": "human.shin",
-                "role": "anatomy.shin",
-                "worldTransform": {
-                  "position": [
-                    0.080260838996,
-                    -0.332806639784,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.100002906437,
-                    -0.672584254135,
-                    -0.1
-                  ],
-                  "max": [
-                    0.260524584429,
-                    0.006970974567,
-                    0.1
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "shin.right",
-                "templateId": "human.shin",
-                "role": "anatomy.shin",
-                "worldTransform": {
-                  "position": [
-                    -0.080260838996,
-                    -0.332806639784,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.260524584429,
-                    -0.672584254135,
-                    -0.1
-                  ],
-                  "max": [
-                    0.100002906437,
-                    0.006970974567,
-                    0.1
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "sword",
-                "templateId": "equipment.sword",
-                "role": "equipment.sword",
-                "worldTransform": {
-                  "position": [
-                    0.860811328267,
-                    1.293752512138,
-                    0.09
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.173648177667,
-                    0.984807753012
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.621853202021,
-                    0.847756276072,
-                    0.0725
-                  ],
-                  "max": [
-                    1.07021891413,
-                    1.820938190639,
-                    0.1075
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "metal",
-                    "materialId": "iron.weathered"
-                  }
-                ],
-                "triangleCount": 16,
-                "visible": true
-              },
-              {
-                "id": "thigh.left",
-                "templateId": "human.thigh",
-                "role": "anatomy.thigh",
-                "worldTransform": {
-                  "position": [
-                    -0.076504549353,
-                    0.295944990843,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.284982774455,
-                    -0.080350564847,
-                    -0.12
-                  ],
-                  "max": [
-                    0.131973675749,
-                    0.672240546533,
-                    0.12
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.umber"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "thigh.right",
-                "templateId": "human.thigh",
-                "role": "anatomy.thigh",
-                "worldTransform": {
-                  "position": [
-                    0.076504549353,
-                    0.295944990843,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.121869343405,
-                    0.992546151641
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.131973675749,
-                    -0.080350564847,
-                    -0.12
-                  ],
-                  "max": [
-                    0.284982774455,
-                    0.672240546533,
-                    0.12
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.umber"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "torso",
-                "templateId": "human.torso",
-                "role": "anatomy.torso",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    1.42,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.273,
-                    1.0528,
-                    -0.14
-                  ],
-                  "max": [
-                    0.273,
-                    1.7872,
-                    0.14
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "body",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "tunic",
-                "templateId": "human.tunic",
-                "role": "clothing.tunic-shell",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    1.4,
-                    0.01
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.295,
-                    1.035,
-                    -0.155
-                  ],
-                  "max": [
-                    0.295,
-                    1.765,
-                    0.175
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 8,
-                "visible": true
-              },
-              {
-                "id": "upper-arm.left",
-                "templateId": "human.upper-arm",
-                "role": "anatomy.upper-arm",
-                "worldTransform": {
-                  "position": [
-                    -0.536649102879,
-                    1.498534736283,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    -0.406736643076,
-                    0.913545457643
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.8080569658,
-                    1.24012747095,
-                    -0.095
-                  ],
-                  "max": [
-                    -0.265241239958,
-                    1.756942001616,
-                    0.095
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              },
-              {
-                "id": "upper-arm.right",
-                "templateId": "human.upper-arm",
-                "role": "anatomy.upper-arm",
-                "worldTransform": {
-                  "position": [
-                    0.574395850072,
-                    1.552442678048,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0.51503807491,
-                    0.857167300702
-                  ],
-                  "scale": [
-                    1.05,
-                    1.08,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.284402294611,
-                    1.335076187269,
-                    -0.095
-                  ],
-                  "max": [
-                    0.864389405533,
-                    1.769809168827,
-                    0.095
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.moss"
-                  }
-                ],
-                "triangleCount": 128,
-                "visible": true
-              }
-            ],
             "bounds": {
               "min": [
                 -1.497865499715,
@@ -921,117 +229,470 @@
                 0.5
               ]
             },
-            "triangleCount": 1440
+            "triangleCount": 1440,
+            "parts": {
+              "items": [
+                {
+                  "id": "foot.left",
+                  "templateId": "human.foot",
+                  "role": "anatomy.foot",
+                  "bounds": {
+                    "min": [
+                      0.050362051112,
+                      -0.84676104251,
+                      -0.115
+                    ],
+                    "max": [
+                      0.308729118788,
+                      -0.615270969186,
+                      0.255
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "foot.right",
+                  "templateId": "human.foot",
+                  "role": "anatomy.foot",
+                  "bounds": {
+                    "min": [
+                      -0.308729118788,
+                      -0.84676104251,
+                      -0.115
+                    ],
+                    "max": [
+                      -0.050362051112,
+                      -0.615270969186,
+                      0.255
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "forearm.left",
+                  "templateId": "human.forearm",
+                  "role": "anatomy.forearm",
+                  "bounds": {
+                    "min": [
+                      -1.165709893086,
+                      0.920015295743,
+                      -0.082
+                    ],
+                    "max": [
+                      -0.678080867728,
+                      1.383299564149,
+                      0.082
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "forearm.right",
+                  "templateId": "human.forearm",
+                  "role": "anatomy.forearm",
+                  "bounds": {
+                    "min": [
+                      0.731145401985,
+                      0.927368391689,
+                      -0.082
+                    ],
+                    "max": [
+                      1.064353605507,
+                      1.457163026497,
+                      0.082
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "hair",
+                  "templateId": "human.hair",
+                  "role": "clothing.hair-mass",
+                  "bounds": {
+                    "min": [
+                      -0.192369095115,
+                      2.1004,
+                      -0.182638527006
+                    ],
+                    "max": [
+                      0.204714915133,
+                      2.4028,
+                      0.182638527006
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "hand.left",
+                  "templateId": "human.hand",
+                  "role": "anatomy.hand",
+                  "bounds": {
+                    "min": [
+                      -1.320705965359,
+                      0.782966931465,
+                      -0.05
+                    ],
+                    "max": [
+                      -1.068850355287,
+                      1.028938411117,
+                      0.05
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "hand.right",
+                  "templateId": "human.hand",
+                  "role": "anatomy.hand",
+                  "bounds": {
+                    "min": [
+                      0.922267103527,
+                      0.722380900914,
+                      -0.05
+                    ],
+                    "max": [
+                      1.124411497223,
+                      0.972040256568,
+                      0.05
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "head",
+                  "templateId": "human.head",
+                  "role": "anatomy.head",
+                  "bounds": {
+                    "min": [
+                      -0.1995,
+                      1.8304,
+                      -0.171190172933
+                    ],
+                    "max": [
+                      0.1995,
+                      2.3272,
+                      0.171190172933
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "pelvis",
+                  "templateId": "human.pelvis",
+                  "role": "anatomy.pelvis",
+                  "bounds": {
+                    "min": [
+                      -0.2415,
+                      0.6424,
+                      -0.135
+                    ],
+                    "max": [
+                      0.2415,
+                      0.9664,
+                      0.135
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "shield",
+                  "templateId": "equipment.shield",
+                  "role": "equipment.shield",
+                  "bounds": {
+                    "min": [
+                      -1.497865499715,
+                      0.582837084206,
+                      -0.18
+                    ],
+                    "max": [
+                      -0.955898533853,
+                      1.171255373986,
+                      0.5
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "shin.left",
+                  "templateId": "human.shin",
+                  "role": "anatomy.shin",
+                  "bounds": {
+                    "min": [
+                      -0.100002906437,
+                      -0.672584254135,
+                      -0.1
+                    ],
+                    "max": [
+                      0.260524584429,
+                      0.006970974567,
+                      0.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "shin.right",
+                  "templateId": "human.shin",
+                  "role": "anatomy.shin",
+                  "bounds": {
+                    "min": [
+                      -0.260524584429,
+                      -0.672584254135,
+                      -0.1
+                    ],
+                    "max": [
+                      0.100002906437,
+                      0.006970974567,
+                      0.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "sword",
+                  "templateId": "equipment.sword",
+                  "role": "equipment.sword",
+                  "bounds": {
+                    "min": [
+                      0.621853202021,
+                      0.847756276072,
+                      0.0725
+                    ],
+                    "max": [
+                      1.07021891413,
+                      1.820938190639,
+                      0.1075
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "thigh.left",
+                  "templateId": "human.thigh",
+                  "role": "anatomy.thigh",
+                  "bounds": {
+                    "min": [
+                      -0.284982774455,
+                      -0.080350564847,
+                      -0.12
+                    ],
+                    "max": [
+                      0.131973675749,
+                      0.672240546533,
+                      0.12
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "thigh.right",
+                  "templateId": "human.thigh",
+                  "role": "anatomy.thigh",
+                  "bounds": {
+                    "min": [
+                      -0.131973675749,
+                      -0.080350564847,
+                      -0.12
+                    ],
+                    "max": [
+                      0.284982774455,
+                      0.672240546533,
+                      0.12
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "torso",
+                  "templateId": "human.torso",
+                  "role": "anatomy.torso",
+                  "bounds": {
+                    "min": [
+                      -0.273,
+                      1.0528,
+                      -0.14
+                    ],
+                    "max": [
+                      0.273,
+                      1.7872,
+                      0.14
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tunic",
+                  "templateId": "human.tunic",
+                  "role": "clothing.tunic-shell",
+                  "bounds": {
+                    "min": [
+                      -0.295,
+                      1.035,
+                      -0.155
+                    ],
+                    "max": [
+                      0.295,
+                      1.765,
+                      0.175
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "upper-arm.left",
+                  "templateId": "human.upper-arm",
+                  "role": "anatomy.upper-arm",
+                  "bounds": {
+                    "min": [
+                      -0.8080569658,
+                      1.24012747095,
+                      -0.095
+                    ],
+                    "max": [
+                      -0.265241239958,
+                      1.756942001616,
+                      0.095
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "upper-arm.right",
+                  "templateId": "human.upper-arm",
+                  "role": "anatomy.upper-arm",
+                  "bounds": {
+                    "min": [
+                      0.284402294611,
+                      1.335076187269,
+                      -0.095
+                    ],
+                    "max": [
+                      0.864389405533,
+                      1.769809168827,
+                      0.095
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 19,
+              "truncated": false,
+              "limit": 100
+            }
           }
         }
       },
       "rendered": {
         "ok": true,
-        "revisionId": "revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523",
+        "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
         "affectedIds": [],
         "summary": "Rendered the current canonical revision.",
         "issues": [],
         "data": {
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/render-manifest.json",
-          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/contact-sheet.png",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/render-manifest.json",
+          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/contact-sheet.png",
           "frames": [
             {
               "direction": "N",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/n.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/n.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 28,
+                  "minY": 39,
+                  "maxX": 99,
+                  "maxY": 121,
+                  "width": 72,
+                  "height": 83
+                },
+                "occupiedPixelCount": 1438,
+                "occupiedRatio": 0.0877685546875,
+                "transparentPixelCount": 14946,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 5
+              }
+            },
+            {
+              "direction": "NE",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/ne.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 35,
+                  "minY": 38,
+                  "maxX": 92,
+                  "maxY": 121,
+                  "width": 58,
+                  "height": 84
+                },
+                "occupiedPixelCount": 1442,
+                "occupiedRatio": 0.0880126953125,
+                "transparentPixelCount": 14942,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5
+              }
+            },
+            {
+              "direction": "E",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/e.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 54,
+                  "minY": 40,
+                  "maxX": 72,
+                  "maxY": 121,
+                  "width": 19,
+                  "height": 82
+                },
+                "occupiedPixelCount": 793,
+                "occupiedRatio": 0.04840087890625,
+                "transparentPixelCount": 15591,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 5,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5
+              }
+            },
+            {
+              "direction": "SE",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/se.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 40,
+                  "minY": 40,
+                  "maxX": 92,
+                  "maxY": 121,
+                  "width": 53,
+                  "height": 82
+                },
+                "occupiedPixelCount": 1385,
+                "occupiedRatio": 0.08453369140625,
+                "transparentPixelCount": 14999,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 4
+              }
+            },
+            {
+              "direction": "S",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/s.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 28,
                   "minY": 41,
                   "maxX": 99,
-                  "maxY": 123,
-                  "width": 72,
-                  "height": 83
-                },
-                "occupiedPixelCount": 1431,
-                "occupiedRatio": 0.08734130859375,
-                "transparentPixelCount": 14953,
-                "clippedEdges": [],
-                "groundPixelY": 123,
-                "groundAnchorDeviationPixels": 2,
-                "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
-              }
-            },
-            {
-              "direction": "NE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/ne.png",
-              "metrics": {
-                "occupiedBounds": {
-                  "minX": 35,
-                  "minY": 32,
-                  "maxX": 92,
-                  "maxY": 114,
-                  "width": 58,
-                  "height": 83
-                },
-                "occupiedPixelCount": 1436,
-                "occupiedRatio": 0.087646484375,
-                "transparentPixelCount": 14948,
-                "clippedEdges": [],
-                "groundPixelY": 114,
-                "groundAnchorDeviationPixels": -7,
-                "minimumHorizontalRunPixels": 3,
-                "minimumVerticalRunPixels": 2
-              }
-            },
-            {
-              "direction": "E",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/e.png",
-              "metrics": {
-                "occupiedBounds": {
-                  "minX": 54,
-                  "minY": 32,
-                  "maxX": 72,
-                  "maxY": 113,
-                  "width": 19,
-                  "height": 82
-                },
-                "occupiedPixelCount": 784,
-                "occupiedRatio": 0.0478515625,
-                "transparentPixelCount": 15600,
-                "clippedEdges": [],
-                "groundPixelY": 113,
-                "groundAnchorDeviationPixels": -8,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 1
-              }
-            },
-            {
-              "direction": "SE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/se.png",
-              "metrics": {
-                "occupiedBounds": {
-                  "minX": 40,
-                  "minY": 35,
-                  "maxX": 92,
-                  "maxY": 116,
-                  "width": 53,
-                  "height": 82
-                },
-                "occupiedPixelCount": 1393,
-                "occupiedRatio": 0.08502197265625,
-                "transparentPixelCount": 14991,
-                "clippedEdges": [],
-                "groundPixelY": 116,
-                "groundAnchorDeviationPixels": -5,
-                "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
-              }
-            },
-            {
-              "direction": "S",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/s.png",
-              "metrics": {
-                "occupiedBounds": {
-                  "minX": 28,
-                  "minY": 45,
-                  "maxX": 99,
-                  "maxY": 125,
+                  "maxY": 121,
                   "width": 72,
                   "height": 81
                 },
@@ -1039,76 +700,80 @@
                 "occupiedRatio": 0.0841064453125,
                 "transparentPixelCount": 15006,
                 "clippedEdges": [],
-                "groundPixelY": 125,
-                "groundAnchorDeviationPixels": 4,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 4
               }
             },
             {
               "direction": "SW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/sw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/sw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 35,
-                  "minY": 31,
+                  "minY": 40,
                   "maxX": 92,
-                  "maxY": 112,
+                  "maxY": 121,
                   "width": 58,
                   "height": 82
                 },
-                "occupiedPixelCount": 1273,
-                "occupiedRatio": 0.07769775390625,
-                "transparentPixelCount": 15111,
+                "occupiedPixelCount": 1263,
+                "occupiedRatio": 0.07708740234375,
+                "transparentPixelCount": 15121,
                 "clippedEdges": [],
-                "groundPixelY": 112,
-                "groundAnchorDeviationPixels": -9,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 2
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 4
               }
             },
             {
               "direction": "W",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/w.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/w.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 54,
-                  "minY": 27,
+                  "minY": 39,
                   "maxX": 72,
-                  "maxY": 108,
+                  "maxY": 121,
                   "width": 19,
-                  "height": 82
+                  "height": 83
                 },
-                "occupiedPixelCount": 712,
-                "occupiedRatio": 0.04345703125,
-                "transparentPixelCount": 15672,
+                "occupiedPixelCount": 717,
+                "occupiedRatio": 0.04376220703125,
+                "transparentPixelCount": 15667,
                 "clippedEdges": [],
-                "groundPixelY": 108,
-                "groundAnchorDeviationPixels": -13,
-                "minimumHorizontalRunPixels": 5,
-                "minimumVerticalRunPixels": 2
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 4
               }
             },
             {
               "direction": "NW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/nw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/nw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 35,
-                  "minY": 28,
+                  "minY": 39,
                   "maxX": 87,
-                  "maxY": 111,
+                  "maxY": 121,
                   "width": 53,
-                  "height": 84
+                  "height": 83
                 },
-                "occupiedPixelCount": 1294,
-                "occupiedRatio": 0.0789794921875,
-                "transparentPixelCount": 15090,
+                "occupiedPixelCount": 1297,
+                "occupiedRatio": 0.07916259765625,
+                "transparentPixelCount": 15087,
                 "clippedEdges": [],
-                "groundPixelY": 111,
-                "groundAnchorDeviationPixels": -10,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 4
               }
             }
           ]
@@ -1116,13 +781,13 @@
       },
       "exported": {
         "ok": true,
-        "revisionId": "revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523",
+        "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
         "affectedIds": [],
         "summary": "Exported the current canonical revision.",
         "issues": [],
         "data": {
-          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/adventurer.rustic.glb",
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.53818aadc04450183639f332da418f42f95a2047847d6fcfdf40cc3f1e831523/glb-manifest.json",
+          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/adventurer.rustic.glb",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/glb-manifest.json",
           "manifest": {
             "format": "glb",
             "byteLength": 59356,
@@ -1181,18 +846,800 @@
               "upper-arm.left",
               "upper-arm.right"
             ],
+            "reloadMaterialNames": [
+              "cloth.moss",
+              "cloth.umber",
+              "hair.chestnut",
+              "iron.weathered",
+              "leather.dark",
+              "skin.warm",
+              "wood.oak"
+            ],
+            "materialNamesMatch": true,
+            "semanticNodeCount": 20,
+            "reloadSemanticNodeCount": 20,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 4.2146848510894035e-8,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -1.49786550150972,
+                -0.8467610426141425,
+                -0.1826385259628296
+              ],
+              "sourceMax": [
+                1.124411495420814,
+                2.40280000064373,
+                0.5000000035762787
+              ],
+              "reloadMin": [
+                -1.49786550150972,
+                -0.8467610426141425,
+                -0.1826385259628296
+              ],
+              "reloadMax": [
+                1.124411495420814,
+                2.40280000064373,
+                0.5000000035762787
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.00003249561043257873,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.00003249561043257873,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
             "animationCount": 0
           }
         }
+      },
+      "variantArtifacts": {
+        "idleEquipped": {
+          "revisionId": "revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b",
+          "rendered": {
+            "ok": true,
+            "revisionId": "revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b",
+            "affectedIds": [],
+            "summary": "Rendered the current canonical revision.",
+            "issues": [],
+            "data": {
+              "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/render-manifest.json",
+              "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/contact-sheet.png",
+              "frames": [
+                {
+                  "direction": "N",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/n.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 41,
+                      "minY": 27,
+                      "maxX": 86,
+                      "maxY": 121,
+                      "width": 46,
+                      "height": 95
+                    },
+                    "occupiedPixelCount": 2053,
+                    "occupiedRatio": 0.12530517578125,
+                    "transparentPixelCount": 14331,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 4,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "NE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/ne.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 44,
+                      "minY": 25,
+                      "maxX": 84,
+                      "maxY": 121,
+                      "width": 41,
+                      "height": 97
+                    },
+                    "occupiedPixelCount": 1934,
+                    "occupiedRatio": 0.1180419921875,
+                    "transparentPixelCount": 14450,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 6
+                  }
+                },
+                {
+                  "direction": "E",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/e.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 52,
+                      "minY": 26,
+                      "maxX": 75,
+                      "maxY": 121,
+                      "width": 24,
+                      "height": 96
+                    },
+                    "occupiedPixelCount": 1093,
+                    "occupiedRatio": 0.06671142578125,
+                    "transparentPixelCount": 15291,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 5,
+                    "minimumVerticalRunPixels": 3,
+                    "representativeFeaturePixels": 7
+                  }
+                },
+                {
+                  "direction": "SE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/se.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 49,
+                      "minY": 27,
+                      "maxX": 83,
+                      "maxY": 121,
+                      "width": 35,
+                      "height": 95
+                    },
+                    "occupiedPixelCount": 1743,
+                    "occupiedRatio": 0.10638427734375,
+                    "transparentPixelCount": 14641,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "S",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/s.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 41,
+                      "minY": 29,
+                      "maxX": 86,
+                      "maxY": 121,
+                      "width": 46,
+                      "height": 93
+                    },
+                    "occupiedPixelCount": 1953,
+                    "occupiedRatio": 0.11920166015625,
+                    "transparentPixelCount": 14431,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 2,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "SW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/sw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 43,
+                      "minY": 26,
+                      "maxX": 83,
+                      "maxY": 121,
+                      "width": 41,
+                      "height": 96
+                    },
+                    "occupiedPixelCount": 1796,
+                    "occupiedRatio": 0.109619140625,
+                    "transparentPixelCount": 14588,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "W",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/w.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 52,
+                      "minY": 26,
+                      "maxX": 75,
+                      "maxY": 121,
+                      "width": 24,
+                      "height": 96
+                    },
+                    "occupiedPixelCount": 1054,
+                    "occupiedRatio": 0.0643310546875,
+                    "transparentPixelCount": 15330,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 3,
+                    "representativeFeaturePixels": 7
+                  }
+                },
+                {
+                  "direction": "NW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/nw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 44,
+                      "minY": 25,
+                      "maxX": 78,
+                      "maxY": 121,
+                      "width": 35,
+                      "height": 97
+                    },
+                    "occupiedPixelCount": 1791,
+                    "occupiedRatio": 0.10931396484375,
+                    "transparentPixelCount": 14593,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "unequipRevisionId": "revision.1c129522fa493b2793c4c2686eddeaf69ea65659612c8be3e9b534f7aac5f7f8",
+        "equipRevisionId": "revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b",
+        "actionEquipped": {
+          "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
+          "rendered": {
+            "ok": true,
+            "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
+            "affectedIds": [],
+            "summary": "Rendered the current canonical revision.",
+            "issues": [],
+            "data": {
+              "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/render-manifest.json",
+              "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/contact-sheet.png",
+              "frames": [
+                {
+                  "direction": "N",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/n.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 28,
+                      "minY": 39,
+                      "maxX": 99,
+                      "maxY": 121,
+                      "width": 72,
+                      "height": 83
+                    },
+                    "occupiedPixelCount": 1438,
+                    "occupiedRatio": 0.0877685546875,
+                    "transparentPixelCount": 14946,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 2,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "NE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/ne.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 35,
+                      "minY": 38,
+                      "maxX": 92,
+                      "maxY": 121,
+                      "width": 58,
+                      "height": 84
+                    },
+                    "occupiedPixelCount": 1442,
+                    "occupiedRatio": 0.0880126953125,
+                    "transparentPixelCount": 14942,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "E",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/e.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 54,
+                      "minY": 40,
+                      "maxX": 72,
+                      "maxY": 121,
+                      "width": 19,
+                      "height": 82
+                    },
+                    "occupiedPixelCount": 793,
+                    "occupiedRatio": 0.04840087890625,
+                    "transparentPixelCount": 15591,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 5,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "SE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/se.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 40,
+                      "minY": 40,
+                      "maxX": 92,
+                      "maxY": 121,
+                      "width": 53,
+                      "height": 82
+                    },
+                    "occupiedPixelCount": 1385,
+                    "occupiedRatio": 0.08453369140625,
+                    "transparentPixelCount": 14999,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "S",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/s.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 28,
+                      "minY": 41,
+                      "maxX": 99,
+                      "maxY": 121,
+                      "width": 72,
+                      "height": 81
+                    },
+                    "occupiedPixelCount": 1378,
+                    "occupiedRatio": 0.0841064453125,
+                    "transparentPixelCount": 15006,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "SW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/sw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 35,
+                      "minY": 40,
+                      "maxX": 92,
+                      "maxY": 121,
+                      "width": 58,
+                      "height": 82
+                    },
+                    "occupiedPixelCount": 1263,
+                    "occupiedRatio": 0.07708740234375,
+                    "transparentPixelCount": 15121,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "W",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/w.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 54,
+                      "minY": 39,
+                      "maxX": 72,
+                      "maxY": 121,
+                      "width": 19,
+                      "height": 83
+                    },
+                    "occupiedPixelCount": 717,
+                    "occupiedRatio": 0.04376220703125,
+                    "transparentPixelCount": 15667,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 2,
+                    "minimumVerticalRunPixels": 2,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "NW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/nw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 35,
+                      "minY": 39,
+                      "maxX": 87,
+                      "maxY": 121,
+                      "width": 53,
+                      "height": 83
+                    },
+                    "occupiedPixelCount": 1297,
+                    "occupiedRatio": 0.07916259765625,
+                    "transparentPixelCount": 15087,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                }
+              ]
+            }
+          },
+          "exported": {
+            "ok": true,
+            "revisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b",
+            "affectedIds": [],
+            "summary": "Exported the current canonical revision.",
+            "issues": [],
+            "data": {
+              "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/adventurer.rustic.glb",
+              "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b/glb-manifest.json",
+              "manifest": {
+                "format": "glb",
+                "byteLength": 59356,
+                "nodeNames": [
+                  "adventurer.rustic",
+                  "foot.left",
+                  "foot.right",
+                  "forearm.left",
+                  "forearm.right",
+                  "hair",
+                  "hand.left",
+                  "hand.right",
+                  "head",
+                  "pelvis",
+                  "shield",
+                  "shin.left",
+                  "shin.right",
+                  "sword",
+                  "thigh.left",
+                  "thigh.right",
+                  "torso",
+                  "tunic",
+                  "upper-arm.left",
+                  "upper-arm.right"
+                ],
+                "materialNames": [
+                  "cloth.moss",
+                  "cloth.umber",
+                  "hair.chestnut",
+                  "iron.weathered",
+                  "leather.dark",
+                  "skin.warm",
+                  "wood.oak"
+                ],
+                "unit": "meter",
+                "reloadNodeNames": [
+                  "AuxScene",
+                  "adventurer.rustic",
+                  "foot.left",
+                  "foot.right",
+                  "forearm.left",
+                  "forearm.right",
+                  "hair",
+                  "hand.left",
+                  "hand.right",
+                  "head",
+                  "pelvis",
+                  "shield",
+                  "shin.left",
+                  "shin.right",
+                  "sword",
+                  "thigh.left",
+                  "thigh.right",
+                  "torso",
+                  "tunic",
+                  "upper-arm.left",
+                  "upper-arm.right"
+                ],
+                "reloadMaterialNames": [
+                  "cloth.moss",
+                  "cloth.umber",
+                  "hair.chestnut",
+                  "iron.weathered",
+                  "leather.dark",
+                  "skin.warm",
+                  "wood.oak"
+                ],
+                "materialNamesMatch": true,
+                "semanticNodeCount": 20,
+                "reloadSemanticNodeCount": 20,
+                "missingSemanticNodeNames": [],
+                "unexpectedSemanticNodeNames": [],
+                "transformMismatchCount": 0,
+                "scaleMismatchCount": 0,
+                "maximumPositionDeviation": 0,
+                "maximumRotationDeviationRadians": 4.2146848510894035e-8,
+                "maximumScaleDeviation": 0,
+                "transformTolerance": 0.00001,
+                "bounds": {
+                  "sourceMin": [
+                    -1.49786550150972,
+                    -0.8467610426141425,
+                    -0.1826385259628296
+                  ],
+                  "sourceMax": [
+                    1.124411495420814,
+                    2.40280000064373,
+                    0.5000000035762787
+                  ],
+                  "reloadMin": [
+                    -1.49786550150972,
+                    -0.8467610426141425,
+                    -0.1826385259628296
+                  ],
+                  "reloadMax": [
+                    1.124411495420814,
+                    2.40280000064373,
+                    0.5000000035762787
+                  ],
+                  "maximumDeviation": 0,
+                  "tolerance": 0.00003249561043257873,
+                  "matches": true
+                },
+                "unitScaleDeviation": 0,
+                "unitScaleTolerance": 0.00003249561043257873,
+                "textureCount": 0,
+                "unsupportedMaterialCount": 0,
+                "unsupportedShaderCount": 0,
+                "skinCount": 0,
+                "cameraCount": 0,
+                "lightCount": 0,
+                "animationCount": 0
+              }
+            }
+          }
+        },
+        "actionUnequipped": {
+          "revisionId": "revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd",
+          "rendered": {
+            "ok": true,
+            "revisionId": "revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd",
+            "affectedIds": [],
+            "summary": "Rendered the current canonical revision.",
+            "issues": [],
+            "data": {
+              "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/render-manifest.json",
+              "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/contact-sheet.png",
+              "frames": [
+                {
+                  "direction": "N",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/n.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 30,
+                      "minY": 38,
+                      "maxX": 98,
+                      "maxY": 121,
+                      "width": 69,
+                      "height": 84
+                    },
+                    "occupiedPixelCount": 1394,
+                    "occupiedRatio": 0.0850830078125,
+                    "transparentPixelCount": 14990,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 3,
+                    "minimumVerticalRunPixels": 2,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "NE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/ne.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 40,
+                      "minY": 36,
+                      "maxX": 89,
+                      "maxY": 121,
+                      "width": 50,
+                      "height": 86
+                    },
+                    "occupiedPixelCount": 1268,
+                    "occupiedRatio": 0.077392578125,
+                    "transparentPixelCount": 15116,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "E",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/e.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 58,
+                      "minY": 37,
+                      "maxX": 69,
+                      "maxY": 121,
+                      "width": 12,
+                      "height": 85
+                    },
+                    "occupiedPixelCount": 660,
+                    "occupiedRatio": 0.040283203125,
+                    "transparentPixelCount": 15724,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 4,
+                    "minimumVerticalRunPixels": 3,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "SE",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/se.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 40,
+                      "minY": 38,
+                      "maxX": 89,
+                      "maxY": 121,
+                      "width": 50,
+                      "height": 84
+                    },
+                    "occupiedPixelCount": 1249,
+                    "occupiedRatio": 0.07623291015625,
+                    "transparentPixelCount": 15135,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 2,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "S",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/s.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 29,
+                      "minY": 39,
+                      "maxX": 97,
+                      "maxY": 121,
+                      "width": 69,
+                      "height": 83
+                    },
+                    "occupiedPixelCount": 1342,
+                    "occupiedRatio": 0.0819091796875,
+                    "transparentPixelCount": 15042,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "SW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/sw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 38,
+                      "minY": 38,
+                      "maxX": 87,
+                      "maxY": 121,
+                      "width": 50,
+                      "height": 84
+                    },
+                    "occupiedPixelCount": 1260,
+                    "occupiedRatio": 0.076904296875,
+                    "transparentPixelCount": 15124,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 2,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                },
+                {
+                  "direction": "W",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/w.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 58,
+                      "minY": 37,
+                      "maxX": 69,
+                      "maxY": 121,
+                      "width": 12,
+                      "height": 85
+                    },
+                    "occupiedPixelCount": 654,
+                    "occupiedRatio": 0.0399169921875,
+                    "transparentPixelCount": 15730,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 4,
+                    "minimumVerticalRunPixels": 2,
+                    "representativeFeaturePixels": 5
+                  }
+                },
+                {
+                  "direction": "NW",
+                  "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/nw.png",
+                  "metrics": {
+                    "occupiedBounds": {
+                      "minX": 38,
+                      "minY": 36,
+                      "maxX": 87,
+                      "maxY": 121,
+                      "width": 50,
+                      "height": 86
+                    },
+                    "occupiedPixelCount": 1287,
+                    "occupiedRatio": 0.07855224609375,
+                    "transparentPixelCount": 15097,
+                    "clippedEdges": [],
+                    "groundPixelY": 121,
+                    "groundAnchorDeviationPixels": 0,
+                    "minimumHorizontalRunPixels": 1,
+                    "minimumVerticalRunPixels": 1,
+                    "representativeFeaturePixels": 4
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "restoredEquippedRevisionId": "revision.eb774603d901d84416d3e757610df39ab25e4b54a5179ef2102ce2ab3d0cfb3b"
       }
     },
     {
       "reference": "crate",
       "assetId": "crate.rustic",
-      "revisionId": "revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299",
+      "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
       "inspected": {
         "ok": true,
-        "revisionId": "revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299",
+        "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
         "affectedIds": [],
         "summary": "Inspected crate.rustic.",
         "issues": [],
@@ -1200,19 +1647,55 @@
           "id": "crate.rustic",
           "name": "Iron-Banded Crate",
           "kitId": "rustic-human",
-          "partIds": [
-            "crate.band.high",
-            "crate.band.low",
-            "crate.body"
-          ],
-          "connectionIds": [],
-          "variants": [],
-          "poses": []
+          "parts": {
+            "items": [
+              {
+                "id": "crate.band.high",
+                "templateId": "prop.crate-band"
+              },
+              {
+                "id": "crate.band.low",
+                "templateId": "prop.crate-band"
+              },
+              {
+                "id": "crate.body",
+                "templateId": "prop.crate"
+              }
+            ],
+            "total": 3,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "crate-band-high"
+              },
+              {
+                "id": "crate-band-low"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
         }
       },
       "validated": {
         "ok": true,
-        "revisionId": "revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299",
+        "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
         "affectedIds": [],
         "summary": "Document and assembly validation passed.",
         "issues": [],
@@ -1220,137 +1703,6 @@
           "validation": "valid",
           "scene": {
             "id": "crate.assembly",
-            "parts": [
-              {
-                "id": "crate.band.high",
-                "templateId": "prop.crate-band",
-                "role": "prop.reinforcement",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.58,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.48,
-                    0.53,
-                    -0.43
-                  ],
-                  "max": [
-                    0.48,
-                    0.63,
-                    0.43
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "metal",
-                    "materialId": "iron.weathered"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "crate.band.low",
-                "templateId": "prop.crate-band",
-                "role": "prop.reinforcement",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.18,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.48,
-                    0.13,
-                    -0.43
-                  ],
-                  "max": [
-                    0.48,
-                    0.23,
-                    0.43
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "metal",
-                    "materialId": "iron.weathered"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "crate.body",
-                "templateId": "prop.crate",
-                "role": "prop.container",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.38,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.45,
-                    0.005,
-                    -0.4
-                  ],
-                  "max": [
-                    0.45,
-                    0.755,
-                    0.4
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.oak"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              }
-            ],
             "bounds": {
               "min": [
                 -0.48,
@@ -1363,194 +1715,263 @@
                 0.43
               ]
             },
-            "triangleCount": 132
+            "triangleCount": 132,
+            "parts": {
+              "items": [
+                {
+                  "id": "crate.band.high",
+                  "templateId": "prop.crate-band",
+                  "role": "prop.reinforcement",
+                  "bounds": {
+                    "min": [
+                      -0.48,
+                      0.53,
+                      -0.43
+                    ],
+                    "max": [
+                      0.48,
+                      0.63,
+                      0.43
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "crate.band.low",
+                  "templateId": "prop.crate-band",
+                  "role": "prop.reinforcement",
+                  "bounds": {
+                    "min": [
+                      -0.48,
+                      0.13,
+                      -0.43
+                    ],
+                    "max": [
+                      0.48,
+                      0.23,
+                      0.43
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "crate.body",
+                  "templateId": "prop.crate",
+                  "role": "prop.container",
+                  "bounds": {
+                    "min": [
+                      -0.45,
+                      0.005,
+                      -0.4
+                    ],
+                    "max": [
+                      0.45,
+                      0.755,
+                      0.4
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 3,
+              "truncated": false,
+              "limit": 100
+            }
           }
         }
       },
       "rendered": {
         "ok": true,
-        "revisionId": "revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299",
+        "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
         "affectedIds": [],
         "summary": "Rendered the current canonical revision.",
         "issues": [],
         "data": {
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/render-manifest.json",
-          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/contact-sheet.png",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/render-manifest.json",
+          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/contact-sheet.png",
           "frames": [
             {
               "direction": "N",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/n.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/n.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 21,
-                  "minY": 34,
+                  "minY": 33,
                   "maxX": 106,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 86,
                   "height": 89
                 },
-                "occupiedPixelCount": 7534,
-                "occupiedRatio": 0.4598388671875,
-                "transparentPixelCount": 8850,
+                "occupiedPixelCount": 7540,
+                "occupiedRatio": 0.460205078125,
+                "transparentPixelCount": 8844,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 72,
-                "minimumVerticalRunPixels": 74
+                "minimumVerticalRunPixels": 74,
+                "representativeFeaturePixels": 80
               }
             },
             {
               "direction": "NE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/ne.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/ne.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 7,
                   "minY": 17,
                   "maxX": 120,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 114,
-                  "height": 104
+                  "height": 105
                 },
-                "occupiedPixelCount": 8251,
-                "occupiedRatio": 0.50360107421875,
-                "transparentPixelCount": 8133,
+                "occupiedPixelCount": 8254,
+                "occupiedRatio": 0.5037841796875,
+                "transparentPixelCount": 8130,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 6
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 6,
+                "representativeFeaturePixels": 11
               }
             },
             {
               "direction": "E",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/e.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/e.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 25,
-                  "minY": 30,
+                  "minY": 28,
                   "maxX": 102,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 78,
-                  "height": 93
+                  "height": 94
                 },
-                "occupiedPixelCount": 7132,
-                "occupiedRatio": 0.435302734375,
-                "transparentPixelCount": 9252,
+                "occupiedPixelCount": 7196,
+                "occupiedRatio": 0.439208984375,
+                "transparentPixelCount": 9188,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
-                "minimumHorizontalRunPixels": 64,
-                "minimumVerticalRunPixels": 77
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 62,
+                "minimumVerticalRunPixels": 78,
+                "representativeFeaturePixels": 78
               }
             },
             {
               "direction": "SE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/se.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/se.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 7,
                   "minY": 17,
                   "maxX": 120,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 114,
-                  "height": 104
+                  "height": 105
                 },
-                "occupiedPixelCount": 8251,
-                "occupiedRatio": 0.50360107421875,
-                "transparentPixelCount": 8133,
+                "occupiedPixelCount": 8254,
+                "occupiedRatio": 0.5037841796875,
+                "transparentPixelCount": 8130,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 6
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 6,
+                "representativeFeaturePixels": 11
               }
             },
             {
               "direction": "S",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/s.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/s.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 21,
-                  "minY": 34,
+                  "minY": 33,
                   "maxX": 106,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 86,
                   "height": 89
                 },
-                "occupiedPixelCount": 7534,
-                "occupiedRatio": 0.4598388671875,
-                "transparentPixelCount": 8850,
+                "occupiedPixelCount": 7540,
+                "occupiedRatio": 0.460205078125,
+                "transparentPixelCount": 8844,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 72,
-                "minimumVerticalRunPixels": 74
+                "minimumVerticalRunPixels": 74,
+                "representativeFeaturePixels": 80
               }
             },
             {
               "direction": "SW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/sw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/sw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 7,
                   "minY": 17,
                   "maxX": 120,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 114,
-                  "height": 104
+                  "height": 105
                 },
-                "occupiedPixelCount": 8251,
-                "occupiedRatio": 0.50360107421875,
-                "transparentPixelCount": 8133,
+                "occupiedPixelCount": 8254,
+                "occupiedRatio": 0.5037841796875,
+                "transparentPixelCount": 8130,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 6
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 6,
+                "representativeFeaturePixels": 11
               }
             },
             {
               "direction": "W",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/w.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/w.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 25,
-                  "minY": 30,
+                  "minY": 28,
                   "maxX": 102,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 78,
-                  "height": 93
+                  "height": 94
                 },
-                "occupiedPixelCount": 7132,
-                "occupiedRatio": 0.435302734375,
-                "transparentPixelCount": 9252,
+                "occupiedPixelCount": 7196,
+                "occupiedRatio": 0.439208984375,
+                "transparentPixelCount": 9188,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
-                "minimumHorizontalRunPixels": 64,
-                "minimumVerticalRunPixels": 77
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 62,
+                "minimumVerticalRunPixels": 78,
+                "representativeFeaturePixels": 78
               }
             },
             {
               "direction": "NW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/nw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/nw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 7,
                   "minY": 17,
                   "maxX": 120,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 114,
-                  "height": 104
+                  "height": 105
                 },
-                "occupiedPixelCount": 8251,
-                "occupiedRatio": 0.50360107421875,
-                "transparentPixelCount": 8133,
+                "occupiedPixelCount": 8254,
+                "occupiedRatio": 0.5037841796875,
+                "transparentPixelCount": 8130,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 6
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 6,
+                "representativeFeaturePixels": 11
               }
             }
           ]
@@ -1558,13 +1979,13 @@
       },
       "exported": {
         "ok": true,
-        "revisionId": "revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299",
+        "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
         "affectedIds": [],
         "summary": "Exported the current canonical revision.",
         "issues": [],
         "data": {
-          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/crate.rustic.glb",
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.25e1507ca7683999ac7aec6bd1379cfea43e6231bf202286722dcc8765974299/glb-manifest.json",
+          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/crate.rustic.glb",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/glb-manifest.json",
           "manifest": {
             "format": "glb",
             "byteLength": 11400,
@@ -1586,6 +2007,54 @@
               "crate.body",
               "crate.rustic"
             ],
+            "reloadMaterialNames": [
+              "iron.weathered",
+              "wood.oak"
+            ],
+            "materialNamesMatch": true,
+            "semanticNodeCount": 4,
+            "reloadSemanticNodeCount": 4,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 0,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -0.47999998927116394,
+                0.0050000000000000044,
+                -0.4300000071525574
+              ],
+              "sourceMax": [
+                0.47999998927116394,
+                0.755,
+                0.4300000071525574
+              ],
+              "reloadMin": [
+                -0.47999998927116394,
+                0.0050000000000000044,
+                -0.4300000071525574
+              ],
+              "reloadMax": [
+                0.47999998927116394,
+                0.755,
+                0.4300000071525574
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.00001,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.00001,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
             "animationCount": 0
           }
         }
@@ -1594,10 +2063,10 @@
     {
       "reference": "tree",
       "assetId": "tree.rustic",
-      "revisionId": "revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591",
+      "revisionId": "revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007",
       "inspected": {
         "ok": true,
-        "revisionId": "revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591",
+        "revisionId": "revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007",
         "affectedIds": [],
         "summary": "Inspected tree.rustic.",
         "issues": [],
@@ -1605,24 +2074,90 @@
           "id": "tree.rustic",
           "name": "Old Roadside Tree",
           "kitId": "rustic-human",
-          "partIds": [
-            "tree.branch.east",
-            "tree.branch.west",
-            "tree.crown",
-            "tree.crown.east",
-            "tree.crown.west",
-            "tree.root.east",
-            "tree.root.west",
-            "trunk.main"
-          ],
-          "connectionIds": [],
-          "variants": [],
-          "poses": []
+          "parts": {
+            "items": [
+              {
+                "id": "tree.branch.east",
+                "templateId": "tree.branch"
+              },
+              {
+                "id": "tree.branch.west",
+                "templateId": "tree.branch"
+              },
+              {
+                "id": "tree.crown",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.crown.east",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.crown.west",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.root.east",
+                "templateId": "tree.root"
+              },
+              {
+                "id": "tree.root.west",
+                "templateId": "tree.root"
+              },
+              {
+                "id": "trunk.main",
+                "templateId": "tree.trunk"
+              }
+            ],
+            "total": 8,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "tree-branch-east"
+              },
+              {
+                "id": "tree-branch-west"
+              },
+              {
+                "id": "tree-crown-east"
+              },
+              {
+                "id": "tree-crown-main"
+              },
+              {
+                "id": "tree-crown-west"
+              },
+              {
+                "id": "tree-root-east"
+              },
+              {
+                "id": "tree-root-west"
+              }
+            ],
+            "total": 7,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
         }
       },
       "validated": {
         "ok": true,
-        "revisionId": "revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591",
+        "revisionId": "revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007",
         "affectedIds": [],
         "summary": "Document and assembly validation passed.",
         "issues": [],
@@ -1630,352 +2165,6 @@
           "validation": "valid",
           "scene": {
             "id": "tree.assembly",
-            "parts": [
-              {
-                "id": "tree.branch.east",
-                "templateId": "tree.branch",
-                "role": "vegetation.branch",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    1.65,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.040678830615,
-                    1.566793301014,
-                    -0.095
-                  ],
-                  "max": [
-                    0.84837996594,
-                    2.059488251361,
-                    0.146189129195
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 38,
-                "visible": true
-              },
-              {
-                "id": "tree.branch.west",
-                "templateId": "tree.branch",
-                "role": "vegetation.branch",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    1.85,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    -1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.84837996594,
-                    1.766793301014,
-                    -0.095
-                  ],
-                  "max": [
-                    0.040678830615,
-                    2.259488251361,
-                    0.146189129195
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 38,
-                "visible": true
-              },
-              {
-                "id": "tree.crown",
-                "templateId": "tree.foliage",
-                "role": "vegetation.foliage-cluster",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    2.45,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.714166391797,
-                    1.9,
-                    -0.649973116988
-                  ],
-                  "max": [
-                    0.76,
-                    3,
-                    0.649973116988
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "foliage",
-                    "materialId": "foliage.pine"
-                  }
-                ],
-                "triangleCount": 90,
-                "visible": true
-              },
-              {
-                "id": "tree.crown.east",
-                "templateId": "tree.foliage",
-                "role": "vegetation.foliage-cluster",
-                "worldTransform": {
-                  "position": [
-                    0.55,
-                    2.15,
-                    0.05
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    0.72,
-                    0.72,
-                    0.72
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.035800197906,
-                    1.754,
-                    -0.417980644231
-                  ],
-                  "max": [
-                    1.0972,
-                    2.546,
-                    0.517980644231
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "foliage",
-                    "materialId": "foliage.pine"
-                  }
-                ],
-                "triangleCount": 90,
-                "visible": true
-              },
-              {
-                "id": "tree.crown.west",
-                "templateId": "tree.foliage",
-                "role": "vegetation.foliage-cluster",
-                "worldTransform": {
-                  "position": [
-                    -0.58,
-                    2.25,
-                    -0.02
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    0.68,
-                    0.68,
-                    0.68
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.065633146422,
-                    1.876,
-                    -0.461981719552
-                  ],
-                  "max": [
-                    -0.0632,
-                    2.624,
-                    0.421981719552
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "foliage",
-                    "materialId": "foliage.pine"
-                  }
-                ],
-                "triangleCount": 90,
-                "visible": true
-              },
-              {
-                "id": "tree.root.east",
-                "templateId": "tree.root",
-                "role": "vegetation.root",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.12,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.024108308227,
-                    -0.08720396194,
-                    -0.087856835417
-                  ],
-                  "max": [
-                    0.820099032565,
-                    0.206451314325,
-                    0.26001200587
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 38,
-                "visible": true
-              },
-              {
-                "id": "tree.root.west",
-                "templateId": "tree.root",
-                "role": "vegetation.root",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.12,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    -1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.820099032565,
-                    -0.08720396194,
-                    -0.087856835417
-                  ],
-                  "max": [
-                    0.024108308227,
-                    0.206451314325,
-                    0.26001200587
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 38,
-                "visible": true
-              },
-              {
-                "id": "trunk.main",
-                "templateId": "tree.trunk",
-                "role": "vegetation.trunk",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    1.16,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.338289343483,
-                    -0.015,
-                    -0.354530791084
-                  ],
-                  "max": [
-                    0.36,
-                    2.335,
-                    0.354530791084
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 16,
-                "visible": true
-              }
-            ],
             "bounds": {
               "min": [
                 -1.065633146422,
@@ -1988,194 +2177,353 @@
                 0.649973116988
               ]
             },
-            "triangleCount": 438
+            "triangleCount": 438,
+            "parts": {
+              "items": [
+                {
+                  "id": "tree.branch.east",
+                  "templateId": "tree.branch",
+                  "role": "vegetation.branch",
+                  "bounds": {
+                    "min": [
+                      -0.040678830615,
+                      1.566793301014,
+                      -0.095
+                    ],
+                    "max": [
+                      0.84837996594,
+                      2.059488251361,
+                      0.146189129195
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.branch.west",
+                  "templateId": "tree.branch",
+                  "role": "vegetation.branch",
+                  "bounds": {
+                    "min": [
+                      -0.84837996594,
+                      1.766793301014,
+                      -0.095
+                    ],
+                    "max": [
+                      0.040678830615,
+                      2.259488251361,
+                      0.146189129195
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      -0.714166391797,
+                      1.9,
+                      -0.649973116988
+                    ],
+                    "max": [
+                      0.76,
+                      3,
+                      0.649973116988
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown.east",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      0.035800197906,
+                      1.754,
+                      -0.417980644231
+                    ],
+                    "max": [
+                      1.0972,
+                      2.546,
+                      0.517980644231
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown.west",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      -1.065633146422,
+                      1.876,
+                      -0.461981719552
+                    ],
+                    "max": [
+                      -0.0632,
+                      2.624,
+                      0.421981719552
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.root.east",
+                  "templateId": "tree.root",
+                  "role": "vegetation.root",
+                  "bounds": {
+                    "min": [
+                      -0.024108308227,
+                      -0.08720396194,
+                      -0.087856835417
+                    ],
+                    "max": [
+                      0.820099032565,
+                      0.206451314325,
+                      0.26001200587
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.root.west",
+                  "templateId": "tree.root",
+                  "role": "vegetation.root",
+                  "bounds": {
+                    "min": [
+                      -0.820099032565,
+                      -0.08720396194,
+                      -0.087856835417
+                    ],
+                    "max": [
+                      0.024108308227,
+                      0.206451314325,
+                      0.26001200587
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "trunk.main",
+                  "templateId": "tree.trunk",
+                  "role": "vegetation.trunk",
+                  "bounds": {
+                    "min": [
+                      -0.338289343483,
+                      -0.015,
+                      -0.354530791084
+                    ],
+                    "max": [
+                      0.36,
+                      2.335,
+                      0.354530791084
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 8,
+              "truncated": false,
+              "limit": 100
+            }
           }
         }
       },
       "rendered": {
         "ok": true,
-        "revisionId": "revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591",
+        "revisionId": "revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007",
         "affectedIds": [],
         "summary": "Rendered the current canonical revision.",
         "issues": [],
         "data": {
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/render-manifest.json",
-          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/contact-sheet.png",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/render-manifest.json",
+          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/contact-sheet.png",
           "frames": [
             {
               "direction": "N",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/n.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/n.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 32,
-                  "minY": 36,
+                  "minY": 37,
                   "maxX": 95,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 64,
                   "height": 85
                 },
-                "occupiedPixelCount": 2480,
-                "occupiedRatio": 0.1513671875,
-                "transparentPixelCount": 13904,
+                "occupiedPixelCount": 2479,
+                "occupiedRatio": 0.15130615234375,
+                "transparentPixelCount": 13905,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 2
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5
               }
             },
             {
               "direction": "NE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/ne.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/ne.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 39,
-                  "minY": 27,
+                  "minY": 30,
                   "maxX": 88,
-                  "maxY": 118,
+                  "maxY": 121,
                   "width": 50,
                   "height": 92
                 },
-                "occupiedPixelCount": 2196,
-                "occupiedRatio": 0.134033203125,
-                "transparentPixelCount": 14188,
+                "occupiedPixelCount": 2200,
+                "occupiedRatio": 0.13427734375,
+                "transparentPixelCount": 14184,
                 "clippedEdges": [],
-                "groundPixelY": 118,
-                "groundAnchorDeviationPixels": -3,
-                "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 1
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5
               }
             },
             {
               "direction": "E",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/e.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/e.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 45,
-                  "minY": 29,
+                  "minY": 28,
                   "maxX": 82,
                   "maxY": 121,
                   "width": 38,
-                  "height": 93
+                  "height": 94
                 },
-                "occupiedPixelCount": 1905,
-                "occupiedRatio": 0.11627197265625,
-                "transparentPixelCount": 14479,
+                "occupiedPixelCount": 1914,
+                "occupiedRatio": 0.1168212890625,
+                "transparentPixelCount": 14470,
                 "clippedEdges": [],
                 "groundPixelY": 121,
                 "groundAnchorDeviationPixels": 0,
-                "minimumHorizontalRunPixels": 4,
-                "minimumVerticalRunPixels": 2
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 3,
+                "representativeFeaturePixels": 6
               }
             },
             {
               "direction": "SE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/se.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/se.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 37,
-                  "minY": 27,
+                  "minY": 33,
                   "maxX": 89,
-                  "maxY": 114,
+                  "maxY": 121,
                   "width": 53,
-                  "height": 88
+                  "height": 89
                 },
-                "occupiedPixelCount": 2217,
-                "occupiedRatio": 0.13531494140625,
-                "transparentPixelCount": 14167,
+                "occupiedPixelCount": 2223,
+                "occupiedRatio": 0.13568115234375,
+                "transparentPixelCount": 14161,
                 "clippedEdges": [],
-                "groundPixelY": 114,
-                "groundAnchorDeviationPixels": -7,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 1
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 6
               }
             },
             {
               "direction": "S",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/s.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/s.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 32,
-                  "minY": 36,
+                  "minY": 37,
                   "maxX": 95,
-                  "maxY": 120,
+                  "maxY": 121,
                   "width": 64,
                   "height": 85
                 },
-                "occupiedPixelCount": 2464,
-                "occupiedRatio": 0.150390625,
-                "transparentPixelCount": 13920,
+                "occupiedPixelCount": 2474,
+                "occupiedRatio": 0.1510009765625,
+                "transparentPixelCount": 13910,
                 "clippedEdges": [],
-                "groundPixelY": 120,
-                "groundAnchorDeviationPixels": -1,
-                "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 6,
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 5
               }
             },
             {
               "direction": "SW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/sw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/sw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 39,
-                  "minY": 27,
+                  "minY": 33,
                   "maxX": 88,
-                  "maxY": 115,
+                  "maxY": 121,
                   "width": 50,
                   "height": 89
                 },
-                "occupiedPixelCount": 2160,
-                "occupiedRatio": 0.1318359375,
-                "transparentPixelCount": 14224,
+                "occupiedPixelCount": 2171,
+                "occupiedRatio": 0.13250732421875,
+                "transparentPixelCount": 14213,
                 "clippedEdges": [],
-                "groundPixelY": 115,
-                "groundAnchorDeviationPixels": -6,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 2
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 6
               }
             },
             {
               "direction": "W",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/w.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/w.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 45,
-                  "minY": 29,
+                  "minY": 28,
                   "maxX": 82,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 38,
                   "height": 94
                 },
-                "occupiedPixelCount": 1853,
-                "occupiedRatio": 0.11309814453125,
-                "transparentPixelCount": 14531,
+                "occupiedPixelCount": 1864,
+                "occupiedRatio": 0.11376953125,
+                "transparentPixelCount": 14520,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 3
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 8
               }
             },
             {
               "direction": "NW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/nw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/nw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 38,
-                  "minY": 27,
+                  "minY": 29,
                   "maxX": 90,
-                  "maxY": 118,
+                  "maxY": 121,
                   "width": 53,
-                  "height": 92
+                  "height": 93
                 },
-                "occupiedPixelCount": 2239,
-                "occupiedRatio": 0.13665771484375,
-                "transparentPixelCount": 14145,
+                "occupiedPixelCount": 2249,
+                "occupiedRatio": 0.13726806640625,
+                "transparentPixelCount": 14135,
                 "clippedEdges": [],
-                "groundPixelY": 118,
-                "groundAnchorDeviationPixels": -3,
-                "minimumHorizontalRunPixels": 3,
-                "minimumVerticalRunPixels": 3
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 7
               }
             }
           ]
@@ -2183,13 +2531,13 @@
       },
       "exported": {
         "ok": true,
-        "revisionId": "revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591",
+        "revisionId": "revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007",
         "affectedIds": [],
         "summary": "Exported the current canonical revision.",
         "issues": [],
         "data": {
-          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/tree.rustic.glb",
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.0ba16c54ec1ed088b820467b932c6838be3483274034e9175e0a86e2cc8bf591/glb-manifest.json",
+          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/tree.rustic.glb",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/tree.rustic/revision.17ad4075ec857fb0c258b2a68615d2c1f75c990404c66169908ae8e976102007/glb-manifest.json",
           "manifest": {
             "format": "glb",
             "byteLength": 18256,
@@ -2221,6 +2569,54 @@
               "tree.rustic",
               "trunk.main"
             ],
+            "reloadMaterialNames": [
+              "foliage.pine",
+              "wood.dark"
+            ],
+            "materialNamesMatch": true,
+            "semanticNodeCount": 9,
+            "reloadSemanticNodeCount": 9,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 5.960464477539063e-8,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -1.0656331539154054,
+                -0.08720396935939789,
+                -0.6499730944633484
+              ],
+              "sourceMax": [
+                1.097199993133545,
+                3.000000011920929,
+                0.6499730944633484
+              ],
+              "reloadMin": [
+                -1.0656331539154054,
+                -0.08720396935939789,
+                -0.6499730944633484
+              ],
+              "reloadMax": [
+                1.097199993133545,
+                3.000000011920929,
+                0.6499730944633484
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.000030872039812803274,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.000030872039812803274,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
             "animationCount": 0
           }
         }
@@ -2229,10 +2625,10 @@
     {
       "reference": "cottage",
       "assetId": "cottage.rustic",
-      "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+      "revisionId": "revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04",
       "inspected": {
         "ok": true,
-        "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+        "revisionId": "revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04",
         "affectedIds": [],
         "summary": "Inspected cottage.rustic.",
         "issues": [],
@@ -2240,27 +2636,111 @@
           "id": "cottage.rustic",
           "name": "Wayside Timber Cottage",
           "kitId": "rustic-human",
-          "partIds": [
-            "chimney",
-            "door.front",
-            "roof.main",
-            "timber.left",
-            "timber.right",
-            "wall.back",
-            "wall.front",
-            "wall.left",
-            "wall.right",
-            "window.left",
-            "window.right"
-          ],
-          "connectionIds": [],
-          "variants": [],
-          "poses": []
+          "parts": {
+            "items": [
+              {
+                "id": "chimney",
+                "templateId": "cottage.chimney"
+              },
+              {
+                "id": "door.front",
+                "templateId": "cottage.door"
+              },
+              {
+                "id": "roof.main",
+                "templateId": "cottage.roof"
+              },
+              {
+                "id": "timber.left",
+                "templateId": "cottage.timber"
+              },
+              {
+                "id": "timber.right",
+                "templateId": "cottage.timber"
+              },
+              {
+                "id": "wall.back",
+                "templateId": "cottage.wall"
+              },
+              {
+                "id": "wall.front",
+                "templateId": "cottage.wall"
+              },
+              {
+                "id": "wall.left",
+                "templateId": "cottage.side-wall"
+              },
+              {
+                "id": "wall.right",
+                "templateId": "cottage.side-wall"
+              },
+              {
+                "id": "window.left",
+                "templateId": "cottage.window"
+              },
+              {
+                "id": "window.right",
+                "templateId": "cottage.window"
+              }
+            ],
+            "total": 11,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "cottage-chimney"
+              },
+              {
+                "id": "cottage-door"
+              },
+              {
+                "id": "cottage-roof"
+              },
+              {
+                "id": "cottage-timber-left"
+              },
+              {
+                "id": "cottage-timber-right"
+              },
+              {
+                "id": "cottage-wall-back"
+              },
+              {
+                "id": "cottage-wall-left"
+              },
+              {
+                "id": "cottage-wall-right"
+              },
+              {
+                "id": "cottage-window-left"
+              },
+              {
+                "id": "cottage-window-right"
+              }
+            ],
+            "total": 10,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
         }
       },
       "validated": {
         "ok": true,
-        "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+        "revisionId": "revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04",
         "affectedIds": [],
         "summary": "Document and assembly validation passed.",
         "issues": [],
@@ -2268,481 +2748,6 @@
           "validation": "valid",
           "scene": {
             "id": "cottage.assembly",
-            "parts": [
-              {
-                "id": "chimney",
-                "templateId": "cottage.chimney",
-                "role": "structure.chimney",
-                "worldTransform": {
-                  "position": [
-                    0.82,
-                    2.45,
-                    -0.28
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.63,
-                    1.775,
-                    -0.47
-                  ],
-                  "max": [
-                    1.01,
-                    3.125,
-                    -0.09
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "stone",
-                    "materialId": "stone.lime"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "door.front",
-                "templateId": "cottage.door",
-                "role": "structure.door",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.68,
-                    1.25
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -0.38,
-                    0.005,
-                    1.18
-                  ],
-                  "max": [
-                    0.38,
-                    1.355,
-                    1.32
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.oak"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "roof.main",
-                "templateId": "cottage.roof",
-                "role": "structure.roof",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    2.2,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.625,
-                    1.675,
-                    -1.275
-                  ],
-                  "max": [
-                    1.625,
-                    2.725,
-                    1.275
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "cloth",
-                    "materialId": "cloth.umber"
-                  }
-                ],
-                "triangleCount": 8,
-                "visible": true
-              },
-              {
-                "id": "timber.left",
-                "templateId": "cottage.timber",
-                "role": "structure.timber-frame",
-                "worldTransform": {
-                  "position": [
-                    -1.05,
-                    0.98,
-                    1.24
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.13,
-                    0.005,
-                    1.1
-                  ],
-                  "max": [
-                    -0.97,
-                    1.955,
-                    1.38
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "timber.right",
-                "templateId": "cottage.timber",
-                "role": "structure.timber-frame",
-                "worldTransform": {
-                  "position": [
-                    1.05,
-                    0.98,
-                    1.24
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.97,
-                    0.005,
-                    1.1
-                  ],
-                  "max": [
-                    1.13,
-                    1.955,
-                    1.38
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "wood",
-                    "materialId": "wood.dark"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "wall.back",
-                "templateId": "cottage.wall",
-                "role": "structure.wall",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.91,
-                    -1.1
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.4,
-                    0.01,
-                    -1.21
-                  ],
-                  "max": [
-                    1.4,
-                    1.81,
-                    -0.99
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "stone",
-                    "materialId": "stone.lime"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "wall.front",
-                "templateId": "cottage.wall",
-                "role": "structure.wall",
-                "worldTransform": {
-                  "position": [
-                    0,
-                    0.91,
-                    1.1
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.4,
-                    0.01,
-                    0.99
-                  ],
-                  "max": [
-                    1.4,
-                    1.81,
-                    1.21
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "stone",
-                    "materialId": "stone.lime"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "wall.left",
-                "templateId": "cottage.side-wall",
-                "role": "structure.wall",
-                "worldTransform": {
-                  "position": [
-                    -1.4,
-                    0.91,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0.707106781187,
-                    0,
-                    0.707106781187
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.51,
-                    0.01,
-                    -1.1
-                  ],
-                  "max": [
-                    -1.29,
-                    1.81,
-                    1.1
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "stone",
-                    "materialId": "stone.lime"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "wall.right",
-                "templateId": "cottage.side-wall",
-                "role": "structure.wall",
-                "worldTransform": {
-                  "position": [
-                    1.4,
-                    0.91,
-                    0
-                  ],
-                  "rotation": [
-                    0,
-                    0.707106781187,
-                    0,
-                    0.707106781187
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    1.29,
-                    0.01,
-                    -1.1
-                  ],
-                  "max": [
-                    1.51,
-                    1.81,
-                    1.1
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "stone",
-                    "materialId": "stone.lime"
-                  }
-                ],
-                "triangleCount": 44,
-                "visible": true
-              },
-              {
-                "id": "window.left",
-                "templateId": "cottage.window",
-                "role": "structure.window",
-                "worldTransform": {
-                  "position": [
-                    -0.78,
-                    1.04,
-                    1.26
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    -1.04,
-                    0.74,
-                    1.26
-                  ],
-                  "max": [
-                    -0.52,
-                    1.34,
-                    1.26
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "metal",
-                    "materialId": "iron.weathered"
-                  }
-                ],
-                "triangleCount": 2,
-                "visible": true
-              },
-              {
-                "id": "window.right",
-                "templateId": "cottage.window",
-                "role": "structure.window",
-                "worldTransform": {
-                  "position": [
-                    0.78,
-                    1.04,
-                    1.26
-                  ],
-                  "rotation": [
-                    0,
-                    0,
-                    0,
-                    1
-                  ],
-                  "scale": [
-                    1,
-                    1,
-                    1
-                  ]
-                },
-                "bounds": {
-                  "min": [
-                    0.52,
-                    0.74,
-                    1.26
-                  ],
-                  "max": [
-                    1.04,
-                    1.34,
-                    1.26
-                  ]
-                },
-                "materialBindings": [
-                  {
-                    "slot": "metal",
-                    "materialId": "iron.weathered"
-                  }
-                ],
-                "triangleCount": 2,
-                "visible": true
-              }
-            ],
             "bounds": {
               "min": [
                 -1.625,
@@ -2755,194 +2760,407 @@
                 1.38
               ]
             },
-            "triangleCount": 364
+            "triangleCount": 364,
+            "parts": {
+              "items": [
+                {
+                  "id": "chimney",
+                  "templateId": "cottage.chimney",
+                  "role": "structure.chimney",
+                  "bounds": {
+                    "min": [
+                      0.63,
+                      1.775,
+                      -0.47
+                    ],
+                    "max": [
+                      1.01,
+                      3.125,
+                      -0.09
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "door.front",
+                  "templateId": "cottage.door",
+                  "role": "structure.door",
+                  "bounds": {
+                    "min": [
+                      -0.38,
+                      0.005,
+                      1.18
+                    ],
+                    "max": [
+                      0.38,
+                      1.355,
+                      1.32
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "roof.main",
+                  "templateId": "cottage.roof",
+                  "role": "structure.roof",
+                  "bounds": {
+                    "min": [
+                      -1.625,
+                      1.675,
+                      -1.275
+                    ],
+                    "max": [
+                      1.625,
+                      2.725,
+                      1.275
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "timber.left",
+                  "templateId": "cottage.timber",
+                  "role": "structure.timber-frame",
+                  "bounds": {
+                    "min": [
+                      -1.13,
+                      0.005,
+                      1.1
+                    ],
+                    "max": [
+                      -0.97,
+                      1.955,
+                      1.38
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "timber.right",
+                  "templateId": "cottage.timber",
+                  "role": "structure.timber-frame",
+                  "bounds": {
+                    "min": [
+                      0.97,
+                      0.005,
+                      1.1
+                    ],
+                    "max": [
+                      1.13,
+                      1.955,
+                      1.38
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.back",
+                  "templateId": "cottage.wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.4,
+                      0.01,
+                      -1.21
+                    ],
+                    "max": [
+                      1.4,
+                      1.81,
+                      -0.99
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.front",
+                  "templateId": "cottage.wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.4,
+                      0.01,
+                      0.99
+                    ],
+                    "max": [
+                      1.4,
+                      1.81,
+                      1.21
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.left",
+                  "templateId": "cottage.side-wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.51,
+                      0.01,
+                      -1.1
+                    ],
+                    "max": [
+                      -1.29,
+                      1.81,
+                      1.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.right",
+                  "templateId": "cottage.side-wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      1.29,
+                      0.01,
+                      -1.1
+                    ],
+                    "max": [
+                      1.51,
+                      1.81,
+                      1.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "window.left",
+                  "templateId": "cottage.window",
+                  "role": "structure.window",
+                  "bounds": {
+                    "min": [
+                      -1.04,
+                      0.74,
+                      1.26
+                    ],
+                    "max": [
+                      -0.52,
+                      1.34,
+                      1.26
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "window.right",
+                  "templateId": "cottage.window",
+                  "role": "structure.window",
+                  "bounds": {
+                    "min": [
+                      0.52,
+                      0.74,
+                      1.26
+                    ],
+                    "max": [
+                      1.04,
+                      1.34,
+                      1.26
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 11,
+              "truncated": false,
+              "limit": 100
+            }
           }
         }
       },
       "rendered": {
         "ok": true,
-        "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+        "revisionId": "revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04",
         "affectedIds": [],
         "summary": "Rendered the current canonical revision.",
         "issues": [],
         "data": {
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/render-manifest.json",
-          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/contact-sheet.png",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/render-manifest.json",
+          "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/contact-sheet.png",
           "frames": [
             {
               "direction": "N",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/n.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/n.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 25,
-                  "minY": 38,
+                  "minY": 34,
                   "maxX": 102,
-                  "maxY": 126,
+                  "maxY": 121,
                   "width": 78,
-                  "height": 89
+                  "height": 88
                 },
-                "occupiedPixelCount": 6595,
-                "occupiedRatio": 0.40252685546875,
-                "transparentPixelCount": 9789,
+                "occupiedPixelCount": 6564,
+                "occupiedRatio": 0.400634765625,
+                "transparentPixelCount": 9820,
                 "clippedEdges": [],
-                "groundPixelY": 126,
-                "groundAnchorDeviationPixels": 5,
-                "minimumHorizontalRunPixels": 3,
-                "minimumVerticalRunPixels": 53
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 4,
+                "minimumVerticalRunPixels": 52,
+                "representativeFeaturePixels": 73
               }
             },
             {
               "direction": "NE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/ne.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/ne.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 16,
-                  "minY": 20,
+                  "minY": 19,
                   "maxX": 113,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 98,
                   "height": 103
                 },
-                "occupiedPixelCount": 7066,
-                "occupiedRatio": 0.4312744140625,
-                "transparentPixelCount": 9318,
+                "occupiedPixelCount": 7043,
+                "occupiedRatio": 0.42987060546875,
+                "transparentPixelCount": 9341,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
-                "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 2
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 25
               }
             },
             {
               "direction": "E",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/e.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/e.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 32,
-                  "minY": 31,
+                  "minY": 28,
                   "maxX": 95,
-                  "maxY": 124,
+                  "maxY": 121,
                   "width": 64,
                   "height": 94
                 },
-                "occupiedPixelCount": 5207,
-                "occupiedRatio": 0.31781005859375,
-                "transparentPixelCount": 11177,
+                "occupiedPixelCount": 5228,
+                "occupiedRatio": 0.319091796875,
+                "transparentPixelCount": 11156,
                 "clippedEdges": [],
-                "groundPixelY": 124,
-                "groundAnchorDeviationPixels": 3,
-                "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 61
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 61,
+                "representativeFeaturePixels": 45
               }
             },
             {
               "direction": "SE",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/se.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/se.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 16,
-                  "minY": 40,
+                  "minY": 39,
                   "maxX": 113,
-                  "maxY": 123,
+                  "maxY": 121,
                   "width": 98,
-                  "height": 84
+                  "height": 83
                 },
-                "occupiedPixelCount": 5940,
-                "occupiedRatio": 0.362548828125,
-                "transparentPixelCount": 10444,
+                "occupiedPixelCount": 5917,
+                "occupiedRatio": 0.36114501953125,
+                "transparentPixelCount": 10467,
                 "clippedEdges": [],
-                "groundPixelY": 123,
-                "groundAnchorDeviationPixels": 2,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 23
               }
             },
             {
               "direction": "S",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/s.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/s.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 25,
-                  "minY": 48,
+                  "minY": 44,
                   "maxX": 102,
-                  "maxY": 125,
+                  "maxY": 121,
                   "width": 78,
                   "height": 78
                 },
-                "occupiedPixelCount": 5105,
-                "occupiedRatio": 0.31158447265625,
-                "transparentPixelCount": 11279,
+                "occupiedPixelCount": 5101,
+                "occupiedRatio": 0.31134033203125,
+                "transparentPixelCount": 11283,
                 "clippedEdges": [],
-                "groundPixelY": 125,
-                "groundAnchorDeviationPixels": 4,
-                "minimumHorizontalRunPixels": 3,
-                "minimumVerticalRunPixels": 31
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 4,
+                "minimumVerticalRunPixels": 31,
+                "representativeFeaturePixels": 12
               }
             },
             {
               "direction": "SW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/sw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/sw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 14,
-                  "minY": 30,
+                  "minY": 28,
                   "maxX": 111,
-                  "maxY": 123,
+                  "maxY": 121,
                   "width": 98,
                   "height": 94
                 },
-                "occupiedPixelCount": 6028,
-                "occupiedRatio": 0.367919921875,
-                "transparentPixelCount": 10356,
+                "occupiedPixelCount": 6011,
+                "occupiedRatio": 0.36688232421875,
+                "transparentPixelCount": 10373,
                 "clippedEdges": [],
-                "groundPixelY": 123,
-                "groundAnchorDeviationPixels": 2,
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
                 "minimumHorizontalRunPixels": 1,
-                "minimumVerticalRunPixels": 1
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 12
               }
             },
             {
               "direction": "W",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/w.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/w.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 32,
-                  "minY": 30,
+                  "minY": 27,
                   "maxX": 95,
-                  "maxY": 124,
+                  "maxY": 121,
                   "width": 64,
                   "height": 95
                 },
-                "occupiedPixelCount": 5331,
-                "occupiedRatio": 0.32537841796875,
-                "transparentPixelCount": 11053,
+                "occupiedPixelCount": 5346,
+                "occupiedRatio": 0.3262939453125,
+                "transparentPixelCount": 11038,
                 "clippedEdges": [],
-                "groundPixelY": 124,
-                "groundAnchorDeviationPixels": 3,
-                "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 61
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 61,
+                "representativeFeaturePixels": 29
               }
             },
             {
               "direction": "NW",
-              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/nw.png",
+              "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/nw.png",
               "metrics": {
                 "occupiedBounds": {
                   "minX": 14,
-                  "minY": 20,
+                  "minY": 19,
                   "maxX": 111,
-                  "maxY": 122,
+                  "maxY": 121,
                   "width": 98,
                   "height": 103
                 },
-                "occupiedPixelCount": 7068,
-                "occupiedRatio": 0.431396484375,
-                "transparentPixelCount": 9316,
+                "occupiedPixelCount": 7047,
+                "occupiedRatio": 0.43011474609375,
+                "transparentPixelCount": 9337,
                 "clippedEdges": [],
-                "groundPixelY": 122,
-                "groundAnchorDeviationPixels": 1,
-                "minimumHorizontalRunPixels": 2,
-                "minimumVerticalRunPixels": 2
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 25
               }
             }
           ]
@@ -2950,13 +3168,13 @@
       },
       "exported": {
         "ok": true,
-        "revisionId": "revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486",
+        "revisionId": "revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04",
         "affectedIds": [],
         "summary": "Exported the current canonical revision.",
         "issues": [],
         "data": {
-          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/cottage.rustic.glb",
-          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.51c51b351c59fb5a463e8304c16d1598d26ff6f7c29eea88fedd27af69890486/glb-manifest.json",
+          "glbPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/cottage.rustic.glb",
+          "manifestPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/cottage.rustic/revision.b90dcab021f93c24da941ddba316a6f333df555c5b56b3ada999f9d319849a04/glb-manifest.json",
           "manifest": {
             "format": "glb",
             "byteLength": 33784,
@@ -2997,6 +3215,57 @@
               "window.left",
               "window.right"
             ],
+            "reloadMaterialNames": [
+              "cloth.umber",
+              "iron.weathered",
+              "stone.lime",
+              "wood.dark",
+              "wood.oak"
+            ],
+            "materialNamesMatch": true,
+            "semanticNodeCount": 12,
+            "reloadSemanticNodeCount": 12,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 0,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -1.625,
+                0.004999976158142072,
+                -1.274999976158142
+              ],
+              "sourceMax": [
+                1.625,
+                3.125000011920929,
+                1.3800000005960464
+              ],
+              "reloadMin": [
+                -1.625,
+                0.004999976158142072,
+                -1.274999976158142
+              ],
+              "reloadMax": [
+                1.625,
+                3.125000011920929,
+                1.3800000005960464
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.000032500000000000004,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.000032500000000000004,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
             "animationCount": 0
           }
         }

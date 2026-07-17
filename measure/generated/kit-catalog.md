@@ -21,19 +21,19 @@ Kit ID: `rustic-human`
 | `human.tunic` | clothing.tunic-shell | `wedge` | cloth | none |
 | `equipment.sword` | equipment.sword | `extrudedProfile` | metal | grip |
 | `equipment.shield` | equipment.shield | `prism` | wood | grip |
-| `prop.crate` | prop.container | `beveledBox` | wood | none |
-| `prop.crate-band` | prop.reinforcement | `beveledBox` | metal | none |
-| `tree.trunk` | vegetation.trunk | `cone` | wood | none |
-| `tree.root` | vegetation.root | `tubePath` | wood | none |
-| `tree.branch` | vegetation.branch | `tubePath` | wood | none |
-| `tree.foliage` | vegetation.foliage-cluster | `ellipsoid` | foliage | none |
-| `cottage.wall` | structure.wall | `beveledBox` | stone | none |
-| `cottage.side-wall` | structure.wall | `beveledBox` | stone | none |
-| `cottage.timber` | structure.timber-frame | `beveledBox` | wood | none |
-| `cottage.door` | structure.door | `beveledBox` | wood | none |
-| `cottage.window` | structure.window | `flatCard` | metal | none |
-| `cottage.roof` | structure.roof | `wedge` | cloth | none |
-| `cottage.chimney` | structure.chimney | `beveledBox` | stone | none |
+| `prop.crate` | prop.container | `beveledBox` | wood | band.low, band.high |
+| `prop.crate-band` | prop.reinforcement | `beveledBox` | metal | crate.attach |
+| `tree.trunk` | vegetation.trunk | `cone` | wood | root.east, root.west, branch.east, branch.west, crown.main, crown.east, crown.west |
+| `tree.root` | vegetation.root | `tubePath` | wood | trunk.attach |
+| `tree.branch` | vegetation.branch | `tubePath` | wood | trunk.attach |
+| `tree.foliage` | vegetation.foliage-cluster | `ellipsoid` | foliage | trunk.attach |
+| `cottage.wall` | structure.wall | `beveledBox` | stone | wall.attach, wall.back, wall.left, wall.right, timber.left, timber.right, door.front, window.left, window.right, roof.main, chimney |
+| `cottage.side-wall` | structure.wall | `beveledBox` | stone | wall.attach |
+| `cottage.timber` | structure.timber-frame | `beveledBox` | wood | wall.attach |
+| `cottage.door` | structure.door | `beveledBox` | wood | wall.attach |
+| `cottage.window` | structure.window | `flatCard` | metal | wall.attach |
+| `cottage.roof` | structure.roof | `wedge` | cloth | wall.attach |
+| `cottage.chimney` | structure.chimney | `beveledBox` | stone | wall.attach |
 
 ## Palette and Material Families
 
@@ -49,6 +49,9 @@ Kit ID: `rustic-human`
 | `stone.lime` | stone | `#8e8978` | 1 | 0 |
 | `foliage.pine` | foliage | `#334f36` | 1 | 0 |
 | `hair.chestnut` | fur | `#4b3025` | 1 | 0 |
+| `bronze.aged` | bronze | `#8a633d` | 0.72 | 0.66 |
+| `bone.ivory` | bone | `#c8b995` | 0.9 | 0 |
+| `crystal.arcane` | crystal | `#7f73b8` | 0.28 | 0.08 |
 
 ## Canonical References
 

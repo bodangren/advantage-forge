@@ -1,10 +1,14 @@
+import { z } from 'zod';
+
 import {
   AssetDocumentSchema,
+  PartTemplateDefinitionSchema,
   type AssetDocument,
   type ConnectionDefinition,
   type MaterialDefinition,
   type PartInstance,
   type PartTemplateDefinition,
+  type PortCompatibilityTag,
   type PortDefinition,
   type PoseDefinition,
   type Transform,
@@ -24,8 +28,8 @@ const at = (x: number, y: number, z: number): Transform => ({
 const port = (
   id: string,
   position: [number, number, number],
-  tags: string[],
-  accepts: string[],
+  tags: PortCompatibilityTag[],
+  accepts: PortCompatibilityTag[],
   cardinality: 'single' | 'multiple' = 'single',
 ): PortDefinition => ({
   id,
@@ -120,6 +124,28 @@ export const rusticMaterials: readonly MaterialDefinition[] = [
     color: '#4b3025',
     roughness: 1,
     metalness: 0,
+  },
+  {
+    id: 'bronze.aged',
+    family: 'bronze',
+    color: '#8a633d',
+    roughness: 0.72,
+    metalness: 0.66,
+  },
+  {
+    id: 'bone.ivory',
+    family: 'bone',
+    color: '#c8b995',
+    roughness: 0.9,
+    metalness: 0,
+  },
+  {
+    id: 'crystal.arcane',
+    family: 'crystal',
+    color: '#7f73b8',
+    roughness: 0.28,
+    metalness: 0.08,
+    emissive: '#241d45',
   },
 ];
 
@@ -299,18 +325,67 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     'prop.container',
     { kind: 'beveledBox', width: 0.9, height: 0.75, depth: 0.8, bevel: 0.055 },
     ['wood'],
+    [
+      port('band.low', [0, -0.2, 0], ['prop.mount'], ['prop.attach']),
+      port('band.high', [0, 0.2, 0], ['prop.mount'], ['prop.attach']),
+    ],
   ),
   template(
     'prop.crate-band',
     'prop.reinforcement',
     { kind: 'beveledBox', width: 0.96, height: 0.1, depth: 0.86, bevel: 0.018 },
     ['metal'],
+    [port('crate.attach', [0, 0, 0], ['prop.attach'], ['prop.mount'])],
   ),
   template(
     'tree.trunk',
     'vegetation.trunk',
     { kind: 'cone', radius: 0.36, height: 2.35, radialSegments: 9 },
     ['wood'],
+    [
+      port(
+        'root.east',
+        [0, -1.04, 0],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'root.west',
+        [0, -1.04, 0],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'branch.east',
+        [0, 0.49, 0],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'branch.west',
+        [0, 0.69, 0],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'crown.main',
+        [0, 1.29, 0],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'crown.east',
+        [0.55, 0.99, 0.05],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+      port(
+        'crown.west',
+        [-0.58, 1.09, -0.02],
+        ['vegetation.mount'],
+        ['vegetation.attach'],
+      ),
+    ],
   ),
   template(
     'tree.root',
@@ -326,6 +401,14 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       radialSegments: 7,
     },
     ['wood'],
+    [
+      port(
+        'trunk.attach',
+        [0, 0, 0],
+        ['vegetation.attach'],
+        ['vegetation.mount'],
+      ),
+    ],
   ),
   template(
     'tree.branch',
@@ -341,6 +424,14 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       radialSegments: 7,
     },
     ['wood'],
+    [
+      port(
+        'trunk.attach',
+        [0, 0, 0],
+        ['vegetation.attach'],
+        ['vegetation.mount'],
+      ),
+    ],
   ),
   template(
     'tree.foliage',
@@ -354,18 +445,90 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       heightSegments: 6,
     },
     ['foliage'],
+    [
+      port(
+        'trunk.attach',
+        [0, 0, 0],
+        ['vegetation.attach'],
+        ['vegetation.mount'],
+      ),
+    ],
   ),
   template(
     'cottage.wall',
     'structure.wall',
     { kind: 'beveledBox', width: 2.8, height: 1.8, depth: 0.22, bevel: 0.035 },
     ['stone'],
+    [
+      port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount']),
+      port(
+        'wall.back',
+        [0, 0, -2.2],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'wall.left',
+        [-1.4, 0, -1.1],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'wall.right',
+        [1.4, 0, -1.1],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'timber.left',
+        [-1.05, 0.07, 0.14],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'timber.right',
+        [1.05, 0.07, 0.14],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'door.front',
+        [0, -0.23, 0.15],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'window.left',
+        [-0.78, 0.13, 0.16],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'window.right',
+        [0.78, 0.13, 0.16],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'roof.main',
+        [0, 1.29, -1.1],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+      port(
+        'chimney',
+        [0.82, 1.54, -1.38],
+        ['structure.mount'],
+        ['structure.attach'],
+      ),
+    ],
   ),
   template(
     'cottage.side-wall',
     'structure.wall',
     { kind: 'beveledBox', width: 2.2, height: 1.8, depth: 0.22, bevel: 0.035 },
     ['stone'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
   template(
     'cottage.timber',
@@ -378,6 +541,7 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       bevel: 0.025,
     },
     ['wood'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
   template(
     'cottage.door',
@@ -390,49 +554,122 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       bevel: 0.035,
     },
     ['wood'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
   template(
     'cottage.window',
     'structure.window',
     { kind: 'flatCard', width: 0.52, height: 0.6 },
     ['metal'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
   template(
     'cottage.roof',
     'structure.roof',
     { kind: 'wedge', width: 3.25, height: 1.05, depth: 2.55 },
     ['cloth'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
   template(
     'cottage.chimney',
     'structure.chimney',
     { kind: 'beveledBox', width: 0.38, height: 1.35, depth: 0.38, bevel: 0.04 },
     ['stone'],
+    [port('wall.attach', [0, 0, 0], ['structure.attach'], ['structure.mount'])],
   ),
 ];
 
-export interface KitTemplateManifest {
-  readonly template: PartTemplateDefinition;
-  readonly parameterBounds: Readonly<Record<string, readonly [number, number]>>;
-  readonly intendedReferences: readonly string[];
-}
+export const KitTemplateManifestSchema = z
+  .object({
+    template: PartTemplateDefinitionSchema,
+    parameterBounds: z.record(
+      z.string().min(1),
+      z.tuple([z.number().finite(), z.number().finite()]),
+    ),
+    intendedReferences: z
+      .array(z.enum(['adventurer', 'crate', 'tree', 'cottage']))
+      .min(1),
+  })
+  .strict();
+export type KitTemplateManifest = z.infer<typeof KitTemplateManifestSchema>;
+
 const numericBounds = (
   entry: PartTemplateDefinition,
-): Record<string, [number, number]> =>
-  Object.fromEntries(
-    Object.entries(entry.shape)
-      .filter(([key, value]) => key !== 'kind' && typeof value === 'number')
-      .map(([key]) => [key, [0.001, 1_000]]),
-  );
+): Record<string, [number, number]> => {
+  const dimension = (): [number, number] => [0.001, 1_000];
+  const segments = (): [number, number] => [3, 128];
+  switch (entry.shape.kind) {
+    case 'box':
+    case 'wedge':
+      return { width: dimension(), height: dimension(), depth: dimension() };
+    case 'beveledBox':
+      return {
+        width: dimension(),
+        height: dimension(),
+        depth: dimension(),
+        bevel: [
+          0.001,
+          Math.min(entry.shape.width, entry.shape.height, entry.shape.depth) /
+            2 -
+            Number.EPSILON,
+        ],
+      };
+    case 'prism':
+      return { radius: dimension(), height: dimension(), sides: segments() };
+    case 'cylinder':
+    case 'cone':
+      return {
+        radius: dimension(),
+        height: dimension(),
+        radialSegments: segments(),
+      };
+    case 'ellipsoid':
+      return {
+        radiusX: dimension(),
+        radiusY: dimension(),
+        radiusZ: dimension(),
+        widthSegments: segments(),
+        heightSegments: [2, 128],
+      };
+    case 'capsule':
+      return {
+        radius: dimension(),
+        cylinderHeight: dimension(),
+        radialSegments: segments(),
+        capSegments: [2, 128],
+      };
+    case 'extrudedProfile':
+      return { depth: dimension(), profilePoints: [3, 256] };
+    case 'lathedProfile':
+      return { profilePoints: [2, 256], radialSegments: segments() };
+    case 'tubePath':
+      return {
+        pathPoints: [2, 256],
+        radius: dimension(),
+        radialSegments: segments(),
+      };
+    case 'flatCard':
+      return { width: dimension(), height: dimension() };
+  }
+};
+const intendedReferences = (
+  entry: PartTemplateDefinition,
+): KitTemplateManifest['intendedReferences'] =>
+  entry.id.startsWith('human.') || entry.id.startsWith('equipment.')
+    ? ['adventurer']
+    : entry.id.startsWith('prop.')
+      ? ['crate']
+      : entry.id.startsWith('tree.')
+        ? ['tree']
+        : ['cottage'];
 export const rusticManifest: readonly KitTemplateManifest[] =
-  rusticTemplates.map((entry) => ({
-    template: entry,
-    parameterBounds: numericBounds(entry),
-    intendedReferences:
-      entry.id.startsWith('human.') || entry.id.startsWith('equipment.')
-        ? ['adventurer']
-        : [entry.id.split('.')[0]!],
-  }));
+  rusticTemplates.map((entry) =>
+    KitTemplateManifestSchema.parse({
+      template: entry,
+      parameterBounds: numericBounds(entry),
+      intendedReferences: intendedReferences(entry),
+    }),
+  );
 
 const bind = (slot: string, materialId: string) => ({ slot, materialId });
 const part = (
@@ -445,6 +682,11 @@ const part = (
 ): PartInstance => ({
   id,
   templateId,
+  handedness: id.endsWith('.left')
+    ? 'left'
+    : id.endsWith('.right')
+      ? 'right'
+      : 'neutral',
   transform,
   materialBindings: [bind(slot, materialId)],
   visible: true,
@@ -651,11 +893,11 @@ const documentBase = (id: string, name: string, seed: number) => ({
       id: 'sprite.default',
       widthPixels: 128,
       heightPixels: 128,
-      elevationDegrees: 24,
+      elevationDegrees: 30,
       directions: 8 as const,
-      paddingPixels: 8,
+      paddingPixels: 6,
       transparent: true as const,
-      minimumFeaturePixels: 2,
+      minimumFeaturePixels: 3,
     },
   ],
 });
@@ -680,20 +922,25 @@ export const crateDocument = parseDocument({
     id: 'crate.assembly',
     parts: [
       part('crate.body', 'prop.crate', 'wood.oak', at(0, 0.38, 0)),
-      part(
+      part('crate.band.low', 'prop.crate-band', 'iron.weathered'),
+      part('crate.band.high', 'prop.crate-band', 'iron.weathered'),
+    ],
+    connections: [
+      connect(
+        'crate-band-low',
+        'crate.body',
+        'band.low',
         'crate.band.low',
-        'prop.crate-band',
-        'iron.weathered',
-        at(0, 0.18, 0),
+        'crate.attach',
       ),
-      part(
+      connect(
+        'crate-band-high',
+        'crate.body',
+        'band.high',
         'crate.band.high',
-        'prop.crate-band',
-        'iron.weathered',
-        at(0, 0.58, 0),
+        'crate.attach',
       ),
     ],
-    connections: [],
   },
 });
 export const treeDocument = parseDocument({
@@ -702,27 +949,77 @@ export const treeDocument = parseDocument({
     id: 'tree.assembly',
     parts: [
       part('trunk.main', 'tree.trunk', 'wood.dark', at(0, 1.16, 0)),
-      part('tree.root.east', 'tree.root', 'wood.dark', at(0, 0.12, 0)),
+      part('tree.root.east', 'tree.root', 'wood.dark'),
       part('tree.root.west', 'tree.root', 'wood.dark', {
-        ...at(0, 0.12, 0),
+        ...identity(),
         scale: [-1, 1, 1],
       }),
-      part('tree.branch.east', 'tree.branch', 'wood.dark', at(0, 1.65, 0)),
+      part('tree.branch.east', 'tree.branch', 'wood.dark'),
       part('tree.branch.west', 'tree.branch', 'wood.dark', {
-        ...at(0, 1.85, 0),
+        ...identity(),
         scale: [-1, 1, 1],
       }),
-      part('tree.crown', 'tree.foliage', 'foliage.pine', at(0, 2.45, 0)),
+      part('tree.crown', 'tree.foliage', 'foliage.pine'),
       part('tree.crown.east', 'tree.foliage', 'foliage.pine', {
-        ...at(0.55, 2.15, 0.05),
+        ...identity(),
         scale: [0.72, 0.72, 0.72],
       }),
       part('tree.crown.west', 'tree.foliage', 'foliage.pine', {
-        ...at(-0.58, 2.25, -0.02),
+        ...identity(),
         scale: [0.68, 0.68, 0.68],
       }),
     ],
-    connections: [],
+    connections: [
+      connect(
+        'tree-root-east',
+        'trunk.main',
+        'root.east',
+        'tree.root.east',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-root-west',
+        'trunk.main',
+        'root.west',
+        'tree.root.west',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-branch-east',
+        'trunk.main',
+        'branch.east',
+        'tree.branch.east',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-branch-west',
+        'trunk.main',
+        'branch.west',
+        'tree.branch.west',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-crown-main',
+        'trunk.main',
+        'crown.main',
+        'tree.crown',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-crown-east',
+        'trunk.main',
+        'crown.east',
+        'tree.crown.east',
+        'trunk.attach',
+      ),
+      connect(
+        'tree-crown-west',
+        'trunk.main',
+        'crown.west',
+        'tree.crown.west',
+        'trunk.attach',
+      ),
+    ],
   },
 });
 export const cottageDocument = parseDocument({
@@ -731,34 +1028,95 @@ export const cottageDocument = parseDocument({
     id: 'cottage.assembly',
     parts: [
       part('wall.front', 'cottage.wall', 'stone.lime', at(0, 0.91, 1.1)),
-      part('wall.back', 'cottage.wall', 'stone.lime', at(0, 0.91, -1.1)),
+      part('wall.back', 'cottage.wall', 'stone.lime'),
       part('wall.left', 'cottage.side-wall', 'stone.lime', {
-        ...at(-1.4, 0.91, 0),
+        ...identity(),
         rotation: [0, 0.70710678, 0, 0.70710678],
       }),
       part('wall.right', 'cottage.side-wall', 'stone.lime', {
-        ...at(1.4, 0.91, 0),
+        ...identity(),
         rotation: [0, 0.70710678, 0, 0.70710678],
       }),
-      part('timber.left', 'cottage.timber', 'wood.dark', at(-1.05, 0.98, 1.24)),
-      part('timber.right', 'cottage.timber', 'wood.dark', at(1.05, 0.98, 1.24)),
-      part('door.front', 'cottage.door', 'wood.oak', at(0, 0.68, 1.25)),
-      part(
-        'window.left',
-        'cottage.window',
-        'iron.weathered',
-        at(-0.78, 1.04, 1.26),
-      ),
-      part(
-        'window.right',
-        'cottage.window',
-        'iron.weathered',
-        at(0.78, 1.04, 1.26),
-      ),
-      part('roof.main', 'cottage.roof', 'cloth.umber', at(0, 2.2, 0)),
-      part('chimney', 'cottage.chimney', 'stone.lime', at(0.82, 2.45, -0.28)),
+      part('timber.left', 'cottage.timber', 'wood.dark'),
+      part('timber.right', 'cottage.timber', 'wood.dark'),
+      part('door.front', 'cottage.door', 'wood.oak'),
+      part('window.left', 'cottage.window', 'iron.weathered'),
+      part('window.right', 'cottage.window', 'iron.weathered'),
+      part('roof.main', 'cottage.roof', 'cloth.umber'),
+      part('chimney', 'cottage.chimney', 'stone.lime'),
     ],
-    connections: [],
+    connections: [
+      connect(
+        'cottage-wall-back',
+        'wall.front',
+        'wall.back',
+        'wall.back',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-wall-left',
+        'wall.front',
+        'wall.left',
+        'wall.left',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-wall-right',
+        'wall.front',
+        'wall.right',
+        'wall.right',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-timber-left',
+        'wall.front',
+        'timber.left',
+        'timber.left',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-timber-right',
+        'wall.front',
+        'timber.right',
+        'timber.right',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-door',
+        'wall.front',
+        'door.front',
+        'door.front',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-window-left',
+        'wall.front',
+        'window.left',
+        'window.left',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-window-right',
+        'wall.front',
+        'window.right',
+        'window.right',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-roof',
+        'wall.front',
+        'roof.main',
+        'roof.main',
+        'wall.attach',
+      ),
+      connect(
+        'cottage-chimney',
+        'wall.front',
+        'chimney',
+        'chimney',
+        'wall.attach',
+      ),
+    ],
   },
 });
 

@@ -12,7 +12,7 @@ export const SemanticIdSchema = z
     'Use lowercase semantic segments separated by dots, underscores, or hyphens.',
   );
 export const FiniteNumberSchema = z.number().finite();
-export const PositiveNumberSchema = FiniteNumberSchema.positive();
+export const PositiveNumberSchema = FiniteNumberSchema.min(0.001);
 export const Vec2Schema = z.tuple([FiniteNumberSchema, FiniteNumberSchema]);
 export const Vec3Schema = z.tuple([
   FiniteNumberSchema,
@@ -109,7 +109,7 @@ export const CapsuleShapeSchema = z
     radius: PositiveNumberSchema.max(1_000),
     cylinderHeight: PositiveNumberSchema.max(1_000),
     radialSegments: SegmentSchema,
-    capSegments: z.number().int().min(2).max(64),
+    capSegments: z.number().int().min(2).max(128),
   })
   .strict();
 export const ExtrudedProfileShapeSchema = z
@@ -142,7 +142,7 @@ export const FlatCardShapeSchema = z
   })
   .strict();
 
-export const ShapeDefinitionSchema = z.discriminatedUnion('kind', [
+const BaseShapeDefinitionSchema = z.discriminatedUnion('kind', [
   BoxShapeSchema,
   BeveledBoxShapeSchema,
   WedgeShapeSchema,
@@ -156,6 +156,103 @@ export const ShapeDefinitionSchema = z.discriminatedUnion('kind', [
   TubePathShapeSchema,
   FlatCardShapeSchema,
 ]);
+function profileArea(profile: readonly (readonly [number, number])[]): number {
+  return (
+    profile.reduce((sum, point, index) => {
+      const next = profile[(index + 1) % profile.length] ?? point;
+      return sum + point[0] * next[1] - next[0] * point[1];
+    }, 0) / 2
+  );
+}
+
+function convexProfile(
+  profile: readonly (readonly [number, number])[],
+): boolean {
+  let sign = 0;
+  for (let index = 0; index < profile.length; index += 1) {
+    const a = profile[index]!;
+    const b = profile[(index + 1) % profile.length]!;
+    const c = profile[(index + 2) % profile.length]!;
+    const cross = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]);
+    if (Math.abs(cross) <= 1e-9) continue;
+    const nextSign = Math.sign(cross);
+    if (sign !== 0 && sign !== nextSign) return false;
+    sign = nextSign;
+  }
+  return sign !== 0;
+}
+
+export const ShapeDefinitionSchema = BaseShapeDefinitionSchema.superRefine(
+  (shape, context) => {
+    const issue = (path: (string | number)[], message: string) =>
+      context.addIssue({ code: 'custom', path, message });
+    if (
+      shape.kind === 'beveledBox' &&
+      shape.bevel >= Math.min(shape.width, shape.height, shape.depth) / 2
+    )
+      issue(
+        ['bevel'],
+        'Bevel must be smaller than half the shortest dimension.',
+      );
+    if (shape.kind === 'extrudedProfile') {
+      if (
+        shape.profile.some((point) =>
+          point.some((value) => Math.abs(value) > 1_000),
+        )
+      )
+        issue(
+          ['profile'],
+          'Profile coordinates must be between -1000 and 1000.',
+        );
+      if (Math.abs(profileArea(shape.profile)) <= 1e-9)
+        issue(['profile'], 'Profile must have non-zero area.');
+      else if (!convexProfile(shape.profile))
+        issue(['profile'], 'Profile must be convex and non-self-intersecting.');
+    }
+    if (shape.kind === 'lathedProfile') {
+      if (
+        shape.profile.some(
+          ([radius, y]) => radius < 0 || radius > 1_000 || Math.abs(y) > 1_000,
+        )
+      )
+        issue(
+          ['profile'],
+          'Lathed radii must be 0..1000 and heights -1000..1000.',
+        );
+      if (
+        shape.profile.some(
+          (point, index) =>
+            index > 0 && point[1] <= shape.profile[index - 1]![1],
+        )
+      )
+        issue(
+          ['profile'],
+          'Lathed profile heights must be strictly increasing.',
+        );
+      if (!shape.profile.some(([radius]) => radius > 0))
+        issue(['profile'], 'Lathed profile must contain a positive radius.');
+    }
+    if (shape.kind === 'tubePath') {
+      if (
+        shape.path.some((point) =>
+          point.some((value) => Math.abs(value) > 1_000),
+        )
+      )
+        issue(['path'], 'Path coordinates must be between -1000 and 1000.');
+      if (
+        shape.path.some(
+          (point, index) =>
+            index > 0 &&
+            point.every(
+              (value, axis) =>
+                Math.abs(value - shape.path[index - 1]![axis]!) <= 1e-9,
+            ),
+        )
+      )
+        issue(['path'], 'Consecutive path points must differ.');
+    }
+  },
+);
 
 export const MaterialBindingSchema = z
   .object({ slot: SemanticIdSchema, materialId: SemanticIdSchema })
@@ -189,12 +286,25 @@ export const MaterialDefinitionSchema = z
   })
   .strict();
 
+export const PortCompatibilityTagSchema = z.enum([
+  'anatomy.mount',
+  'anatomy.attach',
+  'equipment.mount',
+  'equipment.grip',
+  'prop.mount',
+  'prop.attach',
+  'vegetation.mount',
+  'vegetation.attach',
+  'structure.mount',
+  'structure.attach',
+]);
+
 export const PortDefinitionSchema = z
   .object({
     id: SemanticIdSchema,
     frame: TransformSchema,
-    tags: z.array(SemanticIdSchema).min(1).max(16),
-    accepts: z.array(SemanticIdSchema).min(1).max(16),
+    tags: z.array(PortCompatibilityTagSchema).min(1).max(16),
+    accepts: z.array(PortCompatibilityTagSchema).min(1).max(16),
     cardinality: z.enum(['single', 'multiple']),
   })
   .strict();
@@ -213,6 +323,7 @@ export const PartInstanceSchema = z
   .object({
     id: SemanticIdSchema,
     templateId: SemanticIdSchema,
+    handedness: z.enum(['neutral', 'left', 'right']).optional(),
     transform: TransformSchema,
     shape: ShapeDefinitionSchema.optional(),
     materialBindings: z.array(MaterialBindingSchema).min(1).max(16),
@@ -310,9 +421,30 @@ export const AssetDocumentSchema = z
   })
   .strict();
 
+export const ValidationErrorCodeSchema = z.enum([
+  'UNKNOWN_FIELD',
+  'UNKNOWN_REFERENCE',
+  'INVALID_MATERIAL_SLOT',
+  'INVALID_UNIT',
+  'DUPLICATE_ID',
+  'UNSUPPORTED_NODE_KIND',
+  'UNSUPPORTED_VERSION',
+  'INVALID_VALUE',
+  'NON_FINITE_VALUE',
+  'INVALID_PATH',
+  'REVISION_CONFLICT',
+  'ALREADY_EXISTS',
+  'NOT_FOUND',
+  'PATCH_REJECTED',
+  'INVALID_ASSEMBLY',
+  'SERVICE_UNAVAILABLE',
+  'RESPONSE_TOO_LARGE',
+  'REPOSITORY_ERROR',
+]);
+
 export const ValidationIssueSchema = z
   .object({
-    code: z.string().min(1).max(80),
+    code: ValidationErrorCodeSchema,
     path: z.string().min(1).max(500),
     message: z.string().min(1).max(1_000),
     severity: z.enum(['error', 'warning']),
@@ -380,6 +512,7 @@ export type ShapeDefinition = z.infer<typeof ShapeDefinitionSchema>;
 export type MaterialBinding = z.infer<typeof MaterialBindingSchema>;
 export type MaterialDefinition = z.infer<typeof MaterialDefinitionSchema>;
 export type MaterialFamily = z.infer<typeof MaterialFamilySchema>;
+export type PortCompatibilityTag = z.infer<typeof PortCompatibilityTagSchema>;
 export type PortDefinition = z.infer<typeof PortDefinitionSchema>;
 export type PartTemplateDefinition = z.infer<
   typeof PartTemplateDefinitionSchema
@@ -391,6 +524,7 @@ export type AssemblyDefinition = z.infer<typeof AssemblyDefinitionSchema>;
 export type VariantDefinition = z.infer<typeof VariantDefinitionSchema>;
 export type PoseDefinition = z.infer<typeof PoseDefinitionSchema>;
 export type AssetDocument = z.infer<typeof AssetDocumentSchema>;
+export type ValidationErrorCode = z.infer<typeof ValidationErrorCodeSchema>;
 export type ValidationIssue = z.infer<typeof ValidationIssueSchema>;
 export type ToolResultEnvelope = z.infer<typeof ToolResultEnvelopeSchema>;
 export type GeometryMaterialGroup = z.infer<typeof GeometryMaterialGroupSchema>;

@@ -17,6 +17,7 @@ export interface PixelMetrics {
   readonly groundAnchorDeviationPixels: number | null;
   readonly minimumHorizontalRunPixels: number | null;
   readonly minimumVerticalRunPixels: number | null;
+  readonly representativeFeaturePixels: number | null;
 }
 
 export interface PixelAnalysisOptions {
@@ -116,6 +117,7 @@ export function analyzeRgbaPixels(
         : groundPixelY - expectedGroundPixelY,
     minimumHorizontalRunPixels: minimumRun(occupied, width, height, true),
     minimumVerticalRunPixels: minimumRun(occupied, width, height, false),
+    representativeFeaturePixels: representativeRun(occupied, width, height),
   };
 }
 
@@ -143,6 +145,34 @@ function minimumRun(
     }
   }
   return Number.isFinite(minimum) ? minimum : null;
+}
+
+function representativeRun(
+  occupied: Uint8Array,
+  width: number,
+  height: number,
+): number | null {
+  const runs: number[] = [];
+  for (const horizontal of [true, false]) {
+    const outer = horizontal ? height : width;
+    const inner = horizontal ? width : height;
+    for (let outerIndex = 0; outerIndex < outer; outerIndex += 1) {
+      let run = 0;
+      for (let innerIndex = 0; innerIndex <= inner; innerIndex += 1) {
+        const x = horizontal ? innerIndex : outerIndex;
+        const y = horizontal ? outerIndex : innerIndex;
+        const set = innerIndex < inner && occupied[y * width + x] === 1;
+        if (set) run += 1;
+        else if (run > 0) {
+          if (run >= 2) runs.push(run);
+          run = 0;
+        }
+      }
+    }
+  }
+  if (runs.length === 0) return null;
+  runs.sort((left, right) => left - right);
+  return runs[Math.floor((runs.length - 1) * 0.1)] ?? null;
 }
 
 function assertDimensions(

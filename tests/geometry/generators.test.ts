@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
-import type {
-  IndexedGeometry,
-  ShapeDefinition,
+import {
+  ShapeDefinitionSchema,
+  type IndexedGeometry,
+  type ShapeDefinition,
 } from '../../src/contracts/index.js';
 import {
   GEOMETRY_LIMITS,
@@ -181,8 +182,9 @@ describe.each([
   it.each(shapes.map((shape) => [shape.kind, shape] as const))(
     '%s returns valid deterministic indexed geometry',
     (_kind, shape) => {
-      const first = generateGeometry(shape);
-      const second = generateGeometry(shape);
+      const parsed = ShapeDefinitionSchema.parse(shape);
+      const first = generateGeometry(parsed);
+      const second = generateGeometry(parsed);
 
       expect(first).toEqual(second);
       expect(validateIndexedGeometry(first)).toEqual([]);

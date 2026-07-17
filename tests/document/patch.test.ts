@@ -124,6 +124,16 @@ describe('semantic document patches', () => {
           },
         },
         {
+          operation: 'setActiveVariant',
+          variantId: 'variant.broad',
+        },
+        {
+          operation: 'setMaterialBinding',
+          partId: 'part.torso',
+          slot: 'surface',
+          materialId: 'material.cloth',
+        },
+        {
           operation: 'upsertRenderProfile',
           renderProfile: {
             id: 'render.preview',
@@ -141,6 +151,7 @@ describe('semantic document patches', () => {
     expect(result.ok).toBe(true);
     if (!result.ok) return;
     expect(result.document.variants[0]?.id).toBe('variant.broad');
+    expect(result.document.activeVariantId).toBe('variant.broad');
     expect(
       result.document.renderProfiles.some(({ id }) => id === 'render.preview'),
     ).toBe(true);
@@ -193,6 +204,36 @@ describe('semantic document patches', () => {
       ],
     });
     expect(invalidResult.ok).toBe(false);
+  });
+
+  it('rejects unknown variants, material slots, and materials without mutation', () => {
+    for (const operation of [
+      { operation: 'setActiveVariant', variantId: 'variant.missing' },
+      {
+        operation: 'setMaterialBinding',
+        partId: 'part.torso',
+        slot: 'slot.missing',
+        materialId: 'material.cloth',
+      },
+      {
+        operation: 'setMaterialBinding',
+        partId: 'part.torso',
+        slot: 'surface',
+        materialId: 'material.missing',
+      },
+      {
+        operation: 'setMaterialBinding',
+        partId: 'part.missing',
+        slot: 'surface',
+        materialId: 'material.cloth',
+      },
+    ] as const) {
+      const document = assetFixture();
+      const before = canonicalJson(document);
+      const result = applySemanticPatch(document, { operations: [operation] });
+      expect(result.ok).toBe(false);
+      expect(canonicalJson(document)).toBe(before);
+    }
   });
 
   it('replaces existing named definitions', () => {

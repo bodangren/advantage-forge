@@ -4,6 +4,7 @@ import {
   AssetDocumentSchema,
   type AssetDocument,
   type ValidationIssue,
+  type ValidationErrorCode,
 } from '../contracts/index.js';
 import { freezeDocument } from './canonical.js';
 
@@ -45,7 +46,7 @@ function duplicateIssues(document: AssetDocument): ValidationIssue[] {
     })),
   ];
   const seen = new Set<string>();
-  const globalIssues = candidates.flatMap(({ id, path }) => {
+  const globalIssues: ValidationIssue[] = candidates.flatMap(({ id, path }) => {
     if (!seen.has(id)) {
       seen.add(id);
       return [];
@@ -62,27 +63,124 @@ function duplicateIssues(document: AssetDocument): ValidationIssue[] {
       },
     ];
   });
-  const portIssues = document.templates.flatMap((template, templateIndex) => {
-    const templatePorts = new Set<string>();
-    return template.ports.flatMap(({ id }, portIndex) => {
-      if (!templatePorts.has(id)) {
-        templatePorts.add(id);
-        return [];
-      }
-      return [
-        {
-          code: 'DUPLICATE_ID',
-          severity: 'error' as const,
-          path: `$.templates[${templateIndex}].ports[${portIndex}].id`,
-          message: `Duplicate semantic ID within template ${template.id}: ${id}`,
-          actual: id,
-          expected: 'a unique port ID within its template',
-          guidance: issueGuidance('DUPLICATE_ID'),
-        },
-      ];
-    });
-  });
+  const portIssues: ValidationIssue[] = document.templates.flatMap(
+    (template, templateIndex) => {
+      const templatePorts = new Set<string>();
+      return template.ports.flatMap(({ id }, portIndex) => {
+        if (!templatePorts.has(id)) {
+          templatePorts.add(id);
+          return [];
+        }
+        return [
+          {
+            code: 'DUPLICATE_ID',
+            severity: 'error' as const,
+            path: `$.templates[${templateIndex}].ports[${portIndex}].id`,
+            message: `Duplicate semantic ID within template ${template.id}: ${id}`,
+            actual: id,
+            expected: 'a unique port ID within its template',
+            guidance: issueGuidance('DUPLICATE_ID'),
+          },
+        ];
+      });
+    },
+  );
   return [...globalIssues, ...portIssues];
+}
+
+function referenceIssues(document: AssetDocument): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const materials = new Set(document.materials.map(({ id }) => id));
+  const templates = new Map(
+    document.templates.map((template) => [template.id, template]),
+  );
+  const partIds = new Set(document.assembly.parts.map(({ id }) => id));
+  for (const [partIndex, part] of document.assembly.parts.entries()) {
+    const template = templates.get(part.templateId);
+    if (template === undefined) {
+      issues.push({
+        code: 'UNKNOWN_REFERENCE',
+        severity: 'error',
+        path: `$.assembly.parts[${partIndex}].templateId`,
+        message: `Template ${part.templateId} does not exist.`,
+        actual: part.templateId,
+        expected: 'an existing template ID',
+        guidance:
+          'Inspect the kit template catalog and use a declared template.',
+      });
+      continue;
+    }
+    for (const [bindingIndex, binding] of part.materialBindings.entries()) {
+      if (!template.materialSlots.includes(binding.slot))
+        issues.push({
+          code: 'INVALID_MATERIAL_SLOT',
+          severity: 'error',
+          path: `$.assembly.parts[${partIndex}].materialBindings[${bindingIndex}].slot`,
+          message: `Slot ${binding.slot} is not declared by ${template.id}.`,
+          actual: binding.slot,
+          expected: template.materialSlots,
+          guidance: 'Bind only material slots declared by the part template.',
+        });
+      if (!materials.has(binding.materialId))
+        issues.push({
+          code: 'UNKNOWN_REFERENCE',
+          severity: 'error',
+          path: `$.assembly.parts[${partIndex}].materialBindings[${bindingIndex}].materialId`,
+          message: `Material ${binding.materialId} does not exist.`,
+          actual: binding.materialId,
+          expected: 'an existing palette material ID',
+          guidance: 'Use a material declared by the active asset palette.',
+        });
+    }
+  }
+  const checkOverrides = (
+    kind: 'variants' | 'poses',
+    values: readonly {
+      readonly overrides: readonly { readonly partId: string }[];
+    }[],
+  ) => {
+    for (const [valueIndex, value] of values.entries())
+      for (const [overrideIndex, override] of value.overrides.entries())
+        if (!partIds.has(override.partId))
+          issues.push({
+            code: 'UNKNOWN_REFERENCE',
+            severity: 'error',
+            path: `$.${kind}[${valueIndex}].overrides[${overrideIndex}].partId`,
+            message: `Part ${override.partId} does not exist.`,
+            actual: override.partId,
+            expected: 'an existing assembly part ID',
+            guidance: 'Target a stable part ID declared by the assembly.',
+          });
+  };
+  checkOverrides('variants', document.variants);
+  checkOverrides('poses', document.poses);
+  if (
+    document.activeVariantId !== undefined &&
+    !document.variants.some(({ id }) => id === document.activeVariantId)
+  )
+    issues.push({
+      code: 'UNKNOWN_REFERENCE',
+      severity: 'error',
+      path: '$.activeVariantId',
+      message: `Variant ${document.activeVariantId} does not exist.`,
+      actual: document.activeVariantId,
+      expected: 'a declared variant ID',
+      guidance: 'Select a variant declared by this document.',
+    });
+  if (
+    document.activePoseId !== undefined &&
+    !document.poses.some(({ id }) => id === document.activePoseId)
+  )
+    issues.push({
+      code: 'UNKNOWN_REFERENCE',
+      severity: 'error',
+      path: '$.activePoseId',
+      message: `Pose ${document.activePoseId} does not exist.`,
+      actual: document.activePoseId,
+      expected: 'a declared pose ID',
+      guidance: 'Select a pose declared by this document.',
+    });
+  return issues;
 }
 
 function semanticPath(path: readonly PropertyKey[]): string {
@@ -104,19 +202,7 @@ function actualAt(input: unknown, path: readonly PropertyKey[]): unknown {
   return current;
 }
 
-type DocumentErrorCode =
-  | 'UNKNOWN_FIELD'
-  | 'INVALID_UNIT'
-  | 'DUPLICATE_ID'
-  | 'UNSUPPORTED_NODE_KIND'
-  | 'UNSUPPORTED_VERSION'
-  | 'INVALID_VALUE'
-  | 'NON_FINITE_VALUE'
-  | 'INVALID_PATH'
-  | 'REVISION_CONFLICT'
-  | 'NOT_FOUND'
-  | 'PATCH_REJECTED'
-  | 'REPOSITORY_ERROR';
+type DocumentErrorCode = ValidationErrorCode;
 
 function classify(issue: z.core.$ZodIssue, actual: unknown): DocumentErrorCode {
   if (issue.code === 'unrecognized_keys') return 'UNKNOWN_FIELD';
@@ -152,6 +238,14 @@ function issueGuidance(code: DocumentErrorCode): string {
       'Reload the current revision and reapply the localized operation.',
     NOT_FOUND: 'Inspect the active document and use an existing semantic ID.',
     PATCH_REJECTED: 'Correct the proposed semantic operation before retrying.',
+    UNKNOWN_REFERENCE: 'Use an existing semantic ID from the active document.',
+    INVALID_MATERIAL_SLOT: 'Use a slot declared by the selected template.',
+    ALREADY_EXISTS:
+      'Inspect and revise the existing asset instead of recreating it.',
+    INVALID_ASSEMBLY:
+      'Correct the reported assembly, port, variant, or pose issue.',
+    SERVICE_UNAVAILABLE: 'Start the configured local service and retry.',
+    RESPONSE_TOO_LARGE: 'Request a narrower semantic summary.',
     REPOSITORY_ERROR: 'Verify the active workspace and repository permissions.',
   };
   return guidance[code];
@@ -191,10 +285,13 @@ function mapZodIssue(
 export function parseAssetDocument(input: unknown): DocumentParseResult {
   const result = AssetDocumentSchema.safeParse(input);
   if (result.success) {
-    const duplicates = duplicateIssues(result.data);
-    return duplicates.length === 0
+    const issues = [
+      ...duplicateIssues(result.data),
+      ...referenceIssues(result.data),
+    ];
+    return issues.length === 0
       ? { ok: true, document: freezeDocument(result.data) }
-      : { ok: false, issues: duplicates };
+      : { ok: false, issues };
   }
   return {
     ok: false,
@@ -223,4 +320,34 @@ export function parseAssetDocumentJson(json: string): DocumentParseResult {
       ],
     };
   }
+}
+
+/**
+ * Establishes the schema-version compatibility boundary.
+ * V1 is already current and is validated without mutation. No other version is
+ * guessed or silently upgraded before an explicit future migration is added.
+ */
+export function migrateAssetDocumentToCurrent(
+  input: unknown,
+): DocumentParseResult {
+  const version =
+    input !== null && typeof input === 'object'
+      ? (input as Record<string, unknown>)['schemaVersion']
+      : undefined;
+  if (version === '1.0.0') return parseAssetDocument(input);
+  return {
+    ok: false,
+    issues: [
+      {
+        code: 'UNSUPPORTED_VERSION',
+        severity: 'error',
+        path: '$.schemaVersion',
+        message: `No explicit migration exists from ${String(version)} to 1.0.0.`,
+        actual: version,
+        expected: '1.0.0',
+        guidance:
+          'Do not guess a migration. Add and test an explicit version-to-version transform first.',
+      },
+    ],
+  };
 }

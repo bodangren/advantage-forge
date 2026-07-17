@@ -4,14 +4,13 @@
 
 | Tool | Surface |
 |---|---|
+| `list_kits` | Semantic domain tool |
+| `inspect_template` | Semantic domain tool |
+| `inspect_asset` | Semantic domain tool |
+| `create_asset` | Semantic domain tool |
 | `apply_operations` | Semantic domain tool |
 | `connect_parts` | Semantic domain tool |
-| `create_asset` | Semantic domain tool |
-| `export_asset` | Semantic domain tool |
-| `fantasy-asset-forge` | Semantic domain tool |
-| `inspect_asset` | Semantic domain tool |
-| `inspect_template` | Semantic domain tool |
-| `list_kits` | Semantic domain tool |
-| `render_preview` | Semantic domain tool |
 | `set_pose` | Semantic domain tool |
 | `validate_asset` | Semantic domain tool |
+| `render_preview` | Semantic domain tool |
+| `export_asset` | Semantic domain tool |

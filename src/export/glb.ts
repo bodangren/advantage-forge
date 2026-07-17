@@ -1,6 +1,10 @@
-import type * as THREE from 'three';
+import * as THREE from 'three';
 import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+const TRANSFORM_TOLERANCE = 1e-5;
+const MINIMUM_BOUNDS_TOLERANCE = 1e-5;
+type Tuple3 = readonly [number, number, number];
 
 export interface GlbManifest {
   readonly format: 'glb';
@@ -8,8 +12,148 @@ export interface GlbManifest {
   readonly nodeNames: readonly string[];
   readonly materialNames: readonly string[];
   readonly reloadNodeNames: readonly string[];
+  readonly reloadMaterialNames: readonly string[];
+  readonly materialNamesMatch: boolean;
+  readonly semanticNodeCount: number;
+  readonly reloadSemanticNodeCount: number;
+  readonly missingSemanticNodeNames: readonly string[];
+  readonly unexpectedSemanticNodeNames: readonly string[];
+  readonly transformMismatchCount: number;
+  readonly scaleMismatchCount: number;
+  readonly maximumPositionDeviation: number;
+  readonly maximumRotationDeviationRadians: number;
+  readonly maximumScaleDeviation: number;
+  readonly transformTolerance: number;
+  readonly bounds: {
+    readonly sourceMin: Tuple3;
+    readonly sourceMax: Tuple3;
+    readonly reloadMin: Tuple3;
+    readonly reloadMax: Tuple3;
+    readonly maximumDeviation: number;
+    readonly tolerance: number;
+    readonly matches: boolean;
+  };
+  readonly unitScaleDeviation: number;
+  readonly unitScaleTolerance: number;
+  readonly textureCount: number;
+  readonly unsupportedMaterialCount: number;
+  readonly unsupportedShaderCount: number;
+  readonly skinCount: number;
+  readonly cameraCount: number;
+  readonly lightCount: number;
   readonly animationCount: number;
   readonly unit: 'meter';
+}
+
+interface TransformEvidence {
+  readonly position: THREE.Vector3;
+  readonly rotation: THREE.Quaternion;
+  readonly scale: THREE.Vector3;
+}
+
+interface SceneEvidence {
+  readonly nodeNames: readonly string[];
+  readonly materialNames: readonly string[];
+  readonly semanticTransforms: ReadonlyMap<string, TransformEvidence>;
+  readonly bounds: THREE.Box3;
+  readonly textureCount: number;
+  readonly unsupportedMaterialCount: number;
+  readonly unsupportedShaderCount: number;
+  readonly skinCount: number;
+  readonly cameraCount: number;
+  readonly lightCount: number;
+}
+
+function tuple3(vector: THREE.Vector3): Tuple3 {
+  return [vector.x, vector.y, vector.z];
+}
+
+function maximumComponentDelta(
+  left: THREE.Vector3,
+  right: THREE.Vector3,
+): number {
+  return Math.max(
+    Math.abs(left.x - right.x),
+    Math.abs(left.y - right.y),
+    Math.abs(left.z - right.z),
+  );
+}
+
+function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
+  root.updateMatrixWorld(true);
+  const nodeNames = new Set<string>();
+  const materialNames = new Set<string>();
+  const semanticTransforms = new Map<string, TransformEvidence>();
+  const textureIds = new Set<string>();
+  const materials = new Set<THREE.Material>();
+  const bounds = new THREE.Box3();
+  let hasBounds = false;
+  let unsupportedMaterialCount = 0;
+  let unsupportedShaderCount = 0;
+  let skinCount = 0;
+  let cameraCount = 0;
+  let lightCount = 0;
+
+  root.traverseVisible((node) => {
+    const semanticId: unknown = node.userData['semanticId'];
+    if (typeof semanticId === 'string') {
+      nodeNames.add(semanticId);
+      const position = new THREE.Vector3();
+      const rotation = new THREE.Quaternion();
+      const scale = new THREE.Vector3();
+      node.matrixWorld.decompose(position, rotation, scale);
+      semanticTransforms.set(semanticId, { position, rotation, scale });
+    } else if (node.name) nodeNames.add(node.name);
+    if (node instanceof THREE.Camera) cameraCount += 1;
+    if (node instanceof THREE.Light) lightCount += 1;
+    if (!(node instanceof THREE.Mesh)) return;
+    if (node instanceof THREE.SkinnedMesh) skinCount += 1;
+    const mesh = node as THREE.Mesh<
+      THREE.BufferGeometry,
+      THREE.Material | THREE.Material[]
+    >;
+    mesh.geometry.computeBoundingBox();
+    if (mesh.geometry.boundingBox !== null) {
+      const meshBounds = mesh.geometry.boundingBox
+        .clone()
+        .applyMatrix4(mesh.matrixWorld);
+      if (hasBounds) bounds.union(meshBounds);
+      else {
+        bounds.copy(meshBounds);
+        hasBounds = true;
+      }
+    }
+    const nodeMaterials = Array.isArray(mesh.material)
+      ? mesh.material
+      : [mesh.material];
+    for (const material of nodeMaterials) {
+      if (materials.has(material)) continue;
+      materials.add(material);
+      if (material.name) materialNames.add(material.name);
+      if (!(material instanceof THREE.MeshStandardMaterial))
+        unsupportedMaterialCount += 1;
+      if (
+        material instanceof THREE.ShaderMaterial ||
+        material instanceof THREE.RawShaderMaterial
+      )
+        unsupportedShaderCount += 1;
+      for (const value of Object.values(material))
+        if (value instanceof THREE.Texture) textureIds.add(value.uuid);
+    }
+  });
+  if (!hasBounds) bounds.makeEmpty();
+  return {
+    nodeNames: [...nodeNames].sort(),
+    materialNames: [...materialNames].sort(),
+    semanticTransforms,
+    bounds,
+    textureCount: textureIds.size,
+    unsupportedMaterialCount,
+    unsupportedShaderCount,
+    skinCount,
+    cameraCount,
+    lightCount,
+  };
 }
 
 export async function exportSceneToGlb(
@@ -24,34 +168,130 @@ export async function exportSceneToGlb(
   if (!(result instanceof ArrayBuffer))
     throw new Error('Binary glTF export did not return an ArrayBuffer.');
   const reloaded = await new GLTFLoader().parseAsync(result, '');
-  const reloadNodeNames: string[] = [];
-  reloaded.scene.traverse((node) => {
-    const semanticId: unknown = node.userData['semanticId'];
-    if (typeof semanticId === 'string') reloadNodeNames.push(semanticId);
-    else if (node.name) reloadNodeNames.push(node.name);
-  });
-  const nodeNames: string[] = [];
-  const materialNames = new Set<string>();
-  scene.traverse((node) => {
-    if (node.name) nodeNames.push(node.name);
-    const candidate = node as THREE.Mesh;
-    if (!('material' in candidate)) return;
-    const materials = Array.isArray(candidate.material)
-      ? candidate.material
-      : [candidate.material];
-    for (const material of materials)
-      if (material?.name) materialNames.add(material.name);
-  });
+  const source = collectSceneEvidence(scene);
+  const reload = collectSceneEvidence(reloaded.scene);
+  const sourceIds = [...source.semanticTransforms.keys()].sort();
+  const reloadIds = [...reload.semanticTransforms.keys()].sort();
+  const missingSemanticNodeNames = sourceIds.filter(
+    (id) => !reload.semanticTransforms.has(id),
+  );
+  const unexpectedSemanticNodeNames = reloadIds.filter(
+    (id) => !source.semanticTransforms.has(id),
+  );
+
+  let transformMismatchCount = 0;
+  let scaleMismatchCount = 0;
+  let maximumPositionDeviation = 0;
+  let maximumRotationDeviationRadians = 0;
+  let maximumScaleDeviation = 0;
+  for (const id of sourceIds) {
+    const left = source.semanticTransforms.get(id);
+    const right = reload.semanticTransforms.get(id);
+    if (left === undefined || right === undefined) continue;
+    const positionDeviation = maximumComponentDelta(
+      left.position,
+      right.position,
+    );
+    const rotationDeviation = left.rotation.angleTo(right.rotation);
+    const scaleDeviation = maximumComponentDelta(left.scale, right.scale);
+    maximumPositionDeviation = Math.max(
+      maximumPositionDeviation,
+      positionDeviation,
+    );
+    maximumRotationDeviationRadians = Math.max(
+      maximumRotationDeviationRadians,
+      rotationDeviation,
+    );
+    maximumScaleDeviation = Math.max(maximumScaleDeviation, scaleDeviation);
+    if (
+      positionDeviation > TRANSFORM_TOLERANCE ||
+      rotationDeviation > TRANSFORM_TOLERANCE
+    )
+      transformMismatchCount += 1;
+    if (scaleDeviation > TRANSFORM_TOLERANCE) scaleMismatchCount += 1;
+  }
+
+  const sourceSize = source.bounds.getSize(new THREE.Vector3());
+  const reloadSize = reload.bounds.getSize(new THREE.Vector3());
+  const extent = Math.max(sourceSize.x, sourceSize.y, sourceSize.z);
+  const boundsTolerance = Math.max(
+    MINIMUM_BOUNDS_TOLERANCE,
+    extent * TRANSFORM_TOLERANCE,
+  );
+  const boundsMaximumDeviation = Math.max(
+    maximumComponentDelta(source.bounds.min, reload.bounds.min),
+    maximumComponentDelta(source.bounds.max, reload.bounds.max),
+  );
+  const unitScaleDeviation = maximumComponentDelta(sourceSize, reloadSize);
+  const materialNamesMatch =
+    JSON.stringify(source.materialNames) ===
+    JSON.stringify(reload.materialNames);
+  const animationCount = reloaded.animations.length;
+  const policyFailures: string[] = [];
+  if (missingSemanticNodeNames.length > 0)
+    policyFailures.push('missing semantic nodes');
+  if (unexpectedSemanticNodeNames.length > 0)
+    policyFailures.push('unexpected semantic nodes');
+  if (transformMismatchCount > 0) policyFailures.push('transform mismatch');
+  if (scaleMismatchCount > 0) policyFailures.push('scale mismatch');
+  if (!materialNamesMatch) policyFailures.push('material-name mismatch');
+  if (boundsMaximumDeviation > boundsTolerance)
+    policyFailures.push('bounds mismatch');
+  if (unitScaleDeviation > boundsTolerance)
+    policyFailures.push('unit-scale mismatch');
+  if (animationCount > 0) policyFailures.push('animations');
+  if (reload.textureCount > 0) policyFailures.push('textures');
+  if (reload.unsupportedMaterialCount > 0)
+    policyFailures.push('unsupported materials');
+  if (reload.unsupportedShaderCount > 0)
+    policyFailures.push('unsupported shaders');
+  if (reload.skinCount > 0) policyFailures.push('skins');
+  if (reload.cameraCount > 0) policyFailures.push('cameras');
+  if (reload.lightCount > 0) policyFailures.push('lights');
+  if (policyFailures.length > 0)
+    throw new Error(
+      `Reloaded GLB violates the export policy: ${policyFailures.join(', ')}.`,
+    );
+
   return {
     bytes: result,
     manifest: {
       format: 'glb',
       byteLength: result.byteLength,
-      nodeNames: nodeNames.sort(),
-      materialNames: [...materialNames].sort(),
+      nodeNames: source.nodeNames,
+      materialNames: source.materialNames,
       unit: 'meter',
-      reloadNodeNames: reloadNodeNames.sort(),
-      animationCount: reloaded.animations.length,
+      reloadNodeNames: reload.nodeNames,
+      reloadMaterialNames: reload.materialNames,
+      materialNamesMatch,
+      semanticNodeCount: sourceIds.length,
+      reloadSemanticNodeCount: reloadIds.length,
+      missingSemanticNodeNames,
+      unexpectedSemanticNodeNames,
+      transformMismatchCount,
+      scaleMismatchCount,
+      maximumPositionDeviation,
+      maximumRotationDeviationRadians,
+      maximumScaleDeviation,
+      transformTolerance: TRANSFORM_TOLERANCE,
+      bounds: {
+        sourceMin: tuple3(source.bounds.min),
+        sourceMax: tuple3(source.bounds.max),
+        reloadMin: tuple3(reload.bounds.min),
+        reloadMax: tuple3(reload.bounds.max),
+        maximumDeviation: boundsMaximumDeviation,
+        tolerance: boundsTolerance,
+        matches: boundsMaximumDeviation <= boundsTolerance,
+      },
+      unitScaleDeviation,
+      unitScaleTolerance: boundsTolerance,
+      textureCount: reload.textureCount,
+      unsupportedMaterialCount: reload.unsupportedMaterialCount,
+      unsupportedShaderCount: reload.unsupportedShaderCount,
+      skinCount: reload.skinCount,
+      cameraCount: reload.cameraCount,
+      lightCount: reload.lightCount,
+      animationCount,
     },
   };
 }

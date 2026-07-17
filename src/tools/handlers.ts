@@ -6,10 +6,12 @@ import {
   ToolResultEnvelopeSchema,
   type AssetDocument,
   type ToolResultEnvelope,
+  type ValidationErrorCode,
 } from '../contracts/index.js';
 import {
   applySemanticPatch,
   parseAssetDocument,
+  SemanticPatchSchema,
   type RevisionRepository,
   type SemanticPatch,
 } from '../document/index.js';
@@ -34,6 +36,7 @@ export interface ToolHandlerContext {
 }
 
 const semanticId = z.string().regex(/^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$/);
+const revisionId = z.string().regex(/^revision\.[a-f0-9]{64}$/);
 export const ListKitsInputSchema = z.strictObject({});
 export const InspectTemplateInputSchema = z.strictObject({
   templateId: semanticId,
@@ -44,25 +47,27 @@ export const CreateAssetInputSchema = z.strictObject({
 });
 export const ApplyOperationsInputSchema = z.strictObject({
   assetId: semanticId,
-  expectedRevisionId: z.string().startsWith('revision.'),
-  patch: z.unknown(),
+  expectedRevisionId: revisionId,
+  patch: SemanticPatchSchema,
   dryRun: z.boolean().default(false),
 });
 export const ConnectPartsInputSchema = z.strictObject({
   assetId: semanticId,
-  expectedRevisionId: z.string().startsWith('revision.'),
+  expectedRevisionId: revisionId,
   connection: ConnectionDefinitionSchema,
   dryRun: z.boolean().default(false),
 });
 export const SetPoseInputSchema = z.strictObject({
   assetId: semanticId,
-  expectedRevisionId: z.string().startsWith('revision.'),
+  expectedRevisionId: revisionId,
   poseId: semanticId,
   dryRun: z.boolean().default(false),
 });
 export const ValidateAssetInputSchema = z.strictObject({ assetId: semanticId });
 export const RenderPreviewInputSchema = z.strictObject({ assetId: semanticId });
 export const ExportAssetInputSchema = z.strictObject({ assetId: semanticId });
+
+const RESPONSE_ITEM_LIMIT = 100;
 
 const ok = (
   summary: string,
@@ -79,7 +84,7 @@ const ok = (
     data,
   });
 const fail = (
-  code: string,
+  code: ValidationErrorCode,
   message: string,
   path = '$',
   guidance = 'Inspect the tool schema and current revision before retrying.',
@@ -90,11 +95,40 @@ const fail = (
     summary: message,
     issues: [{ code, severity: 'error', path, message, guidance }],
   });
-const invalid = (result: z.ZodSafeParseError<unknown>): ToolResultEnvelope =>
-  fail(
-    'INVALID_VALUE',
-    result.error.issues[0]?.message ?? 'Invalid tool input.',
+const invalid = (result: z.ZodSafeParseError<unknown>): ToolResultEnvelope => {
+  const issue = result.error.issues[0];
+  const unknownKey =
+    issue?.code === 'unrecognized_keys' ? issue.keys[0] : undefined;
+  const path = [...(issue?.path ?? []), ...(unknownKey ? [unknownKey] : [])]
+    .map((segment) =>
+      typeof segment === 'number' ? `[${segment}]` : `.${String(segment)}`,
+    )
+    .join('');
+  return fail(
+    issue?.code === 'unrecognized_keys' ? 'UNKNOWN_FIELD' : 'INVALID_VALUE',
+    issue?.message ?? 'Invalid tool input.',
+    `$${path}`,
+    'Use only the fields and bounded semantic operations advertised by this tool schema.',
   );
+};
+
+const bounded = <Value>(values: readonly Value[]) => ({
+  items: values.slice(0, RESPONSE_ITEM_LIMIT),
+  total: values.length,
+  truncated: values.length > RESPONSE_ITEM_LIMIT,
+  limit: RESPONSE_ITEM_LIMIT,
+});
+
+function evaluateDocument(document: Readonly<AssetDocument>) {
+  const variant = document.variants.find(
+    ({ id }) => id === document.activeVariantId,
+  );
+  const pose = document.poses.find(({ id }) => id === document.activePoseId);
+  return evaluateAssembly(document.assembly, document.templates, {
+    ...(variant === undefined ? {} : { variant }),
+    ...(pose === undefined ? {} : { pose }),
+  });
+}
 
 export function createToolHandlers(context: ToolHandlerContext) {
   const current = async (assetId: string) =>
@@ -161,12 +195,17 @@ export function createToolHandlers(context: ToolHandlerContext) {
         id: revision.document.id,
         name: revision.document.name,
         kitId: revision.document.kitId,
-        partIds: revision.document.assembly.parts.map(({ id }) => id),
-        connectionIds: revision.document.assembly.connections.map(
-          ({ id }) => id,
+        parts: bounded(
+          revision.document.assembly.parts.map(({ id, templateId }) => ({
+            id,
+            templateId,
+          })),
         ),
-        variants: revision.document.variants.map(({ id }) => id),
-        poses: revision.document.poses.map(({ id }) => id),
+        connections: bounded(
+          revision.document.assembly.connections.map(({ id }) => ({ id })),
+        ),
+        variants: bounded(revision.document.variants.map(({ id }) => ({ id }))),
+        poses: bounded(revision.document.poses.map(({ id }) => ({ id }))),
         activeVariantId: revision.document.activeVariantId,
         activePoseId: revision.document.activePoseId,
       },
@@ -185,6 +224,21 @@ export function createToolHandlers(context: ToolHandlerContext) {
         summary: 'Reference document failed validation.',
         issues: [...validated.issues],
       };
+    if ((await current(document.id)) !== undefined)
+      return fail(
+        'ALREADY_EXISTS',
+        `Asset ${document.id} already exists.`,
+        '$.reference',
+        'Inspect and revise the current asset instead of resetting it.',
+      );
+    try {
+      evaluateDocument(validated.document);
+    } catch (error) {
+      return fail(
+        'INVALID_ASSEMBLY',
+        error instanceof Error ? error.message : 'Assembly validation failed.',
+      );
+    }
     const revision = await context.revisions.save(validated.document);
     return ok(
       `Created ${document.id} from the ${parsed.data.reference} reference.`,
@@ -220,10 +274,27 @@ export function createToolHandlers(context: ToolHandlerContext) {
         summary: 'Semantic operations were rejected without mutation.',
         issues: [...patched.issues],
       };
+    try {
+      evaluateDocument(patched.document);
+    } catch (error) {
+      return fail(
+        'INVALID_ASSEMBLY',
+        error instanceof Error ? error.message : 'Assembly validation failed.',
+        '$.patch',
+        'Correct the proposed connections, ports, variants, or pose values before retrying.',
+      );
+    }
     if (parsed.data.dryRun)
       return ok(
         'Dry run succeeded; no revision was written.',
-        { validation: 'valid', dryRun: true },
+        {
+          validation: 'valid',
+          dryRun: true,
+          patchSummary: {
+            operationCount: parsed.data.patch.operations.length,
+            affectedIds: [...patched.affectedIds],
+          },
+        },
         revision.revisionId,
         [...patched.affectedIds],
       );
@@ -233,7 +304,14 @@ export function createToolHandlers(context: ToolHandlerContext) {
     );
     return ok(
       `Applied ${patched.affectedIds.length} localized semantic change(s).`,
-      { validation: 'valid', parentRevisionId: revision.revisionId },
+      {
+        validation: 'valid',
+        parentRevisionId: revision.revisionId,
+        patchSummary: {
+          operationCount: parsed.data.patch.operations.length,
+          affectedIds: [...patched.affectedIds],
+        },
+      },
       saved.revisionId,
       [...patched.affectedIds],
     );
@@ -281,8 +359,17 @@ export function createToolHandlers(context: ToolHandlerContext) {
         revision.revisionId,
         [parsed.data.poseId],
       );
-    const next = structuredClone(revision.document) as AssetDocument;
+    const next = structuredClone(revision.document);
     next.activePoseId = parsed.data.poseId;
+    try {
+      evaluateDocument(next);
+    } catch (error) {
+      return fail(
+        'INVALID_ASSEMBLY',
+        error instanceof Error ? error.message : 'Pose validation failed.',
+        '$.poseId',
+      );
+    }
     const saved = await context.revisions.save(next, revision.revisionId);
     return ok(
       `Selected pose ${parsed.data.poseId}.`,
@@ -301,24 +388,27 @@ export function createToolHandlers(context: ToolHandlerContext) {
         `Asset ${parsed.data.assetId} was not found.`,
         '$.assetId',
       );
-    const variant = revision.document.variants.find(
-      ({ id }) => id === revision.document.activeVariantId,
-    );
-    const pose = revision.document.poses.find(
-      ({ id }) => id === revision.document.activePoseId,
-    );
     try {
-      const scene = evaluateAssembly(
-        revision.document.assembly,
-        revision.document.templates,
-        {
-          ...(variant === undefined ? {} : { variant }),
-          ...(pose === undefined ? {} : { pose }),
-        },
-      );
+      const scene = evaluateDocument(revision.document);
       return ok(
         'Document and assembly validation passed.',
-        { validation: 'valid', scene },
+        {
+          validation: 'valid',
+          scene: {
+            id: scene.id,
+            bounds: scene.bounds,
+            triangleCount: scene.triangleCount,
+            parts: bounded(
+              scene.parts.map(({ id, templateId, role, bounds, visible }) => ({
+                id,
+                templateId,
+                role,
+                bounds,
+                visible,
+              })),
+            ),
+          },
+        },
         revision.revisionId,
       );
     } catch (error) {

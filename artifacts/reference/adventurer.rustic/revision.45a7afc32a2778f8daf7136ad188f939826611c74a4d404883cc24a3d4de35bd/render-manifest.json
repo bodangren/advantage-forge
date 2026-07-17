@@ -1,0 +1,199 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 30,
+          "minY": 38,
+          "maxX": 98,
+          "maxY": 121,
+          "width": 69,
+          "height": 84
+        },
+        "occupiedPixelCount": 1394,
+        "occupiedRatio": 0.0850830078125,
+        "transparentPixelCount": 14990,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 40,
+          "minY": 36,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 50,
+          "height": 86
+        },
+        "occupiedPixelCount": 1268,
+        "occupiedRatio": 0.077392578125,
+        "transparentPixelCount": 15116,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4
+      }
+    },
+    {
+      "direction": "E",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 58,
+          "minY": 37,
+          "maxX": 69,
+          "maxY": 121,
+          "width": 12,
+          "height": 85
+        },
+        "occupiedPixelCount": 660,
+        "occupiedRatio": 0.040283203125,
+        "transparentPixelCount": 15724,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 4,
+        "minimumVerticalRunPixels": 3,
+        "representativeFeaturePixels": 5
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 40,
+          "minY": 38,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 50,
+          "height": 84
+        },
+        "occupiedPixelCount": 1249,
+        "occupiedRatio": 0.07623291015625,
+        "transparentPixelCount": 15135,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4
+      }
+    },
+    {
+      "direction": "S",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 29,
+          "minY": 39,
+          "maxX": 97,
+          "maxY": 121,
+          "width": 69,
+          "height": 83
+        },
+        "occupiedPixelCount": 1342,
+        "occupiedRatio": 0.0819091796875,
+        "transparentPixelCount": 15042,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 38,
+          "maxX": 87,
+          "maxY": 121,
+          "width": 50,
+          "height": 84
+        },
+        "occupiedPixelCount": 1260,
+        "occupiedRatio": 0.076904296875,
+        "transparentPixelCount": 15124,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4
+      }
+    },
+    {
+      "direction": "W",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 58,
+          "minY": 37,
+          "maxX": 69,
+          "maxY": 121,
+          "width": 12,
+          "height": 85
+        },
+        "occupiedPixelCount": 654,
+        "occupiedRatio": 0.0399169921875,
+        "transparentPixelCount": 15730,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 4,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 36,
+          "maxX": 87,
+          "maxY": 121,
+          "width": 50,
+          "height": 86
+        },
+        "occupiedPixelCount": 1287,
+        "occupiedRatio": 0.07855224609375,
+        "transparentPixelCount": 15097,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4
+      }
+    }
+  ],
+  "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.45a7afc32a2778f8daf7136ad188f939826611c74a4d404883cc24a3d4de35bd/contact-sheet.png"
+}

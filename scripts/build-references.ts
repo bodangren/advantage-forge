@@ -19,7 +19,10 @@ const vite = await createServer({
 await vite.listen();
 
 try {
-  const revisions = new FileRevisionRepository({ workspaceRoot });
+  const revisions = new FileRevisionRepository({
+    workspaceRoot,
+    storageDirectory: `.forge/reference-build-${process.pid}/revisions`,
+  });
   const artifacts = new LocalBrowserArtifactService({
     workspaceRoot,
     inspectorUrl: `http://127.0.0.1:${port}`,
@@ -43,7 +46,38 @@ try {
     const inspected = await handlers.inspectAsset({ assetId });
     if (!inspected.ok)
       throw new Error(`Failed to inspect ${reference}: ${inspected.summary}`);
+    let variantArtifacts: Record<string, unknown> | undefined;
     if (reference === 'adventurer') {
+      const idleEquipped = await handlers.renderPreview({ assetId });
+      if (!idleEquipped.ok)
+        throw new Error(`Failed idle equipped render: ${idleEquipped.summary}`);
+      const idleEquippedRevisionId = revisionId;
+      const unequipped = await handlers.applyOperations({
+        assetId,
+        expectedRevisionId: revisionId,
+        dryRun: false,
+        patch: {
+          operations: [
+            { operation: 'setActiveVariant', variantId: 'unequipped' },
+          ],
+        },
+      });
+      if (!unequipped.ok || unequipped.revisionId === undefined)
+        throw new Error(`Failed adventurer unequip: ${unequipped.summary}`);
+      revisionId = unequipped.revisionId;
+      const equipped = await handlers.applyOperations({
+        assetId,
+        expectedRevisionId: revisionId,
+        dryRun: false,
+        patch: {
+          operations: [
+            { operation: 'setActiveVariant', variantId: 'equipped' },
+          ],
+        },
+      });
+      if (!equipped.ok || equipped.revisionId === undefined)
+        throw new Error(`Failed adventurer equip: ${equipped.summary}`);
+      revisionId = equipped.revisionId;
       const localized = await handlers.applyOperations({
         assetId,
         expectedRevisionId: revisionId,
@@ -76,6 +110,14 @@ try {
       if (!posed.ok || posed.revisionId === undefined)
         throw new Error(`Failed adventurer pose: ${posed.summary}`);
       revisionId = posed.revisionId;
+      variantArtifacts = {
+        idleEquipped: {
+          revisionId: idleEquippedRevisionId,
+          rendered: idleEquipped,
+        },
+        unequipRevisionId: unequipped.revisionId,
+        equipRevisionId: equipped.revisionId,
+      };
     }
     const current = await revisions.getCurrent(assetId);
     if (current === undefined)
@@ -90,6 +132,55 @@ try {
     const exported = await handlers.exportAsset({ assetId });
     if (!validated.ok || !rendered.ok || !exported.ok)
       throw new Error(`Reference workflow failed for ${reference}.`);
+    if (reference === 'adventurer') {
+      const actionEquippedRevisionId = revisionId;
+      const unequipped = await handlers.applyOperations({
+        assetId,
+        expectedRevisionId: revisionId,
+        dryRun: false,
+        patch: {
+          operations: [
+            { operation: 'setActiveVariant', variantId: 'unequipped' },
+          ],
+        },
+      });
+      if (!unequipped.ok || unequipped.revisionId === undefined)
+        throw new Error(
+          `Failed action unequipped variant: ${unequipped.summary}`,
+        );
+      revisionId = unequipped.revisionId;
+      const actionUnequipped = await handlers.renderPreview({ assetId });
+      if (!actionUnequipped.ok)
+        throw new Error(
+          `Failed action unequipped render: ${actionUnequipped.summary}`,
+        );
+      const restored = await handlers.applyOperations({
+        assetId,
+        expectedRevisionId: revisionId,
+        dryRun: false,
+        patch: {
+          operations: [
+            { operation: 'setActiveVariant', variantId: 'equipped' },
+          ],
+        },
+      });
+      if (!restored.ok || restored.revisionId === undefined)
+        throw new Error(`Failed final equipped restore: ${restored.summary}`);
+      revisionId = restored.revisionId;
+      variantArtifacts = {
+        ...variantArtifacts,
+        actionEquipped: {
+          revisionId: actionEquippedRevisionId,
+          rendered,
+          exported,
+        },
+        actionUnequipped: {
+          revisionId: unequipped.revisionId,
+          rendered: actionUnequipped,
+        },
+        restoredEquippedRevisionId: restored.revisionId,
+      };
+    }
     evidence.push({
       reference,
       assetId,
@@ -98,6 +189,7 @@ try {
       validated,
       rendered,
       exported,
+      variantArtifacts,
     });
   }
   const dossierPath = resolve(

@@ -1,0 +1,199 @@
+{
+  "assetId": "crate.rustic",
+  "revisionId": "revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 21,
+          "minY": 33,
+          "maxX": 106,
+          "maxY": 121,
+          "width": 86,
+          "height": 89
+        },
+        "occupiedPixelCount": 7540,
+        "occupiedRatio": 0.460205078125,
+        "transparentPixelCount": 8844,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 72,
+        "minimumVerticalRunPixels": 74,
+        "representativeFeaturePixels": 80
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 7,
+          "minY": 17,
+          "maxX": 120,
+          "maxY": 121,
+          "width": 114,
+          "height": 105
+        },
+        "occupiedPixelCount": 8254,
+        "occupiedRatio": 0.5037841796875,
+        "transparentPixelCount": 8130,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 6,
+        "representativeFeaturePixels": 11
+      }
+    },
+    {
+      "direction": "E",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 25,
+          "minY": 28,
+          "maxX": 102,
+          "maxY": 121,
+          "width": 78,
+          "height": 94
+        },
+        "occupiedPixelCount": 7196,
+        "occupiedRatio": 0.439208984375,
+        "transparentPixelCount": 9188,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 62,
+        "minimumVerticalRunPixels": 78,
+        "representativeFeaturePixels": 78
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 7,
+          "minY": 17,
+          "maxX": 120,
+          "maxY": 121,
+          "width": 114,
+          "height": 105
+        },
+        "occupiedPixelCount": 8254,
+        "occupiedRatio": 0.5037841796875,
+        "transparentPixelCount": 8130,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 6,
+        "representativeFeaturePixels": 11
+      }
+    },
+    {
+      "direction": "S",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 21,
+          "minY": 33,
+          "maxX": 106,
+          "maxY": 121,
+          "width": 86,
+          "height": 89
+        },
+        "occupiedPixelCount": 7540,
+        "occupiedRatio": 0.460205078125,
+        "transparentPixelCount": 8844,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 72,
+        "minimumVerticalRunPixels": 74,
+        "representativeFeaturePixels": 80
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 7,
+          "minY": 17,
+          "maxX": 120,
+          "maxY": 121,
+          "width": 114,
+          "height": 105
+        },
+        "occupiedPixelCount": 8254,
+        "occupiedRatio": 0.5037841796875,
+        "transparentPixelCount": 8130,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 6,
+        "representativeFeaturePixels": 11
+      }
+    },
+    {
+      "direction": "W",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 25,
+          "minY": 28,
+          "maxX": 102,
+          "maxY": 121,
+          "width": 78,
+          "height": 94
+        },
+        "occupiedPixelCount": 7196,
+        "occupiedRatio": 0.439208984375,
+        "transparentPixelCount": 9188,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 62,
+        "minimumVerticalRunPixels": 78,
+        "representativeFeaturePixels": 78
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 7,
+          "minY": 17,
+          "maxX": 120,
+          "maxY": 121,
+          "width": 114,
+          "height": 105
+        },
+        "occupiedPixelCount": 8254,
+        "occupiedRatio": 0.5037841796875,
+        "transparentPixelCount": 8130,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 6,
+        "representativeFeaturePixels": 11
+      }
+    }
+  ],
+  "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.e6b20ae75d9fd1b178818358520ab2c1c2ce07853f5f245fdce5d89ab99b41d6/contact-sheet.png"
+}

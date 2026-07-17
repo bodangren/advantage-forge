@@ -11,13 +11,20 @@
 - Padding: 6px
 - Minimum feature: 3px
 
+## Coordinate system
+
+- Right-handed world coordinates in meters: +X east/right, +Y up, and +Z north/forward.
+- Transforms use position XYZ, quaternion rotation XYZW, and scale XYZ; N/E/S/W labels identify camera positions around the asset.
+- Ground contact is normalized to Y=0 in world space and to the declared bottom padding row in sprite space.
+
 ## Mechanical validation
 
-- Reports occupied bounds, transparent and occupied pixel counts, clipped edges, ground-anchor deviation, and silhouette width.
+- Reports occupied bounds, transparent and occupied pixel counts, clipped edges, exact ground-anchor deviation, and representative silhouette-feature width.
 - Emits one PNG per direction plus a labeled contact sheet associated with the canonical asset revision.
 
 ## 3D export
 
 - Emits binary glTF 2.0 in meters as GLB.
-- Preserves semantic node identifiers and material names and verifies the GLB by loading it back.
-- Rejects output paths outside the active workspace and stores artifacts in collision-safe revision directories.
+- Reload-verifies semantic IDs, material names, world transforms, scales, bounds, and unit scale within explicit tolerances.
+- Rejects animations, textures, unsupported materials or shaders, skins, cameras, and lights.
+- Rejects output paths outside the active workspace, including symbolic-link traversal, and stores artifacts in collision-safe revision directories.

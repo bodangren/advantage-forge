@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import type { PortDefinition } from '../../src/contracts/index.js';
 
 import {
+  migrateAssetDocumentToCurrent,
   parseAssetDocument,
   parseAssetDocumentJson,
 } from '../../src/document/index.js';
@@ -88,15 +90,15 @@ describe('asset document parsing', () => {
   });
 
   it('scopes port IDs to their template while rejecting duplicates within one template', () => {
-    const sharedPort = {
+    const sharedPort: PortDefinition = {
       id: 'equipment.attach',
       frame: {
         position: [0, 0, 0] as [number, number, number],
         rotation: [0, 0, 0, 1] as [number, number, number, number],
         scale: [1, 1, 1] as [number, number, number],
       },
-      tags: ['equipment'],
-      accepts: ['equipment'],
+      tags: ['equipment.mount'],
+      accepts: ['equipment.mount'],
       cardinality: 'single' as const,
     };
     const crossTemplate = assetFixture();
@@ -126,5 +128,62 @@ describe('asset document parsing', () => {
         code: 'INVALID_VALUE',
         path: '$',
       });
+  });
+
+  it('rejects missing template, material, and slot references structurally', () => {
+    const cases = [
+      {
+        mutate: (input: ReturnType<typeof assetFixture>) => {
+          input.assembly.parts[0]!.templateId = 'template.missing';
+        },
+        code: 'UNKNOWN_REFERENCE',
+        path: '$.assembly.parts[0].templateId',
+      },
+      {
+        mutate: (input: ReturnType<typeof assetFixture>) => {
+          input.assembly.parts[0]!.materialBindings[0]!.materialId =
+            'material.missing';
+        },
+        code: 'UNKNOWN_REFERENCE',
+        path: '$.assembly.parts[0].materialBindings[0].materialId',
+      },
+      {
+        mutate: (input: ReturnType<typeof assetFixture>) => {
+          input.assembly.parts[0]!.materialBindings[0]!.slot = 'slot.missing';
+        },
+        code: 'INVALID_MATERIAL_SLOT',
+        path: '$.assembly.parts[0].materialBindings[0].slot',
+      },
+    ] as const;
+    for (const entry of cases) {
+      const input = assetFixture();
+      entry.mutate(input);
+      const result = parseAssetDocument(input);
+      expect(result.ok).toBe(false);
+      if (!result.ok)
+        expect(result.issues).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({ code: entry.code, path: entry.path }),
+          ]),
+        );
+    }
+  });
+
+  it('migrates only explicitly supported schema versions without guessing', () => {
+    const current = assetFixture();
+    const supported = migrateAssetDocumentToCurrent(current);
+    expect(supported.ok).toBe(true);
+
+    const future = { ...current, schemaVersion: '2.0.0' };
+    const unsupported = migrateAssetDocumentToCurrent(future);
+    expect(unsupported.ok).toBe(false);
+    if (!unsupported.ok)
+      expect(unsupported.issues[0]).toMatchObject({
+        code: 'UNSUPPORTED_VERSION',
+        path: '$.schemaVersion',
+        actual: '2.0.0',
+        expected: '1.0.0',
+      });
+    expect(future.schemaVersion).toBe('2.0.0');
   });
 });

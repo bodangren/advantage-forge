@@ -67,7 +67,9 @@
       "projectDependencies": [
         "contracts"
       ],
-      "externalDependencies": []
+      "externalDependencies": [
+        "zod"
+      ]
     },
     {
       "name": "geometry",
@@ -108,6 +110,7 @@
         "src/mcp/stdio.ts"
       ],
       "projectDependencies": [
+        "contracts",
         "document",
         "tools"
       ],

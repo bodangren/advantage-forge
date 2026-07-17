@@ -51,6 +51,7 @@ describe('RGBA pixel analysis', () => {
     expect(metrics.groundAnchorDeviationPixels).toBe(0);
     expect(metrics.minimumHorizontalRunPixels).toBe(1);
     expect(metrics.minimumVerticalRunPixels).toBe(2);
+    expect(metrics.representativeFeaturePixels).toBe(2);
     expect(metrics.clippedEdges).toEqual([]);
   });
 
@@ -72,6 +73,7 @@ describe('RGBA pixel analysis', () => {
     expect(metrics.groundPixelY).toBeNull();
     expect(metrics.minimumHorizontalRunPixels).toBeNull();
     expect(metrics.minimumVerticalRunPixels).toBeNull();
+    expect(metrics.representativeFeaturePixels).toBeNull();
   });
 
   it('rejects malformed buffers and anchors', () => {

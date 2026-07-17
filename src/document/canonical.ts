@@ -5,6 +5,9 @@ import type { AssetDocument } from '../contracts/index.js';
 type JsonValue =
   null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 
+const compareText = (left: string, right: string): number =>
+  left < right ? -1 : left > right ? 1 : 0;
+
 function sortKey(value: JsonValue): string | undefined {
   if (value === null || Array.isArray(value) || typeof value !== 'object')
     return undefined;
@@ -28,14 +31,14 @@ function canonicalize(value: unknown): JsonValue {
     const keys = items.map(sortKey);
     return keys.every((key) => key !== undefined)
       ? [...items].sort((left, right) =>
-          (sortKey(left) ?? '').localeCompare(sortKey(right) ?? ''),
+          compareText(sortKey(left) ?? '', sortKey(right) ?? ''),
         )
       : items;
   }
   if (typeof value === 'object') {
     const entries = Object.entries(value)
       .filter(([, child]) => child !== undefined)
-      .sort(([left], [right]) => left.localeCompare(right));
+      .sort(([left], [right]) => compareText(left, right));
     return Object.fromEntries(
       entries.map(([key, child]) => [key, canonicalize(child)]),
     );

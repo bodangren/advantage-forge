@@ -1,5 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import {
+  ToolResultEnvelopeSchema,
+  type ToolResultEnvelope,
+} from '../contracts/index.js';
+import {
   PUBLIC_TOOL_CATALOG,
   ApplyOperationsInputSchema,
   ConnectPartsInputSchema,
@@ -15,6 +19,47 @@ import {
   type ToolHandlerContext,
 } from '../tools/index.js';
 
+export const MCP_RESPONSE_BYTE_LIMIT = 64 * 1024;
+
+const encoder = new TextEncoder();
+
+function serializedBytes(value: unknown): number {
+  return encoder.encode(JSON.stringify(value)).byteLength;
+}
+
+function responseFor(envelope: ToolResultEnvelope) {
+  return {
+    content: [{ type: 'text' as const, text: JSON.stringify(envelope) }],
+    isError: !envelope.ok,
+  };
+}
+
+function boundedResponse(envelope: ToolResultEnvelope) {
+  const response = responseFor(envelope);
+  const byteLength = serializedBytes(response);
+  if (byteLength <= MCP_RESPONSE_BYTE_LIMIT) return response;
+
+  return responseFor(
+    ToolResultEnvelopeSchema.parse({
+      ok: false,
+      affectedIds: [],
+      summary: 'Serialized MCP response exceeded the configured byte limit.',
+      issues: [
+        {
+          code: 'RESPONSE_TOO_LARGE',
+          severity: 'error',
+          path: '$.response',
+          message: `Serialized MCP response was ${byteLength} bytes; the limit is ${MCP_RESPONSE_BYTE_LIMIT} bytes.`,
+          expected: { maximumBytes: MCP_RESPONSE_BYTE_LIMIT },
+          actual: { serializedBytes: byteLength },
+          guidance:
+            'Narrow the request or inspect the asset through bounded semantic summaries.',
+        },
+      ],
+    }),
+  );
+}
+
 export function createFantasyAssetMcpServer(
   context: ToolHandlerContext,
 ): McpServer {
@@ -24,11 +69,8 @@ export function createFantasyAssetMcpServer(
     version: '0.1.0',
   });
   const result = async (value: Promise<unknown>) => {
-    const envelope = (await value) as { ok: boolean };
-    return {
-      content: [{ type: 'text' as const, text: JSON.stringify(envelope) }],
-      isError: !envelope.ok,
-    };
+    const envelope = ToolResultEnvelopeSchema.parse(await value);
+    return boundedResponse(envelope);
   };
   const description = (name: string) =>
     PUBLIC_TOOL_CATALOG.find((tool) => tool.name === name)!.description;

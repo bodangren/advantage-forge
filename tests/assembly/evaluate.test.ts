@@ -32,15 +32,15 @@ const templates: readonly PartTemplateDefinition[] = [
       {
         id: 'shoulder.left',
         frame: { ...identity, position: [-0.5, 0.75, 0] },
-        tags: ['body.shoulder'],
-        accepts: ['limb.shoulder'],
+        tags: ['anatomy.mount'],
+        accepts: ['anatomy.attach'],
         cardinality: 'single',
       },
       {
         id: 'shoulder.right',
         frame: { ...identity, position: [0.5, 0.75, 0] },
-        tags: ['body.shoulder'],
-        accepts: ['limb.shoulder'],
+        tags: ['anatomy.mount'],
+        accepts: ['anatomy.attach'],
         cardinality: 'single',
       },
     ],
@@ -60,15 +60,15 @@ const templates: readonly PartTemplateDefinition[] = [
       {
         id: 'shoulder',
         frame: { ...identity, position: [0, 0.5, 0] },
-        tags: ['limb.shoulder'],
-        accepts: ['body.shoulder'],
+        tags: ['anatomy.attach'],
+        accepts: ['anatomy.mount'],
         cardinality: 'single',
       },
       {
         id: 'elbow',
         frame: { ...identity, position: [0, -0.5, 0] },
-        tags: ['limb.elbow.parent'],
-        accepts: ['limb.elbow.child'],
+        tags: ['anatomy.mount'],
+        accepts: ['anatomy.attach'],
         cardinality: 'single',
       },
     ],
@@ -88,8 +88,8 @@ const templates: readonly PartTemplateDefinition[] = [
       {
         id: 'elbow',
         frame: { ...identity, position: [0, 0.45, 0] },
-        tags: ['limb.elbow.child'],
-        accepts: ['limb.elbow.parent'],
+        tags: ['anatomy.attach'],
+        accepts: ['anatomy.mount'],
         cardinality: 'single',
       },
     ],
@@ -271,8 +271,8 @@ describe('assembly rejection', () => {
           {
             id: 'link',
             frame: identity,
-            tags: ['chain'],
-            accepts: ['chain'],
+            tags: ['anatomy.mount'],
+            accepts: ['anatomy.mount'],
             cardinality: 'multiple',
           },
         ],
@@ -357,6 +357,9 @@ describe('variants, mirroring, and rigid poses', () => {
       mirrored.parts.find((part) => part.id === 'body.arm.left')?.transform
         .position,
     ).toEqual([0.2, 0, 0]);
+    expect(
+      mirrored.parts.find((part) => part.id === 'body.arm.left')?.handedness,
+    ).toBe('right');
     expect(mirrored.parts.find((part) => part.id === 'body.torso')).toBe(
       moved.parts.find((part) => part.id === 'body.torso'),
     );

@@ -33,6 +33,10 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - **PNG:** Transparent sprite frames and contact sheets.
 - **Local filesystem:** Projects, revisions, previews, and exports. No database, authentication, hosted service, or cloud storage in the MVP.
 
+## Coordinate and Output Contract
+
+The engine uses right-handed meter coordinates with +Y up, +X east, and +Z north. Serialized rotations are XYZW quaternions. The scene compiler, orthographic sprite renderer, and GLB exporter consume the same world transforms; adapters may not reinterpret axes or units. Sprite ground rows are normalized to the document render profile. GLB delivery is accepted only after reload confirms semantic IDs, materials, transforms, scale, and bounds and confirms the absence of out-of-scope animations, textures, shaders, skins, cameras, and lights.
+
 ## Module Boundaries
 
 ```text

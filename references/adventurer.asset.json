@@ -206,6 +206,7 @@
     "id": "adventurer.assembly",
     "parts": [
       {
+        "handedness": "left",
         "id": "foot.left",
         "materialBindings": [
           {
@@ -235,6 +236,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "foot.right",
         "materialBindings": [
           {
@@ -264,6 +266,7 @@
         "visible": true
       },
       {
+        "handedness": "left",
         "id": "forearm.left",
         "materialBindings": [
           {
@@ -293,6 +296,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "forearm.right",
         "materialBindings": [
           {
@@ -322,6 +326,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "hair",
         "materialBindings": [
           {
@@ -351,6 +356,7 @@
         "visible": true
       },
       {
+        "handedness": "left",
         "id": "hand.left",
         "materialBindings": [
           {
@@ -380,6 +386,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "hand.right",
         "materialBindings": [
           {
@@ -409,6 +416,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "head",
         "materialBindings": [
           {
@@ -438,6 +446,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "pelvis",
         "materialBindings": [
           {
@@ -467,6 +476,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "shield",
         "materialBindings": [
           {
@@ -496,6 +506,7 @@
         "visible": true
       },
       {
+        "handedness": "left",
         "id": "shin.left",
         "materialBindings": [
           {
@@ -525,6 +536,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "shin.right",
         "materialBindings": [
           {
@@ -554,6 +566,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "sword",
         "materialBindings": [
           {
@@ -583,6 +596,7 @@
         "visible": true
       },
       {
+        "handedness": "left",
         "id": "thigh.left",
         "materialBindings": [
           {
@@ -612,6 +626,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "thigh.right",
         "materialBindings": [
           {
@@ -641,6 +656,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "torso",
         "materialBindings": [
           {
@@ -670,6 +686,7 @@
         "visible": true
       },
       {
+        "handedness": "neutral",
         "id": "tunic",
         "materialBindings": [
           {
@@ -699,6 +716,7 @@
         "visible": true
       },
       {
+        "handedness": "left",
         "id": "upper-arm.left",
         "materialBindings": [
           {
@@ -728,6 +746,7 @@
         "visible": true
       },
       {
+        "handedness": "right",
         "id": "upper-arm.right",
         "materialBindings": [
           {
@@ -762,6 +781,20 @@
   "kitId": "rustic-human",
   "materials": [
     {
+      "color": "#c8b995",
+      "family": "bone",
+      "id": "bone.ivory",
+      "metalness": 0,
+      "roughness": 0.9
+    },
+    {
+      "color": "#8a633d",
+      "family": "bronze",
+      "id": "bronze.aged",
+      "metalness": 0.66,
+      "roughness": 0.72
+    },
+    {
       "color": "#46563b",
       "family": "cloth",
       "id": "cloth.moss",
@@ -774,6 +807,14 @@
       "id": "cloth.umber",
       "metalness": 0,
       "roughness": 0.95
+    },
+    {
+      "color": "#7f73b8",
+      "emissive": "#241d45",
+      "family": "crystal",
+      "id": "crystal.arcane",
+      "metalness": 0.08,
+      "roughness": 0.28
     },
     {
       "color": "#334f36",
@@ -876,11 +917,11 @@
   "renderProfiles": [
     {
       "directions": 8,
-      "elevationDegrees": 24,
+      "elevationDegrees": 30,
       "heightPixels": 128,
       "id": "sprite.default",
-      "minimumFeaturePixels": 2,
-      "paddingPixels": 8,
+      "minimumFeaturePixels": 3,
+      "paddingPixels": 6,
       "transparent": true,
       "widthPixels": 128
     }
@@ -893,7 +934,36 @@
       "materialSlots": [
         "stone"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.chimney",
       "shape": {
         "bevel": 0.04,
@@ -908,7 +978,36 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.door",
       "shape": {
         "bevel": 0.035,
@@ -923,7 +1022,36 @@
       "materialSlots": [
         "cloth"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.roof",
       "shape": {
         "depth": 2.55,
@@ -937,7 +1065,36 @@
       "materialSlots": [
         "stone"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.wall",
       "shape": {
         "bevel": 0.035,
@@ -952,7 +1109,36 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.timber-frame",
       "shape": {
         "bevel": 0.025,
@@ -967,7 +1153,316 @@
       "materialSlots": [
         "stone"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0.82,
+              1.54,
+              -1.38
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "chimney",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.23,
+              0.15
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "door.front",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              1.29,
+              -1.1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "roof.main",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -1.05,
+              0.07,
+              0.14
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "timber.left",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              1.05,
+              0.07,
+              0.14
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "timber.right",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -2.2
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.back",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -1.4,
+              0,
+              -1.1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.left",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              1.4,
+              0,
+              -1.1
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.right",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -0.78,
+              0.13,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "window.left",
+          "tags": [
+            "structure.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "structure.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0.78,
+              0.13,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "window.right",
+          "tags": [
+            "structure.mount"
+          ]
+        }
+      ],
       "role": "structure.wall",
       "shape": {
         "bevel": 0.035,
@@ -982,7 +1477,36 @@
       "materialSlots": [
         "metal"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "structure.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "wall.attach",
+          "tags": [
+            "structure.attach"
+          ]
+        }
+      ],
       "role": "structure.window",
       "shape": {
         "height": 0.6,
@@ -1864,7 +2388,64 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "prop.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.2,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "band.high",
+          "tags": [
+            "prop.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "prop.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.2,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "band.low",
+          "tags": [
+            "prop.mount"
+          ]
+        }
+      ],
       "role": "prop.container",
       "shape": {
         "bevel": 0.055,
@@ -1879,7 +2460,36 @@
       "materialSlots": [
         "metal"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "prop.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "crate.attach",
+          "tags": [
+            "prop.attach"
+          ]
+        }
+      ],
       "role": "prop.reinforcement",
       "shape": {
         "bevel": 0.018,
@@ -1894,7 +2504,36 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "vegetation.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "trunk.attach",
+          "tags": [
+            "vegetation.attach"
+          ]
+        }
+      ],
       "role": "vegetation.branch",
       "shape": {
         "kind": "tubePath",
@@ -1924,7 +2563,36 @@
       "materialSlots": [
         "foliage"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "vegetation.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "trunk.attach",
+          "tags": [
+            "vegetation.attach"
+          ]
+        }
+      ],
       "role": "vegetation.foliage-cluster",
       "shape": {
         "heightSegments": 6,
@@ -1940,7 +2608,36 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "vegetation.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "trunk.attach",
+          "tags": [
+            "vegetation.attach"
+          ]
+        }
+      ],
       "role": "vegetation.root",
       "shape": {
         "kind": "tubePath",
@@ -1970,7 +2667,204 @@
       "materialSlots": [
         "wood"
       ],
-      "ports": [],
+      "ports": [
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.49,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "branch.east",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.69,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "branch.west",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0.55,
+              0.99,
+              0.05
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "crown.east",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              1.29,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "crown.main",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              -0.58,
+              1.09,
+              -0.02
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "crown.west",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -1.04,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "root.east",
+          "tags": [
+            "vegetation.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "vegetation.attach"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -1.04,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "root.west",
+          "tags": [
+            "vegetation.mount"
+          ]
+        }
+      ],
       "role": "vegetation.trunk",
       "shape": {
         "height": 2.35,

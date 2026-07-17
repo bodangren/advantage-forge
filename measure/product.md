@@ -26,6 +26,15 @@ The primary user is a small fantasy RPG game team or technical creator who wants
 6. **Local edits over regeneration:** A request to change a forearm, roof, sword, or branch patches the relevant part without rebuilding unrelated content.
 7. **Evidence-driven completion:** Structural validation and fixed-resolution visual contact sheets are required before an output is considered successful.
 
+## Normative Coordinate System
+
+- World space is right-handed and measured in meters.
+- +X is east/right, +Y is up, and +Z is north/forward.
+- Transforms serialize position as XYZ, rotation as quaternion XYZW, and scale as XYZ.
+- Direction labels describe camera positions around the asset: N is viewed from +Z, E from +X, S from -Z, and W from -X.
+- Reference assets rest on the Y=0 ground plane. Sprite output normalizes visible ground contact to the render profile's declared bottom padding row.
+- Negative scale is permitted only for explicit mirrored subassemblies; mirrored instances swap left/right handedness metadata.
+
 ## MVP Outcome
 
 An LLM can create and revise a rustic fantasy adventurer assembled from rigid parametric parts, equip it with a sword and shield, pose it, render an eight-direction transparent sprite contact sheet, and export a GLB. The same engine also assembles one crate, one tree, and one cottage module set to demonstrate that the part-and-port abstraction is reusable across characters, props, vegetation, and structures.

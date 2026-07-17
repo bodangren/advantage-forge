@@ -110,6 +110,73 @@ describe('semantic domain tools', () => {
     expect(
       (await handlers.validateAsset({ assetId: 'adventurer.rustic' })).ok,
     ).toBe(true);
+    const changed = await handlers.applyOperations({
+      assetId: 'adventurer.rustic',
+      expectedRevisionId: current!.revisionId,
+      dryRun: false,
+      patch: {
+        operations: [
+          { operation: 'setActiveVariant', variantId: 'unequipped' },
+          {
+            operation: 'setMaterialBinding',
+            partId: 'torso',
+            slot: 'body',
+            materialId: 'cloth.umber',
+          },
+        ],
+      },
+    });
+    expect(changed.ok).toBe(true);
+    expect(changed.affectedIds).toEqual(['torso', 'unequipped']);
+    expect(changed.data).toMatchObject({
+      patchSummary: { operationCount: 2 },
+    });
+    expect(
+      (await revisions.getCurrent('adventurer.rustic'))?.document
+        .activeVariantId,
+    ).toBe('unequipped');
+  });
+
+  it('returns stable paths for invalid and out-of-scope tool payloads without mutation', async () => {
+    const revisions = new MemoryRevisions();
+    const handlers = createToolHandlers({ revisions });
+    const unknown = await handlers.listKits({ unexpected: true });
+    expect(unknown.ok).toBe(false);
+    expect(unknown.issues[0]).toMatchObject({
+      code: 'UNKNOWN_FIELD',
+      path: '$.unexpected',
+    });
+    const created = await handlers.createAsset({ reference: 'crate' });
+    const before = await revisions.getCurrent('crate.rustic');
+    const repeated = await handlers.createAsset({ reference: 'crate' });
+    expect(repeated.ok).toBe(false);
+    expect(repeated.issues[0]?.code).toBe('ALREADY_EXISTS');
+    expect(await revisions.getCurrent('crate.rustic')).toEqual(before);
+    const invalidConnection = await handlers.connectParts({
+      assetId: 'crate.rustic',
+      expectedRevisionId: created.revisionId,
+      dryRun: false,
+      connection: {
+        id: 'invalid.connection',
+        parentPartId: 'missing.parent',
+        parentPortId: 'missing.port',
+        childPartId: 'missing.child',
+        childPortId: 'missing.port',
+      },
+    });
+    expect(invalidConnection.ok).toBe(false);
+    expect(invalidConnection.issues[0]).toMatchObject({
+      code: 'INVALID_ASSEMBLY',
+      path: '$.patch',
+    });
+    expect(await revisions.getCurrent('crate.rustic')).toEqual(before);
+    const rejected = await handlers.applyOperations({
+      assetId: 'crate.rustic',
+      expectedRevisionId: created.revisionId,
+      patch: { operations: [{ operation: 'runShell', command: 'true' }] },
+    });
+    expect(rejected.ok).toBe(false);
+    expect(await revisions.getCurrent('crate.rustic')).toEqual(before);
   });
   it('orchestrates render and export through narrow service ports', async () => {
     const revisions = new MemoryRevisions();

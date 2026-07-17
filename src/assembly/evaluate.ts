@@ -70,6 +70,11 @@ export function instantiatePart(
   return {
     id,
     templateId: template.id,
+    handedness: id.endsWith('.left')
+      ? 'left'
+      : id.endsWith('.right')
+        ? 'right'
+        : 'neutral',
     transform: canonicalTransform(transform),
     shape: template.shape,
     materialBindings: template.materialSlots.map((slot) => ({
@@ -516,7 +521,16 @@ export function mirrorSubassembly(
     ...assembly,
     parts: assembly.parts.map((part) =>
       selected.has(part.id)
-        ? { ...part, transform: mirrorTransform(part.transform, axis) }
+        ? {
+            ...part,
+            handedness:
+              part.handedness === 'left'
+                ? 'right'
+                : part.handedness === 'right'
+                  ? 'left'
+                  : (part.handedness ?? 'neutral'),
+            transform: mirrorTransform(part.transform, axis),
+          }
         : part,
     ),
   };

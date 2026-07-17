@@ -66,7 +66,8 @@ export function createOrthographicCamera(
       new THREE.Vector3(max.x, min.y, max.z),
     ].map((corner) => corner.project(camera).y),
   );
-  const desiredGroundNdc = -1 + 2 / profile.heightPixels;
+  const desiredGroundNdc =
+    -1 + (2 * (profile.paddingPixels + 0.5)) / profile.heightPixels;
   const shiftWorld = (lowestGroundNdc - desiredGroundNdc) * halfHeight;
   const screenUp = new THREE.Vector3()
     .setFromMatrixColumn(camera.matrixWorld, 1)

@@ -31,6 +31,31 @@ function flipRows(
   return target;
 }
 
+function alignGroundRow(
+  pixels: Uint8ClampedArray,
+  width: number,
+  height: number,
+  expectedGroundPixelY: number,
+): Uint8ClampedArray {
+  const measured = analyzeRgbaPixels(pixels, width, height, {
+    alphaThreshold: 128,
+  });
+  if (measured.groundPixelY === null) return pixels;
+  const offset = expectedGroundPixelY - measured.groundPixelY;
+  if (offset === 0) return pixels;
+  const aligned = new Uint8ClampedArray(pixels.length);
+  const stride = width * 4;
+  for (let sourceY = 0; sourceY < height; sourceY += 1) {
+    const targetY = sourceY + offset;
+    if (targetY < 0 || targetY >= height) continue;
+    aligned.set(
+      pixels.subarray(sourceY * stride, (sourceY + 1) * stride),
+      targetY * stride,
+    );
+  }
+  return aligned;
+}
+
 export function renderDirectionalSprites(
   renderer: THREE.WebGLRenderer,
   scene: THREE.Scene,
@@ -71,7 +96,14 @@ export function renderDirectionalSprites(
         profile.heightPixels,
         raw,
       );
-      const pixels = flipRows(raw, profile.widthPixels, profile.heightPixels);
+      const expectedGroundPixelY =
+        profile.heightPixels - profile.paddingPixels - 1;
+      const pixels = alignGroundRow(
+        flipRows(raw, profile.widthPixels, profile.heightPixels),
+        profile.widthPixels,
+        profile.heightPixels,
+        expectedGroundPixelY,
+      );
       frames.push({
         direction,
         width: profile.widthPixels,
@@ -82,8 +114,8 @@ export function renderDirectionalSprites(
           profile.widthPixels,
           profile.heightPixels,
           {
-            expectedGroundPixelY:
-              profile.heightPixels - profile.paddingPixels - 1,
+            alphaThreshold: 128,
+            expectedGroundPixelY,
           },
         ),
       });

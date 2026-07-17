@@ -31,6 +31,16 @@ export const SemanticOperationSchema = z.discriminatedUnion('operation', [
     visible: z.boolean(),
   }),
   z.strictObject({
+    operation: z.literal('setMaterialBinding'),
+    partId: SemanticIdSchema,
+    slot: SemanticIdSchema,
+    materialId: SemanticIdSchema,
+  }),
+  z.strictObject({
+    operation: z.literal('setActiveVariant'),
+    variantId: SemanticIdSchema,
+  }),
+  z.strictObject({
     operation: z.literal('connectParts'),
     connection: ConnectionDefinitionSchema,
   }),
@@ -159,6 +169,53 @@ export function applySemanticPatch(
         affected.add(operation.partId);
         break;
       }
+      case 'setMaterialBinding': {
+        const part = next.assembly.parts.find(
+          ({ id }) => id === operation.partId,
+        );
+        if (!part)
+          return failure(
+            '$.operations',
+            `Part ${operation.partId} was not found.`,
+          );
+        const template = next.templates.find(
+          ({ id }) => id === part.templateId,
+        );
+        if (!template?.materialSlots.includes(operation.slot))
+          return failure(
+            '$.operations',
+            `Slot ${operation.slot} is not declared by template ${part.templateId}.`,
+          );
+        if (!next.materials.some(({ id }) => id === operation.materialId))
+          return failure(
+            '$.operations',
+            `Material ${operation.materialId} was not found.`,
+          );
+        next.assembly.parts = next.assembly.parts.map((candidate) =>
+          candidate.id !== operation.partId
+            ? candidate
+            : {
+                ...candidate,
+                materialBindings: [
+                  ...candidate.materialBindings.filter(
+                    ({ slot }) => slot !== operation.slot,
+                  ),
+                  { slot: operation.slot, materialId: operation.materialId },
+                ],
+              },
+        );
+        affected.add(operation.partId);
+        break;
+      }
+      case 'setActiveVariant':
+        if (!next.variants.some(({ id }) => id === operation.variantId))
+          return failure(
+            '$.operations',
+            `Variant ${operation.variantId} is not declared.`,
+          );
+        next.activeVariantId = operation.variantId;
+        affected.add(operation.variantId);
+        break;
       case 'connectParts':
         if (
           next.assembly.connections.some(
