@@ -27,22 +27,22 @@ _Story ref: spec.md#story-s1_
 
 _Story ref: spec.md#story-s2_
 
-- [x] Task: Define machine-readable capability and limitation contracts
+- [x] Task: Define machine-readable capability and limitation contracts [commit: 2b65ea2]
   - [x] Represent asset families, templates, operations, outputs, render profiles, and explicit exclusions.
   - [x] Define supported, partial, unsupported, and not-assessed results with remediation guidance.
   - [x] Decide whether to extend discovery or add a dedicated bounded read tool and update the public catalog deliberately.
-- [x] Task: Write failing capability consistency tests
+- [x] Task: Write failing capability consistency tests [commit: b5dfe48]
   - [x] Cover current static references, sword/shield, GLB, directional sprites, and revisions as supported.
   - [x] Cover new identities, unavailable accessories, animation, atlases, unsupported anatomy, and raw mesh as unsupported.
   - [x] Fail when generated documentation and runtime capability facts drift.
-- [x] Task: Implement capability discovery through domain tools and MCP
+- [x] Task: Implement capability discovery through domain tools and MCP [commit: 90d367d]
   - [x] Derive facts from registered contracts and kit/output manifests rather than duplicated prose.
   - [x] Keep responses concise and source-layout independent.
   - [x] Return actionable limitation guidance without suggesting hidden internal routes.
-- [~] Task: Update product documentation and run quality gates
-  - [ ] Update README, product, tech-stack, generated catalogs, and benchmark guidance.
-  - [ ] Run contract, MCP, generation, doctor, coverage, type, lint, and full checks.
-- [ ] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md)
+- [x] Task: Update product documentation and run quality gates [commit: 4504f88]
+  - [x] Update README, product, tech-stack, generated catalogs, and benchmark guidance.
+  - [x] Run contract, MCP, generation, doctor, coverage, type, lint, and full checks.
+- [~] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md)
 
 ## Phase S3: Guide Visual Authoring
 

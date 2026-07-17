@@ -42,3 +42,41 @@ Using the repository MCP server and its existing `adventurer.rustic` revision hi
 6. Request a second page using `nextOffset`, then try an out-of-range offset and an unknown field; confirm deterministic continuation and actionable rejection.
 
 Owner decision: approved. No additional S1 inspection or comparison gap was identified.
+
+## Phase S2: Publish Honest Capabilities
+
+Status: automated verification passed; explicit owner confirmation pending.
+
+### Automated evidence
+
+| Check                                               | Result                                                                                                                                                                                    |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Red test run                                        | Expected failure: `inspectCapabilities`, public registration, and the generated capability catalog did not exist                                                                          |
+| Focused capability, handler, and MCP tests          | Pass: 16 tests before full-suite integration; filtering, unknown fields/IDs, supported static facts, explicit gaps, safe guidance, generated drift, and protocol registration are covered |
+| Full unit suite                                     | Pass: 20 files, 165 tests                                                                                                                                                                 |
+| Full coverage                                       | Pass: 94.29% statements, 83.59% branches, 96.70% functions, 94.84% lines                                                                                                                  |
+| New `capabilities.ts` coverage                      | Pass: 100% statements, functions, and lines; 71.42% branches, with total new tools-module coverage above 87% statements                                                                   |
+| `pnpm typecheck`                                    | Pass                                                                                                                                                                                      |
+| `pnpm lint`                                         | Pass; no dependency violations across 52 modules and 91 dependencies                                                                                                                      |
+| `pnpm generate`                                     | Pass; capability catalog added beside architecture, route, kit, tool, and output facts                                                                                                    |
+| `pnpm doctor`                                       | Pass                                                                                                                                                                                      |
+| `env CI=true pnpm check` in an isolated clean clone | Pass: formatting, typecheck, lint, 165 tests, generated-fact freshness, and doctor                                                                                                        |
+
+### Capability boundary to review
+
+- Supported: adventurer, crate, tree, and cottage references; localized semantic revisions; sword and shield; static rigid poses; directional PNGs; review contact sheets; GLB.
+- Partial: accessory authoring exists but only for the registered sword and shield.
+- Unsupported: new identities, additional accessories, temporal animation, runtime sprite atlases, unregistered anatomy, skeletal deformation, and raw mesh operations.
+- Not Assessed: representative external game-engine import remains unevidenced until S4.
+- Guidance never recommends source inspection, hand-authored canonical JSON, unrestricted file access, shell access, or hidden tools.
+
+### Owner manual verification procedure
+
+1. Call `inspect_capabilities` with `{}` and confirm every fact has an ID, category, status, summary, executable evidence arrays, and guidance for every non-supported status.
+2. Filter with `capabilityIds: ["accessory.additional", "animation.temporal", "integration.game_engine_import"]`; confirm the ordered result is unsupported, unsupported, and not-assessed with concrete next steps.
+3. Confirm `accessory.sword` and `accessory.shield` cite registered templates and public tools, while `accessory.library` is explicitly partial.
+4. Confirm the four reference asset facts, directional PNG/contact-sheet output, GLB output, static pose, localized revision, inspection, and immutable revision facts are supported.
+5. Compare the runtime response with `measure/generated/capability-catalog.md`, README, product, and tech stack; confirm they make no broader claim.
+6. Request an unknown capability and an unknown field; confirm `NOT_FOUND` and `UNKNOWN_FIELD` responses include stable paths and no mutation occurs.
+
+Owner decision requested: approve Phase S2, or identify a capability status, evidence, or limitation statement that is still misleading.
