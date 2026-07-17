@@ -618,6 +618,69 @@ export const SemanticRevisionComparisonSchema = z
   })
   .strict();
 
+export const CapabilityStatusSchema = z.enum([
+  'supported',
+  'partial',
+  'unsupported',
+  'not-assessed',
+]);
+
+export const CapabilityCategorySchema = z.enum([
+  'asset',
+  'accessory',
+  'operation',
+  'output',
+  'animation',
+  'integration',
+]);
+
+export const CapabilityEvidenceSchema = z
+  .object({
+    publicTools: z.array(SemanticIdSchema).max(32),
+    referenceAssetIds: z.array(SemanticIdSchema).max(32),
+    templateIds: z.array(SemanticIdSchema).max(256),
+    renderProfileIds: z.array(SemanticIdSchema).max(16),
+    formats: z.array(SemanticIdSchema).max(16),
+  })
+  .strict();
+
+export const CapabilityFactSchema = z
+  .object({
+    id: SemanticIdSchema,
+    category: CapabilityCategorySchema,
+    status: CapabilityStatusSchema,
+    summary: z.string().min(1).max(500),
+    guidance: z.string().min(1).max(1_000).optional(),
+    evidence: CapabilityEvidenceSchema,
+  })
+  .strict()
+  .superRefine((fact, context) => {
+    if (fact.status !== 'supported' && fact.guidance === undefined)
+      context.addIssue({
+        code: 'custom',
+        path: ['guidance'],
+        message:
+          'Partial, unsupported, and not-assessed capabilities require actionable guidance.',
+      });
+  });
+
+export const CapabilityReportSchema = z
+  .object({
+    scope: z.literal('fantasy-asset-forge'),
+    facts: z.array(CapabilityFactSchema).max(128),
+    availableCapabilityIds: z.array(SemanticIdSchema).max(128),
+    totals: z
+      .object({
+        supported: z.number().int().nonnegative(),
+        partial: z.number().int().nonnegative(),
+        unsupported: z.number().int().nonnegative(),
+        notAssessed: z.number().int().nonnegative(),
+      })
+      .strict(),
+    filtered: z.boolean(),
+  })
+  .strict();
+
 export const GeometryMaterialGroupSchema = z
   .object({
     materialSlot: SemanticIdSchema,
@@ -694,6 +757,11 @@ export type SemanticChange = z.infer<typeof SemanticChangeSchema>;
 export type SemanticRevisionComparison = z.infer<
   typeof SemanticRevisionComparisonSchema
 >;
+export type CapabilityStatus = z.infer<typeof CapabilityStatusSchema>;
+export type CapabilityCategory = z.infer<typeof CapabilityCategorySchema>;
+export type CapabilityEvidence = z.infer<typeof CapabilityEvidenceSchema>;
+export type CapabilityFact = z.infer<typeof CapabilityFactSchema>;
+export type CapabilityReport = z.infer<typeof CapabilityReportSchema>;
 export type GeometryMaterialGroup = z.infer<typeof GeometryMaterialGroupSchema>;
 export type IndexedGeometry = z.infer<typeof IndexedGeometrySchema>;
 

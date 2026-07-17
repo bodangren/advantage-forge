@@ -27,11 +27,11 @@ _Story ref: spec.md#story-s1_
 
 _Story ref: spec.md#story-s2_
 
-- [~] Task: Define machine-readable capability and limitation contracts
-  - [ ] Represent asset families, templates, operations, outputs, render profiles, and explicit exclusions.
-  - [ ] Define supported, partial, unsupported, and not-assessed results with remediation guidance.
-  - [ ] Decide whether to extend discovery or add a dedicated bounded read tool and update the public catalog deliberately.
-- [ ] Task: Write failing capability consistency tests
+- [x] Task: Define machine-readable capability and limitation contracts
+  - [x] Represent asset families, templates, operations, outputs, render profiles, and explicit exclusions.
+  - [x] Define supported, partial, unsupported, and not-assessed results with remediation guidance.
+  - [x] Decide whether to extend discovery or add a dedicated bounded read tool and update the public catalog deliberately.
+- [~] Task: Write failing capability consistency tests
   - [ ] Cover current static references, sword/shield, GLB, directional sprites, and revisions as supported.
   - [ ] Cover new identities, unavailable accessories, animation, atlases, unsupported anatomy, and raw mesh as unsupported.
   - [ ] Fail when generated documentation and runtime capability facts drift.
