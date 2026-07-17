@@ -22,6 +22,7 @@ import {
 
 class MemoryRevisions implements RevisionRepository {
   readonly current = new Map<string, RevisionRecord>();
+  readonly records = new Map<string, RevisionRecord>();
   async save(
     document: Readonly<AssetDocument>,
     expected?: string,
@@ -37,14 +38,14 @@ class MemoryRevisions implements RevisionRepository {
       document,
     };
     this.current.set(document.id, record);
+    this.records.set(`${document.id}:${record.revisionId}`, record);
     return record;
   }
   async get(
     assetId: string,
     revisionId: string,
   ): Promise<RevisionRecord | undefined> {
-    const found = this.current.get(assetId);
-    return found?.revisionId === revisionId ? found : undefined;
+    return this.records.get(`${assetId}:${revisionId}`);
   }
   async getCurrent(assetId: string): Promise<RevisionRecord | undefined> {
     return this.current.get(assetId);
@@ -151,6 +152,16 @@ describe('MCP adapter', () => {
         },
       });
       expect(reshaped.affectedIds).toEqual(['torso']);
+      const comparison = await call('compare_revisions', {
+        assetId: 'adventurer.rustic',
+        baseRevisionId: created.revisionId,
+        targetRevisionId: reshaped.revisionId,
+        limit: 100,
+      });
+      expect(comparison.data).toMatchObject({
+        affectedIds: expect.arrayContaining(['torso']),
+        preservedIds: expect.arrayContaining(['sword']),
+      });
       const originalConnection =
         revisions.current.get('adventurer.rustic')?.document.assembly
           .connections[0];

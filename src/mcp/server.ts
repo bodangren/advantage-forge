@@ -6,6 +6,7 @@ import {
 import {
   PUBLIC_TOOL_CATALOG,
   ApplyOperationsInputSchema,
+  CompareRevisionsInputSchema,
   ConnectPartsInputSchema,
   CreateAssetInputSchema,
   ExportAssetInputSchema,
@@ -94,6 +95,14 @@ export function createFantasyAssetMcpServer(
       inputSchema: InspectAssetInputSchema,
     },
     (input) => result(handlers.inspectAsset(input)),
+  );
+  server.registerTool(
+    'compare_revisions',
+    {
+      description: description('compare_revisions'),
+      inputSchema: CompareRevisionsInputSchema,
+    },
+    (input) => result(handlers.compareRevisions(input)),
   );
   server.registerTool(
     'create_asset',

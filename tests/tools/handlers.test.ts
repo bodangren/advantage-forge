@@ -48,6 +48,7 @@ describe('semantic domain tools', () => {
       'list_kits',
       'inspect_template',
       'inspect_asset',
+      'compare_revisions',
       'create_asset',
       'apply_operations',
       'connect_parts',
@@ -171,7 +172,7 @@ describe('semantic domain tools', () => {
       effective: { jointValueDegrees: -48 },
     });
     expect(inspection.items.find(({ id }) => id === 'shield')).toMatchObject({
-      handedness: 'left',
+      handedness: 'neutral',
       base: { visible: false },
       effective: { visible: false },
     });

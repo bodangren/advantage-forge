@@ -1,15 +1,24 @@
 import { z } from 'zod';
 
-import { evaluateAssembly } from '../assembly/index.js';
 import {
+  applyPose,
+  applyVariant,
+  evaluateAssembly,
+} from '../assembly/index.js';
+import {
+  AssetInspectionDataSchema,
   ConnectionDefinitionSchema,
+  InspectionSectionSchema,
+  SemanticRevisionComparisonSchema,
   ToolResultEnvelopeSchema,
   type AssetDocument,
+  type PageInfo,
   type ToolResultEnvelope,
   type ValidationErrorCode,
 } from '../contracts/index.js';
 import {
   applySemanticPatch,
+  compareSemanticDocuments,
   parseAssetDocument,
   SemanticPatchSchema,
   type RevisionRepository,
@@ -41,7 +50,19 @@ export const ListKitsInputSchema = z.strictObject({});
 export const InspectTemplateInputSchema = z.strictObject({
   templateId: semanticId,
 });
-export const InspectAssetInputSchema = z.strictObject({ assetId: semanticId });
+export const InspectAssetInputSchema = z.strictObject({
+  assetId: semanticId,
+  section: InspectionSectionSchema.default('overview'),
+  offset: z.number().int().nonnegative().default(0),
+  limit: z.number().int().min(1).max(100).default(20),
+});
+export const CompareRevisionsInputSchema = z.strictObject({
+  assetId: semanticId,
+  baseRevisionId: revisionId,
+  targetRevisionId: revisionId.optional(),
+  offset: z.number().int().nonnegative().default(0),
+  limit: z.number().int().min(1).max(100).default(20),
+});
 export const CreateAssetInputSchema = z.strictObject({
   reference: z.enum(['adventurer', 'crate', 'tree', 'cottage']),
 });
@@ -68,6 +89,8 @@ export const RenderPreviewInputSchema = z.strictObject({ assetId: semanticId });
 export const ExportAssetInputSchema = z.strictObject({ assetId: semanticId });
 
 const RESPONSE_ITEM_LIMIT = 100;
+const compareText = (left: string, right: string): number =>
+  left < right ? -1 : left > right ? 1 : 0;
 
 const ok = (
   summary: string,
@@ -129,6 +152,18 @@ const bounded = <Value>(values: readonly Value[]) => ({
   truncated: values.length > RESPONSE_ITEM_LIMIT,
   limit: RESPONSE_ITEM_LIMIT,
 });
+
+function pageInfo(total: number, offset: number, limit: number): PageInfo {
+  const nextOffset = offset + limit;
+  const truncated = nextOffset < total;
+  return {
+    total,
+    offset,
+    limit,
+    truncated,
+    ...(truncated ? { nextOffset } : {}),
+  };
+}
 
 function evaluateDocument(document: Readonly<AssetDocument>) {
   const variant = document.variants.find(
@@ -200,27 +235,222 @@ export function createToolHandlers(context: ToolHandlerContext) {
         `Asset ${parsed.data.assetId} has no current revision.`,
         '$.assetId',
       );
+    const document = revision.document;
+    const counts = {
+      parts: document.assembly.parts.length,
+      connections: document.assembly.connections.length,
+      variants: document.variants.length,
+      poses: document.poses.length,
+      renderProfiles: document.renderProfiles.length,
+    };
+    const common = {
+      id: document.id,
+      name: document.name,
+      kitId: document.kitId,
+      unit: document.unit,
+      seed: document.seed,
+      triangleBudget: document.triangleBudget,
+      activeVariantId: document.activeVariantId,
+      activePoseId: document.activePoseId,
+      section: parsed.data.section,
+      counts,
+    };
+    if (parsed.data.section === 'overview')
+      return ok(
+        `Inspected current state for ${document.id}; request a section for complete bounded items.`,
+        AssetInspectionDataSchema.parse(common),
+        revision.revisionId,
+      );
+
+    const templateById = new Map(
+      document.templates.map((template) => [template.id, template]),
+    );
+    let effectiveAssembly = document.assembly;
+    const activeVariant = document.variants.find(
+      ({ id }) => id === document.activeVariantId,
+    );
+    if (activeVariant !== undefined)
+      effectiveAssembly = applyVariant(effectiveAssembly, activeVariant);
+    const activePose = document.poses.find(
+      ({ id }) => id === document.activePoseId,
+    );
+    if (activePose !== undefined)
+      effectiveAssembly = applyPose(effectiveAssembly, activePose);
+    const effectiveById = new Map(
+      effectiveAssembly.parts.map((part) => [part.id, part]),
+    );
+    const sceneById = new Map(
+      evaluateAssembly(effectiveAssembly, document.templates).parts.map(
+        (part) => [part.id, part],
+      ),
+    );
+    const portFor = (partId: string, portId: string) => {
+      const part = document.assembly.parts.find(({ id }) => id === partId);
+      const port =
+        part === undefined
+          ? undefined
+          : templateById
+              .get(part.templateId)
+              ?.ports.find(({ id }) => id === portId);
+      if (port === undefined)
+        throw new Error(`Port ${partId}.${portId} was not found.`);
+      return port;
+    };
+    const sections = {
+      parts: document.assembly.parts
+        .map((part) => {
+          const template = templateById.get(part.templateId);
+          const effective = effectiveById.get(part.id);
+          const scene = sceneById.get(part.id);
+          if (
+            template === undefined ||
+            effective === undefined ||
+            scene === undefined
+          )
+            throw new Error(
+              `Part ${part.id} could not be resolved for inspection.`,
+            );
+          return {
+            id: part.id,
+            templateId: part.templateId,
+            role: template.role,
+            handedness: part.handedness ?? 'neutral',
+            shapeSource: part.shape === undefined ? 'template' : 'part',
+            base: {
+              shape: part.shape ?? template.shape,
+              transform: part.transform,
+              materialBindings: [...part.materialBindings].sort((left, right) =>
+                compareText(left.slot, right.slot),
+              ),
+              visible: part.visible,
+              ...(part.jointValueDegrees === undefined
+                ? {}
+                : { jointValueDegrees: part.jointValueDegrees }),
+            },
+            effective: {
+              shape: effective.shape ?? template.shape,
+              transform: effective.transform,
+              worldTransform: scene.worldTransform,
+              materialBindings: [...effective.materialBindings].sort(
+                (left, right) => compareText(left.slot, right.slot),
+              ),
+              visible: effective.visible,
+              ...(effective.jointValueDegrees === undefined
+                ? {}
+                : { jointValueDegrees: effective.jointValueDegrees }),
+            },
+            ports: [...template.ports].sort((left, right) =>
+              compareText(left.id, right.id),
+            ),
+          };
+        })
+        .sort((left, right) => compareText(left.id, right.id)),
+      connections: document.assembly.connections
+        .map((connection) => ({
+          ...connection,
+          parentPort: portFor(connection.parentPartId, connection.parentPortId),
+          childPort: portFor(connection.childPartId, connection.childPortId),
+        }))
+        .sort((left, right) => compareText(left.id, right.id)),
+      variants: [...document.variants].sort((left, right) =>
+        compareText(left.id, right.id),
+      ),
+      poses: [...document.poses].sort((left, right) =>
+        compareText(left.id, right.id),
+      ),
+      renderProfiles: [...document.renderProfiles].sort((left, right) =>
+        compareText(left.id, right.id),
+      ),
+    } as const;
+    const values = sections[parsed.data.section];
+    if (values.length > 0 && parsed.data.offset >= values.length)
+      return fail(
+        'INVALID_VALUE',
+        `Offset ${parsed.data.offset} is outside the ${values.length}-item ${parsed.data.section} section.`,
+        '$.offset',
+        'Use offset 0 or the nextOffset returned by the previous page.',
+        { actual: parsed.data.offset, expected: `0..${values.length - 1}` },
+      );
+    const page = pageInfo(values.length, parsed.data.offset, parsed.data.limit);
+    const items = values.slice(
+      parsed.data.offset,
+      parsed.data.offset + parsed.data.limit,
+    );
     return ok(
-      `Inspected ${revision.document.id}.`,
-      {
-        id: revision.document.id,
-        name: revision.document.name,
-        kitId: revision.document.kitId,
-        parts: bounded(
-          revision.document.assembly.parts.map(({ id, templateId }) => ({
-            id,
-            templateId,
-          })),
-        ),
-        connections: bounded(
-          revision.document.assembly.connections.map(({ id }) => ({ id })),
-        ),
-        variants: bounded(revision.document.variants.map(({ id }) => ({ id }))),
-        poses: bounded(revision.document.poses.map(({ id }) => ({ id }))),
-        activeVariantId: revision.document.activeVariantId,
-        activePoseId: revision.document.activePoseId,
-      },
+      `Inspected ${items.length} of ${values.length} ${parsed.data.section} for ${document.id}.`,
+      AssetInspectionDataSchema.parse({ ...common, page, items }),
       revision.revisionId,
+    );
+  };
+  const compareRevisions = async (
+    input: unknown,
+  ): Promise<ToolResultEnvelope> => {
+    const parsed = CompareRevisionsInputSchema.safeParse(input);
+    if (!parsed.success) return invalid(parsed);
+    const target =
+      parsed.data.targetRevisionId === undefined
+        ? await current(parsed.data.assetId)
+        : await context.revisions.get(
+            parsed.data.assetId,
+            parsed.data.targetRevisionId,
+          );
+    if (target === undefined)
+      return fail(
+        'NOT_FOUND',
+        parsed.data.targetRevisionId === undefined
+          ? `Asset ${parsed.data.assetId} has no current revision.`
+          : `Target revision ${parsed.data.targetRevisionId} was not found for ${parsed.data.assetId}.`,
+        parsed.data.targetRevisionId === undefined
+          ? '$.assetId'
+          : '$.targetRevisionId',
+      );
+    const base = await context.revisions.get(
+      parsed.data.assetId,
+      parsed.data.baseRevisionId,
+    );
+    if (base === undefined)
+      return fail(
+        'NOT_FOUND',
+        `Base revision ${parsed.data.baseRevisionId} was not found for ${parsed.data.assetId}.`,
+        '$.baseRevisionId',
+      );
+    const comparison = compareSemanticDocuments(base.document, target.document);
+    if (
+      comparison.changes.length > 0 &&
+      parsed.data.offset >= comparison.changes.length
+    )
+      return fail(
+        'INVALID_VALUE',
+        `Offset ${parsed.data.offset} is outside the ${comparison.changes.length}-change comparison.`,
+        '$.offset',
+        'Use offset 0 or the nextOffset returned by the previous comparison page.',
+        {
+          actual: parsed.data.offset,
+          expected: `0..${comparison.changes.length - 1}`,
+        },
+      );
+    const page = pageInfo(
+      comparison.changes.length,
+      parsed.data.offset,
+      parsed.data.limit,
+    );
+    const data = SemanticRevisionComparisonSchema.parse({
+      assetId: parsed.data.assetId,
+      baseRevisionId: base.revisionId,
+      targetRevisionId: target.revisionId,
+      affectedIds: comparison.affectedIds,
+      preservedIds: comparison.preservedIds,
+      page,
+      changes: comparison.changes.slice(
+        parsed.data.offset,
+        parsed.data.offset + parsed.data.limit,
+      ),
+    });
+    return ok(
+      `Compared ${data.page.total} field-level change(s) between two immutable revisions.`,
+      data,
+      target.revisionId,
+      [...data.affectedIds],
     );
   };
   const createAsset = async (input: unknown): Promise<ToolResultEnvelope> => {
@@ -489,6 +719,7 @@ export function createToolHandlers(context: ToolHandlerContext) {
     listKits,
     inspectTemplate,
     inspectAsset,
+    compareRevisions,
     createAsset,
     applyOperations,
     connectParts,

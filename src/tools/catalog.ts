@@ -2,6 +2,7 @@ export const PUBLIC_TOOL_NAMES = [
   'list_kits',
   'inspect_template',
   'inspect_asset',
+  'compare_revisions',
   'create_asset',
   'apply_operations',
   'connect_parts',
@@ -33,7 +34,14 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   },
   {
     name: 'inspect_asset',
-    description: 'Inspect the current revision as a bounded semantic summary.',
+    description:
+      'Inspect overview or complete current authoring state through deterministic bounded sections.',
+    mutates: false,
+  },
+  {
+    name: 'compare_revisions',
+    description:
+      'Compare immutable revisions as bounded field changes plus affected and preserved semantic IDs.',
     mutates: false,
   },
   {
