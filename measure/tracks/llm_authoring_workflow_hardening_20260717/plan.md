@@ -6,7 +6,7 @@ This track is the prerequisite for all later authoring, accessory, novel-identit
 
 _Story ref: spec.md#story-s1_
 
-- [ ] Task: Define bounded inspection and semantic comparison contracts
+- [~] Task: Define bounded inspection and semantic comparison contracts
   - [ ] Extend inspection response schemas for current part, connection, pose, variant, render-profile, and active-state values.
   - [ ] Define pagination, truncation, response-budget, and continuation semantics.
   - [ ] Define a field-level revision comparison that reports changed and preserved semantic IDs.
