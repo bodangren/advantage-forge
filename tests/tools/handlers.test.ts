@@ -11,12 +11,13 @@ import {
 } from '../../src/tools/index.js';
 
 class MemoryRevisions implements RevisionRepository {
+  readonly currentRecords = new Map<string, RevisionRecord>();
   readonly records = new Map<string, RevisionRecord>();
   async save(
     document: Readonly<AssetDocument>,
     expected?: string,
   ): Promise<RevisionRecord> {
-    const prior = this.records.get(document.id);
+    const prior = this.currentRecords.get(document.id);
     if (expected !== undefined && prior?.revisionId !== expected)
       throw new Error('REVISION_CONFLICT');
     const record: RevisionRecord = {
@@ -26,18 +27,18 @@ class MemoryRevisions implements RevisionRepository {
       createdAt: '2026-07-17T00:00:00.000Z',
       document,
     };
-    this.records.set(document.id, record);
+    this.currentRecords.set(document.id, record);
+    this.records.set(`${document.id}:${record.revisionId}`, record);
     return record;
   }
   async get(
     assetId: string,
     revisionId: string,
   ): Promise<RevisionRecord | undefined> {
-    const record = this.records.get(assetId);
-    return record?.revisionId === revisionId ? record : undefined;
+    return this.records.get(`${assetId}:${revisionId}`);
   }
   async getCurrent(assetId: string): Promise<RevisionRecord | undefined> {
-    return this.records.get(assetId);
+    return this.currentRecords.get(assetId);
   }
 }
 
@@ -71,6 +72,234 @@ describe('semantic domain tools', () => {
       generator: 'beveledBox',
     });
     expect(JSON.stringify(inspected.data)).not.toContain('positions');
+  });
+
+  it('inspects exact current authoring state through bounded deterministic pages without mutation', async () => {
+    const revisions = new MemoryRevisions();
+    const handlers = createToolHandlers({ revisions });
+    const created = await handlers.createAsset({ reference: 'adventurer' });
+    const changed = await handlers.applyOperations({
+      assetId: 'adventurer.rustic',
+      expectedRevisionId: created.revisionId,
+      patch: {
+        operations: [
+          {
+            operation: 'setPartShapeParameters',
+            partId: 'torso',
+            shape: {
+              kind: 'beveledBox',
+              width: 0.55,
+              height: 0.72,
+              depth: 0.28,
+              bevel: 0.05,
+            },
+          },
+          {
+            operation: 'setPartTransform',
+            partId: 'torso',
+            transform: {
+              position: [0.02, 1.25, 0],
+              rotation: [0, 0, 0, 1],
+              scale: [1.05, 1, 1],
+            },
+          },
+          {
+            operation: 'setMaterialBinding',
+            partId: 'torso',
+            slot: 'body',
+            materialId: 'cloth.umber',
+          },
+          { operation: 'setPartVisibility', partId: 'shield', visible: false },
+          { operation: 'setActiveVariant', variantId: 'unequipped' },
+        ],
+      },
+    });
+    const posed = await handlers.setPose({
+      assetId: 'adventurer.rustic',
+      expectedRevisionId: changed.revisionId,
+      poseId: 'action',
+    });
+    expect(posed.ok).toBe(true);
+    const recordCount = revisions.records.size;
+
+    const inspected = await handlers.inspectAsset({
+      assetId: 'adventurer.rustic',
+      section: 'parts',
+      offset: 0,
+      limit: 100,
+    });
+    expect(inspected.ok).toBe(true);
+    expect(inspected.revisionId).toBe(posed.revisionId);
+    expect(inspected.data).toMatchObject({
+      id: 'adventurer.rustic',
+      unit: 'meter',
+      activeVariantId: 'unequipped',
+      activePoseId: 'action',
+      section: 'parts',
+      page: { offset: 0, limit: 100, truncated: false },
+    });
+    const inspection = inspected.data as {
+      items: Array<{
+        id: string;
+        handedness: string;
+        shapeSource: string;
+        base: Record<string, unknown>;
+        effective: Record<string, unknown>;
+        ports: unknown[];
+      }>;
+    };
+    expect(inspection.items.map(({ id }) => id)).toEqual(
+      [...inspection.items.map(({ id }) => id)].sort(),
+    );
+    expect(inspection.items.find(({ id }) => id === 'torso')).toMatchObject({
+      handedness: 'neutral',
+      shapeSource: 'part',
+      base: {
+        shape: { kind: 'beveledBox', width: 0.55 },
+        transform: {
+          position: [0.02, 1.25, 0],
+          scale: [1.05, 1, 1],
+        },
+        materialBindings: [{ slot: 'body', materialId: 'cloth.umber' }],
+        visible: true,
+      },
+    });
+    expect(
+      inspection.items.find(({ id }) => id === 'upper-arm.left'),
+    ).toMatchObject({
+      handedness: 'left',
+      effective: { jointValueDegrees: -48 },
+    });
+    expect(inspection.items.find(({ id }) => id === 'shield')).toMatchObject({
+      handedness: 'left',
+      base: { visible: false },
+      effective: { visible: false },
+    });
+    expect(JSON.stringify(inspected.data)).not.toMatch(
+      /positions|normals|indices/,
+    );
+
+    const connections = await handlers.inspectAsset({
+      assetId: 'adventurer.rustic',
+      section: 'connections',
+      offset: 0,
+      limit: 1,
+    });
+    expect(connections.data).toMatchObject({
+      section: 'connections',
+      page: { offset: 0, limit: 1, truncated: true, nextOffset: 1 },
+      items: [
+        {
+          parentPartId: expect.any(String),
+          parentPortId: expect.any(String),
+          childPartId: expect.any(String),
+          childPortId: expect.any(String),
+          parentPort: { frame: expect.any(Object) },
+          childPort: { frame: expect.any(Object) },
+        },
+      ],
+    });
+    expect(revisions.records.size).toBe(recordCount);
+
+    const invalidPage = await handlers.inspectAsset({
+      assetId: 'adventurer.rustic',
+      section: 'parts',
+      offset: 10_000,
+      limit: 1,
+    });
+    expect(invalidPage).toMatchObject({
+      ok: false,
+      issues: [{ code: 'INVALID_VALUE', path: '$.offset' }],
+    });
+    const unknown = await handlers.inspectAsset({
+      assetId: 'adventurer.rustic',
+      section: 'parts',
+      detailEverything: true,
+    });
+    expect(unknown).toMatchObject({
+      ok: false,
+      issues: [{ code: 'UNKNOWN_FIELD', path: '$.detailEverything' }],
+    });
+  });
+
+  it('compares bounded field-level changes and preserved semantic IDs between revisions', async () => {
+    const revisions = new MemoryRevisions();
+    const handlers = createToolHandlers({ revisions });
+    const created = await handlers.createAsset({ reference: 'adventurer' });
+    const baseRecord = await revisions.getCurrent('adventurer.rustic');
+    const preservedConnectionId =
+      baseRecord!.document.assembly.connections[0]!.id;
+    const changed = await handlers.applyOperations({
+      assetId: 'adventurer.rustic',
+      expectedRevisionId: created.revisionId,
+      patch: {
+        operations: [
+          { operation: 'setPartVisibility', partId: 'shield', visible: false },
+          {
+            operation: 'setPartShapeParameters',
+            partId: 'torso',
+            shape: {
+              kind: 'beveledBox',
+              width: 0.55,
+              height: 0.72,
+              depth: 0.28,
+              bevel: 0.05,
+            },
+          },
+        ],
+      },
+    });
+    const beforeReads = revisions.records.size;
+    const comparisonHandler = (
+      handlers as typeof handlers & {
+        compareRevisions(input: unknown): Promise<{
+          ok: boolean;
+          data?: unknown;
+          issues: Array<{ code: string; path: string }>;
+        }>;
+      }
+    ).compareRevisions;
+    const comparison = await comparisonHandler({
+      assetId: 'adventurer.rustic',
+      baseRevisionId: created.revisionId,
+      targetRevisionId: changed.revisionId,
+      offset: 0,
+      limit: 100,
+    });
+    expect(comparison.ok).toBe(true);
+    expect(comparison.data).toMatchObject({
+      assetId: 'adventurer.rustic',
+      baseRevisionId: created.revisionId,
+      targetRevisionId: changed.revisionId,
+      affectedIds: expect.arrayContaining(['shield', 'torso']),
+      preservedIds: expect.arrayContaining(['sword', preservedConnectionId]),
+      page: { offset: 0, limit: 100, truncated: false },
+      changes: expect.arrayContaining([
+        expect.objectContaining({
+          path: '$.assembly.parts[shield].visible',
+          kind: 'changed',
+          semanticId: 'shield',
+          before: true,
+          after: false,
+        }),
+        expect.objectContaining({
+          path: '$.assembly.parts[torso].shape',
+          kind: 'added',
+          semanticId: 'torso',
+        }),
+      ]),
+    });
+    expect(revisions.records.size).toBe(beforeReads);
+
+    const missing = await comparisonHandler({
+      assetId: 'adventurer.rustic',
+      baseRevisionId: `revision.${'0'.repeat(64)}`,
+      targetRevisionId: changed.revisionId,
+    });
+    expect(missing).toMatchObject({
+      ok: false,
+      issues: [{ code: 'NOT_FOUND', path: '$.baseRevisionId' }],
+    });
   });
   it('creates, locally patches, validates, and rejects stale revisions without mutation', async () => {
     const revisions = new MemoryRevisions();

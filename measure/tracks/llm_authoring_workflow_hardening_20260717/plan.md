@@ -10,11 +10,11 @@ _Story ref: spec.md#story-s1_
   - [x] Extend inspection response schemas for current part, connection, pose, variant, render-profile, and active-state values.
   - [x] Define pagination, truncation, response-budget, and continuation semantics.
   - [x] Define a field-level revision comparison that reports changed and preserved semantic IDs.
-- [~] Task: Write failing inspection and comparison tests
-  - [ ] Cover exact current state after multiple prior revisions rather than reference defaults.
-  - [ ] Cover materials, visibility, transforms, connections, poses, variants, pagination, and unknown fields.
-  - [ ] Prove read operations do not mutate revisions or expose raw geometry.
-- [ ] Task: Implement complete bounded inspection and comparison
+- [x] Task: Write failing inspection and comparison tests
+  - [x] Cover exact current state after multiple prior revisions rather than reference defaults.
+  - [x] Cover materials, visibility, transforms, connections, poses, variants, pagination, and unknown fields.
+  - [x] Prove read operations do not mutate revisions or expose raw geometry.
+- [~] Task: Implement complete bounded inspection and comparison
   - [ ] Update transport-independent handlers before changing the MCP adapter.
   - [ ] Preserve deterministic ordering and response budgets.
   - [ ] Return actionable issues when requested pages or revision IDs are invalid.
