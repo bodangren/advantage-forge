@@ -7,6 +7,7 @@
 | `list_kits` | Semantic domain tool |
 | `inspect_template` | Semantic domain tool |
 | `inspect_asset` | Semantic domain tool |
+| `compare_revisions` | Semantic domain tool |
 | `create_asset` | Semantic domain tool |
 | `apply_operations` | Semantic domain tool |
 | `connect_parts` | Semantic domain tool |

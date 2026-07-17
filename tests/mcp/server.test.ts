@@ -2,6 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
 import {
+  SemanticRevisionComparisonSchema,
   ToolResultEnvelopeSchema,
   type AssetDocument,
   type ToolResultEnvelope,
@@ -130,7 +131,17 @@ describe('MCP adapter', () => {
 
       const created = await call('create_asset', { reference: 'adventurer' });
       expect(created.revisionId).toMatch(/^revision\.[a-f0-9]{64}$/);
-      await call('inspect_asset', { assetId: 'adventurer.rustic' });
+      const inspected = await call('inspect_asset', {
+        assetId: 'adventurer.rustic',
+        section: 'parts',
+        limit: 100,
+      });
+      expect(inspected.data).toMatchObject({
+        page: { total: 19, truncated: false },
+      });
+      expect(JSON.stringify(inspected).length).toBeLessThan(
+        MCP_RESPONSE_BYTE_LIMIT,
+      );
 
       const reshaped = await call('apply_operations', {
         assetId: 'adventurer.rustic',
@@ -158,10 +169,11 @@ describe('MCP adapter', () => {
         targetRevisionId: reshaped.revisionId,
         limit: 100,
       });
-      expect(comparison.data).toMatchObject({
-        affectedIds: expect.arrayContaining(['torso']),
-        preservedIds: expect.arrayContaining(['sword']),
-      });
+      const comparisonData = SemanticRevisionComparisonSchema.parse(
+        comparison.data,
+      );
+      expect(comparisonData.affectedIds).toContain('torso');
+      expect(comparisonData.preservedIds).toContain('sword');
       const originalConnection =
         revisions.current.get('adventurer.rustic')?.document.assembly
           .connections[0];

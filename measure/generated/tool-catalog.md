@@ -6,7 +6,8 @@
 |---|---|---|
 | `list_kits` | no | List bounded fantasy kits and reference assets. |
 | `inspect_template` | no | Inspect semantic role, parameters, material slots, and named ports. |
-| `inspect_asset` | no | Inspect the current revision as a bounded semantic summary. |
+| `inspect_asset` | no | Inspect overview or complete current authoring state through deterministic bounded sections. |
+| `compare_revisions` | no | Compare immutable revisions as bounded field changes plus affected and preserved semantic IDs. |
 | `create_asset` | yes | Create a revision from a committed fantasy reference document. |
 | `apply_operations` | yes | Apply one or more closed semantic operations with revision preconditions. |
 | `connect_parts` | yes | Connect two compatible named part ports. |

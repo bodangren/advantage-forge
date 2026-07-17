@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import type { AssetDocument } from '../../src/contracts/index.js';
+import {
+  AssetInspectionConnectionSchema,
+  AssetInspectionDataSchema,
+  SemanticRevisionComparisonSchema,
+  type AssetDocument,
+} from '../../src/contracts/index.js';
 import {
   contentRevisionId,
   type RevisionRecord,
@@ -186,20 +191,20 @@ describe('semantic domain tools', () => {
       offset: 0,
       limit: 1,
     });
-    expect(connections.data).toMatchObject({
+    const connectionData = AssetInspectionDataSchema.parse(connections.data);
+    expect(connectionData).toMatchObject({
       section: 'connections',
       page: { offset: 0, limit: 1, truncated: true, nextOffset: 1 },
-      items: [
-        {
-          parentPartId: expect.any(String),
-          parentPortId: expect.any(String),
-          childPartId: expect.any(String),
-          childPortId: expect.any(String),
-          parentPort: { frame: expect.any(Object) },
-          childPort: { frame: expect.any(Object) },
-        },
-      ],
     });
+    const connection = AssetInspectionConnectionSchema.parse(
+      connectionData.items?.[0],
+    );
+    expect(connection.parentPartId).not.toBe('');
+    expect(connection.parentPortId).not.toBe('');
+    expect(connection.childPartId).not.toBe('');
+    expect(connection.childPortId).not.toBe('');
+    expect(connection.parentPort.frame.scale).toEqual([1, 1, 1]);
+    expect(connection.childPort.frame.scale).toEqual([1, 1, 1]);
     expect(revisions.records.size).toBe(recordCount);
 
     const invalidPage = await handlers.inspectAsset({
@@ -268,27 +273,34 @@ describe('semantic domain tools', () => {
       limit: 100,
     });
     expect(comparison.ok).toBe(true);
-    expect(comparison.data).toMatchObject({
+    const comparisonData = SemanticRevisionComparisonSchema.parse(
+      comparison.data,
+    );
+    expect(comparisonData).toMatchObject({
       assetId: 'adventurer.rustic',
       baseRevisionId: created.revisionId,
       targetRevisionId: changed.revisionId,
-      affectedIds: expect.arrayContaining(['shield', 'torso']),
-      preservedIds: expect.arrayContaining(['sword', preservedConnectionId]),
       page: { offset: 0, limit: 100, truncated: false },
-      changes: expect.arrayContaining([
-        expect.objectContaining({
-          path: '$.assembly.parts[shield].visible',
-          kind: 'changed',
-          semanticId: 'shield',
-          before: true,
-          after: false,
-        }),
-        expect.objectContaining({
-          path: '$.assembly.parts[torso].shape',
-          kind: 'added',
-          semanticId: 'torso',
-        }),
-      ]),
+    });
+    expect(comparisonData.affectedIds).toContain('shield');
+    expect(comparisonData.affectedIds).toContain('torso');
+    expect(comparisonData.preservedIds).toContain('sword');
+    expect(comparisonData.preservedIds).toContain(preservedConnectionId);
+    expect(comparisonData.changes).toContainEqual({
+      path: '$.assembly.parts[shield].visible',
+      kind: 'changed',
+      semanticId: 'shield',
+      before: true,
+      after: false,
+    });
+    expect(
+      comparisonData.changes.find(
+        ({ path }) => path === '$.assembly.parts[torso].shape',
+      ),
+    ).toMatchObject({
+      path: '$.assembly.parts[torso].shape',
+      kind: 'added',
+      semanticId: 'torso',
     });
     expect(revisions.records.size).toBe(beforeReads);
 

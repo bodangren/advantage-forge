@@ -38,7 +38,8 @@
         "src/document/parse.ts",
         "src/document/patch.ts",
         "src/document/revision-id.ts",
-        "src/document/revisions.ts"
+        "src/document/revisions.ts",
+        "src/document/semantic-diff.ts"
       ],
       "projectDependencies": [
         "contracts"
