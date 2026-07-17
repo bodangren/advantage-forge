@@ -2,4 +2,5 @@
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
+- [Verification Dossier](./verification.md)
 - [Metadata](./metadata.json)

@@ -3,11 +3,11 @@
   "type": "feature",
   "status": "in-progress",
   "created_at": "2026-07-17T00:42:19Z",
-  "updated_at": "2026-07-17T00:42:19Z",
+  "updated_at": "2026-07-17T03:19:55Z",
   "description": "Deliver the LLM-first fantasy RPG asset foundry MVP",
   "estimated_tasks": 43,
-  "actual_tasks": null,
-  "deviation_notes": "",
+  "actual_tasks": 43,
+  "deviation_notes": "Implementation consolidated into one vertical-slice commit instead of task-sized commits; subagent roles were assigned as requested but the collaboration runtime did not expose model attestation; agent-browser CLI was unavailable so the committed Playwright acceptance path was used.",
   "sprint": {
     "goal": "Deliver a local LLM-first vertical slice that creates, revises, validates, renders, and exports constrained stylized fantasy RPG assets from canonical semantic documents without Blender.",
     "stories": [
@@ -16,45 +16,45 @@
         "title": "Establish Asset Contracts",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       },
       {
         "id": "S2",
         "title": "Compile Parts and Assemblies",
         "size": "XL",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       },
       {
         "id": "S3",
         "title": "Author Rustic Fantasy Kit",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       },
       {
         "id": "S4",
         "title": "Expose LLM Domain Tools",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       },
       {
         "id": "S5",
         "title": "Render and Export Assets",
         "size": "XL",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       },
       {
         "id": "S6",
         "title": "Verify Reference Vertical Slice",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "implemented-awaiting-manual-verification"
       }
     ],
-    "demo_notes": null,
+    "demo_notes": "Automated acceptance complete. Explicit owner review of interactive 3D and actual-resolution sprites remains required.",
     "retro_ref": null
   }
 }
