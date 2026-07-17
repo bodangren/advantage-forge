@@ -203,3 +203,7 @@ _Story ref: spec.md#story-s6_
   - [x] Regenerate architecture, routes, tool catalog, template catalog, and output-contract documentation.
   - [x] Run the final non-interactive doctor and prove no generated files are stale.
 - [ ] Task: Measure - User Manual Verification 'Phase S6: Verify Reference Vertical Slice' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions 8772846
