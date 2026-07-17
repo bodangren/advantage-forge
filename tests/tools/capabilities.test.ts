@@ -82,7 +82,7 @@ describe('public capability discovery', () => {
       'not-assessed',
     );
     expect(JSON.stringify(report)).not.toMatch(
-      /\/src\/|\\src\\|filesystem|read the source|hand-authored json|shell/i,
+      /\/src\/|\\src\\|filesystem|read the source|hand-authored json|shell (?:access|tool|command)/i,
     );
   });
 

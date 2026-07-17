@@ -2,6 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
 import {
+  CapabilityReportSchema,
   SemanticRevisionComparisonSchema,
   ToolResultEnvelopeSchema,
   type AssetDocument,
@@ -127,6 +128,10 @@ describe('MCP adapter', () => {
 
       const kits = await call('list_kits', {});
       expect(JSON.stringify(kits.data)).toContain('rustic-human');
+      const capabilities = await call('inspect_capabilities', {});
+      expect(
+        CapabilityReportSchema.parse(capabilities.data).availableCapabilityIds,
+      ).toContain('animation.temporal');
       await call('inspect_template', { templateId: 'human.torso' });
 
       const created = await call('create_asset', { reference: 'adventurer' });

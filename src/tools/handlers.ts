@@ -26,6 +26,8 @@ import {
 } from '../document/index.js';
 import { referenceDocuments, rusticManifest } from '../fantasy-kit/index.js';
 
+import { CAPABILITY_FACTS, capabilityReport } from './capabilities.js';
+
 export interface RenderService {
   render(
     document: Readonly<AssetDocument>,
@@ -47,6 +49,15 @@ export interface ToolHandlerContext {
 const semanticId = z.string().regex(/^[a-z][a-z0-9]*(?:[._-][a-z0-9]+)*$/);
 const revisionId = z.string().regex(/^revision\.[a-f0-9]{64}$/);
 export const ListKitsInputSchema = z.strictObject({});
+export const InspectCapabilitiesInputSchema = z.strictObject({
+  capabilityIds: z
+    .array(semanticId)
+    .max(32)
+    .refine((ids) => new Set(ids).size === ids.length, {
+      message: 'Capability IDs must be unique.',
+    })
+    .default([]),
+});
 export const InspectTemplateInputSchema = z.strictObject({
   templateId: semanticId,
 });
@@ -192,6 +203,30 @@ export function createToolHandlers(context: ToolHandlerContext) {
         },
       ],
     });
+  };
+  const inspectCapabilities = async (
+    input: unknown,
+  ): Promise<ToolResultEnvelope> => {
+    const parsed = InspectCapabilitiesInputSchema.safeParse(input);
+    if (!parsed.success) return invalid(parsed);
+    const available = new Set(CAPABILITY_FACTS.map(({ id }) => id));
+    const unknownIndex = parsed.data.capabilityIds.findIndex(
+      (id) => !available.has(id),
+    );
+    if (unknownIndex >= 0)
+      return fail(
+        'NOT_FOUND',
+        `Capability ${parsed.data.capabilityIds[unknownIndex]} is not declared.`,
+        `$.capabilityIds[${unknownIndex}]`,
+        'Call inspect_capabilities without filters to discover the complete bounded capability ID list.',
+      );
+    const report = capabilityReport(parsed.data.capabilityIds);
+    return ok(
+      report.filtered
+        ? `Reported ${report.facts.length} requested capability fact(s).`
+        : `Reported all ${report.facts.length} current capability fact(s).`,
+      report,
+    );
   };
   const inspectTemplate = async (
     input: unknown,
@@ -717,6 +752,7 @@ export function createToolHandlers(context: ToolHandlerContext) {
   };
   return {
     listKits,
+    inspectCapabilities,
     inspectTemplate,
     inspectAsset,
     compareRevisions,

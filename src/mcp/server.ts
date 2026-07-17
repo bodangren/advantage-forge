@@ -10,6 +10,7 @@ import {
   ConnectPartsInputSchema,
   CreateAssetInputSchema,
   ExportAssetInputSchema,
+  InspectCapabilitiesInputSchema,
   InspectAssetInputSchema,
   InspectTemplateInputSchema,
   ListKitsInputSchema,
@@ -79,6 +80,14 @@ export function createFantasyAssetMcpServer(
     'list_kits',
     { description: description('list_kits'), inputSchema: ListKitsInputSchema },
     (input) => result(handlers.listKits(input)),
+  );
+  server.registerTool(
+    'inspect_capabilities',
+    {
+      description: description('inspect_capabilities'),
+      inputSchema: InspectCapabilitiesInputSchema,
+    },
+    (input) => result(handlers.inspectCapabilities(input)),
   );
   server.registerTool(
     'inspect_template',

@@ -1,5 +1,6 @@
 export const PUBLIC_TOOL_NAMES = [
   'list_kits',
+  'inspect_capabilities',
   'inspect_template',
   'inspect_asset',
   'compare_revisions',
@@ -24,6 +25,12 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   {
     name: 'list_kits',
     description: 'List bounded fantasy kits and reference assets.',
+    mutates: false,
+  },
+  {
+    name: 'inspect_capabilities',
+    description:
+      'Preflight supported, partial, unsupported, and not-assessed product capabilities with evidence and guidance.',
     mutates: false,
   },
   {

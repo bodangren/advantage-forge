@@ -35,11 +35,11 @@ _Story ref: spec.md#story-s2_
   - [x] Cover current static references, sword/shield, GLB, directional sprites, and revisions as supported.
   - [x] Cover new identities, unavailable accessories, animation, atlases, unsupported anatomy, and raw mesh as unsupported.
   - [x] Fail when generated documentation and runtime capability facts drift.
-- [~] Task: Implement capability discovery through domain tools and MCP
-  - [ ] Derive facts from registered contracts and kit/output manifests rather than duplicated prose.
-  - [ ] Keep responses concise and source-layout independent.
-  - [ ] Return actionable limitation guidance without suggesting hidden internal routes.
-- [ ] Task: Update product documentation and run quality gates
+- [x] Task: Implement capability discovery through domain tools and MCP
+  - [x] Derive facts from registered contracts and kit/output manifests rather than duplicated prose.
+  - [x] Keep responses concise and source-layout independent.
+  - [x] Return actionable limitation guidance without suggesting hidden internal routes.
+- [~] Task: Update product documentation and run quality gates
   - [ ] Update README, product, tech-stack, generated catalogs, and benchmark guidance.
   - [ ] Run contract, MCP, generation, doctor, coverage, type, lint, and full checks.
 - [ ] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md)
