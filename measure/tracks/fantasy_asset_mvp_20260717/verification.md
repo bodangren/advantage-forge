@@ -41,16 +41,16 @@ Every exported GLB passed deep reload comparison:
 - visible bounds and meter unit scale match their tolerance;
 - animation, texture, unsupported material/shader, skin, camera, and light counts are all zero.
 
-Root-level visual inspection found the four silhouettes and adventurer pose/equipment changes discernible after increasing palette separation and replacing the crate's horizontal slabs with a sharp body and vertical iron straps. This is implementation evidence, not owner approval; final visual taste remains an explicit owner gate.
+Root-level visual inspection found the four silhouettes and adventurer pose/equipment changes discernible after increasing palette separation and replacing the crate's horizontal slabs with a sharp body and vertical iron straps. The project owner approved this visual evidence on 2026-07-17.
 
 Evidence:
 
 - `reference-build.json`: public-handler requests, responses, and adventurer variant transitions.
-- `../../../generated/architecture.json`: source-derived module facts.
-- `../../../generated/tool-catalog.md`: exact ten-tool public surface.
-- `../../../generated/kit-catalog.md`: 26 templates, palette, ports, and reference counts.
-- `../../../generated/output-contracts.md`: fixed coordinate, sprite, pixel-validation, and GLB delivery contracts.
-- `../../../../artifacts/reference/`: 48 individual sprites, six contact sheets, four GLBs, and per-revision manifests.
+- `../../generated/architecture.json`: source-derived module facts.
+- `../../generated/tool-catalog.md`: exact ten-tool public surface.
+- `../../generated/kit-catalog.md`: 26 templates, palette, ports, and reference counts.
+- `../../generated/output-contracts.md`: fixed coordinate, sprite, pixel-validation, and GLB delivery contracts.
+- `../../../artifacts/reference/`: 48 individual sprites, six contact sheets, four GLBs, and per-revision manifests.
 - `adventurer-contact-sheet.png`: enlarged inspector-level browser capture.
 
 ### Direct visual review
@@ -86,14 +86,6 @@ The implementation used two independently scoped roles requested by the project 
 
 The collaboration runtime accepted the role assignments but did not expose model-selection or model-attestation controls, so the requested `gpt-5.6terra` and `gpt-5.6-luna` identities could not be independently verified. Their work was integrated only after root-level tests and quality gates.
 
-## Explicit owner review still required
+## Owner visual approval
 
-Automated acceptance is complete. Measure closeout remains intentionally open until the project owner:
-
-1. Opens the inspector with `pnpm dev --host 127.0.0.1 --port 4173`.
-2. Reviews all four references in interactive 3D.
-3. Uses selected-part evidence and comparison mode.
-4. Reviews the enlarged eight-direction contact sheets and the `Actual 128px` view.
-5. Confirms recognizable silhouettes, coherent rustic style, stable framing, and acceptable material separation.
-
-After explicit approval, the six manual phase-verification tasks can be checkpointed and the track archived.
+The project owner explicitly approved the MVP visuals on 2026-07-17 after reviewing the six reference contact sheets and the associated evidence dossier. This acceptance closes the manual gate for recognizable silhouettes, coherent rustic style, stable framing, and acceptable material separation. The approval is recorded in checkpoint `2e2bedc` and its Git note.

@@ -2,7 +2,7 @@
 
 The plan is the execution source of truth. Tasks run sequentially unless a phase explicitly identifies independent test fixtures. Every task follows `measure/workflow.md`: contract first, failing tests, minimum implementation, verification, atomic commit, Git note, and recorded plan SHA.
 
-## Phase S1: Establish Asset Contracts
+## Phase S1: Establish Asset Contracts [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s1_
 
@@ -31,9 +31,9 @@ _Story ref: spec.md#story-s1_
   - [x] Create `measure/doctor.sh` and package scripts that enforce dependency direction and generated-fact freshness.
   - [x] Regenerate `measure/generated/architecture.json` and `measure/generated/routes.md` from real source.
   - [x] Run formatting, type, lint, unit, coverage, generate, and doctor checks.
-- [ ] Task: Measure - User Manual Verification 'Phase S1: Establish Asset Contracts' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S1: Establish Asset Contracts' (Protocol in workflow.md)
 
-## Phase S2: Compile Parts and Assemblies
+## Phase S2: Compile Parts and Assemblies [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s2_
 
@@ -66,9 +66,9 @@ _Story ref: spec.md#story-s2_
   - [x] Regenerate module and route documentation.
   - [x] Run focused geometry and assembly tests, full unit tests, coverage, type checking, linting, and doctor.
   - [x] Confirm domain modules remain free of browser, MCP, and filesystem dependencies.
-- [ ] Task: Measure - User Manual Verification 'Phase S2: Compile Parts and Assemblies' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S2: Compile Parts and Assemblies' (Protocol in workflow.md)
 
-## Phase S3: Author Rustic Fantasy Kit
+## Phase S3: Author Rustic Fantasy Kit [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s3_
 
@@ -94,9 +94,9 @@ _Story ref: spec.md#story-s3_
   - [x] Generate a human-readable template, port, preset, and palette catalog from kit manifests.
   - [x] Build and validate all reference variants through the semantic scene-summary stage.
   - [x] Run contract, kit, assembly, coverage, type, lint, generate, and doctor checks.
-- [ ] Task: Measure - User Manual Verification 'Phase S3: Author Rustic Fantasy Kit' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S3: Author Rustic Fantasy Kit' (Protocol in workflow.md)
 
-## Phase S4: Expose LLM Domain Tools
+## Phase S4: Expose LLM Domain Tools [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s4_
 
@@ -127,9 +127,9 @@ _Story ref: spec.md#story-s4_
   - [x] Regenerate the public tool catalog and architecture facts.
   - [x] Run handler, MCP adapter, security-boundary, coverage, type, lint, generate, and doctor checks.
   - [x] Exercise the server with an MCP inspector or protocol-level integration fixture.
-- [ ] Task: Measure - User Manual Verification 'Phase S4: Expose LLM Domain Tools' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S4: Expose LLM Domain Tools' (Protocol in workflow.md)
 
-## Phase S5: Render and Export Assets
+## Phase S5: Render and Export Assets [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s5_
 
@@ -169,9 +169,9 @@ _Story ref: spec.md#story-s5_
   - [x] Generate camera, sprite-layout, validation-rule, tool, and export documentation.
   - [x] Run unit, coverage, browser, GLB reload, type, lint, generate, and doctor checks.
   - [x] Produce reference previews for manual verification without approving them automatically.
-- [ ] Task: Measure - User Manual Verification 'Phase S5: Render and Export Assets' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S5: Render and Export Assets' (Protocol in workflow.md)
 
-## Phase S6: Verify Reference Vertical Slice
+## Phase S6: Verify Reference Vertical Slice [checkpoint: 2e2bedc]
 
 _Story ref: spec.md#story-s6_
 
@@ -202,7 +202,7 @@ _Story ref: spec.md#story-s6_
 - [x] Task: Generate final facts and run doctor [commit: d056429]
   - [x] Regenerate architecture, routes, tool catalog, template catalog, and output-contract documentation.
   - [x] Run the final non-interactive doctor and prove no generated files are stale.
-- [ ] Task: Measure - User Manual Verification 'Phase S6: Verify Reference Vertical Slice' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S6: Verify Reference Vertical Slice' (Protocol in workflow.md)
 
 ## Phase: Review Fixes
 

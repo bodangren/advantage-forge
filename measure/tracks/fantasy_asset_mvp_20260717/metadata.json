@@ -1,9 +1,9 @@
 {
   "track_id": "fantasy_asset_mvp_20260717",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "created_at": "2026-07-17T00:42:19Z",
-  "updated_at": "2026-07-17T06:45:10Z",
+  "updated_at": "2026-07-17T08:21:28Z",
   "description": "Deliver the LLM-first fantasy RPG asset foundry MVP",
   "estimated_tasks": 43,
   "actual_tasks": 45,
@@ -16,45 +16,45 @@
         "title": "Establish Asset Contracts",
         "size": "L",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       },
       {
         "id": "S2",
         "title": "Compile Parts and Assemblies",
         "size": "XL",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       },
       {
         "id": "S3",
         "title": "Author Rustic Fantasy Kit",
         "size": "L",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       },
       {
         "id": "S4",
         "title": "Expose LLM Domain Tools",
         "size": "L",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       },
       {
         "id": "S5",
         "title": "Render and Export Assets",
         "size": "XL",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       },
       {
         "id": "S6",
         "title": "Verify Reference Vertical Slice",
         "size": "L",
         "priority": "Must",
-        "status": "implemented-awaiting-manual-verification"
+        "status": "completed"
       }
     ],
-    "demo_notes": "Automated acceptance complete. Explicit owner review of interactive 3D and actual-resolution sprites remains required.",
+    "demo_notes": "Automated acceptance complete. The project owner approved the six MVP visual references on 2026-07-17; checkpoint 2e2bedc records the manual gate.",
     "retro_ref": null
   }
 }
