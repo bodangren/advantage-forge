@@ -176,6 +176,7 @@
       "name": "tools",
       "publicEntry": "src/tools/index.ts",
       "sourceFiles": [
+        "src/tools/capabilities.ts",
         "src/tools/catalog.ts",
         "src/tools/handlers.ts",
         "src/tools/index.ts"
@@ -184,7 +185,8 @@
         "assembly",
         "contracts",
         "document",
-        "fantasy-kit"
+        "fantasy-kit",
+        "render"
       ],
       "externalDependencies": [
         "zod"

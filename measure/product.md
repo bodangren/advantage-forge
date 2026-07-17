@@ -52,6 +52,17 @@ An LLM can create and revise a rustic fantasy adventurer assembled from rigid pa
 - Transparent one-, four-, and eight-direction sprite output plus contact sheets.
 - GLB export and mechanical validation of schema, ports, bounds, ground contact, scale, triangle budget, and frame occupancy.
 
+## Current Authoring Boundary
+
+The public `inspect_capabilities` preflight is the executable source for this boundary:
+
+- Supported creation starts from exactly four committed identities: adventurer, crate, tree, and cottage.
+- Supported character equipment is exactly the registered static sword and shield. The accessory surface is partial, not a general library.
+- Supported motion state is a static rigid pose snapshot. Temporal clips, frame interpolation, animation playback/export, and runtime sprite atlases are unsupported.
+- Supported outputs are directional transparent PNG frames, a review contact sheet, and reload-verified GLB. The contact sheet is evidence, not an animation atlas contract.
+- New asset identities, unavailable accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
+- Representative external game-engine import is Not Assessed until direct scale, orientation, node, material, and error evidence is recorded.
+
 ## Explicitly Out of Scope
 
 - Blender, Maya, Houdini, Godot, Unity, or another DCC/game engine as a backend.

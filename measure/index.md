@@ -18,6 +18,7 @@
 - [Generated Routes](./generated/routes.md)
 - [Generated Kit Catalog](./generated/kit-catalog.md)
 - [Generated Tool Catalog](./generated/tool-catalog.md)
+- [Generated Capability Catalog](./generated/capability-catalog.md)
 - [Generated Output Contracts](./generated/output-contracts.md)
 
 ## Learning & Continuity
@@ -28,4 +29,4 @@
 ## Management
 
 - [Tracks Registry](./tracks.md)
-- [Initial MVP Track](./tracks/fantasy_asset_mvp_20260717/)
+- [Active LLM Authoring Workflow Track](./tracks/llm_authoring_workflow_hardening_20260717/)

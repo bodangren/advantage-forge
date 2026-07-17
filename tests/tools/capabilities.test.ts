@@ -4,7 +4,6 @@ import { describe, expect, it } from 'vitest';
 
 import {
   CapabilityReportSchema,
-  type AssetDocument,
   type ToolResultEnvelope,
 } from '../../src/contracts/index.js';
 import type {
@@ -14,7 +13,7 @@ import type {
 import { createToolHandlers } from '../../src/tools/index.js';
 
 class UnusedRevisions implements RevisionRepository {
-  async save(_document: Readonly<AssetDocument>): Promise<RevisionRecord> {
+  async save(): Promise<RevisionRecord> {
     throw new Error('Capability inspection must not write revisions.');
   }
 

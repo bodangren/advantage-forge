@@ -5,6 +5,7 @@
 | Tool | Surface |
 |---|---|
 | `list_kits` | Semantic domain tool |
+| `inspect_capabilities` | Semantic domain tool |
 | `inspect_template` | Semantic domain tool |
 | `inspect_asset` | Semantic domain tool |
 | `compare_revisions` | Semantic domain tool |

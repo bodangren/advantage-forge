@@ -5,6 +5,7 @@
 | Tool | Mutates revision | Purpose |
 |---|---|---|
 | `list_kits` | no | List bounded fantasy kits and reference assets. |
+| `inspect_capabilities` | no | Preflight supported, partial, unsupported, and not-assessed product capabilities with evidence and guidance. |
 | `inspect_template` | no | Inspect semantic role, parameters, material slots, and named ports. |
 | `inspect_asset` | no | Inspect overview or complete current authoring state through deterministic bounded sections. |
 | `compare_revisions` | no | Compare immutable revisions as bounded field changes plus affected and preserved semantic IDs. |
