@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in-progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-17T12:37:24Z",
+  "updated_at": "2026-07-17T13:17:38Z",
   "description": "Harden the public LLM authoring, inspection, visual review, and evidence workflow",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -40,7 +40,7 @@
         "status": "pending"
       }
     ],
-    "demo_notes": null,
+    "demo_notes": "Phase S1 automated gates pass; owner manual verification is pending before the S1 checkpoint and S2 capability work.",
     "retro_ref": null
   }
 }

@@ -6,22 +6,22 @@ This track is the prerequisite for all later authoring, accessory, novel-identit
 
 _Story ref: spec.md#story-s1_
 
-- [x] Task: Define bounded inspection and semantic comparison contracts
+- [x] Task: Define bounded inspection and semantic comparison contracts [commit: 53a08fc]
   - [x] Extend inspection response schemas for current part, connection, pose, variant, render-profile, and active-state values.
   - [x] Define pagination, truncation, response-budget, and continuation semantics.
   - [x] Define a field-level revision comparison that reports changed and preserved semantic IDs.
-- [x] Task: Write failing inspection and comparison tests
+- [x] Task: Write failing inspection and comparison tests [commit: 5775c6e]
   - [x] Cover exact current state after multiple prior revisions rather than reference defaults.
   - [x] Cover materials, visibility, transforms, connections, poses, variants, pagination, and unknown fields.
   - [x] Prove read operations do not mutate revisions or expose raw geometry.
-- [x] Task: Implement complete bounded inspection and comparison
+- [x] Task: Implement complete bounded inspection and comparison [commit: 86f49bc]
   - [x] Update transport-independent handlers before changing the MCP adapter.
   - [x] Preserve deterministic ordering and response budgets.
   - [x] Return actionable issues when requested pages or revision IDs are invalid.
-- [~] Task: Generate inspection documentation and run quality gates
-  - [ ] Regenerate tool and architecture facts.
-  - [ ] Run focused tests, full tests, coverage, typecheck, lint, generate, doctor, and `pnpm check`.
-- [ ] Task: Measure - User Manual Verification 'Phase S1: Expose Complete Current State' (Protocol in workflow.md)
+- [x] Task: Generate inspection documentation and run quality gates [commits: 4b35d82, 18ddcab, 9edfeb4]
+  - [x] Regenerate tool and architecture facts.
+  - [x] Run focused tests, full tests, coverage, typecheck, lint, generate, doctor, and `pnpm check`.
+- [~] Task: Measure - User Manual Verification 'Phase S1: Expose Complete Current State' (Protocol in workflow.md)
 
 ## Phase S2: Publish Honest Capabilities
 
