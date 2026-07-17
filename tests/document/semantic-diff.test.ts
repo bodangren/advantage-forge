@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 
-import type { AssetDocument } from '../../src/contracts/index.js';
 import { compareSemanticDocuments } from '../../src/document/index.js';
 import {
   adventurerDocument,
@@ -9,7 +8,7 @@ import {
 
 describe('semantic document comparison', () => {
   it('reports root changes and added or removed semantic entities', () => {
-    const after = structuredClone(crateDocument) as AssetDocument;
+    const after = structuredClone(crateDocument);
     after.name = 'Reviewed Crate';
     after.poses.push({ id: 'pose.review', overrides: [] });
     const removedConnection = after.assembly.connections.shift();
@@ -40,7 +39,7 @@ describe('semantic document comparison', () => {
   });
 
   it('compares keyed semantic arrays and positional vectors by stable paths', () => {
-    const after = structuredClone(adventurerDocument) as AssetDocument;
+    const after = structuredClone(adventurerDocument);
     const torso = after.assembly.parts.find(({ id }) => id === 'torso');
     const action = after.poses.find(({ id }) => id === 'action');
     const armOverride = action?.overrides.find(
@@ -86,7 +85,7 @@ describe('semantic document comparison', () => {
   });
 
   it('reports removal of an optional authored override', () => {
-    const before = structuredClone(adventurerDocument) as AssetDocument;
+    const before = structuredClone(adventurerDocument);
     const torso = before.assembly.parts.find(({ id }) => id === 'torso');
     const template = before.templates.find(
       ({ id }) => id === torso?.templateId,
@@ -94,7 +93,7 @@ describe('semantic document comparison', () => {
     if (torso === undefined || template === undefined)
       throw new Error('Expected canonical torso template.');
     torso.shape = structuredClone(template.shape);
-    const after = structuredClone(before) as AssetDocument;
+    const after = structuredClone(before);
     delete after.assembly.parts.find(({ id }) => id === 'torso')!.shape;
 
     const comparison = compareSemanticDocuments(before, after);
