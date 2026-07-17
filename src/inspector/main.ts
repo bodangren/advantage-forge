@@ -36,6 +36,8 @@ app.innerHTML = `<main class="workshop">
 const canvas = document.querySelector<HTMLCanvasElement>('#asset-canvas')!;
 const shell = canvas.parentElement!;
 const sheet = document.querySelector<HTMLDivElement>('#contact-sheet')!;
+const viewportOverlay =
+  document.querySelector<HTMLDivElement>('#viewport-overlay')!;
 const partSelect = document.querySelector<HTMLSelectElement>('#part-select')!;
 const poseSelect = document.querySelector<HTMLSelectElement>('#pose-select')!;
 const variantSelect =
@@ -194,6 +196,7 @@ function showView(view: InspectorView): void {
     );
   canvas.style.display = view === 'three' ? 'block' : 'none';
   sheet.style.display = view === 'three' ? 'none' : 'grid';
+  viewportOverlay.style.display = view === 'three' ? 'grid' : 'none';
   sheet.classList.toggle('comparison', view === 'compare');
   sheet.classList.toggle('actual', view === 'actual');
   sheet.style.gridTemplateColumns = view === 'actual' ? 'repeat(4, 128px)' : '';

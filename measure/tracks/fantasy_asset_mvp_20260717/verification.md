@@ -53,6 +53,15 @@ Evidence:
 - `../../../../artifacts/reference/`: 48 individual sprites, six contact sheets, four GLBs, and per-revision manifests.
 - `adventurer-contact-sheet.png`: enlarged inspector-level browser capture.
 
+### Direct visual review
+
+- [Adventurer — idle equipped](../../../artifacts/reference/adventurer.rustic/revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b/contact-sheet.png)
+- [Adventurer — action equipped](../../../artifacts/reference/adventurer.rustic/revision.02ee4a5682675f49d494f6f99ea5cb1b9b5e1805ac0c30ee5b300ceaa7136561/contact-sheet.png)
+- [Adventurer — action unequipped](../../../artifacts/reference/adventurer.rustic/revision.760a31918520da7b3ca40078cdc2f1f1575d6bb1a3173111bdc41b561c990ed6/contact-sheet.png)
+- [Iron-banded crate](../../../artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/contact-sheet.png)
+- [Roadside tree](../../../artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/contact-sheet.png)
+- [Timber cottage](../../../artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/contact-sheet.png)
+
 ## Product scope audit
 
 - Dependencies contain no Blender, `bpy`, React, game engine, database, cloud, physics, animation, CSG, texture, or alternate-export stack.

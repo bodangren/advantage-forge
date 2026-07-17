@@ -58,6 +58,19 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
   await expect
     .poll(() => revisionLabel.textContent())
     .not.toBe(initialRevision);
+  await page.evaluate(() => {
+    (
+      window as unknown as {
+        fantasyAssetForge: { selectAsset: (name: 'adventurer') => void };
+      }
+    ).fantasyAssetForge.selectAsset('adventurer');
+  });
+  await expect(
+    page.locator('#viewport-overlay').getByText('Rustic Adventurer', {
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText(injectedName, { exact: true })).toHaveCount(0);
 
   const frameEvidence = await page.evaluate(() => {
     const forge = (
@@ -138,6 +151,26 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
 
   await page.getByRole('button', { name: 'Contact Sheet' }).click();
   await expect(page.getByLabel('Eight direction contact sheet')).toBeVisible();
+  await expect(page.locator('#viewport-overlay')).toBeHidden();
+  await expect(page.locator('.contact-frame')).toHaveCount(8);
+  const contactLayout = await page
+    .locator('.contact-frame')
+    .evaluateAll((elements) =>
+      elements.map((element) => {
+        const bounds = element.getBoundingClientRect();
+        return {
+          width: bounds.width,
+          height: bounds.height,
+          x: bounds.x,
+          y: bounds.y,
+        };
+      }),
+    );
+  expect(
+    contactLayout.every(({ width, height }) => width >= 96 && height >= 128),
+  ).toBe(true);
+  expect(new Set(contactLayout.map(({ x }) => x)).size).toBe(4);
+  expect(new Set(contactLayout.map(({ y }) => y)).size).toBe(2);
   await page.screenshot({
     path: 'measure/tracks/fantasy_asset_mvp_20260717/adventurer-contact-sheet.png',
   });
