@@ -6,5 +6,5 @@ pnpm-lock.yaml
 artifacts/
 measure/generated/
 references/
-measure/tracks/fantasy_asset_mvp_20260717/reference-build.json
+measure/archive/fantasy_asset_mvp_20260717/reference-build.json
 test-results/
