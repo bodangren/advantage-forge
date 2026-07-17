@@ -2,7 +2,7 @@
 
 This track is the prerequisite for all later authoring, accessory, novel-identity, and animation tracks. Follow `measure/workflow.md` contract-first and preserve a real MCP-capable LLM transcript as an acceptance artifact.
 
-## Phase S1: Expose Complete Current State
+## Phase S1: Expose Complete Current State [checkpoint: 2c9504b]
 
 _Story ref: spec.md#story-s1_
 
@@ -27,7 +27,7 @@ _Story ref: spec.md#story-s1_
 
 _Story ref: spec.md#story-s2_
 
-- [ ] Task: Define machine-readable capability and limitation contracts
+- [~] Task: Define machine-readable capability and limitation contracts
   - [ ] Represent asset families, templates, operations, outputs, render profiles, and explicit exclusions.
   - [ ] Define supported, partial, unsupported, and not-assessed results with remediation guidance.
   - [ ] Decide whether to extend discovery or add a dedicated bounded read tool and update the public catalog deliberately.
