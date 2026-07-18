@@ -23,7 +23,7 @@ _Story ref: spec.md#story-s1_
   - [x] Run focused tests, full tests, coverage, typecheck, lint, generate, doctor, and `pnpm check`.
 - [x] Task: Measure - User Manual Verification 'Phase S1: Expose Complete Current State' (Protocol in workflow.md) [approved: 2026-07-17]
 
-## Phase S2: Publish Honest Capabilities
+## Phase S2: Publish Honest Capabilities [checkpoint: 0f3e970]
 
 _Story ref: spec.md#story-s2_
 
