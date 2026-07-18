@@ -70,11 +70,11 @@ _Story ref: spec.md#story-s3_
 
 _Story ref: spec.md#story-s4_
 
-- [~] Task: Define clean-clone and external-import acceptance evidence
-  - [ ] Require portable committed manifest paths while preserving usable returned artifact paths.
-  - [ ] Define chronological LLM transcript, timing, correction, visual, and revision-lineage evidence.
-  - [ ] Select and document a representative target importer or record Not Assessed.
-- [ ] Task: Write failing portability and workflow acceptance tests
+- [x] Task: Define clean-clone and external-import acceptance evidence [commit: e25470c]
+  - [x] Require portable committed manifest paths while preserving usable returned artifact paths.
+  - [x] Define chronological LLM transcript, timing, correction, visual, and revision-lineage evidence.
+  - [x] Select and document a representative target importer or record Not Assessed.
+- [~] Task: Write failing portability and workflow acceptance tests
   - [ ] Reproduce tracked manifest churn from a differently rooted clone.
   - [ ] Reproduce stale archived-track output and README/index references.
   - [ ] Assert clean status after reference build and byte-stable semantic artifacts where promised.
