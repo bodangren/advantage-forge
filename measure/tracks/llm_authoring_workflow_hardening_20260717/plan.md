@@ -86,4 +86,4 @@ _Story ref: spec.md#story-s4_
   - [x] Preserve logs, transcript, screenshots, manifests, GLBs, sprites, semantic comparisons, and clean-status proof.
   - [x] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification from a clean clone.
   - [x] Update metadata, lessons learned, and tech debt to match observed reality.
-- [~] Task: Measure - User Manual Verification 'Phase S4: Prove Reproducible LLM Workflow' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S4: Prove Reproducible LLM Workflow' (Protocol in workflow.md) [approved: 2026-07-18]

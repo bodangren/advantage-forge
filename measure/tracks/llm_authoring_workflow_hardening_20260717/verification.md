@@ -141,7 +141,7 @@ Owner decision: approved. No additional S3 workflow, evidence-contract, or limit
 
 ## Phase S4: Prove Reproducible LLM Workflow
 
-Status: automated verification passed on 2026-07-18; awaiting owner manual approval.
+Status: approved by the owner on 2026-07-18 after automated verification passed.
 
 ### Automated evidence
 
@@ -186,4 +186,4 @@ Evidence is under `s4-evidence/20260718T111001Z/`, including the exact prompt/ha
 5. Read `clean-clone.log` and confirm `git-status.txt` is zero bytes; verify the full candidate gate list, the two committed reference audits, final Kimi audits, and ad-hoc-output ignore regression all pass.
 6. Confirm the product boundary remains explicit: sword/shield only, no novel identities, no temporal animation/atlas/animated GLB, equipped sword readability open, and external game engines Not Assessed.
 
-Owner decision: pending.
+Owner decision: approved. No additional S4 portability, public-MCP workflow, visual, artifact, importer, or limitation-reporting gap was identified.
