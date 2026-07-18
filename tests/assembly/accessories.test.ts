@@ -55,6 +55,7 @@ const accessoryTemplate = (
   accessory: {
     role: 'weapon',
     slot: 'main-hand',
+    compatibleSlots: ['main-hand', 'off-hand'],
     attachmentPortIds: ['grip'],
     handedness: 'right',
     compatibilityTags: ['rustic', 'guard'],
@@ -205,6 +206,7 @@ describe('accessory compatibility validation', () => {
     const bodyTemplate = accessoryTemplate('equipment.armor', {
       role: 'armor',
       slot: 'body',
+      compatibleSlots: ['body'],
       handedness: 'neutral',
       layer: {
         kind: 'overlay',

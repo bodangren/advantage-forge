@@ -374,6 +374,7 @@ export const AccessoryMetadataSchema = z
   .object({
     role: AccessoryRoleSchema,
     slot: EquipmentSlotSchema,
+    compatibleSlots: z.array(EquipmentSlotSchema).min(1).max(6).optional(),
     attachmentPortIds: z.array(SemanticIdSchema).min(1).max(4),
     handedness: AccessoryHandednessSchema,
     compatibilityTags: z.array(SemanticIdSchema).min(1).max(32),
@@ -389,17 +390,30 @@ export const AccessoryMetadataSchema = z
   .superRefine((metadata, context) => {
     for (const key of [
       'attachmentPortIds',
+      'compatibleSlots',
       'compatibilityTags',
       'compatibleAnatomy',
       'compatibleArchetypes',
       'allowedPoseIds',
     ] as const)
-      if (new Set(metadata[key]).size !== metadata[key].length)
+      if (
+        metadata[key] !== undefined &&
+        new Set(metadata[key]).size !== metadata[key].length
+      )
         context.addIssue({
           code: 'custom',
           path: [key],
           message: `${key} must contain unique values.`,
         });
+    if (
+      metadata.compatibleSlots !== undefined &&
+      !metadata.compatibleSlots.includes(metadata.slot)
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['compatibleSlots'],
+        message: 'Compatible slots must include the default slot.',
+      });
     const featureIds = metadata.requiredFeatures.map(({ id }) => id);
     if (new Set(featureIds).size !== featureIds.length)
       context.addIssue({
@@ -439,11 +453,26 @@ export const PartInstanceSchema = z
     id: SemanticIdSchema,
     templateId: SemanticIdSchema,
     handedness: z.enum(['neutral', 'left', 'right']).optional(),
+    equipmentSlot: EquipmentSlotSchema.optional(),
     transform: TransformSchema,
     shape: ShapeDefinitionSchema.optional(),
     materialBindings: z.array(MaterialBindingSchema).min(1).max(16),
     visible: z.boolean(),
     jointValueDegrees: FiniteNumberSchema.optional(),
+  })
+  .strict();
+
+export const AccessoryQuerySchema = z
+  .object({
+    roles: z.array(AccessoryRoleSchema).min(1).max(7).optional(),
+    slots: z.array(EquipmentSlotSchema).min(1).max(6).optional(),
+    handedness: z.array(AccessoryHandednessSchema).min(1).max(5).optional(),
+    compatibilityTags: z.array(SemanticIdSchema).min(1).max(16).optional(),
+    compatibleAnatomy: z.array(SemanticIdSchema).min(1).max(16).optional(),
+    compatibleArchetypes: z.array(SemanticIdSchema).min(1).max(16).optional(),
+    materialFamilies: z.array(MaterialFamilySchema).min(1).max(13).optional(),
+    offset: z.number().int().min(0).max(10_000),
+    limit: z.number().int().min(1).max(50),
   })
   .strict();
 
@@ -854,6 +883,7 @@ export type AccessoryRequiredFeature = z.infer<
   typeof AccessoryRequiredFeatureSchema
 >;
 export type AccessoryMetadata = z.infer<typeof AccessoryMetadataSchema>;
+export type AccessoryQuery = z.infer<typeof AccessoryQuerySchema>;
 export type PartTemplateDefinition = z.infer<
   typeof PartTemplateDefinitionSchema
 >;

@@ -325,6 +325,7 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     {
       role: 'weapon',
       slot: 'main-hand',
+      compatibleSlots: ['main-hand', 'off-hand'],
       attachmentPortIds: ['grip'],
       handedness: 'either',
       compatibilityTags: ['rustic', 'melee', 'guard'],
@@ -358,6 +359,7 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     {
       role: 'shield',
       slot: 'off-hand',
+      compatibleSlots: ['off-hand', 'main-hand'],
       attachmentPortIds: ['grip'],
       handedness: 'either',
       compatibilityTags: ['rustic', 'defense', 'guard'],

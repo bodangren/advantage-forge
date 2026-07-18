@@ -13,6 +13,18 @@ export type {
   EvaluateAssemblyOptions,
 } from './evaluate.js';
 export {
+  AccessoryValidationError,
+  equipAccessory,
+  unequipAccessory,
+  validateAccessoryLoadout,
+} from './accessories.js';
+export type {
+  AccessoryIssue,
+  AccessoryIssueCode,
+  AccessoryLoadoutContext,
+  EquipAccessoryRequest,
+} from './accessories.js';
+export {
   IDENTITY_TRANSFORM,
   canonicalNumber,
   canonicalTransform,

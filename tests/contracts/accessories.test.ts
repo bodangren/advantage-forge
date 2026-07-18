@@ -36,6 +36,7 @@ const accessoryTemplate = (): PartTemplateDefinition => ({
   accessory: {
     role: 'headwear',
     slot: 'head',
+    compatibleSlots: ['head'],
     attachmentPortIds: ['head.attach'],
     handedness: 'neutral',
     compatibilityTags: ['rustic', 'guard'],

@@ -6,6 +6,7 @@
       "name": "assembly",
       "publicEntry": "src/assembly/index.ts",
       "sourceFiles": [
+        "src/assembly/accessories.ts",
         "src/assembly/evaluate.ts",
         "src/assembly/index.ts",
         "src/assembly/math.ts"
