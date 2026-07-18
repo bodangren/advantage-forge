@@ -19,3 +19,7 @@ This file tracks all major project tracks.
 - [ ] **Track: Assemble a bounded village asset pack with export evidence**
       _Link: [./tracks/village_asset_pack_20260718/](./tracks/village_asset_pack_20260718/)_
       _Depends on: `rigid_animation_sprite_pipeline_20260717`_
+
+- [ ] **Track: Prove external game-engine import compatibility with direct evidence**
+      _Link: [./tracks/engine_interop_evidence_20260719/](./tracks/engine_interop_evidence_20260719/)_
+      _Depends on: `llm_authoring_workflow_hardening_20260717`_

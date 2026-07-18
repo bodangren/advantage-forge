@@ -1,0 +1,39 @@
+{
+  "track_id": "engine_interop_evidence_20260719",
+  "type": "feature",
+  "status": "pending",
+  "created_at": "2026-07-19T05:10:00Z",
+  "updated_at": "2026-07-19T05:10:00Z",
+  "description": "Prove exported GLBs and sprite atlases survive real external game-engine import paths with direct evidence",
+  "estimated_tasks": 12,
+  "actual_tasks": null,
+  "deviation_notes": "Addresses tech-debt: external game-engine compatibility remains unassessed (Unity, Godot, gameplay-runtime scale/material behavior). Depends on llm_authoring_workflow_hardening_20260717 (complete) for workflow and evidence conventions.",
+  "sprint": {
+    "goal": "Replace the assumption that exports are game-ready with audited import evidence from external runtimes, and gate future exports on that evidence staying green.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Define Interop Target Matrix",
+        "size": "M",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Automated Import Evidence Harness",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Gate Exports on Interop Evidence",
+        "size": "M",
+        "priority": "Should",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}
