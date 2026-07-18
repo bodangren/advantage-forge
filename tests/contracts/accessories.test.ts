@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   AccessoryMetadataSchema,
+  AccessoryQuerySchema,
   PartTemplateDefinitionSchema,
   type PartTemplateDefinition,
 } from '../../src/contracts/index.js';
@@ -105,5 +106,27 @@ describe('accessory template contracts', () => {
       expect(template?.accessory).toBeDefined();
       expect(PartTemplateDefinitionSchema.parse(template)).toEqual(template);
     }
+  });
+
+  it('bounds accessory discovery filters and response budgets', () => {
+    const query = {
+      roles: ['headwear'],
+      slots: ['head'],
+      handedness: ['neutral'],
+      compatibilityTags: ['guard'],
+      materialFamilies: ['iron'],
+      offset: 0,
+      limit: 10,
+    };
+    expect(AccessoryQuerySchema.parse(query)).toEqual(query);
+    expect(AccessoryQuerySchema.safeParse({ ...query, limit: 0 }).success).toBe(
+      false,
+    );
+    expect(
+      AccessoryQuerySchema.safeParse({ ...query, limit: 51 }).success,
+    ).toBe(false);
+    expect(
+      AccessoryQuerySchema.safeParse({ ...query, rawGeometry: true }).success,
+    ).toBe(false);
   });
 });
