@@ -52,11 +52,11 @@ _Story ref: spec.md#story-s3_
   - [x] Create `.agents/skills/fantasy-asset-workflow/SKILL.md` with capability preflight and supported workflow routing.
   - [x] Define reference files for current capabilities, visual review, evidence reporting, and future animation handoff.
   - [x] Define a stable final report template with revision, mutation, validation, visual, artifact, and limitation evidence.
-- [~] Task: Create skill eval prompts and objective assertions
-  - [ ] Cover localized adventurer revision, static prop creation, unsupported accessory/new identity, and unsupported animation.
-  - [ ] Assert inspect-before-mutate, dry run, affected IDs, no source reads, actual-resolution review, and honest blocking.
-  - [ ] Save eval inputs and expected outcomes in the skill package.
-- [ ] Task: Implement and exercise the skill workflow
+- [x] Task: Create skill eval prompts and objective assertions [commit: c85cdf0]
+  - [x] Cover localized adventurer revision, static prop creation, unsupported accessory/new identity, and unsupported animation.
+  - [x] Assert inspect-before-mutate, dry run, affected IDs, no source reads, actual-resolution review, and honest blocking.
+  - [x] Save eval inputs and expected outcomes in the skill package.
+- [~] Task: Implement and exercise the skill workflow
   - [ ] Keep creation and mutation inside public MCP tools.
   - [ ] Use browser/image inspection for 3D, contact-sheet, and actual-resolution evidence.
   - [ ] Add audit-only artifact verification scripts without manufacturing or altering product output.
