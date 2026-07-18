@@ -1,0 +1,68 @@
+{
+  "skill_name": "fantasy-asset-workflow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use the Fantasy Asset Forge product tools to revise the existing rustic adventurer so the sword reads more clearly at game resolution: make only the existing sword blade slightly broader and move the sword outward just enough to separate it from the torso. Preserve every unrelated part and deliver validation, directional sprites, contact sheet, and GLB. Work as a fresh client that cannot read repository source. Return a concise execution record and final evidence report; when a live product tool is unavailable, show the exact call and evidence you would require instead of inventing a successful result.",
+      "expected_output": "A bounded inspect-plan-dry-run-apply-compare-validate-render-review report that never fabricates unavailable runtime evidence.",
+      "files": [],
+      "expectations": [
+        "The output calls inspect_capabilities before planning mutation and limits the request to supported reference, localized-revision, sword, sprite, contact-sheet, and GLB capabilities.",
+        "The output calls inspect_asset for the overview and relevant parts before proposing exact sword semantic IDs, shape parameters, or transforms.",
+        "The output proposes the smallest localized operation and submits that same operation with dryRun: true before any real apply.",
+        "The output uses the inspected baseline revision as expectedRevisionId and records the applied revision plus affectedIds.",
+        "The output calls compare_revisions and checks both affectedIds for the sword and preservedIds for unrelated parts.",
+        "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+        "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+        "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Create a standard rustic crate from whatever fixed references Fantasy Asset Forge currently supports, then deliver its directional PNGs, review contact sheet, and GLB without changing the reference design. I need an evidence report suitable for another engineer to audit. Work as a fresh MCP client with no repository-source access. If you cannot actually call a tool, write the exact intended call and mark its result unverified rather than pretending it ran.",
+      "expected_output": "A capability-first fixed-reference creation workflow that handles create_asset's deliberate no-dry-run exception honestly and completes all review gates conditionally on real evidence.",
+      "files": [],
+      "expectations": [
+        "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+        "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+        "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+        "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+        "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+        "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+        "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+        "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Make me a new character called Moon Guard: a distinct identity based on the rustic adventurer, with a closed steel helmet and a spear instead of the current sword. Export sprites and GLB. Please handle the whole request using Fantasy Asset Forge as a fresh client without repository source access, and give me a clear delivery report.",
+      "expected_output": "An honest preflight rejection that identifies novel identity, helmet, and spear gaps and stops before mutation without approximating them.",
+      "files": [],
+      "expectations": [
+        "The output calls inspect_capabilities for asset.new_identity, accessory.additional, relevant reference/output facts, and uses the runtime statuses as authority.",
+        "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+        "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+        "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+        "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+        "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+        "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Turn the rustic adventurer into an eight-direction looping walk animation and give me a packed runtime sprite atlas plus an animated GLB. Use the Fantasy Asset Forge tools end to end as a fresh client; do not inspect repository source. Include enough evidence that I can approve the animation.",
+      "expected_output": "An honest temporal-animation and atlas handoff that distinguishes static camera directions from time frames and stops before unsupported mutation.",
+      "files": [],
+      "expectations": [
+        "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb.",
+        "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+        "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+        "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+        "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+        "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+        "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+        "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence."
+      ]
+    }
+  ]
+}

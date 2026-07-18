@@ -58,4 +58,39 @@ describe('fantasy asset workflow skill contract', () => {
       expect(report).toContain(`## ${heading}`);
     }
   });
+
+  it('defines realistic evals with discriminating workflow assertions', async () => {
+    const parsed = JSON.parse(await readSkillFile('evals/evals.json')) as {
+      skill_name: string;
+      evals: Array<{
+        id: number;
+        prompt: string;
+        expectations: string[];
+      }>;
+    };
+
+    expect(parsed.skill_name).toBe('fantasy-asset-workflow');
+    expect(parsed.evals).toHaveLength(4);
+    expect(parsed.evals.map(({ id }) => id)).toEqual([1, 2, 3, 4]);
+    expect(parsed.evals.map(({ prompt }) => prompt).join('\n')).toMatch(
+      /adventurer[\s\S]*crate[\s\S]*helmet[\s\S]*animation/i,
+    );
+
+    const expectations = parsed.evals.flatMap((evaluation) =>
+      evaluation.expectations.map((expectation) => expectation.toLowerCase()),
+    );
+    for (const requiredEvidence of [
+      'inspect_capabilities',
+      'inspect_asset',
+      'dryrun: true',
+      'affectedids',
+      'actual 128x128',
+      'does not read source',
+      'stops before mutation',
+    ]) {
+      expect(
+        expectations.some((entry) => entry.includes(requiredEvidence)),
+      ).toBe(true);
+    }
+  });
 });
