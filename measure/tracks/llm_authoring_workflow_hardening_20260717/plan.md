@@ -66,7 +66,7 @@ _Story ref: spec.md#story-s3_
   - [x] Revise the skill until safety, fidelity review, and limitation reporting are consistently better.
 - [x] Task: Measure - User Manual Verification 'Phase S3: Guide Visual Authoring' (Protocol in workflow.md) [approved: 2026-07-18]
 
-## Phase S4: Prove Reproducible LLM Workflow
+## Phase S4: Prove Reproducible LLM Workflow [checkpoint: 87ca849]
 
 _Story ref: spec.md#story-s4_
 
