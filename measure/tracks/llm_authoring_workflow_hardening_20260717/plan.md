@@ -44,7 +44,7 @@ _Story ref: spec.md#story-s2_
   - [x] Run contract, MCP, generation, doctor, coverage, type, lint, and full checks.
 - [x] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md) [approved: 2026-07-18]
 
-## Phase S3: Guide Visual Authoring
+## Phase S3: Guide Visual Authoring [checkpoint: 135732f]
 
 _Story ref: spec.md#story-s3_
 
