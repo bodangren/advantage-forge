@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in-progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-17T15:05:03Z",
+  "updated_at": "2026-07-18T00:38:12Z",
   "description": "Harden the public LLM authoring, inspection, visual review, and evidence workflow",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -23,7 +23,7 @@
         "title": "Publish Honest Capabilities",
         "size": "M",
         "priority": "Must",
-        "status": "in-progress"
+        "status": "done"
       },
       {
         "id": "S3",
@@ -40,7 +40,7 @@
         "status": "pending"
       }
     ],
-    "demo_notes": "Phase S1 is owner-approved. Phase S2 automated gates pass: runtime and generated capability facts now state the supported static workflow and explicit product gaps; owner verification is pending.",
+    "demo_notes": "Phases S1 and S2 are owner-approved. Complete state inspection, semantic revision comparison, and honest machine-readable capability discovery now establish the supported static authoring boundary.",
     "retro_ref": null
   }
 }

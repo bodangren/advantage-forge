@@ -42,13 +42,13 @@ _Story ref: spec.md#story-s2_
 - [x] Task: Update product documentation and run quality gates [commit: 4504f88]
   - [x] Update README, product, tech-stack, generated catalogs, and benchmark guidance.
   - [x] Run contract, MCP, generation, doctor, coverage, type, lint, and full checks.
-- [~] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S2: Publish Honest Capabilities' (Protocol in workflow.md) [approved: 2026-07-18]
 
 ## Phase S3: Guide Visual Authoring
 
 _Story ref: spec.md#story-s3_
 
-- [ ] Task: Define the repository-local workflow skill and evidence contract
+- [~] Task: Define the repository-local workflow skill and evidence contract
   - [ ] Create `.agents/skills/fantasy-asset-workflow/SKILL.md` with capability preflight and supported workflow routing.
   - [ ] Define reference files for current capabilities, visual review, evidence reporting, and future animation handoff.
   - [ ] Define a stable final report template with revision, mutation, validation, visual, artifact, and limitation evidence.

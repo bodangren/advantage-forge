@@ -45,7 +45,7 @@ Owner decision: approved. No additional S1 inspection or comparison gap was iden
 
 ## Phase S2: Publish Honest Capabilities
 
-Status: automated verification passed; explicit owner confirmation pending.
+Status: approved by the owner on 2026-07-18 after automated verification passed.
 
 ### Automated evidence
 
@@ -79,4 +79,4 @@ Status: automated verification passed; explicit owner confirmation pending.
 5. Compare the runtime response with `measure/generated/capability-catalog.md`, README, product, and tech stack; confirm they make no broader claim.
 6. Request an unknown capability and an unknown field; confirm `NOT_FOUND` and `UNKNOWN_FIELD` responses include stable paths and no mutation occurs.
 
-Owner decision requested: approve Phase S2, or identify a capability status, evidence, or limitation statement that is still misleading.
+Owner decision: approved. No additional S2 capability status, evidence, or limitation gap was identified.
