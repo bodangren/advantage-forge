@@ -1,6 +1,6 @@
 import { mkdtemp, readFile, readdir, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import type { Page } from '@playwright/test';
 import { assetFixture } from '../document/fixture.js';
 import { describe, expect, it } from 'vitest';
@@ -89,14 +89,22 @@ describe('local browser artifact service', () => {
 
     expect(await readFile(result.frames[0]!.path, 'utf8')).toBe('PNG');
     expect(await readFile(result.contactSheetPath, 'utf8')).toBe('PNG');
-    expect(
-      JSON.parse(await readFile(result.manifestPath, 'utf8')),
-    ).toMatchObject({
+    const manifest = JSON.parse(
+      await readFile(result.manifestPath, 'utf8'),
+    ) as {
+      contactSheetPath: string;
+      frames: { path: string }[];
+    };
+    expect(manifest).toMatchObject({
       assetId: 'asset.hero',
       revisionId:
         'revision.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
       frames: [{ direction: 'S' }],
     });
+    expect(manifest.frames[0]!.path).toBe('s.png');
+    expect(manifest.contactSheetPath).toBe('contact-sheet.png');
+    expect(isAbsolute(result.frames[0]!.path)).toBe(true);
+    expect(isAbsolute(result.contactSheetPath)).toBe(true);
     await expect(
       service.render(
         { ...assetFixture(), renderProfiles: [] },
@@ -126,9 +134,15 @@ describe('local browser artifact service', () => {
     expect([...new Uint8Array(await readFile(result.glbPath))]).toEqual([
       1, 2, 3,
     ]);
-    expect(
-      JSON.parse(await readFile(result.manifestPath, 'utf8')),
-    ).toMatchObject({ assetId: 'asset.hero', format: 'glb' });
+    const manifest = JSON.parse(
+      await readFile(result.manifestPath, 'utf8'),
+    ) as { glbPath: string };
+    expect(manifest).toMatchObject({
+      assetId: 'asset.hero',
+      format: 'glb',
+      glbPath: 'asset.hero.glb',
+    });
+    expect(isAbsolute(result.glbPath)).toBe(true);
     await expect(service.render(document, 'invalid-revision')).rejects.toThrow(
       /Invalid artifact identity/,
     );
