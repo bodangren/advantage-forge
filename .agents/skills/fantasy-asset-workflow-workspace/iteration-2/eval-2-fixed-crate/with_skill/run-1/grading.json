@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities and list_kits before create_asset and requires runtime confirmation for asset.reference.crate plus outputs; when tools are unavailable, it shows the intended calls and marks support unassessed.",
+      "passed": true,
+      "evidence": "The intended sequence places `inspect_capabilities` and filtered capability confirmation before `list_kits`, template inspection, and `create_asset`. It requires the fixed-crate creation, directional/contact-sheet, and GLB capabilities to report supported while marking their current runtime status `Not assessed`."
+    },
+    {
+      "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+      "passed": true,
+      "evidence": "The sole creation call is exactly `create_asset({ reference: \"crate\" })`; it includes no naming/customization identity and authors no canonical document."
+    },
+    {
+      "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision when executed; when unavailable, it leaves the revision unassessed without fabricating dry-run evidence.",
+      "passed": true,
+      "evidence": "It explicitly says `create_asset` has no dry-run field, marks the initial/baseline/final revision IDs `Not assessed`, and explains that the untouched final revision must equal the returned initial revision when live."
+    },
+    {
+      "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+      "passed": true,
+      "evidence": "It schedules overview, parts, and renderProfiles inspection immediately after creation/existing discovery and states that no `apply_operations`, `connect_parts`, or `set_pose` call is warranted."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+      "passed": true,
+      "evidence": "All three public calls are shown; the artifact section requires common asset/revision identity and gives the read-only `verify-artifacts.mjs` command with expected asset and revision arguments."
+    },
+    {
+      "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+      "passed": true,
+      "evidence": "The visual section separately requires orbiting the interactive 3D view, reviewing every labeled contact-sheet direction, and opening every PNG natively at 128x128, with explicit edge clipping, stable framing, ground row, silhouette, and material/value checks."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+      "passed": true,
+      "evidence": "The report stays within intended public calls, says returned files would not be rewritten/moved/post-processed, supplies no canonical document, and marks every unavailable result `Not assessed` with a fail verdict."
+    },
+    {
+      "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+      "passed": true,
+      "evidence": "The final verdict is explicitly `fail` because no runtime capability, revision, validation, artifact, or visual evidence exists."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 8111
+  },
+  "claims": [
+    {
+      "claim": "No creation or mutation was attempted.",
+      "type": "process",
+      "verified": true,
+      "evidence": "All calls are labeled intended, all response-derived identifiers are `Not assessed`, and the mutation section states that no operation was applied."
+    },
+    {
+      "claim": "The unchanged fixed crate requires no post-creation semantic mutation.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "This follows directly from the supplied request to use the fixed reference without changing its design; the report consistently preserves the initial revision and proposes no mutation."
+    },
+    {
+      "claim": "Fixed crate creation and requested output capabilities are statically supported.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The report itself correctly distinguishes static orientation from runtime confirmation; static support cannot be independently verified from the permitted evaluation inputs."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "No suggestions; the assertions meaningfully test fixed-reference discipline, creation semantics, artifact provenance, visual fidelity review, and honest verdict handling."
+  }
+}

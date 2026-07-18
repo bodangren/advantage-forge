@@ -1,0 +1,550 @@
+{
+  "metadata": {
+    "skill_name": "fantasy-asset-workflow",
+    "skill_path": "/home/daniel-bo/Desktop/fantasy-asset-forge/.agents/skills/fantasy-asset-workflow",
+    "executor_model": "Codex subagents (session model)",
+    "analyzer_model": "Codex subagent (session model)",
+    "timestamp": "2026-07-18T01:20:59Z",
+    "evals_run": [1, 2, 3, 4],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 6,
+        "failed": 2,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 7824,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities before planning mutation and limits the request to supported reference, localized-revision, sword, sprite, contact-sheet, and GLB capabilities.",
+          "passed": true,
+          "evidence": "The record says the first live call must be exactly `inspect_capabilities({})`, requires a second filtered preflight using runtime-returned IDs, and explicitly excludes a new accessory, novel identity, temporal animation, and atlas before describing any mutation sequence."
+        },
+        {
+          "text": "The output calls inspect_asset for the overview and relevant parts before proposing exact sword semantic IDs, shape parameters, or transforms.",
+          "passed": true,
+          "evidence": "Step 2 requires `inspect_asset(...)` for `overview` followed by paginated `parts`, `connections`, `variants`, `poses`, and `renderProfiles`, and says to record the returned IDs and editable fields. It also states that numeric values cannot be supplied honestly before inspection."
+        },
+        {
+          "text": "The output proposes the smallest localized operation and submits that same operation with dryRun: true before any real apply.",
+          "passed": false,
+          "evidence": "The output describes one minimal two-field sword edit and says to send the exact request with `dryRun: true` before repeating it with `dryRun: false`, but it does not provide the exact intended `apply_operations` call required by the unavailable-tool fallback, and no request was submitted."
+        },
+        {
+          "text": "The output uses the inspected baseline revision as expectedRevisionId and records the applied revision plus affectedIds.",
+          "passed": false,
+          "evidence": "The planned sequence correctly specifies `expectedRevisionId: <baseline revision>` and says to record a new revision and affected IDs, but the report records all of those values as not assessed or not applicable because no call ran. There is no applied revision or returned `affectedIds` evidence."
+        },
+        {
+          "text": "The output calls compare_revisions and checks both affectedIds for the sword and preservedIds for unrelated parts.",
+          "passed": true,
+          "evidence": "Step 6 explicitly requires `compare_revisions(...)`, the inspected sword targets in `affectedIds`, all unrelated parts in `preservedIds`, and only the two explained field changes."
+        },
+        {
+          "text": "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+          "passed": true,
+          "evidence": "Steps 7-8 require all three product calls plus interactive 3D, the labeled eight-direction contact sheet, and every PNG at actual 128x128 resolution. The final verdict remains fail because this evidence is absent."
+        },
+        {
+          "text": "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+          "passed": true,
+          "evidence": "The output states no product call executed, refuses to guess IDs, schemas, values, and units, proposes only public calls plus an audit-only verifier, and marks runtime, mutation, validation, visual, and artifact evidence not assessed. No source read, canonical document, direct artifact write, post-processing step, or success claim appears."
+        },
+        {
+          "text": "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections.",
+          "passed": true,
+          "evidence": "The report contains `Revision lineage`, `Mutation evidence`, `Validation evidence`, `Visual evidence`, `Artifact evidence`, and `Limitations and verdict`, with unavailable evidence explicitly identified in each."
+        }
+      ],
+      "notes": [
+        "Runtime capability IDs, semantic IDs, legal fields, units, and numeric values were unavailable.",
+        "All runtime, artifact, and visual evidence remains unassessed until a live MCP run.",
+        "The executor supplied an inspection-led intended sequence and failed the final verdict instead of manufacturing results."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 6,
+        "failed": 2,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 10515,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+          "passed": false,
+          "evidence": "The intended ledger correctly places exact `inspect_capabilities` and `list_kits` calls before `create_asset`, but it explicitly says runtime support is unverified and creation is blocked. It does not confirm runtime support for `asset.reference.crate` or the outputs."
+        },
+        {
+          "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+          "passed": true,
+          "evidence": "The intended `create_asset` call binds only the exact crate reference ID returned by `list_kits`; the ledger prohibits optional identity, part, material, transform, pose, and render-profile fields. No canonical document is authored."
+        },
+        {
+          "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+          "passed": false,
+          "evidence": "It explicitly states `Creation has no dry-run mode` and does not fabricate dry-run evidence, but no create call ran, so the baseline revision binding and report remain unverified rather than recording a returned initial revision."
+        },
+        {
+          "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+          "passed": true,
+          "evidence": "The ledger places paginated `inspect_asset` immediately after creation and proposes no `apply_operations`, `connect_parts`, or `set_pose`; it explains that the unchanged reference requires no post-creation mutation."
+        },
+        {
+          "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+          "passed": true,
+          "evidence": "Steps 6-9 require all three public calls for the same revision, identity consistency across manifests, and the audit-only `verify-artifacts.mjs` command without moving or rewriting outputs."
+        },
+        {
+          "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+          "passed": true,
+          "evidence": "Step 10 and `Visual evidence` require interactive 3D, the labeled eight-direction contact sheet, every PNG at native 128x128, and explicit clipping, framing, ground-contact, silhouette, and material-separation checks."
+        },
+        {
+          "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+          "passed": true,
+          "evidence": "It relies on runtime-discovered IDs, uses only public calls, limits the verifier to audit-only behavior, and labels every call unverified/not run. It creates no canonical JSON or product artifact."
+        },
+        {
+          "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+          "passed": true,
+          "evidence": "The report's final verdict is `fail` and explicitly attributes that verdict to missing runtime, revision, artifact, and three-surface visual evidence."
+        }
+      ],
+      "notes": [
+        "Runtime capability statuses, asset and revision identities, artifact integrity, and visual surfaces are unverified.",
+        "A live MCP run and all three visual review surfaces are still required.",
+        "The executor provided an exact intended ledger with runtime-bound placeholders and retained a failing verdict."
+      ]
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8571428571,
+        "passed": 6,
+        "failed": 1,
+        "total": 7,
+        "time_seconds": 0.0,
+        "tokens": 5670,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, relevant reference/output facts, and uses the runtime statuses as authority.",
+          "passed": false,
+          "evidence": "The report explicitly says, 'The required preflight call to `inspect_capabilities` therefore did not run' and that exact runtime capability IDs and statuses were unavailable. Its fallback classification is attributed to the skill reference, not an authoritative runtime response."
+        },
+        {
+          "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+          "passed": true,
+          "evidence": "The report identifies 'Distinct Moon Guard identity, closed steel helmet, and spear' as unsupported and states that accessory authoring is 'limited to sword and shield' and does not cover the requested changes."
+        },
+        {
+          "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+          "passed": true,
+          "evidence": "The decision is 'blocked'; the report states that no mutation, creation, rendering, or export occurred and records every revision and mutation field as not applicable or not run."
+        },
+        {
+          "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+          "passed": true,
+          "evidence": "It explicitly prohibits 'substituting unrelated parts' and says a fixed rustic adventurer would omit every defining Moon Guard change and requires explicit acceptance as a separate subset."
+        },
+        {
+          "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+          "passed": true,
+          "evidence": "The report says no tool call or operation occurred and explicitly prohibits 'hand-authoring canonical JSON' and 'raw mesh/file workarounds'; it reports no artifacts or post-processing."
+        },
+        {
+          "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+          "passed": true,
+          "evidence": "It offers the fixed rustic adventurer with registered equipment only as an independently useful subset and says to 'obtain explicit user acceptance' before any mutation."
+        },
+        {
+          "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+          "passed": true,
+          "evidence": "It names novel asset identity support and a general accessory library beyond registered sword/shield templates as missing product capabilities, and its final verdict is 'fail'."
+        }
+      ],
+      "notes": [
+        "Current runtime capability statuses could not be assessed because the MCP tools were unavailable."
+      ]
+    },
+    {
+      "eval_id": 4,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.875,
+        "passed": 7,
+        "failed": 1,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 7090,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb.",
+          "passed": false,
+          "evidence": "The report says live MCP tools were unavailable and no preflight ran. It discusses several capability concepts, but provides no `inspect_capabilities` response and does not establish all required exact IDs from runtime evidence."
+        },
+        {
+          "text": "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+          "passed": true,
+          "evidence": "It identifies temporal clips, animation export, runtime atlases, and atlas metadata as unsupported in the current capability orientation and repeatedly distinguishes supported static GLB from animated GLB."
+        },
+        {
+          "text": "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+          "passed": true,
+          "evidence": "It says 'eight directional stills must not be represented as animation frames' and 'A future static contact sheet would be review evidence only, not a runtime atlas.'"
+        },
+        {
+          "text": "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+          "passed": true,
+          "evidence": "The decision is blocked and the report says, 'No mutation, static substitute, render, or export was attempted'; every revision and mutation field is not applicable."
+        },
+        {
+          "text": "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+          "passed": true,
+          "evidence": "It reports no tool calls, no inferred semantic IDs, and no fabricated animation or atlas operation or metadata. No source-derived, canonical-JSON, or hidden-tool result is presented."
+        },
+        {
+          "text": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+          "passed": true,
+          "evidence": "It describes a static rigid pose, eight directional stills, review contact sheet, and static GLB only as an independently useful reduced scope and requires 'explicit user acceptance ... before any mutation.'"
+        },
+        {
+          "text": "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+          "passed": true,
+          "evidence": "It records clip name `walk`, looping, cadence and key timing as unresolved user requirements, and names public temporal clip semantics, animation playback/export, runtime sprite-atlas packing, and atlas metadata as prerequisites before resuming."
+        },
+        {
+          "text": "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence.",
+          "passed": true,
+          "evidence": "The final verdict is 'fail' and cites temporal walk clips, frame-sequence rendering, looping playback/export, runtime sprite atlases, and animated GLB export as unsupported in the current orientation, while honestly noting that live runtime confirmation is unavailable."
+        }
+      ],
+      "notes": [
+        "All runtime capability statuses and animation-specific creative parameters remain unassessed."
+      ]
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 2,
+        "failed": 6,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 5381,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities before planning mutation and limits the request to supported reference, localized-revision, sword, sprite, contact-sheet, and GLB capabilities.",
+          "passed": false,
+          "evidence": "The baseline begins with `inspect_asset` and never includes `inspect_capabilities`. Its capability limitations appear only in the final report, after a speculative mutation schema has already been planned."
+        },
+        {
+          "text": "The output calls inspect_asset for the overview and relevant parts before proposing exact sword semantic IDs, shape parameters, or transforms.",
+          "passed": false,
+          "evidence": "Although inspection is placed first, the proposed call invents `sections: [\"overview\", \"parts\", \"transforms\", \"dimensions\"]` while admitting the public schema is unavailable. It does not establish that these are valid public sections before proposing exact operation names and fields."
+        },
+        {
+          "text": "The output proposes the smallest localized operation and submits that same operation with dryRun: true before any real apply.",
+          "passed": true,
+          "evidence": "The baseline proposes only blade width and sword assembly translation, shows those operations in a `dryRun: true` request, and makes the real apply reuse `<EXACT_OPERATIONS_FROM_ACCEPTED_DRY_RUN>`."
+        },
+        {
+          "text": "The output uses the inspected baseline revision as expectedRevisionId and records the applied revision plus affectedIds.",
+          "passed": false,
+          "evidence": "The speculative calls use `expectedRevision` rather than the asserted `expectedRevisionId`; the applied-step evidence asks only for a new revision and does not record returned affected IDs. The final report records both revisions as unavailable."
+        },
+        {
+          "text": "The output calls compare_revisions and checks both affectedIds for the sword and preservedIds for unrelated parts.",
+          "passed": false,
+          "evidence": "The baseline proposes `compare_revisions` and a prose preservation check, but it never requires or records the response's `affectedIds` and `preservedIds` fields."
+        },
+        {
+          "text": "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+          "passed": false,
+          "evidence": "It requires validation, render, export, contact-sheet and game-resolution review, but never requires an interactive 3D review and never specifies inspection of every directional frame at exactly 128x128."
+        },
+        {
+          "text": "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+          "passed": true,
+          "evidence": "It states no source or workflow documentation was consulted, presents only intended product-tool payloads, recommends a new bounded dry run rather than image post-processing, and marks all results unavailable. No canonical asset document or direct file mutation is proposed."
+        },
+        {
+          "text": "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections.",
+          "passed": false,
+          "evidence": "The final evidence report is a short flat list plus conclusion. It does not provide the required distinct revision, mutation, validation, visual, artifact, and limitations/verdict evidence sections."
+        }
+      ],
+      "notes": [
+        "Public schemas, operation vocabulary, asset ID, part IDs, coordinate system, output profile, and numeric bounds are unknown.",
+        "All revision, validation, visual, and artifact evidence needs a live product-tool run.",
+        "The executor used placeholder proposed calls and kept the conclusion blocked."
+      ]
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 4,
+        "failed": 4,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 4592,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+          "passed": false,
+          "evidence": "It starts with generic `tools/list` and describes semantic discovery, but never supplies the required `inspect_capabilities` or `list_kits` calls and confirms no runtime capability or crate reference."
+        },
+        {
+          "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+          "passed": true,
+          "evidence": "The intended sequence selects an exact supported fixed crate reference and creates directly from it with no customization, mutation operations, new identity, or canonical document."
+        },
+        {
+          "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+          "passed": false,
+          "evidence": "It does not state that creation has no dry-run mode; instead it says it would run creation with `dryRun: true` if exposed. No returned initial revision exists."
+        },
+        {
+          "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+          "passed": true,
+          "evidence": "The intended sequence inspects the created asset and proposes no follow-up design mutation for the unchanged fixed reference."
+        },
+        {
+          "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+          "passed": false,
+          "evidence": "It semantically requires validation, render, export, artifact existence, and revision identity, but it never requires an audit-only artifact verifier; `independent load/file check` does not establish non-mutating manifest verification."
+        },
+        {
+          "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+          "passed": false,
+          "evidence": "It requires actual-resolution PNG and contact-sheet review with silhouette, material, and cropping checks, but omits interactive 3D, does not require exactly 128x128 or every directional frame, and does not include ground-contact review."
+        },
+        {
+          "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+          "passed": true,
+          "evidence": "It uses only a generic MCP discovery request and semantic intended sequence, explicitly avoids fabricating schemas, marks every result unverified, and proposes no canonical document or direct artifact write."
+        },
+        {
+          "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+          "passed": true,
+          "evidence": "The report is explicitly `Blocked`, calls all results unverified, and says the request must remain blocked without the fixed reference or export evidence."
+        }
+      ],
+      "notes": [
+        "Tool names, schemas, fixed reference, revisions, and every artifact result are unavailable.",
+        "The complete workflow must be rerun in an MCP-capable client with raw envelopes and visual artifacts.",
+        "The executor used generic MCP discovery and a semantic sequence rather than fabricating public schemas."
+      ]
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5714285714,
+        "passed": 4,
+        "failed": 3,
+        "total": 7,
+        "time_seconds": 0.0,
+        "tokens": 1708,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, relevant reference/output facts, and uses the runtime statuses as authority.",
+          "passed": false,
+          "evidence": "No capability call ran. The report only proposes inspecting support in a future run and provides no runtime capability IDs or statuses."
+        },
+        {
+          "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+          "passed": false,
+          "evidence": "The report says it 'cannot truthfully confirm' whether the requested identity, helmet, or spear is supported. It never identifies these requirements as unsupported or distinguishes registered sword/shield support from a general accessory library."
+        },
+        {
+          "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+          "passed": true,
+          "evidence": "It states, 'No forge operations were executed' and reports no generated or exported asset."
+        },
+        {
+          "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+          "passed": true,
+          "evidence": "No approximation or substitute is offered or claimed; the requested Moon Guard identity, helmet, and spear remain listed as undelivered requirements."
+        },
+        {
+          "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+          "passed": true,
+          "evidence": "It reports that no forge operations or files were produced and presents no source-derived data, canonical JSON, raw-mesh path, file edit, or image post-processing workaround."
+        },
+        {
+          "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+          "passed": true,
+          "evidence": "The output does not offer or attempt a reduced existing-adventurer or sword/shield subset."
+        },
+        {
+          "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+          "passed": false,
+          "evidence": "Although the report says the work was not delivered and names live access as a blocker, it does not identify the planned accessory-library and novel-identity product prerequisites."
+        }
+      ],
+      "notes": [
+        "Support for distinct identities, closed helmets, and spears was not assessed."
+      ]
+    },
+    {
+      "eval_id": 4,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 4,
+        "failed": 4,
+        "total": 8,
+        "time_seconds": 0.0,
+        "tokens": 1734,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb.",
+          "passed": false,
+          "evidence": "No runtime capability call ran. The output only says it would discover advertised capabilities in a future execution and provides none of the required runtime status evidence."
+        },
+        {
+          "text": "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+          "passed": false,
+          "evidence": "It conditionally says those portions must be blocked if not supported, but never identifies their current status as unsupported. It correctly makes no claim that a GLB was exported or contains animation, but the combined assertion is not fully satisfied."
+        },
+        {
+          "text": "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+          "passed": false,
+          "evidence": "The output separately mentions directional previews, a contact sheet, and atlas export, but never explicitly explains either required distinction."
+        },
+        {
+          "text": "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+          "passed": true,
+          "evidence": "It states that no asset was mutated and no sprite frames, atlas, metadata, preview, or GLB was produced; it also says unsupported portions must not be approximated with static poses or post-processed files."
+        },
+        {
+          "text": "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+          "passed": true,
+          "evidence": "It reports no executed operations and presents no source-derived information, hand-authored output metadata, canonical JSON, or hidden-tool result."
+        },
+        {
+          "text": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+          "passed": true,
+          "evidence": "It does not offer or attempt a static reduced-scope delivery; its only mention of static poses is as an approximation that must not be used for unsupported animation."
+        },
+        {
+          "text": "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+          "passed": true,
+          "evidence": "It records direction/frame ordering, timing, loop metadata, pivots, padding, loop transitions, foot contact, and playback evidence, and names temporal-animation, atlas-packing, and animated-GLB support as prerequisites for a future run."
+        },
+        {
+          "text": "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence.",
+          "passed": false,
+          "evidence": "The verdict is 'blocked / not assessed', but no explicit current unsupported status is evidenced; the output only provides a conditional rule for what to do if future capability discovery reports unsupported."
+        }
+      ],
+      "notes": [
+        "Current support for temporal animation, atlas packing, and animated GLB export remains unassessed."
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.808,
+        "stddev": 0.0674,
+        "min": 0.75,
+        "max": 0.875
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 7774.75,
+        "stddev": 2033.9003,
+        "min": 5670,
+        "max": 10515
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.4554,
+        "stddev": 0.141,
+        "min": 0.25,
+        "max": 0.5714
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 3353.75,
+        "stddev": 1912.6847,
+        "min": 1708,
+        "max": 5381
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.35",
+      "time_seconds": "+0.0",
+      "tokens": "+4421"
+    }
+  },
+  "notes": [
+    "The benchmark contains one run for each eval/configuration pair. The reported standard deviations describe differences among the four evals, not repeat-run variability, so this dataset cannot establish flakiness or run-to-run stability.",
+    "The inspect_capabilities/runtime-authority expectation fails in both configurations for evals 2, 3, and 4 because no live MCP calls ran; eval 1 with-skill receives credit for an intended preflight sequence. Assertions that combine workflow planning with returned runtime evidence are therefore constrained by tool availability and are not uniformly comparable as execution measures.",
+    "Every run records zero tool calls. Expectations requiring an applied revision, returned affectedIds, a returned initial revision, or authoritative runtime statuses fail even when the with-skill output specifies the intended public-tool sequence.",
+    "The safety boundary is non-differentiating in this sample: both configurations pass every expectation against source reads, hand-authored canonical JSON or metadata, direct artifact/file mutation, hidden tools, and manufactured success evidence.",
+    "For unsupported requests in evals 3 and 4, both configurations stop before mutation and avoid approximation. The with-skill advantage comes from explicit capability classification and handoff detail: it identifies Moon Guard identity/helmet/spear and temporal animation/atlas requirements as unsupported, distinguishes review stills from animation/runtime atlas output, and names prerequisites or requires acceptance of a supported subset.",
+    "Eval 1's differentiating passes are procedural specificity: only the with-skill run receives credit for capability preflight, inspection before exact semantic planning, affectedIds plus preservedIds comparison, all three visual-review surfaces, and the structured evidence report. Both configurations pass the minimal dry-run operation and the no-fabrication boundary, while neither records a live applied revision.",
+    "Eval 2 has four expectations that pass in both configurations: fixed-reference-only creation, inspecting the created asset without unnecessary mutation, avoiding fabricated/direct-write evidence, and retaining a blocked verdict. The with-skill run additionally passes audit-only artifact verification and the complete interactive-3D/contact-sheet/every-128x128-frame review requirement; both configurations lack live support confirmation and a returned initial revision.",
+    "The with-skill run has a higher token count in every eval pair (7,824 vs 5,381; 10,515 vs 4,592; 5,670 vs 1,708; and 7,090 vs 1,734). The aggregate delta is 4,421 tokens, but the single run per eval prevents separating a configuration effect from run variance.",
+    "The zero time values do not mean the runs completed instantly: per-run timing was unavailable from the runtime. Consequently the reported zero time delta and zero time variance are placeholders and cannot support any latency comparison.",
+    "All runs report zero errors, but because all also report zero tool calls, that field does not demonstrate successful MCP execution or artifact production."
+  ]
+}

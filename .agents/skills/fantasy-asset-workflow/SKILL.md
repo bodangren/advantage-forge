@@ -26,6 +26,10 @@ Read [current capabilities](references/current-capabilities.md) before planning.
 Use its summary only as orientation; the runtime `inspect_capabilities` response
 is authoritative for the current run.
 
+Read [public call ledger](references/public-call-ledger.md) when preparing calls
+or an unavailable-tool fallback. It records the exact public request field names
+so a workflow report does not drift into plausible but invalid pseudo-schemas.
+
 ## Workflow
 
 ### 1. Normalize the goal
@@ -51,6 +55,22 @@ For temporal animation or atlas requests, also read
 [animation handoff](references/animation-handoff.md). A request that mixes
 supported and unsupported goals may continue only after the user accepts a
 clearly named supported subset.
+
+#### When the public MCP tools are unavailable
+
+Stop before creation or mutation and give the workflow a `fail` or `blocked`
+verdict. Do not treat the static capability orientation as runtime confirmation.
+Provide an exact intended call ledger using the templates in
+[public call ledger](references/public-call-ledger.md): keep known field names
+literal and use visibly unresolved placeholders such as `<assetId from
+inspect_asset>` only for response-derived values. For a proposed mutation, show
+the complete `dryRun: true` request and say that the accepted dry-run request
+must be replayed byte-for-byte except for `dryRun: false`.
+
+Mark returned capability statuses, revisions, affected IDs, validation, artifact
+paths, and visual observations as `Not assessed`; never write fake values merely
+to make the report look complete. This fallback is useful planning evidence, not
+delivery evidence.
 
 ### 3. Inspect the bounded baseline
 

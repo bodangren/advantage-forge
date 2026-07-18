@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities before planning mutation; when tools are unavailable, it shows that exact intended call first, limits the requested capability set, and marks runtime statuses unassessed.",
+      "passed": true,
+      "evidence": "The report says the first required runtime call is `inspect_capabilities({})`, lists it first in the call ledger, follows it with a filtered capabilityIds call, and marks all runtime statuses `Not assessed`."
+    },
+    {
+      "text": "The output calls inspect_asset for overview and relevant parts before exact sword values; when tools are unavailable, it shows valid section calls and leaves response-derived IDs, shapes, and transforms unresolved.",
+      "passed": true,
+      "evidence": "The ledger shows valid `inspect_asset` calls for `overview`, `parts`, `connections`, and `renderProfiles` before the operation proposal; all asset, part, shape, and transform values remain angle-bracket response placeholders or `Not assessed`."
+    },
+    {
+      "text": "The output shows the smallest exact apply_operations request with expectedRevisionId, a complete inspected shape/transform placeholder, and dryRun: true, then requires byte-identical replay except for dryRun: false.",
+      "passed": true,
+      "evidence": "The proposed patch contains exactly the two changes needed for the brief, uses `expectedRevisionId`, supplies complete inspected shape and transform placeholders, begins with `dryRun: true`, and explicitly requires byte-for-byte replay with only `dryRun` changed to false."
+    },
+    {
+      "text": "The output binds expectedRevisionId to the inspected baseline and records returned revision plus affectedIds; when tools are unavailable, those response-derived values remain explicitly unassessed.",
+      "passed": true,
+      "evidence": "Both apply calls bind `expectedRevisionId` to the baseline revision from inspection. The report requires the accepted response's final revision and affected IDs while marking the dry-run revision, applied result, final revision, and affected IDs `Not assessed` because no call ran."
+    },
+    {
+      "text": "The output calls compare_revisions, or shows its exact unavailable-tool call, and requires affectedIds for the sword plus preservedIds for unrelated parts.",
+      "passed": true,
+      "evidence": "It shows `compare_revisions` with `baseRevisionId`, `targetRevisionId`, pagination, and requires affected IDs to be limited to inspected sword targets while all unrelated semantic IDs appear preserved."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+      "passed": true,
+      "evidence": "The ledger includes all three delivery calls, and the visual section requires interactive 3D, the labeled eight-direction contact sheet, and every native 128x128 frame before acceptance."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+      "passed": true,
+      "evidence": "The report uses only intended public calls with response-derived placeholders, reports no filesystem or post-processing action, and repeatedly marks unavailable runtime results `Not assessed`; its final verdict is fail."
+    },
+    {
+      "text": "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections.",
+      "passed": true,
+      "evidence": "The report has explicit `Revision lineage`, `Mutation evidence`, `Validation evidence`, `Visual evidence`, `Artifact evidence`, and `Limitations and verdict` sections."
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 0,
+    "total": 8,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 8391
+  },
+  "claims": [
+    {
+      "claim": "No creation or mutation was attempted.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The execution record contains only an intended call ledger with unresolved placeholders and reports every mutation response field as `Not assessed`."
+    },
+    {
+      "claim": "Required runtime and delivery evidence is unavailable.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "No response envelopes, revision IDs, validation metrics, artifact paths, hashes, or visual observations are supplied, and the verdict remains fail."
+    },
+    {
+      "claim": "The complete request appears bounded by statically expected capabilities.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The report correctly labels runtime support unassessed; static capability support cannot be independently verified from the permitted evaluation inputs."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "No suggestions; the revised assertions discriminate exact public-call discipline, evidence provenance, visual review completeness, and honest failure behavior."
+  }
+}

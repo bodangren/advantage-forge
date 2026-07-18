@@ -1,0 +1,90 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb; when unavailable, it shows the intended preflight and marks runtime statuses unassessed.",
+      "passed": false,
+      "evidence": "The baseline generically proposes discovering capabilities but supplies no inspect_capabilities call, no exact five-capability ledger, and no per-capability runtime status."
+    },
+    {
+      "text": "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+      "passed": false,
+      "evidence": "It correctly avoids claiming an animated GLB, but treats animation and atlas support as capabilities to confirm rather than explicitly identifying temporal animation and runtime atlas output as unsupported."
+    },
+    {
+      "text": "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+      "passed": false,
+      "evidence": "It mentions eight directions, playback evidence, a contact sheet, and an atlas as separate future artifacts, but never states either required distinction."
+    },
+    {
+      "text": "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+      "passed": true,
+      "evidence": "The outcome is blocked, the execution has zero tool calls, and no repeated pose/render or file/image workaround is attempted."
+    },
+    {
+      "text": "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+      "passed": true,
+      "evidence": "No tool calls or workaround steps appear; the output contains no source access, hand-authored animation metadata, canonical JSON edit, or hidden-tool route."
+    },
+    {
+      "text": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+      "passed": true,
+      "evidence": "The baseline does not offer or attempt a static-pose/stills fallback, so it does not silently substitute such a subset for the requested animation."
+    },
+    {
+      "text": "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+      "passed": false,
+      "evidence": "The future checklist mentions validation and loop boundaries but does not record the requested clip/loop/cadence contract or name the rigid-animation and sprite-pipeline prerequisite."
+    },
+    {
+      "text": "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence.",
+      "passed": false,
+      "evidence": "The request is blocked because the MCP is unavailable, but the output provides no explicit evidence that temporal animation and atlas capabilities are unsupported."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 5,
+    "total": 8,
+    "pass_rate": 0.375
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 2568
+  },
+  "claims": [
+    {
+      "claim": "No requested animation artifact or approval evidence was produced.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The artifact table marks all deliverables not created or unavailable, and the execution has zero tool calls."
+    },
+    {
+      "claim": "No live Fantasy Asset Forge MCP was available.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "This is asserted in the record but is not independently demonstrated by an availability probe in the assigned output."
+    },
+    {
+      "claim": "The animation request should not be approved from this run.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "No animation, atlas, animated GLB, or review evidence exists, so the non-approval recommendation is justified."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+        "reason": "The assertion passes vacuously when no fallback is offered; consider additionally requiring an explicit statement that static stills are either declined or pending separate acceptance."
+      }
+    ],
+    "overall": "The exact capability, semantic-distinction, prerequisite, and evidence assertions sharply expose missing baseline guidance; the conditional static-subset assertion is weaker when no subset appears."
+  }
+}

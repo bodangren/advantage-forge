@@ -1,0 +1,85 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, and relevant output facts; when unavailable, it shows the intended preflight, marks runtime statuses unassessed, and does not treat static orientation as runtime proof.",
+      "passed": false,
+      "evidence": "The baseline says it would inspect advertised capabilities, but gives no inspect_capabilities call ledger, no identity/accessory/output capability IDs, and no explicit runtime-status accounting for directional PNG or GLB facts."
+    },
+    {
+      "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+      "passed": false,
+      "evidence": "It says the three capabilities are 'not established by the prompt alone,' not that the requested identity, helmet, and spear are unsupported, and it never establishes the sword/shield-only accessory boundary."
+    },
+    {
+      "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+      "passed": true,
+      "evidence": "It opens with 'Status: blocked before creation' and states that it did not claim tool calls, revisions, validation, renders, or exports. The execution has zero tool calls."
+    },
+    {
+      "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+      "passed": true,
+      "evidence": "It explicitly refuses to 'substitute a recolor for a distinct identity' or 'approximate the helmet or spear with unrelated parts.'"
+    },
+    {
+      "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+      "passed": true,
+      "evidence": "The execution contains no tool calls or workaround steps and expressly refuses to edit generated files outside the Forge. No source, JSON, raw-mesh, or post-processing route appears."
+    },
+    {
+      "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+      "passed": true,
+      "evidence": "The baseline does not offer an existing-adventurer or sword/shield fallback, so it does not mutate or propose mutation under an unaccepted reduced scope."
+    },
+    {
+      "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+      "passed": false,
+      "evidence": "Although the report is blocked, it does not name the planned accessory-library and novel-identity prerequisites; it only asks for generic future capability confirmation."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 3,
+    "total": 7,
+    "pass_rate": 0.5714285714
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 1508
+  },
+  "claims": [
+    {
+      "claim": "No Forge tool call ran and no deliverable artifact was produced.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The execution has zero tool calls and explicitly says no deliverable artifacts were produced."
+    },
+    {
+      "claim": "No live Fantasy Asset Forge MCP connection was available.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "This is asserted by the output but cannot be independently verified from the assigned execution record."
+    },
+    {
+      "claim": "The Moon Guard request should remain blocked pending capability confirmation.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The output produces no artifacts and appropriately avoids approval, although it does not identify the known unsupported product boundaries."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+        "reason": "This conditional assertion passes vacuously when no subset is offered; a companion assertion could require the report to state whether a supported fallback exists and whether it was offered."
+      }
+    ],
+    "overall": "The revised capability-ID and prerequisite assertions meaningfully distinguish the baseline, while the conditional fallback assertion remains less discriminating when no fallback appears."
+  }
+}

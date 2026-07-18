@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities before planning mutation; when tools are unavailable, it shows that exact intended call first, limits the requested capability set, and marks runtime statuses unassessed.",
+      "passed": false,
+      "evidence": "The baseline begins with `list_kits` and never includes `inspect_capabilities`, a bounded capability ID set, or runtime capability statuses."
+    },
+    {
+      "text": "The output calls inspect_asset for overview and relevant parts before exact sword values; when tools are unavailable, it shows valid section calls and leaves response-derived IDs, shapes, and transforms unresolved.",
+      "passed": false,
+      "evidence": "It shows only a generic `inspect_asset({assetId})` call without required section pagination, then invents `scale_part`/`translate_part`, factor 1.12, and amount 0.04 rather than retaining complete response-derived shape and transform placeholders."
+    },
+    {
+      "text": "The output shows the smallest exact apply_operations request with expectedRevisionId, a complete inspected shape/transform placeholder, and dryRun: true, then requires byte-identical replay except for dryRun: false.",
+      "passed": false,
+      "evidence": "Although it repeats a two-operation request, the payload uses `expectedRevision` instead of `expectedRevisionId`, places `operations` at the top level instead of inside `patch`, and supplies guessed delta operations rather than complete inspected shape/transform objects."
+    },
+    {
+      "text": "The output binds expectedRevisionId to the inspected baseline and records returned revision plus affectedIds; when tools are unavailable, those response-derived values remain explicitly unassessed.",
+      "passed": false,
+      "evidence": "The calls never contain `expectedRevisionId`; they use the non-contract field `expectedRevision`. The narrative expects a new revision and affected list but cannot cure the missing required binding."
+    },
+    {
+      "text": "The output calls compare_revisions, or shows its exact unavailable-tool call, and requires affectedIds for the sword plus preservedIds for unrelated parts.",
+      "passed": false,
+      "evidence": "It uses `fromRevision` and `toRevision` rather than the exact `baseRevisionId` and `targetRevisionId` fields, so the unavailable-tool call is not valid even though the prose asks for preservation evidence."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+      "passed": false,
+      "evidence": "It requires validation, rendering, export, native directional sprites, and contact-sheet review, but never requires interactive 3D review."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+      "passed": true,
+      "evidence": "The baseline reports no source access, direct file mutation, artifact post-processing, or canonical-document authorship, and explicitly says all live results are unavailable rather than successful."
+    },
+    {
+      "text": "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections.",
+      "passed": false,
+      "evidence": "The final report is a short bullet list without the required structured sections; in particular it lacks distinct artifact evidence and verdict sections."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 7,
+    "total": 8,
+    "pass_rate": 0.125
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 4389
+  },
+  "claims": [
+    {
+      "claim": "No live tool result is claimed.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The opening status says `not executed`, all evidence is described as required rather than returned, and the final report marks the task blocked."
+    },
+    {
+      "claim": "The shown operation fields would be replaced by product-advertised schema if rejected.",
+      "type": "process",
+      "verified": false,
+      "evidence": "This is only a future intention; the record supplies guessed schema and contains no public schema-discovery result or corrected request."
+    },
+    {
+      "claim": "The intended revision would preserve unrelated parts.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "No inspection, dry run, semantic comparison, or response evidence exists, and the proposed request itself is not contract-valid."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "No suggestions; the assertions clearly expose missing capability preflight, invalid guessed request schemas, incomplete visual review, and weak reporting structure."
+  }
+}

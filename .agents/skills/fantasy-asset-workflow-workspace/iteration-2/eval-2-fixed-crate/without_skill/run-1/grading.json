@@ -1,0 +1,84 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities and list_kits before create_asset and requires runtime confirmation for asset.reference.crate plus outputs; when tools are unavailable, it shows the intended calls and marks support unassessed.",
+      "passed": true,
+      "evidence": "The intended order starts with `inspect_capabilities` and `list_kits` before creation, requires confirmation that the rustic-crate reference and all three output types are supported, and marks both calls unverified/not called."
+    },
+    {
+      "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+      "passed": false,
+      "evidence": "The create request invents a `name: \"standard-rustic-crate\"` identity and uses an unverified `templateId` payload rather than the bounded fixed-reference call."
+    },
+    {
+      "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision when executed; when unavailable, it leaves the revision unassessed without fabricating dry-run evidence.",
+      "passed": false,
+      "evidence": "It expects an initial revision and does not fabricate one, but never explicitly states that `create_asset` has no dry-run mode, which is a required part of the assertion."
+    },
+    {
+      "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+      "passed": true,
+      "evidence": "It schedules asset inspection directly after creation, supplies no follow-up mutation call, and repeatedly states that the design must remain unchanged."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+      "passed": false,
+      "evidence": "It includes validation, render, export, and cross-artifact revision checks, but provides no requirement or command for an audit-only artifact verifier."
+    },
+    {
+      "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+      "passed": false,
+      "evidence": "It requires native directional and contact-sheet review with cropping, centering, silhouette, and material checks, but omits interactive 3D review and explicit ground-contact/ground-row review."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+      "passed": true,
+      "evidence": "No repository-source read, canonical-document construction, direct artifact write, or fabricated success appears; every call is explicitly unverified and no artifacts are claimed."
+    },
+    {
+      "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+      "passed": true,
+      "evidence": "The outcome says no asset was created or reviewed, the evidence matrix remains unverified/not produced, and the handoff states no visual-fidelity conclusion can be made."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 4,
+    "total": 8,
+    "pass_rate": 0.5
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 5980
+  },
+  "claims": [
+    {
+      "claim": "No asset was created, rendered, exported, or visually inspected.",
+      "type": "process",
+      "verified": true,
+      "evidence": "Every call is marked `UNVERIFIED — NOT CALLED`, and the report supplies no response IDs, paths, or observations."
+    },
+    {
+      "claim": "The shown request and response schemas could not be discovered without a live MCP.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The record explicitly treats its payloads as semantic intentions rather than accepted schema and provides no schema-discovery response."
+    },
+    {
+      "claim": "The proposed creation supplies no customization fields.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "The proposed `create_asset` call includes a custom `name` field in addition to the template identifier, contradicting the no-customization claim."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "No suggestions; the assertions distinguish generic good intentions from the exact creation boundary, audit verification, and complete visual review required by the workflow."
+  }
+}

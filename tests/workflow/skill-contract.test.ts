@@ -30,6 +30,7 @@ describe('fantasy asset workflow skill contract', () => {
       'references/visual-review.md',
       'references/evidence-report.md',
       'references/animation-handoff.md',
+      'references/public-call-ledger.md',
     ]) {
       expect(skill).toContain(reference);
       expect(await readSkillFile(reference)).not.toHaveLength(0);
@@ -45,6 +46,31 @@ describe('fantasy asset workflow skill contract', () => {
     expect(skill).toMatch(/stop before (any )?mutation/i);
     expect(skill).toMatch(/do not (?:read or\s+inspect|inspect) the source/i);
     expect(skill).toMatch(/actual 128x128/i);
+    expect(skill).toMatch(
+      /when (the )?(public )?(mcp )?tools are unavailable/i,
+    );
+
+    const ledger = await readSkillFile('references/public-call-ledger.md');
+    for (const requestField of [
+      'create_asset({ reference: "crate" })',
+      'expectedRevisionId',
+      'dryRun: true',
+      'baseRevisionId',
+      'targetRevisionId',
+    ]) {
+      expect(ledger).toContain(requestField);
+    }
+
+    const animation = await readSkillFile('references/animation-handoff.md');
+    for (const capabilityId of [
+      'animation.rigid_pose',
+      'animation.temporal',
+      'output.sprite.directional',
+      'output.sprite_atlas',
+      'output.glb',
+    ]) {
+      expect(animation).toContain(capabilityId);
+    }
 
     for (const heading of [
       'Goal and capability decision',

@@ -1,0 +1,102 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+      "passed": false,
+      "evidence": "The intended ledger correctly places exact `inspect_capabilities` and `list_kits` calls before `create_asset`, but it explicitly says runtime support is unverified and creation is blocked. It does not confirm runtime support for `asset.reference.crate` or the outputs."
+    },
+    {
+      "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+      "passed": true,
+      "evidence": "The intended `create_asset` call binds only the exact crate reference ID returned by `list_kits`; the ledger prohibits optional identity, part, material, transform, pose, and render-profile fields. No canonical document is authored."
+    },
+    {
+      "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+      "passed": false,
+      "evidence": "It explicitly states `Creation has no dry-run mode` and does not fabricate dry-run evidence, but no create call ran, so the baseline revision binding and report remain unverified rather than recording a returned initial revision."
+    },
+    {
+      "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+      "passed": true,
+      "evidence": "The ledger places paginated `inspect_asset` immediately after creation and proposes no `apply_operations`, `connect_parts`, or `set_pose`; it explains that the unchanged reference requires no post-creation mutation."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+      "passed": true,
+      "evidence": "Steps 6-9 require all three public calls for the same revision, identity consistency across manifests, and the audit-only `verify-artifacts.mjs` command without moving or rewriting outputs."
+    },
+    {
+      "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+      "passed": true,
+      "evidence": "Step 10 and `Visual evidence` require interactive 3D, the labeled eight-direction contact sheet, every PNG at native 128x128, and explicit clipping, framing, ground-contact, silhouette, and material-separation checks."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+      "passed": true,
+      "evidence": "It relies on runtime-discovered IDs, uses only public calls, limits the verifier to audit-only behavior, and labels every call unverified/not run. It creates no canonical JSON or product artifact."
+    },
+    {
+      "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+      "passed": true,
+      "evidence": "The report's final verdict is `fail` and explicitly attributes that verdict to missing runtime, revision, artifact, and three-surface visual evidence."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 2,
+    "total": 8,
+    "pass_rate": 0.75
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 10515,
+    "transcript_chars": 10515
+  },
+  "claims": [
+    {
+      "claim": "No live Fantasy Asset Forge MCP tool was called.",
+      "type": "process",
+      "verified": true,
+      "evidence": "Every ledger entry is explicitly labeled intended and unverified/not run, and no returned IDs or artifact paths are presented."
+    },
+    {
+      "claim": "create_asset has no dry-run mode.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This is explicitly stated in the output and is also encoded as a required fact in the evaluation assertion."
+    },
+    {
+      "claim": "The unchanged fixed crate needs no post-creation mutation.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The prompt asks for the fixed reference without changing its design, and the proposed workflow adds no customization or mutation."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Runtime capability statuses, asset and revision identities, artifact integrity, and visual surfaces are unverified."
+    ],
+    "needs_review": [
+      "A live MCP run and all three visual review surfaces are still required."
+    ],
+    "workarounds": [
+      "The executor provided an exact intended ledger with runtime-bound placeholders and retained a failing verdict."
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+        "reason": "The prompt explicitly permits missing tools, so split this into ordering/stop behavior and a conditional runtime-confirmation assertion."
+      },
+      {
+        "assertion": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+        "reason": "Separate the no-dry-run fact from the returned-revision requirement so an honest unavailable-tool fallback can pass the former without falsely passing the latter."
+      }
+    ],
+    "overall": "The assertions cover fixed-reference delivery comprehensively, but two combine fallback-safe behavior with evidence that only a live run can produce."
+  }
+}

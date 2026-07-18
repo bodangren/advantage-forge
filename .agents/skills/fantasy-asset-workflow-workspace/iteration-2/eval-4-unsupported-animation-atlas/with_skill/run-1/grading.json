@@ -1,0 +1,85 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb; when unavailable, it shows the intended preflight and marks runtime statuses unassessed.",
+      "passed": false,
+      "evidence": "The intended focused call names only animation.temporal and output.sprite_atlas. The report discusses static pose, directional stills, and GLB, but it does not show an intended preflight call covering the exact animation.rigid_pose, output.sprite.directional, and output.glb capability IDs."
+    },
+    {
+      "text": "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+      "passed": true,
+      "evidence": "It explicitly marks temporal clips, runtime atlases, atlas metadata, and animation export unsupported and says no static or animated GLB was exported; static GLB is only described as a non-equivalent subset."
+    },
+    {
+      "text": "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+      "passed": true,
+      "evidence": "It states that a directional contact sheet shows camera directions rather than walk-cycle time frames and concludes that eight viewing directions must not be confused with animation frames or a contact sheet with a runtime atlas."
+    },
+    {
+      "text": "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+      "passed": true,
+      "evidence": "The decision is 'blocked' before mutation, and the mutation section explicitly rejects repeated set_pose/render_preview calls as a substitute. No file manipulation or image post-processing occurs in the zero-tool-call execution."
+    },
+    {
+      "text": "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+      "passed": true,
+      "evidence": "The execution has zero tool calls and contains only a public-call plan. It reports no source access, authored metadata, canonical JSON edits, or hidden-tool route."
+    },
+    {
+      "text": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+      "passed": true,
+      "evidence": "It identifies a static rigid pose, directional stills, review contact sheet, and static GLB only as a separate subset and explicitly says the user has not accepted that reduced scope."
+    },
+    {
+      "text": "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+      "passed": true,
+      "evidence": "The limitations section records gameplay purpose, key poses, direction set, frames or cadence, loop and transition semantics, atlas metadata, and animated-GLB playback contracts, then names a public rigid-animation and sprite-pipeline capability as the prerequisite."
+    },
+    {
+      "text": "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence.",
+      "passed": true,
+      "evidence": "The report ends 'Final verdict: fail' and immediately ties the failure to unsupported temporal animation, atlas, and animated-export capabilities."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 1,
+    "total": 8,
+    "pass_rate": 0.875
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 6433
+  },
+  "claims": [
+    {
+      "claim": "No creation, pose, render, export, or other mutation was attempted.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The execution contains zero tool calls and consistently records all revision and artifact fields as not assessed or not applicable."
+    },
+    {
+      "claim": "The public Forge MCP was unavailable.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The report states this, but the assigned record contains no independent availability probe."
+    },
+    {
+      "claim": "Eight-direction stills, a contact sheet, and a static GLB would not satisfy the requested temporal animation deliverables.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The requested deliverables require time-based motion, atlas metadata, and animated GLB playback, none of which the proposed static subset supplies."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The exact capability-ID assertion successfully catches an incomplete preflight ledger; the remaining assertions test substantive boundary, handoff, and non-workaround behavior."
+  }
+}

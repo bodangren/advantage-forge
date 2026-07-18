@@ -1,0 +1,81 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, relevant reference/output facts, and uses the runtime statuses as authority.",
+      "passed": false,
+      "evidence": "No capability call ran. The report only proposes inspecting support in a future run and provides no runtime capability IDs or statuses."
+    },
+    {
+      "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+      "passed": false,
+      "evidence": "The report says it 'cannot truthfully confirm' whether the requested identity, helmet, or spear is supported. It never identifies these requirements as unsupported or distinguishes registered sword/shield support from a general accessory library."
+    },
+    {
+      "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+      "passed": true,
+      "evidence": "It states, 'No forge operations were executed' and reports no generated or exported asset."
+    },
+    {
+      "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+      "passed": true,
+      "evidence": "No approximation or substitute is offered or claimed; the requested Moon Guard identity, helmet, and spear remain listed as undelivered requirements."
+    },
+    {
+      "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+      "passed": true,
+      "evidence": "It reports that no forge operations or files were produced and presents no source-derived data, canonical JSON, raw-mesh path, file edit, or image post-processing workaround."
+    },
+    {
+      "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+      "passed": true,
+      "evidence": "The output does not offer or attempt a reduced existing-adventurer or sword/shield subset."
+    },
+    {
+      "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+      "passed": false,
+      "evidence": "Although the report says the work was not delivered and names live access as a blocker, it does not identify the planned accessory-library and novel-identity product prerequisites."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 3,
+    "total": 7,
+    "pass_rate": 0.5714285714
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 1708
+  },
+  "claims": [
+    {
+      "claim": "No live Fantasy Asset Forge tools were available.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The report contains no runtime response or generated evidence and consistently treats execution as unavailable."
+    },
+    {
+      "claim": "No character, sprites, or GLB were produced.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The missing-deliverables section enumerates no asset ID, revision, visual evidence, sprite files, GLB, or artifact paths."
+    },
+    {
+      "claim": "Capability support for the requested identity and equipment cannot be confirmed from this run.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "No runtime capability evidence appears in the allowed inputs, so the report's not-assessed stance is justified."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Support for distinct identities, closed helmets, and spears was not assessed."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions expose the baseline's honest stop but also its failure to identify the known product boundary and roadmap prerequisites."
+  }
+}

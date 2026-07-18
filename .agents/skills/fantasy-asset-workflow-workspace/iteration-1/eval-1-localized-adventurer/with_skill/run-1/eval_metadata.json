@@ -1,0 +1,15 @@
+{
+  "eval_id": 1,
+  "eval_name": "localized-adventurer-sword-readability",
+  "prompt": "Use the Fantasy Asset Forge product tools to revise the existing rustic adventurer so the sword reads more clearly at game resolution: make only the existing sword blade slightly broader and move the sword outward just enough to separate it from the torso. Preserve every unrelated part and deliver validation, directional sprites, contact sheet, and GLB. Work as a fresh client that cannot read repository source. Return a concise execution record and final evidence report; when a live product tool is unavailable, show the exact call and evidence you would require instead of inventing a successful result.",
+  "assertions": [
+    "The output calls inspect_capabilities before planning mutation and limits the request to supported reference, localized-revision, sword, sprite, contact-sheet, and GLB capabilities.",
+    "The output calls inspect_asset for the overview and relevant parts before proposing exact sword semantic IDs, shape parameters, or transforms.",
+    "The output proposes the smallest localized operation and submits that same operation with dryRun: true before any real apply.",
+    "The output uses the inspected baseline revision as expectedRevisionId and records the applied revision plus affectedIds.",
+    "The output calls compare_revisions and checks both affectedIds for the sword and preservedIds for unrelated parts.",
+    "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+    "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+    "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections."
+  ]
+}

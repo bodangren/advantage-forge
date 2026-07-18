@@ -1,0 +1,86 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb.",
+      "passed": false,
+      "evidence": "No runtime capability call ran. The output only says it would discover advertised capabilities in a future execution and provides none of the required runtime status evidence."
+    },
+    {
+      "text": "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+      "passed": false,
+      "evidence": "It conditionally says those portions must be blocked if not supported, but never identifies their current status as unsupported. It correctly makes no claim that a GLB was exported or contains animation, but the combined assertion is not fully satisfied."
+    },
+    {
+      "text": "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+      "passed": false,
+      "evidence": "The output separately mentions directional previews, a contact sheet, and atlas export, but never explicitly explains either required distinction."
+    },
+    {
+      "text": "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+      "passed": true,
+      "evidence": "It states that no asset was mutated and no sprite frames, atlas, metadata, preview, or GLB was produced; it also says unsupported portions must not be approximated with static poses or post-processed files."
+    },
+    {
+      "text": "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+      "passed": true,
+      "evidence": "It reports no executed operations and presents no source-derived information, hand-authored output metadata, canonical JSON, or hidden-tool result."
+    },
+    {
+      "text": "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+      "passed": true,
+      "evidence": "It does not offer or attempt a static reduced-scope delivery; its only mention of static poses is as an approximation that must not be used for unsupported animation."
+    },
+    {
+      "text": "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+      "passed": true,
+      "evidence": "It records direction/frame ordering, timing, loop metadata, pivots, padding, loop transitions, foot contact, and playback evidence, and names temporal-animation, atlas-packing, and animated-GLB support as prerequisites for a future run."
+    },
+    {
+      "text": "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence.",
+      "passed": false,
+      "evidence": "The verdict is 'blocked / not assessed', but no explicit current unsupported status is evidenced; the output only provides a conditional rule for what to do if future capability discovery reports unsupported."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 4,
+    "total": 8,
+    "pass_rate": 0.5
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 1734
+  },
+  "claims": [
+    {
+      "claim": "No live Fantasy Asset Forge tools were available in the run.",
+      "type": "process",
+      "verified": true,
+      "evidence": "No runtime response, asset ID, revision, or artifact evidence is presented."
+    },
+    {
+      "claim": "No animation, atlas, metadata, preview, validation report, or GLB was produced.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The opening paragraph explicitly lists these absent outputs, and no paths or identifiers appear later."
+    },
+    {
+      "claim": "Temporal animation, sprite-atlas export, and animated-GLB export were not assessed.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The output provides no live status evidence and accurately labels approval 'blocked / not assessed'."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Current support for temporal animation, atlas packing, and animated GLB export remains unassessed."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions correctly penalize a generic conditional plan that lacks live statuses and the crucial conceptual distinction between directional stills, animation frames, review sheets, and runtime atlases."
+  }
+}

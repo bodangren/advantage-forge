@@ -1,0 +1,15 @@
+{
+  "eval_id": 4,
+  "eval_name": "unsupported-temporal-animation-and-atlas",
+  "prompt": "Turn the rustic adventurer into an eight-direction looping walk animation and give me a packed runtime sprite atlas plus an animated GLB. Use the Fantasy Asset Forge tools end to end as a fresh client; do not inspect repository source. Include enough evidence that I can approve the animation.",
+  "assertions": [
+    "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb.",
+    "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+    "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
+    "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+    "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
+    "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
+    "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
+    "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence."
+  ]
+}

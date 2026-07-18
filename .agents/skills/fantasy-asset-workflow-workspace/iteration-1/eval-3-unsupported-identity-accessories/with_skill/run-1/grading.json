@@ -1,0 +1,81 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, relevant reference/output facts, and uses the runtime statuses as authority.",
+      "passed": false,
+      "evidence": "The report explicitly says, 'The required preflight call to `inspect_capabilities` therefore did not run' and that exact runtime capability IDs and statuses were unavailable. Its fallback classification is attributed to the skill reference, not an authoritative runtime response."
+    },
+    {
+      "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+      "passed": true,
+      "evidence": "The report identifies 'Distinct Moon Guard identity, closed steel helmet, and spear' as unsupported and states that accessory authoring is 'limited to sword and shield' and does not cover the requested changes."
+    },
+    {
+      "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+      "passed": true,
+      "evidence": "The decision is 'blocked'; the report states that no mutation, creation, rendering, or export occurred and records every revision and mutation field as not applicable or not run."
+    },
+    {
+      "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+      "passed": true,
+      "evidence": "It explicitly prohibits 'substituting unrelated parts' and says a fixed rustic adventurer would omit every defining Moon Guard change and requires explicit acceptance as a separate subset."
+    },
+    {
+      "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+      "passed": true,
+      "evidence": "The report says no tool call or operation occurred and explicitly prohibits 'hand-authoring canonical JSON' and 'raw mesh/file workarounds'; it reports no artifacts or post-processing."
+    },
+    {
+      "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+      "passed": true,
+      "evidence": "It offers the fixed rustic adventurer with registered equipment only as an independently useful subset and says to 'obtain explicit user acceptance' before any mutation."
+    },
+    {
+      "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+      "passed": true,
+      "evidence": "It names novel asset identity support and a general accessory library beyond registered sword/shield templates as missing product capabilities, and its final verdict is 'fail'."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 1,
+    "total": 7,
+    "pass_rate": 0.8571428571
+  },
+  "execution_metrics": {
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 5670
+  },
+  "claims": [
+    {
+      "claim": "The required runtime capability preflight did not run.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The report consistently records the MCP tools as unavailable and contains no claimed runtime response or mutation result."
+    },
+    {
+      "claim": "Novel identity, closed helmets, and spears are unsupported according to the skill reference.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The report clearly attributes this to a non-runtime skill reference, but the allowed grading inputs contain no authoritative capability response with which to verify the product fact."
+    },
+    {
+      "claim": "No Moon Guard assets or exports were produced.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "All revision, validation, render, frame, manifest, and GLB fields are explicitly not applicable, and no artifact paths are presented."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Current runtime capability statuses could not be assessed because the MCP tools were unavailable."
+    ],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions discriminate live capability evidence from an honest capability-boundary response. The unavailable MCP runtime necessarily prevents a perfect score."
+  }
+}

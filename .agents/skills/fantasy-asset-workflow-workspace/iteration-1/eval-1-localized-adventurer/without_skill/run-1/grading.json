@@ -1,0 +1,97 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities before planning mutation and limits the request to supported reference, localized-revision, sword, sprite, contact-sheet, and GLB capabilities.",
+      "passed": false,
+      "evidence": "The baseline begins with `inspect_asset` and never includes `inspect_capabilities`. Its capability limitations appear only in the final report, after a speculative mutation schema has already been planned."
+    },
+    {
+      "text": "The output calls inspect_asset for the overview and relevant parts before proposing exact sword semantic IDs, shape parameters, or transforms.",
+      "passed": false,
+      "evidence": "Although inspection is placed first, the proposed call invents `sections: [\"overview\", \"parts\", \"transforms\", \"dimensions\"]` while admitting the public schema is unavailable. It does not establish that these are valid public sections before proposing exact operation names and fields."
+    },
+    {
+      "text": "The output proposes the smallest localized operation and submits that same operation with dryRun: true before any real apply.",
+      "passed": true,
+      "evidence": "The baseline proposes only blade width and sword assembly translation, shows those operations in a `dryRun: true` request, and makes the real apply reuse `<EXACT_OPERATIONS_FROM_ACCEPTED_DRY_RUN>`."
+    },
+    {
+      "text": "The output uses the inspected baseline revision as expectedRevisionId and records the applied revision plus affectedIds.",
+      "passed": false,
+      "evidence": "The speculative calls use `expectedRevision` rather than the asserted `expectedRevisionId`; the applied-step evidence asks only for a new revision and does not record returned affected IDs. The final report records both revisions as unavailable."
+    },
+    {
+      "text": "The output calls compare_revisions and checks both affectedIds for the sword and preservedIds for unrelated parts.",
+      "passed": false,
+      "evidence": "The baseline proposes `compare_revisions` and a prose preservation check, but it never requires or records the response's `affectedIds` and `preservedIds` fields."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, interactive 3D review, contact-sheet review, and every actual 128x128 directional frame before pass.",
+      "passed": false,
+      "evidence": "It requires validation, render, export, contact-sheet and game-resolution review, but never requires an interactive 3D review and never specifies inspection of every directional frame at exactly 128x128."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, mutate files directly, post-process artifacts, or claim unavailable tool results succeeded.",
+      "passed": true,
+      "evidence": "It states no source or workflow documentation was consulted, presents only intended product-tool payloads, recommends a new bounded dry run rather than image post-processing, and marks all results unavailable. No canonical asset document or direct file mutation is proposed."
+    },
+    {
+      "text": "The final report uses the required revision, mutation, validation, visual, artifact, limitation, and verdict evidence sections.",
+      "passed": false,
+      "evidence": "The final evidence report is a short flat list plus conclusion. It does not provide the required distinct revision, mutation, validation, visual, artifact, and limitations/verdict evidence sections."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 6,
+    "total": 8,
+    "pass_rate": 0.25
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 5381,
+    "transcript_chars": 5381
+  },
+  "claims": [
+    {
+      "claim": "No live product tool was executed.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The record labels every call proposed and every resulting evidence item unavailable."
+    },
+    {
+      "claim": "The shown parameter names and operation forms must be confirmed before use.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "The output explicitly says schemas are unavailable, but then presents its payloads only as proposed placeholders rather than successful calls."
+    },
+    {
+      "claim": "The proposed patch would affect exactly two existing sword targets and nothing else.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "No valid schema, dry-run response, or revision comparison exists, so this remains an acceptance requirement rather than verified behavior."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Public schemas, operation vocabulary, asset ID, part IDs, coordinate system, output profile, and numeric bounds are unknown."
+    ],
+    "needs_review": [
+      "All revision, validation, visual, and artifact evidence needs a live product-tool run."
+    ],
+    "workarounds": [
+      "The executor used placeholder proposed calls and kept the conclusion blocked."
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "Add an assertion that a fallback must not invent public section names, operation names, or argument fields when discovery and inspection are unavailable; the baseline does this while still satisfying the broader no-canonical-JSON assertion."
+      }
+    ],
+    "overall": "The assertions discriminate the skill-led workflow well, but they do not directly penalize speculative public tool schemas in an unavailable-tool fallback."
+  }
+}

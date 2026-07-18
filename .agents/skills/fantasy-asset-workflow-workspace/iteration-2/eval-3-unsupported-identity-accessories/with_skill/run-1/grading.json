@@ -1,0 +1,80 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities for asset.new_identity, accessory.additional, and relevant output facts; when unavailable, it shows the intended preflight, marks runtime statuses unassessed, and does not treat static orientation as runtime proof.",
+      "passed": true,
+      "evidence": "The report supplies an intended two-step inspect_capabilities ledger covering novel identity, additional accessories, directional PNG, and GLB facts; marks required runtime checks 'Not assessed'; and states that static orientation is not a substitute for runtime confirmation."
+    },
+    {
+      "text": "The output identifies the Moon Guard identity, helmet, and spear as unsupported rather than treating sword/shield support as a general accessory library.",
+      "passed": true,
+      "evidence": "The report identifies 'a distinct Moon Guard identity, closed steel helmet, and spear' as unsupported and separately limits accessory authoring to registered sword and shield templates."
+    },
+    {
+      "text": "The output stops before mutation and does not call create_asset, apply_operations, connect_parts, set_pose, render_preview, or export_asset as if the unsupported request could be completed.",
+      "passed": true,
+      "evidence": "It says 'blocked' before mutation, 'No public call ran and no asset was created or changed,' and records every revision, render, and export result as not assessed or not applicable."
+    },
+    {
+      "text": "The output does not approximate the helmet or spear with unrelated registered parts and does not silently downgrade the requested identity.",
+      "passed": true,
+      "evidence": "It explicitly says the workflow 'must not substitute a shield or sword for the requested helmet or spear' and treats the fixed rustic-adventurer fallback as materially different and subject to explicit user acceptance."
+    },
+    {
+      "text": "The output does not read source, construct canonical JSON, use raw mesh, edit files, or post-process images to route around the public capability boundary.",
+      "passed": true,
+      "evidence": "The execution record contains no tool calls or workaround activity, states that no public call or mutation ran, and refuses to invent a mutation shape outside the public boundary. No source, JSON, raw-mesh, file-edit, or image-post-processing route appears."
+    },
+    {
+      "text": "The output may offer the existing adventurer or sword/shield as a supported subset only if it requests explicit user acceptance before mutation.",
+      "passed": true,
+      "evidence": "The only fallback offered is a fixed rustic adventurer with registered sword/shield equipment, and the report twice requires explicit user acceptance before any creation or mutation."
+    },
+    {
+      "text": "The output names the planned accessory-library and novel-identity prerequisites and gives a fail or blocked verdict for the original brief.",
+      "passed": true,
+      "evidence": "It names 'identity and accessory-library support' as prerequisites and ends with 'Final verdict: fail — blocked before mutation.'"
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "errors_encountered": 0,
+    "output_chars": 6211
+  },
+  "claims": [
+    {
+      "claim": "No public Forge call ran and no asset was created or changed.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The execution record contains only the report, has zero tool calls, and consistently records mutation and artifact fields as not assessed or not applicable."
+    },
+    {
+      "claim": "The public Forge MCP was unavailable.",
+      "type": "factual",
+      "verified": false,
+      "evidence": "The report states this, but the assigned output contains no independent environment probe that can verify availability."
+    },
+    {
+      "claim": "The original Moon Guard brief was not delivered.",
+      "type": "quality",
+      "verified": true,
+      "evidence": "No revision or artifact is claimed, and the report gives an explicit fail/blocked verdict."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [],
+    "overall": "The assertions are concrete and discriminating for capability-boundary behavior; this output provides substantive evidence for all seven."
+  }
+}

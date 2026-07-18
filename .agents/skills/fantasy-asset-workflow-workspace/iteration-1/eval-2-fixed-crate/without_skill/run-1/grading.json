@@ -1,0 +1,97 @@
+{
+  "expectations": [
+    {
+      "text": "The output calls inspect_capabilities and list_kits before create_asset and confirms asset.reference.crate plus required outputs are supported.",
+      "passed": false,
+      "evidence": "It starts with generic `tools/list` and describes semantic discovery, but never supplies the required `inspect_capabilities` or `list_kits` calls and confirms no runtime capability or crate reference."
+    },
+    {
+      "text": "The output uses create_asset only with the fixed crate reference and does not invent a new asset identity or canonical document.",
+      "passed": true,
+      "evidence": "The intended sequence selects an exact supported fixed crate reference and creates directly from it with no customization, mutation operations, new identity, or canonical document."
+    },
+    {
+      "text": "The output explicitly states that create_asset has no dry-run mode and records its returned initial revision instead of fabricating dry-run evidence.",
+      "passed": false,
+      "evidence": "It does not state that creation has no dry-run mode; instead it says it would run creation with `dryRun: true` if exposed. No returned initial revision exists."
+    },
+    {
+      "text": "The output inspects the created asset before any optional follow-up mutation and performs no unnecessary mutation when the unchanged reference satisfies the brief.",
+      "passed": true,
+      "evidence": "The intended sequence inspects the created asset and proposes no follow-up design mutation for the unchanged fixed reference."
+    },
+    {
+      "text": "The output requires validate_asset, render_preview, export_asset, artifact identity checks, and audit-only artifact verification.",
+      "passed": false,
+      "evidence": "It semantically requires validation, render, export, artifact existence, and revision identity, but it never requires an audit-only artifact verifier; `independent load/file check` does not establish non-mutating manifest verification."
+    },
+    {
+      "text": "The output requires interactive 3D, contact-sheet, and every actual 128x128 frame review, including clipping, framing, ground, silhouette, and material separation.",
+      "passed": false,
+      "evidence": "It requires actual-resolution PNG and contact-sheet review with silhouette, material, and cropping checks, but omits interactive 3D, does not require exactly 128x128 or every directional frame, and does not include ground-contact review."
+    },
+    {
+      "text": "The output does not read source, hand-author canonical JSON, directly write product artifacts, or manufacture successful tool evidence.",
+      "passed": true,
+      "evidence": "It uses only a generic MCP discovery request and semantic intended sequence, explicitly avoids fabricating schemas, marks every result unverified, and proposes no canonical document or direct artifact write."
+    },
+    {
+      "text": "The final verdict remains fail or unverified when required runtime or visual evidence is unavailable.",
+      "passed": true,
+      "evidence": "The report is explicitly `Blocked`, calls all results unverified, and says the request must remain blocked without the fixed reference or export evidence."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 4,
+    "total": 8,
+    "pass_rate": 0.5
+  },
+  "execution_metrics": {
+    "tool_calls": {},
+    "total_tool_calls": 0,
+    "total_steps": 0,
+    "errors_encountered": 0,
+    "output_chars": 4592,
+    "transcript_chars": 4592
+  },
+  "claims": [
+    {
+      "claim": "No live Fantasy Asset Forge MCP connection was available and no call was executed.",
+      "type": "process",
+      "verified": true,
+      "evidence": "The status, ledger, and handoff consistently mark all results unverified and list no returned value."
+    },
+    {
+      "claim": "A fixed supported crate reference must be discovered before creation.",
+      "type": "factual",
+      "verified": true,
+      "evidence": "This matches the user request and the output makes discovery a precondition rather than inventing a reference."
+    },
+    {
+      "claim": "The proposed acceptance checks would prove the GLB and renders are auditable.",
+      "type": "quality",
+      "verified": false,
+      "evidence": "The checks omit the required audit-only manifest verifier, interactive 3D review, and exact native-frame contract, so they are incomplete."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [
+      "Tool names, schemas, fixed reference, revisions, and every artifact result are unavailable."
+    ],
+    "needs_review": [
+      "The complete workflow must be rerun in an MCP-capable client with raw envelopes and visual artifacts."
+    ],
+    "workarounds": [
+      "The executor used generic MCP discovery and a semantic sequence rather than fabricating public schemas."
+    ]
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "reason": "Add a direct assertion that fixed-reference creation must never be dry-run speculated; the baseline's conditional dry-run advice contradicts the known contract and is currently caught only by a compound assertion."
+      }
+    ],
+    "overall": "The eval distinguishes the missing skill-specific artifact and visual gates, although the creation dry-run requirement would be clearer as its own assertion."
+  }
+}

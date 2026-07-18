@@ -7,8 +7,10 @@ current public capability boundary.
 
 ## What the current workflow may do
 
-- Inspect `animation.rigid_pose`, `animation.temporal`, and
-  `output.sprite_atlas` with `inspect_capabilities`.
+- Inspect `animation.rigid_pose`, `animation.temporal`,
+  `output.sprite.directional`, `output.sprite_atlas`, and `output.glb` together
+  with `inspect_capabilities`. This distinguishes the supported static subset
+  from the unsupported temporal, atlas, and animated-GLB requirements.
 - Select or upsert one declared static rigid pose when that standalone result is
   useful and explicitly accepted.
 - Render the selected pose as eight directional stills and a review contact sheet.
