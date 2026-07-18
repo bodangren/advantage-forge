@@ -74,11 +74,11 @@ _Story ref: spec.md#story-s4_
   - [x] Require portable committed manifest paths while preserving usable returned artifact paths.
   - [x] Define chronological LLM transcript, timing, correction, visual, and revision-lineage evidence.
   - [x] Select and document a representative target importer or record Not Assessed.
-- [~] Task: Write failing portability and workflow acceptance tests
-  - [ ] Reproduce tracked manifest churn from a differently rooted clone.
-  - [ ] Reproduce stale archived-track output and README/index references.
-  - [ ] Assert clean status after reference build and byte-stable semantic artifacts where promised.
-- [ ] Task: Repair paths and execute the fresh-LLM workflow
+- [x] Task: Write failing portability and workflow acceptance tests [commit: 52c244d]
+  - [x] Reproduce tracked manifest churn from a differently rooted clone.
+  - [x] Reproduce stale archived-track output and README/index references.
+  - [x] Assert clean status after reference build and byte-stable semantic artifacts where promised.
+- [~] Task: Repair paths and execute the fresh-LLM workflow
   - [ ] Store portable paths in committed manifests and update archive destinations consistently.
   - [ ] Run the exact seeded authoring request with a fresh MCP-capable LLM and no source access.
   - [ ] Import the final GLB into the selected target and capture scale, orientation, nodes, materials, and errors.
