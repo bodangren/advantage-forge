@@ -1,0 +1,320 @@
+{
+  "ok": true,
+  "auditor": "Codex independent visual review",
+  "reviewedAt": "2026-07-18T11:32:00.000Z",
+  "revisionId": "revision.d5d5b50da9ea46803f99118eb65dddcfebfb4fa1f58ea327ab44316f93ca2679",
+  "surfaces": [
+    "interactive 3D inspector",
+    "complete directional contact sheet",
+    "all eight frames at native 128x128 CSS and canvas resolution"
+  ],
+  "browserConsoleErrors": [],
+  "selectedPose": "action",
+  "selectedVariant": "unequipped",
+  "canvasBoxes": [
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    },
+    {
+      "width": 128,
+      "height": 128,
+      "cssWidth": 128,
+      "cssHeight": 128
+    }
+  ],
+  "observations": {
+    "clipping": "Pass: no visible clipping in any frame; mechanical clippedEdges arrays are empty.",
+    "grounding": "Pass: feet remain consistently grounded; every frame reports zero anchor deviation.",
+    "framing": "Pass: all directions fit the native frame with consistent headroom and ground row.",
+    "materialSeparation": "Pass: moss tunic, umber lower body, warm skin, dark leather, and chestnut hair remain visually distinct.",
+    "torsoBroadening": "Pass: the torso is visibly broader in front and rear views; public comparison proves width 0.52 to 0.572 with height, depth, and bevel preserved.",
+    "equipmentState": "Pass for the request: sword and shield are absent in 3D and all sprites because the final variant is unequipped.",
+    "identityConsistency": "Pass within the current bounded reference: the same rustic adventurer and action pose remain recognizable across all views."
+  },
+  "limitations": [
+    "E and W silhouettes are only 14 pixels wide overall because the authored body has shallow depth; they remain legible but are visibly thin.",
+    "This is one existing reference identity with a static pose, not a temporal animation or a novel character generator.",
+    "The run does not improve or assess the known equipped thin-sword silhouette because unequipped was explicitly requested."
+  ],
+  "frameMetrics": [
+    {
+      "direction": "N",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 29,
+          "minY": 37,
+          "maxX": 98,
+          "maxY": 121,
+          "width": 70,
+          "height": 85
+        },
+        "occupiedPixelCount": 1463,
+        "occupiedRatio": 0.08929443359375,
+        "transparentPixelCount": 14921,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 18,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NE",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 40,
+          "minY": 36,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 50,
+          "height": 86
+        },
+        "occupiedPixelCount": 1343,
+        "occupiedRatio": 0.08197021484375,
+        "transparentPixelCount": 15041,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "E",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 57,
+          "minY": 38,
+          "maxX": 70,
+          "maxY": 121,
+          "width": 14,
+          "height": 84
+        },
+        "occupiedPixelCount": 735,
+        "occupiedRatio": 0.04486083984375,
+        "transparentPixelCount": 15649,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 4,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SE",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 40,
+          "minY": 38,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 50,
+          "height": 84
+        },
+        "occupiedPixelCount": 1301,
+        "occupiedRatio": 0.07940673828125,
+        "transparentPixelCount": 15083,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "S",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 29,
+          "minY": 39,
+          "maxX": 98,
+          "maxY": 121,
+          "width": 70,
+          "height": 83
+        },
+        "occupiedPixelCount": 1408,
+        "occupiedRatio": 0.0859375,
+        "transparentPixelCount": 14976,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 18,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SW",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 38,
+          "maxX": 87,
+          "maxY": 121,
+          "width": 50,
+          "height": 84
+        },
+        "occupiedPixelCount": 1318,
+        "occupiedRatio": 0.0804443359375,
+        "transparentPixelCount": 15066,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "W",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 57,
+          "minY": 37,
+          "maxX": 70,
+          "maxY": 121,
+          "width": 14,
+          "height": 85
+        },
+        "occupiedPixelCount": 738,
+        "occupiedRatio": 0.0450439453125,
+        "transparentPixelCount": 15646,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NW",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 36,
+          "maxX": 87,
+          "maxY": 121,
+          "width": 50,
+          "height": 86
+        },
+        "occupiedPixelCount": 1350,
+        "occupiedRatio": 0.0823974609375,
+        "transparentPixelCount": 15034,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -37,6 +37,10 @@ describe('representative GLTFLoader importer', () => {
         matchesManifest: boolean;
       };
       nodeNames: string[];
+      expectedNodeNames: string[];
+      semanticNodeCount: number;
+      missingNodeNames: string[];
+      unexpectedNodeNames: string[];
       materialNames: string[];
       duplicateNodeNames: string[];
       cameraCount: number;
@@ -54,6 +58,9 @@ describe('representative GLTFLoader importer', () => {
       assetId: 'crate.rustic',
       revisionId,
       up: [0, 1, 0],
+      semanticNodeCount: 4,
+      missingNodeNames: [],
+      unexpectedNodeNames: [],
       duplicateNodeNames: [],
       cameraCount: 0,
       lightCount: 0,
@@ -66,6 +73,7 @@ describe('representative GLTFLoader importer', () => {
     expect(report.bounds.groundY).toBeCloseTo(-0.02, 6);
     expect(report.bounds.max[1]).toBeGreaterThan(report.bounds.min[1]!);
     expect(report.nodeNames.length).toBeGreaterThan(0);
+    expect(report.nodeNames).toEqual(report.expectedNodeNames);
     expect(report.materialNames.length).toBeGreaterThan(0);
     expect(report.byteLength).toBeGreaterThan(12);
     expect(report.sha256).toMatch(/^[a-f0-9]{64}$/);

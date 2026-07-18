@@ -123,6 +123,32 @@ async function main() {
     .filter(([, count]) => count > 1)
     .map(([name]) => name)
     .sort();
+  const expectedNodeNames = (manifest.reloadNodeNames ?? [])
+    .map((name) => THREE.PropertyBinding.sanitizeNodeName(name))
+    .sort();
+  const expectedSemanticNodeNames = (manifest.nodeNames ?? [])
+    .map((name) => THREE.PropertyBinding.sanitizeNodeName(name))
+    .sort();
+  const expectedCounts = new Map();
+  for (const name of expectedNodeNames)
+    expectedCounts.set(name, (expectedCounts.get(name) ?? 0) + 1);
+  const missingNodeNames = expectedNodeNames.filter((name, index, names) => {
+    const occurrence = names
+      .slice(0, index + 1)
+      .filter((item) => item === name).length;
+    return occurrence > (counts.get(name) ?? 0);
+  });
+  const unexpectedNodeNames = nodeNames
+    .filter((name, index, names) => {
+      const occurrence = names
+        .slice(0, index + 1)
+        .filter((item) => item === name).length;
+      return occurrence > (expectedCounts.get(name) ?? 0);
+    })
+    .sort();
+  const semanticNodeCount = expectedSemanticNodeNames.filter(
+    (name) => (counts.get(name) ?? 0) > 0,
+  ).length;
   const importedMin = vector(bounds.min);
   const importedMax = vector(bounds.max);
   const boundsTolerance = manifest.bounds?.tolerance ?? 0.00001;
@@ -154,7 +180,10 @@ async function main() {
       matchesManifest: manifestBoundsDeviation <= boundsTolerance,
     },
     nodeNames: [...nodeNames].sort(),
-    semanticNodeCount: nodeNames.length,
+    expectedNodeNames,
+    semanticNodeCount,
+    missingNodeNames,
+    unexpectedNodeNames,
     duplicateNodeNames,
     materialNames: [...materialNames].sort(),
     cameraCount,

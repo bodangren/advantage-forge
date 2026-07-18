@@ -1,0 +1,101 @@
+{
+  "ok": true,
+  "importer": "Three.js GLTFLoader",
+  "importerVersion": "0.185.1",
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.d5d5b50da9ea46803f99118eb65dddcfebfb4fa1f58ea327ab44316f93ca2679",
+  "manifestPath": "/tmp/faf-s4-llm-29ff877/artifacts/reference/adventurer.rustic/revision.d5d5b50da9ea46803f99118eb65dddcfebfb4fa1f58ea327ab44316f93ca2679/glb-manifest.json",
+  "glbPath": "/tmp/faf-s4-llm-29ff877/artifacts/reference/adventurer.rustic/revision.d5d5b50da9ea46803f99118eb65dddcfebfb4fa1f58ea327ab44316f93ca2679/adventurer.rustic.glb",
+  "byteLength": 54336,
+  "sha256": "b480793458c8be4e28e77366633dfc388985a8503b4a575127b8866bedad473f",
+  "up": [
+    0,
+    1,
+    0
+  ],
+  "orientation": "Y-up",
+  "bounds": {
+    "min": [
+      -1.2329729347341534,
+      -0.6795584227428222,
+      -0.1826385259628296
+    ],
+    "max": [
+      1.0517073110789021,
+      2.3300000005960464,
+      0.2550000023841858
+    ],
+    "size": [
+      2.2846802458130555,
+      3.0095584233388686,
+      0.4376385283470154
+    ],
+    "groundY": -0.6795584227428222,
+    "unit": "meter",
+    "manifestDeviation": 0,
+    "manifestTolerance": 0.000030095584233388687,
+    "matchesManifest": true
+  },
+  "nodeNames": [
+    "AuxScene",
+    "adventurerrustic",
+    "footleft",
+    "footright",
+    "forearmleft",
+    "forearmright",
+    "hair",
+    "handleft",
+    "handright",
+    "head",
+    "pelvis",
+    "shinleft",
+    "shinright",
+    "thighleft",
+    "thighright",
+    "torso",
+    "tunic",
+    "upper-armleft",
+    "upper-armright"
+  ],
+  "expectedNodeNames": [
+    "AuxScene",
+    "adventurerrustic",
+    "footleft",
+    "footright",
+    "forearmleft",
+    "forearmright",
+    "hair",
+    "handleft",
+    "handright",
+    "head",
+    "pelvis",
+    "shinleft",
+    "shinright",
+    "thighleft",
+    "thighright",
+    "torso",
+    "tunic",
+    "upper-armleft",
+    "upper-armright"
+  ],
+  "semanticNodeCount": 18,
+  "missingNodeNames": [],
+  "unexpectedNodeNames": [],
+  "duplicateNodeNames": [],
+  "materialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "leather.dark",
+    "skin.warm"
+  ],
+  "cameraCount": 0,
+  "lightCount": 0,
+  "skinCount": 0,
+  "textureCount": 0,
+  "animationCount": 0,
+  "errors": [],
+  "limitations": [
+    "Representative Three.js importer only; Godot, Unity, and gameplay runtime import remain Not Assessed."
+  ]
+}

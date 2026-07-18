@@ -1,0 +1,49 @@
+{
+  "client": "OpenCode",
+  "clientVersion": "1.18.2",
+  "candidateCommit": "29ff877",
+  "clientWorkspace": "/tmp/faf-opencode-s4-29ff877",
+  "serverClone": "/tmp/faf-s4-llm-29ff877",
+  "startedAt": "2026-07-18T11:10:01.844Z",
+  "endedAt": "2026-07-18T11:15:21.467Z",
+  "elapsedSeconds": 319.623,
+  "code": 0,
+  "signal": null,
+  "provider": "kimi-for-coding",
+  "model": "k3",
+  "sessionId": "ses_08b148a31ffef3F6TOXs7YdnV1",
+  "promptSha256": "b22aafa214c156e90fce045d943ebd81b5c9857613c495f79a36ff62dfac8d26",
+  "invocation": [
+    "opencode",
+    "run",
+    "--pure",
+    "--format",
+    "json",
+    "--model",
+    "kimi-for-coding/k3",
+    "--title",
+    "Fantasy Asset Forge S4 acceptance",
+    "<seeded prompt>"
+  ],
+  "builtInPermissionDefault": "deny",
+  "allowedToolPattern": "forge_*",
+  "configuredMcpServers": [
+    "forge"
+  ],
+  "toolCount": 18,
+  "nonForgeToolCount": 0,
+  "baselineRevision": "revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b",
+  "finalRevision": "revision.d5d5b50da9ea46803f99118eb65dddcfebfb4fa1f58ea327ab44316f93ca2679",
+  "clientVerdict": "partial",
+  "combinedAuditedVerdict": "pass",
+  "runCommitFinding": "The run at 29ff877 generated an untracked revision artifact directory; the final S4 candidate repairs this with a regression-tested ignore policy.",
+  "tokens": {
+    "input": 33914,
+    "output": 5054,
+    "reasoning": 0,
+    "cache": {
+      "read": 262656,
+      "write": 0
+    }
+  }
+}

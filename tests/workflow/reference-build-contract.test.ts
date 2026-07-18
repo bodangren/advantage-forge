@@ -1,8 +1,11 @@
+import { execFile } from 'node:child_process';
 import { readFile, readdir } from 'node:fs/promises';
 import { isAbsolute, join } from 'node:path';
+import { promisify } from 'node:util';
 import { describe, expect, it } from 'vitest';
 
 const root = new URL('../../', import.meta.url);
+const execFileAsync = promisify(execFile);
 
 async function text(path: string): Promise<string> {
   return readFile(new URL(path, root), 'utf8');
@@ -80,5 +83,31 @@ describe('reference build portability contract', () => {
     expect(index).toContain(
       './archive/fantasy_asset_mvp_20260717/reference-build.json',
     );
+  });
+
+  it('ignores ad-hoc revision artifacts without untracking reference evidence', async () => {
+    const generatedPath =
+      'artifacts/reference/adventurer.rustic/revision.ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff/n.png';
+    const { stdout } = await execFileAsync(
+      'git',
+      ['check-ignore', '--no-index', '-v', generatedPath],
+      { cwd: root },
+    );
+    expect(stdout).toContain(generatedPath);
+
+    const { stdout: tracked } = await execFileAsync(
+      'git',
+      ['ls-files', 'artifacts/reference/**/render-manifest.json'],
+      { cwd: root },
+    );
+    const present = (
+      await readdir(new URL('artifacts/reference/', root), {
+        recursive: true,
+      })
+    )
+      .filter((path) => path.endsWith('/render-manifest.json'))
+      .map((path) => `artifacts/reference/${path}`)
+      .sort();
+    expect(tracked.trim().split('\n').sort()).toEqual(present);
   });
 });
