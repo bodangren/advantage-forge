@@ -3,11 +3,11 @@
   "type": "feature",
   "status": "in-progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-18T07:21:11Z",
+  "updated_at": "2026-07-18T12:01:28Z",
   "description": "Harden the public LLM authoring, inspection, visual review, and evidence workflow",
   "estimated_tasks": 20,
   "actual_tasks": null,
-  "deviation_notes": "",
+  "deviation_notes": "S4 repaired clone-root manifest churn, stale archive routing, and unignored ad-hoc revision outputs. The approved fresh client was kimi-for-coding/k3 through OpenCode. Three.js GLTFLoader was selected as the representative format importer; Unity, Godot, and gameplay runtime remain Not Assessed. The preferred browser harness was unavailable, so the pinned Playwright fallback supplied visual evidence.",
   "sprint": {
     "goal": "Make the supported static asset workflow independently discoverable, safely editable, visually reviewable, and reproducible by a fresh MCP-capable LLM without source knowledge.",
     "stories": [
@@ -37,10 +37,10 @@
         "title": "Prove Reproducible LLM Workflow",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in-progress"
       }
     ],
-    "demo_notes": "Phases S1 through S3 are owner-approved. The repository-local workflow skill now requires capability preflight, inspect/dry-run/compare discipline, exact unavailable-tool reporting, audit-only artifact checks, and three-surface visual review. S4 must still prove portable manifests, a fresh MCP-led execution, and representative external import or record it as not assessed.",
+    "demo_notes": "Phases S1 through S3 are owner-approved. S4 automated verification passes: portable deterministic artifacts, a permission-isolated OpenCode run with kimi-for-coding/k3 through 18 public forge calls, independent visual/artifact audits, a passing Three.js GLTFLoader import, and a fully green differently rooted clean clone. S4 awaits owner manual approval; accessory breadth, novel identities, temporal animation/atlases/animated GLB, equipped-sword readability, and external game engines remain open or Not Assessed.",
     "retro_ref": null
   }
 }

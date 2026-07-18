@@ -138,3 +138,52 @@ Status: approved by the owner on 2026-07-18 after automated verification passed.
 6. Decide whether the skill/evidence contract is acceptable for S3. If approved, record the owner decision and create the phase checkpoint; otherwise list the exact workflow or reporting changes required.
 
 Owner decision: approved. No additional S3 workflow, evidence-contract, or limitation-reporting gap was identified.
+
+## Phase S4: Prove Reproducible LLM Workflow
+
+Status: automated verification passed on 2026-07-18; awaiting owner manual approval.
+
+### Automated evidence
+
+| Check                     | Result                                                                                                                                                                                                                                                                                                                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Portability red/green     | Pass: tests first reproduced absolute persisted paths, stale active-track evidence, nondeterministic archive fields, and unignored ad-hoc revision output; persisted manifests now use revision-relative paths, archived evidence uses repository-relative paths without wall-clock data, and new revision outputs are ignored while committed references remain tracked |
+| Fresh LLM client          | Pass: OpenCode 1.18.2 with `kimi-for-coding/k3`, session `ses_08b148a31ffef3F6TOXs7YdnV1`, completed the exact seeded prompt at implementation commit `29ff877` in 319.623 seconds with exit 0                                                                                                                                                                           |
+| Client isolation          | Pass: the temporary client exposed one local forge MCP server, denied built-in permissions by default, allowed only `forge_*`, used `--pure` without `--auto`, and recorded 18 forge calls with zero non-forge calls                                                                                                                                                     |
+| Mutation discipline       | Pass: capability preflight preceded creation/mutation; all three dry-run/apply pairs were argument-identical except `dryRun`; there were zero retries or corrections                                                                                                                                                                                                     |
+| Revision evidence         | Pass: baseline `revision.8044813…`, broadened `revision.a521b0d…`, action-pose `revision.fc7581f…`, final unequipped `revision.d5d5b50…`; baseline-to-final public comparison reports only pose, variant, and torso-shape changes while preserving 81 unrelated semantic IDs                                                                                             |
+| Client verdict            | Honest Partial: Kimi did not claim visual, verifier, or importer evidence because the isolated client could not observe those surfaces                                                                                                                                                                                                                                   |
+| Independent visual review | Pass: interactive 3D, complete contact sheet, and all eight native 128x128 canvases showed no clipping, consistent ground/framing, distinct materials, visible torso broadening, action pose, and the requested unequipped state; E/W silhouettes remain visibly thin at 14px overall                                                                                    |
+| Artifact verification     | Pass: final Kimi sprites/contact sheet/GLB, committed adventurer, and committed crate all passed identity, containment, dimensions, hashes, GLB header/length, reload, and policy checks                                                                                                                                                                                 |
+| Representative importer   | Pass: Three.js `GLTFLoader` 0.185.1 imported the 54,336-byte final GLB as Y-up meters with 18 expected semantic nodes, five materials, matching bounds, no missing/unexpected/duplicate names, and zero cameras, lights, skins, textures, or animations                                                                                                                  |
+| Clean-clone full check    | Pass at candidate `017310a`: offline frozen install; formatting; typecheck; ESLint; 52-module/91-dependency boundaries; 24 files and 175 tests; generated-fact drift; doctor                                                                                                                                                                                             |
+| Coverage                  | Pass: 94.29% statements, 83.59% branches, 96.70% functions, 94.85% lines                                                                                                                                                                                                                                                                                                 |
+| Build and browser         | Pass: production build plus Playwright inspector test; Vite retains the known non-blocking 800.16 kB chunk warning                                                                                                                                                                                                                                                       |
+| Reference reproducibility | Pass: reference build, generation, and doctor left the differently rooted clone byte-clean; copying the exact Kimi artifact set into a new revision directory still produced empty `git status --porcelain`                                                                                                                                                              |
+| Verification correction   | An initial audit command selected an adventurer revision with sprites but no committed GLB manifest; the verifier rejected it. The selection was corrected to a revision containing both sets and the entire clean-clone suite was rerun to a final Pass.                                                                                                                |
+
+### Combined verdict
+
+The bounded S4 workflow passes. Kimi's transcript remains an honest Partial; independent visual, artifact, semantic, and importer audits close the evidence that the isolated model could not access. Raw events were not reconstructed from prose, and the original client conclusion remains preserved separately.
+
+Evidence is under `s4-evidence/20260718T111001Z/`, including the exact prompt/hash, sanitized configuration, 49 raw JSON events, sanitized structured session export, 18-call ledger, both semantic comparisons, native assets, screenshots, visual audit, verifier/importer reports, run metadata, clean-clone log, empty status file, and SHA-256 inventory.
+
+### Honest remaining gaps
+
+- The accessory library remains sword/shield only. Helmets, armor shells, alternate weapons, packs, capes, quivers, and their attachment/readability conventions are not implemented.
+- Novel character identities and arbitrary anatomy remain unsupported; this run revised the existing adventurer reference only.
+- The action pose is a static rigid snapshot. Temporal clips, interpolation, runtime atlases, skeletal deformation, and animated GLB remain unsupported.
+- The equipped thin-sword visibility problem remains open because the requested final state was unequipped and the current pixel metric is torso-focused.
+- The representative Three.js importer proves the bounded GLB contract only. Unity, Godot, and gameplay-runtime integration remain Not Assessed.
+- The preferred browser harness entrypoint remains broken; the pinned Playwright fallback is the verified visual/browser route.
+
+### Owner manual verification procedure
+
+1. Read `s4-evidence/20260718T111001Z/final-report.md`, `run-metadata.json`, and `tool-ledger.json`; confirm the provider/model, exact prompt hash, timing, 18 public calls, zero non-forge calls, zero retries/corrections, and three matching dry-run/apply pairs.
+2. Inspect `events.jsonl` and `session.json`; confirm the chronological calls and Kimi's final Partial verdict are preserved rather than inferred from the independent audit.
+3. Review `interactive-3d.png`, `contact-sheet-review.png`, `actual-128px-frames.png`, and `visual-audit.json`; confirm the final action/unequipped state, torso broadening, material separation, framing, grounding, and visibly thin E/W limitation.
+4. Inspect `artifact-verifier.json`, `import-report.json`, and `semantic-comparison.json`; confirm the artifact hashes, Y-up meter dimensions, expected nodes/materials, absence of unsupported GLB content, and three baseline-to-final field changes.
+5. Read `clean-clone.log` and confirm `git-status.txt` is zero bytes; verify the full candidate gate list, the two committed reference audits, final Kimi audits, and ad-hoc-output ignore regression all pass.
+6. Confirm the product boundary remains explicit: sword/shield only, no novel identities, no temporal animation/atlas/animated GLB, equipped sword readability open, and external game engines Not Assessed.
+
+Owner decision: pending.
