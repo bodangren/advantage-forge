@@ -3,6 +3,10 @@ import { dirname, extname, join, relative, resolve } from 'node:path';
 import process from 'node:process';
 
 import {
+  AccessoryRoleSchema,
+  EquipmentSlotSchema,
+} from '../src/contracts/index.js';
+import {
   referenceDocuments,
   rusticMaterials,
   rusticTemplates,
@@ -129,6 +133,24 @@ function kitCatalogMarkdown(): string {
         `| \`${material.id}\` | ${material.family} | \`${material.color}\` | ${material.roughness} | ${material.metalness} |`,
     )
     .join('\n');
+  const accessoryRows = rusticTemplates
+    .filter(
+      (
+        template,
+      ): template is typeof template & {
+        accessory: NonNullable<(typeof template)['accessory']>;
+      } => template.accessory !== undefined,
+    )
+    .map(({ id, accessory }) => {
+      const features = accessory.requiredFeatures
+        .map(
+          (feature) =>
+            `\`${feature.id}\`: ${feature.minimumPixelArea}px area, ${feature.minimumWidthPixels}px width (${feature.intendedDirections.join(', ')})`,
+        )
+        .join('; ');
+      return `| \`${id}\` | ${accessory.role} | ${accessory.slot} | ${(accessory.compatibleSlots ?? [accessory.slot]).join(', ')} | ${accessory.handedness} | ${accessory.attachmentPortIds.join(', ')} | ${accessory.compatibleAnatomy.join(', ')} | ${accessory.compatibleArchetypes.join(', ')} | ${accessory.layer.kind}:${accessory.layer.order} / max intersection ${accessory.layer.maximumIntersectionRatio} | ${accessory.triangleBudget} | ${features} |`;
+    })
+    .join('\n');
   const referenceRows = Object.entries(referenceDocuments)
     .map(
       ([name, document]) =>
@@ -147,6 +169,18 @@ function kitCatalogMarkdown(): string {
     '| Template | Semantic role | Shape | Material slots | Ports |',
     '|---|---|---|---|---|',
     templateRows,
+    '',
+    '## Accessory Grammar',
+    '',
+    `- Slots: ${EquipmentSlotSchema.options.join(', ')}`,
+    `- Roles: ${AccessoryRoleSchema.options.join(', ')}`,
+    '- Ownership: the template slot is the default; an instance-level equipment slot may select only a declared compatible slot.',
+    '- Fidelity: each template declares rigid-layer intersection tolerance, local bounds, triangle budget, allowed poses, and direction-specific native-resolution feature evidence.',
+    '',
+    '| Accessory template | Role | Default slot | Compatible slots | Handedness | Attachment ports | Compatible anatomy | Compatible archetypes | Layer | Triangle budget | Required features |',
+    '|---|---|---|---|---|---|---|---|---|---:|---|',
+    accessoryRows ||
+      '| _None registered_ | - | - | - | - | - | - | - | - | - | - |',
     '',
     '## Palette and Material Families',
     '',

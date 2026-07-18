@@ -35,6 +35,18 @@ Kit ID: `rustic-human`
 | `cottage.roof` | structure.roof | `wedge` | cloth | wall.attach |
 | `cottage.chimney` | structure.chimney | `beveledBox` | stone | wall.attach |
 
+## Accessory Grammar
+
+- Slots: head, main-hand, off-hand, body, back, waist
+- Roles: headwear, weapon, shield, light, armor, back-item, waist-item
+- Ownership: the template slot is the default; an instance-level equipment slot may select only a declared compatible slot.
+- Fidelity: each template declares rigid-layer intersection tolerance, local bounds, triangle budget, allowed poses, and direction-specific native-resolution feature evidence.
+
+| Accessory template | Role | Default slot | Compatible slots | Handedness | Attachment ports | Compatible anatomy | Compatible archetypes | Layer | Triangle budget | Required features |
+|---|---|---|---|---|---|---|---|---|---:|---|
+| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.08 | 64 | `blade`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |
+| `equipment.shield` | shield | off-hand | off-hand, main-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.12 | 64 | `shield-face`: 24px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
+
 ## Palette and Material Families
 
 | Material | Family | Color | Roughness | Metalness |

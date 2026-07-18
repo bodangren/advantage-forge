@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import { AssetDocumentSchema } from '../../src/contracts/index.js';
 import { evaluateAssembly } from '../../src/assembly/index.js';
@@ -91,5 +92,20 @@ describe('rustic fantasy kit', () => {
         evaluateAssembly(document.assembly, document.templates),
       ).not.toThrow();
     }
+  });
+
+  it('publishes schema-derived accessory grammar and template evidence', async () => {
+    const generated = await readFile(
+      new URL('../../measure/generated/kit-catalog.md', import.meta.url),
+      'utf8',
+    );
+    expect(generated).toContain('## Accessory Grammar');
+    expect(generated).toContain('head, main-hand, off-hand, body, back, waist');
+    expect(generated).toContain(
+      '| Accessory template | Role | Default slot | Compatible slots | Handedness | Attachment ports | Compatible anatomy | Compatible archetypes | Layer | Triangle budget | Required features |',
+    );
+    expect(generated).toContain(
+      '| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.08 | 64 | `blade`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |',
+    );
   });
 });
