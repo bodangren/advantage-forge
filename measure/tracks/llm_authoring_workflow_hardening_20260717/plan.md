@@ -60,11 +60,11 @@ _Story ref: spec.md#story-s3_
   - [x] Keep creation and mutation inside public MCP tools.
   - [x] Use browser/image inspection for 3D, contact-sheet, and actual-resolution evidence.
   - [x] Add audit-only artifact verification scripts without manufacturing or altering product output.
-- [~] Task: Compare skill-guided and baseline runs
-  - [ ] Run realistic with-skill and without-skill evals using a capable client.
-  - [ ] Generate the standard skill eval viewer and collect qualitative review.
-  - [ ] Revise the skill until safety, fidelity review, and limitation reporting are consistently better.
-- [ ] Task: Measure - User Manual Verification 'Phase S3: Guide Visual Authoring' (Protocol in workflow.md)
+- [x] Task: Compare skill-guided and baseline runs [commit: 1894268]
+  - [x] Run realistic with-skill and without-skill evals using a capable client.
+  - [x] Generate the standard skill eval viewer and collect qualitative review.
+  - [x] Revise the skill until safety, fidelity review, and limitation reporting are consistently better.
+- [~] Task: Measure - User Manual Verification 'Phase S3: Guide Visual Authoring' (Protocol in workflow.md)
 
 ## Phase S4: Prove Reproducible LLM Workflow
 
