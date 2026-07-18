@@ -1,12 +1,12 @@
 {
   "track_id": "llm_authoring_workflow_hardening_20260717",
   "type": "feature",
-  "status": "in-progress",
+  "status": "completed",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-18T12:01:28Z",
+  "updated_at": "2026-07-18T12:32:07Z",
   "description": "Harden the public LLM authoring, inspection, visual review, and evidence workflow",
   "estimated_tasks": 20,
-  "actual_tasks": null,
+  "actual_tasks": 20,
   "deviation_notes": "S4 repaired clone-root manifest churn, stale archive routing, and unignored ad-hoc revision outputs. The approved fresh client was kimi-for-coding/k3 through OpenCode. Three.js GLTFLoader was selected as the representative format importer; Unity, Godot, and gameplay runtime remain Not Assessed. The preferred browser harness was unavailable, so the pinned Playwright fallback supplied visual evidence.",
   "sprint": {
     "goal": "Make the supported static asset workflow independently discoverable, safely editable, visually reviewable, and reproducible by a fresh MCP-capable LLM without source knowledge.",
@@ -37,10 +37,10 @@
         "title": "Prove Reproducible LLM Workflow",
         "size": "L",
         "priority": "Must",
-        "status": "in-progress"
+        "status": "done"
       }
     ],
-    "demo_notes": "Phases S1 through S3 are owner-approved. S4 automated verification passes: portable deterministic artifacts, a permission-isolated OpenCode run with kimi-for-coding/k3 through 18 public forge calls, independent visual/artifact audits, a passing Three.js GLTFLoader import, and a fully green differently rooted clean clone. S4 awaits owner manual approval; accessory breadth, novel identities, temporal animation/atlases/animated GLB, equipped-sword readability, and external game engines remain open or Not Assessed.",
-    "retro_ref": null
+    "demo_notes": "All four phases are owner-approved. The final workflow includes bounded inspection and capability discovery, a repository-local authoring skill, portable deterministic evidence, a permission-isolated OpenCode run with kimi-for-coding/k3 through 18 public forge calls, independent visual/artifact audits, a passing Three.js GLTFLoader import, and a fully green differently rooted clean clone. Accessory breadth, novel identities, temporal animation/atlases/animated GLB, equipped-sword readability, and external game engines remain open or Not Assessed.",
+    "retro_ref": "measure/lessons-learned.md"
   }
 }

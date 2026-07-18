@@ -4,8 +4,8 @@ This file tracks all major project tracks.
 
 ---
 
-- [~] **Track: Harden LLM authoring, inspection, visual review, and evidence workflow**
-  _Link: [./tracks/llm_authoring_workflow_hardening_20260717/](./tracks/llm_authoring_workflow_hardening_20260717/)_
+- [x] **Track: Harden LLM authoring, inspection, visual review, and evidence workflow**
+      _Link: [./tracks/llm_authoring_workflow_hardening_20260717/](./tracks/llm_authoring_workflow_hardening_20260717/)_
 
 - [ ] **Track: Add a bounded character accessory library and equipment workflow**
       _Link: [./tracks/character_accessory_library_20260717/](./tracks/character_accessory_library_20260717/)_
