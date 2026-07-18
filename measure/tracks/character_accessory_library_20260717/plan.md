@@ -6,11 +6,11 @@ Prerequisite: complete `llm_authoring_workflow_hardening_20260717`. Use the work
 
 _Story ref: spec.md#story-s1_
 
-- [~] Task: Define accessory role, slot, compatibility, and fidelity contracts
-  - [ ] Add schemas for accessory metadata, equipment slots, compatibility tags, handedness, and required-feature evidence.
-  - [ ] Define layer, visibility, bounds, and pose-compatibility behavior for rigid accessories.
-  - [ ] Document compatibility and migration behavior for existing sword and shield templates.
-- [ ] Task: Write failing accessory contract and compatibility tests
+- [x] Task: Define accessory role, slot, compatibility, and fidelity contracts [commit: 1822db1]
+  - [x] Add schemas for accessory metadata, equipment slots, compatibility tags, handedness, and required-feature evidence.
+  - [x] Define layer, visibility, bounds, and pose-compatibility behavior for rigid accessories.
+  - [x] Document compatibility and migration behavior for existing sword and shield templates.
+- [~] Task: Write failing accessory contract and compatibility tests
   - [ ] Cover valid definitions plus unknown fields, invalid slots, missing ports, conflicting handedness, occupied slots, and incompatible anatomy.
   - [ ] Cover canonical serialization and unchanged-node preservation during equip and unequip.
   - [ ] Cover bounded discovery filters and response budgets.
