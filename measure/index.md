@@ -26,8 +26,9 @@
 - [Lessons Learned](./lessons-learned.md)
 - [Tech Debt Registry](./tech-debt.md)
 - [Archived MVP Reference Evidence](./archive/fantasy_asset_mvp_20260717/reference-build.json)
+- [Archived LLM Authoring Workflow Track](./archive/llm_authoring_workflow_hardening_20260717/)
 
 ## Management
 
 - [Tracks Registry](./tracks.md)
-- [Active LLM Authoring Workflow Track](./tracks/llm_authoring_workflow_hardening_20260717/)
+- [Active Character Accessory Library Track](./tracks/character_accessory_library_20260717/)

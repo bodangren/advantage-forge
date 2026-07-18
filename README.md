@@ -61,7 +61,7 @@ pnpm test:browser
 pnpm reference:build
 ```
 
-See the generated contracts in `measure/generated/` and the active evidence dossier in `measure/tracks/llm_authoring_workflow_hardening_20260717/`.
+See the generated contracts in `measure/generated/` and the completed evidence dossier in `measure/archive/llm_authoring_workflow_hardening_20260717/`.
 
 ## Scope
 
