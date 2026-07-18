@@ -48,11 +48,11 @@ _Story ref: spec.md#story-s2_
 
 _Story ref: spec.md#story-s3_
 
-- [~] Task: Define the repository-local workflow skill and evidence contract
-  - [ ] Create `.agents/skills/fantasy-asset-workflow/SKILL.md` with capability preflight and supported workflow routing.
-  - [ ] Define reference files for current capabilities, visual review, evidence reporting, and future animation handoff.
-  - [ ] Define a stable final report template with revision, mutation, validation, visual, artifact, and limitation evidence.
-- [ ] Task: Create skill eval prompts and objective assertions
+- [x] Task: Define the repository-local workflow skill and evidence contract [commit: 7ed78d2]
+  - [x] Create `.agents/skills/fantasy-asset-workflow/SKILL.md` with capability preflight and supported workflow routing.
+  - [x] Define reference files for current capabilities, visual review, evidence reporting, and future animation handoff.
+  - [x] Define a stable final report template with revision, mutation, validation, visual, artifact, and limitation evidence.
+- [~] Task: Create skill eval prompts and objective assertions
   - [ ] Cover localized adventurer revision, static prop creation, unsupported accessory/new identity, and unsupported animation.
   - [ ] Assert inspect-before-mutate, dry run, affected IDs, no source reads, actual-resolution review, and honest blocking.
   - [ ] Save eval inputs and expected outcomes in the skill package.
