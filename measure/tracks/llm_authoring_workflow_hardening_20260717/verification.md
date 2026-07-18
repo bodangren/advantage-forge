@@ -80,3 +80,61 @@ Status: approved by the owner on 2026-07-18 after automated verification passed.
 6. Request an unknown capability and an unknown field; confirm `NOT_FOUND` and `UNKNOWN_FIELD` responses include stable paths and no mutation occurs.
 
 Owner decision: approved. No additional S2 capability status, evidence, or limitation gap was identified.
+
+## Phase S3: Guide Visual Authoring
+
+Status: automated verification passed on 2026-07-18; owner manual verification is pending.
+
+### Automated evidence
+
+| Check                                         | Result                                                                                                                                                                                                                                                                                |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Red/green skill contract                      | Pass: the contract first failed for missing workflow files and later for incomplete animation capability preflight; the implemented skill, exact public-call ledger, unavailable-MCP fallback, and five-capability animation handoff now pass                                         |
+| Skill package validation                      | Pass: the skill-creator `quick_validate.py` validator accepted `.agents/skills/fantasy-asset-workflow`                                                                                                                                                                                |
+| Focused skill and artifact-verifier tests     | Pass: 2 files, 5 tests; includes the audit-only verifier and workflow contract                                                                                                                                                                                                        |
+| Paired skill benchmark, iteration 1           | Skill 80.8%, baseline 45.5%, delta +0.35 across four evals                                                                                                                                                                                                                            |
+| Paired skill benchmark, iteration 2           | Skill 96.9%, baseline 39.3%, delta +0.58 across four evals; the remaining 7/8 animation-preflight miss was repaired afterward with a red/green contract regression while the benchmark result was preserved                                                                           |
+| Benchmark provenance                          | Limited: one run per eval/configuration, no measured timing, and zero recorded tool calls; results measure the written intended workflows and unavailable-tool handling, not repeat-run stability or observed MCP execution                                                           |
+| Committed crate artifact audit                | Pass: eight physical 128x128 PNGs, no manifest clipping, zero ground-anchor deviation, 512x292 contact sheet, GLB identity/header/length/reload invariants, and SHA-256 evidence                                                                                                      |
+| Browser workflow exercise                     | Pass for mechanics via pinned Playwright fallback: interactive 3D, 4x2 contact sheet, and eight actual-size 128x128 canvases loaded with no console errors; 19 parts and 1,440 triangles were reported                                                                                |
+| Preferred browser harness                     | Unavailable: installed entrypoint failed with `ModuleNotFoundError: No module named 'run'`; the fallback and screenshots are recorded in `s3-evidence/exercise.md`                                                                                                                    |
+| Baseline adventurer visual fidelity           | Partial: framing, ground contact, clipping, and torso pixel metrics pass, but the thin sword is ambiguous at native size in multiple directions, especially edge-on                                                                                                                   |
+| Full unit suite                               | Pass: 22 files, 170 tests                                                                                                                                                                                                                                                             |
+| Full coverage                                 | Pass: 94.29% statements, 83.59% branches, 96.70% functions, 94.84% lines                                                                                                                                                                                                              |
+| `pnpm typecheck`                              | Pass                                                                                                                                                                                                                                                                                  |
+| `pnpm lint`                                   | Pass; no dependency violations across 52 modules and 91 dependencies                                                                                                                                                                                                                  |
+| `pnpm build`                                  | Pass; Vite retained a non-blocking 800.16 kB chunk-size warning                                                                                                                                                                                                                       |
+| Generated facts and `pnpm doctor`             | Pass; architecture, route, kit, tool, capability, and output facts are current, and the architecture doctor passed                                                                                                                                                                    |
+| First clean-clone `env CI=true pnpm check`    | Failed honestly on tracked Prettier drift in `review-2026-07-18.md`; mechanical repair committed as `953e2dd`                                                                                                                                                                         |
+| Repeated clean-clone `env CI=true pnpm check` | Pass after the repair: formatting, typecheck, lint, 170 tests, generated-fact freshness, and doctor                                                                                                                                                                                   |
+| Clean-clone browser test                      | Pass: the repository inspector rendered semantic assets, transparent sprites, and valid GLB evidence                                                                                                                                                                                  |
+| Clean-clone reference build                   | Generation completed and the crate verifier passed, but reproducibility failed: manifests changed only because they contain clone-root absolute paths, and the build/browser evidence was written under stale `fantasy_asset_mvp_20260717`; these are explicit S4 acceptance failures |
+
+### Workflow and evidence delivered
+
+- The repository-local skill starts with machine-readable capability preflight, inspects before mutation, preserves response-derived revision and semantic IDs, dry-runs before applying, compares immutable revisions, validates, renders, exports, and reviews artifacts without source or canonical-document access.
+- When MCP tools are unavailable, the skill records an exact intended public-call ledger with unresolved placeholders and reports runtime, revision, mutation, validation, visual, and artifact outcomes as not assessed instead of inventing them.
+- Visual review requires three distinct surfaces: interactive 3D, the directional contact sheet, and every frame at native 128x128 size. Mechanical pixel metrics are evidence, not a substitute for visual judgment.
+- The audit-only verifier reads manifests and artifacts, checks containment, dimensions, direction order, clipping/anchor metrics, GLB invariants, and hashes, and does not manufacture or modify product output.
+- Two complete benchmark iterations preserve prompts, with-skill and baseline outputs, objective grading, analyzer notes, aggregate summaries, and static HTML viewers.
+
+### Honest remaining gaps
+
+- The accessory library remains limited to the registered sword and shield. Helmets, spears, axes, additional equipment, and their attachment/readability conventions still require a dedicated product track.
+- Novel character identities and unregistered anatomy are unsupported; the workflow must block rather than approximate them from existing templates.
+- Temporal animation, skeletal deformation, runtime sprite-atlas generation, and animated GLB export are unsupported. The skill supplies a future handoff contract but does not claim these outputs exist.
+- The baseline sword is not consistently legible in the native directional frames, and the current torso-focused metric does not detect that equipment-readability failure.
+- A fresh MCP-capable LLM has not yet executed the complete seeded request, and representative game-engine import remains not assessed. Both belong to S4.
+- Reference manifests are not portable across clone roots, and reference/browser evidence still targets an archived track path. S4 must make a successful reference build leave the clean clone unchanged.
+- The skill benchmark has one run per pairing and no observed MCP tool execution, so it supports workflow-quality comparison but not repeatability, runtime, or end-to-end acceptance claims.
+
+### Owner manual verification procedure
+
+1. Read `.agents/skills/fantasy-asset-workflow/SKILL.md` and its `current-capabilities.md`, `public-call-ledger.md`, `visual-review.md`, `evidence-report.md`, and `animation-handoff.md` references; confirm the workflow uses only public MCP operations and blocks unsupported work honestly.
+2. Open `.agents/skills/fantasy-asset-workflow-workspace/iteration-2/review.html`; compare the four paired with-skill and baseline outputs, objective grading, and iteration-one comparison. Confirm the stated 96.9% versus 39.3% result is useful but does not overrule the one-run/no-runtime-tool caveats.
+3. Review `s3-evidence/faf-s3-3d.png`, `s3-evidence/faf-s3-contact.png`, and `s3-evidence/faf-s3-actual.png` alongside `s3-evidence/exercise.md`; confirm the workflow surfaces the sword-readability limitation rather than calling mechanical metrics sufficient.
+4. Inspect the artifact-verifier script and tests; confirm it is read-only and rejects identity, revision, containment, dimension, clipping, ground-anchor, GLB, and hash inconsistencies without post-processing output.
+5. Confirm the product boundary is still accurate: sword/shield only, no novel identities, no helmet/spear/general accessory library, no temporal animation/atlas/animated GLB, and no proven external importer.
+6. Decide whether the skill/evidence contract is acceptable for S3. If approved, record the owner decision and create the phase checkpoint; otherwise list the exact workflow or reporting changes required.
+
+Owner decision: pending.

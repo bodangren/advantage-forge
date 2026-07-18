@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in-progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-18T00:38:12Z",
+  "updated_at": "2026-07-18T02:14:25Z",
   "description": "Harden the public LLM authoring, inspection, visual review, and evidence workflow",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -30,7 +30,7 @@
         "title": "Guide Visual Authoring",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in-progress"
       },
       {
         "id": "S4",
@@ -40,7 +40,7 @@
         "status": "pending"
       }
     ],
-    "demo_notes": "Phases S1 and S2 are owner-approved. Complete state inspection, semantic revision comparison, and honest machine-readable capability discovery now establish the supported static authoring boundary.",
+    "demo_notes": "Phases S1 and S2 are owner-approved. Phase S3 automated verification passed: the repository-local workflow skill, exact unavailable-tool ledger, audit-only artifact verifier, three-surface visual review, and paired eval evidence are complete. Owner S3 approval is pending. The sword remains visually weak at native size, accessories remain limited to sword and shield, and fresh MCP execution, portable manifests, temporal animation, sprite atlases, animated GLB, and external import are not yet proven.",
     "retro_ref": null
   }
 }
