@@ -1,6 +1,6 @@
 import { existsSync, realpathSync } from 'node:fs';
 import { lstat, mkdir, writeFile } from 'node:fs/promises';
-import { join, relative, resolve, sep } from 'node:path';
+import { basename, join, relative, resolve, sep } from 'node:path';
 import { chromium } from '@playwright/test';
 import type { Page } from '@playwright/test';
 import type { AssetDocument } from '../contracts/index.js';
@@ -151,8 +151,11 @@ export class LocalBrowserArtifactService
       paddingPixels: profile.paddingPixels,
       minimumFeaturePixels: profile.minimumFeaturePixels,
       transparent: profile.transparent,
-      frames,
-      contactSheetPath,
+      frames: frames.map((frame) => ({
+        ...frame,
+        path: basename(frame.path),
+      })),
+      contactSheetPath: basename(contactSheetPath),
     };
     const manifestPath = resolve(directory, 'render-manifest.json');
     await assertNoSymlinkPath(this.#workspaceRoot, manifestPath);
@@ -205,7 +208,7 @@ export class LocalBrowserArtifactService
     await assertNoSymlinkPath(this.#workspaceRoot, manifestPath);
     await writeFile(
       manifestPath,
-      `${JSON.stringify({ assetId: document.id, revisionId, glbPath, ...(exported.manifest as object) }, null, 2)}\n`,
+      `${JSON.stringify({ assetId: document.id, revisionId, glbPath: basename(glbPath), ...(exported.manifest as object) }, null, 2)}\n`,
       'utf8',
     );
     return { glbPath, manifestPath, manifest: exported.manifest };

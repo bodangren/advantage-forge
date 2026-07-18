@@ -9,6 +9,7 @@ import { referenceDocuments } from '../src/fantasy-kit/index.js';
 import { LocalBrowserArtifactService } from '../src/services/index.js';
 import { createToolHandlers } from '../src/tools/index.js';
 import { assertRenderArtifactAcceptance } from '../src/validation/index.js';
+import { portableEvidence } from './reference-evidence.js';
 
 const workspaceRoot = process.cwd();
 const port = 4174;
@@ -212,13 +213,24 @@ try {
   }
   const dossierPath = resolve(
     workspaceRoot,
-    'measure/tracks/fantasy_asset_mvp_20260717/reference-build.json',
+    'measure/archive/fantasy_asset_mvp_20260717/reference-build.json',
   );
-  await writeFile(
-    dossierPath,
-    `${JSON.stringify({ generatedAt: new Date().toISOString(), workflow: ['create_asset', 'inspect_asset', 'apply_operations', 'set_pose', 'validate_asset', 'render_preview', 'export_asset'], evidence }, null, 2)}\n`,
-    'utf8',
+  const dossier = portableEvidence(
+    {
+      workflow: [
+        'create_asset',
+        'inspect_asset',
+        'apply_operations',
+        'set_pose',
+        'validate_asset',
+        'render_preview',
+        'export_asset',
+      ],
+      evidence,
+    },
+    workspaceRoot,
   );
+  await writeFile(dossierPath, `${JSON.stringify(dossier, null, 2)}\n`, 'utf8');
   console.log(dossierPath);
 } finally {
   await vite.close();

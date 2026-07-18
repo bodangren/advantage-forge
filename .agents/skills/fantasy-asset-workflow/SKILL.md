@@ -134,6 +134,20 @@ node .agents/skills/fantasy-asset-workflow/scripts/verify-artifacts.mjs \
 The script only reads and hashes existing outputs. A verifier failure invalidates
 artifact evidence; it does not authorize repairing artifacts outside MCP.
 
+When a representative GLB importer audit is required and local file access is
+available, run the independent pinned Three.js loader:
+
+```bash
+node .agents/skills/fantasy-asset-workflow/scripts/inspect-glb.mjs \
+  --glb-manifest <glb-manifest.json> \
+  --expected-asset <asset-id> \
+  --expected-revision <revision-id>
+```
+
+Record its orientation, bounds, node, material, unsupported-content, byte, and
+hash evidence. This is representative importer evidence only; do not infer
+Godot, Unity, or gameplay-runtime compatibility from it.
+
 ### 8. Perform visual fidelity review
 
 Read and follow [visual review](references/visual-review.md). Inspect all three:

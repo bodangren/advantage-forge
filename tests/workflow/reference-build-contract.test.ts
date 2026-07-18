@@ -1,5 +1,5 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { readFile, readdir } from 'node:fs/promises';
+import { isAbsolute, join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const root = new URL('../../', import.meta.url);
@@ -9,9 +9,34 @@ async function text(path: string): Promise<string> {
 }
 
 describe('reference build portability contract', () => {
+  it('keeps every committed reference manifest checkout-independent', async () => {
+    const artifactRoot = new URL('artifacts/reference/', root);
+    const paths = (await readdir(artifactRoot, { recursive: true })).filter(
+      (path) =>
+        path.endsWith('/render-manifest.json') ||
+        path.endsWith('/glb-manifest.json'),
+    );
+    expect(paths).toHaveLength(20);
+    for (const path of paths) {
+      const manifest = JSON.parse(
+        await readFile(new URL(path, artifactRoot), 'utf8'),
+      ) as {
+        contactSheetPath?: string;
+        frames?: { path: string }[];
+        glbPath?: string;
+      };
+      for (const value of [
+        manifest.contactSheetPath,
+        manifest.glbPath,
+        ...(manifest.frames?.map((frame) => frame.path) ?? []),
+      ].filter((value): value is string => value !== undefined))
+        expect(isAbsolute(value), `${path}: ${value}`).toBe(false);
+    }
+  });
+
   it('normalizes checkout paths recursively and rejects outside roots', async () => {
     const { portableEvidence } =
-      await import('../../scripts/reference-evidence.mjs');
+      await import('../../scripts/reference-evidence.js');
     const workspaceRoot = '/tmp/clone-a';
     expect(
       portableEvidence(
@@ -52,6 +77,8 @@ describe('reference build portability contract', () => {
       'measure/tracks/fantasy_asset_mvp_20260717',
     );
     expect(readme).toContain(archiveDossier);
-    expect(index).toContain(archiveDossier);
+    expect(index).toContain(
+      './archive/fantasy_asset_mvp_20260717/reference-build.json',
+    );
   });
 });

@@ -12,7 +12,7 @@
   "frames": [
     {
       "direction": "N",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/n.png",
+      "path": "n.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 41,
@@ -35,7 +35,7 @@
     },
     {
       "direction": "NE",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/ne.png",
+      "path": "ne.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 44,
@@ -58,7 +58,7 @@
     },
     {
       "direction": "E",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/e.png",
+      "path": "e.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 52,
@@ -81,7 +81,7 @@
     },
     {
       "direction": "SE",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/se.png",
+      "path": "se.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 49,
@@ -104,7 +104,7 @@
     },
     {
       "direction": "S",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/s.png",
+      "path": "s.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 41,
@@ -127,7 +127,7 @@
     },
     {
       "direction": "SW",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/sw.png",
+      "path": "sw.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 43,
@@ -150,7 +150,7 @@
     },
     {
       "direction": "W",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/w.png",
+      "path": "w.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 52,
@@ -173,7 +173,7 @@
     },
     {
       "direction": "NW",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/nw.png",
+      "path": "nw.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 44,
@@ -195,5 +195,5 @@
       }
     }
   ],
-  "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/adventurer.rustic/revision.69d8907b2aa68bdaf2742a1cb42fa135aabf64a2132c92c13784cb868a635a8b/contact-sheet.png"
+  "contactSheetPath": "contact-sheet.png"
 }

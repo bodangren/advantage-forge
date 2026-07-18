@@ -25,6 +25,7 @@
 
 - [Lessons Learned](./lessons-learned.md)
 - [Tech Debt Registry](./tech-debt.md)
+- [Archived MVP Reference Evidence](./archive/fantasy_asset_mvp_20260717/reference-build.json)
 
 ## Management
 

@@ -52,6 +52,7 @@ or `Not assessed` with a reason instead of deleting a section.
 - Directional frame paths and dimensions:
 - GLB path and manifest path:
 - Audit-only verifier result and hashes:
+- Representative importer, orientation, bounds, nodes, materials, and errors:
 - Artifact/revision identity consistency:
 
 ## Limitations and verdict

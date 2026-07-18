@@ -172,7 +172,7 @@ test('inspector renders semantic assets, transparent sprites, and valid GLB evid
   expect(new Set(contactLayout.map(({ x }) => x)).size).toBe(4);
   expect(new Set(contactLayout.map(({ y }) => y)).size).toBe(2);
   await page.screenshot({
-    path: 'measure/tracks/fantasy_asset_mvp_20260717/adventurer-contact-sheet.png',
+    path: 'measure/archive/fantasy_asset_mvp_20260717/adventurer-contact-sheet.png',
   });
   await page.getByRole('button', { name: 'Actual 128px' }).click();
   await expect(page.locator('.contact-frame canvas').first()).toHaveAttribute(

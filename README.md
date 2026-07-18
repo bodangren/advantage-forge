@@ -20,6 +20,8 @@ pnpm reference:build
 ```
 
 This runs the complete public-handler workflow for the adventurer, crate, tree, and cottage. Canonical JSON is written under `references/`; revision-associated PNG, contact-sheet, manifest, and GLB files are written under `artifacts/reference/`.
+The deterministic run dossier is committed at
+`measure/archive/fantasy_asset_mvp_20260717/reference-build.json`.
 
 ## Connect an MCP client
 

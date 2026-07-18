@@ -12,7 +12,7 @@
   "frames": [
     {
       "direction": "N",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/n.png",
+      "path": "n.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 24,
@@ -43,7 +43,7 @@
     },
     {
       "direction": "NE",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/ne.png",
+      "path": "ne.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 14,
@@ -74,7 +74,7 @@
     },
     {
       "direction": "E",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/e.png",
+      "path": "e.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 26,
@@ -105,7 +105,7 @@
     },
     {
       "direction": "SE",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/se.png",
+      "path": "se.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 14,
@@ -136,7 +136,7 @@
     },
     {
       "direction": "S",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/s.png",
+      "path": "s.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 24,
@@ -167,7 +167,7 @@
     },
     {
       "direction": "SW",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/sw.png",
+      "path": "sw.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 10,
@@ -198,7 +198,7 @@
     },
     {
       "direction": "W",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/w.png",
+      "path": "w.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 26,
@@ -229,7 +229,7 @@
     },
     {
       "direction": "NW",
-      "path": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/nw.png",
+      "path": "nw.png",
       "metrics": {
         "occupiedBounds": {
           "minX": 10,
@@ -259,5 +259,5 @@
       }
     }
   ],
-  "contactSheetPath": "/home/daniel-bo/Desktop/fantasy-asset-forge/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/contact-sheet.png"
+  "contactSheetPath": "contact-sheet.png"
 }

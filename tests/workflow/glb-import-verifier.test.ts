@@ -30,7 +30,12 @@ describe('representative GLTFLoader importer', () => {
       assetId: string;
       revisionId: string;
       up: number[];
-      bounds: { min: number[]; max: number[]; groundY: number };
+      bounds: {
+        min: number[];
+        max: number[];
+        groundY: number;
+        matchesManifest: boolean;
+      };
       nodeNames: string[];
       materialNames: string[];
       duplicateNodeNames: string[];
@@ -57,7 +62,8 @@ describe('representative GLTFLoader importer', () => {
       animationCount: 0,
       errors: [],
     });
-    expect(report.bounds.groundY).toBeCloseTo(0, 6);
+    expect(report.bounds.matchesManifest).toBe(true);
+    expect(report.bounds.groundY).toBeCloseTo(-0.02, 6);
     expect(report.bounds.max[1]).toBeGreaterThan(report.bounds.min[1]!);
     expect(report.nodeNames.length).toBeGreaterThan(0);
     expect(report.materialNames.length).toBeGreaterThan(0);
