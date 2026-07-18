@@ -14,11 +14,11 @@ _Story ref: spec.md#story-s1_
   - [x] Cover valid definitions plus unknown fields, invalid slots, missing ports, conflicting handedness, occupied slots, and incompatible anatomy.
   - [x] Cover canonical serialization and unchanged-node preservation during equip and unequip.
   - [x] Cover bounded discovery filters and response budgets.
-- [~] Task: Implement accessory validation in shared contracts and assembly
-  - [ ] Resolve slot ownership and compatibility through named ports.
-  - [ ] Keep accessory metadata engine-neutral and data-driven.
-  - [ ] Return actionable conflict paths and guidance.
-- [ ] Task: Generate grammar documentation and run quality gates
+- [x] Task: Implement accessory validation in shared contracts and assembly [commit: 16fd9e2]
+  - [x] Resolve slot ownership and compatibility through named ports.
+  - [x] Keep accessory metadata engine-neutral and data-driven.
+  - [x] Return actionable conflict paths and guidance.
+- [~] Task: Generate grammar documentation and run quality gates
   - [ ] Update product and tech-stack decisions before expanding kit contracts.
   - [ ] Run contract, assembly, coverage, type, lint, generate, doctor, and full checks.
 - [ ] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md)
