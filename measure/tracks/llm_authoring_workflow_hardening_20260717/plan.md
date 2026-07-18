@@ -64,13 +64,13 @@ _Story ref: spec.md#story-s3_
   - [x] Run realistic with-skill and without-skill evals using a capable client.
   - [x] Generate the standard skill eval viewer and collect qualitative review.
   - [x] Revise the skill until safety, fidelity review, and limitation reporting are consistently better.
-- [~] Task: Measure - User Manual Verification 'Phase S3: Guide Visual Authoring' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S3: Guide Visual Authoring' (Protocol in workflow.md) [approved: 2026-07-18]
 
 ## Phase S4: Prove Reproducible LLM Workflow
 
 _Story ref: spec.md#story-s4_
 
-- [ ] Task: Define clean-clone and external-import acceptance evidence
+- [~] Task: Define clean-clone and external-import acceptance evidence
   - [ ] Require portable committed manifest paths while preserving usable returned artifact paths.
   - [ ] Define chronological LLM transcript, timing, correction, visual, and revision-lineage evidence.
   - [ ] Select and document a representative target importer or record Not Assessed.
