@@ -56,11 +56,11 @@ _Story ref: spec.md#story-s3_
   - [x] Cover localized adventurer revision, static prop creation, unsupported accessory/new identity, and unsupported animation.
   - [x] Assert inspect-before-mutate, dry run, affected IDs, no source reads, actual-resolution review, and honest blocking.
   - [x] Save eval inputs and expected outcomes in the skill package.
-- [~] Task: Implement and exercise the skill workflow
-  - [ ] Keep creation and mutation inside public MCP tools.
-  - [ ] Use browser/image inspection for 3D, contact-sheet, and actual-resolution evidence.
-  - [ ] Add audit-only artifact verification scripts without manufacturing or altering product output.
-- [ ] Task: Compare skill-guided and baseline runs
+- [x] Task: Implement and exercise the skill workflow [commit: 1fd5cd4]
+  - [x] Keep creation and mutation inside public MCP tools.
+  - [x] Use browser/image inspection for 3D, contact-sheet, and actual-resolution evidence.
+  - [x] Add audit-only artifact verification scripts without manufacturing or altering product output.
+- [~] Task: Compare skill-guided and baseline runs
   - [ ] Run realistic with-skill and without-skill evals using a capable client.
   - [ ] Generate the standard skill eval viewer and collect qualitative review.
   - [ ] Revise the skill until safety, fidelity review, and limitation reporting are consistently better.
