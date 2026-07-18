@@ -82,8 +82,8 @@ _Story ref: spec.md#story-s4_
   - [x] Store portable paths in committed manifests and update archive destinations consistently.
   - [x] Run the exact seeded authoring request with a fresh MCP-capable LLM and no source access.
   - [x] Import the final GLB into the selected target and capture scale, orientation, nodes, materials, and errors.
-- [~] Task: Assemble final verification and run all gates
-  - [ ] Preserve logs, transcript, screenshots, manifests, GLBs, sprites, semantic comparisons, and clean-status proof.
-  - [ ] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification from a clean clone.
-  - [ ] Update metadata, lessons learned, and tech debt to match observed reality.
-- [ ] Task: Measure - User Manual Verification 'Phase S4: Prove Reproducible LLM Workflow' (Protocol in workflow.md)
+- [x] Task: Assemble final verification and run all gates [commit: c1c0584]
+  - [x] Preserve logs, transcript, screenshots, manifests, GLBs, sprites, semantic comparisons, and clean-status proof.
+  - [x] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification from a clean clone.
+  - [x] Update metadata, lessons learned, and tech debt to match observed reality.
+- [~] Task: Measure - User Manual Verification 'Phase S4: Prove Reproducible LLM Workflow' (Protocol in workflow.md)
