@@ -31,8 +31,9 @@ during the run because executable runtime facts supersede this summary.
 
 ## Not assessed now
 
-- Representative external game-engine import. Internal GLB reload checks do not
-  prove scale, orientation, nodes, or materials in a real target engine.
+- Unity, Godot, and gameplay-runtime import. The S4 audit proves scale,
+  orientation, nodes, and materials through the pinned Three.js `GLTFLoader`,
+  but one representative format importer does not prove a game-engine target.
 
 ## Safe response to a gap
 

@@ -61,7 +61,7 @@ The public `inspect_capabilities` preflight is the executable source for this bo
 - Supported motion state is a static rigid pose snapshot. Temporal clips, frame interpolation, animation playback/export, and runtime sprite atlases are unsupported.
 - Supported outputs are directional transparent PNG frames, a review contact sheet, and reload-verified GLB. The contact sheet is evidence, not an animation atlas contract.
 - New asset identities, unavailable accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
-- Representative external game-engine import is Not Assessed until direct scale, orientation, node, material, and error evidence is recorded.
+- The pinned Three.js `GLTFLoader` passes as a representative format importer with direct scale, orientation, node, material, and error evidence. Unity, Godot, and gameplay-runtime integration remain Not Assessed.
 
 ## Explicitly Out of Scope
 

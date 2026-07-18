@@ -255,9 +255,9 @@ const declaredFacts: CapabilityFact[] = [
     category: 'integration',
     status: 'not-assessed',
     summary:
-      'GLB reload validation is implemented, but representative external game-engine import has not yet been evidenced.',
+      'Independent Three.js GLTFLoader evidence passes, but Unity, Godot, and gameplay-runtime import have not been assessed.',
     guidance:
-      'Treat scale, orientation, nodes, and materials in an external importer as Not Assessed until the S4 acceptance run records them.',
+      'Treat external game-engine and gameplay-runtime compatibility as Not Assessed; the S4 GLTFLoader audit proves only the bounded GLB format contract.',
     evidence: evidence({
       publicTools: tools('validate_asset', 'export_asset'),
       formats: ['glb'],

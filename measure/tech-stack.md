@@ -38,7 +38,8 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - `src/tools/capabilities.ts` derives the public capability manifest from the registered tool catalog, committed reference documents, template catalog, and render profile.
 - `inspect_capabilities` returns schema-validated supported, partial, unsupported, and not-assessed facts through both in-process and MCP adapters.
 - `measure/generated/capability-catalog.md` is generated from the same executable facts; human documentation must not claim more than that catalog.
-- PNG contact sheets remain visual-review evidence. No atlas layout, temporal metadata, or game-engine importer is implied by the current renderer/exporter stack.
+- PNG contact sheets remain visual-review evidence. No atlas layout or temporal metadata is implied by the current renderer/exporter stack.
+- The audit-only workflow uses the pinned Three.js `GLTFLoader` as a representative independent format importer. This does not establish Unity, Godot, or gameplay-runtime compatibility.
 
 ## Coordinate and Output Contract
 

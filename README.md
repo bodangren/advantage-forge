@@ -47,7 +47,7 @@ Call `inspect_capabilities` before planning an asset request. Its generated and 
 - **Supported:** the four committed references, localized semantic revisions, the existing sword and shield, static rigid poses, directional transparent PNGs, review contact sheets, and reload-verified GLB.
 - **Partial:** the accessory surface exists, but currently contains only the sword and shield.
 - **Unsupported:** new asset identities, additional accessories such as helmets or alternate weapons, temporal animation, runtime sprite atlases, unregistered anatomy, skeletal deformation, and raw mesh editing.
-- **Not Assessed:** importing the GLB into a representative external game engine remains unverified until the active workflow-hardening track records it.
+- **Not Assessed:** Three.js `GLTFLoader` now passes as a representative format importer, but Unity, Godot, and gameplay-runtime integration remain unverified.
 
 Do not compensate for an unsupported result by reading product source, hand-authoring canonical asset JSON, post-processing images, or using hidden filesystem or shell routes. The generated [capability catalog](measure/generated/capability-catalog.md) is derived from the same executable facts as the public tool.
 

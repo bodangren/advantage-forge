@@ -12,11 +12,14 @@
 
 - Large previews can conceal unreadable features; always verify at the committed sprite resolution.
 - “Fantasy RPG” is still unbounded unless art style, camera, asset families, and exclusions remain explicit.
+- Deterministic committed references are not enough for checkout cleanliness; ad-hoc LLM output paths must also be exercised in a clean clone.
 
 ## Patterns That Worked Well
 
 - Define one reference vertical slice and require every proposed capability to justify itself against that slice.
 - Prefer intersecting closed parts over adding general mesh booleans before a concrete asset requires subtraction.
+- Keep the LLM's verdict separate from independent visual, hash, and importer audits; a truthful Partial can become an audited Pass without rewriting the transcript.
+- Name representative import evidence precisely: a passing GLTFLoader audit proves the GLB contract, not Unity, Godot, or gameplay integration.
 
 ## Planning Improvements
 
