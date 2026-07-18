@@ -309,6 +309,106 @@ export const PortDefinitionSchema = z
   })
   .strict();
 
+export const EquipmentSlotSchema = z.enum([
+  'head',
+  'main-hand',
+  'off-hand',
+  'body',
+  'back',
+  'waist',
+]);
+export const AccessoryRoleSchema = z.enum([
+  'headwear',
+  'weapon',
+  'shield',
+  'light',
+  'armor',
+  'back-item',
+  'waist-item',
+]);
+export const AccessoryHandednessSchema = z.enum([
+  'neutral',
+  'left',
+  'right',
+  'either',
+  'two-handed',
+]);
+export const AccessoryLayerSchema = z
+  .object({
+    kind: z.enum(['underlay', 'body', 'overlay', 'carried']),
+    order: z.number().int().min(-32).max(32),
+    maximumIntersectionRatio: FiniteNumberSchema.min(0).max(1),
+  })
+  .strict();
+export const SpriteDirectionSchema = z.enum([
+  'N',
+  'NE',
+  'E',
+  'SE',
+  'S',
+  'SW',
+  'W',
+  'NW',
+]);
+export const AccessoryRequiredFeatureSchema = z
+  .object({
+    id: SemanticIdSchema,
+    expectation: z.string().min(1).max(160),
+    intendedDirections: z.array(SpriteDirectionSchema).min(1).max(8),
+    minimumPixelArea: z.number().int().min(1).max(16_384),
+    minimumWidthPixels: z.number().int().min(1).max(128),
+  })
+  .strict()
+  .superRefine((feature, context) => {
+    if (
+      new Set(feature.intendedDirections).size !==
+      feature.intendedDirections.length
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['intendedDirections'],
+        message: 'Intended sprite directions must be unique.',
+      });
+  });
+export const AccessoryMetadataSchema = z
+  .object({
+    role: AccessoryRoleSchema,
+    slot: EquipmentSlotSchema,
+    attachmentPortIds: z.array(SemanticIdSchema).min(1).max(4),
+    handedness: AccessoryHandednessSchema,
+    compatibilityTags: z.array(SemanticIdSchema).min(1).max(32),
+    compatibleAnatomy: z.array(SemanticIdSchema).min(1).max(32),
+    compatibleArchetypes: z.array(SemanticIdSchema).min(1).max(32),
+    layer: AccessoryLayerSchema,
+    bounds: BoundsSchema,
+    triangleBudget: z.number().int().min(1).max(100_000),
+    allowedPoseIds: z.array(SemanticIdSchema).min(1).max(32),
+    requiredFeatures: z.array(AccessoryRequiredFeatureSchema).min(1).max(16),
+  })
+  .strict()
+  .superRefine((metadata, context) => {
+    for (const key of [
+      'attachmentPortIds',
+      'compatibilityTags',
+      'compatibleAnatomy',
+      'compatibleArchetypes',
+      'allowedPoseIds',
+    ] as const)
+      if (new Set(metadata[key]).size !== metadata[key].length)
+        context.addIssue({
+          code: 'custom',
+          path: [key],
+          message: `${key} must contain unique values.`,
+        });
+    const featureIds = metadata.requiredFeatures.map(({ id }) => id);
+    if (new Set(featureIds).size !== featureIds.length)
+      context.addIssue({
+        code: 'custom',
+        path: ['requiredFeatures'],
+        message: 'Required feature IDs must be unique.',
+      });
+  });
+
 export const PartTemplateDefinitionSchema = z
   .object({
     id: SemanticIdSchema,
@@ -316,8 +416,23 @@ export const PartTemplateDefinitionSchema = z
     shape: ShapeDefinitionSchema,
     materialSlots: z.array(SemanticIdSchema).min(1).max(16),
     ports: z.array(PortDefinitionSchema).max(32),
+    accessory: AccessoryMetadataSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((template, context) => {
+    if (template.accessory === undefined) return;
+    const portIds = new Set(template.ports.map(({ id }) => id));
+    for (const [
+      index,
+      portId,
+    ] of template.accessory.attachmentPortIds.entries())
+      if (!portIds.has(portId))
+        context.addIssue({
+          code: 'custom',
+          path: ['accessory', 'attachmentPortIds', index],
+          message: `Accessory attachment port '${portId}' is not declared by the template.`,
+        });
+  });
 
 export const PartInstanceSchema = z
   .object({
@@ -730,6 +845,15 @@ export type MaterialDefinition = z.infer<typeof MaterialDefinitionSchema>;
 export type MaterialFamily = z.infer<typeof MaterialFamilySchema>;
 export type PortCompatibilityTag = z.infer<typeof PortCompatibilityTagSchema>;
 export type PortDefinition = z.infer<typeof PortDefinitionSchema>;
+export type EquipmentSlot = z.infer<typeof EquipmentSlotSchema>;
+export type AccessoryRole = z.infer<typeof AccessoryRoleSchema>;
+export type AccessoryHandedness = z.infer<typeof AccessoryHandednessSchema>;
+export type AccessoryLayer = z.infer<typeof AccessoryLayerSchema>;
+export type SpriteDirection = z.infer<typeof SpriteDirectionSchema>;
+export type AccessoryRequiredFeature = z.infer<
+  typeof AccessoryRequiredFeatureSchema
+>;
+export type AccessoryMetadata = z.infer<typeof AccessoryMetadataSchema>;
 export type PartTemplateDefinition = z.infer<
   typeof PartTemplateDefinitionSchema
 >;

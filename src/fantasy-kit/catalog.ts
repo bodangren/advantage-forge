@@ -4,6 +4,7 @@ import { mirrorTransform } from '../assembly/index.js';
 import {
   AssetDocumentSchema,
   PartTemplateDefinitionSchema,
+  type AccessoryMetadata,
   type AssetDocument,
   type ConnectionDefinition,
   type MaterialDefinition,
@@ -53,7 +54,15 @@ const template = (
   shape: PartTemplateDefinition['shape'],
   materialSlots: string[],
   ports: PortDefinition[] = [],
-): PartTemplateDefinition => ({ id, role, shape, materialSlots, ports });
+  accessory?: AccessoryMetadata,
+): PartTemplateDefinition => ({
+  id,
+  role,
+  shape,
+  materialSlots,
+  ports,
+  ...(accessory === undefined ? {} : { accessory }),
+});
 
 export const rusticMaterials: readonly MaterialDefinition[] = [
   {
@@ -313,6 +322,32 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     },
     ['metal'],
     [port('grip', [0, -0.48, 0], ['equipment.grip'], ['equipment.mount'])],
+    {
+      role: 'weapon',
+      slot: 'main-hand',
+      attachmentPortIds: ['grip'],
+      handedness: 'either',
+      compatibilityTags: ['rustic', 'melee', 'guard'],
+      compatibleAnatomy: ['rustic-human'],
+      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
+      layer: {
+        kind: 'carried',
+        order: 20,
+        maximumIntersectionRatio: 0.08,
+      },
+      bounds: { min: [-0.055, -0.42, -0.0175], max: [0.055, 0.5, 0.0175] },
+      triangleBudget: 64,
+      allowedPoseIds: ['idle', 'action'],
+      requiredFeatures: [
+        {
+          id: 'blade',
+          expectation: 'Blade silhouette remains readable beside the body.',
+          intendedDirections: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+          minimumPixelArea: 8,
+          minimumWidthPixels: 2,
+        },
+      ],
+    },
   ),
   template(
     'equipment.shield',
@@ -320,6 +355,32 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     { kind: 'prism', radius: 0.34, height: 0.08, sides: 8 },
     ['wood'],
     [port('grip', [0, 0, -0.07], ['equipment.grip'], ['equipment.mount'])],
+    {
+      role: 'shield',
+      slot: 'off-hand',
+      attachmentPortIds: ['grip'],
+      handedness: 'either',
+      compatibilityTags: ['rustic', 'defense', 'guard'],
+      compatibleAnatomy: ['rustic-human'],
+      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
+      layer: {
+        kind: 'carried',
+        order: 20,
+        maximumIntersectionRatio: 0.12,
+      },
+      bounds: { min: [-0.34, -0.04, -0.34], max: [0.34, 0.04, 0.34] },
+      triangleBudget: 64,
+      allowedPoseIds: ['idle', 'action'],
+      requiredFeatures: [
+        {
+          id: 'shield-face',
+          expectation: 'Shield face remains distinct from the torso.',
+          intendedDirections: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
+          minimumPixelArea: 24,
+          minimumWidthPixels: 3,
+        },
+      ],
+    },
   ),
   template(
     'prop.crate',

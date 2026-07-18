@@ -44,6 +44,7 @@ An LLM can create and revise a rustic fantasy adventurer assembled from rigid pa
 - Versioned asset documents with schema validation and stable semantic identifiers.
 - A bounded procedural shape set: box, beveled box, wedge, prism, cylinder, cone, ellipsoid, capsule, extruded profile, lathed profile, tube path, and flat card.
 - Parts with typed parameters, material slots, transforms, connection ports, compatibility rules, and bounds.
+- Rigid accessories declare one of six equipment slots, attachment ownership, handedness, compatible anatomy and archetypes, layer/intersection limits, pose compatibility, triangle budgets, and delivery-resolution feature evidence.
 - Assemblies with parent-child transforms, port connections, mirroring, rigid joints, poses, and deterministic variants.
 - A fixed fantasy palette and material families for wood, stone, iron, bronze, leather, cloth, skin, foliage, bone, and crystal.
 - A rustic-human MVP kit for humanoid parts, sword, shield, crate, tree, and cottage modules.
@@ -58,6 +59,7 @@ The public `inspect_capabilities` preflight is the executable source for this bo
 
 - Supported creation starts from exactly four committed identities: adventurer, crate, tree, and cottage.
 - Supported character equipment is exactly the registered static sword and shield. The accessory surface is partial, not a general library.
+- Sword and shield use the same closed accessory metadata contract planned for the broader library; contract availability alone does not make unregistered equipment supported.
 - Supported motion state is a static rigid pose snapshot. Temporal clips, frame interpolation, animation playback/export, and runtime sprite atlases are unsupported.
 - Supported outputs are directional transparent PNG frames, a review contact sheet, and reload-verified GLB. The contact sheet is evidence, not an animation atlas contract.
 - New asset identities, unavailable accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
