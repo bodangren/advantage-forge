@@ -10,11 +10,11 @@ _Story ref: spec.md#story-s1_
   - [x] Add schemas for accessory metadata, equipment slots, compatibility tags, handedness, and required-feature evidence.
   - [x] Define layer, visibility, bounds, and pose-compatibility behavior for rigid accessories.
   - [x] Document compatibility and migration behavior for existing sword and shield templates.
-- [~] Task: Write failing accessory contract and compatibility tests
-  - [ ] Cover valid definitions plus unknown fields, invalid slots, missing ports, conflicting handedness, occupied slots, and incompatible anatomy.
-  - [ ] Cover canonical serialization and unchanged-node preservation during equip and unequip.
-  - [ ] Cover bounded discovery filters and response budgets.
-- [ ] Task: Implement accessory validation in shared contracts and assembly
+- [x] Task: Write failing accessory contract and compatibility tests [commit: a091db3]
+  - [x] Cover valid definitions plus unknown fields, invalid slots, missing ports, conflicting handedness, occupied slots, and incompatible anatomy.
+  - [x] Cover canonical serialization and unchanged-node preservation during equip and unequip.
+  - [x] Cover bounded discovery filters and response budgets.
+- [~] Task: Implement accessory validation in shared contracts and assembly
   - [ ] Resolve slot ownership and compatibility through named ports.
   - [ ] Keep accessory metadata engine-neutral and data-driven.
   - [ ] Return actionable conflict paths and guidance.
