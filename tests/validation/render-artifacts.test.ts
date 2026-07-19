@@ -4,6 +4,7 @@ import {
   assertRenderArtifactAcceptance,
   validateRenderArtifactAcceptance,
 } from '../../src/validation/index.js';
+import { getRusticAccessoryLoadout } from '../../src/fantasy-kit/index.js';
 
 const profile = {
   directions: 1 as const,
@@ -27,6 +28,15 @@ const validFrame = {
     ],
   },
 };
+
+const directionOrder = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] as const;
+
+function passingFrame(direction: (typeof directionOrder)[number]) {
+  return {
+    ...validFrame,
+    direction,
+  };
+}
 
 describe('render artifact acceptance', () => {
   it('accepts a complete frame that satisfies every pixel contract', () => {
@@ -127,5 +137,128 @@ describe('render artifact acceptance', () => {
     expect(validateRenderArtifactAcceptance({ frames: [] }, profile)).toEqual([
       'expected 1 frames but received 0',
     ]);
+  });
+});
+
+describe('S4 accessory render acceptance', () => {
+  const guard = getRusticAccessoryLoadout('guard');
+  const helmet = guard.accessories.find(
+    ({ templateId }) => templateId === 'equipment.helmet.iron',
+  )!;
+  const helmetCrown = helmet.requiredFeatures[0]!;
+  const accessoryProfile = {
+    directions: 8 as const,
+    minimumFeaturePixels: helmetCrown.minimumWidthPixels,
+    requiredFeaturePartIds: [helmet.partId],
+    directionOrder: guard.framing.directionOrder,
+    requiredAccessoryFeatures: [helmetCrown],
+    framing: guard.framing,
+  };
+
+  function accessoryFrame(
+    direction: (typeof directionOrder)[number],
+    evidence: Record<string, unknown> = {},
+    framing: Record<string, unknown> = {},
+  ) {
+    return {
+      direction,
+      metrics: {
+        occupiedPixelCount: 200,
+        transparentPixelCount: 16_184,
+        clippedEdges: [],
+        groundAnchorDeviationPixels: 0,
+        framingEvidence: {
+          topMarginPixels: guard.framing.minimumTopMarginPixels,
+          centerDeviationPixels: 0,
+          heightDeviationPixels: 0,
+          ...framing,
+        },
+        requiredFeatureEvidence: [
+          {
+            partId: helmet.partId,
+            templateId: helmet.templateId,
+            featureId: helmetCrown.id,
+            silhouetteWidthPixels: helmetCrown.minimumWidthPixels,
+            minimumPixels: helmetCrown.minimumWidthPixels,
+            isolatedPixelArea: helmetCrown.minimumPixelArea * 2,
+            visiblePixelArea: helmetCrown.minimumPixelArea,
+            occlusionRatio: 0.5,
+            materialOklabDistance: helmetCrown.minimumOklabDistance,
+            passes: true,
+            ...evidence,
+          },
+        ],
+      },
+    };
+  }
+
+  it('rejects duplicate or reordered directions even when eight frames exist', () => {
+    const frames = directionOrder.map(passingFrame);
+    frames[1] = passingFrame('E');
+    frames[2] = passingFrame('NE');
+
+    expect(
+      validateRenderArtifactAcceptance(
+        { frames },
+        {
+          directions: 8,
+          minimumFeaturePixels: 3,
+          requiredFeaturePartIds: ['torso'],
+          directionOrder,
+        },
+      ),
+    ).toEqual([
+      'frame directions must be exactly N, NE, E, SE, S, SW, W, NW; received N, E, NE, SE, S, SW, W, NW',
+    ]);
+  });
+
+  it('requires exact feature and template identity rather than part-only evidence', () => {
+    const frames = directionOrder.map((direction) =>
+      accessoryFrame(direction, {
+        templateId: 'equipment.hood.cloth',
+        featureId: 'hood-outline',
+      }),
+    );
+
+    expect(
+      validateRenderArtifactAcceptance({ frames }, accessoryProfile),
+    ).toEqual(
+      directionOrder.flatMap((direction) => [
+        `${direction}: required feature ${helmetCrown.id} must identify template ${helmet.templateId}`,
+        `${direction}: required feature ${helmetCrown.id} evidence is missing`,
+      ]),
+    );
+  });
+
+  it('rejects hidden, occluded, materially merged, or unstably framed accessories', () => {
+    const frames = directionOrder.map((direction) =>
+      accessoryFrame(
+        direction,
+        {
+          isolatedPixelArea: helmetCrown.minimumPixelArea * 2,
+          visiblePixelArea: helmetCrown.minimumPixelArea - 1,
+          occlusionRatio: helmetCrown.maximumOcclusionRatio + 0.01,
+          materialOklabDistance: helmetCrown.minimumOklabDistance - 0.01,
+        },
+        {
+          topMarginPixels: guard.framing.minimumTopMarginPixels - 1,
+          centerDeviationPixels: guard.framing.maximumCenterDeviationPixels + 1,
+          heightDeviationPixels: guard.framing.maximumHeightDeviationPixels + 1,
+        },
+      ),
+    );
+
+    expect(
+      validateRenderArtifactAcceptance({ frames }, accessoryProfile),
+    ).toEqual(
+      directionOrder.flatMap((direction) => [
+        `${direction}: required feature ${helmetCrown.id} visible area must be at least ${helmetCrown.minimumPixelArea}px`,
+        `${direction}: required feature ${helmetCrown.id} occlusion ratio must be at most ${helmetCrown.maximumOcclusionRatio}`,
+        `${direction}: required feature ${helmetCrown.id} OKLab distance must be at least ${helmetCrown.minimumOklabDistance}`,
+        `${direction}: top margin must be at least ${guard.framing.minimumTopMarginPixels}px`,
+        `${direction}: center deviation must be at most ${guard.framing.maximumCenterDeviationPixels}px`,
+        `${direction}: height deviation must be at most ${guard.framing.maximumHeightDeviationPixels}px`,
+      ]),
+    );
   });
 });
