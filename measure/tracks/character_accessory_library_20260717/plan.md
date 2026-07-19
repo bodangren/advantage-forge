@@ -93,3 +93,12 @@ _Story ref: spec.md#story-s4_
   - Complete fresh sandboxed MCP-capable LLM workflows for all four loadouts without source or non-Forge tool access.
   - Record the owner decision that attachment/validation remains eight-directional while pixel identity evidence is limited to documented physically observable directions, including the single far-side view of handed items and self-occluding back or single-hip features.
 - [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [visual and implementation acceptance passed: 2026-07-19; phase blocked only by fresh-LLM criterion; evidence: s4-evidence/owner-acceptance.md]
+- [x] Task: Write failing Red-phase contract tests for the sandboxed-LLM runner and evidence aggregator
+  - [x] Cover the four exact loadouts, omitted/missing loadout failure, and Not Assessed classification (A4/A6).
+  - [x] Cover deny-all permission config with only `forge_*` allowlisted and no source/file/shell/internal-handler fallback.
+  - [x] Cover completed session, ≥1 Forge call, zero non-Forge calls, and non-empty final response.
+  - [x] Cover revision-bound artifact and GLB audit evidence and explicit labeled counts (A3).
+  - [x] Cover hand-edited/incomplete summary rejection (A5) and infrastructure zero-event handling.
+  - [x] Run focused Red test command and record command evidence.
+    - RED command: `pnpm exec vitest run tests/scripts/run-sandboxed-llm.contract.test.ts tests/scripts/aggregate-sandboxed-evidence.contract.test.ts`
+    - Result: 2 test files failed because `scripts/run-sandboxed-llm.mjs` and `scripts/aggregate-sandboxed-evidence.mjs` do not exist; no production code was implemented. Evidence saved to `/tmp/opencode/s4-red-test-output.txt`.
