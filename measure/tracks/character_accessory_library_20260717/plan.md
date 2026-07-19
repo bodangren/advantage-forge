@@ -78,11 +78,11 @@ _Story ref: spec.md#story-s4_
   - [x] Cover eight directions, transparent pixels, ground anchor, clipping, accessory evidence, stable framing, and material separation.
   - [x] Cover equipment attachment and visibility across poses and variants.
   - [x] Reload GLBs and compare accessory nodes, materials, transforms, bounds, and meter scale.
-- [~] Task: Build and refine the four reference loadouts
-  - [ ] Create all revisions through public tools and preserve workflow transcripts.
-  - [ ] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
-  - [ ] Keep every accepted accessory within declared budgets and style constraints.
-- [ ] Task: Assemble final evidence and run all gates
+- [x] Task: Build and refine the four reference loadouts [commit: c2d8e6c]
+  - [x] Create all revisions through public tools and preserve workflow transcripts.
+  - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
+  - [x] Keep every accepted accessory within declared budgets and style constraints.
+- [~] Task: Assemble final evidence and run all gates
   - [ ] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout.
   - [ ] Preserve 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and clean-status proof.
   - [ ] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification.
