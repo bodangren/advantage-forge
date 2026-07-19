@@ -61,10 +61,10 @@ _Story ref: spec.md#story-s3_
   - [x] Resolve compatible templates and ports inside bounded domain services.
   - [x] Keep the MCP adapter thin and response budgeted.
   - [x] Enrich inspection and comparison with accessory state.
-- [~] Task: Update the workflow skill and run quality gates
-  - [ ] Add accessory discovery, loadout planning, dry-run, visual review, and limitation branches.
-  - [ ] Regenerate public tool and capability catalogs and run handler, MCP, coverage, type, lint, doctor, and full checks.
-- [ ] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md)
+- [x] Task: Update the workflow skill and run quality gates [commit: 0bcaf64]
+  - [x] Add accessory discovery, loadout planning, dry-run, visual review, and limitation branches.
+  - [x] Regenerate public tool and capability catalogs and run handler, MCP, coverage, type, lint, doctor, and full checks.
+- [~] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md)
 
 ## Phase S4: Verify Character Readability
 
