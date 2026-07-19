@@ -50,6 +50,7 @@ _Story ref: spec.md#story-s3_
 
 - [~] Task: Define accessory discovery and equipment operation contracts
   - [ ] Add bounded filtering and inspection for compatible accessories.
+  - [ ] Expose kit-owned placement, orientation, usage, and visual-check guidance so callers never invent transforms.
   - [ ] Define task-level dry-run/apply operations for equip, replace, swap hand, recolor, and unequip.
   - [ ] Preserve revision preconditions, semantic diff, and exact affected-ID reporting.
 - [ ] Task: Write failing tool and MCP tests

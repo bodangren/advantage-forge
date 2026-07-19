@@ -471,10 +471,186 @@ export const AccessoryQuerySchema = z
     compatibleAnatomy: z.array(SemanticIdSchema).min(1).max(16).optional(),
     compatibleArchetypes: z.array(SemanticIdSchema).min(1).max(16).optional(),
     materialFamilies: z.array(MaterialFamilySchema).min(1).max(13).optional(),
-    offset: z.number().int().min(0).max(10_000),
-    limit: z.number().int().min(1).max(50),
+    offset: z.number().int().min(0).max(10_000).default(0),
+    limit: z.number().int().min(1).max(50).default(20),
+  })
+  .strict()
+  .superRefine((query, context) => {
+    for (const key of [
+      'roles',
+      'slots',
+      'handedness',
+      'compatibilityTags',
+      'compatibleAnatomy',
+      'compatibleArchetypes',
+      'materialFamilies',
+    ] as const)
+      if (
+        query[key] !== undefined &&
+        new Set(query[key]).size !== query[key].length
+      )
+        context.addIssue({
+          code: 'custom',
+          path: [key],
+          message: `${key} must contain unique values.`,
+        });
+  });
+
+export const AccessoryPlacementSchema = z
+  .object({
+    slot: EquipmentSlotSchema,
+    parentPartId: SemanticIdSchema,
+    parentPortId: SemanticIdSchema,
+    transform: TransformSchema,
+    intendedOrientation: z.string().min(1).max(240),
+    guidance: z.string().min(1).max(500),
   })
   .strict();
+
+export const AccessoryUsageSchema = z
+  .object({
+    summary: z.string().min(1).max(500),
+    placements: z.array(AccessoryPlacementSchema).min(1).max(6),
+    visualChecks: z.array(z.string().min(1).max(240)).min(1).max(8),
+  })
+  .strict()
+  .superRefine((usage, context) => {
+    const slots = usage.placements.map(({ slot }) => slot);
+    if (new Set(slots).size !== slots.length)
+      context.addIssue({
+        code: 'custom',
+        path: ['placements'],
+        message: 'Accessory usage placements must use unique equipment slots.',
+      });
+  });
+
+export const AccessoryTaskOperationSchema = z.discriminatedUnion('operation', [
+  z
+    .object({
+      operation: z.literal('equip'),
+      templateId: SemanticIdSchema,
+      equipmentSlot: EquipmentSlotSchema.optional(),
+      materialId: SemanticIdSchema.optional(),
+    })
+    .strict(),
+  z
+    .object({
+      operation: z.literal('replace'),
+      partId: SemanticIdSchema,
+      templateId: SemanticIdSchema,
+      equipmentSlot: EquipmentSlotSchema.optional(),
+      materialId: SemanticIdSchema.optional(),
+    })
+    .strict(),
+  z
+    .object({
+      operation: z.literal('swapHand'),
+      partId: SemanticIdSchema,
+      toSlot: z.enum(['main-hand', 'off-hand']).optional(),
+    })
+    .strict(),
+  z
+    .object({
+      operation: z.literal('recolor'),
+      partId: SemanticIdSchema,
+      materialId: SemanticIdSchema,
+    })
+    .strict(),
+  z
+    .object({
+      operation: z.literal('unequip'),
+      partId: SemanticIdSchema,
+    })
+    .strict(),
+]);
+
+export const AccessorySearchRequestSchema = z
+  .object({
+    assetId: SemanticIdSchema,
+    archetypeId: SemanticIdSchema,
+    query: AccessoryQuerySchema.default({ offset: 0, limit: 20 }),
+  })
+  .strict();
+
+export const AccessoryWorkflowRequestSchema = z
+  .object({
+    assetId: SemanticIdSchema,
+    expectedRevisionId: z.string().regex(/^revision\.[a-f0-9]{64}$/),
+    archetypeId: SemanticIdSchema,
+    operation: AccessoryTaskOperationSchema,
+    dryRun: z.boolean().default(false),
+  })
+  .strict();
+
+export const AccessoryDiscoveryItemSchema = z
+  .object({
+    templateId: SemanticIdSchema,
+    role: AccessoryRoleSchema,
+    defaultSlot: EquipmentSlotSchema,
+    compatibleSlots: z.array(EquipmentSlotSchema).min(1).max(6),
+    handedness: AccessoryHandednessSchema,
+    compatibilityTags: z.array(SemanticIdSchema).max(32),
+    compatibleAnatomy: z.array(SemanticIdSchema).max(32),
+    compatibleArchetypes: z.array(SemanticIdSchema).max(32),
+    parameterBounds: z.record(
+      z.string().min(1),
+      z.tuple([FiniteNumberSchema, FiniteNumberSchema]),
+    ),
+    defaultMaterialId: SemanticIdSchema,
+    materialOptions: z
+      .array(
+        z
+          .object({
+            id: SemanticIdSchema,
+            family: MaterialFamilySchema,
+          })
+          .strict(),
+      )
+      .min(1)
+      .max(32),
+    attachmentTarget: z
+      .object({
+        parentPartId: SemanticIdSchema,
+        parentPortId: SemanticIdSchema,
+      })
+      .strict(),
+    attachmentPorts: z.array(PortDefinitionSchema).min(1).max(4),
+    requiredFeatures: z.array(AccessoryRequiredFeatureSchema).min(1).max(16),
+    usage: AccessoryUsageSchema,
+    compatibility: z
+      .object({
+        eligible: z.boolean(),
+        issueCodes: z.array(z.string().regex(/^ACCESSORY_[A-Z_]+$/)).max(16),
+        occupiedByPartId: SemanticIdSchema.optional(),
+        replacementRequired: z.boolean(),
+      })
+      .strict(),
+    exampleOperation: AccessoryTaskOperationSchema,
+  })
+  .strict()
+  .superRefine((item, context) => {
+    if (!item.compatibleSlots.includes(item.defaultSlot))
+      context.addIssue({
+        code: 'custom',
+        path: ['compatibleSlots'],
+        message: 'Compatible slots must include the default slot.',
+      });
+    for (const [path, [minimum, maximum]] of Object.entries(
+      item.parameterBounds,
+    ))
+      if (minimum >= maximum)
+        context.addIssue({
+          code: 'custom',
+          path: ['parameterBounds', path],
+          message: 'Parameter bounds must have a minimum below the maximum.',
+        });
+    if (!item.materialOptions.some(({ id }) => id === item.defaultMaterialId))
+      context.addIssue({
+        code: 'custom',
+        path: ['defaultMaterialId'],
+        message: 'Default material must be present in material options.',
+      });
+  });
 
 export const JointDefinitionSchema = z
   .object({
@@ -677,6 +853,17 @@ export const PageInfoSchema = z
   })
   .strict();
 
+export const AccessoryDiscoveryDataSchema = z
+  .object({
+    assetId: SemanticIdSchema,
+    revisionId: z.string().regex(/^revision\.[a-f0-9]{64}$/),
+    archetypeId: SemanticIdSchema,
+    query: AccessoryQuerySchema,
+    page: PageInfoSchema,
+    items: z.array(AccessoryDiscoveryItemSchema).max(50),
+  })
+  .strict();
+
 export const AssetInspectionPartStateSchema = z
   .object({
     shape: ShapeDefinitionSchema,
@@ -749,6 +936,44 @@ export const SemanticChangeSchema = z
     after: z.unknown().optional(),
   })
   .strict();
+
+export const AccessoryOperationSummarySchema = z
+  .object({
+    operation: z.enum(['equip', 'replace', 'swapHand', 'recolor', 'unequip']),
+    dryRun: z.boolean(),
+    parentRevisionId: z.string().regex(/^revision\.[a-f0-9]{64}$/),
+    partId: SemanticIdSchema,
+    templateId: SemanticIdSchema.optional(),
+    equipmentSlot: EquipmentSlotSchema.optional(),
+    materialId: SemanticIdSchema.optional(),
+    validation: z.literal('valid'),
+    affectedIds: z.array(SemanticIdSchema).min(1).max(16),
+    addedIds: z.array(SemanticIdSchema).max(8),
+    removedIds: z.array(SemanticIdSchema).max(8),
+    connectionIds: z.array(SemanticIdSchema).max(8),
+    changePreview: z
+      .object({
+        total: z.number().int().positive(),
+        truncated: z.boolean(),
+        items: z.array(SemanticChangeSchema).max(20),
+      })
+      .strict(),
+  })
+  .strict()
+  .superRefine((summary, context) => {
+    for (const key of [
+      'affectedIds',
+      'addedIds',
+      'removedIds',
+      'connectionIds',
+    ] as const)
+      if (new Set(summary[key]).size !== summary[key].length)
+        context.addIssue({
+          code: 'custom',
+          path: [key],
+          message: `${key} must contain unique values.`,
+        });
+  });
 
 export const SemanticRevisionComparisonSchema = z
   .object({
@@ -884,6 +1109,23 @@ export type AccessoryRequiredFeature = z.infer<
 >;
 export type AccessoryMetadata = z.infer<typeof AccessoryMetadataSchema>;
 export type AccessoryQuery = z.infer<typeof AccessoryQuerySchema>;
+export type AccessoryPlacement = z.infer<typeof AccessoryPlacementSchema>;
+export type AccessoryUsage = z.infer<typeof AccessoryUsageSchema>;
+export type AccessoryTaskOperation = z.infer<
+  typeof AccessoryTaskOperationSchema
+>;
+export type AccessorySearchRequest = z.infer<
+  typeof AccessorySearchRequestSchema
+>;
+export type AccessoryWorkflowRequest = z.infer<
+  typeof AccessoryWorkflowRequestSchema
+>;
+export type AccessoryDiscoveryItem = z.infer<
+  typeof AccessoryDiscoveryItemSchema
+>;
+export type AccessoryOperationSummary = z.infer<
+  typeof AccessoryOperationSummarySchema
+>;
 export type PartTemplateDefinition = z.infer<
   typeof PartTemplateDefinitionSchema
 >;
@@ -899,6 +1141,9 @@ export type ValidationIssue = z.infer<typeof ValidationIssueSchema>;
 export type ToolResultEnvelope = z.infer<typeof ToolResultEnvelopeSchema>;
 export type InspectionSection = z.infer<typeof InspectionSectionSchema>;
 export type PageInfo = z.infer<typeof PageInfoSchema>;
+export type AccessoryDiscoveryData = z.infer<
+  typeof AccessoryDiscoveryDataSchema
+>;
 export type AssetInspectionPartState = z.infer<
   typeof AssetInspectionPartStateSchema
 >;

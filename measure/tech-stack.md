@@ -48,6 +48,9 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - Equipment remains data in `fantasy-kit`; slot resolution and compatibility are shared assembly behavior, not character-specific or MCP-specific logic.
 - Existing `equipment.sword` and `equipment.shield` IDs migrate in place, preserving canonical identity and revision behavior.
 - The initial accessory catalog adds fifteen data-only templates to the existing sword and round shield, yielding seventeen named accessories across all six slots. Every entry reuses the twelve-shape grammar; no generator or dependency is added.
+- Public accessory discovery returns bounded compatibility, parameter, material, attachment, and required-feature facts without raw geometry payloads. A closed task-operation union covers equip, replace, swap hand, recolor, and unequip.
+- Each accessory exposes kit-owned placement profiles with the exact attachment transform, intended orientation, usage guidance, and visual checks for every supported slot. LLM callers select the accessory and slot; they do not invent quaternions or hand offsets.
+- Accessory mutations carry the current asset revision precondition and explicit dry-run flag. Successful results report exact added, removed, connection, and affected IDs; adapters do not reconstruct parts or transforms.
 
 ## Coordinate and Output Contract
 
