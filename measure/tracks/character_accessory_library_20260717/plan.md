@@ -23,7 +23,7 @@ _Story ref: spec.md#story-s1_
   - [x] Run contract, assembly, coverage, type, lint, generate, doctor, and full checks.
 - [x] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md) [approved: 2026-07-19]
 
-## Phase S2: Build Initial Accessory Library
+## Phase S2: Build Initial Accessory Library [checkpoint: 075a038]
 
 _Story ref: spec.md#story-s2_
 
@@ -48,7 +48,7 @@ _Story ref: spec.md#story-s2_
 
 _Story ref: spec.md#story-s3_
 
-- [ ] Task: Define accessory discovery and equipment operation contracts
+- [~] Task: Define accessory discovery and equipment operation contracts
   - [ ] Add bounded filtering and inspection for compatible accessories.
   - [ ] Define task-level dry-run/apply operations for equip, replace, swap hand, recolor, and unequip.
   - [ ] Preserve revision preconditions, semantic diff, and exact affected-ID reporting.
