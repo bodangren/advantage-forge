@@ -31,11 +31,11 @@ _Story ref: spec.md#story-s2_
   - [x] Commit the required head, hand, body, back, and waist identities with parameter bounds and materials.
   - [x] Map every template to at least one reference character and attachment slot.
   - [x] Justify any new generator with at least two committed uses before implementation.
-- [~] Task: Write failing template and geometry tests
-  - [ ] Cover bounds, triangle counts, normals, material groups, ports, and deterministic output for each accessory.
-  - [ ] Reject invalid generator parameters, slots, materials, and compatibility metadata.
-  - [ ] Assert the library remains data and composition over the shared grammar.
-- [ ] Task: Implement the curated accessory templates
+- [x] Task: Write failing template and geometry tests [commit: 8b395d6]
+  - [x] Cover bounds, triangle counts, normals, material groups, ports, and deterministic output for each accessory.
+  - [x] Reject invalid generator parameters, slots, materials, and compatibility metadata.
+  - [x] Assert the library remains data and composition over the shared grammar.
+- [~] Task: Implement the curated accessory templates
   - [ ] Add helmets/hoods, weapons, shields/torch, armor shells, back items, and waist items.
   - [ ] Reuse palette materials and existing generators wherever possible.
   - [ ] Keep names, roles, ports, and required visual features stable and documented.
