@@ -48,12 +48,12 @@ _Story ref: spec.md#story-s2_
 
 _Story ref: spec.md#story-s3_
 
-- [~] Task: Define accessory discovery and equipment operation contracts
-  - [ ] Add bounded filtering and inspection for compatible accessories.
-  - [ ] Expose kit-owned placement, orientation, usage, and visual-check guidance so callers never invent transforms.
-  - [ ] Define task-level dry-run/apply operations for equip, replace, swap hand, recolor, and unequip.
-  - [ ] Preserve revision preconditions, semantic diff, and exact affected-ID reporting.
-- [ ] Task: Write failing tool and MCP tests
+- [x] Task: Define accessory discovery and equipment operation contracts [commit: d2ab740]
+  - [x] Add bounded filtering and inspection for compatible accessories.
+  - [x] Expose kit-owned placement, orientation, usage, and visual-check guidance so callers never invent transforms.
+  - [x] Define task-level dry-run/apply operations for equip, replace, swap hand, recolor, and unequip.
+  - [x] Preserve revision preconditions, semantic diff, and exact affected-ID reporting.
+- [~] Task: Write failing tool and MCP tests
   - [ ] Cover successful equipment workflows without manually constructed transforms.
   - [ ] Cover occupied slots, invalid ports, incompatible anatomy, handedness, stale revisions, no-ops, and unknown fields.
   - [ ] Prove failures do not mutate current state and unrelated nodes remain byte-equivalent.
