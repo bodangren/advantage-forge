@@ -1,0 +1,263 @@
+{
+  "assetId": "tree.rustic",
+  "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 32,
+          "minY": 37,
+          "maxX": 95,
+          "maxY": 121,
+          "width": 64,
+          "height": 85
+        },
+        "occupiedPixelCount": 2479,
+        "occupiedRatio": 0.15130615234375,
+        "transparentPixelCount": 13905,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 39,
+          "minY": 30,
+          "maxX": 88,
+          "maxY": 121,
+          "width": 50,
+          "height": 92
+        },
+        "occupiedPixelCount": 2200,
+        "occupiedRatio": 0.13427734375,
+        "transparentPixelCount": 14184,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "E",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 45,
+          "minY": 28,
+          "maxX": 82,
+          "maxY": 121,
+          "width": 38,
+          "height": 94
+        },
+        "occupiedPixelCount": 1914,
+        "occupiedRatio": 0.1168212890625,
+        "transparentPixelCount": 14470,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 3,
+        "minimumVerticalRunPixels": 3,
+        "representativeFeaturePixels": 6,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 37,
+          "minY": 33,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 53,
+          "height": 89
+        },
+        "occupiedPixelCount": 2223,
+        "occupiedRatio": 0.13568115234375,
+        "transparentPixelCount": 14161,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 6,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "S",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 32,
+          "minY": 37,
+          "maxX": 95,
+          "maxY": 121,
+          "width": 64,
+          "height": 85
+        },
+        "occupiedPixelCount": 2474,
+        "occupiedRatio": 0.1510009765625,
+        "transparentPixelCount": 13910,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 6,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 39,
+          "minY": 33,
+          "maxX": 88,
+          "maxY": 121,
+          "width": 50,
+          "height": 89
+        },
+        "occupiedPixelCount": 2171,
+        "occupiedRatio": 0.13250732421875,
+        "transparentPixelCount": 14213,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 6,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 20,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "W",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 45,
+          "minY": 28,
+          "maxX": 82,
+          "maxY": 121,
+          "width": 38,
+          "height": 94
+        },
+        "occupiedPixelCount": 1864,
+        "occupiedRatio": 0.11376953125,
+        "transparentPixelCount": 14520,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 8,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 29,
+          "maxX": 90,
+          "maxY": 121,
+          "width": 53,
+          "height": 93
+        },
+        "occupiedPixelCount": 2249,
+        "occupiedRatio": 0.13726806640625,
+        "transparentPixelCount": 14135,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 7,
+        "requiredFeatureEvidence": [
+          {
+            "partId": "tree.branch.east",
+            "silhouetteWidthPixels": 20,
+            "minimumPixels": 3,
+            "passes": true
+          }
+        ]
+      }
+    }
+  ],
+  "contactSheetPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/contact-sheet.png"
+}

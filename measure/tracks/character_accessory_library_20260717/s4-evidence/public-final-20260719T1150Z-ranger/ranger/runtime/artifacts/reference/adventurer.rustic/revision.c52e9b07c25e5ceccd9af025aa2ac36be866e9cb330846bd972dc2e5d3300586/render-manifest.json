@@ -1,0 +1,659 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.c52e9b07c25e5ceccd9af025aa2ac36be866e9cb330846bd972dc2e5d3300586",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 29,
+          "minY": 40,
+          "maxX": 97,
+          "maxY": 121,
+          "width": 69,
+          "height": 82
+        },
+        "occupiedPixelCount": 1532,
+        "occupiedRatio": 0.093505859375,
+        "transparentPixelCount": 14852,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 299,
+            "visiblePixelArea": 41,
+            "occlusionRatio": 0.862876254180602,
+            "materialOklabDistance": 0.12925222274590212,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 63,
+            "visiblePixelArea": 63,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.3356850238450818,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 19,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 456,
+            "visiblePixelArea": 456,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.13448263576154382,
+            "passes": true
+          },
+          {
+            "featureId": "pouch-flap",
+            "partId": "accessory.waist",
+            "templateId": "equipment.pouch.belt",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 47,
+            "visiblePixelArea": 47,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.1575278520672324,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 40,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 41,
+          "minY": 39,
+          "maxX": 88,
+          "maxY": 121,
+          "width": 48,
+          "height": 83
+        },
+        "occupiedPixelCount": 1490,
+        "occupiedRatio": 0.0909423828125,
+        "transparentPixelCount": 14894,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 297,
+            "visiblePixelArea": 79,
+            "occlusionRatio": 0.734006734006734,
+            "materialOklabDistance": 0.08027610160518145,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 6,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 65,
+            "visiblePixelArea": 65,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.20908769868569757,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 21,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 420,
+            "visiblePixelArea": 420,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.10572304201803283,
+            "passes": true
+          },
+          {
+            "featureId": "pouch-flap",
+            "partId": "accessory.waist",
+            "templateId": "equipment.pouch.belt",
+            "silhouetteWidthPixels": 6,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 37,
+            "visiblePixelArea": 37,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.12468107574522869,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 39,
+          "centerDeviationPixels": 1,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "E",
+      "path": "e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 51,
+          "minY": 40,
+          "maxX": 76,
+          "maxY": 121,
+          "width": 26,
+          "height": 82
+        },
+        "occupiedPixelCount": 1050,
+        "occupiedRatio": 0.0640869140625,
+        "transparentPixelCount": 15334,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 211,
+            "visiblePixelArea": 88,
+            "occlusionRatio": 0.5829383886255924,
+            "materialOklabDistance": 0.05274559910687664,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 5,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 51,
+            "visiblePixelArea": 51,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.03516660301657558,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 211,
+            "visiblePixelArea": 190,
+            "occlusionRatio": 0.09952606635071093,
+            "materialOklabDistance": 0.14744058983766165,
+            "passes": true
+          },
+          {
+            "featureId": "quiver-rim",
+            "partId": "accessory.back",
+            "templateId": "equipment.quiver",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 136,
+            "visiblePixelArea": 123,
+            "occlusionRatio": 0.09558823529411764,
+            "materialOklabDistance": 0.07459243740091157,
+            "passes": true
+          },
+          {
+            "featureId": "pouch-flap",
+            "partId": "accessory.waist",
+            "templateId": "equipment.pouch.belt",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 24,
+            "visiblePixelArea": 24,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.1693114639657634,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 40,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 40,
+          "maxX": 90,
+          "maxY": 121,
+          "width": 53,
+          "height": 82
+        },
+        "occupiedPixelCount": 1375,
+        "occupiedRatio": 0.08392333984375,
+        "transparentPixelCount": 15009,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 281,
+            "visiblePixelArea": 49,
+            "occlusionRatio": 0.8256227758007118,
+            "materialOklabDistance": 0.10190251161688713,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 64,
+            "visiblePixelArea": 64,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 1,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 13,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 313,
+            "visiblePixelArea": 61,
+            "occlusionRatio": 0.805111821086262,
+            "materialOklabDistance": 0.14193772505198313,
+            "passes": true
+          },
+          {
+            "featureId": "quiver-rim",
+            "partId": "accessory.back",
+            "templateId": "equipment.quiver",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 142,
+            "visiblePixelArea": 140,
+            "occlusionRatio": 0.014084507042253502,
+            "materialOklabDistance": 0.05839416171824278,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 40,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "S",
+      "path": "s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 30,
+          "minY": 41,
+          "maxX": 98,
+          "maxY": 121,
+          "width": 69,
+          "height": 81
+        },
+        "occupiedPixelCount": 1449,
+        "occupiedRatio": 0.08843994140625,
+        "transparentPixelCount": 14935,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 298,
+            "visiblePixelArea": 38,
+            "occlusionRatio": 0.87248322147651,
+            "materialOklabDistance": 0.16057263005406172,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 62,
+            "visiblePixelArea": 61,
+            "occlusionRatio": 0.016129032258064502,
+            "materialOklabDistance": 0.3318040855647345,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 19,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 361,
+            "visiblePixelArea": 53,
+            "occlusionRatio": 0.853185595567867,
+            "materialOklabDistance": 0.12932878118367355,
+            "passes": true
+          },
+          {
+            "featureId": "quiver-rim",
+            "partId": "accessory.back",
+            "templateId": "equipment.quiver",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 151,
+            "visiblePixelArea": 151,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.06321641591628616,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 41,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 39,
+          "maxX": 87,
+          "maxY": 121,
+          "width": 50,
+          "height": 83
+        },
+        "occupiedPixelCount": 1377,
+        "occupiedRatio": 0.08404541015625,
+        "transparentPixelCount": 15007,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 298,
+            "visiblePixelArea": 66,
+            "occlusionRatio": 0.7785234899328859,
+            "materialOklabDistance": 0.12166378199803271,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 6,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 60,
+            "visiblePixelArea": 38,
+            "occlusionRatio": 0.3666666666666667,
+            "materialOklabDistance": 0.16698450947928103,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 318,
+            "visiblePixelArea": 58,
+            "occlusionRatio": 0.8176100628930818,
+            "materialOklabDistance": 0.1454587812919561,
+            "passes": true
+          },
+          {
+            "featureId": "quiver-rim",
+            "partId": "accessory.back",
+            "templateId": "equipment.quiver",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 157,
+            "visiblePixelArea": 154,
+            "occlusionRatio": 0.019108280254777066,
+            "materialOklabDistance": 0.0834259641132533,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 39,
+          "centerDeviationPixels": 1,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "W",
+      "path": "w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 51,
+          "minY": 37,
+          "maxX": 76,
+          "maxY": 121,
+          "width": 26,
+          "height": 85
+        },
+        "occupiedPixelCount": 1041,
+        "occupiedRatio": 0.06353759765625,
+        "transparentPixelCount": 15343,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 188,
+            "visiblePixelArea": 78,
+            "occlusionRatio": 0.5851063829787234,
+            "materialOklabDistance": 0.023013382876880973,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 215,
+            "visiblePixelArea": 215,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.11609614475267876,
+            "passes": true
+          },
+          {
+            "featureId": "quiver-rim",
+            "partId": "accessory.back",
+            "templateId": "equipment.quiver",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 155,
+            "visiblePixelArea": 133,
+            "occlusionRatio": 0.14193548387096777,
+            "materialOklabDistance": 0.054467522423500676,
+            "passes": true
+          },
+          {
+            "featureId": "pouch-flap",
+            "partId": "accessory.waist",
+            "templateId": "equipment.pouch.belt",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 24,
+            "visiblePixelArea": 9,
+            "occlusionRatio": 0.625,
+            "materialOklabDistance": 0.1155196422951378,
+            "passes": false
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 37,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 37,
+          "minY": 39,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 53,
+          "height": 83
+        },
+        "occupiedPixelCount": 1522,
+        "occupiedRatio": 0.0928955078125,
+        "transparentPixelCount": 14862,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 281,
+            "visiblePixelArea": 78,
+            "occlusionRatio": 0.7224199288256228,
+            "materialOklabDistance": 0.05769602452199157,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 60,
+            "visiblePixelArea": 60,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 1,
+            "passes": true
+          },
+          {
+            "featureId": "armor-shoulder",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.leather",
+            "silhouetteWidthPixels": 21,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 424,
+            "visiblePixelArea": 424,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.10309757562795067,
+            "passes": true
+          },
+          {
+            "featureId": "pouch-flap",
+            "partId": "accessory.waist",
+            "templateId": "equipment.pouch.belt",
+            "silhouetteWidthPixels": 6,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 40,
+            "visiblePixelArea": 29,
+            "occlusionRatio": 0.275,
+            "materialOklabDistance": 0.09750326531497867,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 39,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03338877476326033
+        }
+      }
+    }
+  ],
+  "contactSheetPath": "contact-sheet.png"
+}

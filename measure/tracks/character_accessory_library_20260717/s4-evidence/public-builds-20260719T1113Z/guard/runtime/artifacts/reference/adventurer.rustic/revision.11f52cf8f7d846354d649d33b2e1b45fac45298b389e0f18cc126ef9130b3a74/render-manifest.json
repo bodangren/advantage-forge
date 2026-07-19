@@ -1,0 +1,743 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.11f52cf8f7d846354d649d33b2e1b45fac45298b389e0f18cc126ef9130b3a74",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 42,
+          "minY": 27,
+          "maxX": 85,
+          "maxY": 121,
+          "width": 44,
+          "height": 95
+        },
+        "occupiedPixelCount": 2070,
+        "occupiedRatio": 0.1263427734375,
+        "transparentPixelCount": 14314,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 4,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 350,
+            "visiblePixelArea": 62,
+            "occlusionRatio": 0.8228571428571428,
+            "materialOklabDistance": 0.06704756225978084,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 138,
+            "visiblePixelArea": 133,
+            "occlusionRatio": 0.036231884057971064,
+            "materialOklabDistance": 0.11299202450677064,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 73,
+            "visiblePixelArea": 70,
+            "occlusionRatio": 0.04109589041095896,
+            "materialOklabDistance": 0.13605233831671196,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 20,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 396,
+            "visiblePixelArea": 396,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.0645012835681161,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 20,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 476,
+            "visiblePixelArea": 476,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.04317353980322598,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 27,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 48,
+          "minY": 25,
+          "maxX": 82,
+          "maxY": 121,
+          "width": 35,
+          "height": 97
+        },
+        "occupiedPixelCount": 1982,
+        "occupiedRatio": 0.1209716796875,
+        "transparentPixelCount": 14402,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 348,
+            "visiblePixelArea": 117,
+            "occlusionRatio": 0.6637931034482758,
+            "materialOklabDistance": 0.03320258693666115,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 139,
+            "visiblePixelArea": 133,
+            "occlusionRatio": 0.043165467625899234,
+            "materialOklabDistance": 0.11005601107882824,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 7,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 76,
+            "visiblePixelArea": 71,
+            "occlusionRatio": 0.06578947368421051,
+            "materialOklabDistance": 0.06241221976652554,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 303,
+            "visiblePixelArea": 260,
+            "occlusionRatio": 0.14191419141914197,
+            "materialOklabDistance": 0.14884234655696743,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 19,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 452,
+            "visiblePixelArea": 452,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.046151028642687095,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 25,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "E",
+      "path": "e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 52,
+          "minY": 27,
+          "maxX": 75,
+          "maxY": 121,
+          "width": 24,
+          "height": 95
+        },
+        "occupiedPixelCount": 1241,
+        "occupiedRatio": 0.07574462890625,
+        "transparentPixelCount": 15143,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 6,
+        "minimumVerticalRunPixels": 4,
+        "representativeFeaturePixels": 6,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 229,
+            "visiblePixelArea": 94,
+            "occlusionRatio": 0.5895196506550218,
+            "materialOklabDistance": 0.03313168465727745,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 135,
+            "visiblePixelArea": 130,
+            "occlusionRatio": 0.03703703703703709,
+            "materialOklabDistance": 0.1095230382755084,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 91,
+            "visiblePixelArea": 67,
+            "occlusionRatio": 0.2637362637362637,
+            "materialOklabDistance": 0.09783629515352005,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 2,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 52,
+            "visiblePixelArea": 23,
+            "occlusionRatio": 0.5576923076923077,
+            "materialOklabDistance": 0.04197395163928078,
+            "passes": false
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 305,
+            "visiblePixelArea": 305,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.0664058185473879,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 27,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 47,
+          "minY": 27,
+          "maxX": 79,
+          "maxY": 121,
+          "width": 33,
+          "height": 95
+        },
+        "occupiedPixelCount": 1861,
+        "occupiedRatio": 0.11358642578125,
+        "transparentPixelCount": 14523,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 342,
+            "visiblePixelArea": 64,
+            "occlusionRatio": 0.8128654970760234,
+            "materialOklabDistance": 0.13954912908885617,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 138,
+            "visiblePixelArea": 134,
+            "occlusionRatio": 0.02898550724637683,
+            "materialOklabDistance": 0.10342677522189857,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 5,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 77,
+            "visiblePixelArea": 33,
+            "occlusionRatio": 0.5714285714285714,
+            "materialOklabDistance": 0.155236882639866,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 305,
+            "visiblePixelArea": 88,
+            "occlusionRatio": 0.7114754098360656,
+            "materialOklabDistance": 0.07944983958244309,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 464,
+            "visiblePixelArea": 211,
+            "occlusionRatio": 0.5452586206896552,
+            "materialOklabDistance": 0.05773371573148253,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 27,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "S",
+      "path": "s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 42,
+          "minY": 29,
+          "maxX": 85,
+          "maxY": 121,
+          "width": 44,
+          "height": 93
+        },
+        "occupiedPixelCount": 2041,
+        "occupiedRatio": 0.12457275390625,
+        "transparentPixelCount": 14343,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 2,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 369,
+            "visiblePixelArea": 50,
+            "occlusionRatio": 0.8644986449864499,
+            "materialOklabDistance": 0.20403061344074466,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 144,
+            "visiblePixelArea": 136,
+            "occlusionRatio": 0.05555555555555558,
+            "materialOklabDistance": 0.11017985920341819,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 2,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 73,
+            "visiblePixelArea": 6,
+            "occlusionRatio": 0.9178082191780822,
+            "materialOklabDistance": 0.08059516147822382,
+            "passes": false
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 19,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 396,
+            "visiblePixelArea": 286,
+            "occlusionRatio": 0.2777777777777778,
+            "materialOklabDistance": 0.0473597832361545,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 476,
+            "visiblePixelArea": 79,
+            "occlusionRatio": 0.8340336134453782,
+            "materialOklabDistance": 0.03518222877974844,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 29,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 45,
+          "minY": 27,
+          "maxX": 79,
+          "maxY": 121,
+          "width": 35,
+          "height": 95
+        },
+        "occupiedPixelCount": 1996,
+        "occupiedRatio": 0.121826171875,
+        "transparentPixelCount": 14388,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 341,
+            "visiblePixelArea": 67,
+            "occlusionRatio": 0.8035190615835777,
+            "materialOklabDistance": 0.08631811875368625,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 139,
+            "visiblePixelArea": 137,
+            "occlusionRatio": 0.014388489208633115,
+            "materialOklabDistance": 0.1057240474560973,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 68,
+            "visiblePixelArea": 12,
+            "occlusionRatio": 0.8235294117647058,
+            "materialOklabDistance": 0.12785189741115527,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 306,
+            "visiblePixelArea": 237,
+            "occlusionRatio": 0.22549019607843135,
+            "materialOklabDistance": 0.08545938936203896,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 442,
+            "visiblePixelArea": 207,
+            "occlusionRatio": 0.5316742081447964,
+            "materialOklabDistance": 0.06548444446036886,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 27,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "W",
+      "path": "w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 52,
+          "minY": 27,
+          "maxX": 75,
+          "maxY": 121,
+          "width": 24,
+          "height": 95
+        },
+        "occupiedPixelCount": 1265,
+        "occupiedRatio": 0.07720947265625,
+        "transparentPixelCount": 15119,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 6,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 229,
+            "visiblePixelArea": 109,
+            "occlusionRatio": 0.5240174672489083,
+            "materialOklabDistance": 0.011280861254877017,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 133,
+            "visiblePixelArea": 129,
+            "occlusionRatio": 0.03007518796992481,
+            "materialOklabDistance": 0.10303987207411613,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 1,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 79,
+            "visiblePixelArea": 1,
+            "occlusionRatio": 0.9873417721518988,
+            "materialOklabDistance": 0.02925949513118064,
+            "passes": false
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 2,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 56,
+            "visiblePixelArea": 56,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.05536092414906533,
+            "passes": false
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 305,
+            "visiblePixelArea": 305,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.07383278513154722,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 27,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 48,
+          "minY": 25,
+          "maxX": 80,
+          "maxY": 121,
+          "width": 33,
+          "height": 97
+        },
+        "occupiedPixelCount": 1863,
+        "occupiedRatio": 0.11370849609375,
+        "transparentPixelCount": 14521,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 344,
+            "visiblePixelArea": 112,
+            "occlusionRatio": 0.6744186046511628,
+            "materialOklabDistance": 0.017956306200834337,
+            "passes": true
+          },
+          {
+            "featureId": "helmet-crown",
+            "partId": "accessory.head",
+            "templateId": "equipment.helmet.iron",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "isolatedPixelArea": 138,
+            "visiblePixelArea": 132,
+            "occlusionRatio": 0.04347826086956519,
+            "materialOklabDistance": 0.10315486346157823,
+            "passes": true
+          },
+          {
+            "featureId": "spear-tip",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.spear",
+            "silhouetteWidthPixels": 3,
+            "minimumPixels": 2,
+            "isolatedPixelArea": 70,
+            "visiblePixelArea": 22,
+            "occlusionRatio": 0.6857142857142857,
+            "materialOklabDistance": 0.21732622524069117,
+            "passes": true
+          },
+          {
+            "featureId": "kite-point",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield.kite",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 308,
+            "visiblePixelArea": 308,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.06537708554921205,
+            "passes": true
+          },
+          {
+            "featureId": "mail-outline",
+            "partId": "accessory.body",
+            "templateId": "equipment.armor.mail",
+            "silhouetteWidthPixels": 20,
+            "minimumPixels": 4,
+            "isolatedPixelArea": 466,
+            "visiblePixelArea": 466,
+            "occlusionRatio": 0,
+            "materialOklabDistance": 0.03437118106143027,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 25,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.030775674484831303
+        }
+      }
+    }
+  ],
+  "contactSheetPath": "contact-sheet.png"
+}

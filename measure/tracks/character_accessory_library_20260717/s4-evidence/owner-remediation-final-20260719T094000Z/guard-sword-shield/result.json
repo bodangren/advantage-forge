@@ -1,0 +1,74 @@
+{
+  "loadoutId": "guard-sword-shield",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.3fadcf18930f1a453f0fbd162ba02695638929f871e8f50eac3f54b91f727289",
+  "idleRevisionId": "revision.029d18158d19cacc639bb71e0909436d3dba0a48690d129ea5e0a101404ce405",
+  "actionRevisionId": "revision.db522b269c14fd94387ba4eddc30aab827cb7a66432e3ecfc8bf0c6736b7c97f",
+  "unequippedRevisionId": "revision.de34f582924d5c258f19a5427d7090d9a5eeb8e8042fb9c91abedb13eea23c04",
+  "equippedPartIds": [
+    "accessory.main-hand",
+    "accessory.off-hand"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "blade",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 8,
+      "minimumWidthPixels": 2,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.sword"
+    },
+    {
+      "id": "shield-face",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 24,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.off-hand",
+      "templateId": "equipment.shield"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "N: shield-face OKLab 0.028311794404788013 < 0.05",
+      "E: blade width 1 < 2",
+      "E: shield-face visible area 22 < 24",
+      "E: shield-face width 2 < 3",
+      "W: blade visible area 0 < 8",
+      "W: blade width null < 2",
+      "W: blade occlusion 1 > 0.8",
+      "W: blade OKLab 0 < 0.05",
+      "W: shield-face width 2 < 3",
+      "E: blade width 1 < 2",
+      "E: shield-face width 2 < 3",
+      "W: blade visible area 0 < 8",
+      "W: blade width null < 2",
+      "W: blade occlusion 1 > 0.8",
+      "W: blade OKLab 0 < 0.05",
+      "W: shield-face width 2 < 3"
+    ]
+  },
+  "toolCallCount": 31
+}

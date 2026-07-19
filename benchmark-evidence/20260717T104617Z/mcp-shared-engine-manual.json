@@ -1,0 +1,1981 @@
+{
+  "results": [
+    {
+      "name": "create_asset",
+      "args": {
+        "reference": "crate"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+        "affectedIds": [
+          "crate.rustic"
+        ],
+        "summary": "Created crate.rustic from the crate reference.",
+        "issues": [],
+        "data": {
+          "assetId": "crate.rustic",
+          "validation": "valid"
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "crate.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+        "affectedIds": [],
+        "summary": "Inspected crate.rustic.",
+        "issues": [],
+        "data": {
+          "id": "crate.rustic",
+          "name": "Iron-Banded Crate",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "crate.band.high",
+                "templateId": "prop.crate-band"
+              },
+              {
+                "id": "crate.band.low",
+                "templateId": "prop.crate-band"
+              },
+              {
+                "id": "crate.body",
+                "templateId": "prop.crate"
+              }
+            ],
+            "total": 3,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "crate-band-high"
+              },
+              {
+                "id": "crate-band-low"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "validate_asset",
+      "args": {
+        "assetId": "crate.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+        "affectedIds": [],
+        "summary": "Document and assembly validation passed.",
+        "issues": [],
+        "data": {
+          "validation": "valid",
+          "scene": {
+            "id": "crate.assembly",
+            "bounds": {
+              "min": [
+                -0.45,
+                -0.02,
+                -0.4
+              ],
+              "max": [
+                0.45,
+                0.78,
+                0.46
+              ]
+            },
+            "triangleCount": 132,
+            "triangleBudget": 2000,
+            "remainingTriangleBudget": 1868,
+            "parts": {
+              "items": [
+                {
+                  "id": "crate.band.high",
+                  "templateId": "prop.crate-band",
+                  "role": "prop.reinforcement",
+                  "bounds": {
+                    "min": [
+                      0.2,
+                      -0.01,
+                      0.4
+                    ],
+                    "max": [
+                      0.3,
+                      0.77,
+                      0.46
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "crate.band.low",
+                  "templateId": "prop.crate-band",
+                  "role": "prop.reinforcement",
+                  "bounds": {
+                    "min": [
+                      -0.3,
+                      -0.01,
+                      0.4
+                    ],
+                    "max": [
+                      -0.2,
+                      0.77,
+                      0.46
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "crate.body",
+                  "templateId": "prop.crate",
+                  "role": "prop.container",
+                  "bounds": {
+                    "min": [
+                      -0.45,
+                      -0.02,
+                      -0.4
+                    ],
+                    "max": [
+                      0.45,
+                      0.78,
+                      0.4
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 3,
+              "truncated": false,
+              "limit": 100
+            }
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "render_preview",
+      "args": {
+        "assetId": "crate.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+        "affectedIds": [],
+        "summary": "Rendered the current canonical revision.",
+        "issues": [],
+        "data": {
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/render-manifest.json",
+          "contactSheetPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/contact-sheet.png",
+          "frames": [
+            {
+              "direction": "N",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/n.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 24,
+                  "minY": 25,
+                  "maxX": 103,
+                  "maxY": 121,
+                  "width": 80,
+                  "height": 97
+                },
+                "occupiedPixelCount": 7628,
+                "occupiedRatio": 0.465576171875,
+                "transparentPixelCount": 8756,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 8,
+                "minimumVerticalRunPixels": 93,
+                "representativeFeaturePixels": 80,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 80,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/ne.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 14,
+                  "minY": 11,
+                  "maxX": 117,
+                  "maxY": 121,
+                  "width": 104,
+                  "height": 111
+                },
+                "occupiedPixelCount": 8986,
+                "occupiedRatio": 0.5484619140625,
+                "transparentPixelCount": 7398,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 60,
+                "representativeFeaturePixels": 40,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 104,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "E",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/e.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 26,
+                  "minY": 22,
+                  "maxX": 101,
+                  "maxY": 121,
+                  "width": 76,
+                  "height": 100
+                },
+                "occupiedPixelCount": 7519,
+                "occupiedRatio": 0.45892333984375,
+                "transparentPixelCount": 8865,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 68,
+                "minimumVerticalRunPixels": 84,
+                "representativeFeaturePixels": 76,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 71,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/se.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 14,
+                  "minY": 11,
+                  "maxX": 117,
+                  "maxY": 121,
+                  "width": 104,
+                  "height": 111
+                },
+                "occupiedPixelCount": 8986,
+                "occupiedRatio": 0.5484619140625,
+                "transparentPixelCount": 7398,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 60,
+                "representativeFeaturePixels": 40,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 104,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "S",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/s.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 24,
+                  "minY": 25,
+                  "maxX": 103,
+                  "maxY": 121,
+                  "width": 80,
+                  "height": 97
+                },
+                "occupiedPixelCount": 7628,
+                "occupiedRatio": 0.465576171875,
+                "transparentPixelCount": 8756,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 8,
+                "minimumVerticalRunPixels": 93,
+                "representativeFeaturePixels": 80,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 80,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/sw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 10,
+                  "minY": 11,
+                  "maxX": 113,
+                  "maxY": 121,
+                  "width": 104,
+                  "height": 111
+                },
+                "occupiedPixelCount": 8986,
+                "occupiedRatio": 0.5484619140625,
+                "transparentPixelCount": 7398,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 60,
+                "representativeFeaturePixels": 40,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 104,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "W",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/w.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 26,
+                  "minY": 22,
+                  "maxX": 101,
+                  "maxY": 121,
+                  "width": 76,
+                  "height": 100
+                },
+                "occupiedPixelCount": 7519,
+                "occupiedRatio": 0.45892333984375,
+                "transparentPixelCount": 8865,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 68,
+                "minimumVerticalRunPixels": 84,
+                "representativeFeaturePixels": 76,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 71,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/nw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 10,
+                  "minY": 11,
+                  "maxX": 113,
+                  "maxY": 121,
+                  "width": 104,
+                  "height": 111
+                },
+                "occupiedPixelCount": 8986,
+                "occupiedRatio": 0.5484619140625,
+                "transparentPixelCount": 7398,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 60,
+                "representativeFeaturePixels": 40,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "crate.body",
+                    "silhouetteWidthPixels": 104,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "export_asset",
+      "args": {
+        "assetId": "crate.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6",
+        "affectedIds": [],
+        "summary": "Exported the current canonical revision.",
+        "issues": [],
+        "data": {
+          "glbPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/crate.rustic.glb",
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/crate.rustic/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/glb-manifest.json",
+          "manifest": {
+            "format": "glb",
+            "byteLength": 11448,
+            "nodeNames": [
+              "crate.band.high",
+              "crate.band.low",
+              "crate.body",
+              "crate.rustic"
+            ],
+            "materialNames": [
+              "iron.weathered",
+              "wood.oak"
+            ],
+            "unit": "meter",
+            "reloadNodeNames": [
+              "AuxScene",
+              "crate.band.high",
+              "crate.band.low",
+              "crate.body",
+              "crate.rustic"
+            ],
+            "reloadMaterialNames": [
+              "iron.weathered",
+              "wood.oak"
+            ],
+            "materialNamesMatch": true,
+            "materialPropertiesMatch": true,
+            "materialPropertyMismatchNames": [],
+            "maximumMaterialPropertyDeviation": 0,
+            "materialPropertyTolerance": 0.00001,
+            "semanticNodeCount": 4,
+            "reloadSemanticNodeCount": 4,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 0,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -0.44999998807907104,
+                -0.020000005960464473,
+                -0.4000000059604645
+              ],
+              "sourceMax": [
+                0.44999998807907104,
+                0.7800000059604645,
+                0.45999999932944774
+              ],
+              "reloadMin": [
+                -0.44999998807907104,
+                -0.020000005960464473,
+                -0.4000000059604645
+              ],
+              "reloadMax": [
+                0.44999998807907104,
+                0.7800000059604645,
+                0.45999999932944774
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.00001,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.00001,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
+            "animationCount": 0
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "create_asset",
+      "args": {
+        "reference": "tree"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+        "affectedIds": [
+          "tree.rustic"
+        ],
+        "summary": "Created tree.rustic from the tree reference.",
+        "issues": [],
+        "data": {
+          "assetId": "tree.rustic",
+          "validation": "valid"
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "tree.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+        "affectedIds": [],
+        "summary": "Inspected tree.rustic.",
+        "issues": [],
+        "data": {
+          "id": "tree.rustic",
+          "name": "Old Roadside Tree",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "tree.branch.east",
+                "templateId": "tree.branch"
+              },
+              {
+                "id": "tree.branch.west",
+                "templateId": "tree.branch"
+              },
+              {
+                "id": "tree.crown",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.crown.east",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.crown.west",
+                "templateId": "tree.foliage"
+              },
+              {
+                "id": "tree.root.east",
+                "templateId": "tree.root"
+              },
+              {
+                "id": "tree.root.west",
+                "templateId": "tree.root"
+              },
+              {
+                "id": "trunk.main",
+                "templateId": "tree.trunk"
+              }
+            ],
+            "total": 8,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "tree-branch-east"
+              },
+              {
+                "id": "tree-branch-west"
+              },
+              {
+                "id": "tree-crown-east"
+              },
+              {
+                "id": "tree-crown-main"
+              },
+              {
+                "id": "tree-crown-west"
+              },
+              {
+                "id": "tree-root-east"
+              },
+              {
+                "id": "tree-root-west"
+              }
+            ],
+            "total": 7,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "validate_asset",
+      "args": {
+        "assetId": "tree.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+        "affectedIds": [],
+        "summary": "Document and assembly validation passed.",
+        "issues": [],
+        "data": {
+          "validation": "valid",
+          "scene": {
+            "id": "tree.assembly",
+            "bounds": {
+              "min": [
+                -1.065633146422,
+                -0.08720396194,
+                -0.649973116988
+              ],
+              "max": [
+                1.0972,
+                3,
+                0.649973116988
+              ]
+            },
+            "triangleCount": 438,
+            "triangleBudget": 2000,
+            "remainingTriangleBudget": 1562,
+            "parts": {
+              "items": [
+                {
+                  "id": "tree.branch.east",
+                  "templateId": "tree.branch",
+                  "role": "vegetation.branch",
+                  "bounds": {
+                    "min": [
+                      -0.040678830615,
+                      1.566793301014,
+                      -0.095
+                    ],
+                    "max": [
+                      0.84837996594,
+                      2.059488251361,
+                      0.146189129195
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.branch.west",
+                  "templateId": "tree.branch",
+                  "role": "vegetation.branch",
+                  "bounds": {
+                    "min": [
+                      -0.84837996594,
+                      1.766793301014,
+                      -0.095
+                    ],
+                    "max": [
+                      0.040678830615,
+                      2.259488251361,
+                      0.146189129195
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      -0.714166391797,
+                      1.9,
+                      -0.649973116988
+                    ],
+                    "max": [
+                      0.76,
+                      3,
+                      0.649973116988
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown.east",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      0.035800197906,
+                      1.754,
+                      -0.417980644231
+                    ],
+                    "max": [
+                      1.0972,
+                      2.546,
+                      0.517980644231
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.crown.west",
+                  "templateId": "tree.foliage",
+                  "role": "vegetation.foliage-cluster",
+                  "bounds": {
+                    "min": [
+                      -1.065633146422,
+                      1.876,
+                      -0.461981719552
+                    ],
+                    "max": [
+                      -0.0632,
+                      2.624,
+                      0.421981719552
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.root.east",
+                  "templateId": "tree.root",
+                  "role": "vegetation.root",
+                  "bounds": {
+                    "min": [
+                      -0.024108308227,
+                      -0.08720396194,
+                      -0.087856835417
+                    ],
+                    "max": [
+                      0.820099032565,
+                      0.206451314325,
+                      0.26001200587
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "tree.root.west",
+                  "templateId": "tree.root",
+                  "role": "vegetation.root",
+                  "bounds": {
+                    "min": [
+                      -0.820099032565,
+                      -0.08720396194,
+                      -0.087856835417
+                    ],
+                    "max": [
+                      0.024108308227,
+                      0.206451314325,
+                      0.26001200587
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "trunk.main",
+                  "templateId": "tree.trunk",
+                  "role": "vegetation.trunk",
+                  "bounds": {
+                    "min": [
+                      -0.338289343483,
+                      -0.015,
+                      -0.354530791084
+                    ],
+                    "max": [
+                      0.36,
+                      2.335,
+                      0.354530791084
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 8,
+              "truncated": false,
+              "limit": 100
+            }
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "render_preview",
+      "args": {
+        "assetId": "tree.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+        "affectedIds": [],
+        "summary": "Rendered the current canonical revision.",
+        "issues": [],
+        "data": {
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/render-manifest.json",
+          "contactSheetPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/contact-sheet.png",
+          "frames": [
+            {
+              "direction": "N",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/n.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 32,
+                  "minY": 37,
+                  "maxX": 95,
+                  "maxY": 121,
+                  "width": 64,
+                  "height": 85
+                },
+                "occupiedPixelCount": 2479,
+                "occupiedRatio": 0.15130615234375,
+                "transparentPixelCount": 13905,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 12,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/ne.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 39,
+                  "minY": 30,
+                  "maxX": 88,
+                  "maxY": 121,
+                  "width": 50,
+                  "height": 92
+                },
+                "occupiedPixelCount": 2200,
+                "occupiedRatio": 0.13427734375,
+                "transparentPixelCount": 14184,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 5,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 8,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "E",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/e.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 45,
+                  "minY": 28,
+                  "maxX": 82,
+                  "maxY": 121,
+                  "width": 38,
+                  "height": 94
+                },
+                "occupiedPixelCount": 1914,
+                "occupiedRatio": 0.1168212890625,
+                "transparentPixelCount": 14470,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 3,
+                "representativeFeaturePixels": 6,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 7,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/se.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 37,
+                  "minY": 33,
+                  "maxX": 89,
+                  "maxY": 121,
+                  "width": 53,
+                  "height": 89
+                },
+                "occupiedPixelCount": 2223,
+                "occupiedRatio": 0.13568115234375,
+                "transparentPixelCount": 14161,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 6,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 7,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "S",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/s.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 32,
+                  "minY": 37,
+                  "maxX": 95,
+                  "maxY": 121,
+                  "width": 64,
+                  "height": 85
+                },
+                "occupiedPixelCount": 2474,
+                "occupiedRatio": 0.1510009765625,
+                "transparentPixelCount": 13910,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 6,
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 5,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 14,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/sw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 39,
+                  "minY": 33,
+                  "maxX": 88,
+                  "maxY": 121,
+                  "width": 50,
+                  "height": 89
+                },
+                "occupiedPixelCount": 2171,
+                "occupiedRatio": 0.13250732421875,
+                "transparentPixelCount": 14213,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 6,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 20,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "W",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/w.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 45,
+                  "minY": 28,
+                  "maxX": 82,
+                  "maxY": 121,
+                  "width": 38,
+                  "height": 94
+                },
+                "occupiedPixelCount": 1864,
+                "occupiedRatio": 0.11376953125,
+                "transparentPixelCount": 14520,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 2,
+                "minimumVerticalRunPixels": 2,
+                "representativeFeaturePixels": 8,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 7,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/nw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 38,
+                  "minY": 29,
+                  "maxX": 90,
+                  "maxY": 121,
+                  "width": 53,
+                  "height": 93
+                },
+                "occupiedPixelCount": 2249,
+                "occupiedRatio": 0.13726806640625,
+                "transparentPixelCount": 14135,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 7,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "tree.branch.east",
+                    "silhouetteWidthPixels": 20,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "export_asset",
+      "args": {
+        "assetId": "tree.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb",
+        "affectedIds": [],
+        "summary": "Exported the current canonical revision.",
+        "issues": [],
+        "data": {
+          "glbPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/tree.rustic.glb",
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/tree.rustic/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/glb-manifest.json",
+          "manifest": {
+            "format": "glb",
+            "byteLength": 18236,
+            "nodeNames": [
+              "tree.branch.east",
+              "tree.branch.west",
+              "tree.crown",
+              "tree.crown.east",
+              "tree.crown.west",
+              "tree.root.east",
+              "tree.root.west",
+              "tree.rustic",
+              "trunk.main"
+            ],
+            "materialNames": [
+              "foliage.pine",
+              "wood.dark"
+            ],
+            "unit": "meter",
+            "reloadNodeNames": [
+              "AuxScene",
+              "tree.branch.east",
+              "tree.branch.west",
+              "tree.crown",
+              "tree.crown.east",
+              "tree.crown.west",
+              "tree.root.east",
+              "tree.root.west",
+              "tree.rustic",
+              "trunk.main"
+            ],
+            "reloadMaterialNames": [
+              "foliage.pine",
+              "wood.dark"
+            ],
+            "materialNamesMatch": true,
+            "materialPropertiesMatch": true,
+            "materialPropertyMismatchNames": [],
+            "maximumMaterialPropertyDeviation": 0,
+            "materialPropertyTolerance": 0.00001,
+            "semanticNodeCount": 9,
+            "reloadSemanticNodeCount": 9,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 5.960464477539063e-8,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -1.0656331539154054,
+                -0.08720396935939789,
+                -0.6499730944633484
+              ],
+              "sourceMax": [
+                1.097199993133545,
+                3.000000011920929,
+                0.6499730944633484
+              ],
+              "reloadMin": [
+                -1.0656331539154054,
+                -0.08720396935939789,
+                -0.6499730944633484
+              ],
+              "reloadMax": [
+                1.097199993133545,
+                3.000000011920929,
+                0.6499730944633484
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.000030872039812803274,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.000030872039812803274,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
+            "animationCount": 0
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "create_asset",
+      "args": {
+        "reference": "cottage"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+        "affectedIds": [
+          "cottage.rustic"
+        ],
+        "summary": "Created cottage.rustic from the cottage reference.",
+        "issues": [],
+        "data": {
+          "assetId": "cottage.rustic",
+          "validation": "valid"
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "cottage.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+        "affectedIds": [],
+        "summary": "Inspected cottage.rustic.",
+        "issues": [],
+        "data": {
+          "id": "cottage.rustic",
+          "name": "Wayside Timber Cottage",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "chimney",
+                "templateId": "cottage.chimney"
+              },
+              {
+                "id": "door.front",
+                "templateId": "cottage.door"
+              },
+              {
+                "id": "roof.main",
+                "templateId": "cottage.roof"
+              },
+              {
+                "id": "timber.left",
+                "templateId": "cottage.timber"
+              },
+              {
+                "id": "timber.right",
+                "templateId": "cottage.timber"
+              },
+              {
+                "id": "wall.back",
+                "templateId": "cottage.wall"
+              },
+              {
+                "id": "wall.front",
+                "templateId": "cottage.wall"
+              },
+              {
+                "id": "wall.left",
+                "templateId": "cottage.side-wall"
+              },
+              {
+                "id": "wall.right",
+                "templateId": "cottage.side-wall"
+              },
+              {
+                "id": "window.left",
+                "templateId": "cottage.window"
+              },
+              {
+                "id": "window.right",
+                "templateId": "cottage.window"
+              }
+            ],
+            "total": 11,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "cottage-chimney"
+              },
+              {
+                "id": "cottage-door"
+              },
+              {
+                "id": "cottage-roof"
+              },
+              {
+                "id": "cottage-timber-left"
+              },
+              {
+                "id": "cottage-timber-right"
+              },
+              {
+                "id": "cottage-wall-back"
+              },
+              {
+                "id": "cottage-wall-left"
+              },
+              {
+                "id": "cottage-wall-right"
+              },
+              {
+                "id": "cottage-window-left"
+              },
+              {
+                "id": "cottage-window-right"
+              }
+            ],
+            "total": 10,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [],
+            "total": 0,
+            "truncated": false,
+            "limit": 100
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "validate_asset",
+      "args": {
+        "assetId": "cottage.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+        "affectedIds": [],
+        "summary": "Document and assembly validation passed.",
+        "issues": [],
+        "data": {
+          "validation": "valid",
+          "scene": {
+            "id": "cottage.assembly",
+            "bounds": {
+              "min": [
+                -1.625,
+                0.005,
+                -1.275
+              ],
+              "max": [
+                1.625,
+                3.125,
+                1.38
+              ]
+            },
+            "triangleCount": 364,
+            "triangleBudget": 2000,
+            "remainingTriangleBudget": 1636,
+            "parts": {
+              "items": [
+                {
+                  "id": "chimney",
+                  "templateId": "cottage.chimney",
+                  "role": "structure.chimney",
+                  "bounds": {
+                    "min": [
+                      0.63,
+                      1.775,
+                      -0.47
+                    ],
+                    "max": [
+                      1.01,
+                      3.125,
+                      -0.09
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "door.front",
+                  "templateId": "cottage.door",
+                  "role": "structure.door",
+                  "bounds": {
+                    "min": [
+                      -0.38,
+                      0.005,
+                      1.18
+                    ],
+                    "max": [
+                      0.38,
+                      1.355,
+                      1.32
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "roof.main",
+                  "templateId": "cottage.roof",
+                  "role": "structure.roof",
+                  "bounds": {
+                    "min": [
+                      -1.625,
+                      1.675,
+                      -1.275
+                    ],
+                    "max": [
+                      1.625,
+                      2.725,
+                      1.275
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "timber.left",
+                  "templateId": "cottage.timber",
+                  "role": "structure.timber-frame",
+                  "bounds": {
+                    "min": [
+                      -1.13,
+                      0.005,
+                      1.1
+                    ],
+                    "max": [
+                      -0.97,
+                      1.955,
+                      1.38
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "timber.right",
+                  "templateId": "cottage.timber",
+                  "role": "structure.timber-frame",
+                  "bounds": {
+                    "min": [
+                      0.97,
+                      0.005,
+                      1.1
+                    ],
+                    "max": [
+                      1.13,
+                      1.955,
+                      1.38
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.back",
+                  "templateId": "cottage.wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.4,
+                      0.01,
+                      -1.21
+                    ],
+                    "max": [
+                      1.4,
+                      1.81,
+                      -0.99
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.front",
+                  "templateId": "cottage.wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.4,
+                      0.01,
+                      0.99
+                    ],
+                    "max": [
+                      1.4,
+                      1.81,
+                      1.21
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.left",
+                  "templateId": "cottage.side-wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      -1.51,
+                      0.01,
+                      -1.1
+                    ],
+                    "max": [
+                      -1.29,
+                      1.81,
+                      1.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "wall.right",
+                  "templateId": "cottage.side-wall",
+                  "role": "structure.wall",
+                  "bounds": {
+                    "min": [
+                      1.29,
+                      0.01,
+                      -1.1
+                    ],
+                    "max": [
+                      1.51,
+                      1.81,
+                      1.1
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "window.left",
+                  "templateId": "cottage.window",
+                  "role": "structure.window",
+                  "bounds": {
+                    "min": [
+                      -1.04,
+                      0.74,
+                      1.26
+                    ],
+                    "max": [
+                      -0.52,
+                      1.34,
+                      1.26
+                    ]
+                  },
+                  "visible": true
+                },
+                {
+                  "id": "window.right",
+                  "templateId": "cottage.window",
+                  "role": "structure.window",
+                  "bounds": {
+                    "min": [
+                      0.52,
+                      0.74,
+                      1.26
+                    ],
+                    "max": [
+                      1.04,
+                      1.34,
+                      1.26
+                    ]
+                  },
+                  "visible": true
+                }
+              ],
+              "total": 11,
+              "truncated": false,
+              "limit": 100
+            }
+          }
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "render_preview",
+      "args": {
+        "assetId": "cottage.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+        "affectedIds": [],
+        "summary": "Rendered the current canonical revision.",
+        "issues": [],
+        "data": {
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/render-manifest.json",
+          "contactSheetPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/contact-sheet.png",
+          "frames": [
+            {
+              "direction": "N",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/n.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 25,
+                  "minY": 34,
+                  "maxX": 102,
+                  "maxY": 121,
+                  "width": 78,
+                  "height": 88
+                },
+                "occupiedPixelCount": 6564,
+                "occupiedRatio": 0.400634765625,
+                "transparentPixelCount": 9820,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 4,
+                "minimumVerticalRunPixels": 52,
+                "representativeFeaturePixels": 73,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 9,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/ne.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 16,
+                  "minY": 19,
+                  "maxX": 113,
+                  "maxY": 121,
+                  "width": 98,
+                  "height": 103
+                },
+                "occupiedPixelCount": 7043,
+                "occupiedRatio": 0.42987060546875,
+                "transparentPixelCount": 9341,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 25,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 11,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "E",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/e.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 32,
+                  "minY": 28,
+                  "maxX": 95,
+                  "maxY": 121,
+                  "width": 64,
+                  "height": 94
+                },
+                "occupiedPixelCount": 5228,
+                "occupiedRatio": 0.319091796875,
+                "transparentPixelCount": 11156,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 61,
+                "representativeFeaturePixels": 45,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 10,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SE",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/se.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 16,
+                  "minY": 39,
+                  "maxX": 113,
+                  "maxY": 121,
+                  "width": 98,
+                  "height": 83
+                },
+                "occupiedPixelCount": 5917,
+                "occupiedRatio": 0.36114501953125,
+                "transparentPixelCount": 10467,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 23,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 11,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "S",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/s.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 25,
+                  "minY": 44,
+                  "maxX": 102,
+                  "maxY": 121,
+                  "width": 78,
+                  "height": 78
+                },
+                "occupiedPixelCount": 5101,
+                "occupiedRatio": 0.31134033203125,
+                "transparentPixelCount": 11283,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 4,
+                "minimumVerticalRunPixels": 31,
+                "representativeFeaturePixels": 12,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 9,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "SW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/sw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 14,
+                  "minY": 28,
+                  "maxX": 111,
+                  "maxY": 121,
+                  "width": 98,
+                  "height": 94
+                },
+                "occupiedPixelCount": 6011,
+                "occupiedRatio": 0.36688232421875,
+                "transparentPixelCount": 10373,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 12,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 12,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "W",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/w.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 32,
+                  "minY": 27,
+                  "maxX": 95,
+                  "maxY": 121,
+                  "width": 64,
+                  "height": 95
+                },
+                "occupiedPixelCount": 5346,
+                "occupiedRatio": 0.3262939453125,
+                "transparentPixelCount": 11038,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 3,
+                "minimumVerticalRunPixels": 61,
+                "representativeFeaturePixels": 29,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 10,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            },
+            {
+              "direction": "NW",
+              "path": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/nw.png",
+              "metrics": {
+                "occupiedBounds": {
+                  "minX": 14,
+                  "minY": 19,
+                  "maxX": 111,
+                  "maxY": 121,
+                  "width": 98,
+                  "height": 103
+                },
+                "occupiedPixelCount": 7047,
+                "occupiedRatio": 0.43011474609375,
+                "transparentPixelCount": 9337,
+                "clippedEdges": [],
+                "groundPixelY": 121,
+                "groundAnchorDeviationPixels": 0,
+                "minimumHorizontalRunPixels": 1,
+                "minimumVerticalRunPixels": 1,
+                "representativeFeaturePixels": 25,
+                "requiredFeatureEvidence": [
+                  {
+                    "partId": "chimney",
+                    "silhouetteWidthPixels": 12,
+                    "minimumPixels": 3,
+                    "passes": true
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "export_asset",
+      "args": {
+        "assetId": "cottage.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0",
+        "affectedIds": [],
+        "summary": "Exported the current canonical revision.",
+        "issues": [],
+        "data": {
+          "glbPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/cottage.rustic.glb",
+          "manifestPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/cottage.rustic/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/glb-manifest.json",
+          "manifest": {
+            "format": "glb",
+            "byteLength": 33784,
+            "nodeNames": [
+              "chimney",
+              "cottage.rustic",
+              "door.front",
+              "roof.main",
+              "timber.left",
+              "timber.right",
+              "wall.back",
+              "wall.front",
+              "wall.left",
+              "wall.right",
+              "window.left",
+              "window.right"
+            ],
+            "materialNames": [
+              "cloth.umber",
+              "iron.weathered",
+              "stone.lime",
+              "wood.dark",
+              "wood.oak"
+            ],
+            "unit": "meter",
+            "reloadNodeNames": [
+              "AuxScene",
+              "chimney",
+              "cottage.rustic",
+              "door.front",
+              "roof.main",
+              "timber.left",
+              "timber.right",
+              "wall.back",
+              "wall.front",
+              "wall.left",
+              "wall.right",
+              "window.left",
+              "window.right"
+            ],
+            "reloadMaterialNames": [
+              "cloth.umber",
+              "iron.weathered",
+              "stone.lime",
+              "wood.dark",
+              "wood.oak"
+            ],
+            "materialNamesMatch": true,
+            "materialPropertiesMatch": true,
+            "materialPropertyMismatchNames": [],
+            "maximumMaterialPropertyDeviation": 0,
+            "materialPropertyTolerance": 0.00001,
+            "semanticNodeCount": 12,
+            "reloadSemanticNodeCount": 12,
+            "missingSemanticNodeNames": [],
+            "unexpectedSemanticNodeNames": [],
+            "transformMismatchCount": 0,
+            "scaleMismatchCount": 0,
+            "maximumPositionDeviation": 0,
+            "maximumRotationDeviationRadians": 0,
+            "maximumScaleDeviation": 0,
+            "transformTolerance": 0.00001,
+            "bounds": {
+              "sourceMin": [
+                -1.625,
+                0.004999976158142072,
+                -1.274999976158142
+              ],
+              "sourceMax": [
+                1.625,
+                3.125000011920929,
+                1.3800000005960464
+              ],
+              "reloadMin": [
+                -1.625,
+                0.004999976158142072,
+                -1.274999976158142
+              ],
+              "reloadMax": [
+                1.625,
+                3.125000011920929,
+                1.3800000005960464
+              ],
+              "maximumDeviation": 0,
+              "tolerance": 0.000032500000000000004,
+              "matches": true
+            },
+            "unitScaleDeviation": 0,
+            "unitScaleTolerance": 0.000032500000000000004,
+            "textureCount": 0,
+            "unsupportedMaterialCount": 0,
+            "unsupportedShaderCount": 0,
+            "skinCount": 0,
+            "cameraCount": 0,
+            "lightCount": 0,
+            "animationCount": 0
+          }
+        }
+      },
+      "isError": false
+    }
+  ]
+}

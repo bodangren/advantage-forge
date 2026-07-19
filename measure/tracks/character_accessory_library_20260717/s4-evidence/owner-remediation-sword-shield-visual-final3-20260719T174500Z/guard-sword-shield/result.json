@@ -1,0 +1,59 @@
+{
+  "loadoutId": "guard-sword-shield",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.6efbb7c5cf4df26768d2017fd49ccb6bc2d66d1e81931c13e58f4993de8e6335",
+  "idleRevisionId": "revision.95a441396c6cbbf1fb7ed817bc13ddd5441913dc0ee27790664816d2fea64f56",
+  "actionRevisionId": "revision.9913bf0f51d90c1d56be15c9eb243cc7530be072af6b03cd3f30b5c42646d97a",
+  "unequippedRevisionId": "revision.f44c507d401fd752853e09fc561194ea814629bb2f96326e2da70157492c0373",
+  "equippedPartIds": [
+    "accessory.main-hand",
+    "accessory.off-hand"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "blade",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 10,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.sword"
+    },
+    {
+      "id": "shield-face",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 24,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.off-hand",
+      "templateId": "equipment.shield"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "SW: blade OKLab 0.043311256321402584 < 0.05"
+    ]
+  },
+  "toolCallCount": 31
+}

@@ -1,0 +1,122 @@
+Fantasy Asset Forge
+revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b
+Export GLB
+REFERENCE ASSETS
+4
+Rustic Adventurer
+19 parts · adventurer
+Iron-Banded Crate
+3 parts · crate
+Roadside Tree
+8 parts · tree
+Timber Cottage
+11 parts · cottage
+3D Inspector
+Contact Sheet
+Actual 128px
+Compare
+Pose
+idle
+action
+Variant
+short
+tall
+broad
+slender
+equipped
+unequipped
+Part
+foot.left
+foot.right
+forearm.left
+forearm.right
+hair
+hand.left
+hand.right
+head
+pelvis
+shield
+shin.left
+shin.right
+sword
+thigh.left
+thigh.right
+torso
+tunic
+upper-arm.left
+upper-arm.right
+Rustic Adventurer
+19 semantic parts
+1,440 triangles
+SEMANTIC EVIDENCE
+Asset
+adventurer.rustic
+Revision
+revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b
+Kit
+rustic-human
+Parts
+19
+Ports
+53
+Triangles
+1,440
+Bounds
+1.36 × 3.02 × 0.68m
+Pose
+idle
+Variant
+equipped
+Selected part
+foot.left
+Template
+human.foot
+Handedness
+left
+Part ports
+ankle.attach [anatomy.attach] @ 0.00, 0.09, -0.07
+Materials
+leather.dark
+PIXEL VALIDATION
+N frame
+46×95px · ground 0px · feature 5px · clipped 0
+NE frame
+41×97px · ground 0px · feature 6px · clipped 0
+E frame
+24×96px · ground 0px · feature 7px · clipped 0
+SE frame
+35×95px · ground 0px · feature 5px · clipped 0
+S frame
+46×93px · ground 0px · feature 5px · clipped 0
+SW frame
+41×96px · ground 0px · feature 5px · clipped 0
+W frame
+24×96px · ground 0px · feature 7px · clipped 0
+NW frame
+35×97px · ground 0px · feature 5px · clipped 0
+schema valid
+128 × 128
+8 directions
+No Blender · closed semantic grammar
+
+--- buttons ---
+Export GLB
+Rustic Adventurer19 parts · adventurer
+Iron-Banded Crate3 parts · crate
+Roadside Tree8 parts · tree
+Timber Cottage11 parts · cottage
+3D Inspector
+Contact Sheet
+Actual 128px
+Compare
+
+--- console ---
+debug: [vite] connecting...
+debug: [vite] connected.
+warning: [.WebGL-0x3e7400161400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+warning: [.WebGL-0x3e7400161400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+warning: [.WebGL-0x3e7400161400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+warning: [.WebGL-0x3e7400161400]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+
+--- failures ---
+

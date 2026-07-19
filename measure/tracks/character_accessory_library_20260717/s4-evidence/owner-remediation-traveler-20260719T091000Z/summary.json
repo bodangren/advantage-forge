@@ -1,0 +1,81 @@
+[
+  {
+    "loadoutId": "traveler",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.4f7fee5d52c8cf1bdcc0f757dd0f1968ef474f9f21cb0df0146a59e59b6e90cf",
+    "idleRevisionId": "revision.5e4102188dc11ab1752fb9e70a11d622816e273975a637062548a0bf239713f0",
+    "actionRevisionId": "revision.830ab505228f613922a88eabef7a69786ba37a7b6c3baa974f73d98a171b06f2",
+    "unequippedRevisionId": "revision.3e76cfff507fed820ca605526b5a5a4b82bdba3cacd07d8b3519c05f59159bf0",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 12,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "pack-body",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 26,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.backpack"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "N: pack-body occlusion 0.8833333333333333 > 0.8"
+      ]
+    },
+    "toolCallCount": 37
+  }
+]

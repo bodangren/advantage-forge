@@ -1,0 +1,76 @@
+[
+  {
+    "loadoutId": "traveler",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.a9497e5465e6a0afd7a88a6ed0cb54894480077d8e9d8d3bd8f643fd8230bf8f",
+    "idleRevisionId": "revision.16a431423b614a8aab99cb56d822f7cd25911d0570c166b6cfe77f356eaf1036",
+    "actionRevisionId": "revision.243dd8e178e73fffc954f60f231d5c98714d760c6345071eddf6a4bb7f092d99",
+    "unequippedRevisionId": "revision.46b2851733b041f99b65b02a94695926413cd6484649ee8835feb81a349a06d0",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.9,
+        "minimumOklabDistance": 0.02,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 2,
+        "maximumOcclusionRatio": 0.9,
+        "minimumOklabDistance": 0.02,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "pack-body",
+        "intendedDirections": [
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W"
+        ],
+        "minimumPixelArea": 26,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.9,
+        "minimumOklabDistance": 0.02,
+        "partId": "accessory.back",
+        "templateId": "equipment.backpack"
+      }
+    ],
+    "acceptance": {
+      "passes": true,
+      "issues": []
+    },
+    "toolCallCount": 37
+  }
+]

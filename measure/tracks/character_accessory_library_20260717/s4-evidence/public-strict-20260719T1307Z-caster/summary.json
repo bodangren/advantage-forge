@@ -1,0 +1,12 @@
+[
+  {
+    "loadoutId": "caster",
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "Error: apply_accessory_operation failed: [{\"code\":\"INVALID_ASSEMBLY\",\"path\":\"$.operation.equipmentSlot\",\"message\":\"Rigid accessories 'accessory.back' and 'accessory.waist' intersect by 0.240, above 0.180.\",\"severity\":\"error\",\"actual\":{\"accessoryIssueCode\":\"ACCESSORY_INTERSECTION_EXCEEDED\",\"domainPath\":\"parts[20].transform\"},\"guidance\":\"Adjust bounded transforms, layers, or compatible equipment; cloth simulation is not available.\"}]\n    at call (file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:173:17)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:242:9"
+      ]
+    },
+    "toolCallCount": 24
+  }
+]

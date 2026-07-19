@@ -1,0 +1,77 @@
+{
+  "loadoutId": "traveler",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.7a01afbe6df1b5ced3d80f625c480427addf1ba3748c1d87f43b48518d5172bf",
+  "idleRevisionId": "revision.c260235f3d4c953b9592a2a7aec59663aeab4216f54b3c8c8c3be5c03bde78a7",
+  "actionRevisionId": "revision.fb15722fbbde8dcb05dab93382679161e9dcd9b119f757b68a07e6557fe57249",
+  "unequippedRevisionId": "revision.f44c507d401fd752853e09fc561194ea814629bb2f96326e2da70157492c0373",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.back"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "hood-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 20,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.head",
+      "templateId": "equipment.hood.cloth"
+    },
+    {
+      "id": "staff-crook",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 12,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.staff"
+    },
+    {
+      "id": "pack-body",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 26,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.back",
+      "templateId": "equipment.backpack"
+    }
+  ],
+  "acceptance": {
+    "passes": true,
+    "issues": []
+  },
+  "toolCallCount": 37
+}

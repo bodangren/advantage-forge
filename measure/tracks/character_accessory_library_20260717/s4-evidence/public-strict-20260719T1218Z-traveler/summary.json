@@ -1,0 +1,79 @@
+[
+  {
+    "loadoutId": "traveler",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.e642b50f4ad79980042ad7e40cca63a4bdef2e5d1c1fa9fadddb9f946f63ddc1",
+    "idleRevisionId": "revision.d7a3b3ac54937074c5fd8e7c91b942e26f9384c05e8cdca9b82225a7661bb9dc",
+    "actionRevisionId": "revision.205b15d9a56515a033b950f513c75b5804afd0a98af48cba7c27df3e4fc39787",
+    "unequippedRevisionId": "revision.6bd2540420f9f043def271da977abf41b2286c2a53bf03090a2f14835df5cb39",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 2,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "pack-body",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 26,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.backpack"
+      }
+    ],
+    "acceptance": {
+      "passes": true,
+      "issues": []
+    },
+    "toolCallCount": 37
+  }
+]

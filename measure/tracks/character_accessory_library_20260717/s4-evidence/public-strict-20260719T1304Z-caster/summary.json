@@ -1,0 +1,12 @@
+[
+  {
+    "loadoutId": "caster",
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "ZodError: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"nonoptional\",\n    \"path\": [\n      \"data\"\n    ],\n    \"message\": \"Invalid input: expected nonoptional, received undefined\"\n  }\n]\n    at call (file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:170:41)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:242:9"
+      ]
+    },
+    "toolCallCount": 23
+  }
+]

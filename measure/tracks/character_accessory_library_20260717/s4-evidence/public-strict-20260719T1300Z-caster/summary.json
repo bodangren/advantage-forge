@@ -1,0 +1,133 @@
+[
+  {
+    "loadoutId": "caster",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.b235eef199f55e8d62e0a5bd22b60f92cdb15e00fce8c78e8ef640ae86be2fa2",
+    "idleRevisionId": "revision.7d021f11bb101401a65b7d5a04feee69bed42e10e47b1666aa57daf23a818ce8",
+    "actionRevisionId": "revision.d85f2ca77fa2e959feba614100337dd873f09e006f56cdb0497370f411edf2d5",
+    "unequippedRevisionId": "revision.0396efbf70b9cf63cb1cdf5a44fbf95224e194575c5e4934f1df3def28316d8a",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back",
+      "accessory.waist"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 2,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "cape-tail",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 24,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.cape"
+      },
+      {
+        "id": "pouch-flap",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.waist",
+        "templateId": "equipment.pouch.belt"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "N: hood-outline OKLab 0.02106298584483637 < 0.05",
+        "N: cape-tail occlusion 0.8818681318681318 > 0.8",
+        "NE: hood-outline OKLab 0.019294204308948442 < 0.05",
+        "NE: cape-tail occlusion 0.9491525423728814 > 0.8",
+        "E: hood-outline OKLab 0.0182620286671085 < 0.05",
+        "SE: hood-outline OKLab 0.020312605066429682 < 0.05",
+        "SE: pouch-flap occlusion 0.8290322580645162 > 0.8",
+        "S: hood-outline OKLab 0.01886171070261611 < 0.05",
+        "S: cape-tail OKLab 0.04324415308895124 < 0.05",
+        "S: pouch-flap visible area 0 < 10",
+        "S: pouch-flap width null < 3",
+        "S: pouch-flap occlusion 1 > 0.8",
+        "S: pouch-flap OKLab 0 < 0.05",
+        "SW: hood-outline OKLab 0.024766298111490784 < 0.05",
+        "SW: pouch-flap visible area 8 < 10",
+        "SW: pouch-flap occlusion 0.9746031746031746 > 0.8",
+        "W: hood-outline OKLab 0.020080862118963316 < 0.05",
+        "NW: hood-outline OKLab 0.01827903454916791 < 0.05",
+        "N: hood-outline OKLab 0.020079992262277264 < 0.05",
+        "NE: hood-outline OKLab 0.020864754704104545 < 0.05",
+        "NE: cape-tail occlusion 0.8452914798206278 > 0.8",
+        "E: hood-outline OKLab 0.017841484995947204 < 0.05",
+        "SE: hood-outline OKLab 0.01738713321375341 < 0.05",
+        "S: hood-outline OKLab 0.020747743266104516 < 0.05",
+        "S: cape-tail OKLab 0.046438315108370556 < 0.05",
+        "S: pouch-flap visible area 0 < 10",
+        "S: pouch-flap width null < 3",
+        "S: pouch-flap occlusion 1 > 0.8",
+        "S: pouch-flap OKLab 0 < 0.05",
+        "SW: hood-outline OKLab 0.022655386547884602 < 0.05",
+        "SW: pouch-flap occlusion 0.8583333333333334 > 0.8",
+        "W: hood-outline OKLab 0.04690941538666888 < 0.05",
+        "NW: hood-outline OKLab 0.018438428077216268 < 0.05"
+      ]
+    },
+    "toolCallCount": 43
+  }
+]

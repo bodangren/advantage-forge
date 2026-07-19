@@ -1,0 +1,70 @@
+{
+  "loadoutId": "traveler",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.70bb82510da2ab65eb5dc6f15d79e77d45d6ddff50b835b55f3496de759c9df0",
+  "idleRevisionId": "revision.1ce3788f9c19fa35984239bd113302e7bb3191b8e881aafa4b05c4b03d4a4349",
+  "actionRevisionId": "revision.120be0d30c69f9df0bf6d7e77c1d679340abfb9385347999a005c93d10c62b50",
+  "unequippedRevisionId": "revision.bd149392eb2947cd6f8cdb29bd2fc7e4f91fabcd26994d6676bc51c67c3df643",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.back"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "hood-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 20,
+      "minimumWidthPixels": 3,
+      "partId": "accessory.head",
+      "templateId": "equipment.hood.cloth"
+    },
+    {
+      "id": "staff-crook",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 10,
+      "minimumWidthPixels": 2,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.staff"
+    },
+    {
+      "id": "pack-body",
+      "intendedDirections": [
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W"
+      ],
+      "minimumPixelArea": 26,
+      "minimumWidthPixels": 4,
+      "partId": "accessory.back",
+      "templateId": "equipment.backpack"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "SW: staff-crook OKLab 0.0262035468048403 < 0.05"
+    ]
+  },
+  "toolCallCount": 37
+}

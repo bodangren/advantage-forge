@@ -1,0 +1,97 @@
+{
+  "loadoutId": "guard",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.4f7fee5d52c8cf1bdcc0f757dd0f1968ef474f9f21cb0df0146a59e59b6e90cf",
+  "idleRevisionId": "revision.fb5e927e139da89294181edac462f8b758a61deca0ab72cf31d4fdc2df4aa28d",
+  "actionRevisionId": "revision.80a6a46bf1ed307dc5f7a6f4c2e4577a48a6e4d0f49fb0e4e780ebd9d061554d",
+  "unequippedRevisionId": "revision.3e76cfff507fed820ca605526b5a5a4b82bdba3cacd07d8b3519c05f59159bf0",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.off-hand",
+    "accessory.body"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "helmet-crown",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 18,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.head",
+      "templateId": "equipment.helmet.iron"
+    },
+    {
+      "id": "spear-tip",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 10,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.spear"
+    },
+    {
+      "id": "kite-point",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.off-hand",
+      "templateId": "equipment.shield.kite"
+    },
+    {
+      "id": "mail-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.body",
+      "templateId": "equipment.armor.mail"
+    }
+  ],
+  "acceptance": {
+    "passes": true,
+    "issues": []
+  },
+  "toolCallCount": 43
+}

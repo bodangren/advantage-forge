@@ -1,0 +1,15 @@
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/crate.rustic.glb
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/glb-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.453647cfe7d1b945148666d971c21975926f2348ff00704d0d1faacdd431d3e6/render-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b/adventurer.rustic.glb
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b/glb-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b/render-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/cottage.rustic.glb
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/glb-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.e8c3ab466df9cd4c960d7fcea8a944a63c6d92572832b6120d243c84afdcc1a0/render-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/glb-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/render-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.f3e0fc7bbc3c3a2d6fc99f2360d5082bd9413321f87306c8bec9f059e1ddcdfb/tree.rustic.glb
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7/adventurer.rustic.glb
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7/glb-manifest.json
+/home/daniel-bo/Desktop/fantasy-asset-forge/benchmark-evidence/20260717T104617Z/mcp-artifacts/revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7/render-manifest.json

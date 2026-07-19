@@ -1,0 +1,436 @@
+[
+  {
+    "loadoutId": "guard",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.27dc51e6565d28bbb8125d9c808a46da3a7a6bdbf67a939acd262dc2aa5cec32",
+    "idleRevisionId": "revision.40cbc0bb07bacd3402ab60c35eaac264d5a6bbc3d101f4e05cee0d2cb5b309c1",
+    "actionRevisionId": "revision.71412d3fec672eabc02734cd4ec598c68c57accc79ca15edccaee07f5ef01bb3",
+    "unequippedRevisionId": "revision.2cd972a264cc58807ab5336447e4533658313ba21b7a7d2cbf25e6637753033d",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.off-hand",
+      "accessory.body"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "helmet-crown",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 18,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.helmet.iron"
+      },
+      {
+        "id": "spear-tip",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.spear"
+      },
+      {
+        "id": "kite-point",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 30,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.off-hand",
+        "templateId": "equipment.shield.kite"
+      },
+      {
+        "id": "mail-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 30,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.body",
+        "templateId": "equipment.armor.mail"
+      }
+    ],
+    "acceptance": {
+      "passes": true,
+      "issues": []
+    },
+    "toolCallCount": 43
+  },
+  {
+    "loadoutId": "traveler",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.27dc51e6565d28bbb8125d9c808a46da3a7a6bdbf67a939acd262dc2aa5cec32",
+    "idleRevisionId": "revision.8d20b22ab4adb540057e3878e24e4855fd2c73a9eb06be4ea1e4a85766647c42",
+    "actionRevisionId": "revision.05af36426e3247ebfa4a9b3beae76b61532617becc1c73f10533a3c2be8fa78f",
+    "unequippedRevisionId": "revision.2cd972a264cc58807ab5336447e4533658313ba21b7a7d2cbf25e6637753033d",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 12,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "pack-body",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 26,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.backpack"
+      }
+    ],
+    "acceptance": {
+      "passes": true,
+      "issues": []
+    },
+    "toolCallCount": 37
+  },
+  {
+    "loadoutId": "ranger",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.27dc51e6565d28bbb8125d9c808a46da3a7a6bdbf67a939acd262dc2aa5cec32",
+    "idleRevisionId": "revision.b4e607ea0e70ab41e3b47429ab1ba833d413e56be3aae1df045bfbf192718be4",
+    "actionRevisionId": "revision.7dcfbd0ed5646a5b976ae29d6efbe1a5a729a45d38c29ecd2f42c3acf78eec45",
+    "unequippedRevisionId": "revision.2cd972a264cc58807ab5336447e4533658313ba21b7a7d2cbf25e6637753033d",
+    "equippedPartIds": [
+      "accessory.main-hand",
+      "accessory.body",
+      "accessory.back",
+      "accessory.waist"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "spear-tip",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.spear"
+      },
+      {
+        "id": "armor-shoulder",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 28,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.body",
+        "templateId": "equipment.armor.leather"
+      },
+      {
+        "id": "quiver-rim",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 12,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.quiver"
+      },
+      {
+        "id": "pouch-flap",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.waist",
+        "templateId": "equipment.pouch.belt"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "S: armor-shoulder occlusion 0.8015503875968992 > 0.8",
+        "NW: quiver-rim occlusion 0.8029556650246306 > 0.8"
+      ]
+    },
+    "toolCallCount": 43
+  },
+  {
+    "loadoutId": "caster",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.27dc51e6565d28bbb8125d9c808a46da3a7a6bdbf67a939acd262dc2aa5cec32",
+    "idleRevisionId": "revision.e8a26fd0bf8c6c4652d53c06d23071753dc0989b8b88cd00ef910f5d536f5563",
+    "actionRevisionId": "revision.6eb6f4d483d1b9d6690dafdf9eb20fd33798a2836f0cf2a40de6df228bf0c791",
+    "unequippedRevisionId": "revision.2cd972a264cc58807ab5336447e4533658313ba21b7a7d2cbf25e6637753033d",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.back",
+      "accessory.waist"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "hood-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 20,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.hood.cloth"
+      },
+      {
+        "id": "staff-crook",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 12,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.staff"
+      },
+      {
+        "id": "cape-tail",
+        "intendedDirections": [
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 24,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.cape"
+      },
+      {
+        "id": "pouch-flap",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.waist",
+        "templateId": "equipment.pouch.belt"
+      }
+    ],
+    "acceptance": {
+      "passes": true,
+      "issues": []
+    },
+    "toolCallCount": 43
+  },
+  {
+    "loadoutId": "guard-sword-shield",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.27dc51e6565d28bbb8125d9c808a46da3a7a6bdbf67a939acd262dc2aa5cec32",
+    "idleRevisionId": "revision.61e57e014f4c54318081c37df287b6caaba456c94f2d41825810f9d489093d32",
+    "actionRevisionId": "revision.60b1a491d65e39aa8ec14ca8e58e5f2e04d9c44ed8fdcf4ad02ad9dd63f7e90d",
+    "unequippedRevisionId": "revision.2cd972a264cc58807ab5336447e4533658313ba21b7a7d2cbf25e6637753033d",
+    "equippedPartIds": [
+      "accessory.main-hand",
+      "accessory.off-hand"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "blade",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.sword"
+      },
+      {
+        "id": "shield-face",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 24,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.off-hand",
+        "templateId": "equipment.shield"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "W: blade visible area 6 < 10",
+        "W: blade width 2 < 3",
+        "W: blade occlusion 0.9433962264150944 > 0.8",
+        "W: shield-face OKLab 0.030826122386114485 < 0.05",
+        "NW: shield-face OKLab 0.04741568003871011 < 0.05",
+        "W: blade visible area 0 < 10",
+        "W: blade width null < 3",
+        "W: blade occlusion 1 > 0.8",
+        "W: blade OKLab 0 < 0.05"
+      ]
+    },
+    "toolCallCount": 31
+  }
+]

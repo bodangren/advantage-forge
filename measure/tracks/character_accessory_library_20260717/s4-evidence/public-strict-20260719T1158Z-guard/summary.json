@@ -1,0 +1,105 @@
+[
+  {
+    "loadoutId": "guard",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.e99d5fbb19df408cf3f2125acf48e208e3cbd48272eb02e3f909f98b1df1ac7e",
+    "idleRevisionId": "revision.8e3db98cb380696d74ec85790d5432639a68dd7e5385ca9c01766165005e5565",
+    "actionRevisionId": "revision.8d934297972c76a6b41b46b9fd364aedd5a924118efa12b2b33300cf1a6fd446",
+    "unequippedRevisionId": "revision.8c030aa3f6c9a11ef6f10aa5ef688d3f6e7ac13fa9fd9a1f4080d71635ca327d",
+    "equippedPartIds": [
+      "accessory.head",
+      "accessory.main-hand",
+      "accessory.off-hand",
+      "accessory.body"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "helmet-crown",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 18,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.head",
+        "templateId": "equipment.helmet.iron"
+      },
+      {
+        "id": "spear-tip",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 8,
+        "minimumWidthPixels": 2,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.spear"
+      },
+      {
+        "id": "kite-point",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 30,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.off-hand",
+        "templateId": "equipment.shield.kite"
+      },
+      {
+        "id": "mail-outline",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 30,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.body",
+        "templateId": "equipment.armor.mail"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "SE: kite-point visible area 17 < 30",
+        "SE: kite-point width 3 < 4",
+        "SE: kite-point occlusion 0.8172043010752688 > 0.8",
+        "NW: spear-tip OKLab 0.009398708376730569 < 0.05",
+        "E: spear-tip OKLab 0.03157767792503926 < 0.05"
+      ]
+    },
+    "toolCallCount": 43
+  }
+]

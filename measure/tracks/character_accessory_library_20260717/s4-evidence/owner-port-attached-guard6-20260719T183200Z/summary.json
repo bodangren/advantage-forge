@@ -1,0 +1,12 @@
+[
+  {
+    "loadoutId": "guard",
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "SyntaxError: Unexpected token 'p', \"page.goto:\"... is not valid JSON\n    at JSON.parse (<anonymous>)\n    at call (file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:178:52)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/daniel-bo/Desktop/fantasy-asset-forge/scripts/build-accessory-loadouts.mjs:189:7"
+      ]
+    },
+    "toolCallCount": 2
+  }
+]

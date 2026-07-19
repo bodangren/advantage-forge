@@ -1,0 +1,107 @@
+[
+  {
+    "loadoutId": "ranger",
+    "modelBoundary": "public MCP tools only",
+    "baselineRevisionId": "revision.00d49f10ff321765a55e5898d8adc9924935a8ada2db5bede50f31c3cf8321f4",
+    "idleRevisionId": "revision.78f1f7c67fc0c7c008568a43276f8c451e9a88b8a8a4ab72a43ee33ff66a8915",
+    "actionRevisionId": "revision.1da2f93f8de0e432827ba5456a19660b2754db77ec1147ae8362bff7920e0284",
+    "unequippedRevisionId": "revision.97cdbd03b646d6b47894b85ecdc33bb85cb8279198d0024f69c40edd54d92575",
+    "equippedPartIds": [
+      "accessory.main-hand",
+      "accessory.body",
+      "accessory.back",
+      "accessory.waist"
+    ],
+    "expectedFeatures": [
+      {
+        "id": "spear-tip",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 8,
+        "minimumWidthPixels": 2,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.main-hand",
+        "templateId": "equipment.spear"
+      },
+      {
+        "id": "armor-shoulder",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 28,
+        "minimumWidthPixels": 4,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.body",
+        "templateId": "equipment.armor.leather"
+      },
+      {
+        "id": "quiver-rim",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 12,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.back",
+        "templateId": "equipment.quiver"
+      },
+      {
+        "id": "pouch-flap",
+        "intendedDirections": [
+          "N",
+          "NE",
+          "E",
+          "SE",
+          "S",
+          "SW",
+          "W",
+          "NW"
+        ],
+        "minimumPixelArea": 10,
+        "minimumWidthPixels": 3,
+        "maximumOcclusionRatio": 0.8,
+        "minimumOklabDistance": 0.05,
+        "partId": "accessory.waist",
+        "templateId": "equipment.pouch.belt"
+      }
+    ],
+    "acceptance": {
+      "passes": false,
+      "issues": [
+        "SE: pouch-flap occlusion 0.8211382113821138 > 0.8",
+        "S: pouch-flap occlusion 0.8307692307692307 > 0.8",
+        "SW: spear-tip occlusion 0.8854166666666666 > 0.8",
+        "SW: spear-tip OKLab 0.046643281992922454 < 0.05",
+        "SW: pouch-flap occlusion 0.8414634146341463 > 0.8",
+        "S: pouch-flap occlusion 0.8421052631578947 > 0.8",
+        "W: spear-tip OKLab 0.027171000725556727 < 0.05"
+      ]
+    },
+    "toolCallCount": 43
+  }
+]

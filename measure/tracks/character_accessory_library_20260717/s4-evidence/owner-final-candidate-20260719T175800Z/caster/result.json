@@ -1,0 +1,94 @@
+{
+  "loadoutId": "caster",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.7a01afbe6df1b5ced3d80f625c480427addf1ba3748c1d87f43b48518d5172bf",
+  "idleRevisionId": "revision.01429fd599f5f2123724e1a1811f4619487746ee632d868833f02826f43356d6",
+  "actionRevisionId": "revision.b2a268178dc36737986ba358d5b63882a15fd13a6ee2e70342d323885dbc722f",
+  "unequippedRevisionId": "revision.f44c507d401fd752853e09fc561194ea814629bb2f96326e2da70157492c0373",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.back",
+    "accessory.waist"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "hood-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 20,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.head",
+      "templateId": "equipment.hood.cloth"
+    },
+    {
+      "id": "staff-crook",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 12,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.staff"
+    },
+    {
+      "id": "cape-tail",
+      "intendedDirections": [
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 24,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.back",
+      "templateId": "equipment.cape"
+    },
+    {
+      "id": "pouch-flap",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 10,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.waist",
+      "templateId": "equipment.pouch.belt"
+    }
+  ],
+  "acceptance": {
+    "passes": true,
+    "issues": []
+  },
+  "toolCallCount": 43
+}

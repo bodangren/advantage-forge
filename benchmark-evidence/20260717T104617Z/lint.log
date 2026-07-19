@@ -1,0 +1,4 @@
+$ eslint . && dependency-cruiser src --config dependency-cruiser.config.mjs
+
+✔ no dependency violations found (50 modules, 83 dependencies cruised)
+

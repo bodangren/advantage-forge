@@ -1,0 +1,383 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.846a8f507632044c8dbb44ba2d96c74ea658f4cf177d2054347edabf88f5f173",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 34,
+          "minY": 35,
+          "maxX": 92,
+          "maxY": 121,
+          "width": 59,
+          "height": 87
+        },
+        "occupiedPixelCount": 1979,
+        "occupiedRatio": 0.12078857421875,
+        "transparentPixelCount": 14405,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 334,
+            "visiblePixelArea": 334,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 35,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 47,
+          "minY": 31,
+          "maxX": 80,
+          "maxY": 121,
+          "width": 34,
+          "height": 91
+        },
+        "occupiedPixelCount": 1601,
+        "occupiedRatio": 0.09771728515625,
+        "transparentPixelCount": 14783,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 331,
+            "visiblePixelArea": 331,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 31,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 3,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "E",
+      "path": "e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 52,
+          "minY": 33,
+          "maxX": 75,
+          "maxY": 121,
+          "width": 24,
+          "height": 89
+        },
+        "occupiedPixelCount": 1094,
+        "occupiedRatio": 0.0667724609375,
+        "transparentPixelCount": 15290,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 221,
+            "visiblePixelArea": 221,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 33,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 35,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 52,
+          "height": 87
+        },
+        "occupiedPixelCount": 1588,
+        "occupiedRatio": 0.096923828125,
+        "transparentPixelCount": 14796,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 2,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 332,
+            "visiblePixelArea": 332,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 35,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "S",
+      "path": "s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 35,
+          "minY": 37,
+          "maxX": 93,
+          "maxY": 121,
+          "width": 59,
+          "height": 85
+        },
+        "occupiedPixelCount": 1848,
+        "occupiedRatio": 0.11279296875,
+        "transparentPixelCount": 14536,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 5,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 348,
+            "visiblePixelArea": 348,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 37,
+          "centerDeviationPixels": 0.5,
+          "heightDeviationPixels": 3,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 47,
+          "minY": 34,
+          "maxX": 80,
+          "maxY": 121,
+          "width": 34,
+          "height": 88
+        },
+        "occupiedPixelCount": 1507,
+        "occupiedRatio": 0.09197998046875,
+        "transparentPixelCount": 14877,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 331,
+            "visiblePixelArea": 331,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 34,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "W",
+      "path": "w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 52,
+          "minY": 35,
+          "maxX": 75,
+          "maxY": 121,
+          "width": 24,
+          "height": 87
+        },
+        "occupiedPixelCount": 1086,
+        "occupiedRatio": 0.0662841796875,
+        "transparentPixelCount": 15298,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 7,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 221,
+            "visiblePixelArea": 221,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 35,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 38,
+          "minY": 33,
+          "maxX": 89,
+          "maxY": 121,
+          "width": 52,
+          "height": 89
+        },
+        "occupiedPixelCount": 1691,
+        "occupiedRatio": 0.10321044921875,
+        "transparentPixelCount": 14693,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 2,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 16,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 333,
+            "visiblePixelArea": 333,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 33,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03174939637768601
+        }
+      }
+    }
+  ],
+  "contactSheetPath": "contact-sheet.png"
+}

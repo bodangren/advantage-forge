@@ -1,0 +1,112 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+  "glbPath": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/artifacts/reference/adventurer.rustic/revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7/adventurer.rustic.glb",
+  "format": "glb",
+  "byteLength": 54336,
+  "nodeNames": [
+    "adventurer.rustic",
+    "foot.left",
+    "foot.right",
+    "forearm.left",
+    "forearm.right",
+    "hair",
+    "hand.left",
+    "hand.right",
+    "head",
+    "pelvis",
+    "shin.left",
+    "shin.right",
+    "thigh.left",
+    "thigh.right",
+    "torso",
+    "tunic",
+    "upper-arm.left",
+    "upper-arm.right"
+  ],
+  "materialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "leather.dark",
+    "skin.warm"
+  ],
+  "unit": "meter",
+  "reloadNodeNames": [
+    "AuxScene",
+    "adventurer.rustic",
+    "foot.left",
+    "foot.right",
+    "forearm.left",
+    "forearm.right",
+    "hair",
+    "hand.left",
+    "hand.right",
+    "head",
+    "pelvis",
+    "shin.left",
+    "shin.right",
+    "thigh.left",
+    "thigh.right",
+    "torso",
+    "tunic",
+    "upper-arm.left",
+    "upper-arm.right"
+  ],
+  "reloadMaterialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "leather.dark",
+    "skin.warm"
+  ],
+  "materialNamesMatch": true,
+  "materialPropertiesMatch": true,
+  "materialPropertyMismatchNames": [],
+  "maximumMaterialPropertyDeviation": 0,
+  "materialPropertyTolerance": 0.00001,
+  "semanticNodeCount": 18,
+  "reloadSemanticNodeCount": 18,
+  "missingSemanticNodeNames": [],
+  "unexpectedSemanticNodeNames": [],
+  "transformMismatchCount": 0,
+  "scaleMismatchCount": 0,
+  "maximumPositionDeviation": 0,
+  "maximumRotationDeviationRadians": 4.2146848510894035e-8,
+  "maximumScaleDeviation": 0,
+  "transformTolerance": 0.00001,
+  "bounds": {
+    "sourceMin": [
+      -1.2329729347341534,
+      -0.6795584227428222,
+      -0.1826385259628296
+    ],
+    "sourceMax": [
+      1.0517073110789021,
+      2.3300000005960464,
+      0.2550000023841858
+    ],
+    "reloadMin": [
+      -1.2329729347341534,
+      -0.6795584227428222,
+      -0.1826385259628296
+    ],
+    "reloadMax": [
+      1.0517073110789021,
+      2.3300000005960464,
+      0.2550000023841858
+    ],
+    "maximumDeviation": 0,
+    "tolerance": 0.000030095584233388687,
+    "matches": true
+  },
+  "unitScaleDeviation": 0,
+  "unitScaleTolerance": 0.000030095584233388687,
+  "textureCount": 0,
+  "unsupportedMaterialCount": 0,
+  "unsupportedShaderCount": 0,
+  "skinCount": 0,
+  "cameraCount": 0,
+  "lightCount": 0,
+  "animationCount": 0
+}

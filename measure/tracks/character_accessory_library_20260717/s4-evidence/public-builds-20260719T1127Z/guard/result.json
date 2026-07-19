@@ -1,0 +1,113 @@
+{
+  "loadoutId": "guard",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.70bb82510da2ab65eb5dc6f15d79e77d45d6ddff50b835b55f3496de759c9df0",
+  "idleRevisionId": "revision.52dc028c732d58336b9fb26397d49a1907a0247caf0a3c6167d5b96d5a310c20",
+  "actionRevisionId": "revision.886fba2154d9e343aa300c5f6f7e68c9be779f4821e8ebc507f752654d4355a8",
+  "unequippedRevisionId": "revision.bd149392eb2947cd6f8cdb29bd2fc7e4f91fabcd26994d6676bc51c67c3df643",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.off-hand",
+    "accessory.body"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "helmet-crown",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 18,
+      "minimumWidthPixels": 3,
+      "partId": "accessory.head",
+      "templateId": "equipment.helmet.iron"
+    },
+    {
+      "id": "spear-tip",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 8,
+      "minimumWidthPixels": 2,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.spear"
+    },
+    {
+      "id": "kite-point",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "partId": "accessory.off-hand",
+      "templateId": "equipment.shield.kite"
+    },
+    {
+      "id": "mail-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "partId": "accessory.body",
+      "templateId": "equipment.armor.mail"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "N: mail-outline OKLab 0.029567093128595224 < 0.05",
+      "NE: mail-outline OKLab 0.04729856577847198 < 0.05",
+      "E: spear-tip OKLab 0.045359241735850944 < 0.05",
+      "E: mail-outline OKLab 0.028511813880894618 < 0.05",
+      "SE: spear-tip OKLab 0.03322662593321122 < 0.05",
+      "SE: mail-outline OKLab 0.028544643081985375 < 0.05",
+      "S: mail-outline occlusion 0.8580931263858094 > 0.8",
+      "S: mail-outline OKLab 0.04939001056729438 < 0.05",
+      "W: spear-tip OKLab 0.049107035003418106 < 0.05",
+      "W: kite-point OKLab 0.02420119303228099 < 0.05",
+      "W: mail-outline OKLab 0.032565100701654505 < 0.05",
+      "NW: mail-outline OKLab 0.03318840164822635 < 0.05",
+      "N: mail-outline OKLab 0.03531792998093913 < 0.05",
+      "E: spear-tip OKLab 0.046757957657174914 < 0.05",
+      "E: kite-point visible area 16 < 30",
+      "SE: mail-outline OKLab 0.030052696263676595 < 0.05",
+      "S: mail-outline occlusion 0.8584905660377359 > 0.8",
+      "S: mail-outline OKLab 0.043061373524657984 < 0.05",
+      "W: spear-tip visible area 5 < 8",
+      "W: spear-tip occlusion 0.868421052631579 > 0.8",
+      "W: kite-point OKLab 0.04782995356002006 < 0.05",
+      "W: mail-outline OKLab 0.031998583919058396 < 0.05",
+      "NW: mail-outline OKLab 0.02648780592267839 < 0.05"
+    ]
+  },
+  "toolCallCount": 43
+}

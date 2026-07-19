@@ -1,0 +1,1636 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.9c2ea9872a051661699b7483fefe447f942dc23d85510f58b1c8ab932213fa6a",
+  "glbPath": "adventurer.rustic.glb",
+  "format": "glb",
+  "byteLength": 60448,
+  "nodeNames": [
+    "accessory.main-hand",
+    "accessory.off-hand",
+    "adventurer.rustic",
+    "foot.left",
+    "foot.right",
+    "forearm.left",
+    "forearm.right",
+    "hair",
+    "hand.left",
+    "hand.right",
+    "head",
+    "pelvis",
+    "shin.left",
+    "shin.right",
+    "thigh.left",
+    "thigh.right",
+    "torso",
+    "tunic",
+    "upper-arm.left",
+    "upper-arm.right"
+  ],
+  "materialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "iron.blued",
+    "leather.dark",
+    "skin.warm"
+  ],
+  "unit": "meter",
+  "reloadNodeNames": [
+    "AuxScene",
+    "accessory.main-hand",
+    "accessory.off-hand",
+    "adventurer.rustic",
+    "foot.left",
+    "foot.right",
+    "forearm.left",
+    "forearm.right",
+    "hair",
+    "hand.left",
+    "hand.right",
+    "head",
+    "pelvis",
+    "shin.left",
+    "shin.right",
+    "thigh.left",
+    "thigh.right",
+    "torso",
+    "tunic",
+    "upper-arm.left",
+    "upper-arm.right"
+  ],
+  "reloadMaterialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "iron.blued",
+    "leather.dark",
+    "skin.warm"
+  ],
+  "materialNamesMatch": true,
+  "materialPropertiesMatch": true,
+  "materialPropertyMismatchNames": [],
+  "maximumMaterialPropertyDeviation": 0,
+  "materialPropertyTolerance": 0.00001,
+  "semanticNodeCount": 20,
+  "reloadSemanticNodeCount": 20,
+  "semanticNodes": [
+    {
+      "semanticId": "accessory.main-hand",
+      "source": {
+        "materialNames": [
+          "iron.blued"
+        ],
+        "worldTransform": {
+          "position": [
+            1.465724693272,
+            0.542920365965,
+            0.39
+          ],
+          "rotation": [
+            -0.06645228065397067,
+            0.37686961114184325,
+            0.16042999720390744,
+            0.9098437264667071
+          ],
+          "scale": [
+            0.9999999999996152,
+            0.9999999999999308,
+            0.999999999999664
+          ]
+        },
+        "bounds": {
+          "min": [
+            1.2183013748938225,
+            0.12043733024905479,
+            0.3086827213220329
+          ],
+          "max": [
+            1.6857863956992456,
+            1.0405788236660363,
+            0.47131727867786855
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "iron.blued"
+        ],
+        "worldTransform": {
+          "position": [
+            1.465724693272,
+            0.542920365965,
+            0.39
+          ],
+          "rotation": [
+            -0.06645228065397067,
+            0.37686961114184325,
+            0.16042999720390744,
+            0.9098437264667071
+          ],
+          "scale": [
+            0.9999999999996152,
+            0.9999999999999308,
+            0.999999999999664
+          ]
+        },
+        "bounds": {
+          "min": [
+            1.2183013748938225,
+            0.12043733024905479,
+            0.3086827213220329
+          ],
+          "max": [
+            1.6857863956992456,
+            1.0405788236660363,
+            0.47131727867786855
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 3.097148193542145e-7,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "accessory.off-hand",
+      "source": {
+        "materialNames": [
+          "iron.blued"
+        ],
+        "worldTransform": {
+          "position": [
+            -1.265334265425,
+            1.051031095527,
+            0.2
+          ],
+          "rotation": [
+            0.48674018833407834,
+            -0.5129171366420743,
+            -0.018509897659000966,
+            0.7068644733526765
+          ],
+          "scale": [
+            1.0000000000002143,
+            1.000000000000193,
+            1.0000000000004066
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.6977992899311793,
+            0.6238432422728398,
+            -0.06870057874801294
+          ],
+          "max": [
+            -0.8328692409188205,
+            1.47821894878116,
+            0.46870057874801296
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "iron.blued"
+        ],
+        "worldTransform": {
+          "position": [
+            -1.265334265425,
+            1.051031095527,
+            0.2
+          ],
+          "rotation": [
+            0.48674018833407834,
+            -0.5129171366420743,
+            -0.018509897659000966,
+            0.7068644733526765
+          ],
+          "scale": [
+            1.0000000000002143,
+            1.000000000000193,
+            1.0000000000004066
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.6977992899311793,
+            0.6238432422728398,
+            -0.06870057874801294
+          ],
+          "max": [
+            -0.8328692409188205,
+            1.47821894878116,
+            0.46870057874801296
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "adventurer.rustic",
+      "source": {
+        "materialNames": [],
+        "worldTransform": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.6977992899311793,
+            -0.6795584227428222,
+            -0.1826385259628296
+          ],
+          "max": [
+            1.6857863956992456,
+            2.3300000005960464,
+            0.47131727867786855
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [],
+        "worldTransform": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.6977992899311793,
+            -0.6795584227428222,
+            -0.1826385259628296
+          ],
+          "max": [
+            1.6857863956992456,
+            2.3300000005960464,
+            0.47131727867786855
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "foot.left",
+      "source": {
+        "materialNames": [
+          "leather.dark"
+        ],
+        "worldTransform": {
+          "position": [
+            0.162079245324,
+            -0.571681486897,
+            0.07
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.03963483590365485,
+            -0.6795584227428222,
+            -0.11500000238418578
+          ],
+          "max": [
+            0.28452365474434516,
+            -0.4638045510511779,
+            0.2550000023841858
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "leather.dark"
+        ],
+        "worldTransform": {
+          "position": [
+            0.162079245324,
+            -0.571681486897,
+            0.07
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.03963483590365485,
+            -0.6795584227428222,
+            -0.11500000238418578
+          ],
+          "max": [
+            0.28452365474434516,
+            -0.4638045510511779,
+            0.2550000023841858
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "foot.right",
+      "source": {
+        "materialNames": [
+          "leather.dark"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.162079245324,
+            -0.571681486897,
+            0.07
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.28452365474434516,
+            -0.6795584227428222,
+            -0.11500000238418578
+          ],
+          "max": [
+            -0.03963483590365485,
+            -0.4638045510511779,
+            0.2550000023841858
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "leather.dark"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.162079245324,
+            -0.571681486897,
+            0.07
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.28452365474434516,
+            -0.6795584227428222,
+            -0.11500000238418578
+          ],
+          "max": [
+            -0.03963483590365485,
+            -0.4638045510511779,
+            0.2550000023841858
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "forearm.left",
+      "source": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.862495722598,
+            1.171534657357,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.0897740283848534,
+            0.9553584837763406,
+            -0.0820000022649765
+          ],
+          "max": [
+            -0.6352174168111466,
+            1.3877108309376593,
+            0.0820000022649765
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.862495722598,
+            1.171534657357,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.0897740283848534,
+            0.9553584837763406,
+            -0.0820000022649765
+          ],
+          "max": [
+            -0.6352174168111466,
+            1.3877108309376593,
+            0.0820000022649765
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "forearm.right",
+      "source": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0.840138429395,
+            1.209134915827,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.17364817766696852,
+            0.9848077530122015
+          ],
+          "scale": [
+            0.9999999999999768,
+            0.9999999999999768,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.6837349613938384,
+            0.9630805815504278,
+            -0.0820000022649765
+          ],
+          "max": [
+            0.9965418973961617,
+            1.4551892501035721,
+            0.0820000022649765
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0.840138429395,
+            1.209134915827,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.17364817766696852,
+            0.9848077530122015
+          ],
+          "scale": [
+            0.9999999999999768,
+            0.9999999999999768,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.6837349613938384,
+            0.9630805815504278,
+            -0.0820000022649765
+          ],
+          "max": [
+            0.9965418973961617,
+            1.4551892501035721,
+            0.0820000022649765
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "hair",
+      "source": {
+        "materialNames": [
+          "hair.chestnut"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            2.19,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.1832086592912674,
+            2.0499999994039535,
+            -0.1826385259628296
+          ],
+          "max": [
+            0.19496658444404602,
+            2.3300000005960464,
+            0.1826385259628296
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "hair.chestnut"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            2.19,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.1832086592912674,
+            2.0499999994039535,
+            -0.1826385259628296
+          ],
+          "max": [
+            0.19496658444404602,
+            2.3300000005960464,
+            0.1826385259628296
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "hand.left",
+      "source": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            -1.115164963261,
+            0.944030251195,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.2329729347341534,
+            0.8288127776777843,
+            -0.05000000074505806
+          ],
+          "max": [
+            -0.9973569917878464,
+            1.0592477247122156,
+            0.05000000074505806
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            -1.115164963261,
+            0.944030251195,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -1.2329729347341534,
+            0.8288127776777843,
+            -0.05000000074505806
+          ],
+          "max": [
+            -0.9973569917878464,
+            1.0592477247122156,
+            0.05000000074505806
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "hand.right",
+      "source": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0.956425278126,
+            0.88963942476,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.17364817766696852,
+            0.9848077530122015
+          ],
+          "scale": [
+            0.9999999999999768,
+            0.9999999999999768,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.8611432451730978,
+            0.7734388527804298,
+            -0.05000000074505806
+          ],
+          "max": [
+            1.0517073110789021,
+            1.0058399967395704,
+            0.05000000074505806
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0.956425278126,
+            0.88963942476,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.17364817766696852,
+            0.9848077530122015
+          ],
+          "scale": [
+            0.9999999999999768,
+            0.9999999999999768,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.8611432451730978,
+            0.7734388527804298,
+            -0.05000000074505806
+          ],
+          "max": [
+            1.0517073110789021,
+            1.0058399967395704,
+            0.05000000074505806
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "head",
+      "source": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            2.03,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.1899999976158142,
+            1.7999999958276747,
+            -0.17119017243385315
+          ],
+          "max": [
+            0.1899999976158142,
+            2.260000004172325,
+            0.17119017243385315
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "skin.warm"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            2.03,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.1899999976158142,
+            1.7999999958276747,
+            -0.17119017243385315
+          ],
+          "max": [
+            0.1899999976158142,
+            2.260000004172325,
+            0.17119017243385315
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "pelvis",
+      "source": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            0.85,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.23000000417232513,
+            0.6999999940395355,
+            -0.13500000536441803
+          ],
+          "max": [
+            0.23000000417232513,
+            1.0000000059604646,
+            0.13500000536441803
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            0.85,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.23000000417232513,
+            0.6999999940395355,
+            -0.13500000536441803
+          ],
+          "max": [
+            0.23000000417232513,
+            1.0000000059604646,
+            0.13500000536441803
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "shin.left",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0.070148924996,
+            -0.202969110912,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.09945722064118281,
+            -0.5182500302820683,
+            -0.10000000149011612
+          ],
+          "max": [
+            0.23975507063318283,
+            0.11231180845806829,
+            0.10000000149011612
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0.070148924996,
+            -0.202969110912,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.09945722064118281,
+            -0.5182500302820683,
+            -0.10000000149011612
+          ],
+          "max": [
+            0.23975507063318283,
+            0.11231180845806829,
+            0.10000000149011612
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "shin.right",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.070148924996,
+            -0.202969110912,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.23975507063318283,
+            -0.5182500302820683,
+            -0.10000000149011612
+          ],
+          "max": [
+            0.09945722064118281,
+            0.11231180845806829,
+            0.10000000149011612
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.070148924996,
+            -0.202969110912,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.23975507063318283,
+            -0.5182500302820683,
+            -0.10000000149011612
+          ],
+          "max": [
+            0.09945722064118281,
+            0.11231180845806829,
+            0.10000000149011612
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "thigh.left",
+      "source": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.075004212364,
+            0.379208324854,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.2712739256346872,
+            0.029980095636357895,
+            -0.11999999731779099
+          ],
+          "max": [
+            0.12126550090668721,
+            0.7284365540716422,
+            0.11999999731779099
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.075004212364,
+            0.379208324854,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.2712739256346872,
+            0.029980095636357895,
+            -0.11999999731779099
+          ],
+          "max": [
+            0.12126550090668721,
+            0.7284365540716422,
+            0.11999999731779099
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "thigh.right",
+      "source": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            0.075004212364,
+            0.379208324854,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.12126550090668721,
+            0.029980095636357895,
+            -0.11999999731779099
+          ],
+          "max": [
+            0.2712739256346872,
+            0.7284365540716422,
+            0.11999999731779099
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.umber"
+        ],
+        "worldTransform": {
+          "position": [
+            0.075004212364,
+            0.379208324854,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.1218693434049601,
+            0.992546151641345
+          ],
+          "scale": [
+            0.9999999999999799,
+            0.9999999999999799,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.12126550090668721,
+            0.029980095636357895,
+            -0.11999999731779099
+          ],
+          "max": [
+            0.2712739256346872,
+            0.7284365540716422,
+            0.11999999731779099
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 4.2146848510894035e-8,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "torso",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            1.42,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.25999999046325684,
+            1.0799999964237212,
+            -0.14000000059604645
+          ],
+          "max": [
+            0.25999999046325684,
+            1.7600000035762786,
+            0.14000000059604645
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            1.42,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.25999999046325684,
+            1.0799999964237212,
+            -0.14000000059604645
+          ],
+          "max": [
+            0.25999999046325684,
+            1.7600000035762786,
+            0.14000000059604645
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "tunic",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            1.4,
+            0.01
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.29499998688697815,
+            1.0349999904632567,
+            -0.15500000655651092
+          ],
+          "max": [
+            0.29499998688697815,
+            1.765000009536743,
+            0.17500000655651093
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0,
+            1.4,
+            0.01
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            1
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.29499998688697815,
+            1.0349999904632567,
+            -0.15500000655651092
+          ],
+          "max": [
+            0.29499998688697815,
+            1.765000009536743,
+            0.17500000655651093
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "upper-arm.left",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.505786206369,
+            1.49271734841,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.7588555401287155,
+            1.251490289444717,
+            -0.0949999988079071
+          ],
+          "max": [
+            -0.25271687260928444,
+            1.733944407375283,
+            0.0949999988079071
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            -0.505786206369,
+            1.49271734841,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -0.40673664307612134,
+            0.913545457642458
+          ],
+          "scale": [
+            1.000000000000295,
+            1.000000000000295,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            -0.7588555401287155,
+            1.251490289444717,
+            -0.0949999988079071
+          ],
+          "max": [
+            -0.25271687260928444,
+            1.733944407375283,
+            0.0949999988079071
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    },
+    {
+      "semanticId": "upper-arm.right",
+      "source": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0.540736898215,
+            1.542632109304,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.51503807490997,
+            0.8571673007021628
+          ],
+          "scale": [
+            0.9999999999998682,
+            0.9999999999998682,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.27098546834123255,
+            1.3390368427631616,
+            -0.0949999988079071
+          ],
+          "max": [
+            0.8104883280887676,
+            1.7462273758448386,
+            0.0949999988079071
+          ]
+        }
+      },
+      "reload": {
+        "materialNames": [
+          "cloth.moss"
+        ],
+        "worldTransform": {
+          "position": [
+            0.540736898215,
+            1.542632109304,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0.51503807490997,
+            0.8571673007021628
+          ],
+          "scale": [
+            0.9999999999998682,
+            0.9999999999998682,
+            1
+          ]
+        },
+        "bounds": {
+          "min": [
+            0.27098546834123255,
+            1.3390368427631616,
+            -0.0949999988079071
+          ],
+          "max": [
+            0.8104883280887676,
+            1.7462273758448386,
+            0.0949999988079071
+          ]
+        }
+      },
+      "materialNamesMatch": true,
+      "maximumTransformDeviation": 0,
+      "maximumBoundsDeviation": 0
+    }
+  ],
+  "missingSemanticNodeNames": [],
+  "unexpectedSemanticNodeNames": [],
+  "transformMismatchCount": 0,
+  "scaleMismatchCount": 0,
+  "maximumPositionDeviation": 0,
+  "maximumRotationDeviationRadians": 3.097148193542145e-7,
+  "maximumScaleDeviation": 0,
+  "transformTolerance": 0.00001,
+  "bounds": {
+    "sourceMin": [
+      -1.6977992899311793,
+      -0.6795584227428222,
+      -0.1826385259628296
+    ],
+    "sourceMax": [
+      1.6857863956992456,
+      2.3300000005960464,
+      0.47131727867786855
+    ],
+    "reloadMin": [
+      -1.6977992899311793,
+      -0.6795584227428222,
+      -0.1826385259628296
+    ],
+    "reloadMax": [
+      1.6857863956992456,
+      2.3300000005960464,
+      0.47131727867786855
+    ],
+    "maximumDeviation": 0,
+    "tolerance": 0.00003383585685630425,
+    "matches": true
+  },
+  "unitScaleDeviation": 0,
+  "unitScaleTolerance": 0.00003383585685630425,
+  "textureCount": 0,
+  "unsupportedMaterialCount": 0,
+  "unsupportedShaderCount": 0,
+  "skinCount": 0,
+  "cameraCount": 0,
+  "lightCount": 0,
+  "animationCount": 0
+}

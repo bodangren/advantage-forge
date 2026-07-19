@@ -1,0 +1,2 @@
+$ node --import tsx scripts/build-references.ts
+/tmp/fantasy-asset-forge-benchmark-20260717T104617Z/measure/tracks/fantasy_asset_mvp_20260717/reference-build.json

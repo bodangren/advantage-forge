@@ -1,0 +1,99 @@
+{
+  "loadoutId": "guard",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.959ccae626990a31bc9730ad9d79681d5e408e724219e297a568e98d82c867c8",
+  "idleRevisionId": "revision.8b185edbd984aebbc8daf2498d4befc88761e6cd4d220144b8e7f15ed76986b3",
+  "actionRevisionId": "revision.be930fcec06136d3b63829c3d79c732c44493bf4bbd0c29ed21c38bec2061554",
+  "unequippedRevisionId": "revision.b4d92abcfecd15e1cd4df3e0088ff1f605640acaa01e906e4a65b73511c6129f",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.off-hand",
+    "accessory.body"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "helmet-crown",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 18,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.head",
+      "templateId": "equipment.helmet.iron"
+    },
+    {
+      "id": "spear-tip",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 8,
+      "minimumWidthPixels": 2,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.spear"
+    },
+    {
+      "id": "kite-point",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.off-hand",
+      "templateId": "equipment.shield.kite"
+    },
+    {
+      "id": "mail-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 30,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.body",
+      "templateId": "equipment.armor.mail"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "SW: spear-tip OKLab 0.0492130620235183 < 0.05"
+    ]
+  },
+  "toolCallCount": 43
+}

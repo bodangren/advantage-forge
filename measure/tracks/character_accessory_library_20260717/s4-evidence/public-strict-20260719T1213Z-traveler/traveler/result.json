@@ -1,0 +1,83 @@
+{
+  "loadoutId": "traveler",
+  "modelBoundary": "public MCP tools only",
+  "baselineRevisionId": "revision.3e4a0a7376f6b54f0410e151717d7cd5c67dc8f3f4ec707838f8510266771a1e",
+  "idleRevisionId": "revision.6fe004bce08a68dcab93166f20922ec9a890c28291b9fb51da351dc3883b0a02",
+  "actionRevisionId": "revision.7b4a5d69e82150b27382b9ab9a6c30096698411ffd1354a5596401ea2443391d",
+  "unequippedRevisionId": "revision.d049b5fe238adc2ffd4ea25979cd5c639088e0921be39a31468d7dbe6d274cf1",
+  "equippedPartIds": [
+    "accessory.head",
+    "accessory.main-hand",
+    "accessory.back"
+  ],
+  "expectedFeatures": [
+    {
+      "id": "hood-outline",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 20,
+      "minimumWidthPixels": 3,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.head",
+      "templateId": "equipment.hood.cloth"
+    },
+    {
+      "id": "staff-crook",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 10,
+      "minimumWidthPixels": 2,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.main-hand",
+      "templateId": "equipment.staff"
+    },
+    {
+      "id": "pack-body",
+      "intendedDirections": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ],
+      "minimumPixelArea": 26,
+      "minimumWidthPixels": 4,
+      "maximumOcclusionRatio": 0.8,
+      "minimumOklabDistance": 0.05,
+      "partId": "accessory.back",
+      "templateId": "equipment.backpack"
+    }
+  ],
+  "acceptance": {
+    "passes": false,
+    "issues": [
+      "NW: pack-body visible area 10 < 26",
+      "NW: pack-body occlusion 0.9731903485254692 > 0.8",
+      "W: staff-crook width 1 < 2",
+      "NW: pack-body visible area 6 < 26",
+      "NW: pack-body occlusion 0.9801324503311258 > 0.8"
+    ]
+  },
+  "toolCallCount": 37
+}

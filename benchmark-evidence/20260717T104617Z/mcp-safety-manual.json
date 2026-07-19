@@ -1,0 +1,751 @@
+{
+  "results": [
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "adventurer.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "affectedIds": [],
+        "summary": "Inspected adventurer.rustic.",
+        "issues": [],
+        "data": {
+          "id": "adventurer.rustic",
+          "name": "Rustic Adventurer",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "foot.left",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "foot.right",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "forearm.left",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "forearm.right",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "hair",
+                "templateId": "human.hair"
+              },
+              {
+                "id": "hand.left",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "hand.right",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "head",
+                "templateId": "human.head"
+              },
+              {
+                "id": "pelvis",
+                "templateId": "human.pelvis"
+              },
+              {
+                "id": "shield",
+                "templateId": "equipment.shield"
+              },
+              {
+                "id": "shin.left",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "shin.right",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "sword",
+                "templateId": "equipment.sword"
+              },
+              {
+                "id": "thigh.left",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "thigh.right",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "torso",
+                "templateId": "human.torso"
+              },
+              {
+                "id": "tunic",
+                "templateId": "human.tunic"
+              },
+              {
+                "id": "upper-arm.left",
+                "templateId": "human.upper-arm"
+              },
+              {
+                "id": "upper-arm.right",
+                "templateId": "human.upper-arm"
+              }
+            ],
+            "total": 19,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "ankle-left"
+              },
+              {
+                "id": "ankle-right"
+              },
+              {
+                "id": "elbow-left"
+              },
+              {
+                "id": "elbow-right"
+              },
+              {
+                "id": "equip-shield"
+              },
+              {
+                "id": "equip-sword"
+              },
+              {
+                "id": "head-hair"
+              },
+              {
+                "id": "hip-left"
+              },
+              {
+                "id": "hip-right"
+              },
+              {
+                "id": "knee-left"
+              },
+              {
+                "id": "knee-right"
+              },
+              {
+                "id": "shoulder-left"
+              },
+              {
+                "id": "shoulder-right"
+              },
+              {
+                "id": "torso-head"
+              },
+              {
+                "id": "torso-pelvis"
+              },
+              {
+                "id": "wrist-left"
+              },
+              {
+                "id": "wrist-right"
+              }
+            ],
+            "total": 17,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [
+              {
+                "id": "broad"
+              },
+              {
+                "id": "equipped"
+              },
+              {
+                "id": "short"
+              },
+              {
+                "id": "slender"
+              },
+              {
+                "id": "tall"
+              },
+              {
+                "id": "unequipped"
+              }
+            ],
+            "total": 6,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [
+              {
+                "id": "action"
+              },
+              {
+                "id": "idle"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
+          "activeVariantId": "unequipped",
+          "activePoseId": "action"
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "apply_operations",
+      "args": {
+        "assetId": "adventurer.rustic",
+        "expectedRevisionId": "revision.8044813bcf514c8bea35331db437de0e5c1a2c7961e7b87ddc9a635b493b355b",
+        "patch": {
+          "operations": [
+            {
+              "operation": "setPartVisibility",
+              "partId": "hair",
+              "visible": true
+            }
+          ]
+        },
+        "dryRun": true
+      },
+      "response": {
+        "ok": false,
+        "affectedIds": [],
+        "summary": "The expected revision is stale.",
+        "issues": [
+          {
+            "code": "REVISION_CONFLICT",
+            "path": "$.expectedRevisionId",
+            "message": "The expected revision is stale.",
+            "severity": "error",
+            "guidance": "Inspect the current asset and reapply the localized operation."
+          }
+        ]
+      },
+      "isError": true
+    },
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "adventurer.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "affectedIds": [],
+        "summary": "Inspected adventurer.rustic.",
+        "issues": [],
+        "data": {
+          "id": "adventurer.rustic",
+          "name": "Rustic Adventurer",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "foot.left",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "foot.right",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "forearm.left",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "forearm.right",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "hair",
+                "templateId": "human.hair"
+              },
+              {
+                "id": "hand.left",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "hand.right",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "head",
+                "templateId": "human.head"
+              },
+              {
+                "id": "pelvis",
+                "templateId": "human.pelvis"
+              },
+              {
+                "id": "shield",
+                "templateId": "equipment.shield"
+              },
+              {
+                "id": "shin.left",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "shin.right",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "sword",
+                "templateId": "equipment.sword"
+              },
+              {
+                "id": "thigh.left",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "thigh.right",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "torso",
+                "templateId": "human.torso"
+              },
+              {
+                "id": "tunic",
+                "templateId": "human.tunic"
+              },
+              {
+                "id": "upper-arm.left",
+                "templateId": "human.upper-arm"
+              },
+              {
+                "id": "upper-arm.right",
+                "templateId": "human.upper-arm"
+              }
+            ],
+            "total": 19,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "ankle-left"
+              },
+              {
+                "id": "ankle-right"
+              },
+              {
+                "id": "elbow-left"
+              },
+              {
+                "id": "elbow-right"
+              },
+              {
+                "id": "equip-shield"
+              },
+              {
+                "id": "equip-sword"
+              },
+              {
+                "id": "head-hair"
+              },
+              {
+                "id": "hip-left"
+              },
+              {
+                "id": "hip-right"
+              },
+              {
+                "id": "knee-left"
+              },
+              {
+                "id": "knee-right"
+              },
+              {
+                "id": "shoulder-left"
+              },
+              {
+                "id": "shoulder-right"
+              },
+              {
+                "id": "torso-head"
+              },
+              {
+                "id": "torso-pelvis"
+              },
+              {
+                "id": "wrist-left"
+              },
+              {
+                "id": "wrist-right"
+              }
+            ],
+            "total": 17,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [
+              {
+                "id": "broad"
+              },
+              {
+                "id": "equipped"
+              },
+              {
+                "id": "short"
+              },
+              {
+                "id": "slender"
+              },
+              {
+                "id": "tall"
+              },
+              {
+                "id": "unequipped"
+              }
+            ],
+            "total": 6,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [
+              {
+                "id": "action"
+              },
+              {
+                "id": "idle"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
+          "activeVariantId": "unequipped",
+          "activePoseId": "action"
+        }
+      },
+      "isError": false
+    },
+    {
+      "name": "apply_operations",
+      "args": {
+        "assetId": "adventurer.rustic",
+        "expectedRevisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "patch": {
+          "operations": [
+            {
+              "operation": "setPartShapeParameters",
+              "partId": "missing.part",
+              "shape": {
+                "kind": "beveledBox",
+                "width": 0.598,
+                "height": 0.68,
+                "depth": 0.28,
+                "bevel": 0.05
+              }
+            }
+          ]
+        },
+        "dryRun": true
+      },
+      "response": {
+        "ok": false,
+        "affectedIds": [],
+        "summary": "Semantic operations were rejected without mutation.",
+        "issues": [
+          {
+            "code": "PATCH_REJECTED",
+            "path": "$.operations",
+            "message": "Part missing.part was not found.",
+            "severity": "error",
+            "guidance": "Inspect the active document and submit a localized operation using an existing stable ID."
+          }
+        ]
+      },
+      "isError": true
+    },
+    {
+      "name": "apply_operations",
+      "args": {
+        "assetId": "adventurer.rustic",
+        "expectedRevisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "patch": {
+          "operations": [
+            {
+              "operation": "runShell",
+              "command": "true"
+            }
+          ]
+        },
+        "dryRun": true
+      },
+      "response": {
+        "raw": {
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "MCP error -32602: Input validation error: Invalid arguments for tool apply_operations: [\n  {\n    \"code\": \"invalid_union\",\n    \"errors\": [],\n    \"note\": \"No matching discriminator\",\n    \"discriminator\": \"operation\",\n    \"options\": [\n      \"addPart\",\n      \"removePart\",\n      \"setPartTransform\",\n      \"setPartShapeParameters\",\n      \"setPartVisibility\",\n      \"setMaterialBinding\",\n      \"setActiveVariant\",\n      \"connectParts\",\n      \"disconnectParts\",\n      \"upsertPose\",\n      \"upsertVariant\",\n      \"upsertRenderProfile\"\n    ],\n    \"path\": [\n      \"patch\",\n      \"operations\",\n      0,\n      \"operation\"\n    ],\n    \"message\": \"Invalid discriminator value. Expected 'addPart' | 'removePart' | 'setPartTransform' | 'setPartShapeParameters' | 'setPartVisibility' | 'setMaterialBinding' | 'setActiveVariant' | 'connectParts' | 'disconnectParts' | 'upsertPose' | 'upsertVariant' | 'upsertRenderProfile'\"\n  }\n]"
+              }
+            ],
+            "isError": true
+          },
+          "jsonrpc": "2.0",
+          "id": 6
+        }
+      },
+      "isError": true
+    },
+    {
+      "name": "apply_operations",
+      "args": {
+        "assetId": "adventurer.rustic",
+        "expectedRevisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "patch": {
+          "operations": [
+            {
+              "operation": "setPartShapeParameters",
+              "partId": "torso",
+              "shape": {
+                "kind": "beveledBox",
+                "width": 0.598,
+                "height": 0.68,
+                "depth": 0.28,
+                "bevel": 0.05
+              }
+            }
+          ]
+        },
+        "dryRun": false
+      },
+      "response": {
+        "ok": false,
+        "affectedIds": [],
+        "summary": "Semantic operations were rejected without mutation.",
+        "issues": [
+          {
+            "code": "PATCH_REJECTED",
+            "path": "$.operations",
+            "message": "Part torso already has the requested shape parameters.",
+            "severity": "error",
+            "actual": {
+              "kind": "beveledBox",
+              "width": 0.598,
+              "height": 0.68,
+              "depth": 0.28,
+              "bevel": 0.05
+            },
+            "guidance": "Inspect the active document and submit a localized operation using an existing stable ID."
+          }
+        ]
+      },
+      "isError": true
+    },
+    {
+      "name": "inspect_asset",
+      "args": {
+        "assetId": "adventurer.rustic"
+      },
+      "response": {
+        "ok": true,
+        "revisionId": "revision.fda4025a45c6cf5590dbf57e2468f4d8ce1e08d0735a4b6337430953585bfcf7",
+        "affectedIds": [],
+        "summary": "Inspected adventurer.rustic.",
+        "issues": [],
+        "data": {
+          "id": "adventurer.rustic",
+          "name": "Rustic Adventurer",
+          "kitId": "rustic-human",
+          "parts": {
+            "items": [
+              {
+                "id": "foot.left",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "foot.right",
+                "templateId": "human.foot"
+              },
+              {
+                "id": "forearm.left",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "forearm.right",
+                "templateId": "human.forearm"
+              },
+              {
+                "id": "hair",
+                "templateId": "human.hair"
+              },
+              {
+                "id": "hand.left",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "hand.right",
+                "templateId": "human.hand"
+              },
+              {
+                "id": "head",
+                "templateId": "human.head"
+              },
+              {
+                "id": "pelvis",
+                "templateId": "human.pelvis"
+              },
+              {
+                "id": "shield",
+                "templateId": "equipment.shield"
+              },
+              {
+                "id": "shin.left",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "shin.right",
+                "templateId": "human.shin"
+              },
+              {
+                "id": "sword",
+                "templateId": "equipment.sword"
+              },
+              {
+                "id": "thigh.left",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "thigh.right",
+                "templateId": "human.thigh"
+              },
+              {
+                "id": "torso",
+                "templateId": "human.torso"
+              },
+              {
+                "id": "tunic",
+                "templateId": "human.tunic"
+              },
+              {
+                "id": "upper-arm.left",
+                "templateId": "human.upper-arm"
+              },
+              {
+                "id": "upper-arm.right",
+                "templateId": "human.upper-arm"
+              }
+            ],
+            "total": 19,
+            "truncated": false,
+            "limit": 100
+          },
+          "connections": {
+            "items": [
+              {
+                "id": "ankle-left"
+              },
+              {
+                "id": "ankle-right"
+              },
+              {
+                "id": "elbow-left"
+              },
+              {
+                "id": "elbow-right"
+              },
+              {
+                "id": "equip-shield"
+              },
+              {
+                "id": "equip-sword"
+              },
+              {
+                "id": "head-hair"
+              },
+              {
+                "id": "hip-left"
+              },
+              {
+                "id": "hip-right"
+              },
+              {
+                "id": "knee-left"
+              },
+              {
+                "id": "knee-right"
+              },
+              {
+                "id": "shoulder-left"
+              },
+              {
+                "id": "shoulder-right"
+              },
+              {
+                "id": "torso-head"
+              },
+              {
+                "id": "torso-pelvis"
+              },
+              {
+                "id": "wrist-left"
+              },
+              {
+                "id": "wrist-right"
+              }
+            ],
+            "total": 17,
+            "truncated": false,
+            "limit": 100
+          },
+          "variants": {
+            "items": [
+              {
+                "id": "broad"
+              },
+              {
+                "id": "equipped"
+              },
+              {
+                "id": "short"
+              },
+              {
+                "id": "slender"
+              },
+              {
+                "id": "tall"
+              },
+              {
+                "id": "unequipped"
+              }
+            ],
+            "total": 6,
+            "truncated": false,
+            "limit": 100
+          },
+          "poses": {
+            "items": [
+              {
+                "id": "action"
+              },
+              {
+                "id": "idle"
+              }
+            ],
+            "total": 2,
+            "truncated": false,
+            "limit": 100
+          },
+          "activeVariantId": "unequipped",
+          "activePoseId": "action"
+        }
+      },
+      "isError": false
+    }
+  ]
+}

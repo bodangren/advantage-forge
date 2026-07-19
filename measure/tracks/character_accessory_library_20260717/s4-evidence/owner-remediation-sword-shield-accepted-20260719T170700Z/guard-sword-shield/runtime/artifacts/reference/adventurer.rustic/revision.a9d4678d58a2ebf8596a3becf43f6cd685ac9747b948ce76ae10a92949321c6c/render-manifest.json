@@ -1,0 +1,623 @@
+{
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.a9d4678d58a2ebf8596a3becf43f6cd685ac9747b948ce76ae10a92949321c6c",
+  "profile": "sprite.default",
+  "width": 128,
+  "height": 128,
+  "directions": 8,
+  "elevationDegrees": 30,
+  "paddingPixels": 6,
+  "minimumFeaturePixels": 3,
+  "transparent": true,
+  "frames": [
+    {
+      "direction": "N",
+      "path": "n.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 22,
+          "minY": 47,
+          "maxX": 108,
+          "maxY": 121,
+          "width": 87,
+          "height": 75
+        },
+        "occupiedPixelCount": 1399,
+        "occupiedRatio": 0.08538818359375,
+        "transparentPixelCount": 14985,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 262,
+            "visiblePixelArea": 262,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 84,
+            "visiblePixelArea": 84,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 17,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 223,
+            "visiblePixelArea": 223,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.11677359020108455,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 47,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "NE",
+      "path": "ne.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 33,
+          "minY": 47,
+          "maxX": 91,
+          "maxY": 121,
+          "width": 59,
+          "height": 75
+        },
+        "occupiedPixelCount": 1220,
+        "occupiedRatio": 0.074462890625,
+        "transparentPixelCount": 15164,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 13,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 229,
+            "visiblePixelArea": 229,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 81,
+            "visiblePixelArea": 81,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 129,
+            "visiblePixelArea": 129,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.19108398239807384,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 47,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "E",
+      "path": "e.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 55,
+          "minY": 48,
+          "maxX": 72,
+          "maxY": 121,
+          "width": 18,
+          "height": 74
+        },
+        "occupiedPixelCount": 694,
+        "occupiedRatio": 0.0423583984375,
+        "transparentPixelCount": 15690,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 165,
+            "visiblePixelArea": 165,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 5,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 86,
+            "visiblePixelArea": 86,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 9,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 73,
+            "visiblePixelArea": 46,
+            "occlusionRatio": 0.36986301369863017,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.04088108610648744,
+            "minimumOklabDistance": 0.05,
+            "passes": false
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 48,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 0,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "SE",
+      "path": "se.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 28,
+          "minY": 49,
+          "maxX": 95,
+          "maxY": 121,
+          "width": 68,
+          "height": 73
+        },
+        "occupiedPixelCount": 1133,
+        "occupiedRatio": 0.06915283203125,
+        "transparentPixelCount": 15251,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 2,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 13,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 229,
+            "visiblePixelArea": 229,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 54,
+            "visiblePixelArea": 54,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 10,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 141,
+            "visiblePixelArea": 101,
+            "occlusionRatio": 0.2836879432624113,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.20360121927632582,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 49,
+          "centerDeviationPixels": 2,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "S",
+      "path": "s.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 19,
+          "minY": 49,
+          "maxX": 105,
+          "maxY": 121,
+          "width": 87,
+          "height": 73
+        },
+        "occupiedPixelCount": 1250,
+        "occupiedRatio": 0.0762939453125,
+        "transparentPixelCount": 15134,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 250,
+            "visiblePixelArea": 250,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 11,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 72,
+            "visiblePixelArea": 72,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 114,
+            "visiblePixelArea": 114,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.22444419421778866,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 49,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "SW",
+      "path": "sw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 36,
+          "minY": 49,
+          "maxX": 94,
+          "maxY": 121,
+          "width": 59,
+          "height": 73
+        },
+        "occupiedPixelCount": 1108,
+        "occupiedRatio": 0.067626953125,
+        "transparentPixelCount": 15276,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 14,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 245,
+            "visiblePixelArea": 245,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 65,
+            "visiblePixelArea": 51,
+            "occlusionRatio": 0.2153846153846154,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.23492222856667636,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 12,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 67,
+            "visiblePixelArea": 67,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 49,
+          "centerDeviationPixels": 1.5,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "W",
+      "path": "w.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 55,
+          "minY": 49,
+          "maxX": 72,
+          "maxY": 121,
+          "width": 18,
+          "height": 73
+        },
+        "occupiedPixelCount": 751,
+        "occupiedRatio": 0.04583740234375,
+        "transparentPixelCount": 15633,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 4,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 171,
+            "visiblePixelArea": 171,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 5,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 59,
+            "visiblePixelArea": 59,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 15,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 184,
+            "visiblePixelArea": 184,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.23539130929085048,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 49,
+          "centerDeviationPixels": 0,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    },
+    {
+      "direction": "NW",
+      "path": "nw.png",
+      "metrics": {
+        "occupiedBounds": {
+          "minX": 32,
+          "minY": 47,
+          "maxX": 99,
+          "maxY": 121,
+          "width": 68,
+          "height": 75
+        },
+        "occupiedPixelCount": 1266,
+        "occupiedRatio": 0.0772705078125,
+        "transparentPixelCount": 15118,
+        "clippedEdges": [],
+        "groundPixelY": 121,
+        "groundAnchorDeviationPixels": 0,
+        "minimumHorizontalRunPixels": 1,
+        "minimumVerticalRunPixels": 1,
+        "representativeFeaturePixels": 3,
+        "requiredFeatureEvidence": [
+          {
+            "featureId": "torso",
+            "partId": "torso",
+            "templateId": "human.torso",
+            "silhouetteWidthPixels": 13,
+            "minimumPixels": 3,
+            "minimumPixelArea": 9,
+            "isolatedPixelArea": 230,
+            "visiblePixelArea": 230,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 1,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0,
+            "passes": true
+          },
+          {
+            "featureId": "blade",
+            "partId": "accessory.main-hand",
+            "templateId": "equipment.sword",
+            "silhouetteWidthPixels": 8,
+            "minimumPixels": 3,
+            "minimumPixelArea": 10,
+            "isolatedPixelArea": 46,
+            "visiblePixelArea": 46,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 1,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          },
+          {
+            "featureId": "shield-face",
+            "partId": "accessory.off-hand",
+            "templateId": "equipment.shield",
+            "silhouetteWidthPixels": 18,
+            "minimumPixels": 3,
+            "minimumPixelArea": 24,
+            "isolatedPixelArea": 239,
+            "visiblePixelArea": 239,
+            "occlusionRatio": 0,
+            "maximumOcclusionRatio": 0.8,
+            "materialOklabDistance": 0.13374905474474819,
+            "minimumOklabDistance": 0.05,
+            "passes": true
+          }
+        ],
+        "framingEvidence": {
+          "topMarginPixels": 47,
+          "centerDeviationPixels": 2,
+          "heightDeviationPixels": 1,
+          "worldUnitsPerPixel": 0.03732288964464448
+        }
+      }
+    }
+  ],
+  "contactSheetPath": "contact-sheet.png"
+}
