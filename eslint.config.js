@@ -7,6 +7,7 @@ export default tseslint.config(
       'coverage/**',
       'dist/**',
       'measure/generated/**',
+      'measure/tracks/**/s*-evidence/**',
       'playwright.config.ts',
     ],
   },

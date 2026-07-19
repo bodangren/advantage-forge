@@ -8,7 +8,7 @@ import type {
 } from '../contracts/index.js';
 
 import { transformBounds } from './math.js';
-import { validateAssembly } from './evaluate.js';
+import { evaluateAssembly, validateAssembly } from './evaluate.js';
 
 export type AccessoryIssueCode =
   | 'ACCESSORY_TEMPLATE_MISSING'
@@ -251,6 +251,17 @@ export function validateAccessoryLoadout(
         );
   }
 
+  const assemblyIssues = validateAssembly(assembly, templates);
+  const worldTransformByPartId =
+    assemblyIssues.length === 0
+      ? new Map(
+          evaluateAssembly(assembly, templates).parts.map((part) => [
+            part.id,
+            part.worldTransform,
+          ]),
+        )
+      : new Map<string, Transform>();
+
   for (const [leftIndex, left] of accessoryStates.entries())
     for (const right of accessoryStates.slice(leftIndex + 1)) {
       if (
@@ -258,11 +269,15 @@ export function validateAccessoryLoadout(
         right.template.accessory?.layer.kind === 'carried'
       )
         continue;
+      const leftWorldTransform = worldTransformByPartId.get(left.part.id);
+      const rightWorldTransform = worldTransformByPartId.get(right.part.id);
+      if (leftWorldTransform === undefined || rightWorldTransform === undefined)
+        continue;
       const ratio = intersectionRatio(
         left.template.accessory!.bounds,
-        left.part.transform,
+        leftWorldTransform,
         right.template.accessory!.bounds,
-        right.part.transform,
+        rightWorldTransform,
       );
       const maximum = Math.min(
         left.template.accessory!.layer.maximumIntersectionRatio,

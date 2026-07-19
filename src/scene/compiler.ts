@@ -87,10 +87,8 @@ export function compileThreeScene(
     geometry.computeBoundingBox();
     geometry.computeBoundingSphere();
     const binding = part.materialBindings[0];
-    const mesh = new THREE.Mesh(
-      geometry,
-      materialFor(materialById.get(binding?.materialId ?? '')),
-    );
+    const materialDefinition = materialById.get(binding?.materialId ?? '');
+    const mesh = new THREE.Mesh(geometry, materialFor(materialDefinition));
     mesh.name = part.id;
     mesh.visible = part.visible;
     mesh.castShadow = true;
@@ -100,6 +98,8 @@ export function compileThreeScene(
       templateId: template.id,
       role: template.role,
       materialBindings: part.materialBindings,
+      materialColor: materialDefinition?.color ?? '#ff00ff',
+      accessoryFeatures: template.accessory?.requiredFeatures ?? [],
     };
     applyTransform(mesh, semantic.worldTransform);
     group.add(mesh);

@@ -190,12 +190,12 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.spear',
       equipmentSlot: 'main-hand',
-      materialId: 'iron.weathered',
+      materialId: 'iron.blued',
     },
     {
       templateId: 'equipment.shield.kite',
       equipmentSlot: 'off-hand',
-      materialId: 'wood.oak',
+      materialId: 'wood.dark',
     },
     {
       templateId: 'equipment.armor.mail',
@@ -217,14 +217,14 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.backpack',
       equipmentSlot: 'back',
-      materialId: 'leather.dark',
+      materialId: 'leather.tan',
     },
   ],
   ranger: [
     {
       templateId: 'equipment.spear',
       equipmentSlot: 'main-hand',
-      materialId: 'iron.weathered',
+      materialId: 'iron.blued',
     },
     {
       templateId: 'equipment.armor.leather',
@@ -234,12 +234,12 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.quiver',
       equipmentSlot: 'back',
-      materialId: 'leather.dark',
+      materialId: 'leather.tan',
     },
     {
       templateId: 'equipment.pouch.belt',
       equipmentSlot: 'waist',
-      materialId: 'leather.dark',
+      materialId: 'leather.tan',
     },
   ],
   caster: [
@@ -256,12 +256,12 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.cape',
       equipmentSlot: 'back',
-      materialId: 'cloth.moss',
+      materialId: 'cloth.umber',
     },
     {
       templateId: 'equipment.pouch.belt',
       equipmentSlot: 'waist',
-      materialId: 'leather.dark',
+      materialId: 'leather.tan',
     },
   ],
 } as const satisfies Record<AccessoryLoadoutId, readonly LoadoutSelection[]>;

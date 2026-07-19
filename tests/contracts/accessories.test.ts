@@ -63,6 +63,8 @@ const accessoryTemplate = (): PartTemplateDefinition => ({
         intendedDirections: ['N', 'E', 'S', 'W'],
         minimumPixelArea: 12,
         minimumWidthPixels: 3,
+        maximumOcclusionRatio: 0.8,
+        minimumOklabDistance: 0.05,
       },
     ],
   },
@@ -252,6 +254,8 @@ describe('accessory template contracts', () => {
           intendedDirections: ['S', 'W'],
           minimumPixelArea: 12,
           minimumWidthPixels: 2,
+          maximumOcclusionRatio: 0.8,
+          minimumOklabDistance: 0.05,
         },
       ],
       usage: {

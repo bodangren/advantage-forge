@@ -67,7 +67,8 @@
       "sourceFiles": [
         "src/fantasy-kit/accessories.ts",
         "src/fantasy-kit/catalog.ts",
-        "src/fantasy-kit/index.ts"
+        "src/fantasy-kit/index.ts",
+        "src/fantasy-kit/loadouts.ts"
       ],
       "projectDependencies": [
         "assembly",

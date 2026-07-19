@@ -5,7 +5,30 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 const TRANSFORM_TOLERANCE = 1e-5;
 const MINIMUM_BOUNDS_TOLERANCE = 1e-5;
 type Tuple3 = readonly [number, number, number];
+type Tuple4 = readonly [number, number, number, number];
 const MATERIAL_TOLERANCE = 1e-5;
+
+export interface GlbSemanticNodeState {
+  readonly materialNames: readonly string[];
+  readonly worldTransform: {
+    readonly position: Tuple3;
+    readonly rotation: Tuple4;
+    readonly scale: Tuple3;
+  };
+  readonly bounds: {
+    readonly min: Tuple3;
+    readonly max: Tuple3;
+  };
+}
+
+export interface GlbSemanticNodeEvidence {
+  readonly semanticId: string;
+  readonly source: GlbSemanticNodeState;
+  readonly reload: GlbSemanticNodeState;
+  readonly materialNamesMatch: boolean;
+  readonly maximumTransformDeviation: number;
+  readonly maximumBoundsDeviation: number;
+}
 
 export interface GlbManifest {
   readonly format: 'glb';
@@ -21,6 +44,7 @@ export interface GlbManifest {
   readonly materialNamesMatch: boolean;
   readonly semanticNodeCount: number;
   readonly reloadSemanticNodeCount: number;
+  readonly semanticNodes: readonly GlbSemanticNodeEvidence[];
   readonly missingSemanticNodeNames: readonly string[];
   readonly unexpectedSemanticNodeNames: readonly string[];
   readonly transformMismatchCount: number;
@@ -56,11 +80,17 @@ interface TransformEvidence {
   readonly scale: THREE.Vector3;
 }
 
+interface SemanticNodeSceneEvidence extends TransformEvidence {
+  readonly materialNames: readonly string[];
+  readonly bounds: THREE.Box3;
+}
+
 interface SceneEvidence {
   readonly nodeNames: readonly string[];
   readonly materialNames: readonly string[];
   readonly standardMaterials: ReadonlyMap<string, THREE.MeshStandardMaterial>;
   readonly semanticTransforms: ReadonlyMap<string, TransformEvidence>;
+  readonly semanticNodes: ReadonlyMap<string, SemanticNodeSceneEvidence>;
   readonly bounds: THREE.Box3;
   readonly textureCount: number;
   readonly unsupportedMaterialCount: number;
@@ -72,6 +102,49 @@ interface SceneEvidence {
 
 function tuple3(vector: THREE.Vector3): Tuple3 {
   return [vector.x, vector.y, vector.z];
+}
+
+function tuple4(quaternion: THREE.Quaternion): Tuple4 {
+  return [quaternion.x, quaternion.y, quaternion.z, quaternion.w];
+}
+
+function semanticNodeState(
+  evidence: SemanticNodeSceneEvidence,
+): GlbSemanticNodeState {
+  return {
+    materialNames: evidence.materialNames,
+    worldTransform: {
+      position: tuple3(evidence.position),
+      rotation: tuple4(evidence.rotation),
+      scale: tuple3(evidence.scale),
+    },
+    bounds: {
+      min: tuple3(evidence.bounds.min),
+      max: tuple3(evidence.bounds.max),
+    },
+  };
+}
+
+function materialsFor(node: THREE.Object3D): readonly THREE.Material[] {
+  if (!(node instanceof THREE.Mesh)) return [];
+  const material = (
+    node as THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
+  ).material;
+  return Array.isArray(material) ? material : [material];
+}
+
+function visibleBoundsFor(node: THREE.Object3D): THREE.Box3 {
+  const bounds = new THREE.Box3();
+  node.traverseVisible((candidate) => {
+    if (!(candidate instanceof THREE.Mesh)) return;
+    const mesh = candidate as THREE.Mesh<THREE.BufferGeometry>;
+    mesh.geometry.computeBoundingBox();
+    if (mesh.geometry.boundingBox !== null)
+      bounds.union(
+        mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld),
+      );
+  });
+  return bounds;
 }
 
 function maximumComponentDelta(
@@ -116,6 +189,7 @@ function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
   const materialNames = new Set<string>();
   const standardMaterials = new Map<string, THREE.MeshStandardMaterial>();
   const semanticTransforms = new Map<string, TransformEvidence>();
+  const semanticNodes = new Map<string, SemanticNodeSceneEvidence>();
   const textureIds = new Set<string>();
   const materials = new Set<THREE.Material>();
   const bounds = new THREE.Box3();
@@ -135,6 +209,17 @@ function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
       const scale = new THREE.Vector3();
       node.matrixWorld.decompose(position, rotation, scale);
       semanticTransforms.set(semanticId, { position, rotation, scale });
+      const nodeMaterials = materialsFor(node);
+      semanticNodes.set(semanticId, {
+        position,
+        rotation,
+        scale,
+        materialNames: nodeMaterials
+          .map(({ name }) => name)
+          .filter((name) => name !== '')
+          .sort(),
+        bounds: visibleBoundsFor(node),
+      });
     } else if (node.name) nodeNames.add(node.name);
     if (node instanceof THREE.Camera) cameraCount += 1;
     if (node instanceof THREE.Light) lightCount += 1;
@@ -181,6 +266,7 @@ function collectSceneEvidence(root: THREE.Object3D): SceneEvidence {
     materialNames: [...materialNames].sort(),
     standardMaterials,
     semanticTransforms,
+    semanticNodes,
     bounds,
     textureCount: textureIds.size,
     unsupportedMaterialCount,
@@ -212,6 +298,35 @@ export async function exportSceneToGlb(
   );
   const unexpectedSemanticNodeNames = reloadIds.filter(
     (id) => !source.semanticTransforms.has(id),
+  );
+  const semanticNodes: GlbSemanticNodeEvidence[] = sourceIds.flatMap(
+    (semanticId) => {
+      const sourceNode = source.semanticNodes.get(semanticId);
+      const reloadNode = reload.semanticNodes.get(semanticId);
+      if (sourceNode === undefined || reloadNode === undefined) return [];
+      const materialNamesMatch =
+        JSON.stringify(sourceNode.materialNames) ===
+        JSON.stringify(reloadNode.materialNames);
+      const maximumTransformDeviation = Math.max(
+        maximumComponentDelta(sourceNode.position, reloadNode.position),
+        sourceNode.rotation.angleTo(reloadNode.rotation),
+        maximumComponentDelta(sourceNode.scale, reloadNode.scale),
+      );
+      const maximumBoundsDeviation = Math.max(
+        maximumComponentDelta(sourceNode.bounds.min, reloadNode.bounds.min),
+        maximumComponentDelta(sourceNode.bounds.max, reloadNode.bounds.max),
+      );
+      return [
+        {
+          semanticId,
+          source: semanticNodeState(sourceNode),
+          reload: semanticNodeState(reloadNode),
+          materialNamesMatch,
+          maximumTransformDeviation,
+          maximumBoundsDeviation,
+        },
+      ];
+    },
   );
 
   let transformMismatchCount = 0;
@@ -298,6 +413,14 @@ export async function exportSceneToGlb(
   if (!materialNamesMatch) policyFailures.push('material-name mismatch');
   if (!materialPropertiesMatch)
     policyFailures.push('material-property mismatch');
+  if (semanticNodes.some(({ materialNamesMatch }) => !materialNamesMatch))
+    policyFailures.push('semantic-node material-name mismatch');
+  if (
+    semanticNodes.some(
+      ({ maximumBoundsDeviation }) => maximumBoundsDeviation > boundsTolerance,
+    )
+  )
+    policyFailures.push('semantic-node bounds mismatch');
   if (boundsMaximumDeviation > boundsTolerance)
     policyFailures.push('bounds mismatch');
   if (unitScaleDeviation > boundsTolerance)
@@ -333,6 +456,7 @@ export async function exportSceneToGlb(
       materialPropertyTolerance: MATERIAL_TOLERANCE,
       semanticNodeCount: sourceIds.length,
       reloadSemanticNodeCount: reloadIds.length,
+      semanticNodes,
       missingSemanticNodeNames,
       unexpectedSemanticNodeNames,
       transformMismatchCount,

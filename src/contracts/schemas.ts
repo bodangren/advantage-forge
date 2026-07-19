@@ -357,6 +357,8 @@ export const AccessoryRequiredFeatureSchema = z
     intendedDirections: z.array(SpriteDirectionSchema).min(1).max(8),
     minimumPixelArea: z.number().int().min(1).max(16_384),
     minimumWidthPixels: z.number().int().min(1).max(128),
+    maximumOcclusionRatio: FiniteNumberSchema.min(0).max(1),
+    minimumOklabDistance: FiniteNumberSchema.gt(0).max(1),
   })
   .strict()
   .superRefine((feature, context) => {

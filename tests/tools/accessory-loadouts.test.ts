@@ -206,15 +206,40 @@ describe('reference accessory loadout public workflows', () => {
           loadout.accessories.some(({ partId }) => partId === item.id),
       );
       expect(
-        idleParts.map((part) => ({
-          id: part.id,
-          templateId: 'templateId' in part ? part.templateId : undefined,
-        })),
+        idleParts
+          .map((part) => ({
+            id: part.id,
+            templateId: 'templateId' in part ? part.templateId : undefined,
+          }))
+          .sort((left, right) => left.id.localeCompare(right.id)),
       ).toEqual(
-        loadout.accessories.map((accessory) => ({
-          id: accessory.partId,
-          templateId: accessory.templateId,
-        })),
+        loadout.accessories
+          .map((accessory) => ({
+            id: accessory.partId,
+            templateId: accessory.templateId,
+          }))
+          .sort((left, right) => left.id.localeCompare(right.id)),
+      );
+      const equippedProfiles = AssetInspectionDataSchema.parse(
+        (
+          await handlers.inspectAsset({
+            assetId: ASSET_ID,
+            section: 'renderProfiles',
+            offset: 0,
+            limit: 100,
+          })
+        ).data,
+      ).items!;
+      const equippedProfile = equippedProfiles.find(
+        (item) => 'requiredFeaturePartIds' in item,
+      );
+      expect(
+        equippedProfile !== undefined &&
+          'requiredFeaturePartIds' in equippedProfile
+          ? equippedProfile.requiredFeaturePartIds
+          : [],
+      ).toEqual(
+        expect.arrayContaining(loadout.accessories.map(({ partId }) => partId)),
       );
 
       const posed = await handlers.setPose({
@@ -273,6 +298,28 @@ describe('reference accessory loadout public workflows', () => {
       expect(remainingIds).not.toEqual(
         expect.arrayContaining(loadout.accessories.map(({ partId }) => partId)),
       );
+      const unequippedProfiles = AssetInspectionDataSchema.parse(
+        (
+          await handlers.inspectAsset({
+            assetId: ASSET_ID,
+            section: 'renderProfiles',
+            offset: 0,
+            limit: 100,
+          })
+        ).data,
+      ).items!;
+      const unequippedProfile = unequippedProfiles.find(
+        (item) => 'requiredFeaturePartIds' in item,
+      );
+      expect(
+        unequippedProfile !== undefined &&
+          'requiredFeaturePartIds' in unequippedProfile
+          ? unequippedProfile.requiredFeaturePartIds
+          : [],
+      ).not.toEqual(
+        expect.arrayContaining(loadout.accessories.map(({ partId }) => partId)),
+      );
     },
+    30_000,
   );
 });

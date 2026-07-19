@@ -86,14 +86,21 @@ export const rusticMaterials: readonly MaterialDefinition[] = [
   {
     id: 'cloth.umber',
     family: 'cloth',
-    color: '#865d42',
+    color: '#4a407f',
     roughness: 0.95,
     metalness: 0,
   },
   {
     id: 'leather.dark',
     family: 'leather',
-    color: '#594035',
+    color: '#70412f',
+    roughness: 0.88,
+    metalness: 0,
+  },
+  {
+    id: 'leather.tan',
+    family: 'leather',
+    color: '#d8b24c',
     roughness: 0.88,
     metalness: 0,
   },
@@ -107,16 +114,23 @@ export const rusticMaterials: readonly MaterialDefinition[] = [
   {
     id: 'wood.dark',
     family: 'wood',
-    color: '#684634',
+    color: '#321b12',
     roughness: 0.92,
     metalness: 0,
   },
   {
     id: 'iron.weathered',
     family: 'iron',
-    color: '#a7afac',
+    color: '#d7dfdc',
     roughness: 0.68,
     metalness: 0.72,
+  },
+  {
+    id: 'iron.blued',
+    family: 'iron',
+    color: '#315f96',
+    roughness: 0.7,
+    metalness: 0.68,
   },
   {
     id: 'stone.lime',
@@ -142,7 +156,7 @@ export const rusticMaterials: readonly MaterialDefinition[] = [
   {
     id: 'bronze.aged',
     family: 'bronze',
-    color: '#b17e45',
+    color: '#c99a22',
     roughness: 0.72,
     metalness: 0.66,
   },

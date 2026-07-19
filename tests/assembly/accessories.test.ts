@@ -76,6 +76,8 @@ const accessoryTemplate = (
         intendedDirections: ['N', 'E', 'S', 'W'],
         minimumPixelArea: 8,
         minimumWidthPixels: 2,
+        maximumOcclusionRatio: 0.8,
+        minimumOklabDistance: 0.05,
       },
     ],
     ...overrides,
@@ -230,6 +232,101 @@ describe('accessory compatibility validation', () => {
         ({ code }) => code,
       ),
     ).toContain('ACCESSORY_INTERSECTION_EXCEEDED');
+  });
+
+  it('compares rigid accessory bounds in evaluated world space', () => {
+    const mountTemplate: PartTemplateDefinition = {
+      id: 'human.mounts',
+      role: 'anatomy.torso',
+      shape: { kind: 'box', width: 1, height: 1, depth: 1 },
+      materialSlots: ['body'],
+      ports: [
+        {
+          id: 'equipment.body',
+          frame: { ...identity, position: [0, 0, 2] },
+          tags: ['equipment.mount'],
+          accepts: ['equipment.grip'],
+          cardinality: 'single',
+        },
+        {
+          id: 'equipment.back',
+          frame: { ...identity, position: [0, 0, -2] },
+          tags: ['equipment.mount'],
+          accepts: ['equipment.grip'],
+          cardinality: 'single',
+        },
+      ],
+    };
+    const bodyTemplate = accessoryTemplate('equipment.body-shell', {
+      role: 'armor',
+      slot: 'body',
+      compatibleSlots: ['body'],
+      handedness: 'neutral',
+      layer: {
+        kind: 'overlay',
+        order: 10,
+        maximumIntersectionRatio: 0.01,
+      },
+      bounds: { min: [-1, -1, -1], max: [1, 1, 1] },
+    });
+    const backTemplate = accessoryTemplate('equipment.back-shell', {
+      role: 'back-item',
+      slot: 'back',
+      compatibleSlots: ['back'],
+      handedness: 'neutral',
+      layer: {
+        kind: 'overlay',
+        order: 11,
+        maximumIntersectionRatio: 0.01,
+      },
+      bounds: { min: [-1, -1, -1], max: [1, 1, 1] },
+    });
+    const parent: PartInstance = {
+      id: 'torso',
+      templateId: mountTemplate.id,
+      handedness: 'neutral',
+      transform: identity,
+      materialBindings: [{ slot: 'body', materialId: 'cloth.moss' }],
+      visible: true,
+    };
+    const body = {
+      ...sword('armor', bodyTemplate.id),
+      equipmentSlot: 'body' as const,
+      handedness: 'neutral' as const,
+    };
+    const back = {
+      ...sword('pack', backTemplate.id),
+      equipmentSlot: 'back' as const,
+      handedness: 'neutral' as const,
+    };
+    const assembly: AssemblyDefinition = {
+      id: 'world-space-layers',
+      parts: [parent, body, back],
+      connections: [
+        {
+          id: 'equip.body',
+          parentPartId: parent.id,
+          parentPortId: 'equipment.body',
+          childPartId: body.id,
+          childPortId: 'grip',
+        },
+        {
+          id: 'equip.back',
+          parentPartId: parent.id,
+          parentPortId: 'equipment.back',
+          childPartId: back.id,
+          childPortId: 'grip',
+        },
+      ],
+    };
+
+    expect(
+      validateAccessoryLoadout(
+        assembly,
+        [mountTemplate, bodyTemplate, backTemplate],
+        context,
+      ),
+    ).toEqual([]);
   });
 });
 

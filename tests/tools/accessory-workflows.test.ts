@@ -159,7 +159,7 @@ describe('accessory workflow tools', () => {
       parentRevisionId: created.revisionId,
       partId: 'accessory.head',
       equipmentSlot: 'head',
-      affectedIds: ['accessory.head', 'connection.head'],
+      affectedIds: ['accessory.head', 'connection.head', 'sprite.default'],
       addedIds: ['accessory.head', 'connection.head'],
       connectionIds: ['connection.head'],
     });
@@ -191,6 +191,10 @@ describe('accessory workflow tools', () => {
         current.document.assembly.parts.find(({ id }) => id === 'torso'),
       ),
     ).toBe(torsoBytes);
+    expect(current.document.renderProfiles[0]?.requiredFeaturePartIds).toEqual([
+      'torso',
+      'accessory.head',
+    ]);
   });
 
   it('rejects occupied, stale, no-op, and unknown requests without mutation', async () => {
@@ -341,7 +345,7 @@ describe('accessory workflow tools', () => {
       operation: 'swapHand',
       partId: 'sword',
       equipmentSlot: 'off-hand',
-      affectedIds: ['sword', 'equip-sword'],
+      affectedIds: ['sword', 'equip-sword', 'sprite.default'],
     });
     expect(
       revisions.current
@@ -361,6 +365,10 @@ describe('accessory workflow tools', () => {
       operation: 'unequip',
       removedIds: ['sword', 'equip-sword'],
     });
+    expect(
+      revisions.current.get('adventurer.rustic')!.document.renderProfiles[0]
+        ?.requiredFeaturePartIds,
+    ).toEqual(['torso']);
   });
 
   it('rejects missing mount ports and incompatible anatomy without saving', async () => {

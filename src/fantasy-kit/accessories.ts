@@ -25,9 +25,11 @@ export const RUSTIC_ACCESSORY_MATERIAL_IDS = [
   'cloth.moss',
   'cloth.umber',
   'leather.dark',
+  'leather.tan',
   'wood.oak',
   'wood.dark',
   'iron.weathered',
+  'iron.blued',
   'bronze.aged',
   'bone.ivory',
   'crystal.arcane',
@@ -230,6 +232,9 @@ interface EntryInput {
   readonly featureExpectation: string;
   readonly minimumPixelArea: number;
   readonly minimumWidthPixels: number;
+  readonly intendedDirections?: readonly SpriteDirection[];
+  readonly maximumOcclusionRatio?: number;
+  readonly minimumOklabDistance?: number;
   readonly intendedLoadouts: readonly AccessoryLoadoutId[];
   readonly attachmentTarget: AccessoryCatalogEntry['attachmentTarget'];
   readonly attachmentPosition: readonly [number, number, number];
@@ -347,9 +352,11 @@ function catalogEntry(input: EntryInput): AccessoryCatalogEntry {
         {
           id: input.featureId,
           expectation: input.featureExpectation,
-          intendedDirections: [...DIRECTIONS],
+          intendedDirections: [...(input.intendedDirections ?? DIRECTIONS)],
           minimumPixelArea: input.minimumPixelArea,
           minimumWidthPixels: input.minimumWidthPixels,
+          maximumOcclusionRatio: input.maximumOcclusionRatio ?? 0.8,
+          minimumOklabDistance: input.minimumOklabDistance ?? 0.05,
         },
       ],
     },
@@ -646,7 +653,7 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
         radialSegments: 7,
       },
       materialSlot: 'metal',
-      defaultMaterialId: 'iron.weathered',
+      defaultMaterialId: 'iron.blued',
       tags: ['reach', 'guard', 'ranger'],
       layer: carriedLayer,
       bounds: { min: [-0.08, -0.66, -0.08], max: [0.08, 0.72, 0.08] },
@@ -658,6 +665,24 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['guard', 'ranger'],
       attachmentTarget: rightHandTarget,
       attachmentPosition: [0, -0.38, 0],
+      placementTransforms: {
+        'main-hand': {
+          position: [0.36, 0, 0.3],
+          rotation: [0, 0, -0.20791169081775931, 0.9781476007338057],
+          scale: [1.08, 1.08, 1.08],
+        },
+        'off-hand': {
+          position: [-0.36, 0, 0.3],
+          rotation: [0, 0, 0.20791169081775931, 0.9781476007338057],
+          scale: [1.08, 1.08, 1.08],
+        },
+      },
+      intendedOrientations: {
+        'main-hand':
+          'Spear leans twenty-four degrees outward from the right hand, sits forward of the body silhouette, and clears the action pose.',
+        'off-hand':
+          'Spear leans twenty-four degrees outward from the left hand, sits forward of the body silhouette, and clears the action pose.',
+      },
     }),
     catalogEntry({
       id: 'equipment.staff',
@@ -672,14 +697,14 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
           [0.1, 0.64, 0],
           [0.23, 0.61, 0],
         ],
-        radius: 0.035,
+        radius: 0.05,
         radialSegments: 7,
       },
       materialSlot: 'wood',
       defaultMaterialId: 'wood.dark',
       tags: ['traveler', 'caster'],
       layer: carriedLayer,
-      bounds: { min: [-0.035, -0.695, -0.035], max: [0.265, 0.675, 0.035] },
+      bounds: { min: [-0.05, -0.71, -0.05], max: [0.28, 0.69, 0.05] },
       triangleBudget: 192,
       featureId: 'staff-crook',
       featureExpectation: 'Crooked staff top remains visible beside the head.',
@@ -688,6 +713,24 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['traveler', 'caster'],
       attachmentTarget: rightHandTarget,
       attachmentPosition: [0, -0.38, 0],
+      placementTransforms: {
+        'main-hand': {
+          position: [0.26, 0, 0.12],
+          rotation: [0, 0, -0.15643446504023087, 0.9876883405951378],
+          scale: [1, 1, 1],
+        },
+        'off-hand': {
+          position: [-0.26, 0, 0.12],
+          rotation: [0, 0, 0.15643446504023087, 0.9876883405951378],
+          scale: [1, 1, 1],
+        },
+      },
+      intendedOrientations: {
+        'main-hand':
+          'Staff leans outward from the right shoulder so the crooked crown clears the head.',
+        'off-hand':
+          'Staff leans outward from the left shoulder so the crooked crown clears the head.',
+      },
     }),
     catalogEntry({
       id: 'equipment.shield.kite',
@@ -707,7 +750,7 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
         depth: 0.07,
       },
       materialSlot: 'wood',
-      defaultMaterialId: 'wood.oak',
+      defaultMaterialId: 'wood.dark',
       tags: ['defense', 'guard'],
       layer: carriedLayer,
       bounds: { min: [-0.3, -0.52, -0.035], max: [0.3, 0.42, 0.035] },
@@ -719,6 +762,24 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['guard'],
       attachmentTarget: leftHandTarget,
       attachmentPosition: [0, 0, -0.06],
+      placementTransforms: {
+        'main-hand': {
+          position: [0.45, 0, 0.25],
+          rotation: [0, -0.3826834323650898, 0, 0.9238795325112867],
+          scale: [1.25, 1.25, 1.25],
+        },
+        'off-hand': {
+          position: [-0.45, 0, 0.25],
+          rotation: [0, 0.3826834323650898, 0, 0.9238795325112867],
+          scale: [1.25, 1.25, 1.25],
+        },
+      },
+      intendedOrientations: {
+        'main-hand':
+          'Kite shield stays vertical and yaws forty-five degrees so its broad face remains readable from every cardinal camera.',
+        'off-hand':
+          'Kite shield stays vertical and yaws forty-five degrees so its broad face remains readable from every cardinal camera.',
+      },
     }),
     catalogEntry({
       id: 'equipment.torch',
@@ -754,13 +815,19 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       id: 'equipment.armor.leather',
       role: 'armor',
       slot: 'body',
-      shape: { kind: 'wedge', width: 0.62, height: 0.72, depth: 0.36 },
+      shape: {
+        kind: 'beveledBox',
+        width: 0.76,
+        height: 0.8,
+        depth: 0.38,
+        bevel: 0.04,
+      },
       materialSlot: 'leather',
       defaultMaterialId: 'leather.dark',
       tags: ['traveler', 'ranger', 'armor'],
       layer: overlayLayer,
-      bounds: { min: [-0.31, -0.36, -0.18], max: [0.31, 0.36, 0.18] },
-      triangleBudget: 64,
+      bounds: { min: [-0.38, -0.4, -0.19], max: [0.38, 0.4, 0.19] },
+      triangleBudget: 128,
       featureId: 'armor-shoulder',
       featureExpectation: 'Leather shell broadens the shoulder silhouette.',
       minimumPixelArea: 28,
@@ -775,16 +842,16 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       slot: 'body',
       shape: {
         kind: 'beveledBox',
-        width: 0.6,
-        height: 0.7,
-        depth: 0.34,
+        width: 0.72,
+        height: 0.76,
+        depth: 0.38,
         bevel: 0.04,
       },
       materialSlot: 'metal',
       defaultMaterialId: 'iron.weathered',
       tags: ['guard', 'armor'],
       layer: overlayLayer,
-      bounds: { min: [-0.3, -0.35, -0.17], max: [0.3, 0.35, 0.17] },
+      bounds: { min: [-0.36, -0.38, -0.19], max: [0.36, 0.38, 0.19] },
       triangleBudget: 128,
       featureId: 'mail-outline',
       featureExpectation: 'Mail shell remains distinct from the tunic.',
@@ -798,13 +865,22 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       id: 'equipment.cape',
       role: 'back-item',
       slot: 'back',
-      shape: { kind: 'flatCard', width: 0.58, height: 0.9 },
+      shape: {
+        kind: 'box',
+        width: 1.2,
+        height: 1.12,
+        depth: 0.18,
+      },
       materialSlot: 'cloth',
-      defaultMaterialId: 'cloth.moss',
+      defaultMaterialId: 'cloth.umber',
       tags: ['traveler', 'caster'],
-      layer: { ...overlayLayer, order: 12 },
-      bounds: { min: [-0.29, -0.45, -0.01], max: [0.29, 0.45, 0.01] },
-      triangleBudget: 16,
+      layer: {
+        ...overlayLayer,
+        order: 12,
+        maximumIntersectionRatio: 0.35,
+      },
+      bounds: { min: [-0.6, -0.56, -0.09], max: [0.6, 0.56, 0.09] },
+      triangleBudget: 12,
       featureId: 'cape-tail',
       featureExpectation: 'Cape extends below the torso from reverse views.',
       minimumPixelArea: 24,
@@ -812,6 +888,13 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['traveler', 'caster'],
       attachmentTarget: backTarget,
       attachmentPosition: [0, 0.4, 0],
+      placementTransforms: {
+        back: {
+          position: [-0.1, -0.3, -0.04],
+          rotation: [0, 0, 0, 1],
+          scale: [1, 1, 1],
+        },
+      },
     }),
     catalogEntry({
       id: 'equipment.quiver',
@@ -819,15 +902,15 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       slot: 'back',
       shape: {
         kind: 'cylinder',
-        radius: 0.12,
-        height: 0.72,
+        radius: 0.15,
+        height: 0.76,
         radialSegments: 8,
       },
       materialSlot: 'leather',
-      defaultMaterialId: 'leather.dark',
+      defaultMaterialId: 'leather.tan',
       tags: ['ranger', 'ammunition'],
       layer: { ...overlayLayer, order: 13 },
-      bounds: { min: [-0.12, -0.36, -0.12], max: [0.12, 0.36, 0.12] },
+      bounds: { min: [-0.15, -0.38, -0.15], max: [0.15, 0.38, 0.15] },
       triangleBudget: 96,
       featureId: 'quiver-rim',
       featureExpectation: 'Quiver rim remains visible above one shoulder.',
@@ -836,6 +919,13 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['ranger'],
       attachmentTarget: backTarget,
       attachmentPosition: [0, 0.22, 0],
+      placementTransforms: {
+        back: {
+          position: [0.42, 0.3, -0.02],
+          rotation: [0, 0, -0.10452846326765347, 0.9945218953682733],
+          scale: [1, 1, 1],
+        },
+      },
     }),
     catalogEntry({
       id: 'equipment.backpack',
@@ -843,16 +933,16 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       slot: 'back',
       shape: {
         kind: 'beveledBox',
-        width: 0.46,
-        height: 0.58,
-        depth: 0.24,
+        width: 0.82,
+        height: 0.64,
+        depth: 0.5,
         bevel: 0.05,
       },
       materialSlot: 'leather',
-      defaultMaterialId: 'leather.dark',
+      defaultMaterialId: 'leather.tan',
       tags: ['traveler', 'pack'],
       layer: { ...overlayLayer, order: 14 },
-      bounds: { min: [-0.23, -0.29, -0.12], max: [0.23, 0.29, 0.12] },
+      bounds: { min: [-0.41, -0.32, -0.25], max: [0.41, 0.32, 0.25] },
       triangleBudget: 128,
       featureId: 'pack-body',
       featureExpectation: 'Backpack projects beyond the torso in side views.',
@@ -861,6 +951,13 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['traveler'],
       attachmentTarget: backTarget,
       attachmentPosition: [0, 0.2, 0.12],
+      placementTransforms: {
+        back: {
+          position: [0.38, 0, -0.18],
+          rotation: [0, 0, 0, 1],
+          scale: [1, 1, 1],
+        },
+      },
     }),
     catalogEntry({
       id: 'equipment.pouch.belt',
@@ -868,16 +965,16 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       slot: 'waist',
       shape: {
         kind: 'beveledBox',
-        width: 0.24,
-        height: 0.2,
-        depth: 0.12,
+        width: 0.64,
+        height: 0.28,
+        depth: 0.6,
         bevel: 0.025,
       },
       materialSlot: 'leather',
-      defaultMaterialId: 'leather.dark',
+      defaultMaterialId: 'leather.tan',
       tags: ['traveler', 'utility'],
-      layer: overlayLayer,
-      bounds: { min: [-0.12, -0.1, -0.06], max: [0.12, 0.1, 0.06] },
+      layer: { ...overlayLayer, maximumIntersectionRatio: 0.35 },
+      bounds: { min: [-0.32, -0.14, -0.3], max: [0.32, 0.14, 0.3] },
       triangleBudget: 128,
       featureId: 'pouch-flap',
       featureExpectation: 'Belt pouch remains visible beside the pelvis.',
@@ -886,6 +983,13 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       intendedLoadouts: ['traveler', 'ranger', 'caster'],
       attachmentTarget: waistTarget,
       attachmentPosition: [0, 0.08, -0.06],
+      placementTransforms: {
+        waist: {
+          position: [0, -0.22, -0.3],
+          rotation: [0, 0, 0, 1],
+          scale: [1, 1, 1],
+        },
+      },
     }),
     catalogEntry({
       id: 'equipment.scabbard',

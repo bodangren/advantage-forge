@@ -706,6 +706,19 @@ export function planAccessoryOperation(
     connectionIds = [connectionId];
   }
 
+  const includeInRenderEvidence = operation.operation !== 'unequip';
+  candidate.renderProfiles = candidate.renderProfiles.map((profile) => {
+    const withoutPart = profile.requiredFeaturePartIds.filter(
+      (candidatePartId) => candidatePartId !== partId,
+    );
+    return {
+      ...profile,
+      requiredFeaturePartIds: includeInRenderEvidence
+        ? [...withoutPart, partId!]
+        : withoutPart,
+    };
+  });
+
   candidate = checkedCandidate(before, candidate, archetypeId);
   const diff = compareSemanticDocuments(before, candidate);
   const primaryAffectedIds = [

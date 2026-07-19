@@ -115,4 +115,26 @@ describe('accessory GLB semantic reload evidence', () => {
       disposeCompiledScene(compiled);
     }
   });
+
+  it('excludes invisible accessory nodes and their bounds from reload evidence', async () => {
+    const compiled = compileThreeScene({
+      ...adventurerDocument,
+      activeVariantId: 'unequipped',
+    });
+    try {
+      const { manifest } = await exportSceneToGlb(compiled.group);
+      expect(
+        manifest.semanticNodes.map(({ semanticId }) => semanticId),
+      ).not.toEqual(expect.arrayContaining(['sword', 'shield']));
+      const root = manifest.semanticNodes.find(
+        ({ semanticId }) => semanticId === adventurerDocument.id,
+      );
+      expect(root).toBeDefined();
+      expect(root?.maximumBoundsDeviation).toBeLessThanOrEqual(
+        manifest.bounds.tolerance,
+      );
+    } finally {
+      disposeCompiledScene(compiled);
+    }
+  });
 });

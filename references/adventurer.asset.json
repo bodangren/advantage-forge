@@ -487,15 +487,15 @@
         "templateId": "equipment.shield",
         "transform": {
           "position": [
-            0,
+            -0.12,
             0,
             0
           ],
           "rotation": [
+            0.7071067811865476,
             0,
             0,
-            0,
-            1
+            0.7071067811865476
           ],
           "scale": [
             1,
@@ -577,8 +577,8 @@
         "templateId": "equipment.sword",
         "transform": {
           "position": [
-            0,
-            0,
+            0.14,
+            -0.04,
             0
           ],
           "rotation": [
@@ -795,7 +795,7 @@
       "roughness": 0.9
     },
     {
-      "color": "#b17e45",
+      "color": "#c99a22",
       "family": "bronze",
       "id": "bronze.aged",
       "metalness": 0.66,
@@ -809,7 +809,7 @@
       "roughness": 0.95
     },
     {
-      "color": "#865d42",
+      "color": "#4a407f",
       "family": "cloth",
       "id": "cloth.umber",
       "metalness": 0,
@@ -838,16 +838,30 @@
       "roughness": 1
     },
     {
-      "color": "#a7afac",
+      "color": "#315f96",
+      "family": "iron",
+      "id": "iron.blued",
+      "metalness": 0.68,
+      "roughness": 0.7
+    },
+    {
+      "color": "#d7dfdc",
       "family": "iron",
       "id": "iron.weathered",
       "metalness": 0.72,
       "roughness": 0.68
     },
     {
-      "color": "#594035",
+      "color": "#70412f",
       "family": "leather",
       "id": "leather.dark",
+      "metalness": 0,
+      "roughness": 0.88
+    },
+    {
+      "color": "#d8b24c",
+      "family": "leather",
+      "id": "leather.tan",
       "metalness": 0,
       "roughness": 0.88
     },
@@ -866,7 +880,7 @@
       "roughness": 1
     },
     {
-      "color": "#684634",
+      "color": "#321b12",
       "family": "wood",
       "id": "wood.dark",
       "metalness": 0,
@@ -1525,6 +1539,1311 @@
       }
     },
     {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.38,
+            0.4,
+            0.19
+          ],
+          "min": [
+            -0.38,
+            -0.4,
+            -0.19
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "ranger",
+          "armor"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler",
+          "ranger"
+        ],
+        "compatibleSlots": [
+          "body"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Leather shell broadens the shoulder silhouette.",
+            "id": "armor-shoulder",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 28,
+            "minimumWidthPixels": 4
+          }
+        ],
+        "role": "armor",
+        "slot": "body",
+        "triangleBudget": 128
+      },
+      "id": "equipment.armor.leather",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -0.18
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.armor.leather",
+      "shape": {
+        "bevel": 0.04,
+        "depth": 0.38,
+        "height": 0.8,
+        "kind": "beveledBox",
+        "width": 0.76
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.36,
+            0.38,
+            0.19
+          ],
+          "min": [
+            -0.36,
+            -0.38,
+            -0.19
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "guard",
+          "armor"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "body"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Mail shell remains distinct from the tunic.",
+            "id": "mail-outline",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 30,
+            "minimumWidthPixels": 4
+          }
+        ],
+        "role": "armor",
+        "slot": "body",
+        "triangleBudget": 128
+      },
+      "id": "equipment.armor.mail",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -0.17
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.armor.mail",
+      "shape": {
+        "bevel": 0.04,
+        "depth": 0.38,
+        "height": 0.76,
+        "kind": "beveledBox",
+        "width": 0.72
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.24,
+            0.36,
+            0.0275
+          ],
+          "min": [
+            -0.14,
+            -0.5,
+            -0.0275
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "melee",
+          "guard"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "main-hand",
+          "off-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Axe head remains wider than the handle.",
+            "id": "axe-head",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "weapon",
+        "slot": "main-hand",
+        "triangleBudget": 128
+      },
+      "id": "equipment.axe",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.44,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.axe",
+      "shape": {
+        "depth": 0.055,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.035,
+            -0.5
+          ],
+          [
+            0.035,
+            -0.5
+          ],
+          [
+            0.24,
+            0.16
+          ],
+          [
+            0.2,
+            0.36
+          ],
+          [
+            -0.14,
+            0.16
+          ]
+        ]
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.41,
+            0.32,
+            0.25
+          ],
+          "min": [
+            -0.41,
+            -0.32,
+            -0.25
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "pack"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler"
+        ],
+        "compatibleSlots": [
+          "back"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 14
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Backpack projects beyond the torso in side views.",
+            "id": "pack-body",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 26,
+            "minimumWidthPixels": 4
+          }
+        ],
+        "role": "back-item",
+        "slot": "back",
+        "triangleBudget": 128
+      },
+      "id": "equipment.backpack",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.2,
+              0.12
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.backpack",
+      "shape": {
+        "bevel": 0.05,
+        "depth": 0.5,
+        "height": 0.64,
+        "kind": "beveledBox",
+        "width": 0.82
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.6,
+            0.56,
+            0.09
+          ],
+          "min": [
+            -0.6,
+            -0.56,
+            -0.09
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "caster"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler",
+          "caster"
+        ],
+        "compatibleSlots": [
+          "back"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.35,
+          "order": 12
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Cape extends below the torso from reverse views.",
+            "id": "cape-tail",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 24,
+            "minimumWidthPixels": 4
+          }
+        ],
+        "role": "back-item",
+        "slot": "back",
+        "triangleBudget": 12
+      },
+      "id": "equipment.cape",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.4,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.cape",
+      "shape": {
+        "depth": 0.18,
+        "height": 1.12,
+        "kind": "box",
+        "width": 1.2
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.24,
+            0.17,
+            0.23
+          ],
+          "min": [
+            -0.24,
+            -0.17,
+            -0.23
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "guard",
+          "armor"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "head"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Iron crown extends beyond the head silhouette.",
+            "id": "helmet-crown",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 18,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "headwear",
+        "slot": "head",
+        "triangleBudget": 256
+      },
+      "id": "equipment.helmet.iron",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.14,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.helmet.iron",
+      "shape": {
+        "heightSegments": 5,
+        "kind": "ellipsoid",
+        "radiusX": 0.24,
+        "radiusY": 0.17,
+        "radiusZ": 0.23,
+        "widthSegments": 10
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.25,
+            0.24,
+            0.24
+          ],
+          "min": [
+            -0.25,
+            -0.24,
+            -0.24
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "caster"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler",
+          "caster"
+        ],
+        "compatibleSlots": [
+          "head"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Cloth hood frames and enlarges the head silhouette.",
+            "id": "hood-outline",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 20,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "headwear",
+        "slot": "head",
+        "triangleBudget": 256
+      },
+      "id": "equipment.hood.cloth",
+      "materialSlots": [
+        "cloth"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.17,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.hood.cloth",
+      "shape": {
+        "heightSegments": 5,
+        "kind": "ellipsoid",
+        "radiusX": 0.25,
+        "radiusY": 0.24,
+        "radiusZ": 0.24,
+        "widthSegments": 9
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.16,
+            0.46,
+            0.16
+          ],
+          "min": [
+            -0.16,
+            -0.5,
+            -0.16
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "melee",
+          "guard"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "main-hand",
+          "off-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Mace head reads wider than its shaft.",
+            "id": "mace-head",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "weapon",
+        "slot": "main-hand",
+        "triangleBudget": 160
+      },
+      "id": "equipment.mace",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.44,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.mace",
+      "shape": {
+        "kind": "lathedProfile",
+        "profile": [
+          [
+            0.03,
+            -0.5
+          ],
+          [
+            0.035,
+            0.18
+          ],
+          [
+            0.13,
+            0.22
+          ],
+          [
+            0.16,
+            0.34
+          ],
+          [
+            0.1,
+            0.42
+          ],
+          [
+            0,
+            0.46
+          ]
+        ],
+        "radialSegments": 8
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.32,
+            0.14,
+            0.3
+          ],
+          "min": [
+            -0.32,
+            -0.14,
+            -0.3
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "utility"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler",
+          "ranger",
+          "caster"
+        ],
+        "compatibleSlots": [
+          "waist"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.35,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Belt pouch remains visible beside the pelvis.",
+            "id": "pouch-flap",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 10,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "waist-item",
+        "slot": "waist",
+        "triangleBudget": 128
+      },
+      "id": "equipment.pouch.belt",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.08,
+              -0.06
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.pouch.belt",
+      "shape": {
+        "bevel": 0.025,
+        "depth": 0.6,
+        "height": 0.28,
+        "kind": "beveledBox",
+        "width": 0.64
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.15,
+            0.38,
+            0.15
+          ],
+          "min": [
+            -0.15,
+            -0.38,
+            -0.15
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "ranger",
+          "ammunition"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "ranger"
+        ],
+        "compatibleSlots": [
+          "back"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 13
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Quiver rim remains visible above one shoulder.",
+            "id": "quiver-rim",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "back-item",
+        "slot": "back",
+        "triangleBudget": 96
+      },
+      "id": "equipment.quiver",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.22,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.quiver",
+      "shape": {
+        "height": 0.76,
+        "kind": "cylinder",
+        "radialSegments": 8,
+        "radius": 0.15
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "mount"
+        ],
+        "bounds": {
+          "max": [
+            0.045,
+            0.405,
+            0.045
+          ],
+          "min": [
+            -0.045,
+            -0.405,
+            -0.045
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "guard",
+          "weapon-storage"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "waist"
+        ],
+        "handedness": "neutral",
+        "layer": {
+          "kind": "overlay",
+          "maximumIntersectionRatio": 0.18,
+          "order": 10
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Scabbard extends below the waist silhouette.",
+            "id": "scabbard-tip",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 2
+          }
+        ],
+        "role": "waist-item",
+        "slot": "waist",
+        "triangleBudget": 192
+      },
+      "id": "equipment.scabbard",
+      "materialSlots": [
+        "leather"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.34,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "mount",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.scabbard",
+      "shape": {
+        "capSegments": 3,
+        "cylinderHeight": 0.72,
+        "kind": "capsule",
+        "radialSegments": 7,
+        "radius": 0.045
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.34,
+            0.04,
+            0.34
+          ],
+          "min": [
+            -0.34,
+            -0.04,
+            -0.34
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "defense",
+          "guard"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "adventurer",
+          "guard",
+          "warrior"
+        ],
+        "compatibleSlots": [
+          "off-hand",
+          "main-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Shield face remains distinct from the torso.",
+            "id": "shield-face",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 24,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "shield",
+        "slot": "off-hand",
+        "triangleBudget": 64
+      },
       "id": "equipment.shield",
       "materialSlots": [
         "wood"
@@ -1568,6 +2887,461 @@
       }
     },
     {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.3,
+            0.42,
+            0.035
+          ],
+          "min": [
+            -0.3,
+            -0.52,
+            -0.035
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "defense",
+          "guard"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard"
+        ],
+        "compatibleSlots": [
+          "off-hand",
+          "main-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Kite shield retains its pointed lower silhouette.",
+            "id": "kite-point",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 30,
+            "minimumWidthPixels": 4
+          }
+        ],
+        "role": "shield",
+        "slot": "off-hand",
+        "triangleBudget": 128
+      },
+      "id": "equipment.shield.kite",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -0.06
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.shield.kite",
+      "shape": {
+        "depth": 0.07,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.3,
+            -0.22
+          ],
+          [
+            0,
+            -0.52
+          ],
+          [
+            0.3,
+            -0.22
+          ],
+          [
+            0.25,
+            0.3
+          ],
+          [
+            0,
+            0.42
+          ],
+          [
+            -0.25,
+            0.3
+          ]
+        ]
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.08,
+            0.72,
+            0.08
+          ],
+          "min": [
+            -0.08,
+            -0.66,
+            -0.08
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "reach",
+          "guard",
+          "ranger"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "guard",
+          "ranger"
+        ],
+        "compatibleSlots": [
+          "main-hand",
+          "off-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Spear tip remains distinct at the top of the shaft.",
+            "id": "spear-tip",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 8,
+            "minimumWidthPixels": 2
+          }
+        ],
+        "role": "weapon",
+        "slot": "main-hand",
+        "triangleBudget": 128
+      },
+      "id": "equipment.spear",
+      "materialSlots": [
+        "metal"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.38,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.spear",
+      "shape": {
+        "kind": "lathedProfile",
+        "profile": [
+          [
+            0.025,
+            -0.66
+          ],
+          [
+            0.025,
+            0.42
+          ],
+          [
+            0.08,
+            0.54
+          ],
+          [
+            0,
+            0.72
+          ]
+        ],
+        "radialSegments": 7
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.28,
+            0.69,
+            0.05
+          ],
+          "min": [
+            -0.05,
+            -0.71,
+            -0.05
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "caster"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler",
+          "caster"
+        ],
+        "compatibleSlots": [
+          "main-hand",
+          "off-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Crooked staff top remains visible beside the head.",
+            "id": "staff-crook",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 10,
+            "minimumWidthPixels": 2
+          }
+        ],
+        "role": "weapon",
+        "slot": "main-hand",
+        "triangleBudget": 192
+      },
+      "id": "equipment.staff",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.38,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.staff",
+      "shape": {
+        "kind": "tubePath",
+        "path": [
+          [
+            0,
+            -0.66,
+            0
+          ],
+          [
+            0,
+            0.42,
+            0
+          ],
+          [
+            0.1,
+            0.64,
+            0
+          ],
+          [
+            0.23,
+            0.61,
+            0
+          ]
+        ],
+        "radialSegments": 7,
+        "radius": 0.05
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.055,
+            0.5,
+            0.0175
+          ],
+          "min": [
+            -0.055,
+            -0.42,
+            -0.0175
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "melee",
+          "guard"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "adventurer",
+          "guard",
+          "warrior"
+        ],
+        "compatibleSlots": [
+          "main-hand",
+          "off-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Blade silhouette remains readable beside the body.",
+            "id": "blade",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 8,
+            "minimumWidthPixels": 2
+          }
+        ],
+        "role": "weapon",
+        "slot": "main-hand",
+        "triangleBudget": 64
+      },
       "id": "equipment.sword",
       "materialSlots": [
         "metal"
@@ -1581,7 +3355,7 @@
           "frame": {
             "position": [
               0,
-              -0.48,
+              0.42,
               0
             ],
             "rotation": [
@@ -1628,6 +3402,134 @@
             0.31
           ]
         ]
+      }
+    },
+    {
+      "accessory": {
+        "allowedPoseIds": [
+          "idle",
+          "action"
+        ],
+        "attachmentPortIds": [
+          "grip"
+        ],
+        "bounds": {
+          "max": [
+            0.11,
+            0.58,
+            0.11
+          ],
+          "min": [
+            -0.11,
+            -0.5,
+            -0.11
+          ]
+        },
+        "compatibilityTags": [
+          "rustic",
+          "traveler",
+          "light"
+        ],
+        "compatibleAnatomy": [
+          "rustic-human"
+        ],
+        "compatibleArchetypes": [
+          "traveler"
+        ],
+        "compatibleSlots": [
+          "off-hand",
+          "main-hand"
+        ],
+        "handedness": "either",
+        "layer": {
+          "kind": "carried",
+          "maximumIntersectionRatio": 0.1,
+          "order": 20
+        },
+        "requiredFeatures": [
+          {
+            "expectation": "Torch head remains wider than the wooden shaft.",
+            "id": "torch-head",
+            "intendedDirections": [
+              "N",
+              "NE",
+              "E",
+              "SE",
+              "S",
+              "SW",
+              "W",
+              "NW"
+            ],
+            "maximumOcclusionRatio": 0.8,
+            "minimumOklabDistance": 0.05,
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 3
+          }
+        ],
+        "role": "light",
+        "slot": "off-hand",
+        "triangleBudget": 160
+      },
+      "id": "equipment.torch",
+      "materialSlots": [
+        "wood"
+      ],
+      "ports": [
+        {
+          "accepts": [
+            "equipment.mount"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              -0.42,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "grip",
+          "tags": [
+            "equipment.grip"
+          ]
+        }
+      ],
+      "role": "equipment.torch",
+      "shape": {
+        "kind": "lathedProfile",
+        "profile": [
+          [
+            0.035,
+            -0.5
+          ],
+          [
+            0.04,
+            0.24
+          ],
+          [
+            0.11,
+            0.3
+          ],
+          [
+            0.08,
+            0.5
+          ],
+          [
+            0,
+            0.58
+          ]
+        ],
+        "radialSegments": 8
       }
     },
     {
@@ -1870,6 +3772,34 @@
       "ports": [
         {
           "accepts": [
+            "equipment.grip"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0.16,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "equipment.head",
+          "tags": [
+            "equipment.mount"
+          ]
+        },
+        {
+          "accepts": [
             "anatomy.attach"
           ],
           "cardinality": "single",
@@ -1941,6 +3871,34 @@
         "cloth"
       ],
       "ports": [
+        {
+          "accepts": [
+            "equipment.grip"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0.16
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "equipment.waist",
+          "tags": [
+            "equipment.mount"
+          ]
+        },
         {
           "accepts": [
             "anatomy.attach"
@@ -2185,6 +4143,62 @@
         "body"
       ],
       "ports": [
+        {
+          "accepts": [
+            "equipment.grip"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              -0.17
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "equipment.back",
+          "tags": [
+            "equipment.mount"
+          ]
+        },
+        {
+          "accepts": [
+            "equipment.grip"
+          ],
+          "cardinality": "single",
+          "frame": {
+            "position": [
+              0,
+              0,
+              0.17
+            ],
+            "rotation": [
+              0,
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          "id": "equipment.body",
+          "tags": [
+            "equipment.mount"
+          ]
+        },
         {
           "accepts": [
             "anatomy.attach"
