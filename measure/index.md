@@ -25,6 +25,7 @@
 
 - [Lessons Learned](./lessons-learned.md)
 - [Tech Debt Registry](./tech-debt.md)
+- [Orchestrator Anti-Patterns](./anti-patterns.md)
 - [Archived MVP Reference Evidence](./archive/fantasy_asset_mvp_20260717/reference-build.json)
 - [Archived LLM Authoring Workflow Track](./archive/llm_authoring_workflow_hardening_20260717/)
 
