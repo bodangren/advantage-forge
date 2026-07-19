@@ -1,0 +1,35 @@
+{
+  "phase": "S4",
+  "date": "2026-07-19",
+  "verdict": "partial",
+  "deterministicPublicMcp": {
+    "root": "public-final-candidate-20260719T075230Z",
+    "loadouts": 4,
+    "toolCalls": 166,
+    "passes": 4,
+    "issues": 0,
+    "glbsVerified": 8,
+    "threeJsReloadsPassed": 8
+  },
+  "browser": {
+    "testsPassed": 2,
+    "testsFailed": 0,
+    "visualVerdict": "partial"
+  },
+  "freshLlm": {
+    "ranger": "partial",
+    "caster": "partial",
+    "guard": "blocked-startup",
+    "traveler": "blocked-startup",
+    "sandboxedLuna": "preflight-only-not-assessed"
+  },
+  "coverage": {
+    "testFilesPassed": 34,
+    "testsPassed": 222,
+    "statementsPercent": 93.1,
+    "branchesPercent": 80.97,
+    "functionsPercent": 97.57,
+    "linesPercent": 93.6
+  },
+  "manualApproval": "pending"
+}

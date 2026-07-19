@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-18T13:00:00Z",
+  "updated_at": "2026-07-19T08:00:00Z",
   "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -16,31 +16,31 @@
         "title": "Define Accessory Grammar",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "id": "S2",
         "title": "Build Initial Accessory Library",
         "size": "XL",
         "priority": "Must",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "id": "S3",
         "title": "Equip Through Public Tools",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "id": "S4",
         "title": "Verify Character Readability",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in_progress"
       }
     ],
-    "demo_notes": null,
+    "demo_notes": "S4 deterministic and browser gates pass; visual polish is partial and the owner checkpoint remains pending. Guard/Traveler fresh-LLM runs were blocked at OpenCode startup.",
     "retro_ref": null
   }
 }

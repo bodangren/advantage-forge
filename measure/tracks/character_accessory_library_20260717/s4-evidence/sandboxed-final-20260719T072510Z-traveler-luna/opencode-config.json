@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "workflow/SKILL.md",
+    "workflow/references/*.md"
+  ],
+  "permission": {
+    "*": "deny",
+    "forge_*": "allow"
+  },
+  "mcp": {
+    "forge": {
+      "type": "local",
+      "command": [
+        "env",
+        "-C",
+        "/tmp/faf-20260719T072540221Z-0b6f602c-luna-runtime",
+        "/home/daniel-bo/Desktop/fantasy-asset-forge/node_modules/.bin/tsx",
+        "/home/daniel-bo/Desktop/fantasy-asset-forge/src/mcp/stdio.ts"
+      ],
+      "enabled": true,
+      "timeout": 30000
+    }
+  }
+}

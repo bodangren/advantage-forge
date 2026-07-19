@@ -1,0 +1,20 @@
+{
+  "sessionId": "ses_086ddf094ffebgXzREdKAT1C3Q",
+  "interactive3d": "Not Assessed",
+  "contactSheet": "Not Assessed",
+  "native128pxFrames": "Not Assessed",
+  "independentGlbImporter": "Assessed independently only for GLBs that the LLM run produced; see independentArtifactAudits.",
+  "artifactVerifier": "Assessed independently only for complete render/GLB pairs that the LLM run produced; see independentArtifactAudits.",
+  "independentArtifactAudits": {
+    "equippedIdle": {
+      "artifactVerifier": "pass",
+      "representativeThreeJsImporter": "pass"
+    },
+    "equippedAction": {
+      "artifactVerifier": "pass",
+      "representativeThreeJsImporter": "pass"
+    }
+  },
+  "returnedMetricEvidence": "Recorded in raw tool responses and client-final-report.md; metric evidence is not treated as direct visual observation.",
+  "reason": "The deny-all client exposed only forge_* tools, so it could record returned metrics and paths but could not directly open the interactive 3D view, contact sheet, native PNGs, or an independent GLB importer."
+}

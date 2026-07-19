@@ -1,0 +1,95 @@
+{
+  "ok": true,
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992",
+  "renderManifestPath": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/render-manifest.json",
+  "glbManifestPath": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/glb-manifest.json",
+  "files": [
+    {
+      "kind": "directional-frame",
+      "direction": "N",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/n.png",
+      "bytes": 3729,
+      "width": 128,
+      "height": 128,
+      "sha256": "f4d3a630c5534d5781c252fed373cff381977af34da9493c14d382ec499682d3"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "NE",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/ne.png",
+      "bytes": 3621,
+      "width": 128,
+      "height": 128,
+      "sha256": "d55aa1535cb9e91e725f8145a76a09e146ff33ac9283fe3d91b7cc95b6f6f39b"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "E",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/e.png",
+      "bytes": 2599,
+      "width": 128,
+      "height": 128,
+      "sha256": "8816f0fc344e2337fb34b8615a8bef678210deb24fee0e9405b34e4b97b74162"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "SE",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/se.png",
+      "bytes": 3141,
+      "width": 128,
+      "height": 128,
+      "sha256": "06c51ecb49c2ec90f20f28b766cb05762f0cc9f8ab264f8f6c4d93367826a237"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "S",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/s.png",
+      "bytes": 2675,
+      "width": 128,
+      "height": 128,
+      "sha256": "de59404966779accc990338cc0333c4e622718cb0885708059caad7f11c430de"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "SW",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/sw.png",
+      "bytes": 2617,
+      "width": 128,
+      "height": 128,
+      "sha256": "2411f39660093505a7fff9ec61c3dd122e0d755fffb3907aecb33991fa820c9a"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "W",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/w.png",
+      "bytes": 2479,
+      "width": 128,
+      "height": 128,
+      "sha256": "e74d00e9af2801b9cda212d2f900272bcca9a883305c6e8ab97c308795b18d28"
+    },
+    {
+      "kind": "directional-frame",
+      "direction": "NW",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/nw.png",
+      "bytes": 3815,
+      "width": 128,
+      "height": 128,
+      "sha256": "d70b0906b04672f2c65e22beb1788ffdbe3fa25de31989816b9933c7129cd732"
+    },
+    {
+      "kind": "contact-sheet",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/contact-sheet.png",
+      "bytes": 24732,
+      "width": 512,
+      "height": 292,
+      "sha256": "3079528dde7c5a89cac4aea2fbd0f29fb620baf5e4097e75750be93b714610c5"
+    },
+    {
+      "kind": "glb",
+      "path": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/adventurer.rustic.glb",
+      "bytes": 66216,
+      "sha256": "efdd902ddf52a5c11a7ec77ef62ede84cac39bb5d00378e5b4e64ac5d23e4c19"
+    }
+  ]
+}

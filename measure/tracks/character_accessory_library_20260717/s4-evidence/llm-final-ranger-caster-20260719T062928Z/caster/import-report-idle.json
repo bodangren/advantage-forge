@@ -1,0 +1,111 @@
+{
+  "ok": true,
+  "importer": "Three.js GLTFLoader",
+  "importerVersion": "0.185.1",
+  "assetId": "adventurer.rustic",
+  "revisionId": "revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992",
+  "manifestPath": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/glb-manifest.json",
+  "glbPath": "/tmp/faf-s4-k3-caster-20260719T062928Z-runtime/artifacts/reference/adventurer.rustic/revision.5018d05c28f2fb2bb10563c4c64db69bad4ebc7bd4b469b1dda035cdefe76992/adventurer.rustic.glb",
+  "byteLength": 66216,
+  "sha256": "efdd902ddf52a5c11a7ec77ef62ede84cac39bb5d00378e5b4e64ac5d23e4c19",
+  "up": [
+    0,
+    1,
+    0
+  ],
+  "orientation": "Y-up",
+  "bounds": {
+    "min": [
+      -0.7000000238418579,
+      -0.6950000008940697,
+      -0.38000001192092897
+    ],
+    "max": [
+      1.034027222416227,
+      2.599999994635582,
+      0.260000000745058
+    ],
+    "size": [
+      1.7340272462580848,
+      3.2949999955296514,
+      0.640000012665987
+    ],
+    "groundY": -0.6950000008940697,
+    "unit": "meter",
+    "manifestDeviation": 0,
+    "manifestTolerance": 0.000032949999955296516,
+    "matchesManifest": true
+  },
+  "nodeNames": [
+    "AuxScene",
+    "accessoryback",
+    "accessoryhead",
+    "accessorywaist",
+    "adventurerrustic",
+    "footleft",
+    "footright",
+    "forearmleft",
+    "forearmright",
+    "hair",
+    "handleft",
+    "handright",
+    "head",
+    "pelvis",
+    "shinleft",
+    "shinright",
+    "sword",
+    "thighleft",
+    "thighright",
+    "torso",
+    "tunic",
+    "upper-armleft",
+    "upper-armright"
+  ],
+  "expectedNodeNames": [
+    "AuxScene",
+    "accessoryback",
+    "accessoryhead",
+    "accessorywaist",
+    "adventurerrustic",
+    "footleft",
+    "footright",
+    "forearmleft",
+    "forearmright",
+    "hair",
+    "handleft",
+    "handright",
+    "head",
+    "pelvis",
+    "shinleft",
+    "shinright",
+    "sword",
+    "thighleft",
+    "thighright",
+    "torso",
+    "tunic",
+    "upper-armleft",
+    "upper-armright"
+  ],
+  "semanticNodeCount": 22,
+  "missingNodeNames": [],
+  "unexpectedNodeNames": [],
+  "duplicateNodeNames": [],
+  "materialNames": [
+    "cloth.moss",
+    "cloth.umber",
+    "hair.chestnut",
+    "leather.dark",
+    "leather.tan",
+    "skin.warm",
+    "wood.dark"
+  ],
+  "cameraCount": 0,
+  "lightCount": 0,
+  "skinCount": 0,
+  "textureCount": 0,
+  "animationCount": 0,
+  "errors": [],
+  "limitations": [
+    "Representative Three.js importer only; Godot, Unity, and gameplay runtime import remain Not Assessed."
+  ]
+}
