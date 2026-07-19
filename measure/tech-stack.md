@@ -47,6 +47,7 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - Accessory metadata owns semantic role, a default and bounded compatible set among six equipment slots, attachment port IDs, handedness, compatibility tags, compatible anatomy/archetypes, rigid layering and intersection limits, declared local bounds, a triangle budget, allowed poses, and native-resolution required-feature evidence. Accessory instances may record an explicit equipment slot when ownership differs from the template default.
 - Equipment remains data in `fantasy-kit`; slot resolution and compatibility are shared assembly behavior, not character-specific or MCP-specific logic.
 - Existing `equipment.sword` and `equipment.shield` IDs migrate in place, preserving canonical identity and revision behavior.
+- The initial accessory catalog adds fifteen data-only templates to the existing sword and round shield, yielding seventeen named accessories across all six slots. Every entry reuses the twelve-shape grammar; no generator or dependency is added.
 
 ## Coordinate and Output Contract
 

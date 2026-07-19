@@ -65,6 +65,7 @@
       "name": "fantasy-kit",
       "publicEntry": "src/fantasy-kit/index.ts",
       "sourceFiles": [
+        "src/fantasy-kit/accessories.ts",
         "src/fantasy-kit/catalog.ts",
         "src/fantasy-kit/index.ts"
       ],
