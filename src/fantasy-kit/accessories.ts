@@ -19,6 +19,21 @@ export const AccessoryLoadoutIdSchema = z.enum([
 ]);
 export type AccessoryLoadoutId = z.infer<typeof AccessoryLoadoutIdSchema>;
 
+export const RUSTIC_ACCESSORY_MATERIAL_IDS = [
+  'cloth.moss',
+  'cloth.umber',
+  'leather.dark',
+  'wood.oak',
+  'wood.dark',
+  'iron.weathered',
+  'bronze.aged',
+  'bone.ivory',
+  'crystal.arcane',
+] as const;
+const rusticAccessoryMaterialIds = new Set<string>(
+  RUSTIC_ACCESSORY_MATERIAL_IDS,
+);
+
 export const AccessoryCatalogEntrySchema = z
   .object({
     template: PartTemplateDefinitionSchema,
@@ -52,6 +67,12 @@ export const AccessoryCatalogEntrySchema = z
           path: ['parameterBounds', path],
           message: 'Parameter bounds must have a minimum below the maximum.',
         });
+    if (!rusticAccessoryMaterialIds.has(entry.defaultMaterialId))
+      context.addIssue({
+        code: 'custom',
+        path: ['defaultMaterialId'],
+        message: 'Material is not part of the rustic accessory palette.',
+      });
   });
 export type AccessoryCatalogEntry = z.infer<typeof AccessoryCatalogEntrySchema>;
 

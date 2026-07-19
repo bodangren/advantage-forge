@@ -16,6 +16,7 @@ import {
   type Transform,
   type VariantDefinition,
 } from '../contracts/index.js';
+import { rusticAccessoryTemplates } from './accessories.js';
 
 export const RUSTIC_KIT_ID = 'rustic-human' as const;
 const identity = (): Transform => ({
@@ -170,6 +171,18 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       anatomyPort('hip', [0, -0.39, 0]),
       anatomyPort('shoulder.left', [-0.32, 0.24, 0]),
       anatomyPort('shoulder.right', [0.32, 0.24, 0]),
+      port(
+        'equipment.body',
+        [0, 0, 0.17],
+        ['equipment.mount'],
+        ['equipment.grip'],
+      ),
+      port(
+        'equipment.back',
+        [0, 0, -0.17],
+        ['equipment.mount'],
+        ['equipment.grip'],
+      ),
     ],
   ),
   template(
@@ -187,6 +200,12 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     [
       attachPort('neck.attach', [0, -0.22, 0]),
       anatomyPort('hair', [0, 0.08, 0]),
+      port(
+        'equipment.head',
+        [0, 0.16, 0],
+        ['equipment.mount'],
+        ['equipment.grip'],
+      ),
     ],
   ),
   template(
@@ -212,6 +231,12 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       attachPort('torso.attach', [0, 0.18, 0]),
       anatomyPort('leg.left', [-0.15, -0.17, 0]),
       anatomyPort('leg.right', [0.15, -0.17, 0]),
+      port(
+        'equipment.waist',
+        [0, 0, 0.16],
+        ['equipment.mount'],
+        ['equipment.grip'],
+      ),
     ],
   ),
   template(
@@ -384,6 +409,7 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
       ],
     },
   ),
+  ...rusticAccessoryTemplates,
   template(
     'prop.crate',
     'prop.container',
