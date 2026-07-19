@@ -21,7 +21,7 @@ _Story ref: spec.md#story-s1_
 - [x] Task: Generate grammar documentation and run quality gates [commit: c899ab7]
   - [x] Update product and tech-stack decisions before expanding kit contracts.
   - [x] Run contract, assembly, coverage, type, lint, generate, doctor, and full checks.
-- [~] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md) [approved: 2026-07-19]
 
 ## Phase S2: Build Initial Accessory Library
 
