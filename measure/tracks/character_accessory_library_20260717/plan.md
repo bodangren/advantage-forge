@@ -27,11 +27,11 @@ _Story ref: spec.md#story-s1_
 
 _Story ref: spec.md#story-s2_
 
-- [~] Task: Specify the initial accessory catalog and reference uses
-  - [ ] Commit the required head, hand, body, back, and waist identities with parameter bounds and materials.
-  - [ ] Map every template to at least one reference character and attachment slot.
-  - [ ] Justify any new generator with at least two committed uses before implementation.
-- [ ] Task: Write failing template and geometry tests
+- [x] Task: Specify the initial accessory catalog and reference uses [commit: afe7f92]
+  - [x] Commit the required head, hand, body, back, and waist identities with parameter bounds and materials.
+  - [x] Map every template to at least one reference character and attachment slot.
+  - [x] Justify any new generator with at least two committed uses before implementation.
+- [~] Task: Write failing template and geometry tests
   - [ ] Cover bounds, triangle counts, normals, material groups, ports, and deterministic output for each accessory.
   - [ ] Reject invalid generator parameters, slots, materials, and compatibility metadata.
   - [ ] Assert the library remains data and composition over the shared grammar.
