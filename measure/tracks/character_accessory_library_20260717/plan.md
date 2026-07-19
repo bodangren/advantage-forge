@@ -39,10 +39,10 @@ _Story ref: spec.md#story-s2_
   - [x] Add helmets/hoods, weapons, shields/torch, armor shells, back items, and waist items.
   - [x] Reuse palette materials and existing generators wherever possible.
   - [x] Keep names, roles, ports, and required visual features stable and documented.
-- [~] Task: Generate the accessory catalog and run quality gates
-  - [ ] Regenerate kit, capability, architecture, and output facts.
-  - [ ] Run geometry, kit, assembly, coverage, type, lint, generate, doctor, and full checks.
-- [ ] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md)
+- [x] Task: Generate the accessory catalog and run quality gates [commit: 134d9d6]
+  - [x] Regenerate kit, capability, architecture, and output facts.
+  - [x] Run geometry, kit, assembly, coverage, type, lint, generate, doctor, and full checks.
+- [~] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md)
 
 ## Phase S3: Equip Through Public Tools
 
