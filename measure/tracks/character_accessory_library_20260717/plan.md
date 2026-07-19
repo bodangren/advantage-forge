@@ -2,7 +2,7 @@
 
 Prerequisite: complete `llm_authoring_workflow_hardening_20260717`. Use the workflow skill and rich inspection surface as acceptance infrastructure; do not start animation work in this track.
 
-## Phase S1: Define Accessory Grammar
+## Phase S1: Define Accessory Grammar [checkpoint: 5a6d589]
 
 _Story ref: spec.md#story-s1_
 
@@ -27,7 +27,7 @@ _Story ref: spec.md#story-s1_
 
 _Story ref: spec.md#story-s2_
 
-- [ ] Task: Specify the initial accessory catalog and reference uses
+- [~] Task: Specify the initial accessory catalog and reference uses
   - [ ] Commit the required head, hand, body, back, and waist identities with parameter bounds and materials.
   - [ ] Map every template to at least one reference character and attachment slot.
   - [ ] Justify any new generator with at least two committed uses before implementation.
