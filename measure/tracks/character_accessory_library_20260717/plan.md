@@ -53,11 +53,11 @@ _Story ref: spec.md#story-s3_
   - [x] Expose kit-owned placement, orientation, usage, and visual-check guidance so callers never invent transforms.
   - [x] Define task-level dry-run/apply operations for equip, replace, swap hand, recolor, and unequip.
   - [x] Preserve revision preconditions, semantic diff, and exact affected-ID reporting.
-- [~] Task: Write failing tool and MCP tests
-  - [ ] Cover successful equipment workflows without manually constructed transforms.
-  - [ ] Cover occupied slots, invalid ports, incompatible anatomy, handedness, stale revisions, no-ops, and unknown fields.
-  - [ ] Prove failures do not mutate current state and unrelated nodes remain byte-equivalent.
-- [ ] Task: Implement accessory workflows through domain handlers
+- [x] Task: Write failing tool and MCP tests [commit: 648ad58]
+  - [x] Cover successful equipment workflows without manually constructed transforms.
+  - [x] Cover occupied slots, invalid ports, incompatible anatomy, handedness, stale revisions, no-ops, and unknown fields.
+  - [x] Prove failures do not mutate current state and unrelated nodes remain byte-equivalent.
+- [~] Task: Implement accessory workflows through domain handlers
   - [ ] Resolve compatible templates and ports inside bounded domain services.
   - [ ] Keep the MCP adapter thin and response budgeted.
   - [ ] Enrich inspection and comparison with accessory state.
