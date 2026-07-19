@@ -881,6 +881,7 @@ export const AssetInspectionPartSchema = z
     templateId: SemanticIdSchema,
     role: SemanticIdSchema,
     handedness: z.enum(['neutral', 'left', 'right']),
+    equipmentSlot: EquipmentSlotSchema.optional(),
     shapeSource: z.enum(['template', 'part']),
     base: AssetInspectionPartStateSchema,
     effective: AssetInspectionPartStateSchema,

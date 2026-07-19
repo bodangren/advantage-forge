@@ -152,8 +152,7 @@ export function validateAccessoryLoadout(
     const slot = equipmentSlot(part, template);
     if (
       slot === undefined ||
-      (metadata.compatibleSlots !== undefined &&
-        !metadata.compatibleSlots.includes(slot))
+      !(metadata.compatibleSlots ?? [metadata.slot]).includes(slot)
     ) {
       issues.push(
         issue(

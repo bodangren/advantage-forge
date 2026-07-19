@@ -1,9 +1,11 @@
 import { z } from 'zod';
 
 import {
+  AccessoryUsageSchema,
   PartTemplateDefinitionSchema,
   SemanticIdSchema,
   type AccessoryMetadata,
+  type AccessoryUsage,
   type EquipmentSlot,
   type PartTemplateDefinition,
   type ShapeDefinition,
@@ -49,6 +51,7 @@ export const AccessoryCatalogEntrySchema = z
         parentPortId: SemanticIdSchema,
       })
       .strict(),
+    usage: AccessoryUsageSchema,
   })
   .strict()
   .superRefine((entry, context) => {
@@ -72,6 +75,35 @@ export const AccessoryCatalogEntrySchema = z
         code: 'custom',
         path: ['defaultMaterialId'],
         message: 'Material is not part of the rustic accessory palette.',
+      });
+    const compatibleSlots =
+      entry.template.accessory?.compatibleSlots ??
+      (entry.template.accessory === undefined
+        ? []
+        : [entry.template.accessory.slot]);
+    const placementSlots = entry.usage.placements.map(({ slot }) => slot);
+    if (
+      compatibleSlots.length !== placementSlots.length ||
+      compatibleSlots.some((slot) => !placementSlots.includes(slot))
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['usage', 'placements'],
+        message:
+          'Usage placements must cover every compatible slot exactly once.',
+      });
+    const defaultPlacement = entry.usage.placements.find(
+      ({ slot }) => slot === entry.template.accessory?.slot,
+    );
+    if (
+      defaultPlacement !== undefined &&
+      (defaultPlacement.parentPartId !== entry.attachmentTarget.parentPartId ||
+        defaultPlacement.parentPortId !== entry.attachmentTarget.parentPortId)
+    )
+      context.addIssue({
+        code: 'custom',
+        path: ['attachmentTarget'],
+        message: 'Default placement must match the catalog attachment target.',
       });
   });
 export type AccessoryCatalogEntry = z.infer<typeof AccessoryCatalogEntrySchema>;
@@ -201,6 +233,72 @@ interface EntryInput {
   readonly intendedLoadouts: readonly AccessoryLoadoutId[];
   readonly attachmentTarget: AccessoryCatalogEntry['attachmentTarget'];
   readonly attachmentPosition: readonly [number, number, number];
+  readonly compatibleArchetypes?: readonly string[];
+  readonly placementTransforms?: Partial<Record<EquipmentSlot, Transform>>;
+  readonly intendedOrientations?: Partial<Record<EquipmentSlot, string>>;
+  readonly usageSummary?: string;
+  readonly visualChecks?: readonly string[];
+}
+
+function targetForSlot(slot: EquipmentSlot) {
+  switch (slot) {
+    case 'head':
+      return { parentPartId: 'head', parentPortId: 'equipment.head' } as const;
+    case 'main-hand':
+      return {
+        parentPartId: 'hand.right',
+        parentPortId: 'equipment',
+      } as const;
+    case 'off-hand':
+      return {
+        parentPartId: 'hand.left',
+        parentPortId: 'equipment',
+      } as const;
+    case 'body':
+      return {
+        parentPartId: 'torso',
+        parentPortId: 'equipment.body',
+      } as const;
+    case 'back':
+      return {
+        parentPartId: 'torso',
+        parentPortId: 'equipment.back',
+      } as const;
+    case 'waist':
+      return {
+        parentPartId: 'pelvis',
+        parentPortId: 'equipment.waist',
+      } as const;
+  }
+}
+
+function usageFor(
+  input: EntryInput,
+  compatibleSlots: readonly EquipmentSlot[],
+): AccessoryUsage {
+  return AccessoryUsageSchema.parse({
+    summary:
+      input.usageSummary ??
+      `${input.id} uses declared ${compatibleSlots.join(' or ')} placement profiles.`,
+    placements: compatibleSlots.map((slot) => {
+      const target = targetForSlot(slot);
+      return {
+        slot,
+        ...target,
+        transform: structuredClone(
+          input.placementTransforms?.[slot] ?? IDENTITY,
+        ),
+        intendedOrientation:
+          input.intendedOrientations?.[slot] ??
+          `${input.featureExpectation} Keep the accessory clear of the body silhouette.`,
+        guidance: `Attach through ${target.parentPartId}.${target.parentPortId}; use this declared local transform instead of inventing attachment coordinates.`,
+      };
+    }),
+    visualChecks: input.visualChecks ?? [
+      input.featureExpectation,
+      'At 128x128, confirm the named feature remains unclipped and materially distinct in every intended direction.',
+    ],
+  });
 }
 
 function catalogEntry(input: EntryInput): AccessoryCatalogEntry {
@@ -238,7 +336,9 @@ function catalogEntry(input: EntryInput): AccessoryCatalogEntry {
           : 'neutral'),
       compatibilityTags: ['rustic', ...input.tags],
       compatibleAnatomy: ['rustic-human'],
-      compatibleArchetypes: [...input.intendedLoadouts],
+      compatibleArchetypes: [
+        ...(input.compatibleArchetypes ?? input.intendedLoadouts),
+      ],
       layer: input.layer,
       bounds: input.bounds,
       triangleBudget: input.triangleBudget,
@@ -260,6 +360,7 @@ function catalogEntry(input: EntryInput): AccessoryCatalogEntry {
     defaultMaterialId: input.defaultMaterialId,
     intendedLoadouts: input.intendedLoadouts,
     attachmentTarget: input.attachmentTarget,
+    usage: usageFor(input, compatibleSlots),
   });
 }
 
@@ -298,8 +399,124 @@ const overlayLayer = {
   maximumIntersectionRatio: 0.18,
 };
 
+function sortedAccessoryCatalog(
+  entries: AccessoryCatalogEntry[],
+): readonly AccessoryCatalogEntry[] {
+  return Object.freeze(
+    entries.sort((left, right) =>
+      left.template.id.localeCompare(right.template.id),
+    ),
+  );
+}
+
 export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
-  Object.freeze([
+  sortedAccessoryCatalog([
+    catalogEntry({
+      id: 'equipment.sword',
+      role: 'weapon',
+      slot: 'main-hand',
+      compatibleSlots: ['main-hand', 'off-hand'],
+      shape: {
+        kind: 'extrudedProfile',
+        profile: [
+          [-0.055, -0.42],
+          [0.055, -0.42],
+          [0.04, 0.31],
+          [0, 0.5],
+          [-0.04, 0.31],
+        ],
+        depth: 0.035,
+      },
+      materialSlot: 'metal',
+      defaultMaterialId: 'iron.weathered',
+      tags: ['melee', 'guard'],
+      layer: carriedLayer,
+      bounds: {
+        min: [-0.055, -0.42, -0.0175],
+        max: [0.055, 0.5, 0.0175],
+      },
+      triangleBudget: 64,
+      featureId: 'blade',
+      featureExpectation: 'Blade silhouette remains readable beside the body.',
+      minimumPixelArea: 8,
+      minimumWidthPixels: 2,
+      intendedLoadouts: ['guard'],
+      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
+      attachmentTarget: rightHandTarget,
+      attachmentPosition: [0, 0.42, 0],
+      placementTransforms: {
+        'main-hand': {
+          position: [0.14, -0.04, 0],
+          rotation: [0, 0, 0, 1],
+          scale: [1, 1, 1],
+        },
+        'off-hand': {
+          position: [-0.14, -0.04, 0],
+          rotation: [0, 0, 0, 1],
+          scale: [1, 1, 1],
+        },
+      },
+      intendedOrientations: {
+        'main-hand':
+          'Blade points down and away from the right side of the body.',
+        'off-hand':
+          'Blade points down and away from the left side of the body.',
+      },
+      usageSummary:
+        'A one-handed rustic sword carried blade-down and offset away from the body.',
+      visualChecks: [
+        'The hand meets the grip rather than the blade.',
+        'The blade extends below the torso and remains separated from the leg silhouette.',
+      ],
+    }),
+    catalogEntry({
+      id: 'equipment.shield',
+      role: 'shield',
+      slot: 'off-hand',
+      compatibleSlots: ['off-hand', 'main-hand'],
+      shape: { kind: 'prism', radius: 0.34, height: 0.08, sides: 8 },
+      materialSlot: 'wood',
+      defaultMaterialId: 'wood.oak',
+      tags: ['defense', 'guard'],
+      layer: carriedLayer,
+      bounds: {
+        min: [-0.34, -0.04, -0.34],
+        max: [0.34, 0.04, 0.34],
+      },
+      triangleBudget: 64,
+      featureId: 'shield-face',
+      featureExpectation: 'Shield face remains distinct from the torso.',
+      minimumPixelArea: 24,
+      minimumWidthPixels: 3,
+      intendedLoadouts: ['guard'],
+      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
+      attachmentTarget: leftHandTarget,
+      attachmentPosition: [0, 0, -0.07],
+      placementTransforms: {
+        'main-hand': {
+          position: [0.12, 0, 0],
+          rotation: [0.7071067811865476, 0, 0, 0.7071067811865476],
+          scale: [1, 1, 1],
+        },
+        'off-hand': {
+          position: [-0.12, 0, 0],
+          rotation: [0.7071067811865476, 0, 0, 0.7071067811865476],
+          scale: [1, 1, 1],
+        },
+      },
+      intendedOrientations: {
+        'main-hand':
+          'Shield is upright with its broad face vertical in the right hand.',
+        'off-hand':
+          'Shield is upright with its broad face vertical in the left hand.',
+      },
+      usageSummary:
+        'A round wooden shield held upright with its broad face vertical.',
+      visualChecks: [
+        'The shield face reads as a broad defensive surface, not a horizontal platter.',
+        'The rim remains distinct from the torso at native sprite resolution.',
+      ],
+    }),
     catalogEntry({
       id: 'equipment.helmet.iron',
       role: 'headwear',
@@ -699,6 +916,16 @@ export const rusticAccessoryCatalog: readonly AccessoryCatalogEntry[] =
       attachmentPosition: [0, 0.34, 0],
     }),
   ]);
+
+const rusticAccessoryByTemplateId = new Map(
+  rusticAccessoryCatalog.map((entry) => [entry.template.id, entry]),
+);
+
+export function getRusticAccessoryCatalogEntry(
+  templateId: string,
+): AccessoryCatalogEntry | undefined {
+  return rusticAccessoryByTemplateId.get(templateId);
+}
 
 export const rusticAccessoryTemplates: readonly PartTemplateDefinition[] =
   rusticAccessoryCatalog.map(({ template }) => template);

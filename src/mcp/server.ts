@@ -5,6 +5,7 @@ import {
 } from '../contracts/index.js';
 import {
   PUBLIC_TOOL_CATALOG,
+  ApplyAccessoryOperationInputSchema,
   ApplyOperationsInputSchema,
   CompareRevisionsInputSchema,
   ConnectPartsInputSchema,
@@ -15,6 +16,7 @@ import {
   InspectTemplateInputSchema,
   ListKitsInputSchema,
   RenderPreviewInputSchema,
+  SearchAccessoriesInputSchema,
   SetPoseInputSchema,
   ValidateAssetInputSchema,
   createToolHandlers,
@@ -98,6 +100,14 @@ export function createFantasyAssetMcpServer(
     (input) => result(handlers.inspectTemplate(input)),
   );
   server.registerTool(
+    'search_accessories',
+    {
+      description: description('search_accessories'),
+      inputSchema: SearchAccessoriesInputSchema,
+    },
+    (input) => result(handlers.searchAccessories(input)),
+  );
+  server.registerTool(
     'inspect_asset',
     {
       description: description('inspect_asset'),
@@ -120,6 +130,14 @@ export function createFantasyAssetMcpServer(
       inputSchema: CreateAssetInputSchema,
     },
     (input) => result(handlers.createAsset(input)),
+  );
+  server.registerTool(
+    'apply_accessory_operation',
+    {
+      description: description('apply_accessory_operation'),
+      inputSchema: ApplyAccessoryOperationInputSchema,
+    },
+    (input) => result(handlers.applyAccessoryOperation(input)),
   );
   server.registerTool(
     'apply_operations',

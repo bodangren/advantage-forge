@@ -60,7 +60,8 @@ function parseEnvelope(response: unknown): ToolResultEnvelope {
     !Array.isArray(response.content)
   )
     throw new Error('Expected an MCP content array.');
-  const text = response.content.find(
+  const content: unknown[] = response.content;
+  const text = content.find(
     (part): part is { type: 'text'; text: string } =>
       typeof part === 'object' &&
       part !== null &&

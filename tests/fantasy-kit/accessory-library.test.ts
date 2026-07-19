@@ -13,11 +13,7 @@ import {
   validateIndexedGeometry,
 } from '../../src/geometry/index.js';
 
-const legacyAccessoryIds = ['equipment.sword', 'equipment.shield'] as const;
-const accessoryIds = [
-  ...legacyAccessoryIds,
-  ...rusticAccessoryCatalog.map(({ template }) => template.id),
-];
+const accessoryIds = rusticAccessoryCatalog.map(({ template }) => template.id);
 const allowedMaterialFamilies = new Set([
   'iron',
   'bronze',

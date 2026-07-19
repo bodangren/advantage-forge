@@ -16,7 +16,10 @@ import {
   type Transform,
   type VariantDefinition,
 } from '../contracts/index.js';
-import { rusticAccessoryTemplates } from './accessories.js';
+import {
+  getRusticAccessoryCatalogEntry,
+  rusticAccessoryTemplates,
+} from './accessories.js';
 
 export const RUSTIC_KIT_ID = 'rustic-human' as const;
 const identity = (): Transform => ({
@@ -330,84 +333,6 @@ export const rusticTemplates: readonly PartTemplateDefinition[] = [
     'clothing.tunic-shell',
     { kind: 'wedge', width: 0.59, height: 0.73, depth: 0.33 },
     ['cloth'],
-  ),
-  template(
-    'equipment.sword',
-    'equipment.sword',
-    {
-      kind: 'extrudedProfile',
-      profile: [
-        [-0.055, -0.42],
-        [0.055, -0.42],
-        [0.04, 0.31],
-        [0, 0.5],
-        [-0.04, 0.31],
-      ],
-      depth: 0.035,
-    },
-    ['metal'],
-    [port('grip', [0, -0.48, 0], ['equipment.grip'], ['equipment.mount'])],
-    {
-      role: 'weapon',
-      slot: 'main-hand',
-      compatibleSlots: ['main-hand', 'off-hand'],
-      attachmentPortIds: ['grip'],
-      handedness: 'either',
-      compatibilityTags: ['rustic', 'melee', 'guard'],
-      compatibleAnatomy: ['rustic-human'],
-      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
-      layer: {
-        kind: 'carried',
-        order: 20,
-        maximumIntersectionRatio: 0.08,
-      },
-      bounds: { min: [-0.055, -0.42, -0.0175], max: [0.055, 0.5, 0.0175] },
-      triangleBudget: 64,
-      allowedPoseIds: ['idle', 'action'],
-      requiredFeatures: [
-        {
-          id: 'blade',
-          expectation: 'Blade silhouette remains readable beside the body.',
-          intendedDirections: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
-          minimumPixelArea: 8,
-          minimumWidthPixels: 2,
-        },
-      ],
-    },
-  ),
-  template(
-    'equipment.shield',
-    'equipment.shield',
-    { kind: 'prism', radius: 0.34, height: 0.08, sides: 8 },
-    ['wood'],
-    [port('grip', [0, 0, -0.07], ['equipment.grip'], ['equipment.mount'])],
-    {
-      role: 'shield',
-      slot: 'off-hand',
-      compatibleSlots: ['off-hand', 'main-hand'],
-      attachmentPortIds: ['grip'],
-      handedness: 'either',
-      compatibilityTags: ['rustic', 'defense', 'guard'],
-      compatibleAnatomy: ['rustic-human'],
-      compatibleArchetypes: ['adventurer', 'guard', 'warrior'],
-      layer: {
-        kind: 'carried',
-        order: 20,
-        maximumIntersectionRatio: 0.12,
-      },
-      bounds: { min: [-0.34, -0.04, -0.34], max: [0.34, 0.04, 0.34] },
-      triangleBudget: 64,
-      allowedPoseIds: ['idle', 'action'],
-      requiredFeatures: [
-        {
-          id: 'shield-face',
-          expectation: 'Shield face remains distinct from the torso.',
-          intendedDirections: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
-          minimumPixelArea: 24,
-          minimumWidthPixels: 3,
-        },
-      ],
-    },
   ),
   ...rusticAccessoryTemplates,
   template(
@@ -824,8 +749,22 @@ const adventurerParts: PartInstance[] = [
   part('foot.left', 'human.foot', 'leather.dark'),
   part('foot.right', 'human.foot', 'leather.dark'),
   part('tunic', 'human.tunic', 'cloth.moss', at(0, 1.4, 0.01)),
-  part('sword', 'equipment.sword', 'iron.weathered'),
-  part('shield', 'equipment.shield', 'wood.oak'),
+  part(
+    'sword',
+    'equipment.sword',
+    'iron.weathered',
+    getRusticAccessoryCatalogEntry('equipment.sword')!.usage.placements.find(
+      ({ slot }) => slot === 'main-hand',
+    )!.transform,
+  ),
+  part(
+    'shield',
+    'equipment.shield',
+    'wood.oak',
+    getRusticAccessoryCatalogEntry('equipment.shield')!.usage.placements.find(
+      ({ slot }) => slot === 'off-hand',
+    )!.transform,
+  ),
 ];
 const adventurerConnections: ConnectionDefinition[] = [
   connect('torso-head', 'torso', 'neck', 'head', 'neck.attach'),

@@ -26,9 +26,9 @@ const requiredNewIds = [
 
 describe('bounded accessory catalog specification', () => {
   it('commits every required new identity with complete closed metadata', () => {
-    expect(rusticAccessoryCatalog.map(({ template }) => template.id)).toEqual(
-      requiredNewIds,
-    );
+    const ids = rusticAccessoryCatalog.map(({ template }) => template.id);
+    expect(ids).toHaveLength(17);
+    expect(ids).toEqual(expect.arrayContaining([...requiredNewIds]));
     for (const entry of rusticAccessoryCatalog) {
       expect(AccessoryCatalogEntrySchema.parse(entry)).toEqual(entry);
       expect(PartTemplateDefinitionSchema.parse(entry.template)).toEqual(

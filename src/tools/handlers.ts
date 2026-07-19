@@ -6,6 +6,9 @@ import {
   evaluateAssembly,
 } from '../assembly/index.js';
 import {
+  AccessoryOperationSummarySchema,
+  AccessorySearchRequestSchema,
+  AccessoryWorkflowRequestSchema,
   AssetInspectionDataSchema,
   ConnectionDefinitionSchema,
   InspectionSectionSchema,
@@ -24,8 +27,17 @@ import {
   type RevisionRepository,
   type SemanticPatch,
 } from '../document/index.js';
-import { referenceDocuments, rusticManifest } from '../fantasy-kit/index.js';
+import {
+  referenceDocuments,
+  rusticAccessoryCatalog,
+  rusticManifest,
+} from '../fantasy-kit/index.js';
 
+import {
+  AccessoryWorkflowError,
+  discoverAccessories,
+  planAccessoryOperation,
+} from './accessory-workflow.js';
 import { CAPABILITY_FACTS, capabilityReport } from './capabilities.js';
 
 export interface RenderService {
@@ -61,6 +73,7 @@ export const InspectCapabilitiesInputSchema = z.strictObject({
 export const InspectTemplateInputSchema = z.strictObject({
   templateId: semanticId,
 });
+export const SearchAccessoriesInputSchema = AccessorySearchRequestSchema;
 export const InspectAssetInputSchema = z.strictObject({
   assetId: semanticId,
   section: InspectionSectionSchema.default('overview'),
@@ -83,6 +96,8 @@ export const ApplyOperationsInputSchema = z.strictObject({
   patch: SemanticPatchSchema,
   dryRun: z.boolean().default(false),
 });
+export const ApplyAccessoryOperationInputSchema =
+  AccessoryWorkflowRequestSchema;
 export const ConnectPartsInputSchema = z.strictObject({
   assetId: semanticId,
   expectedRevisionId: revisionId,
@@ -243,6 +258,9 @@ export function createToolHandlers(context: ToolHandlerContext) {
         '$.templateId',
       );
     const { template, parameterBounds, intendedReferences } = manifest;
+    const accessoryEntry = rusticAccessoryCatalog.find(
+      (entry) => entry.template.id === template.id,
+    );
     return ok(`Template ${template.id} is ready for semantic assembly.`, {
       id: template.id,
       role: template.role,
@@ -257,8 +275,51 @@ export function createToolHandlers(context: ToolHandlerContext) {
         cardinality,
       })),
       intendedReferences,
+      ...(accessoryEntry === undefined
+        ? {}
+        : {
+            accessory: {
+              ...template.accessory,
+              parameterBounds: accessoryEntry.parameterBounds,
+              defaultMaterialId: accessoryEntry.defaultMaterialId,
+              intendedLoadouts: accessoryEntry.intendedLoadouts,
+              attachmentTarget: accessoryEntry.attachmentTarget,
+              usage: accessoryEntry.usage,
+            },
+          }),
       example: { templateId: template.id, partId: `${template.role}.example` },
     });
+  };
+  const searchAccessories = async (
+    input: unknown,
+  ): Promise<ToolResultEnvelope> => {
+    const parsed = SearchAccessoriesInputSchema.safeParse(input);
+    if (!parsed.success) return invalid(parsed);
+    const revision = await current(parsed.data.assetId);
+    if (revision === undefined)
+      return fail(
+        'NOT_FOUND',
+        `Asset ${parsed.data.assetId} was not found.`,
+        '$.assetId',
+      );
+    const data = discoverAccessories(
+      revision.document,
+      revision.revisionId,
+      parsed.data.archetypeId,
+      parsed.data.query,
+    );
+    if (data.page.total > 0 && data.page.offset >= data.page.total)
+      return fail(
+        'INVALID_VALUE',
+        `Offset ${data.page.offset} is outside the ${data.page.total}-accessory result.`,
+        '$.query.offset',
+        'Use offset 0 or nextOffset from the previous page.',
+      );
+    return ok(
+      `Discovered ${data.items.length} of ${data.page.total} compatible accessory candidate(s).`,
+      data,
+      revision.revisionId,
+    );
   };
   const inspectAsset = async (input: unknown): Promise<ToolResultEnvelope> => {
     const parsed = InspectAssetInputSchema.safeParse(input);
@@ -350,6 +411,9 @@ export function createToolHandlers(context: ToolHandlerContext) {
             templateId: part.templateId,
             role: template.role,
             handedness: part.handedness ?? 'neutral',
+            ...(part.equipmentSlot === undefined
+              ? {}
+              : { equipmentSlot: part.equipmentSlot }),
             shapeSource: part.shape === undefined ? 'template' : 'part',
             base: {
               shape: part.shape ?? template.shape,
@@ -592,6 +656,111 @@ export function createToolHandlers(context: ToolHandlerContext) {
       [...patched.affectedIds],
     );
   };
+  const applyAccessoryOperation = async (
+    input: unknown,
+  ): Promise<ToolResultEnvelope> => {
+    const parsed = ApplyAccessoryOperationInputSchema.safeParse(input);
+    if (!parsed.success) return invalid(parsed);
+    const revision = await current(parsed.data.assetId);
+    if (revision === undefined)
+      return fail(
+        'NOT_FOUND',
+        `Asset ${parsed.data.assetId} was not found.`,
+        '$.assetId',
+      );
+    if (revision.revisionId !== parsed.data.expectedRevisionId)
+      return fail(
+        'REVISION_CONFLICT',
+        'The expected revision is stale.',
+        '$.expectedRevisionId',
+        'Inspect the current asset and replay the accessory operation against its current revision.',
+      );
+    let planned: ReturnType<typeof planAccessoryOperation>;
+    try {
+      planned = planAccessoryOperation(
+        revision.document,
+        parsed.data.archetypeId,
+        parsed.data.operation,
+      );
+    } catch (error) {
+      if (error instanceof AccessoryWorkflowError)
+        return fail(
+          error.code,
+          error.message,
+          error.path,
+          error.guidance,
+          error.detail === undefined ? {} : { actual: error.detail },
+        );
+      return fail(
+        'INVALID_ASSEMBLY',
+        error instanceof Error
+          ? error.message
+          : 'Accessory operation validation failed.',
+        '$.operation',
+      );
+    }
+    const comparison = compareSemanticDocuments(
+      revision.document,
+      planned.document,
+    );
+    const summary = AccessoryOperationSummarySchema.parse({
+      operation: parsed.data.operation.operation,
+      dryRun: parsed.data.dryRun,
+      parentRevisionId: revision.revisionId,
+      partId: planned.partId,
+      ...(planned.templateId === undefined
+        ? {}
+        : { templateId: planned.templateId }),
+      ...(planned.equipmentSlot === undefined
+        ? {}
+        : { equipmentSlot: planned.equipmentSlot }),
+      ...(planned.materialId === undefined
+        ? {}
+        : { materialId: planned.materialId }),
+      validation: 'valid',
+      affectedIds: planned.primaryAffectedIds,
+      addedIds: planned.addedIds,
+      removedIds: planned.removedIds,
+      connectionIds: planned.connectionIds,
+      changePreview: {
+        total: comparison.changes.length,
+        truncated: comparison.changes.length > 20,
+        items: comparison.changes.slice(0, 20),
+      },
+    });
+    if (parsed.data.dryRun)
+      return ok(
+        'Accessory dry run succeeded; no revision was written.',
+        summary,
+        revision.revisionId,
+        [...summary.affectedIds],
+      );
+    try {
+      const saved = await context.revisions.save(
+        planned.document,
+        revision.revisionId,
+      );
+      return ok(
+        `Applied accessory ${parsed.data.operation.operation} operation.`,
+        summary,
+        saved.revisionId,
+        [...summary.affectedIds],
+      );
+    } catch (error) {
+      if (error instanceof Error && error.message === 'REVISION_CONFLICT')
+        return fail(
+          'REVISION_CONFLICT',
+          'The asset changed while the accessory operation was being saved.',
+          '$.expectedRevisionId',
+          'Inspect the new current revision and replay the same task-level operation.',
+        );
+      return fail(
+        'REPOSITORY_ERROR',
+        error instanceof Error ? error.message : 'Revision save failed.',
+        '$.assetId',
+      );
+    }
+  };
   const connectParts = async (input: unknown): Promise<ToolResultEnvelope> => {
     const parsed = ConnectPartsInputSchema.safeParse(input);
     if (!parsed.success) return invalid(parsed);
@@ -754,9 +923,11 @@ export function createToolHandlers(context: ToolHandlerContext) {
     listKits,
     inspectCapabilities,
     inspectTemplate,
+    searchAccessories,
     inspectAsset,
     compareRevisions,
     createAsset,
+    applyAccessoryOperation,
     applyOperations,
     connectParts,
     setPose,

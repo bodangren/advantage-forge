@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
+import { z } from 'zod';
 
 import {
   AccessoryDiscoveryDataSchema,
   AccessoryOperationSummarySchema,
+  AccessoryUsageSchema,
   type AssetDocument,
-  type ToolResultEnvelope,
 } from '../../src/contracts/index.js';
 import {
   canonicalJson,
@@ -49,13 +50,12 @@ class MemoryRevisions implements RevisionRepository {
   }
 }
 
-type AccessoryHandlers = ReturnType<typeof createToolHandlers> & {
-  searchAccessories(input: unknown): Promise<ToolResultEnvelope>;
-  applyAccessoryOperation(input: unknown): Promise<ToolResultEnvelope>;
-};
+const handlersFor = (revisions: MemoryRevisions) =>
+  createToolHandlers({ revisions });
 
-const handlersFor = (revisions: MemoryRevisions): AccessoryHandlers =>
-  createToolHandlers({ revisions }) as AccessoryHandlers;
+const InspectedAccessoryUsageSchema = z.object({
+  accessory: z.object({ usage: AccessoryUsageSchema }),
+});
 
 describe('accessory workflow tools', () => {
   it('discovers bounded accessories with placement guidance and enriched inspection', async () => {
@@ -368,7 +368,7 @@ describe('accessory workflow tools', () => {
     const handlers = handlersFor(revisions);
     const created = await handlers.createAsset({ reference: 'adventurer' });
     const current = revisions.current.get('adventurer.rustic')!;
-    const invalidDocument = structuredClone(current.document) as AssetDocument;
+    const invalidDocument = structuredClone(current.document);
     const head = invalidDocument.templates.find(
       ({ id }) => id === 'human.head',
     )!;
@@ -423,35 +423,23 @@ describe('accessory workflow tools', () => {
     const shield = await handlers.inspectTemplate({
       templateId: 'equipment.shield',
     });
-    expect(sword.data).toMatchObject({
-      accessory: {
-        usage: {
-          placements: [
-            {
-              slot: 'main-hand',
-              intendedOrientation: expect.stringMatching(/blade.*down/i),
-            },
-          ],
-          visualChecks: expect.arrayContaining([
-            expect.stringMatching(/grip/i),
-          ]),
-        },
-      },
-    });
-    expect(shield.data).toMatchObject({
-      accessory: {
-        usage: {
-          placements: [
-            {
-              slot: 'off-hand',
-              intendedOrientation: expect.stringMatching(/vertical|upright/i),
-            },
-          ],
-          visualChecks: expect.arrayContaining([
-            expect.stringMatching(/face|rim/i),
-          ]),
-        },
-      },
-    });
+    const swordUsage = InspectedAccessoryUsageSchema.parse(sword.data).accessory
+      .usage;
+    const shieldUsage = InspectedAccessoryUsageSchema.parse(shield.data)
+      .accessory.usage;
+    expect(
+      swordUsage.placements.find(({ slot }) => slot === 'main-hand')
+        ?.intendedOrientation,
+    ).toMatch(/blade.*down/i);
+    expect(swordUsage.visualChecks.some((check) => /grip/i.test(check))).toBe(
+      true,
+    );
+    expect(
+      shieldUsage.placements.find(({ slot }) => slot === 'off-hand')
+        ?.intendedOrientation,
+    ).toMatch(/vertical|upright/i);
+    expect(
+      shieldUsage.visualChecks.some((check) => /face|rim/i.test(check)),
+    ).toBe(true);
   });
 });

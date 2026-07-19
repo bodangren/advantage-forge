@@ -2,9 +2,11 @@ export const PUBLIC_TOOL_NAMES = [
   'list_kits',
   'inspect_capabilities',
   'inspect_template',
+  'search_accessories',
   'inspect_asset',
   'compare_revisions',
   'create_asset',
+  'apply_accessory_operation',
   'apply_operations',
   'connect_parts',
   'set_pose',
@@ -40,6 +42,12 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
     mutates: false,
   },
   {
+    name: 'search_accessories',
+    description:
+      'Discover bounded compatible accessories with kit-owned placement and visual guidance.',
+    mutates: false,
+  },
+  {
     name: 'inspect_asset',
     description:
       'Inspect overview or complete current authoring state through deterministic bounded sections.',
@@ -55,6 +63,12 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
     name: 'create_asset',
     description:
       'Create a revision from a committed fantasy reference document.',
+    mutates: true,
+  },
+  {
+    name: 'apply_accessory_operation',
+    description:
+      'Dry-run or apply one closed equip, replace, swap-hand, recolor, or unequip task.',
     mutates: true,
   },
   {
