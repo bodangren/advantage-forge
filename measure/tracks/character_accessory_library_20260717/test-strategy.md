@@ -1,4 +1,4 @@
-# Phase S4 Test Strategy — Character Readability
+# Test Strategy — Character Accessory Library, Phase S4
 
 > Phase-scoped test strategy for `character_accessory_library_20260717` Phase S4
 > (Verify Character Readability). Phases S1–S3 are closed and out of scope.
@@ -19,6 +19,10 @@
   zero Forge calls before the 624-second zero-progress cutoff.
 - The owner has explicitly authorized `coder-*` subagents for one-off tasks
   and remediation; this is **not** authorization to weaken acceptance.
+- `529fbce7a7e06352cf1753b912fd80735103a3a3` is the visual-pass /
+  K3-blocker marker head, **not** the phase baseline for Red. The
+  corrective strategy commit that lands this `test-strategy.md` is what
+  defines the phase baseline (§10).
 
 ## 2. Testing pyramid for this evidence-only completion
 
@@ -165,7 +169,10 @@ evidence is bound to the candidate commit:
    operator envelope (`ok`, `affectedIds`, `summary`).
 4. `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`,
    `pnpm test:browser`, `pnpm reference:build`, `pnpm generate`, `pnpm doctor`
-   all pass at the strategy baseline `ddff848`.
+   all pass at the strategy baseline — i.e. at the corrective strategy commit
+   that lands this `test-strategy.md` (the symbolic SHA captured in §10), not
+   at `ddff848` (which only initialized the anti-pattern registry and never
+   represented the immutable phase baseline for Red).
 5. `scripts/build-accessory-loadouts.mjs` produces zero issues for all four
    loadouts under the deterministic harness (regression guard).
 6. `git status --porcelain` is clean after excluding `.opencode/`,
@@ -246,7 +253,7 @@ this strategy does **not** duplicate that ownership.
 
 | Role                       | Applicable | Why                                                                                                              |
 | -------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Review A** (correctness, architecture) | yes | Verify the closeout gate commands really run against `076199f`+1 and the strategy's referenced symbols exist. |
+| **Review A** (correctness, architecture) | yes | Verify the closeout gate commands really run at the corrective strategy commit / `phase_base_sha` (§10) and the strategy's referenced symbols exist at that commit. |
 | **Review B** (security, data) | yes (narrow) | Audit the sandboxed LLM wrapper for permission leaks, allow-listed tool patterns, and accidental file-read fallback. |
 | **Review C** (UX/API)       | yes (narrow) | Confirm the four-loadout browser evidence is unchanged and pixel contract thresholds still hold. |
 | **Adversarial**            | yes (narrow) | Confirm A3–A6 defenses: refutation by changing `minimumPixelArea`, removing a dry-run/apply pair, omitting a loadout, or hand-editing `final-summary.json` must fail the gate. |
@@ -257,13 +264,22 @@ sandbox-LLM evidence root, not against the deterministic harness output.
 
 ## 10. Orchestrator hand-off and `phase_base_sha` capture
 
-- The strategy commit must precede the orchestrator's `phase_base_sha`
-  capture. The exact capture point is **immediately after the strategy commit
-  is recorded in `git log` and before any fresh-LLM, remediation, or
-  acceptance work begins**; it is the SHA of the strategy commit itself.
-- Any SHA recorded in `verification.md`, `final-summary.json`, or the
-  orchestrator audit that predates this strategy commit is invalid and must
-  be rejected as evidence (A5).
+- The immutable `phase_base_sha` for any subsequent Red phase work is
+  captured **only after the final corrective Strategy commit that lands this
+  `test-strategy.md`**. That capture point is the SHA of the corrective
+  strategy commit itself, recorded as `HEAD` immediately after the strategy
+  commit and before any fresh-LLM, remediation, or acceptance work begins.
+- `529fbce7a7e06352cf1753b912fd80735103a3a3` (the visual-pass / K3-blocker
+  marker) is the *prior* phase head, **not** the phase baseline for Red.
+  `ddff848` only initialized the orchestrator anti-pattern registry and is
+  also **not** the phase baseline for Red. Both pre-date this strategy and
+  must not be embedded as the active baseline.
+- The strategy text deliberately avoids baking a future SHA; it refers only
+  symbolically to "the corrective strategy commit / HEAD at capture time."
+  The orchestrator must read that commit SHA from `git rev-parse HEAD` at
+  capture time and record it in `verification.md`, `final-summary.json`, and
+  every audit JSON. Any audit SHA that predates the corrective strategy
+  commit is invalid evidence (A5).
 - The owner-owned dirty paths `.opencode/`, `benchmark-evidence/`,
   `approval-and-benchmark.md`, `benchmark-report.md`, and the untracked
   `measure/tracks/character_accessory_library_20260717/s4-evidence/**`
