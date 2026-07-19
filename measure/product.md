@@ -47,7 +47,7 @@ An LLM can create and revise a rustic fantasy adventurer assembled from rigid pa
 - Rigid accessories declare one of six equipment slots, attachment ownership, handedness, compatible anatomy and archetypes, layer/intersection limits, pose compatibility, triangle budgets, and delivery-resolution feature evidence.
 - Assemblies with parent-child transforms, port connections, mirroring, rigid joints, poses, and deterministic variants.
 - A fixed fantasy palette and material families for wood, stone, iron, bronze, leather, cloth, skin, foliage, bone, and crystal.
-- A rustic-human MVP kit for humanoid parts, sword, shield, crate, tree, and cottage modules.
+- A rustic-human MVP kit for humanoid parts, seventeen static accessories, crate, tree, and cottage modules.
 - A domain tool API suitable for MCP and in-process tool calling.
 - Browser-based 3D inspection and fixed orthographic preview rendering.
 - Transparent one-, four-, and eight-direction sprite output plus contact sheets.
@@ -58,11 +58,12 @@ An LLM can create and revise a rustic fantasy adventurer assembled from rigid pa
 The public `inspect_capabilities` preflight is the executable source for this boundary:
 
 - Supported creation starts from exactly four committed identities: adventurer, crate, tree, and cottage.
-- Supported character equipment is exactly the registered static sword and shield. The accessory surface is partial, not a general library.
-- Sword and shield use the same closed accessory metadata contract planned for the broader library; contract availability alone does not make unregistered equipment supported.
+- Supported static character equipment is exactly the seventeen registered sword, shield, head, hand, body, back, and waist templates. Their identities, geometry, ports, materials, bounds, budgets, and required-feature contracts are inspectable.
+- The accessory authoring surface remains partial: compatibility-filtered discovery and task-level equip, replace, swap-hand, recolor, and unequip operations are not yet public. Generic semantic operations require exact template, part, and port knowledge.
+- Static template availability does not prove equipped character readability; the guard, traveler, ranger, and caster loadouts and native-resolution evidence remain pending.
 - Supported motion state is a static rigid pose snapshot. Temporal clips, frame interpolation, animation playback/export, and runtime sprite atlases are unsupported.
 - Supported outputs are directional transparent PNG frames, a review contact sheet, and reload-verified GLB. The contact sheet is evidence, not an animation atlas contract.
-- New asset identities, unavailable accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
+- New asset identities, unregistered accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
 - The pinned Three.js `GLTFLoader` passes as a representative format importer with direct scale, orientation, node, material, and error evidence. Unity, Godot, and gameplay-runtime integration remain Not Assessed.
 
 ## Explicitly Out of Scope
