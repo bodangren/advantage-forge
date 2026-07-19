@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { PartTemplateDefinitionSchema } from '../../src/contracts/index.js';
 import {
   AccessoryCatalogEntrySchema,
+  getRusticAccessoryCatalogEntry,
   rusticAccessoryCatalog,
 } from '../../src/fantasy-kit/index.js';
 
@@ -87,5 +88,96 @@ describe('bounded accessory catalog specification', () => {
     ]);
     for (const { template } of rusticAccessoryCatalog)
       expect(existingGenerators.has(template.shape.kind)).toBe(true);
+  });
+
+  it('encodes the owner-approved delivery-resolution silhouettes as kit data', () => {
+    const required = (templateId: string) => {
+      const entry = getRusticAccessoryCatalogEntry(templateId);
+      expect(entry, templateId).toBeDefined();
+      return entry!;
+    };
+
+    const kite = required('equipment.shield.kite');
+    expect(kite.defaultMaterialId).toBe('wood.oak');
+    expect(kite.usage.placements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          intendedOrientation: expect.stringMatching(/vertical/i),
+        }),
+      ]),
+    );
+
+    const spear = required('equipment.spear');
+    expect(spear.template.shape).toMatchObject({
+      kind: 'lathedProfile',
+      profile: expect.arrayContaining([[0.04, -0.66]]),
+    });
+    expect(
+      spear.template.accessory?.requiredFeatures[0]?.minimumWidthPixels,
+    ).toBeGreaterThanOrEqual(3);
+
+    const staff = required('equipment.staff');
+    expect(staff.template.shape).toMatchObject({
+      kind: 'tubePath',
+      radius: 0.07,
+    });
+    expect(
+      staff.template.accessory?.requiredFeatures[0]?.minimumWidthPixels,
+    ).toBeGreaterThanOrEqual(3);
+
+    const backpack = required('equipment.backpack');
+    expect(backpack.template.shape).toMatchObject({
+      kind: 'extrudedProfile',
+      depth: 0.32,
+    });
+    expect(backpack.defaultMaterialId).toBe('leather.dark');
+    expect(backpack.usage.placements[0]?.transform.position[0]).toBe(0);
+
+    const armor = required('equipment.armor.leather');
+    expect(armor.template.shape).toMatchObject({
+      kind: 'extrudedProfile',
+      depth: 0.18,
+    });
+
+    const pouch = required('equipment.pouch.belt');
+    expect(pouch.template.shape).toMatchObject({
+      kind: 'beveledBox',
+      width: 0.3,
+      height: 0.22,
+      depth: 0.16,
+    });
+    expect(Math.abs(pouch.usage.placements[0]!.transform.position[0])).toBe(
+      0.3,
+    );
+
+    const cape = required('equipment.cape');
+    expect(cape.template.shape).toMatchObject({
+      kind: 'extrudedProfile',
+      depth: 0.09,
+    });
+    expect(cape.usage.summary).toMatch(/rigid/i);
+  });
+
+  it('keeps sword-down and shield-upright regression guidance public', () => {
+    const sword = getRusticAccessoryCatalogEntry('equipment.sword')!;
+    const shield = getRusticAccessoryCatalogEntry('equipment.shield')!;
+    expect(sword.usage.visualChecks.join(' ')).toMatch(/below the torso/i);
+    expect(sword.usage.placements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          intendedOrientation: expect.stringMatching(/down and away/i),
+        }),
+      ]),
+    );
+    expect(shield.usage.visualChecks.join(' ')).toMatch(
+      /not a horizontal platter/i,
+    );
+    expect(shield.usage.placements).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          intendedOrientation: expect.stringMatching(/upright/i),
+        }),
+      ]),
+    );
   });
 });
