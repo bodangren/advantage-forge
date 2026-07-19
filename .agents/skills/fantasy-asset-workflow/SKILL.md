@@ -85,13 +85,38 @@ calling `create_asset`. Creation is limited to the fixed `adventurer`, `crate`,
 `tree`, or `cottage` reference; `create_asset` has no dry-run mode and cannot
 assign a novel identity. Record the returned initial revision as the baseline.
 
+#### Accessory discovery and loadout planning
+
+For adventurer equipment, call `search_accessories` with the inspected asset ID,
+an explicit archetype ID, and only the filters required by the brief. Select a
+returned candidate, then call `inspect_template` with its exact `templateId`.
+Treat the returned `usage.placements`, `intendedOrientation`, `guidance`,
+`visualChecks`, material options, compatibility result, and `exampleOperation`
+as kit-owned instructions. Never add a caller-authored transform, quaternion,
+part ID, connection ID, or port.
+
+Plan the whole loadout before mutating. A candidate with
+`replacementRequired: true` must use its returned `replace` example rather than
+`equip`. If discovery reports an anatomy, archetype, handedness, slot, or port
+conflict, stop and report the issue. `swapHand` moves one equipped item only to
+the opposite empty hand; it does not exchange two occupied hands. For a stale
+revision, re-inspect and re-plan. Treat a no-op as a rejected change, not a
+successful revision.
+
+Dry-run the exact returned `exampleOperation` through
+`apply_accessory_operation`, inspect its exact part, connection, affected, and
+removed IDs plus change preview, then replay the request with only `dryRun`
+changed to `false`. Re-inspect the `parts` section to confirm `equipmentSlot`
+and compare revisions before rendering.
+
 ### 4. Propose the smallest semantic change
 
 Describe the intended public operation, target semantic IDs, expected visible
 effect, and preservation set. Reuse IDs returned by inspection. Prefer localized
-`apply_operations`, `connect_parts`, or `set_pose` calls over broad changes.
-Never infer transforms, material slots, ports, generator kinds, or part schemas
-that the public inspection responses did not establish.
+`apply_accessory_operation`, `apply_operations`, `connect_parts`, or `set_pose`
+calls over broad changes. For accessories, use the task-level operation returned
+by discovery. Never infer transforms, material slots, ports, generator kinds, or
+part schemas that the public inspection responses did not establish.
 
 ### 5. Dry-run, then apply with a revision precondition
 
@@ -162,6 +187,13 @@ can correct a failure, return to step 4 and preserve another revision lineage.
 Otherwise issue a partial or fail verdict with concrete visual evidence. Never
 approve from an enlarged contact sheet alone.
 
+Apply every accessory candidate's returned `visualChecks` to all eight native
+frames. For the rustic sword, confirm the blade reads down from the hand and
+stays below and outside the torso silhouette. For a shield, confirm its broad
+face is upright and vertical rather than lying flat like a tray. Inspect front,
+back, and both side views for hand contact, body clipping, and accidental
+occlusion; a valid attachment transform is not visual proof.
+
 ### 9. Report evidence, not confidence
 
 Use the exact structure in
@@ -182,3 +214,8 @@ artifact paths. State every unsupported or not-assessed requirement plainly.
 Do not call a temporal sprite sequence, runtime atlas, novel character identity,
 new accessory, or external game-engine import complete until the corresponding
 runtime capability says `supported` and the requested evidence exists.
+
+Current accessory operations are rigid attachments only. They do not provide
+cloth or equipment physics, inventory/gameplay state, arbitrary uploaded meshes,
+two-occupied-hand exchange, skeletal deformation, or temporally animated
+accessories.

@@ -50,6 +50,7 @@ describe('public capability discovery', () => {
     expect(status.get('asset.reference.cottage')).toBe('supported');
     expect(status.get('accessory.sword')).toBe('supported');
     expect(status.get('accessory.shield')).toBe('supported');
+    expect(status.get('accessory.library')).toBe('supported');
     expect(status.get('accessory.additional')).toBe('supported');
     expect(status.get('output.glb')).toBe('supported');
     expect(status.get('output.sprite.directional')).toBe('supported');
@@ -58,7 +59,7 @@ describe('public capability discovery', () => {
     const sword = report.facts.find(({ id }) => id === 'accessory.sword');
     expect(sword?.evidence.templateIds).toContain('equipment.sword');
     expect(sword?.evidence.publicTools).toContain('create_asset');
-    expect(sword?.evidence.publicTools).toContain('apply_operations');
+    expect(sword?.evidence.publicTools).toContain('apply_accessory_operation');
   });
 
   it('states product gaps without inventing source, filesystem, or hidden-tool routes', async () => {
@@ -66,7 +67,14 @@ describe('public capability discovery', () => {
     const report = CapabilityReportSchema.parse(result.data);
     const byId = new Map(report.facts.map((fact) => [fact.id, fact]));
 
-    expect(byId.get('accessory.library')?.status).toBe('partial');
+    const accessoryLibrary = byId.get('accessory.library');
+    expect(accessoryLibrary?.status).toBe('supported');
+    expect(accessoryLibrary?.evidence.publicTools).toContain(
+      'search_accessories',
+    );
+    expect(accessoryLibrary?.evidence.publicTools).toContain(
+      'apply_accessory_operation',
+    );
     for (const id of [
       'asset.new_identity',
       'animation.temporal',

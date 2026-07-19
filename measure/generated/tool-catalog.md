@@ -7,9 +7,11 @@
 | `list_kits` | no | List bounded fantasy kits and reference assets. |
 | `inspect_capabilities` | no | Preflight supported, partial, unsupported, and not-assessed product capabilities with evidence and guidance. |
 | `inspect_template` | no | Inspect semantic role, parameters, material slots, and named ports. |
+| `search_accessories` | no | Discover bounded compatible accessories with kit-owned placement and visual guidance. |
 | `inspect_asset` | no | Inspect overview or complete current authoring state through deterministic bounded sections. |
 | `compare_revisions` | no | Compare immutable revisions as bounded field changes plus affected and preserved semantic IDs. |
 | `create_asset` | yes | Create a revision from a committed fantasy reference document. |
+| `apply_accessory_operation` | yes | Dry-run or apply one closed equip, replace, swap-hand, recolor, or unequip task. |
 | `apply_operations` | yes | Apply one or more closed semantic operations with revision preconditions. |
 | `connect_parts` | yes | Connect two compatible named part ports. |
 | `set_pose` | yes | Select a declared rigid pose by stable ID. |

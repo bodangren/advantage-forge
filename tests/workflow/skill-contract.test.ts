@@ -16,6 +16,8 @@ describe('fantasy asset workflow skill contract', () => {
     for (const requiredStep of [
       'inspect_capabilities',
       'inspect_asset',
+      'search_accessories',
+      'apply_accessory_operation',
       'dryRun: true',
       'compare_revisions',
       'validate_asset',
@@ -57,9 +59,14 @@ describe('fantasy asset workflow skill contract', () => {
       'dryRun: true',
       'baseRevisionId',
       'targetRevisionId',
+      'search_accessories({',
+      'apply_accessory_operation({',
     ]) {
       expect(ledger).toContain(requestField);
     }
+    expect(ledger).toMatch(/never add `transform`/i);
+    expect(skill).toMatch(/blade reads down from the hand/i);
+    expect(skill).toMatch(/broad\s+face\s+is\s+upright\s+and\s+vertical/i);
 
     const animation = await readSkillFile('references/animation-handoff.md');
     for (const capabilityId of [

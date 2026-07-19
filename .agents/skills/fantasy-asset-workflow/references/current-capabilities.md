@@ -11,16 +11,16 @@ during the run because executable runtime facts supersede this summary.
 - Complete bounded semantic inspection and immutable revision comparison.
 - Seventeen registered static adventurer accessory templates: sword and round
   shield plus fifteen head, hand, body, back, and waist options.
+- Compatibility-filtered accessory discovery with kit-owned placement,
+  intended-orientation, usage, material, and native-frame visual-check guidance.
+- Revision-safe task operations for equip, replace, move to an empty opposite
+  hand, recolor, and unequip. Callers do not author transforms or ports.
 - Eight deterministic 128x128 orthographic transparent directional PNGs and a
   labeled review contact sheet.
 - Reload-verified GLB 2.0 export in meters.
 
 ## Partial now
 
-- The static accessory library is inspectable, but compatibility-filtered
-  discovery and task-level equip, replace, swap-hand, recolor, and unequip
-  operations are not yet public. Generic semantic operations require exact
-  template, part, and port knowledge.
 - Accessory templates have deterministic geometry contracts, but the four
   character loadouts and native-resolution readability evidence are not yet
   complete.
@@ -28,10 +28,10 @@ during the run because executable runtime facts supersede this summary.
 ## Unsupported now
 
 - Novel asset identity or arbitrary canonical-document assembly.
-- Bounded compatibility-filtered accessory discovery and task-level equipment
-  operations.
 - Arbitrary creatures, additional humanoid culture families, deforming anatomy,
   wings, tentacles, quadrupeds, skeletal deformation, and raw mesh editing.
+- Cloth/equipment physics, gameplay inventory state, arbitrary uploaded
+  accessories, exchange of two occupied hands, and temporally animated gear.
 - Temporal clips, interpolation, frame sequences, animation playback/export,
   runtime sprite atlases, and atlas metadata.
 

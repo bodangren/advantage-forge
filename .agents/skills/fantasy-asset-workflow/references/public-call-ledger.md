@@ -11,6 +11,11 @@ inspect_capabilities({})
 inspect_capabilities({ capabilityIds: [<IDs returned by the first call>] })
 list_kits({})
 inspect_template({ templateId: <registered template ID> })
+search_accessories({
+  assetId: <asset ID>,
+  archetypeId: <declared archetype ID>,
+  query: { roles: [<required role>], slots: [<required slot>], offset: 0, limit: 20 }
+})
 inspect_asset({ assetId: <asset ID>, section: "overview", offset: 0, limit: 20 })
 inspect_asset({ assetId: <asset ID>, section: "parts", offset: 0, limit: 100 })
 ```
@@ -18,6 +23,35 @@ inspect_asset({ assetId: <asset ID>, section: "parts", offset: 0, limit: 100 })
 Valid paged sections are `parts`, `connections`, `variants`, `poses`, and
 `renderProfiles`. Follow the returned `nextOffset`; do not use guessed section
 names such as `materials`, `transforms`, or `dimensions`.
+
+Accessory filters are optional and bounded: `roles`, `slots`, `handedness`,
+`compatibilityTags`, `compatibleAnatomy`, `compatibleArchetypes`,
+`materialFamilies`, `offset`, and `limit`. Use only request-relevant filters.
+The selected discovery item supplies `usage`, compatibility, material options,
+and a complete `exampleOperation`; do not reconstruct these from source.
+
+## Accessory task mutation
+
+Copy a selected candidate's complete `exampleOperation` into the request. The
+closed operation variants are `equip`, `replace`, `swapHand`, `recolor`, and
+`unequip`:
+
+```text
+apply_accessory_operation({
+  assetId: <asset ID from search_accessories>,
+  expectedRevisionId: <baseline revisionId>,
+  archetypeId: <same declared archetype ID>,
+  operation: <complete exampleOperation returned by search_accessories>,
+  dryRun: true
+})
+```
+
+After checking the dry-run summary, replay the identical request with only
+`dryRun: false` changed. Never add `transform`, `rotation`, `position`, `scale`,
+`parentPartId`, `parentPortId`, or `connectionId`; placement is kit-owned. An
+occupied slot requires the returned `replace` operation. A stale revision,
+incompatible candidate, missing port, or no-op requires re-inspection or a stop,
+not a generic-operation workaround.
 
 ## Fixed-reference creation
 

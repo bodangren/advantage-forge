@@ -178,6 +178,7 @@
       "name": "tools",
       "publicEntry": "src/tools/index.ts",
       "sourceFiles": [
+        "src/tools/accessory-workflow.ts",
         "src/tools/capabilities.ts",
         "src/tools/catalog.ts",
         "src/tools/handlers.ts",

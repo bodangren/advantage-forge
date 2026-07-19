@@ -66,10 +66,6 @@ const referenceFacts = Object.entries(referenceDocuments).map(
 );
 
 const templateIds = new Set(rusticTemplates.map(({ id }) => id));
-const accessoryTemplateIds = rusticTemplates
-  .filter(({ accessory }) => accessory !== undefined)
-  .map(({ id }) => id)
-  .sort(compareText);
 const additionalAccessoryTemplateIds = rusticAccessoryCatalog
   .map(({ template }) => template.id)
   .sort(compareText);
@@ -91,8 +87,9 @@ const accessoryFact = (
       publicTools: tools(
         'create_asset',
         'inspect_template',
+        'search_accessories',
         'inspect_asset',
-        'apply_operations',
+        'apply_accessory_operation',
       ),
       referenceAssetIds: [referenceDocuments.adventurer.id],
       templateIds: templateIds.has(templateId) ? [templateId] : [],
@@ -105,18 +102,18 @@ const declaredFacts: CapabilityFact[] = [
   CapabilityFactSchema.parse({
     id: 'accessory.library',
     category: 'accessory',
-    status: 'partial',
+    status: 'supported',
     summary:
-      'Seventeen static accessory templates are registered, but compatibility-filtered discovery and task-level equip workflows are not yet public.',
-    guidance:
-      'Inspect a known template and use generic semantic operations only when exact parts and ports are already known; wait for the public accessory workflow before relying on search, equip, replace, swap-hand, recolor, or unequip tasks.',
+      'Discover seventeen compatible static accessories with kit-owned usage and perform revision-safe equip, replace, empty-hand swap, recolor, and unequip tasks without caller-authored transforms.',
     evidence: evidence({
       publicTools: tools(
+        'search_accessories',
         'inspect_template',
         'inspect_asset',
-        'apply_operations',
+        'apply_accessory_operation',
+        'compare_revisions',
       ),
-      templateIds: accessoryTemplateIds,
+      templateIds: additionalAccessoryTemplateIds,
     }),
   }),
   CapabilityFactSchema.parse({
@@ -212,9 +209,13 @@ const declaredFacts: CapabilityFact[] = [
     category: 'accessory',
     status: 'supported',
     summary:
-      'Fifteen additional static helmet, hood, weapon, shield, torch, armor, back, and waist templates are registered and inspectable.',
+      'The complete seventeen-template static helmet, hood, weapon, shield, torch, armor, back, and waist library is registered, discoverable, and inspectable.',
     evidence: evidence({
-      publicTools: tools('inspect_capabilities', 'inspect_template'),
+      publicTools: tools(
+        'inspect_capabilities',
+        'search_accessories',
+        'inspect_template',
+      ),
       templateIds: additionalAccessoryTemplateIds,
     }),
   }),
