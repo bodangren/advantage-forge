@@ -82,7 +82,7 @@ _Story ref: spec.md#story-s4_
   - [x] Create all revisions through public tools and preserve workflow transcripts.
   - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
   - [x] Keep every accepted accessory within declared budgets and style constraints.
-- [b] Task: Assemble final evidence and run all gates (deferred:orchestrator) [partial commits: c26dde4, 076199f]
+- [~] Task: Assemble final evidence and run all gates (actively worked:orchestrator) [partial commits: c26dde4, 076199f]
   - [b] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout. (deferred:orchestrator) [blocked: risk-disclosed K3 retry timed out after 624 seconds with zero events, sessions, or Forge calls]
   - [x] Preserve exact-revision 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and repository-status proof. [commit: 076199f]
   - [x] Run check components, coverage, build, browser, reference build, generate, doctor, and artifact verification. [commit: 076199f] [note: monolithic pnpm check stops only because format:check scans unrelated untracked and historical evidence]
