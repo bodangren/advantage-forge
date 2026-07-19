@@ -57,11 +57,11 @@ _Story ref: spec.md#story-s3_
   - [x] Cover successful equipment workflows without manually constructed transforms.
   - [x] Cover occupied slots, invalid ports, incompatible anatomy, handedness, stale revisions, no-ops, and unknown fields.
   - [x] Prove failures do not mutate current state and unrelated nodes remain byte-equivalent.
-- [~] Task: Implement accessory workflows through domain handlers
-  - [ ] Resolve compatible templates and ports inside bounded domain services.
-  - [ ] Keep the MCP adapter thin and response budgeted.
-  - [ ] Enrich inspection and comparison with accessory state.
-- [ ] Task: Update the workflow skill and run quality gates
+- [x] Task: Implement accessory workflows through domain handlers [commit: ade20de]
+  - [x] Resolve compatible templates and ports inside bounded domain services.
+  - [x] Keep the MCP adapter thin and response budgeted.
+  - [x] Enrich inspection and comparison with accessory state.
+- [~] Task: Update the workflow skill and run quality gates
   - [ ] Add accessory discovery, loadout planning, dry-run, visual review, and limitation branches.
   - [ ] Regenerate public tool and capability catalogs and run handler, MCP, coverage, type, lint, doctor, and full checks.
 - [ ] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md)
