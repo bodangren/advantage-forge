@@ -82,8 +82,8 @@ _Story ref: spec.md#story-s4_
   - [x] Create all revisions through public tools and preserve workflow transcripts.
   - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
   - [x] Keep every accepted accessory within declared budgets and style constraints.
-- [~] Task: Assemble final evidence and run all gates
-  - [ ] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout.
-  - [ ] Preserve 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and clean-status proof.
-  - [ ] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification.
+- [x] Task: Assemble final evidence and run all gates [commit: c26dde4]
+  - [x] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout.
+  - [x] Preserve 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and clean-status proof.
+  - [x] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification.
 - [ ] Task: Measure - User Manual Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md)
