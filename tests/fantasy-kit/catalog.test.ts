@@ -107,5 +107,14 @@ describe('rustic fantasy kit', () => {
     expect(generated).toContain(
       '| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.08 | 64 | `blade`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |',
     );
+    for (const id of [
+      'equipment.helmet.iron',
+      'equipment.axe',
+      'equipment.shield.kite',
+      'equipment.armor.mail',
+      'equipment.backpack',
+      'equipment.scabbard',
+    ])
+      expect(generated).toContain(`| \`${id}\` |`);
   });
 });

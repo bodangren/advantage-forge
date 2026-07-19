@@ -50,6 +50,7 @@ describe('public capability discovery', () => {
     expect(status.get('asset.reference.cottage')).toBe('supported');
     expect(status.get('accessory.sword')).toBe('supported');
     expect(status.get('accessory.shield')).toBe('supported');
+    expect(status.get('accessory.additional')).toBe('supported');
     expect(status.get('output.glb')).toBe('supported');
     expect(status.get('output.sprite.directional')).toBe('supported');
     expect(status.get('revision.immutable')).toBe('supported');
@@ -68,7 +69,6 @@ describe('public capability discovery', () => {
     expect(byId.get('accessory.library')?.status).toBe('partial');
     for (const id of [
       'asset.new_identity',
-      'accessory.additional',
       'animation.temporal',
       'output.sprite_atlas',
       'anatomy.unsupported',
@@ -93,7 +93,7 @@ describe('public capability discovery', () => {
     expect(CapabilityReportSchema.parse(filtered.data)).toMatchObject({
       filtered: true,
       facts: [
-        { id: 'accessory.additional', status: 'unsupported' },
+        { id: 'accessory.additional', status: 'supported' },
         { id: 'animation.temporal', status: 'unsupported' },
       ],
     });

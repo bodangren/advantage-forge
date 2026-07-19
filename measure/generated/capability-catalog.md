@@ -4,8 +4,8 @@
 
 | Capability | Category | Status | Current scope | Guidance |
 |---|---|---|---|---|
-| `accessory.additional` | accessory | unsupported | No helmet, hood, axe, mace, spear, staff, torch, armor shell, cape, quiver, backpack, pouch, or scabbard template is registered. | Do not approximate missing equipment with unrelated parts; implement and verify the planned accessory-library track first. |
-| `accessory.library` | accessory | partial | Accessory authoring is limited to the registered sword and shield. | Use the existing sword or shield only; helmets, alternate weapons, armor shells, packs, and similar equipment require the planned accessory-library track. |
+| `accessory.additional` | accessory | supported | Fifteen additional static helmet, hood, weapon, shield, torch, armor, back, and waist templates are registered and inspectable. | Available through the listed public evidence. |
+| `accessory.library` | accessory | partial | Seventeen static accessory templates are registered, but compatibility-filtered discovery and task-level equip workflows are not yet public. | Inspect a known template and use generic semantic operations only when exact parts and ports are already known; wait for the public accessory workflow before relying on search, equip, replace, swap-hand, recolor, or unequip tasks. |
 | `accessory.shield` | accessory | supported | The rustic-human kit declares a static shield part with semantic ports and materials. | Available through the listed public evidence. |
 | `accessory.sword` | accessory | supported | The rustic-human kit declares a static sword part with semantic ports and materials. | Available through the listed public evidence. |
 | `anatomy.unsupported` | asset | unsupported | Arbitrary creatures, quadrupeds, wings, tentacles, deforming anatomy, and additional humanoid culture families are not registered. | Use the rustic adventurer anatomy or another existing static reference; add a bounded reviewed template family before requesting new anatomy. |

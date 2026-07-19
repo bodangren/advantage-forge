@@ -5,7 +5,11 @@ import {
   type CapabilityFact,
   type CapabilityReport,
 } from '../contracts/index.js';
-import { referenceDocuments, rusticTemplates } from '../fantasy-kit/index.js';
+import {
+  referenceDocuments,
+  rusticAccessoryCatalog,
+  rusticTemplates,
+} from '../fantasy-kit/index.js';
 import { MVP_RENDER_PROFILE } from '../render/index.js';
 
 import { PUBLIC_TOOL_NAMES, type PublicToolName } from './catalog.js';
@@ -62,6 +66,13 @@ const referenceFacts = Object.entries(referenceDocuments).map(
 );
 
 const templateIds = new Set(rusticTemplates.map(({ id }) => id));
+const accessoryTemplateIds = rusticTemplates
+  .filter(({ accessory }) => accessory !== undefined)
+  .map(({ id }) => id)
+  .sort(compareText);
+const additionalAccessoryTemplateIds = rusticAccessoryCatalog
+  .map(({ template }) => template.id)
+  .sort(compareText);
 const accessoryFact = (
   id: 'sword' | 'shield',
   templateId: 'equipment.sword' | 'equipment.shield',
@@ -96,12 +107,16 @@ const declaredFacts: CapabilityFact[] = [
     category: 'accessory',
     status: 'partial',
     summary:
-      'Accessory authoring is limited to the registered sword and shield.',
+      'Seventeen static accessory templates are registered, but compatibility-filtered discovery and task-level equip workflows are not yet public.',
     guidance:
-      'Use the existing sword or shield only; helmets, alternate weapons, armor shells, packs, and similar equipment require the planned accessory-library track.',
+      'Inspect a known template and use generic semantic operations only when exact parts and ports are already known; wait for the public accessory workflow before relying on search, equip, replace, swap-hand, recolor, or unequip tasks.',
     evidence: evidence({
-      publicTools: tools('inspect_template', 'inspect_asset'),
-      templateIds: ['equipment.shield', 'equipment.sword'],
+      publicTools: tools(
+        'inspect_template',
+        'inspect_asset',
+        'apply_operations',
+      ),
+      templateIds: accessoryTemplateIds,
     }),
   }),
   CapabilityFactSchema.parse({
@@ -195,14 +210,12 @@ const declaredFacts: CapabilityFact[] = [
   CapabilityFactSchema.parse({
     id: 'accessory.additional',
     category: 'accessory',
-    status: 'unsupported',
+    status: 'supported',
     summary:
-      'No helmet, hood, axe, mace, spear, staff, torch, armor shell, cape, quiver, backpack, pouch, or scabbard template is registered.',
-    guidance:
-      'Do not approximate missing equipment with unrelated parts; implement and verify the planned accessory-library track first.',
+      'Fifteen additional static helmet, hood, weapon, shield, torch, armor, back, and waist templates are registered and inspectable.',
     evidence: evidence({
       publicTools: tools('inspect_capabilities', 'inspect_template'),
-      templateIds: ['equipment.shield', 'equipment.sword'],
+      templateIds: additionalAccessoryTemplateIds,
     }),
   }),
   CapabilityFactSchema.parse({
