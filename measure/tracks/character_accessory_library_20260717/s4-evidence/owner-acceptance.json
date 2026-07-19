@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "role": "phase-acceptance",
+  "track": "character_accessory_library_20260717",
+  "phase": "Phase S4: Verify Character Readability",
+  "baseline_sha": "e4090eb084142aa4ddff1276e9debfa481905f25",
+  "audited_head_sha": "ffb2824184a714118db199b803c953a99734f55f",
+  "applicability": "applicable",
+  "status": "fail",
+  "summary": "Automated S4 gates pass, but Must-level delivery-resolution fidelity, exact-revision interactive 3D review, fresh LLM proof for every loadout, and direct sword-plus-shield regression evidence are incomplete.",
+  "blocking_findings": [
+    "The Guard kite shield is upright but remains a near-black featureless slab and loses useful identity edge-on.",
+    "Long weapons become visually lost in narrow E/W views despite passing computed pixel thresholds.",
+    "The Traveler backpack is an oversized unarticulated cuboid.",
+    "Ranger armor, back, quiver, and waist equipment collapse into ambiguous rectangular volumes.",
+    "The Caster cape and pouch read as a rigid board and pasted-on block.",
+    "Exact-revision interactive 3D inspection was not completed.",
+    "Guard and Traveler fresh-LLM runs produced no session or Forge calls; the isolated Luna run did not execute.",
+    "The owner-required regression gate does not directly re-prove sword-down and shield-upright orientation together."
+  ],
+  "nonblocking_findings": [
+    "Cloth physics, skeletal deformation, temporal animation, inventory, and external engine import are outside this track."
+  ],
+  "evidence": [
+    "measure/tracks/character_accessory_library_20260717/spec.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/final-review.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/verification.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/public-final-candidate-20260719T075230Z",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/llm-final-ranger-caster-20260719T062928Z",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/llm-final-guard-traveler-20260719T062741Z",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/sandboxed-final-20260719T072510Z-traveler-luna"
+  ],
+  "commands": [
+    "python3 /home/daniel-bo/.agents/skills/measure-orchestrator/scripts/measure_interphase_checks.py status --repo .",
+    "base64 -w0 <each committed final contact-sheet.png>"
+  ],
+  "changed_files": [
+    "measure/tracks/character_accessory_library_20260717/index.md",
+    "measure/tracks/character_accessory_library_20260717/metadata.json",
+    "measure/tracks/character_accessory_library_20260717/plan.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/final-review.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/final-summary.json",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/verification.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/owner-acceptance.md",
+    "measure/tracks/character_accessory_library_20260717/s4-evidence/owner-acceptance.json"
+  ],
+  "test_strategy_violations": [],
+  "live_contract_violations": [],
+  "prod_wiring_violations": [],
+  "route_parity_violations": [],
+  "retry_recommendation": "retry_implementation",
+  "confidence": "high"
+}

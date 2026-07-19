@@ -1,7 +1,7 @@
 {
   "phase": "S4",
   "date": "2026-07-19",
-  "verdict": "partial",
+  "verdict": "fail",
   "deterministicPublicMcp": {
     "root": "public-final-candidate-20260719T075230Z",
     "loadouts": 4,
@@ -14,7 +14,7 @@
   "browser": {
     "testsPassed": 2,
     "testsFailed": 0,
-    "visualVerdict": "partial"
+    "visualVerdict": "owner-rejected"
   },
   "freshLlm": {
     "ranger": "partial",
@@ -31,5 +31,6 @@
     "functionsPercent": 97.57,
     "linesPercent": 93.6
   },
-  "manualApproval": "pending"
+  "ownerAcceptance": "rejected",
+  "ownerAcceptanceEvidence": "owner-acceptance.md"
 }

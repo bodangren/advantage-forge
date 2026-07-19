@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-19T08:00:00Z",
+  "updated_at": "2026-07-19T08:37:56Z",
   "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -40,7 +40,7 @@
         "status": "in_progress"
       }
     ],
-    "demo_notes": "S4 deterministic and browser gates pass; visual polish is partial and the owner checkpoint remains pending. Guard/Traveler fresh-LLM runs were blocked at OpenCode startup.",
+    "demo_notes": "S4 owner acceptance was rejected on 2026-07-19. Deterministic and browser gates pass, but required delivery-resolution visual fidelity, exact-revision interactive 3D review, and fresh sandboxed LLM coverage for all four loadouts remain incomplete.",
     "retro_ref": null
   }
 }

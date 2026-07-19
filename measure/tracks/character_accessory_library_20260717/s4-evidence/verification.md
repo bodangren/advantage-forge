@@ -80,7 +80,9 @@ resolved-permission preflight, and a non-Forge ledger rejection.
 
 ## Phase verdict
 
-Automated S4 acceptance passes. Overall phase acceptance remains **partial and
-awaiting owner review** because visual polish is incomplete, Guard/Traveler
-fresh-LLM sessions were blocked at client startup, direct exact-revision 3D
-inspection is unavailable, and external engine import is Not Assessed.
+The substantive automated S4 component gates pass. Overall phase acceptance is
+**rejected by the project owner** because required delivery-resolution visual
+fidelity is incomplete, Guard/Traveler fresh-LLM sessions were blocked at
+client startup, direct exact-revision interactive 3D inspection is missing, and
+the sword-plus-shield orientation regression was not re-proved. External engine
+import remains out of scope and is not a blocker for this track.

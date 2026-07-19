@@ -82,8 +82,13 @@ _Story ref: spec.md#story-s4_
   - [x] Create all revisions through public tools and preserve workflow transcripts.
   - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
   - [x] Keep every accepted accessory within declared budgets and style constraints.
-- [x] Task: Assemble final evidence and run all gates [commit: c26dde4]
-  - [x] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout.
-  - [x] Preserve 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and clean-status proof.
-  - [x] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification.
-- [ ] Task: Measure - User Manual Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md)
+- [b] Task: Assemble final evidence and run all gates (deferred:orchestrator) [partial commit: c26dde4]
+  - [b] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout. (deferred:orchestrator) [blocked: Guard and Traveler established no OpenCode session or Forge calls]
+  - [b] Preserve exact-revision 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and repository-status proof. (deferred:orchestrator) [blocked: exact-revision interactive 3D review is missing]
+  - [b] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification. (deferred:orchestrator) [partial: substantive component gates pass; monolithic pnpm check stopped on untracked inputs]
+- [~] Task: Remediate owner-rejected S4 delivery-resolution fidelity
+  - Make the Guard shield materially legible, keep long weapons readable edge-on, and add a direct sword-plus-shield regression review.
+  - Replace the Traveler, Ranger, and Caster box-like silhouettes with bounded rigid forms that read as backpack, armor/quiver/pouch, and cape/pouch.
+  - Complete exact-revision interactive 3D, contact-sheet, and native-frame review for every final idle/action revision.
+  - Complete fresh sandboxed MCP-capable LLM workflows for all four loadouts without source or non-Forge tool access.
+- [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [rejected: 2026-07-19; evidence: s4-evidence/owner-acceptance.md]

@@ -6,9 +6,10 @@ Date: 2026-07-19
 
 The four reference loadouts pass semantic validation, the frozen accessory
 pixel contract, deterministic public-tool reconstruction, GLB reload, artifact
-hash verification, and browser acceptance. The visual verdict is **partial**:
-the corrected equipment is usable and attached, but several shapes remain too
-crude to call polished at 128x128.
+hash verification, and browser acceptance. The artifact-level visual verdict is
+**partial**, but the project-owner phase verdict is **rejected**: the equipment
+is mechanically attached yet remains prototype-grade and does not satisfy the
+Must-level readability bar at 128x128.
 
 The final public evidence is
 [`public-final-candidate-20260719T075230Z`](public-final-candidate-20260719T075230Z/summary.json).
@@ -20,14 +21,15 @@ distance 0.05.
 ## Orientation and attachment findings
 
 - Guard: the kite shield is upright and vertical instead of tray-like. Its
-  broad face is yawed 45 degrees and remains readable in cardinal and oblique
-  views. The spear leans outward from the hand, stays in front of the body, and
-  follows the action pose without visible detachment.
+  broad-face silhouette is yawed 45 degrees and remains present, but the
+  near-black material makes the surface almost featureless. The spear leans
+  outward from the hand, stays in front of the body, and follows the action pose
+  without visible detachment.
 - Sword: S4's committed Guard loadout uses a spear, so S4 does not substitute a
-  sword test. The prior S3 native-resolution sword-and-round-shield review still
-  applies: the kit-owned sword points down from the hand, remains outside the
-  leg silhouette, and the round shield is vertical. The workflow skill now
-  requires these exact sword and shield checks in every native frame.
+  current sword test. The prior S3 review is useful historical evidence, but the
+  owner requires a fresh sword-plus-round-shield idle/action regression proving
+  that the blade points down outside the leg silhouette and the shield remains
+  vertical in every native frame.
 - Traveler: the staff clears the head and the backpack is unmistakably attached.
 - Ranger: the spear and quiver remain attached in idle and action.
 - Caster: staff, hood, cape, and pouch remain grounded and attached.
