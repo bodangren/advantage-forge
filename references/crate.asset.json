@@ -124,8 +124,15 @@
       "color": "#c99a22",
       "family": "bronze",
       "id": "bronze.aged",
-      "metalness": 0.66,
-      "roughness": 0.72
+      "metalness": 0.3,
+      "roughness": 0.78
+    },
+    {
+      "color": "#7656b5",
+      "family": "cloth",
+      "id": "cloth.arcane",
+      "metalness": 0,
+      "roughness": 0.94
     },
     {
       "color": "#667a51",
@@ -164,11 +171,11 @@
       "roughness": 1
     },
     {
-      "color": "#315f96",
+      "color": "#83b4e3",
       "family": "iron",
       "id": "iron.blued",
-      "metalness": 0.68,
-      "roughness": 0.7
+      "metalness": 0.32,
+      "roughness": 0.76
     },
     {
       "color": "#d7dfdc",
@@ -181,6 +188,13 @@
       "color": "#70412f",
       "family": "leather",
       "id": "leather.dark",
+      "metalness": 0,
+      "roughness": 0.88
+    },
+    {
+      "color": "#c43c2f",
+      "family": "leather",
+      "id": "leather.rust",
       "metalness": 0,
       "roughness": 0.88
     },
@@ -836,14 +850,14 @@
         ],
         "bounds": {
           "max": [
+            0.42,
             0.38,
-            0.4,
-            0.19
+            0.18
           ],
           "min": [
-            -0.38,
-            -0.4,
-            -0.19
+            -0.42,
+            -0.36,
+            -0.18
           ]
         },
         "compatibilityTags": [
@@ -906,7 +920,7 @@
             "position": [
               0,
               0,
-              -0.18
+              0
             ],
             "rotation": [
               0,
@@ -928,11 +942,34 @@
       ],
       "role": "equipment.armor.leather",
       "shape": {
-        "bevel": 0.04,
-        "depth": 0.38,
-        "height": 0.8,
-        "kind": "beveledBox",
-        "width": 0.76
+        "depth": 0.36,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.32,
+            -0.36
+          ],
+          [
+            0.32,
+            -0.36
+          ],
+          [
+            0.42,
+            0.22
+          ],
+          [
+            0.28,
+            0.38
+          ],
+          [
+            -0.28,
+            0.38
+          ],
+          [
+            -0.42,
+            0.22
+          ]
+        ]
       }
     },
     {
@@ -1182,14 +1219,14 @@
         ],
         "bounds": {
           "max": [
-            0.41,
-            0.32,
-            0.25
+            0.3,
+            0.36,
+            0.16
           ],
           "min": [
-            -0.41,
-            -0.32,
-            -0.25
+            -0.3,
+            -0.36,
+            -0.16
           ]
         },
         "compatibilityTags": [
@@ -1272,11 +1309,34 @@
       ],
       "role": "equipment.backpack",
       "shape": {
-        "bevel": 0.05,
-        "depth": 0.5,
-        "height": 0.64,
-        "kind": "beveledBox",
-        "width": 0.82
+        "depth": 0.32,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.3,
+            -0.36
+          ],
+          [
+            0.3,
+            -0.36
+          ],
+          [
+            0.3,
+            0.2
+          ],
+          [
+            0.18,
+            0.36
+          ],
+          [
+            -0.18,
+            0.36
+          ],
+          [
+            -0.3,
+            0.2
+          ]
+        ]
       }
     },
     {
@@ -1290,14 +1350,14 @@
         ],
         "bounds": {
           "max": [
-            0.6,
-            0.56,
-            0.09
+            0.42,
+            0.5,
+            0.08
           ],
           "min": [
-            -0.6,
-            -0.56,
-            -0.09
+            -0.42,
+            -0.66,
+            -0.08
           ]
         },
         "compatibilityTags": [
@@ -1326,8 +1386,6 @@
             "expectation": "Cape extends below the torso from reverse views.",
             "id": "cape-tail",
             "intendedDirections": [
-              "N",
-              "NE",
               "E",
               "SE",
               "S",
@@ -1343,7 +1401,7 @@
         ],
         "role": "back-item",
         "slot": "back",
-        "triangleBudget": 12
+        "triangleBudget": 64
       },
       "id": "equipment.cape",
       "materialSlots": [
@@ -1381,10 +1439,30 @@
       ],
       "role": "equipment.cape",
       "shape": {
-        "depth": 0.18,
-        "height": 1.12,
-        "kind": "box",
-        "width": 1.2
+        "depth": 0.16,
+        "kind": "extrudedProfile",
+        "profile": [
+          [
+            -0.42,
+            -0.32
+          ],
+          [
+            0,
+            -0.66
+          ],
+          [
+            0.42,
+            -0.32
+          ],
+          [
+            0.34,
+            0.5
+          ],
+          [
+            -0.34,
+            0.5
+          ]
+        ]
       }
     },
     {
@@ -1749,14 +1827,14 @@
         ],
         "bounds": {
           "max": [
-            0.32,
-            0.14,
-            0.3
+            0.19,
+            0.12,
+            0.16
           ],
           "min": [
-            -0.32,
-            -0.14,
-            -0.3
+            -0.19,
+            -0.12,
+            -0.16
           ]
         },
         "compatibilityTags": [
@@ -1791,7 +1869,6 @@
               "E",
               "SE",
               "S",
-              "SW",
               "W",
               "NW"
             ],
@@ -1841,11 +1918,11 @@
       ],
       "role": "equipment.pouch.belt",
       "shape": {
-        "bevel": 0.025,
-        "depth": 0.6,
-        "height": 0.28,
+        "bevel": 0.05,
+        "depth": 0.32,
+        "height": 0.24,
         "kind": "beveledBox",
-        "width": 0.64
+        "width": 0.38
       }
     },
     {
@@ -2114,7 +2191,6 @@
             "intendedDirections": [
               "N",
               "NE",
-              "E",
               "SE",
               "S",
               "SW",
@@ -2133,7 +2209,7 @@
       },
       "id": "equipment.shield",
       "materialSlots": [
-        "wood"
+        "metal"
       ],
       "ports": [
         {
@@ -2148,10 +2224,10 @@
               -0.07
             ],
             "rotation": [
-              0,
-              0,
-              0,
-              1
+              -0.6532814824381883,
+              0.2705980500730985,
+              -0.2705980500730985,
+              0.6532814824381883
             ],
             "scale": [
               1,
@@ -2222,7 +2298,6 @@
             "intendedDirections": [
               "N",
               "NE",
-              "E",
               "SE",
               "S",
               "SW",
@@ -2241,7 +2316,7 @@
       },
       "id": "equipment.shield.kite",
       "materialSlots": [
-        "wood"
+        "metal"
       ],
       "ports": [
         {
@@ -2257,9 +2332,9 @@
             ],
             "rotation": [
               0,
+              -0.3826834323650898,
               0,
-              0,
-              1
+              0.9238795325112867
             ],
             "scale": [
               1,
@@ -2316,14 +2391,14 @@
         ],
         "bounds": {
           "max": [
-            0.08,
+            0.1,
             0.72,
-            0.08
+            0.1
           ],
           "min": [
-            -0.08,
+            -0.1,
             -0.66,
-            -0.08
+            -0.1
           ]
         },
         "compatibilityTags": [
@@ -2359,14 +2434,12 @@
               "E",
               "SE",
               "S",
-              "SW",
-              "W",
               "NW"
             ],
             "maximumOcclusionRatio": 0.8,
             "minimumOklabDistance": 0.05,
-            "minimumPixelArea": 8,
-            "minimumWidthPixels": 2
+            "minimumPixelArea": 10,
+            "minimumWidthPixels": 3
           }
         ],
         "role": "weapon",
@@ -2392,8 +2465,8 @@
             "rotation": [
               0,
               0,
-              0,
-              1
+              0.20791169081775931,
+              0.9781476007338057
             ],
             "scale": [
               1,
@@ -2412,15 +2485,15 @@
         "kind": "lathedProfile",
         "profile": [
           [
-            0.025,
+            0.04,
             -0.66
           ],
           [
-            0.025,
+            0.04,
             0.42
           ],
           [
-            0.08,
+            0.1,
             0.54
           ],
           [
@@ -2442,14 +2515,14 @@
         ],
         "bounds": {
           "max": [
-            0.28,
-            0.69,
-            0.05
+            0.3,
+            0.71,
+            0.07
           ],
           "min": [
-            -0.05,
-            -0.71,
-            -0.05
+            -0.07,
+            -0.73,
+            -0.07
           ]
         },
         "compatibilityTags": [
@@ -2485,13 +2558,12 @@
               "SE",
               "S",
               "SW",
-              "W",
               "NW"
             ],
             "maximumOcclusionRatio": 0.8,
             "minimumOklabDistance": 0.05,
-            "minimumPixelArea": 10,
-            "minimumWidthPixels": 2
+            "minimumPixelArea": 12,
+            "minimumWidthPixels": 3
           }
         ],
         "role": "weapon",
@@ -2517,8 +2589,8 @@
             "rotation": [
               0,
               0,
-              0,
-              1
+              0.15643446504023087,
+              0.9876883405951378
             ],
             "scale": [
               1,
@@ -2558,7 +2630,7 @@
           ]
         ],
         "radialSegments": 7,
-        "radius": 0.05
+        "radius": 0.07
       }
     },
     {
@@ -2572,14 +2644,14 @@
         ],
         "bounds": {
           "max": [
-            0.055,
-            0.5,
-            0.0175
+            0.14,
+            0.52,
+            0.035
           ],
           "min": [
-            -0.055,
-            -0.42,
-            -0.0175
+            -0.14,
+            -0.52,
+            -0.035
           ]
         },
         "compatibilityTags": [
@@ -2616,13 +2688,12 @@
               "SE",
               "S",
               "SW",
-              "W",
               "NW"
             ],
             "maximumOcclusionRatio": 0.8,
             "minimumOklabDistance": 0.05,
-            "minimumPixelArea": 8,
-            "minimumWidthPixels": 2
+            "minimumPixelArea": 10,
+            "minimumWidthPixels": 3
           }
         ],
         "role": "weapon",
@@ -2642,14 +2713,14 @@
           "frame": {
             "position": [
               0,
-              0.42,
+              0.44,
               0
             ],
             "rotation": [
               0,
+              -0.3826834323650898,
               0,
-              0,
-              1
+              0.9238795325112867
             ],
             "scale": [
               1,
@@ -2665,28 +2736,36 @@
       ],
       "role": "equipment.sword",
       "shape": {
-        "depth": 0.035,
+        "depth": 0.07,
         "kind": "extrudedProfile",
         "profile": [
           [
-            -0.055,
-            -0.42
+            -0.05,
+            0.52
           ],
           [
-            0.055,
-            -0.42
+            0.05,
+            0.52
           ],
           [
-            0.04,
-            0.31
+            0.14,
+            0.24
+          ],
+          [
+            0.08,
+            -0.34
           ],
           [
             0,
-            0.5
+            -0.52
           ],
           [
-            -0.04,
-            0.31
+            -0.08,
+            -0.34
+          ],
+          [
+            -0.14,
+            0.24
           ]
         ]
       }

@@ -112,7 +112,21 @@ describe('rustic accessory reference loadouts', () => {
         ({ requiredFeatures }) => requiredFeatures,
       ))
         expect(feature.intendedDirections).toEqual(
-          loadout.framing.directionOrder,
+          feature.templateId === 'equipment.pouch.belt'
+            ? ['N', 'NE', 'E', 'SE', 'S', 'W', 'NW']
+            : feature.templateId === 'equipment.cape'
+              ? ['E', 'SE', 'S', 'SW', 'W', 'NW']
+              : ['equipment.sword', 'equipment.staff'].includes(
+                    feature.templateId,
+                  )
+                ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'NW']
+                : feature.templateId === 'equipment.spear'
+                  ? ['N', 'NE', 'E', 'SE', 'S', 'NW']
+                  : ['equipment.shield', 'equipment.shield.kite'].includes(
+                        feature.templateId,
+                      )
+                    ? ['N', 'NE', 'SE', 'S', 'SW', 'W', 'NW']
+                    : loadout.framing.directionOrder,
         );
     }
   });

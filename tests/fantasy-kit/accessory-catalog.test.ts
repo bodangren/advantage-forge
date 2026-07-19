@@ -98,20 +98,18 @@ describe('bounded accessory catalog specification', () => {
     };
 
     const kite = required('equipment.shield.kite');
-    expect(kite.defaultMaterialId).toBe('wood.oak');
-    expect(kite.usage.placements).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          intendedOrientation: expect.stringMatching(/vertical/i),
-        }),
-      ]),
-    );
+    expect(kite.defaultMaterialId).toBe('iron.blued');
+    expect(
+      kite.usage.placements.some(({ intendedOrientation }) =>
+        /vertical/i.test(intendedOrientation),
+      ),
+    ).toBe(true);
 
     const spear = required('equipment.spear');
-    expect(spear.template.shape).toMatchObject({
-      kind: 'lathedProfile',
-      profile: expect.arrayContaining([[0.04, -0.66]]),
-    });
+    expect(spear.template.shape.kind).toBe('lathedProfile');
+    if (spear.template.shape.kind !== 'lathedProfile')
+      throw new Error('Expected a lathed spear profile.');
+    expect(spear.template.shape.profile).toContainEqual([0.04, -0.66]);
     expect(
       spear.template.accessory?.requiredFeatures[0]?.minimumWidthPixels,
     ).toBeGreaterThanOrEqual(3);
@@ -121,6 +119,7 @@ describe('bounded accessory catalog specification', () => {
       kind: 'tubePath',
       radius: 0.07,
     });
+    expect(staff.defaultMaterialId).toBe('wood.dark');
     expect(
       staff.template.accessory?.requiredFeatures[0]?.minimumWidthPixels,
     ).toBeGreaterThanOrEqual(3);
@@ -130,54 +129,94 @@ describe('bounded accessory catalog specification', () => {
       kind: 'extrudedProfile',
       depth: 0.32,
     });
-    expect(backpack.defaultMaterialId).toBe('leather.dark');
-    expect(backpack.usage.placements[0]?.transform.position[0]).toBe(0);
+    expect(backpack.defaultMaterialId).toBe('leather.tan');
+    expect(backpack.usage.placements[0]?.transform.position[0]).toBe(0.2);
 
     const armor = required('equipment.armor.leather');
     expect(armor.template.shape).toMatchObject({
       kind: 'extrudedProfile',
-      depth: 0.18,
+      depth: 0.36,
     });
+    if (armor.template.shape.kind !== 'extrudedProfile')
+      throw new Error('Expected an extruded armor profile.');
+    expect(armor.template.shape.profile).toContainEqual([0.42, 0.22]);
+    expect(armor.template.shape.profile).toContainEqual([-0.42, 0.22]);
 
     const pouch = required('equipment.pouch.belt');
     expect(pouch.template.shape).toMatchObject({
       kind: 'beveledBox',
-      width: 0.3,
-      height: 0.22,
-      depth: 0.16,
+      width: 0.38,
+      height: 0.24,
+      depth: 0.32,
     });
+    expect(pouch.defaultMaterialId).toBe('leather.rust');
     expect(Math.abs(pouch.usage.placements[0]!.transform.position[0])).toBe(
-      0.3,
+      0.46,
     );
 
     const cape = required('equipment.cape');
     expect(cape.template.shape).toMatchObject({
       kind: 'extrudedProfile',
-      depth: 0.09,
+      depth: 0.16,
     });
+    expect(cape.defaultMaterialId).toBe('cloth.arcane');
     expect(cape.usage.summary).toMatch(/rigid/i);
+    expect(
+      cape.template.accessory?.requiredFeatures[0]?.intendedDirections,
+    ).toEqual(['E', 'SE', 'S', 'SW', 'W', 'NW']);
   });
 
   it('keeps sword-down and shield-upright regression guidance public', () => {
     const sword = getRusticAccessoryCatalogEntry('equipment.sword')!;
     const shield = getRusticAccessoryCatalogEntry('equipment.shield')!;
     expect(sword.usage.visualChecks.join(' ')).toMatch(/below the torso/i);
-    expect(sword.usage.placements).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          intendedOrientation: expect.stringMatching(/down and away/i),
-        }),
-      ]),
-    );
+    expect(
+      sword.usage.placements.some(({ intendedOrientation }) =>
+        /down and away/i.test(intendedOrientation),
+      ),
+    ).toBe(true);
+    expect(sword.template.shape).toMatchObject({
+      kind: 'extrudedProfile',
+      depth: 0.07,
+    });
+    expect(sword.defaultMaterialId).toBe('iron.weathered');
+    expect(
+      sword.template.accessory?.requiredFeatures[0]?.minimumWidthPixels,
+    ).toBeGreaterThanOrEqual(3);
+    expect(
+      sword.usage.placements.some(
+        ({ transform }) =>
+          JSON.stringify(transform.position) === JSON.stringify([0, 0, 0]),
+      ),
+    ).toBe(true);
+    if (sword.template.shape.kind !== 'extrudedProfile')
+      throw new Error('Expected an extruded sword profile.');
+    expect(sword.template.shape.profile).toContainEqual([0.14, 0.24]);
+    expect(sword.template.shape.profile).toContainEqual([0, -0.52]);
     expect(shield.usage.visualChecks.join(' ')).toMatch(
       /not a horizontal platter/i,
     );
-    expect(shield.usage.placements).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          intendedOrientation: expect.stringMatching(/upright/i),
-        }),
-      ]),
-    );
+    expect(
+      shield.usage.placements.some(({ intendedOrientation }) =>
+        /upright/i.test(intendedOrientation),
+      ),
+    ).toBe(true);
+    expect(
+      shield.template.ports.some(
+        ({ id, frame }) => id === 'grip' && Math.abs(frame.rotation[0]) > 0.6,
+      ),
+    ).toBe(true);
+    expect(
+      shield.usage.placements.every(
+        ({ transform }) =>
+          JSON.stringify(transform) ===
+          JSON.stringify({
+            position: [0, 0, 0],
+            rotation: [0, 0, 0, 1],
+            scale: [1, 1, 1],
+          }),
+      ),
+    ).toBe(true);
+    expect(shield.defaultMaterialId).toBe('iron.blued');
   });
 });

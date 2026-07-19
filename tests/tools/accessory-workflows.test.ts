@@ -290,7 +290,7 @@ describe('accessory workflow tools', () => {
         operation: 'replace',
         partId: 'shield',
         templateId: 'equipment.shield.kite',
-        materialId: 'wood.oak',
+        materialId: 'bronze.aged',
       },
     });
     expect(AccessoryOperationSummarySchema.parse(replace.data)).toMatchObject({
@@ -307,13 +307,13 @@ describe('accessory workflow tools', () => {
       operation: {
         operation: 'recolor',
         partId: 'shield',
-        materialId: 'wood.dark',
+        materialId: 'iron.weathered',
       },
     });
     expect(AccessoryOperationSummarySchema.parse(recolor.data)).toMatchObject({
       operation: 'recolor',
       partId: 'shield',
-      materialId: 'wood.dark',
+      materialId: 'iron.weathered',
       affectedIds: ['shield'],
     });
 

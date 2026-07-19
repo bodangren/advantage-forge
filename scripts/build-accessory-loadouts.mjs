@@ -45,6 +45,14 @@ const LOADOUTS = [
       ['equipment.pouch.belt', 'waist'],
     ],
   },
+  {
+    id: 'guard-sword-shield',
+    archetypeId: 'guard',
+    accessories: [
+      ['equipment.sword', 'main-hand'],
+      ['equipment.shield', 'off-hand'],
+    ],
+  },
 ];
 const DIRECTIONS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 const ASSET_ID = 'adventurer.rustic';
@@ -222,7 +230,7 @@ try {
           (
             await call('search_accessories', {
               assetId: ASSET_ID,
-              archetypeId: loadout.id,
+              archetypeId: loadout.archetypeId ?? loadout.id,
               query: { slots: [slot], offset: 0, limit: 50 },
             })
           ).data,
@@ -236,7 +244,7 @@ try {
         const request = {
           assetId: ASSET_ID,
           expectedRevisionId: revisionId,
-          archetypeId: loadout.id,
+          archetypeId: loadout.archetypeId ?? loadout.id,
           operation: candidate.exampleOperation,
         };
         await call('apply_accessory_operation', { ...request, dryRun: true });
@@ -298,7 +306,7 @@ try {
         const request = {
           assetId: ASSET_ID,
           expectedRevisionId: revisionId,
-          archetypeId: loadout.id,
+          archetypeId: loadout.archetypeId ?? loadout.id,
           operation: { operation: 'unequip', partId },
         };
         await call('apply_accessory_operation', { ...request, dryRun: true });

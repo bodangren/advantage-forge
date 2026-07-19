@@ -91,4 +91,5 @@ _Story ref: spec.md#story-s4_
   - Replace the Traveler, Ranger, and Caster box-like silhouettes with bounded rigid forms that read as backpack, armor/quiver/pouch, and cape/pouch.
   - Complete exact-revision interactive 3D, contact-sheet, and native-frame review for every final idle/action revision.
   - Complete fresh sandboxed MCP-capable LLM workflows for all four loadouts without source or non-Forge tool access.
+  - Record the owner decision that attachment/validation remains eight-directional while pixel identity evidence is limited to documented physically observable directions, including the single far-side view of handed items and self-occluding back or single-hip features.
 - [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [rejected: 2026-07-19; evidence: s4-evidence/owner-acceptance.md]

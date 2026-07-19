@@ -19,19 +19,19 @@ Kit ID: `rustic-human`
 | `human.shin` | anatomy.shin | `capsule` | cloth | knee.attach, ankle |
 | `human.foot` | anatomy.foot | `wedge` | leather | ankle.attach |
 | `human.tunic` | clothing.tunic-shell | `wedge` | cloth | none |
-| `equipment.armor.leather` | equipment.armor.leather | `beveledBox` | leather | mount |
+| `equipment.armor.leather` | equipment.armor.leather | `extrudedProfile` | leather | mount |
 | `equipment.armor.mail` | equipment.armor.mail | `beveledBox` | metal | mount |
 | `equipment.axe` | equipment.axe | `extrudedProfile` | metal | grip |
-| `equipment.backpack` | equipment.backpack | `beveledBox` | leather | mount |
-| `equipment.cape` | equipment.cape | `box` | cloth | mount |
+| `equipment.backpack` | equipment.backpack | `extrudedProfile` | leather | mount |
+| `equipment.cape` | equipment.cape | `extrudedProfile` | cloth | mount |
 | `equipment.helmet.iron` | equipment.helmet.iron | `ellipsoid` | metal | mount |
 | `equipment.hood.cloth` | equipment.hood.cloth | `ellipsoid` | cloth | mount |
 | `equipment.mace` | equipment.mace | `lathedProfile` | metal | grip |
 | `equipment.pouch.belt` | equipment.pouch.belt | `beveledBox` | leather | mount |
 | `equipment.quiver` | equipment.quiver | `cylinder` | leather | mount |
 | `equipment.scabbard` | equipment.scabbard | `capsule` | leather | mount |
-| `equipment.shield` | equipment.shield | `prism` | wood | grip |
-| `equipment.shield.kite` | equipment.shield.kite | `extrudedProfile` | wood | grip |
+| `equipment.shield` | equipment.shield | `prism` | metal | grip |
+| `equipment.shield.kite` | equipment.shield.kite | `extrudedProfile` | metal | grip |
 | `equipment.spear` | equipment.spear | `lathedProfile` | metal | grip |
 | `equipment.staff` | equipment.staff | `tubePath` | wood | grip |
 | `equipment.sword` | equipment.sword | `extrudedProfile` | metal | grip |
@@ -63,18 +63,18 @@ Kit ID: `rustic-human`
 | `equipment.armor.mail` | armor | body | body | neutral | mount | rustic-human | guard | overlay:10 / max intersection 0.18 | 128 | `mail-outline`: 30px area, 4px width (N, NE, E, SE, S, SW, W, NW) |
 | `equipment.axe` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | guard | carried:20 / max intersection 0.1 | 128 | `axe-head`: 12px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
 | `equipment.backpack` | back-item | back | back | neutral | mount | rustic-human | traveler | overlay:14 / max intersection 0.18 | 128 | `pack-body`: 26px area, 4px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.cape` | back-item | back | back | neutral | mount | rustic-human | traveler, caster | overlay:12 / max intersection 0.35 | 12 | `cape-tail`: 24px area, 4px width (N, NE, E, SE, S, SW, W, NW) |
+| `equipment.cape` | back-item | back | back | neutral | mount | rustic-human | traveler, caster | overlay:12 / max intersection 0.35 | 64 | `cape-tail`: 24px area, 4px width (E, SE, S, SW, W, NW) |
 | `equipment.helmet.iron` | headwear | head | head | neutral | mount | rustic-human | guard | overlay:10 / max intersection 0.18 | 256 | `helmet-crown`: 18px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
 | `equipment.hood.cloth` | headwear | head | head | neutral | mount | rustic-human | traveler, caster | overlay:10 / max intersection 0.18 | 256 | `hood-outline`: 20px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
 | `equipment.mace` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | guard | carried:20 / max intersection 0.1 | 160 | `mace-head`: 12px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.pouch.belt` | waist-item | waist | waist | neutral | mount | rustic-human | traveler, ranger, caster | overlay:10 / max intersection 0.35 | 128 | `pouch-flap`: 10px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
+| `equipment.pouch.belt` | waist-item | waist | waist | neutral | mount | rustic-human | traveler, ranger, caster | overlay:10 / max intersection 0.35 | 128 | `pouch-flap`: 10px area, 3px width (N, NE, E, SE, S, W, NW) |
 | `equipment.quiver` | back-item | back | back | neutral | mount | rustic-human | ranger | overlay:13 / max intersection 0.18 | 96 | `quiver-rim`: 12px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
 | `equipment.scabbard` | waist-item | waist | waist | neutral | mount | rustic-human | guard | overlay:10 / max intersection 0.18 | 192 | `scabbard-tip`: 12px area, 2px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.shield` | shield | off-hand | off-hand, main-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `shield-face`: 24px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.shield.kite` | shield | off-hand | off-hand, main-hand | either | grip | rustic-human | guard | carried:20 / max intersection 0.1 | 128 | `kite-point`: 30px area, 4px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.spear` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | guard, ranger | carried:20 / max intersection 0.1 | 128 | `spear-tip`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.staff` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | traveler, caster | carried:20 / max intersection 0.1 | 192 | `staff-crook`: 10px area, 2px width (N, NE, E, SE, S, SW, W, NW) |
-| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `blade`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |
+| `equipment.shield` | shield | off-hand | off-hand, main-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `shield-face`: 24px area, 3px width (N, NE, SE, S, SW, W, NW) |
+| `equipment.shield.kite` | shield | off-hand | off-hand, main-hand | either | grip | rustic-human | guard | carried:20 / max intersection 0.1 | 128 | `kite-point`: 30px area, 4px width (N, NE, SE, S, SW, W, NW) |
+| `equipment.spear` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | guard, ranger | carried:20 / max intersection 0.1 | 128 | `spear-tip`: 10px area, 3px width (N, NE, E, SE, S, NW) |
+| `equipment.staff` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | traveler, caster | carried:20 / max intersection 0.1 | 192 | `staff-crook`: 12px area, 3px width (N, NE, E, SE, S, SW, NW) |
+| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `blade`: 10px area, 3px width (N, NE, E, SE, S, SW, NW) |
 | `equipment.torch` | light | off-hand | off-hand, main-hand | either | grip | rustic-human | traveler | carried:20 / max intersection 0.1 | 160 | `torch-head`: 12px area, 3px width (N, NE, E, SE, S, SW, W, NW) |
 
 ## Palette and Material Families
@@ -84,16 +84,18 @@ Kit ID: `rustic-human`
 | `skin.warm` | skin | `#d29368` | 0.9 | 0 |
 | `cloth.moss` | cloth | `#667a51` | 0.95 | 0 |
 | `cloth.umber` | cloth | `#4a407f` | 0.95 | 0 |
+| `cloth.arcane` | cloth | `#7656b5` | 0.94 | 0 |
 | `leather.dark` | leather | `#70412f` | 0.88 | 0 |
 | `leather.tan` | leather | `#d8b24c` | 0.88 | 0 |
+| `leather.rust` | leather | `#c43c2f` | 0.88 | 0 |
 | `wood.oak` | wood | `#a46d38` | 0.9 | 0 |
 | `wood.dark` | wood | `#321b12` | 0.92 | 0 |
 | `iron.weathered` | iron | `#d7dfdc` | 0.68 | 0.72 |
-| `iron.blued` | iron | `#315f96` | 0.7 | 0.68 |
+| `iron.blued` | iron | `#83b4e3` | 0.76 | 0.32 |
 | `stone.lime` | stone | `#b6ae96` | 1 | 0 |
 | `foliage.pine` | foliage | `#53784f` | 1 | 0 |
 | `hair.chestnut` | fur | `#714838` | 1 | 0 |
-| `bronze.aged` | bronze | `#c99a22` | 0.72 | 0.66 |
+| `bronze.aged` | bronze | `#c99a22` | 0.78 | 0.3 |
 | `bone.ivory` | bone | `#c8b995` | 0.9 | 0 |
 | `crystal.arcane` | crystal | `#7f73b8` | 0.28 | 0.08 |
 

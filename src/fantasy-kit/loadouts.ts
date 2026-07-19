@@ -195,12 +195,12 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.shield.kite',
       equipmentSlot: 'off-hand',
-      materialId: 'wood.dark',
+      materialId: 'iron.blued',
     },
     {
       templateId: 'equipment.armor.mail',
       equipmentSlot: 'body',
-      materialId: 'iron.weathered',
+      materialId: 'bronze.aged',
     },
   ],
   traveler: [
@@ -229,17 +229,17 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.armor.leather',
       equipmentSlot: 'body',
-      materialId: 'leather.dark',
+      materialId: 'leather.tan',
     },
     {
       templateId: 'equipment.quiver',
       equipmentSlot: 'back',
-      materialId: 'leather.tan',
+      materialId: 'leather.rust',
     },
     {
       templateId: 'equipment.pouch.belt',
       equipmentSlot: 'waist',
-      materialId: 'leather.tan',
+      materialId: 'leather.rust',
     },
   ],
   caster: [
@@ -256,12 +256,12 @@ const LOADOUT_SELECTIONS = {
     {
       templateId: 'equipment.cape',
       equipmentSlot: 'back',
-      materialId: 'cloth.umber',
+      materialId: 'cloth.arcane',
     },
     {
       templateId: 'equipment.pouch.belt',
       equipmentSlot: 'waist',
-      materialId: 'leather.tan',
+      materialId: 'leather.rust',
     },
   ],
 } as const satisfies Record<AccessoryLoadoutId, readonly LoadoutSelection[]>;

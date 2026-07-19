@@ -226,7 +226,15 @@ export class LocalBrowserArtifactService
       const page = await browser.newPage({
         viewport: { width: 1400, height: 800 },
       });
-      await page.goto(this.#inspectorUrl, { waitUntil: 'networkidle' });
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        try {
+          await page.goto(this.#inspectorUrl, { waitUntil: 'networkidle' });
+          break;
+        } catch (error) {
+          if (attempt === 1) throw error;
+          await page.waitForTimeout(250);
+        }
+      }
       await page.waitForFunction(() => 'fantasyAssetForge' in window);
       return await callback(page);
     } finally {

@@ -70,8 +70,8 @@ Accessories remain rigid parametric parts attached through named ports. The firs
 
 **Acceptance Criteria:**
 
-- Given committed guard, traveler, ranger, and caster reference loadouts, When rendered in eight directions, Then required accessories remain present, grounded, unclipped, and materially distinguishable at 128x128.
-- Given narrow side and reverse views, When accessory pixel evidence is measured, Then each profile-named identity feature meets its declared minimum or the reference fails validation.
+- Given committed guard, traveler, ranger, and caster reference loadouts, When rendered in eight directions, Then every accessory remains attached, grounded, unclipped, and semantically present at 128x128; each profile-named identity feature is materially distinguishable in every declared physically observable direction.
+- Given narrow side and reverse views, When accessory pixel evidence is measured, Then each profile-named identity feature meets its declared minimum in its intended directions or the reference fails validation. A feature may omit only directions where the character itself physically self-occludes it, including the single far-side view of a handed item, and the catalog must document that rationale while validation still proves the part remains attached in all eight views.
 - Given equipped characters in idle and action poses, When browser inspection runs, Then equipment remains attached, does not jump between revisions, and does not become unintentionally hidden.
 - Given the repository-local workflow skill, When an LLM creates each reference loadout, Then it discovers accessories, uses dry runs, performs actual-resolution visual review, and reports limitations without source reads.
 
@@ -91,7 +91,7 @@ Accessories remain rigid parametric parts attached through named ports. The firs
 - At least fifteen named accessory templates across all six slots build through the shared engine.
 - Four distinct committed character loadouts are reproducible through public tools and the workflow skill.
 - Compatibility, slot conflict, handedness, replacement, material, pose, and visibility failures are covered by contract and integration tests.
-- Every reference loadout passes semantic validation, GLB reload, eight-direction rendering, and accessory-specific pixel evidence.
+- Every reference loadout passes semantic validation, GLB reload, eight-direction rendering, and accessory-specific pixel evidence in each feature's documented physically observable directions.
 - Generated kit and capability catalogs accurately expose the library and its limitations.
 
 ## Out of Scope

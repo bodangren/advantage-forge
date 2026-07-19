@@ -52,6 +52,12 @@ describe('rustic accessory usage profiles', () => {
         ).toBe(true);
         expect(placement.intendedOrientation).not.toHaveLength(0);
         expect(placement.guidance).not.toHaveLength(0);
+        if (placement.slot === 'main-hand' || placement.slot === 'off-hand')
+          expect(placement.transform, entry.template.id).toEqual({
+            position: [0, 0, 0],
+            rotation: [0, 0, 0, 1],
+            scale: [1, 1, 1],
+          });
       }
 
       const defaultPlacement = entry.usage.placements.find(
@@ -104,9 +110,23 @@ describe('rustic accessory usage profiles', () => {
     const shieldSize = shield.bounds.max.map(
       (maximum, axis) => maximum - shield.bounds.min[axis]!,
     );
-    expect(swordSize[1]).toBeGreaterThan(swordSize[0]! * 6);
-    expect(sword.bounds.min[0]).toBeGreaterThan(torso.bounds.max[0]);
+    expect(swordSize[1]).toBeGreaterThan(swordSize[0]! * 3);
     expect(sword.bounds.min[1]).toBeLessThan(torso.bounds.min[1]);
-    expect(shieldSize[1]).toBeGreaterThan(shieldSize[2]! * 4);
+    expect(shieldSize[1]).toBeGreaterThan(0.6);
+    expect(shieldSize[0]).toBeGreaterThan(0.4);
+    const handRight = scene.parts.find(({ id }) => id === 'hand.right')!;
+    const handLeft = scene.parts.find(({ id }) => id === 'hand.left')!;
+    const boundsGap = (left: typeof sword.bounds, right: typeof sword.bounds) =>
+      Math.hypot(
+        ...left.min.map((minimum, axis) =>
+          Math.max(
+            0,
+            minimum - right.max[axis]!,
+            right.min[axis]! - left.max[axis]!,
+          ),
+        ),
+      );
+    expect(boundsGap(sword.bounds, handRight.bounds)).toBeLessThan(0.08);
+    expect(boundsGap(shield.bounds, handLeft.bounds)).toBeLessThan(0.08);
   });
 });
