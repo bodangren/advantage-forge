@@ -35,11 +35,11 @@ _Story ref: spec.md#story-s2_
   - [x] Cover bounds, triangle counts, normals, material groups, ports, and deterministic output for each accessory.
   - [x] Reject invalid generator parameters, slots, materials, and compatibility metadata.
   - [x] Assert the library remains data and composition over the shared grammar.
-- [~] Task: Implement the curated accessory templates
-  - [ ] Add helmets/hoods, weapons, shields/torch, armor shells, back items, and waist items.
-  - [ ] Reuse palette materials and existing generators wherever possible.
-  - [ ] Keep names, roles, ports, and required visual features stable and documented.
-- [ ] Task: Generate the accessory catalog and run quality gates
+- [x] Task: Implement the curated accessory templates [commit: 8221a05]
+  - [x] Add helmets/hoods, weapons, shields/torch, armor shells, back items, and waist items.
+  - [x] Reuse palette materials and existing generators wherever possible.
+  - [x] Keep names, roles, ports, and required visual features stable and documented.
+- [~] Task: Generate the accessory catalog and run quality gates
   - [ ] Regenerate kit, capability, architecture, and output facts.
   - [ ] Run geometry, kit, assembly, coverage, type, lint, generate, doctor, and full checks.
 - [ ] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md)
