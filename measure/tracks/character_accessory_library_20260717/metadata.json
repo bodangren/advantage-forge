@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-19T08:37:56Z",
+  "updated_at": "2026-07-19T12:45:00Z",
   "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -40,7 +40,7 @@
         "status": "in_progress"
       }
     ],
-    "demo_notes": "S4 owner acceptance was rejected on 2026-07-19. Deterministic and browser gates pass, but required delivery-resolution visual fidelity, exact-revision interactive 3D review, and fresh sandboxed LLM coverage for all four loadouts remain incomplete.",
+    "demo_notes": "S4 visual and implementation remediation passed owner review on 2026-07-19 at commit 076199f. Five deterministic public-MCP loadouts, exact-revision Kimi 3D review, actual-resolution matrices, browser tests, coverage, build, doctor, and all final artifact/GLB audits pass. The phase remains in progress solely because the mandatory fresh sandboxed LLM workflow is Not Assessed: a risk-disclosed K3 retry timed out after 624 seconds with zero events, sessions, or Forge calls.",
     "retro_ref": null
   }
 }

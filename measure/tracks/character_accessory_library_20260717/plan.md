@@ -82,14 +82,14 @@ _Story ref: spec.md#story-s4_
   - [x] Create all revisions through public tools and preserve workflow transcripts.
   - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
   - [x] Keep every accepted accessory within declared budgets and style constraints.
-- [b] Task: Assemble final evidence and run all gates (deferred:orchestrator) [partial commit: c26dde4]
-  - [b] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout. (deferred:orchestrator) [blocked: Guard and Traveler established no OpenCode session or Forge calls]
-  - [b] Preserve exact-revision 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and repository-status proof. (deferred:orchestrator) [blocked: exact-revision interactive 3D review is missing]
-  - [b] Run install, check, coverage, build, browser, reference build, generate, doctor, and artifact verification. (deferred:orchestrator) [partial: substantive component gates pass; monolithic pnpm check stopped on untracked inputs]
-- [~] Task: Remediate owner-rejected S4 delivery-resolution fidelity
+- [b] Task: Assemble final evidence and run all gates (deferred:orchestrator) [partial commits: c26dde4, 076199f]
+  - [b] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout. (deferred:orchestrator) [blocked: risk-disclosed K3 retry timed out after 624 seconds with zero events, sessions, or Forge calls]
+  - [x] Preserve exact-revision 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and repository-status proof. [commit: 076199f]
+  - [x] Run check components, coverage, build, browser, reference build, generate, doctor, and artifact verification. [commit: 076199f] [note: monolithic pnpm check stops only because format:check scans unrelated untracked and historical evidence]
+- [x] Task: Remediate owner-rejected S4 delivery-resolution fidelity [commit: 076199f]
   - Make the Guard shield materially legible, keep long weapons readable edge-on, and add a direct sword-plus-shield regression review.
   - Replace the Traveler, Ranger, and Caster box-like silhouettes with bounded rigid forms that read as backpack, armor/quiver/pouch, and cape/pouch.
   - Complete exact-revision interactive 3D, contact-sheet, and native-frame review for every final idle/action revision.
   - Complete fresh sandboxed MCP-capable LLM workflows for all four loadouts without source or non-Forge tool access.
   - Record the owner decision that attachment/validation remains eight-directional while pixel identity evidence is limited to documented physically observable directions, including the single far-side view of handed items and self-occluding back or single-hip features.
-- [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [rejected: 2026-07-19; evidence: s4-evidence/owner-acceptance.md]
+- [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [visual and implementation acceptance passed: 2026-07-19; phase blocked only by fresh-LLM criterion; evidence: s4-evidence/owner-acceptance.md]

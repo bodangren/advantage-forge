@@ -1,36 +1,44 @@
 {
   "phase": "S4",
   "date": "2026-07-19",
-  "verdict": "fail",
+  "candidateCommit": "076199f",
+  "verdict": "blocked",
   "deterministicPublicMcp": {
-    "root": "public-final-candidate-20260719T075230Z",
-    "loadouts": 4,
-    "toolCalls": 166,
-    "passes": 4,
+    "root": "owner-port-attached-final2-20260719T190000Z",
+    "loadouts": 5,
+    "toolCalls": 197,
+    "passes": 5,
     "issues": 0,
-    "glbsVerified": 8,
-    "threeJsReloadsPassed": 8
+    "glbsVerified": 10,
+    "threeJsReloadsPassed": 10
   },
   "browser": {
     "testsPassed": 2,
     "testsFailed": 0,
-    "visualVerdict": "owner-rejected"
+    "exactRevisionStatesReviewed": 10,
+    "visualVerdict": "owner-passed"
   },
   "freshLlm": {
-    "ranger": "partial",
-    "caster": "partial",
-    "guard": "blocked-startup",
-    "traveler": "blocked-startup",
-    "sandboxedLuna": "preflight-only-not-assessed"
+    "provider": "kimi-for-coding/k3",
+    "riskDisclosureApproved": true,
+    "guard": "provider-timeout-not-assessed",
+    "traveler": "not-started-not-assessed",
+    "ranger": "not-started-not-assessed",
+    "caster": "not-started-not-assessed",
+    "sessions": 0,
+    "forgeCalls": 0,
+    "nonForgeCalls": 0,
+    "timeoutSeconds": 624
   },
   "coverage": {
     "testFilesPassed": 34,
-    "testsPassed": 222,
-    "statementsPercent": 93.1,
-    "branchesPercent": 80.97,
+    "testsPassed": 224,
+    "statementsPercent": 92.81,
+    "branchesPercent": 80.7,
     "functionsPercent": 97.57,
-    "linesPercent": 93.6
+    "linesPercent": 93.36
   },
-  "ownerAcceptance": "rejected",
+  "ownerVisualAcceptance": "passed",
+  "phaseAcceptance": "blocked-fresh-llm-not-assessed",
   "ownerAcceptanceEvidence": "owner-acceptance.md"
 }

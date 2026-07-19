@@ -1,0 +1,30 @@
+{
+  "status": "blocked",
+  "evidenceVerdict": "preflight-only",
+  "provider": "kimi-for-coding",
+  "model": "k3",
+  "externalProviderApproval": "approved-with-disclosure",
+  "externalProviderDisclosure": "The Guard prompt and Forge MCP requests and results would be transmitted to the external kimi-for-coding/k3 provider.",
+  "reason": "The OpenCode process emitted no event and started no recorded Forge MCP call before the bounded ten-minute no-first-event cutoff.",
+  "interruptedAt": "2026-07-19T12:40:18Z",
+  "observedElapsedSecondsAtTermination": 624,
+  "processExitCode": 130,
+  "preflight": {
+    "status": "pass",
+    "configuredMcpServers": ["forge"],
+    "configuredAgents": ["coder-kimi-k3-forge-only"],
+    "permissionDefault": "deny",
+    "allowedToolPattern": "forge_*",
+    "plugins": []
+  },
+  "sessionId": null,
+  "eventBytes": 0,
+  "stderrBytes": 0,
+  "toolCallCount": 0,
+  "forgeToolCallCount": 0,
+  "nonForgeToolCallCount": 0,
+  "providerRequestStatus": "timed-out-before-first-event",
+  "providerRequestReason": "The external-provider OpenCode process remained active through the cutoff but returned no event. No completed model response or recorded MCP call exists.",
+  "clientVerdict": "blocked",
+  "acceptanceVerdict": "not-assessed"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "workflow/SKILL.md",
+    "workflow/references/*.md"
+  ],
+  "permission": {
+    "*": "deny",
+    "forge_*": "allow"
+  },
+  "mcp": {
+    "forge": {
+      "type": "local",
+      "command": [
+        "env",
+        "-C",
+        "/tmp/faf-20260719T122842215Z-933ecbc7-k3-runtime",
+        "/home/daniel-bo/Desktop/fantasy-asset-forge/node_modules/.bin/tsx",
+        "/home/daniel-bo/Desktop/fantasy-asset-forge/src/mcp/stdio.ts"
+      ],
+      "enabled": true,
+      "timeout": 30000
+    }
+  },
+  "agent": {
+    "coder-kimi-k3-forge-only": {
+      "name": "coder-kimi-k3-forge-only",
+      "description": "Source-free Fantasy Asset Forge MCP acceptance client.",
+      "mode": "primary",
+      "model": "kimi-for-coding/k3",
+      "temperature": 0.1,
+      "permission": {
+        "*": "deny",
+        "forge_*": "allow"
+      },
+      "prompt": "Use only configured forge_* MCP tools and supplied workflow instructions. Never read or search files, run shell commands, use browser or network tools, edit source, construct canonical JSON, or post-process artifacts. Report direct visual surfaces as Not Assessed.",
+      "options": {}
+    }
+  },
+  "mode": {},
+  "plugin": [],
+  "command": {},
+  "username": "daniel-bo"
+}

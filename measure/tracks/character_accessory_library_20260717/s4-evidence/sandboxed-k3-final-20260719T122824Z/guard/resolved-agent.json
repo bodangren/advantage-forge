@@ -1,0 +1,889 @@
+{
+  "name": "coder-kimi-k3-forge-only",
+  "mode": "primary",
+  "permission": [
+    {
+      "permission": "*",
+      "action": "allow",
+      "pattern": "*"
+    },
+    {
+      "permission": "doom_loop",
+      "action": "ask",
+      "pattern": "*"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "*",
+      "action": "ask"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.local/share/opencode/tool-output/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/tmp/opencode/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/ai-sdk/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-config/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/build-graph/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/deslop/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-gen/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-pricing/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/vitest/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/migrate-to-vinext/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-deploy/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-usage/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/web-design-guidelines/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-doctor/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-custommodel/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-helper/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-models/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/vite/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-understand/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/measure/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/marketing-readme/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/cdp/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/create-image-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/record-promo/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/promo-video/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-auth/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-infer-endpoint/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-code-example/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-billing/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/vercel-composition-patterns/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/building-components/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/create-text-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/next-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-quickstart/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/worldlabs/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/next-upgrade/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-onboard/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-migration-helper/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/skill-creator/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/react-doctor/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/research-synthesis/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/deploy-to-vercel/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/mimo-v2-5-tts/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-api-explorer/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/browser/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/agent-browser/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-plans/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-chat/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/create-video-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/frontend-design/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-performance-audit/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-connect/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/find-skills/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-resources/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-shared/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/vercel-react-native-skills/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-create-component/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/improve-react/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/avoid-feature-creep/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/rust-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/tauri/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/plugin-structure/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/remotion-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/vercel-react-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-train-finetune/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/pdf/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/create-music-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/threejs-game/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/create-speech-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/browser-harness/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/use-template/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/next-cache-components/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/kimi-webbridge/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/spreadsheet/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/convex-setup-auth/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.claude/skills/arkcli-profile/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/worldlabs/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/research-synthesis/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/ai-sdk/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-migration-helper/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/next-upgrade/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-quickstart/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/find-skills/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/skill-creator/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/mimo-v2-5-tts/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/browser/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/promo-video/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/vercel-composition-patterns/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/frontend-design/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/create-text-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-plans/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-chat/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-code-example/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-shared/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/vercel-react-native-skills/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-create-component/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/improve-react/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/avoid-feature-creep/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/tauri/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/remotion-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/vercel-react-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/pdf/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-connect/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/measure-orchestrator/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/cdp/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/measure/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/web-design-guidelines/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/use-template/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-auth/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/create-speech-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-config/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-doctor/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-custommodel/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-billing/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/building-components/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/next-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-deploy/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-models/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-understand/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-helper/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/vite/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/marketing-readme/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/record-promo/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-onboard/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/react-doctor/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/deploy-to-vercel/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/daily-report/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-pricing/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/vitest/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/deslop/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-api-explorer/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/create-video-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-performance-audit/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/create-image-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-resources/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/rust-best-practices/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/plugin-structure/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-train-finetune/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/migrate-to-vinext/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/build-graph/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-infer-endpoint/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/spreadsheet/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/make-advantage-game/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/kimi-webbridge/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-gen/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/browser-harness/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/threejs-game/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/next-cache-components/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/convex-setup-auth/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-usage/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/create-music-mmx/*",
+      "action": "allow"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.agents/skills/arkcli-profile/*",
+      "action": "allow"
+    },
+    {
+      "permission": "question",
+      "action": "deny",
+      "pattern": "*"
+    },
+    {
+      "permission": "plan_enter",
+      "action": "deny",
+      "pattern": "*"
+    },
+    {
+      "permission": "plan_exit",
+      "action": "deny",
+      "pattern": "*"
+    },
+    {
+      "permission": "read",
+      "pattern": "*",
+      "action": "allow"
+    },
+    {
+      "permission": "read",
+      "pattern": "*.env",
+      "action": "ask"
+    },
+    {
+      "permission": "read",
+      "pattern": "*.env.*",
+      "action": "ask"
+    },
+    {
+      "permission": "read",
+      "pattern": "*.env.example",
+      "action": "allow"
+    },
+    {
+      "permission": "*",
+      "action": "deny",
+      "pattern": "*"
+    },
+    {
+      "permission": "forge_*",
+      "action": "allow",
+      "pattern": "*"
+    },
+    {
+      "permission": "*",
+      "action": "deny",
+      "pattern": "*"
+    },
+    {
+      "permission": "forge_*",
+      "action": "allow",
+      "pattern": "*"
+    },
+    {
+      "permission": "external_directory",
+      "pattern": "/home/daniel-bo/.local/share/opencode/tool-output/*",
+      "action": "allow"
+    }
+  ],
+  "options": {},
+  "native": false,
+  "model": {
+    "providerID": "kimi-for-coding",
+    "modelID": "k3"
+  },
+  "prompt": "Use only configured forge_* MCP tools and supplied workflow instructions. Never read or search files, run shell commands, use browser or network tools, edit source, construct canonical JSON, or post-process artifacts. Report direct visual surfaces as Not Assessed.",
+  "description": "Source-free Fantasy Asset Forge MCP acceptance client.",
+  "temperature": 0.1,
+  "tools": {
+    "invalid": false,
+    "question": false,
+    "bash": false,
+    "read": false,
+    "glob": false,
+    "grep": false,
+    "edit": false,
+    "write": false,
+    "task": false,
+    "webfetch": false,
+    "todowrite": false,
+    "skill": false
+  }
+}

@@ -2,87 +2,86 @@
 
 Date: 2026-07-19
 
-## Deterministic public-tool acceptance
+## Final public-tool aggregate
 
-Final root:
-[`public-final-candidate-20260719T075230Z`](public-final-candidate-20260719T075230Z/summary.json)
+Selected root:
+[`owner-port-attached-final2-20260719T190000Z`](owner-port-attached-final2-20260719T190000Z/summary.json)
 
-| Loadout  | Calls | Equipped idle revision                                                      | Equipped action revision                                                    | Result |
-| -------- | ----: | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------ |
-| Guard    |    43 | `revision.4df756071666df9827b41217dceb6a703433931b94854945b5354db5678aba59` | `revision.9e8d887e7c55e543bae648d5a98de7ffdc963c02446b1725e56ec55d686f2aac` | pass   |
-| Traveler |    37 | `revision.20df1e0fddce2e9bc589e9ed4d226b015446a92d5c1c24c68122b50ff5e7ab7e` | `revision.01c72e7d0706ca2576954b82f7934541cdc2fc739c7cae3d5e18d82f695a6bfc` | pass   |
-| Ranger   |    43 | `revision.32a10f1cd7ac9d5dcd0a2e6023db7d3b21378abadec530652861f3232da770c2` | `revision.2644fedc0de2208f3002ea083e3d53b1a7f93d16fd67777b9291531c93767f12` | pass   |
-| Caster   |    43 | `revision.214f2d84102a78cbbb81c8d06cca6a73ec886336c15c03985daef7b37ef26c59` | `revision.eefd8112aea7b290e3b6f6d3d6d5eeafd1d366568c8b9fbe45164db14ba72920` | pass   |
+| Loadout            | Calls | Equipped idle revision                                                      | Equipped action revision                                                    | Result |
+| ------------------ | ----: | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ------ |
+| Guard              |    43 | `revision.ba020ca0852e09cea6e84501987177fda2a61ddccc2f073a405859075c02ed97` | `revision.8dc00a93abc7c808d1ac68f1617aa650e7d6277fd457102ee650ce644f32f68b` | pass   |
+| Traveler           |    37 | `revision.8a08fcc1cacfb25e022335ae668db4313f4b0987cb5424c2e409f7878a83ab9d` | `revision.a5037f4952d0e89f6ce61f6866613e2031f16e711322db2b8ec13dbdb5a41ff0` | pass   |
+| Ranger             |    43 | `revision.d63deb90908fb153c1c56c174d36f8049fce516ab7af109efd6ab3f3d09065b0` | `revision.59406ed7a15630d465a5fa2301be0557f0c4358c51eaba07c2487b335de19523` | pass   |
+| Caster             |    43 | `revision.b0c8d8945fb5848ea24a724848b6e6cb99fba5eda33083506813b52bb349ba9a` | `revision.92a49b9440c5702e6e659037842d0cf532032d2bb0662a66984812e43b0eefdc` | pass   |
+| Guard sword/shield |    31 | `revision.591cbf65c484c393e67a110b63f926fc4b23a0b3d5281ca67b07a2a15e42bc1c` | `revision.46d9f471d1de6df192a02f3b6ed3756e06e4fe670d323fa7d4e07ce94639c08c` | pass   |
 
-Each run used public MCP calls only, preserved its transcript, and covered
-baseline, equipped idle, equipped action, and action-pose unequipped revisions.
-All named accessory features passed width, visible area, occlusion, material
-separation, clipping, ground-anchor, direction-order, and measured framing
-checks in every intended direction.
-
-The first measured-framing run intentionally remains a failed audit record: it
-proved that the previous constant-zero value was not evidence. The final metric
-is the absolute occupied-height deviation from the eight-direction median, and
-the browser suite independently recomputes that value.
-
-Earlier refinement runs briefly experimented with relaxed occlusion/material
-thresholds and direction exclusions. An independent contract audit rejected
-that approach. Those outputs are superseded and are not acceptance evidence;
-the final run restores the original 0.8 occlusion ceiling, 0.05 OKLab minimum,
-and all eight intended directions for every required accessory feature.
+All 197 calls used public Forge MCP tools. Every loadout covered a baseline,
+equipped idle, equipped action, and unequipped comparison. All named features
+passed their declared observable-direction area, width, occlusion, and material
+separation thresholds. All eight directions still passed transparency,
+grounding, clipping, attachment, semantic-presence, direction-order, and
+framing validation.
 
 The workflow skill's `verify-artifacts.mjs` and pinned Three.js
-`inspect-glb.mjs` passed for all eight final equipped idle/action GLBs.
+`inspect-glb.mjs` passed for all ten equipped idle/action artifact pairs.
+
+## Browser and owner review
+
+- Kimi WebBridge loaded every idle/action revision above into the live
+  interactive inspector and verified the exact revision hash and pose before
+  capturing the canvas.
+- The owner directly inspected the five idle contact sheets, five action
+  contact sheets, and ten exact-revision 3D screenshots.
+- Independent visual review passed all five loadouts for the supported rigid
+  scope.
+- `pnpm test:browser`: 2/2 pass, covering ordered native accessory evidence
+  and the inspector render/export path.
 
 ## Fresh LLM acceptance
 
-- [Ranger/Caster K3 report](llm-final-ranger-caster-20260719T062928Z/final-report.md):
-  103 `forge_*` calls, zero non-Forge calls, and 20/20 exact dry-run/apply
-  pairs. Both verdicts are partial. Ranger lacked an action GLB after four MCP
-  timeouts. Caster completed both GLBs but exposed the baseline-equipment versus
-  target-archetype cleanup seam. Direct image/3D review was unavailable to both
-  Forge-only clients.
-- [Guard/Traveler K3 report](llm-final-guard-traveler-20260719T062741Z/blocked-report.md):
-  four bounded, unique OpenCode clients created no session and made zero calls.
-  Guard recorded a K3 `ReleaseError: token mismatch`; later Guard and Traveler
-  clients stalled at `init`. Their acceptance is Blocked, not failed Forge work.
-- A safer unique-XDG Luna wrapper passed permission preflight with only the
-  Forge MCP and every shell/file/browser/edit/task tool disabled. The external
-  run was then stopped because risk-informed approval is required before
-  sending repository-derived prompts and MCP responses to the provider. Its
-  status is preserved as preflight-only / Not Assessed.
+Final K3 retry evidence:
+[`sandboxed-k3-final-20260719T122824Z`](sandboxed-k3-final-20260719T122824Z/summary.json)
 
-The K3 runs used explicit deny-all client configuration and their ledgers prove
-that no non-Forge tool was called. A later audit found that OpenCode `--pure`
-does not by itself remove globally installed agent definitions, so future runs
-must use a unique `XDG_CONFIG_HOME`, a local `coder-*-forge-only` wrapper, a
-resolved-permission preflight, and a non-Forge ledger rejection.
+The retry used a unique client/runtime/XDG environment, a local
+`coder-kimi-k3-forge-only` wrapper, deny-all non-Forge permissions, and
+explicit risk disclosure for transmitting the prompt and Forge MCP
+requests/results to the external provider. Guard passed preflight, but after 624
+seconds OpenCode had produced:
 
-## Automated gates
+- zero events,
+- no session,
+- zero Forge calls,
+- zero non-Forge calls,
+- no Forge MCP child, and
+- empty stderr.
 
-- `pnpm install --frozen-lockfile`: pass.
-- `pnpm test:coverage`: 34 files, 222 tests; 93.1% statements, 80.97% branches,
-  97.57% functions, 93.6% lines.
+The process was terminated with exit 130 and no child remains. Guard is Blocked
+/ Not Assessed; Traveler, Ranger, and Caster were not started after the
+zero-progress bounded timeout and are Not Assessed. Earlier K3 evidence remains
+partial and does not satisfy the final criterion.
+
+## Automated gates at `076199f`
+
+- Focused S4 tests: 25/25 pass.
+- `pnpm test:coverage`: 34 files, 224 tests; 92.81% statements, 80.7%
+  branches, 97.57% functions, 93.36% lines.
 - `pnpm typecheck`: pass.
-- `pnpm lint`: ESLint and dependency-cruiser pass; 56 modules and 107
+- `pnpm lint`: ESLint and dependency-cruiser pass; 56 modules, 107
   dependencies, zero violations.
-- `pnpm test`: 34 files and 222 tests pass.
-- `pnpm build`: pass; Vite reports only the existing large-chunk warning.
-- `pnpm reference:build`: pass after preserving its ignored transient revision
-  outputs outside the worktree.
-- `pnpm generate` and `pnpm doctor`: pass; generated facts current.
-- `pnpm test:browser`: 2/2 pass, including native feature/framing evidence and
-  inspector render/export behavior.
+- `pnpm build`: pass with the existing 837 KB chunk-size warning.
+- `pnpm test:browser`: 2/2 pass.
+- `pnpm reference:build`: pass.
+- `pnpm generate` and `pnpm doctor`: pass; generated facts are current.
 - `git diff --check`: pass.
-- Monolithic `pnpm check`: formatting stopped on user-owned untracked benchmark
-  JSON/Markdown and OpenCode state. Its substantive component gates were run
-  separately and passed without rewriting those files.
+- Ten render/GLB manifest audits and ten pinned Three.js importer audits: pass.
+- Monolithic `pnpm check`: stops in `format:check` because it scans
+  user-owned benchmark/OpenCode files and historical evidence with existing
+  formatting drift. Its substantive component gates passed separately without
+  rewriting unrelated artifacts.
 
 ## Phase verdict
 
-The substantive automated S4 component gates pass. Overall phase acceptance is
-**rejected by the project owner** because required delivery-resolution visual
-fidelity is incomplete, Guard/Traveler fresh-LLM sessions were blocked at
-client startup, direct exact-revision interactive 3D inspection is missing, and
-the sword-plus-shield orientation regression was not re-proved. External engine
-import remains out of scope and is not a blocker for this track.
+The implementation, deterministic public-tool workflow, visual fidelity,
+exact-revision interactive 3D evidence, artifacts, and local gates pass. Phase
+S4 remains **blocked** solely because the Must-level fresh-LLM criterion is Not
+Assessed. No archive or track-complete claim is permitted yet.
