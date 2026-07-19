@@ -42,7 +42,7 @@ _Story ref: spec.md#story-s2_
 - [x] Task: Generate the accessory catalog and run quality gates [commit: 134d9d6]
   - [x] Regenerate kit, capability, architecture, and output facts.
   - [x] Run geometry, kit, assembly, coverage, type, lint, generate, doctor, and full checks.
-- [~] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md) [approved: 2026-07-19]
 
 ## Phase S3: Equip Through Public Tools
 
