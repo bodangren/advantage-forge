@@ -2,6 +2,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
 import {
+  AccessoryDiscoveryDataSchema,
   CapabilityReportSchema,
   SemanticRevisionComparisonSchema,
   ToolResultEnvelopeSchema,
@@ -136,6 +137,22 @@ describe('MCP adapter', () => {
 
       const created = await call('create_asset', { reference: 'adventurer' });
       expect(created.revisionId).toMatch(/^revision\.[a-f0-9]{64}$/);
+      const accessories = await call('search_accessories', {
+        assetId: 'adventurer.rustic',
+        archetypeId: 'guard',
+        query: { slots: ['head'], limit: 10 },
+      });
+      const accessoryData = AccessoryDiscoveryDataSchema.parse(
+        accessories.data,
+      );
+      expect(accessoryData.items.length).toBeGreaterThan(0);
+      await call('apply_accessory_operation', {
+        assetId: 'adventurer.rustic',
+        expectedRevisionId: created.revisionId,
+        archetypeId: 'guard',
+        operation: accessoryData.items[0]!.exampleOperation,
+        dryRun: true,
+      });
       const inspected = await call('inspect_asset', {
         assetId: 'adventurer.rustic',
         section: 'parts',
