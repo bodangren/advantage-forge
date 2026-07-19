@@ -70,11 +70,11 @@ _Story ref: spec.md#story-s3_
 
 _Story ref: spec.md#story-s4_
 
-- [ ] Task: Define reference loadouts and accessory-specific pixel contracts
-  - [ ] Specify guard, traveler, ranger, and caster identities using only committed library parts.
-  - [ ] Declare required accessory feature IDs and per-direction minimum evidence.
-  - [ ] Define idle/action, equipped/unequipped, and before/after browser review evidence.
-- [ ] Task: Write failing browser, pixel, and GLB acceptance tests
+- [x] Task: Define reference loadouts and accessory-specific pixel contracts [commit: 3f801bb]
+  - [x] Specify guard, traveler, ranger, and caster identities using only committed library parts.
+  - [x] Declare required accessory feature IDs and per-direction minimum evidence.
+  - [x] Define idle/action, equipped/unequipped, and before/after browser review evidence.
+- [~] Task: Write failing browser, pixel, and GLB acceptance tests
   - [ ] Cover eight directions, transparent pixels, ground anchor, clipping, accessory evidence, stable framing, and material separation.
   - [ ] Cover equipment attachment and visibility across poses and variants.
   - [ ] Reload GLBs and compare accessory nodes, materials, transforms, bounds, and meter scale.
