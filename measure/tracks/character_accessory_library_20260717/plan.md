@@ -64,7 +64,7 @@ _Story ref: spec.md#story-s3_
 - [x] Task: Update the workflow skill and run quality gates [commit: 0bcaf64]
   - [x] Add accessory discovery, loadout planning, dry-run, visual review, and limitation branches.
   - [x] Regenerate public tool and capability catalogs and run handler, MCP, coverage, type, lint, doctor, and full checks.
-- [~] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md)
+- [x] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md) [approved: 2026-07-19]
 
 ## Phase S4: Verify Character Readability
 
