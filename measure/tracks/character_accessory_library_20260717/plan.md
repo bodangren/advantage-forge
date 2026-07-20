@@ -107,3 +107,7 @@ _Story ref: spec.md#story-s4_
   - [x] Bound first-event and total runtime, isolate client configuration, and classify zero-event failures as infrastructure Not Assessed.
   - [x] Require all four loadouts, completed sessions, Forge-only calls, non-empty responses, revision-bound manifests, and labeled aggregate counts.
   - [x] Pass 13 focused contract tests, typecheck, targeted lint, and diff hygiene.
+- [~] Task: Remove the rejected sandbox reassessment harness after independent review
+  - [x] Preserve Review B and C findings that the producer/consumer and evidence-trust contracts were not fail-closed.
+  - [x] Remove the runner, aggregator, declarations, and tests instead of weakening review requirements.
+  - [x] Require any future external-client reassessment to use a separate approved track and fresh TDD cycle.

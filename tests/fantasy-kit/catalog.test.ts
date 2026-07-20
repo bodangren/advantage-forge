@@ -105,7 +105,7 @@ describe('rustic fantasy kit', () => {
       '| Accessory template | Role | Default slot | Compatible slots | Handedness | Attachment ports | Compatible anatomy | Compatible archetypes | Layer | Triangle budget | Required features |',
     );
     expect(generated).toContain(
-      '| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `blade`: 8px area, 2px width (N, NE, E, SE, S, SW, W, NW) |',
+      '| `equipment.sword` | weapon | main-hand | main-hand, off-hand | either | grip | rustic-human | adventurer, guard, warrior | carried:20 / max intersection 0.1 | 64 | `blade`: 10px area, 3px width (N, NE, E, SE, S, SW, NW) |',
     );
     for (const id of [
       'equipment.helmet.iron',

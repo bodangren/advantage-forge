@@ -9,7 +9,6 @@ export default tseslint.config(
       'measure/generated/**',
       'measure/tracks/**/s*-evidence/**',
       'playwright.config.ts',
-      '**/*.d.mts',
     ],
   },
   eslint.configs.recommended,

@@ -23,8 +23,10 @@ product nor its public workflow.
   tests, artifact hashes, and independent GLB reload audits passed.
 - A separate LLM visual reviewer inspected the accepted revisions and reached
   the same supported-scope verdict.
-- The new sandbox runner and fail-closed aggregator retain the external-client
-  path for future reassessment without making it a release blocker.
+- The rejected sandbox-runner experiment was removed after independent security
+  and API review found that its evidence contract was not fail-closed. Any future
+  external-client reassessment requires a separate approved track and fresh TDD
+  cycle; no unaccepted reassessment harness ships with this closure.
 
 ## Residual Limitation
 

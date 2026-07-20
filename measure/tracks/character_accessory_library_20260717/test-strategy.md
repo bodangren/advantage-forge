@@ -11,6 +11,11 @@
 > closeout condition. The deterministic public-MCP reproduction plus independent
 > LLM/browser and artifact review is the accepted substitute. The K3 path remains
 > Not Assessed and must never be reported as passed.
+>
+> Independent Reviews B and C rejected the experimental reassessment harness.
+> The harness and its tests were removed rather than weakening their findings or
+> shipping a non-fail-closed evidence path. Sections describing that experiment
+> are retained as historical strategy only and are not a release capability.
 
 ## 1. Status of the phase at the strategy baseline
 
