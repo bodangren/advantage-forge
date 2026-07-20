@@ -17,7 +17,7 @@ try {
     workspaceRoot,
     'node_modules/@playwright/test/cli.js',
   );
-  const child = spawn(process.execPath, [playwrightCli, 'test'], {
+  const child = spawn(process.execPath, [playwrightCli, 'test', '--workers=1'], {
     cwd: workspaceRoot,
     env: { ...process.env, PLAYWRIGHT_BASE_URL: browserUrl },
     stdio: 'inherit',

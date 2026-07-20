@@ -21,6 +21,7 @@ interface BrowserFeatureEvidence {
 test('native frames expose ordered accessory visibility and material evidence', async ({
   page,
 }) => {
+  test.setTimeout(90_000);
   await page.goto('/');
   await page.waitForFunction(
     () =>

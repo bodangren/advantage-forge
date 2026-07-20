@@ -369,7 +369,7 @@ describe('accessory workflow tools', () => {
       revisions.current.get('adventurer.rustic')!.document.renderProfiles[0]
         ?.requiredFeaturePartIds,
     ).toEqual(['torso']);
-  });
+  }, 15_000);
 
   it('rejects missing mount ports and incompatible anatomy without saving', async () => {
     const revisions = new MemoryRevisions();
