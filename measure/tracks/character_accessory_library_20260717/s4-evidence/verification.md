@@ -60,16 +60,25 @@ The process was terminated with exit 130 and no child remains. Guard is Blocked
 zero-progress bounded timeout and are Not Assessed. Earlier K3 evidence remains
 partial and does not satisfy the final criterion.
 
-## Automated gates at `076199f`
+## Historical gate record at `076199f`
 
-- Focused S4 tests: 25/25 pass.
+The list below was recorded during the original acceptance attempt. A later
+adversarial audit found that the catalog assertion was stale at this exact
+commit and that browser/coverage tests were not repeatably green under resource
+contention. Treat the pass counts as historical claims, not current acceptance
+evidence. The stale catalog assertion was corrected at `8f71c1d`; final
+acceptance uses gates rerun at the immutable final HEAD.
+
+- Focused S4 tests: originally reported 25/25; later found to include a stale
+  sword-catalog expectation.
 - `pnpm test:coverage`: 34 files, 224 tests; 92.81% statements, 80.7%
   branches, 97.57% functions, 93.36% lines.
 - `pnpm typecheck`: pass.
 - `pnpm lint`: ESLint and dependency-cruiser pass; 56 modules, 107
   dependencies, zero violations.
 - `pnpm build`: pass with the existing 837 KB chunk-size warning.
-- `pnpm test:browser`: 2/2 pass.
+- `pnpm test:browser`: one 2/2 run passed, but repeated adversarial runs exposed
+  timeout flakiness before the final serial-runner remediation.
 - `pnpm reference:build`: pass.
 - `pnpm generate` and `pnpm doctor`: pass; generated facts are current.
 - `git diff --check`: pass.
@@ -81,7 +90,6 @@ partial and does not satisfy the final criterion.
 
 ## Phase verdict
 
-The implementation, deterministic public-tool workflow, visual fidelity,
-exact-revision interactive 3D evidence, artifacts, and local gates pass. Phase
-S4 remains **blocked** solely because the Must-level fresh-LLM criterion is Not
-Assessed. No archive or track-complete claim is permitted yet.
+This was the historical blocked verdict. It is superseded by
+`owner-closure-decision.md`, the current `final-summary.json`, and immutable-HEAD
+Measure acceptance. The fresh K3 path remains Not Assessed.

@@ -40,7 +40,7 @@
         "status": "completed"
       }
     ],
-    "demo_notes": "S4 closed by owner decision on 2026-07-20. Five deterministic public-MCP loadouts, exact-revision independent LLM/browser review, actual-resolution matrices, browser tests, coverage, build, doctor, and final artifact/GLB audits pass. The attempted fresh K3 provider path remains explicitly Not Assessed after timing out before any session or Forge call; deterministic public-MCP reproduction plus independent review is the approved substitute evidence.",
+    "demo_notes": "S4 closed by owner decision on 2026-07-20. Five deterministic public-MCP loadouts, exact-revision independent LLM/browser review, actual-resolution matrices, build, doctor, and final artifact/GLB audits pass. Browser behavior passed independent UX review; the test runner was serialized and timeout budgets were hardened after adversarial testing exposed resource-contention flakiness. The attempted fresh K3 provider path remains explicitly Not Assessed after timing out before any session or Forge call; deterministic public-MCP reproduction plus independent review is the approved substitute evidence.",
     "retro_ref": null
   }
 }
