@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "track": "character_accessory_library_20260717",
+  "archived_at": "2026-07-20T04:45:50.828386Z",
+  "track_base_sha": "a42c13179363a9cbba31eaadf129ea9db30fb332",
+  "track_final_sha": "edd57c72d67a82ea32cd12d4e0a4dbe51e0ab8d8",
+  "closure_decision": "measure/tracks/character_accessory_library_20260717/s4-evidence/owner-closure-decision.md",
+  "owner_signature_commit": "ca8cfe66ae13c4bd517350efd583edf825b83ab0",
+  "registry_a6_note": "S4 closure passed deterministic public-MCP reproduction plus independent LLM/browser review. The fresh third-party K3 authoring path remains explicitly Not Assessed.",
+  "phase_acceptance_results": [
+    "measure/archive/character_accessory_library_20260717/s1-evidence/phase-acceptance.json",
+    "measure/archive/character_accessory_library_20260717/s2-evidence/phase-acceptance.json",
+    "measure/archive/character_accessory_library_20260717/s3-evidence/phase-acceptance.json",
+    "measure/archive/character_accessory_library_20260717/s4-evidence/phase-acceptance.json"
+  ],
+  "antipatterns_clean": [
+    "A5",
+    "A6"
+  ],
+  "antipatterns_known_limitations": [
+    "FA-01 strict-audit chicken-and-egg between phase-acceptance audited_head_sha and current HEAD is acknowledged; the orchestrator's closeout_feedback does not depend on this check and all product gates pass at the archive base SHA."
+  ],
+  "gates": {
+    "pnpm_lint": "pass",
+    "pnpm_typecheck": "pass",
+    "pnpm_build": "pass (837 kB chunk warning is known)",
+    "pnpm_generate": "pass",
+    "pnpm_doctor": "pass",
+    "pnpm_reference_build": "pass",
+    "pnpm_test_browser": "2/2 pass",
+    "pnpm_test_coverage": "224/224 pass; 92.81% statements / 80.7% branches / 97.57% functions / 93.36% lines",
+    "focused_s4_vitest": "25/25 pass",
+    "git_diff_check": "pass"
+  },
+  "completed_phases": [
+    {
+      "id": "S1",
+      "title": "Define Accessory Grammar",
+      "checkpoint": "5a6d589"
+    },
+    {
+      "id": "S2",
+      "title": "Build Initial Accessory Library",
+      "checkpoint": "075a038"
+    },
+    {
+      "id": "S3",
+      "title": "Equip Through Public Tools",
+      "checkpoint": "0bcaf64"
+    },
+    {
+      "id": "S4",
+      "title": "Verify Character Readability",
+      "checkpoint": "dfc6204",
+      "closure_decision_commit": "dfc6204"
+    }
+  ]
+}

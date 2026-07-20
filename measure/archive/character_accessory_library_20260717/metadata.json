@@ -1,7 +1,7 @@
 {
   "track_id": "character_accessory_library_20260717",
   "type": "feature",
-  "status": "in_progress",
+  "status": "done",
   "created_at": "2026-07-17T12:37:24Z",
   "updated_at": "2026-07-20T00:00:00Z",
   "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
@@ -41,6 +41,9 @@
       }
     ],
     "demo_notes": "S4 closed by owner decision on 2026-07-20. Five deterministic public-MCP loadouts, exact-revision independent LLM/browser review, actual-resolution matrices, build, doctor, and final artifact/GLB audits pass. Browser behavior passed independent UX review; the test runner was serialized and timeout budgets were hardened after adversarial testing exposed resource-contention flakiness. The attempted fresh K3 provider path remains explicitly Not Assessed after timing out before any session or Forge call; deterministic public-MCP reproduction plus independent review is the approved substitute evidence.",
-    "retro_ref": null
+    "retro_ref": null,
+    "completed_at": "2026-07-20",
+    "closure_verdict": "owner-approved-with-provider-deviation; K3 fresh-LLM authoring remains Not Assessed",
+    "archived_at": "2026-07-20T04:45:00.040330Z"
   }
 }
