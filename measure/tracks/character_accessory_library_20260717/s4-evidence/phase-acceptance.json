@@ -4,7 +4,7 @@
   "track": "character_accessory_library_20260717",
   "phase": "Phase S4: Verify Character Readability",
   "baseline_sha": "0bcaf645f0ae7757ee08354dc7903d84ec09df52",
-  "audited_head_sha": "ca8cfe66ae13c4bd517350efd583edf825b83ab0",
+  "audited_head_sha": "30cbf83647a706b6b720842bcc2575238a6a891b",
   "applicability": "applicable",
   "status": "pass",
   "summary": "Owner-approved closure with bounded provider-infrastructure deviation. Five deterministic public-MCP loadouts (Guard, Traveler, Ranger, Caster, plus the sword-plus-round-shield regression) made 197 Forge calls, produced baseline/equipped-idle/equipped-action/unequipped revision evidence, passed verify-artifacts and pinned Three.js inspect-glb audits on all ten equipped artifacts, passed owner and independent visual review, and matched the eight-direction attachment/validation plus the documented physically observable pixel-identity directions. Browser tests passed 2/2 at the immutable HEAD with the serialized runner. The fresh third-party K3 authoring path remains explicitly Not Assessed per owner-closure-decision.md, and the rejected sandbox reassessment harness was removed at 8f71c1d rather than weakened.",
