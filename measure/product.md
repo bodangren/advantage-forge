@@ -59,12 +59,13 @@ The public `inspect_capabilities` preflight is the executable source for this bo
 
 - Supported creation starts from exactly four committed identities: adventurer, crate, tree, and cottage.
 - Supported static character equipment is exactly the seventeen registered sword, shield, head, hand, body, back, and waist templates. Their identities, geometry, ports, materials, bounds, budgets, and required-feature contracts are inspectable.
-- The accessory authoring surface remains partial: compatibility-filtered discovery and task-level equip, replace, swap-hand, recolor, and unequip operations are not yet public. Generic semantic operations require exact template, part, and port knowledge.
-- Static template availability does not prove equipped character readability; the guard, traveler, ranger, and caster loadouts and native-resolution evidence remain pending.
+- Compatibility-filtered accessory discovery and task-level public equip, replace, swap-hand, recolor, and unequip operations are exposed through the public tool surface (`accessory_discover`, `accessory_equip`, `accessory_replace`, `accessory_swap_hand`, `accessory_recolor`, `accessory_unequip`) with dry-run/apply envelopes and revision preconditions. Generic semantic operations still require exact template, part, and port knowledge.
+- The four reference loadouts — guard, traveler, ranger, caster — plus a sword-plus-round-shield regression have deterministic public-MCP reconstructions, exact-revision interactive 3D evidence, native 128×128 contact-sheet matrices, and reload-verified GLB artifacts. Pixel identity evidence is limited to documented physically observable directions; attachment and validation remain eight-directional.
 - Supported motion state is a static rigid pose snapshot. Temporal clips, frame interpolation, animation playback/export, and runtime sprite atlases are unsupported.
 - Supported outputs are directional transparent PNG frames, a review contact sheet, and reload-verified GLB. The contact sheet is evidence, not an animation atlas contract.
 - New asset identities, unregistered accessories, unsupported anatomy, skeletal deformation, and raw mesh operations are unsupported rather than hidden behind source or file access.
 - The pinned Three.js `GLTFLoader` passes as a representative format importer with direct scale, orientation, node, material, and error evidence. Unity, Godot, and gameplay-runtime integration remain Not Assessed.
+- A fresh third-party `kimi-for-coding/k3` authoring run on this host produced no session, no Forge call, and no provider evidence and remains **Not Assessed**. The deterministic public-MCP reproduction plus independent LLM/browser review is the approved substitute evidence for the S4 closure; registry readers must not infer that the K3 external-authoring path passed.
 
 ## Explicitly Out of Scope
 
