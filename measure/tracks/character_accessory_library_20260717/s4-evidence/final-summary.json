@@ -1,8 +1,9 @@
 {
   "phase": "S4",
-  "date": "2026-07-19",
+  "date": "2026-07-20",
   "candidateCommit": "076199f",
-  "verdict": "blocked",
+  "ownerClosureDecisionCommit": "dfc6204",
+  "verdict": "owner-approved-with-provider-deviation",
   "deterministicPublicMcp": {
     "root": "owner-port-attached-final2-20260719T190000Z",
     "loadouts": 5,
@@ -39,6 +40,7 @@
     "linesPercent": 93.36
   },
   "ownerVisualAcceptance": "passed",
-  "phaseAcceptance": "blocked-fresh-llm-not-assessed",
-  "ownerAcceptanceEvidence": "owner-acceptance.md"
+  "phaseAcceptance": "pending-independent-measure-acceptance",
+  "ownerAcceptanceEvidence": "owner-closure-decision.md",
+  "historicalBlockedAcceptanceEvidence": "owner-acceptance.md"
 }
