@@ -2,6 +2,14 @@
 
 Date: 2026-07-20
 
+## Owner signature
+
+- Name: Daniel Bo
+- Role: product owner
+- Date: 2026-07-20
+- Commit: `dfc6204` (initial closure), reaffirmed in subsequent closeout commits
+- Attestation: "As product owner, I attest that this closure decision accurately records the substitute-evidence path that passed and the fresh third-party K3 path that remains Not Assessed, and that no claim in this track registry overstates a capability that failed or was never assessed."
+
 ## Decision
 
 As product owner, I approve a bounded deviation for the fresh external-client
