@@ -6,6 +6,12 @@
 > (`076199f`); retry only the fresh sandboxed LLM criterion. The plan still
 > forbids waiving acceptance criteria.
 
+> Owner amendment (2026-07-20): after repeated zero-session provider failures,
+> `s4-evidence/owner-closure-decision.md` supersedes the external-client-only
+> closeout condition. The deterministic public-MCP reproduction plus independent
+> LLM/browser and artifact review is the accepted substitute. The K3 path remains
+> Not Assessed and must never be reported as passed.
+
 ## 1. Status of the phase at the strategy baseline
 
 - Implementation, deterministic public-MCP harness, visual fidelity, exact-revision
