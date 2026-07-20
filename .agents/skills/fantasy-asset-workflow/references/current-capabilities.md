@@ -18,12 +18,8 @@ during the run because executable runtime facts supersede this summary.
 - Eight deterministic 128x128 orthographic transparent directional PNGs and a
   labeled review contact sheet.
 - Reload-verified GLB 2.0 export in meters.
-
-## Partial now
-
-- Accessory templates have deterministic geometry contracts, but the four
-  character loadouts and native-resolution readability evidence are not yet
-  complete.
+- Four accepted guard, traveler, ranger, and caster loadouts with deterministic
+  public-MCP revision histories and native-resolution readability evidence.
 
 ## Unsupported now
 
