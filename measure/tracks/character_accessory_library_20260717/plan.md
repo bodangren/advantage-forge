@@ -82,8 +82,8 @@ _Story ref: spec.md#story-s4_
   - [x] Create all revisions through public tools and preserve workflow transcripts.
   - [x] Iterate only through bounded parameters, materials, and attachments when actual-resolution review fails.
   - [x] Keep every accepted accessory within declared budgets and style constraints.
-- [~] Task: Assemble final evidence and run all gates (actively worked:orchestrator) [partial commits: c26dde4, 076199f]
-  - [b] Run the workflow skill with a fresh MCP-capable LLM for every reference loadout. (deferred:orchestrator) [blocked: risk-disclosed K3 retry timed out after 624 seconds with zero events, sessions, or Forge calls]
+- [x] Task: Assemble final evidence and run all gates [commits: c26dde4, 076199f, a77e87c]
+  - [x] Close the fresh-client criterion through the owner-approved deterministic public-MCP and independent LLM/browser substitute evidence; retain the K3 path as Not Assessed. [decision: s4-evidence/owner-closure-decision.md]
   - [x] Preserve exact-revision 3D views, contact sheets, actual-resolution captures, metrics, manifests, GLBs, transcripts, and repository-status proof. [commit: 076199f]
   - [x] Run check components, coverage, build, browser, reference build, generate, doctor, and artifact verification. [commit: 076199f] [note: monolithic pnpm check stops only because format:check scans unrelated untracked and historical evidence]
 - [x] Task: Remediate owner-rejected S4 delivery-resolution fidelity [commit: 076199f]
@@ -92,7 +92,7 @@ _Story ref: spec.md#story-s4_
   - Complete exact-revision interactive 3D, contact-sheet, and native-frame review for every final idle/action revision.
   - Complete fresh sandboxed MCP-capable LLM workflows for all four loadouts without source or non-Forge tool access.
   - Record the owner decision that attachment/validation remains eight-directional while pixel identity evidence is limited to documented physically observable directions, including the single far-side view of handed items and self-occluding back or single-hip features.
-- [b] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) (deferred:orchestrator) [visual and implementation acceptance passed: 2026-07-19; phase blocked only by fresh-LLM criterion; evidence: s4-evidence/owner-acceptance.md]
+- [x] Task: Measure - Owner Verification 'Phase S4: Verify Character Readability' (Protocol in workflow.md) [approved with bounded provider-infrastructure deviation: 2026-07-20; evidence: s4-evidence/owner-closure-decision.md]
 - [x] Task: Write failing Red-phase contract tests for the sandboxed-LLM runner and evidence aggregator
   - [x] Cover the four exact loadouts, omitted/missing loadout failure, and Not Assessed classification (A4/A6).
   - [x] Cover deny-all permission config with only `forge_*` allowlisted and no source/file/shell/internal-handler fallback.

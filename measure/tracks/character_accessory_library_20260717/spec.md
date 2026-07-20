@@ -74,6 +74,7 @@ Accessories remain rigid parametric parts attached through named ports. The firs
 - Given narrow side and reverse views, When accessory pixel evidence is measured, Then each profile-named identity feature meets its declared minimum in its intended directions or the reference fails validation. A feature may omit only directions where the character itself physically self-occludes it, including the single far-side view of a handed item, and the catalog must document that rationale while validation still proves the part remains attached in all eight views.
 - Given equipped characters in idle and action poses, When browser inspection runs, Then equipment remains attached, does not jump between revisions, and does not become unintentionally hidden.
 - Given the repository-local workflow skill, When an LLM creates each reference loadout, Then it discovers accessories, uses dry runs, performs actual-resolution visual review, and reports limitations without source reads.
+- Given repeated external-client infrastructure failures before any session or Forge call, When the owner evaluates closure, Then the criterion may be satisfied by a committed deterministic public-MCP reproduction for every loadout plus independent LLM/browser review, artifact audits, and an explicit Not Assessed limitation for the failed provider path.
 
 **Estimate:** L
 **Priority:** Must

@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-19T12:45:00Z",
+  "updated_at": "2026-07-20T00:00:00Z",
   "description": "Add a bounded character accessory library with discoverable compatibility and safe equipment workflows",
   "estimated_tasks": 20,
   "actual_tasks": null,
@@ -37,10 +37,10 @@
         "title": "Verify Character Readability",
         "size": "L",
         "priority": "Must",
-        "status": "in_progress"
+        "status": "completed"
       }
     ],
-    "demo_notes": "S4 visual and implementation remediation passed owner review on 2026-07-19 at commit 076199f. Five deterministic public-MCP loadouts, exact-revision Kimi 3D review, actual-resolution matrices, browser tests, coverage, build, doctor, and all final artifact/GLB audits pass. The phase remains in progress solely because the mandatory fresh sandboxed LLM workflow is Not Assessed: a risk-disclosed K3 retry timed out after 624 seconds with zero events, sessions, or Forge calls.",
+    "demo_notes": "S4 closed by owner decision on 2026-07-20. Five deterministic public-MCP loadouts, exact-revision independent LLM/browser review, actual-resolution matrices, browser tests, coverage, build, doctor, and final artifact/GLB audits pass. The attempted fresh K3 provider path remains explicitly Not Assessed after timing out before any session or Forge call; deterministic public-MCP reproduction plus independent review is the approved substitute evidence.",
     "retro_ref": null
   }
 }
