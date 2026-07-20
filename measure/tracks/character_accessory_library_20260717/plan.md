@@ -21,7 +21,7 @@ _Story ref: spec.md#story-s1_
 - [x] Task: Generate grammar documentation and run quality gates [commit: c899ab7]
   - [x] Update product and tech-stack decisions before expanding kit contracts.
   - [x] Run contract, assembly, coverage, type, lint, generate, doctor, and full checks.
-- [x] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md) [approved: 2026-07-19]
+- [x] Task: Measure - User Manual Verification 'Phase S1: Define Accessory Grammar' (Protocol in workflow.md) [commit: 5a6d589] [approved: 2026-07-19]
 
 ## Phase S2: Build Initial Accessory Library [checkpoint: 075a038]
 
@@ -42,9 +42,9 @@ _Story ref: spec.md#story-s2_
 - [x] Task: Generate the accessory catalog and run quality gates [commit: 134d9d6]
   - [x] Regenerate kit, capability, architecture, and output facts.
   - [x] Run geometry, kit, assembly, coverage, type, lint, generate, doctor, and full checks.
-- [x] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md) [approved: 2026-07-19]
+- [x] Task: Measure - User Manual Verification 'Phase S2: Build Initial Accessory Library' (Protocol in workflow.md) [commit: 075a038] [approved: 2026-07-19]
 
-## Phase S3: Equip Through Public Tools
+## Phase S3: Equip Through Public Tools [checkpoint: 0bcaf64]
 
 _Story ref: spec.md#story-s3_
 
@@ -64,9 +64,9 @@ _Story ref: spec.md#story-s3_
 - [x] Task: Update the workflow skill and run quality gates [commit: 0bcaf64]
   - [x] Add accessory discovery, loadout planning, dry-run, visual review, and limitation branches.
   - [x] Regenerate public tool and capability catalogs and run handler, MCP, coverage, type, lint, doctor, and full checks.
-- [x] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md) [approved: 2026-07-19]
+- [x] Task: Measure - User Manual Verification 'Phase S3: Equip Through Public Tools' (Protocol in workflow.md) [commit: 0bcaf64] [approved: 2026-07-19]
 
-## Phase S4: Verify Character Readability
+## Phase S4: Verify Character Readability [checkpoint: dfc6204]
 
 _Story ref: spec.md#story-s4_
 
