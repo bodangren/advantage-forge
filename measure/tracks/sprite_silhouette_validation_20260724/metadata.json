@@ -1,0 +1,41 @@
+{
+  "track_id": "sprite_silhouette_validation_20260724",
+  "title": "Harden native-resolution sprite silhouette and framing validation",
+  "type": "feature",
+  "status": "new",
+  "priority": "High",
+  "created_at": "2026-07-24T00:00:00Z",
+  "updated_at": "2026-07-24T00:00:00Z",
+  "description": "Extend the project-owned PNG pixel-analysis checks beyond the torso metric so thin edge-on equipment (sword) is detected at native 128x128 resolution, enforce the stable ground-anchor and framing contract across all eight directions, and wire the strengthened checks into the render/export validation pipeline.",
+  "estimated_tasks": 14,
+  "actual_tasks": null,
+  "deviation_notes": "New track retires the Open Medium tech-debt item 'Equipped sword is weak at native sprite resolution - the current torso metric does not detect thin edge-on equipment; the unequipped S4 run did not close this limitation.' Validation is mechanical PNG pixel analysis, not Kimi visual acceptance, so it is not blocked by the pending animation visual gates. Builds on the committed sword-and-shield regression and four reference loadouts from the completed character_accessory_library track.",
+  "sprint": {
+    "goal": "Make native 128x128 sprite quality mechanically verifiable for thin edge-on equipment and stable framing, without depending on visual acceptance.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Detect thin edge-on equipment at native resolution",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Enforce the stable ground-anchor and framing contract",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Wire strengthened checks into the validation pipeline",
+        "size": "M",
+        "priority": "Should",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "track_id": "test_coverage_reliability_20260724",
+  "title": "Stabilize full-suite test coverage and enforce the >80% coverage gate",
+  "type": "feature",
+  "status": "new",
+  "priority": "High",
+  "created_at": "2026-07-24T00:00:00Z",
+  "updated_at": "2026-07-24T00:00:00Z",
+  "description": "Stabilize the full Vitest/Playwright suite so it passes reliably on a clean clone under nominal and constrained host load, add a per-file fallback that prevents false-red runs under memory pressure, and introduce a coverage gate that enforces the >80% success criterion across contracts, geometry, assembly, validation, render, and export modules.",
+  "estimated_tasks": 18,
+  "actual_tasks": null,
+  "deviation_notes": "New track. The active reusable_rig_pose_library track repeatedly reports full-suite coverage as environment-red under host load (16.41/16.71/12.51 load, 5.7 GiB swap) with five files passing independently and two timeout-only. This track owns the suite-stabilization and coverage-gate capability rather than any one track's incidental coverage pass. It does not depend on any visual acceptance gate and does not modify automation-supervisor.py.",
+  "sprint": {
+    "goal": "Make the >80% automated coverage success criterion reliably measurable and enforceable, independent of host load.",
+    "stories": [
+      {
+        "id": "S1",
+        "title": "Diagnose and isolate full-suite flakiness",
+        "size": "L",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S2",
+        "title": "Stabilize the full suite under nominal and constrained load",
+        "size": "XL",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S3",
+        "title": "Add the >80% coverage gate",
+        "size": "M",
+        "priority": "Must",
+        "status": "pending"
+      },
+      {
+        "id": "S4",
+        "title": "Wire the gate into the quality workflow and refresh facts",
+        "size": "M",
+        "priority": "Should",
+        "status": "pending"
+      }
+    ],
+    "demo_notes": null,
+    "retro_ref": null
+  }
+}
