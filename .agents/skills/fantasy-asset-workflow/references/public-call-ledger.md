@@ -10,6 +10,7 @@ revision, full shape, transform, connection, pose, or path.
 inspect_capabilities({})
 inspect_capabilities({ capabilityIds: [<IDs returned by the first call>] })
 list_kits({})
+list_kits({ brief: "an iron-banded barrel" })
 inspect_template({ templateId: <registered template ID> })
 search_accessories({
   assetId: <asset ID>,
@@ -64,6 +65,52 @@ create_asset({ reference: "crate" })
 `create_asset` has no dry-run field. It returns the canonical asset ID and
 initial revision. If the reference already exists, inspect and revise its current
 revision rather than resetting it.
+
+## Novel identity and registered composition
+
+Use only a family and archetype returned by `list_kits`. Identity creation has
+no dry-run field:
+
+```text
+create_asset({
+  identity: {
+    assetId: <new unused semantic ID>,
+    name: <display name>,
+    kitId: <advertised kit ID>,
+    family: <advertised family>,
+    archetypeId: <advertised archetype ID>,
+    seed: <bounded integer seed>
+  }
+})
+```
+
+Inspect the initial revision's completeness, then copy one complete suggested
+composition operation from the registered-grammar plan:
+
+```text
+apply_operations({
+  assetId: <new asset ID>,
+  expectedRevisionId: <current revision ID>,
+  composition: {
+    operation: "add_part",
+    partId: <semantic part ID>,
+    templateId: <default or compatible template ID from the plan>,
+    role: <required or optional role from the plan>,
+    attachment: {
+      connectionId: <semantic connection ID>,
+      parentPartId: <existing parent part ID>,
+      parentPortId: <required parent port ID>,
+      childPortId: <required child port ID>
+    }
+  },
+  dryRun: true
+})
+```
+
+After inspecting the compiled patch and completeness result, replay the request
+with only `dryRun: false` changed. Re-inspect the new revision before planning
+the next role. Never add transforms, material bindings, source/file fields,
+unadvertised templates or ports, or both `patch` and `composition`.
 
 ## Localized mutation
 
@@ -127,11 +174,24 @@ compare_revisions({
 })
 
 validate_asset({ assetId: <asset ID> })
-render_preview({ assetId: <asset ID> })
-export_asset({ assetId: <asset ID> })
+render_preview({ assetId: <asset ID>, revisionId: <final revisionId> })
+export_asset({ assetId: <asset ID>, revisionId: <final revisionId> })
+get_interchange_manifest({
+  asset_id: <asset ID>,
+  revision_id: <final revisionId>
+})
+get_interchange_artifact_chunk({
+  asset_id: <asset ID>,
+  revision_id: <final revisionId>,
+  artifact_id: <manifest artifact or evidence ID>,
+  record_kind: <artifact or evidence>,
+  offset: <next byte offset>,
+  length: <at most 32768>
+})
 ```
 
-These output calls operate on the current revision. Before accepting their
-results, confirm every returned envelope carries the expected final revision.
+These output calls require the exact revision. Producer calls return no host
+paths. Verify every chunk digest, then verify each fully reassembled record
+against its manifest digest before accepting delivery.
 If the tools are unavailable, present these as intended calls and mark every
 response-derived value and delivery verdict `Not assessed`.

@@ -51,17 +51,17 @@
     {
       "id": 4,
       "prompt": "Turn the rustic adventurer into an eight-direction looping walk animation and give me a packed runtime sprite atlas plus an animated GLB. Use the Fantasy Asset Forge tools end to end as a fresh client; do not inspect repository source. Include enough evidence that I can approve the animation.",
-      "expected_output": "An honest temporal-animation and atlas handoff that distinguishes static camera directions from time frames and stops before unsupported mutation.",
+      "expected_output": "An honest partial temporal-animation handoff that uses the public rigid render/retrieval path, distinguishes spatial directions from time frames, and rejects animated-GLB or unproven production-motion claims.",
       "files": [],
       "expectations": [
         "The output calls inspect_capabilities for animation.rigid_pose, animation.temporal, output.sprite.directional, output.sprite_atlas, and output.glb; when unavailable, it shows the intended preflight and marks runtime statuses unassessed.",
-        "The output identifies temporal animation and a runtime sprite atlas as unsupported and does not claim that GLB export contains animation.",
+        "The output treats the bounded single-clip rigid temporal path as partial, uses only its advertised subset, and does not claim that the delivered source GLB contains animation.",
         "The output explains that eight camera directions are not eight animation frames and that the review contact sheet is not a runtime atlas.",
-        "The output stops before mutation and does not manufacture a walk cycle through repeated set_pose, render_preview, file manipulation, or image post-processing.",
+        "The output submits one semantic render_preview.animation request rather than manufacturing a walk through repeated set_pose, file manipulation, or image post-processing.",
         "The output does not read source, hand-author animation metadata, edit canonical JSON, or route through hidden tools.",
-        "The output may offer one declared static rigid pose and directional stills only as a separately accepted supported subset.",
-        "The output records requested clip/loop/cadence requirements as a future handoff and names the rigid-animation and sprite-pipeline prerequisite.",
-        "The original animation request receives a fail or blocked verdict with explicit unsupported-capability evidence."
+        "The output retrieves every declared temporal source frame, derived atlas, and source GLB through delivery-bound public manifest and bounded chunk calls and verifies their hashes.",
+        "The output requires native-frame, timed-playback, and manual-step review and does not accept distinct hashes as readable walking motion.",
+        "The animated-GLB portion remains explicitly unsupported, and the overall verdict stays partial or fail until the actual walk and every requested direction pass visual review."
       ]
     }
   ]

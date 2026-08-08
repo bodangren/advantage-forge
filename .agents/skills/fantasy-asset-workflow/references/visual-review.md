@@ -37,6 +37,16 @@ Check:
 Record the inspected paths and direction-specific observations. Use pixel metrics
 as supporting evidence, never as a substitute for looking at the frames.
 
+### Temporal clips
+
+Open every temporal source PNG at native 128x128, then play the clip at its
+declared cadence and manually step every sample. Record the delivery, clip,
+frame-plan, frame IDs, and timestamps. Check action-specific mechanics,
+anticipation/contact/recovery, weight transfer, alternating limbs, loop seam,
+identity and equipment stability, camera-scale lock, clipping, and ground
+anchor. Review every requested direction independently. A distinct digest,
+valid atlas rectangle, or enlarged playback is supporting evidence only.
+
 ## Failure routing
 
 When visual review finds a problem, classify it before editing:
@@ -44,8 +54,9 @@ When visual review finds a problem, classify it before editing:
 - `bounded semantic correction`: an inspected transform, shape parameter,
   material binding, visibility, connection, variant, pose, or render profile can
   address it. Start another dry-run/apply/compare cycle.
-- `capability gap`: the fix needs a new template, novel identity, raw mesh,
-  temporal animation, atlas, or unsupported anatomy. Stop and report it.
+- `capability gap`: the fix needs a new template, unsupported identity/anatomy,
+  raw mesh, deforming or batch animation, animated GLB, or another temporal
+  feature not advertised by the runtime. Stop and report it.
 - `artifact or viewer failure`: identity mismatch, missing files, unreadable
   image, wrong dimensions, or stale revision. Fail the artifact gate; do not
   fabricate a substitute.

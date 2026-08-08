@@ -1,13 +1,15 @@
 ---
 name: fantasy-asset-workflow
-description: Safely create, revise, validate, export, and visually review supported Fantasy Asset Forge assets through its public MCP tools. Use this skill whenever a user asks an LLM to make or modify a fantasy character, prop, building, tree, accessory, pose, sprite, contact sheet, or GLB in this repository, or asks whether such an asset or animation is currently possible. It must preflight capability limits, preserve revision evidence, inspect delivery-resolution fidelity, and block unsupported identities, accessories, temporal animation, atlases, anatomy, and raw-mesh work honestly.
+description: Safely create, revise, validate, export, animate, and visually review supported Fantasy Asset Forge assets through its public MCP tools. Use this skill whenever a user asks an LLM to make or modify a fantasy character, prop, building, tree, accessory, pose, sprite, contact sheet, temporal clip, atlas, or GLB in this repository, or asks whether such work is currently possible. It must preflight capability limits, preserve revision and delivery evidence, inspect every delivery-resolution frame, and distinguish the mechanically implemented temporal subset from accepted production motion while blocking unregistered anatomy, unsupported accessories, deforming animation, animated-GLB, and raw-mesh work honestly.
 ---
 
 # Fantasy Asset Workflow
 
 Use the public semantic tool surface to turn a bounded asset request into an
-auditable static revision. Treat semantic correctness and visual fidelity as
-separate acceptance gates: a valid document can still be illegible at 128px.
+auditable revision and, when requested, a freshness-bound temporal render
+delivery. Treat semantic correctness, motion correctness, and visual fidelity
+as separate acceptance gates: a valid document or distinct byte sequence can
+still be illegible or fail to animate at 128px.
 
 ## Non-negotiable boundary
 
@@ -81,9 +83,46 @@ part or port is involved. For an existing asset, call `inspect_asset` first for
 planned change is complete. Record the baseline `revisionId`.
 
 If no asset exists, inspect capabilities, kits, and relevant templates before
-calling `create_asset`. Creation is limited to the fixed `adventurer`, `crate`,
-`tree`, or `cottage` reference; `create_asset` has no dry-run mode and cannot
-assign a novel identity. Record the returned initial revision as the baseline.
+calling `create_asset`. Creation supports either one fixed `adventurer`,
+`crate`, `tree`, or `cottage` reference, or one novel identity whose kit,
+family, and archetype are advertised by `list_kits`. `create_asset` has no
+dry-run mode and accepts exactly one of `reference` or `identity`. Record the
+returned initial revision as the baseline.
+
+#### Novel identity and registered grammar planning
+
+For a novel request, call `list_kits` first with the user-level brief. Continue
+only when its registered-grammar preflight reports a supported archetype. Treat
+the returned required/optional roles, default templates, material bindings,
+required ports, and suggested operations as kit-owned facts. An unsupported
+brief is a stop; do not rename a reference, invent an archetype, add source
+fields, or approximate missing anatomy.
+
+Initialize the exact advertised identity through `create_asset({ identity })`,
+then inspect its `overview` completeness. For each planned role, submit the
+complete returned task-level `composition` to `apply_operations` with the
+current `expectedRevisionId` and `dryRun: true`. Inspect the compiled patch,
+affected IDs, missing requirements, and unattached parts. Replay with only
+`dryRun: false` changed, re-inspect, and repeat until completeness is
+`complete`. Callers choose semantic IDs exposed by the plan but never author
+transforms, material-slot schemas, raw document patches, source paths, or
+unadvertised ports.
+
+#### Reference-led visual convergence for novel characters
+
+Before modeling a novel character for visual acceptance, require a
+provenance-bound generated turnaround or reference target covering at minimum
+front, three-quarter, side, and back views. A reduced view set is allowed only
+when the owner explicitly approves it. Record the generator/provider,
+prompt/inputs, output identity, provenance, and originality review, then obtain
+explicit owner approval of the target before character modeling begins.
+
+If no approved built-in image generator is callable, stop and report the
+unresolved dependency. Do not silently choose MMX or any other provider. Once a
+target is approved, iterate the semantic 3D assembly only through public MCP and
+capture side-by-side Kimi review across the approved views. Transform-only
+compacting, schema validity, clean alpha bounds, and deterministic bytes are
+necessary evidence but cannot establish visual-identity convergence.
 
 #### Accessory discovery and loadout planning
 
@@ -141,12 +180,28 @@ passes.
 ### 7. Validate, render, and export
 
 Call `validate_asset`; record validation status, bounds, triangle count, budget,
-and remaining budget. Then call `render_preview` and `export_asset` for the same
-final revision. Record every returned manifest, contact-sheet, directional-frame,
-and GLB path without rewriting or moving the product output.
+and remaining budget. Then call `render_preview` and `export_asset` with the
+same exact final `revisionId`. These producer responses are path-free status
+records. Retrieve the canonical manifest with `get_interchange_manifest`, then
+retrieve every source artifact and workflow-evidence record through bounded
+`get_interchange_artifact_chunk` calls. Verify each `chunk_sha256`, reassemble
+in offset order, and verify the full bytes against the manifest SHA-256 before
+accepting delivery.
 
-Run the bundled audit-only verifier against returned manifests when local file
-access is available:
+For a temporal request whose runtime preflight reports the required subset as
+available, submit one bounded semantic `render_preview.animation` request for
+the exact immutable revision. The caller supplies declared rigid joints, named
+poses, clip timing/keyframes, requested camera directions, FPS, and seed; it
+must not manufacture morphology, rig, equipment, clip, frame-plan, frame,
+atlas, GLB, or delivery hashes. Retrieve the returned delivery by passing its
+`deliveryId` to `get_interchange_manifest`, then retrieve every declared source
+frame, derived atlas, and source GLB through bounded
+`get_interchange_artifact_chunk` calls. Reassemble multi-chunk artifacts in
+offset order and verify chunk and full-artifact digests. Eight camera directions
+remain spatial views; temporal sample times are the animation frames.
+
+Run the bundled audit-only verifier against trusted local manifests only when
+local file access is separately available; this is not the public handoff:
 
 ```bash
 node .agents/skills/fantasy-asset-workflow/scripts/verify-artifacts.mjs \
@@ -187,6 +242,14 @@ can correct a failure, return to step 4 and preserve another revision lineage.
 Otherwise issue a partial or fail verdict with concrete visual evidence. Never
 approve from an enlarged contact sheet alone.
 
+For temporal delivery, additionally inspect every source frame at native
+128x128, play each clip at its declared timing, pause and step every frame, and
+check anticipation/contact/recovery, weight transfer, alternating limb motion,
+loop seam, identity/equipment stability, locked camera scale, clipping, and
+ground anchor. Distinct hashes prove only distinct bytes; they do not prove
+readable motion. A derived atlas is never a substitute for reviewing every
+source frame.
+
 Apply every accessory candidate's returned `visualChecks` to all eight native
 frames. For the rustic sword, confirm the blade reads down from the hand and
 stays below and outside the torso silhouette. For a shield, confirm its broad
@@ -209,11 +272,13 @@ artifact paths. State every unsupported or not-assessed requirement plainly.
   not-assessed requirement remains.
 - `fail`: required capability is unsupported, mutation or comparison evidence is
   inconsistent, validation/artifact verification fails, or delivery-resolution
-  visual fidelity is unacceptable.
+  visual fidelity is unacceptable. A novel character also fails when its
+  approved reference target or side-by-side convergence evidence is missing.
 
-Do not call a temporal sprite sequence, runtime atlas, novel character identity,
-new accessory, or external game-engine import complete until the corresponding
-runtime capability says `supported` and the requested evidence exists.
+Do not call a temporal sprite sequence, runtime atlas, unregistered identity or
+anatomy, new accessory template, or external game-engine import complete until
+the corresponding runtime capability says `supported` and the requested
+evidence exists.
 
 Current accessory operations are rigid attachments only. They do not provide
 cloth or equipment physics, inventory/gameplay state, arbitrary uploaded meshes,

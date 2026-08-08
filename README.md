@@ -2,7 +2,7 @@
 
 Fantasy Asset Forge is an LLM-first, purpose-built system for creating stylized low-poly fantasy RPG assets from reusable parametric parts. Its canonical source is a semantic asset document; deterministic builds produce inspectable 3D scenes, GLB assets, and fixed-view transparent sprites without Blender or another general-purpose DCC backend.
 
-The MVP contains one controlled rustic-fantasy kit, four reference assets, twelve bounded shape generators, twelve semantic LLM tools, an inspector, transparent eight-direction sprites, and GLB export. It intentionally is not a general modeling environment.
+The MVP contains one controlled rustic-fantasy kit, four reference assets, twelve bounded shape generators, sixteen public semantic tools, an inspector, transparent eight-direction sprites, and GLB export. It intentionally is not a general modeling environment.
 
 ## Start locally
 
@@ -38,18 +38,25 @@ Keep the inspector server running on port 4173, then configure the MCP client to
 }
 ```
 
-The public surface is deliberately small: `list_kits`, `inspect_capabilities`, `inspect_template`, `inspect_asset`, `compare_revisions`, `create_asset`, `apply_operations`, `connect_parts`, `set_pose`, `validate_asset`, `render_preview`, and `export_asset`.
+The public surface is deliberately small and discoverable through MCP `tools/list`; it covers kit/capability/template/accessory discovery, asset inspection and comparison, reference or bounded novel-identity creation, semantic/accessory revisions, validation, rendering/export, and revision-pinned interchange retrieval.
 
 ## Capability preflight
 
 Call `inspect_capabilities` before planning an asset request. Its generated and runtime facts use four explicit statuses:
 
-- **Supported:** the four committed references, localized semantic revisions, the existing sword and shield, static rigid poses, directional transparent PNGs, review contact sheets, and reload-verified GLB.
-- **Partial:** the accessory surface exists, but currently contains only the sword and shield.
-- **Unsupported:** new asset identities, additional accessories such as helmets or alternate weapons, temporal animation, runtime sprite atlases, unregistered anatomy, skeletal deformation, and raw mesh editing.
+- **Supported:** the four committed references, bounded novel-identity initialization and registered-grammar composition for the advertised humanoid and banded-container archetypes, the registered seventeen-accessory library, localized semantic revisions, static rigid poses, directional transparent PNGs, review contact sheets, reload-verified GLB, and revision-pinned public interchange retrieval.
+- **Partial:** broad novel-identity authoring remains limited to the two advertised archetypes and registered grammar; arbitrary anatomy, templates, generators, and raw-mesh composition are unavailable. Mechanically valid novel-character output is not visually accepted without an owner-approved provenance-bound reference target and side-by-side Kimi convergence.
+- **Unsupported:** temporal animation, runtime sprite atlases, unregistered anatomy, skeletal deformation, and raw mesh editing.
 - **Not Assessed:** Three.js `GLTFLoader` now passes as a representative format importer, but Unity, Godot, and gameplay-runtime integration remain unverified.
 
 Do not compensate for an unsupported result by reading product source, hand-authoring canonical asset JSON, post-processing images, or using hidden filesystem or shell routes. The generated [capability catalog](measure/generated/capability-catalog.md) is derived from the same executable facts as the public tool.
+
+For a novel character intended as accepted art, generate and provenance-bind a
+front/three-quarter/side/back turnaround or an explicitly approved reduced view
+set before modeling. Obtain owner approval, then compare Forge renders
+side-by-side through Kimi. No image provider is implicitly authorized; do not
+silently use MMX. The first compacted novel guard was mechanically valid but
+visually rejected, so transform-only compacting is not an acceptance route.
 
 ## Verify
 
