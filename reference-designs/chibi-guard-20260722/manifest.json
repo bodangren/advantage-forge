@@ -1,0 +1,46 @@
+{
+  "schema": "forge-reference-candidate-set/v1",
+  "created_at": "2026-07-22T00:00:00+07:00",
+  "generator": {
+    "tool": "mmx",
+    "version": "1.0.16",
+    "role": "non-shipping design reference only",
+    "determinism": "not claimed"
+  },
+  "subject": {
+    "theme": "Chibi Quest",
+    "semantic_role": "friendly village guard",
+    "originality_requirement": "original; no franchise resemblance"
+  },
+  "candidate_sets": [
+    {
+      "id": "equipped-turnaround",
+      "prompt_summary": "Four-view low-poly chibi village guard with helmet, blue tunic, spear, and shield on a solid magenta background.",
+      "disposition": "rejected",
+      "reason": "All candidates contain cross-view equipment, pose, or view-coverage drift; none is an acceptable structural target.",
+      "files": [
+        { "path": "chibi-guard-turnaround_001.jpg", "sha256": "22beb4c085d9ce95d1d99c62d5b6ad2abc60ed0c15353045a43e59e77161ce9a", "width": 1280, "height": 720 },
+        { "path": "chibi-guard-turnaround_002.jpg", "sha256": "d770c10f46801a6d638f602ceb420565d650e36790bb1cbeddcc59c668a68d2b", "width": 1280, "height": 720 },
+        { "path": "chibi-guard-turnaround_003.jpg", "sha256": "adb87e5fc09a7406b3faea1a070a3dcaf92aca1e56e790665796cb31df154672", "width": 1280, "height": 720 },
+        { "path": "chibi-guard-turnaround_004.jpg", "sha256": "59a2a320401a88b828f04f42636905ed92c5a9f68753c2c3b265c6a1a97dc437", "width": 1280, "height": 720 }
+      ]
+    },
+    {
+      "id": "base-character-turnaround",
+      "prompt_summary": "Four-view neutral low-poly Chibi Quest guard base identity without held equipment on a solid magenta background.",
+      "files": [
+        { "path": "chibi-guard-base-turnaround_001.jpg", "sha256": "4775e436b3ce66daa5211fdaf2007df4f4c6f1f9a6fa946a07033f5cd0730726", "width": 1280, "height": 720, "disposition": "secondary-art-direction", "reason": "Strong personality and proportions, but views are not sufficiently orthographic for structural modeling." },
+        { "path": "chibi-guard-base-turnaround_002.jpg", "sha256": "e922d42800c4e28a8a42eeb851013ef035941bda9c05e3a8790ba79bc471ff64", "width": 1280, "height": 720, "disposition": "selected-structural-target", "reason": "Best consistent front, side, and back coverage with simple modelable geometry and no equipment drift." },
+        { "path": "chibi-guard-base-turnaround_003.jpg", "sha256": "af7ce1143e4e275251a6ea47312ea9c57e319bf256dceeaf4c9c10cd2efb8c5d", "width": 1280, "height": 720, "disposition": "rejected", "reason": "Contains logo text and lacks complete orthographic coverage." },
+        { "path": "chibi-guard-base-turnaround_004.jpg", "sha256": "dcf11ee0eeb1602f644b9570e5d1cc4675a83996bb91f47e0ae3829009cde9b1", "width": 1280, "height": 720, "disposition": "rejected", "reason": "Contains accidental shield carryover and lacks a true front view." }
+      ]
+    }
+  ],
+  "acceptance": {
+    "structural_target": "chibi-guard-base-turnaround_002.jpg",
+    "art_direction_reference": "chibi-guard-base-turnaround_001.jpg",
+    "runtime_asset": false,
+    "model_convergence": "not yet assessed",
+    "owner_final_art_acceptance": "not requested"
+  }
+}
