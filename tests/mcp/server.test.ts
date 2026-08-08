@@ -1,6 +1,7 @@
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { describe, expect, it } from 'vitest';
+import { REFERENCE_FIVE_CLIP_ANIMATION_REQUEST } from '../../scripts/replay-public-mcp-reference-five-clip.js';
 import {
   AccessoryDiscoveryDataSchema,
   CapabilityReportSchema,
@@ -126,6 +127,17 @@ describe('MCP adapter', () => {
         expect(envelope.ok, name).toBe(true);
         return envelope;
       };
+      const callFailure = async (
+        name: string,
+        arguments_: Record<string, unknown>,
+      ) => {
+        called.push(name);
+        const response = await client.callTool({ name, arguments: arguments_ });
+        const envelope = parseEnvelope(response);
+        expect(response.isError, name).toBe(true);
+        expect(envelope.ok, name).toBe(false);
+        return envelope;
+      };
 
       const kits = await call('list_kits', {});
       expect(JSON.stringify(kits.data)).toContain('rustic-human');
@@ -195,7 +207,25 @@ describe('MCP adapter', () => {
         comparison.data,
       );
       expect(comparisonData.affectedIds).toContain('torso');
-      expect(comparisonData.preservedIds).toContain('sword');
+      const preservedIds = [...comparisonData.preservedIds];
+      let nextIdOffset = comparisonData.preservedIdsPage.nextOffset;
+      while (nextIdOffset !== undefined) {
+        const page = SemanticRevisionComparisonSchema.parse(
+          (
+            await call('compare_revisions', {
+              assetId: 'adventurer.rustic',
+              baseRevisionId: created.revisionId,
+              targetRevisionId: reshaped.revisionId,
+              limit: 100,
+              idOffset: nextIdOffset,
+              idLimit: 100,
+            })
+          ).data,
+        );
+        preservedIds.push(...page.preservedIds);
+        nextIdOffset = page.preservedIdsPage.nextOffset;
+      }
+      expect(preservedIds).toContain('sword');
       const originalConnection =
         revisions.current.get('adventurer.rustic')?.document.assembly
           .connections[0];
@@ -226,8 +256,33 @@ describe('MCP adapter', () => {
       expect(posed.revisionId).toMatch(/^revision\.[a-f0-9]{64}$/);
 
       await call('validate_asset', { assetId: 'adventurer.rustic' });
-      await call('render_preview', { assetId: 'adventurer.rustic' });
-      await call('export_asset', { assetId: 'adventurer.rustic' });
+      await call('render_preview', {
+        assetId: 'adventurer.rustic',
+        revisionId: posed.revisionId,
+      });
+      await call('export_asset', {
+        assetId: 'adventurer.rustic',
+        revisionId: posed.revisionId,
+      });
+      const unavailableManifest = await callFailure(
+        'get_interchange_manifest',
+        {
+          asset_id: 'adventurer.rustic',
+          revision_id: posed.revisionId,
+        },
+      );
+      expect(unavailableManifest.issues[0]?.code).toBe('SERVICE_UNAVAILABLE');
+      const unavailableChunk = await callFailure(
+        'get_interchange_artifact_chunk',
+        {
+          asset_id: 'adventurer.rustic',
+          revision_id: posed.revisionId,
+          artifact_id: 'frame.n',
+          offset: 0,
+          length: 1,
+        },
+      );
+      expect(unavailableChunk.issues[0]?.code).toBe('SERVICE_UNAVAILABLE');
 
       expect([...new Set(called)].sort()).toEqual(
         [...PUBLIC_TOOL_NAMES].sort(),
@@ -302,7 +357,78 @@ describe('MCP adapter', () => {
     }
   });
 
-  it('replaces oversized serialized responses with a bounded error envelope', async () => {
+  it('keeps reference comparison on the existing path-free render protocol', async () => {
+    const revisions = new MemoryRevisions();
+    const digest = 'a'.repeat(64);
+    const { client, server } = await connectProtocol({
+      revisions,
+      renderService: {
+        render: async () => ({}),
+        renderReferenceComparison: async () => ({
+          contractId: 'forge-authoring-review-manifest/v1',
+          deliveryId: `delivery.${digest}`,
+          manifestSha256: digest,
+          profileId: 'forge.authoring.reference-comparison.v1',
+          classification: 'authoring_only',
+          admission: {
+            review_only: true,
+            interchange_admitted: false,
+            pack_admitted: false,
+          },
+          artifactSha256s: ['1', '2', '3', '4', '5'].map((value) =>
+            value.repeat(64),
+          ),
+        }),
+      },
+    });
+    try {
+      expect((await client.listTools()).tools).toHaveLength(16);
+      const created = parseEnvelope(
+        await client.callTool({
+          name: 'create_asset',
+          arguments: { reference: 'crate' },
+        }),
+      );
+      const request = {
+        assetId: 'crate.rustic',
+        revisionId: created.revisionId,
+        referenceComparison: {
+          profileId: 'forge.authoring.reference-comparison.v1',
+        },
+      };
+      const response = await client.callTool({
+        name: 'render_preview',
+        arguments: request,
+      });
+      expect(parseEnvelope(response)).toMatchObject({
+        ok: true,
+        data: {
+          state: 'authoring_review_rendered',
+          delivery: {
+            deliveryId: `delivery.${digest}`,
+            classification: 'authoring_only',
+          },
+        },
+      });
+      expect(JSON.stringify(response)).not.toMatch(
+        /\/(?:tmp|home)\/|[a-z]:\\\\|(?:manifest|contactSheet|frame)Path/i,
+      );
+      const mutuallyExclusive = await client.callTool({
+        name: 'render_preview',
+        arguments: {
+          ...request,
+          animation: REFERENCE_FIVE_CLIP_ANIMATION_REQUEST,
+        },
+      });
+      expect(mutuallyExclusive.isError).toBe(true);
+      expect(JSON.stringify(mutuallyExclusive.content)).toContain('-32602');
+    } finally {
+      await client.close();
+      await server.close();
+    }
+  });
+
+  it('does not expose oversized or path-bearing producer service payloads', async () => {
     const revisions = new MemoryRevisions();
     const oversizedPayload = 'x'.repeat(MCP_RESPONSE_BYTE_LIMIT * 2);
     const { client, server } = await connectProtocol({
@@ -320,30 +446,17 @@ describe('MCP adapter', () => {
 
       const response = await client.callTool({
         name: 'render_preview',
-        arguments: { assetId: 'crate.rustic' },
+        arguments: {
+          assetId: 'crate.rustic',
+          revisionId: parseEnvelope(created).revisionId,
+        },
       });
       const envelope = parseEnvelope(response);
-      expect(response.isError).toBe(true);
+      expect(response.isError).not.toBe(true);
       expect(envelope).toMatchObject({
-        ok: false,
-        affectedIds: [],
-        issues: [
-          {
-            code: 'RESPONSE_TOO_LARGE',
-            path: '$.response',
-            expected: { maximumBytes: MCP_RESPONSE_BYTE_LIMIT },
-          },
-        ],
+        ok: true,
+        data: { state: 'rendered' },
       });
-      const actual = envelope.issues[0]?.actual;
-      if (
-        typeof actual !== 'object' ||
-        actual === null ||
-        !('serializedBytes' in actual) ||
-        typeof actual.serializedBytes !== 'number'
-      )
-        throw new Error('Expected the oversized response byte count.');
-      expect(actual.serializedBytes).toBeGreaterThan(MCP_RESPONSE_BYTE_LIMIT);
       expect(
         new TextEncoder().encode(JSON.stringify(response)).byteLength,
       ).toBeLessThanOrEqual(MCP_RESPONSE_BYTE_LIMIT);
@@ -353,4 +466,48 @@ describe('MCP adapter', () => {
       await server.close();
     }
   });
+
+  it.each([
+    ['render_preview', 'malformed renderer /tmp/secret'],
+    ['render_preview', 'immutable conflict /home/private'],
+    ['export_asset', 'browser export failure C:\\secret'],
+  ] as const)(
+    'wraps %s producer failures in a stable path-free envelope',
+    async (toolName, secret) => {
+      const revisions = new MemoryRevisions();
+      const { client, server } = await connectProtocol({
+        revisions,
+        renderService: {
+          render: async () => Promise.reject(new Error(secret)),
+        },
+        exportService: {
+          export: async () => Promise.reject(new Error(secret)),
+        },
+      });
+      try {
+        const created = parseEnvelope(
+          await client.callTool({
+            name: 'create_asset',
+            arguments: { reference: 'crate' },
+          }),
+        );
+        const response = await client.callTool({
+          name: toolName,
+          arguments: {
+            assetId: 'crate.rustic',
+            revisionId: created.revisionId,
+          },
+        });
+        expect(response.isError).toBe(true);
+        expect(parseEnvelope(response)).toMatchObject({
+          ok: false,
+          issues: [{ code: 'REPOSITORY_ERROR', path: '$.revisionId' }],
+        });
+        expect(JSON.stringify(response)).not.toContain(secret);
+      } finally {
+        await client.close();
+        await server.close();
+      }
+    },
+  );
 });

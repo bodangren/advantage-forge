@@ -56,6 +56,43 @@ describe('file revision repository', () => {
     expect(pointer.trim()).toBe(second.revisionId);
   });
 
+  it('atomically admits exactly one create-only revision for a new identity', async () => {
+    const workspaceRoot = await mkdtemp(join(tmpdir(), 'forge-revisions-'));
+    const repository = new FileRevisionRepository({
+      workspaceRoot,
+      now: () => new Date('2026-07-22T00:00:00Z'),
+    });
+    const firstDocument = assetFixture();
+    const changed = applySemanticPatch(firstDocument, {
+      operations: [
+        { operation: 'setPartVisibility', partId: 'part.head', visible: false },
+      ],
+    });
+    if (!changed.ok) throw new Error('fixture patch failed');
+
+    const results = await Promise.allSettled([
+      repository.save(firstDocument, undefined, { requireAbsent: true }),
+      repository.save(changed.document, undefined, { requireAbsent: true }),
+    ]);
+    expect(results.filter(({ status }) => status === 'fulfilled')).toHaveLength(
+      1,
+    );
+    const rejected = results.find(({ status }) => status === 'rejected');
+    expect(rejected).toMatchObject({ status: 'rejected' });
+    if (rejected?.status === 'rejected')
+      expect(rejected.reason).toMatchObject({ message: 'ALREADY_EXISTS' });
+
+    const accepted = results.find(({ status }) => status === 'fulfilled');
+    if (accepted?.status !== 'fulfilled')
+      throw new Error('expected one create-only save to win');
+    expect((await repository.getCurrent('asset.hero'))?.revisionId).toBe(
+      accepted.value.revisionId,
+    );
+    expect(
+      await readdir(join(workspaceRoot, '.forge/revisions/asset.hero')),
+    ).toEqual(['current', `${accepted.value.revisionId}.json`]);
+  });
+
   it('rejects revision storage outside the active workspace', () => {
     expect(
       () =>

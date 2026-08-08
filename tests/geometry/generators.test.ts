@@ -222,6 +222,32 @@ describe('geometry topology', () => {
     });
   });
 
+  it('builds a deterministic smooth bevel around a convex extruded profile', () => {
+    const shape = ShapeDefinitionSchema.parse({
+      kind: 'extrudedProfile',
+      profile: [
+        [-1, -0.8],
+        [1, -0.8],
+        [1.1, -0.6],
+        [0.8, 0.8],
+        [-0.8, 0.8],
+        [-1.1, -0.6],
+      ],
+      depth: 0.6,
+      bevel: 0.08,
+      bevelSegments: 3,
+    });
+    const first = generateGeometry(shape);
+    const second = generateGeometry(structuredClone(shape));
+
+    expect(second).toEqual(first);
+    expect(validateIndexedGeometry(first)).toEqual([]);
+    expect(signedVolume(first)).toBeGreaterThan(0);
+    expect(first.metadata.triangleCount).toBeGreaterThan(12);
+    expect(first.bounds.min[2]).toBeCloseTo(-0.3);
+    expect(first.bounds.max[2]).toBeCloseTo(0.3);
+  });
+
   it('does not call ambient randomness', () => {
     const originalRandom = Math.random;
     Math.random = () => {
@@ -371,6 +397,29 @@ describe('geometry parameter rejection', () => {
     });
     expect(validateIndexedGeometry(geometry)).toEqual([]);
     expect(signedVolume(geometry)).toBeGreaterThan(0);
+  });
+
+  it('rejects incomplete or oversized extruded-profile bevel declarations', () => {
+    const base = {
+      kind: 'extrudedProfile' as const,
+      profile: [
+        [-1, -1],
+        [1, -1],
+        [1, 1],
+        [-1, 1],
+      ],
+      depth: 0.2,
+    };
+    expect(
+      ShapeDefinitionSchema.safeParse({ ...base, bevel: 0.02 }).success,
+    ).toBe(false);
+    expect(
+      ShapeDefinitionSchema.safeParse({
+        ...base,
+        bevel: 0.1,
+        bevelSegments: 2,
+      }).success,
+    ).toBe(false);
   });
 
   it('publishes the bounded surface rather than an open-ended mesh API', () => {

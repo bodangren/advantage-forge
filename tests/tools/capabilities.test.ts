@@ -55,6 +55,9 @@ describe('public capability discovery', () => {
     expect(status.get('output.glb')).toBe('supported');
     expect(status.get('output.sprite.directional')).toBe('supported');
     expect(status.get('revision.immutable')).toBe('supported');
+    expect(status.get('asset.humanoid_morphology')).toBe('supported');
+    expect(status.get('animation.temporal')).toBe('partial');
+    expect(status.get('output.sprite_atlas')).toBe('partial');
 
     const sword = report.facts.find(({ id }) => id === 'accessory.sword');
     expect(sword?.evidence.templateIds).toContain('equipment.sword');
@@ -75,14 +78,18 @@ describe('public capability discovery', () => {
     expect(accessoryLibrary?.evidence.publicTools).toContain(
       'apply_accessory_operation',
     );
-    for (const id of [
-      'asset.new_identity',
-      'animation.temporal',
-      'output.sprite_atlas',
-      'anatomy.unsupported',
-      'operation.raw_mesh',
-    ]) {
+    expect(byId.get('asset.new_identity')?.status).toBe('partial');
+    expect(byId.get('asset.new_identity')?.guidance).toBeTruthy();
+    expect(byId.get('asset.identity.initialize')?.status).toBe('supported');
+    expect(
+      byId.get('asset.identity.initialize')?.evidence.publicTools,
+    ).toContain('create_asset');
+    for (const id of ['anatomy.unsupported', 'operation.raw_mesh']) {
       expect(byId.get(id)?.status, id).toBe('unsupported');
+      expect(byId.get(id)?.guidance, id).toBeTruthy();
+    }
+    for (const id of ['animation.temporal', 'output.sprite_atlas']) {
+      expect(byId.get(id)?.status, id).toBe('partial');
       expect(byId.get(id)?.guidance, id).toBeTruthy();
     }
     expect(byId.get('integration.game_engine_import')?.status).toBe(
@@ -102,7 +109,7 @@ describe('public capability discovery', () => {
       filtered: true,
       facts: [
         { id: 'accessory.additional', status: 'supported' },
-        { id: 'animation.temporal', status: 'unsupported' },
+        { id: 'animation.temporal', status: 'partial' },
       ],
     });
 
