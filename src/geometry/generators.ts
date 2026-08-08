@@ -391,6 +391,13 @@ export function generateExtrudedProfile(
     signedArea(shape.profile) < 0
       ? [...shape.profile].reverse()
       : [...shape.profile];
+  if (shape.bevel !== undefined && shape.bevelSegments !== undefined)
+    return generateBeveledExtrudedProfile(
+      profile,
+      shape.depth,
+      shape.bevel,
+      shape.bevelSegments,
+    );
   const halfDepth = shape.depth / 2;
   const vertices: Vec3[] = [
     ...profile.map<Vec3>((point) => [point[0], point[1], -halfDepth]),
@@ -408,6 +415,97 @@ export function generateExtrudedProfile(
   return meshFromPolygons('extrudedProfile', vertices, polygons, {
     flatShading: true,
   });
+}
+
+function generateBeveledExtrudedProfile(
+  profile: readonly Vec2[],
+  depth: number,
+  bevel: number,
+  bevelSegments: number,
+): IndexedGeometry {
+  assertFiniteInRange(
+    bevel,
+    'bevel',
+    GEOMETRY_LIMITS.minimumDimension,
+    depth / 2 - Number.EPSILON,
+  );
+  assertIntegerInRange(bevelSegments, 'bevelSegments', 1, 16);
+  const centroid: Vec2 = [
+    profile.reduce((sum, point) => sum + point[0], 0) / profile.length,
+    profile.reduce((sum, point) => sum + point[1], 0) / profile.length,
+  ];
+  const inset = profile.map<Vec2>((point, index) => {
+    const dx = centroid[0] - point[0];
+    const dy = centroid[1] - point[1];
+    const distance = Math.hypot(dx, dy);
+    if (distance <= bevel)
+      throw new GeometryParameterError(
+        `profile[${index}]`,
+        'farther from the centroid than bevel',
+        point,
+      );
+    return [
+      point[0] + (dx / distance) * bevel,
+      point[1] + (dy / distance) * bevel,
+    ];
+  });
+  const halfDepth = depth / 2;
+  const rings: Array<{
+    readonly profile: readonly Vec2[];
+    readonly z: number;
+  }> = [];
+  for (let segment = 0; segment <= bevelSegments; segment += 1) {
+    const angle = (segment / bevelSegments) * (Math.PI / 2);
+    const profileWeight = Math.sin(angle);
+    rings.push({
+      profile: inset.map((point, index) => {
+        const target = profile[index]!;
+        return [
+          point[0] + (target[0] - point[0]) * profileWeight,
+          point[1] + (target[1] - point[1]) * profileWeight,
+        ];
+      }),
+      z: -halfDepth + bevel * (1 - Math.cos(angle)),
+    });
+  }
+  for (let segment = bevelSegments - 1; segment >= 0; segment -= 1) {
+    const angle = (segment / bevelSegments) * (Math.PI / 2);
+    const profileWeight = Math.sin(angle);
+    rings.push({
+      profile: inset.map((point, index) => {
+        const target = profile[index]!;
+        return [
+          point[0] + (target[0] - point[0]) * profileWeight,
+          point[1] + (target[1] - point[1]) * profileWeight,
+        ];
+      }),
+      z: halfDepth - bevel * (1 - Math.cos(angle)),
+    });
+  }
+  const vertices: Vec3[] = rings.flatMap(({ profile: ring, z }) =>
+    ring.map(([x, y]) => [x, y, z] as Vec3),
+  );
+  const count = profile.length;
+  const polygons: number[][] = [
+    [...Array.from({ length: count }, (_, index) => index)].reverse(),
+    Array.from(
+      { length: count },
+      (_, index) => (rings.length - 1) * count + index,
+    ),
+  ];
+  for (let ring = 0; ring < rings.length - 1; ring += 1)
+    for (let index = 0; index < count; index += 1) {
+      const next = (index + 1) % count;
+      const current = ring * count;
+      const following = (ring + 1) * count;
+      polygons.push([
+        current + index,
+        current + next,
+        following + next,
+        following + index,
+      ]);
+    }
+  return meshFromPolygons('extrudedProfile', vertices, polygons);
 }
 
 export function generateLathedProfile(

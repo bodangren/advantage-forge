@@ -1,16 +1,19 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { composeTransforms } from '../assembly/index.js';
-import type { AssetDocument } from '../contracts/index.js';
+import type { AssetDocument, Bounds } from '../contracts/index.js';
 import { canonicalJson } from '../document/browser.js';
 import { downloadGlb, exportSceneToGlb } from '../export/index.js';
 import { referenceDocuments } from '../fantasy-kit/index.js';
 import {
   MVP_RENDER_PROFILE,
+  REFERENCE_COMPARISON_VIEWS,
   createContactSheet,
+  createReferenceComparisonContactSheet,
   createOrthographicCamera,
   frameToCanvas,
   renderDirectionalSprites,
+  renderReferenceComparisonFrames,
   type SpriteFrame,
   type SpriteRenderProfile,
 } from '../render/index.js';
@@ -66,6 +69,7 @@ let previousFrames: readonly SpriteFrame[] = [];
 let previousStateLabel = '';
 let activeView: InspectorView = 'three';
 let loadSequence = 0;
+let activeFramingBounds: Bounds | undefined;
 
 function resize(): void {
   const width = Math.max(1, shell.clientWidth);
@@ -171,10 +175,15 @@ function renderWithDirections(count: 1 | 4 | 8): readonly SpriteFrame[] {
   const portsWereVisible = portOverlay?.visible ?? false;
   if (portOverlay !== undefined) portOverlay.visible = false;
   try {
-    return renderDirectionalSprites(renderer, scene, compiled.summary.bounds, {
-      ...activeProfile,
-      directions: count,
-    });
+    return renderDirectionalSprites(
+      renderer,
+      scene,
+      activeFramingBounds ?? compiled.summary.bounds,
+      {
+        ...activeProfile,
+        directions: count,
+      },
+    );
   } finally {
     if (portOverlay !== undefined) portOverlay.visible = portsWereVisible;
   }
@@ -318,6 +327,7 @@ function loadDocument(
   asset: Readonly<AssetDocument>,
   referenceName?: ReferenceName,
   revisionId?: string,
+  framingBounds?: Bounds,
 ): void {
   if (frames.length > 0 && activeDocument.id === asset.id) {
     previousFrames = frames;
@@ -341,6 +351,7 @@ function loadDocument(
     });
   activeProfile = asset.renderProfiles[0] ?? MVP_RENDER_PROFILE;
   compiled = compileThreeScene(asset);
+  activeFramingBounds = framingBounds ?? compiled.summary.bounds;
   populateStateControls();
   selectedPartId = compiled.summary.parts[0]?.id ?? '';
   partSelect.replaceChildren(
@@ -368,7 +379,7 @@ function loadDocument(
   fill.position.set(-4, 3, -2);
   scene.add(fill);
   const rig = createOrthographicCamera(
-    compiled.summary.bounds,
+    framingBounds ?? compiled.summary.bounds,
     {
       ...activeProfile,
       widthPixels: Math.max(shell.clientWidth, 128),
@@ -498,6 +509,24 @@ Object.assign(window, {
       })),
       contactSheetDataUrl: createContactSheet(frames).toDataURL('image/png'),
     }),
+    renderReferenceComparisonArtifacts: () => {
+      const comparisonFrames = renderReferenceComparisonFrames(
+        renderer,
+        compiled.group,
+        activeFramingBounds ?? compiled.summary.bounds,
+      );
+      return {
+        frames: comparisonFrames.map((frame, index) => ({
+          view: REFERENCE_COMPARISON_VIEWS[index]!.view,
+          dataUrl: frameToCanvas(frame).toDataURL('image/png'),
+          metrics: frame.metrics,
+        })),
+        contactSheetDataUrl:
+          createReferenceComparisonContactSheet(comparisonFrames).toDataURL(
+            'image/png',
+          ),
+      };
+    },
     get document() {
       return structuredClone(activeDocument);
     },

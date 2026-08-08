@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { Bounds } from '../contracts/index.js';
 import { createOrthographicCamera } from './camera.js';
+import type { CameraRig } from './camera.js';
 import { analyzeRgbaPixels, type PixelMetrics } from '../validation/index.js';
 import {
   directionsForCount,
@@ -205,18 +206,17 @@ function measureRequiredFeatures(
         profile.heightPixels,
         { alphaThreshold: 128 },
       );
-      const accessoryFeatureValue: unknown = (
+      const visualFeatureValue: unknown = (
         targetMesh.userData as Record<string, unknown>
-      )['accessoryFeatures'];
-      const hasAccessoryFeatureContracts =
-        Array.isArray(accessoryFeatureValue) &&
-        accessoryFeatureValue.length > 0;
+      )['requiredVisualFeatures'];
+      const hasFeatureContracts =
+        Array.isArray(visualFeatureValue) && visualFeatureValue.length > 0;
       const isolatedPixelArea = isolatedMetrics.occupiedPixelCount;
       const measuredVisiblePixelArea = visibleMetrics.occupiedPixelCount;
-      const visiblePixelArea = hasAccessoryFeatureContracts
+      const visiblePixelArea = hasFeatureContracts
         ? measuredVisiblePixelArea
         : isolatedPixelArea;
-      const occlusionRatio = !hasAccessoryFeatureContracts
+      const occlusionRatio = !hasFeatureContracts
         ? 0
         : isolatedPixelArea === 0
           ? 1
@@ -229,13 +229,13 @@ function measureRequiredFeatures(
           ? targetMesh.userData['templateId']
           : 'template.unknown';
       const features = featureContracts(
-        accessoryFeatureValue,
+        visualFeatureValue,
         partId,
         profile.minimumFeaturePixels,
       ).filter(({ intendedDirections }) =>
         intendedDirections.includes(direction),
       );
-      const silhouetteMetrics = hasAccessoryFeatureContracts
+      const silhouetteMetrics = hasFeatureContracts
         ? visibleMetrics
         : isolatedMetrics;
       const silhouetteWidthPixels =
@@ -245,7 +245,7 @@ function measureRequiredFeatures(
               silhouetteMetrics.occupiedBounds.width,
               silhouetteMetrics.occupiedBounds.height,
             );
-      const materialOklabDistance = hasAccessoryFeatureContracts
+      const materialOklabDistance = hasFeatureContracts
         ? visibleMaterialOklabDistance(
             fullPixels,
             visibleMask,
@@ -467,7 +467,25 @@ export function renderDirectionalSprites(
   scene: THREE.Scene,
   bounds: Bounds,
   profile: SpriteRenderProfile,
+  directions: readonly SpriteDirection[] = directionsForCount(
+    profile.directions,
+  ),
+  prepareView?: (
+    scene: THREE.Scene,
+    rig: CameraRig,
+    direction: SpriteDirection,
+  ) => void,
+  cameraFactory: (
+    bounds: Bounds,
+    profile: SpriteRenderProfile,
+    direction: SpriteDirection,
+  ) => CameraRig = createOrthographicCamera,
 ): readonly SpriteFrame[] {
+  if (
+    directions.length !== profile.directions ||
+    new Set(directions).size !== directions.length
+  )
+    throw new Error('Render directions must be unique and match the profile.');
   const target = new THREE.WebGLRenderTarget(
     profile.widthPixels,
     profile.heightPixels,
@@ -486,12 +504,10 @@ export function renderDirectionalSprites(
   renderer.setClearColor(0x000000, 0);
   const frames: SpriteFrame[] = [];
   try {
-    for (const direction of directionsForCount(profile.directions)) {
-      const { camera, worldUnitsPerPixel } = createOrthographicCamera(
-        bounds,
-        profile,
-        direction,
-      );
+    for (const direction of directions) {
+      const rig = cameraFactory(bounds, profile, direction);
+      const { camera, worldUnitsPerPixel } = rig;
+      prepareView?.(scene, rig, direction);
       renderer.setRenderTarget(target);
       renderer.clear(true, true, true);
       renderer.render(scene, camera);
@@ -606,8 +622,11 @@ export function frameToCanvas(frame: SpriteFrame): HTMLCanvasElement {
 export function createContactSheet(
   frames: readonly SpriteFrame[],
   columns = 4,
+  labels: readonly string[] = frames.map(({ direction }) => direction),
 ): HTMLCanvasElement {
   if (frames.length === 0) throw new Error('At least one frame is required.');
+  if (labels.length !== frames.length)
+    throw new Error('Contact-sheet labels must match the frame count.');
   const labelHeight = 18;
   const rows = Math.ceil(frames.length / columns);
   const canvas = document.createElement('canvas');
@@ -625,11 +644,7 @@ export function createContactSheet(
     const y = Math.floor(index / columns) * (frame.height + labelHeight);
     context.drawImage(frameToCanvas(frame), x, y);
     context.fillStyle = '#f2efe6';
-    context.fillText(
-      frame.direction,
-      x + 6,
-      y + frame.height + labelHeight / 2,
-    );
+    context.fillText(labels[index]!, x + 6, y + frame.height + labelHeight / 2);
   }
   return canvas;
 }

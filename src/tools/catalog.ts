@@ -11,6 +11,8 @@ export const PUBLIC_TOOL_NAMES = [
   'connect_parts',
   'set_pose',
   'validate_asset',
+  'get_interchange_manifest',
+  'get_interchange_artifact_chunk',
   'render_preview',
   'export_asset',
 ] as const;
@@ -26,7 +28,8 @@ export interface PublicToolDefinition {
 export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   {
     name: 'list_kits',
-    description: 'List bounded fantasy kits and reference assets.',
+    description:
+      'List bounded kits, references, and novel archetypes, with optional registered-grammar brief preflight.',
     mutates: false,
   },
   {
@@ -56,13 +59,13 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   {
     name: 'compare_revisions',
     description:
-      'Compare immutable revisions as bounded field changes plus affected and preserved semantic IDs.',
+      'Compare immutable revisions as bounded field changes, exact affected and preserved IDs, origin, completeness, and required-role deltas.',
     mutates: false,
   },
   {
     name: 'create_asset',
     description:
-      'Create a revision from a committed fantasy reference document.',
+      'Create a revision from a committed reference or initialize a bounded novel identity skeleton.',
     mutates: true,
   },
   {
@@ -74,7 +77,7 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
   {
     name: 'apply_operations',
     description:
-      'Apply one or more closed semantic operations with revision preconditions.',
+      'Dry-run or apply closed patches, task-level novel composition, and confirmed immutable current-pointer restoration.',
     mutates: true,
   },
   {
@@ -94,14 +97,26 @@ export const PUBLIC_TOOL_CATALOG: readonly PublicToolDefinition[] = [
     mutates: false,
   },
   {
+    name: 'get_interchange_manifest',
+    description:
+      'Retrieve a canonical digest-pinned interchange manifest for one exact immutable revision.',
+    mutates: false,
+  },
+  {
+    name: 'get_interchange_artifact_chunk',
+    description:
+      'Retrieve a bounded digest-bound byte chunk for one manifest-allowlisted source PNG, GLB, or evidence record.',
+    mutates: false,
+  },
+  {
     name: 'render_preview',
     description:
-      'Render bounded directional sprite previews for the current revision.',
+      'Render bounded directional sprite previews for one exact immutable revision.',
     mutates: false,
   },
   {
     name: 'export_asset',
-    description: 'Export the current revision as a workspace-contained GLB.',
+    description: 'Export one exact immutable revision for registry delivery.',
     mutates: false,
   },
 ];

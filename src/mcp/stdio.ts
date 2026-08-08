@@ -15,5 +15,6 @@ const server = createFantasyAssetMcpServer({
   revisions,
   renderService: artifacts,
   exportService: artifacts,
+  interchangeService: artifacts,
 });
 await server.connect(new StdioServerTransport());

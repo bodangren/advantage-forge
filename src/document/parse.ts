@@ -238,6 +238,8 @@ function issueGuidance(code: DocumentErrorCode): string {
       'Reload the current revision and reapply the localized operation.',
     NOT_FOUND: 'Inspect the active document and use an existing semantic ID.',
     PATCH_REJECTED: 'Correct the proposed semantic operation before retrying.',
+    DRY_RUN_REQUIRED:
+      'Dry-run the exact proposed operation and confirm its deterministic plan before applying it.',
     UNKNOWN_REFERENCE: 'Use an existing semantic ID from the active document.',
     INVALID_MATERIAL_SLOT: 'Use a slot declared by the selected template.',
     ALREADY_EXISTS:
@@ -246,6 +248,8 @@ function issueGuidance(code: DocumentErrorCode): string {
       'Reduce evaluated geometry or raise the explicit asset triangle budget.',
     INVALID_ASSEMBLY:
       'Correct the reported assembly, port, variant, or pose issue.',
+    INCOMPLETE_ASSET:
+      'Complete every required novel-identity stage before validation or artifact production.',
     SERVICE_UNAVAILABLE: 'Start the configured local service and retry.',
     RESPONSE_TOO_LARGE: 'Request a narrower semantic summary.',
     REPOSITORY_ERROR: 'Verify the active workspace and repository permissions.',

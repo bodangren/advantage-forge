@@ -6,6 +6,7 @@ import {
   type CapabilityReport,
 } from '../contracts/index.js';
 import {
+  NOVEL_ASSET_ARCHETYPES,
   referenceDocuments,
   rusticAccessoryCatalog,
   rusticTemplates,
@@ -28,6 +29,7 @@ function evidence(
   return {
     publicTools: [],
     referenceAssetIds: [],
+    archetypeIds: [],
     templateIds: [],
     renderProfileIds: [],
     formats: [],
@@ -153,6 +155,16 @@ const declaredFacts: CapabilityFact[] = [
     }),
   }),
   CapabilityFactSchema.parse({
+    id: 'revision.restore',
+    category: 'operation',
+    status: 'supported',
+    summary:
+      'Compare exact novel revision semantics and restore a validated prior immutable revision through a deterministic confirmed dry-run plan without deleting lineage.',
+    evidence: evidence({
+      publicTools: tools('compare_revisions', 'apply_operations'),
+    }),
+  }),
+  CapabilityFactSchema.parse({
     id: 'animation.rigid_pose',
     category: 'animation',
     status: 'supported',
@@ -195,14 +207,61 @@ const declaredFacts: CapabilityFact[] = [
     }),
   }),
   CapabilityFactSchema.parse({
+    id: 'asset.identity.initialize',
+    category: 'asset',
+    status: 'supported',
+    summary:
+      'Initialize a deterministic canonical identity skeleton for a declared rustic humanoid or banded-container archetype.',
+    evidence: evidence({
+      publicTools: tools(
+        'list_kits',
+        'create_asset',
+        'inspect_asset',
+        'validate_asset',
+      ),
+      archetypeIds: NOVEL_ASSET_ARCHETYPES.map(({ id }) => id),
+      templateIds: NOVEL_ASSET_ARCHETYPES.flatMap(
+        ({ allowedTemplateIds }) => allowedTemplateIds,
+      ).sort(compareText),
+    }),
+  }),
+  CapabilityFactSchema.parse({
+    id: 'asset.grammar.compose',
+    category: 'asset',
+    status: 'supported',
+    summary:
+      'Preflight bounded briefs and compile task-level add-and-connect requests into the existing closed semantic patch workflow without caller-authored transforms.',
+    evidence: evidence({
+      publicTools: tools(
+        'list_kits',
+        'inspect_template',
+        'apply_operations',
+        'inspect_asset',
+        'validate_asset',
+      ),
+      archetypeIds: NOVEL_ASSET_ARCHETYPES.map(({ id }) => id),
+      templateIds: NOVEL_ASSET_ARCHETYPES.flatMap(
+        ({ allowedTemplateIds }) => allowedTemplateIds,
+      ).sort(compareText),
+    }),
+  }),
+  CapabilityFactSchema.parse({
     id: 'asset.new_identity',
     category: 'asset',
-    status: 'unsupported',
+    status: 'partial',
     summary:
-      'The public creation tool cannot assign a new asset identity or assemble an arbitrary new document.',
+      'The public workflow can initialize and compose bounded registered archetypes, but arbitrary assembly, anatomy, generator, and raw-mesh authoring are not available.',
     guidance:
-      'Choose adventurer, crate, tree, or cottage and revise it locally; wait for the planned novel-identity authoring track for new canonical IDs.',
-    evidence: evidence({ publicTools: tools('create_asset') }),
+      'Use one advertised archetype and its registered grammar; unsupported anatomy, generators, raw mesh, source, and file workflows require a separately reviewed kit extension.',
+    evidence: evidence({
+      publicTools: tools(
+        'list_kits',
+        'create_asset',
+        'apply_operations',
+        'inspect_asset',
+      ),
+      archetypeIds: NOVEL_ASSET_ARCHETYPES.map(({ id }) => id),
+    }),
   }),
   CapabilityFactSchema.parse({
     id: 'accessory.additional',
@@ -220,26 +279,54 @@ const declaredFacts: CapabilityFact[] = [
     }),
   }),
   CapabilityFactSchema.parse({
+    id: 'asset.humanoid_morphology',
+    category: 'asset',
+    status: 'supported',
+    summary:
+      'The public apply_operations workflow compiles bounded rustic-human proportions and registered appearance features into a deterministic fifteen-part semantic transform plan with dry-run confirmation and revision lineage.',
+    evidence: evidence({
+      publicTools: tools(
+        'create_asset',
+        'apply_operations',
+        'inspect_asset',
+        'render_preview',
+      ),
+      archetypeIds: ['humanoid.biped.rustic'],
+    }),
+  }),
+  CapabilityFactSchema.parse({
     id: 'animation.temporal',
     category: 'animation',
-    status: 'unsupported',
+    status: 'partial',
     summary:
-      'No temporal clip, frame sequence, interpolation, animation export, or playback contract exists.',
+      'Public render_preview animation input compiles one bounded semantic rigid clip into freshness-bound timed 128x128 source frames, a deterministic derived atlas, and an exact source-GLB delivery with public manifest and bounded chunk retrieval.',
     guidance:
-      'Use a single declared rigid pose snapshot; temporal animation requires the planned rigid-animation and sprite-pipeline track.',
-    evidence: evidence({ publicTools: tools('set_pose') }),
+      'Treat this as a mechanical single-clip subset only. The current proof motion is visually rejected; persisted inspect/compare authoring, the five-clip batch, Pixel playback, and production-motion acceptance remain incomplete.',
+    evidence: evidence({
+      publicTools: tools(
+        'inspect_asset',
+        'render_preview',
+        'get_interchange_manifest',
+        'get_interchange_artifact_chunk',
+      ),
+      formats: ['glb', 'png'],
+    }),
   }),
   CapabilityFactSchema.parse({
     id: 'output.sprite_atlas',
     category: 'output',
-    status: 'unsupported',
+    status: 'partial',
     summary:
-      'Directional frames and a review contact sheet exist, but no runtime atlas layout or animation metadata contract exists.',
+      'The temporal renderer composes and publishes a deterministic derived PNG atlas with exact frame rectangles while preserving every individual source frame and source GLB in the same delivery.',
     guidance:
-      'Consume individual PNG directions or the review-only contact sheet; wait for the rigid-animation sprite-pipeline track for atlases.',
+      'Do not treat the atlas as source or production art. Five readable clips, broader delivery metadata, Pixel playback/admission, and exhaustive Kimi review remain required.',
     evidence: evidence({
-      publicTools: tools('render_preview'),
-      formats: ['contact-sheet', 'png'],
+      publicTools: tools(
+        'render_preview',
+        'get_interchange_manifest',
+        'get_interchange_artifact_chunk',
+      ),
+      formats: ['glb', 'png'],
     }),
   }),
   CapabilityFactSchema.parse({
@@ -262,6 +349,22 @@ const declaredFacts: CapabilityFact[] = [
       'Express changes through registered templates, shape parameters, parts, ports, materials, variants, and poses.',
     evidence: evidence({
       publicTools: tools('inspect_template', 'apply_operations'),
+    }),
+  }),
+  CapabilityFactSchema.parse({
+    id: 'integration.public_interchange',
+    category: 'integration',
+    status: 'partial',
+    summary:
+      'Public MCP exposes canonical revision-pinned manifests and bounded digest-bound chunks for allowlisted source PNG and GLB artifacts.',
+    guidance:
+      'Treat live delivery as partial until a complete render/export revision is registered and exercised through the public MCP process.',
+    evidence: evidence({
+      publicTools: tools(
+        'get_interchange_manifest',
+        'get_interchange_artifact_chunk',
+      ),
+      formats: ['glb', 'png'],
     }),
   }),
   CapabilityFactSchema.parse({

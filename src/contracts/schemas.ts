@@ -1,5 +1,21 @@
 import { z } from 'zod';
 
+import {
+  NovelAssetArchetypeIdSchema,
+  NovelAssetCompletenessSchema,
+  NovelAssetFamilySchema,
+  NovelAssetIdentityMetadataSchema,
+} from './novel-identity.js';
+import {
+  NovelRequiredRoleChangeSchema,
+  NovelRevisionStateSchema,
+} from './novel-revision.js';
+import {
+  ForgeRenderProfileSchema,
+  ForgeStyleProfileSchema,
+} from './interchange.js';
+import { HumanoidMorphologyProfileSchema } from './humanoid-morphology.js';
+
 export const SCHEMA_VERSION = '1.0.0' as const;
 export const WORLD_UNIT = 'meter' as const;
 
@@ -117,8 +133,43 @@ export const ExtrudedProfileShapeSchema = z
     kind: z.literal('extrudedProfile'),
     profile: z.array(Vec2Schema).min(3).max(256),
     depth: PositiveNumberSchema.max(1_000),
+    bevel: PositiveNumberSchema.max(1_000).optional(),
+    bevelSegments: z.number().int().min(1).max(16).optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((shape, context) => {
+    if ((shape.bevel === undefined) !== (shape.bevelSegments === undefined))
+      context.addIssue({
+        code: 'custom',
+        path: [shape.bevel === undefined ? 'bevel' : 'bevelSegments'],
+        message:
+          'Extruded-profile bevel and bevelSegments must be declared together.',
+      });
+    if (shape.bevel === undefined) return;
+    const center = shape.profile.reduce(
+      (sum, point) => [sum[0] + point[0], sum[1] + point[1]] as const,
+      [0, 0] as const,
+    );
+    const centroid = center.map((value) => value / shape.profile.length);
+    const minimumRadius = Math.min(
+      ...shape.profile.map((point) =>
+        Math.hypot(point[0] - centroid[0]!, point[1] - centroid[1]!),
+      ),
+    );
+    if (shape.bevel >= shape.depth / 2)
+      context.addIssue({
+        code: 'custom',
+        path: ['bevel'],
+        message: 'Extruded-profile bevel must be smaller than half the depth.',
+      });
+    if (shape.bevel >= minimumRadius)
+      context.addIssue({
+        code: 'custom',
+        path: ['bevel'],
+        message:
+          'Extruded-profile bevel must be smaller than the profile radius.',
+      });
+  });
 export const LathedProfileShapeSchema = z
   .object({
     kind: z.literal('lathedProfile'),
@@ -433,9 +484,22 @@ export const PartTemplateDefinitionSchema = z
     materialSlots: z.array(SemanticIdSchema).min(1).max(16),
     ports: z.array(PortDefinitionSchema).max(32),
     accessory: AccessoryMetadataSchema.optional(),
+    requiredVisualFeatures: z
+      .array(AccessoryRequiredFeatureSchema)
+      .min(1)
+      .max(16)
+      .optional(),
   })
   .strict()
   .superRefine((template, context) => {
+    const genericFeatureIds =
+      template.requiredVisualFeatures?.map(({ id }) => id) ?? [];
+    if (new Set(genericFeatureIds).size !== genericFeatureIds.length)
+      context.addIssue({
+        code: 'custom',
+        path: ['requiredVisualFeatures'],
+        message: 'Required visual feature IDs must be unique.',
+      });
     if (template.accessory === undefined) return;
     const portIds = new Set(template.ports.map(({ id }) => id));
     for (const [
@@ -762,6 +826,8 @@ export const AssetDocumentSchema = z
     renderProfiles: z.array(SpriteRenderProfileSchema).min(1).max(16),
     activeVariantId: SemanticIdSchema.optional(),
     activePoseId: SemanticIdSchema.optional(),
+    novelIdentity: NovelAssetIdentityMetadataSchema.optional(),
+    morphologyProfile: HumanoidMorphologyProfileSchema.optional(),
   })
   .strict()
   .superRefine((document, context) => {
@@ -800,6 +866,8 @@ export const ValidationErrorCodeSchema = z.enum([
   'NOT_FOUND',
   'PATCH_REJECTED',
   'INVALID_ASSEMBLY',
+  'INCOMPLETE_ASSET',
+  'DRY_RUN_REQUIRED',
   'TRIANGLE_BUDGET_EXCEEDED',
   'SERVICE_UNAVAILABLE',
   'RESPONSE_TOO_LARGE',
@@ -915,6 +983,27 @@ export const AssetInspectionDataSchema = z
     triangleBudget: z.number().int().positive(),
     activeVariantId: SemanticIdSchema.optional(),
     activePoseId: SemanticIdSchema.optional(),
+    origin: z.discriminatedUnion('kind', [
+      z.strictObject({
+        kind: z.literal('reference'),
+        reference: z.enum(['adventurer', 'crate', 'tree', 'cottage']),
+      }),
+      z.strictObject({
+        kind: z.literal('novel'),
+        family: NovelAssetFamilySchema,
+        archetypeId: NovelAssetArchetypeIdSchema,
+        styleProfile: ForgeStyleProfileSchema,
+        renderProfile: ForgeRenderProfileSchema,
+      }),
+    ]),
+    lineage: z.strictObject({
+      currentRevisionId: z.string().regex(/^revision\.[a-f0-9]{64}$/),
+      parentRevisionId: z
+        .string()
+        .regex(/^revision\.[a-f0-9]{64}$/)
+        .optional(),
+    }),
+    completeness: NovelAssetCompletenessSchema.optional(),
     section: InspectionSectionSchema,
     counts: z
       .object({
@@ -983,8 +1072,13 @@ export const SemanticRevisionComparisonSchema = z
     assetId: SemanticIdSchema,
     baseRevisionId: SemanticIdSchema,
     targetRevisionId: SemanticIdSchema,
-    affectedIds: z.array(SemanticIdSchema).max(2_000),
-    preservedIds: z.array(SemanticIdSchema).max(2_000),
+    affectedIds: z.array(SemanticIdSchema).max(100),
+    affectedIdsPage: PageInfoSchema,
+    preservedIds: z.array(SemanticIdSchema).max(100),
+    preservedIdsPage: PageInfoSchema,
+    baseState: NovelRevisionStateSchema,
+    targetState: NovelRevisionStateSchema,
+    requiredRoleChanges: z.array(NovelRequiredRoleChangeSchema).max(64),
     page: PageInfoSchema,
     changes: z.array(SemanticChangeSchema).max(100),
   })
@@ -1010,6 +1104,7 @@ export const CapabilityEvidenceSchema = z
   .object({
     publicTools: z.array(SemanticIdSchema).max(32),
     referenceAssetIds: z.array(SemanticIdSchema).max(32),
+    archetypeIds: z.array(SemanticIdSchema).max(16),
     templateIds: z.array(SemanticIdSchema).max(256),
     renderProfileIds: z.array(SemanticIdSchema).max(16),
     formats: z.array(SemanticIdSchema).max(16),

@@ -1,6 +1,17 @@
 import { existsSync, realpathSync } from 'node:fs';
-import { lstat, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
+import {
+  lstat,
+  mkdir,
+  readFile,
+  rename,
+  rmdir,
+  stat,
+  unlink,
+  writeFile,
+} from 'node:fs/promises';
 import { dirname, join, relative, resolve, sep } from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 import { z } from 'zod';
 
 import { AssetDocumentSchema, type AssetDocument } from '../contracts/index.js';
@@ -22,19 +33,30 @@ export const RevisionRecordSchema = z
   .strict();
 export type RevisionRecord = z.infer<typeof RevisionRecordSchema>;
 
+export interface RevisionSaveOptions {
+  readonly requireAbsent?: true;
+}
+
 export interface RevisionRepository {
   save(
     document: Readonly<AssetDocument>,
     expectedCurrentRevisionId?: string,
+    options?: RevisionSaveOptions,
   ): Promise<RevisionRecord>;
   get(assetId: string, revisionId: string): Promise<RevisionRecord | undefined>;
   getCurrent(assetId: string): Promise<RevisionRecord | undefined>;
+  restoreCurrent?(
+    assetId: string,
+    targetRevisionId: string,
+    expectedCurrentRevisionId: string,
+  ): Promise<RevisionRecord>;
 }
 
 export interface FileRevisionRepositoryOptions {
   readonly workspaceRoot: string;
   readonly storageDirectory?: string;
   readonly now?: () => Date;
+  readonly lockTimeoutMilliseconds?: number;
 }
 
 function inside(root: string, candidate: string): boolean {
@@ -64,10 +86,15 @@ async function assertNoSymlinkPath(
   }
 }
 
+const LOCK_RETRY_MILLISECONDS = 10;
+const LOCK_TIMEOUT_MILLISECONDS = 10_000;
+const LOCK_OWNER_INITIALIZATION_GRACE_MILLISECONDS = 5_000;
+
 export class FileRevisionRepository implements RevisionRepository {
   readonly #workspaceRoot: string;
   readonly #storageRoot: string;
   readonly #now: () => Date;
+  readonly #lockTimeoutMilliseconds: number;
 
   constructor(options: FileRevisionRepositoryOptions) {
     const resolvedWorkspaceRoot = resolve(options.workspaceRoot);
@@ -79,6 +106,13 @@ export class FileRevisionRepository implements RevisionRepository {
       options.storageDirectory ?? '.forge/revisions',
     );
     this.#now = options.now ?? (() => new Date());
+    this.#lockTimeoutMilliseconds =
+      options.lockTimeoutMilliseconds ?? LOCK_TIMEOUT_MILLISECONDS;
+    if (
+      !Number.isFinite(this.#lockTimeoutMilliseconds) ||
+      this.#lockTimeoutMilliseconds < 1
+    )
+      throw new Error('Revision lock timeout must be a positive number.');
     if (!inside(this.#workspaceRoot, this.#storageRoot))
       throw new Error(
         'Revision storage must remain inside the active workspace.',
@@ -88,41 +122,65 @@ export class FileRevisionRepository implements RevisionRepository {
   async save(
     document: Readonly<AssetDocument>,
     expectedCurrentRevisionId?: string,
+    options: RevisionSaveOptions = {},
   ): Promise<RevisionRecord> {
-    const current = await this.getCurrent(document.id);
-    if (
-      expectedCurrentRevisionId !== undefined &&
-      current?.revisionId !== expectedCurrentRevisionId
-    )
-      throw new Error('REVISION_CONFLICT');
-    const revisionId = contentRevisionId(document);
-    const record: RevisionRecord = {
-      revisionId,
-      assetId: document.id,
-      ...(current ? { parentRevisionId: current.revisionId } : {}),
-      createdAt: this.#now().toISOString(),
-      document: freezeDocument(structuredClone(document)),
-    };
-    const revisionPath = this.#revisionPath(document.id, revisionId);
-    await assertNoSymlinkPath(this.#workspaceRoot, dirname(revisionPath));
-    await mkdir(dirname(revisionPath), { recursive: true });
-    await assertNoSymlinkPath(this.#workspaceRoot, dirname(revisionPath));
-    const canonicalDocument: unknown = JSON.parse(canonicalSerialize(document));
-    try {
-      await writeFile(
-        revisionPath,
-        `${JSON.stringify({ ...record, document: canonicalDocument }, null, 2)}\n`,
-        { encoding: 'utf8', flag: 'wx' },
+    if (options.requireAbsent && expectedCurrentRevisionId !== undefined)
+      throw new Error('INVALID_CREATE_PRECONDITION');
+    return this.#withAssetLock(document.id, async () => {
+      const assetDirectory = this.#assetDirectory(document.id);
+      let reservedNewIdentity = false;
+      if (options.requireAbsent)
+        try {
+          await mkdir(assetDirectory);
+          reservedNewIdentity = true;
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code === 'EEXIST')
+            throw new Error('ALREADY_EXISTS', { cause: error });
+          throw error;
+        }
+      const current = reservedNewIdentity
+        ? undefined
+        : await this.getCurrent(document.id);
+      if (
+        expectedCurrentRevisionId !== undefined &&
+        current?.revisionId !== expectedCurrentRevisionId
+      )
+        throw new Error('REVISION_CONFLICT');
+      const revisionId = contentRevisionId(document);
+      const record: RevisionRecord = {
+        revisionId,
+        assetId: document.id,
+        ...(current ? { parentRevisionId: current.revisionId } : {}),
+        createdAt: this.#now().toISOString(),
+        document: freezeDocument(structuredClone(document)),
+      };
+      const revisionPath = this.#revisionPath(document.id, revisionId);
+      await assertNoSymlinkPath(this.#workspaceRoot, dirname(revisionPath));
+      if (!reservedNewIdentity)
+        await mkdir(dirname(revisionPath), { recursive: true });
+      await assertNoSymlinkPath(this.#workspaceRoot, dirname(revisionPath));
+      const canonicalDocument: unknown = JSON.parse(
+        canonicalSerialize(document),
       );
-    } catch (error) {
-      if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
-    }
-    const currentPath = this.#currentPath(document.id);
-    await assertNoSymlinkPath(this.#workspaceRoot, currentPath);
-    const temporaryPath = `${currentPath}.${process.pid}.tmp`;
-    await writeFile(temporaryPath, `${revisionId}\n`, 'utf8');
-    await rename(temporaryPath, currentPath);
-    return record;
+      let storedRecord = record;
+      try {
+        await writeFile(
+          revisionPath,
+          `${JSON.stringify({ ...record, document: canonicalDocument }, null, 2)}\n`,
+          { encoding: 'utf8', flag: 'wx' },
+        );
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+        const existing = await this.get(document.id, revisionId);
+        if (existing === undefined)
+          throw new Error('Existing revision could not be loaded.', {
+            cause: error,
+          });
+        storedRecord = existing;
+      }
+      await this.#writeCurrentPointer(document.id, revisionId);
+      return storedRecord;
+    });
   }
 
   async get(
@@ -175,6 +233,192 @@ export class FileRevisionRepository implements RevisionRepository {
       if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
       throw error;
     }
+  }
+
+  async restoreCurrent(
+    assetId: string,
+    targetRevisionId: string,
+    expectedCurrentRevisionId: string,
+  ): Promise<RevisionRecord> {
+    return this.#withAssetLock(assetId, async () => {
+      const current = await this.getCurrent(assetId);
+      if (current?.revisionId !== expectedCurrentRevisionId)
+        throw new Error('REVISION_CONFLICT');
+      if (targetRevisionId === expectedCurrentRevisionId)
+        throw new Error('NO_OP_RESTORE');
+      const target = await this.get(assetId, targetRevisionId);
+      if (target === undefined) throw new Error('NOT_FOUND');
+      await this.#writeCurrentPointer(assetId, targetRevisionId);
+      return target;
+    });
+  }
+
+  async #withAssetLock<Value>(
+    assetId: string,
+    operation: () => Promise<Value>,
+  ): Promise<Value> {
+    this.#assetDirectory(assetId);
+    await assertNoSymlinkPath(this.#workspaceRoot, this.#storageRoot);
+    await mkdir(this.#storageRoot, { recursive: true });
+    await assertNoSymlinkPath(this.#workspaceRoot, this.#storageRoot);
+    const lockRoot = resolve(this.#storageRoot, '.locks');
+    if (!inside(this.#storageRoot, lockRoot))
+      throw new Error('Revision lock path escaped revision storage.');
+    await mkdir(lockRoot, { recursive: true });
+    await assertNoSymlinkPath(this.#workspaceRoot, lockRoot);
+    const lockPath = resolve(lockRoot, `${assetId}.lock`);
+    if (!inside(lockRoot, lockPath))
+      throw new Error('Revision lock path escaped lock storage.');
+    const startedAt = Date.now();
+    const token = randomUUID();
+    const ownerPath = join(lockPath, 'owner.json');
+    while (true)
+      try {
+        await mkdir(lockPath);
+        try {
+          await writeFile(
+            ownerPath,
+            `${JSON.stringify({ pid: process.pid, token, acquiredAt: new Date().toISOString() })}\n`,
+            { encoding: 'utf8', flag: 'wx' },
+          );
+        } catch (error) {
+          await rmdir(lockPath);
+          throw error;
+        }
+        break;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+        if (await this.#recoverStaleLock(lockPath)) continue;
+        if (Date.now() - startedAt >= this.#lockTimeoutMilliseconds)
+          throw new Error('REVISION_LOCK_TIMEOUT', { cause: error });
+        await delay(LOCK_RETRY_MILLISECONDS);
+      }
+    const outcome = await operation().then(
+      (value) => ({ ok: true as const, value }),
+      (error: unknown) => ({ ok: false as const, error }),
+    );
+    await this.#assertLockDirectory(lockPath);
+    await this.#assertRegularLockOwner(ownerPath);
+    const owner = JSON.parse(await readFile(ownerPath, 'utf8')) as unknown;
+    if (
+      owner === null ||
+      typeof owner !== 'object' ||
+      !('token' in owner) ||
+      owner.token !== token
+    )
+      throw new Error('REVISION_LOCK_OWNERSHIP_LOST');
+    await unlink(ownerPath);
+    await rmdir(lockPath);
+    if (!outcome.ok) throw outcome.error;
+    return outcome.value;
+  }
+
+  async #recoverStaleLock(lockPath: string): Promise<boolean> {
+    try {
+      await this.#assertLockDirectory(lockPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true;
+      throw error;
+    }
+    const ownerPath = join(lockPath, 'owner.json');
+    let stale: boolean;
+    try {
+      await this.#assertRegularLockOwner(ownerPath);
+      const value = JSON.parse(await readFile(ownerPath, 'utf8')) as unknown;
+      if (
+        value !== null &&
+        typeof value === 'object' &&
+        'pid' in value &&
+        typeof value.pid === 'number' &&
+        Number.isSafeInteger(value.pid) &&
+        value.pid > 0
+      )
+        stale = !this.#processIsAlive(value.pid);
+      else stale = await this.#ownerlessLockIsRecoverable(lockPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT')
+        stale = await this.#ownerlessLockIsRecoverable(lockPath);
+      else if (error instanceof SyntaxError)
+        stale = await this.#ownerlessLockIsRecoverable(lockPath);
+      else throw error;
+    }
+    if (!stale) return false;
+    const quarantinePath = `${lockPath}.stale.${randomUUID()}`;
+    try {
+      await rename(lockPath, quarantinePath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true;
+      throw error;
+    }
+    await this.#assertLockDirectory(quarantinePath);
+    const quarantineOwnerPath = join(quarantinePath, 'owner.json');
+    try {
+      await this.#assertRegularLockOwner(quarantineOwnerPath);
+      await unlink(quarantineOwnerPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+    }
+    await rmdir(quarantinePath);
+    return true;
+  }
+
+  async #assertLockDirectory(lockPath: string): Promise<void> {
+    const metadata = await lstat(lockPath);
+    if (metadata.isSymbolicLink() || !metadata.isDirectory())
+      throw new Error('REVISION_LOCK_PATH_INVALID');
+  }
+
+  async #assertRegularLockOwner(ownerPath: string): Promise<void> {
+    const metadata = await lstat(ownerPath);
+    if (metadata.isSymbolicLink() || !metadata.isFile())
+      throw new Error('REVISION_LOCK_OWNER_INVALID');
+  }
+
+  async #ownerlessLockIsRecoverable(lockPath: string): Promise<boolean> {
+    try {
+      return (
+        Date.now() - (await stat(lockPath)).mtimeMs >=
+        LOCK_OWNER_INITIALIZATION_GRACE_MILLISECONDS
+      );
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return true;
+      throw error;
+    }
+  }
+
+  #processIsAlive(pid: number): boolean {
+    try {
+      process.kill(pid, 0);
+      return true;
+    } catch (error) {
+      return (error as NodeJS.ErrnoException).code !== 'ESRCH';
+    }
+  }
+
+  async #writeCurrentPointer(
+    assetId: string,
+    revisionId: string,
+  ): Promise<void> {
+    const currentPath = this.#currentPath(assetId);
+    await assertNoSymlinkPath(this.#workspaceRoot, currentPath);
+    const temporaryPath = `${currentPath}.${process.pid}.${randomUUID()}.tmp`;
+    await assertNoSymlinkPath(this.#workspaceRoot, temporaryPath);
+    const outcome = await (async () => {
+      await writeFile(temporaryPath, `${revisionId}\n`, {
+        encoding: 'utf8',
+        flag: 'wx',
+      });
+      await rename(temporaryPath, currentPath);
+    })().then(
+      () => ({ ok: true as const }),
+      (error: unknown) => ({ ok: false as const, error }),
+    );
+    try {
+      await unlink(temporaryPath);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+    }
+    if (!outcome.ok) throw outcome.error;
   }
 
   #assetDirectory(assetId: string): string {

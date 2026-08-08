@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 import {
   ConnectionDefinitionSchema,
+  HumanoidMorphologyProfileSchema,
   PartInstanceSchema,
   PoseDefinitionSchema,
   SemanticIdSchema,
@@ -65,6 +66,10 @@ export const SemanticOperationSchema = z.discriminatedUnion('operation', [
   z.strictObject({
     operation: z.literal('upsertRenderProfile'),
     renderProfile: SpriteRenderProfileSchema,
+  }),
+  z.strictObject({
+    operation: z.literal('setHumanoidMorphologyProfile'),
+    profile: HumanoidMorphologyProfileSchema,
   }),
 ]);
 export const SemanticPatchSchema = z.strictObject({
@@ -302,6 +307,15 @@ export function applySemanticPatch(
           operation.renderProfile,
         );
         affected.add(operation.renderProfile.id);
+        break;
+      case 'setHumanoidMorphologyProfile':
+        if (next.kitId !== operation.profile.kitId)
+          return failure(
+            '$.operations',
+            `Morphology kit ${operation.profile.kitId} does not match asset kit ${next.kitId}.`,
+          );
+        next.morphologyProfile = operation.profile;
+        affected.add(operation.profile.profileId);
         break;
     }
   }

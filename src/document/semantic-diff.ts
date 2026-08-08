@@ -166,6 +166,7 @@ export function compareSemanticDocuments(
     'assembly.id',
     'activeVariantId',
     'activePoseId',
+    'novelIdentity',
   ];
   for (const field of rootFields) {
     const beforeValue =
@@ -173,8 +174,14 @@ export function compareSemanticDocuments(
     const afterValue =
       field === 'assembly.id' ? after.assembly.id : after[field];
     if (equivalent(beforeValue, afterValue)) continue;
-    affected.add(after.id);
-    diffValue(changes, `$.${field}`, after.id, beforeValue, afterValue);
+    const identityValue = afterValue ?? beforeValue;
+    const fieldSemanticId =
+      (field === 'activeVariantId' || field === 'activePoseId') &&
+      typeof identityValue === 'string'
+        ? identityValue
+        : after.id;
+    affected.add(fieldSemanticId);
+    diffValue(changes, `$.${field}`, fieldSemanticId, beforeValue, afterValue);
   }
   if (!affected.has(after.id)) preserved.add(after.id);
 

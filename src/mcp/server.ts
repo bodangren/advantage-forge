@@ -11,6 +11,8 @@ import {
   ConnectPartsInputSchema,
   CreateAssetInputSchema,
   ExportAssetInputSchema,
+  GetInterchangeArtifactChunkInputSchema,
+  GetInterchangeManifestInputSchema,
   InspectCapabilitiesInputSchema,
   InspectAssetInputSchema,
   InspectTemplateInputSchema,
@@ -167,6 +169,22 @@ export function createFantasyAssetMcpServer(
       inputSchema: ValidateAssetInputSchema,
     },
     (input) => result(handlers.validateAsset(input)),
+  );
+  server.registerTool(
+    'get_interchange_manifest',
+    {
+      description: description('get_interchange_manifest'),
+      inputSchema: GetInterchangeManifestInputSchema,
+    },
+    (input) => result(handlers.getInterchangeManifest(input)),
+  );
+  server.registerTool(
+    'get_interchange_artifact_chunk',
+    {
+      description: description('get_interchange_artifact_chunk'),
+      inputSchema: GetInterchangeArtifactChunkInputSchema,
+    },
+    (input) => result(handlers.getInterchangeArtifactChunk(input)),
   );
   server.registerTool(
     'render_preview',

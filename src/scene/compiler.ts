@@ -100,6 +100,10 @@ export function compileThreeScene(
       materialBindings: part.materialBindings,
       materialColor: materialDefinition?.color ?? '#ff00ff',
       accessoryFeatures: template.accessory?.requiredFeatures ?? [],
+      requiredVisualFeatures:
+        template.requiredVisualFeatures ??
+        template.accessory?.requiredFeatures ??
+        [],
     };
     applyTransform(mesh, semantic.worldTransform);
     group.add(mesh);

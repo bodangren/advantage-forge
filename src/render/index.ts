@@ -7,4 +7,5 @@ export {
   yawRadiansForDirection,
 } from './profile.js';
 export type { SpriteDirection, SpriteRenderProfile } from './profile.js';
+export * from './reference-comparison.js';
 export * from './sprites.js';
