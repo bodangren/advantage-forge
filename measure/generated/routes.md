@@ -16,5 +16,7 @@
 | `connect_parts` | Semantic domain tool |
 | `set_pose` | Semantic domain tool |
 | `validate_asset` | Semantic domain tool |
+| `get_interchange_manifest` | Semantic domain tool |
+| `get_interchange_artifact_chunk` | Semantic domain tool |
 | `render_preview` | Semantic domain tool |
 | `export_asset` | Semantic domain tool |

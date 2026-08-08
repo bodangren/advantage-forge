@@ -26,6 +26,7 @@
 - Write operations return a structured patch summary, validation status, and revision identifier.
 - Broad regeneration is never the automatic fallback for a failed local edit.
 - Arbitrary code execution and raw filesystem access are prohibited tool capabilities.
+- Downstream consumers, including Pixel Art Generator, use public MCP only. They must not import Forge source, call internal handlers, use absolute paths, or rely on a shared mutable filesystem.
 
 ## Visual Output Guidelines
 
@@ -35,6 +36,17 @@
 - Permit intersecting closed parts when the supported views remain correct; internal hidden geometry is not an MVP defect.
 - Exaggerate small fantasy features when required to remain legible at output resolution.
 - Never approve an asset solely from a large 3D viewport render.
+- Before modeling a novel character for visual acceptance, preserve a provenance-bound generated turnaround/reference target covering front, three-quarter, side, and back views, or an owner-approved reduced view set. Obtain explicit owner approval first, then require side-by-side Kimi convergence evidence. Mechanical validity or transform-only compacting is not visual-identity proof.
+- If no approved built-in image generator is callable, stop and report the dependency. Do not silently use MMX or another provider.
+- Registered novel work uses `cute_chibi_v1` as its default profile. `heroic_stylized_v1` is secondary, original, and project-owned; apply only exaggerated silhouettes, material/value separation, and restrained detail as broad readability ideas. These profile contracts do not substitute for visual acceptance.
+- Do not copy franchise characters, symbols, costumes, names, or distinctive combinations. Record originality/provenance review evidence; do not promise legal clearance or guarantees.
+
+## Delivery and Interchange Guidelines
+
+- The implemented base interchange manifest uses the exact ID `forge-asset-interchange-manifest/v1`, is closed-schema and canonically serialized, and pins a SHA-256 digest.
+- The manifest identifies source revisions, profile ID/version, artifact digests, dimensions/media type, roles, and evidence references using portable identities.
+- Forge preserves individual transparent 128x128 PNG frames and GLBs as independently required source delivery. Contact sheets are derived review artifacts. The mechanically implemented `forge-temporal-render-artifacts/v1` path now delivers timed source frames, a Forge-derived atlas, and exact source GLB through public digest-bound chunks. Atlas-only delivery remains invalid; Pixel validates and stages Forge bytes without recomputing its atlas. No mechanical result becomes pack art until motion and every frame pass Kimi review.
+- The downstream completeness profile uses the exact implemented validation-contract ID `education-app-pack-profile/v1`; complete pack assembly remains blocked on animation output and accepted production inputs.
 
 ## Scope Guardrails
 
@@ -42,4 +54,4 @@
 - New part templates should be data definitions unless the existing geometry grammar is demonstrably insufficient.
 - A new geometry generator requires at least two committed reference uses or a documented replacement of a more complex feature.
 - A new dependency requires an update to `tech-stack.md` before implementation.
-- Optional content packs, additional styles, and general editing affordances remain deferred until the initial track is verified.
+- Optional content packs, additional styles, and general editing affordances remain deferred until their planned track is verified. Archived rustic work is historical evidence and is not rewritten to simulate these planned capabilities.

@@ -2,7 +2,7 @@
 
 ## Decision Summary
 
-The MVP is a strict TypeScript application with a shared deterministic asset engine, a local LLM tool adapter, and a browser renderer/inspector. Blender and all general-purpose DCC or game-engine runtimes are explicitly excluded.
+The MVP is a strict TypeScript application with a shared deterministic asset engine, a local LLM tool adapter, and a browser renderer/inspector. Forge is the semantic 3D/raster producer; Pixel Art Generator is the named downstream educational-app pack assembler. Blender and all general-purpose DCC or game-engine runtimes are explicitly excluded.
 
 ## Runtime and Language
 
@@ -32,6 +32,20 @@ The MVP is a strict TypeScript application with a shared deterministic asset eng
 - **GLB/glTF 2.0:** The only MVP 3D delivery format.
 - **PNG:** Transparent sprite frames and contact sheets.
 - **Local filesystem:** Projects, revisions, previews, and exports. No database, authentication, hosted service, or cloud storage in the MVP.
+
+## Public Interchange Boundary
+
+- `forge-asset-interchange-manifest/v1` is the technically accepted static shared base contract. It is a closed Zod schema with canonical serialization and a SHA-256 digest pin; portable records include artifact digests, source revisions, profile ID/version, dimensions/media type, roles, and evidence references.
+- `forge-temporal-render-artifacts/v1` is the mechanically implemented single-clip public temporal contract. It binds individual transparent 128x128 source frames, Forge-derived atlas metadata/bytes, exact source GLB, immutable asset/morphology/rig/equipment/clip/frame-plan identities, timing, metrics, and one canonical delivery ID. Every artifact is retrieved through bounded public chunks; atlas-only delivery is rejected. Production motion, the five-clip set, broader delivery-metadata reconciliation, Pixel admission/playback, and visual quality remain incomplete.
+- Pixel Art Generator may consume, validate, and package only Forge public MCP responses and portable interchange artifacts; it may not recompute Forge animation atlases, import Forge source, call internal handlers, use absolute paths, or share mutable filesystem state.
+- `education-app-pack-profile/v1` is implemented downstream as a validation contract, but complete pack assembly remains blocked on animation output and accepted production inputs.
+
+## Novel Identity Contract
+
+- `create_asset` accepts either a committed reference or a bounded novel-identity request. Novel initialization supports advertised rustic-humanoid and banded-container archetypes and produces a deterministic immutable skeleton.
+- Novel documents carry closed origin, provenance, lineage, render/interchange profile, and completeness metadata. Incomplete identities are inspectable but fail validation and every artifact-producing operation with `INCOMPLETE_ASSET`.
+- `asset.identity.initialize` and registered-grammar composition are supported for the advertised rustic humanoid and banded-container archetypes. Broad `asset.new_identity` remains partial because arbitrary anatomy, templates, generators, and raw-mesh composition are unavailable.
+- Novel-character visual acceptance is reference-led: a provenance-bound generated turnaround/reference target must be explicitly owner-approved before modeling and reviewed side-by-side through Kimi. No image-generation provider is selected by this stack, and MMX is not implicitly authorized.
 
 ## Capability Contract
 
@@ -75,6 +89,8 @@ src/
 ```
 
 Dependencies flow from adapters toward domain modules. `contracts` depends on no project module. `fantasy-kit` is data and template composition, not a second engine. `mcp` and `inspector` may call `tools`; domain modules never import an adapter.
+
+The default novel-identity style profile is `cute_chibi_v1`. The secondary `heroic_stylized_v1` profile requires explicit originality/provenance review, is limited to broad readability ideas (exaggerated silhouettes, material/value separation, restrained detail), and prohibits copied franchise characters, symbols, costumes, names, and distinctive combinations without offering legal guarantees.
 
 ## Deliberately Rejected for MVP
 

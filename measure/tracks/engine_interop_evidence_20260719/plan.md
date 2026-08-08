@@ -1,51 +1,54 @@
-# Implementation Plan: Engine Interop Evidence
+# Implementation Plan: Forge–Pixel Public MCP Interchange Evidence
 
-Prerequisite: `llm_authoring_workflow_hardening_20260717` (complete). Reuse its evidence-dossier and owner-verification conventions. Every phase writes failing tests before implementation.
+Prerequisite: `llm_authoring_workflow_hardening_20260717` (complete). This is the first active track. Reuse its evidence-dossier and owner-verification conventions. S1 contract foundations and the bounded S2 public-retrieval/immutable-registry foundation are implemented but uncommitted by owner direction. Two independent source-overlay clones now prove the real 16-tool/17-call stdio MCP render, export, manifest, bounded retrieval, reconstruction, and Pixel validation path deterministically. Automated S3 delivery-claim gates are proven, and the owner has accepted the static interchange boundary only. The definitive successor rebind is inventory-complete static claim `dacab165e0ad370136a3ac67abca4f086c21dabb8b45dcd225372b615b416ab4` over 68 producer files after two byte-identical post-alias public-MCP replays; inclusion of animation source is a freshness fact, not temporal acceptance. The checkpoint commit, Git note, clean-commit reachability, and Measure closeout remain pending because commits are unauthorized. Under delegated FINAL authority, successor source development may proceed without formal closeout only if every producer change fails the stale claim gate first, then reruns the real public-MCP replay and rebinds the claim before Green is accepted. The superseded e91779f game-engine-first strategy is not a Red baseline.
 
-## Phase S1: Define Interop Target Matrix
+## Phase S1: Define Forge–Pixel Interchange Manifest
 
 _Story ref: spec.md#story-s1_
 
-- [ ] Task: Draft the interop target matrix contract
-  - [ ] Enumerate candidate importers (glTF validator, Godot headless, Unity batch importer, sprite consumers) and probe host availability without installing anything globally.
-  - [ ] Define pass criteria per target: load success, meter scale, material slot survival, texture fidelity, animation presence where applicable.
-  - [ ] Define the manual-only placeholder format for non-automatable targets, including the owner verification procedure.
-- [ ] Task: Write failing matrix schema and coverage tests
-  - [ ] Reject targets missing importer, version, availability class, or pass criteria.
-  - [ ] Assert every committed reference artifact maps to at least one automated target.
-  - [ ] Assert manual-only targets can never be reported as automated passes.
-- [ ] Task: Commit the matrix and update product docs
-  - [ ] Serialize the matrix as a versioned, digested document consumed by the harness.
-  - [ ] Update `measure/product.md` and `measure/tech-stack.md` to declare the matrix before harness work begins.
+- [x] Task: Define the closed interchange manifest contract
+  - [x] Specify exact ID `forge-asset-interchange-manifest/v1`, canonical serialization, SHA-256 pinning, and portable evidence references.
+  - [x] Require artifact digests, source revisions, profile ID/version, dimensions/media type, and roles; classify individual 128x128 PNG frames and GLBs as independently required source artifacts and Forge-produced atlases/contact sheets/clip metadata as derived.
+  - [x] Define `cute_chibi_v1` as default and `heroic_stylized_v1` originality/provenance review requirements without legal guarantees.
+- [x] Task: Write failing manifest schema and boundary tests
+  - [x] Reject unknown fields, missing required records, noncanonical payloads, digest mismatches, and nonportable paths.
+  - [x] Reject a source import, internal handler, absolute path, or shared mutable filesystem dependency in the Pixel consumer fixture.
+  - [x] Assert source/derived artifact classification and profile/version evidence.
+- [x] Task: Publish the planned contract documentation
+  - [x] Update human docs and generated architecture facts without overstating acceptance.
+  - [x] Record a fresh strategy/baseline requirement before Red.
 
-## Phase S2: Automated Import Evidence Harness
+## Phase S2: Prove Public MCP Interchange Evidence
 
 _Story ref: spec.md#story-s2_
 
-- [ ] Task: Write failing harness contract tests
-  - [ ] Cover GLB validation evidence layout, input digest binding, and non-zero exit on import failure.
-  - [ ] Cover sprite atlas checks: frame count, dimensions, alpha presence, pivot/ground-contact metadata vs render profile.
-  - [ ] Cover clean-clone determinism: no network, no host-specific absolute paths.
-- [ ] Task: Implement the GLB import evidence path
-  - [ ] Run a headless glTF validator over committed exports and persist reports with input digests.
-  - [ ] Add one engine-grade import log (Godot `--headless` if available; otherwise the honest manual-only placeholder from S1).
-- [ ] Task: Implement the sprite atlas evidence path
-  - [ ] Decode committed atlases and verify frame geometry and alpha against the render profile.
-  - [ ] Record per-artifact verdicts naming artifact, importer, and contract clause on failure.
-- [ ] Task: Prove clean-clone determinism
-  - [ ] Run the harness twice in a fresh clone and diff evidence byte-for-byte, excluding timestamps declared in the matrix.
+- [x] Task: Write failing public-MCP evidence tests
+  - [x] Cover manifest retrieval, artifact/evidence digest binding, bounded transport, and fail-closed validation.
+  - [x] Cover static PNG/GLB registry delivery plus fixture-only derived atlas/contact-sheet/clip-metadata classification and atlas-only source-contract rejection; live Pixel public-MCP evidence is recorded under `s2-live-evidence/`.
+  - [x] Cover clone-root determinism without network, host-specific paths, or shared mutable storage; two independent source-overlay clones replayed the exact uncommitted snapshot because a clean commit remains unauthorized. See `clone-replay-verification.md`.
+- [x] Task: Implement the Forge public-MCP evidence path
+  - [x] Expose public MCP manifest/chunk operations and a production immutable registry for portable static PNG/GLB/evidence records; Pixel live consumption retrieved 9 artifacts and 1 evidence record through 17 public calls.
+  - [x] Persist deterministic workflow evidence and an immutable canonical manifest bound to actual byte digests.
+  - [x] Map internal `sprite.default` to external `fantasy.sprite.orthographic.v1` only under exact render-parameter equality; reject drift and unknown IDs.
+- [x] Task: Validate downstream completeness-profile handoff
+  - [x] Define and exercise the `education-app-pack-profile/v1` handoff inputs without asserting a finished pack.
+  - [x] Record per-artifact failures with the manifest contract clause.
+- [x] Task: Prove clone-root determinism under the no-commit constraint
+  - [x] Two independent local no-hardlink clones reproduced claim `ac456aa8...0b9e89e`, 56 producer files, the focused 5-file/24-test suite, typecheck, the claim-bound gate, and byte-identical 16-tool/17-call stdio MCP outputs from separate empty runtime roots. This is source-overlay portability evidence, not proof that the snapshot is reachable from a clean Git commit. See `clone-replay-verification.md`.
 
-## Phase S3: Gate Exports on Interop Evidence
+## Phase S3: Gate Delivery Claims on Interchange Evidence
 
 _Story ref: spec.md#story-s3_
 
-- [ ] Task: Write failing gate tests
-  - [ ] Doctor/quality gate fails when evidence is missing, stale, or digest-mismatched, with an actionable message.
-  - [ ] Regression test reproduces any contract-level defect uncovered in S2 against the fixed export.
-- [ ] Task: Wire the gate into the existing check suite
-  - [ ] Add the interop evidence freshness check to doctor and the run-full-checks path.
-  - [ ] Keep the gate skippable only through the matrix's explicit manual-only mechanism.
-- [ ] Task: Produce the final evidence dossier and owner verification
-  - [ ] Assemble per-target automated evidence or manual-only placeholders for every matrix row.
-  - [ ] Record the six-step-style owner verification procedure in the track's verification document.
-- [ ] Task: Measure - User Manual Verification 'Phase S3: Gate Exports on Interop Evidence' (Protocol in workflow.md)
+- [x] Task: Write failing delivery-claim gate tests
+  - [x] Fail when evidence is missing, stale, digest-mismatched, or violates the public-MCP boundary.
+  - [x] Reproduce every contract-level defect found in S2, including profile-digest, raw-boundary, arbitrary-chunk-digest, missing-chunk-digest, stale-file, record-attribution, and provenance-reference regressions.
+- [x] Task: Wire the gate into the existing check suite
+  - [x] Add immutable claim freshness and public-boundary checks through `pnpm check:interchange-evidence` and `pnpm check` without editing generated documentation by hand.
+  - [x] Keep unimplemented downstream pack, animation, atlas, and game-engine claims explicitly planned.
+- [b] Task: Produce the final evidence dossier and owner verification (blocked:commit-authorization)
+  - [x] Assemble manifest, public-MCP, portability, downstream-profile, and originality/provenance evidence under `s2-live-evidence/` with an immutable delivery claim.
+  - [x] Record that game-engine compatibility remains Not Assessed.
+  - [x] Complete independent clone-root proof and owner/manual verification for the static interchange boundary. See `clone-replay-verification.md` and `owner-verification.md`.
+  - [b] Create the required phase checkpoint commit and Git note; owner authorization has not been granted, so this task, phase closeout, and track closeout remain pending. (blocked:commit-authorization)
+- [x] Task: Measure - User Manual Verification 'Phase S3: Gate Delivery Claims on Interchange Evidence' (Protocol in workflow.md) [approved: 2026-07-22] [scope: static interchange only] [evidence: owner-verification.md]

@@ -2,14 +2,15 @@
 
 ## Overview
 
-Allow a fresh LLM to create distinct, versioned character and standalone prop identities from the public template grammar without source edits or complete hand-authored documents. This track closes the benchmark's four-reference boundary while preserving the product's constrained semantic model.
+After Forge–Pixel public-MCP interchange is evidenced, allow a fresh LLM to create original, distinct, versioned character and standalone-prop identities from the public template grammar without source edits or complete hand-authored documents. The bounded identity, composition, revision, and static delivery implementation now exists for the two advertised archetypes. Final novel-character visual acceptance remains blocked on the reference-led workflow defined in S4.
 
-Novel means a new canonical asset identity and composition assembled from registered templates, materials, ports, render profiles, and bounded parameters. It does not mean arbitrary topology, unregistered generators, user-supplied code, or silently adding new kit content. The public workflow must make the valid construction grammar discoverable and keep every intermediate revision inspectable and recoverable.
+Novel means a new canonical asset identity and composition assembled from registered templates, materials, ports, render profiles, and bounded parameters. The default profile is `cute_chibi_v1`; secondary `heroic_stylized_v1` is original and project-owned, using only broad readability ideas (exaggerated silhouettes, material/value separation, restrained detail). It prohibits copied franchise characters, symbols, costumes, names, and distinctive combinations; review records originality/provenance, not legal guarantees. Novel authoring does not mean arbitrary topology, unregistered generators, user-supplied code, or silently adding new kit content.
 
 ## Prerequisites
 
 - `llm_authoring_workflow_hardening_20260717` is complete.
 - `character_accessory_library_20260717` is complete so novel characters can express useful identity through supported equipment rather than cloned references.
+- `engine_interop_evidence_20260719` has a technically accepted static public-MCP boundary using `forge-asset-interchange-manifest/v1`; its formal checkpoint and Measure closeout remain commit-gated.
 
 ## Stories
 
@@ -21,7 +22,7 @@ Novel means a new canonical asset identity and composition assembled from regist
 
 **Acceptance Criteria:**
 
-- Given a valid unused semantic asset ID, kit ID, style profile, asset family, and base archetype, When initialization runs, Then a minimal valid immutable revision is created with seed, units, budgets, render profile, and no hidden reference identity.
+- Given a valid unused semantic asset ID, kit ID, style profile, asset family, and base archetype, When initialization runs, Then a minimal valid immutable revision is created with seed, units, budgets, render profile, and no hidden reference identity; `cute_chibi_v1` is the default.
 - Given an existing, reserved, traversal-like, malformed, or conflicting ID, When initialization is requested, Then the operation fails without mutation and explains the identity rule.
 - Given supported humanoid and standalone-prop archetypes, When capabilities are inspected, Then their required roles, allowed templates, default materials, required ports, and completion rules are discoverable.
 - Given an initialized asset, When inspected, Then its origin, archetype, current completeness state, missing requirements, and revision lineage are visible through public tools.
@@ -37,7 +38,7 @@ Novel means a new canonical asset identity and composition assembled from regist
 
 **Acceptance Criteria:**
 
-- Given a brief such as “rustic guard with iron helmet, spear, and kite shield” or “iron-banded barrel,” When the grammar is queried, Then the LLM can find compatible templates, materials, ports, parameter presets, and suggested next operations.
+- Given an original brief such as “round chibi village guard with iron helmet, spear, and kite shield” or “iron-banded barrel,” When the grammar is queried, Then the LLM can find compatible templates, materials, ports, parameter presets, and suggested next operations without franchise copying.
 - Given a selected template and target semantic role, When a part is added, Then safe defaults, bounded parameters, material bindings, stable IDs, and compatible attachment transforms are resolved by the domain workflow.
 - Given a compatible connection, When it is dry-run or applied, Then port occupancy, cycles, handedness, bounds, completeness, and triangle budget are validated before revision write.
 - Given a missing required role or unattached part, When validation runs, Then the result identifies the incomplete semantic path and a bounded correction rather than generating hidden content.
@@ -70,10 +71,12 @@ Novel means a new canonical asset identity and composition assembled from regist
 
 **Acceptance Criteria:**
 
+- Given a novel character brief, Before 3D modeling begins, Then a provenance-bound generated turnaround or reference target is preserved, covers at minimum front, three-quarter, side, and back views unless the owner explicitly accepts a reduced view set, and receives explicit owner approval.
 - Given a fresh MCP-capable LLM with no source access, When asked for a helmeted rustic guard, Then it creates a new identity, composes supported anatomy and accessories, validates, visually iterates, renders eight directions, and exports a GLB.
 - Given the same environment, When asked for a rustic iron-banded barrel, Then it creates a distinct standalone-prop identity from existing grammar without renaming the crate or adding source templates.
-- Given both workflows, When evidence is reviewed, Then chronological transcripts, revisions, semantic comparisons, validation, 3D captures, actual-resolution sprites, manifests, and GLBs prove the result.
+- Given both workflows, When evidence is reviewed, Then chronological transcripts, revisions, semantic comparisons, validation, 3D captures, actual-resolution PNG frames, `forge-asset-interchange-manifest/v1` records, GLBs, and originality/provenance review evidence prove the result.
 - Given repeated builds from the same canonical revisions and seed, When render and export repeat, Then semantic structure, framing, direction order, and supported deterministic artifact properties remain stable.
+- Given the generated reference target and Forge renders, When visual acceptance is requested, Then side-by-side Kimi review records convergence across the approved views; transform-only compacting or mechanical validity cannot substitute for visual-identity convergence.
 
 **Estimate:** L
 **Priority:** Must
@@ -82,6 +85,8 @@ Novel means a new canonical asset identity and composition assembled from regist
 
 - Initialization and composition are schema validated and restricted to the active project workspace.
 - Public authoring never exposes arbitrary filesystem operations, source modification, raw mesh mutation, anonymous vertices, or code execution.
+- Public authoring and delivery use Forge public MCP; no downstream consumer may use source imports, internal handlers, absolute paths, or shared mutable filesystem state.
+- The reference-image generator/provider is an explicit approved dependency. If no approved built-in generator is callable, the workflow stops rather than silently selecting MMX or another provider.
 - New assets use registered kit templates and the shared geometry, assembly, material, validation, render, and export paths.
 - Intermediate incomplete assets are explicitly marked and may not be exported as complete deliverables until required roles validate.
 - Response budgets, pagination, deterministic ordering, and immutable content-addressed revisions apply to novel assets.
@@ -93,11 +98,12 @@ Novel means a new canonical asset identity and composition assembled from regist
 - All invalid identity, incomplete composition, compatibility, stale revision, cycle, port, budget, and traversal cases fail without corruption.
 - The workflow skill plans, dry-runs, visually reviews, and reports both novel asset workflows honestly.
 - Product, generated capability/tool catalogs, README, and benchmark protocol are updated to state the bounded novel-identity contract.
+- Novel-character visual acceptance requires the approved reference target and side-by-side convergence evidence; the mechanically valid rejected guard iteration does not satisfy this criterion.
 
 ## Out of Scope
 
 - Creating new procedural generator implementations during an authoring session.
 - Arbitrary vertices, mesh imports, texture painting, free-form sculpting, booleans, or general DCC behavior.
-- New creatures, quadrupeds, deforming anatomy, multiple art directions, or unregistered culture packs.
+- New creatures, quadrupeds, deforming anatomy, unregistered culture packs, copied franchise identities, or distinctive franchise combinations.
 - Temporal animation or sprite atlas production.
 - General scenes, terrain, levels, interiors, or gameplay logic.

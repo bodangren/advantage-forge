@@ -1,0 +1,1 @@
+{"contract_id":"forge-public-mcp-workflow-evidence/v1","asset_id":"adventurer.rustic","revision_id":"revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67","source_operations":["render_preview","export_asset"],"retrieval_operations":["get_interchange_manifest","get_interchange_artifact_chunk"]}

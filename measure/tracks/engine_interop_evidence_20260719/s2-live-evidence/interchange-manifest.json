@@ -1,0 +1,158 @@
+{
+  "contract_id": "forge-asset-interchange-manifest/v1",
+  "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+  "source": {
+    "asset_id": "adventurer.rustic",
+    "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67"
+  },
+  "style_profile": {
+    "id": "cute_chibi_v1",
+    "version": "1.0.0",
+    "review": {
+      "status": "not_required"
+    }
+  },
+  "render_profile": {
+    "id": "fantasy.sprite.orthographic.v1",
+    "version": "1.0.0"
+  },
+  "provenance": {
+    "source_kind": "project_generated",
+    "workflow_reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/public-mcp-workflow.json",
+    "ownership": "project_owned",
+    "license_label": "project-owned"
+  },
+  "artifacts": [
+    {
+      "id": "frame.n",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3716,
+      "sha256": "415cacf519bd05effa5d00ce85188db866a02e9ed4e115532c7eff9ed83c973b",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/n.png",
+      "direction": "N",
+      "transparent": true
+    },
+    {
+      "id": "frame.ne",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3725,
+      "sha256": "2eb022062f1f79f32d9bf5495668eac81fa82baae1d6244e08a2abca2800dcab",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/ne.png",
+      "direction": "NE",
+      "transparent": true
+    },
+    {
+      "id": "frame.e",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 2511,
+      "sha256": "fb21cd2e186db539747e8c47eeed35d32d0ed99ded67467bff95d65cdfcbde55",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/e.png",
+      "direction": "E",
+      "transparent": true
+    },
+    {
+      "id": "frame.se",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3538,
+      "sha256": "27c97fd26f140ad1fd88e417a92345a0d3048ef18f3d77b2201b5382c1061e86",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/se.png",
+      "direction": "SE",
+      "transparent": true
+    },
+    {
+      "id": "frame.s",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3488,
+      "sha256": "7ef24e8965f864f4381e8d143360fd582ce8da50e639f831bd75477cf0ed8280",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/s.png",
+      "direction": "S",
+      "transparent": true
+    },
+    {
+      "id": "frame.sw",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3132,
+      "sha256": "74001caef0f3deea74f9bfc4b0fb894ca02fe43a15813227aad4b1ab530f67e9",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/sw.png",
+      "direction": "SW",
+      "transparent": true
+    },
+    {
+      "id": "frame.w",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 2242,
+      "sha256": "17984b1c6f389f2ff699542720c2d18330b68255fde663932fd84c84bf0d1c30",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/w.png",
+      "direction": "W",
+      "transparent": true
+    },
+    {
+      "id": "frame.nw",
+      "classification": "source",
+      "role": "directional_frame",
+      "media_type": "image/png",
+      "byte_length": 3560,
+      "sha256": "febcbfbd244c724693bbde08b5e940a3bee93735f50811afd71d8766dac2e62a",
+      "width": 128,
+      "height": 128,
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/nw.png",
+      "direction": "NW",
+      "transparent": true
+    },
+    {
+      "id": "model.glb",
+      "classification": "source",
+      "role": "glb",
+      "media_type": "model/gltf-binary",
+      "byte_length": 60320,
+      "sha256": "ef22ce2bad7e2c3051c4839a70a7cb568c75c4df99cf76c39a1d652e43d4099c",
+      "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/adventurer.rustic.glb"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "workflow.public-mcp",
+      "kind": "workflow",
+      "reference": "artifacts/reference/adventurer.rustic/revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67/public-mcp-workflow.json",
+      "sha256": "c9a504ddd7b7cdda0a8e54121e2970bc7d42f271cd021e2256377c79fd207ef4",
+      "byte_length": 316
+    }
+  ]
+}

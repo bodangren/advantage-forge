@@ -3,37 +3,37 @@
   "type": "feature",
   "status": "pending",
   "created_at": "2026-07-19T05:10:00Z",
-  "updated_at": "2026-07-19T05:10:00Z",
-  "description": "Prove exported GLBs and sprite atlases survive real external game-engine import paths with direct evidence",
-  "estimated_tasks": 12,
+  "updated_at": "2026-07-22T00:00:00Z",
+  "description": "Implemented static Forge-to-Pixel Art Generator public-MCP interchange evidence with a portable digest-pinned source-delivery manifest; formal closeout remains commit-gated",
+  "estimated_tasks": 11,
   "actual_tasks": null,
-  "deviation_notes": "Addresses tech-debt: external game-engine compatibility remains unassessed (Unity, Godot, gameplay-runtime scale/material behavior). Depends on llm_authoring_workflow_hardening_20260717 (complete) for workflow and evidence conventions.",
+  "deviation_notes": "Owner decision supersedes the e91779f game-engine-first strategy. External game-engine compatibility remains Not Assessed and is out of scope. Static public-MCP interchange is technically implemented and manually accepted at placeholder transport scope. Current uncommitted-overlay claim dacab165e0ad370136a3ac67abca4f086c21dabb8b45dcd225372b615b416ab4 covers the complete 68-file producer inventory and passes the hardened claim gate after a fresh deterministic two-root replay. Earlier diagnostic runs caught and rejected a Node-backed browser-boundary regression, an unclaimed-source inventory race, and a torso/body.root morphology alias gap before final binding. Clean-commit reachability, checkpoint note, and archive closeout remain blocked because commits are unauthorized. Novel-character visual quality, temporal runtime acceptance, atlases, theme packs, and game-engine integration are explicitly outside this acceptance.",
   "sprint": {
-    "goal": "Replace the assumption that exports are game-ready with audited import evidence from external runtimes, and gate future exports on that evidence staying green.",
+    "goal": "Define and prove a portable public-MCP interchange boundary from Forge to Pixel Art Generator without asserting any unimplemented downstream capability.",
     "stories": [
       {
         "id": "S1",
-        "title": "Define Interop Target Matrix",
+        "title": "Define Forge–Pixel Interchange Manifest",
         "size": "M",
         "priority": "Must",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "id": "S2",
-        "title": "Automated Import Evidence Harness",
+        "title": "Prove Public MCP Interchange Evidence",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "completed"
       },
       {
         "id": "S3",
-        "title": "Gate Exports on Interop Evidence",
+        "title": "Gate Delivery Claims on Interchange Evidence",
         "size": "M",
         "priority": "Should",
-        "status": "pending"
+        "status": "in_progress"
       }
     ],
-    "demo_notes": null,
+    "demo_notes": "See owner-verification.md, public-mcp-replay-verification.md, s3-gate-verification.md, and clone-replay-verification.md. Current inventory-complete 68-file static overlay claim: dacab165e0ad370136a3ac67abca4f086c21dabb8b45dcd225372b615b416ab4.",
     "retro_ref": null
   }
 }

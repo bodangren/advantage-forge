@@ -3,6 +3,26 @@
   "sourceRoot": "src",
   "modules": [
     {
+      "name": "animation",
+      "publicEntry": "src/animation/index.ts",
+      "sourceFiles": [
+        "src/animation/authoring.ts",
+        "src/animation/clip-library-v2.ts",
+        "src/animation/index.ts",
+        "src/animation/reference-five-clip.ts",
+        "src/animation/rendering.ts",
+        "src/animation/reusable-pose-authoring.ts",
+        "src/animation/rigid-animation.ts"
+      ],
+      "projectDependencies": [
+        "assembly",
+        "contracts"
+      ],
+      "externalDependencies": [
+        "zod"
+      ]
+    },
+    {
       "name": "assembly",
       "publicEntry": "src/assembly/index.ts",
       "sourceFiles": [
@@ -21,8 +41,21 @@
       "name": "contracts",
       "publicEntry": "src/contracts/index.ts",
       "sourceFiles": [
+        "src/contracts/authoring-review.ts",
+        "src/contracts/clip-library-v2.ts",
+        "src/contracts/domain-error.ts",
+        "src/contracts/humanoid-morphology.ts",
         "src/contracts/index.ts",
-        "src/contracts/schemas.ts"
+        "src/contracts/interchange.ts",
+        "src/contracts/novel-composition.ts",
+        "src/contracts/novel-identity.ts",
+        "src/contracts/novel-revision.ts",
+        "src/contracts/pose-library.ts",
+        "src/contracts/reference-character.ts",
+        "src/contracts/rigid-animation.ts",
+        "src/contracts/rigid-rig-v2.ts",
+        "src/contracts/schemas.ts",
+        "src/contracts/temporal-interchange.ts"
       ],
       "projectDependencies": [],
       "externalDependencies": [
@@ -67,12 +100,19 @@
       "sourceFiles": [
         "src/fantasy-kit/accessories.ts",
         "src/fantasy-kit/catalog.ts",
+        "src/fantasy-kit/humanoid-morphology.ts",
         "src/fantasy-kit/index.ts",
-        "src/fantasy-kit/loadouts.ts"
+        "src/fantasy-kit/loadouts.ts",
+        "src/fantasy-kit/novel-composition.ts",
+        "src/fantasy-kit/novel-identities.ts",
+        "src/fantasy-kit/novel-revisions.ts",
+        "src/fantasy-kit/reference-geometry/chibi-guard.ts",
+        "src/fantasy-kit/reference-geometry/humanoid-geometry-regressions.ts"
       ],
       "projectDependencies": [
         "assembly",
-        "contracts"
+        "contracts",
+        "document"
       ],
       "externalDependencies": [
         "zod"
@@ -134,6 +174,7 @@
         "src/render/camera.ts",
         "src/render/index.ts",
         "src/render/profile.ts",
+        "src/render/reference-comparison.ts",
         "src/render/sprites.ts"
       ],
       "projectDependencies": [
@@ -164,15 +205,27 @@
       "name": "services",
       "publicEntry": "src/services/index.ts",
       "sourceFiles": [
+        "src/services/authoring-review-artifacts.ts",
         "src/services/browser-artifacts.ts",
-        "src/services/index.ts"
+        "src/services/claim-bound-interchange-gate.ts",
+        "src/services/index.ts",
+        "src/services/interchange-artifacts.ts",
+        "src/services/interchange-claim-files.ts",
+        "src/services/interchange-evidence-gate.ts",
+        "src/services/public-mcp-interchange-replay.ts",
+        "src/services/rig-pose-library-repository.ts"
       ],
       "projectDependencies": [
         "contracts",
+        "document",
+        "render",
+        "scene",
         "tools"
       ],
       "externalDependencies": [
-        "@playwright/test"
+        "@playwright/test",
+        "three",
+        "zod"
       ]
     },
     {

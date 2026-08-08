@@ -2,7 +2,7 @@
 
 ## Overview
 
-Let an LLM author, inspect, validate, render, and export five readable rigid-part character clips as a deterministic transparent sprite atlas with trustworthy metadata. The initial clips are `idle`, `walk_forward`, `walk_right`, `attack`, and `receive_damage` for one supported humanoid identity and equipment loadout.
+After public interchange and novel identity work, let an LLM author, inspect, validate, and deliver five planned readable rigid-part character clips as individual transparent 128x128 Forge frames. Forge also produces deterministic derived atlases, contact sheets, and clip metadata; Pixel Art Generator or another public-MCP consumer consumes, validates, and packages those outputs without recomputing Forge animation atlases. Individual frames and GLBs remain independently required source delivery, so atlas-only delivery cannot satisfy the source contract. The initial clips are `idle`, `walk_forward`, `walk_right`, `attack`, and `receive_damage` for one supported humanoid identity and equipment loadout.
 
 This track deliberately implements rigid-part animation over the existing semantic assembly, joint, pose, material, camera, and renderer contracts. It does not introduce skeletal deformation, skinning, inverse kinematics, physics, cloth simulation, or a timeline editor. If rigid motion cannot meet the approved visual contract, the track must record that evidence before proposing a different animation architecture.
 
@@ -11,6 +11,7 @@ This track deliberately implements rigid-part animation over the existing semant
 - `llm_authoring_workflow_hardening_20260717` is complete.
 - `character_accessory_library_20260717` is complete so equipment identity and compatibility persist through clips.
 - `novel_asset_identity_authoring_20260717` is complete so the animation workflow operates on a genuinely authored character identity rather than only the committed adventurer reference.
+- `engine_interop_evidence_20260719` is complete so delivery records use `forge-asset-interchange-manifest/v1` through public MCP.
 - `measure/product.md` and `measure/tech-stack.md` are updated to approve rigid animation and atlas outputs before implementation begins.
 
 ## Stories
@@ -57,8 +58,8 @@ This track deliberately implements rigid-part animation over the existing semant
 
 **Acceptance Criteria:**
 
-- Given validated clips, When rendered, Then every cell is a transparent 128x128 PNG using the declared camera, palette, lighting, scale, ground/pivot anchor, and equipment state.
-- Given a combined atlas, When exported, Then deterministic layout metadata includes asset and source revision, clip revisions, sheet path/dimensions, cell dimensions, clip ranges, per-frame rectangles, timing, loop flags, direction/action labels, and pivot/ground coordinates.
+- Given validated clips, When rendered, Then every Forge source frame is a transparent 128x128 PNG using the declared camera, palette, lighting, scale, ground/pivot anchor, and equipment state.
+- Given a combined atlas, When Forge derives it, Then deterministic layout metadata includes asset and source revision, clip revisions, source-frame digests, sheet dimensions, cell dimensions, clip ranges, per-frame rectangles, timing, loop flags, direction/action labels, and pivot/ground coordinates.
 - Given repeated renders in the pinned environment, When compared, Then frame plan, metadata, atlas layout, and supported artifact bytes are deterministic; cross-GPU runs preserve semantic and pixel-contract equivalence.
 - Given an output set, When validated, Then empty cells, clipping, anchor deviation, camera/scale drift, inconsistent identity/material/equipment, duplicate filler frames, and invalid loop seams are reported.
 - Given static directional contact sheets, When animation validation runs, Then they cannot be substituted for temporal clips.
@@ -91,10 +92,10 @@ This track deliberately implements rigid-part animation over the existing semant
 
 **Acceptance Criteria:**
 
-- Given the benchmark's exact five-clip request and a fresh MCP-capable LLM, When the workflow skill runs, Then it creates or selects a supported character, authors all clips, validates, visually iterates, exports the atlas/metadata, and reports every source and clip revision.
-- Given the final atlas and metadata, When clips are extracted and played at declared timing, Then frame counts, uniqueness, loop seams, action phases, direction distinction, anchors, and identity consistency pass.
+- Given the benchmark's exact five-clip request and a fresh MCP-capable LLM, When the workflow skill runs, Then it creates or selects a supported character, authors all clips, validates, visually iterates, has Forge export the derived atlas/contact-sheet/clip metadata, and reports every source and clip revision.
+- Given the final source frames and Forge-derived atlas metadata, When clips are extracted and played at declared timing, Then frame counts, uniqueness, loop seams, action phases, direction distinction, anchors, and identity consistency pass; atlas-only delivery is rejected as incomplete source delivery.
 - Given the complete workflow, When evidence is captured, Then natural-language/tool transcript, retries, timing, revisions, actual-resolution frames, animated previews or frame-by-frame sheets, hashes, metadata, and paths are preserved.
-- Given a target game importer or reference playback harness, When the atlas and metadata are consumed, Then clip ranges, timing, loops, pivots, and transparent rendering work without manual image edits.
+- Given the Pixel Art Generator reference playback harness, When public-MCP delivery frames, GLBs, and Forge-derived atlas metadata are consumed, validated, and packaged, Then clip ranges, timing, loops, pivots, and transparent rendering work without recomputing Forge animation atlases, manual image edits, source imports, internal handlers, absolute paths, or shared mutable filesystems.
 
 **Estimate:** L
 **Priority:** Must
@@ -104,7 +105,8 @@ This track deliberately implements rigid-part animation over the existing semant
 - Animation remains semantic rigid-part motion evaluated by the shared scene compiler.
 - Clip documents and revisions are canonical, deterministic, versioned, and independently inspectable.
 - Rendering remains bounded, local, and free of arbitrary code, unrestricted filesystems, network retrieval, or DCC dependencies.
-- Atlas generation cannot alter frame content through post-processing beyond deterministic layout/composition owned by the product renderer.
+- Forge-owned atlas and contact-sheet generation cannot alter frame content through post-processing beyond deterministic layout/composition owned by the Forge renderer.
+- Delivery manifests use `forge-asset-interchange-manifest/v1`; `cute_chibi_v1` is default, and `heroic_stylized_v1` requires originality/provenance review rather than legal guarantees and prohibits copied franchise characters, symbols, costumes, names, and distinctive combinations.
 - New domain and adapter code maintains more than 80% coverage; browser-visible motion is a mandatory acceptance gate.
 - Performance targets and maximum clip/frame/atlas budgets are declared before implementation and validated mechanically.
 
@@ -121,5 +123,5 @@ This track deliberately implements rigid-part animation over the existing semant
 - Skeletal skinning, mesh deformation, inverse kinematics, motion capture, physics, cloth, hair simulation, facial animation, and blend shapes.
 - General nonlinear animation editors, arbitrary curves, scripting, or importing third-party animation files.
 - More than the five required reference clips or multiple character anatomies unless added through a later track.
-- Perspective cameras, arbitrary cell sizes, texture atlases unrelated to rendered sprites, or engine-specific proprietary formats.
+- Perspective cameras, arbitrary cell sizes, texture atlases unrelated to rendered sprites, engine-specific proprietary formats, or downstream source coupling.
 - Hiding rigid-animation limitations or claiming approval when delivery-resolution motion remains unreadable.

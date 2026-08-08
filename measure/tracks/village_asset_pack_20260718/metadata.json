@@ -3,45 +3,45 @@
   "type": "feature",
   "status": "new",
   "created_at": "2026-07-17T22:10:26Z",
-  "updated_at": "2026-07-17T22:10:26Z",
-  "description": "Assemble a bounded village asset pack end-to-end with deterministic exports and pack-level evidence",
-  "estimated_tasks": 20,
+  "updated_at": "2026-07-22T00:00:00Z",
+  "description": "Plan a complete Pixel Art Generator educational-app pack that consumes, validates, and packages Forge public-MCP source and derived delivery",
+  "estimated_tasks": 21,
   "actual_tasks": null,
-  "deviation_notes": "Prerequisite: rigid_animation_sprite_pipeline_20260717 (and transitively the three upstream authoring tracks) must complete before implementation begins.",
+  "deviation_notes": "Prerequisite: rigid_animation_sprite_pipeline_20260717 (and transitively Forge–Pixel interchange, novel identity, and upstream authoring tracks) must complete before implementation begins. Pixel Art Generator consumes, validates, and packages Forge public-MCP outputs; Forge preserves source frames and GLBs and produces derived atlases, contact sheets, and clip metadata rather than sharing its filesystem.",
   "sprint": {
-    "goal": "Let an LLM assemble, validate, and export one coherent game-ready village starter pack — characters, equipment, props, vegetation, and structures — as versioned documents, sprite sheets, atlases, and GLBs under a single digested pack manifest.",
+    "goal": "Let Pixel Art Generator consume, validate, and package one complete educational-app pack from Forge public-MCP source and derived delivery under the exact education-app-pack-profile/v1 completeness contract.",
     "stories": [
       {
         "id": "S1",
-        "title": "Define Pack Contracts",
+        "title": "Define Educational-App Pack Contracts",
         "size": "L",
         "priority": "Must",
         "status": "pending"
       },
       {
         "id": "S2",
-        "title": "Author Pack Membership Through Tools",
+        "title": "Assemble Membership Through Public MCP",
         "size": "L",
         "priority": "Must",
         "status": "pending"
       },
       {
         "id": "S3",
-        "title": "Produce Deterministic Pack Outputs",
+        "title": "Package Forge Derived Educational-App Outputs",
         "size": "XL",
         "priority": "Must",
         "status": "pending"
       },
       {
         "id": "S4",
-        "title": "Deliver the Reference Village Pack",
+        "title": "Deliver the Reference Educational-App Pack",
         "size": "L",
         "priority": "Must",
         "status": "pending"
       },
       {
         "id": "S5",
-        "title": "Prove Pack Product Fitness",
+        "title": "Prove Educational-App Pack Fitness",
         "size": "M",
         "priority": "Must",
         "status": "pending"

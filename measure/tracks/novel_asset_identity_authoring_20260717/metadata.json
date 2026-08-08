@@ -1,46 +1,46 @@
 {
   "track_id": "novel_asset_identity_authoring_20260717",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-07-17T12:37:24Z",
-  "updated_at": "2026-07-17T12:37:24Z",
-  "description": "Enable bounded creation of new semantic asset identities from discoverable kit templates",
+  "updated_at": "2026-07-22T00:00:00Z",
+  "description": "Implemented bounded semantic identity initialization, grammar composition, revision safety, and public-MCP static delivery; reference-led visual convergence is active and both current guard candidates are rejected",
   "estimated_tasks": 20,
   "actual_tasks": null,
-  "deviation_notes": "Prerequisites: llm_authoring_workflow_hardening_20260717 and character_accessory_library_20260717 must complete before implementation begins.",
+  "deviation_notes": "Static implementation proceeded under delegated technical interchange authority while formal engine_interop closeout remained commit-gated. A generated structural reference target is selected and provenance-bound under delegated final orchestration authority. The compacted guard and the later first-class novel-feature candidate both pass mechanical public-MCP gates but fail side-by-side Kimi convergence: helmet/cranium, face readability, rounded proportions, and equipment balance remain materially wrong. S4 is active rather than deferred to the product owner; accepted sprites, final convergence lineage, and commit-gated closeout remain incomplete. Temporal animation is tracked separately and is not accepted here.",
   "sprint": {
-    "goal": "Allow a fresh LLM to create distinct, versioned character and standalone prop identities from the public template grammar without source edits or complete hand-authored documents.",
+    "goal": "Allow a fresh LLM to create original, distinct, versioned Forge identities through public MCP without source edits, then deliver portable source artifacts for downstream assembly.",
     "stories": [
       {
         "id": "S1",
         "title": "Create New Asset Identities",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in_progress"
       },
       {
         "id": "S2",
         "title": "Compose From Public Grammar",
         "size": "XL",
         "priority": "Must",
-        "status": "pending"
+        "status": "in_progress"
       },
       {
         "id": "S3",
         "title": "Revise Novel Assemblies Safely",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in_progress"
       },
       {
         "id": "S4",
         "title": "Prove Novel Asset Workflows",
         "size": "L",
         "priority": "Must",
-        "status": "pending"
+        "status": "in_progress"
       }
     ],
-    "demo_notes": null,
+    "demo_notes": "See s4-rejected-iteration.md and the 2026-07-22 Kimi review. Mechanical public-MCP, determinism, GLB, manifest, and Pixel staging checks pass. The generated structural target is selected, but both current guard candidates fail visual convergence and are unadmitted.",
     "retro_ref": null
   }
 }

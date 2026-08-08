@@ -155,6 +155,7 @@ for (const run of runs) {
     nonForgeTools,
     rejectedCalls,
     dryRunApplyPairs,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     calls: calls.map(({ envelope: _envelope, ...call }) => call),
   };
   const visualStatus = {
@@ -264,7 +265,7 @@ function pairCalls(calls) {
 }
 
 function withoutDryRun(input) {
-  const copy = structuredClone(input);
+  const copy = globalThis.structuredClone(input);
   delete copy.dryRun;
   return copy;
 }

@@ -1,0 +1,241 @@
+{
+  "contract_id": "education-app-pack-profile/v1",
+  "pack_id": "pilot.forge.static",
+  "members": [
+    {
+      "id": "forge.frame.n",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3716,
+      "sha256": "415cacf519bd05effa5d00ce85188db866a02e9ed4e115532c7eff9ed83c973b",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.n",
+        "artifact_sha256": "415cacf519bd05effa5d00ce85188db866a02e9ed4e115532c7eff9ed83c973b",
+        "artifact_role": "directional_frame",
+        "direction": "N"
+      }
+    },
+    {
+      "id": "forge.frame.ne",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3725,
+      "sha256": "2eb022062f1f79f32d9bf5495668eac81fa82baae1d6244e08a2abca2800dcab",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.ne",
+        "artifact_sha256": "2eb022062f1f79f32d9bf5495668eac81fa82baae1d6244e08a2abca2800dcab",
+        "artifact_role": "directional_frame",
+        "direction": "NE"
+      }
+    },
+    {
+      "id": "forge.frame.e",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 2511,
+      "sha256": "fb21cd2e186db539747e8c47eeed35d32d0ed99ded67467bff95d65cdfcbde55",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.e",
+        "artifact_sha256": "fb21cd2e186db539747e8c47eeed35d32d0ed99ded67467bff95d65cdfcbde55",
+        "artifact_role": "directional_frame",
+        "direction": "E"
+      }
+    },
+    {
+      "id": "forge.frame.se",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3538,
+      "sha256": "27c97fd26f140ad1fd88e417a92345a0d3048ef18f3d77b2201b5382c1061e86",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.se",
+        "artifact_sha256": "27c97fd26f140ad1fd88e417a92345a0d3048ef18f3d77b2201b5382c1061e86",
+        "artifact_role": "directional_frame",
+        "direction": "SE"
+      }
+    },
+    {
+      "id": "forge.frame.s",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3488,
+      "sha256": "7ef24e8965f864f4381e8d143360fd582ce8da50e639f831bd75477cf0ed8280",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.s",
+        "artifact_sha256": "7ef24e8965f864f4381e8d143360fd582ce8da50e639f831bd75477cf0ed8280",
+        "artifact_role": "directional_frame",
+        "direction": "S"
+      }
+    },
+    {
+      "id": "forge.frame.sw",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3132,
+      "sha256": "74001caef0f3deea74f9bfc4b0fb894ca02fe43a15813227aad4b1ab530f67e9",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.sw",
+        "artifact_sha256": "74001caef0f3deea74f9bfc4b0fb894ca02fe43a15813227aad4b1ab530f67e9",
+        "artifact_role": "directional_frame",
+        "direction": "SW"
+      }
+    },
+    {
+      "id": "forge.frame.w",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 2242,
+      "sha256": "17984b1c6f389f2ff699542720c2d18330b68255fde663932fd84c84bf0d1c30",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.w",
+        "artifact_sha256": "17984b1c6f389f2ff699542720c2d18330b68255fde663932fd84c84bf0d1c30",
+        "artifact_role": "directional_frame",
+        "direction": "W"
+      }
+    },
+    {
+      "id": "forge.frame.nw",
+      "semantic_role": "pilot.visual",
+      "media_type": "image/png",
+      "byte_length": 3560,
+      "sha256": "febcbfbd244c724693bbde08b5e940a3bee93735f50811afd71d8766dac2e62a",
+      "width": 128,
+      "height": 128,
+      "transparent": true,
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "frame.nw",
+        "artifact_sha256": "febcbfbd244c724693bbde08b5e940a3bee93735f50811afd71d8766dac2e62a",
+        "artifact_role": "directional_frame",
+        "direction": "NW"
+      }
+    },
+    {
+      "id": "forge.model.glb",
+      "semantic_role": "pilot.visual",
+      "media_type": "model/gltf-binary",
+      "byte_length": 60320,
+      "sha256": "ef22ce2bad7e2c3051c4839a70a7cb568c75c4df99cf76c39a1d652e43d4099c",
+      "source": {
+        "kind": "forge",
+        "contract_id": "forge-asset-interchange-manifest/v1",
+        "asset_id": "adventurer.rustic",
+        "revision_id": "revision.ee5d0a35c6d53befb6422c9df637b7a2679adf57cb8913aeec793afb0b01df67",
+        "manifest_sha256": "0d8c1380938e1bd5cbfb4c940b797727a01ba167884b222afcfe92485b49551d",
+        "artifact_id": "model.glb",
+        "artifact_sha256": "ef22ce2bad7e2c3051c4839a70a7cb568c75c4df99cf76c39a1d652e43d4099c",
+        "artifact_role": "glb"
+      }
+    }
+  ],
+  "role_cardinalities": [
+    {
+      "semantic_role": "pilot.visual",
+      "minimum": 9,
+      "maximum": 9
+    }
+  ],
+  "completeness": {
+    "required_member_ids": [
+      "forge.frame.n",
+      "forge.frame.ne",
+      "forge.frame.e",
+      "forge.frame.se",
+      "forge.frame.s",
+      "forge.frame.sw",
+      "forge.frame.w",
+      "forge.frame.nw",
+      "forge.model.glb"
+    ],
+    "required_derived_profile_ids": [
+      "pilot.delivery"
+    ]
+  },
+  "derived_export_profiles": [
+    {
+      "id": "pilot.delivery",
+      "output_contract_id": "pilot-static-delivery/v1",
+      "member_ids": [
+        "forge.frame.n",
+        "forge.frame.ne",
+        "forge.frame.e",
+        "forge.frame.se",
+        "forge.frame.s",
+        "forge.frame.sw",
+        "forge.frame.w",
+        "forge.frame.nw",
+        "forge.model.glb"
+      ],
+      "budgets": {
+        "max_artifact_count": 9,
+        "max_total_bytes": 86232
+      }
+    }
+  ],
+  "budgets": {
+    "max_artifact_count": 9,
+    "max_total_bytes": 86232,
+    "max_single_artifact_bytes": 60320
+  },
+  "profile_sha256": "e071abd2f121fd40c40f976b3ed09c232a1e6f132a9ef53cabe2e14328184011"
+}

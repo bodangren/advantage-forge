@@ -8,17 +8,38 @@ Kit ID: `rustic-human`
 
 | Template | Semantic role | Shape | Material slots | Ports |
 |---|---|---|---|---|
-| `human.torso` | anatomy.torso | `beveledBox` | body | neck, hip, shoulder.left, shoulder.right, equipment.body, equipment.back |
-| `human.head` | anatomy.head | `ellipsoid` | skin | neck.attach, hair, equipment.head |
+| `human.torso` | anatomy.torso | `beveledBox` | body | neck, hip, shoulder.left, shoulder.right, clothing.tunic, clothing.trim, clothing.belt, clothing.collar, clothing.pouch.left, clothing.pouch.center, clothing.pouch.right, equipment.body, equipment.back |
+| `human.head` | anatomy.head | `ellipsoid` | skin | neck.attach, hair, hair.back, face.eye.left, face.eye.right, face.nose, face.mouth, face.ear.left, face.ear.right, hair.side.left, hair.side.right, hair.fringe.left, hair.fringe.center, hair.fringe.right, helmet.crest, helmet.dome, equipment.head |
 | `human.hair` | clothing.hair-mass | `ellipsoid` | hair | head.attach |
+| `human.hair-back` | feature.hair-back | `ellipsoid` | hair | head.attach |
+| `human.hair-side` | feature.hair-side | `ellipsoid` | hair | head.attach |
+| `human.face-eye` | feature.face-eye | `ellipsoid` | eye | head.attach |
+| `human.face-nose` | feature.face-nose | `ellipsoid` | skin | head.attach |
+| `human.face-ear` | feature.face-ear | `ellipsoid` | skin | head.attach |
+| `human.face-mouth` | feature.face-mouth | `tubePath` | mouth | head.attach |
+| `human.helmet-crest` | feature.helmet-crest | `wedge` | metal | head.attach |
+| `human.helmet-ridge` | feature.helmet-ridge | `wedge` | metal | surface.attach |
+| `human.hair-fringe` | feature.hair-fringe | `ellipsoid` | hair | head.attach |
+| `human.helmet-dome` | feature.helmet-dome | `lathedProfile` | metal | head.attach, emblem.mount, ridge.mount, stud.left, stud.right |
+| `human.helmet-emblem` | feature.helmet-emblem | `extrudedProfile` | metal | surface.attach |
+| `human.helmet-stud` | feature.helmet-stud | `ellipsoid` | metal | surface.attach |
 | `human.pelvis` | anatomy.pelvis | `beveledBox` | cloth | torso.attach, leg.left, leg.right, equipment.waist |
-| `human.upper-arm` | anatomy.upper-arm | `capsule` | cloth | shoulder.attach, elbow |
+| `human.upper-arm` | anatomy.upper-arm | `capsule` | cloth | shoulder.attach, elbow, sleeve.cuff |
 | `human.forearm` | anatomy.forearm | `capsule` | skin | elbow.attach, wrist |
-| `human.hand` | anatomy.hand | `beveledBox` | skin | wrist.attach, equipment |
+| `human.hand` | anatomy.hand | `ellipsoid` | skin | wrist.attach, equipment |
 | `human.thigh` | anatomy.thigh | `capsule` | cloth | hip.attach, knee |
-| `human.shin` | anatomy.shin | `capsule` | cloth | knee.attach, ankle |
-| `human.foot` | anatomy.foot | `wedge` | leather | ankle.attach |
-| `human.tunic` | clothing.tunic-shell | `wedge` | cloth | none |
+| `human.shin` | anatomy.shin | `capsule` | cloth | knee.attach, ankle, boot.cuff |
+| `human.foot` | anatomy.foot | `ellipsoid` | leather | ankle.attach, toe, sole |
+| `human.boot-toe` | feature.boot-toe | `ellipsoid` | leather | foot.attach |
+| `human.tunic` | clothing.tunic-shell | `wedge` | cloth | torso.attach |
+| `human.scarf-collar` | clothing.scarf-collar | `lathedProfile` | cloth | torso.attach |
+| `human.sleeve-cuff` | clothing.sleeve-cuff | `cylinder` | cloth | arm.attach |
+| `human.tunic-flared` | clothing.tunic-shell | `extrudedProfile` | cloth | torso.attach |
+| `human.tunic-trim` | clothing.tunic-trim | `extrudedProfile` | cloth | torso.attach |
+| `human.guard-belt` | clothing.belt | `extrudedProfile` | leather | torso.attach |
+| `human.guard-pouch` | clothing.pouch | `ellipsoid` | leather | torso.attach |
+| `human.boot-cuff` | feature.boot-cuff | `wedge` | leather | shin.attach |
+| `human.boot-sole` | feature.boot-sole | `wedge` | leather | foot.attach |
 | `equipment.armor.leather` | equipment.armor.leather | `extrudedProfile` | leather | mount |
 | `equipment.armor.mail` | equipment.armor.mail | `beveledBox` | metal | mount |
 | `equipment.axe` | equipment.axe | `extrudedProfile` | metal | grip |
@@ -82,7 +103,15 @@ Kit ID: `rustic-human`
 | Material | Family | Color | Roughness | Metalness |
 |---|---|---|---:|---:|
 | `skin.warm` | skin | `#d29368` | 0.9 | 0 |
+| `skin.peach` | skin | `#f8d7c5` | 0.92 | 0 |
+| `mouth.soft` | skin | `#9f5260` | 0.94 | 0 |
+| `face.ink` | skin | `#302126` | 0.94 | 0 |
 | `cloth.moss` | cloth | `#667a51` | 0.95 | 0 |
+| `cloth.guard-teal` | cloth | `#68b7c3` | 0.94 | 0 |
+| `cloth.guard-trim` | cloth | `#eadfd3` | 0.96 | 0 |
+| `leather.guard-brown` | leather | `#9b633e` | 0.9 | 0 |
+| `iron.guard-grey` | iron | `#91a3a6` | 0.72 | 0.55 |
+| `iron.guard-highlight` | iron | `#e7eceb` | 0.68 | 0.42 |
 | `cloth.umber` | cloth | `#4a407f` | 0.95 | 0 |
 | `cloth.arcane` | cloth | `#7656b5` | 0.94 | 0 |
 | `leather.dark` | leather | `#70412f` | 0.88 | 0 |
