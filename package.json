@@ -21,7 +21,12 @@
     "doctor": "bash measure/doctor.sh",
     "mcp": "node --import tsx src/mcp/stdio.ts",
     "reference:build": "node --import tsx scripts/build-references.ts",
-    "check": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm generate && git diff --exit-code -- measure/generated && pnpm doctor"
+    "check:interchange-evidence": "node --import tsx scripts/check-claim-bound-interchange-evidence.ts",
+    "replay:public-mcp-interchange": "node --import tsx scripts/replay-public-mcp-interchange.ts",
+    "replay:public-mcp-novel": "node --import tsx scripts/replay-public-mcp-novel-workflows.ts",
+    "replay:public-mcp-temporal": "node --import tsx scripts/replay-public-mcp-temporal.ts",
+    "replay:public-mcp-reference-five": "node --import tsx scripts/replay-public-mcp-reference-five-clip.ts",
+    "check": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm check:interchange-evidence && pnpm generate && git diff --exit-code -- measure/generated && pnpm doctor"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",
