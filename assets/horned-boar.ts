@@ -331,5 +331,92 @@ export default defineAsset({
         };
       },
     });
+
+    // Hit, struck from the front-left: the head jerks up and back, the body flinches back and to
+    // its right, and the tail flicks; then a quick return. The legs brace: each leg leans by the
+    // angle that cancels the body's shift, so the hooves stay planted.
+    const { keys } = motion;
+    const DEG = 180 / Math.PI;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.16, 1], [0.34, 0.8], [1, 0]] as const);
+        const flick = keys(p, [[0, 0], [0.12, 1], [0.45, -0.35], [0.8, 0.1], [1, 0]] as const);
+        const back = 0.035 * h;
+        const side = 0.018 * h;
+        const lean = (legLength: number, d: number) => Math.asin(d / legLength) * DEG;
+        const twist = 2.8 * h; // the spine's turn moves the left shoulder forward and the right one back
+        return {
+          hips: { move: [-side, 0.004 * h, -back] },
+          spine: { rotate: [0, -6 * h, 0] },
+          neck: { rotate: [-12 * h, -6 * h, 0] },
+          head: { rotate: [-20 * h, -4 * h, 8 * h] },
+          tail: { rotate: [40 * flick, 25 * flick, 0] },
+          'fleg.L': { rotate: [-lean(0.27, back) + twist, 0, lean(0.27, side) + 1.5 * h] },
+          'fleg.R': { rotate: [-lean(0.27, back) - twist, 0, lean(0.27, side) + 1.5 * h] },
+          'bleg.L': { rotate: [-lean(0.25, back), 0, lean(0.25, side)] },
+          'bleg.R': { rotate: [-lean(0.25, back), 0, lean(0.25, side)] },
+        };
+      },
+    });
+
+    // Death: a recoil and a stagger, the front legs buckle and the boar drops onto its knees, then
+    // it rolls onto its right side and lies still, the legs out stiffly and the head on the ground.
+    // Lying on its side the head is wider than the body, so the neck turns the head part of the way
+    // back up: the lower horn then stays clear of the ground and the jowl carries the head.
+    // The hips lift that keeps every part on or above the ground, measured per phase with the
+    // rigid-bone ground probe (scratch tool); zero where the pose already clears the ground.
+    const DEATH_LIFT: readonly (readonly [number, number])[] = [
+      [0, 0], [0.225, 0], [0.25, 0.01], [0.275, 0.015], [0.3, 0.015], [0.325, 0.018], [0.35, 0.022],
+      [0.375, 0.021], [0.4, 0.019], [0.425, 0.018], [0.45, 0.022], [0.475, 0.034], [0.5, 0.049],
+      [0.525, 0.064], [0.55, 0.075], [0.575, 0.078], [0.6, 0.072], [0.625, 0.058], [0.65, 0.036],
+      [0.675, 0.013], [0.7, 0.003], [0.725, 0],
+    ];
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const recoil = keys(p, [[0, 0], [0.06, 1], [0.16, 0.3], [0.26, 0]] as const);
+        const sway = keys(p, [[0.05, 0], [0.14, 1], [0.24, -0.5], [0.34, 0]] as const);
+        const fold = keys(p, [[0.22, 0], [0.36, 1]] as const); // the front legs buckle at the knees
+        const drop = keys(p, [[0.26, 0], [0.42, 1], [0.55, 0.9], [0.74, 0]] as const); // onto the knees
+        const crouch = keys(p, [[0.26, 0], [0.42, 1]] as const);
+        const roll = keys(p, [[0.42, 0], [0.74, 1]] as const); // over onto the right side
+        const outL = keys(p, [[0.5, 0], [0.7, 1]] as const); // the upper legs kick out first
+        const outR = keys(p, [[0.7, 0], [0.86, 1]] as const); // the lower legs slide out last
+        const bounce = keys(p, [[0.72, 0], [0.78, 1], [0.86, 0]] as const);
+        const twitch = Math.max(0, Math.sin((p - 0.86) * Math.PI * 12)) * Math.max(0, Math.min(1, (p - 0.86) / 0.03, (1 - p) / 0.06));
+        const legZ = -5 * sway;
+        const frontLeg = (f: number, out: number, side: number, tw: number) => ({
+          upper: [-49 * f - 18 * out - tw, 0, legZ + side * out] as const,
+          lower: [121 * f - 6 * out, 0, 0] as const,
+        });
+        const backLeg = (c: number, out: number, side: number, tw: number) => ({
+          upper: [-57 * c + 18 * out + tw, 0, legZ + side * out] as const,
+          lower: [70 * c + 4 * out, 0, 0] as const,
+        });
+        const fL = frontLeg(fold * (1 - outL), outL, 12, 6 * twitch);
+        const fR = frontLeg(fold * (1 - outR), outR, 6, 0);
+        const bL = backLeg(crouch * (1 - outL), outL, 12, 5 * twitch);
+        const bR = backLeg(crouch * (1 - outR), outR, 6, 0);
+        const y = 0.012 * Math.abs(sway) - 0.012 * drop * (1 - roll) - 0.075 * roll + 0.012 * bounce + keys(p, DEATH_LIFT, 'linear');
+        return {
+          hips: { move: [-0.02 * sway - 0.1 * roll, y, -0.03 * recoil], rotate: [18 * drop, 0, 5 * sway + 90 * roll] },
+          spine: { rotate: [0, -6 * sway, 0] },
+          neck: { rotate: [-16 * recoil + 10 * drop + 14 * roll, 0, -28 * roll] },
+          head: { rotate: [-18 * recoil + 4 * drop + 6 * roll, 0, -8 * roll] },
+          tail: { rotate: [40 * recoil - 25 * roll, 20 * sway, 0] },
+          'fleg.L': { rotate: fL.upper },
+          'fshin.L': { rotate: fL.lower },
+          'fleg.R': { rotate: fR.upper },
+          'fshin.R': { rotate: fR.lower },
+          'bleg.L': { rotate: bL.upper },
+          'bshin.L': { rotate: bL.lower },
+          'bleg.R': { rotate: bR.upper },
+          'bshin.R': { rotate: bR.lower },
+        };
+      },
+    });
   },
 });
