@@ -631,11 +631,12 @@ export default defineAsset({
       pose: (_t: number, p: number) => {
         const s = wave(p);
         const hipsTurn = [0, 6 * s, 4 * s] as const;
-        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, { // left heel strike at 0.25, with the left arm back
           stride: step,
           lift,
           duty,
           bob: hop,
+          sit: 0.005, // the upright hammer's butt hangs low: a shallow sit keeps it off the floor
           roll: 10,
           heel: [0.1, 0, -0.028],
           toe: [0.117, 0, 0.12],

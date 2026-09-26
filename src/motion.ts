@@ -246,6 +246,8 @@ export interface GaitOptions {
  * strike to toe-off. Returns `leg`, `shin`, and `foot` rotations for both sides and the hips'
  * `move` y (add it to any bob of your own only if you also raise the feet). The left foot
  * strikes at phase 0, the right at 0.5. Bones: `leg.L`, `shin.L`, `foot.L` and the `.R` mirror.
+ * The arms swing against the legs: with the usual arm swing `wave(p)` (the left arm is back at
+ * 0.25), pass `p - 0.25` so the left heel strikes as the left arm is back.
  */
 export function gait(phase: number, leg: LegJoints, o: GaitOptions): { hipsY: number; pose: Record<string, { rotate: Vec3 }> } {
   const duty = o.duty ?? 0.6;

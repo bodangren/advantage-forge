@@ -624,7 +624,7 @@ export default defineAsset({
       pose: (_t: number, p: number) => {
         const s = wave(p);
         const hipsTurn = [0, 7 * s, 0] as const;
-        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, { // left heel strike at 0.25, with the left arm back
           stride: step,
           lift: footLift,
           duty,
