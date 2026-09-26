@@ -20,8 +20,10 @@ type RegionName = 'head' | 'body';
 export interface ClipCheckOptions {
   /** Poses per second of each clip. Default 60 (fast strikes move far between 30 fps frames). */
   readonly fps?: number;
-  /** Penetration in meters that counts as contact, beyond the rest-pose baseline. Default 0.01. */
+  /** Penetration in meters that counts as body contact, beyond the rest-pose baseline. Default 0.01. */
   readonly margin?: number;
+  /** Penetration in meters that counts as head contact (no baseline). Default 0.003: only noise. */
+  readonly headMargin?: number;
   /** Only these clips (default: all). */
   readonly clips?: readonly string[];
 }
@@ -43,6 +45,7 @@ export interface ClipCheckResult {
   readonly regions: Readonly<Record<RegionName, readonly string[]>>;
   readonly clips: readonly { name: string; frames: number; contacts: readonly Contact[] }[];
   readonly margin: number;
+  readonly headMargin: number;
   readonly ok: boolean;
 }
 
@@ -107,9 +110,10 @@ function chunks(points: readonly THREE.Vector3[], size = 40): Chunk[] {
 export async function checkClips(def: AssetDefinition, options: ClipCheckOptions = {}): Promise<ClipCheckResult> {
   const fps = options.fps ?? 60;
   const margin = options.margin ?? 0.01;
+  const headMargin = options.headMargin ?? 0.003;
   const collected = await collectBodies(def);
   const skeleton = collected.skeleton;
-  const empty = { items: [], regions: { head: [], body: [] }, clips: [], margin, ok: true } as const;
+  const empty = { items: [], regions: { head: [], body: [] }, clips: [], margin, headMargin, ok: true } as const;
   if (!skeleton) return empty;
 
   // Bone sets: the head and everything below it (ears, plume); the torso; the held bones.
@@ -257,7 +261,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
           const key = `${item.name}:${region}`;
           const extra = d[region].depth - base[region].depth;
           const extraCount = d[region].count - base[region].count;
-          if (extra > margin || extraCount > Math.max(8, points * 0.02)) {
+          if (extra > (region === 'head' ? headMargin : margin) || extraCount > Math.max(8, points * 0.02)) {
             const c = open.get(key);
             if (c) {
               c.to = phase;
@@ -275,6 +279,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
     regions,
     clips,
     margin,
+    headMargin,
     ok: clips.every((c) => c.contacts.every((x) => x.region !== 'head')),
   };
 }
@@ -301,7 +306,7 @@ export function formatClipCheck(name: string, r: ClipCheckResult): string {
     r.items.length === 0
       ? 'result  no held items to check'
       : heads.length === 0
-        ? `result  ok: no held item passes through the head (margin ${cm(r.margin)})`
+        ? `result  ok: no held item passes through the head (head margin ${cm(r.headMargin)})`
         : `result  FAIL: a held item passes through the head in ${new Set(heads.map((h) => h.clip)).size} clip(s)`,
   );
   return lines.join('\n');
