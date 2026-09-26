@@ -20,7 +20,7 @@ import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/in
  *   (focal point); the tongue is the second.
  * Bodies: chest-wood, iron, lid-wood, lid-iron, lock, mouth (flesh), teeth, tongue, eyes, pupils, feet.
  * Rig: base, body, lid, teeth.upper, teeth.lower, tongue1-3, fleg/bleg.L/R. Clips: idle (the lid
- *   breathes, the tongue sways), walk (a waddle on four feet), attack (open wide, lunge, slam),
+ *   breathes, the tongue sways), walk (a waddle on four feet), attack (open wide, lunge, bite on interlocked fangs),
  *   reveal (a closed chest rattles, then springs open), hit (rocks back, the lid snaps shut and springs
  *   open, the tongue whips), death (the legs buckle and fold in, the lid falls shut on the limp tongue).
  */
@@ -244,13 +244,14 @@ export default defineAsset({
       ...[-0.2, -0.12, -0.04, 0.04, 0.12, 0.2].map((x, i) =>
         tooth(lidPoint([x, TOP + 0.004, D / 2 - 0.022]), downFwd, i === 0 || i === 5 ? 0.075 : 0.065, 0.026),
       ),
-      ...[-0.29, 0.29].map((x) => tooth(lidPoint([x, TOP + 0.004, D / 2 - 0.024]), downFwd, 0.13, 0.034, [-Math.sign(x) * 0.2, 0, 0.6])),
+      ...[-0.3, 0.3].map((x) => tooth(lidPoint([x, TOP + 0.004, D / 2 - 0.024]), downFwd, 0.13, 0.034, [-Math.sign(x) * 0.2, 0, 0.6])),
     );
     // Lower: along the front rim, pointing up; the tongue passes through the gap on the right side.
+    // The lower fangs stand 5 cm inside the upper ones, so the fangs interlock when the lid bites.
     const upFwd = norm([0, 0.95, 0.3]);
     const lowerTeeth = sdf.union(
       ...[-0.2, 0.0, 0.1, 0.2].map((x) => tooth([x, TOP - 0.006, D / 2 - 0.042], upFwd, 0.055, 0.024)),
-      ...[-0.29, 0.29].map((x) => tooth([x, TOP - 0.006, D / 2 - 0.044], upFwd, 0.12, 0.032, [-Math.sign(x) * 0.15, 0, 0.2])),
+      ...[-0.25, 0.25].map((x) => tooth([x, TOP - 0.006, D / 2 - 0.044], upFwd, 0.12, 0.032, [-Math.sign(x) * 0.15, 0, 0.2])),
     );
     k.body(
       'teeth',
@@ -352,25 +353,41 @@ export default defineAsset({
       },
     });
 
-    // Attack: open wide and rear back, lunge forward, slam the lid shut, recover.
+    // Attack: open wide and rear back, hop 0.22 m forward with the chest leaning into the bite, slam the
+    // lid onto the fangs, hold the bite and shake it, let go, and settle back to rest. The lid stops BITE
+    // degrees open: there the fangs interlock at the seam (the upper corner fangs dip inside the lower
+    // lip, the lower ones stand in front of the lid), and no tip touches the opposite gum or tooth.
+    const BITE = 15;
     k.animation('attack', {
-      duration: 0.9,
+      duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const wide = ease(0, 0.3, p) * (1 - ease(0.36, 0.44, p));
-        const lunge = ease(0.34, 0.46, p) * (1 - ease(0.62, 1, p));
-        const shut = ease(0.38, 0.46, p) * (1 - ease(0.6, 0.9, p));
+        const rear = ease(0, 0.28, p) * (1 - ease(0.3, 0.4, p));
+        const gape = ease(0.02, 0.28, p);
+        const slam = Math.min(1, Math.max(0, (p - 0.34) / 0.09)) ** 2; // speeds up into the bite
+        const hop = Math.sin(Math.PI * ease(0.3, 0.43, p));
+        const lunge = ease(0.3, 0.43, p) * (1 - ease(0.62, 1, p));
+        const lean = ease(0.32, 0.43, p) * (1 - ease(0.6, 0.95, p));
+        const shake = wave(p, 14) * ease(0.42, 0.45, p) * (1 - ease(0.53, 0.57, p));
+        const letGo = ease(0.55, 0.62, p);
+        const settle = ease(0.62, 1, p);
+        const tuck = ease(0.36, 0.42, p) * (1 - ease(0.6, 0.85, p));
+        const lid = (-28 * gape * (1 - slam) + (OPEN - BITE) * slam - 10 * letGo) * (1 - settle) - 2 * Math.abs(shake);
+        const tg = 1 - 0.5 * tuck;
+        // The legs turn against the lean; the front legs shorten and the back legs stretch to the ground.
+        const leg = (push: number, stretch: number) => ({
+          rotate: [10 * rear - 12 * lean + push * hop, 0, 0] as [number, number, number],
+          scale: [1, 1 + stretch * lean, 1] as [number, number, number],
+        });
         return {
-          body: { move: [0, 0.03 * lunge, -0.04 * wide + 0.14 * lunge], rotate: [-10 * wide + 12 * lunge, 0, 0] },
-          lid: { rotate: [-28 * wide + (OPEN - 2) * shut, 0, 0] },
-          'teeth.lower': { scale: [1, 1 - 0.5 * shut, 1] },
-          'teeth.upper': { scale: [1, 1 - 0.5 * shut, 1] },
-          tongue1: { rotate: [-10 * wide, 0, 0], scale: [1 - 0.5 * shut, 1 - 0.5 * shut, 1 - 0.5 * shut] },
-          tongue3: { rotate: [-20 * wide + 20 * lunge, 0, 0] },
-          'fleg.L': { rotate: [-20 * lunge, 0, 0] },
-          'fleg.R': { rotate: [-20 * lunge, 0, 0] },
-          'bleg.L': { rotate: [20 * lunge, 0, 0] },
-          'bleg.R': { rotate: [20 * lunge, 0, 0] },
+          body: { move: [0, 0.04 * hop, -0.05 * rear + 0.22 * lunge], rotate: [-10 * rear + 12 * lean, 4 * shake, 3 * shake] },
+          lid: { rotate: [lid, 0, 0] },
+          tongue1: { rotate: [-10 * rear, 0, 0], scale: [tg, tg, tg] },
+          tongue3: { rotate: [-20 * rear + 20 * lunge, 0, 0] },
+          'fleg.L': leg(-15, -0.3),
+          'fleg.R': leg(-15, -0.3),
+          'bleg.L': leg(25, 0.3),
+          'bleg.R': leg(25, 0.3),
         };
       },
     });
