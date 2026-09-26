@@ -321,7 +321,7 @@
     "reviewedAt": "2026-09-26T19:05:34+00:00"
   },
   "skeleton": {
-    "overall": 8.4,
+    "overall": 8.5,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -335,22 +335,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The skeleton warrior matches the enemy-sheet design: a grinning skull with glowing eyes under a riveted helmet, a red scarf, mail, a sword, and a round red shield. It now has the full clip set: idle, walk, run, attack, hit, and death. The forge check shows result ok and ground ok. The helmet is still dark iron, and the chop stops at the impact.",
+    "summary": "The skeleton warrior matches the enemy-sheet design: a grinning skull with glowing eyes under a riveted helmet, a red scarf, mail, a sword, and a round red shield. The chop is now a full sword cut. The body leans away and the blade stands up on the right with its tip above the helmet. The cut then follows through to knee height on the left. The forge check shows result ok and ground ok, with no body contact. The helmet is still dark iron.",
     "strengths": [
-      "The death clip tells a clear story. The skeleton staggers, its knees buckle, and it folds into a heap. Then the helmeted skull rolls off beside the body, and the sword and the shield fall flat.",
-      "In the chop, the flat of the blade faces sideways, so the edge leads down through the cut. The wind-up now goes up and back over the right shoulder.",
-      "The slanted black sockets, the amber eyes, and the square teeth make a clear angry skull face. Iron, mail, bone, red cloth, wood, and brass read as different materials."
+      "The chop has a clear wind-up, hold, cut, and follow-through. The cut takes about 0.12 s with the edge leading, and the front foot steps in. The blade continues down and across to knee height on the left, slows, and recovers.",
+      "In the wind-up, the upper body leans far to the left and the shoulder shrugs, so the blade tip goes about 4 cm above the helmet top in the front view. The blade stays about 3 cm clear of the helmet, and the shield arm tucks out of the blade path.",
+      "The death clip tells a clear story, and the slanted black sockets, the amber eyes, and the square teeth make a clear angry skull face. Iron, mail, bone, red cloth, wood, and brass read as different materials."
     ],
     "issues": [
-      "The chop is a real sword cut only in part. The edge leads, but the huge helmet hides the raised blade in the three-quarter and side views, and the tip stays below the helmet crown. The blade stops at waist height and holds, so there is no follow-through.",
-      "The helmet is still dark iron all over. The mockup shows lighter steel with dark patches. From above, the dark dome is the largest shape in the sprites, and the face shows only in the three front directions.",
-      "The model stands in a neutral pose, but the mockup shows a lunge. The mockup has brown leather boots; the model has plain steel feet. The sword passes 0.3 cm from the head in the check."
+      "In the side view, the huge helmet still hides most of the raised blade. Only the tip shows above the helmet at the top of the wind-up.",
+      "The helmet is still dark iron all over. The mockup shows lighter steel with dark patches. From above, the dark dome is the largest shape in the sprites.",
+      "The model stands in a neutral pose, but the mockup shows a lunge. The mockup has brown leather boots; the model has plain steel feet."
     ],
     "next": [
       "Make the helmet steel lighter, with the patina in patches. This item from the old review is still open.",
-      "Lift the sword tip above the helmet crown in the wind-up, and continue the cut down past the waist before the recovery. The old item for a higher wind-up is open in part."
+      "Give the rest pose a small lunge and brown leather boots, as in the mockup."
     ],
-    "reviewedAt": "2026-09-26T18:50:25+00:00"
+    "reviewedAt": "2026-09-26T21:29:09+00:00"
   },
   "orc-warrior": {
     "overall": 8.3,
