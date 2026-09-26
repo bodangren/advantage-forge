@@ -1089,6 +1089,19 @@ export default defineAsset({
       [0.7, deathEnd.pole],
     ] as const;
     const LANTERN_DOWN = quat([-88, 0, 0]); // on its side, the bottom toward the viewer
+    // Rim points of the lantern frame (base, cap, bail), relative to the hook, in the rest pose.
+    const LANTERN_RIM: V3[] = [
+      ...Array.from({ length: 16 }, (_, i) => i * (Math.PI / 8)).flatMap((a): V3[] => [
+        [0.036 * Math.cos(a), -0.133, 0.036 * Math.sin(a)],
+        [0.036 * Math.cos(a), -0.119, 0.036 * Math.sin(a)],
+        [0.034 * Math.cos(a), -0.067, 0.034 * Math.sin(a)],
+        [0.034 * Math.cos(a), -0.053, 0.034 * Math.sin(a)],
+      ]),
+      [0.026, -0.016, 0],
+      [-0.026, -0.016, 0],
+      [0, 0.01, 0],
+    ];
+    const LANTERN_JOINTS: V3[] = [HIPS_AT, SPINE_AT, CHEST_AT, SHOULDER, ELBOW_L, WRIST_L];
     k.animation('death', {
       duration: DEATH_S,
       loop: false,
@@ -1100,10 +1113,18 @@ export default defineAsset({
         const arm = reach(ARM_L, keys(p, deathWrist), keys(p, deathPole));
         const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: norm(keys(p, deathDir)), up: norm(keys(p, deathUp)) });
         const chain: V3[] = [b.hipsR, b.spineR, b.chestR, arm.upper, arm.lower, hand];
-        // The lantern hangs plumb and swings while she falls, then tips onto its side.
-        const lie = ease(0.64, 0.74, p);
+        // The lantern hangs plumb and swings while she falls, then tips onto its side. It meets the
+        // floor before the staff does, so the floor tips it over: it turns as far as it must to
+        // stay on the floor, never into it.
         const swing = quat([keys(p, [[0, 0], [0.12, -18], [0.3, 10], [0.5, -14], [0.64, 6]] as const), 0, 12 * f]);
-        const lanternR = lanternWorld(chain, swing.slerp(LANTERN_DOWN, lie));
+        const hookY = add(follow(LANTERN_JOINTS, chain, HOOK), b.hipsMove)[1];
+        const lowest = (l: number) => {
+          const w = swing.clone().slerp(LANTERN_DOWN, l);
+          return hookY + 0.04 * l + Math.min(...LANTERN_RIM.map((q) => new THREE.Vector3(...q).applyQuaternion(w).y));
+        };
+        let lie = ease(0.64, 0.74, p);
+        while (lie < 1 && lowest(lie) < 0.003) lie = Math.min(1, lie + 0.01);
+        const lanternR = lanternWorld(chain, swing.clone().slerp(LANTERN_DOWN, lie));
         const liftW = new THREE.Vector3(0, 0.04 * lie, 0).applyQuaternion(chainQ(chain).invert());
         return {
           hips: { move: b.hipsMove, rotate: b.hipsR },
