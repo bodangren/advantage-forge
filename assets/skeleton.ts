@@ -20,8 +20,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Bodies: bone, eyes (emissive), pupils, helmet, rivets, scarf, mail, pauldrons, bracers, belt,
  *   tabard, leggings, greaves, sword, hilt, shield-wood, shield-iron, brass.
  * Rig: the knight's chibi skeleton plus `weapon` (a child of `hand.R`, carries the sword) and
- *   `shield` (a child of `forearm.L`, carries the shield); only the death clip moves those two.
- *   Clips: idle, walk, run, attack (an overhead chop), hit, death (a collapse into a heap).
+ *   `shield` (a child of `forearm.L`, carries the shield); only the death and rise clips move those two.
+ *   Clips: idle, walk, run, attack (an overhead chop), hit, death (a collapse into a heap), rise (the
+ *   spawn: the heap rattles, the skull hops back on, and the skeleton pushes itself up).
  */
 
 const C = {
@@ -792,6 +793,121 @@ export default defineAsset({
           'leg.R': { rotate: [-lean, 28 * c, -phi] },
           'foot.L': { rotate: [lean, 0, 0] },
           'foot.R': { rotate: [lean, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ rise: the heap pulls itself together
+    // The spawn clip. It starts on the last frame of `death` (the heap, the sword and the shield on
+    // the ground, the skull on its side). A short beat, then a rattle runs through the bones (0.45 s
+    // in all). The stand-up takes about 0.85 s in three held stages: the torso sits up from the heap
+    // with both arms pushing on the floor while the skull rolls back and hops onto the neck; the body
+    // leans forward and to the right into a crouch over the half-closed legs, the right hand still on
+    // the floor (the legs have no knees, so this is the lowest crouch they allow); then it stands, and
+    // the sword and the shield fly up into the hands. A sway and a double nod of the skull (the jaw
+    // clack; the rig has no jaw bone) settle it into the rest pose, ready to fight.
+    // Times are in seconds. The heap values are the end of `death`.
+    const RISE_D = 1.8;
+    const SKULL_ROLL: V3 = [0.25, 0.22, 0.42]; // upright on its jaw, in front of the left leg
+    const ROLL = 58; // the roll about +Z, degrees: from on its side back onto its jaw
+    const SWORD_NEAR: V3 = [-0.26, 0.024, 0.22]; // the sword skids up to the planted right hand
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const FLOOR_L: V3 = [0.25, 0.075, 0.06]; // the planted wrists (the fists touch the floor)
+    const FLOOR_R: V3 = [-0.2, 0.075, 0.12];
+    const POLE_L = add(ELBOW_L, [0.2, 0, -0.08]); // the elbows point out and back (chest rest frame)
+    const POLE_R = add(ELBOW_R, [-0.12, 0, -0.1]);
+    /** Maps a world point into the chest's rest frame (where `reach` solves). */
+    const toChest = (rots: readonly V3[], hipsMove: V3) => {
+      const inv = chainQ(rots).invert();
+      const at = add(follow([TRUNK[0]!, TRUNK[1]!], [rots[0]!, rots[1]!], TRUNK[2]!), hipsMove);
+      return (w: V3): V3 => add(arr(vec(add(w, at, -1)).applyQuaternion(inv)), TRUNK[2]!);
+    };
+    k.animation('rise', {
+      duration: RISE_D,
+      loop: false,
+      pose: (_t, p) => {
+        const s = p * RISE_D;
+        // Two off-beat rattles (a flip every 0.054 s, about 1.6 frames at 30 fps): they grow, peak, and die out.
+        const r = keys(s, [[0.08, 0], [0.134, 0.6], [0.188, -0.9], [0.242, 1], [0.296, -0.9], [0.35, 0.7], [0.404, -0.4], [0.45, 0]] as const, 'linear');
+        const r2 = keys(s, [[0.107, 0], [0.161, -0.7], [0.215, 1], [0.269, -0.9], [0.323, 0.8], [0.377, -0.5], [0.431, 0.25], [0.47, 0]] as const, 'linear');
+        const roll = ease(0.3, 0.55, s);
+        const hop = ease(0.55, 0.75, s);
+        const land = keys(s, [[0.75, 0], [0.79, 1], [0.86, 0]] as const);
+        // The stages: heap (to 0.42), sit (0.72), crouch (0.98 to 1.06), stand (1.3, a little past upright), rest (1.42).
+        const spineK = keys(s, [[0.42, [28, 0, 4]], [0.72, [14, 0, 2]], [0.98, [26, 0, 12]], [1.06, [26, 0, 12]], [1.3, [-3, 0, 0]], [1.42, [0, 0, 0]]] as const);
+        const chestK = keys(s, [[0.42, [25, 6, 6]], [0.72, [16, 3, 2]], [0.98, [26, 0, 10]], [1.06, [26, 0, 10]], [1.3, [-2, 0, 0]], [1.42, [0, 0, 0]]] as const);
+        const neckK = keys(s, [[0.42, [12, 0, 0]], [0.72, [6, 0, 0]], [0.98, [4, 0, 0]], [1.3, [0, 0, 0]]] as const);
+        // The skull looks up at the player in the crouch and stays level against the lean.
+        const headK = keys(s, [[0.42, [20, 0, -8]], [0.72, [-6, 0, -2]], [0.98, [-20, 0, -14]], [1.06, [-20, 0, -14]], [1.32, [0, 0, 0]]] as const);
+        const c = keys(s, [[0.72, 1], [0.98, 0.72], [1.06, 0.72], [1.3, 0]] as const);
+        const plant = ease(0.38, 0.5, s);
+        const relL = ease(0.8, 1.0, s);
+        const relR = ease(1.06, 1.28, s);
+        const catchL = keys(s, [[1.2, 0], [1.26, 1], [1.38, 0]] as const);
+        const catchR = keys(s, [[1.3, 0], [1.36, 1], [1.48, 0]] as const);
+        const sway = keys(s, [[1.42, 0], [1.52, 4], [1.64, -1.5], [1.76, 0]] as const);
+        const nod = keys(s, [[1.46, 0], [1.52, 8], [1.57, -3], [1.62, 6], [1.67, -2], [1.74, 0]] as const);
+        // The legs close from the death's V; the hips stay as high as the splayed feet need.
+        const phi = SPLAY * c;
+        const hipsY = 0.2 + 0.028 * Math.sin(phi * DEG) + 0.195 * (Math.cos(phi * DEG) - 1) + 0.005 * c;
+        const hipsMove: V3 = [0, hipsY - 0.2, -0.015 * c];
+        const hipsR: V3 = [0, 10 * c + 2 * r2, 0];
+        const spineR = add(spineK, [3 * r, 0, 3 * r2]);
+        const chestR = add(chestK, [sway, 3 * r, -2 * r2]);
+        const neckR = add(neckK, [8 * land, 0, 0]);
+        const headR = add(headK, [nod, 0, 0]);
+        // The limp arms of the heap plant on the floor (solved in the chest's frame) and push, then
+        // come up to the rest pose: the left arm first, for the shield; the right one leaves the floor last.
+        const inChest = toChest([hipsR, spineR, chestR], hipsMove);
+        const ikL = reach(ARM_L, inChest(FLOOR_L), POLE_L);
+        const ikR = reach(ARM_R, inChest(FLOOR_R), POLE_R);
+        const uaL = add(lerp(lerp([-34, 0, 10], ikL.upper, plant), [0, 0, 0], relL), [5 * r2, 0, 3 * r2]);
+        const faL = add(lerp(lerp([14, 0, 0], ikL.lower, plant), [0, 0, 0], relL), [6 * catchL, 0, 0]);
+        const uaR = add(lerp(lerp([-34, 0, -10], ikR.upper, plant), [0, 0, 0], relR), [5 * r, 0, -3 * r]);
+        const faR = add(lerp(lerp([30, 0, 0], ikR.lower, plant), [0, 0, 0], relR), [8 * catchR, 0, 0]);
+        // The sword jitters, skids up to the planted hand, and rises into it as the hand leaves the floor.
+        const handRots = [hipsR, spineR, chestR, uaR, faR, [0, 0, 0] as V3];
+        const handQ = chainQ(handRots);
+        const guardNow = add(follow(SWORD_CHAIN, handRots, GUARD), hipsMove);
+        const sw = ease(1.04, 1.3, s);
+        const swArc = Math.sin(Math.PI * clamp01((s - 1.04) / 0.26));
+        const swordGround = add(lerp(SWORD_DOWN, SWORD_NEAR, ease(0.8, 0.98, s)), [0, 0.006 * Math.abs(r), 0]);
+        const swordAt = add(lerp(swordGround, guardNow, sw), [0, 0.06 * swArc, 0]);
+        const swordTurn = quat([0, 4 * r2 - 12 * ease(0.8, 0.98, s), 0]).multiply(SWORD_TURN).slerp(handQ, ease(1.04, 1.28, s));
+        const weapon = place(handQ, guardNow, swordAt, swordTurn);
+        // The shield lifts off the ground, swings out around the left side, and locks onto the forearm.
+        const armRots = [hipsR, spineR, chestR, uaL, faL];
+        const armQ = chainQ(armRots);
+        const shieldNow = add(follow(SHIELD_CHAIN, armRots, SHIELD_C), hipsMove);
+        const sh = ease(0.9, 1.2, s);
+        const shArc = Math.sin(Math.PI * clamp01((s - 0.9) / 0.3));
+        const shieldAt = add(lerp(SHIELD_DOWN, shieldNow, sh), [0.07 * shArc, 0.1 * shArc + 0.006 * Math.abs(r2), 0]);
+        const shield = place(armQ, shieldNow, shieldAt, quat([0, -4 * r, 0]).multiply(SHIELD_TURN).slerp(armQ, ease(0.9, 1.16, s)));
+        // The skull rattles on its side, rolls back onto its jaw, and hops onto the neck.
+        const neckRots = [hipsR, spineR, chestR, neckR];
+        const neckQ = chainQ(neckRots);
+        const headNow = add(follow(NECK_CHAIN, neckRots, HEAD_AT), hipsMove);
+        const heldQ = neckQ.clone().multiply(quat(headR));
+        const skullHeld = add(headNow, arr(vec(SKULL_OFF).applyQuaternion(heldQ)));
+        const groundQ = quat([0, 0, ROLL * roll]).multiply(quat([0, 9 * r, 0])).multiply(SKULL_TURN);
+        const skullGround = add(lerp(SKULL_DOWN, SKULL_ROLL, roll), [0, 0.012 * Math.abs(r) + 0.02 * Math.sin(Math.PI * roll), 0]);
+        const skullAt = add(lerp(skullGround, skullHeld, hop), [0, 0.14 * Math.sin(Math.PI * hop), 0]);
+        const turnH = groundQ.slerp(heldQ, hop);
+        const head = place(neckQ, headNow, add(skullAt, arr(vec(SKULL_OFF).applyQuaternion(turnH)), -1), turnH);
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: neckR },
+          head,
+          'upperarm.L': { rotate: uaL },
+          'forearm.L': { rotate: faL },
+          'upperarm.R': { rotate: uaR },
+          'forearm.R': { rotate: faR },
+          weapon,
+          shield,
+          'leg.L': { rotate: [0, -28 * c + 3 * r, phi] },
+          'leg.R': { rotate: [0, 28 * c - 3 * r2, -phi] },
         };
       },
     });
