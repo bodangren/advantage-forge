@@ -17,8 +17,8 @@ import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
  * Bodies: skin, hair, hood, mantle, cape, tunic, sleeves, leather, gold, pants, wraps, boots,
  *   sheaths (empty, at the hips), and a dagger and a grip in each hand (reverse grip).
  * Rig: chibi skeleton plus a `cloak` bone for the cape; the daggers are rigid on `knife.L`/`knife.R`,
- *   children of the hands that only the death clip moves (the daggers drop). Clips idle, walk,
- *   run, attack, hit, death.
+ *   children of the hands. The death clip drops both daggers; the victory clip flips the right one.
+ *   Clips idle, walk, run, attack, attack2 (a spinning slash), hit, death, victory.
  */
 
 const C = {
@@ -806,6 +806,186 @@ export default defineAsset({
           'foot.R': { rotate: [lean + 10 * settle, -18 * settle, 0] },
           ...deathL(p, [hipsR, spineR, chestR], hipsMove, w),
           ...deathR(p, [hipsR, spineR, chestR], hipsMove, w),
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ arm posing for attack2 and victory
+    // One arm from a wrist target, an elbow pole, the blade's direction, and the flat's normal, all in
+    // the chest's rest frame (as in the attack). Keys are written for the right arm (x < 0); `m`
+    // mirrors them for the left arm.
+    const armRig = (side: 1 | -1) => {
+      const m = (v: V3): V3 => [side === 1 ? -v[0] : v[0], v[1], v[2]];
+      const tag = side === 1 ? 'L' : 'R';
+      const chain = { root: m(mx(SHOULDER)), mid: m(mx(ELBOW)), end: m(mx(WRIST)) };
+      const rest = { dir: inHandDir([0, 1, 0], side), up: inHandDir([0, 0, 1], side) };
+      const solve = (wrist: V3, pole: V3, dir: V3, up: V3) => {
+        const arm = reach(chain, wrist, pole);
+        const hand = orient([arm.upper, arm.lower], rest, { dir: norm(dir), up: norm(up) });
+        const rots: V3[] = [arm.upper, arm.lower, hand];
+        return {
+          rots,
+          bones: {
+            [`upperarm.${tag}`]: { rotate: arm.upper },
+            [`forearm.${tag}`]: { rotate: arm.lower },
+            [`hand.${tag}`]: { rotate: hand },
+          },
+        };
+      };
+      return {
+        m,
+        chain,
+        rest,
+        pole: m([-0.58, 0.6, -0.015]), // the rest bend plane
+        back: m([-0.6, 0.25, -0.3]), // elbow out and back
+        side: m([-0.55, 0.45, -0.05]), // elbow out to the side
+        low: m([-0.3, 0.12, 0.08]), // elbow down, under the mantle
+        solve,
+      };
+    };
+
+    // ------------------------------------------------------------------ attack2: a spinning slash
+    // She crouches and coils to her right with both fists drawn back at the hips, then spins one full
+    // turn to her left (+Y) on the spot with a small hop, the chest a little ahead of the hips. Both
+    // fists go out at chest height with the blades flat and pointing out, so the steel sweeps a circle
+    // around her, outside the mantle and the cape and far below the hood. The cape lags and flares out
+    // with the spin. She lands in the crouch, facing forward, and rises to her stance.
+    const spinArm = (side: 1 | -1) => {
+      const a = armRig(side);
+      const { m } = a;
+      const out = m([-0.25, 0.355, 0.075]); // the wrist, out at chest height (the fist hangs a little lower)
+      const outDir = m([-0.95, 0.1, -0.28]); // the blade out and flat, trailing a little
+      const wristKeys: [number, V3][] = [
+        [0, a.chain.end],
+        [0.18, m([-0.21, 0.255, 0.005])], // drawn back at the hip in the crouch
+        [0.24, m([-0.215, 0.26, 0])],
+        [0.34, out],
+        [0.64, out],
+        [0.76, m([-0.21, 0.265, 0.025])],
+        [1, a.chain.end],
+      ];
+      const bladeKeys: [number, V3][] = [
+        [0, a.rest.dir],
+        [0.18, m([-0.72, 0.6, -0.35])], // up and back beside the forearm
+        [0.24, m([-0.74, 0.56, -0.37])],
+        [0.34, outDir],
+        [0.64, outDir],
+        [0.76, m([-0.76, 0.5, -0.38])],
+        [1, a.rest.dir],
+      ];
+      const upKeys: [number, V3][] = [
+        [0, a.rest.up],
+        [0.24, a.rest.up],
+        [0.34, [0, 1, 0]], // the flat faces up, so the edges cut around the circle
+        [0.64, [0, 1, 0]],
+        [0.76, a.rest.up],
+        [1, a.rest.up],
+      ];
+      const poleKeys: [number, V3][] = [
+        [0, a.pole],
+        [0.18, a.back], // elbow out and back
+        [0.24, a.back],
+        [0.34, a.side], // elbow out to the side
+        [0.64, a.side],
+        [0.76, a.back],
+        [1, a.pole],
+      ];
+      return (p: number) => a.solve(keys(p, wristKeys), keys(p, poleKeys), keys(p, bladeKeys), keys(p, upKeys)).bones;
+    };
+    const spinR = spinArm(-1);
+    const spinL = spinArm(1);
+    k.animation('attack2', {
+      duration: 0.85,
+      loop: false,
+      pose: (_t, p) => {
+        const hipsY = keys(p, [[0, 0], [0.18, -20], [0.24, -20], [0.66, 360], [1, 360]] as const);
+        const lead = keys(p, [[0, 0], [0.18, -22], [0.24, -22], [0.36, 22], [0.56, 16], [0.7, 0], [1, 0]] as const);
+        const lean = keys(p, [[0, 0], [0.18, 12], [0.28, 7], [0.45, 3], [0.68, 9], [0.78, 9], [1, 0]] as const);
+        const legZ = keys(p, [[0, 0], [0.18, 13], [0.28, 9], [0.42, 3], [0.56, 3], [0.68, 13], [0.8, 13], [1, 0]] as const);
+        const hop = 0.03 * keys(p, [[0.28, 0], [0.45, 1], [0.62, 0]] as const);
+        const flare = keys(p, [[0.24, 0], [0.42, 1], [0.64, 1], [0.82, 0.15], [1, 0]] as const);
+        const drop = LEG * (1 - Math.cos(legZ * rad));
+        return {
+          hips: { move: [0, hop - drop, 0], rotate: [0, hipsY, 0] },
+          spine: { rotate: [lean, 0, 0] },
+          chest: { rotate: [lean / 3, lead, 0] },
+          head: { rotate: [-0.6 * lean, -0.6 * lead, 0] },
+          cloak: { rotate: [0.4 * lean + 34 * flare, -12 * flare, 0], scale: [1 + 0.12 * flare, 1, 1 + 0.08 * flare] },
+          'leg.L': { rotate: [0, 0, legZ] },
+          'leg.R': { rotate: [0, 0, -legZ] },
+          'foot.L': { rotate: [0, 0, -legZ] },
+          'foot.R': { rotate: [0, 0, legZ] },
+          ...spinR(p),
+          ...spinL(p),
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ victory: a knife flip, then crossed daggers
+    // She dips the right fist and flicks it up: the right dagger (bone `knife.R`) leaves the hand,
+    // rises out to her right side, flips once about the world X axis, and drops back into the fist.
+    // The flight stays outside the hood's widest point. Then she crosses the daggers in front of her
+    // chest (the blades point a little up and across, the right blade in front, the blades tilt
+    // forward and stay below the clasp and the collar; the elbows stay down under the mantle), leans
+    // back a little, and tilts her head with a sly look. She holds the pose to the end.
+    const vicR = armRig(-1);
+    const vicL = armRig(1);
+    const CROSS_UP: V3 = [0, -0.45, 1]; // the flats face forward, so both blades read at full width
+    const crossR: V3 = [-0.05, 0.3, 0.13]; // at full reach; inside the mantle's front edge
+    const crossL: V3 = [0.08, 0.29, 0.105]; // behind the right fist, so the blades pass without touching
+    const vicKeysR = {
+      wrist: [
+        [0, vicR.chain.end],
+        [0.08, [-0.215, 0.235, 0.075]], // the fist dips
+        [0.15, [-0.235, 0.3, 0.1]], // and flicks up: the dagger leaves the hand
+        [0.38, [-0.235, 0.3, 0.1]],
+        [0.44, [-0.225, 0.272, 0.09]], // the catch gives a little
+        [0.52, [-0.225, 0.28, 0.09]],
+        [0.72, crossR],
+        [1, crossR],
+      ] as [number, V3][],
+      pole: [[0, vicR.pole], [0.08, vicR.back], [0.52, vicR.back], [0.72, vicR.low], [1, vicR.low]] as [number, V3][],
+      dir: [[0, vicR.rest.dir], [0.52, vicR.rest.dir], [0.72, [0.85, 0.25, 0.45]], [1, [0.85, 0.25, 0.45]]] as [number, V3][],
+      up: [[0, vicR.rest.up], [0.52, vicR.rest.up], [0.72, CROSS_UP], [1, CROSS_UP]] as [number, V3][],
+    };
+    // The left blade swings forward, not up, on its way in, so it passes under the mantle's edge.
+    const vicKeysL = {
+      wrist: [[0, vicL.chain.end], [0.5, vicL.chain.end], [0.72, crossL], [1, crossL]] as [number, V3][],
+      pole: [[0, vicL.pole], [0.5, vicL.pole], [0.72, vicL.low], [1, vicL.low]] as [number, V3][],
+      dir: [[0, vicL.rest.dir], [0.5, vicL.rest.dir], [0.6, [0.35, 0.1, 0.93]], [0.72, [-0.85, 0.25, 0.45]], [1, [-0.85, 0.25, 0.45]]] as [number, V3][],
+      up: [[0, vicL.rest.up], [0.5, vicL.rest.up], [0.72, CROSS_UP], [1, CROSS_UP]] as [number, V3][],
+    };
+    const FLIGHT = [0.15, 0.39] as const; // the dagger is in the air between these phases
+    k.animation('victory', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const c = keys(p, [[0.46, 0], [0.72, 1]] as const);
+        const sly = keys(p, [[0.62, 0], [0.8, 1]] as const);
+        const watch = keys(p, [[0.06, 0], [0.18, 1], [0.34, 1], [0.48, 0]] as const);
+        const hipsR: V3 = [0, -10 * c, 0];
+        const spineR: V3 = [-3 * c, 0, 0];
+        const chestR: V3 = [-3 * c, 7 * c, 0];
+        const at = (ks: typeof vicKeysR) => [keys(p, ks.wrist), keys(p, ks.pole), keys(p, ks.dir), keys(p, ks.up)] as const;
+        const r = vicR.solve(...at(vicKeysR));
+        const l = vicL.solve(...at(vicKeysL));
+        // The flying dagger: a world offset and a world spin, turned into the hand's frame.
+        const u = clamp01((p - FLIGHT[0]) / (FLIGHT[1] - FLIGHT[0]));
+        const air = 4 * u * (1 - u);
+        const inv = [hipsR, spineR, chestR, ...r.rots].reduce((q, x) => q.multiply(quat(x)), new THREE.Quaternion()).invert();
+        const d = new THREE.Vector3(-0.09 * air, 0.3 * air, 0.02 * air).applyQuaternion(inv);
+        const spin = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0).applyQuaternion(inv), 2 * Math.PI * u);
+        return {
+          hips: { rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [3 * sly, 0, 0] },
+          head: { rotate: [-14 * watch + 4 * sly, -10 * watch - 8 * sly, 12 * sly] },
+          cloak: { rotate: [3 * c + 2 * watch, 0, 0] },
+          'foot.L': { rotate: [0, 14 * c, 0] },
+          ...r.bones,
+          ...l.bones,
+          'knife.R': { move: [d.x, d.y, d.z], rotate: euler(spin) },
         };
       },
     });
