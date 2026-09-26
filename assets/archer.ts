@@ -554,7 +554,18 @@ export default defineAsset({
 
     // The bow arm swings less than the free arm and lifts out from the body (`lift`, degrees),
     // so the bow tip clears the ground and the boot while the hips drop at each step.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flop: number, lift: number) => ({
+    // The lift also tilts the upper bow limb (above the shoulder) in toward the hood, so the
+    // hand turns back by the lift plus `tiltOut` degrees: the bow leans out, clear of the hood.
+    const stride = (
+      duration: number,
+      legSwing: number,
+      armSwing: number,
+      lean: number,
+      hop: number,
+      flop: number,
+      lift: number,
+      tiltOut: number,
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -576,10 +587,11 @@ export default defineAsset({
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.2, 0, 0] as const },
           'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
+          'hand.L': { rotate: [0, 0, -(lift + tiltOut)] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, 12));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 12, 19));
+    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, 12, 8));
+    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 12, 19, 6));
   },
 });
