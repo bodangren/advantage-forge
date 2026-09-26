@@ -418,7 +418,7 @@
     "reviewedAt": "2026-09-26T18:48:13+00:00"
   },
   "zombie": {
-    "overall": 8,
+    "overall": 8.1,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -426,28 +426,28 @@
       "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 4,
+      "detail": 3,
       "technical": 5,
       "gameReady": 5,
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The zombie matches the mmx mockup: grey-green skin, one bulging yellow eye and one glossy black eye, a toothy grimace, a patched shirt, a rope belt, torn trousers, and sandals.",
+    "summary": "The zombie now has the full clip set: idle, walk, run, attack, hit, and death. The silhouette, the colors, and the mismatched eyes match the mmx mockup. The hair, the shirt, and the trouser hems are still simpler than the mockup.",
     "strengths": [
-      "The mismatched eyes are a unique signature, and they read in every sprite direction that shows the face.",
-      "The shamble drags one foot and keeps the arms reaching forward, so the motion reads as a zombie at once.",
-      "It uses the rogue's head and skeleton, so it reads as a villager who came back wrong."
+      "The bulging yellow eye and the glossy black eye read in every sprite direction that shows the face.",
+      "The death clip reads clearly. The head snaps back, the knees give way, and the body falls forward and lies flat. Nothing goes below the ground.",
+      "The walk and the run drag one foot and keep the arms forward, so the motion reads as a zombie at once."
     ],
     "issues": [
-      "The hair is a smooth black mass with thick locks. The mockup hair is thinner and messier.",
-      "The shirt is plain. The mockup shirt has a torn collar, loose threads, and buttons.",
-      "The torn trouser hems are painted. The mockup shows deep, shaggy tears."
+      "The hair is still a smooth black helmet with thick cone locks. The mockup hair is thinner and messier. In the back sprites, the hair is a large, plain black mass.",
+      "The shirt is still plain, with no torn collar, buttons, or loose threads. The trouser tears are still paint, and the sandals are flat planks. The collar and hem threads from the last review are still open.",
+      "The attack reads as a two-hand claw, and the forward pitch of the head and the chest gives it weight. But the reach is short: the hands rise only to the ears, the strike stops at belly height, and the feet stay planted."
     ],
     "next": [
-      "Make the hair locks thinner and more varied.",
-      "Add a few loose threads at the collar and the hem."
+      "Make the hair locks thinner and more varied, and break up the smooth mass at the back. This item from the last review is still open.",
+      "Add a lunge step to the attack, and extend the arms so that the claws reach past the face at chest height."
     ],
-    "reviewedAt": "2026-09-26T05:20:08+00:00"
+    "reviewedAt": "2026-09-26T18:52:13+00:00"
   },
   "slime": {
     "overall": 8.5,
