@@ -385,7 +385,7 @@
     "reviewedAt": "2026-09-26T19:11:28+00:00"
   },
   "bandit": {
-    "overall": 8.4,
+    "overall": 8.5,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -399,22 +399,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The bandit has its full clip set: idle, walk, run, a cutlass slash, hit, and death. The model matches the mockup: wild dark hair, an angry glare over a dark red mask, a striped shirt, a leather vest, a loot sack, and a curved cutlass. The slash is now a strong diagonal cut. The gear is still plainer than the mockup.",
+    "summary": "The bandit has a new taunt clip for the first sight of the player. He leans back with the head cocked and beckons twice with the free hand, palm up. Then he tosses the cutlass, it turns one full flip, and he catches it. Then he points the blade at the player. The full clip set is now idle, walk, run, a cutlass slash, hit, death, and taunt. The gear is still plainer than the mockup.",
     "strengths": [
-      "The glare between the dark hair and the red mask is a strong focal point. It reads in the front view and in the S, SW, and SE sprites.",
-      "The slash has a high wind-up: the chest turns, the weight goes back, and the blade rises over the left shoulder with the tip behind the head. Then the blade cuts on a diagonal from high to low across the body, with the edge leading and a step in on the right foot.",
-      "The cutlass clears the head and the hair by 2 cm or more in every clip. The check ends with result ok and ground ok, and the blade does not touch the body in the attack."
+      "The taunt reads as one attitude: a cocky beckon, a trick toss, and a threat. The cutlass rises beside the head, turns one full flip in 0.35 s, and drops back into the hand at the same grip.",
+      "The cutlass stays 5 cm or more from the head and the hair in the taunt. The head tilts away from the toss and turns to watch it. The check ends with result ok and ground ok.",
+      "The glare between the dark hair and the red mask is a strong focal point. It reads in the front view and in the S, SW, and SE sprites."
     ],
     "issues": [
-      "The chibi arm is short, so the hand rises only to chin height. In the front view, the raised blade shows only along the side of the head.",
-      "The cut is fast (about 0.12 s), and the blade is edge-on to the front camera. In a strip or a sprite frame, the blade at the strike shows as a thin line.",
-      "The gear is plainer than the mockup. The mockup has straps on the vest, a holster at the belt, and tall boots with cuffs. The model has a plain vest and short boots. The sack still sits behind the arm."
+      "The hand is a closed fist, so the beckon shows as a fist that tilts up twice. The fingers do not curl, and in the side views the far hand is hidden.",
+      "In the front view and the S sprite, the pointed blade faces the camera and shows only as a short curve. The point reads better in the W, E, and SE sprites.",
+      "The gear is plainer than the mockup. The mockup has straps on the vest, a holster at the belt, and tall boots with cuffs. The model has a plain vest and short boots."
     ],
     "next": [
-      "Add the mockup gear: a vest strap with a buckle, a holster at the belt, and cuffs on the boots. Move the sack a little to the side.",
-      "Check the attack sprite sheet at 128 px. If the strike frame is weak, add a short smear or a brighter edge on the blade."
+      "Give the free hand an open pose for the beckon: a palm with fingers that curl, on its own bone, used only in the taunt.",
+      "Add the mockup gear: a vest strap with a buckle, a holster at the belt, and cuffs on the boots."
     ],
-    "reviewedAt": "2026-09-26T21:28:22+00:00"
+    "reviewedAt": "2026-09-26T22:13:39+00:00"
   },
   "zombie": {
     "overall": 8.3,

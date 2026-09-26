@@ -21,8 +21,11 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Bodies: skin, hair, mask, shirt, vest, trousers, leather (belt, pouch, wrist wrap), steel,
  *   boots, loot-sack, rope, cutlass, hilt.
  * Rig: the rogue's skeleton plus `knot` (the mask's tails) and `sack`; the cutlass is rigid on
- *   `cutlassbone`, a child of `hand.L` that only the death clip moves (the cutlass drops).
- *   Clips: idle, walk, run, attack (a high diagonal slash), hit, death.
+ *   `cutlassbone`, a child of `hand.L` that the death clip moves (the cutlass drops) and the taunt
+ *   tosses (one flip in the air).
+ *   Clips: idle, walk, run, attack (a high diagonal slash), hit, death, taunt (beckon twice with
+ *   the palm up, toss and catch the cutlass, point it at the player; plays when the bandit first
+ *   sees the player).
  */
 
 const C = {
@@ -773,6 +776,135 @@ export default defineAsset({
           'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
           'foot.L': { rotate: [lean, 20 * land, 0] },
           'foot.R': { rotate: [lean, -20 * land, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ taunt: beckon, toss, point
+    // Played when the bandit first sees the player. He leans back with the head cocked and beckons
+    // twice with the free right hand, the palm up: "come here". Then he tosses the cutlass up out
+    // to his left; it turns one full flip (about 0.3 m up, 0.35 s) and drops back into his hand,
+    // while his head tilts away from it and watches it. He points the blade straight at the player
+    // at chest height for a beat (a short thrust: "you!"), and returns to rest.
+    // The hand targets are in world space. Each frame converts them into the chest's rest frame
+    // and blends them from the arm's rest; reach solves the arm, and orient turns the hand. In the
+    // air the cutlass bone undoes the posed hand and carries the cutlass on its own path: up and a
+    // little out, the tip up and back first. The flip turns fast after the throw and slows into
+    // the catch, so the blade points down only near the top, above the hand that drops out of its
+    // way.
+    const chestFrame = (rots: readonly V3[], move: V3) => {
+      const q = quat(rots[0]!).multiply(quat(rots[1]!)).multiply(quat(rots[2]!));
+      const inv = q.clone().invert();
+      const at = follow(TRUNK, rots, TRUNK[2]!);
+      const c = TRUNK[2]!;
+      return {
+        q,
+        inv,
+        point: (w: V3): V3 => {
+          const v = new THREE.Vector3(w[0] - at[0] - move[0], w[1] - at[1] - move[1], w[2] - at[2] - move[2]).applyQuaternion(inv);
+          return [v.x + c[0], v.y + c[1], v.z + c[2]];
+        },
+      };
+    };
+    const turnV = (q: THREE.Quaternion, v: V3): V3 => {
+      const w = new THREE.Vector3(...v).applyQuaternion(q);
+      return [w.x, w.y, w.z];
+    };
+    const mix2 = (a: V3, ca: number, b: V3, cb: number): V3 => [a[0] * ca + b[0] * cb, a[1] * ca + b[1] * cb, a[2] * ca + b[2] * cb];
+    const Q_ID = new THREE.Quaternion();
+    // The right hand's rest frame: the wrist to the fist center, and the palm (the curled fingers)
+    // forward.
+    const AXIS_R = norm([-0.007, -0.038, 0.004]);
+    const PALM_R: V3 = [0, 0, 1];
+    const BECKON_AT: V3 = [-0.215, 0.35, 0.1]; // the right wrist out and forward, the forearm level
+    const BECKON_F = norm([-0.5, 0.2, 1]); // the hand points forward and out, a little up
+    const BECKON_U = norm(add([0, 1, 0], BECKON_F, -BECKON_F[1])); // the palm up
+    const POLE_REST_R: V3 = add(mx(SHOULDER), add(ELBOW_R, mx(SHOULDER), -1), 4);
+    const POLE_BECKON: V3 = [-0.4, 0.2, -0.06]; // the elbow down and out
+    // The left hand: the cutlass straight ahead, the flat upright, the curved edge down.
+    const Q_FWD = quat(orient([], { dir: BLADE_DIR, up: FLAT }, { dir: [0, 0, 1], up: [-1, 0, 0] }));
+    const GRIP_OFF: V3 = add(GRIP, WRIST_L, -1);
+    const TOSS_AT: V3 = [0.265, 0.325, 0.075]; // the grip out to the left and a little forward
+    const RELEASE: V3 = add(TOSS_AT, [0, 0.02, 0.005]); // the flick lets go a little higher
+    const POINT_AT: V3 = [0.15, 0.345, 0.17]; // the grip before the chest, the blade at the player
+    const POLE_REST_L: V3 = add(SHOULDER, add(ELBOW_L, SHOULDER, -1), 4);
+    const POLE_TOSS: V3 = [0.45, 0.2, -0.05];
+    const POLE_AIM: V3 = [0.42, 0.15, 0.02];
+    const FLY0 = 0.455; // the throw
+    const FLY1 = FLY0 + 0.35 / 1.5; // the catch, 0.35 s later
+    const FLIP_AXIS = new THREE.Vector3(-1, 0, 0); // the tip goes up and back first
+    k.animation('taunt', {
+      duration: 1.5,
+      loop: false,
+      pose: (_t, p) => {
+        const beck = keys(p, [[0, 0], [0.08, 1], [0.35, 1], [0.44, 0]] as const);
+        const curl = keys(p, [[0.08, 0], [0.15, 1], [0.22, 0], [0.29, 1], [0.36, 0]] as const);
+        const cock = keys(p, [[0, 0], [0.08, 1], [0.36, 1], [0.45, 0]] as const);
+        const ready = keys(p, [[0.33, 0], [0.41, 1], [0.9, 1], [1, 0]] as const);
+        const look = keys(p, [[0.38, 0], [0.45, 1], [0.66, 1], [0.74, 0]] as const);
+        const aim = keys(p, [[0.7, 0], [0.79, 1], [0.9, 1], [1, 0]] as const);
+        // He leans back for the beckon; the chest turns the left shoulder forward for the point.
+        const hipsR: V3 = [0, 0, 0];
+        const spineR: V3 = [-4 * cock + 2 * aim, 0, 0];
+        const chestR: V3 = [-4 * cock, 6 * cock - 12 * aim, 0];
+        const frame = chestFrame([hipsR, spineR, chestR], [0, 0, 0]);
+        // The right hand: forward with the palm up; it curls up toward him twice.
+        const c = (10 + 75 * curl) * DEG;
+        const beckonQ = quat(
+          orient([], { dir: AXIS_R, up: PALM_R }, { dir: mix2(BECKON_F, Math.cos(c), BECKON_U, Math.sin(c)), up: mix2(BECKON_F, -Math.sin(c), BECKON_U, Math.cos(c)) }),
+        );
+        const turnR = Q_ID.clone().slerp(frame.inv.clone().multiply(beckonQ), beck);
+        const wristR = lerp(WRIST_R, frame.point(add(BECKON_AT, [0, 0.012, -0.015], curl)), beck);
+        const armR = reach(ARM_R, wristR, lerp(POLE_REST_R, frame.point(POLE_BECKON), beck));
+        const handR = orient([armR.upper, armR.lower], { dir: AXIS_R, up: PALM_R }, { dir: turnV(turnR, AXIS_R), up: turnV(turnR, PALM_R) });
+        // The left hand: the cutlass forward out to the left, the wind-up dip and the flick, the
+        // drop out of the way, the catch and its give, then the point with a short thrust.
+        const gripW = keys(p, [
+          [0.41, TOSS_AT],
+          [0.435, add(TOSS_AT, [0, -0.04, -0.01])],
+          [FLY0, RELEASE],
+          [0.565, add(TOSS_AT, [-0.03, -0.08, -0.01])],
+          [FLY1, TOSS_AT],
+          [FLY1 + 0.022, add(TOSS_AT, [0, -0.03, 0])],
+          [0.74, TOSS_AT],
+          [0.8, add(POINT_AT, [0, 0, 0.025])],
+          [0.84, POINT_AT],
+        ] as const);
+        const turnL = Q_ID.clone().slerp(frame.inv.clone().multiply(Q_FWD), ready);
+        const wristL = add(lerp(GRIP, frame.point(gripW), ready), turnV(turnL, GRIP_OFF), -1);
+        const poleL = lerp(POLE_REST_L, frame.point(keys(p, [[0.74, POLE_TOSS], [0.8, POLE_AIM]] as const)), ready);
+        const armL = reach(ARM_L, wristL, poleL);
+        const handL = orient([armL.upper, armL.lower], { dir: BLADE_DIR, up: FLAT }, { dir: turnV(turnL, BLADE_DIR), up: turnV(turnL, FLAT) });
+        // The flight: the grip rises about 0.3 m and a little out, and comes back into the hand.
+        let cutMove: V3 = [0, 0, 0];
+        let cutRot: V3 = [0, 0, 0];
+        if (p > FLY0 && p < FLY1) {
+          const u = (p - FLY0) / (FLY1 - FLY0);
+          const at = add(lerp(RELEASE, TOSS_AT, u), [0.05, 0.3, 0], 4 * u * (1 - u));
+          const flip = 2 * Math.PI * (0.25 * u + 0.75 * (1 - (1 - u) * (1 - u)));
+          const handQ = frame.q.clone().multiply(quat(armL.upper)).multiply(quat(armL.lower)).multiply(quat(handL));
+          const held = follow(HAND_CHAIN, [hipsR, spineR, chestR, armL.upper, armL.lower, handL], GRIP);
+          const inv = handQ.clone().invert();
+          const d = new THREE.Vector3(...add(at, held, -1)).applyQuaternion(inv);
+          cutMove = [d.x, d.y, d.z];
+          cutRot = euler(inv.multiply(new THREE.Quaternion().setFromAxisAngle(FLIP_AXIS, flip)).multiply(Q_FWD));
+        }
+        return {
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [-3 * cock + 3 * aim, 0, 3 * cock + 4 * look] },
+          // Cocky: the chin up and the head cocked to his right; then it tilts further away from
+          // the flying cutlass and turns to watch it; for the point it faces the player.
+          head: { rotate: [-6 * cock - 4 * look + 5 * aim, 8 * look + 10 * aim, 9 * cock + 12 * look] },
+          knot: { rotate: [6 * cock + 6 * look, 0, -6 * look] },
+          sack: { rotate: [3 * cock - 2 * aim, 0, 3 * aim] },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
+          cutlassbone: { move: cutMove, rotate: cutRot },
         };
       },
     });
