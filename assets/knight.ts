@@ -70,14 +70,10 @@ const WRIST_L: V3 = [0.2, 0.29, 0.085];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
-// Rest points on the flat bottom of the left sabaton (y = 0): heel, toe, inner and outer side.
+// The ends of the flat bottom of the left sabaton (y = 0), measured on the SDF: heel and toe.
 // The toe turns out 12 degrees, so the toe point sits outboard of the heel.
-const SOLE: readonly V3[] = [
-  [0.096, 0, -0.01],
-  [0.118, 0, 0.092],
-  [0.074, 0, 0.026],
-  [0.136, 0, 0.034],
-];
+const HEEL: V3 = [0.096, 0, -0.008];
+const TOE: V3 = [0.117, 0, 0.09];
 const mx =(p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 
@@ -693,42 +689,44 @@ export default defineAsset({
 
     // The shield arm stays in front of the body; the sword arm swings a little.
     // shield: the [upper arm, forearm] X offsets that keep the shield's top edge clear of the cheek.
+    // The legs come from motion.gait: planted stance sabatons, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the right
+    // arm is most forward. The hips' sway goes to gait, so the planted feet do not slide.
     const stride = (
       duration: number,
-      legSwing: number,
+      step: number,
+      footLift: number,
+      duty: number,
+      bob: number,
       armSwing: number,
       lean: number,
-      hop: number,
       flow: number,
       shield: readonly [number, number] = [0, 0],
     ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
-        const legL: V3 = [-legSwing * s, 0, 0];
-        const legR: V3 = [legSwing * s, 0, 0];
-        // Heel strike in front, toe-off behind.
-        const footL: V3 = [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0];
-        const footR: V3 = [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0];
-        // The hips drop until the lowest heel or toe touches the ground.
-        const drop = motion.plant([
-          { joints: [HIP, ANKLE], rotations: [legL, footL], sole: SOLE },
-          { joints: [mx(HIP), mx(ANKLE)], rotations: [legR, footR], sole: SOLE.map(mx) },
-        ]);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 10,
+          heel: HEEL,
+          toe: TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, drop + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -9 * s, 0] as const },
           head: { rotate: [-lean, 4 * s, 0] as const },
           plume: { rotate: [flow * 0.5 + 5 * wave(p, 2, 0.2), 0, 4 * wave(p, 2, 0.1)] as const },
           cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
-          'leg.L': { rotate: legL },
-          'leg.R': { rotate: legR },
-          'foot.L': { rotate: footL },
-          'foot.R': { rotate: footR },
           'upperarm.L': { rotate: [armSwing * 0.15 * s + shield[0], 0, 3] as const },
           'forearm.L': { rotate: [shield[1], 0, 0] as const },
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -6] as const },
@@ -736,8 +734,9 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, [4, 0]));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
+    // A knight in armor walks heavier: short steps, a low swing, long stances.
+    k.animation('walk', stride(0.9, 0.09, 0.02, 0.62, 0.005, 28, 3, 6, [4, 0]));
+    k.animation('run', stride(0.56, 0.13, 0.04, 0.42, 0.025, 50, 12, 22));
 
     // A diagonal slash, solved by targets (as the animated armor's attack). The wrist follows keys
     // in the chest's rest frame (reach); the blade follows its own keys; edgeUp turns the flat so
