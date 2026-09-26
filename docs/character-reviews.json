@@ -353,7 +353,7 @@
     "reviewedAt": "2026-09-26T21:29:09+00:00"
   },
   "orc-warrior": {
-    "overall": 8.3,
+    "overall": 8.4,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -367,22 +367,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The orc warrior is a stocky brute with a heavy scowl, tusks, a topknot, a spiked pauldron, and a large crescent axe. The one-hand overhead chop now hits at the height of a target's body in front of the orc. The follow-through goes down and across the body and stops above the floor. The clip check passes the head test and the ground test.",
+    "summary": "The orc warrior is a stocky brute with a heavy scowl, tusks, a topknot, a spiked pauldron, and a large crescent axe. A new second attack, attack2, is a shoulder charge with the spiked pauldron and then a backhand axe swipe. The orc turns the pauldron shoulder to the target, takes two heavy steps, and rams at chest height. Then the body unwinds and the axe swings across at waist height with the edge in front. The clip check passes the head test and the ground test for all clips.",
     "strengths": [
-      "The attack reads as a hit on a body: the axe comes over the top, hits level in front of the chest with the edge down, and follows through across the body to the left knee.",
-      "The costume matches the mockup: large brown bracers, a spiked pauldron, a belt with a round buckle, a ragged red loincloth, and fur leg wraps.",
-      "The death reads well at game size: a stagger back, a fall onto the back, and the axe on the floor next to the hand."
+      "The second attack reads clearly: the spiked pauldron leads the charge, and the head stays low behind it.",
+      "The feet stay on the floor in the charge: each planted foot keeps its position, and the hips move over the feet.",
+      "The costume matches the mockup: large brown bracers, a spiked pauldron, a belt with a round buckle, a ragged red loincloth, and fur leg wraps."
     ],
     "issues": [
-      "The haft passes near the hair at the top of the swing. The head test passes, but the margin is only 0.3 cm.",
+      "In the charge, the axe hangs low across the front, and the axe head comes near the floor.",
       "The tusks are small: about half the size of the mockup tusks. They hang down from under the upper lip, as the owner asked.",
       "The beard is a small goatee, and the mockup beard is full."
     ],
     "next": [
-      "Move the haft a little farther from the hair at the top of the swing, for a larger head margin.",
+      "Hold the axe higher in the charge of attack2, so that the head of the axe stays clear of the feet.",
       "Give the beard more volume, toward the full beard of the mockup."
     ],
-    "reviewedAt": "2026-09-26T19:11:28+00:00"
+    "reviewedAt": "2026-09-26T22:57:44+00:00"
   },
   "bandit": {
     "overall": 8.5,

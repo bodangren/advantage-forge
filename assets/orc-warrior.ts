@@ -23,7 +23,10 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  * Rig: chibi humanoid with wide joints plus `knot` (the topknot tail); the axe is rigid on
  *   `hand.R`, the pauldron follows `upperarm.R`. Clips: idle, walk, run, attack (a heavy overhead
  *   chop solved by targets: a big wind-up behind the shoulder, a hold, the body drives the axe
- *   down in front, an impact with a shake, a follow-through), roar (a war cry), hit, death.
+ *   down in front, an impact with a shake, a follow-through), attack2 (a shoulder charge: a low,
+ *   wide stance with the pauldron shoulder turned at the target, two heavy steps, a ram with the
+ *   spiked pauldron and a shake; then the body unwinds into a backhand axe swipe at waist height,
+ *   the edge leading; two steps back), roar (a war cry), hit, death.
  */
 
 const C = {
@@ -678,6 +681,128 @@ export default defineAsset({
           'leg.R': { rotate: [legR, -hipsY, 0] },
           'foot.L': { rotate: [-legL - spineX * 0, 0, 0] },
           'foot.R': { rotate: [-legR, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ attack2: a shoulder charge with the pauldron, then a backhand swipe
+    // Plan: the orc sinks into a wide stance (the left foot steps back), turns the pauldron
+    // shoulder at the target, and tucks the head down behind it; the axe is held across the belly.
+    // Two heavy steps (left, then right) carry the hips about 0.3 m forward, and the spiked
+    // pauldron rams into the target's chest; a short hold with a shake. Then the body unwinds and
+    // the axe swings backhand across the front at the target's waist, the edge leading, out to the
+    // right. Two steps back to rest. The feet are solved: a planted foot keeps its world position,
+    // the swing foot lifts, and the hips drop so the lowest sole stays on the floor.
+    const { edgeUp } = motion;
+    const UP: V3 = [0, 1, 0];
+    const LEG_Y = HIP[1] - ANKLE[1]; // hip joint to ankle (the ankle is straight below the hip in z)
+    const ease = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    type Step = readonly [number, number, number, number]; // phase start, phase end, from z, to z
+    const footAt = (steps: readonly Step[], p: number) => {
+      let z = 0;
+      let lift = 0;
+      for (const [a, b, from, to] of steps) {
+        if (p >= a) z = from + (to - from) * ease(a, b, p);
+        if (p > a && p < b) lift = 0.03 * Math.sin(((p - a) / (b - a)) * Math.PI);
+      }
+      return { z, lift };
+    };
+    // The leg angle (degrees, +X swings back) that puts the ankle at world z `footZ`, and the hips
+    // drop that keeps that ankle at its rest height. `side` is 1 for the left leg, -1 for the right.
+    const legTo = (footZ: number, hipsZ: number, hipsY: number, side: 1 | -1) => {
+      const hipZ = hipsZ - side * HIP[0] * Math.sin(hipsY * DEG);
+      const a = Math.asin(Math.max(-0.95, Math.min(0.95, (hipZ - footZ) / LEG_Y)));
+      return { rot: deg(a), drop: LEG_Y * (1 - Math.cos(a)) };
+    };
+    const STEPS_L: readonly Step[] = [[0.02, 0.13, 0, -0.2], [0.16, 0.26, -0.2, 0.12], [0.85, 0.95, 0.12, 0]];
+    const STEPS_R: readonly Step[] = [[0.26, 0.36, 0, 0.28], [0.72, 0.83, 0.28, 0]];
+    // The axe (in the chest's rest frame): across the belly with the head to the left in the
+    // charge, cocked further left, then level and forward at contact, out to the right after.
+    const swipeAt = (q: number) =>
+      keys(
+        q,
+        [
+          [0, AXE.dir],
+          [0.15, [0.55, -0.35, 0.75]],
+          [0.36, [0.55, -0.3, 0.78]],
+          [0.45, [0.55, -0.3, 0.78]],
+          [0.49, [0.78, -0.12, 0.42]], // cocked: the head to the left
+          [0.54, [0.35, -0.12, 0.93]],
+          [0.58, [-0.3, -0.12, 0.95]], // contact: level and forward
+          [0.62, [-0.8, -0.1, 0.55]],
+          [0.66, [-0.95, -0.1, 0]], // the follow-through, out to the right
+          [0.72, [-0.92, -0.2, 0]],
+          [0.86, [-0.6, -0.6, 0.3]],
+          [1, AXE.dir],
+        ] as const,
+        'spline',
+      );
+
+    k.animation('attack2', {
+      duration: 1.15,
+      loop: false,
+      pose: (_t, p) => {
+        const sh = shake(p, 0.36, 0.1, 5);
+        const hipsY = keys(p, [[0, 0], [0.15, 14], [0.45, 14], [0.48, 15], [0.66, -10], [0.72, -10], [0.9, 0]] as const);
+        const spineY = keys(p, [[0, 0], [0.15, 14], [0.45, 14], [0.48, 15], [0.66, -10], [0.72, -10], [0.92, 0]] as const);
+        const chestY = keys(p, [[0, 0], [0.15, 22], [0.36, 24], [0.45, 24], [0.48, 27], [0.66, -18], [0.72, -18], [0.95, 0]] as const);
+        const turn = hipsY + spineY + chestY;
+        // The lean toward the target (world +Z); the spine splits it over its X and Z axes because
+        // the hips are turned.
+        const lean = keys(p, [[0, 0], [0.15, 14], [0.26, 15], [0.36, 20], [0.45, 18], [0.48, 14], [0.66, 6], [0.72, 6], [0.95, 0]] as const);
+        const dip = keys(p, [[0, 0], [0.15, 4], [0.36, 8], [0.45, 7], [0.6, 0]] as const); // the pauldron shoulder drops into the ram
+        const headX = keys(p, [[0, 0], [0.15, 2], [0.36, -4], [0.45, -4], [0.6, -6], [0.72, -4], [1, 0]] as const);
+        const fL = footAt(STEPS_L, p);
+        const fR = footAt(STEPS_R, p);
+        const hipsZ = (fL.z + fR.z) / 2 + keys(p, [[0, 0], [0.3, 0], [0.36, 0.02], [0.45, 0.015], [0.6, 0.02], [0.72, 0]] as const);
+        const legL = legTo(fL.z, hipsZ, hipsY, 1);
+        const legR = legTo(fR.z, hipsZ, hipsY, -1);
+        const wrist = keys(
+          p,
+          [
+            [0, mx(WRIST)],
+            [0.15, [-0.18, 0.4, 0.2]], // tucked: the fist in front of the right side of the belly
+            [0.36, [-0.17, 0.4, 0.21]],
+            [0.45, [-0.17, 0.4, 0.21]],
+            [0.49, [-0.13, 0.41, 0.2]], // cocked across the belly
+            [0.54, [-0.2, 0.42, 0.22]],
+            [0.58, [-0.27, 0.41, 0.18]], // contact in front
+            [0.62, [-0.33, 0.41, 0.1]],
+            [0.66, [-0.36, 0.4, 0]],
+            [0.72, [-0.36, 0.39, 0]],
+            [0.86, [-0.36, 0.33, 0.04]],
+            [1, mx(WRIST)],
+          ] as const,
+          'spline',
+        );
+        const pole = keys(p, [[0, [-0.8, 0.2, -0.3]], [0.45, [-0.8, 0.2, -0.3]], [0.54, [-0.7, 0.4, 0.3]], [0.66, [-0.6, 0.3, -0.2]], [1, [-0.8, 0.3, 0]]] as const);
+        const arm = reach(ARM_R, wrist, pole);
+        const flat = norm(keys(p, [[0, AXE.up], [0.15, UP], [0.72, UP], [0.98, AXE.up]] as const));
+        const up = p > 0.45 && p < 0.72 ? edgeUp(swipeAt, p, UP) : flat;
+        const hand = orient([arm.upper, arm.lower], AXE, { dir: norm(swipeAt(p)), up });
+        // The off arm braces forward, pulls back to drive the charge, and swings out in the swipe.
+        const offWrist = keys(p, [[0, WRIST], [0.15, [0.3, 0.38, 0.14]], [0.3, [0.32, 0.37, -0.12]], [0.45, [0.32, 0.37, -0.12]], [0.6, [0.36, 0.4, 0.1]], [0.72, [0.36, 0.4, 0.1]], [1, WRIST]] as const);
+        const off = reach(ARM_L, offWrist, [0.8, 0.2, -0.3]);
+        const h = hipsY * DEG;
+        return {
+          hips: { move: [0, -Math.min(legL.drop + fL.lift, legR.drop + fR.lift), hipsZ], rotate: [0, hipsY, 0] },
+          spine: { rotate: [lean * Math.cos(h), spineY, lean * Math.sin(h)] },
+          chest: { rotate: [3 * sh, chestY, dip + 2 * sh] },
+          // The head stays down behind the pauldron, but the eyes turn toward the target.
+          head: { rotate: [headX - 3 * sh, -turn * 0.7, 0] },
+          knot: { rotate: [-lean * 0.8 + 12 * sh, 0, -chestY * 0.4] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          'upperarm.L': { rotate: off.upper },
+          'forearm.L': { rotate: off.lower },
+          'leg.L': { rotate: [legL.rot, -hipsY, 0], move: [0, fL.lift, 0] },
+          'leg.R': { rotate: [legR.rot, -hipsY, 0], move: [0, fR.lift, 0] },
+          'foot.L': { rotate: [-legL.rot, 0, 0] },
+          'foot.R': { rotate: [-legR.rot, 0, 0] },
         };
       },
     });
