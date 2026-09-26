@@ -387,21 +387,54 @@ export default defineAsset({
     k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.wingBone, roughness: 0.5 });
 
     // ------------------------------------------------------------------ animation
-    const { wave } = motion;
+    const { wave, keys, reach, quat, euler } = motion;
     const hover = (p: number, beats: number, lift: number, bob: number) => ({
       move: [0, lift + bob * wave(p, beats, 0.25), 0] as const,
     });
+    const ease = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+
+    // The wing beat. A beat about Z alone keeps the membrane in one plane, so the side and the
+    // three-quarter cameras see it edge-on near the top and the bottom of the stroke. A wing pose is
+    // three angles: `raise` (Z, the tip up), `fwd` (Y, the tip forward), and `twist` about the
+    // wing's own rest span (+ turns the leading edge forward and down). They compose as twist, then
+    // sweep, then raise; the right wing mirrors the left.
+    type WingAngles = { raise: number; fwd: number; twist: number };
+    const restWing = quat([0, 0, 10]).multiply(quat([0, 22, 0])); // wingPose: rotateY(22), then rotateZ(10)
+    const restWingInv = restWing.clone().invert();
+    const wings = ({ raise, fwd, twist }: WingAngles) => {
+      const q = quat([0, 0, raise]).multiply(quat([0, -fwd, 0])).multiply(restWing).multiply(quat([twist, 0, 0])).multiply(restWingInv);
+      const r = euler(q);
+      return { 'wing.L': { rotate: r }, 'wing.R': { rotate: [r[0], -r[1], -r[2]] as typeof r } };
+    };
+    // One beat cycle; `u` counts beats (0 = mid-upstroke, 0.25 = top, 0.75 = bottom). The tip sweeps
+    // back at the top and forward at the bottom (forward through the downstroke, back through the
+    // upstroke), and the leading edge turns down through the downstroke and up through the upstroke.
+    // With these angles at least a third of the membrane area faces the side and the three-quarter
+    // cameras in every frame of idle and fly (a Z-only beat dropped to 14% at the top of fly).
+    const flap = (u: number, amp: number, lift: number): WingAngles => {
+      const w = Math.sin(2 * Math.PI * u);
+      const c = Math.cos(2 * Math.PI * u);
+      return { raise: lift + amp * w, fwd: -15 - 20 * (0.966 * w + 0.259 * c), twist: -15 - 15 * (-0.766 * w + 0.643 * c) };
+    };
+    const mixWing = (a: WingAngles, b: WingAngles, t: number): WingAngles => ({
+      raise: a.raise + (b.raise - a.raise) * t,
+      fwd: a.fwd + (b.fwd - a.fwd) * t,
+      twist: a.twist + (b.twist - a.twist) * t,
+    });
+    const IDLE_BEAT = { amp: 40, lift: 8 };
+    const idleWing = (u: number) => flap(u, IDLE_BEAT.amp, IDLE_BEAT.lift);
 
     // Idle: hovering in place, the wings beating, the tail and legs trailing.
     k.animation('idle', {
       duration: 0.8,
       pose: (_t, p) => {
-        const beat = wave(p, 2);
         return {
           hips: { ...hover(p, 2, 0.18, 0.025), rotate: [4, 0, 0] },
           head: { rotate: [2 * wave(p, 1, 0.3), 6 * wave(p, 1, 0.1), 0] },
-          'wing.L': { rotate: [0, 4 * wave(p, 2, 0.25), 8 + 40 * beat] },
-          'wing.R': { rotate: [0, -4 * wave(p, 2, 0.25), -8 - 40 * beat] },
+          ...wings(idleWing(2 * p)),
           tail1: { rotate: [8 * wave(p, 1, 0.2), 10 * wave(p, 1, 0.1), 0] },
           tail2: { rotate: [10 * wave(p, 1, 0.35), 12 * wave(p, 1, 0.25), 0] },
           tail3: { rotate: [12 * wave(p, 1, 0.5), 14 * wave(p, 1, 0.4), 0] },
@@ -417,12 +450,10 @@ export default defineAsset({
     k.animation('fly', {
       duration: 0.5,
       pose: (_t, p) => {
-        const beat = wave(p);
         return {
           hips: { ...hover(p, 1, 0.22, 0.03), rotate: [26, 0, 3 * wave(p, 1, 0.1)] },
           head: { rotate: [-20, 0, 0] },
-          'wing.L': { rotate: [0, 8 * wave(p, 1, 0.25), 6 + 50 * beat] },
-          'wing.R': { rotate: [0, -8 * wave(p, 1, 0.25), -6 - 50 * beat] },
+          ...wings(flap(p, 45, 5)),
           tail1: { rotate: [18 + 6 * wave(p, 1, 0.3), 0, 0] },
           tail2: { rotate: [8 + 10 * wave(p, 1, 0.45), 8 * wave(p, 1, 0.4), 0] },
           tail3: { rotate: [10 * wave(p, 1, 0.6), 12 * wave(p, 1, 0.55), 0] },
@@ -436,31 +467,69 @@ export default defineAsset({
       },
     });
 
-    // Attack: rear up with the claws raised, then dive forward and rake down, and recover.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
+    // Attack (0.8 s): a wind-up, a diving double claw rake, and a recovery.
+    // 0 to 0.34: it rises and pulls back; the claws come up and back beside the head; the wings go up.
+    // 0.34 to 0.56: the body drives 0.27 m forward and 0.15 m down; both claws reach forward toward
+    //   the target and rake down across it; the wings sweep down hard once, then fold back a little.
+    // 0.56 to 1: two strong beats back to the hover (the last frame is the first idle frame).
+    // The claw targets are wrist positions in the chest's rest frame; the chest leans with the dive.
+    const ARM_L = { root: SHOULDER, mid: ELBOW, end: WRIST };
+    const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
+    const start = idleWing(0);
     k.animation('attack', {
       duration: 0.8,
       loop: false,
       pose: (_t, p) => {
-        const rear = ease(0, 0.35, p) * (1 - ease(0.35, 0.45, p));
-        const dive = ease(0.35, 0.47, p) * (1 - ease(0.6, 1, p));
-        const beat = wave(p, 3);
+        const wrist = keys(p, [
+          [0, WRIST],
+          [0.3, [0.2, 0.44, 0.0]], // up and back beside the head
+          [0.36, [0.2, 0.46, 0.01]],
+          [0.45, [0.11, 0.44, 0.15]], // reach forward at the target
+          [0.51, [0.1, 0.3, 0.13]], // rake down across it
+          [0.58, [0.12, 0.24, 0.06]], // follow-through, low
+          [0.82, WRIST],
+          [1, WRIST],
+        ]);
+        const armL = reach(ARM_L, wrist, [0.45, 0.15, -0.2]);
+        const armR = reach(ARM_R, mx(wrist), [-0.45, 0.15, -0.2]);
+        const hand = keys(p, [[0, 0], [0.3, -25], [0.4, -20], [0.47, 10], [0.53, 35], [0.62, 20], [0.85, 0]]);
+        const x = Math.max(0, (p - 0.56) / 0.44);
+        const keyed: WingAngles = {
+          raise: keys(p, [[0, start.raise], [0.3, 60], [0.36, 64], [0.46, -48], [0.56, -5]]),
+          fwd: keys(p, [[0, start.fwd], [0.3, 5], [0.36, 5], [0.46, 15], [0.56, -20]]),
+          twist: keys(p, [[0, start.twist], [0.3, 20], [0.36, 22], [0.46, -32], [0.56, -40]]),
+        };
+        const wing = mixWing(keyed, flap(2 * x, 58 - 18 * x, IDLE_BEAT.lift), ease(0.56, 0.66, p));
+        const back = (a: number) => keys(p, [[0, a], [0.3, 0], [0.8, 0], [1, a]]); // idle values fade out and back
         return {
-          hips: { move: [0, 0.18 + 0.06 * rear - 0.04 * dive, -0.03 * rear + 0.1 * dive], rotate: [4 - 20 * rear + 40 * dive, 0, 0] },
-          head: { rotate: [-10 * rear - 10 * dive, 0, 0] },
-          'wing.L': { rotate: [0, 0, 8 + 30 * beat + 20 * rear] },
-          'wing.R': { rotate: [0, 0, -8 - 30 * beat - 20 * rear] },
-          'upperarm.L': { rotate: [-70 * rear + 30 * dive, 0, -10 * rear] },
-          'upperarm.R': { rotate: [-70 * rear + 30 * dive, 0, 10 * rear] },
-          'forearm.L': { rotate: [-30 * rear + 40 * dive, 0, 0] },
-          'forearm.R': { rotate: [-30 * rear + 40 * dive, 0, 0] },
-          tail1: { rotate: [10 * rear + 20 * dive, 0, 0] },
-          tail3: { rotate: [-20 * rear + 20 * dive, 0, 0] },
-          'leg.L': { rotate: [8 - 20 * rear + 30 * dive, 0, 0] },
-          'leg.R': { rotate: [8 - 20 * rear + 30 * dive, 0, 0] },
+          hips: {
+            move: keys(p, [
+              [0, [0, 0.205, 0]],
+              [0.3, [0, 0.27, -0.06]],
+              [0.36, [0, 0.275, -0.065]],
+              [0.46, [0, 0.14, 0.17]],
+              [0.54, [0, 0.12, 0.205]],
+              [0.72, [0, 0.19, 0.08]],
+              [1, [0, 0.205, 0]],
+            ]),
+            rotate: [keys(p, [[0, 4], [0.3, -16], [0.36, -18], [0.46, 30], [0.54, 34], [0.72, 12], [1, 4]]), 0, 0],
+          },
+          chest: { rotate: [keys(p, [[0, 0], [0.3, -8], [0.36, -9], [0.47, 12], [0.56, 14], [0.8, 0]]), 0, 0] },
+          head: { rotate: [keys(p, [[0, 1.9], [0.3, 12], [0.46, -24], [0.56, -26], [0.8, -4], [1, 1.9]]), back(3.5), 0] },
+          ...wings(wing),
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.L': { rotate: [hand, 0, 0] },
+          'hand.R': { rotate: [hand, 0, 0] },
+          tail1: { rotate: [keys(p, [[0, 7.6], [0.3, -10], [0.46, 25], [0.6, 20], [1, 7.6]]), back(5.9), 0] },
+          tail2: { rotate: [keys(p, [[0, 8.1], [0.3, -5], [0.46, 15], [0.62, 5], [1, 8.1]]), back(12), 0] },
+          tail3: { rotate: [keys(p, [[0, 0], [0.3, -20], [0.46, 30], [0.6, -10], [0.8, 5], [1, 0]]), back(8.2), 0] },
+          'leg.L': { rotate: [keys(p, [[0, 11.5], [0.3, -10], [0.46, 30], [0.56, 34], [0.8, 12], [1, 11.5]]), 0, 0] },
+          'leg.R': { rotate: [keys(p, [[0, 9.9], [0.3, -12], [0.46, 28], [0.56, 32], [0.8, 10], [1, 9.9]]), 0, 0] },
+          'shin.L': { rotate: [keys(p, [[0, 0], [0.3, 30], [0.46, 25], [0.6, 20], [1, 0]]), 0, 0] },
+          'shin.R': { rotate: [keys(p, [[0, 0], [0.3, 34], [0.46, 22], [0.6, 18], [1, 0]]), 0, 0] },
         };
       },
     });
@@ -468,21 +537,18 @@ export default defineAsset({
     // Hit: a jolt back in the hover with a yelp pose; the head snaps back, the wings fold in for a
     // moment, the arms fly out, and the tail whips; then the hover and the wing beat come back. The
     // last frame is the first idle frame.
-    const { keys } = motion;
     k.animation('hit', {
       duration: 0.4,
       loop: false,
       pose: (_t, p) => {
         const h = keys(p, [[0, 0], [0.14, 1], [0.38, 0.75], [1, 0]]);
         const free = 1 - h;
-        const beat = wave(p) * free;
         const whip = (d: number, a: number) => a * keys(p, [[0, 0], [0.1 + d, 1], [0.3 + d, -0.6], [0.56 + d, 0.2], [1, 0]]);
         return {
           hips: { move: [0, 0.18 + 0.025 * wave(p, 1, 0.25) + 0.02 * h, -0.07 * h], rotate: [4 - 20 * h, 0, 6 * h] },
           chest: { rotate: [-8 * h, 0, 0] },
           head: { rotate: [2 * wave(p, 1, 0.3) - 24 * h, 6 * wave(p, 1, 0.1) * free, -8 * h] },
-          'wing.L': { rotate: [0, 4 * wave(p, 1, 0.25) * free + 40 * h, (8 + 40 * beat) * free - 30 * h] },
-          'wing.R': { rotate: [0, -4 * wave(p, 1, 0.25) * free - 40 * h, -(8 + 40 * beat) * free + 30 * h] },
+          ...wings(mixWing(idleWing(p), { raise: -30, fwd: -40, twist: 0 }, h)),
           tail1: { rotate: [8 * wave(p, 1, 0.2) + 20 * h, 10 * wave(p, 1, 0.1) + whip(0, 30), 0] },
           tail2: { rotate: [10 * wave(p, 1, 0.35) + 10 * h, 12 * wave(p, 1, 0.25) + whip(0.06, -40), 0] },
           tail3: { rotate: [12 * wave(p, 1, 0.5), 14 * wave(p, 1, 0.4) + whip(0.12, 50), 0] },
@@ -502,6 +568,7 @@ export default defineAsset({
     // small bounce, and lies on its back: the wings limp on the floor, the arms flopped out to the
     // sides, the knees up, the head turned to one side, and the tail laid out with its tip curled.
     const HOVER0 = 0.205; // hips move y in the first idle frame
+    const idle0 = wings(idleWing(0))['wing.L'].rotate; // the wing in the first idle frame
     const LIE = -0.16; // hips move y when it lies on its back (the build lifts it if it sinks)
     k.animation('death', {
       duration: 1.4,
@@ -535,9 +602,9 @@ export default defineAsset({
             const s = side === 'L' ? 1 : -1;
             acc[`wing.${side}`] = {
               rotate: [
-                0,
-                s * keys(p, [[0, 4], [0.08, 30], [0.3, 40], [0.46, 20], [0.56, -16], [0.66, -6], [1, -10]]),
-                s * keys(p, [[0, 8], [0.08, 50], [0.2, 20], [0.3, 60], [0.46, 40], [0.56, -34], [0.66, -20], [1, -28]]),
+                keys(p, [[0, idle0[0]], [0.08, 0]]),
+                s * keys(p, [[0, idle0[1]], [0.08, 30], [0.3, 40], [0.46, 20], [0.56, -16], [0.66, -6], [1, -10]]),
+                s * keys(p, [[0, idle0[2]], [0.08, 50], [0.2, 20], [0.3, 60], [0.46, 40], [0.56, -34], [0.66, -20], [1, -28]]),
               ],
             };
             acc[`upperarm.${side}`] = {

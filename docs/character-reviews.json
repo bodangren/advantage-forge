@@ -712,7 +712,7 @@
     "reviewedAt": "2026-09-26T18:54:40+00:00"
   },
   "imp": {
-    "overall": 7.6,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -725,24 +725,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 5,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The imp matches the imp on the Chibi Quest enemy sheet. It is a big-headed red devil with dark horns, amber eyes, fangs, bat wings, claws, and a spade tail. The wing bones are now dark brown. Three faults lower the score: flat light membranes, edge-on wing frames in the fly clip, and an attack that is only a head-first dive.",
+    "summary": "The imp matches the imp on the Chibi Quest enemy sheet. It is a big-headed red devil with dark horns, amber eyes, fangs, bat wings, claws, and a spade tail. The attack is now a clear claw strike, and the wing beat has a sweep and a twist. The flat light membranes and the thin leading bone remain open.",
     "strengths": [
       "The spread bat wings and the curved horns give a spiky silhouette that reads in all eight sprite directions.",
-      "The dark brown wing bones now separate the wing frame from the membrane and repeat the horn color, as in the mockup.",
-      "The face reads at 128 px. The amber eyes under angry brows and the row of white fangs make it cute but dangerous."
+      "The attack has three clear parts. The imp rises with the claws beside the head and the wings up, dives 0.27 m forward and 0.15 m down with a hard downstroke, and rakes both claws down.",
+      "One shared wing helper sweeps the tip back at the top and forward at the bottom and twists the wing. In fly, the side and three-quarter views show the membrane in every frame."
     ],
     "issues": [
-      "The attack has a small anticipation (the body leans back and the claws rise) and a smooth recovery. The strike is only a head-first dive. In the dive the arms swing back (upperarm +30), so the claws stay under the body and never reach toward the target. The wings keep the same beat through the dive.",
-      "The wings go edge-on in the fly clip. In the side view at t=0.13 to 0.19, both wings are one thin vertical line. In the three-quarter view at t=0.31 to 0.38, the near wing is almost invisible. The beat turns the wing only about Z, with no sweep or twist.",
-      "The membranes are one flat light orange (#e0704a), lighter than the skin, with sharp star points. The mockup membranes are darker red-orange with rounded scallops. The leading bone is dark and thick only to the knuckle; from the knuckle to the top tip it is a thin finger."
+      "The claws reach straight forward for only about 0.04 s (phase 0.45). A 10-frame strip shows the claws beside the head and then under the chin, so the forward reach is easy to miss.",
+      "The membranes are one flat light orange (#e0704a), lighter than the skin, with sharp star points. The mockup membranes are darker red-orange with rounded scallops.",
+      "The leading bone is dark and thick only to the knuckle. From the knuckle to the top tip it is a thin finger."
     ],
     "next": [
-      "Make the attack a clear claw strike. Pull the claws back in the anticipation. Reach both claws forward at the target in the dive. Fold the wings back during the dive. Add a sweep and a twist to the wing beat so that no frame shows a wing edge-on.",
-      "Darken the membranes toward the wing tips with C.membraneDark. The file defines this color but does not use it. Carry the thick dark leading bone from the knuckle out to the top wing tip. Both requests from the old review are still open or only half done."
+      "Darken the membranes toward the wing tips with C.membraneDark and carry the thick dark leading bone from the knuckle to the top wing tip.",
+      "Hold the forward claw reach a little longer (phase 0.42 to 0.48) so that it shows in the sprite sheet of the attack."
     ],
-    "reviewedAt": "2026-09-26T19:21:28+00:00"
+    "reviewedAt": "2026-09-26T20:56:44+00:00"
   },
   "skeleton-archer": {
     "overall": 7.6,
