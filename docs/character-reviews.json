@@ -581,7 +581,7 @@
     "reviewedAt": "2026-09-26T21:04:14+00:00"
   },
   "blacksmith": {
-    "overall": 7.9,
+    "overall": 8.1,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -596,22 +596,22 @@
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The blacksmith matches the mmx mockup in costume and color: a red bandana, a black beard, a leather bib apron with brass rings, big gloves, and a hammer at the right shoulder. The work clip is now a full smith's blow: a high lift, a fast blow in front of the belly, and a clear rebound. The body is still less burly than the mockup. The check ends with result ok and ground ok.",
+    "summary": "The blacksmith matches the mmx mockup in costume and color: a red bandana, a black beard, a leather bib apron with brass rings, big gloves, and a hammer at the right shoulder. The work clip now has tongs in the left fist and a glowing hot billet in the jaws. The hammer face lands flat on the billet at the blow, and the billet flashes. The body is still less burly than the mockup. The check ends with result ok and ground ok.",
     "strengths": [
       "The red bandana, the black beard, and the brown apron read at 128 px in all 8 sprite directions.",
-      "In the work clip, the hammer head rises about 7 cm above the bandana at the top of the lift, so the side view shows it above the head. The drop takes about 0.12 s and lands in front of the belly with the face flat on the work.",
-      "The hammer bounces up about 6 cm after the blow and holds before the next lift. The loop is seamless, and the left fist holds the unseen tongs with a small jolt at the blow."
+      "Dark iron tongs with a rivet and flat jaw pads come out of the left fist. The orange-red billet glows and is easy to see in the side and three-quarter views.",
+      "The billet stays still in the world during the loop. The clip samples at 50 frames each second, so a key falls exactly on the blow and the face touches the billet top."
     ],
     "issues": [
       "The head is still larger than the torso. In the mockup, the chest and the arms are larger than the head, so the model is less burly than the mockup.",
-      "The anvil, the work piece, and the tongs are not in the model, so the blow and the left fist hit and hold empty air. The short arms keep the wrist at eye height, not at the top of the head.",
+      "There is no anvil. The billet hangs in the air at thigh height (y 0.16) in front of the belly, held only by the tongs.",
       "The soot mark under the left eye is dark blue-gray and reads as a bruise in the front sprites. The back hair is one plain black mass."
     ],
     "next": [
-      "Make the chest, the shoulders, and the arms 10 percent bigger. This item from the last two reviews is still open.",
-      "Add a small anvil prop or a scene anvil at the blow point (about x 0, y 0.17, z 0.48) so the work clip hits a real surface."
+      "Make the chest, the shoulders, and the arms 10 percent bigger. This item from the last three reviews is still open.",
+      "Add a small anvil prop or a scene anvil under the billet (about x 0.02, y 0.15, z 0.47) so the blow hits a real surface."
     ],
-    "reviewedAt": "2026-09-26T20:54:02+00:00"
+    "reviewedAt": "2026-09-26T21:08:20+00:00"
   },
   "farmer": {
     "overall": 7.4,

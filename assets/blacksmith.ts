@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js';
 
 /**
  * Blacksmith — Chibi Quest settlement NPC (catalog `npcs/settlement/blacksmith`), about 0.98 m
@@ -18,8 +18,10 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  * Value plan: the light face between the red bandana and the black beard is the focal point;
  *   the big brown apron is the dominant mass.
  * Bodies: skin, hair (hair, brows, beard, mustache), bandana, shirt, apron, leather (straps,
- *   belt), gloves, brass, trousers, boots, hammer-head, hammer-haft.
- * Rig: the rogue's skeleton plus `knot` (bandana tails); the hammer is rigid on `hand.R`.
+ *   belt), gloves, brass, trousers, boots, hammer-head, hammer-haft, tong-iron, hot-iron.
+ * Rig: the rogue's skeleton plus `knot` (bandana tails); the hammer is rigid on `hand.R`. The
+ *   tongs (`tongs`, under `hand.L`) and the hot work piece (`billet`, under `tongs`) show only in
+ *   the work clip; the bind pose hides them inside the chest.
  *   Clips: idle, walk, run, work (a hammering loop), talk (a palm-up chat), wave (a greeting).
  */
 
@@ -51,6 +53,9 @@ const C = {
   sole: '#2e2420',
   iron: '#5a5e66',
   wood: '#8a5a36',
+  tongs: '#35373c',
+  hot: '#ff4a14',
+  hotCore: '#ffb03a',
 };
 
 type V3 = readonly [number, number, number];
@@ -77,6 +82,14 @@ const ELBOW_L: V3 = [0.265, 0.31, 0.0];
 const WRIST_L: V3 = [0.27, 0.225, 0.05];
 const HIP: V3 = [0.08, 0.195, 0];
 const ANKLE: V3 = [0.11, 0.07, 0];
+
+// The tongs and the hot work piece (the billet) for the work clip. Both are built along +X at
+// bind places inside the chest, where the rest pose hides them; the work clip moves them into the
+// left fist. Every other clip shrinks them to a point there.
+const TONGS_HIDE: V3 = [-0.126, 0.36, 0]; // the grip end of the tongs (the fist holds it here)
+const BILLET_HIDE: V3 = [0, 0.27, 0];
+const BILLET_REACH = 0.345; // from the grip to the billet's center, along the tongs
+const HIDDEN = { scale: [0.001, 0.001, 0.001] as V3 };
 
 // The hammer: the grip in the right fist, the haft up and back over the shoulder.
 const GRIP: V3 = add(WRIST_R, norm([WRIST_R[0] - ELBOW_R[0], WRIST_R[1] - ELBOW_R[1], WRIST_R[2] - ELBOW_R[2]]), 0.045);
@@ -120,6 +133,8 @@ export default defineAsset({
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      tongs: { parent: 'hand.L', at: TONGS_HIDE },
+      billet: { parent: 'tongs', at: BILLET_HIDE },
     });
 
     // ------------------------------------------------------------------ head and face
@@ -414,6 +429,42 @@ export default defineAsset({
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 30, y * 200, z * 30, 2),
     });
 
+    // ------------------------------------------------------------------ tongs and the hot billet (work clip only)
+    // Local frame: the grip at the origin, the tongs along +Z, the jaws closing up and down (Y) on
+    // the flat billet. Two arms run from the fist to a riveted pivot, then open into flat jaw pads.
+    const tongArm = (s: 1 | -1) =>
+      sdf.chain(
+        [
+          [0.003 * s, 0.018 * s, -0.05, 0.0065],
+          [0.003 * s, 0.013 * s, 0.06, 0.0055],
+          [0.003 * s, 0.004 * s, 0.235, 0.006],
+          [0.003 * s, 0.017 * s, 0.26, 0.005],
+          [0, 0.014 * s, 0.274, 0.0045],
+        ],
+        0.004,
+      );
+    const tongsLocal = sdf.union(
+      tongArm(1),
+      tongArm(-1),
+      sdf.cylinder(0.0095, 0.02, 0.002).rotateZ(90).at(0, 0, 0.235), // the rivet
+      sdf.box([0.026, 0.006, 0.032], 0.002).at(0, 0.013, 0.286), // the upper jaw pad
+      sdf.box([0.026, 0.006, 0.032], 0.002).at(0, -0.013, 0.286), // the lower jaw pad
+    );
+    k.body('tong-iron', tongsLocal.rotateY(90).at(...TONGS_HIDE), {
+      color: C.tongs,
+      roughness: 0.55,
+      metalness: 0.7,
+      detail: 0.0025,
+      bone: 'tongs',
+    });
+    // The billet: a short flat bar, hottest in the middle.
+    const billet = sdf
+      .box([0.03, 0.02, 0.12], 0.004)
+      .paintWhere(sdf.box([0.1, 0.1, 0.05]), C.hotCore, 0.025)
+      .rotateY(90)
+      .at(...BILLET_HIDE);
+    k.body('hot-iron', billet, { color: C.hot, roughness: 0.5, emissive: C.hot, emissiveIntensity: 1.3, detail: 0.003, bone: 'billet' });
+
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;
@@ -429,6 +480,8 @@ export default defineAsset({
         'upperarm.L': { rotate: [2 * wave(p, 1, 0.1), 0, 3 * bump(p)] },
         'upperarm.R': { rotate: [1.5 * wave(p, 1, 0.1), 0, -1.5 * bump(p)] },
         'forearm.L': { rotate: [-5 * bump(p), 0, 0] },
+        tongs: HIDDEN,
+        billet: HIDDEN,
       }),
     });
 
@@ -453,6 +506,8 @@ export default defineAsset({
           'upperarm.L': { rotate: [armSwing * s, 0, 4] as const },
           'upperarm.R': { rotate: [-armSwing * 0.15 * s, 0, 0] as const },
           'forearm.L': { rotate: [-armSwing * 0.4 - armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
+          tongs: HIDDEN,
+          billet: HIDDEN,
         };
       },
     });
@@ -503,20 +558,76 @@ export default defineAsset({
       if (p < 0.68) return blend(HIT, BOUNCE, 1 - (1 - (p - 0.6) / 0.08) ** 2); // the rebound
       return blend(BOUNCE, HOLD, ease(0.68, 0.8, p)); // settle, then hold
     };
-    const TONGS: V3 = [0.18, 0.31, 0.2];
+    const TONGS: V3 = [0.18, 0.31, 0.2]; // the left wrist in the hold, in the chest's rest frame
+    // The blow, in parts: the trunk, the hammer arm, and the tongs arm (for a wrist target in the
+    // chest's rest frame).
+    const trunk = (p: number) => {
+      const up = ease(0, 0.42, p) * (1 - ease(0.47, 0.6, p)); // 1 at the top of the lift
+      const jolt = Math.exp(-(((p - 0.615) / 0.035) ** 2)); // the shock of the blow
+      const spine: V3 = [6 * (1 - up) - 4 * up + 2 * jolt, 0, -9 * up];
+      const chest: V3 = [2 * (1 - up), 8 * (1 - up) - 8 * up, -3 * up];
+      return { up, jolt, spine, chest };
+    };
+    const hammerArm = (p: number) => {
+      const b = blowAt(p);
+      const arm = reach(ARM_R, b.w, [-0.6, 0.1, -0.1]);
+      return { arm, hand: orient([arm.upper, arm.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, { dir: b.d, up: b.l }) };
+    };
+    const tongsArm = (wrist: V3) => {
+      const armL = reach(ARM_L, wrist, [0.55, 0.25, -0.25]);
+      return { armL, handL: orient([armL.upper, armL.lower], HAND_L_REST, { dir: norm([-0.3, -0.35, 1]), up: [-0.6, -0.8, 0] }) };
+    };
+    // Where the hammer face lands: follow the hammer arm at the blow (p = 0.6) to the striking face.
+    // The billet's center lies half its thickness under that face, its flat top square to the face.
+    const { follow, quat } = motion;
+    const SPINE_AT: V3 = [0, 0.26, 0];
+    const CHEST_AT: V3 = [0, 0.33, 0];
+    const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const chainQ = (rots: readonly V3[]) => rots.reduce((q, r) => q.multiply(quat(r)), new THREE.Quaternion());
+    const turn = (q: THREE.Quaternion, v: V3): V3 => {
+      const r = new THREE.Vector3(...v).applyQuaternion(q);
+      return [r.x, r.y, r.z];
+    };
+    /** A world point in the chest's rest frame, for a posed spine and chest. */
+    const toChest = (w: V3, spine: V3, chest: V3): V3 =>
+      add(CHEST_AT, turn(quat(chest).invert(), sub(turn(quat(spine).invert(), sub(w, SPINE_AT)), sub(CHEST_AT, SPINE_AT))));
+    const P_HIT = 0.6;
+    const FACE_BIND = add(GRIP, turn(quat([HAMMER_X, 0, HAMMER_Z]), [0, HEAD_AT, 0.095]));
+    const hitT = trunk(P_HIT);
+    const hitA = hammerArm(P_HIT);
+    const hitR = [hitT.spine, hitT.chest, hitA.arm.upper, hitA.arm.lower, hitA.hand];
+    const FACE_N = norm(turn(chainQ(hitR), HAMMER_LONG)); // out of the striking face, down onto the work
+    const BILLET_AT = add(follow([SPINE_AT, CHEST_AT, mx(SHOULDER), ELBOW_R, WRIST_R], hitR, FACE_BIND), FACE_N, 0.01);
+    // The left wrist stays still in the world while the trunk turns: its hold place, moved along
+    // the tongs so the billet sits in the jaws.
+    const GRIP_L = fistL;
+    const ARM_L_JOINTS = [SPINE_AT, CHEST_AT, SHOULDER, ELBOW_L, WRIST_L];
+    const holdT = trunk(0);
+    const holdL = tongsArm(TONGS);
+    const holdRots = [holdT.spine, holdT.chest, holdL.armL.upper, holdL.armL.lower, holdL.handL];
+    const holdGrip = follow(ARM_L_JOINTS, holdRots, GRIP_L);
+    const WRIST_W = add(follow(ARM_L_JOINTS.slice(0, 4), holdRots.slice(0, 4), WRIST_L), norm(sub(BILLET_AT, holdGrip)), Math.hypot(...sub(BILLET_AT, holdGrip)) - BILLET_REACH);
+    // 50 samples a second put a key exactly on the blow (p = 0.6, frame 27); at 30 the exported
+    // clip skips from 9 cm above the work to the rebound and the hammer never touches it.
     k.animation('work', {
       duration: 0.9,
+      fps: 50,
       pose: (_t, p) => {
-        const up = ease(0, 0.42, p) * (1 - ease(0.47, 0.6, p)); // 1 at the top of the lift
-        const jolt = Math.exp(-(((p - 0.615) / 0.035) ** 2)); // the shock of the blow
-        const b = blowAt(p);
-        const arm = reach(ARM_R, b.w, [-0.6, 0.1, -0.1]);
-        const hand = orient([arm.upper, arm.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, { dir: b.d, up: b.l });
-        const armL = reach(ARM_L, add(TONGS, [0, -0.012, 0.004], jolt), [0.55, 0.25, -0.25]);
-        const handL = orient([armL.upper, armL.lower], HAND_L_REST, { dir: norm([-0.3, -0.35, 1]), up: [-0.6, -0.8, 0] });
+        const { up, jolt, spine, chest } = trunk(p);
+        const { arm, hand } = hammerArm(p);
+        const { armL, handL } = tongsArm(toChest(add(WRIST_W, [0, -0.012, 0.004], jolt), spine, chest));
+        // The tongs aim from the fist at the billet, which stays still on the (unseen) anvil; the
+        // handles slide a little in the fist where the reach falls short.
+        const rotsL = [spine, chest, armL.upper, armL.lower, handL];
+        const gripW = follow(ARM_L_JOINTS, rotsL, GRIP_L);
+        const toBillet = sub(BILLET_AT, gripW);
+        const aim = norm(toBillet);
+        const aimInHand = turn(chainQ(rotsL).invert(), aim);
+        const slide = Math.hypot(...toBillet) - BILLET_REACH;
+        const flash = 1 + 0.1 * ease(0.59, 0.6, p) * (1 - ease(0.635, 0.655, p)); // the billet takes the blow (2 frames)
         return {
-          spine: { rotate: [6 * (1 - up) - 4 * up + 2 * jolt, 0, -9 * up] },
-          chest: { rotate: [2 * (1 - up), 8 * (1 - up) - 8 * up, -3 * up] },
+          spine: { rotate: spine },
+          chest: { rotate: chest },
           head: { rotate: [8 + 5 * up + 3 * jolt, 0, -4 * up] }, // the eyes stay on the work
           'upperarm.R': { rotate: arm.upper },
           'forearm.R': { rotate: arm.lower },
@@ -524,6 +635,14 @@ export default defineAsset({
           'upperarm.L': { rotate: armL.upper },
           'forearm.L': { rotate: armL.lower },
           'hand.L': { rotate: handL },
+          tongs: {
+            move: add(sub(GRIP_L, TONGS_HIDE), aimInHand, slide),
+            rotate: orient(rotsL, { dir: [1, 0, 0], up: [0, 1, 0] }, { dir: aim, up: [-FACE_N[0], -FACE_N[1], -FACE_N[2]] }),
+          },
+          billet: {
+            move: add(sub(TONGS_HIDE, BILLET_HIDE), [BILLET_REACH, 0, 0]),
+            scale: [flash, flash, flash],
+          },
         };
       },
     });
@@ -576,6 +695,8 @@ export default defineAsset({
           'forearm.L': { rotate: arm.lower },
           'hand.L': { rotate: hand },
           'upperarm.R': { rotate: [1.5 * wave(p, 1, 0.1), 0, -1.5 * bump(p)] },
+          tongs: HIDDEN,
+          billet: HIDDEN,
         };
       },
     });
@@ -619,6 +740,8 @@ export default defineAsset({
           'upperarm.R': { rotate: armR.upper },
           'forearm.R': { rotate: armR.lower },
           'hand.R': { rotate: handR },
+          tongs: HIDDEN,
+          billet: HIDDEN,
         };
       },
     });
