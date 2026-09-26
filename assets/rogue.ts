@@ -1,4 +1,4 @@
-import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Rogue — Chibi Quest hero (catalog `heroes/martial/rogue`), 1.0 m tall, faces +Z.
@@ -16,7 +16,9 @@ import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
  *   ring buckle are the second contrast; the cape is the darkest large mass.
  * Bodies: skin, hair, hood, mantle, cape, tunic, sleeves, leather, gold, pants, wraps, boots,
  *   sheaths (empty, at the hips), and a dagger and a grip in each hand (reverse grip).
- * Rig: chibi skeleton plus a `cloak` bone for the cape; clips idle, walk, run, attack.
+ * Rig: chibi skeleton plus a `cloak` bone for the cape; the daggers are rigid on `knife.L`/`knife.R`,
+ *   children of the hands that only the death clip moves (the daggers drop). Clips idle, walk,
+ *   run, attack, hit, death.
  */
 
 const C = {
@@ -67,6 +69,8 @@ export default defineAsset({
     const HIP = [0.068, 0.195, 0] as const;
     const ANKLE = [0.098, 0.07, 0] as const;
     const mx = (p: readonly [number, number, number]) => [-p[0], p[1], p[2]] as const;
+    // The left dagger's grip center in the fist, and its turn (see inHand below).
+    const GRIP = { at: [0.232, 0.172, 0.022] as const, lean: 42, back: 20, roll: 20 };
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
       spine: { parent: 'hips', at: [0, 0.26, 0] },
@@ -80,6 +84,8 @@ export default defineAsset({
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: mx(ELBOW) },
       'hand.R': { parent: 'forearm.R', at: mx(WRIST) },
+      'knife.L': { parent: 'hand.L', at: GRIP.at },
+      'knife.R': { parent: 'hand.R', at: mx(GRIP.at) },
       'leg.L': { parent: 'hips', at: HIP },
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
@@ -475,7 +481,6 @@ export default defineAsset({
       sdf.sphere(0.013).at(0, -0.04, 0).paint(C.gold), // pommel
     );
     const handGrip = sdf.capsule([0, -0.032, 0], [0, GUARD, 0], 0.011);
-    const GRIP = { at: [0.232, 0.172, 0.022] as const, lean: 42, back: 20, roll: 20 };
     const inHand = (s: sdf.Shape, side: 1 | -1) =>
       s
         .rotateY(GRIP.roll * side)
@@ -490,9 +495,9 @@ export default defineAsset({
         color: C.blade,
         roughness: 0.3,
         metalness: 0.85,
-        bone: `hand.${tag}`,
+        bone: `knife.${tag}`,
       });
-      k.body(`daggerGrip.${tag}`, inHand(handGrip, side), { color: C.grip, roughness: 0.6, bone: `hand.${tag}` });
+      k.body(`daggerGrip.${tag}`, inHand(handGrip, side), { color: C.grip, roughness: 0.6, bone: `knife.${tag}` });
     }
 
     // ------------------------------------------------------------------ animation
@@ -657,6 +662,150 @@ export default defineAsset({
           'foot.R': { rotate: [legX, 0, legZ] },
           ...armR(p),
           ...armL(p),
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a blow from the front
+    // The chest snaps back and the right foot steps back, then all returns quickly. The head (and so
+    // the hood) whips back a beat after the chest and overshoots a little; the cape swings late. The
+    // arms fly a little forward and out, so the daggers stay outside the body and far below the hood.
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.34, 0.6], [1, 0]] as const);
+        const whip = keys(p, [[0, 0], [0.2, 1], [0.4, 0.5], [0.6, -0.2], [0.82, 0]] as const, 'spline');
+        const step = keys(p, [[0.04, 0], [0.24, 1], [0.58, 1], [0.9, 0]] as const);
+        const lift = bump(clamp01((p - 0.04) / 0.2)) + bump(clamp01((p - 0.58) / 0.32));
+        const lag = keys(p, [[0, 0], [0.12, 0.3], [0.28, 1], [0.5, -0.45], [0.74, 0.15], [1, 0]] as const, 'spline');
+        const back = 0.03 * step;
+        const lean = Math.asin(back / LEG) / rad; // the left foot stays planted as the hips move back
+        return {
+          hips: { move: [0, -legDrop(LEG, lean), -back], rotate: [0, 5 * h, 0] },
+          spine: { rotate: [-7 * h, 0, 0] },
+          chest: { rotate: [-9 * h, 6 * h, -3 * h] },
+          neck: { rotate: [-4 * whip, 0, 0] },
+          head: { rotate: [-10 * whip, -6 * whip, 4 * whip] },
+          cloak: { rotate: [12 * lag, 0, 4 * lag] },
+          'upperarm.L': { rotate: [-12 * h, 0, 16 * h] },
+          'forearm.L': { rotate: [-16 * h, 0, 0] },
+          'upperarm.R': { rotate: [-8 * h, 0, -14 * h] },
+          'forearm.R': { rotate: [-12 * h, 0, 0] },
+          'leg.L': { rotate: [-lean, 0, 0] },
+          'leg.R': { rotate: [lean + 8 * lift, 0, 0] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'foot.R': { rotate: [-lean - 8 * lift, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: a stagger, then a fall on the back
+    // The blow snaps her back; she slumps forward and wobbles over planted feet, then tips back over
+    // her heels and lands on her back. The big hood and the cape hold the upper body up, so the neck
+    // bends forward and the head turns to the side. The cape swings toward the legs and flattens
+    // under her. The arms fly out and fall to the ground at her sides (targets solved in the chest's
+    // rest frame); the fists open and each dagger, on its `knife` bone, drops and lies flat on the
+    // floor beside its hand.
+    const { follow, quat, euler } = motion;
+    const add = (a: V3, b: V3, s = 1): V3 => [a[0] + b[0] * s, a[1] + b[1] * s, a[2] + b[2] * s];
+    const lerp = (a: V3, b: V3, t: number): V3 => add(a, add(b, a, -1), t);
+    const LIE = 78; // the hips' final tilt back, degrees
+    const LIE_Y = 0.178; // the hips' height when she lies on her back
+    const HEEL = 0.05; // the back of the boot, behind the ankle's ground point
+    const FIST_Y = 0.03; // the fist center on the ground
+    const BEND_NECK = 10; // the neck and the head bend forward, so the hood props the head up like a pillow
+    const BEND_HEAD = 12;
+    const TURN = 22; // the head turns toward her left
+    const HIPS0: V3 = [0, 0.2, 0];
+    const TRUNK: readonly V3[] = [HIPS0, [0, 0.26, 0], [0, 0.33, 0]];
+    const END: V3 = [0, LIE_Y - 0.2, -HEEL - 0.2 * Math.sin(LIE * rad) + HEEL * Math.cos(LIE * rad)];
+    const toWorld = (v: V3): V3 => add(add(HIPS0, END), turn(add(v, HIPS0, -1), 0, -LIE));
+    const toBody = (w: V3): V3 => add(HIPS0, turn(add(w, add(HIPS0, END), -1), 0, LIE));
+    const LEG_DOWN = Math.asin(clamp01((LIE_Y - 0.035) / 0.165)) / rad - (90 - LIE); // the legs lie down to the floor
+    type Weights = { hitB: number; sag: number; fly: number; land: number; loose: number };
+    const deathArm = (side: 1 | -1) => {
+      const f = (v: V3): V3 => [v[0] * side, v[1], v[2]];
+      const tag = side === 1 ? 'L' : 'R';
+      const chain = { root: f(SHOULDER), mid: f(ELBOW), end: f(GRIP.at) }; // the hand stays straight
+      const joints: readonly V3[] = [...TRUNK, chain.root, chain.mid, f(WRIST)];
+      const shoulderW = toWorld(chain.root);
+      const span = Math.sqrt(Math.max(0, 0.23 ** 2 - (shoulderW[1] - FIST_Y) ** 2));
+      const out = norm([0.93 * side, 0, 0.37]);
+      const fistW: V3 = [shoulderW[0] + out[0] * span, FIST_Y, shoulderW[2] + out[2] * span];
+      const fistEnd = toBody(fistW);
+      // The dagger lies flat beside the fist, the pommel toward the hand and the point out and down the body.
+      const knifeAt: V3 = [fistW[0] + 0.095 * side, 0.015, fistW[2] + 0.05];
+      const dropKeys: [number, V3][] = [
+        [0.44, add(knifeAt, [0, 0.12, 0])],
+        [0.6, knifeAt],
+        [0.65, add(knifeAt, [0, 0.015, 0])],
+        [0.7, knifeAt],
+      ];
+      const rest = { dir: inHandDir([0, 1, 0], side), up: inHandDir([0, 0, 1], side) };
+      const dropTurn = quat(orient([], rest, { dir: norm([0.6 * side, 0, 0.8]), up: [0, 1, 0] }));
+      return (p: number, trunk: readonly V3[], move: V3, w: Weights) => {
+        const stand = add(add(add(chain.end, f([0.05, 0.05, 0.05]), w.hitB), [0, -0.03, 0.02], w.sag), f([0.08, 0.06, 0.03]), w.fly);
+        const arm = reach(chain, lerp(stand, fistEnd, w.land), lerp(f([0.58, 0.6, -0.015]), f([0.6, 0.45, 0.1]), w.land));
+        const rots: V3[] = [...trunk, arm.upper, arm.lower, [0, 0, 0]];
+        const handQ = rots.slice(0, 5).reduce((q, r) => q.multiply(quat(r)), new THREE.Quaternion());
+        const inv = handQ.clone().invert();
+        const held = add(follow(joints, rots, chain.end), move);
+        const d = new THREE.Vector3(...add(lerp(held, keys(p, dropKeys), w.loose), held, -1)).applyQuaternion(inv);
+        return {
+          [`upperarm.${tag}`]: { rotate: arm.upper },
+          [`forearm.${tag}`]: { rotate: arm.lower },
+          [`knife.${tag}`]: { move: [d.x, d.y, d.z] as V3, rotate: euler(inv.clone().multiply(handQ.clone().slerp(dropTurn, w.loose))) },
+        };
+      };
+    };
+    const deathL = deathArm(1);
+    const deathR = deathArm(-1);
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.18, 0.5], [0.3, 0.2], [0.4, 0]] as const);
+        const sag = keys(p, [[0.1, 0], [0.26, 1], [0.36, 0.8], [0.5, 0]] as const);
+        const wob = keys(p, [[0.12, 0], [0.22, 1], [0.32, -0.6], [0.42, 0]] as const);
+        const u = clamp01((p - 0.36) / 0.24); // the fall speeds up to the impact
+        const bounce = keys(p, [[0.6, 0], [0.66, 1], [0.73, 0]] as const);
+        const tilt = LIE * u * u - 4 * bounce;
+        const fly = keys(p, [[0.36, 0], [0.5, 1], [0.62, 0.2], [0.7, 0]] as const);
+        const land = keys(p, [[0.44, 0], [0.62, 1]] as const);
+        const loose = keys(p, [[0.44, 0], [0.6, 1]] as const);
+        const settle = keys(p, [[0.56, 0], [0.8, 1]] as const);
+        const flat = keys(p, [[0.4, 0], [0.62, 1]] as const);
+        const crumple = keys(p, [[0.42, 0], [0.56, 1], [0.72, 1], [0.9, 0]] as const);
+        // The stagger: the hips give way backward over planted feet.
+        const back = 0.022 * hitB;
+        const lean = Math.asin(back / LEG) / rad;
+        // The fall: a rigid tip over the back of the heels, until the hips reach their lying height.
+        const a = tilt * rad;
+        const hipsY = Math.max(LIE_Y, 0.2 * Math.cos(a) + HEEL * Math.sin(a));
+        const hipsMove: V3 = [0, hipsY - 0.2 - legDrop(LEG, lean), -HEEL - 0.2 * Math.sin(a) + HEEL * Math.cos(a) - back];
+        const hipsR: V3 = [-tilt, 0, 0];
+        const spineR: V3 = [-8 * hitB + 6 * sag, 0, 4 * wob];
+        const chestR: V3 = [-10 * hitB + 5 * sag, 6 * hitB, 5 * wob];
+        const legs = LEG_DOWN * clamp01((tilt - LIE + 18) / 18);
+        const w = { hitB, sag, fly, land, loose };
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [-8 * hitB + 5 * sag + BEND_NECK * land, 0, 0] },
+          head: { rotate: [-14 * hitB + 8 * sag + BEND_HEAD * land, -8 * hitB + TURN * settle, 8 * wob] },
+          cloak: {
+            rotate: [10 * hitB - 8 * flat - 12 * crumple, 0, 5 * wob],
+            scale: [1 + 0.12 * flat, 1 - 0.15 * crumple, 1 - 0.6 * flat],
+          },
+          'leg.L': { rotate: [-lean + legs, 0, 8 * land] },
+          'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
+          'foot.L': { rotate: [lean + 10 * settle, 18 * settle, 0] },
+          'foot.R': { rotate: [lean + 10 * settle, -18 * settle, 0] },
+          ...deathL(p, [hipsR, spineR, chestR], hipsMove, w),
+          ...deathR(p, [hipsR, spineR, chestR], hipsMove, w),
         };
       },
     });
