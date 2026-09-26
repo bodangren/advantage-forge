@@ -20,7 +20,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  * Bodies: skin, hair (hair, brows, beard, mustache), bandana, shirt, apron, leather (straps,
  *   belt), gloves, brass, trousers, boots, hammer-head, hammer-haft.
  * Rig: the rogue's skeleton plus `knot` (bandana tails); the hammer is rigid on `hand.R`.
- *   Clips: idle, walk, run, work (a hammering loop).
+ *   Clips: idle, walk, run, work (a hammering loop), talk (a palm-up chat), wave (a greeting).
  */
 
 const C = {
@@ -521,6 +521,112 @@ export default defineAsset({
           'hand.R': { rotate: hand },
           'upperarm.L': { rotate: [-10 * hit, 0, 6 * hit] },
           'forearm.L': { rotate: [-30 * hit, 0, 0] },
+        };
+      },
+    });
+
+    // The free left hand, posed by targets in the chest's rest frame. At rest the mitt hangs with
+    // the fingers down and the palm (the finger roll) forward.
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const HAND_L_REST = { dir: [0, -1, 0] as V3, up: [0, 0, 1] as V3 };
+    const bez = (a: V3, m: V3, b: V3, u: number): V3 => {
+      const w0 = (1 - u) * (1 - u);
+      const w1 = 2 * u * (1 - u);
+      const w2 = u * u;
+      return [a[0] * w0 + m[0] * w1 + b[0] * w2, a[1] * w0 + m[1] * w1 + b[1] * w2, a[2] * w0 + m[2] * w1 + b[2] * w2];
+    };
+
+    // Talk: a friendly chat with a customer in front. The hammer stays on the shoulder. The left
+    // hand gestures palm up in front of the chest, with one firm beat (p = 0.39) that the head
+    // answers with a nod. The weight shifts a little from foot to foot.
+    const talkWrist = [
+      [0, [0.17, 0.32, 0.17]],
+      [0.2, [0.22, 0.38, 0.19]], // lift and open out
+      [0.39, [0.19, 0.3, 0.22]], // the beat: a firm push down and forward
+      [0.5, [0.19, 0.33, 0.2]],
+      [0.74, [0.15, 0.35, 0.17]],
+      [1, [0.17, 0.32, 0.17]],
+    ] as const;
+    const talkFingers = [
+      [0, [-0.3, 0.1, 1]],
+      [0.2, [-0.1, 0.18, 1]],
+      [0.39, [-0.2, -0.05, 1]],
+      [0.74, [-0.35, 0.12, 1]],
+      [1, [-0.3, 0.1, 1]],
+    ] as const;
+    const talkPalm = [
+      [0, [0.1, 1, -0.1]],
+      [0.2, [0.55, 1, 0]],
+      [0.39, [0.3, 1, 0.05]],
+      [0.74, [0.05, 1, -0.1]],
+      [1, [0.1, 1, -0.1]],
+    ] as const;
+    k.animation('talk', {
+      duration: 2.2,
+      pose: (_t, p) => {
+        const beat = Math.exp(-(((p - 0.4) / 0.07) ** 2));
+        const sway = wave(p);
+        const arm = reach(ARM_L, keys(p, talkWrist, 'spline'), [0.65, 0.12, -0.2]);
+        const hand = orient([arm.upper, arm.lower], HAND_L_REST, {
+          dir: norm(keys(p, talkFingers, 'spline')),
+          up: keys(p, talkPalm, 'spline'),
+        });
+        return {
+          hips: { move: [0, -0.003 * bump(p, 2), 0], rotate: [0, 2 * sway, 1.5 * sway] },
+          'leg.L': { rotate: [0, -2 * sway, -1.5 * sway] },
+          'leg.R': { rotate: [0, -2 * sway, -1.5 * sway] },
+          spine: { rotate: [2 * beat, 0, -1.2 * sway] },
+          chest: { rotate: [1.5 * wave(p, 2), 3 * wave(p, 1, 0.2), 0], scale: [1 + 0.01 * bump(p, 2), 1, 1 + 0.01 * bump(p, 2)] },
+          neck: { rotate: [-1.5 * wave(p, 2), 0, 0] },
+          head: { rotate: [3 * wave(p, 2, 0.1) + 6 * beat, 7 * wave(p, 1, 0.3), 2.5 * wave(p, 1, 0.6)] },
+          knot: { rotate: [4 * wave(p, 1, 0.4) - 4 * beat, 0, 4 * wave(p, 1, 0.3)] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: hand },
+          'upperarm.R': { rotate: [1.5 * wave(p, 1, 0.1), 0, -1.5 * bump(p)] },
+        };
+      },
+    });
+
+    // Wave: a greeting. The hammer comes off the shoulder, out to the right and down, to hang low
+    // at his side with the head forward. The left hand rises out at the side to beside the head,
+    // waves twice (always outside the cheek and the ear), then everything returns to rest.
+    const WAVE_UP: V3 = [0.335, 0.54, 0.06];
+    const HAMMER_LOW: V3 = [-0.35, 0.29, 0.05];
+    const HAFT_LOW = norm([-0.22, -0.34, 1]);
+    const LONG_LOW: V3 = [1, 0, 0.22];
+    k.animation('wave', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const u = ease(0, 0.24, p) * (1 - ease(0.8, 1, p)); // the left hand up
+        const v = ease(0, 0.22, p) * (1 - ease(0.8, 1, p)); // the hammer down
+        const env = ease(0.22, 0.32, p) * (1 - ease(0.72, 0.82, p));
+        const w = Math.sin((2 * Math.PI * 2 * (p - 0.27)) / 0.5) * env;
+        const ang = ((16 + 24 * w) * Math.PI) / 180;
+        const wrist = bez(WRIST_L, [0.4, 0.3, 0.07], add(WAVE_UP, [0.015 * w, 0, 0]), u);
+        const armL = reach(ARM_L, wrist, [0.57, 0.5, -0.3]);
+        const handL = orient([armL.upper, armL.lower], HAND_L_REST, {
+          dir: norm(bez([0, -1, 0.1], [1, 0, 0.1], [Math.sin(ang), Math.cos(ang), 0.1], u)),
+          up: [0, 0, 1],
+        });
+        const armR = reach(ARM_R, bez(WRIST_R, [-0.36, 0.36, 0.08], HAMMER_LOW, v), [-0.57, -0.1, -0.35]);
+        const handR = orient([armR.upper, armR.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, {
+          dir: norm(bez(HAFT_DIR, [-1, 0.15, -0.1], HAFT_LOW, v)),
+          up: bez(HAMMER_LONG, [0, 0.4, 1], LONG_LOW, v),
+        });
+        return {
+          hips: { move: [0, -0.004 * u, 0] },
+          spine: { rotate: [-2 * u, 0, 0] },
+          chest: { rotate: [0, 0, 3 * u] },
+          head: { rotate: [-3 * u + 2 * Math.abs(w), 0, 5 * u] },
+          knot: { rotate: [3 * u + 4 * w, 0, 5 * w] },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
         };
       },
     });
