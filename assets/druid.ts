@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Druid — Chibi Quest hero (catalog `heroes/magic/druid`), a mushroom forager, about 1.0 m to the
@@ -21,7 +21,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   lantern-light, flask, potion.
  * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff), `caproot` (the cap, on the
  *   head) and `flaskroot` (the flask, on the right hand); the basket is rigid on the chest, the staff
- *   on the left hand. Clips: idle, walk, run.
+ *   on the left hand. Clips: idle, walk, run, attack (a staff thrust; the lantern flares), attack2
+ *   (a flask throw; the flask flies off and grows back in the hand).
  */
 
 const C = {
@@ -785,5 +786,201 @@ export default defineAsset({
     });
     k.animation('walk', stride(0.9, 26, 28, 3, 0));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03));
+
+    // ------------------------------------------------------------------ attacks
+    // Both arms are posed by targets in the chest's rest frame (reach for the arm, orient for the
+    // hand). The rest pole of each arm keeps the elbow where the model has it at phase 0 and 1.
+    const { keys, reach, orient, follow, quat, euler } = motion;
+    const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const norm = (v: V3): V3 => scale(v, 1 / Math.hypot(v[0], v[1], v[2]));
+    const ease = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    type Arm = { root: V3; mid: V3; end: V3 };
+    const restPole = (a: Arm): V3 => {
+      const u = norm(sub(a.end, a.root));
+      const se = sub(a.mid, a.root);
+      const d = se[0] * u[0] + se[1] * u[1] + se[2] * u[2];
+      return add(a.root, scale(norm(sub(se, scale(u, d))), 0.5));
+    };
+    const chainQ = (rots: readonly V3[]) => rots.reduce((q, r) => q.multiply(quat(r)), new THREE.Quaternion());
+    const ARM_L: Arm = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const ARM_R: Arm = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const POLE_L = restPole(ARM_L);
+    const POLE_R = restPole(ARM_R);
+    const FIST_L = rotZ(rotX([0, -1, 0], HAND_L.pitch), HAND_L.roll); // wrist to fist, at rest
+    const FINGERS_R = rotY([1, 0, 0], HAND_R_YAW); // the open right hand's fingers, at rest
+    const HIPS_AT: V3 = [0, 0.2, 0];
+    const SPINE_AT: V3 = [0, 0.26, 0];
+    const CHEST_AT: V3 = [0, 0.33, 0];
+
+    // Attack: a staff cast. She turns away and draws the staff back along its own line, tipped
+    // forward, then thrusts the lantern end at the target with her body behind it. The lantern
+    // hangs plumb from the hook (it swings on its own), whips forward at the strike, and flares.
+    // The staff's lower end must pass outside the skirt: the hand stays out and forward while the
+    // staff turns, and the recovery stands the staff up in front of the hip, not beside it.
+    const castWrist = [
+      [0, WRIST_L],
+      [0.15, [0.285, 0.35, 0.03]],
+      [0.35, [0.25, 0.35, -0.06]],
+      [0.42, [0.245, 0.352, -0.075]],
+      [0.52, [0.2, 0.37, 0.175]],
+      [0.62, [0.205, 0.368, 0.168]],
+      [0.74, [0.27, 0.37, 0.16]],
+      [0.86, [0.285, 0.355, 0.12]],
+      [1, WRIST_L],
+    ] as const;
+    const castDir = [
+      [0, STAFF_AXIS],
+      [0.15, norm([0.2, 0.85, 0.48])],
+      [0.35, norm([0.34, 0.66, 0.67])],
+      [0.42, norm([0.34, 0.64, 0.69])],
+      [0.52, norm([0.12, 0.4, 0.91])],
+      [0.62, norm([0.13, 0.41, 0.9])],
+      [0.74, norm([0.06, 0.62, 0.78])],
+      [0.86, norm([0.2, 0.9, 0.38])],
+      [1, STAFF_AXIS],
+    ] as const;
+    const castPole = [
+      [0, POLE_L],
+      [0.35, [0.55, 0.15, -0.1]],
+      [0.52, [0.5, 0.2, -0.2]],
+      [0.74, [0.55, 0.15, -0.2]],
+      [1, POLE_L],
+    ] as const;
+    k.animation('attack', {
+      duration: 1.0,
+      loop: false,
+      pose: (_t, p) => {
+        const g = ease(0, 0.35, p) * (1 - ease(0.42, 0.5, p));
+        const s = ease(0.43, 0.52, p) * (1 - ease(0.64, 1, p));
+        const hipsR: V3 = [0, 10 * g - 12 * s, 0];
+        const spineR: V3 = [-3 * g + 7 * s, 6 * g - 6 * s, 0];
+        const chestR: V3 = [-3 * g + 5 * s, 10 * g - 12 * s, 0];
+        const wrist = keys(p, castWrist);
+        const arm = reach(ARM_L, wrist, keys(p, castPole));
+        // The fist lines up with the forearm while the staff is out of its rest grip.
+        const elbow = follow([SHOULDER], [arm.upper], ELBOW_L);
+        const w = keys(p, [[0, 0], [0.25, 1], [0.75, 1], [1, 0]] as const);
+        const up = norm(lerp(FIST_L, norm(sub(wrist, elbow)), w));
+        const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: keys(p, castDir), up });
+        // The lantern: plumb, plus a lag swing (+X swings it back, -X forward to the target).
+        const swing = keys(p, [[0, 0], [0.18, -10], [0.35, 6], [0.44, 4], [0.48, 20], [0.54, -40], [0.6, -46], [0.7, -8], [0.8, 8], [0.9, -3], [1, 0]] as const);
+        const lanternR = euler(chainQ([hipsR, spineR, chestR, arm.upper, arm.lower, hand]).invert().multiply(quat([swing, 0, 0])));
+        const flare = keys(p, [[0, 1], [0.47, 1], [0.49, 1.4], [0.56, 1.4], [0.59, 1], [1, 1]] as const, 'linear');
+        return {
+          hips: { move: [0, -legDrop(LEG, 14 * s) - 0.004 * g, -0.012 * g + 0.025 * s], rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          head: { rotate: [2 * g - 6 * s, -4 * g + 14 * s, 0] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: hand },
+          lantern: { rotate: lanternR, scale: [flare, flare, flare] },
+          // The flask arm swings in for balance on the draw, then back on the thrust.
+          'upperarm.R': { rotate: [-5 * g + 10 * s, 0, -4 * s] },
+          'leg.L': { rotate: [-14 * s, 0, 0] },
+          'leg.R': { rotate: [14 * s, 0, 0] },
+          'foot.L': { rotate: [14 * s, 0, 0] },
+          'foot.R': { rotate: [-14 * s, 0, 0] },
+        };
+      },
+    });
+
+    // Attack 2: a flask throw. The right hand winds up back and up, out beside the head (clear of
+    // the hair locks and the basket), then throws forward and up. At the release the flask leaves
+    // the hand on a world-space arc toward the target, tumbling, and shrinks away; at the end a new
+    // flask grows back on the palm.
+    const THROW_S = 0.9;
+    const RELEASE = 0.47;
+    const throwWrist = [
+      [0, WRIST_R],
+      [0.18, [-0.3, 0.41, 0.04]],
+      [0.34, [-0.3, 0.46, -0.07]],
+      [0.4, [-0.3, 0.465, -0.075]],
+      [0.44, [-0.31, 0.44, 0.06]],
+      [RELEASE, [-0.26, 0.46, 0.13]],
+      [0.55, [-0.19, 0.37, 0.17]],
+      [0.62, [-0.19, 0.36, 0.15]],
+      [0.85, WRIST_R],
+      [1, WRIST_R],
+    ] as const;
+    // The flask's axis (the palm's normal): tipped out, away from the head, on the wind-up.
+    const flaskAxis = [
+      [0, [0, 1, 0]],
+      [0.18, norm([-0.4, 0.9, 0.05])],
+      [0.34, norm([-0.45, 0.87, 0.02])],
+      [0.4, norm([-0.45, 0.87, 0])],
+      [0.44, norm([-0.5, 0.85, 0])],
+      [RELEASE, norm([-0.15, 0.8, -0.5])],
+      [0.55, norm([0, 0.9, 0.4])],
+      [0.85, [0, 1, 0]],
+    ] as const;
+    const throwPole = [
+      [0, POLE_R],
+      [0.18, [-0.6, 0.2, 0.0]],
+      [0.4, [-0.6, 0.2, -0.05]],
+      [RELEASE, [-0.6, 0.1, 0.1]],
+      [0.62, [-0.5, 0.1, 0.0]],
+      [0.85, POLE_R],
+    ] as const;
+    const throwRig = (p: number) => {
+      const w = ease(0, 0.34, p) * (1 - ease(0.4, 0.48, p));
+      const t = ease(0.41, 0.5, p) * (1 - ease(0.62, 0.95, p));
+      const hipsR: V3 = [0, -8 * w + 12 * t, 0];
+      const hipsMove: V3 = [0, -legDrop(LEG, 12 * t) - 0.004 * w, -0.012 * w + 0.022 * t];
+      // On the wind-up she leans away from the raised arm (-Z tilts toward her left).
+      const spineR: V3 = [-4 * w + 7 * t, -6 * w + 8 * t, -3 * w];
+      const chestR: V3 = [-3 * w + 5 * t, -12 * w + 14 * t, -7 * w];
+      const wrist = keys(p, throwWrist, 'spline');
+      const arm = reach(ARM_R, wrist, keys(p, throwPole));
+      const elbow = follow([mx(SHOULDER)], [arm.upper], ELBOW_R);
+      const wt = keys(p, [[0, 0], [0.2, 1], [0.7, 1], [0.85, 0]] as const);
+      const fingers = norm(lerp(FINGERS_R, norm(sub(wrist, elbow)), wt));
+      const hand = orient([arm.upper, arm.lower], { dir: [0, 1, 0], up: FINGERS_R }, { dir: keys(p, flaskAxis), up: fingers });
+      const rots: V3[] = [hipsR, spineR, chestR, arm.upper, arm.lower, hand];
+      // Where the flask's pivot is when it sits in the hand, and how the hand is turned.
+      const flaskAt = add(follow([HIPS_AT, SPINE_AT, CHEST_AT, mx(SHOULDER), ELBOW_R, WRIST_R], rots, FLASK), hipsMove);
+      return { w, t, hipsR, hipsMove, spineR, chestR, arm, hand, flaskAt, handQ: chainQ(rots) };
+    };
+    const atRelease = throwRig(RELEASE);
+    const FLIGHT_V: V3 = [0.15, 1.3, 2.0]; // m/s: forward and up, a little toward the center line
+    k.animation('attack2', {
+      duration: THROW_S,
+      loop: false,
+      pose: (_t, p) => {
+        const r = throwRig(p);
+        const size = keys(p, [[0, 1], [0.58, 1], [0.72, 0.001], [0.86, 0.001], [1, 1]] as const);
+        let flask: { move?: V3; rotate?: V3; scale: V3 } = { scale: [size, size, size] };
+        if (p > RELEASE && p < 0.73) {
+          const dt = (p - RELEASE) * THROW_S;
+          const want = add(atRelease.flaskAt, [FLIGHT_V[0] * dt, FLIGHT_V[1] * dt - 4.9 * dt * dt, FLIGHT_V[2] * dt]);
+          const inv = r.handQ.clone().invert();
+          const d = new THREE.Vector3(...sub(want, r.flaskAt)).applyQuaternion(inv);
+          const tumble = quat([540 * dt, 0, 0]).multiply(atRelease.handQ.clone());
+          flask = { move: [d.x, d.y, d.z], rotate: euler(inv.multiply(tumble)), scale: flask.scale };
+        }
+        const { w, t } = r;
+        return {
+          hips: { move: r.hipsMove, rotate: r.hipsR },
+          spine: { rotate: r.spineR },
+          chest: { rotate: r.chestR },
+          // The head keeps looking at the target while the body winds up and throws.
+          head: { rotate: [3 * w - 5 * t, 12 * w - 14 * t, 0] },
+          'upperarm.R': { rotate: r.arm.upper },
+          'forearm.R': { rotate: r.arm.lower },
+          'hand.R': { rotate: r.hand },
+          flaskroot: flask,
+          // The staff arm barely moves; the lantern swings with the turn.
+          'upperarm.L': { rotate: [4 * w - 3 * t, 0, 0] },
+          lantern: { rotate: [-8 * w + 14 * t, 0, 5 * w] },
+          'leg.L': { rotate: [-12 * t, 0, 0] },
+          'leg.R': { rotate: [12 * t, 0, 0] },
+          'foot.L': { rotate: [12 * t, 0, 0] },
+          'foot.R': { rotate: [-12 * t, 0, 0] },
+        };
+      },
+    });
   },
 });
