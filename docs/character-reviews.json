@@ -459,5 +459,38 @@
       "Add a few loose threads at the collar and the hem."
     ],
     "reviewedAt": "2026-09-26T05:20:08+00:00"
+  },
+  "slime": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 3,
+      "proportion": 4,
+      "shape": 5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 5
+    },
+    "summary": "The slime is the slime king from the enemy sheet without its crown, cape, and chain: a glossy green jelly dome with a grumpy glare, settling into a puddle with round drips.",
+    "strengths": [
+      "The squash and stretch sells the jelly: it stretches on each hop, flattens on landing, and the slam leaps and lands flat.",
+      "The slanted jelly lids and heavy brows give the same grumpy glare as the mockup.",
+      "It is very light: 7,354 triangles. The color is one constant, so the P2 fire, ice, and poison slimes can reuse the file."
+    ],
+    "issues": [
+      "From behind and from the side, it is a plain green dome, so the silhouette gives little to remember.",
+      "The mockup jelly looks translucent, with bubbles inside and floating around it. The model is opaque, with only three pale bubble spots.",
+      "The mouth is a small, faint line."
+    ],
+    "next": [
+      "Add two or three small bubbles that float around the slime on their own bones.",
+      "Make the frown bolder, so it reads at 128 px."
+    ],
+    "reviewedAt": "2026-09-26T05:25:31+00:00"
   }
 }
