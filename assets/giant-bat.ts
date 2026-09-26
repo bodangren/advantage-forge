@@ -351,5 +351,86 @@ export default defineAsset({
         };
       },
     });
+
+    const { keys } = motion;
+    /** Left-side rotations spread to both sides: Y and Z flip sign on the right. */
+    const both = (name: string, r: [number, number, number]) => ({
+      [`${name}.L`]: { rotate: r },
+      [`${name}.R`]: { rotate: [r[0], -r[1], -r[2]] as [number, number, number] },
+    });
+
+    // Hit: the ball jolts back and squashes, the wings fold in against the body, the ears flatten;
+    // then the hover and the wing beat return (the last frame is the first idle frame).
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.38, 0.75], [1, 0]]);
+        const free = 1 - h;
+        const beat = wave(p) * free;
+        const lag = wave(p, 1, 0.12) * free;
+        return {
+          body: {
+            move: [0, HOVER + 0.03 * wave(p, 1, 0.25) + 0.02 * h, -0.08 * h],
+            rotate: [4 - 26 * h, 0, 7 * h],
+            scale: [1 - 0.03 * beat + 0.12 * h, 1 + 0.03 * beat - 0.15 * h, 1 - 0.03 * beat + 0.1 * h],
+          },
+          ...both('wing', [0, 6 * wave(p, 1, 0.25) * free + 30 * h, (10 + 45 * beat) * free - 28 * h]),
+          ...both('wingtip', [0, 0, 20 * lag - 55 * h]),
+          ...both('ear', [-45 * h, 0, -6 * wave(p, 1, 0.35) * free - 22 * h]),
+          'foot.L': { rotate: [(10 + 8 * wave(p, 1, 0.4)) * free - 22 * h, 0, 6 * h] },
+          'foot.R': { rotate: [(10 + 8 * wave(p, 1, 0.45)) * free - 18 * h, 0, -6 * h] },
+        };
+      },
+    });
+
+    // Death: a jolt in the hover, the wings stop and crumple, the ball tumbles back and drops, lands
+    // with a squash and a small bounce, and lies on its back with the feet up and the ears limp on the
+    // floor; the wing arms hang down its sides and the fingers lie spread flat on the floor.
+    const LIE = -0.07; // body move y when it lies on its back (the build lifts it if it sinks)
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const jolt = keys(p, [[0, 0], [0.08, 1], [0.2, 0.4], [0.4, 0]]);
+        const f = Math.min(1, Math.max(0, (p - 0.12) / 0.34));
+        const y =
+          p < 0.12
+            ? keys(p, [[0, HOVER + 0.03], [0.09, HOVER + 0.06], [0.12, HOVER + 0.06]])
+            : p < 0.46
+              ? HOVER + 0.06 + (LIE - HOVER - 0.06) * f * f // accelerates like a drop
+              : keys(p, [[0.46, LIE], [0.57, LIE + 0.06], [0.68, LIE], [0.76, LIE + 0.012], [0.84, LIE]]);
+        // The landing squash is along the body's own Z, the vertical when it lies on its back.
+        const land = keys(p, [[0.42, 0], [0.47, 1], [0.56, -0.35], [0.66, 0.4], [0.76, -0.1], [0.84, 0]]);
+        return {
+          body: {
+            move: [0, y, -0.06 * jolt],
+            rotate: [
+              keys(p, [[0, 4], [0.08, -20], [0.16, -8], [0.46, -102], [0.57, -84], [0.68, -93], [1, -90]]),
+              0,
+              keys(p, [[0, 0], [0.1, 10], [0.3, -26], [0.46, 7], [0.6, -3], [0.75, 0]]),
+            ],
+            scale: [1 + 0.1 * jolt + 0.12 * land, 1 - 0.12 * jolt + 0.12 * land, 1 + 0.1 * jolt - 0.2 * land],
+          },
+          ...both('wing', [
+            0,
+            keys(p, [[0, 6], [0.08, 24], [0.3, -8], [0.44, 6], [0.54, 66], [0.64, 54], [0.76, 64], [1, 62]]),
+            keys(p, [[0, 10], [0.08, -24], [0.3, 52], [0.44, 40], [0.54, -2], [1, 4]]),
+          ]),
+          ...both('wingtip', [
+            0,
+            keys(p, [[0, 0], [0.44, 0], [0.54, -34], [0.66, -46], [1, -40]]),
+            keys(p, [[0, 14], [0.08, -40], [0.3, -78], [0.44, -62], [0.56, -8], [1, -16]]),
+          ]),
+          ...both('ear', [
+            keys(p, [[0, 0], [0.08, -42], [0.3, -8], [0.46, -12], [0.56, -36], [0.68, -22], [1, -28]]),
+            0,
+            keys(p, [[0, -5], [0.08, -22], [0.3, 10], [0.56, -14], [1, -10]]),
+          ]),
+          'foot.L': { rotate: [keys(p, [[0, 15], [0.1, -12], [0.46, -30], [0.6, -72], [0.74, -52], [1, -60]]), 0, keys(p, [[0, 0], [0.5, 12]])] },
+          'foot.R': { rotate: [keys(p, [[0, 12], [0.1, -8], [0.46, -24], [0.62, -66], [0.76, -46], [1, -54]]), 0, keys(p, [[0, 0], [0.5, -8]])] },
+        };
+      },
+    });
   },
 });
