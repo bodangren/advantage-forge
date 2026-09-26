@@ -378,7 +378,8 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // `forkOut` tilts the fork's top out to his right (degrees at the wrist), clear of the hat brim.
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, forkOut = 0) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -398,12 +399,12 @@ export default defineAsset({
           // The fork arm swings little, so the fork stays clear of the ground and the legs.
           'upperarm.R': { rotate: [-armSwing * 0.25 * s, 0, -4] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
-          'hand.R': { rotate: [armSwing * 0.2 * s, 0, 0] as const },
+          'hand.R': { rotate: [armSwing * 0.2 * s, 0, forkOut] as const },
         };
       },
     });
     k.animation('walk', stride(0.9, 24, 26, 3, 0));
-    k.animation('run', stride(0.58, 36, 44, 10, 0.025));
+    k.animation('run', stride(0.58, 36, 44, 10, 0.025, 14));
 
     // Work: dig the fork in forward and low, lift a load, and toss it up and to the side.
     const ease = (a: number, b: number, x: number) => {
