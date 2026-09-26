@@ -330,5 +330,38 @@
       "Add a nocked arrow during the shot, so the draw reads at 128 px."
     ],
     "reviewedAt": "2026-09-26T04:05:28+00:00"
+  },
+  "skeleton": {
+    "overall": 8.0,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The skeleton warrior matches the enemy-sheet design: a grinning skull with angry glowing eyes under a riveted iron helmet, a red scarf, mail, a raised sword, and a round red shield.",
+    "strengths": [
+      "The slanted black sockets with amber eyes, the heart-shaped nose hole, and the square teeth make a clear angry skull face.",
+      "Iron, steel, mail, bone, red cloth, wood, and brass read as different materials.",
+      "It shares the knight's body and legs, so the armored characters look like one set."
+    ],
+    "issues": [
+      "The mockup shows a dynamic lunge. The model stands in the set's neutral pose.",
+      "From above, the dark helmet dome is the largest shape in the sprites, and the face shows only in the front directions.",
+      "In the chop, the wind-up is small, so most of the motion is in the downward cut.",
+      "The mockup helmet is lighter steel with dark patches. The model helmet is dark iron all over."
+    ],
+    "next": [
+      "Raise the sword higher in the wind-up of the chop.",
+      "Make the helmet steel lighter, with the patina in patches."
+    ],
+    "reviewedAt": "2026-09-26T04:49:52+00:00"
   }
 }
