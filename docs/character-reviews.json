@@ -879,7 +879,7 @@
     "reviewedAt": "2026-09-26T10:15:32+00:00"
   },
   "animated-armor": {
-    "overall": 8,
+    "overall": 7.4,
     "group": "Enemies",
     "scores": {
       "mockup": 4,
@@ -889,26 +889,26 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
-      "gameReady": 4,
+      "technical": 3,
+      "gameReady": 3,
       "sprite": 4,
-      "motion": 4
+      "motion": 3
     },
-    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, a slotted face plate, a dark suit with fine rust specks, a purple scarf and torn cape, and a dark chipped sword held low. It has the full enemy clip set: idle, walk, run, attack, hit, and death.",
+    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. The dark suit has rust specks, a purple scarf, a torn cape, and a broad sword held low. It has the full enemy clip set: idle, walk, run, attack, hit, and death. The model did not change since the last review. The head check gives result ok, but the ground check fails: in the run, the sword goes into the floor.",
     "strengths": [
-      "The cyan eyes on the black visor read at once, and nothing inside the helm shows that the suit is empty.",
-      "The death tells the story: the eyes flicker out, the helm falls off and rolls, and the suit collapses into a pile of armor.",
-      "The slash goes around the huge helm: a backswing beside the helm, then a cut that sweeps low across the front with the edge first."
+      "The two cyan eyes on the black visor read at once, also in the 128 px sprites. Nothing inside the helm shows that the suit is empty.",
+      "The slash reads as a real sword cut. The blade rises up and back beside the helm and holds, then cuts across the front with the edge first (edgeUp). The follow-through ends low at the left, and the hips and chest turn with it.",
+      "The death tells the story: the eyes flicker out, the sword drops flat, the helm falls off in front and rolls onto its side, and the legs splay."
     ],
     "issues": [
-      "The rust specks are small and sparse; the mockup shows more rust and more scratches on the helm dome.",
-      "The helm is a smooth dome; the mockup helm has a raised brow over the visor and cheek plates that flare out.",
-      "In the attack follow-through, the right gauntlet goes 0.7 cm into the cuirass."
+      "In the run, the sword goes 7.0 cm below its rest pose in every frame, and the tip cuts into the floor (ground FAIL). The hips drop and the spine leans 10 degrees, but the right arm does not lift the blade.",
+      "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through. From phase 0.58 to 0.75, the right gauntlet goes 0.7 cm into the cuirass. At the end of the death, the cape stands out as a stiff, flat panel above the ground.",
+      "The helm is a smooth round dome. The mockup helm has a raised brow over the visor and cheek plates that flare out. The rust specks on the helm dome and the pauldrons are still small and sparse."
     ],
     "next": [
-      "Add more rust and scratches on the helm dome and the pauldrons.",
-      "Give the helm a raised brow ridge over the visor, as in the mockup."
+      "Lift the sword in the run, so that it stays less than 1.5 cm below its rest pose and ./forge check gives ground ok. Then lay the death cape flat on the ground, and keep the right forearm 1 cm clear of the cuirass in the attack.",
+      "Give the helm a raised brow ridge over the visor, and add more rust and scratches on the helm dome and the pauldrons. Both items from the last review are still open."
     ],
-    "reviewedAt": "2026-09-26T13:16:12+00:00"
+    "reviewedAt": "2026-09-26T19:06:10+00:00"
   }
 }
