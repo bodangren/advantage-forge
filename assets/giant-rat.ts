@@ -21,7 +21,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  * Bodies: fur, pink, eyes, teeth, spikes, claws, whiskers, neckerchief, bandage.
  * Rig: hips, spine, chest, neck, head, arms, legs with shins and feet, and a three-bone tail.
  *   Clips: idle (breathing, sniffing), walk (a waddle), run (a low scurry), attack (lunge, bite,
- *   and claw rake).
+ *   and claw rake), hit (a squeal, arms up), death (a stagger, then a flop onto the back).
  */
 
 const C = {
@@ -447,7 +447,7 @@ export default defineAsset({
     k.body('bandage', sdf.union(wrapAt(0), wrapAt(1), wrapAt(2)).bone('tail3'), { color: C.bandage, roughness: 0.9 });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
+    const { wave, bump, legDrop, orient } = motion;
     const LEG = 0.11;
 
     // Idle: slow breathing, a sniffing nose, twitching ears (on the head), and a sweeping tail.
@@ -521,6 +521,129 @@ export default defineAsset({
           tail1: { rotate: [-8 * wind, 12 * hit, 0] },
           tail2: { rotate: [0, 16 * hit, 0] },
           tail3: { rotate: [0, 20 * hit, 0] },
+        };
+      },
+    });
+
+    type R3 = [number, number, number];
+    const kf = (p: number, list: readonly (readonly [number, number])[]) => motion.keys<number>(p, list);
+    const DEG = Math.PI / 180;
+    // Arms up: the wrists go up and out beside the head (clear of the cheeks and the whiskers), the
+    // elbows out and down. The pole keeps the rest elbow in the bend plane, so t = 0 is the rest pose.
+    const ARM = { root: SHOULDER, mid: ELBOW, end: WRIST };
+    const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
+    const WRIST_UP: V3 = [0.25, 0.49, 0.1];
+    const POLE: V3 = [0.29, 0.22, 0.03];
+    const armsUp = (t: number) => ({
+      L: motion.reach(ARM, lerp(WRIST, WRIST_UP, t), POLE),
+      R: motion.reach(ARM_R, lerp(mx(WRIST), mx(WRIST_UP), t), mx(POLE)),
+    });
+
+    // Hit: a squeal. The head jerks back, the chest and the belly flinch back, the arms fly up
+    // with the claws open, and the tail whips; then a quick return.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = kf(p, [[0, 0], [0.15, 1], [0.35, 0.75], [0.75, 0.12], [1, 0]]);
+        const wt = kf(p, [[0, 0], [0.12, 1], [0.3, -0.8], [0.5, 0.45], [0.72, -0.15], [1, 0]]);
+        const up = armsUp(h);
+        return {
+          hips: { move: [0, 0.006 * h, -0.025 * h], rotate: [-6 * h, 0, 0] },
+          spine: { rotate: [-7 * h, 0, 0], scale: [1 - 0.03 * h, 1 + 0.02 * h, 1 - 0.04 * h] },
+          chest: { rotate: [-9 * h, 0, 0] },
+          neck: { rotate: [-4 * h, 0, 0] },
+          head: { rotate: [-10 * h, 0, 7 * h] },
+          // The arms fly up and out beside the head (not in front of the face).
+          'upperarm.L': { rotate: up.L.upper },
+          'upperarm.R': { rotate: up.R.upper },
+          'forearm.L': { rotate: up.L.lower },
+          'forearm.R': { rotate: up.R.lower },
+          'hand.L': { rotate: [-25 * h, 0, 0] },
+          'hand.R': { rotate: [-25 * h, 0, 0] },
+          'leg.L': { rotate: [6 * h, 0, 0] },
+          'leg.R': { rotate: [6 * h, 0, 0] },
+          tail1: { rotate: [14 * h, 22 * wt, 0] },
+          tail2: { rotate: [4 * h, -30 * wt, 0] },
+          tail3: { rotate: [0, 40 * wt, 0] },
+        };
+      },
+    });
+
+    // Death: the blow knocks it back, it staggers and wobbles, then it tips over backward and flops
+    // onto its back with the legs and arms in the air. The tail sweeps around its right side and
+    // goes limp on the ground. The tail directions are set in world space (orient), so the tail
+    // stays on the floor while the body turns over.
+    const TAIL_DIR: R3[] = [0, 1, 2].map((i) => {
+      const a = T_BONES[i]!;
+      const b = T_BONES[i + 1]!;
+      return [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+    });
+    const TAIL_YAW = TAIL_DIR.map((d) => Math.atan2(d[0], d[2]) / DEG); // top-view angle, 0 = +Z
+    const TAIL_SLOPE = TAIL_DIR.map((d) => d[1] / Math.hypot(d[0], d[1], d[2]));
+    const LIE_YAW = [-20, -55, -95]; // lying: toward the feet, curling to the rat's right
+    const LIE_SLOPE = [-0.03, 0, 0];
+    const UP: R3 = [0, 1, 0];
+    const tailDir = (yaw: number, y: number): R3 => {
+      const h = Math.sqrt(1 - Math.min(0.95, y * y));
+      return [Math.sin(yaw * DEG) * h, y, Math.cos(yaw * DEG) * h];
+    };
+    const mix = (a: number, b: number, t: number) => a + (b - a) * t;
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const r = kf(p, [[0, 0], [0.07, 1], [0.2, 0.55], [0.32, 0.25], [0.42, 0]]); // the recoil
+        const sag = kf(p, [[0.1, 0], [0.24, 1], [0.34, 0.7], [0.42, 0]]); // the knees give way
+        const wob = kf(p, [[0.08, 0], [0.17, 1], [0.27, -0.8], [0.36, 0.35], [0.42, 0]]);
+        const wt = kf(p, [[0, 0], [0.06, 1], [0.15, -0.8], [0.25, 0.5], [0.35, -0.2], [0.44, 0]]);
+        const u = Math.min(1, Math.max(0, (p - 0.34) / 0.28)); // the fall speeds up to the impact at 0.62
+        const tilt = 90 * u * u;
+        const bounce = kf(p, [[0.62, 0], [0.67, 1], [0.75, 0]]);
+        const lie = kf(p, [[0.36, 0], [0.62, 1]]); // the limbs go up
+        const flail = kf(p, [[0.62, 0], [0.68, 1], [0.75, -0.6], [0.81, 0.3], [0.87, 0]]);
+        const sweep = kf(p, [[0.38, 0], [0.72, 1]]);
+        const flop = kf(p, [[0.6, 0], [0.66, 1], [0.76, 0]]);
+        const L = (a: number, b: number) => mix(a, b, lie);
+        const up = armsUp(Math.min(1, r + 0.4 * sag));
+
+        const hipsR: R3 = [-8 * r + 5 * sag - tilt + 5 * bounce, 0, 6 * wob];
+        const down = Math.sin(tilt * DEG);
+        const tail = (i: number, parents: R3[], whip: number, lift: number) =>
+          orient(
+            parents,
+            { dir: TAIL_DIR[i]!, up: UP },
+            {
+              dir: tailDir(mix(TAIL_YAW[i]!, LIE_YAW[i]!, sweep) + whip, mix(TAIL_SLOPE[i]!, LIE_SLOPE[i]!, down) + lift),
+              up: UP,
+            },
+          ) as R3;
+        const t1 = tail(0, [hipsR], 25 * wt, 0.06 * r);
+        const t2 = tail(1, [hipsR, t1], -35 * wt, 0.3 * flop);
+        const t3 = tail(2, [hipsR, t1, t2], 45 * wt, 0.4 * flop);
+        return {
+          hips: { move: [0, -0.01 * sag - 0.02 * lie + 0.02 * bounce, -0.03 * r - 0.05 * sweep], rotate: hipsR },
+          spine: { rotate: [-6 * r + 4 * sag, 0, -4 * wob], scale: [1 - 0.03 * r, 1 + 0.02 * r, 1 - 0.04 * r] },
+          chest: { rotate: [-10 * r + 5 * sag, 0, -5 * wob] },
+          neck: { rotate: [-4 * r - 15 * lie, 0, 0] },
+          head: { rotate: [-10 * r + 8 * sag - 18 * lie - 8 * bounce, 25 * lie, 8 * wob + 6 * r] },
+          // The arms fly up and out beside the head at the blow, flail, and end raised with the claws curled.
+          'upperarm.L': { rotate: [L(up.L.upper[0], -35) - 15 * flail, L(up.L.upper[1], 0), L(up.L.upper[2] + 6 * wob, 25) + 10 * flail] },
+          'upperarm.R': { rotate: [L(up.R.upper[0], -35) + 12 * flail, L(up.R.upper[1], 0), L(up.R.upper[2] + 6 * wob, -25) - 10 * flail] },
+          'forearm.L': { rotate: [L(up.L.lower[0], 5) - 15 * flail, L(up.L.lower[1], 0), L(up.L.lower[2], 0)] },
+          'forearm.R': { rotate: [L(up.R.lower[0], 5) + 15 * flail, L(up.R.lower[1], 0), L(up.R.lower[2], 0)] },
+          'hand.L': { rotate: [L(-25 * r, 25), 0, 0] },
+          'hand.R': { rotate: [L(-25 * r, 25), 0, 0] },
+          // The legs buckle, then swing up into the air with the soles up, and kick once.
+          'leg.L': { rotate: [L(8 * r - 12 * sag, -50) - 12 * flail, 0, L(0, 15)] },
+          'leg.R': { rotate: [L(8 * r - 12 * sag, -50) + 10 * flail, 0, L(0, -15)] },
+          'shin.L': { rotate: [L(20 * sag, -40) + 12 * flail, 0, 0] },
+          'shin.R': { rotate: [L(20 * sag, -40) - 10 * flail, 0, 0] },
+          'foot.L': { rotate: [L(-8 * sag, 45), 0, 0] },
+          'foot.R': { rotate: [L(-8 * sag, 45), 0, 0] },
+          tail1: { rotate: t1 },
+          tail2: { rotate: t2 },
+          tail3: { rotate: t3 },
         };
       },
     });
