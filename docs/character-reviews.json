@@ -548,7 +548,7 @@
     "reviewedAt": "2026-09-26T20:44:37+00:00"
   },
   "dragon-fire": {
-    "overall": 8,
+    "overall": 8.4,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -561,24 +561,24 @@
       "technical": 5,
       "gameReady": 4,
       "sprite": 5,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The fire dragon matches the mmx mockup closely in shape and color: a squat red dragon that is half head, with cream horns, a crest, heavy black brows, a toothy grin, orange bat wings, and a ridged cream belly. The attack is the weak clip: the strike points the open mouth at the floor, and no bite or breath reads.",
+    "summary": "The fire dragon matches the mmx mockup closely in shape and color: a squat red dragon that is half head, with cream horns, a crest, heavy black brows, a toothy grin, orange bat wings, and a ridged cream belly. The attack is now a fire-breath roar: a jaw bone opens the grin, and a level cone of fire comes from the mouth.",
     "strengths": [
       "The spread wings, the horns, and the crest make a unique silhouette that reads in all eight sprite directions.",
-      "The black brows over the yellow eyes and the white teeth in the dark grin give a strong focal point at 128 px.",
-      "The death has a clear stagger: the dragon rears with a last roar, then the legs buckle and it rolls onto its right side."
+      "The attack has a clear draw back (the head tips back, the chest fills, the wings rise), then a 9 cm hop forward with the head level and the jaws wide, and a fire cone at chest height.",
+      "The jaw splits along the painted grin, so the closed mouth looks the same as before. The open mouth shows a dark throat, a tongue, and the lower teeth."
     ],
     "issues": [
-      "The attack does not read as a bite or a breath. The windup tilts the head back only 16 degrees, and the chest does not fill. At the strike, the head pitches down about 30 degrees and the hips move only 4 cm forward, so the open mouth points at the floor and the strike looks like a nod. The recovery is present.",
-      "The head has no jaw bone, so the mouth keeps the same grin in every clip. The mockup puffs smoke from one nostril, and the model has no smoke or fire effect.",
+      "The fire cone reads as a smooth orange shape. It has only a small scale flicker, no glow, and no smoke. The textured build loses most of the yellow-to-red gradient.",
+      "The jaw opens only in the attack. The hit and the death roars keep the mouth closed, and the mockup smoke puff from one nostril is not in the model.",
       "In the three-quarter view, the death ends with the head and the belly as two separate blobs, and the face lies sideways. The side view of the end pose reads clearly."
     ],
     "next": [
-      "Rework the attack: scale the chest up about 8 percent in the windup, keep the head level at the strike, and move the hips 8 to 10 cm forward. Add a jaw bone that opens the mouth wide at the strike.",
-      "Add a fire-breath effect (an emissive cone from the mouth) that plays at the attack strike."
+      "Give the fire more life: two or three flame tongues with their own flicker, a yellow core, and a short smoke puff when the breath ends.",
+      "Open the jaw in the hit and in the death roar, and fix the three-quarter end pose of the death."
     ],
-    "reviewedAt": "2026-09-26T19:18:29+00:00"
+    "reviewedAt": "2026-09-26T21:04:14+00:00"
   },
   "blacksmith": {
     "overall": 7.9,

@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Fire dragon — Chibi Quest monster (catalog `monsters/dragon/dragon-fire`), about 1.0 m to the
@@ -18,10 +18,12 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   black brows as the focal point.
  * Value plan: the black brows over the yellow eyes and the white teeth in the dark grin are the
  *   strongest contrast (focal point); the cream belly is the biggest light mass.
- * Bodies: scales, belly, horns, crest, crest-red, wing-membranes, wing-bones, claws, teeth, brows.
- * Rig: chibi humanoid (hips, spine, chest, neck, head, arms, legs) plus `wing.L`/`wing.R` and a
- *   three-bone tail. Clips: idle (breathing, wing flutter, tail sway), walk (a waddle), run, fly
- *   (a hovering wing beat), and attack (a roar: rear back, then lunge forward with the wings flared).
+ * Bodies: scales, jaw-scales, belly, horns, crest, crest-red, wing-membranes, wing-bones, claws,
+ *   teeth, jaw-teeth, mouth, tongue, brows, fire-breath.
+ * Rig: chibi humanoid (hips, spine, chest, neck, head, arms, legs) plus `jaw` and `breath` (the
+ *   fire) under the head, `wing.L`/`wing.R`, and a three-bone tail. Clips: idle (breathing, wing
+ *   flutter, tail sway), walk (a waddle), run, fly (a hovering wing beat), attack (a fire-breath
+ *   roar: draw back with a full chest, hop forward, jaws wide, a level cone of fire), hit, death.
  */
 
 const C = {
@@ -39,6 +41,10 @@ const C = {
   mouth: '#4a1a18',
   tooth: '#fbf6e8',
   claw: '#f2e4c0',
+  tongue: '#c0505a',
+  fireCore: '#ffe04a',
+  fire: '#ff9a14',
+  fireTip: '#f24a12',
 };
 
 type V3 = readonly [number, number, number];
@@ -60,6 +66,16 @@ const TAIL: V3[] = [
   [-0.34, 0.2, -0.38],
 ];
 const HEAD_C: V3 = [0, 0.67, 0];
+// The grin line: the bottom arc of a circle (236 to 304 degrees). It paints the grin, and it is
+// also the line where the lower jaw separates from the head.
+const GRIN_R = 0.22;
+const GRIN_Y = 0.455;
+const GRIN_CORNER_Y = GRIN_Y + GRIN_R * (1 - Math.sin((56 * Math.PI) / 180));
+const JAW_AT: V3 = [0, 0.48, 0.05]; // the jaw hinge, behind the grin corners
+// The fire breath is built at FLAME_REST of its size, hidden inside the mouth, so the rest pose
+// and the static sprites show no fire; the attack scales the `breath` bone up to full size.
+const BREATH_AT: V3 = [0, 0.425, 0.1];
+const FLAME_REST = 0.02;
 
 export default defineAsset({
   name: 'dragon-fire',
@@ -75,6 +91,8 @@ export default defineAsset({
       chest: { parent: 'spine', at: [0, 0.36, 0] },
       neck: { parent: 'chest', at: [0, 0.42, -0.01] },
       head: { parent: 'neck', at: [0, 0.47, 0] },
+      jaw: { parent: 'head', at: JAW_AT, tail: [0, 0.44, 0.2] },
+      breath: { parent: 'head', at: BREATH_AT, tail: [0, BREATH_AT[1], 0.6] },
       'wing.L': { parent: 'chest', at: WING_ROOT, tail: [0.6, 0.5, -0.24] },
       'wing.R': { parent: 'chest', at: mx(WING_ROOT), tail: [-0.6, 0.5, -0.24] },
       tail1: { parent: 'hips', at: TAIL[0]! },
@@ -169,8 +187,6 @@ export default defineAsset({
         .at(0, 0, 0.2),
     );
     // The grin: a wide dark mouth that curves up at the corners.
-    const GRIN_R = 0.22;
-    const GRIN_Y = 0.455;
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.05, 236, 304), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
     const scaleTone = rgb(C.redDark);
     const scales = sdf
@@ -197,15 +213,45 @@ export default defineAsset({
       .paintWhere(lid.intersect(eyeWhite.round(0.006)), C.red, 0.002)
       .paintWhere(grin, C.mouth, 0.003)
       .paintWhere(nostrils.round(0.006), C.mouth, 0.004);
-    k.body('scales', scales, {
+    // The lower jaw zone: below the grin circle and below the grin corners, above the chin (y
+    // 0.425, so the neck and the chest stay on the body), inside a rounded bound around the snout.
+    // The head keeps the rest; the jaw piece is rigid on `jaw` and reaches 3 mm into the head, so
+    // no seam groove shows. The cut faces inside the skull (the roof of the mouth and the top of
+    // the jaw) are dark; the skin is not.
+    const jawZone = sdf
+      .ellipsoid([0.16, 0.09, 0.13])
+      .at(0, 0.45, 0.17)
+      .intersect(sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y))
+      .intersect(sdf.halfSpace([0, -1, 0], -0.425))
+      .subtract(sdf.cylinder(GRIN_R, 0.7).rotateX(90).at(0, GRIN_Y + GRIN_R, 0.25));
+    const jawPart = jawZone.round(0.003);
+    const inSkull = skull.round(-0.004);
+    const scaleLook = {
       color: C.red,
       roughness: 0.55,
       textureDensity: 2,
-      bump: (x, y, z) => 0.0007 * noise.fbm(x * 90, y * 90, z * 90, 2),
+      bump: (x: number, y: number, z: number) => 0.0007 * noise.fbm(x * 90, y * 90, z * 90, 2),
+    };
+    k.body('scales', scales.subtract(jawZone).paintWhere(jawPart.intersect(inSkull), C.mouth, 0.002), scaleLook);
+    k.body('jaw-scales', scales.intersect(jawPart).paintWhere(inSkull.subtract(jawZone.round(-0.003)), C.mouth, 0.002), {
+      ...scaleLook,
+      bone: 'jaw',
+    });
+    // The dark mouth inside the head (seen when the jaw opens), and the tongue on the jaw. Both
+    // stay inside the closed head.
+    k.body('mouth', sdf.ellipsoid([0.1, 0.04, 0.08]).at(0, 0.465, 0.08).intersect(skull.round(-0.006)).bone('head'), {
+      color: C.mouth,
+      roughness: 0.6,
+    });
+    k.body('tongue', sdf.ellipsoid([0.055, 0.012, 0.07]).at(0, 0.452, 0.1).intersect(skull.round(-0.008)), {
+      color: C.tongue,
+      roughness: 0.35,
+      bone: 'jaw',
     });
 
     // ------------------------------------------------------------------ belly plate with ridges
-    const bellyBase = sdf.smoothUnion(0.07, sdf.ellipsoid([0.25, 0.2, 0.2]).at(0, 0.19, 0), sdf.ellipsoid([0.19, 0.12, 0.16]).at(0, 0.34, 0));
+    // Tagged like the trunk, so the plate follows the chest when it turns and fills with air.
+    const bellyBase = sdf.smoothUnion(0.07, sdf.ellipsoid([0.25, 0.2, 0.2]).at(0, 0.19, 0).bone('spine'), sdf.ellipsoid([0.19, 0.12, 0.16]).at(0, 0.34, 0).bone('chest'));
     const bellyOval = sdf.extrude(profile.polygon([[-0.1, 0.4], [0.1, 0.4], [0.16, 0.25], [0.16, 0.08], [0.09, 0.01], [-0.09, 0.01], [-0.16, 0.08], [-0.16, 0.25]], { smooth: true, samples: 5 }), 0.5).at(0, 0, 0.25);
     const ridge = rgb(C.creamLine);
     const belly = bellyBase
@@ -213,7 +259,7 @@ export default defineAsset({
       .subtract(bellyBase.round(-0.004))
       .smoothIntersect(0.006, bellyOval)
       .paintFn((x, y, _z, base) => (Math.abs(Math.sin((y + 0.02 * (x / 0.14) ** 2) * 95)) < 0.1 ? ridge : base));
-    k.body('belly', belly.bone('spine'), { color: C.cream, roughness: 0.6 });
+    k.body('belly', belly, { color: C.cream, roughness: 0.6 });
 
     // ------------------------------------------------------------------ horns
     const horn = sdf
@@ -298,12 +344,45 @@ export default defineAsset({
         const h = faceHit(x, grinTop(x));
         return sdf.cone([h[0], h[1], h[2] - 0.006], [h[0] - Math.sign(x) * 0.004, h[1] - 0.04, h[2] + 0.002], 0.016, 0.004);
       }),
+    );
+    k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+    // Two lower teeth stand up from the bottom of the grin; they go with the jaw.
+    const lowerTeeth = sdf.union(
       ...[-0.035, 0.035].map((x) => {
         const h = faceHit(x, GRIN_Y + 0.004);
         return sdf.box([0.026, 0.02, 0.018], 0.006).at(h[0], h[1] + 0.006, h[2] - 0.006);
       }),
     );
-    k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+    k.body('jaw-teeth', lowerTeeth, { color: C.tooth, roughness: 0.3, detail: 0.003, bone: 'jaw' });
+
+    // ------------------------------------------------------------------ fire breath
+    // Built at full size along +Z from its root (a narrow jet that swells into a rolling cone about
+    // 0.5 m beyond the lips), then shrunk to FLAME_REST and hidden in the mouth.
+    const fc = [rgb(C.fireCore), rgb(C.fire), rgb(C.fireTip)] as const;
+    const flame = sdf
+      .smoothUnion(
+        0.05,
+        sdf.cone([0, 0, 0], [0, 0, 0.34], 0.018, 0.085),
+        sdf.cone([0, 0, 0.3], [0, 0.02, 0.58], 0.085, 0.025),
+        sdf.sphere(0.07).at(0.03, 0.02, 0.37),
+        sdf.sphere(0.06).at(-0.035, -0.015, 0.46),
+      )
+      .displace(0.012, (x, y, z) => noise.fbm(x * 16, y * 16, z * 10, 2))
+      .paintFn((x, y, z) => {
+        const r = Math.hypot(x, y);
+        const t = Math.min(1, Math.max(0, z / 0.56 + r * 2));
+        return t < 0.4 ? mixRgb(fc[0], fc[1], t / 0.4) : mixRgb(fc[1], fc[2], (t - 0.4) / 0.6);
+      });
+    k.body('fire-breath', flame.scale(FLAME_REST).at(...BREATH_AT), {
+      color: C.fire,
+      roughness: 1,
+      emissive: C.fireTip,
+      emissiveIntensity: 0.7,
+      opacity: 0.9,
+      detail: 0.006 * FLAME_REST,
+      textureDensity: 0.5 / FLAME_REST,
+      bone: 'breath',
+    });
 
     // ------------------------------------------------------------------ claws on the hands and feet
     const handClaws = (s: 1 | -1) => {
@@ -353,8 +432,11 @@ export default defineAsset({
     k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.red, roughness: 0.55 });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
+    const { wave, bump, legDrop, keys } = motion;
+    type R3 = [number, number, number];
+    const DEG = 180 / Math.PI;
     const LEG = 0.11;
+    const HIDE = [0.001, 0.001, 0.001] as const; // the fire breath, in every clip but the attack
 
     k.animation('idle', {
       duration: 2.6,
@@ -369,6 +451,7 @@ export default defineAsset({
         tail3: { rotate: [4 * wave(p, 1, 0.5), 12 * wave(p, 1, 0.5), 0] },
         'upperarm.L': { rotate: [3 * wave(p, 1, 0.1), 0, 0] },
         'upperarm.R': { rotate: [3 * wave(p, 1, 0.1), 0, 0] },
+        breath: { scale: HIDE },
       }),
     });
 
@@ -396,6 +479,7 @@ export default defineAsset({
           'foot.R': { rotate: [-legSwing * 0.6 * s + 10 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [8 * s, 0, 0] as const },
           'upperarm.R': { rotate: [-8 * s, 0, 0] as const },
+          breath: { scale: HIDE },
         };
       },
     });
@@ -427,41 +511,79 @@ export default defineAsset({
           tail1: { rotate: [18 + 5 * wave(p, 1, 0.35), 0, 0] },
           tail2: { rotate: [6 + 8 * wave(p, 1, 0.5), 6 * wave(p, 1, 0.4), 0] },
           tail3: { rotate: [8 * wave(p, 1, 0.65), 10 * wave(p, 1, 0.55), 0] },
+          breath: { scale: HIDE },
         };
       },
     });
 
-    // A roar: rear back with the head up and the wings raised, then lunge forward, jaws first,
-    // with the wings flared wide, and settle.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    // The attack: a fire-breath roar. It draws back and up (the head tipped back, the chest filled
+    // with air, the wings and the claws raised), hops 9 cm forward with the head level and the
+    // jaws wide open, breathes a cone of fire at chest height for about a quarter second (it
+    // grows in 0.1 s and flickers), then closes the jaws and hops back to the start.
+    // `head` is the head's world pitch (- = nose up): the head's own turn cancels the body's.
+    // `feet` is where the hops put the feet; `lean` is the hips ahead of the feet (the legs slant
+    // so the feet stay flat and put).
+    const FLAME_FULL = 1 / FLAME_REST;
+    type Track = readonly (readonly [number, number])[];
+    const ATTACK: Record<string, Track> = {
+      feet: [[0, 0], [0.36, 0], [0.46, 0.09], [0.84, 0.09], [0.96, 0], [1, 0]],
+      lean: [[0, 0], [0.3, -0.025], [0.36, -0.025], [0.46, 0.02], [0.8, 0.02], [0.92, 0], [1, 0]],
+      hop: [[0, 0], [0.36, 0], [0.41, 0.035], [0.46, 0], [0.84, 0], [0.9, 0.025], [0.96, 0], [1, 0]],
+      tuck: [[0, 0], [0.36, 0], [0.41, 1], [0.46, 0], [0.84, 0], [0.9, 1], [0.96, 0], [1, 0]],
+      hx: [[0, 0], [0.3, -4], [0.36, -4], [0.46, 4], [0.8, 4], [1, 0]],
+      sp: [[0, 0], [0.3, -8], [0.36, -9], [0.46, 9], [0.8, 9], [1, 0]],
+      ch: [[0, 0], [0.3, -7], [0.36, -8], [0.46, 7], [0.8, 7], [1, 0]],
+      nk: [[0, 0], [0.3, -10], [0.36, -11], [0.46, 4], [0.8, 4], [1, 0]],
+      ny: [[0, 0], [0.3, 0.025], [0.36, 0.03], [0.46, 0.05], [0.8, 0.05], [0.94, 0], [1, 0]],
+      nz: [[0, 0], [0.3, -0.02], [0.36, -0.02], [0.46, 0.05], [0.8, 0.05], [0.94, 0], [1, 0]],
+      head: [[0, 0], [0.3, -34], [0.36, -36], [0.46, 0], [0.8, 0], [1, 0]],
+      fill: [[0, 0], [0.3, 1], [0.36, 1], [0.46, -0.25], [0.8, -0.25], [1, 0]],
+      jaw: [[0, 0], [0.3, 0.15], [0.38, 0.3], [0.46, 1], [0.78, 1], [0.88, 0], [1, 0]],
+      fire: [[0, 0], [0.44, 0], [0.52, 1], [0.74, 1], [0.82, 0], [1, 0]],
+      raise: [[0, 0], [0.3, 1], [0.36, 1], [0.46, 0], [1, 0]],
+      flare: [[0, 0], [0.36, 0], [0.46, 1], [0.8, 1], [0.96, 0], [1, 0]],
+      t1: [[0, 0], [0.3, 14], [0.36, 14], [0.46, -8], [0.8, -8], [1, 0]],
+      t3: [[0, 0], [0.3, -20], [0.36, -20], [0.46, 14], [0.8, 14], [1, 0]],
     };
     k.animation('attack', {
-      duration: 1.1,
+      duration: 1.2,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.38, p) * (1 - ease(0.38, 0.5, p));
-        const hit = ease(0.38, 0.5, p) * (1 - ease(0.72, 1, p));
-        const shake = hit * wave(p, 7) * 3;
+        const v = (n: string) => keys(p, ATTACK[n]!);
+        const lean = v('lean');
+        const legA = Math.asin(lean / LEG) * DEG;
+        const [hx, sp, ch, nk] = [v('hx'), v('sp'), v('ch'), v('nk')];
+        const fill = v('fill');
+        const cs: R3 = [1 + 0.08 * fill, 1 + 0.04 * fill, 1 + 0.08 * fill];
+        const fire = v('fire');
+        const flick = (c: number, o: number) => Math.max(0.001, FLAME_FULL * fire * (1 + 0.07 * wave(p, c, o)));
+        const [raise, flare, tuck] = [v('raise'), v('flare'), v('tuck')];
+        const shake = fire * wave(p, 8) * 2.5;
+        const flap = 5 * fire * wave(p, 6);
         return {
-          hips: { move: [0, -0.01 * wind, -0.02 * wind + 0.04 * hit] },
-          spine: { rotate: [-8 * wind + 12 * hit, 0, 0] },
-          chest: { rotate: [-6 * wind + 6 * hit, 0, 0] },
-          head: { rotate: [-16 * wind + 12 * hit, shake, 0] },
-          'wing.L': { rotate: [-10 * wind, 10 * hit, 30 * wind + 18 * hit] },
-          'wing.R': { rotate: [-10 * wind, -10 * hit, -30 * wind - 18 * hit] },
-          'upperarm.L': { rotate: [-30 * wind - 20 * hit, 0, 20 * hit] },
-          'upperarm.R': { rotate: [-30 * wind - 20 * hit, 0, -20 * hit] },
-          tail1: { rotate: [10 * wind - 6 * hit, 0, 0] },
-          tail3: { rotate: [-20 * wind + 16 * hit, 0, 0] },
+          hips: { move: [0, v('hop') - legDrop(LEG, legA), v('feet') + lean], rotate: [hx, 0, 0] },
+          spine: { rotate: [sp, 0, 0] },
+          chest: { rotate: [ch, 0, 0], scale: cs },
+          neck: { rotate: [nk, 0, 0], move: [0, v('ny'), v('nz')], scale: [1 / cs[0], 1 / cs[1], 1 / cs[2]] },
+          head: { rotate: [v('head') - hx - sp - ch - nk, shake, 0] },
+          jaw: { rotate: [35 * v('jaw'), 0, 0] },
+          breath: { scale: [flick(11, 0), flick(11, 0.3), flick(7, 0.6)] },
+          'wing.L': { rotate: [-12 * raise - 4 * flare, 18 * flare, 40 * raise + 16 * flare + flap] },
+          'wing.R': { rotate: [-12 * raise - 4 * flare, -18 * flare, -40 * raise - 16 * flare - flap] },
+          'upperarm.L': { rotate: [-35 * raise - 20 * flare, 0, 12 * raise + 26 * flare] },
+          'upperarm.R': { rotate: [-35 * raise - 20 * flare, 0, -12 * raise - 26 * flare] },
+          'forearm.L': { rotate: [-20 * raise, 0, 0] },
+          'forearm.R': { rotate: [-20 * raise, 0, 0] },
+          'leg.L': { rotate: [legA - hx - 14 * tuck, 0, 0] },
+          'leg.R': { rotate: [legA - hx - 14 * tuck, 0, 0] },
+          'foot.L': { rotate: [-legA + 14 * tuck, 0, 0] },
+          'foot.R': { rotate: [-legA + 14 * tuck, 0, 0] },
+          tail1: { rotate: [v('t1') - hx, 0, 0] },
+          tail2: { rotate: [0, 8 * fire * wave(p, 3), 0] },
+          tail3: { rotate: [v('t3'), 10 * fire * wave(p, 3, 0.2), 0] },
         };
       },
     });
-
-    const { keys } = motion;
-    type R3 = [number, number, number];
-    const DEG = 180 / Math.PI;
 
     // A hit: the head snaps back in a pained roar, the body flinches back on planted feet, the
     // wings flare for a moment, and the tail whips; then a quick return.
@@ -494,6 +616,7 @@ export default defineAsset({
           tail1: { rotate: [10 * s, 14 * whip(0), 0] },
           tail2: { rotate: [0, 20 * whip(0.05), 0] },
           tail3: { rotate: [8 * s, 28 * whip(0.1), 0] },
+          breath: { scale: HIDE },
         };
       },
     });
@@ -537,6 +660,7 @@ export default defineAsset({
           tail1: { rotate: k3([[0, [0, 0, 0]], [0.2, [12, 0, 0]], [0.32, [10, 8, 0]], [0.5, [-4, -10, 0]], [0.72, [0, -22, 0]], [1, [0, -20, 0]]]) },
           tail2: { rotate: k3([[0, [0, 0, 0]], [0.2, [6, 10, 0]], [0.4, [0, -12, 0]], [0.6, [0, 10, 0]], [0.8, [0, -30, 0]], [1, [0, -28, 0]]]) },
           tail3: { rotate: k3([[0, [0, 0, 0]], [0.22, [-10, 16, 0]], [0.45, [0, -18, 0]], [0.65, [0, 16, 0]], [0.85, [0, -34, 0]], [1, [0, -32, 0]]]) },
+          breath: { scale: HIDE },
         };
       },
     });
