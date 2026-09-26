@@ -312,5 +312,104 @@ export default defineAsset({
         };
       },
     });
+
+    // Hit, struck from the front: a yelp. The head jerks up and back (the nose and the grin point
+    // up, the ears sweep back), the body flinches back and a little to its right, and the tail
+    // tucks down; then a quick return. Each upper leg leans by the angle that cancels the body's
+    // shift and each shin turns back by the same angle, so the paws stay flat and planted; the
+    // hips sink by the height the leaning upper legs lose.
+    const { keys } = motion;
+    const DEG = 180 / Math.PI;
+    const UPPER = 0.12; // shoulder or hip joint to knee
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.15, 1], [0.34, 0.85], [1, 0]] as const);
+        const tuck = keys(p, [[0, 0], [0.14, 1], [0.55, 0.75], [1, 0]] as const);
+        const back = 0.028 * h;
+        const side = 0.01 * h;
+        const a = Math.asin(back / UPPER) * DEG;
+        const c = Math.asin(side / UPPER) * DEG;
+        const sink = UPPER - Math.sqrt(UPPER * UPPER - back * back - side * side);
+        const upper = { rotate: [-a, 0, c] as const };
+        const lower = { rotate: [a, 0, -c] as const };
+        return {
+          hips: { move: [-side, 0.005 * h - sink, -back] },
+          neck: { rotate: [-14 * h, -4 * h, 0] },
+          head: { rotate: [-26 * h, -5 * h, 8 * h] },
+          tail: { rotate: [-50 * tuck, 10 * tuck, 0] },
+          'fleg.L': upper,
+          'fleg.R': upper,
+          'bleg.L': upper,
+          'bleg.R': upper,
+          'fshin.L': lower,
+          'fshin.R': lower,
+          'bshin.L': lower,
+          'bshin.R': lower,
+        };
+      },
+    });
+
+    // Death: a yelping recoil and a stagger, then the legs give way: the front legs fold forward
+    // with the forearms flat (the big paws cannot kneel), the hind legs bend, and the chest drops.
+    // Then the wolf rolls onto its right side and lies still, the legs out and the head down.
+    // The head is much wider than the body (the cheek tufts), so the neck turns it part of the way
+    // back up: the head then rests on its lower cheek tuft instead of pushing the tuft into the
+    // ground. The hips lift keeps every part on or above the ground, measured per phase with the
+    // rigid-bone ground probe (scratch tool); zero where the pose already clears the ground.
+    const DEATH_LIFT: readonly (readonly [number, number])[] = [
+      [0, 0], [0.275, 0], [0.3, 0.004], [0.325, 0.008], [0.35, 0.011], [0.375, 0.012], [0.4, 0.011],
+      [0.425, 0.014], [0.45, 0.019], [0.475, 0.025], [0.5, 0.032], [0.525, 0.034], [0.55, 0.036],
+      [0.575, 0.041], [0.6, 0.046], [0.625, 0.04], [0.65, 0.028], [0.675, 0.02], [0.7, 0.016],
+      [0.725, 0.012], [0.75, 0.006], [0.775, 0], [0.8, 0.002], [0.825, 0.009], [0.85, 0.015], [0.875, 0.016], [1, 0.016],
+    ];
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const recoil = keys(p, [[0, 0], [0.06, 1], [0.16, 0.3], [0.26, 0]] as const);
+        const sway = keys(p, [[0.05, 0], [0.14, 1], [0.24, -0.5], [0.34, 0]] as const);
+        const fold = keys(p, [[0.22, 0], [0.36, 1]] as const); // the front legs buckle
+        const drop = keys(p, [[0.26, 0], [0.42, 1], [0.55, 0.9], [0.74, 0]] as const); // onto the chest
+        const crouch = keys(p, [[0.26, 0], [0.42, 1]] as const);
+        const roll = keys(p, [[0.42, 0], [0.74, 1]] as const); // over onto the right side
+        const outL = keys(p, [[0.46, 0], [0.68, 1]] as const); // the upper legs go out first
+        const outR = keys(p, [[0.56, 0], [0.82, 1]] as const); // the lower legs slide out last
+        const tuckR = keys(p, [[0.42, 0], [0.56, 1], [0.74, 0.3], [0.84, 0]] as const); // the lower legs fold under the belly
+        const bounce = keys(p, [[0.72, 0], [0.78, 1], [0.86, 0]] as const);
+        const twitch = Math.max(0, Math.sin((p - 0.86) * Math.PI * 12)) * Math.max(0, Math.min(1, (p - 0.86) / 0.03, (1 - p) / 0.06));
+        const legZ = -5 * sway;
+        const frontLeg = (f: number, out: number, z: number, tw: number) => ({
+          upper: [45 * f - 24 * out - tw, 0, legZ + z] as const,
+          lower: [-100 * f - 8 * out, 0, 0] as const,
+        });
+        // The shin also cancels the hips pitch, so the hind paws stay flat instead of toes-down.
+        const backLeg = (c: number, out: number, z: number, tw: number) => ({
+          upper: [-50 * c + 24 * out + tw, 0, legZ + z] as const,
+          lower: [50 * c + 6 * out - 16 * drop, 0, 0] as const,
+        });
+        const fL = frontLeg(fold * (1 - outL), outL, 14 * outL, 6 * twitch);
+        const fR = frontLeg(fold * (1 - outR), outR, -6 * outR + 35 * tuckR, 0);
+        const bL = backLeg(crouch * (1 - outL), outL, 14 * outL, 5 * twitch);
+        const bR = backLeg(crouch * (1 - outR), outR, -6 * outR + 35 * tuckR, 0);
+        const y = 0.012 * Math.abs(sway) - 0.03 * drop * (1 - roll) - 0.1 * roll + 0.012 * bounce + keys(p, DEATH_LIFT, 'linear');
+        return {
+          hips: { move: [-0.02 * sway - 0.08 * roll, y, -0.03 * recoil], rotate: [16 * drop, 0, 5 * sway + 90 * roll] },
+          spine: { rotate: [0, -6 * sway, 0] },
+          neck: { rotate: [-16 * recoil + 10 * drop + 8 * roll, 0, -32 * roll] },
+          head: { rotate: [-24 * recoil + 6 * drop + 4 * roll, 0, -13 * roll] },
+          tail: { rotate: [-35 * recoil - 45 * roll, 20 * sway, 0] },
+          'fleg.L': { rotate: fL.upper },
+          'fshin.L': { rotate: fL.lower },
+          'fleg.R': { rotate: fR.upper },
+          'fshin.R': { rotate: fR.lower },
+          'bleg.L': { rotate: bL.upper },
+          'bshin.L': { rotate: bL.lower },
+          'bleg.R': { rotate: bR.upper },
+          'bshin.R': { rotate: bR.lower },
+        };
+      },
+    });
   },
 });
