@@ -458,5 +458,87 @@ export default defineAsset({
         };
       },
     });
+
+    const { keys } = motion;
+    type R3 = [number, number, number];
+    const DEG = 180 / Math.PI;
+
+    // A hit: the head snaps back in a pained roar, the body flinches back on planted feet, the
+    // wings flare for a moment, and the tail whips; then a quick return.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const s = keys(p, [[0, 0], [0.16, 1], [0.34, 0.8], [1, 0]]);
+        const flare = keys(p, [[0, 0], [0.14, 1], [0.4, 0.45], [1, 0]]);
+        const whip = (lag: number) => keys(p, [[0, 0], [0.16 + lag, 1], [0.42 + lag, -0.7], [0.7 + lag, 0.25], [1, 0]]);
+        const back = 0.016 * s;
+        const legA = Math.asin(back / LEG) * DEG; // the legs lean forward so the feet stay put
+        const tilt = -4 * s;
+        return {
+          hips: { move: [0, -legDrop(LEG, legA), -back], rotate: [tilt, 0, 0] },
+          spine: { rotate: [-5 * s, 0, 2 * s] },
+          chest: { rotate: [-5 * s, 0, 0] },
+          neck: { rotate: [-7 * s, 0, 0] },
+          head: { rotate: [-16 * s, 7 * s, 5 * s] },
+          'wing.L': { rotate: [-8 * flare, 14 * flare, 36 * flare] },
+          'wing.R': { rotate: [-8 * flare, -14 * flare, -36 * flare] },
+          'upperarm.L': { rotate: [-28 * s, 0, 16 * s] },
+          'upperarm.R': { rotate: [-28 * s, 0, -16 * s] },
+          'forearm.L': { rotate: [-18 * s, 0, 0] },
+          'forearm.R': { rotate: [-18 * s, 0, 0] },
+          'leg.L': { rotate: [-tilt - legA, 0, 0] },
+          'leg.R': { rotate: [-tilt - legA, 0, 0] },
+          'foot.L': { rotate: [legA, 0, 0] },
+          'foot.R': { rotate: [legA, 0, 0] },
+          tail1: { rotate: [10 * s, 14 * whip(0), 0] },
+          tail2: { rotate: [0, 20 * whip(0.05), 0] },
+          tail3: { rotate: [8 * s, 28 * whip(0.1), 0] },
+        };
+      },
+    });
+
+    // Death: it rears up with a last roar, then the legs buckle and it rolls onto its right side.
+    // It ends with the head down, the tail limp, the right wing flat on the floor, and the left
+    // wing over its back.
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const k3 = (list: [number, R3][]) => keys<R3>(p, list);
+        const roar = keys(p, [[0.14, 0], [0.2, 1], [0.3, 1], [0.36, 0]]);
+        const shake = roar * wave(p, 9) * 5;
+        const hipsX = keys(p, [[0, 0], [0.2, -10], [0.32, -8], [0.5, 8], [0.72, 0], [1, 0]]);
+        const roll = keys(p, [[0, 0], [0.34, 0], [0.5, 16], [0.7, 82], [0.79, 72], [0.89, 79], [1, 77]]);
+        const head = k3([[0, [0, 0, 0]], [0.2, [-26, 0, 0]], [0.32, [-24, 0, 0]], [0.5, [14, 0, 4]], [0.72, [14, 0, 2]], [0.82, [12, -4, 2]], [1, [12, -4, -2]]]);
+        return {
+          hips: {
+            move: [
+              keys(p, [[0.34, 0], [0.72, -0.08]]),
+              keys(p, [[0, 0], [0.2, 0.012], [0.5, -0.02], [0.7, 0.04], [1, 0.04]]),
+              keys(p, [[0, 0], [0.2, -0.02], [0.5, 0.02], [1, 0.02]]),
+            ],
+            rotate: [hipsX, 0, roll],
+          },
+          spine: { rotate: [keys(p, [[0, 0], [0.2, -8], [0.32, -6], [0.5, 10], [0.72, 3], [1, 3]]), 0, 0] },
+          chest: { rotate: [keys(p, [[0, 0], [0.2, -7], [0.32, -6], [0.5, 8], [1, 2]]), 0, 0] },
+          neck: { rotate: k3([[0, [0, 0, 0]], [0.2, [-10, 0, 0]], [0.32, [-8, 0, 0]], [0.5, [10, 0, 6]], [0.7, [8, 0, 4]], [0.8, [10, 0, 6]], [0.9, [10, 0, 1]], [1, [10, 0, 3]]]) },
+          head: { rotate: [head[0], head[1] + shake, head[2]] },
+          'wing.L': { rotate: k3([[0, [0, 0, 0]], [0.2, [-10, 10, 46]], [0.32, [-8, 10, 40]], [0.5, [0, -10, 56]], [0.66, [0, 60, 20]], [0.8, [0, 125, -4]], [0.9, [0, 120, -12]], [1, [0, 128, -10]]]) },
+          'wing.R': { rotate: k3([[0, [0, 0, 0]], [0.2, [-10, -10, -46]], [0.32, [-8, -10, -40]], [0.5, [0, -40, -20]], [0.62, [0, -75, 0]], [0.76, [0, -80, 0]], [1, [0, -76, 0]]]) },
+          'upperarm.L': { rotate: k3([[0, [0, 0, 0]], [0.2, [-50, 0, 24]], [0.32, [-44, 0, 20]], [0.5, [-10, 0, 30]], [0.72, [-30, 0, -6]], [1, [-34, 0, -10]]]) },
+          'upperarm.R': { rotate: k3([[0, [0, 0, 0]], [0.2, [-50, 0, -24]], [0.32, [-44, 0, -20]], [0.5, [-10, 0, -10]], [0.72, [-30, 0, 10]], [1, [-34, 0, 12]]]) },
+          'forearm.L': { rotate: k3([[0, [0, 0, 0]], [0.2, [-30, 0, 0]], [0.5, [0, 0, 0]], [1, [10, 0, 0]]]) },
+          'forearm.R': { rotate: k3([[0, [0, 0, 0]], [0.2, [-30, 0, 0]], [0.5, [0, 0, 0]], [1, [10, 0, 0]]]) },
+          'leg.L': { rotate: k3([[0, [0, 0, 0]], [0.2, [10, 0, 0]], [0.32, [8, 0, 0]], [0.5, [-14, 0, 24]], [0.7, [-28, 0, 6]], [1, [-30, 0, 2]]]) },
+          'leg.R': { rotate: k3([[0, [0, 0, 0]], [0.2, [10, 0, 0]], [0.32, [8, 0, 0]], [0.5, [-14, 0, -10]], [0.7, [-28, 0, 18]], [1, [-30, 0, 22]]]) },
+          'foot.L': { rotate: k3([[0, [0, 0, 0]], [0.32, [0, 0, 0]], [0.5, [10, 0, 0]], [1, [36, 0, 0]]]) },
+          'foot.R': { rotate: k3([[0, [0, 0, 0]], [0.32, [0, 0, 0]], [0.5, [10, 0, 0]], [1, [36, 0, 0]]]) },
+          tail1: { rotate: k3([[0, [0, 0, 0]], [0.2, [12, 0, 0]], [0.32, [10, 8, 0]], [0.5, [-4, -10, 0]], [0.72, [0, -22, 0]], [1, [0, -20, 0]]]) },
+          tail2: { rotate: k3([[0, [0, 0, 0]], [0.2, [6, 10, 0]], [0.4, [0, -12, 0]], [0.6, [0, 10, 0]], [0.8, [0, -30, 0]], [1, [0, -28, 0]]]) },
+          tail3: { rotate: k3([[0, [0, 0, 0]], [0.22, [-10, 16, 0]], [0.45, [0, -18, 0]], [0.65, [0, 16, 0]], [0.85, [0, -34, 0]], [1, [0, -32, 0]]]) },
+        };
+      },
+    });
   },
 });
