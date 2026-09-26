@@ -505,26 +505,82 @@ export default defineAsset({
     k.animation('walk', glide(1.1, 18, 4, 3, 10));
     k.animation('run', glide(0.7, 28, 12, 4, 18));
 
-    // A cast: draw the flame hand back and in, then swing it forward to push the flame at the
-    // target. The arm points out along -X, so a turn about Y swings it forward.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    // A cast, solved by targets. The wrist follows keys in the chest's rest frame (reach); the
+    // flame axis (the hand's rest +Y) follows its own keys (orient), and the fingers stay pointed
+    // out to the right, so the palm turns from up to forward about one axis. Gather: the flame
+    // hand pulls back and down to the right hip, and the body leans back and turns the right
+    // shoulder away. Push: the arm thrusts straight, forward and out to the right at chest height,
+    // below and outside the skull, and the flame points at the target. Recovery: back to rest.
+    // The flame shares `hand.R` with the bony hand, so it keeps its size.
+    const { keys, reach, orient } = motion;
+    const unit = (v: V3): V3 => {
+      const l = Math.hypot(v[0], v[1], v[2]);
+      return [v[0] / l, v[1] / l, v[2] / l];
     };
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const FLAME_UP: V3 = [0, 1, 0]; // the flame's axis at rest
+    const FINGERS: V3 = [-1, 0, 0]; // the open hand's fingers at rest
+    const HIP_R: V3 = [-0.215, 0.255, -0.05];
+    const PUSH: V3 = [-0.255, 0.37, 0.115];
     k.animation('attack', {
       duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const draw = ease(0, 0.4, p) * (1 - ease(0.4, 0.5, p));
-        const cast = ease(0.4, 0.52, p) * (1 - ease(0.7, 1, p));
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_R],
+            [0.14, [-0.25, 0.3, 0.03]],
+            [0.3, HIP_R],
+            [0.4, [-0.22, 0.26, -0.055]], // the hold at the hip
+            [0.46, [-0.275, 0.32, 0.03]], // out past the robe
+            [0.52, PUSH],
+            [0.66, [-0.252, 0.366, 0.11]],
+            [1, WRIST_R],
+          ] as const,
+          'spline',
+        );
+        const dir = unit(
+          keys(
+            p,
+            [
+              [0, FLAME_UP],
+              [0.3, [-0.35, 1, -0.25]], // up, out, and back at the hip
+              [0.4, [-0.35, 1, -0.25]],
+              [0.46, [-0.4, 0.75, 0.55]],
+              [0.52, [-0.45, 0.1, 0.89]], // at the target: forward and out to the right
+              [0.66, [-0.42, 0.14, 0.9]],
+              [1, FLAME_UP],
+            ] as const,
+          ),
+        );
+        const fingers = keys(p, [[0, FINGERS], [0.3, [-1, 0, 0.3]], [0.4, [-1, 0, 0.3]], [0.52, [-1, 0.4, 0]], [0.66, [-1, 0.4, 0]], [1, FINGERS]] as const);
+        // The elbow bends back and out at the hip, down and out in the thrust.
+        const pole = keys(p, [[0, ELBOW_R], [0.3, [-0.35, 0.3, -0.25]], [0.4, [-0.35, 0.3, -0.25]], [0.52, [-0.35, 0.2, 0.05]], [0.66, [-0.35, 0.2, 0.05]], [1, ELBOW_R]] as const);
+        const arm = reach(ARM_R, wrist, pole);
+        const hand = orient([arm.upper, arm.lower], { dir: FLAME_UP, up: FINGERS }, { dir, up: fingers });
+        const twist = keys(p, [[0, 0], [0.3, -14], [0.4, -15], [0.52, 12], [0.66, 10], [1, 0]] as const);
+        const lean = keys(p, [[0, 0], [0.3, -6], [0.4, -7], [0.52, 9], [0.66, 8], [1, 0]] as const);
+        const fwd = keys(p, [[0, 0], [0.3, -0.012], [0.4, -0.014], [0.52, 0.035], [0.66, 0.03], [1, 0]] as const);
+        const look = keys(p, [[0, 0], [0.3, 6], [0.4, 6], [0.52, -18], [0.66, -16], [1, 0]] as const);
+        const thrust = keys(p, [[0, 0], [0.4, 0], [0.52, 1], [0.66, 1], [1, 0]] as const);
+        const gather = keys(p, [[0, 0], [0.3, 1], [0.4, 1], [0.52, 0]] as const);
+        // The feet stay planted: the legs tilt under the hips as the hips move.
+        const legA = (Math.atan2(fwd, LEG) * 180) / Math.PI;
         return {
-          hips: { move: [0, -0.006 * draw, -0.01 * draw + 0.045 * cast], rotate: [0, 6 * draw - 6 * cast, 0] },
-          spine: { rotate: [-4 * draw + 12 * cast, 0, 0] },
-          chest: { rotate: [0, 6 * draw - 8 * cast, 0] },
-          head: { rotate: [-6 * draw + 6 * cast, 0, 0] },
-          lantern: { rotate: [10 * cast, 0, 12 * wave(p, 3) * cast] },
-          'upperarm.R': { rotate: [-18 * cast, -25 * draw + 55 * cast, 12 * draw] },
-          'forearm.R': { rotate: [0, -20 * draw + 45 * cast, 0] },
+          hips: { move: [0, -legDrop(LEG, legA), fwd] },
+          spine: { rotate: [lean, twist * 0.4, 0] },
+          chest: { rotate: [0, twist * 0.6, 0] },
+          head: { rotate: [-0.7 * lean, look, 0] },
+          lantern: { rotate: [8 * thrust - 4 * gather, 0, 10 * wave(p, 3) * thrust] },
+          'upperarm.L': { rotate: [8 * thrust - 4 * gather, 0, 0] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          'leg.L': { rotate: [legA, 0, 0] },
+          'leg.R': { rotate: [legA, 0, 0] },
+          'foot.L': { rotate: [-legA, 0, 0] },
+          'foot.R': { rotate: [-legA, 0, 0] },
         };
       },
     });
