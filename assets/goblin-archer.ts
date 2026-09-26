@@ -18,11 +18,14 @@ import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js
  *   accents; brass studs and buckles #c8a050.
  * Value plan: the dark hood frames the light face (focal point); the red fletching over the
  *   shoulder is the second accent; the dark pants and boots ground the figure.
- * Bodies: skin, hood, capelet, jerkin, leather, bracers, brass, quiver, arrows, pants, boots,
- *   bow, bowstring.
+ * Bodies: skin, hood, capelet, jerkin, leather, bracers, brass, quiver, arrows, nocked-arrow,
+ *   pants, boots, bow, bowstring (two halves).
  * Rig: the warrior's skeleton (ears, no scarf knot); the bow is rigid on `bowgrip`, a child of
- *   `hand.L` that only the death clip moves (the bow drops); the quiver is on `chest`.
- *   Clips: idle, walk, run, attack (raise the bow, draw, loose), hit, death.
+ *   `hand.L` that only the death clip moves (the bow drops); the quiver is on `chest`. The string
+ *   is in two halves on `string.top` and `string.bot` (children of `bowgrip`), so the draw pulls
+ *   its middle back. The shot arrow is on `arrow` (in the right fist); its mesh rests in the
+ *   quiver, and every clip but the shot scales it to nothing.
+ *   Clips: idle, walk, run, attack (nock, draw, loose), hit, death.
  */
 
 const C = {
@@ -56,6 +59,7 @@ const C = {
   bow: '#7a4a28',
   grip: '#3e2618',
   string: '#e8dcc0',
+  arrowhead: '#8a8e94',
 };
 
 type V3 = readonly [number, number, number];
@@ -72,6 +76,13 @@ const norm = (a: V3): V3 => {
   const l = Math.hypot(a[0], a[1], a[2]);
   return [a[0] / l, a[1] / l, a[2] / l];
 };
+const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const scl = (a: V3, s: number): V3 => [a[0] * s, a[1] * s, a[2] * s];
+const len = (a: V3) => Math.hypot(a[0], a[1], a[2]);
+const DEG = Math.PI / 180;
+const rotXv = (v: V3, d: number): V3 => [v[0], v[1] * Math.cos(d * DEG) - v[2] * Math.sin(d * DEG), v[1] * Math.sin(d * DEG) + v[2] * Math.cos(d * DEG)];
+const rotYv = (v: V3, d: number): V3 => [v[0] * Math.cos(d * DEG) + v[2] * Math.sin(d * DEG), v[1], -v[0] * Math.sin(d * DEG) + v[2] * Math.cos(d * DEG)];
+const rotZv = (v: V3, d: number): V3 => [v[0] * Math.cos(d * DEG) - v[1] * Math.sin(d * DEG), v[0] * Math.sin(d * DEG) + v[1] * Math.cos(d * DEG), v[2]];
 
 // Joints. The right arm hangs relaxed; the left (bow) arm is held out, so the bow clears the
 // capelet, the boot, and the ground.
@@ -84,6 +95,25 @@ const HIP: V3 = [0.075, 0.2, 0];
 const ANKLE: V3 = [0.108, 0.075, 0];
 /** The bow's grip in the left fist: the pivot of the `bowgrip` bone. */
 const GRIP: V3 = [WRIST_L[0] + 0.008, WRIST_L[1] - 0.044, WRIST_L[2] + 0.004];
+// The recurve bow in the left fist (see bowPose): limb lengths and points of the bow frame in the
+// rest pose.
+const UPPER = 0.3;
+const LOWER = 0.2;
+const BOW_TILT = -8;
+const bowDir = (d: V3) => rotZv(rotYv(d, 100), BOW_TILT);
+const bowPoint = (p: V3) => add(bowDir(p), GRIP);
+const NOCK_TOP = bowPoint([0, 0.9 * UPPER, -0.072]);
+const NOCK_BOT = bowPoint([0, -0.9 * LOWER, -0.072]);
+const NOCK_MID = bowPoint([0, 0.035, -0.072]); // the nocking point, level with the top of the fist
+const ARROW_ON_BOW = bowPoint([0, 0.035, 0]); // where the arrow lies on the bow hand
+// The quiver's pose on the back (see quiverPose); the shot arrow rests in it: its nock and its
+// direction (nock to head).
+const quiverDir = (d: V3) => rotZv(rotXv(d, -6), 46);
+const quiverPoint = (p: V3) => add(quiverDir(p), [0.07, 0.2, -0.152]);
+const ARROW_NOCK = quiverPoint([0, 0.43, 0]);
+const ARROW_DIR = quiverDir([0, -1, 0]);
+// The right fist's curled fingers, where they hook the string.
+const PINCH: V3 = [WRIST_R[0] + 0.008, WRIST_R[1] - 0.053, WRIST_R[2] + 0.045];
 
 /** A fist hanging from the wrist `w`; `s` mirrors it for the right hand. Its grip hole runs along Z. */
 const fistAt = (w: V3, s: 1 | -1) => {
@@ -117,9 +147,14 @@ export default defineAsset({
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
       bowgrip: { parent: 'hand.L', at: GRIP },
+      // The bowstring in two halves from the nocks, so the draw pulls its middle back.
+      'string.top': { parent: 'bowgrip', at: NOCK_TOP },
+      'string.bot': { parent: 'bowgrip', at: NOCK_BOT },
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
+      // The shot arrow, in the right hand's fingers; its mesh rests in the quiver.
+      arrow: { parent: 'hand.R', at: PINCH },
       'leg.L': { parent: 'hips', at: HIP },
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
@@ -441,6 +476,14 @@ export default defineAsset({
       }),
     );
     k.body('arrows', quiverPose(arrows).bone('chest'), { color: C.shaft, roughness: 0.7, detail: 0.004 });
+    // The arrow for the shot, in the middle of the quiver (quiver frame: nock up at 0.43, the
+    // head down in the tube). Its bone hides it in every clip but the shot.
+    const shotArrow = sdf.union(
+      sdf.capsule([0, 0.17, 0], [0, 0.43, 0], 0.006),
+      sdf.cone([0, 0.176, 0], [0, 0.13, 0], 0.013, 0.002).paint(C.arrowhead),
+      fletching.at(0, 0.358, 0).paint(C.fletch),
+    );
+    k.body('nocked-arrow', quiverPose(shotArrow), { color: C.shaft, roughness: 0.7, detail: 0.0035, bone: 'arrow' });
 
     // ------------------------------------------------------------------ pants and boots (the warrior's)
     const pants = sdf.smoothUnion(
@@ -488,23 +531,18 @@ export default defineAsset({
         ],
         0.01,
       );
-    const UPPER = 0.3;
-    const LOWER = 0.2;
     const bowLocal = sdf.union(limb(UPPER, 1), limb(LOWER, -1)).paintWhere(sdf.box([0.1, 0.075, 0.1]), C.grip);
-    const nockTop: V3 = [0, 0.9 * UPPER, -0.072];
-    const nockBottom: V3 = [0, -0.9 * LOWER, -0.072];
     // The back of the bow faces out (+X), so the front view shows the whole curve.
-    const bowPose = (s: sdf.Shape) => s.rotateY(100).rotateZ(-8).at(...GRIP);
+    const bowPose = (s: sdf.Shape) => s.rotateY(100).rotateZ(BOW_TILT).at(...GRIP);
     k.body('bow', bowPose(bowLocal), { color: C.bow, roughness: 0.55, detail: 0.004, bone: 'bowgrip' });
-    k.body('bowstring', bowPose(sdf.capsule(nockTop, nockBottom, 0.0035)), {
-      color: C.string,
-      roughness: 0.8,
-      detail: 0.003,
-      bone: 'bowgrip',
-    });
+    // The string in two halves that meet at the nocking point, each on its own bone.
+    const stringLook = { color: C.string, roughness: 0.8, detail: 0.003 };
+    k.body('bowstring', sdf.capsule(NOCK_TOP, NOCK_MID, 0.0035), { ...stringLook, bone: 'string.top' });
+    k.body('bowstring-low', sdf.capsule(NOCK_BOT, NOCK_MID, 0.0035), { ...stringLook, bone: 'string.bot' });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
+    const { wave, bump, legDrop, keys, reach, orient, follow, quat, euler } = motion;
+    const HIDE: V3 = [0.001, 0.001, 0.001]; // the shot arrow's scale outside the shot
     const LEG = 0.19;
 
     k.animation('idle', {
@@ -519,6 +557,7 @@ export default defineAsset({
         'upperarm.L': { rotate: [1.5 * wave(p, 1, 0.1), 0, 2 * bump(p)] },
         'upperarm.R': { rotate: [2 * wave(p, 1, 0.1), 0, -3 * bump(p)] },
         'forearm.R': { rotate: [-5 * bump(p), 0, 0] },
+        arrow: { scale: HIDE },
       }),
     });
 
@@ -558,42 +597,201 @@ export default defineAsset({
           'forearm.L': { rotate: [-armSwing * 0.2, 0, 0] as const },
           'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
           'hand.L': { rotate: [0, 0, -(lift + tiltOut)] as const },
+          arrow: { scale: HIDE },
         };
       },
     });
     k.animation('walk', stride(0.9, 26, 28, 3, 0, 10, 8));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03, 16, 6));
 
-    // A shot: turn side-on and raise the bow (aim), pull the right hand back to the cheek (draw),
-    // hold, loose with a snap of the right hand and a kick of the bow, then settle back.
+    // ------------------------------------------------------------------ attack: a bow shot, solved by targets
+    // Plan (in the chest's rest frame): the goblin turns side-on, raises the bow in front, brings
+    // the right hand up and nocks the arrow, then pushes the bow out at the target while the right
+    // hand draws back along the arrow line to the anchor under the right jaw. A short hold, the
+    // release: the string snaps forward, the arrow is gone, the right hand flicks back and out,
+    // and the bow arm follows through. Then back to rest.
+    // The head and the hood are big and the arms short: the anchor is under the jaw, in front of
+    // the hood's hem, and the bow cants its top out to the goblin's right, clear of the eyes.
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const CHAIN_L = [SHOULDER, ELBOW_L, WRIST_L] as const;
+    const CHAIN_R = [mx(SHOULDER), ELBOW_R, WRIST_R] as const;
+    const Z3: V3 = [0, 0, 0];
+    const chainQ = (rots: readonly V3[]) => {
+      const q = new THREE.Quaternion();
+      for (const r of rots) q.multiply(quat(r));
+      return q;
+    };
+    const turnBy = (q: THREE.Quaternion, v: V3): V3 => {
+      const w = new THREE.Vector3(v[0], v[1], v[2]).applyQuaternion(q);
+      return [w.x, w.y, w.z];
+    };
+    const slerpRot = (a: V3, b: V3, t: number): V3 => euler(quat(a).slerp(quat(b), t));
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
+
+    const TURN = 55; // the body turns this far to its right, so the bow side faces the target
+    const toChest = (w: V3): V3 => rotYv(w, TURN);
+    const AIM = toChest(norm([0.2, 0.03, 1])); // at the target in front, a little to the bow side
+    const ANCHOR: V3 = [-0.022, 0.43, 0.205]; // the pinch at full draw: under the right jaw, below the hood's hem
+    const BOW_AT = add(add(ANCHOR, scl(AIM, 0.15)), [0, -0.022, 0]); // the grip at full draw
+    const BOW_NOCK = add(BOW_AT, [-0.006, 0, -0.008]); // the grip while the arrow is nocked
+    const BOW_REST = { dir: bowDir([0, 1, 0]), up: bowDir([0, 0, 1]) }; // the limbs, the back of the bow
+    const CANT = 0.5; // the bow top leans out to the goblin's right by about 27 degrees
+    const HAND_R_REST = { dir: norm(sub(WRIST_R, ELBOW_R)), up: [0, 0, 1] as V3 };
+    // The draw hand: the forearm rises along the arrow line to the fist, so the thick bracer stays
+    // under the hood's hem; the palm faces the neck.
+    const HAND_R_DRAW = { dir: norm(add(AIM, [0, 0.45, 0])), up: norm([AIM[2], 0, -AIM[0]]) };
+    const OFF_R = sub(PINCH, WRIST_R);
+    const OFF_DRAW = turnBy(quat(orient([], HAND_R_REST, HAND_R_DRAW)), OFF_R);
+    // Elbow poles: at rest (in the rest bend plane, so the solved arm matches the rest pose) and in the shot.
+    const POLE_L_REST: V3 = [0.212, 0.248, -0.162];
+    const POLE_L_AIM: V3 = [0.37, 0.24, -0.12];
+    const POLE_R_REST: V3 = [-0.37, 0.417, -0.058];
+    const POLE_R_DRAW: V3 = [-0.45, 0.4, -0.04];
+
+    // The arrow bone's pose that puts the arrow's nock at `nock`, pointing along `dir`, for a posed
+    // right arm (`rots`: upper arm, forearm, hand; `sh`: the shoulder's move).
+    const ARROW_UP: V3 = [0, 1, 0];
+    const arrowPose = (rots: readonly V3[], sh: V3, nock: V3, dir: V3) => {
+      const q = chainQ(rots);
+      const pivot = add(follow(CHAIN_R, rots, PINCH), sh);
+      const rw = quat(orient([], { dir: ARROW_DIR, up: ARROW_UP }, { dir, up: ARROW_UP }));
+      const at = sub(nock, turnBy(rw, sub(ARROW_NOCK, PINCH)));
+      const inv = q.clone().invert();
+      return { move: turnBy(inv, sub(at, pivot)), rotate: euler(inv.multiply(rw)) };
+    };
+    // The bow arm: solve the wrist so the grip lands at `grip`, with the bow turned to `want`.
+    const bowArm = (grip: V3, want: { dir: V3; up: V3 }, sh: V3, pole: V3) => {
+      let wrist = sub(grip, sub(GRIP, WRIST_L));
+      let arm = reach(ARM_L, sub(wrist, sh), pole);
+      let hand: V3 = Z3;
+      for (let i = 0; i < 3; i++) {
+        arm = reach(ARM_L, sub(wrist, sh), pole);
+        hand = orient([arm.upper, arm.lower], BOW_REST, want);
+        const g = add(follow(CHAIN_L, [arm.upper, arm.lower, hand], GRIP), sh);
+        wrist = add(wrist, sub(grip, g));
+      }
+      return { arm, hand };
+    };
+
+    const RELEASE = 0.58;
     k.animation('attack', {
       duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const aim = ease(0, 0.28, p) * (1 - ease(0.78, 1, p));
-        const draw = ease(0.28, 0.55, p) * (1 - ease(0.64, 0.68, p));
-        const loose = ease(0.64, 0.69, p) * (1 - ease(0.72, 1, p));
+        const turn = keys(p, [[0, 0], [0.2, 1], [0.78, 1], [1, 0]] as const);
+        const aim = keys(p, [[0, 0], [0.22, 1], [0.76, 1], [0.97, 0]] as const);
+        const drawn = keys(p, [[0.28, 0], [0.46, 1], [RELEASE, 1], [RELEASE + 0.03, 0]] as const);
+        const kick = p >= RELEASE ? Math.exp(-(p - RELEASE) * 30) : 0;
+        const tremble = p > 0.46 && p < RELEASE ? Math.sin(((p - 0.46) / (RELEASE - 0.46)) * Math.PI * 4) : 0;
+        // Shoulders: the bow shoulder pushes toward the target; the string shoulder comes forward
+        // a little, so the short arm reaches the string.
+        const shL = scl([0, 0.012, 0.06], aim);
+        const shR = keys(p, [[0, Z3], [0.22, [0.035, 0.012, 0.045]], [0.46, [0.02, 0.008, 0.04]], [0.8, [0.02, 0.008, 0.04]], [1, Z3]] as const);
+
+        // ---- the bow arm: up in front, the nock, the push at the target, the follow-through, back.
+        const bowAt = keys(p, [
+          [0, GRIP],
+          [0.12, add(GRIP, [0, 0.08, 0.1])],
+          [0.22, BOW_NOCK],
+          [0.28, BOW_NOCK],
+          [0.46, BOW_AT],
+          [RELEASE, BOW_AT],
+          [RELEASE + 0.06, add(BOW_AT, [0.02, -0.006, 0.03])],
+          [0.76, add(BOW_AT, [0.012, -0.014, 0.02])],
+          [0.88, add(GRIP, [0.01, 0.07, 0.1])],
+          [1, GRIP],
+        ] as const);
+        // The bow cants its top out to the goblin's right (a roll about the arrow line), so the
+        // upper limb passes outside the right eye. After the release the bow tips forward in the
+        // open hand.
+        const side = norm([-AIM[2], 0, AIM[0]]);
+        const lean = norm(add(add([0, 1, 0], scl(side, CANT)), scl(AIM, 0.15 * kick)));
+        const r = ease(0, 0.12, p) * (1 - ease(0.86, 1, p));
+        const bowWant = { dir: norm(lerp(BOW_REST.dir, lean, r)), up: norm(lerp(BOW_REST.up, AIM, r)) };
+        const poleL = keys(p, [[0, POLE_L_REST], [0.2, POLE_L_AIM], [0.8, POLE_L_AIM], [1, POLE_L_REST]] as const);
+        const bow = bowArm(bowAt, bowWant, shL, poleL);
+        const rotsL = [bow.arm.upper, bow.arm.lower, bow.hand] as const;
+        const onBow = (pt: V3) => add(follow(CHAIN_L, rotsL, pt), shL);
+        const nockNow = onBow(NOCK_MID);
+        const restOnBow = onBow(ARROW_ON_BOW);
+        const toBow = norm(sub(restOnBow, nockNow));
+
+        // ---- the string hand: up in front, the nock, the draw to the anchor, the hold, the
+        // release flick back and out past the jaw, back to rest.
+        const pinchAt = keys(p, [
+          [0, PINCH],
+          [0.12, [-0.09, 0.35, 0.24]],
+          [0.22, nockNow],
+          [0.28, nockNow],
+          [0.46, ANCHOR],
+          [RELEASE, add(ANCHOR, scl(AIM, -0.004))],
+          [RELEASE + 0.05, add(ANCHOR, [-0.075, 0.012, -0.01])],
+          [0.78, add(ANCHOR, [-0.085, -0.03, -0.01])],
+          [1, PINCH],
+        ] as const);
+        const onString = keys(p, [[0, 0], [0.12, 0.4], [0.22, 1], [0.7, 1], [0.92, 0]] as const);
+        const wristR = sub(pinchAt, add(scl(OFF_R, 1 - onString), scl(OFF_DRAW, onString)));
+        const poleR = keys(p, [[0, POLE_R_REST], [0.2, POLE_R_DRAW], [0.82, POLE_R_DRAW], [1, POLE_R_REST]] as const);
+        const armR = reach(ARM_R, sub(wristR, shR), poleR);
+        const handR = slerpRot(Z3, orient([armR.upper, armR.lower], HAND_R_REST, HAND_R_DRAW), onString);
+        const rotsR = [armR.upper, armR.lower, handR] as const;
+        const pinchNow = add(follow(CHAIN_R, rotsR, PINCH), shR);
+
+        // ---- the string: its middle follows the pinch from the nock to the release, then snaps
+        // forward (a small overshoot) and settles straight. Each half turns from its nock toward
+        // the middle and stretches along its rest axis to the new length.
+        const pulled = p >= 0.22 && p < RELEASE;
+        const mid = pulled ? pinchNow : add(nockNow, scl(toBow, 0.012 * kick));
+        const qL = chainQ(rotsL);
+        const string = (nock: V3) => {
+          const n = onBow(nock);
+          const v = sub(NOCK_MID, nock);
+          const l = len(sub(mid, n));
+          const sy = Math.sqrt(Math.max(1e-6, l * l - v[0] * v[0] - v[2] * v[2])) / Math.abs(v[1]);
+          return {
+            rotate: orient(rotsL, { dir: norm([v[0], v[1] * sy, v[2]]), up: [0, 0, 1] }, { dir: norm(sub(mid, n)), up: turnBy(qL, [0, 0, 1]) }),
+            scale: [1, sy, 1] as V3,
+          };
+        };
+
+        // ---- the arrow: in the fingers from the nock to the release, pointing at the bow hand;
+        // at the release it leaves along the arrow line and is gone.
+        const flown = p >= RELEASE ? Math.min(1, (p - RELEASE) / 0.04) : 0;
+        const shown = p >= 0.2 && p < RELEASE + 0.04;
+        const arrow = !shown
+          ? { move: Z3, rotate: Z3 }
+          : p < RELEASE
+            ? arrowPose(rotsR, shR, pinchNow, norm(sub(restOnBow, pinchNow)))
+            : arrowPose(rotsR, shR, add(nockNow, scl(toBow, 0.6 * flown)), toBow);
+
         return {
-          hips: { move: [0, -0.006 * aim, 0], rotate: [0, -40 * aim, 0] },
-          spine: { rotate: [0, -12 * aim, 0] },
-          chest: { rotate: [-3 * aim - 4 * loose, -6 * aim, 0] },
-          // The head keeps looking at the target while the body turns away.
-          head: { rotate: [-4 * draw, 52 * aim, 0] },
-          'ear.L': { rotate: [0, 12 * loose - 4 * draw, -6 * draw + 8 * loose] },
-          'ear.R': { rotate: [0, -12 * loose + 4 * draw, 6 * draw - 8 * loose] },
-          // The bow arm swings out to point at the target; the hand keeps the bow upright.
-          'upperarm.L': { rotate: [0, 0, 60 * aim + 6 * loose] },
-          'forearm.L': { rotate: [12 * aim, 0, 0] },
-          'hand.L': { rotate: [0, 0, -56 * aim - 10 * loose] },
-          // The right elbow drops a little at the draw, so the bracer stays clear of the hood.
-          'upperarm.R': { rotate: [-78 * aim + 6 * draw, 0, 30 * aim - 20 * draw - 18 * loose] },
-          'forearm.R': { rotate: [-40 * aim - 55 * draw + 45 * loose, 0, 0] },
-          'leg.L': { rotate: [-8 * aim, 0, 6 * aim] },
-          'leg.R': { rotate: [8 * aim, 0, -4 * aim] },
+          hips: { move: [0, -0.003 * turn, 0], rotate: [0, -35 * turn, 0] },
+          spine: { rotate: [0, -12 * turn, 0] },
+          chest: { rotate: [-2 * aim + 0.4 * tremble - 3 * kick, -8 * turn, 0] },
+          // The head turns back to the target and lifts the chin a little over the string.
+          neck: { rotate: [0, 15 * turn, 0] },
+          head: { rotate: [-4 * aim, 32 * turn, 0] },
+          // The ears lie back in the draw and flick at the release.
+          'ear.L': { rotate: [0, 12 * kick - 5 * drawn, -6 * drawn + 9 * kick] },
+          'ear.R': { rotate: [0, -12 * kick + 5 * drawn, 6 * drawn - 9 * kick] },
+          'upperarm.L': { move: shL, rotate: bow.arm.upper },
+          'forearm.L': { rotate: bow.arm.lower },
+          'hand.L': { rotate: bow.hand },
+          'upperarm.R': { move: shR, rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
+          'string.top': string(NOCK_TOP),
+          'string.bot': string(NOCK_BOT),
+          arrow: { ...arrow, scale: shown ? ([1, 1, 1] as V3) : HIDE },
+          // A braced stance: the feet turn a little toward the target, the rear leg back.
+          'leg.L': { rotate: [-5 * turn, 25 * turn, 5 * turn] },
+          'leg.R': { rotate: [4 * turn, 15 * turn, -4 * turn] },
+          'foot.L': { rotate: [5 * turn, 10 * turn, -5 * turn] },
+          'foot.R': { rotate: [-4 * turn, 8 * turn, 4 * turn] },
         };
       },
     });
@@ -602,8 +800,6 @@ export default defineAsset({
     // The goblin warrior's hit. The head and the chest snap back and the hips give way: the left
     // foot stays planted and the right foot steps back, then all returns quickly. The bow arm
     // swings a little out and the hand tilts the bow out, clear of the hood. The ears flop late.
-    const { keys, reach, orient, follow, quat, euler } = motion;
-    const DEG = Math.PI / 180;
     const SHIN = 0.125; // hip joint to ankle joint, in the Y-Z plane
     const HEEL = 0.077; // the back of the boot, behind the ankle's ground point
     /** The leg angle (degrees) that keeps a foot on its rest spot when the hips move `back` meters. */
@@ -634,6 +830,7 @@ export default defineAsset({
           'hand.L': { rotate: [0, 0, -20 * h] },
           'upperarm.R': { rotate: [-6 * h, 0, -8 * h] },
           'forearm.R': { rotate: [-6 * h, 0, 0] },
+          arrow: { scale: HIDE },
         };
       },
     });
@@ -647,8 +844,6 @@ export default defineAsset({
     const LIE = 84; // the hips' final tilt back, degrees
     const LIE_Y = 0.17; // the hips' height when the goblin lies on its back
     const TRUNK: readonly V3[] = [[0, 0.2, 0], [0, 0.27, 0], [0, 0.35, 0]]; // hips, spine, chest pivots
-    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
-    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
     const BOW_CHAIN: readonly V3[] = [...TRUNK, SHOULDER, ELBOW_L, WRIST_L];
     // The bow's rest frame in the world (see `bowPose`): the limbs along local +Y, the flat side
     // along local +X. On the floor the flat side faces up, so the bow lies at its limb radius.
@@ -715,6 +910,7 @@ export default defineAsset({
           'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
           'foot.L': { rotate: [lean, 20 * land, 0] },
           'foot.R': { rotate: [lean, -20 * land, 0] },
+          arrow: { scale: HIDE },
         };
       },
     });
