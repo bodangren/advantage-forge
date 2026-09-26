@@ -16,7 +16,7 @@ import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
  *   ring buckle are the second contrast; the cape is the darkest large mass.
  * Bodies: skin, hair, hood, mantle, cape, tunic, sleeves, leather, gold, pants, wraps, boots,
  *   sheaths (empty, at the hips), and a dagger and a grip in each hand (reverse grip).
- * Rig: chibi skeleton plus a `cloak` bone for the cape; clips idle, walk, run.
+ * Rig: chibi skeleton plus a `cloak` bone for the cape; clips idle, walk, run, attack.
  */
 
 const C = {
@@ -541,5 +541,124 @@ export default defineAsset({
     });
     k.animation('walk', stride(0.9, 26, 28, 3, 0, 6));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
+
+    // Attack: a fast reverse-grip double slash, solved by targets. Each wrist follows keys in the
+    // chest's rest frame (reach); each blade follows its own direction keys (orient), and edgeUp
+    // turns the flat so the edge leads. She coils low to her right with both fists at the hips;
+    // the torso unwinds and carries the right fist across the front from right to left, the blade
+    // trailing flat with the edge out; the torso winds back into the left fist's mirror slash while
+    // the right fist returns to its hip; the left foot steps in; then back to rest. The paths stay
+    // at chest height, in front of the mantle, beside the cape, and far below the hood.
+    const { keys, reach, orient, edgeUp } = motion;
+    type V3 = readonly [number, number, number];
+    const norm = (a: V3): V3 => {
+      const l = Math.hypot(a[0], a[1], a[2]);
+      return [a[0] / l, a[1] / l, a[2] / l];
+    };
+    // The blade's rest direction (local +Y) and its flat's normal (local +Z), turned as inHand turns them.
+    const turn = (v: V3, axis: 0 | 1 | 2, deg: number): V3 => {
+      const c = Math.cos((deg * Math.PI) / 180);
+      const s = Math.sin((deg * Math.PI) / 180);
+      const [x, y, z] = v;
+      if (axis === 0) return [x, y * c - z * s, y * s + z * c];
+      if (axis === 1) return [x * c + z * s, y, -x * s + z * c];
+      return [x * c - y * s, x * s + y * c, z];
+    };
+    const inHandDir = (v: V3, side: 1 | -1) => turn(turn(turn(v, 1, GRIP.roll * side), 2, -GRIP.lean * side), 0, -GRIP.back);
+    const SLASH_UP = norm([0, 1, 0.3]); // in a slash the flat faces up, so one edge faces out
+    // One arm's part of the combo. The keys are written for the right arm (x < 0); the left arm
+    // uses their mirror. `s` is the phase where this arm's slash starts.
+    const slashArm = (side: 1 | -1, s: number) => {
+      const m = (v: V3): V3 => [side === 1 ? -v[0] : v[0], v[1], v[2]];
+      const tag = side === 1 ? 'L' : 'R';
+      const chain = { root: m(mx(SHOULDER)), mid: m(mx(ELBOW)), end: m(mx(WRIST)) };
+      const rest = { dir: inHandDir([0, 1, 0], side), up: inHandDir([0, 0, 1], side) };
+      const wristKeys: [number, V3][] = [
+        [0, chain.end],
+        [0.22, m([-0.21, 0.255, 0.005])], // drawn back at the hip
+        [s, m([-0.215, 0.26, 0])],
+        [s + 0.04, m([-0.235, 0.3, 0.075])], // out at the side, rising
+        [s + 0.08, m([-0.14, 0.33, 0.155])], // in front, chest high
+        [s + 0.12, m([-0.06, 0.34, 0.15])], // across the front
+        [s + 0.16, m([-0.09, 0.33, 0.15])],
+        [s + 0.19, m([-0.16, 0.27, 0.12])], // drops below the mantle's hem on the way back
+        [s + 0.23, m([-0.21, 0.27, 0.03])], // back at the hip, clear of the other arm
+        [0.66, m([-0.21, 0.26, 0.025])],
+        [1, chain.end],
+      ];
+      const bladeKeys: [number, V3][] = [
+        [0, rest.dir],
+        [0.22, m([-0.72, 0.6, -0.35])], // up and back beside the forearm
+        [s, m([-0.74, 0.56, -0.37])],
+        [s + 0.04, m([-0.9, 0.15, -0.42])], // lies down flat, trailing the fist
+        [s + 0.08, m([-0.97, 0, -0.22])],
+        [s + 0.12, m([-0.95, -0.02, 0.2])],
+        [s + 0.16, m([-0.9, 0, 0.35])], // the fist stops and the blade swings on a little
+        [s + 0.19, m([-0.92, 0.12, 0.2])],
+        [s + 0.23, m([-0.78, 0.45, -0.4])],
+        [0.66, m([-0.72, 0.6, -0.33])],
+        [1, rest.dir],
+      ];
+      const upKeys: [number, V3][] = [
+        [0, rest.up],
+        [s, rest.up],
+        [s + 0.05, SLASH_UP],
+        [s + 0.16, SLASH_UP],
+        [s + 0.24, rest.up],
+        [1, rest.up],
+      ];
+      const poleKeys: [number, V3][] = [
+        [0, m([-0.58, 0.6, -0.015])], // the rest bend plane
+        [0.22, m([-0.6, 0.25, -0.3])], // elbow out and back
+        [s, m([-0.6, 0.25, -0.3])],
+        [s + 0.06, m([-0.55, 0.45, -0.05])], // elbow out to the side for the sweep
+        [s + 0.16, m([-0.55, 0.45, -0.05])],
+        [s + 0.22, m([-0.6, 0.25, -0.3])],
+        [0.66, m([-0.6, 0.25, -0.3])],
+        [1, m([-0.58, 0.6, -0.015])],
+      ];
+      const bladeAt = (q: number) => norm(keys(q, bladeKeys, 'spline'));
+      return (p: number) => {
+        const arm = reach(chain, keys(p, wristKeys, 'spline'), keys(p, poleKeys));
+        const up = edgeUp(bladeAt, p, keys(p, upKeys));
+        const hand = orient([arm.upper, arm.lower], rest, { dir: bladeAt(p), up });
+        return {
+          [`upperarm.${tag}`]: { rotate: arm.upper },
+          [`forearm.${tag}`]: { rotate: arm.lower },
+          [`hand.${tag}`]: { rotate: hand },
+        };
+      };
+    };
+    const armR = slashArm(-1, 0.27);
+    const armL = slashArm(1, 0.38);
+    const rad = Math.PI / 180;
+    k.animation('attack', {
+      duration: 0.85,
+      loop: false,
+      pose: (_t, p) => {
+        // +Y turns the front toward her left: coil right, unwind left (slash 1), wind right (slash 2).
+        const hipsY = keys(p, [[0, 0], [0.22, -12], [0.27, -12], [0.39, 14], [0.41, 14], [0.5, -12], [0.58, -10], [1, 0]] as const);
+        const chestY = keys(p, [[0, 0], [0.22, -20], [0.27, -20], [0.38, 22], [0.41, 22], [0.49, -22], [0.58, -18], [1, 0]] as const);
+        const lean = keys(p, [[0, 0], [0.22, 9], [0.3, 7], [0.45, 9], [0.58, 7], [1, 0]] as const);
+        // The low stance: the legs spread, then the left (front) foot steps in and the hips follow.
+        const legX = keys(p, [[0, 0], [0.22, -8], [0.3, -9], [0.4, -17], [0.62, -17], [1, 0]] as const);
+        const legZ = keys(p, [[0, 0], [0.22, 10], [0.4, 6], [0.62, 6], [1, 0]] as const);
+        const stepZ = keys(p, [[0, 0], [0.22, -0.01], [0.3, -0.008], [0.4, 0.028], [0.62, 0.028], [1, 0]] as const);
+        const drop = LEG * (1 - Math.cos(legX * rad) * Math.cos(legZ * rad));
+        return {
+          hips: { move: [0, -drop, stepZ], rotate: [0, hipsY, 0] },
+          spine: { rotate: [lean, 0, 0] },
+          chest: { rotate: [lean / 3, chestY, 0] },
+          head: { rotate: [-0.6 * lean, -0.55 * (hipsY + chestY), 0] },
+          cloak: { rotate: [keys(p, [[0, 0], [0.22, 5], [0.38, 12], [0.5, 14], [0.62, 8], [1, 0]] as const), 0, 0] },
+          'leg.L': { rotate: [legX, 0, legZ] },
+          'leg.R': { rotate: [-legX, 0, -legZ] },
+          'foot.L': { rotate: [-legX, 0, -legZ] },
+          'foot.R': { rotate: [legX, 0, legZ] },
+          ...armR(p),
+          ...armL(p),
+        };
+      },
+    });
   },
 });
