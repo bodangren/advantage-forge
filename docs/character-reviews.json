@@ -265,36 +265,38 @@
     "reviewedAt": "2026-09-26T03:39:07+00:00"
   },
   "horned-boar": {
-    "overall": 6.0,
+    "overall": 8.0,
     "group": "Monsters",
     "scores": {
-      "silhouette": 4,
-      "proportion": 3,
-      "shape": 4,
-      "color": 3,
-      "materials": 3,
-      "detail": 3,
-      "technical": 4,
-      "gameReady": 4
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
     },
-    "summary": "The horned boar has no mockup. It is an early test creature. It reads as a horned boar, but its style does not match the chibi set.",
+    "summary": "The horned boar is rebuilt in the chibi style from a new mmx mockup. It is all head and shoulders: a huge angry head, a pink snout, upturned tusks, and cream horns.",
     "strengths": [
-      "The horns, the tusks, and the glowing eyes make a clear, dangerous silhouette.",
-      "The fur texture is in the normal map, so the body surface stays smooth.",
-      "It has a quadruped rig with walk, idle, and charge clips."
+      "The eyes, the horns, the tusks, and the pink snout read in all eight sprite directions.",
+      "The black brows slope down toward the snout, so the face reads as angry but cute.",
+      "It keeps everything the bench brief asks for: tusks, a bristle mane, glowing eyes, and the walk, charge, and idle clips. It also has a new gore attack.",
+      "It is light: 26,188 triangles."
     ],
     "issues": [
-      "The design note says the boar is all head and shoulders, but the body is long and the rump is not small.",
-      "The mane is a row of cones of the same size. It looks like spikes, not bristles.",
-      "The legs are thin, straight posts, so the stance looks stiff.",
-      "It has no sprites yet, so the 128 px score is empty. I did not review its clips, so the motion score is empty."
+      "From the side, the head looks smaller than in the mockup, because the snout is short in profile.",
+      "The horns are thinner at the tips than the thick crescents in the mockup.",
+      "The small teeth show only as a row under the snout. The mockup shows a wider open grin."
     ],
     "next": [
-      "Make a chibi mockup with mmx and rebuild the boar to match the other characters.",
-      "Make the head and the shoulders 25 percent larger and the rump smaller.",
-      "Give the mane spikes different sizes and angles."
+      "Make the snout 20 percent longer so that the head reads larger from the side.",
+      "Thicken the horn tips."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T04:31:24+00:00"
   },
   "goblin-archer": {
     "overall": 8.0,
