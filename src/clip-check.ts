@@ -313,3 +313,103 @@ export function formatClipCheck(name: string, r: ClipCheckResult): string {
 }
 
 export type { Vec3 };
+
+export interface GroundSink {
+  readonly clip: string;
+  /** The lowest point in the clip, in meters (y). */
+  readonly lowest: number;
+  /** The body whose vertex is lowest. */
+  readonly part: string;
+  readonly from: number;
+  readonly to: number;
+}
+
+export interface GroundResult {
+  /** The lowest point of the rest pose (feet or paws on the ground, about 0). */
+  readonly rest: number;
+  readonly sinks: readonly GroundSink[];
+  readonly tolerance: number;
+  readonly ok: boolean;
+}
+
+/**
+ * Ground check on a built, skinned asset: plays every clip and finds where any vertex goes more
+ * than `tolerance` below the lowest point of the rest pose (feet through the floor, a body that
+ * sinks when it lies down). Flying and hopping above the ground is fine.
+ */
+export function checkGround(root: THREE.Object3D, options: { fps?: number; tolerance?: number; clips?: readonly string[] } = {}): GroundResult {
+  const fps = options.fps ?? 30;
+  const tolerance = options.tolerance ?? 0.015;
+  const meshes: THREE.SkinnedMesh[] = [];
+  root.traverse((o) => {
+    if ((o as THREE.SkinnedMesh).isSkinnedMesh) meshes.push(o as THREE.SkinnedMesh);
+  });
+  if (meshes.length === 0) return { rest: 0, sinks: [], tolerance, ok: true };
+  const v = new THREE.Vector3();
+  const lowest = () => {
+    root.updateMatrixWorld(true);
+    let min = Infinity;
+    let part = '';
+    for (const m of meshes) {
+      const pos = m.geometry.getAttribute('position');
+      const stride = Math.max(1, Math.floor(pos.count / 1500));
+      for (let j = 0; j < pos.count; j += stride) {
+        v.fromBufferAttribute(pos, j);
+        m.applyBoneTransform(j, v);
+        v.applyMatrix4(m.matrixWorld);
+        if (v.y < min) {
+          min = v.y;
+          part = m.name;
+        }
+      }
+    }
+    return { min, part };
+  };
+  const skeletons = [...new Set(meshes.map((m) => m.skeleton))];
+  const toRest = () => skeletons.forEach((s) => s.pose());
+  toRest();
+  const rest = lowest().min;
+  const mixer = new THREE.AnimationMixer(root);
+  const sinks: GroundSink[] = [];
+  for (const clip of root.animations) {
+    if (options.clips && !options.clips.includes(clip.name)) continue;
+    toRest();
+    const action = mixer.clipAction(clip);
+    action.reset().play();
+    const frames = Math.max(2, Math.round(clip.duration * fps) + 1);
+    let open: { from: number; to: number; lowest: number; part: string } | null = null;
+    for (let f = 0; f < frames; f++) {
+      const phase = f / (frames - 1);
+      mixer.setTime(phase * clip.duration * 0.9999);
+      const { min, part } = lowest();
+      if (min < rest - tolerance) {
+        if (open) {
+          open.to = phase;
+          if (min < open.lowest) Object.assign(open, { lowest: min, part });
+        } else open = { from: phase, to: phase, lowest: min, part };
+      } else if (open) {
+        sinks.push({ clip: clip.name, ...open });
+        open = null;
+      }
+    }
+    if (open) sinks.push({ clip: clip.name, ...open });
+    action.stop();
+    mixer.uncacheClip(clip);
+  }
+  toRest();
+  return { rest, sinks, tolerance, ok: sinks.length === 0 };
+}
+
+/** A short text report of a ground check. */
+export function formatGround(r: GroundResult): string {
+  const cm = (m: number) => `${(m * 100).toFixed(1)} cm`;
+  const lines = r.sinks.map(
+    (s) => `  ${s.clip.padEnd(10)} GROUND: ${s.part} goes ${cm(r.rest - s.lowest)} below the rest pose at phase ${s.from.toFixed(2)}-${s.to.toFixed(2)}`,
+  );
+  lines.push(
+    r.ok
+      ? `ground  ok: no clip sinks more than ${cm(r.tolerance)} below the rest pose (rest lowest ${cm(r.rest)})`
+      : `ground  FAIL: ${new Set(r.sinks.map((s) => s.clip)).size} clip(s) sink below the ground`,
+  );
+  return lines.join('\n');
+}

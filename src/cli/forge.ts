@@ -27,6 +27,7 @@ const HELP = `forge — build and look at 3D assets
                                         values, colors, ground contact, floating parts
   pnpm forge check   <asset>            clip clearance: does a held weapon, shield, or staff pass
                                         through the head (fails) or the body (reported) in any clip?
+                                        Does any clip sink below the ground (fails)?
                                         --clip attack,victory  --fps 60 (no browser)
 
 render options
@@ -164,7 +165,13 @@ async function main(): Promise<void> {
           ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
         });
         console.log(checker.formatClipCheck(name, report));
-        if (!report.ok) process.exitCode = 1;
+        // The ground check needs the skinned mesh: a quick build without textures.
+        const { result } = await pipeline.buildToGlb(def, file, 0);
+        const ground = checker.checkGround(result.root, {
+          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+        });
+        console.log(checker.formatGround(ground));
+        if (!report.ok || !ground.ok) process.exitCode = 1;
         return;
       }
       let built;
