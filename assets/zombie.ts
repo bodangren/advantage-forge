@@ -57,6 +57,7 @@ const ELBOW: V3 = [0.215, 0.345, 0.045];
 const WRIST: V3 = [0.29, 0.285, 0.095];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
+const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 
 /** An open clawing hand at the wrist `w`, fingers drooping forward and down; `s` mirrors it. */
 const handAt = (w: V3, s: 1 | -1) => {
@@ -102,9 +103,11 @@ export default defineAsset({
       'forearm.R': { parent: 'upperarm.R', at: mx(ELBOW) },
       'hand.R': { parent: 'forearm.R', at: mx(WRIST) },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head, with a carved mouth

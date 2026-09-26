@@ -68,6 +68,7 @@ export default defineAsset({
     const WRIST = [0.205, 0.238, 0.03] as const;
     const HIP = [0.068, 0.195, 0] as const;
     const ANKLE = [0.098, 0.07, 0] as const;
+    const KNEE = [0.083, 0.1325, 0] as const; // the knee: splits the leg (shin.L takes the weight below it)
     const mx = (p: readonly [number, number, number]) => [-p[0], p[1], p[2]] as const;
     // The left dagger's grip center in the fist, and its turn (see inHand below).
     const GRIP = { at: [0.232, 0.172, 0.022] as const, lean: 42, back: 20, roll: 20 };
@@ -87,9 +88,11 @@ export default defineAsset({
       'knife.L': { parent: 'hand.L', at: GRIP.at },
       'knife.R': { parent: 'hand.R', at: mx(GRIP.at) },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head and face
@@ -547,24 +550,32 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number) => ({
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `lift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `hop` the hips bob.
+    const stride = (duration: number, step: number, lift: number, duty: number, armSwing: number, lean: number, hop: number, flow: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [ANKLE[0], 0, -0.045],
+          toe: [ANKLE[0], 0, 0.11],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -11 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The cape trails behind and flutters twice per cycle, a little after the steps.
           cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
@@ -572,8 +583,8 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006, 6));
+    k.animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03, 22));
 
     // Attack: a fast reverse-grip double slash, solved by targets. Each wrist follows keys in the
     // chest's rest frame (reach); each blade follows its own direction keys (orient), and edgeUp

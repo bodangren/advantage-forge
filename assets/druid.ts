@@ -92,6 +92,7 @@ const ELBOW_L: V3 = [0.205, 0.36, -0.004];
 const WRIST_L: V3 = [0.275, 0.35, 0.085];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
+const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
@@ -188,9 +189,11 @@ export default defineAsset({
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head and face

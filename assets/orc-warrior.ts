@@ -67,6 +67,7 @@ const ELBOW: V3 = [0.31, 0.4, 0.02];
 const WRIST: V3 = [0.345, 0.3, 0.05];
 const HIP: V3 = [0.1, 0.25, 0];
 const ANKLE: V3 = [0.155, 0.075, 0];
+const KNEE: V3 = [0.1275, 0.1625, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 const HEAD_Y = 0.72;
 
 /** A big fist hanging from the wrist `w`; `s` mirrors it for the right hand. */
@@ -103,9 +104,11 @@ export default defineAsset({
       'forearm.R': { parent: 'upperarm.R', at: mx(ELBOW) },
       'hand.R': { parent: 'forearm.R', at: mx(WRIST) },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head

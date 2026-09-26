@@ -71,6 +71,7 @@ const ELBOW_R: V3 = [-0.195, 0.335, 0.03];
 const WRIST_R: V3 = [-0.225, 0.3, 0.09];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
+const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 const GRIP: V3 = [WRIST_R[0] - 0.012, WRIST_R[1] - 0.038, WRIST_R[2] + 0.014];
 
 /** A relaxed fist hanging from the wrist `w`. */
@@ -118,9 +119,11 @@ export default defineAsset({
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
       pennant: { parent: 'hand.R', at: PENNANT_AT, tail: pennantTail },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head and face

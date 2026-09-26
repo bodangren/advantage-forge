@@ -68,6 +68,7 @@ const ELBOW_L: V3 = [0.2, 0.33, 0.02];
 const WRIST_L: V3 = [0.235, 0.3, 0.09];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
+const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 const GRIP: V3 = [WRIST_L[0] + 0.012, WRIST_L[1] - 0.038, WRIST_L[2] + 0.014];
 
 /** A bony hand wrapped around a vertical staff at `g`: a small palm and four curled finger bones. */
@@ -182,7 +183,7 @@ export default defineAsset({
     const HIDE = { move: [0, -0.06, 0] as V3, scale: [0.001, 0.001, 0.001] as V3 };
 
     // ------------------------------------------------------------------ skeleton (rig)
-    const RIG: Record<string, { parent?: string; at: V3; tail?: V3 }> = {
+    const RIG: Record<string, { parent?: string; at: V3; tail?: V3; split?: number }> = {
       hips: { at: [0, 0.2, 0] },
       spine: { parent: 'hips', at: [0, 0.26, 0] },
       chest: { parent: 'spine', at: [0, 0.33, 0] },
@@ -201,9 +202,11 @@ export default defineAsset({
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     };
     k.skeleton(RIG);
 

@@ -82,6 +82,7 @@ const ELBOW_L: V3 = [0.265, 0.31, 0.0];
 const WRIST_L: V3 = [0.27, 0.225, 0.05];
 const HIP: V3 = [0.08, 0.195, 0];
 const ANKLE: V3 = [0.11, 0.07, 0];
+const KNEE: V3 = [0.095, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 
 // The tongs and the hot work piece (the billet) for the work clip. Both are built along +X at
 // bind places inside the chest, where the rest pose hides them; the work clip moves them into the
@@ -130,9 +131,11 @@ export default defineAsset({
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
       tongs: { parent: 'hand.L', at: TONGS_HIDE },
       billet: { parent: 'tongs', at: BILLET_HIDE },
     });

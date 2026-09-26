@@ -86,6 +86,7 @@ const ELBOW_R: V3 = [-0.2, 0.335, 0.03];
 const WRIST_R: V3 = [-0.232, 0.292, 0.1];
 const HIP: V3 = [0.075, 0.2, 0];
 const ANKLE: V3 = [0.108, 0.075, 0];
+const KNEE: V3 = [0.0915, 0.1375, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 // The dagger: its grip axis points up, out, and forward; the guard sits just above the fist.
 const DAGGER_TILT = { z: 24, x: 19 };
 const GRIP_DIR = norm([-0.406, 0.862, 0.304]);
@@ -129,9 +130,11 @@ export default defineAsset({
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
       dagger: { parent: 'hand.R', at: GUARD },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head, ears, tuft
