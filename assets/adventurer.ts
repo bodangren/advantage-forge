@@ -720,25 +720,34 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `lift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `hop` the hips bob. The heel and
+    // the toe are the ends of the boot's sole at y = 0.
+    const stride = (duration: number, step: number, lift: number, duty: number, armSwing: number, lean: number, hop: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.093, 0, -0.021],
+          toe: [0.108, 0, 0.087],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -11 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The bandana tails stream back and the lantern swings, both a little after the steps.
           knot: { rotate: [lean * 1.5 + 6 * wave(p, 2, 0.2), 0, 6 * wave(p, 2, 0.1)] as const },
           lantern: { rotate: [lean * 1.5 + 10 * wave(p, 2, 0.2), 0, 8 * wave(p, 1, 0.3)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           // The sword arm swings less and holds the blade up a little, clear of the ground.
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -8] as const },
@@ -747,8 +756,8 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03));
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006));
+    k.animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03));
 
     // ---------------------------------------------------------------- attack: a stepping diagonal slash
     // The wrist and the blade follow keys in the chest's rest frame. Wind-up: the blade rises up
