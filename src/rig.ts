@@ -34,6 +34,11 @@ export interface AnimationDef {
   readonly fps?: number;
   /** Cycles (walk, run, idle) loop; one-shots (attack, jump) do not. Default true. */
   readonly loop?: boolean;
+  /**
+   * Keep the body on the ground: where it would sink below the rest pose's lowest point (a foot
+   * that rolls, a body that lies down), the root bone rises by that much. Default true.
+   */
+  readonly ground?: boolean;
   /** The pose at time `t` seconds; `phase` is t / duration in [0, 1]. */
   pose(t: number, phase: number): Pose;
 }

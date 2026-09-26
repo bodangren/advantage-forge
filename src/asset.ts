@@ -7,6 +7,7 @@ import { dilate, type BakeResult } from './texture/bake.js';
 import { encodePng } from './texture/png.js';
 import { unwrap, type UvMesh } from './texture/unwrap.js';
 import { openPool } from './workers.js';
+import { groundClip } from './grounding.js';
 import { buildRig, sampleAnimation, skinWeights, type AnimationDef, type SkeletonDef } from './rig.js';
 
 export interface BodyOptions {
@@ -349,7 +350,25 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
     bodies.push({ name: body.name, ...stats });
   });
   if (images) root.userData.forgeTextures = images;
-  if (rig) root.animations = [...animations].map(([name, a]) => sampleAnimation(name, a, rig));
+  if (rig) {
+    // Held items (on a hand or forearm bone, or below one) do not count for the ground: an axe
+    // that hits the floor is fixed in its clip, not by lifting the body.
+    const names = Object.keys(rig.def);
+    const below = (b: string): string[] => [b, ...names.filter((n) => rig.def[n]!.parent === b).flatMap(below)];
+    const head = new Set(rig.def.head ? below('head') : []);
+    const held = new Set(names.filter((n) => /^(hand|forearm)\.(L|R)$/.test(n)).flatMap(below).filter((n) => !head.has(n)));
+    const heldBodies = new Set(
+      pending
+        .filter((b) =>
+          b.options.bone !== undefined ? held.has(b.options.bone) : b.shape.tags.length > 0 && b.shape.tags.every((t) => held.has(t.bone)),
+        )
+        .map((b) => b.name),
+    );
+    root.animations = [...animations].map(([name, a]) => {
+      const clip = sampleAnimation(name, a, rig);
+      return a.ground === false ? clip : groundClip(root, clip, rig, heldBodies);
+    });
+  }
 
   root.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(root);
