@@ -19,11 +19,12 @@ import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
  *   and quiver are the second contrast; gold buckle and fletching are the small accents.
  * Bodies: skin, hair, hood, cowl, tunic, sleeves, cuffs, leather, gold, quiver, arrows,
  *   pants (with the sock roll), boots, bow, bowstring (two halves), nocked-arrow.
- * Rig: the rogue's chibi skeleton plus `hoodtip` for the floppy point; the bow is rigid on the
- *   left hand, the quiver on the chest. The string is in two halves on `string.top` and
- *   `string.bot` (children of the bow hand), so the draw pulls its middle back. The shot arrow is
- *   on `arrow` (in the right hand); its mesh rests in the quiver, and it shows only in the shot.
- *   Clips: idle, walk, run, attack (nock, draw, loose).
+ * Rig: the rogue's chibi skeleton plus `hoodtip` for the floppy point; the bow is rigid on
+ *   `bowgrip`, a child of the left hand that only the death clip moves (the bow drops), and the
+ *   quiver is on the chest. The string is in two halves on `string.top` and `string.bot`
+ *   (children of `bowgrip`), so the draw pulls its middle back. The shot arrow is on `arrow` (in
+ *   the right hand); its mesh rests in the quiver, and it shows only in the shot.
+ *   Clips: idle, walk, run, attack (nock, draw, loose), hit, death.
  */
 
 const C = {
@@ -148,9 +149,11 @@ export default defineAsset({
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      // The bow's grip in the left fist: only the death clip moves it (the bow drops).
+      bowgrip: { parent: 'hand.L', at: GRIP },
       // The bowstring in two halves from the nocks, so the draw pulls its middle back.
-      'string.top': { parent: 'hand.L', at: NOCK_TOP },
-      'string.bot': { parent: 'hand.L', at: NOCK_BOT },
+      'string.top': { parent: 'bowgrip', at: NOCK_TOP },
+      'string.bot': { parent: 'bowgrip', at: NOCK_BOT },
       // The shot arrow, in the right hand's fingers; its mesh rests in the quiver.
       arrow: { parent: 'hand.R', at: PINCH },
     });
@@ -568,7 +571,7 @@ export default defineAsset({
       .paintWhere(sdf.box([0.1, 0.07, 0.1]), C.grip);
     // The back of the bow faces out (+X), so the front view shows the whole curve.
     const bowPose = (s: sdf.Shape) => s.rotateY(100).rotateZ(BOW_TILT).at(...GRIP);
-    k.body('bow', bowPose(bowLocal), { color: C.bow, roughness: 0.55, detail: 0.004, bone: 'hand.L' });
+    k.body('bow', bowPose(bowLocal), { color: C.bow, roughness: 0.55, detail: 0.004, bone: 'bowgrip' });
     // The string in two halves that meet at the nocking point, each on its own bone.
     const stringLook = { color: C.string, roughness: 0.8, detail: 0.003 };
     k.body('bowstring', sdf.capsule(NOCK_TOP, NOCK_MID, 0.0035), { ...stringLook, bone: 'string.top' });
@@ -824,6 +827,126 @@ export default defineAsset({
           'leg.R': { rotate: [4 * turn, 15 * turn, -4 * turn] },
           'foot.L': { rotate: [5 * turn, 10 * turn, -5 * turn] },
           'foot.R': { rotate: [-4 * turn, 8 * turn, 4 * turn] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a blow from the front
+    // The goblin archer's hit. The head and the chest snap back and the hips give way: the left
+    // foot stays planted and the right foot steps back, then all returns quickly. The bow arm
+    // swings a little out and the hand tilts the bow top out, clear of the hood. The hood point
+    // lags behind the head and flops late.
+    const SHIN = 0.125; // hip joint to ankle joint, in the Y-Z plane
+    const HEEL = 0.055; // the back of the boot, behind the ankle's ground point
+    /** The leg angle (degrees) that keeps a foot on its rest spot when the hips move `back` meters. */
+    const plant = (back: number) => Math.asin(Math.max(-1, Math.min(1, back / SHIN))) / DEG;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.15, 1], [0.32, 0.85], [0.8, 0]] as const);
+        const lift = keys(p, [[0.04, 0], [0.13, 1], [0.24, 0], [0.5, 0], [0.62, 0.7], [0.74, 0]] as const);
+        const flop = keys(p, [[0.08, 0], [0.3, 1], [0.5, -0.4], [0.68, 0.15], [0.85, 0]] as const);
+        const back = 0.028 * h;
+        const lean = plant(back);
+        return {
+          hips: { move: [0, -legDrop(SHIN, lean), -back], rotate: [0, 5 * h, 0] },
+          spine: { rotate: [-6 * h, 0, 0] },
+          chest: { rotate: [-10 * h, 6 * h, 3 * h] },
+          neck: { rotate: [-6 * h, 0, 0] },
+          head: { rotate: [-16 * h, -6 * h, 4 * h] },
+          hoodtip: { rotate: [-10 * flop, 0, 8 * flop] },
+          'leg.L': { rotate: [-lean, 0, 0] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'leg.R': { rotate: [lean + 16 * lift, 0, 0] },
+          'foot.R': { rotate: [-lean - 16 * lift, 0, 0] },
+          'upperarm.L': { rotate: [-10 * h, 0, 12 * h] },
+          'forearm.L': { rotate: [-12 * h, 0, 0] },
+          'hand.L': { rotate: [0, 0, -20 * h] },
+          'upperarm.R': { rotate: [-6 * h, 0, -8 * h] },
+          'forearm.R': { rotate: [-6 * h, 0, 0] },
+          arrow: { scale: HIDE },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: a stagger, then a fall on the back
+    // The goblin archer's death. The blow snaps the chest back, the archer slumps forward and
+    // wobbles, then tips back over the heels as one piece and lands on the back (and the quiver).
+    // The quiver and the fletching behind the back prop the body up, so the hips stay off the
+    // floor and the arms hang back to it. The arms are solved by targets in the chest's rest
+    // frame. The left hand opens in the
+    // fall and the `bowgrip` bone carries the bow (and its string) to lie flat on the floor beside
+    // the left hand, the string out. The hood point flops down last.
+    const LIE = 80; // the hips' final tilt back, degrees
+    const LIE_Y = 0.13; // the hips' height when the archer lies on the back
+    // The fletching over the right shoulder (above and behind the hips pivot, in the hips' rest
+    // frame) is the lowest point of the lying body: the hips rise so that it stays on the floor.
+    const PROP = [0.305, -0.29] as const;
+    const TRUNK: readonly V3[] = [[0, 0.2, 0], [0, 0.26, 0], [0, 0.33, 0]]; // hips, spine, chest pivots
+    const BOW_CHAIN: readonly V3[] = [...TRUNK, SHOULDER, ELBOW_L, WRIST_L];
+    // On the floor the bow's flat side (local +X) faces up, so the bow lies at its limb radius.
+    const DROP_AT: V3 = [0.34, 0.02, -0.4]; // the grip on the floor, the upper limb toward the head
+    const DROP_TURN = quat(orient([], { dir: bowDir([0, 1, 0]), up: bowDir([1, 0, 0]) }, { dir: norm([0.12, 0, -1]), up: [0, 1, 0] }));
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.18, 0.5], [0.3, 0.2], [0.4, 0]] as const);
+        const sag = keys(p, [[0.1, 0], [0.26, 1], [0.36, 0.8], [0.5, 0]] as const);
+        const wob = keys(p, [[0.12, 0], [0.22, 1], [0.32, -0.6], [0.42, 0]] as const);
+        const u = Math.min(1, Math.max(0, (p - 0.36) / 0.24)); // the fall speeds up to the impact
+        const bounce = keys(p, [[0.6, 0], [0.66, 1], [0.73, 0]] as const);
+        const tilt = LIE * u * u - 5 * bounce;
+        const fly = keys(p, [[0.36, 0], [0.5, 1], [0.62, 0.2], [0.7, 0]] as const);
+        const land = keys(p, [[0.48, 0], [0.7, 1]] as const);
+        const turnBow = keys(p, [[0.42, 0], [0.54, 1]] as const);
+        const loose = keys(p, [[0.42, 0], [0.6, 1]] as const);
+        const tipUp = keys(p, [[0.36, 0], [0.54, 1], [0.62, 1], [0.7, 0]] as const);
+        const tipDown = keys(p, [[0.62, 0], [0.72, 1.15], [0.8, 0.92], [0.88, 1]] as const);
+        // The stagger: the hips give way backward over planted feet.
+        const back = 0.022 * hitB;
+        const lean = plant(back);
+        // The fall: a rigid tip over the back of the heels, until the hips reach their lying height.
+        const a = tilt * DEG;
+        const heels = Math.max(LIE_Y, 0.2 * Math.cos(a) + HEEL * Math.sin(a));
+        const hipsY = heels + Math.max(0, -(heels + PROP[0] * Math.cos(a) + PROP[1] * Math.sin(a)));
+        const hipsMove: V3 = [0, hipsY - 0.2 - legDrop(SHIN, lean), -HEEL - 0.2 * Math.sin(a) + HEEL * Math.cos(a) - back];
+        const legs = 16 * Math.min(1, Math.max(0, (tilt - LIE + 14) / 14)); // the legs come down once the hips hold
+        const hipsR: V3 = [-tilt, 0, 0];
+        const spineR: V3 = [-8 * hitB + 6 * sag, 0, 4 * wob];
+        const chestR: V3 = [-10 * hitB + 5 * sag, 6 * hitB, 5 * wob];
+        // The wrists: flung back by the blow, slumped, flung out in the fall, then out on the ground.
+        const standR = add(add(add(mx(WRIST), scl([-0.05, 0.02, -0.05], hitB)), scl([0, -0.06, -0.03], sag)), scl([-0.07, 0, 0.04], fly));
+        const armR = reach(ARM_R, lerp(standR, [-0.23, 0.33, -0.13], land), lerp(mx(ELBOW), [-0.3, 0.3, -0.1], land));
+        const standL = add(add(add(WRIST_L, scl([0.03, 0.03, 0.04], hitB)), scl([0, -0.01, 0.02], sag)), scl([0.05, 0.05, 0.06], fly));
+        const armL = reach(ARM_L, lerp(standL, [0.2, 0.36, -0.15], land), lerp(ELBOW_L, [0.3, 0.32, -0.1], land));
+        // The bow hand tilts the bow top out in the blow, clear of the hood.
+        const handL: V3 = [0, 0, -14 * hitB - 8 * fly];
+        // The bow: in the posed hand until the hand opens, then it turns flat and drops to the floor.
+        const handQ = chainQ([hipsR, spineR, chestR, armL.upper, armL.lower, handL]);
+        const held = add(follow(BOW_CHAIN, [hipsR, spineR, chestR, armL.upper, armL.lower, handL], GRIP), hipsMove);
+        const drop = keys(p, [[0.42, add(DROP_AT, [0, 0.12, 0])], [0.6, DROP_AT], [0.65, add(DROP_AT, [0, 0.02, 0])], [0.7, DROP_AT]] as const);
+        const inv = handQ.clone().invert();
+        const d = turnBy(inv, sub(lerp(held, drop, loose), held));
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [-8 * hitB + 5 * sag + 8 * land, 0, 0] },
+          head: { rotate: [-16 * hitB + 8 * sag + 10 * land, -8 * hitB, -6 * wob + 6 * land] },
+          hoodtip: { rotate: [-12 * tipUp + 6 * tipDown, 0, -6 * wob + 10 * tipUp - 4 * tipDown] },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          bowgrip: { move: d, rotate: euler(inv.clone().multiply(handQ.clone().slerp(DROP_TURN, turnBow))) },
+          arrow: { scale: HIDE },
+          'leg.L': { rotate: [-lean + legs, 0, 8 * land] },
+          'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
+          'foot.L': { rotate: [lean, 20 * land, 0] },
+          'foot.R': { rotate: [lean, -20 * land, 0] },
         };
       },
     });
