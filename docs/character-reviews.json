@@ -658,5 +658,38 @@
       "Give the brim a gentle wave."
     ],
     "reviewedAt": "2026-09-26T08:38:25+00:00"
+  },
+  "guard": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The town guard matches the mmx mockup: a round steel kettle helmet with a crest, a big brown mustache, a sky-blue tabard with a gold tower and gold trim over mail, steel pauldrons and gauntlets, and a spear with a teal pennant.",
+    "strengths": [
+      "The helmet, mustache, and spear with a pennant make a clear watchman silhouette in every sprite direction.",
+      "The blue tabard with the gold tower and trim reads as a town livery, and it differs from the knight's red.",
+      "The spear thrust levels the spear and drives it forward; the pennant flutters in the walk."
+    ],
+    "issues": [
+      "The helmet sits lower than in the mockup, and the hair locks under the brim cover the top of the eyes.",
+      "From above, the big steel dome hides the face in the sprites.",
+      "The mockup pennant hangs down along the haft. The model pennant sticks out to the side."
+    ],
+    "next": [
+      "Make the helmet dome 10 percent smaller, so more of the face shows.",
+      "Hang the pennant down and let the walk lift it."
+    ],
+    "reviewedAt": "2026-09-26T08:44:15+00:00"
   }
 }
