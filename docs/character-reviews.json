@@ -138,26 +138,26 @@
       "materials": 4,
       "detail": 4,
       "technical": 4,
-      "gameReady": 5,
+      "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The cleric is a dwarf battle priest with a ginger mane, a braided beard, a large cross hammer, and a holy book. The hair, face, armor trim, and weapons now match the mockup closely.",
+    "summary": "The cleric is a dwarf battle priest with a ginger mane, a braided beard, a large cross hammer, and a holy book. The front silhouette matches the mockup, and all eight clips are done: idle, walk, run, attack, attack2, hit, death, and victory.",
     "strengths": [
-      "The hairline is at the brows and a thick braid runs over the top of the head, so the head reads as a full ginger mane.",
-      "The large octagonal hammer, the gold pauldron rims, and the book with gold corners match the mockup.",
-      "The attack is an overhead smash: the hammer rises beside the head, stops, and hits the ground in front with the body behind it."
+      "The front silhouette matches the mockup: the large octagonal hammer on the right, the big ginger head, and the book with gold corners on the left.",
+      "The attack is a clear overhead smash. The hammer rises behind the head, goes over the top, and hits the ground in front of the dwarf.",
+      "The death has a stagger back, a fall, and a rest on the back. The hammer and the book stay in the hands and lie on the ground."
     ],
     "issues": [
-      "The eyes are large and round, so the face looks younger than the mature dwarf in the mockup.",
-      "The model has 85,000 triangles. The hair and the gold trims use more triangles than other heroes.",
-      "The blessing scales the gold cross on the book, but it has no separate glow or light rays."
+      "The brows point down at the center and the eyes are large and round, so the face looks stern and young. The mockup face is older and smiles.",
+      "The side braids and their rings are short and small, so they do not show in the front view. The hair and the beard are smooth, with few strand grooves.",
+      "In the attack, the right bracer goes 0.9 cm into the collar while the hammer is up. The model has 85,000 triangles, which is the highest count of the heroes. In the east and west sprites, the hair covers most of the face."
     ],
     "next": [
-      "Make the eyes a little smaller and add heavier lower lids for an older face.",
-      "Add a soft glow shape behind the cross in the blessing."
+      "Raise the brows, make the eyes a little smaller, and add heavier lower lids, for an older and friendlier face.",
+      "Make the two side braids longer, with larger gold rings, and cut deeper strand grooves in the hair and the beard."
     ],
-    "reviewedAt": "2026-09-26T12:11:20+00:00"
+    "reviewedAt": "2026-09-26T18:33:17+00:00"
   },
   "druid": {
     "overall": 8,
