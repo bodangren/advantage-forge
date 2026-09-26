@@ -459,71 +459,13 @@ export default defineAsset({
     k.animation('walk', stride(1.0, 22, 20, 3, 0, 4));
     k.animation('run', stride(0.62, 34, 34, 10, 0.02, 3));
 
-    // Work: lift the hammer off the shoulder, bring it down in front onto an unseen anvil, bounce.
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
-    // Solved by targets (reach, orient) in the chest's rest frame, so the path stays clear of the
-    // head: the hammer rises off the shoulder up and out beside the head on the right side, comes
-    // forward, and lands on the anvil spot with the fist held out in front, the haft butt clear of
-    // the belt. The head's long axis turns to point down at the blow, a striking face on the anvil.
     const { keys, reach, orient } = motion;
     const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
     const HAMMER_LONG: V3 = [0, -Math.sin((HAMMER_X * Math.PI) / 180), Math.cos((HAMMER_X * Math.PI) / 180)];
-    const workWrist = [
-      [0, WRIST_R],
-      [0.18, [-0.27, 0.45, 0.11]],
-      [0.38, [-0.31, 0.5, 0.08]], // the top: out beside the head
-      [0.45, [-0.315, 0.505, 0.075]],
-      [0.52, [-0.29, 0.45, 0.19]],
-      [0.58, [-0.245, 0.41, 0.22]], // the blow, the fist out in front
-      [0.63, [-0.245, 0.43, 0.22]], // the bounce
-      [0.68, [-0.245, 0.41, 0.22]],
-      [0.84, [-0.29, 0.47, 0.12]], // back up beside the head
-      [1, WRIST_R],
-    ] as const;
-    const workHaft = [
-      [0, HAFT_DIR],
-      [0.18, norm([-0.45, 0.75, -0.48])],
-      [0.38, norm([-0.42, 0.85, -0.3])],
-      [0.45, norm([-0.42, 0.86, -0.28])],
-      [0.52, norm([-0.4, 0.35, 0.85])],
-      [0.58, norm([-0.38, -0.42, 0.82])],
-      [0.63, norm([-0.38, -0.32, 0.87])],
-      [0.68, norm([-0.38, -0.42, 0.82])],
-      [0.84, norm([-0.45, 0.85, 0.1])],
-      [1, HAFT_DIR],
-    ] as const;
-    const workLong = [
-      [0, HAMMER_LONG],
-      [0.38, [0.1, 0.1, 1]],
-      [0.52, [0, -1, 0.4]],
-      [0.58, [0, -1, 0]],
-      [0.68, [0, -1, 0]],
-      [0.84, [0, -0.1, 1]],
-      [1, HAMMER_LONG],
-    ] as const;
-    k.animation('work', {
-      duration: 0.9,
-      pose: (_t, p) => {
-        const lift = ease(0, 0.45, p) * (1 - ease(0.45, 0.58, p));
-        const hit = ease(0.45, 0.58, p) * (1 - ease(0.68, 1, p));
-        const arm = reach(ARM_R, keys(p, workWrist, 'spline'), [-0.6, 0.1, -0.1]);
-        const hand = orient([arm.upper, arm.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, { dir: norm(keys(p, workHaft, 'spline')), up: keys(p, workLong) });
-        return {
-          hips: { move: [0, -0.006 * hit, 0] },
-          spine: { rotate: [-4 * lift + 8 * hit, 0, 0] },
-          chest: { rotate: [0, 8 * lift - 4 * hit, 0] },
-          head: { rotate: [6 * hit, 0, 0] },
-          'upperarm.R': { rotate: arm.upper },
-          'forearm.R': { rotate: arm.lower },
-          'hand.R': { rotate: hand },
-          'upperarm.L': { rotate: [-10 * hit, 0, 6 * hit] },
-          'forearm.L': { rotate: [-30 * hit, 0, 0] },
-        };
-      },
-    });
 
     // The free left hand, posed by targets in the chest's rest frame. At rest the mitt hangs with
     // the fingers down and the palm (the finger roll) forward.
@@ -535,6 +477,56 @@ export default defineAsset({
       const w2 = u * u;
       return [a[0] * w0 + m[0] * w1 + b[0] * w2, a[1] * w0 + m[1] * w1 + b[1] * w2, a[2] * w0 + m[2] * w1 + b[2] * w2];
     };
+
+    // Work: a smith's blow on a work piece that lies on an unseen anvil in front of the belly.
+    // The loop starts in the hold after the rebound, the hammer a few centimeters over the work.
+    // The hammer rises out beside the head until its head is high above the bandana and cocked
+    // back, drops in a fast arc (about 0.12 s), and lands in front of the belly with the haft
+    // level and the face flat on the work. It bounces up about 5 cm and holds before the next
+    // lift. The left fist holds the (unseen) tongs on the work and takes a small jolt at the blow.
+    // Each key: the wrist target, the haft direction, and the head's long axis (the face points
+    // along it), all in the chest's rest frame; the chest leans and twists on top of them.
+    type Blow = { w: V3; d: V3; l: V3 };
+    const HOLD: Blow = { w: [-0.17, 0.375, 0.2], d: norm([0.38, 0.155, 0.9]), l: [0, -1, 0.19] };
+    const LIFT: Blow = { w: [-0.33, 0.5, 0.14], d: [-0.5, 0.5, 0.4], l: [0, -0.5, 1] }; // curve control
+    const TOP: Blow = { w: [-0.305, 0.615, -0.03], d: norm([-0.1, 0.94, -0.33]), l: [0, 0.33, 0.94] };
+    const COCK: Blow = { w: [-0.3, 0.61, -0.05], d: norm([-0.1, 0.9, -0.43]), l: [0, 0.43, 0.9] };
+    const ARC: Blow = { w: [-0.27, 0.55, 0.24], d: [-0.1, 0.7, 0.7], l: [0, -0.3, 1] }; // curve control
+    const HIT: Blow = { w: [-0.17, 0.355, 0.21], d: norm([0.38, 0.1, 0.9]), l: [0, -1, 0.16] };
+    const BOUNCE: Blow = { w: [-0.17, 0.38, 0.2], d: norm([0.38, 0.17, 0.9]), l: [0, -1, 0.2] };
+    const curve = (a: Blow, m: Blow, b: Blow, u: number): Blow => ({ w: bez(a.w, m.w, b.w, u), d: norm(bez(a.d, m.d, b.d, u)), l: bez(a.l, m.l, b.l, u) });
+    const blend = (a: Blow, b: Blow, u: number): Blow => ({ w: lerp(a.w, b.w, u), d: norm(lerp(a.d, b.d, u)), l: lerp(a.l, b.l, u) });
+    const blowAt = (p: number): Blow => {
+      if (p < 0.42) return curve(HOLD, LIFT, TOP, ease(0, 0.42, p)); // the lift
+      if (p < 0.47) return blend(TOP, COCK, ease(0.42, 0.47, p)); // a short hang at the top
+      if (p < 0.6) return curve(COCK, ARC, HIT, ((p - 0.47) / 0.13) ** 2); // the drop speeds up to the blow
+      if (p < 0.68) return blend(HIT, BOUNCE, 1 - (1 - (p - 0.6) / 0.08) ** 2); // the rebound
+      return blend(BOUNCE, HOLD, ease(0.68, 0.8, p)); // settle, then hold
+    };
+    const TONGS: V3 = [0.18, 0.31, 0.2];
+    k.animation('work', {
+      duration: 0.9,
+      pose: (_t, p) => {
+        const up = ease(0, 0.42, p) * (1 - ease(0.47, 0.6, p)); // 1 at the top of the lift
+        const jolt = Math.exp(-(((p - 0.615) / 0.035) ** 2)); // the shock of the blow
+        const b = blowAt(p);
+        const arm = reach(ARM_R, b.w, [-0.6, 0.1, -0.1]);
+        const hand = orient([arm.upper, arm.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, { dir: b.d, up: b.l });
+        const armL = reach(ARM_L, add(TONGS, [0, -0.012, 0.004], jolt), [0.55, 0.25, -0.25]);
+        const handL = orient([armL.upper, armL.lower], HAND_L_REST, { dir: norm([-0.3, -0.35, 1]), up: [-0.6, -0.8, 0] });
+        return {
+          spine: { rotate: [6 * (1 - up) - 4 * up + 2 * jolt, 0, -9 * up] },
+          chest: { rotate: [2 * (1 - up), 8 * (1 - up) - 8 * up, -3 * up] },
+          head: { rotate: [8 + 5 * up + 3 * jolt, 0, -4 * up] }, // the eyes stay on the work
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
+        };
+      },
+    });
 
     // Talk: a friendly chat with a customer in front. The hammer stays on the shoulder. The left
     // hand gestures palm up in front of the chest, with one firm beat (p = 0.39) that the head

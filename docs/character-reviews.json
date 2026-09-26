@@ -581,7 +581,7 @@
     "reviewedAt": "2026-09-26T19:18:29+00:00"
   },
   "blacksmith": {
-    "overall": 7.6,
+    "overall": 7.9,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -594,24 +594,24 @@
       "technical": 4,
       "gameReady": 5,
       "sprite": 5,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The blacksmith matches the mmx mockup in costume and color: a red bandana, a black beard, a leather bib apron with brass rings, big gloves, and a hammer at the right shoulder. The body is less burly than the mockup, and the work blow is short. The check ends with result ok, but the head margin is only 0.3 cm.",
+    "summary": "The blacksmith matches the mmx mockup in costume and color: a red bandana, a black beard, a leather bib apron with brass rings, big gloves, and a hammer at the right shoulder. The work clip is now a full smith's blow: a high lift, a fast blow in front of the belly, and a clear rebound. The body is still less burly than the mockup. The check ends with result ok and ground ok.",
     "strengths": [
       "The red bandana, the black beard, and the brown apron read at 128 px in all 8 sprite directions.",
-      "In the work clip, the drop is fast (about 0.12 s), and the hammer face is square to the work at the impact.",
-      "The talk clip shows a clear open-hand gesture in front of the chest, and the hammer stays still at the shoulder."
+      "In the work clip, the hammer head rises about 7 cm above the bandana at the top of the lift, so the side view shows it above the head. The drop takes about 0.12 s and lands in front of the belly with the face flat on the work.",
+      "The hammer bounces up about 6 cm after the blow and holds before the next lift. The loop is seamless, and the left fist holds the unseen tongs with a small jolt at the blow."
     ],
     "issues": [
       "The head is still larger than the torso. In the mockup, the chest and the arms are larger than the head, so the model is less burly than the mockup.",
-      "The work blow is not a full smith's blow. The fist rises only to chin height, and the side view hides the hammer behind the head during the lift. The blow lands out at the right side, not in front of the body. The rebound is only 2 cm, so it does not show.",
+      "The anvil, the work piece, and the tongs are not in the model, so the blow and the left fist hit and hold empty air. The short arms keep the wrist at eye height, not at the top of the head.",
       "The soot mark under the left eye is dark blue-gray and reads as a bruise in the front sprites. The back hair is one plain black mass."
     ],
     "next": [
-      "Make the chest, the shoulders, and the arms 10 percent bigger. This item from the last review is still open.",
-      "In the work clip, raise the hammer head clearly above the bandana at the top of the lift, bring the blow in front of the belly, and make the rebound 5 to 6 cm. The higher lift from the last review is still open."
+      "Make the chest, the shoulders, and the arms 10 percent bigger. This item from the last two reviews is still open.",
+      "Add a small anvil prop or a scene anvil at the blow point (about x 0, y 0.17, z 0.48) so the work clip hits a real surface."
     ],
-    "reviewedAt": "2026-09-26T19:09:00+00:00"
+    "reviewedAt": "2026-09-26T20:54:02+00:00"
   },
   "farmer": {
     "overall": 7.4,
