@@ -136,7 +136,12 @@ wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path
 3. **Timing.** Anticipation 30 to 40% of the clip, with a short hold at the top; the strike
    itself is fast (0.08 to 0.15 s); follow-through past the target; a slower recovery back to
    the rest pose. Use `keys(p, list, 'spline')` for the strike, so the weapon keeps its speed
-   through the middle keys, and `'smooth'` for holds.
+   through the middle keys, and `'smooth'` for holds. Hold the contact pose for about 0.1 s
+   (a claw at full reach, a bite, a hammer on the work): a contact that lasts one frame is
+   invisible in play. The GLB stores the clip at its `fps` (30 by default) and the game
+   interpolates between samples, so put the contact phase on a sample
+   (`phase * duration * fps` a whole number) or raise the clip's `fps`; a blacksmith's hammer
+   whose impact fell between two samples stopped 9 cm above the work.
 4. **The edge leads.** A cutting blade moves edge first: its flat faces across the direction of
    travel. Give `orient` an `up` that is the flat's normal you want (about the cross product of
    the blade direction and the swing direction).
