@@ -848,7 +848,7 @@
     "group": "Monsters",
     "scores": {
       "mockup": 4,
-      "silhouette": 5,
+      "silhouette": 4,
       "proportion": 5,
       "shape": 4,
       "color": 4,
@@ -859,22 +859,22 @@
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The mimic matches its mmx mockup and is built from the treasure chest asset: the same planks, iron, lid, and gold lock, with the lid open as a jaw of big white fangs, glowing yellow slit eyes under the lid, red flesh inside, a fat purple tongue over the front, and iron claw feet.",
+    "summary": "The mimic matches its mmx mockup and uses the planks, iron, and gold lock of the treasure chest asset. The open lid is a jaw of white fangs with yellow slit eyes. Red flesh, a purple tongue, and iron claw feet complete it. Six clips cover the encounter: idle, walk, reveal, attack, hit, and death. The bite reads, and the death ends with the lid shut on the limp tongue.",
     "strengths": [
-      "Closed (the first frame of the reveal clip), it matches the real treasure chest, so the trap works in a level.",
-      "The white teeth and the yellow eyes on the dark mouth read in every front and three-quarter sprite.",
-      "Four clips cover the whole encounter: reveal (rattle, then spring open), idle, a waddle walk, and an attack that opens wide, lunges, and slams shut."
+      "Closed (the first frame of the reveal clip), the mimic matches the real treasure chest, so the trap works in a level.",
+      "The white teeth and the purple tongue read in every front and three-quarter sprite. The yellow eyes read best in the S sprite.",
+      "The death reads well. The chest shivers and gapes, the front legs buckle, then the back legs, and the lid falls shut on the limp tongue."
     ],
     "issues": [
-      "The mockup shows gold and cloth among the flesh inside; the model has only flesh.",
-      "The teeth are straight cones; the mockup teeth are thicker at the base and curve more.",
-      "The chest body is square; the mockup chest flares out a little toward the top."
+      "The bite reads: the lid opens wide as the chest rears back, the chest lunges 14 cm forward, the lid slams shut, and the chest recovers. At the contact frame, the teeth shrink to half size and hide, so the bite shows a plain closed chest.",
+      "The mockup shows gold coins and cloth in the flesh; the model has only flesh. The teeth are still straight cones with thin bases.",
+      "The chest body is a square box; the mockup chest flares out toward the top. The iron bands are blue-black; the mockup iron is a warm dark gray-brown."
     ],
     "next": [
-      "Add a few gold coins and a gem in the flesh, from the chest's treasure heap.",
-      "Thicken the tooth bases and bend the middle teeth a little toward the front."
+      "Add a few gold coins and a gem in the flesh, from the treasure heap of the chest. This item from the old review is still open.",
+      "Make the tooth bases thicker and bend the middle teeth a little toward the front. Keep the tooth tips visible at the seam when the lid slams shut. The tooth item from the old review is still open."
     ],
-    "reviewedAt": "2026-09-26T10:15:32+00:00"
+    "reviewedAt": "2026-09-26T19:25:22+00:00"
   },
   "animated-armor": {
     "overall": 7.4,
