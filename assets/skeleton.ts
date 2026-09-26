@@ -556,30 +556,82 @@ export default defineAsset({
     k.animation('walk', stride(0.9, 26, 28, 3, 0));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03));
 
-    // An overhead chop: raise the sword back over the shoulder, chop down and forward, settle.
+    // An overhead chop, solved by targets (see the armor's slash). The wrist follows keys in the
+    // chest's rest frame (reach); the blade follows its own keys (orient), and edgeUp turns the
+    // flat so the edge leads. The chibi arm is short and the helmet is huge, so the sword rises on
+    // the right, out beside the helmet: up and back over the right shoulder, the tip above the
+    // brow. It holds, comes over the top beside the helmet, and chops straight down in front to
+    // waist height. The flat faces sideways through the swing, so the edge cuts down.
+    const { keys, reach, orient, edgeUp } = motion;
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const FLAT = norm([0, -GRIP_DIR[2], GRIP_DIR[1]]); // the blade's flat normal at rest (local +Z, from swordPose)
+    const bladeKeys = [
+      [0, GRIP_DIR],
+      [0.14, norm([-0.4, 0.9, 0.1])],
+      [0.26, norm([-0.46, 0.86, -0.18])],
+      // The top: up, out, and back over the right shoulder. The keys lean out more than the look,
+      // because the wind-up turns the chest to the right and leans it to the left.
+      [0.34, norm([-0.5, 0.82, -0.26])],
+      [0.44, norm([-0.5, 0.8, -0.33])], // the hold, sinking back a little
+      [0.49, norm([-0.3, 0.94, 0.12])], // over the top, upright, out beside the helmet
+      [0.525, norm([-0.1, 0.55, 0.83])], // falling forward
+      [0.565, norm([-0.06, 0.05, 1])], // the impact: pointing forward at waist height
+      [0.7, norm([-0.06, 0.01, 1])],
+      [1, GRIP_DIR],
+    ] as const;
+    const bladeAt = (p: number) => keys(p, bladeKeys, 'spline');
     k.animation('attack', {
-      duration: 0.85,
+      duration: 0.9,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.34, p) * (1 - ease(0.34, 0.46, p));
-        const hit = ease(0.34, 0.46, p) * (1 - ease(0.6, 1, p));
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_R],
+            [0.14, [-0.245, 0.41, 0.06]],
+            [0.26, [-0.25, 0.47, 0.0]],
+            [0.34, [-0.235, 0.505, -0.03]],
+            [0.44, [-0.235, 0.507, -0.04]],
+            [0.49, [-0.25, 0.485, 0.06]],
+            [0.525, [-0.205, 0.445, 0.15]],
+            [0.565, [-0.16, 0.34, 0.16]],
+            [0.7, [-0.16, 0.335, 0.155]],
+            [0.85, [-0.21, 0.32, 0.13]], // out to the right, so the pommel clears the belt
+            [1, WRIST_R],
+          ] as const,
+          'spline',
+        );
+        // The elbow points out to the right in the wind-up, then out and down through the chop.
+        const pole = keys(p, [[0, ELBOW_R], [0.3, [-0.42, 0.36, 0.02]], [0.49, [-0.42, 0.36, 0.06]], [0.565, [-0.36, 0.26, 0.1]], [0.7, [-0.36, 0.26, 0.1]], [1, ELBOW_R]] as const);
+        const arm = reach(ARM_R, wrist, pole);
+        // Fallback flat: at rest it faces forward; through the swing it faces the left side.
+        const side = norm(keys(p, [[0, FLAT], [0.2, [1, 0, 0.2]], [0.8, [1, 0, 0.2]], [1, FLAT]] as const));
+        const hand = orient([arm.upper, arm.lower], { dir: GRIP_DIR, up: FLAT }, { dir: norm(bladeAt(p)), up: edgeUp(bladeAt, p, side) });
+        const wind = ease(0, 0.34, p) * (1 - ease(0.44, 0.53, p));
+        const cut = ease(0.47, 0.57, p) * (1 - ease(0.7, 1, p));
+        // The loose skull lags: it nods on the impact and rattles back.
+        const bob = keys(p, [[0, 0], [0.56, 0], [0.63, 1], [0.73, -0.45], [0.83, 0.15], [0.93, 0]] as const);
         return {
-          hips: { move: [0, -legDrop(LEG, 16 * hit) - 0.006 * wind, 0.035 * hit - 0.01 * wind], rotate: [0, -10 * wind + 12 * hit, 0] },
-          spine: { rotate: [-5 * wind + 12 * hit, 0, 0] },
-          chest: { rotate: [0, -16 * wind + 18 * hit, 0] },
-          head: { rotate: [-6 * wind + 6 * hit, 8 * wind - 10 * hit, 0] },
-          'upperarm.R': { rotate: [-95 * wind + 25 * hit, 0, -10 * wind + 8 * hit] },
-          'forearm.R': { rotate: [-30 * wind + 10 * hit, 0, 0] },
-          'hand.R': { rotate: [75 * wind + 60 * hit, 0, 0] },
-          'upperarm.L': { rotate: [-10 * wind - 10 * hit, 0, 8 * hit] },
-          'leg.R': { rotate: [-18 * hit, 0, 0] },
-          'leg.L': { rotate: [12 * hit, 0, 0] },
-          'foot.R': { rotate: [10 * hit, 0, 0] },
-          'foot.L': { rotate: [-6 * hit, 0, 0] },
+          hips: { move: [0, -legDrop(LEG, 20 * cut) - 0.004 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, -6 * wind + 12 * cut, 0] },
+          // The upper body leans away from the raised sword, which lifts it higher.
+          spine: { rotate: [-5 * wind + 14 * cut, 0, -5 * wind] },
+          chest: { rotate: [-3 * wind + 6 * cut, -6 * wind + 3 * cut, -4 * wind] },
+          head: { rotate: [4 * wind - 8 * cut + 7 * bob, 10 * wind - 12 * cut, 3 * wind + 2 * bob] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          // The shield stays up in front of the left side as the body bends into the chop.
+          'upperarm.L': { rotate: [-4 * wind - 8 * cut, 0, 0] },
+          'forearm.L': { rotate: [-6 * cut, 0, 0] },
+          // The front (shield-side) foot steps in; the back leg pushes.
+          'leg.L': { rotate: [3 * wind - 20 * cut, 0, 0] },
+          'foot.L': { rotate: [-3 * wind + 20 * cut, 0, 0] },
+          'leg.R': { rotate: [-3 * wind + 14 * cut, 0, 0] },
+          'foot.R': { rotate: [3 * wind - 14 * cut, 0, 0] },
         };
       },
     });
