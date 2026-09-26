@@ -625,5 +625,38 @@
       "Raise the hammer higher in the wind-up of the work clip."
     ],
     "reviewedAt": "2026-09-26T08:30:00+00:00"
+  },
+  "farmer": {
+    "overall": 8.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The farmer matches the mmx mockup: a wide woven straw hat, a straw bundle in his mouth, rosy cheeks, a red plaid shirt, patched blue overalls with brass buttons, boots, and a tall pitchfork.",
+    "strengths": [
+      "The wide straw hat and the upright pitchfork make a silhouette that reads as a farmer at once.",
+      "The red plaid and the blue denim are two clear color masses, with the straw hat as a light accent.",
+      "The work clip digs the fork into the ground in front and then lifts it high."
+    ],
+    "issues": [
+      "From above, the wide hat hides much of the face in the sprites.",
+      "The mockup hat has a softer, floppier brim that tilts. The model brim is flat and even.",
+      "The hair shows as a smooth mass under the hat at the back."
+    ],
+    "next": [
+      "Tilt the hat back a few more degrees, so the face shows more in the top-down sprites.",
+      "Give the brim a gentle wave."
+    ],
+    "reviewedAt": "2026-09-26T08:38:25+00:00"
   }
 }
