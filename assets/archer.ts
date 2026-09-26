@@ -584,7 +584,6 @@ export default defineAsset({
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const HIDE: V3 = [0.001, 0.001, 0.001]; // the shot arrow's scale outside the shot
-    const LEG = 0.19;
 
     k.animation('idle', {
       duration: 2.4,
@@ -601,13 +600,19 @@ export default defineAsset({
       }),
     });
 
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `hop` the hips bob.
+    // The heel and the toe are the ends of the boot sole on the ground (the boot turns out 12 deg).
     // The bow arm swings less than the free arm and lifts out from the body (`lift`, degrees),
     // so the bow tip clears the ground and the boot while the hips drop at each step.
     // The lift also tilts the upper bow limb (above the shoulder) in toward the hood, so the
     // hand turns back by the lift plus `tiltOut` degrees: the bow leans out, clear of the hood.
     const stride = (
       duration: number,
-      legSwing: number,
+      step: number,
+      footLift: number,
+      duty: number,
       armSwing: number,
       lean: number,
       hop: number,
@@ -618,20 +623,25 @@ export default defineAsset({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.092, 0, -0.025],
+          toe: [0.11, 0, 0.1],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -11 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The hood point bounces twice per cycle, a little after the steps.
           hoodtip: { rotate: [flop * wave(p, 2, 0.2), 0, flop * 0.8 * wave(p, 2, 0.1)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.35 * s, 0, lift] as const },
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.2, 0, 0] as const },
@@ -641,8 +651,8 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, 12, 8));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 12, 19, 6));
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006, 6, 12, 8));
+    k.animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03, 12, 19, 6));
 
     // ------------------------------------------------------------------ attack: a bow shot, solved by targets
     // Plan (in the chest's rest frame): the archer turns side-on, raises the bow in front, brings
