@@ -33,9 +33,9 @@ const C = {
   brow: '#4a3462',
   claw: '#1c1226',
   orange: '#f08a2a',
-  white: '#f6f2ea',
-  red: '#d8282a',
-  redDark: '#8a1418',
+  eyeWhite: '#fdfcf8',
+  iris: '#d8282a',
+  irisRim: '#8a1418',
   pupil: '#3a0a0e',
   fang: '#efe6d0',
 };
@@ -250,10 +250,11 @@ export default defineAsset({
     const bigEye = sdf
       .sphere(EYE_R)
       .at(...eyeC)
-      .paintWhere(cap(eyeC, look, EYE_R, 0.062), C.redDark, 0.002)
-      .paintWhere(cap(eyeC, look, EYE_R, 0.054), C.red, 0.003)
-      .paintWhere(cap(eyeC, look, EYE_R, 0.016), C.pupil, 0.004)
-      .paintWhere(sdf.sphere(0.015).at(eyeC[0] + 0.004, eyeC[1] + 0.024, eyeC[2] + EYE_R - 0.006), C.white, 0.002)
+      // A red iris about half the eye wide, as in the mockup, so a wide white ring shows around it.
+      .paintWhere(cap(eyeC, look, EYE_R, 0.04), C.irisRim, 0.002)
+      .paintWhere(cap(eyeC, look, EYE_R, 0.035), C.iris, 0.003)
+      .paintWhere(cap(eyeC, look, EYE_R, 0.011), C.pupil, 0.003)
+      .paintWhere(sdf.sphere(0.0085).at(eyeC[0] - 0.003, eyeC[1] + 0.0115, eyeC[2] + EYE_R - 0.003), C.eyeWhite, 0.0015)
       // An angry lid in body purple across the top of the eye, lower toward the middle.
       .paintWhere(
         sdf
@@ -262,7 +263,7 @@ export default defineAsset({
         C.body,
         0.002,
       );
-    k.body('eyes', headPose(pair(bigEye)), { color: C.white, roughness: 0.1, textureDensity: 2, bone: 'head' });
+    k.body('eyes', headPose(pair(bigEye)), { color: C.eyeWhite, roughness: 0.1, textureDensity: 2, bone: 'head' });
     // Six small eyeballs on top of the head, as in the mockup: white with red irises.
     const smallEye = (x: number, z: number, r: number) => {
       const h = topHit(x, z);
@@ -271,11 +272,11 @@ export default defineAsset({
       return sdf
         .sphere(r)
         .at(...c)
-        .paintWhere(cap(c, d, r, r * 0.8), C.red, 0.002)
-        .paintWhere(sdf.sphere(r * 0.24).at(c[0] + r * 0.2, c[1] + r * 0.72, c[2] + r * 0.62), C.white, 0.001);
+        .paintWhere(cap(c, d, r, r * 0.8), C.iris, 0.002)
+        .paintWhere(sdf.sphere(r * 0.24).at(c[0] + r * 0.2, c[1] + r * 0.72, c[2] + r * 0.62), C.eyeWhite, 0.001);
     };
     const smallEyes = pair(sdf.union(smallEye(0.048, 0.21, 0.034), smallEye(0.135, 0.17, 0.027), smallEye(0.062, 0.11, 0.03)));
-    k.body('small-eyes', headPose(smallEyes), { color: C.white, roughness: 0.12, textureDensity: 2, bone: 'head' });
+    k.body('small-eyes', headPose(smallEyes), { color: C.eyeWhite, roughness: 0.12, textureDensity: 2, bone: 'head' });
 
     // ------------------------------------------------------------------ fangs: curved pale tusks on their own bones
     const fang = sdf.smoothUnion(

@@ -515,7 +515,7 @@
     "reviewedAt": "2026-09-26T20:35:46+00:00"
   },
   "giant-spider": {
-    "overall": 7.9,
+    "overall": 8.1,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -527,25 +527,25 @@
       "detail": 4,
       "technical": 5,
       "gameReady": 4,
-      "sprite": 4,
+      "sprite": 5,
       "motion": 4
     },
-    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. The attack now has a strong strike and a held bite. In the death, the body stays on the ground through the roll and lies on the small eyes and the abdomen. The eye colors are still open.",
+    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. The big eyes now match the mockup: a bright white eyeball with a red iris about half the eye wide. The attack and the death are unchanged. The attack drive and the fang snap are still open.",
     "strengths": [
-      "The front view is close to the mockup: the heavy brow, the glaring red eyes, the pale fangs, the orange splat, and the small eyeballs on top.",
-      "The attack reads: the spider rears up with the fangs wide, then pitches down 25 degrees and drives 16 cm forward in 0.08 s. The front feet slam down ahead, and the bite holds for 0.15 s.",
-      "In the death, the legs curl, the body drops onto its belly, rolls over the curled knees, and lies on its back. A measurement of every frame shows ground contact with no float."
+      "The big eyes match the mockup: the red iris cap is 0.035 on an eye radius of 0.08, so a wide bright white ring shows around it, with a small dark pupil and a highlight.",
+      "At 128 px, the front sprite shows two white eyes with small red irises under the heavy brow, so the glare reads clearly.",
+      "The attack reads: the spider rears up with the fangs wide, then pitches down and drives 16 cm forward in 0.08 s, and the bite holds for 0.15 s."
     ],
     "issues": [
-      "The big eyes still show a large red iris (cap 0.062 on an eye radius of 0.08) and a thin white ring.",
       "The forward drive in the attack stops at 16 cm, not 20 cm. More drive pulls the back legs beyond their reach, and the back feet then slide.",
-      "In the attack strip, the fang snap is hard to see from the side, because the low head hides the fangs at the bite."
+      "In the attack strip, the fang snap is hard to see from the side, because the low head hides the fangs at the bite.",
+      "The mockup irises show no dark pupil. The model keeps a small dark pupil, which adds a little noise at close range."
     ],
     "next": [
-      "Fix the eye colors: a smaller red iris and a wider white ring, as in the mockup.",
-      "Check the fang snap in a front view of the attack. If it does not read, open the fangs wider at the top of the rear-up."
+      "Check the fang snap in a front view of the attack. If it does not read, open the fangs wider at the top of the rear-up.",
+      "Try more attack drive with a longer back-leg reach, and keep the back feet planted."
     ],
-    "reviewedAt": "2026-09-26T20:44:37+00:00"
+    "reviewedAt": "2026-09-26T21:13:21+00:00"
   },
   "dragon-fire": {
     "overall": 8.4,
