@@ -190,8 +190,8 @@ export default defineAsset({
       ...[EYE[0], -EYE[0]].map((x) => at(sdf.sphere(0.008), x - 0.002, EYE[1] + 0.004)),
     );
     const MOUTH_Y = 0.604;
-    // A scowling upper lip over the underbite: a shallow downturned line.
-    const mouth = sdf.extrude(profile.arc(0.24, 0.009, 72, 108), 0.4).at(0, MOUTH_Y - 0.24, 0.2);
+    // A scowling upper lip over the underbite: a downturned line whose corners run under the tusk roots.
+    const mouth = sdf.extrude(profile.arc(0.06, 0.013, 45, 135), 0.4).at(0, MOUTH_Y - 0.06, 0.2);
     const nostrils = pair(sdf.sphere(0.009).at(0.02, 0.64, faceZ(0, 0.64) + 0.012));
     const skin = sdf
       .smoothUnion(0.04, head, neck)
@@ -262,14 +262,15 @@ export default defineAsset({
       ],
       0.01,
     );
-    // A wide, pointed beard under the mouth, joined to sideburns that run up the jaw to the temples.
-    const jawFront = faceZ(0, 0.55);
+    // A wide, pointed beard that hangs from the chin, joined to sideburns that run up the jaw to the
+    // temples. Its top stays well under the mouth, so a band of green chin shows the frown line.
+    const jawFront = faceZ(0, 0.52);
     const beardStrands = (x: number, y: number, z: number) => Math.sin(x * 90 + Math.sin(y * 30) * 1.5);
     const beard = sdf
       .smoothUnion(
-        0.03,
-        sdf.ellipsoid([0.108, 0.042, 0.05]).at(0, 0.535, jawFront - 0.035),
-        sdf.cone([0, 0.525, jawFront - 0.035], [0, 0.44, jawFront - 0.012], 0.068, 0.016),
+        0.025,
+        sdf.ellipsoid([0.104, 0.034, 0.05]).at(0, 0.51, jawFront - 0.035),
+        sdf.cone([0, 0.5, jawFront - 0.033], [0, 0.435, jawFront - 0.012], 0.064, 0.016),
       )
       .displace(0.003, beardStrands);
     const sideburnPath = [
@@ -405,25 +406,38 @@ export default defineAsset({
     );
 
     // The axe: local frame with the grip at the origin, the haft down (-Y), the blade out to -X.
+    // A large crescent blade: a narrow neck on the haft, horns that curl up and down, and a wide
+    // convex edge (an arc about EDGE_C). A bright band of worn iron follows the edge.
+    // (A lens that thins the blade toward the edge breaks the triangle reduction; keep it flat.)
+    const EDGE_C: [number, number] = [-0.05, -0.165];
+    const EDGE_R = 0.168;
+    const edgeRing = (r: number) => sdf.cylinder(r, 0.4).rotateX(90).at(EDGE_C[0], EDGE_C[1], 0);
     const axeHead = sdf
       .extrude(
         profile.polygon(
           [
-            [0.012, -0.15],
-            [-0.05, -0.13],
-            [-0.11, -0.1],
-            [-0.14, -0.17],
-            [-0.12, -0.26],
-            [-0.05, -0.25],
-            [0.012, -0.235],
+            [0.014, -0.135],
+            [-0.035, -0.145],
+            [-0.085, -0.125],
+            [-0.135, -0.085],
+            [-0.17, -0.045], // the upper horn
+            [-0.2, -0.085],
+            [-0.217, -0.145],
+            [-0.212, -0.205],
+            [-0.195, -0.25],
+            [-0.165, -0.285], // the lower horn
+            [-0.115, -0.266],
+            [-0.07, -0.25],
+            [-0.035, -0.245],
+            [0.014, -0.245],
           ],
           { smooth: true, samples: 4 },
         ),
         0.024,
         0.007,
       )
-      .union(sdf.cone([0.01, -0.192, 0], [0.075, -0.19, 0], 0.02, 0.004)) // back spike
-      .paintWhere(sdf.cylinder(0.1, 0.4).rotateX(90).at(-0.02, -0.19, 0).subtract(sdf.cylinder(0.088, 0.5).rotateX(90).at(-0.02, -0.19, 0)), C.ironLight, 0.004);
+      .union(sdf.cone([0.01, -0.19, 0], [0.075, -0.188, 0], 0.02, 0.004)) // back spike
+      .paintWhere(edgeRing(EDGE_R + 0.03).subtract(edgeRing(EDGE_R - 0.022)), C.ironLight, 0.004);
     const GRIP: V3 = [-WRIST[0] - 0.006, WRIST[1] - 0.064, WRIST[2] + 0.02];
     const axePose = (s: sdf.Shape) => s.scale(1.14).rotateZ(-12).rotateX(-40).at(...GRIP);
     const ironBump = (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 60, z * 60, 2);
@@ -433,7 +447,7 @@ export default defineAsset({
       metalness: 0.75,
       bump: ironBump,
     });
-    k.body('axe-head', axePose(axeHead), { color: C.iron, roughness: 0.45, metalness: 0.8, bump: ironBump, bone: 'hand.R' });
+    k.body('axe-head', axePose(axeHead), { color: C.iron, roughness: 0.45, metalness: 0.8, bump: ironBump, bone: 'hand.R', detail: 0.004 });
     k.body('spikes', spikes.bone('upperarm.R'), { color: C.iron, roughness: 0.4, metalness: 0.8, detail: 0.004 });
     k.body('haft', axePose(sdf.cylinder(0.019, 0.3, 0.006).at(0, -0.09, 0)), {
       color: C.wood,

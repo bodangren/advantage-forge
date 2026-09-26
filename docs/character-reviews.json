@@ -359,7 +359,7 @@
     "reviewedAt": "2026-09-26T04:49:52+00:00"
   },
   "orc-warrior": {
-    "overall": 8,
+    "overall": 8.3,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -373,22 +373,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The orc warrior is a stocky brute with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a hand axe. The hair and the loincloth now match the mmx mockup better, and it has the full clip set.",
+    "summary": "The orc warrior is a stocky brute with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a large crescent axe. The beard now hangs below a green chin band, so the frown and the tusk roots show. The full clip set passes the clip check.",
     "strengths": [
-      "The hair now has thick grooved strands that sweep back to the topknot, as in the mockup.",
-      "The loincloth is now a torn red cloth with jagged points over a fur skirt, as in the mockup.",
-      "The clips read well: a high overhead chop, a roar with the axe up, a quick hit, and a fall that ends on the back."
+      "The axe blade is now a large crescent with an upper horn, a lower horn, and a bright worn edge, as in the mockup. It reads at 128 px.",
+      "The beard starts below the chin, so a green band shows the downturned mouth line and the tusk roots between the tusks.",
+      "The chop reads well: a high wind-up behind the shoulder, a swing over the top, and an impact in front. The edge leads the whole swing."
     ],
     "issues": [
-      "The tusks are wide flat plates on the cheeks. The mockup tusks curve up from the lower jaw.",
-      "The mouth is hidden under the beard. The mockup shows a clear frown between the tusks.",
-      "The axe blade is a small flat wedge. The mockup blade is a large curved crescent."
+      "The frown line is thin. At 128 px it is only a short dark stroke between the tusks.",
+      "The axe blade is a flat plate with a painted edge. A blade that thins to the edge broke the triangle reduction, so the bevel is not in the shape.",
+      "The beard is one smooth black mass with shallow strands. The mockup beard is fuller, with thick locks and a sharper point."
     ],
     "next": [
-      "Make the tusks narrower and curve them up from the lower jaw.",
-      "Paint a short dark frown line between the tusks, above the beard."
+      "Add a small lower-lip bulge under the mouth line, so the frown reads at 128 px.",
+      "Give the beard thick locks and a sharper point, as in the mockup."
     ],
-    "reviewedAt": "2026-09-26T13:16:54+00:00"
+    "reviewedAt": "2026-09-26T13:35:28+00:00"
   },
   "bandit": {
     "overall": 8,
