@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js';
 
 /**
  * Animated armor — Chibi Quest dungeon enemy: an empty, haunted suit of plate, about 0.98 m to
@@ -35,9 +35,12 @@ const C = {
   eye: '#3ff0e0',
   purple: '#5a3a7a',
   purpleDark: '#3e2656',
+  cape: '#3a2656',
+  capeDark: '#221433',
   leather: '#3a2a22',
-  blade: '#9aa0a8',
-  bladeEdge: '#bcc2ca',
+  blade: '#4c525a',
+  bladeEdge: '#7a8088',
+  bladeFuller: '#3a3f46',
 };
 
 type V3 = readonly [number, number, number];
@@ -61,12 +64,20 @@ const alignY = (s: sdf.Shape, d: V3, p: V3) => {
     .at(...p);
 };
 
-/** Rust and wear on dark steel: orange-brown blotches and lighter scuffs. */
+/**
+ * Rust and wear on dark steel: fine rust specks that gather in patches, thin light scratches, and
+ * a few worn, brighter spots. Fine enough to read as texture, not as blotches.
+ */
+const RUST: readonly [number, number, number] = [0.46, 0.25, 0.14];
 const rusty = (x: number, y: number, z: number, base: readonly [number, number, number]): readonly [number, number, number] => {
-  const n = noise.fbm(x * 16, y * 16, z * 16, 3);
-  if (n > 0.52) return [0.54, 0.3, 0.18];
-  if (n > 0.38) return [base[0] * 0.8 + 0.54 * 0.2, base[1] * 0.8 + 0.3 * 0.2, base[2] * 0.8 + 0.18 * 0.2];
-  if (n < -0.45) return [base[0] * 1.15, base[1] * 1.15, base[2] * 1.15];
+  const patch = noise.fbm(x * 7, y * 7, z * 7, 2);
+  const speck = noise.fbm(x * 70, y * 70, z * 70, 2);
+  if (speck + patch * 0.6 > 0.72) return RUST;
+  if (speck + patch * 0.6 > 0.56) return [base[0] * 0.65 + RUST[0] * 0.35, base[1] * 0.65 + RUST[1] * 0.35, base[2] * 0.65 + RUST[2] * 0.35];
+  // Scratches: thin lines on a slant, only in some places.
+  const sc = Math.abs(Math.sin(x * 150 + y * 90 - z * 60 + noise.fbm(x * 12, y * 12, z * 12, 2) * 4));
+  if (sc > 0.994 && patch < 0.1) return [base[0] * 1.35, base[1] * 1.35, base[2] * 1.35];
+  if (patch < -0.42) return [base[0] * 1.12, base[1] * 1.12, base[2] * 1.12];
   return base;
 };
 const dents = (x: number, y: number, z: number) => 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2);
@@ -104,6 +115,10 @@ export default defineAsset({
       head: { parent: 'neck', at: [0, 0.48, -0.01] },
       plume: { parent: 'head', at: PLUME_AT, tail: [0.02, 1.05, -0.03] },
       cloak: { parent: 'chest', at: [0, 0.41, -0.13] },
+      // The eye glow on its own bone, so the death can put it out; the sword on its own bone, so
+      // it can fall from the hand.
+      glow: { parent: 'head', at: [0, 0.678, 0.17] },
+      weapon: { parent: 'hand.R', at: FIST_R },
       'upperarm.L': { parent: 'chest', at: SHOULDER },
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
@@ -117,8 +132,9 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ great helm: a dome with a black visor opening
-    const helmOuter = sdf.ellipsoid([0.24, 0.255, 0.235]).at(...HELM_C);
-    const helmInner = sdf.ellipsoid([0.222, 0.237, 0.217]).at(...HELM_C);
+    // A tall kettle helm: a dome over nearly straight sides (the ellipsoid stretched in the middle).
+    const helmOuter = sdf.ellipsoid([0.24, 0.215, 0.235]).elongate(0, 0.045, 0).at(...HELM_C);
+    const helmInner = sdf.ellipsoid([0.222, 0.197, 0.217]).elongate(0, 0.045, 0).at(...HELM_C);
     const helmBottom = sdf.halfSpace([0, -1, 0], -0.48);
     const BAND_Y = 0.735;
     const PLATE_TOP = 0.632;
@@ -149,13 +165,13 @@ export default defineAsset({
     k.body('helm', helm, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
 
     // Nothing inside: a black void fills the helm, with two glowing eyes on it.
-    const voidShape = sdf.ellipsoid([0.2, 0.2, 0.19]).at(HELM_C[0], HELM_C[1] - 0.01, HELM_C[2] + 0.005).intersect(helmBottom);
+    const voidShape = sdf.ellipsoid([0.2, 0.17, 0.19]).elongate(0, 0.04, 0).at(HELM_C[0], HELM_C[1] - 0.01, HELM_C[2] + 0.005).intersect(helmBottom);
     k.body('void', voidShape.bone('head'), { color: C.void, roughness: 1 });
     const EYE_Y = 0.678;
     const eyeZ = (x: number) => sdf.raycast(voidShape, [x, EYE_Y, 1], [0, 0, -1])![2];
     // Oval eyes, tilted a little (inner ends lower): a cold glare.
     const eyes = sdf.union(...[1, -1].map((s) => sdf.ellipsoid([0.036, 0.027, 0.014]).rotateZ(s * 10).at(s * 0.078, EYE_Y, eyeZ(0.078) - 0.004)));
-    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.6 });
+    k.body('eyes', eyes, { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.6, bone: 'glow' });
 
     // The face plate (bevor): a curved plate over the lower front, standing proud of the helm,
     // with a rolled top edge and three pairs of breathing slots.
@@ -165,8 +181,9 @@ export default defineAsset({
       .round(0.022)
       .subtract(helmOuter.round(0.004))
       .smoothIntersect(0.004, sdf.box([0.44, 0.016, 0.3], 0.006).at(0, PLATE_TOP - 0.006, 0.14));
+    // Four pairs of small square breathing holes, as in the mockup.
     const slots = sdf.union(
-      ...[-0.1, -0.058, 0.058, 0.1, -0.02, 0.02].map((x) => sdf.box([0.018, 0.03, 0.4], 0.003).at(x, 0.575, 0.2)),
+      ...[-0.126, -0.046, 0.046, 0.126].flatMap((c) => [c - 0.014, c + 0.014].map((x) => sdf.box([0.018, 0.028, 0.4], 0.003).at(x, 0.58, 0.2))),
     );
     const facePlate = sdf
       .smoothUnion(0.006, plateShell, plateRim)
@@ -469,8 +486,8 @@ export default defineAsset({
       .at(0, 0, -0.025)
       .intersect(sdf.halfSpace([0, 0, 1], -0.02))
       .subtract(tears)
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), C.purpleDark, 0.04);
-    k.body('cape', cape.bone('cloak'), { color: C.purple, roughness: 0.85 });
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.14), C.capeDark, 0.05);
+    k.body('cape', cape.bone('cloak'), { color: C.cape, roughness: 0.88 });
 
     // ------------------------------------------------------------------ legs: knee cops, greaves, sabatons (the knight's)
     const knee = sdf.ellipsoid([0.058, 0.034, 0.052]).at(0.095, 0.11, 0.022).bone('leg.L');
@@ -514,20 +531,21 @@ export default defineAsset({
       )
       .subtract(sdf.box([0.018, 0.03, 0.1], 0.003).at(0, -0.1, 0)) // the square hole below the guard
       .subtract(chip(-0.24, 1, 0.012), chip(-0.33, -1, 0.01), chip(-0.4, 1, 0.009))
-      .paintWhere(sdf.box([0.2, 1, 0.2]).at(0, -0.3, 0).subtract(sdf.box([BW - 0.024, 1, 0.3]).at(0, -0.3, 0)), C.bladeEdge, 0.004)
-      .paintFn((x, y, z, base) => (noise.fbm(x * 30, y * 30, z * 30, 2) > 0.45 ? [0.5, 0.33, 0.24] : base));
+      .paintWhere(sdf.box([0.2, 1, 0.2]).at(0, -0.3, 0).subtract(sdf.box([BW - 0.022, 1, 0.3]).at(0, -0.3, 0)), C.bladeEdge, 0.004)
+      .paintWhere(sdf.box([0.012, 0.34, 0.3], 0.004).at(0, -0.29, 0), C.bladeFuller, 0.004) // a dark fuller down the middle
+      .paintFn(rusty);
     k.body('sword', swordPose(bladeLocal), {
       color: C.blade,
-      roughness: 0.4,
-      metalness: 0.8,
+      roughness: 0.5,
+      metalness: 0.65,
       detail: 0.0035,
-      bone: 'hand.R',
+      bone: 'weapon',
       bump: dents,
     });
-    const guard = sdf.box([0.15, 0.022, 0.03], 0.009).at(0, -0.062, 0);
-    const pommel = sdf.cylinder(0.024, 0.02, 0.007).rotateX(90).at(0, 0.075, 0);
-    k.body('hilt', swordPose(sdf.union(guard, pommel)), { color: C.brass, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'hand.R' });
-    k.body('grip', swordPose(sdf.cylinder(0.014, 0.13, 0.004)), { color: C.leather, roughness: 0.75, detail: 0.004, bone: 'hand.R' });
+    const guard = sdf.box([0.15, 0.022, 0.03], 0.009).at(0, -0.082, 0);
+    const pommel = sdf.cylinder(0.024, 0.02, 0.007).rotateX(90).at(0, 0.098, 0);
+    k.body('hilt', swordPose(sdf.union(guard, pommel)), { color: C.brass, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'weapon' });
+    k.body('grip', swordPose(sdf.cylinder(0.016, 0.18, 0.004).at(0, 0.006, 0)), { color: C.leather, roughness: 0.75, detail: 0.004, bone: 'weapon' });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
@@ -577,21 +595,24 @@ export default defineAsset({
     k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20));
 
     // A diagonal slash, solved by targets. The wrist follows keys in the chest's rest frame
-    // (reach); the blade follows its own keys: the backswing rises on the right side, the cut
-    // comes over the right shoulder and down across the front to the low left, and edgeUp turns
-    // the flat so the edge leads.
+    // (reach); the blade follows its own keys. The chibi arm is short and the helm is huge, so the
+    // path goes around the helm: the backswing rises on the right side, out beside the helm; the
+    // blade comes forward on the right, pointing up and out, then sweeps down and across the front
+    // below the helm's rim to the low left. edgeUp turns the flat so the edge leads.
     const { keys, reach, orient, edgeUp } = motion;
     const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
     const FLAT = norm([0, 0.66, 0.75]); // the blade's flat normal at rest (from swordPose)
     const bladeKeys = [
       [0, BLADE_DIR],
-      [0.12, norm([0.0, -0.7, 0.7])], // down in front
+      [0.12, norm([0.1, -0.5, 0.86])], // down in front, the tip clear of the floor
       [0.22, norm([-0.9, 0.1, 0.35])], // out to the right
-      [0.32, norm([-0.35, 0.75, -0.55])], // up and back over the right shoulder
-      [0.4, norm([-0.3, 0.72, -0.62])], // the hold at the top
-      [0.47, norm([0.05, 0.6, 0.8])], // over the shoulder toward the front
-      [0.52, norm([0.7, -0.05, 0.7])], // across the front, pointing left
-      [0.57, norm([0.72, -0.5, 0.45])], // low left, a little past the rest pose
+      [0.32, norm([-0.5, 0.7, -0.5])], // up and back, out beside the helm
+      [0.4, norm([-0.48, 0.66, -0.58])], // the hold at the top
+      [0.45, norm([-0.55, 0.55, 0.62])], // comes forward on the right, up and out
+      [0.49, norm([-0.2, 0.2, 0.96])], // level, pointing forward, under the helm's rim
+      [0.53, norm([0.55, -0.2, 0.8])], // sweeping across the front to the left
+      [0.58, norm([0.82, -0.36, 0.44])], // low left, past the rest pose
       [1, BLADE_DIR],
     ] as const;
     const bladeAt = (p: number) => keys(p, bladeKeys, 'spline');
@@ -600,34 +621,40 @@ export default defineAsset({
       return t * t * (3 - 2 * t);
     };
     k.animation('attack', {
-      duration: 0.9,
+      duration: 0.95,
       loop: false,
       pose: (_t, p) => {
         const wrist = keys(
           p,
           [
             [0, WRIST_R],
-            [0.14, [-0.24, 0.3, 0.06]],
-            [0.24, [-0.27, 0.38, 0.0]],
-            [0.32, [-0.24, 0.53, -0.03]],
-            [0.4, [-0.245, 0.545, -0.04]],
-            [0.47, [-0.16, 0.47, 0.13]],
-            [0.52, [-0.08, 0.36, 0.17]],
-            [0.57, [-0.04, 0.28, 0.17]],
+            [0.12, [-0.24, 0.3, 0.06]],
+            [0.22, [-0.27, 0.38, 0.0]],
+            [0.32, [-0.3, 0.47, -0.04]],
+            [0.4, [-0.305, 0.475, -0.045]],
+            [0.45, [-0.29, 0.47, 0.08]],
+            [0.49, [-0.18, 0.43, 0.17]],
+            [0.53, [-0.18, 0.36, 0.21]],
+            [0.58, [-0.15, 0.32, 0.22]],
+            [0.7, [-0.16, 0.31, 0.21]],
             [1, WRIST_R],
           ] as const,
           'spline',
         );
         const dir = norm(bladeAt(p));
-        const arm = reach(ARM_R, wrist, [-0.6, 0.2, -0.2]);
+        // The elbow points out and back in the wind-up, then out and forward through the cut, so
+        // the forearm stays in front of the breastplate.
+        const pole = keys(p, [[0, [-0.6, 0.1, -0.2]], [0.45, [-0.6, 0.2, -0.1]], [0.52, [-0.5, 0.0, 0.5]], [0.8, [-0.5, 0.0, 0.5]], [1, [-0.6, 0.1, -0.2]]] as const);
+        const arm = reach(ARM_R, wrist, pole);
         const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up: edgeUp(bladeAt, p, FLAT) });
-        const wind = ease(0, 0.32, p) * (1 - ease(0.42, 0.52, p));
-        const cut = ease(0.44, 0.57, p) * (1 - ease(0.68, 1, p));
+        const wind = ease(0, 0.32, p) * (1 - ease(0.42, 0.5, p));
+        const cut = ease(0.43, 0.56, p) * (1 - ease(0.7, 1, p));
         return {
           hips: { move: [0, -legDrop(LEG, 14 * cut) - 0.006 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, -12 * wind + 16 * cut, 0] },
           spine: { rotate: [-4 * wind + 10 * cut, 0, 0] },
           chest: { rotate: [-3 * wind + 4 * cut, -18 * wind + 22 * cut, 0] },
-          head: { rotate: [-4 * wind + 6 * cut, 14 * wind - 16 * cut, 0] },
+          head: { rotate: [-3 * wind + 4 * cut, 14 * wind - 16 * cut, 0] },
+          plume: { rotate: [-8 * wind + 14 * cut, 0, 0] },
           'upperarm.R': { rotate: arm.upper },
           'forearm.R': { rotate: arm.lower },
           'hand.R': { rotate: hand },
@@ -637,6 +664,130 @@ export default defineAsset({
           'leg.R': { rotate: [-4 * wind + 12 * cut, 0, 0] },
           'foot.L': { rotate: [12 * cut, 0, 0] },
           cloak: { rotate: [6 * cut, 0, 0] },
+        };
+      },
+    });
+
+    // Hit: the blow knocks the loose helm up and back off the collar; it clanks down again.
+    k.animation('hit', {
+      duration: 0.42,
+      loop: false,
+      pose: (_t, p) => {
+        const r = keys(p, [[0, 0], [0.15, 1], [0.36, 0.7], [1, 0]] as const);
+        const pop = keys(p, [[0, 0], [0.12, 1], [0.34, 0], [0.44, 0.3], [0.56, 0], [1, 0]] as const);
+        const back = -0.022 * r;
+        const legL = (Math.atan2(back, 0.19) * 180) / Math.PI;
+        return {
+          hips: { move: [0, -legDrop(LEG, 12 * r), back], rotate: [0, 6 * r, 0] },
+          spine: { rotate: [-7 * r, 0, 3 * r] },
+          chest: { rotate: [-8 * r, 8 * r, 0] },
+          head: { move: [0, 0.035 * pop, -0.015 * pop], rotate: [-14 * r, -10 * r, 7 * pop] },
+          plume: { rotate: [16 * r, 0, -8 * r] },
+          glow: { scale: [1 + 0.3 * r, 1 + 0.3 * r, 1] },
+          cloak: { rotate: [6 * r, 0, 0] },
+          'hand.R': { rotate: [-8 * r, 0, 0] },
+          'upperarm.L': { rotate: [12 * r, 0, 24 * r] },
+          'forearm.L': { rotate: [-18 * r, 0, 0] },
+          'upperarm.R': { rotate: [10 * r, 0, -14 * r] },
+          'hand.L': { move: [0.01 * pop, 0.012 * pop, 0] },
+          'leg.L': { rotate: [legL, 0, 0] },
+          'foot.L': { rotate: [-legL, 0, 0] },
+          'leg.R': { rotate: [12 * r, 0, 0] },
+          'foot.R': { rotate: [-12 * r, 0, 0] },
+        };
+      },
+    });
+
+    // Death: the eyes flicker, the suit shudders, then it falls apart into a pile of loose armor:
+    // the hips drop, the legs splay, the arms fall off to the sides, the helm tumbles off the
+    // collar and lands on the ground in front, and the glow goes out. The helm is placed by world
+    // targets: its pivot and turn are converted into the neck's posed frame.
+    const { quat, euler } = motion;
+    const SPINE_AT: V3 = [0, 0.26, 0];
+    const CHEST_AT: V3 = [0, 0.33, 0];
+    const NECK_AT: V3 = [0, 0.43, -0.01];
+    const HEAD_AT: V3 = [0, 0.48, -0.01];
+    // Forward kinematics with moves: where a bone's pivot is and how its parent's frame is turned.
+    // `joints` are the rest pivots from the root down to the parent, `rots` and `moves` their pose
+    // (each move is in its own parent's frame), `child` the rest pivot of the bone to place.
+    const fk = (joints: readonly V3[], rots: readonly V3[], moves: readonly V3[], child: V3) => {
+      const q = new THREE.Quaternion();
+      const pos = new THREE.Vector3(joints[0]![0] + moves[0]![0], joints[0]![1] + moves[0]![1], joints[0]![2] + moves[0]![2]);
+      for (let i = 0; i < joints.length; i++) {
+        q.multiply(quat(rots[i]!));
+        const next = i + 1 < joints.length ? joints[i + 1]! : child;
+        const mv = i + 1 < joints.length ? moves[i + 1]! : ([0, 0, 0] as V3);
+        pos.add(new THREE.Vector3(next[0] - joints[i]![0] + mv[0], next[1] - joints[i]![1] + mv[1], next[2] - joints[i]![2] + mv[2]).applyQuaternion(q));
+      }
+      return { at: [pos.x, pos.y, pos.z] as V3, q };
+    };
+    // The pose (move, rotate) that puts a bone's pivot at `want` with the world turn `turn`,
+    // blended from its attached pose (`attached`, local) by `loose` (0 attached, 1 free).
+    const release = (frame: { at: V3; q: THREE.Quaternion }, attached: THREE.Quaternion, want: V3, turn: THREE.Quaternion, loose: number, lift = 0) => {
+      const inv = frame.q.clone().invert();
+      const w: V3 = [
+        frame.at[0] + (want[0] - frame.at[0]) * loose,
+        frame.at[1] + lift * (1 - loose) + (want[1] - frame.at[1]) * loose,
+        frame.at[2] + (want[2] - frame.at[2]) * loose,
+      ];
+      const d = new THREE.Vector3(w[0] - frame.at[0], w[1] - frame.at[1], w[2] - frame.at[2]).applyQuaternion(inv);
+      return { move: [d.x, d.y, d.z] as V3, rotate: euler(inv.multiply(frame.q.clone().multiply(attached).slerp(turn, loose))) };
+    };
+    const HIPS_AT: V3 = [0, 0.2, 0];
+    const Z3: V3 = [0, 0, 0];
+    // The sword lying flat on the ground, pointing forward and a little to the right.
+    const SWORD_DOWN = quat(orient([], { dir: BLADE_DIR, up: FLAT }, { dir: norm([-0.35, 0, 0.94]), up: [0, 1, 0] }));
+    k.animation('death', {
+      duration: 1.5,
+      loop: false,
+      pose: (_t, p) => {
+        const shudder = p > 0.12 && p < 0.36 ? wave((p - 0.12) / 0.24, 5) * Math.sin(((p - 0.12) / 0.24) * Math.PI) : 0;
+        const glow = keys(p, [[0, 1], [0.05, 0.35], [0.09, 1], [0.2, 0.9], [0.25, 0.25], [0.3, 0.85], [0.6, 0.7], [0.66, 0.2], [0.7, 0.55], [0.8, 0.02], [1, 0.02]] as const);
+        const drop = keys(p, [[0, 0], [0.36, 0], [0.5, 1], [0.55, 0.9], [0.6, 1], [1, 1]] as const);
+        const off = keys(p, [[0, 0], [0.4, 0], [0.56, 1], [1, 1]] as const);
+        const hipsMove: V3 = [0, -0.135 * drop, -0.03 * drop];
+        const hipsR: V3 = [-6 * drop, 12 * drop, 3 * drop + 2 * shudder];
+        const spineR: V3 = [keys(p, [[0, 0], [0.1, -8], [0.36, -4], [0.52, 14], [0.6, 18], [1, 18]] as const) + 2 * shudder, 0, 0];
+        const chestR: V3 = [keys(p, [[0, 0], [0.1, -6], [0.36, -3], [0.52, 12], [0.62, 16], [1, 16]] as const), 3 * shudder, -5 * drop];
+        const neckR: V3 = [0, 0, 0];
+        // The helm: on the collar until 0.4 (it lifts a little as the body sinks), then it falls
+        // off forward, hits the ground in front at 0.58, bounces, and rolls onto its side.
+        const loose = keys(p, [[0, 0], [0.4, 0], [0.58, 1], [1, 1]] as const);
+        const frame = fk([HIPS_AT, SPINE_AT, CHEST_AT, NECK_AT], [hipsR, spineR, chestR, neckR], [hipsMove, Z3, Z3, Z3], HEAD_AT);
+        const pop = keys(p, [[0, 0], [0.34, 0], [0.4, 0.05], [0.45, 0.06]] as const);
+        const attached = quat([keys(p, [[0, 0], [0.1, -14], [0.36, -6], [0.45, 10]] as const), 0, 4 * shudder]);
+        const land = keys(p, [[0.4, [0.0, 0.45, 0.06]], [0.5, [0.03, 0.3, 0.24]], [0.58, [0.05, 0.115, 0.32]], [0.64, [0.06, 0.14, 0.34]], [0.72, [0.07, 0.116, 0.36]], [1, [0.07, 0.116, 0.36]]] as const, 'spline');
+        const turn = quat(keys(p, [[0.4, [10, 0, 0]], [0.5, [30, 10, -10]], [0.58, [-8, 18, -20]], [0.64, [-14, 20, -14]], [0.72, [-20, 24, -30]], [1, [-20, 25, -31]]] as const));
+        const head = release(frame, attached, land, turn, loose, pop);
+        // The sword slips out of the fist as the arm drops and falls flat on the ground at the right.
+        const armRMove: V3 = [-0.05 * off, -0.08 * off, -0.02 * off];
+        const armRRot: V3 = [keys(p, [[0, 0], [0.1, 10], [0.4, 0], [0.56, 25], [1, 28]] as const), 0, keys(p, [[0, 0], [0.1, -18], [0.4, -8], [0.56, -70], [0.64, -62], [1, -66]] as const)];
+        const foreRRot: V3 = [keys(p, [[0, 0], [0.5, 10], [1, 10]] as const), 0, 0];
+        const handRRot: V3 = [0, 0, 0];
+        const swordFrame = fk([HIPS_AT, SPINE_AT, CHEST_AT, mx(SHOULDER), ELBOW_R, WRIST_R], [hipsR, spineR, chestR, armRRot, foreRRot, handRRot], [hipsMove, Z3, Z3, armRMove, Z3, Z3], FIST_R);
+        const swordLoose = keys(p, [[0, 0], [0.36, 0], [0.5, 1], [1, 1]] as const);
+        const swordLand = keys(p, [[0.36, [-0.3, 0.2, 0.12]], [0.5, [-0.32, 0.024, 0.14]], [0.55, [-0.32, 0.05, 0.15]], [0.6, [-0.33, 0.024, 0.15]], [1, [-0.33, 0.024, 0.15]]] as const);
+        const weapon = release(swordFrame, quat([keys(p, [[0, 0], [0.1, -14], [0.36, -12], [0.44, -30]] as const), 0, 0]), swordLand, SWORD_DOWN, swordLoose);
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          head,
+          glow: { scale: [glow, glow, glow] },
+          plume: { rotate: [keys(p, [[0, 0], [0.44, -20], [0.6, 30], [0.72, -10], [1, 0]] as const), 0, 0] },
+          cloak: { rotate: [keys(p, [[0, 0], [0.36, -6], [0.44, 12], [0.52, 50], [0.62, 58], [0.7, 50], [1, 54]] as const), 0, 0] },
+          // The arms come off at the shoulders and fall to the sides.
+          'upperarm.L': { move: [0.05 * off, -0.08 * off, -0.02 * off], rotate: [keys(p, [[0, 0], [0.1, 12], [0.4, 0], [0.56, 20], [1, 24]] as const), 0, keys(p, [[0, 0], [0.1, 22], [0.4, 10], [0.56, 72], [0.64, 64], [1, 68]] as const)] },
+          'forearm.L': { rotate: [keys(p, [[0, 0], [0.1, -20], [0.5, 10], [1, 12]] as const), 0, 0] },
+          'hand.L': { rotate: [keys(p, [[0, 0], [0.5, 0], [0.7, 30], [1, 30]] as const), 0, 0] },
+          'upperarm.R': { move: armRMove, rotate: armRRot },
+          'forearm.R': { rotate: foreRRot },
+          'hand.R': { rotate: handRRot },
+          weapon,
+          'leg.L': { rotate: [keys(p, [[0, 0], [0.36, 0], [0.54, -24], [1, -26]] as const), 0, keys(p, [[0, 0], [0.36, 0], [0.54, 70], [0.6, 64], [1, 66]] as const)] },
+          'leg.R': { rotate: [keys(p, [[0, 0], [0.36, 0], [0.54, -14], [1, -16]] as const), 0, keys(p, [[0, 0], [0.36, 0], [0.54, -72], [0.6, -66], [1, -68]] as const)] },
+          'foot.L': { rotate: [keys(p, [[0, 0], [0.4, 0], [0.56, 20], [1, 20]] as const), 0, keys(p, [[0, 0], [0.4, 0], [0.56, -40], [1, -40]] as const)] },
+          'foot.R': { rotate: [keys(p, [[0, 0], [0.4, 0], [0.56, 12], [1, 12]] as const), 0, keys(p, [[0, 0], [0.4, 0], [0.56, 40], [1, 40]] as const)] },
         };
       },
     });
