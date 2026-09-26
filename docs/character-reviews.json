@@ -788,5 +788,38 @@
       "Add a string bone, so the draw pulls the string back to the jaw."
     ],
     "reviewedAt": "2026-09-26T09:26:56+00:00"
+  },
+  "giant-rat": {
+    "overall": 8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The giant rat matches its mmx mockup: a fat, hunched rat on its hind legs with huge round pink-lined ears, bulging red eyes under angry brows, a pink nose, a jagged yellow grin with buck teeth, pale head spikes, gray back tufts, a red neckerchief, and a long ringed tail with a bandage.",
+    "strengths": [
+      "The round ears, the head spikes, the back tufts, and the long tail give a clear silhouette from every side.",
+      "The white eyes with red irises and the pink nose on the cream muzzle read at 128 px in the front sprites.",
+      "The walk is a side-to-side waddle, and the attack raises the claws beside the head, then lunges into a bite and a rake."
+    ],
+    "issues": [
+      "In the side view the snout is shorter and flatter than the mockup, so the profile is less pointed.",
+      "The body stands more upright than the mockup; the mockup leans forward with the head ahead of the belly.",
+      "The belly and the fur are smooth; the mockup has a wrinkled belly and shaggier fur."
+    ],
+    "next": [
+      "Push the snout and the nose 0.03 m forward, and lean the chest and the head forward a little.",
+      "Add fur clumps in the bump along the sides and a few belly folds in the paint."
+    ],
+    "reviewedAt": "2026-09-26T09:42:16+00:00"
   }
 }
