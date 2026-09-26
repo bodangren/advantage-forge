@@ -256,38 +256,37 @@
     "reviewedAt": "2026-09-26T18:55:23+00:00"
   },
   "horned-boar": {
-    "overall": 8,
+    "overall": 7.5,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
-      "silhouette": 5,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 5,
+      "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
+      "technical": 4,
       "gameReady": 5,
-      "sprite": 5,
+      "sprite": 4,
       "motion": 4
     },
-    "summary": "The horned boar is rebuilt in the chibi style from a new mmx mockup. It is all head and shoulders: a huge angry head, a pink snout, upturned tusks, and cream horns.",
+    "summary": "The horned boar has the angry chibi face of the mockup in the front views and a full set of six clips. The two requests from the last review are still open: the snout is short and the horn tips are thin. A new fault: the shin fur comes through the hoof soles.",
     "strengths": [
-      "The eyes, the horns, the tusks, and the pink snout read in all eight sprite directions.",
-      "The black brows slope down toward the snout, so the face reads as angry but cute.",
-      "It keeps everything the bench brief asks for: tusks, a bristle mane, glowing eyes, and the walk, charge, and idle clips. It also has a new gore attack.",
-      "It is light: 26,188 triangles."
+      "The front and three-quarter views match the mockup: a big angry head, a pink snout, upturned tusks, cream horns, and a black bristle mane.",
+      "The death reads clearly. The boar recoils and staggers, the front legs buckle, and the boar rolls onto its right side. No part goes below the ground.",
+      "The asset is light and complete: 26,188 triangles and six clips. The clip check gives 'ground ok'."
     ],
     "issues": [
-      "From the side, the head looks smaller than in the mockup, because the snout is short in profile.",
-      "The horns are thinner at the tips than the thick crescents in the mockup.",
-      "The small teeth show only as a row under the snout. The mockup shows a wider open grin."
+      "The fur of each shin comes through the hoof sole. The shin cone ends at y = 0.06 with radius 0.068, so the fur reaches y = -0.008. In the death, the raised soles show a brown disc in a black ring.",
+      "The snout is still short in profile. In the side view and in the W and E sprites, the snout is only a small pink edge, and the head looks flat.",
+      "The attack reads as a boar gore, but a weak one. The head drops only to chest height, and the body drives forward only 7 cm. From the side, the short tusks do not lead the toss."
     ],
     "next": [
-      "Make the snout 20 percent longer so that the head reads larger from the side.",
-      "Thicken the horn tips."
+      "Make the snout 20 percent longer. This request from the last review is still open. A longer snout gives a boar profile in the side view, the W and E sprites, and the attack.",
+      "Make the hoof soles solid black: end the shin cones at y = 0.1, inside the hooves. The thicker horn tips from the last review are still open, but they have a lower value."
     ],
-    "reviewedAt": "2026-09-26T04:31:24+00:00"
+    "reviewedAt": "2026-09-26T19:16:14+00:00"
   },
   "goblin-archer": {
     "overall": 8.3,
