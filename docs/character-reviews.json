@@ -525,5 +525,38 @@
       "Widen the cream muzzle toward the cheeks."
     ],
     "reviewedAt": "2026-09-26T05:48:30+00:00"
+  },
+  "giant-spider": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 3,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The giant spider takes the mmx mockup's glaring red eyes, pale fangs, and chunky orange-banded legs, with the big abdomen moved behind the head so it reads as a spider from every side.",
+    "strengths": [
+      "It reads as a spider in all eight sprite directions, and the orange skull on the abdomen is a strong mark from behind.",
+      "The purple and orange palette with red eyes is unique in the set and easy to spot.",
+      "The four-leg alternating gait and the rear-up strike both read in the side view."
+    ],
+    "issues": [
+      "I changed the mockup's anatomy on purpose: its round body sits under the head, and here it sits behind. So the front view is less like the mockup.",
+      "Seen from above in the sprites, the brow shelf hides much of the big eyes, and the four small eyes read as red dots.",
+      "The body is one smooth fuzz texture. The mockup has more shape in the head, such as a ridged brow."
+    ],
+    "next": [
+      "Tilt the head up a little, so the big eyes show more in the top-down sprites.",
+      "Give the small eyes white eyeballs, as in the mockup."
+    ],
+    "reviewedAt": "2026-09-26T05:55:10+00:00"
   }
 }
