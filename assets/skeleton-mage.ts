@@ -24,7 +24,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  *   the two flames `candle` (under `head`) and `palmfire` (under `hand.R`), the eye glow `eyeglow`
  *   (under `head`), and the spell bolt `bolt` (under `hand.R`, hidden outside the cast), so clips
  *   can drop the staff, fire a bolt, and put the lights out. Clips: idle, walk (a gliding shuffle), run, attack (a spell
- *   cast), hit, death (the robe crumples into a heap, the staff falls, the skull rolls off).
+ *   cast), hit, death (the robe crumples into a heap, the staff falls, the skull rolls off),
+ *   taunt (a cackle with the skull thrown back and the palm flame raised and swelling, then a
+ *   point at the player; plays when the mage first sees the player).
  */
 
 const C = {
@@ -813,6 +815,70 @@ export default defineAsset({
           pose.head = placeAt('head', pose, plus(skullAt, turned([SKULL_C[0] - RIG.head!.at[0], SKULL_C[1] - RIG.head!.at[1], SKULL_C[2] - RIG.head!.at[2]], turnH), -1), turnH);
         }
         return pose;
+      },
+    });
+
+    // ------------------------------------------------------------------ taunt: a cackle, then a point
+    // Played when the mage first sees the player. It throws the skull back and cackles: the skull
+    // bobs back and up four times, the shoulders shake with each laugh, the eyes pulse, and the
+    // flame hand rises out beside the skull while the palm flame swells to 1.5 times and flickers.
+    // Then it leans in and points the flame hand at the player (the fingers forward, the flame
+    // upright) for a beat, and returns to rest. reach solves the right arm in the chest's rest
+    // frame, and orient keeps the palm up. The hips do not move, so the feet stay planted; the
+    // staff arm counters the chest's lean so the staff's foot stays off the floor.
+    const WRIST_CACKLE: V3 = [-0.27, 0.46, 0.06]; // beside the skull, out past the cheekbone
+    const POLE_CACKLE: V3 = [-0.36, 0.3, -0.02]; // the elbow out and down
+    const WRIST_POINT: V3 = [-0.235, 0.375, 0.13]; // forward at chest height, out to the right
+    const POLE_POINT: V3 = [-0.34, 0.26, 0.06];
+    const LAUGH_A = 0.12; // the first "ha"
+    const LAUGH_B = 0.57; // the end of the fourth
+    k.animation('taunt', {
+      duration: 1.6,
+      loop: false,
+      pose: (_t, p) => {
+        const cackle = keys(p, [[0, 0], [0.12, 1], [0.56, 1], [0.68, 0]] as const);
+        const pt = keys(p, [[0.56, 0], [0.68, 1], [0.84, 1], [1, 0]] as const);
+        const jab = keys(p, [[0.66, 0], [0.71, 1], [0.78, 0]] as const); // "you!"
+        // Four laughs, about 0.18 s each: 0 to 1 and back on each "ha".
+        const u = (p - LAUGH_A) / (LAUGH_B - LAUGH_A);
+        const laugh = u > 0 && u < 1 ? Math.sin(Math.PI * 4 * u) ** 2 : 0;
+        const sway = cackle * Math.sin(2 * Math.PI * 2 * u);
+        // The right arm: rest, beside the skull, the point (with a short jab), rest.
+        const wrist = keys(
+          p,
+          [[0, WRIST_R], [0.14, WRIST_CACKLE], [0.56, WRIST_CACKLE], [0.68, WRIST_POINT], [0.84, WRIST_POINT], [1, WRIST_R]] as const,
+          'spline',
+        );
+        const pole = keys(p, [[0, ELBOW_R], [0.14, POLE_CACKLE], [0.56, POLE_CACKLE], [0.68, POLE_POINT], [0.84, POLE_POINT], [1, ELBOW_R]] as const);
+        const arm = reach(ARM_R, [wrist[0], wrist[1], wrist[2] + 0.012 * jab], pole);
+        // The flame stays upright (tilted out, away from the skull, in the cackle); the fingers
+        // point out and a little forward beside the skull, then straight at the player.
+        const dir = unit(keys(p, [[0, FLAME_UP], [0.14, [-0.15, 1, 0]], [0.56, [-0.15, 1, 0]], [0.68, [0, 1, 0.08]], [0.84, [0, 1, 0.08]], [1, FLAME_UP]] as const));
+        const fingers = keys(p, [[0, FINGERS], [0.14, [-1, 0, 0.25]], [0.56, [-1, 0, 0.25]], [0.68, [0.12, -0.1, 1]], [0.84, [0.12, -0.1, 1]], [1, FINGERS]] as const);
+        const hand = orient([arm.upper, arm.lower], { dir: FLAME_UP, up: FINGERS }, { dir, up: fingers });
+        // The palm flame swells to 1.5 in the cackle, flickers harder as it grows, jumps a little
+        // with each laugh, and settles back to its normal size through the point.
+        const swell = keys(p, [[0, 1], [0.14, 1.5], [0.56, 1.5], [0.68, 1.2], [0.84, 1.2], [1, 1]] as const);
+        const flick = 0.6 * Math.sin(2 * Math.PI * 11 * p) + 0.4 * Math.sin(2 * Math.PI * 17 * p + 1);
+        const fa = (swell - 1) / 0.5;
+        const fxz = swell * (1 + 0.05 * fa * flick);
+        const fy = swell * (1 + 0.1 * fa * flick + 0.06 * laugh);
+        const eye = 1 + 0.3 * laugh + 0.15 * pt;
+        return {
+          spine: { rotate: [-3 * cackle + 3 * pt, 4 * pt, 0] },
+          chest: { rotate: [-5 * cackle - 3 * laugh + 4 * pt, 10 * pt, 0], move: [0, 0.005 * laugh, 0] },
+          neck: { rotate: [-8 * cackle + 4 * pt, 0, 0] },
+          head: { rotate: [-12 * cackle - 8 * laugh + 6 * pt, 0, 3 * sway], move: [0, 0.006 * laugh, 0] },
+          eyeglow: { scale: [eye, eye, eye] },
+          candle: { scale: [1 - 0.05 * laugh, 1 + 0.12 * laugh, 1 - 0.05 * laugh] },
+          lantern: { rotate: [5 * cackle * Math.sin(2 * Math.PI * 4 * u + 0.5) + 6 * pt, 0, 4 * sway] },
+          'upperarm.L': { rotate: [-7 * pt, 0, -1.5 * cackle - 1.5 * pt] }, // the staff tilts out, clear of the wax
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          palmfire: { scale: [fxz, fy, fxz] },
+          bolt: HIDE,
+        };
       },
     });
   },

@@ -694,22 +694,22 @@
       "sprite": 4,
       "motion": 5
     },
-    "summary": "The skeleton mage matches the candle-skull caster on the mockup. The cast now has a strong release: the palm flame shrinks, swells, and flares to 1.8 times its size, and a purple bolt flies 0.6 m toward the target. At the end of the death, the eyes and the candle flame go out as the skull stops. All clips pass the head check and the ground check. The model has 43,728 triangles.",
+    "summary": "The skeleton mage matches the candle-skull caster on the mockup. A new taunt clip (1.6 s) plays when the mage first sees the player. The skull tips back and bobs four times in a cackle, the eyes pulse, and the palm flame rises beside the skull and swells to 1.5 times its size. Then the flame hand points at the player for a beat. All 7 clips pass the head check and the ground check. The model has 43,728 triangles.",
     "strengths": [
       "The candle on the skull is a unique silhouette. It shows clearly in all 8 sprite directions.",
-      "The cast reads as a spell: an anticipation, a flare of the palm flame, a bolt that leaves the hand, and a recovery.",
-      "The death is clear: a stagger, a collapse into a heap, the staff falls, the skull rolls off, and the lights go out."
+      "The taunt cackle reads at 128 px in all 8 directions: the skull and the candle tip back, and the large purple flame rises beside the skull.",
+      "The cast and the death are clear: a flare and a bolt in the cast; a collapse, a falling staff, a rolling skull, and lights that go out in the death."
     ],
     "issues": [
-      "The bolt is small (about 5 cm wide). At 128 px, it shows as only a few purple pixels for one or two frames.",
-      "In the idle, the staff comes to 0.5 cm from the wax on the skull. It passes the check, but the margin is small.",
+      "The point in the taunt is weak from the front: the hand moves toward the camera, and the forward skull tilt hides part of the face.",
+      "In the idle, the staff comes to 0.5 cm from the wax on the skull. It passes the check, but the margin is small. In the taunt, the margin is 1.5 cm.",
       "The candle is a wide block with a flat top, and the skull has no hood. The mockup has a taller, rounder candle and a dark hood."
     ],
     "next": [
       "Make the candle taller and rounder, and add a dark hood behind the skull, as on the mockup.",
       "Tilt the staff out a little more in the idle, so that it stays 1 cm or more from the wax."
     ],
-    "reviewedAt": "2026-09-26T21:39:19+00:00"
+    "reviewedAt": "2026-09-26T22:26:18+00:00"
   },
   "imp": {
     "overall": 8.1,
