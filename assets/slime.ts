@@ -159,8 +159,8 @@ export default defineAsset({
         const sx = 1 + squash * down - 0.07 * up;
         const sy = 1 - squash * 1.3 * down + 0.14 * up;
         return {
-          core: { move: [0, height * up, 0], scale: [sx, sy, sx] },
-          top: { rotate: [-8 * Math.cos(TAU * p), 0, 3 * wave(p, 1, 0.3)] },
+          core: { move: [0, height * up, 0] as const, scale: [sx, sy, sx] as const },
+          top: { rotate: [-8 * Math.cos(TAU * p), 0, 3 * wave(p, 1, 0.3)] as const },
         };
       },
     });
