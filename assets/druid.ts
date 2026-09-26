@@ -22,7 +22,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff), `caproot` (the cap, on the
  *   head) and `flaskroot` (the flask, on the right hand); the basket is rigid on the chest, the staff
  *   on the left hand. Clips: idle, walk, run, attack (a staff thrust; the lantern flares), attack2
- *   (a flask throw; the flask flies off and grows back in the hand).
+ *   (a flask throw; the flask flies off and grows back in the hand), hit, death (she topples onto
+ *   her left side; the cap props her head, the staff lies in front of her), victory (the staff up
+ *   and out past the cap, a hop, the lantern swings).
  */
 
 const C = {
@@ -979,6 +981,207 @@ export default defineAsset({
           'leg.R': { rotate: [12 * t, 0, 0] },
           'foot.L': { rotate: [12 * t, 0, 0] },
           'foot.R': { rotate: [-12 * t, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit, death, victory
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    /** The lantern's rotate value that gives it the world rotation `world` under the posed staff hand. */
+    const lanternWorld = (chain: readonly V3[], world: THREE.Quaternion) => euler(chainQ(chain).invert().multiply(world));
+    /** World points and directions into the chest's rest frame, for a posed torso (the arm targets). */
+    const chestFrame = (rots: readonly V3[], hipsMove: V3) => {
+      const inv = chainQ(rots).invert();
+      const at = add(follow([HIPS_AT, SPINE_AT], rots.slice(0, 2), CHEST_AT), hipsMove);
+      const turn = (v: V3): V3 => {
+        const r = new THREE.Vector3(...v).applyQuaternion(inv);
+        return [r.x, r.y, r.z];
+      };
+      return { point: (w: V3) => add(CHEST_AT, turn(sub(w, at))), dir: turn };
+    };
+
+    // Hit: a blow from the front. The chest and the head snap back, the right foot steps back to
+    // catch her, and she comes back quickly. The cap and the lantern lag, then overshoot.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.32, 0.8], [0.72, 0.1], [1, 0]] as const);
+        const lag = keys(p, [[0, 0], [0.12, 1], [0.32, -0.7], [0.56, 0.35], [0.8, -0.1], [1, 0]] as const);
+        return {
+          hips: { move: [0, -legDrop(LEG, 12 * h), -0.03 * h], rotate: [-3 * h, 4 * h, 0] },
+          spine: { rotate: [-6 * h, 0, 0] },
+          chest: { rotate: [-9 * h, -4 * h, -2 * h] },
+          neck: { rotate: [-3 * h, 0, 0] },
+          head: { rotate: [-8 * h, 5 * h, -4 * h] },
+          caproot: { rotate: [6 * lag, 0, 2 * lag] },
+          lantern: { rotate: [-16 * lag, 0, 6 * lag] },
+          'upperarm.L': { rotate: [-8 * h, 0, 5 * h] },
+          'upperarm.R': { rotate: [3 * h, 0, -12 * h] },
+          'forearm.R': { rotate: [4 * h, 0, 0] },
+          'leg.L': { rotate: [-9 * h, 0, 0] },
+          'leg.R': { rotate: [14 * h, 0, 0] },
+          'foot.L': { rotate: [9 * h, 0, 0] },
+          'foot.R': { rotate: [-8 * h, 0, 0] },
+        };
+      },
+    });
+
+    // Death: she reels back from the blow, sways, and topples onto her left side, pivoting on her
+    // left foot. The cap is too wide to lie flat, so the neck and the head bend up and the cap's
+    // rim props them; the basket stays on top. The staff arm reaches forward on the way down, and
+    // the staff lands in front of her, pointing past her head, resting on its branch and crook;
+    // the lantern tips over on its side next to it.
+    const DEATH_S = 1.4;
+    const FOOT_PIVOT: V3 = [ANKLE[0] + 0.02, 0, 0];
+    const DEATH_LIFT: V3 = [-0.02, 0.086, 0.02];
+    const deathBody = (p: number) => {
+      const st = keys(p, [[0, 0], [0.1, 1], [0.24, 0.75], [0.42, 0]] as const);
+      const tt = clamp01((p - 0.24) / 0.44);
+      const f = tt * tt; // the fall speeds up until she hits the ground
+      const land = bump(clamp01((p - 0.68) / 0.14));
+      const lift = ease(0.42, 0.68, p);
+      const tree = add(FOOT_PIVOT, rotZ(sub(HIPS_AT, FOOT_PIVOT), -88 * f));
+      const hipsMove: V3 = add(sub(tree, HIPS_AT), [DEATH_LIFT[0] * lift, DEATH_LIFT[1] * lift + 0.012 * land, -0.03 * st + DEATH_LIFT[2] * lift]);
+      const hipsR: V3 = [-4 * st, 0, -88 * f];
+      const spineR: V3 = [-5 * st, 0, 0];
+      const chestR: V3 = [-8 * st, -3 * st, 0];
+      return { st, f, land, hipsMove, hipsR, spineR, chestR };
+    };
+    // The end pose of the staff arm, set in world space and turned into the chest's rest frame.
+    const deathEnd = (() => {
+      const b = deathBody(1);
+      const rots = [b.hipsR, b.spineR, b.chestR];
+      const cf = chestFrame(rots, b.hipsMove);
+      const shoulder = add(follow([HIPS_AT, SPINE_AT, CHEST_AT], rots, SHOULDER), b.hipsMove);
+      const wrist: V3 = [shoulder[0] + 0.06, 0.08, shoulder[2] + 0.17];
+      return {
+        wrist: cf.point(wrist),
+        dir: norm(cf.dir(norm([0.9, 0.07, 0.42]))),
+        up: norm(cf.dir(norm([0.3, 0, 1]))),
+        pole: cf.point(add(shoulder, [0.1, 0.05, 0.08])),
+      };
+    })();
+    const deathWrist = [
+      [0, WRIST_L],
+      [0.2, [0.285, 0.34, 0.1]],
+      [0.46, [0.28, 0.33, 0.18]],
+      [0.7, deathEnd.wrist],
+    ] as const;
+    const deathDir = [
+      [0, STAFF_AXIS],
+      [0.2, norm([0.42, 0.85, 0.3])],
+      [0.46, norm([0.6, 0.45, 0.66])],
+      [0.7, deathEnd.dir],
+    ] as const;
+    const deathUp = [
+      [0, FIST_L],
+      [0.46, norm([0.1, -0.3, 1])],
+      [0.7, deathEnd.up],
+    ] as const;
+    const deathPole = [
+      [0, POLE_L],
+      [0.46, [0.5, 0.2, 0.1]],
+      [0.7, deathEnd.pole],
+    ] as const;
+    const LANTERN_DOWN = quat([-88, 0, 0]); // on its side, the bottom toward the viewer
+    k.animation('death', {
+      duration: DEATH_S,
+      loop: false,
+      pose: (_t, p) => {
+        const b = deathBody(p);
+        const { st, f, land } = b;
+        const hb = ease(0.5, 0.72, p); // the head bends up as the cap meets the ground
+        const lag = keys(p, [[0, 0], [0.1, 1], [0.3, -0.5], [0.5, 0], [0.7, 0], [0.76, 1], [0.9, -0.3], [1, 0]] as const);
+        const arm = reach(ARM_L, keys(p, deathWrist), keys(p, deathPole));
+        const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: norm(keys(p, deathDir)), up: norm(keys(p, deathUp)) });
+        const chain: V3[] = [b.hipsR, b.spineR, b.chestR, arm.upper, arm.lower, hand];
+        // The lantern hangs plumb and swings while she falls, then tips onto its side.
+        const lie = ease(0.64, 0.74, p);
+        const swing = quat([keys(p, [[0, 0], [0.12, -18], [0.3, 10], [0.5, -14], [0.64, 6]] as const), 0, 12 * f]);
+        const lanternR = lanternWorld(chain, swing.slerp(LANTERN_DOWN, lie));
+        const liftW = new THREE.Vector3(0, 0.04 * lie, 0).applyQuaternion(chainQ(chain).invert());
+        return {
+          hips: { move: b.hipsMove, rotate: b.hipsR },
+          spine: { rotate: b.spineR },
+          chest: { rotate: b.chestR },
+          neck: { rotate: [-3 * st, 0, 16 * hb] },
+          head: { rotate: [-9 * st + 6 * hb, 4 * hb, 26 * hb + 4 * land] },
+          caproot: { rotate: [6 * lag * (1 - hb), 0, 8 * hb + 5 * land] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: hand },
+          lantern: { rotate: lanternR, move: [liftW.x, liftW.y, liftW.z] },
+          // The flask arm flings out on the blow, then rests along her side; the flask tips over.
+          'upperarm.R': { rotate: [4 * st - 12 * f, 0, -12 * st + 12 * f] },
+          'forearm.R': { rotate: [10 * f, 0, 0] },
+          'hand.R': { rotate: [75 * ease(0.3, 0.7, p), 0, 0] },
+          'leg.L': { rotate: [-6 * st - 15 * f, 0, 0] },
+          'leg.R': { rotate: [14 * st * (1 - f) - 30 * f, 0, 0] },
+          'foot.L': { rotate: [6 * st + 15 * f, 0, 0] },
+          'foot.R': { rotate: [-8 * st + 12 * f, 0, 0] },
+        };
+      },
+    });
+
+    // Victory: she lifts the staff high, out and forward beside the cap (the cap is wider than her
+    // reach, so the staff leans out past the rim), raises the flask, and hops once; the lantern
+    // swings plumb from the hook, and after the landing she holds the pose with a small bounce.
+    const vicWrist = [
+      [0, WRIST_L],
+      [0.2, [0.28, 0.47, 0.1]],
+      [1, [0.28, 0.475, 0.1]],
+    ] as const;
+    const vicDir = [
+      [0, STAFF_AXIS],
+      [0.2, norm([0.5, 0.75, 0.43])],
+      [1, norm([0.5, 0.76, 0.41])],
+    ] as const;
+    const vicPole = [
+      [0, POLE_L],
+      [0.2, [0.55, 0.3, -0.1]],
+    ] as const;
+    k.animation('victory', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const up = ease(0.02, 0.2, p);
+        const hopT = clamp01((p - 0.2) / 0.26);
+        const hop = Math.sin(Math.PI * hopT);
+        const squash = keys(p, [[0, 0], [0.13, 1], [0.2, 0], [0.46, 0], [0.52, 1], [0.64, 0]] as const);
+        const bob = bump(clamp01((p - 0.64) / 0.36), 2);
+        const wrist = keys(p, vicWrist);
+        const arm = reach(ARM_L, wrist, keys(p, vicPole));
+        const elbow = follow([SHOULDER], [arm.upper], ELBOW_L);
+        const fist = norm(lerp(FIST_L, norm(sub(wrist, elbow)), up));
+        const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: norm(keys(p, vicDir)), up: fist });
+        const hipsR: V3 = [0, 0, 0];
+        const spineR: V3 = [-4 * up, 0, 2 * up];
+        const chestR: V3 = [-4 * up + 3 * squash, 5 * up, 0];
+        const swing = keys(p, [[0, 0], [0.2, 16], [0.34, -20], [0.5, 22], [0.62, -14], [0.76, 9], [0.9, -4], [1, 2]] as const);
+        const lanternR = lanternWorld([hipsR, spineR, chestR, arm.upper, arm.lower, hand], quat([swing, 0, 0.4 * swing]));
+        const upR: V3 = [-10 * up, -45 * up, -35 * up];
+        const foreR: V3 = [-25 * up + 6 * bob, 0, 0];
+        return {
+          hips: { move: [0, 0.05 * hop - 0.003 * squash - 0.002 * bob, 0], rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [-3 * up, 0, 0] },
+          head: { rotate: [-7 * up + 4 * squash, 6 * up, -3 * up] },
+          caproot: { rotate: [-5 * hop + 4 * squash, 0, 0] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: hand },
+          lantern: { rotate: lanternR },
+          // The flask arm turns out to her right and lifts the flask like a toast, clear of the hair.
+          'upperarm.R': { rotate: upR },
+          'forearm.R': { rotate: foreR },
+          // The palm stays level, so the flask stands upright (tipped a little outward) on the raised hand.
+          'hand.R': { rotate: euler(chainQ([hipsR, spineR, chestR, upR, foreR]).invert().multiply(quat([0, 0, 22 * up]))) },
+          'leg.L': { rotate: [-8 * hop, 0, 0] },
+          'leg.R': { rotate: [-4 * hop, 0, 0] },
+          'foot.L': { rotate: [18 * hop, 0, 0] },
+          'foot.R': { rotate: [14 * hop, 0, 0] },
         };
       },
     });
