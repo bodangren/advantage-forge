@@ -295,5 +295,38 @@
       "Give the mane spikes different sizes and angles."
     ],
     "reviewedAt": "2026-09-26T03:39:07+00:00"
+  },
+  "goblin-archer": {
+    "overall": 8.0,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The goblin archer matches the mockup's pointed hood, big ears, war paint, and leather gear. It shares the warrior's face and body, so the two goblins read as one tribe.",
+    "strengths": [
+      "The pointed dark hood with the ears through it is a strong, unique silhouette in every view.",
+      "The dark hood frames the light face, and the red fletching over the shoulder is a clear second accent.",
+      "The shot clip reads in the side view: the goblin turns, raises the bow, draws, and looses."
+    ],
+    "issues": [
+      "The mockup holds the bow across the body in both hands. The model holds it upright at the side, because that reads better in sprites and allows the shot clip.",
+      "Seen from above in the sprites, the hood rim covers the brows, so the face reads weaker than the warrior's face.",
+      "In the shot clip, the drawing hand is hard to see, because it stays behind the body.",
+      "The mockup has a long back cape. The model has only the short capelet, so that the quiver shows."
+    ],
+    "next": [
+      "Pull the drawing hand further out to the side in the shot clip.",
+      "Add a nocked arrow during the shot, so the draw reads at 128 px."
+    ],
+    "reviewedAt": "2026-09-26T04:05:28+00:00"
   }
 }
