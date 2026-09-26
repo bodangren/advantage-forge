@@ -102,6 +102,7 @@ export default defineAsset({
     // A point on the haft `h` above the grip (the spear leans 3 degrees about Z).
     const onHaft = (h: number): V3 => [GRIP[0] - h * Math.sin((3 * Math.PI) / 180), GRIP[1] + h * Math.cos((3 * Math.PI) / 180), GRIP[2]];
     const PENNANT_AT = onHaft(SPEAR_TOP - 0.078); // the tie, just below the rings
+    const pennantTail: V3 = [PENNANT_AT[0] - 0.04, PENNANT_AT[1] - 0.19, PENNANT_AT[2] - 0.015];
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -115,7 +116,7 @@ export default defineAsset({
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
-      pennant: { parent: 'hand.R', at: PENNANT_AT, tail: [PENNANT_AT[0] - 0.04, PENNANT_AT[1] - 0.19, PENNANT_AT[2] - 0.015] },
+      pennant: { parent: 'hand.R', at: PENNANT_AT, tail: pennantTail },
       'leg.L': { parent: 'hips', at: HIP },
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
@@ -505,31 +506,112 @@ export default defineAsset({
     k.animation('walk', stride(0.9, 26, 26, 3, 0, 24));
     k.animation('run', stride(0.56, 40, 44, 12, 0.03, 48));
 
-    // A thrust: pull back and lower the spear to level, drive it forward, and recover.
-    // The X angles on the arm bones add up to the spear's tilt (about 90 degrees when level).
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
+    // A spear thrust, solved by targets in the world frame. The spear lowers to a level guard with
+    // the rear (right) hand at the hip, and the body turns right. Then the front (left) foot steps
+    // in, the hips drop, and the wrist drives straight along the spear's own line toward a target
+    // in front at chest height. The spear pulls back to the guard and returns to rest. The chibi
+    // left arm is too short to reach a haft on the right side, so it aims in the guard and swings
+    // back for balance in the thrust. The pennant keeps its own world frame: it hangs down, trails
+    // back behind the spear head in the drive, and swings forward when the spear stops.
+    const { keys, reach, orient, follow, quat, euler } = motion;
+    const DEG = Math.PI / 180;
+    const O: V3 = [0, 0, 0];
+    const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+    const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const mul = (a: V3, s: number): V3 => [a[0] * s, a[1] * s, a[2] * s];
+    const unit = (a: V3): V3 => mul(a, 1 / Math.hypot(a[0], a[1], a[2]));
+    const turn = (r: readonly V3[], v: V3): V3 => follow(r.map(() => O), r, v);
+    const HIPS: V3 = [0, 0.2, 0];
+    const SPINE: V3 = [0, 0.26, 0];
+    const CHEST: V3 = [0, 0.33, 0];
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const SPEAR_DIR: V3 = [-Math.sin(3 * DEG), Math.cos(3 * DEG), 0];
+    const FINGERS: V3 = [0, 0, 1]; // the fingers and the blade's flat face forward at rest
+    const PEN_DIR = unit(sub(pennantTail, PENNANT_AT));
+    const PEN_FACE: V3 = [-Math.sin(22 * DEG), 0, Math.cos(22 * DEG)]; // the flag's face (rotateY(-22))
+    const AIM = unit([0.12, 0.05, 1]); // toward a target in front at chest height
+    const PALM = unit([0.5, -0.85, 0]); // the rear hand holds the level spear palm up
+    const GUARD: V3 = [-0.225, 0.27, -0.015]; // the rear wrist at the hip
+    const HOLD = 0.28; // the guard is set
+    const COIL = 0.36;
+    const DRIVE = 0.47; // full extension
+    const STAY = 0.58;
+    const BACK = 0.74; // back in the guard
     k.animation('attack', {
       duration: 0.9,
       loop: false,
       pose: (_t, p) => {
-        const level = ease(0, 0.3, p) * (1 - ease(0.62, 1, p));
-        const wind = ease(0.1, 0.32, p) * (1 - ease(0.32, 0.42, p));
-        const hit = ease(0.32, 0.44, p) * (1 - ease(0.58, 0.9, p));
+        // The body: a right turn in the guard, unwinding in the drive; a forward lean in the drive.
+        const yaw = keys(p, [[0, 0], [HOLD, -30], [COIL, -34], [DRIVE, 4], [STAY, 2], [BACK, -26], [1, 0]] as const);
+        const lean = keys(p, [[0, 0], [HOLD, -3], [COIL, -5], [DRIVE, 12], [STAY, 10], [BACK, -2], [1, 0]] as const);
+        const hipZ = keys(p, [[0, 0], [HOLD, -0.008], [COIL, -0.012], [DRIVE, 0.065], [STAY, 0.065], [BACK, -0.008], [1, 0]] as const);
+        // The feet: the rear foot slides back once and stays; the front foot steps in and back.
+        const footL = keys(p, [[0, 0], [HOLD, 0.025], [COIL, 0.025], [DRIVE, 0.17], [0.6, 0.17], [BACK, 0.025], [1, 0]] as const);
+        const footR = keys(p, [[0, 0], [HOLD, -0.04], [BACK, -0.04], [1, 0]] as const);
+        const legL = (-Math.asin(Math.max(-1, Math.min(1, (footL - hipZ) / LEG))) / DEG) as number;
+        const legR = (-Math.asin(Math.max(-1, Math.min(1, (footR - hipZ) / LEG))) / DEG) as number;
+        const lift: V3 = [0, -Math.min(legDrop(LEG, legL), legDrop(LEG, legR)), hipZ];
+        const rh: V3 = [0, 0.2 * yaw, 0];
+        const rs: V3 = [0.5 * lean, 0.35 * yaw, 0];
+        const rc: V3 = [0.5 * lean, 0.45 * yaw, 0];
+        // World targets to the chest's rest frame (where reach works).
+        const chestAt = add(lift, follow([HIPS, SPINE, CHEST], [rh, rs, rc], CHEST));
+        const undo = euler(quat(rh).multiply(quat(rs)).multiply(quat(rc)).invert());
+        const toChest = (w: V3): V3 => add(CHEST, turn([undo], sub(w, chestAt)));
+
+        // The rear wrist: rest, the guard at the hip, a short coil, the drive along AIM, back.
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_R],
+            [HOLD, GUARD],
+            [COIL, add(GUARD, mul(AIM, -0.025))],
+            [DRIVE, add(GUARD, mul(AIM, 0.25))],
+            [STAY, add(GUARD, mul(AIM, 0.24))],
+            [BACK, GUARD],
+            [1, WRIST_R],
+          ] as const,
+        );
+        const dir = unit(keys(p, [[0, SPEAR_DIR], [HOLD, AIM], [BACK, AIM], [1, SPEAR_DIR]] as const));
+        const up = unit(keys(p, [[0, FINGERS], [HOLD, PALM], [BACK, PALM], [1, FINGERS]] as const));
+        const pole = keys(p, [[0, ELBOW_R], [HOLD, [-0.36, 0.3, -0.1]], [BACK, [-0.36, 0.3, -0.1]], [1, ELBOW_R]] as const);
+        const arm = reach(ARM_R, toChest(wrist), pole);
+        const chain = [rh, rs, rc, arm.upper, arm.lower];
+        const hand = orient(chain, { dir: SPEAR_DIR, up: FINGERS }, { dir, up });
+
+        // The pennant: it turns under the level haft, its tails down and its body behind the tie,
+        // and trails back with the speed of the spear head.
+        const flagYaw = keys(p, [[0, 0], [HOLD, -68], [BACK, -68], [1, 0]] as const);
+        const trail = keys(
+          p,
+          [[0, 0], [0.12, 26], [HOLD, 4], [COIL, -8], [0.43, 38], [DRIVE, 30], [0.53, -16], [0.6, 8], [0.68, -20], [0.78, -4], [0.88, 12], [1, 0]] as const,
+          'spline',
+        );
+        const hang = (v: V3) => turn([[trail, 0, 0], [0, flagYaw, 0]], v);
+        const pennant = orient([...chain, hand], { dir: PEN_DIR, up: PEN_FACE }, { dir: hang(PEN_DIR), up: hang(PEN_FACE) });
+
         return {
-          hips: { move: [0, -legDrop(LEG, 18 * hit) - 0.006 * wind, 0.045 * hit - 0.015 * wind], rotate: [0, -12 * wind + 16 * hit, 0] },
-          spine: { rotate: [-3 * wind + 10 * hit, 0, 0] },
-          chest: { rotate: [0, -10 * wind + 12 * hit, 0] },
-          'upperarm.R': { rotate: [-50 * level + 25 * wind - 35 * hit, 0, 0] },
-          'forearm.R': { rotate: [-10 * level + 15 * wind - 25 * hit, 0, 0] },
-          'hand.R': { rotate: [150 * level - 40 * wind + 25 * hit, 0, 0] },
-          pennant: { rotate: [0, 30 * hit, 0] },
-          'upperarm.L': { rotate: [-20 * level, 0, 10 * level] },
-          'leg.R': { rotate: [-18 * hit, 0, 0] },
-          'leg.L': { rotate: [12 * hit, 0, 0] },
-          'foot.R': { rotate: [10 * hit, 0, 0] },
+          hips: { move: lift, rotate: rh },
+          spine: { rotate: rs },
+          chest: { rotate: rc },
+          head: { rotate: [-0.6 * lean, -0.75 * yaw, 0] }, // the eyes stay on the target
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          pennant: { rotate: pennant },
+          // The free left arm aims forward in the guard and swings back in the drive.
+          'upperarm.L': {
+            rotate: [
+              keys(p, [[0, 0], [HOLD, -50], [COIL, -46], [DRIVE, 28], [STAY, 24], [BACK, -40], [1, 0]] as const),
+              0,
+              keys(p, [[0, 0], [HOLD, 12], [COIL, 14], [DRIVE, 24], [STAY, 22], [BACK, 12], [1, 0]] as const),
+            ],
+          },
+          'forearm.L': { rotate: [keys(p, [[0, 0], [HOLD, -40], [COIL, -40], [DRIVE, -12], [STAY, -12], [BACK, -35], [1, 0]] as const), 0, 0] },
+          'leg.L': { rotate: [legL, 0, 0] },
+          'leg.R': { rotate: [legR, 0, 0] },
+          'foot.L': { rotate: [-legL, 0, 0] },
+          'foot.R': { rotate: [-legR, 0, 0] },
         };
       },
     });
