@@ -6,6 +6,7 @@ import { createServer } from 'vite';
 import * as THREE from 'three';
 import type {
   AnimationRequest,
+  ClipInfo,
   InspectRequest,
   SpritesRequest,
   ViewSpec,
@@ -257,6 +258,12 @@ async function main(): Promise<void> {
         return [values.clip];
       };
       const frameCount = num(values.frames, 8);
+      // The clip options a GLB loses (a one-shot clip's last frame; a clip that digs into the floor).
+      const clipInfo = (clip: string): ClipInfo | undefined => {
+        const c = result.root.animations.find((a) => a.name === clip);
+        const u = c?.userData as { loop?: boolean; dig?: number } | undefined;
+        return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
+      };
 
       const sprites = async (clip: string | null) => {
         const t2 = performance.now();
@@ -270,7 +277,7 @@ async function main(): Promise<void> {
           colors: num(values.colors, 0),
           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
           margin: num(values.margin, 0.06),
-          ...(clip ? { clip, frames: frameCount } : {}),
+          ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
         const dir = clip ? join(out, 'sprites', clip) : join(out, 'sprites');
@@ -306,6 +313,7 @@ async function main(): Promise<void> {
           size: 320,
           background: values.bg ?? '#aeb3ba',
           gifSize: 400,
+          ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderAnimation(r), req);
         const dir = join(out, 'anim');

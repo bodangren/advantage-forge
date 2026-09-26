@@ -593,7 +593,7 @@ export default defineAsset({
         const vy = by / Math.hypot(bu, by);
         const along = (SHIN * SHIN - BALL_LEN * BALL_LEN + D * D) / (2 * D);
         const side = Math.sqrt(Math.max(0, SHIN * SHIN - along * along));
-        let ankle = [along * vu + side * vy, along * vy - side * vu];
+        let ankle: [number, number] = [along * vu + side * vy, along * vy - side * vu];
         let footAng = Math.atan2(by - ankle[1], bu - ankle[0]) / DEG;
         if (footAng > BALL_ANG) {
           ankle = [bu - BALL[0], by - BALL[1]]; // the heel stays down

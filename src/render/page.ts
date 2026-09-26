@@ -45,6 +45,17 @@ export interface SpritesRequest {
   /** Animate: render this clip as `frames` evenly spaced poses per direction. */
   readonly clip?: string;
   readonly frames?: number;
+  /** The clip's options from the asset (a GLB does not keep them). */
+  readonly clipInfo?: ClipInfo;
+}
+
+/**
+ * A clip's options that the GLB loses: `loop` (a one-shot clip shows its last frame) and `dig`
+ * (the clip goes into the floor; the render hides everything below y = 0, as a game floor does).
+ */
+export interface ClipInfo {
+  readonly loop: boolean;
+  readonly dig: number;
 }
 
 export interface AnimationRequest {
@@ -57,6 +68,7 @@ export interface AnimationRequest {
   readonly background: string;
   /** Size of the animated GIF (0 = none). */
   readonly gifSize: number;
+  readonly clipInfo?: ClipInfo;
 }
 
 const DIRECTION_NAMES: Record<number, readonly string[]> = {
@@ -72,6 +84,7 @@ let current: { scene: THREE.Object3D; mixer: THREE.AnimationMixer; clips: THREE.
 
 async function load(url: string): Promise<THREE.Object3D> {
   const gltf = await loader.loadAsync(url);
+  studio.renderer.clippingPlanes = [];
   current = { scene: gltf.scene, mixer: new THREE.AnimationMixer(gltf.scene), clips: gltf.animations };
   studio.setAsset(gltf.scene);
   return gltf.scene;
@@ -82,6 +95,10 @@ function poseAt(clip: THREE.AnimationClip, t: number): void {
   const { mixer, scene } = current!;
   mixer.stopAllAction();
   const action = mixer.clipAction(clip);
+  // Play once and hold the end: a repeating action wraps to the first frame at the clip's end,
+  // so a one-shot clip's last frame would show its first pose.
+  action.setLoop(THREE.LoopOnce, 1);
+  action.clampWhenFinished = true;
   action.reset().play();
   mixer.setTime(t);
   scene.updateMatrixWorld(true);
@@ -97,21 +114,29 @@ function findClip(name: string): THREE.AnimationClip {
 }
 
 /** Evenly spaced sample times; a looping clip skips its last frame (it equals the first). */
-function sampleTimes(clip: THREE.AnimationClip, frames: number): number[] {
-  const loop = (clip.userData as { loop?: boolean } | undefined)?.loop ?? true;
+function sampleTimes(clip: THREE.AnimationClip, frames: number, info?: ClipInfo): number[] {
+  const loop = info?.loop ?? true;
   return Array.from(
     { length: frames },
     (_, i) => (clip.duration * i) / (loop ? frames : Math.max(1, frames - 1)),
   );
 }
 
-/** Bounds of the posed (skinned) asset over all given times; also moves the ground to the lowest point. */
-function animatedBounds(clip: THREE.AnimationClip, times: readonly number[]): void {
+/**
+ * Bounds of the posed (skinned) asset over all given times; also moves the ground to the lowest
+ * point. A clip that digs (`dig`) keeps the floor at y = 0 and hides what is below it, as a game
+ * floor does: a zombie that rises out of the ground, fork tines in the soil.
+ */
+function animatedBounds(clip: THREE.AnimationClip, times: readonly number[], info?: ClipInfo): void {
   const box = new THREE.Box3();
   for (const t of times) {
     poseAt(clip, t);
     box.expandByObject(current!.scene, true);
   }
+  if (info && info.dig > 0) {
+    box.min.y = Math.max(box.min.y, 0);
+    studio.renderer.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)];
+  } else studio.renderer.clippingPlanes = [];
   studio.bounds.copy(box);
   studio.ground.position.y = box.min.y;
 }
@@ -261,8 +286,8 @@ async function renderSprites(req: SpritesRequest): Promise<{
   const names = DIRECTION_NAMES[req.directions];
   if (!names) throw new Error('directions must be 1, 4, or 8.');
   const clip = req.clip ? findClip(req.clip) : null;
-  const times = clip ? sampleTimes(clip, req.frames ?? 8) : [0];
-  if (clip) animatedBounds(clip, times);
+  const times = clip ? sampleTimes(clip, req.frames ?? 8, req.clipInfo) : [0];
+  if (clip) animatedBounds(clip, times, req.clipInfo);
 
   // One fixed frame for every direction and pose: a vertical cylinder around the asset, so the
   // sprite never changes scale or ground line when it turns or moves.
@@ -397,9 +422,9 @@ async function renderAnimation(
   const clip = findClip(req.clip);
   studio.setBackground(req.background);
   studio.ground.visible = true;
-  const gifTimes = sampleTimes(clip, Math.max(2, Math.round(clip.duration * 20)));
-  const times = sampleTimes(clip, req.frames);
-  animatedBounds(clip, [...times, ...gifTimes]);
+  const gifTimes = sampleTimes(clip, Math.max(2, Math.round(clip.duration * 20)), req.clipInfo);
+  const times = sampleTimes(clip, req.frames, req.clipInfo);
+  animatedBounds(clip, [...times, ...gifTimes], req.clipInfo);
   const cam = studio.perspective;
   const size = studio.bounds.getSize(new THREE.Vector3());
   const center = studio.bounds.getCenter(new THREE.Vector3());
