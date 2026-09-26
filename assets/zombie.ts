@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Zombie — Chibi Quest enemy (catalog `enemies/undead/zombie`), about 0.98 m to the top of its
@@ -17,7 +17,7 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   dark mouth with yellow teeth is the second.
  * Bodies: skin, eye-yellow, eye-black, teeth, hair, shirt, trousers, rope, sandals.
  * Rig: the rogue's skeleton plus `jaw`-free face; clips: idle (sway and head loll), walk (a
- *   shamble that drags the right foot), run (a faster lurch), attack (a two-handed grab), hit (a
+ *   shamble that drags the right foot), run (a faster lurch), attack (a lunging two-hand grab), hit (a
  *   late, floppy recoil), death (the knees give way and it crumples forward onto its face).
  */
 
@@ -429,34 +429,180 @@ export default defineAsset({
     k.animation('walk', shamble(1.3, 26, 14, 8, 6));
     k.animation('run', shamble(0.75, 36, 22, 16, 8));
 
-    // A grab: lean back a little, then lunge forward with both hands and clutch.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
-    k.animation('attack', {
-      duration: 0.9,
-      loop: false,
-      pose: (_t, p) => {
-        const wind = ease(0, 0.35, p) * (1 - ease(0.35, 0.48, p));
-        const hit = ease(0.35, 0.48, p) * (1 - ease(0.62, 1, p));
-        return {
-          hips: { move: [0, -legDrop(LEG, 16 * hit), 0.05 * hit - 0.015 * wind] },
-          spine: { rotate: [-8 * wind + 16 * hit, 0, 0] },
-          head: { rotate: [-10 * wind + 6 * hit, 0, 6 * hit] },
-          // The arms rise high and wide, then thrust forward and close in to clutch.
-          'upperarm.L': { rotate: [-110 * wind - 78 * hit, 0, 30 * wind - 18 * hit] },
-          'upperarm.R': { rotate: [-110 * wind - 78 * hit, 0, -30 * wind + 18 * hit] },
-          'forearm.L': { rotate: [-25 * wind + 12 * hit, 0, 0] },
-          'forearm.R': { rotate: [-25 * wind + 12 * hit, 0, 0] },
-          'hand.L': { rotate: [40 * hit, 0, 0] },
-          'hand.R': { rotate: [40 * hit, 0, 0] },
-          'leg.L': { rotate: [-18 * hit, 0, 0] },
-          'leg.R': { rotate: [10 * hit, 0, 0] },
-          'foot.L': { rotate: [10 * hit, 0, 0] },
-        };
-      },
-    });
+    // ------------------------------------------------------------------ attack: a lunging two-hand grab
+    // Wind-up: a slow, heavy sway back; the arms rise up and out at full length, the claws open
+    // forward, and the head lolls back. Lunge: the left foot lurches 0.19 m forward, the hips drop,
+    // and the body falls forward; both arms reach out full length at a target in front, then close
+    // in. Grab: the hands clutch the target's shoulders and hold with a shake, pulling it in.
+    // Recovery: a clumsy step back to rest. Solved by targets: the stiff legs (no knee) point at
+    // ankle targets, and the hips take the height that the loaded feet allow, so a planted foot
+    // never slides or sinks; a swinging leg that is too long for its target swings out to the side.
+    // The wrists follow world targets, converted into the chest's rest frame for `reach`.
+    {
+      const { keys, reach, orient, quat, euler, follow } = motion;
+      const HIPS_AT: V3 = [0, 0.2, 0];
+      const SPINE_AT: V3 = [0, 0.26, 0];
+      const CHEST_AT: V3 = [0, 0.33, 0];
+      const LEG_LEN = Math.hypot(ANKLE[0] - HIP[0], ANKLE[1] - HIP[1]);
+      const STEP = 0.19; // the left ankle's lunge, meters forward
+      const ARM_L = { root: SHOULDER, mid: ELBOW, end: WRIST };
+      const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
+      // The left hand's rest frame: the middle finger's direction from the wrist, and the back of the hand.
+      const HAND_DIR: V3 = [-0.1, -0.8, 0.6];
+      const HAND_UP: V3 = [0, 0.6, 0.8];
+      const vec = (p: V3) => new THREE.Vector3(p[0], p[1], p[2]);
+      const arr = (p: THREE.Vector3): V3 => [p.x, p.y, p.z];
+      const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+      // Left-arm paths in world meters (the right arm mirrors them, a beat late).
+      const wristPath = [
+        [0, WRIST],
+        [0.12, [0.33, 0.42, 0.02]],
+        [0.3, [0.42, 0.8, -0.08]], // up and out, past full reach: the arm is straight
+        [0.39, [0.36, 0.8, 0.2]],
+        [0.46, [0.3, 0.62, 0.55]], // the long reach, wide and past full length: the arms are straight
+        [0.52, [0.28, 0.6, 0.56]],
+        [0.58, [0.12, 0.44, 0.34]], // closed in: the clutch at the target's shoulders
+        [0.72, [0.12, 0.44, 0.32]],
+        [0.86, [0.24, 0.31, 0.2]],
+        [1, WRIST],
+      ] as const;
+      const polePath = [
+        [0, ELBOW],
+        [0.3, [0.45, 0.4, -0.12]], // the elbows out and back
+        [0.46, [0.36, 0.26, 0.16]],
+        [0.58, [0.4, 0.2, 0.12]],
+        [0.72, [0.4, 0.2, 0.12]],
+        [1, ELBOW],
+      ] as const;
+      const dirPath = [
+        [0, HAND_DIR],
+        [0.3, [0.35, 0.9, 0.05]], // claws up, palms forward
+        [0.46, [-0.05, 0.25, 1]], // fingers straight out at the target
+        [0.52, [-0.1, 0.2, 1]],
+        [0.58, [-0.35, -0.45, 0.8]], // curled in and down: the clutch
+        [0.72, [-0.35, -0.5, 0.78]],
+        [0.86, [0, -0.7, 0.6]],
+        [1, HAND_DIR],
+      ] as const;
+      const upPath = [
+        [0, HAND_UP],
+        [0.3, [0.1, 0.05, -1]],
+        [0.46, [0.15, 1, -0.2]],
+        [0.52, [0.15, 1, -0.2]],
+        [0.58, [0.2, 0.85, 0.45]],
+        [0.72, [0.2, 0.85, 0.45]],
+        [0.86, [0, 0.65, 0.75]],
+        [1, HAND_UP],
+      ] as const;
+      k.animation('attack', {
+        duration: 1.1,
+        loop: false,
+        pose: (_t, p) => {
+          // The hold (0.58 to 0.72, 0.15 s): a shake and two tugs that pull the target in.
+          const hold = clamp01((p - 0.58) / 0.14);
+          const env = Math.sin(Math.PI * hold);
+          const shake = wave(hold, 2) * env;
+          const tug = bump(hold, 2) * env;
+          const shrug = 0.03 * keys(p, [[0, 0], [0.3, 1], [0.44, 0]] as const);
+
+          // ---- trunk
+          const hipsR: V3 = [
+            keys(p, [[0, 0], [0.3, -4], [0.5, 8], [0.72, 7], [0.9, 1], [1, 0]] as const),
+            keys(p, [[0, 0], [0.3, 4], [0.48, -8], [0.72, -8], [0.92, -1], [1, 0]] as const),
+            // The hips roll up on the side of the swinging leg, so the foot clears the ground.
+            keys(p, [[0, 0], [0.31, 0], [0.38, 5], [0.48, 0], [0.74, 0], [0.82, 5], [0.95, 0], [1, 0]] as const),
+          ];
+          const spineR: V3 = [keys(p, [[0, 0], [0.3, -8], [0.5, 13], [0.58, 10], [0.72, 10], [0.9, 2], [1, 0]] as const) - 3 * tug, 0, -0.7 * hipsR[2]];
+          const chestR: V3 = [
+            keys(p, [[0, 0], [0.3, -8], [0.5, 7], [0.72, 6], [1, 0]] as const) - 3 * tug,
+            keys(p, [[0, 0], [0.3, -4], [0.48, 7], [0.72, 7], [1, 0]] as const) + 3 * shake,
+            -0.4 * hipsR[2],
+          ];
+          const hipsZ = keys(p, [[0, 0], [0.3, -0.035], [0.48, STEP / 2], [0.72, STEP / 2], [0.95, 0], [1, 0]] as const);
+
+          // ---- legs: the right foot stays planted; the left steps out and back
+          const lift = keys(p, [[0, 0], [0.32, 0], [0.39, 0.035], [0.44, 0.028], [0.48, 0], [0.74, 0], [0.8, 0.03], [0.88, 0.024], [0.94, 0]] as const);
+          const zL = keys(p, [[0, 0], [0.33, 0], [0.475, STEP], [0.74, STEP], [0.93, 0]] as const);
+          const loadL = keys(p, [[0, 1], [0.31, 1], [0.35, 0], [0.47, 0], [0.49, 1], [0.72, 1], [0.76, 0], [0.93, 0], [0.96, 1]] as const);
+          const hipsQ = quat(hipsR);
+          const hipJoint = (s: 1 | -1) => vec([s * HIP[0], HIP[1], HIP[2]]).sub(vec(HIPS_AT)).applyQuaternion(hipsQ).add(vec(HIPS_AT)).add(vec([0, 0, hipsZ]));
+          // The hips' move y at which a stiff leg from hip joint `h` just reaches the ankle target `a` ([y, z]).
+          const need = (h: THREE.Vector3, s: 1 | -1, a: readonly [number, number]) => {
+            const dx = s * ANKLE[0] - h.x;
+            const dz = a[1] - h.z;
+            return a[0] - h.y + Math.sqrt(Math.max(0, LEG_LEN ** 2 - dx * dx - dz * dz));
+          };
+          const aL = [ANKLE[1] + lift, zL] as const;
+          const aR = [ANKLE[1], 0] as const;
+          const hL = hipJoint(1);
+          const hR = hipJoint(-1);
+          const nR = need(hR, -1, aR);
+          const hipsY = nR + loadL * Math.max(0, need(hL, 1, aL) - nR);
+          hL.y += hipsY;
+          hR.y += hipsY;
+          // Leg and foot rotations that point the leg at its ankle target and keep the sole flat.
+          const legTo = (h: THREE.Vector3, s: 1 | -1, a: readonly [number, number]) => {
+            const dy = h.y - a[0];
+            const dz = a[1] - h.z;
+            const x = s * Math.max(ANKLE[0], s * h.x + Math.sqrt(Math.max(0, LEG_LEN ** 2 - dy * dy - dz * dz)));
+            const rest = vec([s * (ANKLE[0] - HIP[0]), ANKLE[1] - HIP[1], 0]).normalize();
+            const world = new THREE.Quaternion().setFromUnitVectors(rest, vec([x, a[0], a[1]]).sub(h).normalize());
+            return { leg: euler(hipsQ.clone().invert().multiply(world)), foot: euler(world.clone().invert()) };
+          };
+          const legL = legTo(hL, 1, aL);
+          const legR = legTo(hR, -1, aR);
+
+          // ---- arms: world wrist targets in the chest's rest frame
+          const hipsMove: V3 = [0, hipsY, hipsZ];
+          const chestAt = vec(follow([HIPS_AT, SPINE_AT], [hipsR, spineR], CHEST_AT)).add(vec(hipsMove));
+          const inv = quat(hipsR).multiply(quat(spineR)).multiply(quat(chestR)).invert();
+          const toChest = (w: V3): V3 => arr(vec(w).sub(chestAt).applyQuaternion(inv).add(vec(CHEST_AT)));
+          const dirToChest = (d: V3): V3 => arr(vec(d).applyQuaternion(inv));
+          const lift3 = (w: V3): V3 => [w[0], w[1] - shrug, w[2]];
+          const arm = (s: 1 | -1, q: number) => {
+            const m = (w: V3): V3 => (s > 0 ? w : mx(w));
+            const pull: V3 = [0, 0.008 * shake, -0.02 * tug];
+            const w = keys(q, wristPath, 'spline');
+            const wrist = toChest(m([w[0], w[1] + pull[1], w[2] + pull[2]]));
+            const pole = m(keys(q, polePath));
+            const ik = reach(s > 0 ? ARM_L : ARM_R, lift3(wrist), lift3(pole));
+            const hand = orient(
+              [ik.upper, ik.lower],
+              { dir: m(HAND_DIR), up: m(HAND_UP) },
+              { dir: dirToChest(m(keys(q, dirPath))), up: dirToChest(m(keys(q, upPath))) },
+            );
+            return { upper: ik.upper, lower: ik.lower, hand };
+          };
+          const L = arm(1, p);
+          const R = arm(-1, p - 0.025 * Math.sin(Math.PI * p)); // the right arm lags a beat
+
+          return {
+            hips: { move: hipsMove, rotate: hipsR },
+            spine: { rotate: spineR },
+            chest: { rotate: chestR },
+            // The head lolls back and to the side in the wind-up, looks up at the target in the lunge, and shakes in the hold.
+            neck: { rotate: [keys(p, [[0, 0], [0.3, -8], [0.5, -8], [0.72, -7], [1, 0]] as const), 0, 0] },
+            head: {
+              rotate: [
+                keys(p, [[0, 0], [0.06, 0], [0.32, -16], [0.42, -6], [0.5, -14], [0.72, -12], [0.88, 3], [1, 0]] as const) - 4 * tug,
+                5 * shake,
+                keys(p, [[0, 0], [0.32, 10], [0.46, -4], [0.72, -4], [1, 0]] as const),
+              ],
+            },
+            'upperarm.L': { move: [0, shrug, 0], rotate: L.upper },
+            'forearm.L': { rotate: L.lower },
+            'hand.L': { rotate: L.hand },
+            'upperarm.R': { move: [0, shrug, 0], rotate: R.upper },
+            'forearm.R': { rotate: R.lower },
+            'hand.R': { rotate: R.hand },
+            'leg.L': { rotate: legL.leg },
+            'foot.L': { rotate: legL.foot },
+            'leg.R': { rotate: legR.leg },
+            'foot.R': { rotate: legR.foot },
+          };
+        },
+      });
+    }
 
     // ------------------------------------------------------------------ hit: a late, floppy recoil
     // The chest rocks back first. The head follows late, lolls far back, flops forward past the
