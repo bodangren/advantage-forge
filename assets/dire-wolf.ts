@@ -249,32 +249,110 @@ export default defineAsset({
     // ------------------------------------------------------------------ animation
     const { wave, bump } = motion;
 
-    // Trot: diagonal pairs move together (front-left with back-right).
-    const gait = (duration: number, swing: number, lift: number, bob: number, headDip: number, tailUp: number) => ({
+    // Ground contact. The paws and the claws are rigid on the shins, and the claws sit far in
+    // front of the knee, so a shin that turns back (+X) swings the claw tips down into the floor.
+    // A planted paw stays flat: its shin cancels the turn of the upper leg (and of the spine for a
+    // front leg). motion.plant then sets the hips height from these chains, so the lowest point of
+    // the paws (claw tips, toe pads, pad, heel) rests on the ground.
+    type Rot = readonly [number, number, number];
+    type Pose = Record<string, { rotate?: Rot; move?: Rot }>;
+    const mx = (v: V3): V3 => [-v[0], v[1], v[2]];
+    const HIPS_AT: V3 = [0, 0.27, -0.17];
+    const SPINE_AT: V3 = [0, 0.29, 0.0];
+    const pawSole = (kn: V3): V3[] => {
+      const pts: V3[] = [];
+      const c: V3 = [kn[0], 0.036, kn[2] + 0.04]; // the paw ellipsoid (flat bottom at y = 0)
+      for (const th of [26, 45, 65, 90])
+        for (let ph = 0; ph < 360; ph += 30) {
+          const s = Math.sin((th * Math.PI) / 180);
+          const a = (ph * Math.PI) / 180;
+          pts.push([c[0] + 0.058 * s * Math.cos(a), Math.max(0, c[1] - 0.04 * Math.cos((th * Math.PI) / 180)), c[2] + 0.07 * s * Math.sin(a)]);
+        }
+      for (const x of [-0.03, 0, 0.03]) {
+        const pad = kn[2] + 0.095 - Math.abs(x) * 0.4;
+        pts.push([kn[0] + x, 0.002, pad], [kn[0] + x, 0.009, pad + 0.017]); // the toe pad
+        pts.push([kn[0] + x, 0.001, kn[2] + 0.13 - Math.abs(x) * 0.4], [kn[0] + x, 0.012, kn[2] + 0.115 - Math.abs(x) * 0.4]); // the claw
+      }
+      return pts;
+    };
+    const LEGS = [
+      { bones: ['hips', 'spine', 'fleg.L', 'fshin.L'], joints: [HIPS_AT, SPINE_AT, SHOULDER, FKNEE], sole: pawSole(FKNEE) },
+      { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SHOULDER), mx(FKNEE)], sole: pawSole(mx(FKNEE)) },
+      { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HIP, BKNEE], sole: pawSole(BKNEE) },
+      { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HIP), mx(BKNEE)], sole: pawSole(mx(BKNEE)) },
+    ];
+    const chains = (pose: Pose, legs: readonly (typeof LEGS)[number][] = LEGS) =>
+      legs.map((l) => ({ joints: l.joints, rotations: l.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const)), sole: l.sole }));
+    // The hips lift for the pose, and then each planted paw ([index in LEGS, weight]) that floats
+    // tips its toes down (the heel lifts) until the claws touch the ground: the push-off at the
+    // end of a step, and a paw on the high side of a hips roll. It changes the shins in `pose`.
+    const planted = (pose: Pose, settle: readonly (readonly [leg: number, weight: number])[] = []) => {
+      const y = motion.plant(chains(pose));
+      for (const [i, weight] of settle) {
+        const l = LEGS[i]!;
+        const shin = l.bones[l.bones.length - 1]!;
+        const r = pose[shin]?.rotate ?? ([0, 0, 0] as const);
+        const floats = (w: number) => {
+          pose[shin] = { rotate: [r[0] + w, r[1], r[2]] };
+          return y - motion.plant(chains(pose, [l])) > 0.001; // the paw's lowest point is above the ground
+        };
+        let lo = 0;
+        if (floats(0)) {
+          let hi = 30;
+          for (let n = 0; n < 12; n++) {
+            const mid = (lo + hi) / 2;
+            if (floats(mid)) lo = mid;
+            else hi = mid;
+          }
+        }
+        pose[shin] = { rotate: [r[0] + lo * weight, r[1], r[2]] };
+      }
+      return y;
+    };
+
+    // Trot: diagonal pairs move together (front-left with back-right). A paw stays flat on the
+    // ground while its leg pushes back. While the leg swings forward, the upper leg lifts the knee
+    // (`fold`) and the paw tips its toes up (`toe`); a paw's rounded pad sits in front of the
+    // knee, so the tip lifts all of it. The hind knee sits behind the hip, so the hind leg needs
+    // more of both. The hips follow the planted paws (motion.plant), plus a small `hop` between
+    // the steps of the run.
+    type Swing = readonly [fold: number, toe: number];
+    const gait = (duration: number, swing: number, front: Swing, hind: Swing, hop: number, headDip: number, tailUp: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const a = wave(p);
-        const liftA = Math.max(0, wave(p, 1, 0.25));
-        const liftB = Math.max(0, -wave(p, 1, 0.25));
-        return {
-          hips: { move: [0, -bob * bump(p, 2), 0] as const, rotate: [0, 0, 3 * a] as const },
-          spine: { rotate: [2 * wave(p, 2), 0, -3 * a] as const },
-          neck: { rotate: [headDip, 0, 0] as const },
-          head: { rotate: [-4 * wave(p, 2, 0.25), 4 * a, 0] as const },
-          tail: { rotate: [tailUp + 8 * wave(p, 2, 0.1), 18 * wave(p, 1, 0.2), 0] as const },
-          'fleg.L': { rotate: [-swing * a, 0, 0] as const },
-          'bleg.R': { rotate: [-swing * a, 0, 0] as const },
-          'fleg.R': { rotate: [swing * a, 0, 0] as const },
-          'bleg.L': { rotate: [swing * a, 0, 0] as const },
-          'fshin.L': { rotate: [lift * liftA, 0, 0] as const },
-          'bshin.R': { rotate: [-lift * liftA, 0, 0] as const },
-          'fshin.R': { rotate: [lift * liftB, 0, 0] as const },
-          'bshin.L': { rotate: [-lift * liftB, 0, 0] as const },
+        const pitch = 2 * wave(p, 2);
+        // The bias sets each knee straight under its shoulder or hip, so a planted paw rises the
+        // same height at both ends of the stride (the front knee sits 1 cm in front of the
+        // shoulder, the hind knee 2 cm behind the hip).
+        const leg = (s: 1 | -1, isFront: boolean) => {
+          const lift = Math.max(0, s * wave(p, 1, 0.25)); // 0 while planted, 1 at mid-swing
+          const [fold, toe] = isFront ? front : hind;
+          const upper = (isFront ? 4.8 : -9.5) - s * swing * a - fold * lift;
+          const lower = -upper - (isFront ? pitch : 0) - toe * lift;
+          return { upper: { rotate: [upper, 0, 0] as Rot }, lower: { rotate: [lower, 0, 0] as Rot }, lift };
         };
+        const legs = [leg(1, true), leg(-1, true), leg(-1, false), leg(1, false)]; // LEGS order
+        const pose: Pose = {
+          hips: { rotate: [0, 0, 3 * a] },
+          spine: { rotate: [pitch, 0, -3 * a] },
+          neck: { rotate: [headDip, 0, 0] },
+          head: { rotate: [-4 * wave(p, 2, 0.25), 4 * a, 0] },
+          tail: { rotate: [tailUp + 8 * wave(p, 2, 0.1), 18 * wave(p, 1, 0.2), 0] },
+        };
+        legs.forEach((l, i) => {
+          pose[LEGS[i]!.bones.at(-2)!] = l.upper;
+          pose[LEGS[i]!.bones.at(-1)!] = l.lower;
+        });
+        // A planted paw settles fully; the settle fades out early in the swing, so the paw leaves
+        // the ground toes last and lands toes first, without a jump.
+        const settle = legs.map((l, i) => [i, Math.max(0, 1 - l.lift / 0.4)] as const).filter(([, w]) => w > 0);
+        pose.hips = { ...pose.hips, move: [0, planted(pose, settle) + hop * bump(p, 2) ** 2, 0] };
+        return pose;
       },
     });
-    k.animation('walk', gait(0.6, 26, 40, 0.01, 0, 0));
-    k.animation('run', gait(0.36, 40, 62, 0.024, 10, 14));
+    k.animation('walk', gait(0.6, 24, [34, 10], [40, 22], 0, 0, 0));
+    k.animation('run', gait(0.36, 36, [50, 14], [54, 26], 0.008, 10, 14));
     k.animation('idle', {
       duration: 2.6,
       pose: (_t, p) => ({
@@ -297,19 +375,30 @@ export default defineAsset({
         const wind = ease(0, 0.32, p) * (1 - ease(0.32, 0.42, p));
         const hit = ease(0.32, 0.44, p) * (1 - ease(0.58, 1, p));
         const snap = ease(0.4, 0.48, p) * (1 - ease(0.52, 0.8, p));
-        return {
-          hips: { move: [0, -0.02 * wind, -0.04 * wind + 0.09 * hit] },
-          spine: { rotate: [6 * wind - 6 * hit, 0, 0] },
+        // Each shin cancels its upper leg (and the spine pitch), so the paws stay flat on the
+        // ground; in the leap the front paws tip their toes up by 10 degrees. The hips height
+        // comes from motion.plant: the crouch reads from the low neck and head.
+        const pitch = 6 * wind - 6 * hit;
+        const fl = 14 * wind - 34 * hit;
+        const fr = 14 * wind - 26 * hit;
+        const bl = -10 * wind + 26 * hit;
+        const br = -10 * wind + 20 * hit;
+        const pose: Pose = {
+          spine: { rotate: [pitch, 0, 0] },
           neck: { rotate: [14 * wind - 8 * hit, 0, 0] },
           head: { rotate: [6 * wind - 22 * snap, 0, 0] },
           tail: { rotate: [-10 * wind + 20 * hit, 10 * wave(p, 3), 0] },
-          'fleg.L': { rotate: [14 * wind - 34 * hit, 0, 0] },
-          'fleg.R': { rotate: [14 * wind - 26 * hit, 0, 0] },
-          'bleg.L': { rotate: [-10 * wind + 26 * hit, 0, 0] },
-          'bleg.R': { rotate: [-10 * wind + 20 * hit, 0, 0] },
-          'fshin.L': { rotate: [24 * hit, 0, 0] },
-          'fshin.R': { rotate: [16 * hit, 0, 0] },
+          'fleg.L': { rotate: [fl, 0, 0] },
+          'fleg.R': { rotate: [fr, 0, 0] },
+          'bleg.L': { rotate: [bl, 0, 0] },
+          'bleg.R': { rotate: [br, 0, 0] },
+          'fshin.L': { rotate: [-fl - pitch - 10 * hit, 0, 0] },
+          'fshin.R': { rotate: [-fr - pitch - 10 * hit, 0, 0] },
+          'bshin.L': { rotate: [-bl, 0, 0] },
+          'bshin.R': { rotate: [-br, 0, 0] },
         };
+        pose.hips = { move: [0, planted(pose, [[2, 1], [3, 1]]), -0.04 * wind + 0.09 * hit] };
+        return pose;
       },
     });
 
