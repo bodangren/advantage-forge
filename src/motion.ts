@@ -185,3 +185,23 @@ export function edgeUp(dirAt: (phase: number) => Vec3, phase: number, fallback: 
   const up = f.multiplyScalar(1 - w).add(n.normalize().multiplyScalar(w)).normalize();
   return [up.x, up.y, up.z];
 }
+
+/**
+ * How far to move the hips up (positive) or down so the lowest sole point of the feet rests on
+ * the ground, the same height as in the rest pose. Use it instead of `legDrop` when feet roll
+ * (heel strike, toe-off) or legs bend: `legDrop` keeps the ankle level, but a rolling foot dips
+ * its toe or heel below the floor.
+ * Each foot is a chain from the hips: `joints` are rest pivots (for example the hip joint and
+ * the ankle), `rotations` the matching `rotate` values in the pose, and `sole` a few rest points
+ * on the bottom of the foot (heel, toe, and the sides).
+ */
+export function plant(feet: readonly { joints: readonly Vec3[]; rotations: readonly Vec3[]; sole: readonly Vec3[] }[]): number {
+  let restLow = Infinity;
+  let posedLow = Infinity;
+  for (const f of feet)
+    for (const p of f.sole) {
+      restLow = Math.min(restLow, p[1]);
+      posedLow = Math.min(posedLow, follow(f.joints, f.rotations, p)[1]);
+    }
+  return restLow - posedLow;
+}

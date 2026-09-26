@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { edgeUp, follow, keys, orient, reach } from '../src/motion.js';
+import { edgeUp, follow, keys, legDrop, orient, plant, reach } from '../src/motion.js';
 import type { Vec3 } from '../src/sdf/core.js';
 
 const close = (a: Vec3, b: Vec3, digits = 4) => a.forEach((v, i) => expect(v).toBeCloseTo(b[i]!, digits));
@@ -56,6 +56,24 @@ describe('posing by targets', () => {
     close(edgeUp(swing, 0.5, [0, 0.2, -1]), [0, 0, -1]);
     // A blade that holds still keeps the fallback.
     close(edgeUp(() => [1, 0, 0], 0.5, [0, 1, 0]), [0, 1, 0]);
+  });
+
+  it('plant lifts the hips so a rolled foot does not dip below the ground', () => {
+    const hip: Vec3 = [0.07, 0.2, 0];
+    const ankle: Vec3 = [0.1, 0.07, 0];
+    const sole: Vec3[] = [
+      [0.1, 0, -0.04],
+      [0.1, 0, 0.1],
+    ];
+    // A straight leg with a flat foot: nothing to do.
+    expect(plant([{ joints: [hip, ankle], rotations: [[0, 0, 0], [0, 0, 0]], sole }])).toBeCloseTo(0);
+    // A leg swung back with the toe rolled down: the hips must come up more than legDrop says.
+    const leg: Vec3 = [26, 0, 0];
+    const foot: Vec3 = [20, 0, 0];
+    const dy = plant([{ joints: [hip, ankle], rotations: [leg, foot], sole }]);
+    expect(dy).toBeGreaterThan(-legDrop(0.13, 26));
+    const lowest = Math.min(...sole.map((p) => follow([hip, ankle], [leg, foot], p)[1]));
+    expect(lowest + dy).toBeCloseTo(0);
   });
 
   it('keys hold, ease, and pass through their values', () => {

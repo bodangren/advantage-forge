@@ -161,6 +161,11 @@ wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path
 - `follow(joints, rotations, point)`: where a point bound to the chain goes (forward
   kinematics): the posed grip of a two-handed weapon, so the other hand can `reach` it.
 - `keys(p, [[phase, value], ...], mode)`: keyframes for numbers or [x, y, z] values.
+- `plant([{ joints: [HIP, ANKLE], rotations: [legRot, footRot], sole: [heel, toe] }, ...])`: the
+  hips `move` y that keeps the lowest sole point of the feet on the ground. Use it instead of
+  `legDrop` in walks and runs: `legDrop` keeps the ankle level, but a foot that rolls (heel
+  strike, toe-off) then dips its toe or heel below the floor. `./forge check` fails clips that
+  sink more than 1.5 cm below the rest pose.
 
 ```ts
 const { keys, reach, orient } = motion;
