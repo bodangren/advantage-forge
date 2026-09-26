@@ -811,7 +811,7 @@
     "reviewedAt": "2026-09-26T20:49:05+00:00"
   },
   "giant-bat": {
-    "overall": 7.5,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -824,24 +824,24 @@
       "technical": 5,
       "gameReady": 4,
       "sprite": 4,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The giant bat matches the front of its mmx mockup: a round purple fur ball, tall ears, yellow eyes under heavy brows, a pink snout, fangs, and pink wings on dark bones. The death reads well, but the attack does not read as a bite.",
+    "summary": "The giant bat matches the front of its mmx mockup: a round purple fur ball, tall ears, yellow eyes under heavy brows, a pink snout, fangs, and pink wings. The attack is now a real swooping bite with a lower jaw that opens and snaps shut.",
     "strengths": [
-      "The front view and the S sprite read clearly at 128 px: the yellow eyes, the pink snout, the white fangs, and the wide pink wings.",
-      "The idle, the hit, and the death lift the ball into a hover. The wings beat on two bones each, so the wing tips lag the beat.",
-      "The death has a jolt in the hover, a tumble back, and a drop. Then the bat lies still on its back with the feet up. No clip sinks below the ground."
+      "A jaw bone moves a small lower lip under the grin. The closed mouth at rest looks the same as before. When the jaw opens, a dark throat, a tongue, and two lower fangs show.",
+      "The attack has a clear wind-up, a swoop 0.3 m forward with a pitch of 14 degrees or less, a wide open mouth, a hard snap, and a climb back to the hover with strong wing beats.",
+      "The idle, the hit, and the death still read well. No clip sinks below the ground, and the build gives no warnings."
     ],
     "issues": [
-      "The attack does not read as a real bat strike. The wings go up and the ball rises, but the rig has no jaw bone, so the mouth never opens and never snaps shut.",
-      "In the dive, the ball moves only 16 cm forward and drops 8 cm, and it pitches 32 degrees nose-down, so the face points at the floor. The climb back to the hover is correct.",
-      "The ears are still tall pointed triangles with a straight rim. In the side view and in the W and E sprites, the wings are still thin pink fins beside the ball."
+      "The open lower jaw looks ragged in close views: its top face is dark to the lip edge, and the chin fur spikes cover part of the lower lip.",
+      "The ears are still tall pointed triangles with a straight rim.",
+      "In the side view and in the W and E sprites, the wings are still thin pink fins beside the ball."
     ],
     "next": [
-      "Make the attack a real bite. Add a lower jaw on a jaw bone. Open the jaw wide in the dive, snap it shut at the target, and dive about 30 cm forward with a pitch of 15 degrees or less.",
-      "Round the ear outline and add two or three scallops to its back edge. Angle the wings 20 degrees toward the front at rest. The old review asked for these changes, and they are still open."
+      "Round the ear outline and add two or three scallops to its back edge.",
+      "Angle the wings 20 degrees toward the front at rest, so they read in the side view and in the W and E sprites."
     ],
-    "reviewedAt": "2026-09-26T19:22:11+00:00"
+    "reviewedAt": "2026-09-26T20:49:35+00:00"
   },
   "mimic": {
     "overall": 8.5,

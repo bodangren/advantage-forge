@@ -17,8 +17,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   #43324f; pink membranes, ear insides, snout, and feet #e08a8e; yellow eyes #f2c21c as the accent.
  * Value plan: the yellow eyes under the dark brows and the white fangs are the strongest contrast
  *   (focal point); the pink snout and ear insides are the second.
- * Bodies: fur, ears, eyes, brows, snout, mouth, teeth, wing-membranes, wing-bones, feet, claws.
- * Rig: body (root), ear.L/R, wing.L/R with wingtip.L/R at the knuckle, foot.L/R. Clips: idle
+ * Bodies: fur, ears, eyes, brows, snout, mouth, teeth, wing-membranes, wing-bones, feet, claws;
+ *   on the jaw: jawFur, jawMouth, jawTeeth, tongue; the dark throat inside the ball.
+ * Rig: body (root), jaw, ear.L/R, wing.L/R with wingtip.L/R at the knuckle, foot.L/R. Clips: idle
  *   (hover), fly (forward flight), attack (a swooping bite).
  */
 
@@ -35,6 +36,7 @@ const C = {
   snout: '#e8a0a0',
   nostril: '#5a2a30',
   mouth: '#2a1418',
+  tongue: '#c0606c',
   tooth: '#f6f0e2',
   membrane: '#e08a8e',
   membraneDark: '#b86a72',
@@ -52,6 +54,9 @@ const R = 0.22;
 const WING_ROOT: V3 = [0.19, 0.34, -0.03];
 const EAR_ROOT: V3 = [0.115, 0.47, -0.01];
 const FOOT: V3 = [0.075, 0.05, 0.0];
+// The jaw hinge: level with the grin corners and far back inside the ball, so the lower lip
+// swings mostly down (and not back into the fur) when the jaw opens.
+const JAW_AT: V3 = [0, 0.25, 0.06];
 
 // Fur tufts: directions spread evenly over the ball (a Fibonacci lattice), each with its own length.
 // The lattice is jittered, so the tufts do not form a regular pattern.
@@ -97,6 +102,7 @@ export default defineAsset({
     const KNUCKLE: V3 = [0.12, 0.2, 0];
     k.skeleton({
       body: { at: BODY_C },
+      jaw: { parent: 'body', at: JAW_AT, tail: [0, 0.235, 0.2] },
       'ear.L': { parent: 'body', at: EAR_ROOT, tail: [0.22, 0.72, -0.02] },
       'ear.R': { parent: 'body', at: mx(EAR_ROOT), tail: [-0.22, 0.72, -0.02] },
       'wing.L': { parent: 'body', at: WING_ROOT },
@@ -125,12 +131,32 @@ export default defineAsset({
         const b = base[2] + (tip[2] - base[2]) * t * 0.6;
         return [r * (1 - 0.25 * under), g * (1 - 0.25 * under), b * (1 - 0.2 * under)];
       });
-    k.body('fur', fur.bone('body'), {
+    const furLook = {
       color: C.fur,
       roughness: 0.9,
       textureDensity: 1.5,
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 90, y * 40, z * 90, 2),
-    });
+      bump: (x: number, y: number, z: number) => 0.0012 * noise.fbm(x * 90, y * 40, z * 90, 2),
+    };
+    // The lower jaw: a small lip under the grin. The zone lies below a smile curve through the
+    // middle of the grin (y 0.232 at the center, 0.25 at the corners) and inside a rounded bound
+    // that ends at the grin corners and about 6 cm under the grin. The jaw pieces are rigid on
+    // `jaw` and reach 3 mm into the ball, so no seam groove shows. The cut faces (the roof of the
+    // mouth and the top of the jaw) are dark, but the outer fur is not.
+    const jawZone = sdf
+      .ellipsoid([0.1, 0.055, 0.11])
+      .at(0, 0.225, 0.17)
+      .subtract(sdf.cylinder(0.187, 0.6).rotateX(90).at(0, 0.419, 0.2));
+    const jawPart = jawZone.round(0.003);
+    const inBall = ballSmooth.round(-0.004);
+    const roofPaint = jawPart.intersect(inBall);
+    const jawTopPaint = inBall.subtract(jawZone.round(-0.003));
+    k.body('fur', fur.subtract(jawZone).paintWhere(roofPaint, C.mouth, 0.002).bone('body'), furLook);
+    k.body('jawFur', fur.intersect(jawPart).paintWhere(jawTopPaint, C.mouth, 0.002), { ...furLook, bone: 'jaw' });
+    // The dark throat inside the ball (seen when the jaw opens) and the tongue on the jaw. Both
+    // stay inside the closed ball.
+    const deepIn = ballSmooth.round(-0.012);
+    k.body('throat', sdf.ellipsoid([0.075, 0.04, 0.08]).at(0, 0.23, 0.12).intersect(deepIn).bone('body'), { color: C.mouth, roughness: 0.6 });
+    k.body('tongue', sdf.ellipsoid([0.042, 0.011, 0.055]).at(0, 0.226, 0.13).intersect(deepIn), { color: C.tongue, roughness: 0.35, bone: 'jaw' });
 
     // ------------------------------------------------------------------ ears: tall, pointed, cupped, pink inside
     const earOutline = profile.polygon(
@@ -211,7 +237,9 @@ export default defineAsset({
       )
       .at(0, MOUTH_Y, 0.2);
     const mouth = ball.round(0.004).subtract(ball.round(-0.008)).intersect(mouthShape).intersect(sdf.halfSpace([0, 0, -1], -0.1));
-    k.body('mouth', mouth.bone('body'), { color: C.mouth, roughness: 0.6 });
+    // The lower half of the grin goes with the jaw.
+    k.body('mouth', mouth.subtract(jawZone).bone('body'), { color: C.mouth, roughness: 0.6 });
+    k.body('jawMouth', mouth.intersect(jawPart), { color: C.mouth, roughness: 0.6, bone: 'jaw' });
     const mouthZ = (x: number) => sdf.raycast(ball, [x, MOUTH_Y + 0.016, 1], [0, 0, -1])![2];
     const teeth = sdf.union(
       ...[-0.03, -0.01, 0.01, 0.03].map((x) => sdf.box([0.018, 0.022, 0.012], 0.004).at(x, MOUTH_Y + 0.008, mouthZ(Math.abs(x)) + 0.008)),
@@ -221,6 +249,15 @@ export default defineAsset({
       }),
     );
     k.body('teeth', teeth.bone('body'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+    // Two small lower fangs on the jaw, 1.2 cm behind the lip: hidden in the closed grin, they
+    // stand up from the jaw when it opens.
+    const lowerFangs = sdf.union(
+      ...[-0.036, 0.036].map((x) => {
+        const zAt = (y: number) => sdf.raycast(ball, [x, y, 1], [0, 0, -1])![2];
+        return sdf.cone([x, 0.214, zAt(0.214) - 0.013], [x * 0.95, 0.25, zAt(0.25) - 0.012], 0.007, 0.002);
+      }),
+    );
+    k.body('jawTeeth', lowerFangs, { color: C.tooth, roughness: 0.3, detail: 0.003, bone: 'jaw' });
 
     // ------------------------------------------------------------------ wings
     // Local frame: the root at the origin, the wing spread along +X, the membrane in the XY plane.
@@ -321,42 +358,55 @@ export default defineAsset({
       },
     });
 
-    // Attack: rise with the wings high, dive forward with the mouth open wide... the fangs lead,
-    // the wings sweep back, then recover to the hover.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
-    k.animation('attack', {
-      duration: 0.8,
-      loop: false,
-      pose: (_t, p) => {
-        const rise = ease(0, 0.35, p) * (1 - ease(0.35, 0.45, p));
-        const dive = ease(0.35, 0.47, p) * (1 - ease(0.62, 1, p));
-        const beat = wave(p, 3);
-        return {
-          body: {
-            move: [0, HOVER + 0.08 * rise - 0.08 * dive, -0.04 * rise + 0.16 * dive],
-            rotate: [-12 * rise + 32 * dive, 0, 0],
-            scale: [1 - 0.06 * dive, 1 + 0.08 * dive, 1 - 0.06 * dive],
-          },
-          'wing.L': { rotate: [0, -30 * dive, 10 + 25 * beat * (1 - dive) + 40 * rise] },
-          'wing.R': { rotate: [0, 30 * dive, -10 - 25 * beat * (1 - dive) - 40 * rise] },
-          'wingtip.L': { rotate: [0, 0, -20 * dive] },
-          'wingtip.R': { rotate: [0, 0, 20 * dive] },
-          'ear.L': { rotate: [-30 * dive, 0, 8 * rise] },
-          'ear.R': { rotate: [-30 * dive, 0, -8 * rise] },
-          'foot.L': { rotate: [10 + 30 * dive, 0, 0] },
-          'foot.R': { rotate: [10 + 30 * dive, 0, 0] },
-        };
-      },
-    });
-
     const { keys } = motion;
     /** Left-side rotations spread to both sides: Y and Z flip sign on the right. */
     const both = (name: string, r: [number, number, number]) => ({
       [`${name}.L`]: { rotate: r },
       [`${name}.R`]: { rotate: [r[0], -r[1], -r[2]] as [number, number, number] },
+    });
+
+    // Attack: a swooping bite. Wind-up (0 to 0.34): the bat rises and draws back, nose up, with the
+    // wings pulled high and back and the jaw starting to open. Swoop (0.34 to 0.5): one hard
+    // downstroke drives it 0.3 m forward and a little down; the pitch stays at 14 degrees or less,
+    // so the face looks at the target, and the jaw opens wide (38 degrees). Bite (0.5 to 0.54):
+    // the jaw snaps shut with a squash. Climb (0.54 to 1): strong wing beats carry it back up to
+    // the hover; the last frame is the first idle frame.
+    type Track = readonly (readonly [number, number])[];
+    const ATTACK: Record<string, Track> = {
+      y: [[0, HOVER + 0.03], [0.28, HOVER + 0.1], [0.34, HOVER + 0.1], [0.5, HOVER - 0.04], [0.56, HOVER - 0.03], [0.76, HOVER + 0.06], [1, HOVER + 0.03]],
+      z: [[0, 0], [0.28, -0.07], [0.34, -0.08], [0.5, 0.3], [0.56, 0.32], [0.8, 0.06], [1, 0]],
+      pitch: [[0, 4], [0.28, -14], [0.34, -14], [0.44, 11], [0.54, 14], [0.62, 4], [0.76, -8], [1, 4]],
+      jaw: [[0, 0], [0.24, 0], [0.34, 0.25], [0.44, 1], [0.5, 1], [0.54, 0], [0.6, 0.12], [0.66, 0], [1, 0]],
+      wingZ: [[0, 10], [0.28, 75], [0.34, 78], [0.44, -50], [0.5, -55], [0.56, -30], [0.64, 62], [0.72, -40], [0.8, 52], [0.88, -18], [1, 10]],
+      wingY: [[0, 6], [0.28, 30], [0.34, 32], [0.44, -10], [0.5, -14], [0.6, 0], [1, 6]],
+      earX: [[0, 0], [0.28, 12], [0.34, 12], [0.44, -35], [0.54, -40], [0.7, -10], [1, 0]],
+      earZ: [[0, -4.9], [0.28, 10], [0.44, -8], [0.7, -4], [1, -4.9]],
+      feet: [[0, 14.7], [0.28, -15], [0.34, -15], [0.46, 45], [0.56, 50], [0.8, 25], [1, 14.7]],
+      sx: [[0, 1], [0.3, 0.97], [0.46, 0.95], [0.52, 1.07], [0.6, 1], [1, 1]],
+      sy: [[0, 1], [0.3, 1.04], [0.46, 0.97], [0.52, 0.93], [0.6, 1], [1, 1]],
+      sz: [[0, 1], [0.3, 0.97], [0.46, 1.08], [0.52, 0.96], [0.6, 1], [1, 1]],
+    };
+    k.animation('attack', {
+      duration: 0.9,
+      loop: false,
+      pose: (_t, p) => {
+        const v = (name: string, q = p) => keys(q, ATTACK[name]!);
+        const jaw = v('jaw');
+        // The finger tips lag the arm: they point where the arm was a moment ago. At the end they
+        // blend into the idle tip angle.
+        const end = Math.min(1, Math.max(0, (p - 0.9) / 0.1));
+        const tipZ = Math.max(-40, Math.min(40, 0.6 * (v('wingZ', p - 0.04) - v('wingZ')))) * (1 - end) + 13.7 * end;
+        return {
+          body: { move: [0, v('y'), v('z')], rotate: [v('pitch'), 0, 0], scale: [v('sx'), v('sy'), v('sz')] },
+          // The open jaw also juts forward a little, so the lower lip stays in front of the chin.
+          jaw: { rotate: [38 * jaw, 0, 0], move: [0, -0.006 * jaw, 0.014 * jaw] },
+          ...both('wing', [0, v('wingY'), v('wingZ')]),
+          ...both('wingtip', [0, 0, tipZ]),
+          ...both('ear', [v('earX'), 0, v('earZ')]),
+          'foot.L': { rotate: [v('feet'), 0, 0] },
+          'foot.R': { rotate: [v('feet') - 2.2, 0, 0] }, // the idle start angle of the right foot
+        };
+      },
     });
 
     // Hit: the ball jolts back and squashes, the wings fold in against the body, the ears flatten;
