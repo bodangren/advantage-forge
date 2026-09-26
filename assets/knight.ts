@@ -661,6 +661,8 @@ export default defineAsset({
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;
+    // At rest the shield's top edge touches the left cheek; the idle and the walk hold it lower.
+    const SHIELD_DROP = [4, 8] as const;
 
     k.animation('idle', {
       duration: 2.4,
@@ -673,11 +675,23 @@ export default defineAsset({
         cloak: { rotate: [3 * wave(p, 1, 0.3), 0, 0] },
         'upperarm.R': { rotate: [2 * wave(p, 1, 0.1), 0, -2 * bump(p)] },
         'forearm.R': { rotate: [-4 * bump(p), 0, 0] },
+        // The shield sits a little lower and tips forward, so its top edge stays clear of the cheek.
+        'upperarm.L': { rotate: [SHIELD_DROP[0], 0, 0] },
+        'forearm.L': { rotate: [SHIELD_DROP[1], 0, 0] },
       }),
     });
 
     // The shield arm stays in front of the body; the sword arm swings a little.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number) => ({
+    // shield: the [upper arm, forearm] X offsets that keep the shield's top edge clear of the cheek.
+    const stride = (
+      duration: number,
+      legSwing: number,
+      armSwing: number,
+      lean: number,
+      hop: number,
+      flow: number,
+      shield: readonly [number, number] = [0, 0],
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -695,13 +709,14 @@ export default defineAsset({
           'leg.R': { rotate: [legSwing * s, 0, 0] as const },
           'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
           'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
-          'upperarm.L': { rotate: [armSwing * 0.15 * s, 0, 3] as const },
+          'upperarm.L': { rotate: [armSwing * 0.15 * s + shield[0], 0, 3] as const },
+          'forearm.L': { rotate: [shield[1], 0, 0] as const },
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -6] as const },
           'forearm.R': { rotate: [-armSwing * 0.2 * Math.max(0, s), 0, 0] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6));
+    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, [SHIELD_DROP[0] + 4, SHIELD_DROP[1]]));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
 
     // A diagonal slash, solved by targets (as the animated armor's attack). The wrist follows keys
