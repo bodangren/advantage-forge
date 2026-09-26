@@ -435,5 +435,64 @@ export default defineAsset({
         };
       },
     });
+
+    // ------------------------------------------------------------------ villager clips: talk and wave
+    // The free left arm is posed by wrist targets (chest rest frame). His arms are short and his head
+    // is wide, so the hand stays in front of the chest or out beside the cheek: far below the brim (0.78).
+    const { reach } = motion;
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+
+    // Talk: a friendly chat with someone in front. He leans a little on the fork (to his right), nods
+    // and turns his head under the hat, and the left hand makes two palm-up points in front of the chest.
+    // The head tilts only to his left, so the brim never dips toward the fork.
+    k.animation('talk', {
+      duration: 2.2,
+      pose: (_t, p) => {
+        const beat = bump(p, 2, 0.1);
+        const sweep = wave(p, 1, 0.1);
+        const wrist: V3 = [0.13 + 0.04 * sweep, 0.315 + 0.035 * beat, 0.14 + 0.01 * wave(p, 2)];
+        const arm = reach(ARM_L, wrist, [0.35, 0.2, -0.12]);
+        return {
+          hips: { move: [0, -0.002 * bump(p, 2), 0] },
+          spine: { rotate: [1.5, 0, 2.5 + 0.7 * wave(p, 1, 0.3)] },
+          chest: { rotate: [1.2 * beat, 0, 0] },
+          neck: { rotate: [-1.5, 0, 0] },
+          head: { rotate: [4 * bump(p, 2, 0.2) - 1.5, 8 * wave(p, 1, 0.35), -2.5 - 1.5 * bump(p, 1, 0.1)] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: [-8 - 8 * beat, 14 * sweep, 0] },
+        };
+      },
+    });
+
+    // Wave: a greeting. The left hand comes up out to the side, beside the cheek and far under the brim,
+    // waves two and a half times, and comes down. The right arm and the fork stay planted.
+    const RAISED: V3 = [0.245, 0.46, 0.09];
+    const POLE_REST: V3 = [0.43, 0.535, 0];
+    const POLE_UP: V3 = [0.45, 0.22, -0.1];
+    k.animation('wave', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const up = ease(0.02, 0.24, p) * (1 - ease(0.8, 1, p));
+        const waving = ease(0.18, 0.28, p) * (1 - ease(0.72, 0.82, p));
+        const side = waving * Math.sin(((p - 0.2) / 0.6) * Math.PI * 5);
+        const bulge = Math.sin(Math.PI * up);
+        const wrist: V3 = [
+          WRIST_L[0] + (RAISED[0] - WRIST_L[0]) * up + 0.05 * bulge + 0.022 * side,
+          WRIST_L[1] + (RAISED[1] - WRIST_L[1]) * up - 0.02 * bulge - 0.006 * Math.abs(side),
+          WRIST_L[2] + (RAISED[2] - WRIST_L[2]) * up + 0.02 * bulge,
+        ];
+        const arm = reach(ARM_L, wrist, lerp(POLE_REST, POLE_UP, up));
+        return {
+          chest: { rotate: [0, 0, 0] },
+          neck: { rotate: [-2 * up, 0, 0] },
+          head: { rotate: [-3 * up + 3 * bump(p, 1), 6 * up, -5 * up] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: [-10 * up, 0, 28 * side] },
+        };
+      },
+    });
   },
 });
