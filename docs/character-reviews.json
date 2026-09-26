@@ -821,5 +821,38 @@
       "Add fur clumps in the bump along the sides and a few belly folds in the paint."
     ],
     "reviewedAt": "2026-09-26T09:42:16+00:00"
+  },
+  "giant-bat": {
+    "overall": 8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The giant bat matches its mmx mockup: a round, shaggy purple fur ball with huge pointed ears, glaring yellow eyes under heavy brows, a pink pig snout, an open grin with two long fangs, pink-membraned wings on dark bones, and tiny pink feet.",
+    "strengths": [
+      "The combed fur spikes give the ball a shaggy outline, and the wide pink wings and tall ears make a clear flying silhouette.",
+      "The yellow eyes with dark pupils, the pink snout, and the white fangs read in the front sprites.",
+      "The wings flap on two bones each, so the tips lag the beat; the attack rises, then dives forward with a squash."
+    ],
+    "issues": [
+      "The ears are tall triangles; the mockup ears are rounder, with a wavy rim.",
+      "The fur is 32,000 of the 48,700 triangles; a reduced real-time model will need a smoother fur shell with the spikes in the normal map.",
+      "From the side, the wings show as thin pink fins beside the ball."
+    ],
+    "next": [
+      "Round the ear outline and add two or three scallops to its back edge.",
+      "Angle the wings 20 degrees toward the front at rest, so the side view shows more membrane."
+    ],
+    "reviewedAt": "2026-09-26T10:02:27+00:00"
   }
 }
