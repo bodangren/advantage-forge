@@ -290,7 +290,7 @@
     "reviewedAt": "2026-09-26T04:31:24+00:00"
   },
   "goblin-archer": {
-    "overall": 8,
+    "overall": 8.1,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -304,23 +304,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The goblin archer matches the mockup's pointed hood, big ears, war paint, and leather gear. It shares the warrior's face and body, so the two goblins read as one tribe.",
+    "summary": "The goblin archer has its full clip set: idle, walk, run, a bow shot, hit, and death. The hood, the ears, the face, and the leather gear match the mockup. The shot is the weakest clip, because the drawing hand stays hidden and the string holds no arrow.",
     "strengths": [
-      "The pointed dark hood with the ears through it is a strong, unique silhouette in every view.",
-      "The dark hood frames the light face, and the red fletching over the shoulder is a clear second accent.",
-      "The shot clip reads in the side view: the goblin turns, raises the bow, draws, and looses."
+      "The pointed dark hood with the ears through it gives a strong, unique silhouette in every view and in every sprite direction.",
+      "The dark hood frames the light face and the big amber eyes. The red fletching on the back quiver gives a clear second accent.",
+      "The death clip reads well. The goblin staggers and falls on its back, and the bow drops and lies flat on the floor."
     ],
     "issues": [
-      "The mockup holds the bow across the body in both hands. The model holds it upright at the side, because that reads better in sprites and allows the shot clip.",
-      "Seen from above in the sprites, the hood rim covers the brows, so the face reads weaker than the warrior's face.",
-      "In the shot clip, the drawing hand is hard to see, because it stays behind the body.",
-      "The mockup has a long back cape. The model has only the short capelet, so that the quiver shows."
+      "The shot reads weakly. The drawing hand stays behind the body, and no arrow shows on the string. In the three-quarter view, the raised bow covers one eye.",
+      "The ears are thin flat plates. In the side views and in the W and E sprites, they read as flat triangles. In the SW and SE sprites, they read as thin sticks.",
+      "The model differs from the mockup. It holds the bow upright at the side, not across the body. It has no long back cape and no chest strap, and the nose is a small bump, not a snout."
     ],
     "next": [
-      "Pull the drawing hand further out to the side in the shot clip.",
-      "Add a nocked arrow during the shot, so the draw reads at 128 px."
+      "Rework the shot. Pull the drawing hand out to the side, clear of the body. Show a nocked arrow from the draw to the release. Both items from the last review are still open.",
+      "Give the ears thickness and a cupped inner face, as in the mockup. Then the ears read as ears from the side and from above."
     ],
-    "reviewedAt": "2026-09-26T04:05:28+00:00"
+    "reviewedAt": "2026-09-26T18:43:17+00:00"
   },
   "skeleton": {
     "overall": 8,
