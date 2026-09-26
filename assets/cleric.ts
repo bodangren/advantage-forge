@@ -810,19 +810,22 @@ export default defineAsset({
         const fall = ease(0.26, 0.7, p);
         const land = bump(Math.min(1, Math.max(0, (p - 0.66) / 0.16)));
         const fling = ease(0.2, 0.62, p);
-        // The hammer tips forward out of his grip and comes down along his right side.
+        // The hammer tips forward out of his grip and comes down along his right side. It lands
+        // flat: the haft points to his feet and slopes down a little from the fist, and the
+        // head on one side with a cross face up. The keys are in the chest's rest frame; lying
+        // down, that frame is turned 84 degrees back, so chest +Z is world up.
         const hammerArm = hammerPose(
-          keys(p, [[0, WRIST_R], [0.3, [-0.29, 0.34, 0.1]], [0.66, [-0.33, 0.4, -0.02]]] as const),
+          keys(p, [[0, WRIST_R], [0.3, [-0.29, 0.34, 0.1]], [0.66, [-0.305, 0.34, -0.11]]] as const),
           keys(
             p,
             [
               [0, HAFT_AXIS],
               [0.3, norm([-0.3, 0.75, 0.6])],
               [0.5, norm([-0.2, -0.2, 0.96])],
-              [0.66, norm([-0.1, -1, -0.02])],
+              [0.66, norm([-0.05, -0.997, 0.06])],
             ] as const,
           ),
-          keys(p, [[0, [0, 0, 1]], [0.3, [-1, 0, 0]], [0.66, [-1, 0, 0]]] as const),
+          keys(p, [[0, [0, 0, 1]], [0.3, [-1, 0, 0]], [0.5, [-1, 0, 0]], [0.66, [0, 0.1045, 0.9945]]] as const),
           [-0.3, 0.2, -0.4],
         );
         const bookArm = bookPoseAt(
