@@ -425,10 +425,11 @@ export default defineAsset({
           head: { rotate: [-6 * dig + 4 * toss, 0, 0] },
           // Dig: the hand comes up and forward and the fork tips over, tines down into the hay.
           // Toss: the arm lifts high in front with the fork upright.
-          // The three X angles add up to the fork's tilt: about 120 degrees in the dig, 15 in the toss.
+          // The three X angles add up to the fork's tilt: about 120 degrees in the dig, 23 in the toss.
+          // The toss tilt keeps the upright haft 2 cm in front of the hat brim.
           'upperarm.R': { rotate: [-35 * dig - 95 * toss, 0, 10 * toss] },
           'forearm.R': { rotate: [15 * dig - 30 * toss, 0, 0] },
-          'hand.R': { rotate: [140 * (dig + toss), 0, 0] },
+          'hand.R': { rotate: [140 * dig + 148 * toss, 0, 0] },
           'upperarm.L': { rotate: [-40 * dig - 30 * toss, 0, -20 * dig] },
           'forearm.L': { rotate: [-40 * dig - 30 * toss, 0, 0] },
         };
