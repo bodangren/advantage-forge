@@ -548,7 +548,7 @@
     "reviewedAt": "2026-09-26T19:14:03+00:00"
   },
   "dragon-fire": {
-    "overall": 8.5,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -559,27 +559,26 @@
       "materials": 4,
       "detail": 4,
       "technical": 5,
-      "gameReady": 5,
+      "gameReady": 4,
       "sprite": 5,
-      "motion": 4
+      "motion": 3
     },
-    "summary": "The fire dragon matches the mmx mockup closely: a squat red dragon that is half head, with cream horns, a red and orange crest, heavy black brows, a toothy grin, spread orange bat wings, a ridged cream belly, and a finned tail.",
+    "summary": "The fire dragon matches the mmx mockup closely in shape and color: a squat red dragon that is half head, with cream horns, a crest, heavy black brows, a toothy grin, orange bat wings, and a ridged cream belly. The attack is the weak clip: the strike points the open mouth at the floor, and no bite or breath reads.",
     "strengths": [
-      "The spread wings, horns, and crest make a unique silhouette that reads in all eight sprite directions.",
-      "The black brows over the yellow eyes and the white teeth in the dark grin give a strong focal point.",
-      "The roar reads well: it rears back with the wings raised, then lunges with the wings flared.",
-      "It has a fly clip: the body lifts and tilts forward, the wings beat through a full stroke, the legs dangle back, and the tail waves."
+      "The spread wings, the horns, and the crest make a unique silhouette that reads in all eight sprite directions.",
+      "The black brows over the yellow eyes and the white teeth in the dark grin give a strong focal point at 128 px.",
+      "The death has a clear stagger: the dragon rears with a last roar, then the legs buckle and it rolls onto its right side."
     ],
     "issues": [
-      "The mockup puffs smoke from one nostril. The model has no smoke or fire effect yet.",
-      "The horns are thinner than the big cream horns in the mockup.",
-      "The cheek frills are small and hide behind the wings from the front."
+      "The attack does not read as a bite or a breath. The windup tilts the head back only 16 degrees, and the chest does not fill. At the strike, the head pitches down about 30 degrees and the hips move only 4 cm forward, so the open mouth points at the floor and the strike looks like a nod. The recovery is present.",
+      "The head has no jaw bone, so the mouth keeps the same grin in every clip. The mockup puffs smoke from one nostril, and the model has no smoke or fire effect.",
+      "In the three-quarter view, the death ends with the head and the belly as two separate blobs, and the face lies sideways. The side view of the end pose reads clearly."
     ],
     "next": [
-      "Add a fire-breath effect as a separate effects asset, and play it with the roar.",
-      "Make the horns 20 percent thicker at the root."
+      "Rework the attack: scale the chest up about 8 percent in the windup, keep the head level at the strike, and move the hips 8 to 10 cm forward. Add a jaw bone that opens the mouth wide at the strike.",
+      "Add a fire-breath effect (an emissive cone from the mouth) that plays at the attack strike."
     ],
-    "reviewedAt": "2026-09-26T06:06:30+00:00"
+    "reviewedAt": "2026-09-26T19:18:29+00:00"
   },
   "blacksmith": {
     "overall": 7.6,
