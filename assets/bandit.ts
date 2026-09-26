@@ -21,7 +21,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Bodies: skin, hair, mask, shirt, vest, trousers, leather (belt, pouch, wrist wrap), steel,
  *   boots, loot-sack, rope, cutlass, hilt.
  * Rig: the rogue's skeleton plus `knot` (the mask's tails) and `sack`; the cutlass is rigid on
- *   `hand.L`. Clips: idle, walk, run, attack (a forward slash).
+ *   `cutlassbone`, a child of `hand.L` that only the death clip moves (the cutlass drops).
+ *   Clips: idle, walk, run, attack (a forward slash), hit, death.
  */
 
 const C = {
@@ -96,6 +97,7 @@ export default defineAsset({
   build(k) {
     const KNOT: V3 = [0, 0.6, -0.2];
     const SACK_TOP: V3 = [-0.14, 0.43, -0.08];
+    const GRIP: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.045, WRIST_L[2] + 0.02];
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -108,6 +110,7 @@ export default defineAsset({
       'upperarm.L': { parent: 'chest', at: SHOULDER },
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
+      cutlassbone: { parent: 'hand.L', at: GRIP },
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
@@ -495,10 +498,9 @@ export default defineAsset({
       sdf.capsule([-0.06, 0, 0], [0.025, 0, 0], 0.013), // grip
       sdf.sphere(0.017).at(-0.066, 0, 0).paint(C.brass), // pommel
     );
-    const GRIP: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.045, WRIST_L[2] + 0.02];
     const cutlassPose = (s: sdf.Shape) => s.rotateY(-90).rotateX(6).rotateY(66).at(...GRIP);
-    k.body('cutlass', cutlassPose(bladeLocal).bone('hand.L'), { color: C.bladeEdge, roughness: 0.4, metalness: 0.75, detail: 0.003 });
-    k.body('hilt', cutlassPose(hiltLocal).bone('hand.L'), { color: C.grip, roughness: 0.7, detail: 0.004 });
+    k.body('cutlass', cutlassPose(bladeLocal), { color: C.bladeEdge, roughness: 0.4, metalness: 0.75, detail: 0.003, bone: 'cutlassbone' });
+    k.body('hilt', cutlassPose(hiltLocal), { color: C.grip, roughness: 0.7, detail: 0.004, bone: 'cutlassbone' });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
@@ -646,6 +648,120 @@ export default defineAsset({
           'leg.L': { rotate: [-4 * wind + 12 * cut, 0, 0] },
           'foot.R': { rotate: [12 * cut, 0, 0] },
           'foot.L': { rotate: [-8 * cut, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a blow from the front
+    // The head and the chest snap back and the hips give way: the left foot stays planted and the
+    // right foot steps back, then all returns quickly. The cutlass stays in the hand. The sack and
+    // the mask tails swing late.
+    const { quat, follow, euler } = motion;
+    const DEG = Math.PI / 180;
+    const add = (a: V3, b: V3, s = 1): V3 => [a[0] + b[0] * s, a[1] + b[1] * s, a[2] + b[2] * s];
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    const SHIN = 0.125; // hip joint to ankle joint, in the Y-Z plane
+    const HEEL = 0.06; // the back of the boot, behind the ankle's ground point
+    /** The leg angle (degrees) that keeps a foot on its rest spot when the hips move `back` meters. */
+    const plant = (back: number) => Math.asin(Math.max(-1, Math.min(1, back / SHIN))) / DEG;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.15, 1], [0.32, 0.85], [0.8, 0]] as const);
+        const lift = keys(p, [[0.04, 0], [0.13, 1], [0.24, 0], [0.5, 0], [0.62, 0.7], [0.74, 0]] as const);
+        const flop = keys(p, [[0.08, 0], [0.3, 1], [0.5, -0.45], [0.68, 0.15], [0.85, 0]] as const);
+        const back = 0.028 * h;
+        const lean = plant(back);
+        return {
+          hips: { move: [0, -legDrop(SHIN, lean), -back], rotate: [0, 5 * h, 0] },
+          spine: { rotate: [-6 * h, 0, 0] },
+          chest: { rotate: [-10 * h, 6 * h, 3 * h] },
+          neck: { rotate: [-6 * h, 0, 0] },
+          head: { rotate: [-16 * h, -6 * h, -5 * h] },
+          knot: { rotate: [-16 * flop, 0, 8 * flop] },
+          sack: { rotate: [-5 * flop, 0, -9 * flop] },
+          'leg.L': { rotate: [-lean, 0, 0] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'leg.R': { rotate: [lean + 16 * lift, 0, 0] },
+          'foot.R': { rotate: [-lean - 16 * lift, 0, 0] },
+          // The cutlass arm is flung out and up a little; the empty arm by the sack follows.
+          'upperarm.L': { rotate: [-8 * h, 0, 14 * h] },
+          'forearm.L': { rotate: [-10 * h, 0, 0] },
+          'upperarm.R': { rotate: [-6 * h, 0, -8 * h] },
+          'forearm.R': { rotate: [-6 * h, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: a stagger, then a fall on the back
+    // The blow snaps the chest back, the bandit slumps forward and wobbles, then tips back over his
+    // heels as one piece and lands on his back. The chin tucks and the head rolls toward the
+    // cutlass, so the back of the skull and the vest rest on the ground. The arms are solved by
+    // targets in the chest's rest frame and lie out on the ground. The hand opens in the fall and
+    // the cutlass bone carries the cutlass to lie flat beside the left hand. The sack slides off
+    // the right shoulder and lands beside him, a moment after the body.
+    const LIE = 86; // the hips' final tilt back, degrees
+    const LIE_Y = 0.13; // the hips' height when the bandit lies on his back
+    const TRUNK: readonly V3[] = [[0, 0.2, 0], [0, 0.26, 0], [0, 0.33, 0]]; // hips, spine, chest pivots
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const HAND_CHAIN: readonly V3[] = [...TRUNK, SHOULDER, ELBOW_L, WRIST_L];
+    const DROP_AT: V3 = [0.4, 0.028, -0.36]; // the grip on the ground, the point toward the feet
+    const DROP_TURN = quat(orient([], { dir: BLADE_DIR, up: FLAT }, { dir: norm([0.35, -0.05, 1]), up: [0, 1, 0] }));
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.18, 0.5], [0.3, 0.2], [0.4, 0]] as const);
+        const sag = keys(p, [[0.1, 0], [0.26, 1], [0.36, 0.8], [0.5, 0]] as const);
+        const wob = keys(p, [[0.12, 0], [0.22, 1], [0.32, -0.6], [0.42, 0]] as const);
+        const u = clamp01((p - 0.36) / 0.24); // the fall speeds up to the impact
+        const bounce = keys(p, [[0.6, 0], [0.66, 1], [0.73, 0]] as const);
+        const tilt = LIE * u * u - 5 * bounce;
+        const fly = keys(p, [[0.36, 0], [0.5, 1], [0.62, 0.2], [0.7, 0]] as const);
+        const land = keys(p, [[0.44, 0], [0.62, 1]] as const);
+        const loose = keys(p, [[0.44, 0], [0.6, 1]] as const);
+        const slide = keys(p, [[0.4, 0], [0.64, 1.08], [0.72, 0.97], [0.8, 1]] as const);
+        // The stagger: the hips give way backward over planted feet.
+        const back = 0.022 * hitB;
+        const lean = plant(back);
+        // The fall: a rigid tip over the back of the heels, until the hips reach their lying height.
+        const a = tilt * DEG;
+        const hipsY = Math.max(LIE_Y, 0.2 * Math.cos(a) + HEEL * Math.sin(a));
+        const hipsMove: V3 = [0, hipsY - 0.2 - legDrop(SHIN, lean), -HEEL - 0.2 * Math.sin(a) + HEEL * Math.cos(a) - back];
+        const legs = 16 * clamp01((tilt - 70) / 16); // the legs come down once the hips hold
+        const hipsR: V3 = [-tilt, 0, 0];
+        const spineR: V3 = [-8 * hitB + 6 * sag, 0, 4 * wob];
+        const chestR: V3 = [-10 * hitB + 5 * sag, 6 * hitB, 5 * wob];
+        // The wrists: flung back by the blow, slumped, flung out in the fall, then out on the ground.
+        const standR = add(add(add(WRIST_R, [-0.05, 0.02, -0.05], hitB), [0, -0.07, -0.03], sag), [-0.07, 0, 0.04], fly);
+        const armR = reach(ARM_R, lerp(standR, [-0.215, 0.26, -0.07], land), lerp(ELBOW_R, [-0.3, 0.3, -0.05], land));
+        const standL = add(add(add(WRIST_L, [0.05, 0.04, 0.02], hitB), [0, -0.02, 0.03], sag), [0.07, 0.06, 0.04], fly);
+        const armL = reach(ARM_L, lerp(standL, [0.27, 0.34, -0.07], land), lerp(ELBOW_L, [0.35, 0.36, -0.1], land));
+        // The cutlass: attached to the posed hand until the hand opens, then it drops to the ground.
+        const handQ = quat(hipsR).multiply(quat(spineR)).multiply(quat(chestR)).multiply(quat(armL.upper)).multiply(quat(armL.lower));
+        const held = add(follow(HAND_CHAIN, [hipsR, spineR, chestR, armL.upper, armL.lower, [0, 0, 0]], GRIP), hipsMove);
+        const drop = keys(p, [[0.44, add(DROP_AT, [0, 0.12, 0])], [0.6, DROP_AT], [0.65, add(DROP_AT, [0, 0.02, 0])], [0.7, DROP_AT]] as const);
+        const inv = handQ.clone().invert();
+        const d = new THREE.Vector3(...add(lerp(held, drop, loose), held, -1)).applyQuaternion(inv);
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [-8 * hitB + 5 * sag + 8 * land, 0, 0] },
+          head: { rotate: [-16 * hitB + 8 * sag + 10 * land, -8 * hitB + 30 * land, 8 * wob] },
+          // The mask tails swing out and lie on the ground beside the head.
+          knot: { rotate: [-12 * hitB + 10 * fly, 0, 10 * wob - 90 * land] },
+          sack: { move: [-0.03 * slide, 0, 0.045 * slide], rotate: [-6 * hitB + 8 * sag, 0, -8 * wob - 85 * slide] },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          cutlassbone: { move: [d.x, d.y, d.z], rotate: euler(inv.clone().multiply(handQ.clone().slerp(DROP_TURN, loose))) },
+          'leg.L': { rotate: [-lean + legs, 0, 8 * land] },
+          'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
+          'foot.L': { rotate: [lean, 20 * land, 0] },
+          'foot.R': { rotate: [lean, -20 * land, 0] },
         };
       },
     });
