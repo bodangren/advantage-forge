@@ -20,9 +20,10 @@ import type { Rgb } from '../src/index.js';
  *   floating, a little see-through).
  * Rig: `core` (root, on the ground: squash and stretch), `top` (the dome's jiggle and the face),
  *   `bubble1` to `bubble3` (the floating bubbles; their poses cancel the core's squash and travel,
- *   so they float on their own).
- *   Clips: idle (wobble, bubbles drift), walk (hops), attack (a heavy body slam), hit (a squashed
- *   recoil and jiggle), death (it melts into a puddle and the bubbles pop).
+ *   so they float on their own), `eye.L` and `eye.R` (children of `top`, so the eyes can close).
+ *   Clips: idle (wobble, bubbles drift), walk (hops), attack (a leaping body slam and a hop back),
+ *   hit (a squashed recoil and jiggle), death (a wobble, then it melts into a puddle, the eyes
+ *   sink, and the bubbles pop).
  */
 
 /** The one slime color. Change it for the color variants; everything else follows. */
@@ -73,6 +74,9 @@ export default defineAsset({
       top: { parent: 'core', at: [0, 0.2, 0], tail: [0, 0.49, 0] },
     };
     BUBBLES.forEach((b, i) => (bones[`bubble${i + 1}`] = { parent: 'core', at: b.at }));
+    // Each eye on its own bone at its center, so the death clip can close and sink the eyes.
+    bones['eye.L'] = { parent: 'top', at: [0.105, 0.25, 0.196] };
+    bones['eye.R'] = { parent: 'top', at: [-0.105, 0.25, 0.196] };
     k.skeleton(bones);
 
     // ------------------------------------------------------------------ the jelly
@@ -192,7 +196,7 @@ export default defineAsset({
         C.brow,
         0.002,
       );
-    k.body('eyes', pair(eyeLocal).bone('top'), { color: C.white, roughness: 0.1, textureDensity: 2 });
+    k.body('eyes', pair(eyeLocal.bone('eye.L')), { color: C.white, roughness: 0.1, textureDensity: 2 });
 
     // ------------------------------------------------------------------ floating bubbles, each on its own bone
     const bubbles = sdf.union(
@@ -268,20 +272,45 @@ export default defineAsset({
     });
     k.animation('walk', hop(0.8, 0.09, 0.14));
 
-    // A heavy body slam. Anticipation: it sinks low and wide and rocks back (hold). Launch: it
-    // stretches tall and leaps forward, the top leading. Impact: it hits the ground flat and wide
-    // with a big splat, then jiggles back up. The bubbles fly after it, a little late.
+    // A leaping body slam. Anticipation: it sinks deep and wide and rocks back (hold). Launch: it
+    // stretches tall and leaps in an arc, 0.35 m forward and 0.25 m up, tilted along the arc.
+    // Impact: a hard splat, wide and flat, held for a moment, then a jiggle. Recovery: a small hop
+    // back to the start, so it never slides on the floor. The bubbles fly after it, a little late.
+    const JUMP = { from: 0.33, to: 0.52, fwd: 0.35, up: 0.25 };
+    const BACK = { from: 0.79, to: 0.9, up: 0.07 };
+    const arc = (p: number, a: number, b: number) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+    const slamTravel = (p: number): { fwd: number; up: number; tilt: number } => {
+      if (p > JUMP.from && p < JUMP.to) {
+        const s = arc(p, JUMP.from, JUMP.to);
+        return { fwd: JUMP.fwd * s, up: JUMP.up * 4 * s * (1 - s), tilt: 14 * Math.sin(TAU * s) };
+      }
+      if (p > BACK.from && p < BACK.to) {
+        const s = arc(p, BACK.from, BACK.to);
+        return { fwd: JUMP.fwd * (1 - s), up: BACK.up * 4 * s * (1 - s), tilt: -6 * Math.sin(TAU * s) };
+      }
+      return { fwd: p >= JUMP.to && p <= BACK.from ? JUMP.fwd : 0, up: 0, tilt: 0 };
+    };
     k.animation('attack', {
-      duration: 1.0,
+      duration: 1.2,
       loop: false,
       pose: (_t, p) => {
-        const sy = keys(p, [[0, 1], [0.24, 0.62], [0.34, 0.6], [0.42, 1.34], [0.5, 1.12], [0.56, 0.46], [0.64, 0.62], [0.72, 1.12], [0.8, 0.94], [0.88, 1.03], [1, 1]] as const);
+        const sy = keys(p, [
+          [0, 1], [0.18, 0.5], [0.27, 0.48], // deep squash, held
+          [0.31, 1.02], [0.34, 1.36], [0.42, 1.14], [0.49, 1.24], // launch stretch, apex, fall stretch
+          [0.525, 0.4], [0.59, 0.43], // hard splat, held about 0.08 s
+          [0.64, 1.16], [0.69, 0.9], [0.73, 1.05], // jiggle
+          [0.77, 0.84], [0.8, 1.1], [0.87, 1.05], [0.9, 0.84], [0.95, 1.03], [1, 1], // hop back
+        ] as const);
         const sxz = 1 / Math.sqrt(sy); // keep the volume
-        const up = keys(p, [[0, 0], [0.36, 0], [0.47, 0.2], [0.55, 0], [1, 0]] as const, 'spline');
-        const fwd = keys(p, [[0, 0], [0.24, -0.03], [0.36, -0.03], [0.55, 0.16], [0.72, 0.16], [1, 0]] as const);
-        const lean = keys(p, [[0, 0], [0.24, -12], [0.36, -12], [0.44, 16], [0.54, 24], [0.62, -6], [0.74, 4], [1, 0]] as const);
-        const lag: V3 = [0, keys(p, [[0.4, 0], [0.56, 0.12], [0.68, 0], [1, 0]] as const), keys(p, [[0.36, 0], [0.64, 0.14], [0.8, 0.15], [1, 0]] as const)];
-        const core: Core = { move: [0, Math.max(0, up), fwd], scale: [sxz * (1 + 0.12 * Math.max(0, 0.9 - sy)), sy, sxz] };
+        const { fwd, up, tilt } = slamTravel(p);
+        const lean = keys(p, [[0, 0], [0.18, -14], [0.29, -14], [0.36, 18], [0.49, 22], [0.56, 8], [0.64, -8], [0.72, 4], [0.8, -5], [0.9, 3], [1, 0]] as const);
+        const late = slamTravel(p - 0.05);
+        const lag: V3 = [0, late.up * 0.8, late.fwd];
+        const core: Core & { rotate: V3 } = {
+          move: [0, up, fwd],
+          rotate: [tilt, 0, 0],
+          scale: [sxz * (1 + 0.24 * Math.max(0, 0.9 - sy)), sy, sxz * (1 + 0.12 * Math.max(0, 0.9 - sy))],
+        };
         return {
           core,
           top: { rotate: [lean, 0, 3 * wave(p, 3, 0.1) * bump(p)] },
@@ -306,24 +335,30 @@ export default defineAsset({
       },
     });
 
-    // Death: a last shudder, then the jelly melts into a wide puddle, the face sinking into it,
-    // and the floating bubbles swell and pop, one after another.
+    // Death: a strong last wobble, then the jelly melts into a low puddle. The puddle keeps a
+    // soft dome: a flatter squash bends the skinned normals into radial streaks. The eyes
+    // close and sink into the jelly, and the floating bubbles swell and pop, one after another.
     k.animation('death', {
       duration: 1.4,
       loop: false,
       pose: (_t, p) => {
-        const shake = Math.sin(p * TAU * 7) * (1 - Math.min(1, p / 0.2)) * Math.min(1, p / 0.05);
-        const melt = keys(p, [[0.15, 0], [0.75, 1]] as const);
-        const sy = 1 - 0.84 * melt;
-        const sxz = 1 + 0.75 * melt;
-        const core: Core = { scale: [sxz + 0.04 * shake, sy - 0.04 * shake, sxz + 0.04 * shake] };
+        const shake = keys(p, [[0, 0], [0.05, 1], [0.11, -1], [0.17, 0.85], [0.23, -0.6], [0.29, 0.3], [0.34, 0]] as const);
+        const melt = keys(p, [[0.2, 0], [0.8, 1]] as const);
+        const sy = 1 - 0.68 * melt;
+        const sxz = 1 + 0.5 * melt;
+        const core: Core = { scale: [sxz + 0.13 * shake, sy - 0.14 * shake, sxz + 0.13 * shake] };
         const grow = BUBBLES.map((_, i) => {
           const p0 = 0.3 + i * 0.12;
           return keys(p, [[p0, 1], [p0 + 0.08, 1.5], [p0 + 0.11, 0.02]] as const);
         });
+        // The eyes squint shut and shrink into the jelly: hidden before the puddle settles.
+        const e = keys(p, [[0.22, 1], [0.45, 0.6], [0.68, 0.04]] as const);
+        const eye = { move: [0, -0.01 * (1 - e), -0.03 * (1 - e)] as V3, scale: [e, e * Math.min(1, 0.4 + e), e] as V3 };
         return {
           core,
-          top: { rotate: [8 * melt, 0, 8 * shake], scale: [1 + 0.1 * melt, 1 - 0.3 * melt, 1 + 0.1 * melt] },
+          top: { rotate: [6 * melt, 0, 10 * shake], scale: [1 + 0.04 * melt, 1, 1 + 0.04 * melt] },
+          'eye.L': eye,
+          'eye.R': eye,
           ...drift(p, 1, 0.012, core, [0, 0, 0], grow),
         } as P;
       },

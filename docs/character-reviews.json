@@ -449,7 +449,7 @@
     "reviewedAt": "2026-09-26T21:40:35+00:00"
   },
   "slime": {
-    "overall": 8,
+    "overall": 8.3,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -462,24 +462,24 @@
       "technical": 4,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 4
+      "motion": 4.5
     },
-    "summary": "The slime is a glossy green jelly dome on a lobed puddle base, with three floating bubbles. The body and the face match the slime king mockup without the crown, the cape, and the chain. The jelly is opaque, so it shows less depth than the see-through mockup. All five clips read, but the slam does not travel far, and the death puddle shows the eyes at its rim.",
+    "summary": "The slime is a glossy green jelly dome on a lobed puddle base, with three floating bubbles. The body and the face match the slime king mockup without the crown, the cape, and the chain. The attack is now a real leap: a deep squash, an arc 0.35 m forward and 0.25 m up, a hard splat, and a hop back. The death starts with a strong wobble, and the eyes close and sink before the puddle settles.",
     "strengths": [
-      "The face reads at 128 px in the S sprite: big white eyes with lime irises, heavy brow ridges, and a frown.",
-      "The attack has clear squash and stretch: a low squash for anticipation, a tall stretch at the launch, a flat splat at the impact, and a rebound that settles.",
-      "The death melts the body into a wide puddle, and the bubbles swell and pop one after another. No clip goes below the ground (ground ok)."
+      "The attack reads as a lunge at the target: the body leaps in an arc, tilts along the arc, splats wide and flat for 0.08 s, jiggles, and hops back. It never slides on the floor.",
+      "The death shows a clear wobble of about 13 percent in the first 0.3 s. The eyes squint, shrink, and sink into the jelly, so the puddle has no white crescents.",
+      "The face reads at 128 px in the S sprite: big white eyes with lime irises, heavy brow ridges, and a frown. No clip goes below the ground (ground ok)."
     ],
     "issues": [
-      "The attack leap is almost vertical: the body moves 0.16 m forward and 0.2 m up. The slam reads as a hop in place, not a lunge at the target. At the end, the body slides back to the start without a hop.",
-      "In the death puddle, the eye whites stick out as white crescents at the rim, and the flat top shows radial shading streaks. The first 0.3 s shows almost no change, because the shudder is only 4 percent of the scale.",
+      "The mouth paint stays on the jelly, so the melted puddle shows a thin dark line at its front rim.",
+      "The puddle keeps a soft dome (about 0.16 m high) to limit the shading streaks, so it reads as a low mound more than a flat puddle. Faint radial streaks still show on its top.",
       "In the front view, a vertical ridge above the small frown reads as a nose. In the side view and the W and E sprites, the eye white sticks out of the profile as a white disc."
     ],
     "next": [
-      "Make the slam a lunge: move the body about 0.35 m forward in an arc to the peak, and land on the target. Then hop back to the start in the recovery.",
-      "Fix the death puddle: hide the eyes inside the body before the puddle is flat, and remove the radial streaks on the top. Make the first 0.3 s a visible wobble or sag."
+      "Hide the frown in the death puddle: put the mouth on its own small body on the eye bones, or fade it with a separate paint layer.",
+      "Remove the nose ridge above the frown, and set the eyes a little deeper into the dome so the side profile stays round."
     ],
-    "reviewedAt": "2026-09-26T19:11:12+00:00"
+    "reviewedAt": "2026-09-26T21:42:54+00:00"
   },
   "dire-wolf": {
     "overall": 8,
