@@ -20,7 +20,8 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   gauntlets, belt, tabard, tassets, leggings, greaves, sword, hilt, grip, shield, shield-face,
  *   shield-gold.
  * Rig: the rogue's chibi skeleton plus `cloak` (cape) and `plume`; sword rigid on the right hand,
- *   shield rigid on the left forearm. Clips: idle, walk, run, attack (a diagonal slash).
+ *   shield rigid on the left forearm. Clips: idle, walk, run, attack (a diagonal slash), hit,
+ *   death (he falls on his back; the cape flattens under him).
  */
 
 const C = {
@@ -812,6 +813,140 @@ export default defineAsset({
           'leg.R': { rotate: [step, 0, 0] },
           'foot.L': { rotate: [step, 0, 0] },
           'foot.R': { rotate: [-step, 0, 0] },
+        };
+      },
+    });
+
+    // hit: a blow from the front. The head and the chest snap back, the right foot steps back and
+    // returns, the shield jolts down and out and comes back up; the plume and the cape lag.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.34, 0.6], [1, 0]] as const);
+        const step = keys(p, [[0.04, 0], [0.24, 1], [0.58, 1], [0.9, 0]] as const);
+        const lift = bump(Math.min(1, Math.max(0, (p - 0.04) / 0.2))) + bump(Math.min(1, Math.max(0, (p - 0.58) / 0.32)));
+        const jolt = keys(p, [[0, 0], [0.1, 1], [0.3, 0.15], [0.5, -0.2], [0.78, 0]] as const, 'spline');
+        const lag = keys(p, [[0, 0], [0.12, 0.3], [0.26, 1], [0.48, -0.45], [0.72, 0.15], [1, 0]] as const, 'spline');
+        const back = 0.03 * step;
+        const plant = Math.asin(back / LEG) / rad; // the left foot stays planted as the hips move back
+        return {
+          hips: { move: [0, -legDrop(LEG, plant), -back], rotate: [0, 5 * h, 0] },
+          spine: { rotate: [-7 * h, 0, 0] },
+          chest: { rotate: [-9 * h, 6 * h, -3 * h] },
+          neck: { rotate: [-5 * h, 0, 0] },
+          head: { rotate: [-12 * h, -6 * h, 3 * h] },
+          plume: { rotate: [16 * lag, 0, 5 * lag] },
+          cloak: { rotate: [9 * lag, 0, 0] },
+          'upperarm.R': { rotate: [8 * h, 0, -10 * h] },
+          'forearm.R': { rotate: [-12 * h, 0, 0] },
+          'upperarm.L': { rotate: [10 * jolt, 0, 10 * jolt] },
+          'forearm.L': { rotate: [22 * jolt, 0, 0] },
+          'leg.L': { rotate: [-plant, 0, 0] },
+          'leg.R': { rotate: [plant + 8 * lift, 0, 0] },
+          'foot.L': { rotate: [plant, 0, 0] },
+          'foot.R': { rotate: [-plant - 8 * lift, 0, 0] },
+        };
+      },
+    });
+
+    // death: the blow snaps him back, he staggers a step, then topples onto his back. The big helm
+    // and the cape hold the body up, so the hips stay high, the neck bends a little forward, and the
+    // cape flattens under him (scale). The sword arm falls out to the right with the blade flat on
+    // the ground; the shield arm falls to the left side and the shield lies face up over it.
+    const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const rotY = (p: V3, d: number): V3 => {
+      const c = Math.cos(d * rad);
+      const s = Math.sin(d * rad);
+      return [p[0] * c + p[2] * s, p[1], -p[0] * s + p[2] * c];
+    };
+    const poleOf = (root: V3, mid: V3, end: V3) => {
+      const t = norm(sub(end, root));
+      const e = sub(mid, root);
+      const d = e[0] * t[0] + e[1] * t[1] + e[2] * t[2];
+      const side = norm([e[0] - d * t[0], e[1] - d * t[1], e[2] - d * t[2]]);
+      return add(root, [side[0] * 0.6, side[1] * 0.6, side[2] * 0.6]);
+    };
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const POLE_REST_L = poleOf(SHOULDER, ELBOW_L, WRIST_L);
+    const SHIELD_N = rotY(rotX(rotZ([0, 0, 1], -4), 4), 38); // the shield face's normal at rest
+    const FOREARM_L = norm(sub(WRIST_L, ELBOW_L));
+    const D = {
+      tilt: 86, // the hips' final tilt back (90 = flat)
+      drop: 0.045, // how far the hips come down
+      back: 0.15, // how far the hips land behind the start
+      neck: 9, // the neck and the head bend forward, so the helm clears the ground
+      head: 12,
+      cape: 8, // the cape swings toward the legs and flattens under him
+      capeFlat: 0.4,
+      leg: 34, // the legs lie back down to the ground
+      wristR: [-0.27, 0.35, -0.1] as V3,
+      bladeR: norm([-0.52, -0.85, -0.14]),
+      wristL: [0.19, 0.235, 0.05] as V3,
+      poleL: [0.5, 0.3, -0.3] as V3,
+      shieldN: norm([0.25, -0.1, 0.96]),
+    };
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.2, 0.4], [0.3, 0]] as const);
+        const stag = keys(p, [[0.04, 0], [0.22, 1]] as const);
+        const f = keys(p, [[0.26, 0], [0.68, 1]] as const);
+        const g = f * f; // the fall starts slowly and ends fast
+        const stand = 1 - g;
+        const land = bump(Math.min(1, Math.max(0, (p - 0.66) / 0.14)));
+        const flat = keys(p, [[0.28, 0], [0.56, 1]] as const);
+        // The cape bunches up and swings toward the legs as it meets the ground, then spreads.
+        const crumple = keys(p, [[0.3, 0], [0.48, 1], [0.7, 1], [0.9, 0]] as const);
+        const lag = keys(p, [[0, 0], [0.1, 0.8], [0.3, -0.3], [0.5, 0.6], [0.7, -1], [0.82, -0.6], [1, -0.7]] as const, 'spline');
+
+        // The sword arm flies out in the blow and falls to the ground on the right; the blade
+        // turns flat and points out toward the feet.
+        const wristR = keys(p, [[0, WRIST_R], [0.1, [-0.27, 0.34, 0.08]], [0.36, [-0.28, 0.37, 0.03]], [0.74, D.wristR]] as const);
+        const poleR = keys(p, [[0, POLE_REST], [0.2, [-0.6, 0.3, -0.1]], [0.74, [-0.6, 0.4, -0.35]]] as const);
+        const armR = reach(ARM_R, wristR, poleR);
+        const blade = norm(keys(p, [[0, BLADE_DIR], [0.1, norm([-0.75, -0.45, 0.48])], [0.4, norm([-0.75, -0.55, 0.36])], [0.74, D.bladeR]] as const));
+        const flatUp = norm(keys(p, [[0, FLAT], [0.4, FLAT], [0.74, [0, 0, 1]]] as const));
+        const hand = orient([armR.upper, armR.lower], { dir: BLADE_DIR, up: FLAT }, { dir: blade, up: flatUp });
+
+        // The shield arm flies out, then falls to his left side; the forearm turns the shield face up.
+        const wristL = keys(p, [[0, WRIST_L], [0.1, [0.28, 0.3, 0.06]], [0.36, [0.27, 0.31, 0.03]], [0.76, D.wristL]] as const);
+        const poleL = keys(p, [[0, POLE_REST_L], [0.2, [0.6, 0.3, -0.1]], [0.76, D.poleL]] as const);
+        const armL = reach(ARM_L, wristL, poleL);
+        const elbowL = motion.follow([SHOULDER], [armL.upper], ELBOW_L);
+        const faceUp = norm(keys(p, [[0, SHIELD_N], [0.36, norm([0.9, 0, 0.44])], [0.76, D.shieldN]] as const));
+        const forearmL = orient([armL.upper], { dir: FOREARM_L, up: SHIELD_N }, { dir: norm(sub(wristL, elbowL)), up: faceUp });
+
+        const plant = Math.asin((0.03 * stag * stand) / LEG) / rad;
+        // The soles stay flat on the ground while the legs trail the fall, then the toes turn up.
+        const legL = -plant + D.leg * g * g;
+        const sole = D.tilt * g - D.leg * g * g;
+        const toes = keys(p, [[0.56, 0], [0.76, 1]] as const);
+        return {
+          hips: {
+            move: [0, -legDrop(LEG, plant) * stand - D.drop * g + 0.014 * Math.sin(Math.PI * f) + 0.012 * land, -0.03 * stag - D.back * g],
+            rotate: [-4 * hitB - 4 * stag * stand - D.tilt * g, 0, 0],
+          },
+          spine: { rotate: [-6 * hitB + 5 * stag * stand, 0, 0] },
+          chest: { rotate: [-8 * hitB + 4 * stag * stand, 5 * hitB, 3 * stag * stand] },
+          neck: { rotate: [-5 * hitB + D.neck * g, 0, 0] },
+          head: { rotate: [-12 * hitB + D.head * g, 22 * g, 0] },
+          plume: { rotate: [18 * lag - 22 * toes, 0, 6 * lag] },
+          cloak: {
+            rotate: [8 * hitB - D.cape * flat - 12 * crumple, 0, 0],
+            scale: [1 + 0.1 * flat, 1 - 0.15 * crumple, 1 - (1 - D.capeFlat) * flat],
+          },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: hand },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: forearmL },
+          // The right foot steps back in the stagger; the legs trail the fall and lie back down.
+          'leg.L': { rotate: [legL, 0, 6 * g] },
+          'leg.R': { rotate: [plant + 10 * stag * stand + (D.leg + 2) * g * g, 0, -6 * g] },
+          'foot.L': { rotate: [plant + sole * (1 - toes) + 16 * toes, 0, 0] },
+          'foot.R': { rotate: [-plant - 10 * stag * stand + sole * (1 - toes) + 16 * toes, 0, 0] },
         };
       },
     });
