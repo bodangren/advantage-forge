@@ -1,6 +1,6 @@
 {
   "rogue": {
-    "overall": 8.3,
+    "overall": 8.4,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -14,22 +14,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The rogue now holds twin daggers in a reverse grip, and the empty sheaths stay at her hips. The hood, the face, and the gold clasp still match the mockup. All 8 clips are present: idle, walk, run, attack, attack2, hit, death, and victory. The forge check shows result ok and ground ok. The check also shows that the daggers go 0.7 to 0.9 cm into the sheaths in the attack and into the mantle in the victory.",
+    "summary": "The mantle is now skinned. The cap over each shoulder follows the upper arm, and the collar and the front and back panels stay on the chest. In attack2 and victory, the upper arms stay under the mantle. The dagger blades are now about 30 percent longer and 15 percent wider, with the same grip. The forge check shows result ok and ground ok, with a head margin of 0.3 cm.",
     "strengths": [
-      "The dark inside of the hood frames the light face. The face reads at 128 px in the S, SW, and SE sprites.",
-      "The attack2 spin reads clearly. At t = 0.32 to 0.43 s, the mantle flares out and both arms swing the daggers out to the sides.",
-      "The gold clasp, the ring buckle, the hem stitches, and the gold rings on the dagger grips are small, clear accents."
+      "In attack2, a raised arm lifts the mantle cap like a pauldron. The arm stays under the cloth, and the mantle does not tear.",
+      "The longer blades read as silver lines in the attack2 and victory sprites. The crossed daggers in the victory pose are clear from the front.",
+      "The hood, the face, the gold clasp, and the hem stitches still match the mockup, and all 8 clips are present."
     ],
     "issues": [
-      "When she raises her arms, the upper arms pass through the mantle. In attack2 at t = 0.32 s, the mantle stretches from the arm to a point, like a wing.",
-      "The daggers are short and thin. At 128 px, they show only as small silver points. In the side view, the hood and the mantle hide both slashes of the attack.",
-      "The old shape issues remain. From the side, the hood is very deep. The tunic is short and plain, but the mockup tunic is dark and has a pointed hem."
+      "In attack2 at t = 0.32 s, the mantle cap over the raised arm still ends in a pointed flap. It looks like a small wing for about 0.2 s.",
+      "The top of the left bracer shows through the side of the mantle, also in the rest pose. In victory, the daggers go 0.9 cm into the mantle, and in the attack, the left dagger goes 0.6 cm into the sheath.",
+      "At 128 px the blades are still thin, and the old shape issues remain: the hood is very deep from the side, and the tunic is short and plain."
     ],
     "next": [
-      "Bind the mantle at the shoulders to the upper arms, or make it shorter over the arms, so that raised arms stay clear of it.",
-      "Make the dagger blades about 30 percent longer and wider. Lift the attack slashes to chest height, so that they read in the side view and at 128 px."
+      "Round the mantle hem over the shoulders, so the lifted cap has no corner. Move the bracer in, or the mantle out, so the bracer stays under the cloth.",
+      "Move the victory cross pose 1 cm forward, and move the attack slash 1 cm away from the sheaths."
     ],
-    "reviewedAt": "2026-09-26T18:39:02+00:00"
+    "reviewedAt": "2026-09-26T18:52:00+00:00"
   },
   "archer": {
     "overall": 8.2,

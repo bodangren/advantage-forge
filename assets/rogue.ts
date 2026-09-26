@@ -327,7 +327,19 @@ export default defineAsset({
       )
       .at(0, 0, 0.22);
     const mantle = mantleSolid.smoothSubtract(0.01, frontGap);
-    k.body('mantle', mantle, { color: C.hood, roughness: 0.85, bone: 'chest' });
+    // Skinned, not rigid: the cap over each shoulder follows the upper arm, so a raised arm lifts it
+    // like a pauldron instead of going through it. The collar and the front and back panels stay on
+    // the chest. A band around the cap is in both tagged parts, so it takes half of each bone and the
+    // cloth stretches over a wide band instead of to a point. The tagged parts only set the weights:
+    // the union with the whole mantle keeps the surface exactly as it was.
+    const capZone = sdf.ellipsoid([0.1, 0.13, 0.085]).at(0.26, 0.33, 0);
+    const bandZone = sdf.ellipsoid([0.135, 0.165, 0.13]).at(0.26, 0.33, 0);
+    const mantleSkin = sdf.union(
+      mantle,
+      pair(mantle.intersect(bandZone).bone('upperarm.L')),
+      mantle.subtract(hard(capZone)).bone('chest'),
+    );
+    k.body('mantle', mantleSkin, { color: C.hood, roughness: 0.85 });
 
     // ------------------------------------------------------------------ cape (behind, to the ankles)
     // A cone of cloth open at the top and the hem. Both walls get the same fold displacement, so
@@ -474,9 +486,25 @@ export default defineAsset({
     // Local frame: origin at the grip center, the blade up (+Y), the pommel down, flat facing +Z.
     // In the hand the blade leaves the fist on the outside, below the bracer cuff, and runs up and
     // back beside the forearm; the gold pommel shows under the thumb at the front of the fist.
+    // The blade in the hand is about 30 percent longer and 15 percent wider than the sheath outline,
+    // so it reads as a blade at 128 px; the guard, the grip, and the pommel keep their size.
     const GUARD = 0.034;
+    const longBlade = sdf.extrude(
+      profile.polygon(
+        [
+          [-0.0185, 0],
+          [0.0185, 0],
+          [0.014, -0.105],
+          [0, -0.153],
+          [-0.014, -0.105],
+        ],
+        { smooth: false },
+      ),
+      0.017,
+      0.005,
+    );
     const handBlade = sdf.union(
-      bladeOutline.rotateZ(180).at(0, GUARD, 0).paint(C.blade),
+      longBlade.rotateZ(180).at(0, GUARD, 0).paint(C.blade),
       sdf.box([0.052, 0.012, 0.024], 0.004).at(0, GUARD, 0).paint(C.gold), // guard
       sdf.sphere(0.013).at(0, -0.04, 0).paint(C.gold), // pommel
     );
@@ -854,6 +882,7 @@ export default defineAsset({
       const a = armRig(side);
       const { m } = a;
       const out = m([-0.25, 0.355, 0.075]); // the wrist, out at chest height (the fist hangs a little lower)
+      const coil = m([-0.62, 0.3, -0.14]); // elbow out and a little back, so the bracer stays out of the mantle
       const outDir = m([-0.95, 0.1, -0.28]); // the blade out and flat, trailing a little
       const wristKeys: [number, V3][] = [
         [0, a.chain.end],
@@ -883,11 +912,11 @@ export default defineAsset({
       ];
       const poleKeys: [number, V3][] = [
         [0, a.pole],
-        [0.18, a.back], // elbow out and back
-        [0.24, a.back],
+        [0.18, coil],
+        [0.24, coil],
         [0.34, a.side], // elbow out to the side
         [0.64, a.side],
-        [0.76, a.back],
+        [0.76, coil],
         [1, a.pole],
       ];
       return (p: number) => a.solve(keys(p, wristKeys), keys(p, poleKeys), keys(p, bladeKeys), keys(p, upKeys)).bones;
