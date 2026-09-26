@@ -81,15 +81,18 @@ k.skeleton({
   'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
   'forearm.R': { parent: 'upperarm.R', at: mx(ELBOW) },
   'hand.R': { parent: 'forearm.R', at: mx(WRIST) },
-  'leg.L': { parent: 'hips', at: [0.068, 0.195, 0] },
-  'foot.L': { parent: 'leg.L', at: [0.098, 0.07, 0] },
-  'leg.R': { parent: 'hips', at: [-0.068, 0.195, 0] },
-  'foot.R': { parent: 'leg.R', at: [-0.098, 0.07, 0] },
+  'leg.L': { parent: 'hips', at: HIP }, // HIP = [0.068, 0.195, 0]
+  'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 }, // KNEE = [0.083, 0.1325, 0]
+  'foot.L': { parent: 'shin.L', at: ANKLE }, // ANKLE = [0.098, 0.07, 0]
+  'leg.R': { parent: 'hips', at: mx(HIP) },
+  'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+  'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
 });
 ```
 
-Taller characters need a knee bone between `leg` and `foot` (`shin.L`). Tag the matching
-parts: head/ears/nose `'head'`, neck `'neck'`, torso `'spine'` (or split chest/belly),
+Every humanoid has a knee (`shin.L`). With `split`, the shin takes the part of the leg below
+the knee, so a leg built and tagged as one part (`'leg.L'`) still bends at the knee; tag a
+separate shin part `'shin.L'` only if you build one. Tag the matching parts: head/ears/nose `'head'`, neck `'neck'`, torso `'spine'` (or split chest/belly),
 sleeves `'upperarm.L'`, legs `'leg.L'`, boots `'foot.L'`; bind hair, hats, helmets `bone: 'head'`,
 scarves `'chest'`, belts `'spine'`. Build the left side and `pair()` it; tags are renamed.
 

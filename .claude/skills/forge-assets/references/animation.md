@@ -17,6 +17,9 @@ Worked examples: `assets/rogue.ts` (humanoid idle, walk, run, a trailing cape),
 3. **Rigid parts** (helmets, hair under a helmet, weapons, buckles, eyes, horns): body option
    `bone: 'head'` so they move as one piece and never deform.
 4. **Names**: a bone and a body must never share a name.
+4b. **Split bones (knees)**: `'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 }` takes the
+   parent's weight beyond the knee (blended over 1.5 cm each side), so a leg tagged as one part
+   bends at the knee. A clip that leaves `shin` at 0 keeps a straight leg, as before.
 5. `skinBlend` (asset option, default 0.015 m) sets how gradually weight passes between bones;
    raise it for soft creatures, lower it for armor.
 
@@ -166,9 +169,15 @@ wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path
 - `follow(joints, rotations, point)`: where a point bound to the chain goes (forward
   kinematics): the posed grip of a two-handed weapon, so the other hand can `reach` it.
 - `keys(p, [[phase, value], ...], mode)`: keyframes for numbers or [x, y, z] values.
-- `plant([{ joints: [HIP, ANKLE], rotations: [legRot, footRot], sole: [heel, toe] }, ...])`: the
+- **Legs with knees**: solve a planted or stepping foot with `reach({ root: HIP, mid: KNEE,
+  end: ANKLE }, ankleTarget, pole)` with the pole in front of the knee (`[x, KNEE[1], 0.3]`):
+  `upper` goes to `leg.L`, `lower` to `shin.L`. Give the foot the opposite pitch so the sole
+  stays flat (`orient`, or for pure X turns `foot = -(upper + lower)`). Targets are in the rest
+  frame of the hips: if the hips move or turn, move the target by the opposite. A crouch, a
+  lunge, a jump, and a kneel all drop the hips and bend the knees; the feet stay planted.
+- `plant([{ joints: [HIP, KNEE, ANKLE], rotations: [legRot, shinRot, footRot], sole: [heel, toe] }, ...])`: the
   hips `move` y that keeps the lowest sole point of the feet on the ground. Use it instead of
-  `legDrop` in walks and runs: `legDrop` keeps the ankle level, but a foot that rolls (heel
+  `legDrop` in walks and runs (`legDrop` assumes a straight leg): `legDrop` keeps the ankle level, but a foot that rolls (heel
   strike, toe-off) then dips its toe or heel below the floor. `./forge check` fails clips that
   sink more than 1.5 cm below the rest pose.
 

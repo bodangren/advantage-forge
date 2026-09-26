@@ -293,6 +293,12 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
       const phase = frames === 1 ? 0 : f / (frames - 1);
       const skin = skinMatrices(skeleton, order, anim.pose(phase * anim.duration, phase));
       for (const item of items) {
+        // A clip hides an item by scaling its bone to about 0 (tongs outside the work clip): it
+        // collapses to a point at the bone and cannot touch anything.
+        if (skin.get(item.bone)!.getMaxScaleOnAxis() < 0.05) {
+          for (const region of ['head', 'body'] as const) close(`${item.name}:${region}`);
+          continue;
+        }
         const d = measure(skin, item);
         if (d.clear.part && (!closest || d.clear.distance < closest.distance))
           closest = { item: item.name, part: d.clear.part, phase, distance: d.clear.distance };

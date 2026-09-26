@@ -91,6 +91,44 @@ describe('rigging', () => {
     expect(anim.listSamplers()[0]!.getInput()!.getCount()).toBe(11);
   });
 
+  it('splits a leg tagged as one part at a knee bone', async () => {
+    const kneed = defineAsset({
+      name: 'knee-test',
+      detail: 0.01,
+      texture: false,
+      build(k) {
+        k.skeleton({
+          hips: { at: [0, 0.3, 0] },
+          'leg.L': { parent: 'hips', at: [0.1, 0.3, 0] },
+          'shin.L': { parent: 'leg.L', at: [0.1, 0.16, 0], split: 0.02 },
+          'foot.L': { parent: 'shin.L', at: [0.1, 0.03, 0] },
+        });
+        k.body('leg', sdf.capsule([0.1, 0.3, 0], [0.1, 0.05, 0], 0.04).bone('leg.L'), { color: '#88aa66' });
+      },
+    });
+    const { root } = await buildAsset(kneed);
+    const doc = await new NodeIO().readBinary(await toGlb(root));
+    const joints = doc.getRoot().listSkins()[0]!.listJoints().map((n) => n.getName());
+    const prim = doc.getRoot().listNodes().find((n) => n.getName() === 'leg')!.getMesh()!.listPrimitives()[0]!;
+    const pos = prim.getAttribute('POSITION')!;
+    const j = prim.getAttribute('JOINTS_0')!;
+    const w = prim.getAttribute('WEIGHTS_0')!;
+    let above = 0;
+    let below = 0;
+    for (let i = 0; i < pos.getCount(); i++) {
+      const y = (pos.getElement(i, []) as number[])[1]!;
+      const js = j.getElement(i, []) as number[];
+      const ws = w.getElement(i, []) as number[];
+      expect(ws.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 5);
+      const on = (name: string) => js.reduce((acc, b, k) => acc + (joints[b] === name ? ws[k]! : 0), 0);
+      // Well above the knee: the thigh; well below: the shin (the tag says leg.L for both).
+      if (y > 0.2) (above++, expect(on('leg.L')).toBeGreaterThan(0.99));
+      if (y < 0.12 && y > 0.06) (below++, expect(on('shin.L')).toBeGreaterThan(0.99));
+    }
+    expect(above).toBeGreaterThan(10);
+    expect(below).toBeGreaterThan(10);
+  });
+
   it('reports unknown bones clearly', async () => {
     const bad = defineAsset({
       name: 'bad',

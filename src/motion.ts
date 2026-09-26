@@ -209,3 +209,91 @@ export function plant(feet: readonly { joints: readonly Vec3[]; rotations: reado
     }
   return restLow - posedLow;
 }
+
+/** A leg's rest joints (the left leg; the right one is mirrored in x). */
+export interface LegJoints {
+  readonly hip: Vec3;
+  readonly knee: Vec3;
+  readonly ankle: Vec3;
+}
+
+export interface GaitOptions {
+  /** Foot travel from front to back during a stance, meters (walk about 0.08, run about 0.12). */
+  readonly stride: number;
+  /** Peak lift of the swing foot, meters. */
+  readonly lift: number;
+  /** Share of the cycle each foot is on the ground: about 0.6 for a walk, 0.4 for a run. */
+  readonly duty?: number;
+  /** Rest points on the bottom of the left foot: the heel and the toe (world meters). */
+  readonly heel: Vec3;
+  readonly toe: Vec3;
+  /** Heel-strike and toe-off pitch of the foot, degrees. Default 14. */
+  readonly roll?: number;
+  /** How far the hips sit below their rest height at the lowest, meters (soft knees). Default 0.012. */
+  readonly sit?: number;
+  /**
+   * Hips bob, meters. Default 0.006. A walk (duty 0.5 or more) is highest at each mid-stance; a
+   * run (duty under 0.5) is lowest at mid-stance and highest in the flight between steps.
+   */
+  readonly bob?: number;
+  /** The hips' own turn in the same pose (a sway), so planted feet stay where they are. */
+  readonly hips?: { readonly at: Vec3; readonly rotate: Vec3 };
+}
+
+/**
+ * A walk or run with knees: each stance foot stays flat on the floor and slides back under the
+ * body, the swing foot lifts and comes forward with the knee bent, and the foot rolls from heel
+ * strike to toe-off. Returns `leg`, `shin`, and `foot` rotations for both sides and the hips'
+ * `move` y (add it to any bob of your own only if you also raise the feet). The left foot
+ * strikes at phase 0, the right at 0.5. Bones: `leg.L`, `shin.L`, `foot.L` and the `.R` mirror.
+ */
+export function gait(phase: number, leg: LegJoints, o: GaitOptions): { hipsY: number; pose: Record<string, { rotate: Vec3 }> } {
+  const duty = o.duty ?? 0.6;
+  const roll = o.roll ?? 14;
+  const sit = o.sit ?? 0.012;
+  const bob = o.bob ?? 0.006;
+  const wave2 = Math.cos(4 * Math.PI * (phase - duty / 2));
+  const hipsY = -sit + bob * (duty >= 0.5 ? 0.5 + 0.5 * wave2 : 0.5 - 0.5 * wave2);
+  const hipsRot = o.hips ? quat(o.hips.rotate) : new THREE.Quaternion();
+  const hipsInv = hipsRot.clone().invert();
+  const pose: Record<string, { rotate: Vec3 }> = {};
+  for (const [side, sx, offset] of [['L', 1, 0], ['R', -1, 0.5]] as const) {
+    const m = (p: Vec3): Vec3 => [p[0] * sx, p[1], p[2]];
+    const hip = m(leg.hip);
+    const knee = m(leg.knee);
+    const ankle = m(leg.ankle);
+    const q = (((phase + offset) % 1) + 1) % 1;
+    let z: number;
+    let lift = 0;
+    if (q < duty) z = o.stride / 2 - (o.stride * q) / duty;
+    else {
+      const s = (q - duty) / (1 - duty);
+      z = -o.stride / 2 + o.stride * s * s * (3 - 2 * s);
+      lift = o.lift * Math.sin(Math.PI * s);
+    }
+    // The foot's pitch in the world (+ is toe down): heel strike, flat, toe-off, then toe up again.
+    const pitch = keys(q, [
+      [0, -roll],
+      [0.25 * duty, 0],
+      [0.6 * duty, 0],
+      [duty, roll],
+      [duty + 0.4 * (1 - duty), 0.3 * roll],
+      [1, -roll],
+    ]);
+    const t = pitch * DEG;
+    // The ankle height that puts the lower of the heel and the toe on the floor at this pitch.
+    const low = (p: Vec3) => (p[1] - leg.ankle[1]) * Math.cos(t) - (p[2] - leg.ankle[2]) * Math.sin(t);
+    const ankleY = -Math.min(low(o.heel), low(o.toe)) + lift;
+    // The world target into the hips' rest frame (the hips move down by hipsY and may turn).
+    const world = new THREE.Vector3(ankle[0], ankleY, ankle[2] + z);
+    const pivot = o.hips ? v3(o.hips.at) : new THREE.Vector3();
+    const local = world.sub(new THREE.Vector3(0, hipsY, 0)).sub(pivot).applyQuaternion(hipsInv).add(pivot);
+    const ik = reach({ root: hip, mid: knee, end: ankle }, [local.x, local.y, local.z], [hip[0], knee[1], knee[2] + 0.3]);
+    const parents: Vec3[] = o.hips ? [o.hips.rotate, ik.upper, ik.lower] : [ik.upper, ik.lower];
+    const foot = orient(parents, { dir: [0, 0, 1], up: [0, 1, 0] }, { dir: [0, -Math.sin(t), Math.cos(t)], up: [0, Math.cos(t), Math.sin(t)] });
+    pose[`leg.${side}`] = { rotate: ik.upper };
+    pose[`shin.${side}`] = { rotate: ik.lower };
+    pose[`foot.${side}`] = { rotate: foot };
+  }
+  return { hipsY, pose };
+}

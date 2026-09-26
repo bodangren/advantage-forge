@@ -95,3 +95,32 @@ describe('posing by targets', () => {
     close(keys(0.65, [[0.5, [0, 0, 0]], [0.8, [2, 4, 6]]] as const), [1, 2, 3]);
   });
 });
+
+describe('gait', () => {
+  it('keeps the stance sole on the floor and lifts the swing foot', async () => {
+    const { gait, follow } = await import('../src/motion.js');
+    const leg = { hip: [0.068, 0.195, 0], knee: [0.083, 0.1325, 0], ankle: [0.098, 0.07, 0] } as const;
+    const heel: [number, number, number] = [0.098, 0, -0.03];
+    const toe: [number, number, number] = [0.098, 0, 0.06];
+    const opts = { stride: 0.08, lift: 0.03, duty: 0.6, heel, toe };
+    const sole = (p: number) => {
+      const g = gait(p, leg, opts);
+      const r = [g.pose['leg.L']!.rotate, g.pose['shin.L']!.rotate, g.pose['foot.L']!.rotate];
+      const at = (pt: [number, number, number]) => follow([leg.hip, leg.knee, leg.ankle], r, pt);
+      const h = at(heel);
+      const t = at(toe);
+      return { low: Math.min(h[1], t[1]) + g.hipsY, z: (h[2] + t[2]) / 2, knee: r[1]![0] };
+    };
+    let lastZ = Infinity;
+    for (let p = 0.02; p < 0.58; p += 0.04) {
+      const s = sole(p);
+      expect(Math.abs(s.low)).toBeLessThan(0.002); // planted: on the floor, not under it
+      expect(s.z).toBeLessThan(lastZ + 1e-4); // and it slides back under the body
+      lastZ = s.z;
+    }
+    const swing = sole(0.8);
+    expect(swing.low).toBeGreaterThan(0.015);
+    expect(swing.knee).toBeGreaterThan(20); // the knee bends in the swing
+  });
+});
+

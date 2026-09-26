@@ -125,8 +125,9 @@ Motion (`motion.*`): `wave(phase, cycles, offset)` in [-1, 1], `bump(phase, cycl
 
 ### Rigging and animation
 
-- `k.skeleton({...})`: bone name to `{ parent?, at, tail? }`, `at` = joint position in the rest
-  pose (world meters). Exactly one root.
+- `k.skeleton({...})`: bone name to `{ parent?, at, tail?, split? }`, `at` = joint position in
+  the rest pose (world meters). Exactly one root. `split` (meters) lets a bone take its parent's
+  weight beyond its joint: humanoid knees are `'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 }`.
 - Skin weights come from `.bone(name)` tags on the parts you build from: tag the upper arm cone,
   the forearm cone, the hand, the head. The distance from each vertex to each bone's tagged
   shapes decides the weights; fillets between tagged parts blend them. `.mirror('x')` renames

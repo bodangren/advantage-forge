@@ -8,6 +8,12 @@ export interface BoneDef {
   readonly at: Vec3;
   /** Optional end point, used for weights when a body has no tags and for display. */
   readonly tail?: Vec3;
+  /**
+   * Split the parent: this bone takes the parent's skin weight beyond its joint (along the
+   * parent's direction), blended over this many meters on each side. A knee on a leg that was
+   * tagged as one part: `'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 }`.
+   */
+  readonly split?: number;
 }
 
 export type SkeletonDef = Readonly<Record<string, BoneDef>>;
@@ -170,7 +176,49 @@ export function skinWeights(
       weight[v * 4 + k] = total > 0 ? w[k]! / total : k === 0 ? 1 : 0;
     }
   }
+  splitWeights(positions, rig, index, weight);
   return { index, weight };
+}
+
+/** Bones with `split` take their parent's weight beyond their joint (see BoneDef.split). */
+function splitWeights(positions: Float32Array, rig: Rig, index: Uint16Array, weight: Float32Array): void {
+  const n = positions.length / 3;
+  for (const [name, def] of Object.entries(rig.def)) {
+    if (def.split === undefined || def.parent === undefined) continue;
+    const s = rig.index.get(name)!;
+    const p = rig.index.get(def.parent)!;
+    const pa = rig.def[def.parent]!.at;
+    const dir = new THREE.Vector3(def.at[0] - pa[0], def.at[1] - pa[1], def.at[2] - pa[2]).normalize();
+    const width = Math.max(1e-6, def.split);
+    for (let v = 0; v < n; v++) {
+      const t =
+        (positions[v * 3]! - def.at[0]) * dir.x +
+        (positions[v * 3 + 1]! - def.at[1]) * dir.y +
+        (positions[v * 3 + 2]! - def.at[2]) * dir.z;
+      const u = Math.min(1, Math.max(0, (t + width) / (2 * width)));
+      const f = u * u * (3 - 2 * u);
+      if (f <= 0) continue;
+      const base = v * 4;
+      let kp = -1;
+      for (let k = 0; k < 4; k++) if (index[base + k] === p && weight[base + k]! > 0) kp = k;
+      if (kp < 0) continue;
+      const moved = weight[base + kp]! * f;
+      weight[base + kp] = weight[base + kp]! - moved;
+      // Add to the split bone's slot, or an empty slot, or replace the smallest other slot.
+      let ks = -1;
+      for (let k = 0; k < 4; k++) if (index[base + k] === s && weight[base + k]! > 0) ks = k;
+      if (ks < 0) for (let k = 0; k < 4 && ks < 0; k++) if (weight[base + k] === 0) ks = k;
+      if (ks < 0) {
+        for (let k = 0; k < 4; k++) if (k !== kp && (ks < 0 || weight[base + k]! < weight[base + ks]!)) ks = k;
+        weight[base + ks] = 0;
+      }
+      index[base + ks] = s;
+      weight[base + ks] = weight[base + ks]! + moved;
+      let total = 0;
+      for (let k = 0; k < 4; k++) total += weight[base + k]!;
+      for (let k = 0; k < 4; k++) weight[base + k] = weight[base + k]! / total;
+    }
+  }
 }
 
 function segmentDistance(a: Vec3, b: Vec3): (x: number, y: number, z: number) => number {
