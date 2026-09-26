@@ -11,7 +11,7 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  * One idea: a friendly, mustached watchman in a round steel kettle helmet, a sky-blue tabard with
  *   a gold tower, and a tall spear with a teal pennant.
  * Proportions: the rogue's (head center 0.675, eyes 0.628, shoulders 0.385, belt 0.25); the
- *   helmet crest at 0.96, its brim at 0.72, the cheek guards to 0.55; the tabard hem at 0.15.
+ *   helmet crest at 0.96, its brim at 0.78, the cheek guards to 0.55; the tabard hem at 0.15.
  * Shape language: round and sturdy (helmet dome, pauldrons, gauntlets, boots) with the straight
  *   spear and the pointed pennant as accents.
  * Palette (60/30/10): sky-blue tabard #6aa2c0 and satin steel #9aa0a8; gold #e0b040 trims and
@@ -99,7 +99,9 @@ export default defineAsset({
 
   build(k) {
     const SPEAR_TOP = 0.8; // above the grip
-    const PENNANT_AT: V3 = [GRIP[0], GRIP[1] + SPEAR_TOP - 0.07, GRIP[2]];
+    // A point on the haft `h` above the grip (the spear leans 3 degrees about Z).
+    const onHaft = (h: number): V3 => [GRIP[0] - h * Math.sin((3 * Math.PI) / 180), GRIP[1] + h * Math.cos((3 * Math.PI) / 180), GRIP[2]];
+    const PENNANT_AT = onHaft(SPEAR_TOP - 0.078); // the tie, just below the rings
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -113,7 +115,7 @@ export default defineAsset({
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
-      pennant: { parent: 'hand.R', at: PENNANT_AT, tail: [PENNANT_AT[0] - 0.14, PENNANT_AT[1] - 0.05, PENNANT_AT[2]] },
+      pennant: { parent: 'hand.R', at: PENNANT_AT, tail: [PENNANT_AT[0] - 0.04, PENNANT_AT[1] - 0.19, PENNANT_AT[2] - 0.015] },
       'leg.L': { parent: 'hips', at: HIP },
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
@@ -172,9 +174,16 @@ export default defineAsset({
     k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the kettle helmet
-    const helmOuter = sdf.ellipsoid([0.232, 0.232, 0.222]).at(0, 0.725, -0.01);
+    // A dome about 10 percent smaller than the skull-sized first helmet, so the brim sits higher and
+    // more of the face shows. A second ellipsoid, close around the skull, carries the cheek and neck
+    // guards below the brim, so the smaller dome never lets the head poke through.
+    const helmOuter = sdf.smoothUnion(
+      0.02,
+      sdf.ellipsoid([0.209, 0.209, 0.2]).at(0, 0.745, -0.01),
+      sdf.ellipsoid([0.231, 0.235, 0.217]).at(0, 0.7, -0.01),
+    );
     const helmInner = helmOuter.round(-0.014);
-    const BRIM_Y = 0.752;
+    const BRIM_Y = 0.78;
     // The face window between the cheek guards, from the brim down.
     const faceWindow = sdf
       .extrude(
@@ -423,25 +432,31 @@ export default defineAsset({
     );
     k.body('spear-haft', spearPose(haft), { color: C.wood, roughness: 0.7, detail: 0.004, bone: 'hand.R' });
     k.body('spear-head', spearPose(blade), { color: C.steel, roughness: 0.3, metalness: 0.85, detail: 0.0035, bone: 'hand.R' });
-    // The pennant: a pointed flag tied below the head, blowing out to the right, rippling.
+    // The pennant: a swallowtail flag tied to the haft just below the rings. At rest it hangs
+    // down beside the haft, its tails turned a little back, with soft vertical folds.
     const flag = sdf
       .extrude(
         profile.polygon(
           [
-            [0, 0.0],
-            [-0.14, -0.035],
-            [-0.1, -0.06],
-            [-0.15, -0.1],
-            [0, -0.1],
+            [0.0, 0.01],
+            [-0.045, -0.006],
+            [-0.082, -0.05],
+            [-0.09, -0.125],
+            [-0.074, -0.21],
+            [-0.05, -0.165],
+            [-0.024, -0.195],
+            [-0.012, -0.105],
+            [0.0, -0.035],
           ],
           { smooth: false },
         ),
-        0.016,
-        0.006,
+        0.014,
+        0.005,
       )
-      .displace(0.005, (x) => Math.sin(x * 45))
-      .at(PENNANT_AT[0] - 0.012, PENNANT_AT[1] + 0.01, PENNANT_AT[2])
-      .paintWhere(sdf.halfSpace([1, 0, 0], PENNANT_AT[0] - 0.1).intersect(sdf.halfSpace([-1, 0, 0], -(PENNANT_AT[0] - 0.115))), C.pennantDark, 0.003);
+      .displace(0.005, (x, y) => Math.sin(x * 120 + y * 18))
+      .paintWhere(sdf.halfSpace([0, 1, 0], -0.132).intersect(sdf.halfSpace([0, -1, 0], 0.148)), C.pennantDark, 0.003)
+      .rotateY(-22)
+      .at(...PENNANT_AT);
     k.body('flag', flag.bone('pennant'), { color: C.pennant, roughness: 0.8, detail: 0.003 });
 
     // ------------------------------------------------------------------ animation
@@ -473,7 +488,8 @@ export default defineAsset({
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -10 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
-          pennant: { rotate: [0, flap + 10 * wave(p, 2, 0.2), 6 * wave(p, 3, 0.1)] as const },
+          // The pennant lifts back behind the haft and flutters.
+          pennant: { rotate: [flap + 0.3 * flap * wave(p, 2, 0.2), 10 * wave(p, 3, 0.1), -0.25 * flap - 6 * wave(p, 2, 0.45)] as const },
           'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
           'leg.R': { rotate: [legSwing * s, 0, 0] as const },
           'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
@@ -486,8 +502,8 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 26, 3, 0, 20));
-    k.animation('run', stride(0.56, 40, 44, 12, 0.03, 40));
+    k.animation('walk', stride(0.9, 26, 26, 3, 0, 24));
+    k.animation('run', stride(0.56, 40, 44, 12, 0.03, 48));
 
     // A thrust: pull back and lower the spear to level, drive it forward, and recover.
     // The X angles on the arm bones add up to the spear's tilt (about 90 degrees when level).
