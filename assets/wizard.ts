@@ -11,7 +11,7 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   orb held up in a gnarled, forked staff, a small flame on the open palm.
  * Proportions: hat point 1.07, brim 0.74 (radius 0.36, drooping at the edge, tipped down to her
  *   left), eyes 0.63, chin 0.48, shoulders 0.385, belt 0.25, coat hem 0.09 (open below the
- *   belt), boots 0.09. Staff top 0.71 on the right (-X), the orb and its flame above it.
+ *   belt), boots 0.09. Staff top 0.785 on the right (-X), the orb and its flame above it.
  * Shape language: round and soft (brim, cheeks, robe, boots), with flame and hat-point curls.
  * Palette (60/30/10): red cloth #b8322b (robe, hat, cape); dark tunic #3a3034 and brown leather
  *   #74462a; gold #e2b04a trim and warm fire as the accent. Skin #f2c7a4, hair #6b3a22.
@@ -80,6 +80,7 @@ const ANKLE: V3 = [0.098, 0.07, 0];
 const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const scale = (a: V3, k: number): V3 => [a[0] * k, a[1] * k, a[2] * k];
 const norm = (a: V3): V3 => {
   const l = Math.hypot(a[0], a[1], a[2]);
@@ -112,15 +113,22 @@ const fistLocal = (s: 1 | -1) =>
     sdf.cone([0.02 * s, -0.023, 0.025], [0.001 * s, -0.033, 0.048], 0.016, 0.013),
   );
 // The staff hand swings forward and tips out, so the grip hole (and the staff) leans outward.
-const HAND_R = { pitch: -80, roll: 12 };
+// The tilt and the tall staff hold the fork and its fire clear of the brim (at least 2 cm at rest).
+const HAND_R = { pitch: -78, roll: 19 };
 const handR = (s: sdf.Shape) => s.rotateX(HAND_R.pitch).rotateZ(HAND_R.roll).at(...WRIST_R);
 const handRPoint = (p: V3) => add(rotZ(rotX(p, HAND_R.pitch), HAND_R.roll), WRIST_R);
 const STAFF_AXIS = rotZ(rotX([0, 0, 1], HAND_R.pitch), HAND_R.roll);
 const GRIP = handRPoint([-0.007, -0.04, 0.004]);
 const L_DOWN = (GRIP[1] - 0.03) / STAFF_AXIS[1];
-const L_UP = (0.71 - GRIP[1]) / STAFF_AXIS[1];
+const L_UP = (0.785 - GRIP[1]) / STAFF_AXIS[1];
 const along = (t: number): V3 => add(GRIP, scale(STAFF_AXIS, t));
 const STAFF_TOP = along(L_UP);
+// Below the fist the pole bows gently in, so its foot stands beside the boot, clear of the hem:
+// the foot sits where a less tilted staff (pitch -80, roll 12) would put it.
+const FOOT_AXIS = rotZ(rotX([0, 0, 1], -80), 12);
+const FOOT_SHIFT = sub(add(GRIP, scale(FOOT_AXIS, -(GRIP[1] - 0.03) / FOOT_AXIS[1])), along(-L_DOWN));
+/** A point on the pole: straight above the grip (t >= 0), bowed below it. */
+const pole = (t: number): V3 => (t >= 0 ? along(t) : add(along(t), scale(FOOT_SHIFT, (t / L_DOWN) ** 2)));
 /** The fire orb in the staff head (and the `orb` bone that flares it). */
 const ORB: V3 = add(STAFF_TOP, [-0.012, 0.085, 0.004]);
 const ORB_FLAME = 0.26;
@@ -730,7 +738,7 @@ export default defineAsset({
     // A gnarled pole along the staff axis through the fist, with a forked head cradling the orb.
     const wobble = (t: number, a: number): V3 => [Math.sin(t * 23) * a, 0, Math.cos(t * 17) * a];
     const polePts = [-L_DOWN, -L_DOWN * 0.6, -L_DOWN * 0.25, 0, L_UP * 0.35, L_UP * 0.7, L_UP].map((t, i) => {
-      const p = add(along(t), wobble(t, i === 3 ? 0 : 0.006));
+      const p = add(pole(t), wobble(t, i === 3 ? 0 : 0.006));
       return [p[0], p[1], p[2], 0.016 - i * 0.0006] as [number, number, number, number];
     });
     const top = STAFF_TOP;
@@ -746,7 +754,7 @@ export default defineAsset({
         ],
         0.008,
       );
-    const knots = sdf.union(sdf.sphere(0.02).at(...along(L_UP * 0.45)), sdf.sphere(0.018).at(...along(-L_DOWN * 0.5)));
+    const knots = sdf.union(sdf.sphere(0.02).at(...along(L_UP * 0.45)), sdf.sphere(0.018).at(...pole(-L_DOWN * 0.5)));
     const staff = sdf
       .smoothUnion(0.012, sdf.chain(polePts, 0.02), prong(1), prong(-1), knots)
       .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 12, z * 90, 2) > 0.25 ? rgb(C.woodDark) : base));
