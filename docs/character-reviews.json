@@ -680,7 +680,7 @@
     "reviewedAt": "2026-09-26T21:05:52+00:00"
   },
   "skeleton-mage": {
-    "overall": 8.2,
+    "overall": 8.5,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -692,24 +692,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 4
+      "motion": 5
     },
-    "summary": "The skeleton mage matches the candle-skull caster on the mockup. The white wax now shows apart from the cream skull. The cast has an anticipation, a thrust toward the target, and a recovery. In the death, the mage staggers back, falls to the knees, drops the staff, and lies on its side. All clips pass the head check (margin 0.3 cm) and the ground check. The model has 43,126 triangles.",
+    "summary": "The skeleton mage matches the candle-skull caster on the mockup. The cast now has a strong release: the palm flame shrinks, swells, and flares to 1.8 times its size, and a purple bolt flies 0.6 m toward the target. At the end of the death, the eyes and the candle flame go out as the skull stops. All clips pass the head check and the ground check. The model has 43,728 triangles.",
     "strengths": [
       "The candle on the skull is a unique silhouette. It shows clearly in all 8 sprite directions.",
-      "Three glowing accents (the candle flame, the palm flame, and the lantern) make the mage easy to see in a dark dungeon.",
-      "The death is clear: a stagger back, a fall to the knees, the staff falls to the floor, and the body lies on its side."
+      "The cast reads as a spell: an anticipation, a flare of the palm flame, a bolt that leaves the hand, and a recovery.",
+      "The death is clear: a stagger, a collapse into a heap, the staff falls, the skull rolls off, and the lights go out."
     ],
     "issues": [
-      "The cast shows a real spell: the hand pulls back to the chest, then pushes the flame forward, then returns. But the palm flame keeps its size, and no bolt leaves the hand.",
-      "The known flaw is visible: after the death, the orange eyes stay lit on the skull on the floor. The candle flame also stays lit.",
-      "The candle is a wide block with a flat top, and the skull has no hood. The mockup has a taller, rounder candle and a dark hood. At 128 px, the wax drips cover part of the eye sockets."
+      "The bolt is small (about 5 cm wide). At 128 px, it shows as only a few purple pixels for one or two frames.",
+      "In the idle, the staff comes to 0.5 cm from the wax on the skull. It passes the check, but the margin is small.",
+      "The candle is a wide block with a flat top, and the skull has no hood. The mockup has a taller, rounder candle and a dark hood."
     ],
     "next": [
-      "At the release of the cast (phase 0.5), scale up the palm flame and make it brighter, or send a short purple bolt toward the target.",
-      "Put the eye glow on its own bone and scale it to zero at the end of the death. Scale the candle bone to zero there too."
+      "Make the candle taller and rounder, and add a dark hood behind the skull, as on the mockup.",
+      "Tilt the staff out a little more in the idle, so that it stays 1 cm or more from the wax."
     ],
-    "reviewedAt": "2026-09-26T18:54:40+00:00"
+    "reviewedAt": "2026-09-26T21:39:19+00:00"
   },
   "imp": {
     "overall": 8.1,

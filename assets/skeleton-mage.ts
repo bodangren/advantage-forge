@@ -19,10 +19,11 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Value plan: the glowing orange eyes in the dark sockets and the candle flame are the focal
  *   point; the two purple flames at the sides are the second accents.
  * Bodies: bone, wax, wick, candle-fire, eyes, robe, sash, satchel, staff, lantern-frame,
- *   lantern-light, palm-fire.
+ *   lantern-light, palm-fire, spell-orb.
  * Rig: the rogue's skeleton plus `weapon` (the staff, rigid under `hand.L`), `lantern` (under it),
- *   the two flames `candle` (under `head`) and `palmfire` (under `hand.R`), so clips can drop the
- *   staff and put the flames out. Clips: idle, walk (a gliding shuffle), run, attack (a spell
+ *   the two flames `candle` (under `head`) and `palmfire` (under `hand.R`), the eye glow `eyeglow`
+ *   (under `head`), and the spell bolt `bolt` (under `hand.R`, hidden outside the cast), so clips
+ *   can drop the staff, fire a bolt, and put the lights out. Clips: idle, walk (a gliding shuffle), run, attack (a spell
  *   cast), hit, death (the robe crumples into a heap, the staff falls, the skull rolls off).
  */
 
@@ -172,6 +173,11 @@ export default defineAsset({
     const WICK_TOP: V3 = [0, 0.975, -0.01];
     const CANDLE_FIRE: V3 = [WICK_TOP[0], WICK_TOP[1] - 0.016, WICK_TOP[2]]; // the candle flame's base
     const PALM: V3 = [WRIST_R[0] - 0.05, WRIST_R[1] + 0.02, WRIST_R[2] + 0.006]; // the palm flame's base
+    // The spell bolt waits at rest inside the base of the palm flame (hidden), and flies out in the cast.
+    const BOLT: V3 = [PALM[0], PALM[1] + 0.052, PALM[2]];
+    const EYE_GLOW: V3 = [0, 0.632, 0.1]; // between the glowing eyes, inside the skull
+    // Hidden, the bolt shrinks to a point inside the bony palm, where nothing (a falling skull) crosses it.
+    const HIDE = { move: [0, -0.06, 0] as V3, scale: [0.001, 0.001, 0.001] as V3 };
 
     // ------------------------------------------------------------------ skeleton (rig)
     const RIG: Record<string, { parent?: string; at: V3; tail?: V3 }> = {
@@ -187,6 +193,8 @@ export default defineAsset({
       lantern: { parent: 'weapon', at: HOOK, tail: LANTERN },
       candle: { parent: 'head', at: CANDLE_FIRE },
       palmfire: { parent: 'hand.R', at: PALM },
+      bolt: { parent: 'hand.R', at: BOLT },
+      eyeglow: { parent: 'head', at: EYE_GLOW },
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
@@ -248,7 +256,7 @@ export default defineAsset({
 
     // Glowing eyes deep in the sockets.
     const eyes = pair(sdf.sphere(0.029).at(EYE[0] - 0.002, EYE[1] - 0.008, faceZ(EYE[0], EYE[1]) - 0.044));
-    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 0.8 });
+    k.body('eyes', eyes, { bone: 'eyeglow', color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 0.8 });
 
     // ------------------------------------------------------------------ the candle on the skull
     // A thick candle standing on the cranium, with a pool of melted wax that runs down over the
@@ -474,6 +482,17 @@ export default defineAsset({
       emissiveIntensity: 0.9,
       detail: 0.0035,
     });
+    // The spell bolt: a bright purple orb with a short tail back toward the hand (local -Y, so it
+    // trails behind when the orb flies along the flame's axis).
+    const boltOrb = sdf.smoothUnion(0.01, sdf.sphere(0.03), sdf.cone([0, -0.012, 0], [0, -0.042, 0], 0.022, 0.006)).at(...BOLT);
+    k.body('spell-orb', boltOrb.paintFn(flamePaint([BOLT[0], BOLT[1] - 0.042, BOLT[2]], 0.08, C.purple, C.purpleCore)), {
+      bone: 'bolt',
+      color: C.purple,
+      roughness: 0.25,
+      emissive: C.purple,
+      emissiveIntensity: 1.4,
+      detail: 0.003,
+    });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
@@ -489,6 +508,7 @@ export default defineAsset({
         lantern: { rotate: [4 * wave(p, 1, 0.4), 0, 6 * wave(p, 1, 0.2)] },
         'upperarm.R': { rotate: [-3 * bump(p), 0, -2 * wave(p, 1, 0.2)] },
         'forearm.R': { rotate: [-6 * bump(p), 0, 0] },
+        bolt: HIDE,
       }),
     });
 
@@ -508,6 +528,7 @@ export default defineAsset({
           'foot.R': { rotate: [-legSwing * 0.5 * s, 0, 0] as const },
           'upperarm.R': { rotate: [-6 * s, 0, 0] as const },
           'upperarm.L': { rotate: [4 * s, 0, 0] as const },
+          bolt: HIDE,
         };
       },
     });
@@ -520,7 +541,7 @@ export default defineAsset({
     // hand pulls back and down to the right hip, and the body leans back and turns the right
     // shoulder away. Push: the arm thrusts straight, forward and out to the right at chest height,
     // below and outside the skull, and the flame points at the target. Recovery: back to rest.
-    // The flame shares `hand.R` with the bony hand, so it keeps its size.
+    // The palm flame (its own bone) gathers and flares at the release, and a bolt flies out.
     const { keys, reach, orient } = motion;
     const unit = (v: V3): V3 => {
       const l = Math.hypot(v[0], v[1], v[2]);
@@ -574,6 +595,17 @@ export default defineAsset({
         const look = keys(p, [[0, 0], [0.3, 6], [0.4, 6], [0.52, -18], [0.66, -16], [1, 0]] as const);
         const thrust = keys(p, [[0, 0], [0.4, 0], [0.52, 1], [0.66, 1], [1, 0]] as const);
         const gather = keys(p, [[0, 0], [0.3, 1], [0.4, 1], [0.52, 0]] as const);
+        // The palm flame gathers (shrinks, then swells), flares to 1.8 times its size at the
+        // release for about 0.1 s, and dips a little, spent, before it settles.
+        const flare = keys(
+          p,
+          [[0, 1], [0.14, 0.94], [0.3, 0.8], [0.4, 0.84], [0.47, 1.22], [0.52, 1.8], [0.59, 1.74], [0.66, 1.02], [0.76, 0.9], [1, 1]] as const,
+        );
+        // The bolt leaves the palm at the release and flies 0.6 m along the flame's axis (the
+        // hand's rest +Y, which points at the target) in 0.12 s, then is gone.
+        const fly = (p - 0.52) / 0.12;
+        const boltS = 1.6 - 0.6 * Math.min(1, Math.max(0, (fly - 0.75) / 0.25));
+        const bolt = fly >= 0 && fly <= 1 ? { move: [0, 0.6 * (1 - (1 - fly) ** 1.6), 0] as V3, scale: [boltS, boltS, boltS] as V3 } : HIDE;
         // The feet stay planted: the legs tilt under the hips as the hips move.
         const legA = (Math.atan2(fwd, LEG) * 180) / Math.PI;
         return {
@@ -582,10 +614,12 @@ export default defineAsset({
           chest: { rotate: [0, twist * 0.6, 0] },
           head: { rotate: [-0.7 * lean, look, 0] },
           lantern: { rotate: [8 * thrust - 4 * gather, 0, 10 * wave(p, 3) * thrust] },
-          'upperarm.L': { rotate: [8 * thrust - 4 * gather, 0, 0] },
+          'upperarm.L': { rotate: [8 * thrust - 4 * gather, 0, -3 * gather] }, // the staff tilts out, clear of the wax
           'upperarm.R': { rotate: arm.upper },
           'forearm.R': { rotate: arm.lower },
           'hand.R': { rotate: hand },
+          palmfire: { scale: [flare, flare, flare] },
+          bolt,
           'leg.L': { rotate: [legA, 0, 0] },
           'leg.R': { rotate: [legA, 0, 0] },
           'foot.L': { rotate: [-legA, 0, 0] },
@@ -628,6 +662,7 @@ export default defineAsset({
           'upperarm.R': { rotate: [-4 * h, 0, -12 * h] },
           'forearm.R': { rotate: [8 * h, 0, 0] },
           palmfire: { scale: [1 - 0.1 * rattle, 1 + 0.15 * rattle, 1 - 0.1 * rattle] },
+          bolt: HIDE,
           'leg.L': { rotate: [-lean, 0, 0] },
           'leg.R': { rotate: [-lean, 0, 0] },
           'foot.L': { rotate: [lean, 0, 0] },
@@ -641,7 +676,7 @@ export default defineAsset({
     // lets the staff go: it topples out to the left front and lands flat, the lantern on its side
     // beside it. The robe crumples into a heap (the spine squashes; the chest scales back, so all
     // above it keeps its shape), the legs fold forward under it, and the arms sprawl. At last the
-    // skull with its candle topples off to the right, rolls onto its side, and the candle goes out.
+    // skull with its candle topples off to the right, rolls onto its side, and the candle and the eyes go out.
     // The `weapon` (staff) and `head` bones are placed in world space under their posed parents.
     type Pose = Record<string, { move?: V3; rotate?: V3; scale?: V3 }>;
     const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
@@ -714,8 +749,10 @@ export default defineAsset({
         const pf = keys(p, [[0, 1], [0.05, 1.3], [0.1, 0.55], [0.15, 0.8], [0.22, 0.25], [0.28, 0]] as const);
         const cf = keys(
           p,
-          [[0, 1], [0.05, 0.5], [0.1, 1.3], [0.16, 0.7], [0.24, 1.15], [0.32, 1], [0.62, 1], [0.68, 0.6], [0.74, 1.1], [0.82, 0.85], [0.87, 0.55], [0.91, 0.65], [0.97, 0]] as const,
+          [[0, 1], [0.05, 0.5], [0.1, 1.3], [0.16, 0.7], [0.24, 1.15], [0.32, 1], [0.62, 1], [0.68, 0.6], [0.74, 1.1], [0.79, 0.85], [0.83, 0.5], [0.85, 0.6], [0.88, 0.001]] as const,
         );
+        // The eyes flare in the blow, then dim and go out with the candle as the skull rocks to a stop.
+        const ef = keys(p, [[0, 1], [0.06, 1.2], [0.14, 0.9], [0.22, 1], [0.8, 1], [0.83, 0.65], [0.85, 0.8], [0.88, 0.001]] as const);
         // The collapse: the robe crumples, faster and faster, to the impact at 0.52, and settles.
         const c = fall(0.3, 0.52, p);
         const sq = c + 0.12 * keys(p, [[0.52, 0], [0.57, 1], [0.64, 0]] as const);
@@ -737,7 +774,9 @@ export default defineAsset({
           neck: { rotate: [-8 * hitB + 3 * rattle + 10 * sag, 0, 0] },
           head: { rotate: [-18 * hitB + 6 * rattle + 6 * sag, 8 * rattle, 7 * rattle + 8 * wob] },
           candle: { scale: [cf, cf, cf] },
+          eyeglow: { scale: [ef, ef, ef] },
           palmfire: { scale: [pf, pf, pf] },
+          bolt: HIDE,
           // The arms fling in the blow, then sprawl out over the heap.
           'upperarm.L': { rotate: [-6 * hitB - 30 * limp, 0, -4 * hitB + 35 * limp] },
           'forearm.L': { rotate: [-20 * limp, 0, 0] },
