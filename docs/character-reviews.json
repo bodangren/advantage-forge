@@ -289,7 +289,7 @@
     "reviewedAt": "2026-09-26T20:40:39+00:00"
   },
   "goblin-archer": {
-    "overall": 8.3,
+    "overall": 8.4,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -303,22 +303,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The goblin archer has its full clip set: idle, walk, run, a bow shot, hit, and death. The shot is now a real bow shot. The goblin nocks an arrow, pulls the string back to the chin, holds, and releases. The hood, the ears, the face, and the leather gear match the mockup.",
+    "summary": "The goblin archer has a new taunt clip. The goblin shakes the bow high out to the side and hops from foot to foot two times. Then it turns, holds the bow up in front, plucks the empty string once, and grins at the player. The full clip set is idle, walk, run, a bow shot, hit, death, and taunt. The hood, the ears, the face, and the leather gear match the mockup.",
     "strengths": [
       "The pointed dark hood with the ears through it gives a strong, unique silhouette in every view and in every sprite direction.",
-      "The shot reads. The string bends back to the right fist, a nocked arrow shows from the nock to the release, and the string snaps straight when the arrow goes.",
-      "The bow cants its top out to the right, so the upper limb stays beside the face. Both eyes stay clear in the front and three-quarter views at full draw."
+      "The taunt reads at a distance. The raised bow shakes beside the head, the feet lift in the two hops, and the string pulls back and snaps in the pluck.",
+      "The bow stays clear of the head in every clip. In the taunt, the bow turns so the string is in front of the limbs and not against the hood. The closest part comes to 0.8 cm from the hood."
     ],
     "issues": [
-      "The short arms and the big hood keep the draw short and low. The right fist anchors under the chin, not at the jaw. In the side view, the hood and the body hide the right fist.",
-      "The ears are thin flat plates. In the side views and in the W and E sprites, they read as flat triangles. In the SW and SE sprites, they read as thin sticks.",
-      "The model differs from the mockup. It has no long back cape and no chest strap, and the nose is a small bump, not a snout. In the draw, the lower string touches the capelet by 0.9 cm."
+      "The short arms and the big hood keep the raised bow low. The fist stays at chin height, and the bow top rises only to the ear tips, not above the hood peak.",
+      "In the pluck, the right forearm crosses the chest and goes up to 4.8 cm into the jerkin. The body turn and the short arm cause this.",
+      "The ears are thin flat plates. The model has no long back cape and no chest strap from the mockup. In the draw and the pluck, the lower string touches the capelet by 0.9 cm."
     ],
     "next": [
-      "Give the ears thickness and a cupped inner face, as in the mockup. Then the ears read as ears from the side and from above.",
-      "Add the long back cape and the chest strap from the mockup, and keep the lower bowstring clear of the capelet in the draw."
+      "Move the pluck hand path out and forward, so the right forearm stays in front of the jerkin.",
+      "Give the ears thickness and a cupped inner face, and add the long back cape and the chest strap from the mockup."
     ],
-    "reviewedAt": "2026-09-26T19:05:34+00:00"
+    "reviewedAt": "2026-09-26T22:55:50+00:00"
   },
   "skeleton": {
     "overall": 8.5,
