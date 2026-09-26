@@ -615,7 +615,9 @@ export default defineAsset({
     // ------------------------------------------------------------------ heater shield on the left forearm
     // Local frame: the face toward +Z, the point down. A raised steel rim around a red enamel
     // field, a gold band inside the rim with a V at the top, and a raised heart.
-    const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(-4).rotateY(38).at(0.236, 0.3, 0.092);
+    // The top tips a little forward and the shield sits low on the forearm, so the top edge keeps
+    // clear of the left cheek.
+    const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(0.236, 0.28, 0.092);
     const inner = profile.offsetProfile(heater, -0.022);
     const steelPlate = sdf.union(
       sdf.extrude(heater, 0.024, 0.006),
@@ -661,8 +663,6 @@ export default defineAsset({
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;
-    // At rest the shield's top edge touches the left cheek; the idle and the walk hold it lower.
-    const SHIELD_DROP = [4, 8] as const;
 
     k.animation('idle', {
       duration: 2.4,
@@ -675,9 +675,6 @@ export default defineAsset({
         cloak: { rotate: [3 * wave(p, 1, 0.3), 0, 0] },
         'upperarm.R': { rotate: [2 * wave(p, 1, 0.1), 0, -2 * bump(p)] },
         'forearm.R': { rotate: [-4 * bump(p), 0, 0] },
-        // The shield sits a little lower and tips forward, so its top edge stays clear of the cheek.
-        'upperarm.L': { rotate: [SHIELD_DROP[0], 0, 0] },
-        'forearm.L': { rotate: [SHIELD_DROP[1], 0, 0] },
       }),
     });
 
@@ -716,7 +713,7 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, [SHIELD_DROP[0] + 4, SHIELD_DROP[1]]));
+    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6, [4, 0]));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
 
     // A diagonal slash, solved by targets (as the animated armor's attack). The wrist follows keys
