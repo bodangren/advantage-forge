@@ -1,50 +1,35 @@
 {
   "name": "fantasy-asset-forge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.22.2 <25"
+    "node": ">=22"
   },
   "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "forge": "tsx src/cli/forge.ts",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:browser": "node --import tsx scripts/test-browser.ts",
-    "lint": "eslint . && dependency-cruiser src --config dependency-cruiser.config.mjs",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "typecheck": "tsc -b --pretty false",
-    "generate": "node scripts/generate-architecture.mjs",
-    "doctor": "bash measure/doctor.sh",
-    "mcp": "node --import tsx src/mcp/stdio.ts",
-    "reference:build": "node --import tsx scripts/build-references.ts",
-    "check:interchange-evidence": "node --import tsx scripts/check-claim-bound-interchange-evidence.ts",
-    "replay:public-mcp-interchange": "node --import tsx scripts/replay-public-mcp-interchange.ts",
-    "replay:public-mcp-novel": "node --import tsx scripts/replay-public-mcp-novel-workflows.ts",
-    "replay:public-mcp-temporal": "node --import tsx scripts/replay-public-mcp-temporal.ts",
-    "replay:public-mcp-reference-five": "node --import tsx scripts/replay-public-mcp-reference-five-clip.ts",
-    "check": "pnpm format:check && pnpm typecheck && pnpm lint && pnpm test && pnpm check:interchange-evidence && pnpm generate && git diff --exit-code -- measure/generated && pnpm doctor"
+    "check": "tsc --noEmit && vitest run"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.29.0",
-    "three": "0.185.1",
-    "zod": "4.4.3"
+    "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/extensions": "4.5.0",
+    "gifenc": "1.0.3",
+    "meshoptimizer": "1.2.0",
+    "xatlasjs": "0.2.0",
+    "three": "0.185.1"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
-    "@playwright/test": "1.61.1",
-    "@types/node": "26.1.1",
+    "@types/node": "24.13.6",
     "@types/three": "0.185.1",
-    "@vitest/coverage-v8": "4.1.10",
-    "dependency-cruiser": "18.1.0",
-    "eslint": "10.7.0",
+    "playwright": "1.62.0",
     "prettier": "3.9.5",
-    "tsx": "4.20.6",
+    "tsx": "4.23.13",
     "typescript": "6.0.2",
-    "typescript-eslint": "8.64.0",
     "vite": "8.1.4",
     "vitest": "4.1.10"
   }

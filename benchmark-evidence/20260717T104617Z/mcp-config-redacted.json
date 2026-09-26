@@ -1,8 +1,0 @@
-{
-  "command": "pnpm",
-  "args": ["mcp"],
-  "cwd": "/tmp/fantasy-asset-forge-benchmark-20260717T104617Z",
-  "env": {
-    "FORGE_INSPECTOR_URL": "http://127.0.0.1:4175"
-  }
-}

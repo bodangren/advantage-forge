@@ -1,0 +1,27 @@
+asset_id	instances	placement
+architecture/structure/cottage	7	three northwest; two northeast; one southwest; one southeast
+architecture/structure/barn	1	southwest beside crop field
+architecture/structure/shop-stall	2	east of central well
+architecture/structure/well	1	central road crossing
+architecture/structure/bridge	1	south road crossing over stream
+architecture/building-parts/fence	repeat	cottage yards and crop field
+architecture/landscape-parts/grass-ground	repeat	open ground
+architecture/landscape-parts/dirt-ground	repeat	bare ground near buildings
+architecture/landscape-parts/dirt-road-straight	repeat	east-west road and north-south road
+architecture/landscape-parts/dirt-road-corner	repeat	lane bends
+architecture/landscape-parts/dirt-road-t-junction	repeat	road junctions
+architecture/landscape-parts/river-straight	repeat	southern stream
+architecture/landscape-parts/river-bend	repeat	southern stream bends
+architecture/landscape-parts/river-bank	repeat	both stream banks
+architecture/landscape-parts/farm-field	1	southwest rectangular field
+architecture/landscape-parts/tilled-field	repeat	crop rows inside field
+nature/trees/oak-tree	repeat	forest edge and yards
+nature/trees/pine-tree	repeat	forest edge
+nature/plants/bush	repeat	yard and forest clusters
+nature/plants/wildflowers	repeat	yards and meadow patches
+nature/terrain/boulder	repeat	forest edge and stream banks
+props/containers/barrel	repeat	market stalls and barn
+props/furniture/lantern	4	around central well crossing
+props/world/signpost	2	west and east road exits
+props/food/apple	repeat	market goods
+props/food/pumpkin	repeat	market and farm goods

@@ -1,0 +1,23 @@
+{
+  "provider": "opencode-go",
+  "note": "vision: true only after bench/probe-vision.sh confirms the model can read an image through pi. Unknown models run blind (text-only) and rely on ./forge inspect.",
+  "models": [
+    { "id": "gpt-5.6-luna", "vision": null },
+    { "id": "grok-4.6", "vision": null },
+    { "id": "kimi-k3", "vision": null },
+    { "id": "glm-5.3", "vision": null },
+    { "id": "glm-5.3-flash", "vision": null },
+    { "id": "qwen3.8-max", "vision": null },
+    { "id": "qwen3.8-flash", "vision": null },
+    { "id": "qwen3.7-plus", "vision": null },
+    { "id": "deepseek-v4-pro", "vision": null },
+    { "id": "deepseek-v4.1-flash", "vision": null },
+    { "id": "deepseek-v4-flash-vision-exp", "vision": null },
+    { "id": "minimax-m3", "vision": null },
+    { "id": "minimax-m2.7", "vision": null },
+    { "id": "mimo-v2.6-pro", "vision": null },
+    { "id": "mimo-v2.5-pro", "vision": null },
+    { "id": "longcat-2.0", "vision": null },
+    { "id": "hy3", "vision": null }
+  ]
+}

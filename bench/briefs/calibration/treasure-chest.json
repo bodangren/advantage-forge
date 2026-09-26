@@ -1,0 +1,20 @@
+{
+  "id": "treasure-chest",
+  "category": "prop",
+  "title": "Calibration: treasure chest",
+  "asset": "assets/treasure-chest.ts",
+  "brief": "A wooden treasure chest with iron fittings, a gold lock, and coins inside; the lid opens.",
+  "height": [
+    0.3,
+    0.8
+  ],
+  "triangles": [
+    3000,
+    60000
+  ],
+  "rig": true,
+  "clips": [
+    "open"
+  ],
+  "expect_min": 70
+}

@@ -1,0 +1,16 @@
+{
+  "id": "watchtower",
+  "category": "architecture",
+  "title": "Wooden watchtower",
+  "brief": "A small wooden watchtower for a frontier village: four log legs on stone footings, a railed lookout platform, a ladder, and a steep peaked roof with a banner. About 5 m tall.",
+  "height": [
+    3.5,
+    7.0
+  ],
+  "triangles": [
+    10000,
+    80000
+  ],
+  "rig": false,
+  "clips": []
+}

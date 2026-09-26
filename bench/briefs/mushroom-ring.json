@@ -1,0 +1,16 @@
+{
+  "id": "mushroom-ring",
+  "category": "vegetation",
+  "title": "Mushroom ring",
+  "brief": "A cluster of 4 to 6 fantasy mushrooms of clearly different sizes growing from a mossy patch of ground; the biggest has a spotted red cap, one small one glows softly.",
+  "height": [
+    0.3,
+    1.2
+  ],
+  "triangles": [
+    5000,
+    40000
+  ],
+  "rig": false,
+  "clips": []
+}

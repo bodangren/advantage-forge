@@ -1,0 +1,19 @@
+{
+  "id": "frost-wolf",
+  "category": "creature",
+  "title": "Frost wolf",
+  "brief": "A frost wolf enemy for an ice level: a lean, menacing quadruped with a thick frosted mane, icy crystal spikes along its back, and glowing pale-blue eyes. Stylized, readable at small size. Rigged, with an idle and a run cycle.",
+  "height": [
+    0.5,
+    1.2
+  ],
+  "triangles": [
+    8000,
+    60000
+  ],
+  "rig": true,
+  "clips": [
+    "idle",
+    "run"
+  ]
+}

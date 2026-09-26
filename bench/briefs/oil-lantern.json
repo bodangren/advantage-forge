@@ -1,0 +1,16 @@
+{
+  "id": "oil-lantern",
+  "category": "item",
+  "title": "Oil lantern",
+  "brief": "A hanging oil lantern for a medieval village: a wrought-iron frame with a ring handle on top, glass panes, and a warm glowing flame inside. Stands on its base.",
+  "height": [
+    0.25,
+    0.6
+  ],
+  "triangles": [
+    2000,
+    25000
+  ],
+  "rig": false,
+  "clips": []
+}

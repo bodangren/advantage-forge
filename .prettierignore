@@ -1,11 +1,5 @@
-coverage/
-dist/
+out/
 node_modules/
+reference-designs/
 pnpm-lock.yaml
-.forge/
-artifacts/
-measure/generated/
-references/
-measure/archive/fantasy_asset_mvp_20260717/reference-build.json
-measure/archive/llm_authoring_workflow_hardening_20260717/s4-evidence/
-test-results/
+docs/

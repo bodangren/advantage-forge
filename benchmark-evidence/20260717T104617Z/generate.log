@@ -1,2 +1,0 @@
-$ node scripts/generate-architecture.mjs
-Generated architecture, route, kit, tool, and output facts.

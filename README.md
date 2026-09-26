@@ -1,75 +1,97 @@
 # Fantasy Asset Forge
 
-Fantasy Asset Forge is an LLM-first, purpose-built system for creating stylized low-poly fantasy RPG assets from reusable parametric parts. Its canonical source is a semantic asset document; deterministic builds produce inspectable 3D scenes, GLB assets, and fixed-view transparent sprites without Blender or another general-purpose DCC backend.
+An LLM writes a 3D game asset as code, looks at the render, and improves it. There is no Blender
+in the loop. Forge gives the model an expressive modeling language (signed distance fields with
+smooth blending, profiles, displacement, surface probes, and 3D paint), a mesher that turns it
+into clean medium-poly geometry, UV unwrapping and texture baking, rigging and animation, a
+studio renderer, GLB export, and a derived pixel-art sprite pass.
 
-The MVP contains one controlled rustic-fantasy kit, four reference assets, twelve bounded shape generators, sixteen public semantic tools, an inspector, transparent eight-direction sprites, and GLB export. It intentionally is not a general modeling environment.
+3D is the primary output. Sprites are rendered from the same GLB.
 
-## Start locally
+![rogue](docs/rogue.png)
 
-```bash
-pnpm install --frozen-lockfile
-pnpm dev --host 127.0.0.1 --port 4173
-```
-
-Open `http://127.0.0.1:4173`. The inspector provides interactive 3D, an enlarged contact sheet, actual 128px frames, semantic scene evidence, and pixel-validation metrics.
-
-## Build canonical references
+## Quick start
 
 ```bash
-pnpm reference:build
+pnpm install
+./forge render rogue --fast         # quick shape check: out/rogue/render.png
+./forge all rogue                   # final: textured GLB, turnaround, sprites, every animation
+pnpm dev                            # interactive viewer at http://127.0.0.1:5173 (orbit, clips, rebuild on save)
 ```
 
-This runs the complete public-handler workflow for the adventurer, crate, tree, and cottage. Canonical JSON is written under `references/`; revision-associated PNG, contact-sheet, manifest, and GLB files are written under `artifacts/reference/`.
-The deterministic run dossier is committed at
-`measure/archive/fantasy_asset_mvp_20260717/reference-build.json`.
+Assets live in `assets/*.ts`. Worked examples, one per category: `rogue` (character),
+`horned-boar` (creature), `treasure-chest` and `barrel` (props), `oak-tree` (vegetation),
+`cottage` (architecture), `knight-sword` (item).
 
-## Connect an MCP client
+- [AGENTS.md](AGENTS.md): the authoring loop and the API. Coding agents read it automatically.
+- [.claude/skills/forge-assets](.claude/skills/forge-assets/SKILL.md): the asset-creation skill
+  (process, art direction, category playbooks, rigging and animation, review rubric).
+- [bench/](bench/README.md): Forge Bench, which measures how well models make assets with Forge.
 
-Keep the inspector server running on port 4173, then configure the MCP client to launch:
+## How it works
 
-```json
-{
-  "command": "pnpm",
-  "args": ["mcp"],
-  "cwd": "<path-to-your-fantasy-asset-forge-checkout>",
-  "env": {
-    "FORGE_INSPECTOR_URL": "http://127.0.0.1:4173"
-  }
-}
+```
+assets/rogue.ts ─build─▶ SDF bodies ─mesh─▶ medium-poly meshes ─unwrap─▶ UV atlas ─bake─▶ textures
+  (code)                (closures)   surface nets,       xatlas          base color,
+                                     reduction           (one atlas)     normal, AO/rough/metal
+                                                                          │
+                     skeleton + bone tags ─▶ skin weights, clips ─────────┤
+                                                                          ▼
+                                                             out/rogue/rogue.glb
+                                                               ├─▶ render.png (studio turnaround)
+                                                               ├─▶ sprites/ (pixel art, animated sheets)
+                                                               ├─▶ anim/ (review strips, GIFs)
+                                                               └─▶ inspect.md (numbers for blind checks)
 ```
 
-The public surface is deliberately small and discoverable through MCP `tools/list`; it covers kit/capability/template/accessory discovery, asset inspection and comparison, reference or bounded novel-identity creation, semantic/accessory revisions, validation, rendering/export, and revision-pinned interchange retrieval.
+- **Modeling** (`src/sdf/`): shapes, cubic smooth booleans, transforms, 2D profiles (revolve,
+  extrude, arcs), noise (gradient, fbm, Worley), paint stencils, bone tags, and surface probes
+  (`raycast`, `surfacePoint`) for attaching details exactly.
+- **Meshing** (`src/sdf/mesher.ts`): hierarchical narrow band, surface nets, vertices snapped to
+  the true surface, normals from the field gradient, checked triangle reduction (meshoptimizer),
+  parallel worker threads.
+- **Textures** (`src/texture/`): one xatlas UV atlas for all bodies; every texel is projected
+  onto the true surface and baked: anti-aliased paint, a tangent-space normal map encoded in the
+  exact frame the shader uses (so bake-only `bump` detail and smooth curvature survive
+  reduction), SDF ambient occlusion, and per-body roughness and metalness.
+- **Rigging and animation** (`src/rig.ts`, `src/motion.ts`): skeletons from joint positions,
+  skin weights from the distance to bone-tagged parts, clips written as `pose(t, phase)`
+  functions and exported as glTF animations.
+- **Export** (`src/gltf.ts`): GLB with named nodes, PBR materials, embedded PNG textures,
+  tangents, skins, and animations.
+- **Rendering** (`src/render/`): headless Chromium; image-based light, a camera-relative
+  key/fill/rim rig, shadows; turnarounds, animation strips and GIFs, pixel-art sprites
+  (supersampled, binary alpha, optional shared palette and outline), and an ID-buffer
+  inspection.
 
-## Capability preflight
+## Commands
 
-Call `inspect_capabilities` before planning an asset request. Its generated and runtime facts use four explicit statuses:
+| Command                                                          | Output                                                                  |
+| ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `./forge build <asset>`                                          | `<asset>.glb`, `stats.json`, `textures/`                                |
+| `./forge render <asset> [--fast] [--views …] [--focus x,y,z,r]`  | `render.png`, `views/`                                                  |
+| `./forge inspect <asset>`                                        | `inspect.md`: visibility per part, silhouette, values, colors, warnings |
+| `./forge animate <asset> [--clip walk]`                          | `anim/<clip>.png` strip and `.gif`                                      |
+| `./forge sprites <asset> [--clip walk] [--dirs 8] [--colors 24]` | `sprites/` frames, sheet, preview, GIF                                  |
+| `./forge all <asset>`                                            | everything above                                                        |
+| `pnpm dev`                                                       | viewer with orbit, wireframe, clip playback                             |
+| `pnpm check`                                                     | typecheck and tests                                                     |
 
-- **Supported:** the four committed references, bounded novel-identity initialization and registered-grammar composition for the advertised humanoid and banded-container archetypes, the registered seventeen-accessory library, localized semantic revisions, static rigid poses, directional transparent PNGs, review contact sheets, reload-verified GLB, and revision-pinned public interchange retrieval.
-- **Partial:** broad novel-identity authoring remains limited to the two advertised archetypes and registered grammar; arbitrary anatomy, templates, generators, and raw-mesh composition are unavailable. Mechanically valid novel-character output is not visually accepted without an owner-approved provenance-bound reference target and side-by-side Kimi convergence.
-- **Unsupported:** temporal animation, runtime sprite atlases, unregistered anatomy, skeletal deformation, and raw mesh editing.
-- **Not Assessed:** Three.js `GLTFLoader` now passes as a representative format importer, but Unity, Godot, and gameplay-runtime integration remain unverified.
-
-Do not compensate for an unsupported result by reading product source, hand-authoring canonical asset JSON, post-processing images, or using hidden filesystem or shell routes. The generated [capability catalog](measure/generated/capability-catalog.md) is derived from the same executable facts as the public tool.
-
-For a novel character intended as accepted art, generate and provenance-bind a
-front/three-quarter/side/back turnaround or an explicitly approved reduced view
-set before modeling. Obtain owner approval, then compare Forge renders
-side-by-side through Kimi. No image provider is implicitly authorized; do not
-silently use MMX. The first compacted novel guard was mechanically valid but
-visually rejected, so transform-only compacting is not an acceptance route.
-
-## Verify
-
-```bash
-pnpm check
-pnpm test:coverage
-pnpm build
-pnpm test:browser
-pnpm reference:build
-```
-
-See the generated contracts in `measure/generated/` and the completed evidence dossier in `measure/archive/llm_authoring_workflow_hardening_20260717/`.
+`--fast` skips UV unwrapping and baking (vertex colors, about 3x faster) for shape iteration.
 
 ## Scope
 
-The canonical value is the semantic document and reusable part grammar. Blender, arbitrary mesh editing, code execution, shell access, unrestricted filesystems, network retrieval, general animation, physics, texture painting, and additional art directions are excluded from the MVP.
+In: characters, creatures, props, vegetation, architecture, and items in a stylized medium-poly
+look (a full-quality hero is about 40k to 70k triangles), baked textures, skeletal rigs, animation
+clips, GLB, and pixel-art sprites.
+
+Not yet: image-texture projection (textures are baked from code, not painted from files), LODs,
+blend shapes, inverse kinematics, and engine-specific exporters.
+
+## History
+
+Version 0.1 tried to make LLM asset creation reliable by giving the LLM a closed catalog of parts
+and patch operations. The LLM could only rearrange what already existed, and new shapes needed
+product code changes. Its last commit is `5d03ddd`. This rebuild keeps the loop that
+makes the Blender workflow succeed (the LLM writes geometry code and looks at the result) and
+replaces only the runtime.

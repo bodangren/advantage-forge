@@ -1,4 +1,0 @@
-interface:
-  display_name: 'Fantasy Asset Workflow'
-  short_description: 'Safely author and review fantasy assets'
-  default_prompt: 'Use $fantasy-asset-workflow to preflight, author, validate, visually review, and report a supported Fantasy Asset Forge request.'

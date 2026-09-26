@@ -1,0 +1,16 @@
+{
+  "id": "dwarven-axe",
+  "category": "item",
+  "title": "Dwarven battle axe",
+  "brief": "A dwarven double-bladed battle axe: heavy steel blades with engraved runes, a thick wooden haft wrapped in leather, and a bronze pommel. Stands upright on the pommel, blades up.",
+  "height": [
+    0.6,
+    1.3
+  ],
+  "triangles": [
+    2000,
+    25000
+  ],
+  "rig": false,
+  "clips": []
+}

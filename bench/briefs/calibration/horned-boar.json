@@ -1,0 +1,22 @@
+{
+  "id": "horned-boar",
+  "category": "creature",
+  "title": "Calibration: horned boar",
+  "asset": "assets/horned-boar.ts",
+  "brief": "A chunky horned boar monster with tusks, a bristle mane, and glowing eyes. Rigged, with walk, charge, and idle.",
+  "height": [
+    0.5,
+    1.2
+  ],
+  "triangles": [
+    8000,
+    60000
+  ],
+  "rig": true,
+  "clips": [
+    "walk",
+    "charge",
+    "idle"
+  ],
+  "expect_min": 70
+}

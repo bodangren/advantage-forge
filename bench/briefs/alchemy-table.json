@@ -1,0 +1,16 @@
+{
+  "id": "alchemy-table",
+  "category": "prop",
+  "title": "Alchemy table",
+  "brief": "An alchemist's workbench: a sturdy wooden table crowded with potion bottles of different shapes and colors, an open book, a candle, and a small cauldron.",
+  "height": [
+    0.8,
+    1.6
+  ],
+  "triangles": [
+    8000,
+    60000
+  ],
+  "rig": false,
+  "clips": []
+}

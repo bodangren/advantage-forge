@@ -1,0 +1,19 @@
+{
+  "id": "bounce-slime",
+  "category": "creature",
+  "title": "Bounce slime",
+  "brief": "A cute, glossy green slime monster with big eyes and a small crown of bubbles, the first enemy the player meets. Rigged, with a squash-and-stretch idle and a hop animation.",
+  "height": [
+    0.3,
+    0.8
+  ],
+  "triangles": [
+    2000,
+    30000
+  ],
+  "rig": true,
+  "clips": [
+    "idle",
+    "hop"
+  ]
+}

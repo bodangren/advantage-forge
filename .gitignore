@@ -1,9 +1,7 @@
-.forge/
-artifacts/reference/*/revision.*/
-coverage/
-dist/
 node_modules/
-playwright-report/
-test-results/
-graph.db
-outputs/
+out/
+dist/
+coverage/
+bench/runs/
+bench/site/
+bench/.env.local

@@ -1,0 +1,128 @@
+:root {
+  --bg: #16171a;
+  --panel: #1f2024;
+  --line: #2e3036;
+  --ink: #ecedf0;
+  --muted: #9a9ca5;
+  --accent: #e0a458;
+  color-scheme: dark;
+  font:
+    14px/1.4 system-ui,
+    sans-serif;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+.app {
+  display: grid;
+  grid-template-columns: 200px 1fr 280px;
+  height: 100vh;
+}
+.rail,
+.info {
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  padding: 12px;
+  overflow: auto;
+}
+.info {
+  border-right: 0;
+  border-left: 1px solid var(--line);
+}
+h1 {
+  font-size: 15px;
+  margin: 0 0 12px;
+}
+h2 {
+  font-size: 15px;
+  margin: 12px 0 4px;
+}
+.assets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.assets button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--ink);
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+}
+.assets li.active button {
+  border-color: var(--accent);
+}
+.stage {
+  position: relative;
+  min-width: 0;
+}
+.stage canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.error {
+  position: absolute;
+  inset: 12px;
+  margin: 0;
+  background: #2a1414ee;
+  color: #ffb4a8;
+  padding: 12px;
+  overflow: auto;
+  border-radius: 6px;
+  white-space: pre-wrap;
+}
+.busy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #000a;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font:
+    12px ui-monospace,
+    monospace;
+  color: var(--muted);
+}
+td {
+  padding: 2px 0;
+}
+td:not(:first-child) {
+  text-align: right;
+}
+@media (max-width: 800px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 60vh auto;
+  }
+}
+.clip-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+.clips {
+  flex: 1;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px;
+  font: inherit;
+}

@@ -1,3 +1,0 @@
-## master
-?? approval-and-benchmark.md
-?? benchmark-evidence/
