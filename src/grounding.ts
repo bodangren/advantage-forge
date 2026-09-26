@@ -45,6 +45,10 @@ export function groundClip(
   const rest = lowest();
   const mixer = new THREE.AnimationMixer(root);
   const action = mixer.clipAction(clip);
+  // Play once and hold the end: a looping action wraps back to the first frame at the clip's
+  // end time, so the last frame would be measured on the wrong pose.
+  action.setLoop(THREE.LoopOnce, 1);
+  action.clampWhenFinished = true;
   action.play();
   const lift = new Float32Array(times.length);
   let any = false;
