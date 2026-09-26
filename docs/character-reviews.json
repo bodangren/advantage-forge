@@ -521,10 +521,10 @@
     "reviewedAt": "2026-09-26T05:48:30+00:00"
   },
   "giant-spider": {
-    "overall": 7.5,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 5,
       "proportion": 4,
       "shape": 4,
@@ -536,22 +536,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The giant spider takes the mmx mockup's glaring red eyes, pale fangs, and chunky orange-banded legs, with the big abdomen moved behind the head so it reads as a spider from every side.",
+    "summary": "The giant spider now has a head that tilts up 14 degrees and six small white eyeballs with red irises, as in the mockup. The full clip set is done, and no clip puts a foot or a leg below the ground.",
     "strengths": [
-      "It reads as a spider in all eight sprite directions, and the orange skull on the abdomen is a strong mark from behind.",
-      "The purple and orange palette with red eyes is unique in the set and easy to spot.",
-      "The four-leg alternating gait and the rear-up strike both read in the side view."
+      "The front view is close to the mockup: the heavy brow, the glaring red eyes, the pale fangs, the orange splat, and the white eyeballs on top.",
+      "The attack reads as a spider strike: it rears up, the front legs rise wide, then it lunges, the fangs close, and the front feet stay planted.",
+      "The death reads clearly: a recoil, the legs curl in, and it rolls onto its back with the curled legs in the air."
     ],
     "issues": [
-      "I changed the mockup's anatomy on purpose: its round body sits under the head, and here it sits behind. So the front view is less like the mockup.",
-      "Seen from above in the sprites, the brow shelf hides much of the big eyes, and the four small eyes read as red dots.",
-      "The body is one smooth fuzz texture. The mockup has more shape in the head, such as a ridged brow."
+      "The big abdomen sits behind the head, not under it as in the mockup. This change is on purpose, but the side view is less like the mockup.",
+      "At the end of the death, the body rests on the small eyes. The carapace stays 2.6 cm above the ground.",
+      "The big eyes show more red iris and less white than the mockup, and the body is one smooth fuzz texture."
     ],
     "next": [
-      "Tilt the head up a little, so the big eyes show more in the top-down sprites.",
-      "Give the small eyes white eyeballs, as in the mockup."
+      "Pitch the body a little at the end of the death, so the abdomen also touches the ground.",
+      "Make the big eyes whiter with a smaller red iris, as in the mockup."
     ],
-    "reviewedAt": "2026-09-26T05:55:10+00:00"
+    "reviewedAt": "2026-09-26T13:26:40+00:00"
   },
   "dragon-fire": {
     "overall": 8.5,
