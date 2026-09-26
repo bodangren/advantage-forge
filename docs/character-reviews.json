@@ -647,14 +647,14 @@
     "reviewedAt": "2026-09-26T20:32:23+00:00"
   },
   "guard": {
-    "overall": 7.8,
+    "overall": 8.1,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 3,
+      "color": 4,
       "materials": 4,
       "detail": 4,
       "technical": 4,
@@ -662,22 +662,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The town guard matches the mmx mockup in form. He has a kettle helmet with a crest, a brown mustache, and a blue tabard with a gold tower over mail. He has steel pauldrons, steel gauntlets, and a spear with a teal swallowtail pennant. The thrust now uses two hands in a side-on stance, with a draw back of about 10 cm. The face and the colors still differ from the mockup.",
+    "summary": "The town guard now matches the mmx mockup in form and in color. He has a gunmetal kettle helmet with a crest, a large round nose, and a brown handlebar mustache with tips that curl up. He wears a teal-blue tabard with a gold tower over dark mail. His spear has a thin spike on a small collar and a deep teal swallowtail pennant. The thrust uses two hands in a side-on stance.",
     "strengths": [
-      "The kettle helmet with the crest, the gold tower on the tabard, the belt with the gold buckle, and the teal swallowtail pennant match the mockup.",
-      "The thrust reads in the strip. The guard turns side-on, the left hand holds the haft ahead of the right hand, the spear draws back about 10 cm, and then drives along the shaft with a step and a forward lean.",
-      "The clips are clean. The check gives result ok and ground ok, and no gauntlet goes into the body in the attack. In the run, the forearm lifts the spear, so the butt stays above the ground."
+      "The face reads as in the mockup. The nose is 25 percent larger, it is a separate round bulb with a rosy tip, and the mustache tips curl up beside the cheeks.",
+      "The colors follow the mockup. The steel is gunmetal (#7a8088), the mail is darker (#5e646c), and the tabard is teal blue (#4d8898). The gold tower and the pennant stay clear against the tabard.",
+      "The spear has a thin spike on a small collar above the socket and the rings, as in the mockup. The check gives result ok and ground ok."
     ],
     "issues": [
-      "The nose is small, and the mustache is flat and wide. The mockup has a large round nose and mustache tips that curl up. The steel is bright silver (#9aa0a8), not gunmetal, and the tabard is sky blue (#6aa2c0), not teal blue.",
-      "The chibi left arm is short. In the drive, the haft slides through the left hand, and the left shoulder moves forward up to 4.5 cm. The hand spacing changes from 0.20 to 0.36 m.",
-      "The right vambrace goes 0.4 cm into the tabard at phase 0.43 of the death. In the salute, the forearm stays inside the body outline."
+      "Under the render light, the helmet and the gauntlets still show bright highlights, so the steel reads a little lighter than the matte gunmetal of the mockup.",
+      "The chibi left arm is short. In the drive, the haft slides through the left hand, and the left shoulder moves forward up to 4.5 cm.",
+      "The right vambrace goes 0.4 cm into the tabard at phase 0.43 of the death."
     ],
     "next": [
-      "Make the nose larger and rounder, and curl the mustache tips up. Darken the steel toward gunmetal (about #70767e), and move the tabard toward teal blue (about #4a93a6).",
-      "Move the right elbow out in the death at phase 0.43, so the vambrace clears the tabard."
+      "Move the right elbow out in the death at phase 0.43, so the vambrace clears the tabard.",
+      "Raise the steel roughness a little (about 0.45), so the helmet reads as matte gunmetal in the sprites."
     ],
-    "reviewedAt": "2026-09-26T20:41:09+00:00"
+    "reviewedAt": "2026-09-26T21:05:52+00:00"
   },
   "skeleton-mage": {
     "overall": 8.2,

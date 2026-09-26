@@ -8,14 +8,14 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: a town NPC (gates and patrols), seen in 3D and as a 128 px sprite; the helmet, the big
  *   mustache, the blue tabard, and the spear must read.
- * One idea: a friendly, mustached watchman in a round steel kettle helmet, a sky-blue tabard with
- *   a gold tower, and a tall spear with a teal pennant.
+ * One idea: a friendly, mustached watchman in a round steel kettle helmet, a teal-blue tabard with
+ *   a gold tower, and a tall spike-headed spear with a teal pennant.
  * Proportions: the rogue's (head center 0.675, eyes 0.628, shoulders 0.385, belt 0.25); the
  *   helmet crest at 0.96, its brim at 0.78, the cheek guards to 0.55; the tabard hem at 0.15.
  * Shape language: round and sturdy (helmet dome, pauldrons, gauntlets, boots) with the straight
  *   spear and the pointed pennant as accents.
- * Palette (60/30/10): sky-blue tabard #6aa2c0 and satin steel #9aa0a8; gold #e0b040 trims and
- *   tower; a teal pennant #3e9aa0; brown hair and mustache #5a3422; brown leather.
+ * Palette (60/30/10): teal-blue tabard #4d8898 and gunmetal steel #7a8088; gold #e0b040 trims
+ *   and tower; a deep teal pennant #2f8c92; brown hair and mustache #5a3422; brown leather.
  * Value plan: the light face framed by the dark steel helmet and the brown mustache is the focal
  *   point; the blue tabard with the gold tower is the second.
  * Bodies: skin, hair (hair, brows, mustache), helmet, mail, tabard, gold, pauldrons, gauntlets,
@@ -36,11 +36,11 @@ const C = {
   mouth: '#a4503f',
   hair: '#5a3422',
   hairDark: '#3e2216',
-  steel: '#9aa0a8',
-  steelDark: '#6e747c',
-  mail: '#7a8088',
-  blue: '#6aa2c0',
-  blueDark: '#4e84a2',
+  steel: '#7a8088',
+  steelDark: '#555b63',
+  mail: '#5e646c',
+  blue: '#4d8898',
+  blueDark: '#3a6c7a',
   gold: '#e0b040',
   leather: '#6a432c',
   trousers: '#5e6a5a',
@@ -48,8 +48,8 @@ const C = {
   cuff: '#5a341e',
   sole: '#3e2618',
   wood: '#6e4a30',
-  pennant: '#3e9aa0',
-  pennantDark: '#2e7a80',
+  pennant: '#2f8c92',
+  pennantDark: '#226c72',
 };
 
 type V3 = readonly [number, number, number];
@@ -93,7 +93,7 @@ const gripFist = (g: V3) =>
 
 export default defineAsset({
   name: 'guard',
-  description: 'Chibi town guard NPC: a round steel kettle helmet, a big brown mustache, a sky-blue tabard with a gold tower, mail, steel gauntlets, and a spear with a teal pennant.',
+  description: 'Chibi town guard NPC: a round steel kettle helmet, a big brown handlebar mustache, a teal-blue tabard with a gold tower, mail, steel gauntlets, and a spiked spear with a teal pennant.',
   detail: 0.005,
   reference: 'docs/npc-mockups/guard_001.jpg',
 
@@ -133,8 +133,11 @@ export default defineAsset({
       )
       .bone('head');
     const faceZ = (x: number, y: number) => sdf.raycast(head, [x, y, 1], [0, 0, -1])![2];
-    // A big round nose.
-    const nose = sdf.ellipsoid([0.038, 0.032, 0.03]).at(0, 0.585, faceZ(0, 0.585) + 0.006).bone('head');
+    // A big round nose, just above the mustache.
+    const NOSE_Y = 0.59;
+    const NOSE_R = [0.047, 0.042, 0.039] as const;
+    const noseZ = faceZ(0, NOSE_Y) + 0.013;
+    const nose = sdf.ellipsoid(NOSE_R).at(0, NOSE_Y, noseZ).bone('head');
     const ears = pair(
       sdf
         .ellipsoid([0.03, 0.048, 0.034])
@@ -160,7 +163,8 @@ export default defineAsset({
     const armR = sdf.smoothUnion(0.02, sdf.cone(mx(SHOULDER), ELBOW_R, 0.042, 0.038).bone('upperarm.R'), sdf.cone(ELBOW_R, WRIST_R, 0.038, 0.034).bone('forearm.R'));
     const skin = sdf
       .smoothUnion(0.03, head, neck)
-      .smoothUnion(0.014, nose, ears)
+      .smoothUnion(0.007, nose) // a small fillet, so the round nose reads as its own bulb
+      .smoothUnion(0.014, ears)
       .union(armL, armR)
       .paintWhere(pair(at(sdf.sphere(0.03), 0.14, 0.575)), C.blush, 0.028)
       .paintWhere(eyeWhite, C.eyeWhite)
@@ -171,7 +175,7 @@ export default defineAsset({
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
       .paintWhere(smile, C.mouth)
-      .paintWhere(sdf.sphere(0.028).at(0, 0.585, faceZ(0, 0.585) + 0.04), '#f0a090', 0.02); // a rosy nose tip
+      .paintWhere(sdf.sphere(0.03).at(0, NOSE_Y + 0.006, noseZ + NOSE_R[2] + 0.008), '#f0a090', 0.018); // a rosy nose tip
     k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the kettle helmet
@@ -248,18 +252,23 @@ export default defineAsset({
         0.008,
       ),
     );
-    // A big handlebar mustache under the nose, curling up at the ends.
+    // A big handlebar mustache under the nose: full at the middle, it tapers out along the cheeks
+    // and the tips curl up and a little in, clear of the eyes.
     const mZ = faceZ(0, 0.55);
+    const onFace = (x: number, y: number, out: number, r: number): [number, number, number, number] => [x, y, faceZ(x, y) + out, r];
     const mustache = pair(
       sdf.chain(
         [
           [0.0, 0.555, mZ + 0.028, 0.02],
           [0.04, 0.552, mZ + 0.024, 0.026],
-          [0.085, 0.545, mZ + 0.008, 0.022],
-          [0.12, 0.555, mZ - 0.012, 0.014],
-          [0.135, 0.575, mZ - 0.022, 0.006],
+          [0.085, 0.546, mZ + 0.008, 0.021],
+          onFace(0.122, 0.552, 0.008, 0.015),
+          onFace(0.152, 0.568, 0.007, 0.011),
+          onFace(0.167, 0.593, 0.006, 0.008),
+          onFace(0.162, 0.615, 0.005, 0.0055),
+          onFace(0.15, 0.622, 0.004, 0.004),
         ],
-        0.012,
+        0.01,
       ),
     );
     const hairTone = rgb(C.hairDark);
@@ -406,27 +415,17 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ the spear and its pennant
-    // Local frame: the grip at the origin, the haft along +Y, the blade at the top.
+    // Local frame: the grip at the origin, the haft along +Y, the spike at the top.
     const spearPose = (s: sdf.Shape) => s.rotateZ(3).at(...GRIP);
     const haft = sdf.capsule([0, -GRIP[1] + 0.015, 0], [0, SPEAR_TOP, 0], 0.013);
+    // A thin round spike on a small collar above the socket, as in the mockup.
+    const spike = sdf.smoothUnion(
+      0.006,
+      sdf.cone([0, SPEAR_TOP + 0.022, 0], [0, SPEAR_TOP + 0.11, 0], 0.0115, 0.0015),
+      sdf.torus(0.0135, 0.0055).at(0, SPEAR_TOP + 0.027, 0), // the collar
+    );
     const blade = sdf.union(
-      sdf
-        .extrude(
-          profile.polygon(
-            [
-              [0, 0.0],
-              [0.022, 0.04],
-              [0.02, 0.08],
-              [0, 0.13],
-              [-0.02, 0.08],
-              [-0.022, 0.04],
-            ],
-            { smooth: true, samples: 3 },
-          ),
-          0.012,
-          0.004,
-        )
-        .at(0, SPEAR_TOP + 0.02, 0),
+      spike,
       sdf.cylinder(0.02, 0.05, 0.006).at(0, SPEAR_TOP - 0.005, 0), // the socket
       sdf.torus(0.02, 0.006).at(0, SPEAR_TOP - 0.04, 0),
       sdf.torus(0.019, 0.006).at(0, SPEAR_TOP - 0.06, 0),
