@@ -16,10 +16,12 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   spots; brown leather and wicker; accents: glowing green potion and warm lantern light.
  * Value plan: the cream gills and the auburn hair frame the light face (focal point); the red cap
  *   is the biggest mass; the potion and the lantern are the two glowing accents.
- * Bodies: skin, hair, cap, gills, dress, sleeves, apron, leather, gold, basket, mushrooms, leaves,
- *   legs, boots, staff, staff-mushroom, lantern-frame, lantern-light, flask, potion.
- * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff); the basket is rigid on the
- *   chest, the flask on the right hand, the staff on the left hand. Clips: idle, walk, run.
+ * Bodies: skin, hair, cap, gills, dress, sleeves, apron, hip-potion, leather, gold, basket,
+ *   mushrooms, leaves, cap-growth, cap-leaves, legs, boots, staff, staff-mushroom, lantern-frame,
+ *   lantern-light, flask, potion.
+ * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff), `caproot` (the cap, on the
+ *   head) and `flaskroot` (the flask, on the right hand); the basket is rigid on the chest, the staff
+ *   on the left hand. Clips: idle, walk, run.
  */
 
 const C = {
@@ -59,6 +61,7 @@ const C = {
   woodDark: '#4a2e18',
   moss: '#6a9a3a',
   potion: '#7ad04a',
+  hipPotion: '#4a8ed0',
   glass: '#dff5e6',
   cork: '#a0764a',
   lanternGlow: '#ffcc55',
@@ -78,7 +81,7 @@ const SHOULDER: V3 = [0.13, 0.385, 0];
 const ELBOW_R: V3 = [-0.185, 0.335, 0.02];
 const WRIST_R: V3 = [-0.2, 0.35, 0.115];
 const ELBOW_L: V3 = [0.205, 0.36, -0.004];
-const WRIST_L: V3 = [0.27, 0.35, 0.085];
+const WRIST_L: V3 = [0.275, 0.35, 0.085];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
@@ -112,7 +115,7 @@ const fistLocal = (s: 1 | -1) =>
     sdf.cone([0.02 * s, -0.023, 0.025], [0.001 * s, -0.033, 0.048], 0.016, 0.013),
   );
 // The staff hand swings forward and tips out (+X), so the staff leans away from the body.
-const HAND_L = { pitch: -80, roll: -14 };
+const HAND_L = { pitch: -80, roll: -21 };
 const handL = (s: sdf.Shape) => s.rotateX(HAND_L.pitch).rotateZ(HAND_L.roll).at(...WRIST_L);
 const STAFF_AXIS = rotZ(rotX([0, 0, 1], HAND_L.pitch), HAND_L.roll);
 const GRIP = add(rotZ(rotX([0.007, -0.04, 0.004], HAND_L.pitch), HAND_L.roll), WRIST_L);
@@ -130,6 +133,10 @@ const openHand = sdf.smoothUnion(
 const HAND_R_YAW = -100;
 const handR = (s: sdf.Shape) => s.rotateY(HAND_R_YAW).at(...WRIST_R);
 const FLASK: V3 = add(WRIST_R, rotY([0.042, 0.02, 0.0], HAND_R_YAW)); // bottom of the flask, on the palm
+/** The cap's pivot: the center of its underside (and the `caproot` bone). */
+const CAP_AT: V3 = [0, 0.755, -0.01];
+/** The cap is wider and taller than the skull cavity under it. */
+const CAP_SCALE: V3 = [1.24, 1.16, 1.24];
 
 export default defineAsset({
   name: 'druid',
@@ -151,6 +158,8 @@ export default defineAsset({
       chest: { parent: 'spine', at: [0, 0.33, 0] },
       neck: { parent: 'chest', at: [0, 0.43, -0.01] },
       head: { parent: 'neck', at: [0, 0.48, -0.01] },
+      caproot: { parent: 'head', at: CAP_AT },
+      flaskroot: { parent: 'hand.R', at: FLASK },
       'upperarm.L': { parent: 'chest', at: SHOULDER },
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
@@ -261,7 +270,9 @@ export default defineAsset({
     // ------------------------------------------------------------------ the mushroom cap
     // Local frame: the underside's center at the origin. A soft dome with a thick rolled rim, cream
     // gills underneath in radial ridges, and cream spots on top.
-    const capPose = (s: sdf.Shape) => s.rotateX(-6).rotateZ(-7).at(0, 0.745, -0.01);
+    // Tipped well back so the wide cream underside shows and the rim clears the eyes in side view,
+    // and a little down toward her left, like the mockup.
+    const capPose = (s: sdf.Shape) => s.rotateX(-19).rotateZ(-3).at(...CAP_AT);
     const dome = sdf
       .revolve(
         profile.polygon(
@@ -279,7 +290,8 @@ export default defineAsset({
           { smooth: true, samples: 8 },
         ),
       )
-      .displace(0.004, (x, y, z) => noise.fbm(x * 12, y * 12, z * 12, 2));
+      .displace(0.004, (x, y, z) => noise.fbm(x * 12, y * 12, z * 12, 2))
+      .scale(CAP_SCALE);
     const capInner = sdf.ellipsoid([0.21, 0.2, 0.2]).at(0, -0.07, 0.01);
     // Spots: flat patches where small spheres cross the dome.
     const spots = sdf.union(
@@ -298,21 +310,21 @@ export default defineAsset({
           [-0.23, 0.12, 0.19, 0.03],
         ] as const
       ).map(([x, y, z, r]) => sdf.sphere(r).at(x, y, z)),
-    );
+    ).scale(CAP_SCALE);
     const capTop = dome
       .subtract(capInner)
       .intersect(sdf.halfSpace([0, -1, 0], -0.012))
       .paintWhere(spots, C.spot, 0.004);
-    k.body('cap', capPose(capTop), { color: C.cap, roughness: 0.6, bone: 'head' });
+    k.body('cap', capPose(capTop), { color: C.cap, roughness: 0.6, bone: 'caproot' });
     // The gills: the underside between the rim and the stem, in radial folds.
     const gillShell = dome.round(0.002).intersect(sdf.halfSpace([0, 1, 0], 0.016)).subtract(capInner.round(0.004));
     const gills = gillShell.paintFn((x, _y, z, base) => (Math.sin(Math.atan2(z, x) * 36) > 0.8 ? rgb(C.gillsDark) : base));
     // The radial folds live in the normal map (fine, regular detail), not in the mesh.
     const gillFolds = (x: number, y: number, z: number) => {
-      const p = [x, y - 0.745, z + 0.01] as const;
+      const p = [x, y - CAP_AT[1], z - CAP_AT[2]] as const;
       return 0.0035 * Math.abs(Math.sin(Math.atan2(p[2], p[0]) * 36));
     };
-    k.body('gills', capPose(gills), { color: C.gills, roughness: 0.8, bone: 'head', bump: gillFolds });
+    k.body('gills', capPose(gills), { color: C.gills, roughness: 0.8, bone: 'caproot', bump: gillFolds });
 
     // ------------------------------------------------------------------ hair: an auburn bob with bangs
     const underCap = capPose(capInner.round(-0.004).union(sdf.halfSpace([0, 1, 0], -0.004)));
@@ -320,26 +332,71 @@ export default defineAsset({
       .ellipsoid([HEAD[0] + 0.016, HEAD[1] + 0.012, HEAD[2] + 0.016])
       .at(0, HEAD_Y + 0.004, -0.014)
       .smoothSubtract(0.015, sdf.ellipsoid([0.235, 0.15, 0.22]).at(0, 0.615, 0.15));
-    // The bob: a rounded shell around the head down to the jaw, fuller at the back.
+    // Short, messy hair: a rounded shell cut above the jaw, with pointed locks flicking out
+    // around the lower edge and fuller at the back.
     const bob = sdf
       .smoothUnion(
         0.04,
-        sdf.ellipsoid([0.235, 0.2, 0.225]).at(0, 0.64, -0.03),
-        pair(sdf.ellipsoid([0.06, 0.1, 0.07]).at(0.19, 0.55, 0.02)),
+        sdf.ellipsoid([0.235, 0.2, 0.225]).at(0, 0.645, -0.03),
+        pair(sdf.ellipsoid([0.06, 0.09, 0.07]).at(0.19, 0.57, 0.02)),
       )
-      .smoothIntersect(0.02, sdf.halfSpace([0, -1, 0], -0.48))
+      .smoothIntersect(0.02, sdf.halfSpace([0, -1, 0], -0.51))
       .smoothSubtract(0.02, sdf.ellipsoid([0.2, 0.2, 0.24]).at(0, 0.58, 0.19));
-    // Bangs: blunt, rounded locks over the brow.
+    const flick = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.012);
+    const flicks = pair(
+      sdf.union(
+        // At the cheek, flaring out.
+        flick([
+          [0.185, 0.6, 0.05, 0.036],
+          [0.215, 0.53, 0.06, 0.024],
+          [0.262, 0.492, 0.068, 0.005],
+        ]),
+        flick([
+          [0.2, 0.6, -0.03, 0.04],
+          [0.235, 0.525, -0.03, 0.026],
+          [0.28, 0.5, -0.02, 0.005],
+        ]),
+        // Around the back, curling out and up a little.
+        flick([
+          [0.15, 0.58, -0.13, 0.042],
+          [0.19, 0.5, -0.14, 0.028],
+          [0.235, 0.468, -0.13, 0.005],
+        ]),
+        flick([
+          [0.06, 0.58, -0.19, 0.042],
+          [0.08, 0.5, -0.21, 0.028],
+          [0.1, 0.46, -0.225, 0.005],
+        ]),
+      ),
+    );
+    // Bangs: uneven pointed locks swept out from a part, the longest between the eyes.
     const bangs = sdf.union(
-      ...[-0.13, -0.07, -0.01, 0.05, 0.11, 0.16].map((x, i) => {
-        const top = [x * 0.9, 0.8, faceZ(Math.abs(x) * 0.9, 0.74) - 0.02] as const;
-        const tip = [x, 0.705 + (i % 2) * 0.012, faceZ(Math.abs(x), 0.705) + 0.012] as const;
-        return sdf.cone(top, tip, 0.044, 0.02);
+      ...(
+        [
+          [0.0, -0.03, -0.045, 0.672],
+          [0.045, 0.06, 0.08, 0.7],
+          [-0.075, -0.1, -0.125, 0.7],
+          [0.11, 0.14, 0.168, 0.688],
+          [-0.14, -0.165, -0.19, 0.672],
+          [0.02, 0.028, 0.032, 0.716],
+        ] as const
+      ).map(([x0, x1, x2, y2]) => {
+        const z0 = faceZ(Math.abs(x0), 0.78) - 0.03;
+        const z1 = faceZ(Math.abs(x1), 0.745) + 0.012;
+        const z2 = faceZ(Math.abs(x2), y2) + 0.008;
+        return sdf.chain(
+          [
+            [x0, 0.8, z0, 0.042],
+            [x1, 0.745, z1, 0.026],
+            [x2, y2, z2, 0.005],
+          ],
+          0.012,
+        );
       }),
     );
     const strands = (x: number, y: number, z: number) => Math.sin(Math.atan2(z, x) * 24 + y * 12);
     const hair = sdf
-      .smoothUnion(0.02, cap, bob, bangs)
+      .smoothUnion(0.02, cap, bob, flicks, bangs)
       .intersect(underCap)
       .paintFn((x, y, z, base) => (strands(x, y, z) > 0.8 ? rgb(C.hairDark) : base));
     k.body('hair', hair, {
@@ -404,17 +461,17 @@ export default defineAsset({
     // mushroom. A thin shell of a smooth cone, so it drapes over the skirt.
     const drape = sdf.cone([0, 0.3, -0.03], [0, 0.112, -0.03], 0.155, 0.2);
     const apronPanel = sdf.extrude(profile.rect([0.16, 0.2], 0.03), 0.4).at(0, 0.2, 0.2);
+    // A clover emblem: three heart-shaped leaflets on a curved stem.
+    const CLOVER = [0, 0.212] as const;
+    const disc = (r: number, x: number, y: number) => sdf.extrude(profile.circle(r), 0.4).at(x, y, 0.2);
     const sprig = sdf.union(
-      sdf.extrude(profile.rect([0.006, 0.07], 0.003), 0.4).at(0, 0.2, 0.2),
-      ...(
-        [
-          [-0.018, 0.215, 30],
-          [0.018, 0.215, -30],
-          [-0.016, 0.185, 40],
-          [0.016, 0.185, -40],
-          [0, 0.238, 0],
-        ] as const
-      ).map(([x, y, r]) => sdf.extrude(profile.polygon([[0, -0.012], [0.01, 0], [0, 0.014], [-0.01, 0]], { smooth: true, samples: 3 }), 0.4).rotateZ(r).at(x, y, 0.2)),
+      sdf.extrude(profile.arc(0.06, 0.006, 180, 222), 0.4).at(CLOVER[0] + 0.06, CLOVER[1], 0.2),
+      ...[90, 210, 330].map((a) => {
+        const r = (a * Math.PI) / 180;
+        const [cx, cy, px, py] = [Math.cos(r), Math.sin(r), -Math.sin(r), Math.cos(r)];
+        const at = (d: number, side: number): [number, number] => [CLOVER[0] + cx * d + px * side, CLOVER[1] + cy * d + py * side];
+        return sdf.union(disc(0.011, ...at(0.02, 0.008)), disc(0.011, ...at(0.02, -0.008)), disc(0.008, ...at(0.009, 0)));
+      }),
     );
     const printMush = sdf.union(
       sdf.extrude(profile.arc(0.016, 0.014, 0, 180), 0.4).at(0.05, 0.14, 0.2),
@@ -444,14 +501,29 @@ export default defineAsset({
             .at(s * 0.06, 0.43, 0),
         )
         .intersect(sdf.halfSpace([0, -1, 0], -RING[1]));
-    const pouch = (x: number) => {
+    // Pouches hang from the belt at both hips: two on her right, one on her left.
+    const yawAt = (p: V3) => (Math.atan2(p[0], p[2]) * 180) / Math.PI;
+    const pouch = (x: number, w = 0.046, h = 0.05) => {
       const p = sdf.surfacePoint(belt, [x, beltY - 0.02, 0.3], 0);
       return sdf
-        .union(sdf.box([0.046, 0.05, 0.03], 0.01), sdf.box([0.052, 0.022, 0.036], 0.008).at(0, 0.018, 0.002).paint(C.leatherDark))
-        .rotateY((Math.atan2(p[0], p[2]) * 180) / Math.PI)
-        .at(p[0], p[1] - 0.024, p[2] + 0.006);
+        .union(sdf.box([w, h, 0.03], 0.01), sdf.box([w + 0.006, 0.022, 0.036], 0.008).at(0, h / 2 - 0.007, 0.002).paint(C.leatherDark))
+        .rotateY(yawAt(p))
+        .at(p[0], p[1] - h / 2 + 0.001, p[2] + 0.006);
     };
-    k.body('leather', sdf.union(belt, strap(1), strap(-1), pouch(0.12), pouch(-0.12)).bone('spine'), {
+    // A small blue potion hangs from the belt on her right hip, beside the pouches.
+    const VIAL = sdf.surfacePoint(dressShape, [-0.155, 0.212, 0.3], 0.024);
+    const vial = sdf
+      .union(
+        sdf.sphere(0.021),
+        sdf.cylinder(0.008, 0.03, 0.002).at(0, 0.026, 0),
+        sdf.cylinder(0.01, 0.014, 0.003).at(0, 0.044, 0).paint(C.cork),
+      )
+      .rotateZ(-8)
+      .rotateY(yawAt(VIAL))
+      .at(...VIAL);
+    k.body('hip-potion', vial.bone('spine'), { color: C.hipPotion, roughness: 0.15, emissive: C.hipPotion, emissiveIntensity: 0.25 });
+    const pouches = sdf.union(pouch(-0.1, 0.05, 0.056), pouch(-0.205, 0.04, 0.046), pouch(0.14, 0.05, 0.056));
+    k.body('leather', sdf.union(belt, strap(1), strap(-1), pouches).bone('spine'), {
       color: C.leather,
       roughness: 0.6,
     });
@@ -534,6 +606,28 @@ export default defineAsset({
     );
     k.body('leaves', basketPose(leaves).bone('chest'), { color: C.leaf, roughness: 0.7, detail: 0.0035 });
 
+    // Two small mushrooms and a sprig of leaves grow from the cap on her right, as in the mockup.
+    const onCap = (x: number, z: number) => sdf.surfacePoint(dome, [x, 0.4, z], 0);
+    const capShroom = (x: number, z: number, h: number, r: number, tilt: number, yaw: number) => {
+      const p = onCap(x, z);
+      return shroom(0, 0, h, r, tilt).rotateY(yaw).at(p[0], p[1] - 0.17 - 0.01, p[2]);
+    };
+    const capGrowth = sdf.union(capShroom(-0.4, 0.02, 0.1, 0.075, 38, 0), capShroom(-0.34, -0.14, 0.075, 0.056, 26, 40));
+    const capLeaves = sdf.union(
+      ...(
+        [
+          [-0.36, 0.12, 55, 20, 0.11],
+          [-0.28, 0.06, 20, -30, 0.1],
+          [-0.4, -0.08, 75, 60, 0.1],
+        ] as const
+      ).map(([x, z, rz, ry, len]) => {
+        const p = onCap(x, z);
+        return leafShape(len).rotateZ(rz).rotateY(ry).at(p[0], p[1] - 0.006, p[2]);
+      }),
+    );
+    k.body('cap-growth', capPose(capGrowth), { color: C.cap, roughness: 0.6, detail: 0.004, bone: 'caproot' });
+    k.body('cap-leaves', capPose(capLeaves), { color: C.leaf, roughness: 0.7, detail: 0.0035, bone: 'caproot' });
+
     // ------------------------------------------------------------------ legs and boots
     const legs = sdf.smoothUnion(
       0.03,
@@ -572,8 +666,8 @@ export default defineAsset({
     const crook = sdf.chain(
       [
         [top[0], top[1], top[2], 0.013],
-        [top[0] - 0.03, top[1] + 0.04, top[2], 0.011],
-        [top[0] - 0.07, top[1] + 0.035, top[2], 0.009],
+        [top[0] + 0.03, top[1] + 0.04, top[2], 0.011],
+        [top[0] + 0.07, top[1] + 0.035, top[2], 0.009],
       ],
       0.01,
     );
@@ -589,8 +683,8 @@ export default defineAsset({
       bone: 'hand.L',
       bump: (x, y, z) => 0.0012 * noise.fbm(x * 160, y * 25, z * 160, 2),
     });
-    // A little mushroom sprouting from the crook.
-    const crookTip: V3 = [top[0] - 0.07, top[1] + 0.035, top[2]];
+    // A little mushroom sprouting from the crook, which curls outward, away from the cap.
+    const crookTip: V3 = [top[0] + 0.07, top[1] + 0.035, top[2]];
     const topShroom = sdf
       .union(
         sdf.cone([0, 0, 0], [0, 0.05, 0], 0.012, 0.01).paint(C.stem),
@@ -598,7 +692,7 @@ export default defineAsset({
           .revolve(profile.polygon([[0, 0.078], [0.03, 0.07], [0.048, 0.048], [0.044, 0.04], [0, 0.052]], { smooth: true, samples: 4 }))
           .paintWhere(sdf.sphere(0.012).at(0.018, 0.074, 0.01), C.spot),
       )
-      .rotateZ(15)
+      .rotateZ(-15)
       .at(...crookTip);
     k.body('staff-mushroom', topShroom, { color: C.cap, roughness: 0.6, detail: 0.004, bone: 'hand.L' });
 
@@ -629,7 +723,7 @@ export default defineAsset({
       sdf.sphere(0.05).at(FLASK[0], FLASK[1] + 0.048, FLASK[2]),
       sdf.cylinder(0.017, 0.05, 0.004).at(FLASK[0], FLASK[1] + 0.108, FLASK[2]),
     );
-    k.body('flask', flaskGlass.subtract(flaskGlass.round(-0.004)).bone('hand.R'), {
+    k.body('flask', flaskGlass.subtract(flaskGlass.round(-0.004)).bone('flaskroot'), {
       color: C.glass,
       roughness: 0.1,
       opacity: 0.4,
@@ -641,7 +735,7 @@ export default defineAsset({
       leafShape(0.04).rotateZ(50).at(FLASK[0], FLASK[1] + 0.178, FLASK[2]),
       leafShape(0.036).rotateZ(-45).at(FLASK[0], FLASK[1] + 0.172, FLASK[2]),
     );
-    k.body('potion', sdf.union(liquid, cork, sprout.paint(C.leaf)).bone('hand.R'), {
+    k.body('potion', sdf.union(liquid, cork, sprout.paint(C.leaf)).bone('flaskroot'), {
       color: C.potion,
       roughness: 0.3,
       emissive: C.potion,
