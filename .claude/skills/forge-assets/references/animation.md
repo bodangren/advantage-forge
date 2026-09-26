@@ -35,7 +35,12 @@ Rotations are degrees:
   breathing bellies. Keep volume roughly constant.
 
 Helpers in `motion`: `wave(phase, cycles, offset)` (a sine, -1 to 1), `bump(phase, cycles,
-offset)` (0 to 1 to 0), `mirrorPose(pose)` (left to right), `legDrop(legLength, degrees)`.
+offset)` (0 to 1 to 0), `mirrorPose(pose)` (left to right), `legDrop(legLength, degrees)`, and
+for posing by targets `reach`, `orient`, `follow`, `keys` (see "Weapon attacks that read").
+
+The rig applies `rotate` in X, then Y, then Z order on world-aligned rest axes, and a child turns
+with its parent. So a Z rotation of an upper arm also swings the forearm and the weapon; angles
+tuned one bone at a time rarely give the path you want. Solve arm poses with `reach`.
 
 ## Cycles
 
@@ -104,6 +109,96 @@ move too much look nervous.
 Set `loop: false`. Use easing: anticipation (a small move in the opposite direction first),
 a fast main action, then overshoot and settle. `easeOutBack` from `references/props.md` gives
 the overshoot. Timing: anticipation 20 to 30%, action 10 to 20%, follow-through the rest.
+
+## Weapon attacks that read
+
+A weapon attack looks janky when its angles are tuned by hand: the blade points backward in the
+wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path, then let
+`motion.reach` and `motion.orient` solve the arm.
+
+1. **Plan the path first**, in the chest's rest frame (world meters of the rest pose). Write
+   down 3 to 6 keys for the wrist position and the weapon direction:
+   - **Slash** (sword, axe): wind up over the shoulder on the weapon side, cut on an arc down and
+     across through the space in front of the chest, follow through past the far hip.
+   - **Chop or smash** (axe, mace, hammer, club): lift high over the head, the head of the weapon
+     lags, then snaps down in front; the body bends forward and the knees drop at impact.
+   - **Thrust** (spear, dagger, rapier): pull back to the hip, drive the point along a straight
+     line toward the target, the weapon parallel to its motion, the body lunges.
+   - **Shoot** (bow): the bow arm points at the target, the string hand draws back along the arrow
+     line to the jaw, holds, releases forward; give the string two segments that meet the hand
+     (or a string bone), so the draw is visible.
+   - **Cast** (staff, wand, book): gather (both hands in, the staff pulled back), then push out
+     toward the target with a flare on the focus (scale the glow up for 2 to 3 frames).
+2. **The body drives the weapon.** The hips turn and the weight shifts first, the chest follows,
+   the arm comes last and the weapon lags, then whips through. Step into the strike: the front
+   foot moves forward and the hips drop (`legDrop`). The off hand balances (swings the other way)
+   or holds the same weapon (two-handed).
+3. **Timing.** Anticipation 30 to 40% of the clip, with a short hold at the top; the strike
+   itself is fast (0.08 to 0.15 s); follow-through past the target; a slower recovery back to
+   the rest pose. Use `keys(p, list, 'spline')` for the strike, so the weapon keeps its speed
+   through the middle keys, and `'smooth'` for holds.
+4. **The edge leads.** A cutting blade moves edge first: its flat faces across the direction of
+   travel. Give `orient` an `up` that is the flat's normal you want (about the cross product of
+   the blade direction and the swing direction).
+5. **Check** the strike frames from the front and the side (`--views front,side --frames 12`):
+   the weapon passes through the space in front of the character, never through the head or the
+   body, and the wind-up points the weapon up or back, not into the ground.
+
+### Helpers
+
+- `reach({ root, mid, end }, target, pole)`: two-bone IK. `root/mid/end` are the rest joints
+  (shoulder, elbow, wrist; or hip, knee, ankle), `target` the wanted wrist position, `pole` a
+  point the elbow bends toward. Returns `{ upper, lower }` rotate values.
+- `orient(parents, rest, want)`: the rotate value for a bone (the hand) so a rest direction of
+  the weapon points along `want.dir`, rolled so `rest.up` goes toward `want.up`. `parents` are
+  the rotate values of the bones above it in the chain (upper arm, forearm).
+- `follow(joints, rotations, point)`: where a point bound to the chain goes (forward
+  kinematics): the posed grip of a two-handed weapon, so the other hand can `reach` it.
+- `keys(p, [[phase, value], ...], mode)`: keyframes for numbers or [x, y, z] values.
+
+```ts
+const { keys, reach, orient } = motion;
+const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+// How the sword is built: the blade direction and its flat's normal at rest.
+const BLADE = { dir: BLADE_DIR, up: [0, 0, 1] as V3 };
+k.animation('attack', {
+  duration: 0.9,
+  loop: false,
+  pose: (_t, p) => {
+    // The wrist: rest, up beside the right side of the head (hold), down and across in front of
+    // the chest to the left hip (strike), then back to rest.
+    const wrist = keys(p, [[0, WRIST_R], [0.32, [-0.24, 0.6, -0.02]], [0.4, [-0.23, 0.62, 0.0]],
+      [0.48, [-0.02, 0.4, 0.2]], [0.56, [0.14, 0.22, 0.16]], [1, WRIST_R]], 'spline');
+    const dir = keys(p, [[0, BLADE.dir], [0.35, [-0.3, 0.75, -0.6]], [0.48, [0.3, 0.2, 0.9]],
+      [0.56, [0.7, -0.5, 0.4]], [1, BLADE.dir]], 'spline');
+    const arm = reach(ARM_R, wrist, [-0.5, 0.2, -0.3]);
+    const hand = orient([arm.upper, arm.lower], BLADE, { dir: norm(dir), up: [0, 0, 1] });
+    return {
+      'upperarm.R': { rotate: arm.upper },
+      'forearm.R': { rotate: arm.lower },
+      'hand.R': { rotate: hand },
+      // ...hips, spine, chest, legs from the same keys' timing
+    };
+  },
+});
+```
+
+## The clip set
+
+Every character gets the clips its role needs, not only walk and attack:
+
+- **Heroes**: idle, walk, run, attack (the main weapon), attack2 (a second move: shield bash,
+  spin, cast, power shot), hit, death, victory.
+- **Humanoid enemies**: idle, walk, run, attack, hit, death (plus a special where the design
+  has one).
+- **Monsters**: idle, walk (or fly), attack, hit, death, plus specials (charge, reveal, spit).
+- **Villagers and NPCs**: idle, walk, work or talk, wave (and attack for guards).
+
+**Hit** (0.35 to 0.45 s, one-shot): the head and chest snap back from the blow, a small step
+back, a quick return. **Death** (1.0 to 1.5 s, one-shot): a stagger, then a fall that ends lying
+on the ground; the hips come down to the ground (`move`), the body turns about 80 to 90 degrees
+about X (backward) or Z (sideways), and nothing sinks below y = 0. Flyers stop flapping and drop.
+Held weapons fall with the hand or drop beside the body.
 
 ## Review
 
