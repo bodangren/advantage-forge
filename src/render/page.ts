@@ -404,9 +404,15 @@ async function renderAnimation(
   const size = studio.bounds.getSize(new THREE.Vector3());
   const center = studio.bounds.getCenter(new THREE.Vector3());
   const fitRadius = (Math.max(size.y, Math.hypot(size.x, size.z)) / 2) * 1.12;
-  const distance = fitRadius / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
-  cam.near = distance / 50;
-  cam.far = distance * 10;
+  // A view with a focus (--focus) zooms on that sphere, as in the turnaround views.
+  const aimView = (v: AnimationRequest['views'][number]) => {
+    const c = v.focus ? new THREE.Vector3(...v.focus.center) : center;
+    const radius = v.focus ? v.focus.radius : fitRadius;
+    const distance = radius / Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+    cam.near = distance / 50;
+    cam.far = distance * 10;
+    studio.aim(cam, c, distance, v.azimuth, v.elevation);
+  };
 
   const gap = 3;
   const strip = document.createElement('canvas');
@@ -418,7 +424,7 @@ async function renderAnimation(
   req.views.forEach((v, r) => {
     times.forEach((t, f) => {
       poseAt(clip, t);
-      studio.aim(cam, center, distance, v.azimuth, v.elevation);
+      aimView(v);
       studio.render(cam, req.size, req.size);
       const x = f * (req.size + gap);
       const y = r * (req.size + gap);
@@ -432,7 +438,7 @@ async function renderAnimation(
     const v = req.views[0]!;
     const frames = gifTimes.map((t) => {
       poseAt(clip, t);
-      studio.aim(cam, center, distance, v.azimuth, v.elevation);
+      aimView(v);
       studio.render(cam, req.gifSize, req.gifSize);
       return snapshot(req.gifSize, req.gifSize);
     });
