@@ -12,6 +12,7 @@ import type {
   ViewsRequest,
 } from '../render/page.js';
 import type * as Pipeline from '../pipeline.js';
+import type * as ClipCheck from '../clip-check.js';
 import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
 
 const HELP = `forge — build and look at 3D assets
@@ -24,6 +25,9 @@ const HELP = `forge — build and look at 3D assets
   pnpm forge all     <asset>            render + sprites + every animation (strips and sprite sheets)
   pnpm forge inspect <asset>            numbers instead of pictures: visibility per part, silhouette,
                                         values, colors, ground contact, floating parts
+  pnpm forge check   <asset>            clip clearance: does a held weapon, shield, or staff pass
+                                        through the head (fails) or the body (reported) in any clip?
+                                        --clip attack,victory  --fps 60 (no browser)
 
 render options
   --views front,three-quarter,side,back,top,back-three-quarter  (default: first four)
@@ -86,6 +90,7 @@ async function main(): Promise<void> {
       fast: { type: 'boolean' },
       texture: { type: 'string' },
       clip: { type: 'string' },
+      fps: { type: 'string' },
       frames: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
@@ -99,7 +104,7 @@ async function main(): Promise<void> {
     for (const a of listAssets()) console.log(a);
     return;
   }
-  if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect'].includes(command))
+  if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check'].includes(command))
     throw new Error(`Unknown command '${command}'.\n${HELP}`);
   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
   const file = assetPath(name);
@@ -111,12 +116,19 @@ async function main(): Promise<void> {
     configFile: false,
     ...(process.env.FORGE_VITE_CACHE ? { cacheDir: process.env.FORGE_VITE_CACHE } : {}),
     logLevel: 'error',
-    server: { port: 5400 + Math.floor(Math.random() * 400), strictPort: false, hmr: false },
+    server: {
+      port: 5400 + Math.floor(Math.random() * 400),
+      strictPort: false,
+      hmr: false,
+      // One-shot commands need no file watcher. Several forge runs at once (and the thousands of
+      // files under bench/) otherwise use up the system's inotify watches (ENOSPC).
+      watch: values.watch ? { ignored: ['**/bench/**', '**/out/**', '**/node_modules/**', '**/.git/**'] } : null,
+    },
   });
   phase('vite server created');
   let browser: Browser | null = null;
   let page: Page | null = null;
-  const needsBrowser = command !== 'build';
+  const needsBrowser = command !== 'build' && command !== 'check';
   try {
     if (needsBrowser) {
       await server.listen();
@@ -144,6 +156,17 @@ async function main(): Promise<void> {
       const t0 = performance.now();
       const pipeline = (await server.ssrLoadModule('/src/pipeline.ts')) as typeof Pipeline;
       phase('pipeline loaded');
+      if (command === 'check') {
+        const checker = (await server.ssrLoadModule('/src/clip-check.ts')) as typeof ClipCheck;
+        const def = pipeline.checkDefinition(await server.ssrLoadModule(file), name);
+        const report = await checker.checkClips(def, {
+          ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+          ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+        });
+        console.log(checker.formatClipCheck(name, report));
+        if (!report.ok) process.exitCode = 1;
+        return;
+      }
       let built;
       try {
         const mod = await server.ssrLoadModule(file);

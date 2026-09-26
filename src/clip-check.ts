@@ -1,0 +1,274 @@
+import * as THREE from 'three';
+import { collectBodies, meshOptions, type AssetDefinition } from './asset.js';
+import type { AnimationDef, SkeletonDef } from './rig.js';
+import type { Vec3 } from './sdf/core.js';
+import { meshSdf } from './sdf/mesher.js';
+
+/**
+ * Clip clearance: does a held item (a weapon, a shield, a staff, a bow) pass through the head or
+ * the body in any clip? Every clip is posed at `fps`; the held items' vertices move with their
+ * bones and are measured against the head and body parts in those parts' own rest frames. A
+ * contact that already exists in the rest pose (a shield resting on the chest) is the baseline;
+ * only deeper contact counts. Head contact fails the check; body contact is reported.
+ */
+
+type DistFn = (x: number, y: number, z: number) => number;
+type RegionName = 'head' | 'body';
+
+export interface ClipCheckOptions {
+  /** Poses per second of each clip. Default 60 (fast strikes move far between 30 fps frames). */
+  readonly fps?: number;
+  /** Penetration in meters that counts as contact, beyond the rest-pose baseline. Default 0.01. */
+  readonly margin?: number;
+  /** Only these clips (default: all). */
+  readonly clips?: readonly string[];
+}
+
+export interface Contact {
+  readonly clip: string;
+  readonly item: string;
+  readonly region: RegionName;
+  /** The region part the item goes deepest into. */
+  readonly part: string;
+  readonly from: number;
+  readonly to: number;
+  /** The deepest penetration in meters, beyond the rest-pose baseline. */
+  readonly depth: number;
+}
+
+export interface ClipCheckResult {
+  readonly items: readonly { name: string; bone: string }[];
+  readonly regions: Readonly<Record<RegionName, readonly string[]>>;
+  readonly clips: readonly { name: string; frames: number; contacts: readonly Contact[] }[];
+  readonly margin: number;
+  readonly ok: boolean;
+}
+
+interface Part {
+  readonly name: string;
+  readonly bone: string;
+  readonly region: RegionName;
+  readonly dist: DistFn;
+}
+
+interface Chunk {
+  readonly center: THREE.Vector3;
+  readonly radius: number;
+  readonly points: readonly THREE.Vector3[];
+}
+
+const HELD = /^(hand|forearm)\.(L|R)$/;
+const BODY_BONES = ['hips', 'spine', 'chest', 'neck'];
+
+/** The skinning matrix of every bone for a pose: posed world matrix times the inverse rest. */
+function skinMatrices(skeleton: SkeletonDef, order: readonly string[], pose: ReturnType<AnimationDef['pose']>) {
+  const world = new Map<string, THREE.Matrix4>();
+  const skin = new Map<string, THREE.Matrix4>();
+  const q = new THREE.Quaternion();
+  const e = new THREE.Euler();
+  for (const b of order) {
+    const def = skeleton[b]!;
+    const pat = def.parent ? skeleton[def.parent]!.at : ([0, 0, 0] as const);
+    const bp = pose[b];
+    const r = bp?.rotate ?? [0, 0, 0];
+    const m = bp?.move ?? [0, 0, 0];
+    const s = bp?.scale ?? [1, 1, 1];
+    q.setFromEuler(e.set(r[0] * THREE.MathUtils.DEG2RAD, r[1] * THREE.MathUtils.DEG2RAD, r[2] * THREE.MathUtils.DEG2RAD, 'XYZ'));
+    const local = new THREE.Matrix4().compose(
+      new THREE.Vector3(def.at[0] - pat[0] + m[0], def.at[1] - pat[1] + m[1], def.at[2] - pat[2] + m[2]),
+      q,
+      new THREE.Vector3(s[0], s[1], s[2]),
+    );
+    const w = def.parent ? world.get(def.parent)!.clone().multiply(local) : local;
+    world.set(b, w);
+    skin.set(b, w.clone().multiply(new THREE.Matrix4().makeTranslation(-def.at[0], -def.at[1], -def.at[2])));
+  }
+  return skin;
+}
+
+/** Split an item's points into small groups along its longest axis, each with a bounding sphere. */
+function chunks(points: readonly THREE.Vector3[], size = 40): Chunk[] {
+  const box = new THREE.Box3().setFromPoints([...points]);
+  const ext = box.getSize(new THREE.Vector3());
+  const axis = ext.x >= ext.y && ext.x >= ext.z ? 'x' : ext.y >= ext.z ? 'y' : 'z';
+  const sorted = [...points].sort((a, b) => a[axis] - b[axis]);
+  const out: Chunk[] = [];
+  for (let i = 0; i < sorted.length; i += size) {
+    const pts = sorted.slice(i, i + size);
+    const center = new THREE.Box3().setFromPoints(pts).getCenter(new THREE.Vector3());
+    const radius = Math.max(...pts.map((p) => p.distanceTo(center)));
+    out.push({ center, radius, points: pts });
+  }
+  return out;
+}
+
+export async function checkClips(def: AssetDefinition, options: ClipCheckOptions = {}): Promise<ClipCheckResult> {
+  const fps = options.fps ?? 60;
+  const margin = options.margin ?? 0.01;
+  const collected = await collectBodies(def);
+  const skeleton = collected.skeleton;
+  const empty = { items: [], regions: { head: [], body: [] }, clips: [], margin, ok: true } as const;
+  if (!skeleton) return empty;
+
+  // Bone sets: the head and everything below it (ears, plume); the torso; the held bones.
+  const names = Object.keys(skeleton);
+  const children = (b: string) => names.filter((n) => skeleton[n]!.parent === b);
+  const below = (b: string): string[] => [b, ...children(b).flatMap(below)];
+  const head = new Set(skeleton.head ? below('head') : []);
+  const body = new Set(BODY_BONES.filter((b) => b in skeleton));
+  const held = new Set(names.filter((n) => HELD.test(n)).flatMap(below).filter((b) => !head.has(b)));
+  const order: string[] = [];
+  const visit = (b: string) => {
+    order.push(b);
+    children(b).forEach(visit);
+  };
+  visit(names.find((n) => skeleton[n]!.parent === undefined)!);
+
+  // Region parts: rigid bodies on a region bone, and the tagged parts of skinned bodies.
+  const parts: Part[] = [];
+  const items: { name: string; bone: string; chunks: Chunk[] }[] = [];
+  for (const p of collected.pending) {
+    const rigid = p.options.bone;
+    if (rigid !== undefined) {
+      const region: RegionName | null = head.has(rigid) ? 'head' : body.has(rigid) ? 'body' : null;
+      if (region) parts.push({ name: p.name, bone: rigid, region, dist: p.shape.dist });
+      if (held.has(rigid)) {
+        const { mesh } = await meshSdf(p.shape, meshOptions(def, p));
+        const pos = mesh.positions;
+        const n = pos.length / 3;
+        const stride = Math.max(1, Math.floor(n / 2000));
+        const pts: THREE.Vector3[] = [];
+        for (let i = 0; i < n; i += stride) pts.push(new THREE.Vector3(pos[i * 3]!, pos[i * 3 + 1]!, pos[i * 3 + 2]!));
+        if (pts.length > 0) items.push({ name: p.name, bone: rigid, chunks: chunks(pts) });
+      }
+    } else {
+      for (const t of p.shape.tags) {
+        const region: RegionName | null = head.has(t.bone) ? 'head' : body.has(t.bone) ? 'body' : null;
+        if (region) parts.push({ name: p.name, bone: t.bone, region, dist: t.dist });
+      }
+    }
+  }
+  const regions = {
+    head: [...new Set(parts.filter((p) => p.region === 'head').map((p) => p.name))],
+    body: [...new Set(parts.filter((p) => p.region === 'body').map((p) => p.name))],
+  };
+  if (items.length === 0 || parts.length === 0) return { ...empty, items: items.map((i) => ({ name: i.name, bone: i.bone })), regions };
+
+  const partBones = [...new Set(parts.map((p) => p.bone))];
+  // The deepest penetration of one item into each region for a pose: per region, the depth and part.
+  const measure = (skin: Map<string, THREE.Matrix4>, item: (typeof items)[number]) => {
+    // Per region: the deepest point, and how many points are inside at all (a blade that cuts
+    // through a thin hood never goes deep into it, but many of its points are inside).
+    const deepest: Record<RegionName, { depth: number; part: string; count: number }> = {
+      head: { depth: 0, part: '', count: 0 },
+      body: { depth: 0, part: '', count: 0 },
+    };
+    const toWorld = skin.get(item.bone)!;
+    for (const bone of partBones) {
+      const toRest = skin.get(bone)!.clone().invert();
+      const m = toRest.multiply(toWorld);
+      const boneParts = parts.filter((p) => p.bone === bone);
+      const dist = (v: THREE.Vector3) => {
+        let best = Infinity;
+        let name = '';
+        for (const p of boneParts) {
+          const d = p.dist(v.x, v.y, v.z);
+          if (d < best) {
+            best = d;
+            name = p.name;
+          }
+        }
+        return { d: best, name };
+      };
+      const v = new THREE.Vector3();
+      for (const c of item.chunks) {
+        v.copy(c.center).applyMatrix4(m);
+        // Distances are lower bounds, so a chunk whose center is farther than its radius is clear.
+        if (dist(v).d > c.radius + 0.002) continue;
+        for (const p of c.points) {
+          v.copy(p).applyMatrix4(m);
+          const { d, name } = dist(v);
+          if (d >= -0.002) continue;
+          const region = boneParts.find((bp) => bp.name === name)!.region;
+          deepest[region].count++;
+          if (-d > deepest[region].depth) Object.assign(deepest[region], { depth: -d, part: name });
+        }
+      }
+    }
+    return deepest;
+  };
+
+  const restSkin = skinMatrices(skeleton, order, {});
+  const baseline = new Map(items.map((it) => [it.name, measure(restSkin, it)]));
+  const wanted = options.clips ? [...collected.animations].filter(([n]) => options.clips!.includes(n)) : [...collected.animations];
+  const clips = wanted.map(([name, anim]) => {
+    const frames = Math.max(2, Math.round(anim.duration * fps) + 1);
+    const open = new Map<string, { from: number; to: number; depth: number; part: string; region: RegionName; item: string }>();
+    const contacts: Contact[] = [];
+    const close = (key: string) => {
+      const c = open.get(key);
+      if (c) contacts.push({ clip: name, item: c.item, region: c.region, part: c.part, from: c.from, to: c.to, depth: c.depth });
+      open.delete(key);
+    };
+    for (let f = 0; f < frames; f++) {
+      const phase = f / (frames - 1);
+      const skin = skinMatrices(skeleton, order, anim.pose(phase * anim.duration, phase));
+      for (const item of items) {
+        const d = measure(skin, item);
+        const base = baseline.get(item.name)!;
+        const points = item.chunks.reduce((n, c) => n + c.points.length, 0);
+        for (const region of ['head', 'body'] as const) {
+          const key = `${item.name}:${region}`;
+          const extra = d[region].depth - base[region].depth;
+          const extraCount = d[region].count - base[region].count;
+          if (extra > margin || extraCount > Math.max(8, points * 0.02)) {
+            const c = open.get(key);
+            if (c) {
+              c.to = phase;
+              if (extra > c.depth) Object.assign(c, { depth: Math.max(0, extra), part: d[region].part });
+            } else open.set(key, { from: phase, to: phase, depth: Math.max(0, extra), part: d[region].part, region, item: item.name });
+          } else close(key);
+        }
+      }
+    }
+    for (const key of [...open.keys()]) close(key);
+    return { name, frames, contacts };
+  });
+  return {
+    items: items.map((i) => ({ name: i.name, bone: i.bone })),
+    regions,
+    clips,
+    margin,
+    ok: clips.every((c) => c.contacts.every((x) => x.region !== 'head')),
+  };
+}
+
+/** A short text report of a clip check. */
+export function formatClipCheck(name: string, r: ClipCheckResult): string {
+  const lines: string[] = [];
+  const cm = (m: number) => `${(m * 100).toFixed(1)} cm`;
+  const ph = (a: number, b: number) => (Math.abs(a - b) < 1e-6 ? `phase ${a.toFixed(2)}` : `phase ${a.toFixed(2)}-${b.toFixed(2)}`);
+  lines.push(`check  ${name}: held items ${r.items.map((i) => `${i.name} (${i.bone})`).join(', ') || 'none'}`);
+  lines.push(`       head parts: ${r.regions.head.join(', ') || 'none'}; body parts: ${r.regions.body.join(', ') || 'none'}`);
+  for (const c of r.clips) {
+    if (c.contacts.length === 0) {
+      lines.push(`  ${c.name.padEnd(10)} ok`);
+      continue;
+    }
+    for (const x of c.contacts)
+      lines.push(
+        `  ${c.name.padEnd(10)} ${x.region === 'head' ? 'HEAD' : 'body'}: ${x.item} goes ${cm(x.depth)} into ${x.part} at ${ph(x.from, x.to)}`,
+      );
+  }
+  const heads = r.clips.flatMap((c) => c.contacts.filter((x) => x.region === 'head'));
+  lines.push(
+    r.items.length === 0
+      ? 'result  no held items to check'
+      : heads.length === 0
+        ? `result  ok: no held item passes through the head (margin ${cm(r.margin)})`
+        : `result  FAIL: a held item passes through the head in ${new Set(heads.map((h) => h.clip)).size} clip(s)`,
+  );
+  return lines.join('\n');
+}
+
+export type { Vec3 };
