@@ -482,7 +482,7 @@
     "reviewedAt": "2026-09-26T19:11:12+00:00"
   },
   "dire-wolf": {
-    "overall": 7.5,
+    "overall": 7.9,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -495,24 +495,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 5,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The dire wolf head matches the mmx mockup: cream brows, amber eyes, a toothy grin, cheek tufts, tall ears, and a cream ruff. The death reads well, but the attack does not read as a bite.",
+    "summary": "The dire wolf head matches the mmx mockup: cream brows, amber eyes, a toothy grin, cheek tufts, tall ears, and a cream ruff. A lower jaw on a jaw bone now opens, and the attack is a real leap and bite.",
     "strengths": [
-      "The ears, cheek tufts, and ruff make a spiky outline that reads in all 8 sprite directions at 128 px.",
-      "The cream brows and muzzle around the amber eyes give a strong focal point on the dark face.",
-      "The death has a recoil, a stagger, and a collapse onto the chest. Then the wolf rolls onto its right side and lies still above the ground."
+      "The lower jaw splits on the grin line. At rest the grin looks the same as before. Open, the mouth shows a dark inside, a pink tongue, and lower fangs.",
+      "The attack has a coiled crouch, a leap with the front paws off the ground and the jaw wide open, and a hard snap at the peak. The nose drives forward and down.",
+      "The ears, cheek tufts, and ruff make a spiky outline that reads in all 8 sprite directions at 128 px."
     ],
     "issues": [
-      "The attack does not read as a real wolf bite. The jaws never open, because the grin is paint and the rig has no jaw bone.",
-      "In the attack, the head tosses up with the nose high, and all four paws stay on the ground. The lunge reads as a rear-up, not a leap and a snap. The crouch is small: only the neck and the head dip.",
-      "The fur is one flat dark grey, and the cream muzzle is narrower than the wide grin in the mockup. The legs are straight, so the side view is longer than the compact mockup."
+      "The fur is one flat dark grey, and the cream muzzle is narrower than the wide grin in the mockup. The legs are straight, so the side view is longer than the compact mockup.",
+      "In the crouch the upper legs lean far forward, so the knees push out under the body. After the landing, the wolf hops back 20 cm to its start point, and the paws slide a little.",
+      "The hit and the death do not use the jaw. The yelp in the hit keeps the mouth shut."
     ],
     "next": [
-      "Make the attack a real bite. Add a lower jaw on a jaw bone. Crouch on bent hind legs, leap with the front paws off the ground and the jaws open, then snap the jaws shut with the nose forward and down.",
-      "Paint a lighter grey on the chest and the lower cheeks, and widen the cream muzzle toward the cheeks. The old review asked for these two changes, and they are still open."
+      "Paint a lighter grey on the chest and the lower cheeks, and widen the cream muzzle toward the cheeks.",
+      "Open the jaw in the hit (a yelp) and a little in the death, so all clips use the new jaw."
     ],
-    "reviewedAt": "2026-09-26T19:18:29+00:00"
+    "reviewedAt": "2026-09-26T20:35:46+00:00"
   },
   "giant-spider": {
     "overall": 7.6,

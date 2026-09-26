@@ -26,6 +26,7 @@ const C = {
   earInner: '#c49a7a',
   nose: '#1a1a1c',
   mouth: '#2a2426',
+  tongue: '#b8505e',
   eye: '#f0a020',
   eyeRim: '#b0500c',
   pupil: '#141012',
@@ -42,6 +43,13 @@ const FKNEE: V3 = [0.105, 0.12, 0.08];
 const HIP: V3 = [0.1, 0.24, -0.2];
 const BKNEE: V3 = [0.105, 0.12, -0.22];
 const HEAD_C: V3 = [0, 0.5, 0.17];
+const JAW_AT: V3 = [0, 0.41, 0.2]; // the jaw hinge, behind the grin corners
+// The grin line: the bottom arc of a circle (226 to 314 degrees). It paints the grin, and it is
+// also the line where the lower jaw separates from the head.
+const GRIN_R = 0.16;
+const GRIN_Y = 0.39;
+const GRIN_CORNER_Y = GRIN_Y + GRIN_R * (1 - Math.sin((46 * Math.PI) / 180));
+const grinY = (x: number) => GRIN_Y + GRIN_R - Math.sqrt(GRIN_R * GRIN_R - x * x);
 
 export default defineAsset({
   name: 'dire-wolf',
@@ -55,6 +63,7 @@ export default defineAsset({
       spine: { parent: 'hips', at: [0, 0.29, 0.0] },
       neck: { parent: 'spine', at: [0, 0.34, 0.1] },
       head: { parent: 'neck', at: [0, 0.4, 0.14] },
+      jaw: { parent: 'head', at: JAW_AT, tail: [0, 0.385, 0.36] },
       tail: { parent: 'hips', at: [0, 0.32, -0.3], tail: [0.06, 0.5, -0.42] },
       'fleg.L': { parent: 'spine', at: SHOULDER },
       'fshin.L': { parent: 'fleg.L', at: FKNEE },
@@ -159,19 +168,45 @@ export default defineAsset({
       .paintWhere(eye.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.eye, 0.002)
       .paintWhere(pupil.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.pupil, 0.002)
       .paintWhere(shine, '#ffffff', 0.002);
-    k.body('fur', fur, {
-      color: C.fur,
-      roughness: 0.85,
-      textureDensity: 1.5,
-      bump: (x, y, z) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2),
+    // The lower jaw zone: below the grin circle and below the grin corners, inside a rounded
+    // bound that keeps the outer cheeks and the cheek tufts on the head. The head keeps the rest;
+    // the jaw pieces are rigid on `jaw` and reach 3 mm into the head, so no seam groove shows.
+    // The cut faces (the roof of the mouth and the top of the jaw) are dark, but not the skin.
+    const jawZone = sdf
+      .ellipsoid([0.15, 0.12, 0.2])
+      .at(0, 0.39, 0.33)
+      .intersect(sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y))
+      .subtract(sdf.cylinder(GRIN_R, 0.6).rotateX(90).at(0, GRIN_Y + GRIN_R, 0.3));
+    const jawPart = jawZone.round(0.003);
+    const roofPaint = (inside: sdf.Shape) => jawPart.intersect(inside);
+    const jawTopPaint = (inside: sdf.Shape) => inside.subtract(jawZone.round(-0.003));
+    const furLook = { color: C.fur, roughness: 0.85, textureDensity: 1.5, bump: (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2) };
+    k.body('fur', fur.subtract(jawZone).paintWhere(roofPaint(headBase.round(-0.004)), C.mouth, 0.002), furLook);
+    k.body('jawFur', fur.intersect(jawPart).paintWhere(jawTopPaint(headBase.round(-0.004)), C.mouth, 0.002), { ...furLook, bone: 'jaw' });
+    // The dark mouth inside the head (seen when the jaw opens), and the tongue on the jaw. Both
+    // stay inside the closed head.
+    const inHead = headBase.round(-0.006);
+    k.body('mouth', sdf.ellipsoid([0.085, 0.045, 0.08]).at(0, 0.385, 0.24).intersect(inHead).bone('head'), {
+      color: C.mouth,
+      roughness: 0.6,
+    });
+    k.body('tongue', sdf.ellipsoid([0.05, 0.014, 0.075]).at(0, 0.384, 0.29).intersect(inHead), {
+      color: C.tongue,
+      roughness: 0.35,
+      bone: 'jaw',
     });
 
     // ------------------------------------------------------------------ cream: muzzle, brows, forelock, ruff
-    // The grin: a dark band on the muzzle that curves up at the corners.
-    const GRIN_R = 0.16;
-    const GRIN_Y = 0.39;
+    // The grin: a dark band on the muzzle that curves up at the corners. The lower half of the
+    // band goes with the lower jaw.
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
     const muzzleCream = muzzle.round(0.004).paintWhere(grin, C.mouth, 0.002);
+    k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzle), C.mouth, 0.002), {
+      color: C.cream,
+      roughness: 0.8,
+      textureDensity: 1.5,
+      bone: 'jaw',
+    });
     const browAt = (x: number, y: number): V3 => {
       const h = faceHit(x, y);
       return [h[0], h[1], h[2] - 0.008];
@@ -212,7 +247,8 @@ export default defineAsset({
       ...ruffRow(9, 0.39, 95, 0.13, 0.13, 0.05),
       ...ruffRow(6, 0.31, 55, 0.13, 0.12, 0.042),
     );
-    const cream = sdf.union(muzzleCream.bone('head'), brows.bone('head'), forelock.bone('head'), ruff.bone('neck'));
+    const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzle), C.mouth, 0.002);
+    const cream = sdf.union(muzzleTop.bone('head'), brows.bone('head'), forelock.bone('head'), ruff.bone('neck'));
     k.body('cream', cream, { color: C.cream, roughness: 0.8, textureDensity: 1.5 });
 
     // ------------------------------------------------------------------ nose, teeth, claws
@@ -235,6 +271,16 @@ export default defineAsset({
       }),
     );
     k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+    // Two lower fangs on the jaw, 5 mm behind the lip: hidden in the closed grin, they stand up
+    // from the jaw when it opens.
+    const lowerFangs = sdf.union(
+      ...[-0.072, 0.072].map((x) => {
+        const y = grinY(x);
+        const h = faceHit(x, y - 0.004);
+        return sdf.cone([h[0], y - 0.012, h[2] - 0.008], [h[0], y + 0.014, h[2] - 0.006], 0.009, 0.0025);
+      }),
+    );
+    k.body('jawTeeth', lowerFangs, { color: C.tooth, roughness: 0.3, detail: 0.003, bone: 'jaw' });
     const claws = sdf.union(
       ...[FKNEE, BKNEE].flatMap((kn, j) =>
         [-0.03, 0, 0.03].map((x) =>
@@ -247,7 +293,7 @@ export default defineAsset({
     k.body('claws', pair(claws), { color: C.claw, roughness: 0.4, detail: 0.003 });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump } = motion;
+    const { wave, bump, keys } = motion;
 
     // Ground contact. The paws and the claws are rigid on the shins, and the claws sit far in
     // front of the knee, so a shin that turns back (+X) swings the claw tips down into the floor.
@@ -363,41 +409,75 @@ export default defineAsset({
       }),
     });
 
-    // A lunging bite: crouch back with the head low, spring forward, snap the head up, settle.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    // The bite: a coiled crouch, a leap with the jaws wide open, a hard snap at the peak with the
+    // nose driving forward and down, a landing on the front paws, and a hop back to the start.
+    // The legs are keyed as world angles: the upper leg, and the shin that carries the rigid paw
+    // (0 = a flat paw, + = toes down); the local turns cancel the parent turns. In the crouch all
+    // four upper legs lean forward like a parallelogram, so the body sinks and rocks back over
+    // the planted paws. `head` is the head's world pitch (+ = nose down); it never tosses up.
+    // While all four paws are down (`level`), the body pitch is solved so the front and the hind
+    // paws both touch; in the air (`air`) the hips follow `airY`, never lower than the paws allow.
+    type Track = readonly (readonly [number, number])[];
+    const ATTACK: Record<string, Track> = {
+      hu: [[0, 0], [0.24, -60], [0.3, -62], [0.38, 20], [0.46, 42], [0.52, 20], [0.58, -30], [0.66, -40], [0.74, -38], [0.86, 0], [1, 0]],
+      hs: [[0, 0], [0.3, 0], [0.38, 30], [0.46, 50], [0.52, 30], [0.6, 0], [1, 0]],
+      fu: [[0, 0], [0.24, -55], [0.3, -56], [0.38, -70], [0.46, -80], [0.52, -70], [0.58, -22], [0.66, -35], [0.74, -33], [0.86, 0], [1, 0]],
+      fs: [[0, 0], [0.3, 0], [0.38, -30], [0.46, -35], [0.52, -30], [0.58, -6], [0.66, 0], [1, 0]],
+      s: [[0, 0], [0.24, 4], [0.3, 4], [0.38, -4], [0.46, -2], [0.52, 2], [0.58, 4], [0.66, 3], [0.8, 0], [1, 0]],
+      h: [[0, 0], [0.3, 0], [0.38, -12], [0.46, -6], [0.52, 2], [0.58, 7], [0.66, 0], [1, 0]],
+      neck: [[0, 0], [0.24, 26], [0.3, 28], [0.38, 10], [0.46, 16], [0.52, 28], [0.58, 20], [0.66, 14], [0.8, 4], [1, 0]],
+      head: [[0, 0], [0.24, 8], [0.3, 8], [0.38, -2], [0.46, 0], [0.5, 14], [0.58, 10], [0.66, 6], [0.8, 2], [1, 0]],
+      jaw: [[0, 0], [0.3, 0], [0.38, 0.75], [0.44, 1], [0.47, 1], [0.5, 0], [1, 0]],
+      tail: [[0, 0], [0.24, -20], [0.3, -22], [0.38, -30], [0.46, -36], [0.52, -28], [0.6, -14], [0.72, -6], [1, 0]],
+      z: [[0, 0], [0.24, -0.1], [0.3, -0.105], [0.38, 0.08], [0.46, 0.15], [0.52, 0.19], [0.58, 0.2], [0.76, 0.2], [0.88, 0.01], [1, 0]],
+      air: [[0.34, 0], [0.42, 1], [0.52, 1], [0.6, 0]],
+      airY: [[0.34, 0.02], [0.44, 0.1], [0.5, 0.1], [0.58, 0.02]],
+      hop: [[0.74, 0], [0.8, 0.03], [0.86, 0.02], [0.9, 0]],
+      level: [[0, 1], [0.32, 1], [0.38, 0], [0.56, 0], [0.64, 1], [1, 1]],
     };
+    const FRONT = LEGS.slice(0, 2);
+    const HIND = LEGS.slice(2);
+    const needY = (pose: Pose, legs: readonly (typeof LEGS)[number][] = LEGS) => motion.plant(chains(pose, legs));
     k.animation('attack', {
-      duration: 0.8,
+      duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.32, p) * (1 - ease(0.32, 0.42, p));
-        const hit = ease(0.32, 0.44, p) * (1 - ease(0.58, 1, p));
-        const snap = ease(0.4, 0.48, p) * (1 - ease(0.52, 0.8, p));
-        // Each shin cancels its upper leg (and the spine pitch), so the paws stay flat on the
-        // ground; in the leap the front paws tip their toes up by 10 degrees. The hips height
-        // comes from motion.plant: the crouch reads from the low neck and head.
-        const pitch = 6 * wind - 6 * hit;
-        const fl = 14 * wind - 34 * hit;
-        const fr = 14 * wind - 26 * hit;
-        const bl = -10 * wind + 26 * hit;
-        const br = -10 * wind + 20 * hit;
-        const pose: Pose = {
-          spine: { rotate: [pitch, 0, 0] },
-          neck: { rotate: [14 * wind - 8 * hit, 0, 0] },
-          head: { rotate: [6 * wind - 22 * snap, 0, 0] },
-          tail: { rotate: [-10 * wind + 20 * hit, 10 * wave(p, 3), 0] },
-          'fleg.L': { rotate: [fl, 0, 0] },
-          'fleg.R': { rotate: [fr, 0, 0] },
-          'bleg.L': { rotate: [bl, 0, 0] },
-          'bleg.R': { rotate: [br, 0, 0] },
-          'fshin.L': { rotate: [-fl - pitch - 10 * hit, 0, 0] },
-          'fshin.R': { rotate: [-fr - pitch - 10 * hit, 0, 0] },
-          'bshin.L': { rotate: [-bl, 0, 0] },
-          'bshin.R': { rotate: [-br, 0, 0] },
+        const v = (name: string) => keys(p, ATTACK[name]!);
+        const [hu, hs, fu, fs, s, neck] = [v('hu'), v('hs'), v('fu'), v('fs'), v('s'), v('neck')];
+        const make = (h: number): Pose => {
+          const pose: Pose = {
+            hips: { rotate: [h, 0, 0] },
+            spine: { rotate: [s, 0, 0] },
+            neck: { rotate: [neck, 0, 0] },
+            head: { rotate: [v('head') - h - s - neck, 0, 0] },
+            jaw: { rotate: [35 * v('jaw'), 0, 0] },
+            tail: { rotate: [v('tail') - h, 8 * wave(p, 3), 0] },
+          };
+          for (const side of ['L', 'R']) {
+            pose[`fleg.${side}`] = { rotate: [fu - h - s, 0, 0] };
+            pose[`fshin.${side}`] = { rotate: [fs - fu, 0, 0] };
+            pose[`bleg.${side}`] = { rotate: [hu - h, 0, 0] };
+            pose[`bshin.${side}`] = { rotate: [hs - hu, 0, 0] };
+          }
+          return pose;
         };
-        pose.hips = { move: [0, planted(pose, [[2, 1], [3, 1]]), -0.04 * wind + 0.09 * hit] };
+        // The pitch that puts the front and the hind paws on the ground together.
+        let level = 0;
+        if (v('level') > 0) {
+          let lo = -25;
+          let hi = 25;
+          for (let n = 0; n < 14; n++) {
+            const mid = (lo + hi) / 2;
+            const pose = make(v('h') + mid);
+            if (needY(pose, FRONT) > needY(pose, HIND)) hi = mid;
+            else lo = mid;
+          }
+          level = ((lo + hi) / 2) * v('level');
+        }
+        const pose = make(v('h') + level);
+        const ground = needY(pose);
+        const y = Math.max(ground, ground + (v('airY') - ground) * v('air')) + v('hop');
+        pose.hips = { ...pose.hips, move: [0, y, v('z')] };
         return pose;
       },
     });
@@ -407,7 +487,6 @@ export default defineAsset({
     // tucks down; then a quick return. Each upper leg leans by the angle that cancels the body's
     // shift and each shin turns back by the same angle, so the paws stay flat and planted; the
     // hips sink by the height the leaning upper legs lose.
-    const { keys } = motion;
     const DEG = 180 / Math.PI;
     const UPPER = 0.12; // shoulder or hip joint to knee
     k.animation('hit', {
