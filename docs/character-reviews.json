@@ -206,22 +206,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The adventurer is a chibi hero with tousled hair under a wide teal bandana, a soft rucksack with a bedroll and a lantern, a short sword, and a map. It matches the mockup in the hair, the face, the pack, and the clothes.",
+    "summary": "The adventurer is a chibi hero with a teal bandana, a red scarf, a leather harness, a short sword, a map, and a large pack with a bedroll and a lantern. It matches the mockup in the face, the clothes, the pack, and the lantern. The hair, the bedroll, and the hand that holds the map differ from the mockup. All 8 clips pass the forge check.",
     "strengths": [
-      "The hair is a full mop of separate locks with grooves between them. The lock ends flick out past the bandana, and one big lock falls over the bandana.",
-      "The attack is a stepping diagonal slash that IK solves: the blade rises beside the head, cuts across the front edge first, and follows through. The forge check shows no contact with the head or the body.",
-      "The full hero clip set reads in the sprites: idle, walk, run, attack, attack2 (a lunging thrust), hit, death (a fall onto the face under the pack), and victory."
+      "The face reads at 128 px in the sprites: large brown eyes with highlights, rosy cheeks, and an open smile. The red scarf, the cream shirt, the harness, and the belt match the mockup.",
+      "The pack reads from all 8 sprite directions: the teal bedroll, the brass lantern on the side, and the flap with a buckle. The silhouette is clear in every view.",
+      "The full clip set is present: idle, walk, run, attack, attack2, hit, death, and victory. The death staggers, pitches forward, and ends face down under the pack. The forge check shows result ok and ground ok."
     ],
     "issues": [
-      "The sword is in the right hand and the map is in the left hand. In the mockup, one hand holds the two items, and the other hand is empty.",
-      "The short chibi arms keep the slash wind-up near the head, so the front view hides the raised blade for about 0.1 s.",
-      "The back of the head is one smooth hair mass under the bandana, and the ends of the bedroll show a strong spiral."
+      "The front hair stands up in a spiky crown, but the mockup hair sweeps to one side. At the back and the sides, the hair is one smooth mass, like a helmet.",
+      "In the attack wind-up (t = 0.2 to 0.3 s), the head and the pack hide the sword in the three-quarter and side views. The blade passes only 0.3 cm from the head.",
+      "The legs stay straight in every clip. The death fall tips the body forward as one rigid piece, and the attack2 lunge has no knee bend."
     ],
     "next": [
-      "Add a knee bone, so the lunge and the death fall can bend the legs.",
-      "Give the victory pose a real fist pump with the left hand."
+      "Add knee bones, so the run, the attack2 lunge, and the death fall bend the legs.",
+      "Sculpt the front hair to sweep to one side as in the mockup, and add separate locks to the back and the sides of the head."
     ],
-    "reviewedAt": "2026-09-26T12:23:10+00:00"
+    "reviewedAt": "2026-09-26T18:36:11+00:00"
   },
   "goblin-warrior": {
     "overall": 8.5,
