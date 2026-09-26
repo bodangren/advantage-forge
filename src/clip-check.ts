@@ -41,10 +41,22 @@ export interface Contact {
   readonly depth: number;
 }
 
+/** The closest a held item comes to the head in a clip (a lower bound; capped at CLEAR_CAP). */
+export interface HeadClearance {
+  readonly item: string;
+  readonly part: string;
+  readonly phase: number;
+  /** Meters between the item's surface and the head; 0 or less is contact. */
+  readonly distance: number;
+}
+
+/** Clearances beyond this are not measured: the item is far from the head. */
+export const CLEAR_CAP = 0.05;
+
 export interface ClipCheckResult {
   readonly items: readonly { name: string; bone: string }[];
   readonly regions: Readonly<Record<RegionName, readonly string[]>>;
-  readonly clips: readonly { name: string; frames: number; contacts: readonly Contact[] }[];
+  readonly clips: readonly { name: string; frames: number; contacts: readonly Contact[]; closest: HeadClearance | null }[];
   readonly margin: number;
   readonly headMargin: number;
   readonly ok: boolean;
@@ -194,11 +206,14 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
       head: { depth: 0, part: '', count: 0 },
       body: { depth: 0, part: '', count: 0 },
     };
+    // The closest approach to the head, for the report (the margin is only the contact limit).
+    const clear = { distance: CLEAR_CAP, part: '' };
     const toWorld = skin.get(item.bone)!;
     for (const bone of partBones) {
       const toRest = skin.get(bone)!.clone().invert();
       const m = toRest.multiply(toWorld);
       const boneParts = parts.filter((p) => p.bone === bone);
+      const headParts = boneParts.filter((p) => p.region === 'head');
       const dist = (v: THREE.Vector3) => {
         let best = Infinity;
         let name = '';
@@ -212,6 +227,28 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
         return { d: best, name };
       };
       const v = new THREE.Vector3();
+      const headDist = (w: THREE.Vector3) => {
+        let best = Infinity;
+        let name = '';
+        for (const p of headParts) {
+          const d = p.dist(w.x, w.y, w.z);
+          if (d < best) {
+            best = d;
+            name = p.name;
+          }
+        }
+        return { d: best, name };
+      };
+      if (headParts.length > 0)
+        for (const c of item.chunks) {
+          v.copy(c.center).applyMatrix4(m);
+          if (headDist(v).d - c.radius >= clear.distance) continue;
+          for (const p of c.points) {
+            v.copy(p).applyMatrix4(m);
+            const h = headDist(v);
+            if (h.d < clear.distance) Object.assign(clear, { distance: h.d, part: h.name });
+          }
+        }
       for (const c of item.chunks) {
         v.copy(c.center).applyMatrix4(m);
         // Distances are lower bounds, so a chunk whose center is farther than its radius is clear.
@@ -226,7 +263,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
         }
       }
     }
-    return deepest;
+    return { ...deepest, clear };
   };
 
   const restSkin = skinMatrices(skeleton, order, {});
@@ -234,7 +271,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
     items.map((it) => {
       const m = measure(restSkin, it);
       // A weapon in the head is wrong even at rest: the head has no baseline.
-      return [it.name, { ...m, head: { depth: 0, part: '', count: 0 } }];
+      return [it.name, { body: m.body, head: { depth: 0, part: '', count: 0 } }];
     }),
   );
   const restClip: AnimationDef = { duration: 1, loop: false, pose: () => ({}) };
@@ -246,6 +283,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
     const frames = anim === restClip ? 1 : Math.max(2, Math.round(anim.duration * fps) + 1);
     const open = new Map<string, { from: number; to: number; depth: number; part: string; region: RegionName; item: string }>();
     const contacts: Contact[] = [];
+    let closest: HeadClearance | null = null;
     const close = (key: string) => {
       const c = open.get(key);
       if (c) contacts.push({ clip: name, item: c.item, region: c.region, part: c.part, from: c.from, to: c.to, depth: c.depth });
@@ -256,6 +294,8 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
       const skin = skinMatrices(skeleton, order, anim.pose(phase * anim.duration, phase));
       for (const item of items) {
         const d = measure(skin, item);
+        if (d.clear.part && (!closest || d.clear.distance < closest.distance))
+          closest = { item: item.name, part: d.clear.part, phase, distance: d.clear.distance };
         const base = baseline.get(item.name)!;
         const points = item.chunks.reduce((n, c) => n + c.points.length, 0);
         for (const region of ['head', 'body'] as const) {
@@ -273,7 +313,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
       }
     }
     for (const key of [...open.keys()]) close(key);
-    return { name, frames, contacts };
+    return { name, frames, contacts, closest };
   });
   return {
     items: items.map((i) => ({ name: i.name, bone: i.bone })),
@@ -293,10 +333,14 @@ export function formatClipCheck(name: string, r: ClipCheckResult): string {
   lines.push(`check  ${name}: held items ${r.items.map((i) => `${i.name} (${i.bone})`).join(', ') || 'none'}`);
   lines.push(`       head parts: ${r.regions.head.join(', ') || 'none'}; body parts: ${r.regions.body.join(', ') || 'none'}`);
   for (const c of r.clips) {
+    const near = c.closest
+      ? `closest to the head ${cm(Math.max(0, c.closest.distance))} (${c.closest.item} to ${c.closest.part} at phase ${c.closest.phase.toFixed(2)})`
+      : `nothing within ${cm(CLEAR_CAP)} of the head`;
     if (c.contacts.length === 0) {
-      lines.push(`  ${c.name.padEnd(10)} ok`);
+      lines.push(`  ${c.name.padEnd(10)} ok, ${near}`);
       continue;
     }
+    if (!c.contacts.some((x) => x.region === 'head')) lines.push(`  ${c.name.padEnd(10)} ${near}`);
     for (const x of c.contacts)
       lines.push(
         `  ${c.name.padEnd(10)} ${x.region === 'head' ? 'HEAD' : 'body'}: ${x.item} goes ${cm(x.depth)} into ${x.part} at ${ph(x.from, x.to)}`,
@@ -307,10 +351,18 @@ export function formatClipCheck(name: string, r: ClipCheckResult): string {
     r.items.length === 0
       ? 'result  no held items to check'
       : heads.length === 0
-        ? `result  ok: no held item passes through the head (head margin ${cm(r.headMargin)})`
+        ? `result  ok: no held item passes through the head (contact limit ${cm(r.headMargin)}; closest ${closestText(r)})`
         : `result  FAIL: a held item passes through the head in ${new Set(heads.map((h) => h.clip)).size} clip(s)`,
   );
   return lines.join('\n');
+}
+
+/** The closest head approach over all clips, as text. */
+function closestText(r: ClipCheckResult): string {
+  const all = r.clips.filter((c) => c.closest).map((c) => ({ clip: c.name, ...c.closest! }));
+  if (all.length === 0) return `more than ${(CLEAR_CAP * 100).toFixed(1)} cm`;
+  const m = all.reduce((a, b) => (b.distance < a.distance ? b : a));
+  return `${(Math.max(0, m.distance) * 100).toFixed(1)} cm, ${m.item} in ${m.clip}`;
 }
 
 export type { Vec3 };

@@ -31,6 +31,9 @@ describe('clip clearance', () => {
     const clear = r.clips.find((c) => c.name === 'clear')!;
     expect(through.contacts.some((c) => c.region === 'head' && c.depth > 0.05)).toBe(true);
     expect(clear.contacts.filter((c) => c.region === 'head')).toEqual([]);
+    // The report measures the closest approach: contact in one clip, nothing near in the other.
+    expect(through.closest!.distance).toBeLessThanOrEqual(0);
+    expect(clear.closest).toBeNull();
     expect(r.ok).toBe(false);
   });
 });
