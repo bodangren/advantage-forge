@@ -752,7 +752,8 @@
     "reviewedAt": "2026-09-26T10:51:35+00:00"
   },
   "skeleton-archer": {
-    "overall": 7.5,
+    "overall": 7.8,
+    "group": "Enemies",
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -761,27 +762,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
-      "gameReady": 5,
+      "technical": 4,
+      "gameReady": 4,
       "sprite": 3,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The skeleton archer matches its mmx mockup: the skeleton warrior's grinning skull with glowing eyes in a ragged green hood, a bare ribcage crossed by a quiver strap, a dark cloak, a torn loincloth, red forearm wraps, and a dark recurve bow in a bony hand.",
+    "summary": "The skeleton archer matches its mmx mockup: a grinning skull with glowing eyes in a ragged green hood, a bare ribcage with a quiver strap, a dark cloak, red forearm wraps, and a recurve bow. The attack is now a real bow shot, and the death breaks the skeleton into a heap.",
     "strengths": [
-      "The open ribcage over a dark chest cavity, the knobby arm bones, and the bony hands make it read as a skeleton, not as a man in a mask.",
-      "It shares the skull, the eyes, and the rig with the skeleton warrior, so the undead read as one family.",
-      "The quiver with red and black fletching gives a clear back view, and the walk keeps the bow clear of the ground."
+      "The attack reads as a real shot: the archer turns side-on, takes an arrow from the quiver, aims the bow arm at the target, draws the string to the jaw, holds, and releases.",
+      "The bowstring has two bones, so the string bends back with the draw and snaps forward at the release; the arrow flies away.",
+      "In the death, the skull in its hood rolls off to the front, the arms fall off, and the bow lies flat on the ground."
     ],
     "issues": [
-      "At 128 px the hood and the boots are the largest masses, and the ribs become a small light patch under the skull.",
-      "The mockup holds the bow across the body; the model holds it upright at the side, for a clean walk and shot.",
-      "In the shot, the right hand stops at the shoulder; the bowstring stays straight, because it is rigid on the bow."
+      "The mockup holds the bow across the body; the model holds it upright at the side.",
+      "In walk, run, and attack, the red wraps and the right hand go up to 1.3 cm into the ribs, the mantle, and the cloak.",
+      "The teeth are a simple grid; the mockup has large, separate teeth and a taller, narrower skull."
     ],
     "next": [
-      "Make the mantle shorter and the ribs thicker, so the ribcage reads at sprite size.",
-      "Add a string bone, so the draw pulls the string back to the jaw."
+      "Move the draw elbow and the hand path a little away from the ribs and the mantle, so the body clip warnings stop.",
+      "Give the teeth separate shapes, so the grin reads more like the mockup."
     ],
-    "reviewedAt": "2026-09-26T09:26:56+00:00"
+    "reviewedAt": "2026-09-26T13:19:46+00:00"
   },
   "giant-rat": {
     "overall": 8,
