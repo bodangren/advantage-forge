@@ -576,30 +576,67 @@ export default defineAsset({
     k.animation('walk', stride(1.0, 24, 24, 3, 0, 6));
     k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20));
 
-    // A diagonal slash: raise the sword over the right shoulder, cut down and across to the left,
-    // follow through, and recover.
+    // A diagonal slash, solved by targets. The wrist follows keys in the chest's rest frame
+    // (reach); the blade follows its own keys: the backswing rises on the right side, the cut
+    // comes over the right shoulder and down across the front to the low left, and edgeUp turns
+    // the flat so the edge leads.
+    const { keys, reach, orient, edgeUp } = motion;
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const FLAT = norm([0, 0.66, 0.75]); // the blade's flat normal at rest (from swordPose)
+    const bladeKeys = [
+      [0, BLADE_DIR],
+      [0.12, norm([0.0, -0.7, 0.7])], // down in front
+      [0.22, norm([-0.9, 0.1, 0.35])], // out to the right
+      [0.32, norm([-0.35, 0.75, -0.55])], // up and back over the right shoulder
+      [0.4, norm([-0.3, 0.72, -0.62])], // the hold at the top
+      [0.47, norm([0.05, 0.6, 0.8])], // over the shoulder toward the front
+      [0.52, norm([0.7, -0.05, 0.7])], // across the front, pointing left
+      [0.57, norm([0.72, -0.5, 0.45])], // low left, a little past the rest pose
+      [1, BLADE_DIR],
+    ] as const;
+    const bladeAt = (p: number) => keys(p, bladeKeys, 'spline');
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
     k.animation('attack', {
-      duration: 1.0,
+      duration: 0.9,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.38, p) * (1 - ease(0.38, 0.5, p));
-        const cut = ease(0.38, 0.52, p) * (1 - ease(0.66, 1, p));
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_R],
+            [0.14, [-0.24, 0.3, 0.06]],
+            [0.24, [-0.27, 0.38, 0.0]],
+            [0.32, [-0.24, 0.53, -0.03]],
+            [0.4, [-0.245, 0.545, -0.04]],
+            [0.47, [-0.16, 0.47, 0.13]],
+            [0.52, [-0.08, 0.36, 0.17]],
+            [0.57, [-0.04, 0.28, 0.17]],
+            [1, WRIST_R],
+          ] as const,
+          'spline',
+        );
+        const dir = norm(bladeAt(p));
+        const arm = reach(ARM_R, wrist, [-0.6, 0.2, -0.2]);
+        const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up: edgeUp(bladeAt, p, FLAT) });
+        const wind = ease(0, 0.32, p) * (1 - ease(0.42, 0.52, p));
+        const cut = ease(0.44, 0.57, p) * (1 - ease(0.68, 1, p));
         return {
-          hips: { move: [0, -legDrop(LEG, 14 * cut) - 0.006 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, -18 * wind + 22 * cut, 0] },
+          hips: { move: [0, -legDrop(LEG, 14 * cut) - 0.006 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, -12 * wind + 16 * cut, 0] },
           spine: { rotate: [-4 * wind + 10 * cut, 0, 0] },
-          chest: { rotate: [0, -16 * wind + 20 * cut, 0] },
-          head: { rotate: [-4 * wind + 6 * cut, 12 * wind - 14 * cut, 0] },
-          'upperarm.R': { rotate: [-110 * wind + 10 * cut, 0, -30 * wind + 20 * cut] },
-          'forearm.R': { rotate: [-20 * wind - 10 * cut, 0, 0] },
-          'hand.R': { rotate: [40 * wind - 20 * cut, 0, -30 * wind + 10 * cut] },
-          'upperarm.L': { rotate: [-15 * wind + 10 * cut, 0, 12 * wind] },
-          'leg.R': { rotate: [8 * wind - 16 * cut, 0, 0] },
-          'leg.L': { rotate: [-6 * wind + 12 * cut, 0, 0] },
-          'foot.R': { rotate: [8 * cut, 0, 0] },
+          chest: { rotate: [-3 * wind + 4 * cut, -18 * wind + 22 * cut, 0] },
+          head: { rotate: [-4 * wind + 6 * cut, 14 * wind - 16 * cut, 0] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          // The empty left claw swings back for balance, then forward.
+          'upperarm.L': { rotate: [18 * wind - 14 * cut, 0, 10 * wind] },
+          'leg.L': { rotate: [4 * wind - 20 * cut, 0, 0] },
+          'leg.R': { rotate: [-4 * wind + 12 * cut, 0, 0] },
+          'foot.L': { rotate: [12 * cut, 0, 0] },
+          cloak: { rotate: [6 * cut, 0, 0] },
         };
       },
     });
