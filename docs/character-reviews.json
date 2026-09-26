@@ -431,22 +431,22 @@
       "sprite": 5,
       "motion": 5
     },
-    "summary": "The attack is now a lunging two-hand grab. The zombie sways back with the arms up, lurches 0.19 m forward on the left foot, reaches out with straight arms, and clutches and shakes the target. The hair, the shirt, and the trouser hems are still simpler than the mockup.",
+    "summary": "A new spawn clip, rise (2.0 s), is added. The zombie starts bent forward below the floor, with only the left hand above it. The hand bursts up and claws, the right hand follows, and both hands slam down flat on the floor. The body comes up in three jerky heaves, stands, shudders, and groans. The hair, the shirt, and the trouser hems are still simpler than the mockup.",
     "strengths": [
-      "The attack has a clear wind-up, lunge, grab, and recovery. The hips drop in the lunge, and the planted feet do not slide or go into the floor.",
+      "The rise reads clearly: a clawing hand, a second hand, a push on the floor, three heaves, and a stand. The pushing hands stay flat on the floor at y 0 to 4 cm and do not slide.",
       "The bulging yellow eye and the glossy black eye read in every sprite direction that shows the face.",
-      "The walk, the run, and the death read as a zombie at once: one foot drags, the arms stay forward, and the fall ends flat on the ground."
+      "The attack, the walk, the run, and the death read as a zombie at once: one foot drags, the arms stay forward, and the fall ends flat on the ground."
     ],
     "issues": [
-      "The hair is still a smooth black helmet with thick cone locks. The mockup hair is thinner and messier. In the back sprites, the hair is a large, plain black mass.",
-      "The shirt is still plain, with no torn collar, buttons, or loose threads. The trouser tears are still paint, and the sandals are flat planks.",
-      "In the attack wind-up, the hands rise only to the brow, because the short chibi arms cannot reach above the large head. The full reach lasts only about 0.07 s, and the stiff swing leg moves out to the side a little."
+      "In the rise, the hips start only 0.5 m below the floor, because the short chibi arms cannot reach the floor from deeper. The raised hand comes up only about 18 cm above the floor.",
+      "The rise sprites and the review strips show the full body below the floor. Only a game floor at y = 0 hides it; the sprite renderer does not cut the body at the floor.",
+      "The hair is still a smooth black helmet with thick cone locks, and the shirt is still plain, with no torn collar, buttons, or loose threads."
     ],
     "next": [
-      "Make the hair locks thinner and more varied, and break up the smooth mass at the back. This item from the last review is still open.",
-      "Add a torn collar, buttons, and loose threads to the shirt, and give the sandals a strap and a thicker sole."
+      "Make the hair locks thinner and more varied, and break up the smooth mass at the back.",
+      "Let the sprite renderer cut a clip at y = 0 when the clip sets ground: false, so the rise sprites show only the part above the floor."
     ],
-    "reviewedAt": "2026-09-26T21:40:35+00:00"
+    "reviewedAt": "2026-09-26T22:09:26+00:00"
   },
   "slime": {
     "overall": 8.3,

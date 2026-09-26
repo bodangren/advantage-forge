@@ -18,7 +18,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  * Bodies: skin, eye-yellow, eye-black, teeth, hair, shirt, trousers, rope, sandals.
  * Rig: the rogue's skeleton plus `jaw`-free face; clips: idle (sway and head loll), walk (a
  *   shamble that drags the right foot), run (a faster lurch), attack (a lunging two-hand grab), hit (a
- *   late, floppy recoil), death (the knees give way and it crumples forward onto its face).
+ *   late, floppy recoil), death (the knees give way and it crumples forward onto its face), rise
+ *   (the spawn: it claws its way up out of a grave through the floor and stands).
  */
 
 const C = {
@@ -691,5 +692,127 @@ export default defineAsset({
         };
       },
     });
+
+    // ------------------------------------------------------------------ rise: it claws its way up out of a grave
+    // The spawn clip. In the game the floor hides everything below y = 0, so this clip keeps the
+    // body under the floor (`ground: false`, `dig: 1.0`). At the start the zombie is bent forward
+    // in the grave, the hips about 0.5 m down: the short chibi arms cannot reach the floor from
+    // deeper. Only the left hand breaks the surface. It bursts up and claws the air; the right hand
+    // follows. Both hands slam down flat on the floor beside the hole and push, and the body comes
+    // up in three jerks: the head and shoulders break through, lolling; the arms lock straight; the
+    // hands let go and the zombie stands, its feet on the floor. Then a shudder and a groan (the
+    // head rolls back and the chest lifts), and it settles into the rest pose. The wrists follow
+    // world targets, converted into the chest's rest frame for `reach`, so the planted hands stay
+    // flat on the floor while the body rises past them.
+    {
+      const { reach, orient, quat, follow } = motion;
+      const HIPS_AT: V3 = [0, 0.2, 0];
+      const SPINE_AT: V3 = [0, 0.26, 0];
+      const CHEST_AT: V3 = [0, 0.33, 0];
+      const ARM_L = { root: SHOULDER, mid: ELBOW, end: WRIST };
+      const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
+      // The left hand's rest frame: the middle finger's direction from the wrist, and the back of the hand.
+      const HAND_DIR: V3 = [-0.1, -0.8, 0.6];
+      const HAND_UP: V3 = [0, 0.6, 0.8];
+      const FLAT_Y = 0.041; // the wrist's height when the hand lies flat on the floor
+      const PLANT: V3 = [0.25, FLAT_Y, 0.1]; // where the left hand pushes on the floor
+      const vec = (p: V3) => new THREE.Vector3(p[0], p[1], p[2]);
+      const arr = (p: THREE.Vector3): V3 => [p.x, p.y, p.z];
+      const unit = (d: V3): V3 => arr(vec(d).normalize());
+      /** A weighted sum of points or directions. */
+      const blend = (...parts: (readonly [V3, number])[]): V3 =>
+        parts.reduce<V3>((s, [v, w]) => [s[0] + v[0] * w, s[1] + v[1] * w, s[2] + v[2] * w], [0, 0, 0]);
+      k.animation('rise', {
+        duration: 2.0,
+        loop: false,
+        ground: false,
+        dig: 1.0,
+        pose: (t, p) => {
+          // ---- the trunk: three jerky heaves (a fast pull up, then a stall or a sag back)
+          const hy = keys(p, [[0, -0.5], [0.07, -0.45], [0.2, -0.43], [0.27, -0.39], [0.31, -0.39], [0.37, -0.27], [0.41, -0.29], [0.44, -0.29], [0.5, -0.17], [0.58, -0.18], [0.61, -0.18], [0.7, 0]] as const);
+          const hz = keys(p, [[0, -0.16], [0.31, -0.14], [0.37, -0.1], [0.5, -0.06], [0.61, -0.06], [0.7, 0]] as const);
+          const lean = keys(p, [[0, 85], [0.27, 82], [0.31, 82], [0.37, 64], [0.44, 63], [0.5, 40], [0.61, 38], [0.7, 4], [0.76, 0]] as const);
+          // The strain in the push, the shudder after the stand, and the groan.
+          const strain = keys(p, [[0.47, 0], [0.52, 1], [0.58, 1], [0.62, 0]] as const) * Math.sin(2 * Math.PI * 11 * t);
+          const shud = keys(p, [[0.68, 0], [0.72, 1], [0.8, 0.5], [0.88, 0]] as const) * Math.sin(2 * Math.PI * 7 * t);
+          const groan = keys(p, [[0.74, 0], [0.82, 1], [0.9, 1], [1, 0]] as const);
+          // The head hangs in the grave, then lolls from side to side at each heave.
+          const loll = keys(p, [[0, 0], [0.31, 0], [0.37, 1], [0.44, -0.7], [0.5, 0.8], [0.58, -0.4], [0.66, 0.5], [0.74, 0]] as const);
+          const nod = keys(p, [[0, 1], [0.31, 1], [0.37, -0.6], [0.44, 0.5], [0.5, -0.5], [0.58, 0.3], [0.66, -0.3], [0.74, 0]] as const);
+
+          const hipsR: V3 = [0.5 * lean, 2 * shud, 3 * shud];
+          const spineR: V3 = [0.3 * lean + 2 * strain, 0, -2 * shud];
+          const chestR: V3 = [0.2 * lean - 10 * groan, 3 * strain, 4 * shud];
+          const hipsMove: V3 = [0, hy, hz];
+
+          // ---- arms: world wrist targets in the chest's rest frame
+          const chestAt = vec(follow([HIPS_AT, SPINE_AT], [hipsR, spineR], CHEST_AT)).add(vec(hipsMove));
+          const chestQ = quat(hipsR).multiply(quat(spineR)).multiply(quat(chestR));
+          const inv = chestQ.clone().invert();
+          const toChest = (w: V3): V3 => arr(vec(w).sub(chestAt).applyQuaternion(inv).add(vec(CHEST_AT)));
+          const fromChest = (c: V3): V3 => arr(vec(c).sub(vec(CHEST_AT)).applyQuaternion(chestQ).add(chestAt));
+          const dirToChest = (d: V3): V3 => arr(vec(unit(d)).applyQuaternion(inv));
+          const arm = (s: 1 | -1) => {
+            const m = (w: V3): V3 => (s > 0 ? w : mx(w));
+            const shoulder = fromChest(m(SHOULDER));
+            // Three modes, blended: an arm straight up out of the ground, a hand flat on the floor,
+            // and a free arm in the chest's frame (buried, then after the stand).
+            const up = s > 0 ? keys(p, [[0, 1], [0.22, 1], [0.29, 0]] as const) : keys(p, [[0.09, 0], [0.16, 1], [0.23, 1], [0.3, 0]] as const);
+            const flat = s > 0 ? keys(p, [[0.22, 0], [0.29, 1], [0.57, 1], [0.63, 0]] as const) : keys(p, [[0.23, 0], [0.3, 1], [0.58, 1], [0.64, 0]] as const);
+            const free = 1 - up - flat;
+            // The raised arm: bent at the start, it bursts up straight and claws the air.
+            const claw = s > 0 ? bump(clamp01((p - 0.05) / 0.18), 3) : bump(clamp01((p - 0.15) / 0.08), 2);
+            const len = s > 0 ? keys(p, [[0, 0.17], [0.05, 0.5]] as const) : 0.5;
+            const upW = blend([shoulder, 1], [[s * (0.08 + 0.03 * wave(p, 3)), 1, 0.08], len]);
+            const upDir = blend([[s * 0.1, 1, 0.15], 1 - claw], [[s * 0.1, 0.3, 1], claw]);
+            const upBack = blend([[0, 0.15, -1], 1 - claw], [[0, 1, -0.3], claw]);
+            // The planted hand: flat, the fingers out and forward, the claw tips down on the floor.
+            // At the release the hand lifts straight up first, so the claw tips never scrape into the floor.
+            const lift = s > 0 ? keys(p, [[0.56, 0], [0.6, 0.1]] as const) : keys(p, [[0.57, 0], [0.61, 0.1]] as const);
+            const flatW = m([PLANT[0], PLANT[1] + lift, PLANT[2] + 0.003 * strain]);
+            // The free arm: rest, spread out and up a little in the groan, trembling in the shudder.
+            // Right after the release the hands stay up at the chest while the legs come out of the hole.
+            const held = keys(p, [[0.5, 0], [0.55, 1], [0.66, 1], [0.74, 0]] as const);
+            const freeW = m(blend([WRIST, 1 - 0.8 * groan], [[0.34, 0.36, 0.1], 0.8 * groan], [[0.012 * shud + 0.02 * held, 0.01 * shud + 0.12 * held, 0.02 * held], 1]));
+            const target = blend([toChest(upW), up], [toChest(flatW), flat], [freeW, free]);
+            const pole = blend(
+              [toChest(blend([shoulder, 1], [[s * 0.3, -0.05, -0.2], 1])), up],
+              [toChest(blend([shoulder, 1], [[s * 0.45, 0.08, -0.15], 1])), flat],
+              [m([0.3, 0.33, 0.06]), free],
+            );
+            const ik = reach(s > 0 ? ARM_L : ARM_R, target, pole);
+            const dir = blend([dirToChest(upDir), up], [dirToChest([s * 0.3, -0.22, 0.93]), flat], [unit(m(HAND_DIR)), free]);
+            const back = blend([dirToChest(upBack), up], [dirToChest([0, 1, 0.24]), flat], [unit(m(HAND_UP)), free]);
+            const hand = orient([ik.upper, ik.lower], { dir: m(HAND_DIR), up: m(HAND_UP) }, { dir, up: back });
+            return { upper: ik.upper, lower: ik.lower, hand };
+          };
+          const L = arm(1);
+          const R = arm(-1);
+
+          // ---- legs: they hang straight down under the leaning hips and kick in the heaves; the
+          // left leg steps up out of the hole in the last heave.
+          const kick = keys(p, [[0.3, 0], [0.36, 1], [0.58, 1], [0.64, 0]] as const) * wave(p, 5);
+          const step = keys(p, [[0.6, 0], [0.65, 1], [0.7, 0]] as const);
+          const legX = -hipsR[0];
+          return {
+            hips: { move: hipsMove, rotate: hipsR },
+            spine: { rotate: spineR },
+            chest: { rotate: chestR },
+            neck: { rotate: [10 * nod - 8 * groan, 0, 4 * loll] },
+            head: { rotate: [14 * nod - 16 * groan + 3 * strain, 8 * loll + 10 * groan, 14 * loll + 14 * groan + 3 * shud] },
+            'upperarm.L': { rotate: L.upper },
+            'forearm.L': { rotate: L.lower },
+            'hand.L': { rotate: L.hand },
+            'upperarm.R': { rotate: R.upper },
+            'forearm.R': { rotate: R.lower },
+            'hand.R': { rotate: R.hand },
+            'leg.L': { rotate: [legX + 14 * kick - 30 * step, 0, -hipsR[2]] },
+            'leg.R': { rotate: [legX - 14 * kick, 0, -hipsR[2]] },
+            'foot.L': { rotate: [20 * step, 0, 0] },
+            'foot.R': { rotate: [0, 0, 0] },
+          };
+        },
+      });
+    }
   },
 });
