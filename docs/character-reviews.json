@@ -854,5 +854,38 @@
       "Angle the wings 20 degrees toward the front at rest, so the side view shows more membrane."
     ],
     "reviewedAt": "2026-09-26T10:02:27+00:00"
+  },
+  "mimic": {
+    "overall": 8.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 4,
+      "color": 4,
+      "materials": 5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "The mimic matches its mmx mockup and is built from the treasure chest asset: the same planks, iron, lid, and gold lock, with the lid open as a jaw of big white fangs, glowing yellow slit eyes under the lid, red flesh inside, a fat purple tongue over the front, and iron claw feet.",
+    "strengths": [
+      "Closed (the first frame of the reveal clip), it matches the real treasure chest, so the trap works in a level.",
+      "The white teeth and the yellow eyes on the dark mouth read in every front and three-quarter sprite.",
+      "Four clips cover the whole encounter: reveal (rattle, then spring open), idle, a waddle walk, and an attack that opens wide, lunges, and slams shut."
+    ],
+    "issues": [
+      "The mockup shows gold and cloth among the flesh inside; the model has only flesh.",
+      "The teeth are straight cones; the mockup teeth are thicker at the base and curve more.",
+      "The chest body is square; the mockup chest flares out a little toward the top."
+    ],
+    "next": [
+      "Add a few gold coins and a gem in the flesh, from the chest's treasure heap.",
+      "Thicken the tooth bases and bend the middle teeth a little toward the front."
+    ],
+    "reviewedAt": "2026-09-26T10:15:32+00:00"
   }
 }
