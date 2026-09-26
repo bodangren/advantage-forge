@@ -322,7 +322,7 @@
     "reviewedAt": "2026-09-26T18:43:17+00:00"
   },
   "skeleton": {
-    "overall": 8,
+    "overall": 8.4,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -334,25 +334,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The skeleton warrior matches the enemy-sheet design: a grinning skull with angry glowing eyes under a riveted iron helmet, a red scarf, mail, a raised sword, and a round red shield.",
+    "summary": "The skeleton warrior matches the enemy-sheet design: a grinning skull with glowing eyes under a riveted helmet, a red scarf, mail, a sword, and a round red shield. It now has the full clip set: idle, walk, run, attack, hit, and death. The forge check shows result ok and ground ok. The helmet is still dark iron, and the chop stops at the impact.",
     "strengths": [
-      "The slanted black sockets with amber eyes, the heart-shaped nose hole, and the square teeth make a clear angry skull face.",
-      "Iron, steel, mail, bone, red cloth, wood, and brass read as different materials.",
-      "It shares the knight's body and legs, so the armored characters look like one set."
+      "The death clip tells a clear story. The skeleton staggers, its knees buckle, and it folds into a heap. Then the helmeted skull rolls off beside the body, and the sword and the shield fall flat.",
+      "In the chop, the flat of the blade faces sideways, so the edge leads down through the cut. The wind-up now goes up and back over the right shoulder.",
+      "The slanted black sockets, the amber eyes, and the square teeth make a clear angry skull face. Iron, mail, bone, red cloth, wood, and brass read as different materials."
     ],
     "issues": [
-      "The mockup shows a dynamic lunge. The model stands in the set's neutral pose.",
-      "From above, the dark helmet dome is the largest shape in the sprites, and the face shows only in the front directions.",
-      "In the chop, the wind-up is small, so most of the motion is in the downward cut.",
-      "The mockup helmet is lighter steel with dark patches. The model helmet is dark iron all over."
+      "The chop is a real sword cut only in part. The edge leads, but the huge helmet hides the raised blade in the three-quarter and side views, and the tip stays below the helmet crown. The blade stops at waist height and holds, so there is no follow-through.",
+      "The helmet is still dark iron all over. The mockup shows lighter steel with dark patches. From above, the dark dome is the largest shape in the sprites, and the face shows only in the three front directions.",
+      "The model stands in a neutral pose, but the mockup shows a lunge. The mockup has brown leather boots; the model has plain steel feet. The sword passes 0.3 cm from the head in the check."
     ],
     "next": [
-      "Raise the sword higher in the wind-up of the chop.",
-      "Make the helmet steel lighter, with the patina in patches."
+      "Make the helmet steel lighter, with the patina in patches. This item from the old review is still open.",
+      "Lift the sword tip above the helmet crown in the wind-up, and continue the cut down past the waist before the recovery. The old item for a higher wind-up is open in part."
     ],
-    "reviewedAt": "2026-09-26T04:49:52+00:00"
+    "reviewedAt": "2026-09-26T18:50:25+00:00"
   },
   "orc-warrior": {
     "overall": 8.3,
