@@ -621,31 +621,40 @@ export default defineAsset({
       }),
     });
 
-    // A short, heavy stride: small leg swing, body roll, the braids bounce on each step.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // A short, heavy stride: body roll, the braids bounce on each step. The legs come from
+    // motion.gait: planted stance feet, a knee lift in the swing, heel strike and toe-off. `step` is
+    // the foot travel, `lift` the swing height, `duty` the share of the cycle a foot is down (a run
+    // has a flight between steps), `hop` the hips bob. The sole points are the boot's heel and toe
+    // on the floor (measured from bootFoot, turned 10 degrees out).
+    const stride = (duration: number, step: number, lift: number, duty: number, armSwing: number, lean: number, hop: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 6 * s, 4 * s] as const;
+        const legs = motion.gait(p, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.1, 0, -0.028],
+          toe: [0.117, 0, 0.12],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 6 * s, 4 * s] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, -2 * s] as const },
           chest: { rotate: [lean * 0.5, -8 * s, 0] as const },
           head: { rotate: [-lean, 4 * s, -2 * s] as const },
           beard: { rotate: [5 * wave(p, 2, 0.2) + lean, 0, 5 * s] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.2 * s, 0, 2] as const },
           'upperarm.R': { rotate: [-armSwing * 0.35 * s, 0, -3] as const },
         };
       },
     });
-    k.animation('walk', stride(0.95, 24, 26, 3, 0));
-    k.animation('run', stride(0.6, 36, 44, 10, 0.03));
+    k.animation('walk', stride(0.95, 0.1, 0.025, 0.6, 26, 3, 0.006));
+    k.animation('run', stride(0.6, 0.15, 0.045, 0.4, 44, 10, 0.03));
 
     // Posing by targets: the wrist follows keys in the chest's rest frame (reach), and the hand
     // turns so the haft points along its own keys (orient). HAMMER.up is the normal of the cross
