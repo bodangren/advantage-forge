@@ -542,36 +542,69 @@ export default defineAsset({
     const GUARD: V3 = [-0.22, 0.34, -0.1]; // the rear wrist in front of the right hip, side-on
     const DRAW = 0.13; // the target; the arm's reach limit makes the draw back about 0.10
     const POLE_R: V3 = [-0.54, 0.28, -0.12]; // the right elbow out, so the gauntlet clears the tabard
-    const POLE_L: V3 = [0.6, 0.3, 0.5]; // the left elbow out and forward, clear of the chest
+    const POLE_L: V3 = [0.6, 0.45, 0.5]; // the left elbow out and forward, clear of the chest
     const LEAD = 0.25; // the lead hand on the haft, ahead of the rear grip
     const FOLD = 0.17; // the lead fist stays this far from its shoulder, so the elbow never folds in
     const REACH_L = Math.hypot(...sub(ELBOW_L, SHOULDER)) + Math.hypot(...sub(FIST_L, ELBOW_L)) - 0.004;
     const PROTRACT = 0.045; // how far the left shoulder may reach forward
     const CHANNEL: V3 = [0, 0, 1]; // the grip channel through the left fist at rest
     const FOREARM_L = unit(sub(ELBOW_L, FIST_L)); // from the fist back to the elbow
-    const HOLD = 0.28; // the guard is set
-    const COIL = 0.4; // the draw back, held long enough to read
-    const DRIVE = 0.47; // full extension
-    const STAY = 0.58;
-    const BACK = 0.74; // back in the guard
+    const HOLD = 0.22; // the guard is set
+    const COIL = 0.34; // the draw back ...
+    const COIL2 = 0.39; // ... held long enough to read
+    const DRIVE = 0.48; // full extension, 0.1 s after the draw back
+    const STAY = 0.575; // full extension held 0.1 s
+    const BACK = 0.78; // back in the guard
+    const EXT = 0.33; // the drive target, this far ahead of the guard along AIM
+    // The lunge, in the hips' own forward line (u) and height (y): the legs are rigid (no knee),
+    // SHIN from the hip joint to the ankle, the ankle 0.07 above the sole. The front foot steps
+    // STEP forward; the rear foot stays on its ball and its heel rises as the rear leg straightens.
+    const SHIN = 0.125;
+    const BALL = [0.083, -0.07] as const; // the front edge of the sole from the ankle
+    const BALL_LEN = Math.hypot(...BALL);
+    const BALL_ANG = Math.atan2(BALL[1], BALL[0]) / DEG; // the flat foot
+    const STEP = 0.19;
     k.animation('attack', {
-      duration: 0.9,
+      duration: 1.1,
       loop: false,
       pose: (_t, p) => {
-        // The body: a side-on right turn in the guard, more in the coil, unwinding a little in the
-        // drive (the short lead arm keeps the stance side-on); a forward lean in the drive.
-        const yaw = keys(p, [[0, 0], [HOLD, -70], [COIL, -78], [DRIVE, -60], [STAY, -62], [BACK, -66], [1, 0]] as const);
-        const lean = keys(p, [[0, 0], [HOLD, -3], [COIL, -5], [DRIVE, 12], [STAY, 10], [BACK, -2], [1, 0]] as const);
-        const hipZ = keys(p, [[0, 0], [HOLD, -0.008], [COIL, -0.012], [DRIVE, 0.065], [STAY, 0.065], [BACK, -0.008], [1, 0]] as const);
-        // The feet: the rear foot slides back once and stays; the front foot steps in and back.
-        const footL = keys(p, [[0, 0], [HOLD, 0.025], [COIL, 0.025], [DRIVE, 0.17], [0.6, 0.17], [BACK, 0.025], [1, 0]] as const);
-        const footR = keys(p, [[0, 0], [HOLD, -0.04], [BACK, -0.04], [1, 0]] as const);
-        const legL = (-Math.asin(Math.max(-1, Math.min(1, (footL - hipZ) / LEG))) / DEG) as number;
-        const legR = (-Math.asin(Math.max(-1, Math.min(1, (footR - hipZ) / LEG))) / DEG) as number;
-        const lift: V3 = [0, -Math.min(legDrop(LEG, legL), legDrop(LEG, legR)), hipZ];
-        const rh: V3 = [0, 0.2 * yaw, 0];
-        const rs: V3 = [0.5 * lean, 0.35 * yaw, 0];
-        const rc: V3 = [0.5 * lean, 0.45 * yaw, 0];
+        // The body: a side-on right turn in the guard, more in the coil, unwinding in the drive;
+        // the chest leans in with the lunge. The hips keep their turn from the guard to the pull
+        // back, so the feet stay planted while the hips travel along their own forward line.
+        const yaw = keys(p, [[0, 0], [HOLD, -70], [COIL, -78], [COIL2, -80], [DRIVE, -34], [STAY, -36], [BACK, -66], [1, 0]] as const);
+        const lean = keys(p, [[0, 0], [HOLD, -3], [COIL, -5], [COIL2, -6], [DRIVE, 18], [STAY, 16], [BACK, -2], [1, 0]] as const);
+        const hipYaw = keys(p, [[0, 0], [HOLD, -14], [BACK, -14], [1, 0]] as const);
+        // The hips travel u and drop; the front foot lands as they arrive. In the recovery the hips
+        // push back first and rise a little on the rear foot's ball, so the front foot swings back in the air.
+        const u = keys(p, [[0, 0], [HOLD, -0.012], [COIL, -0.02], [COIL2, -0.022], [DRIVE, 0.1], [STAY, 0.1], [0.72, -0.004], [BACK, -0.012], [1, 0]] as const);
+        const front = keys(p, [[0, 0], [COIL2, 0], [0.455, STEP], [0.6, STEP], [0.76, 0], [1, 0]] as const);
+        const rear = keys(p, [[0, 0], [HOLD, -0.04], [BACK, -0.04], [1, 0]] as const);
+        // The rear foot lifts a little as it steps back into the guard and forward out of it.
+        const rearUp = 0.018 * (Math.sin(Math.PI * Math.min(1, p / HOLD)) + (p > BACK ? Math.sin((Math.PI * (p - BACK)) / (1 - BACK)) : 0));
+        const cap = keys(p, [[0, 0], [COIL2, 0.004], [0.41, -0.004], [DRIVE, 0.05], [STAY, 0.05], [0.64, 0.035], [0.7, -0.012], [0.74, -0.012], [BACK, 0.003], [1, 0]] as const);
+        const aF = Math.asin(Math.max(-1, Math.min(1, (front - u) / SHIN)));
+        const drop = Math.min(SHIN * (1 - Math.cos(aF)), cap); // the front sole on the ground, or in the air in the step
+        const legL = -aF / DEG;
+        // The rear leg: two links (the leg, then the ankle to the ball) from the hip to the ball.
+        const bu = rear + BALL[0] - u;
+        const by = -SHIN + BALL[1] + rearUp + drop; // the ball from the hip joint
+        const D = Math.min(Math.hypot(bu, by), SHIN + BALL_LEN - 1e-4);
+        const vu = bu / Math.hypot(bu, by);
+        const vy = by / Math.hypot(bu, by);
+        const along = (SHIN * SHIN - BALL_LEN * BALL_LEN + D * D) / (2 * D);
+        const side = Math.sqrt(Math.max(0, SHIN * SHIN - along * along));
+        let ankle = [along * vu + side * vy, along * vy - side * vu];
+        let footAng = Math.atan2(by - ankle[1], bu - ankle[0]) / DEG;
+        if (footAng > BALL_ANG) {
+          ankle = [bu - BALL[0], by - BALL[1]]; // the heel stays down
+          footAng = BALL_ANG;
+        }
+        const legR = -(Math.atan2(ankle[1], ankle[0]) / DEG + 90);
+        const footR = -(footAng - BALL_ANG) - legR;
+        const lift: V3 = [u * Math.sin(hipYaw * DEG), -drop, u * Math.cos(hipYaw * DEG)];
+        const rh: V3 = [0, hipYaw, 0];
+        const rs: V3 = [0.5 * lean, 0.4375 * (yaw - hipYaw), 0];
+        const rc: V3 = [0.5 * lean, 0.5625 * (yaw - hipYaw), 0];
         // World targets to the chest's rest frame (where reach works).
         const chestAt = add(lift, follow([HIPS, SPINE, CHEST], [rh, rs, rc], CHEST));
         const undo = euler(quat(rh).multiply(quat(rs)).multiply(quat(rc)).invert());
@@ -584,8 +617,9 @@ export default defineAsset({
             [0, WRIST_R],
             [HOLD, GUARD],
             [COIL, add(GUARD, mul(AIM, -DRAW))],
-            [DRIVE, add(GUARD, mul(AIM, 0.16))],
-            [STAY, add(GUARD, mul(AIM, 0.15))],
+            [COIL2, add(GUARD, mul(AIM, -DRAW))],
+            [DRIVE, add(GUARD, mul(AIM, EXT))],
+            [STAY, add(GUARD, mul(AIM, EXT - 0.01))],
             [BACK, GUARD],
             [1, WRIST_R],
           ] as const,
@@ -594,7 +628,7 @@ export default defineAsset({
         const up = unit(keys(p, [[0, FINGERS], [HOLD, PALM], [BACK, PALM], [1, FINGERS]] as const));
         const pole = keys(p, [[0, ELBOW_R], [HOLD, POLE_R], [BACK, POLE_R], [1, ELBOW_R]] as const);
         // In the pull back, the rear wrist passes a little out to the right of the chest.
-        const wide = mul([-0.035, 0, 0.01], keys(p, [[STAY, 0], [0.645, 1], [BACK, 0]] as const));
+        const wide = mul([-0.035, 0, 0.01], keys(p, [[STAY, 0], [(STAY + BACK) / 2, 1], [BACK, 0]] as const));
         const arm = reach(ARM_R, add(toChest(wrist), wide), pole);
         const chain = [rh, rs, rc, arm.upper, arm.lower];
         const hand = orient(chain, { dir: SPEAR_DIR, up: FINGERS }, { dir, up });
@@ -625,7 +659,7 @@ export default defineAsset({
         const flagYaw = keys(p, [[0, 0], [HOLD, -68], [BACK, -68], [1, 0]] as const);
         const trail = keys(
           p,
-          [[0, 0], [0.12, 26], [HOLD, 4], [COIL, -8], [0.43, 38], [DRIVE, 30], [0.53, -16], [0.6, 8], [0.68, -20], [0.78, -4], [0.88, 12], [1, 0]] as const,
+          [[0, 0], [0.12, 26], [HOLD, 4], [COIL2, -8], [0.44, 38], [DRIVE, 30], [0.53, -16], [0.6, 8], [0.68, -20], [0.78, -4], [0.88, 12], [1, 0]] as const,
           'spline',
         );
         const hang = (v: V3) => turn([[trail, 0, 0], [0, flagYaw, 0]], v);
@@ -646,7 +680,7 @@ export default defineAsset({
           'leg.L': { rotate: [legL, 0, 0] },
           'leg.R': { rotate: [legR, 0, 0] },
           'foot.L': { rotate: [-legL, 0, 0] },
-          'foot.R': { rotate: [-legR, 0, 0] },
+          'foot.R': { rotate: [footR, 0, 0] },
         };
       },
     });
@@ -746,7 +780,7 @@ export default defineAsset({
 
         // The spear arm lowers in the stagger and lies out on the ground at the end.
         const wristR = lerp(lerp(WRIST_R, [-0.25, 0.325, 0.06], sag), toChest(WRIST_END_R), armFall);
-        const armR = reach(ARM_R, wristR, lerp(ELBOW_R, [-0.45, 0.33, -0.05], armFall));
+        const armR = reach(ARM_R, wristR, lerp(lerp(ELBOW_R, [-0.27, 0.345, 0.0], sag), [-0.45, 0.33, -0.05], armFall)); // the elbow out, clear of the tabard
         const chainR = [rh, rs, rc, armR.upper, armR.lower];
         const carry = turn([rh, rs, rc], unit(lerp(SPEAR_DIR, [-0.45, 0.85, 0.2], sag)));
         const dir = unit(lerp(carry, SPEAR_LIE, tip));

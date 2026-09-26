@@ -647,7 +647,7 @@
     "reviewedAt": "2026-09-26T20:32:23+00:00"
   },
   "guard": {
-    "overall": 8.1,
+    "overall": 8.2,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -660,24 +660,24 @@
       "technical": 4,
       "gameReady": 4,
       "sprite": 4,
-      "motion": 4
+      "motion": 4.3
     },
-    "summary": "The town guard now matches the mmx mockup in form and in color. He has a gunmetal kettle helmet with a crest, a large round nose, and a brown handlebar mustache with tips that curl up. He wears a teal-blue tabard with a gold tower over dark mail. His spear has a thin spike on a small collar and a deep teal swallowtail pennant. The thrust uses two hands in a side-on stance.",
+    "summary": "The spear thrust is now a lunge. The front foot steps 0.19 m forward, the hips drop 4 cm, and the rear heel rises. The spear tip travels 0.40 m along the aim line in 0.1 s and holds 0.1 s. The strip shows a clear drive.",
     "strengths": [
-      "The face reads as in the mockup. The nose is 25 percent larger, it is a separate round bulb with a rosy tip, and the mustache tips curl up beside the cheeks.",
-      "The colors follow the mockup. The steel is gunmetal (#7a8088), the mail is darker (#5e646c), and the tabard is teal blue (#4d8898). The gold tower and the pennant stay clear against the tabard.",
-      "The spear has a thin spike on a small collar above the socket and the rings, as in the mockup. The check gives result ok and ground ok."
+      "The lunge and the long drive read clearly in the side view.",
+      "The feet stay planted: the front foot lands with the hips, and the rear foot rolls on its sole edge.",
+      "The front foot lifts when it steps back, and the hips rise a little on the rear foot."
     ],
     "issues": [
-      "Under the render light, the helmet and the gauntlets still show bright highlights, so the steel reads a little lighter than the matte gunmetal of the mockup.",
-      "The chibi left arm is short. In the drive, the haft slides through the left hand, and the left shoulder moves forward up to 4.5 cm.",
-      "The right vambrace goes 0.4 cm into the tabard at phase 0.43 of the death."
+      "Both forearms go 2 to 3 cm into the mail at full extension, because the short arms reach across the chest.",
+      "The right gauntlet comes 1.0 cm from the face at full extension.",
+      "The rigid legs make a wide, flat lunge; there is no knee to bend."
     ],
     "next": [
-      "Move the right elbow out in the death at phase 0.43, so the vambrace clears the tabard.",
-      "Raise the steel roughness a little (about 0.45), so the helmet reads as matte gunmetal in the sprites."
+      "Keep the forearms off the mail at full extension, for example with a spear line further in front of the chest.",
+      "Make 3 color variants after all clips are done."
     ],
-    "reviewedAt": "2026-09-26T21:05:52+00:00"
+    "reviewedAt": "2026-09-26T21:57:09+00:00"
   },
   "skeleton-mage": {
     "overall": 8.5,
