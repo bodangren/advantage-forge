@@ -21,7 +21,8 @@ import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/in
  * Bodies: chest-wood, iron, lid-wood, lid-iron, lock, mouth (flesh), teeth, tongue, eyes, pupils, feet.
  * Rig: base, body, lid, teeth.upper, teeth.lower, tongue1-3, fleg/bleg.L/R. Clips: idle (the lid
  *   breathes, the tongue sways), walk (a waddle on four feet), attack (open wide, lunge, slam),
- *   reveal (a closed chest rattles, then springs open).
+ *   reveal (a closed chest rattles, then springs open), hit (rocks back, the lid snaps shut and springs
+ *   open, the tongue whips), death (the legs buckle and fold in, the lid falls shut on the limp tongue).
  */
 
 type V3 = readonly [number, number, number];
@@ -393,6 +394,107 @@ export default defineAsset({
           'fleg.R': { scale: [1, tuck, 1] },
           'bleg.L': { scale: [1, tuck, 1] },
           'bleg.R': { scale: [1, tuck, 1] },
+        };
+      },
+    });
+
+    type T3 = [number, number, number];
+    /** Turns (y, z) about the X axis by `deg` (+ tips +Y toward +Z). */
+    const rotX = (y: number, z: number, deg: number): [number, number] => {
+      const a = (deg * Math.PI) / 180;
+      return [y * Math.cos(a) - z * Math.sin(a), y * Math.sin(a) + z * Math.cos(a)];
+    };
+    /** Smooth keyframes: [[phase, value], ...]. */
+    const seq = (p: number, ks: [number, number][]) => {
+      if (p <= ks[0]![0]) return ks[0]![1];
+      for (let i = 1; i < ks.length; i++) {
+        const [p0, v0] = ks[i - 1]!;
+        const [p1, v1] = ks[i]!;
+        if (p <= p1) return v0 + (v1 - v0) * ease(p0, p1, p);
+      }
+      return ks[ks.length - 1]![1];
+    };
+    const HEEL_Z = FEET[2]![2] - 0.04; // the back edge of the back feet, on the ground
+
+    // Hit: the chest rocks back onto its back heels (the front legs stretch to stay down), the lid snaps
+    // shut for a moment with the teeth and the tongue pulled in, then springs open and the tongue whips.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const jolt = ease(0, 0.14, p) * (1 - ease(0.4, 1, p));
+        const tilt = -7 * jolt;
+        const [hy, hz] = rotX(-LIFT, HEEL_Z, tilt);
+        const move: T3 = [0, -LIFT - hy, HEEL_Z - hz];
+        // Each leg turns back level and stretches to the ground.
+        const leg = (fz: number) => ({
+          rotate: [-tilt, 0, 0] as T3,
+          scale: [1, (LIFT + move[1] + rotX(0.02, fz, tilt)[0]) / 0.1, 1] as T3,
+        });
+        const shut = ease(0.02, 0.13, p) * (1 - ease(0.26, 0.42, p));
+        const spring = ease(0.36, 0.5, p) * (1 - ease(0.55, 0.95, p));
+        const tuck = ease(0, 0.09, p) * (1 - ease(0.3, 0.46, p));
+        const s = 1 - 0.9 * tuck;
+        const tg = 1 - 0.6 * tuck;
+        return {
+          body: { move, rotate: [tilt, 0, 0] },
+          lid: { rotate: [(OPEN - 3) * shut - 14 * spring, 0, 0] },
+          'teeth.upper': { scale: [s, s, s] },
+          'teeth.lower': { scale: [s, s, s] },
+          tongue1: { scale: [tg, tg, tg] },
+          tongue2: { rotate: [seq(p, [[0.3, 0], [0.5, -22], [0.68, 16], [0.85, -5], [1, 0]]), 0, 0] },
+          tongue3: {
+            rotate: [
+              seq(p, [[0, 0], [0.08, -14], [0.3, 0], [0.55, -38], [0.72, 24], [0.88, -8], [1, 0]]),
+              0,
+              seq(p, [[0.35, 0], [0.55, 16], [0.75, -10], [1, 0]]),
+            ],
+          },
+          'fleg.L': leg(FEET[0]![2]),
+          'fleg.R': leg(FEET[1]![2]),
+          'bleg.L': leg(FEET[2]![2]),
+          'bleg.R': leg(FEET[3]![2]),
+        };
+      },
+    });
+
+    // Death: a shudder and a last gape; the front legs buckle, then the back legs, and all fold in under
+    // it; the chest drops flat, the lid falls shut on the tongue, and the tongue hangs out limp.
+    const GAP = 6; // degrees the dead lid stays open where it rests on the tongue
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const shiver = wave(p, 12) * ease(0, 0.04, p) * (1 - ease(0.2, 0.3, p));
+        const gape = ease(0, 0.12, p) * (1 - ease(0.26, 0.4, p));
+        const f = ease(0.24, 0.42, p); // the front legs give way
+        const b = ease(0.36, 0.54, p); // then the back legs
+        const pitch = (Math.atan((LIFT * (f - b)) / D) * 180) / Math.PI;
+        const fall = ease(0.5, 0.66, p);
+        const bounce = ease(0.66, 0.72, p) * (1 - ease(0.72, 0.86, p));
+        const flop = Math.sin(Math.PI * ease(0.3, 0.62, p));
+        const limp = ease(0.44, 0.64, p);
+        const settle = ease(0.5, 0.85, p);
+        const s = Math.max(0.05, 1 - 0.95 * ease(0.44, 0.58, p));
+        const leg = (d: number, side: number, front: boolean) => ({
+          rotate: [front ? -18 * Math.sin(Math.PI * d) : 0, 0, side * 22 * Math.sin(Math.PI * d)] as T3,
+          scale: [1, Math.max(0.05, 1 - 0.95 * d), 1] as T3,
+        });
+        return {
+          body: {
+            move: [0, (-LIFT * (f + b)) / 2, 0],
+            rotate: [pitch + 1.5 * shiver, 3 * shiver - 5 * settle, 1.5 * shiver],
+          },
+          lid: { rotate: [-16 * gape - 3 * Math.abs(shiver) + (OPEN - GAP) * fall - 5 * bounce, 0, 0] },
+          'teeth.upper': { scale: [s, s, s] },
+          'teeth.lower': { scale: [s, s, s] },
+          tongue1: { rotate: [-6 * gape + 10 * limp, 0, 0] },
+          tongue2: { rotate: [-10 * flop - 12 * limp, 0, 0] },
+          tongue3: { rotate: [12 * shiver - 15 * flop - 24 * limp, 0, -8 * limp] },
+          'fleg.L': leg(f, 1, true),
+          'fleg.R': leg(f, -1, true),
+          'bleg.L': leg(b, 1, false),
+          'bleg.R': leg(b, -1, false),
         };
       },
     });
