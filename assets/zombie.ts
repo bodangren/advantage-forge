@@ -17,7 +17,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   dark mouth with yellow teeth is the second.
  * Bodies: skin, eye-yellow, eye-black, teeth, hair, shirt, trousers, rope, sandals.
  * Rig: the rogue's skeleton plus `jaw`-free face; clips: idle (sway and head loll), walk (a
- *   shamble that drags the right foot), run (a faster lurch), attack (a two-handed grab).
+ *   shamble that drags the right foot), run (a faster lurch), attack (a two-handed grab), hit (a
+ *   late, floppy recoil), death (the knees give way and it crumples forward onto its face).
  */
 
 const C = {
@@ -453,6 +454,94 @@ export default defineAsset({
           'leg.L': { rotate: [-18 * hit, 0, 0] },
           'leg.R': { rotate: [10 * hit, 0, 0] },
           'foot.L': { rotate: [10 * hit, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a late, floppy recoil
+    // The chest rocks back first. The head follows late, lolls far back, flops forward past the
+    // stance, and sways back. The arms fling up loosely a beat behind the chest and drop again.
+    // The hips give way backward over planted feet (`SHIN` keeps the ankles on their rest spot).
+    const { keys } = motion;
+    const DEG = Math.PI / 180;
+    const SHIN = 0.125; // hip joint to ankle joint
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    /** The leg angle (degrees, + = the hips in front of the ankle) for the hips `dz` meters ahead of it. */
+    const legFor = (dz: number) => Math.asin(Math.max(-1, Math.min(1, dz / SHIN))) / DEG;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.15, 1], [0.32, 0.75], [0.6, -0.2], [0.82, 0.06], [1, 0]] as const);
+        const loll = keys(p, [[0, 0], [0.07, 0], [0.3, 1], [0.48, 0.3], [0.66, -0.45], [0.85, 0.14], [1, 0]] as const);
+        const flop = keys(p, [[0, 0], [0.1, 0], [0.3, 1], [0.52, -0.35], [0.72, 0.14], [0.9, -0.04], [1, 0]] as const);
+        const roll = keys(p, [[0, 0], [0.12, 0], [0.34, 1], [0.58, -0.5], [0.8, 0.18], [1, 0]] as const);
+        const leg = legFor(-0.022 * h);
+        return {
+          hips: { move: [0, -SHIN * (1 - Math.cos(leg * DEG)), -0.022 * h], rotate: [0, 4 * roll, 3 * roll] },
+          spine: { rotate: [4 - 7 * h, 0, -4 * roll] },
+          chest: { rotate: [-12 * h, 5 * h, 2 * roll] },
+          neck: { rotate: [-10 * loll, 0, 0] },
+          head: { rotate: [-24 * loll, 8 * roll, 14 * roll] },
+          'upperarm.L': { rotate: [-30 * flop, 0, 16 * flop] },
+          'upperarm.R': { rotate: [-24 * flop, 0, -19 * flop] },
+          'forearm.L': { rotate: [-22 * flop, 0, 0] },
+          'forearm.R': { rotate: [-16 * flop, 0, 0] },
+          'hand.L': { rotate: [18 * flop, 0, 0] },
+          'hand.R': { rotate: [14 * flop, 0, 0] },
+          'leg.L': { rotate: [leg, 0, -3 * roll] },
+          'leg.R': { rotate: [leg, 0, -3 * roll] },
+          'foot.L': { rotate: [-leg, 0, 0] },
+          'foot.R': { rotate: [-leg, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: the knees give way, a forward crumple
+    // The blow lolls the head back and the zombie sways. Then the knees give way: the legs fold back
+    // as the hips sink forward over the planted feet, and the trunk slumps. Then it topples forward,
+    // faster and faster, onto its face; the legs lie flat behind it, soles up. The arms trail in the
+    // fall, then flop onto the ground beside the head. At last the head rolls onto its cheek.
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.18, 0.45], [0.3, 0]] as const);
+        const loll = keys(p, [[0, 0], [0.04, 0], [0.15, 1], [0.26, 0.25], [0.34, -0.25], [0.42, 0]] as const);
+        const sway = keys(p, [[0.06, 0], [0.18, 1], [0.3, -0.6], [0.42, 0]] as const);
+        const buckle = keys(p, [[0.24, 0], [0.46, 1]] as const); // the knees give way
+        const u = clamp01((p - 0.42) / 0.22);
+        const topple = u * u; // the fall speeds up to the impact at 0.64
+        const bounce = keys(p, [[0.64, 0], [0.69, 1], [0.76, 0]] as const);
+        const trail = keys(p, [[0.44, 0], [0.6, 1], [0.66, 0]] as const); // the arms lag in the fall
+        const land = keys(p, [[0.6, 0], [0.7, 1]] as const); // the arms flop onto the ground
+        const whip = keys(p, [[0.46, 0], [0.6, 1], [0.68, -0.4], [0.76, 0]] as const);
+        const roll = keys(p, [[0.72, 0], [0.9, 1]] as const); // the head rolls onto its cheek
+        // The legs fold back over the planted ankles; the hips follow the hip joint's arc.
+        const leg = legFor(-0.02 * hitB) + 45 * buckle + 45 * topple;
+        const ankleY = 0.07 - 0.02 * topple;
+        const hipsY = ankleY + SHIN * Math.cos(leg * DEG) + 0.005 + 0.012 * bounce;
+        const hipsTilt = 16 * buckle + 44 * topple - 3 * bounce;
+        const trunk = hipsTilt + 4 + 8 * buckle; // hips + spine + chest, for the limp arms
+        return {
+          hips: { move: [0, hipsY - 0.2, SHIN * Math.sin(leg * DEG)], rotate: [hipsTilt, 6 * buckle, 4 * sway] },
+          spine: { rotate: [4 - 6 * hitB + 4 * buckle, 0, -4 * sway] },
+          chest: { rotate: [-10 * hitB + 4 * buckle - 6 * whip, 4 * hitB, 3 * sway] },
+          neck: { rotate: [-10 * loll - 8 * topple * (1 - land) - 6 * roll, 0, 0] },
+          head: {
+            rotate: [-24 * loll + 10 * buckle - 20 * topple * (1 - land) + 14 * whip - 12 * roll, 10 * sway + 62 * roll, 12 * sway + 14 * roll],
+          },
+          // Limp arms: they hang as the trunk slumps, trail up in the fall, and slap down out wide.
+          'upperarm.L': { rotate: [-24 * hitB - 0.8 * trunk * (1 - land) + 70 * trail - 6 * land, 0, 20 * hitB + 36 * land] },
+          'upperarm.R': { rotate: [-20 * hitB - 0.8 * trunk * (1 - land) + 60 * trail - 10 * land, 0, -18 * hitB - 30 * land] },
+          'forearm.L': { rotate: [-14 * hitB - 10 * buckle + 10 * land, 0, 12 * land] },
+          'forearm.R': { rotate: [-10 * hitB - 16 * buckle + 16 * land, 0, -8 * land] },
+          'hand.L': { rotate: [10 * hitB + 20 * buckle - 10 * land, 0, 0] },
+          'hand.R': { rotate: [10 * hitB + 24 * buckle - 16 * land, 0, 0] },
+          'leg.L': { rotate: [leg - hipsTilt, 0, 4 * buckle - 4 * sway] },
+          'leg.R': { rotate: [leg - hipsTilt, -8 * buckle, -6 * buckle - 4 * sway] },
+          'foot.L': { rotate: [150 * topple - leg, 0, 0] }, // flat on the ground, then soles up
+          'foot.R': { rotate: [140 * topple - leg, 0, 0] },
         };
       },
     });
