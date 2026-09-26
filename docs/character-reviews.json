@@ -354,7 +354,7 @@
     "reviewedAt": "2026-09-26T18:50:25+00:00"
   },
   "orc-warrior": {
-    "overall": 8.3,
+    "overall": 7.9,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -363,27 +363,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
-      "gameReady": 5,
+      "technical": 3,
+      "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The orc warrior is a stocky brute with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a large crescent axe. The beard now hangs below a green chin band, so the frown and the tusk roots show. The full clip set passes the clip check.",
+    "summary": "The orc warrior is a stocky brute with a heavy scowl, tusks, a topknot, a spiked pauldron, and a large crescent axe. The tusks now start under the upper lip and hang down past the lower lip, so they read as teeth from the mouth. The axe stays clear of the head in all clips, but the axe head goes into the floor in the attack and the run.",
     "strengths": [
-      "The axe blade is now a large crescent with an upper horn, a lower horn, and a bright worn edge, as in the mockup. It reads at 128 px.",
-      "The beard starts below the chin, so a green band shows the downturned mouth line and the tusk roots between the tusks.",
-      "The chop reads well: a high wind-up behind the shoulder, a swing over the top, and an impact in front. The edge leads the whole swing."
+      "The tusks now come from the mouth. In the front view and in the S sprite, they show as two clear white teeth below the yellow eyes and the heavy brows.",
+      "The costume matches the mockup: large brown bracers, a spiked pauldron, a belt with a round buckle, a ragged red loincloth, and fur leg wraps.",
+      "The death reads well at game size: a stagger back, a fall onto the back, and the axe on the floor next to the hand."
     ],
     "issues": [
-      "The frown line is thin. At 128 px it is only a short dark stroke between the tusks.",
-      "The axe blade is a flat plate with a painted edge. A blade that thins to the edge broke the triangle reduction, so the bevel is not in the shape.",
-      "The beard is one smooth black mass with shallow strands. The mockup beard is fuller, with thick locks and a sharper point."
+      "The clip check fails the ground test. The axe head goes 14.3 cm into the floor at the attack impact and 2.4 cm in the run.",
+      "The attack is a two-hand chop in name only. The left fist stays away from the haft for the full swing, so the chop reads as a one-hand swing.",
+      "The tusks are small: about half the size of the mockup tusks. They hang down from under the upper lip, as the owner asked. The beard is a small goatee, and the mockup beard is full."
     ],
     "next": [
-      "Add a small lower-lip bulge under the mouth line, so the frown reads at 128 px.",
-      "Give the beard thick locks and a sharper point, as in the mockup."
+      "Stop the axe head at the floor at the attack impact and in the run, so the check ends with ground ok.",
+      "Put the left hand on the haft from the wind-up to the impact, so the chop reads as a two-hand swing."
     ],
-    "reviewedAt": "2026-09-26T13:35:28+00:00"
+    "reviewedAt": "2026-09-26T18:51:44+00:00"
   },
   "bandit": {
     "overall": 8.2,
