@@ -878,10 +878,13 @@ export default defineAsset({
             [0, WRIST_R],
             [0.3, [-0.275, 0.38, -0.02]],
             [0.42, [-0.278, 0.39, -0.03]],
+            // The drive and the recovery swing the fist wide, on an arc around the shoulder, so the
+            // pole passes outside the side locks above and the coat skirt below.
+            [0.465, [-0.29, 0.395, 0.045]],
             [0.52, [-0.19, 0.37, 0.155]],
             [0.6, [-0.185, 0.365, 0.16]],
             [0.76, [-0.2, 0.36, 0.13]],
-            [0.88, [-0.25, 0.355, 0.1]],
+            [0.86, [-0.262, 0.368, 0.095]],
             [1, WRIST_R],
           ] as const,
           'spline',
@@ -892,10 +895,12 @@ export default defineAsset({
             [0, STAFF_AXIS],
             [0.3, norm([-0.5, 0.85, -0.12])],
             [0.42, norm([-0.52, 0.84, -0.16])],
+            // In both swings the pole stays near upright, so its foot never tips in under the fist.
+            [0.465, norm([-0.32, 0.8, 0.42])],
             [0.52, norm([-0.14, 0.5, 0.86])],
             [0.6, norm([-0.1, 0.42, 0.9])],
             [0.76, norm([-0.2, 0.6, 0.78])],
-            [0.88, norm([-0.45, 0.82, 0.36])],
+            [0.86, norm([-0.28, 0.82, 0.5])],
             [1, STAFF_AXIS],
           ] as const,
           'spline',
@@ -907,7 +912,8 @@ export default defineAsset({
         return {
           ...staffPose(wrist, dir, up),
           ...palmPose(
-            keys(p, [[0, WRIST_L], [0.3, [0.245, 0.29, -0.03]], [0.5, [0.245, 0.29, -0.03]], [0.6, [0.27, 0.34, 0.05]], [1, WRIST_L]] as const),
+            // The charging palm drifts out and forward, so its flame clears the side lock as the head turns back.
+            keys(p, [[0, WRIST_L], [0.3, [0.245, 0.29, -0.03]], [0.5, [0.265, 0.285, -0.01]], [0.6, [0.27, 0.34, 0.05]], [1, WRIST_L]] as const),
             PALM.dir,
             PALM.up,
           ),
