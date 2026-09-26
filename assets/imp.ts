@@ -469,9 +469,10 @@ export default defineAsset({
 
     // Attack (0.8 s): a wind-up, a diving double claw rake, and a recovery.
     // 0 to 0.34: it rises and pulls back; the claws come up and back beside the head; the wings go up.
-    // 0.34 to 0.56: the body drives 0.27 m forward and 0.15 m down; both claws reach forward toward
-    //   the target and rake down across it; the wings sweep down hard once, then fold back a little.
-    // 0.56 to 1: two strong beats back to the hover (the last frame is the first idle frame).
+    // 0.34 to 0.71: the body drives 0.27 m forward and 0.15 m down; both claws reach forward toward
+    //   the target and hold there at contact (0.44 to 0.59, 0.12 s), then rake down across it; the
+    //   wings sweep down hard once, then fold back a little.
+    // 0.6 to 1: two strong beats back to the hover (the last frame is the first idle frame).
     // The claw targets are wrist positions in the chest's rest frame; the chest leans with the dive.
     const ARM_L = { root: SHOULDER, mid: ELBOW, end: WRIST };
     const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
@@ -484,22 +485,23 @@ export default defineAsset({
           [0, WRIST],
           [0.3, [0.2, 0.44, 0.0]], // up and back beside the head
           [0.36, [0.2, 0.46, 0.01]],
-          [0.45, [0.11, 0.44, 0.15]], // reach forward at the target
-          [0.51, [0.1, 0.3, 0.13]], // rake down across it
-          [0.58, [0.12, 0.24, 0.06]], // follow-through, low
-          [0.82, WRIST],
+          [0.44, [0.11, 0.44, 0.15]], // reach forward at the target
+          [0.59, [0.11, 0.43, 0.16]], // hold the reach at contact (0.12 s)
+          [0.65, [0.1, 0.3, 0.13]], // rake down across it
+          [0.71, [0.12, 0.24, 0.06]], // follow-through, low
+          [0.9, WRIST],
           [1, WRIST],
         ]);
         const armL = reach(ARM_L, wrist, [0.45, 0.15, -0.2]);
         const armR = reach(ARM_R, mx(wrist), [-0.45, 0.15, -0.2]);
-        const hand = keys(p, [[0, 0], [0.3, -25], [0.4, -20], [0.47, 10], [0.53, 35], [0.62, 20], [0.85, 0]]);
-        const x = Math.max(0, (p - 0.56) / 0.44);
+        const hand = keys(p, [[0, 0], [0.3, -25], [0.4, -20], [0.44, 10], [0.59, 12], [0.66, 35], [0.74, 20], [0.92, 0]]);
+        const x = Math.max(0, (p - 0.6) / 0.4);
         const keyed: WingAngles = {
-          raise: keys(p, [[0, start.raise], [0.3, 60], [0.36, 64], [0.46, -48], [0.56, -5]]),
-          fwd: keys(p, [[0, start.fwd], [0.3, 5], [0.36, 5], [0.46, 15], [0.56, -20]]),
-          twist: keys(p, [[0, start.twist], [0.3, 20], [0.36, 22], [0.46, -32], [0.56, -40]]),
+          raise: keys(p, [[0, start.raise], [0.3, 60], [0.36, 64], [0.46, -48], [0.6, -8]]),
+          fwd: keys(p, [[0, start.fwd], [0.3, 5], [0.36, 5], [0.46, 15], [0.6, -20]]),
+          twist: keys(p, [[0, start.twist], [0.3, 20], [0.36, 22], [0.46, -32], [0.6, -40]]),
         };
-        const wing = mixWing(keyed, flap(2 * x, 58 - 18 * x, IDLE_BEAT.lift), ease(0.56, 0.66, p));
+        const wing = mixWing(keyed, flap(2 * x, 58 - 18 * x, IDLE_BEAT.lift), ease(0.6, 0.68, p));
         const back = (a: number) => keys(p, [[0, a], [0.3, 0], [0.8, 0], [1, a]]); // idle values fade out and back
         return {
           hips: {
@@ -507,15 +509,16 @@ export default defineAsset({
               [0, [0, 0.205, 0]],
               [0.3, [0, 0.27, -0.06]],
               [0.36, [0, 0.275, -0.065]],
-              [0.46, [0, 0.14, 0.17]],
-              [0.54, [0, 0.12, 0.205]],
-              [0.72, [0, 0.19, 0.08]],
+              [0.44, [0, 0.15, 0.16]],
+              [0.59, [0, 0.13, 0.2]],
+              [0.66, [0, 0.12, 0.21]],
+              [0.82, [0, 0.19, 0.08]],
               [1, [0, 0.205, 0]],
             ]),
-            rotate: [keys(p, [[0, 4], [0.3, -16], [0.36, -18], [0.46, 30], [0.54, 34], [0.72, 12], [1, 4]]), 0, 0],
+            rotate: [keys(p, [[0, 4], [0.3, -16], [0.36, -18], [0.44, 28], [0.59, 32], [0.66, 34], [0.82, 12], [1, 4]]), 0, 0],
           },
-          chest: { rotate: [keys(p, [[0, 0], [0.3, -8], [0.36, -9], [0.47, 12], [0.56, 14], [0.8, 0]]), 0, 0] },
-          head: { rotate: [keys(p, [[0, 1.9], [0.3, 12], [0.46, -24], [0.56, -26], [0.8, -4], [1, 1.9]]), back(3.5), 0] },
+          chest: { rotate: [keys(p, [[0, 0], [0.3, -8], [0.36, -9], [0.44, 10], [0.59, 12], [0.66, 14], [0.86, 0]]), 0, 0] },
+          head: { rotate: [keys(p, [[0, 1.9], [0.3, 12], [0.44, -22], [0.59, -24], [0.66, -26], [0.86, -4], [1, 1.9]]), back(3.5), 0] },
           ...wings(wing),
           'upperarm.L': { rotate: armL.upper },
           'forearm.L': { rotate: armL.lower },
@@ -523,13 +526,13 @@ export default defineAsset({
           'forearm.R': { rotate: armR.lower },
           'hand.L': { rotate: [hand, 0, 0] },
           'hand.R': { rotate: [hand, 0, 0] },
-          tail1: { rotate: [keys(p, [[0, 7.6], [0.3, -10], [0.46, 25], [0.6, 20], [1, 7.6]]), back(5.9), 0] },
-          tail2: { rotate: [keys(p, [[0, 8.1], [0.3, -5], [0.46, 15], [0.62, 5], [1, 8.1]]), back(12), 0] },
-          tail3: { rotate: [keys(p, [[0, 0], [0.3, -20], [0.46, 30], [0.6, -10], [0.8, 5], [1, 0]]), back(8.2), 0] },
-          'leg.L': { rotate: [keys(p, [[0, 11.5], [0.3, -10], [0.46, 30], [0.56, 34], [0.8, 12], [1, 11.5]]), 0, 0] },
-          'leg.R': { rotate: [keys(p, [[0, 9.9], [0.3, -12], [0.46, 28], [0.56, 32], [0.8, 10], [1, 9.9]]), 0, 0] },
-          'shin.L': { rotate: [keys(p, [[0, 0], [0.3, 30], [0.46, 25], [0.6, 20], [1, 0]]), 0, 0] },
-          'shin.R': { rotate: [keys(p, [[0, 0], [0.3, 34], [0.46, 22], [0.6, 18], [1, 0]]), 0, 0] },
+          tail1: { rotate: [keys(p, [[0, 7.6], [0.3, -10], [0.46, 25], [0.66, 20], [1, 7.6]]), back(5.9), 0] },
+          tail2: { rotate: [keys(p, [[0, 8.1], [0.3, -5], [0.46, 15], [0.68, 5], [1, 8.1]]), back(12), 0] },
+          tail3: { rotate: [keys(p, [[0, 0], [0.3, -20], [0.46, 30], [0.68, -10], [0.86, 5], [1, 0]]), back(8.2), 0] },
+          'leg.L': { rotate: [keys(p, [[0, 11.5], [0.3, -10], [0.46, 30], [0.66, 34], [0.86, 12], [1, 11.5]]), 0, 0] },
+          'leg.R': { rotate: [keys(p, [[0, 9.9], [0.3, -12], [0.46, 28], [0.66, 32], [0.86, 10], [1, 9.9]]), 0, 0] },
+          'shin.L': { rotate: [keys(p, [[0, 0], [0.3, 30], [0.46, 25], [0.66, 20], [1, 0]]), 0, 0] },
+          'shin.R': { rotate: [keys(p, [[0, 0], [0.3, 34], [0.46, 22], [0.66, 18], [1, 0]]), 0, 0] },
         };
       },
     });
