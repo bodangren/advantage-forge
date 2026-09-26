@@ -877,7 +877,7 @@
     "reviewedAt": "2026-09-26T19:25:22+00:00"
   },
   "animated-armor": {
-    "overall": 7.9,
+    "overall": 8.1,
     "group": "Enemies",
     "scores": {
       "mockup": 4,
@@ -892,21 +892,21 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. The dark suit has rust specks, a purple scarf, a torn cape, and a broad sword. This pass changed three clips and not the model. In the run, the fist comes up to the belt and the blade points flatter across the front, so the tip stays about 8 cm above the floor. In the attack, the follow-through keeps the right forearm clear of the cuirass. In the death, the cape falls off the collar and lies flat on the floor behind the pile. ./forge check gives result ok and ground ok.",
+    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. This pass changed the model and not the clips. A raised brass brow now follows the dome over the visor slit and turns down at its ends. The cheek plates flare out by up to 2.8 cm at the bottom. A second, low-frequency noise gathers the rust specks into larger patches on the helm dome and the pauldrons, with a faint dark stain around them. The dark steel stays the main value. ./forge check gives result ok (head margin 0.3 cm) and ground ok.",
     "strengths": [
-      "The two cyan eyes on the black visor read at once, also in the 128 px sprites. Nothing inside the helm shows that the suit is empty.",
-      "The slash reads as a real sword cut. The blade rises up and back beside the helm and holds, then cuts across the front with the edge first. The follow-through ends low at the left, and the right forearm stays about 1 cm clear of the cuirass.",
-      "The death tells the story: the eyes flicker out, the sword drops flat, the helm falls off in front and rolls onto its side, the legs splay, and the cape lies flat on the floor behind the pile."
+      "The two cyan eyes on the black visor read at once. The new brass brow puts a shadow line over the visor slit, as in the mockup.",
+      "The rust now reads as weathered plate: speck clusters and dark stains on the helm dome and the pauldrons, with clean steel between them.",
+      "The clips stay as before: the diagonal slash, the loose helm in the hit, and the death where the suit falls apart into a pile."
     ],
     "issues": [
-      "The helm is a smooth round dome. The mockup helm has a raised brow over the visor and cheek plates that flare out.",
-      "The rust specks on the helm dome and the pauldrons are still small and sparse. The suit looks cleaner than the mockup.",
-      "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through. The run carries the blade in a flat guard, which is less menacing than the low carry in the walk."
+      "The brow is brass like the band, so it reads as a thicker lower edge of the band more than as a separate ridge.",
+      "The cheek flare is small. The sword fist passes just under the cheek plates in the attack (0.3 cm margin), so a larger flare needs a change to the attack path.",
+      "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through."
     ],
     "next": [
-      "Give the helm a raised brow ridge over the visor, and flare the cheek plates out as in the mockup.",
-      "Add more rust patches and scratches on the helm dome and the pauldrons."
+      "Move the attack wrist path about 2 cm lower or farther out under the helm rim, then flare the cheek plates more.",
+      "Look at the 128 px sprites to make sure that the rust patches do not turn into noise at sprite size."
     ],
-    "reviewedAt": "2026-09-26T19:28:34+00:00"
+    "reviewedAt": "2026-09-26T21:16:00+00:00"
   }
 }

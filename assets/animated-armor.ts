@@ -67,19 +67,36 @@ const alignY = (s: sdf.Shape, d: V3, p: V3) => {
 /**
  * Rust and wear on dark steel: fine rust specks that gather in patches, thin light scratches, and
  * a few worn, brighter spots. Fine enough to read as texture, not as blotches.
+ * `heavy` (0 to 1) adds a second, lower-frequency noise that gathers the specks into larger rust
+ * patches with a faint rust stain around them. Where that noise is low, the steel stays clean, so
+ * the dark steel stays the main value (about 7 % rust, 7 % half rust, 9 % stain on the helm dome).
  */
-const RUST: readonly [number, number, number] = [0.46, 0.25, 0.14];
-const rusty = (x: number, y: number, z: number, base: readonly [number, number, number]): readonly [number, number, number] => {
-  const patch = noise.fbm(x * 7, y * 7, z * 7, 2);
-  const speck = noise.fbm(x * 70, y * 70, z * 70, 2);
-  if (speck + patch * 0.6 > 0.72) return RUST;
-  if (speck + patch * 0.6 > 0.56) return [base[0] * 0.65 + RUST[0] * 0.35, base[1] * 0.65 + RUST[1] * 0.35, base[2] * 0.65 + RUST[2] * 0.35];
-  // Scratches: thin lines on a slant, only in some places.
-  const sc = Math.abs(Math.sin(x * 150 + y * 90 - z * 60 + noise.fbm(x * 12, y * 12, z * 12, 2) * 4));
-  if (sc > 0.994 && patch < 0.1) return [base[0] * 1.35, base[1] * 1.35, base[2] * 1.35];
-  if (patch < -0.42) return [base[0] * 1.12, base[1] * 1.12, base[2] * 1.12];
-  return base;
-};
+type Rgb = readonly [number, number, number];
+const RUST: Rgb = [0.46, 0.25, 0.14];
+const toRust = (base: Rgb, t: number): Rgb => [base[0] * (1 - t) + RUST[0] * t, base[1] * (1 - t) + RUST[1] * t, base[2] * (1 - t) + RUST[2] * t];
+const wear =
+  (heavy: number) =>
+  (x: number, y: number, z: number, base: Rgb): Rgb => {
+    const patch = noise.fbm(x * 7, y * 7, z * 7, 2);
+    const speck = noise.fbm(x * 70, y * 70, z * 70, 2);
+    const gather = heavy * Math.max(0, noise.fbm(x * 4.5 + 7.3, y * 4.5, z * 4.5 - 3.1, 2) + 0.08);
+    const v = speck + patch * 0.6 + gather * 1.3;
+    if (v > 0.72) return RUST;
+    if (v > 0.56) return toRust(base, 0.35);
+    // Scratches: thin lines on a slant, only in some places.
+    const sc = Math.abs(Math.sin(x * 150 + y * 90 - z * 60 + noise.fbm(x * 12, y * 12, z * 12, 2) * 4));
+    if (sc > 0.994 - 0.003 * heavy && patch < 0.1 + 0.15 * heavy) return [base[0] * 1.35, base[1] * 1.35, base[2] * 1.35];
+    // A faint, dark rust stain around the patches (tarnish, not bright orange).
+    if (gather > 0.18 && patch > 0) {
+      const c = toRust(base, 0.16);
+      return [c[0] * 0.88, c[1] * 0.88, c[2] * 0.88];
+    }
+    if (patch < -0.42) return [base[0] * 1.12, base[1] * 1.12, base[2] * 1.12];
+    return base;
+  };
+const rusty = wear(0);
+const rustMid = wear(0.6);
+const rustHeavy = wear(1);
 const dents = (x: number, y: number, z: number) => 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2);
 
 // Joints (the knight's shoulders and legs). The right forearm points forward and holds the sword
@@ -161,7 +178,7 @@ export default defineAsset({
       .smoothSubtract(0.006, visor)
       .intersect(helmBottom)
       .paintWhere(helmInner.round(0.005), C.steelDark, 0.01)
-      .paintFn(rusty);
+      .paintFn(rustHeavy);
     k.body('helm', helm, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
 
     // Nothing inside: a black void fills the helm, with two glowing eyes on it.
@@ -189,16 +206,22 @@ export default defineAsset({
       .smoothUnion(0.006, plateShell, plateRim)
       .intersect(helmBottom)
       .subtract(slots.intersect(sdf.halfSpace([0, 1, 0], 0.61)))
-      .paintFn(rusty);
+      .paintFn(rustMid);
     k.body('face-plate', facePlate, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
-    // Hinge plates on the cheeks, beside the visor.
+    // Hinge plates on the cheeks, beside the visor. They follow the helm at the top and flare out
+    // at the bottom (the helm surface pushed out by up to 2.8 cm below y = 0.66). The lower edge
+    // stops at y = 0.532, so the plate stays clear of the sword fist's path in the attack.
+    const cheekBase = helmOuter.displace(0.028, (_x, y) => {
+      const t = Math.min(1, Math.max(0, (0.66 - y) / 0.15));
+      return -t * t;
+    });
     const cheeks = hard(
-      helmOuter
+      cheekBase
         .round(0.01)
-        .subtract(helmOuter.round(-0.004))
-        .smoothIntersect(0.006, sdf.box([0.08, 0.2, 0.2], 0.01).rotateY(-40).at(0.2, 0.62, 0.1))
+        .subtract(cheekBase.round(-0.004))
+        .smoothIntersect(0.006, sdf.box([0.08, 0.188, 0.2], 0.01).rotateY(-40).at(0.2, 0.626, 0.1))
         .intersect(helmBottom),
-    ).paintFn(rusty);
+    ).paintFn(rustMid);
     k.body('cheek-plates', cheeks, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
 
     // Brass: the brow band, a strip over the crown, and a diamond plate at the front.
@@ -207,7 +230,31 @@ export default defineAsset({
     const strip = shellOf(helmOuter, 0.012, 0.012)
       .smoothIntersect(0.005, sdf.box([0.052, 0.5, 0.8], 0.008).at(0, 0.98, 0))
       .intersect(sdf.halfSpace([0, -1, 0], -BAND_Y));
-    const bandFront = sdf.raycast(band, [0, BAND_Y + 0.004, 1], [0, 0, -1])!;
+    // The brow: a raised brass ridge along the lower edge of the band. It follows the dome over the
+    // visor slit, overhangs the slit a little, and turns down at its ends toward the cheek plates.
+    const BROW_OUT = 0.024;
+    const brow = shellOf(helmOuter, BROW_OUT, 0.004).smoothIntersect(
+      0.004,
+      sdf
+        .extrude(
+          profile.polygon([
+            [-0.2, BAND_Y - 0.003],
+            [0.2, BAND_Y - 0.003],
+            [0.208, 0.696],
+            [0.19, 0.692],
+            [0.178, BAND_Y - 0.026],
+            [-0.178, BAND_Y - 0.026],
+            [-0.19, 0.692],
+            [-0.208, 0.696],
+          ]),
+          0.3,
+          0.004,
+        )
+        .at(0, 0, 0.27),
+    );
+    // The diamond and its rivet stand on the brow's front face, which is proud of the band.
+    const bandHit = sdf.raycast(band, [0, BAND_Y + 0.004, 1], [0, 0, -1])!;
+    const bandFront: V3 = [bandHit[0], bandHit[1], bandHit[2] + BROW_OUT - 0.012];
     const diamond = sdf
       .extrude(
         profile.polygon([
@@ -221,22 +268,22 @@ export default defineAsset({
       )
       .rotateX(-8)
       .at(bandFront[0], bandFront[1], bandFront[2] - 0.002);
-    k.body('brass', sdf.union(band, strip, diamond).bone('head'), {
+    k.body('brass', sdf.union(band, brow, strip, diamond).bone('head'), {
       color: C.brass,
       roughness: 0.45,
       metalness: 0.8,
       bump: dents,
       detail: 0.004,
     });
-    // Rivets along the band, the strip, the cheek plates, and in the diamond.
+    // Rivets along the band (above the brow), the strip, the cheek plates, and in the diamond.
     const onBand = Array.from({ length: 12 }, (_, i) => {
       const a = ((i - 5.5) / 5.5) * 150 * (Math.PI / 180);
-      const hit = sdf.raycast(band.round(0.001), [Math.sin(a), BAND_Y + 0.004, Math.cos(a) - 0.01], [-Math.sin(a), 0, -Math.cos(a)]);
+      const hit = sdf.raycast(band.round(0.001), [Math.sin(a), BAND_Y + 0.01, Math.cos(a) - 0.01], [-Math.sin(a), 0, -Math.cos(a)]);
       return hit && Math.abs(Math.sin(a)) > 0.12 ? sdf.sphere(0.009).at(...hit) : null;
     }).filter((s): s is sdf.Shape => s !== null);
     const onStrip = [0.8, 0.86, 0.91].map((y) => sdf.sphere(0.009).at(...sdf.raycast(strip.round(0.001), [0, y, 1], [0, 0, -1])!));
     const onCheeks = hard(
-      sdf.union(...[0.57, 0.64, 0.7].map((y) => sdf.sphere(0.009).at(...sdf.raycast(helmOuter.round(0.011), [1, y, 0.12], [-1, 0, 0])!))),
+      sdf.union(...[0.57, 0.64, 0.7].map((y) => sdf.sphere(0.009).at(...sdf.raycast(cheekBase.round(0.011), [1, y, 0.12], [-1, 0, 0])!))),
     );
     k.body('rivets', sdf.union(...onBand, ...onStrip, onCheeks, sdf.sphere(0.01).at(bandFront[0], bandFront[1], bandFront[2] + 0.018)).bone('head'), {
       color: C.rivet,
@@ -329,7 +376,7 @@ export default defineAsset({
         .round(0.003);
     const pauldronPose = (s: sdf.Shape) => s.rotateZ(-26).at(0.162, 0.436, 0);
     const pauldronLocal = sdf.union(lame(1.06), lame(1.2).at(0, -0.036, 0));
-    k.body('pauldrons', pair(pauldronPose(pauldronLocal).bone('upperarm.L')).paintFn(rusty), {
+    k.body('pauldrons', pair(pauldronPose(pauldronLocal).bone('upperarm.L')).paintFn(rustHeavy), {
       color: C.steel,
       roughness: 0.5,
       metalness: 0.75,
