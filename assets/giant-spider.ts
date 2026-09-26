@@ -376,33 +376,37 @@ export default defineAsset({
       },
     });
 
-    // The strike. Rear up (anticipation): the body tips back on the planted back legs, the front
-    // legs rise high and wide, the fangs spread (hold). Lunge: the body drops forward, the front
-    // legs slam down ahead to pin the prey, and the fangs snap shut in the bite. Then it backs off.
+    // The strike. Rear up (anticipation, 0.3 s): the body tips back on the planted back legs, the
+    // front legs rise high and wide, and the fangs spread wide (hold, 0.1 s). Lunge (0.08 s): the
+    // body pitches down 25 degrees and drives forward, the front legs slam down ahead to pin the
+    // prey, and the fangs snap shut. Bite (0.15 s): it presses down with the fangs in. Then it
+    // backs off, and the front feet step back to their rest spots.
     k.animation('attack', {
       duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const rx = keys(p, [[0, 0], [0.3, -30], [0.4, -32], [0.5, 14], [0.6, 12], [1, 0]] as const);
+        const rx = keys(p, [[0, 0], [0.3, -30], [0.4, -32], [0.48, 25], [0.55, 27], [0.63, 26], [1, 0]] as const);
+        // The forward drive stops at 0.16 m: more and the back legs cannot reach their planted tips.
         const move: V3 = [
           0,
-          keys(p, [[0, 0], [0.3, 0.06], [0.4, 0.065], [0.5, -0.03], [0.6, -0.025], [1, 0]] as const),
-          keys(p, [[0, 0], [0.3, -0.05], [0.4, -0.05], [0.5, 0.13], [0.62, 0.12], [1, 0]] as const),
+          keys(p, [[0, 0], [0.3, 0.06], [0.4, 0.065], [0.48, -0.01], [0.55, -0.013], [0.63, -0.01], [1, 0]] as const),
+          keys(p, [[0, 0], [0.3, -0.05], [0.4, -0.05], [0.48, 0.16], [0.55, 0.155], [0.63, 0.15], [1, 0]] as const),
         ];
-        const rear = keys(p, [[0, 0], [0.3, 1], [0.4, 1], [0.48, 0], [1, 0]] as const);
-        const strike = keys(p, [[0.4, 0], [0.5, 1], [0.64, 1], [1, 0]] as const);
-        const open = keys(p, [[0, 0], [0.3, 1], [0.44, 1], [0.5, -0.4], [0.62, -0.4], [0.8, 0], [1, 0]] as const);
+        const rear = keys(p, [[0, 0], [0.3, 1], [0.4, 1], [0.46, 0], [1, 0]] as const);
+        const strike = keys(p, [[0.4, 0], [0.48, 1], [0.63, 1], [1, 0]] as const);
+        const open = keys(p, [[0, 0], [0.3, 1.2], [0.42, 1.4], [0.48, -0.8], [0.55, -0.85], [0.63, -0.8], [0.8, 0], [1, 0]] as const);
         const body = { move, rx };
         const pose: P = {
           body: { move, rotate: [rx, 0, 0] },
-          head: { rotate: [-8 * rear + 10 * strike, 0, 0] },
-          abdomen: { rotate: [14 * rear - 10 * strike, 0, 0] },
+          head: { rotate: [keys(p, [[0, 0], [0.3, -8], [0.4, -9], [0.48, 12], [0.55, 15], [0.63, 14], [1, 0]] as const), 0, 0] },
+          abdomen: { rotate: [14 * rear - 12 * strike, 0, 0] },
           'fang.L': { rotate: [-20 * open, 0, 26 * open] },
           'fang.R': { rotate: [-20 * open, 0, -26 * open] },
         };
         // From the top of the rear-up, legs 0 and 1 blend into planted legs: the front feet slam
-        // down ahead of their rest spots and stay on the ground through the bite and the recovery.
-        const land = keys(p, [[0.4, 0], [0.5, 1]] as const);
+        // down ahead of their rest spots and hold the prey through the bite. In the recovery they
+        // lift and step back, legs 1 a little after legs 0.
+        const land = keys(p, [[0.4, 0], [0.47, 1]] as const);
         const blend = (a: P, b: P): P => {
           const r: P = {};
           for (const n of Object.keys(a)) {
@@ -412,16 +416,18 @@ export default defineAsset({
           }
           return r;
         };
-        const ahead = (i: number, side: 1 | -1, dz: number): V3 => {
+        const pinned = (i: number, side: 1 | -1, dz: number, back: number): V3 => {
           const t = legTip(LEG_ANGLES[i]!);
           const w = side > 0 ? t : mxp(t);
-          return [w[0], w[1], w[2] + dz * strike];
+          const pin = keys(p, [[0.4, 0], [0.47, 1], [0.63 + back, 1], [0.9 + back, 0]] as const);
+          const step = keys(p, [[0.63 + back, 0], [0.76 + back, 1], [0.9 + back, 0]] as const);
+          return [w[0], w[1] + 0.05 * step, w[2] + dz * pin];
         };
         for (const side of [1, -1] as const) {
           // Front legs: raised high and spread wide, then slammed down in front.
-          Object.assign(pose, blend(legPose(0, side, -24 * rear, 62 * rear, -30 * rear), plant(0, side, body, ahead(0, side, 0.07))));
+          Object.assign(pose, blend(legPose(0, side, -24 * rear, 62 * rear, -30 * rear), plant(0, side, body, pinned(0, side, 0.14, 0))));
           // Second legs: lifted a little in the rear-up, then planted.
-          Object.assign(pose, blend(legPose(1, side, -8 * rear, 26 * rear, 12 * rear), plant(1, side, body, ahead(1, side, 0.04))));
+          Object.assign(pose, blend(legPose(1, side, -8 * rear, 26 * rear, 12 * rear), plant(1, side, body, pinned(1, side, 0.08, 0.06))));
           // Back legs: planted; they hold the weight.
           Object.assign(pose, plant(2, side, body));
           Object.assign(pose, plant(3, side, body));
@@ -465,10 +471,17 @@ export default defineAsset({
         const roll = keys(p, [[0.4, 0], [0.78, 1]] as const, 'smooth');
         const twitch = Math.max(0, Math.sin((p - 0.82) * Math.PI * 8)) * Math.max(0, Math.min(1, (p - 0.82) / 0.04)) * Math.max(0, (1 - p) / 0.18);
         const ang = 180 * roll;
-        // Lift the pivot so the curled body clears the ground through the roll.
-        const y = 0.04 * curl * (1 - roll) + 0.13 * Math.sin(roll * Math.PI) + 0.1 * roll;
+        // At the end, pitch the body so the abdomen rests on the ground next to the small eyes. The X
+        // rotation acts after the roll (world axes), so a negative pitch lowers the upturned abdomen.
+        const settle = keys(p, [[0.62, 0], [0.84, 1]] as const);
+        // The pivot height that keeps the curled body on the ground as it rolls: it drops onto its
+        // belly as the legs curl, rolls over the curled knees on its side, and lies on its back on
+        // the small eyes and the abdomen. The keys stay 1 to 2 cm low on purpose: the build's
+        // ground pass raises every frame to exact contact, so the body never floats.
+        const settleY = keys(roll, [[0, -0.045], [0.17, -0.045], [0.33, -0.005], [0.5, 0.055], [0.62, 0.07], [0.75, 0.06], [0.85, 0.068], [1, 0.078]] as const, 'linear');
+        const y = -0.02 * recoil + curl * settleY;
         const pose: P = {
-          body: { move: [0.02 * Math.sin(roll * Math.PI), y, -0.03 * recoil], rotate: [-10 * recoil, 0, -ang] },
+          body: { move: [0.02 * Math.sin(roll * Math.PI), y, -0.03 * recoil], rotate: [-10 * recoil - 3.5 * settle, 0, -ang] },
           head: { rotate: [-12 * recoil + 10 * curl, 0, 0] },
           abdomen: { rotate: [8 * curl, 0, 0] },
           'fang.L': { rotate: [0, 0, 18 * recoil - 8 * curl] },

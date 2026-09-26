@@ -515,7 +515,7 @@
     "reviewedAt": "2026-09-26T20:35:46+00:00"
   },
   "giant-spider": {
-    "overall": 7.6,
+    "overall": 7.9,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -528,24 +528,24 @@
       "technical": 5,
       "gameReady": 4,
       "sprite": 4,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. The rear-up in the attack reads well, but the bite is weak. In the death, the body floats above the ground during the roll. The two items from the last review are still open.",
+    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. The attack now has a strong strike and a held bite. In the death, the body stays on the ground through the roll and lies on the small eyes and the abdomen. The eye colors are still open.",
     "strengths": [
       "The front view is close to the mockup: the heavy brow, the glaring red eyes, the pale fangs, the orange splat, and the small eyeballs on top.",
-      "The 8-direction sprites read clearly at 128 px. The red eyes, the orange leg bands, and the skull on the abdomen show in each direction.",
-      "The rear-up in the attack reads well. The body tips back on the back legs, the front legs rise high and wide, and the fangs spread."
+      "The attack reads: the spider rears up with the fangs wide, then pitches down 25 degrees and drives 16 cm forward in 0.08 s. The front feet slam down ahead, and the bite holds for 0.15 s.",
+      "In the death, the legs curl, the body drops onto its belly, rolls over the curled knees, and lies on its back. A measurement of every frame shows ground contact with no float."
     ],
     "issues": [
-      "The lunge in the attack is weak. The body pitches only 14 degrees and moves 13 cm forward, and the small fangs close with little movement. From t = 0.5 s, the frames look almost like the rest pose, so the bite does not read.",
-      "In the death, the curled body floats clearly above the ground during the roll (t = 0.75 to 0.94 s). The pivot lift in the pose, 0.13 * sin(roll * PI) + 0.1 * roll, is too large.",
-      "At the end of the death, the body rests on the small eyes, and the abdomen stays above the ground. The big eyes still show a large red iris (cap 0.062 on an eye radius of 0.08) and a thin white ring."
+      "The big eyes still show a large red iris (cap 0.062 on an eye radius of 0.08) and a thin white ring.",
+      "The forward drive in the attack stops at 16 cm, not 20 cm. More drive pulls the back legs beyond their reach, and the back feet then slide.",
+      "In the attack strip, the fang snap is hard to see from the side, because the low head hides the fangs at the bite."
     ],
     "next": [
-      "Fix the death roll. Lower the pivot lift so that the curled body touches the ground through the roll. At the end, pitch the body so that the abdomen also touches the ground. This item from the last review is still open.",
-      "Make the bite read. Give a deeper and faster lunge (about 25 degrees and 20 cm forward), a larger fang snap, and a short hold before the recovery. The item for whiter eyes with a smaller red iris is still open, but it has a lower value."
+      "Fix the eye colors: a smaller red iris and a wider white ring, as in the mockup.",
+      "Check the fang snap in a front view of the attack. If it does not read, open the fangs wider at the top of the rear-up."
     ],
-    "reviewedAt": "2026-09-26T19:14:03+00:00"
+    "reviewedAt": "2026-09-26T20:44:37+00:00"
   },
   "dragon-fire": {
     "overall": 8,
