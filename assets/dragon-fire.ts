@@ -20,8 +20,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   strongest contrast (focal point); the cream belly is the biggest light mass.
  * Bodies: scales, belly, horns, crest, crest-red, wing-membranes, wing-bones, claws, teeth, brows.
  * Rig: chibi humanoid (hips, spine, chest, neck, head, arms, legs) plus `wing.L`/`wing.R` and a
- *   three-bone tail. Clips: idle (breathing, wing flutter, tail sway), walk (a waddle), run, and
- *   attack (a roar: rear back, then lunge forward with the wings flared).
+ *   three-bone tail. Clips: idle (breathing, wing flutter, tail sway), walk (a waddle), run, fly
+ *   (a hovering wing beat), and attack (a roar: rear back, then lunge forward with the wings flared).
  */
 
 const C = {
@@ -401,6 +401,35 @@ export default defineAsset({
     });
     k.animation('walk', stride(0.8, 26, 6, 3, 0, 12));
     k.animation('run', stride(0.5, 36, 7, 10, 0.02, 24));
+
+    // Flying: lifted off the ground and tilted forward, the wings beat through a full stroke,
+    // the body rises on each downstroke, the legs dangle back, and the tail trails and waves.
+    k.animation('fly', {
+      duration: 0.6,
+      pose: (_t, p) => {
+        const beat = wave(p); // +1 at the top of the upstroke
+        const rise = wave(p, 1, 0.25); // the body lags the wings by a quarter beat
+        return {
+          hips: { move: [0, 0.36 + 0.035 * rise, 0], rotate: [14, 0, 0] },
+          spine: { rotate: [4, 0, 0] },
+          chest: { rotate: [2 * rise, 0, 0] },
+          head: { rotate: [-16 - 2 * rise, 0, 0] },
+          'wing.L': { rotate: [0, 6 * rise, 10 + 42 * beat] },
+          'wing.R': { rotate: [0, -6 * rise, -10 - 42 * beat] },
+          'upperarm.L': { rotate: [-18, 0, 0] },
+          'upperarm.R': { rotate: [-18, 0, 0] },
+          'forearm.L': { rotate: [-30, 0, 0] },
+          'forearm.R': { rotate: [-30, 0, 0] },
+          'leg.L': { rotate: [28 + 4 * rise, 0, 4] },
+          'leg.R': { rotate: [28 + 4 * rise, 0, -4] },
+          'foot.L': { rotate: [30, 0, 0] },
+          'foot.R': { rotate: [30, 0, 0] },
+          tail1: { rotate: [18 + 5 * wave(p, 1, 0.35), 0, 0] },
+          tail2: { rotate: [6 + 8 * wave(p, 1, 0.5), 6 * wave(p, 1, 0.4), 0] },
+          tail3: { rotate: [8 * wave(p, 1, 0.65), 10 * wave(p, 1, 0.55), 0] },
+        };
+      },
+    });
 
     // A roar: rear back with the head up and the wings raised, then lunge forward, jaws first,
     // with the wings flared wide, and settle.
