@@ -363,5 +363,37 @@
       "Make the helmet steel lighter, with the patina in patches."
     ],
     "reviewedAt": "2026-09-26T04:49:52+00:00"
+  },
+  "orc-warrior": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The orc warrior is a stocky brute that is all shoulders and arms, with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a hand axe, as in the mmx mockup.",
+    "strengths": [
+      "The yellow eyes under heavy black brows, the big tusks, and the pointed beard make a strong scowl at 128 px.",
+      "The wide shoulders, big bracers, and spiked pauldron give it a heavier silhouette than the goblins, so the two kinds read apart.",
+      "The heavy walk shifts the weight from side to side, and the axe chop has a high wind-up."
+    ],
+    "issues": [
+      "The hair stripes look like a knit cap. The mockup hair is combed back in thick strands.",
+      "The loincloth is two plain red flaps. The mockup has a shaggy, torn red cloth.",
+      "The skin is a little brighter and greener than the olive skin in the mockup."
+    ],
+    "next": [
+      "Replace the painted hair stripes with shallow grooves that sweep back to the topknot.",
+      "Give the loincloth more torn points and a darker, shaggier edge."
+    ],
+    "reviewedAt": "2026-09-26T05:01:27+00:00"
   }
 }
