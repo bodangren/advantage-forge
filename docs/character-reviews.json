@@ -778,7 +778,7 @@
     "reviewedAt": "2026-09-26T18:57:46+00:00"
   },
   "giant-rat": {
-    "overall": 8,
+    "overall": 7.5,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -791,24 +791,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 4
+      "motion": 3
     },
-    "summary": "The giant rat matches its mmx mockup: a fat, hunched rat on its hind legs with huge round pink-lined ears, bulging red eyes under angry brows, a pink nose, a jagged yellow grin with buck teeth, pale head spikes, gray back tufts, a red neckerchief, and a long ringed tail with a bandage.",
+    "summary": "The giant rat matches the front of its mmx mockup: round pink-lined ears, red eyes under angry brows, a pink nose, buck teeth, head spikes, back tufts, a red neckerchief, and a ringed tail. The death reads well, but the attack does not read as a bite.",
     "strengths": [
-      "The round ears, the head spikes, the back tufts, and the long tail give a clear silhouette from every side.",
-      "The white eyes with red irises and the pink nose on the cream muzzle read at 128 px in the front sprites.",
-      "The walk is a side-to-side waddle, and the attack raises the claws beside the head, then lunges into a bite and a rake."
+      "The round ears, the head spikes, the back tufts, and the long tail give a clear silhouette from every side and in all 8 sprite directions.",
+      "The red eyes under the angry brows, the pink nose, and the buck teeth on the cream muzzle read at 128 px in the front sprites.",
+      "The death has a recoil with the arms up, a fall onto the back, and one kick. Then the rat lies still with the paws up, above the ground."
     ],
     "issues": [
-      "In the side view the snout is shorter and flatter than the mockup, so the profile is less pointed.",
-      "The body stands more upright than the mockup; the mockup leans forward with the head ahead of the belly.",
-      "The belly and the fur are smooth; the mockup has a wrinkled belly and shaggier fur."
+      "The attack does not read as a real rat bite. The rig has no jaw bone, so the jaws never open and never snap shut. The teeth stay in one fixed grin.",
+      "The wind-up leans the body back with the claws beside the head: a rear-up, not a crouch. In the lunge, the feet stay planted and the hips move only 6 cm, so there is no dart. The recovery is correct.",
+      "In the side view, the snout is still short and flat, and the body stands upright. The sides and the belly are smooth, with no fur clumps or folds. In the death, the rat stops in the rest pose for about 0.2 s before the fall."
     ],
     "next": [
-      "Push the snout and the nose 0.03 m forward, and lean the chest and the head forward a little.",
-      "Add fur clumps in the bump along the sides and a few belly folds in the paint."
+      "Make the attack a real bite. Add a lower jaw on a jaw bone. Crouch low on bent legs, dart the hips about 15 cm forward with the jaws open, snap the jaws shut, then recover.",
+      "Push the snout and the nose 0.03 m forward, and lean the chest and the head forward. Add fur clumps along the sides and belly folds in the paint. The old review asked for these changes, and they are still open."
     ],
-    "reviewedAt": "2026-09-26T09:42:16+00:00"
+    "reviewedAt": "2026-09-26T19:20:28+00:00"
   },
   "giant-bat": {
     "overall": 8,
