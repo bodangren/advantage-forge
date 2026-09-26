@@ -647,7 +647,7 @@
     "reviewedAt": "2026-09-26T20:32:23+00:00"
   },
   "guard": {
-    "overall": 7.5,
+    "overall": 7.8,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -662,22 +662,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The town guard matches the mmx mockup in form. He has a kettle helmet with a crest, a brown mustache, and a blue tabard with a gold tower over mail. He also has steel pauldrons, steel gauntlets, and a spear with a teal swallowtail pennant. He has idle, walk, run, attack (a spear thrust), hit, death, and salute (a fist to the chest). The face and the colors still differ from the mockup.",
+    "summary": "The town guard matches the mmx mockup in form. He has a kettle helmet with a crest, a brown mustache, and a blue tabard with a gold tower over mail. He has steel pauldrons, steel gauntlets, and a spear with a teal swallowtail pennant. The thrust now uses two hands in a side-on stance, with a draw back of about 10 cm. The face and the colors still differ from the mockup.",
     "strengths": [
       "The kettle helmet with the crest, the gold tower on the tabard, the belt with the gold buckle, and the teal swallowtail pennant match the mockup.",
-      "The face reads at 128 px in the S, SW, and SE sprites. The large eyes, the brows, and the brown mustache are clear under the brim.",
-      "The thrust drives the spear straight along the shaft with a step and a forward lean, holds it, and brings it back upright. The pennant trails under the level haft."
+      "The thrust reads in the strip. The guard turns side-on, the left hand holds the haft ahead of the right hand, the spear draws back about 10 cm, and then drives along the shaft with a step and a forward lean.",
+      "The clips are clean. The check gives result ok and ground ok, and no gauntlet goes into the body in the attack. In the run, the forearm lifts the spear, so the butt stays above the ground."
     ],
     "issues": [
       "The nose is small, and the mustache is flat and wide. The mockup has a large round nose and mustache tips that curl up. The steel is bright silver (#9aa0a8), not gunmetal, and the tabard is sky blue (#6aa2c0), not teal blue.",
-      "The thrust drives straight along the shaft and recovers, but the draw back is only 2.5 cm, so it does not show. One hand holds the spear. The salute reads: the fist stops on the chest over the gold tower, but the forearm stays inside the body outline.",
-      "In the run, the spear butt goes 2.3 cm below the ground at phase 0.65 to 0.82, so the ground check fails. The right vambrace goes 0.4 cm into the tabard in the attack and the death."
+      "The chibi left arm is short. In the drive, the haft slides through the left hand, and the left shoulder moves forward up to 4.5 cm. The hand spacing changes from 0.20 to 0.36 m.",
+      "The right vambrace goes 0.4 cm into the tabard at phase 0.43 of the death. In the salute, the forearm stays inside the body outline."
     ],
     "next": [
-      "Fix the clips. Keep the spear butt above the ground in the run at phase 0.65 to 0.82. Make the draw back in the thrust about 10 cm.",
-      "Make the nose larger and rounder, and curl the mustache tips up. Darken the steel toward gunmetal (about #70767e), and move the tabard toward teal blue (about #4a93a6). These items are still open from the last review."
+      "Make the nose larger and rounder, and curl the mustache tips up. Darken the steel toward gunmetal (about #70767e), and move the tabard toward teal blue (about #4a93a6).",
+      "Move the right elbow out in the death at phase 0.43, so the vambrace clears the tabard."
     ],
-    "reviewedAt": "2026-09-26T19:05:39+00:00"
+    "reviewedAt": "2026-09-26T20:41:09+00:00"
   },
   "skeleton-mage": {
     "overall": 8.2,

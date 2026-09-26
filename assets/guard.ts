@@ -477,7 +477,7 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flap: number) => ({
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flap: number, carry = 0) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -497,43 +497,61 @@ export default defineAsset({
           'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
-          // The spear arm swings little; the hand keeps the spear upright.
+          // The spear arm swings little; the hand keeps the spear upright. `carry` bends the forearm
+          // up and lifts the spear with its tilt unchanged, so in the run the butt clears the ground.
           'upperarm.R': { rotate: [-armSwing * 0.25 * s, 0, -3] as const },
-          'hand.R': { rotate: [armSwing * 0.25 * s, 0, 0] as const },
+          'forearm.R': { rotate: [-carry, 0, 0] as const },
+          'hand.R': { rotate: [armSwing * 0.25 * s + carry, 0, 0] as const },
         };
       },
     });
     k.animation('walk', stride(0.9, 26, 26, 3, 0, 24));
-    k.animation('run', stride(0.56, 40, 44, 12, 0.03, 48));
+    k.animation('run', stride(0.56, 40, 44, 12, 0.03, 48, 36));
 
-    // A spear thrust, solved by targets in the world frame. The spear lowers to a level guard with
-    // the rear (right) hand at the hip, and the body turns right. Then the front (left) foot steps
-    // in, the hips drop, and the wrist drives straight along the spear's own line toward a target
-    // in front at chest height. The spear pulls back to the guard and returns to rest. The chibi
-    // left arm is too short to reach a haft on the right side, so it aims in the guard and swings
-    // back for balance in the thrust. The pennant keeps its own world frame: it hangs down, trails
-    // back behind the spear head in the drive, and swings forward when the spear stops.
+    // A two-hand spear thrust, solved by targets in the world frame. The guard turns side-on to the
+    // right, the left shoulder forward, the spear level at the belly: the rear (right) hand in front
+    // of the right hip, the lead (left) hand on the haft a quarter meter ahead. The rear hand draws
+    // the spear back 10 cm and the chest turns further. Then the front (left) foot steps in, the
+    // hips drop, the body unwinds a little, and the rear hand drives the wrist straight along the
+    // spear's own line toward a target in front at chest height. The lead hand guides: it holds the
+    // haft, and the haft slides through it where the short chibi arm cannot follow (its shoulder
+    // reaches forward up to 4.5 cm). The spear pulls back to the guard and returns to rest. The
+    // pennant keeps its own world frame: it hangs down, trails back behind the spear head in the
+    // drive, and swings forward when the spear stops.
     const { keys, reach, orient, follow, quat, euler } = motion;
     const DEG = Math.PI / 180;
     const O: V3 = [0, 0, 0];
     const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
     const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
     const mul = (a: V3, s: number): V3 => [a[0] * s, a[1] * s, a[2] * s];
+    const dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
     const unit = (a: V3): V3 => mul(a, 1 / Math.hypot(a[0], a[1], a[2]));
     const turn = (r: readonly V3[], v: V3): V3 => follow(r.map(() => O), r, v);
     const HIPS: V3 = [0, 0.2, 0];
     const SPINE: V3 = [0, 0.26, 0];
     const CHEST: V3 = [0, 0.33, 0];
     const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const ARM_CHAIN_R = [HIPS, SPINE, CHEST, mx(SHOULDER), ELBOW_R, WRIST_R] as const;
+    const FIST_L: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.04, WRIST_L[2] + 0.004]; // the left fist's center
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: FIST_L }; // to the fist; the hand stays in line
     const SPEAR_DIR: V3 = [-Math.sin(3 * DEG), Math.cos(3 * DEG), 0];
     const FINGERS: V3 = [0, 0, 1]; // the fingers and the blade's flat face forward at rest
     const PEN_DIR = unit(sub(pennantTail, PENNANT_AT));
     const PEN_FACE: V3 = [-Math.sin(22 * DEG), 0, Math.cos(22 * DEG)]; // the flag's face (rotateY(-22))
     const AIM = unit([0.12, 0.05, 1]); // toward a target in front at chest height
     const PALM = unit([0.5, -0.85, 0]); // the rear hand holds the level spear palm up
-    const GUARD: V3 = [-0.225, 0.27, -0.015]; // the rear wrist at the hip
+    const GUARD: V3 = [-0.22, 0.34, -0.1]; // the rear wrist in front of the right hip, side-on
+    const DRAW = 0.13; // the target; the arm's reach limit makes the draw back about 0.10
+    const POLE_R: V3 = [-0.54, 0.28, -0.12]; // the right elbow out, so the gauntlet clears the tabard
+    const POLE_L: V3 = [0.6, 0.3, 0.5]; // the left elbow out and forward, clear of the chest
+    const LEAD = 0.25; // the lead hand on the haft, ahead of the rear grip
+    const FOLD = 0.17; // the lead fist stays this far from its shoulder, so the elbow never folds in
+    const REACH_L = Math.hypot(...sub(ELBOW_L, SHOULDER)) + Math.hypot(...sub(FIST_L, ELBOW_L)) - 0.004;
+    const PROTRACT = 0.045; // how far the left shoulder may reach forward
+    const CHANNEL: V3 = [0, 0, 1]; // the grip channel through the left fist at rest
+    const FOREARM_L = unit(sub(ELBOW_L, FIST_L)); // from the fist back to the elbow
     const HOLD = 0.28; // the guard is set
-    const COIL = 0.36;
+    const COIL = 0.4; // the draw back, held long enough to read
     const DRIVE = 0.47; // full extension
     const STAY = 0.58;
     const BACK = 0.74; // back in the guard
@@ -541,8 +559,9 @@ export default defineAsset({
       duration: 0.9,
       loop: false,
       pose: (_t, p) => {
-        // The body: a right turn in the guard, unwinding in the drive; a forward lean in the drive.
-        const yaw = keys(p, [[0, 0], [HOLD, -30], [COIL, -34], [DRIVE, 4], [STAY, 2], [BACK, -26], [1, 0]] as const);
+        // The body: a side-on right turn in the guard, more in the coil, unwinding a little in the
+        // drive (the short lead arm keeps the stance side-on); a forward lean in the drive.
+        const yaw = keys(p, [[0, 0], [HOLD, -70], [COIL, -78], [DRIVE, -60], [STAY, -62], [BACK, -66], [1, 0]] as const);
         const lean = keys(p, [[0, 0], [HOLD, -3], [COIL, -5], [DRIVE, 12], [STAY, 10], [BACK, -2], [1, 0]] as const);
         const hipZ = keys(p, [[0, 0], [HOLD, -0.008], [COIL, -0.012], [DRIVE, 0.065], [STAY, 0.065], [BACK, -0.008], [1, 0]] as const);
         // The feet: the rear foot slides back once and stays; the front foot steps in and back.
@@ -559,25 +578,48 @@ export default defineAsset({
         const undo = euler(quat(rh).multiply(quat(rs)).multiply(quat(rc)).invert());
         const toChest = (w: V3): V3 => add(CHEST, turn([undo], sub(w, chestAt)));
 
-        // The rear wrist: rest, the guard at the hip, a short coil, the drive along AIM, back.
+        // The rear wrist: rest, the guard, the draw back, the drive along AIM, back.
         const wrist = keys(
           p,
           [
             [0, WRIST_R],
             [HOLD, GUARD],
-            [COIL, add(GUARD, mul(AIM, -0.025))],
-            [DRIVE, add(GUARD, mul(AIM, 0.25))],
-            [STAY, add(GUARD, mul(AIM, 0.24))],
+            [COIL, add(GUARD, mul(AIM, -DRAW))],
+            [DRIVE, add(GUARD, mul(AIM, 0.16))],
+            [STAY, add(GUARD, mul(AIM, 0.15))],
             [BACK, GUARD],
             [1, WRIST_R],
           ] as const,
         );
         const dir = unit(keys(p, [[0, SPEAR_DIR], [HOLD, AIM], [BACK, AIM], [1, SPEAR_DIR]] as const));
         const up = unit(keys(p, [[0, FINGERS], [HOLD, PALM], [BACK, PALM], [1, FINGERS]] as const));
-        const pole = keys(p, [[0, ELBOW_R], [HOLD, [-0.36, 0.3, -0.1]], [BACK, [-0.36, 0.3, -0.1]], [1, ELBOW_R]] as const);
-        const arm = reach(ARM_R, toChest(wrist), pole);
+        const pole = keys(p, [[0, ELBOW_R], [HOLD, POLE_R], [BACK, POLE_R], [1, ELBOW_R]] as const);
+        // In the pull back, the rear wrist passes a little out to the right of the chest.
+        const wide = mul([-0.035, 0, 0.01], keys(p, [[STAY, 0], [0.645, 1], [BACK, 0]] as const));
+        const arm = reach(ARM_R, add(toChest(wrist), wide), pole);
         const chain = [rh, rs, rc, arm.upper, arm.lower];
         const hand = orient(chain, { dir: SPEAR_DIR, up: FINGERS }, { dir, up });
+
+        // The lead hand: the point on the haft LEAD ahead of the rear grip. The haft slides through
+        // the hand where that point is too near the shoulder (FOLD) or out of reach; past the reach
+        // the hand takes the nearest point, and the shoulder reaches forward for the rest.
+        const grip = add(lift, follow(ARM_CHAIN_R, [...chain, hand], GRIP));
+        const shL = add(lift, follow([HIPS, SPINE, CHEST], [rh, rs, rc], SHOULDER));
+        const q = sub(grip, shL);
+        const b = dot(q, dir);
+        const root = (r: number) => -b + Math.sqrt(Math.max(0, b * b - dot(q, q) + r * r)); // the far point at distance r
+        const h = Math.min(Math.max(LEAD, root(FOLD)), root(REACH_L));
+        const on = keys(p, [[0.04, 0], [HOLD, 1], [BACK, 1], [0.96, 0]] as const);
+        const onHaftC = toChest(add(grip, mul(dir, h)));
+        const toHaft = sub(onHaftC, SHOULDER);
+        const shift = mul(unit(toHaft), on * Math.min(PROTRACT, Math.max(0, Math.hypot(...toHaft) - REACH_L)));
+        // On the way to the haft and back, the fist first swings out and forward, clear of the belt
+        // and the tabard, and then comes in to the haft.
+        const fistTo = add(lerp(FIST_L, sub(onHaftC, shift), on * on), mul([0.03, 0.03, 0.1], Math.sin(Math.PI * on)));
+        const armL = reach(ARM_L, fistTo, lerp(ELBOW_L, POLE_L, on));
+        const chainL = [rh, rs, rc, armL.upper, armL.lower];
+        // The haft runs through the fist; the fist stays in line with the forearm.
+        const handL = orient(chainL, { dir: CHANNEL, up: FOREARM_L }, { dir: unit(lerp(turn(chainL, CHANNEL), dir, on)), up: turn(chainL, FOREARM_L) });
 
         // The pennant: it turns under the level haft, its tails down and its body behind the tie,
         // and trails back with the speed of the spear head.
@@ -599,15 +641,9 @@ export default defineAsset({
           'forearm.R': { rotate: arm.lower },
           'hand.R': { rotate: hand },
           pennant: { rotate: pennant },
-          // The free left arm aims forward in the guard and swings back in the drive.
-          'upperarm.L': {
-            rotate: [
-              keys(p, [[0, 0], [HOLD, -50], [COIL, -46], [DRIVE, 28], [STAY, 24], [BACK, -40], [1, 0]] as const),
-              0,
-              keys(p, [[0, 0], [HOLD, 12], [COIL, 14], [DRIVE, 24], [STAY, 22], [BACK, 12], [1, 0]] as const),
-            ],
-          },
-          'forearm.L': { rotate: [keys(p, [[0, 0], [HOLD, -40], [COIL, -40], [DRIVE, -12], [STAY, -12], [BACK, -35], [1, 0]] as const), 0, 0] },
+          'upperarm.L': { rotate: armL.upper, move: shift },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
           'leg.L': { rotate: [legL, 0, 0] },
           'leg.R': { rotate: [legR, 0, 0] },
           'foot.L': { rotate: [-legL, 0, 0] },
@@ -619,9 +655,6 @@ export default defineAsset({
     // ------------------------------------------------------------------ hit, death, salute
     // Shared by the one-shot clips: joints, the chest's rest frame for a body pose (where `reach`
     // works), world points on a bone chain, and the pennant's world orientation.
-    const ARM_CHAIN_R = [HIPS, SPINE, CHEST, mx(SHOULDER), ELBOW_R, WRIST_R] as const;
-    const FIST_L: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.04, WRIST_L[2] + 0.004]; // the left fist's center
-    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: FIST_L }; // to the fist; the hand stays in line
     const clamp1 = (v: number) => Math.max(-1, Math.min(1, v));
     const toChestOf = (lift: V3, rh: V3, rs: V3, rc: V3) => {
       const at = add(lift, follow([HIPS, SPINE, CHEST], [rh, rs, rc], CHEST));
