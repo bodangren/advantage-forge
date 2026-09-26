@@ -24,22 +24,7 @@ export function groundClip(
   if (meshes.length === 0 || !times) return clip;
   const skeletons = [...new Set(meshes.map((m) => m.skeleton))];
   const toRest = () => skeletons.forEach((s) => s.pose());
-  const v = new THREE.Vector3();
-  const lowest = () => {
-    root.updateMatrixWorld(true);
-    let min = Infinity;
-    for (const m of meshes) {
-      const pos = m.geometry.getAttribute('position');
-      const stride = Math.max(1, Math.floor(pos.count / 1500));
-      for (let j = 0; j < pos.count; j += stride) {
-        v.fromBufferAttribute(pos, j);
-        m.applyBoneTransform(j, v);
-        v.applyMatrix4(m.matrixWorld);
-        if (v.y < min) min = v.y;
-      }
-    }
-    return min;
-  };
+  const lowest = () => lowestPoint(root, meshes).min;
 
   toRest();
   const rest = lowest();
@@ -78,4 +63,39 @@ export function groundClip(
   const out = new THREE.AnimationClip(clip.name, clip.duration, tracks);
   out.userData = { ...clip.userData, grounded: Math.max(...lift) };
   return out;
+}
+
+/** Posed meshes smaller than this (meters, largest side) are hidden: their bone is scaled to 0. */
+const HIDDEN = 0.005;
+
+/**
+ * The lowest posed point of `meshes` (about 1500 sampled vertices each) and the mesh it is on.
+ * A mesh that a clip hides by scaling its bone to about 0 (a nocked arrow after the release, a
+ * flame that goes out) collapses to a point at the bone; it does not count.
+ */
+export function lowestPoint(root: THREE.Object3D, meshes: readonly THREE.SkinnedMesh[]): { min: number; part: string } {
+  root.updateMatrixWorld(true);
+  const v = new THREE.Vector3();
+  const box = new THREE.Box3();
+  const size = new THREE.Vector3();
+  let min = Infinity;
+  let part = '';
+  for (const m of meshes) {
+    const pos = m.geometry.getAttribute('position');
+    const stride = Math.max(1, Math.floor(pos.count / 1500));
+    box.makeEmpty();
+    for (let j = 0; j < pos.count; j += stride) {
+      v.fromBufferAttribute(pos, j);
+      m.applyBoneTransform(j, v);
+      v.applyMatrix4(m.matrixWorld);
+      box.expandByPoint(v);
+    }
+    box.getSize(size);
+    if (Math.max(size.x, size.y, size.z) < HIDDEN) continue;
+    if (box.min.y < min) {
+      min = box.min.y;
+      part = m.name;
+    }
+  }
+  return { min, part };
 }

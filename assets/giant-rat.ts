@@ -526,7 +526,7 @@ export default defineAsset({
     });
 
     type R3 = [number, number, number];
-    const kf = (p: number, list: readonly (readonly [number, number])[]) => motion.keys<number>(p, list);
+    const kf = (p: number, list: readonly (readonly [number, number])[]) => motion.keys(p, list);
     const DEG = Math.PI / 180;
     // Arms up: the wrists go up and out beside the head (clear of the cheeks and the whiskers), the
     // elbows out and down. The pole keeps the rest elbow in the bend plane, so t = 0 is the rest pose.

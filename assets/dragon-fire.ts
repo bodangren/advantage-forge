@@ -505,7 +505,7 @@ export default defineAsset({
       duration: 1.4,
       loop: false,
       pose: (_t, p) => {
-        const k3 = (list: [number, R3][]) => keys<R3>(p, list);
+        const k3 = (list: [number, R3][]) => keys(p, list) as R3;
         const roar = keys(p, [[0.14, 0], [0.2, 1], [0.3, 1], [0.36, 0]]);
         const shake = roar * wave(p, 9) * 5;
         const hipsX = keys(p, [[0, 0], [0.2, -10], [0.32, -8], [0.5, 8], [0.72, 0], [1, 0]]);

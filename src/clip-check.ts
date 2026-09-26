@@ -3,6 +3,7 @@ import { collectBodies, meshOptions, type AssetDefinition } from './asset.js';
 import type { AnimationDef, SkeletonDef } from './rig.js';
 import type { Vec3 } from './sdf/core.js';
 import { meshSdf } from './sdf/mesher.js';
+import { lowestPoint } from './grounding.js';
 
 /**
  * Clip clearance: does a held item (a weapon, a shield, a staff, a bow) pass through the head or
@@ -345,26 +346,7 @@ export function checkGround(root: THREE.Object3D, options: { fps?: number; toler
     if ((o as THREE.SkinnedMesh).isSkinnedMesh) meshes.push(o as THREE.SkinnedMesh);
   });
   if (meshes.length === 0) return { rest: 0, sinks: [], tolerance, ok: true };
-  const v = new THREE.Vector3();
-  const lowest = () => {
-    root.updateMatrixWorld(true);
-    let min = Infinity;
-    let part = '';
-    for (const m of meshes) {
-      const pos = m.geometry.getAttribute('position');
-      const stride = Math.max(1, Math.floor(pos.count / 1500));
-      for (let j = 0; j < pos.count; j += stride) {
-        v.fromBufferAttribute(pos, j);
-        m.applyBoneTransform(j, v);
-        v.applyMatrix4(m.matrixWorld);
-        if (v.y < min) {
-          min = v.y;
-          part = m.name;
-        }
-      }
-    }
-    return { min, part };
-  };
+  const lowest = () => lowestPoint(root, meshes);
   const skeletons = [...new Set(meshes.map((m) => m.skeleton))];
   const toRest = () => skeletons.forEach((s) => s.pose());
   toRest();

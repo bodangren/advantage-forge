@@ -138,6 +138,10 @@ type Key<T> = readonly [number, T];
  * weapon path that must keep its speed through the strike. Before the first key and after the
  * last, the value holds.
  */
+// The overloads widen the value type: with `as const` keys, a generic T would be inferred from
+// the first key's literal values and reject the others.
+export function keys(phase: number, list: readonly Key<number>[], mode?: 'smooth' | 'spline' | 'linear'): number;
+export function keys(phase: number, list: readonly Key<Vec3>[], mode?: 'smooth' | 'spline' | 'linear'): Vec3;
 export function keys<T extends number | Vec3>(phase: number, list: readonly Key<T>[], mode: 'smooth' | 'spline' | 'linear' = 'smooth'): T {
   const n = list.length;
   if (phase <= list[0]![0]) return list[0]![1];
