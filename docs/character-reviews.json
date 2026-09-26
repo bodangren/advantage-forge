@@ -778,7 +778,7 @@
     "reviewedAt": "2026-09-26T19:31:46+00:00"
   },
   "giant-rat": {
-    "overall": 7.5,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -791,24 +791,24 @@
       "technical": 5,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The giant rat matches the front of its mmx mockup: round pink-lined ears, red eyes under angry brows, a pink nose, buck teeth, head spikes, back tufts, a red neckerchief, and a ringed tail. The death reads well, but the attack does not read as a bite.",
+    "summary": "The giant rat matches the front of its mmx mockup: round pink-lined ears, red eyes under angry brows, a pink nose, buck teeth, head spikes, back tufts, a red neckerchief, and a ringed tail. The attack is now a real bite: a crouch, a dart with the jaws open, and a hard snap.",
     "strengths": [
       "The round ears, the head spikes, the back tufts, and the long tail give a clear silhouette from every side and in all 8 sprite directions.",
-      "The red eyes under the angry brows, the pink nose, and the buck teeth on the cream muzzle read at 128 px in the front sprites.",
-      "The death has a recoil with the arms up, a fall onto the back, and one kick. Then the rat lies still with the paws up, above the ground."
+      "A lower jaw on a jaw bone opens 35 degrees in the dart. The open mouth shows a dark inside, a tongue, lower teeth, and the buck teeth. At rest the grin looks the same as before.",
+      "The attack has a crouch with the claws back beside the chest, a 15 cm dart with a step of the left foot, a claw rake, and a snap with a nod down. IK keeps the feet planted, and the back foot rolls onto its toes."
     ],
     "issues": [
-      "The attack does not read as a real rat bite. The rig has no jaw bone, so the jaws never open and never snap shut. The teeth stay in one fixed grin.",
-      "The wind-up leans the body back with the claws beside the head: a rear-up, not a crouch. In the lunge, the feet stay planted and the hips move only 6 cm, so there is no dart. The recovery is correct.",
-      "In the side view, the snout is still short and flat, and the body stands upright. The sides and the belly are smooth, with no fur clumps or folds. In the death, the rat stops in the rest pose for about 0.2 s before the fall."
+      "In the side view, the snout is still short and flat, and the body stands upright. The sides and the belly are smooth, with no fur clumps or folds.",
+      "A faint seam line shows on the chin below the grin corners at close zoom, where the jaw separates from the head. It does not show at sprite size.",
+      "The tail slides 15 cm on the ground with the hips during the dart. In the crouch, the hands fold back with the claws up, which reads less clearly in the side view."
     ],
     "next": [
-      "Make the attack a real bite. Add a lower jaw on a jaw bone. Crouch low on bent legs, dart the hips about 15 cm forward with the jaws open, snap the jaws shut, then recover.",
-      "Push the snout and the nose 0.03 m forward, and lean the chest and the head forward. Add fur clumps along the sides and belly folds in the paint. The old review asked for these changes, and they are still open."
+      "Push the snout and the nose 0.03 m forward, and lean the chest and the head forward. Add fur clumps along the sides and belly folds in the paint.",
+      "Use the jaw in the other clips: a squeal with the mouth open in the hit, a small chew in the idle sniff, and a slack jaw in the death."
     ],
-    "reviewedAt": "2026-09-26T19:20:28+00:00"
+    "reviewedAt": "2026-09-26T20:49:05+00:00"
   },
   "giant-bat": {
     "overall": 7.5,

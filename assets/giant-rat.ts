@@ -18,10 +18,12 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   as the accents.
  * Value plan: the white eyes with red irises and the pink nose on the cream muzzle are the
  *   strongest contrast (focal point); the light belly is the second mass; the dark back frames it.
- * Bodies: fur, pink, eyes, teeth, spikes, claws, whiskers, neckerchief, bandage.
- * Rig: hips, spine, chest, neck, head, arms, legs with shins and feet, and a three-bone tail.
- *   Clips: idle (breathing, sniffing), walk (a waddle), run (a low scurry), attack (lunge, bite,
- *   and claw rake), hit (a squeal, arms up), death (a stagger, then a flop onto the back).
+ * Bodies: fur, pink, eyes, teeth, spikes, claws, whiskers, neckerchief, bandage; on the jaw:
+ *   jawFur, jawMouth, tongue, jawTeeth.
+ * Rig: hips, spine, chest, neck, head with a lower jaw, arms, legs with shins and feet, and a
+ *   three-bone tail. Clips: idle (breathing, sniffing), walk (a waddle), run (a low scurry),
+ *   attack (a crouch, a dart with the jaws open and a claw rake, a snap), hit (a squeal, arms up),
+ *   death (a stagger, then a flop onto the back).
  */
 
 const C = {
@@ -34,6 +36,7 @@ const C = {
   earInner: '#e8928a',
   nose: '#e06e70',
   mouth: '#3a1e1c',
+  tongue: '#c25a64',
   eyeWhite: '#fbf4ea',
   iris: '#c8201c',
   pupil: '#140c0c',
@@ -53,6 +56,13 @@ const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 
 const HEAD_C: V3 = [0, 0.52, 0.06];
+// The grin line: the bottom arc of a circle (232 to 308 degrees). It paints the grin, and it is
+// also the line where the lower jaw separates from the head.
+const GRIN_R = 0.13;
+const GRIN_Y = 0.425;
+const GRIN_CORNER_Y = GRIN_Y + GRIN_R * (1 - Math.sin((52 * Math.PI) / 180));
+const grinY = (x: number) => GRIN_Y + GRIN_R - Math.sqrt(GRIN_R * GRIN_R - x * x);
+const JAW_AT: V3 = [0, 0.445, 0.1]; // the jaw hinge, behind the grin corners
 // Joints. The arms are held forward with the claws raised; the legs are short under the belly.
 const SHOULDER: V3 = [0.13, 0.37, 0.04];
 const ELBOW: V3 = [0.185, 0.3, 0.09];
@@ -164,6 +174,7 @@ export default defineAsset({
       chest: { parent: 'spine', at: [0, 0.36, 0.01] },
       neck: { parent: 'chest', at: [0, 0.42, 0.03] },
       head: { parent: 'neck', at: [0, 0.46, 0.05] },
+      jaw: { parent: 'head', at: JAW_AT, tail: [0, 0.425, 0.25] },
       tail1: { parent: 'hips', at: T_BONES[0]! },
       tail2: { parent: 'tail1', at: T_BONES[1]! },
       tail3: { parent: 'tail2', at: T_BONES[2]!, tail: T_BONES[3]! },
@@ -283,12 +294,28 @@ export default defineAsset({
       .paintWhere(sdf.ellipsoid([0.13, 0.15, 0.2]).at(0, 0.215, 0.13), C.belly, 0.025)
       .paintWhere(sdf.halfSpace([0, 0, 1], -0.07).intersect(sdf.sphere(0.5).at(0, 0.3, -0.2)), C.furDark, 0.06) // a darker back
       .paintWhere(earPaint, C.earInner, 0.008);
-    k.body('fur', fur, {
+    // The lower jaw zone: below the grin circle and the grin corners, in front of the throat,
+    // inside a rounded bound that keeps the cheeks on the head. The jaw pieces are rigid on `jaw`
+    // and reach 3 mm into the head, so no seam shows at rest. The cut faces (the roof of the
+    // mouth and the top of the jaw) are dark, but not the skin.
+    const jawZone = sdf
+      .ellipsoid([0.09, 0.09, 0.16])
+      .at(0, 0.42, 0.2)
+      .intersect(sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y))
+      .intersect(sdf.halfSpace([0, -1, 0], -0.365))
+      .intersect(sdf.halfSpace([0, 0, -1], -0.09))
+      .subtract(sdf.cylinder(GRIN_R, 0.6).rotateX(90).at(0, GRIN_Y + GRIN_R, 0.3));
+    const jawPart = jawZone.round(0.003);
+    const skin = sdf.smoothUnion(0.05, head, body);
+    const inSkin = skin.round(-0.004);
+    const furLook = {
       color: C.fur,
       roughness: 0.85,
       textureDensity: 2,
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 70, y * 22, z * 70, 2),
-    });
+      bump: (x: number, y: number, z: number) => 0.0012 * noise.fbm(x * 70, y * 22, z * 70, 2),
+    };
+    k.body('fur', fur.subtract(jawZone).paintWhere(jawPart.intersect(inSkin), C.mouth, 0.002), furLook);
+    k.body('jawFur', fur.intersect(jawPart).paintWhere(inSkin.subtract(jawZone.round(-0.003)), C.mouth, 0.002), { ...furLook, bone: 'jaw' });
 
     // ------------------------------------------------------------------ pink skin: nose, forearms and hands, feet, tail
     const noseAt = faceHit(0, 0.5);
@@ -343,15 +370,19 @@ export default defineAsset({
     k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.85, bump: (x, y, z) => 0.001 * noise.fbm(x * 90, y * 40, z * 90, 2) });
 
     // ------------------------------------------------------------------ mouth and teeth: a wide jagged grin
-    const GRIN_R = 0.13;
-    const GRIN_Y = 0.425;
+    // The dark grin band on the face: the upper half stays on the head, the lower half goes with
+    // the jaw. A dark mouth inside the head shows when the jaw opens; the tongue lies on the jaw.
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.02, 232, 308), 0.4).at(0, GRIN_Y + GRIN_R, 0.2);
     const mouthPatch = head
       .round(0.002)
       .subtract(head.round(-0.01))
       .intersect(grin)
       .intersect(sdf.halfSpace([0, 0, -1], -0.1));
-    k.body('mouth', mouthPatch.bone('head'), { color: C.mouth, roughness: 0.6 });
+    const inHead = skin.round(-0.006);
+    const mouthInside = sdf.ellipsoid([0.07, 0.035, 0.075]).at(0, 0.43, 0.18).intersect(inHead);
+    k.body('mouth', sdf.union(mouthPatch.subtract(jawZone), mouthInside).bone('head'), { color: C.mouth, roughness: 0.6 });
+    k.body('jawMouth', mouthPatch.intersect(jawPart), { color: C.mouth, roughness: 0.6, bone: 'jaw' });
+    k.body('tongue', sdf.ellipsoid([0.04, 0.012, 0.06]).at(0, 0.428, 0.18).intersect(inHead), { color: C.tongue, roughness: 0.35, bone: 'jaw' });
     const teeth = sdf.union(
       // Two big buck teeth in the middle, and smaller jagged teeth along the grin.
       ...[-0.013, 0.013].map((x) => {
@@ -365,6 +396,16 @@ export default defineAsset({
       }),
     );
     k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.35, detail: 0.003 });
+    // Four small lower teeth on the jaw, behind the lip: hidden in the closed grin, they stand up
+    // from the jaw when it opens.
+    const lowerTeeth = sdf.union(
+      ...[-0.034, -0.012, 0.012, 0.034].map((x) => {
+        const y = grinY(x);
+        const z = Math.min(faceZ(Math.abs(x), y), faceZ(Math.abs(x), y - 0.014)) - 0.011;
+        return sdf.cone([x, y - 0.014, z], [x * 1.04, y + 0.015, z + 0.002], 0.008, 0.002);
+      }),
+    );
+    k.body('jawTeeth', lowerTeeth, { color: C.tooth, roughness: 0.35, detail: 0.003, bone: 'jaw' });
 
     // ------------------------------------------------------------------ pale spikes on the crown
     const spikes = sdf.union(
@@ -412,7 +453,6 @@ export default defineAsset({
       .smoothUnion(0.05, head, body)
       .round(0.012)
       .smoothIntersect(0.006, sdf.box([0.6, 0.036, 0.6], 0.008).rotateX(20).at(0, 0.392, 0));
-    const skin = sdf.smoothUnion(0.05, head, body);
     const kerchief = skin
       .round(0.012)
       .subtract(skin.round(-0.004))
@@ -493,38 +533,6 @@ export default defineAsset({
     k.animation('walk', stride(0.7, 30, 4, 6, 0));
     k.animation('run', stride(0.4, 42, 22, 4, 0.025));
 
-    // Attack: crouch back, lunge forward with a snapping bite, rake both claws down, recover.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
-    k.animation('attack', {
-      duration: 0.8,
-      loop: false,
-      pose: (_t, p) => {
-        const wind = ease(0, 0.3, p) * (1 - ease(0.3, 0.42, p));
-        const hit = ease(0.3, 0.44, p) * (1 - ease(0.6, 1, p));
-        const rake = ease(0.4, 0.52, p) * (1 - ease(0.6, 0.95, p));
-        return {
-          hips: { move: [0, -0.015 * wind - legDrop(LEG, 20 * hit), -0.03 * wind + 0.06 * hit], rotate: [-8 * wind + 18 * hit, 0, 0] },
-          spine: { rotate: [-6 * wind + 10 * hit, 0, 0] },
-          head: { rotate: [-10 * wind - 6 * hit + 10 * rake, 0, 0] },
-          // The claws rise up and out beside the head (not in front of the face), then rake down.
-          'upperarm.L': { rotate: [-50 * wind + 30 * rake, 0, 30 * wind] },
-          'upperarm.R': { rotate: [-50 * wind + 30 * rake, 0, -30 * wind] },
-          'forearm.L': { rotate: [-12 * wind + 30 * rake, 0, 0] },
-          'forearm.R': { rotate: [-12 * wind + 30 * rake, 0, 0] },
-          'leg.L': { rotate: [10 * wind - 20 * hit, 0, 0] },
-          'leg.R': { rotate: [10 * wind + 20 * hit, 0, 0] },
-          'foot.L': { rotate: [-10 * wind + 20 * hit, 0, 0] },
-          'foot.R': { rotate: [-10 * wind - 10 * hit, 0, 0] },
-          tail1: { rotate: [-8 * wind, 12 * hit, 0] },
-          tail2: { rotate: [0, 16 * hit, 0] },
-          tail3: { rotate: [0, 20 * hit, 0] },
-        };
-      },
-    });
-
     type R3 = [number, number, number];
     const kf = (p: number, list: readonly (readonly [number, number])[]) => motion.keys(p, list);
     const DEG = Math.PI / 180;
@@ -537,6 +545,130 @@ export default defineAsset({
     const armsUp = (t: number) => ({
       L: motion.reach(ARM, lerp(WRIST, WRIST_UP, t), POLE),
       R: motion.reach(ARM_R, lerp(mx(WRIST), mx(WRIST_UP), t), mx(POLE)),
+    });
+
+    // Attack: a darting bite with a claw rake. The crouch: the hips drop, the body leans forward,
+    // and the claws pull back beside the chest. The dart: the hips drive 0.15 m forward, the left
+    // foot steps, the jaw opens wide, and the claws rake forward and down. The snap: the jaw
+    // shuts hard at the end of the dart and the nose drives down. Then a step back to rest.
+    // The feet are placed in the world with IK, so they never slide: the right foot stays
+    // planted and rolls onto its toe claws when the hips pull away from it.
+    const HIPS_AT: V3 = [0, 0.16, -0.02];
+    const dist = (a: V3, b: V3) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+    const LEG_MAX = dist(HIP, KNEE) + dist(KNEE, ANKLE);
+    const KNEE_POLE: V3 = [0.13, 0.075, 0.175]; // in the rest bend plane of the leg, in front of the knee
+    const rotX = (v: V3, deg: number): V3 => {
+      const c = Math.cos(deg * DEG);
+      const s = Math.sin(deg * DEG);
+      return [v[0], v[1] * c - v[2] * s, v[1] * s + v[2] * c];
+    };
+    const TOE_DZ = 0.165; // the toe claw tips, on the ground in front of the ankle
+    /** The ankle of a planted foot that rolls onto its toe claws by `roll` degrees (+ = heel up). */
+    const rolledAnkle = (rest: V3, roll: number): V3 => {
+      const v = rotX([0, rest[1] - 0.003, -TOE_DZ], roll);
+      return [rest[0], 0.003 + v[1], rest[2] + TOE_DZ + v[2]];
+    };
+    type Track = readonly (readonly [number, number])[];
+    const ATTACK: Record<string, Track> = {
+      z: [[0, 0], [0.28, -0.025], [0.52, 0.15], [0.66, 0.15], [0.94, 0], [1, 0]],
+      y: [[0, 0], [0.28, -0.035], [0.36, -0.03], [0.5, -0.014], [0.55, -0.024], [0.66, -0.018], [0.94, 0], [1, 0]],
+      hips: [[0, 0], [0.28, 14], [0.36, 15], [0.5, 18], [0.55, 21], [0.66, 18], [0.94, 0], [1, 0]],
+      spine: [[0, 0], [0.28, 8], [0.5, 8], [0.55, 11], [0.66, 9], [0.94, 0], [1, 0]],
+      chest: [[0, 0], [0.28, 4], [0.55, 5], [0.94, 0], [1, 0]],
+      // The head's world pitch (+ = nose down): level in the crouch, a little up with the jaws
+      // open, and a hard nod down at the snap.
+      look: [[0, 0], [0.28, 4], [0.36, 0], [0.46, -8], [0.51, -8], [0.55, 12], [0.62, 8], [0.9, 0], [1, 0]],
+      jaw: [[0, 0], [0.18, 0.15], [0.3, 0.1], [0.42, 0.85], [0.46, 1], [0.51, 1], [0.545, 0], [1, 0]],
+      // The hands' pitch in the chest frame (+ = claws down).
+      hand: [[0, 0], [0.3, -30], [0.44, -10], [0.54, 50], [0.68, 35], [0.94, 0], [1, 0]],
+      // The left foot: the ankle's forward step, its lift, and its world pitch (+ = toe down).
+      stepZ: [[0, 0], [0.34, 0], [0.5, 0.2], [0.7, 0.2], [0.9, 0], [1, 0]],
+      stepY: [[0, 0], [0.34, 0], [0.42, 0.045], [0.5, 0], [0.7, 0], [0.8, 0.035], [0.9, 0], [1, 0]],
+      stepPitch: [[0, 0], [0.34, 0], [0.4, 10], [0.47, 3], [0.5, 0], [0.7, 0], [0.77, 8], [0.86, 0], [1, 0]],
+      whip: [[0, 0], [0.3, -0.4], [0.5, 1], [0.68, -0.4], [0.85, 0.15], [1, 0]],
+    };
+    // The wrist path in the chest frame: rest, cocked beside the chest, high and forward, then
+    // raked forward and down.
+    const WRIST_PATH: readonly (readonly [number, V3])[] = [
+      [0, WRIST],
+      [0.3, [0.215, 0.35, 0.03]],
+      [0.44, [0.2, 0.39, 0.16]],
+      [0.54, [0.155, 0.27, 0.2]],
+      [0.68, [0.16, 0.28, 0.19]],
+      [0.94, WRIST],
+      [1, WRIST],
+    ];
+    k.animation('attack', {
+      duration: 0.9,
+      loop: false,
+      pose: (_t, p) => {
+        const v = (name: string) => kf(p, ATTACK[name]!);
+        const [hp, sp, ch] = [v('hips'), v('spine'), v('chest')];
+        const neck = -0.35 * (hp + sp + ch);
+        const move: R3 = [0, v('y'), v('z')];
+        const hipsR: R3 = [hp, 0, 0];
+        const toWorld = (q: V3): V3 => {
+          const r = rotX([q[0] - HIPS_AT[0], q[1] - HIPS_AT[1], q[2] - HIPS_AT[2]], hp);
+          return [HIPS_AT[0] + r[0] + move[0], HIPS_AT[1] + r[1] + move[1], HIPS_AT[2] + r[2] + move[2]];
+        };
+        // A leg that puts its ankle at a world point, with the foot at a world pitch.
+        const leg = (s: 1 | -1, ankle: V3, pitch: number) => {
+          const l = rotX([ankle[0] - move[0] - HIPS_AT[0], ankle[1] - move[1] - HIPS_AT[1], ankle[2] - move[2] - HIPS_AT[2]], -hp);
+          const rest = s > 0 ? { root: HIP, mid: KNEE, end: ANKLE } : { root: mx(HIP), mid: mx(KNEE), end: mx(ANKLE) };
+          const { upper, lower } = motion.reach(rest, [l[0] + HIPS_AT[0], l[1] + HIPS_AT[1], l[2] + HIPS_AT[2]], s > 0 ? KNEE_POLE : mx(KNEE_POLE));
+          const foot = orient([hipsR, upper, lower], { dir: [0, 0, 1], up: [0, 1, 0] }, { dir: rotX([0, 0, 1], pitch), up: rotX([0, 1, 0], pitch) });
+          return { upper, lower, foot };
+        };
+        // The right foot stays planted; it rolls onto its toes just enough to keep the leg in reach.
+        const restR = mx(ANKLE);
+        const hipR = toWorld(mx(HIP));
+        const far = (roll: number) => dist(hipR, rolledAnkle(restR, roll)) > 0.95 * LEG_MAX;
+        let roll = 0;
+        if (far(0)) {
+          let lo = 0;
+          let hi = 70;
+          for (let n = 0; n < 16; n++) {
+            const mid = (lo + hi) / 2;
+            if (far(mid)) lo = mid;
+            else hi = mid;
+          }
+          roll = hi;
+        }
+        const legL = leg(1, [ANKLE[0], ANKLE[1] + v('stepY'), ANKLE[2] + v('stepZ')], v('stepPitch'));
+        const legR = leg(-1, rolledAnkle(restR, roll), roll);
+        // The arms: IK to the wrist path; the hands turn the claws by a pitch in the chest frame.
+        const wL = motion.keys(p, WRIST_PATH, 'spline');
+        const wR = motion.keys(Math.max(0, p - 0.015), WRIST_PATH, 'spline');
+        const aL = motion.reach(ARM, wL, POLE);
+        const aR = motion.reach(ARM_R, mx(wR), mx(POLE));
+        const h = v('hand');
+        const handWant = { dir: rotX([0, 0, 1], h), up: rotX([0, 1, 0], h) };
+        const handRest = { dir: [0, 0, 1] as V3, up: [0, 1, 0] as V3 };
+        const w = v('whip');
+        return {
+          hips: { move, rotate: hipsR },
+          spine: { rotate: [sp, 0, 0] },
+          chest: { rotate: [ch, 0, 0] },
+          neck: { rotate: [neck, 0, 0] },
+          head: { rotate: [v('look') - hp - sp - ch - neck, 0, 0] },
+          jaw: { rotate: [35 * v('jaw'), 0, 0] },
+          'upperarm.L': { rotate: aL.upper },
+          'upperarm.R': { rotate: aR.upper },
+          'forearm.L': { rotate: aL.lower },
+          'forearm.R': { rotate: aR.lower },
+          'hand.L': { rotate: orient([aL.upper, aL.lower], handRest, handWant) },
+          'hand.R': { rotate: orient([aR.upper, aR.lower], handRest, handWant) },
+          'leg.L': { rotate: legL.upper },
+          'shin.L': { rotate: legL.lower },
+          'foot.L': { rotate: legL.foot },
+          'leg.R': { rotate: legR.upper },
+          'shin.R': { rotate: legR.lower },
+          'foot.R': { rotate: legR.foot },
+          tail1: { rotate: [-0.7 * hp, 10 * w, 0] },
+          tail2: { rotate: [0, 16 * w, 0] },
+          tail3: { rotate: [0, 22 * w, 0] },
+        };
+      },
     });
 
     // Hit: a squeal. The head jerks back, the chest and the belly flinch back, the arms fly up
@@ -593,16 +725,17 @@ export default defineAsset({
       duration: 1.4,
       loop: false,
       pose: (_t, p) => {
-        const r = kf(p, [[0, 0], [0.07, 1], [0.2, 0.55], [0.32, 0.25], [0.42, 0]]); // the recoil
-        const sag = kf(p, [[0.1, 0], [0.24, 1], [0.34, 0.7], [0.42, 0]]); // the knees give way
-        const wob = kf(p, [[0.08, 0], [0.17, 1], [0.27, -0.8], [0.36, 0.35], [0.42, 0]]);
+        // The recoil and the sagging knees fade out during the fall, so there is no hold in the rest pose.
+        const r = kf(p, [[0, 0], [0.07, 1], [0.2, 0.55], [0.3, 0.45], [0.6, 0]]); // the recoil
+        const sag = kf(p, [[0.1, 0], [0.24, 1], [0.34, 0.8], [0.6, 0]]); // the knees give way
+        const wob = kf(p, [[0.08, 0], [0.17, 1], [0.27, -0.8], [0.36, 0.35], [0.46, 0]]);
         const wt = kf(p, [[0, 0], [0.06, 1], [0.15, -0.8], [0.25, 0.5], [0.35, -0.2], [0.44, 0]]);
-        const u = Math.min(1, Math.max(0, (p - 0.34) / 0.28)); // the fall speeds up to the impact at 0.62
-        const tilt = 90 * u * u;
+        const u = Math.min(1, Math.max(0, (p - 0.28) / 0.34)); // the fall starts moving and speeds up to the impact at 0.62
+        const tilt = 90 * u * (0.3 + 0.7 * u);
         const bounce = kf(p, [[0.62, 0], [0.67, 1], [0.75, 0]]);
-        const lie = kf(p, [[0.36, 0], [0.62, 1]]); // the limbs go up
+        const lie = kf(p, [[0.32, 0], [0.62, 1]]); // the limbs go up
         const flail = kf(p, [[0.62, 0], [0.68, 1], [0.75, -0.6], [0.81, 0.3], [0.87, 0]]);
-        const sweep = kf(p, [[0.38, 0], [0.72, 1]]);
+        const sweep = kf(p, [[0.34, 0], [0.72, 1]]);
         const flop = kf(p, [[0.6, 0], [0.66, 1], [0.76, 0]]);
         const L = (a: number, b: number) => mix(a, b, lie);
         const up = armsUp(Math.min(1, r + 0.4 * sag));
