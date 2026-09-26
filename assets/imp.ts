@@ -19,7 +19,8 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   strongest contrast (focal point); the dark horns frame the head.
  * Bodies: skin, eyes, horns, claws, teeth, wing-membranes, wing-bones.
  * Rig: hips, spine, chest, neck, head, wings, arms, legs with shins and feet, and a three-bone
- *   tail. Clips: idle (hover), fly (forward flight), attack (a diving claw swipe).
+ *   tail. Clips: idle (hover), fly (forward flight), attack (a diving claw swipe), hit (a jolt
+ *   back in the hover), death (a tumble to the floor, on its back).
  */
 
 const C = {
@@ -460,6 +461,120 @@ export default defineAsset({
           tail3: { rotate: [-20 * rear + 20 * dive, 0, 0] },
           'leg.L': { rotate: [8 - 20 * rear + 30 * dive, 0, 0] },
           'leg.R': { rotate: [8 - 20 * rear + 30 * dive, 0, 0] },
+        };
+      },
+    });
+
+    // Hit: a jolt back in the hover with a yelp pose; the head snaps back, the wings fold in for a
+    // moment, the arms fly out, and the tail whips; then the hover and the wing beat come back. The
+    // last frame is the first idle frame.
+    const { keys } = motion;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.38, 0.75], [1, 0]]);
+        const free = 1 - h;
+        const beat = wave(p) * free;
+        const whip = (d: number, a: number) => a * keys(p, [[0, 0], [0.1 + d, 1], [0.3 + d, -0.6], [0.56 + d, 0.2], [1, 0]]);
+        return {
+          hips: { move: [0, 0.18 + 0.025 * wave(p, 1, 0.25) + 0.02 * h, -0.07 * h], rotate: [4 - 20 * h, 0, 6 * h] },
+          chest: { rotate: [-8 * h, 0, 0] },
+          head: { rotate: [2 * wave(p, 1, 0.3) - 24 * h, 6 * wave(p, 1, 0.1) * free, -8 * h] },
+          'wing.L': { rotate: [0, 4 * wave(p, 1, 0.25) * free + 40 * h, (8 + 40 * beat) * free - 30 * h] },
+          'wing.R': { rotate: [0, -4 * wave(p, 1, 0.25) * free - 40 * h, -(8 + 40 * beat) * free + 30 * h] },
+          tail1: { rotate: [8 * wave(p, 1, 0.2) + 20 * h, 10 * wave(p, 1, 0.1) + whip(0, 30), 0] },
+          tail2: { rotate: [10 * wave(p, 1, 0.35) + 10 * h, 12 * wave(p, 1, 0.25) + whip(0.06, -40), 0] },
+          tail3: { rotate: [12 * wave(p, 1, 0.5), 14 * wave(p, 1, 0.4) + whip(0.12, 50), 0] },
+          'leg.L': { rotate: [8 + 6 * wave(p, 1, 0.4) - 18 * h, 0, 8 * h] },
+          'leg.R': { rotate: [8 + 6 * wave(p, 1, 0.45) - 14 * h, 0, -8 * h] },
+          'shin.L': { rotate: [30 * h, 0, 0] },
+          'shin.R': { rotate: [26 * h, 0, 0] },
+          'upperarm.L': { rotate: [-4 * wave(p, 1, 0.3) + 20 * h, 0, 70 * h] },
+          'upperarm.R': { rotate: [-4 * wave(p, 1, 0.35) + 20 * h, 0, -70 * h] },
+          'forearm.L': { rotate: [30 * h, 0, 30 * h] },
+          'forearm.R': { rotate: [30 * h, 0, -30 * h] },
+        };
+      },
+    });
+
+    // Death: a jolt in the hover, the wings stop and crumple, it tumbles back and drops, lands with a
+    // small bounce, and lies on its back: the wings limp on the floor, the arms flopped out to the
+    // sides, the knees up, the head turned to one side, and the tail laid out with its tip curled.
+    const HOVER0 = 0.205; // hips move y in the first idle frame
+    const LIE = -0.16; // hips move y when it lies on its back (the build lifts it if it sinks)
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const f = Math.min(1, Math.max(0, (p - 0.12) / 0.34));
+        const y =
+          p < 0.12
+            ? keys(p, [[0, HOVER0], [0.09, HOVER0 + 0.03], [0.12, HOVER0 + 0.03]])
+            : p < 0.46
+              ? HOVER0 + 0.03 + (LIE - HOVER0 - 0.03) * f * f // accelerates like a drop
+              : keys(p, [[0.46, LIE], [0.56, LIE + 0.05], [0.66, LIE], [0.74, LIE + 0.01], [0.82, LIE]]);
+        return {
+          hips: {
+            move: [0, y, keys(p, [[0, 0], [0.08, -0.06], [0.46, 0.06], [1, 0.08]])],
+            rotate: [
+              keys(p, [[0, 4], [0.08, -18], [0.16, -10], [0.46, -100], [0.56, -84], [0.66, -93], [1, -90]]),
+              keys(p, [[0, 0], [0.46, 14], [1, 20]]),
+              keys(p, [[0, 0], [0.1, 8], [0.3, -24], [0.46, 6], [0.6, -3], [0.75, 0]]),
+            ],
+          },
+          chest: { rotate: [keys(p, [[0, 0], [0.08, -10], [0.3, 4], [0.5, 0]]), 0, 0] },
+          head: {
+            rotate: [
+              keys(p, [[0, 1.9], [0.08, -30], [0.3, 6], [0.46, -12], [0.58, 22], [0.7, 12], [1, 15]]),
+              keys(p, [[0, 3.5], [0.3, -10], [0.5, 10], [0.7, 32], [1, 30]]),
+              keys(p, [[0, 0], [0.08, -10], [0.3, 8], [0.5, 0]]),
+            ],
+          },
+          ...(['L', 'R'] as const).reduce((acc, side) => {
+            const s = side === 'L' ? 1 : -1;
+            acc[`wing.${side}`] = {
+              rotate: [
+                0,
+                s * keys(p, [[0, 4], [0.08, 30], [0.3, 40], [0.46, 20], [0.56, -16], [0.66, -6], [1, -10]]),
+                s * keys(p, [[0, 8], [0.08, 50], [0.2, 20], [0.3, 60], [0.46, 40], [0.56, -34], [0.66, -20], [1, -28]]),
+              ],
+            };
+            acc[`upperarm.${side}`] = {
+              rotate: [
+                keys(p, [[0, 2.4], [0.08, 10], [0.3, -25], [0.46, 0], [0.58, 60], [0.7, 45], [1, 50]]),
+                0,
+                s * keys(p, [[0, 0], [0.08, 70], [0.3, 65], [0.46, 45], [0.58, 55], [1, 50]]),
+              ],
+            };
+            acc[`forearm.${side}`] = { rotate: [keys(p, [[0, 0], [0.08, 30], [0.3, 10], [0.5, 40], [0.62, 75], [1, 70]]), 0, s * keys(p, [[0, 0], [0.08, 30], [0.3, 20], [0.5, 0]])] };
+            return acc;
+          }, {} as Record<string, { rotate: [number, number, number] }>),
+          'leg.L': { rotate: [keys(p, [[0, 11.5], [0.08, -20], [0.3, 10], [0.46, -10], [0.58, -45], [0.7, -32], [1, -38]]), 0, keys(p, [[0, 0], [0.5, 12], [1, 14]])] },
+          'leg.R': { rotate: [keys(p, [[0, 9.9], [0.08, -16], [0.3, 14], [0.46, -6], [0.6, -38], [0.72, -26], [1, -30]]), 0, keys(p, [[0, 0], [0.5, -10], [1, -12]])] },
+          'shin.L': { rotate: [keys(p, [[0, 0], [0.08, 30], [0.3, 10], [0.5, 40], [0.6, 80], [1, 72]]), 0, 0] },
+          'shin.R': { rotate: [keys(p, [[0, 0], [0.08, 26], [0.3, 14], [0.5, 36], [0.62, 70], [1, 64]]), 0, 0] },
+          tail1: {
+            rotate: [
+              keys(p, [[0, 7.6], [0.08, 30], [0.3, 20], [0.46, -20], [0.6, -50], [1, -45]]),
+              keys(p, [[0, 5.9], [0.08, 25], [0.2, -20], [0.34, 15], [0.5, 0]]),
+              keys(p, [[0, 0], [0.4, 0], [0.62, -40], [1, -35]]),
+            ],
+          },
+          tail2: {
+            rotate: [
+              keys(p, [[0, 8.1], [0.1, 25], [0.3, 10], [0.46, -30], [0.62, -62], [1, -57]]),
+              keys(p, [[0, 12], [0.12, -30], [0.24, 25], [0.38, -15], [0.55, 0]]),
+              0,
+            ],
+          },
+          tail3: {
+            rotate: [
+              keys(p, [[0, 0], [0.12, 20], [0.3, -10], [0.46, 40], [0.66, 118], [0.8, 104], [1, 110]]),
+              keys(p, [[0, 8.2], [0.16, 40], [0.28, -35], [0.42, 20], [0.6, 0]]),
+              0,
+            ],
+          },
         };
       },
     });
