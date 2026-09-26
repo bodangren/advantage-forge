@@ -32,7 +32,7 @@
     "reviewedAt": "2026-09-26T18:39:02+00:00"
   },
   "archer": {
-    "overall": 8,
+    "overall": 8.2,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -46,22 +46,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The archer matches the mockup well. The floppy hood point, the elf ears, and the bow make a clear archer silhouette.",
+    "summary": "The archer matches the mockup well and now has the full hero clip set. The bow shot draws the string and releases a nocked arrow. The bow is still small and dark.",
     "strengths": [
-      "The hood point falls to the right side, as in the mockup, and breaks the outline.",
-      "The quiver with gold fletching reads from the back and in the sprites.",
-      "The face uses the rogue's construction, so the two heroes look like one set."
+      "The attack draws the string back with a nocked arrow and then releases it. The shot reads clearly in the side view.",
+      "In the death clip, the archer staggers, falls on the back, and lies still. The bow drops to the floor next to the body.",
+      "The hood point, the elf ears, and the quiver with gold fletching give a clear silhouette in all 8 sprite directions."
     ],
     "issues": [
-      "The bow is smaller and darker than the large recurve in the mockup. It reads weakly in the front view.",
-      "The tunic and the cream leggings are shorter than in the mockup, so the legs look stubby.",
-      "The rim of the hood opening is thick and makes the face look small."
+      "In the front view, the bow passes in front of the face while it rises and falls. The check shows a head margin of only 0.3 cm.",
+      "The bow and the lower string go 1.0 to 1.9 cm into the tunic and the belt in attack and attack2. The arrow is thin and dark and reads weakly.",
+      "The bow is still smaller and darker than the large recurve in the mockup. The hood rim is still thick, and the legs still look short."
     ],
     "next": [
-      "Make the bow 20 percent larger and use a lighter wood color.",
-      "Make the hood rim thinner."
+      "Make the bow 20 percent larger and use a lighter wood color. This item from the last review is still open.",
+      "Move the bow path away from the face and the tunic in attack and attack2. The thinner hood rim from the last review is also still open."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T18:41:07+00:00"
   },
   "knight": {
     "overall": 8.5,
