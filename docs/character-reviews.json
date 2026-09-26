@@ -387,7 +387,7 @@
     "reviewedAt": "2026-09-26T13:35:28+00:00"
   },
   "bandit": {
-    "overall": 8,
+    "overall": 8.2,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -396,27 +396,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
+      "technical": 4,
       "gameReady": 5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The bandit matches the mmx mockup: wild dark hair, an angry glare over a dark red mask, a striped shirt under a leather vest, a loot sack, and a curved cutlass.",
+    "summary": "The bandit has its full clip set: idle, walk, run, a cutlass slash, hit, and death. The model matches the mockup: wild dark hair, an angry glare over a dark red mask, a striped shirt, a leather vest, a loot sack, and a curved cutlass. The death reads well. The slash is the weakest clip, because the wind-up is low and short.",
     "strengths": [
-      "The glare between the dark hair and the red mask is a strong focal point, and it reads in the front sprites.",
-      "It uses the rogue's head and skeleton, so it fits with the heroes, but the mask, the stripes, and the sack make it read as a different person.",
-      "The sack and the mask tails swing on their own bones in the walk and the slash."
+      "The glare between the dark hair and the red mask is a strong focal point. It reads in the front view and in the S, SW, and SE sprites.",
+      "The death reads well. The bandit staggers, falls on its back, and lies flat with the face up. The cutlass drops from the hand and lies on the floor.",
+      "The slash has the three parts of a real cutlass cut: a wind-up, a cut with the edge leading, and a follow-through down and across the body. The sack and the mask tails swing late."
     ],
     "issues": [
-      "From above, the big hair covers the brows a little in the sprites.",
-      "The mockup vest has more straps and a second pouch. The model vest is plain.",
-      "The loot sack sits behind the arm, so it shows less from the front than in the mockup."
+      "The slash is a real cut, but a weak one. In the wind-up, the hand rises only to chest height, and the blade stays upright next to the shoulder. At the strike, the blade is level at waist height, so the cut reads as a flat sweep. The step into the cut is small.",
+      "The gear is plainer than the mockup. The mockup has straps on the vest, a holster at the belt, and tall boots with cuffs. The model has a plain vest and short boots. The sack still sits behind the arm.",
+      "The cutlass passes only 0.3 cm from the head in one clip (the check head margin). The check passes, but a small change to a clip can make it fail."
     ],
     "next": [
-      "Move the sack a little to the side, so it shows more from the front.",
-      "Add a strap with a buckle to the vest."
+      "Make the slash stronger. Lift the hand above the shoulder and hold the blade back, then cut on a diagonal from high to the opposite hip. Make the forward step longer. Keep the head margin at 1 cm or more.",
+      "Add the mockup gear: a vest strap with a buckle, a holster at the belt, and cuffs on the boots. Move the sack a little to the side. These items from the last review are still open."
     ],
-    "reviewedAt": "2026-09-26T05:09:12+00:00"
+    "reviewedAt": "2026-09-26T18:48:13+00:00"
   },
   "zombie": {
     "overall": 8,
