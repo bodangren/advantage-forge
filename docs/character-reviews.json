@@ -877,7 +877,7 @@
     "reviewedAt": "2026-09-26T19:25:22+00:00"
   },
   "animated-armor": {
-    "overall": 7.4,
+    "overall": 7.9,
     "group": "Enemies",
     "scores": {
       "mockup": 4,
@@ -887,26 +887,26 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3,
-      "gameReady": 3,
+      "technical": 4,
+      "gameReady": 4,
       "sprite": 4,
-      "motion": 3
+      "motion": 4
     },
-    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. The dark suit has rust specks, a purple scarf, a torn cape, and a broad sword held low. It has the full enemy clip set: idle, walk, run, attack, hit, and death. The model did not change since the last review. The head check gives result ok, but the ground check fails: in the run, the sword goes into the floor.",
+    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. The dark suit has rust specks, a purple scarf, a torn cape, and a broad sword. This pass changed three clips and not the model. In the run, the fist comes up to the belt and the blade points flatter across the front, so the tip stays about 8 cm above the floor. In the attack, the follow-through keeps the right forearm clear of the cuirass. In the death, the cape falls off the collar and lies flat on the floor behind the pile. ./forge check gives result ok and ground ok.",
     "strengths": [
       "The two cyan eyes on the black visor read at once, also in the 128 px sprites. Nothing inside the helm shows that the suit is empty.",
-      "The slash reads as a real sword cut. The blade rises up and back beside the helm and holds, then cuts across the front with the edge first (edgeUp). The follow-through ends low at the left, and the hips and chest turn with it.",
-      "The death tells the story: the eyes flicker out, the sword drops flat, the helm falls off in front and rolls onto its side, and the legs splay."
+      "The slash reads as a real sword cut. The blade rises up and back beside the helm and holds, then cuts across the front with the edge first. The follow-through ends low at the left, and the right forearm stays about 1 cm clear of the cuirass.",
+      "The death tells the story: the eyes flicker out, the sword drops flat, the helm falls off in front and rolls onto its side, the legs splay, and the cape lies flat on the floor behind the pile."
     ],
     "issues": [
-      "In the run, the sword goes 7.0 cm below its rest pose in every frame, and the tip cuts into the floor (ground FAIL). The hips drop and the spine leans 10 degrees, but the right arm does not lift the blade.",
-      "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through. From phase 0.58 to 0.75, the right gauntlet goes 0.7 cm into the cuirass. At the end of the death, the cape stands out as a stiff, flat panel above the ground.",
-      "The helm is a smooth round dome. The mockup helm has a raised brow over the visor and cheek plates that flare out. The rust specks on the helm dome and the pauldrons are still small and sparse."
+      "The helm is a smooth round dome. The mockup helm has a raised brow over the visor and cheek plates that flare out.",
+      "The rust specks on the helm dome and the pauldrons are still small and sparse. The suit looks cleaner than the mockup.",
+      "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through. The run carries the blade in a flat guard, which is less menacing than the low carry in the walk."
     ],
     "next": [
-      "Lift the sword in the run, so that it stays less than 1.5 cm below its rest pose and ./forge check gives ground ok. Then lay the death cape flat on the ground, and keep the right forearm 1 cm clear of the cuirass in the attack.",
-      "Give the helm a raised brow ridge over the visor, and add more rust and scratches on the helm dome and the pauldrons. Both items from the last review are still open."
+      "Give the helm a raised brow ridge over the visor, and flare the cheek plates out as in the mockup.",
+      "Add more rust patches and scratches on the helm dome and the pauldrons."
     ],
-    "reviewedAt": "2026-09-26T19:06:10+00:00"
+    "reviewedAt": "2026-09-26T19:28:34+00:00"
   }
 }

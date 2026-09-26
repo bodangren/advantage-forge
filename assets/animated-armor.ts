@@ -567,10 +567,25 @@ export default defineAsset({
     });
 
     // A heavy, clanking stride: the helm lags each step and settles late.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number) => ({
+    // `carry` (the run): the forward lean and the deep steps put a low blade into the floor, so the
+    // fist comes up to the belt and the blade turns back and up to a flatter line across the front.
+    const CARRY_WRIST: V3 = [-0.23, 0.345, 0.11];
+    const CARRY_BLADE = norm([0.86, -0.2, 0.36]);
+    const carryArm = motion.reach({ root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R }, CARRY_WRIST, [-0.6, 0, -0.2]);
+    const carryHand = motion.orient([carryArm.upper, carryArm.lower], { dir: BLADE_DIR, up: norm([0, 0.66, 0.75]) }, { dir: CARRY_BLADE, up: norm([0, 0.66, 0.75]) });
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number, carry = false) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        // The sword arm: a small swing about the shoulder on top of the carry.
+        const swingR = motion.euler(motion.quat([-3 * s, 0, -2]).multiply(motion.quat(carryArm.upper)));
+        const armR = carry
+          ? {
+              'upperarm.R': { rotate: swingR },
+              'forearm.R': { rotate: carryArm.lower },
+              'hand.R': { rotate: carryHand },
+            }
+          : { 'upperarm.R': { rotate: [-armSwing * 0.2 * s, 0, -4] as const } };
         return {
           hips: {
             move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
@@ -586,13 +601,13 @@ export default defineAsset({
           'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
           'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.6 * s, 0, 4] as const },
-          'upperarm.R': { rotate: [-armSwing * 0.2 * s, 0, -4] as const },
           'forearm.L': { rotate: [-armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
+          ...armR,
         };
       },
     });
     k.animation('walk', stride(1.0, 24, 24, 3, 0, 6));
-    k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20));
+    k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20, true));
 
     // A diagonal slash, solved by targets. The wrist follows keys in the chest's rest frame
     // (reach); the blade follows its own keys. The chibi arm is short and the helm is huge, so the
@@ -634,9 +649,9 @@ export default defineAsset({
             [0.4, [-0.305, 0.475, -0.045]],
             [0.45, [-0.29, 0.47, 0.08]],
             [0.49, [-0.18, 0.43, 0.17]],
-            [0.53, [-0.18, 0.36, 0.21]],
-            [0.58, [-0.15, 0.32, 0.22]],
-            [0.7, [-0.16, 0.31, 0.21]],
+            [0.53, [-0.19, 0.36, 0.2]],
+            [0.58, [-0.2, 0.32, 0.2]],
+            [0.7, [-0.21, 0.31, 0.19]],
             [1, WRIST_R],
           ] as const,
           'spline',
@@ -644,7 +659,7 @@ export default defineAsset({
         const dir = norm(bladeAt(p));
         // The elbow points out and back in the wind-up, then out and forward through the cut, so
         // the forearm stays in front of the breastplate.
-        const pole = keys(p, [[0, [-0.6, 0.1, -0.2]], [0.45, [-0.6, 0.2, -0.1]], [0.52, [-0.5, 0.0, 0.5]], [0.8, [-0.5, 0.0, 0.5]], [1, [-0.6, 0.1, -0.2]]] as const);
+        const pole = keys(p, [[0, [-0.6, 0.1, -0.2]], [0.45, [-0.6, 0.2, -0.1]], [0.52, [-0.9, 0.05, 0.3]], [0.8, [-0.9, 0.05, 0.3]], [1, [-0.6, 0.1, -0.2]]] as const);
         const arm = reach(ARM_R, wrist, pole);
         const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up: edgeUp(bladeAt, p, FLAT) });
         const wind = ease(0, 0.32, p) * (1 - ease(0.42, 0.5, p));
@@ -734,7 +749,11 @@ export default defineAsset({
       return { move: [d.x, d.y, d.z] as V3, rotate: euler(inv.multiply(frame.q.clone().multiply(attached).slerp(turn, loose))) };
     };
     const HIPS_AT: V3 = [0, 0.2, 0];
+    const CLOAK_AT: V3 = [0, 0.41, -0.13];
     const Z3: V3 = [0, 0, 0];
+    // The cape's pivot on the floor behind the pile, and its turn: hanging down becomes lying back.
+    const CAPE_DOWN_AT: V3 = [0, 0.018, -0.11];
+    const CAPE_FLAT = quat([0, 12, 0]).multiply(quat([90, 0, 0]));
     // The sword lying flat on the ground, pointing forward and a little to the right.
     const SWORD_DOWN = quat(orient([], { dir: BLADE_DIR, up: FLAT }, { dir: norm([-0.35, 0, 0.94]), up: [0, 1, 0] }));
     k.animation('death', {
@@ -759,6 +778,13 @@ export default defineAsset({
         const land = keys(p, [[0.4, [0.0, 0.45, 0.06]], [0.5, [0.03, 0.3, 0.24]], [0.58, [0.05, 0.115, 0.32]], [0.64, [0.06, 0.14, 0.34]], [0.72, [0.07, 0.116, 0.36]], [1, [0.07, 0.116, 0.36]]] as const, 'spline');
         const turn = quat(keys(p, [[0.4, [10, 0, 0]], [0.5, [30, 10, -10]], [0.58, [-8, 18, -20]], [0.64, [-14, 20, -14]], [0.72, [-20, 24, -30]], [1, [-20, 25, -31]]] as const));
         const head = release(frame, attached, land, turn, loose, pop);
+        // The cape: it flies up behind as the suit drops, slips off the collar, and settles flat on
+        // the floor behind the pile (turned flat and squashed thin, as the wizard's cloak does).
+        const capeFrame = fk([HIPS_AT, SPINE_AT, CHEST_AT], [hipsR, spineR, chestR], [hipsMove, Z3, Z3], CLOAK_AT);
+        const capeAttached = quat([keys(p, [[0, 0], [0.36, -6], [0.42, 16], [0.5, 46], [1, 46]] as const), 0, 0]);
+        const capeLoose = keys(p, [[0, 0], [0.46, 0], [0.64, 0.96], [0.68, 1], [1, 1]] as const);
+        const flat = keys(p, [[0, 0], [0.5, 0], [0.66, 1], [1, 1]] as const);
+        const cloak = { ...release(capeFrame, capeAttached, CAPE_DOWN_AT, CAPE_FLAT, capeLoose), scale: [1 + 0.15 * flat, 1, 1 - 0.88 * flat] as V3 };
         // The sword slips out of the fist as the arm drops and falls flat on the ground at the right.
         const armRMove: V3 = [-0.05 * off, -0.08 * off, -0.02 * off];
         const armRRot: V3 = [keys(p, [[0, 0], [0.1, 10], [0.4, 0], [0.56, 25], [1, 28]] as const), 0, keys(p, [[0, 0], [0.1, -18], [0.4, -8], [0.56, -70], [0.64, -62], [1, -66]] as const)];
@@ -775,7 +801,7 @@ export default defineAsset({
           head,
           glow: { scale: [glow, glow, glow] },
           plume: { rotate: [keys(p, [[0, 0], [0.44, -20], [0.6, 30], [0.72, -10], [1, 0]] as const), 0, 0] },
-          cloak: { rotate: [keys(p, [[0, 0], [0.36, -6], [0.44, 12], [0.52, 50], [0.62, 58], [0.7, 50], [1, 54]] as const), 0, 0] },
+          cloak,
           // The arms come off at the shoulders and fall to the sides.
           'upperarm.L': { move: [0.05 * off, -0.08 * off, -0.02 * off], rotate: [keys(p, [[0, 0], [0.1, 12], [0.4, 0], [0.56, 20], [1, 24]] as const), 0, keys(p, [[0, 0], [0.1, 22], [0.4, 10], [0.56, 72], [0.64, 64], [1, 68]] as const)] },
           'forearm.L': { rotate: [keys(p, [[0, 0], [0.1, -20], [0.5, 10], [1, 12]] as const), 0, 0] },
