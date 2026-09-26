@@ -256,7 +256,7 @@
     "reviewedAt": "2026-09-26T18:55:23+00:00"
   },
   "horned-boar": {
-    "overall": 7.5,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -266,27 +266,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 4,
+      "technical": 5,
       "gameReady": 5,
       "sprite": 4,
-      "motion": 4
+      "motion": 4.5
     },
-    "summary": "The horned boar has the angry chibi face of the mockup in the front views and a full set of six clips. The two requests from the last review are still open: the snout is short and the horn tips are thin. A new fault: the shin fur comes through the hoof soles.",
+    "summary": "The horned boar is a strong chibi monster. The hoof soles are now solid black, and the attack is a real gore: a low gather, a 0.2 m charge, and a hooked toss. The short snout in profile is the largest open fault.",
     "strengths": [
-      "The front and three-quarter views match the mockup: a big angry head, a pink snout, upturned tusks, cream horns, and a black bristle mane.",
-      "The death reads clearly. The boar recoils and staggers, the front legs buckle, and the boar rolls onto its right side. No part goes below the ground.",
-      "The asset is light and complete: 26,188 triangles and six clips. The clip check gives 'ground ok'."
+      "The attack has clear stages. The head drops until the snout is at knee height, and the horns and the tusks point forward. The hips then drive 0.2 m forward, and the head hooks up and to the left.",
+      "The legs in the attack use two-bone IK. The hind hooves stay planted and roll onto the toe as the legs push. The front hooves step forward and back, and no hoof slides or goes into the floor.",
+      "The shin fur now ends inside the hooves, at y = 0.023. In the death, the raised soles show solid black discs, with no brown ring."
     ],
     "issues": [
-      "The fur of each shin comes through the hoof sole. The shin cone ends at y = 0.06 with radius 0.068, so the fur reaches y = -0.008. In the death, the raised soles show a brown disc in a black ring.",
       "The snout is still short in profile. In the side view and in the W and E sprites, the snout is only a small pink edge, and the head looks flat.",
-      "The attack reads as a boar gore, but a weak one. The head drops only to chest height, and the body drives forward only 7 cm. From the side, the short tusks do not lead the toss."
+      "When the head is low in the attack, the lower jaw goes into the front of the chest. From the side, the head and the chest merge into one mass.",
+      "Each hoof cleft cuts through the full hoof height. On a raised sole, a thin brown line of shin fur shows inside the cleft."
     ],
     "next": [
-      "Make the snout 20 percent longer. This request from the last review is still open. A longer snout gives a boar profile in the side view, the W and E sprites, and the attack.",
-      "Make the hoof soles solid black: end the shin cones at y = 0.1, inside the hooves. The thicker horn tips from the last review are still open, but they have a lower value."
+      "Make the snout 20 percent longer. A longer snout gives a boar profile in the side view, the W and E sprites, and the attack.",
+      "Stop the hoof cleft below the hoof top, or fill the hoof inside it with black, so no fur shows in the cleft."
     ],
-    "reviewedAt": "2026-09-26T19:16:14+00:00"
+    "reviewedAt": "2026-09-26T20:40:39+00:00"
   },
   "goblin-archer": {
     "overall": 8.3,

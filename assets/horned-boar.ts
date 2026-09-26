@@ -116,11 +116,13 @@ export default defineAsset({
     const ears = pair(earPose(earLocal.paintWhere(earCup, C.earInner, 0.006)));
 
     // ------------------------------------------------------------------ legs, tail
+    // The shin ends inside the hoof: its round end stops at y = 0.023, above the sole (y = 0), and
+    // it enters the hoof top (y = 0.06) at a radius of 0.057, inside the hoof's flat top.
     const leg = (hip: V3, knee: V3, upper: string, lower: string) =>
       sdf.smoothUnion(
         0.03,
         sdf.cone(hip, knee, 0.09, 0.074).bone(upper),
-        sdf.cone(knee, [knee[0], 0.06, knee[2] + 0.01], 0.074, 0.068).bone(lower),
+        sdf.cone(knee, [knee[0], 0.085, knee[2] + 0.012], 0.074, 0.062).bone(lower),
       );
     const legs = sdf.union(pair(leg(SHOULDER, FKNEE, 'fleg.L', 'fshin.L')), pair(leg(HIP, BKNEE, 'bleg.L', 'bshin.L')));
     const TAIL_TIP: V3 = [0.02, 0.34, -0.41];
@@ -305,29 +307,109 @@ export default defineAsset({
       }),
     });
 
-    // A gore: lower the head and rock back (wind-up), lunge forward and toss the head up, settle.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    // A gore, solved by targets. The legs use two-bone IK (reach). The hind hooves stay planted and
+    // roll onto the toe as the legs push; the front hooves take a short step forward in the charge
+    // and a step back in the recovery. Each hoof rises until its lowest rim point touches the
+    // ground, so no hoof goes into the floor.
+    // Gather (0 to 0.3) and hold (to 0.4): the body rocks back and down over the bent hind legs,
+    // the head drops until the snout is at knee height, and the horns and the tusks point forward.
+    // Charge (0.4 to 0.56): the hips drive 0.2 m forward. Toss (0.52 to 0.64): the head hooks up
+    // and to the boar's left, with the tusks leading. Hold (to 0.72), then recover to rest.
+    const { keys, reach, follow } = motion;
+    type P3 = Parameters<typeof reach>[1];
+    const SPINE_J: P3 = [0, 0.35, 0.02];
+    const HOOF_Y = 0.03; // the hoof center: the IK end joint
+    const RIM_R = 0.058; // the center line of the hoof's rounded bottom edge
+    const RIM_Y = 0.016;
+    const rotX = (v: P3, deg: number, about: P3): P3 => {
+      const a = (deg * Math.PI) / 180;
+      const y = v[1] - about[1];
+      const z = v[2] - about[2];
+      return [v[0], about[1] + y * Math.cos(a) - z * Math.sin(a), about[2] + y * Math.sin(a) + z * Math.cos(a)];
+    };
+    const sub = (a: P3, b: P3): P3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    const mx = (v: V3, s = -1): P3 => [s * v[0], v[1], v[2]];
+    const mkLeg = (root: P3, mid: P3, front: boolean) => {
+      const end: P3 = [mid[0], HOOF_Y, mid[2] + 0.014];
+      // The front knees bend forward; the hind legs bend back, as in the rest pose.
+      const pole: P3 = [mid[0], mid[1], mid[2] + (front ? 0.6 : -0.6)];
+      const sole = Array.from({ length: 12 }, (_, i): P3 => {
+        const a = (i / 12) * Math.PI * 2;
+        return [end[0] + RIM_R * Math.cos(a), RIM_Y, end[2] + RIM_R * Math.sin(a)];
+      });
+      return { root, mid, end, pole, sole, front, rest: reach({ root, mid, end }, end, pole) };
+    };
+    const LEGS = {
+      'fleg.L': mkLeg(mx(SHOULDER, 1), mx(FKNEE, 1), true),
+      'fleg.R': mkLeg(mx(SHOULDER), mx(FKNEE), true),
+      'bleg.L': mkLeg(mx(HIP, 1), mx(BKNEE, 1), false),
+      'bleg.R': mkLeg(mx(HIP), mx(BKNEE), false),
+    };
+    // Rotations that put the hoof center at `target` (world), with the hips moved by `hm` and the
+    // spine turned by `spineX`; the rest solution is taken off, so the rest target gives the rest pose.
+    const solveLeg = (leg: ReturnType<typeof mkLeg>, spineX: number, hm: P3, target: P3) => {
+      const spine: P3 = [spineX, 0, 0];
+      const toLocal = (q: P3): P3 => {
+        const l: P3 = [q[0] - hm[0], q[1] - hm[1], q[2] - hm[2]];
+        return leg.front ? rotX(l, -spineX, SPINE_J) : l;
+      };
+      const lowest = (upper: P3, lower: P3) =>
+        Math.min(
+          ...leg.sole.map((s) => (leg.front ? follow([SPINE_J, leg.root, leg.mid], [spine, upper, lower], s) : follow([leg.root, leg.mid], [upper, lower], s))[1] + hm[1]),
+        );
+      let lift = 0;
+      for (let i = 0; ; i++) {
+        const r = reach(leg, toLocal([target[0], target[1] + lift, target[2]]), leg.pole);
+        const upper = sub(r.upper, leg.rest.upper);
+        const lower = sub(r.lower, leg.rest.lower);
+        if (i === 4) return { upper, lower };
+        lift = Math.max(0, lift + target[1] - HOOF_Y + RIM_Y - lowest(upper, lower));
+      }
+    };
+    // A front hoof's step: forward by `dz` in the charge, back in the recovery, on a small arc.
+    const step = (p: number, out: readonly [number, number], back: readonly [number, number], dz: number, h: number) => {
+      const arc = (a: number, b: number, hh: number) => (p > a && p < b ? hh * Math.sin(((p - a) / (b - a)) * Math.PI) : 0);
+      const z = keys(p, [[out[0], 0], [out[1], dz], [back[0], dz], [back[1], 0]]);
+      return { z, y: arc(out[0], out[1], h) + arc(back[0], back[1], h * 0.7) };
     };
     k.animation('attack', {
-      duration: 0.9,
+      duration: 1.0,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.35, p) * (1 - ease(0.35, 0.45, p));
-        const hit = ease(0.35, 0.47, p) * (1 - ease(0.6, 1, p));
-        const toss = ease(0.42, 0.52, p) * (1 - ease(0.6, 0.95, p));
+        const hm: P3 = [
+          0,
+          keys(p, [[0, 0], [0.3, -0.035], [0.4, -0.04], [0.54, -0.045], [0.64, -0.02], [0.72, -0.022], [1, 0]] as const),
+          keys(p, [[0, 0], [0.3, -0.045], [0.4, -0.05], [0.56, 0.15], [0.64, 0.155], [0.72, 0.145], [1, 0]] as const),
+        ];
+        const spineX = keys(p, [[0, 0], [0.3, 10], [0.4, 11], [0.54, 7], [0.64, -4], [0.72, -3], [1, 0]] as const);
+        const hook = keys(p, [[0, 0], [0.4, 0], [0.52, -0.25], [0.64, 1], [0.72, 0.85], [1, 0]] as const);
+        const fL = step(p, [0.42, 0.54], [0.74, 0.9], 0.13, 0.045);
+        const fR = step(p, [0.46, 0.58], [0.78, 0.94], 0.12, 0.045);
+        const front = (leg: ReturnType<typeof mkLeg>, s: { z: number; y: number }) =>
+          solveLeg(leg, spineX, hm, [leg.end[0], HOOF_Y + s.y, leg.end[2] + s.z]);
+        const lFL = front(LEGS['fleg.L'], fL);
+        const lFR = front(LEGS['fleg.R'], fR);
+        const lBL = solveLeg(LEGS['bleg.L'], spineX, hm, LEGS['bleg.L'].end);
+        const lBR = solveLeg(LEGS['bleg.R'], spineX, hm, LEGS['bleg.R'].end);
         return {
-          hips: { move: [0, -0.012 * wind, -0.035 * wind + 0.07 * hit] },
-          spine: { rotate: [4 * wind - 4 * hit, 0, 0] },
-          neck: { rotate: [16 * wind - 6 * hit, 0, 0] },
-          head: { rotate: [10 * wind - 30 * toss, 0, 0] },
-          tail: { rotate: [-20 * hit, 20 * wave(p, 3), 0] },
-          'fleg.L': { rotate: [12 * wind - 26 * hit, 0, 0] },
-          'fleg.R': { rotate: [12 * wind - 18 * hit, 0, 0] },
-          'bleg.L': { rotate: [-8 * wind + 24 * hit, 0, 0] },
-          'bleg.R': { rotate: [-8 * wind + 18 * hit, 0, 0] },
-          'fshin.L': { rotate: [20 * hit, 0, 0] },
+          hips: { move: hm },
+          spine: { rotate: [spineX, 0, 0] },
+          neck: {
+            rotate: [keys(p, [[0, 0], [0.3, 16], [0.4, 17], [0.54, 16], [0.64, -11], [0.72, -8], [1, 0]] as const), 12 * hook, 0],
+            move: [0, 0, keys(p, [[0, 0], [0.3, 0.035], [0.54, 0.045], [0.66, 0.015], [1, 0]] as const)],
+          },
+          head: {
+            rotate: [keys(p, [[0, 0], [0.3, 26], [0.4, 28], [0.52, 26], [0.64, -28], [0.72, -23], [1, 0]] as const), 30 * hook, 20 * hook],
+          },
+          tail: { rotate: [keys(p, [[0, 0], [0.3, 20], [0.45, 50], [0.7, 45], [1, 0]] as const), 15 * wave(p, 3), 0] },
+          'fleg.L': { rotate: lFL.upper },
+          'fshin.L': { rotate: lFL.lower },
+          'fleg.R': { rotate: lFR.upper },
+          'fshin.R': { rotate: lFR.lower },
+          'bleg.L': { rotate: lBL.upper },
+          'bshin.L': { rotate: lBL.lower },
+          'bleg.R': { rotate: lBR.upper },
+          'bshin.R': { rotate: lBR.lower },
         };
       },
     });
@@ -335,7 +417,6 @@ export default defineAsset({
     // Hit, struck from the front-left: the head jerks up and back, the body flinches back and to
     // its right, and the tail flicks; then a quick return. The legs brace: each leg leans by the
     // angle that cancels the body's shift, so the hooves stay planted.
-    const { keys } = motion;
     const DEG = 180 / Math.PI;
     k.animation('hit', {
       duration: 0.4,
