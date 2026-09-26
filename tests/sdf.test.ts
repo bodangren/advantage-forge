@@ -41,6 +41,15 @@ describe('sdf primitives', () => {
     expect(subtract(base, cutter).dist(...q)).toBeCloseTo(0.7, 5);
   });
 
+  it('divides a steep displacement by its Lipschitz bound without moving the surface', () => {
+    const plain = sphere(1).displace(0.1, () => -1);
+    const scaled = sphere(1).displace(0.1, () => -1, 2);
+    expect(plain.dist(2, 0, 0)).toBeCloseTo(0.9);
+    expect(scaled.dist(2, 0, 0)).toBeCloseTo(0.45);
+    expect(scaled.dist(1.1, 0, 0)).toBeCloseTo(0);
+    expect(Math.sign(scaled.dist(1.05, 0, 0))).toBe(-1);
+  });
+
   it('smooth union adds material between shapes', () => {
     const a = sphere(0.5).at(-0.45, 0, 0);
     const b = sphere(0.5).at(0.45, 0, 0);

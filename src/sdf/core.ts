@@ -187,11 +187,16 @@ export class Sdf {
   /**
    * Add a displacement. `fn` must return values in [-1, 1]; the surface moves by up to `amplitude`
    * meters. Use with `noise3`/`fbm` for bark, stone, cloth folds, and hand-made irregularity.
+   * A steep displacement (spikes, combed fur) makes the field change faster than the distance, so
+   * values overstate how far a point is from the surface; `lipschitz` (the steepest slope, about
+   * 1 + amplitude x the slope of `fn`) divides the field back to true distances without moving the
+   * surface. Triangle reduction checks its error with these values.
    */
-  displace(amplitude: number, fn: DistFn): Sdf {
+  displace(amplitude: number, fn: DistFn, lipschitz = 1): Sdf {
     const d = this.dist;
+    const inv = 1 / Math.max(1, lipschitz);
     return new Sdf(
-      (x, y, z) => d(x, y, z) + amplitude * fn(x, y, z),
+      (x, y, z) => (d(x, y, z) + amplitude * fn(x, y, z)) * inv,
       expand(this.bounds, Math.abs(amplitude)),
       this.color,
       this.tags,
