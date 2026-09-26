@@ -687,9 +687,11 @@ export default defineAsset({
     // The chibi head and hood are huge and the arms short, so the shot is planned in the chest's
     // frame: the string hand anchors under the right side of the jaw, in front of the ribs, with
     // the draw forearm along the arrow line; the bow hand is out in front, the bow canted.
-    const ANCHOR: V3 = [0, 0.4, 0.16]; // the pinch at full draw
+    // The pinch at full draw: just below and in front of the right jaw corner (the head is turned
+    // 42 degrees to the target), above the mantle collar and clear of the hood's cheek.
+    const ANCHOR: V3 = [-0.04, 0.46, 0.228];
     const AIM = norm([0.85, 0.02, 0.52]); // in the world: ahead and a little to the left
-    const REST_PT = add(ANCHOR, scl(AIM, 0.15)); // where the arrow lies on the bow hand
+    const REST_PT = add(ANCHOR, scl(AIM, 0.12)); // where the arrow lies on the bow hand
     const BOW_AT = add(REST_PT, [0, -0.018, 0]); // the grip at full aim
     const BOW_REST = { dir: bowDir([0, 1, 0]), up: bowDir([0, 0, 1]) }; // the limbs, and the back of the bow
     const HAND_R_REST = { dir: DIR_R, up: [0, 0, 1] as V3 };
@@ -806,13 +808,17 @@ export default defineAsset({
         const tremble = p > 0.58 && p < RELEASE ? 0.6 * Math.sin(((p - 0.58) / (RELEASE - 0.58)) * Math.PI * 5) : 0;
         const kick = p >= RELEASE ? Math.exp(-(p - RELEASE) * 40) : 0;
         // Shoulders: the bow shoulder pushes toward the target, the string shoulder pulls back.
-        const shL: V3 = scl([0.0, 0.01, 0.03], aim);
-        const shR: V3 = add(scl([0, 0.012, -0.035], keys(p, [[0, 0], [0.12, 1], [0.24, 0.5], [0.42, 0], [0.56, 1], [0.8, 1], [1, 0]] as const)), [0, 0, 0]);
+        // (The chibi arm is short: the string shoulder rises and comes forward under the mantle for
+        // the draw, so the hand reaches the jaw with the elbow high and back on the arrow line.)
+        const shL: V3 = scl([0.0, 0.03, 0.09], keys(p, [[0, 0], [0.26, 1], [0.82, 1], [1, 0]] as const)); // leads the bow arm up, over the mantle hem
+        const SH_QUIVER: V3 = [0, 0.012, -0.035];
+        const SH_DRAW: V3 = [0.025, 0.035, 0.06];
+        const shR: V3 = keys(p, [[0, Z3], [0.12, SH_QUIVER], [0.2, SH_QUIVER], [0.33, SH_DRAW], [0.8, SH_DRAW], [1, Z3]] as const);
         // ---- the bow arm
         // In the recovery the bow swings past the side of the hood; `clear` holds it out from the hood.
         const clear = keys(p, [[0.83, 0], [0.88, 1], [0.94, 0]] as const);
         const bowAt = add(
-          keys(p, [[0, GRIP], [0.2, add(GRIP, [0.04, 0.06, 0.05])], [0.38, BOW_AT], [RELEASE, BOW_AT], [RELEASE + 0.05, add(BOW_AT, [0.015, -0.01, 0.02])], [0.82, add(BOW_AT, [0.01, -0.02, 0.01])], [0.86, add(BOW_AT, [0.02, -0.16, 0.0])], [0.91, toChest([0.28, 0.24, 0.16])], [0.95, add(GRIP, [0.05, -0.03, 0.02])], [1, GRIP]] as const),
+          keys(p, [[0, GRIP], [0.2, add(GRIP, [0.04, 0.06, 0.05])], [0.38, BOW_AT], [RELEASE, BOW_AT], [RELEASE + 0.05, add(BOW_AT, [0.015, -0.01, 0.02])], [0.82, add(BOW_AT, [0.01, -0.02, 0.01])], [0.86, [0.15, 0.225, 0.24]], [0.91, toChest([0.28, 0.24, 0.16])], [0.95, add(GRIP, [0.05, -0.03, 0.02])], [1, GRIP]] as const),
           scl([0.022, 0, 0.01], clear),
         );
         // The bow is canted: its top leans to the archer's right, so the string clears the face.
@@ -829,14 +835,15 @@ export default defineAsset({
             [0, PINCH],
             [0.14, [-0.2, 0.34, -0.16]], // behind the right side, at the quiver
             [0.19, [-0.21, 0.35, -0.16]],
-            [0.25, [-0.26, 0.34, -0.02]], // out round the right side, low (clear of the hood)
-            [0.32, [-0.12, 0.37, 0.17]], // in front, low
+            [0.25, [-0.28, 0.35, 0.0]], // out round the right side, low (clear of the hood)
+            [0.32, [-0.15, 0.39, 0.21]], // in front, below the hood
             [0.38, nockNow],
             [0.42, nockNow],
             [0.58, ANCHOR],
             [RELEASE, add(ANCHOR, [0, -0.002, -0.004])],
-            [RELEASE + 0.04, add(ANCHOR, [-0.07, -0.02, -0.06])],
-            [0.82, add(ANCHOR, [-0.08, -0.04, -0.06])],
+            [RELEASE + 0.04, add(ANCHOR, [-0.075, 0.005, -0.04])], // back along the arrow line, past the jaw
+            [0.82, add(ANCHOR, [-0.09, -0.005, -0.045])],
+            [0.9, [-0.26, 0.3, 0.1]], // down past the right side, clear of the mantle hem
             [1, PINCH],
           ] as const,
           'smooth',
@@ -846,8 +853,10 @@ export default defineAsset({
         const handWant = { dir: norm(add(scl(AIM, onString), scl([0, -1, 0.2], 1 - onString))), up: [0, 1, 0] as V3 };
         const pinchDir = norm(add(scl(AIM, onString), scl(DIR_R, 1 - onString)));
         const wristR = sub(pinchAt, scl(pinchDir, 0.07));
-        // The draw elbow stays up and back, in line with the arrow, so the forearm clears the ribs.
-        const armR = reach(ARM_R, sub(wristR, shR), keys(p, [[0, [-0.4, 0.1, -0.35]], [0.3, [-0.45, 0.2, -0.3]], [0.42, [-0.35, 0.4, -0.1]], [0.84, [-0.35, 0.4, -0.1]], [1, [-0.4, 0.1, -0.35]]] as const));
+        // The draw elbow lifts out and back, level with the arrow and above the shoulder, so the
+        // forearm lies along the arrow line and the wraps clear the ribs.
+        const ELBOW_POLE: V3 = [-0.45, 0.55, -0.15];
+        const armR = reach(ARM_R, sub(wristR, shR), keys(p, [[0, [-0.4, 0.1, -0.35]], [0.25, [-0.45, 0.2, -0.3]], [0.33, [-0.5, 0.45, -0.2]], [0.4, ELBOW_POLE], [0.84, ELBOW_POLE], [1, [-0.4, 0.1, -0.35]]] as const));
         const handR = slerpRot(Z3, orient([armR.upper, armR.lower], HAND_R_REST, handWant), onString);
         const pinchNow = add(follow([mx(SHOULDER), ELBOW_R, WRIST_R], [armR.upper, armR.lower, handR], PINCH), shR);
         // ---- the string: its middle follows the pinch from the nock to the release, then snaps back.

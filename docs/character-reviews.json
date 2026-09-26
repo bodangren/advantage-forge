@@ -745,7 +745,7 @@
     "reviewedAt": "2026-09-26T19:21:28+00:00"
   },
   "skeleton-archer": {
-    "overall": 7.3,
+    "overall": 7.6,
     "group": "Enemies",
     "scores": {
       "mockup": 3,
@@ -755,27 +755,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3,
+      "technical": 4,
       "gameReady": 3,
       "sprite": 3,
       "motion": 4
     },
-    "summary": "The skeleton archer keeps the identity of its mmx mockup: a green hood, glowing orange eyes, a bare ribcage, red wraps, a quiver, and a bow. The attack is a full bow-shot sequence, but the draw hand stops at the chest, not at the jaw. The head check passes (margin 0.3 cm). The ground check fails, because the hidden arrow goes 4.2 cm below the ground in the attack. The model has 66,696 triangles.",
+    "summary": "The bow shot now draws to the jaw. The draw hand stops at the right side of the hood, at jaw height, above the mantle collar. The forearm lies level along the arrow line, and the elbow is high and back. The check passes (result ok, ground ok), and the draw, the hold, and the release have no body clips.",
     "strengths": [
-      "The costume matches the mockup: the green hood with a ragged mantle, the ribcage with a diagonal strap, the brown loincloth with a brass buckle, the red wraps, and a quiver with red fletching.",
-      "The attack has a full sequence: the archer takes an arrow from the quiver, nocks it, points the bow arm at the target, holds with a tremble, and releases with a bow kick.",
-      "The death is clear and stays above the ground: a stagger, a fall forward, the hooded skull rolls to the front, and the bow lies flat on the ground."
+      "The draw hand comes to the right jaw (ANCHOR y = 0.46 m), and the forearm lies along the arrow line, level with the arrow.",
+      "The draw, the hold, and the release have no body clips: the wraps stay out of the ribs, and the hand and the bracer stay out of the mantle.",
+      "The shot keeps all its parts: the nock, the hold with a tremble, the string snap at the release, the follow-through past the jaw, and the recovery."
     ],
     "issues": [
-      "The shot reads as a bow shot only in part. The bow arm points at the target, and an arrow shows on the string before the release. After the release, the string is straight again. But the draw hand stops at the chest under the chin (ANCHOR y = 0.40 m), inside the mantle edge. It does not come to the jaw beside the face, and the hood hides it in the side view.",
-      "The ground check fails: in the attack, the hidden nocked arrow goes 4.2 cm below the ground at phase 0.88. The body clips from the last review stay: the red wraps go 1.3 cm into the ribs (phase 0.23-0.85), the draw hand goes 0.6 to 0.8 cm into the mantle, and the bracer goes 0.8 cm into the mantle.",
-      "The model differs from the mockup: the bow is a thin, upright stick at the side, not a recurve across the body. The hood is a smooth dome, not a draped hood. The skull is wide and flat, and the teeth are still one block with cut lines. At 128 px, the back and side sprites show only the hood and the quiver."
+      "In the front view, the bow arm crosses in front of the face and hides the draw hand. The mantle does not lift with the arm, so the upper arm and the high elbow go into the mantle and do not show.",
+      "In the reach to the quiver, the red wraps go 0.9 cm into the mantle at phase 0.04-0.08 and 0.23-0.30. Small old lines remain: the hand 0.4 cm into the cloak, the arrow 0.3 cm into the quiver, the string 0.4 cm into the cloak at phase 0.91.",
+      "The model differs from the mockup: the bow is a thin, upright stick, not a recurve across the body. The teeth are still one block with cut lines. At 128 px, the back and side sprites show only the hood and the quiver."
     ],
     "next": [
-      "Fix the ground failure: while the shot arrow is hidden (phase 0.735 to 0.9), keep its direction at the release aim, or park it at the pinch, so it never goes below y = 0.",
-      "Still open from the last review: raise the draw anchor to the right side of the jaw, in front of the mantle, and move the draw elbow and the hand path away from the ribs and the mantle, so the body clip warnings stop. The separate teeth are also still open."
+      "Give the skull separate teeth and make the bow a recurve, as the mockup shows.",
+      "Keep the red wraps out of the mantle hem in the reach to the quiver, and let the mantle show the raised draw arm."
     ],
-    "reviewedAt": "2026-09-26T18:57:46+00:00"
+    "reviewedAt": "2026-09-26T19:31:46+00:00"
   },
   "giant-rat": {
     "overall": 7.5,
