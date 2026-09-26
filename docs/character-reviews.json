@@ -427,5 +427,37 @@
       "Add a strap with a buckle to the vest."
     ],
     "reviewedAt": "2026-09-26T05:09:12+00:00"
+  },
+  "zombie": {
+    "overall": 8.0,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "The zombie matches the mmx mockup: grey-green skin, one bulging yellow eye and one glossy black eye, a toothy grimace, a patched shirt, a rope belt, torn trousers, and sandals.",
+    "strengths": [
+      "The mismatched eyes are a unique signature, and they read in every sprite direction that shows the face.",
+      "The shamble drags one foot and keeps the arms reaching forward, so the motion reads as a zombie at once.",
+      "It uses the rogue's head and skeleton, so it reads as a villager who came back wrong."
+    ],
+    "issues": [
+      "The hair is a smooth black mass with thick locks. The mockup hair is thinner and messier.",
+      "The shirt is plain. The mockup shirt has a torn collar, loose threads, and buttons.",
+      "The torn trouser hems are painted. The mockup shows deep, shaggy tears."
+    ],
+    "next": [
+      "Make the hair locks thinner and more varied.",
+      "Add a few loose threads at the collar and the hem."
+    ],
+    "reviewedAt": "2026-09-26T05:20:08+00:00"
   }
 }
