@@ -1,4 +1,4 @@
-import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+import { defineAsset, motion, profile, rgb, sdf, Sdf, THREE } from '../src/index.js';
 
 /**
  * Goblin warrior — Chibi Quest enemy (catalog `enemies/humanoid/goblin-warrior`), about 0.93 m
@@ -11,7 +11,7 @@ import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
  * Proportions (from the turnaround, on the rogue's body): head center 0.7, eyes 0.655, chin 0.51,
  *   ear tips 0.37 out and 0.82 high, shoulders 0.45, belt 0.28, tunic hem 0.18, boot cuffs 0.12.
  * Shape language: round (head, cheeks, fists, big boots) with sharp points for menace (ears,
- *   tuft, fang, dagger, jagged hem).
+ *   fang, dagger, jagged hem); one soft crest of hair leans back on the crown.
  * Palette (60/30/10): olive-green skin #b8ba4e; browns (tunic #86573a, leather #965d31, pouch
  *   #c98c42, boots #86593b); a red-orange scarf #de6233 as the accent under the face;
  *   blue-grey steel #7e8a9d on one shoulder; cream wraps #e4c496.
@@ -163,7 +163,23 @@ export default defineAsset({
     );
     const earCup = sdf.extrude(profile.offsetProfile(earOutline, -0.028), 0.03, 0.01).at(0.012, 0.004, 0.02);
     const earLocal = sdf.extrude(earOutline, 0.028, 0.012).smoothSubtract(0.01, earCup);
-    const earPose = (s: sdf.Shape) => s.scale(1.06).rotateY(41).at(...EAR);
+    // A slight cup across the width: both long edges curve toward the inner (+Z) face, so the far
+    // ear keeps a visible inner face in the diagonal views instead of a thin edge.
+    const EAR_CUP = 0.014;
+    const cupOffset = (x: number, y: number) => {
+      const ramp = Math.min(1, Math.max(0, (x + 0.03) / 0.12)); // flat where the ear meets the head
+      const across = (y - (0.01 + 0.35 * x)) / Math.max(0.035, 0.1 - 0.3 * x); // -1..1 edge to edge
+      return EAR_CUP * ramp * across * across;
+    };
+    const cupped = (s: sdf.Shape): sdf.Shape =>
+      new Sdf(
+        (x, y, z) => s.dist(x, y, z - cupOffset(x, y)) * 0.75,
+        { min: s.bounds.min, max: [s.bounds.max[0], s.bounds.max[1], s.bounds.max[2] + EAR_CUP * 3] },
+        (x, y, z, f) => s.color(x, y, z - cupOffset(x, y), f),
+      );
+    // The ear rolls 28 degrees about its long axis so the inner face looks a little upward, and it
+    // sweeps back a little less; the raised sprite cameras then see that face in the diagonal views.
+    const earPose = (s: sdf.Shape) => s.scale(1.06).rotateX(-28).rotateY(32).at(...EAR);
     // Two small V nicks in the lower edge of the left ear, near the tip.
     const nick = (x: number, y: number, a: number) =>
       sdf
@@ -178,36 +194,21 @@ export default defineAsset({
         .rotateZ(a)
         .at(x, y, 0);
     const nicks = earPose(sdf.union(nick(0.2, 0.052, 140), nick(0.16, 0.012, 135)));
-    const ears = pair(earPose(earLocal.paintWhere(earCup.round(0.004), C.earInner, 0.008)).bone('ear.L')).subtract(nicks);
+    const ears = pair(earPose(cupped(earLocal.paintWhere(earCup.round(0.004), C.earInner, 0.008))).bone('ear.L')).subtract(nicks);
 
-    // A small flame-shaped tuft of hair on the crown, swept back.
-    const tuft = sdf.smoothUnion(
-      0.015,
-      sdf.chain(
+    // One soft crest of hair on the crown: a single flame shape that leans back.
+    const tuft = sdf
+      .chain(
         [
-          [0.0, 0.83, 0.03, 0.052],
-          [0.028, 0.888, 0.0, 0.036],
-          [0.058, 0.912, -0.035, 0.02],
+          [0, 0, 0.04, 0.058],
+          [0, 0.047, 0.004, 0.045],
+          [0, 0.069, -0.034, 0.031],
+          [0, 0.074, -0.068, 0.018],
         ],
-        0.01,
-      ),
-      sdf.chain(
-        [
-          [0.04, 0.83, 0.0, 0.042],
-          [0.078, 0.87, -0.03, 0.028],
-          [0.105, 0.878, -0.065, 0.016],
-        ],
-        0.01,
-      ),
-      sdf.chain(
-        [
-          [-0.035, 0.83, 0.01, 0.042],
-          [-0.055, 0.87, -0.02, 0.026],
-          [-0.066, 0.884, -0.05, 0.016],
-        ],
-        0.01,
-      ),
-    );
+        0.025,
+      )
+      .scale([1.05, 1, 1])
+      .at(0.008, 0.818, 0);
     const neck = sdf.capsule([0, 0.44, -0.01], [0, 0.55, -0.01], 0.056).bone('neck');
 
     // Arms: bare green upper arms, forearms under wraps, big fists.

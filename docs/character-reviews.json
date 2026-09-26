@@ -224,7 +224,7 @@
     "reviewedAt": "2026-09-26T18:36:11+00:00"
   },
   "goblin-warrior": {
-    "overall": 8.5,
+    "overall": 8.6,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -238,22 +238,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The goblin warrior stays close to the four-view mockup in every view. It now has the full clip set: idle, walk, run, attack, hit, and death. The attack is a dagger lunge-stab that reads clearly in the side view. The forge check shows result ok and ground ok. The two changes from the last review are still open: the tuft has three spikes, and the belt buckle is small.",
+    "summary": "The goblin warrior stays close to the four-view mockup in every view. The hair on the crown is now one soft crest that leans back, as in the mockup. Each ear now has a slight cup and rolls 28 degrees, so its inner face looks a little upward. In the SW and SE sprites, the far ear still shows as a narrow upward point. The forge check shows result ok and ground ok.",
     "strengths": [
+      "The one soft crest replaces the three thin spikes. From the front it is a round, soft shape. From the side it leans back like a small flame.",
       "The broad leaf ears, the angry eyes, and the fang read at once. The face reads at 128 px in the S, SW, and SE sprites.",
-      "In the attack, the arm pulls back and then stabs straight forward at chest height at t = 0.38 s. In the side view, the full dagger shows in front of the body.",
-      "All identity cues of the mockup are present: the nicked ear, one shoulder guard, the diagonal strap, the pouch, the wraps, and the dagger. At 31,138 triangles, the model is light."
+      "All identity cues of the mockup are present: the nicked ear, one shoulder guard, the diagonal strap, the pouch, the wraps, and the dagger. At 30,374 triangles, the model is light."
     ],
     "issues": [
-      "The tuft on the head still has three thin spikes. The mockup shows one soft crest. The belt buckle is still smaller than the large tan buckle in the mockup.",
-      "In the SW and SE sprites, one ear shows only its edge. It reads as a thin spike above the head, like an antenna.",
-      "The pouch is at the front of the hip, so it does not show from the back as in the mockup. The brows are thicker than the thin brows of the mockup. In the side view of the attack, the body hides the dagger during the wind-up."
+      "In the SW and SE sprites, the far ear still reads as a narrow point above the head. The raised camera looks along the ear, and the head hides the wide base of the ear.",
+      "The belt buckle is still smaller than the large tan buckle in the mockup.",
+      "The pouch is at the front of the hip, so it does not show from the back as in the mockup. The brows are thicker than the thin brows of the mockup."
     ],
     "next": [
-      "Merge the three spikes of the tuft into one soft crest. This change from the last review is still open.",
-      "Give each ear a slight cup, so that it keeps some width in the SW and SE sprites. The 30 percent larger buckle from the last review is also still open, but it has less value."
+      "Turn the ears more to the front (about 20 degrees of sweep instead of 32), or let the tips droop a little. Then compare the front silhouette with the mockup again.",
+      "Make the belt buckle about 30 percent larger."
     ],
-    "reviewedAt": "2026-09-26T18:41:38+00:00"
+    "reviewedAt": "2026-09-26T18:55:23+00:00"
   },
   "horned-boar": {
     "overall": 8,
