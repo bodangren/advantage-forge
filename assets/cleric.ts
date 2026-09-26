@@ -826,8 +826,8 @@ export default defineAsset({
           [-0.3, 0.2, -0.4],
         );
         const bookArm = bookPoseAt(
-          lerp(WRIST_L, [0.33, 0.4, 0.0], fling),
-          norm(lerp(BOOK.dir, norm([0.7, 0.7, 0]), fling)),
+          lerp(WRIST_L, [0.355, 0.37, 0.0], fling),
+          norm(lerp(BOOK.dir, norm([0.78, 0.62, 0]), fling)),
           norm(lerp(BOOK.up, [0, 0, 1], fling)),
           [0.3, 0.2, -0.4],
         );
@@ -861,7 +861,7 @@ export default defineAsset({
         const up = ease(0.02, 0.24, p);
         const pump = bump(Math.min(1, Math.max(0, (p - 0.24) / 0.5)), 2);
         const hop = bump(Math.min(1, Math.max(0, (p - 0.2) / 0.22)));
-        const wrist: V3 = [-0.31 - 0.03 * pump, 0.5 + 0.03 * pump, 0.05 + 0.03 * pump];
+        const wrist: V3 = [-0.322 - 0.03 * pump, 0.5 + 0.03 * pump, 0.05 + 0.03 * pump];
         return {
           ...hammerPose(lerp(WRIST_R, wrist, up), lerp(HAFT_AXIS, norm([-0.3, 1, 0.16 - 0.1 * pump]), up), [0, 0, 1]),
           ...bookPoseAt(lerp(WRIST_L, [0.255, 0.32, 0.11], up), BOOK.dir, BOOK.up),
