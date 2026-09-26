@@ -96,73 +96,68 @@
     "reviewedAt": "2026-09-26T03:39:07+00:00"
   },
   "wizard": {
-    "overall": 7.5,
+    "overall": 8.5,
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 5,
       "proportion": 4,
       "shape": 4,
       "color": 4,
-      "materials": 3,
-      "detail": 3,
-      "technical": 4,
-      "gameReady": 4,
-      "sprite": 4,
-      "motion": 3
-    },
-    "summary": "The wizard reads as a fire mage at once. The large hat and the fire staff match the mockup, but the robe is simpler.",
-    "strengths": [
-      "The large red hat with the bent point is the signature shape. It reads in every sprite direction.",
-      "The flame on the staff and the flame in the palm are two glowing accents.",
-      "The teeth sit inside a dark rim, so the open smile reads as a mouth."
-    ],
-    "issues": [
-      "The hat brim is flat. In the mockup, the brim is wider and droops at the front and the back.",
-      "The robe is one plain red mass. The mockup robe has gold trim, a flared cape, and a patterned skirt.",
-      "The flame on the staff is smaller than the large fireball in the mockup.",
-      "In the walk, the long robe hides the legs and does not swing, so the motion looks stiff."
-    ],
-    "next": [
-      "Give the hat brim a soft droop.",
-      "Add gold trim and a flared hem to the robe.",
-      "Make the staff flame 30 percent larger.",
-      "Add a small swing to the robe hem in the walk and the run."
-    ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
-  },
-  "cleric": {
-    "overall": 6.5,
-    "scores": {
-      "mockup": 3,
-      "silhouette": 4,
-      "proportion": 3,
-      "shape": 4,
-      "color": 4,
       "materials": 4,
-      "detail": 3,
+      "detail": 4,
       "technical": 4,
-      "gameReady": 4,
+      "gameReady": 5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The cleric has the beard, the hammer, the holy book, and the tabard of the mockup. The head does not match: it looks bald and young.",
+    "summary": "The wizard is a fire mage with a huge drooping red hat, a forked fire staff, and a flame in her palm. The hat, the open gold-trimmed coat, and the wide cape now match the mockup.",
     "strengths": [
-      "The big ginger beard with braids is the focal point, as in the mockup.",
-      "The hammer with the gold cross and the book make a clear cleric silhouette.",
-      "The steel pauldrons, the blue tunic, and the leather read as different materials."
+      "The wide brim droops in soft waves and tips down to her left, so the hat looks like felt, as in the mockup.",
+      "The coat opens below the belt, has wide gold trims and flame motifs, and the cape flares out on both sides.",
+      "The staff cast thrusts the fire orb at the target with the body behind it, and a second attack throws the palm flame as a fireball."
     ],
     "issues": [
-      "The hair starts high on the head, so the large bare forehead looks bald. In the mockup, the hair comes down to the brows.",
-      "The face is a child's face with a beard. The mockup dwarf has a larger nose, heavier brows, and a stronger jaw.",
-      "The mockup shoulder armor has gold trim, and the boots are big. The model armor is plain silver.",
-      "The hands are bare skin. The mockup shows leather gauntlets."
+      "The fringe is short because the brim sits low, so the hair frames the face less than in the mockup.",
+      "The back of the cape is one plain red area with no emblem or trim above the hem.",
+      "The fireball in the second attack is small, and the charge in the palm grows only a little because the hair is near."
     ],
     "next": [
-      "Bring the hairline down to the brows and add the braided top of the hair.",
-      "Make the nose larger and the brows heavier.",
-      "Add gold trim to the pauldrons and leather gauntlets to the hands."
+      "Add a gold flame emblem or trim to the back of the cape.",
+      "Make the fringe fuller at the sides of the face."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T12:49:34+00:00"
+  },
+  "cleric": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The cleric is a dwarf battle priest with a ginger mane, a braided beard, a large cross hammer, and a holy book. The hair, face, armor trim, and weapons now match the mockup closely.",
+    "strengths": [
+      "The hairline is at the brows and a thick braid runs over the top of the head, so the head reads as a full ginger mane.",
+      "The large octagonal hammer, the gold pauldron rims, and the book with gold corners match the mockup.",
+      "The attack is an overhead smash: the hammer rises beside the head, stops, and hits the ground in front with the body behind it."
+    ],
+    "issues": [
+      "The eyes are large and round, so the face looks younger than the mature dwarf in the mockup.",
+      "The model has 85,000 triangles. The hair and the gold trims use more triangles than other heroes.",
+      "The blessing scales the gold cross on the book, but it has no separate glow or light rays."
+    ],
+    "next": [
+      "Make the eyes a little smaller and add heavier lower lids for an older face.",
+      "Add a soft glow shape behind the cross in the blessing."
+    ],
+    "reviewedAt": "2026-09-26T12:11:20+00:00"
   },
   "druid": {
     "overall": 7.5,
@@ -199,37 +194,36 @@
     "reviewedAt": "2026-09-26T03:39:07+00:00"
   },
   "adventurer": {
-    "overall": 7.5,
+    "overall": 8.5,
     "scores": {
       "mockup": 4,
-      "silhouette": 4,
+      "silhouette": 5,
       "proportion": 4,
       "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3,
-      "technical": 4,
-      "gameReady": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The adventurer matches the main parts of the mockup: the teal bandana, the grin, the big pack, the map, and the short sword.",
+    "summary": "The adventurer is a chibi hero with tousled hair under a wide teal bandana, a soft rucksack with a bedroll and a lantern, a short sword, and a map. It matches the mockup in the hair, the face, the pack, and the clothes.",
     "strengths": [
-      "The pack with the bedroll and the lantern makes a clear traveler silhouette from the side and the back.",
-      "The red neckerchief is a strong color accent under the face.",
-      "The open grin has teeth and a tongue inside a dark rim, and it reads at 128 px."
+      "The hair is a full mop of separate locks with grooves between them. The lock ends flick out past the bandana, and one big lock falls over the bandana.",
+      "The attack is a stepping diagonal slash that IK solves: the blade rises beside the head, cuts across the front edge first, and follows through. The forge check shows no contact with the head or the body.",
+      "The full hero clip set reads in the sprites: idle, walk, run, attack, attack2 (a lunging thrust), hit, death (a fall onto the face under the pack), and victory."
     ],
     "issues": [
-      "The hair is a tall, smooth mass with painted dark stripes. The mockup hair is messy, with many separate locks.",
-      "The mockup pack is a soft, round rucksack. The model pack is a box.",
-      "The map in the right hand reads as a pale stick in the front view."
+      "The sword is in the right hand and the map is in the left hand. In the mockup, one hand holds the two items, and the other hand is empty.",
+      "The short chibi arms keep the slash wind-up near the head, so the front view hides the raised blade for about 0.1 s.",
+      "The back of the head is one smooth hair mass under the bandana, and the ends of the bedroll show a strong spiral."
     ],
     "next": [
-      "Replace the painted hair stripes with grooves and more separate locks.",
-      "Make the pack rounder and softer.",
-      "Unroll the map a little so that it reads as paper."
+      "Add a knee bone, so the lunge and the death fall can bend the legs.",
+      "Give the victory pose a real fist pump with the left hand."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T12:23:10+00:00"
   },
   "goblin-warrior": {
     "overall": 8.5,
@@ -461,11 +455,11 @@
     "reviewedAt": "2026-09-26T05:20:08+00:00"
   },
   "slime": {
-    "overall": 7.5,
+    "overall": 8.5,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
-      "silhouette": 3,
+      "silhouette": 4,
       "proportion": 4,
       "shape": 5,
       "color": 4,
@@ -476,22 +470,22 @@
       "sprite": 4,
       "motion": 5
     },
-    "summary": "The slime is the slime king from the enemy sheet without its crown, cape, and chain: a glossy green jelly dome with a grumpy glare, settling into a puddle with round drips.",
+    "summary": "The slime is the slime king from the enemy sheet without its crown, cape, and chain: a glossy green jelly with a head dome on a wider belly, a puddle of round drips, and three bubbles that float around it.",
     "strengths": [
-      "The squash and stretch sells the jelly: it stretches on each hop, flattens on landing, and the slam leaps and lands flat.",
-      "The slanted jelly lids and heavy brows give the same grumpy glare as the mockup.",
-      "It is very light: 7,354 triangles. The color is one constant, so the P2 fire, ice, and poison slimes can reuse the file."
+      "The face reads at 128 px: big white eyes with lime irises, heavy jelly brow ridges with a dark crease, and a bold, wide frown.",
+      "Three bubbles float on their own bones, and blisters bulge from the belly and the back. The side and back views are no longer a plain dome.",
+      "The motion is strong squash and stretch: a body slam with a low hold, a tall leap, and a flat splat, a squashed hit recoil, and a death that melts into a puddle while the bubbles pop."
     ],
     "issues": [
-      "From behind and from the side, it is a plain green dome, so the silhouette gives little to remember.",
-      "The mockup jelly looks translucent, with bubbles inside and floating around it. The model is opaque, with only three pale bubble spots.",
-      "The mouth is a small, faint line."
+      "The jelly is opaque. A see-through test hid the ground shadow and showed sorting errors, so the inner bubbles are only paint.",
+      "A vertical gloss highlight runs down the middle of the face in the front view and can read as a small nose.",
+      "Without the crown, the top of the dome is still a plain round shape."
     ],
     "next": [
-      "Add two or three small bubbles that float around the slime on their own bones.",
-      "Make the frown bolder, so it reads at 128 px."
+      "Make the fire, ice, and poison variants: change only the SLIME constant.",
+      "Add a spit or a split attack as a special clip."
     ],
-    "reviewedAt": "2026-09-26T05:25:31+00:00"
+    "reviewedAt": "2026-09-26T12:38:38+00:00"
   },
   "dire-wolf": {
     "overall": 8,
@@ -755,7 +749,7 @@
       "Make the wing's leading bone thicker and darker.",
       "Darken the membranes toward the wing tips."
     ],
-    "reviewedAt": "2026-09-26T09:01:51+00:00"
+    "reviewedAt": "2026-09-26T10:51:35+00:00"
   },
   "skeleton-archer": {
     "overall": 7.5,
