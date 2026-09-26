@@ -1,6 +1,6 @@
 {
   "rogue": {
-    "overall": 8.5,
+    "overall": 8.3,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -9,27 +9,27 @@
       "color": 5,
       "materials": 4,
       "detail": 4,
-      "technical": 4,
+      "technical": 3,
       "gameReady": 5,
-      "sprite": 5,
+      "sprite": 4,
       "motion": 4
     },
-    "summary": "The rogue is the best match in the set. The hood, the face, and the gold clasp read the same as in the mockup.",
+    "summary": "The rogue now holds twin daggers in a reverse grip, and the empty sheaths stay at her hips. The hood, the face, and the gold clasp still match the mockup. All 8 clips are present: idle, walk, run, attack, attack2, hit, death, and victory. The forge check shows result ok and ground ok. The check also shows that the daggers go 0.7 to 0.9 cm into the sheaths in the attack and into the mantle in the victory.",
     "strengths": [
-      "The dark inside of the hood frames the light face. This is the strongest focal point in the set.",
-      "The hair stays inside the hood and does not go through it.",
-      "The gold clasp, the ring buckle, and the hem stitches are small, clear accents."
+      "The dark inside of the hood frames the light face. The face reads at 128 px in the S, SW, and SE sprites.",
+      "The attack2 spin reads clearly. At t = 0.32 to 0.43 s, the mantle flares out and both arms swing the daggers out to the sides.",
+      "The gold clasp, the ring buckle, the hem stitches, and the gold rings on the dagger grips are small, clear accents."
     ],
     "issues": [
-      "From the side, the hood is very deep, so the back of the head looks too large.",
-      "The mockup tunic is dark and has a pointed hem. The model tunic is short and plain.",
-      "The cape is longer and flatter than in the mockup, where the hem curls."
+      "When she raises her arms, the upper arms pass through the mantle. In attack2 at t = 0.32 s, the mantle stretches from the arm to a point, like a wing.",
+      "The daggers are short and thin. At 128 px, they show only as small silver points. In the side view, the hood and the mantle hide both slashes of the attack.",
+      "The old shape issues remain. From the side, the hood is very deep. The tunic is short and plain, but the mockup tunic is dark and has a pointed hem."
     ],
     "next": [
-      "Make the back of the hood 10 to 15 percent shallower.",
-      "Add the darker, pointed lower tunic from the mockup."
+      "Bind the mantle at the shoulders to the upper arms, or make it shorter over the arms, so that raised arms stay clear of it.",
+      "Make the dagger blades about 30 percent longer and wider. Lift the attack slashes to chest height, so that they read in the side view and at 128 px."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T18:39:02+00:00"
   },
   "archer": {
     "overall": 8,
