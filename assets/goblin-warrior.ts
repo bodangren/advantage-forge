@@ -554,15 +554,30 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // The legs come from motion.gait: planted stance boots, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `lift` the swing height, `duty` the share of the
+    // cycle a foot is down (the run has a flight between steps), `hop` the hips bob. The left boot
+    // strikes at p = 0.25, when the left arm is back and the right arm forward (gait's phase 0 is
+    // the left strike). The sole points are the boot's heel and toe on the floor (measured on the
+    // boot SDF at y = 0, turned out 16 degrees).
+    const stride = (duration: number, step: number, lift: number, duty: number, armSwing: number, lean: number, hop: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.097, 0, -0.068],
+          toe: [0.128, 0, 0.107],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -11 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
@@ -570,18 +585,14 @@ export default defineAsset({
           'ear.L': { rotate: [0, lean * 0.8 + 3 * wave(p, 2, 0.2), 7 * wave(p, 2, 0.15)] as const },
           'ear.R': { rotate: [0, -lean * 0.8 - 3 * wave(p, 2, 0.2), -7 * wave(p, 2, 0.15)] as const },
           knot: { rotate: [lean * 1.5 + 6 * wave(p, 2, 0.2), 0, 6 * wave(p, 2, 0.1)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           'upperarm.R': { rotate: [-armSwing * 0.5 * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03));
+    k.animation('walk', stride(0.9, 0.1, 0.03, 0.58, 28, 3, 0.008));
+    k.animation('run', stride(0.56, 0.15, 0.05, 0.38, 50, 12, 0.035));
 
     // A sneaky lunge-stab, solved by targets. The wrist follows a path in world space. Each frame
     // converts it into the chest's rest frame (the hips, spine, and chest turn under the arm),
