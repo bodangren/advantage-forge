@@ -614,7 +614,7 @@
     "reviewedAt": "2026-09-26T21:08:20+00:00"
   },
   "farmer": {
-    "overall": 7.4,
+    "overall": 7.6,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -627,24 +627,24 @@
       "technical": 5,
       "gameReady": 4,
       "sprite": 4,
-      "motion": 3
+      "motion": 3.5
     },
-    "summary": "The farmer model matches the mmx mockup well: a wide straw hat, a straw bundle in the mouth, a red plaid shirt, patched blue overalls, and a tall pitchfork. The work clip now reads as fork work: a stab into the soil, a lever, a lift of a hay clump, and a toss to his left. The short chibi arms limit the stab angle and the toss.",
+    "summary": "The farmer model matches the mmx mockup well: a wide straw hat, a straw bundle in the mouth, a red plaid shirt, patched blue overalls, and a tall pitchfork. The work clip now uses the knee bones: the hips drop 6 cm on bent knees with flat feet, and the stab tilts the fork 47 to 49 degrees down. The face stays clear of the brim in every frame.",
     "strengths": [
       "The wide straw hat and the tall pitchfork make a silhouette that reads as a farmer at once, also in the 128 px sprites.",
-      "The work clip uses targets: both hands hold the haft, the tines go 10 cm into the soil, and a hay clump rides from the lever to the toss.",
-      "The check passes: no held item goes through the head, and no clip sinks below the ground."
+      "The stab drives the fork 47 to 49 degrees down with both hands on the haft, and the tines go at most 11 cm into the soil. The fork stays 2.2 cm or more from the head.",
+      "The legs bend at the knees with the soles flat in a wide stance, and the knees straighten again for the lift and the toss."
     ],
     "issues": [
-      "The stab tilts the fork only 36 degrees down, not 55: the fork is 1 m long and the arms are 17 cm long, so a steeper fork hits the head.",
-      "The rig has no knees. The hips drop 5.6 cm because the pant legs squash, and the lean is small, so the crouch is weak in the three-quarter view.",
-      "At the toss the left fist moves up to 5 cm off the haft axis, and the haft touches the shirt, the overalls, and a brass button by up to 0.9 cm."
+      "The legs are very short, so the knee bend is small in the side view: the overalls hide most of it.",
+      "At the toss the left fist moves up to 4.6 cm off the haft axis, and in the draw up to 2.3 cm, because the short arms cannot reach the fork across the chest.",
+      "The haft goes up to 0.9 cm into the shirt and the overalls in the lift, the toss, and the return. The stab and the lever are clear."
     ],
     "next": [
-      "Add knee bones to the legs, so the stab can bend the knees and drop the hips more.",
-      "Make the fork shorter or move the top hand nearer the butt end, so the stab can tilt the fork more and keep both hands on the haft in the toss."
+      "Let the left hand slide along the haft at the toss (a larger gap key), so the fist stays on the haft axis.",
+      "Give the return path a little more room from the shirt, for example a wider yaw at phase 0.84 to 0.96."
     ],
-    "reviewedAt": "2026-09-26T20:32:23+00:00"
+    "reviewedAt": "2026-09-26T23:32:56+00:00"
   },
   "guard": {
     "overall": 8.2,

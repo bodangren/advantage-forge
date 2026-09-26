@@ -476,13 +476,14 @@ export default defineAsset({
     // arms: the left hand's point on the haft (`L`), the fork's pitch below level, and its yaw to his
     // left. The right hand holds the haft near its top end, the left hand `W.gap` lower. The targets
     // go into the chest's rest frame, so the lean and the turn of the body carry the arms.
-    //   0.00 ready, fork drawn back   0.20 stab: tines 10 cm into the soil, hips down, lean
+    //   0.00 ready, fork drawn back   0.12 draw: the left hand slides down the haft
+    //   0.20 stab: the fork 47 degrees down, the tines 10 cm into the soil, the hips 6 cm down on bent
+    //   knees, a small lean and a side bend to his left, the head up and turned to the tines
     //   0.30-0.44 lever: the top hand pushes down and back about the left hand, the tines lift the load
-    //   0.44-0.62 slow lift: the hands come down to the hips, the load up to hip height, the butt end
-    //   swings out past the right hip   0.62-0.76 toss: the chest turns to his left, the tines flick up
+    //   0.44-0.62 slow lift: the knees straighten, the load comes up to hip height, the left hand slides
+    //   up the haft   0.62-0.76 toss: the chest turns to his left, the tines flick up
     //   0.76-1.00 return to the ready pose.
-    // The rig has no knees: the feet stay planted in a wide stance, and the pant legs squash (scale)
-    // to drop the hips.
+    // The feet stay planted flat in a wide stance: each leg is solved through its knee to a fixed ankle.
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
@@ -497,22 +498,32 @@ export default defineAsset({
     const W = {
       L: [
         [0, [-0.06, 0.35, 0.14]],
-        [0.12, [-0.065, 0.31, 0.17]],
-        [0.2, [-0.065, 0.295, 0.18]],
-        [0.3, [-0.065, 0.295, 0.18]],
+        [0.12, [-0.12, 0.358, 0.119]],
+        [0.2, [-0.087, 0.285, 0.16]],
+        [0.3, [-0.087, 0.29, 0.16]],
         [0.44, [-0.05, 0.31, 0.16]],
         [0.62, [0.02, 0.3, 0.17]],
         [0.72, [0.11, 0.32, 0.14]],
         [0.84, [0, 0.28, 0.17]],
       ] as const,
-      pitch: [[0, 25], [0.12, 31], [0.2, 36], [0.3, 36], [0.44, 12], [0.62, -4], [0.72, -22], [0.84, 24]] as const,
-      yaw: [[0, 32], [0.12, 34], [0.2, 35], [0.3, 35], [0.44, 38], [0.62, 55], [0.72, 100], [0.84, 50]] as const,
-      turn: [[0, -26], [0.12, -33], [0.2, -36], [0.3, -36], [0.44, -32], [0.62, -14], [0.72, 20], [0.84, 0]] as const,
-      lean: [[0, 8], [0.12, 13], [0.2, 16], [0.3, 16], [0.44, 13], [0.62, 6], [0.72, 3], [0.84, 4]] as const,
-      // The left hand slides down the haft for the toss: the short arms reach the fork across the chest.
-      gap: [[0, 0.12], [0.44, 0.12], [0.62, 0.13], [0.72, 0.15], [0.84, 0.12]] as const,
-      drop: [[0, 0.03], [0.12, 0.045], [0.2, 0.056], [0.3, 0.055], [0.44, 0.05], [0.62, 0.025], [0.72, 0.015], [0.84, 0.02]] as const,
+      pitch: [[0, 25], [0.12, 34], [0.2, 47], [0.3, 46], [0.44, 12], [0.62, -4], [0.72, -22], [0.84, 24]] as const,
+      yaw: [[0, 32], [0.12, 44], [0.2, 45], [0.3, 45], [0.44, 38], [0.62, 55], [0.72, 100], [0.84, 50]] as const,
+      turn: [[0, -26], [0.12, -30], [0.2, -30.4], [0.3, -31], [0.44, -32], [0.62, -14], [0.72, 20], [0.84, 0]] as const,
+      lean: [[0, 8], [0.12, 13], [0.2, 15.3], [0.3, 15.5], [0.44, 13], [0.62, 6], [0.72, 3], [0.84, 4]] as const,
+      // A side bend to his left (spine and chest): the head leans away from the haft in the stab.
+      roll: [[0, 0], [0.12, -2], [0.2, -4.4], [0.3, -4.4], [0.44, -2], [0.62, 0], [0.72, 0], [0.84, 0]] as const,
+      // The left hand holds the haft far down for the stab and the lever, and slides up for the lift
+      // and the toss: the short arms reach the fork across the chest.
+      gap: [[0, 0.12], [0.12, 0.2], [0.2, 0.27], [0.3, 0.27], [0.44, 0.2], [0.62, 0.13], [0.72, 0.15], [0.84, 0.12]] as const,
+      // The hips drop on bent knees for the stab and the lever; the knees straighten for the lift and the toss.
+      drop: [[0, 0.025], [0.12, 0.045], [0.2, 0.06], [0.3, 0.065], [0.44, 0.05], [0.62, 0.022], [0.72, 0.02], [0.84, 0.022]] as const,
+      // The head turns to the tines and stays up (the brim clears the face); it tilts to his left, away from the haft.
+      headYaw: [[0, 17.7], [0.12, 30], [0.2, 42.5], [0.3, 42], [0.44, 30], [0.62, 12.3], [0.72, -3], [0.84, 6]] as const,
+      headRoll: [[0, -9.2], [0.12, -6], [0.2, -3], [0.3, -3], [0.44, -8], [0.62, -6.8], [0.72, -4], [0.84, -4]] as const,
     };
+    // The knees bend forward and a little out; the toes turn out 8 degrees.
+    const KNEE_POLE: V3 = [0.16, KNEE[1], 0.3];
+    const TOE_L: V3 = [Math.sin(8 * DEG), 0, Math.cos(8 * DEG)];
     const POLE_R: V3 = [-0.5, 0.15, -0.15];
     const POLE_L: V3 = [0.5, 0.15, -0.1];
     k.animation('work', {
@@ -522,10 +533,11 @@ export default defineAsset({
         const turn = loopN(p, W.turn);
         const lean = loopN(p, W.lean);
         const drop = loopN(p, W.drop);
+        const roll = loopN(p, W.roll);
         const hipsMove: V3 = [0, -drop, (-0.012 * lean) / 16];
         const hipsRot: V3 = [0, 0.35 * turn, 0];
-        const spineRot: V3 = [0.6 * lean, 0.3 * turn, 0];
-        const chestRot: V3 = [0.4 * lean, 0.35 * turn, 0];
+        const spineRot: V3 = [0.6 * lean, 0.3 * turn, 0.5 * roll];
+        const chestRot: V3 = [0.4 * lean, 0.35 * turn, 0.5 * roll];
         // World to the chest's rest frame (where the arm targets and directions live).
         const qHS = motion.quat(hipsRot).multiply(motion.quat(spineRot));
         const inv = qHS.clone().multiply(motion.quat(chestRot)).invert();
@@ -554,26 +566,17 @@ export default defineAsset({
         const armL = reach(ARM_L, sub(left, scl(toHaft, Math.hypot(...FIST_C))), POLE_L);
         const handL = orient([armL.upper, armL.lower], { dir: unit(FIST_C), up: [1, 0, 0] }, { dir: toHaft, up: dir });
 
-        // Legs: each leg turns to its planted ankle and squashes (Y) to the hip height, a little
-        // wider (X, Z) as it squashes; the boot takes the inverse, so it stays flat and its size.
-        const leg = (hip: V3, ankle: V3, planted: V3) => {
-          const want = sub(planted, add(add(HIPS_P, hipsMove), turnBy(hipsRot, sub(hip, HIPS_P))));
-          const rest = sub(ankle, hip);
-          const len = Math.hypot(...want);
-          const sy0 = Math.sqrt(len * len - rest[0] * rest[0]) / -rest[1];
-          const w = 1 + 0.5 * (1 - sy0);
-          const sy = Math.sqrt(Math.max(1e-6, len * len - (rest[0] * w) ** 2)) / -rest[1];
-          const rotate = orient([hipsRot], { dir: [rest[0] * w, rest[1] * sy, 0], up: [0, 0, 1] }, { dir: want, up: [0, 0, 1] });
-          // The boot's up axis goes where the squashed leg frame keeps the sole level (no shear across it).
-          const back = motion.quat(hipsRot).multiply(motion.quat(rotate)).invert();
-          const u = new THREE.Vector3(0, 1, 0).applyQuaternion(back);
-          const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(back);
-          const b: V3 = [w * u.x, sy * u.y, w * u.z];
-          const foot = orient([], { dir: [0, 1, 0], up: [0, 0, 1] }, { dir: b, up: [fwd.x, fwd.y, fwd.z] });
-          return { leg: { rotate, scale: [w, sy, w] as V3 }, foot: { rotate: foot, scale: [1 / w, 1 / Math.hypot(...b), 1 / w] as V3 } };
+        // Legs: each ankle stays on its planted target (world), solved through the knee in the hips' rest
+        // frame; the boot takes the opposite turn, so its sole stays flat on the ground.
+        const hipsInv = motion.quat(hipsRot).invert();
+        const leg = (hip: V3, knee: V3, ankle: V3, planted: V3, pole: V3, toe: V3) => {
+          const target = add(HIPS_P, new THREE.Vector3(...sub(planted, add(HIPS_P, hipsMove))).applyQuaternion(hipsInv).toArray() as V3);
+          const r = reach({ root: hip, mid: knee, end: ankle }, target, pole);
+          const foot = orient([hipsRot, r.upper, r.lower], { dir: [0, 1, 0], up: [0, 0, 1] }, { dir: [0, 1, 0], up: toe });
+          return { leg: { rotate: r.upper }, shin: { rotate: r.lower }, foot: { rotate: foot } };
         };
-        const legL = leg(HIP, ANKLE, STANCE_L);
-        const legR = leg(mx(HIP), mx(ANKLE), STANCE_R);
+        const legL = leg(HIP, KNEE, ANKLE, STANCE_L, KNEE_POLE, TOE_L);
+        const legR = leg(mx(HIP), mx(KNEE), mx(ANKLE), STANCE_R, mx(KNEE_POLE), mx(TOE_L));
 
         // The hay: grows on the tines as they come out of the soil, rides through the lift, and flies
         // off the tines (along them and up off the hollow side) in the toss.
@@ -585,8 +588,8 @@ export default defineAsset({
           spine: { rotate: spineRot },
           chest: { rotate: chestRot },
           // He watches the tines: the head turns toward the fork and tilts to his left, away from the haft.
-          neck: { rotate: [-0.3 * lean, 0, 0] },
-          head: { rotate: [4 - 0.2 * lean, -0.45 * turn + 6, -4 - 0.2 * Math.max(0, -turn)] },
+          neck: { rotate: [-0.2 * lean, 0, 0] },
+          head: { rotate: [4 - 0.2 * lean, loopN(p, W.headYaw), loopN(p, W.headRoll)] },
           'upperarm.R': { rotate: armR.upper },
           'forearm.R': { rotate: armR.lower },
           'hand.R': { rotate: handR },
@@ -594,8 +597,10 @@ export default defineAsset({
           'forearm.L': { rotate: armL.lower },
           'hand.L': { rotate: handL },
           'leg.L': legL.leg,
+          'shin.L': legL.shin,
           'foot.L': legL.foot,
           'leg.R': legR.leg,
+          'shin.R': legR.shin,
           'foot.R': legR.foot,
           hay: { move: add(HAY_MOVE, add(scl(FORK_DIR, 0.14 * fly), scl(FORK_UP, 0.12 * fly))), scale: [hay, hay, hay] as V3 },
         };
