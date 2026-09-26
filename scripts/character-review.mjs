@@ -36,9 +36,11 @@ const readJson = (p, fallback) => {
   }
 };
 
-function parseAsset(file) {
+function parseAsset(file, reviewed) {
   const src = fs.readFileSync(file, 'utf8');
-  if (!/k\.skeleton\(/.test(src) || !/['"](?:f|b)?leg\.L['"]/.test(src)) return null;
+  // A rigged asset with legs is a character; a reviewed asset (a slime, a spider) is one too.
+  const legged = /k\.skeleton\(/.test(src) && /['"](?:f|b)?leg\.L['"]/.test(src);
+  if (!legged && !reviewed.has(path.basename(file, '.ts'))) return null;
   const pick = (re) => src.match(re)?.[1];
   const name = pick(/defineAsset\(\{\s*name:\s*'([^']+)'/) ?? path.basename(file, '.ts');
   const catalog = pick(/catalog `([^`]+)`/) ?? null;
@@ -60,7 +62,7 @@ function collect() {
   const characters = [];
   for (const f of fs.readdirSync(assetsDir).sort()) {
     if (!f.endsWith('.ts')) continue;
-    const asset = parseAsset(path.join(assetsDir, f));
+    const asset = parseAsset(path.join(assetsDir, f), new Set(Object.keys(reviews)));
     if (!asset) continue;
     const dir = path.join(ROOT, 'out', asset.name);
     const stats = readJson(path.join(dir, 'stats.json'), null);
