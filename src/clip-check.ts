@@ -378,11 +378,13 @@ export function checkGround(root: THREE.Object3D, options: { fps?: number; toler
     action.reset().play();
     const frames = Math.max(2, Math.round(clip.duration * fps) + 1);
     let open: { from: number; to: number; lowest: number; part: string } | null = null;
+    // A digging clip allows its tool this much deeper (AnimationDef.dig).
+    const allowed = tolerance + ((clip.userData as { dig?: number }).dig ?? 0);
     for (let f = 0; f < frames; f++) {
       const phase = f / (frames - 1);
       mixer.setTime(phase * clip.duration * 0.9999);
       const { min, part } = lowest();
-      if (min < rest - tolerance) {
+      if (min < rest - allowed) {
         if (open) {
           open.to = phase;
           if (min < open.lowest) Object.assign(open, { lowest: min, part });

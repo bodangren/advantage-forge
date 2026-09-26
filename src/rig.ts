@@ -39,6 +39,11 @@ export interface AnimationDef {
    * that rolls, a body that lies down), the root bone rises by that much. Default true.
    */
   readonly ground?: boolean;
+  /**
+   * How deep, in meters, a held tool may go into the ground in this clip: a fork or a spade that
+   * digs, a staff planted in soil. `forge check` allows this much. Default 0.
+   */
+  readonly dig?: number;
   /** The pose at time `t` seconds; `phase` is t / duration in [0, 1]. */
   pose(t: number, phase: number): Pose;
 }
@@ -236,6 +241,6 @@ export function sampleAnimation(name: string, anim: AnimationDef, rig: Rig): THR
     if (scales) tracks.push(new THREE.VectorKeyframeTrack(`${b}.scale`, times, scl));
   }
   const clip = new THREE.AnimationClip(name, anim.duration, tracks);
-  clip.userData = { loop: anim.loop ?? true, fps };
+  clip.userData = { loop: anim.loop ?? true, fps, dig: anim.dig ?? 0 };
   return clip;
 }
