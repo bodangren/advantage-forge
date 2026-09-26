@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Bandit — Chibi Quest enemy (catalog `enemies/humanoid/bandit`), about 0.99 m to the top of his
@@ -548,31 +548,104 @@ export default defineAsset({
     k.animation('walk', stride(0.9, 26, 26, 3, 0));
     k.animation('run', stride(0.56, 40, 46, 12, 0.03));
 
-    // A forward slash with the cutlass: pull the blade back across the body, sweep it out.
+    // Attack: a left-handed diagonal slash with the cutlass, solved by targets (the mirror of the
+    // animated armor's cut). The wrist follows its keys (reach); the blade follows its own keys
+    // (orient). The arm is short and the head is big, so the cutlass rises on the left side, out
+    // beside the head, and holds up and back over the left shoulder. Then it comes over the shoulder
+    // and down across the front, below the chin, to the low right. edgeUp turns the flat so the
+    // curved edge leads the cut; the back of the blade leads the lift and the recovery.
+    const { keys, reach, orient, edgeUp } = motion;
+    const norm = (a: V3): V3 => {
+      const l = Math.hypot(a[0], a[1], a[2]);
+      return [a[0] / l, a[1] / l, a[2] / l];
+    };
+    // The cutlass's rest frame, from the turns in cutlassPose: the blade runs along local +X, and
+    // the flat's normal is the extrude axis, local +Z.
+    const cutlassTurn = (v: V3): V3 => {
+      const w = new THREE.Vector3(...v)
+        .applyAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(-90))
+        .applyAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(6))
+        .applyAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(66));
+      return [w.x, w.y, w.z];
+    };
+    const BLADE_DIR = cutlassTurn([1, 0, 0]); // out to the left, forward, a little down
+    const FLAT = cutlassTurn([0, 0, 1]); // forward and to the right
+    // The flat's normal through the cut (up and to the right). edgeUp keeps its sign on this side,
+    // so the edge leads the whole cut and never flips when the blade points straight forward.
+    const CUT_FLAT = norm([-0.6, 0.75, 0]);
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const bladeKeys = [
+      [0, BLADE_DIR],
+      [0.13, norm([0.85, 0.4, 0.05])], // out to the left, rising
+      [0.26, norm([0.45, 0.7, -0.55])], // up and back, out beside the head
+      [0.36, norm([0.4, 0.68, -0.62])], // the hold over the left shoulder
+      [0.42, norm([0.5, 0.62, 0.6])], // over the shoulder: up, out, and forward
+      [0.47, norm([0.15, 0.18, 0.97])], // level, pointing forward, below the chin
+      [0.52, norm([-0.55, -0.22, 0.8])], // sweeping across the front to the right
+      [0.58, norm([-0.76, -0.38, 0.54])], // low right, past the body, in front of the pouch
+      [0.68, norm([-0.74, -0.42, 0.55])],
+      [1, BLADE_DIR],
+    ] as const;
+    const bladeAt = (p: number) => keys(p, bladeKeys, 'spline');
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
     k.animation('attack', {
-      duration: 0.75,
+      duration: 0.85,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.32, p) * (1 - ease(0.32, 0.44, p));
-        const hit = ease(0.32, 0.44, p) * (1 - ease(0.58, 1, p));
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_L],
+            [0.13, [0.26, 0.33, 0.03]],
+            [0.26, [0.27, 0.43, -0.03]],
+            [0.36, [0.275, 0.44, -0.04]],
+            [0.42, [0.22, 0.45, 0.07]],
+            [0.47, [0.16, 0.41, 0.14]],
+            [0.52, [0.13, 0.35, 0.16]],
+            [0.58, [0.13, 0.31, 0.15]],
+            [0.68, [0.135, 0.305, 0.145]],
+            [0.84, [0.2, 0.285, 0.125]], // out and forward, so the pommel stays off the vest
+            [1, WRIST_L],
+          ] as const,
+          'spline',
+        );
+        const dir = norm(bladeAt(p));
+        // The flat turns from its rest side to the cut side at the top of the lift, and back to
+        // rest at the end, so the first and the last frame are the rest pose.
+        const lead = ease(0.2, 0.36, p) * (1 - ease(0.7, 0.92, p));
+        const cutUp = edgeUp(bladeAt, p, CUT_FLAT);
+        const up = norm([FLAT[0] + (cutUp[0] - FLAT[0]) * lead, FLAT[1] + (cutUp[1] - FLAT[1]) * lead, FLAT[2] + (cutUp[2] - FLAT[2]) * lead]);
+        // The elbow points out and down (its rest side), out and back in the lift, then out and
+        // forward through the cut, so the forearm stays clear of the vest.
+        const POLE_REST: V3 = [SHOULDER[0] + 4 * (ELBOW_L[0] - SHOULDER[0]), SHOULDER[1] + 4 * (ELBOW_L[1] - SHOULDER[1]), SHOULDER[2] + 4 * (ELBOW_L[2] - SHOULDER[2])];
+        const pole = keys(p, [[0, POLE_REST], [0.3, [0.6, 0.2, -0.15]], [0.42, [0.6, 0.2, -0.1]], [0.5, [0.5, 0.0, 0.5]], [0.72, [0.5, 0.0, 0.5]], [1, POLE_REST]] as const);
+        const arm = reach(ARM_L, wrist, pole);
+        const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up });
+        const wind = ease(0, 0.3, p) * (1 - ease(0.37, 0.46, p));
+        const cut = ease(0.38, 0.54, p) * (1 - ease(0.68, 1, p));
+        // The sack and the mask tails lag behind the turn of the body.
+        const swing = ease(0.44, 0.62, p) * (1 - ease(0.72, 1, p));
         return {
-          hips: { move: [0, -legDrop(LEG, 16 * hit) - 0.006 * wind, 0.04 * hit - 0.01 * wind], rotate: [0, 14 * wind - 14 * hit, 0] },
-          spine: { rotate: [-3 * wind + 10 * hit, 0, 0] },
-          chest: { rotate: [0, 22 * wind - 24 * hit, 0] },
-          head: { rotate: [0, -12 * wind + 12 * hit, 0] },
-          sack: { rotate: [6 * hit, 0, -8 * wind + 10 * hit] },
-          knot: { rotate: [8 * hit, 0, 0] },
-          'upperarm.L': { rotate: [-60 * wind - 70 * hit, 0, -25 * wind + 30 * hit] },
-          'forearm.L': { rotate: [-50 * wind + 20 * hit, 0, 0] },
-          'hand.L': { rotate: [0, 0, -20 * wind + 20 * hit] },
-          'leg.L': { rotate: [-18 * hit, 0, 0] },
-          'leg.R': { rotate: [12 * hit, 0, 0] },
-          'foot.L': { rotate: [10 * hit, 0, 0] },
-          'foot.R': { rotate: [-6 * hit, 0, 0] },
+          hips: { move: [0, -legDrop(LEG, 13 * cut) - 0.006 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, 12 * wind - 16 * cut, 0] },
+          spine: { rotate: [-4 * wind + 10 * cut, 0, 0] },
+          chest: { rotate: [-3 * wind + 4 * cut, 18 * wind - 22 * cut, 0] },
+          head: { rotate: [-3 * wind + 4 * cut, -14 * wind + 16 * cut, 0] },
+          knot: { rotate: [-6 * wind + 14 * swing, 0, 6 * wind - 10 * swing] },
+          sack: { rotate: [-3 * wind + 8 * swing, 0, 6 * wind - 14 * swing] },
+          'upperarm.L': { rotate: arm.upper },
+          'forearm.L': { rotate: arm.lower },
+          'hand.L': { rotate: hand },
+          // The empty right arm reaches forward and out for balance, then pulls back to the sack.
+          'upperarm.R': { rotate: [-16 * wind + 6 * cut, 0, -10 * wind] },
+          'forearm.R': { rotate: [-12 * wind, 0, 0] },
+          // The right foot steps forward into the cut; the left leg pushes back.
+          'leg.R': { rotate: [4 * wind - 20 * cut, 0, 0] },
+          'leg.L': { rotate: [-4 * wind + 12 * cut, 0, 0] },
+          'foot.R': { rotate: [12 * cut, 0, 0] },
+          'foot.L': { rotate: [-8 * cut, 0, 0] },
         };
       },
     });
