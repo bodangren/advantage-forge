@@ -691,5 +691,37 @@
       "Hang the pennant down and let the walk lift it."
     ],
     "reviewedAt": "2026-09-26T08:44:15+00:00"
+  },
+  "skeleton-mage": {
+    "overall": 8.0,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The skeleton mage matches the candle-skull caster on the Chibi Quest enemy sheet: a skull under a lit, melting candle, with glowing eyes in dark sockets, a torn purple robe, a skull necklace, a satchel, a purple flame in one hand, and a lantern staff.",
+    "strengths": [
+      "The candle on the skull is a unique, memorable silhouette that reads in every sprite direction.",
+      "Three glowing accents (the candle flame, the palm flame, and the lantern) make it easy to spot in a dark dungeon.",
+      "The walk is a gliding shuffle under the robe, and the lantern swings on its own bone."
+    ],
+    "issues": [
+      "The candle and the skull are both cream, so they merge into one tall block from the back and the side.",
+      "In the cast, the flame ends in front of the chest, under the big skull, so the push is short.",
+      "The robe's hem is torn, but it has fewer and shorter tatters than the mockup."
+    ],
+    "next": [
+      "Make the wax whiter or the skull warmer, so the candle reads apart from the skull.",
+      "Give the cast a bright flare on the palm flame (scale it up at the moment of the cast)."
+    ],
+    "reviewedAt": "2026-09-26T08:54:54+00:00"
   }
 }
