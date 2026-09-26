@@ -356,7 +356,8 @@ export default defineAsset({
       tine(0),
       tine(0.04),
     );
-    const forkPose = (s: sdf.Shape) => s.rotateZ(4).at(...GRIP);
+    // The fork leans forward and out to his right, so the haft and the tines keep 3.5 cm from the hat brim.
+    const forkPose = (s: sdf.Shape) => s.rotateX(6).rotateZ(14).at(...GRIP);
     k.body('fork-haft', forkPose(haft), { color: C.wood, roughness: 0.7, detail: 0.004, bone: 'hand.R' });
     k.body('fork-tines', forkPose(tines), { color: C.iron, roughness: 0.4, metalness: 0.75, detail: 0.003, bone: 'hand.R' });
 
@@ -378,7 +379,8 @@ export default defineAsset({
       }),
     });
 
-    // `forkOut` tilts the fork's top out to his right (degrees at the wrist), clear of the hat brim.
+    // `forkOut` tilts the fork's top out to his right (degrees at the wrist): extra room from the hat brim
+    // while the head bobs and leans in the run. The rest pose already keeps the fork clear.
     const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, forkOut = 0) => ({
       duration,
       pose: (_t: number, p: number) => {
@@ -404,7 +406,7 @@ export default defineAsset({
       },
     });
     k.animation('walk', stride(0.9, 24, 26, 3, 0));
-    k.animation('run', stride(0.58, 36, 44, 10, 0.025, 14));
+    k.animation('run', stride(0.58, 36, 44, 10, 0.025, 5));
 
     // Work: dig the fork in forward and low, lift a load, and toss it up and to the side.
     const ease = (a: number, b: number, x: number) => {
