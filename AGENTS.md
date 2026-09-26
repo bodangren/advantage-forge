@@ -36,6 +36,7 @@ For the full creative process (art direction, category playbooks, review rubric)
 ./forge sprites rogue --clip walk --dirs 4            # animated sheet: rows = directions, columns = frames
 ./forge all rogue                                     # final: textures, render, sprites, all clips
 ./forge inspect rogue --fast                          # the render as numbers: part visibility, silhouette, values, warnings
+./forge check rogue                                   # clip clearance: held weapons never pass through the head
 FORGE_DEBUG=1 ./forge build rogue                     # per-phase timings and reduction diagnostics
 ```
 
@@ -176,5 +177,7 @@ textures (UV unwrap and bake); a render adds about 1 s; an animation strip about
 - Silhouette and proportions match the reference in front, side, and back.
 - Nothing pokes through anything (hair through hats, hands through cloth), also mid-animation.
 - The face reads at 128 px: run `./forge sprites <name>` and look at `preview.png`.
+- No held weapon, staff, bow, or shield passes through the head in any clip: `./forge check <name>`
+  ends with `result ok`.
 - No `warning:` lines in the build output.
 - `pnpm test` and `pnpm typecheck` pass if you changed `src/`.

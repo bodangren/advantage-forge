@@ -140,9 +140,15 @@ wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path
 4. **The edge leads.** A cutting blade moves edge first: its flat faces across the direction of
    travel. Give `orient` an `up` that is the flat's normal you want (about the cross product of
    the blade direction and the swing direction).
-5. **Check** the strike frames from the front and the side (`--views front,side --frames 12`):
-   the weapon passes through the space in front of the character, never through the head or the
-   body, and the wind-up points the weapon up or back, not into the ground.
+5. **Check** the strike frames from the front, the side, and the top (`--views front,side,top
+   --frames 16`): the weapon passes through the space in front of the character, never through
+   the head or the body, and the wind-up points the weapon up or back, not into the ground.
+6. **Never through the head, in any clip.** A held item (weapon, haft, staff, bow, shield) must
+   not pass through the head, the helmet, the hat, or the hood in any clip: attack, victory (a
+   weapon raised in celebration), idle, walk, run, hit, death. Chibi heads, hats, and hoods are
+   big: route a raised weapon beside the head on the weapon side or clearly above it, and check
+   the frames between keys too (a spline between two clear keys can still cut through). Run
+   `./forge check <name>`: it poses every clip at 60 fps and fails on any head contact.
 
 ### Helpers
 
