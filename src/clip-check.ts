@@ -141,6 +141,30 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
         for (let i = 0; i < n; i += stride) pts.push(new THREE.Vector3(pos[i * 3]!, pos[i * 3 + 1]!, pos[i * 3 + 2]!));
         if (pts.length > 0) items.push({ name: p.name, bone: rigid, chunks: chunks(pts) });
       }
+    } else if (p.shape.tags.length > 0 && p.shape.tags.every((t) => held.has(t.bone))) {
+      // A skinned body that is all hand and forearm (a weapon tagged to a hand, a bracer, a
+      // gauntlet): a held item; each vertex follows its nearest tagged bone.
+      const { mesh } = await meshSdf(p.shape, meshOptions(def, p));
+      const pos = mesh.positions;
+      const n = pos.length / 3;
+      const stride = Math.max(1, Math.floor(n / 2000));
+      const byBone = new Map<string, THREE.Vector3[]>();
+      for (let i = 0; i < n; i += stride) {
+        const v = new THREE.Vector3(pos[i * 3]!, pos[i * 3 + 1]!, pos[i * 3 + 2]!);
+        let best = Infinity;
+        let bone = p.shape.tags[0]!.bone;
+        for (const t of p.shape.tags) {
+          const d = t.dist(v.x, v.y, v.z);
+          if (d < best) {
+            best = d;
+            bone = t.bone;
+          }
+        }
+        if (!byBone.has(bone)) byBone.set(bone, []);
+        byBone.get(bone)!.push(v);
+      }
+      const split = byBone.size > 1;
+      for (const [bone, pts] of byBone) items.push({ name: split ? `${p.name} (${bone})` : p.name, bone, chunks: chunks(pts) });
     } else {
       for (const t of p.shape.tags) {
         const region: RegionName | null = head.has(t.bone) ? 'head' : body.has(t.bone) ? 'body' : null;
