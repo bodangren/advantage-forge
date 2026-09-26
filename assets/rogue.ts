@@ -15,7 +15,7 @@ import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
  * Value plan: the dark inside of the hood frames the light face (focal point); gold clasp and
  *   ring buckle are the second contrast; the cape is the darkest large mass.
  * Bodies: skin, hair, hood, mantle, cape, tunic, sleeves, leather, gold, pants, wraps, boots,
- *   daggers.
+ *   sheaths (empty, at the hips), and a dagger and a grip in each hand (reverse grip).
  * Rig: chibi skeleton plus a `cloak` bone for the cape; clips idle, walk, run.
  */
 
@@ -44,6 +44,7 @@ const C = {
   sole: '#4a2c1c',
   sheath: '#bf9a6c',
   grip: '#3b2a22',
+  blade: '#c9d1d6',
 };
 
 const HEAD_Y = 0.675;
@@ -442,29 +443,57 @@ export default defineAsset({
       .bone('foot.L');
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
-    // ------------------------------------------------------------------ daggers at the hips
-    // Local frame: origin at the guard, the grip up, the sheath down.
-    const dagger = sdf.union(
-      sdf.capsule([0, 0, 0], [0, 0.04, 0], 0.011).paint(C.grip),
-      sdf
-        .extrude(
-          profile.polygon(
-            [
-              [-0.016, 0],
-              [0.016, 0],
-              [0.012, -0.08],
-              [0, -0.118],
-              [-0.012, -0.08],
-            ],
-            { smooth: false },
-          ),
-          0.016,
-          0.005,
-        )
-        .paint(C.sheath),
+    // ------------------------------------------------------------------ empty sheaths at the hips
+    // The dagger outline in its local frame: top edge at the guard (y = 0), the point down.
+    const bladeOutline = sdf.extrude(
+      profile.polygon(
+        [
+          [-0.016, 0],
+          [0.016, 0],
+          [0.012, -0.08],
+          [0, -0.118],
+          [-0.012, -0.08],
+        ],
+        { smooth: false },
+      ),
+      0.016,
+      0.005,
     );
-    const daggers = hard(dagger.rotateZ(20).rotateX(8).at(0.132, 0.228, 0.07)).bone('spine');
-    k.body('daggers', daggers, { color: C.sheath, roughness: 0.65 });
+    // Empty scabbards: the outline alone, with a dark throat band where the blade went in.
+    const sheath = bladeOutline.paintWhere(sdf.box([0.1, 0.014, 0.1]).at(0, -0.004, 0), C.leatherDark);
+    const sheaths = hard(sheath.rotateZ(20).rotateX(8).at(0.132, 0.228, 0.07)).bone('spine');
+    k.body('sheaths', sheaths, { color: C.sheath, roughness: 0.65 });
+
+    // ------------------------------------------------------------------ daggers in the hands (reverse grip)
+    // Local frame: origin at the grip center, the blade up (+Y), the pommel down, flat facing +Z.
+    // In the hand the blade leaves the fist on the outside, below the bracer cuff, and runs up and
+    // back beside the forearm; the gold pommel shows under the thumb at the front of the fist.
+    const GUARD = 0.034;
+    const handBlade = sdf.union(
+      bladeOutline.rotateZ(180).at(0, GUARD, 0).paint(C.blade),
+      sdf.box([0.052, 0.012, 0.024], 0.004).at(0, GUARD, 0).paint(C.gold), // guard
+      sdf.sphere(0.013).at(0, -0.04, 0).paint(C.gold), // pommel
+    );
+    const handGrip = sdf.capsule([0, -0.032, 0], [0, GUARD, 0], 0.011);
+    const GRIP = { at: [0.232, 0.172, 0.022] as const, lean: 42, back: 20, roll: 20 };
+    const inHand = (s: sdf.Shape, side: 1 | -1) =>
+      s
+        .rotateY(GRIP.roll * side)
+        .rotateZ(-GRIP.lean * side)
+        .rotateX(-GRIP.back)
+        .at(GRIP.at[0] * side, GRIP.at[1], GRIP.at[2]);
+    for (const [side, tag] of [
+      [1, 'L'],
+      [-1, 'R'],
+    ] as const) {
+      k.body(`dagger.${tag}`, inHand(handBlade, side), {
+        color: C.blade,
+        roughness: 0.3,
+        metalness: 0.85,
+        bone: `hand.${tag}`,
+      });
+      k.body(`daggerGrip.${tag}`, inHand(handGrip, side), { color: C.grip, roughness: 0.6, bone: `hand.${tag}` });
+    }
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
