@@ -583,37 +583,37 @@
     "reviewedAt": "2026-09-26T06:06:30+00:00"
   },
   "blacksmith": {
-    "overall": 8,
+    "overall": 7.6,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
       "silhouette": 4,
-      "proportion": 4,
+      "proportion": 3,
       "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
+      "technical": 4,
       "gameReady": 5,
       "sprite": 5,
-      "motion": 4
+      "motion": 3
     },
-    "summary": "The blacksmith matches the mmx mockup: a burly smith with a black beard and a red bandana, a leather bib apron with brass rings and a buckled belt, big leather gloves, and a hammer resting on his shoulder.",
+    "summary": "The blacksmith matches the mmx mockup in costume and color: a red bandana, a black beard, a leather bib apron with brass rings, big gloves, and a hammer at the right shoulder. The body is less burly than the mockup, and the work blow is short. The check ends with result ok, but the head margin is only 0.3 cm.",
     "strengths": [
-      "The red bandana and black beard frame a friendly face that reads at 128 px in every direction.",
-      "The bib apron with straps, brass rings, and buckle reads as a smith's apron at once.",
-      "The work clip lifts the hammer and brings it down in front, onto an unseen anvil."
+      "The red bandana, the black beard, and the brown apron read at 128 px in all 8 sprite directions.",
+      "In the work clip, the drop is fast (about 0.12 s), and the hammer face is square to the work at the impact.",
+      "The talk clip shows a clear open-hand gesture in front of the chest, and the hammer stays still at the shoulder."
     ],
     "issues": [
-      "He uses the rogue's large head, so he is less burly than the mockup, where the body is bigger than the head.",
-      "The short hair at the back of the head is one plain black mass.",
-      "In the work clip, the wind-up hides the hammer behind the head, so the lift reads weakly."
+      "The head is still larger than the torso. In the mockup, the chest and the arms are larger than the head, so the model is less burly than the mockup.",
+      "The work blow is not a full smith's blow. The fist rises only to chin height, and the side view hides the hammer behind the head during the lift. The blow lands out at the right side, not in front of the body. The rebound is only 2 cm, so it does not show.",
+      "The soot mark under the left eye is dark blue-gray and reads as a bruise in the front sprites. The back hair is one plain black mass."
     ],
     "next": [
-      "Make the chest and arms 10 percent bigger, so he reads as the strongest villager.",
-      "Raise the hammer higher in the wind-up of the work clip."
+      "Make the chest, the shoulders, and the arms 10 percent bigger. This item from the last review is still open.",
+      "In the work clip, raise the hammer head clearly above the bandana at the top of the lift, bring the blow in front of the belly, and make the rebound 5 to 6 cm. The higher lift from the last review is still open."
     ],
-    "reviewedAt": "2026-09-26T08:30:00+00:00"
+    "reviewedAt": "2026-09-26T19:09:00+00:00"
   },
   "farmer": {
     "overall": 7,
