@@ -415,6 +415,7 @@ export default defineAsset({
     };
     k.animation('work', {
       duration: 1.4,
+      dig: 0.12, // the fork's tines go into the ground
       pose: (_t, p) => {
         const dig = ease(0, 0.3, p) * (1 - ease(0.45, 0.65, p));
         const toss = ease(0.45, 0.65, p) * (1 - ease(0.72, 1, p));
@@ -425,11 +426,13 @@ export default defineAsset({
           head: { rotate: [-6 * dig + 4 * toss, 0, 0] },
           // Dig: the hand comes up and forward and the fork tips over, tines down into the hay.
           // Toss: the arm lifts high in front with the fork upright.
-          // The three X angles add up to the fork's tilt: about 120 degrees in the dig, 23 in the toss.
+          // The X angles (with the spine and chest) add up to the fork's tilt: about 126 degrees in the dig,
+          // 23 in the toss. In the dig the grip stays at about 0.38 m, so only the tines go into the
+          // ground (about 9 cm) and the haft stays above it (`dig: 0.12` above).
           // The toss tilt keeps the upright haft 2 cm in front of the hat brim.
-          'upperarm.R': { rotate: [-35 * dig - 95 * toss, 0, 10 * toss] },
-          'forearm.R': { rotate: [15 * dig - 30 * toss, 0, 0] },
-          'hand.R': { rotate: [140 * dig + 148 * toss, 0, 0] },
+          'upperarm.R': { rotate: [-70 * dig - 95 * toss, 0, 10 * toss] },
+          'forearm.R': { rotate: [-20 * dig - 30 * toss, 0, 0] },
+          'hand.R': { rotate: [192 * dig + 148 * toss, 0, 0] },
           'upperarm.L': { rotate: [-40 * dig - 30 * toss, 0, -20 * dig] },
           'forearm.L': { rotate: [-40 * dig - 30 * toss, 0, 0] },
         };
