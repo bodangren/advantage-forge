@@ -18,13 +18,14 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  *   is the biggest mass; the potion and the lantern are the two glowing accents.
  * Bodies: skin, hair, cap, gills, dress, sleeves, apron, hip-potion, leather, gold, basket,
  *   mushrooms, leaves, cap-growth, cap-leaves, legs, boots, staff, staff-mushroom, lantern-frame,
- *   lantern-light, flask, potion, spell-orb.
+ *   lantern-light, flask, potion, spell-orb, potion-splash.
  * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff), `caproot` (the cap, on the
  *   head), `flaskroot` (the flask, on the right hand) and `spell` (the spell orb, hidden inside the
- *   crook mushroom's cap outside the cast); the basket is rigid on the chest, the staff on the left
+ *   crook mushroom's cap outside the cast) and `splash` (the flask's splash, hidden inside the belly
+ *   outside the throw); the basket is rigid on the chest, the staff on the left
  *   hand. Clips: idle, walk, run, attack (a nature spell: the staff goes up high, sweeps down to
  *   point at the target, and a green orb flies from the crook; the lantern flares), attack2
- *   (a flask throw; the flask flies off and grows back in the hand), hit, death (she topples onto
+ *   (a flask throw; the flask spins to the target and breaks in a green splash, and a new one grows back in the hand), hit, death (she topples onto
  *   her left side; the cap props her head, the staff lies in front of her), victory (the staff up
  *   and out past the cap, a hop, the lantern swings).
  */
@@ -161,6 +162,12 @@ export default defineAsset({
     // stays hidden in every clip that leaves its bone alone.
     const MUSH_UP = rotZ([0, 1, 0], -15);
     const ORB: V3 = add(add(along(L_UP), [0.07, 0.035, 0]), rotZ([0, 0.065, 0], -15));
+    // The flask's splash (attack2) is built at SPLASH_REST of its size, hidden inside the belly at
+    // rest; the throw moves it to SPLASH_AT and scales it up to full size.
+    const SPLASH_AT: V3 = [0, 0.4, 1.0]; // where the flask breaks: the chest of an enemy 1 m in front
+    const SPLASH_HOME: V3 = [0, 0.3, 0.01];
+    const SPLASH_REST = 0.3;
+    const SPLASH_HIDE = { scale: [0.001, 0.001, 0.001] as V3 }; // the splash in every other clip
 
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
@@ -171,6 +178,7 @@ export default defineAsset({
       head: { parent: 'neck', at: [0, 0.48, -0.01] },
       caproot: { parent: 'head', at: CAP_AT },
       flaskroot: { parent: 'hand.R', at: FLASK },
+      splash: { parent: 'hips', at: SPLASH_HOME },
       'upperarm.L': { parent: 'chest', at: SHOULDER },
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
@@ -772,6 +780,31 @@ export default defineAsset({
       detail: 0.0035,
     });
 
+    // A splash of green potion: a wet blob with 7 tapered streaks and a droplet past each tip. The
+    // streaks fan out and back toward the thrower (-Z), like a crown, so the burst reads from the side too.
+    const splashParts = [sdf.ellipsoid([0.042, 0.042, 0.02])];
+    const LENGTHS = [0.1, 0.075, 0.095, 0.08, 0.105, 0.07, 0.09];
+    LENGTHS.forEach((len, i) => {
+      const a = ((i / LENGTHS.length) * 360 + 14) * (Math.PI / 180);
+      const raw: V3 = [Math.cos(a), Math.sin(a), -0.6];
+      const dir = scale(raw, 1 / Math.hypot(...raw));
+      splashParts.push(
+        sdf.cone(scale(dir, 0.02), scale(dir, len), 0.014, 0.006),
+        sdf.sphere(0.012 + 0.002 * (i % 2)).at(...scale(dir, len + 0.024)),
+      );
+    });
+    const splash = sdf.smoothUnion(0.01, ...splashParts.slice(0, 1), ...splashParts.slice(1).filter((_, i) => i % 2 === 0));
+    const drops = sdf.union(...splashParts.slice(1).filter((_, i) => i % 2 === 1));
+    k.body('potion-splash', sdf.union(splash, drops.paint(C.spellCore)).scale(SPLASH_REST).at(...SPLASH_HOME), {
+      bone: 'splash',
+      color: C.potion,
+      roughness: 0.2,
+      emissive: C.potion,
+      emissiveIntensity: 0.6,
+      opacity: 0.85,
+      detail: 0.0012,
+    });
+
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;
@@ -784,6 +817,7 @@ export default defineAsset({
         neck: { rotate: [-1.5 * wave(p), 0, 0] },
         head: { rotate: [0, 5 * wave(p, 1, 0.25), 3 * wave(p, 1, 0.1)] },
         lantern: { rotate: [4 * wave(p, 1, 0.4), 0, 5 * wave(p, 1, 0.2)] },
+        splash: SPLASH_HIDE,
         'forearm.R': { rotate: [-4 * bump(p), 0, 0] },
       }),
     });
@@ -802,6 +836,7 @@ export default defineAsset({
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The lantern lags and swings twice per cycle.
           lantern: { rotate: [lean * 2 + 12 * wave(p, 2, 0.2), 0, 8 * wave(p, 1, 0.3)] as const },
+          splash: SPLASH_HIDE,
           'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
           'leg.R': { rotate: [legSwing * s, 0, 0] as const },
           'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
@@ -954,6 +989,7 @@ export default defineAsset({
           'forearm.L': { rotate: r.arm.lower },
           'hand.L': { rotate: r.hand },
           lantern: { rotate: lanternR, scale: [flare, flare, flare] },
+          splash: SPLASH_HIDE,
           spell,
           // The flask arm swings in for balance on the draw, then back on the cast.
           'upperarm.R': { rotate: [-5 * g + 10 * s, 0, -4 * s] },
@@ -967,8 +1003,8 @@ export default defineAsset({
 
     // Attack 2: a flask throw. The right hand winds up back and up, out beside the head (clear of
     // the hair locks and the basket), then throws forward and up. At the release the flask leaves
-    // the hand on a world-space arc toward the target, tumbling, and shrinks away; at the end a new
-    // flask grows back on the palm.
+    // the hand on a world-space arc toward the target, 1.5 times its size and spinning; it breaks
+    // on the target's chest in a burst of green potion. At the end a new flask grows back on the palm.
     const THROW_S = 0.9;
     const RELEASE = 0.47;
     const throwWrist = [
@@ -1022,22 +1058,45 @@ export default defineAsset({
       return { w, t, hipsR, hipsMove, spineR, chestR, arm, hand, flaskAt, handQ: chainQ(rots) };
     };
     const atRelease = throwRig(RELEASE);
-    const FLIGHT_V: V3 = [0.15, 1.3, 2.0]; // m/s: forward and up, a little toward the center line
+    // The flask breaks on the target at HIT. Its middle (not the pivot on the palm) flies on a
+    // ballistic arc from the release to SPLASH_AT, so the flask spins about itself: one turn end over end.
+    const HIT = 0.68;
+    const FLIGHT_T = (HIT - RELEASE) * THROW_S; // s
+    const FLASK_MID: V3 = [0, 0.065, 0]; // the flask's middle, from its pivot, at rest
+    const turned = (q: THREE.Quaternion, v: V3): V3 => {
+      const r = new THREE.Vector3(...v).applyQuaternion(q);
+      return [r.x, r.y, r.z];
+    };
+    const launchAt = add(atRelease.flaskAt, turned(atRelease.handQ, FLASK_MID));
+    // m/s: the start speed that puts the flask's middle on SPLASH_AT at HIT (fast and nearly flat).
+    const FLIGHT_V: V3 = scale(add(sub(SPLASH_AT, launchAt), [0, 4.9 * FLIGHT_T ** 2, 0]), 1 / FLIGHT_T);
+    const SPLASH_SIZE = 1.6; // the splash's full size, as a multiple of the built shape (about 0.4 m across)
+    const SPLASH_GROW = HIT + 0.085 / THROW_S; // the splash is at full size
+    const SPLASH_GONE = SPLASH_GROW + 0.2 / THROW_S; // the splash has shrunk away
     k.animation('attack2', {
       duration: THROW_S,
       loop: false,
       pose: (_t, p) => {
         const r = throwRig(p);
-        const size = keys(p, [[0, 1], [0.58, 1], [0.72, 0.001], [0.86, 0.001], [1, 1]] as const);
+        // The flask grows to 1.5 times its size in flight, so it reads at game size, and breaks at HIT.
+        const size = keys(p, [[0, 1], [RELEASE, 1], [RELEASE + 0.06, 1.5], [HIT, 1.5], [HIT + 0.01, 0.001], [0.86, 0.001], [1, 1]] as const);
         let flask: { move?: V3; rotate?: V3; scale: V3 } = { scale: [size, size, size] };
-        if (p > RELEASE && p < 0.73) {
+        if (p > RELEASE && p < HIT + 0.01) {
           const dt = (p - RELEASE) * THROW_S;
-          const want = add(atRelease.flaskAt, [FLIGHT_V[0] * dt, FLIGHT_V[1] * dt - 4.9 * dt * dt, FLIGHT_V[2] * dt]);
+          const mid = add(launchAt, [FLIGHT_V[0] * dt, FLIGHT_V[1] * dt - 4.9 * dt * dt, FLIGHT_V[2] * dt]);
+          const spin = quat([(360 * dt) / FLIGHT_T, 0, 0]).multiply(atRelease.handQ.clone());
+          const want = sub(mid, turned(spin, scale(FLASK_MID, size)));
           const inv = r.handQ.clone().invert();
           const d = new THREE.Vector3(...sub(want, r.flaskAt)).applyQuaternion(inv);
-          const tumble = quat([540 * dt, 0, 0]).multiply(atRelease.handQ.clone());
-          flask = { move: [d.x, d.y, d.z], rotate: euler(inv.multiply(tumble)), scale: flask.scale };
+          flask = { move: [d.x, d.y, d.z], rotate: euler(inv.multiply(spin)), scale: flask.scale };
         }
+        // The splash stays at SPLASH_AT in the world (it undoes the hips' turn and shift). It bursts to
+        // full size in about 0.1 s as the flask breaks, then shrinks away in about 0.2 s.
+        const burst = keys(p, [[0, 0], [HIT, 0], [SPLASH_GROW, SPLASH_SIZE], [SPLASH_GONE, 0], [1, 0]] as const);
+        const unHips = quat(r.hipsR).invert();
+        const toSplash = turned(unHips, sub(SPLASH_AT, add(HIPS_AT, r.hipsMove)));
+        const sp = Math.max(0.001, burst / SPLASH_REST);
+        const splashPose = { move: sub(toSplash, sub(SPLASH_HOME, HIPS_AT)), rotate: euler(unHips), scale: [sp, sp, sp] as V3 };
         const { w, t } = r;
         return {
           hips: { move: r.hipsMove, rotate: r.hipsR },
@@ -1049,6 +1108,7 @@ export default defineAsset({
           'forearm.R': { rotate: r.arm.lower },
           'hand.R': { rotate: r.hand },
           flaskroot: flask,
+          splash: splashPose,
           // The staff arm barely moves; the lantern swings with the turn.
           'upperarm.L': { rotate: [4 * w - 3 * t, 0, 0] },
           lantern: { rotate: [-8 * w + 14 * t, 0, 5 * w] },
@@ -1091,6 +1151,7 @@ export default defineAsset({
           head: { rotate: [-8 * h, 5 * h, -4 * h] },
           caproot: { rotate: [6 * lag, 0, 2 * lag] },
           lantern: { rotate: [-16 * lag, 0, 6 * lag] },
+          splash: SPLASH_HIDE,
           'upperarm.L': { rotate: [-8 * h, 0, 5 * h] },
           'upperarm.R': { rotate: [3 * h, 0, -12 * h] },
           'forearm.R': { rotate: [4 * h, 0, 0] },
@@ -1212,6 +1273,7 @@ export default defineAsset({
           'forearm.L': { rotate: arm.lower },
           'hand.L': { rotate: hand },
           lantern: { rotate: lanternR, move: [liftW.x, liftW.y, liftW.z] },
+          splash: SPLASH_HIDE,
           // The flask arm flings out on the blow, then rests along her side; the flask tips over.
           'upperarm.R': { rotate: [4 * st - 12 * f, 0, -12 * st + 12 * f] },
           'forearm.R': { rotate: [10 * f, 0, 0] },
@@ -1277,6 +1339,7 @@ export default defineAsset({
           'forearm.L': { rotate: arm.lower },
           'hand.L': { rotate: hand },
           lantern: { rotate: lanternR },
+          splash: SPLASH_HIDE,
           // The flask arm turns out to her right and lifts the flask like a toast, clear of the hair.
           'upperarm.R': { rotate: upR },
           'forearm.R': { rotate: foreR },
