@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
@@ -17,9 +18,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   boots and hair; brass buttons #d8a840.
  * Value plan: the light face under the hat's shadow, with rosy cheeks, is the focal point; the red
  *   shirt and blue overalls are the two big masses.
- * Bodies: skin, hair, hat, straw, shirt, overalls, brass, boots, fork-haft, fork-tines.
- * Rig: the rogue's skeleton; the pitchfork is rigid on `hand.R`. Clips: idle, walk, run, work
- *   (pitching hay).
+ * Bodies: skin, hair, hat, straw, shirt, overalls, brass, boots, fork-haft, fork-tines, hay-clump.
+ * Rig: the rogue's skeleton; the pitchfork is rigid on `hand.R`, and a hay clump for the work clip
+ *   rides on `hay` under it. Clips: idle, walk, run, work (pitching hay), talk, wave.
  */
 
 const C = {
@@ -71,6 +72,43 @@ const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const GRIP: V3 = [WRIST_R[0] - 0.012, WRIST_R[1] - 0.038, WRIST_R[2] + 0.014];
 
+// ------------------------------------------------------------------ work clip: pose constants
+const DEG = Math.PI / 180;
+const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const scl = (a: V3, s: number): V3 => [a[0] * s, a[1] * s, a[2] * s];
+const dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const unit = (a: V3): V3 => scl(a, 1 / Math.hypot(...a));
+const turnBy = (r: V3, p: V3): V3 => {
+  const v = new THREE.Vector3(...p).applyQuaternion(motion.quat(r));
+  return [v.x, v.y, v.z];
+};
+// The fork's rest frame (as `forkPose` below): the haft along +Y, the tines' hollow side along +Z.
+const forkRot = (p: V3): V3 => {
+  const [cx, sx, cz, sz] = [Math.cos(6 * DEG), Math.sin(6 * DEG), Math.cos(14 * DEG), Math.sin(14 * DEG)];
+  const y = p[1] * cx - p[2] * sx;
+  const z = p[1] * sx + p[2] * cx;
+  return [p[0] * cz - y * sz, p[0] * sz + y * cz, z];
+};
+const FORK_DIR = forkRot([0, 1, 0]);
+const FORK_UP = forkRot([0, 0, 1]);
+const forkPoint = (p: V3) => add(forkRot(p), GRIP);
+const FORK_TIP = 0.79; // from the right-hand grip to the tine tips, along the haft
+const FIST_C: V3 = [0.007, -0.038, 0.004]; // the left fist's center from its wrist (`fistAt`)
+const GRIP_OFF = sub(GRIP, WRIST_R);
+const HIPS_P: V3 = [0, 0.2, 0];
+const SPINE_P: V3 = [0, 0.26, 0];
+const CHEST_P: V3 = [0, 0.33, 0];
+// The hay clump: its place on the rest fork's tines, and its bind place hidden inside the chest.
+const HAY_ON_FORK = forkPoint([0, 0.71, 0.03]);
+const HAY_HIDE: V3 = [0, 0.31, 0.0];
+const HAY_MOVE = sub(HAY_ON_FORK, HAY_HIDE);
+/** The hay clump off: shrunk to a point on the tines (all clips but the work lift). */
+const HAY_OFF = { move: HAY_MOVE, scale: [0.001, 0.001, 0.001] as V3 };
+// The stance: the planted ankles (the left foot forward, the right foot back).
+const STANCE_L: V3 = [ANKLE[0] + 0.012, ANKLE[1], 0.045];
+const STANCE_R: V3 = [-ANKLE[0] - 0.012, ANKLE[1], -0.045];
+
 /** A relaxed fist hanging from the wrist `w`. */
 const fistAt = (w: V3) =>
   sdf.smoothUnion(
@@ -113,6 +151,7 @@ export default defineAsset({
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      hay: { parent: 'hand.R', at: HAY_HIDE },
     });
 
     // ------------------------------------------------------------------ head and face
@@ -361,9 +400,29 @@ export default defineAsset({
     k.body('fork-haft', forkPose(haft), { color: C.wood, roughness: 0.7, detail: 0.004, bone: 'hand.R' });
     k.body('fork-tines', forkPose(tines), { color: C.iron, roughness: 0.4, metalness: 0.75, detail: 0.003, bone: 'hand.R' });
 
+    // The hay clump for the work clip, built on the rest fork's tines (hollow side) and then moved into
+    // the chest, where the bind pose hides it. The work clip moves it back onto the tines (`HAY_MOVE`).
+    const clump = sdf
+      .smoothUnion(
+        0.02,
+        sdf.ellipsoid([0.058, 0.05, 0.03]).at(0, 0.71, 0.034),
+        sdf.ellipsoid([0.036, 0.034, 0.026]).at(0.03, 0.67, 0.05),
+        sdf.ellipsoid([0.032, 0.036, 0.024]).at(-0.028, 0.745, 0.05),
+      )
+      .displace(0.006, (x, y, z) => noise.fbm(x * 60, y * 22, z * 60, 3))
+      .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 30, z * 90, 2) > 0.15 ? rgb(C.strawDark) : base));
+    k.body('hay-clump', forkPose(clump).at(...HAY_HIDE.map((v, i) => v - HAY_ON_FORK[i]!) as unknown as V3), {
+      color: C.straw,
+      roughness: 0.9,
+      detail: 0.004,
+      bone: 'hay',
+    });
+
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
+    const { wave, bump, legDrop, reach, orient, keys } = motion;
     const LEG = 0.19;
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
 
     k.animation('idle', {
       duration: 2.4,
@@ -376,6 +435,7 @@ export default defineAsset({
         'upperarm.L': { rotate: [2 * wave(p, 1, 0.1), 0, 3 * bump(p)] },
         'upperarm.R': { rotate: [1 * wave(p, 1, 0.1), 0, -1 * bump(p)] },
         'forearm.L': { rotate: [-5 * bump(p), 0, 0] },
+        hay: HAY_OFF,
       }),
     });
 
@@ -402,39 +462,139 @@ export default defineAsset({
           'upperarm.R': { rotate: [-armSwing * 0.25 * s, 0, -4] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
           'hand.R': { rotate: [armSwing * 0.2 * s, 0, forkOut] as const },
+          hay: HAY_OFF,
         };
       },
     });
     k.animation('walk', stride(0.9, 24, 26, 3, 0));
     k.animation('run', stride(0.58, 36, 44, 10, 0.025, 5));
 
-    // Work: dig the fork in forward and low, lift a load, and toss it up and to the side.
+    // Work: pitching hay, a 2.4 s loop solved by targets. One fork path in world space drives both
+    // arms: the left hand's point on the haft (`L`), the fork's pitch below level, and its yaw to his
+    // left. The right hand holds the haft near its top end, the left hand `W.gap` lower. The targets
+    // go into the chest's rest frame, so the lean and the turn of the body carry the arms.
+    //   0.00 ready, fork drawn back   0.20 stab: tines 10 cm into the soil, hips down, lean
+    //   0.30-0.44 lever: the top hand pushes down and back about the left hand, the tines lift the load
+    //   0.44-0.62 slow lift: the hands come down to the hips, the load up to hip height, the butt end
+    //   swings out past the right hip   0.62-0.76 toss: the chest turns to his left, the tines flick up
+    //   0.76-1.00 return to the ready pose.
+    // The rig has no knees: the feet stay planted in a wide stance, and the pant legs squash (scale)
+    // to drop the hips.
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
+    // Keys that wrap around the loop, so the path keeps its speed through p = 0.
+    const wrap = <T,>(list: readonly (readonly [number, T])[]) => {
+      const n = list.length;
+      return [[list[n - 1]![0] - 1, list[n - 1]![1]], ...list, [1 + list[0]![0], list[0]![1]], [1 + list[1]![0], list[1]![1]]] as const;
+    };
+    const loopN = (p: number, list: readonly (readonly [number, number])[]): number => keys(p, wrap(list), 'spline');
+    const loopV = (p: number, list: readonly (readonly [number, V3])[]): V3 => keys(p, wrap(list), 'spline');
+    const W = {
+      L: [
+        [0, [-0.06, 0.35, 0.14]],
+        [0.12, [-0.065, 0.31, 0.17]],
+        [0.2, [-0.065, 0.295, 0.18]],
+        [0.3, [-0.065, 0.295, 0.18]],
+        [0.44, [-0.05, 0.31, 0.16]],
+        [0.62, [0.02, 0.3, 0.17]],
+        [0.72, [0.11, 0.32, 0.14]],
+        [0.84, [0, 0.28, 0.17]],
+      ] as const,
+      pitch: [[0, 25], [0.12, 31], [0.2, 36], [0.3, 36], [0.44, 12], [0.62, -4], [0.72, -22], [0.84, 24]] as const,
+      yaw: [[0, 32], [0.12, 34], [0.2, 35], [0.3, 35], [0.44, 38], [0.62, 55], [0.72, 100], [0.84, 50]] as const,
+      turn: [[0, -26], [0.12, -33], [0.2, -36], [0.3, -36], [0.44, -32], [0.62, -14], [0.72, 20], [0.84, 0]] as const,
+      lean: [[0, 8], [0.12, 13], [0.2, 16], [0.3, 16], [0.44, 13], [0.62, 6], [0.72, 3], [0.84, 4]] as const,
+      // The left hand slides down the haft for the toss: the short arms reach the fork across the chest.
+      gap: [[0, 0.12], [0.44, 0.12], [0.62, 0.13], [0.72, 0.15], [0.84, 0.12]] as const,
+      drop: [[0, 0.03], [0.12, 0.045], [0.2, 0.056], [0.3, 0.055], [0.44, 0.05], [0.62, 0.025], [0.72, 0.015], [0.84, 0.02]] as const,
+    };
+    const POLE_R: V3 = [-0.5, 0.15, -0.15];
+    const POLE_L: V3 = [0.5, 0.15, -0.1];
     k.animation('work', {
-      duration: 1.4,
+      duration: 2.4,
       dig: 0.12, // the fork's tines go into the ground
       pose: (_t, p) => {
-        const dig = ease(0, 0.3, p) * (1 - ease(0.45, 0.65, p));
-        const toss = ease(0.45, 0.65, p) * (1 - ease(0.72, 1, p));
+        const turn = loopN(p, W.turn);
+        const lean = loopN(p, W.lean);
+        const drop = loopN(p, W.drop);
+        const hipsMove: V3 = [0, -drop, (-0.012 * lean) / 16];
+        const hipsRot: V3 = [0, 0.35 * turn, 0];
+        const spineRot: V3 = [0.6 * lean, 0.3 * turn, 0];
+        const chestRot: V3 = [0.4 * lean, 0.35 * turn, 0];
+        // World to the chest's rest frame (where the arm targets and directions live).
+        const qHS = motion.quat(hipsRot).multiply(motion.quat(spineRot));
+        const inv = qHS.clone().multiply(motion.quat(chestRot)).invert();
+        const pivot = add(add(add(HIPS_P, hipsMove), turnBy(hipsRot, sub(SPINE_P, HIPS_P))), turnBy(motion.euler(qHS), sub(CHEST_P, SPINE_P)));
+        const toDir = (d: V3): V3 => {
+          const v = new THREE.Vector3(...d).applyQuaternion(inv);
+          return [v.x, v.y, v.z];
+        };
+        const toPoint = (x: V3) => add(CHEST_P, toDir(sub(x, pivot)));
+
+        // The fork: its direction (grip to tines), the hollow side of the tines up, and the two hands.
+        const pitch = loopN(p, W.pitch) * DEG;
+        const yaw = loopN(p, W.yaw) * DEG;
+        const dirW: V3 = [Math.cos(pitch) * Math.sin(yaw), -Math.sin(pitch), Math.cos(pitch) * Math.cos(yaw)];
+        const dir = toDir(dirW);
+        const up = toDir(unit(sub([0, 1, 0], scl(dirW, dirW[1]))));
+        const left = toPoint(loopV(p, W.L));
+        const grip = sub(left, scl(dir, loopN(p, W.gap)));
+        const forkTurn = motion.quat(orient([], { dir: FORK_DIR, up: FORK_UP }, { dir, up }));
+        const wristR = sub(grip, [...new THREE.Vector3(...GRIP_OFF).applyQuaternion(forkTurn).toArray()] as V3);
+        const armR = reach(ARM_R, wristR, POLE_R);
+        const handR = orient([armR.upper, armR.lower], { dir: FORK_DIR, up: FORK_UP }, { dir, up });
+        // The left fist closes on the haft from the shoulder's side.
+        const side = sub(left, SHOULDER);
+        const toHaft = unit(sub(side, scl(dir, dot(side, dir))));
+        const armL = reach(ARM_L, sub(left, scl(toHaft, Math.hypot(...FIST_C))), POLE_L);
+        const handL = orient([armL.upper, armL.lower], { dir: unit(FIST_C), up: [1, 0, 0] }, { dir: toHaft, up: dir });
+
+        // Legs: each leg turns to its planted ankle and squashes (Y) to the hip height, a little
+        // wider (X, Z) as it squashes; the boot takes the inverse, so it stays flat and its size.
+        const leg = (hip: V3, ankle: V3, planted: V3) => {
+          const want = sub(planted, add(add(HIPS_P, hipsMove), turnBy(hipsRot, sub(hip, HIPS_P))));
+          const rest = sub(ankle, hip);
+          const len = Math.hypot(...want);
+          const sy0 = Math.sqrt(len * len - rest[0] * rest[0]) / -rest[1];
+          const w = 1 + 0.5 * (1 - sy0);
+          const sy = Math.sqrt(Math.max(1e-6, len * len - (rest[0] * w) ** 2)) / -rest[1];
+          const rotate = orient([hipsRot], { dir: [rest[0] * w, rest[1] * sy, 0], up: [0, 0, 1] }, { dir: want, up: [0, 0, 1] });
+          // The boot's up axis goes where the squashed leg frame keeps the sole level (no shear across it).
+          const back = motion.quat(hipsRot).multiply(motion.quat(rotate)).invert();
+          const u = new THREE.Vector3(0, 1, 0).applyQuaternion(back);
+          const fwd = new THREE.Vector3(0, 0, 1).applyQuaternion(back);
+          const b: V3 = [w * u.x, sy * u.y, w * u.z];
+          const foot = orient([], { dir: [0, 1, 0], up: [0, 0, 1] }, { dir: b, up: [fwd.x, fwd.y, fwd.z] });
+          return { leg: { rotate, scale: [w, sy, w] as V3 }, foot: { rotate: foot, scale: [1 / w, 1 / Math.hypot(...b), 1 / w] as V3 } };
+        };
+        const legL = leg(HIP, ANKLE, STANCE_L);
+        const legR = leg(mx(HIP), mx(ANKLE), STANCE_R);
+
+        // The hay: grows on the tines as they come out of the soil, rides through the lift, and flies
+        // off the tines (along them and up off the hollow side) in the toss.
+        const load = ease(0.3, 0.42, p) * (1 - ease(0.7, 0.8, p));
+        const fly = ease(0.68, 0.8, p) * (1 - ease(0.86, 0.96, p)); // back on the tines while hidden
+        const hay = Math.max(0.001, load);
         return {
-          hips: { move: [0, -0.012 * dig, 0], rotate: [0, -10 * dig + 16 * toss, 0] },
-          spine: { rotate: [14 * dig - 6 * toss, 0, 0] },
-          chest: { rotate: [4 * dig, 10 * dig - 14 * toss, 0] },
-          head: { rotate: [-6 * dig + 4 * toss, 0, 0] },
-          // Dig: the hand comes up and forward and the fork tips over, tines down into the hay.
-          // Toss: the arm lifts high in front with the fork upright.
-          // The X angles (with the spine and chest) add up to the fork's tilt: about 126 degrees in the dig,
-          // 23 in the toss. In the dig the grip stays at about 0.38 m, so only the tines go into the
-          // ground (about 9 cm) and the haft stays above it (`dig: 0.12` above).
-          // The toss tilt keeps the upright haft 2 cm in front of the hat brim.
-          'upperarm.R': { rotate: [-70 * dig - 95 * toss, 0, 10 * toss] },
-          'forearm.R': { rotate: [-20 * dig - 30 * toss, 0, 0] },
-          'hand.R': { rotate: [192 * dig + 148 * toss, 0, 0] },
-          'upperarm.L': { rotate: [-40 * dig - 30 * toss, 0, -20 * dig] },
-          'forearm.L': { rotate: [-40 * dig - 30 * toss, 0, 0] },
+          hips: { move: hipsMove, rotate: hipsRot },
+          spine: { rotate: spineRot },
+          chest: { rotate: chestRot },
+          // He watches the tines: the head turns toward the fork and tilts to his left, away from the haft.
+          neck: { rotate: [-0.3 * lean, 0, 0] },
+          head: { rotate: [4 - 0.2 * lean, -0.45 * turn + 6, -4 - 0.2 * Math.max(0, -turn)] },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'hand.L': { rotate: handL },
+          'leg.L': legL.leg,
+          'foot.L': legL.foot,
+          'leg.R': legR.leg,
+          'foot.R': legR.foot,
+          hay: { move: add(HAY_MOVE, add(scl(FORK_DIR, 0.14 * fly), scl(FORK_UP, 0.12 * fly))), scale: [hay, hay, hay] as V3 },
         };
       },
     });
@@ -442,8 +602,6 @@ export default defineAsset({
     // ------------------------------------------------------------------ villager clips: talk and wave
     // The free left arm is posed by wrist targets (chest rest frame). His arms are short and his head
     // is wide, so the hand stays in front of the chest or out beside the cheek: far below the brim (0.78).
-    const { reach } = motion;
-    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
 
     // Talk: a friendly chat with someone in front. He leans a little on the fork (to his right), nods
     // and turns his head under the hat, and the left hand makes two palm-up points in front of the chest.
@@ -464,6 +622,7 @@ export default defineAsset({
           'upperarm.L': { rotate: arm.upper },
           'forearm.L': { rotate: arm.lower },
           'hand.L': { rotate: [-8 - 8 * beat, 14 * sweep, 0] },
+          hay: HAY_OFF,
         };
       },
     });
@@ -494,6 +653,7 @@ export default defineAsset({
           'upperarm.L': { rotate: arm.upper },
           'forearm.L': { rotate: arm.lower },
           'hand.L': { rotate: [-10 * up, 0, 28 * side] },
+          hay: HAY_OFF,
         };
       },
     });
