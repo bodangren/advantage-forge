@@ -877,7 +877,7 @@
     "reviewedAt": "2026-09-26T21:37:21+00:00"
   },
   "animated-armor": {
-    "overall": 8.1,
+    "overall": 8.2,
     "group": "Enemies",
     "scores": {
       "mockup": 4,
@@ -892,21 +892,21 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. This pass changed the model and not the clips. A raised brass brow now follows the dome over the visor slit and turns down at its ends. The cheek plates flare out by up to 2.8 cm at the bottom. A second, low-frequency noise gathers the rust specks into larger patches on the helm dome and the pauldrons, with a faint dark stain around them. The dark steel stays the main value. ./forge check gives result ok (head margin 0.3 cm) and ground ok.",
+    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two cyan eyes, and a slotted face plate. This pass added a new spawn clip, awaken (2.0 s, one shot), and did not change the model or the other clips. At the start, the suit is an empty display piece: the helm sits low and turned aside, the arms hang, the sword tip rests on the floor in front, and the eyes are out. A rattle goes through the plates, the helm first. The eyes grow to a flare of 1.3 and settle to 1. Then the helm lifts and turns to the player, the shoulders rise, the sword comes up into the rest grip, and the idle drift starts. The last frame is the first frame of idle. ./forge check gives result ok and ground ok; the sword stays more than 5 cm from the helm in awaken.",
     "strengths": [
-      "The two cyan eyes on the black visor read at once. The new brass brow puts a shadow line over the visor slit, as in the mockup.",
-      "The rust now reads as weathered plate: speck clusters and dark stains on the helm dome and the pauldrons, with clean steel between them.",
-      "The clips stay as before: the diagonal slash, the loose helm in the hit, and the death where the suit falls apart into a pile."
+      "The awaken clip reads clearly: a dark, slumped suit, then the cyan eyes flare, then the helm lifts and the sword comes up.",
+      "The blade direction is solved from the posed fist at every frame, so the tip rests on the floor and does not go into it.",
+      "The awaken clip ends on the first frame of idle, so the spawn goes into idle without a jump."
     ],
     "issues": [
-      "The brow is brass like the band, so it reads as a thicker lower edge of the band more than as a separate ridge.",
-      "The cheek flare is small. The sword fist passes just under the cheek plates in the attack (0.3 cm margin), so a larger flare needs a change to the attack path.",
+      "The rattle is short and small, so it is hard to see in an 8 or 12 frame strip and at sprite size.",
+      "The cheek flare is small. The sword fist passes just under the cheek plates in the attack (0.3 cm margin).",
       "In the attack, the top of the backswing is behind the helm in the front view, so the front sprite shows mainly the follow-through."
     ],
     "next": [
-      "Move the attack wrist path about 2 cm lower or farther out under the helm rim, then flare the cheek plates more.",
-      "Look at the 128 px sprites to make sure that the rust patches do not turn into noise at sprite size."
+      "Look at the awaken sprite sheet at 128 px and make the rattle larger if it does not show.",
+      "Move the attack wrist path about 2 cm lower or farther out under the helm rim, then flare the cheek plates more."
     ],
-    "reviewedAt": "2026-09-26T21:16:00+00:00"
+    "reviewedAt": "2026-09-26T22:31:00+00:00"
   }
 }

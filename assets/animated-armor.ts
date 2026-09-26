@@ -21,7 +21,8 @@ import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js
  * Bodies: void, eyes, helm, face-plate, cheek-plates, brass, rivets, plume-cloth, scarf, cape, tabard, cuirass, mail,
  *   pauldrons, gauntlets, belt, legs, greaves, sword, hilt, grip.
  * Rig: the knight's skeleton with `cloak` and `plume`; the sword rigid on `hand.R`. Clips: idle
- *   (the helm and hands drift, loose on nothing), walk, run, attack (a diagonal slash).
+ *   (the helm and hands drift, loose on nothing), walk, run, attack (a diagonal slash), awaken
+ *   (the spawn: an empty display piece rattles, its eyes light, and it rises into the rest pose).
  */
 
 const C = {
@@ -599,19 +600,19 @@ export default defineAsset({
     const LEG = 0.19;
 
     // Idle: nothing holds the pieces together, so the helm and the hands drift a little on their own.
-    k.animation('idle', {
-      duration: 2.6,
-      pose: (_t, p) => ({
-        hips: { move: [0, -0.003 * bump(p), 0] },
-        chest: { rotate: [2 * wave(p), 0, 0] },
-        head: { move: [0, 0.012 * wave(p, 1, 0.2), 0], rotate: [3 * wave(p, 1, 0.35), 6 * wave(p, 1, 0.1), 3 * wave(p, 2, 0.2)] },
-        plume: { rotate: [4 * wave(p, 1, 0.4), 0, 4 * wave(p, 1, 0.3)] },
-        cloak: { rotate: [3 * wave(p, 1, 0.3), 0, 0] },
-        'hand.L': { move: [0.006 * wave(p, 1, 0.5), 0.008 * wave(p, 1, 0.1), 0], rotate: [8 * wave(p, 1, 0.3), 0, 0] },
-        'hand.R': { move: [0, 0.005 * wave(p, 1, 0.6), 0] },
-        'upperarm.L': { rotate: [3 * wave(p, 1, 0.1), 0, 2 * bump(p)] },
-      }),
+    // (The awaken clip blends this drift in at its end, so the pose is a function.)
+    const IDLE = 2.6;
+    const idlePose = (p: number): Record<string, { move?: V3; rotate?: V3 }> => ({
+      hips: { move: [0, -0.003 * bump(p), 0] },
+      chest: { rotate: [2 * wave(p), 0, 0] },
+      head: { move: [0, 0.012 * wave(p, 1, 0.2), 0], rotate: [3 * wave(p, 1, 0.35), 6 * wave(p, 1, 0.1), 3 * wave(p, 2, 0.2)] },
+      plume: { rotate: [4 * wave(p, 1, 0.4), 0, 4 * wave(p, 1, 0.3)] },
+      cloak: { rotate: [3 * wave(p, 1, 0.3), 0, 0] },
+      'hand.L': { move: [0.006 * wave(p, 1, 0.5), 0.008 * wave(p, 1, 0.1), 0], rotate: [8 * wave(p, 1, 0.3), 0, 0] },
+      'hand.R': { move: [0, 0.005 * wave(p, 1, 0.6), 0] },
+      'upperarm.L': { rotate: [3 * wave(p, 1, 0.1), 0, 2 * bump(p)] },
     });
+    k.animation('idle', { duration: IDLE, pose: (_t, p) => idlePose(p) });
 
     // A heavy, clanking stride: the helm lags each step and settles late.
     // `carry` (the run): the forward lean and the deep steps put a low blade into the floor, so the
@@ -862,6 +863,97 @@ export default defineAsset({
           'foot.L': { rotate: [keys(p, [[0, 0], [0.4, 0], [0.56, 20], [1, 20]] as const), 0, keys(p, [[0, 0], [0.4, 0], [0.56, -40], [1, -40]] as const)] },
           'foot.R': { rotate: [keys(p, [[0, 0], [0.4, 0], [0.56, 12], [1, 12]] as const), 0, keys(p, [[0, 0], [0.4, 0], [0.56, 40], [1, 40]] as const)] },
         };
+      },
+    });
+
+    // Awaken (the spawn clip): the suit stands as an empty display piece, the helm low and turned
+    // aside, the arms hanging, the sword tip on the floor in front, the eyes out. A rattle runs
+    // through the plates (the helm first), the eyes flare up, then the helm lifts and turns to the
+    // player, the shoulders rise, the sword comes up into the rest grip, and the idle drift starts
+    // (the last frame is the first frame of idle). The blade direction is solved from the posed
+    // fist at every frame, so the tip rests on the floor (never in it) until the arm lifts it.
+    const AWAKEN = 2.0;
+    const HANG_R = reach(ARM_R, [-0.245, 0.232, 0.045], [-0.3, 0.3, -0.4]);
+    const HANG_L = reach(ARM_L, [0.245, 0.245, 0.04], [0.3, 0.3, -0.4]);
+    const toward = (a: V3, b: V3, t: number) => euler(quat(a).slerp(quat(b), t));
+    const addV = (a: V3, b: V3, s = 1): V3 => [a[0] + b[0] * s, a[1] + b[1] * s, a[2] + b[2] * s];
+    const rattle = (p: number, a: number, b: number, cycles: number, offset = 0) => {
+      if (p <= a || p >= b) return 0;
+      const x = (p - a) / (b - a);
+      return wave(x, cycles, offset) * Math.sin(x * Math.PI);
+    };
+    const SWORD_LEN = 0.52; // the grip center to the tip
+    const TIP_Y = 0.013; // the tip's center line: the blade's half-thickness above the floor
+    const DOWN_DIR = norm([0.3, -0.8, 0.6]); // steeper than the floor allows, so the tip rests on it
+    const onFloor = (fist: V3, d: V3): V3 => {
+      const minY = (TIP_Y - fist[1]) / SWORD_LEN;
+      if (d[1] >= minY) return d;
+      const y = Math.max(-1, minY);
+      const s = Math.sqrt(1 - y * y) / (Math.hypot(d[0], d[2]) || 1);
+      return [d[0] * s, y, d[2] * s];
+    };
+    const ARM_R_JOINTS: V3[] = [HIPS_AT, SPINE_AT, CHEST_AT, mx(SHOULDER), ELBOW_R, WRIST_R];
+    k.animation('awaken', {
+      duration: AWAKEN,
+      loop: false,
+      pose: (t, p) => {
+        // The rattle: the helm first, then the plates of the body.
+        const helmR = rattle(p, 0.12, 0.3, 4);
+        const bodyR = rattle(p, 0.16, 0.34, 4, 0.25);
+        const glow = keys(p, [[0, 0.001], [0.3, 0.001], [0.41, 1.3], [0.52, 1]] as const);
+        const rise = ease(0.42, 0.64, p); // the slump straightens
+        const shoulders = ease(0.46, 0.64, p);
+        const lift = ease(0.5, 0.84, p); // the arms and the sword
+        const hipsR: V3 = [0, 0, 1.2 * bodyR];
+        const spineR: V3 = [4 * (1 - rise), 0, 0];
+        const chestR: V3 = [5 * (1 - rise) + 2 * bodyR, 2.5 * bodyR, bodyR];
+        const sag: V3 = [0, -0.012 * (1 - shoulders), 0];
+        const upR = addV(toward(HANG_R.upper, Z3, lift), [2 * bodyR, 0, -1.5 * bodyR]);
+        const loR = toward(HANG_R.lower, Z3, lift);
+        const upL = addV(toward(HANG_L.upper, Z3, lift), [-2 * bodyR, 0, 1.5 * bodyR]);
+        const loL = toward(HANG_L.lower, Z3, lift);
+        // The sword: from the floor in front, up and across into the rest grip.
+        const want = norm(keys(p, [[0, DOWN_DIR], [0.5, DOWN_DIR], [0.68, norm([0.3, -0.25, 0.92])], [0.86, BLADE_DIR]] as const, 'spline'));
+        const up = norm(keys(p, [[0, [0, 1, 0]], [0.5, [0, 1, 0]], [0.86, FLAT]] as const));
+        const parents = [hipsR, spineR, chestR, upR, loR];
+        let dir = want;
+        for (let i = 0; i < 3; i++) {
+          const hand = orient(parents, { dir: BLADE_DIR, up: FLAT }, { dir, up });
+          const fist = fk(ARM_R_JOINTS, [...parents, hand], [Z3, Z3, Z3, sag, Z3, Z3], FIST_R).at;
+          dir = onFloor(fist, want);
+        }
+        const handR = orient(parents, { dir: BLADE_DIR, up: FLAT }, { dir, up });
+        const pose: Record<string, { move?: V3; rotate?: V3; scale?: V3 }> = {
+          hips: { rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          head: {
+            move: [0, keys(p, [[0, -0.02], [0.42, -0.02], [0.58, 0.012], [0.72, 0]] as const) + 0.006 * helmR, keys(p, [[0, 0.008], [0.42, 0.008], [0.6, 0]] as const)],
+            rotate: [
+              keys(p, [[0, 9], [0.42, 9], [0.58, -5], [0.74, 0]] as const) + 4 * helmR,
+              keys(p, [[0, -14], [0.46, -14], [0.66, 4], [0.78, 0]] as const),
+              keys(p, [[0, 5], [0.42, 5], [0.6, 0]] as const) + 8 * helmR,
+            ],
+          },
+          glow: { scale: [glow, glow, glow] },
+          plume: { rotate: [keys(p, [[0, -8], [0.2, -8], [0.5, -4], [0.62, 10], [0.76, -4], [0.9, 0]] as const) + 7 * helmR, 0, 5 * rattle(p, 0.14, 0.32, 3, 0.1)] },
+          cloak: { rotate: [keys(p, [[0, 0], [0.45, 0], [0.62, 6], [0.8, 0]] as const) + 2 * bodyR, 0, 0] },
+          'upperarm.R': { move: sag, rotate: upR },
+          'forearm.R': { rotate: loR },
+          'hand.R': { rotate: handR },
+          'upperarm.L': { move: sag, rotate: upL },
+          'forearm.L': { rotate: loL },
+          'hand.L': { move: [0.004 * bodyR, 0.003 * rattle(p, 0.18, 0.34, 5), 0], rotate: [6 * bodyR, 0, 0] },
+        };
+        // The idle drift fades in; at the last frame the pose is idle's first frame.
+        const drift = idlePose((t - AWAKEN) / IDLE);
+        const w = ease(0.7, 1, p);
+        for (const [bone, v] of Object.entries(drift)) {
+          const b = (pose[bone] ??= {});
+          if (v.move) b.move = addV(b.move ?? Z3, v.move, w);
+          if (v.rotate) b.rotate = addV(b.rotate ?? Z3, v.rotate, w);
+        }
+        return pose;
       },
     });
   },
