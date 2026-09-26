@@ -224,7 +224,7 @@
     "reviewedAt": "2026-09-26T18:36:11+00:00"
   },
   "goblin-warrior": {
-    "overall": 8.6,
+    "overall": 8.7,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -238,22 +238,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The goblin warrior stays close to the four-view mockup in every view. The hair on the crown is now one soft crest that leans back, as in the mockup. Each ear now has a slight cup and rolls 28 degrees, so its inner face looks a little upward. In the SW and SE sprites, the far ear still shows as a narrow upward point. The forge check shows result ok and ground ok.",
+    "summary": "The goblin warrior has a new taunt clip of 1.4 s. The goblin points the dagger straight at the player at chest height and puts the left fist on the hip. Then it hops from foot to foot two times, with the head tilted and the ears flicking. Then it turns the blade up, spins the dagger one time in the fingers in 0.25 s, and goes back to rest. The model did not change. The forge check shows result ok and ground ok, and the blade stays 2.4 cm or more from the head.",
     "strengths": [
-      "The one soft crest replaces the three thin spikes. From the front it is a round, soft shape. From the side it leans back like a small flame.",
+      "The taunt reads in the front and side views: the blade points level at the player, each hop lifts a different foot, and the spin shows the blade up, out, down, and in.",
       "The broad leaf ears, the angry eyes, and the fang read at once. The face reads at 128 px in the S, SW, and SE sprites.",
       "All identity cues of the mockup are present: the nicked ear, one shoulder guard, the diagonal strap, the pouch, the wraps, and the dagger. At 30,374 triangles, the model is light."
     ],
     "issues": [
-      "In the SW and SE sprites, the far ear still reads as a narrow point above the head. The raised camera looks along the ear, and the head hides the wide base of the ear.",
-      "The belt buckle is still smaller than the large tan buckle in the mockup.",
-      "The pouch is at the front of the hip, so it does not show from the back as in the mockup. The brows are thicker than the thin brows of the mockup."
+      "In the taunt point, the wrist bends about 90 degrees, because the grip is across the fist. The hops are low (5 cm), because the legs have no knee bones.",
+      "In the SW and SE sprites, the far ear still reads as a narrow point above the head.",
+      "The belt buckle is still smaller than the large tan buckle in the mockup. The pouch does not show from the back."
     ],
     "next": [
-      "Turn the ears more to the front (about 20 degrees of sweep instead of 32), or let the tips droop a little. Then compare the front silhouette with the mockup again.",
-      "Make the belt buckle about 30 percent larger."
+      "Add a second new clip (for example a block or a cheer) to get to 8 clips, as the heroes have.",
+      "Turn the ears more to the front (about 20 degrees of sweep instead of 32), and make the belt buckle about 30 percent larger."
     ],
-    "reviewedAt": "2026-09-26T18:55:23+00:00"
+    "reviewedAt": "2026-09-26T21:54:23+00:00"
   },
   "horned-boar": {
     "overall": 8,

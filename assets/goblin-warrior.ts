@@ -23,8 +23,10 @@ import { defineAsset, motion, profile, rgb, sdf, Sdf, THREE } from '../src/index
  * Bodies: skin, teeth, tunic, scarf, leather, pouch, brass, pauldron, pauldron-rim, wraps,
  *   pants, boots, blade, hilt.
  * Rig: the rogue's chibi skeleton plus `ear.L`/`ear.R` and `knot` (scarf tails); the dagger is
- *   rigid on `dagger`, a child of `hand.R` that only the death clip moves (the dagger drops).
- *   Clips: idle, walk, run, attack, hit, death.
+ *   rigid on `dagger`, a child of `hand.R` that the death clip moves (the dagger drops) and the
+ *   taunt turns (one spin in the fingers).
+ *   Clips: idle, walk, run, attack, hit, death, taunt (point the dagger at the player, hop from
+ *   foot to foot twice, spin the dagger once; plays when the goblin first sees the player).
  */
 
 const C = {
@@ -773,6 +775,118 @@ export default defineAsset({
           'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
           'foot.L': { rotate: [lean, 20 * land, 0] },
           'foot.R': { rotate: [lean, -20 * land, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ taunt: point, hop, twirl
+    // Played when the goblin first sees the player. It points the dagger straight at the player,
+    // the left fist on the hip; it hops from foot to foot twice, the head cocked and the ears
+    // flicking; then it flips the blade up, spins it once in the fingers, and returns to rest.
+    // The right fist center follows a path in world space that rides with the hops; each frame
+    // converts it into the chest's rest frame, reach solves the arm, and orient turns the fist.
+    // The spin turns the `dagger` bone 360 degrees about the hand's axis (wrist to fist center),
+    // through the fist center, so the grip stays in the fingers.
+    const FIST_OFF: V3 = [FIST_R[0] - WRIST_R[0], FIST_R[1] - WRIST_R[1], FIST_R[2] - WRIST_R[2]];
+    const HAND_AXIS = norm(FIST_OFF);
+    const FIST_POINT: V3 = [-0.105, 0.38, 0.155]; // the blade straight ahead at chest height
+    const FIST_SPIN: V3 = [-0.175, 0.37, 0.215]; // the forearm level, forward and a little out, the blade up
+    const Q_REST = new THREE.Quaternion();
+    const Q_POINT = quat(orient([], { dir: GRIP_DIR, up: FLAT }, { dir: [0, 0, 1], up: [1, 0, 0] }));
+    const Q_SPIN = quat(orient([], { dir: HAND_AXIS, up: GRIP_DIR }, { dir: norm([-0.1, 0, 1]), up: norm([-0.25, 1, 0]) }));
+    const POLE_POINT: V3 = [-0.42, 0.34, 0.08]; // the elbow out to the side
+    const POLE_SPIN: V3 = [-0.42, 0.24, 0.06]; // the elbow out and down
+    const WRIST_HIP: V3 = [0.2, 0.3, -0.005]; // the left fist on the hip
+    const POLE_HIP: V3 = [0.42, 0.42, -0.14]; // the left elbow out and back
+    const HIPS_AT: V3 = [0, 0.2, 0];
+    // Sole points of the left boot (turned out 16 degrees at the ankle's ground point); the right
+    // boot mirrors them. `plant` keeps the lowest one on the ground.
+    const c16 = Math.cos(16 * DEG);
+    const s16 = Math.sin(16 * DEG);
+    const SOLE_L: V3[] = ([[0, 0, -0.068], [0, 0, 0.128], [0.055, 0, 0.02], [-0.05, 0, 0.02]] as const).map(
+      ([x, y, z]): V3 => [ANKLE[0] + x * c16 + z * s16, y, -x * s16 + z * c16],
+    );
+    const SOLE_R: V3[] = SOLE_L.map(mx);
+    /** A hop's height, 0 to 1: a parabola from take-off `a` to landing `b` (phases). */
+    const hop = (p: number, a: number, b: number) => {
+      const u = (p - a) / (b - a);
+      return u <= 0 || u >= 1 ? 0 : 4 * u * (1 - u);
+    };
+    k.animation('taunt', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const up = keys(p, [[0, 0], [0.14, 1]] as const); // rest to the point
+        const jab = keys(p, [[0.12, 0], [0.17, 1], [0.24, 0]] as const); // "you!": a short thrust
+        const flip = keys(p, [[0.58, 0], [0.67, 1]] as const); // the point to the blade up
+        const spin = keys(p, [[0.66, 0], [0.84, 1]] as const); // 0.25 s, one full turn
+        const down = keys(p, [[0.82, 0], [1, 1]] as const); // back to rest
+        const akimbo = keys(p, [[0, 0], [0.14, 1], [0.82, 1], [1, 0]] as const);
+        const cock = keys(p, [[0.06, 0], [0.2, 1], [0.8, 1], [1, 0]] as const); // the head tilt, the lean back
+        // Foot to foot: +1 stands on the left foot with the right foot kicked up, -1 the reverse.
+        // The weight changes in the air; the last change is a step down, not a hop.
+        const side = keys(p, [[0.2, 0], [0.28, 1], [0.38, 1], [0.46, -1], [0.54, -1], [0.62, 0]] as const);
+        const air = 0.05 * (hop(p, 0.2, 0.32) + hop(p, 0.38, 0.5));
+        const land = keys(p, [[0.31, 0], [0.34, 1], [0.38, 0], [0.49, 0], [0.52, 1], [0.56, 0]] as const);
+        const env = keys(p, [[0.16, 0], [0.22, 1], [0.58, 1], [0.66, 0]] as const);
+        const flick = env * Math.sin((2 * Math.PI * (p - 0.2)) / 0.18); // one flick back and forth per hop
+        // The legs: the hips tilt up on the side of the free leg, both legs counter it (they stay
+        // plumb), and the free leg kicks back and out with its sole level.
+        const liftL = Math.max(0, -side);
+        const liftR = Math.max(0, side);
+        const hipsR: V3 = [0, 0, -5 * side];
+        const legL: V3 = [38 * liftL, 0, 5 * side + 18 * liftL];
+        const legR: V3 = [38 * liftR, 0, 5 * side - 18 * liftR];
+        const footL: V3 = [-34 * liftL, 0, 0];
+        const footR: V3 = [-34 * liftR, 0, 0];
+        const ground = motion.plant([
+          { joints: [HIPS_AT, HIP, ANKLE], rotations: [hipsR, legL, footL], sole: SOLE_L },
+          { joints: [HIPS_AT, mx(HIP), mx(ANKLE)], rotations: [hipsR, legR, footR], sole: SOLE_R },
+        ]);
+        const hipsMove: V3 = [0, ground + air, 0];
+        // The goblin leans back while it points and hops, and stands up straight for the spin.
+        const spineR: V3 = [-4 * cock * (1 - flip) + 3 * land, 0, 3 * side];
+        const chestR: V3 = [-3 * cock * (1 - flip), 10 * up * (1 - flip), 0]; // the right shoulder leads the point
+        const frame = chestFrame([hipsR, spineR, chestR], hipsMove);
+        // The right fist: rest, the point (with the jab), the level forearm for the spin, rest.
+        const pointAt = add(FIST_POINT, [0, 0, 0.025], jab);
+        const fist = add(lerp(lerp(lerp(FIST_R, pointAt, up), FIST_SPIN, flip), FIST_R, down), hipsMove);
+        const turn = Q_REST.clone().slerp(Q_POINT, up).slerp(Q_SPIN, flip).slerp(Q_REST, down);
+        const off = new THREE.Vector3(...FIST_OFF).applyQuaternion(turn);
+        const wrist: V3 = [fist[0] - off.x, fist[1] - off.y, fist[2] - off.z];
+        const pole = lerp(lerp(lerp(ELBOW_R, POLE_POINT, up), POLE_SPIN, flip), ELBOW_R, down);
+        const arm = reach(ARM_R, frame.point(wrist), frame.point(add(pole, hipsMove)));
+        const dirW = new THREE.Vector3(...GRIP_DIR).applyQuaternion(turn);
+        const upW = new THREE.Vector3(...FLAT).applyQuaternion(turn);
+        const hand = orient(
+          [arm.upper, arm.lower],
+          { dir: GRIP_DIR, up: FLAT },
+          { dir: frame.dir([dirW.x, dirW.y, dirW.z]), up: frame.dir([upW.x, upW.y, upW.z]) },
+        );
+        // The twirl: the dagger turns about the hand's axis through the fist center.
+        const twirl = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(...HAND_AXIS), 2 * Math.PI * spin);
+        const g = new THREE.Vector3(GUARD[0] - FIST_R[0], GUARD[1] - FIST_R[1], GUARD[2] - FIST_R[2]).applyQuaternion(twirl);
+        const armL = reach(ARM_L, lerp(WRIST, WRIST_HIP, akimbo), lerp(ELBOW, POLE_HIP, akimbo));
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: [4 * land, 0, 0] },
+          // The head cocks to its left, away from the blade, the chin a little down: a sly grin.
+          head: { rotate: [5 * cock, 0, -10 * cock - 3 * side] },
+          'ear.L': { rotate: [0, 22 * flick, 8 * up * (1 - down) - 6 * land + 8 * flick] },
+          'ear.R': { rotate: [0, -22 * flick, -8 * up * (1 - down) + 6 * land - 8 * flick] },
+          knot: { rotate: [12 * env * Math.sin((2 * Math.PI * (p - 0.24)) / 0.18), 0, 6 * side] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          dagger: { move: [FIST_R[0] + g.x - GUARD[0], FIST_R[1] + g.y - GUARD[1], FIST_R[2] + g.z - GUARD[2]], rotate: euler(twirl) },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          'leg.L': { rotate: legL },
+          'leg.R': { rotate: legR },
+          'foot.L': { rotate: footL },
+          'foot.R': { rotate: footR },
         };
       },
     });
