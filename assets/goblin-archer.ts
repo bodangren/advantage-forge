@@ -516,7 +516,17 @@ export default defineAsset({
 
     // The bow arm swings less than the free arm and lifts out from the body (`lift`, degrees),
     // so the bow tip clears the ground and the boot while the hips drop at each step.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, lift: number) => ({
+    // The lift also tilts the upper bow limb (above the shoulder) in toward the hood, so the
+    // hand turns back by the lift plus `tiltOut` degrees: the bow leans out, clear of the hood.
+    const stride = (
+      duration: number,
+      legSwing: number,
+      armSwing: number,
+      lean: number,
+      hop: number,
+      lift: number,
+      tiltOut: number,
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -539,11 +549,12 @@ export default defineAsset({
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.2, 0, 0] as const },
           'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
+          'hand.L': { rotate: [0, 0, -(lift + tiltOut)] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 10));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 16));
+    k.animation('walk', stride(0.9, 26, 28, 3, 0, 10, 8));
+    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 16, 6));
 
     // A shot: turn side-on and raise the bow (aim), pull the right hand back to the cheek (draw),
     // hold, loose with a snap of the right hand and a kick of the bow, then settle back.
@@ -570,7 +581,8 @@ export default defineAsset({
           'upperarm.L': { rotate: [0, 0, 60 * aim + 6 * loose] },
           'forearm.L': { rotate: [12 * aim, 0, 0] },
           'hand.L': { rotate: [0, 0, -56 * aim - 10 * loose] },
-          'upperarm.R': { rotate: [-78 * aim, 0, 30 * aim - 20 * draw - 18 * loose] },
+          // The right elbow drops a little at the draw, so the bracer stays clear of the hood.
+          'upperarm.R': { rotate: [-78 * aim + 6 * draw, 0, 30 * aim - 20 * draw - 18 * loose] },
           'forearm.R': { rotate: [-40 * aim - 55 * draw + 45 * loose, 0, 0] },
           'leg.L': { rotate: [-8 * aim, 0, 6 * aim] },
           'leg.R': { rotate: [8 * aim, 0, -4 * aim] },
