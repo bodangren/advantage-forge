@@ -712,37 +712,37 @@
     "reviewedAt": "2026-09-26T18:54:40+00:00"
   },
   "imp": {
-    "overall": 8,
+    "overall": 7.6,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
       "silhouette": 5,
       "proportion": 4,
-      "shape": 5,
+      "shape": 4,
       "color": 4,
       "materials": 3,
       "detail": 4,
       "technical": 5,
       "gameReady": 5,
       "sprite": 5,
-      "motion": 4
+      "motion": 3
     },
-    "summary": "The imp matches the imp on the Chibi Quest enemy sheet: a big-headed little red devil with curved dark horns, amber eyes under angry brows, a fanged grin, scalloped bat wings, clawed hands and feet, and an arrow-tipped tail.",
+    "summary": "The imp matches the imp on the Chibi Quest enemy sheet. It is a big-headed red devil with dark horns, amber eyes, fangs, bat wings, claws, and a spade tail. The wing bones are now dark brown. Three faults lower the score: flat light membranes, edge-on wing frames in the fly clip, and an attack that is only a head-first dive.",
     "strengths": [
-      "The spread bat wings and curved horns make a spiky silhouette that reads in all eight sprite directions.",
-      "It is a true flyer: the idle hovers with beating wings, the fly clip leans into forward flight, and the attack rears and dives.",
-      "Many sharp points (horns, ears, fangs, claws, wing fingers, tail spade) make it read as dangerous, while the big head keeps it cute."
+      "The spread bat wings and the curved horns give a spiky silhouette that reads in all eight sprite directions.",
+      "The dark brown wing bones now separate the wing frame from the membrane and repeat the horn color, as in the mockup.",
+      "The face reads at 128 px. The amber eyes under angry brows and the row of white fangs make it cute but dangerous."
     ],
     "issues": [
-      "In the rest pose it stands on the ground; the mockup shows it mid-flight. The idle clip lifts it, so this matters only for the static model.",
-      "The skin, the wings, and the membranes are all similar reds, so the materials separate only a little.",
-      "The mockup wings have a thick dark leading edge; the model's wing bones are thinner."
+      "The attack has a small anticipation (the body leans back and the claws rise) and a smooth recovery. The strike is only a head-first dive. In the dive the arms swing back (upperarm +30), so the claws stay under the body and never reach toward the target. The wings keep the same beat through the dive.",
+      "The wings go edge-on in the fly clip. In the side view at t=0.13 to 0.19, both wings are one thin vertical line. In the three-quarter view at t=0.31 to 0.38, the near wing is almost invisible. The beat turns the wing only about Z, with no sweep or twist.",
+      "The membranes are one flat light orange (#e0704a), lighter than the skin, with sharp star points. The mockup membranes are darker red-orange with rounded scallops. The leading bone is dark and thick only to the knuckle; from the knuckle to the top tip it is a thin finger."
     ],
     "next": [
-      "Make the wing's leading bone thicker and darker.",
-      "Darken the membranes toward the wing tips."
+      "Make the attack a clear claw strike. Pull the claws back in the anticipation. Reach both claws forward at the target in the dive. Fold the wings back during the dive. Add a sweep and a twist to the wing beat so that no frame shows a wing edge-on.",
+      "Darken the membranes toward the wing tips with C.membraneDark. The file defines this color but does not use it. Carry the thick dark leading bone from the knuckle out to the top wing tip. Both requests from the old review are still open or only half done."
     ],
-    "reviewedAt": "2026-09-26T10:51:35+00:00"
+    "reviewedAt": "2026-09-26T19:21:28+00:00"
   },
   "skeleton-archer": {
     "overall": 7.3,
