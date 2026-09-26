@@ -20,7 +20,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   gauntlets, belt, tabard, tassets, leggings, greaves, sword, hilt, grip, shield, shield-face,
  *   shield-gold.
  * Rig: the rogue's chibi skeleton plus `cloak` (cape) and `plume`; sword rigid on the right hand,
- *   shield rigid on the left forearm. Clips: idle, walk, run.
+ *   shield rigid on the left forearm. Clips: idle, walk, run, attack (a diagonal slash).
  */
 
 const C = {
@@ -703,5 +703,105 @@ export default defineAsset({
     });
     k.animation('walk', stride(0.9, 26, 28, 3, 0, 6));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
+
+    // A diagonal slash, solved by targets (as the animated armor's attack). The wrist follows keys
+    // in the chest's rest frame (reach); the blade follows its own keys; edgeUp turns the flat so
+    // the edge leads. The arm is short and the helm is big, so the wind-up rises on the right side,
+    // out beside the helm; the blade comes over the right shoulder, forward under the helm's rim,
+    // and sweeps down across the front to the low left. The hips and chest turn, the left foot
+    // steps, the hips drop, and the shield rises in front of the left side.
+    const { keys, reach, orient, edgeUp } = motion;
+    const norm = (a: V3): V3 => {
+      const l = Math.hypot(a[0], a[1], a[2]);
+      return [a[0] / l, a[1] / l, a[2] / l];
+    };
+    const BLADE_DIR = rotZ(rotX([0, -1, 0], -12), -44); // the blade (local -Y) at rest, as swordPose
+    const FLAT = rotZ(rotX([0, 0, 1], -12), -44); // the flat's normal (local +Z) at rest
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    // The rest elbow's bend direction, so the solved arm starts and ends on the rest pose.
+    const POLE_REST = (() => {
+      const s = mx(SHOULDER);
+      const t = norm([WRIST_R[0] - s[0], WRIST_R[1] - s[1], WRIST_R[2] - s[2]]);
+      const e: V3 = [ELBOW_R[0] - s[0], ELBOW_R[1] - s[1], ELBOW_R[2] - s[2]];
+      const d = e[0] * t[0] + e[1] * t[1] + e[2] * t[2];
+      const side = norm([e[0] - d * t[0], e[1] - d * t[1], e[2] - d * t[2]]);
+      return add(s, [side[0] * 0.6, side[1] * 0.6, side[2] * 0.6]);
+    })();
+    const bladeKeys = [
+      [0, BLADE_DIR],
+      [0.14, norm([-0.92, 0.12, 0.3])], // out to the right, level
+      [0.28, norm([-0.75, 0.55, -0.37])], // up and back over the right shoulder, out beside the helm
+      [0.38, norm([-0.72, 0.58, -0.38])], // the hold at the top
+      [0.44, norm([-0.6, 0.6, 0.5])], // over the shoulder: forward on the right, up and out
+      [0.48, norm([-0.25, 0.15, 0.95])], // level, pointing forward, under the helm's rim
+      [0.53, norm([0.55, -0.25, 0.8])], // across the front to the left
+      [0.6, norm([0.8, -0.32, 0.5])], // low left
+      [0.7, norm([0.78, -0.34, 0.5])], // the follow-through holds
+      [0.86, norm([-0.3, -0.35, 0.89])], // back through the front, the tip clear of the floor
+      [1, BLADE_DIR],
+    ] as const;
+    const bladeAt = (p: number) => keys(p, bladeKeys, 'spline');
+    const ease = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    k.animation('attack', {
+      duration: 0.85,
+      loop: false,
+      pose: (_t, p) => {
+        const wrist = keys(
+          p,
+          [
+            [0, WRIST_R],
+            [0.14, [-0.265, 0.38, 0.06]],
+            [0.28, [-0.275, 0.472, -0.035]],
+            [0.38, [-0.278, 0.476, -0.04]],
+            [0.44, [-0.27, 0.475, 0.065]],
+            [0.48, [-0.19, 0.43, 0.155]],
+            [0.53, [-0.15, 0.36, 0.175]],
+            [0.6, [-0.15, 0.3, 0.163]],
+            [0.7, [-0.15, 0.302, 0.162]],
+            [1, WRIST_R],
+          ] as const,
+          'spline',
+        );
+        const dir = norm(bladeAt(p));
+        // The elbow points out and back in the wind-up, then out, down, and forward through the
+        // cut, so the forearm stays in front of the breastplate.
+        const pole = keys(p, [
+          [0, POLE_REST],
+          [0.14, [-0.6, 0.2, -0.2]],
+          [0.4, [-0.6, 0.25, -0.15]],
+          [0.48, [-0.5, 0.05, 0.4]],
+          [0.75, [-0.5, 0.05, 0.4]],
+          [1, POLE_REST],
+        ] as const);
+        const arm = reach(ARM_R, wrist, pole);
+        const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up: edgeUp(bladeAt, p, FLAT) });
+        const wind = ease(0, 0.3, p) * (1 - ease(0.4, 0.5, p));
+        const cut = ease(0.42, 0.56, p) * (1 - ease(0.72, 1, p));
+        const step = 24 * cut;
+        const guard = ease(0, 0.2, p) * (1 - ease(0.75, 1, p));
+        return {
+          hips: { move: [0, -legDrop(LEG, step) - 0.004 * wind, 0.025 * cut - 0.01 * wind], rotate: [0, -10 * wind + 16 * cut, 0] },
+          spine: { rotate: [-4 * wind + 7 * cut, 0, 0] },
+          chest: { rotate: [-3 * wind + 4 * cut, -16 * wind + 20 * cut, 0] },
+          // The head turns with the chest: the shield's top edge sits close under the left cheek.
+          head: { rotate: [-2 * wind - 2 * cut, 3 * wind - 3 * cut, 0] },
+          plume: { rotate: [6 * wind - 14 * cut, 0, -4 * wind + 6 * cut] },
+          cloak: { rotate: [-3 * wind + 10 * cut, 0, 0] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          // The shield stays up in front of the left side and comes a little forward, clear of the cheek.
+          'upperarm.L': { rotate: [-30 * guard, 0, 0] },
+          'forearm.L': { rotate: [35 * guard, 0, 0] },
+          'leg.L': { rotate: [-step, 0, 0] },
+          'leg.R': { rotate: [step, 0, 0] },
+          'foot.L': { rotate: [step, 0, 0] },
+          'foot.R': { rotate: [-step, 0, 0] },
+        };
+      },
+    });
   },
 });
