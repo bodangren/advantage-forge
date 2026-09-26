@@ -1026,8 +1026,11 @@ export default defineAsset({
       },
     });
 
-    // death: a stagger, then she falls on her back; both flames go out, the staff drops beside
-    // her right side, and the big hat tips forward over her face.
+    // death: a stagger, then she falls flat on her back; both flames go out, the staff drops
+    // beside her right side, and the big hat tips forward over her face. The legs stay planted
+    // while the body tips back, then lie out in line with it; the coat skirt follows the legs,
+    // the cape flattens into a sheet under the back, and the head rolls back onto the floor. The hips drop
+    // below the floor on purpose: the build lifts the body until it rests on the floor.
     k.animation('death', {
       duration: 1.5,
       loop: false,
@@ -1037,31 +1040,35 @@ export default defineAsset({
         const land = bump(Math.min(1, Math.max(0, (p - 0.66) / 0.16)));
         const out = 1 - 0.95 * ease(0.3, 0.6, p);
         const tip = ease(0.4, 0.8, p);
+        const drop = ease(0.45, 0.72, p);
+        const leg = 30 * bump(fall) + 6 * fall;
+        const flat = ease(0.4, 0.68, p);
         return {
           ...staffPose(
-            keys(p, [[0, WRIST_R], [0.3, [-0.27, 0.34, 0.1]], [0.66, [-0.3, 0.4, -0.02]]] as const),
-            keys(p, [[0, STAFF_AXIS], [0.3, norm([-0.3, 0.75, 0.6])], [0.5, norm([-0.2, -0.2, 0.96])], [0.66, norm([-0.12, -1, 0.02])]] as const),
+            keys(p, [[0, WRIST_R], [0.3, [-0.27, 0.34, 0.1]], [0.66, [-0.26, 0.34, -0.09]]] as const),
+            keys(p, [[0, STAFF_AXIS], [0.3, norm([-0.3, 0.75, 0.6])], [0.5, norm([-0.2, -0.2, 0.96])], [0.66, norm([-0.15, -1, 0.3])]] as const),
             keys(p, [[0, [0, 0, 1]], [0.3, [-1, 0, 0]], [0.66, [-1, 0, 0]]] as const),
             [-0.3, 0.2, -0.4],
           ),
-          ...palmPose(lerp(WRIST_L, [0.3, 0.4, 0.0], ease(0.2, 0.62, p)), PALM.dir, lerp(PALM.up, [0, 0.3, 1], ease(0.2, 0.62, p)), [0.3, 0.2, -0.4]),
+          ...palmPose(lerp(WRIST_L, [0.26, 0.34, -0.09], ease(0.2, 0.66, p)), PALM.dir, lerp(PALM.up, [0, 0.3, 1], ease(0.2, 0.62, p)), [0.3, 0.2, -0.4]),
           orb: { scale: [out, out, out] },
           palmfire: { scale: [out, out, out] },
           hatroot: { rotate: [95 * tip, 0, 0], move: [0, -0.1 * tip, 0.25 * tip] },
           hattip: { rotate: [-10 * tip + 12 * land, 0, 10 * tip] },
           hips: {
-            move: [0, -0.034 * fall * fall + 0.02 * bump(fall) + 0.012 * land + 0.006 * stagger, -0.04 * stagger - 0.08 * fall],
-            rotate: [-86 * fall - 4 * stagger, 0, 0],
+            move: [0, -0.14 * drop + 0.012 * land + 0.006 * stagger, -0.04 * stagger - 0.08 * fall],
+            rotate: [-76 * fall - 4 * stagger, 0, 0],
           },
-          skirt: { rotate: [8 * stagger - 8 * fall, 0, 0] },
-          spine: { rotate: [-6 * stagger + 2 * fall, 0, 0] },
+          skirt: { rotate: [8 * stagger + leg - 20 * fall, 0, 0] },
+          spine: { rotate: [-6 * stagger, 0, 0] },
           chest: { rotate: [-4 * stagger, 0, 0] },
-          head: { rotate: [-16 * stagger + 4 * fall, 0, 0] },
-          cloak: { rotate: [-10 * stagger - 40 * fall, 0, 0] },
-          'leg.L': { rotate: [6 * stagger + 16 * bump(fall) + 22 * fall, 0, 5 * fall] },
-          'leg.R': { rotate: [-6 * stagger + 18 * bump(fall) + 24 * fall, 0, -6 * fall] },
-          'foot.L': { rotate: [-12 * fall, 0, 0] },
-          'foot.R': { rotate: [-16 * fall, 0, 0] },
+          neck: { rotate: [-5 * fall, 0, 0] },
+          head: { rotate: [-16 * stagger - 14 * fall, 0, 0] },
+          cloak: { rotate: [-10 * stagger - 8 * fall, 0, 0], scale: [1 + 0.15 * flat, 1, 1 - 0.86 * flat] },
+          'leg.L': { rotate: [6 * stagger + leg, 0, 4 * fall] },
+          'leg.R': { rotate: [-6 * stagger + leg + 2 * fall, 0, -5 * fall] },
+          'foot.L': { rotate: [-14 * fall, 0, 0] },
+          'foot.R': { rotate: [-18 * fall, 0, 0] },
         };
       },
     });
