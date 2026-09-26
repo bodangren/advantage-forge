@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Skeleton warrior — Chibi Quest enemy (catalog `enemies/undead/skeleton`), about 0.97 m to the
@@ -19,8 +19,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   framed by the dark helmet; the red shield and scarf are the second masses.
  * Bodies: bone, eyes (emissive), pupils, helmet, rivets, scarf, mail, pauldrons, bracers, belt,
  *   tabard, leggings, greaves, sword, hilt, shield-wood, shield-iron, brass.
- * Rig: the knight's chibi skeleton; the sword is rigid on `hand.R`, the shield on `forearm.L`.
- *   Clips: idle, walk, run, attack (an overhead chop).
+ * Rig: the knight's chibi skeleton plus `weapon` (a child of `hand.R`, carries the sword) and
+ *   `shield` (a child of `forearm.L`, carries the shield); only the death clip moves those two.
+ *   Clips: idle, walk, run, attack (an overhead chop), hit, death (a collapse into a heap).
  */
 
 const C = {
@@ -76,6 +77,8 @@ const GUARD = add(FIST_R, GRIP_DIR, 0.045);
 const SWORD_Z = (Math.asin(-GRIP_DIR[0]) * 180) / Math.PI;
 const SWORD_X = (Math.atan2(GRIP_DIR[2], GRIP_DIR[1]) * 180) / Math.PI;
 const swordPose = (s: sdf.Shape) => s.rotateZ(SWORD_Z).rotateX(SWORD_X).at(...GUARD);
+// The shield's center on the left forearm (the pivot of the `shield` bone).
+const SHIELD_C: V3 = [0.24, 0.3, 0.122];
 
 /** A bony fist in the sword's local frame: a small palm and four curled finger bones. */
 const boneFistLocal = () =>
@@ -154,6 +157,8 @@ export default defineAsset({
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      weapon: { parent: 'hand.R', at: GUARD },
+      shield: { parent: 'forearm.L', at: SHIELD_C },
     });
 
     // ------------------------------------------------------------------ skull
@@ -465,15 +470,15 @@ export default defineAsset({
       .intersect(bevel(-1, -1))
       .round(0.0015)
       .paintWhere(sdf.halfSpace([1, 0, 0], 0), '#c6ccd4');
-    k.body('sword', swordPose(bladeLocal), { color: '#9aa1aa', roughness: 0.4, metalness: 0.8, detail: 0.003, bone: 'hand.R' });
+    k.body('sword', swordPose(bladeLocal), { color: '#9aa1aa', roughness: 0.4, metalness: 0.8, detail: 0.003, bone: 'weapon' });
     const guardLocal = sdf.box([0.11, 0.02, 0.026], 0.008).bend(-4).at(0, 0.0, 0);
     const pommelLocal = sdf.sphere(0.02).at(0, -0.128, 0);
-    k.body('hilt', swordPose(sdf.union(guardLocal, pommelLocal)), { color: C.brass, roughness: 0.35, metalness: 0.85, detail: 0.004, bone: 'hand.R' });
-    k.body('grip', swordPose(sdf.capsule([0, -0.118, 0], [0, -0.005, 0], 0.013)), { color: C.grip, roughness: 0.75, detail: 0.004, bone: 'hand.R' });
+    k.body('hilt', swordPose(sdf.union(guardLocal, pommelLocal)), { color: C.brass, roughness: 0.35, metalness: 0.85, detail: 0.004, bone: 'weapon' });
+    k.body('grip', swordPose(sdf.capsule([0, -0.118, 0], [0, -0.005, 0], 0.013)), { color: C.grip, roughness: 0.75, detail: 0.004, bone: 'weapon' });
 
     // ------------------------------------------------------------------ round shield on the left forearm
     // Local frame: the face toward +Z. Red planks in a steel rim, a steel bar across, a domed boss.
-    const shieldPose = (s: sdf.Shape) => s.rotateY(34).rotateX(-4).at(0.24, 0.3, 0.122);
+    const shieldPose = (s: sdf.Shape) => s.rotateY(34).rotateX(-4).at(...SHIELD_C);
     const plankLines = rgb(C.plank);
     const wood = sdf
       .extrude(shieldRound, 0.026, 0.006)
@@ -481,7 +486,7 @@ export default defineAsset({
     k.body('shield-wood', shieldPose(wood), {
       color: C.wood,
       roughness: 0.8,
-      bone: 'forearm.L',
+      bone: 'shield',
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 12, y * 90, z * 12, 2),
     });
     const rim = sdf.torus(0.15, 0.014).rotateX(90).scale([1, 1, 1.3]);
@@ -493,7 +498,7 @@ export default defineAsset({
       color: C.iron,
       roughness: 0.5,
       metalness: 0.75,
-      bone: 'forearm.L',
+      bone: 'shield',
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 70, y * 70, z * 70, 2),
     });
     // Rivets around the rim and on the bar ends: brass, with the belt buckle.
@@ -505,7 +510,7 @@ export default defineAsset({
       sdf.sphere(0.011).at(0.1, 0, 0.026),
       sdf.sphere(0.011).at(-0.1, 0, 0.026),
     );
-    k.body('brass', sdf.union(buckle.bone('spine'), shieldPose(shieldRivets).bone('forearm.L')), {
+    k.body('brass', sdf.union(buckle.bone('spine'), shieldPose(shieldRivets).bone('shield')), {
       color: C.brass,
       roughness: 0.35,
       metalness: 0.85,
@@ -632,6 +637,152 @@ export default defineAsset({
           'foot.L': { rotate: [-3 * wind + 20 * cut, 0, 0] },
           'leg.R': { rotate: [-3 * wind + 14 * cut, 0, 0] },
           'foot.R': { rotate: [3 * wind - 14 * cut, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a blow from the front
+    // The chest snaps back and the loose skull rattles on its neck bones. The hips give way over the
+    // planted left foot and the right foot steps back, then all returns quickly.
+    const { quat, euler, follow } = motion;
+    const DEG = Math.PI / 180;
+    const SHIN = 0.125; // hip joint to ankle joint, in the Y-Z plane
+    /** The leg angle (degrees) that keeps a foot on its rest spot when the hips move `back` meters. */
+    const plant = (back: number) => Math.asin(Math.max(-1, Math.min(1, back / SHIN))) / DEG;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.3, 0.8], [0.8, 0]] as const);
+        const rattle = keys(p, [[0.06, 0], [0.14, 1], [0.22, -0.8], [0.3, 0.55], [0.38, -0.35], [0.46, 0.18], [0.56, 0]] as const);
+        const lift = keys(p, [[0.04, 0], [0.13, 1], [0.24, 0], [0.5, 0], [0.62, 0.7], [0.74, 0]] as const);
+        const back = 0.03 * h;
+        const lean = plant(back);
+        return {
+          hips: { move: [0, -legDrop(SHIN, lean), -back], rotate: [0, 5 * h, 0] },
+          spine: { rotate: [-6 * h, 0, 0] },
+          chest: { rotate: [-12 * h, 6 * h, 2 * h] },
+          neck: { rotate: [-8 * h + 3 * rattle, 0, 0] },
+          head: { rotate: [-16 * h + 6 * rattle, 8 * rattle, 7 * rattle - 3 * h] },
+          'upperarm.L': { rotate: [-10 * h, 0, 14 * h] },
+          'forearm.L': { rotate: [-10 * h, 0, 0] },
+          'upperarm.R': { rotate: [-4 * h, 0, -12 * h] },
+          'forearm.R': { rotate: [8 * h, 0, 0] },
+          'leg.L': { rotate: [-lean, 0, 0] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'leg.R': { rotate: [lean + 16 * lift, 0, 0] },
+          'foot.R': { rotate: [-lean - 16 * lift, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: a stagger, then a collapse into a heap
+    // The blow snaps the chest back and rattles the skull; the skeleton sways, and its sword hand
+    // sags and lets go. Then the knees buckle: the legs splay out in a V, the hips drop onto them,
+    // and the spine folds forward into a heap. The shield slides off the limp arm, and at last the
+    // skull (with its helmet) topples off the neck and rolls onto its side beside the heap. The
+    // `weapon`, `shield`, and `head` bones are placed in world space under their posed parents.
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    /** 0 to 1 from `a` to `b`, speeding up like a drop. */
+    const fall = (a: number, b: number, x: number) => clamp01((x - a) / (b - a)) ** 2;
+    const TRUNK: readonly V3[] = [[0, 0.2, 0], [0, 0.26, 0], [0, 0.33, 0]]; // hips, spine, chest pivots
+    const NECK_CHAIN: readonly V3[] = [...TRUNK, [0, 0.43, -0.01]];
+    const HEAD_AT: V3 = [0, 0.48, -0.01];
+    const SWORD_CHAIN: readonly V3[] = [...TRUNK, mx(SHOULDER), ELBOW_R, WRIST_R];
+    const SHIELD_CHAIN: readonly V3[] = [...TRUNK, SHOULDER, ELBOW_L];
+    const vec = (a: V3) => new THREE.Vector3(a[0], a[1], a[2]);
+    const arr = (v: THREE.Vector3): V3 => [v.x, v.y, v.z];
+    const chainQ = (rots: readonly V3[]) => rots.reduce((q, r) => q.multiply(quat(r)), new THREE.Quaternion());
+    /** The move and rotate that put a bone's pivot (now at `now`) at `at` with the world turn `turn`. */
+    const place = (parentQ: THREE.Quaternion, now: V3, at: V3, turn: THREE.Quaternion) => {
+      const inv = parentQ.clone().invert();
+      return { move: arr(vec(add(at, now, -1)).applyQuaternion(inv)), rotate: euler(inv.multiply(turn)) };
+    };
+    // Where the items and the skull come to rest.
+    const SWORD_DOWN: V3 = [-0.32, 0.024, 0.32]; // the guard; the blade lies flat, out to the right front
+    const SWORD_TURN = quat(orient([], { dir: GRIP_DIR, up: FLAT }, { dir: norm([-0.7, 0, 0.7]), up: [0, 1, 0] }));
+    const SHIELD_REST = quat([-4, 34, 0]); // shieldPose: rotateY(34), then rotateX(-4)
+    const SHIELD_DOWN: V3 = [0.36, 0.042, -0.27]; // face up, behind the left leg
+    const SHIELD_TURN = quat(
+      orient([], { dir: arr(vec([0, 0, 1]).applyQuaternion(SHIELD_REST)), up: arr(vec([0, 1, 0]).applyQuaternion(SHIELD_REST)) }, { dir: [0, 1, 0], up: norm([0.4, 0, -1]) }),
+    );
+    const SKULL_OFF: V3 = [0, HEAD_Y - HEAD_AT[1], 0.005]; // the skull's center from the head pivot
+    const SKULL_DOWN: V3 = [0.38, 0.26, 0.44]; // on its left side (on the ear boss), in front of the left leg
+    const SKULL_TURN = quat([-12, -25, -78]);
+    const SPLAY = 70; // the legs' final splay, degrees
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.06, 1], [0.16, 0.5], [0.3, 0.15], [0.36, 0]] as const);
+        const rattle = keys(p, [[0.03, 0], [0.08, 1], [0.13, -0.8], [0.18, 0.6], [0.23, -0.35], [0.28, 0.15], [0.33, 0]] as const);
+        const wob = keys(p, [[0.1, 0], [0.2, 1], [0.3, -0.4], [0.36, 0]] as const);
+        const sag = keys(p, [[0.16, 0], [0.32, 1]] as const);
+        // The collapse: the legs splay and the hips drop, faster and faster, to the impact at 0.52.
+        const c = fall(0.3, 0.52, p);
+        const bounce = keys(p, [[0.52, 0], [0.57, 1], [0.63, 0]] as const);
+        const slump = keys(p, [[0.3, 0], [0.46, 0.6], [0.56, 1.12], [0.64, 1]] as const);
+        const phi = SPLAY * c;
+        const back = 0.03 * hitB;
+        const lean = plant(back) * (1 - c);
+        // The hips stay as high as the splayed feet need (the inner edge of each sole on the ground).
+        const hipsY = 0.2 + 0.028 * Math.sin(phi * DEG) + 0.195 * (Math.cos(phi * DEG) - 1) + 0.005 * c;
+        const hipsMove: V3 = [0, hipsY - 0.2 - legDrop(SHIN, lean) + 0.012 * bounce, -back * (1 - c) - 0.015 * c];
+        const hipsR: V3 = [0, 10 * c, 0];
+        const spineR: V3 = [-6 * hitB + 4 * sag + 24 * slump, 0, 5 * wob + 4 * slump];
+        const chestR: V3 = [-12 * hitB + 3 * sag + 22 * slump, 6 * hitB + 6 * slump, 3 * wob + 6 * slump];
+        const neckR: V3 = [-8 * hitB + 3 * rattle + 12 * slump, 0, 0];
+        const headR: V3 = [-18 * hitB + 6 * rattle + 6 * sag + 14 * slump, 8 * rattle, 7 * rattle + 8 * wob - 8 * slump];
+        // Limp arms: they fling in the blow, sag, then hang from the folded chest.
+        const uaL: V3 = [-10 * hitB - 34 * slump, 0, 14 * hitB + 10 * slump];
+        const faL: V3 = [-10 * hitB + 14 * slump, 0, 0];
+        const uaR: V3 = [-4 * hitB - 34 * slump, 0, -12 * hitB - 10 * slump];
+        const faR: V3 = [8 * hitB + 30 * sag, 0, 0];
+        // The sword: the hand opens at 0.34 and the sword drops and lands flat at 0.48.
+        const handRots = [hipsR, spineR, chestR, uaR, faR, [0, 0, 0] as V3];
+        const handQ = chainQ(handRots);
+        const guardNow = add(follow(SWORD_CHAIN, handRots, GUARD), hipsMove);
+        const sw = fall(0.34, 0.48, p);
+        const swT = keys(p, [[0.34, 0], [0.45, 1]] as const);
+        const swB = keys(p, [[0.48, 0], [0.52, 1], [0.56, 0]] as const);
+        const weapon = place(handQ, guardNow, add(lerp(guardNow, SWORD_DOWN, sw), [0, 0.015 * swB, 0]), handQ.clone().slerp(SWORD_TURN, swT));
+        // The shield slides off the limp arm at 0.42 and lands face up at 0.58.
+        const armRots = [hipsR, spineR, chestR, uaL, faL];
+        const armQ = chainQ(armRots);
+        const shieldNow = add(follow(SHIELD_CHAIN, armRots, SHIELD_C), hipsMove);
+        const sh = fall(0.42, 0.58, p);
+        const shT = keys(p, [[0.42, 0], [0.54, 1]] as const);
+        const shB = keys(p, [[0.58, 0], [0.62, 1], [0.66, 0]] as const);
+        const shield = place(armQ, shieldNow, add(lerp(shieldNow, SHIELD_DOWN, sh), [0, 0.012 * shB, 0]), armQ.clone().slerp(SHIELD_TURN, shT));
+        // The skull topples off the neck at 0.6, lands on its side at 0.76, and rocks to a stop.
+        const neckRots = [hipsR, spineR, chestR, neckR];
+        const neckQ = chainQ(neckRots);
+        const headNow = add(follow(NECK_CHAIN, neckRots, HEAD_AT), hipsMove);
+        const heldQ = neckQ.clone().multiply(quat(headR));
+        const off = fall(0.6, 0.76, p);
+        const offT = keys(p, [[0.6, 0], [0.76, 1]] as const);
+        const rock = keys(p, [[0.76, 0], [0.81, 1], [0.87, -0.45], [0.93, 0.15], [0.98, 0]] as const);
+        const turnH = heldQ.clone().slerp(quat([6 * rock, 0, 0]).multiply(SKULL_TURN), offT);
+        const skullNow = add(headNow, arr(vec(SKULL_OFF).applyQuaternion(heldQ)));
+        const skullAt = add(lerp(skullNow, SKULL_DOWN, off), [0, 0.07 * Math.sin(Math.PI * clamp01((p - 0.6) / 0.16)), 0]);
+        const head = place(neckQ, headNow, add(skullAt, arr(vec(SKULL_OFF).applyQuaternion(turnH)), -1), turnH);
+        return {
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          neck: { rotate: neckR },
+          head,
+          'upperarm.L': { rotate: uaL },
+          'forearm.L': { rotate: faL },
+          'upperarm.R': { rotate: uaR },
+          'forearm.R': { rotate: faR },
+          weapon,
+          shield,
+          // The legs splay out and forward in a V; the feet stay flat through the stagger.
+          'leg.L': { rotate: [-lean, -28 * c, phi] },
+          'leg.R': { rotate: [-lean, 28 * c, -phi] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'foot.R': { rotate: [lean, 0, 0] },
         };
       },
     });
