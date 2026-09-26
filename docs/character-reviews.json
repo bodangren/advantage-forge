@@ -745,7 +745,7 @@
     "reviewedAt": "2026-09-26T20:59:08+00:00"
   },
   "skeleton-archer": {
-    "overall": 7.6,
+    "overall": 7.8,
     "group": "Enemies",
     "scores": {
       "mockup": 3,
@@ -760,22 +760,22 @@
       "sprite": 3,
       "motion": 4
     },
-    "summary": "The bow shot now draws to the jaw. The draw hand stops at the right side of the hood, at jaw height, above the mantle collar. The forearm lies level along the arrow line, and the elbow is high and back. The check passes (result ok, ground ok), and the draw, the hold, and the release have no body clips.",
+    "summary": "The shot now shows the face and the high draw elbow. The mantle caps follow the upper arms through two mantle bones, so the raised arms lift them. The collar and the panels stay on the chest, and the mantle at rest looks the same. The arrow line points 30 degrees left of front and 9 degrees down, so the bow fist is lower and apart from the draw hand. The check passes (result ok, ground ok).",
     "strengths": [
-      "The draw hand comes to the right jaw (ANCHOR y = 0.46 m), and the forearm lies along the arrow line, level with the arrow.",
-      "The draw, the hold, and the release have no body clips: the wraps stay out of the ribs, and the hand and the bracer stay out of the mantle.",
-      "The shot keeps all its parts: the nock, the hold with a tremble, the string snap at the release, the follow-through past the jaw, and the recovery."
+      "At full draw, the front view shows the whole face. The bow fist is below the jaw, and the draw hand shows beside it at the jaw.",
+      "The mantle caps lift with the upper arms, so the upper arm and the elbow of the draw arm show above the mantle hem in the back views.",
+      "In the death, the mantle caps go back to the chest while the arms fall off, so the mantle does not stretch to the ground."
     ],
     "issues": [
-      "In the front view, the bow arm crosses in front of the face and hides the draw hand. The mantle does not lift with the arm, so the upper arm and the high elbow go into the mantle and do not show.",
-      "In the reach to the quiver, the red wraps go 0.9 cm into the mantle at phase 0.04-0.08 and 0.23-0.30. Small old lines remain: the hand 0.4 cm into the cloak, the arrow 0.3 cm into the quiver, the string 0.4 cm into the cloak at phase 0.91.",
-      "The model differs from the mockup: the bow is a thin, upright stick, not a recurve across the body. The teeth are still one block with cut lines. At 128 px, the back and side sprites show only the hood and the quiver."
+      "The model differs from the mockup: the bow is a thin, upright stick, not a recurve across the body. The teeth are still one block with cut lines.",
+      "In the front view the draw hand is small: the red fletching and the wraps show, but the finger bones are mostly behind the fletching. In the nock (phase 0.3), the upper bow limb crosses the right cheek.",
+      "The red wraps go 0.8 cm into the mantle at phase 0.29-0.30. Small old lines remain: the wraps and the hand 0.4 cm into the cloak, and the arrow 0.3 cm into the quiver."
     ],
     "next": [
       "Give the skull separate teeth and make the bow a recurve, as the mockup shows.",
-      "Keep the red wraps out of the mantle hem in the reach to the quiver, and let the mantle show the raised draw arm."
+      "Keep the red wraps out of the mantle hem at phase 0.29-0.30, and keep the upper bow limb off the cheek in the nock."
     ],
-    "reviewedAt": "2026-09-26T19:31:46+00:00"
+    "reviewedAt": "2026-09-26T21:10:17+00:00"
   },
   "giant-rat": {
     "overall": 8,

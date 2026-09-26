@@ -211,6 +211,11 @@ export default defineAsset({
       // The shot arrow's bone is in the right hand; its mesh rests in the quiver, and each clip
       // places it (in the quiver, in the fingers, or in flight).
       arrow: { parent: 'hand.R', at: PINCH },
+      // The shoulder caps of the mantle, on the shoulder joints. Each clip copies the upper arm's
+      // pose to its cap, so a raised arm lifts the cap like a pauldron. They are separate bones
+      // (not the upper arm tags) because the arms fall off in the death and the mantle stays on.
+      'mantle.L': { parent: 'chest', at: SHOULDER },
+      'mantle.R': { parent: 'chest', at: mx(SHOULDER) },
     });
 
     // ------------------------------------------------------------------ skull (the skeleton warrior's)
@@ -430,7 +435,22 @@ export default defineAsset({
       .subtract(tears(7, 0.374, 1))
       .smoothSubtract(0.012, chestWindow)
       .paintWhere(sdf.halfSpace([0, 1, 0], 0.405), C.hoodDark, 0.025);
-    k.body('mantle', mantle.bone('chest'), { color: C.hood, roughness: 0.9, bump: weave });
+    // Skinned, not rigid: the cap over each shoulder follows its mantle bone (the upper arm's pose),
+    // so a raised arm lifts it instead of going into it. The collar and the front and back panels
+    // stay on the chest. A band around the cap is in both tagged parts, so it takes half of each
+    // bone and the cloth stretches over a wide band. Each tagged part is a piece of the mantle
+    // itself (each side cut on its own, not mirrored, because the tears differ on each side), and
+    // the union with the whole mantle keeps the surface exactly as it was.
+    const CAP_AT: V3 = [0.19, 0.4, 0];
+    const capZone = sdf.ellipsoid([0.07, 0.085, 0.08]).at(...CAP_AT);
+    const bandZone = (s: 1 | -1) => sdf.ellipsoid([0.1, 0.115, 0.115]).at(CAP_AT[0] * s, CAP_AT[1], CAP_AT[2]);
+    const mantleSkin = sdf.union(
+      mantle,
+      mantle.intersect(bandZone(1)).bone('mantle.L'),
+      mantle.intersect(bandZone(-1)).bone('mantle.R'),
+      mantle.subtract(hard(capZone)).bone('chest'),
+    );
+    k.body('mantle', mantleSkin, { color: C.hood, roughness: 0.9, bump: weave });
 
     // ------------------------------------------------------------------ cloak (behind; frames the bones)
     const cloakSolid = sdf
@@ -690,8 +710,11 @@ export default defineAsset({
     // The pinch at full draw: just below and in front of the right jaw corner (the head is turned
     // 42 degrees to the target), above the mantle collar and clear of the hood's cheek.
     const ANCHOR: V3 = [-0.04, 0.46, 0.228];
-    const AIM = norm([0.85, 0.02, 0.52]); // in the world: ahead and a little to the left
-    const REST_PT = add(ANCHOR, scl(AIM, 0.12)); // where the arrow lies on the bow hand
+    // The arrow line, in the world: ahead, 30 degrees to the left and 9 degrees down. The bow hand
+    // is out to the left of the draw hand and a little lower, so in the front view the bow arm
+    // passes below the jaw and the draw hand shows at the jaw beside the bow fist.
+    const AIM = toChest(norm([0.494, -0.156, 0.855]));
+    const REST_PT = add(ANCHOR, scl(AIM, 0.135)); // where the arrow lies on the bow hand
     const BOW_AT = add(REST_PT, [0, -0.018, 0]); // the grip at full aim
     const BOW_REST = { dir: bowDir([0, 1, 0]), up: bowDir([0, 0, 1]) }; // the limbs, and the back of the bow
     const HAND_R_REST = { dir: DIR_R, up: [0, 0, 1] as V3 };
@@ -717,10 +740,20 @@ export default defineAsset({
       const inv = q.clone().invert();
       return { move: turnBy(inv, sub(at, pivot)), rotate: euler(inv.multiply(rw)) };
     };
+    type Pose = Record<string, { rotate?: readonly number[]; move?: readonly number[] }>;
+    // Each mantle cap copies its upper arm's pose (scaled by `w`: the death lets the caps go back
+    // to the chest while the arms fall off).
+    const capes = <P extends Pose>(pose: P, w = 1) => {
+      const cap = (s: 'L' | 'R') => {
+        const a = pose[`upperarm.${s}`];
+        return { rotate: slerpRot(Z3, (a?.rotate ?? Z3) as V3, w), move: scl((a?.move ?? Z3) as V3, w) };
+      };
+      return { ...pose, 'mantle.L': cap('L'), 'mantle.R': cap('R') };
+    };
     // Keeps the shot arrow in the quiver while the right arm moves (for every other clip).
-    const inQuiver = (pose: Record<string, { rotate?: readonly number[]; move?: readonly number[] }>) => {
+    const inQuiver = (pose: Pose, capeWeight = 1) => {
       const r = (b: string) => (pose[b]?.rotate ?? Z3) as V3;
-      return { ...pose, arrow: arrowPose([r('upperarm.R'), r('forearm.R'), r('hand.R')], (pose['upperarm.R']?.move ?? Z3) as V3, ARROW_NOCK, ARROW_DIR) };
+      return capes({ ...pose, arrow: arrowPose([r('upperarm.R'), r('forearm.R'), r('hand.R')], (pose['upperarm.R']?.move ?? Z3) as V3, ARROW_NOCK, ARROW_DIR) }, capeWeight);
     };
     // The bow arm: solve the wrist so the grip lands at `grip`, with the bow turned to `want`.
     const bowArm = (grip: V3, want: { dir: V3; up: V3 }, shoulder: V3, weight: number) => {
@@ -822,7 +855,7 @@ export default defineAsset({
           scl([0.022, 0, 0.01], clear),
         );
         // The bow is canted: its top leans to the archer's right, so the string clears the face.
-        const cant = keys(p, [[0.3, 0.1], [0.38, -0.42], [0.85, -0.42], [0.9, 0.6], [1, 0.6]] as const);
+        const cant = keys(p, [[0.3, 0.1], [0.38, -0.5], [0.85, -0.5], [0.9, 0.6], [1, 0.6]] as const);
         const bowWant = { dir: toChest(norm([cant, 1, 0])), up: AIM };
         const bow = bowArm(bowAt, bowWant, shL, ease(0.05, 0.36, p) * (1 - ease(0.84, 1, p)));
         const handL: V3 = add(bow.hand, [kick * -6, 0, 0]);
@@ -885,7 +918,7 @@ export default defineAsset({
         const nockAt = add(add(scl(ARROW_NOCK, 1 - taken), scl(pinchNow, taken)), scl(dir, 0.8 * flown));
         const arrow = p >= 0.9 || taken === 0 ? arrowPose([armR.upper, armR.lower, handR], shR, ARROW_NOCK, ARROW_DIR) : arrowPose([armR.upper, armR.lower, handR], shR, nockAt, norm(add(scl(ARROW_DIR, 1 - taken), scl(dir, taken))));
         const shown = inFlight ? 0.001 : 1;
-        return {
+        return capes({
           hips: { move: [0, -0.006 * aim, 0], rotate: [0, -30 * turn, 0] },
           spine: { rotate: [0, -10 * turn, 0] },
           chest: { rotate: [-2 * aim + 0.4 * tremble - 3 * kick, -5 * turn, 0] },
@@ -906,7 +939,7 @@ export default defineAsset({
           'leg.R': { rotate: [5 * turn, 10 * turn, -4 * turn] },
           'foot.L': { rotate: [6 * turn, 14 * turn, 0] },
           'foot.R': { rotate: [-5 * turn, 12 * turn, 0] },
-        };
+        });
       },
     });
 
@@ -1014,7 +1047,7 @@ export default defineAsset({
           'leg.R': { rotate: [keys(p, [[0, 0], [0.34, 0], [0.5, -14], [1, -16]] as const), 0, keys(p, [[0, 0], [0.34, 0], [0.5, -68], [0.56, -62], [1, -64]] as const)] },
           'foot.L': { rotate: [keys(p, [[0, 0], [0.38, 0], [0.54, 16], [1, 16]] as const), 0, keys(p, [[0, 0], [0.38, 0], [0.54, -40], [1, -40]] as const)] },
           'foot.R': { rotate: [keys(p, [[0, 0], [0.38, 0], [0.54, 10], [1, 10]] as const), 0, keys(p, [[0, 0], [0.38, 0], [0.54, 40], [1, 40]] as const)] },
-        });
+        }, 1 - off);
       },
     });
   },
