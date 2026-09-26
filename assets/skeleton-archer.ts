@@ -752,7 +752,9 @@ export default defineAsset({
 
     // The bow arm swings less than the free arm and lifts out from the body (`lift`, degrees),
     // so the lower bow tip clears the ground and the boot while the hips drop at each step.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, lift: number) => ({
+    // The lift also tilts the upper bow limb in toward the hood, so the hand turns back by the
+    // lift plus `tiltOut` degrees (a negative `tiltOut` keeps some of the inward tilt).
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, lift: number, tiltOut: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -773,15 +775,16 @@ export default defineAsset({
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.15, 0, 0] as const },
           // The bow hand turns against the arm swing, so the bow stays upright and off the hood.
-          'hand.L': { rotate: [-(armSwing * 0.35 * s - armSwing * 0.15), 0, -lift * 0.3] as const },
+          'hand.L': { rotate: [-(armSwing * 0.35 * s - armSwing * 0.15), 0, -(lift + tiltOut)] as const },
           'forearm.R': { rotate: [-armSwing * 0.4 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
           // The loose hand flops a beat late.
           'hand.R': { rotate: [8 * wave(p, 1, 0.2), 0, 0] as const },
         });
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 12));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 18));
+    // The walk keeps its old tilt (-lift * 0.3); the run turns the bow 6 degrees further out.
+    k.animation('walk', stride(0.9, 26, 28, 3, 0, 12, -8.4));
+    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 18, -6.6));
 
     // ------------------------------------------------------------------ attack: a real bow shot, solved by targets
     // Plan (in the chest's rest frame): the archer turns side-on (the bow shoulder toward the
@@ -806,7 +809,12 @@ export default defineAsset({
         const shL: V3 = scl([0.0, 0.01, 0.03], aim);
         const shR: V3 = add(scl([0, 0.012, -0.035], keys(p, [[0, 0], [0.12, 1], [0.24, 0.5], [0.42, 0], [0.56, 1], [0.8, 1], [1, 0]] as const)), [0, 0, 0]);
         // ---- the bow arm
-        const bowAt = keys(p, [[0, GRIP], [0.2, add(GRIP, [0.04, 0.06, 0.05])], [0.38, BOW_AT], [RELEASE, BOW_AT], [RELEASE + 0.05, add(BOW_AT, [0.015, -0.01, 0.02])], [0.82, add(BOW_AT, [0.01, -0.02, 0.01])], [0.86, add(BOW_AT, [0.02, -0.16, 0.0])], [0.91, toChest([0.28, 0.24, 0.16])], [0.95, add(GRIP, [0.05, -0.03, 0.02])], [1, GRIP]] as const);
+        // In the recovery the bow swings past the side of the hood; `clear` holds it out from the hood.
+        const clear = keys(p, [[0.83, 0], [0.88, 1], [0.94, 0]] as const);
+        const bowAt = add(
+          keys(p, [[0, GRIP], [0.2, add(GRIP, [0.04, 0.06, 0.05])], [0.38, BOW_AT], [RELEASE, BOW_AT], [RELEASE + 0.05, add(BOW_AT, [0.015, -0.01, 0.02])], [0.82, add(BOW_AT, [0.01, -0.02, 0.01])], [0.86, add(BOW_AT, [0.02, -0.16, 0.0])], [0.91, toChest([0.28, 0.24, 0.16])], [0.95, add(GRIP, [0.05, -0.03, 0.02])], [1, GRIP]] as const),
+          scl([0.022, 0, 0.01], clear),
+        );
         // The bow is canted: its top leans to the archer's right, so the string clears the face.
         const cant = keys(p, [[0.3, 0.1], [0.38, -0.42], [0.85, -0.42], [0.9, 0.6], [1, 0.6]] as const);
         const bowWant = { dir: toChest(norm([cant, 1, 0])), up: AIM };
@@ -976,7 +984,8 @@ export default defineAsset({
         const handFrame = fk([HIPS_AT, SPINE_AT, CHEST_AT, SHOULDER, ELBOW_L], [hipsR, spineR, chestR, armLRot, foreLRot], [hipsMove, Z3, Z3, armLMove, Z3], WRIST_L);
         const bowLoose = keys(p, [[0, 0], [0.34, 0], [0.5, 1], [1, 1]] as const);
         const bowPivot = sub(keys(p, [[0.34, add(BOW_GROUND, [0, 0.2, 0])], [0.5, BOW_GROUND], [0.55, add(BOW_GROUND, [0, 0.025, 0])], [0.6, BOW_GROUND], [1, BOW_GROUND]] as const), turnBy(BOW_FLAT, sub(GRIP, WRIST_L)));
-        const handL = release(handFrame, quat([keys(p, [[0, 0], [0.1, -10], [0.34, -6]] as const), 0, 0]), bowPivot, BOW_FLAT, bowLoose);
+        // In the stagger the bow hand turns against the arm's outward lift, so the bow leans off the hood.
+        const handL = release(handFrame, quat([keys(p, [[0, 0], [0.1, -10], [0.34, -6]] as const), 0, keys(p, [[0, 0], [0.1, -6], [0.34, -4]] as const)]), bowPivot, BOW_FLAT, bowLoose);
         // The right arm drops off and lies on the ground at the right side, out and back, clear of
         // the skull that rolls to the front right.
         const armRRot: V3 = [keys(p, [[0, 0], [0.1, 12], [0.4, 0], [0.54, 18], [1, 20]] as const), keys(p, [[0, 0], [0.4, 0], [0.54, 36], [1, 40]] as const), keys(p, [[0, 0], [0.1, -22], [0.4, -8], [0.54, -26], [0.62, -18], [1, -20]] as const)];
