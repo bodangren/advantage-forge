@@ -935,8 +935,11 @@ export default defineAsset({
         // along his body toward the feet (chest -Y) with its flat facing the sky (chest -Z).
         const upperR: V3 = [-24 * hitB - 20 * sag * (1 - fall) - 30 * fall, 0, -30 * sag - 8 * fall];
         const lowerR: V3 = [-20 * sag * (1 - fall) - 10 * fall, 0, 0];
+        // Mid-fall the blade points almost straight down; tip it out to his right for a moment
+        // so the point touches the floor and does not go into it.
+        const tipOut = keys(p, [[0.36, 0], [0.48, 1], [0.6, 0]] as const, 'smooth');
         const handR = orient([upperR, lowerR], BLADE, {
-          dir: norm(lerp(lerp(BLADE_DIR, [0, -0.2, 1], 0.6 * sag), [-0.25, -1, 0.1], fall)),
+          dir: norm(lerp(lerp(lerp(BLADE_DIR, [0, -0.2, 1], 0.6 * sag), [-0.25, -1, 0.1], fall), [-1, -0.2, 0.1], 0.3 * tipOut)),
           up: norm(lerp(FLAT, [0, 0.1, -1], fall)),
         });
         return {
