@@ -592,5 +592,38 @@
       "Make the horns 20 percent thicker at the root."
     ],
     "reviewedAt": "2026-09-26T06:06:30+00:00"
+  },
+  "blacksmith": {
+    "overall": 8.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "The blacksmith matches the mmx mockup: a burly smith with a black beard and a red bandana, a leather bib apron with brass rings and a buckled belt, big leather gloves, and a hammer resting on his shoulder.",
+    "strengths": [
+      "The red bandana and black beard frame a friendly face that reads at 128 px in every direction.",
+      "The bib apron with straps, brass rings, and buckle reads as a smith's apron at once.",
+      "The work clip lifts the hammer and brings it down in front, onto an unseen anvil."
+    ],
+    "issues": [
+      "He uses the rogue's large head, so he is less burly than the mockup, where the body is bigger than the head.",
+      "The short hair at the back of the head is one plain black mass.",
+      "In the work clip, the wind-up hides the hammer behind the head, so the lift reads weakly."
+    ],
+    "next": [
+      "Make the chest and arms 10 percent bigger, so he reads as the strongest villager.",
+      "Raise the hammer higher in the wind-up of the work clip."
+    ],
+    "reviewedAt": "2026-09-26T08:30:00+00:00"
   }
 }
