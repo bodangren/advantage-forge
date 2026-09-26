@@ -652,7 +652,7 @@
     "reviewedAt": "2026-09-26T08:38:25+00:00"
   },
   "guard": {
-    "overall": 7.5,
+    "overall": 8,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -667,22 +667,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The town guard matches the mmx mockup: a round steel kettle helmet with a crest, a big brown mustache, a sky-blue tabard with a gold tower and gold trim over mail, steel pauldrons and gauntlets, and a spear with a teal pennant.",
+    "summary": "The town guard matches the mmx mockup: a steel kettle helmet with a crest, a big brown mustache, a sky-blue tabard with a gold tower over mail, steel pauldrons and gauntlets, and a spear with a teal swallowtail pennant. It has idle, walk, run, a spear thrust attack, hit, death, and a fist-to-chest salute.",
     "strengths": [
-      "The helmet, mustache, and spear with a pennant make a clear watchman silhouette in every sprite direction.",
-      "The blue tabard with the gold tower and trim reads as a town livery, and it differs from the knight's red.",
-      "The spear thrust levels the spear and drives it forward; the pennant flutters in the walk."
+      "The smaller helmet shows the eyes and the mustache, and the face reads in the S, SW, and SE sprites.",
+      "The swallowtail pennant hangs down along the haft as in the mockup, and it hangs below the level spear in the thrust.",
+      "The thrust pulls the spear back, then drives it forward level at chest height, holds it, and returns it upright."
     ],
     "issues": [
-      "The helmet sits lower than in the mockup, and the hair locks under the brim cover the top of the eyes.",
-      "From above, the big steel dome hides the face in the sprites.",
-      "The mockup pennant hangs down along the haft. The model pennant sticks out to the side."
+      "The mockup has a large round nose and a mustache with tips that curl up. The model nose is small, and the mustache is flat and wide.",
+      "The steel is bright polished silver, but the mockup steel is a darker gunmetal. The tabard is lighter than the teal blue of the mockup.",
+      "The spearhead is a wide leaf blade. The mockup spearhead is a thin spike."
     ],
     "next": [
-      "Make the helmet dome 10 percent smaller, so more of the face shows.",
-      "Hang the pennant down and let the walk lift it."
+      "Make the nose larger and rounder, and curl the mustache tips up.",
+      "Darken the steel toward gunmetal, and move the tabard color toward the teal blue of the mockup."
     ],
-    "reviewedAt": "2026-09-26T08:44:15+00:00"
+    "reviewedAt": "2026-09-26T15:06:14+00:00"
   },
   "skeleton-mage": {
     "overall": 8,
