@@ -160,7 +160,7 @@
     "reviewedAt": "2026-09-26T12:11:20+00:00"
   },
   "druid": {
-    "overall": 7.5,
+    "overall": 8,
     "scores": {
       "mockup": 3,
       "silhouette": 5,
@@ -169,29 +169,27 @@
       "color": 4,
       "materials": 4,
       "detail": 3,
-      "technical": 4,
+      "technical": 5,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The druid reads as the mushroom girl at once. The spotted cap, the basket, the potion, and the lantern staff all match the mockup.",
+    "summary": "The druid reads as the mushroom girl at once. The spotted cap, the basket, the potion, and the lantern staff match the mockup. All clips pass the check with no staff contact on the dress or the head.",
     "strengths": [
-      "The spotted cap is a strong and unique silhouette in every view.",
-      "The basket of mushrooms fills the back view, and the lantern swings on its own bone.",
-      "The fine hair and the cap gills are in the normal map, so the model stays light."
+      "The large spotted cap with the cream rim is a strong and unique silhouette in every view and sprite.",
+      "In death, the staff lies flat on the ground in front of her. In victory, it stands upright at her left side.",
+      "The fine hair and the cap gills are in the normal map, so the mesh stays smooth."
     ],
     "issues": [
-      "The cap is smaller and flatter than in the mockup, where it is very large and shows a wide cream underside.",
-      "The hair is a straight bob with even bangs. The mockup hair is short and messy.",
-      "The front is plain. The mockup has belt pouches, small potions, and a clover emblem on the apron.",
-      "In the side sprite, the cap hides the face."
+      "The staff is thin and straight. The mockup staff is thick and gnarled, with a large lantern on a hook.",
+      "The front has one small potion at the hip. The mockup has belt pouches and more potion bottles.",
+      "In the W and E sprites, the cap hides the face."
     ],
     "next": [
-      "Make the cap 15 percent larger and tilt it back so that the underside shows.",
-      "Break the bangs into uneven locks.",
-      "Add the belt pouches and a potion at the hip."
+      "Make the staff thicker and more gnarled, and make the lantern larger.",
+      "Add the belt pouches and two small potion bottles at the hip."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T14:44:49+00:00"
   },
   "adventurer": {
     "overall": 8.5,

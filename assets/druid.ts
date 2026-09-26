@@ -1054,24 +1054,28 @@ export default defineAsset({
       const rots = [b.hipsR, b.spineR, b.chestR];
       const cf = chestFrame(rots, b.hipsMove);
       const shoulder = add(follow([HIPS_AT, SPINE_AT, CHEST_AT], rots, SHOULDER), b.hipsMove);
-      const wrist: V3 = [shoulder[0] + 0.06, 0.08, shoulder[2] + 0.17];
+      // Low and forward, so the staff lies flat in front of the skirt; its lower end reaches past
+      // the hem toward her feet, and its top passes in front of the cap's rim.
+      const wrist: V3 = [shoulder[0] + 0.03, 0.058, shoulder[2] + 0.18];
       return {
         wrist: cf.point(wrist),
-        dir: norm(cf.dir(norm([0.9, 0.07, 0.42]))),
+        dir: norm(cf.dir(norm([0.95, 0.06, 0.25]))),
         up: norm(cf.dir(norm([0.3, 0, 1]))),
         pole: cf.point(add(shoulder, [0.1, 0.05, 0.08])),
       };
     })();
+    // While she falls, the staff stays upright and forward, so its lower end stays under the hem
+    // and in front of it (never in the skirt); it swings down to the ground only as she lands.
     const deathWrist = [
       [0, WRIST_L],
-      [0.2, [0.285, 0.34, 0.1]],
-      [0.46, [0.28, 0.33, 0.18]],
+      [0.2, [0.285, 0.37, 0.13]],
+      [0.46, [0.28, 0.4, 0.19]],
       [0.7, deathEnd.wrist],
     ] as const;
     const deathDir = [
       [0, STAFF_AXIS],
-      [0.2, norm([0.42, 0.85, 0.3])],
-      [0.46, norm([0.6, 0.45, 0.66])],
+      [0.2, norm([0.35, 0.92, 0.1])],
+      [0.46, norm([0.35, 0.9, 0.18])],
       [0.7, deathEnd.dir],
     ] as const;
     const deathUp = [
@@ -1132,10 +1136,12 @@ export default defineAsset({
       [0.2, [0.28, 0.47, 0.1]],
       [1, [0.28, 0.475, 0.1]],
     ] as const;
+    // The staff stands almost upright out at her left side: a steeper lean would swing its lower
+    // end into the skirt.
     const vicDir = [
       [0, STAFF_AXIS],
-      [0.2, norm([0.5, 0.75, 0.43])],
-      [1, norm([0.5, 0.76, 0.41])],
+      [0.2, norm([0.18, 0.95, 0.3])],
+      [1, norm([0.18, 0.95, 0.29])],
     ] as const;
     const vicPole = [
       [0, POLE_L],
@@ -1153,7 +1159,8 @@ export default defineAsset({
         const wrist = keys(p, vicWrist);
         const arm = reach(ARM_L, wrist, keys(p, vicPole));
         const elbow = follow([SHOULDER], [arm.upper], ELBOW_L);
-        const fist = norm(lerp(FIST_L, norm(sub(wrist, elbow)), up));
+        // The fist bends halfway to the forearm, so the lantern branch points out, clear of the cap.
+        const fist = norm(lerp(FIST_L, norm(sub(wrist, elbow)), 0.5 * up));
         const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: norm(keys(p, vicDir)), up: fist });
         const hipsR: V3 = [0, 0, 0];
         const spineR: V3 = [-4 * up, 0, 2 * up];
