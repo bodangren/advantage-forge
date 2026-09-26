@@ -69,7 +69,15 @@ const ELBOW_L: V3 = [0.175, 0.335, 0];
 const WRIST_L: V3 = [0.2, 0.29, 0.085];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
-const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
+// Rest points on the flat bottom of the left sabaton (y = 0): heel, toe, inner and outer side.
+// The toe turns out 12 degrees, so the toe point sits outboard of the heel.
+const SOLE: readonly V3[] = [
+  [0.096, 0, -0.01],
+  [0.118, 0, 0.092],
+  [0.074, 0, 0.026],
+  [0.136, 0, 0.034],
+];
+const mx =(p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 
 // Rotations for points, matching the shape methods (degrees, world axes).
@@ -694,9 +702,19 @@ export default defineAsset({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const legL: V3 = [-legSwing * s, 0, 0];
+        const legR: V3 = [legSwing * s, 0, 0];
+        // Heel strike in front, toe-off behind.
+        const footL: V3 = [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0];
+        const footR: V3 = [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0];
+        // The hips drop until the lowest heel or toe touches the ground.
+        const drop = motion.plant([
+          { joints: [HIP, ANKLE], rotations: [legL, footL], sole: SOLE },
+          { joints: [mx(HIP), mx(ANKLE)], rotations: [legR, footR], sole: SOLE.map(mx) },
+        ]);
         return {
           hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
+            move: [0, drop + hop * bump(p, 2, 0.25), 0] as const,
             rotate: [0, 7 * s, 0] as const,
           },
           spine: { rotate: [lean, 0, 0] as const },
@@ -704,10 +722,10 @@ export default defineAsset({
           head: { rotate: [-lean, 4 * s, 0] as const },
           plume: { rotate: [flow * 0.5 + 5 * wave(p, 2, 0.2), 0, 4 * wave(p, 2, 0.1)] as const },
           cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
+          'leg.L': { rotate: legL },
+          'leg.R': { rotate: legR },
+          'foot.L': { rotate: footL },
+          'foot.R': { rotate: footR },
           'upperarm.L': { rotate: [armSwing * 0.15 * s + shield[0], 0, 3] as const },
           'forearm.L': { rotate: [shield[1], 0, 0] as const },
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -6] as const },
