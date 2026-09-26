@@ -236,8 +236,9 @@ export default defineAsset({
       .at(EYE[0], EYE[1], faceZ(EYE[0], EYE[1]) + 0.004)
       .smoothIntersect(0.008, socketTop);
     const sockets = pair(socketL);
-    const noseZ = faceZ(0, 0.568);
-    const noseHole = pair(sdf.ellipsoid([0.013, 0.022, 0.03]).rotateZ(-24).at(0.011, 0.566, noseZ + 0.01));
+    // The nose sits a little higher than the teeth, with a bridge of bone between them.
+    const noseZ = faceZ(0, 0.59);
+    const noseHole = pair(sdf.ellipsoid([0.013, 0.022, 0.03]).rotateZ(-24).at(0.011, 0.588, noseZ + 0.01));
     const browRidge = pair(
       sdf.capsule(
         [EYE[0] + 0.05, EYE[1] + 0.052, faceZ(EYE[0] + 0.05, EYE[1] + 0.052) - 0.012],
@@ -246,13 +247,22 @@ export default defineAsset({
       ),
     );
     const skull = skullSolid.smoothUnion(0.02, browRidge).smoothSubtract(0.01, sockets).smoothSubtract(0.004, noseHole);
-    const TEETH_Y = 0.535;
-    const mouthLine = sdf.extrude(profile.rect([0.15, 0.009], 0.004), 0.4).at(0, TEETH_Y, 0.2);
-    const gap = (x: number, y: number) => sdf.extrude(profile.rect([0.007, 0.03], 0.002), 0.4).at(x, y, 0.2);
-    const gaps = sdf.union(
-      ...[-0.054, -0.018, 0.018, 0.054].map((x) => gap(x, TEETH_Y + 0.018)),
-      ...[-0.036, 0, 0.036].map((x) => gap(x, TEETH_Y - 0.017)),
-    );
+    // The grin: two rows of separate rounded teeth in a dark mouth. The front of the teeth block
+    // is cut back 8 mm and painted dark; each tooth stands on that floor, turned to the skull's
+    // surface, and sticks out 4 mm past the old surface, so the dark gaps show between the teeth.
+    const MOUTH_RECESS = 0.008;
+    const mouthBox = sdf.box([0.16, 0.075, 0.2], 0.008).at(0, 0.5315, 0.16);
+    const tooth = (x: number, y: number, w: number, h: number) => {
+      const s = sdf.raycast(skullSolid, [x, y, 1], [0, 0, -1])!;
+      const n = sdf.normalAt(skullSolid, s);
+      const yaw = (Math.atan2(n[0], n[2]) * 180) / Math.PI;
+      const pitch = (-Math.atan2(n[1], Math.hypot(n[0], n[2])) * 180) / Math.PI;
+      const c = add(s, scl(n, -0.007));
+      return sdf.box([w, h, 0.022], 0.0055).rotateX(pitch * 0.5).rotateY(yaw).at(...c);
+    };
+    const toothRow = (y: number, pitch: number, w: number, h: number) =>
+      [-3.5, -2.5, -1.5, -0.5, 0.5, 1.5, 2.5, 3.5].map((i) => tooth(i * pitch, y, w, h));
+    const teeth = sdf.union(...toothRow(0.551, 0.019, 0.0152, 0.03), ...toothRow(0.5135, 0.0175, 0.014, 0.028));
     const neckBones = sdf.union(
       ...[0.44, 0.47, 0.5].map((y) => sdf.cylinder(0.036, 0.022, 0.008).at(0, y, -0.015)),
       sdf.cylinder(0.026, 0.1, 0.006).at(0, 0.47, -0.015),
@@ -319,18 +329,23 @@ export default defineAsset({
 
     const bone = sdf
       .union(
-        skull.bone('head'),
-        neckBones.bone('neck'),
-        chestBones.bone('chest'),
-        lumbar.bone('spine'),
-        armBones,
-        legBones,
+        sdf
+          .union(
+            skull
+              .smoothSubtract(0.003, mouthBox.subtract(skullSolid.round(-MOUTH_RECESS)))
+              .paintWhere(mouthBox, C.socket, 0.002)
+              .bone('head'),
+            neckBones.bone('neck'),
+            chestBones.bone('chest'),
+            lumbar.bone('spine'),
+            armBones,
+            legBones,
+          )
+          .paintWhere(sockets.round(0.012), C.boneShade, 0.012)
+          .paintWhere(sockets.round(0.002), C.socket, 0.004)
+          .paintWhere(noseHole.round(0.003), C.socket, 0.003),
+        teeth.bone('head'), // unpainted: the teeth keep the light bone color
       )
-      .paintWhere(sockets.round(0.012), C.boneShade, 0.012)
-      .paintWhere(sockets.round(0.002), C.socket, 0.004)
-      .paintWhere(noseHole.round(0.003), C.socket, 0.003)
-      .paintWhere(mouthLine, C.socket, 0.002)
-      .paintWhere(gaps.intersect(sdf.box([0.15, 0.07, 0.4]).at(0, TEETH_Y, 0.2)), C.socket, 0.002)
       .paintFn((x, y, z, base) => {
         // Faint age stains.
         const n = noise.fbm(x * 22, y * 22, z * 22, 2);
@@ -651,25 +666,31 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ recurve bow in the left hand (the goblin archer's)
     // Local frame: grip at the origin, limbs along Y, the back of the bow toward +Z, the string
-    // behind it at -Z. Each limb bends back toward the string, then the tip curls forward.
-    const limb = (len: number, sign: 1 | -1) =>
-      sdf.chain(
+    // behind it at -Z. Each limb bends back toward the string (its back touches the string only
+    // at the nock, 0.9 of the limb length), then the tip curls forward past the grip line into a
+    // hook. The limbs are thick (chunky enough to read at 128 px); the grip keeps the fist's size.
+    // `curl` scales the hook: the lower limb is shorter, so its hook is smaller.
+    const limb = (len: number, sign: 1 | -1, curl: number) => {
+      const n = 0.9 * len; // the nock
+      return sdf.chain(
         [
-          [0, 0, 0, 0.019],
-          [0, 0.22 * len * sign, -0.007, 0.0152],
-          [0, 0.48 * len * sign, -0.03, 0.013],
-          [0, 0.72 * len * sign, -0.056, 0.011],
-          [0, 0.88 * len * sign, -0.066, 0.0096],
-          [0, 0.97 * len * sign, -0.052, 0.0088],
-          [0, 1.02 * len * sign, -0.026, 0.0082],
-          [0, 1.03 * len * sign, 0.0, 0.0076],
-          [0, 1.015 * len * sign, 0.02, 0.0072],
+          [0, 0, 0, 0.02],
+          [0, 0.22 * len * sign, -0.006, 0.0225],
+          [0, 0.48 * len * sign, -0.026, 0.0195],
+          [0, 0.72 * len * sign, -0.045, 0.0165],
+          [0, n * sign, -0.058, 0.0144],
+          [0, (n + 0.022 * curl) * sign, -0.05 * curl - 0.008 * (1 - curl), 0.0132],
+          [0, (n + 0.038 * curl) * sign, -0.028 * curl, 0.0123],
+          [0, (n + 0.045 * curl) * sign, 0.0, 0.0115],
+          [0, (n + 0.043 * curl) * sign, 0.026 * curl, 0.011],
+          [0, (n + 0.034 * curl) * sign, 0.046 * curl, 0.0108],
         ],
-        0.01,
+        0.012,
       );
+    };
     const UPPER = 0.31;
     const LOWER = 0.2;
-    const bowLocal = sdf.union(limb(UPPER, 1), limb(LOWER, -1)).paintWhere(sdf.box([0.1, 0.085, 0.1]), C.bowGrip);
+    const bowLocal = sdf.union(limb(UPPER, 1, 1), limb(LOWER, -1, 0.75)).paintWhere(sdf.box([0.1, 0.085, 0.1]), C.bowGrip);
     const nockTop: V3 = [0, 0.9 * UPPER, -0.072];
     const nockBottom: V3 = [0, -0.9 * LOWER, -0.072];
     // The back of the bow faces out (+X), so the front view shows the whole curve.
