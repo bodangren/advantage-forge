@@ -21,7 +21,7 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  * Bodies: skin, hair (hair, brows, mustache), helmet, mail, tabard, gold, pauldrons, gauntlets,
  *   belt, trousers, boots, spear-haft, spear-head, flag.
  * Rig: the rogue's skeleton plus `pennant`; the spear is rigid on `hand.R`. Clips: idle, walk,
- *   run, attack (a spear thrust).
+ *   run, attack (a spear thrust), hit, death (falls on his back), salute (a villager greeting).
  */
 
 const C = {
@@ -612,6 +612,206 @@ export default defineAsset({
           'leg.R': { rotate: [legR, 0, 0] },
           'foot.L': { rotate: [-legL, 0, 0] },
           'foot.R': { rotate: [-legR, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit, death, salute
+    // Shared by the one-shot clips: joints, the chest's rest frame for a body pose (where `reach`
+    // works), world points on a bone chain, and the pennant's world orientation.
+    const ARM_CHAIN_R = [HIPS, SPINE, CHEST, mx(SHOULDER), ELBOW_R, WRIST_R] as const;
+    const FIST_L: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.04, WRIST_L[2] + 0.004]; // the left fist's center
+    const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: FIST_L }; // to the fist; the hand stays in line
+    const clamp1 = (v: number) => Math.max(-1, Math.min(1, v));
+    const toChestOf = (lift: V3, rh: V3, rs: V3, rc: V3) => {
+      const at = add(lift, follow([HIPS, SPINE, CHEST], [rh, rs, rc], CHEST));
+      const undo = euler(quat(rh).multiply(quat(rs)).multiply(quat(rc)).invert());
+      return (w: V3): V3 => add(CHEST, turn([undo], sub(w, at)));
+    };
+    const worldOf = (lift: V3, joints: readonly V3[], rotations: readonly V3[], point: V3): V3 => add(lift, follow(joints, rotations, point));
+    const flagTo = (parents: readonly V3[], dir: V3, up: V3) => orient(parents, { dir: PEN_DIR, up: PEN_FACE }, { dir, up });
+    const swing = (trail: number) => (v: V3) => turn([[trail, 0, 0]], v);
+
+    // Hit: a blow from the front snaps the head and the chest back; the right foot takes a small
+    // step back, and all returns quickly. The hand keeps the spear near upright, tipped out to the
+    // right, away from the helmet; the pennant hangs in the world frame and swings.
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.15, 1], [0.32, 0.8], [1, 0]] as const);
+        const step = keys(p, [[0, 0], [0.1, 0], [0.3, 1], [0.6, 1], [1, 0]] as const);
+        const hipZ = -0.022 * h - 0.012 * step;
+        const footR = -0.05 * step;
+        const legL = -Math.asin(clamp1(-hipZ / LEG)) / DEG;
+        const legR = -Math.asin(clamp1((footR - hipZ) / LEG)) / DEG;
+        const lift: V3 = [0, -Math.min(legDrop(LEG, legL), legDrop(LEG, legR)), hipZ];
+        const rh: V3 = [0, 5 * h, 0];
+        const rs: V3 = [-7 * h, 0, 0];
+        const rc: V3 = [-9 * h, 6 * h, 3 * h];
+        const upper: V3 = [-6 * h, 0, -10 * h];
+        const lower: V3 = [-8 * h, 0, 0];
+        const chain = [rh, rs, rc, upper, lower];
+        const hand = orient(chain, { dir: SPEAR_DIR, up: FINGERS }, { dir: unit(add(SPEAR_DIR, [-0.12 * h, 0, 0.04 * h])), up: FINGERS });
+        const hang = swing(keys(p, [[0, 0], [0.14, -22], [0.34, 14], [0.56, -8], [0.8, 3], [1, 0]] as const, 'spline'));
+        return {
+          hips: { move: lift, rotate: rh },
+          spine: { rotate: rs },
+          chest: { rotate: rc },
+          neck: { rotate: [-5 * h, 0, 0] },
+          head: { rotate: [-13 * h, -6 * h, -5 * h] },
+          'upperarm.R': { rotate: upper },
+          'forearm.R': { rotate: lower },
+          'hand.R': { rotate: hand },
+          pennant: { rotate: flagTo([...chain, hand], hang(PEN_DIR), hang(PEN_FACE)) },
+          'upperarm.L': { rotate: [-16 * h, 0, 22 * h] },
+          'forearm.L': { rotate: [-22 * h, 0, 0] },
+          'leg.L': { rotate: [legL, 0, 0] },
+          'leg.R': { rotate: [legR, 0, 0] },
+          'foot.L': { rotate: [-legL, 0, 0] },
+          'foot.R': { rotate: [-legR, 0, 0] },
+        };
+      },
+    });
+
+    // Death: the blow snaps the head and the chest back, the guard staggers a step back and sags,
+    // then falls on his back with a small bounce. The big helmet props the head, so the body ends
+    // tilted 80 degrees with the helmet and the tabard on the ground. The spear falls back with him
+    // and lies beside his right side, its head past the helmet; the pennant lies flat beside it.
+    const TILT = 80;
+    const DROP = 0.048; // the hips joint ends 0.152 above the ground
+    const BACK_Z = -0.17;
+    const endLift: V3 = [0, -DROP, BACK_Z];
+    const shEndR = worldOf(endLift, [HIPS, SPINE, CHEST], [[-TILT, 0, 0], O, O], mx(SHOULDER));
+    const shEndL = worldOf(endLift, [HIPS, SPINE, CHEST], [[-TILT, 0, 0], O, O], SHOULDER);
+    const WRIST_END_R: V3 = [shEndR[0] - 0.1, 0.058, shEndR[2] + 0.02];
+    const FIST_END_L: V3 = [shEndL[0] + 0.1, 0.05, shEndL[2] + 0.06];
+    const SPEAR_LIE = unit([-0.12, (0.029 - (WRIST_END_R[1] + 0.014)) / 0.76, -1]); // the rings touch the ground
+    const FLAG_LIE = unit([-1, -0.12, 0.25]);
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.07, 1], [0.2, 0.35], [0.3, 0]] as const);
+        const sag = keys(p, [[0.08, 0], [0.32, 1]] as const);
+        const stepR = keys(p, [[0.1, 0], [0.26, 1]] as const);
+        const fall = keys(p, [[0.3, 0], [0.64, 1], [0.7, 0.955], [0.78, 1]] as const);
+        const f2 = fall * fall;
+        const stand = 1 - f2;
+        const armFall = keys(p, [[0.4, 0], [0.72, 1]] as const); // the arm lowers
+        const tip = keys(p, [[0.3, 0], [0.64, 1]] as const); // the spear tips back first, so its butt rises
+        // Standing, the feet stay down (the right one steps back); lying, the end pose.
+        const hipZ = -0.025 * hitB - 0.03 * sag;
+        const stL = -Math.asin(clamp1(-hipZ / LEG)) / DEG;
+        const stR = -Math.asin(clamp1((-0.06 * stepR - hipZ) / LEG)) / DEG;
+        const drop = Math.min(legDrop(LEG, stL), legDrop(LEG, stR)) + 0.012 * sag;
+        const lift: V3 = [0, -drop * stand - DROP * f2, hipZ * stand + BACK_Z * f2];
+        const tilt = 4 * sag * stand - TILT * f2;
+        const rh: V3 = [tilt, 6 * sag * stand, 0];
+        const rs: V3 = [-8 * hitB + 6 * sag * stand, 0, 0];
+        const rc: V3 = [-10 * hitB + 8 * sag * stand, 0, 3 * sag * stand];
+        const toChest = toChestOf(lift, rh, rs, rc);
+
+        // The spear arm lowers in the stagger and lies out on the ground at the end.
+        const wristR = lerp(lerp(WRIST_R, [-0.25, 0.325, 0.06], sag), toChest(WRIST_END_R), armFall);
+        const armR = reach(ARM_R, wristR, lerp(ELBOW_R, [-0.45, 0.33, -0.05], armFall));
+        const chainR = [rh, rs, rc, armR.upper, armR.lower];
+        const carry = turn([rh, rs, rc], unit(lerp(SPEAR_DIR, [-0.45, 0.85, 0.2], sag)));
+        const dir = unit(lerp(carry, SPEAR_LIE, tip));
+        const up = unit(lerp(turn([rh, rs, rc], FINGERS), [0, 1, 0], tip));
+        const hand = orient(chainR, { dir: SPEAR_DIR, up: FINGERS }, { dir, up });
+        // The pennant swings while the tie is high and lies flat once it nears the ground.
+        const tie = worldOf(lift, ARM_CHAIN_R, [...chainR, hand], PENNANT_AT);
+        const flat = Math.min(1, Math.max(0, (0.27 - tie[1]) / 0.2));
+        const hang = swing((1 - flat) * keys(p, [[0, 0], [0.08, -18], [0.22, 12], [0.34, -6], [0.5, 22], [0.66, 0]] as const, 'spline'));
+        const flagDir = unit(lerp(hang(PEN_DIR), FLAG_LIE, flat * flat * (3 - 2 * flat)));
+        const flagUp = unit(lerp(hang(PEN_FACE), [0, 1, 0], flat * flat * (3 - 2 * flat)));
+        // The free arm flies up in the blow, out in the stagger, and lies on the ground.
+        const fistL = lerp(add(lerp(FIST_L, [0.27, 0.3, 0.1], sag), [0, 0.04 * hitB, 0.03 * hitB]), toChest(FIST_END_L), armFall);
+        const armL = reach(ARM_L, fistL, lerp(ELBOW_L, [0.45, 0.33, -0.05], armFall));
+        // A leg swings forward until its boot (heel or toe) clears the ground at the current hip height.
+        const legWorld = (st: number, end: number) => {
+          const foot = -st * stand + 10 * f2;
+          let a = st * stand + end * f2;
+          for (let i = 0; i < 90; i++) {
+            const b = (a + foot) * DEG;
+            const low = 0.195 + lift[1] - 0.125 * Math.cos(a * DEG) - 0.07 * Math.cos(b) - Math.max(-0.05 * Math.sin(b), 0.1 * Math.sin(b));
+            if (low >= 0.004) break;
+            a -= 1;
+          }
+          return a;
+        };
+        const legL = legWorld(stL, -62);
+        const legR = legWorld(stR, -57);
+        return {
+          hips: { move: lift, rotate: rh },
+          spine: { rotate: rs },
+          chest: { rotate: rc },
+          neck: { rotate: [-6 * hitB + 6 * sag * stand, 0, 0] },
+          head: { rotate: [-14 * hitB + 10 * sag * stand - 16 * fall * stand, -26 * fall, 0] },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: hand },
+          pennant: { rotate: flagTo([...chainR, hand], flagDir, flagUp) },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          // The legs lie forward along the ground, a little apart; the toes turn up.
+          'leg.L': { rotate: [legL - tilt, 0, 7 * f2] },
+          'leg.R': { rotate: [legR - tilt, 0, -7 * f2] },
+          'foot.L': { rotate: [-stL * stand + 10 * f2, 0, 0] },
+          'foot.R': { rotate: [-stR * stand + 10 * f2, 0, 0] },
+        };
+      },
+    });
+
+    // Salute: a fist to the heart. The guard stands straight, lifts the spear upright and plants it
+    // beside his right side, and strikes the left fist to the left of his chest, over the heart,
+    // with the elbow out. He holds it, gives a small nod, and returns to rest. The arm solves by
+    // `reach` to a chest point it can reach; no bone scales.
+    const HEART_X = 0.05;
+    const HEART_Y = 0.35;
+    const chestFront = sdf.raycast(sdf.union(tabardBase.round(0.01), emblem), [HEART_X, HEART_Y, 1], [0, 0, -1])![2];
+    const HEART: V3 = [HEART_X, HEART_Y, chestFront + 0.052]; // the fist's center, its knuckles on the chest
+    const ELBOW_OUT: V3 = [0.5, 0.46, -0.04]; // the pole: the elbow goes out to the side
+    k.animation('salute', {
+      duration: 1.1,
+      loop: false,
+      pose: (_t, p) => {
+        const up = keys(p, [[0, 0], [0.16, 1], [0.84, 1], [1, 0]] as const);
+        const hop = keys(p, [[0.06, 0], [0.15, 1], [0.22, 0]] as const);
+        const thump = keys(p, [[0.2, 0], [0.23, 1], [0.32, 0]] as const);
+        const raise = keys(p, [[0.18, 0], [0.4, 1], [0.76, 1], [0.95, 0]] as const);
+        const strike = keys(p, [[0.36, 0], [0.4, 1], [0.5, 0]] as const); // the fist meets the chest
+        const nod = keys(p, [[0.48, 0], [0.56, 1], [0.66, 0]] as const);
+        const lift: V3 = [0, 0.004 * up - 0.004 * thump, 0];
+        const rs: V3 = [-2 * up + 1.5 * strike, 0, 0];
+        const rc: V3 = [-3 * up - 2.5 * strike, 0, 0];
+        const toChest = toChestOf(lift, O, rs, rc);
+        // The spear: upright, lifted a hand's width, and planted.
+        const armR = reach(ARM_R, toChest(add(WRIST_R, [0.004 * up, 0.035 * hop, 0])), ELBOW_R);
+        const chainR = [O, rs, rc, armR.upper, armR.lower];
+        const hand = orient(chainR, { dir: SPEAR_DIR, up: FINGERS }, { dir: unit(lerp(SPEAR_DIR, [0, 1, 0], up)), up: FINGERS });
+        const hang = swing(keys(p, [[0, 0], [0.15, 8], [0.24, -20], [0.36, 12], [0.5, -6], [0.66, 3], [1, 0]] as const, 'spline'));
+        // The left fist: from its rest up and forward, clear of the tabard, to the heart. The target
+        // is in the chest's rest frame, so the fist stays on the chest as the chest moves.
+        const fist = add(lerp(FIST_L, HEART, raise), mul([0.02, 0, 0.05], Math.sin(Math.PI * raise)));
+        const armL = reach(ARM_L, fist, lerp(ELBOW_L, ELBOW_OUT, raise));
+        return {
+          hips: { move: lift },
+          spine: { rotate: rs },
+          chest: { rotate: rc },
+          head: { rotate: [-3 * up + 8 * nod, 0, 0] },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: hand },
+          pennant: { rotate: flagTo([...chainR, hand], hang(PEN_DIR), hang(PEN_FACE)) },
+          'upperarm.L': { rotate: armL.upper },
+          'forearm.L': { rotate: armL.lower },
+          // Heels together.
+          'leg.L': { rotate: [0, 0, -3 * up] },
+          'leg.R': { rotate: [0, 0, 3 * up] },
+          'foot.L': { rotate: [0, 0, 3 * up] },
+          'foot.R': { rotate: [0, 0, -3 * up] },
         };
       },
     });
