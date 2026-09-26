@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Skeleton mage — Chibi Quest dungeon enemy (catalog `enemies/undead/skeleton-mage`), about 1.02 m
@@ -20,8 +20,10 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   point; the two purple flames at the sides are the second accents.
  * Bodies: bone, wax, wick, candle-fire, eyes, robe, sash, satchel, staff, lantern-frame,
  *   lantern-light, palm-fire.
- * Rig: the rogue's skeleton plus `lantern`; the staff is rigid on `hand.L`. Clips: idle, walk (a
- *   gliding shuffle), run, attack (a spell cast).
+ * Rig: the rogue's skeleton plus `weapon` (the staff, rigid under `hand.L`), `lantern` (under it),
+ *   the two flames `candle` (under `head`) and `palmfire` (under `hand.R`), so clips can drop the
+ *   staff and put the flames out. Clips: idle, walk (a gliding shuffle), run, attack (a spell
+ *   cast), hit, death (the robe crumples into a heap, the staff falls, the skull rolls off).
  */
 
 const C = {
@@ -167,9 +169,12 @@ export default defineAsset({
     const STAFF_TOP = 0.9;
     const HOOK: V3 = [GRIP[0] + 0.11, STAFF_TOP + 0.02, GRIP[2]];
     const LANTERN: V3 = [HOOK[0], HOOK[1] - 0.14, HOOK[2]];
+    const WICK_TOP: V3 = [0, 0.975, -0.01];
+    const CANDLE_FIRE: V3 = [WICK_TOP[0], WICK_TOP[1] - 0.016, WICK_TOP[2]]; // the candle flame's base
+    const PALM: V3 = [WRIST_R[0] - 0.05, WRIST_R[1] + 0.02, WRIST_R[2] + 0.006]; // the palm flame's base
 
     // ------------------------------------------------------------------ skeleton (rig)
-    k.skeleton({
+    const RIG: Record<string, { parent?: string; at: V3; tail?: V3 }> = {
       hips: { at: [0, 0.2, 0] },
       spine: { parent: 'hips', at: [0, 0.26, 0] },
       chest: { parent: 'spine', at: [0, 0.33, 0] },
@@ -178,7 +183,10 @@ export default defineAsset({
       'upperarm.L': { parent: 'chest', at: SHOULDER },
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
-      lantern: { parent: 'hand.L', at: HOOK, tail: LANTERN },
+      weapon: { parent: 'hand.L', at: GRIP },
+      lantern: { parent: 'weapon', at: HOOK, tail: LANTERN },
+      candle: { parent: 'head', at: CANDLE_FIRE },
+      palmfire: { parent: 'hand.R', at: PALM },
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
@@ -186,7 +194,8 @@ export default defineAsset({
       'foot.L': { parent: 'leg.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
-    });
+    };
+    k.skeleton(RIG);
 
     // ------------------------------------------------------------------ skull
     // A boxy cranium (it carries a candle), wide cheekbones, and a narrower block of teeth.
@@ -292,10 +301,10 @@ export default defineAsset({
       .smoothUnion(0.02, candle, pool, drips, candleDrips)
       .paintWhere(sdf.halfSpace([0, 1, 0], 0.8).intersect(sdf.cylinder(0.3, 1).at(0, 0.5, 0)), C.waxShade, 0.03);
     k.body('wax', wax.bone('head'), { color: C.wax, roughness: 0.35, textureDensity: 1.5 });
-    const WICK_TOP: V3 = [0, 0.975, -0.01];
     k.body('wick', sdf.capsule([0, 0.93, -0.01], WICK_TOP, 0.007).bone('head'), { color: C.wick, roughness: 0.8, detail: 0.003 });
-    const candleFlame = flame(0.15).at(WICK_TOP[0], WICK_TOP[1] - 0.016, WICK_TOP[2]);
-    k.body('candle-fire', candleFlame.paintFn(flamePaint([WICK_TOP[0], WICK_TOP[1] - 0.016, WICK_TOP[2]], 0.15, C.fireCore, C.fire)).bone('head'), {
+    const candleFlame = flame(0.15).at(...CANDLE_FIRE);
+    k.body('candle-fire', candleFlame.paintFn(flamePaint(CANDLE_FIRE, 0.15, C.fireCore, C.fire)), {
+      bone: 'candle',
       color: C.fire,
       roughness: 0.4,
       emissive: '#ff5a14',
@@ -433,7 +442,7 @@ export default defineAsset({
     const staff = sdf
       .smoothUnion(0.012, sdf.chain(staffPts, 0.02), crook, twist)
       .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 12, z * 90, 2) > 0.25 ? rgb(C.woodDark) : base));
-    k.body('staff', staff, { color: C.wood, roughness: 0.8, bone: 'hand.L', bump: (x, y, z) => 0.0012 * noise.fbm(x * 160, y * 25, z * 160, 2) });
+    k.body('staff', staff, { color: C.wood, roughness: 0.8, bone: 'weapon', bump: (x, y, z) => 0.0012 * noise.fbm(x * 160, y * 25, z * 160, 2) });
     const lanternFrame = sdf
       .union(
         sdf.cylinder(0.036, 0.014, 0.004).at(0, 0.036, 0), // cap
@@ -456,9 +465,9 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ the purple flame over the open right hand
-    const PALM: V3 = [WRIST_R[0] - 0.05, WRIST_R[1] + 0.02, WRIST_R[2] + 0.006];
     const palmFlame = flame(0.17).at(...PALM);
-    k.body('palm-fire', palmFlame.paintFn(flamePaint(PALM, 0.17, C.purpleCore, C.purple)).bone('hand.R'), {
+    k.body('palm-fire', palmFlame.paintFn(flamePaint(PALM, 0.17, C.purpleCore, C.purple)), {
+      bone: 'palmfire',
       color: C.purple,
       roughness: 0.3,
       emissive: C.purple,
@@ -582,6 +591,189 @@ export default defineAsset({
           'foot.L': { rotate: [-legA, 0, 0] },
           'foot.R': { rotate: [-legA, 0, 0] },
         };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: a blow from the front
+    // The chest snaps back and the loose skull rattles on its neck; the candle flame gutters and
+    // flares, the robe jolts, and the lantern swings. The staff and the palm flame stay in the
+    // hands. Then all returns quickly.
+    const { quat, euler } = motion;
+    const DEG = Math.PI / 180;
+    const SHIN = HIP[1] - ANKLE[1]; // hip joint to ankle joint
+    /** The leg angle (degrees) that keeps a foot on its rest spot when the hips move `back` meters. */
+    const plantLean = (back: number) => Math.asin(Math.max(-1, Math.min(1, back / SHIN))) / DEG;
+    k.animation('hit', {
+      duration: 0.4,
+      loop: false,
+      pose: (_t, p) => {
+        const h = keys(p, [[0, 0], [0.14, 1], [0.3, 0.8], [0.8, 0]] as const);
+        const rattle = keys(p, [[0.06, 0], [0.14, 1], [0.22, -0.8], [0.3, 0.55], [0.38, -0.35], [0.46, 0.18], [0.56, 0]] as const);
+        const jolt = keys(p, [[0.06, 0], [0.18, 1], [0.32, -0.6], [0.46, 0.3], [0.6, -0.1], [0.72, 0]] as const);
+        const flick = keys(p, [[0.04, 1], [0.1, 0.45], [0.16, 1.3], [0.24, 0.7], [0.32, 1.15], [0.44, 0.9], [0.58, 1]] as const);
+        const back = 0.025 * h;
+        const lean = plantLean(back);
+        const fw = 0.7 + 0.3 * flick;
+        return {
+          hips: { move: [0, -legDrop(SHIN, lean), -back], rotate: [0, 4 * h, 0] },
+          spine: { rotate: [-4 * h + 2 * jolt, 0, 3 * jolt] },
+          chest: { rotate: [-10 * h, 5 * h, 2 * h] },
+          neck: { rotate: [-8 * h + 3 * rattle, 0, 0] },
+          head: { rotate: [-16 * h + 6 * rattle, 8 * rattle, 7 * rattle - 3 * h] },
+          candle: { scale: [fw, flick, fw] },
+          lantern: { rotate: [-16 * jolt, 0, 8 * jolt] },
+          // The staff arm holds the staff near upright and tilts it out, away from the skull.
+          'upperarm.L': { rotate: [5 * h, 0, -4 * h] },
+          'forearm.L': { rotate: [3 * h, 0, 0] },
+          'upperarm.R': { rotate: [-4 * h, 0, -12 * h] },
+          'forearm.R': { rotate: [8 * h, 0, 0] },
+          palmfire: { scale: [1 - 0.1 * rattle, 1 + 0.15 * rattle, 1 - 0.1 * rattle] },
+          'leg.L': { rotate: [-lean, 0, 0] },
+          'leg.R': { rotate: [-lean, 0, 0] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'foot.R': { rotate: [lean, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: a stagger, then a heap of robe and bones
+    // The blow snaps the chest back and rattles the skull, and the palm flame sputters out. The hand
+    // lets the staff go: it topples out to the left front and lands flat, the lantern on its side
+    // beside it. The robe crumples into a heap (the spine squashes; the chest scales back, so all
+    // above it keeps its shape), the legs fold forward under it, and the arms sprawl. At last the
+    // skull with its candle topples off to the right, rolls onto its side, and the candle goes out.
+    // The `weapon` (staff) and `head` bones are placed in world space under their posed parents.
+    type Pose = Record<string, { move?: V3; rotate?: V3; scale?: V3 }>;
+    const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
+    /** 0 to 1 from `a` to `b`, speeding up like a drop. */
+    const fall = (a: number, b: number, x: number) => clamp01((x - a) / (b - a)) ** 2;
+    const vec = (a: V3) => new THREE.Vector3(a[0], a[1], a[2]);
+    const arr = (v: THREE.Vector3): V3 => [v.x, v.y, v.z];
+    const offsetOf = (name: string): V3 => {
+      const b = RIG[name]!;
+      const pa: V3 = b.parent ? RIG[b.parent]!.at : [0, 0, 0];
+      return [b.at[0] - pa[0], b.at[1] - pa[1], b.at[2] - pa[2]];
+    };
+    /** A bone's world matrix in a pose, by the rig's rule: rest offset plus move, then rotate, then scale. */
+    const worldOf = (name: string, pose: Pose): THREE.Matrix4 => {
+      const bp = pose[name] ?? {};
+      const o = offsetOf(name);
+      const m = bp.move ?? [0, 0, 0];
+      const local = new THREE.Matrix4().compose(vec([o[0] + m[0], o[1] + m[1], o[2] + m[2]]), quat(bp.rotate ?? [0, 0, 0]), vec(bp.scale ?? [1, 1, 1]));
+      const parent = RIG[name]!.parent;
+      return parent ? worldOf(parent, pose).multiply(local) : local;
+    };
+    /** Where a point bound to bone `name` (given in rest world meters) is in a pose. */
+    const pointOf = (name: string, pose: Pose, pt: V3): V3 => {
+      const at = RIG[name]!.at;
+      return arr(vec([pt[0] - at[0], pt[1] - at[1], pt[2] - at[2]]).applyMatrix4(worldOf(name, pose)));
+    };
+    const turnOf = (name: string, pose: Pose) => {
+      const q = new THREE.Quaternion();
+      worldOf(name, pose).decompose(new THREE.Vector3(), q, new THREE.Vector3());
+      return q;
+    };
+    /** The move and rotate that put bone `name`'s pivot at `at` with the world turn `turn`. */
+    const placeAt = (name: string, pose: Pose, at: V3, turn: THREE.Quaternion) => {
+      const local = worldOf(RIG[name]!.parent!, pose).invert().multiply(new THREE.Matrix4().compose(vec(at), turn, new THREE.Vector3(1, 1, 1)));
+      const pos = new THREE.Vector3();
+      const q = new THREE.Quaternion();
+      local.decompose(pos, q, new THREE.Vector3());
+      const o = offsetOf(name);
+      return { move: [pos.x - o[0], pos.y - o[1], pos.z - o[2]] as V3, rotate: euler(q) };
+    };
+    const turned = (v: V3, q: THREE.Quaternion) => arr(vec(v).applyQuaternion(q));
+    const plus = (a: V3, b: V3, s = 1): V3 => [a[0] + b[0] * s, a[1] + b[1] * s, a[2] + b[2] * s];
+    // Where the staff comes to rest: flat on the floor, out to the left front, the crook flat.
+    const STAFF_FOOT: V3 = [GRIP[0] - 0.004, 0.02, GRIP[2] + 0.006]; // the bottom end of the staff
+    const LIE_D = unit([0.75, 0, 0.66]);
+    const LIE_U = unit([0.66, 0, -0.75]);
+    const STAFF_TURN = quat(orient([], { dir: [0, 1, 0], up: [1, 0, 0] }, { dir: LIE_D, up: LIE_U }));
+    const FOOT_DOWN: V3 = [0.31, 0.031, 0.13]; // keeps the staff's axis about 3.6 cm up (vines 2.8 cm)
+    // The lantern lies on its side next to the crook, tilted up so its rim clears the floor.
+    const lh = unit([-LIE_D[0] + 0.3 * LIE_U[0], 0, -LIE_D[2] + 0.3 * LIE_U[2]]);
+    const TILT = 16 * DEG;
+    const LANTERN_TURN = quat(
+      orient([], { dir: [0, -1, 0], up: [1, 0, 0] }, { dir: [lh[0] * Math.cos(TILT), Math.sin(TILT), lh[2] * Math.cos(TILT)], up: [-lh[2], 0, lh[0]] }),
+    );
+    const LANTERN_REST = STAFF_TURN.clone().invert().multiply(LANTERN_TURN); // its rotate under the lying staff
+    // Where the skull comes to rest: on its left side, to the right, the candle pointing out.
+    const SKULL_C: V3 = [0, HEAD_Y + 0.03, -0.005];
+    const SKULL_DOWN: V3 = [-0.54, 0.21, 0.02];
+    const SKULL_TURN = quat([-12, 25, 78]);
+    const HEAP = { y: 0.5, xz: 0.3 }; // the robe's squash: height lost, width gained
+    k.animation('death', {
+      duration: 1.4,
+      loop: false,
+      pose: (_t, p) => {
+        const hitB = keys(p, [[0, 0], [0.06, 1], [0.16, 0.5], [0.3, 0.15], [0.36, 0]] as const);
+        const rattle = keys(p, [[0.03, 0], [0.08, 1], [0.13, -0.8], [0.18, 0.6], [0.23, -0.35], [0.28, 0.15], [0.33, 0]] as const);
+        const wob = keys(p, [[0.1, 0], [0.2, 1], [0.3, -0.4], [0.36, 0]] as const);
+        const sag = keys(p, [[0.16, 0], [0.32, 1]] as const);
+        // The palm flame sputters and goes out; the candle gutters in the blow.
+        const pf = keys(p, [[0, 1], [0.05, 1.3], [0.1, 0.55], [0.15, 0.8], [0.22, 0.25], [0.28, 0]] as const);
+        const cf = keys(
+          p,
+          [[0, 1], [0.05, 0.5], [0.1, 1.3], [0.16, 0.7], [0.24, 1.15], [0.32, 1], [0.62, 1], [0.68, 0.6], [0.74, 1.1], [0.82, 0.85], [0.87, 0.55], [0.91, 0.65], [0.97, 0]] as const,
+        );
+        // The collapse: the robe crumples, faster and faster, to the impact at 0.52, and settles.
+        const c = fall(0.3, 0.52, p);
+        const sq = c + 0.12 * keys(p, [[0.52, 0], [0.57, 1], [0.64, 0]] as const);
+        const sy = 1 - HEAP.y * sq;
+        const sxz = 1 + HEAP.xz * sq;
+        const limp = keys(p, [[0.3, 0], [0.46, 0.6], [0.56, 1.12], [0.64, 1]] as const);
+        const back = 0.03 * hitB;
+        const lean = plantLean(back) * (1 - c);
+        // The hem stays on the floor as the robe squashes about the spine pivot (0.24 m above it).
+        const pose: Pose = {
+          hips: { move: [0, 0.24 * (sy - 1) - legDrop(SHIN, lean), -back * (1 - c) + 0.01 * c], rotate: [0, 8 * c, 0] },
+          spine: { rotate: [(-6 * hitB + 3 * sag) * (1 - c), 0, 5 * wob * (1 - c)], scale: [sxz, sy, sxz] },
+          // No chest turn while squashed: its counter-scale then keeps all above it rigid.
+          chest: {
+            rotate: [(-12 * hitB + 3 * sag) * (1 - c), 6 * hitB * (1 - c), 3 * wob * (1 - c)],
+            scale: [1 / sxz, 1 / sy, 1 / sxz],
+            move: [0, (-0.045 * sq) / sy, (0.025 * sq) / sxz],
+          },
+          neck: { rotate: [-8 * hitB + 3 * rattle + 10 * sag, 0, 0] },
+          head: { rotate: [-18 * hitB + 6 * rattle + 6 * sag, 8 * rattle, 7 * rattle + 8 * wob] },
+          candle: { scale: [cf, cf, cf] },
+          palmfire: { scale: [pf, pf, pf] },
+          // The arms fling in the blow, then sprawl out over the heap.
+          'upperarm.L': { rotate: [-6 * hitB - 30 * limp, 0, -4 * hitB + 35 * limp] },
+          'forearm.L': { rotate: [-20 * limp, 0, 0] },
+          'upperarm.R': { rotate: [-4 * hitB - 50 * limp, 0, -12 * hitB + 14 * limp] }, // forward, clear of the skull's path
+          'forearm.R': { rotate: [8 * hitB + 20 * sag - 20 * limp, 0, 0] },
+          // The legs fold forward under the heap; the bony feet poke out, toes up.
+          'leg.L': { rotate: [-lean - 80 * c, -12 * c, 18 * c] },
+          'leg.R': { rotate: [-lean - 80 * c, 12 * c, -18 * c] },
+          'foot.L': { rotate: [lean, 0, 0] },
+          'foot.R': { rotate: [lean, 0, 0] },
+        };
+        // The staff: the hand lets go at 0.28; it topples about its foot and lands flat at 0.5.
+        const sw = fall(0.28, 0.5, p);
+        const swB = keys(p, [[0.5, 0], [0.54, 1], [0.6, 0]] as const);
+        const lw = keys(p, [[0.3, 0], [0.5, 1]] as const);
+        const lb = keys(p, [[0.5, 0], [0.56, 1], [0.64, -0.4], [0.72, 0]] as const);
+        if (p > 0.28) {
+          const heldTurn = turnOf('weapon', pose);
+          const held = pointOf('weapon', pose, STAFF_FOOT);
+          const foot = plus(lerp([held[0], Math.max(STAFF_FOOT[1], held[1]), held[2]], FOOT_DOWN, sw), [0, 0.012 * swB, 0]);
+          const turn = heldTurn.clone().slerp(STAFF_TURN, sw);
+          pose.weapon = placeAt('weapon', pose, plus(foot, turned([GRIP[0] - STAFF_FOOT[0], GRIP[1] - STAFF_FOOT[1], GRIP[2] - STAFF_FOOT[2]], turn)), turn);
+        }
+        pose.lantern = { rotate: euler(quat([-14 * hitB + 10 * wob, 0, 8 * rattle]).slerp(LANTERN_REST, lw).multiply(quat([0, 0, 6 * lb]))) };
+        // The skull topples off the neck at 0.6, lands on its side at 0.76, and rocks to a stop.
+        if (p > 0.6) {
+          const heldTurn = turnOf('head', pose);
+          const skullNow = pointOf('head', pose, SKULL_C);
+          const off = fall(0.6, 0.76, p);
+          const offT = keys(p, [[0.6, 0], [0.76, 1]] as const);
+          const rock = keys(p, [[0.76, 0], [0.81, 1], [0.87, -0.45], [0.93, 0.15], [0.98, 0]] as const);
+          const turnH = heldTurn.clone().slerp(quat([0, 0, -6 * rock]).multiply(SKULL_TURN), offT);
+          const skullAt = plus(lerp(skullNow, SKULL_DOWN, off), [0, 0.12 * Math.sin(Math.PI * clamp01((p - 0.6) / 0.16)), 0]);
+          pose.head = placeAt('head', pose, plus(skullAt, turned([SKULL_C[0] - RIG.head!.at[0], SKULL_C[1] - RIG.head!.at[1], SKULL_C[2] - RIG.head!.at[2]], turnH), -1), turnH);
+        }
+        return pose;
       },
     });
   },
