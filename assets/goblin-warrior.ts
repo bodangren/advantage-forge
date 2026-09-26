@@ -1,4 +1,4 @@
-import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Goblin warrior — Chibi Quest enemy (catalog `enemies/humanoid/goblin-warrior`), about 0.93 m
@@ -575,39 +575,94 @@ export default defineAsset({
     k.animation('walk', stride(0.9, 26, 28, 3, 0));
     k.animation('run', stride(0.56, 40, 50, 12, 0.03));
 
-    // A quick upward jab: wind up (right shoulder back, fist low), lunge and drive the tip forward
-    // and up, hold, then settle back. The wrist turns forward so the tip leads the fist.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    // A sneaky lunge-stab, solved by targets. The wrist follows a path in world space. Each frame
+    // converts it into the chest's rest frame (the hips, spine, and chest turn under the arm),
+    // reach solves the arm, and orient turns the fist so the blade points along the path.
+    // Anticipation: the goblin crouches, coils away, and pulls the dagger back to the right hip
+    // with the point forward. Strike: the right foot steps, the hips drop and drive forward, and
+    // the fist runs straight along the blade's own line to a target at chest height, so the blade
+    // stays parallel to its motion. Recovery: the dagger pulls back along the line, then all
+    // returns to rest. The ears flop late.
+    const { keys, reach, orient, follow, quat } = motion;
+    const DEG = Math.PI / 180;
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const TRUNK: readonly V3[] = [[0, 0.2, 0], [0, 0.27, 0], [0, 0.35, 0]]; // hips, spine, chest pivots
+    const FLAT: V3 = [0, -Math.sin(DAGGER_TILT.x * DEG), Math.cos(DAGGER_TILT.x * DEG)]; // blade flat normal at rest
+    const COCK: V3 = [-0.24, 0.29, -0.06]; // the guard at the right hip, point forward
+    const HIT: V3 = [-0.08, 0.35, 0.335]; // the guard at full extension
+    const AIM = norm([HIT[0] - COCK[0], HIT[1] - COCK[1], HIT[2] - COCK[2]]); // the strike line and the blade
+    // The blade's roll: flat down in the chamber (the fist sits on the hip, the elbow up behind
+    // it), then the fist turns a quarter in the thrust so the flat faces inward.
+    const ROLL_COCK: V3 = [0, -1, 0];
+    const ROLL_HIT: V3 = [1, 0, 0];
+    const GRIP_OFFSET: V3 = [GUARD[0] - WRIST_R[0], GUARD[1] - WRIST_R[1], GUARD[2] - WRIST_R[2]];
+    const POLE_COCK: V3 = [-0.4, 0.3, -0.35]; // the elbow back and out
+    const POLE_HIT: V3 = [-0.42, 0.2, 0.1]; // the elbow out and a little down
+    // The chest's posed frame: world points and directions into the chest's rest frame.
+    const chestFrame = (rots: readonly V3[], move: V3) => {
+      const inv = quat(rots[0]!).multiply(quat(rots[1]!)).multiply(quat(rots[2]!)).invert();
+      const at = follow(TRUNK, rots, TRUNK[2]!);
+      const c = TRUNK[2]!;
+      return {
+        point: (w: V3): V3 => {
+          const v = new THREE.Vector3(w[0] - at[0] - move[0], w[1] - at[1] - move[1], w[2] - at[2] - move[2]).applyQuaternion(inv);
+          return [v.x + c[0], v.y + c[1], v.z + c[2]];
+        },
+        dir: (d: V3): V3 => {
+          const v = new THREE.Vector3(d[0], d[1], d[2]).applyQuaternion(inv);
+          return [v.x, v.y, v.z];
+        },
+      };
     };
     k.animation('attack', {
-      duration: 0.8,
+      duration: 0.75,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.3, p) * (1 - ease(0.3, 0.42, p));
-        const hit = ease(0.3, 0.42, p) * (1 - ease(0.55, 1, p));
-        const flop = ease(0.36, 0.5, p) * (1 - ease(0.6, 1, p)); // the ears lag behind the strike
+        const coil = keys(p, [[0, 0], [0.3, 1], [0.36, 1], [0.46, 0]] as const);
+        const lunge = keys(p, [[0.36, 0], [0.47, 1], [0.6, 1], [0.8, 0.25], [1, 0]] as const);
+        const step = keys(p, [[0.36, 0], [0.42, 1], [0.48, 0]] as const); // the front foot lifts
+        const aim = keys(p, [[0, 0], [0.28, 1], [0.7, 1], [1, 0]] as const); // rest grip to the strike line
+        const ext = keys(p, [[0.28, 0], [0.36, -0.08], [0.47, 1], [0.58, 1], [0.72, 0.5]] as const);
+        const flop = keys(p, [[0.4, 0], [0.54, 1], [0.66, 0.8], [1, 0]] as const); // the ears lag behind
+        // Rigid legs: the left foot stays planted, so its angle sets the hips; the right leg swings
+        // at least as far, so its foot never sinks.
+        const legL = -8 * coil + 20 * lunge;
+        const legR = -8 * coil - 20 * lunge - 8 * step;
+        const hipsMove: V3 = [0, -legDrop(LEG, legL), LEG * Math.sin(legL * DEG)];
+        const hipsR: V3 = [0, -10 * coil + 8 * lunge, 0];
+        const spineR: V3 = [13 * coil + 8 * lunge, -8 * coil + 6 * lunge, 0];
+        const chestR: V3 = [4 * coil + 4 * lunge, -12 * coil + 12 * lunge, 0];
+        const frame = chestFrame([hipsR, spineR, chestR], hipsMove);
+        // The guard runs along the strike line; the wrist follows from the fist's world turn.
+        const guard = lerp(GUARD, lerp(COCK, HIT, ext), aim);
+        const dirW = norm(lerp(GRIP_DIR, AIM, aim));
+        const upW = norm(lerp(FLAT, lerp(ROLL_COCK, ROLL_HIT, Math.min(1, Math.max(0, ext))), aim));
+        const turn = quat(orient([], { dir: GRIP_DIR, up: FLAT }, { dir: dirW, up: upW }));
+        const off = new THREE.Vector3(...GRIP_OFFSET).applyQuaternion(turn);
+        const wrist: V3 = [guard[0] - off.x, guard[1] - off.y, guard[2] - off.z];
+        const pole = lerp(ELBOW_R, keys(p, [[0.1, POLE_COCK], [0.36, POLE_COCK], [0.47, POLE_HIT]] as const), aim);
+        const arm = reach(ARM_R, frame.point(wrist), frame.point(pole));
+        const hand = orient([arm.upper, arm.lower], { dir: GRIP_DIR, up: FLAT }, { dir: frame.dir(dirW), up: frame.dir(upW) });
         return {
-          hips: { move: [0, -legDrop(LEG, 20 * hit) - 0.008 * wind, 0.045 * hit - 0.012 * wind], rotate: [0, -8 * wind + 10 * hit, 0] },
-          spine: { rotate: [-4 * wind + 12 * hit, 0, 0] },
-          chest: { rotate: [0, -18 * wind + 22 * hit, 0] },
-          head: { rotate: [-2 * wind - 6 * hit, 10 * wind - 14 * hit, 0] },
-          'ear.L': { rotate: [0, 12 * flop - 4 * wind, 5 * wind - 6 * flop] },
-          'ear.R': { rotate: [0, -12 * flop + 4 * wind, -5 * wind + 6 * flop] },
+          hips: { move: hipsMove, rotate: hipsR },
+          spine: { rotate: spineR },
+          chest: { rotate: chestR },
+          head: { rotate: [-11 * coil - 8 * lunge, 20 * coil - 16 * lunge, 0] },
+          'ear.L': { rotate: [6 * flop, 12 * flop - 4 * coil, 5 * coil - 6 * flop] },
+          'ear.R': { rotate: [6 * flop, -12 * flop + 4 * coil, -5 * coil + 6 * flop] },
           knot: { rotate: [10 * flop, 0, 6 * flop] },
-          'upperarm.R': { rotate: [30 * wind - 85 * hit, 0, -8 * wind + 6 * hit] },
-          'forearm.R': { rotate: [-30 * wind + 40 * hit, 0, 0] },
-          'hand.R': { rotate: [10 * wind + 55 * hit, 0, 0] },
-          'upperarm.L': { rotate: [-12 * wind + 25 * hit, 0, 12 * hit] },
-          'forearm.L': { rotate: [-10 * wind - 20 * hit, 0, 0] },
-          'leg.R': { rotate: [-20 * hit, 0, 0] },
-          'leg.L': { rotate: [14 * hit, 0, 0] },
-          'foot.R': { rotate: [12 * hit, 0, 0] },
-          'foot.L': { rotate: [-8 * hit, 0, 0] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          // The empty left claw comes up in front in the coil, then swings back for balance.
+          'upperarm.L': { rotate: [-14 * coil + 28 * lunge, 0, 8 * coil + 14 * lunge] },
+          'forearm.L': { rotate: [-24 * coil - 10 * lunge, 0, 0] },
+          'leg.L': { rotate: [legL, 0, 0] },
+          'leg.R': { rotate: [legR, 0, 0] },
+          'foot.L': { rotate: [-legL, 0, 0] },
+          'foot.R': { rotate: [-legR - 10 * step, 0, 0] },
         };
       },
     });
   },
 });
-
