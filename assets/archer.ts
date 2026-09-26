@@ -24,7 +24,8 @@ import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
  *   quiver is on the chest. The string is in two halves on `string.top` and `string.bot`
  *   (children of `bowgrip`), so the draw pulls its middle back. The shot arrow is on `arrow` (in
  *   the right hand); its mesh rests in the quiver, and it shows only in the shot.
- *   Clips: idle, walk, run, attack (nock, draw, loose), hit, death.
+ *   Clips: idle, walk, run, attack (nock, draw, loose), attack2 (a power shot), hit, death,
+ *   victory (the bow held high).
  */
 
 const C = {
@@ -947,6 +948,242 @@ export default defineAsset({
           'leg.R': { rotate: [-lean + legs, 0, -8 * land] },
           'foot.L': { rotate: [lean, 20 * land, 0] },
           'foot.R': { rotate: [lean, -20 * land, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ attack2: a power shot
+    // The attack's shot, deeper and slower. She plants the feet wide and leans back a little,
+    // pushes the bow further out at the target, and draws the string past the jaw, up under the
+    // right ear (below the hood's edge). She holds longer while the limbs bend: the `bowgrip`
+    // bone stretches the bow's depth (world X at rest), so the limbs curve back deeper, and the
+    // string halves follow the bent nocks. On the release the string snaps, the limbs spring
+    // back, the bow kicks forward along the arrow line and tips over in the open hand, and the
+    // recoil pushes her back: the rear (right) foot steps back, the front foot stays planted.
+    // Then she steps back in and returns to rest.
+    const RELEASE2 = 0.72;
+    const DRAW2 = 0.2; // the pinch to the grip along the arrow line at full draw (the attack: 0.135)
+    const ANCHOR2 = add(add(ANCHOR, scl(AIM, -0.035)), [-0.01, 0.004, 0.004]); // back along the arrow line, under the ear
+    const BOW_AT2 = add(add(ANCHOR2, scl(AIM, DRAW2)), [0, -0.012, 0]); // a little higher: a long shot
+    const BOW_NOCK2 = add(BOW_AT2, add(scl(AIM, -0.045), [0, -0.006, 0]));
+    const BACK_W = norm([-0.2, 0, -1]); // the recoil, away from the target (world)
+    const BEND = 0.35; // the bow's depth stretch at the end of the hold
+    const mul = (a: V3, b: V3): V3 => [a[0] * b[0], a[1] * b[1], a[2] * b[2]];
+    const div = (a: V3, b: V3): V3 => [a[0] / b[0], a[1] / b[1], a[2] / b[2]];
+    /** Leg swing (x) and spread (z) in degrees that move the ankle by `d` (hips frame) under a leg twisted by `yaw`. */
+    const legTo = (d: V3, yaw: number) => {
+      const s = Math.max(-0.9, Math.min(0.9, -d[2] / (SHIN * Math.cos(yaw * DEG))));
+      const t = Math.max(-0.9, Math.min(0.9, d[0] / SHIN + s * Math.sin(yaw * DEG)));
+      return [Math.asin(s) / DEG, Math.asin(t) / DEG] as const;
+    };
+    k.animation('attack2', {
+      duration: 1.3,
+      loop: false,
+      pose: (_t, p) => {
+        const turn = keys(p, [[0, 0], [0.18, 1], [0.84, 1], [1, 0]] as const);
+        const aim = keys(p, [[0, 0], [0.2, 1], [0.82, 1], [0.98, 0]] as const);
+        const brace = keys(p, [[0.1, 0], [0.5, 1], [RELEASE2, 1], [0.9, 0.4], [1, 0]] as const);
+        const kick = p >= RELEASE2 ? Math.exp(-(p - RELEASE2) * 16) : 0;
+        const hold = Math.min(1, Math.max(0, (p - 0.52) / (RELEASE2 - 0.52)));
+        const tremble = p > 0.52 && p < RELEASE2 ? Math.sin(hold * Math.PI * 7) * (0.4 + 0.6 * hold) : 0;
+        // The bend: it grows in the draw and the hold, then the limbs spring back past straight.
+        const bend = keys(p, [[0.27, 0], [0.52, 0.75], [RELEASE2, 1], [RELEASE2 + 0.025, -0.35], [RELEASE2 + 0.06, 0.15], [RELEASE2 + 0.1, 0]] as const);
+        const bs: V3 = [1 + BEND * bend, 1 - 0.04 * bend, 1];
+        const bent = (pt: V3) => add(GRIP, mul(sub(pt, GRIP), bs)); // a rest point on the bent bow
+        const shL = add(scl([0, 0.012, 0.06], aim), scl(AIM, 0.025 * kick));
+        const shR = keys(p, [[0, Z3], [0.2, [0.035, 0.012, 0.04]], [0.52, [0.012, 0.01, 0.015]], [0.84, [0.012, 0.01, 0.015]], [1, Z3]] as const);
+
+        // ---- the bow arm: up in front, the nock, the slow push, the kick, back.
+        const bowAt = keys(p, [
+          [0, GRIP],
+          [0.1, add(GRIP, [0.03, 0.09, 0.12])],
+          [0.2, BOW_NOCK2],
+          [0.27, BOW_NOCK2],
+          [0.52, BOW_AT2],
+          [RELEASE2, add(BOW_AT2, scl(AIM, 0.006))],
+          [RELEASE2 + 0.03, add(add(BOW_AT2, scl(AIM, 0.045)), [0, -0.008, 0])],
+          [0.84, add(BOW_AT2, [0.012, -0.025, 0.02])],
+          [0.93, add(GRIP, [0.03, 0.07, 0.11])],
+          [1, GRIP],
+        ] as const);
+        const out = norm([bowAt[0], 0, bowAt[2] + 0.02]);
+        const along = out[0] * AIM[0] + out[2] * AIM[2];
+        const side = norm(sub(out, scl(AIM, along * aim)));
+        const lean = norm(add(add([0, 1, 0], scl(side, 0.62)), scl(AIM, 0.5 * kick)));
+        const r = ease(0, 0.1, p) * (1 - ease(0.9, 1, p));
+        const bowWant = { dir: norm(lerp(BOW_REST.dir, lean, r)), up: norm(lerp(BOW_REST.up, AIM, r)) };
+        const poleL = keys(p, [[0, POLE_L_REST], [0.18, POLE_L_AIM], [0.86, POLE_L_AIM], [1, POLE_L_REST]] as const);
+        const bow = bowArm(bowAt, bowWant, shL, 1, poleL);
+        const rotsL = [bow.arm.upper, bow.arm.lower, bow.hand] as const;
+        const onBow = (pt: V3) => add(follow(CHAIN_L, rotsL, pt), shL);
+        const nockNow = onBow(bent(NOCK_MID));
+        const restOnBow = onBow(ARROW_ON_BOW);
+        const toBow = norm(sub(restOnBow, nockNow));
+
+        // ---- the string hand: up, the nock, the slow draw past the jaw, the hold, the flick back.
+        const pinchAt = keys(p, [
+          [0, PINCH],
+          [0.1, [-0.07, 0.33, 0.21]],
+          [0.2, nockNow],
+          [0.27, nockNow],
+          [0.52, ANCHOR2],
+          [RELEASE2, add(ANCHOR2, scl(AIM, -0.006))],
+          [RELEASE2 + 0.04, add(ANCHOR2, [-0.08, 0.015, -0.01])],
+          [0.84, add(ANCHOR2, [-0.09, -0.04, 0])],
+          [1, PINCH],
+        ] as const);
+        const onString = keys(p, [[0, 0], [0.1, 0.4], [0.2, 1], [0.8, 1], [0.94, 0]] as const);
+        const wristR = sub(pinchAt, add(scl(OFF_R, 1 - onString), scl(OFF_DRAW, onString)));
+        const poleR = keys(p, [[0, POLE_R_REST], [0.18, POLE_R_DRAW], [0.86, POLE_R_DRAW], [1, POLE_R_REST]] as const);
+        const armR = reach(ARM_R, sub(wristR, shR), poleR);
+        const handR = slerpRot(Z3, orient([armR.upper, armR.lower], HAND_R_REST, HAND_R_DRAW), onString);
+        const rotsR = [armR.upper, armR.lower, handR] as const;
+        const pinchNow = add(follow(CHAIN_R, rotsR, PINCH), shR);
+
+        // ---- the string: as in the attack, but each half lives in the stretched bow frame, so
+        // the target is taken back through the hand chain and the bow's stretch.
+        const pulled = p >= 0.2 && p < RELEASE2;
+        const mid = pulled ? pinchNow : add(nockNow, scl(toBow, 0.02 * kick));
+        const qInv = chainQ(rotsL).invert();
+        const string = (nock: V3) => {
+          const n = onBow(bent(nock));
+          const u = div(turnBy(qInv, sub(mid, n)), bs);
+          const v = sub(NOCK_MID, nock);
+          const l = len(u);
+          const sy = Math.sqrt(Math.max(1e-6, l * l - v[0] * v[0] - v[2] * v[2])) / Math.abs(v[1]);
+          return {
+            rotate: orient([], { dir: norm([v[0], v[1] * sy, v[2]]), up: [0, 0, 1] }, { dir: norm(u), up: [0, 0, 1] }),
+            scale: [1, sy, 1] as V3,
+          };
+        };
+
+        // ---- the arrow: only from the nock to the release, then it leaves along the arrow line.
+        const flown = p >= RELEASE2 ? Math.min(1, (p - RELEASE2) / 0.03) : 0;
+        const shown = p >= 0.2 && p < RELEASE2 + 0.03;
+        const arrow = !shown
+          ? { move: Z3, rotate: Z3 }
+          : p < RELEASE2
+            ? arrowPose(rotsR, shR, pinchNow, norm(sub(restOnBow, pinchNow)))
+            : arrowPose(rotsR, shR, add(ANCHOR2, scl(AIM, 0.8 * flown)), AIM); // along the arrow line, not the tipping bow
+
+        // ---- the legs: a wide braced stance; the recoil moves the hips back, the front foot stays
+        // planted, and the rear foot steps back twice as far (with a small lift), then returns.
+        const recoil = keys(p, [[RELEASE2, 0], [RELEASE2 + 0.07, 1], [0.86, 1], [1, 0]] as const);
+        const lift = keys(p, [[RELEASE2, 0], [RELEASE2 + 0.035, 1], [RELEASE2 + 0.07, 0], [0.86, 0], [0.93, 1], [1, 0]] as const);
+        const b = 0.032 * recoil;
+        const u = rotYv(BACK_W, 35 * turn); // the recoil in the hips' frame
+        const wide = 9 * turn;
+        const yawL = 25 * turn;
+        const yawR = 15 * turn;
+        const [sxL, szL] = legTo(scl(u, -b), yawL);
+        const [sxR, szR] = legTo(scl(u, b + 0.02 * lift), yawR);
+        const xL = -5 * turn + sxL;
+        const zL = 5 * turn + wide + szL;
+        const xR = 4 * turn + sxR;
+        const zR = -4 * turn - wide + szR;
+        const drop = SHIN * (1 - Math.cos(xL * DEG) * Math.cos(zL * DEG));
+
+        return {
+          hips: { move: add(scl(BACK_W, b), [0, -drop, 0]), rotate: [0, -35 * turn, 0] },
+          spine: { rotate: [-5 * brace, -12 * turn, 0] },
+          chest: { rotate: [-2 * aim + 0.5 * tremble - 7 * kick, -8 * turn, 0] },
+          neck: { rotate: [2 * brace, 15 * turn, 0] },
+          head: { rotate: [-5 * aim + 2 * brace, 25 * turn, 0] }, // the chin up, over the string
+          hoodtip: { rotate: [8 * kick, 0, keys(p, [[0, 0], [0.16, -7], [0.3, 3], [0.46, 0], [RELEASE2, 0], [0.92, 5], [1, 0]] as const) + 10 * kick] },
+          'upperarm.L': { move: shL, rotate: bow.arm.upper },
+          'forearm.L': { rotate: bow.arm.lower },
+          'hand.L': { rotate: bow.hand },
+          bowgrip: { scale: bs },
+          'upperarm.R': { move: shR, rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
+          'string.top': string(NOCK_TOP),
+          'string.bot': string(NOCK_BOT),
+          arrow: { ...arrow, scale: shown ? ([1, 1, 1] as V3) : HIDE },
+          'leg.L': { rotate: [xL, yawL, zL] },
+          'leg.R': { rotate: [xR, yawR, zR] },
+          'foot.L': { rotate: [-xL, 10 * turn, -zL] },
+          'foot.R': { rotate: [-xR, 8 * turn, -zR] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ victory: the bow held high
+    // She hops and swings the bow up high on her left, beside the hood: the bow stands in front
+    // of the ear with its back to the front, so the limbs and the string stay clear of the hood
+    // and the ear tip. The right fist comes up and pumps twice, then goes to her hip. She ends in
+    // a proud pose and holds it: the chest out, the chin up, the bow high, the hood point at
+    // rest. The arms are solved by targets in the chest's rest frame, like the shot.
+    const V_GRIP: V3 = [0.23, 0.515, 0.125]; // the bow grip, high beside the hood
+    // The limbs lean out; the back of the bow faces front and a little in, so the string is out and behind.
+    const V_BOW = { dir: norm([0.4, 1, 0.15]), up: norm([-0.35, 0, 1]) };
+    const V_POLE_L: V3 = [0.45, 0.3, -0.1];
+    const FIST_UP: V3 = [-0.225, 0.48, 0.1]; // the right wrist: the fist up
+    const FIST_DOWN: V3 = [-0.2, 0.4, 0.12]; // the right wrist at the bottom of a pump
+    const FIST_HIP: V3 = [-0.19, 0.3, 0.02]; // the right wrist: the fist on the hip
+    const V_POLE_R: V3 = [-0.4, 0.25, 0.05];
+    const HIP_POLE_R: V3 = [-0.42, 0.38, -0.15];
+    k.animation('victory', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const raise = keys(p, [[0, 0], [0.24, 1]] as const);
+        const hop = keys(p, [[0.06, 0], [0.17, 1], [0.28, 0]] as const);
+        const pumpBeat = keys(p, [[0.2, 0], [0.3, 1], [0.4, 0], [0.5, 1], [0.62, 0]] as const);
+        const look = keys(p, [[0.08, 0], [0.24, 1], [0.5, 1], [0.75, 0]] as const);
+        const proud = keys(p, [[0.55, 0], [0.8, 1]] as const);
+        const flop = keys(p, [[0.1, 0], [0.2, -1], [0.32, 0.8], [0.42, -0.4], [0.52, 0.5], [0.66, -0.2], [0.8, 0]] as const);
+
+        // ---- the bow arm: the bow swings up and forward to stand high beside the hood; it jumps a
+        // little with each pump.
+        const shL = scl([0.004, 0.018, 0.01], raise);
+        const bowAt = add(
+          keys(p, [
+            [0, GRIP],
+            [0.12, add(GRIP, [0.05, 0.12, 0.12])],
+            [0.24, add(V_GRIP, [0, 0.012, 0])],
+            [0.32, V_GRIP],
+            [1, V_GRIP],
+          ] as const),
+          [0, 0.01 * pumpBeat, 0],
+        );
+        const r = ease(0.02, 0.22, p);
+        const bowWant = { dir: norm(lerp(BOW_REST.dir, V_BOW.dir, r)), up: norm(lerp(BOW_REST.up, V_BOW.up, r)) };
+        const bow = bowArm(bowAt, bowWant, shL, 1, lerp(POLE_L_REST, V_POLE_L, r));
+
+        // ---- the right fist: up, two pumps, then to the hip.
+        const wristR = keys(p, [
+          [0, mx(WRIST)],
+          [0.2, FIST_UP],
+          [0.3, FIST_DOWN],
+          [0.4, FIST_UP],
+          [0.5, FIST_DOWN],
+          [0.62, add(FIST_UP, [0.01, -0.03, 0])],
+          [0.8, FIST_HIP],
+          [1, FIST_HIP],
+        ] as const);
+        const toHip = keys(p, [[0.62, 0], [0.8, 1]] as const);
+        const poleR = lerp(lerp(POLE_R_REST, V_POLE_R, ease(0, 0.18, p)), HIP_POLE_R, toHip);
+        const armR = reach(ARM_R, wristR, poleR);
+
+        return {
+          hips: { move: [0, 0.03 * hop, 0] },
+          // The body leans a little to the right, away from the bow, which lifts the bow higher.
+          spine: { rotate: [-3 * proud + 2 * pumpBeat, 0, 5 * raise] },
+          chest: { rotate: [-6 * proud + 3 * pumpBeat - 3 * hop, 0, 3 * raise] },
+          neck: { rotate: [-4 * proud, 0, 0] },
+          head: { rotate: [-8 * look - 6 * proud, 12 * look, 5 * raise] },
+          hoodtip: { rotate: [10 * flop, 0, 6 * flop] },
+          'upperarm.L': { move: shL, rotate: bow.arm.upper },
+          'forearm.L': { rotate: bow.arm.lower },
+          'hand.L': { rotate: bow.hand },
+          'upperarm.R': { rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          arrow: { scale: HIDE },
+          'leg.L': { rotate: [-6 * hop, 0, 5 * proud] },
+          'leg.R': { rotate: [4 * hop, 0, -5 * proud] },
+          'foot.L': { rotate: [12 * hop, 0, -5 * proud] },
+          'foot.R': { rotate: [12 * hop, 0, 5 * proud] },
         };
       },
     });
