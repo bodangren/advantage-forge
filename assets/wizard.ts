@@ -822,33 +822,42 @@ export default defineAsset({
 
     // Both arms are busy, so they swing little; the hat point, the coat skirt, and the cape
     // carry the motion. The skirt lags the hips' turn and sways toward the planted leg.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number) => ({
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel (the robe keeps it short), `lift` the swing height,
+    // `duty` the share of the cycle a foot is down, `hop` the hips bob. The heel and the toe are
+    // the ends of the boot's rounded sole, just above y = 0. The left heel strikes at p = 0.25,
+    // when the left arm (wave(p)) is back.
+    const stride = (duration: number, step: number, lift: number, duty: number, hop: number, armSwing: number, lean: number, flow: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          heel: [0.094, 0, -0.015],
+          toe: [0.111, 0, 0.093],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
           ...flicker(p),
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           skirt: { rotate: [flow * 0.25 + 3 * wave(p, 2, 0.1), -9 * wave(p, 1, 0.12), 4 * wave(p, 1, 0.3)] as const },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -9 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           hattip: { rotate: [flow * 0.4 + 6 * wave(p, 2, 0.2), 0, 8 * wave(p, 2, 0.1)] as const },
           cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.3 * s, 0, 0] as const },
           'upperarm.R': { rotate: [-armSwing * 0.25 * s, 0, 0] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 6));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 22));
+    k.animation('walk', stride(0.9, 0.09, 0.02, 0.6, 0.006, 28, 3, 6));
+    k.animation('run', stride(0.56, 0.13, 0.04, 0.4, 0.025, 50, 12, 22));
 
     // Posing by targets. The wrists follow keys in the chest's rest frame (reach); the staff hand
     // turns so the staff points along its own keys (orient). STAFF.up is the normal of the fork's
