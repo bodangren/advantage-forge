@@ -313,21 +313,23 @@ export default defineAsset({
     k.body('band', sdf.torus(0.047, 0.014).at(0, 0.952, -0.035).bone('head'), { color: C.band, roughness: 0.7, detail: 0.004 });
 
     // ------------------------------------------------------------------ tusks
-    // Big blunt tusks from the corners of the underbite, curving out and up past the cheeks.
+    // Big tusks are teeth of the upper jaw: each comes out of the mouth from under the upper lip
+    // (its root is sunk behind the lip and cut at the lip line) and hangs down over the lower
+    // jaw, a little out and forward at the tip.
     const tuskPath = [
-      [0.052, 0.57, 0.036, 0.004],
-      [0.092, 0.59, 0.034, 0.034],
-      [0.118, 0.627, 0.029, 0.05],
-      [0.128, 0.672, 0.02, 0.052],
+      [0.046, MOUTH_Y - 0.002, 0.021, -0.008],
+      [0.052, MOUTH_Y - 0.028, 0.022, 0.01],
+      [0.06, MOUTH_Y - 0.056, 0.017, 0.021],
+      [0.066, MOUTH_Y - 0.08, 0.01, 0.03],
     ].map(([x, y, r, lift]) => [x!, y!, faceZ(x!, y!) + lift!, r!] as [number, number, number, number]);
-    const tusks = pair(sdf.chain(tuskPath, 0.012));
+    const tusks = pair(sdf.chain(tuskPath, 0.012).intersect(sdf.halfSpace([0, 1, 0], MOUTH_Y - 0.002)));
     // Ivory, warmer and darker at the root, pale at the blunt tip.
     const tuskRoot = rgb('#b9a57a');
     const tuskTip = rgb(C.tusk);
     k.body(
       'tusks',
       tusks.bone('head').paintFn((x, y) => {
-        const t = smooth01(0.57, 0.66, y);
+        const t = 1 - smooth01(MOUTH_Y - 0.078, MOUTH_Y, y);
         return [tuskRoot[0] + (tuskTip[0] - tuskRoot[0]) * t, tuskRoot[1] + (tuskTip[1] - tuskRoot[1]) * t, tuskRoot[2] + (tuskTip[2] - tuskRoot[2]) * t];
       }),
       { color: C.tusk, roughness: 0.4 },
