@@ -492,5 +492,38 @@
       "Make the frown bolder, so it reads at 128 px."
     ],
     "reviewedAt": "2026-09-26T05:25:31+00:00"
+  },
+  "dire-wolf": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 5,
+      "color": 4,
+      "materials": 3,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "The dire wolf matches the mmx mockup: a huge scowling head with cream brows, amber eyes, and a toothy grin, framed by cheek tufts, tall ears, and a full cream ruff, on a compact body with a bushy tail.",
+    "strengths": [
+      "The pointed ears, cheek tufts, and ruff make a spiky outline that reads in every sprite direction.",
+      "The cream brows and muzzle around the amber eyes give a strong focal point on the dark face.",
+      "The trot moves the diagonal leg pairs together, and the bite has a clear crouch, lunge, and snap."
+    ],
+    "issues": [
+      "The mockup sits in a compact crouch. The model stands on four straight legs, so the body looks longer from the side.",
+      "The fur is one smooth dark grey. The mockup fur has more value variation on the legs and the back.",
+      "The cream muzzle is still narrower than the wide grinning muzzle in the mockup."
+    ],
+    "next": [
+      "Paint a slightly lighter grey on the chest and the lower cheeks.",
+      "Widen the cream muzzle toward the cheeks."
+    ],
+    "reviewedAt": "2026-09-26T05:48:30+00:00"
   }
 }
