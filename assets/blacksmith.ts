@@ -464,19 +464,61 @@ export default defineAsset({
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
     };
+    // Solved by targets (reach, orient) in the chest's rest frame, so the path stays clear of the
+    // head: the hammer rises off the shoulder up and out beside the head on the right side, comes
+    // forward, and lands on the anvil spot with the fist held out in front, the haft butt clear of
+    // the belt. The head's long axis turns to point down at the blow, a striking face on the anvil.
+    const { keys, reach, orient } = motion;
+    const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
+    const HAMMER_LONG: V3 = [0, -Math.sin((HAMMER_X * Math.PI) / 180), Math.cos((HAMMER_X * Math.PI) / 180)];
+    const workWrist = [
+      [0, WRIST_R],
+      [0.18, [-0.27, 0.45, 0.11]],
+      [0.38, [-0.31, 0.5, 0.08]], // the top: out beside the head
+      [0.45, [-0.315, 0.505, 0.075]],
+      [0.52, [-0.29, 0.45, 0.19]],
+      [0.58, [-0.245, 0.41, 0.22]], // the blow, the fist out in front
+      [0.63, [-0.245, 0.43, 0.22]], // the bounce
+      [0.68, [-0.245, 0.41, 0.22]],
+      [0.84, [-0.29, 0.47, 0.12]], // back up beside the head
+      [1, WRIST_R],
+    ] as const;
+    const workHaft = [
+      [0, HAFT_DIR],
+      [0.18, norm([-0.45, 0.75, -0.48])],
+      [0.38, norm([-0.42, 0.85, -0.3])],
+      [0.45, norm([-0.42, 0.86, -0.28])],
+      [0.52, norm([-0.4, 0.35, 0.85])],
+      [0.58, norm([-0.38, -0.42, 0.82])],
+      [0.63, norm([-0.38, -0.32, 0.87])],
+      [0.68, norm([-0.38, -0.42, 0.82])],
+      [0.84, norm([-0.45, 0.85, 0.1])],
+      [1, HAFT_DIR],
+    ] as const;
+    const workLong = [
+      [0, HAMMER_LONG],
+      [0.38, [0.1, 0.1, 1]],
+      [0.52, [0, -1, 0.4]],
+      [0.58, [0, -1, 0]],
+      [0.68, [0, -1, 0]],
+      [0.84, [0, -0.1, 1]],
+      [1, HAMMER_LONG],
+    ] as const;
     k.animation('work', {
       duration: 0.9,
       pose: (_t, p) => {
-        const lift = ease(0, 0.45, p) * (1 - ease(0.45, 0.6, p));
-        const hit = ease(0.45, 0.6, p) * (1 - ease(0.68, 1, p));
+        const lift = ease(0, 0.45, p) * (1 - ease(0.45, 0.58, p));
+        const hit = ease(0.45, 0.58, p) * (1 - ease(0.68, 1, p));
+        const arm = reach(ARM_R, keys(p, workWrist, 'spline'), [-0.6, 0.1, -0.1]);
+        const hand = orient([arm.upper, arm.lower], { dir: HAFT_DIR, up: HAMMER_LONG }, { dir: norm(keys(p, workHaft, 'spline')), up: keys(p, workLong) });
         return {
           hips: { move: [0, -0.006 * hit, 0] },
           spine: { rotate: [-4 * lift + 8 * hit, 0, 0] },
           chest: { rotate: [0, 8 * lift - 4 * hit, 0] },
           head: { rotate: [6 * hit, 0, 0] },
-          'upperarm.R': { rotate: [-40 * lift - 30 * hit, 0, 10 * lift] },
-          'forearm.R': { rotate: [-20 * lift + 70 * hit, 0, 0] },
-          'hand.R': { rotate: [-10 * lift + 115 * hit, 0, 0] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
           'upperarm.L': { rotate: [-10 * hit, 0, 6 * hit] },
           'forearm.L': { rotate: [-30 * hit, 0, 0] },
         };
