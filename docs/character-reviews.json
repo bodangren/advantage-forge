@@ -74,26 +74,26 @@
       "materials": 5,
       "detail": 4,
       "technical": 4,
-      "gameReady": 4,
+      "gameReady": 5,
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The knight is very close to the mockup. The helmet, the red plume, the heart shield, and the red cape all read clearly.",
+    "summary": "The knight is very close to the mockup and now has the full hero clip set. The helmet, the red plume, the heart shield, and the red cape read clearly at 128 px.",
     "strengths": [
-      "Steel, gold, and red cloth read as clearly different materials.",
-      "The plume and the shield give a strong silhouette from every view.",
-      "The face stays visible under the helmet, and the gold brow band frames it."
+      "Steel, gold, and red cloth read as clearly different materials in the model and in the sprites.",
+      "The clip set is complete: idle, walk, run, a sword slash, a shield bash, hit, death, and victory. The feet stay planted in the walk and the run.",
+      "The shield stays clear of the face at rest, and no held item passes through the head in any clip."
     ],
     "issues": [
-      "The mockup helmet has cheek guards that frame the face. The model has ear discs only, so the face looks wider.",
-      "The lower body is plain grey. The mockup has more shape and trim on the legs and the skirt.",
-      "At 65,228 triangles, the knight is the heaviest model. The mail and the plume use many triangles."
+      "In the victory clip, the raised sword reaches only the brow of the helmet. In the slash, the body hides the sword during the wind-up.",
+      "The rig has no knees. The legs stay stiff when he falls and lies on the ground in the death clip.",
+      "Small contacts remain: the left gauntlet goes up to 1.1 cm into the cuirass in the death and the shield bash. The helmet has ear discs only, not the cheek guards of the mockup. At 65,322 triangles, the knight is the heaviest model."
     ],
     "next": [
       "Add small cheek guards to the helmet.",
-      "Move all of the mail ring pattern into the normal map if the triangle count must go down."
+      "Move the mail ring pattern into the normal map if the triangle count must go down."
     ],
-    "reviewedAt": "2026-09-26T03:39:07+00:00"
+    "reviewedAt": "2026-09-26T17:13:16+00:00"
   },
   "wizard": {
     "overall": 8.5,
