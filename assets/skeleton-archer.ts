@@ -714,6 +714,8 @@ export default defineAsset({
     // is out to the left of the draw hand and a little lower, so in the front view the bow arm
     // passes below the jaw and the draw hand shows at the jaw beside the bow fist.
     const AIM = toChest(norm([0.494, -0.156, 0.855]));
+    // The extra torso turn at full aim that brings that line to straight ahead (+Z).
+    const AIM_YAW = (Math.atan2(0.494, 0.855) * 180) / Math.PI;
     const REST_PT = add(ANCHOR, scl(AIM, 0.135)); // where the arrow lies on the bow hand
     const BOW_AT = add(REST_PT, [0, -0.018, 0]); // the grip at full aim
     const BOW_REST = { dir: bowDir([0, 1, 0]), up: bowDir([0, 0, 1]) }; // the limbs, and the back of the bow
@@ -920,11 +922,15 @@ export default defineAsset({
         const shown = inFlight ? 0.001 : 1;
         return capes({
           hips: { move: [0, -0.006 * aim, 0], rotate: [0, -30 * turn, 0] },
-          spine: { rotate: [0, -10 * turn, 0] },
-          chest: { rotate: [-2 * aim + 0.4 * tremble - 3 * kick, -5 * turn, 0] },
-          neck: { rotate: [0, 16 * turn, 0] },
+          // Through the draw, the hold, and the release the torso turns a further AIM_YAW degrees to
+          // its right (on the spine and the chest, so the feet stay planted): the arrow line then
+          // points straight ahead (+Z), along the facing. The arm pose stays the same relative to
+          // the chest, and the neck and the head turn back so the skull looks at the target.
+          spine: { rotate: [0, -10 * turn - AIM_YAW * 0.67 * aim, 0] },
+          chest: { rotate: [-2 * aim + 0.4 * tremble - 3 * kick, -5 * turn - AIM_YAW * 0.33 * aim, 0] },
+          neck: { rotate: [0, 16 * turn + 13 * aim, 0] },
           // The skull turns to the target and dips toward the string at full draw.
-          head: { rotate: [keys(p, [[0, 0], [0.14, -6], [0.3, 0], [0.58, 2], [RELEASE, 2], [0.8, 0], [1, 0]] as const), 26 * turn, keys(p, [[0.4, 0], [0.58, -6], [RELEASE, -6], [0.84, 0]] as const)] },
+          head: { rotate: [keys(p, [[0, 0], [0.14, -6], [0.3, 0], [0.58, 2], [RELEASE, 2], [0.8, 0], [1, 0]] as const), 26 * turn + 13 * aim, keys(p, [[0.4, 0], [0.58, -6], [RELEASE, -6], [0.84, 0]] as const)] },
           'upperarm.L': { move: shL, rotate: bow.arm.upper },
           'forearm.L': { rotate: bow.arm.lower },
           'hand.L': { rotate: handL },

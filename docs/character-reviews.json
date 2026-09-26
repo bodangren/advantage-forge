@@ -760,22 +760,22 @@
       "sprite": 3,
       "motion": 4
     },
-    "summary": "The shot now shows the face and the high draw elbow. The mantle caps follow the upper arms through two mantle bones, so the raised arms lift them. The collar and the panels stay on the chest, and the mantle at rest looks the same. The arrow line points 30 degrees left of front and 9 degrees down, so the bow fist is lower and apart from the draw hand. The check passes (result ok, ground ok).",
+    "summary": "The shot aims straight ahead (+Z), along the facing: through the draw, the hold, and the release, the spine and the chest turn 30 degrees further, and the neck and the head turn back to the target. The mantle caps follow the upper arms through two mantle bones, and the mantle at rest looks the same. The check passes (result ok, ground ok).",
     "strengths": [
-      "At full draw, the front view shows the whole face. The bow fist is below the jaw, and the draw hand shows beside it at the jaw.",
+      "The arrow flies straight ahead along the facing (9 degrees down), and the skull looks at the target. The front view shows the whole face at full draw.",
       "The mantle caps lift with the upper arms, so the upper arm and the elbow of the draw arm show above the mantle hem in the back views.",
       "In the death, the mantle caps go back to the chest while the arms fall off, so the mantle does not stretch to the ground."
     ],
     "issues": [
       "The model differs from the mockup: the bow is a thin, upright stick, not a recurve across the body. The teeth are still one block with cut lines.",
-      "In the front view the draw hand is small: the red fletching and the wraps show, but the finger bones are mostly behind the fletching. In the nock (phase 0.3), the upper bow limb crosses the right cheek.",
+      "In the front view at full draw the bow fist hides most of the draw hand: only the red fletching shows beside it. In the nock (phase 0.3), the upper bow limb crosses the right cheek.",
       "The red wraps go 0.8 cm into the mantle at phase 0.29-0.30. Small old lines remain: the wraps and the hand 0.4 cm into the cloak, and the arrow 0.3 cm into the quiver."
     ],
     "next": [
       "Give the skull separate teeth and make the bow a recurve, as the mockup shows.",
       "Keep the red wraps out of the mantle hem at phase 0.29-0.30, and keep the upper bow limb off the cheek in the nock."
     ],
-    "reviewedAt": "2026-09-26T21:10:17+00:00"
+    "reviewedAt": "2026-09-26T21:16:31+00:00"
   },
   "giant-rat": {
     "overall": 8,
