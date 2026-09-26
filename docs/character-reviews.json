@@ -354,7 +354,7 @@
     "reviewedAt": "2026-09-26T18:50:25+00:00"
   },
   "orc-warrior": {
-    "overall": 7.9,
+    "overall": 8.3,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -363,27 +363,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3,
+      "technical": 4,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The orc warrior is a stocky brute with a heavy scowl, tusks, a topknot, a spiked pauldron, and a large crescent axe. The tusks now start under the upper lip and hang down past the lower lip, so they read as teeth from the mouth. The axe stays clear of the head in all clips, but the axe head goes into the floor in the attack and the run.",
+    "summary": "The orc warrior is a stocky brute with a heavy scowl, tusks, a topknot, a spiked pauldron, and a large crescent axe. The one-hand overhead chop now hits at the height of a target's body in front of the orc. The follow-through goes down and across the body and stops above the floor. The clip check passes the head test and the ground test.",
     "strengths": [
-      "The tusks now come from the mouth. In the front view and in the S sprite, they show as two clear white teeth below the yellow eyes and the heavy brows.",
+      "The attack reads as a hit on a body: the axe comes over the top, hits level in front of the chest with the edge down, and follows through across the body to the left knee.",
       "The costume matches the mockup: large brown bracers, a spiked pauldron, a belt with a round buckle, a ragged red loincloth, and fur leg wraps.",
       "The death reads well at game size: a stagger back, a fall onto the back, and the axe on the floor next to the hand."
     ],
     "issues": [
-      "The clip check fails the ground test. The axe head goes 14.3 cm into the floor at the attack impact and 2.4 cm in the run.",
-      "The attack is a two-hand chop in name only. The left fist stays away from the haft for the full swing, so the chop reads as a one-hand swing.",
-      "The tusks are small: about half the size of the mockup tusks. They hang down from under the upper lip, as the owner asked. The beard is a small goatee, and the mockup beard is full."
+      "The haft passes near the hair at the top of the swing. The head test passes, but the margin is only 0.3 cm.",
+      "The tusks are small: about half the size of the mockup tusks. They hang down from under the upper lip, as the owner asked.",
+      "The beard is a small goatee, and the mockup beard is full."
     ],
     "next": [
-      "Stop the axe head at the floor at the attack impact and in the run, so the check ends with ground ok.",
-      "Put the left hand on the haft from the wind-up to the impact, so the chop reads as a two-hand swing."
+      "Move the haft a little farther from the hair at the top of the swing, for a larger head margin.",
+      "Give the beard more volume, toward the full beard of the mockup."
     ],
-    "reviewedAt": "2026-09-26T18:51:44+00:00"
+    "reviewedAt": "2026-09-26T19:11:28+00:00"
   },
   "bandit": {
     "overall": 8.2,

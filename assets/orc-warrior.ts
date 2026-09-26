@@ -548,7 +548,8 @@ export default defineAsset({
     });
 
     // A heavy, rolling walk: the weight shifts from side to side at each step.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, sway: number) => ({
+    // `carry` bends the axe arm (degrees) on its back swing, so the axe head stays above the floor.
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, sway: number, carry = 0) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
@@ -568,18 +569,23 @@ export default defineAsset({
           'upperarm.L': { rotate: [armSwing * s, 0, 4] as const },
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -4] as const },
           'forearm.L': { rotate: [-armSwing * 0.4 - armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
+          ...(carry > 0 && {
+            'forearm.R': { rotate: [-carry * (1 - s), 0, 0] as const },
+            'hand.R': { rotate: [-carry * 0.5 * (1 - s), 0, 0] as const },
+          }),
         };
       },
     });
     k.animation('walk', stride(1.0, 22, 20, 4, 0, 4));
-    k.animation('run', stride(0.6, 34, 36, 12, 0.025, 3));
+    k.animation('run', stride(0.6, 34, 36, 12, 0.025, 3, 20));
 
     // ------------------------------------------------------------------ attack: a heavy overhead chop, solved by targets
     // Plan (in the chest's rest frame): the axe swings back and up behind the right shoulder, the
     // orc coils back onto the rear foot and holds; then the hips and the chest drive forward, the
     // front foot steps in, and the axe comes over the top in the plane beside the head and chops
-    // down in front of the body. The edge leads the whole way (the flat faces sideways). An impact
-    // shake, a short follow-through, and a slow recovery.
+    // into a target's body in front of the orc (the head about 0.4 m high and 0.45 m forward). The
+    // edge leads the whole way (the flat faces sideways). An impact shake, a follow-through down and
+    // across the body that slows to a stop above the floor, and a slow recovery.
     const { keys, reach, orient } = motion;
     const DEG = Math.PI / 180;
     const rotXv = (v: V3, d: number): V3 => [v[0], v[1] * Math.cos(d * DEG) - v[2] * Math.sin(d * DEG), v[1] * Math.sin(d * DEG) + v[2] * Math.cos(d * DEG)];
@@ -602,15 +608,18 @@ export default defineAsset({
           p,
           [
             [0, mx(WRIST)],
-            [0.13, [-0.34, 0.37, -0.08]],
+            [0.07, [-0.37, 0.4, 0]], // lifts and swings out, so the head clears the floor
+            [0.13, [-0.35, 0.42, -0.08]],
             [0.25, [-0.34, 0.57, -0.12]],
             [0.34, [-0.345, 0.7, -0.09]],
             [0.43, [-0.35, 0.715, -0.1]], // the hold: coiled at the top, out beside the head
             [0.48, [-0.31, 0.67, 0.07]],
-            [0.52, [-0.25, 0.52, 0.2]],
-            [0.56, [-0.22, 0.42, 0.22]], // impact
-            [0.63, [-0.22, 0.395, 0.22]],
-            [0.74, [-0.24, 0.4, 0.2]],
+            [0.52, [-0.29, 0.64, 0.13]],
+            [0.56, [-0.24, 0.55, 0.14]], // impact at body height
+            [0.62, [-0.12, 0.46, 0.24]], // the follow-through: down and across the body
+            [0.7, [-0.04, 0.4, 0.3]],
+            [0.78, [-0.04, 0.4, 0.3]], // stopped in front of the left knee, the head above the floor
+            [0.9, [-0.28, 0.44, 0.15]],
             [1, mx(WRIST)],
           ] as const,
           'spline',
@@ -620,15 +629,18 @@ export default defineAsset({
             q,
             [
               [0, AXE.dir],
-              [0.13, [-0.1, -0.8, -0.55]], // swings back past the leg
+              [0.07, [-0.45, -0.75, 0.1]], // out to the side
+              [0.13, [-0.15, -0.75, -0.6]], // swings back past the leg
               [0.25, [-0.1, 0.05, -1]], // straight back
               [0.34, [-0.1, 0.78, -0.62]], // up and back behind the shoulder
               [0.43, [-0.08, 0.66, -0.75]], // the head sags back in the hold
               [0.48, [0.0, 0.98, 0.2]], // over the top
-              [0.52, [0.05, 0.25, 0.97]], // forward
-              [0.56, [0.08, -0.6, 0.8]], // down in front: impact
-              [0.63, [0.08, -0.72, 0.69]],
-              [0.74, [0.06, -0.7, 0.71]],
+              [0.52, [0.03, 0.75, 0.66]], // forward and up
+              [0.56, [0.05, 0.28, 1]], // level in front: impact (the chest leans it down a little)
+              [0.62, [0.45, -0.2, 0.87]], // down and across
+              [0.7, [0.62, -0.4, 0.68]],
+              [0.78, [0.62, -0.41, 0.68]],
+              [0.9, [0, -0.3, 0.95]],
               [1, AXE.dir],
             ] as const,
             'spline',
@@ -641,8 +653,8 @@ export default defineAsset({
         const off = reach(ARM_L, offWrist, [0.8, 0.2, -0.3]);
         const sh = shake(p, 0.56, 0.16, 5);
         const hipsY = keys(p, [[0, 0], [0.36, -9], [0.44, -10], [0.52, 7], [0.58, 9], [0.72, 6], [1, 0]] as const);
-        const spineX = keys(p, [[0, 0], [0.36, -8], [0.44, -9], [0.52, 11], [0.58, 16], [0.72, 12], [1, 0]] as const);
-        const chestX = keys(p, [[0, 0], [0.36, -6], [0.44, -7], [0.52, 9], [0.58, 13], [0.72, 10], [1, 0]] as const) + 3 * sh;
+        const spineX = keys(p, [[0, 0], [0.36, -8], [0.44, -9], [0.52, 6], [0.58, 7], [0.72, 6], [1, 0]] as const);
+        const chestX = keys(p, [[0, 0], [0.36, -6], [0.44, -7], [0.52, 4], [0.58, 5], [0.72, 5], [1, 0]] as const) + 3 * sh;
         const chestY = keys(p, [[0, 0], [0.36, -18], [0.44, -20], [0.52, 9], [0.58, 12], [0.72, 9], [1, 0]] as const);
         // The weight goes back onto the rear foot, then forward: the front (left) foot steps in.
         const hipsZ = keys(p, [[0, 0], [0.36, -0.018], [0.44, -0.02], [0.54, 0.035], [0.72, 0.035], [1, 0]] as const);
