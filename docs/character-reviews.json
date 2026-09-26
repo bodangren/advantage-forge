@@ -558,5 +558,38 @@
       "Give the small eyes white eyeballs, as in the mockup."
     ],
     "reviewedAt": "2026-09-26T05:55:10+00:00"
+  },
+  "dragon-fire": {
+    "overall": 8.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "The fire dragon matches the mmx mockup closely: a squat red dragon that is half head, with cream horns, a red and orange crest, heavy black brows, a toothy grin, spread orange bat wings, a ridged cream belly, and a finned tail.",
+    "strengths": [
+      "The spread wings, horns, and crest make a unique silhouette that reads in all eight sprite directions.",
+      "The black brows over the yellow eyes and the white teeth in the dark grin give a strong focal point.",
+      "The roar reads well: it rears back with the wings raised, then lunges with the wings flared."
+    ],
+    "issues": [
+      "The mockup puffs smoke from one nostril. The model has no smoke or fire effect yet.",
+      "The horns are thinner than the big cream horns in the mockup.",
+      "The cheek frills are small and hide behind the wings from the front."
+    ],
+    "next": [
+      "Add a fire-breath effect as a separate effects asset, and play it with the roar.",
+      "Make the horns 20 percent thicker at the root."
+    ],
+    "reviewedAt": "2026-09-26T06:06:30+00:00"
   }
 }
