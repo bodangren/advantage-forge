@@ -160,7 +160,7 @@
     "reviewedAt": "2026-09-26T18:33:17+00:00"
   },
   "druid": {
-    "overall": 8,
+    "overall": 8.2,
     "scores": {
       "mockup": 3,
       "silhouette": 5,
@@ -174,22 +174,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The druid reads as the mushroom girl at once, and all 8 clips pass the check. The staff, the apron, and the belt still differ from the mockup. At 72,196 triangles, she is the heaviest model in the set.",
+    "summary": "The druid reads as the mushroom girl at once, and all 8 clips pass the check. The staff cast is now a clear nature spell with a green orb. The staff, the apron, and the belt still differ from the mockup. At 72,606 triangles, she is the heaviest model in the set.",
     "strengths": [
       "The large spotted cap with the cream rim and the gills gives a unique silhouette in every view and in all 8 sprites.",
       "The face is very close to the mockup: large brown eyes, pink cheeks, a small smile, and a ginger bob.",
-      "The clip set is complete: idle, walk, run, a staff cast, a flask throw, hit, death, and victory. The cap and the lantern lag and overshoot in the hit and the victory."
+      "The staff cast reads as a spell. She raises the staff upright beside the cap, and a green orb grows on the crook. Then she sweeps the staff down to point at the target at chest height, the orb flies 0.6 m, and the lantern flares."
     ],
     "issues": [
       "The staff is still thin and straight, and the lantern is small. The mockup staff is thick and gnarled, with a large lantern on a hook.",
       "The front is plain. The apron is a flat card with one clover, and the three belt pouches and the small hip potion are too small to read.",
-      "The attacks read weakly. The staff cast is a flat thrust at hip height with no spell effect, and the thrown flask is small with no splash. At the end of the death clip, the cap stands on its rim and hides the body in the side view."
+      "The raise in the cast is low, because the wide cap blocks a staff over the head. The thrown flask is small with no splash. At the end of the death clip, the cap stands on its rim and hides the body in the side view."
     ],
     "next": [
       "Make the staff thicker and gnarled, and hang a larger lantern from a hook at the top.",
       "Make the three belt pouches and the hip potion larger, and give the apron a scalloped hem with the mushroom motif."
     ],
-    "reviewedAt": "2026-09-26T18:35:49+00:00"
+    "reviewedAt": "2026-09-26T21:58:28+00:00"
   },
   "adventurer": {
     "overall": 8.5,

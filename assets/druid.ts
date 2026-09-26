@@ -18,10 +18,12 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  *   is the biggest mass; the potion and the lantern are the two glowing accents.
  * Bodies: skin, hair, cap, gills, dress, sleeves, apron, hip-potion, leather, gold, basket,
  *   mushrooms, leaves, cap-growth, cap-leaves, legs, boots, staff, staff-mushroom, lantern-frame,
- *   lantern-light, flask, potion.
+ *   lantern-light, flask, potion, spell-orb.
  * Rig: the rogue's chibi skeleton plus `lantern` (hangs from the staff), `caproot` (the cap, on the
- *   head) and `flaskroot` (the flask, on the right hand); the basket is rigid on the chest, the staff
- *   on the left hand. Clips: idle, walk, run, attack (a staff thrust; the lantern flares), attack2
+ *   head), `flaskroot` (the flask, on the right hand) and `spell` (the spell orb, hidden inside the
+ *   crook mushroom's cap outside the cast); the basket is rigid on the chest, the staff on the left
+ *   hand. Clips: idle, walk, run, attack (a nature spell: the staff goes up high, sweeps down to
+ *   point at the target, and a green orb flies from the crook; the lantern flares), attack2
  *   (a flask throw; the flask flies off and grows back in the hand), hit, death (she topples onto
  *   her left side; the cap props her head, the staff lies in front of her), victory (the staff up
  *   and out past the cap, a hop, the lantern swings).
@@ -68,6 +70,8 @@ const C = {
   glass: '#dff5e6',
   cork: '#a0764a',
   lanternGlow: '#ffcc55',
+  spell: '#8ee85a',
+  spellCore: '#e8ffb8',
 };
 
 type V3 = readonly [number, number, number];
@@ -153,6 +157,10 @@ export default defineAsset({
     const L_UP = (0.8 - GRIP[1]) / STAFF_AXIS[1];
     const along = (t: number): V3 => add(GRIP, scale(STAFF_AXIS, t));
     const HOOK: V3 = add(along(L_UP * 0.72), [0.07, 0.02, 0.0]);
+    // The spell orb waits at rest inside the cap of the crook mushroom (see 'staff-mushroom'), so it
+    // stays hidden in every clip that leaves its bone alone.
+    const MUSH_UP = rotZ([0, 1, 0], -15);
+    const ORB: V3 = add(add(along(L_UP), [0.07, 0.035, 0]), rotZ([0, 0.065, 0], -15));
 
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
@@ -167,6 +175,7 @@ export default defineAsset({
       'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
       'hand.L': { parent: 'forearm.L', at: WRIST_L },
       lantern: { parent: 'hand.L', at: HOOK, tail: [HOOK[0], HOOK[1] - 0.12, HOOK[2]] },
+      spell: { parent: 'hand.L', at: ORB },
       'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
       'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
       'hand.R': { parent: 'forearm.R', at: WRIST_R },
@@ -718,6 +727,23 @@ export default defineAsset({
       emissive: C.lanternGlow,
       emissiveIntensity: 0.8,
     });
+    // The nature spell: a small glowing green orb with pale swirls. At rest it is buried in the crook
+    // mushroom's cap; the attack lifts it out, grows it to about 4 times this size, and throws it.
+    const orb = sdf
+      .sphere(0.009)
+      .at(...ORB)
+      .paintFn((x, y, z, base) =>
+        noise.fbm((x - ORB[0]) * 260, (y - ORB[1]) * 260, (z - ORB[2]) * 260, 2) > 0.15 ? rgb(C.spellCore) : base,
+      );
+    k.body('spell-orb', orb, {
+      bone: 'spell',
+      color: C.spell,
+      roughness: 0.3,
+      emissive: C.spell,
+      emissiveIntensity: 1.5,
+      opacity: 0.85,
+      detail: 0.0015,
+    });
 
     // ------------------------------------------------------------------ the potion flask in the right hand
     // A round flask with a neck, a cork, and a sprout; the glass is see-through, the potion glows.
@@ -817,70 +843,119 @@ export default defineAsset({
     const SPINE_AT: V3 = [0, 0.26, 0];
     const CHEST_AT: V3 = [0, 0.33, 0];
 
-    // Attack: a staff cast. She turns away and draws the staff back along its own line, tipped
-    // forward, then thrusts the lantern end at the target with her body behind it. The lantern
-    // hangs plumb from the hook (it swings on its own), whips forward at the strike, and flares.
-    // The staff's lower end must pass outside the skirt: the hand stays out and forward while the
-    // staff turns, and the recovery stands the staff up in front of the hip, not beside it.
+    // Attack: a nature spell. She draws back and raises the staff high, out past the cap rim, while a
+    // green orb gathers above the crook mushroom and the lantern swings. Then she sweeps the staff
+    // over and down until it points at the target in front at chest height and steps into it; the orb
+    // flies 0.6 m at the target in 0.12 s and is gone, and the lantern flares. She holds the point for
+    // about 0.1 s, then recovers. The staff leans out at her left side on the way up and over, clear
+    // of the cap; the recovery stands it up in front of the hip, outside the skirt.
+    const CAST_S = 1.1;
+    const RELEASE_C = 0.55;
+    const FLY_C = 0.12 / CAST_S; // the orb's flight, as a share of the clip
+    const CAST_TARGET: V3 = [0, 0.4, 1.4]; // the chest of an enemy in front
     const castWrist = [
       [0, WRIST_L],
-      [0.15, [0.285, 0.35, 0.03]],
-      [0.35, [0.25, 0.35, -0.06]],
-      [0.42, [0.245, 0.352, -0.075]],
-      [0.52, [0.2, 0.37, 0.175]],
-      [0.62, [0.205, 0.368, 0.168]],
-      [0.74, [0.27, 0.37, 0.16]],
-      [0.86, [0.285, 0.355, 0.12]],
+      [0.18, [0.28, 0.44, 0.08]],
+      [0.36, [0.28, 0.475, 0.1]],
+      [0.46, [0.275, 0.48, 0.09]],
+      [0.505, [0.28, 0.45, 0.09]],
+      [RELEASE_C, [0.215, 0.41, 0.15]],
+      [0.68, [0.215, 0.405, 0.148]],
+      [0.8, [0.27, 0.37, 0.16]],
+      [0.9, [0.285, 0.355, 0.12]],
       [1, WRIST_L],
     ] as const;
     const castDir = [
       [0, STAFF_AXIS],
-      [0.15, norm([0.2, 0.85, 0.48])],
-      [0.35, norm([0.34, 0.66, 0.67])],
-      [0.42, norm([0.34, 0.64, 0.69])],
-      [0.52, norm([0.12, 0.4, 0.91])],
-      [0.62, norm([0.13, 0.41, 0.9])],
-      [0.74, norm([0.06, 0.62, 0.78])],
-      [0.86, norm([0.2, 0.9, 0.38])],
+      [0.18, norm([0.25, 0.95, 0.24])],
+      [0.36, norm([0.22, 0.94, 0.3])],
+      [0.46, norm([0.22, 0.95, 0.27])],
+      [0.505, norm([0.15, 0.75, 0.65])],
+      [RELEASE_C, norm([0.06, 0.2, 1])],
+      [0.68, norm([0.06, 0.21, 1])],
+      [0.8, norm([0.06, 0.62, 0.78])],
+      [0.9, norm([0.2, 0.9, 0.38])],
       [1, STAFF_AXIS],
     ] as const;
     const castPole = [
       [0, POLE_L],
-      [0.35, [0.55, 0.15, -0.1]],
-      [0.52, [0.5, 0.2, -0.2]],
-      [0.74, [0.55, 0.15, -0.2]],
+      [0.36, [0.55, 0.3, -0.1]],
+      [0.505, [0.6, 0.2, -0.1]],
+      [RELEASE_C, [0.6, 0.15, -0.15]],
+      [0.8, [0.55, 0.15, -0.2]],
       [1, POLE_L],
     ] as const;
+    const JOINTS_L: V3[] = [HIPS_AT, SPINE_AT, CHEST_AT, SHOULDER, ELBOW_L, WRIST_L];
+    const castRig = (p: number) => {
+      const g = ease(0, 0.36, p) * (1 - ease(0.46, 0.53, p));
+      const s = ease(0.47, RELEASE_C, p) * (1 - ease(0.68, 1, p));
+      const hipsR: V3 = [0, 6 * g - 6 * s, 0];
+      const spineR: V3 = [-3 * g + 7 * s, 3 * g - 3 * s, 2 * g];
+      const chestR: V3 = [-3 * g + 5 * s, 5 * g - 4 * s, 0];
+      const hipsMove: V3 = [0, -legDrop(LEG, 14 * s) - 0.004 * g, -0.015 * g + 0.025 * s];
+      const wrist = keys(p, castWrist);
+      const arm = reach(ARM_L, wrist, keys(p, castPole));
+      // On the raise the fist bends halfway to the forearm (as in the victory), so the lantern branch
+      // points out, clear of the cap; for the point it lines up with the forearm.
+      const elbow = follow([SHOULDER], [arm.upper], ELBOW_L);
+      const w = keys(p, [[0, 0], [0.2, 0.5], [0.46, 0.5], [RELEASE_C, 1], [0.8, 1], [1, 0]] as const);
+      const up = norm(lerp(FIST_L, norm(sub(wrist, elbow)), w));
+      const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: norm(keys(p, castDir)), up });
+      const rots: V3[] = [hipsR, spineR, chestR, arm.upper, arm.lower, hand];
+      return { g, s, hipsR, spineR, chestR, hipsMove, arm, hand, rots, handQ: chainQ(rots) };
+    };
+    // The gathered orb floats just above the mushroom; at the release it flies from there at the target.
+    const ORB_LIFT = 0.045;
+    const orbHeld = add(ORB, scale(MUSH_UP, ORB_LIFT));
+    const atCast = castRig(RELEASE_C);
+    const orbFrom = add(follow(JOINTS_L, atCast.rots, orbHeld), atCast.hipsMove);
+    const orbDir = norm(sub(CAST_TARGET, orbFrom));
     k.animation('attack', {
-      duration: 1.0,
+      duration: CAST_S,
       loop: false,
       pose: (_t, p) => {
-        const g = ease(0, 0.35, p) * (1 - ease(0.42, 0.5, p));
-        const s = ease(0.43, 0.52, p) * (1 - ease(0.64, 1, p));
-        const hipsR: V3 = [0, 10 * g - 12 * s, 0];
-        const spineR: V3 = [-3 * g + 7 * s, 6 * g - 6 * s, 0];
-        const chestR: V3 = [-3 * g + 5 * s, 10 * g - 12 * s, 0];
-        const wrist = keys(p, castWrist);
-        const arm = reach(ARM_L, wrist, keys(p, castPole));
-        // The fist lines up with the forearm while the staff is out of its rest grip.
-        const elbow = follow([SHOULDER], [arm.upper], ELBOW_L);
-        const w = keys(p, [[0, 0], [0.25, 1], [0.75, 1], [1, 0]] as const);
-        const up = norm(lerp(FIST_L, norm(sub(wrist, elbow)), w));
-        const hand = orient([arm.upper, arm.lower], { dir: STAFF_AXIS, up: FIST_L }, { dir: keys(p, castDir), up });
+        const r = castRig(p);
+        const { g, s } = r;
         // The lantern: plumb, plus a lag swing (+X swings it back, -X forward to the target).
-        const swing = keys(p, [[0, 0], [0.18, -10], [0.35, 6], [0.44, 4], [0.48, 20], [0.54, -40], [0.6, -46], [0.7, -8], [0.8, 8], [0.9, -3], [1, 0]] as const);
-        const lanternR = euler(chainQ([hipsR, spineR, chestR, arm.upper, arm.lower, hand]).invert().multiply(quat([swing, 0, 0])));
-        const flare = keys(p, [[0, 1], [0.47, 1], [0.49, 1.4], [0.56, 1.4], [0.59, 1], [1, 1]] as const, 'linear');
+        const swing = keys(
+          p,
+          [[0, 0], [0.18, -12], [0.36, 12], [0.46, -4], [0.52, 22], [0.57, -36], [0.64, -40], [0.74, -6], [0.84, 9], [0.93, -3], [1, 0]] as const,
+        );
+        const lanternR = euler(r.handQ.clone().invert().multiply(quat([swing, 0, 0.3 * swing])));
+        const flare = keys(p, [[0, 1], [RELEASE_C - 0.02, 1], [RELEASE_C, 1.35], [RELEASE_C + 0.08, 1.35], [RELEASE_C + 0.12, 1], [1, 1]] as const, 'linear');
+        // The orb: it rises out of the mushroom and swells on the raise, pulses at the top, rides the
+        // sweep, and at the release flies 0.6 m at the target, shrinking away at the end of its flight.
+        // After that it waits, tiny, back inside the mushroom's cap and grows back to its hidden rest size.
+        const fly = (p - RELEASE_C) / FLY_C;
+        let spell: { move: V3; scale: V3 };
+        if (fly < 0) {
+          const size = keys(p, [[0, 1], [0.12, 1], [0.34, 3.4], [0.42, 3], [0.48, 3.6], [RELEASE_C, 4]] as const);
+          const lift = keys(p, [[0, 0], [0.12, 0], [0.34, ORB_LIFT], [1, ORB_LIFT]] as const);
+          spell = { move: scale(MUSH_UP, lift), scale: [size, size, size] };
+        } else if (fly <= 1) {
+          const here = add(follow(JOINTS_L, r.rots, orbHeld), r.hipsMove);
+          const want = add(orbFrom, scale(orbDir, 0.6 * (1 - (1 - fly) ** 1.6)));
+          const d = new THREE.Vector3(...sub(want, here)).applyQuaternion(r.handQ.clone().invert());
+          const size = 4.6 * (1 - ease(0.7, 1, fly)) + 0.001;
+          spell = { move: add(scale(MUSH_UP, ORB_LIFT), [d.x, d.y, d.z]), scale: [size, size, size] };
+        } else {
+          const size = keys(p, [[0, 0.001], [0.9, 0.001], [1, 1]] as const);
+          spell = { move: [0, 0, 0], scale: [size, size, size] };
+        }
         return {
-          hips: { move: [0, -legDrop(LEG, 14 * s) - 0.004 * g, -0.012 * g + 0.025 * s], rotate: hipsR },
-          spine: { rotate: spineR },
-          chest: { rotate: chestR },
-          head: { rotate: [2 * g - 6 * s, -4 * g + 14 * s, 0] },
-          'upperarm.L': { rotate: arm.upper },
-          'forearm.L': { rotate: arm.lower },
-          'hand.L': { rotate: hand },
+          hips: { move: r.hipsMove, rotate: r.hipsR },
+          spine: { rotate: r.spineR },
+          chest: { rotate: r.chestR },
+          // The head keeps looking at the target while the body draws back and lunges.
+          // On the raise the head tips back a little, so the cap leans away from the upright staff.
+          neck: { rotate: [-2 * g, -4 * g + 4 * s, 0] },
+          head: { rotate: [-5 * g - 6 * s, -8 * g + 8 * s, 0] },
+          'upperarm.L': { rotate: r.arm.upper },
+          'forearm.L': { rotate: r.arm.lower },
+          'hand.L': { rotate: r.hand },
           lantern: { rotate: lanternR, scale: [flare, flare, flare] },
-          // The flask arm swings in for balance on the draw, then back on the thrust.
+          spell,
+          // The flask arm swings in for balance on the draw, then back on the cast.
           'upperarm.R': { rotate: [-5 * g + 10 * s, 0, -4 * s] },
           'leg.L': { rotate: [-14 * s, 0, 0] },
           'leg.R': { rotate: [14 * s, 0, 0] },
