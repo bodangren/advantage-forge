@@ -1,0 +1,607 @@
+import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+
+/**
+ * Animated armor — Chibi Quest dungeon enemy: an empty, haunted suit of plate, about 0.98 m to
+ * the helm crown and 1.05 m to the plume tip, faces +Z. Target:
+ * docs/enemy-mockups/animated-armor_001.jpg (made with mmx; one front view). Built on the
+ * knight's body and skeleton, so the armored characters share one build.
+ *
+ * Role: a slow, tough dungeon guard, seen in 3D and as a 128 px sprite; the black visor with its
+ *   two glowing eyes must read at once.
+ * One idea: a huge round great helm with nothing inside but darkness and two cyan eyes, over a
+ *   dark, rusty suit with a purple scarf and cape and a broad, chipped sword held low.
+ * Proportions: the knight's joints (shoulders 0.385, belt 0.25, knees 0.12); the helm from 0.48
+ *   to 0.94 (half-width 0.24), its brass band at 0.73, the eyes at 0.67, the face plate below.
+ * Shape language: round and heavy (helm dome, pauldrons, knee cops, sabatons), with sharp accents
+ *   for menace (claw fingers, the sword, the torn cape).
+ * Palette (60/30/10): dark tarnished steel #6b7079 with rust; purple cloth #5a3a7a; tarnished
+ *   brass #a8864a; the glowing cyan eyes #3ff0e0 as the accent on black #0b0d12.
+ * Value plan: the cyan eyes on the black visor are the strongest contrast (focal point); the
+ *   purple scarf under the helm is the second.
+ * Bodies: void, eyes, helm, face-plate, cheek-plates, brass, rivets, plume-cloth, scarf, cape, tabard, cuirass, mail,
+ *   pauldrons, gauntlets, belt, legs, greaves, sword, hilt, grip.
+ * Rig: the knight's skeleton with `cloak` and `plume`; the sword rigid on `hand.R`. Clips: idle
+ *   (the helm and hands drift, loose on nothing), walk, run, attack (a diagonal slash).
+ */
+
+const C = {
+  steel: '#6b7079',
+  steelDark: '#4c5159',
+  rust: '#8a4e2e',
+  brass: '#a8864a',
+  rivet: '#9aa0a8',
+  mail: '#4a4f56',
+  void: '#0b0d12',
+  eye: '#3ff0e0',
+  purple: '#5a3a7a',
+  purpleDark: '#3e2656',
+  leather: '#3a2a22',
+  blade: '#9aa0a8',
+  bladeEdge: '#bcc2ca',
+};
+
+type V3 = readonly [number, number, number];
+
+const pair = (s: sdf.Shape) => s.mirror('x');
+const hard = (s: sdf.Shape) => s.mirror('x', 0);
+const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
+const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const norm = (a: V3): V3 => {
+  const l = Math.hypot(a[0], a[1], a[2]);
+  return [a[0] / l, a[1] / l, a[2] / l];
+};
+const along = (p: V3, d: V3, s: number): V3 => [p[0] + d[0] * s, p[1] + d[1] * s, p[2] + d[2] * s];
+/** Turns local +Y toward `d` (rotateZ, then rotateX) and moves the origin to `p`. */
+const alignY = (s: sdf.Shape, d: V3, p: V3) => {
+  const n = norm(d);
+  return s
+    .rotateZ((Math.asin(-n[0]) * 180) / Math.PI)
+    .rotateX((Math.atan2(n[2], n[1]) * 180) / Math.PI)
+    .at(...p);
+};
+
+/** Rust and wear on dark steel: orange-brown blotches and lighter scuffs. */
+const rusty = (x: number, y: number, z: number, base: readonly [number, number, number]): readonly [number, number, number] => {
+  const n = noise.fbm(x * 16, y * 16, z * 16, 3);
+  if (n > 0.52) return [0.54, 0.3, 0.18];
+  if (n > 0.38) return [base[0] * 0.8 + 0.54 * 0.2, base[1] * 0.8 + 0.3 * 0.2, base[2] * 0.8 + 0.18 * 0.2];
+  if (n < -0.45) return [base[0] * 1.15, base[1] * 1.15, base[2] * 1.15];
+  return base;
+};
+const dents = (x: number, y: number, z: number) => 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2);
+
+// Joints (the knight's shoulders and legs). The right forearm points forward and holds the sword
+// low across the body; the left hand is an open claw held out to the side.
+const SHOULDER: V3 = [0.13, 0.385, 0];
+const ELBOW_R: V3 = [-0.2, 0.33, 0.0];
+const WRIST_R: V3 = [-0.215, 0.29, 0.1];
+const ELBOW_L: V3 = [0.19, 0.33, 0.0];
+const WRIST_L: V3 = [0.24, 0.29, 0.075];
+const HIP: V3 = [0.068, 0.195, 0];
+const ANKLE: V3 = [0.098, 0.07, 0];
+
+// The sword: its grip center is inside the right fist; the blade runs across the body, down to
+// the left and forward.
+const FIST_R = along(WRIST_R, norm(sub(WRIST_R, ELBOW_R)), 0.045);
+const BLADE_DIR = norm([0.8, -0.45, 0.4]);
+const swordPose = (s: sdf.Shape) => alignY(s, [-BLADE_DIR[0], -BLADE_DIR[1], -BLADE_DIR[2]], FIST_R);
+
+export default defineAsset({
+  name: 'animated-armor',
+  description: 'Chibi animated armor dungeon enemy: an empty, rusty suit of plate with a huge round great helm, black inside with two glowing cyan eyes, a purple scarf and cape, and a broad chipped sword.',
+  detail: 0.005,
+  reference: 'docs/enemy-mockups/animated-armor_001.jpg',
+
+  build(k) {
+    const HELM_C: V3 = [0, 0.685, -0.01];
+    const PLUME_AT: V3 = [0, 0.935, -0.01];
+    k.skeleton({
+      hips: { at: [0, 0.2, 0] },
+      spine: { parent: 'hips', at: [0, 0.26, 0] },
+      chest: { parent: 'spine', at: [0, 0.33, 0] },
+      neck: { parent: 'chest', at: [0, 0.43, -0.01] },
+      head: { parent: 'neck', at: [0, 0.48, -0.01] },
+      plume: { parent: 'head', at: PLUME_AT, tail: [0.02, 1.05, -0.03] },
+      cloak: { parent: 'chest', at: [0, 0.41, -0.13] },
+      'upperarm.L': { parent: 'chest', at: SHOULDER },
+      'forearm.L': { parent: 'upperarm.L', at: ELBOW_L },
+      'hand.L': { parent: 'forearm.L', at: WRIST_L },
+      'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
+      'forearm.R': { parent: 'upperarm.R', at: ELBOW_R },
+      'hand.R': { parent: 'forearm.R', at: WRIST_R },
+      'leg.L': { parent: 'hips', at: HIP },
+      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'leg.R': { parent: 'hips', at: mx(HIP) },
+      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+    });
+
+    // ------------------------------------------------------------------ great helm: a dome with a black visor opening
+    const helmOuter = sdf.ellipsoid([0.24, 0.255, 0.235]).at(...HELM_C);
+    const helmInner = sdf.ellipsoid([0.222, 0.237, 0.217]).at(...HELM_C);
+    const helmBottom = sdf.halfSpace([0, -1, 0], -0.48);
+    const BAND_Y = 0.735;
+    const PLATE_TOP = 0.632;
+    // The visor: a wide dark window across the front between the brass band and the face plate.
+    const visor = sdf
+      .extrude(
+        profile.polygon(
+          [
+            [-0.175, BAND_Y - 0.018],
+            [0.175, BAND_Y - 0.018],
+            [0.19, 0.68],
+            [0.182, PLATE_TOP + 0.01],
+            [-0.182, PLATE_TOP + 0.01],
+            [-0.19, 0.68],
+          ],
+          { smooth: true, samples: 4 },
+        ),
+        0.5,
+        0.008,
+      )
+      .at(0, 0, 0.27);
+    const helm = helmOuter
+      .subtract(helmInner)
+      .smoothSubtract(0.006, visor)
+      .intersect(helmBottom)
+      .paintWhere(helmInner.round(0.005), C.steelDark, 0.01)
+      .paintFn(rusty);
+    k.body('helm', helm, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+
+    // Nothing inside: a black void fills the helm, with two glowing eyes on it.
+    const voidShape = sdf.ellipsoid([0.2, 0.2, 0.19]).at(HELM_C[0], HELM_C[1] - 0.01, HELM_C[2] + 0.005).intersect(helmBottom);
+    k.body('void', voidShape.bone('head'), { color: C.void, roughness: 1 });
+    const EYE_Y = 0.678;
+    const eyeZ = (x: number) => sdf.raycast(voidShape, [x, EYE_Y, 1], [0, 0, -1])![2];
+    // Oval eyes, tilted a little (inner ends lower): a cold glare.
+    const eyes = sdf.union(...[1, -1].map((s) => sdf.ellipsoid([0.036, 0.027, 0.014]).rotateZ(s * 10).at(s * 0.078, EYE_Y, eyeZ(0.078) - 0.004)));
+    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.6 });
+
+    // The face plate (bevor): a curved plate over the lower front, standing proud of the helm,
+    // with a rolled top edge and three pairs of breathing slots.
+    const plateRegion = sdf.box([0.44, PLATE_TOP - 0.48, 0.3], 0.006).at(0, (PLATE_TOP + 0.48) / 2, 0.14);
+    const plateShell = helmOuter.round(0.014).subtract(helmOuter.round(-0.004)).smoothIntersect(0.006, plateRegion);
+    const plateRim = helmOuter
+      .round(0.022)
+      .subtract(helmOuter.round(0.004))
+      .smoothIntersect(0.004, sdf.box([0.44, 0.016, 0.3], 0.006).at(0, PLATE_TOP - 0.006, 0.14));
+    const slots = sdf.union(
+      ...[-0.1, -0.058, 0.058, 0.1, -0.02, 0.02].map((x) => sdf.box([0.018, 0.03, 0.4], 0.003).at(x, 0.575, 0.2)),
+    );
+    const facePlate = sdf
+      .smoothUnion(0.006, plateShell, plateRim)
+      .intersect(helmBottom)
+      .subtract(slots.intersect(sdf.halfSpace([0, 1, 0], 0.61)))
+      .paintFn(rusty);
+    k.body('face-plate', facePlate, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+    // Hinge plates on the cheeks, beside the visor.
+    const cheeks = hard(
+      helmOuter
+        .round(0.01)
+        .subtract(helmOuter.round(-0.004))
+        .smoothIntersect(0.006, sdf.box([0.08, 0.2, 0.2], 0.01).rotateY(-40).at(0.2, 0.62, 0.1))
+        .intersect(helmBottom),
+    ).paintFn(rusty);
+    k.body('cheek-plates', cheeks, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+
+    // Brass: the brow band, a strip over the crown, and a diamond plate at the front.
+    const shellOf = (s: sdf.Shape, out: number, inn: number) => s.round(out).subtract(s.round(-inn));
+    const band = shellOf(helmOuter, 0.012, 0.012).smoothIntersect(0.005, sdf.box([0.8, 0.042, 0.8], 0.008).at(0, BAND_Y + 0.004, 0));
+    const strip = shellOf(helmOuter, 0.012, 0.012)
+      .smoothIntersect(0.005, sdf.box([0.052, 0.5, 0.8], 0.008).at(0, 0.98, 0))
+      .intersect(sdf.halfSpace([0, -1, 0], -BAND_Y));
+    const bandFront = sdf.raycast(band, [0, BAND_Y + 0.004, 1], [0, 0, -1])!;
+    const diamond = sdf
+      .extrude(
+        profile.polygon([
+          [0, 0.045],
+          [0.042, 0],
+          [0, -0.045],
+          [-0.042, 0],
+        ]),
+        0.018,
+        0.005,
+      )
+      .rotateX(-8)
+      .at(bandFront[0], bandFront[1], bandFront[2] - 0.002);
+    k.body('brass', sdf.union(band, strip, diamond).bone('head'), {
+      color: C.brass,
+      roughness: 0.45,
+      metalness: 0.8,
+      bump: dents,
+      detail: 0.004,
+    });
+    // Rivets along the band, the strip, the cheek plates, and in the diamond.
+    const onBand = Array.from({ length: 12 }, (_, i) => {
+      const a = ((i - 5.5) / 5.5) * 150 * (Math.PI / 180);
+      const hit = sdf.raycast(band.round(0.001), [Math.sin(a), BAND_Y + 0.004, Math.cos(a) - 0.01], [-Math.sin(a), 0, -Math.cos(a)]);
+      return hit && Math.abs(Math.sin(a)) > 0.12 ? sdf.sphere(0.009).at(...hit) : null;
+    }).filter((s): s is sdf.Shape => s !== null);
+    const onStrip = [0.8, 0.86, 0.91].map((y) => sdf.sphere(0.009).at(...sdf.raycast(strip.round(0.001), [0, y, 1], [0, 0, -1])!));
+    const onCheeks = hard(
+      sdf.union(...[0.57, 0.64, 0.7].map((y) => sdf.sphere(0.009).at(...sdf.raycast(helmOuter.round(0.011), [1, y, 0.12], [-1, 0, 0])!))),
+    );
+    k.body('rivets', sdf.union(...onBand, ...onStrip, onCheeks, sdf.sphere(0.01).at(bandFront[0], bandFront[1], bandFront[2] + 0.018)).bone('head'), {
+      color: C.rivet,
+      roughness: 0.4,
+      metalness: 0.8,
+      detail: 0.0035,
+    });
+
+    // A small twisted purple plume on the crown.
+    const plume = sdf
+      .smoothUnion(
+        0.012,
+        sdf.chain(
+          [
+            [PLUME_AT[0], PLUME_AT[1] - 0.01, PLUME_AT[2], 0.022],
+            [0.004, PLUME_AT[1] + 0.05, -0.02, 0.026],
+            [0.012, PLUME_AT[1] + 0.1, -0.03, 0.012],
+          ],
+          0.01,
+        ),
+        sdf.chain(
+          [
+            [PLUME_AT[0], PLUME_AT[1], PLUME_AT[2], 0.018],
+            [-0.02, PLUME_AT[1] + 0.06, -0.005, 0.018],
+            [-0.018, PLUME_AT[1] + 0.09, 0.0, 0.006],
+          ],
+          0.01,
+        ),
+      )
+      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z + 0.01, x) * 5 + y * 90) > 0.5 ? [base[0] * 0.75, base[1] * 0.75, base[2] * 0.75] : base));
+    k.body('plume-cloth', plume, { color: C.purple, roughness: 0.85, detail: 0.004, bone: 'plume' });
+
+    // ------------------------------------------------------------------ torso: cuirass and mail (the knight's)
+    const torso = sdf
+      .revolve(
+        profile.polygon(
+          [
+            [0, 0.47],
+            [0.07, 0.465],
+            [0.105, 0.44],
+            [0.125, 0.4],
+            [0.13, 0.34],
+            [0.124, 0.29],
+            [0.13, 0.25],
+            [0.138, 0.2],
+            [0.14, 0.165],
+            [0.132, 0.152],
+            [0, 0.152],
+          ],
+          { smooth: true, samples: 8 },
+        ),
+      )
+      .scale([1, 1, 0.78]);
+    const ridge = sdf.capsule([0, 0.43, 0.105], [0, 0.29, 0.112], 0.014).scale([0.8, 1, 1]);
+    // Two lames across the lower breastplate.
+    const lames = sdf.union(
+      ...[0.3, 0.272].map((y) => torso.round(0.02).subtract(torso.round(0.01)).smoothIntersect(0.004, sdf.box([0.5, 0.022, 0.5], 0.006).at(0, y, 0))),
+    );
+    const cuirass = torso
+      .round(0.014)
+      .smoothUnion(0.02, ridge)
+      .smoothUnion(0.004, lames)
+      .intersect(sdf.halfSpace([0, -1, 0], -0.258))
+      .intersect(sdf.halfSpace([0, 1, 0], 0.47))
+      .paintFn(rusty);
+    k.body('cuirass', cuirass, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'chest', bump: dents });
+    const rings = (x: number, y: number, z: number) => {
+      const u = Math.atan2(z, x) * 30;
+      const v = y * 190 + (Math.floor(u / Math.PI) % 2) * Math.PI * 0.5;
+      return 0.0012 * Math.abs(Math.sin(u)) * Math.abs(Math.sin(v));
+    };
+    const skirt = torso.round(0.006).smoothIntersect(0.006, sdf.box([0.5, 0.086, 0.5], 0.01).at(0, 0.219, 0));
+    const sleeve = (s: V3, e: V3, tag: string) => sdf.cone(s, lerp(s, e, 1.12), 0.046, 0.043).bone(tag);
+    const leggings = sdf.smoothUnion(
+      0.03,
+      sdf.ellipsoid([0.112, 0.05, 0.084]).at(0, 0.2, 0).bone('hips'),
+      pair(sdf.capsule([HIP[0], 0.2, 0], [0.095, 0.1, 0.004], 0.046).bone('leg.L')),
+    );
+    k.body(
+      'mail',
+      sdf.union(skirt.bone('hips'), sleeve(SHOULDER, ELBOW_L, 'upperarm.L'), sleeve(mx(SHOULDER), ELBOW_R, 'upperarm.R'), leggings),
+      { color: C.mail, roughness: 0.55, metalness: 0.7, bump: rings },
+    );
+
+    // ------------------------------------------------------------------ pauldrons: two riveted lames each
+    const lame = (s: number) =>
+      sdf
+        .ellipsoid([0.1 * s, 0.066 * s, 0.096 * s])
+        .intersect(sdf.halfSpace([0, -1, 0], 0.016 * s))
+        .round(0.003);
+    const pauldronPose = (s: sdf.Shape) => s.rotateZ(-26).at(0.162, 0.436, 0);
+    const pauldronLocal = sdf.union(lame(1.06), lame(1.2).at(0, -0.036, 0));
+    k.body('pauldrons', pair(pauldronPose(pauldronLocal).bone('upperarm.L')).paintFn(rusty), {
+      color: C.steel,
+      roughness: 0.5,
+      metalness: 0.75,
+      bump: dents,
+    });
+    const pauldronRivets = pair(
+      pauldronPose(sdf.union(...[-50, -15, 20, 55].map((a) => sdf.sphere(0.009).at(0.108 * Math.sin((a * Math.PI) / 180) * 1.2, -0.034, 0.1 * Math.cos((a * Math.PI) / 180) * 1.2)))).bone('upperarm.L'),
+    );
+
+    // ------------------------------------------------------------------ gauntlets: vambraces, a sword fist, and an open claw
+    const vambrace = (e: V3, w: V3) => sdf.cone(lerp(e, w, 0.15), lerp(e, w, 1.02), 0.042, 0.05).round(0.003);
+    // The right fist is built around the sword grip, in the sword's frame (grip along Y).
+    const fistLocal = sdf.smoothUnion(
+      0.012,
+      sdf.ellipsoid([0.044, 0.05, 0.046]).at(0.004, 0, -0.004),
+      sdf.capsule([-0.012, 0.03, 0.036], [-0.012, -0.03, 0.036], 0.018), // the finger roll
+      sdf.cone([0.03, 0.024, 0.014], [0.012, 0.03, 0.044], 0.016, 0.013), // the thumb over the grip
+    );
+    // The left hand: an open claw with pointed finger plates, reaching forward.
+    const dirL = norm(sub(WRIST_L, ELBOW_L));
+    const clawL = (() => {
+      const palm = along(WRIST_L, dirL, 0.035);
+      const fingers = [-0.024, -0.008, 0.008, 0.024].map((dz, i) => {
+        const root: V3 = [palm[0] + 0.012, palm[1] - 0.012, palm[2] + dz];
+        const mid: V3 = [root[0] + 0.022, root[1] - 0.03, root[2] + 0.016 + dz * 0.2];
+        const tip: V3 = [mid[0] + 0.004, mid[1] - 0.032, mid[2] + 0.018];
+        return sdf.chain(
+          [
+            [...root, 0.012],
+            [...mid, 0.011],
+            [...tip, i === 0 ? 0.003 : 0.003],
+          ],
+          0.004,
+        );
+      });
+      const thumb = sdf.chain(
+        [
+          [palm[0] - 0.02, palm[1] - 0.01, palm[2] + 0.03, 0.012],
+          [palm[0] - 0.024, palm[1] - 0.04, palm[2] + 0.05, 0.003],
+        ],
+        0.004,
+      );
+      return sdf.smoothUnion(0.01, sdf.ellipsoid([0.034, 0.03, 0.04]).at(...palm), ...fingers, thumb);
+    })();
+    const gauntlets = sdf
+      .union(
+        sdf.smoothUnion(0.012, vambrace(ELBOW_L, WRIST_L).bone('forearm.L'), clawL.bone('hand.L')),
+        sdf.smoothUnion(0.012, vambrace(ELBOW_R, WRIST_R).bone('forearm.R'), swordPose(fistLocal).bone('hand.R')),
+      )
+      .paintFn(rusty);
+    k.body('gauntlets', gauntlets, { color: C.steel, roughness: 0.5, metalness: 0.75, bump: dents });
+
+    // ------------------------------------------------------------------ belt, tassets, torn tabard
+    const beltY = 0.252;
+    const belt = cuirass.round(0.004).smoothIntersect(0.005, sdf.box([0.5, 0.04, 0.5], 0.006).at(0, beltY, 0));
+    k.body('belt', belt.bone('spine'), { color: C.leather, roughness: 0.65 });
+    const beltRivets = sdf.union(
+      ...[-60, -30, 0, 30, 60].map((a) => {
+        const r = (a * Math.PI) / 180;
+        return sdf.sphere(0.009).at(...sdf.surfacePoint(belt, [Math.sin(r) * 0.3, beltY, Math.cos(r) * 0.3], 0.001));
+      }),
+    );
+    const hipShell = torso.round(0.02).subtract(torso.round(0.004));
+    const tassetL = hipShell.smoothIntersect(0.008, sdf.box([0.1, 0.1, 0.3], 0.02).rotateZ(10).at(0.105, 0.19, 0.08)).bone('leg.L');
+    k.body('tassets', pair(tassetL).paintFn(rusty), { color: C.steel, roughness: 0.5, metalness: 0.75, bump: dents });
+    const flapL = sdf
+      .extrude(
+        profile.polygon([
+          [0.002, 0.262],
+          [0.062, 0.262],
+          [0.074, 0.11],
+          [0.058, 0.086],
+          [0.046, 0.108],
+          [0.03, 0.078],
+          [0.016, 0.1],
+          [0.003, 0.084],
+        ]),
+        0.014,
+        0.005,
+      )
+      .rotateX(-8)
+      .at(0, 0, 0.128);
+    k.body('tabard', pair(flapL.bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.13), C.purpleDark, 0.03), { color: C.purple, roughness: 0.85 });
+
+    // ------------------------------------------------------------------ scarf and torn cape (the knight's, in purple)
+    const scarfRing = sdf
+      .revolve(
+        profile.polygon(
+          [
+            [0.05, 0.51],
+            [0.1, 0.502],
+            [0.14, 0.476],
+            [0.152, 0.446],
+            [0.128, 0.43],
+            [0.09, 0.452],
+            [0.05, 0.47],
+          ],
+          { smooth: true, samples: 6 },
+        ),
+      )
+      .scale([1, 1, 0.92]);
+    const drape = cuirass
+      .round(0.012)
+      .subtract(cuirass.round(-0.002))
+      .intersect(
+        sdf
+          .extrude(
+            profile.polygon([
+              [-0.12, 0.47],
+              [0.12, 0.47],
+              [0.03, 0.38],
+              [0, 0.37],
+              [-0.03, 0.385],
+            ]),
+            0.4,
+          )
+          .at(0, 0, 0.2),
+      );
+    const scarf = sdf
+      .smoothUnion(0.012, scarfRing, drape)
+      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? [base[0] * 0.8, base[1] * 0.8, base[2] * 0.8] : base));
+    k.body('scarf', scarf, { color: C.purple, roughness: 0.85, bone: 'chest' });
+    const folds = (x: number, y: number, z: number) => Math.sin(Math.atan2(z, x) * 6) * Math.min(1, Math.max(0, (0.4 - y) / 0.26));
+    const capeCone = (r0: number, r1: number, y0: number, y1: number) =>
+      sdf
+        .revolve(
+          profile.polygon([
+            [0, y0],
+            [r0, y0],
+            [r1, y1],
+            [0, y1],
+          ]),
+        )
+        .scale([1, 1, 0.85])
+        .displace(0.012, folds);
+    const tears = sdf.union(
+      ...Array.from({ length: 7 }, (_, i) => {
+        const a = -70 + i * 23 + (noise.random(i, 4, 1) - 0.5) * 10;
+        const h = 0.05 + noise.random(i, 4, 2) * 0.05;
+        return sdf
+          .extrude(
+            profile.polygon([
+              [-0.03, 0.05],
+              [0.03, 0.05],
+              [0, 0.09 + h],
+            ]),
+            0.8,
+          )
+          .rotateY(180 + a);
+      }),
+    );
+    const cape = capeCone(0.19, 0.285, 0.44, 0.07)
+      .subtract(capeCone(0.168, 0.263, 0.46, 0.05))
+      .at(0, 0, -0.025)
+      .intersect(sdf.halfSpace([0, 0, 1], -0.02))
+      .subtract(tears)
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), C.purpleDark, 0.04);
+    k.body('cape', cape.bone('cloak'), { color: C.purple, roughness: 0.85 });
+
+    // ------------------------------------------------------------------ legs: knee cops, greaves, sabatons (the knight's)
+    const knee = sdf.ellipsoid([0.058, 0.034, 0.052]).at(0.095, 0.11, 0.022).bone('leg.L');
+    const greave = sdf.cone([0.096, 0.098, 0.006], [0.098, 0.06, 0.004], 0.05, 0.054).bone('leg.L');
+    const sabatonFoot = sdf
+      .smoothUnion(0.03, sdf.cylinder(0.054, 0.06, 0.02).at(0, 0.05, 0), sdf.ellipsoid([0.062, 0.052, 0.108]).at(0, 0.046, 0.045))
+      .intersect(sdf.halfSpace([0, -1, 0], 0));
+    const toeLines = sdf.union(
+      sdf.box([0.2, 0.006, 0.2]).rotateX(-30).at(0, 0.075, 0.06),
+      sdf.box([0.2, 0.006, 0.2]).rotateX(-40).at(0, 0.058, 0.1),
+    );
+    const sabaton = sabatonFoot
+      .smoothSubtract(0.003, toeLines.intersect(sdf.halfSpace([0, 0, -1], -0.04)))
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.012), C.steelDark)
+      .rotateY(12)
+      .at(ANKLE[0], 0, 0)
+      .bone('foot.L');
+    k.body('greaves', pair(sdf.union(sdf.smoothUnion(0.01, greave, knee), sabaton)).paintFn(rusty), {
+      color: C.steel,
+      roughness: 0.5,
+      metalness: 0.75,
+      bump: dents,
+    });
+    k.body('trim-rivets', sdf.union(pauldronRivets, beltRivets.bone('spine')), { color: C.rivet, roughness: 0.4, metalness: 0.8, detail: 0.0035 });
+
+    // ------------------------------------------------------------------ broad, chipped sword in the right fist
+    // Local frame: the grip center at the origin, the blade toward -Y, the flat facing +Z.
+    const BW = 0.078;
+    const chip = (y: number, side: 1 | -1, r: number) => sdf.sphere(r).at((side * BW) / 2, y, 0);
+    const bladeLocal = sdf
+      .extrude(
+        profile.polygon([
+          [-BW / 2, -0.07],
+          [BW / 2, -0.07],
+          [BW / 2 - 0.004, -0.46],
+          [0, -0.52],
+          [-BW / 2 + 0.004, -0.46],
+        ]),
+        0.018,
+        0.004,
+      )
+      .subtract(sdf.box([0.018, 0.03, 0.1], 0.003).at(0, -0.1, 0)) // the square hole below the guard
+      .subtract(chip(-0.24, 1, 0.012), chip(-0.33, -1, 0.01), chip(-0.4, 1, 0.009))
+      .paintWhere(sdf.box([0.2, 1, 0.2]).at(0, -0.3, 0).subtract(sdf.box([BW - 0.024, 1, 0.3]).at(0, -0.3, 0)), C.bladeEdge, 0.004)
+      .paintFn((x, y, z, base) => (noise.fbm(x * 30, y * 30, z * 30, 2) > 0.45 ? [0.5, 0.33, 0.24] : base));
+    k.body('sword', swordPose(bladeLocal), {
+      color: C.blade,
+      roughness: 0.4,
+      metalness: 0.8,
+      detail: 0.0035,
+      bone: 'hand.R',
+      bump: dents,
+    });
+    const guard = sdf.box([0.15, 0.022, 0.03], 0.009).at(0, -0.062, 0);
+    const pommel = sdf.cylinder(0.024, 0.02, 0.007).rotateX(90).at(0, 0.075, 0);
+    k.body('hilt', swordPose(sdf.union(guard, pommel)), { color: C.brass, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'hand.R' });
+    k.body('grip', swordPose(sdf.cylinder(0.014, 0.13, 0.004)), { color: C.leather, roughness: 0.75, detail: 0.004, bone: 'hand.R' });
+
+    // ------------------------------------------------------------------ animation
+    const { wave, bump, legDrop } = motion;
+    const LEG = 0.19;
+
+    // Idle: nothing holds the pieces together, so the helm and the hands drift a little on their own.
+    k.animation('idle', {
+      duration: 2.6,
+      pose: (_t, p) => ({
+        hips: { move: [0, -0.003 * bump(p), 0] },
+        chest: { rotate: [2 * wave(p), 0, 0] },
+        head: { move: [0, 0.012 * wave(p, 1, 0.2), 0], rotate: [3 * wave(p, 1, 0.35), 6 * wave(p, 1, 0.1), 3 * wave(p, 2, 0.2)] },
+        plume: { rotate: [4 * wave(p, 1, 0.4), 0, 4 * wave(p, 1, 0.3)] },
+        cloak: { rotate: [3 * wave(p, 1, 0.3), 0, 0] },
+        'hand.L': { move: [0.006 * wave(p, 1, 0.5), 0.008 * wave(p, 1, 0.1), 0], rotate: [8 * wave(p, 1, 0.3), 0, 0] },
+        'hand.R': { move: [0, 0.005 * wave(p, 1, 0.6), 0] },
+        'upperarm.L': { rotate: [3 * wave(p, 1, 0.1), 0, 2 * bump(p)] },
+      }),
+    });
+
+    // A heavy, clanking stride: the helm lags each step and settles late.
+    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number) => ({
+      duration,
+      pose: (_t: number, p: number) => {
+        const s = wave(p);
+        return {
+          hips: {
+            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
+            rotate: [0, 7 * s, 0] as const,
+          },
+          spine: { rotate: [lean, 0, 0] as const },
+          chest: { rotate: [lean * 0.5, -8 * s, 0] as const },
+          head: { move: [0, 0.008 * bump(p, 2, 0.35), 0] as const, rotate: [-lean + 3 * wave(p, 2, 0.35), 5 * s, 2 * wave(p, 1, 0.3)] as const },
+          plume: { rotate: [flow * 0.5 + 5 * wave(p, 2, 0.2), 0, 4 * wave(p, 2, 0.1)] as const },
+          cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
+          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
+          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
+          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
+          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
+          'upperarm.L': { rotate: [armSwing * 0.6 * s, 0, 4] as const },
+          'upperarm.R': { rotate: [-armSwing * 0.2 * s, 0, -4] as const },
+          'forearm.L': { rotate: [-armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
+        };
+      },
+    });
+    k.animation('walk', stride(1.0, 24, 24, 3, 0, 6));
+    k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20));
+
+    // A diagonal slash: raise the sword over the right shoulder, cut down and across to the left,
+    // follow through, and recover.
+    const ease = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    k.animation('attack', {
+      duration: 1.0,
+      loop: false,
+      pose: (_t, p) => {
+        const wind = ease(0, 0.38, p) * (1 - ease(0.38, 0.5, p));
+        const cut = ease(0.38, 0.52, p) * (1 - ease(0.66, 1, p));
+        return {
+          hips: { move: [0, -legDrop(LEG, 14 * cut) - 0.006 * wind, 0.03 * cut - 0.01 * wind], rotate: [0, -18 * wind + 22 * cut, 0] },
+          spine: { rotate: [-4 * wind + 10 * cut, 0, 0] },
+          chest: { rotate: [0, -16 * wind + 20 * cut, 0] },
+          head: { rotate: [-4 * wind + 6 * cut, 12 * wind - 14 * cut, 0] },
+          'upperarm.R': { rotate: [-110 * wind + 10 * cut, 0, -30 * wind + 20 * cut] },
+          'forearm.R': { rotate: [-20 * wind - 10 * cut, 0, 0] },
+          'hand.R': { rotate: [40 * wind - 20 * cut, 0, -30 * wind + 10 * cut] },
+          'upperarm.L': { rotate: [-15 * wind + 10 * cut, 0, 12 * wind] },
+          'leg.R': { rotate: [8 * wind - 16 * cut, 0, 0] },
+          'leg.L': { rotate: [-6 * wind + 12 * cut, 0, 0] },
+          'foot.R': { rotate: [8 * cut, 0, 0] },
+        };
+      },
+    });
+  },
+});

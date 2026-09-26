@@ -887,5 +887,38 @@
       "Thicken the tooth bases and bend the middle teeth a little toward the front."
     ],
     "reviewedAt": "2026-09-26T10:15:32+00:00"
+  },
+  "animated-armor": {
+    "overall": 7.5,
+    "group": "Enemies",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The animated armor matches its mmx mockup: a huge round great helm with a brass band, a black visor with two glowing cyan eyes, a slotted face plate, a rusty dark suit on the knight's body, a purple scarf and torn cape, and a broad chipped sword held low across the body.",
+    "strengths": [
+      "The cyan eyes on the black visor read at once, and nothing inside the helm shows that the suit is empty.",
+      "It shares the knight's body and rig, so the armored characters read as one set.",
+      "In the idle clip the helm and the hands drift on their own, which shows that nothing holds the pieces together."
+    ],
+    "issues": [
+      "The rust is orange blotches; the mockup has finer rust and more scratches.",
+      "The sword blade is lighter than the mockup and draws the eye away from the visor.",
+      "The attack clip was not reviewed frame by frame before the usage limit."
+    ],
+    "next": [
+      "Review the attack strip, and fix the slash if the blade crosses the helm.",
+      "Darken the blade and make the rust finer."
+    ],
+    "reviewedAt": "2026-09-26T10:25:56+00:00"
   }
 }
