@@ -359,7 +359,7 @@
     "reviewedAt": "2026-09-26T04:49:52+00:00"
   },
   "orc-warrior": {
-    "overall": 7.5,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -367,28 +367,28 @@
       "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3,
+      "detail": 4,
       "technical": 5,
       "gameReady": 5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The orc warrior is a stocky brute that is all shoulders and arms, with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a hand axe, as in the mmx mockup.",
+    "summary": "The orc warrior is a stocky brute with a heavy scowl, big tusks, a topknot, a spiked pauldron, and a hand axe. The hair and the loincloth now match the mmx mockup better, and it has the full clip set.",
     "strengths": [
-      "The yellow eyes under heavy black brows, the big tusks, and the pointed beard make a strong scowl at 128 px.",
-      "The wide shoulders, big bracers, and spiked pauldron give it a heavier silhouette than the goblins, so the two kinds read apart.",
-      "The heavy walk shifts the weight from side to side, and the axe chop has a high wind-up."
+      "The hair now has thick grooved strands that sweep back to the topknot, as in the mockup.",
+      "The loincloth is now a torn red cloth with jagged points over a fur skirt, as in the mockup.",
+      "The clips read well: a high overhead chop, a roar with the axe up, a quick hit, and a fall that ends on the back."
     ],
     "issues": [
-      "The hair stripes look like a knit cap. The mockup hair is combed back in thick strands.",
-      "The loincloth is two plain red flaps. The mockup has a shaggy, torn red cloth.",
-      "The skin is a little brighter and greener than the olive skin in the mockup."
+      "The tusks are wide flat plates on the cheeks. The mockup tusks curve up from the lower jaw.",
+      "The mouth is hidden under the beard. The mockup shows a clear frown between the tusks.",
+      "The axe blade is a small flat wedge. The mockup blade is a large curved crescent."
     ],
     "next": [
-      "Replace the painted hair stripes with shallow grooves that sweep back to the topknot.",
-      "Give the loincloth more torn points and a darker, shaggier edge."
+      "Make the tusks narrower and curve them up from the lower jaw.",
+      "Paint a short dark frown line between the tusks, above the beard."
     ],
-    "reviewedAt": "2026-09-26T05:01:27+00:00"
+    "reviewedAt": "2026-09-26T13:16:54+00:00"
   },
   "bandit": {
     "overall": 8,

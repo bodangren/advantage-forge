@@ -17,15 +17,18 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   beard; red loincloth and hair band #b83a2e; iron #5a6068; yellow eyes #f2c230 as the accent.
  * Value plan: the yellow eyes under the black brows and the cream tusks are the strongest
  *   contrast (focal point); the dark pauldron and the red loincloth are the second masses.
- * Bodies: skin, hair (hair, beard, brows), tusks, iron (pauldron, buckle, axe head), spikes,
- *   leather (bracers, strap, belt), loincloth, fur, band, haft.
+ * Bodies: skin, hair (hair combed back in thick strands to the topknot, sideburns, beard, brows),
+ *   tusks, iron (pauldron, buckle, axe head), spikes, leather (flared bracers, strap, belt),
+ *   loincloth (a torn, shaggy red wrap), fur (shaggy shin wraps), band, haft.
  * Rig: chibi humanoid with wide joints plus `knot` (the topknot tail); the axe is rigid on
- *   `hand.R`, the pauldron follows `upperarm.R`. Clips: idle, walk, run, attack (an overhead chop).
+ *   `hand.R`, the pauldron follows `upperarm.R`. Clips: idle, walk, run, attack (a heavy overhead
+ *   chop solved by targets: a big wind-up behind the shoulder, a hold, the body drives the axe
+ *   down in front, an impact with a shake, a follow-through), roar (a war cry), hit, death.
  */
 
 const C = {
-  skin: '#667f2c',
-  skinDark: '#4c6220',
+  skin: '#6a7a2a',
+  skinDark: '#4a5a1c',
   eye: '#f2c230',
   pupil: '#141010',
   lid: '#2a3a18',
@@ -36,8 +39,8 @@ const C = {
   ironLight: '#8a9098',
   leather: '#6e3f24',
   leatherDark: '#4a2a18',
-  red: '#b83a2e',
-  redDark: '#842a22',
+  red: '#96302a',
+  redDark: '#5a1a15',
   fur: '#6a4a30',
   furDark: '#4a3220',
   wood: '#7a4a2a',
@@ -49,6 +52,11 @@ type V3 = readonly [number, number, number];
 const pair = (s: sdf.Shape) => s.mirror('x');
 const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const norm = (a: V3): V3 => {
+  const l = Math.hypot(a[0], a[1], a[2]);
+  return [a[0] / l, a[1] / l, a[2] / l];
+};
 
 // Joints: wide shoulders, arms hanging out from the body, a wide stance.
 const SHOULDER: V3 = [0.22, 0.52, 0];
@@ -126,6 +134,16 @@ export default defineAsset({
       pair(sdf.sphere(0.1).at(0.155, 0.545, -0.02).bone('chest')), // traps
       pair(sdf.ellipsoid([0.088, 0.062, 0.05]).at(0.076, 0.48, 0.1).bone('chest')), // pecs
     );
+    // Six blocky abdominal muscles on the belly, set on its surface.
+    const belly = sdf.smoothUnion(0.06, sdf.ellipsoid([0.2, 0.16, 0.15]).at(0, 0.47, 0), sdf.ellipsoid([0.17, 0.13, 0.14]).at(0, 0.35, 0.02));
+    const abs = pair(
+      sdf.union(
+        ...[0.405, 0.365, 0.325].map((y, i) => {
+          const p = sdf.raycast(belly, [0.036, y, 1], [0, 0, -1])!;
+          return sdf.ellipsoid([0.03 - i * 0.002, 0.018, 0.016]).at(p[0], p[1], p[2] - 0.006);
+        }),
+      ),
+    ).bone('spine');
     const armAt = (s: 1 | -1) => {
       const sh: V3 = s > 0 ? SHOULDER : mx(SHOULDER);
       const el: V3 = s > 0 ? ELBOW : mx(ELBOW);
@@ -153,8 +171,8 @@ export default defineAsset({
     // ------------------------------------------------------------------ face paint
     const at = (s: sdf.Shape, x: number, y: number) => s.at(x, y, faceZ(Math.abs(x), y));
     const EYE: V3 = [0.074, 0.69, 0];
-    const eyeBall = pair(at(sdf.ellipsoid([0.044, 0.038, 0.07]), EYE[0], EYE[1]));
-    const pupil = pair(at(sdf.ellipsoid([0.019, 0.023, 0.07]), EYE[0] - 0.008, EYE[1] - 0.004));
+    const eyeBall = pair(at(sdf.ellipsoid([0.049, 0.041, 0.07]), EYE[0], EYE[1]));
+    const pupil = pair(at(sdf.ellipsoid([0.02, 0.025, 0.07]), EYE[0] - 0.008, EYE[1] - 0.004));
     // The upper lid cuts across each eye on a slant, low at the inner end: a scowl.
     const lidL = sdf
       .extrude(
@@ -179,6 +197,7 @@ export default defineAsset({
       .smoothUnion(0.04, head, neck)
       .smoothUnion(0.015, nose, ears)
       .smoothUnion(0.05, trunk)
+      .smoothUnion(0.012, abs)
       .union(armAt(1), armAt(-1))
       .smoothUnion(0.03, legs)
       .union(feet)
@@ -192,73 +211,145 @@ export default defineAsset({
     k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hair, beard, brows (black)
-    // Slicked-back hair: a cap over the skull behind a hairline that is high in front.
+    // Thick hair combed back: a full cap over the skull, high at the front hairline, pulled up
+    // over the ears, cut in thick rounded strands that all run to the base of the topknot.
+    // The hairline: high on the forehead, over the ears at the sides, down to the nape at the back.
+    const hairlineY = (z: number) => 0.79 + (z > 0 ? 0.35 : 0.85) * z;
+    const hairRegion = sdf.smoothUnion(0.03, sdf.halfSpace([0, -1, 0.35], -0.79 / Math.hypot(1, 0.35)), sdf.halfSpace([0, -1, 0.85], -0.79 / Math.hypot(1, 0.85)));
     const hairCap = sdf
-      .ellipsoid([0.196, 0.206, 0.188])
-      .at(0, HEAD_Y + 0.006, -0.014)
-      .smoothIntersect(0.02, sdf.halfSpace([0, -0.94, 0.34], -0.735))
+      .smoothUnion(0.04, head.round(0.016), sdf.ellipsoid([0.16, 0.085, 0.13]).at(0, 0.86, 0.01))
+      .smoothIntersect(0.012, hairRegion)
       .smoothSubtract(0.01, sdf.ellipsoid([0.2, 0.1, 0.2]).at(0, 0.66, 0.1));
+    const KNOT_BASE: V3 = [0, 0.93, -0.035];
+    const smooth01 = (a: number, b: number, x: number) => {
+      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
+      return t * t * (3 - 2 * t);
+    };
+    // Strands are meridians around the axis from the knot's base to the face: each one runs from
+    // the hairline up and back to the knot, on the sides as well as in front. `strandAt` gives the
+    // strand coordinate and the distance from that axis.
+    const AX = norm(sub([0, 0.62, 0.16], KNOT_BASE));
+    const E2: V3 = [0, AX[2], -AX[1]];
+    const strandAt = (x: number, y: number, z: number) => {
+      const q: V3 = [x - KNOT_BASE[0], y - KNOT_BASE[1], z - KNOT_BASE[2]];
+      const a = q[0] * AX[0] + q[1] * AX[1] + q[2] * AX[2];
+      const px = q[0] - a * AX[0];
+      const py = q[1] - a * AX[1];
+      const pz = q[2] - a * AX[2];
+      const r = Math.hypot(px, py, pz);
+      const ang = Math.atan2(px, -(py * E2[1] + pz * E2[2]));
+      return { u: ((ang + 0.12 * Math.sin(r * 30)) * 9) / Math.PI, r };
+    };
+    // Positive in the grooves (the surface moves in), negative on the strand crowns.
+    const strands = (x: number, y: number, z: number) => {
+      const { u, r } = strandAt(x, y, z);
+      const f = Math.abs(u - Math.floor(u) - 0.5);
+      // Broad, softly rounded locks with narrow grooves between them (clay-like combed hair).
+      return (smooth01(0.28, 0.5, f) * 1.2 - 0.2 - 0.25 * (1 - 4 * f * f)) * smooth01(0.03, 0.08, r);
+    };
+    // The hair thins out toward the hairline, so its edge lies close on the skin (no bowl rim).
+    const hairTaper = (_x: number, y: number, z: number) => 1 - smooth01(0, 0.05, y - hairlineY(z));
     const bun = sdf.smoothUnion(
       0.02,
-      sdf.sphere(0.052).at(KNOT[0], KNOT[1], KNOT[2]),
-      sdf.cone([0, 0.915, -0.03], [KNOT[0], KNOT[1], KNOT[2]], 0.04, 0.036),
+      sdf.sphere(0.054).at(KNOT[0], KNOT[1], KNOT[2]),
+      sdf.cone([0, 0.915, -0.03], [KNOT[0], KNOT[1], KNOT[2]], 0.045, 0.038),
     );
     const tail = sdf.chain(
       [
-        [KNOT[0] + 0.02, KNOT[1] + 0.02, KNOT[2] - 0.03, 0.03],
-        [KNOT[0] + 0.06, KNOT[1] + 0.03, KNOT[2] - 0.07, 0.022],
-        [KNOT[0] + 0.1, KNOT[1] + 0.0, KNOT[2] - 0.09, 0.01],
+        [KNOT[0] + 0.02, KNOT[1] + 0.02, KNOT[2] - 0.03, 0.032],
+        [KNOT[0] + 0.065, KNOT[1] + 0.03, KNOT[2] - 0.07, 0.024],
+        [KNOT[0] + 0.105, KNOT[1] + 0.0, KNOT[2] - 0.095, 0.011],
       ],
       0.01,
     );
-    // A wide beard under the mouth that ends in a blunt point.
+    // A wide, pointed beard under the mouth, joined to sideburns that run up the jaw to the temples.
     const jawFront = faceZ(0, 0.55);
-    const beard = sdf.smoothUnion(
-      0.03,
-      sdf.ellipsoid([0.1, 0.038, 0.045]).at(0, 0.535, jawFront - 0.035),
-      sdf.cone([0, 0.525, jawFront - 0.035], [0, 0.45, jawFront - 0.015], 0.062, 0.018),
-    );
+    const beardStrands = (x: number, y: number, z: number) => Math.sin(x * 90 + Math.sin(y * 30) * 1.5);
+    const beard = sdf
+      .smoothUnion(
+        0.03,
+        sdf.ellipsoid([0.108, 0.042, 0.05]).at(0, 0.535, jawFront - 0.035),
+        sdf.cone([0, 0.525, jawFront - 0.035], [0, 0.44, jawFront - 0.012], 0.068, 0.016),
+      )
+      .displace(0.003, beardStrands);
+    const sideburnPath = [
+      [0.178, 0.675],
+      [0.16, 0.615],
+      [0.125, 0.568],
+      [0.085, 0.545],
+    ].map(([x, y], i) => [x!, y!, faceZ(x!, y!), 0.012 + i * 0.007] as [number, number, number, number]);
+    const sideburns = pair(head.round(0.012).intersect(sdf.chain(sideburnPath, 0.02)).subtract(head.round(-0.004)));
     // Thick brows over the eyes; the inner ends dip toward the nose.
     const browAt = (x: number, y: number): V3 => [x, y, faceZ(Math.abs(x), y) - 0.006];
     const brows = pair(
       sdf.chain(
         [
-          [...browAt(EYE[0] + 0.06, EYE[1] + 0.062), 0.017],
-          [...browAt(EYE[0] + 0.008, EYE[1] + 0.046), 0.021],
-          [...browAt(EYE[0] - 0.048, EYE[1] + 0.024), 0.018],
+          [...browAt(EYE[0] + 0.062, EYE[1] + 0.064), 0.018],
+          [...browAt(EYE[0] + 0.008, EYE[1] + 0.047), 0.023],
+          [...browAt(EYE[0] - 0.05, EYE[1] + 0.022), 0.019],
         ],
         0.008,
       ),
     );
-    const hairGrooves = rgb('#3a3430');
+    const hairDark = rgb('#0c0a0a');
+    const hairShine = rgb('#3a3a40');
     const hair = sdf
-      .union(sdf.smoothUnion(0.015, hairCap, bun).bone('head'), tail.bone('knot'), beard.bone('head'), brows.bone('head'))
-      // Combed-back strands: lines that fan out from the topknot when seen from above.
-      .paintFn((x, y, z, base) => (y > 0.76 && Math.sin(Math.atan2(x, z - KNOT[2]) * 16) > 0.6 ? hairGrooves : base));
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004 });
+      .union(
+        sdf.smoothUnion(0.015, hairCap.displace(0.01, strands, 2.4).displace(0.013, hairTaper, 1.3), bun).bone('head'),
+        tail.bone('knot'),
+        sdf.smoothUnion(0.02, beard, sideburns).bone('head'),
+        brows.bone('head'),
+      )
+      // The grooves go darker and the strand crowns catch a cool sheen, so the combing reads.
+      .paintFn((x, y, z, base) => {
+        if (y < 0.76) return base;
+        const g = strands(x, y, z);
+        if (g > 0.55) return hairDark;
+        if (g < -0.36) return hairShine;
+        return base;
+      });
+    k.body('hair', hair, { color: C.hair, roughness: 0.45, detail: 0.004 });
     // The red band that ties the topknot.
-    k.body('band', sdf.torus(0.042, 0.012).at(0, 0.935, -0.033).bone('head'), { color: C.band, roughness: 0.7, detail: 0.004 });
+    k.body('band', sdf.torus(0.047, 0.014).at(0, 0.952, -0.035).bone('head'), { color: C.band, roughness: 0.7, detail: 0.004 });
 
     // ------------------------------------------------------------------ tusks
-    const tusks = pair(
-      sdf.chain(
-        [
-          [0.07, 0.57, jawFront - 0.02, 0.034],
-          [0.088, 0.612, jawFront + 0.006, 0.031],
-          [0.104, 0.652, jawFront + 0.006, 0.021],
-          [0.106, 0.68, jawFront - 0.01, 0.008],
-        ],
-        0.01,
-      ),
+    // Big blunt tusks from the corners of the underbite, curving out and up past the cheeks.
+    const tuskPath = [
+      [0.052, 0.57, 0.036, 0.004],
+      [0.092, 0.59, 0.034, 0.034],
+      [0.118, 0.627, 0.029, 0.05],
+      [0.128, 0.672, 0.02, 0.052],
+    ].map(([x, y, r, lift]) => [x!, y!, faceZ(x!, y!) + lift!, r!] as [number, number, number, number]);
+    const tusks = pair(sdf.chain(tuskPath, 0.012));
+    // Ivory, warmer and darker at the root, pale at the blunt tip.
+    const tuskRoot = rgb('#b9a57a');
+    const tuskTip = rgb(C.tusk);
+    k.body(
+      'tusks',
+      tusks.bone('head').paintFn((x, y) => {
+        const t = smooth01(0.57, 0.66, y);
+        return [tuskRoot[0] + (tuskTip[0] - tuskRoot[0]) * t, tuskRoot[1] + (tuskTip[1] - tuskRoot[1]) * t, tuskRoot[2] + (tuskTip[2] - tuskRoot[2]) * t];
+      }),
+      { color: C.tusk, roughness: 0.4 },
     );
-    k.body('tusks', tusks.bone('head'), { color: C.tusk, roughness: 0.35 });
 
     // ------------------------------------------------------------------ leather: bracers, chest strap, belt
-    const bracer = (e: V3, w: V3) =>
-      sdf
-        .cone(lerp(e, w, 0.12), lerp(e, w, 1.0), 0.088, 0.094)
-        .round(0.004)
-        .paintWhere(sdf.box([0.3, 0.012, 0.3]).at(...lerp(e, w, 0.55)), C.leatherDark, 0.004);
+    // Flared leather cuffs: wide at the elbow with a rolled top edge, soft creases, a dark seam.
+    const bracer = (e: V3, w: V3) => {
+      const d = norm(sub(w, e));
+      const along = (x: number, y: number, z: number) => (x - e[0]) * d[0] + (y - e[1]) * d[1] + (z - e[2]) * d[2];
+      const creases = (x: number, y: number, z: number) => Math.sin(along(x, y, z) * 70 + noise.fbm(x * 12, y * 12, z * 12, 2) * 1.2);
+      const cuff = sdf
+        .smoothUnion(
+          0.01,
+          sdf.cone(lerp(e, w, 0.06), lerp(e, w, 1.0), 0.1, 0.086),
+          sdf.cone(lerp(e, w, 0.0), lerp(e, w, 0.14), 0.108, 0.102), // the rolled top edge
+        )
+        .displace(0.003, creases, 1.3)
+        .round(0.002);
+      const band = (t: number) => sdf.cone(lerp(e, w, t - 0.03), lerp(e, w, t + 0.03), 0.2, 0.2);
+      return cuff.paintWhere(band(0.18), C.leatherDark, 0.004).paintWhere(band(0.86), C.leatherDark, 0.004);
+    };
     const bracers = sdf.union(bracer(ELBOW, WRIST).bone('forearm.L'), bracer(mx(ELBOW), mx(WRIST)).bone('forearm.R'));
     const trunkShape = sdf.smoothUnion(0.06, sdf.ellipsoid([0.2, 0.16, 0.15]).at(0, 0.47, 0), sdf.ellipsoid([0.17, 0.13, 0.14]).at(0, 0.35, 0.02));
     // The strap runs from the right shoulder, under the pauldron, down to the left hip.
@@ -273,7 +364,7 @@ export default defineAsset({
         .ellipsoid([0.12 * s, 0.075 * s, 0.11 * s])
         .intersect(sdf.halfSpace([0, -1, 0], 0.016 * s))
         .round(0.004);
-    const pauldronPose = (s: sdf.Shape) => s.scale(1.18).rotateZ(28).at(-0.25, 0.575, -0.005);
+    const pauldronPose = (s: sdf.Shape) => s.scale(1.24).rotateZ(28).at(-0.252, 0.578, -0.005);
     const pauldronLocal = sdf.union(lame(1), lame(1.12).at(0, -0.04, 0));
     const pauldron = pauldronPose(pauldronLocal);
     // Spikes on the upper lame, in its local frame: rooted on the dome, along the dome's normal.
@@ -333,46 +424,91 @@ export default defineAsset({
       .paintWhere(sdf.cylinder(0.1, 0.4).rotateX(90).at(-0.02, -0.19, 0).subtract(sdf.cylinder(0.088, 0.5).rotateX(90).at(-0.02, -0.19, 0)), C.ironLight, 0.004);
     const GRIP: V3 = [-WRIST[0] - 0.006, WRIST[1] - 0.064, WRIST[2] + 0.02];
     const axePose = (s: sdf.Shape) => s.scale(1.14).rotateZ(-12).rotateX(-40).at(...GRIP);
-    k.body(
-      'iron',
-      sdf.union(pauldron.bone('upperarm.R'), buckle.bone('spine'), strapRivets.bone('chest'), axePose(axeHead).bone('hand.R')),
-      { color: C.iron, roughness: 0.5, metalness: 0.75, bump: (x, y, z) => 0.0008 * noise.fbm(x * 60, y * 60, z * 60, 2) },
-    );
+    const ironBump = (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 60, z * 60, 2);
+    k.body('iron', sdf.union(pauldron.bone('upperarm.R'), buckle.bone('spine'), strapRivets.bone('chest')), {
+      color: C.iron,
+      roughness: 0.5,
+      metalness: 0.75,
+      bump: ironBump,
+    });
+    k.body('axe-head', axePose(axeHead), { color: C.iron, roughness: 0.45, metalness: 0.8, bump: ironBump, bone: 'hand.R' });
     k.body('spikes', spikes.bone('upperarm.R'), { color: C.iron, roughness: 0.4, metalness: 0.8, detail: 0.004 });
-    k.body('haft', axePose(sdf.cylinder(0.019, 0.3, 0.006).at(0, -0.09, 0)).bone('hand.R'), {
+    k.body('haft', axePose(sdf.cylinder(0.019, 0.3, 0.006).at(0, -0.09, 0)), {
       color: C.wood,
       roughness: 0.75,
+      bone: 'hand.R',
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 30, y * 200, z * 30, 2),
     });
 
     // ------------------------------------------------------------------ loincloth and fur shin wraps
-    const flap = (front: boolean) =>
+    // A torn red wrap around the hips: a flared shell under the belt, with soft vertical folds, a
+    // ragged hem of V tears and slits, and darker, frayed streaks toward the hem.
+    const skirtCone = (grow: number, top: number) =>
+      sdf
+        .revolve(
+          profile.polygon([
+            [0, top],
+            [0.182 + grow, top],
+            [0.182 + grow, 0.33],
+            [0.21 + grow, 0.26],
+            [0.238 + grow, 0.165],
+            [0, 0.165],
+          ]),
+        )
+        .scale([1, 1, 0.84])
+        .at(0, 0, 0.018);
+    const clothFolds = (x: number, y: number, z: number) =>
+      Math.sin(Math.atan2(x, z) * 11 + noise.fbm(x * 12, y * 4, z * 12, 2) * 2) * Math.min(1, Math.max(0, (0.31 - y) / 0.12));
+    const tearCut = (i: number, w: number, top: number) =>
       sdf
         .extrude(
           profile.polygon([
-            [0.004, 0.33],
-            [0.1, 0.33],
-            [0.11, 0.17],
-            [0.085, 0.19],
-            [0.06, 0.15],
-            [0.035, 0.185],
-            [0.004, 0.16],
+            [-w, 0.08],
+            [w, 0.08],
+            [0, top],
           ]),
-          0.018,
-          0.006,
+          0.3,
         )
-        .rotateX(front ? -10 : 10)
-        .at(0, 0, front ? 0.15 : -0.14);
-    const loincloth = pair(sdf.union(flap(true), flap(false)).bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.2), C.redDark, 0.02);
-    k.body('loincloth', loincloth, { color: C.red, roughness: 0.85 });
+        .at(0, 0, 0.25)
+        .rotateY(i);
+    const tears = sdf.union(
+      ...Array.from({ length: 11 }, (_, i) =>
+        tearCut(i * 32.7 + (noise.random(i, 7, 1) - 0.5) * 14, 0.026 + noise.random(i, 7, 2) * 0.018, 0.21 + noise.random(i, 7, 3) * 0.06),
+      ),
+      ...Array.from({ length: 7 }, (_, i) => tearCut(i * 51.4 + 17, 0.007, 0.2 + noise.random(i, 8, 3) * 0.04)),
+    );
+    const skirt = skirtCone(0, 0.33)
+      .subtract(skirtCone(-0.013, 0.45))
+      .displace(0.009, clothFolds, 1.5)
+      .subtract(tears);
+    const red = rgb(C.red);
+    const redDark = rgb(C.redDark);
+    const loincloth = sdf
+      .union(
+        skirt.intersect(sdf.halfSpace([0, -1, 0], -0.25)).bone('hips'),
+        skirt.intersect(sdf.halfSpace([0, 1, 0], 0.3)).intersect(sdf.halfSpace([-1, 0, 0], 0)).bone('leg.L'),
+        skirt.intersect(sdf.halfSpace([0, 1, 0], 0.3)).intersect(sdf.halfSpace([1, 0, 0], 0)).bone('leg.R'),
+      )
+      .paintFn((x, y, z) => {
+        const a = Math.atan2(x, z);
+        const streak = noise.fbm(a * 7, y * 5, 0.3, 2);
+        const hem = Math.min(1, Math.max(0, (0.27 - y) / 0.08));
+        const t = Math.min(1, Math.max(0, hem * 0.75 + (streak > 0.15 ? 0.45 : streak < -0.3 ? -0.25 : 0)));
+        return [red[0] + (redDark[0] - red[0]) * t, red[1] + (redDark[1] - red[1]) * t, red[2] + (redDark[2] - red[2]) * t];
+      });
+    k.body('loincloth', loincloth, { color: C.red, roughness: 0.88 });
+    // Shaggy fur wraps on the shins: tufts that hang down, with a ragged lower edge.
+    const tufts = (x: number, y: number, z: number) => {
+      const a = Math.atan2(x - ANKLE[0], z);
+      return 0.55 * Math.sin(a * 14 + noise.fbm(x * 40, y * 20, z * 40, 2) * 3) + 0.45 * noise.fbm(x * 70, y * 30, z * 70, 2);
+    };
     const furWrap = pair(
       sdf
-        .cylinder(0.092, 0.07, 0.03)
-        .at(ANKLE[0] - 0.004, 0.13, 0.008)
-        .displace(0.008, (x, y, z) => noise.fbm(x * 60, y * 25, z * 60, 2))
+        .smoothUnion(0.02, sdf.cylinder(0.096, 0.08, 0.03).at(ANKLE[0] - 0.004, 0.14, 0.008), sdf.torus(0.084, 0.022).at(ANKLE[0] - 0.004, 0.104, 0.008))
+        .displace(0.011, tufts, 2)
         .bone('leg.L'),
     );
-    k.body('fur', furWrap.paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 40, z * 90, 2) > 0.2 ? rgb(C.furDark) : base)), {
+    k.body('fur', furWrap.paintFn((x, y, z, base) => (tufts(x < 0 ? -x : x, y, z) > 0.25 ? rgb(C.furDark) : base)), {
       color: C.fur,
       roughness: 0.95,
     });
@@ -422,31 +558,190 @@ export default defineAsset({
     k.animation('walk', stride(1.0, 22, 20, 4, 0, 4));
     k.animation('run', stride(0.6, 34, 36, 12, 0.025, 3));
 
-    // An overhead chop with the axe: wind up high behind the shoulder, chop down and forward.
-    const ease = (a: number, b: number, x: number) => {
-      const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
-      return t * t * (3 - 2 * t);
-    };
+    // ------------------------------------------------------------------ attack: a heavy overhead chop, solved by targets
+    // Plan (in the chest's rest frame): the axe swings back and up behind the right shoulder, the
+    // orc coils back onto the rear foot and holds; then the hips and the chest drive forward, the
+    // front foot steps in, and the axe comes over the top in the plane beside the head and chops
+    // down in front of the body. The edge leads the whole way (the flat faces sideways). An impact
+    // shake, a short follow-through, and a slow recovery.
+    const { keys, reach, orient } = motion;
+    const DEG = Math.PI / 180;
+    const rotXv = (v: V3, d: number): V3 => [v[0], v[1] * Math.cos(d * DEG) - v[2] * Math.sin(d * DEG), v[1] * Math.sin(d * DEG) + v[2] * Math.cos(d * DEG)];
+    const rotZv = (v: V3, d: number): V3 => [v[0] * Math.cos(d * DEG) - v[1] * Math.sin(d * DEG), v[0] * Math.sin(d * DEG) + v[1] * Math.cos(d * DEG), v[2]];
+    // The axe as built by axePose: the haft from the grip to the head (local -Y) and the flat's normal (local +Z).
+    const AXE = { dir: rotXv(rotZv([0, -1, 0], -12), -40), up: rotXv(rotZv([0, 0, 1], -12), -40) };
+    const SIDE: V3 = [-1, 0, 0];
+    const ARM_R = { root: mx(SHOULDER), mid: mx(ELBOW), end: mx(WRIST) };
+    const ARM_L = { root: SHOULDER, mid: ELBOW, end: WRIST };
+    const deg = (r: number) => r / DEG;
+    // A damped shake after `at`, with `n` swings in `len` of the clip.
+    const shake = (p: number, at: number, len: number, n: number) =>
+      p < at ? 0 : Math.exp((-(p - at) / len) * 3) * Math.sin(((p - at) / len) * Math.PI * n);
+
     k.animation('attack', {
-      duration: 1.0,
+      duration: 1.25,
       loop: false,
       pose: (_t, p) => {
-        const wind = ease(0, 0.38, p) * (1 - ease(0.38, 0.5, p));
-        const hit = ease(0.38, 0.5, p) * (1 - ease(0.64, 1, p));
+        const wrist = keys(
+          p,
+          [
+            [0, mx(WRIST)],
+            [0.13, [-0.34, 0.37, -0.08]],
+            [0.25, [-0.34, 0.57, -0.12]],
+            [0.34, [-0.345, 0.7, -0.09]],
+            [0.43, [-0.35, 0.715, -0.1]], // the hold: coiled at the top, out beside the head
+            [0.48, [-0.31, 0.67, 0.07]],
+            [0.52, [-0.25, 0.52, 0.2]],
+            [0.56, [-0.22, 0.42, 0.22]], // impact
+            [0.63, [-0.22, 0.395, 0.22]],
+            [0.74, [-0.24, 0.4, 0.2]],
+            [1, mx(WRIST)],
+          ] as const,
+          'spline',
+        );
+        const axeAt = (q: number) =>
+          keys(
+            q,
+            [
+              [0, AXE.dir],
+              [0.13, [-0.1, -0.8, -0.55]], // swings back past the leg
+              [0.25, [-0.1, 0.05, -1]], // straight back
+              [0.34, [-0.1, 0.78, -0.62]], // up and back behind the shoulder
+              [0.43, [-0.08, 0.66, -0.75]], // the head sags back in the hold
+              [0.48, [0.0, 0.98, 0.2]], // over the top
+              [0.52, [0.05, 0.25, 0.97]], // forward
+              [0.56, [0.08, -0.6, 0.8]], // down in front: impact
+              [0.63, [0.08, -0.72, 0.69]],
+              [0.74, [0.06, -0.7, 0.71]],
+              [1, AXE.dir],
+            ] as const,
+            'spline',
+          );
+        const up = norm(keys(p, [[0, AXE.up], [0.14, SIDE], [0.8, SIDE], [1, AXE.up]] as const, 'smooth'));
+        const arm = reach(ARM_R, wrist, keys(p, [[0, [-0.8, 0.3, 0]], [0.34, [-0.7, 0.55, 0.3]], [0.56, [-0.7, 0.3, -0.2]], [1, [-0.8, 0.3, 0]]] as const, 'smooth'));
+        const hand = orient([arm.upper, arm.lower], AXE, { dir: norm(axeAt(p)), up });
+        // The off hand points at the target in the wind-up, then pulls back hard as the axe falls.
+        const offWrist = keys(p, [[0, WRIST], [0.36, [0.31, 0.42, 0.19]], [0.45, [0.32, 0.42, 0.2]], [0.56, [0.34, 0.36, -0.12]], [0.7, [0.34, 0.34, -0.08]], [1, WRIST]] as const, 'smooth');
+        const off = reach(ARM_L, offWrist, [0.8, 0.2, -0.3]);
+        const sh = shake(p, 0.56, 0.16, 5);
+        const hipsY = keys(p, [[0, 0], [0.36, -9], [0.44, -10], [0.52, 7], [0.58, 9], [0.72, 6], [1, 0]] as const);
+        const spineX = keys(p, [[0, 0], [0.36, -8], [0.44, -9], [0.52, 11], [0.58, 16], [0.72, 12], [1, 0]] as const);
+        const chestX = keys(p, [[0, 0], [0.36, -6], [0.44, -7], [0.52, 9], [0.58, 13], [0.72, 10], [1, 0]] as const) + 3 * sh;
+        const chestY = keys(p, [[0, 0], [0.36, -18], [0.44, -20], [0.52, 9], [0.58, 12], [0.72, 9], [1, 0]] as const);
+        // The weight goes back onto the rear foot, then forward: the front (left) foot steps in.
+        const hipsZ = keys(p, [[0, 0], [0.36, -0.018], [0.44, -0.02], [0.54, 0.035], [0.72, 0.035], [1, 0]] as const);
+        const stepL = keys(p, [[0, 0], [0.34, -6], [0.44, -8], [0.53, -24], [0.74, -22], [1, 0]] as const);
+        const legR = deg(Math.atan2(hipsZ, 0.19));
+        const legL = stepL + legR;
+        const drop = keys(p, [[0, 0], [0.4, 0.005], [0.56, 0.02], [0.62, 0.024], [0.74, 0.018], [1, 0]] as const);
         return {
-          hips: { move: [0, -legDrop(LEG, 14 * hit) - 0.008 * wind, 0.035 * hit - 0.012 * wind], rotate: [0, -12 * wind + 12 * hit, 0] },
-          spine: { rotate: [-8 * wind + 14 * hit, 0, 0] },
-          chest: { rotate: [0, -18 * wind + 18 * hit, 0] },
-          head: { rotate: [-6 * wind + 8 * hit, 10 * wind - 10 * hit, 0] },
-          knot: { rotate: [-10 * wind + 16 * hit, 0, 0] },
-          'upperarm.R': { rotate: [-150 * wind + 10 * hit, 0, -10 * wind + 6 * hit] },
-          'forearm.R': { rotate: [-35 * wind - 10 * hit, 0, 0] },
-          'hand.R': { rotate: [-30 * wind + 40 * hit, 0, 0] },
-          'upperarm.L': { rotate: [-12 * wind + 20 * hit, 0, 10 * hit] },
-          'leg.R': { rotate: [-16 * hit, 0, 0] },
-          'leg.L': { rotate: [12 * hit, 0, 0] },
-          'foot.R': { rotate: [10 * hit, 0, 0] },
-          'foot.L': { rotate: [-6 * hit, 0, 0] },
+          hips: { move: [0, -Math.max(legDrop(LEG, legL), legDrop(LEG, legR)) - drop - 0.004 * sh, hipsZ], rotate: [0, hipsY, 0] },
+          spine: { rotate: [spineX, 0, 0] },
+          chest: { rotate: [chestX, chestY, 0] },
+          // The head keeps its eyes on the target.
+          head: { rotate: [-(spineX + chestX) * 0.55 - 3 * sh, -(chestY + hipsY) * 0.7, 0] },
+          knot: { rotate: [-spineX - chestX * 1.2 + 10 * sh, 0, -chestY * 0.4] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          'upperarm.L': { rotate: off.upper },
+          'forearm.L': { rotate: off.lower },
+          'leg.L': { rotate: [legL, -hipsY, 0] },
+          'leg.R': { rotate: [legR, -hipsY, 0] },
+          'foot.L': { rotate: [-legL - spineX * 0, 0, 0] },
+          'foot.R': { rotate: [-legR, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ roar: a war cry with the axe raised
+    k.animation('roar', {
+      duration: 1.8,
+      loop: false,
+      pose: (_t, p) => {
+        const rise = keys(p, [[0, 0], [0.16, -0.5], [0.3, 1], [0.8, 1], [1, 0]] as const);
+        const lift = Math.max(0, rise);
+        const crouch = Math.max(0, -rise);
+        // Seven quick trembles while it roars (odd, so the strip does not freeze on them).
+        const tremble = p > 0.3 && p < 0.82 ? wave((p - 0.3) / 0.52, 7) * Math.sin(((p - 0.3) / 0.52) * Math.PI) : 0;
+        const axeWrist = keys(p, [[0, mx(WRIST)], [0.16, [-0.3, 0.33, 0.08]], [0.3, [-0.38, 0.66, 0.06]], [0.8, [-0.38, 0.66, 0.06]], [1, mx(WRIST)]] as const, 'smooth');
+        const arm = reach(ARM_R, axeWrist, [-0.8, 0.2, -0.2]);
+        const axeDir = norm(keys(p, [[0, AXE.dir], [0.16, AXE.dir], [0.3, [-0.35, 0.93, 0.1]], [0.8, [-0.35, 0.93, 0.1]], [1, AXE.dir]] as const, 'smooth'));
+        const axeUp = norm(keys(p, [[0, AXE.up], [0.3, [0, -0.1, 1]], [0.8, [0, -0.1, 1]], [1, AXE.up]] as const, 'smooth'));
+        const hand = orient([arm.upper, arm.lower], AXE, { dir: axeDir, up: axeUp });
+        const fist = reach(ARM_L, keys(p, [[0, WRIST], [0.16, [0.28, 0.33, 0.1]], [0.3, [0.38, 0.64, 0.06]], [0.8, [0.38, 0.64, 0.06]], [1, WRIST]] as const, 'smooth'), [0.8, 0.2, -0.2]);
+        return {
+          hips: { move: [0, -0.025 * crouch - 0.003 * Math.abs(tremble), 0] },
+          spine: { rotate: [10 * crouch - 6 * lift, 0, 0] },
+          chest: { rotate: [8 * crouch - 10 * lift + 1.5 * tremble, 2 * tremble, 0], scale: [1 + 0.04 * lift, 1, 1 + 0.03 * lift] },
+          neck: { rotate: [6 * crouch - 8 * lift, 0, 0] },
+          head: { rotate: [8 * crouch - 12 * lift + 2 * tremble, 3 * tremble, 0] },
+          knot: { rotate: [-12 * crouch + 18 * lift + 8 * tremble, 0, 6 * tremble] },
+          'upperarm.R': { rotate: arm.upper },
+          'forearm.R': { rotate: arm.lower },
+          'hand.R': { rotate: hand },
+          'upperarm.L': { rotate: fist.upper },
+          'forearm.L': { rotate: fist.lower },
+          'leg.L': { rotate: [0, 0, 4 * lift] },
+          'leg.R': { rotate: [0, 0, -4 * lift] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ hit: snap back from a blow, a step back, recover
+    k.animation('hit', {
+      duration: 0.45,
+      loop: false,
+      pose: (_t, p) => {
+        const r = keys(p, [[0, 0], [0.16, 1], [0.38, 0.8], [1, 0]] as const);
+        const back = -0.025 * r;
+        const legL = deg(Math.atan2(back, 0.19));
+        return {
+          hips: { move: [0, -legDrop(LEG, 12 * r), back], rotate: [0, 5 * r, 0] },
+          spine: { rotate: [-8 * r, 0, 3 * r] },
+          chest: { rotate: [-9 * r, 7 * r, 0] },
+          neck: { rotate: [-5 * r, 0, 0] },
+          head: { rotate: [-14 * r, -9 * r, 6 * r] },
+          knot: { rotate: [18 * r, 0, -10 * r] },
+          'upperarm.L': { rotate: [12 * r, 0, 24 * r] },
+          'forearm.L': { rotate: [-22 * r, 0, 0] },
+          'upperarm.R': { rotate: [10 * r, 0, -18 * r] },
+          'forearm.R': { rotate: [-12 * r, 0, 0] },
+          'leg.L': { rotate: [legL, 0, 0] },
+          'foot.L': { rotate: [-legL, 0, 0] },
+          'leg.R': { rotate: [12 * r, 0, 0] }, // a small step back
+          'foot.R': { rotate: [-12 * r, 0, 0] },
+        };
+      },
+    });
+
+    // ------------------------------------------------------------------ death: stagger back, topple, lie on the back
+    k.animation('death', {
+      duration: 1.5,
+      loop: false,
+      pose: (_t, p) => {
+        const fall = keys(p, [[0, 0], [0.2, -8], [0.4, 3], [0.54, -40], [0.66, -88], [0.72, -84], [0.8, -88], [1, -88]] as const);
+        const hipsY = keys(p, [[0, 0], [0.4, 0], [0.54, -0.006], [0.66, -0.05], [0.72, -0.038], [0.8, -0.05], [1, -0.05]] as const);
+        const hipsZ = keys(p, [[0, 0], [0.2, -0.035], [0.4, -0.02], [0.66, -0.13], [1, -0.13]] as const);
+        const legs = keys(p, [[0, 0], [0.2, 4], [0.4, -3], [0.54, 36], [0.66, 50], [1, 50]] as const);
+        const stepR = keys(p, [[0, 0], [0.2, 14], [0.4, 4], [0.54, 0], [1, 0]] as const);
+        const spill = keys(p, [[0, 0], [0.54, 0], [0.62, 1], [1, 1]] as const);
+        return {
+          hips: { move: [0, hipsY, hipsZ], rotate: [fall, keys(p, [[0, 0], [0.2, 8], [0.66, -6], [1, -6]] as const), 0] },
+          spine: { rotate: [keys(p, [[0, 0], [0.2, -10], [0.4, 8], [0.56, 6], [0.66, -4], [1, 0]] as const), 0, 0] },
+          chest: { rotate: [keys(p, [[0, 0], [0.2, -8], [0.4, 6], [0.66, -2], [1, 0]] as const), keys(p, [[0, 0], [0.2, 10], [0.5, -6], [1, 0]] as const), 0] },
+          neck: { rotate: [keys(p, [[0, 0], [0.2, -8], [0.4, 8], [0.6, 16], [0.7, -6], [0.8, 0], [1, 0]] as const), 0, 0] },
+          head: { rotate: [keys(p, [[0, 0], [0.2, -14], [0.4, 10], [0.6, 14], [0.7, -10], [0.8, 0], [1, 0]] as const), keys(p, [[0, 0], [0.7, 0], [0.9, 28], [1, 28]] as const), 0] },
+          knot: { rotate: [keys(p, [[0, 0], [0.2, 16], [0.4, -10], [0.66, 30], [0.76, -10], [1, 0]] as const), 0, 12 * spill] },
+          'upperarm.L': { rotate: [keys(p, [[0, 0], [0.2, 12], [0.4, -8], [0.58, -55], [0.7, 30], [1, 34]] as const), 0, keys(p, [[0, 0], [0.2, 28], [0.4, 12], [0.58, 40], [0.7, 60], [1, 62]] as const)] },
+          'forearm.L': { rotate: [keys(p, [[0, 0], [0.2, -30], [0.58, -20], [0.7, -6], [1, -8]] as const), 0, 0] },
+          'upperarm.R': { rotate: [keys(p, [[0, 0], [0.2, 10], [0.4, -6], [0.58, -45], [0.7, 30], [1, 34]] as const), 0, keys(p, [[0, 0], [0.2, -22], [0.4, -10], [0.58, -35], [0.7, -58], [1, -60]] as const)] },
+          'forearm.R': { rotate: [keys(p, [[0, 0], [0.2, -20], [0.58, -15], [0.7, 0], [1, 0]] as const), 0, 0] },
+          'hand.R': { rotate: [keys(p, [[0, 0], [0.62, 0], [0.8, 40], [1, 40]] as const), 0, 0] },
+          'leg.L': { rotate: [legs + keys(p, [[0, 0], [0.2, -6], [0.4, 0]] as const), 0, 6 * spill] },
+          'leg.R': { rotate: [legs + stepR, 0, -8 * spill] },
+          'foot.L': { rotate: [-keys(p, [[0, 0], [0.4, 0], [0.66, 12], [1, 12]] as const), 0, 0] },
+          'foot.R': { rotate: [-stepR * 0.8, 0, 0] },
         };
       },
     });
