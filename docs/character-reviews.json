@@ -307,18 +307,18 @@
     "strengths": [
       "The pointed dark hood with the ears through it gives a strong, unique silhouette in every view and in every sprite direction.",
       "The taunt reads at a distance. The raised bow shakes beside the head, the feet lift in the two hops, and the string pulls back and snaps in the pluck.",
-      "The bow stays clear of the head in every clip. In the taunt, the bow turns so the string is in front of the limbs and not against the hood. The closest part comes to 0.8 cm from the hood."
+      "The bow and the arms stay clear of the head in every clip. In the taunt, the bow turns so the string is in front of the limbs and not against the hood. The closest part comes to 1.1 cm from the hood."
     ],
     "issues": [
       "The short arms and the big hood keep the raised bow low. The fist stays at chin height, and the bow top rises only to the ear tips, not above the hood peak.",
-      "In the pluck, the right forearm crosses the chest and goes up to 4.8 cm into the jerkin. The body turn and the short arm cause this.",
+      "In the taunt, the bracer tops touch the capelet hem by 0.1 cm when the arms are up, as in the shot. The body turn for the pluck repeats the shot's nock, so the pluck looks a little like a shot.",
       "The ears are thin flat plates. The model has no long back cape and no chest strap from the mockup. In the draw and the pluck, the lower string touches the capelet by 0.9 cm."
     ],
     "next": [
-      "Move the pluck hand path out and forward, so the right forearm stays in front of the jerkin.",
+      "Give the pluck its own hold with less body turn, so it reads less like the shot's nock.",
       "Give the ears thickness and a cupped inner face, and add the long back cape and the chest strap from the mockup."
     ],
-    "reviewedAt": "2026-09-26T22:55:50+00:00"
+    "reviewedAt": "2026-09-26T23:13:45+00:00"
   },
   "skeleton": {
     "overall": 8.5,

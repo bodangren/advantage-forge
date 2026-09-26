@@ -95,6 +95,7 @@ const ELBOW_L: V3 = [0.215, 0.35, 0.01];
 const WRIST_L: V3 = [0.284, 0.318, 0.05];
 const HIP: V3 = [0.075, 0.2, 0];
 const ANKLE: V3 = [0.108, 0.075, 0];
+const KNEE: V3 = [0.0915, 0.1375, 0]; // the knee: splits the leg (shin.L takes the weight below it)
 /** The bow's grip in the left fist: the pivot of the `bowgrip` bone. */
 const GRIP: V3 = [WRIST_L[0] + 0.008, WRIST_L[1] - 0.044, WRIST_L[2] + 0.004];
 // The recurve bow in the left fist (see bowPose): limb lengths and points of the bow frame in the
@@ -158,9 +159,11 @@ export default defineAsset({
       // The shot arrow, in the right hand's fingers; its mesh rests in the quiver.
       arrow: { parent: 'hand.R', at: PINCH },
       'leg.L': { parent: 'hips', at: HIP },
-      'foot.L': { parent: 'leg.L', at: ANKLE },
+      'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+      'foot.L': { parent: 'shin.L', at: ANKLE },
       'leg.R': { parent: 'hips', at: mx(HIP) },
-      'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+      'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+      'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
     });
 
     // ------------------------------------------------------------------ head and ears (the goblin warrior's)
@@ -956,8 +959,14 @@ export default defineAsset({
     const SIDE_AIM = norm([-AIM[2], 0, AIM[0]]);
     const LUTE: BowWant = { dir: norm(add([0, 1, 0], scl(SIDE_AIM, CANT))), up: AIM }; // the bow at the nock
     const SH_LUTE_L: V3 = [0, 0.012, 0.06];
-    const SH_LUTE_R: V3 = [0.035, 0.012, 0.045];
-    const PINCH_OUT: V3 = add(PINCH, [-0.085, 0.06, 0.02]); // the free fist out for balance in the dance
+    const SH_LUTE_R: V3 = [0.035, 0.012, 0.055];
+    // The pluck: the bow a little lower and more forward than the shot's nock, so the right forearm
+    // passes under the hood; the right elbow goes out, and the hand comes back out and forward,
+    // clear of the jerkin.
+    const LUTE_AT = add(BOW_NOCK, [0.005, -0.02, 0.01]);
+    const POLE_R_PLUCK: V3 = [-0.5, 0.38, 0.02];
+    const PINCH_OUT: V3 = add(PINCH, [-0.03, 0.01, 0.05]); // the free fist a little out and forward in the dance
+    const PINCH_BACK: V3 = add(PINCH, [-0.05, 0.04, 0.07]); // the fist on the way back to rest, out and forward
     const PINCH_UP: V3 = [-0.09, 0.35, 0.24]; // the right fist up in front, on the way to the string
     const PULL = 0.028; // how far the fingers pull the string's middle back
     const PLUCK = 0.78; // the release
@@ -979,7 +988,7 @@ export default defineAsset({
         const air = 0.05 * (hopArc(p, 0.14, 0.26) + hopArc(p, 0.3, 0.42));
         const land = keys(p, [[0.25, 0], [0.28, 1], [0.32, 0], [0.41, 0], [0.44, 1], [0.48, 0]] as const);
         const flick = env * Math.sin((2 * Math.PI * (p - 0.14)) / 0.16); // one ear flick back and forth per hop
-        const onString = keys(p, [[0.5, 0], [0.6, 0.4], [0.67, 1], [0.86, 1], [0.97, 0]] as const);
+        const onString = keys(p, [[0.5, 0], [0.6, 0.4], [0.67, 1], [0.85, 1], [0.95, 0]] as const);
         const pull = keys(p, [[0.7, 0], [PLUCK, 1]] as const);
         const grin = keys(p, [[0.62, 0], [0.74, 1], [0.9, 1], [1, 0]] as const);
         const snap = keys(p, [[PLUCK, 0], [PLUCK + 0.04, 1], [PLUCK + 0.12, 0]] as const);
@@ -1011,8 +1020,8 @@ export default defineAsset({
           [0.13, high],
           [0.52, high],
           [0.59, MID_AT],
-          [0.66, BOW_NOCK],
-          [0.86, BOW_NOCK],
+          [0.66, LUTE_AT],
+          [0.86, LUTE_AT],
           [0.93, BACK_AT],
           [1, GRIP],
         ] as const);
@@ -1043,18 +1052,18 @@ export default defineAsset({
           };
         };
 
-        // ---- the string hand: out for balance in the dance, up in front and onto the string, the
-        // pull, the release flick back and out, and rest.
+        // ---- the string hand: a little out in the dance, up in front and onto the string, the
+        // pull, the release flick out and up, and back to rest out and forward of the jerkin.
         const pulledAt = add(nockNow, backW, -PULL);
-        const flickAt = add(pulledAt, [-0.075, 0.012, -0.01]);
+        const flickAt = add(pulledAt, [-0.09, 0.02, 0.02]);
         const pinchAt =
           p < 0.67
             ? keys(p, [[0, PINCH], [0.14, PINCH_OUT], [0.5, PINCH_OUT], [0.6, PINCH_UP], [0.67, nockNow]] as const)
             : p < PLUCK
               ? mid
-              : keys(p, [[PLUCK, pulledAt], [PLUCK + 0.05, flickAt], [0.86, flickAt], [0.98, PINCH]] as const);
-        const shR = keys(p, [[0.5, Z3], [0.6, SH_LUTE_R], [0.86, SH_LUTE_R], [1, Z3]] as const);
-        const poleR = keys(p, [[0.5, POLE_R_REST], [0.62, POLE_R_DRAW], [0.88, POLE_R_DRAW], [1, POLE_R_REST]] as const);
+              : keys(p, [[PLUCK, pulledAt], [PLUCK + 0.05, flickAt], [0.85, flickAt], [0.93, PINCH_BACK], [1, PINCH]] as const);
+        const shR = keys(p, [[0.5, Z3], [0.6, SH_LUTE_R], [0.85, SH_LUTE_R], [0.97, Z3]] as const);
+        const poleR = keys(p, [[0.5, POLE_R_REST], [0.62, POLE_R_PLUCK], [0.9, POLE_R_PLUCK], [1, POLE_R_REST]] as const);
         const wristR = sub(pinchAt, add(scl(OFF_R, 1 - onString), scl(OFF_DRAW, onString)));
         const armR = reach(ARM_R, sub(wristR, shR), poleR);
         const handR = slerpRot(Z3, orient([armR.upper, armR.lower], HAND_R_REST, HAND_R_DRAW), onString);
