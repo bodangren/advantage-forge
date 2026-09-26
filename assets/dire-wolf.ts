@@ -10,7 +10,8 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   ears, and a spiky cream chest ruff, on a compact body with stubby legs and a bushy tail.
  * Shape language: round masses (head, body, paws) under sharp triangles (ears, cheek tufts,
  *   ruff points, fangs, tail tip): cute but dangerous.
- * Palette (60/30/10): dark slate fur #4a5058 (darker legs and back); cream #ece2c0 (brows,
+ * Palette (60/30/10): dark slate fur #4a5058 (darker legs and back, lighter #6b737d on the chest
+ *   and the lower cheeks); cream #ece2c0 (brows,
  *   muzzle, forelock, ruff, tail tip); tan ear insides #c49a7a; amber eyes #f0a020 as the accent.
  * Value plan: the cream muzzle and brows on the dark face, with the amber eyes between them, are
  *   the strongest contrast (focal point); the cream ruff is the second light mass.
@@ -21,6 +22,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
 
 const C = {
   fur: '#4a5058',
+  furLight: '#6b737d', // the chest and the lower cheeks
   furDark: '#363b42',
   cream: '#ece2c0',
   earInner: '#c49a7a',
@@ -93,6 +95,14 @@ export default defineAsset({
       sdf.ellipsoid([0.06, 0.04, 0.06]).at(0, 0.47, 0.3), // the bridge up to the brows
     );
     const headBase = sdf.smoothUnion(0.03, skull, muzzle);
+    // The outer bound of the lower jaw (see jawZone below).
+    const JAW_BOUND = sdf.ellipsoid([0.15, 0.12, 0.2]).at(0, 0.39, 0.33);
+    // The cream muzzle spreads out over the cheeks to a wide grin: the muzzle plus the head
+    // surface inside a patch on each side that rises outward, below the eyes. Below the grin
+    // corners the patch stays inside the jaw bound, so no cream crosses the side of the jaw cut.
+    const cheekPatch = pair(sdf.ellipsoid([0.07, 0.035, 0.09]).rotateZ(25).at(0.12, 0.44, 0.26));
+    const besideJaw = sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y).subtract(JAW_BOUND.round(-0.006));
+    const muzzleWide = sdf.union(muzzle, headBase.smoothIntersect(0.01, cheekPatch).subtract(besideJaw));
     const faceHit = (x: number, y: number) => sdf.raycast(headBase, [x, y, 2], [0, 0, -1])!;
 
     // Pointed cheek tufts, two on each side, flattened front to back.
@@ -162,6 +172,10 @@ export default defineAsset({
       .smoothUnion(0.02, paws)
       .smoothUnion(0.02, tailShape.bone('tail'))
       .smoothUnion(0.015, cheekTufts.bone('head'), ears.bone('head'))
+      // Lighter fur on the lower cheeks (below the eyes, so the dark face keeps the eye contrast)
+      // and on the chest under the ruff.
+      .paintWhere(pair(sdf.ellipsoid([0.12, 0.09, 0.13]).at(0.17, 0.4, 0.19)).intersect(sdf.halfSpace([0, 1, 0], 0.47)), C.furLight, 0.03)
+      .paintWhere(sdf.ellipsoid([0.13, 0.14, 0.1]).at(0, 0.22, 0.17), C.furLight, 0.04)
       .paintWhere(sdf.union(legs, paws).intersect(sdf.halfSpace([0, 1, 0], 0.16)), C.furDark, 0.04)
       .paintWhere(sdf.sphere(0.12).at(...TAIL_TIP).intersect(sdf.halfSpace([-0.3, -0.6, 0.74], -0.55)), C.cream, 0.02)
       .paintWhere(eyeRing.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.eyeRim, 0.002)
@@ -172,10 +186,7 @@ export default defineAsset({
     // bound that keeps the outer cheeks and the cheek tufts on the head. The head keeps the rest;
     // the jaw pieces are rigid on `jaw` and reach 3 mm into the head, so no seam groove shows.
     // The cut faces (the roof of the mouth and the top of the jaw) are dark, but not the skin.
-    const jawZone = sdf
-      .ellipsoid([0.15, 0.12, 0.2])
-      .at(0, 0.39, 0.33)
-      .intersect(sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y))
+    const jawZone = JAW_BOUND.intersect(sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y))
       .subtract(sdf.cylinder(GRIN_R, 0.6).rotateX(90).at(0, GRIN_Y + GRIN_R, 0.3));
     const jawPart = jawZone.round(0.003);
     const roofPaint = (inside: sdf.Shape) => jawPart.intersect(inside);
@@ -200,8 +211,8 @@ export default defineAsset({
     // The grin: a dark band on the muzzle that curves up at the corners. The lower half of the
     // band goes with the lower jaw.
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
-    const muzzleCream = muzzle.round(0.004).paintWhere(grin, C.mouth, 0.002);
-    k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzle), C.mouth, 0.002), {
+    const muzzleCream = muzzleWide.round(0.004).paintWhere(grin, C.mouth, 0.002);
+    k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzleWide), C.mouth, 0.002), {
       color: C.cream,
       roughness: 0.8,
       textureDensity: 1.5,
@@ -247,7 +258,7 @@ export default defineAsset({
       ...ruffRow(9, 0.39, 95, 0.13, 0.13, 0.05),
       ...ruffRow(6, 0.31, 55, 0.13, 0.12, 0.042),
     );
-    const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzle), C.mouth, 0.002);
+    const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzleWide), C.mouth, 0.002);
     const cream = sdf.union(muzzleTop.bone('head'), brows.bone('head'), forelock.bone('head'), ruff.bone('neck'));
     k.body('cream', cream, { color: C.cream, roughness: 0.8, textureDensity: 1.5 });
 

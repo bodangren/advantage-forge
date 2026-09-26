@@ -482,7 +482,7 @@
     "reviewedAt": "2026-09-26T19:11:12+00:00"
   },
   "dire-wolf": {
-    "overall": 7.9,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -497,22 +497,22 @@
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The dire wolf head matches the mmx mockup: cream brows, amber eyes, a toothy grin, cheek tufts, tall ears, and a cream ruff. A lower jaw on a jaw bone now opens, and the attack is a real leap and bite.",
+    "summary": "The cream muzzle is now wider. Above the grin corners it sweeps up and out toward the cheeks, as in the mockup. A lighter grey (furLight) is on the lower cheeks and the chest. The dark face around the eyes stays, so the amber eyes and the cream brows keep their contrast. The jaw split and the clips did not change.",
     "strengths": [
-      "The lower jaw splits on the grin line. At rest the grin looks the same as before. Open, the mouth shows a dark inside, a pink tongue, and lower fangs.",
-      "The attack has a coiled crouch, a leap with the front paws off the ground and the jaw wide open, and a hard snap at the peak. The nose drives forward and down.",
+      "The wide cream grin now fills the lower face from cheek to cheek, and the grin corners curve up into it.",
+      "The cheek cream stays on the head below the grin corners, so the jaw cut has no cream seam, and the jaw opens clean in the attack.",
       "The ears, cheek tufts, and ruff make a spiky outline that reads in all 8 sprite directions at 128 px."
     ],
     "issues": [
-      "The fur is one flat dark grey, and the cream muzzle is narrower than the wide grin in the mockup. The legs are straight, so the side view is longer than the compact mockup.",
-      "In the crouch the upper legs lean far forward, so the knees push out under the body. After the landing, the wolf hops back 20 cm to its start point, and the paws slide a little.",
-      "The hit and the death do not use the jaw. The yelp in the hit keeps the mouth shut."
+      "The lighter grey is subtle. The ruff hides most of the light chest, and the base fur is darker than the mid grey in the mockup.",
+      "The cheek cream and the lower jaw cream meet at a notch below the grin corners, so the side view shows two cream parts, not one smooth area.",
+      "The legs are straight and the side view is longer than the compact mockup. The hit and the death do not open the jaw."
     ],
     "next": [
-      "Paint a lighter grey on the chest and the lower cheeks, and widen the cream muzzle toward the cheeks.",
-      "Open the jaw in the hit (a yelp) and a little in the death, so all clips use the new jaw."
+      "Lighten the base fur a little toward the mockup mid grey, and show more of the light chest between the front legs.",
+      "Open the jaw in the hit (a yelp) and a little in the death, so all clips use the jaw."
     ],
-    "reviewedAt": "2026-09-26T20:35:46+00:00"
+    "reviewedAt": "2026-09-26T21:16:03+00:00"
   },
   "giant-spider": {
     "overall": 8.1,
