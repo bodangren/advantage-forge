@@ -32,7 +32,7 @@
     "reviewedAt": "2026-09-26T03:39:07+00:00"
   },
   "archer": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -265,7 +265,7 @@
     "reviewedAt": "2026-09-26T03:39:07+00:00"
   },
   "horned-boar": {
-    "overall": 8.0,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -299,7 +299,7 @@
     "reviewedAt": "2026-09-26T04:31:24+00:00"
   },
   "goblin-archer": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -332,7 +332,7 @@
     "reviewedAt": "2026-09-26T04:05:28+00:00"
   },
   "skeleton": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -397,7 +397,7 @@
     "reviewedAt": "2026-09-26T05:01:27+00:00"
   },
   "bandit": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -429,7 +429,7 @@
     "reviewedAt": "2026-09-26T05:09:12+00:00"
   },
   "zombie": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -494,7 +494,7 @@
     "reviewedAt": "2026-09-26T05:25:31+00:00"
   },
   "dire-wolf": {
-    "overall": 8.0,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -594,7 +594,7 @@
     "reviewedAt": "2026-09-26T06:06:30+00:00"
   },
   "blacksmith": {
-    "overall": 8.0,
+    "overall": 8,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -627,7 +627,7 @@
     "reviewedAt": "2026-09-26T08:30:00+00:00"
   },
   "farmer": {
-    "overall": 8.0,
+    "overall": 8,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
@@ -693,7 +693,7 @@
     "reviewedAt": "2026-09-26T08:44:15+00:00"
   },
   "skeleton-mage": {
-    "overall": 8.0,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -725,7 +725,7 @@
     "reviewedAt": "2026-09-26T08:54:54+00:00"
   },
   "imp": {
-    "overall": 8.0,
+    "overall": 8,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -756,5 +756,37 @@
       "Darken the membranes toward the wing tips."
     ],
     "reviewedAt": "2026-09-26T09:01:51+00:00"
+  },
+  "skeleton-archer": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 3,
+      "motion": 3
+    },
+    "summary": "The skeleton archer matches its mmx mockup: the skeleton warrior's grinning skull with glowing eyes in a ragged green hood, a bare ribcage crossed by a quiver strap, a dark cloak, a torn loincloth, red forearm wraps, and a dark recurve bow in a bony hand.",
+    "strengths": [
+      "The open ribcage over a dark chest cavity, the knobby arm bones, and the bony hands make it read as a skeleton, not as a man in a mask.",
+      "It shares the skull, the eyes, and the rig with the skeleton warrior, so the undead read as one family.",
+      "The quiver with red and black fletching gives a clear back view, and the walk keeps the bow clear of the ground."
+    ],
+    "issues": [
+      "At 128 px the hood and the boots are the largest masses, and the ribs become a small light patch under the skull.",
+      "The mockup holds the bow across the body; the model holds it upright at the side, for a clean walk and shot.",
+      "In the shot, the right hand stops at the shoulder; the bowstring stays straight, because it is rigid on the bow."
+    ],
+    "next": [
+      "Make the mantle shorter and the ribs thicker, so the ribcage reads at sprite size.",
+      "Add a string bone, so the draw pulls the string back to the jaw."
+    ],
+    "reviewedAt": "2026-09-26T09:26:56+00:00"
   }
 }
