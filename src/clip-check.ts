@@ -7,9 +7,11 @@ import { meshSdf } from './sdf/mesher.js';
 /**
  * Clip clearance: does a held item (a weapon, a shield, a staff, a bow) pass through the head or
  * the body in any clip? Every clip is posed at `fps`; the held items' vertices move with their
- * bones and are measured against the head and body parts in those parts' own rest frames. A
- * contact that already exists in the rest pose (a shield resting on the chest) is the baseline;
- * only deeper contact counts. Head contact fails the check; body contact is reported.
+ * bones and are measured against the head and body parts in those parts' own rest frames. For the
+ * body, a contact that already exists in the rest pose (a shield resting on the chest) is the
+ * baseline and only deeper contact counts. For the head there is no baseline, and the rest pose
+ * itself is checked (reported as the clip `rest`). Head contact fails the check; body contact is
+ * reported.
  */
 
 type DistFn = (x: number, y: number, z: number) => number;
@@ -223,10 +225,20 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
   };
 
   const restSkin = skinMatrices(skeleton, order, {});
-  const baseline = new Map(items.map((it) => [it.name, measure(restSkin, it)]));
-  const wanted = options.clips ? [...collected.animations].filter(([n]) => options.clips!.includes(n)) : [...collected.animations];
+  const baseline = new Map(
+    items.map((it) => {
+      const m = measure(restSkin, it);
+      // A weapon in the head is wrong even at rest: the head has no baseline.
+      return [it.name, { ...m, head: { depth: 0, part: '', count: 0 } }];
+    }),
+  );
+  const restClip: AnimationDef = { duration: 1, loop: false, pose: () => ({}) };
+  const wanted: [string, AnimationDef][] = [
+    ['rest', restClip],
+    ...(options.clips ? [...collected.animations].filter(([n]) => options.clips!.includes(n)) : [...collected.animations]),
+  ];
   const clips = wanted.map(([name, anim]) => {
-    const frames = Math.max(2, Math.round(anim.duration * fps) + 1);
+    const frames = anim === restClip ? 1 : Math.max(2, Math.round(anim.duration * fps) + 1);
     const open = new Map<string, { from: number; to: number; depth: number; part: string; region: RegionName; item: string }>();
     const contacts: Contact[] = [];
     const close = (key: string) => {
@@ -235,7 +247,7 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
       open.delete(key);
     };
     for (let f = 0; f < frames; f++) {
-      const phase = f / (frames - 1);
+      const phase = frames === 1 ? 0 : f / (frames - 1);
       const skin = skinMatrices(skeleton, order, anim.pose(phase * anim.duration, phase));
       for (const item of items) {
         const d = measure(skin, item);
