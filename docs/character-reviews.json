@@ -1111,5 +1111,34 @@
     ],
     "next": "Hide the sheet seam, and try a mint default body color.",
     "reviewedAt": "2026-09-27T16:33:12.024Z"
+  },
+  "mummy": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon denizen for the Sunken Vault on the zombie base (shared skeleton, knee bones, seven clips): a chibi mummy wrapped head to toe in stepped cream linen bands with crossing straps, three frayed loose ends, a dark face hole with one glowing yellow eye, and a faded blue-and-gold collar. The walk is a stiff shuffle with the arms forward. The ground check passes, and the textured build has no warnings.",
+    "strengths": [
+      "The wraps, face hole, single eye, collar, and loose ends read as the mockup mummy.",
+      "The stepped bands give real relief, and a linen grain lives in the normal map.",
+      "Wrap and eye variants with three presets: desert, crypt, cursed."
+    ],
+    "issues": [
+      "The eye is a flat pale yellow disc with little visible glow, and it is larger than in the mockup.",
+      "In the rest pose the arms point out to the sides (kept from the zombie); in the mockup they hang down.",
+      "The collar is a full ring; the mockup shows only a small V at the front, and the chest wraps are more regular than the loose layers of the mockup."
+    ],
+    "next": "Make the eye smaller with a stronger glow (dark base, higher intensity) and lower the rest-pose arms.",
+    "reviewedAt": "2026-09-27T16:59:21.208Z"
   }
 }
