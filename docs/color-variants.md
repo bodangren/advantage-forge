@@ -90,6 +90,10 @@ shade whose result is closest to the old hex value. Colors that are not in a slo
 pupils, gold, leather, stitches) keep their hex values and are left out of the mask, even when
 they are painted over a slot color.
 
+For a shade written as its own hex value, `k.tint('clothing', { color: '#16302e', follow: 1 })`
+keeps that exact color in the default look and follows the slot fully; prefer it to a
+`shade` mix, which only comes close.
+
 A color that should partly follow a slot keeps its exact default color with
 `k.tint('skin', { color: C.blush, follow: 0.5 })`: half of the skin's recoloring applies to it,
 so a blush or lips darken on a darker skin but stay pink.
