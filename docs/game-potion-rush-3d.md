@@ -130,3 +130,23 @@ Results: XP by the apps' rule, `score` = coins, stars from first-try accuracy.
 Tuning (constants in the core): belt speed 0.09 of the belt per second (+8% per order, at most
 +40%; Helper mode 25% slower), spawn every 2.1 s, patience 60 s (at least 45 s), 3 slots, shift of
 up to 8 orders, rush when 3 slots wait.
+
+Notes from the core (2026-09-28, BACKEND, `src/games/potion-rush/core`):
+
+- `wordRejected` leaves the item on the belt at its position (the state never moved it); the
+  view flies the dragged copy back. A drop into an empty cauldron or a ready potion is also
+  `wordRejected`, but counts no attempt.
+- `customerReturned` carries `kind` and `sentenceId` too, like `customerArrived`. A customer
+  who sits down empties the cauldron; the same customer comes back with the same order after
+  15 s, when a spot is free, with full patience again.
+- A ready potion holds the customer: the patience meter stops until `serve`.
+- Arrivals: the first customer on the first tick; the next one 3 s later while at most one
+  customer waits (an empty shop), else every patience / 3; a full shop retries each second.
+- Spawns: 70% of the time the belt brings the next word of the customer with the least
+  patience left (when the pool has it), else any word of the pool. Without this, a perfect
+  player could not finish an 8-word A1 sentence in 60 s.
+- `targetFor(state, itemId)` gives the tap target; the QC bot (`qc/bot.ts`) drags a word two
+  cauldrons need to the customer with the least patience.
+- The manifest declares `inputMode: 'story'` (the evidence needs the sentence ids, paragraphs,
+  story id, and level); the core also accepts a plain `SentenceInput` (ids `s-1`, `s-2`, ...).
+- Evidence lists the orders the student started or served; untouched orders are left out.

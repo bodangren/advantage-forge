@@ -83,7 +83,13 @@ export interface Game3DInstance {
   setMuted(muted: boolean): void;
   destroy(): Promise<void>;
   /** Test hook: the QC driver and the tutorial driver use it; production hosts do not. */
-  readonly test: { state(): unknown; dispatch(command: unknown): void; tick(steps: number): void };
+  readonly test: {
+    state(): unknown;
+    dispatch(command: unknown): void;
+    tick(steps: number): void;
+    /** QC only: plays one correct move if there is one (a real-time game's bot); true when it moved. */
+    auto?(): boolean;
+  };
 }
 
 export interface ThreeCartridge {

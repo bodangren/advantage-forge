@@ -105,8 +105,101 @@ async function playMonsterEncounters(page: Page, shot: (name: string) => Promise
   }
 }
 
+const game = '(window.__apk3d.game())';
+
+/** The next word each cauldron needs (the customer's order at that counter spot). */
+const NEEDS = `(() => {
+  const s = ${game}.state();
+  return s.cauldrons.map((c, i) => {
+    const slot = s.slots[i];
+    if (!slot || c.ready) return null;
+    const order = s.orders.find((o) => o.id === (c.orderId ?? slot.orderId));
+    return order ? order.words[c.words.length] ?? null : null;
+  });
+})()`;
+
+/** Potion Rush: one real drag, one wrong drop, then the bot at a person's pace. */
+async function playPotionRush(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForSelector('.order-bubble.on', { timeout: 120_000 });
+  await page.waitForTimeout(2500);
+  await shot('first-order');
+  // One real drag from a word tag to its cauldron.
+  for (let tries = 0; tries < 60; tries++) {
+    const move = await page.evaluate((needsSrc) => {
+      const needs = eval(needsSrc) as (string | null)[];
+      const s = (window as any).__apk3d.game().state();
+      for (const b of s.belt) {
+        const i = needs.findIndex((w) => w && w.toLowerCase() === b.word.toLowerCase());
+        const tag = document.querySelector(`[data-item="${b.id}"]`);
+        const zone = document.querySelector(`[data-cauldron="${i}"]`);
+        if (i < 0 || !tag || !zone || b.position < 0.2 || b.position > 0.85) continue;
+        const a = tag.getBoundingClientRect();
+        const z = zone.getBoundingClientRect();
+        return { from: [a.x + a.width / 2, a.y + a.height / 2], to: [z.x + z.width / 2, z.y + z.height / 2] };
+      }
+      return null;
+    }, NEEDS);
+    if (move) {
+      await page.mouse.move(move.from[0]!, move.from[1]!);
+      await page.mouse.down();
+      for (let k = 1; k <= 8; k++) await page.mouse.move(move.from[0]! + ((move.to[0]! - move.from[0]!) * k) / 8, move.from[1]! + ((move.to[1]! - move.from[1]!) * k) / 8);
+      await shot('dragging');
+      await page.mouse.up();
+      await page.waitForTimeout(700);
+      await shot('after-drag');
+      break;
+    }
+    await page.waitForTimeout(500);
+  }
+  // One wrong word on purpose.
+  for (let tries = 0; tries < 60; tries++) {
+    const done = await page.evaluate((needsSrc) => {
+      const needs = eval(needsSrc) as (string | null)[];
+      const s = (window as any).__apk3d.game().state();
+      const i = needs.findIndex((w) => w);
+      const item = s.belt.find((b: any) => i >= 0 && b.word.toLowerCase() !== needs[i]!.toLowerCase() && b.position > 0.2);
+      if (!item) return false;
+      (window as any).__apk3d.game().dispatch({ type: 'drop', itemId: item.id, cauldron: i });
+      return true;
+    }, NEEDS);
+    if (done) {
+      await page.waitForTimeout(250);
+      await shot('wrong-word');
+      break;
+    }
+    await page.waitForTimeout(500);
+  }
+  let readyShot = false;
+  let rushShot = false;
+  let brewShot = false;
+  const started = Date.now();
+  for (;;) {
+    const state = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return 'results';
+      (window as any).__apk3d.game()?.auto();
+      return document.querySelector('.rush-sign.on') ? 'rush' : document.querySelector('.drop-zone.ready') ? 'ready' : 'play';
+    });
+    if (state === 'results') return;
+    if (state === 'ready' && !readyShot) {
+      readyShot = true;
+      await shot('potion-ready');
+    }
+    if (state === 'rush' && !rushShot) {
+      rushShot = true;
+      await shot('rush');
+    }
+    if (!brewShot && Date.now() - started > 12_000) {
+      brewShot = true;
+      await shot('brewing');
+    }
+    if (Date.now() - started > 20 * 60_000) throw new Error('The shift did not end in 20 minutes');
+    await page.waitForTimeout(700);
+  }
+}
+
 const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
   'monster-encounters': playMonsterEncounters,
+  'potion-rush': playPotionRush,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {

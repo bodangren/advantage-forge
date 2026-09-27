@@ -7,6 +7,8 @@ import { isCompatible, type Cartridge3DManifest, type StoryInput } from '../apk3
 import type { ThreeCartridge } from '../apk3d/factory/index.js';
 import { manifest as monsterEncounters } from '../games/monster-encounters/manifest.js';
 import monsterEncountersStrings from '../games/monster-encounters/strings.en.js';
+import { manifest as potionRush } from '../games/potion-rush/manifest.js';
+import potionRushStrings from '../games/potion-rush/strings.en.js';
 
 export interface GameEntry {
   id: string;
@@ -30,14 +32,22 @@ export const GAMES: GameEntry[] = [
     manifest: monsterEncounters,
     load: () => import('../games/monster-encounters/index.js').then((m) => m.cartridge),
   },
-  { id: 'potion-rush', icon: '🧪', tint: ['#34d399', '#065f46'], titleKey: 'host.games.potionRush.title', pitchKey: 'host.games.potionRush.pitch' },
+  {
+    id: 'potion-rush',
+    icon: '🧪',
+    tint: ['#34d399', '#065f46'],
+    titleKey: 'potionRush.title',
+    pitchKey: 'potionRush.pitch',
+    manifest: potionRush,
+    load: () => import('../games/potion-rush/index.js').then((m) => m.cartridge),
+  },
   { id: 'dragon-flight', icon: '🐉', tint: ['#fb923c', '#9a3412'], titleKey: 'host.games.dragonFlight.title', pitchKey: 'host.games.dragonFlight.pitch' },
   { id: 'dungeon-liberator', icon: '🗝️', tint: ['#60a5fa', '#1e3a8a'], titleKey: 'host.games.dungeonLiberator.title', pitchKey: 'host.games.dungeonLiberator.pitch' },
   { id: 'devourer-slime', icon: '🟢', tint: ['#a3e635', '#3f6212'], titleKey: 'host.games.devourerSlime.title', pitchKey: 'host.games.devourerSlime.pitch' },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 

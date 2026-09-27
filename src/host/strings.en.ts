@@ -81,7 +81,6 @@ export default {
     heroes: { knight: 'Knight', wizard: 'Wizard', cleric: 'Cleric' },
     games: {
       comingSoon: 'Coming soon',
-      potionRush: { title: 'Potion Rush', pitch: 'Brew sentences for busy customers.' },
       dragonFlight: { title: 'Dragon Flight', pitch: 'Fly through the gate with the right meaning.' },
       dungeonLiberator: { title: 'Dungeon Liberator', pitch: 'Free the prisoners in word order.' },
       devourerSlime: { title: 'Devourer Slime', pitch: 'Eat the words in order and grow.' },

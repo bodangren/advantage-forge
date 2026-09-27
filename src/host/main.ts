@@ -224,7 +224,7 @@ async function go(next: Route, push = true): Promise<void> {
       entry = gameById(next.game) ?? null;
       if (!entry?.load) return go({ name: 'select' });
       cartridge = await entry.load();
-      renderBriefing(el.briefing, cartridge.briefing(i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!), story), story, entry.icon, t);
+      renderBriefing(el.briefing, cartridge.briefing(i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!), story), story, cartridge.manifest, entry.icon, t);
       await screens.show(el.briefing, from, 'play');
       break;
     }
