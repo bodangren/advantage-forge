@@ -292,7 +292,7 @@ async function main(): Promise<void> {
         if (res.gif) writeFileSync(join(dir, `${clip}.gif`), Buffer.from(res.gif, 'base64'));
         writeFileSync(
           join(dir, 'metrics.json'),
-          JSON.stringify({ size, clip, metrics: res.metrics, palette: res.palette }, null, 2),
+          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, metrics: res.metrics, palette: res.palette }, null, 2),
         );
         console.log(`sprites  ${rel(join(dir, 'preview.png'))}  (${Math.round(performance.now() - t2)} ms)`);
         if (!clip) {

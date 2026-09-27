@@ -133,12 +133,69 @@ function animatedBounds(clip: THREE.AnimationClip, times: readonly number[], inf
     poseAt(clip, t);
     box.expandByObject(current!.scene, true);
   }
-  if (info && info.dig > 0) {
-    box.min.y = Math.max(box.min.y, 0);
-    studio.renderer.clippingPlanes = [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)];
-  } else studio.renderer.clippingPlanes = [];
+  if (info && info.dig > 0) box.min.y = Math.max(box.min.y, 0);
+  floorClip(info);
   studio.bounds.copy(box);
   studio.ground.position.y = box.min.y;
+}
+
+/** Put every skinned mesh of the loaded asset back into its rest pose. */
+function toRest(): void {
+  current!.mixer.stopAllAction();
+  current!.scene.traverse((o) => {
+    if ((o as THREE.SkinnedMesh).isSkinnedMesh) (o as THREE.SkinnedMesh).skeleton.pose();
+  });
+  current!.scene.updateMatrixWorld(true);
+}
+
+/** The world box of one (posed) mesh. */
+function meshBox(m: THREE.Mesh): THREE.Box3 {
+  const skinned = (m as THREE.SkinnedMesh).isSkinnedMesh;
+  if (skinned) (m as THREE.SkinnedMesh).computeBoundingBox();
+  else if (!m.geometry.boundingBox) m.geometry.computeBoundingBox();
+  const b = (skinned ? (m as THREE.SkinnedMesh).boundingBox : m.geometry.boundingBox)!;
+  return b.clone().applyMatrix4(m.matrixWorld);
+}
+
+/**
+ * Effect parts: meshes that some clip hides by scaling their bone to about 0 (a thrown fireball,
+ * tongs outside their clip). They are left out of sprite frames, so a projectile leaves the cell
+ * instead of making the frame bigger.
+ */
+function effectMeshes(samples = 6): Set<THREE.Mesh> {
+  const { scene, clips } = current!;
+  const meshes: THREE.Mesh[] = [];
+  scene.traverse((o) => {
+    if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh);
+  });
+  const effect = new Set<THREE.Mesh>();
+  const size = new THREE.Vector3();
+  for (const clip of clips)
+    for (const t of sampleTimes(clip, samples, { loop: false, dig: 0 })) {
+      poseAt(clip, t);
+      for (const m of meshes) if (!effect.has(m) && Math.max(...meshBox(m).getSize(size).toArray()) < 0.005) effect.add(m);
+    }
+  toRest();
+  return effect;
+}
+
+/** The world box of the asset in its current pose, without the effect parts. */
+function posedBox(effect: ReadonlySet<THREE.Mesh>): THREE.Box3 {
+  const box = new THREE.Box3();
+  current!.scene.updateMatrixWorld(true);
+  current!.scene.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (m.isMesh && !effect.has(m)) {
+      const b = meshBox(m);
+      if (!b.isEmpty()) box.union(b);
+    }
+  });
+  return box;
+}
+
+/** A clip that digs keeps the floor at y = 0 and hides what is below it, as a game floor does. */
+function floorClip(info?: ClipInfo): void {
+  studio.renderer.clippingPlanes = info && info.dig > 0 ? [new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)] : [];
 }
 
 function gifBase64(frames: readonly HTMLCanvasElement[], delayMs: number): string {
@@ -279,6 +336,10 @@ async function renderSprites(req: SpritesRequest): Promise<{
   gif: string | null;
   palette: number[][];
   metrics: Record<string, { x: number; y: number; width: number; height: number } | null>;
+  /** The cell size in pixels (req.size, or bigger for a clip that needs more room). */
+  cell: number;
+  /** The asset's ground origin in cell pixels from the top-left corner: the same in every sheet. */
+  pivot: [number, number];
 }> {
   await load(req.glbUrl);
   studio.setBackground(null);
@@ -287,37 +348,53 @@ async function renderSprites(req: SpritesRequest): Promise<{
   if (!names) throw new Error('directions must be 1, 4, or 8.');
   const clip = req.clip ? findClip(req.clip) : null;
   const times = clip ? sampleTimes(clip, req.frames ?? 8, req.clipInfo) : [0];
-  if (clip) animatedBounds(clip, times, req.clipInfo);
+  floorClip(clip ? req.clipInfo : undefined);
 
-  // One fixed frame for every direction and pose: a vertical cylinder around the asset, so the
-  // sprite never changes scale or ground line when it turns or moves.
-  const b = studio.bounds;
-  const c = b.getCenter(new THREE.Vector3());
-  let R = 0;
-  const corner = new THREE.Vector3();
-  for (let i = 0; i < 8; i++) {
-    corner.set(i & 1 ? b.max.x : b.min.x, 0, i & 4 ? b.max.z : b.min.z);
-    R = Math.max(R, Math.hypot(corner.x - c.x, corner.z - c.z));
-  }
+  // One pixel density for every sheet of the asset: the rest pose fills a req.size cell, and a
+  // clip that needs more room (a death lying down, a jump) gets a bigger cell at the same pixels
+  // per meter, so the character never shrinks between clips. The camera turns around the
+  // asset's ground origin, so that point is the pivot in every cell and every direction.
+  const effect = effectMeshes();
+  toRest();
+  const restBox = posedBox(effect);
+  const box = restBox.clone();
+  if (clip)
+    for (const t of times) {
+      poseAt(clip, t);
+      box.union(posedBox(effect));
+    }
+  const radius = (b: THREE.Box3) => {
+    let r = 0;
+    for (const x of [b.min.x, b.max.x]) for (const z of [b.min.z, b.max.z]) r = Math.max(r, Math.hypot(x, z));
+    return r;
+  };
   const el = THREE.MathUtils.degToRad(req.elevation);
-  const h = b.max.y - b.min.y;
+  const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
+  const R0 = radius(restBox);
+  const h0 = Math.max(restBox.max.y, 0.01);
+  const ppm = req.size / spanOf(R0, h0);
+  const R = Math.max(R0, radius(box));
+  const h = Math.max(h0, box.max.y);
+  const cellPx = clip ? Math.max(req.size, Math.ceil((spanOf(R, h) * ppm) / 4) * 4) : req.size;
+  const span = cellPx / ppm;
   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
-  const spanX = 2 * R;
-  const span = Math.max(spanX, spanY) / (1 - 2 * req.margin);
   const cam = studio.ortho;
-  // Project the ground contact and top to put the ground line at the bottom margin.
+  // The ground contact and the top: the ground line sits at the bottom margin.
   const bottom = -R * Math.sin(el) - (span - spanY) / 2;
   cam.left = -span / 2;
   cam.right = span / 2;
   cam.bottom = bottom;
   cam.top = bottom + span;
-  const pivot = new THREE.Vector3(c.x, b.min.y, c.z);
+  const pivot = new THREE.Vector3(0, 0, 0);
   const distance = (h + R) * 4;
   cam.near = 0.01;
   cam.far = distance * 3;
   cam.updateProjectionMatrix();
+  if (!clip) toRest();
+  // The pivot (the ground origin) in cell pixels, from the top-left corner.
+  const pivotPx: [number, number] = [cellPx / 2, Math.round(((cam.top - 0) / span) * cellPx)];
 
-  const full = req.size * req.supersample;
+  const full = cellPx * req.supersample;
   const raw: Pixels[][] = names.map(() => []);
   times.forEach((t) => {
     if (clip) poseAt(clip, t);
@@ -337,8 +414,8 @@ async function renderSprites(req: SpritesRequest): Promise<{
   const frames: Record<string, string> = {};
   const metrics: Record<string, ReturnType<typeof occupied>> = {};
   const sheet = document.createElement('canvas');
-  sheet.width = req.size * times.length;
-  sheet.height = req.size * names.length;
+  sheet.width = cellPx * times.length;
+  sheet.height = cellPx * names.length;
   const sctx = sheet.getContext('2d')!;
   finished.forEach((row, d) =>
     row.forEach((p, f) => {
@@ -346,14 +423,14 @@ async function renderSprites(req: SpritesRequest): Promise<{
       const canvas = pixelsToCanvas(p);
       frames[key] = canvas.toDataURL('image/png');
       metrics[key] = occupied(p);
-      sctx.drawImage(canvas, f * req.size, d * req.size);
+      sctx.drawImage(canvas, f * cellPx, d * cellPx);
     }),
   );
   if (!clip) {
     // A static sheet is a single row of directions.
-    sheet.width = req.size * names.length;
-    sheet.height = req.size;
-    finished.forEach((row, d) => sctx.drawImage(pixelsToCanvas(row[0]!), d * req.size, 0));
+    sheet.width = cellPx * names.length;
+    sheet.height = cellPx;
+    finished.forEach((row, d) => sctx.drawImage(pixelsToCanvas(row[0]!), d * cellPx, 0));
   }
 
   // Preview for reviewing: upscaled with nearest neighbor on a checkerboard, labeled.
@@ -362,8 +439,8 @@ async function renderSprites(req: SpritesRequest): Promise<{
     : finished.map((row, d) => ({ p: row[0]!, text: names[d]! }));
   const cols = clip ? times.length : Math.min(4, names.length);
   const rows = Math.ceil(cells.length / cols);
-  const scale = Math.max(1, Math.floor(Math.min(1600 / (req.size * cols), 1600 / (req.size * rows), 4)));
-  const cell = req.size * scale;
+  const scale = Math.max(1, Math.floor(Math.min(1600 / (cellPx * cols), 1600 / (cellPx * rows), 4)));
+  const cell = cellPx * scale;
   const preview = document.createElement('canvas');
   preview.width = cols * cell;
   preview.height = rows * cell;
@@ -381,8 +458,8 @@ async function renderSprites(req: SpritesRequest): Promise<{
     const gs = 2;
     const gifFrames = times.map((_, f) => {
       const g = document.createElement('canvas');
-      g.width = req.size * gs * Math.min(names.length, 4);
-      g.height = req.size * gs * Math.ceil(names.length / 4);
+      g.width = cellPx * gs * Math.min(names.length, 4);
+      g.height = cellPx * gs * Math.ceil(names.length / 4);
       const gctx = g.getContext('2d')!;
       gctx.fillStyle = '#c9ccd2';
       gctx.fillRect(0, 0, g.width, g.height);
@@ -390,10 +467,10 @@ async function renderSprites(req: SpritesRequest): Promise<{
       finished.forEach((row, d) =>
         gctx.drawImage(
           pixelsToCanvas(row[f]!),
-          (d % 4) * req.size * gs,
-          Math.floor(d / 4) * req.size * gs,
-          req.size * gs,
-          req.size * gs,
+          (d % 4) * cellPx * gs,
+          Math.floor(d / 4) * cellPx * gs,
+          cellPx * gs,
+          cellPx * gs,
         ),
       );
       return g;
@@ -408,6 +485,8 @@ async function renderSprites(req: SpritesRequest): Promise<{
     gif,
     palette,
     metrics,
+    cell: cellPx,
+    pivot: pivotPx,
   };
 }
 
