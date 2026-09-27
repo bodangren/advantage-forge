@@ -267,7 +267,8 @@ function clipTime(live: Live, cue: Actor['clips'][number], t: number): number {
 
 function poseActor(live: Live, t: number): void {
   const def = live.def;
-  const visible = t >= def.show[0] && t <= def.show[1];
+  // The end is exclusive: at a cut, the next shot's cast replaces this one on the same frame.
+  const visible = t >= def.show[0] && (t < def.show[1] || (def.show[1] >= tour.duration && t <= def.show[1]));
   live.root.visible = visible;
   if (!visible) return;
   // The root is a child of its set's group, so the position is set-local.
@@ -456,13 +457,14 @@ function drawOverlay(t: number): void {
   for (const { cap, el } of capEls) {
     const inT = cap.start;
     const outT = cap.end;
-    if (t < inT || t > outT + 0.4) {
+    // Text fades out before its end time, so it never crosses into the next shot.
+    if (t < inT || t >= outT) {
       el.style.display = 'none';
       continue;
     }
     el.style.display = '';
     const pin = clamp01((t - inT) / 0.5);
-    const pout = clamp01((t - outT) / 0.4);
+    const pout = clamp01((t - (outT - 0.35)) / 0.35);
     const pop = backOut(pin);
     const opacity = Math.min(clamp01(pin * 2.5), 1 - pout);
     el.style.opacity = String(opacity);

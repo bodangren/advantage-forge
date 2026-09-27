@@ -725,9 +725,9 @@ HEROES.forEach((h, i) => {
   );
 });
 captions.push(
-  { start: 174.2, end: 176.0, kind: 'title', text: 'BOSS BATTLE!', top: 17 },
+  { start: 174.2, end: 176.2, kind: 'title', text: 'BOSS BATTLE!', top: 17 },
   { start: 176.6, end: 180.2, kind: 'banner', text: 'Work together to win!', color: '#e08a1f' },
-  { start: 180.6, end: 182.2, kind: 'banner', text: 'The dragon flies away!', color: '#2fa84f' },
+  { start: 180.6, end: 182.4, kind: 'banner', text: 'The dragon flies away!', color: '#2fa84f' },
 );
 fx(171.0, 'whoosh');
 fx(174.2, 'roar');

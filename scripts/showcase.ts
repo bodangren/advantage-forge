@@ -190,6 +190,36 @@ async function views(file: string): Promise<void> {
   await server.close();
 }
 
+/**
+ * A 1280 x 720 YouTube thumbnail: one moment of the tour (the boss battle by default) with its
+ * captions hidden and the title and a tag line on top.
+ */
+async function thumbnail(at: number): Promise<void> {
+  const t = at > 0 ? at : (tour.captions.find((c) => c.text === 'Work together to win!')?.start ?? 0) + 1.6;
+  const { server, url } = await start();
+  const { browser, page } = await openPage(url);
+  await page.evaluate((x) => window.__showcase!.seek(x), t);
+  await page.evaluate(() => {
+    document.querySelectorAll<HTMLElement>('.overlay > *').forEach((el) => (el.style.display = 'none'));
+    const overlay = document.querySelector('.overlay')!;
+    const title = document.createElement('div');
+    title.className = 'cap cap-title';
+    title.style.cssText = 'display:block;opacity:1;top:22%;transform:translate(-50%,-50%) rotate(-3deg)';
+    title.innerHTML = '<div class="cap-text">CHIBI QUEST</div><div class="cap-sub">Heroes! Monsters! Learning quests!</div>';
+    overlay.append(title);
+  });
+  const file = join(DIR, 'thumbnail.png');
+  const big = await page.screenshot();
+  await browser.close();
+  await server.close();
+  writeFileSync(join(DIR, 'thumbnail-1080.png'), big);
+  await new Promise<void>((resolve, reject) => {
+    const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-i', join(DIR, 'thumbnail-1080.png'), '-vf', 'scale=1280:720:flags=lanczos', file], { stdio: 'inherit' });
+    ff.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg exit ${code}`))));
+  });
+  console.log(`thumb  ${file}`);
+}
+
 async function record(fps: number, from: number, to: number): Promise<void> {
   writeScripts();
   const { server, url } = await start();
@@ -243,6 +273,7 @@ async function main(): Promise<void> {
   else if (cmd === 'views') await views(rest[0] ?? 'views.json');
   else if (cmd === 'record') await record(flag('fps', 30), flag('from', 0), flag('to', tour.duration));
   else if (cmd === 'scripts') writeScripts();
+  else if (cmd === 'thumbnail') await thumbnail(Number(rest[0] ?? 0));
   else if (cmd === 'serve') {
     const { url } = await start(5173);
     console.log(`open ${url}showcase.html?play`);
