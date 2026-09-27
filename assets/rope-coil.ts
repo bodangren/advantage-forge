@@ -32,7 +32,7 @@ export default defineAsset({
   description:
     'Coiled length of hemp rope: three neat tan turns wound into a stout donut shape with a free end tucked under the coil.',
   detail: 0.008,
-  reference: 'reference/blacksmith-quest_001.jpg',
+  reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

@@ -51,7 +51,7 @@ export default defineAsset({
   description:
     'Standing bottle shelf: dark walnut frame with an overhanging top, three pale oak boards with front lips, and a dark vertical-plank back. Built empty.',
   detail: 0.008,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

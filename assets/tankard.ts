@@ -26,7 +26,7 @@ export default defineAsset({
   name: 'tankard',
   description: 'Stout pewter tankard with a rolled lip, chunky D-handle, and a hinged lid resting slightly open.',
   detail: 0.006,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

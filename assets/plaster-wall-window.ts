@@ -65,7 +65,7 @@ export default defineAsset({
     'Modular tavern wall, 2 m: warm plaster with chunky walnut posts, sill beam, top rail, and braces flanking a deep shuttered window with evening-blue glass.',
   detail: 0.013,
   texture: { size: 1024 },
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
 
   build(k) {
     // ------------------------------------------------------------------ plaster wall

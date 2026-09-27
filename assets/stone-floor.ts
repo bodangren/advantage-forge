@@ -267,7 +267,7 @@ export default defineAsset({
   description:
     'Modular 2 m cobblestone workshop floor tile, 0.06 m thick: chunky bevelled flagstones in a dark mortar bed.',
   detail: 0.009,
-  reference: 'reference/blacksmith-quest_001.jpg',
+  reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

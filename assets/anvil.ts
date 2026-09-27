@@ -40,7 +40,7 @@ export default defineAsset({
   description:
     'Heavy cast-iron anvil with a splayed foot, pinched waist, wide flat worn face, a strong horn, and hardie and pritchel holes.',
   detail: 0.008,
-  reference: 'reference/blacksmith-quest_001.jpg',
+  reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

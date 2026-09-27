@@ -111,7 +111,7 @@ export default defineAsset({
   description:
     'Stout hand bellows: two walnut boards squeezing stacked tan leather bags, brass nozzle, leather hinge straps.',
   detail: 0.005,
-  reference: 'reference/blacksmith-quest_001.jpg',
+  reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

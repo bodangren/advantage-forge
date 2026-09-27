@@ -49,7 +49,7 @@ export default defineAsset({
   name: 'table',
   description:
     'Sturdy square tavern table: thick honey-oak top with a soft bevel and faint planks, on four chunky brown legs tied by a low stretcher frame.',
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   detail: 0.008,
   texture: { size: 1024 },
 

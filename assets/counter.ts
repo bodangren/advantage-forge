@@ -38,7 +38,7 @@ export default defineAsset({
   description:
     'Tavern bar counter: thick honey-oak top over a dark walnut plank front with a brass foot rail.',
   detail: 0.008,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

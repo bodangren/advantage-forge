@@ -77,7 +77,7 @@ export default defineAsset({
   description:
     'Long tavern bench: one thick honey-oak plank seat with worn pale edges, on two splayed trestle end frames joined by a low stretcher.',
   detail: 0.006,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

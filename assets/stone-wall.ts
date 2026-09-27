@@ -218,7 +218,7 @@ export default defineAsset({
   name: 'stone-wall',
   description:
     'Ashlar stone wall tile: four courses of warm-grey cut blocks with soft bevels in dark recessed mortar, a darker segmented coping on top, and a walnut sill beam. 2 m long, tiles on a 2 m grid.',
-  reference: 'reference/blacksmith-quest_001.jpg',
+  reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   detail: 0.012,
   texture: { size: 1024 },
 

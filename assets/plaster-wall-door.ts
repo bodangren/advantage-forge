@@ -137,7 +137,7 @@ export default defineAsset({
     'honey-oak plank door on iron strap hinges; braces flank the doorway and the sill and ' +
     'top rail step around the opening.',
   detail: 0.02,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

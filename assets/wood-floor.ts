@@ -193,7 +193,7 @@ export default defineAsset({
   name: 'wood-floor',
   description: 'Modular 2 m honey-oak plank floor tile, 0.08 m thick, with dark seams and soft wear.',
   detail: 0.008,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

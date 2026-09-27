@@ -35,7 +35,7 @@ export default defineAsset({
   description:
     'Stout honey-oak stew bowl with a thick rolled lip, a puddle of deep-orange stew, two vegetable lumps, and one bone.',
   detail: 0.005,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

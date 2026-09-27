@@ -74,7 +74,7 @@ export default defineAsset({
   name: 'plaster-wall',
   description:
     'Tavern wall tile: warm white plaster panel recessed between chunky walnut timbers — square end posts, sill, top rail, one diagonal brace; 2 m, tiles on a 2 m grid.',
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   detail: 0.014,
   texture: { size: 1024 },
 

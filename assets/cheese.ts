@@ -50,7 +50,7 @@ export default defineAsset({
     'A whole cream cheese wheel with a thick orange rind, one wedge cut out at the front, on a small oak board.',
   detail: 0.008,
   texture: { size: 1024 },
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
 
   build(k) {
     // ------------------------------------------------------------ board

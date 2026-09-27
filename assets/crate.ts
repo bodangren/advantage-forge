@@ -53,7 +53,7 @@ export default defineAsset({
   description:
     'Stout honey-oak storage crate with chunky corner posts, iron banding, and strap hinges at the back.',
   detail: 0.006,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {

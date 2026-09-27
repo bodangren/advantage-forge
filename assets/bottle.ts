@@ -34,7 +34,7 @@ export default defineAsset({
   description:
     'Stout round-bellied wine bottle: deep red glass, rolled lip, dark cork, paper label with ink stamp.',
   detail: 0.005,
-  reference: 'reference/mockups/tavern-quest_001.jpg',
+  reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {
