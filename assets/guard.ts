@@ -72,6 +72,10 @@ const WRIST_R: V3 = [-0.225, 0.3, 0.09];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
+// The ends of the flat bottom of the left boot (y = 0), measured on the SDF: heel and toe.
+// The boot turns out 12 degrees, so the toe point sits outboard of the heel.
+const SOLE_HEEL: V3 = [0.093, 0, -0.024];
+const SOLE_TOE: V3 = [0.118, 0, 0.085];
 const GRIP: V3 = [WRIST_R[0] - 0.012, WRIST_R[1] - 0.038, WRIST_R[2] + 0.014];
 
 /** A relaxed fist hanging from the wrist `w`. */
@@ -479,24 +483,44 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flap: number, carry = 0) => ({
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm
+    // is back. The hips' turn goes to gait, so the planted feet do not slide.
+    const stride = (
+      duration: number,
+      step: number,
+      footLift: number,
+      duty: number,
+      bob: number,
+      armSwing: number,
+      lean: number,
+      flap: number,
+      carry = 0,
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 10,
+          heel: SOLE_HEEL,
+          toe: SOLE_TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -10 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The pennant lifts back behind the haft and flutters.
           pennant: { rotate: [flap + 0.3 * flap * wave(p, 2, 0.2), 10 * wave(p, 3, 0.1), -0.25 * flap - 6 * wave(p, 2, 0.45)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
           // The spear arm swings little; the hand keeps the spear upright. `carry` bends the forearm
@@ -507,8 +531,10 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 26, 3, 0, 24));
-    k.animation('run', stride(0.56, 40, 44, 12, 0.03, 48, 36));
+    // A watchman's steady march: short, planted steps with a low swing; the run has a short flight.
+    // Both carry the spear a little higher: the hips sit lower than at rest, and the butt stays off the floor.
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.62, 0.006, 26, 3, 24, 28));
+    k.animation('run', stride(0.56, 0.14, 0.04, 0.42, 0.025, 44, 12, 48, 36));
 
     // A two-hand spear thrust, solved by targets in the world frame. The guard turns side-on to the
     // right, the left shoulder forward, the spear level at the belly: the rear (right) hand in front
