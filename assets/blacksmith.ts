@@ -83,6 +83,10 @@ const WRIST_L: V3 = [0.27, 0.225, 0.05];
 const HIP: V3 = [0.08, 0.195, 0];
 const ANKLE: V3 = [0.11, 0.07, 0];
 const KNEE: V3 = [0.095, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
+// The ends of the flat bottom of the left boot (y = 0), measured on the SDF: heel and toe.
+// The toe turns out 12 degrees, so the toe point sits outboard of the heel.
+const SOLE_HEEL: V3 = [0.096, 0, -0.065];
+const SOLE_TOE: V3 = [0.134, 0, 0.113];
 
 // The tongs and the hot work piece (the billet) for the work clip. Both are built along +X at
 // bind places inside the chest, where the rest pose hides them; the work clip moves them into the
@@ -469,8 +473,7 @@ export default defineAsset({
     k.body('hot-iron', billet, { color: C.hot, roughness: 0.5, emissive: C.hot, emissiveIntensity: 1.3, detail: 0.003, bone: 'billet' });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
-    const LEG = 0.19;
+    const { wave, bump } = motion;
 
     k.animation('idle', {
       duration: 2.6,
@@ -489,23 +492,33 @@ export default defineAsset({
     });
 
     // A heavy walk: the weight shifts from side to side; the hammer arm stays on the shoulder.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, sway: number) => ({
+    // The legs come from motion.gait: planted stance boots, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm
+    // is back. The hips' sway goes to gait, so the planted feet do not slide.
+    const stride = (duration: number, step: number, footLift: number, duty: number, bob: number, armSwing: number, lean: number, sway: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 6 * s, sway * s] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 10,
+          heel: SOLE_HEEL,
+          toe: SOLE_TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 6 * s, sway * s] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, -sway * 0.6 * s] as const },
           chest: { rotate: [lean * 0.5, -9 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           knot: { rotate: [lean * 1.5 + 6 * wave(p, 2, 0.2), 0, 6 * wave(p, 2, 0.1)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 4] as const },
           'upperarm.R': { rotate: [-armSwing * 0.15 * s, 0, 0] as const },
           'forearm.L': { rotate: [-armSwing * 0.4 - armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
@@ -514,8 +527,9 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(1.0, 22, 20, 3, 0, 4));
-    k.animation('run', stride(0.62, 34, 34, 10, 0.02, 3));
+    // A strong, heavy villager: short, grounded steps with a low swing; the run has a short flight.
+    k.animation('walk', stride(1.0, 0.1, 0.022, 0.62, 0.007, 20, 3, 4));
+    k.animation('run', stride(0.62, 0.14, 0.04, 0.42, 0.028, 34, 10, 3));
 
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
