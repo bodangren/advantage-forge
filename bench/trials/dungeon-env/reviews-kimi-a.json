@@ -1,0 +1,16 @@
+{
+  "floor": { "score": 7, "status": "fix", "notes": "Clean 2 m tile with the correct grout grid, but the grout reads thin and the tile tone is flat and washed out versus the anchor. Deepen the grout lines and vary tile tone to add depth." },
+  "floor-cracked": { "score": 7, "status": "fix", "notes": "Cracks read too subtly and the broken-corner debris looks muddy brown, not stone. Strengthen the crack lines and recolor the corner rubble to the stone family." },
+  "wall": { "score": 8, "status": "pass", "notes": "Two staggered courses with pillowy bevels, deep slate joints, pale worn tops, and base moss match the anchor stone language. Blocks are a touch soft but stay on-style." },
+  "wall-corner": { "score": 8, "status": "pass", "notes": "Both arms are full walls with matching courses, bevels, and moss, so it merges cleanly into wall runs. Corner mass reads correct." },
+  "wall-alcove": { "score": 8, "status": "pass", "notes": "Arched niche cuts through both courses with a dark slate interior that reads clearly. Masonry matches the stone family." },
+  "arch": { "score": 8, "status": "pass", "notes": "Round-arch portal with wedge stones and pale worn tops reads as a clear passage marker. Masonry and moss match the family." },
+  "door": { "score": 8, "status": "pass", "notes": "Wood planks, iron hinges, and ring handle sit well in the stone arch, and moss grounds the base. The wood tone is slightly bright versus the muted anchor." },
+  "gate": { "score": 8, "status": "pass", "notes": "Iron portcullis with ring, crossbar, and pointed bars reads clearly and fills a 2 m gap. Rust tones fit the iron language." },
+  "stairs": { "score": 8, "status": "pass", "notes": "Steps rise cleanly to half-wall height with blocky cheeks that carry the canon courses. Reads clearly as stairs." },
+  "pillar": { "score": 8, "status": "pass", "notes": "Proportional column with base, shaft seams, and capital; taller than walls, as a room divider should be. Masonry and moss match." },
+  "rubble": { "score": 7, "status": "fix", "notes": "Reads as a rubble pile with moss accents, but the chunks are soft and uniform, lacking broken-block angularity. Add varied chunk shapes and sharper edges." },
+  "torch-sconce": { "score": 8, "status": "pass", "notes": "Full-height stone stub merges into wall runs, and the torch flame reads as the warm emissive accent. Strong light-language anchor." },
+  "brazier": { "score": 8, "status": "pass", "notes": "Iron fire-bowl on tripod legs with coals and warm flames reads clearly. Rust tones and ring handles fit the iron family." },
+  "candle-cluster": { "score": 7, "status": "fix", "notes": "Varied wax candles with melted drips and warm flames read well, but the base looks like a purple cushion, off the stone palette. Recolor the base to stone." }
+}

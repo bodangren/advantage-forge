@@ -1,0 +1,159 @@
+{
+  "_readme": "Dual review record for the dungeon-env kit. score/status = primary verdict; kimi = independent kimi-k2.8 dual review (A: structure+light, B: props+dressing). agreement: confirm = same status, drift1 = score delta 1, FLAG = delta >= 2 (none found). Assets with fixNext go to the post-graft polish pass; none block the map.",
+  "wall": {
+    "status": "pass", "score": 9,
+    "notes": "Round-1 canon wall by deepseek: 2 courses of 0.60 m pillow blocks, navy joints, moss at base only. Chosen as the masonry canon per user direction. Grafted: exit 0, 0 warnings, 2,626 tris.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Matches anchor stone language; blocks a touch soft but on-style." },
+    "agreement": "drift1"
+  },
+  "wall-corner": {
+    "status": "pass", "score": 9,
+    "notes": "Round-2 re-roll by deepseek against the canon plate. Arms are full 2 m and replace the adjacent straight segment per arm (mockup-verified). Vault map uses it at all 15 convex bends.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Both arms full walls, merges cleanly into runs." },
+    "agreement": "drift1"
+  },
+  "wall-alcove": {
+    "status": "pass", "score": 8,
+    "notes": "Round-2 deepseek supersedes off-canon r1. Niche reads clearly; interior crude but shadowed. Vault places 4 (sanctum x2, sanctum E wall, crypt).",
+    "kimi": { "score": 8, "status": "pass", "notes": "Niche cuts both courses, dark interior reads." },
+    "agreement": "confirm"
+  },
+  "door": {
+    "status": "pass", "score": 9,
+    "notes": "Round-2 deepseek: full 2 m segment with voussoir jamb, wooden leaf, iron bands. Leaf is static-closed; opening is engine-side. Vault places 3.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Wood slightly bright vs muted anchor." },
+    "agreement": "drift1"
+  },
+  "arch": {
+    "status": "pass", "score": 9,
+    "notes": "Round-2 deepseek: full 2 m segment, faceted voussoir ring, 2.4 m tall passage marker over 1.2 m walls. Vault places 4.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Reads as a clear passage marker." },
+    "agreement": "drift1"
+  },
+  "stairs": {
+    "status": "pass", "score": 8,
+    "notes": "Round-2 deepseek: 4 pillow-block steps, canon cheeks, tops out at wall height. Vault places 1 at the north breach (c9, r1).",
+    "kimi": { "score": 8, "status": "pass", "notes": "Steps read cleanly." },
+    "agreement": "confirm"
+  },
+  "pillar": {
+    "status": "pass", "score": 8,
+    "notes": "Round-2 deepseek: 1.4 m pier, canon masonry, base moss. Vault places 6 (hall pair + treasury colonnade).",
+    "kimi": { "score": 8, "status": "pass", "notes": "Proportional; taller than walls as a divider should be." },
+    "agreement": "confirm"
+  },
+  "torch-sconce": {
+    "status": "pass", "score": 9,
+    "notes": "Round-2 deepseek: 1.2 m two-course stub merges into runs, iron bracket, warm emissive flame. Vault places 8.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Strong light-language anchor." },
+    "agreement": "drift1"
+  },
+  "floor": {
+    "status": "pass", "score": 8,
+    "notes": "r1 glm: clean 2x2 m tile, grout grid reads at map scale, pale worn tops per contract. Scene-verified across the whole vault. Kimi's wash-out note is a polish nit: deepen grout slightly in the polish pass.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Grout thin, tile tone flat vs anchor." },
+    "agreement": "drift1"
+  },
+  "floor-cracked": {
+    "status": "fix", "score": 7,
+    "notes": "r1 glm. Crack insets read faintly; the broken corner exposes a BROWN dirt wedge with pebbles - off the stone palette. fixNext: recolor sub-wedge to dark slate, deepen crack insets. Usable in-scene meanwhile (19 vault tiles).",
+    "kimi": { "score": 7, "status": "fix", "notes": "Cracks subtle, corner debris muddy brown." },
+    "agreement": "confirm"
+  },
+  "gate": {
+    "status": "pass", "score": 8,
+    "notes": "r1 deepseek: iron portcullis, ring, crossbar, pointed bars. Scene-verified at the vault south entry.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Reads clearly, rust fits the iron language." },
+    "agreement": "confirm"
+  },
+  "rubble": {
+    "status": "fix", "score": 7,
+    "notes": "r1 glm: chunks soft and same-size; the teal moss leaf floats like a feather from behind. fixNext: more small shards for size rhythm, seat moss flat.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Lacks broken-block angularity." },
+    "agreement": "confirm"
+  },
+  "brazier": {
+    "status": "pass", "score": 8,
+    "notes": "r1: tripod fire bowl, coals, warm flames. Scene-verified flanking the gate.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Rust tones and ring handles fit the iron family." },
+    "agreement": "confirm"
+  },
+  "candle-cluster": {
+    "status": "fix", "score": 7,
+    "notes": "r1 mimo: wax candles, drips and flames read great, but the base is a violet-blue glassy disc - a soap dish, off-palette. fixNext: recolor base to dark stone or iron.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Base looks like a purple cushion." },
+    "agreement": "confirm"
+  },
+  "bone-pile": {
+    "status": "pass", "score": 9,
+    "notes": "r3 REVISION (this session): r2 by muse-spark smoothUnion-melted the pile into dough (user-flagged). Fixed with hard unions between discrete bones; crisp contact creases, both skulls read, rib arcs visible. Formally grafted: ./forge all exit 0, 0 warnings.",
+    "kimi": { "score": 8, "status": "pass", "notes": "(reviewed r2) Two cute skulls plus long bones read clearly at 128 px." },
+    "agreement": "confirm"
+  },
+  "cell-bars": {
+    "status": "pass", "score": 8,
+    "notes": "r2: chunky stone posts, dark iron bars, one bent bar - reads instantly as cell frontage. Scene-verified on both vault cells.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Pale caps and teal moss match the wall language." },
+    "agreement": "confirm"
+  },
+  "hanging-cage": {
+    "status": "pass", "score": 8,
+    "notes": "r2: bulbous iron cage, conical top, ring chain. Scene-verified hanging between the hall pillars.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Rust-brown iron matches chains and cell-bars." },
+    "agreement": "confirm"
+  },
+  "altar": {
+    "status": "pass", "score": 8,
+    "notes": "r1 mimo: stepped base, slab, two candle flames, teal runes. Scene-verified as the sanctum focal point on the gate axis.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Strong focal point; flames are the only warm accent." },
+    "agreement": "confirm"
+  },
+  "cauldron": {
+    "status": "pass", "score": 8,
+    "notes": "r1 mimo: pot-bellied body, legs, fire, teal brew glow. Scene-verified in the treasury NE corner.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Materials separate cleanly." },
+    "agreement": "confirm"
+  },
+  "chains": {
+    "status": "fix", "score": 6,
+    "notes": "r2 muse-spark: the floor coil and hanging chain read well, but a big plain stone pedestal carries 70% of the mass and reads as a monolith from the back. fixNext: shrink the pedestal to a low wall-anchor stub (or dress it with canon courses) so the chains own the silhouette.",
+    "kimi": { "score": 6, "status": "fix", "notes": "Plain stone block dominates; dress it or drop it." },
+    "agreement": "confirm"
+  },
+  "sarcophagus": {
+    "status": "fix", "score": 6,
+    "notes": "r1 mimo: front reads as a stone coffin, but the side view collapses to a plain hexagonal tube - the lid overhang vanishes in profile. fixNext: add a lid ridge/crown visible in profile and end-foot articulation.",
+    "kimi": { "score": 6, "status": "fix", "notes": "Side and back read as a trough." },
+    "agreement": "confirm"
+  },
+  "mushroom-cluster": {
+    "status": "pass", "score": 8,
+    "notes": "r2 muse-spark: unmistakable mushroom silhouette, teal caps + pale speckles + white stems. The big slate-gray cap is the only nit (drifts from the teal family). Scene-verified in the flooded strips.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Dark caps could read as stones at 128 px." },
+    "agreement": "drift1"
+  },
+  "crystal-cluster": {
+    "status": "pass", "score": 8,
+    "notes": "r2: pointed teal shards of varied height on a rounded stone base. Scene-verified.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Matches the contract teal and anchor crystal language." },
+    "agreement": "confirm"
+  },
+  "moss-tuft": {
+    "status": "fix", "score": 7,
+    "notes": "r2 muse-spark: the dome reads as moss, but the spiky blades clash with the kit's soft moss blobs (sea-urchin look). fixNext: round blades into nubs, ease teal saturation.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Spiky blades clash with the anchor's blobby moss." },
+    "agreement": "confirm"
+  },
+  "gold-pile": {
+    "status": "pass", "score": 8,
+    "notes": "r2: gold mound with goblets, coins, small teal crystals. Scene-verified in the treasury.",
+    "kimi": { "score": 8, "status": "pass", "notes": "Gold #f4c542 is the correct warm accent." },
+    "agreement": "confirm"
+  },
+  "walkway": {
+    "status": "pass", "score": 8,
+    "notes": "r2 glm: planked platform with seams and end feet; reads clearly as a jetty in the vault top view. Rope edging would polish but is not required at map scale.",
+    "kimi": { "score": 7, "status": "fix", "notes": "Surface plain at 128 px; add rope or nails." },
+    "agreement": "drift1"
+  }
+}

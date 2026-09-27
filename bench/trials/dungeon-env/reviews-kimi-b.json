@@ -1,0 +1,14 @@
+{
+  "chains": { "score": 6, "status": "fix", "notes": "Chain links are chunky and read well, but a large plain stone block dominates the asset and reads as a monolith, not chains. Dress the block as masonry or drop it so the restraining chain and pile are the prop." },
+  "bone-pile": { "score": 8, "status": "pass", "notes": "Two cute skulls with dark sockets plus long bones read clearly as a bone pile at 128 px. The cream bone color is neutral and sits well beside the slate stone family." },
+  "sarcophagus": { "score": 6, "status": "fix", "notes": "Front view reads as a stone coffin, but the side and back views show a plain hexagonal tube that reads as a trough. Add an arched lid ridge or carved rune detail to fix the silhouette." },
+  "cell-bars": { "score": 8, "status": "pass", "notes": "Chunky stone posts, dark iron bars, and one bent bar read instantly as a cell frontage. Pale cap stones and teal moss at the base match the wall masonry language." },
+  "hanging-cage": { "score": 8, "status": "pass", "notes": "Bulbous iron cage with conical top, front gate, and a long ring chain reads clearly as a hanging cage. The rust-brown iron matches the chains and cell-bars material." },
+  "altar": { "score": 8, "status": "pass", "notes": "Stepped brick base, wide slab, two orange candle flames, and teal rune glyphs make a strong focal point. The flames are the only warm accent, which matches the palette contract." },
+  "cauldron": { "score": 8, "status": "pass", "notes": "Black pot-bellied body, three legs, orange fire, teal bubbling brew, and a wooden spoon read perfectly as a cauldron. Iron, wood, stone, flame, and brew materials separate cleanly." },
+  "mushroom-cluster": { "score": 7, "status": "fix", "notes": "Caps and stems read as mushrooms, but the dark slate caps look like stones at 128 px. Lighten the caps or add a teal glow so the cluster reads as fungus, not rubble." },
+  "crystal-cluster": { "score": 8, "status": "pass", "notes": "Pointed teal shards of varied height on a rounded stone base read clearly as crystals. The teal-green matches the contract and the anchor's crystal language." },
+  "moss-tuft": { "score": 7, "status": "fix", "notes": "The dome reads as a moss tuft, but the spiky blades clash with the soft, blobby moss in the anchor. Round the blades into bumps and ease the teal saturation." },
+  "gold-pile": { "score": 8, "status": "pass", "notes": "Gold mound with goblets, scattered coins, and small teal crystals reads clearly as treasure. The gold #f4c542 is the correct warm accent and matches the anchor alcove." },
+  "walkway": { "score": 7, "status": "fix", "notes": "Planked wood platform on small feet reads as a dock segment and the warm brown is correct. The surface is plain at 128 px; add rope edging or nail detail to read as boards." }
+}
