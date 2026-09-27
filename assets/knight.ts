@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Knight — Chibi Quest hero (catalog `heroes/martial/knight`), 1.0 m to the helm crown, plume
@@ -147,8 +147,32 @@ export default defineAsset({
   description: 'Chibi knight hero with a round plumed helm, red scarf and cape, sword, and heart shield.',
   detail: 0.005,
   reference: 'docs/hero-mockups/knight_001.jpg',
+  // Color slots for individual knights (the first option is the default look). Skin, eye, and
+  // auburn hair options match the rogue's, so the heroes share one set. The clothing slot is the
+  // livery cloth (scarf, tabard, cape); the plume, the shield enamel, and the steel keep their colors.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { black: C.hair, auburn: '#8e3b1c', blond: '#c4974a' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { red: C.red, blue: '#2f58b8', green: '#2e7a3c' },
+  },
+  presets: {
+    royal: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'blue' },
+    warden: { eyes: 'green', hair: 'auburn', skin: 'tan', clothing: 'green' },
+    champion: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'red' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', 0.06),
+      hair: k.tint('hair'),
+      skin: k.tint('skin'),
+      cloth: k.tint('clothing'),
+      clothDark: k.tint('clothing', -0.53),
+      clothStripe: k.tint('clothing', -0.15),
+    };
     // ------------------------------------------------------------------ skeleton
     const PLUME_AT: V3 = [0, 0.985, -0.012];
     k.skeleton({
@@ -209,14 +233,14 @@ export default defineAsset({
       .paintWhere(blush, C.blush, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
+      .paintWhere(brows, T.hair)
       .paintWhere(smile, C.mouth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ helm
     const helmOuter = sdf.ellipsoid([0.246, 0.275, 0.246]).at(0, 0.69, -0.012);
@@ -352,7 +376,7 @@ export default defineAsset({
       lock(0.152, 0.042, 0.01, 0.018),
     );
     const hair = sdf.smoothUnion(0.012, cap, locks).intersect(insideHelm);
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
     // ------------------------------------------------------------------ torso: cuirass, mail skirt
     const torso = sdf
@@ -470,7 +494,7 @@ export default defineAsset({
       )
       .rotateX(-8)
       .at(0, 0, 0.128);
-    k.body('tabard', pair(flapL.bone('leg.L')), { color: C.red, roughness: 0.8 });
+    k.body('tabard', pair(flapL.bone('leg.L')), { color: T.cloth, roughness: 0.8 });
 
     // ------------------------------------------------------------------ scarf and cape
     const scarfRing = sdf
@@ -509,8 +533,8 @@ export default defineAsset({
       );
     const scarf = sdf
       .smoothUnion(0.012, scarfRing, drape)
-      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? [base[0] * 0.85, base[1] * 0.85, base[2] * 0.85] : base));
-    k.body('scarf', scarf, { color: C.red, roughness: 0.8, bone: 'chest' });
+      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? rgb(T.clothStripe) : base));
+    k.body('scarf', scarf, { color: T.cloth, roughness: 0.8, bone: 'chest' });
 
     // A cone of cloth behind, open at the top and the hem; the folds bend both walls alike.
     const folds = (x: number, y: number, z: number) =>
@@ -531,8 +555,8 @@ export default defineAsset({
       .subtract(capeCone(0.168, 0.263, 0.46, 0.07))
       .at(0, 0, -0.025)
       .intersect(sdf.halfSpace([0, 0, 1], -0.02))
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), C.redDark);
-    k.body('cape', cape.bone('cloak'), { color: C.red, roughness: 0.8 });
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), T.clothDark);
+    k.body('cape', cape.bone('cloak'), { color: T.cloth, roughness: 0.8 });
 
     // ------------------------------------------------------------------ legs: leggings, knee cops, greaves, sabatons
     const leggings = sdf.smoothUnion(
