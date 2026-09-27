@@ -86,8 +86,33 @@ export default defineAsset({
     'Chibi giant spider monster: a fuzzy purple head with two huge glaring red eyes, six small white eyeballs, pale fangs, eight chunky orange-banded legs, a round thorax with an orange splat, and a big abdomen with an orange skull.',
   detail: 0.005,
   reference: 'docs/monster-mockups/giant-spider_001.jpg',
+  // Color slots for individual spiders (the first option is the default look).
+  variants: {
+    // Real spider colorings: a tarantula (brown, orange), a black widow (black, red), a garden
+    // spider (grey, yellow). No candy greens.
+    body: { purple: C.body, brown: '#4a3426', black: '#221c24', grey: '#3c3a40' },
+    markings: { orange: C.orange, red: '#b02a20', yellow: '#d0b048' },
+    eyes: { red: C.iris, yellow: '#f2c62a', green: '#52c63a' },
+  },
+  presets: {
+    cave: { body: 'brown', markings: 'orange', eyes: 'yellow' },
+    widow: { body: 'black', markings: 'red', eyes: 'red' },
+    tomb: { body: 'grey', markings: 'yellow', eyes: 'green' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    // The pupil stays out of the eyes slot: its near-zero green and blue turn olive in a yellow eye.
+    const T = {
+      body: k.tint('body'),
+      bodyDark: k.tint('body', { color: C.bodyDark, follow: 1 }),
+      brow: k.tint('body', { color: C.brow, follow: 1 }),
+      claw: k.tint('body', { color: C.claw, follow: 1 }),
+      under: k.tint('body', -1), // black in the body slot: the underside darkens toward it
+      markings: k.tint('markings'),
+      iris: k.tint('eyes'),
+      irisRim: k.tint('eyes', { color: C.irisRim, follow: 1 }),
+    };
     // ------------------------------------------------------------------ head (upright), thorax, abdomen
     const headUp = sdf.smoothUnion(
       0.05,
@@ -166,12 +191,12 @@ export default defineAsset({
       // Darker underneath.
       .paintFn((_x, y, _z, base) => {
         const t = Math.min(1, Math.max(0, (0.2 - y) / 0.14));
-        return [base[0] * (1 - 0.35 * t), base[1] * (1 - 0.35 * t), base[2] * (1 - 0.35 * t)];
+        return t <= 0 ? base : mixRgb(base, rgb(T.under), 0.35 * t);
       })
-      .paintWhere(splat, C.orange, 0.003)
-      .paintWhere(skullStencil, C.orange, 0.003);
+      .paintWhere(splat, T.markings, 0.003)
+      .paintWhere(skullStencil, T.markings, 0.003);
     k.body('carapace', carapace, {
-      color: C.body,
+      color: T.body,
       roughness: 0.8,
       textureDensity: 1.5,
       bump: (x, y, z) => 0.0012 * noise.fbm(x * 80, y * 80, z * 80, 2),
@@ -208,8 +233,10 @@ export default defineAsset({
           const d = norm(sub(q, p));
           return sdf.halfSpace(d, dotv(d, c) + half).intersect(sdf.halfSpace(scl(d, -1), -dotv(d, c) + half)).intersect(sdf.sphere(0.09).at(...c));
         };
+        // The knee cap stencil reaches well into the knee (0.066): at 0.059 it was nearly tangent,
+        // so the caps were a half blend of orange and purple that no recolor could follow.
         return [
-          sdf.sphere(0.059).at(...knee).intersect(sdf.sphere(0.2).at(...knee)),
+          sdf.sphere(0.066).at(...knee).intersect(sdf.sphere(0.2).at(...knee)),
           ring(root, knee, 0.5, 0.022),
           ring(knee, mid, 1.0, 0.024),
           ring(mid, tip, 0.4, 0.02),
@@ -217,8 +244,8 @@ export default defineAsset({
       }),
     );
     const clawTips = sdf.union(...LEG_ANGLES.map((a) => sdf.sphere(0.09).at(...legTip(a)).intersect(sdf.halfSpace(norm(sub(legMid(a), legTip(a))), dotv(norm(sub(legMid(a), legTip(a))), lerp3(legMid(a), legTip(a), 0.64))))));
-    k.body('legs', pair(sdf.union(...legs).paintWhere(bands, C.orange, 0.004).paintWhere(clawTips, C.claw, 0.006)), {
-      color: C.body,
+    k.body('legs', pair(sdf.union(...legs).paintWhere(bands, T.markings, 0.004).paintWhere(clawTips, T.claw, 0.006)), {
+      color: T.body,
       roughness: 0.75,
       bump: (x, y, z) => 0.001 * noise.fbm(x * 90, y * 90, z * 90, 2),
     });
@@ -242,7 +269,7 @@ export default defineAsset({
       ),
     );
     k.body('brows', headPose(brows), {
-      color: C.brow,
+      color: T.brow,
       roughness: 0.75,
       bone: 'head',
       // Wrinkles along the brow, like the clay folds in the mockup.
@@ -259,8 +286,8 @@ export default defineAsset({
       .sphere(EYE_R)
       .at(...eyeC)
       // A red iris about half the eye wide, as in the mockup, so a wide white ring shows around it.
-      .paintWhere(cap(eyeC, look, EYE_R, 0.04), C.irisRim, 0.002)
-      .paintWhere(cap(eyeC, look, EYE_R, 0.035), C.iris, 0.003)
+      .paintWhere(cap(eyeC, look, EYE_R, 0.04), T.irisRim, 0.002)
+      .paintWhere(cap(eyeC, look, EYE_R, 0.035), T.iris, 0.003)
       .paintWhere(cap(eyeC, look, EYE_R, 0.011), C.pupil, 0.003)
       .paintWhere(sdf.sphere(0.0085).at(eyeC[0] - 0.003, eyeC[1] + 0.0115, eyeC[2] + EYE_R - 0.003), C.eyeWhite, 0.0015)
       // An angry lid in body purple across the top of the eye, lower toward the middle.
@@ -268,7 +295,7 @@ export default defineAsset({
         sdf
           .halfSpace([0.45 / Math.hypot(0.45, 1), -1 / Math.hypot(0.45, 1), 0], (0.45 * eyeC[0] - (eyeC[1] + 0.036)) / Math.hypot(0.45, 1))
           .intersect(sdf.sphere(EYE_R + 0.01).at(...eyeC)),
-        C.body,
+        T.body,
         0.002,
       );
     k.body('eyes', headPose(pair(bigEye)), { color: C.eyeWhite, roughness: 0.1, textureDensity: 2, bone: 'head' });
@@ -280,7 +307,7 @@ export default defineAsset({
       return sdf
         .sphere(r)
         .at(...c)
-        .paintWhere(cap(c, d, r, r * 0.8), C.iris, 0.002)
+        .paintWhere(cap(c, d, r, r * 0.8), T.iris, 0.002)
         .paintWhere(sdf.sphere(r * 0.24).at(c[0] + r * 0.2, c[1] + r * 0.72, c[2] + r * 0.62), C.eyeWhite, 0.001);
     };
     const smallEyes = pair(sdf.union(smallEye(0.048, 0.21, 0.034), smallEye(0.135, 0.17, 0.027), smallEye(0.062, 0.11, 0.03)));
@@ -289,7 +316,7 @@ export default defineAsset({
     // ------------------------------------------------------------------ fangs: curved pale tusks on their own bones
     const fang = sdf.smoothUnion(
       0.01,
-      sdf.sphere(0.03).at(FANG_ROOT[0], FANG_ROOT[1], FANG_ROOT[2] - 0.004).paint(C.bodyDark), // the chelicera bulb
+      sdf.sphere(0.03).at(FANG_ROOT[0], FANG_ROOT[1], FANG_ROOT[2] - 0.004).paint(T.bodyDark), // the chelicera bulb
       sdf.chain(
         [
           [FANG_ROOT[0], FANG_ROOT[1] - 0.01, FANG_ROOT[2] + 0.006, 0.024],
