@@ -908,5 +908,34 @@
       "Flare the cheek plates more, and keep the attack fist 1 cm or more below them."
     ],
     "reviewedAt": "2026-09-27T00:39:15+00:00"
+  },
+  "innkeeper": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new settlement NPC on the farmer base (the shared rogue head, skeleton, and knee bones). The hair bun with the white bow, the swept bangs, the sage-green dress with cream cuffs and collar, the white apron, and the tray with a foaming tankard match the mockup. The work clip is now a serving motion with the tray kept level. The forge check shows result ok, and the textured build has no warnings.",
+    "strengths": [
+      "The silhouette and colors read as the mockup at a glance: bun, bow, green dress, white apron, and tray.",
+      "The tray stays level in every clip through one helper, and the serving work clip suits the role.",
+      "Color options for the dress stay in tavern dyes (green, wine, walnut, ochre) with three presets."
+    ],
+    "issues": [
+      "The lower edge of the apron shows a small speckle where it meets the skirt pleats.",
+      "The tankard and tray are smaller than the very large tankard in the mockup.",
+      "The smile is smaller than the wide grin in the mockup, and the bangs look a little like a helmet."
+    ],
+    "next": "Fix the apron speckle, make the tankard about 20 percent larger if the head clearance allows, and widen the smile.",
+    "reviewedAt": "2026-09-27T13:52:13.451Z"
   }
 }
