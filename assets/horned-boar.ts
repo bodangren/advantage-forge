@@ -19,7 +19,8 @@ import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/in
  * Bodies: fur, snout, teeth, eyes (emissive), pupils, mane (spikes, brows, tail tuft), horns,
  *   tusks, hooves.
  * Rig: quadruped (hips, spine, neck, head, tail, front and back legs with shins). Clips: walk
- *   (trot), charge, idle (sniffing), attack (a one-shot gore).
+ *   (trot), charge, idle (sniffing), attack (a one-shot gore), hit, death, taunt (two snorts and
+ *   two hoof scrapes before a charge).
  */
 
 const C = {
@@ -496,6 +497,83 @@ export default defineAsset({
           'bshin.L': { rotate: bL.lower },
           'bleg.R': { rotate: bR.upper },
           'bshin.R': { rotate: bR.lower },
+        };
+      },
+    });
+    // Taunt, before a charge: the boar lowers its head until the horns and the tusks point at the
+    // player, and its weight shifts back onto the hind legs. It snorts twice (the head jerks up a
+    // little, and the body and the head shudder) and scrapes the ground twice with the left front
+    // hoof: the hoof lifts, sets down ahead, draws back along the floor on its toe, and returns.
+    // The other three hooves stay planted (the same IK as the attack), and the tail lashes. The
+    // ears have no bones; they shake with the head.
+    const TAUNT_S = 1.8;
+    const SNORTS = [0.16, 0.5] as const; // the phase of each snort
+    const SCRAPES = [0.2, 0.52] as const; // the start phase of each scrape
+    const SCRAPE_LEN = 0.26;
+    // The front legs are almost straight at rest, so a small drop of the shoulder bends the knee a
+    // lot and tips the hoof. This gives the hips height that keeps a planted front leg at its rest
+    // length while the body shifts back: the leg leans as one piece, and the hoof rolls a little
+    // onto its heel (the hoof center rises until the lowest rim point touches the floor).
+    const FR = LEGS['fleg.R'];
+    const FRONT_LEN = Math.hypot(...sub(FR.root, FR.end)) - 0.0002;
+    const FRONT_LEAN = Math.atan2(FR.root[2] - FR.end[2], FR.root[1] - FR.end[1]);
+    const frontHold = (spineX: number, hx: number, hz: number) => {
+      const sh = rotX(FR.root, spineX, SPINE_J);
+      const dx = sh[0] + hx - FR.end[0];
+      const dz = sh[2] + hz - FR.end[2];
+      const dy = Math.sqrt(FRONT_LEN ** 2 - dx * dx - dz * dz);
+      const tilt = Math.atan2(dz, dy) - FRONT_LEAN;
+      const lift = (HOOF_Y - RIM_Y) * (Math.cos(tilt) - 1) + RIM_R * Math.abs(Math.sin(tilt));
+      return HOOF_Y + lift + dy - sh[1];
+    };
+    k.animation('taunt', {
+      duration: TAUNT_S,
+      loop: false,
+      pose: (t, p) => {
+        const low = keys(p, [[0, 0], [0.14, 1], [0.8, 1], [0.96, 0]] as const); // head down, weight back
+        let snort = 0;
+        let shudder = 0;
+        for (const s of SNORTS) {
+          snort += keys(p, [[s - 0.001, 0], [s + 0.025, 1], [s + 0.11, 0]] as const);
+          const dt = t - s * TAUNT_S;
+          if (dt > 0) shudder += Math.exp(-dt / 0.1) * Math.sin(2 * Math.PI * 9 * dt);
+        }
+        // The scraping hoof, relative to its rest place: forward and up, down ahead, back along the
+        // floor (dy = 0: solveLeg keeps the lowest rim point on the floor), then up and home.
+        let dz = 0;
+        let dy = 0;
+        let lifted = 0;
+        for (const a of SCRAPES) {
+          const u = (p - a) / SCRAPE_LEN;
+          if (u <= 0 || u >= 1) continue;
+          dz += keys(u, [[0, 0], [0.28, 0.05], [0.36, 0.05], [0.74, -0.075], [1, 0]] as const);
+          dy += keys(u, [[0, 0], [0.16, 0.065], [0.34, 0], [0.74, 0], [0.87, 0.05], [1, 0]] as const);
+          lifted += keys(u, [[0, 0], [0.14, 1], [0.86, 1], [1, 0]] as const);
+        }
+        const spineX = 1.5 * low - 1.5 * snort + 1.2 * shudder;
+        const hx = -0.01 * lifted;
+        const hz = -0.02 * low - 0.008 * lifted;
+        const hm: P3 = [hx, frontHold(spineX, hx, hz), hz];
+        const fL = LEGS['fleg.L'];
+        const lFL = solveLeg(fL, spineX, hm, [fL.end[0], HOOF_Y + dy, fL.end[2] + dz]);
+        const lFR = solveLeg(LEGS['fleg.R'], spineX, hm, LEGS['fleg.R'].end);
+        const lBL = solveLeg(LEGS['bleg.L'], spineX, hm, LEGS['bleg.L'].end);
+        const lBR = solveLeg(LEGS['bleg.R'], spineX, hm, LEGS['bleg.R'].end);
+        const lash = keys(p, [[0.08, 0], [0.2, 1], [0.8, 1], [0.94, 0]] as const);
+        return {
+          hips: { move: hm },
+          spine: { rotate: [spineX, 0, 0] },
+          neck: { rotate: [11 * low - 4 * snort, 0, 0] },
+          head: { rotate: [19 * low - 9 * snort, 0, 4 * shudder] },
+          tail: { rotate: [30 * lash + 10 * snort, 38 * lash * wave(p, 5), 0] },
+          'fleg.L': { rotate: lFL.upper },
+          'fshin.L': { rotate: lFL.lower },
+          'fleg.R': { rotate: lFR.upper },
+          'fshin.R': { rotate: lFR.lower },
+          'bleg.L': { rotate: lBL.upper },
+          'bshin.L': { rotate: lBL.lower },
+          'bleg.R': { rotate: lBR.upper },
+          'bshin.R': { rotate: lBR.lower },
         };
       },
     });
