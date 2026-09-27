@@ -44,42 +44,39 @@ export default defineAsset({
 
     // Diagonal 3-strand twist. The pattern uses the angle around the coil
     // axis plus a slope in Y, so each strand spirals along the rope.
+    // Three strands laid around each turn: the phase runs around the tube (phi) and along the
+    // rope (coil angle times radius over the lay length).
+    const LAY = 0.05;
+    const strand = (x: number, y: number, z: number) => {
+      const a = Math.atan2(z, x);
+      const rho = Math.hypot(x, z);
+      const iy = Math.min(2, Math.max(0, Math.round((y - TUBE_R) / (2 * TUBE_R))));
+      const phi = Math.atan2(y - RING_YS[iy], rho - RING_R);
+      return 0.5 + 0.5 * Math.cos(3 * phi + (a * RING_R * 2 * Math.PI) / LAY);
+    };
     const twist = (a: number, y: number) => 0.5 + 0.5 * Math.cos(3 * (a + y * 34));
 
     const ropePaint = (x: number, y: number, z: number) => {
-      const a = Math.atan2(z, x);
-      const t = twist(a, y);
-      let c = mixRgb(ROPE, ROPE_LIGHT, 0.16 + 0.34 * t);
-      c = mixRgb(c, ROPE_SHADE, 0.32 * (1 - t));
-      // Soft tonal patches across the coil so it doesn't read as plastic.
+      const g = Math.pow(strand(x, y, z), 3);
+      let c = mixRgb(ROPE_LIGHT, ROPE, 0.3 + 0.4 * (1 - g));
+      c = mixRgb(c, ROPE_SHADE, 0.75 * g);
       const patch = 0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2);
       c = mixRgb(c, ROPE_LIGHT, 0.08 * patch);
-      // Sun-lit top, shaded seated bottom.
       const ty = Math.min(1, Math.max(0, y / 0.12));
-      c = mixRgb(c, ROPE_LIGHT, 0.14 * Math.max(0, (ty - 0.55) / 0.45));
       c = mixRgb(c, ROPE_SHADE, 0.22 * Math.pow(1 - ty, 1.6));
       return c;
     };
-    const ropeBump = (x: number, y: number, z: number) => {
-      const a = Math.atan2(z, x);
-      // Diagonal 3-strand twist relief (bump only — keeps the mesh light).
-      return 0.0014 * Math.cos(3 * (a + y * 34)) + 0.0006 * noise.fbm(x * 28, y * 28, z * 28, 2);
-    };
-    k.body('coil', coilShape.paintFn(ropePaint), {
+    const ropeBump = (x: number, y: number, z: number) => 0.0006 * noise.fbm(x * 60, y * 60, z * 60, 2);
+    k.body('coil', coilShape.displace(0.004, (x, y, z) => Math.pow(strand(x, y, z), 3), 1.5).paintFn(ropePaint), {
       color: '#c2a06a',
       roughness: 0.85,
       metalness: 0,
-      detail: 0.008,
+      detail: 0.0035,
       paintWeight: 2,
       bump: ropeBump,
-      maxTriangles: 2400,
+      maxTriangles: 12000,
     });
 
-    // ------------------------------------------------------------------ free end
-    // A short length of rope escapes between the bottom and middle turns on
-    // the front-right, curls outward and downward, then tucks back under the
-    // coil. It pokes the silhouette so the donut doesn't read as a closed ring.
-    // Lifted slightly so the tucked tip stays on y = 0.
     const tail = sdf.chain(
       [
         [0.155, 0.046, 0.085, 0.02], // start at front edge between bottom and middle turn
