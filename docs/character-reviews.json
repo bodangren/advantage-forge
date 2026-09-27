@@ -224,7 +224,7 @@
     "reviewedAt": "2026-09-26T18:36:11+00:00"
   },
   "goblin-warrior": {
-    "overall": 8.7,
+    "overall": 8.8,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -238,14 +238,14 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The goblin warrior has a new taunt clip of 1.4 s. The goblin points the dagger straight at the player at chest height and puts the left fist on the hip. Then it hops from foot to foot two times, with the head tilted and the ears flicking. Then it turns the blade up, spins the dagger one time in the fingers in 0.25 s, and goes back to rest. The model did not change. The forge check shows result ok and ground ok, and the blade stays 2.4 cm or more from the head.",
+    "summary": "The taunt hops now use the knee bones. The goblin crouches 3.4 cm on both knees, hops 7.5 cm from the right foot to the left foot, and absorbs the landing on a bent left knee. Then it hops back to the right foot and puts the left foot down. In each hop, the free leg tucks up with the knee bent and the heel up. The point, the fist on the hip, the ear flicks, the head tilt, and the dagger spin did not change. The forge check shows result ok and ground ok, and the blade stays 2.4 cm or more from the head.",
     "strengths": [
-      "The taunt reads in the front and side views: the blade points level at the player, each hop lifts a different foot, and the spin shows the blade up, out, down, and in.",
+      "The hops read in the front and side views: the body drops, the boots leave the floor, one boot tucks up, and the landing knee bends.",
       "The broad leaf ears, the angry eyes, and the fang read at once. The face reads at 128 px in the S, SW, and SE sprites.",
       "All identity cues of the mockup are present: the nicked ear, one shoulder guard, the diagonal strap, the pouch, the wraps, and the dagger. At 30,374 triangles, the model is light."
     ],
     "issues": [
-      "In the taunt point, the wrist bends about 90 degrees, because the grip is across the fist. The hops are low (5 cm), because the legs have no knee bones.",
+      "In the taunt point, the wrist bends about 90 degrees, because the grip is across the fist. The tunic hem hides most of the knee bend, so the crouch reads as a drop of the body.",
       "In the SW and SE sprites, the far ear still reads as a narrow point above the head.",
       "The belt buckle is still smaller than the large tan buckle in the mockup. The pouch does not show from the back."
     ],
@@ -253,7 +253,7 @@
       "Add a second new clip (for example a block or a cheer) to get to 8 clips, as the heroes have.",
       "Turn the ears more to the front (about 20 degrees of sweep instead of 32), and make the belt buckle about 30 percent larger."
     ],
-    "reviewedAt": "2026-09-26T21:54:23+00:00"
+    "reviewedAt": "2026-09-27T00:28:15+00:00"
   },
   "horned-boar": {
     "overall": 8,

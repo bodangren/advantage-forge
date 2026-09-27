@@ -813,18 +813,51 @@ export default defineAsset({
     const WRIST_HIP: V3 = [0.2, 0.3, -0.005]; // the left fist on the hip
     const POLE_HIP: V3 = [0.42, 0.42, -0.14]; // the left elbow out and back
     const HIPS_AT: V3 = [0, 0.2, 0];
-    // Sole points of the left boot (turned out 16 degrees at the ankle's ground point); the right
-    // boot mirrors them. `plant` keeps the lowest one on the ground.
-    const c16 = Math.cos(16 * DEG);
-    const s16 = Math.sin(16 * DEG);
-    const SOLE_L: V3[] = ([[0, 0, -0.068], [0, 0, 0.128], [0.055, 0, 0.02], [-0.05, 0, 0.02]] as const).map(
-      ([x, y, z]): V3 => [ANKLE[0] + x * c16 + z * s16, y, -x * s16 + z * c16],
-    );
-    const SOLE_R: V3[] = SOLE_L.map(mx);
-    /** A hop's height, 0 to 1: a parabola from take-off `a` to landing `b` (phases). */
-    const hop = (p: number, a: number, b: number) => {
-      const u = (p - a) / (b - a);
-      return u <= 0 || u >= 1 ? 0 : 4 * u * (1 - u);
+    // The hops. The hips' height is a cubic Hermite curve through knots [phase, meters, slope per
+    // phase]: each flight is an exact parabola (peak HOP, FLY phases long), and the ground parts
+    // carry the landing speed into the crouch and build the take-off speed out of it.
+    const HOP = 0.075;
+    const FLY = 0.11;
+    const V = (4 * HOP) / FLY;
+    const HIPS_Y: readonly (readonly [number, number, number])[] = [
+      [0.15, 0, 0], // standing, the dagger pointed
+      [0.215, -0.034, 0], // the crouch on both knees
+      [0.25, 0, V], // take-off from the right foot
+      [0.305, HOP, 0],
+      [0.36, 0, -V], // the left foot lands
+      [0.395, -0.035, 0], // the left knee absorbs it
+      [0.43, 0, V], // take-off from the left foot
+      [0.485, HOP, 0],
+      [0.54, 0, -V], // the right foot lands
+      [0.575, -0.032, 0], // the right knee absorbs it
+      [0.65, 0, 0], // the left foot is down; the goblin stands up
+    ];
+    const hipsY = (p: number) => {
+      if (p <= HIPS_Y[0]![0] || p >= HIPS_Y[HIPS_Y.length - 1]![0]) return 0;
+      let i = 0;
+      while (p > HIPS_Y[i + 1]![0]) i++;
+      const [t0, y0, m0] = HIPS_Y[i]!;
+      const [t1, y1, m1] = HIPS_Y[i + 1]!;
+      const s = t1 - t0;
+      const u = (p - t0) / s;
+      const u2 = u * u;
+      const u3 = u2 * u;
+      return (2 * u3 - 3 * u2 + 1) * y0 + (u3 - 2 * u2 + u) * m0 * s + (-2 * u3 + 3 * u2) * y1 + (u3 - u2) * m1 * s;
+    };
+    const TUCK = 0.075; // the tucked ankle, above its rest height in the hips' frame
+    /**
+     * One leg, solved by its ankle's world target. The target converts into the hips' rest frame,
+     * reach bends the knee forward, and the foot gets the opposite turn (plus `pitch`, toe down)
+     * so the sole stays level.
+     */
+    const legTo = (right: boolean, ankleW: V3, pitch: number, hipsR: V3, hipsMove: V3) => {
+      const f = (v: V3) => (right ? mx(v) : v);
+      const qH = quat(hipsR);
+      const t = new THREE.Vector3(ankleW[0] - HIPS_AT[0] - hipsMove[0], ankleW[1] - HIPS_AT[1] - hipsMove[1], ankleW[2] - HIPS_AT[2] - hipsMove[2])
+        .applyQuaternion(qH.clone().invert());
+      const leg = reach({ root: f(HIP), mid: f(KNEE), end: f(ANKLE) }, add(HIPS_AT, [t.x, t.y, t.z]), f([HIP[0] + 0.02, KNEE[1], 0.3]));
+      const foot = euler(qH.multiply(quat(leg.upper)).multiply(quat(leg.lower)).invert().multiply(quat([pitch, 0, 0])));
+      return { leg: leg.upper, shin: leg.lower, foot };
     };
     k.animation('taunt', {
       duration: 1.4,
@@ -837,27 +870,28 @@ export default defineAsset({
         const down = keys(p, [[0.82, 0], [1, 1]] as const); // back to rest
         const akimbo = keys(p, [[0, 0], [0.14, 1], [0.82, 1], [1, 0]] as const);
         const cock = keys(p, [[0.06, 0], [0.2, 1], [0.8, 1], [1, 0]] as const); // the head tilt, the lean back
-        // Foot to foot: +1 stands on the left foot with the right foot kicked up, -1 the reverse.
-        // The weight changes in the air; the last change is a step down, not a hop.
-        const side = keys(p, [[0.2, 0], [0.28, 1], [0.38, 1], [0.46, -1], [0.54, -1], [0.62, 0]] as const);
-        const air = 0.05 * (hop(p, 0.2, 0.32) + hop(p, 0.38, 0.5));
-        const land = keys(p, [[0.31, 0], [0.34, 1], [0.38, 0], [0.49, 0], [0.52, 1], [0.56, 0]] as const);
+        // Foot to foot: +1 stands on the left foot with the right foot tucked up, -1 the reverse.
+        // Two hops (right to left, left to right), then the left foot steps down.
+        const side = keys(p, [[0.2, 0], [0.3, 1], [0.4, 1], [0.48, -1], [0.56, -1], [0.64, 0]] as const);
+        const h = hipsY(p);
+        const land = Math.min(1, Math.max(0, -h / 0.035)); // the crouch: 1 on a fully bent knee
         const env = keys(p, [[0.16, 0], [0.22, 1], [0.58, 1], [0.66, 0]] as const);
         const flick = env * Math.sin((2 * Math.PI * (p - 0.2)) / 0.18); // one flick back and forth per hop
-        // The legs: the hips tilt up on the side of the free leg, both legs counter it (they stay
-        // plumb), and the free leg kicks back and out with its sole level.
-        const liftL = Math.max(0, -side);
-        const liftR = Math.max(0, side);
+        // The legs: the hips tilt up on the side of the free leg and shift over the stance foot.
+        // A leg on the ground keeps its ankle on the rest spot (the hips' drop bends the knee); in
+        // the air it hangs a little bent below the hips. The take-off leg tucks up behind (the
+        // knee bent, the heel up) until it reaches down for the next landing.
         const hipsR: V3 = [0, 0, -5 * side];
-        const legL: V3 = [38 * liftL, 0, 5 * side + 18 * liftL];
-        const legR: V3 = [38 * liftR, 0, 5 * side - 18 * liftR];
-        const footL: V3 = [-34 * liftL, 0, 0];
-        const footR: V3 = [-34 * liftR, 0, 0];
-        const ground = motion.plant([
-          { joints: [HIPS_AT, HIP, ANKLE], rotations: [hipsR, legL, footL], sole: SOLE_L },
-          { joints: [HIPS_AT, mx(HIP), mx(ANKLE)], rotations: [hipsR, legR, footR], sole: SOLE_R },
-        ]);
-        const hipsMove: V3 = [0, ground + air, 0];
+        const hipsMove: V3 = [0.01 * side, h, 0];
+        const tuckL = keys(p, [[0.43, 0], [0.47, 1], [0.56, 1], [0.62, 0]] as const);
+        const tuckR = keys(p, [[0.25, 0], [0.29, 1], [0.44, 1], [0.51, 0]] as const);
+        const ankle = (a: number, s: number): V3 => [
+          0.012 * a * s,
+          a * (h + TUCK) + (1 - a) * 0.9 * Math.max(0, h),
+          -0.025 * a,
+        ];
+        const legsL = legTo(false, add(ANKLE, ankle(tuckL, 1)), 10 * tuckL, hipsR, hipsMove);
+        const legsR = legTo(true, add(mx(ANKLE), ankle(tuckR, -1)), 10 * tuckR, hipsR, hipsMove);
         // The goblin leans back while it points and hops, and stands up straight for the spin.
         const spineR: V3 = [-4 * cock * (1 - flip) + 3 * land, 0, 3 * side];
         const chestR: V3 = [-3 * cock * (1 - flip), 10 * up * (1 - flip), 0]; // the right shoulder leads the point
@@ -897,10 +931,12 @@ export default defineAsset({
           dagger: { move: [FIST_R[0] + g.x - GUARD[0], FIST_R[1] + g.y - GUARD[1], FIST_R[2] + g.z - GUARD[2]], rotate: euler(twirl) },
           'upperarm.L': { rotate: armL.upper },
           'forearm.L': { rotate: armL.lower },
-          'leg.L': { rotate: legL },
-          'leg.R': { rotate: legR },
-          'foot.L': { rotate: footL },
-          'foot.R': { rotate: footR },
+          'leg.L': { rotate: legsL.leg },
+          'shin.L': { rotate: legsL.shin },
+          'foot.L': { rotate: legsL.foot },
+          'leg.R': { rotate: legsR.leg },
+          'shin.R': { rotate: legsR.shin },
+          'foot.R': { rotate: legsR.foot },
         };
       },
     });
