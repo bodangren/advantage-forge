@@ -108,8 +108,33 @@ export default defineAsset({
   description: 'Chibi goblin warrior enemy with huge leaf ears, a toothy grin, a red scarf, one shoulder guard, and a dagger.',
   detail: 0.005,
   reference: 'reference-designs/chibi-goblin-warrior-20260925/chibi-goblin-warrior-turnaround.png',
+  // Color slots for individual goblins (the first option is the default look).
+  variants: {
+    eyes: { amber: C.iris, yellow: '#8f7010', red: '#7a0e0a' },
+    skin: { olive: C.skin, moss: '#6b7c34', grey: '#8a9676' },
+    clothing: { brown: C.tunic, slate: '#58616c', crimson: '#7a2e2a' },
+    scarf: { ember: C.scarf, purple: '#7a3c9c', teal: '#2f8c88' },
+  },
+  presets: {
+    bog: { eyes: 'yellow', skin: 'moss', clothing: 'brown', scarf: 'teal' },
+    cave: { eyes: 'red', skin: 'grey', clothing: 'slate', scarf: 'purple' },
+    raider: { eyes: 'yellow', skin: 'olive', clothing: 'crimson', scarf: 'teal' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it; the blush and the mouth follow the skin halfway.
+    const TS = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      skin: k.tint('skin'),
+      skinDark: k.tint('skin', { color: C.skinDark, follow: 1 }),
+      earInner: k.tint('skin', { color: C.earInner, follow: 1 }),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      tunic: k.tint('clothing'),
+      scarf: k.tint('scarf'),
+    };
     const EAR: V3 = [0.165, 0.7, -0.01];
     const KNOT: V3 = [-0.075, 0.468, -0.112];
     // ------------------------------------------------------------------ skeleton
@@ -199,7 +224,7 @@ export default defineAsset({
         .rotateZ(a)
         .at(x, y, 0);
     const nicks = earPose(sdf.union(nick(0.2, 0.052, 140), nick(0.16, 0.012, 135)));
-    const ears = pair(earPose(cupped(earLocal.paintWhere(earCup.round(0.004), C.earInner, 0.008))).bone('ear.L')).subtract(nicks);
+    const ears = pair(earPose(cupped(earLocal.paintWhere(earCup.round(0.004), TS.earInner, 0.008))).bone('ear.L')).subtract(nicks);
 
     // One soft crest of hair on the crown: a single flame shape that leans back.
     const tuft = sdf
@@ -287,18 +312,18 @@ export default defineAsset({
       .smoothUnion(0.012, nose, tuft.bone('head'))
       .smoothUnion(0.02, ears)
       .union(armL, armR)
-      .paintWhere(blush, C.blush, 0.018)
+      .paintWhere(blush, TS.blush, 0.018)
       .paintWhere(eyeWhite, C.eyeWhite)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.014)
+      .paintWhere(iris, TS.iris)
+      .paintWhere(irisLow, TS.irisLow, 0.014)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(lowLid, C.lid)
       .paintWhere(shine, '#ffffff')
       .paintWhere(brows, C.brow)
-      .paintWhere(mouth, C.mouth)
-      .paintWhere(nostrils, C.skinDark, 0.004);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(mouth, TS.mouth)
+      .paintWhere(nostrils, TS.skinDark, 0.004);
+    k.body('skin', skin, { color: TS.skin, roughness: 0.55, textureDensity: 2 });
 
     // One upper fang hangs over the lip at the left corner of the grin.
     const FANG_X = 0.064;
@@ -345,7 +370,7 @@ export default defineAsset({
         .rotateY(angle);
     const hem = sdf.union(...[0, 30, 60, 90, 120, 150].map((a, i) => notch(a + 8, 0.204 + 0.012 * ((i * 7) % 3))));
     const tunic = torso.subtract(hem);
-    k.body('tunic', tunic.bone('spine'), { color: C.tunic, roughness: 0.85 });
+    k.body('tunic', tunic.bone('spine'), { color: TS.tunic, roughness: 0.85 });
 
     // ------------------------------------------------------------------ scarf with a knot at the back
     const scarfRing = sdf
@@ -398,7 +423,7 @@ export default defineAsset({
         .at(KNOT[0], KNOT[1], KNOT[2] - 0.012);
     const scarfTails = sdf.union(tail(-0.095, 0.035), tail(-0.07, -0.075));
     const scarf = sdf.smoothUnion(0.012, scarfRing.bone('chest'), scarfTip.bone('chest'), scarfKnot.bone('chest'), scarfTails.bone('knot'));
-    k.body('scarf', scarf, { color: C.scarf, roughness: 0.8 });
+    k.body('scarf', scarf, { color: TS.scarf, roughness: 0.8 });
 
     // ------------------------------------------------------------------ leather: belt and strap
     const beltY = 0.28;
