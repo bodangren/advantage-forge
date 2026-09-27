@@ -1,169 +1,145 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Chibi village barn, 3 m wide, walls 2.2 m to the eave (catalog `architecture/building-parts/barn`).
+ * Chibi hamlet barn, about 4.0 m tall to the ridge.
  *
- * Role: farm building in the village kit, beside the cottage and farm field; must read at 128 px.
- *   No rig, no clips.
- * Size: 3.0 m wide (X), 2.2 m deep (Z); ridge runs along Z, gable and big doors face +Z.
- *   Walls rise to 2.2 m, the thatched ridge to about 3.4 m.
- * One idea: a stout walnut timber frame with horizontal plank infill under one steep golden
- *   thatch roof, big X-braced double doors swung half-open, a small hayloft window high in the gable.
- * Shape language: square sturdy mass, chunky posts, one broad triangular roof (stable + friendly).
- * Palette (contract): walnut posts #6b4226, plank infill #8a5a35, thatch #caa14a to #a07830,
- *   iron #4a4f55, dark void #241a12. Value plan: light thatch on top, mid brown walls,
- *   dark doorway as the focal accent.
- * Materials: plank wood infill (rough 0.85), walnut timber frame (0.8), thatch (0.9),
- *   worn iron straps (metal 0.7), dark interior (0.95).
- * Detail list: (1) plank walls + gable, (2) walnut posts/rails/gable truss, (3) steep thatch roof
- *   + ridge cap, (4) half-open split double doors with X braces, (5) iron strap hinges,
- *   (6) hayloft window. Focal point: the open double doors.
+ * Role: background/focal building in a cozy hamlet; must read at 128 px.
+ * Size: 4.5 m wide (X), 3.5 m deep (Z), ridge runs along Z; the gable and doors face +Z.
+ * One idea: a broad, bright cream roof sitting on a chunky plank-red box, with a big friendly
+ * double door as the focal point.
+ * Shape language: square/boxy mass (sturdy) with rounded bevels (friendly); big triangular roof.
+ * Palette: red walls #c93b27 (mid), cream roof/trim #e9dcc0 (light), tan base #d9c7a1,
+ *   deep-red recesses #5f1d12 (dark), gold knob #d7a63a (accent).
+ * Materials: painted wood (rough 0.85), roof shingles (rough 0.8), stone-ish footing (0.9),
+ *   worn gold hardware (metal 1, rough 0.35).
+ * Detail: plank grooves + shingle rows in `bump`; recessed door panels and loft arch in geometry.
+ * Rig/animation: none.
  */
 
-const W = 3.0; // width along X
-const D = 2.2; // depth along Z
-const EAVE = 2.2; // top of the walls
-const RIDGE = 3.3; // gable apex
-const FRONT = D / 2; // 1.1
+const W = 4.5; // width along X
+const D = 3.5; // depth along Z
+const FOUND = 0.24; // foundation height
+const EAVE = 2.3; // top of the walls (roof springs here)
+const RIDGE = 3.93; // gable apex
+const FRONT = D / 2; // 1.75
+const PLANK = 0.2; // wall plank width
 
-const ROOF_HALF = W / 2 + 0.35; // overhang past the side walls
-const ROOF_OVER_Z = D / 2 + 0.35; // overhang past the gable
-const ROOF_EAVE_Y = EAVE - 0.1;
-const APEX_Y = RIDGE + 0.1;
-const ROOF_INNER_DROP = 0.16;
+const ROOF_HALF = W / 2 + 0.36; // roof overhang past the side walls
+const ROOF_OVER_Z = D / 2 + 0.34; // roof overhang past the gable
+const ROOF_EAVE_Y = EAVE - 0.16;
+const APEX_Y = RIDGE + 0.11;
+const ROOF_INNER_DROP = 0.22;
 
-const DOOR_W = 1.5;
-const DOOR_BOT = 0.1;
-const DOOR_H = 1.78;
-const DOOR_SPRING = DOOR_BOT + DOOR_H; // flat-topped doorway
-const OPEN_DEG = 38; // doors swung half-open
+const DOOR_W = 1.7;
+const DOOR_H = 1.62;
+const DOOR_BOT = FOUND;
+const DOOR_TOP = DOOR_BOT + DOOR_H;
+const DOOR_MID = DOOR_BOT + DOOR_H / 2;
+
+const HAY_W = 0.46;
+const HAY_R = HAY_W / 2;
+const HAY_BOT = 2.45;
+const HAY_RECT_TOP = HAY_BOT + 0.28;
 
 const C = {
-  walnut: rgb('#6b4226'),
-  walnutDark: rgb('#4a2e17'),
-  plank: rgb('#8a5a35'),
-  plankDark: rgb('#6e4526'),
-  plankDeep: rgb('#503317'),
-  thatch: rgb('#caa14a'),
-  thatchDark: rgb('#a07830'),
-  iron: rgb('#4a4f55'),
-  void: rgb('#241a12'),
-};
-
-const PLANK_H = 0.23; // horizontal plank band height
-
-const sstep = (e0: number, e1: number, v: number): number => {
-  const t = Math.max(0, Math.min(1, (v - e0) / (e1 - e0)));
-  return t * t * (3 - 2 * t);
+  red: rgb('#c93b27'),
+  redDark: rgb('#8e2a1b'),
+  redDeep: rgb('#5f1d12'),
+  cream: rgb('#e9dcc0'),
+  creamDark: rgb('#c9b795'),
+  tan: rgb('#d9c7a1'),
+  gold: rgb('#d7a63a'),
+  void: rgb('#241110'),
 };
 
 /** Smooth periodic groove weight: 1 at a plank edge, 0 at the plank centre. */
 const grooveAt = (f: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 3);
 
-/** Horizontal plank paint: a soft dark groove at each board edge plus grain tint. */
+/** Vertical plank color: continuous board tint plus a soft dark groove at the board edge. */
 const plankPaint =
-  (base: Rgb, dark: Rgb, deep: Rgb, strength = 0.55) =>
+  (base: typeof C.red, strength = 0.55) =>
   (x: number, y: number, z: number) => {
-    const f = y / PLANK_H - Math.floor(y / PLANK_H);
-    const g = grooveAt(f);
+    // Front/back faces vary with x; side faces vary with z.
     const along = Math.abs(z) >= Math.abs(x) ? x : z;
-    const board = 0.5 + 0.5 * noise.fbm(along * 3.2, y * 1.6, 0, 2);
-    const grain = 0.5 + 0.5 * noise.fbm(along * 22, y * 5, 0, 2);
-    let c = mixRgb(base, dark, 0.1 + 0.24 * board);
-    c = mixRgb(c, dark, 0.1 * grain);
-    c = mixRgb(c, deep, strength * g);
+    const f = along / PLANK - Math.floor(along / PLANK);
+    const g = grooveAt(f);
+    // Continuous variation, so no hard color boundary splits the mesh.
+    const board = 0.5 + 0.5 * noise.fbm(along * 3.5, y * 1.5, 0, 2);
+    const grain = 0.5 + 0.5 * noise.fbm(along * 22, y * 6, 0, 2);
+    let c = mixRgb(base, C.redDark, 0.1 + 0.22 * board);
+    c = mixRgb(c, C.redDark, 0.1 * grain);
+    c = mixRgb(c, C.redDeep, strength * g);
     return c;
   };
 
-/** Plank grooves as normal-map-only relief. */
+/** Plank grooves as a normal-map-only relief. */
 const plankBump = (x: number, y: number, z: number) => {
-  const f = y / PLANK_H - Math.floor(y / PLANK_H);
   const along = Math.abs(z) >= Math.abs(x) ? x : z;
-  return -0.004 * grooveAt(f) + 0.0015 * noise.fbm(along * 22, y * 5, 0, 2);
+  const f = along / PLANK - Math.floor(along / PLANK);
+  return -0.004 * grooveAt(f) + 0.0015 * noise.fbm(along * 22, y * 6, 0, 2);
 };
 
 export default defineAsset({
   name: 'barn',
   description:
-    'Stout timber-frame barn with walnut posts, horizontal plank infill, a steep golden thatched roof, big half-open X-braced double doors with iron strap hinges, and a small hayloft window in the gable.',
-  detail: 0.02,
+    'Red wooden barn with a broad cream shingle roof, big double doors, a small arched hay door, and cream corner trim.',
+  detail: 0.016,
   texture: { size: 1024 },
-  reference: 'reference/village-quest_001.jpg',
+  reference: 'reference/barn_001.jpg',
 
   build(k) {
-    // ---------------------------------------------------------------- plank walls and gable
+    // ---------------------------------------------------------------- foundation
+    const foundation = sdf
+      .box([W + 0.14, FOUND, D + 0.14], 0.03)
+      .at(0, FOUND / 2, 0)
+      .paintFn((x, y, z, base) =>
+        mixRgb(base, C.creamDark, 0.25 * Math.max(0, noise.fbm(x * 14, y * 3, z * 14, 2))),
+      );
+    k.body('foundation', foundation, {
+      color: C.tan,
+      roughness: 0.9,
+      detail: 0.03,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 14, y * 4, z * 14, 3),
+    });
+
+    // ---------------------------------------------------------------- walls and gable
+    // One extruded "house" profile: a clean solid with no internal union crease, which
+    // simplifies well.
     const wallProfile = profile.polygon([
-      [-W / 2, 0],
-      [W / 2, 0],
+      [-W / 2, FOUND],
+      [W / 2, FOUND],
       [W / 2, EAVE],
       [0, RIDGE],
       [-W / 2, EAVE],
     ]);
-    // Gentle hand-made wobble only; the frame carries the character.
-    const walls = sdf.extrude(wallProfile, D, 0.04).displace(0.01, (x, y, z) =>
-      Math.max(-1, Math.min(1, noise.fbm(x * 3, y * 3, z * 3, 2))),
-    );
-    k.body('walls', walls.paintFn(plankPaint(C.plank, C.plankDark, C.plankDeep)), {
-      color: C.plank,
+    let walls = sdf.extrude(wallProfile, D, 0.02);
+    k.body('walls', walls.paintFn(plankPaint(C.red)), {
+      color: C.red,
       roughness: 0.85,
-      detail: 0.024,
-      maxError: 0.008,
+      detail: 0.016,
       bump: plankBump,
     });
 
-    // ---------------------------------------------------------------- timber frame (walnut)
-    const POST = 0.17; // post width
-    const cornerPost = sdf.box([POST, EAVE, POST], 0.03).at(W / 2 - 0.01, EAVE / 2, D / 2 - 0.01);
-    const plateX = sdf
-      .box([W + 0.06, 0.15, POST], 0.028)
-      .at(0, EAVE - 0.06, D / 2 - 0.01);
-    const plateZ = sdf
-      .box([POST, 0.15, D + 0.06], 0.028)
-      .at(W / 2 - 0.01, EAVE - 0.06, 0);
-    const midRailX = sdf
-      .box([W + 0.04, 0.11, 0.1], 0.024)
-      .at(0, 1.06, D / 2 + 0.02);
-    const midRailZ = sdf
-      .box([0.1, 0.11, D + 0.04], 0.024)
-      .at(W / 2 + 0.02, 1.06, 0);
-    // Studs flanking the doorway on the front gable wall.
-    const jamb = sdf.box([0.13, DOOR_H + 0.1, 0.12], 0.024).at(DOOR_W / 2 + 0.1, DOOR_BOT + DOOR_H / 2, D / 2 + 0.02);
-    const lintel = sdf
-      .box([DOOR_W + 0.46, 0.13, 0.12], 0.024)
-      .at(0, DOOR_SPRING + 0.05, D / 2 + 0.02);
-    // Gable truss: collar beam plus two braces following the rake up to the apex.
-    const collar = sdf.box([W - 0.1, 0.12, 0.11], 0.026).at(0, EAVE + 0.34, D / 2 - 0.08);
-    const braceLen = Math.hypot(W / 2, RIDGE - EAVE) - 0.16;
-    const braceAngle = (-Math.atan2(RIDGE - EAVE, W / 2) * 180) / Math.PI;
-    const brace = sdf
-      .box([braceLen, 0.12, 0.1], 0.026)
-      .rotateZ(braceAngle)
-      .at(-W / 4 + 0.03, (EAVE + RIDGE) / 2 + 0.02, D / 2 - 0.08);
-    // Base beam all around.
-    const baseX = sdf.box([W + 0.06, 0.13, POST], 0.028).at(0, 0.07, D / 2 - 0.01);
-    const baseZ = sdf.box([POST, 0.13, D + 0.06], 0.028).at(W / 2 - 0.01, 0.07, 0);
-    const frame = sdf.union(
-      cornerPost.mirror('x', 0).mirror('z', 0),
-      plateX.mirror('z', 0),
-      plateZ.mirror('x', 0),
-      midRailX.mirror('z', 0),
-      midRailZ.mirror('x', 0),
-      jamb.mirror('x', 0),
-      lintel,
-      collar,
-      brace.mirror('x', 0),
-      baseX.mirror('z', 0),
-      baseZ.mirror('x', 0),
-    );
-    k.body('frame', frame, {
-      color: C.walnut,
-      roughness: 0.8,
-      detail: 0.016,
-      maxError: 0.005,
-      bump: (x, y, z) => 0.0025 * noise.fbm(x * 20, y * 7, z * 20, 2),
+    // Recessed arched hay (loft) door: a dark arched panel set into the gable.
+    const hayPts: [number, number][] = [
+      [-HAY_R, HAY_BOT],
+      [HAY_R, HAY_BOT],
+      [HAY_R, HAY_RECT_TOP],
+    ];
+    for (let i = 1; i < 8; i++) {
+      const a = (Math.PI * i) / 8;
+      hayPts.push([HAY_R * Math.cos(a), HAY_RECT_TOP + HAY_R * Math.sin(a)]);
+    }
+    hayPts.push([-HAY_R, HAY_RECT_TOP]);
+    const hayProfile = profile.polygon(hayPts);
+    const hayOpening = sdf.extrude(hayProfile, 0.06, 0.012).at(0, 0, FRONT + 0.005);
+    k.body('hay-door', hayOpening, {
+      color: C.void,
+      roughness: 0.9,
+      detail: 0.01,
     });
 
-    // ---------------------------------------------------------------- thatched roof
+    // ---------------------------------------------------------------- roof
     const roofProfile = profile.polygon([
       [-ROOF_HALF, ROOF_EAVE_Y],
       [0, APEX_Y],
@@ -173,143 +149,139 @@ export default defineAsset({
       [-ROOF_HALF, ROOF_EAVE_Y - ROOF_INNER_DROP],
     ]);
     const slope = Math.atan2(APEX_Y - ROOF_EAVE_Y, ROOF_HALF);
-    const ROW = 0.17; // thatch course height along the slope
+    const ROW = 0.17;
+    const COL = 0.22;
     const downSlope = (y: number) => (APEX_Y - y) / Math.sin(slope);
-    const line = (v: number, p: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * v), p);
-    const roof = sdf.extrude(roofProfile, ROOF_OVER_Z * 2, 0.05).paintFn((x, y, z) => {
+    const roof = sdf.extrude(roofProfile, ROOF_OVER_Z * 2, 0.025).paintFn((x, y, z) => {
       const s = downSlope(y) / ROW;
-      // Wavy course edges: the boundary drifts along the ridge like laid reeds.
-      const wobble = 0.35 * noise.fbm(z * 1.8, s * 0.5, 0, 2);
-      const f = s + wobble - Math.floor(s + wobble);
-      const seam = line(f, 4);
-      const streak = 0.5 + 0.5 * noise.fbm(z * 4.5, s * 3.2, 0, 3);
-      const c = mixRgb(mixRgb(C.thatch, C.thatchDark, 0.42 * streak), C.thatchDark, 0.8 * seam);
-      // Darker eave edge and a warm bright ridge.
-      const edge = sstep(0.55, 0.05, s);
-      const ridge = sstep(0.5, 0.1, downSlope(y));
-      return mixRgb(mixRgb(c, C.thatchDark, 0.35 * edge), C.thatch, 0.3 * ridge);
+      const row = Math.floor(s);
+      const f = s - row;
+      const u = z / COL + (row % 2) * 0.5;
+      const col = Math.floor(u);
+      const g = u - col;
+      const seam = f < 0.12 || g < 0.09 || g > 0.91;
+      const tint = noise.random(row, col, 11) * 0.4;
+      return seam ? C.creamDark : mixRgb(C.cream, C.creamDark, tint);
     });
-    const thatchBump = (x: number, y: number, z: number) => {
+    const shingleBump = (x: number, y: number, z: number) => {
       const s = downSlope(y) / ROW;
       const f = s - Math.floor(s);
       const ramp = f < 0.85 ? f / 0.85 : (1 - f) / 0.15;
-      // Fine reed strands run down the slope (mostly along Z here).
-      const reed = noise.fbm(z * 30, s * 6, x * 3, 2);
-      return 0.011 * ramp + 0.004 * reed + 0.002 * noise.noise3(x * 22, y * 22, z * 22);
+      const u = z / COL + (Math.floor(s) % 2) * 0.5;
+      const g = u - Math.floor(u);
+      const ridge = g < 0.09 || g > 0.91 ? -0.004 : 0;
+      return 0.014 * ramp + ridge + 0.002 * noise.noise3(x * 24, y * 24, z * 24);
     };
     k.body('roof', roof, {
-      color: C.thatch,
-      roughness: 0.9,
-      detail: 0.028,
-      maxError: 0.01,
+      color: C.cream,
+      roughness: 0.8,
+      detail: 0.018,
+      maxError: 0.007,
       textureDensity: 2,
-      bump: thatchBump,
+      bump: shingleBump,
     });
 
-    // Rolled ridge cap along the apex.
-    const ridgeCap = sdf.capsule([0, APEX_Y + 0.01, -ROOF_OVER_Z + 0.06], [0, APEX_Y + 0.01, ROOF_OVER_Z - 0.06], 0.095);
-    k.body('ridge-cap', ridgeCap, {
-      color: C.thatchDark,
-      roughness: 0.9,
-      detail: 0.024,
-      maxError: 0.008,
-      bump: (x, y, z) => 0.004 * noise.fbm(z * 24, y * 8, x * 8, 2),
-    });
+    // ---------------------------------------------------------------- doors and frame
+    const doorZ = FRONT + 0.03;
+    const doorLeaves = sdf
+      .box([DOOR_W, DOOR_H, 0.14], 0.015)
+      .at(0, DOOR_MID, doorZ)
+      .subtract(sdf.box([0.6, DOOR_H - 0.34, 0.12]).at(0.41, DOOR_MID, doorZ + 0.06))
+      .subtract(sdf.box([0.6, DOOR_H - 0.34, 0.12]).at(-0.41, DOOR_MID, doorZ + 0.06))
+      // A shallow centre split, not a through cut, so the leaves meet at the base.
+      .subtract(sdf.box([0.03, DOOR_H, 0.09]).at(0, DOOR_MID, doorZ + 0.06));
 
-    // ---------------------------------------------------------------- doorway and doors
-    // Dark reveal behind the leaves so the gap reads as an opening.
-    const opening = sdf.extrude(profile.rect([DOOR_W, DOOR_H + 0.04], 0.02), 0.08, 0.012).at(0, DOOR_BOT + DOOR_H / 2, FRONT - 0.01);
-    k.body('door-opening', opening, {
-      color: C.void,
-      roughness: 0.95,
-      detail: 0.014,
+    const frameX = DOOR_W / 2 + 0.11;
+    const frameH = DOOR_H + 0.2;
+    const frame = sdf
+      .union(
+        sdf.box([0.22, frameH, 0.17], 0.015).at(-frameX, FOUND + frameH / 2, FRONT + 0.02),
+        sdf.box([0.22, frameH, 0.17], 0.015).at(frameX, FOUND + frameH / 2, FRONT + 0.02),
+        sdf.box([DOOR_W + 0.6, 0.2, 0.19], 0.015).at(0, DOOR_TOP + 0.1, FRONT + 0.03),
+        sdf.box([DOOR_W + 0.72, 0.08, 0.25], 0.015).at(0, DOOR_TOP + 0.24, FRONT + 0.03),
+      )
+      .paintFn(plankPaint(C.red, 0.04));
+    k.body('door-frame', frame, {
+      color: C.red,
+      roughness: 0.85,
+      detail: 0.016,
       maxError: 0.006,
+      bump: plankBump,
     });
 
-    // One door leaf, hinged at its outer edge, swung OPEN_DEG outward (+Z).
-    // Local frame: hinge edge at x = 0, leaf extends +X; pivot at the jamb after the last .at.
-    const LEAF_W = DOOR_W / 2 - 0.02;
-    const leafCore = sdf.box([LEAF_W, DOOR_H, 0.07], 0.018).at(LEAF_W / 2, 0, 0);
-    const leafPainted = leafCore.paintFn(plankPaint(C.plank, C.plankDark, C.plankDeep, 0.45));
-    // X brace in darker walnut, sitting proud of the leaf face.
-    const braceBar = sdf
-      .box([Math.hypot(LEAF_W, DOOR_H - 0.24), 0.09, 0.035], 0.015)
-      .rotateZ((Math.atan2(DOOR_H - 0.24, LEAF_W) * 180) / Math.PI)
-      .at(LEAF_W / 2, 0, 0.045);
-    const leafBrace = braceBar.union(braceBar.rotateZ(0).mirror('z', 0));
-    // Iron strap hinges: two straps running from the hinge across the leaf.
-    const strapBar = sdf.box([LEAF_W * 0.72, 0.055, 0.02], 0.008).at(LEAF_W * 0.55, 0, 0.052);
-    const leafStraps = strapBar.at(0, DOOR_H / 2 - 0.3, 0).union(strapBar.at(0, -DOOR_H / 2 + 0.3, 0));
-    const leafAll = leafPainted
-      .union(leafBrace.paint(C.walnutDark))
-      .at(-0, 0, 0);
-    const leafL = leafAll.rotateY(-OPEN_DEG).at(-(DOOR_W / 2), DOOR_BOT + DOOR_H / 2, FRONT + 0.09);
-    const leaves = leafL.mirror('x', 0);
+    const leaves = doorLeaves.paintFn((x, y, z) => {
+      const alongPos = x + DOOR_W / 2;
+      const f = alongPos / PLANK - Math.floor(alongPos / PLANK);
+      const board = 0.5 + 0.5 * noise.fbm(alongPos * 3.5, y * 1.5, 5, 2);
+      let c = mixRgb(C.red, C.redDark, 0.1 + 0.24 * board);
+      c = mixRgb(c, C.redDark, 0.12 * Math.max(0, noise.fbm(x * 24, y * 6, 0, 2)));
+      c = mixRgb(c, C.redDeep, 0.55 * grooveAt(f));
+      return c;
+    });
     k.body('doors', leaves, {
-      color: C.plank,
-      roughness: 0.82,
-      detail: 0.014,
+      color: C.red,
+      roughness: 0.85,
+      detail: 0.013,
       maxError: 0.005,
       bump: plankBump,
     });
 
-    // Strap hinges and round hinge pins on both leaves.
-    const strapsAll = leafStraps
-      .paint(C.iron)
-      .rotateY(-OPEN_DEG)
-      .at(-(DOOR_W / 2), DOOR_BOT + DOOR_H / 2, FRONT + 0.09)
-      .mirror('x', 0);
-    const pins = sdf
-      .cylinder(0.035, DOOR_H, 0.012)
-      .at(DOOR_W / 2 + 0.02, DOOR_BOT + DOOR_H / 2, FRONT + 0.1)
-      .mirror('x', 0)
-      .paint(C.iron);
-    k.body('ironwork', strapsAll.union(pins), {
-      color: C.iron,
-      roughness: 0.5,
-      metalness: 0.7,
-      detail: 0.01,
-      maxError: 0.004,
+    const knob = sdf
+      .ellipsoid([0.05, 0.05, 0.028])
+      .at(0, DOOR_BOT + 0.66, FRONT + 0.11)
+      .union(sdf.cylinder(0.018, 0.05).rotateX(90).at(0, DOOR_BOT + 0.66, FRONT + 0.1));
+    k.body('knob', knob, { color: C.gold, roughness: 0.35, metalness: 1, detail: 0.005 });
+
+    // Chunky belt rail around the building, just above the door header.
+    const rail = sdf
+      .box([W + 0.08, 0.14, D + 0.08], 0.02)
+      .at(0, DOOR_TOP + 0.19, 0)
+      .paintFn(plankPaint(C.red, 0.03));
+    k.body('belt-rail', rail, {
+      color: C.red,
+      roughness: 0.85,
+      detail: 0.024,
+      maxError: 0.006,
+      bump: plankBump,
     });
 
-    // ---------------------------------------------------------------- hayloft window
-    const LOFT_W = 0.44;
-    const LOFT_H = 0.42;
-    const LOFT_Y = EAVE + 0.5;
-    const loftVoid = sdf
-      .extrude(profile.rect([LOFT_W, LOFT_H], 0.015), 0.08, 0.01)
-      .at(0, LOFT_Y, FRONT - 0.005);
-    k.body('loft-void', loftVoid, {
-      color: C.void,
-      roughness: 0.95,
-      detail: 0.012,
+    // ---------------------------------------------------------------- cream trim
+    const corner = sdf
+      .box([0.16, EAVE - FOUND + 0.02, 0.16], 0.02)
+      .at(W / 2 - 0.03, (EAVE + FOUND) / 2, D / 2 - 0.03)
+      .mirror('x', 0)
+      .mirror('z', 0);
+    const cornerBead = sdf
+      .ellipsoid([0.05, 0.05, 0.05])
+      .at(W / 2 + 0.01, EAVE - 0.16, D / 2 + 0.01)
+      .mirror('x', 0)
+      .mirror('z', 0);
+
+    const hayOuterPts: [number, number][] = [
+      [-HAY_R - 0.055, HAY_BOT],
+      [HAY_R + 0.055, HAY_BOT],
+      [HAY_R + 0.055, HAY_RECT_TOP],
+    ];
+    for (let i = 1; i < 8; i++) {
+      const a = (Math.PI * i) / 8;
+      hayOuterPts.push([
+        (HAY_R + 0.055) * Math.cos(a),
+        HAY_RECT_TOP + (HAY_R + 0.055) * Math.sin(a),
+      ]);
+    }
+    hayOuterPts.push([-HAY_R - 0.055, HAY_RECT_TOP]);
+    const hayTrim = sdf
+      .extrude(profile.polygon(hayOuterPts), 0.12, 0.015)
+      .subtract(sdf.extrude(hayProfile, 0.44))
+      .at(0, 0, FRONT + 0.015);
+    const haySill = sdf.box([HAY_W + 0.24, 0.09, 0.18], 0.02).at(0, HAY_BOT - 0.03, FRONT + 0.05);
+
+    k.body('trim', sdf.union(corner, cornerBead, hayTrim, haySill), {
+      color: C.cream,
+      roughness: 0.85,
+      detail: 0.014,
       maxError: 0.005,
-    });
-    const loftFrame = sdf
-      .extrude(profile.rect([LOFT_W + 0.1, LOFT_H + 0.1], 0.02), 0.07, 0.016)
-      .subtract(sdf.extrude(profile.rect([LOFT_W + 0.01, LOFT_H + 0.01], 0.01), 0.4))
-      .at(0, LOFT_Y, FRONT + 0.01);
-    const loftMullion = sdf.union(
-      sdf.box([LOFT_W + 0.02, 0.045, 0.05], 0.012).at(0, LOFT_Y, FRONT + 0.03),
-      sdf.box([0.045, LOFT_H + 0.02, 0.05], 0.012).at(0, LOFT_Y, FRONT + 0.03),
-    );
-    const loftSill = sdf.box([LOFT_W + 0.16, 0.07, 0.14], 0.02).at(0, LOFT_Y - LOFT_H / 2 - 0.05, FRONT + 0.03);
-    k.body('loft-frame', sdf.union(loftFrame, loftMullion, loftSill), {
-      color: C.walnut,
-      roughness: 0.8,
-      detail: 0.011,
-      maxError: 0.004,
-    });
-    // A hay glow deep in the loft: warm straw inside the dark opening.
-    const hayGlow = sdf
-      .extrude(profile.rect([LOFT_W - 0.1, LOFT_H - 0.12], 0.02), 0.03)
-      .at(0, LOFT_Y - 0.04, FRONT + 0.005)
-      .paint(C.thatchDark);
-    k.body('loft-hay', hayGlow, {
-      color: C.thatchDark,
-      roughness: 0.95,
-      detail: 0.012,
-      maxError: 0.005,
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 26, y * 8, z * 26, 2),
     });
   },
 });

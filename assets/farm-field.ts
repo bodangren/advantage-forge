@@ -1,156 +1,177 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Farm field — catalog id `architecture/building-parts/farm-field`. A 2 m x 2 m tilled soil
- * tile, 0.06 m thick, standing on y = 0 (top of the bare slab at 0.06). Five soft rounded
- * rows run along Z and rise to ~0.12 m, carving four evenly-spaced furrows between them.
- * Grass tufts creep in over the rim. ONE soil body (slab + rows, clipped to a clean square)
- * and ONE grass body (edge blade tufts); no rig, no animation.
+ * Farm field plot for a cozy chibi hamlet. A 4 m x 3 m rectangle of dark tilled soil framed by a
+ * low chunky wooden border, with neat rows of small green sprout dots across the top. Stands on
+ * y = 0 with the soil surface at y = 0.1. The frame peeks a little above the soil so it reads as
+ * a planter bed from any angle.
  *
  * Design:
- *  - Role: village terrain tile (~6 instances, background); reads at 128 px as one stout
- *    tilled square — chunky rows, soft bevels, clean tiling edges.
- *  - The one idea: a stout square of dark tilled soil scored by four parallel furrows, with
- *    green grass nibbling at the edges.
- *  - Shape language: square + rounded (chunky chibi bevels, no razor edges).
- *  - Palette (60/30/10): soil #6e5236 dominant dark, rows #8a6a48 mid-light, grass #5fb14d
- *    small accent; value contrast comes from light rows on dark furrow floors.
- *  - Materials: one soil body (roughness 0.95, all grain in `bump`), one grass body
- *    (roughness 0.85).
- *  - Detail list: 5 rounded rows / 4 furrows (focal rhythm), soil patch + grain noise,
- *    painted grass creep at the rim, 3D blade tufts at the edges.
+ *  - Role: background prop for a cozy hamlet scene; reads clearly at 128 px.
+ *  - The one idea: tidy framed patch of dark earth with bright green rows.
+ *  - Shape language: rounded chunky (Chibi Quest: soft bevels, no razor edges).
+ *  - Palette: dark brown soil, warm wood beam, fresh green sprouts (60/30/10).
+ *  - Materials: rough tilled soil, rough warm wood, matte leaf green.
+ *  - No rig, no animation.
  */
 
-const TILE = 2; // grid size in meters
-const THICK = 0.06; // slab thickness, top of the furrow floor at y = 0.06
-const ROW_R = 0.14; // row cross-section radius
-const ROW_TOP = 0.115; // row crest height
-const ROW_CY = ROW_TOP - ROW_R; // row capsule centerline, dips well into the slab
-const ROW_CENTERS = [-0.8, -0.4, 0, 0.4, 0.8]; // 5 rows -> 4 furrows, evenly spaced
+const SOIL_W = 4.0;
+const SOIL_D = 3.0;
+const SOIL_H = 0.1;
 
-const SOIL = rgb('#6e5236');
-const SOIL_DARK = rgb('#54402b');
-const SOIL_LIGHT = rgb('#7d6244');
-const ROW = rgb('#8a6a48');
-const ROW_LIGHT = rgb('#9a7a56');
-const GRASS = rgb('#5fb14d');
-const GRASS_DARK = rgb('#4c8f3e');
-const GRASS_LIGHT = rgb('#7cc968');
+const FRAME_W = 0.14; // beam thickness
+const FRAME_H = 0.18; // beam height (sticks above soil)
 
-const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
-const smoothstep = (a: number, b: number, t: number) => {
-  const s = clamp01((t - a) / (b - a));
-  return s * s * (3 - 2 * s);
+const soil = rgb('#5a3a25');
+const soilDark = rgb('#3a2415');
+const soilLight = rgb('#7a5236');
+
+const wood = rgb('#b08358');
+const woodDark = rgb('#7a4f2c');
+const woodLight = rgb('#d6a578');
+
+const leaf = rgb('#6fa84a');
+const leafDark = rgb('#3f6a25');
+const leafLight = rgb('#a8d65a');
+
+// Soil bump: low-frequency lumps (clods) plus fine grain.
+const soilBump = (x: number, y: number, z: number) =>
+  0.55 * noise.fbm(x * 5, y * 5, z * 5, 3, 11) + 0.45 * noise.noise3(x * 22, y * 22, z * 22, 3);
+
+// Wood grain: streaks along the long axis of each beam.
+const woodGrain = (axis: 'x' | 'z') => (x: number, y: number, z: number) => {
+  const along = axis === 'x' ? z : x; // grain runs across the beam
+  return noise.fbm(along * 22, y * 4, (axis === 'x' ? x : z) * 3, 3, 7);
 };
-
-/** World-periodic noise over the 2 m tile, so patches continue onto neighboring tiles. */
-const tileNoise = (x: number, z: number, y: number, frequency: number, octaves: number) => {
-  const u = (x + 1) * 0.5;
-  const v = (z + 1) * 0.5;
-  const sample = (sx: number, sz: number) => noise.fbm(sx * frequency, y, sz * frequency, octaves);
-  return lerp(lerp(sample(x, z), sample(x - 2, z), u), lerp(sample(x, z - 2), sample(x - 2, z - 2), u), v);
-};
-
-/** Distance from x to the nearest row centerline. */
-const rowDistance = (x: number) =>
-  Math.min(...ROW_CENTERS.map((cx) => Math.abs(x - cx)));
-
-/** 1 on the raised rows, 0 on the furrow floors. */
-const rowMask = (x: number) => 1 - smoothstep(ROW_R - 0.04, ROW_R + 0.015, rowDistance(x));
-
-/** Soil color: dark furrow floors, lighter rounded rows, patchy grass creep at the rim. */
-const soilColor = (x: number, y: number, z: number) => {
-  const patch = tileNoise(x, z, 1.3, 4, 2);
-  let c = mixRgb(SOIL, SOIL_DARK, clamp01(0.35 + 0.4 * patch));
-  const grain = tileNoise(x, z, 5, 32, 2);
-  if (grain > 0.3) c = mixRgb(c, SOIL_LIGHT, 0.4);
-
-  // Raised rows: lighter tilled earth with a soft noise drift.
-  const rowNoise = 0.5 + 0.5 * tileNoise(x, z, 2.2, 6, 2);
-  c = mixRgb(c, mixRgb(ROW, ROW_LIGHT, rowNoise), rowMask(x) * clamp01(0.8 + 0.35 * (rowNoise - 0.5)));
-
-  // Grass creeping in from the tile rim: a narrow, patchy fringe, browner further in.
-  const edge = Math.max(Math.abs(x), Math.abs(z));
-  const g = 0.5 + 0.5 * tileNoise(x, z, 3.1, 5, 2);
-  const reach = 0.93 + 0.05 * g;
-  const creep = smoothstep(reach, 1.0, edge) * smoothstep(0.42, 0.72, g) * 0.8;
-  const creepCol = mixRgb(GRASS_DARK, GRASS, g);
-  c = mixRgb(c, creepCol, creep * (0.5 + 0.5 * smoothstep(0, THICK, y)));
-  return c;
-};
-
-// --------------------------------------------------------------------------- grass tufts
-// Small clumps of blades at the tile rim, leaning outward. Deterministic placement.
-type Tuft = { x: number; z: number; lx: number; lz: number; s: number; seed: number };
-const TUFTS: Tuft[] = [
-  { x: -0.86, z: -0.97, lx: -0.03, lz: -0.04, s: 1.0, seed: 1 },
-  { x: -0.2, z: -0.99, lx: 0.0, lz: -0.05, s: 0.85, seed: 2 },
-  { x: 0.62, z: -0.96, lx: 0.03, lz: -0.04, s: 1.1, seed: 3 },
-  { x: -0.97, z: -0.55, lx: -0.04, lz: -0.02, s: 0.9, seed: 4 },
-  { x: -0.99, z: 0.28, lx: -0.05, lz: 0.01, s: 1.0, seed: 5 },
-  { x: -0.9, z: 0.86, lx: -0.04, lz: 0.04, s: 0.8, seed: 6 },
-  { x: 0.97, z: -0.42, lx: 0.05, lz: -0.01, s: 0.95, seed: 7 },
-  { x: 0.99, z: 0.35, lx: 0.05, lz: 0.02, s: 1.05, seed: 8 },
-  { x: 0.55, z: 0.97, lx: 0.03, lz: 0.05, s: 0.9, seed: 9 },
-];
-
-const bladeTufts = sdf.union(
-  ...TUFTS.flatMap((t) => {
-    const blades = [];
-    for (let i = 0; i < 4; i++) {
-      const a = (i / 4) * Math.PI * 2 + noise.random(t.seed, i, 1) * 1.2;
-      const h = (0.1 + 0.05 * noise.random(t.seed, i, 2)) * t.s;
-      const spread = 0.028 + 0.014 * noise.random(t.seed, i, 3);
-      const bx = t.x + 0.014 * Math.cos(a);
-      const bz = t.z + 0.014 * Math.sin(a);
-      blades.push(
-        sdf.cone(
-          [bx, 0.02, bz],
-          [bx + t.lx + spread * Math.cos(a), 0.02 + h, bz + t.lz + spread * Math.sin(a)],
-          0.02 * t.s,
-          0.002,
-        ),
-      );
-    }
-    return blades;
-  }),
-);
 
 export default defineAsset({
   name: 'farm-field',
-  description:
-    '2 m x 2 m tilled farm field tile: dark soil scored into four soft furrows between five rounded rows, grass tufts creeping at the edges.',
-  detail: 0.01,
+  description: 'A 4m x 3m framed farm field of tilled soil with sprout rows, for cozy chibi hamlets.',
+  detail: 0.012,
   texture: { size: 1024 },
 
   build(k) {
-    // One soil body: slab + five row capsules, clipped to a clean square so the tile stands
-    // flat on y = 0 and rows end flush at the rim for seamless tiling.
-    const slab = sdf.box([TILE, THICK, TILE], 0.015).at(0, THICK / 2, 0);
-    const rows = sdf.union(
-      ...ROW_CENTERS.map((cx) => sdf.capsule([cx, ROW_CY, -1.1], [cx, ROW_CY, 1.1], ROW_R)),
-    );
-    const clip = sdf.box([TILE, 0.45, TILE]).at(0, 0.225, 0);
-    const tilled = sdf.union(slab, rows).intersect(clip).paintFn(soilColor);
-    k.body('soil', tilled, {
-      color: SOIL,
+    // ------------------------------------------------ soil slab
+    // Furrow stripes along the sprout rows (X-axis strips darker than the gaps). The stripes
+    // match the sprout row positions, so the tilled look lines up with what is planted.
+    const ROW_STRIPES = 4;
+    const STRIPE_W = 0.18;
+    const furrowZ = (z: number) => {
+      const half = SOIL_D / 2 - 0.32;
+      const step = (half * 2) / (ROW_STRIPES - 1);
+      const idx = Math.round((z + half) / step);
+      const cz = -half + idx * step;
+      return Math.abs(z - cz) < STRIPE_W ? 1 - Math.abs(z - cz) / STRIPE_W : 0;
+    };
+    const soilShape = sdf
+      .box([SOIL_W, SOIL_H, SOIL_D], 0.025)
+      .at(0, SOIL_H / 2, 0)
+      .displace(0.01, soilBump)
+      .paintFn((x, y, z) => {
+        const clod = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 3, 1);
+        const micro = 0.5 + 0.5 * noise.noise3(x * 28, y * 28, z * 28, 5);
+        const t = clod * 0.55 + micro * 0.45;
+        // Base mid-brown, with dark clods and brighter highlights.
+        const base = mixRgb(soil, soilDark, 0.3 + 0.55 * t);
+        const hi = mixRgb(base, soilLight, Math.max(0, t - 0.55) * 0.7);
+        // Darker furrows under the sprout rows.
+        return mixRgb(hi, soilDark, furrowZ(z) * 0.45);
+      });
+    k.body('soil', soilShape, {
+      color: '#5a3a25',
       roughness: 0.95,
-      detail: 0.02,
-      // Fine grain plus soft clods in the furrows; rows stay smooth on top.
-      bump: (x, _y, z) =>
-        0.0022 * tileNoise(x, z, 1, 30, 3) + 0.0032 * Math.max(0, tileNoise(x, z, 0.9, 7, 2)) * (1 - rowMask(x)),
+      bump: soilBump,
+      maxError: 0.004,
     });
 
-    // Grass tufts at the rim: dark matte green blades, lighter toward the tips.
-    k.body('grass', bladeTufts.paintFn((x, y, z, base) => {
-      const tint = noise.random(Math.floor(x * 47 + 13), 5, Math.floor(z * 47 + 29));
-      const c = mixRgb(GRASS_DARK, GRASS_LIGHT, clamp01(0.25 + 0.75 * smoothstep(0.02, 0.14, y)));
-      return mixRgb(base, c, 0.55 + 0.45 * tint);
-    }), {
-      color: GRASS,
-      roughness: 0.85,
-      detail: 0.018,
+    // ------------------------------------------------ wooden border frame
+    const beamLongLen = SOIL_W + FRAME_W * 2;
+    const beamShortLen = SOIL_D + FRAME_W * 2;
+    const beamZ = SOIL_D / 2 + FRAME_W / 2;
+    const beamX = SOIL_W / 2 + FRAME_W / 2;
+
+    // Brighter top edge highlight (where the sun catches the beam crown) plus the body variation.
+    const woodPaintX = (x: number, y: number, z: number) => {
+      const grain = 0.5 + 0.5 * woodGrain('x')(x, y, z);
+      const knot = noise.fbm(x * 3, y * 3, z * 3, 2, 9);
+      const t = 0.25 + 0.4 * grain + 0.25 * Math.max(0, knot - 0.45);
+      const base = mixRgb(wood, woodDark, Math.min(0.75, t));
+      const topHi = Math.max(0, (y - FRAME_H * 0.35) / (FRAME_H * 0.65));
+      return mixRgb(base, woodLight, topHi * 0.4);
+    };
+    const woodPaintZ = (x: number, y: number, z: number) => {
+      const grain = 0.5 + 0.5 * woodGrain('z')(x, y, z);
+      const knot = noise.fbm(x * 3, y * 3, z * 3, 2, 13);
+      const t = 0.25 + 0.4 * grain + 0.25 * Math.max(0, knot - 0.45);
+      const base = mixRgb(wood, woodDark, Math.min(0.75, t));
+      const topHi = Math.max(0, (y - FRAME_H * 0.35) / (FRAME_H * 0.65));
+      return mixRgb(base, woodLight, topHi * 0.4);
+    };
+
+    const frontBeam = sdf
+      .box([beamLongLen, FRAME_H, FRAME_W], 0.018)
+      .at(0, FRAME_H / 2, beamZ)
+      .paintFn(woodPaintX);
+    const backBeam = sdf
+      .box([beamLongLen, FRAME_H, FRAME_W], 0.018)
+      .at(0, FRAME_H / 2, -beamZ)
+      .paintFn(woodPaintX);
+    const rightBeam = sdf
+      .box([FRAME_W, FRAME_H, beamShortLen], 0.018)
+      .at(beamX, FRAME_H / 2, 0)
+      .paintFn(woodPaintZ);
+    const leftBeam = sdf
+      .box([FRAME_W, FRAME_H, beamShortLen], 0.018)
+      .at(-beamX, FRAME_H / 2, 0)
+      .paintFn(woodPaintZ);
+
+    const frame = sdf.union(frontBeam, backBeam, rightBeam, leftBeam);
+    k.body('frame', frame, { color: '#b08358', roughness: 0.85, maxError: 0.004 });
+
+    // ------------------------------------------------ sprout rows
+    // Four short rows along the long axis, with six sprouts per row, alternate rows offset
+    // like a hand-sown plot. Tiny ellipsoids rest on the soil surface (top at y = 0.1).
+    const NUM_ROWS = 4;
+    const NUM_COLS = 6;
+    const marginX = 0.32;
+    const marginZ = 0.32;
+    const innerW = SOIL_W - marginX * 2;
+    const innerD = SOIL_D - marginZ * 2;
+
+    const sproutBump = (x: number, y: number, z: number) =>
+      0.5 * noise.noise3(x * 14, y * 14, z * 14, 17) + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2, 19);
+
+    const sprouts: ReturnType<typeof sdf.ellipsoid>[] = [];
+    for (let row = 0; row < NUM_ROWS; row++) {
+      const z = -innerD / 2 + (row / (NUM_ROWS - 1)) * innerD;
+      const offset = row % 2 === 1 ? innerW / (NUM_COLS * 2) : 0;
+      for (let col = 0; col < NUM_COLS; col++) {
+        const x = -innerW / 2 + offset + (col / (NUM_COLS - 1)) * (innerW - offset * 2);
+        if (Math.abs(x) > innerW / 2 - 0.05) continue;
+        const jx = (noise.random(col, row, 1) - 0.5) * 0.04;
+        const jz = (noise.random(col, row, 2) - 0.5) * 0.04;
+        // Slight height variation for a hand-planted look.
+        const h = 0.055 + noise.random(col, row, 3) * 0.025;
+        sprouts.push(
+          sdf
+            .ellipsoid([0.075, h, 0.075])
+            .at(x + jx, SOIL_H + h * 0.55, z + jz)
+            .paintFn((px, py, pz) => {
+              const t = 0.5 + 0.5 * noise.fbm(px * 6, py * 6, pz * 6, 2, col * 7 + row * 13);
+              const tip = Math.max(0, py - (SOIL_H + h * 0.3)) * 6; // brighter at top
+              const base = mixRgb(leaf, leafDark, 0.2 + 0.55 * t);
+              return mixRgb(base, leafLight, Math.min(0.7, tip * (0.4 + 0.6 * t)));
+            })
+            .displace(0.006, sproutBump),
+        );
+      }
+    }
+    const sproutsShape = sdf.union(...sprouts);
+    k.body('sprouts', sproutsShape, {
+      color: '#6fa84a',
+      roughness: 0.75,
+      bump: sproutBump,
+      maxError: 0.004,
     });
   },
 });
