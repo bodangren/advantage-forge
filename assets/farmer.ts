@@ -133,8 +133,38 @@ export default defineAsset({
   description: 'Chibi farmer NPC: a wide straw hat, a straw stalk in his mouth, a red plaid shirt, patched blue overalls, boots, and a pitchfork.',
   detail: 0.005,
   reference: 'docs/npc-mockups/farmer_001.jpg',
+  // Color slots for individual farmers (the first option is the default look). The clothing slot
+  // is the plaid shirt; the denim overalls, the straw hat, the patch, and the boots keep their colors.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, blond: '#c4974a', black: '#231a17' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { red: C.plaid, blue: '#2c4a8c', green: '#3a7a34' },
+  },
+  presets: {
+    shepherd: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'blue' },
+    harvester: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'green' },
+    plowman: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'red' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      hairDark: k.tint('hair', { color: C.hairDark, follow: 1 }),
+      brow: k.tint('hair', { color: C.brow, follow: 1 }),
+      skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      nose: k.tint('skin', { color: '#f0a090', follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      plaid: k.tint('clothing'),
+      plaidDark: k.tint('clothing', { color: C.plaidDark, follow: 1 }),
+      plaidBand: k.tint('clothing', { color: '#b02e27', follow: 1 }), // the red x [0.8, 0.75, 0.75] in linear light
+      // The red has almost no blue or green, so a full follow turns the light lines cyan or mint.
+      plaidLight: k.tint('clothing', { color: C.plaidLight, follow: 0.4 }),
+    };
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -206,18 +236,18 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.012, nose, ears)
       .union(armL, armR)
-      .paintWhere(pair(at(sdf.sphere(0.04), 0.14, 0.565)), C.blush, 0.03)
+      .paintWhere(pair(at(sdf.sphere(0.04), 0.14, 0.565)), T.blush, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
-      .paintWhere(smile, C.mouth)
-      .paintWhere(sdf.sphere(0.022).at(0, 0.57, faceZ(0, 0.57) + 0.03), '#f0a090', 0.015); // a rosy nose tip
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(brows, T.brow)
+      .paintWhere(smile, T.mouth)
+      .paintWhere(sdf.sphere(0.022).at(0, 0.57, faceZ(0, 0.57) + 0.03), T.nose, 0.015); // a rosy nose tip
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ straw stalks in the mouth
     const mouthZ = faceZ(0, 0.54);
@@ -244,8 +274,8 @@ export default defineAsset({
     const sideburns = pair(sdf.cone([0.185, 0.73, 0.06], [0.195, 0.64, 0.08], 0.03, 0.012));
     const hair = sdf
       .smoothUnion(0.02, cap, fringe, sideburns)
-      .paintFn((x, y, z, base) => (Math.sin(x * 60 + z * 25 - y * 30) > 0.85 ? rgb(C.hairDark) : base));
-    k.body('hair', hair.bone('head'), { color: C.hair, roughness: 0.6, detail: 0.004 });
+      .paintFn((x, y, z, base) => (Math.sin(x * 60 + z * 25 - y * 30) > 0.85 ? rgb(T.hairDark) : base));
+    k.body('hair', hair.bone('head'), { color: T.hair, roughness: 0.6, detail: 0.004 });
 
     // ------------------------------------------------------------------ straw hat: a round crown and a wide, soft brim
     // Local frame: the brim's center at the origin; the hat sits tilted back a little.
@@ -303,8 +333,9 @@ export default defineAsset({
           sdf.cone(lerp(s, e, 0.9), lerp(s, e, 1.12), 0.05, 0.05).round(0.004), // rolled cuff
         )
         .bone(tag);
-    const dark = rgb(C.plaidDark);
-    const light = rgb(C.plaidLight);
+    const dark = rgb(T.plaidDark);
+    const bandColor = rgb(T.plaidBand);
+    const light = rgb(T.plaidLight);
     const plaid = (x: number, y: number, z: number) => {
       const u = Math.atan2(x, z) * 0.16 + x * 0.3;
       const a = Math.abs(Math.sin(y * 110)) < 0.25;
@@ -317,10 +348,10 @@ export default defineAsset({
       .paintFn((x, y, z, base) => {
         const { a, b, thin } = plaid(x, y, z);
         if (a && b) return dark;
-        if (a || b) return [base[0] * 0.8, base[1] * 0.75, base[2] * 0.75];
+        if (a || b) return bandColor;
         return thin ? light : base;
       });
-    k.body('shirt', shirt, { color: C.plaid, roughness: 0.85 });
+    k.body('shirt', shirt, { color: T.plaid, roughness: 0.85 });
 
     // ------------------------------------------------------------------ overalls: bib, straps, legs with patches and cuffs
     const bibOutline = profile.polygon(
