@@ -837,6 +837,31 @@ export default defineAsset({
       },
     });
 
+    // ---------------------------------------------------------------- legs on the knees
+    // A planted leg reaches from the hip through the knee to an ankle target in the hips' rest
+    // frame (so it moves against the hips), and the foot takes the opposite turn: `pitch` > 0
+    // points the toes down, < 0 lifts them. `yaw` is the hips' turn about Y; the foot then turns
+    // back by it, so it keeps pointing to world +Z.
+    const FLAT_FOOT = { dir: [0, 0, 1] as V3, up: [0, 1, 0] as V3 };
+    const legTo = (side: 1 | -1, ankle: V3, pitch: number, yaw = 0) => {
+      const m = (v: V3): V3 => (side > 0 ? v : mx(v));
+      const a = (pitch * Math.PI) / 180;
+      const c = Math.cos(-yaw * DEG), s = Math.sin(-yaw * DEG);
+      const want = { dir: [Math.cos(a) * s, -Math.sin(a), Math.cos(a) * c] as V3, up: [Math.sin(a) * s, Math.cos(a), Math.sin(a) * c] as V3 };
+      if (Math.hypot(ankle[0] - ANKLE[0], ankle[1] - ANKLE[1], ankle[2] - ANKLE[2]) < 1e-6) {
+        return { leg: [0, 0, 0] as V3, shin: [0, 0, 0] as V3, foot: orient([], FLAT_FOOT, want) };
+      }
+      const { upper, lower } = reach({ root: m(HIP), mid: m(KNEE), end: m(ANKLE) }, m(ankle), m([KNEE[0], KNEE[1], 0.3]));
+      return { leg: upper, shin: lower, foot: orient([upper, lower], FLAT_FOOT, want) };
+    };
+    // A world point into the hips' rest frame, for hips that move by `move` and turn by `yaw`
+    // degrees about their vertical axis (x = z = 0).
+    const intoHips = (w: V3, move: V3, yaw: number): V3 => {
+      const c = Math.cos(-yaw * DEG), s = Math.sin(-yaw * DEG);
+      const x = w[0] - move[0], z = w[2] - move[2];
+      return [x * c + z * s, w[1] - move[1], -x * s + z * c];
+    };
+
     // ---------------------------------------------------------------- attack2: a lunging thrust
     // Draw the sword back to the right hip with the point forward (hold, coiled), then drive the
     // point straight ahead along one line as the right foot lunges forward and the chest turns in.
@@ -851,6 +876,44 @@ export default defineAsset({
     };
     const THRUST_DIR = norm(toChest([0.05, 0.02, 1], 32, 16));
     const LEVEL = perp([0, 1, 0], THRUST_DIR);
+    // The legs: the right foot lifts, swings forward toes up, lands heel first 16.6 cm ahead, and
+    // rolls flat around the planted heel. The hips drop 4 cm and move 11.3 cm forward, so the front
+    // knee bends over the foot (the shin about vertical) and the rear leg straightens back while
+    // its heel lifts around the planted toe. In the recovery the front foot steps back to its spot.
+    // The sole's heel is 2.1 cm behind the ankle and its toe 8.7 cm ahead, both 7 cm below it.
+    const STEP = 0.166;
+    const SINK = 0.04;
+    const HIPS_FWD = 0.113; // with the step and the sink, the rear leg is straight (99 percent of its length)
+    const TOES_UP = -20; // the front foot's pitch at the heel strike
+    const HEEL_LIFT = 7; // the rear foot's pitch around its toe at full extension
+    const onHeel = (heelZ: number, pitch: number): [number, number] => {
+      const a = pitch * DEG;
+      return [ANKLE[1] * Math.cos(a) - 0.021 * Math.sin(a), heelZ + 0.021 * Math.cos(a) + ANKLE[1] * Math.sin(a)];
+    };
+    const onToe = (pitch: number): V3 => {
+      const a = pitch * DEG;
+      return [ANKLE[0], 0.087 * Math.sin(a) + ANKLE[1] * Math.cos(a), 0.087 * (1 - Math.cos(a)) + ANKLE[1] * Math.sin(a)];
+    };
+    const HEEL_AT = STEP - 0.021;
+    const STRIKE = onHeel(HEEL_AT, TOES_UP);
+    const frontFoot = (p: number): { at: V3; pitch: number } => {
+      if (p < 0.47) {
+        // Lift, carry forward with the toes coming up, and put the heel down.
+        const s = Math.min(1, Math.max(0, (p - 0.36) / 0.11));
+        const e = s * s * (3 - 2 * s);
+        return { at: [-ANKLE[0], ANKLE[1] + (STRIKE[0] - ANKLE[1]) * e + 0.025 * Math.sin(Math.PI * s), STRIKE[1] * e], pitch: TOES_UP * e };
+      }
+      if (p < 0.68) {
+        // Roll down onto the sole around the planted heel.
+        const pitch = TOES_UP * (1 - ease(0.47, 0.53, p));
+        const [y, z] = onHeel(HEEL_AT, pitch);
+        return { at: [-ANKLE[0], y, z], pitch };
+      }
+      // Push off and step back to the rest spot.
+      const s = Math.min(1, (p - 0.68) / 0.24);
+      const e = s * s * (3 - 2 * s);
+      return { at: [-ANKLE[0], ANKLE[1] + 0.02 * Math.sin(Math.PI * s), STEP * (1 - e)], pitch: 6 * Math.sin(Math.PI * s) };
+    };
     k.animation('attack2', {
       duration: 0.75,
       loop: false,
@@ -885,11 +948,18 @@ export default defineAsset({
           [1, WRIST],
         ] as const);
         const armL = reach(ARM_L, handL, [0.5, 0.3, -0.3]);
-        const hipsZ = -0.015 * coil + 0.05 * lunge;
-        const back = (Math.asin(Math.max(-0.9, Math.min(0.9, hipsZ / 0.13))) * 180) / Math.PI;
+        // The body drive: the hips follow the step down and forward, then rise back in the recovery.
+        const drive = ease(0.37, 0.53, p) * (1 - ease(0.66, 0.98, p));
+        const move: V3 = [0, -0.012 * coil - SINK * drive, -0.015 * coil + HIPS_FWD * drive];
+        // The hips turn only 4 deg into the lunge (the feet stay square); the spine takes the rest
+        // of the old 10 deg, so the chest and the sword turn as before.
+        const yaw = -14 * coil + 4 * drive;
+        const front = frontFoot(p);
+        const legR = legTo(-1, mx(intoHips(front.at, move, yaw)), front.pitch, yaw);
+        const legL = legTo(1, intoHips(onToe(HEEL_LIFT * drive), move, yaw), HEEL_LIFT * drive, yaw);
         return {
-          hips: { move: [0, -legDrop(LEG, Math.max(Math.abs(back), 30 * lunge)) - 0.012 * coil, hipsZ], rotate: [0, -14 * coil + 10 * lunge, 0] },
-          spine: { rotate: [2 * coil + 12 * lunge, -6 * coil + 6 * lunge, 0] },
+          hips: { move, rotate: [0, yaw, 0] },
+          spine: { rotate: [2 * coil + 12 * lunge, -6 * coil + 16 * lunge - 4 * drive, 0] },
           chest: { rotate: [-2 * coil + 4 * lunge, -18 * coil + 16 * lunge, 0] },
           head: { rotate: [-2 * coil - 10 * lunge, 28 * coil - 20 * lunge, 0] },
           knot: { rotate: [14 * lunge, 0, 8 * coil] },
@@ -899,10 +969,12 @@ export default defineAsset({
           'hand.R': { rotate: hand },
           'upperarm.L': { rotate: armL.upper },
           'forearm.L': { rotate: armL.lower },
-          'leg.L': { rotate: [back + 10 * lunge, 10 * coil, 0] },
-          'leg.R': { rotate: [back - 36 * lunge, 10 * coil, 0] },
-          'foot.L': { rotate: [-back * 0.5 - 8 * lunge, 0, 0] },
-          'foot.R': { rotate: [28 * lunge, 0, 0] },
+          'leg.L': { rotate: legL.leg },
+          'shin.L': { rotate: legL.shin },
+          'foot.L': { rotate: legL.foot },
+          'leg.R': { rotate: legR.leg },
+          'shin.R': { rotate: legR.shin },
+          'foot.R': { rotate: legR.foot },
         } as P;
       },
     });
@@ -986,20 +1058,7 @@ export default defineAsset({
     // An anticipation crouch on bent knees with the arms pulled down, a push-off that straightens
     // the legs, a jump of about 9 cm with the knees tucked and the toes pointing down, the sword
     // thrust up at the top, and a landing on both feet that the knees absorb with a small bounce.
-    // A planted leg reaches from the hip through the knee to a fixed ankle target (in the hips'
-    // rest frame, so it moves against the hips), and the foot takes the opposite turn: the sole
-    // stays flat on the floor.
-    const FLAT_FOOT = { dir: [0, 0, 1] as V3, up: [0, 1, 0] as V3 };
-    const legTo = (side: 1 | -1, ankle: V3, pitch: number) => {
-      const m = (v: V3): V3 => (side > 0 ? v : mx(v));
-      const a = (pitch * Math.PI) / 180;
-      const want = { dir: [0, -Math.sin(a), Math.cos(a)] as V3, up: [0, Math.cos(a), Math.sin(a)] as V3 };
-      if (Math.hypot(ankle[0] - ANKLE[0], ankle[1] - ANKLE[1], ankle[2] - ANKLE[2]) < 1e-6) {
-        return { leg: [0, 0, 0] as V3, shin: [0, 0, 0] as V3, foot: orient([], FLAT_FOOT, want) };
-      }
-      const { upper, lower } = reach({ root: m(HIP), mid: m(KNEE), end: m(ANKLE) }, m(ankle), m([KNEE[0], KNEE[1], 0.3]));
-      return { leg: upper, shin: lower, foot: orient([upper, lower], FLAT_FOOT, want) };
-    };
+    // The legs use legTo (above attack2): the soles stay flat on the floor.
     const JUMP = 0.09; // the hips' rise at the top of the jump
     const DROP = 0.045; // the depth of the anticipation crouch
     const [T_OFF, T_TOP, T_LAND] = [0.3, 0.41, 0.52];
