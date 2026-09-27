@@ -101,8 +101,34 @@ export default defineAsset({
   description: 'Chibi bandit enemy: wild dark hair, an angry glare over a dark red mask, a striped shirt and leather vest, a loot sack, and a cutlass.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/bandit_001.jpg',
+  // Color slots for individual bandits (the first option is the default look). Hair covers the
+  // wild hair and the brows; mask is the bandana (his accent). Skin uses the rogue's options.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, black: '#1c1816', red: '#7e3a1f' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    mask: { red: C.mask, black: '#262322', green: '#2f4a2c' },
+  },
+  presets: {
+    highwayman: { eyes: 'blue', hair: 'black', skin: 'fair', mask: 'black' },
+    outlaw: { eyes: 'green', hair: 'red', skin: 'tan', mask: 'red' },
+    brigand: { eyes: 'brown', hair: 'black', skin: 'brown', mask: 'green' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    // The anger ticks and the scar keep their color but take half of the skin's recoloring.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      hairDark: k.tint('hair', { color: C.hairDark, follow: 1 }),
+      brow: k.tint('hair', { color: C.brow, follow: 1 }),
+      skin: k.tint('skin'),
+      mark: k.tint('skin', { color: C.mark, follow: 0.5 }),
+      mask: k.tint('mask'),
+      maskDark: k.tint('mask', { color: C.maskDark, follow: 1 }),
+    };
     const KNOT: V3 = [0, 0.6, -0.2];
     const SACK_TOP: V3 = [-0.14, 0.43, -0.08];
     const GRIP: V3 = [WRIST_L[0] + 0.007, WRIST_L[1] - 0.045, WRIST_L[2] + 0.02];
@@ -221,15 +247,15 @@ export default defineAsset({
       .union(armL, armR)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(lid.intersect(eyeWhite.round(0.004)), C.skin)
+      .paintWhere(lid.intersect(eyeWhite.round(0.004)), T.skin)
       .paintWhere(lidLine.intersect(sdf.halfSpace([0, -1, 0], -(EYE[1] + 0.004))), C.lid)
-      .paintWhere(brows, C.brow)
-      .paintWhere(marks, C.mark, 0.002);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(brows, T.brow)
+      .paintWhere(marks, T.mark, 0.002);
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ mask: a bandana over the nose and mouth
     // A wide, soft blend over the nose, so the cloth drapes over it as a low ridge.
@@ -282,8 +308,8 @@ export default defineAsset({
       );
     const mask = sdf
       .smoothUnion(0.01, sdf.smoothUnion(0.012, maskFront, maskPoint, maskBand).bone('head'), knotShape.bone('head'), sdf.union(tail(-0.05, -0.08), tail(0.04, -0.09)).bone('knot'))
-      .paintFn((x, y, z, base) => (z > 0 && Math.abs(Math.sin(x * 50 + y * 30)) < 0.07 && y < 0.58 ? rgb(C.maskDark) : base));
-    k.body('mask', mask, { color: C.mask, roughness: 0.85 });
+      .paintFn((x, y, z, base) => (z > 0 && Math.abs(Math.sin(x * 50 + y * 30)) < 0.07 && y < 0.58 ? rgb(T.maskDark) : base));
+    k.body('mask', mask, { color: T.mask, roughness: 0.85 });
 
     // ------------------------------------------------------------------ hair: wild dark tufts
     const cap = sdf
@@ -346,8 +372,8 @@ export default defineAsset({
     const sideburns = pair(sdf.cone([0.19, 0.7, 0.03], [0.195, 0.62, 0.05], 0.028, 0.012));
     const hair = sdf
       .smoothUnion(0.02, cap, tufts, sideburns)
-      .paintWhere(sdf.ellipsoid([0.2, 0.08, 0.2]).at(0, 0.7, -0.02), C.hairDark, 0.06);
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
+      .paintWhere(sdf.ellipsoid([0.2, 0.08, 0.2]).at(0, 0.7, -0.02), T.hairDark, 0.06);
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
     // ------------------------------------------------------------------ shirt (striped), vest
     const torso = sdf
