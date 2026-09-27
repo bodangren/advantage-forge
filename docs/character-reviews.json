@@ -1024,5 +1024,34 @@
     ],
     "next": "Reshape the hood so it drapes onto the shoulders (flatter crown, longer back), enlarge the nose, and add the shoulder straps.",
     "reviewedAt": "2026-09-27T14:20:59.007Z"
+  },
+  "deer": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P0 wildlife animal on the dire-wolf quadruped rig: a chibi fawn with a big round head, glossy eyes in cream patches, pink-lined leaf ears, small two-tine antlers, a white bib, white back spots, and an upright tail. Clips: idle, walk, run (prancing), graze, alert, hit, and death. The ground check passes, and the textured build has no warnings.",
+    "strengths": [
+      "The face, ears, antlers, bib, spots, and tail match the mockup closely and read at 128 px.",
+      "graze and alert replace the wolf attack and howl with deer behaviour; the ears have their own bones.",
+      "Fur and eye variants in natural colors with three presets: roe, winter, pale."
+    ],
+    "issues": [
+      "The body is a little longer and taller than the short, round body of the mockup.",
+      "The antlers are thinner than the knobbly mockup antlers.",
+      "In graze, the short neck makes the antlers point forward almost level with the ground."
+    ],
+    "next": "Shorten and round the body a little and thicken the antlers.",
+    "reviewedAt": "2026-09-27T14:50:43.859Z"
   }
 }
