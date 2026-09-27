@@ -168,6 +168,8 @@ export default defineAsset({
       cloth: k.tint('clothing'),
       clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
       clothStripe: k.tint('clothing', -0.15), // the scarf stripes: the cloth times 0.85
+      shieldWood: k.tint('clothing', { color: C.wood, follow: 1 }), // the painted shield follows the cloth
+      plank: k.tint('clothing', { color: C.plank, follow: 1 }),
       iron: k.tint('armor'),
       ironDark: k.tint('armor', { color: C.ironDark, follow: 1 }),
       // The patina mixes 18% of this into the iron: the iron times (0.82, 0.82, 0.85).
@@ -514,12 +516,12 @@ export default defineAsset({
     // ------------------------------------------------------------------ round shield on the left forearm
     // Local frame: the face toward +Z. Red planks in a steel rim, a steel bar across, a domed boss.
     const shieldPose = (s: sdf.Shape) => s.rotateY(34).rotateX(-4).at(...SHIELD_C);
-    const plankLines = rgb(C.plank);
+    const plankLines = rgb(SLOT.plank);
     const wood = sdf
       .extrude(shieldRound, 0.026, 0.006)
       .paintFn((x, _y, z, base) => (Math.abs(Math.sin(x * 105)) < 0.12 && z > 0 ? plankLines : base));
     k.body('shield-wood', shieldPose(wood), {
-      color: C.wood,
+      color: SLOT.shieldWood,
       roughness: 0.8,
       bone: 'shield',
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 12, y * 90, z * 12, 2),

@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Knight — Chibi Quest hero (catalog `heroes/martial/knight`), 1.0 m to the helm crown, plume
@@ -149,7 +149,8 @@ export default defineAsset({
   reference: 'docs/hero-mockups/knight_001.jpg',
   // Color slots for individual knights (the first option is the default look). Skin, eye, and
   // auburn hair options match the rogue's, so the heroes share one set. The clothing slot is the
-  // livery cloth (scarf, tabard, cape); the plume, the shield enamel, and the steel keep their colors.
+  // livery cloth (scarf, tabard, cape), the plume, and the shield enamel and heart; the steel and
+  // the gold keep their colors.
   variants: {
     eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
     hair: { black: C.hair, auburn: '#8e3b1c', blond: '#c4974a' },
@@ -172,6 +173,11 @@ export default defineAsset({
       cloth: k.tint('clothing'),
       clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
       clothStripe: k.tint('clothing', -0.15), // exact: the old stripes were the red x 0.85
+      clothBlack: k.tint('clothing', -1), // black in the default look, full in the slot: for paintFn shades
+      plume: k.tint('clothing', { color: C.plume, follow: 1 }),
+      plumeDark: k.tint('clothing', { color: C.plumeDark, follow: 1 }),
+      enamel: k.tint('clothing', { color: C.enamel, follow: 1 }),
+      heart: k.tint('clothing', { color: C.heart, follow: 1 }),
     };
     // ------------------------------------------------------------------ skeleton
     const PLUME_AT: V3 = [0, 0.985, -0.012];
@@ -350,11 +356,11 @@ export default defineAsset({
         feather(0.04, -0.04, 0.12, 0.018),
         feather(-0.15, 0.03, 0.14, 0.02),
       )
-      .paintWhere(sdf.sphere(0.07).at(...PLUME_AT), C.plumeDark, 0.04)
+      .paintWhere(sdf.sphere(0.07).at(...PLUME_AT), T.plumeDark, 0.04)
       .paintFn((x, y, z, base) =>
-        Math.sin(Math.atan2(x - PLUME_AT[0], z - PLUME_AT[2]) * 26 + y * 40) > 0.6 ? [base[0] * 0.8, base[1] * 0.8, base[2] * 0.8] : base,
+        Math.sin(Math.atan2(x - PLUME_AT[0], z - PLUME_AT[2]) * 26 + y * 40) > 0.6 ? mixRgb(base, rgb(T.clothBlack), 0.2) : base,
       );
-    k.body('feathers', feathers, { color: C.plume, roughness: 0.8, detail: 0.004, bone: 'plume' });
+    k.body('feathers', feathers, { color: T.plume, roughness: 0.8, detail: 0.004, bone: 'plume' });
 
     // ------------------------------------------------------------------ hair under the helm
     const insideHelm = helmInner.round(-0.003).union(opening.round(-0.008).intersect(helmOuter.round(-0.002)));
@@ -668,9 +674,9 @@ export default defineAsset({
       sdf.extrude(profile.arc(0.016, 0.005, 20, 200), 0.3).at(0.02, 0.0, 0),
     );
     const face = sdf
-      .union(sdf.extrude(profile.offsetProfile(heater, -0.018), 0.028, 0.005), heartShape.paint(C.heart))
-      .paintWhere(swirl.scale([1.2, 1.2, 1]).at(0, -0.014, 0), C.redDark);
-    k.body('shield-face', shieldPose(face), { color: C.enamel, roughness: 0.45, metalness: 0.1, bone: 'forearm.L' });
+      .union(sdf.extrude(profile.offsetProfile(heater, -0.018), 0.028, 0.005), heartShape.paint(T.heart))
+      .paintWhere(swirl.scale([1.2, 1.2, 1]).at(0, -0.014, 0), T.clothDark);
+    k.body('shield-face', shieldPose(face), { color: T.enamel, roughness: 0.45, metalness: 0.1, bone: 'forearm.L' });
     const goldBand = sdf
       .extrude(profile.offsetProfile(heater, -0.024), 0.032, 0.004)
       .subtract(sdf.extrude(profile.offsetProfile(heater, -0.036), 0.1));
