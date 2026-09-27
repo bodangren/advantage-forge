@@ -25,6 +25,7 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
 const C = {
   skin: '#768f60',
   skinDark: '#566e48',
+  skinBlotch: '#6f8859', // the skin darkened by the blotch noise (linear x 0.88, 0.9, 0.86)
   line: '#1e2418',
   yellow: '#f2c21e',
   rim: '#a8601e',
@@ -87,8 +88,35 @@ export default defineAsset({
   description: 'Chibi zombie enemy: grey-green skin, one bulging yellow eye and one black eye, a toothy grimace, ragged clothes, and reaching arms.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/zombie_001.jpg',
+  // Color slots for individual zombies (the first option is the default look). The eyes slot is
+  // the bulging yellow eye only; the black eye, the pupil, the teeth, and the stitches keep theirs.
+  variants: {
+    eyes: { yellow: C.yellow, green: '#9ac83c', pale: '#dce6ea' },
+    hair: { black: C.hair, brown: '#3e2a1c', grey: '#7c7a78' },
+    skin: { green: C.skin, ashen: '#848c92', mauve: '#968a94' },
+    clothing: { brown: C.shirt, blue: '#6c7e96', white: '#c8bea6' },
+  },
+  presets: {
+    drowned: { eyes: 'pale', hair: 'black', skin: 'ashen', clothing: 'white' },
+    plague: { eyes: 'green', hair: 'brown', skin: 'green', clothing: 'blue' },
+    ancient: { eyes: 'yellow', hair: 'grey', skin: 'mauve', clothing: 'brown' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      eye: k.tint('eyes'),
+      // The rim stays brown: it has the yellow's tiny blue value, so a pale option made it violet.
+      rim: C.rim,
+      hair: k.tint('hair'),
+      skin: k.tint('skin'),
+      skinDark: k.tint('skin', { color: C.skinDark, follow: 1 }),
+      skinBlotch: k.tint('skin', { color: C.skinBlotch, follow: 1 }),
+      line: k.tint('skin', { color: C.line, follow: 1 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      shirt: k.tint('clothing'),
+      patch: k.tint('clothing', { color: C.patch, follow: 1 }),
+    };
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -170,15 +198,12 @@ export default defineAsset({
       .smoothUnion(0.012, ears)
       .union(arm(1), arm(-1))
       .union(shins, toes)
-      .paintWhere(mouthCut.round(0.004), C.mouth, 0.004)
-      .paintWhere(nostrils.round(0.004), C.line, 0.003)
-      .paintWhere(lines, C.line, 0.002)
-      .paintFn((x, y, z, base) => {
-        // Blotchy, sickly skin.
-        const n = noise.fbm(x * 16, y * 16, z * 16, 2);
-        return n > 0.3 ? [base[0] * 0.88, base[1] * 0.9, base[2] * 0.86] : base;
-      });
-    k.body('skin', skin, { color: C.skin, roughness: 0.6, textureDensity: 2 });
+      // Blotchy, sickly skin: a darker skin shade (made inside the function, so it is in the slot).
+      .paintFn((x, y, z, base) => (noise.fbm(x * 16, y * 16, z * 16, 2) > 0.3 ? rgb(T.skinBlotch) : base))
+      .paintWhere(mouthCut.round(0.004), T.mouth, 0.004)
+      .paintWhere(nostrils.round(0.004), T.line, 0.003)
+      .paintWhere(lines, T.line, 0.002);
+    k.body('skin', skin, { color: T.skin, roughness: 0.6, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the mismatched eyes
     const EYE_Y = 0.66;
@@ -189,10 +214,10 @@ export default defineAsset({
     const yellowEye = sdf
       .sphere(0.072)
       .at(...yellowC)
-      .paintWhere(sdf.sphere(0.076).at(...yellowC).subtract(sdf.cylinder(0.056, 1).rotateX(90).at(yellowC[0], yellowC[1], 0)), C.rim, 0.004)
+      .paintWhere(sdf.sphere(0.076).at(...yellowC).subtract(sdf.cylinder(0.056, 1).rotateX(90).at(yellowC[0], yellowC[1], 0)), T.rim, 0.004)
       .paintWhere(sdf.cylinder(0.014, 1).rotateX(90).at(yellowC[0] + 0.006, yellowC[1] - 0.004, 0), C.black, 0.002)
       .paintWhere(sdf.sphere(0.007).at(yellowC[0] + 0.022, yellowC[1] + 0.026, yellowC[2] + 0.066), '#ffffff', 0.002);
-    k.body('eye-yellow', yellowEye.bone('head'), { color: C.yellow, roughness: 0.2, textureDensity: 2 });
+    k.body('eye-yellow', yellowEye.bone('head'), { color: T.eye, roughness: 0.2, textureDensity: 2 });
     // The left eye (+X): a glossy black eye with one big white highlight.
     const blackC: V3 = [EYE_X, EYE_Y, yz - 0.026];
     const blackEye = sdf
@@ -265,7 +290,7 @@ export default defineAsset({
       sdf.cone([-0.03, 0.83, 0.15], [-0.07, 0.765, 0.19], 0.028, 0.006),
       sdf.cone([0.05, 0.83, 0.15], [0.02, 0.775, 0.19], 0.024, 0.005),
     );
-    k.body('hair', hair.bone('head'), { color: C.hair, roughness: 0.55, detail: 0.004 });
+    k.body('hair', hair.bone('head'), { color: T.hair, roughness: 0.55, detail: 0.004 });
 
     // ------------------------------------------------------------------ ragged shirt
     const torso = sdf
@@ -322,15 +347,15 @@ export default defineAsset({
       .union(torso.bone('spine'), sleeves)
       .subtract(sdf.union(...[0, 36, 72, 108, 144].map((a, i) => notch(a + 10, 0.228 + 0.012 * ((i * 3) % 2)))))
       .smoothSubtract(0.008, collar)
-      .paintWhere(patches, C.patch, 0.003)
+      .paintWhere(patches, T.patch, 0.003)
       // Dashed stitches just inside each patch's edge.
       .paintFn((x, y, z, base) => {
         if (z < 0.05) return base;
         const d = patches.dist(x, y, 0.2);
         return Math.abs(d + 0.006) < 0.002 && Math.sin((x + y) * 420) > 0 ? stitchLines : base;
       });
-    k.body('shirt', shirt, { color: C.shirt, roughness: 0.9 });
-    k.body('collar-skin', torso.round(-0.004).intersect(collar).bone('spine'), { color: C.skin, roughness: 0.6 });
+    k.body('shirt', shirt, { color: T.shirt, roughness: 0.9 });
+    k.body('collar-skin', torso.round(-0.004).intersect(collar).bone('spine'), { color: T.skin, roughness: 0.6 });
 
     // ------------------------------------------------------------------ torn trousers
     const hemNotch = (x: number, z: number) => sdf.cone([x, 0.085, z], [x, 0.125, z], 0.018, 0.002);
@@ -346,7 +371,7 @@ export default defineAsset({
     const trousers = sdf
       .smoothUnion(0.03, sdf.ellipsoid([0.118, 0.055, 0.088]).at(0, 0.205, 0).bone('hips'), pair(legShape.subtract(legCut).bone('leg.L')))
       // Holes that show the green skin, and pale frayed threads at the hem.
-      .paintWhere(sdf.union(sdf.sphere(0.018).at(-0.08, 0.17, 0.05), sdf.sphere(0.014).at(0.11, 0.14, 0.05)), C.skinDark, 0.004)
+      .paintWhere(sdf.union(sdf.sphere(0.018).at(-0.08, 0.17, 0.05), sdf.sphere(0.014).at(0.11, 0.14, 0.05)), T.skinDark, 0.004)
       .paintWhere(sdf.box([0.5, 0.012, 0.5]).at(0, 0.122, 0), C.fray, 0.004)
       .paintFn((x, y, z, base) => (noise.fbm(x * 30, y * 30, z * 30, 2) > 0.4 ? rgb(C.trousersDark) : base));
     k.body('trousers', trousers, { color: C.trousers, roughness: 0.9 });
