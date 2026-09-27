@@ -1285,5 +1285,34 @@
     ],
     "next": "Enlarge and brighten the eyes, smooth the hood into the shoulders, and enlarge the charm.",
     "reviewedAt": "2026-09-27T19:24:47.385Z"
+  },
+  "goblin-shaman": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 5,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 enemy on the goblin-archer base (knee bones, seven clips): a goblin shaman with a bone-and-feather headdress, cream face paint, a patched hide mantle and kilt, bead and tooth necklaces, and a crooked staff with a skull and a glowing green flame. attack is a cast where the flame flares; taunt shakes the staff and hops. The forge check shows result ok, and the build has no warnings. The final build was stopped by low memory during the preset sprites (the rest of hexer, and all of firecaller and bogseer); run forge all again to complete them.",
+    "strengths": [
+      "The skull staff, green flame, headdress, face paint, and patched cloak read as the mockup shaman.",
+      "The cast attack flares the flame on its own bone.",
+      "Skin, cloak, and magic variants (the eyes follow the magic color) with three presets: hexer, firecaller, bogseer."
+    ],
+    "issues": [
+      "The feathers read as narrow white blades from the front; the mockup feathers are broad, grey, and fanned.",
+      "The skin is brighter and more yellow-green than the mockup, and the mantle has no bunched collar.",
+      "Preset sprites are incomplete until forge all runs again."
+    ],
+    "next": "Broaden and grey the feathers, darken the skin a little, and rerun forge all for the missing preset sprites.",
+    "reviewedAt": "2026-09-27T19:45:48.274Z"
   }
 }
