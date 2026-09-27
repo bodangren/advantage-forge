@@ -40,6 +40,26 @@ const passColor: ColorFn = (_x, _y, _z, fallback) => fallback;
 const DEG = Math.PI / 180;
 
 /**
+ * Color functions that give black everywhere when the base color under them is black. In a slot's
+ * mask build only that slot's colors are not black, so a body with such a color and a black base
+ * color has an empty mask, and the bake skips it. A function missing from the set is evaluated as
+ * usual: the set can make a bake faster, never different.
+ */
+const blackColors = new WeakSet<ColorFn>([passColor]);
+const isBlackRgb = (c: Rgb): boolean => c[0] === 0 && c[1] === 0 && c[2] === 0;
+
+/** `fn`, marked black when every color function it reads is black (see blackColors). */
+function derived(fn: ColorFn, ...from: readonly ColorFn[]): ColorFn {
+  if (from.every((c) => blackColors.has(c))) blackColors.add(fn);
+  return fn;
+}
+
+/** True when `color` gives black everywhere on a black base color. */
+export function isBlackColor(color: ColorFn): boolean {
+  return blackColors.has(color);
+}
+
+/**
  * An immutable signed distance field with an optional paint layer and a conservative bounding box.
  *
  * Methods never mutate: every call returns a new shape. Transforms apply in world space, so
@@ -75,7 +95,7 @@ export class Sdf {
         min: [this.bounds.min[0] + x, this.bounds.min[1] + y, this.bounds.min[2] + z],
         max: [this.bounds.max[0] + x, this.bounds.max[1] + y, this.bounds.max[2] + z],
       },
-      (px, py, pz, f) => c(px - x, py - y, pz - z, f),
+      derived((px, py, pz, f) => c(px - x, py - y, pz - z, f), c),
       mapTags(this.tags, (td) => (px, py, pz) => td(px - x, py - y, pz - z)),
     );
   }
@@ -155,10 +175,10 @@ export class Sdf {
         return smin(a, r, k);
       },
       expand({ min, max }, k / 4),
-      (x, y, z, f) => {
+      derived((x, y, z, f) => {
         const [a, r] = both(x, y, z);
         return a <= r ? c(x, y, z, f) : c(sx * x, sy * y, sz * z, f);
-      },
+      }, c),
       [
         ...this.tags,
         ...this.tags.map((t) => ({
@@ -214,7 +234,7 @@ export class Sdf {
         min: [this.bounds.min[0] - hx, this.bounds.min[1] - hy, this.bounds.min[2] - hz],
         max: [this.bounds.max[0] + hx, this.bounds.max[1] + hy, this.bounds.max[2] + hz],
       },
-      (x, y, z, f) => c(q(x, hx), q(y, hy), q(z, hz), f),
+      derived((x, y, z, f) => c(q(x, hx), q(y, hy), q(z, hz), f), c),
       mapTags(this.tags, (td) => (x, y, z) => td(q(x, hx), q(y, hy), q(z, hz))),
     );
   }
@@ -235,10 +255,10 @@ export class Sdf {
         return d(bx, by, z) * 0.8;
       },
       expand(this.bounds, maxExtent(this.bounds) * Math.min(1, Math.abs(k) * maxExtent(this.bounds))),
-      (x, y, z, f) => {
+      derived((x, y, z, f) => {
         const [bx, by] = map(x, y);
         return c(bx, by, z, f);
-      },
+      }, c),
       mapTags(this.tags, (td) => (x, y, z) => {
         const [bx, by] = map(x, y);
         return td(bx, by, z);
@@ -251,7 +271,8 @@ export class Sdf {
   /** Paint the whole shape with one color. */
   paint(color: ColorInput): Sdf {
     const col = rgb(color);
-    return new Sdf(this.dist, this.bounds, () => col, this.tags);
+    const paint: ColorFn = () => col;
+    return new Sdf(this.dist, this.bounds, isBlackRgb(col) ? derived(paint) : paint, this.tags);
   }
 
   /**
@@ -272,7 +293,7 @@ export class Sdf {
             if (r <= -soft) return col;
             return mixRgb(c(x, y, z, f), col, smoothstep(soft, -soft, r));
           };
-    return new Sdf(this.dist, this.bounds, color3, this.tags);
+    return new Sdf(this.dist, this.bounds, isBlackRgb(col) ? derived(color3, c) : color3, this.tags);
   }
 
   /** Paint with an arbitrary function of position; `base` is the color underneath. */
@@ -287,6 +308,8 @@ export class Sdf {
       const white: Rgb = [1, 1, 1];
       const black: Rgb = [0, 0, 0];
       const keep = (v: number) => Math.max(0, Math.min(1, v));
+      // Never marked black (see blackColors): `fn` can paint a slot color where the color under
+      // it is black.
       return new Sdf(
         this.dist,
         this.bounds,
@@ -335,7 +358,10 @@ export class Sdf {
     return new Sdf(
       (x, y, z) => d(a * x + b * y + cc * z, e * x + f * y + g * z, h * x + i * y + j * z) * distScale,
       transformBounds(this.bounds, m),
-      (x, y, z, fb) => c(a * x + b * y + cc * z, e * x + f * y + g * z, h * x + i * y + j * z, fb),
+      derived(
+        (x, y, z, fb) => c(a * x + b * y + cc * z, e * x + f * y + g * z, h * x + i * y + j * z, fb),
+        c,
+      ),
       mapTags(
         this.tags,
         (td) => (x, y, z) =>
@@ -559,10 +585,13 @@ export function union(...shapes: Sdf[]): Sdf {
   return new Sdf(
     nearest,
     unionBounds(shapes.map((s) => s.bounds)),
-    (x, y, z, f) => {
-      nearest(x, y, z);
-      return cs[bestIndex]!(x, y, z, f);
-    },
+    derived(
+      (x, y, z, f) => {
+        nearest(x, y, z);
+        return cs[bestIndex]!(x, y, z, f);
+      },
+      ...cs,
+    ),
     shapes.flatMap((s) => s.tags),
   );
 }
@@ -614,16 +643,20 @@ function smoothUnion2(k: number, a: Sdf, b: Sdf, blend: boolean): Sdf {
       return smin(va, vb, k);
     },
     expand(unionBounds([a.bounds, b.bounds]), k / 4),
-    (x, y, z, f) => {
-      both(x, y, z);
-      const a0 = va;
-      const b0 = vb;
-      if (!blend) return a0 <= b0 ? ca(x, y, z, f) : cb(x, y, z, f);
-      const t = clamp01(0.5 + (0.5 * (b0 - a0)) / k);
-      if (t >= 1) return ca(x, y, z, f);
-      if (t <= 0) return cb(x, y, z, f);
-      return mixRgb(cb(x, y, z, f), ca(x, y, z, f), t);
-    },
+    derived(
+      (x, y, z, f) => {
+        both(x, y, z);
+        const a0 = va;
+        const b0 = vb;
+        if (!blend) return a0 <= b0 ? ca(x, y, z, f) : cb(x, y, z, f);
+        const t = clamp01(0.5 + (0.5 * (b0 - a0)) / k);
+        if (t >= 1) return ca(x, y, z, f);
+        if (t <= 0) return cb(x, y, z, f);
+        return mixRgb(cb(x, y, z, f), ca(x, y, z, f), t);
+      },
+      ca,
+      cb,
+    ),
     [...a.tags, ...b.tags],
   );
 }

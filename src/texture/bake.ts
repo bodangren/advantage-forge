@@ -1,5 +1,5 @@
 import type { Rgb } from '../sdf/color.js';
-import type { DistFn, Sdf } from '../sdf/core.js';
+import type { ColorFn, DistFn, Sdf } from '../sdf/core.js';
 import type { UvMesh } from './unwrap.js';
 
 export interface BakeOptions {
@@ -18,6 +18,12 @@ export interface BakeOptions {
   readonly eps: number;
 }
 
+/** A second color map baked at the same surface points as the base color (a color slot's tint mask). */
+export interface ColorLayer {
+  readonly color: ColorFn;
+  readonly baseColor: Rgb;
+}
+
 /** Texels covered by one body: flat texel indices and 3 bytes per texel for each map. */
 export interface BakeResult {
   readonly texels: Uint32Array;
@@ -25,6 +31,8 @@ export interface BakeResult {
   readonly normal: Uint8Array;
   /** Occlusion (R), roughness (G), metalness (B), as glTF expects. */
   readonly orm: Uint8Array;
+  /** One color map per extra layer, in the order given. */
+  readonly layers: readonly Uint8Array[];
 }
 
 const toSrgb = (c: number): number => {
@@ -36,6 +44,7 @@ const toSrgb = (c: number): number => {
  * Bake one body into atlas texels. The mesh is only a carrier: every texel is projected onto the
  * true surface of `shape`, so paint edges, displacement detail, and shading are texel-sharp.
  * `sceneDist` (in this body's coordinates) is the union of every body, for occlusion.
+ * `layers` are more color maps from the same surface points: the costly projection runs once.
  */
 export function bakeBody(
   mesh: UvMesh,
@@ -43,6 +52,7 @@ export function bakeBody(
   sceneDist: DistFn,
   o: BakeOptions,
   bump?: DistFn,
+  layers: readonly ColorLayer[] = [],
 ): BakeResult {
   const S = o.size;
   const { positions: P, normals: N, tangents: T, uvs: U, indices } = mesh;
@@ -80,6 +90,7 @@ export function bakeBody(
   // Per texel: surface point and the 3D step for one texel in x and in y (for edge supersampling).
   const frames: number[] = [];
   const colorOut: number[] = [];
+  const layerOut: number[][] = layers.map(() => []);
   const normalOut: number[] = [];
   const ormOut: number[] = [];
   const seen = new Uint8Array(S * S);
@@ -150,6 +161,10 @@ export function bakeBody(
           frames.push(x, y, z, sx[0]!, sx[1]!, sx[2]!, sy[0]!, sy[1]!, sy[2]!);
           const c = color(x, y, z, o.baseColor);
           colorOut.push(toSrgb(c[0]), toSrgb(c[1]), toSrgb(c[2]));
+          layers.forEach((layer, l) => {
+            const lc = layer.color(x, y, z, layer.baseColor);
+            layerOut[l]!.push(toSrgb(lc[0]), toSrgb(lc[1]), toSrgb(lc[2]));
+          });
 
           if (o.normal) {
             // Rebuild exactly the frame the shader uses: normalize(interpolated NORMAL),
@@ -187,10 +202,37 @@ export function bakeBody(
           ormOut.push(Math.round(ao * 255), rough, metal);
         }
     }
-  // Anti-alias paint edges: texels whose color differs from a neighbor are re-sampled on a 4x4 grid.
   const local = new Map<number, number>();
   texels.forEach((id, k) => local.set(id, k));
-  const OFFSETS = [-0.375, -0.125, 0.125, 0.375];
+  antialias(colorOut, color, o.baseColor, texels, local, frames, S);
+  layers.forEach((layer, l) =>
+    antialias(layerOut[l]!, layer.color, layer.baseColor, texels, local, frames, S),
+  );
+
+  return {
+    texels: new Uint32Array(texels),
+    color: new Uint8Array(colorOut),
+    normal: new Uint8Array(normalOut),
+    orm: new Uint8Array(ormOut),
+    layers: layerOut.map((out) => new Uint8Array(out)),
+  };
+}
+
+const OFFSETS = [-0.375, -0.125, 0.125, 0.375];
+
+/**
+ * Anti-alias paint edges: texels whose color differs from a neighbor are re-sampled on a 4x4 grid.
+ * `local` maps an atlas texel to its index in `texels`; `frames` holds 9 numbers per texel.
+ */
+function antialias(
+  out: number[],
+  color: ColorFn,
+  baseColor: Rgb,
+  texels: readonly number[],
+  local: ReadonlyMap<number, number>,
+  frames: readonly number[],
+  S: number,
+): void {
   for (let k = 0; k < texels.length; k++) {
     const id = texels[k]!;
     let edge = false;
@@ -198,9 +240,9 @@ export function bakeBody(
       const n = local.get(nid);
       if (n === undefined) continue;
       const d =
-        Math.abs(colorOut[k * 3]! - colorOut[n * 3]!) +
-        Math.abs(colorOut[k * 3 + 1]! - colorOut[n * 3 + 1]!) +
-        Math.abs(colorOut[k * 3 + 2]! - colorOut[n * 3 + 2]!);
+        Math.abs(out[k * 3]! - out[n * 3]!) +
+        Math.abs(out[k * 3 + 1]! - out[n * 3 + 1]!) +
+        Math.abs(out[k * 3 + 2]! - out[n * 3 + 2]!);
       if (d > 24) {
         edge = true;
         break;
@@ -209,7 +251,7 @@ export function bakeBody(
     if (!edge) continue;
     const f = k * 9;
     let r = 0;
-    let gg = 0;
+    let g = 0;
     let b = 0;
     for (const oy of OFFSETS)
       for (const ox of OFFSETS) {
@@ -217,23 +259,16 @@ export function bakeBody(
           frames[f]! + frames[f + 3]! * ox + frames[f + 6]! * oy,
           frames[f + 1]! + frames[f + 4]! * ox + frames[f + 7]! * oy,
           frames[f + 2]! + frames[f + 5]! * ox + frames[f + 8]! * oy,
-          o.baseColor,
+          baseColor,
         );
         r += c[0];
-        gg += c[1];
+        g += c[1];
         b += c[2];
       }
-    colorOut[k * 3] = toSrgb(r / 16);
-    colorOut[k * 3 + 1] = toSrgb(gg / 16);
-    colorOut[k * 3 + 2] = toSrgb(b / 16);
+    out[k * 3] = toSrgb(r / 16);
+    out[k * 3 + 1] = toSrgb(g / 16);
+    out[k * 3 + 2] = toSrgb(b / 16);
   }
-
-  return {
-    texels: new Uint32Array(texels),
-    color: new Uint8Array(colorOut),
-    normal: new Uint8Array(normalOut),
-    orm: new Uint8Array(ormOut),
-  };
 }
 
 /** Grow filled texels outward so bilinear filtering and mipmaps never pull in empty space. */

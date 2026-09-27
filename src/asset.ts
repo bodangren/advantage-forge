@@ -322,32 +322,24 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
       );
       const tUnwrap = performance.now();
       const extent = sceneExtent(meshed.map((r) => r.mesh));
+      // Color slots: each bake also gives one color layer per slot, with that slot's colors white
+      // and all others black; together they give the tint mask (one channel per slot).
+      const slots = slotTable(def.variants);
       const bakes = (await pool.run(
         uvMeshes.map((mesh, index) => ({
           kind: 'bake' as const,
           index,
           mesh,
           options: bakeOptions(def, pending[index]!, size, extent * 0.03),
+          slots: slots.map((s) => s.name),
         })),
       )) as BakeResult[];
       const tBake = performance.now();
-      // Color slots: one color-only bake per slot and body, with that slot's colors white and
-      // all others black; together they give the tint mask (one channel per slot).
-      const slots = slotTable(def.variants);
-      const masks: BakeResult[][] = [];
-      for (const slot of slots)
-        masks.push(
-          (await pool.run(
-            uvMeshes.map((mesh, index) => ({
-              kind: 'mask' as const,
-              index,
-              mesh,
-              slot: slot.name,
-              options: { ...bakeOptions(def, pending[index]!, size, extent * 0.03), normal: false, ao: false },
-            })),
-          )) as BakeResult[],
-        );
-      images = composeAtlas(bakes, size, slots.length > 0 ? { slots, masks, presets: def.presets ?? {} } : undefined);
+      images = composeAtlas(
+        bakes,
+        size,
+        slots.length > 0 ? { slots, presets: def.presets ?? {} } : undefined,
+      );
       textureMs = Math.round(performance.now() - t1);
       if (process.env.FORGE_DEBUG)
         console.log(
@@ -495,7 +487,7 @@ function sceneExtent(meshes: readonly MeshData[]): number {
 function composeAtlas(
   bakes: readonly BakeResult[],
   size: number,
-  tint?: { slots: readonly Slot[]; masks: readonly (readonly BakeResult[])[]; presets: VariantPresets },
+  tint?: { slots: readonly Slot[]; presets: VariantPresets },
 ): AtlasImages {
   const n = size * size;
   const color = new Uint8Array(n * 3);
@@ -519,7 +511,7 @@ function composeAtlas(
   let tintMask: Uint8Array | undefined;
   let presets: Record<string, Uint8Array> | undefined;
   if (tint) {
-    // The mask bakes are sRGB bytes of white (in the slot) to black; the mask is linear coverage.
+    // The mask layers are sRGB bytes of white (in the slot) to black; the mask is linear coverage.
     const linear = (b: number) => {
       const c = b / 255;
       return Math.round((c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)) * 255);
@@ -527,8 +519,8 @@ function composeAtlas(
     const mask = new Uint8Array(n * 4);
     tint.slots.forEach((slot, s) => {
       const channel = new Uint8Array(n * 3);
-      for (const b of tint.masks[s]!)
-        for (let k = 0; k < b.texels.length; k++) channel[b.texels[k]! * 3] = linear(b.color[k * 3]!);
+      for (const b of bakes)
+        for (let k = 0; k < b.texels.length; k++) channel[b.texels[k]! * 3] = linear(b.layers[s]![k * 3]!);
       dilate(channel, filled, size, passes);
       for (let i = 0; i < n; i++) mask[i * 4 + slot.channel] = channel[i * 3]!;
     });

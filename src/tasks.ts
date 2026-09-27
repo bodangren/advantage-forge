@@ -1,17 +1,25 @@
 import type * as THREE from 'three';
 import { collectBodies, meshOptions, type AssetDefinition, type MeshResult, type PendingBody } from './asset.js';
 import { rgb, setMaskSlot } from './sdf/color.js';
-import { union, type DistFn, type Sdf } from './sdf/core.js';
+import { isBlackColor, union, type DistFn, type Sdf } from './sdf/core.js';
 import { meshSdf } from './sdf/mesher.js';
-import { bakeBody, type BakeOptions, type BakeResult } from './texture/bake.js';
+import { bakeBody, type BakeOptions, type BakeResult, type ColorLayer } from './texture/bake.js';
 import type { UvMesh } from './texture/unwrap.js';
 
 /** Work that can run in a worker thread or in-process. Shapes stay where they were built. */
 export type Task =
   | { readonly kind: 'mesh'; readonly index: number; readonly paintSeams: boolean }
-  | { readonly kind: 'bake'; readonly index: number; readonly mesh: UvMesh; readonly options: BakeOptions }
-  /** A color slot's tint mask for one body: a color-only bake with the slot white, all else black. */
-  | { readonly kind: 'mask'; readonly index: number; readonly mesh: UvMesh; readonly slot: string; readonly options: BakeOptions };
+  /**
+   * One body's maps, plus a tint mask for each color slot in `slots` (the slot white, all else
+   * black), baked at the same surface points.
+   */
+  | {
+      readonly kind: 'bake';
+      readonly index: number;
+      readonly mesh: UvMesh;
+      readonly options: BakeOptions;
+      readonly slots: readonly string[];
+    };
 
 export type TaskResult = MeshResult | BakeResult;
 
@@ -53,21 +61,44 @@ export function makeContext(
 export async function runTask(task: Task, ctx: TaskContext): Promise<TaskResult> {
   const body = ctx.pending[task.index]!;
   try {
-    if (task.kind === 'mask') {
-      // The whole mask bake runs in mask mode: colors a paint function makes while it runs are
-      // then mask values too (the slot's white, or black), so a stitch painted over the cloth
-      // is left out of the cloth slot, and a blend gives partial coverage.
-      const masked = (await ctx.maskBodies(task.slot))[task.index]!;
-      setMaskSlot(task.slot);
+    // Workers load src/ when a build opens its pool; the main thread loaded it earlier. A task
+    // kind this code does not know means the engine changed on disk while the build ran.
+    const kind: string = task.kind;
+    if (kind !== 'mesh' && kind !== 'bake')
+      throw new Error(`Unknown task '${kind}': forge changed while this build ran. Run the command again.`);
+    if (task.kind === 'mesh')
+      return await meshSdf(body.shape, { ...meshOptions(ctx.def, body), paintSeams: task.paintSeams });
+    // Each slot's mask colors come from the bodies built in that slot's mask mode, and are
+    // evaluated in mask mode: colors a paint function makes while it runs are then mask values
+    // too (the slot's white, or black), so a stitch painted over the cloth is left out of the
+    // cloth slot, and a blend gives partial coverage. A body without any color of a slot has an
+    // empty mask for it, which needs no bake.
+    const layers: ColorLayer[] = [];
+    const empty: boolean[] = [];
+    for (const slot of task.slots) {
+      const masked = (await ctx.maskBodies(slot))[task.index]!;
+      const color = masked.shape.color;
+      setMaskSlot(slot);
       try {
-        const base = rgb(masked.options.color ?? '#cccccc');
-        return bakeBody(task.mesh, masked.shape, () => 1, { ...task.options, baseColor: base, normal: false, ao: false });
+        const baseColor = rgb(masked.options.color ?? '#cccccc');
+        const none = isBlackColor(color) && baseColor.every((v) => v === 0);
+        empty.push(none);
+        if (none) continue;
+        layers.push({
+          baseColor,
+          color: (x, y, z, fallback) => {
+            setMaskSlot(slot);
+            try {
+              return color(x, y, z, fallback);
+            } finally {
+              setMaskSlot(null);
+            }
+          },
+        });
       } finally {
         setMaskSlot(null);
       }
     }
-    if (task.kind === 'mesh')
-      return await meshSdf(body.shape, { ...meshOptions(ctx.def, body), paintSeams: task.paintSeams });
     const world = ctx.scene().dist;
     const e = body.parent.matrixWorld.elements;
     const identity = e.every((v, i) => v === (i % 5 === 0 ? 1 : 0));
@@ -79,7 +110,12 @@ export async function runTask(task: Task, ctx: TaskContext): Promise<TaskResult>
             e[1]! * x + e[5]! * y + e[9]! * z + e[13]!,
             e[2]! * x + e[6]! * y + e[10]! * z + e[14]!,
           );
-    return bakeBody(task.mesh, body.shape, local, task.options, body.options.bump);
+    const baked = bakeBody(task.mesh, body.shape, local, task.options, body.options.bump, layers);
+    let next = 0;
+    return {
+      ...baked,
+      layers: empty.map((none) => (none ? new Uint8Array(baked.texels.length * 3) : baked.layers[next++]!)),
+    };
   } catch (error) {
     throw new Error(`Body '${body.name}': ${(error as Error).message}`, { cause: error });
   }
@@ -96,6 +132,7 @@ export function transferables(result: TaskResult): ArrayBuffer[] {
     result.color.buffer,
     result.normal.buffer,
     result.orm.buffer,
+    ...result.layers.map((l) => l.buffer),
   ] as ArrayBuffer[];
 }
 

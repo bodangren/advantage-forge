@@ -6,6 +6,7 @@ import { toGlb } from '../src/gltf.js';
 import { sdf } from '../src/index.js';
 import { recolor, slotTable } from '../src/variants.js';
 import { followRef, rgb, setMaskSlot } from '../src/sdf/color.js';
+import { isBlackColor } from '../src/sdf/core.js';
 
 // A ball with a band painted in the hair slot, and the rest in plain skin.
 const banded = defineAsset({
@@ -63,6 +64,22 @@ describe('color variants', () => {
       expect(strands.color(0.1, 0, 0, [0, 0, 0])).toEqual([1, 1, 1]);
       expect(strands.color(-0.1, 0, 0, [0, 0, 0])).toEqual([0, 0, 0]);
       for (const v of shape.color(-0.1, 0, 0, [0, 0, 0])) expect(v).toBeCloseTo(0.5, 9);
+    } finally {
+      setMaskSlot(null);
+    }
+  });
+
+  it('knows which colors are black in a mask, so the bake can skip them', () => {
+    setMaskSlot('hair');
+    try {
+      const skin = sdf.sphere(0.1).paint('tint:skin:0').at(0.1, 0, 0);
+      const hair = sdf.box([0.1, 0.1, 0.1]).paint('tint:hair:0');
+      expect(isBlackColor(skin.color)).toBe(true);
+      expect(isBlackColor(sdf.smoothUnion(0.02, skin, skin.mirror('x')).rotate(0, 30, 0).color)).toBe(true);
+      expect(isBlackColor(sdf.union(skin, hair).color)).toBe(false);
+      expect(isBlackColor(skin.paintWhere(sdf.sphere(0.05), 'tint:hair:-0.2').color)).toBe(false);
+      // A paint function can paint a slot color over black (dark hair strands on the skin).
+      expect(isBlackColor(skin.paintFn((_x, _y, _z, base) => base).color)).toBe(false);
     } finally {
       setMaskSlot(null);
     }
