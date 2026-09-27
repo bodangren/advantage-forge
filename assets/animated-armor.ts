@@ -689,7 +689,8 @@ export default defineAsset({
 
     // A diagonal slash, solved by targets. The wrist follows keys in the chest's rest frame
     // (reach); the blade follows its own keys. The chibi arm is short and the helm is huge, so the
-    // path goes around the helm: the backswing rises on the right side, out beside the helm; the
+    // path goes around the helm: in the backswing the arm goes straight out to the side, below the
+    // cheek plate, and the blade stands up beside the helm (the tip shows in the front view); the
     // blade comes forward on the right, pointing up and out, then sweeps down and across the front
     // below the helm's rim to the low left. edgeUp turns the flat so the edge leads.
     const { keys, reach, orient, edgeUp } = motion;
@@ -700,8 +701,8 @@ export default defineAsset({
       [0, BLADE_DIR],
       [0.12, norm([0.1, -0.5, 0.86])], // down in front, the tip clear of the floor
       [0.22, norm([-0.9, 0.1, 0.35])], // out to the right
-      [0.32, norm([-0.5, 0.7, -0.5])], // up and back, out beside the helm
-      [0.4, norm([-0.48, 0.66, -0.58])], // the hold at the top
+      [0.32, norm([-0.6, 0.74, -0.2])], // up and out, the tip beside the helm in the front view
+      [0.4, norm([-0.62, 0.76, -0.14])], // the hold at the top: the tip at the helm's crown height
       [0.45, norm([-0.55, 0.55, 0.62])], // comes forward on the right, up and out
       [0.49, norm([-0.2, 0.2, 0.96])], // level, pointing forward, under the helm's rim
       [0.53, norm([0.55, -0.2, 0.8])], // sweeping across the front to the left
@@ -722,11 +723,11 @@ export default defineAsset({
           [
             [0, WRIST_R],
             [0.12, [-0.24, 0.3, 0.06]],
-            [0.22, [-0.27, 0.38, 0.0]],
-            [0.32, [-0.3, 0.47, -0.04]],
-            [0.4, [-0.305, 0.475, -0.045]],
-            [0.45, [-0.29, 0.47, 0.08]],
-            [0.49, [-0.18, 0.43, 0.17]],
+            [0.22, [-0.3, 0.39, -0.01]],
+            [0.32, [-0.31, 0.44, -0.02]], // the arm straight out to the side, below the cheek plate
+            [0.4, [-0.316, 0.45, -0.028]],
+            [0.45, [-0.31, 0.43, 0.06]],
+            [0.49, [-0.2, 0.39, 0.17]],
             [0.53, [-0.19, 0.36, 0.2]],
             [0.58, [-0.2, 0.32, 0.2]],
             [0.7, [-0.21, 0.31, 0.19]],
@@ -735,9 +736,9 @@ export default defineAsset({
           'spline',
         );
         const dir = norm(bladeAt(p));
-        // The elbow points out and back in the wind-up, then out and forward through the cut, so
+        // The elbow points out to the side in the wind-up, then out and forward through the cut, so
         // the forearm stays in front of the breastplate.
-        const pole = keys(p, [[0, [-0.6, 0.1, -0.2]], [0.45, [-0.6, 0.2, -0.1]], [0.52, [-0.9, 0.05, 0.3]], [0.8, [-0.9, 0.05, 0.3]], [1, [-0.6, 0.1, -0.2]]] as const);
+        const pole = keys(p, [[0, [-0.6, 0.1, -0.2]], [0.3, [-0.8, 0.25, -0.1]], [0.45, [-0.8, 0.25, -0.05]], [0.52, [-0.9, 0.05, 0.3]], [0.8, [-0.9, 0.05, 0.3]], [1, [-0.6, 0.1, -0.2]]] as const);
         const arm = reach(ARM_R, wrist, pole);
         const hand = orient([arm.upper, arm.lower], { dir: BLADE_DIR, up: FLAT }, { dir, up: edgeUp(bladeAt, p, FLAT) });
         const wind = ease(0, 0.32, p) * (1 - ease(0.42, 0.5, p));
