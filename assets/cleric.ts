@@ -868,28 +868,85 @@ export default defineAsset({
       },
     });
 
-    // victory: he thrusts the hammer up beside his head (out on the right, never over it), hops,
-    // and holds the book to his side; two pumps of the fist.
+    // victory: a jump on both knees. He crouches (both feet flat), pushes off, and at the top of the
+    // jump thrusts the hammer up beside his head (out on the right, never over it); the book stays
+    // at his side. He lands on both feet, the knees absorb it, he stands up, and pumps the fist twice.
+    // The hips' height is a cubic Hermite curve through knots [phase, meters, slope per phase]: the
+    // flight is an exact parabola (peak JUMP, FLY phases long), and the ground parts build the
+    // take-off speed out of the crouch and carry the landing speed into the absorb.
+    const JUMP = 0.095;
+    const FLY = 0.17;
+    const OFF = 0.2; // the take-off
+    const TOP = OFF + FLY / 2;
+    const LAND = OFF + FLY;
+    const V = (4 * JUMP) / FLY;
+    const VICTORY_Y: readonly (readonly [number, number, number])[] = [
+      [0, 0, 0],
+      [0.13, -0.04, 0], // the crouch: the hips down 4 cm, the knees bent, both feet flat
+      [OFF, 0, V], // the push-off: the legs straight, the feet leave the ground
+      [TOP, JUMP, 0], // the top of the jump
+      [LAND, 0, -V], // both feet land
+      [LAND + 0.07, -0.035, 0], // the knees absorb it
+      [LAND + 0.21, 0, 0], // he stands up
+    ];
+    const victoryY = (p: number) => {
+      const last = VICTORY_Y[VICTORY_Y.length - 1]!;
+      if (p <= 0 || p >= last[0]) return 0;
+      let i = 0;
+      while (p > VICTORY_Y[i + 1]![0]) i++;
+      const [t0, y0, m0] = VICTORY_Y[i]!;
+      const [t1, y1, m1] = VICTORY_Y[i + 1]!;
+      const s = t1 - t0;
+      const u = (p - t0) / s;
+      const u2 = u * u;
+      const u3 = u2 * u;
+      return (2 * u3 - 3 * u2 + 1) * y0 + (u3 - 2 * u2 + u) * m0 * s + (-2 * u3 + 3 * u2) * y1 + (u3 - u2) * m1 * s;
+    };
+    /**
+     * One leg, solved by its ankle's target in the hips' rest frame (`lift` above the rest ankle,
+     * `back` behind it). reach bends the knee forward, and the foot gets the opposite turn (plus
+     * `pitch`, toe down) so the sole stays level.
+     */
+    const legTo = (right: boolean, lift: number, back: number, pitch: number) => {
+      const f = (v: V3) => (right ? mx(v) : v);
+      const leg = reach({ root: f(HIP), mid: f(KNEE), end: f(ANKLE) }, f(add(ANKLE, [0, lift, -back])), f([HIP[0] + 0.02, KNEE[1], 0.3]));
+      const foot = motion.euler(motion.quat(leg.upper).multiply(motion.quat(leg.lower)).invert().multiply(motion.quat([pitch, 0, 0])));
+      return { leg: leg.upper, shin: leg.lower, foot };
+    };
     k.animation('victory', {
       duration: 1.6,
       loop: false,
       pose: (_t, p) => {
-        const up = ease(0.02, 0.24, p);
-        const pump = bump(Math.min(1, Math.max(0, (p - 0.24) / 0.5)), 2);
-        const hop = bump(Math.min(1, Math.max(0, (p - 0.2) / 0.22)));
-        const wrist: V3 = [-0.322 - 0.03 * pump, 0.5 + 0.03 * pump, 0.05 + 0.03 * pump];
+        const up = ease(0.08, TOP, p); // the thrust: the hammer is highest at the top of the jump
+        const pump = bump(Math.min(1, Math.max(0, (p - 0.5) / 0.46)), 2);
+        const hipsY = victoryY(p) - 0.006 * pump;
+        const crouch = Math.max(0, -hipsY) / 0.04; // 1 in the deep crouch
+        const air = Math.max(0, hipsY) / JUMP; // 1 at the top of the jump
+        const absorb = p > LAND ? crouch : 0;
+        // In the air the knees tuck a little (the ankles up and back) and the toes point down.
+        const tuck = p > OFF && p < LAND ? Math.sin((Math.PI * (p - OFF)) / FLY) : 0;
+        const lift = Math.max(0, -hipsY) + 0.016 * tuck;
+        const legsL = legTo(false, lift, 0.01 * tuck, 16 * tuck);
+        const legsR = legTo(true, lift, 0.01 * tuck, 14 * tuck);
+        // The right arm reaches out to the side, so the bracer and the hammer stay clear of the mane
+        // and the beard.
+        const wrist: V3 = [-0.36 - 0.02 * pump, 0.49 + 0.03 * pump, 0.06 + 0.02 * pump];
+        // In the crouch he pulls the fist up to his chest (the hammer's butt stays off the floor).
+        const load = p < OFF ? crouch : 0;
         return {
-          ...hammerPose(lerp(WRIST_R, wrist, up), lerp(HAFT_AXIS, norm([-0.3, 1, 0.16 - 0.1 * pump]), up), [0, 0, 1]),
+          ...hammerPose(add(lerp(WRIST_R, wrist, up), [0, 0.065 * load, -0.01 * load]), lerp(HAFT_AXIS, norm([-0.32, 1, 0.16 - 0.1 * pump]), up), [0, 0, 1]),
           ...bookPoseAt(lerp(WRIST_L, [0.255, 0.32, 0.11], up), BOOK.dir, BOOK.up),
-          hips: { move: [0, 0.04 * hop - 0.006 * pump, 0] },
-          spine: { rotate: [-5 * up, 0, 0] },
+          hips: { move: [0, hipsY, 0] },
+          spine: { rotate: [5 * crouch - 5 * up, 0, 0] },
           chest: { rotate: [-4 * up - 3 * pump, -6 * up, 0] },
-          head: { rotate: [-10 * up, -8 * up, -4 * up] },
-          beard: { rotate: [-10 * hop + 4 * pump, 0, 0] },
-          'leg.L': { rotate: [-10 * hop, 0, 0] },
-          'leg.R': { rotate: [8 * hop, 0, 0] },
-          'foot.L': { rotate: [14 * hop, 0, 0] },
-          'foot.R': { rotate: [10 * hop, 0, 0] },
+          head: { rotate: [-10 * up - 4 * crouch, -4 * up, 0] },
+          beard: { rotate: [-12 * air + 8 * absorb + 4 * pump, 0, 0] },
+          'leg.L': { rotate: legsL.leg },
+          'shin.L': { rotate: legsL.shin },
+          'foot.L': { rotate: legsL.foot },
+          'leg.R': { rotate: legsR.leg },
+          'shin.R': { rotate: legsR.shin },
+          'foot.R': { rotate: legsR.foot },
         };
       },
     });
