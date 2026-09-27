@@ -117,8 +117,34 @@ export default defineAsset({
   description: 'Chibi blacksmith NPC: a burly smith with a black beard, a red bandana, a long leather apron, big gloves, and a hammer on his shoulder.',
   detail: 0.005,
   reference: 'docs/npc-mockups/blacksmith_001.jpg',
+  // Color slots for individual smiths (the first option is the default look). Eye and skin options
+  // match the rogue's; the hair slot is the hair, brows, beard, and mustache; the clothing slot is
+  // the bandana. The shirt, the leather, the iron, and the hot metal keep their colors.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { black: C.hair, brown: '#4a2e1e', red: '#6e2a14' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { red: C.red, blue: '#2f58b8', green: '#2e7a3c' },
+  },
+  presets: {
+    farrier: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'green' },
+    armorer: { eyes: 'blue', hair: 'red', skin: 'fair', clothing: 'blue' },
+    forgemaster: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'red' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      nose: k.tint('skin', { color: '#f09c88', follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      cloth: k.tint('clothing'),
+      clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
+    };
     const KNOT: V3 = [0, 0.74, -0.2];
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
@@ -213,19 +239,19 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.014, nose, ears)
       .union(armR, armL)
-      .paintWhere(pair(at(sdf.sphere(0.03), 0.14, 0.585)), C.blush, 0.028)
+      .paintWhere(pair(at(sdf.sphere(0.03), 0.14, 0.585)), T.blush, 0.028)
       .paintWhere(soot, C.soot, 0.018)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.01)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.01)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(mouthShape, C.mouth)
+      .paintWhere(mouthShape, T.mouth)
       .paintWhere(teeth, C.teeth)
-      .paintWhere(sdf.sphere(0.03).at(0, 0.588, faceZ(0, 0.588) + 0.04), '#f09c88', 0.02); // a rosy nose tip
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(sdf.sphere(0.03).at(0, 0.588, faceZ(0, 0.588) + 0.04), T.nose, 0.02); // a rosy nose tip
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ bandana with a knot at the back
     const BAND_Y = 0.785;
@@ -246,8 +272,8 @@ export default defineAsset({
       );
     const bandana = sdf
       .smoothUnion(0.01, band.bone('head'), knotShape.bone('head'), sdf.union(tail(-0.05, -0.08), tail(0.05, -0.07)).bone('knot'))
-      .paintWhere(sdf.halfSpace([0, -1, 0], -(BAND_Y + 0.035)), C.redDark, 0.012); // a darker upper fold
-    k.body('bandana', bandana, { color: C.red, roughness: 0.85 });
+      .paintWhere(sdf.halfSpace([0, -1, 0], -(BAND_Y + 0.035)), T.clothDark, 0.012); // a darker upper fold
+    k.body('bandana', bandana, { color: T.cloth, roughness: 0.85 });
 
     // ------------------------------------------------------------------ hair, brows, beard
     // Short hair: a cap at the sides and the back under the bandana, and a crop of ridges on top.
@@ -297,7 +323,7 @@ export default defineAsset({
     const strands = (x: number, y: number, z: number) => Math.sin(x * 70 + Math.sin(y * 20) * 2) * 0.5 + Math.sin(Math.atan2(z, x) * 40) * 0.5;
     const beard = sdf.smoothUnion(0.02, beardMass, mustache).displace(0.003, strands);
     const hair = sdf.smoothUnion(0.015, cap.displace(0.005, crop), brow(1), brow(-1), beard).smoothSubtract(0.004, band.round(0.002));
-    k.body('hair', hair.bone('head'), { color: C.hair, roughness: 0.65, detail: 0.004 });
+    k.body('hair', hair.bone('head'), { color: T.hair, roughness: 0.65, detail: 0.004 });
 
     // ------------------------------------------------------------------ shirt: a wide barrel torso, short sleeves
     const torso = sdf
