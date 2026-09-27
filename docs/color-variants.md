@@ -98,6 +98,11 @@ A color that should partly follow a slot keeps its exact default color with
 `k.tint('skin', { color: C.blush, follow: 0.5 })`: half of the skin's recoloring applies to it,
 so a blush or lips darken on a darker skin but stay pink.
 
+Recoloring multiplies each channel by option / default, so a channel that is near zero in the
+default (the blue of a yellow eye) grows many times for an option that has it. A shade that
+follows such a slot fully can turn a strange hue: a brown iris rim around a yellow eye turned
+violet for a pale option. Look at every preset, and keep such a shade out of the slot.
+
 Check a variant with `./forge render <name> --preset all` (one textured build; writes
 `render.png` and `render.<preset>.png`). Variants need a textured build; `--fast` shows only
 the default look.
