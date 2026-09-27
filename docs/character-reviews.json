@@ -96,7 +96,7 @@
     "reviewedAt": "2026-09-26T17:13:16+00:00"
   },
   "wizard": {
-    "overall": 8.6,
+    "overall": 8.7,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -105,27 +105,27 @@
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 4,
+      "technical": 5,
       "gameReady": 5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The wizard is a fire mage with a large red hat, a forked fire staff, and a flame in her left palm. The front matches the mockup well. The back and the staff are simpler than in the mockup. All 8 clips work. In the death clip, the hat now falls off and lands on its brim beside her head. In attack2, the palm flame stays 2.6 cm or more from the head.",
+    "summary": "The wizard is a fire mage with a large red hat, a forked fire staff, and a flame in her left palm. The front matches the mockup well. The back and the staff are simpler than in the mockup. All 8 clips work, and every held item stays 1.2 cm or more from the head. The victory clip is now a real jump on bent knees.",
     "strengths": [
       "The hat has a soft wavy brim, a curled tip, a brown band, and a gold flame badge. It gives her a clear silhouette in all 8 sprite directions.",
-      "The front has the gold V trim, the belt with the red gem, the flame motifs on the coat, and the cape that flares out on both sides.",
-      "In the death clip, she staggers, falls back, and lies flat. The hat lifts off her head, turns upright in the air, and lands on its brim on the floor beside her head. Both flames go out."
+      "In the victory clip, she crouches on bent knees with flat soles, pushes off, jumps about 8 cm with the toes down, and lands on bent knees. The staff goes up and out to her right.",
+      "In the attack clip, the staff leans out past the side lock, then drives forward at the target with a large orb flare. The staff stays 1.2 cm or more from the head."
     ],
     "issues": [
       "The back of the cape is one plain red area with only a gold hem. From the back and the side, the hat and the cape merge into one red mass, also at sprite size.",
       "The staff is a thin straight pole with a small fork. In the mockup, the staff is a thick twisted branch that holds the orb. The palm flame is also smaller than in the mockup.",
-      "In the attack clip, the staff comes to 0.2 cm from the hair, and in the victory clip, the palm flame comes to 0.4 cm from the hair. In the walk, the long coat hides the legs, so the stride is weak from the side."
+      "The long coat hides the knees, so the crouch and the landing in the victory clip and the stride in the walk are weak from the side."
     ],
     "next": [
-      "Move the staff path in the attack clip and the palm path in the victory clip, so both stay 1 cm or more from the head.",
-      "Add a gold flame emblem and a trim band to the back of the cape, and make the staff a thicker twisted branch that holds the orb."
+      "Add a gold flame emblem and a trim band to the back of the cape.",
+      "Make the staff a thicker twisted branch that holds the orb, and make the palm flame larger."
     ],
-    "reviewedAt": "2026-09-27T00:37:58+00:00"
+    "reviewedAt": "2026-09-27T00:53:36+00:00"
   },
   "cleric": {
     "overall": 8.6,

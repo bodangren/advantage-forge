@@ -892,8 +892,8 @@ export default defineAsset({
             [0.42, [-0.278, 0.39, -0.03]],
             // The drive and the recovery swing the fist wide, on an arc around the shoulder, so the
             // pole passes outside the side locks above and the coat skirt below.
-            [0.465, [-0.29, 0.395, 0.045]],
-            [0.52, [-0.19, 0.37, 0.155]],
+            [0.465, [-0.3, 0.39, 0.05]],
+            [0.52, [-0.2, 0.37, 0.155]],
             [0.6, [-0.185, 0.365, 0.16]],
             [0.76, [-0.2, 0.36, 0.13]],
             [0.86, [-0.262, 0.368, 0.095]],
@@ -906,10 +906,11 @@ export default defineAsset({
           [
             [0, STAFF_AXIS],
             [0.3, norm([-0.5, 0.85, -0.12])],
-            [0.42, norm([-0.52, 0.84, -0.16])],
-            // In both swings the pole stays near upright, so its foot never tips in under the fist.
-            [0.465, norm([-0.32, 0.8, 0.42])],
-            [0.52, norm([-0.14, 0.5, 0.86])],
+            [0.42, norm([-0.56, 0.8, -0.14])],
+            // In both swings the pole stays near upright, so its foot never tips in under the fist;
+            // in the drive it leans out past the side lock before it tips forward at the target.
+            [0.465, norm([-0.5, 0.74, 0.42])],
+            [0.52, norm([-0.18, 0.5, 0.85])],
             [0.6, norm([-0.1, 0.42, 0.9])],
             [0.76, norm([-0.2, 0.6, 0.78])],
             [0.86, norm([-0.28, 0.82, 0.5])],
@@ -1114,36 +1115,67 @@ export default defineAsset({
       },
     });
 
-    // victory: she hops and throws the staff up and out to her right (well clear of the brim);
-    // the orb and the palm flame both flare, the free fist pumps twice.
+    // victory: an anticipation crouch on bent knees (both soles flat), a push-off, a hop of about
+    // 8 cm with the toes pointing down, and a landing that the knees absorb, then the rest stance.
+    // In the push-off she throws the staff up and out to her right (well clear of the brim); the
+    // orb and the palm flame both flare, and the free fist pumps twice after the landing. The palm
+    // stays up and tilts out as it rises (a turn about Z), so its flame leans away from the side lock.
+    const V_JUMP = 0.08; // the hips' rise at the top of the hop
+    const V_DROP = 0.04; // the depth of the anticipation crouch
+    const [V_OFF, V_LAND] = [0.28, 0.48];
+    const LEGS = { hip: HIP, knee: KNEE, ankle: ANKLE };
     k.animation('victory', {
       duration: 1.5,
       loop: false,
       pose: (_t, p) => {
-        const up = ease(0.02, 0.24, p);
-        const pump = bump(Math.min(1, Math.max(0, (p - 0.24) / 0.56)), 2);
-        const hop = bump(Math.min(1, Math.max(0, (p - 0.18) / 0.24)));
+        const pump = bump(Math.min(1, Math.max(0, (p - 0.52) / 0.4)), 2);
+        // The hips' height: the crouch, a push-off that speeds up, a parabola in the air, then the
+        // landing dip, a smaller second dip, and a small bob with each pump.
+        let h: number;
+        if (p < 0.2) h = -V_DROP * ease(0, 0.17, p);
+        else if (p < V_OFF) h = -V_DROP * (1 - ((p - 0.2) / (V_OFF - 0.2)) ** 2);
+        else if (p < V_LAND) h = (4 * V_JUMP * (p - V_OFF) * (V_LAND - p)) / (V_LAND - V_OFF) ** 2;
+        else if (p < 0.56) h = -0.03 * Math.sin(((Math.PI / 2) * (p - V_LAND)) / (0.56 - V_LAND));
+        else h = -0.03 * keys(p, [[0.56, 1], [0.66, 0.1], [0.72, 0.22], [0.84, 0]] as const);
+        h -= 0.006 * pump;
+        const bend = Math.max(0, -h) / V_DROP; // 1 at the bottom of the crouch
+        const air = Math.max(0, h) / V_JUMP; // 1 at the top of the hop
+        const flight = p > V_OFF && p < V_LAND ? Math.sin((Math.PI * (p - V_OFF)) / (V_LAND - V_OFF)) : 0;
+        // In the air the knees tuck a little and the toes point down, never lower than the floor.
+        const lift = Math.max(0, h) + 0.02 * flight;
+        const pitch = Math.min(24, lift / 0.0022);
+        const hips = { at: [0, 0.2, 0] as V3, move: [0, h, -0.2 * Math.max(0, -h)] as V3 };
+        const legL = motion.legTo('L', LEGS, [ANKLE[0], ANKLE[1] + lift, 0], { hips, pitch });
+        const legR = motion.legTo('R', LEGS, [-ANKLE[0], ANKLE[1] + lift, 0], { hips, pitch });
+        const up = ease(0.18, 0.4, p);
+        const upL = ease(0.14, 0.38, p);
         const f = 1 + 0.6 * up + 0.2 * pump;
+        // In the crouch the fist lifts the staff, so its foot stays off the floor.
+        const staffWrist = add(lerp(WRIST_R, [-0.29, 0.48 + 0.02 * pump, 0.08], up), [0, 0.045 * bend * (1 - up), 0]);
+        const palmWrist = keys(p, [[0, WRIST_L], [0.16, [0.275, 0.33, 0.1]], [0.4, [0.285, 0.43, 0.07]]] as const);
         return {
-          ...staffPose(lerp(WRIST_R, [-0.29, 0.48 + 0.02 * pump, 0.08], up), lerp(STAFF_AXIS, norm([-0.5, 0.85, 0.06]), up)),
+          ...staffPose(staffWrist, lerp(STAFF_AXIS, norm([-0.5, 0.85, 0.06]), up)),
           ...palmPose(
-            lerp(WRIST_L, [0.27, 0.43 + 0.04 * pump, 0.06], up),
-            lerp(PALM.dir, norm([0.2, 1, 0.1]), up),
-            lerp(PALM.up, norm([0.4, 0.2, 1]), up),
+            add(palmWrist, [0, 0.04 * pump, 0]),
+            rotZ(PALM.dir, -35 * upL),
+            rotZ(PALM.up, -35 * upL),
           ),
           orb: { scale: [f, f, f] },
           palmfire: { scale: [f, f, f] },
-          hips: { move: [0, 0.045 * hop - 0.006 * pump, 0] },
-          skirt: { rotate: [-8 * hop + 3 * pump, 0, 0] },
-          spine: { rotate: [-5 * up, 0, 0] },
-          chest: { rotate: [-4 * up - 3 * pump, 5 * up, 0] },
-          head: { rotate: [-8 * up, 6 * up, 4 * up] },
-          hattip: { rotate: [-12 * hop + 6 * pump, 0, 8 * pump] },
-          cloak: { rotate: [12 * hop, 0, 0] },
-          'leg.L': { rotate: [-10 * hop, 0, 0] },
-          'leg.R': { rotate: [8 * hop, 0, 0] },
-          'foot.L': { rotate: [14 * hop, 0, 0] },
-          'foot.R': { rotate: [10 * hop, 0, 0] },
+          hips: { move: hips.move },
+          // The robe's skirt swings forward over the bent knees and lifts a little in the air.
+          skirt: { rotate: [-7 * bend - 5 * air + 3 * pump, 0, 0] },
+          spine: { rotate: [8 * bend - 3 * air - 5 * up, 0, 0] },
+          chest: { rotate: [4 * bend - 4 * up - 3 * pump, 5 * up, 0] },
+          head: { rotate: [-4 * bend - 8 * up, 6 * up, 4 * up] },
+          hattip: { rotate: [8 * bend - 14 * air + 6 * pump, 0, 8 * pump] },
+          cloak: { rotate: [14 * air - 4 * bend, 0, 0] },
+          'leg.L': { rotate: legL.leg },
+          'shin.L': { rotate: legL.shin },
+          'foot.L': { rotate: legL.foot },
+          'leg.R': { rotate: legR.leg },
+          'shin.R': { rotate: legR.shin },
+          'foot.R': { rotate: legR.foot },
         };
       },
     });
