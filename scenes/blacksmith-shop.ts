@@ -20,7 +20,7 @@ export function blacksmithShopPlaces(): Place[] {
   };
 
   // Floor: cobblestone tiles.
-  for (const x of [-3, -1, 1, 3]) for (const z of [-2, 0, 2]) put('stone-floor', x, z);
+  for (const x of [-3, -1, 1, 3]) for (const z of [-2, 0, 2]) put('stone-floor', x, z, 0, -0.08); // tile top at y = 0
 
   // North wall: stone behind the forge, half-timber toward the workbench.
   put('stone-wall', -3, -3.05);

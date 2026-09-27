@@ -17,6 +17,7 @@ const browser = await chromium.launch({
   args: ['--use-angle=gl', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'],
 });
 const page = await browser.newPage({ viewport: { width: 1500, height: 950 } });
+page.setDefaultTimeout(180000);
 page.on('console', (msg) => {
   if (msg.type() === 'error') console.log('page error:', msg.text());
 });
