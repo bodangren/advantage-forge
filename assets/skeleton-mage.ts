@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Skeleton mage — Chibi Quest dungeon enemy (catalog `enemies/undead/skeleton-mage`), about 1.02 m
@@ -158,7 +158,7 @@ const flamePaint = (base: V3, h: number, coreHex: string, outerHex: string) => {
     const t = Math.min(1, Math.max(0, (y - base[1]) / h));
     const r = Math.hypot(x - base[0], z - base[2]) / (h * 0.3);
     const k = Math.min(1, Math.max(0, t * 0.9 + r * 0.5 - 0.15));
-    return [core[0] + (outer[0] - core[0]) * k, core[1] + (outer[1] - core[1]) * k, core[2] + (outer[2] - core[2]) * k] as const;
+    return mixRgb(core, outer, k); // a blend of two slot colors stays in the slot's tint mask
   };
 };
 
@@ -167,8 +167,33 @@ export default defineAsset({
   description: 'Chibi skeleton mage dungeon enemy: a skull topped by a melting candle, glowing eyes, a torn purple robe, a skull necklace, a purple flame in one hand, and a lantern staff.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/skeleton-mage_001.png',
+  // Color slots for individual skeleton mages (the first option is the default look).
+  variants: {
+    eyes: { orange: C.eye, green: '#5aff4a', blue: '#40b0ff' },
+    bone: { ivory: C.bone, grey: '#b9b7ae', yellowed: '#d4bf88' },
+    clothing: { purple: C.robe, crimson: '#5c2230', midnight: '#232f4a' },
+    magic: { violet: C.purple, green: '#2ee05a', blue: '#2a8cff' },
+  },
+  presets: {
+    necromancer: { eyes: 'green', bone: 'yellowed', clothing: 'midnight', magic: 'green' },
+    lich: { eyes: 'blue', bone: 'grey', clothing: 'purple', magic: 'blue' },
+    bloodmage: { eyes: 'orange', bone: 'grey', clothing: 'crimson', magic: 'violet' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it. The glows (eyes, purple flames) follow their slots too.
+    const T = {
+      eye: k.tint('eyes'),
+      bone: k.tint('bone'),
+      boneShade: k.tint('bone', { color: C.boneShade, follow: 1 }),
+      robe: k.tint('clothing'),
+      robeDark: k.tint('clothing', { color: C.robeDark, follow: 1 }),
+      robeBlack: k.tint('clothing', -1), // black, but inside the slot: the robe's dark mottling
+      sash: k.tint('clothing', { color: C.sash, follow: 1 }),
+      magic: k.tint('magic'),
+      magicCore: k.tint('magic', { color: C.purpleCore, follow: 1 }),
+    };
     // ------------------------------------------------------------------ the staff line
     const STAFF_TOP = 0.9;
     const HOOK: V3 = [GRIP[0] + 0.11, STAFF_TOP + 0.02, GRIP[2]];
@@ -251,17 +276,17 @@ export default defineAsset({
         pair(foot),
         necklaceSkulls.bone('chest'),
       )
-      .paintWhere(sockets.round(0.016), C.boneShade, 0.01)
+      .paintWhere(sockets.round(0.016), T.boneShade, 0.01)
       .paintWhere(sockets.round(0.007), C.socket, 0.003)
       .paintWhere(noseHole.round(0.003), C.socket, 0.003)
       .paintWhere(mouthLine, C.socket, 0.002)
       .paintWhere(gaps.intersect(sdf.box([0.15, 0.07, 0.4]).at(0, TEETH_Y, 0.2)), C.socket, 0.002)
       .paintWhere(miniEyes, C.socket, 0.002);
-    k.body('bone', bone, { color: C.bone, roughness: 0.6, textureDensity: 2 });
+    k.body('bone', bone, { color: T.bone, roughness: 0.6, textureDensity: 2 });
 
     // Glowing eyes deep in the sockets.
     const eyes = pair(sdf.sphere(0.029).at(EYE[0] - 0.002, EYE[1] - 0.008, faceZ(EYE[0], EYE[1]) - 0.044));
-    k.body('eyes', eyes, { bone: 'eyeglow', color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 0.8 });
+    k.body('eyes', eyes, { bone: 'eyeglow', color: T.eye, roughness: 0.2, emissive: T.eye, emissiveIntensity: 0.8 });
 
     // ------------------------------------------------------------------ the candle on the skull
     // A thick candle standing on the cranium, with a pool of melted wax that runs down over the
@@ -388,6 +413,7 @@ export default defineAsset({
         .subtract(sdf.sphere(0.058).at(...lerp(e, w, 0.82))) // a dark opening for the hand
         .subtract(notches);
     };
+    const robeBlack = rgb(T.robeBlack);
     const robe = sdf
       .union(
         robeShape.subtract(hem).bone('spine'),
@@ -395,9 +421,9 @@ export default defineAsset({
         sleeve(SHOULDER, ELBOW_L, WRIST_L).bone('upperarm.L'),
         sleeve(mx(SHOULDER), ELBOW_R, WRIST_R).bone('upperarm.R'),
       )
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), C.robeDark, 0.04)
-      .paintFn((x, y, z, base) => (noise.fbm(x * 20, y * 20, z * 20, 2) > 0.35 ? [base[0] * 0.85, base[1] * 0.85, base[2] * 0.85] : base));
-    k.body('robe', robe, { color: C.robe, roughness: 0.85, bump: (x, y, z) => 0.0008 * noise.fbm(x * 70, y * 30, z * 70, 2) });
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.12), T.robeDark, 0.04)
+      .paintFn((x, y, z, base) => (noise.fbm(x * 20, y * 20, z * 20, 2) > 0.35 ? mixRgb(base, robeBlack, 0.15) : base));
+    k.body('robe', robe, { color: T.robe, roughness: 0.85, bump: (x, y, z) => 0.0008 * noise.fbm(x * 70, y * 30, z * 70, 2) });
 
     // A purple sash at the waist with a hanging end, and a cord for the necklace.
     const beltY = 0.25;
@@ -413,7 +439,7 @@ export default defineAsset({
       ],
       0.004,
     );
-    k.body('sash', sdf.union(sash.bone('spine'), sashEnd.bone('spine'), cord.bone('chest')), { color: C.sash, roughness: 0.75 });
+    k.body('sash', sdf.union(sash.bone('spine'), sashEnd.bone('spine'), cord.bone('chest')), { color: T.sash, roughness: 0.75 });
 
     // ------------------------------------------------------------------ the satchel on the right hip
     const bagAt = sdf.surfacePoint(robeShape, [-0.15, 0.2, 0.12], 0);
@@ -469,32 +495,32 @@ export default defineAsset({
       .at(...LANTERN);
     k.body('lantern-frame', lanternFrame.bone('lantern'), { color: C.iron, roughness: 0.45, metalness: 0.6 });
     const lanternFlame = flame(0.08).at(LANTERN[0], LANTERN[1] - 0.044, LANTERN[2]);
-    k.body('lantern-light', lanternFlame.paintFn(flamePaint([LANTERN[0], LANTERN[1] - 0.044, LANTERN[2]], 0.08, C.purpleCore, C.purple)).bone('lantern'), {
-      color: C.purple,
+    k.body('lantern-light', lanternFlame.paintFn(flamePaint([LANTERN[0], LANTERN[1] - 0.044, LANTERN[2]], 0.08, T.magicCore, T.magic)).bone('lantern'), {
+      color: T.magic,
       roughness: 0.3,
-      emissive: C.purple,
+      emissive: T.magic,
       emissiveIntensity: 0.9,
       detail: 0.0035,
     });
 
     // ------------------------------------------------------------------ the purple flame over the open right hand
     const palmFlame = flame(0.17).at(...PALM);
-    k.body('palm-fire', palmFlame.paintFn(flamePaint(PALM, 0.17, C.purpleCore, C.purple)), {
+    k.body('palm-fire', palmFlame.paintFn(flamePaint(PALM, 0.17, T.magicCore, T.magic)), {
       bone: 'palmfire',
-      color: C.purple,
+      color: T.magic,
       roughness: 0.3,
-      emissive: C.purple,
+      emissive: T.magic,
       emissiveIntensity: 0.9,
       detail: 0.0035,
     });
     // The spell bolt: a bright purple orb with a short tail back toward the hand (local -Y, so it
     // trails behind when the orb flies along the flame's axis).
     const boltOrb = sdf.smoothUnion(0.01, sdf.sphere(0.03), sdf.cone([0, -0.012, 0], [0, -0.042, 0], 0.022, 0.006)).at(...BOLT);
-    k.body('spell-orb', boltOrb.paintFn(flamePaint([BOLT[0], BOLT[1] - 0.042, BOLT[2]], 0.08, C.purple, C.purpleCore)), {
+    k.body('spell-orb', boltOrb.paintFn(flamePaint([BOLT[0], BOLT[1] - 0.042, BOLT[2]], 0.08, T.magic, T.magicCore)), {
       bone: 'bolt',
-      color: C.purple,
+      color: T.magic,
       roughness: 0.25,
-      emissive: C.purple,
+      emissive: T.magic,
       emissiveIntensity: 1.4,
       detail: 0.003,
     });
