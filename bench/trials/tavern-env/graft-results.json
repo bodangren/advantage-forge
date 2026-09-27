@@ -1,0 +1,177 @@
+[
+  {
+    "asset": "bottle",
+    "ok": true,
+    "code": 0,
+    "tri": "1998",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "bench",
+    "ok": true,
+    "code": 0,
+    "tri": "3796",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "bowl",
+    "ok": true,
+    "code": 0,
+    "tri": "1470",
+    "run": "tavern-env-r3"
+  },
+  {
+    "asset": "bread",
+    "ok": true,
+    "code": 0,
+    "tri": "1266",
+    "run": "tavern-env-r3"
+  },
+  {
+    "asset": "candle",
+    "ok": true,
+    "code": 0,
+    "tri": "1448",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "candelabra",
+    "ok": true,
+    "code": 0,
+    "tri": "4894",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "chair",
+    "ok": true,
+    "code": 0,
+    "tri": "3772",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "chandelier",
+    "ok": true,
+    "code": 0,
+    "tri": "5786",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "cheese",
+    "ok": true,
+    "code": 0,
+    "tri": "1400",
+    "run": "tavern-env-r3"
+  },
+  {
+    "asset": "counter",
+    "ok": true,
+    "code": 0,
+    "tri": "3934",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "crate",
+    "ok": true,
+    "code": 0,
+    "tri": "3040",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "fireplace",
+    "ok": true,
+    "code": 0,
+    "tri": "5606",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "haunch",
+    "ok": true,
+    "code": 0,
+    "tri": "1610",
+    "run": "tavern-env-r3"
+  },
+  {
+    "asset": "mug",
+    "ok": true,
+    "code": 0,
+    "tri": "1624",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "plaster-wall",
+    "ok": true,
+    "code": 0,
+    "tri": "5508",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "plaster-wall-door",
+    "ok": true,
+    "code": 0,
+    "tri": "6344",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "plaster-wall-window",
+    "ok": true,
+    "code": 0,
+    "tri": "2766",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "plate",
+    "ok": true,
+    "code": 0,
+    "tri": "900",
+    "run": "tavern-env-r3"
+  },
+  {
+    "asset": "round-table",
+    "ok": true,
+    "code": 0,
+    "tri": "5500",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "sack",
+    "ok": true,
+    "code": 0,
+    "tri": "2250",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "shelf",
+    "ok": true,
+    "code": 0,
+    "tri": "1092",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "stool",
+    "ok": true,
+    "code": 0,
+    "tri": "3600",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "table",
+    "ok": true,
+    "code": 0,
+    "tri": "4192",
+    "run": "tavern-env-r1"
+  },
+  {
+    "asset": "tankard",
+    "ok": true,
+    "code": 0,
+    "tri": "2070",
+    "run": "tavern-env-r2"
+  },
+  {
+    "asset": "wood-floor",
+    "ok": true,
+    "code": 0,
+    "tri": "3638",
+    "run": "tavern-env-r1"
+  }
+]

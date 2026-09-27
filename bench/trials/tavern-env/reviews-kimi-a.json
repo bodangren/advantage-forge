@@ -1,0 +1,102 @@
+{
+  "chair": {
+    "score": 9,
+    "status": "pass",
+    "notes": "Matches spec and mockup: 0.42x0.40 m seat slab at 0.35 m, domed plank back to 0.722 m with -8 deg lean, four 0.062 m legs with side and back stretchers, all grounded at y=0 with no buried/floating parts or silhouette holes. Palette follows contract: honey oak #b5814a seat/back, warm brown #8a5a35 frame, pale #c9a06a worn edges; honey-oak use is consistent with bench-seat reservation in constructio"
+  },
+  "bench": {
+    "score": 9,
+    "status": "pass",
+    "notes": "Bench matches the contract: 1.5 m honey-oak #b5814a slab (0.35 wide, top at 0.35 m) on two splayed #8a5a35 trestles with low stretcher at 0.14 m, feet cut flat at y=0, legs buried 0.02 m into the seat underside so nothing floats. Pegs #c9a06a pinned through top read as intended joinery. Silhouette clean in all four views, no holes or pokes; 'one long slab on two trestles' reads clearly at 128 px. "
+  },
+  "fireplace": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Matches contract: 1.66x1.5x0.485 m bounds, stepped chimney breast, arched fire box, mantel shelf and jamb pilasters all read cleanly in front/three-quarter/side/back; no buried or floating parts (logs sit on ember bed at y~0.15, flames rooted inside arch). Emissive #ff9a3c/#ffd66b fire is the clear focal point at 128 px; masonry joints + soot interior give good value contrast. 5,606 tris, under th"
+  },
+  "counter": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Solid match to spec and tavern-quest_001.jpg: 2.0 x 0.75 x 0.55 m, 3,933 tris (under 6,000 budget), pale honey-oak #b5814a/#c9a06a slab over dark walnut #6b4226/#54331d plank front, brass #caa24a rail. Front/three-quarter/back read cleanly at 128 px: pale thick top vs dark front, chunky plank divisions, recessed toe-kick plinth, capped ends. No buried parts, no silhouette holes; palette stays on t"
+  },
+  "plaster-wall-door": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: door.ts  E:\u001b[0m→ \u001b[0mRead bench/runs/tavern-env-r1/plaster-wall-door/glm-5-3-flash/ws/out/plaster-wall-door/render.png  E:> build · kimi-k2.8-preview "
+  },
+  "plaster-wall-window": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: .ts  E:\u001b[0m→ \u001b[0mRead bench/runs/tavern-env-r1/plaster-wall-window/glm-5-3-flash/ws/out/plaster-wall-window/render.png  E:> build · kimi-k2.8-preview "
+  },
+  "plaster-wall": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Matches §1: 2.0×1.5 m tile, square end posts, 0.18 m sill/top rail, one brace A(-0.88,0.1)→B(0.44,1.36); walnut #6b4226/#54331d frame around #f0e4cc plaster is contract-exact. 5508 tris (caps 4200+3400). Clean silhouette, no buried/floating parts, reads at 128 px. Minor drift: posts 0.16 m vs spec 0.15 m, plaster inset 10 mm vs §2's 5/20 mm, bevel pushes ends to ±1.003 m."
+  },
+  "round-table": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Structure is sound: thick beveled honey-oak disc on a chunky turned pedestal with splayed feet, grounded and stable in all views. Silhouette is clean, nothing floats or pokes through, and the disc-on-stout-pedestal read is instant at 128 px. Palette matches the contract. Feet are slightly blobby and merge together; a bit more separation would help, but it fits the chunky style."
+  },
+  "shelf": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: '\"]\" \u001b[90m0 matches\u001b[0m E:> build · kimi-k2.8-preview E:\u001b[0m→ \u001b[0mRead bench/trials/tavern-env/prompts/shelf.prompt.md  E:> build · kimi-k2.8-preview "
+  },
+  "stool": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Round seat, three splayed legs, ring stretcher: reads as a stool at 128 px. Silhouette is clean in all four views; no poking or floating parts. Seat and legs stay in the honey oak family per the contract. Furniture grammar is not locked yet, so no drift. The chunky seat disc fits the chibi style."
+  },
+  "table": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Sturdy plank-top tavern table; honey oak top over walnut base matches the contract palette. Square legs and H-stretchers are sound in all four views, silhouette reads instantly at 128 px. Legs are slightly chunky versus the thin top slab, acceptable for chibi. No clipping or floating parts."
+  },
+  "wood-floor": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Structure and silhouette are clean: square 2×2 m slab, square edges, sits at y=0, honey-oak palette, seamless tiling logic all correct. Two drifts from §4 contract: thickness is 0.08 m vs pinned 0.06 m, and plank gaps are ~0.286 m (7 planks) vs 'every 0.2 m' (10 planks). Planks read clearly at 128 px; fix the two numbers to match the contract."
+  },
+  "bottle": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Clean wine-bottle silhouette: sloped shoulders, narrow neck, flared lip, cork read from all views. Label band gives strong 128px contrast; the small front seal may vanish at sprite size but is not essential. No palette conflicts with the tavern contract; structure is sound and the bottle sits well on the ground."
+  },
+  "candelabra": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Three-arm silhouette is balanced and reads at 128 px: pale candles and warm flames pop against the dark iron stem and scrolled arms. Baluster stem and broad foot look sound in all views. Minor drift: the honey-oak base ring borrows the furniture-reserved wood tone; walnut or iron would fit the contract."
+  },
+  "candle": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: | grep -i candle candle-cluster E:> build · kimi-k2.8-preview E:\u001b[0m✱ \u001b[0mGrep \"candle\" \u001b[90min assets · 33 matches\u001b[0m E:> build · kimi-k2.8-preview "
+  },
+  "chandelier": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: queue-r3.tsv queue.tsv reviews-kimi-a.json reviews-kimi-b.json run-reviews.mjs scheduler.log scheduler.pid scheduler.sh E:> build · kimi-k2.8-preview "
+  },
+  "crate": {
+    "score": 6,
+    "status": "fix",
+    "notes": "Structure and silhouette are solid: lid, corner posts, plank seams, and iron straps read clearly at 128 px. Main drift is palette: the body is pale honey oak, but the contract reserves walnut (#6b4226) for all timber and honey oak only for table tops, bench seats, and doors. Re-paint planks in walnut with WALNUT_DEEP grain streaks. A light gap also shows under the bottom band in the back view."
+  },
+  "mug": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Silhouette and 128 px readability strong: staves, foam drip, hoop, and handle read instantly in all views. Palette drift vs §3: body is honey oak (reserved for doors/tabletops/benches); tableware wood should be walnut. Handle is a third lighter tone — match the body. Hoop reads navy; use iron #4a4f55."
+  },
+  "sack": {
+    "score": 7,
+    "status": "pass",
+    "notes": "Clear sack silhouette: bulbous body, cinched rope band, gathered knot top reads well and survives 128px. Cloth tan suits the tavern palette. Slight jar/basket vibe: sides are a bit straight and the crosshatch texture reads woven rather than burlap slump; softer folds would help. No construction.md conflicts (no wood/iron rules apply)."
+  },
+  "tankard": {
+    "score": 6,
+    "status": "fix",
+    "notes": "Silhouette reads as a lidded stein, but the lid floats above the rim in front view. No hinge is visible, so the disc reads detached. The handle has knob bulges. The near-black body drifts from the tavern walnut warmth. The mug, handle, and lid still read at 128 px."
+  }
+}

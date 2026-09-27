@@ -1,0 +1,102 @@
+{
+  "bench": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Clean slab-on-trestle build: 1.5 m honey-oak seat #b5814a with worn #c9a06a edges and pegs, sits exactly on y=0, reads well at 128 px and matches the mockup benches. Two contract drifts: trestle legs are painted honey #8a5a35, but §3 reserves the honey family for bench seats — legs are framing and should be walnut #6b4226/#54331d; and paintFn adds a third wood tone #4a2c15 instead of walnut_deep #"
+  },
+  "chair": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Palette conforms: seat/back #b5814a, legs+stretchers #8a5a35, edge wear #c9a06a — exact §3 honey-oak hexes, matching table, stool, round-table. Shade tones (#5b3a21, #cf9a5f) stay in the brown family; no emissive, correct for wood. Dims match the brief: 0.42×0.40 m seat at 0.35 m, 0.722 m crown, on y=0 facing +Z, 3,772 tris, no warnings. Nits: #5b3a21 slightly off sibling shades (#54331d/#5c3a1f);"
+  },
+  "counter": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse error: stdout=nd style conformance.\\nThe tavern mockup's bar is a medium warm-brown top over a darker plank front. Let me check the forest style anchor location and sibling assets for the shared metal/wood grammar.\\n"
+  },
+  "plaster-wall": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Palette conforms: walnut #6b4226/#54331d + #7d5233 lift on framing, plaster #f0e4cc shading to #d8c9a8, roughness 0.8/0.95, bevel 0.02, brace endpoints AX-0.88,0.1 to BX0.44,1.36 exact; reads as one half-timbered system from front and back, no honey oak or iron drift. Numeric drift vs contract: timber depth 0.15 vs 0.18 (proud 0.015 vs 0.03 m), posts 0.16 wide at x=±0.92 vs 0.15 at ±0.925, slab in"
+  },
+  "fireplace": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Dims 1.66x1.5x0.485 m, y=0, +Z; arched sooty box, pilaster jambs, bare mantel, 5.6k tris, no warnings; logs #3d2717/#5f3d22, emissive #ff9a3c @2.5 match, one wood tone. Fix: flames/embers over-mix to #ffd66b (0.07 m core spans each ~0.17 m tongue; embers 0.55) so fire reads pale cream-pink; #ff9a3c must dominate. Minor: mortar #3c444e darker than pinned #5b6670; stone bakes light (#b7c3d3 vs #8a94"
+  },
+  "shelf": {
+    "score": 4,
+    "status": "fix",
+    "notes": "Clean frame, planked back and cap read well, but two contract problems. Palette: the pale honey boards are a second wood tone outside the walnut family, and honey oak is reserved for doors/table tops/bench seats (§3). Dressing: shelves are empty — a tavern shelf should carry bottles, mugs, or plates per the tableware grammar. Three-quarter view also hints the boards stop short of the right stile; "
+  },
+  "round-table": {
+    "score": 7,
+    "status": "fix",
+    "notes": "Palette conforms: honey-oak top, warm brown pedestal, no second wood tone; proportions and pedestal grammar match prompt. Main issue: tabletop rim silhouette is scalloped/lumpy instead of a smooth disc with soft bevel, so it reads bread-like at side view. Fix rim smoothness; then bake to confirm c9a06a rim wear."
+  },
+  "stool": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Palette conforms: honey-oak seat, warm #8a5a35 legs, no walnut drift. Round seat, three splayed legs, low ring stretcher match the stool contract; grounded and centered. Chunky chibi forms read at 128 px. Minor: seat reads thin for the 'thick seat' spec, and the pale #c9a06a edge wear is barely visible in the render."
+  },
+  "table": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Palette conforms: top and legs stay inside the honey-oak family, no off-palette wood tone. Bare top is correct for wave 1 since candles and mugs are separate assets. Leg/stretcher grammar is still unlocked per §5; consider plank seams on the top when furniture grammar lands."
+  },
+  "wood-floor": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: jpg ?? docs/wildlife-mockups/ ?? scripts/showcase-audio.ts ?? scripts/showcase.ts ?? showcase.html ?? src/showcase/ === E:> build · kimi-k2.8-preview "
+  },
+  "bottle": {
+    "score": 7,
+    "status": "pass",
+    "notes": "Silhouette, grounding, and dressing read well: classic wine bottle, cork, parchment label, wax seal. Contract: tableware grammar is deferred to wave 2/3 (§5), so size is not pinned; cork/seal brown nears reserved honey oak #b5814a — nudge toward walnut #6b4226 to avoid set drift. No wall/plaster/floor conflicts."
+  },
+  "candelabra": {
+    "score": 7,
+    "status": "pass",
+    "notes": "Three curved arms, drip cups, and lit amber flames match the lighting-spec silhouette; dark iron body reads #4a4f55 with straps at arm junctions. Walnut base renders lighter than #6b4226 (verify it is not drifting toward honey oak, reserved per construction.md §3). Scale, y=0 grounding, and emissive amber flames conform; hot core #fff1c2 could pop more at 128 px."
+  },
+  "candle": {
+    "score": 6,
+    "status": "fix",
+    "notes": "Reads as a lit table candle but drifts from spec: column looks ~2x the 0.18 m target (too tall/slender for a 'short' candle), saucer reads near-black instead of iron #4a4f55, and the flame is washed-out peach rather than amber #ffb255 with a hot core — may not read as a warm dot at 128 px. Wax cream tone and drip taper are close; keep those."
+  },
+  "plaster-wall-window": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: ials/tavern-env/prompts/plaster-wall-window.prompt.md  E:\u001b[0m✱ \u001b[0mGlob \"out/plaster-wall-window/**\" \u001b[90m0 matches\u001b[0m E:> build · kimi-k2.8-preview "
+  },
+  "chandelier": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: :\u001b[0m$ \u001b[0mls out/ | grep -i -E \"chand|candel|tavern\"; ls assets/ | grep -i -E \"chand|candel|tavern\" Exited with code 1 E:> build · kimi-k2.8-preview "
+  },
+  "crate": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: rate*\" \u001b[90m1 match\u001b[0m E:> build · kimi-k2.8-preview E:\u001b[0m→ \u001b[0mRead bench/trials/tavern-env/prompts/crate.prompt.md  E:> build · kimi-k2.8-preview "
+  },
+  "mug": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: iew E:\u001b[0m$ \u001b[0mls out/ | grep -i mug; echo \"---\"; ls assets/ | grep -i mug; echo \"---\"; ls out/mug 2>/dev/null --- --- E:> build · kimi-k2.8-preview "
+  },
+  "sack": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Reads clearly as a tied burlap sack in all four views; matte fabric avoids reserved walnut/honey-oak/iron palettes, no contract violations, grounded and centered. Weave grid is very regular and fine, risking shimmer at 128 px sprites; knot merges into the cinch band slightly."
+  },
+  "tankard": {
+    "score": 4,
+    "status": "fix",
+    "notes": "Silhouette reads as a tankard, but it drifts from the contract: the body is cool near-black steel, not the warm tavern palette, and iron #4a4f55 is reserved for accents. The lid top renders white (unpainted) in back view, a thin rod floats off the ajar lid, and jagged teeth ring the rim. Fix palette tone, paint/close the lid, and clean the rim band."
+  },
+  "plaster-wall-door": {
+    "score": 0,
+    "status": "drop",
+    "notes": "parse: /glm-5-3-flash/ws/out/plaster-wall-door/render.png ./bench/runs/tavern-env-r1/plaster-wall-window/glm-5-3-flash/ws/out/plaster-wall-window/render.png "
+  }
+}

@@ -65,7 +65,6 @@ function runReview({ asset, model, kind, tsPath, pngPath }) {
       "run",
       "--standalone",
       "--auto",
-      "--format", "json",
       "-m", model,
       "-f", pngPath,
       prompt,
@@ -82,29 +81,48 @@ function runReview({ asset, model, kind, tsPath, pngPath }) {
     const t = setTimeout(() => { try { child.kill("SIGKILL"); } catch {} }, TIMEOUT_S * 1000);
     child.on("close", () => {
       clearTimeout(t);
-      // Find the last text message in the JSONL-ish output.
-      let lastText = null;
-      for (const line of stdout.split("\n")) {
-        const t = line.trim();
-        if (!t.startsWith("{")) continue;
+      // --format default emits plain text; the model is told to return ONLY a JSON object.
+      // Be lenient: try whole-line JSON parse, then brace-balanced substring search for any
+      // object containing the required keys.
+      let verdict = { score: 0, status: "drop", notes: `parse error: stdout=${stdout.slice(-200).replace(/\n/g, "\\n")}` };
+      const findVerdict = (s) => {
+        // Try direct parse first.
         try {
-          const e = JSON.parse(t);
-          if (e.type === "text" && e.text) lastText = e.text;
+          const j = JSON.parse(s);
+          if (typeof j.score !== "undefined" && typeof j.status === "string") return j;
         } catch {}
-      }
-      let verdict = { score: 0, status: "drop", notes: `parse error: ${stderr.slice(0, 200)}` };
-      if (lastText) {
-        const m = lastText.match(/\{[\s\S]*\}/);
-        if (m) {
-          try {
-            const j = JSON.parse(m[0]);
-            verdict = {
-              score: Number(j.score) || 0,
-              status: ["pass", "fix", "drop"].includes(j.status) ? j.status : "drop",
-              notes: String(j.notes ?? "").slice(0, 400),
-            };
-          } catch {}
+        // Brace-balanced walk: find every '{' and try to match from there.
+        for (let i = 0; i < s.length; i++) {
+          if (s[i] !== "{") continue;
+          let depth = 0;
+          for (let j = i; j < s.length; j++) {
+            if (s[j] === "{") depth++;
+            else if (s[j] === "}") { depth--; if (depth === 0) {
+              try {
+                const o = JSON.parse(s.slice(i, j + 1));
+                if (typeof o.score !== "undefined" && typeof o.status === "string") return o;
+              } catch {}
+              break;
+            } }
+          }
         }
+        return null;
+      };
+      // Whole stdout first (handles single-line JSON).
+      let v = findVerdict(stdout);
+      if (!v) {
+        // Try each line (some models put JSON on its own line).
+        for (const ln of stdout.split("\n")) {
+          v = findVerdict(ln.trim());
+          if (v) break;
+        }
+      }
+      if (v) {
+        verdict = {
+          score: Number(v.score) || 0,
+          status: ["pass", "fix", "drop"].includes(v.status) ? v.status : "drop",
+          notes: String(v.notes ?? "").slice(0, 400),
+        };
       }
       resolve({ asset, kind, model, verdict });
     });
