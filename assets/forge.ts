@@ -22,9 +22,9 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Rig/animation: none (static prop).
  */
 
-const STONE_MID = rgb('#8a94a0');
-const STONE_DARK = rgb('#5b6670');
-const STONE_LIGHT = rgb('#a9b3bd');
+const STONE_MID = rgb('#7d8088');
+const STONE_DARK = rgb('#555a61');
+const STONE_LIGHT = rgb('#979aa1');
 const SEAM = rgb('#5b6670');
 const SOOT = rgb('#46413c');
 const IRON = '#4a4f55';
@@ -114,7 +114,7 @@ export default defineAsset({
       .subtract(sdf.union(chamber, mouth))
       .paintFn(stonePaint);
     k.body('stone', stone, {
-      color: '#8a94a0',
+      color: '#7d8088',
       roughness: 0.9,
       metalness: 0,
       detail: 0.009,
@@ -181,11 +181,11 @@ export default defineAsset({
       sdf.sphere(0.032).at(-0.14, 0.46, -0.08),
     );
     k.body('embers', embers, {
-      color: '#ff6a2a',
+      color: '#4a1405',
       roughness: 0.4,
       metalness: 0,
-      emissive: '#ff6a2a',
-      emissiveIntensity: 2.5,
+      emissive: '#ff4a0a',
+      emissiveIntensity: 1.8,
       detail: 0.006,
       maxTriangles: 400,
     });
@@ -212,11 +212,11 @@ export default defineAsset({
     );
     const flames = sdf.union(outerFlame, mainFlame);
     k.body('flames', flames, {
-      color: '#ff9a3c',
+      color: '#5a1e06',
       roughness: 0.3,
       metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 2.2,
+      emissive: '#ff6a12',
+      emissiveIntensity: 1.8,
       detail: 0.008,
       maxTriangles: 800,
     });
@@ -231,11 +231,11 @@ export default defineAsset({
     );
     const glowBase = sdf.ellipsoid([0.1, 0.04, 0.08]).at(0, 0.45, 0.19);
     k.body('flame-core', sdf.union(core, glowBase), {
-      color: '#ffd66b',
+      color: '#6a4a10',
       roughness: 0.3,
       metalness: 0,
-      emissive: '#ffd66b',
-      emissiveIntensity: 2.2,
+      emissive: '#ffb030',
+      emissiveIntensity: 1.8,
       detail: 0.007,
       maxTriangles: 400,
     });
