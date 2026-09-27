@@ -266,3 +266,53 @@
   display: block;
   touch-action: none;
 }
+
+/* The status bar at the top of a game: the place, a meter, and round buttons. */
+.apk3d-hud .status {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top));
+  left: 10px;
+  right: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  pointer-events: none;
+}
+.apk3d-hud .place {
+  flex: 1;
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: rgba(18, 26, 44, 0.75);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+}
+.apk3d-hud .place small {
+  display: block;
+  color: var(--gold);
+  font-size: 12px;
+}
+.apk3d-hud .meter {
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: rgba(18, 26, 44, 0.75);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+.apk3d-hud .meter b {
+  display: block;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+.apk3d-hud .book {
+  pointer-events: auto;
+  border: 0;
+  border-radius: 14px;
+  padding: 8px 10px;
+  background: var(--gold);
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 3px 0 #b8841a;
+}

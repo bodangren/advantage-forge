@@ -4,6 +4,7 @@ export { createRng, hashString, type Rng } from './rng.js';
 export {
   parseStoryPack,
   parseStoryIndex,
+  toStoryPack,
   storyPackSchema,
   storyIndexSchema,
   CEFR_LEVELS,

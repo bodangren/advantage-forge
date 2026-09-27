@@ -9,6 +9,7 @@ import type {
   APKSessionMode,
   Cartridge3DManifest,
   Catalog,
+  GameBriefing,
   GameInput,
   GameResults,
   GameTerminalOutcome,
@@ -32,6 +33,25 @@ export interface StandaloneComposition {
 
 export type Composition3D = SupportedResponsiveComposition | StandaloneComposition;
 
+/**
+ * Host controls a game may call from its own HUD. In the APK the host page draws its own mute
+ * and story controls (and `APKHostAdapter.navigate` opens the story), so a game hides a button
+ * when the service is absent.
+ */
+export interface HostServices {
+  /** Opens the story over the game at a paragraph (look back); the host pauses the game meanwhile. */
+  openStory?(paragraph?: number): void;
+  /** Toggles the page sound; returns true when it is now muted. */
+  toggleMute?(): boolean;
+}
+
+/** Choices the student made before the game (the APK maps Helper mode to difficulty 'easy'). */
+export interface SessionOptions {
+  helper: boolean;
+  /** Hero id to the color preset the student unlocked (cosmetic; the APK reads it from the profile). */
+  looks: Readonly<Record<string, string>>;
+}
+
 /** What a 3D game receives from the factory. */
 export interface Game3DContext {
   stage: Stage3D;
@@ -44,6 +64,8 @@ export interface Game3DContext {
   seed: number;
   sessionMode: APKSessionMode;
   composition: Composition3D;
+  options: SessionOptions;
+  host: HostServices;
   /** Once per mount; later calls become a `warning` diagnostic (the APK completion latch). */
   complete(result: GameResults, outcome: GameTerminalOutcome, evidence: StoryGameEvidence): void;
   diagnostic(event: APKDiagnosticInput): void;
@@ -68,6 +90,8 @@ export interface ThreeCartridge {
   manifest: Cartridge3DManifest;
   /** The game's English catalog (merged by the host). */
   strings: Catalog;
+  /** The start screen, from the game's catalog scope (the APK briefing contract). */
+  briefing(i18n: ScopedI18n, input: GameInput | StoryInput): GameBriefing;
   createGame(context: Game3DContext): Promise<Game3DInstance>;
 }
 
@@ -118,6 +142,8 @@ export interface ThreeFactoryContext {
   composition: Composition3D;
   i18n: ScopedI18n;
   audio: AudioBus;
+  options: SessionOptions;
+  host: HostServices;
   complete(result: GameResults, outcome: GameTerminalOutcome, evidence: StoryGameEvidence): void;
   diagnostic(event: APKDiagnosticInput): void;
 }

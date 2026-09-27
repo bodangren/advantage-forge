@@ -1,9 +1,34 @@
 /**
- * Story pack validation. The importer (scripts/demo-import.ts) runs every pack through
- * `parseStoryPack` before it writes the file, and the frontend can run it again on load.
+ * Story pack validation. The story files on disk are `StoryInput` packs written by
+ * scripts/apk3d-import.ts; `toStoryPack` converts one into the `StoryPack` shape this core still
+ * reads (until the core moves to src/games/monster-encounters, task 11 of docs/apk3d-cartridge.md).
  */
 import { z } from 'zod';
+import type { StoryInput } from '../../apk3d/contracts/story-input.js';
 import type { CefrLevel, StoryPack } from './types.js';
+
+/** The old `StoryPack` shape from a `StoryInput` (`term -> word`, `translation -> th`, `text -> answer`). */
+export function toStoryPack(story: StoryInput): StoryPack {
+  const { translationsGenerated, ...source } = story.source;
+  return parseStoryPack(
+    {
+      id: story.id,
+      title: story.title,
+      series: story.series,
+      lesson: story.lesson,
+      level: story.level,
+      genre: story.genre,
+      paragraphs: story.paragraphs.map(({ text, translation }) => (translation ? { text, th: translation } : { text })),
+      images: story.images,
+      vocabulary: story.vocabulary.map(({ term, translation, ...rest }) => ({ ...rest, word: term, th: translation })),
+      questions: story.questions,
+      sentences: story.sentences.map(({ text, translation: _translation, ...rest }) => ({ ...rest, answer: text })),
+      fills: story.fills,
+      source: { ...source, ...(translationsGenerated ? { thaiGlossesGenerated: true } : {}) },
+    },
+    `${story.id} story pack`,
+  );
+}
 
 export const CEFR_LEVELS = [
   'Pre-A1',

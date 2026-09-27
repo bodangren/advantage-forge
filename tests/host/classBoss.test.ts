@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BOSS_HP, BOSS_NAME, CLASS_SIZE, simulateClassBoss } from '../../src/demo/core/classBoss.js';
+import { BOSS_HP, BOSS_NAME, CLASS_SIZE, simulateClassBoss } from '../../src/host/classBoss.js';
 
 describe('simulateClassBoss', () => {
   it('reports a class of 30 with 60% to 80% played and 5 to 25 damage each', () => {

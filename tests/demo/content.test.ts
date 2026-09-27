@@ -2,20 +2,49 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parseStoryIndex, parseStoryPack } from '../../src/demo/core/content.js';
-import { STORIES_DIR, STORY_IDS, loadPack, makePack } from './helpers.js';
+import { GENERATED_IDS, STORIES_DIR, STORY_IDS, loadPack, makePack } from './helpers.js';
 
 describe('imported story packs', () => {
   it.each(STORY_IDS)('%s parses and has content for every encounter', (id) => {
     const pack = loadPack(id);
+    const generated = GENERATED_IDS.includes(id);
     expect(pack.id).toBe(id);
     expect(pack.paragraphs.length).toBe(3);
     expect(pack.vocabulary.length).toBeGreaterThanOrEqual(5);
     expect(pack.questions.length).toBe(4);
-    expect(pack.sentences.length).toBe(2);
+    expect(pack.sentences.length).toBeGreaterThanOrEqual(6);
+    expect(pack.sentences.length).toBeLessThanOrEqual(12);
     expect(pack.fills.length).toBe(4);
+    expect(pack.images.length).toBe(generated ? 0 : 3);
+    expect(pack.source.thaiGlossesGenerated).toBe(generated ? true : undefined);
     for (const w of pack.vocabulary) expect(w.th.length).toBeGreaterThan(0);
     for (const f of pack.fills) expect(f.sentence).not.toMatch(/<|_{4,}/);
     for (const img of pack.images) expect(existsSync(join(STORIES_DIR, id, img))).toBe(true);
+    for (const s of pack.sentences) {
+      expect(s.words.join(' ')).toBe(s.answer);
+      expect(s.words.length).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it('takes extra sentences from the paragraphs after the workbook sentences', () => {
+    const pip = loadPack('pip-is-brave');
+    expect(pip.sentences.slice(0, 2).map((s) => s.answer)).toEqual(['This is Pip.', 'Mom is here.']);
+    const extra = pip.sentences.slice(2);
+    expect(extra.length).toBe(10);
+    const texts = pip.sentences.map((s) => s.answer.toLowerCase());
+    expect(new Set(texts).size).toBe(texts.length);
+    for (const s of extra) {
+      expect(s.words.length).toBeGreaterThanOrEqual(3);
+      expect(s.words.length).toBeLessThanOrEqual(8);
+      expect(s.answer).not.toMatch(/["“”‘()]/);
+      expect(pip.paragraphs[s.paragraph!]!.text).toContain(s.answer);
+    }
+    // Sentences come from the whole story, not only the first paragraph.
+    expect(new Set(extra.map((s) => s.paragraph)).size).toBe(3);
+    // A quoted line is skipped; "Mia's" (an apostrophe) is not a quotation mark.
+    const student = loadPack('the-new-student');
+    expect(student.sentences.map((s) => s.answer)).not.toContain("'Mia, you can sit next to me!'");
+    expect(student.sentences.map((s) => s.answer)).toContain('Her name is Mia.');
   });
 
   it('normalizes the workbook data', () => {
@@ -47,7 +76,7 @@ describe('imported story packs', () => {
     expect(car.images).toEqual(['img-1.webp', 'img-2.webp', 'img-3.webp']);
   });
 
-  it('index.json lists the three stories', () => {
+  it('index.json lists the eight stories with a cover where the story has images', () => {
     const index = parseStoryIndex(JSON.parse(readFileSync(join(STORIES_DIR, 'index.json'), 'utf8')));
     expect(index.map((e) => e.id)).toEqual(STORY_IDS);
     expect(index[0]).toMatchObject({
@@ -58,6 +87,19 @@ describe('imported story packs', () => {
       cover: 'img-1.webp',
     });
     expect(index[2]!.cover).toBe('img-1.webp');
+    expect(index[6]).toMatchObject({ title: 'The New Student', level: 'A1', series: 'Adventures 1.0', lesson: 1 });
+    expect(index[6]!.cover).toBeUndefined();
+  });
+
+  it('the A1 stories carry generated Thai glosses for every word', () => {
+    for (const id of GENERATED_IDS) {
+      const pack = loadPack(id);
+      expect(pack.level).toBe('A1');
+      expect(pack.source.thaiGlossesGenerated).toBe(true);
+      expect(pack.vocabulary.length).toBe(5);
+      for (const w of pack.vocabulary) expect(w.th).toMatch(/^[\u0E00-\u0E7F\s]+$/);
+      for (const p of pack.paragraphs) expect(p.th).toBeUndefined();
+    }
   });
 });
 

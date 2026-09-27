@@ -1,4 +1,5 @@
 {
+  "schemaVersion": 1,
   "id": "pip-and-the-red-car",
   "title": "Pip and the Red Car",
   "series": "Origins 3.1",
@@ -8,15 +9,15 @@
   "paragraphs": [
     {
       "text": "This is Pip. Pip is a puppy. Ben is a boy. Ben is Pip's friend. Ben has a toy car. The toy car is red. This red toy car is broken. Ben is very sad. Pip is sad too. My red car is broken. My good toy car is broken.",
-      "th": "นี่คือปิ๊ป ปิ๊ปเป็นลูกหมา เบ็นเป็นเด็กผู้ชาย เบ็นเป็นเพื่อนของปิ๊ป เบ็นมีรถของเล่น รถของเล่นคันนั้นสีแดง รถของเล่นสีแดงคันนี้เสีย เบ็นเสียใจมาก ปิ๊ปก็เสียใจเหมือนกัน รถสีแดงของฉันเสีย รถของเล่นที่ดีของฉันเสีย"
+      "translation": "นี่คือปิ๊ป ปิ๊ปเป็นลูกหมา เบ็นเป็นเด็กผู้ชาย เบ็นเป็นเพื่อนของปิ๊ป เบ็นมีรถของเล่น รถของเล่นคันนั้นสีแดง รถของเล่นสีแดงคันนี้เสีย เบ็นเสียใจมาก ปิ๊ปก็เสียใจเหมือนกัน รถสีแดงของฉันเสีย รถของเล่นที่ดีของฉันเสีย"
     },
     {
       "text": "Ben says, \"We fix car?\" Pip says, \"Yes. We fix car.\" Ben looks for a piece. Pip looks for a piece. Ben puts a small piece on. Pip helps Ben. Pip puts a small piece on. They work together. This is teamwork. Teamwork is good. They fix the red car.",
-      "th": "เบ็นพูดว่า \"เราซ่อมรถกันไหม\" ปิ๊ปพูดว่า \"ใช่ เราซ่อมรถกัน\" เบ็นมองหาชิ้นส่วน ปิ๊ปมองหาชิ้นส่วน เบ็นใส่วัสดุชิ้นเล็กๆ เข้าไป ปิ๊ปช่วยเบ็น ปิ๊ปใส่วัสดุชิ้นเล็กๆ เข้าไป พวกเขาทำงานร่วมกัน นี่คือการทำงานเป็นทีม การทำงานเป็นทีมเป็นสิ่งที่ดี พวกเขาซ่อมรถสีแดง"
+      "translation": "เบ็นพูดว่า \"เราซ่อมรถกันไหม\" ปิ๊ปพูดว่า \"ใช่ เราซ่อมรถกัน\" เบ็นมองหาชิ้นส่วน ปิ๊ปมองหาชิ้นส่วน เบ็นใส่วัสดุชิ้นเล็กๆ เข้าไป ปิ๊ปช่วยเบ็น ปิ๊ปใส่วัสดุชิ้นเล็กๆ เข้าไป พวกเขาทำงานร่วมกัน นี่คือการทำงานเป็นทีม การทำงานเป็นทีมเป็นสิ่งที่ดี พวกเขาซ่อมรถสีแดง"
     },
     {
       "text": "The red car is good. The red toy car is good now. Ben is happy. Pip is happy. They play with the red car. Ben and Pip play. This is fun. My friend is good. This good teamwork is fun. Teamwork is very good.",
-      "th": "รถสีแดงคันนั้นดีแล้ว รถของเล่นสีแดงคันนั้นดีแล้วตอนนี้ เบ็นมีความสุข ปิ๊ปมีความสุข พวกเขาเล่นกับรถสีแดง เบ็นและปิ๊ปเล่นกัน นี่คือความสนุก เพื่อนของฉันดี การทำงานเป็นทีมที่ดีนี้สนุก"
+      "translation": "รถสีแดงคันนั้นดีแล้ว รถของเล่นสีแดงคันนั้นดีแล้วตอนนี้ เบ็นมีความสุข ปิ๊ปมีความสุข พวกเขาเล่นกับรถสีแดง เบ็นและปิ๊ปเล่นกัน นี่คือความสนุก เพื่อนของฉันดี การทำงานเป็นทีมที่ดีนี้สนุก"
     }
   ],
   "images": [
@@ -27,75 +28,241 @@
   "vocabulary": [
     {
       "id": "w-puppy",
-      "word": "puppy",
-      "th": "ลูกสุนัข",
+      "term": "puppy",
+      "translation": "ลูกสุนัข",
       "definition": "A young dog."
     },
     {
       "id": "w-broken",
-      "word": "broken",
-      "th": "พัง",
+      "term": "broken",
+      "translation": "พัง",
       "definition": "Damaged or not working."
     },
     {
       "id": "w-fix",
-      "word": "fix",
-      "th": "ซ่อม",
+      "term": "fix",
+      "translation": "ซ่อม",
       "definition": "To repair or mend something."
     },
     {
       "id": "w-look-for",
-      "word": "Look for",
-      "th": "มองหา",
+      "term": "Look for",
+      "translation": "มองหา",
       "definition": "To search for something."
     },
     {
       "id": "w-piece",
-      "word": "piece",
-      "th": "ชิ้น",
+      "term": "piece",
+      "translation": "ชิ้น",
       "definition": "A part of something."
     },
     {
       "id": "w-together",
-      "word": "together",
-      "th": "ด้วยกัน",
+      "term": "together",
+      "translation": "ด้วยกัน",
       "definition": "With each other."
     },
     {
       "id": "w-teamwork",
-      "word": "Teamwork",
-      "th": "การทำงานเป็นทีม",
+      "term": "Teamwork",
+      "translation": "การทำงานเป็นทีม",
       "definition": "Working together as a group."
     },
     {
       "id": "w-fun",
-      "word": "fun",
-      "th": "สนุก",
+      "term": "fun",
+      "translation": "สนุก",
       "definition": "Enjoyment or pleasure."
     },
     {
       "id": "w-happy",
-      "word": "happy",
-      "th": "มีความสุข",
+      "term": "happy",
+      "translation": "มีความสุข",
       "definition": "Feeling or showing pleasure."
     },
     {
       "id": "w-sad",
-      "word": "sad",
-      "th": "เศร้า",
+      "term": "sad",
+      "translation": "เศร้า",
       "definition": "Feeling or showing sorrow."
     },
     {
       "id": "w-friend",
-      "word": "friend",
-      "th": "เพื่อน",
+      "term": "friend",
+      "translation": "เพื่อน",
       "definition": "A person you like and know well."
     },
     {
       "id": "w-small",
-      "word": "small",
-      "th": "เล็ก",
+      "term": "small",
+      "translation": "เล็ก",
       "definition": "Not large in size."
+    }
+  ],
+  "sentences": [
+    {
+      "id": "s-1",
+      "text": "This is Pip.",
+      "words": [
+        "This",
+        "is",
+        "Pip."
+      ],
+      "paragraph": 0
+    },
+    {
+      "id": "s-2",
+      "text": "Ben says, \"We fix car.",
+      "words": [
+        "Ben",
+        "says,",
+        "\"We",
+        "fix",
+        "car."
+      ],
+      "paragraph": 1
+    },
+    {
+      "id": "s-3",
+      "text": "Pip is a puppy.",
+      "words": [
+        "Pip",
+        "is",
+        "a",
+        "puppy."
+      ],
+      "paragraph": 0
+    },
+    {
+      "id": "s-4",
+      "text": "Ben is a boy.",
+      "words": [
+        "Ben",
+        "is",
+        "a",
+        "boy."
+      ],
+      "paragraph": 0
+    },
+    {
+      "id": "s-5",
+      "text": "Ben is Pip's friend.",
+      "words": [
+        "Ben",
+        "is",
+        "Pip's",
+        "friend."
+      ],
+      "paragraph": 0
+    },
+    {
+      "id": "s-6",
+      "text": "Ben has a toy car.",
+      "words": [
+        "Ben",
+        "has",
+        "a",
+        "toy",
+        "car."
+      ],
+      "paragraph": 0
+    },
+    {
+      "id": "s-7",
+      "text": "We fix car.",
+      "words": [
+        "We",
+        "fix",
+        "car."
+      ],
+      "paragraph": 1
+    },
+    {
+      "id": "s-8",
+      "text": "Pip looks for a piece.",
+      "words": [
+        "Pip",
+        "looks",
+        "for",
+        "a",
+        "piece."
+      ],
+      "paragraph": 1
+    },
+    {
+      "id": "s-9",
+      "text": "Ben puts a small piece on.",
+      "words": [
+        "Ben",
+        "puts",
+        "a",
+        "small",
+        "piece",
+        "on."
+      ],
+      "paragraph": 1
+    },
+    {
+      "id": "s-10",
+      "text": "The red car is good.",
+      "words": [
+        "The",
+        "red",
+        "car",
+        "is",
+        "good."
+      ],
+      "paragraph": 2
+    },
+    {
+      "id": "s-11",
+      "text": "The red toy car is good now.",
+      "words": [
+        "The",
+        "red",
+        "toy",
+        "car",
+        "is",
+        "good",
+        "now."
+      ],
+      "paragraph": 2
+    },
+    {
+      "id": "s-12",
+      "text": "Ben is happy.",
+      "words": [
+        "Ben",
+        "is",
+        "happy."
+      ],
+      "paragraph": 2
+    }
+  ],
+  "fills": [
+    {
+      "id": "f-1",
+      "sentence": "Pip is a ___.",
+      "answer": "puppy",
+      "paragraph": 0
+    },
+    {
+      "id": "f-2",
+      "sentence": "This red toy car is ___.",
+      "answer": "broken",
+      "paragraph": 0
+    },
+    {
+      "id": "f-3",
+      "sentence": "Ben says, \"We ___ car.",
+      "answer": "fix",
+      "paragraph": 1
+    },
+    {
+      "id": "f-4",
+      "sentence": "A Look for is ___.",
+      "answer": "Look for",
+      "paragraph": 1
     }
   ],
   "questions": [
@@ -145,56 +312,6 @@
       ],
       "answer": 1,
       "paragraph": 0
-    }
-  ],
-  "sentences": [
-    {
-      "id": "s-1",
-      "answer": "This is Pip.",
-      "words": [
-        "This",
-        "is",
-        "Pip."
-      ],
-      "paragraph": 0
-    },
-    {
-      "id": "s-2",
-      "answer": "Ben says, \"We fix car.",
-      "words": [
-        "Ben",
-        "says,",
-        "\"We",
-        "fix",
-        "car."
-      ],
-      "paragraph": 1
-    }
-  ],
-  "fills": [
-    {
-      "id": "f-1",
-      "sentence": "Pip is a ___.",
-      "answer": "puppy",
-      "paragraph": 0
-    },
-    {
-      "id": "f-2",
-      "sentence": "This red toy car is ___.",
-      "answer": "broken",
-      "paragraph": 0
-    },
-    {
-      "id": "f-3",
-      "sentence": "Ben says, \"We ___ car.",
-      "answer": "fix",
-      "paragraph": 1
-    },
-    {
-      "id": "f-4",
-      "sentence": "A Look for is ___.",
-      "answer": "Look for",
-      "paragraph": 1
     }
   ],
   "source": {

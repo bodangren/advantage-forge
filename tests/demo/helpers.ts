@@ -1,14 +1,28 @@
 /** Shared test helpers: a synthetic story pack, an answer oracle, and event filters. */
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { parseStoryPack } from '../../src/demo/core/content.js';
+import { parseStoryInput } from '../../src/apk3d/contracts/story-input.js';
+import { parseStoryPack, toStoryPack } from '../../src/demo/core/content.js';
 import type { Challenge, GameEvent, Quest, Response, StoryPack } from '../../src/demo/core/types.js';
 
 export const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
-export const STORY_IDS = ['pip-is-brave', 'squeaky-the-small-mouse', 'pip-and-the-red-car'];
+/** Every story of the demo, in selector order (scripts/apk3d-import.ts STORIES). */
+export const STORY_IDS = [
+  'pip-is-brave',
+  'squeaky-the-small-mouse',
+  'pip-and-the-red-car',
+  'fun-day-at-the-beach',
+  'pips-happy-night',
+  'pip-sees-colors',
+  'the-new-student',
+  'the-school-garden',
+];
+/** The A1 stories: no images, generated Thai glosses. */
+export const GENERATED_IDS = ['the-new-student', 'the-school-garden'];
 
+/** The StoryInput file on disk, converted to the shape the demo core reads. */
 export function loadPack(id: string): StoryPack {
-  return parseStoryPack(JSON.parse(readFileSync(join(STORIES_DIR, id, 'story.json'), 'utf8')), id);
+  return toStoryPack(parseStoryInput(JSON.parse(readFileSync(join(STORIES_DIR, id, 'story.json'), 'utf8')), id));
 }
 
 /** A small valid pack; override any field. */

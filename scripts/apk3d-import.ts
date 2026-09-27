@@ -1,50 +1,77 @@
 /**
- * Workbook JSON to story packs for the Monster Encounters demo.
+ * Workbook JSON to StoryInput packs (section 5 of docs/apk3d-cartridge.md).
  *
- *   node --import tsx scripts/demo-import.ts [--force]
+ *   node --import tsx scripts/apk3d-import.ts [--force] [--only <id>]
  *
  * Reads the chosen Primary workbook files (../Workbooks/primary/**, or $DEMO_WORKBOOKS), writes
- * demo/public/stories/<id>/story.json (validated with the zod schema in src/demo/core/content.ts),
- * converts the article images to WebP (img-1.webp, ...), and writes demo/public/stories/index.json.
- * Re-runnable: images already on disk are kept unless --force is given.
+ * demo/public/stories/<id>/story.json (validated with `storyInputSchema`), converts the article
+ * images to WebP (img-1.webp, ...), and writes demo/public/stories/index.json as `storyIndexSchema`
+ * rows. Re-runnable: images already on disk are kept unless --force is given.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import sharp from 'sharp';
-import { parseStoryPack, type StoryIndexEntry } from '../src/demo/core/content.js';
-import type {
-  CefrLevel,
-  StoryFill,
-  StoryPack,
-  StoryParagraph,
-  StoryQuestion,
-  StorySentence,
-  StoryWord,
-} from '../src/demo/core/types.js';
+import {
+  normalizeCefrLevel,
+  parseStoryInput,
+  toStoryIndexEntry,
+  type StoryFill,
+  type StoryIndexEntry,
+  type StoryInput,
+  type StoryParagraph,
+  type StoryQuestion,
+  type StorySentence,
+  type StoryVocabulary,
+} from '../src/apk3d/contracts/story-input.js';
 
 const ROOT = process.cwd();
 const WORKBOOKS = process.env.DEMO_WORKBOOKS ?? resolve(ROOT, '..', 'Workbooks', 'primary');
 const OUT = join(ROOT, 'demo', 'public', 'stories');
 const FORCE = process.argv.includes('--force');
+const ONLY = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : undefined;
 const IMAGE_WIDTH = 1024;
 const IMAGE_QUALITY = 80;
 
-/** The stories of the demo: id and workbook file (relative to WORKBOOKS). */
-const STORIES: { id: string; file: string }[] = [
+/** The stories of the demo: id and workbook file (relative to WORKBOOKS), in selector order. */
+export const STORIES: { id: string; file: string }[] = [
+  // A0, Origins: images, Thai glosses, and translated paragraphs from the workbook generator.
   { id: 'pip-is-brave', file: 'origins-2-a0/12-Pip is Brave _workbook.json' },
   { id: 'squeaky-the-small-mouse', file: 'origins-3.1-a0/14-Squeaky, the Small Mouse _workbook.json' },
   { id: 'pip-and-the-red-car', file: 'origins-3.1-a0/07-Pip and the Red Car _workbook.json' },
+  { id: 'fun-day-at-the-beach', file: 'origins-2-a0/04-Fun Day at the Beach _workbook.json' },
+  { id: 'pips-happy-night', file: "origins-3.1-a0/02-Pip's Happy Night _workbook.json" },
+  { id: 'pip-sees-colors', file: 'origins-3.1-a0/04-Pip Sees Colors _workbook.json' },
+  // A1, Adventures: no images and no Thai in the workbook; glosses from THAI_GLOSSES (demo only).
+  { id: 'the-new-student', file: 'adventures-1.0-a1/01-The_New_Student_workbook.json' },
+  { id: 'the-school-garden', file: 'adventures-1.0-a1/02-The_School_Garden_workbook.json' },
 ];
 
 /**
- * Thai meanings for stories whose workbook has none. Written by a model, not by the workbook
- * generator: a Thai speaker should review them. The pack's `source.thaiGlossesGenerated` is set.
+ * Thai meanings for stories whose workbook has none, keyed by story id and lowercase word. Written
+ * by a model, not by the workbook generator: a Thai speaker reviews them before the APK port
+ * (owner decision, section 13). A pack that uses them gets `source.translationsGenerated: true`
+ * and its index row `reviewed: false`.
  */
-const THAI_GLOSSES: Record<string, Record<string, string>> = {};
+export const THAI_GLOSSES: Record<string, Record<string, string>> = {
+  'the-new-student': {
+    nervous: 'ประหม่า',
+    classroom: 'ห้องเรียน',
+    friendly: 'เป็นมิตร',
+    introduce: 'แนะนำให้รู้จัก',
+    welcome: 'ต้อนรับ',
+  },
+  'the-school-garden': {
+    garden: 'สวน',
+    seed: 'เมล็ด',
+    soil: 'ดิน',
+    water: 'น้ำ',
+    harvest: 'เก็บเกี่ยว',
+  },
+};
 
 // ---------------------------------------------------------------- workbook shape (loose)
 
-interface Workbook {
+export interface Workbook {
   lesson_number?: string;
   lesson_title: string;
   cefr_level: string;
@@ -63,15 +90,6 @@ interface Workbook {
 }
 
 // ---------------------------------------------------------------- normalizing helpers
-
-/** "CEFR A0" -> "A0". */
-function parseLevel(raw: string): CefrLevel {
-  const level = raw.replace(/^CEFR\s*/i, '').trim();
-  const known: CefrLevel[] = ['Pre-A1', 'A0', 'A0+', 'A1', 'A1+', 'A2', 'B1'];
-  const found = known.find((k) => k.toLowerCase() === level.toLowerCase());
-  if (!found) throw new Error(`unknown CEFR level "${raw}"`);
-  return found;
-}
 
 /** "origins-3.1-a0" -> "Origins 3.1"; "adventures-1.0-a1" -> "Adventures 1.0". */
 function parseSeries(folder: string): string {
@@ -141,50 +159,11 @@ function storyCase(word: string, story: string): string {
   return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]![0];
 }
 
-const STOP_WORDS = new Set([
-  'a',
-  'an',
-  'the',
-  'is',
-  'are',
-  'was',
-  'were',
-  'to',
-  'of',
-  'in',
-  'on',
-  'at',
-  'and',
-  'or',
-  'it',
-  'this',
-  'that',
-  'what',
-  'where',
-  'how',
-  'who',
-  'do',
-  'does',
-  'did',
-  'has',
-  'have',
-  'they',
-  'we',
-  'you',
-  'he',
-  'she',
-  'her',
-  'his',
-  'our',
-  'their',
-  'with',
-  'for',
-  'very',
-  'not',
-  'there',
-  'here',
-  'be',
-]);
+const STOP_WORDS = new Set(
+  'a an the is are was were to of in on at and or it this that what where how who do does did has have they we you he she her his our their with for very not there here be'.split(
+    ' ',
+  ),
+);
 
 const contentWords = (text: string): string[] => [
   ...new Set(
@@ -221,9 +200,66 @@ const slug = (s: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
 
-// ---------------------------------------------------------------- building a pack
+const withParagraph = <T extends object>(base: T, paragraph: number | undefined) =>
+  paragraph === undefined ? base : { ...base, paragraph };
 
-function buildPack(id: string, file: string, wb: Workbook, imageCount: number): StoryPack {
+// ---------------------------------------------------------------- sentences from the paragraphs
+
+/** Sentence length window (words) for sentences taken from the paragraphs. */
+const EXTRACT_MIN_WORDS = 3;
+const EXTRACT_MAX_WORDS = 8;
+/** Cap on `story.sentences` (workbook sentences first). */
+const MAX_SENTENCES = 12;
+
+/** A quotation mark or bracket; an apostrophe between letters ("Mia's") is not one. */
+const QUOTE_OR_BRACKET = /["“”‘()[\]{}]|(?<!\p{L})[’']|[’'](?!\p{L})/u;
+
+/** The sentences of one paragraph: runs that end with . ! or ?, whitespace normalized. */
+export function splitSentences(paragraph: string): string[] {
+  return [...paragraph.matchAll(/[^.!?]+[.!?]+/g)].map((m) => m[0].trim().replace(/\s+/g, ' ')).filter(Boolean);
+}
+
+/**
+ * Sentence-order items taken from the paragraphs (Potion Rush needs 6 to 10 orders per shift;
+ * the workbook gives 2). Sentences of 3 to 8 words without quotation marks or brackets, unique
+ * (case-insensitive) against `existing` and each other, ids continuing after `existing`, with the
+ * paragraph index and no translation (the Thai paragraphs cannot be aligned by sentence).
+ */
+export function extractSentences(paragraphTexts: readonly string[], existing: readonly StorySentence[]): StorySentence[] {
+  const seen = new Set(existing.map((s) => s.text.toLowerCase()));
+  const candidates = paragraphTexts.map((text, paragraph) =>
+    splitSentences(text).flatMap((sentence, position) => {
+      const words = sentence.split(' ');
+      if (words.length < EXTRACT_MIN_WORDS || words.length > EXTRACT_MAX_WORDS) return [];
+      if (QUOTE_OR_BRACKET.test(sentence)) return [];
+      const key = sentence.toLowerCase();
+      if (seen.has(key)) return [];
+      seen.add(key);
+      return [{ paragraph, position, text: sentence, words }];
+    }),
+  );
+  // Round-robin over the paragraphs, so the cap keeps sentences from the whole story.
+  const picked: (typeof candidates)[number] = [];
+  const room = Math.max(0, MAX_SENTENCES - existing.length);
+  for (let i = 0; picked.length < room && candidates.some((c) => i < c.length); i++) {
+    for (const c of candidates) {
+      const next = c[i];
+      if (next && picked.length < room) picked.push(next);
+    }
+  }
+  picked.sort((a, b) => a.paragraph - b.paragraph || a.position - b.position);
+  return picked.map(({ paragraph, text, words }, i) => ({
+    id: `s-${existing.length + i + 1}`,
+    text,
+    words,
+    paragraph,
+  }));
+}
+
+// ---------------------------------------------------------------- building a story
+
+/** A validated StoryInput from one workbook; `imageCount` images are named img-N.webp. */
+export function buildStory(id: string, file: string, wb: Workbook, imageCount: number): StoryInput {
   const paragraphTexts = wb.article_paragraphs.map((p) => p.text.trim());
   const story = paragraphTexts.join('\n');
   const lessonFromFile = parseLessonFromFile(file);
@@ -234,32 +270,32 @@ function buildPack(id: string, file: string, wb: Workbook, imageCount: number): 
     );
   }
 
-  // Paragraphs and their Thai translations ("Paragraph N" labels, else by position).
+  // Paragraphs and their translations ("Paragraph N" labels, else by position).
   const translations = new Map<number, string>();
   (wb.translation_paragraphs ?? []).forEach((t, i) => {
     const n = Number(/(\d+)/.exec(t.label ?? '')?.[1] ?? i + 1);
     translations.set(n - 1, t.text.trim());
   });
   const paragraphs: StoryParagraph[] = paragraphTexts.map((text, i) => {
-    const th = translations.get(i);
-    return th ? { text, th } : { text };
+    const translation = translations.get(i);
+    return translation ? { text, translation } : { text };
   });
 
-  // Vocabulary: the word in its story case, with a Thai meaning from the workbook or the gloss table.
-  let thaiGlossesGenerated = false;
-  const vocabulary: StoryWord[] = wb.vocabulary.map((v) => {
-    const word = storyCase(v.word.trim(), story);
-    let th = v.thai_definition?.trim();
-    if (!th) {
-      th = THAI_GLOSSES[id]?.[v.word.trim().toLowerCase()];
-      if (!th) throw new Error(`${id}: no Thai meaning for "${v.word}" (add one to THAI_GLOSSES)`);
-      thaiGlossesGenerated = true;
+  // Vocabulary: the term in its story case, with a meaning from the workbook or the gloss table.
+  let translationsGenerated = false;
+  const vocabulary: StoryVocabulary[] = wb.vocabulary.map((v) => {
+    const term = storyCase(v.word.trim(), story);
+    let translation = v.thai_definition?.trim();
+    if (!translation) {
+      translation = THAI_GLOSSES[id]?.[v.word.trim().toLowerCase()];
+      if (!translation) throw new Error(`${id}: no Thai meaning for "${v.word}" (add one to THAI_GLOSSES)`);
+      translationsGenerated = true;
     }
     const phonetic = v.phonetic?.trim();
     return {
-      id: `w-${slug(word)}`,
-      word,
-      th,
+      id: `w-${slug(term)}`,
+      term,
+      translation,
       definition: v.definition.trim(),
       ...(phonetic ? { phonetic } : {}),
     };
@@ -281,26 +317,16 @@ function buildPack(id: string, file: string, wb: Workbook, imageCount: number): 
       );
     }
     const paragraph = findParagraph(`${q.question} ${options[answer]}`, paragraphTexts);
-    return {
-      id: `q-${n}`,
-      question: q.question.trim(),
-      options,
-      answer,
-      ...(paragraph !== undefined ? { paragraph } : {}),
-    };
+    return withParagraph({ id: `q-${n}`, question: q.question.trim(), options, answer }, paragraph);
   });
 
   // Sentences: tokens split at spaces, punctuation attached.
-  const sentences: StorySentence[] = (wb.sentence_order_answers ?? []).map((s, i) => {
-    const answer = s.sentence.trim().replace(/\s+/g, ' ');
-    const paragraph = findParagraph(answer, paragraphTexts);
-    return {
-      id: `s-${s.number ?? i + 1}`,
-      answer,
-      words: answer.split(' '),
-      ...(paragraph !== undefined ? { paragraph } : {}),
-    };
+  const workbookSentences: StorySentence[] = (wb.sentence_order_answers ?? []).map((s, i) => {
+    const text = s.sentence.trim().replace(/\s+/g, ' ');
+    const paragraph = findParagraph(text, paragraphTexts);
+    return withParagraph({ id: `s-${s.number ?? i + 1}`, text, words: text.split(' ') }, paragraph);
   });
+  const sentences = [...workbookSentences, ...extractSentences(paragraphTexts, workbookSentences)];
 
   // Fills: HTML stripped, answers from the answer string in either format, in story case.
   const fillAnswers = wb.vocab_fill_answer_string
@@ -313,29 +339,33 @@ function buildPack(id: string, file: string, wb: Workbook, imageCount: number): 
     const sentence = cleanFill(f.sentence);
     const answer = storyCase(raw, story);
     const paragraph = findParagraph(sentence.replace('___', answer), paragraphTexts);
-    return { id: `f-${n}`, sentence, answer, ...(paragraph !== undefined ? { paragraph } : {}) };
+    return withParagraph({ id: `f-${n}`, sentence, answer }, paragraph);
   });
 
   const url = wb.article_url?.trim();
-  return {
-    id,
-    title: wb.lesson_title.trim(),
-    series: parseSeries(file.split('/')[0]!),
-    lesson: lessonFromFile,
-    level: parseLevel(wb.cefr_level),
-    genre: (wb.genre ?? wb.article_type ?? 'Story').trim(),
-    paragraphs,
-    images: Array.from({ length: imageCount }, (_, i) => `img-${i + 1}.webp`),
-    vocabulary,
-    questions,
-    sentences,
-    fills,
-    source: {
-      file: `primary/${file}`,
-      ...(url ? { url } : {}),
-      ...(thaiGlossesGenerated ? { thaiGlossesGenerated } : {}),
+  return parseStoryInput(
+    {
+      schemaVersion: 1,
+      id,
+      title: wb.lesson_title.trim(),
+      series: parseSeries(file.split('/')[0]!),
+      lesson: lessonFromFile,
+      level: normalizeCefrLevel(wb.cefr_level),
+      genre: (wb.genre ?? wb.article_type ?? 'Story').trim(),
+      paragraphs,
+      images: Array.from({ length: imageCount }, (_, i) => `img-${i + 1}.webp`),
+      vocabulary,
+      sentences,
+      fills,
+      questions,
+      source: {
+        file: `primary/${file}`,
+        ...(url ? { url } : {}),
+        ...(translationsGenerated ? { translationsGenerated } : {}),
+      },
     },
-  };
+    `${id} story`,
+  );
 }
 
 // ---------------------------------------------------------------- images
@@ -359,39 +389,40 @@ async function main(): Promise<void> {
   const index: StoryIndexEntry[] = [];
   for (const { id, file } of STORIES) {
     const path = join(WORKBOOKS, file);
-    console.log(`${id} <- ${path}`);
     const wb = JSON.parse(readFileSync(path, 'utf8')) as Workbook;
     const dir = join(OUT, id);
-    mkdirSync(dir, { recursive: true });
-
     const urls = [...new Set(wb.article_image_url ?? [])];
+    if (ONLY && ONLY !== id) {
+      // Not chosen: keep its current pack in the index.
+      index.push(toStoryIndexEntry(parseStoryInput(JSON.parse(readFileSync(join(dir, 'story.json'), 'utf8')), id)));
+      continue;
+    }
+    console.log(`${id} <- ${path}`);
+    mkdirSync(dir, { recursive: true });
     for (const [i, url] of urls.entries()) {
       const target = join(dir, `img-${i + 1}.webp`);
       await importImage(url, target);
       console.log(`  ${basename(target)}`);
     }
-    if (urls.length === 0) console.warn(`  note: ${id}: the workbook has no article images`);
+    if (urls.length === 0) console.warn(`  note: ${id}: the workbook has no article images (plain cover)`);
 
-    const pack = parseStoryPack(buildPack(id, file, wb, urls.length), `${id} story pack`);
-    writeFileSync(join(dir, 'story.json'), JSON.stringify(pack, null, 2) + '\n');
+    const story = buildStory(id, file, wb, urls.length);
+    writeFileSync(join(dir, 'story.json'), JSON.stringify(story, null, 2) + '\n');
     console.log(
-      `  story.json: ${pack.paragraphs.length} paragraphs, ${pack.vocabulary.length} words, ${pack.questions.length} questions, ` +
-        `${pack.sentences.length} sentences, ${pack.fills.length} fills`,
+      `  story.json: ${story.level}, ${story.paragraphs.length} paragraphs, ${story.vocabulary.length} words, ` +
+        `${story.sentences.length} sentences, ${story.fills.length} fills, ${story.questions.length} questions` +
+        (story.source.translationsGenerated ? ' (generated translations, unreviewed)' : ''),
     );
-    index.push({
-      id,
-      title: pack.title,
-      level: pack.level,
-      series: pack.series,
-      lesson: pack.lesson,
-      ...(pack.images[0] ? { cover: pack.images[0] } : {}),
-    });
+    index.push(toStoryIndexEntry(story));
   }
   writeFileSync(join(OUT, 'index.json'), JSON.stringify(index, null, 2) + '\n');
   console.log(`index.json: ${index.length} stories`);
 }
 
-main().catch((err: unknown) => {
-  console.error(err instanceof Error ? err.message : err);
-  process.exit(1);
-});
+const isMain = process.argv[1] !== undefined && resolve(process.argv[1]) === resolve(import.meta.filename);
+if (isMain) {
+  main().catch((err: unknown) => {
+    console.error(err instanceof Error ? err.message : err);
+    process.exit(1);
+  });
+}

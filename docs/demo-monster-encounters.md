@@ -83,12 +83,22 @@ first). No ranking.
 ## Content
 
 Stories come from the Primary workbook generator (`../Workbooks/primary/**/NN-Title_workbook.json`)
-through `scripts/demo-import.ts`, which writes `demo/public/stories/<id>/story.json` and WebP
-images. Chosen stories:
+through `scripts/apk3d-import.ts`, which writes `demo/public/stories/<id>/story.json` as a
+`StoryInput` pack (section 5 of `docs/apk3d-cartridge.md`), WebP images, and
+`demo/public/stories/index.json`. The demo converts a pack with `toStoryPack` in
+`src/demo/core/content.ts`. Besides the two workbook sentences, the importer takes sentences of 3
+to 8 words from the paragraphs (up to 12 per story, no quotation marks, no duplicates). Chosen
+stories:
 
 - Origins 2, lesson 12: "Pip is Brave" (A0)
 - Origins 3.1, lesson 14: "Squeaky, the Small Mouse" (A0)
 - Origins 3.1, lesson 7: "Pip and the Red Car" (A0; teamwork, like the class boss)
+- Origins 2, lesson 4: "Fun Day at the Beach" (A0)
+- Origins 3.1, lesson 2: "Pip's Happy Night" (A0)
+- Origins 3.1, lesson 4: "Pip Sees Colors" (A0)
+- Adventures 1.0, lesson 1: "The New Student" (A1; no images, Thai glosses written by a model,
+  `reviewed: false`)
+- Adventures 1.0, lesson 2: "The School Garden" (A1; the same)
 
 ## Code
 
@@ -96,11 +106,13 @@ images. Chosen stories:
 | --- | --- | --- |
 | `src/demo/core/types.ts` | shared | The contract: story pack, challenges, events, quest API |
 | `src/demo/core/*.ts` | game core | Schema, seeded random, quest rules, class boss |
-| `scripts/demo-import.ts` | game core | Workbook JSON to story packs and WebP images |
+| `scripts/apk3d-import.ts` | game core | Workbook JSON to `StoryInput` packs and WebP images |
 | `tests/demo/*.test.ts` | game core | Rules and import tests |
-| `demo/index.html`, `demo/main.ts`, `src/demo/app/*` | frontend | Title, reader, three.js battle, overlay, results, class boss |
+| `src/games/monster-encounters/*` | frontend | The 3D cartridge: manifest, strings, start screen, battle stage, HUD, game loop |
+| `src/host/*`, `demo/index.html`, `demo/main.ts` | frontend | The standalone host: selector (level, story, game), reader, start screen, results, class boss |
+| `src/apk3d/*` | kit | The shared 3D kit (see `docs/apk3d-cartridge.md`) |
 | `scripts/demo-models.ts` | frontend | Web-weight models from `out/` into `demo/public/models/` |
-| `scripts/demo-shot.ts` | frontend | Plays the whole game headless and saves screenshots (portrait and landscape) |
+| `scripts/apk3d-shot.ts` | frontend | Plays the whole flow headless and saves screenshots (portrait and landscape) |
 | `scripts/demo-publish.ts` | frontend | Builds the site and pushes it to the `gh-pages` branch |
 | `vite.demo.config.ts` | frontend | Dev server and the static build (`dist-demo/`) |
 
@@ -111,11 +123,11 @@ three.js, time, or `Math.random`.
 ## Running it
 
 ```bash
-node --import tsx scripts/demo-import.ts                 # story packs from ../Workbooks/primary
+node --import tsx scripts/apk3d-import.ts                # story packs from ../Workbooks/primary
 node --import tsx scripts/demo-models.ts                 # web models from out/ (after forge builds)
 node_modules/.bin/vite --config vite.demo.config.ts      # dev server at http://127.0.0.1:5190
 node_modules/.bin/vitest run tests/demo                  # the game core's tests
-node --import tsx scripts/demo-shot.ts both 0 --dist     # play the built site, screenshots in out/demo-shots/
+node --import tsx scripts/apk3d-shot.ts both --dist     # play the built site, screenshots in out/apk3d-shots/
 node --import tsx scripts/demo-publish.ts                # publish to GitHub Pages
 ```
 

@@ -14,6 +14,7 @@ import {
   gameBriefingSchema,
   gameResultsSchema,
   isCompatible,
+  parseStoryInput,
   modelPackSchema,
   normalizeCefrLevel,
   parseStoryIndex,
@@ -46,9 +47,11 @@ const STORY_IDS = readdirSync(STORIES_DIR, { withFileTypes: true })
 
 const readJson = (path: string): unknown => JSON.parse(readFileSync(path, 'utf8'));
 
-/** The current pack files, converted by the migration adapter. */
-const loadStory = (id: string): StoryInput =>
-  fromStoryPack(readJson(join(STORIES_DIR, id, 'story.json')), id);
+/** The pack files on disk (StoryInput, written by scripts/apk3d-import.ts). */
+const loadStory = (id: string): StoryInput => parseStoryInput(readJson(join(STORIES_DIR, id, 'story.json')), id);
+
+/** The A1 stories: no images, generated Thai glosses, `reviewed: false`. */
+const GENERATED_IDS = ['the-new-student', 'the-school-garden'];
 
 const manifest = (over: Partial<Cartridge3DManifest> = {}): Cartridge3DManifest =>
   validateCartridge3DManifest({
@@ -96,17 +99,31 @@ const evidence = (items: StoryGameEvidenceItem[]): StoryGameEvidence =>
   });
 
 describe('story input', () => {
-  it('finds the three real story packs', () => {
-    expect(STORY_IDS.sort()).toEqual(['pip-and-the-red-car', 'pip-is-brave', 'squeaky-the-small-mouse']);
+  it('finds the eight real story packs', () => {
+    expect(STORY_IDS.sort()).toEqual([
+      'fun-day-at-the-beach',
+      'pip-and-the-red-car',
+      'pip-is-brave',
+      'pip-sees-colors',
+      'pips-happy-night',
+      'squeaky-the-small-mouse',
+      'the-new-student',
+      'the-school-garden',
+    ]);
   });
 
-  it.each(STORY_IDS)('accepts the real pack %s after the field renames', (id) => {
+  it.each(STORY_IDS)('accepts the real pack %s as written by the importer', (id) => {
     const story = loadStory(id);
+    const generated = GENERATED_IDS.includes(id);
     expect(storyInputSchema.safeParse(story).success).toBe(true);
     expect(story.schemaVersion).toBe(1);
     expect(story.id).toBe(id);
-    expect(story.level).toBe('A0');
+    expect(story.level).toBe(generated ? 'A1' : 'A0');
+    expect(story.source.translationsGenerated).toBe(generated ? true : undefined);
+    expect(story.images.length).toBe(generated ? 0 : 3);
     expect(story.vocabulary.length).toBeGreaterThan(0);
+    expect(story.sentences.length).toBeGreaterThanOrEqual(6);
+    expect(story.sentences.length).toBeLessThanOrEqual(12);
     for (const w of story.vocabulary) {
       expect(w.term.length).toBeGreaterThan(0);
       expect(w.translation.length).toBeGreaterThan(0);
@@ -142,14 +159,23 @@ describe('story input', () => {
     ).toBe(false);
   });
 
-  it('keeps the migration source flag as translationsGenerated', () => {
-    const raw = readJson(join(STORIES_DIR, 'pip-is-brave', 'story.json')) as Record<string, unknown>;
-    const source = raw.source as Record<string, unknown>;
-    const story = fromStoryPack({ ...raw, source: { ...source, thaiGlossesGenerated: true } });
-    expect(story.source.translationsGenerated).toBe(true);
-    expect(story.source).not.toHaveProperty('thaiGlossesGenerated');
-    expect(toStoryIndexEntry(story).reviewed).toBe(false);
-    expect(toStoryIndexEntry(loadStory('pip-is-brave')).reviewed).toBe(true);
+  it('fromStoryPack converts the old demo shape and keeps the source flag as translationsGenerated', () => {
+    const story = loadStory('pip-is-brave');
+    const old = {
+      ...story,
+      level: 'CEFR A0',
+      paragraphs: story.paragraphs.map(({ text, translation }) => ({ text, th: translation })),
+      vocabulary: story.vocabulary.map(({ term, translation, ...rest }) => ({ ...rest, word: term, th: translation })),
+      sentences: story.sentences.map(({ text, ...rest }) => ({ ...rest, answer: text })),
+      source: { file: story.source.file, thaiGlossesGenerated: true },
+    };
+    delete (old as { schemaVersion?: number }).schemaVersion;
+    const converted = fromStoryPack(old);
+    expect(converted.source.translationsGenerated).toBe(true);
+    expect(converted.source).not.toHaveProperty('thaiGlossesGenerated');
+    expect({ ...converted, source: story.source }).toEqual(story);
+    expect(toStoryIndexEntry(converted).reviewed).toBe(false);
+    expect(toStoryIndexEntry(story).reviewed).toBe(true);
   });
 });
 
@@ -177,12 +203,23 @@ describe('story index', () => {
     expect(parseStoryIndex(entries)).toEqual(entries);
     for (const e of entries) {
       expect(storyIndexEntrySchema.safeParse(e).success).toBe(true);
-      expect(e.level).toBe('A0');
-      expect(e.cover).toBe('img-1.webp');
-      expect(e.reviewed).toBe(true);
+      if (GENERATED_IDS.includes(e.id)) {
+        expect(e.level).toBe('A1');
+        expect(e.cover).toBeUndefined();
+        expect(e.reviewed).toBe(false);
+      } else {
+        expect(e.level).toBe('A0');
+        expect(e.cover).toBe('img-1.webp');
+        expect(e.reviewed).toBe(true);
+      }
     }
-    const current = readJson(join(STORIES_DIR, 'index.json')) as { id: string; cover?: string }[];
-    expect(current.map((e) => e.id).sort()).toEqual(entries.map((e) => e.id).sort());
+  });
+
+  it('index.json on disk is what the importer builds from the packs', () => {
+    const current = parseStoryIndex(readJson(join(STORIES_DIR, 'index.json')));
+    const rebuilt = current.map((e) => toStoryIndexEntry(loadStory(e.id)));
+    expect(current).toEqual(rebuilt);
+    expect(current.map((e) => e.level)).toEqual(['A0', 'A0', 'A0', 'A0', 'A0', 'A0', 'A1', 'A1']);
   });
 
   it('rejects duplicate ids and a missing reviewed flag', () => {
@@ -264,6 +301,21 @@ describe('manifest', () => {
       false,
     );
     expect(isCompatible(manifest({ needs: { fills: story.fills.length + 1 } as never }), story)).toBe(false);
+  });
+
+  it('every real story fits Monster Encounters (section 11 step 8) and a sentence game with 6 orders', () => {
+    const monsterEncounters = manifest({
+      inputMode: 'story',
+      simulation: 'turn',
+      levels: ['A0', 'A0+', 'A1'],
+      needs: { vocabulary: 4, questions: 1 } as never,
+    });
+    const potionRush = manifest({ levels: ['A0', 'A1'], needs: { sentences: 6 } as never });
+    for (const id of STORY_IDS) {
+      const story = loadStory(id);
+      expect(isCompatible(monsterEncounters, story), id).toBe(true);
+      expect(isCompatible(potionRush, story), id).toBe(true);
+    }
   });
 });
 

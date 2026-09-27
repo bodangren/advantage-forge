@@ -7,3 +7,4 @@ export * from './evidence.js';
 export * from './results.js';
 export * from './model-asset.js';
 export * from './i18n.js';
+export * from './device.js';

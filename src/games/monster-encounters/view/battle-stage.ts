@@ -1,13 +1,13 @@
 /**
- * The 3D stage of Monster Encounters: the Sunken Vault, the heroes, the monsters, and every
- * animation the battle needs, built on the shared 3D kit (`src/apk3d/stage`). It knows nothing
- * about rules: the app tells it what happened (from the game core's events) and awaits the
- * returned promises to keep the story in order.
+ * The battle stage of Monster Encounters: the Sunken Vault, the heroes, the monsters, and every
+ * animation the battle needs, on the page's kit stage. It knows nothing about rules: the game
+ * view tells it what happened (from the core's events) and awaits the returned promises to keep
+ * the story in order.
  */
 import * as THREE from 'three';
-import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type CutBox, type Shot, type V3 } from '../../apk3d/stage/index.js';
-import { sunkenVaultPlaces } from '../../../scenes/sunken-vault.js';
-import type { EnemyKind, EnemyState, HeroId } from '../core/types.js';
+import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type CutBox, type Shot, type V3 } from '../../../apk3d/stage/index.js';
+import { sunkenVaultPlaces } from '../../../../scenes/sunken-vault.js';
+import type { EnemyKind, EnemyState, HeroId } from '../core/index.js';
 
 const FLOOR_Y = 0.09;
 const HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
@@ -47,9 +47,7 @@ const HALL: StageDef = {
 
 export const STAGES: StageDef[] = [HALL, HALL, HALL, HALL];
 
-export class Stage {
-  /** The shared kit stage (the HUD anchors labels to it). */
-  readonly kit: Stage3D;
+export class BattleStage {
   private readonly actors = new Map<string, Actor>();
   private readonly shots = new ShotRig(0.12);
   private readonly orbit = new OrbitRig([0, 0.8, 4.4], 3.6, 1.45);
@@ -59,9 +57,10 @@ export class Stage {
   private stageDef: StageDef = HALL;
   private portrait = true;
 
-  constructor(canvas: HTMLCanvasElement, base: string) {
-    this.kit = new Stage3D(canvas, { base, background: '#0c1118', fog: [16, 34] });
-    const scene = this.kit.scene;
+  /** `kit` is the page's stage, already cleared by the factory (its HUD updater is running). */
+  constructor(readonly kit: Stage3D) {
+    const scene = kit.scene;
+    scene.fog = new THREE.Fog('#0c1118', 16, 34);
     scene.add(new THREE.HemisphereLight(0x9fb8e8, 0x2a3040, 1.25));
     this.kit.addSun(0xc8dcff, 1.1, [-3, 14, 6], [0, 0, 2]);
     for (let i = 0; i < 4; i++) {

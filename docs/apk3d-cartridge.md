@@ -240,12 +240,22 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | --- | --- |
 | `src/apk3d/contracts` | `zod` only |
 | `src/apk3d/sim` | `contracts` |
-| `src/apk3d/stage`, `hud`, `audio` | `contracts`, `sim`, `three` |
+| `src/apk3d/stage`, `audio` | `contracts`, `sim`, `three` |
+| `src/apk3d/hud` | `contracts`, `sim`, `stage`, `three` (HudRoot anchors labels on the stage frame and uses its Timeline) |
+| `src/apk3d/i18n`, `device` | `contracts` |
 | `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three` |
 | `src/games/*/core` | `src/apk3d/contracts`, `src/apk3d/sim` |
-| `src/games/*/view`, `briefing.ts` | its own `core`, `src/apk3d/*` |
-| `src/host` | `src/apk3d/*`, `src/games/*/index.ts` |
+| `src/games/*/manifest.ts`, `strings.en.ts`, `briefing.ts` | `src/apk3d/contracts` only (the host loads them before the game) |
+| `src/games/*/view` and every other file of the game (`qc/`, ...) | its own game, `src/apk3d/*`, `three` (views build actors and vectors) |
+| `src/games/*/index.ts` | its own game, `src/apk3d/*` |
+| `src/host` | `src/apk3d/*`, `three` (the lobby stage), `src/games/*/manifest.ts` and `strings.en.ts` statically; `src/games/*/index.ts` through `import()` only (lazy game code) |
 | `src/apk3d/*` | never `src/games`, never `src/host` |
+
+Same-folder imports and `.css` imports are allowed everywhere. `three/addons/*` counts as `three`.
+The test keeps a short `TRANSITIONAL` list of imports that break the table today, each with the
+task that removes it: the one-line bridge `src/games/monster-encounters/core/index.ts` over
+`src/demo/core` until task 11, and the `scenes/sunken-vault` import of the battle stage until the
+vault set is a model pack.
 
 Vite: `vite.demo.config.ts` stays the build; `demo/main.ts` imports `src/host/main.ts`.
 
@@ -256,6 +266,34 @@ Implementation notes from tasks 1 and 2 (2026-09-27, code is the reference):
 - `toGameResults(evidence, score)`: `correctAnswers` = solved items (one correct response each), `totalAttempts` = sum of `attempts`; `xp` is `calculateXP` copied verbatim (section 6.1).
 - `storyIndexEntrySchema` requires `reviewed` (false when `source.translationsGenerated`); `toStoryIndexEntry(story)` builds a row; `fromStoryPack(json)` converts the old demo pack shape for the migration.
 - `apk.ts` exports `semanticAssetKeySchema` and `capabilityIdSchema` (module-private in the APK) and `APK3D_CAPABILITIES`, the ids every 3D manifest lists.
+
+Implementation notes from tasks 3 to 5 (2026-09-27):
+
+- `scripts/apk3d-import.ts` writes the eight demo packs: six A0 Origins stories and the two A1
+  Adventures stories (`the-new-student`, `the-school-garden`: no images, Thai glosses from its
+  `THAI_GLOSSES` table, `source.translationsGenerated: true`, index `reviewed: false`, no cover).
+  Besides the two workbook sentences, it takes sentences of 3 to 8 words from the paragraphs
+  (round-robin over the paragraphs, no quotation marks or brackets, no duplicates, up to 12 per
+  story, `paragraph` set, no `translation`) so Potion Rush has 6 to 10 orders per shift. The demo
+  (`src/demo`) reads the packs through `toStoryPack` in `src/demo/core/content.ts` until task 11.
+- `createI18n(catalogs, options?)` (`src/apk3d/i18n/catalog.ts`) takes an array of catalogs and
+  `{ onMissing }`; a missing key is reported once per full key. `src/apk3d/i18n/scan.ts` holds the
+  pure scanners the test uses (comments skipped): a `t('...')` key resolves under `base + scope`
+  where scope is '' or any `.scope('...')` prefix of the same file, and base is '' or, in a game
+  file, a root key of that game's catalog (`context.i18n` is already scoped to the game); the
+  literal-text check covers `src/games/*/view/**` and `src/host/**` (`textContent`, `innerText`,
+  `innerHTML` assigned a string or template literal with words outside markup and `${}`, nested
+  templates included). Catalogs are the default export of every `strings.en.ts` under
+  `src/games/*` and `src/host`.
+- The class boss is `src/host/classBoss.ts` (`simulateClassBoss`, `Classmate`, `ClassBossReport`,
+  the constants); `src/demo/core/classBoss.ts` re-exports it for the old demo app.
+- `src/apk3d/contracts/device.ts` declares `QualityTierId` (`QUALITY_TIER_IDS`), `GateStatus`,
+  `GateReason`, `GateDetails`, and `GateResult`; the same tier union stays in `stage/stage.ts`
+  because `device` may import `contracts` only (a test keeps them equal). `checkDevice(options?)`
+  takes an injectable `GateEnvironment` (`env`), `requirements` (a manifest's `device`), or a
+  `canvas`; it runs the user-agent checks before the WebGL checks so an old phone gets the more
+  specific reason, and releases the probe context with `WEBGL_lose_context`. `device/tier.ts` has
+  `chooseTier` and `pixelRatioFor` (`PIXEL_RATIO_CAP` equals the stage's `QUALITY` caps).
 
 ## 5. Content contracts (decision d)
 
@@ -517,7 +555,7 @@ LINE in-app browser rules (kit and host):
 | --- | --- |
 | viewport height | `height: 100dvh` with `100%` fallback; never `100vh`; the HUD root listens to `visualViewport` resize and scroll |
 | safe areas | `viewport-fit=cover`; `env(safe-area-inset-*)` as CSS variables on the HUD root; the canvas is full-bleed under them |
-| audio unlock | the kit listens to every `touchend`, `click`, and `keydown` (capture phase) and calls `audio.unlock()`: it creates the AudioContext on the first gesture, resumes it after a phone lock or a call, and sets `navigator.audioSession.type = 'playback'` (iPhone silent switch). This is the fix now live in `src/demo/app/audio.ts`; keep it. The selector may play tap sounds |
+| audio unlock | the kit listens to every `touchend`, `click`, and `keydown` (capture phase) and calls `audio.unlock()`: it creates the AudioContext on the first gesture, resumes it after a phone lock or a call, and sets `navigator.audioSession.type = 'playback'` (iPhone silent switch). This is `installAudioUnlock` in `src/apk3d/audio/bus.ts`; keep it. The selector may play tap sounds |
 | no fullscreen API | never call `requestFullscreen`; the layout hides nothing that depends on it |
 | gestures | `touch-action: none` on the canvas and drag surfaces; passive listeners elsewhere; no `window.open`, no `alert` |
 | memory | dispose textures and geometries on scene swap; one renderer per page; `preserveDrawingBuffer: false` |
@@ -589,6 +627,12 @@ Tests:
     current site.
 
 ## 12. Work breakdown (decision k)
+
+Progress (2026-09-27): tasks 1 to 10 and 12 are done, and task 14 is done except the screenshot
+compare. Monster Encounters runs as a cartridge in the standalone host (`src/games/monster-encounters`
+reaches its rules through the bridge `core/index.ts` until task 11). The old page app
+(`src/demo/app`, `scripts/demo-shot.ts`) is removed. Next: task 11, task 13, then Potion Rush 3D
+(tasks 15 to 19, design in `docs/game-potion-rush-3d.md`).
 
 Each task is small, in order. BACKEND = core rules, contracts, content, tests (me). FRONTEND =
 stage, HUD, screens, audio, game feel (Claude).

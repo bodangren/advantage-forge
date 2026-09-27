@@ -62,7 +62,7 @@ export interface StoryFill {
   paragraph?: number;
 }
 
-/** One validated story: everything the reader and the quest need. Built by scripts/demo-import.ts. */
+/** One validated story: everything the reader and the quest need. Converted by `toStoryPack` from the StoryInput files that scripts/apk3d-import.ts writes. */
 export interface StoryPack {
   id: string;
   title: string;
