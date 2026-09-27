@@ -110,8 +110,34 @@ export default defineAsset({
   description: 'Chibi imp dungeon monster: a big-headed little red devil with curved horns, a fanged grin, amber eyes, bat wings, claws, and an arrow-tipped tail.',
   detail: 0.004,
   reference: 'docs/monster-mockups/imp_001.png',
+  // Color slots for individual imps (the first option is the default look): infernal hides, wing
+  // membranes, eyes, and horns. The fire, the teeth, the claws, and the wing bones stay fixed.
+  variants: {
+    skin: { red: C.skin, maroon: '#8c2430', soot: '#523a3a' },
+    wings: { ember: C.membrane, sulfur: '#c88c3c', ash: '#5e4c4a' }, // ash: dark smoke, not pale
+    eyes: { amber: C.iris, yellow: '#f0d030', acid: '#9ad02a' },
+    horns: { brown: C.horn, bone: '#8a8074', black: '#2a2224' },
+  },
+  presets: {
+    cinder: { skin: 'soot', wings: 'ember', eyes: 'yellow', horns: 'bone' },
+    brimstone: { skin: 'red', wings: 'sulfur', eyes: 'acid', horns: 'black' },
+    ash: { skin: 'maroon', wings: 'ash', eyes: 'amber', horns: 'black' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      skin: k.tint('skin'),
+      skinDark: k.tint('skin', { color: C.skinDark, follow: 1 }),
+      belly: k.tint('skin', { color: C.belly, follow: 1 }),
+      brow: k.tint('skin', { color: C.brow, follow: 1 }),
+      membrane: k.tint('wings'),
+      // The veins: the membrane times (0.8, 0.75, 0.75) in linear light, as an exact shade.
+      vein: k.tint('wings', { color: '#cb6240', follow: 1 }),
+      iris: k.tint('eyes'),
+      irisDark: k.tint('eyes', { color: C.irisDark, follow: 1 }),
+      horn: k.tint('horns'),
+    };
     k.skeleton({
       hips: { at: HIPS_AT },
       spine: { parent: 'hips', at: [0, 0.3, 0] },
@@ -296,19 +322,19 @@ export default defineAsset({
       .union(armAt(1), armAt(-1), legAt(1), legAt(-1))
       .smoothUnion(0.012, tailShape)
       .union(spade)
-      .paintWhere(sdf.halfSpace([0, 0, 1], -0.06).intersect(sdf.sphere(0.4).at(0, 0.3, -0.1)), C.skinDark, 0.06) // a darker back
-      .paintWhere(sdf.ellipsoid([0.06, 0.07, 0.1]).at(0, 0.3, 0.06), C.belly, 0.03)
+      .paintWhere(sdf.halfSpace([0, 0, 1], -0.06).intersect(sdf.sphere(0.4).at(0, 0.3, -0.1)), T.skinDark, 0.06) // a darker back
+      .paintWhere(sdf.ellipsoid([0.06, 0.07, 0.1]).at(0, 0.3, 0.06), T.belly, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisDark, C.irisDark, 0.008)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisDark, T.irisDark, 0.008)
       .paintWhere(pupil, C.pupil)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(lid.intersect(eyeWhite.round(0.004)), C.skinDark, 0.002)
-      .paintWhere(brows, C.brow, 0.002)
+      .paintWhere(lid.intersect(eyeWhite.round(0.004)), T.skinDark, 0.002)
+      .paintWhere(brows, T.brow, 0.002)
       .paintWhere(mouth, C.mouth, 0.002)
       .paintWhere(tongue, C.tongue, 0.004);
     k.body('skin', skin, {
-      color: C.skin,
+      color: T.skin,
       roughness: 0.5,
       textureDensity: 2,
       bump: (x, y, z) => 0.0005 * noise.fbm(x * 100, y * 100, z * 100, 2),
@@ -338,7 +364,7 @@ export default defineAsset({
         0.012,
       )
       .paintFn((_x, y, _z, base) => (Math.sin(y * 260) > 0.6 && y < 0.74 ? [base[0] * 1.25, base[1] * 1.25, base[2] * 1.25] : base));
-    k.body('horns', pair(horn).bone('head'), { color: C.horn, roughness: 0.45 });
+    k.body('horns', pair(horn).bone('head'), { color: T.horn, roughness: 0.45 });
     const claws = sdf.union(
       clawHand(WRIST, 1).claws.bone('hand.L'),
       clawHand(mx(WRIST), -1).claws.bone('hand.R'),
@@ -381,7 +407,7 @@ export default defineAsset({
       .paintFn((x, y, _z, base) => {
         // Darker veins fanning from the knuckle.
         const a = Math.atan2(y - KNUCKLE[1], x - KNUCKLE[0]);
-        return Math.abs(Math.sin(a * 6)) < 0.12 ? [base[0] * 0.8, base[1] * 0.75, base[2] * 0.75] : base;
+        return Math.abs(Math.sin(a * 6)) < 0.12 ? rgb(T.vein) : base;
       });
     const wingBones = sdf.union(
       sdf.chain([[0, 0.04, 0, 0.02], [0.1, 0.17, 0, 0.017], [KNUCKLE[0], KNUCKLE[1], 0, 0.015]], 0.008),
@@ -390,7 +416,7 @@ export default defineAsset({
       sdf.cone([KNUCKLE[0], KNUCKLE[1], 0], [KNUCKLE[0] - 0.01, KNUCKLE[1] + 0.05, 0], 0.012, 0.003), // the thumb claw
     );
     const wingPose = (s: sdf.Shape) => s.scale(1.2).rotateY(22).rotateZ(10).at(...WING_ROOT);
-    k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.membrane, roughness: 0.6 });
+    k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: T.membrane, roughness: 0.6 });
     k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.wingBone, roughness: 0.5 });
 
     // ------------------------------------------------------------------ the fireball (cast only)
