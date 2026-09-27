@@ -179,18 +179,23 @@ const flame = (h: number) =>
       h * 0.06,
     ),
   );
-const fireCore = rgb(C.fireCore);
-const fireOuter = rgb(C.fire);
-/** Fire color: a light core low in the flame, orange toward the tips. */
-const firePaint = (base: V3, h: number) => (x: number, y: number, z: number) => {
-  const t = Math.min(1, Math.max(0, (y - base[1]) / h));
-  const r = Math.hypot(x - base[0], z - base[2]) / (h * 0.3);
-  const k = Math.min(1, Math.max(0, t * 0.9 + r * 0.5 - 0.15));
-  return [
-    fireCore[0] + (fireOuter[0] - fireCore[0]) * k,
-    fireCore[1] + (fireOuter[1] - fireCore[1]) * k,
-    fireCore[2] + (fireOuter[2] - fireCore[2]) * k,
-  ] as const;
+/**
+ * Fire color: a light core low in the flame, orange toward the tips. The colors convert when the
+ * build calls this (not at module load), so a tint-mask bake sees them as "not in a slot".
+ */
+const firePaint = (base: V3, h: number) => {
+  const fireCore = rgb(C.fireCore);
+  const fireOuter = rgb(C.fire);
+  return (x: number, y: number, z: number) => {
+    const t = Math.min(1, Math.max(0, (y - base[1]) / h));
+    const r = Math.hypot(x - base[0], z - base[2]) / (h * 0.3);
+    const k = Math.min(1, Math.max(0, t * 0.9 + r * 0.5 - 0.15));
+    return [
+      fireCore[0] + (fireOuter[0] - fireCore[0]) * k,
+      fireCore[1] + (fireOuter[1] - fireCore[1]) * k,
+      fireCore[2] + (fireOuter[2] - fireCore[2]) * k,
+    ] as const;
+  };
 };
 
 export default defineAsset({
@@ -198,8 +203,33 @@ export default defineAsset({
   description: 'Chibi wizard hero with a huge red witch hat, a fire-orb staff, and a flame in her palm.',
   detail: 0.005,
   reference: 'docs/hero-mockups/wizard_001.png',
+  // Color slots for individual wizards (the first option is the default look). The gold trims,
+  // the palm flame, and the staff fire are not in a slot.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, black: '#231a17', silver: '#b9b4ae' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { red: C.red, blue: '#2e4a9e', purple: '#6b3294' },
+  },
+  presets: {
+    frost: { eyes: 'blue', hair: 'silver', skin: 'fair', clothing: 'blue' },
+    mystic: { eyes: 'green', hair: 'black', skin: 'tan', clothing: 'purple' },
+    sage: { eyes: 'brown', hair: 'silver', skin: 'brown', clothing: 'purple' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', 0.15),
+      hair: k.tint('hair'),
+      brow: k.tint('hair', -0.29),
+      skin: k.tint('skin'),
+      freckle: k.tint('skin', -0.4),
+      cloth: k.tint('clothing'),
+      clothDark: k.tint('clothing', -0.56),
+      hatInside: k.tint('clothing', -0.79),
+    };
     // ------------------------------------------------------------------ skeleton
     const HAT_TIP_AT: V3 = [0.03, 0.95, -0.03];
     k.skeleton({
@@ -330,20 +360,20 @@ export default defineAsset({
       .smoothUnion(0.012, nose, ears)
       .union(armR, armL)
       .paintWhere(blush, C.blush, 0.03)
-      .paintWhere(freckles, C.freckle, 0.003)
+      .paintWhere(freckles, T.freckle, 0.003)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(lash, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
+      .paintWhere(brows, T.brow)
       .paintWhere(mouth, C.mouth)
       .paintWhere(tongue, C.tongue, 0.004)
       .paintWhere(teeth, C.teeth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the hat
     // Local frame: the crown's base center at the origin. A wide, soft brim that curls up at
@@ -420,9 +450,9 @@ export default defineAsset({
       .paintFn((x, y, z, base) => {
         // The underside of the brim and the inside of the crown are dark.
         const r = Math.hypot(x, z);
-        return r < 0.4 && y < brimMid(r) - 0.016 * brimWave(x, z) ? rgb(C.hatInside) : base;
+        return r < 0.4 && y < brimMid(r) - 0.016 * brimWave(x, z) ? rgb(T.hatInside) : base;
       });
-    k.body('hat', hatPose(hatLocal).paintFn(sparks), { color: C.red, roughness: 0.85 });
+    k.body('hat', hatPose(hatLocal).paintFn(sparks), { color: T.cloth, roughness: 0.85 });
     // Band around the crown with a gold flame emblem and a red gem on the front left.
     const band = crownCone
       .round(0.009)
@@ -532,7 +562,7 @@ export default defineAsset({
       .displace(0.004, waves)
       .intersect(underHat)
       .subtract(hatPose(brim).round(0.006));
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
     // ------------------------------------------------------------------ robe, tunic, cape
     const robeShape = sdf
@@ -607,7 +637,7 @@ export default defineAsset({
     // Below the belt the coat skirt hangs from its own bone, so the hem can swing in a walk.
     const above = (sh: sdf.Shape, y: number) => sh.intersect(sdf.halfSpace([0, -1, 0], -y));
     const below = (sh: sdf.Shape, y: number) => sh.intersect(sdf.halfSpace([0, 1, 0], y));
-    k.body('robe', sdf.union(above(robe, 0.25).bone('spine'), below(robe, 0.25).bone('skirt')), { color: C.red, roughness: 0.8 });
+    k.body('robe', sdf.union(above(robe, 0.25).bone('spine'), below(robe, 0.25).bone('skirt')), { color: T.cloth, roughness: 0.8 });
     // Ember patterns lick up from the hem of the tunic.
     const tunic = robeShape
       .round(-0.012)
@@ -642,7 +672,7 @@ export default defineAsset({
     // The cape flares wide at the hem, so it shows on both sides from the front; a darker
     // lining inside, a gold hem outside.
     const capeR = (y: number) => 0.18 + ((0.4 - 0.18) * (0.44 - y)) / (0.44 - 0.07);
-    const lining = rgb(C.redDark);
+    const lining = rgb(T.clothDark);
     const cape = capeCone(0.18, 0.4, 0.44, 0.07)
       .subtract(capeCone(0.158, 0.378, 0.46, 0.05))
       .at(0, 0, -0.03)
@@ -652,7 +682,7 @@ export default defineAsset({
         const r = Math.hypot(x, (z + 0.03) / 0.85);
         return r < capeR(y) - 0.012 * folds(x, y, z + 0.03) - 0.011 && y > 0.1 ? lining : base;
       });
-    k.body('cape', sdf.union(cape.bone('cloak'), hood.bone('chest')), { color: C.red, roughness: 0.8 });
+    k.body('cape', sdf.union(cape.bone('cloak'), hood.bone('chest')), { color: T.cloth, roughness: 0.8 });
 
     // ------------------------------------------------------------------ sleeves with dark cuffs
     const sleeve = (s: V3, e: V3, w: V3, tagU: string, tagF: string) =>
@@ -663,7 +693,7 @@ export default defineAsset({
       );
     const cuff = (e: V3, w: V3, tag: string) => sdf.cone(lerp(e, w, 0.7), lerp(e, w, 0.92), 0.056, 0.058).round(0.003).bone(tag);
     k.body('sleeves', sdf.union(sleeve(SHOULDER, ELBOW_L, WRIST_L, 'upperarm.L', 'forearm.L'), sleeve(mx(SHOULDER), ELBOW_R, WRIST_R, 'upperarm.R', 'forearm.R')), {
-      color: C.red,
+      color: T.cloth,
       roughness: 0.8,
     });
 
