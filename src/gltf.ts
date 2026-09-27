@@ -1,5 +1,5 @@
 import { Document, NodeIO, type Material, type Node, type Skin, type Texture } from '@gltf-transform/core';
-import { KHRMaterialsEmissiveStrength } from '@gltf-transform/extensions';
+import { KHRMaterialsEmissiveStrength, KHRMaterialsVariants } from '@gltf-transform/extensions';
 import * as THREE from 'three';
 import type { AtlasImages } from './asset.js';
 
@@ -60,6 +60,7 @@ export async function toGlb(root: THREE.Object3D): Promise<Uint8Array> {
     }
     if (m.transparent) mat.setAlphaMode('BLEND');
     mat.setDoubleSided(m.side === THREE.DoubleSide);
+    if (typeof m.userData.forgeEmissiveTint === 'string') mat.setExtras({ forgeEmissiveTint: m.userData.forgeEmissiveTint });
     materials.set(m, mat);
     return mat;
   };
@@ -116,6 +117,33 @@ export async function toGlb(root: THREE.Object3D): Promise<Uint8Array> {
   };
 
   scene.addChild(visit(root));
+
+  // Color variants: the slot table in the root extras, the tint mask as a named texture (a game
+  // multiplies masked texels by option / default per slot), and each preset as a material
+  // variant (KHR_materials_variants) with a ready recolored atlas, for engines without a shader.
+  const variants = root.userData.forgeVariants as Record<string, unknown> | undefined;
+  if (variants) {
+    doc.getRoot().setExtras({ forgeVariants: variants });
+    if (atlas?.tintMask) doc.createTexture('tintMask').setImage(atlas.tintMask).setMimeType('image/png');
+    const presets = Object.entries(atlas?.presets ?? {});
+    if (presets.length > 0) {
+      const ext = doc.createExtension(KHRMaterialsVariants);
+      const looks = presets.map(([name, image]) => ({
+        variant: ext.createVariant(name),
+        texture: doc.createTexture(`baseColor:${name}`).setImage(image).setMimeType('image/png'),
+      }));
+      for (const prim of doc.getRoot().listMeshes().flatMap((mesh) => mesh.listPrimitives())) {
+        const mat = prim.getMaterial();
+        if (!mat || !mat.getBaseColorTexture()) continue;
+        const list = ext.createMappingList();
+        for (const look of looks) {
+          const alt = mat.clone().setName(`${mat.getName()}:${look.variant.getName()}`).setBaseColorTexture(look.texture);
+          list.addMapping(ext.createMapping().setMaterial(alt).addVariant(look.variant));
+        }
+        prim.setExtension('KHR_materials_variants', list);
+      }
+    }
+  }
 
   // Skins: one per three.js skeleton, joints in skeleton order with their inverse bind matrices.
   const skins = new Map<THREE.Skeleton, Skin>();

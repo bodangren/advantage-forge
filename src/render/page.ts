@@ -28,6 +28,8 @@ export interface ViewsRequest {
   readonly background: string;
   readonly referenceUrl?: string;
   readonly title?: string;
+  /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
+  readonly preset?: string;
 }
 
 export interface SpritesRequest {
@@ -47,6 +49,8 @@ export interface SpritesRequest {
   readonly frames?: number;
   /** The clip's options from the asset (a GLB does not keep them). */
   readonly clipInfo?: ClipInfo;
+  /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
+  readonly preset?: string;
 }
 
 /**
@@ -82,12 +86,47 @@ const loader = new GLTFLoader();
 let current: { scene: THREE.Object3D; mixer: THREE.AnimationMixer; clips: THREE.AnimationClip[] } | null =
   null;
 
+interface ForgeVariants {
+  readonly slots: Record<string, { channel: string; default: string; options: Record<string, [number, number, number]> }>;
+  readonly presets: Record<string, Record<string, string>>;
+}
+let variants: ForgeVariants | null = null;
+
 async function load(url: string): Promise<THREE.Object3D> {
   const gltf = await loader.loadAsync(url);
   studio.renderer.clippingPlanes = [];
+  variants = ((gltf.userData as { forgeVariants?: ForgeVariants }).forgeVariants ?? null) as ForgeVariants | null;
   current = { scene: gltf.scene, mixer: new THREE.AnimationMixer(gltf.scene), clips: gltf.animations };
   studio.setAsset(gltf.scene);
   return gltf.scene;
+}
+
+/**
+ * Recolor the loaded asset with a color preset: every textured material takes the preset's
+ * recolored atlas (served by the CLI at /__forge/preset/<name>.png), and glowing parts in a slot
+ * (glTF extras `forgeEmissiveTint`) take the preset's option color.
+ */
+async function applyPreset(name: string | undefined): Promise<void> {
+  if (!name) return;
+  if (!variants) throw new Error(`Preset '${name}': this asset has no color variants.`);
+  const choice = variants.presets[name];
+  if (!choice) throw new Error(`No preset '${name}'. Presets: ${Object.keys(variants.presets).join(', ') || '(none)'}.`);
+  const map = await new THREE.TextureLoader().loadAsync(`/__forge/preset/${encodeURIComponent(name)}.png?t=${Date.now()}`);
+  map.flipY = false;
+  map.colorSpace = THREE.SRGBColorSpace;
+  current!.scene.traverse((o) => {
+    const m = (o as THREE.Mesh).material as THREE.MeshStandardMaterial | undefined;
+    if (!m) return;
+    if (m.map) {
+      map.wrapS = m.map.wrapS;
+      map.wrapT = m.map.wrapT;
+      m.map = map;
+      m.needsUpdate = true;
+    }
+    const slot = m.userData?.forgeEmissiveTint as string | undefined;
+    const s = slot ? variants!.slots[slot] : undefined;
+    if (s) m.emissive.setRGB(...s.options[choice[slot!] ?? s.default]!);
+  });
 }
 
 /** Put the loaded asset into the pose of `clip` at time `t` (seconds). */
@@ -271,6 +310,7 @@ async function loadImage(url: string): Promise<HTMLImageElement> {
 
 async function renderViews(req: ViewsRequest): Promise<{ sheet: string; views: Record<string, string> }> {
   await load(req.glbUrl);
+  await applyPreset(req.preset);
   studio.setBackground(req.background);
   studio.ground.visible = true;
   const cam = studio.perspective;
@@ -342,6 +382,7 @@ async function renderSprites(req: SpritesRequest): Promise<{
   pivot: [number, number];
 }> {
   await load(req.glbUrl);
+  await applyPreset(req.preset);
   studio.setBackground(null);
   studio.ground.visible = false;
   const names = DIRECTION_NAMES[req.directions];

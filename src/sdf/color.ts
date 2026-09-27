@@ -6,8 +6,47 @@ export type ColorInput = string | Rgb;
 
 const srgbToLinear = (c: number): number => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
 
+// ---------------------------------------------------------------- color slots (variants)
+//
+// An asset names its recolorable colors (eyes, hair, skin, clothing) as slots and uses
+// `k.tint(slot, shade)` in place of a hex color. Normally a slot reference is the slot's default
+// color; while the engine bakes a slot's mask, colors of that slot are white and every other
+// color is black, so the bake records where (and how much of) the surface belongs to the slot.
+
+const TINT = /^tint:([^:]+):(-?[0-9.]+)$/;
+let slotColors = new Map<string, Rgb>();
+let maskSlot: string | null = null;
+
+/** A color reference to a slot, darkened (shade < 0) or lightened (shade > 0) by |shade|. */
+export function tintRef(slot: string, shade = 0): string {
+  return `tint:${slot}:${Math.max(-1, Math.min(1, shade))}`;
+}
+
+/** The slots' default colors, used while an asset builds. */
+export function setSlotColors(colors: ReadonlyMap<string, Rgb>): void {
+  slotColors = new Map(colors);
+}
+
+/** While set, rgb() gives white for this slot's colors and black for every other color. */
+export function setMaskSlot(slot: string | null): void {
+  maskSlot = slot;
+}
+
+
 /** Convert a hex sRGB string (or pass through a linear triple) to linear RGB. */
 export function rgb(input: ColorInput): Rgb {
+  if (typeof input === 'string') {
+    const m = TINT.exec(input);
+    if (m) {
+      const slot = m[1]!;
+      if (maskSlot !== null) return slot === maskSlot ? [1, 1, 1] : [0, 0, 0];
+      const base = slotColors.get(slot);
+      if (!base) throw new Error(`Unknown color slot '${slot}'. Add it to the asset's variants.`);
+      const shade = Number(m[2]);
+      return shade >= 0 ? mixRgb(base, [1, 1, 1], shade) : mixRgb(base, [0, 0, 0], -shade);
+    }
+  }
+  if (maskSlot !== null) return [0, 0, 0];
   if (typeof input !== 'string') return input;
   let hex = input.trim().replace(/^#/, '');
   if (hex.length === 3)

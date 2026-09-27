@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { rgb, type ColorInput } from './sdf/color.js';
+import { rgb, setMaskSlot, setSlotColors, tintRef, type ColorInput } from './sdf/color.js';
 import type { Sdf, Vec3 } from './sdf/core.js';
 import type { MeshData, MeshOptions, MeshStats } from './sdf/mesher.js';
 import { makeContext, bakeOptions } from './tasks.js';
@@ -9,6 +9,7 @@ import { unwrap, type UvMesh } from './texture/unwrap.js';
 import { openPool } from './workers.js';
 import { groundClip } from './grounding.js';
 import { buildRig, sampleAnimation, skinWeights, type AnimationDef, type SkeletonDef } from './rig.js';
+import { checkPresets, recolor, slotTable, type Slot, type VariantPresets, type VariantSlots } from './variants.js';
 
 export interface BodyOptions {
   /** Base color where no paint covers the surface. Default '#cccccc'. */
@@ -75,6 +76,12 @@ export interface AssetContext {
   skeleton(def: SkeletonDef): void;
   /** Add an animation clip. `pose(t, phase)` returns bone rotations and moves at time `t`. */
   animation(name: string, def: AnimationDef): void;
+  /**
+   * A recolorable color: the slot's default color (from the asset's `variants`), darkened
+   * (shade < 0) or lightened (shade > 0) by |shade|. Use it wherever a color goes (body color,
+   * paint, emissive); the build bakes a tint mask for the slot, so a game can recolor it.
+   */
+  tint(slot: string, shade?: number): string;
 }
 
 export interface AssetDefinition {
@@ -91,6 +98,15 @@ export interface AssetDefinition {
    * Default on at 1024 texels. `false` exports vertex colors only (faster).
    */
   readonly texture?: TextureOptions | false;
+  /**
+   * Color slots for individual characters (at most 4): slot to { option: color }, the first
+   * option being the default, e.g. { eyes: { brown: '#6b4226', blue: '#3a6fb0', green: '#4a8a3a' } }.
+   * Colors join a slot through `k.tint(slot)`. A textured build adds a tint mask (one channel per
+   * slot) and the slot table to the GLB, so a game can pick any combination.
+   */
+  readonly variants?: VariantSlots;
+  /** Named slot combinations, baked as ready textures (glTF material variants) and sprite sets. */
+  readonly presets?: VariantPresets;
   build(k: AssetContext): void | Promise<void>;
 }
 
@@ -111,6 +127,10 @@ export interface AtlasImages {
   readonly baseColor: Uint8Array;
   readonly normal: Uint8Array;
   readonly orm: Uint8Array;
+  /** RGBA: one channel per color slot (see AssetDefinition.variants). */
+  readonly tintMask?: Uint8Array;
+  /** The base color atlas recolored with each preset. */
+  readonly presets?: Readonly<Record<string, Uint8Array>>;
 }
 
 export function defineAsset(def: AssetDefinition): AssetDefinition {
@@ -155,7 +175,23 @@ export interface Collected {
   readonly animations: ReadonlyMap<string, AnimationDef>;
 }
 
-export async function collectBodies(def: AssetDefinition): Promise<Collected> {
+/**
+ * Run the asset's build function and collect its bodies. With `maskSlot`, colors of that slot are
+ * white and all others black (for baking the slot's tint mask).
+ */
+export async function collectBodies(def: AssetDefinition, options: { maskSlot?: string } = {}): Promise<Collected> {
+  const slots = slotTable(def.variants);
+  checkPresets(slots, def.presets);
+  setSlotColors(new Map(slots.map((s) => [s.name, s.options[s.default]!])));
+  setMaskSlot(options.maskSlot ?? null);
+  try {
+    return await collect(def, slots);
+  } finally {
+    setMaskSlot(null);
+  }
+}
+
+async function collect(def: AssetDefinition, slots: readonly Slot[]): Promise<Collected> {
   const root = new THREE.Group();
   root.name = def.name;
   const pending: PendingBody[] = [];
@@ -196,6 +232,11 @@ export async function collectBodies(def: AssetDefinition): Promise<Collected> {
     animation(name, a) {
       if (animations.has(name)) throw new Error(`Duplicate animation '${name}'.`);
       animations.set(name, a);
+    },
+    tint(slot, shade = 0) {
+      if (!slots.some((s) => s.name === slot))
+        throw new Error(`k.tint('${slot}'): no such color slot. Slots: ${slots.map((s) => s.name).join(', ') || '(none: add variants)'}.`);
+      return tintRef(slot, shade);
     },
   });
 
@@ -285,7 +326,23 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
         })),
       )) as BakeResult[];
       const tBake = performance.now();
-      images = composeAtlas(bakes, size);
+      // Color slots: one color-only bake per slot and body, with that slot's colors white and
+      // all others black; together they give the tint mask (one channel per slot).
+      const slots = slotTable(def.variants);
+      const masks: BakeResult[][] = [];
+      for (const slot of slots)
+        masks.push(
+          (await pool.run(
+            uvMeshes.map((mesh, index) => ({
+              kind: 'mask' as const,
+              index,
+              mesh,
+              slot: slot.name,
+              options: { ...bakeOptions(def, pending[index]!, size, extent * 0.03), normal: false, ao: false },
+            })),
+          )) as BakeResult[],
+        );
+      images = composeAtlas(bakes, size, slots.length > 0 ? { slots, masks, presets: def.presets ?? {} } : undefined);
       textureMs = Math.round(performance.now() - t1);
       if (process.env.FORGE_DEBUG)
         console.log(
@@ -330,6 +387,8 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
           }
         : {}),
     });
+    // A glowing part in a color slot (glowing eyes): the game sets the emissive color too.
+    if (typeof o.emissive === 'string' && o.emissive.startsWith('tint:')) material.userData.forgeEmissiveTint = o.emissive.split(':')[1];
     let m: THREE.Mesh;
     if (rig && threeSkeleton) {
       const w = skinWeights(
@@ -350,6 +409,22 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
     bodies.push({ name: body.name, ...stats });
   });
   if (images) root.userData.forgeTextures = images;
+  const table = slotTable(def.variants);
+  if (table.length > 0) {
+    const r5 = (v: number) => Math.round(v * 1e5) / 1e5;
+    // The slot table for a game: each slot's mask channel, its default, and the option colors
+    // (linear); the multiplier for an option is option / default, per channel.
+    root.userData.forgeVariants = {
+      slots: Object.fromEntries(
+        table.map((s) => [
+          s.name,
+          { channel: 'RGBA'[s.channel], default: s.default, options: Object.fromEntries(Object.entries(s.options).map(([k, c]) => [k, c.map(r5)])) },
+        ]),
+      ),
+      presets: def.presets ?? {},
+      mask: images?.tintMask ? 'tintMask' : null,
+    };
+  }
   if (rig) {
     // Held items (on a hand or forearm bone, or below one) do not count for the ground: an axe
     // that hits the floor is fixed in its clip, not by lifting the body.
@@ -412,7 +487,11 @@ function sceneExtent(meshes: readonly MeshData[]): number {
 }
 
 /** Paint every body's baked texels into the shared atlas, dilate the edges, and encode PNGs. */
-function composeAtlas(bakes: readonly BakeResult[], size: number): AtlasImages {
+function composeAtlas(
+  bakes: readonly BakeResult[],
+  size: number,
+  tint?: { slots: readonly Slot[]; masks: readonly (readonly BakeResult[])[]; presets: VariantPresets },
+): AtlasImages {
   const n = size * size;
   const color = new Uint8Array(n * 3);
   const normal = new Uint8Array(n * 3);
@@ -432,10 +511,33 @@ function composeAtlas(bakes: readonly BakeResult[], size: number): AtlasImages {
     }
   const passes = Math.max(4, Math.round(size / 128));
   for (const image of [color, normal, orm]) dilate(image, filled, size, passes);
+  let tintMask: Uint8Array | undefined;
+  let presets: Record<string, Uint8Array> | undefined;
+  if (tint) {
+    // The mask bakes are sRGB bytes of white (in the slot) to black; the mask is linear coverage.
+    const linear = (b: number) => {
+      const c = b / 255;
+      return Math.round((c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)) * 255);
+    };
+    const mask = new Uint8Array(n * 4);
+    tint.slots.forEach((slot, s) => {
+      const channel = new Uint8Array(n * 3);
+      for (const b of tint.masks[s]!)
+        for (let k = 0; k < b.texels.length; k++) channel[b.texels[k]! * 3] = linear(b.color[k * 3]!);
+      dilate(channel, filled, size, passes);
+      for (let i = 0; i < n; i++) mask[i * 4 + slot.channel] = channel[i * 3]!;
+    });
+    tintMask = encodePng(size, size, 4, mask);
+    presets = Object.fromEntries(
+      Object.entries(tint.presets).map(([name, choice]) => [name, encodePng(size, size, 3, recolor(color, mask, tint.slots, choice))]),
+    );
+  }
   return {
     size,
     baseColor: encodePng(size, size, 3, color),
     normal: encodePng(size, size, 3, normal),
     orm: encodePng(size, size, 3, orm),
+    ...(tintMask ? { tintMask } : {}),
+    ...(presets ? { presets } : {}),
   };
 }

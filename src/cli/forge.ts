@@ -50,6 +50,8 @@ animation options
   --views three-quarter,side   rows of the review strip
 
 common
+  --preset name        a color preset of the asset (its presets): render.<name>.png, or
+                       sprites/presets/<name>/ (forge all bakes every preset's sprites)
   --fast               skip UV unwrap and texture baking (vertex colors; about 3x faster)
   --texture 2048       atlas size (default: the asset's texture.size, else 1024; 0 = off)
   --watch              keep running; rebuild and re-render when a file changes
@@ -94,6 +96,7 @@ async function main(): Promise<void> {
       clip: { type: 'string' },
       fps: { type: 'string' },
       frames: { type: 'string' },
+      preset: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
   });
@@ -195,14 +198,26 @@ async function main(): Promise<void> {
       writeFileSync(glbPath, glb);
       writeFileSync(join(out, 'stats.json'), JSON.stringify(result.stats, null, 2));
       const atlas = result.root.userData.forgeTextures as
-        { baseColor: Uint8Array; normal: Uint8Array; orm: Uint8Array } | undefined;
+        | { baseColor: Uint8Array; normal: Uint8Array; orm: Uint8Array; tintMask?: Uint8Array; presets?: Record<string, Uint8Array> }
+        | undefined;
       rmSync(join(out, 'textures'), { recursive: true, force: true });
       if (atlas) {
         mkdirSync(join(out, 'textures'), { recursive: true });
         writeFileSync(join(out, 'textures', 'baseColor.png'), atlas.baseColor);
         writeFileSync(join(out, 'textures', 'normal.png'), atlas.normal);
         writeFileSync(join(out, 'textures', 'orm.png'), atlas.orm);
+        // Color variants: the tint mask (R, G, B, A = the asset's slots in order) and one
+        // recolored base color atlas per preset.
+        if (atlas.tintMask) writeFileSync(join(out, 'textures', 'tint-mask.png'), atlas.tintMask);
+        for (const [preset, image] of Object.entries(atlas.presets ?? {}))
+          writeFileSync(join(out, 'textures', `baseColor.${preset}.png`), image);
       }
+      if (values.preset && !atlas?.presets?.[values.preset])
+        throw new Error(
+          atlas?.presets
+            ? `No preset '${values.preset}'. Presets: ${Object.keys(atlas.presets).join(', ') || '(none)'}.`
+            : `--preset needs a textured build with color variants (drop --fast; add variants and presets to the asset).`,
+        );
       const buildMs = Math.round(performance.now() - t0);
       printStats(result.stats, buildMs, glbPath, glb.length);
 
@@ -212,6 +227,14 @@ async function main(): Promise<void> {
       await page.route(
         (u) => u.pathname === '/__forge/asset.glb',
         (r) => r.fulfill({ body: Buffer.from(glb), contentType: 'model/gltf-binary' }),
+      );
+      await page.route(
+        (u) => u.pathname.startsWith('/__forge/preset/'),
+        (r) => {
+          const preset = decodeURIComponent(new URL(r.request().url()).pathname.slice('/__forge/preset/'.length).replace(/\.png$/, ''));
+          const image = atlas?.presets?.[preset];
+          return image ? r.fulfill({ body: Buffer.from(image), contentType: 'image/png' }) : r.fulfill({ status: 404, body: 'no such preset' });
+        },
       );
       const def = (await server.ssrLoadModule(file)).default as { reference?: string };
       const useRef = values['no-ref'] !== true && def.reference !== undefined;
@@ -236,14 +259,19 @@ async function main(): Promise<void> {
           background: values.bg ?? '#aeb3ba',
           title: name,
           ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
+          ...(values.preset ? { preset: values.preset } : {}),
         };
         const res = await page.evaluate((r) => window.forge.renderViews(r), req);
-        rmSync(join(out, 'views'), { recursive: true, force: true });
-        mkdirSync(join(out, 'views'), { recursive: true });
-        for (const [view, data] of Object.entries(res.views))
-          writePng(join(out, 'views', `${view}.png`), data);
-        writePng(join(out, 'render.png'), res.sheet);
-        console.log(`render   ${rel(join(out, 'render.png'))}  (${Math.round(performance.now() - t1)} ms)`);
+        // A color preset's turnaround goes beside the default one: render.<preset>.png.
+        const sheetFile = values.preset ? `render.${values.preset}.png` : 'render.png';
+        if (!values.preset) {
+          rmSync(join(out, 'views'), { recursive: true, force: true });
+          mkdirSync(join(out, 'views'), { recursive: true });
+          for (const [view, data] of Object.entries(res.views))
+            writePng(join(out, 'views', `${view}.png`), data);
+        }
+        writePng(join(out, sheetFile), res.sheet);
+        console.log(`render   ${rel(join(out, sheetFile))}  (${Math.round(performance.now() - t1)} ms)`);
       }
       const clips = await page.evaluate(
         (u) => window.forge.listClips(u),
@@ -265,7 +293,7 @@ async function main(): Promise<void> {
         return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
       };
 
-      const sprites = async (clip: string | null) => {
+      const sprites = async (clip: string | null, preset: string | undefined = values.preset) => {
         const t2 = performance.now();
         const size = command === 'all' ? 128 : num(values.size, 128);
         const req: SpritesRequest = {
@@ -278,9 +306,12 @@ async function main(): Promise<void> {
           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
           margin: num(values.margin, 0.06),
           ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
+          ...(preset ? { preset } : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
-        const dir = clip ? join(out, 'sprites', clip) : join(out, 'sprites');
+        // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.
+        const base = preset ? join(out, 'sprites', 'presets', preset) : join(out, 'sprites');
+        const dir = clip ? join(base, clip) : base;
         if (clip) rmSync(dir, { recursive: true, force: true });
         else
           for (const f of ['S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE', 'sheet', 'preview'])
@@ -352,6 +383,11 @@ async function main(): Promise<void> {
         for (const c of wanted(true)) {
           await animate(c);
           await sprites(c);
+        }
+        // Every color preset gets its own sprite set (static and every clip).
+        for (const preset of Object.keys(atlas?.presets ?? {})) {
+          await sprites(null, preset);
+          for (const c of wanted(true)) await sprites(c, preset);
         }
       }
     };
