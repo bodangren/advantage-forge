@@ -68,6 +68,10 @@ const WRIST: V3 = [0.345, 0.3, 0.05];
 const HIP: V3 = [0.1, 0.25, 0];
 const ANKLE: V3 = [0.155, 0.075, 0];
 const KNEE: V3 = [0.1275, 0.1625, 0]; // the knee: splits the leg (shin.L takes the weight below it)
+// The ends of the flat bottom of the left bare foot (y = 0), measured on the SDF: heel and toe.
+// The foot turns out 14 degrees, so the toe point sits outboard of the heel.
+const SOLE_HEEL: V3 = [0.155, 0, -0.022];
+const SOLE_TOE: V3 = [0.169, 0, 0.09];
 const HEAD_Y = 0.72;
 
 /** A big fist hanging from the wrist `w`; `s` mirrors it for the right hand. */
@@ -554,24 +558,44 @@ export default defineAsset({
     });
 
     // A heavy, rolling walk: the weight shifts from side to side at each step.
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm
+    // is back. The hips' turn and sway go to gait, so the planted feet do not slide.
     // `carry` bends the axe arm (degrees) on its back swing, so the axe head stays above the floor.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, sway: number, carry = 0) => ({
+    const stride = (
+      duration: number,
+      step: number,
+      footLift: number,
+      duty: number,
+      bob: number,
+      armSwing: number,
+      lean: number,
+      sway: number,
+      carry = 0,
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 6 * s, sway * s] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 8,
+          heel: SOLE_HEEL,
+          toe: SOLE_TOE,
+          hips: { at: [0, 0.26, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 6 * s, sway * s] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, -sway * 0.6 * s] as const },
           chest: { rotate: [lean * 0.5, -10 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           knot: { rotate: [lean + 6 * wave(p, 2, 0.2), 0, 6 * wave(p, 2, 0.1)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 4] as const },
           'upperarm.R': { rotate: [-armSwing * 0.6 * s, 0, -4] as const },
           'forearm.L': { rotate: [-armSwing * 0.4 - armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
@@ -582,8 +606,9 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(1.0, 22, 20, 4, 0, 4));
-    k.animation('run', stride(0.6, 34, 36, 12, 0.025, 3, 20));
+    // A heavy brute: long, planted steps with a low swing; the run has a short flight.
+    k.animation('walk', stride(1.0, 0.11, 0.025, 0.62, 0.008, 20, 4, 4, 14));
+    k.animation('run', stride(0.6, 0.16, 0.045, 0.42, 0.03, 36, 12, 3, 20));
 
     // ------------------------------------------------------------------ attack: a heavy overhead chop, solved by targets
     // Plan (in the chest's rest frame): the axe swings back and up behind the right shoulder, the
