@@ -9,6 +9,7 @@ import { sunkenVaultPlaces } from '../../scenes/sunken-vault.js';
 
 import { oldOakClearingPlaces } from '../../scenes/old-oak-clearing.js';
 import { tavernInteriorPlaces } from '../../scenes/tavern-interior.js';
+import { villagePlaces } from '../../scenes/village.js';
 import './hamlet.css';
 
 const FLAT = new Set([
@@ -189,7 +190,9 @@ async function build(): Promise<void> {
           ? oldOakClearingPlaces()
           : sceneName === 'tavern'
             ? tavernInteriorPlaces()
-            : chibiQuestPlaces();
+            : sceneName === 'village'
+              ? villagePlaces()
+              : chibiQuestPlaces();
   const names = [...new Set(places.map((place) => place.asset))];
   await Promise.all(names.map((name) => loadAsset(name)));
   const missing = new Set<string>();
@@ -203,7 +206,7 @@ async function build(): Promise<void> {
     addPlace(source, place);
     shown += 1;
   }
-  if (sceneName === 'hamlet') addTerrainUnderlays(places);
+  if (sceneName === 'hamlet' || sceneName === 'village') addTerrainUnderlays(places);
   const waiting = [...missing].sort();
   statusEl.textContent =
     waiting.length > 0
