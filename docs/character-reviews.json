@@ -937,5 +937,34 @@
     ],
     "next": "Fix the apron speckle, make the tankard about 20 percent larger if the head clearance allows, and widen the smile.",
     "reviewedAt": "2026-09-27T13:52:13.451Z"
+  },
+  "shopkeeper": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new settlement NPC on the farmer base (the shared rogue head, skeleton, and knee bones). The plum beret with its bow, the round spectacles, the mustache, the mustard shirt with the teal vest and brass buttons, the leather apron with pockets, and the coin pouch match the mockup closely. The work clip is now weighing the coin pouch. The forge check shows result ok, and the textured build has no warnings.",
+    "strengths": [
+      "Every main feature of the mockup is present and in the right place, from the beret bow to the apron pockets.",
+      "The spectacles and mustache give a clear, friendly merchant face.",
+      "The beret is the clothing slot (plum, faded indigo, mustard ochre, olive) with three presets: jeweler, grocer, spicer."
+    ],
+    "issues": [
+      "The beret is a stronger violet than the soft lavender-plum of the mockup, and its rim is thinner.",
+      "The mustache is small at 128 px; the nose and the high sprite camera hide part of it.",
+      "The right arm holds the pouch out to the side; the mockup holds it more to the front."
+    ],
+    "next": "Soften the beret toward lavender-plum, enlarge the mustache about 25 percent, and bring the pouch arm forward.",
+    "reviewedAt": "2026-09-27T13:57:52.808Z"
   }
 }
