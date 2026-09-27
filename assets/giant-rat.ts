@@ -23,7 +23,8 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  * Rig: hips, spine, chest, neck, head with a lower jaw, arms, legs with shins and feet, and a
  *   three-bone tail. Clips: idle (breathing, sniffing), walk (a waddle), run (a low scurry),
  *   attack (a crouch, a dart with the jaws open and a claw rake, a snap), hit (a squeal, arms up),
- *   death (a stagger, then a flop onto the back).
+ *   death (a stagger, then a flop onto the back), taunt (a threat squeal: a rear-up on the toes
+ *   with the claws spread wide, the jaw wide open and a fast shake, a chatter, a drop to rest).
  */
 
 const C = {
@@ -777,6 +778,89 @@ export default defineAsset({
           tail1: { rotate: t1 },
           tail2: { rotate: t2 },
           tail3: { rotate: t3 },
+        };
+      },
+    });
+
+    // Taunt: a threat squeal. The rat rears up tall on its toes, spreads its claws wide at chest
+    // height, twitches its head (the ears and the whiskers), and lashes its tail. It squeals with
+    // the jaw wide open and the head tipped up while the body shakes fast. Then the jaw chatters
+    // shut twice and the rat drops back to rest. The feet stay planted: each foot rolls about its
+    // toe claw tips on the ground, and the legs reach the rolled ankles with IK.
+    const TAUNT: Record<string, Track> = {
+      rise: [[0, 0], [0.2, 1], [0.8, 1], [0.97, 0], [1, 0]],
+      arms: [[0, 0], [0.06, 0], [0.24, 1], [0.8, 1], [0.97, 0], [1, 0]],
+      shake: [[0, 0], [0.22, 0], [0.27, 1], [0.58, 1], [0.62, 0], [1, 0]],
+      jaw: [[0, 0], [0.16, 0], [0.26, 1], [0.6, 1], [0.65, 0], [0.7, 0.65], [0.75, 0], [1, 0]],
+      // The head's world pitch (+ = nose down): up for the squeal, a small nod at each snap.
+      look: [[0, 0], [0.18, -3], [0.28, -12], [0.6, -12], [0.65, -4], [0.7, -8], [0.75, -2], [0.8, -3], [0.97, 0], [1, 0]],
+      lash: [[0, 0], [0.1, 1], [0.85, 1], [1, 0]],
+      twitch: [[0, 0], [0.04, 0], [0.08, 1], [0.12, -1], [0.16, 0.6], [0.2, 0], [1, 0]],
+    };
+    const WRIST_WIDE: V3 = [0.3, 0.39, 0.1]; // out to the side at chest height, clear of the head
+    const TAUNT_LIFT = 0.065;
+    const TAUNT_ROLL = 22;
+    k.animation('taunt', {
+      duration: 1.5,
+      loop: false,
+      pose: (_t, p) => {
+        const v = (name: string) => kf(p, TAUNT[name]!);
+        const rise = v('rise');
+        const a = v('arms');
+        const sh = v('shake');
+        const tw = v('twitch');
+        const lash = v('lash');
+        const vib = (o: number) => sh * wave(p, 11, o);
+        const move: R3 = [0, TAUNT_LIFT * rise, 0];
+        // The planted feet: the ankles roll up about the toe claw tips.
+        const roll = TAUNT_ROLL * rise;
+        const leg = (s: 1 | -1) => {
+          const w = rolledAnkle(s > 0 ? ANKLE : mx(ANKLE), roll);
+          const rest = s > 0 ? { root: HIP, mid: KNEE, end: ANKLE } : { root: mx(HIP), mid: mx(KNEE), end: mx(ANKLE) };
+          const { upper, lower } = motion.reach(rest, [w[0] - move[0], w[1] - move[1], w[2] - move[2]], s > 0 ? KNEE_POLE : mx(KNEE_POLE));
+          const foot = orient([upper, lower], { dir: [0, 0, 1], up: [0, 1, 0] }, { dir: rotX([0, 0, 1], roll), up: rotX([0, 1, 0], roll) });
+          return { upper, lower, foot };
+        };
+        const legL = leg(1);
+        const legR = leg(-1);
+        // The upper body leans back to rear up tall; the neck gives back a part of it.
+        const sp = -7 * rise;
+        const ch = -6 * rise;
+        const neck = -0.3 * (sp + ch);
+        // The arms spread wide at chest height; the claws turn up and out.
+        const aL = motion.reach(ARM, lerp(WRIST, WRIST_WIDE, a), POLE);
+        const aR = motion.reach(ARM_R, lerp(mx(WRIST), mx(WRIST_WIDE), a), mx(POLE));
+        const pitch = -35 * a * DEG;
+        const yaw = 30 * a * DEG;
+        const handRest = { dir: [0, 0, 1] as V3, up: [0, 1, 0] as V3 };
+        const handWant = (s: 1 | -1) => ({
+          dir: [s * Math.sin(yaw) * Math.cos(pitch), -Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch)] as V3,
+          up: [s * Math.sin(yaw) * Math.sin(pitch), Math.cos(pitch), Math.cos(yaw) * Math.sin(pitch)] as V3,
+        });
+        const tremble = (r: R3 | readonly number[], o: number): R3 => [r[0]! + 5 * vib(o), r[1]!, r[2]!];
+        return {
+          hips: { move },
+          spine: { rotate: [sp, 0, 3 * vib(0)], scale: [1 - 0.02 * rise, 1 + 0.04 * rise, 1 - 0.02 * rise] },
+          chest: { rotate: [ch, 3 * vib(0.25), -2 * vib(0)] },
+          neck: { rotate: [neck, 0, 0] },
+          head: { rotate: [v('look') - sp - ch - neck, 5 * tw, 6 * tw + 4 * vib(0.5)] },
+          jaw: { rotate: [35 * v('jaw'), 0, 0] },
+          'upperarm.L': { rotate: aL.upper },
+          'upperarm.R': { rotate: aR.upper },
+          'forearm.L': { rotate: tremble(aL.lower, 0.3) },
+          'forearm.R': { rotate: tremble(aR.lower, 0.8) },
+          'hand.L': { rotate: orient([aL.upper, aL.lower], handRest, handWant(1)) },
+          'hand.R': { rotate: orient([aR.upper, aR.lower], handRest, handWant(-1)) },
+          'leg.L': { rotate: legL.upper },
+          'shin.L': { rotate: legL.lower },
+          'foot.L': { rotate: legL.foot },
+          'leg.R': { rotate: legR.upper },
+          'shin.R': { rotate: legR.lower },
+          'foot.R': { rotate: legR.foot },
+          // The tail base drops back toward the floor as the hips rise, and the tail lashes.
+          tail1: { rotate: [-8 * rise, 14 * lash * wave(p, 4), 0] },
+          tail2: { rotate: [0, 22 * lash * wave(p, 4, 0.12), 0] },
+          tail3: { rotate: [0, 30 * lash * wave(p, 4, 0.24), 0] },
         };
       },
     });
