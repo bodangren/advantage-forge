@@ -129,7 +129,7 @@ export default defineAsset({
       hairShade: k.tint('hair', { color: C.hairShade, follow: 1 }),
       skin: k.tint('skin'),
       blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
-      nose: k.tint('skin', { color: '#f0a090', follow: 0.5 }),
+      nose: k.tint('skin', { color: '#f3a47e', follow: 0.5 }),
       mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
       cloth: k.tint('clothing'),
       clothInside: k.tint('clothing', { color: C.clothInside, follow: 1 }),
@@ -166,7 +166,7 @@ export default defineAsset({
       .bone('head');
     const faceZ = (x: number, y: number) => sdf.raycast(head, [x, y, 1], [0, 0, -1])![2];
     // A big round nose between the lower halves of the eyes.
-    const nose = sdf.ellipsoid([0.044, 0.038, 0.034]).at(0, 0.585, faceZ(0, 0.585) - 0.002).bone('head');
+    const nose = sdf.ellipsoid([0.055, 0.0475, 0.0425]).at(0, 0.583, faceZ(0, 0.585) - 0.002).bone('head');
     const ears = pair(
       sdf
         .ellipsoid([0.03, 0.048, 0.034])
@@ -214,24 +214,50 @@ export default defineAsset({
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
       .paintWhere(mouth, T.mouth, 0.004)
-      .paintWhere(sdf.sphere(0.03).at(0, 0.592, faceZ(0, 0.588) + 0.03), T.nose, 0.02); // a rosy nose tip
+      .paintWhere(sdf.sphere(0.038).at(0, 0.59, faceZ(0, 0.586) + 0.036), T.nose, 0.02); // a peach nose tip
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
-    // ------------------------------------------------------------------ hood (the rogue's, without the seam)
-    const hoodOuter = sdf.smoothUnion(
-      0.07,
-      sdf.ellipsoid([0.285, 0.275, 0.272]).at(0, 0.685, -0.025),
-      sdf.cone([0, 0.9, -0.05], [0, 0.99, -0.085], 0.12, 0.022), // the soft point on top
-    );
+    // ------------------------------------------------------------------ hood: a soft crown close to the skull, draped onto the shoulders
+    // The crown hugs the hair cap and rises to a small point tipped back; it follows the head. The
+    // drape is a short cape over the shoulders and upper back, lower at the back; it follows the chest.
+    const crown = sdf
+      .smoothUnion(
+        0.06,
+        sdf.ellipsoid([0.26, 0.245, 0.25]).at(0, 0.683, -0.02),
+        sdf.cone([0, 0.85, -0.07], [0, 0.948, -0.14], 0.11, 0.02), // the soft point on top, tipped back
+        sdf.cone([0, 0.66, -0.1], [0, 0.47, -0.08], 0.155, 0.1), // the back falls straight to the drape
+      )
+      .bone('head');
+    const drape = sdf
+      .revolve(
+        profile.polygon(
+          [
+            [0, 0.13],
+            [0.11, 0.115],
+            [0.165, 0.07],
+            [0.178, 0.01],
+            [0.172, -0.04],
+            [0.158, -0.07],
+            [0, -0.07],
+          ],
+          { smooth: true, samples: 8 },
+        ),
+      )
+      .scale([1, 1, 0.9])
+      .rotateX(-14)
+      .at(0, 0.45, -0.025)
+      .smoothIntersect(0.03, sdf.halfSpace([0, 0, 1], 0.01)) // open in front: clear of the beard
+      .bone('chest');
+    const hoodOuter = sdf.smoothUnion(0.09, crown, drape);
     const cavity = sdf.ellipsoid([0.247, 0.235, 0.235]).at(0, 0.68, -0.015);
     const opening = sdf.ellipsoid([0.25, 0.23, 0.42]).at(0, 0.68, 0.3);
     // A thick rolled rim around the face opening, in the tan trim.
     const rim = hoodOuter.round(0.018).subtract(cavity.round(-0.004)).intersect(opening.round(0.04)).subtract(opening);
     const hood = sdf
       .smoothUnion(0.012, hoodOuter.subtract(cavity).smoothSubtract(0.02, opening), rim.paint(C.trim))
-      .intersect(sdf.halfSpace([0, -1, 0], -0.43))
+      .intersect(sdf.halfSpace([0, -1, 0], -0.3))
       .paintWhere(cavity.round(0.006), T.clothInside, 0.012);
-    k.body('hood', hood, { color: T.cloth, roughness: 0.85, bone: 'head' });
+    k.body('hood', hood, { color: T.cloth, roughness: 0.85 });
 
     // ------------------------------------------------------------------ hair: a cap inside the hood, bushy brows, the beard
     const insideHood = cavity.round(-0.003);
