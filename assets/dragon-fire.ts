@@ -23,7 +23,8 @@ import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/in
  * Rig: chibi humanoid (hips, spine, chest, neck, head, arms, legs) plus `jaw` and `breath` (the
  *   fire) under the head, `wing.L`/`wing.R`, and a three-bone tail. Clips: idle (breathing, wing
  *   flutter, tail sway), walk (a waddle), run, fly (a hovering wing beat), attack (a fire-breath
- *   roar: draw back with a full chest, hop forward, jaws wide, a level cone of fire), hit, death.
+ *   roar: draw back with a full chest, hop forward, jaws wide, a level cone of fire), hit, death,
+ *   roar (rear up with the wings spread, the jaws wide, a small puff of fire, a shake, a stomp).
  */
 
 const C = {
@@ -661,6 +662,82 @@ export default defineAsset({
           tail2: { rotate: k3([[0, [0, 0, 0]], [0.2, [6, 10, 0]], [0.4, [0, -12, 0]], [0.6, [0, 10, 0]], [0.8, [0, -30, 0]], [1, [0, -28, 0]]]) },
           tail3: { rotate: k3([[0, [0, 0, 0]], [0.22, [-10, 16, 0]], [0.45, [0, -18, 0]], [0.65, [0, 16, 0]], [0.85, [0, -34, 0]], [1, [0, -32, 0]]]) },
           breath: { scale: HIDE },
+        };
+      },
+    });
+
+    // A roar: it rears up (the pelvis comes over the feet, the spine arches back, the chest fills,
+    // the front claws rise, the wings spread wide and up, the tail lifts), thrusts the head forward
+    // and up with the jaws wide, puffs a small burst of fire, and holds the roar with a shake of
+    // the head and the chest. Then the jaws close, the wings fold, and it drops forward onto its
+    // front claws with a stomp (the chest squashes, the body bounces) and settles at rest.
+    // `legA` is the world pitch of both legs; the hips move so that both ankles stay exactly put.
+    const rotX = (y: number, z: number, deg: number): [number, number] => {
+      const r = deg / DEG;
+      return [y * Math.cos(r) - z * Math.sin(r), y * Math.sin(r) + z * Math.cos(r)];
+    };
+    const HIPS_AT: V3 = [0, 0.17, 0];
+    const HIP_D = [HIP[1] - HIPS_AT[1], HIP[2] - HIPS_AT[2]] as const; // the hip joint from the hips pivot
+    const LEG_D = [ANKLE[1] - HIP[1], ANKLE[2] - HIP[2]] as const; // the ankle from the hip joint
+    const ROAR: Record<string, Track> = {
+      legA: [[0, 0], [0.26, 18], [0.74, 18], [0.84, 10], [0.88, -5], [0.93, 1], [1, 0]],
+      hx: [[0, 0], [0.26, -6], [0.74, -6], [0.84, -3], [0.88, 4], [0.94, -1], [1, 0]],
+      sp: [[0, 0], [0.26, -10], [0.33, -12], [0.74, -12], [0.84, -4], [0.88, 8], [0.94, -2], [1, 0]],
+      ch: [[0, 0], [0.26, -8], [0.33, -4], [0.74, -4], [0.84, -2], [0.88, 6], [0.94, -1], [1, 0]],
+      nk: [[0, 0], [0.26, -6], [0.33, 6], [0.74, 6], [0.84, 0], [0.88, 4], [1, 0]],
+      ny: [[0, 0], [0.26, 0.02], [0.33, 0.04], [0.74, 0.04], [0.84, 0.01], [0.88, -0.005], [0.94, 0], [1, 0]],
+      nz: [[0, 0], [0.26, -0.015], [0.33, 0.05], [0.74, 0.05], [0.84, 0.01], [0.9, 0.005], [1, 0]],
+      head: [[0, 0], [0.26, -10], [0.33, -18], [0.74, -18], [0.84, -4], [0.88, 6], [0.94, -2], [1, 0]],
+      fill: [[0, 0], [0.26, 1], [0.33, 0.6], [0.74, 0.2], [0.86, 0], [1, 0]],
+      squash: [[0, 0], [0.86, 0], [0.89, 1], [0.95, 0], [1, 0]],
+      jaw: [[0, 0], [0.2, 0.1], [0.28, 0.15], [0.34, 1], [0.74, 1], [0.82, 0], [1, 0]],
+      puff: [[0, 0], [0.34, 0], [0.37, 1], [0.44, 0.8], [0.5, 0], [1, 0]],
+      shake: [[0, 0], [0.36, 0], [0.4, 1], [0.7, 1], [0.76, 0], [1, 0]],
+      spread: [[0, 0], [0.24, 1], [0.76, 1], [0.86, -0.15], [0.94, 0.05], [1, 0]],
+      raise: [[0, 0], [0.24, 1], [0.74, 1], [0.83, 0.8], [0.88, -0.1], [0.94, 0.03], [1, 0]],
+      t1: [[0, 0], [0.26, 24], [0.74, 24], [0.86, 6], [0.9, 0], [0.95, 2], [1, 0]],
+      t2: [[0, 0], [0.28, 10], [0.74, 10], [0.88, 0], [1, 0]],
+      t3: [[0, 0], [0.3, 14], [0.74, 14], [0.9, -4], [1, 0]],
+    };
+    k.animation('roar', {
+      duration: 1.8,
+      loop: false,
+      pose: (_t, p) => {
+        const v = (n: string) => keys(p, ROAR[n]!);
+        const [legA, hx, sp, ch, nk] = [v('legA'), v('hx'), v('sp'), v('ch'), v('nk')];
+        // The hips move that keeps the ankles on their rest spots after the hips and legs turn.
+        const hd = rotX(HIP_D[0], HIP_D[1], hx);
+        const ld = rotX(LEG_D[0], LEG_D[1], legA);
+        const my = HIP_D[0] - hd[0] + LEG_D[0] - ld[0];
+        const mz = HIP_D[1] - hd[1] + LEG_D[1] - ld[1];
+        const [fill, sq] = [v('fill'), v('squash')];
+        const cs: R3 = [1 + 0.08 * fill + 0.05 * sq, 1 + 0.04 * fill - 0.07 * sq, 1 + 0.08 * fill + 0.05 * sq];
+        const shake = v('shake');
+        const puff = v('puff');
+        const burst = (c: number, o: number) => Math.max(0.001, 0.25 * FLAME_FULL * puff * (1 + 0.1 * wave(p, c, o)));
+        const [spread, raise] = [v('spread'), v('raise')];
+        const flutter = 6 * shake * wave(p, 7);
+        return {
+          hips: { move: [0, my, mz], rotate: [hx, 0, 0] },
+          spine: { rotate: [sp, 0, 0] },
+          chest: { rotate: [ch, 2 * shake * wave(p, 9, 0.2), 2.5 * shake * wave(p, 9)], scale: cs },
+          neck: { rotate: [nk, 0, 0], move: [0, v('ny'), v('nz')], scale: [1 / cs[0], 1 / cs[1], 1 / cs[2]] },
+          head: { rotate: [v('head') - hx - sp - ch - nk, 7 * shake * wave(p, 8), 3 * shake * wave(p, 8, 0.25)] },
+          jaw: { rotate: [40 * v('jaw'), 0, 0] },
+          breath: { move: [0, 0, 0.08], scale: [burst(13, 0), burst(13, 0.3), burst(9, 0.6)] }, // a puff at the lips
+          'wing.L': { rotate: [-10 * spread, -14 * spread, 40 * spread + flutter] },
+          'wing.R': { rotate: [-10 * spread, 14 * spread, -40 * spread - flutter] },
+          'upperarm.L': { rotate: [-55 * raise, 0, 18 * raise] },
+          'upperarm.R': { rotate: [-55 * raise, 0, -18 * raise] },
+          'forearm.L': { rotate: [-35 * raise, 0, 0] },
+          'forearm.R': { rotate: [-35 * raise, 0, 0] },
+          'leg.L': { rotate: [legA - hx, 0, 0] },
+          'leg.R': { rotate: [legA - hx, 0, 0] },
+          'foot.L': { rotate: [-legA, 0, 0] },
+          'foot.R': { rotate: [-legA, 0, 0] },
+          tail1: { rotate: [v('t1') - hx, 0, 0] },
+          tail2: { rotate: [v('t2'), 8 * shake * wave(p, 3), 0] },
+          tail3: { rotate: [v('t3'), 10 * shake * wave(p, 3, 0.2), 0] },
         };
       },
     });
