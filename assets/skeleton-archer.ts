@@ -190,8 +190,33 @@ export default defineAsset({
   description: 'Chibi skeleton archer dungeon enemy: a grinning skull with glowing eyes in a ragged green hood, a bare ribcage, a dark cloak, a quiver, and a recurve bow.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/skeleton-archer_001.jpg',
+  // Color slots for individual archers (the first option is the default look).
+  variants: {
+    eyes: { amber: C.eye, red: '#e0200e', green: '#5cff6a' },
+    bone: { ivory: C.bone, grey: '#b5b3ab', ash: '#b39c7e' },
+    clothing: { olive: C.hood, umber: '#5a4430', slate: '#3c4552' },
+    accent: { red: C.wrap, blue: '#2c4a82', purple: '#5c2c72' },
+  },
+  presets: {
+    gravewarden: { eyes: 'green', bone: 'grey', clothing: 'slate', accent: 'blue' },
+    emberbow: { eyes: 'red', bone: 'ash', clothing: 'umber', accent: 'red' },
+    nightshade: { eyes: 'red', bone: 'ivory', clothing: 'olive', accent: 'purple' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it. The glow of the eyes follows the eyes slot too.
+    const SLOT = {
+      eye: k.tint('eyes'),
+      bone: k.tint('bone'),
+      boneShade: k.tint('bone', { color: C.boneShade, follow: 1 }),
+      hood: k.tint('clothing'),
+      hoodDark: k.tint('clothing', { color: C.hoodDark, follow: 1 }),
+      wrap: k.tint('accent'),
+      wrapDark: k.tint('accent', { color: C.wrapDark, follow: 1 }),
+      bowGrip: k.tint('accent', { color: C.bowGrip, follow: 1 }),
+      fletchRed: k.tint('accent', { color: C.fletchRed, follow: 1 }),
+    };
     // ------------------------------------------------------------------ skeleton (rig)
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -348,7 +373,7 @@ export default defineAsset({
             armBones,
             legBones,
           )
-          .paintWhere(sockets.round(0.012), C.boneShade, 0.012)
+          .paintWhere(sockets.round(0.012), SLOT.boneShade, 0.012)
           .paintWhere(sockets.round(0.002), C.socket, 0.004)
           .paintWhere(noseHole.round(0.003), C.socket, 0.003),
         teeth.bone('head'), // unpainted: the teeth keep the light bone color
@@ -358,11 +383,11 @@ export default defineAsset({
         const n = noise.fbm(x * 22, y * 22, z * 22, 2);
         return n > 0.35 ? [base[0] * 0.93, base[1] * 0.9, base[2] * 0.84] : base;
       });
-    k.body('bone', bone, { color: C.bone, roughness: 0.6, textureDensity: 2 });
+    k.body('bone', bone, { color: SLOT.bone, roughness: 0.6, textureDensity: 2 });
 
     const handR = alignY(boneHangLocal(1), sub(ELBOW_R, WRIST_R), WRIST_R);
     k.body('hand-bones', sdf.union(handR.bone('hand.R'), boneGrip(GRIP).bone('hand.L')), {
-      color: C.bone,
+      color: SLOT.bone,
       roughness: 0.6,
       detail: 0.0035,
     });
@@ -374,7 +399,7 @@ export default defineAsset({
     // Glowing eyes deep in the sockets, with dark pupils and one highlight each.
     const eyeAt = (x: number): V3 => [x - Math.sign(x) * 0.004, EYE[1] - 0.01, faceZ(Math.abs(x), EYE[1]) - 0.04];
     const eyes = sdf.union(sdf.sphere(0.026).at(...eyeAt(EYE[0])), sdf.sphere(0.026).at(...eyeAt(-EYE[0])));
-    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.4 });
+    k.body('eyes', eyes.bone('head'), { color: SLOT.eye, roughness: 0.2, emissive: SLOT.eye, emissiveIntensity: 1.4 });
     const pupils = sdf.union(
       ...[EYE[0], -EYE[0]].map((x) => {
         const e = eyeAt(x);
@@ -410,7 +435,7 @@ export default defineAsset({
         const n = noise.fbm(x * 9, y * 9, z * 9, 3);
         return n > 0.25 ? [base[0] * 0.84, base[1] * 0.86, base[2] * 0.82] : base; // grime
       });
-    k.body('hood', hood, { color: C.hood, roughness: 0.9, bone: 'head', bump: weave });
+    k.body('hood', hood, { color: SLOT.hood, roughness: 0.9, bone: 'head', bump: weave });
 
     // ------------------------------------------------------------------ mantle over the shoulders (ragged hem)
     const mantleSolid = sdf
@@ -456,7 +481,7 @@ export default defineAsset({
     const mantle = mantleSolid
       .subtract(tears(7, 0.374, 1))
       .smoothSubtract(0.012, chestWindow)
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.405), C.hoodDark, 0.025);
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.405), SLOT.hoodDark, 0.025);
     // Skinned, not rigid: the cap over each shoulder follows its mantle bone (the upper arm's pose),
     // so a raised arm lifts it instead of going into it. The collar and the front and back panels
     // stay on the chest. A band around the cap is in both tagged parts, so it takes half of each
@@ -472,7 +497,7 @@ export default defineAsset({
       mantle.intersect(bandZone(-1)).bone('mantle.R'),
       mantle.subtract(hard(capZone)).bone('chest'),
     );
-    k.body('mantle', mantleSkin, { color: C.hood, roughness: 0.9, bump: weave });
+    k.body('mantle', mantleSkin, { color: SLOT.hood, roughness: 0.9, bump: weave });
 
     // ------------------------------------------------------------------ cloak (behind; frames the bones)
     const cloakSolid = sdf
@@ -564,13 +589,13 @@ export default defineAsset({
           sdf
             .torus(0.028, 0.0095)
             .rotateX(i % 2 ? 10 : -8)
-            .paintWhere(sdf.halfSpace([0, -1, 0], 0.004), C.wrapDark, 0.006),
+            .paintWhere(sdf.halfSpace([0, -1, 0], 0.004), SLOT.wrapDark, 0.006),
           dirR,
           lerp(ELBOW_R, WRIST_R, t),
         ),
       ),
     );
-    k.body('wraps', wraps.bone('forearm.R'), { color: C.wrap, roughness: 0.85 });
+    k.body('wraps', wraps.bone('forearm.R'), { color: SLOT.wrap, roughness: 0.85 });
 
     const dirL = norm(sub(WRIST_L, ELBOW_L));
     const bracerLocal = sdf
@@ -666,7 +691,7 @@ export default defineAsset({
           .rotateX(tilt)
           .rotateY(yaw)
           .at(...lerp(base, top, 0.83));
-        return sdf.union(sdf.capsule(base, top, 0.006), f.paint(i % 2 ? C.fletchBlack : C.fletchRed));
+        return sdf.union(sdf.capsule(base, top, 0.006), f.paint(i % 2 ? C.fletchBlack : SLOT.fletchRed));
       }),
     );
     k.body('arrows', quiverPose(arrows).bone('chest'), { color: C.shaft, roughness: 0.7, detail: 0.004 });
@@ -697,7 +722,7 @@ export default defineAsset({
     };
     const UPPER = 0.31;
     const LOWER = 0.2;
-    const bowLocal = sdf.union(limb(UPPER, 1, 1), limb(LOWER, -1, 0.75)).paintWhere(sdf.box([0.1, 0.085, 0.1]), C.bowGrip);
+    const bowLocal = sdf.union(limb(UPPER, 1, 1), limb(LOWER, -1, 0.75)).paintWhere(sdf.box([0.1, 0.085, 0.1]), SLOT.bowGrip);
     const nockTop: V3 = [0, 0.9 * UPPER, -0.072];
     const nockBottom: V3 = [0, -0.9 * LOWER, -0.072];
     // The back of the bow faces out (+X), so the front view shows the whole curve.
@@ -718,7 +743,7 @@ export default defineAsset({
     const shotArrow = sdf.union(
       sdf.capsule([0, 0.15, 0], [0, 0.44, 0], 0.0058),
       sdf.cone([0, 0.16, 0], [0, 0.115, 0], 0.013, 0.002).paint('#8a8e94'),
-      fletching.rotateX(180).at(0, 0.436, 0).paint(C.fletchRed),
+      fletching.rotateX(180).at(0, 0.436, 0).paint(SLOT.fletchRed),
     );
     k.body('nocked-arrow', quiverPose(shotArrow), { color: C.shaft, roughness: 0.7, detail: 0.0035, bone: 'arrow' });
 
