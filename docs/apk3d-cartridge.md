@@ -96,7 +96,7 @@ The two are one discriminated union in the port: `RuntimeCartridge = PhaserCartr
 ThreeCartridge`, discriminated by `manifest.renderer`.
 
 ```ts
-// src/apk3d/contracts/cartridge.ts
+// src/apk3d/factory/types.ts (kit layer: it names the stage, HUD, and audio APIs, so it is not in contracts)
 export interface ThreeCartridge {
   manifest: Cartridge3DManifest;
   createGame(context: Game3DContext): Promise<Game3DInstance>;
@@ -185,7 +185,6 @@ Route order: `#/` selector, `#/read/<story>` reader, `#/play/<game>/<story>` bri
 src/apk3d/                         the 3D kit; moves as one package (@reading-advantage/apk3d)
   contracts/story-input.ts         StoryInput zod schema, derivations (section 5)
   contracts/manifest.ts            Cartridge3DManifest schema
-  contracts/cartridge.ts           ThreeCartridge, Game3DContext, Game3DInstance
   contracts/results.ts             toGameResults, outcome rule
   contracts/evidence.ts            storyGameEvidenceSchema
   contracts/model-asset.ts         ModelAssetFile, ModelPack, RuntimeEdition3D
@@ -207,6 +206,7 @@ src/apk3d/                         the 3D kit; moves as one package (@reading-ad
   device/gate.ts                   checkDevice(): GateResult (section 9)
   device/tier.ts                   quality tier from the gate result
   i18n/catalog.ts                  createI18n(catalog), scope, interpolation
+  factory/types.ts                 ThreeCartridge, Game3DContext, Game3DInstance
   factory/three-factory.ts         createThreeGameFactory(), selectGameFactory()
   qc/driver.ts                     window.__apk3d hook, screenshot points
   index.ts
@@ -241,6 +241,7 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | `src/apk3d/contracts` | `zod` only |
 | `src/apk3d/sim` | `contracts` |
 | `src/apk3d/stage`, `hud`, `audio` | `contracts`, `sim`, `three` |
+| `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three` |
 | `src/games/*/core` | `src/apk3d/contracts`, `src/apk3d/sim` |
 | `src/games/*/view`, `briefing.ts` | its own `core`, `src/apk3d/*` |
 | `src/host` | `src/apk3d/*`, `src/games/*/index.ts` |
@@ -347,8 +348,8 @@ and is short (Monster Encounters repeats items; Potion Rush ends when the senten
 | `correctAnswers` | count of correct responses in the run |
 | `totalAttempts` | count of all responses |
 | `accuracy` | `correctAnswers / totalAttempts`, 0 when no attempts |
-| `xp` | kit policy: 10 per first-try correct item, 5 per later correct item, 20 per stage cleared, 50 on victory; cosmetic (matches Monster Encounters today) |
-| `score` | the game's own display points, integer; a game with no points uses `xp` |
+| `xp` | the apps' rule, copied exactly: `calculateXP = floor(correctAnswers * accuracy)` (`reading-advantage/lib/games/xp.ts`, `advantage-games/src/lib/xp.ts`). The results screen shows "+N XP", as the apps do (owner decision). Speed never changes `xp` |
+| `score` | the game's own points, integer, shown in the HUD during play (Potion Rush: coins and tips; Monster Encounters: damage). Speed may add to `score` (tips); the apps do not use `score` for XP |
 
 ### 6.2 Outcome
 
@@ -393,7 +394,7 @@ export const modelAssetFileSchema = z.object({
   clips: z.array(z.string()), presets: z.array(z.string()),
   provenance: z.object({
     source: z.string(),          // 'fantasy-asset-forge/assets/knight.ts'
-    license: z.string(),         // the project license label
+    license: z.string(),         // 'AGPL-3.0-or-later' (owner decision; LICENSE at the repo root)
     forgeCommit: z.string(),     // git sha of the source at build time
     tool: z.literal('scripts/apk3d-models.ts'),
   }),
@@ -586,7 +587,7 @@ stage, HUD, screens, audio, game feel (Claude).
 
 | # | Task | Owner |
 | --- | --- | --- |
-| 1 | `src/apk3d/contracts/*`: story input, manifest, cartridge, results, evidence, model asset, i18n types; tests | BACKEND |
+| 1 | `src/apk3d/contracts/*`: story input, manifest, results, evidence, model asset, briefing, i18n types, APK copies; tests | BACKEND |
 | 2 | `src/apk3d/sim/*`: rng move, `Simulation`, fixed-step loop, recorder; tests | BACKEND |
 | 3 | `scripts/apk3d-import.ts`; rewrite the three story packs; story index with levels | BACKEND |
 | 4 | `src/apk3d/i18n/catalog.ts` + key scan test + import rule test | BACKEND |
@@ -594,7 +595,7 @@ stage, HUD, screens, audio, game feel (Claude).
 | 6 | `src/apk3d/stage/*` from `stage.ts` (renderer, loader with sha256 cache, actor, camera) | FRONTEND |
 | 7 | `src/apk3d/hud/*` widgets, root, safe area, drag helper | FRONTEND |
 | 8 | `src/apk3d/audio/*` move; unlock on Start | FRONTEND |
-| 9 | `src/apk3d/factory/three-factory.ts` with the lifecycle table of section 2.3 | FRONTEND |
+| 9 | `src/apk3d/factory/types.ts` and `three-factory.ts` with the lifecycle table of section 2.3 | FRONTEND |
 | 10 | `src/host/*`: router with whoosh, selector (level, story, game), gate screen, briefing screen from the APK briefing shape, results, class boss, persistence | FRONTEND |
 | 11 | Monster Encounters core into `games/monster-encounters/core` as a `Simulation`; replay test | BACKEND |
 | 12 | Monster Encounters view, manifest, briefing, strings | FRONTEND |
@@ -608,16 +609,16 @@ stage, HUD, screens, audio, game feel (Claude).
 | 20 | `docs/apk-port.md` from the outline in section 14 | BACKEND |
 | 21 | Dragon Flight 3D (rail runner) core and view, same steps as 15 to 19 | both |
 
-## 13. Questions for the owner (decision l)
+## 13. Owner decisions (2026-09-27)
 
-| Question | Recommendation |
+| Question | Decision |
 | --- | --- |
-| Potion Rush patience timers versus the "no speed" guardrail (mastery strategy rule 7: speed must not be the dominant success condition). | Keep patience as a gentle meter: a customer who waits too long sits down and asks again later; nothing is lost, no reputation drop, no game over. Speed never changes the results or the evidence. Difficulty setting removed. |
-| Thai glosses: some story packs have model-written glosses (`translationsGenerated`). Show them without review? | Show them; mark the story index entry `reviewed: false`; a Thai speaker reviews before the APK port. |
-| The class boss in the standalone host is simulated. Keep it in the public demo? | Keep it, labeled "example class" in the catalog text. |
-| Model license label in provenance. | The repo's project license label; the owner confirms the exact SPDX string. |
-| Hero looks unlocked by stars are stored in `localStorage` only. Acceptable for the public site? | Yes; the APK owns persistence at port time. |
-| Score display: `GameResults.score` shows nothing new for Monster Encounters. Show stars only? | Show stars and the practice list; never show a numeric score to students. |
+| Potion Rush patience versus the "no speed" guardrail | A customer who waits too long sits down and asks again later; no loss, no game over, no difficulty setting. The genre is time management, so the game keeps excitement: a rush of customers, a patience meter with visible moods, a combo streak, and tips for fast service. Tips add to `score` only, never to `xp` or the evidence. |
+| Stories with no Thai glosses or images (the two A1 stories) | These are demos: add generated glosses marked `reviewed: false` and a plain cover. A Thai speaker reviews before the APK port. |
+| The simulated class boss | Keep it in the public demo, labeled "example class". |
+| License | `AGPL-3.0-or-later` for the repo and the model provenance. |
+| Hero looks in `localStorage` | Yes for the public site; the APK owns persistence at port time. |
+| Score or XP on the results screen | Show the awarded XP ("+N XP", the apps' rule), the stars, and the practice list. |
 
 ## 14. Outline of `docs/apk-port.md`
 
