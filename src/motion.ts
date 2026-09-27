@@ -299,3 +299,41 @@ export function gait(phase: number, leg: LegJoints, o: GaitOptions): { hipsY: nu
   }
   return { hipsY, pose };
 }
+
+/**
+ * One leg to an ankle target, with the sole at a pitch: a planted foot in a crouch or a lunge,
+ * or a lifted foot in a hop. `ankle` is in world meters; `hips` is the hips' pose in the same
+ * frame (the bone's pivot `at`, and its `move` and `rotate`), so a planted foot stays where it
+ * is while the hips drop, move, or turn. `pitch` is the sole's world pitch in degrees (+ is toe
+ * down; 0 keeps it flat on the floor). `side` 'R' mirrors the left leg's rest joints in x.
+ * Returns the `leg`, `shin`, and `foot` rotate values for that side.
+ */
+export function legTo(
+  side: 'L' | 'R',
+  leg: LegJoints,
+  ankle: Vec3,
+  o: { hips?: { readonly at: Vec3; readonly move?: Vec3; readonly rotate?: Vec3 }; pitch?: number } = {},
+): { leg: Vec3; shin: Vec3; foot: Vec3 } {
+  const sx = side === 'L' ? 1 : -1;
+  const m = (p: Vec3): Vec3 => [p[0] * sx, p[1], p[2]];
+  const hip = m(leg.hip);
+  const knee = m(leg.knee);
+  const rest = m(leg.ankle);
+  const hipsRot: Vec3 = o.hips?.rotate ?? [0, 0, 0];
+  const pivot = v3(o.hips?.at ?? [0, 0, 0]);
+  const local = v3(ankle)
+    .sub(v3(o.hips?.move ?? [0, 0, 0]))
+    .sub(pivot)
+    .applyQuaternion(quat(hipsRot).invert())
+    .add(pivot);
+  const t = (o.pitch ?? 0) * DEG;
+  const want = { dir: [0, -Math.sin(t), Math.cos(t)] as Vec3, up: [0, Math.cos(t), Math.sin(t)] as Vec3 };
+  const flat = { dir: [0, 0, 1] as Vec3, up: [0, 1, 0] as Vec3 };
+  if (local.distanceTo(v3(rest)) < 1e-6) {
+    const parents: Vec3[] = o.hips?.rotate ? [hipsRot] : [];
+    return { leg: [0, 0, 0], shin: [0, 0, 0], foot: orient([...parents, [0, 0, 0], [0, 0, 0]], flat, want) };
+  }
+  const ik = reach({ root: hip, mid: knee, end: rest }, [local.x, local.y, local.z], [hip[0], knee[1], knee[2] + 0.3]);
+  const parents: Vec3[] = o.hips?.rotate ? [hipsRot, ik.upper, ik.lower] : [ik.upper, ik.lower];
+  return { leg: ik.upper, shin: ik.lower, foot: orient(parents, flat, want) };
+}

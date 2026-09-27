@@ -124,3 +124,20 @@ describe('gait', () => {
   });
 });
 
+describe('legTo', () => {
+  it('keeps a planted ankle where it is while the hips drop and turn', async () => {
+    const { legTo, follow, quat } = await import('../src/motion.js');
+    const THREE = await import('three');
+    const leg = { hip: [0.068, 0.195, 0], knee: [0.083, 0.1325, 0], ankle: [0.098, 0.07, 0] } as const;
+    const hips = { at: [0, 0.2, 0] as [number, number, number], move: [0, -0.04, 0.01] as [number, number, number], rotate: [0, 12, 0] as [number, number, number] };
+    const r = legTo('R', leg, [-0.098, 0.07, 0], { hips });
+    expect(r.shin[0]).toBeGreaterThan(10); // the knee bends
+    // The posed ankle: follow the leg chain in the hips' rest frame, then apply the hips' pose.
+    const inHips = follow([[-0.068, 0.195, 0], [-0.083, 0.1325, 0], [-0.098, 0.07, 0]], [r.leg, r.shin, r.foot], [-0.098, 0.07, 0]);
+    const w = new THREE.Vector3(...inHips).sub(new THREE.Vector3(...hips.at)).applyQuaternion(quat(hips.rotate)).add(new THREE.Vector3(...hips.at)).add(new THREE.Vector3(...hips.move));
+    expect(w.x).toBeCloseTo(-0.098, 3);
+    expect(w.y).toBeCloseTo(0.07, 3);
+    expect(w.z).toBeCloseTo(0, 3);
+  });
+});
+

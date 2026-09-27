@@ -169,6 +169,10 @@ wind-up, cuts through the body, or turns flat-side first. Plan the weapon's path
 - `follow(joints, rotations, point)`: where a point bound to the chain goes (forward
   kinematics): the posed grip of a two-handed weapon, so the other hand can `reach` it.
 - `keys(p, [[phase, value], ...], mode)`: keyframes for numbers or [x, y, z] values.
+- **Legs with knees, the short way**: `legTo('L', { hip: HIP, knee: KNEE, ankle: ANKLE },
+  worldAnkle, { hips: { at, move, rotate }, pitch })` returns `{ leg, shin, foot }` for a planted
+  or lifted foot: pass the hips' own pose and the planted foot stays put while the hips drop or
+  turn (crouch, lunge, hop, kneel); `pitch` is the sole's world pitch (0 flat, + toe down).
 - **Legs with knees**: solve a planted or stepping foot with `reach({ root: HIP, mid: KNEE,
   end: ANKLE }, ankleTarget, pole)` with the pole in front of the knee (`[x, KNEE[1], 0.3]`):
   `upper` goes to `leg.L`, `lower` to `shin.L`. Give the foot the opposite pitch so the sole
