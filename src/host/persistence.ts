@@ -8,6 +8,10 @@ const KEY = 'chibi-quest';
 export interface Saved {
   /** Hero id to the chosen color preset. */
   looks: Record<string, string>;
+  /** Hero id to the color presets the student has unlocked (3-star rewards). */
+  unlocked: Record<string, string[]>;
+  /** The hero the student plays. */
+  hero?: string | undefined;
   level?: string | undefined;
   story?: string | undefined;
   game?: string | undefined;
@@ -19,9 +23,13 @@ function read(): Saved {
     const raw = JSON.parse(localStorage.getItem(KEY) ?? '{}') as Partial<Saved>;
     // Looks saved by the first demo version.
     const old = JSON.parse(localStorage.getItem('chibi-quest-looks') ?? '{}') as Record<string, string>;
-    return { ...raw, looks: { ...old, ...(raw.looks ?? {}) } };
+    const looks = { ...old, ...(raw.looks ?? {}) };
+    // A look chosen before unlocks were tracked counts as unlocked.
+    const unlocked: Record<string, string[]> = { ...(raw.unlocked ?? {}) };
+    for (const [hero, look] of Object.entries(looks)) if (look !== 'default' && !unlocked[hero]?.includes(look)) unlocked[hero] = [...(unlocked[hero] ?? []), look];
+    return { ...raw, looks, unlocked };
   } catch {
-    return { looks: {} };
+    return { looks: {}, unlocked: {} };
   }
 }
 

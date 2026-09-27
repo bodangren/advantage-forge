@@ -26,6 +26,8 @@ const MOOD_CLIP = { happy: 'talk', waiting: 'idle', grumpy: 'taunt' } as const;
 interface Item {
   obj: THREE.Object3D;
   tag: HTMLButtonElement;
+  /** An invisible area over the 3D ingredient: grabbing the object also drags its word. */
+  grab: HTMLElement;
   flying: boolean;
   undrag: () => void;
 }
@@ -41,8 +43,11 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const story = ctx.input as StoryInput;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
-  await stage.loader.preload(SHOP_MODELS.map(model));
-  const shop = buildShop(stage);
+  const hero = ctx.options.hero || 'wizard';
+  await stage.loader.preload([...SHOP_MODELS, hero].map(model));
+  const shop = buildShop(stage, hero);
+  const look = ctx.options.looks[hero];
+  if (look && look !== 'default') void stage.loader.texture(`models/${hero}/${look}.webp`).then((tex) => shop.alchemist.setMap(tex)).catch(() => undefined);
   /** The teal brew of an idle cauldron. */
   const baseBrew = shop.brews[0]!.clone();
   const shots = new ShotRig(0.06);
@@ -95,13 +100,24 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     z.dataset.cauldron = String(i);
     z.innerHTML = `<span class="count"></span><span class="serve">${esc(t('serve'))}</span>`;
     z.addEventListener('click', () => {
-      if (sim.state.cauldrons[i]?.ready) loop.dispatch({ type: 'serve', cauldron: i });
+      if (held) {
+        const itemId = held;
+        release();
+        loop.dispatch({ type: 'drop', itemId, cauldron: i });
+      } else if (sim.state.cauldrons[i]?.ready) loop.dispatch({ type: 'serve', cauldron: i });
     });
     return hud.anchor(z, cauldronPoint(i, 0.55));
   });
 
   // ---------------------------------------------------------------- the conveyor
   const items = new Map<string, Item>();
+  /** Click-then-click: a word the student picked up by a click, waiting for a cauldron click. */
+  let held: string | null = null;
+  const release = (): void => {
+    if (held) items.get(held)?.tag.classList.remove('held');
+    held = null;
+    hud.el.classList.remove('dragging-word');
+  };
   const ingredient = (kind: string): THREE.Object3D => {
     const g = stage.loader.get(model(kind));
     const obj = g ? g.scene.clone() : new THREE.Mesh(new THREE.SphereGeometry(0.12), new THREE.MeshStandardMaterial({ color: 0xcccccc }));
@@ -123,31 +139,53 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     tag.className = 'word-tag';
     tag.dataset.item = itemId;
     tag.textContent = word;
-    const it: Item = { obj, tag, flying: false, undrag: () => undefined };
+    const grab = document.createElement('div');
+    grab.className = 'grab';
+    const it: Item = { obj, tag, grab, flying: false, undrag: () => undefined };
+    hud.anchor(grab, () => stage.screenOfPoint(obj.position.clone().add(new THREE.Vector3(0, 0.12, 0))));
     hud.anchor(tag, () => stage.screenOfPoint(obj.position.clone().add(new THREE.Vector3(0, 0.34, 0))));
-    it.undrag = makeDraggable(tag, {
-      tap: () => {
-        const target = targetFor(sim.state, itemId);
-        if (target !== null) loop.dispatch({ type: 'drop', itemId, cauldron: target });
-        else tag.animate([{ transform: 'translate(-50%,-100%) scale(1)' }, { transform: 'translate(-50%,-100%) scale(1.15)' }, { transform: 'translate(-50%,-100%) scale(1)' }], { duration: 260 });
+    it.undrag = makeDraggable(
+      tag,
+      {
+        tap: () => {
+          // One cauldron needs this word: it flies there. Otherwise the word waits in the hand
+          // until the student clicks a cauldron (click-then-click, for mouse users too).
+          const target = targetFor(sim.state, itemId);
+          if (target !== null) {
+            release();
+            loop.dispatch({ type: 'drop', itemId, cauldron: target });
+            return;
+          }
+          const same = held === itemId;
+          release();
+          if (same) return;
+          held = itemId;
+          tag.classList.add('held');
+          hud.el.classList.add('dragging-word');
+          audio.play('tap');
+        },
+        start: () => {
+          release();
+          hud.el.classList.add('dragging-word');
+          audio.play('tap');
+        },
+        drop: (x, y) => {
+          hud.el.classList.remove('dragging-word');
+          dropAt(itemId, x, y);
+        },
       },
-      start: () => {
-        hud.el.classList.add('dragging-word');
-        audio.play('tap');
-      },
-      drop: (x, y) => {
-        hud.el.classList.remove('dragging-word');
-        dropAt(itemId, x, y);
-      },
-    });
+      [grab],
+    );
     items.set(itemId, it);
   }
 
   function removeItem(itemId: string): void {
     const it = items.get(itemId);
     if (!it) return;
+    if (held === itemId) release();
     it.undrag();
     hud.unanchor(it.tag);
+    hud.unanchor(it.grab);
     it.obj.removeFromParent();
     items.delete(itemId);
   }
@@ -158,6 +196,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     if (!it) return;
     it.flying = true;
     it.tag.classList.add('gone');
+    it.grab.remove();
     const from = it.obj.position.clone();
     const to = new THREE.Vector3(LAYOUT.cauldrons[i]![0], 0.75, LAYOUT.cauldrons[i]![2]);
     void stage.timeline

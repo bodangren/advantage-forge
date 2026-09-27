@@ -11,7 +11,7 @@ export const model = (name: string): string => `models/${name}.glb`;
 
 /** Models the shop needs before the first frame (customers load later, one kind at a time). */
 export const SHOP_MODELS = [
-  'wizard', 'counter', 'shelf', 'bottle', 'cauldron', 'fireplace', 'candle-cluster', 'crate', 'barrel', 'sack', 'wood-floor',
+  'counter', 'shelf', 'bottle', 'cauldron', 'fireplace', 'candle-cluster', 'crate', 'barrel', 'sack', 'wood-floor',
   'plaster-wall', 'plaster-wall-window', 'plaster-wall-door', 'round-table', 'stool', 'lantern', 'chandelier',
   'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread',
 ];
@@ -99,7 +99,8 @@ function runeTexture(): THREE.CanvasTexture {
   return tex;
 }
 
-export function buildShop(stage: Stage3D): Shop {
+/** `hero` is the student's hero model ('knight', 'wizard', 'cleric'): the alchemist. */
+export function buildShop(stage: Stage3D, hero: string): Shop {
   const scene = stage.scene;
   scene.background = new THREE.Color('#1c1426');
   scene.fog = new THREE.Fog('#1c1426', 12, 24);
@@ -189,9 +190,9 @@ export function buildShop(stage: Stage3D): Shop {
   strip.receiveShadow = true;
   scene.add(strip);
 
-  // The alchemist: the Wizard, facing the cauldrons.
-  const g = stage.loader.get(model('wizard'))!;
-  const alchemist = stage.addActor(new Actor('wizard', g, stage.timeline));
+  // The alchemist: the student's hero, facing the cauldrons.
+  const g = stage.loader.get(model(hero)) ?? stage.loader.get(model('wizard'))!;
+  const alchemist = stage.addActor(new Actor(hero, g, stage.timeline));
   alchemist.placeAt(LAYOUT.alchemist[0], 0, LAYOUT.alchemist[2], 70);
 
   return { alchemist, brews, runes };

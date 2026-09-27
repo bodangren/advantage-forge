@@ -70,6 +70,20 @@ export class Lobby {
     this.stage.setRig(band ? this.close : this.wide);
   }
 
+  /** The chosen hero steps forward (the others step back a little) and cheers. */
+  focus(hero: string): void {
+    for (const [id, actor] of this.actors) {
+      const [x, y, z] = SPOTS[id as keyof typeof SPOTS];
+      const to = new THREE.Vector3(x * (id === hero ? 0 : 1.1), y, id === hero ? 0.3 : z - 0.15);
+      const from = actor.root.position.clone();
+      void this.stage.timeline.tween(0.45, (u) => {
+        actor.root.position.lerpVectors(from, to, u * u * (3 - 2 * u));
+        actor.home.copy(actor.root.position);
+      });
+    }
+    this.cheer(hero);
+  }
+
   /** A hero cheers (a look chosen, a game picked). */
   cheer(hero?: string): void {
     const list = hero ? [this.actors.get(hero)] : [...this.actors.values()];

@@ -6,12 +6,6 @@
 import { firstTryAccuracy, starsOf, type GameResults, type StoryGameEvidence, type Translate } from '../apk3d/contracts/index.js';
 import { esc } from '../apk3d/hud/index.js';
 
-export const PRESETS: Record<string, string[]> = {
-  knight: ['royal', 'champion', 'warden'],
-  wizard: ['frost', 'mystic', 'sage'],
-  cleric: ['templar', 'bishop', 'pilgrim'],
-};
-
 export interface Run {
   game: string;
   story: string;
@@ -19,21 +13,18 @@ export interface Run {
   evidence: StoryGameEvidence;
 }
 
-export function renderResults(el: HTMLElement, run: Run, looks: Readonly<Record<string, string>>, heroName: (hero: string) => string, t: Translate): void {
+/**
+ * `unlockedNow` is the look this run unlocked (3 stars), or null; `heroName` names the hero.
+ */
+export function renderResults(el: HTMLElement, run: Run, unlockedNow: { hero: string; look: string } | null, allOpen: boolean, heroName: (hero: string) => string, t: Translate): void {
   const stars = starsOf(run.evidence);
   const pct = Math.round(firstTryAccuracy(run.evidence.items) * 100);
   const answers = run.evidence.items.map((i) => `<span class="chip ${i.correctFirstTry ? 'ok' : ''}">${esc(i.label)}</span>`).join('');
   const practice = run.evidence.practice.map((p) => `<span class="chip">${esc(p)}</span>`).join('');
-  const reward =
-    stars === 3
-      ? `<div class="reward">${esc(t('host.results.rewardUnlocked'))}
-          ${Object.keys(PRESETS)
-            .map(
-              (h) => `<div class="hero-name">${esc(heroName(h))}</div><div class="presets">${['default', ...PRESETS[h]!]
-                .map((p) => `<button data-look="${h}:${p}" class="${(looks[h] ?? 'default') === p ? 'sel' : ''}">${esc(p === 'default' ? t('host.results.default') : p)}</button>`)
-                .join('')}</div>`,
-            )
-            .join('')}</div>`
+  const reward = unlockedNow
+    ? `<div class="reward">${esc(t('host.results.rewardUnlocked', { hero: heroName(unlockedNow.hero), look: unlockedNow.look }))}</div>`
+    : stars === 3 && allOpen
+      ? `<div class="reward">${esc(t('host.results.rewardAll'))}</div>`
       : `<div class="reward">${esc(t('host.results.rewardHint'))}</div>`;
   el.innerHTML = `
     <div class="panel">

@@ -10,6 +10,8 @@ export default {
     back: 'Back',
     sound: 'Sound',
     selector: {
+      hero: 'Hero',
+      lookLocked: '⭐ 3 stars unlock a new look',
       level: 'Level',
       comingSoon: 'Coming soon',
       story: 'Choose a story',
@@ -47,7 +49,8 @@ export default {
       xpNote: 'Stars show how many you knew on the first try: {pct}%.',
       storyWords: 'Your answers',
       practice: 'Practice these again',
-      rewardUnlocked: '⭐ New look unlocked! Choose a hero’s colors:',
+      rewardUnlocked: '⭐ New look unlocked: {hero} “{look}”! It is on now; change it on the first screen.',
+      rewardAll: '⭐ Every look is unlocked for this hero!',
       rewardHint: 'Get 3 stars to unlock new hero colors!',
       again: 'Play again',
       other: 'Another game',

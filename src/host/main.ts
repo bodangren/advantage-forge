@@ -5,7 +5,7 @@
  * host stands in for the app pages (see docs/apk-port.md).
  */
 /// <reference types="vite/client" />
-import { CARTRIDGE_3D_RUNTIME_API_VERSION, classBossDamage, type RuntimeEdition3D, type StoryInput } from '../apk3d/contracts/index.js';
+import { CARTRIDGE_3D_RUNTIME_API_VERSION, classBossDamage, starsOf, type RuntimeEdition3D, type StoryInput } from '../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../apk3d/audio/index.js';
 import { checkDevice } from '../apk3d/device/gate.js';
 import { createThreeGameFactory, type Composition3D, type MountedThreeGame, type ThreeCartridge } from '../apk3d/factory/index.js';
@@ -22,7 +22,7 @@ import { Reader } from './reader.js';
 import { gameById, GAME_STRINGS, type GameEntry } from './registry.js';
 import { renderResults, type Run } from './results.js';
 import { parseRoute, routeHash, Screens, type Route } from './router.js';
-import { Selector, type SelectorChoice } from './selector.js';
+import { PRESETS, Selector, type SelectorChoice } from './selector.js';
 import hostStrings from './strings.en.js';
 import '../apk3d/hud/theme.css';
 import './host.css';
@@ -75,7 +75,10 @@ const composition = (): Composition3D => ({ profile: compactQuery.matches ? 'com
 
 // ---------------------------------------------------------------- state
 const saved = persistence.load();
-let choice: SelectorChoice = { level: saved.level ?? 'A0', story: saved.story ?? null, game: saved.game ?? null, helper: saved.helper ?? true };
+const savedHero = saved.hero ?? 'knight';
+let choice: SelectorChoice = { level: saved.level ?? 'A0', story: saved.story ?? null, game: saved.game ?? null, helper: saved.helper ?? true, hero: savedHero, look: saved.looks[savedHero] ?? 'default' };
+/** The look this run unlocked (shown on the results screen once). */
+let unlockedNow: { hero: string; look: string } | null = null;
 let story: StoryInput | null = null;
 let entry: GameEntry | null = null;
 let cartridge: ThreeCartridge | null = null;
@@ -104,17 +107,23 @@ const selector = new Selector(
     story: (id) => void content.story(id).then((s) => selector.setStory(s)),
     change: (c) => {
       choice = c;
-      persistence.save({ level: c.level, story: c.story ?? undefined, game: c.game ?? undefined, helper: c.helper });
+      persistence.save({ level: c.level, story: c.story ?? undefined, game: c.game ?? undefined, helper: c.helper, hero: c.hero, looks: { ...persistence.load().looks, [c.hero]: c.look } });
+    },
+    hero: (hero, look) => {
+      void lobby.setLooks({ ...persistence.load().looks, [hero]: look });
+      lobby.focus(hero);
     },
     read: (c) => {
       choice = c;
-      lobby.cheer('wizard');
+      lobby.cheer(c.hero);
       void go({ name: 'read', story: c.story! });
     },
     tap: () => audio.play('tap'),
   },
   choice,
+  () => persistence.load().unlocked,
 );
+selector.savedLooks = { ...saved.looks };
 
 const reader = new Reader(el.reader, t, (id, name) => content.file(id, name), {
   next: () => {
@@ -142,17 +151,6 @@ el.briefing.addEventListener('click', (e) => {
 
 el.results.addEventListener('click', (e) => {
   const target = e.target as HTMLElement;
-  const look = target.closest<HTMLElement>('[data-look]');
-  if (look) {
-    const [hero, preset] = look.dataset.look!.split(':') as [string, string];
-    const looks = { ...persistence.load().looks, [hero]: preset };
-    persistence.save({ looks });
-    void lobby.setLooks(looks);
-    lobby.cheer(hero);
-    look.parentElement!.querySelectorAll('button').forEach((b) => b.classList.toggle('sel', b === look));
-    audio.play('heal');
-    return;
-  }
   if (target.closest('[data-again]') && lastRun) void go({ name: 'play', game: lastRun.game, story: lastRun.story });
   if (target.closest('[data-other]')) void go({ name: 'select' });
   if (target.closest('[data-class]')) void go({ name: 'boss' });
@@ -186,7 +184,8 @@ function frameLobby(): void {
 }
 
 function showLobby(): void {
-  lobby.show(persistence.load().looks);
+  lobby.show({ ...persistence.load().looks, [choice.hero]: choice.look });
+  lobby.focus(choice.hero);
   frameLobby();
   audio.music('none');
 }
@@ -229,7 +228,11 @@ async function go(next: Route, push = true): Promise<void> {
       break;
     }
     case 'results':
-      renderResults(el.results, lastRun!, persistence.load().looks, (h) => t(`host.heroes.${h}`), t);
+      renderResults(el.results, lastRun!, unlockedNow, (persistence.load().unlocked[choice.hero] ?? []).length >= (PRESETS[choice.hero] ?? []).length, (h) => t(`host.heroes.${h}`), t);
+      if (unlockedNow) {
+        audio.play('heal');
+        unlockedNow = null;
+      }
       lobby.cheer();
       await screens.show(el.results, from, 'results');
       break;
@@ -269,7 +272,7 @@ async function startGame(): Promise<void> {
     composition: composition(),
     i18n: i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!),
     audio,
-    options: { helper: choice.helper, looks: persistence.load().looks },
+    options: { helper: choice.helper, hero: choice.hero, looks: { ...persistence.load().looks, [choice.hero]: choice.look } },
     host: {
       openStory: (paragraph) => {
         if (!story) return;
@@ -286,6 +289,18 @@ async function startGame(): Promise<void> {
     },
     complete: (result, _outcome, evidence) => {
       lastRun = { ...run, result, evidence };
+      // 3 stars unlock the chosen hero's next look, and the hero wears it at once.
+      if (starsOf(evidence) === 3) {
+        const data = persistence.load();
+        const open = data.unlocked[choice.hero] ?? [];
+        const next = (PRESETS[choice.hero] ?? []).find((p) => !open.includes(p));
+        if (next) {
+          persistence.save({ unlocked: { ...data.unlocked, [choice.hero]: [...open, next] }, looks: { ...data.looks, [choice.hero]: next } });
+          choice = { ...choice, look: next };
+          selector.savedLooks[choice.hero] = next;
+          unlockedNow = { hero: choice.hero, look: next };
+        }
+      }
       void go({ name: 'results' });
     },
     diagnostic: (d) => diagnostics.push(d),

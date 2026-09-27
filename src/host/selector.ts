@@ -8,12 +8,23 @@ import { esc } from '../apk3d/hud/index.js';
 import { fits, GAMES, playable, type GameEntry } from './registry.js';
 
 const LEVELS = ['A0', 'A1', 'A2'] as const;
+export const HEROES = ['knight', 'wizard', 'cleric'] as const;
+const HERO_ICON: Record<string, string> = { knight: '🛡️', wizard: '🔥', cleric: '✨' };
+/** Every hero's color presets, in unlock order (3 stars unlock the next one). */
+export const PRESETS: Record<string, string[]> = {
+  knight: ['royal', 'champion', 'warden'],
+  wizard: ['frost', 'mystic', 'sage'],
+  cleric: ['templar', 'bishop', 'pilgrim'],
+};
 
 export interface SelectorChoice {
   level: string;
   story: string | null;
   game: string | null;
   helper: boolean;
+  hero: string;
+  /** The chosen hero's look ('default' or an unlocked preset). */
+  look: string;
 }
 
 export interface SelectorHandlers {
@@ -21,6 +32,8 @@ export interface SelectorHandlers {
   story(id: string): void;
   /** Any choice changed (for saving and for the lobby). */
   change(choice: SelectorChoice): void;
+  /** The hero or the look changed (the lobby shows it). */
+  hero(hero: string, look: string): void;
   read(choice: SelectorChoice): void;
   tap(): void;
 }
@@ -36,8 +49,11 @@ export class Selector {
     private readonly coverUrl: (entry: StoryIndexEntry) => string | null,
     private readonly on: SelectorHandlers,
     initial: Partial<SelectorChoice>,
+    /** Presets unlocked per hero. */
+    private unlocked: () => Readonly<Record<string, readonly string[]>>,
   ) {
-    this.choice = { level: initial.level ?? 'A0', story: initial.story ?? null, game: initial.game ?? null, helper: initial.helper ?? true };
+    const hero = HEROES.includes(initial.hero as never) ? initial.hero! : 'knight';
+    this.choice = { level: initial.level ?? 'A0', story: initial.story ?? null, game: initial.game ?? null, helper: initial.helper ?? true, hero, look: initial.look ?? 'default' };
     el.addEventListener('click', (e) => this.click(e));
     el.addEventListener('change', (e) => {
       const input = e.target as HTMLInputElement;
@@ -68,6 +84,15 @@ export class Selector {
     this.on.change({ ...this.choice });
   }
 
+  /** The look to show for a hero: the one saved for it when still unlocked, else the default. */
+  private lookFor(hero: string, open: readonly string[]): string {
+    const saved = this.savedLooks[hero];
+    return saved && (saved === 'default' || open.includes(saved)) ? saved : 'default';
+  }
+
+  /** Looks the student chose per hero (kept when switching heroes). */
+  savedLooks: Record<string, string> = {};
+
   private levelHasStories(level: string): boolean {
     return this.stories.some((s) => baseLevel(s.level) === level);
   }
@@ -84,6 +109,11 @@ export class Selector {
         <div class="tag">${esc(t('host.tagline'))}</div>
       </header>
       <div class="sheet">
+        <div class="heroes" role="radiogroup" aria-label="${esc(t('host.selector.hero'))}">
+          <span class="label">${esc(t('host.selector.hero'))}</span>
+          ${HEROES.map((h) => `<button class="hero-chip ${h === this.choice.hero ? 'on' : ''}" data-hero="${h}" role="radio" aria-checked="${h === this.choice.hero}">${HERO_ICON[h]} ${esc(t(`host.heroes.${h}`))}</button>`).join('')}
+        </div>
+        <div class="looks" data-looks></div>
         <div class="levels" role="radiogroup" aria-label="${esc(t('host.selector.level'))}">
           <span class="label">${esc(t('host.selector.level'))}</span>
           ${LEVELS.map((l) => {
@@ -102,6 +132,24 @@ export class Selector {
     this.renderStories();
     this.renderGames();
     this.renderAction();
+    this.renderLooks();
+  }
+
+  /** The chosen hero's looks: default, the unlocked presets, and the locked ones (dimmed). */
+  private renderLooks(): void {
+    const box = this.el.querySelector<HTMLElement>('[data-looks]');
+    if (!box) return;
+    const t = this.t;
+    const open = this.unlocked()[this.choice.hero] ?? [];
+    const all = ['default', ...(PRESETS[this.choice.hero] ?? [])];
+    box.innerHTML =
+      all
+        .map((p) => {
+          const locked = p !== 'default' && !open.includes(p);
+          const name = p === 'default' ? t('host.results.default') : p;
+          return `<button class="look ${p === this.choice.look ? 'on' : ''} ${locked ? 'locked' : ''}" data-look="${esc(p)}" ${locked ? `aria-disabled="true" title="${esc(t('host.selector.lookLocked'))}"` : ''}>${locked ? '🔒 ' : ''}${esc(name)}</button>`;
+        })
+        .join('') + (open.length < all.length - 1 ? `<span>${esc(t('host.selector.lookLocked'))}</span>` : '');
   }
 
   private renderStories(): void {
@@ -144,6 +192,28 @@ export class Selector {
 
   private click(e: MouseEvent): void {
     const t = e.target as HTMLElement;
+    const hero = t.closest<HTMLElement>('[data-hero]');
+    if (hero) {
+      this.choice.hero = hero.dataset.hero!;
+      const open = this.unlocked()[this.choice.hero] ?? [];
+      this.choice.look = this.lookFor(this.choice.hero, open);
+      this.el.querySelectorAll('.hero-chip').forEach((c) => c.classList.toggle('on', c === hero));
+      this.renderLooks();
+      this.on.tap();
+      this.on.hero(this.choice.hero, this.choice.look);
+      this.on.change({ ...this.choice });
+      return;
+    }
+    const look = t.closest<HTMLElement>('[data-look]');
+    if (look) {
+      if (look.classList.contains('locked')) return;
+      this.choice.look = look.dataset.look!;
+      this.renderLooks();
+      this.on.tap();
+      this.on.hero(this.choice.hero, this.choice.look);
+      this.on.change({ ...this.choice });
+      return;
+    }
     const level = t.closest<HTMLButtonElement>('[data-level]');
     if (level && !level.disabled) {
       this.choice.level = level.dataset.level!;

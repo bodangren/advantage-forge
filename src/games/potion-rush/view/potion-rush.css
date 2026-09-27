@@ -162,3 +162,23 @@
 .apk3d-hud .meter.coins b {
   margin-left: 4px;
 }
+.word-tag,
+.grab {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  cursor: grab;
+}
+.word-tag.held {
+  border-color: var(--gold);
+  background: #5b3fa0;
+  transform: translate(-50%, -100%) scale(1.12);
+}
+.grab {
+  position: absolute;
+  width: 76px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}

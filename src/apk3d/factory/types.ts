@@ -48,6 +48,8 @@ export interface HostServices {
 /** Choices the student made before the game (the APK maps Helper mode to difficulty 'easy'). */
 export interface SessionOptions {
   helper: boolean;
+  /** The hero the student chose ('knight', 'wizard', 'cleric'); games that show one hero use it. */
+  hero: string;
   /** Hero id to the color preset the student unlocked (cosmetic; the APK reads it from the profile). */
   looks: Readonly<Record<string, string>>;
 }
