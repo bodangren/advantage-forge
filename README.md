@@ -8,12 +8,18 @@ and the sprite pass renders that GLB into eight-direction pixel art, one sheet p
 clip and one sprite set per color preset. You get a 3D asset and a 2.5D sprite character from
 one source file.
 
-![rogue turnaround: reference, front, three-quarter, side, back](docs/showcase/rogue-turnaround.jpg)
+![wizard turnaround: reference, front, three-quarter, side, back](docs/showcase/wizard-turnaround.jpg)
 
 ## Showcase
 
 Everything below was rendered by `./forge` from the code in `assets/`. Nothing was hand-painted
 or retouched.
+
+### Turnarounds
+
+Each render sits under the concept reference it was modeled from.
+
+![rogue turnaround: reference, front, three-quarter, side, back](docs/showcase/rogue-turnaround.jpg)
 
 ### 3D clips and their sprites
 
@@ -22,6 +28,7 @@ column is the pixel-art sprite of the same frames.
 
 | Character                                             |                                                 3D (GLB)                                                 |                                                    Sprite (128 px, SE)                                                     |
 | ----------------------------------------------------- | :------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------: |
+| **Wizard**<br>`attack2`: palm-flame cast              |       <img src="docs/showcase/wizard-attack2-3d.gif" width="240" alt="Wizard palm-flame cast, 3D">       |       <img src="docs/showcase/wizard-attack2-sprite.gif" width="240" alt="Wizard palm-flame cast, pixel-art sprite">       |
 | **Rogue**<br>`attack`: reverse-grip twin-dagger combo | <img src="docs/showcase/rogue-attack-3d.gif" width="240" alt="Rogue reverse-grip twin-dagger combo, 3D"> | <img src="docs/showcase/rogue-attack-sprite.gif" width="240" alt="Rogue reverse-grip twin-dagger combo, pixel-art sprite"> |
 | **Knight**<br>`attack2`: shield bash                  |         <img src="docs/showcase/knight-attack2-3d.gif" width="240" alt="Knight shield bash, 3D">         |         <img src="docs/showcase/knight-attack2-sprite.gif" width="240" alt="Knight shield bash, pixel-art sprite">         |
 | **Druid**<br>`attack`: staff cast                     |           <img src="docs/showcase/druid-attack-3d.gif" width="240" alt="Druid staff cast, 3D">           |           <img src="docs/showcase/druid-attack-sprite.gif" width="240" alt="Druid staff cast, pixel-art sprite">           |
@@ -45,6 +52,10 @@ Characters declare color slots (eyes, hair, skin, clothing, or a creature's scal
 and named presets. A textured build adds a tint mask and one recolored texture per preset to
 the GLB, and `forge all` bakes a full sprite set per preset. See
 [docs/color-variants.md](docs/color-variants.md).
+
+**Wizard**: default, frost, mystic, sage
+
+![Wizard color presets: default, frost, mystic, sage](docs/showcase/wizard-variants.jpg)
 
 **Rogue**: default, noble, nomad, ranger (front)
 
