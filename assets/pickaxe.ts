@@ -20,13 +20,13 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * Rig/animation: none (static prop).
  */
 
-const IRON = rgb('#4a4f55');
-const IRON_DEEP = rgb('#363a3f');
+const IRON = rgb('#6e747b');
+const IRON_DEEP = rgb('#555a61');
 const IRON_LIGHT = rgb('#a8acb1');
 const WALNUT = rgb('#6b4226');
 const WALNUT_DEEP = rgb('#54331d');
 const WALNUT_LIGHT = rgb('#c08a44');
-const STEEL = rgb('#d4d8de');
+const STEEL = rgb('#aab0b8');
 const STEEL_DEEP = rgb('#8e959e');
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -134,17 +134,16 @@ export default defineAsset({
 
     // Steel face: paint the outer portion of the blade steel colour so it reads
     // as a sharpened cutting edge without a separate body.
-    const steelStencil = sdf.box([0.045, 0.20, 0.20]).at(0.142, HEAD_Y, 0);
-    const ironHead = ironBase.paintWhere(steelStencil, rgb(0xd4d8de), 0.008).paintFn((x, y, z) => {
+    const ironHead = ironBase.paintFn((x, y, z) => {
       const insideSteel = (x > 0.119 && x < 0.165 && Math.abs(y - HEAD_Y) < 0.05 && Math.abs(z) < 0.045);
       if (insideSteel) return steelPaint(x, y, z);
       return ironPaint(x, y, z);
     });
 
     k.body('iron', ironHead, {
-      color: '#4a4f55',
-      roughness: 0.5,
-      metalness: 0.7,
+      color: '#6e747b',
+      roughness: 0.55,
+      metalness: 0.6,
       detail: 0.0045,
       paintWeight: 2,
       bump: (x, y, z) => 0.0006 * noise.fbm(x * 36, y * 36, z * 36, 2),
