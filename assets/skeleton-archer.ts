@@ -88,6 +88,10 @@ const WRIST_L: V3 = [0.228, 0.29, 0.09];
 const HIP: V3 = [0.068, 0.195, 0];
 const KNEE: V3 = [0.09, 0.13, 0.01];
 const ANKLE: V3 = [0.098, 0.07, 0];
+// The ends of the flat bottom of the left boot (y = 0), measured on the SDF: heel and toe.
+// The toe turns out 12 degrees, so the toe point sits outboard of the heel.
+const SOLE_HEEL: V3 = [0.09, 0, -0.049];
+const SOLE_TOE: V3 = [0.112, 0, 0.098];
 const GRIP: V3 = [WRIST_L[0] + 0.012, WRIST_L[1] - 0.038, WRIST_L[2] + 0.014];
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 const scl = (a: V3, k: number): V3 => [a[0] * k, a[1] * k, a[2] * k];
@@ -814,23 +818,33 @@ export default defineAsset({
     // so the lower bow tip clears the ground and the boot while the hips drop at each step.
     // The lift also tilts the upper bow limb in toward the hood, so the hand turns back by the
     // lift plus `tiltOut` degrees (a negative `tiltOut` keeps some of the inward tilt).
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, lift: number, tiltOut: number) => ({
+    // The legs come from motion.gait: planted stance boots, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (a run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm
+    // (the bow arm) is back. The hips' sway goes to gait, so the planted feet do not slide.
+    const stride = (duration: number, step: number, footLift: number, duty: number, bob: number, armSwing: number, lean: number, lift: number, tiltOut: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 10,
+          heel: SOLE_HEEL,
+          toe: SOLE_TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return inQuiver({
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -10 * s, 0] as const },
           // The skull bobs a beat late, loose on its neck bones.
           head: { rotate: [-lean + 3 * wave(p, 2, 0.3), 5 * s, 2 * wave(p, 1, 0.2)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.35 * s, 0, lift] as const },
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.15, 0, 0] as const },
@@ -842,9 +856,11 @@ export default defineAsset({
         });
       },
     });
-    // The walk keeps its old tilt (-lift * 0.3); the run turns the bow 6 degrees further out.
-    k.animation('walk', stride(0.9, 26, 28, 3, 0, 12, -8.4));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03, 18, -6.6));
+    // The walk turns the bow 4.4 degrees further out than before (the bow stays 2 cm off the hood);
+    // the run turns it 6 degrees further out.
+    // A light, bony walk; the run is quick with a flight phase.
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 0.006, 28, 3, 12, -4));
+    k.animation('run', stride(0.56, 0.14, 0.04, 0.42, 0.025, 50, 12, 18, -6.6));
 
     // ------------------------------------------------------------------ attack: a real bow shot, solved by targets
     // Plan (in the chest's rest frame): the archer turns side-on (the bow shoulder toward the
