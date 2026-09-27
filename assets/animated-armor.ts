@@ -125,8 +125,32 @@ export default defineAsset({
   description: 'Chibi animated armor dungeon enemy: an empty, rusty suit of plate with a huge round great helm, black inside with two glowing cyan eyes, a purple scarf and cape, and a broad chipped sword.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/animated-armor_001.jpg',
+  // Color slots for individual suits (the first option is the default look).
+  variants: {
+    eyes: { cyan: C.eye, green: '#5cff6a', ember: '#ff7a12' },
+    armor: { steel: C.steel, blackened: '#40434b', bronze: '#8a6a36' },
+    clothing: { purple: C.purple, crimson: '#7a2430', moss: '#3b5a2a' },
+  },
+  presets: {
+    hellforged: { eyes: 'ember', armor: 'blackened', clothing: 'crimson' },
+    barrow: { eyes: 'green', armor: 'bronze', clothing: 'moss' },
+    wraith: { eyes: 'green', armor: 'blackened', clothing: 'purple' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it. The glow of the eyes follows the eyes slot too. Rust,
+    // rivets, brass, leather, and the blade stay out of the slots.
+    const SLOT = {
+      eye: k.tint('eyes'),
+      steel: k.tint('armor'),
+      steelDark: k.tint('armor', { color: C.steelDark, follow: 1 }),
+      mail: k.tint('armor', { color: C.mail, follow: 1 }),
+      purple: k.tint('clothing'),
+      purpleDark: k.tint('clothing', { color: C.purpleDark, follow: 1 }),
+      cape: k.tint('clothing', { color: C.cape, follow: 1 }),
+      capeDark: k.tint('clothing', { color: C.capeDark, follow: 1 }),
+    };
     const HELM_C: V3 = [0, 0.685, -0.01];
     const PLUME_AT: V3 = [0, 0.935, -0.01];
     k.skeleton({
@@ -184,9 +208,9 @@ export default defineAsset({
       .subtract(helmInner)
       .smoothSubtract(0.006, visor)
       .intersect(helmBottom)
-      .paintWhere(helmInner.round(0.005), C.steelDark, 0.01)
+      .paintWhere(helmInner.round(0.005), SLOT.steelDark, 0.01)
       .paintFn(rustHeavy);
-    k.body('helm', helm, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+    k.body('helm', helm, { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
 
     // Nothing inside: a black void fills the helm, with two glowing eyes on it.
     const voidShape = sdf.ellipsoid([0.2, 0.17, 0.19]).elongate(0, 0.04, 0).at(HELM_C[0], HELM_C[1] - 0.01, HELM_C[2] + 0.005).intersect(helmBottom);
@@ -195,7 +219,7 @@ export default defineAsset({
     const eyeZ = (x: number) => sdf.raycast(voidShape, [x, EYE_Y, 1], [0, 0, -1])![2];
     // Oval eyes, tilted a little (inner ends lower): a cold glare.
     const eyes = sdf.union(...[1, -1].map((s) => sdf.ellipsoid([0.036, 0.027, 0.014]).rotateZ(s * 10).at(s * 0.078, EYE_Y, eyeZ(0.078) - 0.004)));
-    k.body('eyes', eyes, { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.6, bone: 'glow' });
+    k.body('eyes', eyes, { color: SLOT.eye, roughness: 0.2, emissive: SLOT.eye, emissiveIntensity: 1.6, bone: 'glow' });
 
     // The face plate (bevor): a curved plate over the lower front, standing proud of the helm,
     // with a rolled top edge and three pairs of breathing slots.
@@ -214,7 +238,7 @@ export default defineAsset({
       .intersect(helmBottom)
       .subtract(slots.intersect(sdf.halfSpace([0, 1, 0], 0.61)))
       .paintFn(rustMid);
-    k.body('face-plate', facePlate, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+    k.body('face-plate', facePlate, { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
     // Hinge plates on the cheeks, beside the visor. They follow the helm at the top and flare out
     // at the bottom (the helm surface pushed out by up to 2.8 cm below y = 0.66). The lower edge
     // stops at y = 0.532, so the plate stays clear of the sword fist's path in the attack.
@@ -229,7 +253,7 @@ export default defineAsset({
         .smoothIntersect(0.006, sdf.box([0.08, 0.188, 0.2], 0.01).rotateY(-40).at(0.2, 0.626, 0.1))
         .intersect(helmBottom),
     ).paintFn(rustMid);
-    k.body('cheek-plates', cheeks, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
+    k.body('cheek-plates', cheeks, { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bone: 'head', bump: dents });
 
     // Brass: the brow band, a strip over the crown, and a diamond plate at the front.
     const shellOf = (s: sdf.Shape, out: number, inn: number) => s.round(out).subtract(s.round(-inn));
@@ -321,7 +345,7 @@ export default defineAsset({
         ),
       )
       .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z + 0.01, x) * 5 + y * 90) > 0.5 ? [base[0] * 0.75, base[1] * 0.75, base[2] * 0.75] : base));
-    k.body('plume-cloth', plume, { color: C.purple, roughness: 0.85, detail: 0.004, bone: 'plume' });
+    k.body('plume-cloth', plume, { color: SLOT.purple, roughness: 0.85, detail: 0.004, bone: 'plume' });
 
     // ------------------------------------------------------------------ torso: cuirass and mail (the knight's)
     const torso = sdf
@@ -356,7 +380,7 @@ export default defineAsset({
       .intersect(sdf.halfSpace([0, -1, 0], -0.258))
       .intersect(sdf.halfSpace([0, 1, 0], 0.47))
       .paintFn(rusty);
-    k.body('cuirass', cuirass, { color: C.steel, roughness: 0.5, metalness: 0.75, bone: 'chest', bump: dents });
+    k.body('cuirass', cuirass, { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bone: 'chest', bump: dents });
     const rings = (x: number, y: number, z: number) => {
       const u = Math.atan2(z, x) * 30;
       const v = y * 190 + (Math.floor(u / Math.PI) % 2) * Math.PI * 0.5;
@@ -372,7 +396,7 @@ export default defineAsset({
     k.body(
       'mail',
       sdf.union(skirt.bone('hips'), sleeve(SHOULDER, ELBOW_L, 'upperarm.L'), sleeve(mx(SHOULDER), ELBOW_R, 'upperarm.R'), leggings),
-      { color: C.mail, roughness: 0.55, metalness: 0.7, bump: rings },
+      { color: SLOT.mail, roughness: 0.55, metalness: 0.7, bump: rings },
     );
 
     // ------------------------------------------------------------------ pauldrons: two riveted lames each
@@ -384,7 +408,7 @@ export default defineAsset({
     const pauldronPose = (s: sdf.Shape) => s.rotateZ(-26).at(0.162, 0.436, 0);
     const pauldronLocal = sdf.union(lame(1.06), lame(1.2).at(0, -0.036, 0));
     k.body('pauldrons', pair(pauldronPose(pauldronLocal).bone('upperarm.L')).paintFn(rustHeavy), {
-      color: C.steel,
+      color: SLOT.steel,
       roughness: 0.5,
       metalness: 0.75,
       bump: dents,
@@ -434,7 +458,7 @@ export default defineAsset({
         sdf.smoothUnion(0.012, vambrace(ELBOW_R, WRIST_R).bone('forearm.R'), swordPose(fistLocal).bone('hand.R')),
       )
       .paintFn(rusty);
-    k.body('gauntlets', gauntlets, { color: C.steel, roughness: 0.5, metalness: 0.75, bump: dents });
+    k.body('gauntlets', gauntlets, { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bump: dents });
 
     // ------------------------------------------------------------------ belt, tassets, torn tabard
     const beltY = 0.252;
@@ -448,7 +472,7 @@ export default defineAsset({
     );
     const hipShell = torso.round(0.02).subtract(torso.round(0.004));
     const tassetL = hipShell.smoothIntersect(0.008, sdf.box([0.1, 0.1, 0.3], 0.02).rotateZ(10).at(0.105, 0.19, 0.08)).bone('leg.L');
-    k.body('tassets', pair(tassetL).paintFn(rusty), { color: C.steel, roughness: 0.5, metalness: 0.75, bump: dents });
+    k.body('tassets', pair(tassetL).paintFn(rusty), { color: SLOT.steel, roughness: 0.5, metalness: 0.75, bump: dents });
     const flapL = sdf
       .extrude(
         profile.polygon([
@@ -466,7 +490,7 @@ export default defineAsset({
       )
       .rotateX(-8)
       .at(0, 0, 0.128);
-    k.body('tabard', pair(flapL.bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.13), C.purpleDark, 0.03), { color: C.purple, roughness: 0.85 });
+    k.body('tabard', pair(flapL.bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.13), SLOT.purpleDark, 0.03), { color: SLOT.purple, roughness: 0.85 });
 
     // ------------------------------------------------------------------ scarf and torn cape (the knight's, in purple)
     const scarfRing = sdf
@@ -505,7 +529,7 @@ export default defineAsset({
     const scarf = sdf
       .smoothUnion(0.012, scarfRing, drape)
       .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? [base[0] * 0.8, base[1] * 0.8, base[2] * 0.8] : base));
-    k.body('scarf', scarf, { color: C.purple, roughness: 0.85, bone: 'chest' });
+    k.body('scarf', scarf, { color: SLOT.purple, roughness: 0.85, bone: 'chest' });
     const folds = (x: number, y: number, z: number) => Math.sin(Math.atan2(z, x) * 6) * Math.min(1, Math.max(0, (0.4 - y) / 0.26));
     const capeCone = (r0: number, r1: number, y0: number, y1: number) =>
       sdf
@@ -540,8 +564,8 @@ export default defineAsset({
       .at(0, 0, -0.025)
       .intersect(sdf.halfSpace([0, 0, 1], -0.02))
       .subtract(tears)
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.14), C.capeDark, 0.05);
-    k.body('cape', cape.bone('cloak'), { color: C.cape, roughness: 0.88 });
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.14), SLOT.capeDark, 0.05);
+    k.body('cape', cape.bone('cloak'), { color: SLOT.cape, roughness: 0.88 });
 
     // ------------------------------------------------------------------ legs: knee cops, greaves, sabatons (the knight's)
     const knee = sdf.ellipsoid([0.058, 0.034, 0.052]).at(0.095, 0.11, 0.022).bone('leg.L');
@@ -555,12 +579,12 @@ export default defineAsset({
     );
     const sabaton = sabatonFoot
       .smoothSubtract(0.003, toeLines.intersect(sdf.halfSpace([0, 0, -1], -0.04)))
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.012), C.steelDark)
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.012), SLOT.steelDark)
       .rotateY(12)
       .at(ANKLE[0], 0, 0)
       .bone('foot.L');
     k.body('greaves', pair(sdf.union(sdf.smoothUnion(0.01, greave, knee), sabaton)).paintFn(rusty), {
-      color: C.steel,
+      color: SLOT.steel,
       roughness: 0.5,
       metalness: 0.75,
       bump: dents,
