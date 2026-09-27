@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, Sdf, sdf } from '../src/index.js';
 
 /**
  * Cleric — Chibi Quest hero (catalog `heroes/magic/cleric`), a dwarf battle-priest, about 0.97 m
@@ -142,8 +142,35 @@ export default defineAsset({
   description: 'Chibi dwarf cleric hero with a braided ginger mane and beard, a cross-marked warhammer, and a holy book.',
   detail: 0.005,
   reference: 'docs/hero-mockups/cleric_001.png',
+  // Color slots for individual clerics (the first option is the default look). Hair covers the
+  // mane, braids, brows, and beard; clothing is the blue robe (and the blue shields on the tabard).
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { ginger: C.hair, grey: '#8e8a84', white: '#e2ddd3' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { blue: C.blue, crimson: '#8a2c30', violet: '#5c3f8f' },
+  },
+  presets: {
+    templar: { eyes: 'blue', hair: 'grey', skin: 'tan', clothing: 'crimson' },
+    bishop: { eyes: 'brown', hair: 'white', skin: 'fair', clothing: 'violet' },
+    pilgrim: { eyes: 'green', hair: 'ginger', skin: 'brown', clothing: 'blue' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    // The blush, lips, mouth, and nose tip keep their pink but take half of the skin's recoloring.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', 0.07),
+      hair: k.tint('hair'),
+      hairDark: k.tint('hair', -0.48),
+      skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      lip: k.tint('skin', { color: C.lip, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      nose: k.tint('skin', { color: '#f09c88', follow: 0.5 }),
+      cloth: k.tint('clothing'),
+    };
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -229,18 +256,18 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.014, nose, ears)
       .union(armR, armL, lips)
-      .paintWhere(blush, C.blush, 0.028)
+      .paintWhere(blush, T.blush, 0.028)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.01)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.01)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(sdf.ellipsoid([0.04, 0.02, 0.04]).at(0, 0.5, lipZ + 0.03), C.lip, 0.006)
-      .paintWhere(smile, C.mouth, 0.002)
-      .paintWhere(sdf.sphere(0.034).at(0, 0.585, noseZ + 0.05), '#f09c88', 0.022); // a rosy nose tip
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(sdf.ellipsoid([0.04, 0.02, 0.04]).at(0, 0.5, lipZ + 0.03), T.lip, 0.006)
+      .paintWhere(smile, T.mouth, 0.002)
+      .paintWhere(sdf.sphere(0.034).at(0, 0.585, noseZ + 0.05), T.nose, 0.022); // a rosy nose tip
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hair: mane, top braid, brows, beard
     // The mane: a cap over the skull that comes down to a hairline just above the brows, puffs
@@ -334,7 +361,7 @@ export default defineAsset({
       return sdf.smoothUnion(0.01, ...lobes, sdf.cone([x, bottom + 0.01, z], [x, bottom - 0.012, z + 0.002], w * 0.7, w * 0.5), tuft);
     };
     const braids = sdf.union(braid(0, 0.35, 0.29, 0.172, 0.026), hard(braid(0.105, 0.42, 0.35, 0.14, 0.024)));
-    const hair = sdf
+    const hairShape = sdf
       .smoothUnion(
         0.015,
         cap.displace(0.004, locks).bone('head'),
@@ -343,16 +370,16 @@ export default defineAsset({
         beard.bone('head'),
         braids.bone('beard'),
       )
-      .smoothUnion(0.007, braidTop.bone('head'))
-      .paintFn((x, y, z, base) => {
-        // Cap: dark grooves between the swept-back locks. Beard: dark strands hanging down.
-        const onCap = y > 0.6 && z < 0.12 && Math.abs(x) < 0.26;
-        const g = onCap ? Math.cos(lockAngle(x, y, z)) : Math.sin(x * 110 + Math.sin(y * 20) * 2);
-        if (g > 0.975 && onCap) return rgb(C.hairDark);
-        if (!onCap && g > 0.92) return rgb(C.hairDark);
-        return base;
-      });
-    k.body('hair', hair, { color: C.hair, roughness: 0.65, detail: 0.004 });
+      .smoothUnion(0.007, braidTop.bone('head'));
+    // Cap: dark grooves between the swept-back locks. Beard: dark strands hanging down. A paint
+    // region (not paintFn), so the strands join the hair slot's tint mask.
+    const darkStrands = new Sdf((x, y, z) => {
+      const onCap = y > 0.6 && z < 0.12 && Math.abs(x) < 0.26;
+      const g = onCap ? Math.cos(lockAngle(x, y, z)) : Math.sin(x * 110 + Math.sin(y * 20) * 2);
+      return (onCap ? 0.975 : 0.92) - g;
+    }, hairShape.bounds);
+    const hair = hairShape.paintWhere(darkStrands, T.hairDark);
+    k.body('hair', hair, { color: T.hair, roughness: 0.65, detail: 0.004 });
     const ring = (x: number, y: number, z: number) => sdf.torus(0.027, 0.009).at(x, y, z);
     k.body('rings', sdf.union(ring(0, 0.3, 0.172), hard(ring(0.105, 0.365, 0.14))).bone('beard'), {
       color: C.gold,
@@ -382,7 +409,7 @@ export default defineAsset({
       )
       .scale([1.22, 1, 0.88]);
     const tunic = torso.paintWhere(sdf.halfSpace([0, 1, 0], 0.176), C.gold);
-    k.body('tunic', tunic.bone('spine'), { color: C.blue, roughness: 0.8 });
+    k.body('tunic', tunic.bone('spine'), { color: T.cloth, roughness: 0.8 });
 
     // The tabard: cream panels down the front and the back, over the tunic and hanging below it,
     // each with a blue shield and a gold cross near the hem, edged in gold.
@@ -407,7 +434,7 @@ export default defineAsset({
       return drapeShell(z > 0 ? -0.03 : 0.035)
         .smoothIntersect(0.004, panel)
         .paintWhere(panel.round(-0.012).subtract(panel.round(-0.022)).union(panel.subtract(panel.round(-0.008))), C.gold, 0.002)
-        .paintWhere(sdf.extrude(shieldP, 0.4).at(0, emblemY, z), C.blue, 0.002)
+        .paintWhere(sdf.extrude(shieldP, 0.4).at(0, emblemY, z), T.cloth, 0.002)
         .paintWhere(crossP(0.05, 0.07, 0.014).at(0, emblemY - 0.002, z), C.gold, 0.002);
     };
     const tabard = sdf.union(tabardPanel(0.18, 0.2, 0.13), tabardPanel(0.2, -0.2, 0.22));
