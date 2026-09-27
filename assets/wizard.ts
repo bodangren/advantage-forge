@@ -793,7 +793,7 @@ export default defineAsset({
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;
 
-    const { keys, reach, orient } = motion;
+    const { keys, reach, orient, follow, quat, euler } = motion;
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
@@ -962,9 +962,11 @@ export default defineAsset({
           p,
           [
             [0, WRIST_L],
-            [0.28, [0.245, 0.29, 0.085]],
-            [0.4, [0.246, 0.288, 0.082]],
-            [0.45, [0.215, 0.32, 0.14]],
+            // The charging palm draws back out and forward of her side, so the grown flame stays in
+            // front of the side lock as the head turns away.
+            [0.28, [0.205, 0.32, 0.14]],
+            [0.4, [0.207, 0.318, 0.137]],
+            [0.45, [0.19, 0.34, 0.17]],
             [0.5, [0.14, 0.39, 0.165]],
             [0.62, [0.14, 0.385, 0.16]],
             [1, WRIST_L],
@@ -980,6 +982,8 @@ export default defineAsset({
           // cancels the body's turn so the fireball flies straight ahead.
           norm(lerp(PALM.dir, norm([0.62, 0.72, -0.3]), palmAim)),
           norm(lerp(lerp(PALM.up, norm([0.55, 0.8, 0.15]), tilt), norm([0.5, 0.05, 0.87]), palmAim)),
+          // The elbow stays out and a little down, so the forearm holds the flame away from her side.
+          [0.6, -0.1, -0.2],
         );
         // The flame: grows while charging, flies out along the palm's normal, bursts, relights.
         const fly = ease(0.45, 0.64, p);
@@ -989,7 +993,8 @@ export default defineAsset({
           ...hand,
           palmfire: {
             scale: [size, p < 0.45 ? 1 + 0.5 * (size - 1) : size, size],
-            move: [0, 0.035 * Math.max(0, size - 1) + 0.6 * fly * (p < 0.67 ? 1 : 1 - ease(0.67, 0.8, p)), 0],
+            // While it grows, the flame also slides from the heel of the palm out over the fingers.
+            move: [0.03 * wind, 0.035 * Math.max(0, size - 1) + 0.6 * fly * (p < 0.67 ? 1 : 1 - ease(0.67, 0.8, p)), 0.026 * wind],
             rotate: [180 * flip, 0, 0],
           },
           ...staffPose(keys(p, [[0, WRIST_R], [0.3, [-0.25, 0.34, 0.07]], [0.8, [-0.25, 0.34, 0.07]], [1, WRIST_R]] as const), STAFF_AXIS),
@@ -1039,10 +1044,19 @@ export default defineAsset({
     });
 
     // death: a stagger, then she falls flat on her back; both flames go out, the staff drops
-    // beside her right side, and the big hat tips forward over her face. The legs stay planted
+    // beside her right side, and the big hat lifts off her head, tumbles out to her left, and
+    // settles on its brim on the floor beside her head. The legs stay planted
     // while the body tips back, then lie out in line with it; the coat skirt follows the legs,
     // the cape flattens into a sheet under the back, and the head rolls back onto the floor. The hips drop
     // below the floor on purpose: the build lifts the body until it rests on the floor.
+    // The neck chain's pivots (hips, spine, chest, neck, head), to follow the head in the death.
+    const NECK_CHAIN: V3[] = [[0, 0.2, 0], [0, 0.26, 0], [0, 0.33, 0], [0, 0.43, -0.01], [0, 0.48, -0.01]];
+    // Where the fallen hat rests: its pivot in world meters before the build lifts the body (the
+    // body's lowest point lies 0.143 m below the floor then), and its turn (the point curls away
+    // from her, the brim tips up a little toward her head and rests on the hair).
+    const HAT_FLOOR: V3 = [0.5, -0.033, -0.6];
+    const HAT_REST = quat([0, 0, -10]).multiply(quat([-12, 0, 0]));
+    const HAT_DOWN = quat([0, 0, -6]).multiply(quat([0, 70, 0]));
     k.animation('death', {
       duration: 1.5,
       loop: false,
@@ -1055,6 +1069,21 @@ export default defineAsset({
         const drop = ease(0.45, 0.72, p);
         const leg = 30 * bump(fall) + 6 * fall;
         const flat = ease(0.4, 0.68, p);
+        const hipsMove: V3 = [0, -0.14 * drop + 0.012 * land + 0.006 * stagger, -0.04 * stagger - 0.08 * fall];
+        const bend = [-76 * fall - 4 * stagger, -6 * stagger, -4 * stagger, -5 * fall, -16 * stagger - 14 * fall];
+        const lean = bend.reduce((a, b) => a + b, 0);
+        const onHead = (pt: V3) =>
+          follow(NECK_CHAIN.map((j) => add(j, hipsMove)), bend.map((a) => [a, 0, 0] as V3), add(pt, hipsMove));
+        // The hat: it lifts off the crown of her head as she tips back, then flies out to her left on
+        // a high arc and turns upright in the air; it lands just after her back does. The arc keeps
+        // its brim above her lowest point, so the hat never lifts the body off the floor.
+        const off = ease(0.28, 0.46, p);
+        const fly = ease(0.36, 0.8, p);
+        const turn = ease(0.36, 0.66, p);
+        const worn = onHead(HAT_AT);
+        const lifted = onHead([HAT_AT[0] + 0.03 * off, HAT_AT[1] + 0.1 * off, HAT_AT[2]]);
+        const hatAt = add(lerp(lifted, HAT_FLOOR, fly), [0, 0.14 * Math.sin(Math.PI * fly), 0]);
+        const hatTurn = quat([lean, 0, 0]).multiply(HAT_REST).slerp(HAT_DOWN, turn);
         return {
           ...staffPose(
             keys(p, [[0, WRIST_R], [0.3, [-0.27, 0.34, 0.1]], [0.66, [-0.26, 0.34, -0.09]]] as const),
@@ -1065,17 +1094,17 @@ export default defineAsset({
           ...palmPose(lerp(WRIST_L, [0.26, 0.34, -0.09], ease(0.2, 0.66, p)), PALM.dir, lerp(PALM.up, [0, 0.3, 1], ease(0.2, 0.62, p)), [0.3, 0.2, -0.4]),
           orb: { scale: [out, out, out] },
           palmfire: { scale: [out, out, out] },
-          hatroot: { rotate: [95 * tip, 0, 0], move: [0, -0.1 * tip, 0.25 * tip] },
-          hattip: { rotate: [-10 * tip + 12 * land, 0, 10 * tip] },
-          hips: {
-            move: [0, -0.14 * drop + 0.012 * land + 0.006 * stagger, -0.04 * stagger - 0.08 * fall],
-            rotate: [-76 * fall - 4 * stagger, 0, 0],
+          hatroot: {
+            rotate: euler(quat([-lean, 0, 0]).multiply(hatTurn).multiply(HAT_REST.clone().invert())),
+            move: follow([[0, 0, 0]], [[-lean, 0, 0]], sub(hatAt, worn)),
           },
+          hattip: { rotate: [-10 * tip + 12 * land, 0, 10 * tip] },
+          hips: { move: hipsMove, rotate: [bend[0]!, 0, 0] },
           skirt: { rotate: [8 * stagger + leg - 20 * fall, 0, 0] },
-          spine: { rotate: [-6 * stagger, 0, 0] },
-          chest: { rotate: [-4 * stagger, 0, 0] },
-          neck: { rotate: [-5 * fall, 0, 0] },
-          head: { rotate: [-16 * stagger - 14 * fall, 0, 0] },
+          spine: { rotate: [bend[1]!, 0, 0] },
+          chest: { rotate: [bend[2]!, 0, 0] },
+          neck: { rotate: [bend[3]!, 0, 0] },
+          head: { rotate: [bend[4]!, 0, 0] },
           cloak: { rotate: [-10 * stagger - 8 * fall, 0, 0], scale: [1 + 0.15 * flat, 1, 1 - 0.86 * flat] },
           'leg.L': { rotate: [6 * stagger + leg, 0, 4 * fall] },
           'leg.R': { rotate: [-6 * stagger + leg + 2 * fall, 0, -5 * fall] },
