@@ -55,6 +55,13 @@ describe('color variants', () => {
         .paintFn((x, _y, _z, base) => (x > 0 ? flame : base)) // paints its own color on +x
         .paintFn((_x, _y, _z, base) => [base[0] * 0.5 + 0.2, base[1] * 0.5 + 0.2, base[2] * 0.5 + 0.2]); // a blend
       expect(shape.color(0.1, 0, 0, [0, 0, 0])).toEqual([0, 0, 0]);
+      // A slot shade that a paint function paints (dark hair strands) is in the slot.
+      const strands = sdf
+        .sphere(0.1)
+        .paint('tint:skin:0')
+        .paintFn((x, _y, _z, base) => (x > 0 ? rgb('tint:hair:-0.4') : base));
+      expect(strands.color(0.1, 0, 0, [0, 0, 0])).toEqual([1, 1, 1]);
+      expect(strands.color(-0.1, 0, 0, [0, 0, 0])).toEqual([0, 0, 0]);
       for (const v of shape.color(-0.1, 0, 0, [0, 0, 0])) expect(v).toBeCloseTo(0.5, 9);
     } finally {
       setMaskSlot(null);

@@ -14,6 +14,20 @@ const srgbToLinear = (c: number): number => (c <= 0.04045 ? c / 12.92 : Math.pow
 // color is black, so the bake records where (and how much of) the surface belongs to the slot.
 
 const TINT = /^tint:([^:]+):(-?[0-9.]+)$/;
+/**
+ * Colors made while a slot mask is built are mask values (the slot's share, 0 to 1). They are
+ * tagged, so a paint function's result can be told apart from a raw color made outside the build.
+ */
+const maskValues = new WeakSet<object>();
+const tag = (c: Rgb): Rgb => {
+  maskValues.add(c);
+  return c;
+};
+
+/** True if `c` was made while a slot mask was being built (see paintFn). */
+export function isMaskValue(c: Rgb): boolean {
+  return maskValues.has(c);
+}
 const FOLLOW = /^tint:([^:]+):follow:([0-9.]+):(#?[0-9a-fA-F]{3,6})$/;
 let slotColors = new Map<string, Rgb>();
 let maskSlot: string | null = null;
@@ -55,21 +69,21 @@ export function rgb(input: ColorInput): Rgb {
     if (f) {
       if (maskSlot !== null) {
         const v = f[1] === maskSlot ? Number(f[2]) : 0;
-        return [v, v, v];
+        return tag([v, v, v]);
       }
       return rgb(f[3]!);
     }
     const m = TINT.exec(input);
     if (m) {
       const slot = m[1]!;
-      if (maskSlot !== null) return slot === maskSlot ? [1, 1, 1] : [0, 0, 0];
+      if (maskSlot !== null) return tag(slot === maskSlot ? [1, 1, 1] : [0, 0, 0]);
       const base = slotColors.get(slot);
       if (!base) throw new Error(`Unknown color slot '${slot}'. Add it to the asset's variants.`);
       const shade = Number(m[2]);
       return shade >= 0 ? mixRgb(base, [1, 1, 1], shade) : mixRgb(base, [0, 0, 0], -shade);
     }
   }
-  if (maskSlot !== null) return [0, 0, 0];
+  if (maskSlot !== null) return tag([0, 0, 0]);
   if (typeof input !== 'string') return input;
   let hex = input.trim().replace(/^#/, '');
   if (hex.length === 3)
@@ -87,5 +101,7 @@ export function rgb(input: ColorInput): Rgb {
 }
 
 export function mixRgb(a: Rgb, b: Rgb, t: number): Rgb {
-  return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  const c: Rgb = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+  // A blend of two mask values is a mask value (a soft paint edge, a slot shade in a paintFn).
+  return maskSlot !== null && maskValues.has(a) && maskValues.has(b) ? tag(c) : c;
 }
