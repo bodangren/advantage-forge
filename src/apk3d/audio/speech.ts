@@ -1,5 +1,5 @@
 /**
- * Read-aloud with the browser's own English voice (the workbook data has no audio files).
+ * Read-aloud with the browser's own English voice (story packs have no audio files yet).
  * A real deployment would use the app's recorded or generated audio instead.
  */
 let voice: SpeechSynthesisVoice | null = null;

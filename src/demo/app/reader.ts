@@ -5,7 +5,7 @@
  */
 import type { StoryPack, StoryWord } from '../core/types.js';
 import { sound } from './audio.js';
-import { canSpeak, speak, stopSpeaking } from './speech.js';
+import { canSpeak, speak, stopSpeaking } from '../../apk3d/audio/index.js';
 
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 

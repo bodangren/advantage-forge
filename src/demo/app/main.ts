@@ -3,7 +3,8 @@
  * results, and the class boss. The game core (../core) decides everything; this file shows it.
  */
 /// <reference types="vite/client" />
-import { createQuest, DAMAGE_PER_CORRECT, parseStoryIndex, parseStoryPack, simulateClassBoss, type StoryIndexEntry } from '../core/index.js';
+import { parseStoryInput } from '../../apk3d/contracts/story-input.js';
+import { createQuest, DAMAGE_PER_CORRECT, parseStoryIndex, simulateClassBoss, toStoryPack, type StoryIndexEntry } from '../core/index.js';
 import type { Challenge, GameEvent, HeroId, Quest, QuestResults, Response, StoryPack } from '../core/types.js';
 import { sound } from './audio.js';
 import { HERO_LOOK, Hud } from './hud.js';
@@ -113,6 +114,9 @@ const hud = new Hud(hudEl, stage, {
 });
 
 // ---------------------------------------------------------------- title
+/** A plain cover for a story without images (the A1 demo stories). */
+const PLAIN_COVER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 3'%3E%3Crect width='4' height='3' fill='%23c9b48a'/%3E%3C/svg%3E";
 function showTitle(): void {
   inBattle = false;
   stage.setStage(0, true);
@@ -120,7 +124,7 @@ function showTitle(): void {
   const cards = stories
     .map(
       (s, i) => `<button class="story-card ${i === chosen ? 'sel' : ''}" data-story="${i}">
-        <img src="${BASE}stories/${s.id}/${s.cover}" alt="" />
+        <img src="${s.cover ? `${BASE}stories/${s.id}/${s.cover}` : PLAIN_COVER}" alt="" />
         <div>${esc(s.title)}<br /><span class="pill">${esc(s.level)}</span></div>
       </button>`,
     )
@@ -142,9 +146,6 @@ function showTitle(): void {
   show('title');
   sound.music('none');
 }
-
-// Every tap and key unlocks (or resumes) the sound, before the tapped control plays its effect.
-for (const type of ['touchend', 'click', 'keydown'] as const) document.addEventListener(type, () => sound.unlock(), { capture: true, passive: true });
 
 titleEl.addEventListener('click', (e) => {
   const t = e.target as HTMLElement;
@@ -169,7 +170,7 @@ async function openStory(): Promise<void> {
   const entry = stories[chosen];
   if (!entry) return;
   const res = await fetch(`${BASE}stories/${entry.id}/story.json`);
-  pack = parseStoryPack(await res.json());
+  pack = toStoryPack(parseStoryInput(await res.json(), entry.id));
   stage.setTitle(false);
   reader.show(pack, 'read');
   show('reader');

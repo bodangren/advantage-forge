@@ -101,6 +101,26 @@ export class Stage3D {
     return !this.running;
   }
 
+  /**
+   * Empties the stage for the next game (one renderer per page): stops every animation, removes
+   * the actors and every scene object, and resets the camera, framing, and background. Loaded
+   * models stay in the loader cache, so a second game reuses them.
+   */
+  clear(options: Pick<StageOptions, 'background' | 'fog' | 'exposure'> = {}): void {
+    this.timeline.clear();
+    for (const a of this.actors) a.dispose();
+    this.actors.clear();
+    this.updaters.clear();
+    this.scene.clear();
+    this.rig = null;
+    this.shakeLeft = 0;
+    this.setFreeArea(null);
+    const bg = new THREE.Color(options.background ?? '#0c1118');
+    this.scene.background = bg;
+    this.scene.fog = options.fog ? new THREE.Fog(bg, options.fog[0], options.fog[1]) : null;
+    this.renderer.toneMappingExposure = options.exposure ?? 1.3;
+  }
+
   /** Frees everything this stage made; the canvas can then be removed. */
   dispose(): void {
     this.pause();
