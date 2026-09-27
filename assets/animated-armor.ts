@@ -110,6 +110,9 @@ const WRIST_L: V3 = [0.24, 0.29, 0.075];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
+// The ends of the flat bottom of the left sabaton (y = 0), measured on the SDF: heel and toe.
+const HEEL: V3 = [0.096, 0, -0.013];
+const TOE: V3 = [0.111, 0, 0.095];
 
 // The sword: its grip center is inside the right fist; the blade runs across the body, down to
 // the left and forward.
@@ -624,11 +627,40 @@ export default defineAsset({
     const CARRY_BLADE = norm([0.86, -0.2, 0.36]);
     const carryArm = motion.reach({ root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R }, CARRY_WRIST, [-0.6, 0, -0.2]);
     const carryHand = motion.orient([carryArm.upper, carryArm.lower], { dir: BLADE_DIR, up: norm([0, 0.66, 0.75]) }, { dir: CARRY_BLADE, up: norm([0, 0.66, 0.75]) });
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, flow: number, carry = false) => ({
+    // The legs come from motion.gait: planted stance sabatons, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `footLift` the swing height, `duty` the share of the
+    // cycle a foot is down (the run has a flight between steps), `bob` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm
+    // is back. The hips' sway goes to gait, so the planted feet do not slide.
+    const SWORD_RAISE = 10;
+    const stride = (
+      duration: number,
+      step: number,
+      footLift: number,
+      duty: number,
+      bob: number,
+      armSwing: number,
+      lean: number,
+      flow: number,
+      carry = false,
+    ) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
-        // The sword arm: a small swing about the shoulder on top of the carry.
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 8,
+          heel: HEEL,
+          toe: TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
+        // The sword arm: a small swing about the shoulder on top of the carry. In the walk the arm
+        // is raised a little: the lean and the back swing put the low blade tip into the floor,
+        // and the planted feet no longer lift the body clear of it.
         const swingR = motion.euler(motion.quat([-3 * s, 0, -2]).multiply(motion.quat(carryArm.upper)));
         const armR = carry
           ? {
@@ -636,29 +668,24 @@ export default defineAsset({
               'forearm.R': { rotate: carryArm.lower },
               'hand.R': { rotate: carryHand },
             }
-          : { 'upperarm.R': { rotate: [-armSwing * 0.2 * s, 0, -4] as const } };
+          : { 'upperarm.R': { rotate: [-armSwing * 0.2 * s - SWORD_RAISE, 0, -4] as const } };
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -8 * s, 0] as const },
           head: { move: [0, 0.008 * bump(p, 2, 0.35), 0] as const, rotate: [-lean + 3 * wave(p, 2, 0.35), 5 * s, 2 * wave(p, 1, 0.3)] as const },
           plume: { rotate: [flow * 0.5 + 5 * wave(p, 2, 0.2), 0, 4 * wave(p, 2, 0.1)] as const },
           cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.6 * s, 0, 4] as const },
           'forearm.L': { rotate: [-armSwing * 0.3 * Math.max(0, -s), 0, 0] as const },
           ...armR,
         };
       },
     });
-    k.animation('walk', stride(1.0, 24, 24, 3, 0, 6));
-    k.animation('run', stride(0.62, 36, 40, 10, 0.025, 20, true));
+    // A heavy, clanking suit: short steps, a low swing, long stances.
+    k.animation('walk', stride(1.0, 0.09, 0.02, 0.64, 0.005, 24, 3, 6));
+    k.animation('run', stride(0.62, 0.13, 0.035, 0.44, 0.02, 40, 10, 20, true));
 
     // A diagonal slash, solved by targets. The wrist follows keys in the chest's rest frame
     // (reach); the blade follows its own keys. The chibi arm is short and the helm is huge, so the
