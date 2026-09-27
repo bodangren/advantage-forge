@@ -90,8 +90,39 @@ export default defineAsset({
   description: 'Chibi orc warrior enemy: huge shoulders, big tusks, a black topknot and beard, a spiked iron pauldron, leather bracers, and a hand axe.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/orc-warrior_001.jpg',
+  // Color slots for individual orcs (the first option is the default look).
+  variants: {
+    eyes: { yellow: C.eye, red: '#d8321e', orange: '#f0861c' },
+    hair: { black: C.hair, brown: '#2c1c12', red: '#40140f' },
+    skin: { green: C.skin, olive: '#4a5220', grey: '#6e7868' },
+    clothing: { red: C.red, black: '#2e2019', blue: '#2e4a7a' },
+  },
+  presets: {
+    bloodfang: { eyes: 'red', hair: 'red', skin: 'green', clothing: 'black' },
+    bog: { eyes: 'yellow', hair: 'brown', skin: 'olive', clothing: 'blue' },
+    ashen: { eyes: 'orange', hair: 'brown', skin: 'grey', clothing: 'black' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it; the mouth and the nostrils follow the skin halfway.
+    const T = {
+      eye: k.tint('eyes'),
+      hair: k.tint('hair'),
+      skin: k.tint('skin'),
+      skinDark: k.tint('skin', { color: C.skinDark, follow: 1 }),
+      lid: k.tint('skin', { color: C.lid, follow: 1 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      red: k.tint('clothing'),
+      band: k.tint('clothing', { color: C.band, follow: 1 }),
+    };
+    // A paintFn shade that follows its slot: the old color as an offset from the body color, so
+    // the default look keeps the exact old color and the slot mask stays full under it.
+    const shadeOf = (body: string, shade: string) => {
+      const a = rgb(body);
+      const b = rgb(shade);
+      return [b[0] - a[0], b[1] - a[1], b[2] - a[2]] as const;
+    };
     const KNOT: V3 = [0, 0.978, -0.04];
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
@@ -211,14 +242,14 @@ export default defineAsset({
       .union(armAt(1), armAt(-1))
       .smoothUnion(0.03, legs)
       .union(feet)
-      .paintWhere(eyeBall, C.eye, 0.002)
+      .paintWhere(eyeBall, T.eye, 0.002)
       .paintWhere(pupil, C.pupil, 0.002)
       .paintWhere(shine, '#ffffff', 0.002)
-      .paintWhere(lids.intersect(eyeBall.round(0.006)), C.lid, 0.002)
-      .paintWhere(mouth, C.mouth, 0.003)
-      .paintWhere(nostrils, C.mouth, 0.004)
-      .paintWhere(pair(sdf.extrude(profile.rect([0.006, 0.08], 0.003), 0.4).rotateZ(-8).at(0.055, 0.35, 0.2)), C.skinDark, 0.01); // belly lines
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(lids.intersect(eyeBall.round(0.006)), T.lid, 0.002)
+      .paintWhere(mouth, T.mouth, 0.003)
+      .paintWhere(nostrils, T.mouth, 0.004)
+      .paintWhere(pair(sdf.extrude(profile.rect([0.006, 0.08], 0.003), 0.4).rotateZ(-8).at(0.055, 0.35, 0.2)), T.skinDark, 0.01); // belly lines
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hair, beard, brows (black)
     // Thick hair combed back: a full cap over the skull, high at the front hairline, pulled up
@@ -302,8 +333,9 @@ export default defineAsset({
         0.008,
       ),
     );
-    const hairDark = rgb('#0c0a0a');
-    const hairShine = rgb('#3a3a40');
+    const hairDark = shadeOf(C.hair, '#0c0a0a');
+    const hairShine = shadeOf(C.hair, '#3a3a40');
+    const plus = (c: readonly [number, number, number], d: readonly [number, number, number]) => [c[0] + d[0], c[1] + d[1], c[2] + d[2]] as const;
     const hair = sdf
       .union(
         sdf.smoothUnion(0.015, hairCap.displace(0.01, strands, 2.4).displace(0.013, hairTaper, 1.3), bun).bone('head'),
@@ -315,15 +347,16 @@ export default defineAsset({
       .paintFn((x, y, z, base) => {
         if (y < 0.76) return base;
         const g = strands(x, y, z);
-        if (g > 0.55) return hairDark;
-        if (g < -0.36) return hairShine;
+        if (g > 0.55) return plus(base, hairDark);
+        if (g < -0.36) return plus(base, hairShine);
         return base;
       });
-    k.body('hair', hair, { color: C.hair, roughness: 0.45, detail: 0.004 });
+    k.body('hair', hair, { color: T.hair, roughness: 0.45, detail: 0.004 });
     // The red band that ties the topknot.
-    k.body('band', sdf.torus(0.047, 0.014).at(0, 0.952, -0.035).bone('head'), { color: C.band, roughness: 0.7, detail: 0.004 });
+    k.body('band', sdf.torus(0.047, 0.014).at(0, 0.952, -0.035).bone('head'), { color: T.band, roughness: 0.7, detail: 0.004 });
 
     // ------------------------------------------------------------------ tusks
+    // The owner asked for this: the tusks hang down from under the upper lip.
     // Big tusks are teeth of the upper jaw: each comes out of the mouth from under the upper lip
     // (its root is sunk behind the lip and cut at the lip line) and hangs down over the lower
     // jaw, a little out and forward at the tip.
@@ -507,22 +540,22 @@ export default defineAsset({
       .subtract(skirtCone(-0.013, 0.45))
       .displace(0.009, clothFolds, 1.5)
       .subtract(tears);
-    const red = rgb(C.red);
-    const redDark = rgb(C.redDark);
+    // The darker streaks and hem follow the clothing slot (an offset from the body color).
+    const redDark = shadeOf(C.red, C.redDark);
     const loincloth = sdf
       .union(
         skirt.intersect(sdf.halfSpace([0, -1, 0], -0.25)).bone('hips'),
         skirt.intersect(sdf.halfSpace([0, 1, 0], 0.3)).intersect(sdf.halfSpace([-1, 0, 0], 0)).bone('leg.L'),
         skirt.intersect(sdf.halfSpace([0, 1, 0], 0.3)).intersect(sdf.halfSpace([1, 0, 0], 0)).bone('leg.R'),
       )
-      .paintFn((x, y, z) => {
+      .paintFn((x, y, z, base) => {
         const a = Math.atan2(x, z);
         const streak = noise.fbm(a * 7, y * 5, 0.3, 2);
         const hem = Math.min(1, Math.max(0, (0.27 - y) / 0.08));
         const t = Math.min(1, Math.max(0, hem * 0.75 + (streak > 0.15 ? 0.45 : streak < -0.3 ? -0.25 : 0)));
-        return [red[0] + (redDark[0] - red[0]) * t, red[1] + (redDark[1] - red[1]) * t, red[2] + (redDark[2] - red[2]) * t];
+        return [base[0] + redDark[0] * t, base[1] + redDark[1] * t, base[2] + redDark[2] * t];
       });
-    k.body('loincloth', loincloth, { color: C.red, roughness: 0.88 });
+    k.body('loincloth', loincloth, { color: T.red, roughness: 0.88 });
     // Shaggy fur wraps on the shins: tufts that hang down, with a ragged lower edge.
     const tufts = (x: number, y: number, z: number) => {
       const a = Math.atan2(x - ANKLE[0], z);
