@@ -1198,5 +1198,34 @@
     ],
     "next": "Thicken and lower the horns, make the loincloth chunky fur, round the mane, and rerun forge all for the missing greybeard sprites.",
     "reviewedAt": "2026-09-27T18:12:46.020Z"
+  },
+  "lich": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "The P1 boss of the Sunken Vault on the skeleton-mage base, scaled to about 1.1 m: a skull with glowing green eye lights (dark base color), pointed bony ears, a five-point gold crown with green gems, a deep purple robe with gold trim, a high collar and a gold-lined cape, and a staff with a four-talon claw holding a glowing green gem, green flames, and two wisps. attack is a new staff-raise spell; cast keeps the palm bolt; death drops the skull with its crown. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The crown, glowing eyes, robe, and gem staff read as the mockup lich and as a boss.",
+      "One eyes slot also colors the gem, flames, wisps, crown gems, and bolt, so the presets change the whole magic color.",
+      "Presets: frost-lich, blood-lich, shadow-lich."
+    ],
+    "issues": [
+      "The skull is a little small for the body; the mockup head is larger and rounder with glow rings around the sockets.",
+      "The staff stands upright; in the mockup it is slanted with the gem at eye level, and the free hand is raised beside the head.",
+      "The crown points are taller and thinner than in the mockup, and the gold hem breaks into pieces between the ragged notches."
+    ],
+    "next": "Enlarge the skull about 10 percent, add glow rings to the sockets, and lower and broaden the crown points.",
+    "reviewedAt": "2026-09-27T18:34:13.433Z"
   }
 }
