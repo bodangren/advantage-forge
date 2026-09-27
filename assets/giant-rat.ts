@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Giant rat — Chibi Quest dungeon monster, a hunched biped about 0.78 m to the tips of its head
@@ -167,8 +167,31 @@ export default defineAsset({
   description: 'Chibi giant rat dungeon monster: a fat, hunched rat on its hind legs with huge round ears, bulging red eyes, a pink nose, a jagged yellow grin, head spikes, a red neckerchief, and a long bandaged tail.',
   detail: 0.005,
   reference: 'docs/monster-mockups/giant-rat_001.jpg',
+  // Real rat colors and a scavenger's faded rags. The first option of each slot is the default.
+  variants: {
+    fur: { grey: C.fur, brown: '#6f5a4b', black: '#3a3536' },
+    markings: { cream: C.muzzle, grey: '#c2c4ba', tan: '#c9a276' },
+    eyes: { red: C.iris, yellow: '#d0a51c', black: '#3b2216' },
+    clothing: { red: C.scarf, bluegrey: '#5b6b7a', olive: '#72703a' },
+  },
+  presets: {
+    sewer: { fur: 'brown', markings: 'tan', eyes: 'black', clothing: 'olive' },
+    plague: { fur: 'black', markings: 'grey', eyes: 'yellow', clothing: 'bluegrey' },
+    cellar: { fur: 'brown', markings: 'grey', eyes: 'red', clothing: 'bluegrey' },
+  },
 
   build(k) {
+    // Slot colors: every fur, marking, iris, and neckerchief color follows its slot.
+    const T = {
+      fur: k.tint('fur'),
+      furDark: k.tint('fur', { color: C.furDark, follow: 1 }),
+      brow: k.tint('fur', { color: C.brow, follow: 1 }),
+      muzzle: k.tint('markings'),
+      belly: k.tint('markings', { color: C.belly, follow: 1 }),
+      iris: k.tint('eyes'),
+      scarf: k.tint('clothing'),
+      scarfShadow: k.tint('clothing', -1), // black in the default look, full in the slot
+    };
     k.skeleton({
       hips: { at: [0, 0.16, -0.02] },
       spine: { parent: 'hips', at: [0, 0.26, 0.0] },
@@ -289,11 +312,11 @@ export default defineAsset({
       // Cream muzzle: the snout, cheeks, and chin below the eyes.
       .paintWhere(
         sdf.smoothUnion(0.03, sdf.ellipsoid([0.1, 0.08, 0.2]).at(0, 0.465, 0.2), pair(sdf.sphere(0.085).at(0.1, 0.47, 0.16))),
-        C.muzzle,
+        T.muzzle,
         0.02,
       )
-      .paintWhere(sdf.ellipsoid([0.13, 0.15, 0.2]).at(0, 0.215, 0.13), C.belly, 0.025)
-      .paintWhere(sdf.halfSpace([0, 0, 1], -0.07).intersect(sdf.sphere(0.5).at(0, 0.3, -0.2)), C.furDark, 0.06) // a darker back
+      .paintWhere(sdf.ellipsoid([0.13, 0.15, 0.2]).at(0, 0.215, 0.13), T.belly, 0.025)
+      .paintWhere(sdf.halfSpace([0, 0, 1], -0.07).intersect(sdf.sphere(0.5).at(0, 0.3, -0.2)), T.furDark, 0.06) // a darker back
       .paintWhere(earPaint, C.earInner, 0.008);
     // The lower jaw zone: below the grin circle and the grin corners, in front of the throat,
     // inside a rounded bound that keeps the cheeks on the head. The jaw pieces are rigid on `jaw`
@@ -310,7 +333,7 @@ export default defineAsset({
     const skin = sdf.smoothUnion(0.05, head, body);
     const inSkin = skin.round(-0.004);
     const furLook = {
-      color: C.fur,
+      color: T.fur,
       roughness: 0.85,
       textureDensity: 2,
       bump: (x: number, y: number, z: number) => 0.0012 * noise.fbm(x * 70, y * 22, z * 70, 2),
@@ -353,7 +376,7 @@ export default defineAsset({
     };
     const eyeballs = sdf
       .union(sdf.sphere(EYE_R).at(...eyeC), sdf.sphere(EYE_R).at(...mx(eyeC)))
-      .paintWhere(sdf.union(...[1, -1].map((x) => sdf.sphere(0.027).at(...onEye(x, 0.027)))), C.iris, 0.002)
+      .paintWhere(sdf.union(...[1, -1].map((x) => sdf.sphere(0.027).at(...onEye(x, 0.027)))), T.iris, 0.002)
       .paintWhere(sdf.union(...[1, -1].map((x) => sdf.sphere(0.013).at(...onEye(x, 0.013)))), C.pupil, 0.002)
       .paintWhere(sdf.union(...[1, -1].map((x) => sdf.sphere(0.007).at(...onEye(x, 0.007, 0.01, 0.012)))), '#ffffff', 0.002);
     k.body('eyes', eyeballs.bone('head'), { color: C.eyeWhite, roughness: 0.2, textureDensity: 2, detail: 0.0035 });
@@ -368,7 +391,7 @@ export default defineAsset({
         0.01,
       ),
     );
-    k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.85, bump: (x, y, z) => 0.001 * noise.fbm(x * 90, y * 40, z * 90, 2) });
+    k.body('brows', brows.bone('head'), { color: T.brow, roughness: 0.85, bump: (x, y, z) => 0.001 * noise.fbm(x * 90, y * 40, z * 90, 2) });
 
     // ------------------------------------------------------------------ mouth and teeth: a wide jagged grin
     // The dark grin band on the face: the upper half stays on the head, the lower half goes with
@@ -473,8 +496,8 @@ export default defineAsset({
       );
     const scarf = sdf
       .smoothUnion(0.01, neckBand, kerchief)
-      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 11 + y * 70) > 0.8 ? [base[0] * 0.82, base[1] * 0.82, base[2] * 0.82] : base));
-    k.body('neckerchief', scarf.bone('chest'), { color: C.scarf, roughness: 0.85 });
+      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 11 + y * 70) > 0.8 ? mixRgb(base, rgb(T.scarfShadow), 0.18) : base));
+    k.body('neckerchief', scarf.bone('chest'), { color: T.scarf, roughness: 0.85 });
 
     // ------------------------------------------------------------------ a dirty bandage wrapped near the tail tip
     const wrapAt = (i: number) => {
