@@ -131,8 +131,35 @@ export default defineAsset({
   description: 'Chibi archer hero with a floppy leaf-green hood, elf ears, a quiver, and a recurve bow.',
   detail: 0.005,
   reference: 'docs/hero-mockups/archer_001.jpg',
+  // Color slots for individual archers (the first option is the default look). The skin options
+  // are the rogue's, so the heroes match.
+  variants: {
+    eyes: { brown: C.iris, green: '#3d7a35', blue: '#2f6aa8' },
+    hair: { brown: C.hair, blonde: '#b88d4a', auburn: '#8e3b1c' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { leaf: C.hood, pine: '#2f5a40', earth: '#7d6a45' },
+  },
+  presets: {
+    sylvan: { eyes: 'green', hair: 'blonde', skin: 'fair', clothing: 'pine' },
+    hunter: { eyes: 'brown', hair: 'auburn', skin: 'tan', clothing: 'earth' },
+    warden: { eyes: 'blue', hair: 'brown', skin: 'brown', clothing: 'pine' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', 0.2),
+      hair: k.tint('hair'),
+      brow: k.tint('hair', -0.26),
+      skin: k.tint('skin'),
+      earInner: k.tint('skin', -0.2),
+      freckle: k.tint('skin', -0.47),
+      cloth: k.tint('clothing'),
+      clothInside: k.tint('clothing', -0.8),
+      tunic: k.tint('clothing', -0.27),
+      tunicDark: k.tint('clothing', -0.52),
+    };
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -241,19 +268,19 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.012, nose, ears)
       .union(armL, armR)
-      .paintWhere(pair(earHollow), C.earInner, 0.006)
+      .paintWhere(pair(earHollow), T.earInner, 0.006)
       .paintWhere(blush, C.blush, 0.03)
-      .paintWhere(freckles, C.freckle, 0.003)
+      .paintWhere(freckles, T.freckle, 0.003)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
+      .paintWhere(brows, T.brow)
       .paintWhere(smile, C.mouth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hood with the floppy point
     const dome = sdf.ellipsoid([0.262, 0.27, 0.255]).at(0, 0.69, -0.022);
@@ -292,8 +319,8 @@ export default defineAsset({
       .smoothUnion(0.012, hoodOuter.subtract(cavity).smoothSubtract(0.02, opening), rim.bone('head'), seam.bone('head'))
       .subtract(pair(ear.round(0.0015))) // tight slits where the ears come through
       .intersect(sdf.halfSpace([0, -1, 0], -0.44))
-      .paintWhere(cavity.round(0.006), C.hoodInside, 0.012);
-    k.body('hood', hood, { color: C.hood, roughness: 0.9 });
+      .paintWhere(cavity.round(0.006), T.clothInside, 0.012);
+    k.body('hood', hood, { color: T.cloth, roughness: 0.9 });
 
     // ------------------------------------------------------------------ hair (inside the hood)
     // The hair fills the cavity and comes forward into the face opening, but not past the rim.
@@ -334,7 +361,7 @@ export default defineAsset({
       .smoothUnion(0.02, cap, swoop, curl, tufts)
       .smoothSubtract(0.006, grooves)
       .intersect(insideHood);
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
     // ------------------------------------------------------------------ tunic and sleeves
     const torso = sdf
@@ -374,14 +401,14 @@ export default defineAsset({
       Math.abs(y - 0.178) < 0.0035 && Math.sin(Math.atan2(z, x) * 50) > 0.15;
     const tunic = torso
       .smoothSubtract(0.008, notch)
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.169), C.tunicDark)
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.169), T.tunicDark)
       .paintFn((x, y, z, base) => (hemStitch(x, y, z) ? stitch : base));
-    k.body('tunic', tunic.bone('spine'), { color: C.tunic, roughness: 0.85 });
+    k.body('tunic', tunic.bone('spine'), { color: T.tunic, roughness: 0.85 });
 
     // Short green sleeves to above the elbow, with the cream shirt cuff rolled below them.
     const sleeveL = sdf.cone([0.11, 0.405, 0], lerp(SHOULDER, ELBOW_L, 0.8), 0.047, 0.044).bone('upperarm.L');
     const sleeveR = sdf.cone([-0.11, 0.405, 0], lerp(mx(SHOULDER), mx(ELBOW), 0.8), 0.047, 0.044).bone('upperarm.R');
-    k.body('sleeves', sdf.union(sleeveL, sleeveR), { color: C.tunic, roughness: 0.85 });
+    k.body('sleeves', sdf.union(sleeveL, sleeveR), { color: T.tunic, roughness: 0.85 });
     const cuffL = sdf.cone(lerp(SHOULDER, ELBOW_L, 0.72), lerp(SHOULDER, ELBOW_L, 1.08), 0.047, 0.046).round(0.004);
     const cuffR = sdf.cone(lerp(mx(SHOULDER), mx(ELBOW), 0.72), lerp(mx(SHOULDER), mx(ELBOW), 1.08), 0.047, 0.046).round(0.004);
     k.body('cuffs', sdf.union(cuffL.bone('upperarm.L'), cuffR.bone('upperarm.R')), { color: C.cuff, roughness: 0.9 });
@@ -420,7 +447,7 @@ export default defineAsset({
       )
       .at(0, 0, 0.22);
     const cowl = cowlSolid.smoothSubtract(0.01, vee);
-    k.body('cowl', cowl, { color: C.hood, roughness: 0.9, bone: 'chest' });
+    k.body('cowl', cowl, { color: T.cloth, roughness: 0.9, bone: 'chest' });
 
     // ------------------------------------------------------------------ leather: belt, baldric, bracers, pouch
     const beltY = 0.252;
