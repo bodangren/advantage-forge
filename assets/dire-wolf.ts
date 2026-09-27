@@ -17,7 +17,8 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   the strongest contrast (focal point); the cream ruff is the second light mass.
  * Bodies: fur, cream (brows, muzzle, forelock, ruff, tail tip), nose, teeth, claws.
  * Rig: quadruped (hips, spine, neck, head, tail, front and back legs with shins, as the horned
- *   boar). Clips: idle (breathing, ear flick, tail sway), walk (trot), run, attack (a lunging bite).
+ *   boar). Clips: idle (breathing, ear flick, tail sway), walk (trot), run, attack (a lunging bite),
+ *   howl (a deep breath, then the nose to the sky with the jaw open).
  */
 
 const C = {
@@ -312,7 +313,7 @@ export default defineAsset({
     // front leg). motion.plant then sets the hips height from these chains, so the lowest point of
     // the paws (claw tips, toe pads, pad, heel) rests on the ground.
     type Rot = readonly [number, number, number];
-    type Pose = Record<string, { rotate?: Rot; move?: Rot }>;
+    type Pose = Record<string, { rotate?: Rot; move?: Rot; scale?: Rot }>;
     const mx = (v: V3): V3 => [-v[0], v[1], v[2]];
     const HIPS_AT: V3 = [0, 0.27, -0.17];
     const SPINE_AT: V3 = [0, 0.29, 0.0];
@@ -588,6 +589,80 @@ export default defineAsset({
           'bleg.R': { rotate: bR.upper },
           'bshin.R': { rotate: bR.lower },
         };
+      },
+    });
+
+    // Howl, when the wolf spots the player or calls its pack. A breath: the front legs plant, the
+    // chest swells and lifts, the rear sinks on bent hind legs, and the head dips. Then the head
+    // tips far back with the nose to the sky, the jaw opens, and the tail rises; the howl holds
+    // 0.8 s with a tremble in the jaw and the head. Then the head comes down, the jaw closes, a
+    // quick shake of the head, and rest. The front legs keep their rest angles in the world, so
+    // the hips move keeps the front paws in place. Each hind leg is solved (motion.reach) so the
+    // back edge of its sole stays in place; its toes lift a little as the knee bends.
+    // The spine scale (the swell) also moves the shoulder joints; `swelled` adds that to the
+    // rest chains of the front legs. fleg and neck cancel the scale, so only the chest grows.
+    const HOWL: Record<string, Track> = {
+      body: [[0, 0], [0.22, 3], [0.33, 4], [0.73, 4], [0.87, 0], [1, 0]], // hips pitch, + = nose up
+      chest: [[0, 0], [0.22, 4], [0.33, 5], [0.73, 4], [0.87, 0], [1, 0]], // spine pitch, + = nose up
+      swell: [[0, 0], [0.24, 1], [0.34, 1], [0.73, 0.3], [0.86, 0], [1, 0]],
+      neck: [[0, 0], [0.2, 8], [0.26, 8], [0.35, -28], [0.73, -28], [0.82, 5], [0.9, 0], [1, 0]], // + = nose down
+      head: [[0, 0], [0.2, 6], [0.26, 6], [0.36, -34], [0.73, -34], [0.82, 3], [0.9, 0], [1, 0]],
+      jaw: [[0, 0], [0.27, 0], [0.35, 1], [0.72, 1], [0.8, 0], [1, 0]],
+      tail: [[0, 0], [0.22, -6], [0.36, 26], [0.73, 26], [0.9, 0], [1, 0]],
+      hum: [[0.33, 0], [0.37, 1], [0.7, 1], [0.74, 0]], // the tremble of the sound
+      shake: [[0.78, 0], [0.82, 1], [0.94, 0]],
+    };
+    const swelled = (l: (typeof LEGS)[number], s: number) => {
+      if (l.bones[1] !== 'spine') return l;
+      const d = [0, 1, 2].map((j) => (l.joints[2]![j]! - SPINE_AT[j]!) * (s - 1));
+      const add = (v: V3): V3 => [v[0] + d[0]!, v[1] + d[1]!, v[2] + d[2]!];
+      return { ...l, joints: [l.joints[0]!, l.joints[1]!, add(l.joints[2]!), add(l.joints[3]!)], sole: l.sole.map(add) };
+    };
+    const swellChains = (pose: Pose, s: number, legs: readonly (typeof LEGS)[number][] = LEGS) =>
+      chains(pose, legs.map((l) => swelled(l, s)));
+    const HEEL: V3 = [BKNEE[0], 0, BKNEE[2] + 0.009]; // the back edge of the flat hind sole
+    const FPAW: V3 = [FKNEE[0], 0, FKNEE[2] + 0.04]; // the middle of the front sole
+    const pitchX = (v: V3, deg: number, about: V3): V3 => {
+      const a = (deg * Math.PI) / 180;
+      const y = v[1] - about[1];
+      const z = v[2] - about[2];
+      return [v[0], about[1] + y * Math.cos(a) - z * Math.sin(a), about[2] + y * Math.sin(a) + z * Math.cos(a)];
+    };
+    k.animation('howl', {
+      duration: 2.0,
+      loop: false,
+      pose: (t, p) => {
+        const v = (name: string) => keys(p, HOWL[name]!);
+        const [body, chest, s] = [v('body'), v('chest'), 1 + 0.05 * v('swell')];
+        const hum = v('hum');
+        const shakeT = ((p - 0.78) / 0.16) * 4 * Math.PI; // two shakes
+        const shake = v('shake') * Math.sin(shakeT);
+        const inv = [1 / s, 1 / s, 1 / s] as const;
+        const pose: Pose = {
+          hips: { rotate: [-body, 0, 0] },
+          spine: { rotate: [-chest, 0, 0], scale: [s, s, s] },
+          neck: { rotate: [v('neck'), 0, 0], scale: inv },
+          head: { rotate: [v('head') + 1.2 * hum * Math.sin(t * 2 * Math.PI * 7), 14 * shake, 7 * shake] },
+          jaw: { rotate: [30 * v('jaw') + 3 * hum * Math.sin(t * 2 * Math.PI * 11), 0, 0] },
+          tail: { rotate: [v('tail') + body, 6 * wave(p, 3), 0] },
+        };
+        for (const side of ['L', 'R']) pose[`fleg.${side}`] = { rotate: [body + chest, 0, 0], scale: inv };
+        // The hips move that keeps the front paws in place.
+        const front = swelled(LEGS[0]!, s);
+        const d = [0, 1, 2].map((j) => front.joints[3]![j]! - FKNEE[j]!);
+        const rots = front.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const));
+        const pawZ = motion.follow(front.joints, rots, [FPAW[0] + d[0]!, FPAW[1] + d[1]!, FPAW[2] + d[2]!])[2];
+        const move: V3 = [0, motion.plant(swellChains(pose, s, [LEGS[0]!])), FPAW[2] - pawZ];
+        // Each hind leg reaches from its posed hip back to the rest heel, in the hips' rest frame.
+        const heel = pitchX([HEEL[0], HEEL[1] - move[1], HEEL[2] - move[2]], body, HIPS_AT);
+        const r = motion.reach({ root: HIP, mid: BKNEE, end: HEEL }, heel, BKNEE);
+        pose['bleg.L'] = { rotate: r.upper };
+        pose['bshin.L'] = { rotate: r.lower };
+        pose['bleg.R'] = { rotate: [r.upper[0], -r.upper[1], -r.upper[2]] };
+        pose['bshin.R'] = { rotate: [r.lower[0], -r.lower[1], -r.lower[2]] };
+        // Nothing goes under the floor: a heel that rolls lifts the body by that much.
+        pose.hips = { ...pose.hips, move: [0, Math.max(move[1], motion.plant(swellChains(pose, s))), move[2]] };
+        return pose;
       },
     });
   },

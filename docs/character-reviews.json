@@ -482,7 +482,7 @@
     "reviewedAt": "2026-09-26T21:42:54+00:00"
   },
   "dire-wolf": {
-    "overall": 8,
+    "overall": 8.1,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -497,22 +497,22 @@
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The cream muzzle is now wider. Above the grin corners it sweeps up and out toward the cheeks, as in the mockup. A lighter grey (furLight) is on the lower cheeks and the chest. The dark face around the eyes stays, so the amber eyes and the cream brows keep their contrast. The jaw split and the clips did not change.",
+    "summary": "The wolf has a new clip, howl (2.0 s, one shot). The wolf takes a breath: the chest swells and lifts, the rear sinks, and the head dips. Then the head tips far back with the nose to the sky, the jaw opens 30 degrees, and the tail rises. The howl holds 0.8 s with a tremble in the jaw and the head. Then the head comes down, the jaw closes, the head shakes, and the wolf goes back to rest. The model and the other clips did not change.",
     "strengths": [
-      "The wide cream grin now fills the lower face from cheek to cheek, and the grin corners curve up into it.",
-      "The cheek cream stays on the head below the grin corners, so the jaw cut has no cream seam, and the jaw opens clean in the attack.",
-      "The ears, cheek tufts, and ruff make a spiky outline that reads in all 8 sprite directions at 128 px."
+      "The howl pose reads in all 8 sprite directions at 128 px: the open jaw and the raised muzzle show clearly in the front and three-quarter views.",
+      "The front paws stay in place. The hips move comes from the front leg chain, and each hind leg is solved so its heel stays on the ground.",
+      "The chest swell scales only the chest: the front legs and the neck cancel the spine scale, so the head and the paws keep their size."
     ],
     "issues": [
-      "The lighter grey is subtle. The ruff hides most of the light chest, and the base fur is darker than the mid grey in the mockup.",
-      "The cheek cream and the lower jaw cream meet at a notch below the grin corners, so the side view shows two cream parts, not one smooth area.",
+      "The ears are part of the head fur and have no bone, so they do not fold back in the howl. They only turn with the head.",
+      "In the breath and the howl, the hind toes lift about 1 cm because the bent hind leg tilts the rigid paw on the heel.",
       "The legs are straight and the side view is longer than the compact mockup. The hit and the death do not open the jaw."
     ],
     "next": [
-      "Lighten the base fur a little toward the mockup mid grey, and show more of the light chest between the front legs.",
+      "Add ear bones (ear.L and ear.R) and fold the ears back in the howl and the hit.",
       "Open the jaw in the hit (a yelp) and a little in the death, so all clips use the jaw."
     ],
-    "reviewedAt": "2026-09-26T21:16:03+00:00"
+    "reviewedAt": "2026-09-27T00:59:24+00:00"
   },
   "giant-spider": {
     "overall": 8.1,
