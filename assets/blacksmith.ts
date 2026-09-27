@@ -124,11 +124,12 @@ export default defineAsset({
     eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
     hair: { black: C.hair, brown: '#4a2e1e', red: '#6e2a14' },
     skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
-    clothing: { red: C.red, blue: '#2f58b8', green: '#2e7a3c' },
+    // Work-cloth dyes in the red's family: a smith's bandana is faded indigo or ochre, never a bright primary.
+    clothing: { red: C.red, indigo: '#3e5070', ochre: '#a8803a' },
   },
   presets: {
-    farrier: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'green' },
-    armorer: { eyes: 'blue', hair: 'red', skin: 'fair', clothing: 'blue' },
+    farrier: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'ochre' },
+    armorer: { eyes: 'blue', hair: 'red', skin: 'fair', clothing: 'indigo' },
     forgemaster: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'red' },
   },
 

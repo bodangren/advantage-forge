@@ -139,11 +139,12 @@ export default defineAsset({
     eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
     hair: { brown: C.hair, blond: '#c4974a', black: '#231a17' },
     skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
-    clothing: { red: C.plaid, blue: '#2c4a8c', green: '#3a7a34' },
+    // Earthy flannel dyes: no blue (it would match the denim), no yellow (the light lines clip to lime).
+    clothing: { red: C.plaid, moss: '#587038', brown: '#8a4a2a' },
   },
   presets: {
-    shepherd: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'blue' },
-    harvester: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'green' },
+    shepherd: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'brown' },
+    harvester: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'moss' },
     plowman: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'red' },
   },
 

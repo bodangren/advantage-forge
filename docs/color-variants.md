@@ -83,6 +83,12 @@ export default defineAsset({
 });
 ```
 
+Pick options that fit the character and stay in the default's saturation and value family. A
+village smith's bandana is brick red, faded indigo, or ochre, not primary red, blue, and green:
+bright primaries read as heraldry and become the loudest part of an earthy palette. Keep
+heraldic colors for knights and soldiers, natural colors for animals, faded colors for the
+undead, and avoid an option that matches a neighbor part (a blue shirt over denim).
+
 Every color that should follow a slot must come from `k.tint`, including darker and lighter
 shades that were written as separate hex values (a hood lining, a hem band, a lower iris). A
 shade is a mix of the slot color toward white (`shade > 0`) or black (`shade < 0`); pick the
