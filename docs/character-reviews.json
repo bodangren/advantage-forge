@@ -1314,5 +1314,34 @@
     ],
     "next": "Broaden and grey the feathers, darken the skin a little, and rerun forge all for the missing preset sprites.",
     "reviewedAt": "2026-09-27T19:45:48.274Z"
+  },
+  "bandit-archer": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 enemy for forest and village roads on the bandit base, with the bow, string, arrow, and quiver built from the archer: a dark green hood and mantle, a grey cloth mask over the lower face, a brown leather vest with a quiver strap, a belt with pouches, a short bow, and a quiver. attack is the archer shot (nock, draw, hold, release); the taunt beckons and shakes the bow. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The hood, mask, vest, bow, and quiver read clearly at 128 px.",
+      "The shot clip reuses the archer rig, so the string and arrow behave correctly.",
+      "Hood (with mantle and tunic), vest, eye, and skin variants with three presets: poacher, raider, cutthroat."
+    ],
+    "issues": [
+      "The hood is a brighter, more saturated green than the muted green of the mockup, and the mask is grey instead of beige.",
+      "The bow rests vertical at the side; the mockup holds it low and diagonal across the front.",
+      "The bow or string touches the tunic, vest, or mantle by up to 1.6 cm for short moments in run, attack, and death."
+    ],
+    "next": "Mute the hood green, make the mask beige, and hold the bow diagonally in the rest pose.",
+    "reviewedAt": "2026-09-27T20:10:02.841Z"
   }
 }
