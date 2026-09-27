@@ -258,6 +258,9 @@ main { max-width: 1500px; margin: 0 auto; padding: 20px; display: grid; gap: 20p
 .cell img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .cell .lbl { position: absolute; left: 8px; top: 8px; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: color-mix(in srgb, var(--panel) 85%, transparent); color: var(--muted); padding: 2px 7px; border-radius: 6px; }
 .cell.mock .lbl { background: var(--accent); color: var(--bg); }
+.cell.sheet { grid-column: 2 / -1; aspect-ratio: auto; min-height: 320px; }
+.cell.sheet .lbl { background: var(--accent); color: var(--bg); }
+.compare.has-wide .cell.sheet { grid-column: 1 / -1; }
 .none { color: var(--muted); font-size: 13px; text-align: center; padding: 20px; cursor: default; }
 .body { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 0; }
 .notes { padding: 16px 18px; border-right: 1px solid var(--line); }
@@ -361,7 +364,7 @@ function card(c) {
   const lookName = chosen ? ' · ' + chosen.name : '';
   if (chosen && !chosen.views.length && chosen.sheet) {
     // Only a turnaround sheet exists for this preset (views come with the next forge all).
-    cells.push('<div class="cell mock wide" data-zoom="' + esc(url(chosen.sheet)) + '" data-cap="' + esc(c.title) + lookName + '"><span class="lbl">' + esc(chosen.name) + '</span><img loading="lazy" src="' + esc(url(chosen.sheet)) + '" alt="' + esc(c.title) + lookName + '"></div>');
+    cells.push('<div class="cell sheet" data-zoom="' + esc(url(chosen.sheet)) + '" data-cap="' + esc(c.title) + lookName + '"><span class="lbl">' + esc(chosen.name) + '</span><img loading="lazy" src="' + esc(url(chosen.sheet)) + '" alt="' + esc(c.title) + lookName + '"></div>');
   } else if (chosen && !chosen.views.length) {
     cells.push('<div class="cell none" style="grid-column: 2 / -1">No renders of this preset yet (they come with its next forge all).</div>');
   } else {
