@@ -197,7 +197,74 @@ async function playPotionRush(page: Page, shot: (name: string) => Promise<void>)
   }
 }
 
+/** Dragon Flight: wait for the first gates (the dragon hovers), then the bot at a person's pace. */
+async function playDragonFlight(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForSelector('.gate-tag', { timeout: 120_000 });
+  await page.waitForTimeout(1500);
+  await shot('first-gates');
+  await page.waitForFunction(() => (window as any).__apk3d.game().state().waiting === true, undefined, { timeout: 120_000, polling: 300 });
+  await shot('waiting');
+  const shots = new Set<string>();
+  const started = Date.now();
+  for (;;) {
+    const s = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return { phase: 'results', flock: 0 };
+      const g = (window as any).__apk3d.game();
+      const st = g.state();
+      if (st.round && st.round.chosen === null && (st.waiting || st.round.gatesAt - st.distance < 30)) g.auto();
+      return { phase: st.phase, flock: st.flock };
+    });
+    if (s.phase === 'results') return;
+    for (const [key, when] of [['flock-3', s.flock >= 3], ['boss', s.phase === 'boss']] as const) {
+      if (when && !shots.has(key)) {
+        shots.add(key);
+        await page.waitForTimeout(key === 'boss' ? 2500 : 600);
+        await shot(key);
+      }
+    }
+    if (Date.now() - started > 20 * 60_000) throw new Error('The flight did not end in 20 minutes');
+    await page.waitForTimeout(500);
+  }
+}
+
+/**
+ * Arena games (a joystick): the bot steers inside the page every 150 ms, like a steady thumb;
+ * screenshots at the start, after the first right word, and whenever a new room or sentence starts.
+ */
+async function playArena(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForSelector('.arena-tag', { timeout: 120_000 });
+  await page.waitForTimeout(1500);
+  await shot('start');
+  await page.evaluate(() => {
+    const w = window as any;
+    w.__qcBot = setInterval(() => w.__apk3d.game()?.auto(), 150);
+  });
+  const started = Date.now();
+  let lastStage = -1;
+  let firstWord = false;
+  for (;;) {
+    const s = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return null;
+      const st = (window as any).__apk3d.game()?.state();
+      return st ? { stage: st.room ?? st.sentence, found: st.next } : null;
+    });
+    if (!s) break;
+    if (!firstWord && s.found >= 1) {
+      firstWord = true;
+      await shot('first-word');
+    }
+    if (s.stage !== lastStage && s.stage > 0) await shot(`stage-${s.stage + 1}`);
+    lastStage = s.stage;
+    if (Date.now() - started > 25 * 60_000) throw new Error('The arena game did not end in 25 minutes');
+    await page.waitForTimeout(700);
+  }
+  await page.evaluate(() => clearInterval((window as any).__qcBot));
+}
+
 const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
+  'dungeon-liberator': playArena,
+  'devourer-slime': playArena,
+  'dragon-flight': playDragonFlight,
   'monster-encounters': playMonsterEncounters,
   'potion-rush': playPotionRush,
 };

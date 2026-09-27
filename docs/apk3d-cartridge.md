@@ -628,11 +628,14 @@ Tests:
 
 ## 12. Work breakdown (decision k)
 
-Progress (2026-09-27): tasks 1 to 10 and 12 are done, and task 14 is done except the screenshot
-compare. Monster Encounters runs as a cartridge in the standalone host (`src/games/monster-encounters`
-reaches its rules through the bridge `core/index.ts` until task 11). The old page app
-(`src/demo/app`, `scripts/demo-shot.ts`) is removed. Next: task 11, task 13, then Potion Rush 3D
-(tasks 15 to 19, design in `docs/game-potion-rush-3d.md`).
+Progress (2026-09-28): tasks 1 to 10, 12, and 14 to 19 are done, and the three next games too.
+The standalone host plays five cartridges: Monster Encounters, Potion Rush 3D, Dragon Flight 3D,
+Dungeon Liberator 3D, and Devourer Slime 3D (designs in `docs/game-*-3d.md`). The kit grew by the
+parts the games needed: `sim/arena.ts` (arena movement, by Fable), `hud/joystick.ts`,
+`hud/drag.ts` (mouse-safe), `stage/walker.ts`, the sentence bar, and edge-pinned anchors. The
+front screen has a hero choice (Knight, Wizard, Cleric) with unlockable looks, passed to games as
+`options.hero`. Open: task 11 (Monster Encounters core as a `Simulation`), task 13 (packs with
+sha256 and budgets), task 20 (`docs/apk-port.md`).
 
 Each task is small, in order. BACKEND = core rules, contracts, content, tests (me). FRONTEND =
 stage, HUD, screens, audio, game feel (Claude).

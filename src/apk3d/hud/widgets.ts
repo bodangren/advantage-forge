@@ -175,6 +175,16 @@ export function feedback(card: Card, good: boolean, html: string, actions: reado
   });
 }
 
+/**
+ * A sentence as blanks that fill in word by word (arena games): the found words show, the
+ * others are blanks; `next` marks the next blank (Helper mode).
+ */
+export function sentenceBar(el: HTMLElement, words: readonly string[], found: number, markNext: boolean): void {
+  el.innerHTML = words
+    .map((w, i) => (i < found ? `<span class="found">${esc(w)}</span>` : `<span class="blank ${markNext && i === found ? 'next' : ''}">${'_'.repeat(Math.min(6, Math.max(3, w.length)))}</span>`))
+    .join(' ');
+}
+
 /** Fills `el` with `max` pips, `value` of them lit (health, courage). */
 export function pips(el: HTMLElement, value: number, max: number): void {
   el.innerHTML = Array.from({ length: max }, (_, i) => `<i class="${i < value ? '' : 'off'}"></i>`).join('');

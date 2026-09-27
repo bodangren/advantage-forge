@@ -5,3 +5,4 @@ export { InstancedSet, type CutBox, type Placement } from './instanced.js';
 export { disposeObject, ModelLoader, type GLTF } from './loader.js';
 export { guessTier, QUALITY, Stage3D, type QualityTier, type QualityTierId, type ScreenRegion, type StageOptions } from './stage.js';
 export { smooth, Timeline } from './timeline.js';
+export { Walker } from './walker.js';

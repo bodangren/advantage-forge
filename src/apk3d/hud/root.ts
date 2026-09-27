@@ -14,6 +14,8 @@ export class HudRoot {
   readonly banner: Banner;
   readonly card: Card;
   private readonly anchors = new Map<HTMLElement, () => ScreenPoint>();
+  /** Anchors kept inside the screen: when the point is off screen, the element waits at the edge. */
+  private readonly pinned = new Set<HTMLElement>();
   private readonly stopFrame: () => void;
 
   constructor(readonly el: HTMLElement, private readonly stage: Stage3D) {
@@ -24,16 +26,18 @@ export class HudRoot {
   }
 
   /** Keeps `el` at a moving screen point (a health bar over a monster, a word over an item). */
-  anchor(el: HTMLElement, where: () => ScreenPoint): HTMLElement {
+  anchor(el: HTMLElement, where: () => ScreenPoint, options: { pin?: boolean } = {}): HTMLElement {
     if (!el.parentElement) this.el.append(el);
     el.classList.add('anchored');
     this.anchors.set(el, where);
+    if (options.pin) this.pinned.add(el);
     this.placeOne(el, where);
     return el;
   }
 
   unanchor(el: HTMLElement, remove = true): void {
     this.anchors.delete(el);
+    this.pinned.delete(el);
     if (remove) el.remove();
   }
 
@@ -62,6 +66,21 @@ export class HudRoot {
 
   private placeOne(el: HTMLElement, where: () => ScreenPoint): void {
     const p = where();
+    if (this.pinned.has(el)) {
+      // Keep the element on screen; mark the side it waits on (the CSS draws an arrow).
+      const w = this.el.clientWidth;
+      const h = this.el.clientHeight;
+      const m = 44;
+      const top = 96;
+      const x = Math.min(w - m, Math.max(m, p.x));
+      const y = Math.min(h - m, Math.max(top, p.visible ? p.y : h - m));
+      const edge = !p.visible ? 'down' : p.x < m ? 'left' : p.x > w - m ? 'right' : p.y < top ? 'up' : p.y > h - m ? 'down' : '';
+      el.dataset.edge = edge;
+      el.style.visibility = '';
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      return;
+    }
     el.style.visibility = p.visible ? '' : 'hidden';
     el.style.left = `${p.x}px`;
     el.style.top = `${p.y}px`;

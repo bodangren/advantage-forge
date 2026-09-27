@@ -14,3 +14,4 @@ export {
   type RecordedCommand,
 } from './simulation.js';
 export * from './motion.js';
+export * from './arena.js';

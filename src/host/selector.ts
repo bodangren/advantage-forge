@@ -111,7 +111,7 @@ export class Selector {
       <div class="sheet">
         <div class="heroes" role="radiogroup" aria-label="${esc(t('host.selector.hero'))}">
           <span class="label">${esc(t('host.selector.hero'))}</span>
-          ${HEROES.map((h) => `<button class="hero-chip ${h === this.choice.hero ? 'on' : ''}" data-hero="${h}" role="radio" aria-checked="${h === this.choice.hero}">${HERO_ICON[h]} ${esc(t(`host.heroes.${h}`))}</button>`).join('')}
+          ${HEROES.map((h) => `<button class="hero-chip ${h === this.choice.hero ? 'on' : ''}" data-hero="${h}" role="radio" aria-checked="${h === this.choice.hero}">${HERO_ICON[h]} ${esc(this.heroName(h))}</button>`).join('')}
         </div>
         <div class="looks" data-looks></div>
         <div class="levels" role="radiogroup" aria-label="${esc(t('host.selector.level'))}">
@@ -133,6 +133,10 @@ export class Selector {
     this.renderGames();
     this.renderAction();
     this.renderLooks();
+  }
+
+  private heroName(hero: string): string {
+    return this.t(`host.heroes.${hero}`);
   }
 
   /** The chosen hero's looks: default, the unlocked presets, and the locked ones (dimmed). */
