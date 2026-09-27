@@ -1053,5 +1053,34 @@
     ],
     "next": "Shorten and round the body a little and thicken the antlers.",
     "reviewedAt": "2026-09-27T14:50:43.859Z"
+  },
+  "horse": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P0 wildlife animal on the dire-wolf quadruped rig: a chibi chestnut horse with a white blaze, a leather halter, a cream muzzle, white socks, dark hooves, and a full mane and tail with a mane bone. Clips: idle, walk (four beats), run (gallop), rear, neigh, hit, and death. The ground check passes, and the textured build has no warnings. About 1.2 m to the ear tips, so a hero can ride it later.",
+    "strengths": [
+      "The blaze, halter, muzzle, socks, and mane read as the mockup horse.",
+      "rear and neigh replace the wolf attack and howl; three clips keep the lowest point on the ground each frame.",
+      "Coat variants (chestnut, bay, dun, grey, black), mane and eye options, and four presets."
+    ],
+    "issues": [
+      "In the side view the eye bulges out beyond the head outline.",
+      "The head is a little small for the body compared with the mockup.",
+      "The mane is a tall ridge of locks from the side (the mockup mane is lower and softer), and the tail is thinner."
+    ],
+    "next": "Sink the eyes into the head so the side outline is smooth, enlarge the head about 10 percent, and lower the mane.",
+    "reviewedAt": "2026-09-27T14:56:55.852Z"
   }
 }
