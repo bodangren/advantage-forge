@@ -249,6 +249,14 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 
 Vite: `vite.demo.config.ts` stays the build; `demo/main.ts` imports `src/host/main.ts`.
 
+Implementation notes from tasks 1 and 2 (2026-09-27, code is the reference):
+
+- `createFixedStepLoop(sim, view, clock?)` takes a `LoopClock` (`now`, `requestFrame`, `cancelFrame`; default browser) instead of a bare `now`, so tests run it without a DOM; it also has `dispatch(command)` (events render before the next tick's, in order), `reset()` for resume, and `frame()` for hand-driven tests.
+- `deviceRequirementsSchema` (manifest.ts) has four fields with the gate's defaults: `minTextureSize` 2048, `minVertexTextureUnits` 4, `minIosVersion` 15, `minWebViewChromeVersion` 80; `device: {}` in a manifest means the kit default.
+- `toGameResults(evidence, score)`: `correctAnswers` = solved items (one correct response each), `totalAttempts` = sum of `attempts`; `xp` is `calculateXP` copied verbatim (section 6.1).
+- `storyIndexEntrySchema` requires `reviewed` (false when `source.translationsGenerated`); `toStoryIndexEntry(story)` builds a row; `fromStoryPack(json)` converts the old demo pack shape for the migration.
+- `apk.ts` exports `semanticAssetKeySchema` and `capabilityIdSchema` (module-private in the APK) and `APK3D_CAPABILITIES`, the ids every 3D manifest lists.
+
 ## 5. Content contracts (decision d)
 
 ### 5.1 StoryInput (proposed for `game-contracts/src/story-input.ts`)

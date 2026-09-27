@@ -9,6 +9,7 @@ import { sound } from './audio.js';
 import { HERO_LOOK, Hud } from './hud.js';
 import { Reader } from './reader.js';
 import { Stage } from './stage.js';
+import '../../apk3d/hud/theme.css';
 import './styles.css';
 
 const BASE = import.meta.env.BASE_URL;

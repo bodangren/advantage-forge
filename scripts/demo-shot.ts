@@ -127,7 +127,7 @@ async function play(layout: 'portrait' | 'landscape', story: number): Promise<vo
       await page.waitForSelector('.feedback.bad');
       await page.waitForTimeout(300);
       await shot('feedback-wrong');
-      await page.click('[data-go]');
+      await page.click('[data-action="go"]');
       await page.waitForTimeout(1600);
       await shot('after-wrong');
     } else if (turn === 1) {

@@ -3,3 +3,6 @@ node_modules/
 reference-designs/
 pnpm-lock.yaml
 docs/
+# verbatim copies of APK sources (double quotes kept on purpose)
+src/apk3d/contracts/apk.ts
+src/apk3d/contracts/briefing.ts
