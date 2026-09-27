@@ -55,8 +55,31 @@ export default defineAsset({
   description: 'Chibi horned boar monster: a huge angry head, pink snout, upturned tusks, cream horns, a black spiky mane, and glowing eyes; quadruped rig.',
   detail: 0.005,
   reference: 'docs/monster-mockups/horned-boar_001.jpg',
+  variants: {
+    fur: { brown: C.fur, ash: '#4a423d', russet: '#9a4222' },
+    skin: { pink: C.snout, dusky: '#9a7e74', slate: '#5e5a62' },
+    eyes: { orange: C.eye, red: '#e8200c', yellow: '#f2c010' },
+    horns: { ivory: C.ivory, dark: '#4a3e34', bone: '#b8b4a8' },
+  },
+  presets: {
+    forest: { fur: 'brown', skin: 'dusky', eyes: 'yellow', horns: 'dark' },
+    ash: { fur: 'ash', skin: 'slate', eyes: 'red', horns: 'bone' },
+    blood: { fur: 'russet', skin: 'pink', eyes: 'red', horns: 'ivory' },
+  },
 
   build(k) {
+    // Colors of the variant slots. Shades keep their exact default color and follow their slot.
+    const T = {
+      fur: k.tint('fur'),
+      furDark: k.tint('fur', { color: C.furDark, follow: 1 }),
+      belly: k.tint('fur', { color: C.belly, follow: 1 }),
+      snout: k.tint('skin'),
+      lid: k.tint('skin', { color: C.lid, follow: 1 }),
+      earInner: k.tint('skin', { color: C.earInner, follow: 1 }),
+      eye: k.tint('eyes'),
+      ivory: k.tint('horns'),
+      ivoryBase: k.tint('horns', { color: C.ivoryBase, follow: 1 }),
+    };
     k.skeleton({
       hips: { at: [0, 0.31, -0.16] },
       spine: { parent: 'hips', at: [0, 0.35, 0.02] },
@@ -114,7 +137,7 @@ export default defineAsset({
     const earCup = sdf.cone([0, 0.012, 0.03], [0, 0.1, 0.03], 0.04, 0.006).scale([1, 1, 0.8]).intersect(sdf.halfSpace([0, -1, 0], -0.03));
     const earRoot = sdf.surfacePoint(headBase, [0.2, 0.64, 0.3], -0.02);
     const earPose = (s: sdf.Shape) => s.scale(1.35).rotateX(-12).rotateZ(-44).rotateY(22).at(...earRoot);
-    const ears = pair(earPose(earLocal.paintWhere(earCup, C.earInner, 0.006)));
+    const ears = pair(earPose(earLocal.paintWhere(earCup, T.earInner, 0.006)));
 
     // ------------------------------------------------------------------ legs, tail
     // The shin ends inside the hoof: its round end stops at y = 0.023, above the sole (y = 0), and
@@ -145,13 +168,13 @@ export default defineAsset({
     const MOUTH_Y = 0.272;
     const mouth = sdf.extrude(profile.arc(0.16, 0.013, 236, 304), 0.5).at(0, MOUTH_Y + 0.16, 0.3);
     const fur = bodyShape
-      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.furDark), 0.22 * (0.5 + 0.5 * noise.fbm(x * 14, y * 14, z * 5, 2))))
-      .paintWhere(sdf.ellipsoid([0.17, 0.08, 0.28]).at(0, 0.16, -0.04), C.belly, 0.05)
-      .paintWhere(legs.intersect(sdf.halfSpace([0, 1, 0], 0.16)), C.furDark, 0.04)
-      .paintWhere(lidRing, C.lid, 0.004)
+      .paintFn((x, y, z, base) => mixRgb(base, rgb(T.furDark), 0.22 * (0.5 + 0.5 * noise.fbm(x * 14, y * 14, z * 5, 2))))
+      .paintWhere(sdf.ellipsoid([0.17, 0.08, 0.28]).at(0, 0.16, -0.04), T.belly, 0.05)
+      .paintWhere(legs.intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04)
+      .paintWhere(lidRing, T.lid, 0.004)
       .paintWhere(mouth, C.mouth, 0.003);
     k.body('fur', fur, {
-      color: C.fur,
+      color: T.fur,
       roughness: 0.8,
       textureDensity: 1.4,
       bump: (x, y, z) => 0.0006 * noise.fbm(x * 90, y * 90, z * 30, 2),
@@ -161,7 +184,7 @@ export default defineAsset({
     const snoutFront = snoutPose(sdf.cylinder(0.087, 0.03, 0.014).at(0, 0.052, 0));
     const nostrils = pair(snoutPose(sdf.ellipsoid([0.018, 0.012, 0.027]).at(0.034, 0.068, 0.004)));
     k.body('snout', snoutFront.smoothSubtract(0.006, nostrils).paintWhere(nostrils.round(0.006), C.nostril, 0.004).bone('head'), {
-      color: C.snout,
+      color: T.snout,
       roughness: 0.5,
     });
     // Small blunt teeth along the lower lip, under the snout.
@@ -175,7 +198,7 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ eyes: glowing irises, dark pupils
     const eyes = pair(sdf.sphere(EYE_R).at(...eyeCenter));
-    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 0.9 });
+    k.body('eyes', eyes.bone('head'), { color: T.eye, roughness: 0.2, emissive: T.eye, emissiveIntensity: 0.9 });
     const pupilAt = out(EYE_R - 0.006);
     const pupils = pair(
       sdf
@@ -240,9 +263,9 @@ export default defineAsset({
           ],
           0.02,
         )
-        .paintFn((x, _y, _z, base) => mixRgb(rgb(C.ivoryBase), base, Math.max(0, Math.min(1, (x - hx - 0.02) / 0.08)))),
+        .paintFn((x, _y, _z, base) => mixRgb(rgb(T.ivoryBase), base, Math.max(0, Math.min(1, (x - hx - 0.02) / 0.08)))),
     );
-    k.body('horns', horns.bone('head'), { color: C.ivory, roughness: 0.4 });
+    k.body('horns', horns.bone('head'), { color: T.ivory, roughness: 0.4 });
     // Tusks grow from the corners of the mouth, out and up past the snout.
     const tuskRoot = sdf.surfacePoint(headBase, [0.1, MOUTH_Y + 0.02, 0.5], -0.02);
     const [tx, ty, tz] = tuskRoot;
@@ -257,7 +280,7 @@ export default defineAsset({
         0.015,
       ),
     );
-    k.body('tusks', tusks.bone('head'), { color: C.ivory, roughness: 0.35 });
+    k.body('tusks', tusks.bone('head'), { color: T.ivory, roughness: 0.35 });
 
     // ------------------------------------------------------------------ hooves: split, black, glossy
     const hoof = (at: V3, bone: string) =>
