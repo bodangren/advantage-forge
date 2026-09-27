@@ -386,8 +386,7 @@ export default defineAsset({
     k.body('sandals', pair(sandal), { color: C.sandal, roughness: 0.7 });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop } = motion;
-    const LEG = 0.19;
+    const { wave, bump } = motion;
 
     k.animation('idle', {
       duration: 3.0,
@@ -404,34 +403,61 @@ export default defineAsset({
       }),
     });
 
-    // A shamble: the left leg steps, the right foot drags; the body lurches and sways, the arms
-    // stay reaching forward.
-    const shamble = (duration: number, stepL: number, stepR: number, lean: number, lurch: number) => ({
-      duration,
-      pose: (_t: number, p: number) => {
-        const s = wave(p);
-        return {
-          hips: {
-            move: [0, -legDrop(LEG, Math.max(stepL, stepR) * Math.abs(s)) * 0.8, 0] as const,
-            rotate: [0, 8 * s, lurch * s] as const,
-          },
-          spine: { rotate: [lean, 0, -lurch * 0.6 * s] as const },
-          chest: { rotate: [2 * wave(p, 2, 0.1), -6 * s, 0] as const },
-          head: { rotate: [-lean * 0.5 + 4 * wave(p, 2, 0.3), 6 * s, 8 * wave(p, 1, 0.25)] as const },
-          'leg.L': { rotate: [-stepL * s, 0, 0] as const },
-          'leg.R': { rotate: [stepR * s, 0, 0] as const },
-          'foot.L': { rotate: [stepL * 0.55 * s + 14 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-stepR * 0.3 * s + 6, 0, 0] as const }, // dragged: the toe stays down
-          // Both arms reach out in front, bobbing out of step with each other.
-          'upperarm.L': { rotate: [-62 + 6 * wave(p, 2, 0.2), 0, -10 + 3 * s] as const },
-          'upperarm.R': { rotate: [-62 + 6 * wave(p, 2, 0.45), 0, 10 + 3 * s] as const },
-          'forearm.L': { rotate: [-4 * wave(p, 2, 0.3), 0, 0] as const },
-          'forearm.R': { rotate: [-4 * wave(p, 2, 0.55), 0, 0] as const },
-        };
-      },
-    });
-    k.animation('walk', shamble(1.3, 26, 14, 8, 6));
-    k.animation('run', shamble(0.75, 36, 22, 16, 8));
+    // A shamble on the knees: the left leg steps (motion.gait, heel strike to toe-off), the right
+    // foot drags on its toe (a second gait with a short stride, almost no lift, no roll, and the
+    // foot pitched `drag` degrees toe down; the ankle rises by `raise` so the toe rests on the
+    // floor). The hips heave up on the side of the swing leg (the left at p = 0.06, the right at
+    // 0.56) to haul it forward; both gait calls get this turn, so the planted feet do not slide.
+    // Both calls share the phase, duty, sit, and bob, so their hips heights are the same.
+    // Sole points measured on the sandal SDF at y = 0 (left foot).
+    const SOLE_HEEL: V3 = [0.1225, 0, -0.056];
+    const SOLE_TOE: V3 = [0.085, 0, 0.1145];
+    const LEGS = { hip: HIP, knee: KNEE, ankle: ANKLE };
+    const SHAMBLE_HIPS: V3 = [0, 0.2, 0];
+    interface Shamble {
+      strideL: number; liftL: number; strideR: number; liftR: number; drag: number;
+      duty: number; sit: number; bob: number; lean: number; lurch: number;
+    }
+    const shamble = (duration: number, o: Shamble) => {
+      const t = (o.drag * Math.PI) / 180;
+      const low = (q: V3) => (q[1] - ANKLE[1]) * Math.cos(t) - (q[2] - ANKLE[2]) * Math.sin(t);
+      const raise = -Math.min(low(SOLE_HEEL), low(SOLE_TOE)) - ANKLE[1];
+      const dragHeel: V3 = [SOLE_HEEL[0], -raise, SOLE_HEEL[2]];
+      const dragToe: V3 = [SOLE_TOE[0], -raise, SOLE_TOE[2]];
+      return {
+        duration,
+        pose: (_t: number, p: number) => {
+          const s = wave(p);
+          const heave = wave(p, 1, 0.19); // +1 at p = 0.06 (left hip up), -1 at 0.56 (right hip up)
+          const hipsTurn: V3 = [0, 8 * s, o.lurch * heave];
+          const shared = { duty: o.duty, sit: o.sit, bob: o.bob, hips: { at: SHAMBLE_HIPS, rotate: hipsTurn } };
+          const step = motion.gait(p - 0.25, LEGS, { ...shared, stride: o.strideL, lift: o.liftL, roll: 10, heel: SOLE_HEEL, toe: SOLE_TOE });
+          const dragged = motion.gait(p - 0.25, LEGS, { ...shared, stride: o.strideR, lift: o.liftR, roll: 0, heel: dragHeel, toe: dragToe });
+          const legR = dragged.pose['leg.R']!.rotate;
+          const shinR = dragged.pose['shin.R']!.rotate;
+          const footR = motion.orient([hipsTurn, legR, shinR], { dir: [0, 0, 1], up: [0, 1, 0] }, { dir: [0, -Math.sin(t), Math.cos(t)], up: [0, Math.cos(t), Math.sin(t)] });
+          return {
+            'leg.L': step.pose['leg.L']!,
+            'shin.L': step.pose['shin.L']!,
+            'foot.L': step.pose['foot.L']!,
+            'leg.R': { rotate: legR },
+            'shin.R': { rotate: shinR },
+            'foot.R': { rotate: footR }, // dragged: the toe stays down on the floor
+            hips: { move: [0, Math.min(step.hipsY, dragged.hipsY), 0] as const, rotate: hipsTurn },
+            spine: { rotate: [o.lean, 0, -o.lurch * 0.6 * heave] as const },
+            chest: { rotate: [2 * wave(p, 2, 0.1), -6 * s, 0] as const },
+            head: { rotate: [-o.lean * 0.5 + 4 * wave(p, 2, 0.3), 6 * s, 8 * wave(p, 1, 0.25)] as const },
+            // Both arms reach out in front, bobbing out of step with each other.
+            'upperarm.L': { rotate: [-62 + 6 * wave(p, 2, 0.2), 0, -10 + 3 * s] as const },
+            'upperarm.R': { rotate: [-62 + 6 * wave(p, 2, 0.45), 0, 10 + 3 * s] as const },
+            'forearm.L': { rotate: [-4 * wave(p, 2, 0.3), 0, 0] as const },
+            'forearm.R': { rotate: [-4 * wave(p, 2, 0.55), 0, 0] as const },
+          };
+        },
+      };
+    };
+    k.animation('walk', shamble(1.3, { strideL: 0.1, liftL: 0.026, strideR: 0.05, liftR: 0.004, drag: 8, duty: 0.62, sit: 0.006, bob: 0.005, lean: 8, lurch: 6 }));
+    k.animation('run', shamble(0.75, { strideL: 0.14, liftL: 0.04, strideR: 0.07, liftR: 0.006, drag: 8, duty: 0.55, sit: 0.014, bob: 0.008, lean: 16, lurch: 8 }));
 
     // ------------------------------------------------------------------ attack: a lunging two-hand grab
     // Wind-up: a slow, heavy sway back; the arms rise up and out at full length, the claws open
