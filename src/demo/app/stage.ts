@@ -17,6 +17,8 @@ const HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
 const ENEMY_KINDS: EnemyKind[] = ['skeleton', 'giant-bat', 'mimic', 'dragon-fire'];
 /** Map pieces that lie flat: they receive shadows but do not cast them. */
 const FLAT = new Set(['floor', 'floor-cracked', 'walkway']);
+/** Vault pieces with no model yet (unbuilt kit parts): skipped, so the browser logs no 404. */
+const NOT_BUILT = new Set(['wall-alcove']);
 
 /**
  * A battle stage: where the party and the monsters stand, the two camera framings (portrait
@@ -150,7 +152,7 @@ export class Stage {
    * then load in the background while the student reads the story.
    */
   async load(progress: (p: number) => void): Promise<void> {
-    const places = sunkenVaultPlaces().filter((p) => p.asset !== 'adventurer' && p.asset !== 'skeleton');
+    const places = sunkenVaultPlaces().filter((p) => p.asset !== 'adventurer' && p.asset !== 'skeleton' && !NOT_BUILT.has(p.asset));
     const names = [...new Set(places.map((p) => p.asset)), ...HEROES];
     let done = 0;
     await Promise.all(
