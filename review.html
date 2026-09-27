@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fantasy Asset Forge — Review</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 28px 36px 64px;
+      max-width: 920px;
+      color: #1d2330;
+      background: #f4f6fa;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { color: #d8dee9; background: #161a23; }
+      a { color: #88c0d0; }
+      .card { background: #1e2330; border-color: #2e3440; }
+      .muted { color: #8a92a3; }
+    }
+    h1 { margin: 0 0 4px; font-size: 22px; }
+    .sub { color: #6f7888; margin-bottom: 28px; font-size: 13px; }
+    h2 { margin: 32px 0 12px; font-size: 14px; text-transform: uppercase;
+         letter-spacing: 0.06em; color: #5f6c7d; }
+    .card {
+      background: #fff;
+      border: 1px solid #d9dde6;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 0 0 12px;
+    }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+    .name { font-weight: 600; }
+    .muted { color: #6f7888; font-size: 12px; }
+    a { color: #2e6bbf; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .badge { display: inline-block; padding: 1px 7px; border-radius: 9px;
+             font-size: 11px; font-weight: 600; background: #e8eef9;
+             color: #2e6bbf; }
+    .badge.warn { background: #fdecd0; color: #a7650d; }
+    .badge.ok { background: #d8efd9; color: #2a6e2f; }
+    code { background: rgba(127,127,127,0.12); padding: 1px 5px; border-radius: 4px; font-size: 12.5px; }
+  </style>
+</head>
+<body>
+  <h1>Fantasy Asset Forge — Review</h1>
+  <p class="sub">Pinned review index for the chibi-set environmental pipeline. Auto-refreshed by the orchestrator.</p>
+
+  <h2>Live 3D scenes</h2>
+  <p class="muted">Orbit viewer served by the dev server (vite on :5199). All scenes load through <code>hamlet.html</code> with <code>?scene=</code>.</p>
+  <div class="card">
+    <div class="row"><span class="name">hamlet</span>
+      <a href="/hamlet.html?scene=hamlet" target="_blank" rel="noopener">/hamlet.html?scene=hamlet</a>
+      <span class="badge ok">ready</span></div>
+    <div class="row"><span class="name">forest — Old Oak Clearing</span>
+      <a href="/hamlet.html?scene=forest" target="_blank" rel="noopener">/hamlet.html?scene=forest</a>
+      <span class="badge ok">ready</span></div>
+    <div class="row"><span class="name">dungeon — the check</span>
+      <a href="/hamlet.html?scene=dungeon" target="_blank" rel="noopener">/hamlet.html?scene=dungeon</a>
+      <span class="badge ok">ready</span></div>
+    <div class="row"><span class="name">dungeon — Sunken Vault</span>
+      <a href="/hamlet.html?scene=vault" target="_blank" rel="noopener">/hamlet.html?scene=vault</a>
+      <span class="badge ok">ready</span></div>
+    <div class="row"><span class="name">tavern — interior cutaway</span>
+      <span class="muted">wired after wave 1 lands</span>
+      <span class="badge warn">in flight</span></div>
+    <div class="row"><span class="name">blacksmith-shop</span>
+      <span class="muted">queued after tavern</span>
+      <span class="badge warn">queued</span></div>
+    <div class="row"><span class="name">village</span>
+      <span class="muted">queued after blacksmith-shop</span>
+      <span class="badge warn">queued</span></div>
+  </div>
+
+  <h2>View controls</h2>
+  <p class="muted">The viewer reads <code>?clean</code>, <code>&amp;az=</code> (azimuth), <code>&amp;el=</code> (elevation), <code>&amp;dist=</code>, <code>&amp;tx=</code>, <code>&amp;tz=</code>. Example: <code>?scene=forest&amp;az=0&amp;el=85&amp;dist=40&amp;tx=0&amp;tz=0</code> is a top-down map read.</p>
+
+  <h2>Trial dashboards</h2>
+  <p class="muted">Per-asset review cards: render, sprites, inspect numbers, and kimi dual-review verdicts. Refreshed by <code>make-viewer.mjs</code>.</p>
+  <div class="card">
+    <div class="row"><span class="name">tavern wave 1 (12 assets)</span>
+      <a href="/bench/runs/tavern-env-r1/viewer.html" target="_blank" rel="noopener">/bench/runs/tavern-env-r1/viewer.html</a>
+      <span class="badge warn">building</span></div>
+    <div class="row"><span class="name">forest (15 assets, done)</span>
+      <a href="/bench/runs/forest-env-r1/viewer.html" target="_blank" rel="noopener">/bench/runs/forest-env-r1/viewer.html</a>
+      <span class="badge ok">15/15 pass</span></div>
+    <div class="row"><span class="name">dungeon (rounds r1 + r2)</span>
+      <a href="/bench/runs/dungeon-env-r1/viewer.html" target="_blank" rel="noopener">/bench/runs/dungeon-env-r1/viewer.html</a>
+      <span class="badge ok">done</span></div>
+  </div>
+
+  <h2>How to flag</h2>
+  <p class="muted">Open the scene or trial dashboard. Send back: <em>what you saw, what was off, the asset or zone name</em>. The orchestrator folds it into the next pass — drafts/fixes live under <code>bench/trials/&lt;env&gt;/</code>, grafted work lives in <code>assets/</code> + <code>scenes/</code>.</p>
+</body>
+</html>
