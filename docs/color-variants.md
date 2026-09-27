@@ -90,6 +90,10 @@ shade whose result is closest to the old hex value. Colors that are not in a slo
 pupils, gold, leather, stitches) keep their hex values and are left out of the mask, even when
 they are painted over a slot color.
 
+A color that should partly follow a slot keeps its exact default color with
+`k.tint('skin', { color: C.blush, follow: 0.5 })`: half of the skin's recoloring applies to it,
+so a blush or lips darken on a darker skin but stay pink.
+
 Check a variant with `./forge render <name> --preset all` (one textured build; writes
 `render.png` and `render.<preset>.png`). Variants need a textured build; `--fast` shows only
 the default look.

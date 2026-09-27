@@ -14,12 +14,22 @@ const srgbToLinear = (c: number): number => (c <= 0.04045 ? c / 12.92 : Math.pow
 // color is black, so the bake records where (and how much of) the surface belongs to the slot.
 
 const TINT = /^tint:([^:]+):(-?[0-9.]+)$/;
+const FOLLOW = /^tint:([^:]+):follow:([0-9.]+):(#?[0-9a-fA-F]{3,6})$/;
 let slotColors = new Map<string, Rgb>();
 let maskSlot: string | null = null;
 
 /** A color reference to a slot, darkened (shade < 0) or lightened (shade > 0) by |shade|. */
 export function tintRef(slot: string, shade = 0): string {
   return `tint:${slot}:${Math.max(-1, Math.min(1, shade))}`;
+}
+
+/**
+ * A fixed color that partly follows a slot: exactly `color` in the default look, but `follow`
+ * (0 to 1) of the slot's recoloring applies to it (a blush or lips that should darken with a
+ * darker skin, but stay pink).
+ */
+export function followRef(slot: string, color: string, follow: number): string {
+  return `tint:${slot}:follow:${Math.max(0, Math.min(1, follow))}:${color}`;
 }
 
 /** The slots' default colors, used while an asset builds. */
@@ -36,6 +46,14 @@ export function setMaskSlot(slot: string | null): void {
 /** Convert a hex sRGB string (or pass through a linear triple) to linear RGB. */
 export function rgb(input: ColorInput): Rgb {
   if (typeof input === 'string') {
+    const f = FOLLOW.exec(input);
+    if (f) {
+      if (maskSlot !== null) {
+        const v = f[1] === maskSlot ? Number(f[2]) : 0;
+        return [v, v, v];
+      }
+      return rgb(f[3]!);
+    }
     const m = TINT.exec(input);
     if (m) {
       const slot = m[1]!;

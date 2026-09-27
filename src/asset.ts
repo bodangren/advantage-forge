@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { rgb, setMaskSlot, setSlotColors, tintRef, type ColorInput } from './sdf/color.js';
+import { followRef, rgb, setMaskSlot, setSlotColors, tintRef, type ColorInput } from './sdf/color.js';
 import type { Sdf, Vec3 } from './sdf/core.js';
 import type { MeshData, MeshOptions, MeshStats } from './sdf/mesher.js';
 import { makeContext, bakeOptions } from './tasks.js';
@@ -82,6 +82,11 @@ export interface AssetContext {
    * paint, emissive); the build bakes a tint mask for the slot, so a game can recolor it.
    */
   tint(slot: string, shade?: number): string;
+  /**
+   * A fixed color that partly follows a slot: exactly `color` in the default look, with `follow`
+   * (0 to 1) of the slot's recoloring (a blush or lips that darken with a darker skin).
+   */
+  tint(slot: string, partial: { readonly color: string; readonly follow: number }): string;
 }
 
 export interface AssetDefinition {
@@ -233,10 +238,10 @@ async function collect(def: AssetDefinition, slots: readonly Slot[]): Promise<Co
       if (animations.has(name)) throw new Error(`Duplicate animation '${name}'.`);
       animations.set(name, a);
     },
-    tint(slot, shade = 0) {
+    tint(slot: string, arg: number | { readonly color: string; readonly follow: number } = 0) {
       if (!slots.some((s) => s.name === slot))
         throw new Error(`k.tint('${slot}'): no such color slot. Slots: ${slots.map((s) => s.name).join(', ') || '(none: add variants)'}.`);
-      return tintRef(slot, shade);
+      return typeof arg === 'number' ? tintRef(slot, arg) : followRef(slot, arg.color, arg.follow);
     },
   });
 

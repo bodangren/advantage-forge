@@ -5,6 +5,7 @@ import { buildAsset, defineAsset, type AtlasImages } from '../src/asset.js';
 import { toGlb } from '../src/gltf.js';
 import { sdf } from '../src/index.js';
 import { recolor, slotTable } from '../src/variants.js';
+import { followRef, rgb, setMaskSlot } from '../src/sdf/color.js';
 
 // A ball with a band painted in the hair slot, and the rest in plain skin.
 const banded = defineAsset({
@@ -26,6 +27,22 @@ describe('color variants', () => {
     const out = recolor(base, mask, slots, { hair: 'blond' });
     expect([...out.slice(0, 3)]).toEqual([0xe0, 0xc0, 0x60].map((v) => expect.closeTo(v, 1) as unknown as number));
     expect([...out.slice(3)]).toEqual([0x6a, 0x40, 0x20]);
+  });
+
+  it('keeps a partly following color exact in the default look and partial in the mask', () => {
+    const blush = followRef('skin', '#f09a86', 0.5);
+    expect(rgb(blush)).toEqual(rgb('#f09a86'));
+    setMaskSlot('skin');
+    try {
+      expect(rgb(blush)).toEqual([0.5, 0.5, 0.5]);
+    } finally {
+      setMaskSlot('hair');
+    }
+    try {
+      expect(rgb(blush)).toEqual([0, 0, 0]);
+    } finally {
+      setMaskSlot(null);
+    }
   });
 
   it('bakes a tint mask and exports the slot table and the presets as material variants', async () => {
