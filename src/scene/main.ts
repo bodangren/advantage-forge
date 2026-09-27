@@ -10,6 +10,7 @@ import { sunkenVaultPlaces } from '../../scenes/sunken-vault.js';
 import { oldOakClearingPlaces } from '../../scenes/old-oak-clearing.js';
 import { tavernInteriorPlaces } from '../../scenes/tavern-interior.js';
 import { villagePlaces } from '../../scenes/village.js';
+import { blacksmithShopPlaces } from '../../scenes/blacksmith-shop.js';
 import './hamlet.css';
 
 const FLAT = new Set([
@@ -192,7 +193,9 @@ async function build(): Promise<void> {
             ? tavernInteriorPlaces()
             : sceneName === 'village'
               ? villagePlaces()
-              : chibiQuestPlaces();
+              : sceneName === 'blacksmith'
+                ? blacksmithShopPlaces()
+                : chibiQuestPlaces();
   const names = [...new Set(places.map((place) => place.asset))];
   await Promise.all(names.map((name) => loadAsset(name)));
   const missing = new Set<string>();
