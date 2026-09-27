@@ -43,6 +43,11 @@ export function setMaskSlot(slot: string | null): void {
 }
 
 
+/** True while a slot mask is being built. */
+export function maskMode(): boolean {
+  return maskSlot !== null;
+}
+
 /** Convert a hex sRGB string (or pass through a linear triple) to linear RGB. */
 export function rgb(input: ColorInput): Rgb {
   if (typeof input === 'string') {

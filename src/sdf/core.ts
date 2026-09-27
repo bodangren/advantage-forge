@@ -1,4 +1,4 @@
-import { mixRgb, rgb, type ColorInput, type Rgb } from './color.js';
+import { maskMode, mixRgb, rgb, type ColorInput, type Rgb } from './color.js';
 
 export type Vec3 = readonly [number, number, number];
 
@@ -278,6 +278,26 @@ export class Sdf {
   /** Paint with an arbitrary function of position; `base` is the color underneath. */
   paintFn(fn: (x: number, y: number, z: number, base: Rgb) => Rgb): Sdf {
     const c = this.color;
+    if (maskMode()) {
+      // In a slot mask, the function keeps as much of the slot as it keeps of the color under
+      // it: fn(white) - fn(black) is that share (0 where it paints its own color, such as a
+      // stitch or a flame; the blend weight where it mixes). Its own colors never count, even
+      // raw values computed outside the build.
+      const white: Rgb = [1, 1, 1];
+      const black: Rgb = [0, 0, 0];
+      const keep = (v: number) => Math.max(0, Math.min(1, v));
+      return new Sdf(
+        this.dist,
+        this.bounds,
+        (x, y, z, f) => {
+          const m = c(x, y, z, f);
+          const a = fn(x, y, z, white);
+          const b = fn(x, y, z, black);
+          return [keep(m[0] * (a[0] - b[0])), keep(m[1] * (a[1] - b[1])), keep(m[2] * (a[2] - b[2]))];
+        },
+        this.tags,
+      );
+    }
     return new Sdf(this.dist, this.bounds, (x, y, z, f) => fn(x, y, z, c(x, y, z, f)), this.tags);
   }
 

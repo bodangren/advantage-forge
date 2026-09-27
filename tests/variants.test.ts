@@ -45,6 +45,22 @@ describe('color variants', () => {
     }
   });
 
+  it("leaves a paint function's own colors out of the mask, even raw values made outside the build", () => {
+    const flame: [number, number, number] = [1, 0.4, 0.05]; // a raw linear color, as a constant
+    setMaskSlot('hair');
+    try {
+      const shape = sdf
+        .sphere(0.1)
+        .paint('tint:hair:0')
+        .paintFn((x, _y, _z, base) => (x > 0 ? flame : base)) // paints its own color on +x
+        .paintFn((_x, _y, _z, base) => [base[0] * 0.5 + 0.2, base[1] * 0.5 + 0.2, base[2] * 0.5 + 0.2]); // a blend
+      expect(shape.color(0.1, 0, 0, [0, 0, 0])).toEqual([0, 0, 0]);
+      for (const v of shape.color(-0.1, 0, 0, [0, 0, 0])) expect(v).toBeCloseTo(0.5, 9);
+    } finally {
+      setMaskSlot(null);
+    }
+  });
+
   it('bakes a tint mask and exports the slot table and the presets as material variants', async () => {
     const { root } = await buildAsset(banded);
     const atlas = root.userData.forgeTextures as AtlasImages;
