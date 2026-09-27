@@ -1341,9 +1341,12 @@ export default defineAsset({
         const chestR: V3 = [-4 * up + 3 * squash, 5 * up, 0];
         const swing = keys(p, [[0, 0], [0.2, 16], [0.34, -20], [0.5, 22], [0.62, -14], [0.76, 9], [0.9, -4], [1, 2]] as const);
         const lanternR = lanternWorld([hipsR, spineR, chestR, arm.upper, arm.lower, hand], quat([swing, 0, 0.4 * swing]));
-        const upR: V3 = [-10 * up, -45 * up, -35 * up];
+        // The flask arm lifts out to her right like a toast. Each crouch (before the hop and on the
+        // landing) tips her head forward, so the arm drops back and in a little with it: the flask
+        // stays 1.5 cm or more clear of the hair locks at her cheek.
+        const upR: V3 = [-10 * up + 5 * squash, -48 * up, -33 * up + 6 * squash];
         // The forearm lifts only a little, so the flask stays about 2 cm clear of the hair locks.
-        const foreR: V3 = [-10 * up + 6 * bob, 0, 0];
+        const foreR: V3 = [-10 * up + 6 * bob + 3 * squash, 0, 0];
         return {
           hips: { move: [0, 0.05 * hop - 0.003 * squash - 0.002 * bob, 0], rotate: hipsR },
           spine: { rotate: spineR },
