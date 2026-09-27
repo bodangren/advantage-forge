@@ -83,8 +83,31 @@ export default defineAsset({
   description: 'Chibi fire dragon monster: a huge red head with cream horns, an orange crest, black brows, and a toothy grin; small orange bat wings; a cream belly; and a finned tail.',
   detail: 0.005,
   reference: 'docs/monster-mockups/dragon-fire_001.jpg',
+  // Color slots for different fire-dragon broods (the first option is the default look). The
+  // horns, claws, teeth, mouth, brows, orange crest and wings, and the fire stay fixed.
+  variants: {
+    // Fire-dragon broods that read apart from the red at a glance: obsidian (black scales under the
+    // fixed orange crest and wings, a lava look), a deep crimson, and copper.
+    scales: { red: C.red, obsidian: '#3a2426', crimson: '#8e1e26', copper: '#aa5430' },
+    belly: { cream: C.cream, gold: '#f2d488', ash: '#c8b8a0' },
+    eyes: { yellow: C.eye, amber: '#f0901c', green: '#a6c43a' },
+  },
+  presets: {
+    magma: { scales: 'obsidian', belly: 'gold', eyes: 'amber' },
+    ember: { scales: 'crimson', belly: 'ash', eyes: 'yellow' },
+    copper: { scales: 'copper', belly: 'cream', eyes: 'green' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      red: k.tint('scales'),
+      redDark: k.tint('scales', { color: C.redDark, follow: 1 }),
+      cream: k.tint('belly'),
+      creamLine: k.tint('belly', { color: C.creamLine, follow: 1 }),
+      eye: k.tint('eyes'),
+      eyeLow: k.tint('eyes', { color: C.eyeLow, follow: 1 }),
+    };
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
       hips: { at: [0, 0.17, 0] },
@@ -189,7 +212,6 @@ export default defineAsset({
     );
     // The grin: a wide dark mouth that curves up at the corners.
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.05, 236, 304), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
-    const scaleTone = rgb(C.redDark);
     const scales = sdf
       .union(
         sdf.smoothUnion(0.05, trunk, head.bone('head')).smoothUnion(0.02, pair(frill).bone('head')),
@@ -203,15 +225,14 @@ export default defineAsset({
         // Darker scales on the back and the top of the tail; a faint scale pattern.
         const back = Math.min(1, Math.max(0, -z * 4 - 0.2));
         const n = noise.fbm(x * 30, y * 30, z * 30, 2) > 0.45 ? 0.12 : 0;
-        const t = Math.min(1, back * 0.5 + n);
-        return [base[0] + (scaleTone[0] - base[0]) * t, base[1] + (scaleTone[1] - base[1]) * t, base[2] + (scaleTone[2] - base[2]) * t];
+        return mixRgb(base, rgb(T.redDark), Math.min(1, back * 0.5 + n));
       })
       .paintWhere(eyeWhite, '#fbf4e0')
-      .paintWhere(iris, C.eye)
-      .paintWhere(irisLow, C.eyeLow, 0.012)
+      .paintWhere(iris, T.eye)
+      .paintWhere(irisLow, T.eyeLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(lid.intersect(eyeWhite.round(0.006)), C.red, 0.002)
+      .paintWhere(lid.intersect(eyeWhite.round(0.006)), T.red, 0.002)
       .paintWhere(grin, C.mouth, 0.003)
       .paintWhere(nostrils.round(0.006), C.mouth, 0.004);
     // The lower jaw zone: below the grin circle and below the grin corners, above the chin (y
@@ -228,7 +249,7 @@ export default defineAsset({
     const jawPart = jawZone.round(0.003);
     const inSkull = skull.round(-0.004);
     const scaleLook = {
-      color: C.red,
+      color: T.red,
       roughness: 0.55,
       textureDensity: 2,
       bump: (x: number, y: number, z: number) => 0.0007 * noise.fbm(x * 90, y * 90, z * 90, 2),
@@ -254,13 +275,12 @@ export default defineAsset({
     // Tagged like the trunk, so the plate follows the chest when it turns and fills with air.
     const bellyBase = sdf.smoothUnion(0.07, sdf.ellipsoid([0.25, 0.2, 0.2]).at(0, 0.19, 0).bone('spine'), sdf.ellipsoid([0.19, 0.12, 0.16]).at(0, 0.34, 0).bone('chest'));
     const bellyOval = sdf.extrude(profile.polygon([[-0.1, 0.4], [0.1, 0.4], [0.16, 0.25], [0.16, 0.08], [0.09, 0.01], [-0.09, 0.01], [-0.16, 0.08], [-0.16, 0.25]], { smooth: true, samples: 5 }), 0.5).at(0, 0, 0.25);
-    const ridge = rgb(C.creamLine);
     const belly = bellyBase
       .round(0.012)
       .subtract(bellyBase.round(-0.004))
       .smoothIntersect(0.006, bellyOval)
-      .paintFn((x, y, _z, base) => (Math.abs(Math.sin((y + 0.02 * (x / 0.14) ** 2) * 95)) < 0.1 ? ridge : base));
-    k.body('belly', belly, { color: C.cream, roughness: 0.6 });
+      .paintFn((x, y, _z, base) => (Math.abs(Math.sin((y + 0.02 * (x / 0.14) ** 2) * 95)) < 0.1 ? rgb(T.creamLine) : base));
+    k.body('belly', belly, { color: T.cream, roughness: 0.6 });
 
     // ------------------------------------------------------------------ horns
     const horn = sdf
@@ -334,7 +354,7 @@ export default defineAsset({
       ),
     );
     k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.5 });
-    k.body('crest-red', redCrest.bone('head'), { color: C.redDark, roughness: 0.5 });
+    k.body('crest-red', redCrest.bone('head'), { color: T.redDark, roughness: 0.5 });
     const grinTop = (x: number) => GRIN_Y + GRIN_R - Math.sqrt(GRIN_R * GRIN_R - x * x) + 0.022;
     const teeth = sdf.union(
       ...[-0.06, -0.02, 0.02, 0.06].map((x) => {
@@ -430,7 +450,7 @@ export default defineAsset({
     );
     const wingPose = (s: sdf.Shape) => s.scale(1.25).rotateY(14).rotateZ(4).at(...WING_ROOT);
     k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.orange, roughness: 0.6 });
-    k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.red, roughness: 0.55 });
+    k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: T.red, roughness: 0.55 });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys } = motion;
