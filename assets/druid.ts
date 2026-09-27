@@ -152,8 +152,36 @@ export default defineAsset({
   description: 'Chibi druid hero under a spotted mushroom cap, with a mushroom basket, a potion, and a lantern staff.',
   detail: 0.005,
   reference: 'docs/hero-mockups/druid_001.png',
+  // Color slots for individual druids (the first option is the default look).
+  variants: {
+    eyes: { brown: C.iris, green: '#3d7a35', blue: '#2f6aa8' },
+    hair: { copper: C.hair, chestnut: '#5a301d', honey: '#c09048' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { fern: C.dress, rust: '#9a4524', heather: '#6a5488' },
+  },
+  presets: {
+    autumn: { eyes: 'green', hair: 'copper', skin: 'tan', clothing: 'rust' },
+    heath: { eyes: 'blue', hair: 'honey', skin: 'fair', clothing: 'heather' },
+    grove: { eyes: 'brown', hair: 'chestnut', skin: 'brown', clothing: 'fern' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot. The
+    // amber lower iris and the freckles keep their exact default color and follow the slot fully; the
+    // blush and the mouth follow the skin half way, so they stay pink.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      hairDark: k.tint('hair', -0.46),
+      brow: k.tint('hair', -0.47),
+      skin: k.tint('skin'),
+      freckle: k.tint('skin', { color: C.freckle, follow: 1 }),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      dress: k.tint('clothing'),
+      dressDark: k.tint('clothing', -0.36),
+    };
     // ------------------------------------------------------------------ the staff line (needed for the skeleton)
     const L_DOWN = (GRIP[1] - 0.03) / STAFF_AXIS[1];
     const L_UP = (0.8 - GRIP[1]) / STAFF_AXIS[1];
@@ -276,19 +304,19 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.012, nose, ears)
       .union(armR, armL)
-      .paintWhere(blush, C.blush, 0.03)
-      .paintWhere(freckles, C.freckle, 0.003)
+      .paintWhere(blush, T.blush, 0.03)
+      .paintWhere(freckles, T.freckle, 0.003)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(lash, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
-      .paintWhere(smile, C.mouth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(brows, T.brow)
+      .paintWhere(smile, T.mouth);
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the mushroom cap
     // Local frame: the underside's center at the origin. A soft dome with a thick rolled rim, cream
@@ -421,9 +449,9 @@ export default defineAsset({
     const hair = sdf
       .smoothUnion(0.02, cap, bob, flicks, bangs)
       .intersect(underCap)
-      .paintFn((x, y, z, base) => (strands(x, y, z) > 0.8 ? rgb(C.hairDark) : base));
+      .paintFn((x, y, z, base) => (strands(x, y, z) > 0.8 ? rgb(T.hairDark) : base));
     k.body('hair', hair, {
-      color: C.hair,
+      color: T.hair,
       roughness: 0.6,
       detail: 0.004,
       bone: 'head',
@@ -454,8 +482,8 @@ export default defineAsset({
       .scale([1, 1, 0.8])
       // Soft folds in the skirt.
       .displace(0.006, (x, y, z) => Math.sin(Math.atan2(z, x) * 9) * Math.min(1, Math.max(0, (0.25 - y) / 0.1)));
-    const dress = dressShape.paintWhere(sdf.halfSpace([0, 1, 0], 0.126), C.dressDark);
-    k.body('dress', dress.bone('spine'), { color: C.dress, roughness: 0.85 });
+    const dress = dressShape.paintWhere(sdf.halfSpace([0, 1, 0], 0.126), T.dressDark);
+    k.body('dress', dress.bone('spine'), { color: T.dress, roughness: 0.85 });
     // Cream collar with two rounded points in front.
     const collar = sdf
       .revolve(
