@@ -1,0 +1,14 @@
+stone-floor	volcengine-agent-plan/kimi-k2.8-preview	prompts/stone-floor.prompt.md
+timber-wall	xai/grok-4.7	prompts/timber-wall.prompt.md
+stone-wall	kimi-code-plan-cn/kimi-for-coding	prompts/stone-wall.prompt.md
+anvil	volcengine-agent-plan/kimi-k2.8-preview	prompts/anvil.prompt.md
+bellows	xai/grok-4.7	prompts/bellows.prompt.md
+grinding-wheel	kimi-code-plan-cn/kimi-for-coding	prompts/grinding-wheel.prompt.md
+hammer	volcengine-agent-plan/kimi-k2.8-preview	prompts/hammer.prompt.md
+tongs	xai/grok-4.7	prompts/tongs.prompt.md
+workbench	kimi-code-plan-cn/kimi-for-coding	prompts/workbench.prompt.md
+rope-coil	volcengine-agent-plan/kimi-k2.8-preview	prompts/rope-coil.prompt.md
+cash-box	xai/grok-4.7	prompts/cash-box.prompt.md
+quench-tub	kimi-code-plan-cn/kimi-for-coding	prompts/quench-tub.prompt.md
+iron-ore	volcengine-agent-plan/kimi-k2.8-preview	prompts/iron-ore.prompt.md
+coal	xai/grok-4.7	prompts/coal.prompt.md

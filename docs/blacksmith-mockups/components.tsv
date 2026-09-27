@@ -1,0 +1,22 @@
+asset_id	instances	wave	role
+architecture/building-parts/stone-floor	~30	1	2 m cobblestone workshop floor tile (catalog floor family, cobble variant)
+architecture/building-parts/timber-wall	~10	1	2 m half-timbered wall, posts at both ends (smithy exterior)
+architecture/building-parts/stone-wall	~6	1	2 m ashlar stone wall (forge backdrop)
+props/craft-and-trade/forge	1	1	stone forge with bright fire — workshop focal emissive
+props/craft-and-trade/anvil	1	1	iron anvil, the smith's work surface
+props/craft-and-trade/bellows	1	1	hand bellows for forge air
+props/craft-and-trade/grinding-wheel	1	1	treadle grinding wheel
+props/craft-and-trade/hammer	2	1	smithing hammers (rack of two)
+props/craft-and-trade/tongs	2	1	smithing tongs (rack of two)
+props/craft-and-trade/workbench	1	1	wood workbench with vice
+props/craft-and-trade/rope-coil	2	1	rope coils by the wall
+props/craft-and-trade/cash-box	1	1	small iron-bound cash box on the bench
+props/craft-and-trade/quench-tub	1	1	wooden water quench tub
+items/crafting/iron-ore	3	1	raw iron ore chunks by the forge
+items/crafting/coal	3	1	coal lumps by the forge
+hero/blacksmith	1	1	the smith at work (full character, drives the scene)
+npc/adventurer	1	reuse	patron waiting for a sword
+
+Notes:
+- Interior cutaway: three walls standing, roof off, camera looks in from the south.
+- Stone floor for workshop grit; the forge anchors the north wall; the anvil sits in the focal mid-floor.
