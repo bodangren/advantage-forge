@@ -1082,5 +1082,34 @@
     ],
     "next": "Sink the eyes into the head so the side outline is smooth, enlarge the head about 10 percent, and lower the mane.",
     "reviewedAt": "2026-09-27T14:56:55.852Z"
+  },
+  "ghost": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 5,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon denizen for the Sunken Vault on the imp hover rig: a chibi ghost with a pale egg head, big dark hollow eyes with glowing cyan pupils, a small smile, stubby arms, a wavy eight-lobed sheet hem, and a curled tail. Clips: idle, walk, attack (boo lunge), hit, death (spins down into a puddle), and taunt. The ground check passes, and the textured build has no warnings.",
+    "strengths": [
+      "The silhouette, eyes, and hem match the mockup closely and read at 128 px.",
+      "The glowing pupils keep their cyan hue (dark base color under the emission).",
+      "Body and eye variants (pale, mint, lavender, grey; cyan, green, violet) with three presets."
+    ],
+    "issues": [
+      "The arms cannot go fully up because the big head is in the way, so the boo pose is mild.",
+      "A very faint line shows on the sheet at y about 0.17 where the sheet is split between two bones.",
+      "The body is paler and bluer than the mint of the mockup."
+    ],
+    "next": "Hide the sheet seam, and try a mint default body color.",
+    "reviewedAt": "2026-09-27T16:33:12.024Z"
   }
 }
