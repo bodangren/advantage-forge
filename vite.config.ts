@@ -8,6 +8,7 @@ const OUT_TYPES: Record<string, string> = {
   '.png': 'image/png',
   '.json': 'application/json',
   '.gif': 'image/gif',
+  '.wav': 'audio/wav',
 };
 
 /** Serve baked files from out/ so the hamlet page can instance them. */
@@ -86,5 +87,5 @@ export default defineConfig({
       ignored: ['**/bench/**', '**/out/**'],
     },
   },
-  build: { rollupOptions: { input: ['index.html', 'render.html', 'hamlet.html'] } },
+  build: { rollupOptions: { input: ['index.html', 'render.html', 'hamlet.html', 'showcase.html'] } },
 });
