@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Giant bat — Chibi Quest dungeon monster, a flyer: a fur ball about 0.44 m across with ears to
@@ -98,8 +98,39 @@ export default defineAsset({
   description: 'Chibi giant bat dungeon monster: a shaggy purple fur ball with huge pointed ears, glaring yellow eyes, a pink pig snout, two long fangs, and pink-membraned wings.',
   detail: 0.005,
   reference: 'docs/monster-mockups/giant-bat_001.jpg',
+  // Color slots for individual bats (the first option is the default look): natural bat fur, the
+  // bare skin (the wing membranes, the snout, the ear insides, and the feet), and the eyes. The
+  // eye rims, the pupils, the nostrils, the mouth, the tongue, the teeth, and the claws stay fixed.
+  variants: {
+    fur: { purple: C.fur, brown: '#5e4636', charcoal: '#3a3638' },
+    skin: { pink: C.membrane, dusky: '#9c7c76', leather: '#5e443c' },
+    eyes: { yellow: C.eye, amber: '#f0921a', red: '#d83a22' },
+  },
+  presets: {
+    cave: { fur: 'brown', skin: 'dusky', eyes: 'amber' },
+    vampire: { fur: 'charcoal', skin: 'leather', eyes: 'red' },
+    dusk: { fur: 'purple', skin: 'dusky', eyes: 'red' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      fur: k.tint('fur'),
+      furTip: k.tint('fur', { color: C.furTip, follow: 1 }),
+      // The target of the darker underside: black in red and green, a little blue, so the mix
+      // gives the old underside (red and green 25 percent darker, blue 20 percent darker).
+      furUnder: k.tint('fur', { color: '#000032', follow: 1 }),
+      earRim: k.tint('fur', { color: C.earRim, follow: 1 }),
+      brow: k.tint('fur', { color: C.brow, follow: 1 }),
+      wingBone: k.tint('fur', { color: C.wingBone, follow: 1 }),
+      membrane: k.tint('skin'),
+      // The veins: the membrane times (0.85, 0.78, 0.8) in linear light, as an exact shade.
+      vein: k.tint('skin', { color: '#d07b80', follow: 1 }),
+      earInner: k.tint('skin', { color: C.earInner, follow: 1 }),
+      snout: k.tint('skin', { color: C.snout, follow: 1 }),
+      feet: k.tint('skin', { color: C.feet, follow: 1 }),
+      eye: k.tint('eyes'),
+    };
     const KNUCKLE: V3 = [0.12, 0.2, 0];
     k.skeleton({
       body: { at: BODY_C },
@@ -120,20 +151,17 @@ export default defineAsset({
     // The spikes are steep (a slope of about 1.5 on top of the comb), so the field is divided back
     // to true distances; see displace().
     const ball = ballSmooth.displace(0.05, (x, y, z) => -spikes(x, y, z), 2.5);
-    const tip = rgb(C.furTip);
     const fur = ball
       .paintFn((x, y, z, base) => {
-        // Lighter tips on the spikes, a darker underside.
+        // Lighter tips on the spikes, a darker underside. Both blend toward fur shades, so the
+        // whole fur stays in the fur slot.
         const s = spikes(x, y, z);
         const t = Math.min(1, s * 1.4);
         const under = Math.max(0, Math.min(1, (0.24 - y) / 0.16));
-        const r = base[0] + (tip[0] - base[0]) * t * 0.6;
-        const g = base[1] + (tip[1] - base[1]) * t * 0.6;
-        const b = base[2] + (tip[2] - base[2]) * t * 0.6;
-        return [r * (1 - 0.25 * under), g * (1 - 0.25 * under), b * (1 - 0.2 * under)];
+        return mixRgb(mixRgb(base, rgb(T.furTip), t * 0.6), rgb(T.furUnder), 0.25 * under);
       });
     const furLook = {
-      color: C.fur,
+      color: T.fur,
       roughness: 0.9,
       textureDensity: 1.5,
       bump: (x: number, y: number, z: number) => 0.0012 * noise.fbm(x * 90, y * 40, z * 90, 2),
@@ -177,7 +205,7 @@ export default defineAsset({
     const earCup = sdf.extrude(profile.offsetProfile(earOutline, -0.02), 0.03, 0.01).at(0.002, 0.006, 0.018);
     const earLocal = sdf.extrude(earOutline, 0.03, 0.012).smoothSubtract(0.008, earCup);
     const earPose = (s: sdf.Shape) => s.scale(1.25).rotateY(22).rotateZ(-24).at(...EAR_ROOT);
-    k.body('ears', pair(earPose(earLocal.paintWhere(earCup.round(0.004), C.earInner, 0.006)).bone('ear.L')), { color: C.earRim, roughness: 0.6 });
+    k.body('ears', pair(earPose(earLocal.paintWhere(earCup.round(0.004), T.earInner, 0.006)).bone('ear.L')), { color: T.earRim, roughness: 0.6 });
 
     // ------------------------------------------------------------------ face
     const EYE_X = 0.078;
@@ -190,7 +218,7 @@ export default defineAsset({
       return [c[0] - Math.sign(x) * 0.006 + dx, c[1] - 0.002 + dy, c[2] + EYE_R - r * 0.4];
     };
     const eyes = sdf.union(sdf.sphere(EYE_R).at(...eyeC), sdf.sphere(EYE_R).at(...mx(eyeC)));
-    k.body('eyes', eyes.bone('body'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 0.3, detail: 0.0035 });
+    k.body('eyes', eyes.bone('body'), { color: T.eye, roughness: 0.2, emissive: T.eye, emissiveIntensity: 0.3, detail: 0.0035 });
     // The pupils are their own body: the eye glow would wash out painted pupils.
     const pupils = sdf
       .union(...[1, -1].map((x) => sdf.ellipsoid([0.016, 0.02, 0.008]).at(...eyeFront(x, 0.004))))
@@ -209,7 +237,8 @@ export default defineAsset({
         0.01,
       ),
     );
-    k.body('brows', sdf.union(brows, eyeRims).bone('body'), { color: C.brow, roughness: 0.8 });
+    // The brows follow the fur; the eye rims keep their fixed dark color.
+    k.body('brows', sdf.union(brows.paint(T.brow), eyeRims.paint(C.brow)).bone('body'), { color: T.brow, roughness: 0.8 });
 
     // A pink pig snout with two nostrils.
     const snoutHit = faceHit(0, 0.295);
@@ -217,7 +246,7 @@ export default defineAsset({
     const snout = sdf
       .smoothUnion(0.015, sdf.ellipsoid([0.052, 0.034, 0.03]).at(...snoutC), sdf.ellipsoid([0.03, 0.02, 0.02]).at(0, 0.322, snoutC[2] - 0.016))
       .paintWhere(pair(sdf.ellipsoid([0.011, 0.014, 0.03]).rotateZ(-20).at(0.018, 0.297, snoutC[2] + 0.028)), C.nostril, 0.003);
-    k.body('snout', snout.bone('body'), { color: C.snout, roughness: 0.4 });
+    k.body('snout', snout.bone('body'), { color: T.snout, roughness: 0.4 });
 
     // The grin: a dark curved mouth under the snout, with a row of small teeth and two long fangs.
     const MOUTH_Y = 0.24;
@@ -290,7 +319,7 @@ export default defineAsset({
       .paintFn((x, y, _z, base) => {
         // Darker veins fanning from the knuckle.
         const a = Math.atan2(y - KNUCKLE[1], x - KNUCKLE[0]);
-        return Math.abs(Math.sin(a * 5)) < 0.1 ? [base[0] * 0.85, base[1] * 0.78, base[2] * 0.8] : base;
+        return Math.abs(Math.sin(a * 5)) < 0.1 ? rgb(T.vein) : base;
       });
     // The inner membrane follows the arm; the outer part follows the knuckle.
     const split = sdf.halfSpace([1, 0, 0], KNUCKLE[0] - 0.01);
@@ -302,8 +331,8 @@ export default defineAsset({
     );
     const wingPose = (s: sdf.Shape) => s.rotateY(14).rotateZ(4).at(...WING_ROOT);
     const membrane = sdf.union(wingPose(membraneLocal.intersect(split)).bone('wing.L'), wingPose(membraneLocal.intersect(outer)).bone('wingtip.L'));
-    k.body('wing-membranes', pair(membrane), { color: C.membrane, roughness: 0.55 });
-    k.body('wing-bones', pair(sdf.union(wingPose(bonesArm).bone('wing.L'), wingPose(bonesFingers).bone('wingtip.L'))), { color: C.wingBone, roughness: 0.5 });
+    k.body('wing-membranes', pair(membrane), { color: T.membrane, roughness: 0.55 });
+    k.body('wing-bones', pair(sdf.union(wingPose(bonesArm).bone('wing.L'), wingPose(bonesFingers).bone('wingtip.L'))), { color: T.wingBone, roughness: 0.5 });
 
     // ------------------------------------------------------------------ feet: tiny pink feet with dark claws
     const footLocal = sdf.smoothUnion(
@@ -312,7 +341,7 @@ export default defineAsset({
       sdf.ellipsoid([0.03, 0.02, 0.032]).at(0, 0.03, 0.014),
     );
     const clawsLocal = sdf.union(...[-0.016, 0, 0.016].map((dx) => sdf.cone([dx, 0.024, 0.036], [dx * 1.2, 0.002, 0.05], 0.008, 0.002)));
-    k.body('feet', pair(footLocal.at(FOOT[0], 0, FOOT[2]).bone('foot.L')), { color: C.feet, roughness: 0.5 });
+    k.body('feet', pair(footLocal.at(FOOT[0], 0, FOOT[2]).bone('foot.L')), { color: T.feet, roughness: 0.5 });
     k.body('claws', pair(clawsLocal.at(FOOT[0], 0, FOOT[2]).bone('foot.L')), { color: C.claw, roughness: 0.35, detail: 0.003 });
 
     // ------------------------------------------------------------------ animation
