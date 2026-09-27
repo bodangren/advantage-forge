@@ -55,17 +55,26 @@ export function polygon(points: readonly Vec2[], opts: { smooth?: boolean; sampl
     return s * Math.sqrt(d);
   };
   const bounds = [Math.min(...us), Math.min(...vs), Math.max(...us), Math.max(...vs)] as const;
-  return { dist: tabulate(dist, bounds), bounds };
+  const key = `${opts.smooth === true ? (opts.samples ?? 12) : 'sharp'}|${points.join(';')}`;
+  return { dist: tabulate(dist, bounds, key), bounds };
 }
+
+/**
+ * Lookup tables by polygon, shared by every build in this thread: an asset with color slots builds
+ * again for each slot's mask, and each of those builds would otherwise fill the same tables again.
+ */
+const tables = new Map<string, Float32Array>();
+const MAX_TABLES = 64;
 
 /**
  * Wrap an exact but slow 2D distance in a lazily built lookup table with bilinear interpolation.
  * The table spans the profile bounds plus a margin at 1/400 of the profile size; queries outside
- * it fall back to the exact function.
+ * it fall back to the exact function. `key` identifies the profile: equal keys give equal tables.
  */
 function tabulate(
   exact: (u: number, v: number) => number,
   b: readonly [number, number, number, number],
+  key: string,
 ): Profile['dist'] {
   const extent = Math.max(b[2] - b[0], b[3] - b[1]);
   const cell = extent / 400;
@@ -80,9 +89,14 @@ function tabulate(
     const fv = (v - v0) / cell;
     if (!(fu >= 0 && fv >= 0 && fu < nu - 1 && fv < nv - 1)) return exact(u, v);
     if (table === null) {
-      table = new Float32Array(nu * nv);
-      for (let j = 0; j < nv; j++)
-        for (let i = 0; i < nu; i++) table[i + nu * j] = exact(u0 + i * cell, v0 + j * cell);
+      table = tables.get(key) ?? null;
+      if (table === null) {
+        table = new Float32Array(nu * nv);
+        for (let j = 0; j < nv; j++)
+          for (let i = 0; i < nu; i++) table[i + nu * j] = exact(u0 + i * cell, v0 + j * cell);
+        if (tables.size >= MAX_TABLES) tables.delete(tables.keys().next().value!);
+        tables.set(key, table);
+      }
     }
     const i = Math.floor(fu);
     const j = Math.floor(fv);
