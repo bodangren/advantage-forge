@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Skeleton warrior — Chibi Quest enemy (catalog `enemies/undead/skeleton`), about 0.97 m to the
@@ -144,8 +144,34 @@ export default defineAsset({
   description: 'Chibi skeleton warrior enemy: a grinning skull with glowing eyes under an iron helmet, a red scarf, mail, a sword, and a round shield.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/skeleton_001.png',
+  // Color slots for individual skeletons (the first option is the default look).
+  variants: {
+    eyes: { amber: C.eye, red: '#e0200e', green: '#5cff6a' },
+    bone: { ivory: C.bone, grey: '#b5b3ab', ash: '#b39c7e' },
+    clothing: { red: C.red, blue: '#34568e', green: '#4a6e34' },
+    armor: { iron: C.iron, bronze: '#8a6a36', rust: '#7c4529' },
+  },
+  presets: {
+    barrow: { eyes: 'green', bone: 'ash', clothing: 'blue', armor: 'bronze' },
+    dread: { eyes: 'red', bone: 'grey', clothing: 'red', armor: 'iron' },
+    rustbone: { eyes: 'amber', bone: 'ash', clothing: 'green', armor: 'rust' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it. The glow of the eyes follows the eyes slot too.
+    const SLOT = {
+      eye: k.tint('eyes'),
+      bone: k.tint('bone'),
+      boneShade: k.tint('bone', { color: C.boneShade, follow: 1 }),
+      cloth: k.tint('clothing'),
+      clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
+      clothStripe: k.tint('clothing', -0.15), // the scarf stripes: the cloth times 0.85
+      iron: k.tint('armor'),
+      ironDark: k.tint('armor', { color: C.ironDark, follow: 1 }),
+      // The patina mixes 18% of this into the iron: the iron times (0.82, 0.82, 0.85).
+      patina: k.tint('armor', { color: '#00002c', follow: 1 }),
+    };
     // ------------------------------------------------------------------ skeleton (rig)
     k.skeleton({
       hips: { at: [0, 0.2, 0] },
@@ -219,7 +245,7 @@ export default defineAsset({
     const fistL = boneFistAt(WRIST_L);
     const bone = sdf
       .union(skull.bone('head'), neckBones.bone('neck'), fistR.bone('hand.R'), fistL.bone('hand.L'))
-      .paintWhere(sockets.round(0.012), C.boneShade, 0.012)
+      .paintWhere(sockets.round(0.012), SLOT.boneShade, 0.012)
       .paintWhere(sockets.round(0.002), C.socket, 0.004)
       .paintWhere(noseHole.round(0.003), C.socket, 0.003)
       .paintWhere(mouthLine, C.socket, 0.002)
@@ -229,12 +255,12 @@ export default defineAsset({
         const n = noise.fbm(x * 22, y * 22, z * 22, 2);
         return n > 0.35 ? [base[0] * 0.93, base[1] * 0.9, base[2] * 0.84] : base;
       });
-    k.body('bone', bone, { color: C.bone, roughness: 0.6, textureDensity: 2 });
+    k.body('bone', bone, { color: SLOT.bone, roughness: 0.6, textureDensity: 2 });
 
     // Glowing eyes deep in the sockets, with dark pupils and one highlight each.
     const eyeAt = (x: number): V3 => [x - Math.sign(x) * 0.004, EYE[1] - 0.01, faceZ(Math.abs(x), EYE[1]) - 0.04];
     const eyes = sdf.union(sdf.sphere(0.026).at(...eyeAt(EYE[0])), sdf.sphere(0.026).at(...eyeAt(-EYE[0])));
-    k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.2, emissive: C.eye, emissiveIntensity: 1.4 });
+    k.body('eyes', eyes.bone('head'), { color: SLOT.eye, roughness: 0.2, emissive: SLOT.eye, emissiveIntensity: 1.4 });
     const pupils = sdf.union(
       ...[EYE[0], -EYE[0]].map((x) => {
         const e = eyeAt(x);
@@ -268,13 +294,13 @@ export default defineAsset({
     const helm = sdf
       .smoothUnion(0.006, helmShell, crestBand)
       .union(rimBand)
-      .paintWhere(helmInner.round(0.004), C.ironDark, 0.008)
+      .paintWhere(helmInner.round(0.004), SLOT.ironDark, 0.008)
       .paintFn((x, y, z, base) => {
         const n = noise.fbm(x * 30, y * 30, z * 30, 3);
-        return n > 0.3 ? [base[0] * 0.82, base[1] * 0.82, base[2] * 0.85] : base; // patina
+        return n > 0.3 ? mixRgb(base, rgb(SLOT.patina), 0.18) : base; // patina
       });
     k.body('helmet', helm, {
-      color: C.iron,
+      color: SLOT.iron,
       roughness: 0.55,
       metalness: 0.7,
       bone: 'head',
@@ -347,7 +373,7 @@ export default defineAsset({
     const pauldronPose = (s: sdf.Shape) => s.rotateZ(-26).at(0.158, 0.432, 0);
     const pauldrons = pair(pauldronPose(sdf.union(lame(1), lame(1.14).at(0, -0.034, 0))).bone('upperarm.L'));
     k.body('pauldrons', pauldrons, {
-      color: C.iron,
+      color: SLOT.iron,
       roughness: 0.5,
       metalness: 0.7,
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 70, y * 70, z * 70, 2),
@@ -388,8 +414,8 @@ export default defineAsset({
         )
         .rotateX(front ? -8 : 8)
         .at(0, 0, front ? 0.126 : -0.124);
-    const tabard = pair(sdf.union(flap(true), flap(false)).bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.125), C.redDark, 0.02);
-    k.body('tabard', tabard, { color: C.red, roughness: 0.85 });
+    const tabard = pair(sdf.union(flap(true), flap(false)).bone('leg.L')).paintWhere(sdf.halfSpace([0, 1, 0], 0.125), SLOT.clothDark, 0.02);
+    k.body('tabard', tabard, { color: SLOT.cloth, roughness: 0.85 });
 
     // ------------------------------------------------------------------ scarf (the knight's)
     const scarfRing = sdf
@@ -427,8 +453,8 @@ export default defineAsset({
       );
     const scarf = sdf
       .smoothUnion(0.012, scarfRing, drape)
-      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? [base[0] * 0.85, base[1] * 0.85, base[2] * 0.85] : base));
-    k.body('scarf', scarf, { color: C.red, roughness: 0.8, bone: 'chest' });
+      .paintFn((x, y, z, base) => (Math.sin(Math.atan2(z, x) * 9 + y * 60) > 0.75 ? rgb(SLOT.clothStripe) : base));
+    k.body('scarf', scarf, { color: SLOT.cloth, roughness: 0.8, bone: 'chest' });
 
     // ------------------------------------------------------------------ legs: leggings, knee cops, greaves, sabatons (the knight's)
     const leggings = sdf.smoothUnion(
@@ -503,7 +529,7 @@ export default defineAsset({
     const handle = sdf.capsule([-0.03, 0.02, -0.024], [0.03, -0.01, -0.024], 0.012);
     const shieldIron = sdf.union(rim, bar, boss, handle).paintWhere(boss.round(0.002).intersect(sdf.halfSpace([0, 0, -1], -0.04)), C.steel, 0.01);
     k.body('shield-iron', shieldPose(shieldIron), {
-      color: C.iron,
+      color: SLOT.iron,
       roughness: 0.5,
       metalness: 0.75,
       bone: 'shield',
