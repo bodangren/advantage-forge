@@ -134,8 +134,34 @@ export default defineAsset({
   description: 'Chibi goblin archer enemy with a pointed dark green hood, ears through slits, war paint, a quiver, and a recurve bow.',
   detail: 0.005,
   reference: 'docs/enemy-mockups/goblin-archer_001.jpg',
+  // Color slots for individual goblins (the first option is the default look). The eyes and the
+  // skin use the same options as the goblin warrior, so the two goblins can share looks.
+  variants: {
+    eyes: { amber: C.iris, yellow: '#8f7010', red: '#7a0e0a' },
+    skin: { olive: C.skin, moss: '#6b7c34', grey: '#8a9676' },
+    clothing: { forest: C.hood, umber: '#3b2a1e', night: '#2e3440' },
+    jerkin: { brown: C.jerkin, slate: '#58616c', crimson: '#7a2e2a' },
+  },
+  presets: {
+    bog: { eyes: 'yellow', skin: 'moss', clothing: 'umber', jerkin: 'brown' },
+    cave: { eyes: 'red', skin: 'grey', clothing: 'night', jerkin: 'slate' },
+    raider: { eyes: 'yellow', skin: 'olive', clothing: 'forest', jerkin: 'crimson' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot when a game recolors it; the mouth and the nostrils follow the skin halfway.
+    const TS = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      skin: k.tint('skin'),
+      earInner: k.tint('skin', { color: C.earInner, follow: 1 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      hood: k.tint('clothing'),
+      hoodInside: k.tint('clothing', { color: C.hoodInside, follow: 1 }),
+      jerkin: k.tint('jerkin'),
+      jerkinDark: k.tint('jerkin', { color: C.jerkinDark, follow: 1 }),
+    };
     const EAR: V3 = [0.165, 0.7, -0.01];
     // ------------------------------------------------------------------ skeleton
     k.skeleton({
@@ -200,7 +226,7 @@ export default defineAsset({
     const earLocal = sdf.extrude(earOutline, 0.028, 0.012).smoothSubtract(0.01, earCup);
     // A little longer than the warrior's ears, because the hood covers their base.
     const earPose = (s: sdf.Shape) => s.scale(1.12).rotateY(41).at(...EAR);
-    const ears = pair(earPose(earLocal.paintWhere(earCup.round(0.004), C.earInner, 0.008)).bone('ear.L'));
+    const ears = pair(earPose(earLocal.paintWhere(earCup.round(0.004), TS.earInner, 0.008)).bone('ear.L'));
     const neck = sdf.capsule([0, 0.44, -0.01], [0, 0.55, -0.01], 0.056).bone('neck');
 
     // Arms: bare green upper arms, forearms under bracers, big fists.
@@ -286,16 +312,16 @@ export default defineAsset({
       .union(armL, armR)
       .paintWhere(warPaint, C.warPaint, 0.004)
       .paintWhere(eyeWhite, C.eyeWhite)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.014)
+      .paintWhere(iris, TS.iris)
+      .paintWhere(irisLow, TS.irisLow, 0.014)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(lowLid, C.lid)
       .paintWhere(shine, '#ffffff')
       .paintWhere(brows, C.brow)
-      .paintWhere(mouth, C.mouth)
-      .paintWhere(nostrils, C.mouth, 0.003);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(mouth, TS.mouth)
+      .paintWhere(nostrils, TS.mouth, 0.003);
+    k.body('skin', skin, { color: TS.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hood (pointed; the ears come out through it)
     const hoodOuter = sdf.smoothUnion(
@@ -316,8 +342,8 @@ export default defineAsset({
     const hood = sdf
       .smoothUnion(0.012, hoodOuter.subtract(cavity).smoothSubtract(0.02, opening), rim)
       .intersect(sdf.halfSpace([0, -1, 0], -0.47))
-      .paintWhere(cavity.round(0.006), C.hoodInside, 0.012);
-    k.body('hood', hood, { color: C.hood, roughness: 0.85, bone: 'head' });
+      .paintWhere(cavity.round(0.006), TS.hoodInside, 0.012);
+    k.body('hood', hood, { color: TS.hood, roughness: 0.85, bone: 'head' });
 
     // ------------------------------------------------------------------ capelet (dagged hem, brass studs)
     const capeletSolid = sdf
@@ -352,7 +378,7 @@ export default defineAsset({
         )
         .rotateY(angle);
     const capelet = capeletSolid.subtract(sdf.union(...[0, 36, 72, 108, 144].map((a) => dag(a + 18))));
-    k.body('capelet', capelet.bone('chest'), { color: C.hood, roughness: 0.85 });
+    k.body('capelet', capelet.bone('chest'), { color: TS.hood, roughness: 0.85 });
 
     // ------------------------------------------------------------------ leather jerkin
     const torso = sdf
@@ -377,9 +403,9 @@ export default defineAsset({
       )
       .scale([1, 1, 0.8]);
     const jerkin = torso
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.234), C.jerkinDark) // a darker hem band
-      .paintWhere(sdf.extrude(profile.rect([0.008, 0.2], 0.003), 0.4).at(0, 0.36, 0.2), C.jerkinDark, 0.002); // front seam
-    k.body('jerkin', jerkin.bone('spine'), { color: C.jerkin, roughness: 0.65 });
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.234), TS.jerkinDark) // a darker hem band
+      .paintWhere(sdf.extrude(profile.rect([0.008, 0.2], 0.003), 0.4).at(0, 0.36, 0.2), TS.jerkinDark, 0.002); // front seam
+    k.body('jerkin', jerkin.bone('spine'), { color: TS.jerkin, roughness: 0.65 });
 
     // ------------------------------------------------------------------ straps: belt and the quiver strap
     const beltY = 0.28;
