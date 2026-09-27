@@ -1256,5 +1256,34 @@
     ],
     "next": "Give the eyes a yellow core, narrow the skull and enlarge the teeth, and hide the cape seam.",
     "reviewedAt": "2026-09-27T19:02:29.490Z"
+  },
+  "cultist": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the bandit base (knee bones, seven clips): a small figure in a crimson hood and ankle-length robe with black bands, a dark face with two slanted glowing purple eyes, a bone skull charm, a curved ritual dagger in the right hand, and a black candle with a flickering purple flame in the left. The taunt is a chant with the candle raised. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The hood silhouette, dark face, and purple eyes read as the mockup cultist at a glance.",
+      "The candle stays upright in every clip and the flame follows the eye color slot.",
+      "Robe and eye variants with three presets: zealot, shade, mirecaller."
+    ],
+    "issues": [
+      "The eyes are smaller and dimmer than in the mockup; at 128 px they are small spots.",
+      "The chibi arms are short, so the chant raises the candle only to eye level.",
+      "The hood makes a small ridge where it meets the collar, and the skull charm is small and simple."
+    ],
+    "next": "Enlarge and brighten the eyes, smooth the hood into the shoulders, and enlarge the charm.",
+    "reviewedAt": "2026-09-27T19:24:47.385Z"
   }
 }
