@@ -153,8 +153,10 @@ async function main(): Promise<void> {
       page.on('console', (m) => {
         if (m.type() === 'error') console.error(`[page] ${m.text()}`);
       });
-      await page.goto(`${url}render.html`);
-      await page.waitForFunction(() => window.forge?.ready === true, undefined, { timeout: 60_000 });
+      // Generous limits: under heavy load (several builds at once) the first page transform
+      // took longer than Playwright's default 30 s, and the whole build failed.
+      await page.goto(`${url}render.html`, { timeout: 180_000 });
+      await page.waitForFunction(() => window.forge?.ready === true, undefined, { timeout: 180_000 });
       phase('render page ready');
     }
 
