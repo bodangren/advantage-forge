@@ -221,14 +221,14 @@ export default defineAsset({
     // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
     const T = {
       iris: k.tint('eyes'),
-      irisLow: k.tint('eyes', 0.15),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
       hair: k.tint('hair'),
-      brow: k.tint('hair', -0.29),
+      brow: k.tint('hair', { color: C.brow, follow: 1 }),
       skin: k.tint('skin'),
-      freckle: k.tint('skin', -0.4),
+      freckle: k.tint('skin', { color: C.freckle, follow: 1 }),
       cloth: k.tint('clothing'),
-      clothDark: k.tint('clothing', -0.56),
-      hatInside: k.tint('clothing', -0.79),
+      clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
+      hatInside: k.tint('clothing', { color: C.hatInside, follow: 1 }),
     };
     // ------------------------------------------------------------------ skeleton
     const HAT_TIP_AT: V3 = [0.03, 0.95, -0.03];

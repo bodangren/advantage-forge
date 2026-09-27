@@ -75,14 +75,21 @@ export default defineAsset({
 
   build(k) {
     // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    // Shades keep their exact default color and follow their slot fully (follow: 1); the blush
+    // and the mouth follow the skin by half, so they darken on a darker skin but stay pink.
     const T = {
       iris: k.tint('eyes'),
-      irisLow: k.tint('eyes', 0.2),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
       hair: k.tint('hair'),
+      brow: k.tint('hair', { color: C.brow, follow: 1 }),
       skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
       cloth: k.tint('clothing'),
-      clothInside: k.tint('clothing', -0.75),
-      tunic: k.tint('clothing', -0.28),
+      clothInside: k.tint('clothing', { color: C.hoodInside, follow: 1 }),
+      tunic: k.tint('clothing', { color: C.tunic, follow: 1 }),
+      hem: k.tint('clothing', { color: '#244d49', follow: 1 }),
+      chevron: k.tint('clothing', { color: '#22433f', follow: 1 }),
     };
     // ------------------------------------------------------------------ skeleton
     const SHOULDER = [0.13, 0.385, 0] as const;
@@ -190,7 +197,7 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.012, nose, ears)
       .union(arms)
-      .paintWhere(blush, C.blush, 0.03)
+      .paintWhere(blush, T.blush, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
       .paintWhere(iris, T.iris)
@@ -199,8 +206,8 @@ export default defineAsset({
       .paintWhere(lid, C.lid)
       .paintWhere(lash, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, T.hair)
-      .paintWhere(smile, C.mouth);
+      .paintWhere(brows, T.brow)
+      .paintWhere(smile, T.mouth);
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hood
@@ -313,7 +320,7 @@ export default defineAsset({
         .at(0.058, 0.35, 0.1),
     );
     const tunic = torso
-      .paintWhere(chevron, k.tint('clothing', -0.53))
+      .paintWhere(chevron, T.chevron)
       .paintFn((x, y, z, base) => (hemStitch(x, y, z) ? stitch : base));
     k.body('tunic', tunic.bone('spine'), { color: T.tunic, roughness: 0.8 });
     const sleeves = pair(sdf.cone([0.11, 0.405, 0], [0.18, 0.34, 0.012], 0.047, 0.042).bone('upperarm.L'));
@@ -389,7 +396,7 @@ export default defineAsset({
       .intersect(sdf.halfSpace([0, 0, 1], -0.03));
     // A darker hem band with the same tan running stitch as the tunic gives the back a finish.
     const cape = capeShell
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.11), k.tint('clothing', -0.38))
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.11), T.hem)
       .paintFn((x, y, z, base) => (Math.abs(y - 0.122) < 0.0035 && Math.sin(Math.atan2(z, x) * 70) > 0.15 ? stitch : base));
     k.body('cape', cape.bone('cloak'), { color: T.cloth, roughness: 0.85 });
 

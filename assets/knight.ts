@@ -166,12 +166,12 @@ export default defineAsset({
     // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
     const T = {
       iris: k.tint('eyes'),
-      irisLow: k.tint('eyes', 0.06),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
       hair: k.tint('hair'),
       skin: k.tint('skin'),
       cloth: k.tint('clothing'),
-      clothDark: k.tint('clothing', -0.53),
-      clothStripe: k.tint('clothing', -0.15),
+      clothDark: k.tint('clothing', { color: C.redDark, follow: 1 }),
+      clothStripe: k.tint('clothing', -0.15), // exact: the old stripes were the red x 0.85
     };
     // ------------------------------------------------------------------ skeleton
     const PLUME_AT: V3 = [0, 0.985, -0.012];
