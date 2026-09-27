@@ -180,6 +180,10 @@ textures (UV unwrap and bake); a render adds about 1 s; an animation strip about
 - `halfSpace` must be intersected with a finite shape, or the body has no bounds.
 - Noise and `paintFn` are evaluated at many points; keep them on the bodies that need them.
 - `FORGE_WORKERS=n` sets the number of meshing and baking threads (default: half the cores).
+- A textured command (`build`, `render`, `sprites`, `animate`, `all`, `inspect` without `--fast`)
+  takes one of 2 build slots for the whole machine. When both are in use, it prints
+  `forge: waiting for a build slot` and starts when one is free, so give it a long timeout.
+  `FORGE_SLOTS=n` sets the limit (0 = no limit). `--fast` and `check` never wait.
 
 ## Checks before you call an asset done
 

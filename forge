@@ -1,3 +1,38 @@
 #!/usr/bin/env sh
 # Fast entry point: runs the CLI directly with tsx (no package-manager startup cost).
-cd "$(dirname "$0")" && exec node --import tsx src/cli/forge.ts "$@"
+cd "$(dirname "$0")" || exit 1
+
+# A textured build (every build, render, sprites, animate, all, or inspect without --fast or
+# --texture 0) first takes one of FORGE_SLOTS build slots for the whole machine (default 2,
+# 0 = no limit), so parallel agents wait in turn instead of pushing the machine into swap.
+# A slot is an flock on a file, held by this process: it is freed when forge ends or is killed.
+heavy=0
+case $1 in build | render | sprites | animate | all | inspect) heavy=1 ;; esac
+prev=
+for arg in "$@"; do
+  case $arg in --fast | --texture=0 | -h | --help) heavy=0 ;; esac
+  [ "$prev" = --texture ] && [ "$arg" = 0 ] && heavy=0
+  prev=$arg
+done
+slots=${FORGE_SLOTS:-2}
+if [ "$heavy" = 1 ] && [ "$slots" -gt 0 ] && command -v flock >/dev/null 2>&1; then
+  dir=/tmp/forge-slots-$(id -u)
+  mkdir -p "$dir"
+  told=0
+  while :; do
+    i=0
+    while [ "$i" -lt "$slots" ]; do
+      exec 9>"$dir/slot$i"
+      flock -n 9 && break 2
+      i=$((i + 1))
+    done
+    exec 9>&-
+    if [ "$told" = 0 ]; then
+      echo "forge: waiting for a build slot ($slots textured builds run now; FORGE_SLOTS sets the limit)" >&2
+      told=1
+    fi
+    sleep 2
+  done
+fi
+
+exec node --import tsx src/cli/forge.ts "$@"
