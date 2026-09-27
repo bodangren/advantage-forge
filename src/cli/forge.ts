@@ -252,9 +252,9 @@ async function main(): Promise<void> {
       }
 
       if (command === 'render' || command === 'all') {
-        // --preset all: the default turnaround and one per preset, from a single build.
+        // --preset all (and forge all): the default turnaround and one per preset, from one build.
         const looks: (string | undefined)[] =
-          values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
+          values.preset === 'all' || command === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
         for (const preset of looks) {
           const t1 = performance.now();
           const req: ViewsRequest = {
@@ -267,14 +267,13 @@ async function main(): Promise<void> {
             ...(preset ? { preset } : {}),
           };
           const res = await page.evaluate((r) => window.forge.renderViews(r), req);
-          // A color preset's turnaround goes beside the default one: render.<preset>.png.
+          // A color preset's turnaround goes beside the default one: render.<preset>.png, and its
+          // views in views/presets/<preset>/.
           const sheetFile = preset ? `render.${preset}.png` : 'render.png';
-          if (!preset) {
-            rmSync(join(out, 'views'), { recursive: true, force: true });
-            mkdirSync(join(out, 'views'), { recursive: true });
-            for (const [view, data] of Object.entries(res.views))
-              writePng(join(out, 'views', `${view}.png`), data);
-          }
+          const viewDir = preset ? join(out, 'views', 'presets', preset) : join(out, 'views');
+          if (!preset) rmSync(join(out, 'views'), { recursive: true, force: true });
+          mkdirSync(viewDir, { recursive: true });
+          for (const [view, data] of Object.entries(res.views)) writePng(join(viewDir, `${view}.png`), data);
           writePng(join(out, sheetFile), res.sheet);
           console.log(`render   ${rel(join(out, sheetFile))}  (${Math.round(performance.now() - t1)} ms)`);
         }

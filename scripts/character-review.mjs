@@ -36,6 +36,29 @@ const readJson = (p, fallback) => {
   }
 };
 
+/** The color variant table (slots and presets) from a GLB's root extras, or null. */
+function glbVariants(file) {
+  try {
+    const buf = fs.readFileSync(file);
+    if (buf.toString('ascii', 0, 4) !== 'glTF') return null;
+    const len = buf.readUInt32LE(12);
+    const json = JSON.parse(buf.toString('utf8', 20, 20 + len));
+    return json.extras?.forgeVariants ?? null;
+  } catch {
+    return null;
+  }
+}
+/** A linear RGB triple as an sRGB hex color, for the swatches. */
+const hex = (lin) =>
+  '#' + lin.map((c) => Math.round(Math.max(0, Math.min(1, c <= 0.0031308 ? c * 12.92 : 1.055 * Math.pow(c, 1 / 2.4) - 0.055)) * 255).toString(16).padStart(2, '0')).join('');
+const dirs = (p) => {
+  try {
+    return fs.readdirSync(p).filter((f) => stat(path.join(p, f))?.isDirectory());
+  } catch {
+    return [];
+  }
+};
+
 function parseAsset(file, reviewed) {
   const src = fs.readFileSync(file, 'utf8');
   // A rigged asset with legs is a character; a reviewed asset (a slime, a spider) is one too.
@@ -77,8 +100,32 @@ function collect() {
     }));
     const builtAt = mtime(path.join(dir, 'stats.json'));
     const review = reviews[asset.name] ?? null;
+    // Color variants: the slot options (as swatches) and, per preset, its views, its turnaround
+    // sheet, and its sprites (whatever the builds have written so far).
+    const table = glbVariants(path.join(dir, `${asset.name}.glb`));
+    const slots = table
+      ? Object.entries(table.slots).map(([name, s]) => ({
+          name,
+          default: s.default,
+          options: Object.entries(s.options).map(([k, lin]) => ({ name: k, hex: hex(lin) })),
+        }))
+      : [];
+    const looks = Object.entries(table?.presets ?? {}).map(([p, choice]) => {
+      const vdir = path.join(dir, 'views', 'presets', p);
+      const sheet = path.join(dir, `render.${p}.png`);
+      const sprite = path.join(dir, 'sprites', 'presets', p, 'preview.png');
+      return {
+        name: p,
+        choice,
+        views: VIEWS.filter((v) => stat(path.join(vdir, `${v}.png`))).map((v) => ({ view: v, ...link(path.join(vdir, `${v}.png`)) })),
+        sheet: stat(sheet) ? link(sheet) : null,
+        sprite: stat(sprite) ? link(sprite) : null,
+      };
+    });
     characters.push({
       ...asset,
+      slots,
+      looks,
       group: review?.group ?? asset.group,
       assetChangedAt: mtime(path.join(ROOT, asset.file)),
       mockup,
@@ -122,6 +169,9 @@ function signature() {
     const dir = path.join(ROOT, 'out', name);
     parts.push(f, mtime(path.join(assetsDir, f)), mtime(path.join(dir, 'stats.json')), mtime(path.join(dir, 'sprites', 'preview.png')));
     for (const v of VIEWS) parts.push(mtime(path.join(dir, 'views', `${v}.png`)));
+    parts.push(mtime(path.join(dir, `${name}.glb`)));
+    for (const p of dirs(path.join(dir, 'sprites', 'presets'))) parts.push(p, mtime(path.join(dir, 'sprites', 'presets', p, 'preview.png')));
+    for (const p of dirs(path.join(dir, 'views', 'presets'))) parts.push(p, mtime(path.join(dir, 'views', 'presets', p, 'front.png')));
   }
   for (const d of ['docs/hero-mockups', 'docs/enemy-mockups', 'reference-designs']) {
     const abs = path.join(ROOT, d);
@@ -232,6 +282,16 @@ main { max-width: 1500px; margin: 0 auto; padding: 20px; display: grid; gap: 20p
 .sprite { margin-top: 6px; border-radius: 8px; background: repeating-conic-gradient(var(--panel-2) 0 25%, var(--panel) 0 50%) 0 0 / 16px 16px; cursor: zoom-in; }
 .sprite img { width: 100%; image-rendering: pixelated; display: block; }
 .clips { display: flex; flex-wrap: wrap; gap: 6px; }
+.looks { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 8px 18px; border-bottom: 1px solid var(--line); font-size: 13px; }
+.looks .t { color: var(--muted); margin-right: 2px; }
+.looks button { border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); border-radius: 999px; padding: 2px 11px; font: inherit; font-size: 12px; cursor: pointer; }
+.looks button[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.looks .combo { color: var(--muted); font-size: 12px; margin-left: 6px; }
+.slots { display: grid; grid-template-columns: auto 1fr; gap: 4px 10px; font-size: 13px; align-items: center; }
+.slots .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.sw { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); padding: 1px 6px 1px 2px; border-radius: 999px; border: 1px solid transparent; }
+.sw i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); display: inline-block; }
+.sw.on { border-color: var(--accent); color: var(--ink); }
 .clips button { border: 1px solid var(--line); background: var(--panel-2); color: var(--ink); border-radius: 8px; padding: 3px 10px; font: inherit; font-size: 12px; cursor: pointer; }
 .empty { text-align: center; color: var(--muted); padding: 60px; }
 dialog { border: none; padding: 0; background: transparent; max-width: 96vw; max-height: 96vh; }
@@ -274,6 +334,7 @@ const RUBRIC = [
 const PAGE_VERSION = '__PAGE_VERSION__';
 const GROUP_ORDER = ['Heroes', 'Enemies', 'Monsters', 'NPCs', 'Wildlife', 'Other'];
 const state = { group: 'All', sort: 'group' };
+const look = {}; // character -> chosen color preset ('' = the default look)
 try { Object.assign(state, JSON.parse(localStorage.getItem('review-ui') || '{}')); } catch {}
 const save = () => { try { localStorage.setItem('review-ui', JSON.stringify(state)); } catch {} };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -293,14 +354,24 @@ function card(c) {
   const r = c.review;
   const s = c.stats;
   const cells = [];
+  const chosen = c.looks.find((l) => l.name === look[c.name]) || null;
   cells.push(c.mockup
     ? '<div class="cell mock" data-zoom="' + esc(url(c.mockup)) + '" data-cap="' + esc(c.title) + ' — mockup"><span class="lbl">Mockup</span><img loading="lazy" onload="wide(this)" src="' + esc(url(c.mockup)) + '" alt="' + esc(c.title) + ' mockup"></div>'
     : '<div class="cell mock none">No mockup exists for this character.</div>');
-  for (const v of ['front', 'three-quarter', 'side', 'back']) {
-    const view = c.views.find((x) => x.view === v);
-    cells.push(view
-      ? '<div class="cell" data-zoom="' + esc(url(view)) + '" data-cap="' + esc(c.title) + ' — ' + v + '"><span class="lbl">' + v + '</span><img loading="lazy" src="' + esc(url(view)) + '" alt="' + esc(c.title) + ' ' + v + '"></div>'
-      : '<div class="cell none">Not rendered yet</div>');
+  const lookName = chosen ? ' · ' + chosen.name : '';
+  if (chosen && !chosen.views.length && chosen.sheet) {
+    // Only a turnaround sheet exists for this preset (views come with the next forge all).
+    cells.push('<div class="cell mock wide" data-zoom="' + esc(url(chosen.sheet)) + '" data-cap="' + esc(c.title) + lookName + '"><span class="lbl">' + esc(chosen.name) + '</span><img loading="lazy" src="' + esc(url(chosen.sheet)) + '" alt="' + esc(c.title) + lookName + '"></div>');
+  } else if (chosen && !chosen.views.length) {
+    cells.push('<div class="cell none" style="grid-column: 2 / -1">No renders of this preset yet (they come with its next forge all).</div>');
+  } else {
+    const views = chosen ? chosen.views : c.views;
+    for (const v of ['front', 'three-quarter', 'side', 'back']) {
+      const view = views.find((x) => x.view === v);
+      cells.push(view
+        ? '<div class="cell" data-zoom="' + esc(url(view)) + '" data-cap="' + esc(c.title) + lookName + ' — ' + v + '"><span class="lbl">' + v + '</span><img loading="lazy" src="' + esc(url(view)) + '" alt="' + esc(c.title) + ' ' + v + '"></div>'
+        : '<div class="cell none">Not rendered yet</div>');
+    }
   }
   const list = (items, cls) => items && items.length ? '<ul class="' + cls + '">' + items.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '';
   const notes = r
@@ -326,8 +397,22 @@ function card(c) {
         ? '<button data-zoom="' + esc(url(k.gif)) + '" data-cap="' + esc(c.title) + ' — ' + esc(k.name) + ' (' + k.duration + ' s)">' + esc(k.name) + '</button>'
         : '<button disabled>' + esc(k.name) + '</button>').join('') + '</div>'
     : '';
-  const sprite = c.sprite
-    ? '<h3>Sprites (128 px)</h3><div class="sprite" data-zoom="' + esc(url(c.sprite)) + '" data-cap="' + esc(c.title) + ' — sprites" data-pixel="1"><img loading="lazy" src="' + esc(url(c.sprite)) + '" alt="' + esc(c.title) + ' sprites"></div>'
+  const spriteImg = chosen ? chosen.sprite : c.sprite;
+  const sprite = spriteImg
+    ? '<h3>Sprites (128 px' + esc(lookName) + ')</h3><div class="sprite" data-zoom="' + esc(url(spriteImg)) + '" data-cap="' + esc(c.title) + lookName + ' — sprites" data-pixel="1"><img loading="lazy" src="' + esc(url(spriteImg)) + '" alt="' + esc(c.title) + ' sprites"></div>'
+    : chosen ? '<h3>Sprites</h3><p class="pending">No sprites of this preset yet.</p>' : '';
+  // The color slots: every option as a swatch; the options of the chosen look are outlined.
+  const pick = (slot) => (chosen && chosen.choice[slot.name]) || slot.default;
+  const colors = c.slots.length
+    ? '<h3>Color variants</h3><div class="slots">' + c.slots.map((slot) =>
+        '<span>' + esc(slot.name) + '</span><span class="opts">' + slot.options.map((o) =>
+          '<span class="sw' + (o.name === pick(slot) ? ' on' : '') + '"><i style="background:' + o.hex + '"></i>' + esc(o.name) + '</span>').join('') + '</span>').join('') + '</div>'
+    : '';
+  const looks = c.looks.length
+    ? '<div class="looks"><span class="t">Look:</span>' +
+      ['', ...c.looks.map((l) => l.name)].map((n) =>
+        '<button data-look="' + esc(n) + '" data-char="' + esc(c.name) + '" aria-pressed="' + ((look[c.name] || '') === n) + '">' + (n ? esc(n) : 'default') + '</button>').join('') +
+      (chosen ? '<span class="combo">' + Object.entries(chosen.choice).map(([k, v]) => esc(k) + ' ' + esc(v)).join(' · ') + '</span>' : '') + '</div>'
     : '';
   const chips = [
     '<span class="chip">' + esc(c.group) + '</span>',
@@ -338,8 +423,8 @@ function card(c) {
     ? '<div class="score"><b style="color:' + tone(r.overall, 10) + '">' + r.overall.toFixed(1) + '</b><span>/ 10</span></div>'
     : '<div class="score"><span>no rating</span></div>';
   return '<div class="head"><h2>' + esc(c.title) + '</h2><code>' + esc(c.catalog || c.file) + '</code>' + chips + score + '</div>' +
-    '<div class="compare">' + cells.join('') + '</div>' +
-    '<div class="body"><div class="notes">' + notes + '</div><div class="side">' + rubric + '<h3>Build</h3>' + facts + clips + sprite + '</div></div>';
+    looks + '<div class="compare">' + cells.join('') + '</div>' +
+    '<div class="body"><div class="notes">' + notes + '</div><div class="side">' + rubric + '<h3>Build</h3>' + facts + clips + colors + sprite + '</div></div>';
 }
 
 function sorted(list) {
@@ -395,7 +480,8 @@ function header() {
     '<span><b>' + data.characters.length + '</b> characters</span>' +
     '<span><b>' + data.characters.filter((c) => c.mockup).length + '</b> with a mockup</span>' +
     '<span><b>' + rated.length + '</b> rated' + (rated.length ? ', average <b>' + avg.toFixed(1) + '</b>' : '') + '</span>' +
-    (stale ? '<span><b>' + stale + '</b> rebuilt after review</span>' : '');
+    (stale ? '<span><b>' + stale + '</b> rebuilt after review</span>' : '') +
+    '<span><b>' + data.characters.filter((c) => c.slots.length).length + '</b> with color variants</span>';
 }
 
 function status() {
@@ -429,6 +515,14 @@ function load() {
 document.addEventListener('click', (e) => {
   const g = e.target.closest('[data-group]');
   if (g) { state.group = g.dataset.group; save(); header(); render(true); return; }
+  const lk = e.target.closest('[data-look]');
+  if (lk) {
+    look[lk.dataset.char] = lk.dataset.look;
+    const entry = cards.get(lk.dataset.char);
+    if (entry) entry.json = '';
+    render(true);
+    return;
+  }
   const z = e.target.closest('[data-zoom]');
   if (z) {
     const d = document.getElementById('zoom');
