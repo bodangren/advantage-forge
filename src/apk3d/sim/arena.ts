@@ -159,6 +159,30 @@ export function circlesTouch(a: Vec2, ra: number, b: Vec2, rb: number): boolean 
   return distance(a, b) < ra + rb;
 }
 
+/**
+ * Pushes overlapping bodies apart: every pair closer than `minDistance` moves half the overlap
+ * each, along the line between them (a pair on the same spot parts along +X). One pass per call;
+ * a crowd that calls it every step stays soft. Returns new positions in the input order.
+ */
+export function separateCircles(bodies: readonly Vec2[], minDistance: number): Vec2[] {
+  const out = bodies.map((b) => ({ x: b.x, z: b.z }));
+  for (let i = 0; i < out.length; i++) {
+    for (let j = i + 1; j < out.length; j++) {
+      const a = out[i]!;
+      const b = out[j]!;
+      const d = distance(a, b);
+      if (d >= minDistance) continue;
+      const dir = d < 1e-9 ? { x: 1, z: 0 } : { x: (b.x - a.x) / d, z: (b.z - a.z) / d };
+      const push = (minDistance - d) / 2;
+      a.x -= dir.x * push;
+      a.z -= dir.z * push;
+      b.x += dir.x * push;
+      b.z += dir.z * push;
+    }
+  }
+  return out;
+}
+
 // ---------------------------------------------------------------- seeded spread
 
 export interface SpreadOptions {

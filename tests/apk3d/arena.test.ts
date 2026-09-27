@@ -15,6 +15,7 @@ import {
   normalize,
   randomPoint,
   recordPath,
+  separateCircles,
   spreadPoints,
   stepMover,
   steerAround,
@@ -123,6 +124,20 @@ describe('contact', () => {
     expect(circlesTouch({ x: 0, z: 0 }, 0.4, { x: 0.7, z: 0 }, 0.35)).toBe(true);
     expect(circlesTouch({ x: 0, z: 0 }, 0.4, { x: 0.75, z: 0 }, 0.35)).toBe(false);
     expect(circlesTouch({ x: 0, z: 0 }, 0.4, { x: 0.8, z: 0 }, 0.35)).toBe(false);
+  });
+
+  it('separates overlapping bodies by half the overlap each, and leaves the rest alone', () => {
+    const out = separateCircles([{ x: 0, z: 0 }, { x: 0.4, z: 0 }, { x: 3, z: 3 }], 1);
+    expect(out[0]!.x).toBeCloseTo(-0.3);
+    expect(out[1]!.x).toBeCloseTo(0.7);
+    expect(out[2]).toEqual({ x: 3, z: 3 });
+    expect(distance(out[0]!, out[1]!)).toBeCloseTo(1);
+    // The same spot parts along +X; the input is not changed.
+    const same = [{ x: 1, z: 1 }, { x: 1, z: 1 }];
+    const parted = separateCircles(same, 0.8);
+    expect(parted).toEqual([{ x: 0.6, z: 1 }, { x: 1.4, z: 1 }]);
+    expect(same).toEqual([{ x: 1, z: 1 }, { x: 1, z: 1 }]);
+    expect(separateCircles([], 1)).toEqual([]);
   });
 });
 
