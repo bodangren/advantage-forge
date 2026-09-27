@@ -422,8 +422,7 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, legDrop, reach, orient, keys } = motion;
-    const LEG = 0.19;
+    const { wave, bump, reach, orient, keys } = motion;
     const ARM_L = { root: SHOULDER, mid: ELBOW_L, end: WRIST_L };
     const ARM_R = { root: mx(SHOULDER), mid: ELBOW_R, end: WRIST_R };
 
@@ -442,24 +441,35 @@ export default defineAsset({
       }),
     });
 
+    // An easy farm walk. The legs come from motion.gait: planted stance feet, a knee lift in the swing,
+    // heel strike and toe-off. `step` is the foot travel, `lift` the swing height, `duty` the share of
+    // the cycle a foot is down (a run has a flight between steps), `hop` the hips bob. The gait phase
+    // runs a quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left arm is
+    // back. The sole points are the boot's heel and toe on the floor (measured from bootFoot, turned
+    // 12 degrees out). The hips' sway goes to gait, so the planted feet do not slide.
     // `forkOut` tilts the fork's top out to his right (degrees at the wrist): extra room from the hat brim
     // while the head bobs and leans in the run. The rest pose already keeps the fork clear.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number, forkOut = 0) => ({
+    const stride = (duration: number, step: number, lift: number, duty: number, hop: number, armSwing: number, lean: number, forkOut = 0) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.092, 0, -0.025],
+          toe: [0.113, 0, 0.086],
+          hips: { at: HIPS_P, rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -10 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
           // The fork arm swings little, so the fork stays clear of the ground and the legs.
           'upperarm.R': { rotate: [-armSwing * 0.25 * s, 0, -4] as const },
@@ -469,8 +479,8 @@ export default defineAsset({
         };
       },
     });
-    k.animation('walk', stride(0.9, 24, 26, 3, 0));
-    k.animation('run', stride(0.58, 36, 44, 10, 0.025, 5));
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 0.006, 26, 3));
+    k.animation('run', stride(0.58, 0.14, 0.04, 0.42, 0.025, 44, 10, 5));
 
     // Work: pitching hay, a 2.4 s loop solved by targets. One fork path in world space drives both
     // arms: the left hand's point on the haft (`L`), the fork's pitch below level, and its yaw to his
