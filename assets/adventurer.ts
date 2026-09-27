@@ -137,8 +137,36 @@ export default defineAsset({
     'Chibi adventurer hero with tousled hair under a teal bandana, a huge soft travel pack with a bedroll and lantern, a half-open map, and a short sword.',
   detail: 0.005,
   reference: 'docs/hero-mockups/adventurer_001.jpg',
+  // Color slots for individual adventurers (the first option is the default look). The skin
+  // options are the rogue's, so the heroes share one set of skin tones.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, blond: '#c89a5a', black: '#231a17' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { cream: C.shirt, sky: '#8cb8e0', earth: '#a07c56' },
+  },
+  presets: {
+    wanderer: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'sky' },
+    pathfinder: { eyes: 'green', hair: 'brown', skin: 'tan', clothing: 'earth' },
+    pilgrim: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'cream' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot keep their exact default color and follow
+    // the slot fully (follow: 1) when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      hairLight: k.tint('hair', { color: C.hairLight, follow: 1 }),
+      hairDark: k.tint('hair', { color: C.hairDark, follow: 1 }),
+      brow: k.tint('hair', { color: C.brow, follow: 1 }),
+      skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      shirt: k.tint('clothing'),
+      shirtShade: k.tint('clothing', { color: C.shirtShade, follow: 1 }),
+    };
     const KNOT: V3 = [0.02, 0.765, -0.2];
 
     // ------------------------------------------------------------------ the travel pack (built first: the lantern hook sits on it)
@@ -280,19 +308,19 @@ export default defineAsset({
       .smoothUnion(0.03, head, neck)
       .smoothUnion(0.012, nose, ears)
       .union(armL, armR)
-      .paintWhere(blush, C.blush, 0.03)
+      .paintWhere(blush, T.blush, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
-      .paintWhere(mouth, C.mouth)
+      .paintWhere(brows, T.brow)
+      .paintWhere(mouth, T.mouth)
       .paintWhere(tongue, C.tongue, 0.004)
       .paintWhere(teeth, C.teeth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ bandana: a wide, soft band with a knot and two tails
     const skull = sdf.ellipsoid([HEAD[0], HEAD[1], HEAD[2]]).at(0, HEAD_Y, 0);
@@ -445,15 +473,17 @@ export default defineAsset({
       .smoothSubtract(0.004, band.round(0.001))
       .smoothUnion(0.012, flicks, tufts, nape)
       .smoothSubtract(0.005, grooves)
-      .paintWhere(grooves.round(0.003), C.hairDark, 0.006)
+      .paintWhere(grooves.round(0.003), T.hairDark, 0.006)
       .smoothUnion(0.01, fringe)
-      // Lighter on top, where the light falls.
+      // Lighter on top, where the light falls. A black base stays black: the lit crown then
+      // counts fully in the hair slot's mask (a plain blend toward a color counts only partly).
       .paintFn((x, y, z, base) => {
+        if (base[0] + base[1] + base[2] === 0) return base;
         const top = Math.min(1, Math.max(0, (y - 0.8) / 0.14)) * 0.7;
-        const l = rgb(C.hairLight);
+        const l = rgb(T.hairLight);
         return [base[0] + (l[0] - base[0]) * top, base[1] + (l[1] - base[1]) * top, base[2] + (l[2] - base[2]) * top];
       });
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.0035, bone: 'head' });
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.0035, bone: 'head' });
 
     // ------------------------------------------------------------------ shirt, trousers, neckerchief
     const torso = sdf
@@ -481,13 +511,13 @@ export default defineAsset({
         .smoothUnion(
           0.012,
           sdf.cone([s[0] * 0.85, 0.405, 0], lerp(s, e, 1.02), 0.048, 0.045),
-          sdf.cone(lerp(s, e, 0.9), lerp(s, e, 1.12), 0.05, 0.05).round(0.004).paint(C.shirtShade), // rolled cuff
+          sdf.cone(lerp(s, e, 0.9), lerp(s, e, 1.12), 0.05, 0.05).round(0.004).paint(T.shirtShade), // rolled cuff
         )
         .bone(tag);
     const shirt = sdf
       .union(torso.bone('spine'), sleeve(SHOULDER, ELBOW, 'upperarm.L'), sleeve(mx(SHOULDER), ELBOW_R, 'upperarm.R'))
-      .paintWhere(sdf.extrude(profile.rect([0.006, 0.2], 0.002), 0.4).at(0.0, 0.33, 0.2), C.shirtShade, 0.002);
-    k.body('shirt', shirt, { color: C.shirt, roughness: 0.85 });
+      .paintWhere(sdf.extrude(profile.rect([0.006, 0.2], 0.002), 0.4).at(0.0, 0.33, 0.2), T.shirtShade, 0.002);
+    k.body('shirt', shirt, { color: T.shirt, roughness: 0.85 });
     const trousers = sdf.smoothUnion(
       0.03,
       sdf.ellipsoid([0.118, 0.055, 0.088]).at(0, 0.205, 0).bone('hips'),
