@@ -995,5 +995,34 @@
     ],
     "next": "Fix the apron hem speckle (shared with the innkeeper), let the pigtails hang lower, and move the moss dress option away from the scarf color.",
     "reviewedAt": "2026-09-27T14:18:00.564Z"
+  },
+  "quest-giver": {
+    "overall": 7,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 3,
+      "proportion": 3,
+      "shape": 3,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new settlement NPC on the farmer base (the shared rogue head, skeleton, and knee bones): an elder with a blue hood and gold trim, a big white beard and brows, an open coat over a plum tunic, a twisted staff, and a scroll with a red seal. The work clip is now give, which holds the scroll out toward the viewer. The forge check shows result ok, and the textured build has no warnings.",
+    "strengths": [
+      "From the front, the hood, beard, coat, staff, and sealed scroll read as the mockup elder.",
+      "The give clip is a clear quest hand-over with the seal turned to the viewer.",
+      "The hood and coat are the clothing slot (indigo, moss, rust, oatmeal) with three presets: hermit, reeve, scribe."
+    ],
+    "issues": [
+      "From the side and back, the hood is a large blue ball; in the mockup it hangs lower and drapes onto the shoulders.",
+      "The eyes are the large chibi eyes and the nose is small and pale; the mockup has smaller eyes and a big peach nose.",
+      "The leather shoulder straps are missing, the scroll is small, and the staff top is a plain knob."
+    ],
+    "next": "Reshape the hood so it drapes onto the shoulders (flatter crown, longer back), enlarge the nose, and add the shoulder straps.",
+    "reviewedAt": "2026-09-27T14:20:59.007Z"
   }
 }
