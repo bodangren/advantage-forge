@@ -32,7 +32,7 @@ const MED_DARK = rgb('#8f4a3c');
 const HALF_W = 0.8; // half length along X
 const HALF_D = 0.5; // half depth along Z
 const CORNER = 0.117; // rounded slab corner radius (rect radius 0.115 + round 0.002)
-const BORDER = 0.145; // cream border band width from the edge
+const BORDER = 0.11; // cream border band width from the edge
 const GUARD_W = 0.017; // dark guard line width
 
 /** Distance from the rug edge in meters, positive inward, corners rounded like the slab. */
@@ -40,7 +40,7 @@ const edgeDist = (x: number, z: number) => {
   const qx = Math.abs(x) - (HALF_W - CORNER);
   const qz = Math.abs(z) - (HALF_D - CORNER);
   const out = Math.min(Math.max(qx, qz), 0) + Math.hypot(Math.max(qx, 0), Math.max(qz, 0));
-  return -out;
+  return CORNER - out;
 };
 
 /** Cream diamond motifs scattered over the red field: [x, z, half diagonal]. */
