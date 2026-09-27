@@ -45,9 +45,10 @@ const lidPoint = (p: V3): V3 => {
 };
 const lidPose = (s: sdf.Shape) => s.at(0, -HINGE[1], -HINGE[2]).rotateX(-OPEN).at(...HINGE);
 
-const wood = rgb('#7d4a27');
-const woodDark = rgb('#4e2c13');
 const C = {
+  wood: '#7d4a27',
+  woodDark: '#4e2c13',
+  woodBody: '#8a5530',
   iron: '#3d4047',
   gold: '#d9a93a',
   mouth: '#4a1216',
@@ -56,13 +57,17 @@ const C = {
   toothBase: '#d8c8a8',
   tongue: '#c070c8',
   tongueDark: '#94489c',
+  tongueGroove: '#ac5fb5', // the groove down the middle of the tongue
   eye: '#ffc21a',
   pupil: '#1a0e08',
 };
 
-/** Planks: horizontal boards with dark gaps and a per-board tint, plus grain (the chest's). */
+/**
+ * Planks: horizontal boards with dark gaps and a per-board tint, plus grain (the chest's). The two
+ * wood tones are color references (slot tints), resolved per call so the tint mask sees them.
+ */
 const planks =
-  (boardHeight: number, axis: 'y' | 'x') =>
+  (boardHeight: number, axis: 'y' | 'x', light: string, dark: string) =>
   (x: number, y: number, z: number): readonly [number, number, number] => {
     const v = axis === 'y' ? y : x;
     const board = Math.floor(v / boardHeight);
@@ -70,7 +75,7 @@ const planks =
     const gap = f < 0.06 || f > 0.94 ? 0.75 : 0;
     const tint = noise.random(board, 3) * 0.35;
     const grain = 0.5 + 0.5 * noise.noise3(x * 6, y * 60, z * 6 + board);
-    return mixRgb(wood, woodDark, Math.min(1, 0.15 + tint + 0.25 * grain + gap));
+    return mixRgb(rgb(light), rgb(dark), Math.min(1, 0.15 + tint + 0.25 * grain + gap));
   };
 
 const norm = (a: V3): V3 => {
@@ -118,8 +123,30 @@ export default defineAsset({
   description: 'Chibi mimic dungeon monster: the treasure chest come alive, its lid a gaping jaw of big white fangs, glowing yellow eyes under the lid, a fat purple tongue, and iron claw feet.',
   detail: 0.006,
   reference: 'docs/monster-mockups/mimic_001.jpg',
+  // Real chest woods and metals, a mimic's glow, and its tongue. The first option of each slot is the default.
+  variants: {
+    wood: { oak: C.wood, walnut: '#452818', driftwood: '#7a7266' },
+    metal: { iron: C.iron, blackened: '#232326', bronze: '#5a4228' },
+    eyes: { yellow: C.eye, red: '#f23a1a', green: '#8ef01a' },
+    tongue: { purple: C.tongue, red: '#c8606a', green: '#9cb45c' },
+  },
+  presets: {
+    crypt: { wood: 'walnut', metal: 'blackened', eyes: 'red', tongue: 'purple' },
+    sunken: { wood: 'driftwood', metal: 'bronze', eyes: 'green', tongue: 'green' },
+    royal: { wood: 'oak', metal: 'bronze', eyes: 'red', tongue: 'red' },
+  },
 
   build(k) {
+    // Slot colors: every wood, iron, eye, and tongue color follows its slot.
+    const T = {
+      wood: k.tint('wood'),
+      woodDark: k.tint('wood', { color: C.woodDark, follow: 1 }),
+      woodBody: k.tint('wood', { color: C.woodBody, follow: 1 }),
+      iron: k.tint('metal'),
+      eye: k.tint('eyes'),
+      tongue: k.tint('tongue'),
+      tongueGroove: k.tint('tongue', { color: C.tongueGroove, follow: 1 }),
+    };
     const LID_FRONT = lidPoint([0, TOP, D / 2 - 0.02]);
     k.skeleton({
       base: { at: [0, 0, 0] },
@@ -139,9 +166,9 @@ export default defineAsset({
     const body = outer
       .subtract(hollow)
       .displace(0.0025, (x, y, z) => noise.fbm(x * 30, y * 30, z * 30, 2))
-      .paintFn((x, y, z) => planks(0.075, 'y')(x, y - LIFT, z))
+      .paintFn((x, y, z) => planks(0.075, 'y', T.wood, T.woodDark)(x, y - LIFT, z))
       .paintWhere(hollow.round(0.004), C.mouth, 0.01);
-    k.body('chest-wood', body, { color: '#8a5530', roughness: 0.8, bone: 'body' });
+    k.body('chest-wood', body, { color: T.woodBody, roughness: 0.8, bone: 'body' });
 
     // Iron: corner guards wrap each vertical edge; two straps run over the front and back.
     const shellOf = (s: sdf.Shape, t: number) => s.round(t).subtract(s.round(-0.002));
@@ -165,7 +192,7 @@ export default defineAsset({
     // Below the rim only: the box's top face is the open mouth.
     const belowRim = sdf.halfSpace([0, 1, 0], TOP - 0.004);
     k.body('iron', sdf.union(corners.intersect(belowRim), straps.intersect(belowRim), studs.mirror('x', 0)).mirror('z', 0), {
-      color: C.iron,
+      color: T.iron,
       roughness: 0.42,
       metalness: 0.85,
       bone: 'body',
@@ -190,10 +217,10 @@ export default defineAsset({
       .displace(0.0025, (x, y, z) => noise.fbm(x * 30, y * 30, z * 30, 2))
       .paintFn((x, y, z) => {
         const angle = Math.atan2((y - TOP) / 0.72, z);
-        return planks(0.26, 'y')(x, angle * 0.5, z);
+        return planks(0.26, 'y', T.wood, T.woodDark)(x, angle * 0.5, z);
       })
       .paintWhere(lidHollow.round(0.004), C.mouth, 0.01);
-    k.body('lid-wood', lidPose(lid), { color: '#8a5530', roughness: 0.8, bone: 'lid' });
+    k.body('lid-wood', lidPose(lid), { color: T.woodBody, roughness: 0.8, bone: 'lid' });
     // Only the dome: the open underside of the lid has no bands.
     const lidBands = shellOf(lidSolid, 0.009).intersect(sdf.halfSpace([0, -1, 0], -(TOP + 0.004))).intersect(
       sdf.union(
@@ -207,7 +234,7 @@ export default defineAsset({
           .mirror('x', 0),
       ),
     );
-    k.body('lid-iron', lidPose(lidBands), { color: C.iron, roughness: 0.42, metalness: 0.85, bone: 'lid' });
+    k.body('lid-iron', lidPose(lidBands), { color: T.iron, roughness: 0.42, metalness: 0.85, bone: 'lid' });
     const lock = sdf
       .extrude(
         profile.polygon(
@@ -279,14 +306,14 @@ export default defineAsset({
       );
     const tongue = sdf
       .smoothUnion(0.02, lobe(0.026), lobe(-0.026))
-      .paintFn((x, _y, _z, base) => (Math.abs(x + 0.1) < 0.007 ? [base[0] * 0.78, base[1] * 0.7, base[2] * 0.8] : base));
-    k.body('tongue', tongue, { color: C.tongue, roughness: 0.3, bump: (x, y, z) => 0.0006 * noise.fbm(x * 90, y * 90, z * 90, 2) });
+      .paintFn((x, _y, _z, base) => (Math.abs(x + 0.1) < 0.007 ? rgb(T.tongueGroove) : base));
+    k.body('tongue', tongue, { color: T.tongue, roughness: 0.3, bump: (x, y, z) => 0.0006 * noise.fbm(x * 90, y * 90, z * 90, 2) });
 
     // ------------------------------------------------------------------ eyes: glowing yellow ovals under the lid, slit pupils
     const EYE_X = 0.15;
     const eyeC = lidPoint([EYE_X, TOP + 0.05, 0.03]);
     const eyes = sdf.union(...[1, -1].map((s) => sdf.ellipsoid([0.05, 0.064, 0.04]).at(s * eyeC[0], eyeC[1], eyeC[2])));
-    k.body('eyes', eyes.bone('lid'), { color: C.eye, roughness: 0.25, emissive: C.eye, emissiveIntensity: 0.6 });
+    k.body('eyes', eyes.bone('lid'), { color: T.eye, roughness: 0.25, emissive: T.eye, emissiveIntensity: 0.6 });
     const pupils = sdf.union(
       ...[1, -1].map((s) =>
         sdf
@@ -314,7 +341,7 @@ export default defineAsset({
           ),
         ),
       );
-    k.body('feet', sdf.union(...FEET.map((f, i) => foot(f).bone(FEET_BONES[i]!))), { color: C.iron, roughness: 0.45, metalness: 0.8 });
+    k.body('feet', sdf.union(...FEET.map((f, i) => foot(f).bone(FEET_BONES[i]!))), { color: T.iron, roughness: 0.45, metalness: 0.8 });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump } = motion;
