@@ -7,8 +7,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 // paint on one flat slab (same convention as dirt-road-straight), so the height at every tile
 // edge matches a straight footpath tile and the two sit side by side without a seam.
 // One idea: a narrow trodden tan path that sweeps one smooth quarter circle around the inside
-// corner, full-bleed through the midpoints of the south and east edges, melting into shaded
-// forest floor with soft worn shoulders (forest-ground styling).
+// corner, full-bleed through the midpoints of the north and east edges (bend axis at the NE
+// tile corner), melting into shaded forest floor with soft worn shoulders (forest-ground styling).
 // Shape language: rounded and soft (cozy forest); the tile boundary stays square and clean.
 // Palette (forest contract): shaded floor green #4a8a3f / deep #2f7a3f with sunny #7ec850
 // dapples and fallen-leaf specks (55, matches forest-ground), warm tan #c8a86b family (35,
@@ -117,7 +117,7 @@ const LEAF_COLORS = [LEAF_PALE, LEAF_BROWN, LEAF_DEEP] as const;
 export default defineAsset({
   name: 'footpath-corner',
   description:
-    'Modular 2 m forest tile: a narrow tan footpath bending 90 degrees from the south edge to the east edge.',
+    'Modular 2 m forest tile: a narrow tan footpath bending 90 degrees from the north edge to the east edge (bend axis at the NE tile corner).',
   detail: 0.02,
   texture: { size: 1024 },
 

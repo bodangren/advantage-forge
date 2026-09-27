@@ -15,18 +15,19 @@ const Z = (r) => (r - 4.5) * 2;
 
 // --- tile plan -------------------------------------------------------------
 // Path S-route: south entry c7 -> west along r6 -> north on c5 -> east on r4
-// -> north on c7 to the north exit. Corner tile mouths at yaw 0 are {S,E};
-// rotation.y maps yaw 90: {S,E}->{E,N}, 180: {N,W}, 270: {W,S}.
+// -> north on c7 to the north exit. Corner tile mouths at yaw 0 are {N,E}
+// (bend axis at the tile's NE corner, verified in assets/footpath-corner.ts);
+// rotation.y maps yaw 90: {N,E}->{N,W}, 180: {S,W}, 270: {S,E}.
 const PATH = new Map([
   ['7,8', ['footpath-straight', 0]],
   ['7,7', ['footpath-straight', 0]],
-  ['7,6', ['footpath-corner', 270]], // S+W
+  ['7,6', ['footpath-corner', 180]], // S+W
   ['6,6', ['footpath-straight', 90]],
-  ['5,6', ['footpath-corner', 90]], // E+N
+  ['5,6', ['footpath-corner', 0]], // N+E
   ['5,5', ['footpath-straight', 0]],
-  ['5,4', ['footpath-corner', 0]], // S+E
+  ['5,4', ['footpath-corner', 270]], // S+E
   ['6,4', ['footpath-straight', 90]],
-  ['7,4', ['footpath-corner', 180]], // W+N
+  ['7,4', ['footpath-corner', 90]], // N+W
   ['7,3', ['footpath-straight', 0]],
   ['7,2', ['footpath-straight', 0]],
   ['7,1', ['footpath-straight', 0]],
@@ -44,7 +45,7 @@ const put = (asset, x, z, opts = {}) => {
 for (let c = 1; c <= 10; c++)
   for (let r = 1; r <= 8; r++) {
     if (c === 1) {
-      put('river-straight', X(c), Z(r), { yaw: 90, y: 0 }); // N-S stream along the west edge
+      put('river-straight', X(c), Z(r), { y: 0 }); // N-S stream along the west edge (channel runs along Z at yaw 0)
       continue;
     }
     const path = PATH.get(`${c},${r}`);
