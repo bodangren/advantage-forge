@@ -825,33 +825,46 @@ export default defineAsset({
       }),
     });
 
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // The legs come from motion.gait: planted stance feet, a knee lift in the swing, heel strike
+    // and toe-off. `step` is the foot travel, `lift` the swing height, `duty` the share of the cycle
+    // a foot is down (a run has a flight between steps), `hop` the hips bob, `sit` how far the hips
+    // sink. The sole points are the boot's heel and toe on the floor (measured from bootFoot, turned
+    // 12 degrees out). The gait phase is 0.25 behind the clip, so the left foot strikes at p = 0.25,
+    // when the left arm is back. The walk keeps a short step and a shallow sit: the dress hangs from
+    // the spine, and a longer step lifts the rising boot cuff through its back folds.
+    const stride = (duration: number, step: number, lift: number, duty: number, sit: number, armSwing: number, lean: number, hop: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          sit,
+          roll: 10,
+          heel: [0.098, 0, 0.004],
+          toe: [0.108, 0, 0.074],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -9 * s, 0] as const },
           head: { rotate: [-lean, 5 * s, 0] as const },
           // The lantern lags and swings twice per cycle.
           lantern: { rotate: [lean * 2 + 12 * wave(p, 2, 0.2), 0, 8 * wave(p, 1, 0.3)] as const },
           splash: SPLASH_HIDE,
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           // Both hands carry something, so the arms barely swing; the lantern does the moving.
           'upperarm.L': { rotate: [armSwing * 0.1 * s, 0, 2] as const },
           'upperarm.R': { rotate: [-armSwing * 0.12 * s, 0, 0] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03));
+    k.animation('walk', stride(0.9, 0.08, 0.025, 0.6, 0.006, 28, 3, 0.006));
+    k.animation('run', stride(0.56, 0.15, 0.045, 0.4, 0.012, 50, 12, 0.03));
 
     // ------------------------------------------------------------------ attacks
     // Both arms are posed by targets in the chest's rest frame (reach for the arm, orient for the
