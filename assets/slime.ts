@@ -12,8 +12,13 @@ import type { Rgb } from '../src/index.js';
  * Shape language: all round and soft (dome, belly, drips, bubbles), with the heavy slanted brow
  *   ridges and the frown as the only hard accents.
  * Palette: ONE constant, `SLIME` (#52c832). Every other color is mixed from it (lighter top,
- *   darker base and puddle, pale bubbles, dark brows and mouth, lime irises), so the P2 fire, ice,
- *   and poison slimes only change that constant. White eyes with dark pupils are the focal point.
+ *   darker base and puddle, pale bubbles, dark brows and mouth, lime irises). White eyes with dark
+ *   pupils are the focal point.
+ * Variants: slot `jelly` (the body and its dark tones), slot `highlight` (the light top and the
+ *   floating bubbles), and slot `eyes` (lime, amber, frost), with the presets fire, ice, and poison.
+ *   The mixed tones join a slot in `build` as exact colors that follow it. The light tones have
+ *   their own slot: the game recolors by multiplying, and green's small red and blue channels
+ *   would blow a light tone out to pink or violet if it followed the jelly.
  * Value plan: the white eyes, the dark pupils, and the dark frown on the mid-green face are the
  *   strongest contrast; the lighter top and the darker puddle give the jelly its volume.
  * Bodies: jelly (glossy, a faint glow, with bubbles painted under its skin), eyes, bubbles (three
@@ -28,10 +33,22 @@ import type { Rgb } from '../src/index.js';
  *   and spits an acid glob about 1 m forward in an arc, then jiggles back to rest).
  */
 
-/** The one slime color. Change it for the color variants; everything else follows. */
+/** The one slime color; the default option of the `jelly` slot. Everything else is mixed from it. */
 const SLIME = '#52c832';
 
 const base = rgb(SLIME);
+/** A linear color as an sRGB '#rrggbb' string (for `k.tint(..., { color })`, which takes hex). */
+const toHex = (c: Rgb): string =>
+  '#' +
+  c
+    .map((v) => {
+      const l = Math.min(1, Math.max(0, v));
+      const s = l <= 0.0031308 ? l * 12.92 : 1.055 * Math.pow(l, 1 / 2.4) - 0.055;
+      return Math.round(s * 255)
+        .toString(16)
+        .padStart(2, '0');
+    })
+    .join('');
 /** A color pushed away from its own gray: the acid glob is a little more saturated than the body. */
 const saturate = (c: Rgb, t: number): Rgb => {
   const g = (c[0] + c[1] + c[2]) / 3;
@@ -57,7 +74,8 @@ const C = {
   brow: tone(black, 0.2),
   crease: tone(black, 0.55),
   mouth: tone(black, 0.75),
-  acid: saturate(base, 0.35),
+  // A little blue (saturate clamps it to 0), so the glob can recolor to an ice or poison jelly.
+  acid: ((c: Rgb): Rgb => [c[0], c[1], Math.max(c[2], base[2] * 0.65)])(saturate(base, 0.35)),
   acidTop: saturate(tone(white, 0.3), 0.35),
 };
 
@@ -81,8 +99,42 @@ export default defineAsset({
   description: 'Chibi green slime monster: a glossy see-through jelly with a grumpy glare, a head dome on a wider belly, round drips at its base, and floating bubbles.',
   detail: 0.005,
   reference: 'docs/monster-mockups/slime_001.png',
+  variants: {
+    jelly: { green: SLIME, fire: '#b8340a', ice: '#58b8ec', poison: '#46244f' },
+    highlight: { green: toHex(C.top), fire: '#ffa010', ice: '#c8e6fa', poison: '#703070' },
+    eyes: { lime: toHex(C.iris), amber: '#ffb43c', frost: '#a8e4ff' },
+  },
+  presets: {
+    fire: { jelly: 'fire', highlight: 'fire', eyes: 'amber' },
+    ice: { jelly: 'ice', highlight: 'ice', eyes: 'frost' },
+    poison: { jelly: 'poison', highlight: 'poison', eyes: 'lime' },
+  },
 
   build(k) {
+    // The slot colors (see variants). Each mixed tone keeps its exact default color and follows
+    // its slot: the body tones follow the jelly (the paler glints only mostly), and the light top
+    // and the floating bubbles follow the highlight.
+    const jellyTone = (c: Rgb, follow: number) => k.tint('jelly', { color: toHex(c), follow });
+    const T = {
+      jelly: k.tint('jelly'),
+      top: k.tint('highlight'),
+      low: jellyTone(C.low, 1),
+      bubble: k.tint('highlight', { color: toHex(C.bubble), follow: 1 }),
+      inner: jellyTone(C.inner, 0.85),
+      brow: jellyTone(C.brow, 1),
+      crease: jellyTone(C.crease, 1),
+      mouth: jellyTone(C.mouth, 1),
+      irisRim: jellyTone(C.irisRim, 1),
+      acid: jellyTone(C.acid, 1),
+      acidTop: jellyTone(C.acidTop, 0.8),
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: toHex(C.irisLow), follow: 1 }),
+    };
+    // The paint functions mix linear colors made here, so the slot mask follows them too.
+    const topRgb = rgb(T.top);
+    const lowRgb = rgb(T.low);
+    const acidTopRgb = rgb(T.acidTop);
+
     const bones: Record<string, { parent?: string; at: V3; tail?: V3 }> = {
       core: { at: [0, 0, 0] },
       top: { parent: 'core', at: [0, 0.2, 0], tail: [0, 0.49, 0] },
@@ -175,17 +227,17 @@ export default defineAsset({
         const t = (y - 0.24) / 0.22;
         const b = (0.1 - y) / 0.1;
         const m = 0.5 + 0.5 * noise.fbm(x * 9, y * 9, z * 9, 2);
-        let out = mix3(c, C.top, t * 0.6);
-        out = mix3(out, C.low, b * 0.65);
-        return mix3(out, C.top, (m - 0.5) * 0.25);
+        let out = mix3(c, topRgb, t * 0.6);
+        out = mix3(out, lowRgb, b * 0.65);
+        return mix3(out, topRgb, (m - 0.5) * 0.25);
       })
-      .paintWhere(blisters.round(0.003), C.inner, 0.016)
+      .paintWhere(blisters.round(0.003), T.inner, 0.016)
       // Bubbles seen inside the jelly: soft pale discs with a bright glint.
-      .paintWhere(innerBubbles, C.inner, 0.01)
-      .paintWhere(glints, C.bubble, 0.002)
-      .paintWhere(crease, C.crease, 0.004)
-      .paintWhere(mouth, C.mouth, 0.002);
-    k.body('jelly', jelly, { color: C.jelly, roughness: 0.2, emissive: C.jelly, emissiveIntensity: 0.16, textureDensity: 1.5 });
+      .paintWhere(innerBubbles, T.inner, 0.01)
+      .paintWhere(glints, T.bubble, 0.002)
+      .paintWhere(crease, T.crease, 0.004)
+      .paintWhere(mouth, T.mouth, 0.002);
+    k.body('jelly', jelly, { color: T.jelly, roughness: 0.2, emissive: T.jelly, emissiveIntensity: 0.16, textureDensity: 1.5 });
 
     // ------------------------------------------------------------------ eyes: big glossy bulbs set into the dome
     const eyeHit = faceHit(EYE_X, EYE_Y);
@@ -196,9 +248,9 @@ export default defineAsset({
     const eyeLocal = sdf
       .sphere(EYE_R)
       .at(...eyeC)
-      .paintWhere(disc(0.053, -0.01, -0.01), C.irisRim, 0.002)
-      .paintWhere(disc(0.046, -0.01, -0.01), C.iris, 0.002)
-      .paintWhere(disc(0.046, -0.01, -0.01).intersect(sdf.halfSpace([0, 1, 0], eyeC[1] - 0.03)), C.irisLow, 0.014)
+      .paintWhere(disc(0.053, -0.01, -0.01), T.irisRim, 0.002)
+      .paintWhere(disc(0.046, -0.01, -0.01), T.iris, 0.002)
+      .paintWhere(disc(0.046, -0.01, -0.01).intersect(sdf.halfSpace([0, 1, 0], eyeC[1] - 0.03)), T.irisLow, 0.014)
       .paintWhere(disc(0.028, -0.012, -0.008), C.pupil, 0.002)
       .paintWhere(sdf.sphere(0.015).at(eyeC[0] + 0.006, eyeC[1] + 0.012, eyeC[2] + EYE_R), C.white, 0.002)
       .paintWhere(sdf.sphere(0.008).at(eyeC[0] - 0.028, eyeC[1] - 0.028, eyeC[2] + EYE_R), C.white, 0.002)
@@ -208,7 +260,7 @@ export default defineAsset({
         sdf.halfSpace([0.4 / Math.hypot(0.4, 1), -1 / Math.hypot(0.4, 1), 0], (0.4 * eyeC[0] - (eyeC[1] + 0.024)) / Math.hypot(0.4, 1)).intersect(
           sdf.sphere(EYE_R + 0.01).at(...eyeC),
         ),
-        C.brow,
+        T.brow,
         0.002,
       );
     k.body('eyes', pair(eyeLocal.bone('eye.L')), { color: C.white, roughness: 0.1, textureDensity: 2 });
@@ -223,7 +275,7 @@ export default defineAsset({
           .bone(`bubble${i + 1}`),
       ),
     );
-    k.body('bubbles', bubbles, { color: C.bubble, roughness: 0.05, emissive: C.jelly, emissiveIntensity: 0.3, opacity: 0.75, detail: 0.004 });
+    k.body('bubbles', bubbles, { color: T.bubble, roughness: 0.05, emissive: T.jelly, emissiveIntensity: 0.3, opacity: 0.75, detail: 0.004 });
 
     // ------------------------------------------------------------------ acid glob: the spit shot
     // A blob of the slime's own jelly, 7.4 cm across, with a short tail that trails behind it in
@@ -231,10 +283,10 @@ export default defineAsset({
     const glob = sdf
       .smoothUnion(0.018, sdf.sphere(GLOB_R), sdf.sphere(GLOB_R * 0.55).at(0, 0.004, -GLOB_R * 0.95))
       .displace(0.002, (x, y, z) => noise.noise3(x * 60, y * 60, z * 60))
-      .paintFn((_x, y, _z, c) => mix3(c, C.acidTop, (y / GLOB_R) * 0.7))
+      .paintFn((_x, y, _z, c) => mix3(c, acidTopRgb, (y / GLOB_R) * 0.7))
       .paintWhere(sdf.sphere(GLOB_R * 0.28).at(GLOB_R * 0.3, GLOB_R * 0.55, GLOB_R * 0.75), C.white, 0.002)
       .at(...GLOB_AT);
-    k.body('acid-glob', glob, { bone: 'glob', color: C.acid, roughness: 0.08, emissive: C.acid, emissiveIntensity: 0.3, opacity: 0.85, detail: 0.003 });
+    k.body('acid-glob', glob, { bone: 'glob', color: T.acid, roughness: 0.08, emissive: T.acid, emissiveIntensity: 0.3, opacity: 0.85, detail: 0.003 });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, keys } = motion;
