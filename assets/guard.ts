@@ -34,6 +34,7 @@ const C = {
   pupil: '#110d0b',
   lid: '#16100c',
   mouth: '#a4503f',
+  noseTip: '#f0a090',
   hair: '#5a3422',
   hairDark: '#3e2216',
   steel: '#7a8088',
@@ -101,8 +102,36 @@ export default defineAsset({
   description: 'Chibi town guard NPC: a round steel kettle helmet, a big brown handlebar mustache, a teal-blue tabard with a gold tower, mail, steel gauntlets, and a spiked spear with a teal pennant.',
   detail: 0.005,
   reference: 'docs/npc-mockups/guard_001.jpg',
+  // Color slots for individual guards (the first option is the default look). Eye, hair, and skin
+  // options match the rogue's and the knight's. The clothing slot is the town color: the tabard
+  // and the pennant. The steel, the mail, the gold, the leather, and the wood keep their colors.
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, black: '#231a17', blond: '#c4974a' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { teal: C.blue, crimson: '#a03a34', forest: '#4a7a3e' },
+  },
+  presets: {
+    'city-watch': { eyes: 'blue', hair: 'black', skin: 'tan', clothing: 'teal' },
+    'royal-guard': { eyes: 'brown', hair: 'blond', skin: 'fair', clothing: 'crimson' },
+    'border-patrol': { eyes: 'green', hair: 'black', skin: 'brown', clothing: 'forest' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', { color: C.irisLow, follow: 1 }),
+      hair: k.tint('hair'),
+      hairDark: k.tint('hair', { color: C.hairDark, follow: 1 }),
+      skin: k.tint('skin'),
+      blush: k.tint('skin', { color: C.blush, follow: 0.5 }),
+      mouth: k.tint('skin', { color: C.mouth, follow: 0.5 }),
+      noseTip: k.tint('skin', { color: C.noseTip, follow: 0.5 }),
+      cloth: k.tint('clothing'),
+      pennant: k.tint('clothing', { color: C.pennant, follow: 1 }),
+      pennantDark: k.tint('clothing', { color: C.pennantDark, follow: 1 }),
+    };
     const SPEAR_TOP = 0.8; // above the grip
     // A point on the haft `h` above the grip (the spear leans 3 degrees about Z).
     const onHaft = (h: number): V3 => [GRIP[0] - h * Math.sin((3 * Math.PI) / 180), GRIP[1] + h * Math.cos((3 * Math.PI) / 180), GRIP[2]];
@@ -173,17 +202,17 @@ export default defineAsset({
       .smoothUnion(0.007, nose) // a small fillet, so the round nose reads as its own bulb
       .smoothUnion(0.014, ears)
       .union(armL, armR)
-      .paintWhere(pair(at(sdf.sphere(0.03), 0.14, 0.575)), C.blush, 0.028)
+      .paintWhere(pair(at(sdf.sphere(0.03), 0.14, 0.575)), T.blush, 0.028)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.01)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.01)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(smile, C.mouth)
-      .paintWhere(sdf.sphere(0.03).at(0, NOSE_Y + 0.006, noseZ + NOSE_R[2] + 0.008), '#f0a090', 0.018); // a rosy nose tip
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+      .paintWhere(smile, T.mouth)
+      .paintWhere(sdf.sphere(0.03).at(0, NOSE_Y + 0.006, noseZ + NOSE_R[2] + 0.008), T.noseTip, 0.018); // a rosy nose tip
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ the kettle helmet
     // A dome about 10 percent smaller than the skull-sized first helmet, so the brim sits higher and
@@ -278,11 +307,11 @@ export default defineAsset({
         0.01,
       ),
     );
-    const hairTone = rgb(C.hairDark);
+    const hairTone = rgb(T.hairDark);
     const hair = sdf
       .smoothUnion(0.01, hairShape, brows, mustache)
       .paintFn((x, y, z, base) => (Math.sin(x * 90 + y * 30) > 0.8 && y > 0.6 ? hairTone : base));
-    k.body('hair', hair.bone('head'), { color: C.hair, roughness: 0.6, detail: 0.004 });
+    k.body('hair', hair.bone('head'), { color: T.hair, roughness: 0.6, detail: 0.004 });
 
     // ------------------------------------------------------------------ mail, tabard, belt
     const torso = sdf
@@ -342,7 +371,7 @@ export default defineAsset({
         C.gold,
         0.003,
       );
-    k.body('tabard', tabard.bone('spine'), { color: C.blue, roughness: 0.8 });
+    k.body('tabard', tabard.bone('spine'), { color: T.cloth, roughness: 0.8 });
     // The gold tower on the chest: a raised emblem that follows the tabard's surface.
     const towerOutline = profile.polygon(
       [
@@ -461,10 +490,10 @@ export default defineAsset({
         0.005,
       )
       .displace(0.005, (x, y) => Math.sin(x * 120 + y * 18))
-      .paintWhere(sdf.halfSpace([0, 1, 0], -0.132).intersect(sdf.halfSpace([0, -1, 0], 0.148)), C.pennantDark, 0.003)
+      .paintWhere(sdf.halfSpace([0, 1, 0], -0.132).intersect(sdf.halfSpace([0, -1, 0], 0.148)), T.pennantDark, 0.003)
       .rotateY(-22)
       .at(...PENNANT_AT);
-    k.body('flag', flag.bone('pennant'), { color: C.pennant, roughness: 0.8, detail: 0.003 });
+    k.body('flag', flag.bone('pennant'), { color: T.pennant, roughness: 0.8, detail: 0.003 });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
