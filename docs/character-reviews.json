@@ -966,5 +966,34 @@
     ],
     "next": "Soften the beret toward lavender-plum, enlarge the mustache about 25 percent, and bring the pouch arm forward.",
     "reviewedAt": "2026-09-27T13:57:52.808Z"
+  },
+  "villager": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new settlement NPC on the farmer base (the shared rogue head, skeleton, and knee bones). The moss headscarf, the curly pigtails, the rose dress with puffed sleeves, the cream apron with a back bow, and the basket of bread in the left hand match the mockup. The work clip lifts and settles the basket. The forge check shows result ok, and the textured build has no warnings.",
+    "strengths": [
+      "The headscarf, pigtails, dress, apron, and basket read clearly at 128 px in all eight directions.",
+      "The dress is the clothing slot with earthy options (rose, faded indigo, moss, rust brown) and three presets, so a crowd of villagers looks varied.",
+      "The basket stays clear of the hair in every clip (closest 1.7 cm in run)."
+    ],
+    "issues": [
+      "The ruffled apron hem shows a small speckle, the same fault as on the innkeeper.",
+      "The mockup has a longer torso and legs; the chibi base shows less leg between skirt and socks.",
+      "The pigtails point out to the sides more than the hanging coils of the mockup, and the moss dress option is close to the moss scarf."
+    ],
+    "next": "Fix the apron hem speckle (shared with the innkeeper), let the pigtails hang lower, and move the moss dress option away from the scarf color.",
+    "reviewedAt": "2026-09-27T14:18:00.564Z"
   }
 }
