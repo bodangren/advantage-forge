@@ -1227,5 +1227,34 @@
     ],
     "next": "Enlarge the skull about 10 percent, add glow rings to the sockets, and lower and broaden the crown points.",
     "reviewedAt": "2026-09-27T18:34:13.433Z"
+  },
+  "skeleton-knight": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the skeleton base (knee bones, seven clips): a skeleton in a dented iron helmet with a red plume, a breastplate with a strap, pauldrons, vambraces, greaves, a torn dark red tabard, cape, and scarf, a notched sword, and a battered kite shield. hit is now a shield block. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The helmet, plume, skull, armor, and red cloth read as the mockup knight at 128 px.",
+      "The shield-block hit clip suits the role.",
+      "Armor, tabard, and eye variants with three presets: drowned, blackguard, ancient."
+    ],
+    "issues": [
+      "The eye glow is a flat salmon orange; the mockup has a hot yellow center.",
+      "The skull is wide with thin tooth lines; the mockup skull is narrower with big clear teeth.",
+      "The cheek plates are small (larger ones touched the sword), and a faint seam crosses the cape at mid-height. The hilt and vambraces touch the breastplate by up to 1 cm in some clips."
+    ],
+    "next": "Give the eyes a yellow core, narrow the skull and enlarge the teeth, and hide the cape seam.",
+    "reviewedAt": "2026-09-27T19:02:29.490Z"
   }
 }
