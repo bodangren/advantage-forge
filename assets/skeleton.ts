@@ -148,13 +148,14 @@ export default defineAsset({
   variants: {
     eyes: { amber: C.eye, red: '#e0200e', green: '#5cff6a' },
     bone: { ivory: C.bone, grey: '#b5b3ab', ash: '#b39c7e' },
-    clothing: { red: C.red, blue: '#34568e', green: '#4a6e34' },
+    // Old grave cloth: the options are faded, as the undead should be.
+    clothing: { red: C.red, slate: '#46546a', moss: '#58603e' },
     armor: { iron: C.iron, bronze: '#8a6a36', rust: '#7c4529' },
   },
   presets: {
-    barrow: { eyes: 'green', bone: 'ash', clothing: 'blue', armor: 'bronze' },
+    barrow: { eyes: 'green', bone: 'ash', clothing: 'slate', armor: 'bronze' },
     dread: { eyes: 'red', bone: 'grey', clothing: 'red', armor: 'iron' },
-    rustbone: { eyes: 'amber', bone: 'ash', clothing: 'green', armor: 'rust' },
+    rustbone: { eyes: 'amber', bone: 'ash', clothing: 'moss', armor: 'rust' },
   },
 
   build(k) {

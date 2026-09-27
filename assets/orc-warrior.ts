@@ -95,11 +95,12 @@ export default defineAsset({
     eyes: { yellow: C.eye, red: '#d8321e', orange: '#f0861c' },
     hair: { black: C.hair, brown: '#2c1c12', red: '#40140f' },
     skin: { green: C.skin, olive: '#4a5220', grey: '#6e7868' },
-    clothing: { red: C.red, black: '#2e2019', blue: '#2e4a7a' },
+    // Tribal dyes: blood red, soot black, undyed hide. No bright blue on an orc.
+    clothing: { red: C.red, black: '#2e2019', hide: '#7a6040' },
   },
   presets: {
     bloodfang: { eyes: 'red', hair: 'red', skin: 'green', clothing: 'black' },
-    bog: { eyes: 'yellow', hair: 'brown', skin: 'olive', clothing: 'blue' },
+    bog: { eyes: 'yellow', hair: 'brown', skin: 'olive', clothing: 'hide' },
     ashen: { eyes: 'orange', hair: 'brown', skin: 'grey', clothing: 'black' },
   },
 
