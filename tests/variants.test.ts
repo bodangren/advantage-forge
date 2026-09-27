@@ -30,6 +30,21 @@ describe('color variants', () => {
     expect([...out.slice(3)]).toEqual([0x6a, 0x40, 0x20]);
   });
 
+  it('gives a soft edge between two slots the blend of their recolors, not a product', () => {
+    // Two slots with the same default; both options remove all green. A texel half in each slot
+    // must lose all its green too (1 + 0.5 * (0 - 1) + 0.5 * (0 - 1) = 0), as the blend of the two
+    // recolored colors would. A product of the factors kept a quarter of it (0.5 * 0.5).
+    const slots = slotTable({
+      body: { green: '#40c040', plum: '#400040' },
+      top: { green: '#40c040', violet: '#400040' },
+    });
+    const base = new Uint8Array([0x40, 0xc0, 0x40]);
+    const mask = new Uint8Array([128, 128, 0, 0]);
+    const out = recolor(base, mask, slots, { body: 'plum', top: 'violet' });
+    expect(out[1]).toBeLessThanOrEqual(2);
+    expect(out[0]).toBeCloseTo(0x40, -1);
+  });
+
   it('keeps a partly following color exact in the default look and partial in the mask', () => {
     const blush = followRef('skin', '#f09a86', 0.5);
     expect(rgb(blush)).toEqual(rgb('#f09a86'));

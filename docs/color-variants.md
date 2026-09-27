@@ -35,12 +35,15 @@ extras `forgeEmissiveTint: "<slot>"`: set its emissive color to the chosen optio
 
 ## Recoloring in a game
 
-For each slot, multiply the base color by the option's color divided by the default color, as
-far as the mask covers the texel (in linear light):
+Multiply the base color by the option's color divided by the default color, as far as the mask
+covers the texel (in linear light). Add the slots' contributions; do not multiply them, so a soft
+edge between two slots gets the blend of the two recolors:
 
 ```
-color *= mix(1, option / default, mask[channel])     // per slot, per color channel
+color *= max(0, 1 + sum over slots of mask[channel] * (option / default - 1))   // per color channel
 ```
+
+For a texel in one slot this is `mix(1, option / default, mask)`.
 
 three.js, with `tintMask` loaded as a linear texture (flipY false, same UVs as the base map):
 
@@ -54,8 +57,8 @@ material.onBeforeCompile = (shader) => {
       '#include <map_fragment>',
       `#include <map_fragment>
        vec4 tm = texture2D(tintMask, vMapUv);
-       diffuseColor.rgb *= mix(vec3(1.0), tintRatio[0], tm.r) * mix(vec3(1.0), tintRatio[1], tm.g)
-                         * mix(vec3(1.0), tintRatio[2], tm.b) * mix(vec3(1.0), tintRatio[3], tm.a);`,
+       diffuseColor.rgb *= max(vec3(0.0), vec3(1.0) + (tintRatio[0] - 1.0) * tm.r + (tintRatio[1] - 1.0) * tm.g
+                         + (tintRatio[2] - 1.0) * tm.b + (tintRatio[3] - 1.0) * tm.a);`,
     );
 };
 ```

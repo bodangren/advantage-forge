@@ -60,8 +60,11 @@ const toByte = (c: number): number => {
 };
 
 /**
- * Recolor a base color atlas (sRGB bytes, 3 per texel) with a preset: each texel is multiplied
- * by mix(1, option / default, mask) for every slot, in linear light, as a game shader would.
+ * Recolor a base color atlas (sRGB bytes, 3 per texel) with a preset, in linear light, as a game
+ * shader would: each texel is multiplied by 1 + sum over slots of mask * (option / default - 1).
+ * For a texel in one slot this is mix(1, ratio, mask). A soft edge between two slots (a dome that
+ * blends the body into a highlight) gets the blend of the two ratios; a product of the per-slot
+ * factors kept a large share of the old color there (a grey top on a recolored slime).
  */
 export function recolor(
   base: Uint8Array,
@@ -73,20 +76,20 @@ export function recolor(
   const ratios = slots.map((s) => ratio(s, choice[s.name] ?? s.default));
   const n = base.length / 3;
   for (let i = 0; i < n; i++) {
-    let r = toLinear(base[i * 3]!);
-    let g = toLinear(base[i * 3 + 1]!);
-    let b = toLinear(base[i * 3 + 2]!);
+    let fr = 1;
+    let fg = 1;
+    let fb = 1;
     slots.forEach((s, k) => {
       const m = mask[i * 4 + s.channel]! / 255;
       if (m === 0) return;
       const q = ratios[k]!;
-      r *= 1 + (q[0] - 1) * m;
-      g *= 1 + (q[1] - 1) * m;
-      b *= 1 + (q[2] - 1) * m;
+      fr += (q[0] - 1) * m;
+      fg += (q[1] - 1) * m;
+      fb += (q[2] - 1) * m;
     });
-    out[i * 3] = toByte(r);
-    out[i * 3 + 1] = toByte(g);
-    out[i * 3 + 2] = toByte(b);
+    out[i * 3] = toByte(toLinear(base[i * 3]!) * Math.max(0, fr));
+    out[i * 3 + 1] = toByte(toLinear(base[i * 3 + 1]!) * Math.max(0, fg));
+    out[i * 3 + 2] = toByte(toLinear(base[i * 3 + 2]!) * Math.max(0, fb));
   }
   return out;
 }
