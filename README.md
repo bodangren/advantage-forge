@@ -8,6 +8,11 @@ and the sprite pass renders that GLB into eight-direction pixel art, one sheet p
 clip and one sprite set per color preset. You get a 3D asset and a 2.5D sprite character from
 one source file.
 
+**Play the demo:** [Chibi Quest: Monster Encounters](https://bodangren.github.io/fantasy-asset-forge/),
+a reading game for grades 3 to 6 built from these assets. Read a short story, then use its words
+and sentences to beat monsters in the Sunken Vault. See
+[docs/demo-monster-encounters.md](docs/demo-monster-encounters.md).
+
 ![wizard turnaround: reference, front, three-quarter, side, back](docs/showcase/wizard-turnaround.jpg)
 
 ## Showcase

@@ -20,17 +20,20 @@
     "@gltf-transform/extensions": "4.5.0",
     "gifenc": "1.0.3",
     "meshoptimizer": "1.2.0",
-    "xatlasjs": "0.2.0",
-    "three": "0.185.1"
+    "three": "0.185.1",
+    "xatlasjs": "0.2.0"
   },
   "devDependencies": {
+    "@gltf-transform/functions": "4.5.0",
     "@types/node": "24.13.6",
     "@types/three": "0.185.1",
     "playwright": "1.62.0",
     "prettier": "3.9.5",
+    "sharp": "^0.35.4",
     "tsx": "4.23.13",
     "typescript": "6.0.2",
     "vite": "8.1.4",
-    "vitest": "4.1.10"
+    "vitest": "4.1.10",
+    "zod": "^4.6.5"
   }
 }

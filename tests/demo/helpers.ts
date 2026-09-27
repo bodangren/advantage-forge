@@ -1,0 +1,117 @@
+/** Shared test helpers: a synthetic story pack, an answer oracle, and event filters. */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { parseStoryPack } from '../../src/demo/core/content.js';
+import type { Challenge, GameEvent, Quest, Response, StoryPack } from '../../src/demo/core/types.js';
+
+export const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
+export const STORY_IDS = ['pip-is-brave', 'squeaky-the-small-mouse', 'pip-and-the-red-car'];
+
+export function loadPack(id: string): StoryPack {
+  return parseStoryPack(JSON.parse(readFileSync(join(STORIES_DIR, id, 'story.json'), 'utf8')), id);
+}
+
+/** A small valid pack; override any field. */
+export function makePack(over: Partial<StoryPack> = {}): StoryPack {
+  return parseStoryPack({
+    id: 'test-story',
+    title: 'Test Story',
+    series: 'Origins 1',
+    lesson: 1,
+    level: 'A0',
+    genre: 'Test',
+    paragraphs: [
+      { text: 'Pip is a puppy. The room is dark.', th: 'ปิ๊ปเป็นลูกสุนัข' },
+      { text: 'Mom is here.' },
+    ],
+    images: [],
+    vocabulary: [
+      { id: 'w-puppy', word: 'puppy', th: 'ลูกสุนัข', definition: 'A young dog.' },
+      { id: 'w-dark', word: 'dark', th: 'มืด', definition: 'Having no light.' },
+      { id: 'w-sound', word: 'sound', th: 'เสียง', definition: 'Something you hear.' },
+      { id: 'w-afraid', word: 'afraid', th: 'กลัว', definition: 'Feeling scared.' },
+      { id: 'w-brave', word: 'brave', th: 'กล้าหาญ', definition: 'Not being afraid.', phonetic: '/breɪv/' },
+      { id: 'w-hand', word: 'hand', th: 'มือ', definition: 'The end of the arm.' },
+    ],
+    questions: [
+      {
+        id: 'q-1',
+        question: 'What is Pip?',
+        options: ['A cat', 'A boy', 'A puppy', 'A girl'],
+        answer: 2,
+        paragraph: 0,
+      },
+      {
+        id: 'q-2',
+        question: 'How is the room?',
+        options: ['Bright', 'Dark', 'Big'],
+        answer: 1,
+        paragraph: 0,
+      },
+      { id: 'q-3', question: 'Who is here?', options: ['Mom', 'A cat', 'Dad'], answer: 0, paragraph: 1 },
+    ],
+    sentences: [
+      { id: 's-1', answer: 'This is Pip.', words: ['This', 'is', 'Pip.'], paragraph: 0 },
+      { id: 's-2', answer: 'Mom is here.', words: ['Mom', 'is', 'here.'], paragraph: 1 },
+    ],
+    fills: [
+      { id: 'f-1', sentence: 'Pip is a ___.', answer: 'puppy', paragraph: 0 },
+      { id: 'f-2', sentence: 'The room is ___.', answer: 'dark', paragraph: 0 },
+      { id: 'f-3', sentence: 'A big ___.', answer: 'sound' },
+    ],
+    source: { file: 'test.json' },
+    ...over,
+  });
+}
+
+/** The correct response for a challenge, from the pack. */
+export function solve(pack: StoryPack, c: Challenge): Response {
+  if (c.kind === 'sentence') {
+    const item = pack.sentences.find((s) => s.id === c.itemId)!;
+    const left = c.tokens.slice();
+    const tokenIds = item.words.map((w) => {
+      const i = left.findIndex((t) => t.text === w);
+      if (i < 0) throw new Error(`no token for "${w}"`);
+      return left.splice(i, 1)[0]!.id;
+    });
+    return { kind: 'order', tokenIds };
+  }
+  const text =
+    c.kind === 'word'
+      ? pack.vocabulary.find((w) => w.id === c.itemId)!.th
+      : c.kind === 'fill'
+        ? pack.fills.find((f) => f.id === c.itemId)!.answer
+        : (() => {
+            const q = pack.questions.find((q) => q.id === c.itemId)!;
+            return q.options[q.answer]!;
+          })();
+  const option = c.options.find((o) => o.text.toLowerCase() === text.toLowerCase());
+  if (!option) throw new Error(`no option for "${text}" in ${c.options.map((o) => o.text).join(', ')}`);
+  return { kind: 'choice', optionId: option.id };
+}
+
+/** A wrong response for a challenge. */
+export function fail(pack: StoryPack, c: Challenge): Response {
+  const right = solve(pack, c);
+  if (c.kind === 'sentence' && right.kind === 'order') {
+    return { kind: 'order', tokenIds: [...right.tokenIds.slice(1), right.tokenIds[0]!] };
+  }
+  if (c.kind !== 'sentence' && right.kind === 'choice') {
+    return { kind: 'choice', optionId: c.options.find((o) => o.id !== right.optionId)!.id };
+  }
+  throw new Error('unreachable');
+}
+
+export const ofType = <T extends GameEvent['type']>(events: GameEvent[], type: T) =>
+  events.filter((e): e is Extract<GameEvent, { type: T }> => e.type === type);
+
+export const types = (events: GameEvent[]) => events.map((e) => e.type);
+
+/** Plays the rest of a quest with every answer correct (starts it when needed); returns all events. */
+export function playPerfect(quest: Quest, pack: StoryPack, limit = 200): GameEvent[] {
+  const all = quest.state.phase === 'ready' ? quest.start() : [];
+  for (let i = 0; i < limit && quest.state.phase === 'challenge'; i++) {
+    all.push(...quest.answer(solve(pack, quest.state.challenge!)));
+  }
+  return all;
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pip-is-brave",
+    "title": "Pip is Brave",
+    "level": "A0",
+    "series": "Origins 2",
+    "lesson": 12,
+    "cover": "img-1.webp"
+  },
+  {
+    "id": "squeaky-the-small-mouse",
+    "title": "Squeaky, the Small Mouse",
+    "level": "A0",
+    "series": "Origins 3.1",
+    "lesson": 14,
+    "cover": "img-1.webp"
+  },
+  {
+    "id": "pip-and-the-red-car",
+    "title": "Pip and the Red Car",
+    "level": "A0",
+    "series": "Origins 3.1",
+    "lesson": 7,
+    "cover": "img-1.webp"
+  }
+]
