@@ -50,8 +50,9 @@ animation options
   --views three-quarter,side   rows of the review strip
 
 common
-  --preset name        a color preset of the asset (its presets): render.<name>.png, or
-                       sprites/presets/<name>/ (forge all bakes every preset's sprites)
+  --preset name|all    a color preset of the asset (its presets): render.<name>.png, or
+                       sprites/presets/<name>/ (forge all bakes every preset's sprites);
+                       render --preset all writes the default and every preset in one build
   --fast               skip UV unwrap and texture baking (vertex colors; about 3x faster)
   --texture 2048       atlas size (default: the asset's texture.size, else 1024; 0 = off)
   --watch              keep running; rebuild and re-render when a file changes
@@ -212,7 +213,7 @@ async function main(): Promise<void> {
         for (const [preset, image] of Object.entries(atlas.presets ?? {}))
           writeFileSync(join(out, 'textures', `baseColor.${preset}.png`), image);
       }
-      if (values.preset && !atlas?.presets?.[values.preset])
+      if (values.preset && values.preset !== 'all' && !atlas?.presets?.[values.preset])
         throw new Error(
           atlas?.presets
             ? `No preset '${values.preset}'. Presets: ${Object.keys(atlas.presets).join(', ') || '(none)'}.`
@@ -251,27 +252,32 @@ async function main(): Promise<void> {
       }
 
       if (command === 'render' || command === 'all') {
-        const t1 = performance.now();
-        const req: ViewsRequest = {
-          glbUrl: `/__forge/asset.glb?t=${Date.now()}`,
-          views: viewList(values),
-          size: num(values.size, 512),
-          background: values.bg ?? '#aeb3ba',
-          title: name,
-          ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
-          ...(values.preset ? { preset: values.preset } : {}),
-        };
-        const res = await page.evaluate((r) => window.forge.renderViews(r), req);
-        // A color preset's turnaround goes beside the default one: render.<preset>.png.
-        const sheetFile = values.preset ? `render.${values.preset}.png` : 'render.png';
-        if (!values.preset) {
-          rmSync(join(out, 'views'), { recursive: true, force: true });
-          mkdirSync(join(out, 'views'), { recursive: true });
-          for (const [view, data] of Object.entries(res.views))
-            writePng(join(out, 'views', `${view}.png`), data);
+        // --preset all: the default turnaround and one per preset, from a single build.
+        const looks: (string | undefined)[] =
+          values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [values.preset];
+        for (const preset of looks) {
+          const t1 = performance.now();
+          const req: ViewsRequest = {
+            glbUrl: `/__forge/asset.glb?t=${Date.now()}`,
+            views: viewList(values),
+            size: num(values.size, 512),
+            background: values.bg ?? '#aeb3ba',
+            title: preset ? `${name} · ${preset}` : name,
+            ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
+            ...(preset ? { preset } : {}),
+          };
+          const res = await page.evaluate((r) => window.forge.renderViews(r), req);
+          // A color preset's turnaround goes beside the default one: render.<preset>.png.
+          const sheetFile = preset ? `render.${preset}.png` : 'render.png';
+          if (!preset) {
+            rmSync(join(out, 'views'), { recursive: true, force: true });
+            mkdirSync(join(out, 'views'), { recursive: true });
+            for (const [view, data] of Object.entries(res.views))
+              writePng(join(out, 'views', `${view}.png`), data);
+          }
+          writePng(join(out, sheetFile), res.sheet);
+          console.log(`render   ${rel(join(out, sheetFile))}  (${Math.round(performance.now() - t1)} ms)`);
         }
-        writePng(join(out, sheetFile), res.sheet);
-        console.log(`render   ${rel(join(out, sheetFile))}  (${Math.round(performance.now() - t1)} ms)`);
       }
       const clips = await page.evaluate(
         (u) => window.forge.listClips(u),
@@ -293,7 +299,7 @@ async function main(): Promise<void> {
         return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
       };
 
-      const sprites = async (clip: string | null, preset: string | undefined = values.preset) => {
+      const sprites = async (clip: string | null, preset: string | undefined = values.preset === 'all' ? undefined : values.preset) => {
         const t2 = performance.now();
         const size = command === 'all' ? 128 : num(values.size, 128);
         const req: SpritesRequest = {
@@ -370,7 +376,8 @@ async function main(): Promise<void> {
       }
       if (command === 'sprites') {
         const list = values.clip === undefined ? [null] : wanted(true);
-        for (const c of list) await sprites(c);
+        const looks = values.preset === 'all' ? [undefined, ...Object.keys(atlas?.presets ?? {})] : [undefined];
+        for (const look of looks) for (const c of list) await (look ? sprites(c, look) : sprites(c));
       }
       if (command === 'animate') {
         const list = wanted(true);

@@ -70,9 +70,17 @@ export default defineAsset({
     k.animation('walk', { duration: 0.9, pose: (t, phase) => ({ 'leg.L': { rotate: [-25, 0, 0] } }) });
     k.group('lid', { at: [x, y, z], rotate: [rx, ry, rz] }, (g) => g.body(...)); // static pivots (no skeleton)
     k.add('name', anyThreeObject); // escape hatch: hand-built three.js geometry
+    k.tint('hair', -0.2); // a recolorable color (a slot of `variants`), 0.2 darker
   },
 });
 ```
+
+Characters list color slots for individual looks (up to four, the first option the default)
+and presets: `variants: { eyes: { brown: '#6e4020', blue: '#2f6aa8', green: '#3d7a35' }, ... }`,
+`presets: { ranger: { eyes: 'green', ... } }`. Every color of a slot, and every darker or lighter
+shade of it, comes from `k.tint(slot, shade)`. A textured build adds a tint mask, the slot table,
+and one recolored texture per preset to the GLB; `forge all` bakes sprites per preset. See
+`docs/color-variants.md`.
 
 Shapes (`sdf.*`), all centered at the origin unless defined by points:
 
