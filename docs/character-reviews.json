@@ -811,7 +811,7 @@
     "reviewedAt": "2026-09-26T20:49:05+00:00"
   },
   "giant-bat": {
-    "overall": 8,
+    "overall": 8.1,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -826,11 +826,11 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The giant bat matches the front of its mmx mockup: a round purple fur ball, tall ears, yellow eyes under heavy brows, a pink snout, fangs, and pink wings. The attack is now a real swooping bite with a lower jaw that opens and snaps shut.",
+    "summary": "The giant bat matches the front of its mmx mockup: a round purple fur ball, tall ears, yellow eyes under heavy brows, a pink snout, fangs, and pink wings. A new screech clip adds a threat display: the bat pulls back, spreads its wings, and screeches with a wide open jaw.",
     "strengths": [
-      "A jaw bone moves a small lower lip under the grin. The closed mouth at rest looks the same as before. When the jaw opens, a dark throat, a tongue, and two lower fangs show.",
-      "The attack has a clear wind-up, a swoop 0.3 m forward with a pitch of 14 degrees or less, a wide open mouth, a hard snap, and a climb back to the hover with strong wing beats.",
-      "The idle, the hit, and the death still read well. No clip sinks below the ground, and the build gives no warnings."
+      "The screech clip reads well: the bat pulls back nose up, the wings freeze raised and spread, the ears prick forward, and the jaw opens 40 degrees for 0.6 s.",
+      "During the screech, the ball puffs up 8 percent and shakes fast, and the tongue and the lower fangs show in the open mouth.",
+      "The attack, the idle, the hit, and the death still read well. No clip sinks below the ground, and the build gives no warnings."
     ],
     "issues": [
       "The open lower jaw looks ragged in close views: its top face is dark to the lip edge, and the chin fur spikes cover part of the lower lip.",
@@ -841,7 +841,7 @@
       "Round the ear outline and add two or three scallops to its back edge.",
       "Angle the wings 20 degrees toward the front at rest, so they read in the side view and in the W and E sprites."
     ],
-    "reviewedAt": "2026-09-26T20:49:35+00:00"
+    "reviewedAt": "2026-09-27T01:38:55+00:00"
   },
   "mimic": {
     "overall": 8.7,

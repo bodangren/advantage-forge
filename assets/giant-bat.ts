@@ -20,7 +20,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  * Bodies: fur, ears, eyes, brows, snout, mouth, teeth, wing-membranes, wing-bones, feet, claws;
  *   on the jaw: jawFur, jawMouth, jawTeeth, tongue; the dark throat inside the ball.
  * Rig: body (root), jaw, ear.L/R, wing.L/R with wingtip.L/R at the knuckle, foot.L/R. Clips: idle
- *   (hover), fly (forward flight), attack (a swooping bite).
+ *   (hover), fly (forward flight), attack (a swooping bite), hit, death, screech (a threat display
+ *   with spread wings, a wide open jaw, and a fast shake).
  */
 
 const C = {
@@ -479,6 +480,67 @@ export default defineAsset({
           ]),
           'foot.L': { rotate: [keys(p, [[0, 15], [0.1, -12], [0.46, -30], [0.6, -72], [0.74, -52], [1, -60]]), 0, keys(p, [[0, 0], [0.5, 12]])] },
           'foot.R': { rotate: [keys(p, [[0, 12], [0.1, -8], [0.46, -24], [0.62, -66], [0.76, -46], [1, -54]]), 0, keys(p, [[0, 0], [0.5, -8]])] },
+        };
+      },
+    });
+
+    // Screech: a threat display. Pull back (0 to 0.13): the bat rises and draws back, nose up, the
+    // wings sweep up and freeze spread wide with the membranes turned to the front, and the ears
+    // prick forward. Screech (0.17 to 0.66): the face thrusts forward, the jaw opens 40 degrees
+    // (held 0.6 s), the ball puffs up 8 percent, and the body and the wings shake fast. Settle
+    // (0.63 to 1): the jaw closes, and strong beats that calm to the idle beat carry it back to
+    // the hover; the last frame is the first idle frame.
+    const SCREECH_S = 1.4;
+    const SPREAD: [number, number, number] = [0, -12, 25]; // wing.L: raised, turned to the front
+    const SPREAD_TIP = -4; // the fingers straight out from the arm
+    k.animation('screech', {
+      duration: SCREECH_S,
+      loop: false,
+      pose: (_t, p) => {
+        const t = p * SCREECH_S;
+        // The idle beat runs until the wings freeze; the settle beats (1.75 cycles from the top of
+        // a stroke) end exactly on the idle start phase.
+        const q = t / 0.6;
+        const s = Math.min(1, Math.max(0, (p - 0.63) / 0.37));
+        const settle = p >= 0.63;
+        const amp = 58 - 13 * s;
+        const beat = settle ? wave(s, 1.75, 0.25) : wave(q);
+        const wingZ = settle ? 10 + amp * beat : 10 + 45 * beat;
+        const wingY = settle ? 6 * wave(s, 1.75, 0.5) : 6 * wave(q, 1, 0.25);
+        const tipZ = settle ? 20 * wave(s, 1.75, 0.37) : 20 * wave(q, 1, 0.12);
+        const spread = keys(p, [[0, 0], [0.13, 1], [0.63, 1], [0.69, 0]]);
+        const free = 1 - spread;
+        const scr = keys(p, [[0, 0], [0.17, 0], [0.23, 1], [0.63, 1], [0.69, 0]]);
+        const jaw = keys(p, [[0, 0], [0.15, 0], [0.22, 1], [0.64, 1], [0.7, 0], [1, 0]]);
+        // The shake: two fast sines that do not line up with the 30 fps frames.
+        const shakeA = Math.sin(2 * Math.PI * 13 * t);
+        const shakeB = Math.sin(2 * Math.PI * 17 * t + 1.3);
+        const puff = 1 + 0.08 * scr;
+        const squash = 0.03 * beat * free;
+        return {
+          body: {
+            move: [
+              0.011 * scr * shakeB,
+              keys(p, [[0, HOVER + 0.03], [0.13, HOVER + 0.08], [0.22, HOVER + 0.07], [0.64, HOVER + 0.07], [0.8, HOVER + 0.01], [1, HOVER + 0.03]]),
+              keys(p, [[0, 0], [0.13, -0.07], [0.22, -0.06], [0.64, -0.04], [0.86, 0.01], [1, 0]]),
+            ],
+            rotate: [
+              keys(p, [[0, 4], [0.13, -12], [0.2, -8], [0.28, 6], [0.62, 6], [0.72, -2], [0.86, 6], [1, 4]]),
+              4 * scr * shakeA,
+              7 * scr * shakeB,
+            ],
+            scale: [puff * (1 - squash), puff * (1 + squash), puff * (1 - squash)],
+          },
+          jaw: { rotate: [40 * jaw, 0, 0], move: [0, -0.0063 * jaw, 0.0147 * jaw] },
+          ...both('wing', [0, wingY * free + SPREAD[1] * spread, wingZ * free + (SPREAD[2] + 3 * scr * shakeA) * spread]),
+          ...both('wingtip', [0, 0, tipZ * free + (SPREAD_TIP + 4 * scr * shakeB) * spread]),
+          ...both('ear', [
+            keys(p, [[0, 0], [0.13, 18], [0.64, 18], [0.76, -8], [1, 0]]),
+            0,
+            keys(p, [[0, -4.9], [0.13, 10], [0.64, 10], [0.78, -8], [1, -4.9]]) + 3 * scr * shakeA,
+          ]),
+          'foot.L': { rotate: [keys(p, [[0, 14.7], [0.13, -6], [0.28, 20], [0.64, 20], [0.8, 30], [1, 14.7]]), 0, 0] },
+          'foot.R': { rotate: [keys(p, [[0, 12.5], [0.13, -8], [0.28, 18], [0.64, 18], [0.8, 27], [1, 12.5]]), 0, 0] },
         };
       },
     });
