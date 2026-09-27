@@ -70,6 +70,10 @@ const WRIST_L: V3 = [0.2, 0.29, 0.085];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
+// The ends of the flat bottom of the left sabaton (y = 0), measured on the SDF: heel and toe.
+// The toe turns out 12 degrees, so the toe point sits outboard of the heel.
+const SOLE_HEEL: V3 = [0.095, 0, -0.017];
+const SOLE_TOE: V3 = [0.111, 0, 0.098];
 
 // The sword: the grip axis points up, out, and forward; the guard sits just above the fist.
 const FIST_R = add(WRIST_R, norm([WRIST_R[0] - ELBOW_R[0], WRIST_R[1] - ELBOW_R[1], WRIST_R[2] - ELBOW_R[2]]), 0.04);
@@ -538,32 +542,43 @@ export default defineAsset({
       }),
     });
 
-    // The shield arm stays in front of the body; the sword arm swings a little.
-    const stride = (duration: number, legSwing: number, armSwing: number, lean: number, hop: number) => ({
+    // The shield arm stays in front of the body; the sword arm swings a little. The legs come from
+    // motion.gait: planted stance sabatons, a knee lift in the swing, heel strike and toe-off.
+    // `step` is the foot travel, `footLift` the swing height, `duty` the share of the cycle a foot
+    // is down (the run has a flight between steps), `bob` the hips bob. The gait phase runs a
+    // quarter cycle behind the clip, so the left heel strikes at p = 0.25, when the left (shield)
+    // arm is back. The hips' sway goes to gait, so the planted feet do not slide.
+    const stride = (duration: number, step: number, footLift: number, duty: number, bob: number, armSwing: number, lean: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 7 * s, 0] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift: footLift,
+          duty,
+          bob,
+          roll: 10,
+          heel: SOLE_HEEL,
+          toe: SOLE_TOE,
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: {
-            move: [0, -legDrop(LEG, legSwing * s) + hop * bump(p, 2, 0.25), 0] as const,
-            rotate: [0, 7 * s, 0] as const,
-          },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, 0] as const },
           chest: { rotate: [lean * 0.5, -9 * s, 0] as const },
           // The head bobs a beat late, loose on its neck bones.
           head: { rotate: [-lean + 3 * wave(p, 2, 0.3), 5 * s, 2 * wave(p, 1, 0.2)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.55 * s + 12 * Math.max(0, -s), 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.55 * s + 12 * Math.max(0, s), 0, 0] as const },
           'upperarm.L': { rotate: [armSwing * 0.15 * s, 0, 3] as const },
           'upperarm.R': { rotate: [-armSwing * 0.5 * s, 0, -6] as const },
           'forearm.R': { rotate: [-armSwing * 0.2 * Math.max(0, s), 0, 0] as const },
         };
       },
     });
-    k.animation('walk', stride(0.9, 26, 28, 3, 0));
-    k.animation('run', stride(0.56, 40, 50, 12, 0.03));
+    // A stiff, rattling march: short steps with a low swing; the run is quicker with a flight phase.
+    k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 0.006, 28, 3));
+    k.animation('run', stride(0.56, 0.14, 0.04, 0.42, 0.025, 50, 12));
 
     // An overhead chop, solved by targets (see the armor's slash). The wrist follows keys in the
     // chest's rest frame (reach); the blade follows its own keys (orient), and edgeUp turns the
