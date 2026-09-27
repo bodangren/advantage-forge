@@ -59,8 +59,29 @@ export default defineAsset({
   description: 'Chibi dire wolf monster: a huge scowling head with a toothy grin, cream brows and chest ruff, tall ears, amber eyes, and a bushy tail; quadruped rig.',
   detail: 0.005,
   reference: 'docs/monster-mockups/dire-wolf_001.jpg',
+  // Color slots for individual wolves (the first option is the default look): real wolf coats,
+  // markings, and eye colors.
+  variants: {
+    fur: { slate: C.fur, timber: '#5e5246', black: '#2e2c2c' },
+    markings: { cream: C.cream, tan: '#cfae84', silver: '#c8c8c4' },
+    eyes: { amber: C.eye, gold: '#e8c830', ice: '#9fd3da' },
+  },
+  presets: {
+    timber: { fur: 'timber', markings: 'cream', eyes: 'gold' },
+    shadow: { fur: 'black', markings: 'tan', eyes: 'amber' },
+    frost: { fur: 'slate', markings: 'silver', eyes: 'ice' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      fur: k.tint('fur'),
+      furLight: k.tint('fur', { color: C.furLight, follow: 1 }),
+      furDark: k.tint('fur', { color: C.furDark, follow: 1 }),
+      cream: k.tint('markings'),
+      eye: k.tint('eyes'),
+      eyeRim: k.tint('eyes', { color: C.eyeRim, follow: 1 }),
+    };
     k.skeleton({
       hips: { at: [0, 0.27, -0.17] },
       spine: { parent: 'hips', at: [0, 0.29, 0.0] },
@@ -175,12 +196,12 @@ export default defineAsset({
       .smoothUnion(0.015, cheekTufts.bone('head'), ears.bone('head'))
       // Lighter fur on the lower cheeks (below the eyes, so the dark face keeps the eye contrast)
       // and on the chest under the ruff.
-      .paintWhere(pair(sdf.ellipsoid([0.12, 0.09, 0.13]).at(0.17, 0.4, 0.19)).intersect(sdf.halfSpace([0, 1, 0], 0.47)), C.furLight, 0.03)
-      .paintWhere(sdf.ellipsoid([0.13, 0.14, 0.1]).at(0, 0.22, 0.17), C.furLight, 0.04)
-      .paintWhere(sdf.union(legs, paws).intersect(sdf.halfSpace([0, 1, 0], 0.16)), C.furDark, 0.04)
-      .paintWhere(sdf.sphere(0.12).at(...TAIL_TIP).intersect(sdf.halfSpace([-0.3, -0.6, 0.74], -0.55)), C.cream, 0.02)
-      .paintWhere(eyeRing.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.eyeRim, 0.002)
-      .paintWhere(eye.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.eye, 0.002)
+      .paintWhere(pair(sdf.ellipsoid([0.12, 0.09, 0.13]).at(0.17, 0.4, 0.19)).intersect(sdf.halfSpace([0, 1, 0], 0.47)), T.furLight, 0.03)
+      .paintWhere(sdf.ellipsoid([0.13, 0.14, 0.1]).at(0, 0.22, 0.17), T.furLight, 0.04)
+      .paintWhere(sdf.union(legs, paws).intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04)
+      .paintWhere(sdf.sphere(0.12).at(...TAIL_TIP).intersect(sdf.halfSpace([-0.3, -0.6, 0.74], -0.55)), T.cream, 0.02)
+      .paintWhere(eyeRing.intersect(sdf.halfSpace([0, 0, -1], -0.2)), T.eyeRim, 0.002)
+      .paintWhere(eye.intersect(sdf.halfSpace([0, 0, -1], -0.2)), T.eye, 0.002)
       .paintWhere(pupil.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.pupil, 0.002)
       .paintWhere(shine, '#ffffff', 0.002);
     // The lower jaw zone: below the grin circle and below the grin corners, inside a rounded
@@ -192,7 +213,7 @@ export default defineAsset({
     const jawPart = jawZone.round(0.003);
     const roofPaint = (inside: sdf.Shape) => jawPart.intersect(inside);
     const jawTopPaint = (inside: sdf.Shape) => inside.subtract(jawZone.round(-0.003));
-    const furLook = { color: C.fur, roughness: 0.85, textureDensity: 1.5, bump: (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2) };
+    const furLook = { color: T.fur, roughness: 0.85, textureDensity: 1.5, bump: (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2) };
     k.body('fur', fur.subtract(jawZone).paintWhere(roofPaint(headBase.round(-0.004)), C.mouth, 0.002), furLook);
     k.body('jawFur', fur.intersect(jawPart).paintWhere(jawTopPaint(headBase.round(-0.004)), C.mouth, 0.002), { ...furLook, bone: 'jaw' });
     // The dark mouth inside the head (seen when the jaw opens), and the tongue on the jaw. Both
@@ -214,7 +235,7 @@ export default defineAsset({
     const grin = sdf.extrude(profile.arc(GRIN_R, 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
     const muzzleCream = muzzleWide.round(0.004).paintWhere(grin, C.mouth, 0.002);
     k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzleWide), C.mouth, 0.002), {
-      color: C.cream,
+      color: T.cream,
       roughness: 0.8,
       textureDensity: 1.5,
       bone: 'jaw',
@@ -261,7 +282,7 @@ export default defineAsset({
     );
     const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzleWide), C.mouth, 0.002);
     const cream = sdf.union(muzzleTop.bone('head'), brows.bone('head'), forelock.bone('head'), ruff.bone('neck'));
-    k.body('cream', cream, { color: C.cream, roughness: 0.8, textureDensity: 1.5 });
+    k.body('cream', cream, { color: T.cream, roughness: 0.8, textureDensity: 1.5 });
 
     // ------------------------------------------------------------------ nose, teeth, claws
     const noseAt = faceHit(0, 0.465);
