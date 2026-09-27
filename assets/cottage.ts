@@ -1,400 +1,401 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf } from '../src/index.js';
 
 /**
- * Chibi hamlet cottage, about 2.2 m tall to the ridge (catalog `architecture/structure/cottage`).
+ * Small village cottage, 2.0 m wide, 1.8 m to the eaves, steep golden thatch roof.
  *
- * Role: cozy hamlet home beside the barn; must read at 128 px. No rig, no clips.
- * Size: 2.0 m wide (X), 1.8 m deep (Z); the ridge runs along Z, and the gable, round window, and
- *   arched door face +Z.
- * One idea: a chunky red plank box under one big friendly cream roof, with a round window high in
- *   the gable and a warm wood arched door. Reads as the barn's little sibling.
- * Shape language: square/boxy mass (sturdy) with rounded bevels (friendly); one broad roof.
- * Palette (barn family): red walls #c93b27, cream roof/trim #e9dcc0, tan base #d9c7a1, deep-red
- *   recesses #5f1d12, warm wood #8a4b28, gold #d7a63a, warm stone #9a9082.
- * Materials: painted wood walls (0.85), shingle roof (0.8), cream trim (0.85), tan footing (0.9),
- *   wood door/shutters (0.8), stone chimney (0.9), worn iron straps (metal 0.7), gold ring (metal 1).
- * Detail list: (1) chunky walls + broad roof, (2) stone footing, (3) arched wood door + cream
- *   frame + iron straps, (4) round gable window + cream ring + wood shutters, (5) side stone
- *   chimney, (6) cream corner boards, (7) two bushes + tiny flowers. Focal point: door + round window.
+ * Role: cozy village backdrop building for the chibi quest line; must read at 128 px.
+ * Size: 2.0 m wide (X) x 1.6 m deep (Z), eaves at 1.8 m, ridge along Z so the gable
+ *   and door face +Z; stands on y = 0.
+ * One idea: a stout whitewashed cube under a big steep straw roof, with one warm lit
+ *   window and a smoking stone chimney telling "someone is home".
+ * Shape language: square sturdy mass (safe, cozy) with rounded bevels everywhere and a
+ *   deep triangular roof (friendly, storybook).
+ * Palette (village contract): plaster #f0e4cc -> #d8c9a8 near the ground, walnut door
+ *   #6b4226, honey-oak window frame #b5814a, thatch #caa14a -> #a07830, stone #5e5e58.
+ *   Value plan: light plaster dominant, golden roof secondary, dark door + glowing
+ *   window as focal contrast.
+ * Materials: plaster (rough 0.95), straw thatch (0.9), walnut timber (0.8), honey oak
+ *   (0.75), fieldstone (0.9), iron hardware (0.5 / 0.7), glass (0.2, faint warm emissive).
+ * Detail: stone plinth + doorstep, recessed arched plank door with iron ring, shuttered
+ *   window with muntin cross and deep sill, worley-stone chimney with cap and smoke wisp,
+ *   thatch rows + reed strokes in paint and bump.
+ * Rig/animation: none (static building).
  */
 
-const W = 2.0; // width along X
-const D = 1.8; // depth along Z
-const FOUND = 0.18; // foundation height
-const EAVE = 1.32; // top of the walls (roof springs here)
-const RIDGE = 2.12; // gable apex
-const FRONT = D / 2; // 0.9
-const PLANK = 0.16; // wall plank width
+// ---------------------------------------------------------------- palette (village contract)
+const PLASTER = rgb('#f0e4cc');
+const PLASTER_DARK = rgb('#d8c9a8');
+const PLASTER_LIGHT = rgb('#f7eeda');
+const SPLASH = rgb('#c4a880');
+const WALNUT = rgb('#6b4226');
+const WALNUT_LIGHT = rgb('#7d5030');
+const DEEP = rgb('#54331d');
+const OAK = rgb('#b5814a');
+const OAK_LIGHT = rgb('#c9a06a');
+const OAK_DEEP = rgb('#8a5a35');
+const THATCH = rgb('#caa14a');
+const THATCH_DARK = rgb('#a07830');
+const STONE = rgb('#5e5e58');
+const STONE_LIGHT = rgb('#73716a');
+const MORTAR = rgb('#4c4c46');
+const RECESS = rgb('#1a2433');
+const GLOW = rgb('#59371a');
+const IRON = rgb('#3d4047');
+const SMOKE = rgb('#d3cec4');
 
-const ROOF_HALF = W / 2 + 0.3; // roof overhang past the side walls
-const ROOF_OVER_Z = D / 2 + 0.3; // roof overhang past the gable
-const ROOF_EAVE_Y = EAVE - 0.12;
-const APEX_Y = RIDGE + 0.08; // ~2.2 m to the ridge
-const ROOF_INNER_DROP = 0.17;
+// ---------------------------------------------------------------- layout (meters)
+const W = 2.0;
+const D = 1.6;
+const PLINTH = 0.16; // stone plinth height
+const EAVE = 1.8; // wall top (roof springs just below)
+const ROOF_HALF = W / 2 + 0.28; // 1.28 — roof overhang past the side walls
+const ROOF_EAVE_Y = EAVE - 0.02;
+const APEX_Y = 3.15; // steep ~47 degree pitch
+const ROOF_DEPTH = D + 0.52;
+const FRONT = D / 2; // 0.8
 
-const DOOR_W = 0.62;
+const DOOR_X = -0.42;
+const DOOR_W = 0.56;
+const DOOR_H = 1.0;
+const DOOR_BOT = PLINTH;
+const DOOR_SPRING = DOOR_BOT + DOOR_H - DOOR_W / 2; // arch spring line
 const DOOR_R = DOOR_W / 2;
-const DOOR_BOT = FOUND;
-const DOOR_SPRING = 0.82;
-const DOOR_FRAME = 0.085;
 
-const WIN_R = 0.17; // glass radius
-const WIN_CY = 1.55; // round window centre in the gable
-const WIN_Z = FRONT + 0.03;
+const WIN_X = 0.5;
+const WIN_CY = 1.12;
+const WIN_HALF = 0.22; // 0.44 m opening
+const JAMB_W = 0.06;
 
-const C = {
-  red: rgb('#c93b27'),
-  redDark: rgb('#8e2a1b'),
-  redDeep: rgb('#5f1d12'),
-  cream: rgb('#e9dcc0'),
-  creamDark: rgb('#c9b795'),
-  tan: rgb('#d9c7a1'),
-  wood: rgb('#8a4b28'),
-  woodDark: rgb('#5f3117'),
-  gold: rgb('#d7a63a'),
-  iron: rgb('#3d4047'),
-  void: rgb('#241110'),
-  stone: rgb('#9a9082'),
-  stoneDark: rgb('#6f6759'),
-  leafDark: rgb('#2f6b3a'),
-  leafMid: rgb('#4a9a4e'),
-  leafLime: rgb('#8ede4f'),
-  bloomA: rgb('#e0533d'),
-  bloomB: rgb('#f2c14e'),
-};
+const CHIM_X = 0.42;
+const CHIM_Z = -0.25;
 
-const sstep = (e0: number, e1: number, v: number): number => {
-  const t = Math.max(0, Math.min(1, (v - e0) / (e1 - e0)));
+const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
+const smoothstep = (e0: number, e1: number, v: number): number => {
+  const t = clamp01((v - e0) / (e1 - e0));
   return t * t * (3 - 2 * t);
 };
-
-/** Smooth periodic groove weight: 1 at a plank edge, 0 at the plank centre. */
+/** Smooth groove weight: 1 at a board edge, 0 at the board centre. */
 const grooveAt = (f: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 3);
 
-/** Vertical plank color: continuous board tint plus a soft dark groove at the board edge. */
-const plankPaint =
-  (base: Rgb, dark: Rgb, deep: Rgb, strength = 0.55) =>
-  (x: number, y: number, z: number) => {
-    // Front/back faces vary with x; side faces vary with z.
-    const along = Math.abs(z) >= Math.abs(x) ? x : z;
-    const f = along / PLANK - Math.floor(along / PLANK);
-    const g = grooveAt(f);
-    const board = 0.5 + 0.5 * noise.fbm(along * 3.5, y * 1.5, 0, 2);
-    const grain = 0.5 + 0.5 * noise.fbm(along * 22, y * 6, 0, 2);
-    let c = mixRgb(base, dark, 0.1 + 0.22 * board);
-    c = mixRgb(c, dark, 0.1 * grain);
-    c = mixRgb(c, deep, strength * g);
-    return c;
-  };
-
-/** Plank grooves as a normal-map-only relief. */
-const plankBump = (x: number, y: number, z: number) => {
-  const along = Math.abs(z) >= Math.abs(x) ? x : z;
-  const f = along / PLANK - Math.floor(along / PLANK);
-  return -0.004 * grooveAt(f) + 0.0015 * noise.fbm(along * 22, y * 6, 0, 2);
+// ---------------------------------------------------------------- stone (plinth, step, chimney)
+const stonePaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+  // Laid fieldstone: worley cells stretched vertically, mortar where f2 - f1 is small.
+  // All blends are continuous so the mesh can reduce.
+  const w = noise.worley(x * 3.4, y * 5.4, z * 3.4, 4);
+  const tint = 0.5 + 0.5 * noise.fbm(x * 3.4, y * 5.4, z * 3.4, 2, 14);
+  let c = mixRgb(base, STONE_LIGHT, 0.08 + 0.22 * tint);
+  c = mixRgb(c, MORTAR, smoothstep(0.1, 0.025, w.f2 - w.f1));
+  return c;
+};
+const stoneBump = (x: number, y: number, z: number): number => {
+  const w = noise.worley(x * 3.4, y * 5.4, z * 3.4, 4);
+  return -0.004 * smoothstep(0.1, 0.025, w.f2 - w.f1) + 0.002 * noise.fbm(x * 18, y * 18, z * 18, 2, 9);
 };
 
-/** Arched outline in XY: a rectangle with a half-round top of radius `halfW`. */
-const archProfile = (halfW: number, bot: number, spring: number) => {
-  const pts: [number, number][] = [
-    [-halfW, bot],
-    [halfW, bot],
-  ];
-  const n = 14;
-  for (let i = 0; i <= n; i++) {
-    const a = (Math.PI * i) / n;
-    pts.push([halfW * Math.cos(a), spring + halfW * Math.sin(a)]);
-  }
-  return profile.polygon(pts);
+// ---------------------------------------------------------------- thatch roof helpers
+const SLOPE_RISE = APEX_Y - ROOF_EAVE_Y; // 1.37
+const SLOPE_LEN = Math.hypot(SLOPE_RISE, ROOF_HALF); // 1.873
+const SIN_SLOPE = SLOPE_RISE / SLOPE_LEN;
+const ROW = 0.115; // thatch course height down the slope
+const REED = 0.06; // reed width along the ridge
+const downSlope = (y: number) => (APEX_Y - y) / SIN_SLOPE;
+
+const thatchPaint = (x: number, y: number, z: number): Rgb => {
+  // Continuous thatch: soft grooves at each course and reed, streaky straw tint.
+  // (No per-cell jumps: discontinuous paint splits the mesh into islands and
+  // blocks triangle reduction.)
+  const ds = downSlope(y);
+  const s = ds / ROW;
+  const f = s - Math.floor(s);
+  const u = z / REED;
+  const g = u - Math.floor(u);
+  const course = grooveAt(f);
+  const reed = grooveAt(g);
+  const tint = 0.5 + 0.5 * noise.fbm(z * 2.5, ds * 1.6, 3, 2);
+  let c = mixRgb(THATCH, THATCH_DARK, 0.1 + 0.34 * tint);
+  // Long straw streaks running down the slope.
+  const streak = noise.fbm(z * 26, ds * 3.2, 5, 2);
+  c = mixRgb(c, THATCH_DARK, clamp01(-streak) * 0.3);
+  c = mixRgb(c, rgb('#e0bb60'), clamp01(streak) * 0.22);
+  c = mixRgb(c, THATCH_DARK, 0.4 * Math.max(course, reed * 0.7));
+  return c;
 };
-
-/** Warm laid-stone paint: mortar lines where the worley cells touch, a tint per cell. */
-const stonePaint =
-  (base: Rgb, dark: Rgb, mortar: Rgb) =>
-  (x: number, y: number, z: number) => {
-    const { f1, f2, id } = noise.worley(x * 9, y * 5.5, z * 9, 4);
-    const gap = sstep(0.05, 0.14, f2 - f1);
-    const tint = noise.random(id, 7);
-    let c = mixRgb(base, dark, 0.35 * tint);
-    c = mixRgb(c, mortar, 0.75 * (1 - gap));
-    return c;
-  };
-
-const stoneBump = (x: number, y: number, z: number) => {
-  const { f1, f2 } = noise.worley(x * 9, y * 5.5, z * 9, 4);
-  return -0.006 * (1 - sstep(0.05, 0.14, f2 - f1)) + 0.002 * noise.fbm(x * 20, y * 20, z * 20, 2);
-};
-
-/** A chunky lumpy bush, flat on the ground, centred on the origin, about 0.44 m wide. */
-const bushShape = (s: number, seed: number) => {
-  const lumps = [];
-  const n = 6;
-  for (let i = 0; i < n; i++) {
-    const a = (i / n) * Math.PI * 2 + noise.random(i, seed) * 0.7;
-    const r = 0.11 * s * (0.75 + 0.5 * noise.random(i, seed + 1));
-    const bx = Math.cos(a) * 0.13 * s * (0.5 + 0.7 * noise.random(i, seed + 2));
-    const bz = Math.sin(a) * 0.13 * s * (0.5 + 0.7 * noise.random(i, seed + 3));
-    const by = 0.1 * s + 0.08 * s * noise.random(i, seed + 4);
-    lumps.push(sdf.ellipsoid([r, r * 0.9, r]).at(bx, by, bz));
-  }
-  const base = sdf.smoothUnion(
-    0.06 * s,
-    sdf.ellipsoid([0.16 * s, 0.14 * s, 0.15 * s]).at(0, 0.13 * s, 0),
-    ...lumps,
-  );
-  return base.displace(0.015 * s, (x, y, z) => noise.fbm(x * 7, y * 7, z * 7, 2)).intersect(sdf.halfSpace([0, -1, 0], 0));
+const thatchBump = (x: number, y: number, z: number): number => {
+  const ds = downSlope(y);
+  const s = ds / ROW;
+  const f = s - Math.floor(s);
+  const ramp = f < 0.85 ? f / 0.85 : (1 - f) / 0.15;
+  const u = z / REED + (Math.floor(s) % 2) * 0.5;
+  const g = u - Math.floor(u);
+  const reed = g < 0.08 || g > 0.92 ? -0.004 : 0;
+  return 0.011 * ramp + reed + 0.0022 * noise.fbm(z * 30, ds * 5, 0, 2, 12);
 };
 
 export default defineAsset({
   name: 'cottage',
   description:
-    'Chibi red plank cottage with a broad cream shingle roof, round gable window with shutters, arched wood door, stone chimney, and bushes at the base.',
-  detail: 0.016,
+    'Stout whitewashed village cottage with a steep golden thatched roof, an arched walnut door, one shuttered window with a honey-oak frame, and a smoking stone chimney.',
+  detail: 0.02,
   texture: { size: 1024 },
-  reference: 'reference/barn_001.jpg',
 
   build(k) {
-    // ---------------------------------------------------------------- foundation
-    const foundation = sdf
-      .box([W + 0.12, FOUND, D + 0.12], 0.03)
-      .at(0, FOUND / 2, 0)
-      .paintFn((x, y, z, base) =>
-        mixRgb(base, C.creamDark, 0.25 * Math.max(0, noise.fbm(x * 14, y * 3, z * 14, 2))),
-      );
-    k.body('foundation', foundation, {
-      color: C.tan,
+    // ---------------------------------------------------------------- stone plinth + doorstep
+    // Single rounded boxes keep the meshes connected so they reduce cleanly.
+    const plinth = sdf.box([W + 0.12, PLINTH, D + 0.12], 0.03).at(0, PLINTH / 2, 0);
+    k.body('plinth', plinth.paintFn(stonePaint), {
+      color: STONE,
       roughness: 0.9,
-      detail: 0.022,
+      detail: 0.05,
+      maxError: 0.01,
+      maxTriangles: 700,
+      bump: stoneBump,
+    });
+    const step = sdf.box([0.62, 0.07, 0.3], 0.02).at(DOOR_X, 0.035, FRONT + 0.16);
+    k.body('doorstep', step.paintFn(stonePaint), {
+      color: STONE,
+      roughness: 0.9,
+      detail: 0.02,
       maxError: 0.006,
-      bump: (x, y, z) => 0.004 * noise.fbm(x * 14, y * 4, z * 14, 3),
+      maxTriangles: 120,
+      bump: stoneBump,
     });
 
-    // ---------------------------------------------------------------- walls and gable
+    // ---------------------------------------------------------------- stone chimney (base buried in the roof)
+    // One box; the cap slab and flue opening are paint, so the mesh stays simple.
+    const CHIM_TOP = 3.1;
+    const chimneyPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      let c = stonePaint(x, y, z, base);
+      // Cap slab: lighter band near the top.
+      c = mixRgb(c, STONE_LIGHT, smoothstep(CHIM_TOP - 0.14, CHIM_TOP - 0.06, y) * 0.45);
+      // Flue opening: dark square on the top face.
+      if (y > CHIM_TOP - 0.03 && Math.abs(x - CHIM_X) < 0.09 && Math.abs(z - CHIM_Z) < 0.09)
+        c = MORTAR;
+      return c;
+    };
+    const shaft = sdf.box([0.32, 1.0, 0.32], 0.025).at(CHIM_X, CHIM_TOP - 0.5, CHIM_Z);
+    k.body('chimney', shaft.paintFn(chimneyPaint), {
+      color: STONE,
+      roughness: 0.9,
+      detail: 0.024,
+      maxError: 0.008,
+      maxTriangles: 450,
+      bump: stoneBump,
+    });
+
+    // ---------------------------------------------------------------- walls + gable (one clean extrude)
     const wallProfile = profile.polygon([
-      [-W / 2, FOUND],
-      [W / 2, FOUND],
+      [-W / 2, 0],
+      [W / 2, 0],
       [W / 2, EAVE],
-      [0, RIDGE],
+      [0, EAVE + 0.42],
       [-W / 2, EAVE],
     ]);
-    // Gentle outward bow at mid height plus a slow hand-made wobble: rounded chunky walls.
-    const wallBulge = (x: number, y: number, z: number) => {
-      const bow = Math.sin(Math.PI * Math.max(0, Math.min(1, (y - FOUND) / (EAVE - FOUND))));
-      return Math.max(-1, Math.min(1, 0.75 * bow + 0.5 * noise.fbm(x * 3.2, y * 3.2, z * 3.2, 2)));
+    const winHole = sdf
+      .box([WIN_HALF * 2, WIN_HALF * 2, 0.5], 0.01)
+      .at(WIN_X, WIN_CY, 0);
+    const walls = sdf.extrude(wallProfile, D, 0.025).subtract(winHole);
+    const plasterPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      const patch = noise.fbm(x * 2.6, y * 2.6, z * 2.6, 3, 4);
+      let c = mixRgb(base, PLASTER_DARK, clamp01(patch) * 0.32);
+      c = mixRgb(c, PLASTER_LIGHT, clamp01(-patch) * 0.16);
+      // Shade to #d8c9a8 near the ground, with mottled splash accents.
+      const low = smoothstep(0.5, 0.06, y);
+      c = mixRgb(c, PLASTER_DARK, low * 0.55);
+      c = mixRgb(c, SPLASH, low * clamp01(0.25 + 0.55 * noise.fbm(x * 5, y * 7, z * 5, 2, 6)) * 0.7);
+      return c;
     };
-    const walls = sdf.extrude(wallProfile, D, 0.045).displace(0.013, wallBulge);
-    k.body('walls', walls.paintFn(plankPaint(C.red, C.redDark, C.redDeep)), {
-      color: C.red,
-      roughness: 0.85,
-      detail: 0.013,
-      maxError: 0.004,
-      bump: plankBump,
+    k.body('walls', walls.paintFn(plasterPaint), {
+      color: PLASTER,
+      roughness: 0.95,
+      detail: 0.02,
+      maxError: 0.01,
+      maxTriangles: 1100,
+      paintWeight: 2,
+      bump: (x, y, z) => 0.0015 * noise.fbm(x * 14, y * 14, z * 14, 3, 6),
     });
 
-    // ---------------------------------------------------------------- roof
+    // ---------------------------------------------------------------- thatched roof
     const roofProfile = profile.polygon([
       [-ROOF_HALF, ROOF_EAVE_Y],
       [0, APEX_Y],
       [ROOF_HALF, ROOF_EAVE_Y],
-      [ROOF_HALF, ROOF_EAVE_Y - ROOF_INNER_DROP],
-      [0, APEX_Y - ROOF_INNER_DROP],
-      [-ROOF_HALF, ROOF_EAVE_Y - ROOF_INNER_DROP],
+      [ROOF_HALF, ROOF_EAVE_Y - 0.3],
+      [0, APEX_Y - 0.3],
+      [-ROOF_HALF, ROOF_EAVE_Y - 0.3],
     ]);
-    const slope = Math.atan2(APEX_Y - ROOF_EAVE_Y, ROOF_HALF);
-    const ROW = 0.15;
-    const COL = 0.19;
-    const downSlope = (y: number) => (APEX_Y - y) / Math.sin(slope);
-    // Continuous shingle paint: a periodic dark line at each row/column edge plus smooth tint.
-    // Hard color jumps would split the mesh into seams that fold under reduction.
-    const line = (v: number, p: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * v), p);
-    const roof = sdf.extrude(roofProfile, ROOF_OVER_Z * 2, 0.045).paintFn((x, y, z) => {
-      const s = downSlope(y) / ROW;
-      const row = Math.floor(s);
-      const f = s - row;
-      const u = z / COL + (row % 2) * 0.5;
-      const g = u - Math.floor(u);
-      const seam = Math.max(line(f, 5), line(g, 6));
-      const tint = 0.5 + 0.5 * noise.fbm(z * 3.5, s * 3.5, 0, 2);
-      const shingle = mixRgb(mixRgb(C.cream, C.creamDark, 0.35 * tint), C.creamDark, 0.85 * seam);
-      // Plain cream rake board along the gable edges, like the barn's roof trim.
-      const edge = sstep(ROOF_OVER_Z - 0.09, ROOF_OVER_Z - 0.02, Math.abs(z));
-      return mixRgb(shingle, C.cream, edge);
+    // Thick rounded thatch: all reed detail lives in paint + bump, so the mesh stays light.
+    const roof = sdf.extrude(roofProfile, ROOF_DEPTH, 0.05);
+    k.body('roof', roof.paintFn(thatchPaint), {
+      color: THATCH,
+      roughness: 0.9,
+      detail: 0.026,
+      maxError: 0.012,
+      maxTriangles: 1100,
+      textureDensity: 2,
+      bump: thatchBump,
     });
-    const shingleBump = (x: number, y: number, z: number) => {
-      const s = downSlope(y) / ROW;
-      const f = s - Math.floor(s);
-      const ramp = f < 0.85 ? f / 0.85 : (1 - f) / 0.15;
-      const u = z / COL + (Math.floor(s) % 2) * 0.5;
-      const g = u - Math.floor(u);
-      const ridge = g < 0.09 || g > 0.91 ? -0.004 : 0;
-      return 0.012 * ramp + ridge + 0.002 * noise.noise3(x * 24, y * 24, z * 24);
+
+    // ---------------------------------------------------------------- walnut door (arched, plank) + frame ring
+    const archPts = (r: number, springY: number, botY: number): [number, number][] => {
+      const pts: [number, number][] = [
+        [-r, botY],
+        [r, botY],
+        [r, springY],
+      ];
+      for (let i = 1; i < 8; i++) {
+        const a = (Math.PI * i) / 8;
+        pts.push([r * Math.cos(a), springY + r * Math.sin(a)]);
+      }
+      pts.push([-r, springY]);
+      return pts;
     };
-    k.body('roof', roof, {
-      color: C.cream,
+    const doorShape = sdf
+      .extrude(profile.polygon(archPts(DOOR_R, DOOR_SPRING, DOOR_BOT)), 0.1, 0.012)
+      .at(DOOR_X, 0, FRONT);
+    const frameShape = sdf
+      .extrude(profile.polygon(archPts(DOOR_R + 0.06, DOOR_SPRING, DOOR_BOT - 0.02)), 0.08, 0.014)
+      .subtract(sdf.extrude(profile.polygon(archPts(DOOR_R + 0.01, DOOR_SPRING, DOOR_BOT)), 0.4))
+      .at(DOOR_X, 0, FRONT + 0.02);
+    const plankPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      const along = x - (DOOR_X - DOOR_R);
+      const f = along / 0.14 - Math.floor(along / 0.14);
+      const board = 0.5 + 0.5 * noise.fbm(x * 3.5, y * 1.5, 7, 2);
+      let c = mixRgb(base, WALNUT_LIGHT, 0.12 + 0.26 * board);
+      c = mixRgb(c, DEEP, 0.14 * Math.max(0, noise.fbm(x * 24, y * 6, 0, 2)));
+      c = mixRgb(c, DEEP, 0.6 * grooveAt(f));
+      return c;
+    };
+    k.body('door', doorShape.paintFn(plankPaint), {
+      color: WALNUT,
       roughness: 0.8,
-      detail: 0.022,
-      maxError: 0.008,
-      textureDensity: 2,
-      bump: shingleBump,
-    });
-
-    // ---------------------------------------------------------------- door
-    const doorZ = FRONT + 0.01;
-    // Dark reveal behind the leaves, so the doorway reads as an opening.
-    const opening = sdf.extrude(archProfile(DOOR_R + 0.01, DOOR_BOT, DOOR_SPRING), 0.06, 0.01);
-    k.body('door-opening', opening.at(0, 0, doorZ), {
-      color: C.void,
-      roughness: 0.9,
       detail: 0.012,
-      maxError: 0.005,
-    });
-
-    // One arched wood leaf, plank-painted.
-    const leaf = sdf
-      .extrude(archProfile(DOOR_R - 0.01, DOOR_BOT + 0.025, DOOR_SPRING), 0.1, 0.012)
-      .at(0, 0, FRONT + 0.06);
-    k.body('door', leaf.paintFn(plankPaint(C.wood, C.woodDark, C.void)), {
-      color: C.wood,
-      roughness: 0.8,
-      detail: 0.01,
-      maxError: 0.004,
-      bump: plankBump,
-    });
-
-    // Two worn iron straps across the door.
-    const straps = sdf
-      .union(
-        sdf.box([0.54, 0.05, 0.03], 0.012).at(0, 0.44, FRONT + 0.12),
-        sdf.box([0.54, 0.05, 0.03], 0.012).at(0, 0.74, FRONT + 0.12),
-      );
-    k.body('straps', straps, { color: C.iron, roughness: 0.55, metalness: 0.7, detail: 0.008 });
-
-    // Gold ring handle.
-    const ring = sdf
-      .torus(0.052, 0.015)
-      .rotateX(90)
-      .at(0.16, 0.6, FRONT + 0.13)
-      .union(sdf.ellipsoid([0.03, 0.03, 0.018]).at(0.16, 0.67, FRONT + 0.12));
-    k.body('handle', ring, { color: C.gold, roughness: 0.35, metalness: 1, detail: 0.01, maxError: 0.005 });
-
-    // ---------------------------------------------------------------- round window
-    const glass = sdf.extrude(profile.circle(WIN_R), 0.05).at(0, WIN_CY, WIN_Z);
-    k.body('window-glass', glass, {
-      color: C.void,
-      roughness: 0.2,
-      emissive: rgb('#ffbf6b'),
-      emissiveIntensity: 0.25,
-      detail: 0.014,
-    });
-
-    // ---------------------------------------------------------------- trim (cream)
-    const frameRing = sdf
-      .extrude(profile.circle(WIN_R + 0.058), 0.1, 0.02)
-      .subtract(sdf.extrude(profile.circle(WIN_R + 0.002), 0.4))
-      .at(0, WIN_CY, WIN_Z + 0.01);
-    const mullions = sdf
-      .union(
-        sdf.box([WIN_R * 2 + 0.1, 0.03, 0.05], 0.012).at(0, WIN_CY, WIN_Z + 0.04),
-        sdf.box([0.03, WIN_R * 2 + 0.1, 0.05], 0.012).at(0, WIN_CY, WIN_Z + 0.04),
-      );
-    const doorFrame = sdf
-      .extrude(archProfile(DOOR_R + DOOR_FRAME, DOOR_BOT - 0.02, DOOR_SPRING), 0.15, 0.02)
-      .subtract(sdf.extrude(archProfile(DOOR_R + 0.004, DOOR_BOT + 0.004, DOOR_SPRING), 0.5))
-      .at(0, 0, FRONT + 0.01);
-    const corner = sdf
-      .box([0.13, EAVE - FOUND + 0.02, 0.13], 0.025)
-      .at(W / 2 - 0.03, (EAVE + FOUND) / 2, D / 2 - 0.03)
-      .mirror('x', 0)
-      .mirror('z', 0);
-    const bead = sdf
-      .ellipsoid([0.05, 0.05, 0.05])
-      .at(W / 2 + 0.02, EAVE - 0.14, D / 2 + 0.02)
-      .mirror('x', 0)
-      .mirror('z', 0);
-    k.body('trim', sdf.union(frameRing, mullions, doorFrame, corner, bead), {
-      color: C.cream,
-      roughness: 0.85,
-      detail: 0.011,
-      maxError: 0.004,
-      textureDensity: 2,
-      bump: (x, y, z) => 0.002 * noise.fbm(x * 26, y * 8, z * 26, 2),
-    });
-
-    // ---------------------------------------------------------------- woodwork (shutters)
-    const shutter = sdf
-      .box([0.15, 0.34, 0.05], 0.022)
-      .at(WIN_R + 0.13, WIN_CY, WIN_Z + 0.01)
-      .mirror('x', 0)
-      .paintFn(plankPaint(C.wood, C.woodDark, C.void, 0.4));
-    k.body('shutters', shutter, {
-      color: C.wood,
-      roughness: 0.8,
-      detail: 0.009,
-      maxError: 0.004,
-      bump: plankBump,
-    });
-
-    // ---------------------------------------------------------------- chimney (stone)
-    const CH_X = 0.6;
-    const CH_Z = -0.22;
-    const CH_Y0 = 1.4;
-    const CH_Y1 = 2.28;
-    const chimney = sdf
-      .box([0.26, CH_Y1 - CH_Y0, 0.26], 0.035)
-      .at(CH_X, (CH_Y0 + CH_Y1) / 2, CH_Z)
-      .paintFn(stonePaint(C.stone, C.stoneDark, C.creamDark));
-    const cap = sdf
-      .box([0.33, 0.07, 0.33], 0.02)
-      .at(CH_X, CH_Y1 + 0.02, CH_Z)
-      .paintFn((x, y, z, base) => mixRgb(base, C.stoneDark, 0.35));
-    k.body('chimney', sdf.union(chimney, cap), {
-      color: C.stone,
-      roughness: 0.9,
-      detail: 0.018,
       maxError: 0.006,
-      bump: stoneBump,
+      maxTriangles: 380,
+      paintWeight: 2,
+      bump: (x, y, z) => {
+        const along = x - (DOOR_X - DOOR_R);
+        const f = along / 0.14 - Math.floor(along / 0.14);
+        return -0.0035 * grooveAt(f) + 0.0012 * noise.fbm(x * 24, y * 6, 0, 2, 8);
+      },
+    });
+    k.body('door-frame', frameShape, {
+      color: DEEP,
+      roughness: 0.8,
+      detail: 0.014,
+      maxError: 0.006,
+      maxTriangles: 300,
+      bump: (x, y, z) => 0.0018 * noise.fbm(x * 26, y * 8, z * 26, 2, 8),
     });
 
-    // ---------------------------------------------------------------- bushes and flowers
-    const bushes = sdf
-      .union(bushShape(1.0, 1).at(-0.6, 0, 1.02), bushShape(0.85, 2).at(0.66, 0, 0.96))
-      .paintFn((x, y, z, base) => {
-        const t = Math.max(0, Math.min(1, y / 0.3));
-        const v = 0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2);
-        const target = mixRgb(C.leafDark, C.leafMid, Math.max(0, Math.min(1, t + (v - 0.5) * 0.35)));
-        return mixRgb(base, target, 0.7);
-      });
-    k.body('bushes', bushes, { color: C.leafMid, roughness: 0.8, detail: 0.011, maxError: 0.005, paintWeight: 2 });
+    // ---------------------------------------------------------------- iron ring handle + door straps
+    const ring = sdf
+      .torus(0.045, 0.011)
+      .rotateX(90)
+      .at(DOOR_X + 0.17, DOOR_BOT + 0.52, FRONT + 0.075)
+      .union(sdf.ellipsoid([0.028, 0.028, 0.014]).at(DOOR_X + 0.17, DOOR_BOT + 0.52, FRONT + 0.055));
+    const strap = (hy: number): Sdf =>
+      sdf
+        .box([0.2, 0.034, 0.012], 0.005)
+        .at(DOOR_X - 0.17, hy, FRONT + 0.056)
+        .union(sdf.cylinder(0.014, 0.05, 0.004).rotateX(90).at(DOOR_X - 0.245, hy, FRONT + 0.056));
+    k.body('iron', ring.union(strap(DOOR_BOT + 0.24)).union(strap(DOOR_BOT + 0.78)), {
+      color: IRON,
+      roughness: 0.5,
+      metalness: 0.7,
+      detail: 0.006,
+      maxError: 0.003,
+      maxTriangles: 220,
+    });
 
-    // Bright leaf tips break the bush outline.
-    const tips = sdf.union(
-      sdf.ellipsoid([0.07, 0.06, 0.06]).at(-0.78, 0.26, 1.08),
-      sdf.ellipsoid([0.06, 0.055, 0.055]).at(-0.5, 0.3, 0.86),
-      sdf.ellipsoid([0.065, 0.055, 0.055]).at(0.82, 0.24, 0.98),
-      sdf.ellipsoid([0.055, 0.05, 0.05]).at(0.56, 0.28, 1.1),
+    // ---------------------------------------------------------------- honey-oak window frame + shutters + glass
+    const jambX = WIN_HALF + JAMB_W / 2;
+    const oakFrame = sdf.union(
+      sdf.box([JAMB_W, WIN_HALF * 2 + 0.14, 0.13], 0.012).at(WIN_X + jambX, WIN_CY, FRONT + 0.045),
+      sdf.box([JAMB_W, WIN_HALF * 2 + 0.14, 0.13], 0.012).at(WIN_X - jambX, WIN_CY, FRONT + 0.045),
+      sdf.box([WIN_HALF * 2 + 0.14, JAMB_W, 0.13], 0.012).at(WIN_X, WIN_CY + WIN_HALF + JAMB_W / 2, FRONT + 0.045),
+      // Chunky deep sill with ears.
+      sdf.box([WIN_HALF * 2 + 0.24, 0.07, 0.22], 0.015).at(WIN_X, WIN_CY - WIN_HALF - 0.045, FRONT + 0.06),
+      // Muntin cross, recessed behind the frame front.
+      sdf.box([WIN_HALF * 2, 0.042, 0.05], 0.008).at(WIN_X, WIN_CY, FRONT - 0.01),
+      sdf.box([0.042, WIN_HALF * 2, 0.05], 0.008).at(WIN_X, WIN_CY, FRONT - 0.01),
     );
-    k.body('leaf-tips', tips, { color: C.leafLime, roughness: 0.72, detail: 0.013, maxError: 0.005 });
+    const oakPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      const tint = noise.fbm(x * 2.2, y * 2.2, z * 2.2, 3, 7);
+      let c = mixRgb(base, OAK_LIGHT, clamp01(tint) * 0.25);
+      c = mixRgb(c, OAK_DEEP, clamp01(-tint) * 0.3);
+      const grain = noise.fbm(x * 3.2, y * 26, z * 26, 2, 9);
+      c = mixRgb(c, OAK_DEEP, clamp01(-grain) * 0.2);
+      return c;
+    };
+    k.body('window-frame', oakFrame.paintFn(oakPaint), {
+      color: OAK,
+      roughness: 0.75,
+      detail: 0.011,
+      maxError: 0.005,
+      maxTriangles: 400,
+      paintWeight: 2,
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 30, y * 30, z * 30, 2, 8),
+    });
 
-    // Three tiny flowers in front of the right bush.
-    const flowers: [number, number, number, Rgb][] = [
-      [0.4, 1.24, 0.17, C.bloomA],
-      [0.5, 1.18, 0.21, C.bloomB],
-      [0.33, 1.2, 0.14, C.bloomA],
-    ];
-    const stems = sdf.union(
-      ...flowers.map(([fx, fz, h]) => sdf.capsule([fx, 0.012, fz], [fx, h, fz], 0.012)),
-    );
-    k.body('stems', stems, { color: C.leafDark, roughness: 0.8, detail: 0.006 });
+    // Dark glass, recessed deep, faintly warm — someone is home.
+    const glass = sdf.box([WIN_HALF * 2, WIN_HALF * 2, 0.05], 0.008).at(WIN_X, WIN_CY, FRONT - 0.12);
+    k.body('glass', glass, {
+      color: RECESS,
+      roughness: 0.2,
+      metalness: 0.05,
+      emissive: GLOW,
+      emissiveIntensity: 0.4,
+      detail: 0.02,
+      maxError: 0.008,
+      maxTriangles: 60,
+    });
 
-    const blooms = sdf.union(
-      ...flowers.map(([fx, fz, h, col]) =>
-        sdf
-          .sphere(0.038)
-          .paint(col)
-          .at(fx, h + 0.02, fz)
-          .union(sdf.sphere(0.016).paint(C.woodDark).at(fx, h + 0.05, fz)),
-      ),
-    );
-    k.body('blooms', blooms, { color: C.bloomA, roughness: 0.6, detail: 0.009, maxError: 0.006 });
+    // Two walnut shutter leaves standing open, canted off the wall.
+    const SHUT_TILT = 14;
+    const hingeX = WIN_HALF + JAMB_W + 0.01;
+    const shutterLeaf = (side: 1 | -1): Sdf =>
+      sdf
+        .box([0.24, WIN_HALF * 2 + 0.08, 0.04], 0.012)
+        .at(side * 0.12, 0, 0)
+        .rotateY(side * -SHUT_TILT)
+        .at(WIN_X + side * hingeX, WIN_CY, FRONT + 0.05);
+    const shutterPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      const f = (Math.abs(x - WIN_X) - hingeX) / 0.12;
+      const bi = Math.floor(f) + (x < WIN_X ? 11 : 0);
+      const tint = noise.random(bi, 3, 5);
+      let c = mixRgb(base, WALNUT_LIGHT, 0.2 * tint);
+      c = mixRgb(c, DEEP, 0.18 * (1 - tint));
+      c = mixRgb(c, DEEP, 0.55 * grooveAt(f - Math.floor(f)));
+      const grain = noise.fbm(x * 30, y * 4, z * 30, 2, 8);
+      c = mixRgb(c, DEEP, clamp01(-grain) * 0.2);
+      return c;
+    };
+    k.body('shutters', sdf.union(shutterLeaf(1), shutterLeaf(-1)).paintFn(shutterPaint), {
+      color: WALNUT,
+      roughness: 0.8,
+      detail: 0.011,
+      maxError: 0.005,
+      maxTriangles: 300,
+      paintWeight: 2,
+      bump: (x, y, z) => {
+        const f = (Math.abs(x - WIN_X) - hingeX) / 0.12;
+        return -0.003 * grooveAt(f - Math.floor(f)) + 0.0012 * noise.fbm(x * 30, y * 4, z * 30, 2, 8);
+      },
+    });
+
+    // ---------------------------------------------------------------- smoke wisp above the chimney
+    const puff = (dx: number, dy: number, dz: number, s: number): Sdf =>
+      sdf.ellipsoid([0.075 * s, 0.06 * s, 0.065 * s]).at(CHIM_X + dx, dy, CHIM_Z + dz);
+    const smoke = sdf
+      .smoothUnion(0.06, puff(0.01, 3.26, 0, 0.9), puff(0.08, 3.44, 0.03, 1.1), puff(0.17, 3.64, 0.07, 1.35))
+      .paintFn((x, y, z, base) => mixRgb(base, SMOKE, smoothstep(3.25, 3.75, y) * 0.5));
+    k.body('smoke', smoke, {
+      color: SMOKE,
+      roughness: 1,
+      opacity: 0.35,
+      detail: 0.02,
+      maxError: 0.01,
+      maxTriangles: 140,
+    });
   },
 });
