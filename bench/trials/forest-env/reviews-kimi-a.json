@@ -1,0 +1,5 @@
+{
+  "ancient-oak": { "score": 8, "status": "pass", "notes": "Chunky lobed canopy and root-flared trunk read clearly as a hero oak at 128 px in all eight sprite directions. Palette matches the canopy and bark contract; the root flare is one-sided but stays within the chunky chibi style." },
+  "campfire": { "score": 7, "status": "pass", "notes": "Stone ring, charred logs, and teardrop flame read instantly as a campfire at 128 px, and the gray stones match the contract. The flame emissive runs pale peach instead of the contract #ff9a3c orange, so the map's warm focal accent is weaker than specified." },
+  "fallen-log": { "score": 8, "status": "pass", "notes": "Hollow opening, growth-ring end, moss patches, and branch stubs read as a mossy hollow log at 128 px. Browns match the wood contract and the piece matches the anchor log; the top stubs sit slightly peg-like but stay in style." }
+}

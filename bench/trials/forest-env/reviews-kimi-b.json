@@ -1,0 +1,17 @@
+{
+  "tree-stump": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Wide chunky stump with soft bevels, pale ringed cut top, and warm brown bark that matches the contract; silhouette reads instantly at 128 px. The salmon-red blob on the front is off-palette and the hollow is subtle, but neither breaks the style beside hamlet assets."
+  },
+  "fern": {
+    "score": 7,
+    "status": "pass",
+    "notes": "Arching frond cluster with rounded chunky stems and a small central base; silhouette reads as a fern at 128 px and sits fine in the sunny forest set. Greens run a touch brighter than the #2f7a3f/#4a9a4f contract and fronds read tubular rather than leafy, but the intent is clear."
+  },
+  "bramble": {
+    "score": 5,
+    "status": "fix",
+    "notes": "Style and palette are on-contract, but the asset reads as a sparse young shrub, not a thorny impassable tangle. It needs denser interwoven canes, more visible thorns, and a darker deep-green body before it can frame the map borders."
+  }
+}

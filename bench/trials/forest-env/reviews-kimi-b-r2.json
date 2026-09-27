@@ -1,0 +1,12 @@
+{
+  "ancient-oak": { "score": 9, "status": "pass", "notes": "Fix verified: massive fluted trunk ~1/3 canopy width with buttress root star on all sides (front, 3/4, side, back), broad layered canopy. Trunk reads a touch light/orange vs bark #8a5a35." },
+  "forest-ground": { "score": 7, "status": "pass", "notes": "Flat 2 m tile, shaded green with tan/brown leaf-litter scatter; reads as the forest floor. Base green is a notch brighter than contract #4a8a3f and litter is sparse." },
+  "dead-tree": { "score": 8, "status": "pass", "notes": "Gnarled bare snag with twisted taper, pale cut branch tips, mossy base patch; silhouette reads instantly at sprite size." },
+  "footpath-straight": { "score": 5, "status": "fix", "notes": "Grass shoulders still bright yellow-lawn green, clearly warmer than forest-ground's cooler shaded green; litter present but sparse. Path strip itself meets both edge midpoints." },
+  "footpath-corner": { "score": 6, "status": "fix", "notes": "Bend curve reads well and endpoints land near edge midpoints, but shoulders share the same too-bright sunny-lawn green as footpath-straight instead of forest-ground's shaded green." },
+  "tall-grass": { "score": 8, "status": "pass", "notes": "Arcing blade tuft with tan wheat-like seed heads; strong readable silhouette. Seed heads slightly chunky but acceptable." },
+  "mushroom": { "score": 9, "status": "pass", "notes": "Tan/brown cap cluster on a green mossy mound, white stems; clean, on-palette, reads at sprite size." },
+  "rock-cluster": { "score": 6, "status": "fix", "notes": "Gray stones with moss cap are on-contract, but the broad pale sandy base disc clashes with the shaded forest-floor green; reads as a beach patch." },
+  "reeds": { "score": 7, "status": "pass", "notes": "Cattail brown heads and blades read instantly; sandy mound plausible for a stream bank though it sits outside the floor palette." },
+  "campfire-out": { "score": 8, "status": "pass", "notes": "Clearly the same pit as the lit campfire: same stone ring, pale ash bed, logs collapsed and charred dark. Ash bed could be grayer/less cream." }
+}

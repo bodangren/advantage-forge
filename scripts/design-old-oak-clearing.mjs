@@ -1,0 +1,216 @@
+#!/usr/bin/env node
+// Old Oak Clearing map designer (forest sample map): derives every placement
+// from one data table so counts are exact. Prints an ASCII map and the
+// component tally, and writes scenes/old-oak-clearing.ts plus
+// docs/forest-mockups/map.md from the same data.
+//
+// Grid: 10 x 8 tiles of 2 m. col 1..10 west->east, row 1..8 north->south.
+// Cell (c,r) center: x = (c-5.5)*2, z = (r-4.5)*2. +X east, -Z north.
+// Anchor: docs/forest-mockups/forest-quest_001.jpg (v3 mockup).
+
+import { writeFileSync } from 'node:fs';
+
+const X = (c) => (c - 5.5) * 2;
+const Z = (r) => (r - 4.5) * 2;
+
+// --- tile plan -------------------------------------------------------------
+// Path S-route: south entry c7 -> west along r6 -> north on c5 -> east on r4
+// -> north on c7 to the north exit. Corner tile mouths at yaw 0 are {S,E};
+// rotation.y maps yaw 90: {S,E}->{E,N}, 180: {N,W}, 270: {W,S}.
+const PATH = new Map([
+  ['7,8', ['footpath-straight', 0]],
+  ['7,7', ['footpath-straight', 0]],
+  ['7,6', ['footpath-corner', 270]], // S+W
+  ['6,6', ['footpath-straight', 90]],
+  ['5,6', ['footpath-corner', 90]], // E+N
+  ['5,5', ['footpath-straight', 0]],
+  ['5,4', ['footpath-corner', 0]], // S+E
+  ['6,4', ['footpath-straight', 90]],
+  ['7,4', ['footpath-corner', 180]], // W+N
+  ['7,3', ['footpath-straight', 0]],
+  ['7,2', ['footpath-straight', 0]],
+  ['7,1', ['footpath-straight', 0]],
+]);
+
+const places = [];
+const put = (asset, x, z, opts = {}) => {
+  const p = { asset, at: [x, opts.y ?? 0.08, z] };
+  if (opts.yaw) p.yaw = opts.yaw;
+  if (opts.scale) p.scale = opts.scale;
+  places.push(p);
+};
+
+// Tiles: river column c1, path cells, forest-ground everywhere else.
+for (let c = 1; c <= 10; c++)
+  for (let r = 1; r <= 8; r++) {
+    if (c === 1) {
+      put('river-straight', X(c), Z(r), { yaw: 90, y: 0 }); // N-S stream along the west edge
+      continue;
+    }
+    const path = PATH.get(`${c},${r}`);
+    if (path) put(path[0], X(c), Z(r), { yaw: path[1], y: 0 });
+    else put('forest-ground', X(c), Z(r), { y: 0 });
+  }
+
+// --- landmarks (v3 mockup anchors) -----------------------------------------
+put('ancient-oak', -2.5, -3.5, { yaw: 20 }); // THE old tree, west-of-center north
+put('well', -4.8, -0.6); // stone well west of the oak
+put('campfire', -5.6, 4.4); // lit fire, SW clearing near the stream
+put('campfire-out', 6.8, -5.4, { yaw: 140 }); // burned-out hunters' fire, NE corner
+put('fallen-log', 1.2, -3.6, { yaw: 35 }); // mossy log between the path's north arms
+put('tree-stump', 4.2, 4.8, { yaw: 300 }); // stump with mushrooms, SE clearing
+put('dead-tree', 7.6, -0.8, { yaw: 250 }); // bare snag on the east treeline
+put('signpost', 4.0, 6.2, { yaw: 200 }); // by the south path entry
+
+// --- stream dressing --------------------------------------------------------
+put('reeds', -7.7, -5.6, { yaw: 15 });
+put('reeds', -7.8, -1.4, { yaw: 160 });
+put('reeds', -7.7, 2.8, { yaw: 75 });
+put('reeds', -7.8, 5.6, { yaw: 240 });
+put('stepping-stone', -9, 2.5, { y: 0.02 }); // crossing at r6
+put('stepping-stone', -9, 3.05, { y: 0.02 });
+put('stepping-stone', -9, 3.6, { y: 0.02 });
+put('rock-cluster', -7.3, -3.0, { yaw: 80 }); // north stream bank
+
+// --- floor dressing ---------------------------------------------------------
+put('mushroom', -3.6, -5.0); // at the oak's skirt
+put('mushroom', -7.4, 1.8, { yaw: 120 }); // stream bank
+put('mushroom', 5.6, -5.8, { yaw: 70 }); // NE camp
+put('rock-cluster', 1.8, 6.0, { yaw: 190 }); // south clearing
+put('tall-grass', -3.2, 1.8);
+put('tall-grass', -1.4, -5.4, { yaw: 90 });
+put('tall-grass', 2.4, 2.2, { yaw: 45 });
+put('tall-grass', 4.8, 0.6, { yaw: 210 });
+put('tall-grass', -6.2, -4.2, { yaw: 130 });
+put('tall-grass', 6.6, 3.4, { yaw: 300 });
+put('tall-grass', 0.6, 5.4, { yaw: 20 });
+put('tall-grass', -4.4, 6.2, { yaw: 250 });
+put('fern', -4.6, -5.4, { yaw: 30 });
+put('fern', -0.8, -2.2, { yaw: 170 });
+put('fern', 3.6, -2.4, { yaw: 290 });
+put('fern', 6.0, 5.2, { yaw: 110 });
+put('fern', -6.2, 5.6, { yaw: 200 });
+put('fern', 1.4, 6.6, { yaw: 340 });
+put('bramble', -7.6, -6.6, { yaw: 10 }); // treeline thickets
+put('bramble', 8.0, 6.4, { yaw: 190 });
+put('bramble', 8.2, -4.2, { yaw: 100 });
+put('bush', -6.0, -6.8, { yaw: 60 });
+put('bush', 6.4, -6.6, { yaw: 150 });
+put('bush', -6.6, 6.8, { yaw: 320 });
+put('bush', 8.2, 1.8, { yaw: 230 });
+put('bush', -2.8, 6.8, { yaw: 25 });
+put('bush', 0.8, -6.8, { yaw: 275 });
+put('wildflowers', -2.2, 3.4);
+put('wildflowers', 4.4, 5.4, { yaw: 140 });
+put('wildflowers', -5.6, 0.4, { yaw: 220 });
+
+// --- treeline (clearing boundary on the outer ring + far bank) --------------
+// [x, z, asset, yaw, scale]
+const TREES = [
+  // north row (gap at the path exit x=3)
+  [-7, -7, 'pine-tree', 10, 0.9], [-5, -7, 'oak-tree', 80, 1.05], [-3, -7, 'pine-tree', 190, 0.8],
+  [1, -7, 'oak-tree', 260, 0.95], [5, -7, 'pine-tree', 330, 1.1], [7, -7, 'oak-tree', 45, 0.85],
+  [9, -7, 'pine-tree', 135, 1.0],
+  // south row (gap at the path entry x=3)
+  [-7, 7, 'oak-tree', 20, 0.95], [-5, 7, 'pine-tree', 110, 0.8], [-3, 7, 'oak-tree', 200, 1.1],
+  [-1, 7, 'pine-tree', 285, 0.9], [1, 7, 'oak-tree', 350, 0.85], [5, 7, 'oak-tree', 70, 1.0],
+  [7, 7, 'pine-tree', 160, 0.9], [9, 7, 'oak-tree', 240, 1.05],
+  // west bank (east of the stream, between the reeds)
+  [-7, -5, 'oak-tree', 55, 0.9], [-7, 3, 'pine-tree', 305, 0.85],
+  // east band (gap at the dead-tree accent z=-1)
+  [9, -5, 'pine-tree', 95, 1.0], [9, -3, 'oak-tree', 175, 0.9], [9, 1, 'pine-tree', 265, 0.85],
+  [9, 3, 'oak-tree', 355, 1.0], [9, 5, 'pine-tree', 125, 0.95],
+  // far bank west of the stream, for depth
+  [-11, -4, 'oak-tree', 15, 1.1], [-11, 2, 'pine-tree', 215, 1.0], [-11, 6, 'oak-tree', 145, 0.9],
+];
+for (const [x, z, asset, yaw, scale] of TREES) put(asset, x, z, { yaw, scale, y: x < -10 ? 0 : 0.08 });
+
+// --- figures (scale) ---------------------------------------------------------
+put('adventurer', 2.8, 6.4, { yaw: 180 }); // walking in from the south entry
+put('druid', -5.0, 4.0, { yaw: 230 }); // tending the campfire
+
+// --- ASCII map ---------------------------------------------------------------
+const glyph = Array.from({ length: 8 }, () => Array(10).fill('.'));
+for (let r = 1; r <= 8; r++) glyph[r - 1][0] = '~';
+for (const [k, [asset]] of PATH) {
+  const [c, r] = k.split(',').map(Number);
+  glyph[r - 1][c - 1] = asset === 'footpath-corner' ? '+' : '=';
+}
+const mark = (x, z, g) => {
+  const c = Math.round(x / 2 + 5.5), r = Math.round(z / 2 + 4.5);
+  if (c >= 1 && c <= 10 && r >= 1 && r <= 8) glyph[r - 1][c - 1] = g;
+};
+mark(-2.5, -3.5, 'O'); // ancient oak
+mark(-4.8, -0.6, 'W'); // well
+mark(-5.6, 4.4, 'C'); // campfire
+mark(6.8, -5.4, 'c'); // campfire-out
+mark(1.2, -3.6, 'L'); // fallen log
+mark(4.2, 4.8, 'T'); // stump
+mark(7.6, -0.8, 'D'); // dead tree
+
+console.log('=== Old Oak Clearing (10x8 tiles of 2 m) ===');
+console.log(glyph.map((row) => '  ' + row.join(' ')).join('\n'));
+console.log('\n~ stream  = path  + bend  . forest floor  O ancient oak  W well  C/c campfire lit/out');
+console.log('L fallen log  T stump  D dead tree. Treeline (oaks/pines) rings the clearing.');
+
+// --- emission ----------------------------------------------------------------
+const num = (v) => (Number.isInteger(v) ? String(v) : v.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
+const fmt = (p) => {
+  const [x, y, z] = p.at;
+  return `  { asset: '${p.asset}', at: [${num(x)}, ${num(y)}, ${num(z)}]${p.yaw ? `, yaw: ${p.yaw}` : ''}${p.scale ? `, scale: ${p.scale}` : ''} },`;
+};
+const sceneSrc = `// GENERATED by scripts/design-old-oak-clearing.mjs — edit the generator, not this file.
+// The Old Oak Clearing: 10x8 tiles of 2 m, the whole forest kit placed.
+import type { Place } from './chibi-quest.js';
+
+export function oldOakClearingPlaces(): Place[] {
+  return [
+${places.map(fmt).join('\n')}
+  ];
+}
+`;
+writeFileSync('scenes/old-oak-clearing.ts', sceneSrc);
+
+const tally = {};
+for (const p of places) if (!['adventurer', 'druid'].includes(p.asset)) tally[p.asset] = (tally[p.asset] ?? 0) + 1;
+
+const doc = `# Old Oak Clearing — map plan (generated)
+
+GENERATED by \`scripts/design-old-oak-clearing.mjs\` — edit the generator, not this file.
+
+Forest sample map for the chibi set, realizing the v3 mockup
+(\`forest-quest_001.jpg\`). 10 × 8 tiles of 2 m (20 m × 16 m). Cell (c,r)
+center: x = (c-5.5)·2, z = (r-4.5)·2; +X east, -Z north.
+
+\`\`\`
+${glyph.map((row) => '  ' + row.join(' ')).join('\n')}
+\`\`\`
+
+~ stream · = path · + bend · . forest floor · O ancient oak · W well ·
+C campfire (lit) · c campfire (burned out) · L fallen log · T stump · D dead tree.
+
+## Layout
+
+A stream runs north-south along the west edge (reeds and stepping-stones on
+it). The footpath enters at the south (c7), bends west along r6, north on c5,
+east on r4, and exits north on c7 — an S-route that tours the clearing. The
+ancient oak anchors the north-west of the path's north arm; the well, the lit
+campfire, and the stream form the west side; a burned-out hunters' fire shows
+the campfire's second state in the NE corner. Oaks and pines ring the
+clearing; the dead tree stands out on the east treeline.
+
+## Piece allocation (exact, from the data tables)
+
+| component | count | where |
+|-----------|-------|-------|
+${Object.entries(tally)
+  .sort((a, b) => b[1] - a[1])
+  .map(([k, v]) => `| ${k} | ${v} | |`)
+  .join('\n')}
+
+Total placed instances: ${places.length} (plus 2 figures).
+`;
+writeFileSync('docs/forest-mockups/map.md', doc);
+
+console.log('\nwrote scenes/old-oak-clearing.ts (' + places.length + ' places) and docs/forest-mockups/map.md');
+console.log('tally:', JSON.stringify(tally));

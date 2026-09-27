@@ -1,0 +1,52 @@
+{
+  "ancient-oak": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Fix verified: thick trunk ~1/3 canopy width, buttress-root star flares on all sides (front/side/back), broad layered canopy. Biggest nit: trunk reads cut-wood tan, darker bark tones would help."
+  },
+  "forest-ground": {
+    "score": 7,
+    "status": "pass",
+    "notes": "Flat 2 m tile reads fine; leaf scatter uses contract browns/tan. Biggest issue: base green sits brighter than shaded-floor #4a8a3f and has no sunny #7ec850 dapple variation."
+  },
+  "dead-tree": {
+    "score": 6,
+    "status": "fix",
+    "notes": "Gnarled silhouette and cut branch tips read, but bark is light orange-tan like cut wood, not bark #8a5a35/#5f3d22. Biggest issue: bark color too light/saturated; green moss splotch on trunk reads neon."
+  },
+  "footpath-straight": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Fix verified: grass shoulders now match forest-ground's mid shaded green with leaf-litter specks, no longer bright lawn. Sandy path matches mockup dirt. Biggest nit: shoulders a hair lighter than the ground tile."
+  },
+  "footpath-corner": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Shoulders match forest-ground styling; quarter bend meets tile edges at midpoints. Path color and scatter consistent with footpath-straight. No major issue."
+  },
+  "tall-grass": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Arcing blades with tan wheat-like seed heads; silhouette reads at sprite size. Biggest nit: blades a bit thick and uniform, could use slight color variation."
+  },
+  "mushroom": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Cap cluster in contract tans/browns on mossy mound reads clearly. Biggest nit: mound green brighter than shaded floor and stems near-white, slightly off palette."
+  },
+  "rock-cluster": {
+    "score": 6,
+    "status": "fix",
+    "notes": "Gray stones and moss caps read, but several rocks carry moss where the spec says one moss cap. Biggest issue: wide sandy pancake base plate looks like a dinner plate, not forest floor."
+  },
+  "reeds": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Cattail heads and green stalks read instantly at sprite size; colors in contract browns/greens. Biggest nit: cattail heads slightly oversized and smooth."
+  },
+  "campfire-out": {
+    "score": 8,
+    "status": "pass",
+    "notes": "Reads as the lit campfire's pit in a second state: same gray stone ring and log layout, logs charred dark, ash bed present. Biggest nit: ash bed reads near-white rather than gray ash."
+  }
+}

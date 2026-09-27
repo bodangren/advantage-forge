@@ -1,0 +1,223 @@
+{
+  "_readme": "Dual review record for the forest-env kit. score/status = primary verdict; kimi = independent kimi-k2.8 dual review (A: structure, B: dressing). agreement: confirm = same status, drift1 = score delta 1, flag-resolved = delta >= 2 fixed and verified. r2 edits this session: bramble density, tree-stump mushroom recolor, campfire flame saturation.",
+  "ancient-oak": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Hero clumped canopy and root-flared trunk read as THE old tree at 128 px; palette on contract. Nit: one-sided buttress flare vs the 4-6 roots specced. USER FLAG FIX r2: rotateY units bug had stacked all 6 buttress fins on one azimuth - fixed; trunk widened to 1.55 m at base, crown to 11 clumps over 5 m. Now dwarfs the common oak. FIXED post-review nit (both kimis): warm flare halved, trunk reads bark-brown not cut-wood. Verified in render.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 9,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass",
+    "flagged": "flag-resolved"
+  },
+  "campfire": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Stone ring, charred log tips, teardrop flame all read; on contract. Flame washed pale in fast preview (vertex-color interpolation); r2 raised emissive to 3 and cut the hot-core mix to 0.45. Verify in the textured scene render.",
+    "kimi": {
+      "score": 7,
+      "status": "pass",
+      "notes": "Flame emissive renders pale peach instead of #ff9a3c; warm focal accent weaker than specified."
+    },
+    "agreement": "drift1"
+  },
+  "fallen-log": {
+    "status": "pass",
+    "score": 9,
+    "notes": "Exact spec: hollow end with pale cut ring, growth rings on the back face, bark grooves, shelf mushrooms, moss patches. Best of the batch.",
+    "kimi": {
+      "score": 8,
+      "status": "pass",
+      "notes": "Reads as a mossy hollow log at 128 px; top stubs slightly peg-like."
+    },
+    "agreement": "drift1"
+  },
+  "tree-stump": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 FIXED: trial build had salmon-red mushroom caps (#d9483b) off-palette; recolored to pale #c9a06a. Growth rings and root flares read well.",
+    "kimi": {
+      "score": 8,
+      "status": "pass",
+      "notes": "Salmon-red blob off-palette but does not break the style."
+    },
+    "agreement": "drift1"
+  },
+  "fern": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Arching fiddlehead fronds with striped leaflets read as fern at 128 px. Nits: fronds tubular rather than leafy, greens a touch bright.",
+    "kimi": {
+      "score": 7,
+      "status": "pass",
+      "notes": "Greens brighter than the #2f7a3f/#4a9a4f contract; intent clear."
+    },
+    "agreement": "drift1"
+  },
+  "bramble": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 FIXED after the batch's only FLAG (delta 3): kimi-B was right that r1 read as a sparse young shrub. r2 weaves 16 canes (8 spray + 6 crossing + 2 heart), 6 thorns per cane, denser mid-cane leaves, fuller mound. Verified: reads as an impassable thicket from all four views.",
+    "kimi": {
+      "score": 5,
+      "status": "fix",
+      "notes": "(r1) Sparse young shrub, not a thorny tangle; needs denser interwoven canes, more thorns, darker body."
+    },
+    "agreement": "flag-resolved"
+  },
+  "forest-ground": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 deepseek: even leaf scatter with twigs, no edge clustering. Nit: base green runs sunny rather than the shaded #4a8a3f spec; verify it differentiates from grass-ground in the map.",
+    "kimi": {
+      "a": {
+        "score": 7,
+        "status": "pass"
+      },
+      "b": {
+        "score": 7,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass"
+  },
+  "dead-tree": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 deepseek: gnarled bare snag, 4-5 forks with pale cut tips, root flare, moss patch on the shaded side. Reads instantly as the mood accent. FIXED post-review: bark damped into #8a5a35/#5f3d22, sky-bleach and ridge light reduced, neon moss muted to #57a05b. Verified in render.",
+    "kimi": {
+      "a": {
+        "score": 6,
+        "status": "fix"
+      },
+      "b": {
+        "score": 8,
+        "status": "pass"
+      }
+    },
+    "agreement": "split (resolved)",
+    "flagged": "flag-resolved"
+  },
+  "footpath-corner": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 glm: clean 90-degree bend, path meets the tile edges at midpoints, pebble specks. Tiles with the straight pending its re-run. USER FLAG FIX: shoulders re-styled to forest-ground (shaded #4a8a3f, litter specks, 7 leaf blobs); fix verified in main-repo render. FIXED post-review: same shoulder tuning as the straight. Verified in render.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 6,
+        "status": "fix"
+      }
+    },
+    "agreement": "split (resolved)",
+    "flagged": "flag-resolved"
+  },
+  "tall-grass": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 mimo: arching blades with 4 wheat seed heads, matches the mockup tufts. Softer than bramble, wilder than lawn - right slot.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 8,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass"
+  },
+  "rock-cluster": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 muse: 5-6 varied gray stones, one moss cap, dirt mound. Nit: stones very smooth (soapy); reads fine at map scale. FIXED post-review: sandy disc recolored to shaded floor #4a8a3f family with leaf flecks, disc shrunk, moss reduced to the single spec cap. Verified in render.",
+    "kimi": {
+      "a": {
+        "score": 6,
+        "status": "fix"
+      },
+      "b": {
+        "score": 6,
+        "status": "fix"
+      }
+    },
+    "agreement": "both-fix (resolved)",
+    "flagged": "flag-resolved"
+  },
+  "reeds": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 muse: 3 cattail heads on stalks plus upright blades from a mud mound. Reads as stream-bank reeds instantly.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 7,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass"
+  },
+  "footpath-straight": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 glm: clean straight trail, meets both edges at midpoints, pebbles. User flag: shoulders were sunny lawn - harmonized to forest-ground styling (shaded #4a8a3f base, litter specks, 6 leaf blobs). Fix verified in main-repo render. FIXED post-review: moss-pocket term added, sun dapples 0.55->0.40, litter 0.30->0.35 - now forest-ground average. Verified in render.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 5,
+        "status": "fix"
+      }
+    },
+    "agreement": "split (resolved)",
+    "flagged": "flag-resolved"
+  },
+  "mushroom": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 mimo: 5-6 tan and brown caps with pale stems on a mossy deep-green mound (#2c6f38 family - already shaded, no ground-color issue). Matches the mockup clusters.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 9,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass"
+  },
+  "campfire-out": {
+    "status": "pass",
+    "score": 8,
+    "notes": "r2 glm: stone ring, white-gray ash bed, charred black-brown logs. Reads instantly as the lit campfire burned out - the requested two-state pair works.",
+    "kimi": {
+      "a": {
+        "score": 8,
+        "status": "pass"
+      },
+      "b": {
+        "score": 8,
+        "status": "pass"
+      }
+    },
+    "agreement": "both-pass"
+  }
+}

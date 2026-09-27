@@ -1,5 +1,34 @@
+import { existsSync, readFileSync, statSync } from 'node:fs';
+import { extname, join, normalize, sep } from 'node:path';
 import { defineConfig, type Plugin, type ViteDevServer } from 'vite';
-import { ASSET_DIR, assetPath, buildToGlb, checkDefinition, listAssets } from './src/pipeline.js';
+import { ASSET_DIR, OUT_DIR, assetPath, buildToGlb, checkDefinition, listAssets } from './src/pipeline.js';
+
+const OUT_TYPES: Record<string, string> = {
+  '.glb': 'model/gltf-binary',
+  '.png': 'image/png',
+  '.json': 'application/json',
+  '.gif': 'image/gif',
+};
+
+/** Serve baked files from out/ so the hamlet page can instance them. */
+function serveOut(url: URL, res: import('node:http').ServerResponse): boolean {
+  if (!url.pathname.startsWith('/out/')) return false;
+  const rel = decodeURIComponent(url.pathname.slice('/out/'.length));
+  const file = normalize(join(OUT_DIR, rel));
+  if (file !== OUT_DIR && !file.startsWith(OUT_DIR + sep)) {
+    res.statusCode = 403;
+    res.end('forbidden');
+    return true;
+  }
+  if (!existsSync(file) || !statSync(file).isFile()) {
+    res.statusCode = 404;
+    res.end('missing');
+    return true;
+  }
+  res.setHeader('content-type', OUT_TYPES[extname(file)] ?? 'application/octet-stream');
+  res.end(readFileSync(file));
+  return true;
+}
 
 /** Dev-server API: list assets and build one to GLB in Node, fresh on every file change. */
 function forgeApi(): Plugin {
@@ -14,6 +43,7 @@ function forgeApi(): Plugin {
       });
       s.middlewares.use(async (req, res, next) => {
         const url = new URL(req.url ?? '/', 'http://x');
+        if (serveOut(url, res)) return;
         if (url.pathname === '/api/assets') {
           res.setHeader('content-type', 'application/json');
           res.end(JSON.stringify(listAssets()));
@@ -49,6 +79,12 @@ export default defineConfig({
   plugins: [forgeApi()],
   // Read-only node_modules (benchmark containers) need the dependency cache elsewhere.
   ...(process.env.FORGE_VITE_CACHE ? { cacheDir: process.env.FORGE_VITE_CACHE } : {}),
-  server: { host: '127.0.0.1' },
-  build: { rollupOptions: { input: ['index.html', 'render.html'] } },
+  server: {
+    host: '127.0.0.1',
+    watch: {
+      // Trial workspaces under bench/ rebuild constantly; never reload for them.
+      ignored: ['**/bench/**', '**/out/**'],
+    },
+  },
+  build: { rollupOptions: { input: ['index.html', 'render.html', 'hamlet.html'] } },
 });
