@@ -17,19 +17,27 @@ import type { Rgb } from '../src/index.js';
  * Value plan: the white eyes, the dark pupils, and the dark frown on the mid-green face are the
  *   strongest contrast; the lighter top and the darker puddle give the jelly its volume.
  * Bodies: jelly (glossy, a faint glow, with bubbles painted under its skin), eyes, bubbles (three
- *   floating, a little see-through).
+ *   floating, a little see-through), acid-glob (the spit shot; hidden outside the spit).
  * Rig: `core` (root, on the ground: squash and stretch), `top` (the dome's jiggle and the face),
  *   `bubble1` to `bubble3` (the floating bubbles; their poses cancel the core's squash and travel,
- *   so they float on their own), `eye.L` and `eye.R` (children of `top`, so the eyes can close).
+ *   so they float on their own), `eye.L` and `eye.R` (children of `top`, so the eyes can close),
+ *   `glob` (under `core`; the acid glob, hidden at scale 0.001 inside the body outside the spit).
  *   Clips: idle (wobble, bubbles drift), walk (hops), attack (a leaping body slam and a hop back),
  *   hit (a squashed recoil and jiggle), death (a wobble, then it melts into a puddle, the eyes
- *   sink, and the bubbles pop).
+ *   sink, and the bubbles pop), spit (it squashes and swells its cheeks, stretches up and forward,
+ *   and spits an acid glob about 1 m forward in an arc, then jiggles back to rest).
  */
 
 /** The one slime color. Change it for the color variants; everything else follows. */
 const SLIME = '#52c832';
 
 const base = rgb(SLIME);
+/** A color pushed away from its own gray: the acid glob is a little more saturated than the body. */
+const saturate = (c: Rgb, t: number): Rgb => {
+  const g = (c[0] + c[1] + c[2]) / 3;
+  const f = (v: number) => Math.min(1, Math.max(0, g + (v - g) * (1 + t)));
+  return [f(c[0]), f(c[1]), f(c[2])];
+};
 const white = rgb('#f4faf0');
 const black = rgb('#0c140a');
 const lime = rgb('#e8ff6a');
@@ -49,6 +57,8 @@ const C = {
   brow: tone(black, 0.2),
   crease: tone(black, 0.55),
   mouth: tone(black, 0.75),
+  acid: saturate(base, 0.35),
+  acidTop: saturate(tone(white, 0.3), 0.35),
 };
 
 type V3 = readonly [number, number, number];
@@ -61,6 +71,10 @@ const BUBBLES: { at: V3; r: number }[] = [
   { at: [-0.35, 0.24, -0.08], r: 0.032 },
   { at: [0.12, 0.6, -0.17], r: 0.024 },
 ];
+
+// The acid glob's bone: deep inside the belly, where it hides at scale 0.001 outside the spit.
+const GLOB_AT: V3 = [0, 0.17, 0.08];
+const GLOB_R = 0.037;
 
 export default defineAsset({
   name: 'slime',
@@ -77,6 +91,7 @@ export default defineAsset({
     // Each eye on its own bone at its center, so the death clip can close and sink the eyes.
     bones['eye.L'] = { parent: 'top', at: [0.105, 0.25, 0.196] };
     bones['eye.R'] = { parent: 'top', at: [-0.105, 0.25, 0.196] };
+    bones.glob = { parent: 'core', at: GLOB_AT };
     k.skeleton(bones);
 
     // ------------------------------------------------------------------ the jelly
@@ -210,11 +225,23 @@ export default defineAsset({
     );
     k.body('bubbles', bubbles, { color: C.bubble, roughness: 0.05, emissive: C.jelly, emissiveIntensity: 0.3, opacity: 0.75, detail: 0.004 });
 
+    // ------------------------------------------------------------------ acid glob: the spit shot
+    // A blob of the slime's own jelly, 7.4 cm across, with a short tail that trails behind it in
+    // flight (-Z), a lighter top, and a white glint. It rides `glob` and hides outside the spit.
+    const glob = sdf
+      .smoothUnion(0.018, sdf.sphere(GLOB_R), sdf.sphere(GLOB_R * 0.55).at(0, 0.004, -GLOB_R * 0.95))
+      .displace(0.002, (x, y, z) => noise.noise3(x * 60, y * 60, z * 60))
+      .paintFn((_x, y, _z, c) => mix3(c, C.acidTop, (y / GLOB_R) * 0.7))
+      .paintWhere(sdf.sphere(GLOB_R * 0.28).at(GLOB_R * 0.3, GLOB_R * 0.55, GLOB_R * 0.75), C.white, 0.002)
+      .at(...GLOB_AT);
+    k.body('acid-glob', glob, { bone: 'glob', color: C.acid, roughness: 0.08, emissive: C.acid, emissiveIntensity: 0.3, opacity: 0.85, detail: 0.003 });
+
     // ------------------------------------------------------------------ animation
     const { wave, bump, keys } = motion;
     const TAU = Math.PI * 2;
     type P = Record<string, { rotate?: V3; move?: V3; scale?: V3 }>;
     type Core = { move?: V3; scale?: V3 };
+    const HIDE = { scale: [0.001, 0.001, 0.001] as V3 }; // the acid glob, outside the spit
     /**
      * The bubbles drift on their own: slow bobs and small circles, each out of step, plus `lag`
      * (world meters). They hang on `core`, so their poses cancel the core's move and scale.
@@ -247,6 +274,7 @@ export default defineAsset({
         return {
           core,
           top: { rotate: [3 * wave(p, 1, 0.2), 0, 4 * wave(p, 1, 0.1)] },
+          glob: HIDE,
           ...drift(p, 1, 0.025, core),
         } as P;
       },
@@ -266,6 +294,7 @@ export default defineAsset({
         return {
           core,
           top: { rotate: [-8 * Math.cos(TAU * p), 0, 3 * wave(p, 1, 0.3)] },
+          glob: HIDE,
           ...drift(p, 1, 0.015, core, [0, lagUp * 0.8, 0]),
         } as P;
       },
@@ -314,6 +343,7 @@ export default defineAsset({
         return {
           core,
           top: { rotate: [lean, 0, 3 * wave(p, 3, 0.1) * bump(p)] },
+          glob: HIDE,
           ...drift(p, 1, 0.012, core, lag),
         } as P;
       },
@@ -330,6 +360,7 @@ export default defineAsset({
         return {
           core,
           top: { rotate: [-16 * h + 30 * j, 0, 6 * j] },
+          glob: HIDE,
           ...drift(p, 1, 0.02, core, [0, 0.02 * h, -0.05 * h]),
         } as P;
       },
@@ -359,7 +390,84 @@ export default defineAsset({
           top: { rotate: [6 * melt, 0, 10 * shake], scale: [1 + 0.04 * melt, 1, 1 + 0.04 * melt] },
           'eye.L': eye,
           'eye.R': eye,
+          glob: HIDE,
           ...drift(p, 1, 0.012, core, [0, 0, 0], grow),
+        } as P;
+      },
+    });
+
+    // Spit (1.1 s): a ranged acid spit. Anticipation: it squashes down and swells its cheeks (the
+    // body widens, the top leans back), and the eyes squint. The spit: a fast stretch up and
+    // forward, and an acid glob shoots from the frown about 1 m forward and a little up, then falls
+    // in an arc (0.3 s), wobbling, and is gone. Recovery: a jiggle back to rest. The core never
+    // moves, so the slime does not slide.
+    const RELEASE = 0.4;
+    const FLIGHT = 0.3 / 1.1;
+    const MOUTH: V3 = [0, 0.16, 0.285];
+    const TOP_AT: V3 = [0, 0.2, 0];
+    const spitBody = (p: number) => {
+      const cheek = keys(p, [[0, 0], [0.26, 1], [0.35, 1.05], [0.39, 0], [1, 0]] as const);
+      const reach = keys(p, [[0, 0], [0.34, 0], [0.4, 1], [0.46, 0.85], [0.55, 0], [1, 0]] as const);
+      const sy = keys(p, [
+        [0, 1], [0.26, 0.82], [0.35, 0.79], // squash, held
+        [0.4, 1.24], [0.46, 1.18], // the stretch at the spit
+        [0.53, 0.86], [0.61, 1.09], [0.7, 0.95], [0.8, 1.03], [0.9, 0.99], [1, 1], // jiggle
+      ] as const);
+      const lean = keys(p, [[0, 0], [0.26, -13], [0.35, -15], [0.4, 10], [0.46, 12], [0.54, -7], [0.63, 5], [0.73, -2.5], [0.85, 1], [1, 0]] as const);
+      const v = 1 / Math.sqrt(sy); // keep the volume
+      const core: V3 = [v * (1 + 0.1 * cheek), sy, v * (1 + 0.05 * cheek) + 0.08 * reach];
+      // The dome swells wide in the anticipation and stretches forward at the spit.
+      const top: V3 = [1 + 0.08 * cheek - 0.04 * reach, 1 - 0.03 * cheek + 0.03 * reach, 1 + 0.06 * cheek + 0.1 * reach];
+      return { core, top, lean, reach };
+    };
+    // Where the frown is in the world (the top turns about its joint), so the glob leaves from it.
+    const mouthAt = (p: number): V3 => {
+      const b = spitBody(p);
+      const a = (b.lean * Math.PI) / 180;
+      const dy = (MOUTH[1] - TOP_AT[1]) * b.top[1];
+      const dz = (MOUTH[2] - TOP_AT[2]) * b.top[2];
+      const y = TOP_AT[1] + dy * Math.cos(a) - dz * Math.sin(a);
+      const z = TOP_AT[2] + dy * Math.sin(a) + dz * Math.cos(a) + 0.02 * b.reach;
+      return [0, y * b.core[1], z * b.core[2]];
+    };
+    const LAUNCH = mouthAt(RELEASE);
+    const L0: V3 = [0, LAUNCH[1], LAUNCH[2] + 0.025];
+    const LAND_Y = 0.04;
+    const RISE = 0.64; // the arc: about 0.12 m above the mouth at its top
+    const globPath = (f: number): V3 => [0, L0[1] + (LAND_Y - L0[1]) * f + RISE * f * (1 - f), L0[2] + 1.0 * f];
+    const globPitch = (f: number) => (-Math.atan2(LAND_Y - L0[1] + RISE * (1 - 2 * f), 1.0) * 180) / Math.PI;
+    k.animation('spit', {
+      duration: 1.1,
+      loop: false,
+      pose: (_t, p) => {
+        const b = spitBody(p);
+        const core: Core = { scale: b.core };
+        // The eyes squint in the anticipation, open wide at the spit, then settle.
+        const e = keys(p, [[0, 1], [0.24, 0.5], [0.35, 0.45], [0.4, 1.12], [0.5, 1.08], [0.62, 1], [1, 1]] as const);
+        const eye = { scale: [1 + 0.06 * Math.max(0, 1 - e), e, 1] as V3 };
+        // The glob: it flies its own world path (the core's scale is cancelled), pointed along the
+        // arc, wobbling, and it shrinks away as it lands.
+        let glob: { move?: V3; rotate?: V3; scale: V3 } = HIDE;
+        const f = (p - RELEASE) / FLIGHT;
+        if (f >= 0 && f <= 1) {
+          const at = globPath(f);
+          const cs = b.core;
+          const g = keys(f, [[0, 0.45], [0.1, 1.15], [0.2, 1], [0.86, 1], [1, 0.001]] as const);
+          const w = 0.14 * Math.sin(TAU * 3.5 * f) * (1 - 0.5 * f);
+          const flat = keys(f, [[0.86, 1], [1, 0.35]] as const);
+          glob = {
+            move: [at[0] / cs[0] - GLOB_AT[0], at[1] / cs[1] - GLOB_AT[1], at[2] / cs[2] - GLOB_AT[2]],
+            rotate: [globPitch(f), 0, 0],
+            scale: [(g * (1 + w)) / cs[0], (g * (1 - w) * flat) / cs[1], (g * 1.12) / cs[2]],
+          };
+        }
+        return {
+          core,
+          top: { move: [0, 0, 0.02 * b.reach], rotate: [b.lean, 0, 2.5 * wave(p, 3, 0.1) * bump(p)], scale: b.top },
+          'eye.L': eye,
+          'eye.R': eye,
+          glob,
+          ...drift(p, 1, 0.015, core, [0, 0.03 * b.reach, 0.02 * b.reach]),
         } as P;
       },
     });
