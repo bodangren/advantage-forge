@@ -11,6 +11,8 @@ import { manifest as potionRush } from '../games/potion-rush/manifest.js';
 import potionRushStrings from '../games/potion-rush/strings.en.js';
 import { manifest as dragonFlight } from '../games/dragon-flight/manifest.js';
 import dragonFlightStrings from '../games/dragon-flight/strings.en.js';
+import { manifest as dungeonLiberator } from '../games/dungeon-liberator/manifest.js';
+import dungeonLiberatorStrings from '../games/dungeon-liberator/strings.en.js';
 
 export interface GameEntry {
   id: string;
@@ -52,12 +54,20 @@ export const GAMES: GameEntry[] = [
     manifest: dragonFlight,
     load: () => import('../games/dragon-flight/index.js').then((m) => m.cartridge),
   },
-  { id: 'dungeon-liberator', icon: '🗝️', tint: ['#60a5fa', '#1e3a8a'], titleKey: 'host.games.dungeonLiberator.title', pitchKey: 'host.games.dungeonLiberator.pitch' },
+  {
+    id: 'dungeon-liberator',
+    icon: '🗝️',
+    tint: ['#60a5fa', '#1e3a8a'],
+    titleKey: 'dungeonLiberator.title',
+    pitchKey: 'dungeonLiberator.pitch',
+    manifest: dungeonLiberator,
+    load: () => import('../games/dungeon-liberator/index.js').then((m) => m.cartridge),
+  },
   { id: 'devourer-slime', icon: '🟢', tint: ['#a3e635', '#3f6212'], titleKey: 'host.games.devourerSlime.title', pitchKey: 'host.games.devourerSlime.pitch' },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings, dragonFlightStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
