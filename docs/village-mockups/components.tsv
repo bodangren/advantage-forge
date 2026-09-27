@@ -1,0 +1,23 @@
+asset_id	instances	wave	role
+architecture/building-parts/dirt-road-straight	~12	1	2 m straight dirt road tile (catalog road family, dirt variant)
+architecture/building-parts/dirt-road-corner	~4	1	2 m dirt road corner tile
+architecture/building-parts/cottage	~3	1	small village cottage with thatched roof (catalog cottage row)
+architecture/building-parts/well	1	1	stone village well (catalog well row)
+architecture/building-parts/farm-field	~6	1	2 m tilled farm field tile (catalog farm-field row)
+architecture/building-parts/fence	~6	1	wooden fence section (catalog fence row)
+architecture/building-parts/barn	1	1	wooden barn with thatched roof (catalog barn row)
+architecture/building-parts/clothesline	1	1	clothesline between two posts (catalog clothesline row)
+architecture/building-parts/shop-stall	1	1	open market shop stall (catalog shop-stall row)
+props/plants/oak-tree	~3	1	scattered oak trees (catalog oak-tree row)
+props/plants/pine-tree	~3	1	scattered pine trees (catalog pine-tree row)
+props/plants/bush	~4	1	scattered bushes
+props/plants/wildflowers	~4	1	scattered wildflower patches
+props/plants/fallen-log	~2	1	scattered fallen logs
+props/plants/rock-cluster	~3	1	scattered rock clusters
+hero/farmer	1	reuse	patron by the field
+hero/merchant	1	reuse	patron at the stall
+npc/adventurer	1	reuse	patron on the road
+
+Notes:
+- Open map layout (like the forest): ~20×16 m, dirt road winds through, buildings scattered along it.
+- Reuses hamlet and forest kits where possible (oak-tree, pine-tree, well, bush, wildflowers, fallen-log, rock-cluster, adventurer, farmer).

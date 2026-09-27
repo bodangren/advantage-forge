@@ -44,7 +44,7 @@ else
   mkdir -p "$ws/.claude/skills"
   cp -r "$REPO/.claude/skills/forge-assets" "$ws/.claude/skills/"
   rm -f "$ws/assets/$ASSET.ts"
-  [ -n "${TRIAL_REFS:-}" ] && cp -r "$TRIAL_REFS" "$ws/reference"
+  [ -n "${TRIAL_REFS:-}" ] && { rm -rf "$ws/reference"; mkdir -p "$ws/reference"; cp -r "$TRIAL_REFS"/. "$ws/reference"/; }
   ln -s "$REPO/node_modules" "$ws/node_modules"
   (cd "$ws" && git init -q && git add -A >/dev/null 2>&1 && git -c user.email=t@t -c user.name=trial commit -qm base >/dev/null 2>&1)
 
