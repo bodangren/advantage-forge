@@ -1140,5 +1140,34 @@
     ],
     "next": "Make the eye smaller with a stronger glow (dark base, higher intensity) and lower the rest-pose arms.",
     "reviewedAt": "2026-09-27T16:59:21.208Z"
+  },
+  "kobold-warrior": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon denizen on the goblin-warrior base (knee bones, enemy clips): a rust-orange scaly kobold with a long toothy snout, yellow eyes, small ivory horns, frill ears, a cream belly, a three-bone swaying tail, a battered leather vest with straps, and a crude barbed spear with a rag. The attack is a spear thrust; the taunt thumps the spear butt. The forge check shows result ok, and the textured build has no warnings.",
+    "strengths": [
+      "The snout, horns, frill ears, vest, spear, and tail read as the mockup kobold.",
+      "Worley scales in paint and bump give a rich surface.",
+      "Scale, eye, and vest variants with three presets: swamp, deep, dune."
+    ],
+    "issues": [
+      "Heavy angry lids make the eyes small yellow dots at 128 px; the mockup eyes are big and open.",
+      "The shoulder pads are round domes; the mockup pads are flat, wide, embossed plates.",
+      "The texture bake is slow (208 s) because of the per-texel Worley scales."
+    ],
+    "next": "Open the eyes wider with bigger pupils and flatten the shoulder pads.",
+    "reviewedAt": "2026-09-27T17:31:52.515Z"
   }
 }
