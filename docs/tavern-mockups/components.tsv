@@ -2,7 +2,7 @@ asset_id	instances	wave	role
 architecture/building-parts/wood-floor	~30	1	2 m plank floor tile, warm tavern boards (catalog floor family, plank variant)
 architecture/building-parts/plaster-wall	~14	1	2 m timber-framed plaster wall, posts at both ends so corners read clean
 architecture/building-parts/plaster-wall-window	3	1	wall with a shuttered window (catalog window row covered)
-architecture/building-parts/plaster-wall-door	1	1	wall with a wood door ajar (covers wood-door P0)
+architecture/building-parts/plaster-wall-door	1	1	wall with a closed wood door (covers wood-door P0; no door animation)
 props/furniture/table	3	1	square wooden table
 props/furniture/round-table	2	1	round tavern table
 props/furniture/chair	6	1	wooden chair
