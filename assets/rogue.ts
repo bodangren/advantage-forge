@@ -60,8 +60,30 @@ export default defineAsset({
   description: 'Chibi rogue hero with a big teal hood, gold clasp, leather bracers, and twin daggers.',
   detail: 0.005,
   reference: 'docs/hero-mockups/rogue_001.jpg',
+  // Color slots for individual rogues (the first option is the default look).
+  variants: {
+    eyes: { brown: C.iris, blue: '#2f6aa8', green: '#3d7a35' },
+    hair: { brown: C.hair, black: '#231a17', auburn: '#8e3b1c' },
+    skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
+    clothing: { teal: C.hood, crimson: '#7a2a30', forest: '#3b5a2a' },
+  },
+  presets: {
+    ranger: { eyes: 'green', hair: 'auburn', skin: 'tan', clothing: 'forest' },
+    noble: { eyes: 'blue', hair: 'black', skin: 'fair', clothing: 'crimson' },
+    nomad: { eyes: 'brown', hair: 'black', skin: 'brown', clothing: 'teal' },
+  },
 
   build(k) {
+    // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
+    const T = {
+      iris: k.tint('eyes'),
+      irisLow: k.tint('eyes', 0.2),
+      hair: k.tint('hair'),
+      skin: k.tint('skin'),
+      cloth: k.tint('clothing'),
+      clothInside: k.tint('clothing', -0.75),
+      tunic: k.tint('clothing', -0.28),
+    };
     // ------------------------------------------------------------------ skeleton
     const SHOULDER = [0.13, 0.385, 0] as const;
     const ELBOW = [0.18, 0.332, 0.012] as const;
@@ -171,15 +193,15 @@ export default defineAsset({
       .paintWhere(blush, C.blush, 0.03)
       .paintWhere(eyeWhite, C.eyeWhite)
       .paintWhere(irisRim, C.irisRim)
-      .paintWhere(iris, C.iris)
-      .paintWhere(irisLow, C.irisLow, 0.012)
+      .paintWhere(iris, T.iris)
+      .paintWhere(irisLow, T.irisLow, 0.012)
       .paintWhere(pupil, C.pupil)
       .paintWhere(lid, C.lid)
       .paintWhere(lash, C.lid)
       .paintWhere(shine, '#ffffff')
-      .paintWhere(brows, C.brow)
+      .paintWhere(brows, T.hair)
       .paintWhere(smile, C.mouth);
-    k.body('skin', skin, { color: C.skin, roughness: 0.55, textureDensity: 2 });
+    k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hood
     const hoodOuter = sdf.smoothUnion(
@@ -205,8 +227,8 @@ export default defineAsset({
     const hood = sdf
       .smoothUnion(0.012, hoodOuter.subtract(cavity).smoothSubtract(0.02, opening), rim, seam)
       .intersect(sdf.halfSpace([0, -1, 0], -0.43))
-      .paintWhere(cavity.round(0.006), C.hoodInside, 0.012);
-    k.body('hood', hood, { color: C.hood, roughness: 0.85, bone: 'head' });
+      .paintWhere(cavity.round(0.006), T.clothInside, 0.012);
+    k.body('hood', hood, { color: T.cloth, roughness: 0.85, bone: 'head' });
 
     // ------------------------------------------------------------------ hair (inside the hood)
     const insideHood = cavity.round(-0.003);
@@ -248,7 +270,7 @@ export default defineAsset({
       .smoothUnion(0.02, cap, swoop, curl, tufts)
       .smoothSubtract(0.006, grooves)
       .intersect(insideHood);
-    k.body('hair', hair, { color: C.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
+    k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
     // ------------------------------------------------------------------ tunic and sleeves
     const torso = sdf
@@ -291,9 +313,9 @@ export default defineAsset({
         .at(0.058, 0.35, 0.1),
     );
     const tunic = torso
-      .paintWhere(chevron, '#22433f')
+      .paintWhere(chevron, k.tint('clothing', -0.53))
       .paintFn((x, y, z, base) => (hemStitch(x, y, z) ? stitch : base));
-    k.body('tunic', tunic.bone('spine'), { color: C.tunic, roughness: 0.8 });
+    k.body('tunic', tunic.bone('spine'), { color: T.tunic, roughness: 0.8 });
     const sleeves = pair(sdf.cone([0.11, 0.405, 0], [0.18, 0.34, 0.012], 0.047, 0.042).bone('upperarm.L'));
     k.body('sleeves', sleeves, { color: C.knit, roughness: 0.95 });
 
@@ -342,7 +364,7 @@ export default defineAsset({
       pair(mantle.intersect(bandZone).bone('upperarm.L')),
       mantle.subtract(hard(capZone)).bone('chest'),
     );
-    k.body('mantle', mantleSkin, { color: C.hood, roughness: 0.85 });
+    k.body('mantle', mantleSkin, { color: T.cloth, roughness: 0.85 });
 
     // ------------------------------------------------------------------ cape (behind, to the ankles)
     // A cone of cloth open at the top and the hem. Both walls get the same fold displacement, so
@@ -367,9 +389,9 @@ export default defineAsset({
       .intersect(sdf.halfSpace([0, 0, 1], -0.03));
     // A darker hem band with the same tan running stitch as the tunic gives the back a finish.
     const cape = capeShell
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.11), '#244d49')
+      .paintWhere(sdf.halfSpace([0, 1, 0], 0.11), k.tint('clothing', -0.38))
       .paintFn((x, y, z, base) => (Math.abs(y - 0.122) < 0.0035 && Math.sin(Math.atan2(z, x) * 70) > 0.15 ? stitch : base));
-    k.body('cape', cape.bone('cloak'), { color: C.hood, roughness: 0.85 });
+    k.body('cape', cape.bone('cloak'), { color: T.cloth, roughness: 0.85 });
 
     // ------------------------------------------------------------------ leather: belt, strap, bracers
     const beltY = 0.252;
@@ -445,7 +467,7 @@ export default defineAsset({
     );
     k.body('pants', pants, { color: C.pants, roughness: 0.85 });
     const wraps = pair(sdf.cylinder(0.058, 0.044, 0.02).at(0.095, 0.118, 0.004).bone('leg.L'));
-    k.body('wraps', wraps, { color: C.hood, roughness: 0.85 });
+    k.body('wraps', wraps, { color: T.cloth, roughness: 0.85 });
 
     // Boot built at the ankle's ground point, then turned out a little.
     const bootFoot = sdf
