@@ -760,22 +760,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The skull has two rows of separate rounded teeth (8 in each row) in a dark mouth, as in the mockup. The nose is 2 cm higher, with bone between the nose and the teeth. The bow limbs are 1.5 times thicker, and each limb is a recurve: it bends back to the string at the nock, then the tip curls forward into a hook. The grip, the nocks, and the clips did not change. The check passes (result ok, ground ok).",
+    "summary": "A new clip, taunt (1.7 s, one shot), plays when the archer first sees the player. The right hand takes an arrow from the quiver and holds it up beside the hood, out to the right. The skull tips back and bobs four times in a rattling laugh, and the shoulders shake. Then the bow comes forward and the arrow taps the upper limb once. The arrow goes back into the quiver. The model and the other clips did not change. The check passes (result ok, ground ok).",
     "strengths": [
-      "The grin reads at 128 px: light teeth on a dark mouth, with a dark line between the rows. The close views show a dark gap between each pair of teeth.",
-      "The bow reads as a recurve in the front view and in the sprites: thick dark limbs, and a hook at each tip.",
-      "The string touches the limbs only at the nocks, so the string bones and the draw in the attack clip did not change."
+      "The taunt reads in the front view: the arrow up beside the hood, the skull tipped back, then the arrow across the bow.",
+      "The arms move by targets: the arrow nock, the bow contact point, and the quiver come from the rig, so the shaft touches the front of the bow limb at the tap.",
+      "The held items stay 2.6 cm or more from the hood and the skull in the taunt, and the mantle caps follow the upper arms."
     ],
     "issues": [
-      "The bow stands upright at the side. The mockup holds the bow across the body, horizontal, at hip height.",
-      "The lower bow tip curls close to the ground beside the left boot.",
-      "Old small lines remain: the red wraps go 0.8 cm into the mantle at attack phase 0.29-0.30, the wraps and the hand go 0.4 cm into the cloak, and the arrow goes 0.3 cm into the quiver."
+      "The four laugh bobs are fast (about 9 per second), so the 12-frame strip shows only the tipped-back skull, not each bob.",
+      "The tap is small (about 5 cm of travel); at 128 px it reads more as a gesture across the bow than as a hit.",
+      "Old small lines remain: the red wraps go 0.9 cm into the mantle in the taunt and the attack, and the arrow goes 0.3 cm into the quiver when the hand takes it."
     ],
     "next": [
-      "Keep the red wraps out of the mantle hem at attack phase 0.29-0.30.",
-      "Look at the nock (attack phase 0.3) with the thicker upper limb, and keep the limb off the right cheek."
+      "Give the tap a small bow recoil at the contact so the hit reads in the sprites.",
+      "Keep the red wraps out of the mantle hem when the right arm crosses the chest."
     ],
-    "reviewedAt": "2026-09-26T21:25:15+00:00"
+    "reviewedAt": "2026-09-27T01:34:51+00:00"
   },
   "giant-rat": {
     "overall": 8,

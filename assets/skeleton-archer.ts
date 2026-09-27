@@ -22,7 +22,8 @@ import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js
  * Bodies: bone, hand-bones, cavity, eyes, pupils, hood, mantle, cloak, leather, wraps, bracer,
  *   loincloth, brass, boots, quiver, arrows, bow, bowstring.
  * Rig: the skeleton warrior's; the bow is rigid on `hand.L`, the quiver on `chest`. Clips: idle,
- *   walk, run, attack (raise the bow, draw, loose).
+ *   walk, run, attack (raise the bow, draw, loose), hit, death, taunt (a rattling laugh with an
+ *   arrow held up beside the hood, then the arrow taps the bow once).
  */
 
 const C = {
@@ -1093,6 +1094,104 @@ export default defineAsset({
           'foot.L': { rotate: [keys(p, [[0, 0], [0.38, 0], [0.54, 16], [1, 16]] as const), 0, keys(p, [[0, 0], [0.38, 0], [0.54, -40], [1, -40]] as const)] },
           'foot.R': { rotate: [keys(p, [[0, 0], [0.38, 0], [0.54, 10], [1, 10]] as const), 0, keys(p, [[0, 0], [0.38, 0], [0.54, 40], [1, 40]] as const)] },
         }, 1 - off);
+      },
+    });
+
+    // ------------------------------------------------------------------ taunt: a rattling laugh and a threat with an arrow
+    // Plays when the archer first sees the player. The string hand takes an arrow from the quiver
+    // (as in the attack) and holds it up beside the hood, out to the right. The skull tips back and
+    // rattles with a laugh (four fast bobs) and the shoulders shake with it. Then the bow comes
+    // forward, its top tilted out, and the arrow shaft taps the upper limb once, as a threat. The
+    // arrow goes back into the quiver and the arms return to rest. Targets are in the chest's rest frame.
+    const SH_QUIVER_T: V3 = [0, 0.012, -0.035]; // the string shoulder at the quiver (as in the attack)
+    const SH_SHOW: V3 = [-0.01, 0.035, 0.02]; // lifted, so the hand reaches up beside the hood
+    const SH_TAP: V3 = [0.02, 0.01, 0.05]; // forward, so the hand reaches across the chest
+    const SHL_TAP: V3 = [0, 0.01, 0.04];
+    // The bow in the tap: forward and in front of the left ribs, its top tilted out 16 degrees more.
+    const TAP_BOW = { dir: rotZv(BOW_REST.dir, -16), up: rotZv(BOW_REST.up, -16) };
+    const bowTap = bowArm([0.17, 0.3, 0.19], TAP_BOW, SHL_TAP, 1);
+    const bowTapRots: V3[] = [bowTap.arm.upper, bowTap.arm.lower, bowTap.hand];
+    // Where the shaft touches the bow: on the front of the upper limb, 10 cm above the grip.
+    const TAP_AT = add(follow([SHOULDER, ELBOW_L, WRIST_L], bowTapRots, bowPoint([-0.03, 0.1, -0.006])), SHL_TAP);
+    const HANG = norm([-0.3, -0.9, 0.2]); // the arrow hangs down the right side
+    const SHOW_DIR = norm([-0.35, 0.93, 0.12]); // held up beside the hood: the head up and out
+    const FWD_DIR = norm([-0.1, 0.3, 1]); // swung forward, past the front of the hood
+    const WIND_DIR = norm([1, 0.3, 0.3]); // the wind-up: the head of the arrow up and forward
+    const TAP_DIR = norm([1, 0.05, 0.15]); // across the body, toward the bow
+    const S_TAP = 0.24; // the shaft touches the bow this far from the nock
+    const GRAB_TAP = 0.03; // the fingers hold the arrow this far from the nock in the tap
+    const PINCH_TAP = sub(TAP_AT, scl(TAP_DIR, S_TAP - GRAB_TAP));
+    const PINCH_SHOW: V3 = [-0.316, 0.535, 0.078];
+    const QUIVER_AT: V3 = [-0.2, 0.34, -0.16];
+    const QUIVER_OUT: V3 = [-0.21, 0.35, -0.16];
+    const SIDE_AT: V3 = [-0.28, 0.35, 0.0];
+    k.animation('taunt', {
+      duration: 1.7,
+      loop: false,
+      pose: (_t, p) => {
+        // ---- the laugh: the skull tips back and bobs four times; the shoulders jump with each bob.
+        const laugh = keys(p, [[0, 0], [0.24, 0], [0.32, 1], [0.54, 1], [0.62, 0], [1, 0]] as const);
+        const q = (p - 0.3) / 0.26;
+        const ha = q > 0 && q < 1 ? Math.sin(Math.PI * 4 * q) ** 2 : 0;
+        const shake: V3 = [0, 0.007 * ha * laugh, 0];
+        const threat = keys(p, [[0, 0], [0.56, 0], [0.64, 1], [0.74, 1], [0.86, 0], [1, 0]] as const);
+        // ---- the bow arm: from rest to the tap pose and back.
+        const wB = keys(p, [[0, 0], [0.5, 0], [0.6, 1], [0.74, 1], [0.88, 0], [1, 0]] as const);
+        const bowRots = bowTapRots.map((r) => slerpRot(Z3, r, wB));
+        const shL = add(scl(SHL_TAP, wB), shake);
+        // ---- the arrow hand: the quiver, round the right side, up beside the hood, forward, the
+        // wind-up above the bow, the tap, a small rebound, round the side, the quiver, rest.
+        const shR = add(keys(p, [[0, Z3], [0.12, SH_QUIVER_T], [0.18, SH_QUIVER_T], [0.3, SH_SHOW], [0.54, SH_SHOW], [0.62, SH_TAP], [0.74, SH_TAP], [0.86, SH_QUIVER_T], [0.91, SH_QUIVER_T], [1, Z3]] as const), shake);
+        const pinchAt = keys(p, [
+          [0, PINCH],
+          [0.12, QUIVER_AT],
+          [0.17, QUIVER_OUT],
+          [0.23, SIDE_AT],
+          [0.31, PINCH_SHOW],
+          [0.54, PINCH_SHOW],
+          [0.585, [-0.2, 0.44, 0.19]],
+          [0.62, add(PINCH_TAP, [0, 0.05, 0.08])],
+          [0.655, PINCH_TAP],
+          [0.69, add(PINCH_TAP, [0, 0.02, 0.025])],
+          [0.74, add(PINCH_TAP, [0, 0.01, 0.03])],
+          [0.8, SIDE_AT],
+          [0.86, QUIVER_OUT],
+          [0.91, QUIVER_AT],
+          [1, PINCH],
+        ] as const);
+        const aDir = norm(keys(p, [
+          [0, ARROW_DIR], [0.17, ARROW_DIR], [0.23, HANG], [0.31, SHOW_DIR], [0.54, SHOW_DIR], [0.585, FWD_DIR],
+          [0.62, WIND_DIR], [0.655, TAP_DIR], [0.74, TAP_DIR], [0.8, HANG], [0.86, ARROW_DIR], [1, ARROW_DIR],
+        ] as const));
+        // The fingers slide up the shaft to show the arrow, and back to the nock for the tap.
+        const grab = keys(p, [[0, 0], [0.18, 0], [0.3, 0.12], [0.54, 0.12], [0.62, GRAB_TAP], [0.74, GRAB_TAP], [0.82, 0], [1, 0]] as const);
+        // The hand points along the arrow while it holds it up and across; at the quiver it hangs as at rest.
+        const wH = keys(p, [[0, 0], [0.18, 0], [0.27, 1], [0.76, 1], [0.85, 0], [1, 0]] as const);
+        const handUp = norm(keys(p, [[0, [0, 0, 1]], [0.54, [0, 0, 1]], [0.585, [-1, 0, 0]], [0.62, [0, 1, 0]], [0.74, [0, 1, 0]], [0.8, [0, 0, 1]], [1, [0, 0, 1]]] as const));
+        const pinchDir = norm(lerp(DIR_R, aDir, wH));
+        const wristR = sub(pinchAt, scl(pinchDir, 0.07));
+        const pole = keys(p, [[0, [-0.4, 0.1, -0.35]], [0.12, [-0.45, 0.2, -0.3]], [0.2, [-0.45, 0.2, -0.3]], [0.31, [-0.5, -0.2, -0.1]], [0.54, [-0.5, -0.2, -0.1]], [0.62, [-0.4, -0.3, 0]], [0.74, [-0.4, -0.3, 0]], [0.84, [-0.45, 0.2, -0.3]], [0.91, [-0.45, 0.2, -0.3]], [1, [-0.4, 0.1, -0.35]]] as const);
+        const armR = reach(ARM_R, sub(wristR, shR), pole);
+        const handR = slerpRot(Z3, orient([armR.upper, armR.lower], HAND_R_REST, { dir: aDir, up: handUp }), wH);
+        const pinchNow = add(follow([mx(SHOULDER), ELBOW_R, WRIST_R], [armR.upper, armR.lower, handR], PINCH), shR);
+        // ---- the arrow: out of the quiver at 0.12-0.18, in the fingers, back in the quiver at 0.85-0.91.
+        const taken = keys(p, [[0, 0], [0.12, 0], [0.18, 1], [0.85, 1], [0.91, 0], [1, 0]] as const);
+        const nockAt = lerp(ARROW_NOCK, sub(pinchNow, scl(aDir, grab)), taken);
+        const arrow = arrowPose([armR.upper, armR.lower, handR], shR, nockAt, norm(lerp(ARROW_DIR, aDir, taken)));
+        return capes({
+          spine: { rotate: [-3 * laugh + 3 * threat, 0, 0] },
+          chest: { rotate: [-2 * laugh - 2.5 * ha * laugh, 0, 0] },
+          neck: { rotate: [-3 * laugh + 2 * threat, 0, 0] },
+          // Tipped back and a little to the left (away from the arrow), then a forward lean for the threat.
+          head: { rotate: [-10 * laugh - 6 * ha * laugh + 4 * threat, 0, -5 * laugh] },
+          'upperarm.L': { move: shL, rotate: bowRots[0]! },
+          'forearm.L': { rotate: bowRots[1]! },
+          'hand.L': { rotate: bowRots[2]! },
+          'upperarm.R': { move: shR, rotate: armR.upper },
+          'forearm.R': { rotate: armR.lower },
+          'hand.R': { rotate: handR },
+          arrow,
+        });
       },
     });
   },
