@@ -140,7 +140,7 @@ export default defineAsset({
     hair: { brown: C.hair, blond: '#c4974a', black: '#231a17' },
     skin: { fair: C.skin, tan: '#d49a72', brown: '#8a5a3e' },
     // Earthy flannel dyes: no blue (it would match the denim), no yellow (the light lines clip to lime).
-    clothing: { red: C.plaid, moss: '#587038', brown: '#8a4a2a' },
+    clothing: { red: C.plaid, moss: '#4a5634', brown: '#8a4a2a' },
   },
   presets: {
     shepherd: { eyes: 'blue', hair: 'blond', skin: 'fair', clothing: 'brown' },
