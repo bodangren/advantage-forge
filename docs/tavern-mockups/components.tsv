@@ -1,0 +1,36 @@
+asset_id	instances	wave	role
+architecture/building-parts/wood-floor	~30	1	2 m plank floor tile, warm tavern boards (catalog floor family, plank variant)
+architecture/building-parts/plaster-wall	~14	1	2 m timber-framed plaster wall, posts at both ends so corners read clean
+architecture/building-parts/plaster-wall-window	3	1	wall with a shuttered window (catalog window row covered)
+architecture/building-parts/plaster-wall-door	1	1	wall with a wood door ajar (covers wood-door P0)
+props/furniture/table	3	1	square wooden table
+props/furniture/round-table	2	1	round tavern table
+props/furniture/chair	6	1	wooden chair
+props/furniture/bench	4	1	long bench
+props/furniture/stool	4	1	round stool
+props/furniture/counter	1	1	the bar counter, L of the tap wall
+props/furniture/fireplace	1	1	stone hearth with bright fire — the room's warm emissive anchor
+props/furniture/shelf	2	1	wall shelf for bottles
+props/furniture/candelabra	2	2	three-arm table candelabra, lit
+props/furniture/candle	5	2	single lit candle for tables
+props/furniture/chandelier	1	2	hanging candle ring over the hall
+props/food/mug	6	2	wooden mug on tables
+props/food/tankard	3	2	pewter tankard at the bar
+props/containers/bottle	8	2	glass bottles on shelf and counter
+props/containers/crate	3	2	wooden crate stack in the corner
+props/containers/sack	2	2	grain sacks by the bar
+props/food/bread	2	3	loaves on the feast table
+props/food/cheese	1	3	wheel with a cut wedge
+props/food/haunch	1	3	meat haunch on a platter
+props/food/plate	3	3	wooden plates
+props/food/bowl	2	3	stew bowls
+props/containers/barrel	4	reuse	hamlet barrel: behind the bar and corner stack
+props/furniture/lantern	2	reuse	hamlet lantern by the door
+hero/adventurer	1	reuse	patron at a table
+hero/rogue	1	reuse	patron at the bar
+npc/blacksmith	1	reuse	patron raising a mug
+
+Notes:
+- Interior cutaway composition (like the dungeon): two walls standing, roof off, camera looks in.
+- plaster-wall posts make corners read intentional; no separate corner piece needed.
+- The fireplace is the hero emissive; chandelier, candelabra, and candles are the warm accents.

@@ -1,0 +1,9 @@
+plaster-wall-window	volcengine-agent-plan/glm-5.3-flash	prompts/plaster-wall-window.prompt.md
+plaster-wall-door	volcengine-agent-plan/glm-5.3-flash	prompts/plaster-wall-door.prompt.md
+table	volcengine-agent-plan/glm-5.3-flash	prompts/table.prompt.md
+bench	volcengine-agent-plan/glm-5.3-flash	prompts/bench.prompt.md
+round-table	opencode-go/mimo-v2.6-flash	prompts/round-table.prompt.md
+stool	opencode-go/mimo-v2.6-flash	prompts/stool.prompt.md
+chair	opencode-go/mimo-v2.6-flash	prompts/chair.prompt.md
+counter	opencode-go/muse-spark-1.3-contributor	prompts/counter.prompt.md
+shelf	opencode-go/muse-spark-1.3-contributor	prompts/shelf.prompt.md
