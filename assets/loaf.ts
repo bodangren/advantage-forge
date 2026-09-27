@@ -1,156 +1,79 @@
-import { defineAsset, sdf, noise, rgb, mixRgb } from '../src/index.js';
+import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
-// Design note — round crusty bread loaf (props/food/loaf).
-// - Role: cozy chibi hamlet prop on a tavern table; must read at 128 px
-//   as a plump round golden loaf.
-// - Size: 0.25 m wide and 0.14 m tall, sits on y = 0, centered on Y, faces
-//   +Z. No board (a bare loaf on a tabletop).
-// - One idea: a plump round crusty loaf with three diagonal baked slash
-//   marks across the upper dome — the focal feature.
-// - Shape language: round dominant (plump squat dome).
-// - Palette: golden crust #d9a860 (60), baked slash top #a8702a (slash
-//   ridges + warm crown), warm sunlit top highlight #f0c878, dark
-//   under-crust #6b4226 (foot/shaded crevices).
-// - Materials: bread matte (roughness 0.78); no metal.
-// - Detail: dome body with paint bands + grainy bump (primary), three
-//   parallel diagonal slashes on the upper dome painted darker with a
-//   slight bump groove (secondary). Focal point: the three slash marks.
-// - Rig/animation: none (static prop).
+/**
+ * Round crusty loaf (props/food/loaf): a tabletop prop for the tavern feast, read at 128 px.
+ * Size: 0.23 m wide, 0.16 m tall, on y = 0. One idea: a high golden boule with three raised,
+ * darker baked slash ridges across the crown. Palette: crust #e0a452, light crown #f2c878,
+ * baked underside #9a5a26, slash ridges #b5582c. Material: matte bread (roughness 0.8).
+ */
 
-const CRUST = rgb('#d9a860');
-const CRUST_LIGHT = rgb('#f0c878');
-const BAKE = rgb('#b87231');
-const BAKE_DARK = rgb('#7a4a1a');
-const UNDERSIDE = rgb('#6b4226');
+const CRUST = rgb('#e0a452');
+const CROWN = rgb('#f2c878');
+const UNDER = rgb('#9a5a26');
+const RIDGE = rgb('#b5582c');
+const RIDGE_DARK = rgb('#8e3f1e');
 
-const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
-const smoothstep = (a: number, b: number, v: number) => {
-  const t = clamp01((v - a) / (b - a));
-  return t * t * (3 - 2 * t);
-};
-
-// Three slash marks laid across the upper dome. Each slash is a thin band
-// running along a 45-degree diagonal in XZ. The slash field is computed in
-// the local frame (along-bar d, perp n):
-//
-//   d = (-x + z) / sqrt(2)    n = (x + z) / sqrt(2)
-//
-// so the bar axis points from (-1, _, +1)/sqrt(2) to (+1, _, -1)/sqrt(2).
-const INV_SQRT2 = 1 / Math.SQRT2;
-const SLASH_HALF_LEN = 0.085; // half-length of each bar (along d)
-const SLASH_RADIUS = 0.017; // perpendicular radius (across the bar)
-const SLASHES: ReadonlyArray<readonly [number, number, number]> = [
-  [0, 0.1, 0.07], // front slash, well forward of the dome's equator
-  [0, 0.122, 0.0], // middle slash (highest, on the dome crown)
-  [0, 0.1, -0.07], // back slash
-];
-
-// Returns positive distance to the closest slash axis (capped by
-// SLASH_RADIUS inside the band, the actual perpendicular offset outside).
-function slashOffset(x: number, y: number, z: number) {
-  const d = (-x + z) * INV_SQRT2;
-  const n = (x + z) * INV_SQRT2;
-  let best = Infinity;
-  for (const [mx, my, mz] of SLASHES) {
-    const md = (-mx + mz) * INV_SQRT2;
-    const mn = (mx + mz) * INV_SQRT2;
-    const along = Math.abs(d - md);
-    const perp = Math.abs(n - mn);
-    const dy = y - my;
-    // Distance to the band rectangle in the local frame: along the bar to
-    // the nearest cap, then 2D perpendicular distance.
-    const alongC = Math.max(0, along - SLASH_HALF_LEN);
-    const perpC = Math.max(0, perp - SLASH_RADIUS);
-    const dyC = Math.max(0, Math.abs(dy) - SLASH_RADIUS * 0.7);
-    const dist = Math.hypot(alongC, perpC, dyC);
-    // Signed: negative when inside the capsule's bounding slab.
-    const slab = Math.max(
-      along - SLASH_HALF_LEN,
-      perp - SLASH_RADIUS,
-      Math.abs(dy) - SLASH_RADIUS * 0.7,
-    );
-    const signed = dist === 0 ? -Math.min(SLASH_RADIUS, perp, Math.abs(dy)) + 1e-9 : dist + slab * 0.0;
-    if (signed < best) best = signed;
-  }
-  return best;
-}
+const clamp = (v: number, lo = 0, hi = 1) => (v < lo ? lo : v > hi ? hi : v);
 
 export default defineAsset({
   name: 'loaf',
-  description: 'A round crusty bread loaf with three baked slash marks across the top.',
-  detail: 0.006,
+  description: 'A round golden bread loaf with three raised, darker baked slash ridges across the top.',
+  detail: 0.005,
   reference: 'docs/item-mockups/loaf-mock.jpg',
-  texture: { size: 1024 },
+  texture: { size: 512 },
 
   build(k) {
-    // ------------------------------------------------------------ loaf body
-    // Plump squat dome, flat foot where it meets the table. Mild displace
-    // for an organic, hand-shaped surface (kept small so the form stays
-    // readable).
-    const loafShape = sdf
-      .ellipsoid([0.125, 0.07, 0.125])
-      .at(0, 0.07, 0)
-      .displace(0.0028, (x, y, z) => noise.fbm(x * 16, y * 12, z * 16, 2))
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
+    // The boule: a high dome with a flat, slightly tucked base and a lumpy surface.
+    const boule = sdf
+      .smoothUnion(
+        0.05,
+        sdf.ellipsoid([0.115, 0.085, 0.11]).at(0, 0.078, 0),
+        sdf.cylinder(0.085, 0.02, 0.01).at(0, 0.01, 0),
+      )
+      .displace(0.003, (x, y, z) => noise.fbm(x * 14, y * 11, z * 14, 2))
+      .intersect(sdf.halfSpace([0, -1, 0], 0).intersect(sdf.box([0.4, 0.4, 0.4]).at(0, 0.15, 0)));
 
-    const loafPaint = (x: number, y: number, z: number) => {
-      // Light-top / dark-foot value plan, with the dome crown catching the
-      // most light.
-      const t = y / 0.14;
-      let c = mixRgb(UNDERSIDE, CRUST, smoothstep(0.06, 0.32, t));
-      c = mixRgb(c, CRUST_LIGHT, smoothstep(0.55, 1, t) * 0.55);
+    k.body(
+      'loaf',
+      boule.paintFn((x, y, z) => {
+        const t = clamp(y / 0.165);
+        let c = mixRgb(UNDER, CRUST, clamp((t - 0.05) / 0.3));
+        c = mixRgb(c, CROWN, clamp((t - 0.6) / 0.4) * 0.6);
+        const n = 0.5 + 0.5 * noise.fbm(x * 40, y * 40, z * 40, 2);
+        return mixRgb(c, UNDER, clamp((n - 0.62) * 2) * 0.35);
+      }),
+      {
+        color: '#e0a452',
+        roughness: 0.8,
+        metalness: 0,
+        textureDensity: 2,
+        paintWeight: 2,
+        bump: (x, y, z) => 0.0012 * noise.fbm(x * 45, y * 45, z * 45, 2),
+        maxTriangles: 2600,
+      },
+    );
 
-      // A subtle baked rim where the dome meets the table.
-      const rim = 1 - Math.abs(t - 0.18) / 0.18;
-      c = mixRgb(c, BAKE_DARK, clamp01(rim) * 0.22);
-
-      // Faint bake speckles on the upper dome.
-      if (t > 0.35) {
-        const n = noise.fbm(x * 90, y * 60, z * 90, 2);
-        c = mixRgb(c, BAKE, smoothstep(0.42, 0.78, n) * 0.3);
-      }
-
-      // Three baked slash marks across the upper dome. Each slash is mostly a
-      // darker baked orange band with a darker crease along its centerline.
-      const d = slashOffset(x, y, z);
-      const inside = smoothstep(SLASH_RADIUS * 1.05, SLASH_RADIUS * 0.4, d);
-      if (inside > 0) {
-        // Radial position inside the slash cross-section (0 = center, 1 = edge).
-        const radial = clamp01(d / SLASH_RADIUS);
-        const center = 1 - smoothstep(0, 0.45, radial);
-        const edge = smoothstep(0.85, 1, radial);
-        // Saturated bake band as the main slash color, with a darker
-        // crease along the very centerline for the baked-crust feel.
-        let slashC = BAKE;
-        slashC = mixRgb(slashC, BAKE_DARK, center * 0.6);
-        // Tiny blend into crust at the very edge so the slash doesn't cut
-        // off abruptly into the dome.
-        slashC = mixRgb(slashC, CRUST, edge * 0.1);
-        c = mixRgb(c, slashC, inside);
-      }
-
-      return c;
-    };
-
-    const loafBump = (x: number, y: number, z: number) => {
-      // Faint dome grain.
-      let b = 0.0014 * noise.fbm(x * 32, y * 18, z * 32, 2);
-      // Slash groove: each slash is a clear indented channel (~3 mm).
-      const d = slashOffset(x, y, z);
-      const groove = -(1 - smoothstep(SLASH_RADIUS * 0.4, SLASH_RADIUS * 1.0, d)) * 0.0032;
-      b += groove;
-      return b;
-    };
-
-    k.body('loaf', loafShape.paintFn(loafPaint), {
-      color: '#d9a860',
-      roughness: 0.78,
+    // Slash ridges: a thin shell of the loaf cut by three parallel diagonal strips on the crown.
+    const strips = sdf.union(
+      ...[-0.058, 0, 0.058].map((off, i) =>
+        sdf
+          .box([0.16 - Math.abs(off) * 0.9, 0.3, 0.026], 0.012)
+          .at(0, 0.2, off)
+          .rotateY(-32 + i * 2),
+      ),
+    );
+    const ridges = boule
+      .round(0.008)
+      .smoothIntersect(0.004, strips)
+      .smoothIntersect(0.01, sdf.box([0.4, 0.2, 0.4]).at(0, 0.19, 0))
+      .paintFn((x, y, z) => mixRgb(RIDGE_DARK, RIDGE, 0.6 + 0.4 * noise.noise3(x * 60, y * 60, z * 60)));
+    k.body('ridges', ridges, {
+      color: '#b5582c',
+      roughness: 0.6,
       metalness: 0,
-      detail: 0.005,
       textureDensity: 2,
-      paintWeight: 2,
-      bump: loafBump,
-      maxTriangles: 1900,
+      detail: 0.004,
+      maxTriangles: 1800,
     });
   },
 });
