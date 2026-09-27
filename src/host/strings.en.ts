@@ -84,7 +84,6 @@ export default {
     heroes: { knight: 'Knight', wizard: 'Wizard', cleric: 'Cleric' },
     games: {
       comingSoon: 'Coming soon',
-      devourerSlime: { title: 'Devourer Slime', pitch: 'Eat the words in order and grow.' },
     },
   },
 } as const;
