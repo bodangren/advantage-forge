@@ -12,11 +12,14 @@ function pickVoice(): SpeechSynthesisVoice | null {
 }
 
 export const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
+// Chrome fills the voice list after the page loads: pick again when it changes.
+if (canSpeak) window.speechSynthesis.addEventListener('voiceschanged', () => (voice = null));
 
 /** Speaks `text` slowly; resolves when it ends (or at once when speech is not available). */
 export function speak(text: string, rate = 0.85): Promise<void> {
   if (!canSpeak) return Promise.resolve();
-  window.speechSynthesis.cancel();
+  // Chrome on Android can drop a sentence that starts right after cancel(): cancel only when needed.
+  if (window.speechSynthesis.speaking || window.speechSynthesis.pending) window.speechSynthesis.cancel();
   return new Promise((resolve) => {
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';

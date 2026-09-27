@@ -142,9 +142,11 @@ function showTitle(): void {
   sound.music('none');
 }
 
+// Every tap and key unlocks (or resumes) the sound, before the tapped control plays its effect.
+for (const type of ['touchend', 'click', 'keydown'] as const) document.addEventListener(type, () => sound.unlock(), { capture: true, passive: true });
+
 titleEl.addEventListener('click', (e) => {
   const t = e.target as HTMLElement;
-  sound.unlock();
   const card = t.closest<HTMLElement>('[data-story]');
   if (card) {
     chosen = Number(card.dataset.story);
@@ -177,7 +179,6 @@ let quest: Quest | null = null;
 
 async function startQuest(): Promise<void> {
   if (!pack) return;
-  sound.unlock();
   inBattle = true;
   quest = createQuest(pack, { seed: randomSeed(), helper });
   (window as unknown as { __demo: unknown }).__demo = { quest, pack };

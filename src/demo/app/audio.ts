@@ -14,10 +14,16 @@ class Sound {
   private mood: 'calm' | 'battle' | 'boss' | 'none' = 'none';
   muted = false;
 
-  /** Call from a user gesture. */
+  /**
+   * Call from every user gesture (main.ts does this for each tap and key): it creates the
+   * context on the first one, and resumes it after the phone suspends it (a lock, a call).
+   */
   unlock(): void {
+    // iPhone: Web Audio obeys the ring/silent switch unless the page asks for media playback.
+    const session = (navigator as unknown as { audioSession?: { type: string } }).audioSession;
+    if (session && session.type !== 'playback') session.type = 'playback';
     if (this.ctx) {
-      void this.ctx.resume();
+      if (this.ctx.state !== 'running') void this.ctx.resume();
       return;
     }
     const Ctx = window.AudioContext ?? (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -29,6 +35,12 @@ class Sound {
     this.musicGain = this.ctx.createGain();
     this.musicGain.gain.value = 0.22;
     this.musicGain.connect(this.master);
+    // Older iPhones start the context only when a sound starts inside the gesture.
+    const silence = this.ctx.createBufferSource();
+    silence.buffer = this.ctx.createBuffer(1, 1, 22050);
+    silence.connect(this.ctx.destination);
+    silence.start(0);
+    void this.ctx.resume();
   }
 
   setMuted(m: boolean): void {
@@ -136,6 +148,8 @@ class Sound {
     const bpm = this.mood === 'boss' ? 132 : this.mood === 'battle' ? 104 : 80;
     const eighth = 60 / bpm / 2;
     // A minor: i - VI - VII - v, one bar each.
+    // After a stall (a background tab, a suspended context), start again from now, not with a burst.
+    if (this.nextNote < ctx.currentTime) this.nextNote = ctx.currentTime + 0.05;
     const chords = [
       [57, 60, 64],
       [53, 57, 60],
