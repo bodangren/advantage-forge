@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Imp — Chibi Quest dungeon monster (catalog `monsters/small/imp`), a small flyer about 0.8 m to
@@ -17,10 +17,11 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   bones #4a2e24; orange-red wing membranes #e0704a; amber eyes #e8a030 as the accent.
  * Value plan: the light amber eyes with dark pupils under dark brows, and the white fangs, are the
  *   strongest contrast (focal point); the dark horns frame the head.
- * Bodies: skin, eyes, horns, claws, teeth, wing-membranes, wing-bones.
- * Rig: hips, spine, chest, neck, head, wings, arms, legs with shins and feet, and a three-bone
- *   tail. Clips: idle (hover), fly (forward flight), attack (a diving claw swipe), hit (a jolt
- *   back in the hover), death (a tumble to the floor, on its back).
+ * Bodies: skin, eyes, horns, claws, teeth, wing-membranes, wing-bones, fireball.
+ * Rig: hips, spine, chest, neck, head, wings, arms, legs with shins and feet, a three-bone
+ *   tail, and `orb` (under the hips) for the fireball, hidden (scale 0.001) outside the cast.
+ *   Clips: idle (hover), fly (forward flight), attack (a diving claw swipe), hit (a jolt back in
+ *   the hover), death (a tumble to the floor, on its back), cast (a thrown fireball).
  */
 
 const C = {
@@ -41,6 +42,8 @@ const C = {
   membrane: '#e0704a',
   membraneDark: '#b8482e',
   wingBone: '#5a2e22',
+  fire: '#ff5a0a',
+  fireCore: '#ffc81e',
 };
 
 type V3 = readonly [number, number, number];
@@ -58,6 +61,9 @@ const HIP: V3 = [0.05, 0.24, 0.0];
 const KNEE: V3 = [0.075, 0.15, 0.05];
 const ANKLE: V3 = [0.07, 0.07, -0.02];
 const WING_ROOT: V3 = [0.055, 0.38, -0.07];
+const HIPS_AT: V3 = [0, 0.25, -0.01];
+// The fireball's bone: at the chest center, inside the torso, where it hides at scale 0.001.
+const ORB_AT: V3 = [0, 0.31, 0.03];
 const TAIL: V3[] = [
   [0, 0.23, -0.07],
   [-0.06, 0.13, -0.19],
@@ -107,7 +113,7 @@ export default defineAsset({
 
   build(k) {
     k.skeleton({
-      hips: { at: [0, 0.25, -0.01] },
+      hips: { at: HIPS_AT },
       spine: { parent: 'hips', at: [0, 0.3, 0] },
       chest: { parent: 'spine', at: [0, 0.35, 0] },
       neck: { parent: 'chest', at: [0, 0.39, 0] },
@@ -129,6 +135,7 @@ export default defineAsset({
       'leg.R': { parent: 'hips', at: mx(HIP) },
       'shin.R': { parent: 'leg.R', at: mx(KNEE) },
       'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
+      orb: { parent: 'hips', at: ORB_AT },
     });
 
     // ------------------------------------------------------------------ head
@@ -386,11 +393,28 @@ export default defineAsset({
     k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.membrane, roughness: 0.6 });
     k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.wingBone, roughness: 0.5 });
 
+    // ------------------------------------------------------------------ the fireball (cast only)
+    // A ball of fire 5.6 cm across: orange flame licks over a yellow-white core that shows in the
+    // hollows between them. It rides the `orb` bone and hides at scale 0.001 outside the cast.
+    const fire = rgb(C.fire);
+    const fireCore = rgb(C.fireCore);
+    const lick = (x: number, y: number, z: number) => noise.fbm(x * 80, y * 80, z * 80, 2);
+    const fireball = sdf
+      .sphere(0.028)
+      .displace(0.003, lick)
+      .paintFn((x, y, z) => {
+        const t = Math.min(1, Math.max(0, 0.55 - 2 * lick(x, y, z)));
+        return [fireCore[0] + (fire[0] - fireCore[0]) * t, fireCore[1] + (fire[1] - fireCore[1]) * t, fireCore[2] + (fire[2] - fireCore[2]) * t] as const;
+      })
+      .at(...ORB_AT);
+    k.body('fireball', fireball, { bone: 'orb', color: C.fire, roughness: 0.3, emissive: C.fire, emissiveIntensity: 0.9, detail: 0.003 });
+
     // ------------------------------------------------------------------ animation
     const { wave, keys, reach, quat, euler } = motion;
     const hover = (p: number, beats: number, lift: number, bob: number) => ({
       move: [0, lift + bob * wave(p, beats, 0.25), 0] as const,
     });
+    const HIDE = { scale: [0.001, 0.001, 0.001] as V3 }; // the fireball, outside the cast
     const ease = (a: number, b: number, x: number) => {
       const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
       return t * t * (3 - 2 * t);
@@ -442,6 +466,7 @@ export default defineAsset({
           'leg.R': { rotate: [8 + 6 * wave(p, 2, 0.45), 0, 0] },
           'upperarm.L': { rotate: [-4 * wave(p, 2, 0.3), 0, 0] },
           'upperarm.R': { rotate: [-4 * wave(p, 2, 0.35), 0, 0] },
+          orb: HIDE,
         };
       },
     });
@@ -463,6 +488,7 @@ export default defineAsset({
           'shin.R': { rotate: [24, 0, 0] },
           'upperarm.L': { rotate: [-10, 0, 0] },
           'upperarm.R': { rotate: [-10, 0, 0] },
+          orb: HIDE,
         };
       },
     });
@@ -533,6 +559,7 @@ export default defineAsset({
           'leg.R': { rotate: [keys(p, [[0, 9.9], [0.3, -12], [0.46, 28], [0.66, 32], [0.86, 10], [1, 9.9]]), 0, 0] },
           'shin.L': { rotate: [keys(p, [[0, 0], [0.3, 30], [0.46, 25], [0.66, 20], [1, 0]]), 0, 0] },
           'shin.R': { rotate: [keys(p, [[0, 0], [0.3, 34], [0.46, 22], [0.66, 18], [1, 0]]), 0, 0] },
+          orb: HIDE,
         };
       },
     });
@@ -563,6 +590,7 @@ export default defineAsset({
           'upperarm.R': { rotate: [-4 * wave(p, 1, 0.35) + 20 * h, 0, -70 * h] },
           'forearm.L': { rotate: [30 * h, 0, 30 * h] },
           'forearm.R': { rotate: [30 * h, 0, -30 * h] },
+          orb: HIDE,
         };
       },
     });
@@ -594,6 +622,7 @@ export default defineAsset({
             ],
           },
           chest: { rotate: [keys(p, [[0, 0], [0.08, -10], [0.3, 4], [0.5, 0]]), 0, 0] },
+          orb: HIDE,
           head: {
             rotate: [
               keys(p, [[0, 1.9], [0.08, -30], [0.3, 6], [0.46, -12], [0.58, 22], [0.7, 12], [1, 15]]),
@@ -645,6 +674,100 @@ export default defineAsset({
               0,
             ],
           },
+        };
+      },
+    });
+    // Cast (1.2 s): a thrown fireball. The wings beat at the idle rate the whole time (three beats,
+    // a little stronger through the throw), and the hover bob keeps running.
+    // 0 to 0.42 (gather): it rises 4.5 cm and draws back, leaning back; both hands come together in
+    //   front of the chest, palms turned in, and the fireball grows between them from nothing.
+    // 0.42 to 0.55 (throw): it pulls the ball back to the chest, then lunges 13 cm forward and down
+    //   on the downstroke, and both hands push the ball out at chest height, the arms straight.
+    // 0.55 to 0.72: the ball flies 1 m forward to a target in front at chest height in 0.2 s,
+    //   stretched along its path, then shrinks away.
+    // 0.55 to 1 (recovery): it settles back to the hover (the last frame is the first idle frame).
+    // Wrist targets and the ball's path before the release are in the hips' rest frame (the spine
+    // and the chest stay still); the flight is a straight world path, converted to that frame.
+    const rotX = (v: V3, deg: number): V3 => {
+      const a = (deg * Math.PI) / 180;
+      return [v[0], v[1] * Math.cos(a) - v[2] * Math.sin(a), v[1] * Math.sin(a) + v[2] * Math.cos(a)];
+    };
+    const castHips = (p: number) => ({
+      move: [
+        0,
+        0.18 + 0.025 * wave(p, 3, 0.25) + keys(p, [[0, 0], [0.2, 0.025], [0.42, 0.045], [0.48, 0.05], [0.55, -0.005], [0.64, -0.015], [0.82, 0], [1, 0]]),
+        keys(p, [[0, 0], [0.2, -0.03], [0.42, -0.05], [0.48, -0.06], [0.55, 0.07], [0.64, 0.09], [0.82, 0.03], [1, 0]]),
+      ] as V3,
+      rx: keys(p, [[0, 4], [0.2, -2], [0.42, -10], [0.48, -14], [0.55, 20], [0.64, 24], [0.82, 10], [1, 4]]),
+    });
+    type HipsPose = ReturnType<typeof castHips>;
+    const hipsToWorld = (v: V3, h: HipsPose): V3 => {
+      const r = rotX([v[0] - HIPS_AT[0], v[1] - HIPS_AT[1], v[2] - HIPS_AT[2]], h.rx);
+      return [HIPS_AT[0] + h.move[0] + r[0], HIPS_AT[1] + h.move[1] + r[1], HIPS_AT[2] + h.move[2] + r[2]];
+    };
+    const worldToHips = (w: V3, h: HipsPose): V3 => {
+      const r = rotX([w[0] - HIPS_AT[0] - h.move[0], w[1] - HIPS_AT[1] - h.move[1], w[2] - HIPS_AT[2] - h.move[2]], -h.rx);
+      return [HIPS_AT[0] + r[0], HIPS_AT[1] + r[1], HIPS_AT[2] + r[2]];
+    };
+    const castWrist = (p: number): V3 =>
+      keys(p, [
+        [0, WRIST],
+        [0.2, [0.064, 0.32, 0.13]], // hands together in front of the chest
+        [0.42, [0.064, 0.325, 0.125]],
+        [0.48, [0.066, 0.34, 0.105]], // the ball pulled back to the chest
+        [0.55, [0.045, 0.37, 0.165]], // pushed out at chest height, the arms straight
+        [0.64, [0.05, 0.36, 0.16]],
+        [0.86, WRIST],
+        [1, WRIST],
+      ]);
+    const ballAt = (w: V3): V3 => [0, w[1] + 0.004, w[2] + 0.05]; // between the palms, in front of the claws
+    const RELEASE = 0.55;
+    const FLIGHT = 0.2 / 1.2; // 0.2 s
+    const TARGET: V3 = [0, 0.5, 1.3]; // chest height in the hover, about 1 m in front of the release
+    const launch = hipsToWorld(ballAt(castWrist(RELEASE)), castHips(RELEASE));
+    k.animation('cast', {
+      duration: 1.2,
+      loop: false,
+      pose: (_t, p) => {
+        const h = castHips(p);
+        const w = castWrist(p);
+        const armL = reach(ARM_L, w, [0.45, 0.15, -0.2]);
+        const armR = reach(ARM_R, mx(w), [-0.45, 0.15, -0.2]);
+        const back = (a: number) => keys(p, [[0, a], [0.2, 0], [0.86, 0], [1, a]]); // idle values fade out and back
+        const cup = keys(p, [[0, 0], [0.2, 30], [0.48, 30], [0.55, 15], [0.66, 10], [0.9, 0]]);
+        const push = keys(p, [[0, 0], [0.42, 0], [0.48, 10], [0.55, -30], [0.64, -20], [0.86, 0]]);
+        const beat = keys(p, [[0, 0], [0.4, 0], [0.5, 1], [0.66, 1], [0.85, 0]]);
+        // The fireball: it grows between the palms, then flies a straight world path and is gone.
+        let orb: { move: V3; rotate?: V3; scale: V3 };
+        if (p < RELEASE) {
+          const g = keys(p, [[0.12, 0.001], [0.4, 1], [0.44, 0.92], [0.48, 1.05], [0.55, 1.1]]);
+          const b = ballAt(w);
+          orb = { move: [b[0] - ORB_AT[0], b[1] - ORB_AT[1], b[2] - ORB_AT[2]], scale: [g, g, g] };
+        } else {
+          const f = Math.min(1, (p - RELEASE) / FLIGHT);
+          const at = worldToHips(lerp(launch, TARGET, 1 - (1 - f) ** 1.4), h);
+          const g = f < 1 ? keys(f, [[0, 1.1], [0.2, 1], [0.8, 1], [1, 0.001]]) : 0.001;
+          const st = keys(f, [[0, 1], [0.15, 1.4], [0.8, 1.4], [1, 1]]); // stretched along the path
+          orb = { move: [at[0] - ORB_AT[0], at[1] - ORB_AT[1], at[2] - ORB_AT[2]], rotate: [-h.rx, 0, 0], scale: [g * 0.9, g * 0.9, g * st] };
+        }
+        return {
+          hips: { move: h.move, rotate: [h.rx, 0, 0] },
+          head: { rotate: [keys(p, [[0, 1.9], [0.2, 10], [0.42, 12], [0.48, 8], [0.55, -14], [0.64, -16], [0.86, -2], [1, 1.9]]), back(3.5), 0] },
+          ...wings(flap(3 * p, IDLE_BEAT.amp + 14 * beat, IDLE_BEAT.lift + 6 * beat)),
+          'upperarm.L': { rotate: [armL.upper[0] + back(-3.8), armL.upper[1], armL.upper[2]] as V3 },
+          'forearm.L': { rotate: armL.lower },
+          'upperarm.R': { rotate: [armR.upper[0] + back(-3.2), armR.upper[1], armR.upper[2]] as V3 },
+          'forearm.R': { rotate: armR.lower },
+          'hand.L': { rotate: [push, 0, -cup] },
+          'hand.R': { rotate: [push, 0, cup] },
+          orb,
+          tail1: { rotate: [keys(p, [[0, 7.6], [0.45, -8], [0.56, 22], [0.7, 15], [1, 7.6]]), back(5.9), 0] },
+          tail2: { rotate: [keys(p, [[0, 8.1], [0.45, -4], [0.58, 14], [0.72, 4], [1, 8.1]]), back(12), 0] },
+          tail3: { rotate: [keys(p, [[0, 0], [0.45, -18], [0.58, 26], [0.74, -8], [0.88, 4], [1, 0]]), back(8.2), 0] },
+          'leg.L': { rotate: [keys(p, [[0, 11.5], [0.2, 4], [0.45, -6], [0.55, 24], [0.66, 28], [0.86, 12], [1, 11.5]]), 0, 0] },
+          'leg.R': { rotate: [keys(p, [[0, 9.9], [0.2, 2], [0.45, -8], [0.55, 20], [0.66, 26], [0.86, 10], [1, 9.9]]), 0, 0] },
+          'shin.L': { rotate: [keys(p, [[0, 0], [0.3, 18], [0.48, 26], [0.56, 12], [0.7, 20], [1, 0]]), 0, 0] },
+          'shin.R': { rotate: [keys(p, [[0, 0], [0.3, 22], [0.48, 30], [0.56, 14], [0.7, 16], [1, 0]]), 0, 0] },
         };
       },
     });
