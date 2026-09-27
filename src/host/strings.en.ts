@@ -14,6 +14,7 @@ export default {
       lookLocked: '⭐ 3 stars unlock a new look',
       level: 'Level',
       comingSoon: 'Coming soon',
+      dungeonLiberator: { title: 'Dungeon Liberator', pitch: 'Free the prisoners in word order.' },
       story: 'Choose a story',
       game: 'Choose a game',
       noGame: 'No game fits this story yet. Choose another story.',
@@ -84,8 +85,6 @@ export default {
     heroes: { knight: 'Knight', wizard: 'Wizard', cleric: 'Cleric' },
     games: {
       comingSoon: 'Coming soon',
-      dragonFlight: { title: 'Dragon Flight', pitch: 'Fly through the gate with the right meaning.' },
-      dungeonLiberator: { title: 'Dungeon Liberator', pitch: 'Free the prisoners in word order.' },
       devourerSlime: { title: 'Devourer Slime', pitch: 'Eat the words in order and grow.' },
     },
   },
