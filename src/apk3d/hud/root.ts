@@ -70,11 +70,14 @@ export class HudRoot {
       // Keep the element on screen; mark the side it waits on (the CSS draws an arrow).
       const w = this.el.clientWidth;
       const h = this.el.clientHeight;
-      const m = 44;
-      const top = 96;
-      const x = Math.min(w - m, Math.max(m, p.x));
-      const y = Math.min(h - m, Math.max(top, p.visible ? p.y : h - m));
-      const edge = !p.visible ? 'down' : p.x < m ? 'left' : p.x > w - m ? 'right' : p.y < top ? 'up' : p.y > h - m ? 'down' : '';
+      // Clamp by the element's own size (it is centered on x and hangs above y), so a wide tag
+      // at the edge stays whole.
+      const mx = Math.min(w / 2, el.offsetWidth / 2 + 8);
+      const top = 96 + el.offsetHeight;
+      const bottom = h - 12;
+      const x = Math.min(w - mx, Math.max(mx, p.x));
+      const y = Math.min(bottom, Math.max(top, p.visible ? p.y : bottom));
+      const edge = !p.visible ? 'down' : p.x < mx ? 'left' : p.x > w - mx ? 'right' : p.y < top ? 'up' : p.y > bottom ? 'down' : '';
       el.dataset.edge = edge;
       el.style.visibility = '';
       el.style.left = `${x}px`;

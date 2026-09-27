@@ -43,6 +43,8 @@ const CHARACTERS: Record<string, number> = {
   // Devourer Slime: the slime and the patrolling guards (guard is above).
   slime: 8000,
   bandit: 8000,
+  // Hero vs. Zombie.
+  zombie: 8000,
 };
 /** Heroes whose color presets the demo can unlock. */
 const HEROES = ['knight', 'wizard', 'cleric'];
@@ -58,11 +60,13 @@ const FLIGHT_PROPS = ['grass-ground', 'forest-ground', 'oak-tree', 'pine-tree', 
 const TREES = ['oak-tree', 'pine-tree', 'ancient-oak'];
 /** Devourer Slime: the clearing's extra pieces. */
 const CLEARING_PROPS = ['tree-stump', 'mushroom-cluster'];
+/** Hero vs. Zombie: the night churchyard. */
+const CHURCHYARD_PROPS = ['dead-tree', 'campfire-out', 'tall-grass', 'dirt-ground'];
 
 function propBudget(name: string): number {
   if (INGREDIENTS.includes(name)) return 600;
   if (TREES.includes(name)) return 2500;
-  if (/^(grass-ground|forest-ground)$/.test(name)) return 300;
+  if (/^(grass-ground|forest-ground|dirt-ground)$/.test(name)) return 300;
   if (/^(floor|floor-cracked|walkway|wood-floor)$/.test(name)) return 300;
   if (/^(wall|wall-corner|arch|door|gate|cell-bars|stairs)$/.test(name)) return 900;
   return 1500;
@@ -172,7 +176,7 @@ async function build(name: string, budget: number, error: number): Promise<void>
 
 async function main(): Promise<void> {
   const only = process.argv[2];
-  const props = [...new Set([...sunkenVaultPlaces().map((p) => p.asset), ...SHOP_PROPS, ...INGREDIENTS, ...FLIGHT_PROPS, ...CLEARING_PROPS])].filter((a) => !(a in CHARACTERS) && a !== 'adventurer');
+  const props = [...new Set([...sunkenVaultPlaces().map((p) => p.asset), ...SHOP_PROPS, ...INGREDIENTS, ...FLIGHT_PROPS, ...CLEARING_PROPS, ...CHURCHYARD_PROPS])].filter((a) => !(a in CHARACTERS) && a !== 'adventurer');
   const jobs: [string, number, number][] = [
     ...Object.entries(CHARACTERS).map(([n, b]) => [n, b, CHARACTER_ERROR] as [string, number, number]),
     ...props.map((p) => [p, propBudget(p), PROP_ERROR] as [string, number, number]),

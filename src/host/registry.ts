@@ -15,6 +15,8 @@ import { manifest as dungeonLiberator } from '../games/dungeon-liberator/manifes
 import dungeonLiberatorStrings from '../games/dungeon-liberator/strings.en.js';
 import { manifest as devourerSlime } from '../games/devourer-slime/manifest.js';
 import devourerSlimeStrings from '../games/devourer-slime/strings.en.js';
+import { manifest as heroVsZombie } from '../games/hero-vs-zombie/manifest.js';
+import heroVsZombieStrings from '../games/hero-vs-zombie/strings.en.js';
 
 export interface GameEntry {
   id: string;
@@ -74,10 +76,19 @@ export const GAMES: GameEntry[] = [
     manifest: devourerSlime,
     load: () => import('../games/devourer-slime/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'hero-vs-zombie',
+    icon: '🧟',
+    tint: ['#64748b', '#1e293b'],
+    titleKey: 'heroVsZombie.title',
+    pitchKey: 'heroVsZombie.pitch',
+    manifest: heroVsZombie,
+    load: () => import('../games/hero-vs-zombie/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 

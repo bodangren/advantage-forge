@@ -246,14 +246,14 @@ async function playArena(page: Page, shot: (name: string) => Promise<void>): Pro
     const s = await page.evaluate(() => {
       if (document.querySelector('.results.on')) return null;
       const st = (window as any).__apk3d.game()?.state();
-      return st ? { stage: st.room ?? st.sentence, found: st.next } : null;
+      return st ? { stage: st.room ?? st.sentence ?? st.roundIndex, found: st.next ?? st.roundIndex } : null;
     });
     if (!s) break;
     if (!firstWord && s.found >= 1) {
       firstWord = true;
       await shot('first-word');
     }
-    if (s.stage !== lastStage && s.stage > 0) await shot(`stage-${s.stage + 1}`);
+    if (s.stage !== lastStage && s.stage > 0 && s.stage <= 3) await shot(`stage-${s.stage + 1}`);
     lastStage = s.stage;
     if (Date.now() - started > 25 * 60_000) throw new Error('The arena game did not end in 25 minutes');
     await page.waitForTimeout(700);
@@ -264,6 +264,7 @@ async function playArena(page: Page, shot: (name: string) => Promise<void>): Pro
 const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
   'dungeon-liberator': playArena,
   'devourer-slime': playArena,
+  'hero-vs-zombie': playArena,
   'dragon-flight': playDragonFlight,
   'monster-encounters': playMonsterEncounters,
   'potion-rush': playPotionRush,
