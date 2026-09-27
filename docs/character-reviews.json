@@ -515,7 +515,7 @@
     "reviewedAt": "2026-09-27T00:59:24+00:00"
   },
   "giant-spider": {
-    "overall": 8.1,
+    "overall": 8.2,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
@@ -530,22 +530,22 @@
       "sprite": 5,
       "motion": 4
     },
-    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. The big eyes now match the mockup: a bright white eyeball with a red iris about half the eye wide. The attack and the death are unchanged. The attack drive and the fang snap are still open.",
+    "summary": "The giant spider is close to the mockup in the front view and reads clearly as a sprite. A new spit clip gives it a ranged web attack: it rocks back, curls the abdomen up, jerks forward, and a web glob flies 1 m forward from between the fangs. The attack drive and the fang snap are still open.",
     "strengths": [
-      "The big eyes match the mockup: the red iris cap is 0.035 on an eye radius of 0.08, so a wide bright white ring shows around it, with a small dark pupil and a highlight.",
-      "At 128 px, the front sprite shows two white eyes with small red irises under the heavy brow, so the glare reads clearly.",
-      "The attack reads: the spider rears up with the fangs wide, then pitches down and drives 16 cm forward in 0.08 s, and the bite holds for 0.15 s."
+      "The big eyes match the mockup: a bright white eyeball with a red iris about half the eye wide, a small dark pupil, and a highlight.",
+      "The spit reads in the side and three-quarter strips: the head tips up and the fangs spread, then a sharp jerk forward, and the glob flies 1 m with its strands behind it.",
+      "All eight feet stay planted in the spit, and the web glob stays hidden inside the head in every other clip and in the rest pose."
     ],
     "issues": [
-      "The forward drive in the attack stops at 16 cm, not 20 cm. More drive pulls the back legs beyond their reach, and the back feet then slide.",
-      "In the attack strip, the fang snap is hard to see from the side, because the low head hides the fangs at the bite.",
-      "The mockup irises show no dark pupil. The model keeps a small dark pupil, which adds a little noise at close range."
+      "The web glob is only about 5.5 cm across. At 128 px it is a few white pixels in flight, so the spit reads mostly from the body motion.",
+      "The abdomen curl in the spit is 38 degrees. From the front and the three-quarter views the head hides most of it; only the side view shows it clearly.",
+      "The forward drive in the attack stops at 16 cm, and the fang snap is hard to see from the side, because the low head hides the fangs at the bite."
     ],
     "next": [
-      "Check the fang snap in a front view of the attack. If it does not read, open the fangs wider at the top of the rear-up.",
-      "Try more attack drive with a longer back-leg reach, and keep the back feet planted."
+      "Check the spit sprite sheet at 128 px. If the glob does not read, make it larger in flight or add a short web trail.",
+      "Check the fang snap in a front view of the attack, and open the fangs wider at the top of the rear-up if it does not read."
     ],
-    "reviewedAt": "2026-09-26T21:13:21+00:00"
+    "reviewedAt": "2026-09-27T01:33:00+00:00"
   },
   "dragon-fire": {
     "overall": 8.4,

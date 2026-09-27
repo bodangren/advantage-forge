@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Giant spider — Chibi Quest monster (catalog `monsters/small/giant-spider`), about 0.53 m tall and
@@ -19,12 +19,14 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   (focal point); the orange splat and skull are the second. The head tilts up 14 degrees, so the
  *   eyes also read in top-down sprites.
  * Bodies: carapace (head, thorax, abdomen, splat and skull marks), legs (with bands and claws),
- *   brows, eyes, small-eyes, fangs.
- * Rig: `body` (root), `head`, `abdomen`, `fang.L`/`fang.R`, and per leg a `leg<n>` (femur) and
- *   `shin<n>` bone on each side. Planted legs are solved with `reach`, so the tips stay put.
+ *   brows, eyes, small-eyes, fangs, web-glob (the spit shot; hidden outside the spit).
+ * Rig: `body` (root), `head`, `abdomen`, `fang.L`/`fang.R`, `webshot` (under `head`; the web glob
+ *   waits inside the head at scale 0.001), and per leg a `leg<n>` (femur) and `shin<n>` bone on
+ *   each side. Planted legs are solved with `reach`, so the tips stay put.
  *   Clips: idle, walk (an alternating four-leg gait), run, attack (rear up with the front legs
- *   raised and the fangs open, lunge and bite, recover), hit, death (curls up and rolls onto its
- *   back).
+ *   raised and the fangs open, lunge and bite, recover), spit (rock back with the abdomen curled
+ *   up, jerk forward, and a web glob flies 1 m from between the fangs), hit, death (curls up and
+ *   rolls onto its back).
  */
 
 const C = {
@@ -38,6 +40,8 @@ const C = {
   irisRim: '#8a1418',
   pupil: '#3a0a0e',
   fang: '#efe6d0',
+  web: '#ebe8f2',
+  webShade: '#b4afc2',
 };
 
 type V3 = readonly [number, number, number];
@@ -72,6 +76,9 @@ const headPoint = (p: V3): V3 => {
   const z = p[2] - HEAD_PIVOT[2];
   return [p[0], HEAD_PIVOT[1] + y * c - z * s, HEAD_PIVOT[2] + y * s + z * c];
 };
+// The web glob (the spit shot) waits deep inside the head, hidden, and flies only in the spit.
+const GLOB_AT: V3 = headPoint([0, 0.37, 0.15]);
+const HIDE = { scale: [0.001, 0.001, 0.001] as V3 };
 
 export default defineAsset({
   name: 'giant-spider',
@@ -101,6 +108,7 @@ export default defineAsset({
       abdomen: { parent: 'body', at: [0, 0.28, -0.04], tail: [0, 0.36, -0.44] },
       'fang.L': { parent: 'head', at: fangPivot, tail: add(fangPivot, [0, -0.1, 0.02]) },
       'fang.R': { parent: 'head', at: mxp(fangPivot), tail: add(mxp(fangPivot), [0, -0.1, 0.02]) },
+      webshot: { parent: 'head', at: GLOB_AT },
     };
     LEG_ANGLES.forEach((a, i) => {
       bones[`leg${i}.L`] = { parent: 'body', at: legRoot(a), tail: legKnee(a) };
@@ -293,6 +301,37 @@ export default defineAsset({
     );
     k.body('fangs', pair(headPose(fang).bone('fang.L')), { color: C.fang, roughness: 0.35, detail: 0.004 });
 
+    // ------------------------------------------------------------------ web glob: the spit shot
+    // A lumpy ball of sticky web about 5.5 cm across, with four short strands that trail behind it
+    // (-Z, away from the flight). Built at the origin, then placed at the webshot bone.
+    const strand = (dx: number, dy: number, len: number) =>
+      sdf.chain(
+        [
+          [0, 0, -0.016, 0.006],
+          [dx * 0.45, dy * 0.45 + 0.002, -0.016 - len * 0.45, 0.0038],
+          [dx, dy, -0.016 - len, 0.0024],
+        ],
+        0.004,
+      );
+    const glob = sdf
+      .smoothUnion(
+        0.008,
+        sdf.sphere(0.026).displace(0.004, (x, y, z) => noise.fbm(x * 70, y * 70, z * 70, 2)),
+        sdf.sphere(0.013).at(0.012, 0.014, -0.012),
+        sdf.sphere(0.012).at(-0.014, -0.01, -0.014),
+        strand(0.016, 0.012, 0.05),
+        strand(-0.018, 0.006, 0.042),
+        strand(0.004, -0.017, 0.058),
+        strand(-0.008, 0.02, 0.034),
+      )
+      .paintFn((x, y, z) => {
+        const t = 0.5 + 0.5 * noise.fbm(x * 90 + 3, y * 90, z * 90, 2);
+        const back = Math.min(1, Math.max(0, -z / 0.06));
+        return mixRgb(rgb(C.web), rgb(C.webShade), Math.min(1, 0.35 * t + 0.55 * back));
+      })
+      .at(...GLOB_AT);
+    k.body('web-glob', glob, { color: C.web, roughness: 0.55, opacity: 0.9, bone: 'webshot', detail: 0.0025, textureDensity: 1.5 });
+
     // ------------------------------------------------------------------ animation
     const { wave, bump, keys, reach } = motion;
     type P = Record<string, { rotate?: V3; move?: V3; scale?: V3 }>;
@@ -347,6 +386,7 @@ export default defineAsset({
           head: { rotate: [0, -3 * s, 0] },
           'fang.L': { rotate: [4 * wave(p, 2), 0, 3 * wave(p, 2)] },
           'fang.R': { rotate: [4 * wave(p, 2), 0, -3 * wave(p, 2)] },
+          webshot: HIDE,
         };
         for (let i = 0; i < 4; i++) {
           const groupA = i % 2 === 0; // for the left side
@@ -369,6 +409,7 @@ export default defineAsset({
           // The fangs work a little, as if it is tasting the air.
           'fang.L': { rotate: [0, 0, 6 * bump(p, 3, 0.2)] },
           'fang.R': { rotate: [0, 0, -6 * bump(p, 3, 0.2)] },
+          webshot: HIDE,
         };
         // The two front legs twitch and tap, one after the other.
         Object.assign(pose, legPose(0, 1, 0, 10 * bump(p, 3, 0.1), 0));
@@ -403,6 +444,7 @@ export default defineAsset({
           abdomen: { rotate: [14 * rear - 12 * strike, 0, 0] },
           'fang.L': { rotate: [-20 * open, 0, 26 * open] },
           'fang.R': { rotate: [-20 * open, 0, -26 * open] },
+          webshot: HIDE,
         };
         // From the top of the rear-up, legs 0 and 1 blend into planted legs: the front feet slam
         // down ahead of their rest spots and hold the prey through the bite. In the recovery they
@@ -437,6 +479,59 @@ export default defineAsset({
       },
     });
 
+    // The spit, a ranged web attack. Anticipation (0.37 s): it rocks back on its planted legs, the
+    // abdomen curls up and forward, the head tips up, and the fangs spread; a short hold with a
+    // pump. The spit (0.055 s): a sharp jerk forward and down, and a web glob shoots from between
+    // the fangs, 1 m forward and 13 cm down in 0.2 s, growing a little; then it is gone. Recovery:
+    // it settles back to rest. All eight feet stay planted.
+    const SPIT_REL = 0.44; // the release phase
+    const SPIT_FLY = 0.2 / 1.1; // the flight time as a phase
+    const mouthUp = faceHit(0, 0.235);
+    const MOUTH = headPoint([0, 0.235, mouthUp[2] + 0.03]); // in front of the jaw, between the fangs
+    const spitBody = (p: number) => ({
+      rx: keys(p, [[0, 0], [0.34, -16], [0.4, -17], [0.45, 12], [0.53, 11], [0.62, 7], [1, 0]] as const),
+      move: [
+        0,
+        keys(p, [[0, 0], [0.34, 0.035], [0.4, 0.038], [0.45, -0.008], [0.53, -0.006], [0.62, -0.003], [1, 0]] as const),
+        keys(p, [[0, 0], [0.34, -0.045], [0.4, -0.05], [0.45, 0.07], [0.53, 0.066], [0.62, 0.05], [1, 0]] as const),
+      ] as V3,
+      head: keys(p, [[0, 0], [0.34, -8], [0.4, -9], [0.45, 8], [0.53, 7], [1, 0]] as const),
+    });
+    k.animation('spit', {
+      duration: 1.1,
+      loop: false,
+      pose: (_t, p) => {
+        const { rx, move, head } = spitBody(p);
+        const curl = keys(p, [[0, 0], [0.34, 34], [0.37, 38], [0.4, 35], [0.45, -10], [0.53, -8], [0.64, -3], [1, 0]] as const);
+        const open = keys(p, [[0, 0], [0.34, 1], [0.4, 1.1], [0.45, 1.5], [0.56, 1.2], [0.82, 0.1], [1, 0]] as const);
+        // The glob: its world path starts at the mouth at the release, then goes into the head's
+        // frame (undo the body and the head rotations) for the webshot bone's move.
+        let webshot: { move?: V3; rotate?: V3; scale: V3 } = HIDE;
+        const f = (p - SPIT_REL) / SPIT_FLY;
+        if (f >= 0 && f <= 1) {
+          const r = spitBody(SPIT_REL);
+          const toWorld = (q: V3, b: { rx: number; move: V3; head: number }) =>
+            add(add(THORAX, b.move), ex(b.rx, sub(add(HEAD_PIVOT, ex(b.head, sub(q, HEAD_PIVOT))), THORAX)));
+          const start = toWorld(MOUTH, r);
+          const w = add(start, [0, -0.13 * f ** 1.3, 1.0 * (1 - (1 - f) ** 1.5)]);
+          const local = add(HEAD_PIVOT, ex(-head, sub(add(THORAX, ex(-rx, sub(sub(w, move), THORAX))), HEAD_PIVOT)));
+          const s = keys(f, [[0, 0.5], [0.12, 1], [1, 1.35]] as const, 'linear');
+          // Point the glob along its flight (7 degrees down); the strands trail behind it.
+          webshot = { move: sub(local, GLOB_AT), rotate: [7 - rx - head, 0, 0], scale: [s, s, s] };
+        }
+        const pose: P = {
+          body: { move, rotate: [rx, 0, 0] },
+          head: { rotate: [head, 0, 0] },
+          abdomen: { rotate: [curl, 0, 0] },
+          'fang.L': { rotate: [-20 * open, 0, 26 * open] },
+          'fang.R': { rotate: [-20 * open, 0, -26 * open] },
+          webshot,
+        };
+        for (const side of [1, -1] as const) for (let i = 0; i < 4; i++) Object.assign(pose, plant(i, side, { move, rx }));
+        return pose;
+      },
+    });
+
     // Hit: it jerks back and up, the legs flinch in, then it settles.
     k.animation('hit', {
       duration: 0.45,
@@ -452,6 +547,7 @@ export default defineAsset({
           abdomen: { rotate: [8 * h, 0, 0] },
           'fang.L': { rotate: [0, 0, 20 * h] },
           'fang.R': { rotate: [0, 0, -20 * h] },
+          webshot: HIDE,
         };
         for (const side of [1, -1] as const) {
           Object.assign(pose, legPose(0, side, 0, 30 * h, 30 * h));
@@ -487,6 +583,7 @@ export default defineAsset({
           abdomen: { rotate: [8 * curl, 0, 0] },
           'fang.L': { rotate: [0, 0, 18 * recoil - 8 * curl] },
           'fang.R': { rotate: [0, 0, -18 * recoil + 8 * curl] },
+          webshot: HIDE,
         };
         for (const side of [1, -1] as const)
           for (let i = 0; i < 4; i++) Object.assign(pose, legPose(i, side, 0, 10 * recoil + 22 * curl, 78 * curl + 18 * twitch * (i % 2 ? 1 : -1)));
