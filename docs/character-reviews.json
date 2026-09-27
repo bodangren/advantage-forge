@@ -192,7 +192,7 @@
     "reviewedAt": "2026-09-26T22:13:14+00:00"
   },
   "adventurer": {
-    "overall": 8.5,
+    "overall": 8.6,
     "scores": {
       "mockup": 4,
       "silhouette": 5,
@@ -206,22 +206,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "The adventurer is a chibi hero with a teal bandana, a red scarf, a leather harness, a short sword, a map, and a large pack with a bedroll and a lantern. It matches the mockup in the face, the clothes, the pack, and the lantern. The hair, the bedroll, and the hand that holds the map differ from the mockup. All 8 clips pass the forge check.",
+    "summary": "The adventurer is a chibi hero with a teal bandana, a red scarf, a leather harness, a short sword, a map, and a large pack with a bedroll and a lantern. It matches the mockup in the face, the clothes, the pack, and the lantern. The victory clip is now a real jump on the knee bones: a crouch, a push-off, a jump of 9 cm with the sword up at the top, and a soft landing. All 9 clip lines of the forge check show ok, and the ground check shows ok.",
     "strengths": [
       "The face reads at 128 px in the sprites: large brown eyes with highlights, rosy cheeks, and an open smile. The red scarf, the cream shirt, the harness, and the belt match the mockup.",
       "The pack reads from all 8 sprite directions: the teal bedroll, the brass lantern on the side, and the flap with a buckle. The silhouette is clear in every view.",
-      "The full clip set is present: idle, walk, run, attack, attack2, hit, death, and victory. The death staggers, pitches forward, and ends face down under the pack. The forge check shows result ok and ground ok."
+      "The victory jump uses the knees: the hips drop 4.5 cm on bent knees with flat feet, the toes point down in the air, and the knees bend to absorb the landing. The sword stays more than 5 cm from the head."
     ],
     "issues": [
       "The front hair stands up in a spiky crown, but the mockup hair sweeps to one side. At the back and the sides, the hair is one smooth mass, like a helmet.",
-      "In the attack wind-up (t = 0.2 to 0.3 s), the head and the pack hide the sword in the three-quarter and side views. The blade passes only 0.3 cm from the head.",
-      "The legs stay straight in every clip. The death fall tips the body forward as one rigid piece, and the attack2 lunge has no knee bend."
+      "In the attack, the hilt passes 1.1 cm from the head. This is the closest approach of all clips.",
+      "The attack2 lunge and the death fall do not use the knee bones. The legs stay straight in these clips."
     ],
     "next": [
-      "Add knee bones, so the run, the attack2 lunge, and the death fall bend the legs.",
+      "Solve the legs of the attack2 lunge and the death fall with the knee bones.",
       "Sculpt the front hair to sweep to one side as in the mockup, and add separate locks to the back and the sides of the head."
     ],
-    "reviewedAt": "2026-09-26T18:36:11+00:00"
+    "reviewedAt": "2026-09-27T00:30:18+00:00"
   },
   "goblin-warrior": {
     "overall": 8.8,

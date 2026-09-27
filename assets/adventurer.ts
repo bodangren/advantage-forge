@@ -22,7 +22,8 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  * Rig: the rogue's chibi skeleton plus `knot` (bandana tails) and `lantern`; the sword is rigid
  *   on the right hand, the map on the left hand, the pack on the chest. Clips: idle, walk, run,
  *   attack (a stepping diagonal slash), attack2 (a lunging thrust), hit, death (a face-down fall
- *   under the pack), victory (a hop with the sword raised).
+ *   under the pack), victory (a crouch, a jump with the sword
+ *   thrust up at the top, and a soft landing on bent knees).
  */
 
 const C = {
@@ -981,35 +982,81 @@ export default defineAsset({
       },
     });
 
-    // ---------------------------------------------------------------- victory: a hop with the sword thrust up
+    // ---------------------------------------------------------------- victory: a jump with the sword thrust up
+    // An anticipation crouch on bent knees with the arms pulled down, a push-off that straightens
+    // the legs, a jump of about 9 cm with the knees tucked and the toes pointing down, the sword
+    // thrust up at the top, and a landing on both feet that the knees absorb with a small bounce.
+    // A planted leg reaches from the hip through the knee to a fixed ankle target (in the hips'
+    // rest frame, so it moves against the hips), and the foot takes the opposite turn: the sole
+    // stays flat on the floor.
+    const FLAT_FOOT = { dir: [0, 0, 1] as V3, up: [0, 1, 0] as V3 };
+    const legTo = (side: 1 | -1, ankle: V3, pitch: number) => {
+      const m = (v: V3): V3 => (side > 0 ? v : mx(v));
+      const a = (pitch * Math.PI) / 180;
+      const want = { dir: [0, -Math.sin(a), Math.cos(a)] as V3, up: [0, Math.cos(a), Math.sin(a)] as V3 };
+      if (Math.hypot(ankle[0] - ANKLE[0], ankle[1] - ANKLE[1], ankle[2] - ANKLE[2]) < 1e-6) {
+        return { leg: [0, 0, 0] as V3, shin: [0, 0, 0] as V3, foot: orient([], FLAT_FOOT, want) };
+      }
+      const { upper, lower } = reach({ root: m(HIP), mid: m(KNEE), end: m(ANKLE) }, m(ankle), m([KNEE[0], KNEE[1], 0.3]));
+      return { leg: upper, shin: lower, foot: orient([upper, lower], FLAT_FOOT, want) };
+    };
+    const JUMP = 0.09; // the hips' rise at the top of the jump
+    const DROP = 0.045; // the depth of the anticipation crouch
+    const [T_OFF, T_TOP, T_LAND] = [0.3, 0.41, 0.52];
+    const FIST_BACK: V3 = [0.215, 0.222, -0.035];
+    const FIST_LIST: readonly (readonly [number, V3])[] = [[0, WRIST], [0.2, FIST_BACK], [0.25, FIST_BACK], [0.34, [0.21, 0.37, 0.1]], [0.46, [0.19, 0.33, 0.075]]];
     k.animation('victory', {
-      duration: 1.4,
+      duration: 1.5,
       loop: false,
       pose: (_t, p) => {
-        const crouch = keys(p, [[0, 0], [0.18, 1], [0.26, 0], [0.42, 0], [0.5, 0.7], [0.6, 0]] as const);
-        const air = keys(p, [[0.22, 0], [0.33, 1], [0.45, 0]] as const);
-        const raise = ease(0.2, 0.34, p);
-        // The fist rises out to his right side (never in front of the face), the blade up and out.
-        const wrist = lerp(WRIST_R, [-0.285, 0.47, 0.07], raise);
-        const dir = norm(lerp(BLADE_DIR, [-0.45, 0.87, 0.18], raise));
+        // The hips' height: the crouch, a push-off that speeds up, a parabola in the air, then the
+        // landing dip and a smaller second dip.
+        let h: number;
+        if (p < 0.24) h = -DROP * ease(0, 0.2, p);
+        else if (p < T_OFF) h = -DROP * (1 - ((p - 0.24) / (T_OFF - 0.24)) ** 2);
+        else if (p < T_LAND) h = (4 * JUMP * (p - T_OFF) * (T_LAND - p)) / (T_LAND - T_OFF) ** 2;
+        else if (p < 0.6) h = -0.034 * Math.sin(((Math.PI / 2) * (p - T_LAND)) / (0.6 - T_LAND));
+        else h = -0.034 * keys(p, [[0.6, 1], [0.7, 0.12], [0.77, 0.28], [0.9, 0]] as const);
+        const bend = Math.max(0, -h) / DROP; // 1 at the bottom of the crouch
+        const air = Math.max(0, h) / JUMP; // 1 at the top of the jump
+        const flight = p > T_OFF && p < T_LAND ? Math.sin((Math.PI * (p - T_OFF)) / (T_LAND - T_OFF)) : 0;
+        // In the air the knees tuck (the ankles come up under the hips) and the toes point down,
+        // but never lower than the floor.
+        const tuck = 0.025 * flight;
+        const pitch = Math.min(26, (Math.max(0, h) + tuck) / 0.0025);
+        // The hips sit back a little over the heels when they drop.
+        const back = -0.25 * Math.max(0, -h);
+        const ankle: V3 = [ANKLE[0], ANKLE[1] - Math.min(0, h) + tuck, -back];
+        const legL = legTo(1, ankle, pitch);
+        const legR = legTo(-1, ankle, pitch);
+        // The arms pull down and back in the crouch and swing up in the push-off; the sword gets
+        // to its full height at the top of the jump. The fist rises out to his right side (never
+        // in front of the face), the blade up and out.
+        const pull = keys(p, [[0, 0], [0.2, 1], [0.25, 1], [0.31, 0]] as const);
+        const raise = ease(0.26, T_TOP, p);
+        const wrist = lerp(lerp(WRIST_R, [-0.21, 0.222, -0.012], pull), [-0.285, 0.47, 0.07], raise);
+        const dir = norm(lerp(lerp(BLADE_DIR, [-0.12, -0.1, 1], pull), [-0.45, 0.87, 0.18], raise));
         const arm = reach(ARM_R, wrist, [-0.6, 0.1, -0.3]);
         // The flat faces out to his right, so the guard runs front to back, not toward his cheek.
         const hand = orient([arm.upper, arm.lower], BLADE, { dir, up: norm(lerp(FLAT, [-1, 0.4, 0], raise)) });
-        // The left fist (with the map) pumps down to his hip in triumph.
-        const fist = lerp(WRIST, [0.19, 0.33, 0.075], ease(0.3, 0.45, p));
-        const armL = reach(ARM_L, fist, [0.3, 0.1, -0.25]);
-        const bob = 0.006 * bump(Math.min(1, Math.max(0, (p - 0.6) / 0.4)), 2);
+        // The left fist (with the map) swings back in the crouch, up in the push-off, and pumps
+        // down to his hip in triumph.
+        const armL = reach(ARM_L, keys(p, FIST_LIST), [0.3, 0.1, -0.25]);
+        // The bandana tails and the lantern lag behind the jump and swing after the landing.
+        const swing = keys(p, [[T_LAND, 0], [0.6, 1], [1, 0]] as const);
         return {
-          hips: { move: [0, -0.03 * crouch + 0.09 * air - bob, 0] },
-          spine: { rotate: [8 * crouch - 6 * raise, 0, 0] },
-          chest: { rotate: [6 * crouch - 6 * raise, 8 * raise, 0] },
-          head: { rotate: [4 * crouch - 12 * raise, 8 * raise, -6 * raise] },
-          knot: { rotate: [-20 * air + 6 * wave(p, 3), 0, 8 * wave(p, 2, 0.1)] },
-          lantern: { rotate: [-18 * air + 8 * wave(p, 2), 0, 6 * wave(p, 2, 0.3)] },
-          'leg.L': { rotate: [18 * crouch - 26 * air, 0, 0] },
-          'leg.R': { rotate: [18 * crouch - 10 * air, 0, 0] },
-          'foot.L': { rotate: [-18 * crouch + 30 * air, 0, 0] },
-          'foot.R': { rotate: [-18 * crouch + 20 * air, 0, 0] },
+          hips: { move: [0, h, back] },
+          spine: { rotate: [10 * bend - 4 * air - 6 * raise, 0, 0] },
+          chest: { rotate: [6 * bend - 6 * raise, 8 * raise, 0] },
+          head: { rotate: [-3 * bend - 12 * raise, 8 * raise, -6 * raise] },
+          knot: { rotate: [-20 * air + 12 * bend + 8 * swing * wave(p, 3), 0, 8 * swing * wave(p, 2)] },
+          lantern: { rotate: [-18 * air + 10 * bend + 8 * swing * wave(p, 2), 0, 6 * swing * wave(p, 2, 0.25)] },
+          'leg.L': { rotate: legL.leg },
+          'shin.L': { rotate: legL.shin },
+          'foot.L': { rotate: legL.foot },
+          'leg.R': { rotate: legR.leg },
+          'shin.R': { rotate: legR.shin },
+          'foot.R': { rotate: legR.foot },
           'upperarm.R': { rotate: arm.upper },
           'forearm.R': { rotate: arm.lower },
           'hand.R': { rotate: hand },
