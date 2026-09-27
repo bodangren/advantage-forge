@@ -517,28 +517,40 @@ export default defineAsset({
       }),
     });
 
-    // A gliding shuffle: short steps under the robe, a gentle bob and sway.
-    const glide = (duration: number, legSwing: number, lean: number, sway: number, swing: number) => ({
+    // A gliding shuffle: short steps under the robe, a gentle bob and sway. The legs come from
+    // motion.gait: planted stance feet, a knee lift in the swing, heel strike and toe-off. `step`
+    // is the foot travel, `lift` the swing height, `duty` the share of the cycle a foot is down,
+    // `hop` the hips bob. The heel and the toe are the ends of the bony foot's rounded sole (about
+    // 4 mm above y = 0). The left heel strikes at p = 0.25, when the left arm (4 * wave(p)) is back.
+    const glide = (duration: number, step: number, lift: number, duty: number, hop: number, lean: number, sway: number, swing: number) => ({
       duration,
       pose: (_t: number, p: number) => {
         const s = wave(p);
+        const hipsTurn = [0, 5 * s, sway * s] as const;
+        const legs = motion.gait(p - 0.25, { hip: HIP, knee: KNEE, ankle: ANKLE }, {
+          stride: step,
+          lift,
+          duty,
+          bob: hop,
+          roll: 10,
+          heel: [0.098, 0, 0.003],
+          toe: [0.089, 0, 0.089],
+          hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+        });
         return {
-          hips: { move: [0, -legDrop(LEG, legSwing * s) * 0.6 + 0.006 * bump(p, 2), 0] as const, rotate: [0, 5 * s, sway * s] as const },
+          ...legs.pose,
+          hips: { move: [0, legs.hipsY, 0] as const, rotate: hipsTurn },
           spine: { rotate: [lean, 0, -sway * 0.5 * s] as const },
           head: { rotate: [-lean, 4 * s, 3 * wave(p, 1, 0.25)] as const },
           lantern: { rotate: [lean * 2 + swing * wave(p, 2, 0.2), 0, swing * 0.6 * wave(p, 1, 0.3)] as const },
-          'leg.L': { rotate: [-legSwing * s, 0, 0] as const },
-          'leg.R': { rotate: [legSwing * s, 0, 0] as const },
-          'foot.L': { rotate: [legSwing * 0.5 * s, 0, 0] as const },
-          'foot.R': { rotate: [-legSwing * 0.5 * s, 0, 0] as const },
           'upperarm.R': { rotate: [-6 * s, 0, 0] as const },
           'upperarm.L': { rotate: [4 * s, 0, 0] as const },
           bolt: HIDE,
         };
       },
     });
-    k.animation('walk', glide(1.1, 18, 4, 3, 10));
-    k.animation('run', glide(0.7, 28, 12, 4, 18));
+    k.animation('walk', glide(1.1, 0.09, 0.02, 0.6, 0.005, 4, 3, 10));
+    k.animation('run', glide(0.7, 0.13, 0.035, 0.42, 0.02, 12, 4, 18));
 
     // A cast, solved by targets. The wrist follows keys in the chest's rest frame (reach); the
     // flame axis (the hand's rest +Y) follows its own keys (orient), and the fingers stay pointed
