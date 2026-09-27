@@ -1,0 +1,6 @@
+asset-id	file	model	description
+nature/terrain/boulder	boulder	deepseek/deepseek-flash
+architecture/building-parts/fence	fence	deepseek/deepseek-flash
+architecture/landscape-parts/dirt-road-straight	dirt-road-straight	volcengine-agent-plan/glm-5.3-flash
+architecture/landscape-parts/dirt-road-corner	dirt-road-corner	volcengine-agent-plan/glm-5.3-flash
+architecture/landscape-parts/tilled-field	tilled-field	volcengine-agent-plan/glm-5.3-flash

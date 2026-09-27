@@ -5,3 +5,5 @@ coverage/
 bench/runs/
 bench/site/
 bench/.env.local
+bench/trials/*/scheduler.log
+bench/trials/*/scheduler.pid

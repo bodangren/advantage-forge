@@ -1,0 +1,152 @@
+{
+  "barn": {
+    "status": "pass",
+    "score": 9,
+    "notes": "R3 provenance re-run (deepseek/deepseek-flash): red board-and-batten barn, cream trim + shingles, arched loft window, cross-braced doors. 4.9k tris (was 15.6k). Grafted."
+  },
+  "shop-stall": {
+    "status": "pass",
+    "score": 9,
+    "notes": "R3 provenance re-run (deepseek/deepseek-flash): scalloped striped awning, stocked counter, hanging sign. 14.5k tris (was 30k, cap 24k). Grafted."
+  },
+  "bridge": {
+    "status": "pass",
+    "score": 9,
+    "notes": "R3 provenance re-run (deepseek/deepseek-flash): arched plank deck, double rails, bolted end posts, 4.08 m span. 13.2k tris (was 41k, cap 20k). Grafted."
+  },
+  "signpost": {
+    "status": "pass",
+    "score": 9,
+    "notes": "R3 provenance re-run (deepseek/deepseek-flash): opposing arrow signs, mossy base fade, bolt details. Grafted."
+  },
+  "pine-tree": {
+    "status": "pass",
+    "notes": "Three scalloped tiers with drooping bumps, shaded undersides, flared trunk. Matches mockup. 39k tris heavy but acceptable for a hero tree.",
+    "score": 9
+  },
+  "bush": {
+    "status": "pass",
+    "notes": "Lumpy leaf-clump dome, two greens, light flecks. 25k tris heavy for a bush; may trim at graft.",
+    "score": 8
+  },
+  "wildflowers": {
+    "status": "pass",
+    "notes": "Cheerful clump, red/yellow/white heads, stems + blade leaves on grass mound. Side view sparse but natural.",
+    "score": 8
+  },
+  "boulder": {
+    "status": "pass",
+    "score": 7,
+    "notes": "R2 win (deepseek/deepseek-flash): rounded lumpy granite, moss cap, grounded, 11.3k tris. Slightly pale but reads well. Trial mockup copied to reference/boulder/ so the graft builds."
+  },
+  "fence": {
+    "status": "pass",
+    "notes": "R2 win (deepseek/deepseek-flash): clean post-and-rail run, warm honey wood, grounded, 5.1k tris. Agent run exited 1 but the asset and final build are fine.",
+    "score": 9
+  },
+  "lantern": {
+    "status": "pass",
+    "notes": "Black iron + gold bands + emissive flame behind translucent glass. Inspect buried-flame warning is a false positive (glass opacity). Graft as-is.",
+    "score": 8
+  },
+  "apple": {
+    "status": "pass",
+    "notes": "Good body, stem, leaf, top dent; glossy. Mid-value warning negligible at this size.",
+    "score": 9
+  },
+  "pumpkin": {
+    "status": "pass",
+    "notes": "Plump ribbed body, chunky green stem, flat base. Reads well.",
+    "score": 9
+  },
+  "grass-ground": {
+    "status": "pass",
+    "notes": "Perfect tile: 2 m square, bright green + flecks, crisp edges, 638 tris.",
+    "score": 8
+  },
+  "dirt-ground": {
+    "status": "pass",
+    "notes": "Warm brown + pebbles, clean edges. Side faces streaky but hidden between tiles. Minor.",
+    "score": 7
+  },
+  "dirt-road-straight": {
+    "status": "pass",
+    "notes": "R2 win (glm): warm brown matches dirt family, road flush with grass, full-bleed edges. R1 MiniMax was pale tan on a raised slab.",
+    "score": 9
+  },
+  "dirt-road-corner": {
+    "status": "pass",
+    "notes": "R2 win (glm): quarter bend enters/exits at edge midpoints, flush slab, warm brown. I widened the packed bed 0.8 -> 1.12 m at graft so it matches the straight road (1.14 m) with no pinch at tile seams.",
+    "score": 8
+  },
+  "farm-field": {
+    "status": "pass",
+    "notes": "Framed plot, dark soil, sprout rows. Chunky border reads great. Graft as-is.",
+    "score": 8
+  },
+  "tilled-field": {
+    "status": "pass",
+    "notes": "R2 win (glm): thin matte furrows read at 128 px, sides clean, distinct from dirt-ground. R1 MiniMax attempt was dark/wet.",
+    "score": 8
+  },
+  "dirt-road-t-junction": {
+    "status": "pass",
+    "score": 9,
+    "notes": "R3 harmony re-run (glm): warm brown matching straight/corner roads, flush slab, symmetric T (arms 1.2 m = straight road). 1.6k tris. Grafted."
+  },
+  "river-straight": {
+    "status": "pass",
+    "score": 8,
+    "notes": "R3 harmony re-run (glm): fresh green margins, sandy banks with pebbles, full-bleed 1.4 m channel matching the bend tile, flush slab. Grafted."
+  },
+  "river-bend": {
+    "status": "pass",
+    "score": 8,
+    "notes": "R3 harmony re-run (glm): fresh mid-green matching grass-ground, sandy banks with pebbles, 1.4 m channel (straight: 1.47 m opening), bend axis at tile corner. Grafted."
+  },
+  "river-bank": {
+    "status": "pass",
+    "score": 8,
+    "notes": "R3 harmony re-run (glm): fresh green, sandy shore, pebbles. Grafted with a seam fix: the trial water spanned the full 2 m edge while river-straight runs a 1.4 m channel - replaced the valley/water with river-straight's exact tube constants (AV .78/RV .75/AW .797/RW .77/SW 2.6, WATER_Y .05), pool closes inside the tile. Flush 2x0.08x2, clean build."
+  },
+  "well": {
+    "status": "pass",
+    "notes": "Kimi trial winner from the model comparison (0 warnings, clean build). Graft as assets/well.ts.",
+    "score": 8
+  },
+  "barrel": {
+    "status": "pass",
+    "score": 9,
+    "notes": "Alternate take r3 (muse-spark, style-anchored to fence wood + lantern metal): honey-brown bulged staves, dark riveted iron hoops, close lid with bung, chunky chibi proportions - same prop family as the batch. Beats the old baseline; grafted."
+  },
+  "cottage": {
+    "status": "pass",
+    "score": 9,
+    "notes": "Style-anchored r3 (deepseek): barn palette family - red board-and-batten, cream trim and shingle roof, arched door, round shuttered window, stone chimney, base bushes. Same game as the barn; grafted."
+  },
+  "oak-tree": {
+    "status": "pass",
+    "score": 9,
+    "notes": "Style-anchored r3 (mimo): flared trunk splitting into heavy limbs, 5-7 overlapping leaf blobs in the pine/bush foliage greens and bark tones. Sibling of the pine; grafted."
+  },
+  "hay-bale": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Map extra (deepseek, tilled-field golds + barn anchor): chunky rounded bale, strap grooves, straw wisps (slightly stiff). Grafted."
+  },
+  "stepping-stone": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Map extra (muse-spark, boulder/well stone + grass-ground base): flush 2 m grass piece, 5 rounded stones, tufts. Sits beside grass tiles cleanly. Grafted."
+  },
+  "clothesline": {
+    "status": "pass",
+    "score": 9,
+    "notes": "Map extra (glm, fence wood + shop-stall cloth palette): sagging rope, 4 bright laundry pieces, flower pot at the base. Grafted."
+  },
+  "well-apron": {
+    "status": "pass",
+    "score": 8,
+    "notes": "Map extra (mimo, well masonry anchor): 2.38 m round pad, 4 cm thick, Voronoi cobbles in the well drum grays with cream mortar, flush profile for the well to stand on. Grafted."
+  }
+}

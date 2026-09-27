@@ -1,281 +1,400 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
 
 /**
- * Village cottage, about 3.3 m tall: fieldstone base, plaster walls with a dark timber frame,
- * a steep shingled roof with generous overhangs, a stone chimney, an arched plank door, and
- * windows with a flower box. The ridge runs along X; the door faces +Z.
+ * Chibi hamlet cottage, about 2.2 m tall to the ridge (catalog `architecture/structure/cottage`).
+ *
+ * Role: cozy hamlet home beside the barn; must read at 128 px. No rig, no clips.
+ * Size: 2.0 m wide (X), 1.8 m deep (Z); the ridge runs along Z, and the gable, round window, and
+ *   arched door face +Z.
+ * One idea: a chunky red plank box under one big friendly cream roof, with a round window high in
+ *   the gable and a warm wood arched door. Reads as the barn's little sibling.
+ * Shape language: square/boxy mass (sturdy) with rounded bevels (friendly); one broad roof.
+ * Palette (barn family): red walls #c93b27, cream roof/trim #e9dcc0, tan base #d9c7a1, deep-red
+ *   recesses #5f1d12, warm wood #8a4b28, gold #d7a63a, warm stone #9a9082.
+ * Materials: painted wood walls (0.85), shingle roof (0.8), cream trim (0.85), tan footing (0.9),
+ *   wood door/shutters (0.8), stone chimney (0.9), worn iron straps (metal 0.7), gold ring (metal 1).
+ * Detail list: (1) chunky walls + broad roof, (2) stone footing, (3) arched wood door + cream
+ *   frame + iron straps, (4) round gable window + cream ring + wood shutters, (5) side stone
+ *   chimney, (6) cream corner boards, (7) two bushes + tiny flowers. Focal point: door + round window.
  */
 
-const W = 2.6; // length along X
-const D = 2.2; // depth along Z
-const BASE = 0.35; // stone foundation height
-const EAVE = 1.95; // top of the walls
-const RIDGE = 3.15;
-const FRONT = D / 2;
+const W = 2.0; // width along X
+const D = 1.8; // depth along Z
+const FOUND = 0.18; // foundation height
+const EAVE = 1.32; // top of the walls (roof springs here)
+const RIDGE = 2.12; // gable apex
+const FRONT = D / 2; // 0.9
+const PLANK = 0.16; // wall plank width
+
+const ROOF_HALF = W / 2 + 0.3; // roof overhang past the side walls
+const ROOF_OVER_Z = D / 2 + 0.3; // roof overhang past the gable
+const ROOF_EAVE_Y = EAVE - 0.12;
+const APEX_Y = RIDGE + 0.08; // ~2.2 m to the ridge
+const ROOF_INNER_DROP = 0.17;
+
+const DOOR_W = 0.62;
+const DOOR_R = DOOR_W / 2;
+const DOOR_BOT = FOUND;
+const DOOR_SPRING = 0.82;
+const DOOR_FRAME = 0.085;
+
+const WIN_R = 0.17; // glass radius
+const WIN_CY = 1.55; // round window centre in the gable
+const WIN_Z = FRONT + 0.03;
 
 const C = {
-  stone: rgb('#8d8a82'),
-  stoneDark: rgb('#5d5a54'),
-  mortar: rgb('#b9b1a0'),
-  plaster: '#ece2cc',
-  timber: '#4a3322',
-  shingle: rgb('#b35a3c'),
-  shingleDark: rgb('#7a3522'),
-  door: rgb('#7b4b2a'),
-  doorDark: rgb('#4f2e17'),
-  iron: '#34363b',
-  glass: '#3d5c7a',
-  petal: ['#e0533d', '#f2c14e', '#e98fb0'],
-  leaf: '#4f8a3a',
+  red: rgb('#c93b27'),
+  redDark: rgb('#8e2a1b'),
+  redDeep: rgb('#5f1d12'),
+  cream: rgb('#e9dcc0'),
+  creamDark: rgb('#c9b795'),
+  tan: rgb('#d9c7a1'),
+  wood: rgb('#8a4b28'),
+  woodDark: rgb('#5f3117'),
+  gold: rgb('#d7a63a'),
+  iron: rgb('#3d4047'),
+  void: rgb('#241110'),
+  stone: rgb('#9a9082'),
+  stoneDark: rgb('#6f6759'),
+  leafDark: rgb('#2f6b3a'),
+  leafMid: rgb('#4a9a4e'),
+  leafLime: rgb('#8ede4f'),
+  bloomA: rgb('#e0533d'),
+  bloomB: rgb('#f2c14e'),
 };
 
-/** Fieldstone: irregular stones (Worley cells) with pale mortar and per-stone tint. */
-const stonePaint = (scale: number) => (x: number, y: number, z: number) => {
-  const c = noise.worley(x * scale, y * scale * 1.6, z * scale);
-  const border = c.f2 - c.f1;
-  const tint = (c.id % 1000) / 1000;
-  const stone = mixRgb(C.stone, C.stoneDark, 0.2 + 0.5 * tint);
-  return border < 0.12 ? C.mortar : stone;
+const sstep = (e0: number, e1: number, v: number): number => {
+  const t = Math.max(0, Math.min(1, (v - e0) / (e1 - e0)));
+  return t * t * (3 - 2 * t);
 };
-const stoneBumps = (scale: number) => (x: number, y: number, z: number) => {
-  const c = noise.worley(x * scale, y * scale * 1.6, z * scale);
-  return -Math.min(1, (c.f2 - c.f1) * 4) * 0.8 + 0.4;
+
+/** Smooth periodic groove weight: 1 at a plank edge, 0 at the plank centre. */
+const grooveAt = (f: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 3);
+
+/** Vertical plank color: continuous board tint plus a soft dark groove at the board edge. */
+const plankPaint =
+  (base: Rgb, dark: Rgb, deep: Rgb, strength = 0.55) =>
+  (x: number, y: number, z: number) => {
+    // Front/back faces vary with x; side faces vary with z.
+    const along = Math.abs(z) >= Math.abs(x) ? x : z;
+    const f = along / PLANK - Math.floor(along / PLANK);
+    const g = grooveAt(f);
+    const board = 0.5 + 0.5 * noise.fbm(along * 3.5, y * 1.5, 0, 2);
+    const grain = 0.5 + 0.5 * noise.fbm(along * 22, y * 6, 0, 2);
+    let c = mixRgb(base, dark, 0.1 + 0.22 * board);
+    c = mixRgb(c, dark, 0.1 * grain);
+    c = mixRgb(c, deep, strength * g);
+    return c;
+  };
+
+/** Plank grooves as a normal-map-only relief. */
+const plankBump = (x: number, y: number, z: number) => {
+  const along = Math.abs(z) >= Math.abs(x) ? x : z;
+  const f = along / PLANK - Math.floor(along / PLANK);
+  return -0.004 * grooveAt(f) + 0.0015 * noise.fbm(along * 22, y * 6, 0, 2);
+};
+
+/** Arched outline in XY: a rectangle with a half-round top of radius `halfW`. */
+const archProfile = (halfW: number, bot: number, spring: number) => {
+  const pts: [number, number][] = [
+    [-halfW, bot],
+    [halfW, bot],
+  ];
+  const n = 14;
+  for (let i = 0; i <= n; i++) {
+    const a = (Math.PI * i) / n;
+    pts.push([halfW * Math.cos(a), spring + halfW * Math.sin(a)]);
+  }
+  return profile.polygon(pts);
+};
+
+/** Warm laid-stone paint: mortar lines where the worley cells touch, a tint per cell. */
+const stonePaint =
+  (base: Rgb, dark: Rgb, mortar: Rgb) =>
+  (x: number, y: number, z: number) => {
+    const { f1, f2, id } = noise.worley(x * 9, y * 5.5, z * 9, 4);
+    const gap = sstep(0.05, 0.14, f2 - f1);
+    const tint = noise.random(id, 7);
+    let c = mixRgb(base, dark, 0.35 * tint);
+    c = mixRgb(c, mortar, 0.75 * (1 - gap));
+    return c;
+  };
+
+const stoneBump = (x: number, y: number, z: number) => {
+  const { f1, f2 } = noise.worley(x * 9, y * 5.5, z * 9, 4);
+  return -0.006 * (1 - sstep(0.05, 0.14, f2 - f1)) + 0.002 * noise.fbm(x * 20, y * 20, z * 20, 2);
+};
+
+/** A chunky lumpy bush, flat on the ground, centred on the origin, about 0.44 m wide. */
+const bushShape = (s: number, seed: number) => {
+  const lumps = [];
+  const n = 6;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + noise.random(i, seed) * 0.7;
+    const r = 0.11 * s * (0.75 + 0.5 * noise.random(i, seed + 1));
+    const bx = Math.cos(a) * 0.13 * s * (0.5 + 0.7 * noise.random(i, seed + 2));
+    const bz = Math.sin(a) * 0.13 * s * (0.5 + 0.7 * noise.random(i, seed + 3));
+    const by = 0.1 * s + 0.08 * s * noise.random(i, seed + 4);
+    lumps.push(sdf.ellipsoid([r, r * 0.9, r]).at(bx, by, bz));
+  }
+  const base = sdf.smoothUnion(
+    0.06 * s,
+    sdf.ellipsoid([0.16 * s, 0.14 * s, 0.15 * s]).at(0, 0.13 * s, 0),
+    ...lumps,
+  );
+  return base.displace(0.015 * s, (x, y, z) => noise.fbm(x * 7, y * 7, z * 7, 2)).intersect(sdf.halfSpace([0, -1, 0], 0));
 };
 
 export default defineAsset({
   name: 'cottage',
-  description: 'Timber-framed village cottage with stone base, shingled roof, chimney, door, and flower box.',
-  detail: 0.014,
+  description:
+    'Chibi red plank cottage with a broad cream shingle roof, round gable window with shutters, arched wood door, stone chimney, and bushes at the base.',
+  detail: 0.016,
   texture: { size: 1024 },
+  reference: 'reference/barn_001.jpg',
 
   build(k) {
-    // ------------------------------------------------------------------ foundation
+    // ---------------------------------------------------------------- foundation
     const foundation = sdf
-      .box([W + 0.12, BASE, D + 0.12], 0.04)
-      .at(0, BASE / 2, 0)
-      .paintFn(stonePaint(5));
-    // Small surface detail goes into the normal map only (bump), so the mesh stays light.
-    const stoneBump = (scale: number, depth: number) => {
-      const f = stoneBumps(scale);
-      return (x: number, y: number, z: number) => depth * f(x, y, z);
-    };
-    k.body('foundation', foundation, { color: '#8d8a82', roughness: 0.9, bump: stoneBump(5, 0.012) });
-
-    // ------------------------------------------------------------------ walls and gables
-    const gableProfile = profile.polygon([
-      [-FRONT, EAVE - 0.01],
-      [FRONT, EAVE - 0.01],
-      [0, RIDGE - 0.12],
-    ]);
-    const walls = sdf.union(
-      sdf.box([W, EAVE - BASE + 0.02, D], 0.02).at(0, (EAVE + BASE) / 2, 0),
-      sdf.extrude(gableProfile, W).rotateY(90),
-    );
-    k.body('walls', walls, {
-      color: C.plaster,
-      roughness: 0.95,
-      bump: (x, y, z) => 0.003 * noise.fbm(x * 8, y * 8, z * 8, 3),
-    });
-
-    // Timber frame: beams sit 3 cm proud of the plaster on every face.
-    const beamX = (y: number) => sdf.box([W + 0.06, 0.1, D + 0.06], 0.012).at(0, y, 0);
-    // Posts show on the front and back faces only (the end walls get their own corner posts).
-    const frontAndBack = sdf
-      .box([W + 0.2, 3, 0.2])
-      .at(0, 1.5, FRONT)
-      .mirror('z', 0);
-    const posts = [-W / 2, -0.55, 0.55, W / 2].map((x) =>
-      sdf
-        .box([0.11, EAVE - BASE, D + 0.06], 0.012)
-        .at(x, (EAVE + BASE) / 2, 0)
-        .intersect(frontAndBack),
-    );
-    const sidePosts = [-FRONT, FRONT].map((z) =>
-      sdf.box([W + 0.06, EAVE - BASE, 0.11], 0.012).at(0, (EAVE + BASE) / 2, z),
-    );
-    const brace = (x0: number, x1: number) => {
-      const len = Math.hypot(x1 - x0, 0.75);
-      const ang = (Math.atan2(0.75, x1 - x0) * 180) / Math.PI;
-      return sdf
-        .box([len, 0.08, D + 0.05], 0.01)
-        .rotateZ(ang)
-        .at((x0 + x1) / 2, 1.55, 0);
-    };
-    // Only keep beam material near the wall surface, so beams never fill doors or windows.
-    const wallSkin = walls.round(0.03).subtract(walls.round(-0.02));
-    const frame = sdf
-      .union(
-        beamX(BASE + 0.05),
-        beamX(1.15),
-        beamX(EAVE - 0.05),
-        ...posts,
-        // Braces on the back face only; the front has the door and windows.
-        sdf.union(brace(-1.25, -0.6), brace(1.25, 0.6)).intersect(sdf.halfSpace([0, 0, 1], 0)),
-      )
-      .intersect(sdf.box([W + 0.1, EAVE, D + 0.1]).at(0, EAVE / 2, 0))
-      .intersect(wallSkin)
-      .union(
-        sdf
-          .union(...sidePosts)
-          .intersect(wallSkin)
-          .intersect(
-            sdf
-              .box([0.12, 3, D + 0.2])
-              .at(W / 2, 1.5, 0)
-              .mirror('x', 0),
-          ),
-      )
+      .box([W + 0.12, FOUND, D + 0.12], 0.03)
+      .at(0, FOUND / 2, 0)
       .paintFn((x, y, z, base) =>
-        mixRgb(base, rgb('#2c1d12'), 0.4 * Math.max(0, noise.fbm(x * 30, y * 4, z * 30, 2))),
+        mixRgb(base, C.creamDark, 0.25 * Math.max(0, noise.fbm(x * 14, y * 3, z * 14, 2))),
       );
-    k.body('timber', frame, {
-      color: C.timber,
-      roughness: 0.85,
-      bump: (x, y, z) => 0.003 * noise.fbm(x * 30, y * 4, z * 30, 2),
+    k.body('foundation', foundation, {
+      color: C.tan,
+      roughness: 0.9,
+      detail: 0.022,
+      maxError: 0.006,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 14, y * 4, z * 14, 3),
     });
 
-    // ------------------------------------------------------------------ roof
-    const roofProfile = profile.polygon([
-      [-FRONT - 0.32, EAVE - 0.18],
-      [0, RIDGE + 0.06],
-      [FRONT + 0.32, EAVE - 0.18],
-      [FRONT + 0.32, EAVE - 0.34],
-      [0, RIDGE - 0.12],
-      [-FRONT - 0.32, EAVE - 0.34],
+    // ---------------------------------------------------------------- walls and gable
+    const wallProfile = profile.polygon([
+      [-W / 2, FOUND],
+      [W / 2, FOUND],
+      [W / 2, EAVE],
+      [0, RIDGE],
+      [-W / 2, EAVE],
     ]);
-    const slope = Math.atan2(RIDGE + 0.06 - (EAVE - 0.18), FRONT + 0.32);
-    // Distance down the slope from the ridge, for shingle rows.
-    const downSlope = (y: number, _z: number) => (RIDGE + 0.06 - y) / Math.sin(slope);
-    const ROW = 0.13;
-    const roof = sdf
-      .extrude(roofProfile, W + 0.5, 0.03)
-      .rotateY(90)
-      .paintFn((x, y, z) => {
-        const s = downSlope(y, z) / ROW;
-        const row = Math.floor(s);
-        const col = Math.floor(x / 0.16 + (row % 2) * 0.5);
-        const seam = s - row < 0.08 || Math.abs(x / 0.16 + (row % 2) * 0.5 - col - 0.5) > 0.46;
-        const tint = noise.random(row, col, 11) * 0.45;
-        return seam ? C.shingleDark : mixRgb(C.shingle, C.shingleDark, tint);
-      });
-    // Shingle relief: each row rises slowly toward its lower edge, then drops back (a continuous
-    // ramp, never a jump), plus a little per-shingle unevenness.
-    const shingleBump = (x: number, y: number, z: number) => {
-      const s2 = downSlope(y, z) / ROW;
-      const f = s2 - Math.floor(s2);
-      const ramp = f < 0.85 ? f / 0.85 : (1 - f) / 0.15;
-      return 0.012 * ramp + 0.002 * noise.noise3(x * 20, y * 20, z * 20);
+    // Gentle outward bow at mid height plus a slow hand-made wobble: rounded chunky walls.
+    const wallBulge = (x: number, y: number, z: number) => {
+      const bow = Math.sin(Math.PI * Math.max(0, Math.min(1, (y - FOUND) / (EAVE - FOUND))));
+      return Math.max(-1, Math.min(1, 0.75 * bow + 0.5 * noise.fbm(x * 3.2, y * 3.2, z * 3.2, 2)));
     };
-    k.body('roof', roof, { color: '#b35a3c', roughness: 0.8, detail: 0.012, bump: shingleBump });
-
-    // ------------------------------------------------------------------ chimney
-    const chimney = sdf
-      .box([0.46, 1.9, 0.46], 0.03)
-      .at(-0.8, 2.45, -0.45)
-      .union(sdf.box([0.56, 0.1, 0.56], 0.02).at(-0.8, 3.42, -0.45))
-      .subtract(sdf.box([0.26, 0.4, 0.26]).at(-0.8, 3.5, -0.45))
-      .paintFn(stonePaint(6))
-      .paintWhere(sdf.box([0.28, 0.3, 0.28]).at(-0.8, 3.4, -0.45), '#1d1a18', 0.02);
-    k.body('chimney', chimney, { color: '#8d8a82', roughness: 0.9, bump: stoneBump(6, 0.01) });
-
-    // ------------------------------------------------------------------ door: arched planks
-    const doorX = 0;
-    const doorOutline = profile.polygon(
-      [
-        [-0.34, 0],
-        [0.34, 0],
-        [0.34, 1.05],
-        [0.24, 1.3],
-        [0, 1.4],
-        [-0.24, 1.3],
-        [-0.34, 1.05],
-      ],
-      { smooth: false },
-    );
-    const doorSlab = sdf.extrude(doorOutline, 0.08, 0.012).at(doorX, BASE, FRONT + 0.01);
-    const door = doorSlab.paintFn((x, y) => {
-      const plank = Math.floor((x - doorX + 0.34) / 0.136);
-      const f = (x - doorX + 0.34) / 0.136 - plank;
-      const grain = 0.5 + 0.5 * noise.noise3(x * 30, y * 3, plank);
-      const c = mixRgb(C.door, C.doorDark, 0.2 + 0.3 * noise.random(plank, 5) + 0.2 * grain);
-      return f < 0.06 ? C.doorDark : c;
-    });
-    k.body('door', door, {
-      color: '#7b4b2a',
-      roughness: 0.8,
-      detail: 0.008,
-      bump: (x, y) => {
-        const f = (x - doorX + 0.34) / 0.136;
-        const gap = f - Math.floor(f) < 0.06 ? -0.004 : 0;
-        return gap + 0.002 * noise.fbm(x * 40, y * 5, 0, 2);
-      },
-    });
-    const hinges = sdf.union(
-      ...[0.3, 0.95].map((y) =>
-        sdf.box([0.42, 0.045, 0.02], 0.008).at(doorX - 0.12, BASE + y, FRONT + 0.055),
-      ),
-      sdf
-        .torus(0.04, 0.009)
-        .rotateX(90)
-        .at(doorX + 0.22, BASE + 0.72, FRONT + 0.07),
-    );
-    k.body('door-iron', hinges, { color: C.iron, roughness: 0.5, metalness: 0.8, detail: 0.006 });
-    const step = sdf
-      .box([0.9, 0.12, 0.35], 0.03)
-      .at(doorX, 0.06, FRONT + 0.2)
-      .paintFn(stonePaint(8));
-    k.body('step', step, { color: '#8d8a82', roughness: 0.9, bump: stoneBump(8, 0.006) });
-
-    // ------------------------------------------------------------------ windows (one with a flower box)
-    const winY = 1.25;
-    const windowAt = (winX: number) => ({
-      frame: sdf
-        .box([0.56, 0.6, 0.1], 0.012)
-        .subtract(sdf.box([0.44, 0.48, 0.3]))
-        .union(sdf.box([0.05, 0.48, 0.06]), sdf.box([0.44, 0.05, 0.06]))
-        .at(winX, winY, FRONT + 0.02)
-        .union(sdf.box([0.68, 0.05, 0.14], 0.01).at(winX, winY - 0.32, FRONT + 0.06)),
-      glass: sdf.box([0.44, 0.48, 0.03]).at(winX, winY, FRONT - 0.01),
-    });
-    const left = windowAt(-0.92);
-    const right = windowAt(0.92);
-    k.body('window-frames', sdf.union(left.frame, right.frame), {
-      color: C.timber,
-      roughness: 0.8,
-      detail: 0.008,
-    });
-    k.body('glass', sdf.union(left.glass, right.glass), {
-      color: C.glass,
-      roughness: 0.08,
-      metalness: 0.3,
-      emissive: '#f0c070',
-      emissiveIntensity: 0.12,
-    });
-    const winX = -0.92;
-    const planter = sdf
-      .box([0.7, 0.16, 0.18], 0.015)
-      .subtract(sdf.box([0.62, 0.2, 0.12]).at(0, 0.06, 0))
-      .at(winX, winY - 0.45, FRONT + 0.12);
-    const flowers = sdf.union(
-      ...Array.from({ length: 11 }, (_, i) => {
-        const x = winX - 0.3 + (i / 10) * 0.6 + (noise.random(i, 1) - 0.5) * 0.03;
-        const y = winY - 0.34 + noise.random(i, 2) * 0.06;
-        const z = FRONT + 0.12 + (noise.random(i, 3) - 0.5) * 0.08;
-        return sdf
-          .sphere(0.045 + noise.random(i, 4) * 0.015)
-          .at(x, y, z)
-          .paint(C.petal[i % 3]!);
-      }),
-    );
-    const foliage = sdf
-      .ellipsoid([0.33, 0.06, 0.07])
-      .at(winX, winY - 0.39, FRONT + 0.12)
-      .displace(0.02, (x, y, z) => noise.noise3(x * 30, y * 30, z * 30))
-      .paint(C.leaf);
-    k.body('flower-box', sdf.union(planter.paint(C.timber), foliage, flowers), {
-      color: C.timber,
+    const walls = sdf.extrude(wallProfile, D, 0.045).displace(0.013, wallBulge);
+    k.body('walls', walls.paintFn(plankPaint(C.red, C.redDark, C.redDeep)), {
+      color: C.red,
       roughness: 0.85,
-      detail: 0.007,
+      detail: 0.013,
+      maxError: 0.004,
+      bump: plankBump,
     });
+
+    // ---------------------------------------------------------------- roof
+    const roofProfile = profile.polygon([
+      [-ROOF_HALF, ROOF_EAVE_Y],
+      [0, APEX_Y],
+      [ROOF_HALF, ROOF_EAVE_Y],
+      [ROOF_HALF, ROOF_EAVE_Y - ROOF_INNER_DROP],
+      [0, APEX_Y - ROOF_INNER_DROP],
+      [-ROOF_HALF, ROOF_EAVE_Y - ROOF_INNER_DROP],
+    ]);
+    const slope = Math.atan2(APEX_Y - ROOF_EAVE_Y, ROOF_HALF);
+    const ROW = 0.15;
+    const COL = 0.19;
+    const downSlope = (y: number) => (APEX_Y - y) / Math.sin(slope);
+    // Continuous shingle paint: a periodic dark line at each row/column edge plus smooth tint.
+    // Hard color jumps would split the mesh into seams that fold under reduction.
+    const line = (v: number, p: number) => Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * v), p);
+    const roof = sdf.extrude(roofProfile, ROOF_OVER_Z * 2, 0.045).paintFn((x, y, z) => {
+      const s = downSlope(y) / ROW;
+      const row = Math.floor(s);
+      const f = s - row;
+      const u = z / COL + (row % 2) * 0.5;
+      const g = u - Math.floor(u);
+      const seam = Math.max(line(f, 5), line(g, 6));
+      const tint = 0.5 + 0.5 * noise.fbm(z * 3.5, s * 3.5, 0, 2);
+      const shingle = mixRgb(mixRgb(C.cream, C.creamDark, 0.35 * tint), C.creamDark, 0.85 * seam);
+      // Plain cream rake board along the gable edges, like the barn's roof trim.
+      const edge = sstep(ROOF_OVER_Z - 0.09, ROOF_OVER_Z - 0.02, Math.abs(z));
+      return mixRgb(shingle, C.cream, edge);
+    });
+    const shingleBump = (x: number, y: number, z: number) => {
+      const s = downSlope(y) / ROW;
+      const f = s - Math.floor(s);
+      const ramp = f < 0.85 ? f / 0.85 : (1 - f) / 0.15;
+      const u = z / COL + (Math.floor(s) % 2) * 0.5;
+      const g = u - Math.floor(u);
+      const ridge = g < 0.09 || g > 0.91 ? -0.004 : 0;
+      return 0.012 * ramp + ridge + 0.002 * noise.noise3(x * 24, y * 24, z * 24);
+    };
+    k.body('roof', roof, {
+      color: C.cream,
+      roughness: 0.8,
+      detail: 0.022,
+      maxError: 0.008,
+      textureDensity: 2,
+      bump: shingleBump,
+    });
+
+    // ---------------------------------------------------------------- door
+    const doorZ = FRONT + 0.01;
+    // Dark reveal behind the leaves, so the doorway reads as an opening.
+    const opening = sdf.extrude(archProfile(DOOR_R + 0.01, DOOR_BOT, DOOR_SPRING), 0.06, 0.01);
+    k.body('door-opening', opening.at(0, 0, doorZ), {
+      color: C.void,
+      roughness: 0.9,
+      detail: 0.012,
+      maxError: 0.005,
+    });
+
+    // One arched wood leaf, plank-painted.
+    const leaf = sdf
+      .extrude(archProfile(DOOR_R - 0.01, DOOR_BOT + 0.025, DOOR_SPRING), 0.1, 0.012)
+      .at(0, 0, FRONT + 0.06);
+    k.body('door', leaf.paintFn(plankPaint(C.wood, C.woodDark, C.void)), {
+      color: C.wood,
+      roughness: 0.8,
+      detail: 0.01,
+      maxError: 0.004,
+      bump: plankBump,
+    });
+
+    // Two worn iron straps across the door.
+    const straps = sdf
+      .union(
+        sdf.box([0.54, 0.05, 0.03], 0.012).at(0, 0.44, FRONT + 0.12),
+        sdf.box([0.54, 0.05, 0.03], 0.012).at(0, 0.74, FRONT + 0.12),
+      );
+    k.body('straps', straps, { color: C.iron, roughness: 0.55, metalness: 0.7, detail: 0.008 });
+
+    // Gold ring handle.
+    const ring = sdf
+      .torus(0.052, 0.015)
+      .rotateX(90)
+      .at(0.16, 0.6, FRONT + 0.13)
+      .union(sdf.ellipsoid([0.03, 0.03, 0.018]).at(0.16, 0.67, FRONT + 0.12));
+    k.body('handle', ring, { color: C.gold, roughness: 0.35, metalness: 1, detail: 0.01, maxError: 0.005 });
+
+    // ---------------------------------------------------------------- round window
+    const glass = sdf.extrude(profile.circle(WIN_R), 0.05).at(0, WIN_CY, WIN_Z);
+    k.body('window-glass', glass, {
+      color: C.void,
+      roughness: 0.2,
+      emissive: rgb('#ffbf6b'),
+      emissiveIntensity: 0.25,
+      detail: 0.014,
+    });
+
+    // ---------------------------------------------------------------- trim (cream)
+    const frameRing = sdf
+      .extrude(profile.circle(WIN_R + 0.058), 0.1, 0.02)
+      .subtract(sdf.extrude(profile.circle(WIN_R + 0.002), 0.4))
+      .at(0, WIN_CY, WIN_Z + 0.01);
+    const mullions = sdf
+      .union(
+        sdf.box([WIN_R * 2 + 0.1, 0.03, 0.05], 0.012).at(0, WIN_CY, WIN_Z + 0.04),
+        sdf.box([0.03, WIN_R * 2 + 0.1, 0.05], 0.012).at(0, WIN_CY, WIN_Z + 0.04),
+      );
+    const doorFrame = sdf
+      .extrude(archProfile(DOOR_R + DOOR_FRAME, DOOR_BOT - 0.02, DOOR_SPRING), 0.15, 0.02)
+      .subtract(sdf.extrude(archProfile(DOOR_R + 0.004, DOOR_BOT + 0.004, DOOR_SPRING), 0.5))
+      .at(0, 0, FRONT + 0.01);
+    const corner = sdf
+      .box([0.13, EAVE - FOUND + 0.02, 0.13], 0.025)
+      .at(W / 2 - 0.03, (EAVE + FOUND) / 2, D / 2 - 0.03)
+      .mirror('x', 0)
+      .mirror('z', 0);
+    const bead = sdf
+      .ellipsoid([0.05, 0.05, 0.05])
+      .at(W / 2 + 0.02, EAVE - 0.14, D / 2 + 0.02)
+      .mirror('x', 0)
+      .mirror('z', 0);
+    k.body('trim', sdf.union(frameRing, mullions, doorFrame, corner, bead), {
+      color: C.cream,
+      roughness: 0.85,
+      detail: 0.011,
+      maxError: 0.004,
+      textureDensity: 2,
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 26, y * 8, z * 26, 2),
+    });
+
+    // ---------------------------------------------------------------- woodwork (shutters)
+    const shutter = sdf
+      .box([0.15, 0.34, 0.05], 0.022)
+      .at(WIN_R + 0.13, WIN_CY, WIN_Z + 0.01)
+      .mirror('x', 0)
+      .paintFn(plankPaint(C.wood, C.woodDark, C.void, 0.4));
+    k.body('shutters', shutter, {
+      color: C.wood,
+      roughness: 0.8,
+      detail: 0.009,
+      maxError: 0.004,
+      bump: plankBump,
+    });
+
+    // ---------------------------------------------------------------- chimney (stone)
+    const CH_X = 0.6;
+    const CH_Z = -0.22;
+    const CH_Y0 = 1.4;
+    const CH_Y1 = 2.28;
+    const chimney = sdf
+      .box([0.26, CH_Y1 - CH_Y0, 0.26], 0.035)
+      .at(CH_X, (CH_Y0 + CH_Y1) / 2, CH_Z)
+      .paintFn(stonePaint(C.stone, C.stoneDark, C.creamDark));
+    const cap = sdf
+      .box([0.33, 0.07, 0.33], 0.02)
+      .at(CH_X, CH_Y1 + 0.02, CH_Z)
+      .paintFn((x, y, z, base) => mixRgb(base, C.stoneDark, 0.35));
+    k.body('chimney', sdf.union(chimney, cap), {
+      color: C.stone,
+      roughness: 0.9,
+      detail: 0.018,
+      maxError: 0.006,
+      bump: stoneBump,
+    });
+
+    // ---------------------------------------------------------------- bushes and flowers
+    const bushes = sdf
+      .union(bushShape(1.0, 1).at(-0.6, 0, 1.02), bushShape(0.85, 2).at(0.66, 0, 0.96))
+      .paintFn((x, y, z, base) => {
+        const t = Math.max(0, Math.min(1, y / 0.3));
+        const v = 0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2);
+        const target = mixRgb(C.leafDark, C.leafMid, Math.max(0, Math.min(1, t + (v - 0.5) * 0.35)));
+        return mixRgb(base, target, 0.7);
+      });
+    k.body('bushes', bushes, { color: C.leafMid, roughness: 0.8, detail: 0.011, maxError: 0.005, paintWeight: 2 });
+
+    // Bright leaf tips break the bush outline.
+    const tips = sdf.union(
+      sdf.ellipsoid([0.07, 0.06, 0.06]).at(-0.78, 0.26, 1.08),
+      sdf.ellipsoid([0.06, 0.055, 0.055]).at(-0.5, 0.3, 0.86),
+      sdf.ellipsoid([0.065, 0.055, 0.055]).at(0.82, 0.24, 0.98),
+      sdf.ellipsoid([0.055, 0.05, 0.05]).at(0.56, 0.28, 1.1),
+    );
+    k.body('leaf-tips', tips, { color: C.leafLime, roughness: 0.72, detail: 0.013, maxError: 0.005 });
+
+    // Three tiny flowers in front of the right bush.
+    const flowers: [number, number, number, Rgb][] = [
+      [0.4, 1.24, 0.17, C.bloomA],
+      [0.5, 1.18, 0.21, C.bloomB],
+      [0.33, 1.2, 0.14, C.bloomA],
+    ];
+    const stems = sdf.union(
+      ...flowers.map(([fx, fz, h]) => sdf.capsule([fx, 0.012, fz], [fx, h, fz], 0.012)),
+    );
+    k.body('stems', stems, { color: C.leafDark, roughness: 0.8, detail: 0.006 });
+
+    const blooms = sdf.union(
+      ...flowers.map(([fx, fz, h, col]) =>
+        sdf
+          .sphere(0.038)
+          .paint(col)
+          .at(fx, h + 0.02, fz)
+          .union(sdf.sphere(0.016).paint(C.woodDark).at(fx, h + 0.05, fz)),
+      ),
+    );
+    k.body('blooms', blooms, { color: C.bloomA, roughness: 0.6, detail: 0.009, maxError: 0.006 });
   },
 });

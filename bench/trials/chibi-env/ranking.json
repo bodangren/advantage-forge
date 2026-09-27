@@ -1,0 +1,37 @@
+[
+  {
+    "model": "opencode-go/deepseek-v4.1-flash",
+    "n": 4,
+    "score": 1,
+    "avgMin": 24,
+    "warns": 0
+  },
+  {
+    "model": "volcengine-agent-plan/glm-5.3-flash",
+    "n": 4,
+    "score": 1,
+    "avgMin": 32,
+    "warns": 0
+  },
+  {
+    "model": "opencode-go/muse-spark-1.3-contributor",
+    "n": 4,
+    "score": 0.875,
+    "avgMin": 8,
+    "warns": 4
+  },
+  {
+    "model": "opencode-go/mimo-v2.6-flash",
+    "n": 4,
+    "score": 0.875,
+    "avgMin": 50,
+    "warns": 0
+  },
+  {
+    "model": "minimax-cn-coding-plan/MiniMax-M3",
+    "n": 6,
+    "score": 0.667,
+    "avgMin": 11,
+    "warns": 2
+  }
+]
