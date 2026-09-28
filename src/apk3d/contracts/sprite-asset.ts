@@ -546,8 +546,11 @@ export function registerAssetAnimations(
 /** Pack root prefix the APK accepts; the standalone host maps it under its site base. */
 export const SPRITE_PACK_ROOT_PREFIX = '/assets/apk/';
 
-/** The pack root for a pack id, in the APK's canonical form. */
-export const spritePackRoot = (packId: string): string => `${SPRITE_PACK_ROOT_PREFIX}${packId}/`;
+/**
+ * The pack root for a pack id, in the APK's canonical form: a version folder and no trailing
+ * slash (`/assets/apk/<id>/v1`), so `resolveAssetBinding` makes `<root>/<path>` without `//`.
+ */
+export const spritePackRoot = (packId: string, version = 'v1'): string => `${SPRITE_PACK_ROOT_PREFIX}${packId}/${version}`;
 
 /** The 8 forge directions in sheet row order (src/render/page.ts `DIRECTION_NAMES`). */
 export const FORGE_DIRECTIONS_8 = ['S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE'] as const;

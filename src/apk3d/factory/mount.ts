@@ -5,6 +5,7 @@
  * given once (`createCartridgeMounter`) and the mounter branches on the renderer.
  */
 import type {
+  AssetUrlResolver,
   RendererId,
   RuntimeEdition,
   RuntimeEdition3D,
@@ -12,6 +13,7 @@ import type {
   GameResults,
   GameTerminalOutcome,
 } from '../contracts/index.js';
+import type { Stage3D } from '../stage/index.js';
 import { createInputController } from './input.js';
 import { isPhaserCartridge, isThreeCartridge } from './select.js';
 import type {
@@ -35,14 +37,18 @@ export interface CartridgeMounterFactories {
 /** What the host passes for one mount: the three-factory context plus the 2D edition. */
 export interface MountOptions extends Omit<
   ThreeFactoryContext,
-  'cartridge' | 'edition' | 'edition2d' | 'complete'
+  'cartridge' | 'edition' | 'edition2d' | 'complete' | 'stage'
 > {
   renderer: RendererId;
+  /** The 3D stage; required for 'three' (a device without WebGL2 has none). */
+  stage?: Stage3D;
   cartridge: Cartridge;
   /** The 3D edition (model packs); required for 'three'. */
   edition3d?: RuntimeEdition3D;
   /** The 2D edition (sprite packs); required for 'phaser'. */
   edition2d?: RuntimeEdition;
+  /** Where the 2D pack files load from (the site's base path); none: the pack root. */
+  resolveUrl?: AssetUrlResolver;
   complete(result: GameResults, outcome: GameTerminalOutcome, evidence: StoryGameEvidence): void;
 }
 
@@ -55,12 +61,13 @@ export function createCartridgeMounter(
   factories: CartridgeMounterFactories,
 ): (options: MountOptions) => Promise<MountedGame> {
   return async (options) => {
-    const { renderer, cartridge, edition3d, edition2d, complete, ...rest } = options;
+    const { renderer, cartridge, edition3d, edition2d, complete, stage, ...rest } = options;
     if (renderer === 'three') {
       if (!isThreeCartridge(cartridge))
         throw new Error(`Cartridge ${cartridge.manifest.id} has no three.js path`);
       if (!edition3d) throw new Error(`Mounting ${cartridge.manifest.id} in 3D needs edition3d`);
-      const three = await factories.three({ ...rest, cartridge, edition: edition3d, complete });
+      if (!stage) throw new Error(`Mounting ${cartridge.manifest.id} in 3D needs a stage`);
+      const three = await factories.three({ ...rest, stage, cartridge, edition: edition3d, complete });
       return {
         renderer,
         three,
@@ -94,6 +101,8 @@ export function createCartridgeMounter(
         i18n: rest.i18n,
         options: rest.options,
         host: rest.host,
+        audio: rest.audio,
+        ...(rest.resolveUrl ? { resolveUrl: rest.resolveUrl } : {}),
         diagnostic: rest.diagnostic,
         // The kit completion latch (the APK `single-completion-emission` behavior), as in the three factory.
         complete: (result, outcome = 'complete', evidence) => {

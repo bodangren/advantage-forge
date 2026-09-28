@@ -762,8 +762,9 @@ optional audio controllers) and the same return value, a Phaser `GameConfig` fra
 loads through `preloadAssetBindings`, `create` builds display objects and registers `shutdown`
 and `destroy` cleanup, `update(time, delta)` reads `inputController.snapshot()` once per frame,
 and the scene extends `apkCaptureResponsiveState`, `apkRestoreResponsiveState`, and
-`apkRecompose` for the responsive host. `Game2DContext` adds three optional fields the APK
-factory never sets: `i18n`, `options`, and `host` (the same services the 3D context gets). A 2D
+`apkRecompose` for the responsive host. `Game2DContext` adds optional fields the APK
+factory never sets: `i18n`, `options`, and `host` (the same services the 3D context gets),
+`audio` (the page's bus), and `resolveUrl` (section 15.4). A 2D
 view falls back when they are absent: its own `strings.en.ts` for `i18n`,
 `SESSION_OPTIONS_DEFAULT` for `options`, and no host buttons. `complete` takes the
 `StoryGameEvidence` as a third argument; the APK today has two parameters, and the port adds the
@@ -821,15 +822,18 @@ Hashing (the monorepo policy): the APK `physicalAssetFileSchema` requires `sha25
 physical file today. Sprite packs keep exactly that field, computed by the packer, and no other
 hash: no pack-level hash, no chain, no hash on the model kind (section 7.1).
 
-What Claude's packer (Phase A') writes per forge sheet (one file per asset and clip):
+What the packer (`scripts/apk2d-pack.ts`, Phase A') writes per forge sheet (one file per asset
+and clip). All 2D art uses one camera: orthographic, azimuth 0, elevation 45 degrees, 64 pixels
+per meter (`scripts/apk2d-sprites.ts`, `scripts/apk2d-bake.ts`), so characters, props, and the
+baked backgrounds line up:
 
 | Field | Value |
 | --- | --- |
-| `id`, `path` | `heroes/knight_walk`, `heroes/knight_walk.png` (the path ends with `.png`) |
+| `id`, `path` | `knight.walk`, `sprites/knight/walk.png`; a prop `prop.apple`, `props/apple.png`; a background `background.potion-rush`, `backgrounds/potion-rush.png` (kind `image`, view `world`, no alpha) |
 | `kind` | `spritesheet` (a still with one frame: also `spritesheet`, one cell, so `frame` bindings work) |
-| `view` | `isometric` for the 8-direction three-quarter camera (`--elevation 30`); `side-scroll` for a side-only sheet |
-| `width`, `height` | `cell * frames`, `cell * directions` |
-| `format`, `alpha` | `png`, `true` |
+| `view` | `isometric` for the three-quarter camera (`--elevation 45 --ppm 64`); `side-scroll` for a side-only sheet |
+| `width`, `height` | `cell * frames`, `cell * directions`; the cell comes from the clip's `metrics.json` (at a fixed ppm, a bigger model gets a bigger cell) |
+| `format`, `alpha` | `png`, `true`; quantized to 256 colors (old phones have little texture memory) |
 | `byteSize`, `sha256` | of the encoded PNG |
 | `grid` | `forgeSheetGrid(cell, directions, frames)`: rows = directions, columns = frames |
 | `animations` | `forgeSheetAnimations(clip, directions, frames, fps, loop)`: one per direction, named `<clip>.<dir>` in lower case (`walk.s`, `walk.sw`, ...), `repeat` -1 for a loop, 0 for a one-shot |
@@ -838,17 +842,21 @@ What Claude's packer (Phase A') writes per forge sheet (one file per asset and c
 | `provenance` | `{ source: 'fantasy-asset-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' }` |
 
 Direction rows follow `src/render/page.ts`: `S, SW, W, NW, N, NE, E, SE` for 8, `S, W, N, E` for
-4, `S` for 1 (`FORGE_DIRECTIONS_8`, `FORGE_DIRECTIONS_4`). Characters use 128 px cells, the forge
-default; props and floor tiles at the same camera use the cell their `metrics.json` says. The
-pack: `{ id, version: '1.0.0', root: '/assets/apk/<id>/', files }` (`spritePackRoot(id)`; the APK
-requires that root prefix). The standalone site serves the files from
-`demo/public/assets/apk/<id>/` and resolves URLs under its relative base through the
-`resolveUrl` seam (`(pack, file) => BASE + pack.root.slice(1) + file.path`); the APK serves them
-from `/assets/apk/`. The 2D edition is the APK `RuntimeEdition`: `{ id: 'standard' | 'lite',
-title, runtimeApiVersion, pack, bindings, tuning: { speed, targetScale, collisionScale,
-intensity } }`. A binding is `{ key, file, usage: 'animation' | 'frame' | 'image', view,
-animation? , frame? }`; the manifest's APK field `requiredAssetBindings` lists the 2D keys a game
-needs (`hero.knight.walk`), as `requiredModelBindings` lists the 3D keys.
+4, `S` for 1 (`FORGE_DIRECTIONS_8`, `FORGE_DIRECTIONS_4`). Heroes and the dragon have 8
+directions, everyone else 4, props 1. The pack: `{ id, version: '1.0.0', root:
+'/assets/apk/<id>/v1', files }` (`spritePackRoot(id)`: the APK's canonical form, a version folder
+and no trailing slash, so `<root>/<path>` has no `//`). There is one pack, `primary-chibi-2d`.
+The standalone site serves it from `demo/public/assets/apk/primary-chibi-2d/v1/` and passes a
+`resolveUrl` in the 2D context (`(pack, file) => BASE + pack.root.slice(1) + '/' + file.path`);
+the view gives it to `preloadAssetBindings`. The APK serves `/assets/apk/` at the root and
+passes none. The 2D edition is the APK `RuntimeEdition`: `{ id: 'standard' | 'lite', title,
+runtimeApiVersion, pack, bindings, tuning: { speed, targetScale, collisionScale, intensity } }`.
+A binding is `{ key, file, usage: 'animation' | 'frame' | 'image', view, animation? , frame? }`.
+The manifest's APK field `requiredAssetBindings` lists the 2D keys a game needs, as
+`requiredModelBindings` lists the 3D keys. The kit binds each file under its own id
+(`sheetBindings(pack, ids)`: key = file id, usage `frame` for a sheet, `image` for a
+background), and `registerSheetAnimations` registers every direction's animation of a bound
+sheet.
 
 ### 15.5 The standalone host: mounting either renderer
 

@@ -16,6 +16,8 @@ export interface Saved {
   story?: string | undefined;
   game?: string | undefined;
   helper?: boolean | undefined;
+  /** True: play games in 2D where they have a 2D view. */
+  flat?: boolean | undefined;
 }
 
 function read(): Saved {

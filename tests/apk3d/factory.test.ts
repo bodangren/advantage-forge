@@ -389,6 +389,7 @@ describe('createInputController (APK copy)', () => {
 describe('createCartridgeMounter', () => {
   const base = (): Omit<MountOptions, 'renderer' | 'cartridge'> => ({
     container: {} as HTMLElement,
+    stage: {} as never,
     input: [{ term: 'river', translation: 'riviere' }],
     edition3d,
     edition2d,

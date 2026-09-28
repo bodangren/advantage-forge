@@ -4,7 +4,7 @@
  * not built yet shows as "coming soon".
  */
 import { isCompatible, type Cartridge3DManifest, type StoryInput } from '../apk3d/contracts/index.js';
-import type { ThreeCartridge } from '../apk3d/factory/index.js';
+import type { Cartridge } from '../apk3d/factory/index.js';
 import { manifest as monsterEncounters } from '../games/monster-encounters/manifest.js';
 import monsterEncountersStrings from '../games/monster-encounters/strings.en.js';
 import { manifest as potionRush } from '../games/potion-rush/manifest.js';
@@ -27,7 +27,7 @@ export interface GameEntry {
   titleKey: string;
   pitchKey: string;
   manifest?: Cartridge3DManifest;
-  load?: () => Promise<ThreeCartridge>;
+  load?: () => Promise<Cartridge>;
 }
 
 export const GAMES: GameEntry[] = [

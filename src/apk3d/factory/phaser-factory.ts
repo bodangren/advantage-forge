@@ -1,9 +1,11 @@
 /**
  * The Phaser game factory, copied from the APK so that the standalone host mounts a 2D cartridge
  * exactly as the monorepo will. Source: ../reading-advantage-monorepo (commit fe6aedc2b),
- * packages/advantage-play-kit/src/runtime/phaser-factory.ts. Two additions, marked `kit:`: the
- * factory context carries `i18n`, `options`, and `host` for the 2D view, and `complete` passes
- * the evidence through as a third argument.
+ * packages/advantage-play-kit/src/runtime/phaser-factory.ts. Additions, marked `kit:`: the
+ * factory context carries `i18n`, `options`, `host`, and `audio` for the 2D view, `complete`
+ * passes the evidence through as a third argument, and the context carries the host's
+ * `resolveUrl` for pack files (the standalone site serves `/assets/apk/` under its own base path;
+ * the APK serves it at the root and sets none).
  */
 import type { APKGameInstance, SupportedResponsiveComposition } from '../contracts/index.js';
 import type { PhaserFactoryContext, PhaserGameFactory } from './types.js';
@@ -74,6 +76,8 @@ export function createPhaserGameFactory(
       ...(context.i18n ? { i18n: context.i18n } : {}),
       ...(context.options ? { options: context.options } : {}),
       ...(context.host ? { host: context.host } : {}),
+      ...(context.audio ? { audio: context.audio } : {}),
+      ...(context.resolveUrl ? { resolveUrl: context.resolveUrl } : {}),
     });
     const scene = cartridgeConfig.scene;
     const game = new Phaser.Game({

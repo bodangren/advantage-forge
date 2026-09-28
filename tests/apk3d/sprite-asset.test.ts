@@ -114,7 +114,8 @@ describe('forge sheet helpers', () => {
   });
 
   it('names the pack root the APK accepts', () => {
-    expect(spritePackRoot('forge-heroes')).toBe('/assets/apk/forge-heroes/');
+    expect(spritePackRoot('forge-heroes')).toBe('/assets/apk/forge-heroes/v1');
+    expect(spritePackRoot('forge-heroes', 'v2')).toBe('/assets/apk/forge-heroes/v2');
   });
 });
 
@@ -143,15 +144,15 @@ describe('validateEdition (APK copy)', () => {
     expect(runtimeEditionSchema.safeParse(e).success).toBe(true);
     expect(validateEdition(e, ['hero.knight.walk'], APK_RUNTIME_API_VERSION)).toBe(e);
     const resolved = resolveAssetBinding(e, 'hero.knight.walk');
-    expect(resolved.url).toBe('/assets/apk/forge-heroes//heroes/knight_walk.png');
+    expect(resolved.url).toBe('/assets/apk/forge-heroes/v1/heroes/knight_walk.png');
     expect(resolved.textureKey).toBe('apk:standard:heroes/knight_walk');
     expect(resolved.animationKey).toBe('apk:standard:heroes/knight_walk:walk.s');
     const base = resolveAssetBinding(
       e,
       'hero.knight.still',
-      (pack, file) => `./${pack.root.slice(1)}${file.path}`,
+      (pack, file) => `./${pack.root.slice(1)}/${file.path}`,
     );
-    expect(base.url).toBe('./assets/apk/forge-heroes/heroes/knight_walk.png');
+    expect(base.url).toBe('./assets/apk/forge-heroes/v1/heroes/knight_walk.png');
     expect(base.animationKey).toBeUndefined();
   });
 
@@ -224,7 +225,7 @@ describe('validateEdition (APK copy)', () => {
     expect(calls).toEqual([
       [
         'apk:standard:heroes/knight_walk',
-        '/assets/apk/forge-heroes//heroes/knight_walk.png',
+        '/assets/apk/forge-heroes/v1/heroes/knight_walk.png',
         { frameWidth: 128, frameHeight: 128 },
       ],
     ]);

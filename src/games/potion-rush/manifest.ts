@@ -4,21 +4,50 @@
  * `inputMode` is 'story': the host passes the whole `StoryInput`, and the evidence needs the
  * sentence ids, the paragraphs, the story id, and the level. The core also accepts the APK
  * `SentenceInput` (section 5.2 of the design), so the APK port can switch this to 'sentence'.
+ *
+ * `requiredAssetBindings` lists the 2D view's files of the `primary-chibi-2d` sprite pack (the key
+ * of each binding is its file id); the 3D view loads its models by path until model packs land.
  */
 import { APK3D_CAPABILITIES, CARTRIDGE_3D_RUNTIME_API_VERSION, validateCartridge3DManifest } from '../../apk3d/contracts/index.js';
+
+/** The heroes a student may play (the alchemist) and the clips the 2D view plays on them. */
+export const HEROES_2D = ['knight', 'wizard', 'cleric'] as const;
+export const HERO_CLIPS_2D = ['idle', 'walk', 'attack2', 'victory'] as const;
+
+/** Each customer's clips in the 2D pack: walk in, wait, react to the mood, thank. */
+export const CUSTOMER_CLIPS_2D: Readonly<Record<string, readonly string[]>> = {
+  farmer: ['idle', 'walk', 'talk', 'wave'],
+  villager: ['idle', 'walk', 'talk', 'wave'],
+  innkeeper: ['idle', 'walk', 'talk', 'wave'],
+  guard: ['idle', 'walk', 'salute'],
+  druid: ['idle', 'walk', 'victory'],
+  'orc-warrior': ['idle', 'walk', 'roar'],
+  'goblin-warrior': ['idle', 'walk', 'taunt'],
+  skeleton: ['idle', 'walk'],
+};
+
+export const INGREDIENTS_2D = ['bottle', 'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread'] as const;
+
+/** Every 2D file the game uses: the baked shop, the heroes, the customers, the ingredients. */
+export const FILES_2D: readonly string[] = [
+  'background.potion-rush',
+  ...HEROES_2D.flatMap((h) => HERO_CLIPS_2D.map((c) => `${h}.${c}`)),
+  ...Object.entries(CUSTOMER_CLIPS_2D).flatMap(([kind, clips]) => clips.map((c) => `${kind}.${c}`)),
+  ...INGREDIENTS_2D.map((k) => `prop.${k}`),
+];
 
 export const manifest = validateCartridge3DManifest({
   id: 'potion-rush',
   title: 'Potion Rush',
   description: 'Brew every sentence the customers order: drag the words into the cauldrons in order, then serve.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderers: ['three'],
+  renderers: ['three', 'phaser'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'portrait',
   levels: ['A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
-  requiredAssetBindings: [],
+  requiredAssetBindings: [...FILES_2D],
   requiredModelBindings: [],
   packs: ['heroes', 'potion-shop'],
   capabilities: [...APK3D_CAPABILITIES],

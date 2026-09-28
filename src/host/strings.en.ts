@@ -18,6 +18,7 @@ export default {
       game: 'Choose a game',
       noGame: 'No game fits this story yet. Choose another story.',
       helper: 'Helper mode (easier)',
+      flat: '2D mode (older phones)',
       read: '📖 Read the story',
       foot: 'A demo of Reading Advantage · primary stories · no sign-in',
       plainCover: 'Story',

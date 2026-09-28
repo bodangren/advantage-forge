@@ -12,13 +12,10 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, ShotRig, smooth } from '../../../apk3d/stage/index.js';
 import { createPotionRush, evidenceOf, scoreOf, targetFor, type PotionRushCommand, type PotionRushEvent, type PotionRushState } from '../core/index.js';
 import { nextDrop } from '../qc/bot.js';
+import { BREW, INGREDIENT_SCALE } from './layout.js';
 import { beltX, buildShop, LAYOUT, model, SHOP_MODELS } from './shop.js';
 import './potion-rush.css';
 
-/** Ingredient scale so each reads at about 0.25 m on the conveyor. */
-const INGREDIENT_SCALE: Record<string, number> = { bottle: 1.4, mushroom: 1.2, apple: 1.9, pumpkin: 0.75, 'crystal-cluster': 0.6, bread: 1.3 };
-/** Each order's brew color (cauldron i). */
-const BREW = [0x8b5cf6, 0x22c55e, 0xf97316];
 const MOOD_ICON = { happy: '😊', waiting: '😐', grumpy: '😤' } as const;
 /** Clip a customer plays for each mood (a missing clip is skipped). */
 const MOOD_CLIP = { happy: 'talk', waiting: 'idle', grumpy: 'taunt' } as const;

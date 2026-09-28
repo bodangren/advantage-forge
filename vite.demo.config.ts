@@ -17,6 +17,8 @@ export default defineConfig({
   base: './',
   publicDir: 'public',
   server: { host: '127.0.0.1', port: 5190, fs: { allow: ['..'] } },
+  // Phaser loads lazily (2D views only); pre-bundle it so the first 2D mount does not re-optimize.
+  optimizeDeps: { include: ['phaser'] },
   build: {
     outDir: fileURLToPath(new URL('./dist-demo', import.meta.url)),
     emptyOutDir: true,

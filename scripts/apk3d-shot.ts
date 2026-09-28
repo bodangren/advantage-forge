@@ -2,11 +2,12 @@
  * QC for the standalone host and its 3D games: plays the whole flow in headless Chromium and
  * saves screenshots of each step, in portrait (a 390 x 844 phone) and landscape (1280 x 720).
  *
- *   node --import tsx scripts/apk3d-shot.ts [portrait|landscape|both] [--game <id>] [--story <id>] [--dist]
+ *   node --import tsx scripts/apk3d-shot.ts [portrait|landscape|both] [--game <id>] [--story <id>] [--dist] [--2d]
  *
  * The page opens with `?qc=1` (the device gate then accepts headless Chromium's software
  * renderer). The game bot answers from the story data, with one wrong answer on purpose.
- * Output: out/apk3d-shots/<game>/<layout>/NN-<step>.png
+ * `--2d` plays the game's 2D (Phaser) view (`?renderer=phaser`), with real drags on its canvas.
+ * Output: out/apk3d-shots/<game>/<layout>[-2d]/NN-<step>.png
  */
 import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -20,6 +21,7 @@ const arg = (name: string): string | undefined => {
 };
 const GAME = arg('game') ?? 'monster-encounters';
 const STORY = arg('story');
+const TWO_D = process.argv.includes('--2d');
 
 async function server() {
   const port = 5190 + Math.floor(Math.random() * 200);
@@ -197,6 +199,116 @@ async function playPotionRush(page: Page, shot: (name: string) => Promise<void>)
   }
 }
 
+/**
+ * A pointer drag in page pixels: a real finger (CDP touch events) on a phone, the mouse on a wide
+ * screen. `during` runs before the release (for a screenshot mid-drag).
+ */
+async function drag(page: Page, from: number[], to: number[], during: () => Promise<void>): Promise<void> {
+  const steps = 8;
+  const at = (k: number) => ({ x: from[0]! + ((to[0]! - from[0]!) * k) / steps, y: from[1]! + ((to[1]! - from[1]!) * k) / steps });
+  if (page.viewportSize()!.width < 700) {
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [at(0)] });
+    for (let k = 1; k <= steps; k++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [at(k)] });
+    await during();
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    return;
+  }
+  await page.mouse.move(from[0]!, from[1]!);
+  await page.mouse.down();
+  for (let k = 1; k <= steps; k++) await page.mouse.move(at(k).x, at(k).y);
+  await during();
+  await page.mouse.up();
+}
+
+/** Potion Rush in 2D: one real drag on the canvas (checked), one tap, one wrong drop, then the bot. */
+async function playPotionRush2D(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForFunction(() => (window as any).__apk3d.renderer() === 'phaser' && (window as any).__apk3d.game()?.state().slots.some(Boolean), undefined, { timeout: 120_000, polling: 250 });
+  await page.waitForTimeout(2500);
+  await shot('first-order');
+  /** Page pixels of a game pixel of the 2D canvas. */
+  const PAGE = `((x, y) => { const c = document.querySelector('.game-layer canvas'); const r = c.getBoundingClientRect(); const s = window.__apk3d.game().size(); return [r.x + (x * r.width) / s.width, r.y + (y * r.height) / s.height]; })`;
+  let dragged = false;
+  for (let tries = 0; tries < 60 && !dragged; tries++) {
+    const move = await page.evaluate(([needsSrc, pageSrc]) => {
+      const needs = eval(needsSrc!) as (string | null)[];
+      const toPage = eval(pageSrc!) as (x: number, y: number) => number[];
+      const g = (window as any).__apk3d.game();
+      const s = g.state();
+      const p = g.points();
+      for (const it of p.items) {
+        const b = s.belt.find((x: any) => x.id === it.id);
+        const i = needs.findIndex((w) => w && w.toLowerCase() === it.word.toLowerCase());
+        if (i < 0 || !b || b.position < 0.25 || b.position > 0.8) continue;
+        return { id: it.id as string, cauldron: i, words: s.cauldrons[i].words.length as number, from: toPage(it.x, it.y), to: toPage(p.cauldrons[i].x, p.cauldrons[i].y) };
+      }
+      return null;
+    }, [NEEDS, PAGE]);
+    if (!move) {
+      await page.waitForTimeout(500);
+      continue;
+    }
+    await drag(page, move.from, move.to, () => shot('dragging'));
+    await page.waitForTimeout(700);
+    await shot('after-drag');
+    const took = await page.evaluate(({ id, cauldron, words }) => {
+      const s = (window as any).__apk3d.game().state();
+      return !s.belt.some((b: any) => b.id === id) && (s.cauldrons[cauldron].words.length > words || s.cauldrons[cauldron].ready || s.served > 0);
+    }, move);
+    console.log(`drag   ${took ? 'the cauldron took the dragged word' : 'FAILED'}`);
+    if (!took) throw new Error('A real drag on the 2D canvas did not put the word into its cauldron');
+    dragged = true;
+  }
+  if (!dragged) throw new Error('No word to drag appeared in 30 s');
+  // One wrong word on purpose.
+  for (let tries = 0; tries < 60; tries++) {
+    const done = await page.evaluate((needsSrc) => {
+      const needs = eval(needsSrc) as (string | null)[];
+      const s = (window as any).__apk3d.game().state();
+      const i = needs.findIndex((w) => w);
+      const item = s.belt.find((b: any) => i >= 0 && b.word.toLowerCase() !== needs[i]!.toLowerCase() && b.position > 0.2);
+      if (!item) return false;
+      (window as any).__apk3d.game().dispatch({ type: 'drop', itemId: item.id, cauldron: i });
+      return true;
+    }, NEEDS);
+    if (done) {
+      await page.waitForTimeout(250);
+      await shot('wrong-word');
+      break;
+    }
+    await page.waitForTimeout(500);
+  }
+  let readyShot = false;
+  let rushShot = false;
+  let brewShot = false;
+  const started = Date.now();
+  for (;;) {
+    const state = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return 'results';
+      const g = (window as any).__apk3d.game();
+      if (!g) return 'play';
+      g.auto();
+      const s = g.state();
+      return s.rush ? 'rush' : s.cauldrons.some((c: any) => c.ready) ? 'ready' : 'play';
+    });
+    if (state === 'results') return;
+    if (state === 'ready' && !readyShot) {
+      readyShot = true;
+      await shot('potion-ready');
+    }
+    if (state === 'rush' && !rushShot) {
+      rushShot = true;
+      await shot('rush');
+    }
+    if (!brewShot && Date.now() - started > 12_000) {
+      brewShot = true;
+      await shot('brewing');
+    }
+    if (Date.now() - started > 20 * 60_000) throw new Error('The shift did not end in 20 minutes');
+    await page.waitForTimeout(700);
+  }
+}
+
 /** Dragon Flight: wait for the first gates (the dragon hovers), then the bot at a person's pace. */
 async function playDragonFlight(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
   await page.waitForSelector('.gate-tag', { timeout: 120_000 });
@@ -284,8 +396,13 @@ const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) =
   'potion-rush': playPotionRush,
 };
 
+/** The 2D (Phaser) players, for `--2d`. */
+const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
+  'potion-rush': playPotionRush2D,
+};
+
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
-  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, layout);
+  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, TWO_D ? `${layout}-2d` : layout);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const { s, url } = await server();
@@ -304,7 +421,7 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
     await page.screenshot({ path: file });
     console.log(`shot   ${file}`);
   };
-  await page.goto(`${url}?qc=1`, { timeout: 180_000 });
+  await page.goto(`${url}?qc=1${TWO_D ? '&renderer=phaser' : ''}`, { timeout: 180_000 });
   await page.waitForFunction(() => (window as unknown as { __apk3dReady?: boolean }).__apk3dReady === true, undefined, { timeout: 300_000, polling: 500 });
   await page.waitForTimeout(1500);
   if (STORY) await page.click(`[data-story="${STORY}"]`);
@@ -328,7 +445,9 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
   await page.waitForTimeout(600);
   await shot('briefing');
   await page.click('[data-start]');
-  await BOTS[GAME]!(page, shot);
+  const bot = TWO_D ? BOTS_2D[GAME] : BOTS[GAME];
+  if (!bot) throw new Error(`No ${TWO_D ? '2D ' : ''}QC player for ${GAME}`);
+  await bot(page, shot);
   await page.waitForTimeout(800);
   await shot('results');
   await page.click('[data-class]');

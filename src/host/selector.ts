@@ -22,6 +22,8 @@ export interface SelectorChoice {
   story: string | null;
   game: string | null;
   helper: boolean;
+  /** True: play in 2D (Phaser) where a game has a 2D view (older phones, or by choice). */
+  flat: boolean;
   hero: string;
   /** The chosen hero's look ('default' or an unlocked preset). */
   look: string;
@@ -53,12 +55,16 @@ export class Selector {
     private unlocked: () => Readonly<Record<string, readonly string[]>>,
   ) {
     const hero = HEROES.includes(initial.hero as never) ? initial.hero! : 'knight';
-    this.choice = { level: initial.level ?? 'A0', story: initial.story ?? null, game: initial.game ?? null, helper: initial.helper ?? true, hero, look: initial.look ?? 'default' };
+    this.choice = { level: initial.level ?? 'A0', story: initial.story ?? null, game: initial.game ?? null, helper: initial.helper ?? true, flat: initial.flat ?? false, hero, look: initial.look ?? 'default' };
     el.addEventListener('click', (e) => this.click(e));
     el.addEventListener('change', (e) => {
       const input = e.target as HTMLInputElement;
       if (input.matches('[data-helper]')) {
         this.choice.helper = input.checked;
+        this.on.change({ ...this.choice });
+      }
+      if (input.matches('[data-flat]')) {
+        this.choice.flat = input.checked;
         this.on.change({ ...this.choice });
       }
     });
@@ -125,7 +131,7 @@ export class Selector {
         <div class="strip stories" data-stories></div>
         <h2>${esc(t('host.selector.game'))}</h2>
         <div class="strip games" data-games></div>
-        <div class="row"><label class="toggle"><input type="checkbox" data-helper ${this.choice.helper ? 'checked' : ''} /> ${esc(t('host.selector.helper'))}</label></div>
+        <div class="row"><label class="toggle"><input type="checkbox" data-helper ${this.choice.helper ? 'checked' : ''} /> ${esc(t('host.selector.helper'))}</label><label class="toggle"><input type="checkbox" data-flat ${this.choice.flat ? 'checked' : ''} /> ${esc(t('host.selector.flat'))}</label></div>
         <button class="btn gold wide" data-read>${esc(t('host.selector.read'))}</button>
         <div class="foot">${esc(t('host.selector.foot'))}</div>
       </div>`;

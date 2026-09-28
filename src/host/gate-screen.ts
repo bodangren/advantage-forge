@@ -1,6 +1,7 @@
 /**
  * The message for a device that cannot run a game: a plain explanation, the reason, and a way
- * back. No 2D fallback; the reader still works on the device.
+ * back. The host shows it only when the game has no view the device can run (a game with a 2D
+ * view plays in 2D instead); the reader still works on the device.
  */
 import type { Translate } from '../apk3d/contracts/index.js';
 import { esc } from '../apk3d/hud/index.js';

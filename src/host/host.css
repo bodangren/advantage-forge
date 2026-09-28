@@ -11,6 +11,10 @@
   height: 100%;
   display: block;
 }
+/* A 2D game hides the paused 3D stage; a device without WebGL2 has no stage at all. */
+.app canvas.stage.off {
+  visibility: hidden;
+}
 .screen {
   position: absolute;
   inset: 0;
@@ -578,7 +582,9 @@
 }
 .selector .row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 4px 18px;
   margin: 6px 0 10px;
 }
 .btn.wide {

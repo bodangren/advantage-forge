@@ -37,12 +37,21 @@ standalone Phaser factory and mounter, the 2D asset contract (APK copies), task 
 section of `docs/apk3d-cartridge.md`. The host UI wiring (renderer setting, 2D editions) is
 Claude's, with the first 2D view.
 
+Phase A' and the host wiring are done (2026-09-28). The 2D art is one APK sprite pack,
+`primary-chibi-2d` (98 files, 4.5 MB): 16 characters and 7 props rendered by the forge at one
+camera (elevation 45 degrees, 64 px/m; `scripts/apk2d-sprites.ts`), and 4 game backgrounds baked
+from the 3D set code (`scripts/apk2d-bake.ts`), packed by `scripts/apk2d-pack.ts`. The kit has
+2D helpers in `src/apk3d/view2d/` (projection, sheets, `Actor2D`, HUD pieces). The host mounts
+either renderer through `createCartridgeMounter`: a "2D mode (older phones)" setting or
+`?renderer=phaser` forces 2D, and a device without WebGL2 gets no 3D stage and plays in 2D. QC:
+`scripts/apk3d-shot.ts --2d`.
+
 ## Tracker
 
 | Game | Core | 3D view | 2D view | In the monorepo |
 | --- | --- | --- | --- | --- |
 | Monster Encounters | done (task 11, 2026-09-28) | done | | |
-| Potion Rush | done | done | | |
+| Potion Rush | done | done | done (2026-09-28): 480-wide canvas at the screen aspect, real touch drag in QC | |
 | Dragon Flight | done | done | | |
 | Dungeon Liberator | done | done | | |
 | Devourer Slime | done | done | | |

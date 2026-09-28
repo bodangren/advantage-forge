@@ -5,7 +5,8 @@
  * purpose: a portrait phone sees all three stations at once.
  */
 import * as THREE from 'three';
-import { Actor, type GLTF, type Shot, type Stage3D } from '../../../apk3d/stage/index.js';
+import { Actor, type GLTF, type Stage3D } from '../../../apk3d/stage/index.js';
+import { LAYOUT } from './layout.js';
 
 export const model = (name: string): string => `models/${name}.glb`;
 
@@ -18,27 +19,7 @@ export const SHOP_MODELS = [
 
 type V3 = [number, number, number];
 
-/** Where things stand; the view and the HUD read positions from here. */
-export const LAYOUT = {
-  /** Customers stand in the open in front of their cauldron (nothing hides them). */
-  slots: [[-1.15, 0, -2.0], [0, 0, -2.0], [1.15, 0, -2.0]] as V3[],
-  cauldrons: [[-1.15, 0, -0.9], [0, 0, -0.9], [1.15, 0, -0.9]] as V3[],
-  /** The conveyor near the thumbs: position 1 is the right end (x = +2.3), position 0 the left end. */
-  belt: { from: 2.3, to: -2.3, z: 1.8, y: 0.52 },
-  /** Customers enter here (the door) and walk to their spot. */
-  door: [3.9, 0, -3.0] as V3,
-  /** Customers who wait sit here (at the side tables). */
-  seats: [[-3.3, 0, -1.9], [-3.9, 0, -1.2], [3.4, 0, -1.3], [-2.9, 0, -1.1]] as V3[],
-  alchemist: [-1.45, 0, 0.55] as V3,
-  shots: {
-    // A portrait phone is tall and narrow: a steep view spreads the three rows over its height.
-    portrait: { pos: [0, 7.2, 4.6], look: [0, 0.2, -1.2], fov: 56 } as Shot,
-    landscape: { pos: [0, 4.4, 5.0], look: [0, 0.35, -0.5], fov: 38 } as Shot,
-  },
-};
-
-/** The x of a belt position (0 to 1). */
-export const beltX = (p: number): number => LAYOUT.belt.to + (LAYOUT.belt.from - LAYOUT.belt.to) * p;
+export { LAYOUT, beltX } from './layout.js';
 
 export interface Shop {
   /** The alchemist, or null for a static bake (the 2D background has no characters). */
