@@ -1439,5 +1439,37 @@
       "Widen the stance and thicken the thighs."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "wraith": {
+    "overall": 7,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the ghost base (floating rig, six clips): a big slate hood around a black void with two pale-blue glowing eyes, a capelet with a tie knot and cords, drooping sleeves with a large bony claw on the right and a bony left hand holding a rusty cage lantern with a blue flame, and ragged strips that reach the floor. The attack is a reaching claw with a lantern swing. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The hood, the void face, and the blue eyes read as a wraith at a glance.",
+      "The lantern glass and flame follow the eye color slot.",
+      "Cloak and glow variants with three presets: dusk, bog, grave."
+    ],
+    "issues": [
+      "The strips are round ribbons that spread on the floor, so they read a little like tentacles; the mockup strips are thin, frayed, and hang straight.",
+      "The capelet is smooth; the mockup has a thick bunched cowl.",
+      "The mockup also shows a tall blue flame above the lantern."
+    ],
+    "next": [
+      "Make the strips thinner and flatter, hanging straight down.",
+      "Bunch the capelet into a lumpy cowl."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
