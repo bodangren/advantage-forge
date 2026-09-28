@@ -1375,5 +1375,37 @@
       "Make the mouth wider and darker."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "vampire": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the rogue base (knee bones, eight clips): a pale noble with slicked black hair and a widow's peak, big red eyes, small fangs, pointed ears, a high flared collar with a red lining, a black cape to the ground, a burgundy vest with gold buttons, and a white frilled cravat. The attack is a cape swirl and a biting lunge; the victory is a cape spread with a small hover. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The collar, cape, and red eyes read as a vampire at a glance, also at 128 px.",
+      "The attack and victory clips use the cape instead of a weapon.",
+      "Eye, hair, and clothing variants with three presets: count, elder, fledgling; the cape and collar linings follow the clothing slot."
+    ],
+    "issues": [
+      "The hair is a smooth dome; the mockup has larger wavy locks.",
+      "The cravat is a long narrow frill; the mockup has a fuller bow.",
+      "In attack2 the white cuffs go about 1 cm into the capelet."
+    ],
+    "next": [
+      "Give the hair two or three larger locks.",
+      "Make the cravat shorter and fuller."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
