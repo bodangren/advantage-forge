@@ -1567,5 +1567,37 @@
       "Widen the cape at the front sides."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "bone-golem": {
+    "overall": 7.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 5,
+      "technical": 3,
+      "gameReady": 3,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the stone-golem base (knee bones, eight clips): a big angry skull with a jaw and glowing red eyes, two shoulder skulls, an open rib cage over a dark hollow, bundled arm bones ending in knuckle-bone club fists, lumpy leg bones with blocky feet, riveted iron bands at the wrists, waist, and shins, and a rust leather belt plate. The attack is the two-fist ground slam. The build has no warnings.",
+    "strengths": [
+      "The skull, red eyes, rib cage, and shoulder skulls read as a bone golem at a glance.",
+      "The iron bands give a clear value contrast against the cream bones.",
+      "Bone, glow, and band variants with three presets: ashen, crypt, ancient."
+    ],
+    "issues": [
+      "74,856 triangles is very heavy for one enemy.",
+      "The skull is rounder than the mockup's heavy-browed skull.",
+      "The shoulder skulls sit high, so part of the upper arm shows below them; the fists are closed clubs, not open bony hands."
+    ],
+    "next": [
+      "Cap the triangle count per body.",
+      "Lower the shoulder skulls against the jaw and add a heavier brow."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
