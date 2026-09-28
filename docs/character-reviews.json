@@ -1599,5 +1599,37 @@
       "Lower the shoulder skulls against the jaw and add a heavier brow."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "paladin": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the knight base (the rogue's face and proportions, knee bones, eight clips): a young blond paladin with a bare head, silver plate with gold trim, a white tabard with a raised gold sun, a V hem with a gold diamond, a blue cowl and long cape, a silver war hammer with gold rings in the right hand, and a heater shield with a gold sun on the left arm. The attack is an overhead hammer strike. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The face, hair, and white-and-gold tabard read as a bright paladin at a glance and at 128 px.",
+      "It matches the P0 hero set: same head construction and proportions as the rogue and knight.",
+      "Eye, hair, cloth, and tabard variants with three presets: dawn, crusader, warden."
+    ],
+    "issues": [
+      "The hair is a rounded cap; the mockup has bigger separate curls over the forehead.",
+      "The hammer rests low (fist at belt height); the mockup holds it at chest height.",
+      "The shield is a heater shield like the knight's, not the round shield of the text; no mail between the plates."
+    ],
+    "next": [
+      "Split the hair into two or three larger curls.",
+      "Raise the hammer arm in the rest pose."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
