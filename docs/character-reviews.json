@@ -1407,5 +1407,37 @@
       "Make the cravat shorter and fuller."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "ghoul": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the goblin-warrior base (knee bones, seven clips): a lean pale grey-violet ghoul with very long pointed ears, big pale-yellow eyes under angry brows, a wide grin with two rows of pointed teeth, a pot belly, thin arms with long three-fingered claws, clawed feet, and torn rags at the waist. The attack is a two-handed claw rake; the taunt is a hop with a cackle. The build has no warnings.",
+    "strengths": [
+      "The ears, eyes, and toothy grin read as the mockup at a glance and at 128 px.",
+      "The claw rake gives the attack a clear read without a weapon.",
+      "Skin, eye, and rag variants with three presets: bog, crypt, butcher."
+    ],
+    "issues": [
+      "The mockup ghoul is stockier, with thicker thighs and more rib detail.",
+      "The ears spread to the sides; the mockup ears stand up and cup forward.",
+      "The hands hang close to the body; the rags hang higher than in the mockup."
+    ],
+    "next": [
+      "Tilt the ears up and forward.",
+      "Widen the stance and thicken the thighs."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
