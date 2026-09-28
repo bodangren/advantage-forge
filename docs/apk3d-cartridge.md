@@ -230,6 +230,8 @@ src/games/<game>/                  one folder per game
   strings.en.ts                    the game's catalog scope
   qc/bot.ts                        headless play for screenshots and smoke tests
   index.ts                         exports { cartridge, strings }
+src/games/shared/<family>/         view code a family of games shares (battle/: the 3D and 2D
+                                   battle stages, the hall layout, the family's types)
 src/games/monster-encounters/
 src/games/potion-rush/
 src/host/                          the standalone host (GitHub Pages)
@@ -255,19 +257,20 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | `src/apk3d/stage`, `audio` | `contracts`, `sim`, `three` |
 | `src/apk3d/hud` | `contracts`, `sim`, `stage`, `three` (HudRoot anchors labels on the stage frame and uses its Timeline) |
 | `src/apk3d/i18n`, `device` | `contracts` |
-| `src/apk3d/view2d` (2D projection helpers, Claude) | `contracts`, `sim` |
+| `src/apk3d/view2d` (the 2D kit: projection, sheets, actors, HUD, card, arena) | `contracts`, `sim`, `audio`, `phaser` |
 | `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three`, `phaser` (factory only) |
 | `src/games/*/core` | `src/apk3d/contracts`, `src/apk3d/sim` |
 | `src/games/*/manifest.ts`, `strings.en.ts`, `briefing.ts` | `src/apk3d/contracts` only (the host loads them before the game) |
-| `src/games/*/view`, `view2d`, and every other file of the game (`qc/`, ...) | its own game, `src/apk3d/*`, `three` (views build actors and vectors), `phaser` (2D views) |
+| `src/games/*/view`, `view2d`, and every other file of the game (`qc/`, ...) | its own game, `src/games/shared/*`, `src/apk3d/*`, `three` (views build actors and vectors), `phaser` (2D views) |
+| `src/games/shared/<family>` | `src/apk3d/*`, `three`, `phaser` (never a game: a family's games import it) |
 | `src/games/*/index.ts` | its own game, `src/apk3d/*` |
 | `src/host` | `src/apk3d/*`, `three` (the lobby stage), `src/games/*/manifest.ts` and `strings.en.ts` statically; `src/games/*/index.ts` through `import()` only (lazy game code) |
 | `src/apk3d/*` | never `src/games`, never `src/host` |
 
 Same-folder imports and `.css` imports are allowed everywhere. `three/addons/*` counts as `three`.
 The test keeps a short `TRANSITIONAL` list of imports that break the table today, each with the
-task that removes it: the `scenes/sunken-vault` import of the battle stage until the vault set is
-a model pack. (The Monster Encounters bridge over `src/demo/core` went with task 11; `src/demo`
+task that removes it: the `scenes/sunken-vault` import of the battle stage
+(`src/games/shared/battle/stage3d.ts`) until the vault set is a model pack. (The Monster Encounters bridge over `src/demo/core` went with task 11; `src/demo`
 is gone.)
 
 Vite: `vite.demo.config.ts` stays the build; `demo/main.ts` imports `src/host/main.ts`.

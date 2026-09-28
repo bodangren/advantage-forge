@@ -63,3 +63,21 @@ behind the selector needs WebGL2 (a device without it gets the selector on a pla
 | Devourer Slime | done | done | done (2026-09-28): the view zooms out as the slime grows | |
 | Hero vs. Zombie (wizard-vs-zombie) | done | done | done (2026-09-28): night tint on sprites, dawn light, Blast ring | |
 | abyssal-well, alchemists-synthesis, archers-revenge, astral-mage, castle-defense, dragon-rider, enchanted-library, griffin-riders-escape, griffin-sky-joust, gryphon-patrol, haunted-library, labyrinth-goblin-king, magic-defense, paladins-twin-soul, realm-carver, rpg-battle, rune-forge-chamber, rune-match, shadow-gate-dungeon, sorcerer-ziggurat, spellweavers-run, storm-castle-tower, village-guardian | | | | legacy 2D |
+
+## Phase D order (by mechanic family)
+
+The legacy games fall into five families. Each family shares one 3D stage and one 2D kit piece,
+so the order builds a family's first game, then its neighbors, which reuse the view code. The
+rules change the same way in every rewrite: no timer that decides a result, no game over (a
+setback is courage or a rest), speed never gives XP, and one evidence item per story item.
+
+| Order | Family | Games (legacy id) | Shared pieces |
+| --- | --- | --- | --- |
+| 1 | Battle and board: a word decides a hero's action | rune-match (design done, core in progress), rpg-battle, paladins-twin-soul | the Monster Encounters stage, `Card2D` |
+| 2 | Arena: steer a hero, reach words in sentence order | labyrinth-goblin-king, astral-mage, village-guardian, haunted-library, realm-carver, shadow-gate-dungeon | the arena helpers of `src/apk3d/sim`, `Arena2D`, `Joystick2D` |
+| 3 | Flight and run: choose a lane or a gate while the world scrolls | spellweavers-run, griffin-sky-joust, gryphon-patrol, dragon-rider, griffin-riders-escape, magic-defense | the Dragon Flight scroller and land plan |
+| 4 | Aim and shoot: point at the right word | archers-revenge, abyssal-well, castle-defense | a new aim control (drag to aim, release to shoot) |
+| 5 | Build and climb: place or climb words in order | alchemists-synthesis, enchanted-library, rune-forge-chamber, sorcerer-ziggurat, storm-castle-tower | the Potion Rush sorting pattern |
+
+A family's first game needs a design (Claude), a core (Fable), and both views (Claude); the next
+games of the family need a design and a core, and their views reuse the family's pieces.

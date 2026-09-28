@@ -8,7 +8,7 @@ import type { AudioBus } from '../../../apk3d/audio/index.js';
 import type { HostServices } from '../../../apk3d/factory/index.js';
 import { arrange, choose, esc, feedback, markChoice, pips, type HudRoot, type PopKind } from '../../../apk3d/hud/index.js';
 import type { Challenge, EncounterInfo, EnemyState, Feedback, HeroId, Response } from '../core/index.js';
-import type { BattleStage } from './battle-stage.js';
+import type { BattleStage } from '../../shared/battle/stage3d.js';
 
 export const HERO_LOOK: Record<HeroId, { color: string; emoji: string }> = {
   knight: { color: '#d9463b', emoji: '🛡️' },

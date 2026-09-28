@@ -13,7 +13,7 @@ import { buildRoom, ROOM_MODELS } from '../src/games/dungeon-liberator/view/room
 import { buildClearing, CLEARING_MODELS } from '../src/games/devourer-slime/view/clearing.js';
 import { buildChurchyard, CHURCHYARD_MODELS } from '../src/games/hero-vs-zombie/view/churchyard.js';
 import { buildShop, SHOP_MODELS } from '../src/games/potion-rush/view/shop.js';
-import { buildVaultBackdrop, vaultModels } from '../src/games/monster-encounters/view/battle-stage.js';
+import { buildVaultBackdrop, vaultModels } from '../src/games/shared/battle/stage3d.js';
 
 interface BakeSet {
   models: string[];

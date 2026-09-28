@@ -19,7 +19,7 @@ import {
   type QuestResults,
   type Response,
 } from '../core/index.js';
-import { BattleStage } from './battle-stage.js';
+import { BattleStage } from '../../shared/battle/stage3d.js';
 import { BattleHud } from './hud.js';
 
 const PRESET_HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];

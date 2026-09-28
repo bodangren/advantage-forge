@@ -1,10 +1,10 @@
 /**
  * Where the battle happens (no three.js here): the party's and the monsters' spots in the great
  * hall of the Sunken Vault, the 3D camera framings, and the map pieces cut away from the view.
- * The 3D battle stage (battle-stage.ts) and the 2D view (../view2d) read it.
+ * The 3D battle stage (stage3d.ts) and the 2D battle stage (stage2d.ts) read it.
  */
 import type { CutBox, Shot, V3 } from '../../../apk3d/stage/index.js';
-import type { HeroId } from '../core/index.js';
+import type { HeroId } from './types.js';
 
 /** The height of the vault floor. */
 export const FLOOR_Y = 0.09;

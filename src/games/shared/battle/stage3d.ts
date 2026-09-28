@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type Shot, type V3 } from '../../../apk3d/stage/index.js';
 import { sunkenVaultPlaces } from '../../../../scenes/sunken-vault.js';
-import type { EnemyKind, EnemyState, HeroId } from '../core/index.js';
+import type { BattleEnemy, EnemyKind, HeroId } from './types.js';
 
 const HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
 const ENEMY_KINDS: EnemyKind[] = ['skeleton', 'giant-bat', 'mimic', 'dragon-fire'];
@@ -192,7 +192,7 @@ export class BattleStage {
   // ---------------------------------------------------------------- monsters
 
   /** Adds the encounter's monsters with their entrance: bones rise, bats fly in, the chest wakes, the dragon lands. */
-  async spawn(enemies: EnemyState[]): Promise<void> {
+  async spawn(enemies: BattleEnemy[]): Promise<void> {
     for (const [id, actor] of this.actors) {
       if (HEROES.includes(id as HeroId)) continue;
       this.kit.removeActor(actor);

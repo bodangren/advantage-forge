@@ -53,7 +53,9 @@ const RULES: Record<string, readonly ModuleId[]> = {
   'games/STAR/manifest': ['apk3d/contracts'],
   'games/STAR/strings': ['apk3d/contracts'],
   'games/STAR/briefing': ['apk3d/contracts'],
-  'games/STAR/view': ['games/self/*', 'apk3d/*', 'three', 'phaser'],
+  'games/STAR/view': ['games/self/*', 'games-shared/*', 'apk3d/*', 'three', 'phaser'],
+  // A family's shared view code (the battle stage of the battle games): the kit and the engines.
+  'games-shared/STAR': ['apk3d/*', 'three', 'phaser'],
   'games/STAR/index': ['games/self/*', 'apk3d/*'],
   host: ['apk3d/*', 'three', 'games/STAR/manifest', 'games/STAR/strings', 'dynamic:games/STAR/index'],
 };
@@ -64,7 +66,7 @@ const RULES: Record<string, readonly ModuleId[]> = {
  */
 const TRANSITIONAL: readonly { file: string; specifier: string; until: string }[] = [
   {
-    file: 'src/games/monster-encounters/view/battle-stage.ts',
+    file: 'src/games/shared/battle/stage3d.ts',
     specifier: '../../../../scenes/sunken-vault.js',
     until: 'task 12/13 puts the vault set into a model pack (FRONTEND)',
   },
@@ -103,6 +105,7 @@ export function moduleOf(file: string): ModuleId {
   const parts = relative(join(ROOT, 'src'), file).split(sep);
   if (parts[0] === 'apk3d') return `apk3d/${parts[1] ?? ''}`;
   if (parts[0] === 'host') return 'host';
+  if (parts[0] === 'games' && parts[1] === 'shared') return `games-shared/${parts[2] ?? ''}`;
   if (parts[0] === 'games' && parts[1]) {
     const game = parts[1];
     const rest = parts.slice(2).join('/');
@@ -136,7 +139,8 @@ export function targetOf(
 export function allowed(source: ModuleId, target: ModuleId, dynamic = false): boolean {
   if (source === target) return true;
   const game = /^games\/([^/]+)\//.exec(source)?.[1];
-  const rule = RULES[game ? source.replace(`games/${game}/`, 'games/STAR/') : source];
+  const key = source.startsWith('games-shared/') ? 'games-shared/STAR' : game ? source.replace(`games/${game}/`, 'games/STAR/') : source;
+  const rule = RULES[key];
   if (!rule) return false;
   return rule.some((entry) => {
     const dynamicOnly = entry.startsWith('dynamic:');
