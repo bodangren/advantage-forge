@@ -37,6 +37,8 @@ export const LIBRARY: Job[] = [
   ...['skeleton', 'zombie', 'slime', 'bandit', 'giant-bat', 'mimic'].map((model) => ({ model, clips: MONSTER, dirs: 4 as const })),
   { model: 'dragon-fire', clips: MONSTER, dirs: 8 },
   ...['bottle', 'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread', 'cauldron'].map((model) => ({ model, dirs: 1 as const })),
+  // Dragon Flight's land and gates (the 2D view places them in chunks, as the 3D view does).
+  ...['arch', 'oak-tree', 'pine-tree', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'well', 'fence', 'hay-bale'].map((model) => ({ model, dirs: 1 as const })),
 ];
 
 /** Keeps only what a pack needs: each clip's sheet and metrics (and a prop's single frame). */

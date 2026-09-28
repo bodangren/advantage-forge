@@ -9,6 +9,10 @@ import { forgeDirections, type RuntimeEdition } from '../contracts/index.js';
 import { depthOf, directionRow, project, type Projection2D } from './projection.js';
 import { animationKeyOf, textureKeyOf } from './sheets.js';
 
+/** Phaser 4 `TintModes` values (a type-only Phaser import here). */
+const TINT_MULTIPLY = 0;
+const TINT_FILL = 1;
+
 export interface Actor2DOptions {
   /** Sheet directions of this model (8 heroes, 4 everyone else). */
   dirs: 1 | 4 | 8;
@@ -25,6 +29,9 @@ export class Actor2D {
   /** The world point the actor stands on (meters). */
   x = 0;
   z = 0;
+  /** Meters above the ground (a hovering bat); 0 stands on the floor. */
+  lift = 0;
+  private baseTint = 0xffffff;
   private tx = 0;
   private tz = 0;
   private facingX = 0;
@@ -104,6 +111,24 @@ export class Actor2D {
     return new Promise((resolve) => this.sprite.once('animationcomplete', () => resolve()));
   }
 
+  /** A lasting color tint (multiplied: a cool night, a dark boss). */
+  tint(color: number): void {
+    this.baseTint = color;
+    this.sprite.setTintMode(TINT_MULTIPLY).setTint(color);
+  }
+
+  /** A short flash in one color (white for a hit, red for a hurt hero). */
+  flash(color = 0xffffff, ms = 110): void {
+    this.sprite.setTint(color).setTintMode(TINT_FILL);
+    this.scene.time.delayedCall(ms, () => this.sprite.setTintMode(TINT_MULTIPLY).setTint(this.baseTint));
+  }
+
+  /** The length of a clip in seconds at a speed (0 when the model has no such clip). */
+  clipSeconds(clip: string, speed = 1): number {
+    const anim = this.has(clip) ? this.scene.anims.get(animationKeyOf(this.edition, `${this.model}.${clip}`, this.animName(clip))) : null;
+    return anim ? anim.duration / 1000 / speed : 0;
+  }
+
   update(dt: number): void {
     const k = 1 - Math.exp(-this.stiffness * dt);
     const px = this.x;
@@ -146,8 +171,8 @@ export class Actor2D {
   }
 
   private draw(): void {
-    const p = project(this.projection, this.x, 0, this.z);
+    const p = project(this.projection, this.x, this.lift, this.z);
     this.sprite.setPosition(p.x, p.y);
-    this.sprite.setDepth(depthOf(this.z));
+    this.sprite.setDepth(depthOf(this.z, this.lift));
   }
 }

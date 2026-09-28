@@ -311,23 +311,44 @@ async function playPotionRush2D(page: Page, shot: (name: string) => Promise<void
 
 /** Dragon Flight: wait for the first gates (the dragon hovers), then the bot at a person's pace. */
 async function playDragonFlight(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
-  await page.waitForSelector('.gate-tag', { timeout: 120_000 });
+  if (TWO_D) await page.waitForFunction(() => (window as any).__apk3d.renderer() === 'phaser' && (window as any).__apk3d.game()?.state().round, undefined, { timeout: 120_000, polling: 250 });
+  else await page.waitForSelector('.gate-tag', { timeout: 120_000 });
   await page.waitForTimeout(1500);
   await shot('first-gates');
   await page.waitForFunction(() => (window as any).__apk3d.game().state().waiting === true, undefined, { timeout: 120_000, polling: 300 });
   await shot('waiting');
+  if (TWO_D) {
+    // A real tap on the right gate's tag on the canvas.
+    const tap = await page.evaluate(() => {
+      const g = (window as any).__apk3d.game();
+      const st = g.state();
+      const i = st.round.options.findIndex((o: any) => o.id === st.round.itemId);
+      const p = g.points().gates[i];
+      const c = document.querySelector('.game-layer canvas')!.getBoundingClientRect();
+      const size = g.size();
+      return p ? { x: c.x + (p.x * c.width) / size.width, y: c.y + (p.y * c.height) / size.height } : null;
+    });
+    if (!tap) throw new Error('No gate tag to tap');
+    if (page.viewportSize()!.width < 700) await page.touchscreen.tap(tap.x, tap.y);
+    else await page.mouse.click(tap.x, tap.y);
+    await page.waitForTimeout(400);
+    const chosen = await page.evaluate(() => (window as any).__apk3d.game().state().round?.chosen ?? null);
+    console.log(`tap    ${chosen === null ? 'FAILED' : `gate ${chosen} chosen`}`);
+    if (chosen === null) throw new Error('A real tap on a gate tag did not choose the gate');
+    await shot('tapped');
+  }
   const shots = new Set<string>();
   const started = Date.now();
   for (;;) {
     const s = await page.evaluate(() => {
-      if (document.querySelector('.results.on')) return { phase: 'results', flock: 0 };
+      if (document.querySelector('.results.on')) return { phase: 'results', flock: 0, speed: 0 };
       const g = (window as any).__apk3d.game();
       const st = g.state();
       if (st.round && st.round.chosen === null && (st.waiting || st.round.gatesAt - st.distance < 30)) g.auto();
-      return { phase: st.phase, flock: st.flock };
+      return { phase: st.phase, flock: st.flock, speed: st.speed };
     });
     if (s.phase === 'results') return;
-    for (const [key, when] of [['flock-3', s.flock >= 3], ['boss', s.phase === 'boss']] as const) {
+    for (const [key, when] of [['flock-3', s.flock >= 3], ['boss', s.phase === 'boss'], ['boss-fight', s.phase === 'boss' && s.speed === 0]] as const) {
       if (when && !shots.has(key)) {
         shots.add(key);
         await page.waitForTimeout(key === 'boss' ? 2500 : 600);
@@ -403,6 +424,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
   'hero-vs-zombie': playArena,
   'devourer-slime': playArena,
   'dungeon-liberator': playArena,
+  'dragon-flight': playDragonFlight,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {

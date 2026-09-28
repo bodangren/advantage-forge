@@ -30,6 +30,33 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "prop.arch": {
+   "id": "prop.arch",
+   "path": "props/arch.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 244,
+   "height": 244,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 6061,
+   "sha256": "950a342386395219bd39366d17efafb0c048d9fe48ab8566ad7a1fe835ed8f6e",
+   "grid": {
+    "frameWidth": 244,
+    "frameHeight": 244,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.7213114754098361
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/arch.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "bandit.attack": {
    "id": "bandit.attack",
    "path": "sprites/bandit/attack.png",
@@ -462,6 +489,33 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "prop.boulder": {
+   "id": "prop.boulder",
+   "path": "props/boulder.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 128,
+   "height": 128,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 2634,
+   "sha256": "fb126a7b50b3bdd629375f1d05d69e7b2f3da0c644331fa2721da4d9ab4d9c42",
+   "grid": {
+    "frameWidth": 128,
+    "frameHeight": 128,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.640625
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/boulder.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "prop.bread": {
    "id": "prop.bread",
    "path": "props/bread.png",
@@ -486,6 +540,33 @@
    },
    "provenance": {
     "source": "fantasy-asset-forge/assets/bread.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.bush": {
+   "id": "prop.bush",
+   "path": "props/bush.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 104,
+   "height": 104,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 3049,
+   "sha256": "a6fb25cdfacb76fc9ea7bc044f7ea58156913da1ca90eb374d1f83a121f84f89",
+   "grid": {
+    "frameWidth": 104,
+    "frameHeight": 104,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.6538461538461539
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/bush.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1444,6 +1525,33 @@
    },
    "provenance": {
     "source": "fantasy-asset-forge/assets/cleric.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.cottage": {
+   "id": "prop.cottage",
+   "path": "props/cottage.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 308,
+   "height": 308,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 20642,
+   "sha256": "2f0ffc64ccc197935f0dce36e066f06fff7c4b95dbd8705383c21d0fe8141504",
+   "grid": {
+    "frameWidth": 308,
+    "frameHeight": 308,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.672077922077922
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/cottage.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2972,6 +3080,60 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "prop.fence": {
+   "id": "prop.fence",
+   "path": "props/fence.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 160,
+   "height": 160,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 2024,
+   "sha256": "582a7376aa2bc5ff7cca88b618c16d94e58972e90f454d663af71fc5af9e0710",
+   "grid": {
+    "frameWidth": 160,
+    "frameHeight": 160,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.65625
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/fence.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.fern": {
+   "id": "prop.fern",
+   "path": "props/fern.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 80,
+   "height": 80,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 984,
+   "sha256": "43368757b619702097f6efa3aedd3ffe1a78202d5f617706655764fd7168893f",
+   "grid": {
+    "frameWidth": 80,
+    "frameHeight": 80,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.65
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/fern.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "giant-bat.attack": {
    "id": "giant-bat.attack",
    "path": "sprites/giant-bat/attack.png",
@@ -3941,6 +4103,33 @@
    },
    "provenance": {
     "source": "fantasy-asset-forge/assets/guard.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.hay-bale": {
+   "id": "prop.hay-bale",
+   "path": "props/hay-bale.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 104,
+   "height": 104,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 2625,
+   "sha256": "a56b6ab3edc8169e149425e83b1b087a2366f0f80f30d5c4daaff3f5de342673",
+   "grid": {
+    "frameWidth": 104,
+    "frameHeight": 104,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.6923076923076923
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/hay-bale.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5712,6 +5901,33 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "prop.oak-tree": {
+   "id": "prop.oak-tree",
+   "path": "props/oak-tree.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 476,
+   "height": 476,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 21018,
+   "sha256": "5aab5cb0a5a125e49cb540c1df743ad0da809abefd94f536ef8cb262bf736eec",
+   "grid": {
+    "frameWidth": 476,
+    "frameHeight": 476,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.7121848739495799
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/oak-tree.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "orc-warrior.idle": {
    "id": "orc-warrior.idle",
    "path": "sprites/orc-warrior/idle.png",
@@ -5955,6 +6171,33 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "prop.pine-tree": {
+   "id": "prop.pine-tree",
+   "path": "props/pine-tree.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 488,
+   "height": 488,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 23833,
+   "sha256": "a3c7d2c74d3e00983cd91c4b6d001eac2ff5164ee1e7f9e67ec4ed3033c41b14",
+   "grid": {
+    "frameWidth": 488,
+    "frameHeight": 488,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.7336065573770492
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/pine-tree.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "prop.pumpkin": {
    "id": "prop.pumpkin",
    "path": "props/pumpkin.png",
@@ -5979,6 +6222,33 @@
    },
    "provenance": {
     "source": "fantasy-asset-forge/assets/pumpkin.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.rock-cluster": {
+   "id": "prop.rock-cluster",
+   "path": "props/rock-cluster.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 108,
+   "height": 108,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 2791,
+   "sha256": "9ea0c0a049488786c1a6af8efbe6927aaffb08d2750917cdac40aa615f820d98",
+   "grid": {
+    "frameWidth": 108,
+    "frameHeight": 108,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.5740740740740741
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/rock-cluster.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7275,6 +7545,60 @@
    },
    "provenance": {
     "source": "fantasy-asset-forge/assets/villager.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.well": {
+   "id": "prop.well",
+   "path": "props/well.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 280,
+   "height": 280,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 8967,
+   "sha256": "1ac712de92df2ac349364a0d2c2559c20e98bdfe28950070e946c6e850c8aba5",
+   "grid": {
+    "frameWidth": 280,
+    "frameHeight": 280,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.7142857142857143
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/well.ts",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "prop.wildflowers": {
+   "id": "prop.wildflowers",
+   "path": "props/wildflowers.png",
+   "kind": "spritesheet",
+   "view": "isometric",
+   "width": 72,
+   "height": 72,
+   "format": "png",
+   "alpha": true,
+   "byteSize": 2360,
+   "sha256": "d69ee95bb78aa342fc1229b8914a9c2d9bd04ccac4a1ae1659ff0975d35f46e8",
+   "grid": {
+    "frameWidth": 72,
+    "frameHeight": 72,
+    "columns": 1,
+    "rows": 1,
+    "frameCount": 1
+   },
+   "origin": {
+    "x": 0.5,
+    "y": 0.6527777777777778
+   },
+   "provenance": {
+    "source": "fantasy-asset-forge/assets/wildflowers.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8740,6 +9064,22 @@
    "sha256": "293804b1eaa96c2da1467f77ff54495b48f2eaf02b737f654d2f3dabfda79b1e",
    "provenance": {
     "source": "fantasy-asset-forge/src/games/hero-vs-zombie/view (the 3D set, baked)",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "background.monster-encounters": {
+   "id": "background.monster-encounters",
+   "path": "backgrounds/monster-encounters.png",
+   "kind": "image",
+   "view": "world",
+   "width": 589,
+   "height": 516,
+   "format": "png",
+   "alpha": false,
+   "byteSize": 129370,
+   "sha256": "90c0b518b1da84464a5edd4a662f1593283269a956df49d764386b4668b0b28b",
+   "provenance": {
+    "source": "fantasy-asset-forge/src/games/monster-encounters/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   },

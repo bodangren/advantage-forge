@@ -13,6 +13,7 @@ import { buildRoom, ROOM_MODELS } from '../src/games/dungeon-liberator/view/room
 import { buildClearing, CLEARING_MODELS } from '../src/games/devourer-slime/view/clearing.js';
 import { buildChurchyard, CHURCHYARD_MODELS } from '../src/games/hero-vs-zombie/view/churchyard.js';
 import { buildShop, SHOP_MODELS } from '../src/games/potion-rush/view/shop.js';
+import { buildVaultBackdrop, vaultModels } from '../src/games/monster-encounters/view/battle-stage.js';
 
 interface BakeSet {
   models: string[];
@@ -26,6 +27,8 @@ const SETS: Record<string, BakeSet> = {
   'dungeon-liberator': { models: ROOM_MODELS, build: (s) => void buildRoom(s), bounds: [-6.6, 6.6, -5.6, 5.6] },
   'devourer-slime': { models: CLEARING_MODELS, build: buildClearing, bounds: [-9.5, 9.5, -9.5, 9.5] },
   'hero-vs-zombie': { models: CHURCHYARD_MODELS, build: (s) => void buildChurchyard(s), bounds: [-7.8, 7.8, -7.0, 7.8] },
+  // The great hall of the vault around the battle (the party south, the monsters north).
+  'monster-encounters': { models: vaultModels(), build: buildVaultBackdrop, bounds: [-4.6, 4.6, -2.6, 6.4] },
 };
 
 async function bake(): Promise<void> {

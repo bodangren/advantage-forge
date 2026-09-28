@@ -5,11 +5,10 @@
  * the story in order.
  */
 import * as THREE from 'three';
-import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type CutBox, type Shot, type V3 } from '../../../apk3d/stage/index.js';
+import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type Shot, type V3 } from '../../../apk3d/stage/index.js';
 import { sunkenVaultPlaces } from '../../../../scenes/sunken-vault.js';
 import type { EnemyKind, EnemyState, HeroId } from '../core/index.js';
 
-const FLOOR_Y = 0.09;
 const HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
 const ENEMY_KINDS: EnemyKind[] = ['skeleton', 'giant-bat', 'mimic', 'dragon-fire'];
 /** Map pieces that lie flat: they receive shadows but do not cast them. */
@@ -20,32 +19,59 @@ const LIGHT_ASSETS = ['torch-sconce', 'brazier', 'candle-cluster'];
 const DRAGON_SCALE = 2.1;
 const model = (name: string): string => `models/${name}.glb`;
 
-/**
- * A battle stage: where the party and the monsters stand, the two camera framings (portrait
- * phones and landscape screens), and the boxes of map pieces cut away so walls never block the view.
- */
-export interface StageDef {
-  party: Record<HeroId, V3>;
-  /** Monster spots in order; the dragon uses `boss`. */
-  enemies: V3[];
-  boss: V3;
-  portrait: Shot;
-  landscape: Shot;
-  cutaway: CutBox[];
-}
+import { FLOOR_Y, HALL, type StageDef } from './hall.js';
 
-/** The great hall: the party stands south of the pillars and faces north. */
-const HALL: StageDef = {
-  party: { knight: [0, FLOOR_Y, 4.0], wizard: [-1.05, FLOOR_Y, 4.75], cleric: [1.05, FLOOR_Y, 4.75] },
-  enemies: [[-0.85, FLOOR_Y, 0.9], [0.85, FLOOR_Y, 0.9], [0, FLOOR_Y, 0.4]],
-  boss: [0, FLOOR_Y, 0.2],
-  portrait: { pos: [3.3, 2.9, 8.4], look: [-0.25, 0.8, 2.4], fov: 50 },
-  landscape: { pos: [3.4, 2.7, 8.6], look: [-0.2, 0.85, 2.4], fov: 46 },
-  // The south wall (between the camera and the fight), and the hall's pillars and cage.
-  cutaway: [[-4.6, 5.4, 4.6, 12], [-1.6, 1.6, 1.6, 2.4]],
-};
+export type { StageDef } from './hall.js';
 
 export const STAGES: StageDef[] = [HALL, HALL, HALL, HALL];
+
+/** The vault map pieces the battle shows: every place but the characters and the unbuilt parts. */
+export const vaultPlaces = () => sunkenVaultPlaces().filter((p) => p.asset !== 'adventurer' && p.asset !== 'skeleton' && !NOT_BUILT.has(p.asset));
+
+/** Every model of the vault map. */
+export const vaultModels = (): string[] => [...new Set(vaultPlaces().map((p) => p.asset))];
+
+/** Where the vault's torches, braziers, and candles give light (the point lights go there). */
+function lightSpots(set: InstancedSet): V3[] {
+  const spots: V3[] = [];
+  for (const asset of LIGHT_ASSETS) {
+    for (const p of set.placementsOf(asset)) {
+      const yaw = THREE.MathUtils.degToRad(p.yaw ?? 0);
+      const out = asset === 'torch-sconce' ? 0.45 : 0;
+      spots.push([p.at[0] + Math.sin(yaw) * out, asset === 'torch-sconce' ? 1.9 : 1.1, p.at[2] + Math.cos(yaw) * out]);
+    }
+  }
+  return spots;
+}
+
+/** The torch spots nearest the fight of a stage, nearest first. */
+function nearestSpots(spots: readonly V3[], def: StageDef): V3[] {
+  const center = new THREE.Vector3(0, 0, 2.5).add(new THREE.Vector3(...def.party.knight)).multiplyScalar(0.5);
+  return [...spots].sort((a, b) => center.distanceToSquared(new THREE.Vector3(...a)) - center.distanceToSquared(new THREE.Vector3(...b)));
+}
+
+/**
+ * The static hall for the 2D bake (demo/bake.ts): the vault with the hall's cutaway, lit as the
+ * battle, with no characters. The models must be loaded (`vaultModels()`).
+ */
+export function buildVaultBackdrop(kit: Stage3D): void {
+  const scene = kit.scene;
+  scene.background = new THREE.Color('#0c1118');
+  scene.add(new THREE.HemisphereLight(0x9fb8e8, 0x2a3040, 1.25));
+  kit.addSun(0xc8dcff, 1.1, [-3, 14, 6], [0, 0, 2]);
+  const set = new InstancedSet(vaultPlaces(), (a) => kit.loader.get(model(a)), FLAT);
+  scene.add(set.group);
+  set.cutaway(HALL.cutaway);
+  for (const p of nearestSpots(lightSpots(set), HALL).slice(0, 4)) {
+    const light = new THREE.PointLight(0xffa24a, 14, 10, 1.6);
+    light.position.set(...p);
+    scene.add(light);
+  }
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(40, 32), new THREE.MeshStandardMaterial({ color: 0x252a33, roughness: 1 }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = 0.02;
+  scene.add(ground);
+}
 
 export class BattleStage {
   private readonly actors = new Map<string, Actor>();
@@ -79,18 +105,12 @@ export class BattleStage {
    * then load in the background while the student reads the story.
    */
   async load(progress: (p: number) => void): Promise<void> {
-    const places = sunkenVaultPlaces().filter((p) => p.asset !== 'adventurer' && p.asset !== 'skeleton' && !NOT_BUILT.has(p.asset));
-    const names = [...new Set(places.map((p) => p.asset)), ...HEROES];
+    const places = vaultPlaces();
+    const names = [...vaultModels(), ...HEROES];
     await this.kit.loader.preload(names.map(model), progress);
     this.set = new InstancedSet(places, (a) => this.kit.loader.get(model(a)), FLAT);
     this.kit.scene.add(this.set.group);
-    for (const asset of LIGHT_ASSETS) {
-      for (const p of this.set.placementsOf(asset)) {
-        const yaw = THREE.MathUtils.degToRad(p.yaw ?? 0);
-        const out = asset === 'torch-sconce' ? 0.45 : 0;
-        this.torchSpots.push([p.at[0] + Math.sin(yaw) * out, asset === 'torch-sconce' ? 1.9 : 1.1, p.at[2] + Math.cos(yaw) * out]);
-      }
-    }
+    this.torchSpots.push(...lightSpots(this.set));
     // Dark stone beyond the map, so no view ever looks into a void.
     const ground = new THREE.Mesh(new THREE.CircleGeometry(40, 32), new THREE.MeshStandardMaterial({ color: 0x252a33, roughness: 1 }));
     ground.rotation.x = -Math.PI / 2;
@@ -143,8 +163,7 @@ export class BattleStage {
       this.actors.get(id)?.placeAt(at[0], at[1], at[2], 180);
     }
     // The four torches nearest the fight light it.
-    const center = new THREE.Vector3(0, 0, 2.5).add(new THREE.Vector3(...this.stageDef.party.knight)).multiplyScalar(0.5);
-    const near = [...this.torchSpots].sort((a, b) => center.distanceToSquared(new THREE.Vector3(...a)) - center.distanceToSquared(new THREE.Vector3(...b)));
+    const near = nearestSpots(this.torchSpots, this.stageDef);
     this.torchLights.forEach((l, i) => {
       const p = near[i];
       if (p) l.position.set(p[0], p[1], p[2]);

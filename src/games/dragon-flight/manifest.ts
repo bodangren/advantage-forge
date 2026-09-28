@@ -7,18 +7,25 @@
  */
 import { APK3D_CAPABILITIES, CARTRIDGE_3D_RUNTIME_API_VERSION, validateCartridge3DManifest } from '../../apk3d/contracts/index.js';
 
+/** The clips the 2D view plays on the dragons, and the land props it places (files of `primary-chibi-2d`). */
+export const DRAGON_CLIPS_2D = ['fly', 'idle', 'attack', 'roar', 'death'] as const;
+export const LAND_PROPS_2D = ['arch', 'oak-tree', 'pine-tree', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'well', 'fence', 'hay-bale'] as const;
+
+/** Every 2D file the game uses (`requiredAssetBindings`: binding key = file id). */
+export const FILES_2D: readonly string[] = [...DRAGON_CLIPS_2D.map((c) => `dragon-fire.${c}`), ...LAND_PROPS_2D.map((p) => `prop.${p}`)];
+
 export const manifest = validateCartridge3DManifest({
   id: 'dragon-flight',
   title: 'Dragon Flight',
   description: 'Ride the fire dragon through the gate with the right meaning: every right gate adds a dragon to the flock for the boss.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderers: ['three'],
+  renderers: ['three', 'phaser'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',
   levels: ['A0', 'A0+', 'A1'],
   needs: { vocabulary: 4 },
-  requiredAssetBindings: [],
+  requiredAssetBindings: [...FILES_2D],
   requiredModelBindings: [],
   packs: ['heroes', 'flight'],
   capabilities: [...APK3D_CAPABILITIES],

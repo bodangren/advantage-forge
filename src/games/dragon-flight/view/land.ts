@@ -11,27 +11,9 @@ export const model = (name: string): string => `models/${name}.glb`;
 
 export const FLIGHT_MODELS = ['dragon-fire', 'arch', 'oak-tree', 'pine-tree', 'ancient-oak', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'barn', 'well', 'fence', 'hay-bale', 'farm-field'];
 
-const CHUNK = 30;
+import { CHUNK, FOREST, PATTERN, rng, VILLAGE, type Kind } from './land-plan.js';
+
 const CHUNKS = 5;
-/** Forest chunks, then village chunks, then forest again (chunk index modulo the pattern). */
-const PATTERN = ['forest', 'forest', 'forest', 'village', 'village', 'forest', 'forest', 'village'] as const;
-
-type Kind = (typeof PATTERN)[number];
-
-const FOREST: [string, number][] = [['oak-tree', 5], ['pine-tree', 6], ['ancient-oak', 1], ['bush', 4], ['fern', 3], ['boulder', 2], ['rock-cluster', 2], ['wildflowers', 3]];
-const VILLAGE: [string, number][] = [['cottage', 3], ['barn', 1], ['well', 1], ['hay-bale', 3], ['fence', 4], ['oak-tree', 3], ['bush', 3], ['wildflowers', 4], ['farm-field', 2]];
-
-/** A small seeded random (view only). */
-function rng(seed: number): () => number {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
 
 export interface Land {
   /** Keeps the chunks around the dragon at z (world z, negative ahead). */

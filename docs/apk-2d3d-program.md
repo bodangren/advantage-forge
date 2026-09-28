@@ -52,7 +52,7 @@ either renderer through `createCartridgeMounter`: a "2D mode (older phones)" set
 | --- | --- | --- | --- | --- |
 | Monster Encounters | done (task 11, 2026-09-28) | done | | |
 | Potion Rush | done | done | done (2026-09-28): 480-wide canvas at the screen aspect, real touch drag in QC | |
-| Dragon Flight | done | done | | |
+| Dragon Flight | done | done | done (2026-09-28): a vertical scroller at the shared camera, land props in the 3D view's chunks | |
 | Dungeon Liberator | done | done | done (2026-09-28): shared `Arena2D` camera, `Joystick2D`, word panel | |
 | Devourer Slime | done | done | done (2026-09-28): the view zooms out as the slime grows | |
 | Hero vs. Zombie (wizard-vs-zombie) | done | done | done (2026-09-28): night tint on sprites, dawn light, Blast ring | |

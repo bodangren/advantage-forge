@@ -5,3 +5,4 @@ export { Actor2D, type Actor2DOptions } from './actor.js';
 export { banner, button, COLORS, FONT, popup, recolorTag, StatusBar2D, tag, text, WordPanel2D } from './hud2d.js';
 export { Arena2D, type Arena2DOptions } from './arena.js';
 export { Joystick2D, type Joystick2DOptions } from './joystick.js';
+export { Card2D, type ArrangeLabels, type CardAction, type CardOption, type CardTarget, type Rect } from './card2d.js';
