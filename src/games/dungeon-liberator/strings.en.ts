@@ -23,6 +23,7 @@ export default {
       place: 'Sunken Vault',
       room: 'Room {room}/{rooms}',
       story: '📖 Story',
+      move: 'Drag to move',
       freed: 'Freed!',
       notYet: 'Not yet!',
       scared: 'Eek!',

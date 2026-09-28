@@ -71,7 +71,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     }
   };
   window.addEventListener('keydown', onKey);
-  const joystick = attachJoystick(hud.el, { change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
+  const joystick = attachJoystick(hud.el, { hint: t('move'), change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
 
   audio.defineMood('night', { bpm: 88, chords: [[57, 60, 64], [53, 57, 60], [52, 55, 59], [50, 53, 57]], busy: false, drum: true });
   audio.defineMood('dawn', { bpm: 96, chords: [[60, 64, 67], [65, 69, 72], [67, 71, 74], [60, 64, 67]], busy: true, drum: false });

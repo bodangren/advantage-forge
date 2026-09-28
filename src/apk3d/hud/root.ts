@@ -74,7 +74,8 @@ export class HudRoot {
       // at the edge stays whole.
       const mx = Math.min(w / 2, el.offsetWidth / 2 + 8);
       const top = 96 + el.offsetHeight;
-      const bottom = h - 12;
+      // Above the bottom controls (the joystick, a Blast button), which take about 150 px.
+      const bottom = h - 150;
       const x = Math.min(w - mx, Math.max(mx, p.x));
       const y = Math.min(bottom, Math.max(top, p.visible ? p.y : bottom));
       const edge = !p.visible ? 'down' : p.x < mx ? 'left' : p.x > w - mx ? 'right' : p.y < top ? 'up' : p.y > bottom ? 'down' : '';

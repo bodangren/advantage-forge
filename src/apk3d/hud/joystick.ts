@@ -1,12 +1,18 @@
 /**
- * A floating joystick for arena games: the student holds a finger (or the mouse) anywhere on the
- * play area and drags toward where the character should go; a knob shows the direction. On a
- * computer, WASD and the arrow keys steer too. The joystick reports a direction of length 0 to 1
- * in screen terms (x to the right, y down); the game turns it into world directions.
+ * The joystick of arena games. A joystick rests at the bottom left of the screen, so the student
+ * sees how to move; a finger (or the mouse) held anywhere on the play area brings it under the
+ * finger, and dragging steers toward the drag direction. On a computer, WASD and the arrow keys
+ * steer too. It reports a direction of length 0 to 1 in screen terms (x to the right, y down);
+ * the game turns it into world directions.
+ *
+ * The joystick has its own touch area under the other HUD controls: the HUD root itself ignores
+ * pointer input (so taps reach the 3D scene), and a joystick on it would never see a finger.
  */
 export interface JoystickOptions {
   /** Drag distance in pixels for full speed. */
   radius?: number;
+  /** A short hint under the resting joystick (from the game's catalog, e.g. "Drag to move"). */
+  hint?: string;
   /** Called with the new direction whenever it changes (0, 0 when released). */
   change(x: number, y: number): void;
 }
@@ -26,14 +32,20 @@ const KEYS: Record<string, [number, number]> = {
   s: [0, 1],
 };
 
-/** Attaches a joystick to `surface` (the HUD layer); controls inside it keep their taps. */
+/** Attaches a joystick to `surface` (the HUD root). */
 export function attachJoystick(surface: HTMLElement, options: JoystickOptions): Joystick {
   const radius = options.radius ?? 56;
+  const zone = document.createElement('div');
+  zone.className = 'joystick-zone';
   const base = document.createElement('div');
-  base.className = 'joystick';
-  base.innerHTML = '<i></i>';
-  const knob = base.firstElementChild as HTMLElement;
-  surface.append(base);
+  base.className = 'joystick rest';
+  base.innerHTML = `<i></i>${options.hint ? `<span></span>` : ''}`;
+  const knob = base.querySelector('i') as HTMLElement;
+  const hint = base.querySelector('span');
+  if (hint) hint.textContent = options.hint ?? '';
+  zone.append(base);
+  // First in the HUD: every other control (buttons, tags) stays on top of the touch area.
+  surface.prepend(zone);
   let id: number | null = null;
   let ox = 0;
   let oy = 0;
@@ -45,22 +57,30 @@ export function attachJoystick(surface: HTMLElement, options: JoystickOptions): 
     last = [x, y];
     options.change(x, y);
   };
+  const rest = (): void => {
+    base.classList.add('rest');
+    base.style.left = '';
+    base.style.top = '';
+    knob.style.transform = 'translate(-50%, -50%)';
+  };
 
   const down = (e: PointerEvent): void => {
-    // Buttons and tags keep their own taps.
-    if (id !== null || (e.target as HTMLElement).closest('button, a, input, .card')) return;
+    if (id !== null) return;
+    e.preventDefault();
     id = e.pointerId;
     ox = e.clientX;
     oy = e.clientY;
-    const r = surface.getBoundingClientRect();
+    const r = zone.getBoundingClientRect();
+    base.classList.remove('rest');
     base.style.left = `${ox - r.left}px`;
     base.style.top = `${oy - r.top}px`;
     knob.style.transform = 'translate(-50%, -50%)';
     base.classList.add('on');
-    surface.setPointerCapture?.(e.pointerId);
+    zone.setPointerCapture?.(e.pointerId);
   };
   const move = (e: PointerEvent): void => {
     if (e.pointerId !== id) return;
+    e.preventDefault();
     let dx = e.clientX - ox;
     let dy = e.clientY - oy;
     const len = Math.hypot(dx, dy);
@@ -77,6 +97,7 @@ export function attachJoystick(surface: HTMLElement, options: JoystickOptions): 
     if (e.pointerId !== id) return;
     id = null;
     base.classList.remove('on');
+    rest();
     emit(0, 0);
   };
   const keyState = (): void => {
@@ -104,23 +125,22 @@ export function attachJoystick(surface: HTMLElement, options: JoystickOptions): 
     if (!held.delete(key)) return;
     keyState();
   };
-  surface.style.touchAction = 'none';
-  surface.addEventListener('pointerdown', down);
-  surface.addEventListener('pointermove', move);
-  surface.addEventListener('pointerup', up);
-  surface.addEventListener('pointercancel', up);
+  zone.addEventListener('pointerdown', down);
+  zone.addEventListener('pointermove', move);
+  zone.addEventListener('pointerup', up);
+  zone.addEventListener('pointercancel', up);
   window.addEventListener('keydown', keydown);
   window.addEventListener('keyup', keyup);
+  rest();
   return {
     dispose() {
-      surface.removeEventListener('pointerdown', down);
-      surface.removeEventListener('pointermove', move);
-      surface.removeEventListener('pointerup', up);
-      surface.removeEventListener('pointercancel', up);
+      zone.removeEventListener('pointerdown', down);
+      zone.removeEventListener('pointermove', move);
+      zone.removeEventListener('pointerup', up);
+      zone.removeEventListener('pointercancel', up);
       window.removeEventListener('keydown', keydown);
       window.removeEventListener('keyup', keyup);
-      surface.style.touchAction = '';
-      base.remove();
+      zone.remove();
     },
   };
 }

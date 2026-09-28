@@ -24,6 +24,7 @@ export default {
       sentence: 'Sentence {index}/{total}',
       size: 'Size',
       story: '📖 Story',
+      move: 'Drag to move',
       yum: 'Yum!',
       bleh: 'Bleh!',
       oof: 'Oof!',

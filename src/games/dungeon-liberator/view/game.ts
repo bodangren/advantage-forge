@@ -55,7 +55,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   bar.className = 'sentence-bar';
   hud.el.append(bar);
   const roomEl = status.querySelector<HTMLElement>('[data-room]')!;
-  const joystick = attachJoystick(hud.el, { change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
+  const joystick = attachJoystick(hud.el, { hint: t('move'), change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
 
   audio.defineMood('vault', { bpm: 92, chords: [[57, 60, 64], [55, 59, 62], [53, 57, 60], [52, 56, 59]], busy: false, drum: true });
   audio.defineSfx('join', (s) => [784, 988, 1319].forEach((f, i) => s.tone(f, 0.22, 'triangle', 0.14, i * 0.06)));

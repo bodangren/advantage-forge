@@ -24,6 +24,7 @@ export default {
       round: 'Word {index}/{total}',
       find: 'Find the meaning of',
       story: '📖 Story',
+      move: 'Drag to move',
       blast: 'Blast',
       light: 'Light!',
       wrong: 'Not that one!',

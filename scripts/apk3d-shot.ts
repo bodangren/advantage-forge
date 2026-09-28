@@ -235,6 +235,20 @@ async function playArena(page: Page, shot: (name: string) => Promise<void>): Pro
   await page.waitForSelector('.arena-tag', { timeout: 120_000 });
   await page.waitForTimeout(1500);
   await shot('start');
+  // A real finger: a touch drag to the right must move the character (the joystick works).
+  if (page.viewportSize()!.width < 700) {
+    const pos = () => page.evaluate(() => { const s = (window as any).__apk3d.game().state(); const m = s.hero ?? s.knight ?? s.slime; return m.x as number; });
+    const x0 = await pos();
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 200, y: 520 }] });
+    for (let k = 1; k <= 8; k++) await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 200 + k * 9, y: 520 }] });
+    await page.waitForTimeout(900);
+    await shot('touch-steer');
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    const x1 = await pos();
+    console.log(`touch  steer moved ${(x1 - x0).toFixed(2)} m`);
+    if (x1 - x0 < 0.5) throw new Error('A touch drag did not move the character: the joystick does not work');
+  }
   await page.evaluate(() => {
     const w = window as any;
     w.__qcBot = setInterval(() => w.__apk3d.game()?.auto(), 150);

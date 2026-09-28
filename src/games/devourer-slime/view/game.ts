@@ -62,7 +62,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const bar = document.createElement('div');
   bar.className = 'sentence-bar';
   hud.el.append(bar);
-  const joystick = attachJoystick(hud.el, { change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
+  const joystick = attachJoystick(hud.el, { hint: t('move'), change: (x, y) => loop.dispatch({ type: 'steer', x, z: y }) });
 
   audio.defineMood('meadow', { bpm: 100, chords: [[60, 64, 67], [57, 60, 64], [65, 69, 72], [67, 71, 74]], busy: false, drum: false });
   audio.defineSfx('munch', (s) => {
