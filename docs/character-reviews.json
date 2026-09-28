@@ -1694,5 +1694,37 @@
       "Enlarge the hands a little."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "barbarian": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the knight base (the rogue's face construction, knee bones, eight clips): a young barbarian with a wild red mane, a top knot and a side braid, a grey fur mantle and cape, bare arms with blue paint bands, leather bracers, a chest strap, a studded leather kilt with a round bronze buckle, fur-cuffed boots, and a double-bladed axe. The attack is a two-handed overhead chop; attack2 a horizontal sweep. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The red mane, fur, kilt, and double axe read as a barbarian at a glance and at 128 px.",
+      "It matches the hero set: same young face and proportions as the rogue and knight.",
+      "Hair, eye, skin, and paint variants with three presets: highlander, ember, wildwood."
+    ],
+    "issues": [
+      "The mane is a tall round dome; the mockup mane is wider with a bigger top tuft.",
+      "The fur cape is a plain grey bell; the mockup fur sits mostly on the left shoulder, with big boot cuffs.",
+      "The paint is thin bands; the mockup has a larger arm tattoo and two crossed chest straps."
+    ],
+    "next": [
+      "Widen the mane at the sides.",
+      "Move the fur toward the left shoulder and enlarge the boot cuffs."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
