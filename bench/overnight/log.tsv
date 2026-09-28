@@ -1,0 +1,336 @@
+asset	category	model	minutes	build_ok	score	verdict	notes	commit
+hammer	blacksmith-tool	opencode-go/muse-spark-1.3-contributor	1	no	-	quota	Go usage limit exceeded (429)	-
+timber-wall	tile	xai/grok-4.7	?	yes	6	graft	clean frame and brace; plaster matches tavern walls; plain	d7dc2d1
+stone-floor	tile	xai/grok-4.7	?	yes	4	reroll	pale flat grid of rectangles, not chunky flagstones	-
+workbench	blacksmith-furniture	coding-plan/kimi-k2.8-preview	25	yes	6	graft	Clean honey-oak bench with a black vise; plain, and 0.99 m tall is high for chibi scale.	d0554a9
+innkeeper	npc	claude-subagent	24	yes	8	claude	Close to the mockup (bun, bow, green dress, apron, tray). Apron edge speckle; tankard smaller than the mockup.	8183775
+grinding-wheel	blacksmith-prop	kimi-code-plan-cn/kimi-for-coding	30	yes	6	graft	Clear stone wheel on a wooden frame with crank and treadle; small and plain; stone paler than the palette gray.	07363eb
+shopkeeper	npc	claude-subagent	29	yes	8.5	claude	Very close to the mockup (beret, spectacles, mustache, vest, apron, pouch). Beret too violet; mustache small at 128 px.	1365053
+forge	blacksmith-structure	volcengine-agent-plan/kimi-k2.8-preview	33	yes	6	graft	Reads as a forge (stone block, arched fire, hood, chimney). Stone too pale and blue; flames render pale peach, not orange; very even stone pattern.	72e7bc6
+stone-wall	tile	coding-plan/glm-5.3-flash	35	yes	7	graft	Clean ashlar wall tile with capstone and wooden sill; tiles at 2.0 x 1.5 m like the other walls; stone a little pale.	651ac45
+tongs	blacksmith-tool	deepseek/deepseek-flash	37	yes	4	reroll	Looks like scissors with finger rings, not smithing tongs	-
+cash-box	blacksmith-prop	kimi-code-plan-cn/kimi-for-coding	-	no	-	fail	ESCAPED: wrote the real repo assets/cash-box.ts by absolute path; stopped, moved into its workspace	-
+villager	npc	claude-subagent	19	yes	8	claude	Close to the mockup (headscarf, pigtails, rose dress, apron, bread basket). Apron hem speckle; chibi legs shorter than the mockup.	32d2562
+anvil	blacksmith-prop	volcengine-agent-plan/kimi-k2.8-preview	19	yes	5	graft	Dark iron but a plain box with a small stub horn; lacks the long tapered horn and waisted body. Placeholder until the second try.	e55b2b7
+quest-giver	npc	claude-subagent	26	yes	7	claude	Elder with hood, beard, staff, sealed scroll; give clip. Hood is a big ball from side and back; small nose.	b09e32a
+rope-coil	blacksmith-prop	minimax-cn-coding-plan/MiniMax-M3	13	yes	5	graft	Three stacked rings with a loose end in burlap tan; no rope twist, so it reads like a smooth hose.	1bf80e5
+iron-ore	blacksmith-item	deepseek/deepseek-flash	24	yes	6	graft	Rock chunk with rusty streaks and a dark metal nodule; reads as ore.	26bb776
+coal	blacksmith-item	deepseek/deepseek-flash	23	yes	5	graft	One black lump, a little cube-like; the scene places several as a pile.	77ff5f6
+wood-door	architecture	volcengine-agent-plan/kimi-k2.8-preview	19	yes	8	graft	Plank door with black strap hinges, ring handle, Z-brace on the back, walnut frame and threshold; fits the 0.85 x 1.2 m wall opening.	3acb6b5
+hammer	blacksmith-tool	minimax-cn-coding-plan/MiniMax-M3	40	yes	5	graft	Rack of two block-headed hammers on a small wooden stand, as the prompt asked; plain heads, no metal detail.	62653f3
+deer	wildlife	claude-subagent	30	yes	8.5	claude	Very close to the mockup (face, antlers, spots, bib, tail); graze and alert clips. Body slightly long.	4e18ac6
+bellows	blacksmith-prop	coding-plan/kimi-k2.8-preview	54	yes	6	graft	Two wooden boards with a leather gusset, a hinge and a brass nozzle; reads as a bellows from the side; small and boxy.	c9ededd
+horse	wildlife	claude-subagent	35	yes	7.5	claude	Good match (blaze, halter, socks, mane); rear and neigh clips. Eye bulges out of the side outline; head a little small.	f2f54c9
+backpack	equipment	coding-plan/kimi-k2.8-preview	27	yes	7.5	graft	Canvas body, leather flap with buckled straps, red bedroll, side pouch, shoulder straps; matches the mockup.	cadb633
+long-sword	equipment	deepseek/deepseek-flash	13	yes	7	graft	Steel blade with fuller, ball-ended crossguard, wrapped leather grip, round pommel; blade slim for the chunky chibi style.	c27b283
+iron-helmet	equipment	volcengine-agent-plan/kimi-k2.8-preview	29	yes	5	graft	Riveted brow band, nasal guard, cheek guards, crest; but the lower half is a closed dark ball (a bowling ball from the back) and the top is much paler. Placeholder until the second try.	a84f10b
+round-shield	equipment	coding-plan/kimi-k2.8-preview	15	yes	8	graft	Radial oak planks, riveted iron rim, domed boss, blue ring, grip on the back; matches the mockup.	07a941b
+stone-floor	tile	volcengine-agent-plan/glm-5.3-flash	60	yes	5	graft	Raised pale rectangular blocks in a running bond with varied shades; still flat and regular, not the chunky flagstones of the mockup; hit the 60 min limit; slow 4 min build.	2c7950e
+leather-armor	equipment	volcengine-agent-plan/kimi-k2.8-preview	9	yes	4	reroll	Shoulder pads read as ears on a round ball: a teddy-bear head on a stand, not a vest	-
+chest	props	coding-plan/kimi-k2.8-preview	9	yes	7.5	graft	Planked chest with iron bands, walnut battens, corner caps and a hasp; clean. The trial hit the plan quota after its final build.	d614699
+staff	equipment	xai/grok-4.7	45	yes	6.5	graft	Gnarled wooden staff with a leather wrap and a glowing blue crystal on top; reads as a magic staff.	f221e4e
+ghost	enemy	claude-subagent	37	yes	8.5	claude	Close to the mockup (egg head, glowing eyes, wavy hem, curled tail). Arms cannot rise fully; faint sheet seam.	32ebe16
+key-iron	item	deepseek/deepseek-flash	11	yes	6	graft	Chunky key lying flat with ring bow, collars and bit; blotchy pale and dark iron colors.	0abfecc
+torch	props	minimax-cn-coding-plan/MiniMax-M3	39	yes	6	graft	Pole on a stone mound with an iron cup; flame still pale peach.	922a405
+basket	village-prop	deepseek/deepseek-flash	12	yes	7.5	graft	Wicker basket full of red apples with a handle.	2c849eb
+shortbow	equipment	xai/grok-4.7	38	yes	7	graft	Curved bow with horn tips, grip wrap and a string.	9322dad
+firewood	village-prop	deepseek/deepseek-flash	31	yes	7.5	graft	Neat stack of split logs with growth rings.	74774c9
+gold-coin	item	minimax-cn-coding-plan/MiniMax-M3	36	yes	8	graft	Chunky gold coin with a raised rim and a raised star.	a36ec6e
+notice-board	village-prop	xai/grok-4.7	44	yes	8	graft	Shingle roof, plank board, pinned notes and a wanted poster, grass tufts at the posts.	fcb3edf
+wheelbarrow	village-prop	volcengine-agent-plan/kimi-k2.8-preview	17	yes	7	graft	Spoked wheel, plank tray with turnips, handles and legs; tray a little small.	416c8c5
+health-potion	item	minimax-cn-coding-plan/MiniMax-M3	49	yes	7.5	graft	See-through flask with red liquid, cork and twine.	937bc3f
+rug	tavern-prop	volcengine-agent-plan/glm-5.3-flash	14	yes	5.5	graft	Colors inverted: cream rug with a small red center instead of red with a cream border; good tassels.	4d600aa
+quench-tub	blacksmith-prop	deepseek/deepseek-flash	60	yes	5	graft	Hooped wooden tub with its lid leaning on it; Claude raised the straps triangle cap from 260 to 2400 to clear a reduction warning. The trial hit the 60 min limit.	58bf4f1
+cabbage	village-prop	deepseek/deepseek-flash	49	yes	6.5	graft	Reads as a cabbage; the outer leaves look a little like flower petals.	adcf91b
+cash-box	blacksmith-prop	minimax-cn-coding-plan/MiniMax-M3	30	yes	7	graft	Iron-bound walnut box with a brass lock plate and back hinges; reads as a small strongbox.	8475887
+mummy	enemy	claude-subagent	26	yes	7.5	claude	Wraps, face hole, single eye, collar, loose ends match the mockup. Eye is a flat pale disc; arms out to the sides at rest.	03f7479
+goblet	tavern-prop	deepseek/deepseek-flash	45	yes	5	graft	Pewter cup, but hourglass-like and the red wine drips down the outside.	7d5fe8e
+wall-sconce	tavern-prop	deepseek/deepseek-flash	21	yes	7	graft	Iron back plate, curled arm, drip pan and a candle with an orange flame that keeps its color.	77d5950
+axe	blacksmith-tool	deepseek/deepseek-flash	12	yes	5.5	graft	Boxy head block with a steel edge on a knobbly haft; reads a little like a cleaver.	4fc5126
+market-tent	village-structure	xai/grok-4.7	31	yes	8.5	graft	Striped canopy with a scalloped valance, four poles, and a trestle table with baskets and cloth.	1e14a4b
+shovel	blacksmith-tool	deepseek/deepseek-flash	16	yes	7.5	graft	D-grip, wrapped haft, iron spade blade.	dfca973
+cooking-pot	tavern-prop	minimax-cn-coding-plan/MiniMax-M3	-	no	-	fail	ESCAPED: wrote the real repo assets/cooking-pot.ts by absolute path (then removed it); stopped	-
+log	forest-prop	deepseek/deepseek-flash	16	yes	7	graft	Bark log with a ringed cut end and a moss patch.	dd14843
+red-mushroom	forest-prop	deepseek/deepseek-flash	14	yes	8	graft	Cluster of spotted red toadstools on a mossy base.	0ed9a81
+bucket	village-prop	minimax-cn-coding-plan/MiniMax-M3	60	yes	3	reroll	Broken dashed handle arc and black holes in the staves	-
+wheat-sheaf	village-prop	minimax-cn-coding-plan/MiniMax-M3	39	yes	3.5	reroll	Looks like a woven vase with straw on top, not a sheaf	-
+kobold-warrior	enemy	claude-subagent	29	yes	8	claude	Snout, horns, frill ears, vest, spear, swaying tail match the mockup. Eyes small under heavy lids.	68c55dd
+lever	dungeon-prop	deepseek/deepseek-flash	13	yes	7.5	graft	Stone block with an iron slot plate and a lever with a wooden grip.	8949d30
+pickaxe	blacksmith-tool	minimax-cn-coding-plan/MiniMax-M3	11	yes	5	graft	One curved pick point; the other side is a box with an odd black-and-white mark.	b8e10ff
+saw	blacksmith-tool	minimax-cn-coding-plan/MiniMax-M3	10	yes	5.5	graft	Lies flat with a handle and a thin toothed blade; the blade reads only from above.	00ba2e0
+bedroll	forest-prop	minimax-cn-coding-plan/MiniMax-M3	16	yes	7.5	graft	Rolled red wool blanket with two leather straps.	30d0f15
+coin-pile	dungeon-prop	deepseek/deepseek-flash	27	yes	7.5	graft	Heap of chunky gold coins with two red gems.	a33c56c
+shed	village-structure	xai/grok-4.7	46	yes	8	graft	Plank walls, sloped shingle roof, arched door, window, rake and grass tufts.	8b20fef
+gravestone	dungeon-prop	deepseek/deepseek-flash	21	yes	7	graft	Rounded stone with a white cross, a base and pebbles; two odd knobs on the sides.	28c61ab
+cattails	forest-prop	minimax-cn-coding-plan/MiniMax-M3	22	yes	7.5	graft	Clump of long leaves with brown cattail heads.	a055993
+spike-trap	dungeon-prop	minimax-cn-coding-plan/MiniMax-M3	12	yes	6.5	graft	Stone slab with rows of iron spikes; no holes around the spikes.	d2617a9
+minotaur-guard	enemy	claude-subagent	38	yes	7	claude	Bull head, horns, nose ring, armor, maul read well. Horns too steep, grass-skirt loincloth; greybeard sprites missing (build stopped by low memory).	f7c7a09
+lich	enemy	claude-subagent	21	yes	8	claude	Crown, glowing eyes, robe, gem staff read as the mockup boss. Skull a little small; staff upright.	4d3c2e1
+scales	village-prop	deepseek/deepseek-flash	18	yes	7.5	graft	Brass balance with two hanging pans on a wooden base.	de5f030
+urn	dungeon-prop	minimax-cn-coding-plan/MiniMax-M3	18	yes	7	graft	Stone urn with a lid, a carved rune band and moss at the base.	6113538
+kite-shield	equipment	xai/grok-4.7	36	yes	8	graft	Teardrop shield with a riveted steel rim, blue field, white chevron and a back strap.	696f7e9
+turnip	village-prop	minimax-cn-coding-plan/MiniMax-M3	29	yes	7	graft	Purple-and-white root with a leaf tuft, standing on small root tips.	572db87
+meat	tavern-prop	deepseek/deepseek-flash	9	yes	7	graft	Glossy roast leg with a bone at each end.	822f937
+spear	equipment	minimax-cn-coding-plan/MiniMax-M3	6	yes	6.5	graft	Steel head, wrap and butt cap on a straight shaft; thin for the chibi style.	c3df512
+milestone	village-prop	deepseek/deepseek-flash	47	yes	7.5	graft	Stone post with a carved arrow and a number 3, grass at the base.	cb822c9
+mace	equipment	minimax-cn-coding-plan/MiniMax-M3	6	yes	7	graft	Flanged iron head on a banded haft with a wrapped grip.	0d79d1e
+skeleton-knight	enemy	claude-subagent	25	yes	8	claude	Plumed helmet, skull, armor, red cloth, sword and kite shield match the mockup. Salmon eye glow; wide skull.	48a7aa1
+loaf	tavern-prop	minimax-cn-coding-plan/MiniMax-M3	32	yes	5	graft	Plain oval loaf with dark smudges instead of slash marks.	9781648
+desk	tavern-prop	deepseek/deepseek-flash	21	yes	7.5	graft	Desk with a drawer, an open book, a candle, an ink pot and a quill.	2b00a52
+dagger	equipment	deepseek/deepseek-flash	16	yes	7.5	graft	Leaf blade, curved crossguard, wrapped grip and ball pommel.	7b19d71
+buckler	equipment	minimax-cn-coding-plan/MiniMax-M3	12	yes	7.5	graft	Steel buckler with a riveted rim and a domed boss.	7fd75d6
+river-rock	forest-prop	minimax-cn-coding-plan/MiniMax-M3	11	yes	7	graft	Three smooth wet rocks; a little pale.	e4b3f26
+gibbet	dungeon-prop	xai/grok-4.7	32	yes	6.5	graft	Post and arm on a stone base; the hanging cage is small, almost a lantern.	38db454
+water-trough	village-prop	coding-plan/kimi-k2.8-preview	5	yes	7.5	graft	Plank trough with iron corners, feet and water.	e087387
+short-sword	equipment	deepseek/deepseek-flash	5	yes	7.5	graft	Broad steel blade, crossguard, wrapped grip and pommel.	242f738
+tongs	blacksmith-tool	volcengine-agent-plan/kimi-k2.8-preview	8	yes	6	graft	Third try: long iron reins, a rivet and a glowing hot stub in the jaws, lying flat; lumpy but reads as smithing tongs.	7d7af42
+bookshelf	tavern-prop	coding-plan/kimi-k2.8-preview	11	yes	8	graft	Three shelves of books in muted colors, some leaning, a candle and a jar on top.	116a460
+birch-tree	forest-tree	coding-plan/kimi-k2.8-preview	6	yes	7	graft	White trunk with black bark marks and a puffy green crown; the crown is one cloud-like lump.	bc39dcd
+cultist	enemy	claude-subagent	21	yes	8	claude	Hood, dark face, purple eyes, charm, dagger, candle match the mockup. Eyes small at 128 px.	33d9d5b
+stalagmite	dungeon-prop	volcengine-agent-plan/glm-5.3-flash	19	yes	7.5	graft	Cluster of stepped cones with drip rings on a shared base.	e811c2f
+anvil	blacksmith-prop	coding-plan/kimi-k2.8-preview	13	yes	6	graft	Second try replaces the plain box: flat face with a long tapered horn; four splayed legs look a little like a stool.	abf1612
+cage	dungeon-prop	coding-plan/kimi-k2.8-preview	16	yes	8	graft	Domed iron cage with a ring, bars, and a door with a brass padlock.	16a15a8
+battle-axe	equipment	deepseek/deepseek-flash	24	yes	7	graft	Two crescent blades standing head-down on a haft with a wrapped grip.	490af26
+goblin-shaman	enemy	claude-subagent	21	yes	8	claude	Skull staff, green flame, headdress, face paint, patched cloak match the mockup. Thin white feathers; preset sprites incomplete (low memory).	95f70bf
+iron-helmet	equipment	coding-plan/kimi-k2.8-preview	10	yes	7	graft	Second try replaces the placeholder: one uniform iron shell, open at the bottom, riveted brow band, nasal guard and cheek guards.	9938115
+market-cart	village-prop	volcengine-agent-plan/kimi-k2.8-preview	30	yes	7.5	graft	Two spoked wheels, long shafts, and a load of cabbages, apples and carrots.	38c0173
+apple-tree	village-tree	coding-plan/kimi-k2.8-preview	13	yes	7.5	graft	Chunky trunk with roots, a lobed green crown with red apples, fallen apples on the ground.	3716e41
+wardrobe	tavern-prop	coding-plan/kimi-k2.8-preview	0	no	-	quota	coding-plan 5-hour quota; moved to grok	-
+leather-armor	equipment	coding-plan/kimi-k2.8-preview	27	yes	7	graft	Second try: a vest on a stand with a V-neck, stitch lines, belt with brass buckle, side straps, tassets, and flat shoulder pads on the crossbar. The trial hit the plan quota after its final build.	8ac8d6e
+bandit-archer	enemy	claude-subagent	22	yes	7.5	claude	Hood, mask, vest, bow and quiver read well; hood too bright a green, grey mask.	c744d05
+stump	forest-prop	deepseek/deepseek-flash	34	yes	7	graft	Bark stump with a knot and a cluster of red mushrooms; the flared roots are faint.	4a324ed
+pond	forest-prop	volcengine-agent-plan/glm-5.3-flash	50	yes	5.5	graft	Flat grass tile with a faint water surface and a ring of stones; reads as a pond only from above.	bcd575d
+blue-mushroom	forest-prop	deepseek/deepseek-flash	10	yes	7	graft	Blue spotted caps on cream stems; the glow under the caps barely shows.	67bbcea
+fountain	village-structure	volcengine-agent-plan/kimi-k2.8-preview	11	yes	7.5	graft	Fieldstone basin, central column with an upper bowl, and streams of water.	db970ae
+treasure-pile	dungeon-prop	deepseek/deepseek-flash	11	yes	6.5	graft	Coins, a gem goblet, crown pieces and a small open chest; spread flat rather than a mound.	2ea6a99
+watchfire	forest-prop	xai/grok-4.7	38	yes	7	graft	Log tepee, tripod with a pot, flames and a stone ring; flames a little pink.	a514039
+cupboard	tavern-prop	volcengine-agent-plan/kimi-k2.8-preview	35	yes	8	graft	Second try: plates on the rack, mugs on hooks, stacked plates, two doors with ring pulls.	5d53502
+locked-chest	dungeon-prop	xai/grok-4.7	50	yes	7	graft	Iron-bound chest with a skull emblem and padlocks; the chain pieces at the base look odd.	6c548f0
+garden-bed	village-tile	volcengine-agent-plan/glm-5.3-flash	13	yes	7.5	graft	Plank bed with dark soil, rows of green tufts and carrot tops.	1c954da
+hedge	village-tile	volcengine-agent-plan/glm-5.3-flash	29	yes	7	graft	Rounded hedge tile with a lumpy top and flat ends that tile.	43a0417
+jar	dungeon-prop	deepseek/deepseek-flash	10	yes	8	graft	Terracotta jar with a painted band, handles, and a cloth cover tied with twine.	88a10a3
+magic-crystal	dungeon-prop	minimax-cn-coding-plan/MiniMax-M3	29	yes	7.5	graft	Purple crystal spires on a rock with small shards.	a00dfd6
+bed	tavern-prop	volcengine-agent-plan/kimi-k2.8-preview	14	yes	8	graft	Arched wooden headboard, red patchwork quilt and a pillow.	76f59a6
+fallen-tree	forest-prop	xai/grok-4.7	35	yes	6.5	graft	Long log with an upturned root plate, moss and leaves; the trunk is thin next to the root plate.	02c7f3d
+tapestry	tavern-prop	volcengine-agent-plan/glm-5.3-flash	23	yes	7.5	graft	Red banner on a rod with a gold border, a stag-head emblem and a tasselled hem.	f855d81
+wheat-sheaf	village-prop	deepseek/deepseek-flash	18	yes	8	graft	Second try: a real sheaf, stalks tied in the middle with heavy ears fanning out on top.	4e0dbd4
+pressure-plate	dungeon-tile	volcengine-agent-plan/glm-5.3-flash	19	yes	7	graft	Stone slab with a sunken square plate and a gold rune.	3b6401f
+bucket	village-prop	deepseek/deepseek-flash	33	yes	7.5	graft	Second try: solid staves, two iron hoops and a thick handle; the water barely shows.	ac91b12
+stalactite	dungeon-prop	volcengine-agent-plan/glm-5.3-flash	16	yes	6.5	graft	Rock slab with three hanging cones, tips resting at y = 0; lumpy slab but reads as stalactites.	4304619
+iron-door	dungeon-structure	volcengine-agent-plan/kimi-k2.8-preview	9	yes	8	graft	Arched stone frame, riveted iron door, barred window with warm light, ring handle. The trial hit the plan quota after its final build.	74da5fb
+greatsword	equipment	deepseek/deepseek-flash	11	yes	7.5	graft	Broad blade with a fuller, gold-banded crossguard, long wrapped grip and pommel.	b638441
+warhammer	equipment	minimax-cn-coding-plan/MiniMax-M3	17	yes	7	graft	Studded cube head with spikes on a banded haft; stands head-up, not head-down as asked.	45c7889
+wardrobe	tavern-prop	xai/grok-4.7	48	yes	8	graft	Two doors with arched carved panels and diamond inlays, ring pulls, hinges, a crowned top and bun feet.	f0f2a3a
+flail	equipment	kimi-code-plan-cn/kimi-for-coding	18	yes	7.5	graft	Lies flat: wooden handle with an iron cap and gold band, a short chain and a spiked ball. First kimi-for-coding trial outside the repo tree; it stayed in its workspace.	f8facab
+steel-helmet	equipment	xai/grok-4.7	46	yes	6.5	graft	Rounded steel helm with a raised crest ridge and rim bands; the visor slit forms odd loops.	10c00fb
+spellbook	equipment	kimi-code-plan-cn/kimi-for-coding	13	yes	8	graft	Purple cover, gold corner caps, gold clasp, glowing rune and cream page edges.	fa32830
+club	equipment	minimax-cn-coding-plan/MiniMax-M3	15	yes	5	graft	Boxy knobbed block head on a wrapped handle; reads more like a mallet than a club. The trial render failed during a node_modules reinstall; reviewed from the repo build.	607aed9
+lantern-handheld	equipment	kimi-code-plan-cn/kimi-for-coding	20	yes	7.5	graft	Iron frame with glass panes, a candle with a flame, a cone roof and a ring handle.	ccca44c
+cloak	equipment	kimi-code-plan-cn/kimi-for-coding	14	yes	6	graft	Green cloak with a gold clasp and a hood at the back, on a stand; the bell shape looks a little like a small tree.	4414150
+hand-axe	equipment	deepseek/deepseek-flash	30	yes	5.5	graft	Stands head-down with a steel edge, but the dark head is an odd notched blob.	e3f0ea1
+scimitar	equipment	deepseek/deepseek-flash	11	yes	7.5	graft	Curved blade widening toward the tip, brass guard and wrapped grip.	373afd9
+guard-post	village-structure	kimi-code-plan-cn/kimi-for-coding	14	yes	7.5	graft	Plank booth with a shingle roof, a counter shelf, a hanging lantern and a sack.	a1ae041
+crossbow	equipment	xai/grok-4.7	26	yes	7	graft	Wooden stock, dark steel bow, string and a loaded bolt; small but reads as a crossbow.	6436d84
+quarterstaff	equipment	deepseek/deepseek-flash	40	yes	7	graft	Plain pole with iron end caps and two grip wraps; thin but correct.	61bbb09
+longbow	equipment	deepseek/deepseek-flash	5	yes	7	graft	Tall bow with a grip wrap and a string.	41072ab
+tower-shield	equipment	kimi-code-plan-cn/kimi-for-coding	32	yes	8	graft	Red field with a gold lion emblem, steel rim with rivets, straps on the back.	e479c5f
+arrow	equipment	minimax-cn-coding-plan/MiniMax-M3	23	yes	3	reroll	The fletching floats about 0.3 m away from the shaft	-
+quiver	equipment	minimax-cn-coding-plan/MiniMax-M3	29	yes	6	graft	matches the pot-style mockup; fletching smaller than the mockup, strap thin	d4ead2f
+orb	equipment	deepseek/deepseek-flash	28	yes	7	graft	clean glass sphere in gold claws on a wooden base	ff54ff8
+goblet	props	claude-fix	10	true	7	claude	Revolved cup wall with a rolled rim, knop stem, fluted foot, wine inside; replaces the DS hourglass (5).	1a043c0
+loaf	props	claude-fix	8	true	7	claude	High golden boule with three raised darker slash ridges (shell strips); replaces the MM smudged loaf (5).	519888f
+tent	props	kimi-code-plan-cn/kimi-for-coding	41	yes	6.5	graft	clean A-frame canvas tent with ridge pole and open front; guy ropes read as stiff sticks, back panel dark	fd162e2
+stone-floor	architecture	claude-fix	15	true	7	claude	Periodic Voronoi flagstones about 0.4 m, rounded shoulders, dark mortar, warm greys; replaces the GLM flat bricks (5).	61cd399
+satchel	equipment	deepseek/deepseek-flash	9	yes	6	graft	DS strap stood beside the bag like a mug handle (4); Claude moved it to an arch over the top and dropped a missing reference	e0dbe71
+scroll	equipment	minimax-cn-coding-plan/MiniMax-M3	14	true	5	reroll	Capped tube with the seal on the end face and an emissive seal.	-
+scroll	equipment	claude	8	true	7.5	claude	Parchment roll on a knobbed rod, spiral ends, red ribbon with a wax seal.	d302c19
+pond	props	claude-fix	12	true	7	claude	Ring of 22 chunky stones round turquoise water, lily pads, low bank; replaces the GLM grass slab (5.5).	ae86379
+rug	props	claude-fix	4	true	6.5	claude	edgeDist left out the corner radius, so the border was 0.26 m; fixed, red field now dominant.	c1850f2
+club	equipment	claude-fix	8	true	6.5	claude	Rounded carved head with 8 iron spikes and 4 studs, tapered handle with raised rings; replaces the MM mallet (5).	ad41bc2
+map	equipment	deepseek/deepseek-flash	39	true	4.5	reroll	Flat sheet with sea and X, but the curled corners are two brown sausage blobs.	-
+map	equipment	claude	8	true	8	claude	Parchment sheet with rolled ends and spiral ends; sea, lake, forests, mountains, dashed trail, red X.	0348adc
+rope-coil	props	claude-fix	5	true	7	claude	Three-strand lay displaced and painted per turn; replaces the smooth hose look (5).	6512d3d
+coal	props	claude-fix	5	true	7	claude	Heap of 18 flat-shaded angular lumps on a dark core mound; replaces one cube-like lump (5).	e007abf
+pickaxe	equipment	claude-fix	6	true	6	claude	Iron lightened to the mockup grey, steel face toned down, stray paintWhere with a numeric rgb removed.	3af89af
+hand-axe	equipment	claude-fix	6	true	7	claude	Head up; eye, poll, and a tapered flared blade with a bright bit; three orange wraps; replaces the DS dark blob head (5.5).	25f0268
+hammer	props	claude-fix	6	true	7	claude	Single cross-peen hammer lying on its side for the bench: bright face, wedge peen, wrapped grip; replaces the MM rack (5).	6313d32
+wand	equipment	minimax-cn-coding-plan/MiniMax-M3	34	true	5	reroll	Lies flat along Z; the crystal cluster points up out of the side of the tip.	-
+wand	equipment	claude	10	true	7.5	claude	Upright gnarled spiral-grooved shaft, gold cup, five hex crystals (dark base, mint emissive).	4a0df33
+crown	equipment	deepseek/deepseek-flash	22	yes	6	graft	gold band with gems and a red velvet cap; the points are blunt rounded tabs, not sharp points	5b0f95d
+anvil	props	claude-fix	8	true	7.5	claude	Waisted anvil (feet, waist, face, horn, heel, hardy hole) on a banded stump; replaces the K2 stool-legged anvil (6).	8c90499
+boots	equipment	deepseek/deepseek-flash	22	yes	6	graft	pair of chibi boots with cuffs, buckled straps, round toes; the soles are plain rectangular slabs	f18317b
+torch	props	claude-fix	5	true	6.5	claude	Flame paint was bright yellow-orange under the emissive; now dark base with a #ff6a12 glow.	54d0166
+axe	equipment	claude-fix	7	true	7	claude	Curved hooked haft, eye and poll, tapered flared blade with pits and a steel edge band; replaces the DS cleaver look (5.5).	c98afe1
+drum	equipment	deepseek/deepseek-flash	9	yes	7	graft	hide drum with zigzag rope lacing, red band, and two sticks beside it; clean and quick (9 min)	9d8c788
+ritual-circle	props	volcengine-agent-plan/glm-5.3-flash	40	true	5	reroll	Small scattered dark stone discs with candles; does not read as a circle. Queued again on kimi-for-coding.	-
+window	architecture	coding-plan/kimi-k2.8-preview	18	yes	7.5	graft	cottage window with glass panes, cross bar, open green shutters, and a flower box with red flowers	d14fe8f
+stairs-wood	architecture	coding-plan/kimi-k2.8-preview	27	yes	7	graft	clean plank steps on stringers with a railing and round newel posts	14e7cef
+lute	equipment	xai/grok-4.7	42	yes	6	graft	reads as a lute: bowl body, sound hole, neck, and peg head; the body is a deep bowl with a flat top, lying on its back	5d0342c
+belt-pouch	equipment	minimax-cn-coding-plan/MiniMax-M3	60	yes	6	graft	leather pouch with a flap, brass buckle, stitching, and a belt loop at the back	5f087dd
+gauntlets	equipment	xai/grok-4.7	60	yes	6	graft	two plate gauntlets lying palm-down with finger plates, cuffs, and gold rivets; the mmx mockup showed a golem, so the model worked from the text; hit the 60 min limit	2108d2e
+amulet	equipment	minimax-cn-coding-plan/MiniMax-M3	24	yes	6	graft	gold medallion with a red gem standing in a chain loop; Claude thickened the chain links (they broke into dots); the gem glows pinkish	fb95d2d
+zombie-soldier	character	claude-subagent	71	true	8	claude	Zombie base: cracked skull, milky and yellow eyes, teal tunic, mantle, straps, pouches, rusty sword chop; 30.8k triangles; mantle smaller than the mockup cape.	88da0a4
+cherry-tree	nature	coding-plan/kimi-k2.8-preview	24	yes	7.5	graft	full pink blossom canopy, twisted trunk, fallen petals on the ground	d32d9ad
+double-door	architecture	volcengine-agent-plan/kimi-k2.8-preview	29	yes	7	graft	arched double door with plank leaves, iron strap hinges, ring handles, walnut frame; the back is a plain dark face	57da24f
+brick-wall	architecture	volcengine-agent-plan/glm-5.3-flash	17	yes	7.5	graft	clean running-bond red bricks with pale mortar and a stone cap; tiles at 2 m	403a294
+statue	props	coding-plan/kimi-k2.8-preview	18	yes	7	graft	stone chibi knight statue (35k triangles, budget 6k) with sword, shield and plume on a stepped cobble pedestal	ca93229
+wood-wall	architecture	volcengine-agent-plan/glm-5.3-flash	47	yes	6.5	graft	vertical plank wall with walnut rails and corner bolts; clean but plain	9185083
+broken-wall	architecture	volcengine-agent-plan/glm-5.3-flash	15	yes	6.5	graft	stepped ruined stone wall with fallen blocks; moss reads as bright green specks; blocks pale	cd9f710
+flute	equipment	claude	6	true	7	claude	Honey-wood tube with a mouth hole, six finger holes, open ends, two brass rings.	b8e1deb
+horn	equipment	claude	10	true	6.5	claude	Curved cream horn, flared brass bell with a rolled lip, brass mouthpiece and bands, leather strap; the lip is a little lumpy.	b8e1deb
+javelin	equipment	claude	6	true	6.5	claude	Ash shaft with a red-orange grip, binding, flattened leaf point, butt cap.	b8e1deb
+sickle	equipment	claude	10	true	6.5	claude	Tapered crescent blade hooking from the ferrule, bright inner edge, curved wooden handle.	b8e1deb
+cabin	architecture	volcengine-agent-plan/kimi-k2.8-preview	51	yes	7	graft	log cabin with notched log walls, plank roof, door, window, stone chimney and base	b8795d6
+carrot	props	claude	6	true	7	claude	Chunky ringed orange root lying on its side, bushy leaf clusters.	b8aed52
+wheel	props	claude	6	true	7	claude	Cheese wheel with a golden rind, cut wedge beside it, holes on the cut faces.	b8aed52
+rune-stone	equipment	claude	8	true	6.5	claude	Smooth grey stone with a carved Tiwaz rune glowing blue; the rune is hard to see from the front.	b8aed52
+tome	equipment	claude	8	true	7	claude	Purple leather tome, page block, gold corner guards and clasp, glowing blue gem in a bezel.	b8aed52
+vampire	character	claude-subagent	26	true	8	claude	Rogue base: pale noble, red eyes, fangs, slicked hair, flared red-lined collar, cape, burgundy vest, cravat; cape-swirl bite attack; 36.9k triangles.	ad03aa9
+spyglass	equipment	kimi-code-plan-cn/kimi-for-coding	8	yes	7	graft	brass telescoping spyglass with rings, a leather grip, and a blue lens; built in 8 min	778b680
+canteen	props	claude	6	true	7	claude	Round leather flask with a stitched edge band, brass neck and lugs, cork, arched strap.	39d49ef
+wicker-basket	props	claude	6	true	7	claude	Flared basket with a raised weave, rope-twist rim and two loop handles.	39d49ef
+pot	props	claude	6	true	7.5	claude	Terracotta pot with a rolled rim and band, soil, six leaves, two red flowers.	39d49ef
+leather-cap	equipment	claude	6	true	6.5	claude	Six-panel stitched leather cap with a band, short visor, brass button; open at the bottom.	39d49ef
+alchemy-apparatus	props	volcengine-agent-plan/kimi-k2.8-preview	19	yes	7	graft	low wooden table with a purple round flask on a burner, a coil condenser, a teal conical flask, and two vials	260267f
+cobble-floor	architecture	volcengine-agent-plan/glm-5.3-flash	31	true	5	reroll	Flat square tiles in a grid, not rounded cobbles; Claude builds it from the stone-floor method.	-
+cobble-floor	architecture	claude	10	true	7	claude	Periodic Voronoi cobbles about 0.18 m, domed in the normal map, dark gaps; 1.9k triangles; tiles without seams.	2849bbd
+mining-pick	equipment	kimi-code-plan-cn/kimi-for-coding	9	yes	6	graft	double-pointed pick lying flat with bright tips and a wrapped handle; the dark head is lumpy	52589dc
+wagon	props	coding-plan/kimi-k2.8-preview	45	yes	7	graft	farm wagon with four spoked wheels, plank bed, drawbar, hay, sacks, and cabbages; Claude moved the iron tyre bands from the origin (half below ground) to the wheels and raised the wheel triangle cap	9ad4a97
+dirt-floor	architecture	volcengine-agent-plan/glm-5.3-flash	41	yes	6.5	graft	packed brown earth tile with pebbles and straw bits	c38db82
+windmill	architecture	volcengine-agent-plan/kimi-k2.8-preview	46	yes	7.5	graft	stone tower windmill with four sails, a conical cap, door and round window	6bc0520
+spinning-wheel	props	xai/grok-4.7	36	yes	7	graft	spinning wheel with treadle, frame, and a distaff of wool	8c8fb98
+fishing-rod	equipment	kimi-code-plan-cn/kimi-for-coding	31	yes	5.5	graft	rod with reel, line and red bobber lying flat; very thin, reads poorly at 128 px	3ece320
+hut	architecture	xai/grok-4.7	43	yes	7	graft	round wattle hut with a thatch cone roof, a plank door and a stone base	5467d06
+roof-thatch	architecture	volcengine-agent-plan/glm-5.3-flash	30	yes	6.5	graft	sloped thatch roof panel with a ridge roll and a bundled fringe; the trial hit the volcengine quota after its build	4085673
+ghoul	character	claude-subagent	27	true	8	claude	Goblin-warrior base: long ears, yellow eyes, toothy grin, lean body, claws, rags; claw-rake attack; 36k triangles.	d659082
+column	architecture	kimi-code-plan-cn/kimi-for-coding	20	yes	7	graft	fluted stone column with square base and capital, two gold rings, and a crack on the capital	2a1726e
+tile-floor	architecture	claude	6	true	7	claude	0.25 m terracotta tiles, rounded edges, two-tone checker, thin grout; repeats exactly.	46c40da
+grass-floor	architecture	claude	8	true	6.5	claude	Green turf with lumps that fade at the edges, eight tufts, six daisies; the green is bright.	46c40da
+throwing-axe	equipment	claude	6	true	6.5	claude	Short wrapped handle and a bearded steel head with a bright edge, lying flat; the mmx mockup showed a man.	46c40da
+maul	equipment	claude	5	true	7	claude	Square iron head with dark bands, thick haft, ringed leather grip, pommel; stands head down.	46c40da
+magic-scepter	equipment	claude	6	true	7	claude	Ribbed gold shaft, knop, five-point crown head with a glowing red gem, pommel.	46c40da
+crystal-focus	equipment	claude	8	true	7	claude	Hexagonal purple crystal (emissive on a dark base) held by three curved silver claws on a round base.	46c40da
+wraith	character	claude-subagent	35	true	7	claude	Ghost base: void hood with blue eyes, bony claw, rusty lantern with blue flame, floor strips (tentacle-like); 35k triangles.	9cc397a
+glowing-mushroom	nature	deepseek/deepseek-flash	28	yes	7	graft	cluster of cyan glowing mushroom caps on a mossy rock	07c3115
+cabinet	props	claude	6	true	7.5	claude	Honey-oak cabinet, overhanging top, two drawers, two raised-panel doors, cream knobs, plates on top.	68bab16
+necklace	equipment	claude	4	true	7	claude	Loop of gold beads lying flat, three faceted red gems at the front.	68bab16
+bracelet	equipment	claude	8	true	6.5	claude	Flat silver band standing upright, engraved edge lines and wave, three blue gems.	68bab16
+circlet	equipment	claude	5	true	7	claude	Thin gold band with small leaves and a raised setting holding a blue gem.	68bab16
+cooking-pot	props	claude	10	true	7.5	claude	Round black iron pot on three legs, bail handle, orange stew with chunks, wooden spoon.	68bab16
+halberd	equipment	claude	8	true	6.5	claude	Long pole with leather wraps, iron socket and langets, axe blade, back hook, leaf spear point (head scaled 1.5).	2208dbd
+scythe	equipment	claude	8	true	6.5	claude	Curved snath with two grips, long curved dark blade with a bright edge.	2208dbd
+great-axe	equipment	claude	6	true	7	claude	Wrapped haft, iron block with a top spike, double crescent blades with bright edges.	2208dbd
+arrow	equipment	deepseek/deepseek-flash	40	yes	6	graft	second try: shaft with a steel head and red and white fletching, lying flat; the fletching is lumpy	1545db8
+magic-rune	props	claude	8	true	6.5	claude	Grey slab with a carved rune circle glowing purple (two rings, star, eight glyphs); the glow is modest from low angles.	14699e4
+pit-trap	props	claude	8	true	6	claude	2 m flagstone tile with a 1.2 m pit going 0.6 m into the ground, iron spikes, broken cover planks; the pit box shows under the tile on its own.	14699e4
+portal	props	claude	7	true	7.5	claude	Ring of carved stone blocks with a keystone on a two-step base, glowing blue disc with a bright three-arm swirl.	14699e4
+necromancer	character	claude-subagent	26	true	8	claude	Cultist base: black hood, green eyes, green under-robe, skull pad, skull staff with a flickering green flame; 40k triangles.	a238931
+gazebo	architecture	kimi-code-plan-cn/kimi-for-coding	27	yes	7.5	graft	octagonal gazebo with posts, railings, a flared shingle roof with a finial, a bell, and vines	1a20225
+trapdoor	props	xai/grok-4.7	36	yes	6	graft	iron-framed plank trapdoor lying flat with a ring pull; the ring stands up tall and the planks sit low like a tray	db440e2
+fruit-basket	props	deepseek/deepseek-flash	24	yes	7	graft	woven basket heaped with apples, grapes, a pear, and oranges	05f4419
+willow-tree	nature	xai/grok-4.7	51	yes	6	graft	round canopy with hanging strands and a flared trunk; the strands look like strings of beads	c5da100
+compass	equipment	kimi-code-plan-cn/kimi-for-coding	41	yes	6.5	graft	open brass compass case with a lid and a red and white needle	5ce5ee6
+distillation-flask	props	deepseek/deepseek-flash	16	yes	6.5	graft	glass flask with glowing green liquid and a swan neck on an iron tripod over a candle; Claude raised the glass triangle cap (900 made the glass look like grey marble)	16c5af2
+bear-trap	props	kimi-code-plan-cn/kimi-for-coding	14	yes	7	graft	open iron bear trap with a ring of teeth, a chain, and a wooden stake	b971f83
+stairs-stone	architecture	kimi-code-plan-cn/kimi-for-coding	60	yes	6.5	graft	five chunky stone steps with side blocks; pale stone; hit the 60 min limit	d168bfa
+curtain	props	deepseek/deepseek-flash	17	yes	5.5	graft	red curtain on a rod with rings; the cloth is gathered in the middle like a bow tie, not tied back at one side	da236bd
+railing	architecture	xai/grok-4.7	17	yes	7	graft	turned balusters between two newel posts with ball finials, top and bottom rails	bcd2d8d
+mirror	props	deepseek/deepseek-flash	16	yes	7	graft	standing oval mirror with a gold frame and pale blue glass on a wooden stand with feet	60e269e
+beam	architecture	claude	5	true	7	claude	Adzed 2 m timber with grain and two iron straps with nail heads.	a4f6973
+pike	equipment	claude	5	true	6.5	claude	Long ash pole, iron socket and butt cap, flattened diamond point, red tassel; thin at 128 px.	a4f6973
+bolt	equipment	claude	6	true	6.5	claude	Short shaft, square pyramid head, four diagonal leather vanes; no mockup (mmx showed a crossbow).	a4f6973
+throwing-knife	equipment	claude	5	true	7	claude	Slim double-edged blade with bright edges, wrapped grip, ring pommel.	a4f6973
+earring	equipment	claude	4	true	6.5	claude	Two gold hoops with teardrop green gems, lying flat.	a4f6973
+sling	equipment	claude	5	true	6.5	claude	Cupped leather pouch with a stone, two cords with a loop and a knot.	a4f6973
+lockpick	equipment	claude	6	true	7	claude	Rolled-open leather wrap with stitched pockets, four steel picks, tension wrench.	a4f6973
+stone-golem	character	claude-subagent	27	true	7	claude	Minotaur base: stone block plates with moss, blue rune eyes and chest rune, two-fist slam; green core shows; 48k triangles.	d622974
+vial	equipment	kimi-code-plan-cn/kimi-for-coding	15	yes	6.5	graft	small glass vial with green liquid and a cork; the glass shows odd seam lines	ee9f17e
+mortar-pestle	props	kimi-code-plan-cn/kimi-for-coding	19	yes	6.5	graft	orange clay mortar with a stone rim, a wooden pestle, green herb leaves, on a stone slab	39bc159
+cactus	nature	claude	6	true	7.5	claude	Ribbed saguaro with two arms, spine dots, pink flower, sandy mound.	ebc90b5
+coral	nature	claude	6	true	7	claude	Branching pink coral, grooved orange brain coral, purple fan coral on a sandy rock; no mockup yet.	ebc90b5
+lava-rock	nature	claude	6	true	6.5	claude	Faceted basalt boulder with five glowing orange cracks and pebbles; the glow reads light orange.	ebc90b5
+grimoire	equipment	claude	8	true	6.5	claude	Open red book with iron corners, runes on the left page, glowing green sigil, ribbon; no mockup (mmx showed a box).	ebc90b5
+fishing-pole	equipment	claude	5	true	5.5	claude	Tapered bamboo cane with nodes, line, red and white float, hook; thin at 128 px.	ebc90b5
+switch	props	deepseek/deepseek-flash	12	yes	6.5	graft	iron wall plate with a lever and red knob; two red side blocks from the mockup	036f9ab
+ring	equipment	kimi-code-plan-cn/kimi-for-coding	9	yes	7	graft	gold ring with a red gem in a four-prong setting	c7b15ee
+flag	props	deepseek/deepseek-flash	17	yes	7	graft	blue flag with a gold star on a wooden pole with a finial and a stone base	f967567
+chimney	architecture	xai/grok-4.7	41	yes	6.5	graft	stone block chimney with a cap and a chimney pot; the stones are a patchy mix of grey and tan	d597185
+bookcase	props	claude	8	true	8	claude	Walnut bookcase with crown moulding, four shelves of varied colorful books (some leaning), scroll rack below.	8ee89f8
+bunk-bed	props	claude	6	true	7.5	claude	Oak bunk bed, cream mattresses, striped red blankets, pillows, side ladder, top guard rail.	8ee89f8
+lectern	props	claude	6	true	7	claude	Walnut lectern with cross foot, turned post, slanted top with lip, large open book.	8ee89f8
+kiln	props	claude	8	true	6.5	claude	Beehive brick dome (bricks in paint and normal map), glowing arched opening, chimney, two pots; the glow is a flat panel.	8ee89f8
+dock	architecture	xai/grok-4.7	26	yes	7	graft	plank dock deck on thick round posts with a ladder and a mooring post with rope	d2541c7
+throne	props	claude	8	true	7.5	claude	Stone throne with a peaked back, rounded armrests, red cushion and panel, gold spikes and studs, red gem.	24cfc7c
+heavy-crossbow	equipment	claude	8	true	6.5	claude	Wooden stock, curved steel bow with capped tips and string, iron nut and crank, loaded bolt; small at 128 px.	24cfc7c
+stained-glass-window	architecture	claude	8	true	7.5	claude	Pointed-arch stone frame with block seams, see-through colored panes in lead lines.	24cfc7c
+death-knight	character	claude-subagent	30	true	8	claude	Skeleton-knight base: horned closed helmet with icy eyes, spiked black plate, purple cape, runed greatsword, overhead chop; 46k triangles.	f7aaca6
+belt	equipment	deepseek/deepseek-flash	17	yes	7	graft	leather belt loop with a brass buckle, stitching, and a small pouch	679faec
+pendant	equipment	kimi-code-plan-cn/kimi-for-coding	23	yes	6.5	graft	silver teardrop pendant with a blue gem and a chain, lying flat	7ac24a6
+brooch	equipment	kimi-code-plan-cn/kimi-for-coding	22	yes	7	graft	round gold brooch with a green gem ringed by pearls	36e78b8
+cobble-road-straight	architecture	claude	5	true	7	claude	1.2 m road of domed Voronoi cobbles (repeat every 2 m) flush in grass; openings match the dirt-road tiles.	cd0c0db
+cobble-road-corner	architecture	claude	5	true	7	claude	1.2 m road of domed Voronoi cobbles (repeat every 2 m) flush in grass; openings match the dirt-road tiles.	cd0c0db
+cobble-road-crossing	architecture	claude	5	true	7	claude	1.2 m road of domed Voronoi cobbles (repeat every 2 m) flush in grass; openings match the dirt-road tiles.	cd0c0db
+cobble-road-t-junction	architecture	claude	5	true	7	claude	1.2 m road of domed Voronoi cobbles (repeat every 2 m) flush in grass; openings match the dirt-road tiles.	cd0c0db
+scabbard	equipment	kimi-code-plan-cn/kimi-for-coding	7	yes	6.5	graft	brown leather sword scabbard with a brass throat, chape, and belt loop, lying flat	546d7a1
+giant-mushroom-tree	nature	xai/grok-4.7	26	yes	7.5	graft	giant red toadstool with white spots, a bulbous stem with a ring, climbing vines, and small mushrooms at its foot	9b9b573
+morningstar	equipment	kimi-code-plan-cn/kimi-for-coding	8	yes	7	graft	spiked black iron ball on a wooden handle with a leather grip, standing on its handle	dc9da6e
+desert-ground	architecture	deepseek/deepseek-flash	25	yes	6.5	graft	2 m sand tile with wind ripples, pebbles and a dry twig	bb490c0
+dirt-road-crossing	architecture	claude	4	true	7	claude	Copy of dirt-road-t-junction with the stub made a full road along Z; four flush arms, same palette and wobble.	278b32d
+katana	equipment	kimi-code-plan-cn/kimi-for-coding	11	yes	7	graft	slightly curved katana with a gold guard and a wrapped diamond-pattern grip, standing on its pommel	ca7be06
+curtain	props	claude-fix	6	true	7	claude	Cloth drawn aside and tied back at the right with a gold tie-back and tassel, folds tighter below the tie; replaces the DS bow-tie curtain (5.5).	c257995
+rapier	equipment	kimi-code-plan-cn/kimi-for-coding	21	yes	7	graft	thin straight rapier blade with a swept gold hilt, knuckle guard, and round pommel, standing	7d593a6
+snow-ground	architecture	deepseek/deepseek-flash	33	yes	6	graft	2 m snow tile with faint drifts and blue shadows; plain	c6cca0c
+banner	props	xai/grok-4.7	39	yes	7	graft	blue banner with gold trim and a shield emblem, swallowtail hem, on a wooden cross stand	37f7adc
+trident	equipment	kimi-code-plan-cn/kimi-for-coding	11	yes	7	graft	gold trident with three barbed prongs on a pole with a leather grip	6ddd6dd
+bone-golem	character	claude-subagent	37	true	7.5	claude	Stone-golem base: skull with red eyes, shoulder skulls, rib cage, bone arms with iron bands, club fists; 75k triangles.	5d5ab60
+puddle	nature	deepseek/deepseek-flash	25	yes	6.5	graft	flat glossy blue-grey puddle with a muddy rim and a few pebbles	149492f
+obelisk	props	xai/grok-4.7	30	yes	6.5	graft	stone obelisk on a stepped base with blue runes and a glowing blue ribbon winding up the front; the ribbon stands out from the stone	33fda89
+stone-ground	architecture	claude	6	true	6.5	claude	Grey slabs split by narrow dark cracks, weathered lumps, repeats every 2 m; reads more like flagstones than bedrock.	fc2aa33
+sand-dune	nature	deepseek/deepseek-flash	15	yes	5.5	graft	sand mound with ring ripples; reads as a sand pile, not a crescent dune	dcb5b5d
+ruin-column	architecture	kimi-code-plan-cn/kimi-for-coding	15	yes	6.5	graft	broken fluted column on a square base with a fallen drum, loose blocks and moss; the moss is bright lime	fe7f112
+snowbank	nature	deepseek/deepseek-flash	13	yes	7	graft	lumpy white snowbank with blue shadows and twigs poking out	543aece
+awning	architecture	kimi-code-plan-cn/kimi-for-coding	22	yes	7	graft	red and cream striped shop awning with a scalloped front edge on a wooden frame with two slanted poles	aae9807
+paladin	character	claude-subagent	44	true	8.5	claude	Knight base: young blond paladin, silver plate with gold trim, white sun tabard, blue cape, hammer and sun shield, overhead strike; 55k triangles.	542ec1b
+ritual-circle	props	kimi-code-plan-cn/kimi-for-coding	18	yes	6.5	graft	second try: dark stone disc with a glowing purple star circle, ringed by stones and black candles	bf9cc71
+moss	nature	deepseek/deepseek-flash	25	yes	6.5	graft	low patch of lumpy green moss cushions with tiny sprouts; bright green	e422b66
+loom	props	xai/grok-4.7	49	yes	7.5	graft	wooden weaving loom with a red and white striped weave, warp threads, a bench, and yarn balls	3975fd9
+portal-frame	architecture	kimi-code-plan-cn/kimi-for-coding	26	yes	7	graft	stone gate frame with two banded columns and a lintel carved with glowing runes, on a stepped base	78d2b3a
+archway	architecture	kimi-code-plan-cn/kimi-for-coding	3	true	4	reroll	Second failure: the arch floats above the pillars with a clear gap.	-
+herb-drying-rack	props	xai/grok-4.7	39	yes	7	graft	wooden A-frame rack with green and purple herb bundles hanging from three poles	9a6e1e8
+gloves	equipment	coding-plan/kimi-k2.8-preview	28	yes	6.5	graft	pair of brown leather gloves lying flat with cuff straps and brass buckles	a6d2623
+lichen	nature	deepseek/deepseek-flash	35	yes	6.5	graft	flat grey stone with pale green and orange lichen rosettes on top	643cbe8
+ritual-dagger	equipment	deepseek/deepseek-flash	18	yes	7	graft	dark purple curved blade with a glowing line, bone handle, gold guard, purple gem pommel, lying flat	9e5ebf3
+ranger	character	claude-subagent	36	true	8.5	claude	Archer base: green hood, auburn hair, capelet and long cloak, leather jerkin, longbow, quiver over the cloak; 56k triangles.	6c3b2bf
+fishing-net	props	xai/grok-4.7	27	yes	6.5	graft	green fishing net sagging between two wooden poles with cord floats and a top line	1761cf7
+bracers	equipment	volcengine-agent-plan/kimi-k2.8-preview	50	yes	6.5	graft	pair of leather bracers standing upright with steel plates, lacing, iron bands and brass studs; a little cup-like	65d90ef
+meadow-ground	architecture	volcengine-agent-plan/glm-5.3-flash	60	yes	6	graft	2 m grass tile with tufts and small flowers; hit the 60 min limit	6e53f41
+cloth-hood	equipment	volcengine-agent-plan/kimi-k2.8-preview	32	yes	6.5	graft	green cloth hood with a short cape and a pointed back, open face; lumpy felt surface	1b2353c
+greaves	equipment	coding-plan/kimi-k2.8-preview	38	yes	6	graft	pair of steel greaves standing upright with leather straps and gold buckles; tube-like, no clear knee caps	3daa121
+monk	character	claude-subagent	27	true	8	claude	Rogue base: shaved head with top knot, saffron wrap robe, sash, prayer beads, wraps, sandals; palm strike and spin kick; 40k triangles.	1ae1ce5
+horned-helmet	equipment	coding-plan/kimi-k2.8-preview	6	yes	7	graft	round riveted iron helmet with two curved cream horns and a nose guard; open at the bottom	3b7b47c
+archway	architecture	coding-plan/kimi-k2.8-preview	30	yes	7.5	graft	third try: stone block archway with pillars, wedge stones and a keystone with a gold gem	c45b830
+cape	equipment	volcengine-agent-plan/kimi-k2.8-preview	24	yes	7	graft	red cape hanging in soft folds from a gold clasp bar, flaring at the hem	03c342a
+roof-slate	architecture	volcengine-agent-plan/glm-5.3-flash	45	yes	6.5	graft	sloped 2 m panel of grey-blue slate tiles with a ridge roll; the slates look a little like flat bricks	34582fa
+tower	architecture	volcengine-agent-plan/kimi-k2.8-preview	15	yes	7.5	graft	round cobbled stone watchtower with a conical red tile roof and flag, arched door, small windows, and a boulder base	ee3cfe4
+mage-robe	equipment	volcengine-agent-plan/kimi-k2.8-preview	33	yes	7	graft	blue mage robe standing as on an invisible body with gold star trim on the hem and cuffs and a rope belt	39f41ac
+roof-tile	architecture	volcengine-agent-plan/glm-5.3-flash	40	yes	7	graft	sloped 2 m panel of wavy red clay roof tiles in overlapping rows on a plank backing	ed5b4fe
+hill-slope	architecture	deepseek/deepseek-flash	14	yes	6.5	graft	2 m grass slope tile rising 1 m toward -Z with lumps, stones and flowers; soil sides	ec29270
+chainmail	equipment	coding-plan/kimi-k2.8-preview	34	yes	7	graft	chainmail shirt with short sleeves on an invisible torso: fine ring-mail pattern, leather collar, cuffs and hem	684ef73
+shoulder-armor	equipment	coding-plan/kimi-k2.8-preview	36	true	4	reroll	Reads as a mushroom cap, not a pauldron of overlapping plates; Claude builds it.	-
+shoulder-armor	equipment	claude	8	true	6.5	claude	Domed cap over three stepped steel lames with rolled rims, brass rivets, leather strap.	31b5411
+barbarian	character	claude-subagent	34	true	8	claude	Knight base: red mane with braid, fur mantle and cape, blue paint, studded kilt, double axe with overhead chop; 45k triangles.	98596ac
+valley-slope	architecture	deepseek/deepseek-flash	25	yes	6.5	graft	2 m grass tile dipping into a soft valley between 0.6 m sides, stones along the valley floor, soil sides	86cdd9b
+ladder	architecture	deepseek/deepseek-flash	6	yes	6.5	graft	wooden ladder leaning back, two rails with seven round rungs	12a949a
+cliff-edge	architecture	deepseek/deepseek-flash	17	yes	7	graft	2 m tile with a raised grass-topped rocky cliff over the -Z half and a low grass strip, grass tufts on top	f0939c0
+bard	character	claude-subagent	32	true	8	claude	Rogue base: curly hair, teal plumed cap, teal doublet, short cape, ribbed lute, strum sends a glowing note; 62k triangles.	f509f3e
+river-junction	architecture	deepseek/deepseek-flash	16	yes	6	graft	2 m tile with a T-shaped river channel through grass and pebble banks; the channel is wide, most of the tile is water	08dbaf1
+lake-shore	architecture	deepseek/deepseek-flash	17	yes	6.5	graft	2 m tile: grass with low bushes on the -Z half sloping to a sandy beach, stones at the waterline, and blue water on the +Z half	7befd77
+elevator-platform	architecture	kimi-code-plan-cn/kimi-for-coding	14	yes	7	graft	mine elevator: wooden frame with a pulley wheel on top, ropes to a plank platform, an iron crank and a small lantern	4b56b58
+balcony	architecture	kimi-code-plan-cn/kimi-for-coding	23	yes	6	graft	plank balcony on carved brackets with a turned-baluster railing and a flower box; it adds its own plaster wall panel behind, which a building wall would double	3733969
+marsh-ground	architecture	deepseek/deepseek-flash	27	yes	6.5	graft	2 m tile of dark wet mud with two glossy pools, reed tufts and moss patches	f1a383d
+mage	character	claude-subagent	31	true	8.5	claude	Wizard base: young face with round glasses, starred blue hat, blue robe with silver bands, glowing wand, spellbook; 66k triangles.	11f5ce1
+glaive	equipment	kimi-code-plan-cn/kimi-for-coding	20	yes	5.5	graft	long wooden pole with a small dark curved blade and back spike; the blade is too small and dark to read well	e16f25a
+falchion	equipment	kimi-code-plan-cn/kimi-for-coding	15	yes	7	graft	falchion standing on its pommel: broad single-edged blade widening to the tip, gold cross guard, leather grip	54e6099
+whip	equipment	kimi-code-plan-cn/kimi-for-coding	25	yes	7	graft	coiled braided leather whip lying flat with a wrapped handle and a knob	917f529
+ice-spire	nature	deepseek/deepseek-flash	21	yes	7.5	graft	cluster of tall pale blue see-through ice crystals with flat facets on a snowy base	d5e0c4c
+priest	character	claude-subagent	30	true	8	claude	Cleric base with the rogue face: white robe, gold stole with cross, sun staff with a glowing burst, book; 35k triangles.	c22fe31

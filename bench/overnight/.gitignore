@@ -1,0 +1,10 @@
+# Run state and logs of the overnight scheduler; the mmx mockups for queued work stay local (large).
+refs/
+rejected-mocks/
+active/
+*.log
+scheduler.pid
+STOP
+expected.txt
+queue-e.tsv
+queue-f.tsv
