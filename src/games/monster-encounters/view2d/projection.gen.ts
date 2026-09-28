@@ -2,4 +2,4 @@
 import type { Projection2D } from '../../../apk3d/view2d/projection.js';
 
 export const BACKGROUND_FILE = 'background.monster-encounters';
-export const PROJECTION: Projection2D = {"elevation":45,"ppm":64,"uMin":-4.6,"vMax":3.5349961795806966,"width":589,"height":516};
+export const PROJECTION: Projection2D = {"elevation":45,"ppm":64,"uMin":-4.6,"vMax":3.5349961795806966,"width":589,"height":661};

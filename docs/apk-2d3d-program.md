@@ -46,11 +46,17 @@ either renderer through `createCartridgeMounter`: a "2D mode (older phones)" set
 `?renderer=phaser` forces 2D, and a device without WebGL2 gets no 3D stage and plays in 2D. QC:
 `scripts/apk3d-shot.ts --2d`.
 
+Phase B is done (2026-09-28): all six games have a 2D view. Each QC run in 2D uses real input on
+the canvas: a touch drag (Potion Rush, the arena games), a tap on a gate tag (Dragon Flight), and
+taps on the challenge card for every answer (Monster Encounters). Known limits: the 2D sprites
+show each hero's default look only (the unlocked color presets are 3D textures); the 3D lobby
+behind the selector needs WebGL2 (a device without it gets the selector on a plain background).
+
 ## Tracker
 
 | Game | Core | 3D view | 2D view | In the monorepo |
 | --- | --- | --- | --- | --- |
-| Monster Encounters | done (task 11, 2026-09-28) | done | | |
+| Monster Encounters | done (task 11, 2026-09-28) | done | done (2026-09-28): the vault hall baked with the battle's cutaway; `Card2D` for choices, sentence order, and feedback | |
 | Potion Rush | done | done | done (2026-09-28): 480-wide canvas at the screen aspect, real touch drag in QC | |
 | Dragon Flight | done | done | done (2026-09-28): a vertical scroller at the shared camera, land props in the 3D view's chunks | |
 | Dungeon Liberator | done | done | done (2026-09-28): shared `Arena2D` camera, `Joystick2D`, word panel | |

@@ -4,7 +4,8 @@
  * time: pick one option (`choose`), tap words into order (`arrange`), or read feedback with
  * action buttons (`feedback`). Nothing is timed; each interaction resolves when the student acts.
  *
- * The card grows downward from the top of its rectangle and moves up when its content is taller.
+ * The card grows downward from the top of its rectangle (or, anchored at the bottom, upward from
+ * its bottom, as a phone's bottom sheet) and moves up when its content is taller.
  * `targets` lists the center of every tappable element (game pixels) for the QC driver.
  */
 import type * as Phaser from 'phaser';
@@ -62,6 +63,7 @@ export class Card2D {
     /** The screen rectangle of the card (read at each `begin`, so a view can change it). */
     private readonly area: () => Rect,
     private readonly tap: () => void = () => undefined,
+    private readonly anchor: 'top' | 'bottom' = 'top',
     private readonly depth = 18_000,
   ) {}
 
@@ -272,7 +274,6 @@ export class Card2D {
    * with the tapped action's id; with none it resolves at once.
    */
   feedback(good: boolean, markup: string, actions: readonly CardAction[] = []): Promise<string | null> {
-    this.local = this.local.filter((t) => t.kind !== 'action');
     const top = this.y;
     const back = this.scene.add.graphics();
     this.add(back);
@@ -285,7 +286,14 @@ export class Card2D {
       this.fit();
       return Promise.resolve(null);
     }
+    return this.buttons(actions);
+  }
+
+  /** A row of action buttons under the content; resolves with the tapped action's id (the row goes). */
+  buttons(actions: readonly CardAction[]): Promise<string> {
+    this.local = this.local.filter((t) => t.kind !== 'action');
     return new Promise((resolve) => {
+      const top = this.y;
       const w = (this.width - 2 * PAD - GAP * (actions.length - 1)) / actions.length;
       const chips = actions.map((a, i) => {
         const chip = this.chip(a.label, 17, a.soft ? 0xe9e4f5 : COLORS.gold, a.soft ? COLORS.purple : COLORS.tagFill, w);
@@ -296,6 +304,7 @@ export class Card2D {
           this.tap();
           chips.forEach((c) => c.destroy());
           this.local = this.local.filter((t) => t.kind !== 'action');
+          this.y = top;
           resolve(a.id);
         });
         return chip;
@@ -375,7 +384,7 @@ export class Card2D {
     const a = this.area();
     const h = this.y;
     const screenH = this.scene.scale.height;
-    const top = Math.max(8, Math.min(a.y, screenH - 8 - h));
+    const top = this.anchor === 'bottom' ? Math.max(8, a.y + a.height - h) : Math.max(8, Math.min(a.y, screenH - 8 - h));
     this.box.setPosition(a.x, top);
     this.bg.clear();
     this.bg.fillStyle(0x000000, 0.3).fillRoundedRect(0, 5, this.width, h, 18);

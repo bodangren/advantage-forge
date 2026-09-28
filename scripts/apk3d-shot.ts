@@ -107,6 +107,97 @@ async function playMonsterEncounters(page: Page, shot: (name: string) => Promise
   }
 }
 
+/** Taps a game-pixel point of the 2D canvas: a real finger on a phone, the mouse on a wide screen. */
+async function tap2d(page: Page, x: number, y: number): Promise<void> {
+  const p = await page.evaluate(([gx, gy]) => {
+    const g = (window as any).__apk3d.game();
+    const c = document.querySelector('.game-layer canvas')!.getBoundingClientRect();
+    const size = g.size();
+    return { x: c.x + (gx! * c.width) / size.width, y: c.y + (gy! * c.height) / size.height };
+  }, [x, y]);
+  if (page.viewportSize()!.width < 700) await page.touchscreen.tap(p.x, p.y);
+  else await page.mouse.click(p.x, p.y);
+}
+
+/** Taps the card target of a kind and id (the card lays out again after each tap). */
+async function tapCard(page: Page, kind: string, id: string): Promise<void> {
+  const t = await page.evaluate(([k, i]) => (window as any).__apk3d.game().card().targets.find((x: any) => x.kind === k && x.id === i) ?? null, [kind, id]);
+  if (!t) throw new Error(`No ${kind} ${id} on the card`);
+  await tap2d(page, t.x, t.y);
+  await page.waitForTimeout(160);
+}
+
+/** Monster Encounters in 2D: every answer by real taps on the canvas card (one wrong on purpose). */
+async function playMonsterEncounters2D(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForFunction(() => (window as any).__apk3d.renderer() === 'phaser' && (window as any).__apk3d.game()?.state(), undefined, { timeout: 120_000, polling: 250 });
+  let turn = 0;
+  let wrongDone = false;
+  let lastEncounter = -1;
+  for (;;) {
+    const state = await page.waitForFunction(
+      () => {
+        if (document.querySelector('.results.on')) return 'results';
+        const w = (window as any).__apk3d.game()?.card().awaiting;
+        return w === 'choice' || w === 'order' ? w : false;
+      },
+      undefined,
+      { timeout: 120_000, polling: 200 },
+    );
+    if ((await state.jsonValue()) === 'results') return;
+    await page.waitForTimeout(400);
+    const encounter = await page.evaluate(() => (window as any).__apk3d.game().state().encounter);
+    if (encounter.index !== lastEncounter) {
+      lastEncounter = encounter.index;
+      await shot(`encounter-${encounter.index + 1}of${encounter.count}`);
+    }
+    turn++;
+    const wrong = !wrongDone && turn === 3;
+    const plan = await page.evaluate((wrongArg) => {
+      const c = (window as any).__apk3d.game().state().challenge;
+      const story = (window as any).__apk3d.story();
+      if (c.kind === 'sentence') {
+        const sentence = story.sentences.find((x: any) => x.id === c.itemId);
+        const used = new Set<string>();
+        const ids: string[] = sentence.words.map((w: string) => {
+          const t = c.tokens.find((k: any) => k.text === w && !used.has(k.id));
+          used.add(t.id);
+          return t.id;
+        });
+        if (wrongArg) ids.reverse();
+        return { kind: 'order', ids };
+      }
+      let right = '';
+      if (c.kind === 'word') right = story.vocabulary.find((w: any) => w.id === c.itemId).translation;
+      else if (c.kind === 'fill') right = story.fills.find((f: any) => f.id === c.itemId).answer.toLowerCase();
+      else {
+        const q = story.questions.find((x: any) => x.id === c.itemId);
+        right = q.options[q.answer];
+      }
+      const opt = c.options.find((o: any) => (wrongArg ? o.text.toLowerCase() !== right.toLowerCase() : o.text.toLowerCase() === right.toLowerCase()));
+      return { kind: c.kind, ids: [opt.id as string] };
+    }, wrong);
+    if (plan.kind === 'order') {
+      for (const id of plan.ids) await tapCard(page, 'token', id);
+      if (turn <= 12) await shot(`turn-${turn}-sentence`);
+      await tapCard(page, 'check', 'check');
+    } else await tapCard(page, 'option', plan.ids[0]!);
+    console.log(`turn   ${turn}: ${plan.kind} ${wrong ? 'wrong' : 'right'} (tapped)`);
+    if (wrong) {
+      wrongDone = true;
+      await page.waitForFunction(() => (window as any).__apk3d.game().card().awaiting === 'feedback', undefined, { timeout: 30_000, polling: 150 });
+      await page.waitForTimeout(300);
+      await shot('feedback-wrong');
+      await tapCard(page, 'action', 'go');
+      await page.waitForTimeout(1600);
+      await shot('after-wrong');
+    } else if (turn === 1) {
+      await page.waitForTimeout(900);
+      await shot('attack');
+    }
+    if (turn > 80) throw new Error('Too many turns');
+  }
+}
+
 const game = '(window.__apk3d.game())';
 
 /** The next word each cauldron needs (the customer's order at that counter spot). */
@@ -425,6 +516,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
   'devourer-slime': playArena,
   'dungeon-liberator': playArena,
   'dragon-flight': playDragonFlight,
+  'monster-encounters': playMonsterEncounters2D,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
@@ -473,7 +565,15 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
   await page.click('[data-start]');
   const bot = TWO_D ? BOTS_2D[GAME] : BOTS[GAME];
   if (!bot) throw new Error(`No ${TWO_D ? '2D ' : ''}QC player for ${GAME}`);
-  await bot(page, shot);
+  try {
+    await bot(page, shot);
+  } catch (err) {
+    await shot('failed');
+    console.log(`errors ${errors.length ? errors.join(' | ') : 'none'}`);
+    const diag = await page.evaluate(() => JSON.stringify({ renderer: (window as any).__apk3d.renderer?.(), diagnostics: (window as any).__apk3d.diagnostics }));
+    console.log(`state  ${diag}`);
+    throw err;
+  }
   await page.waitForTimeout(800);
   await shot('results');
   await page.click('[data-class]');

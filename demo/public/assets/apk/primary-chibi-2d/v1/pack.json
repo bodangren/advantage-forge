@@ -9073,11 +9073,11 @@
    "kind": "image",
    "view": "world",
    "width": 589,
-   "height": 516,
+   "height": 661,
    "format": "png",
    "alpha": false,
-   "byteSize": 129370,
-   "sha256": "90c0b518b1da84464a5edd4a662f1593283269a956df49d764386b4668b0b28b",
+   "byteSize": 133944,
+   "sha256": "8e3558a8b0c9f65ac9ac63dda3f204c3431f1e69d712364dcc3d4efc43478380",
    "provenance": {
     "source": "fantasy-asset-forge/src/games/monster-encounters/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
