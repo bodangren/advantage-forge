@@ -41,7 +41,8 @@ export const LAYOUT = {
 export const beltX = (p: number): number => LAYOUT.belt.to + (LAYOUT.belt.from - LAYOUT.belt.to) * p;
 
 export interface Shop {
-  alchemist: Actor;
+  /** The alchemist, or null for a static bake (the 2D background has no characters). */
+  alchemist: Actor | null;
   /** The brew material of each cauldron (its color and glow show the order's progress). */
   brews: THREE.MeshStandardMaterial[];
   /** The rune strip of the conveyor (its texture scrolls with the belt). */
@@ -99,7 +100,7 @@ function runeTexture(): THREE.CanvasTexture {
   return tex;
 }
 
-/** `hero` is the student's hero model ('knight', 'wizard', 'cleric'): the alchemist. */
+/** `hero` is the student's hero model ('knight', 'wizard', 'cleric'): the alchemist; '' for none. */
 export function buildShop(stage: Stage3D, hero: string): Shop {
   const scene = stage.scene;
   scene.background = new THREE.Color('#1c1426');
@@ -191,9 +192,12 @@ export function buildShop(stage: Stage3D, hero: string): Shop {
   scene.add(strip);
 
   // The alchemist: the student's hero, facing the cauldrons.
-  const g = stage.loader.get(model(hero)) ?? stage.loader.get(model('wizard'))!;
-  const alchemist = stage.addActor(new Actor(hero, g, stage.timeline));
-  alchemist.placeAt(LAYOUT.alchemist[0], 0, LAYOUT.alchemist[2], 70);
+  let alchemist: Actor | null = null;
+  if (hero) {
+    const g = stage.loader.get(model(hero)) ?? stage.loader.get(model('wizard'))!;
+    alchemist = stage.addActor(new Actor(hero, g, stage.timeline));
+    alchemist.placeAt(LAYOUT.alchemist[0], 0, LAYOUT.alchemist[2], 70);
+  }
 
   return { alchemist, brews, runes };
 }

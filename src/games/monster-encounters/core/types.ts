@@ -1,90 +1,16 @@
 /**
  * Monster Encounters: the contract between the game core (rules, content, scoring; renderer-free)
- * and the frontend (story reader, three.js battle, HTML overlay).
+ * and the view (three.js battle, HUD; later a Phaser view too).
  *
  * The core never touches the DOM, three.js, time, or Math.random: every call is a pure step on a
- * seeded state, so tests replay exactly and a server could run the same rules later. The frontend
+ * seeded state, so tests replay exactly and a server could run the same rules later. The view
  * never decides correctness or damage: it shows the current challenge, sends the student's
  * response, and animates the returned events in order.
  *
- * Design and rules: docs/demo-monster-encounters.md.
+ * Design and rules: docs/demo-monster-encounters.md. The story is a `StoryInput`
+ * (src/apk3d/contracts/story-input.ts); the quest reads `vocabulary`, `sentences`, `fills`, and
+ * `questions` from it.
  */
-
-// ---------------------------------------------------------------- content (one story)
-
-/** CEFR level label as shown to teachers ("A0", "A1", ...). */
-export type CefrLevel = 'Pre-A1' | 'A0' | 'A0+' | 'A1' | 'A1+' | 'A2' | 'B1';
-
-export interface StoryParagraph {
-  /** English paragraph text as the student reads it. */
-  text: string;
-  /** Thai translation of the paragraph (the reader's translation toggle). */
-  th?: string;
-}
-
-export interface StoryWord {
-  /** Stable id within the story, e.g. "w-brave". */
-  id: string;
-  /** The English word or phrase, in the case it has in the story ("comes near"). */
-  word: string;
-  /** Short Thai meaning (the workbook's thai_definition). */
-  th: string;
-  /** Simple English definition. */
-  definition: string;
-  phonetic?: string;
-}
-
-export interface StoryQuestion {
-  id: string;
-  question: string;
-  options: string[];
-  /** Index of the correct option in `options`. */
-  answer: number;
-  /** Zero-based paragraph that best supports the answer (for "look again" feedback). */
-  paragraph?: number;
-}
-
-export interface StorySentence {
-  id: string;
-  /** The correct sentence ("Pip is a brave puppy now."). */
-  answer: string;
-  /** Its words (tokens) in the correct order; punctuation stays attached to its word. */
-  words: string[];
-  paragraph?: number;
-}
-
-export interface StoryFill {
-  id: string;
-  /** The sentence with exactly one blank written as "___" ("Pip is a ___."). */
-  sentence: string;
-  /** The word that fills the blank. */
-  answer: string;
-  paragraph?: number;
-}
-
-/** One validated story: everything the reader and the quest need. Converted by `toStoryPack` from the StoryInput files that scripts/apk3d-import.ts writes. */
-export interface StoryPack {
-  id: string;
-  title: string;
-  /** Series and lesson, e.g. "Origins 2", 12. */
-  series: string;
-  lesson: number;
-  level: CefrLevel;
-  genre: string;
-  paragraphs: StoryParagraph[];
-  /** Image paths relative to the story folder ("img-1.webp"). */
-  images: string[];
-  vocabulary: StoryWord[];
-  questions: StoryQuestion[];
-  sentences: StorySentence[];
-  fills: StoryFill[];
-  source: {
-    file: string;
-    url?: string;
-    /** True when the Thai meanings were not in the workbook and a model wrote them (a Thai speaker should review). */
-    thaiGlossesGenerated?: boolean;
-  };
-}
 
 // ---------------------------------------------------------------- the quest
 
@@ -129,9 +55,7 @@ export interface OrderChallenge {
 
 export type Challenge = ChoiceChallenge | OrderChallenge;
 
-export type Response =
-  | { kind: 'choice'; optionId: string }
-  | { kind: 'order'; tokenIds: string[] };
+export type Response = { kind: 'choice'; optionId: string } | { kind: 'order'; tokenIds: string[] };
 
 export interface Feedback {
   correct: boolean;
@@ -172,7 +96,7 @@ export interface EncounterInfo {
   enemies: EnemyState[];
 }
 
-/** Snapshot for the UI; read it after any call. */
+/** Snapshot for the UI; read it after any call (also the `Simulation` state). */
 export interface QuestState {
   phase: 'ready' | 'challenge' | 'victory';
   encounter: EncounterInfo | null;
@@ -241,30 +165,4 @@ export interface Quest {
   /** Answers the current challenge; returns what happens, ending with the next turn or victory. */
   answer(response: Response): GameEvent[];
   results(): QuestResults;
-}
-
-// ---------------------------------------------------------------- the class boss (simulated co-op)
-
-export interface Classmate {
-  name: string;
-  /** Damage this classmate dealt this week (0 = has not played yet). */
-  damage: number;
-}
-
-export interface ClassBossReport {
-  bossName: string;
-  maxHp: number;
-  hpBefore: number;
-  hpAfter: number;
-  /** The student's own damage from this quest. */
-  yourDamage: number;
-  classSize: number;
-  /** Classmates who played this week (including the student). */
-  played: number;
-  /**
-   * The last few classmates who helped, newest first, "You" first of all. Never ranked by damage:
-   * the strategy forbids public leaderboards of raw counts; every helper matters.
-   */
-  helpers: Classmate[];
-  defeated: boolean;
 }

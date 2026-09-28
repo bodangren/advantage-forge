@@ -48,7 +48,8 @@ const STORY_IDS = readdirSync(STORIES_DIR, { withFileTypes: true })
 const readJson = (path: string): unknown => JSON.parse(readFileSync(path, 'utf8'));
 
 /** The pack files on disk (StoryInput, written by scripts/apk3d-import.ts). */
-const loadStory = (id: string): StoryInput => parseStoryInput(readJson(join(STORIES_DIR, id, 'story.json')), id);
+const loadStory = (id: string): StoryInput =>
+  parseStoryInput(readJson(join(STORIES_DIR, id, 'story.json')), id);
 
 /** The A1 stories: no images, generated Thai glosses, `reviewed: false`. */
 const GENERATED_IDS = ['the-new-student', 'the-school-garden'];
@@ -62,7 +63,7 @@ const manifest = (over: Partial<Cartridge3DManifest> = {}): Cartridge3DManifest 
     inputMode: 'sentence',
     requiredAssetBindings: [],
     capabilities: [...APK3D_CAPABILITIES],
-    renderer: 'three',
+    renderers: ['three'],
     simulation: 'realtime',
     orientation: 'portrait',
     levels: ['A0', 'A1'],
@@ -165,7 +166,11 @@ describe('story input', () => {
       ...story,
       level: 'CEFR A0',
       paragraphs: story.paragraphs.map(({ text, translation }) => ({ text, th: translation })),
-      vocabulary: story.vocabulary.map(({ term, translation, ...rest }) => ({ ...rest, word: term, th: translation })),
+      vocabulary: story.vocabulary.map(({ term, translation, ...rest }) => ({
+        ...rest,
+        word: term,
+        th: translation,
+      })),
       sentences: story.sentences.map(({ text, ...rest }) => ({ ...rest, answer: text })),
       source: { file: story.source.file, thaiGlossesGenerated: true },
     };
@@ -258,13 +263,13 @@ describe('derived inputs', () => {
 describe('manifest', () => {
   it('extends the APK manifest with the 3D fields and keeps the base validation', () => {
     const m = manifest();
-    expect(m.renderer).toBe('three');
+    expect(m.renderers).toEqual(['three']);
     expect(m.needs).toEqual({ vocabulary: 0, sentences: 2, fills: 0, questions: 0 });
     expect(m.device).toEqual(DEVICE_REQUIREMENTS_DEFAULT);
     expect(m.device.minTextureSize).toBe(2048);
     // The APK validator accepts the base fields of a 3D manifest.
     const {
-      renderer,
+      renderers,
       simulation,
       orientation,
       levels,
@@ -283,7 +288,11 @@ describe('manifest', () => {
       cartridge3DManifestSchema.safeParse({ ...m, requiredModelBindings: ['/knight.glb'] }).success,
     ).toBe(false);
     expect(cartridge3DManifestSchema.safeParse({ ...m, levels: [] }).success).toBe(false);
-    expect(() => validateCartridge3DManifest({ ...m, renderer: 'phaser' })).toThrow(/renderer/);
+    expect(() => validateCartridge3DManifest({ ...m, renderers: [] })).toThrow(/renderers/);
+    expect(() => validateCartridge3DManifest({ ...m, renderers: ['three', 'three'] })).toThrow(/unique/);
+    expect(() => validateCartridge3DManifest({ ...m, renderers: ['canvas'] })).toThrow(/renderers/);
+    expect(manifest({ renderers: ['three', 'phaser'] }).renderers).toEqual(['three', 'phaser']);
+    expect(manifest({ renderers: ['phaser'] }).renderers).toEqual(['phaser']);
     expect(manifest({ inputMode: 'story' }).inputMode).toBe('story');
   });
 
@@ -418,7 +427,6 @@ describe('model assets', () => {
     kind: 'model',
     format: 'glb',
     byteSize,
-    sha256: 'a'.repeat(64),
     triangles: 12_000,
     textureSize: 512,
     skinned: true,
@@ -445,10 +453,11 @@ describe('model assets', () => {
     expect(modelPackSchema.safeParse({ ...pack, byteSize: 1 }).success).toBe(false);
     const mit = { ...file('knight', 1), provenance: { ...file('knight', 1).provenance, license: 'MIT' } };
     expect(modelPackSchema.safeParse({ ...pack, files: { knight: mit }, byteSize: 1 }).success).toBe(false);
+    // No hash field on the model kind (the monorepo hashing policy): a pack with one is rejected.
     expect(
       modelPackSchema.safeParse({
         ...pack,
-        files: { knight: { ...file('knight', 980_000), sha256: 'nope' } },
+        files: { knight: { ...file('knight', 980_000), sha256: 'a'.repeat(64) } },
       }).success,
     ).toBe(false);
   });

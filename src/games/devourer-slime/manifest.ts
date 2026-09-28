@@ -12,7 +12,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Devourer Slime',
   description: 'Eat the word bubbles of each sentence in order; grow with every right word and swallow the guards.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',

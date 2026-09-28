@@ -1,8 +1,13 @@
 # APK 3D: the cartridge, the kit, and the host
 
-Status: design, 2026-09-27. Owner decisions are fixed (see the list at the end of the
-introduction). Everything else in this document is decided here. Open items that only the owner
-can decide are in section 13.
+Status: design, 2026-09-27; the dual-renderer section (15) added 2026-09-28. Owner decisions are
+fixed (see the list at the end of the introduction). Everything else in this document is decided
+here. Open items that only the owner can decide are in section 13.
+
+Update 2026-09-28: owner decision (3) "no 2D fallback" is superseded by `docs/apk-2d3d-program.md`:
+every game gets a 2D (Phaser) view for devices that fail the 3D gate, beside the 3D view. Section
+15 defines how one cartridge carries both; the rest of this document stays as written, with
+`renderer: 'three'` in a manifest now spelled `renderers: ['three']`.
 
 This document defines how the 3D reading games in this repo are built so that they publish to
 GitHub Pages now and move into the Advantage Play Kit (APK) later with adapter work only. The
@@ -66,7 +71,7 @@ Three layers, and the import rules between them are strict (section 4):
 ```ts
 // src/apk3d/contracts/manifest.ts
 export const cartridge3DManifestSchema = runtimeCartridgeManifestSchema.extend({
-  renderer: z.literal('three'),                               // Phaser cartridges: absent or 'phaser'
+  renderers: z.array(z.enum(['three', 'phaser'])).min(1),     // section 15; a plain APK cartridge has none
   inputMode: z.enum(['vocabulary', 'sentence', 'story']),     // 'story' = StoryInput (section 5)
   simulation: z.enum(['turn', 'realtime']),                   // fixed step is used by both (section 10)
   orientation: z.enum(['portrait', 'landscape', 'any']),      // 'portrait' for every phone-first game
@@ -92,8 +97,9 @@ lists the same ids because the kit implements the same behaviors.
 ### 2.2 Cartridge and instance
 
 A Phaser cartridge has `createGameConfig(context)`. A 3D cartridge has `createGame(context)`.
-The two are one discriminated union in the port: `RuntimeCartridge = PhaserCartridge |
-ThreeCartridge`, discriminated by `manifest.renderer`.
+One cartridge may have both (section 15): `manifest.renderers` lists what it implements, and the
+host picks one with `selectRenderer`. In the port, `RuntimeCartridge` gets both methods as
+optional members, one required per listed renderer.
 
 ```ts
 // src/apk3d/factory/types.ts (kit layer: it names the stage, HUD, and audio APIs, so it is not in contracts)
@@ -132,8 +138,8 @@ export interface Game3DInstance {
 ### 2.3 Factory and lifecycle
 
 `createThreeGameFactory()` returns an APK `GameFactory`. It sits beside
-`createPhaserGameFactory()`; the host picks one by `manifest.renderer`
-(`selectGameFactory(cartridge)`). `mountCartridge` does not change.
+`createPhaserGameFactory()`; the host picks one by the renderer `selectRenderer` chose
+(section 15.2). In this repo `createCartridgeMounter` holds both factories and mounts either.
 
 | `APKGameInstance` call | What the three factory does |
 | --- | --- |
@@ -206,14 +212,20 @@ src/apk3d/                         the 3D kit; moves as one package (@reading-ad
   device/gate.ts                   checkDevice(): GateResult (section 9)
   device/tier.ts                   quality tier from the gate result
   i18n/catalog.ts                  createI18n(catalog), scope, interpolation
-  factory/types.ts                 ThreeCartridge, Game3DContext, Game3DInstance
-  factory/three-factory.ts         createThreeGameFactory(), selectGameFactory()
+  contracts/sprite-asset.ts        the APK 2D asset contract, copied (sprite packs, editions), forge sheet helpers
+  factory/types.ts                 Cartridge (both renderers), Game3DContext, Game2DContext, Game3DInstance, MountedGame
+  factory/three-factory.ts         createThreeGameFactory()
+  factory/phaser-factory.ts        createPhaserGameFactory(), copied from the APK
+  factory/input.ts                 createInputController(), copied from the APK
+  factory/select.ts                selectRenderer(), validateCartridge()
+  factory/mount.ts                 createCartridgeMounter(): one mount call for either renderer
   qc/driver.ts                     window.__apk3d hook, screenshot points
   index.ts
 src/games/<game>/                  one folder per game
   manifest.ts                      Cartridge3DManifest
   core/                            pure rules: types.ts, sim.ts, content.ts (derived items)
   view/                            game.ts (createGame), actors.ts, hud.ts, cues.ts
+  view2d/                          game.ts (createGameConfig), the Phaser scene (section 15.6)
   briefing.ts                      GameBriefing built from catalog keys
   strings.en.ts                    the game's catalog scope
   qc/bot.ts                        headless play for screenshots and smoke tests
@@ -243,19 +255,20 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | `src/apk3d/stage`, `audio` | `contracts`, `sim`, `three` |
 | `src/apk3d/hud` | `contracts`, `sim`, `stage`, `three` (HudRoot anchors labels on the stage frame and uses its Timeline) |
 | `src/apk3d/i18n`, `device` | `contracts` |
-| `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three` |
+| `src/apk3d/view2d` (2D projection helpers, Claude) | `contracts`, `sim` |
+| `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three`, `phaser` (factory only) |
 | `src/games/*/core` | `src/apk3d/contracts`, `src/apk3d/sim` |
 | `src/games/*/manifest.ts`, `strings.en.ts`, `briefing.ts` | `src/apk3d/contracts` only (the host loads them before the game) |
-| `src/games/*/view` and every other file of the game (`qc/`, ...) | its own game, `src/apk3d/*`, `three` (views build actors and vectors) |
+| `src/games/*/view`, `view2d`, and every other file of the game (`qc/`, ...) | its own game, `src/apk3d/*`, `three` (views build actors and vectors), `phaser` (2D views) |
 | `src/games/*/index.ts` | its own game, `src/apk3d/*` |
 | `src/host` | `src/apk3d/*`, `three` (the lobby stage), `src/games/*/manifest.ts` and `strings.en.ts` statically; `src/games/*/index.ts` through `import()` only (lazy game code) |
 | `src/apk3d/*` | never `src/games`, never `src/host` |
 
 Same-folder imports and `.css` imports are allowed everywhere. `three/addons/*` counts as `three`.
 The test keeps a short `TRANSITIONAL` list of imports that break the table today, each with the
-task that removes it: the one-line bridge `src/games/monster-encounters/core/index.ts` over
-`src/demo/core` until task 11, and the `scenes/sunken-vault` import of the battle stage until the
-vault set is a model pack.
+task that removes it: the `scenes/sunken-vault` import of the battle stage until the vault set is
+a model pack. (The Monster Encounters bridge over `src/demo/core` went with task 11; `src/demo`
+is gone.)
 
 Vite: `vite.demo.config.ts` stays the build; `demo/main.ts` imports `src/host/main.ts`.
 
@@ -435,7 +448,7 @@ from `items`. The class boss damage is `correctAnswers * 2`. In the APK the same
 ```ts
 export const modelAssetFileSchema = z.object({
   id: z.string(), path: z.string(), kind: z.literal('model'), format: z.literal('glb'),
-  byteSize: z.number().int(), sha256: z.string().regex(/^[0-9a-f]{64}$/),
+  byteSize: z.number().int(),          // no hash field: see the note under this block
   triangles: z.number().int(), textureSize: z.number().int(), skinned: z.boolean(),
   clips: z.array(z.string()), presets: z.array(z.string()),
   provenance: z.object({
@@ -452,8 +465,17 @@ export const modelPackSchema = z.object({
 ```
 
 `scripts/apk3d-models.ts` writes `demo/public/packs/<pack>/pack.json` with these fields. It is
-the `AssetPackManifest` shape with a new `kind`; the port adds `'model'` to
-`PhysicalAssetKind` and a `format: 'glb'` branch.
+the `AssetPackManifest` shape with a new `kind`. The port keeps it as its own schema in the 3D
+kit (`modelPackSchema`, `RuntimeEdition3D`) and does not add `'model'` to `PhysicalAssetKind`:
+the APK edition validator enforces PNG formats and canonical grids per kind, and a GLB branch
+there would touch 12 files for no gain (`docs/apk-port.md`, step 3).
+
+No hash field (2026-09-28). The first draft had `sha256` per model file. The monorepo `AGENTS.md`
+hashing policy forbids a new hash field unless an existing contract requires one, and no APK
+contract covers the model kind; so the field is gone from the schema, the pack files, and the
+loader. A model file is identified by pack id, pack version, and path; `provenance.forgeCommit`
+says which source built it. The APK 2D physical file (`PhysicalAssetFile`) already requires
+`sha256`; sprite packs keep exactly that field and nothing more (section 15.4).
 
 ### 7.2 Packs and bindings
 
@@ -465,9 +487,9 @@ the `AssetPackManifest` shape with a new `kind`; the port adds `'model'` to
 | `potion-shop` | shop set, cauldron, customers (goblin, elf, dwarf ...) | Potion Rush |
 
 A game manifest lists `packs` and `requiredModelBindings`. `RuntimeEdition3D.bindings` maps a
-binding key to `{ pack, file }`. The kit loader caches a parsed GLB by `sha256` for the page
-session, so a second game in the same visit loads `heroes` once. The Cache API stores files by
-sha256 for repeat visits (a miss is silent; the fetch runs as usual).
+binding key to `{ pack, file }`. The kit loader caches a parsed GLB by pack id, version, and path
+for the page session, so a second game in the same visit loads `heroes` once. Repeat visits rely
+on HTTP caching of the versioned pack URL (`packs/<id>/<version>/...`), not on a content hash.
 
 Edition swap: two editions share the same bindings, `standard` and `lite`. `lite` points to
 the same pack built with the smaller budgets (8k triangles, 384 px textures) and is selected by
@@ -607,6 +629,13 @@ Tests:
 3. Move `types.ts`, `quest.ts`, `content.ts` (the quest parts) to
    `src/games/monster-encounters/core/`; wrap `Quest` in `Simulation` (`dispatch({type:
    'answer', response})`, `tick()` returns `[]`). Move `tests/demo/quest.test.ts`.
+   Done 2026-09-28: the quest reads `StoryInput` directly (`term`, `translation`, `text`), so
+   `toStoryPack` and the old `StoryPack` schema are gone with `src/demo`. `core/sim.ts` exports
+   `createMonsterEncounters(story, { seed, helper })`: a `Simulation<QuestState,
+   MonsterEncountersCommand, GameEvent>` with commands `{ type: 'start' }` and `{ type: 'answer',
+   response }`, plus `results()`. The view sends those two commands; `window.__apk3dGame` still
+   holds `{ quest, story }` where `quest` is the simulation (`quest.state` is unchanged for the QC
+   bot). Tests: `tests/games/monster-encounters/{quest,content,sim}.test.ts`, `tests/apk3d/rng.test.ts`.
 4. Move `classBoss.ts` to `src/host/classBoss.ts` (host-owned).
 5. Split `src/demo/app/stage.ts`: renderer, loader, actor, camera go to `src/apk3d/stage/`; the
    vault set and battle blocking go to `src/games/monster-encounters/view/actors.ts`.
@@ -627,6 +656,10 @@ Tests:
     current site.
 
 ## 12. Work breakdown (decision k)
+
+Progress (2026-09-28, evening): tasks 11, 13 (the contract half: model packs without a hash
+field; `scripts/apk3d-models.ts` pack manifests still to write), and 20 are done, and section 15
+(the dual renderer) with its code and tests.
 
 Progress (2026-09-28): tasks 1 to 10, 12, and 14 to 19 are done, and the three next games too.
 The standalone host plays five cartridges: Monster Encounters, Potion Rush 3D, Dragon Flight 3D,
@@ -689,3 +722,182 @@ stage, HUD, screens, audio, game feel (Claude).
 6. Localization: paste each `strings.en.ts` under `pages.student.games.<game>`; add `th`.
 7. QC: the `__apk3d` driver behind `qc/` `BrowserQcDriver`; screenshots in CI.
 8. Removal list: `src/host` (replaced by app pages), simulated class boss, `localStorage`.
+
+`docs/apk-port.md` is written (task 20, 2026-09-28) with the blast radius of each APK change.
+
+## 15. Dual renderer: the 2D (Phaser) path
+
+Decided 2026-09-28 for `docs/apk-2d3d-program.md` (Phase A). Code: `src/apk3d/contracts/
+{manifest,sprite-asset,apk}.ts`, `src/apk3d/factory/{types,select,mount,phaser-factory,input}.ts`,
+`src/apk3d/sim/simulation.ts` (`createManualClock`). Tests: `tests/apk3d/{factory,sprite-asset,
+contracts,sim}.test.ts`.
+
+### 15.1 One cartridge, two renderers
+
+A cartridge is one object with a manifest, strings, a briefing, and one method per renderer:
+
+```ts
+// src/apk3d/factory/types.ts
+export interface Cartridge {
+  manifest: CartridgeManifest;           // renderers: ['three'] | ['phaser'] | ['three', 'phaser']
+  strings: Catalog;
+  briefing(i18n: ScopedI18n, input: GameInput | StoryInput): GameBriefing;
+  createGame?(context: Game3DContext): Promise<Game3DInstance>;                     // 'three'
+  createGameConfig?(context: Game2DContext): Readonly<Record<string, unknown>>;    // 'phaser'
+}
+export type ThreeCartridge = Cartridge & Required<Pick<Cartridge, 'createGame'>>;
+export type PhaserCartridge = Cartridge & Required<Pick<Cartridge, 'createGameConfig'>>;
+```
+
+`manifest.renderers` (`rendererIdSchema`, unique, at least one) says which methods exist;
+`validateCartridge(cartridge)` throws when a listed renderer has no method or a method has no
+renderer. A plain APK cartridge has no `renderers` field: it is `'phaser'` only. The existing six
+manifests list `['three']`; a game gains `'phaser'` when its 2D view lands.
+
+The Phaser path is exactly the APK `RuntimeCartridge.createGameConfig(context)`: the same
+`CartridgeGameConfigContext` (copied verbatim into `contracts/apk.ts`: `input`, `edition`,
+`complete`, `diagnostic`, `inputController`, `sessionMode`, `composition`, `seed`, the two
+optional audio controllers) and the same return value, a Phaser `GameConfig` fragment with
+`scene`. The scene follows the APK conventions of `game-cartridges/src/potion-rush.ts`: `preload`
+loads through `preloadAssetBindings`, `create` builds display objects and registers `shutdown`
+and `destroy` cleanup, `update(time, delta)` reads `inputController.snapshot()` once per frame,
+and the scene extends `apkCaptureResponsiveState`, `apkRestoreResponsiveState`, and
+`apkRecompose` for the responsive host. `Game2DContext` adds three optional fields the APK
+factory never sets: `i18n`, `options`, and `host` (the same services the 3D context gets). A 2D
+view falls back when they are absent: its own `strings.en.ts` for `i18n`,
+`SESSION_OPTIONS_DEFAULT` for `options`, and no host buttons. `complete` takes the
+`StoryGameEvidence` as a third argument; the APK today has two parameters, and the port adds the
+third (`docs/apk-port.md`, step 2). The 3D path stays `createGame` (section 2.2).
+
+### 15.2 How the host picks a renderer
+
+```ts
+// src/apk3d/factory/select.ts
+selectRenderer(manifest, checkDevice({ requirements: manifest.device }), setting): RendererChoice | null
+```
+
+| Device gate (section 9) | Player setting | The cartridge lists | Choice |
+| --- | --- | --- | --- |
+| any | `phaser` | phaser | phaser (`forced`) |
+| `ok` (WebGL2, not lite) | `auto` | three | three |
+| `lite` or `unsupported` | `auto` | phaser | phaser |
+| `lite` | `auto` | three only | three with the `lite` edition and the `low` tier |
+| `unsupported` | `auto` | three only | `null`: the gate screen, as before |
+| `ok` | `auto` | phaser only | phaser |
+
+The setting is `'auto' | 'phaser'` (a player can force 2D, never 3D: the gate wins). The host
+stores it beside the hero choice (`persistence.ts`), the APK reads it from the profile. The
+reader and the selector never depend on the renderer; only `#/play` does.
+
+### 15.3 One core, two views
+
+The 2D view drives the same `Simulation` (section 10) and never changes the core. A Phaser scene
+owns no clock of its own: it runs the kit fixed-step loop from `update`:
+
+```ts
+const manual = createManualClock();                       // src/apk3d/sim/simulation.ts
+const loop = createFixedStepLoop(sim, { render: (events, alpha) => draw(events, alpha) }, manual.clock);
+create() { loop.start(); }
+update(time) { manual.run(time); }                        // one frame per Phaser frame
+```
+
+`createFixedStepLoop` keeps its rules: `STEP_MS` steps, a frame longer than `MAX_FRAME_MS`
+(the APK bounded frame delta) counts as 50 ms, at most two steps per frame, the rest dropped.
+Student actions go through `loop.dispatch(command)`; a turn game (Monster Encounters) sends its
+commands and renders the returned events without the loop. `pause` in the Phaser factory pauses
+the scenes, so `update` stops and the loop stops with it; `resume` restarts them, and the view
+calls `loop.reset()` first so no catch-up steps run. The QC hook stays the same object shape:
+`window.__apk3d.game()` returns `{ state, dispatch, tick }` from either view.
+
+### 15.4 The 2D asset format: forge sprite packs
+
+A sprite pack is the APK `AssetPackManifest` with `PhysicalAssetFile` entries, unchanged. The
+schemas, the validator (`validateEdition`), and the loaders (`resolveAssetBinding`,
+`preloadAssetBindings`, `registerAssetAnimations`) are copied from
+`advantage-play-kit/src/editions/{editions,asset-contract}.ts` (fe6aedc2b) into
+`contracts/sprite-asset.ts`, so a pack that passes here mounts in the APK unchanged.
+
+Hashing (the monorepo policy): the APK `physicalAssetFileSchema` requires `sha256` on every
+physical file today. Sprite packs keep exactly that field, computed by the packer, and no other
+hash: no pack-level hash, no chain, no hash on the model kind (section 7.1).
+
+What Claude's packer (Phase A') writes per forge sheet (one file per asset and clip):
+
+| Field | Value |
+| --- | --- |
+| `id`, `path` | `heroes/knight_walk`, `heroes/knight_walk.png` (the path ends with `.png`) |
+| `kind` | `spritesheet` (a still with one frame: also `spritesheet`, one cell, so `frame` bindings work) |
+| `view` | `isometric` for the 8-direction three-quarter camera (`--elevation 30`); `side-scroll` for a side-only sheet |
+| `width`, `height` | `cell * frames`, `cell * directions` |
+| `format`, `alpha` | `png`, `true` |
+| `byteSize`, `sha256` | of the encoded PNG |
+| `grid` | `forgeSheetGrid(cell, directions, frames)`: rows = directions, columns = frames |
+| `animations` | `forgeSheetAnimations(clip, directions, frames, fps, loop)`: one per direction, named `<clip>.<dir>` in lower case (`walk.s`, `walk.sw`, ...), `repeat` -1 for a loop, 0 for a one-shot |
+| `origin` | `forgeOrigin(metrics.pivot, cell)`: the asset's ground point, so the game places it on the floor |
+| `collision` | absent. A sheet with both `origin` and `collision` must be a canonical APK actor sheet (4x8 top-down or 4x4 side-scroll, 128 px); forge sheets are not, so they omit `collision` and the game sets bodies in code |
+| `provenance` | `{ source: 'fantasy-asset-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' }` |
+
+Direction rows follow `src/render/page.ts`: `S, SW, W, NW, N, NE, E, SE` for 8, `S, W, N, E` for
+4, `S` for 1 (`FORGE_DIRECTIONS_8`, `FORGE_DIRECTIONS_4`). Characters use 128 px cells, the forge
+default; props and floor tiles at the same camera use the cell their `metrics.json` says. The
+pack: `{ id, version: '1.0.0', root: '/assets/apk/<id>/', files }` (`spritePackRoot(id)`; the APK
+requires that root prefix). The standalone site serves the files from
+`demo/public/assets/apk/<id>/` and resolves URLs under its relative base through the
+`resolveUrl` seam (`(pack, file) => BASE + pack.root.slice(1) + file.path`); the APK serves them
+from `/assets/apk/`. The 2D edition is the APK `RuntimeEdition`: `{ id: 'standard' | 'lite',
+title, runtimeApiVersion, pack, bindings, tuning: { speed, targetScale, collisionScale,
+intensity } }`. A binding is `{ key, file, usage: 'animation' | 'frame' | 'image', view,
+animation? , frame? }`; the manifest's APK field `requiredAssetBindings` lists the 2D keys a game
+needs (`hero.knight.walk`), as `requiredModelBindings` lists the 3D keys.
+
+### 15.5 The standalone host: mounting either renderer
+
+The kit copies the APK Phaser factory and input controller (`factory/phaser-factory.ts`,
+`factory/input.ts`, source paths and the monorepo commit in their headers) and adds one function
+the host calls for both renderers:
+
+```ts
+import { createCartridgeMounter, createPhaserGameFactory, createThreeGameFactory, selectRenderer } from '../apk3d/factory/index.js';
+
+const mount = createCartridgeMounter({
+  three: createThreeGameFactory({ base: BASE, gate: () => checkDevice() }),
+  phaser: createPhaserGameFactory(),                 // imports 'phaser' lazily on the first 2D mount
+});
+const choice = selectRenderer(cartridge.manifest, checkDevice({ requirements: cartridge.manifest.device }), setting);
+if (!choice) return renderGate(...);
+mounted = await mount({
+  renderer: choice.renderer,
+  container, stage, cartridge, input: story, seed, sessionMode: 'playing', composition,
+  edition3d: EDITION_3D, edition2d: EDITION_2D,       // the one the renderer needs must be present
+  i18n, audio, options, host, complete, diagnostic,
+});
+mounted.start();
+```
+
+`MountedGame` is the APK `APKGameInstance` lifecycle plus `start()` and `renderer`, with
+`three` (the `MountedThreeGame`) or `phaser` (the `APKGameInstance`) for the QC driver. For
+'phaser' the mounter creates the input controller on the container, passes the 2D edition,
+wraps `complete` in the completion latch (one result per mount; a result without evidence is an
+`error` diagnostic and is dropped), pauses input on `pause`, and destroys the controller with the
+game. The standalone composition (`{ profile, safe }`) is not an APK composition, so the Phaser
+path receives `composition` only when the host passes a full `SupportedResponsiveComposition`;
+`recompose` with the standalone shape is a no-op for Phaser (the scene reads `scale`).
+
+### 15.6 Where the 2D view lives
+
+`src/games/<game>/view2d/game.ts` exports `createGameConfig`; `index.ts` exports one `cartridge`
+with both methods; `manifest.renderers` becomes `['three', 'phaser']`. The import test classifies
+`view2d/` as the game's view (it may import `phaser`, `three` stays allowed). A 2D view reads the
+same catalog scope and the same `StoryInput`, builds the same evidence with `toGameResults`, and
+calls `context.complete(result, outcome, evidence)`. `createGameConfig` returns `{ width, height,
+render: { pixelArt: true, antialias: false }, scene }` for pixel sprites; the factory adds
+`type`, `scale`, `parent`, and the safe-rect size.
+
+### 15.7 Tests
+
+`tests/apk3d/factory.test.ts`: the choice table, `validateCartridge`, the Phaser factory driven
+with a fake Phaser (the APK's own test, adapted), the input controller on a fake surface, and the
+mounter for both renderers with fake factories. `tests/apk3d/sprite-asset.test.ts`: a forge sheet
+passes the APK schema and validator, the forge helpers, the canonical-actor rule, the loaders.
+`tests/apk3d/contracts.test.ts`: `renderers`, the model kind without a hash. `tests/apk3d/sim.test.ts`:
+the manual clock. No test needs a DOM.

@@ -5,6 +5,7 @@ import {
   STEP_MS,
   angleDelta,
   createFixedStepLoop,
+  createManualClock,
   createRecorder,
   createRng,
   damp,
@@ -201,6 +202,37 @@ describe('fixed-step loop', () => {
     t = 200;
     loop.frame();
     expect(sim.state.ticks).toBe(3); // 16.7 left + 50 = two steps
+  });
+});
+
+describe('manual clock (a Phaser scene drives the loop)', () => {
+  it('steps once per run() at the fixed step and clamps a long frame', () => {
+    const manual = createManualClock();
+    const ticks: number[] = [];
+    const sim: Simulation<number, never, number> = {
+      state: 0,
+      dispatch: () => [],
+      tick: () => {
+        ticks.push(1);
+        return [ticks.length];
+      },
+      snapshot: () => ticks.length,
+    };
+    const rendered: number[][] = [];
+    const loop = createFixedStepLoop(sim, { render: (events) => rendered.push([...events]) }, manual.clock);
+    loop.start();
+    manual.run(0);
+    expect(ticks.length).toBe(0);
+    manual.run(34);
+    expect(ticks.length).toBe(1);
+    manual.run(34 + 500); // a long frame counts as MAX_FRAME_MS (50 ms): one step, 17 ms kept
+    expect(ticks.length).toBe(2);
+    manual.run(34 + 500 + 50); // 67 ms in the accumulator: two steps, the cap per frame
+    expect(ticks.length).toBe(4);
+    expect(rendered.length).toBe(4);
+    loop.stop();
+    manual.run(1000);
+    expect(ticks.length).toBe(4);
   });
 });
 

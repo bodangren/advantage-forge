@@ -12,7 +12,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Dragon Flight',
   description: 'Ride the fire dragon through the gate with the right meaning: every right gate adds a dragon to the flock for the boss.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',

@@ -1,5 +1,5 @@
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { extname, join, relative } from 'node:path';
+import { extname, join, relative, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { chromium, type Browser, type Page } from 'playwright';
 import { createServer } from 'vite';
@@ -42,7 +42,10 @@ render options
 sprite options
   --size 128  --dirs 8|4|1  --elevation 30  --colors 0 (palette size, 0 = full color)
   --outline none|dark|black  --ss 4 (supersample)  --margin 0.06
-  --clip walk|all      animated sprite sheet (rows = directions, columns = frames) and GIF
+  --clip walk|all      animated sprite sheet (rows = directions, columns = frames) and GIF;
+                       a comma list (idle,walk,run) renders the clips the asset has
+  --ppm 64             fixed pixels per meter (a game sprite set at one scale; the cell fits the asset)
+  --into dir           write the sprites to dir/ instead of out/<asset>/sprites/
 
 animation options
   --clip walk          one clip (default: all clips)
@@ -98,6 +101,8 @@ async function main(): Promise<void> {
       fps: { type: 'string' },
       frames: { type: 'string' },
       preset: { type: 'string' },
+      ppm: { type: 'string' },
+      into: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
   });
@@ -289,6 +294,13 @@ async function main(): Promise<void> {
       );
       const wanted = (all: boolean): string[] => {
         if (values.clip === undefined || values.clip === 'all') return all ? clips.map((c) => c.name) : [];
+        // A comma list: the clips this asset has (a game sprite set asks every model for one list).
+        if (values.clip.includes(',')) {
+          const asked = values.clip.split(',').map((c) => c.trim()).filter(Boolean);
+          const missing = asked.filter((c) => !clips.some((x) => x.name === c));
+          if (missing.length) console.log(`clips    ${name} has no ${missing.join(', ')} (skipped)`);
+          return asked.filter((c) => !missing.includes(c));
+        }
         if (!clips.some((c) => c.name === values.clip))
           throw new Error(
             `No animation '${values.clip}'. Clips: ${clips.map((c) => c.name).join(', ') || '(none)'}.`,
@@ -315,12 +327,14 @@ async function main(): Promise<void> {
           colors: num(values.colors, 0),
           outline: (values.outline ?? 'dark') as SpritesRequest['outline'],
           margin: num(values.margin, 0.06),
+          ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
           ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
           ...(preset ? { preset } : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
         // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.
-        const base = preset ? join(out, 'sprites', 'presets', preset) : join(out, 'sprites');
+        const root = values.into ? resolve(values.into) : join(out, 'sprites');
+        const base = preset ? join(root, 'presets', preset) : root;
         const dir = clip ? join(base, clip) : base;
         if (clip) rmSync(dir, { recursive: true, force: true });
         else
@@ -333,7 +347,7 @@ async function main(): Promise<void> {
         if (res.gif) writeFileSync(join(dir, `${clip}.gif`), Buffer.from(res.gif, 'base64'));
         writeFileSync(
           join(dir, 'metrics.json'),
-          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, metrics: res.metrics, palette: res.palette }, null, 2),
+          JSON.stringify({ size: res.cell, clip, pivot: res.pivot, ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}), elevation: num(values.elevation, 30), directions: num(values.dirs, 8), frames: clip ? frameCount : 1, metrics: res.metrics, palette: res.palette }, null, 2),
         );
         console.log(`sprites  ${rel(join(dir, 'preview.png'))}  (${Math.round(performance.now() - t2)} ms)`);
         if (!clip) {

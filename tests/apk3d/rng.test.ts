@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { createRng, hashString } from '../../src/demo/core/rng.js';
+import { createRng, hashString } from '../../src/apk3d/sim/rng.js';
 
 describe('seeded rng', () => {
   it('replays the same sequence for a seed', () => {

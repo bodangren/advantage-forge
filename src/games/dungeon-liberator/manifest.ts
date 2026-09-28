@@ -12,7 +12,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Dungeon Liberator',
   description: 'Free the villagers of the Sunken Vault in the order of the sentence, then lead the line out through the gate.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',

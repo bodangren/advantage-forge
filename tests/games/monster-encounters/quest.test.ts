@@ -7,15 +7,16 @@ import {
   XP_REASON,
   createQuest,
   resolveKind,
-} from '../../src/demo/core/quest.js';
-import type { Challenge, GameEvent, StoryPack } from '../../src/demo/core/types.js';
-import { STORY_IDS, fail, loadPack, makePack, ofType, playPerfect, solve, types } from './helpers.js';
+} from '../../../src/games/monster-encounters/core/quest.js';
+import type { Challenge, GameEvent } from '../../../src/games/monster-encounters/core/types.js';
+import type { StoryInput } from '../../../src/apk3d/contracts/index.js';
+import { STORY_IDS, fail, loadStory, makeStory, ofType, playPerfect, solve, types } from './helpers.js';
 
 const opts = { seed: 1, helper: false };
 
 describe('setup and start', () => {
   it('starts ready, then opens the Bone Hall with two skeletons and a word challenge', () => {
-    const quest = createQuest(makePack(), opts);
+    const quest = createQuest(makeStory(), opts);
     expect(quest.state.phase).toBe('ready');
     expect(quest.state.encounter).toBeNull();
     expect(quest.state.challenge).toBeNull();
@@ -42,21 +43,21 @@ describe('setup and start', () => {
   });
 
   it('refuses a second start and an answer before start', () => {
-    const quest = createQuest(makePack(), opts);
+    const quest = createQuest(makeStory(), opts);
     expect(() => quest.answer({ kind: 'choice', optionId: 'o1' })).toThrow(/phase is ready/);
     quest.start();
     expect(() => quest.start()).toThrow(/twice/);
   });
 
   it('throws on an empty story', () => {
-    const pack = { ...makePack(), vocabulary: [], questions: [], sentences: [], fills: [] };
+    const pack = { ...makeStory(), vocabulary: [], questions: [], sentences: [], fills: [] };
     expect(() => createQuest(pack, opts)).toThrow(/no items/);
   });
 });
 
 describe('a turn', () => {
   it('a correct answer: attack, hit, xp, then the next turn for the next hero', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     const events = quest.answer(solve(pack, quest.state.challenge!));
@@ -84,7 +85,7 @@ describe('a turn', () => {
   });
 
   it('a wrong answer: miss, enemy attack, courage down, feedback with answer and paragraph', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     const c = quest.state.challenge!;
@@ -93,8 +94,8 @@ describe('a turn', () => {
     expect(types(events)).toEqual(['answer', 'heroMiss', 'enemyAttack', 'turn']);
     const fb = ofType(events, 'answer')[0]!.feedback;
     expect(fb.correct).toBe(false);
-    expect(fb.correctText).toBe(word.th);
-    expect(fb.explanation).toContain(word.th);
+    expect(fb.correctText).toBe(word.translation);
+    expect(fb.explanation).toContain(word.translation);
     expect(fb.explanation).toContain(word.definition);
     expect(events[1]).toEqual({ type: 'heroMiss', hero: 'knight', target: 'skeleton-1' });
     expect(events[2]).toEqual({ type: 'enemyAttack', enemy: 'skeleton-1', courage: 4 });
@@ -104,14 +105,14 @@ describe('a turn', () => {
   });
 
   it('heroes take turns in order across encounters', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     const heroes = ofType(playPerfect(quest, pack), 'turn').map((t) => t.hero);
     heroes.forEach((h, i) => expect(h).toBe(PARTY[i % 3]!.id));
   });
 
   it('uses attack2 for the Cleric', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     const attacks = ofType(playPerfect(quest, pack), 'heroAttack');
     expect(attacks.filter((a) => a.hero === 'cleric').every((a) => a.move === 'attack2')).toBe(true);
@@ -119,7 +120,7 @@ describe('a turn', () => {
   });
 
   it('rejects a response of the wrong shape or with an unknown id', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     expect(() => quest.answer({ kind: 'order', tokenIds: [] })).toThrow(/expected a choice/);
@@ -129,7 +130,7 @@ describe('a turn', () => {
 
 describe('retries', () => {
   it('a wrong item comes back at least two turns later, flagged as a retry, and earns 5 xp', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     const first = quest.state.challenge!;
@@ -151,11 +152,11 @@ describe('retries', () => {
 
   it('a wrong item goes last when the queue is shorter than two', () => {
     // One sentence only: the Bat Roost has one item, so the retry is the very next turn.
-    const pack = makePack({
+    const pack = makeStory({
       vocabulary: [],
       fills: [],
       questions: [],
-      sentences: [makePack().sentences[0]!],
+      sentences: [makeStory().sentences[0]!],
     });
     const quest = createQuest(pack, opts);
     quest.start();
@@ -166,7 +167,7 @@ describe('retries', () => {
 
   it('when the new items run out, wrong items come first, then the least recently seen', () => {
     // Three words, Bone Hall needs 4 hits: the queue refills after the third word.
-    const pack = makePack({ vocabulary: makePack().vocabulary.slice(0, 3) });
+    const pack = makeStory({ vocabulary: makeStory().vocabulary.slice(0, 3) });
     const quest = createQuest(pack, opts);
     quest.start();
     const a = quest.state.challenge!.itemId;
@@ -185,7 +186,7 @@ describe('retries', () => {
   });
 
   it('a refill never asks the item that was just answered twice in a row', () => {
-    const pack = makePack({ vocabulary: makePack().vocabulary.slice(0, 2) });
+    const pack = makeStory({ vocabulary: makeStory().vocabulary.slice(0, 2) });
     const quest = createQuest(pack, opts);
     quest.start();
     const a = quest.state.challenge!.itemId;
@@ -203,7 +204,7 @@ describe('retries', () => {
 
 describe('courage', () => {
   it('rests at zero courage: courage returns to 3 and the quest continues', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     let events: GameEvent[] = [];
@@ -216,7 +217,7 @@ describe('courage', () => {
   });
 
   it('a correct Cleric heals one courage, only below the maximum', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     quest.answer(fail(pack, quest.state.challenge!)); // knight wrong: courage 4
@@ -245,7 +246,7 @@ describe('courage', () => {
 
 describe('encounters and victory', () => {
   it('a perfect run clears four encounters in order and wins', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     const all = playPerfect(quest, pack);
     const starts = ofType(all, 'encounterStart').map((e) => e.encounter);
@@ -317,7 +318,7 @@ describe('encounters and victory', () => {
   });
 
   it('results give evidence and stars from first-try accuracy', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     const wrongOne = quest.state.challenge!;
@@ -327,7 +328,7 @@ describe('encounters and victory', () => {
     expect(quest.state.phase).toBe('victory');
     const ev = r.items.find((i) => i.itemId === wrongOne.itemId)!;
     expect(ev).toMatchObject({ kind: 'word', attempts: 2, correctFirstTry: false, solved: true });
-    expect(ev.label).toBe(pack.vocabulary.find((w) => w.id === wrongOne.itemId)!.word);
+    expect(ev.label).toBe(pack.vocabulary.find((w) => w.id === wrongOne.itemId)!.term);
     expect(r.practice).toEqual([ev.label]);
     // The Bone Hall shows 4 of the 6 words: 12 items seen, 11 first try = 91.7% -> 3 stars.
     expect(r.items.length).toBe(12);
@@ -360,15 +361,15 @@ describe('encounters and victory', () => {
   });
 
   it('the dragon has as many HP as questions, between 3 and 5', () => {
-    const q = makePack().questions;
+    const q = makeStory().questions;
     const five = [...q, { ...q[0]!, id: 'q-4' }, { ...q[0]!, id: 'q-5' }, { ...q[0]!, id: 'q-6' }];
-    const hp = (pack: StoryPack) => {
+    const hp = (pack: StoryInput) => {
       const quest = createQuest(pack, opts);
       const enc = ofType(playPerfect(quest, pack), 'encounterStart')[3]!.encounter;
       return enc.enemies[0]!.maxHp;
     };
-    expect(hp(makePack({ questions: five }))).toBe(5);
-    expect(hp(makePack({ questions: q.slice(0, 2) }))).toBe(3);
+    expect(hp(makeStory({ questions: five }))).toBe(5);
+    expect(hp(makeStory({ questions: q.slice(0, 2) }))).toBe(3);
   });
 });
 
@@ -383,7 +384,7 @@ describe('fallbacks for missing kinds', () => {
   });
 
   it('a story with only words uses words everywhere and still wins', () => {
-    const pack = makePack({ questions: [], sentences: [], fills: [] });
+    const pack = makeStory({ questions: [], sentences: [], fills: [] });
     const quest = createQuest(pack, opts);
     const all = playPerfect(quest, pack);
     const encounters = ofType(all, 'encounterStart').map((e) => e.encounter);
@@ -394,7 +395,7 @@ describe('fallbacks for missing kinds', () => {
   });
 
   it('missing sentences fall back to questions, missing questions to words', () => {
-    const pack = makePack({ sentences: [], questions: [] });
+    const pack = makeStory({ sentences: [], questions: [] });
     const kinds = ofType(playPerfect(createQuest(pack, opts), pack), 'encounterStart').map(
       (e) => e.encounter.kind,
     );
@@ -402,15 +403,15 @@ describe('fallbacks for missing kinds', () => {
   });
 
   it('caps enemy HP at two turns per item', () => {
-    const base = makePack();
-    const pack = makePack({ sentences: [base.sentences[0]!], fills: base.fills.slice(0, 1) });
+    const base = makeStory();
+    const pack = makeStory({ sentences: [base.sentences[0]!], fills: base.fills.slice(0, 1) });
     const encounters = ofType(playPerfect(createQuest(pack, opts), pack), 'encounterStart').map(
       (e) => e.encounter,
     );
     expect(encounters[1]!.enemies.map((e) => e.maxHp)).toEqual([1, 1]);
     expect(encounters[2]!.enemies.map((e) => e.maxHp)).toEqual([2]);
     // Enemies never drop below 1 HP: one word and no other items leaves the 4 encounters winnable.
-    const tiny = makePack({ vocabulary: [base.vocabulary[0]!], sentences: [], fills: [], questions: [] });
+    const tiny = makeStory({ vocabulary: [base.vocabulary[0]!], sentences: [], fills: [], questions: [] });
     const q = createQuest(tiny, opts);
     playPerfect(q, tiny);
     expect(q.state.phase).toBe('victory');
@@ -418,13 +419,13 @@ describe('fallbacks for missing kinds', () => {
 });
 
 describe('challenge building', () => {
-  const challengesOf = (pack: StoryPack, seed: number, helper = false): Challenge[] => {
+  const challengesOf = (pack: StoryInput, seed: number, helper = false): Challenge[] => {
     const quest = createQuest(pack, { seed, helper });
     return ofType(playPerfect(quest, pack), 'turn').map((t) => t.challenge);
   };
 
   it('word: 4 options (3 in helper mode), never two identical texts, the answer present', () => {
-    const pack = makePack();
+    const pack = makeStory();
     for (const helper of [false, true]) {
       const words = challengesOf(pack, 5, helper).filter((c) => c.kind === 'word');
       expect(words.length).toBeGreaterThan(0);
@@ -434,19 +435,19 @@ describe('challenge building', () => {
         expect(new Set(c.options.map((o) => o.text)).size).toBe(c.options.length);
         expect(new Set(c.options.map((o) => o.id)).size).toBe(c.options.length);
         const word = pack.vocabulary.find((w) => w.id === c.itemId)!;
-        expect(c.prompt).toBe(word.word);
-        expect(c.options.some((o) => o.text === word.th)).toBe(true);
+        expect(c.prompt).toBe(word.term);
+        expect(c.options.some((o) => o.text === word.translation)).toBe(true);
         expect(c.hint).toBe(helper ? word.definition : word.phonetic);
       }
     }
   });
 
   it('word: distractors with the same Thai text as the answer are excluded', () => {
-    const base = makePack();
-    const pack = makePack({
+    const base = makeStory();
+    const pack = makeStory({
       vocabulary: [
         base.vocabulary[0]!,
-        { ...base.vocabulary[1]!, th: base.vocabulary[0]!.th },
+        { ...base.vocabulary[1]!, translation: base.vocabulary[0]!.translation },
         base.vocabulary[2]!,
       ],
     });
@@ -457,8 +458,8 @@ describe('challenge building', () => {
   });
 
   it('fill: options from other answers and story words, matched without case', () => {
-    const base = makePack();
-    const pack = makePack({
+    const base = makeStory();
+    const pack = makeStory({
       fills: [{ id: 'f-1', sentence: 'Pip is a ___.', answer: 'Puppy' }, ...base.fills.slice(1)],
     });
     const fills = challengesOf(pack, 3).filter((c) => c.kind === 'fill');
@@ -471,7 +472,7 @@ describe('challenge building', () => {
       const fill = pack.fills.find((f) => f.id === c.itemId)!;
       expect(c.prompt).toBe(fill.sentence);
       expect(texts.filter((t) => t === fill.answer.toLowerCase()).length).toBe(1);
-      const allowed = [...pack.fills.map((f) => f.answer), ...pack.vocabulary.map((w) => w.word)].map((t) =>
+      const allowed = [...pack.fills.map((f) => f.answer), ...pack.vocabulary.map((w) => w.term)].map((t) =>
         t.toLowerCase(),
       );
       for (const t of texts) expect(allowed).toContain(t);
@@ -483,7 +484,7 @@ describe('challenge building', () => {
   });
 
   it('question: the workbook options shuffled, all present', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const qs = challengesOf(pack, 8).filter((c) => c.kind === 'question');
     for (const c of qs) {
       if (c.kind !== 'question') continue;
@@ -507,13 +508,13 @@ describe('challenge building', () => {
   });
 
   it('sentence: shuffled tokens are never in the correct order, and duplicate words are interchangeable', () => {
-    const base = makePack();
-    const pack = makePack({
+    const base = makeStory();
+    const pack = makeStory({
       sentences: [
         ...base.sentences,
         {
           id: 's-3',
-          answer: 'Pip loves Mom and Pip loves Dad.',
+          text: 'Pip loves Mom and Pip loves Dad.',
           words: ['Pip', 'loves', 'Mom', 'and', 'Pip', 'loves', 'Dad.'],
         },
       ],
@@ -547,7 +548,7 @@ describe('challenge building', () => {
   });
 
   it('sentence: a missing or extra token, or a wrong order, is wrong', () => {
-    const pack = makePack({ vocabulary: [], fills: [], questions: [] });
+    const pack = makeStory({ vocabulary: [], fills: [], questions: [] });
     const quest = createQuest(pack, opts);
     quest.start();
     const c = quest.state.challenge!;
@@ -561,12 +562,13 @@ describe('challenge building', () => {
     expect(() => quest.answer({ kind: 'choice', optionId: 'o1' })).toThrow(/expected an order/);
   });
 
-  it('a single-word sentence cannot be shuffled and is still solvable', () => {
-    const pack = makePack({
+  it('a sentence of one repeated word cannot be shuffled and is still solvable', () => {
+    // StoryInput needs two words per sentence; two equal words give one distinct token text.
+    const pack = makeStory({
       vocabulary: [],
       fills: [],
       questions: [],
-      sentences: [{ id: 's-1', answer: 'Go!', words: ['Go!'] }],
+      sentences: [{ id: 's-1', text: 'Go Go', words: ['Go', 'Go'] }],
     });
     const quest = createQuest(pack, opts);
     playPerfect(quest, pack);
@@ -574,7 +576,7 @@ describe('challenge building', () => {
   });
 
   it('challenge ids are unique per showing and feedback carries the paragraph', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     const all = playPerfect(quest, pack);
     const ids = ofType(all, 'turn').map((t) => t.challenge.challengeId);
@@ -586,7 +588,7 @@ describe('challenge building', () => {
 
 describe('determinism', () => {
   it('the same seed replays the same events; another seed differs', () => {
-    const pack = loadPack('pip-is-brave');
+    const pack = loadStory('pip-is-brave');
     const a = playPerfect(createQuest(pack, { seed: 99, helper: false }), pack);
     const b = playPerfect(createQuest(pack, { seed: 99, helper: false }), pack);
     expect(a).toEqual(b);
@@ -595,7 +597,7 @@ describe('determinism', () => {
   });
 
   it.each(STORY_IDS)('%s: a perfect run and a clumsy run both reach victory', (id) => {
-    const pack = loadPack(id);
+    const pack = loadStory(id);
     const quest = createQuest(pack, { seed: 7, helper: true });
     playPerfect(quest, pack);
     expect(quest.state.phase).toBe('victory');
@@ -619,7 +621,7 @@ describe('determinism', () => {
   });
 
   it('state snapshots are copies: changing one does not change the quest', () => {
-    const pack = makePack();
+    const pack = makeStory();
     const quest = createQuest(pack, opts);
     quest.start();
     const s = quest.state;

@@ -148,6 +148,40 @@ export function createFixedStepLoop<S, C, E>(
   };
 }
 
+/**
+ * A clock another loop drives: a Phaser scene calls `run(time)` from its `update(time)`, a test
+ * calls it by hand. `requestFrame` queues the callback; `run` sets the time and runs the queue,
+ * so the fixed-step loop steps once per host frame and keeps its clamp of `MAX_FRAME_MS`.
+ */
+export interface ManualClock {
+  readonly clock: LoopClock;
+  /** Runs the frames queued since the last call, at `now` milliseconds. */
+  run(now: number): void;
+}
+
+export function createManualClock(start = 0): ManualClock {
+  let now = start;
+  let nextHandle = 1;
+  const queue = new Map<number, () => void>();
+  return {
+    clock: {
+      now: () => now,
+      requestFrame: (callback) => {
+        const handle = nextHandle++;
+        queue.set(handle, callback);
+        return handle;
+      },
+      cancelFrame: (handle) => void queue.delete(handle),
+    },
+    run(at) {
+      now = at;
+      const callbacks = [...queue.values()];
+      queue.clear();
+      for (const callback of callbacks) callback();
+    },
+  };
+}
+
 // ---------------------------------------------------------------- recorder
 
 export interface RecordedCommand<C> {

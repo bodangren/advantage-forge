@@ -5,7 +5,7 @@
  *   node_modules/.bin/vite build --config vite.demo.config.ts      static build in dist-demo/
  *
  * The page lives in demo/ (demo/index.html, demo/public/ for models and stories); its code is in
- * src/demo/. A relative base path lets the build work under any Pages subpath.
+ * src/host/ (demo/main.ts imports it). A relative base path lets the build work under any Pages subpath.
  */
 import { defineConfig } from 'vite';
 import { fileURLToPath } from 'node:url';

@@ -1,19 +1,25 @@
 /**
- * The 3D cartridge boundary (section 2 of docs/apk3d-cartridge.md). A Phaser cartridge in the APK
- * has `createGameConfig`; a 3D cartridge has `createGame`, and the three factory gives it the kit
- * services: stage, HUD, audio, and strings. These types name kit classes, so they live in the
+ * The cartridge boundary (section 2 and the "Dual renderer" section of docs/apk3d-cartridge.md).
+ * A Phaser cartridge in the APK has `createGameConfig`; a 3D cartridge has `createGame`, and the
+ * three factory gives it the kit services: stage, HUD, audio, and strings. One cartridge may have
+ * both; `manifest.renderers` says which. These types name kit classes, so they live in the
  * factory layer, not in `contracts`.
  */
 import type {
   APKDiagnosticInput,
+  APKGameInstance,
+  APKInputController,
   APKSessionMode,
   Cartridge3DManifest,
+  CartridgeGameConfigContext,
   Catalog,
   GameBriefing,
   GameInput,
   GameResults,
   GameTerminalOutcome,
   LayoutRect,
+  RendererId,
+  RuntimeEdition,
   RuntimeEdition3D,
   ScopedI18n,
   StoryGameEvidence,
@@ -94,14 +100,45 @@ export interface Game3DInstance {
   };
 }
 
-export interface ThreeCartridge {
+/**
+ * What a 2D (Phaser) game receives: exactly the APK `CartridgeGameConfigContext`, plus three
+ * optional kit services the APK factory never sets. A view falls back when they are absent: its
+ * own `strings.en.ts` for `i18n`, `SESSION_OPTIONS_DEFAULT` for `options`, no host buttons.
+ * `complete` takes the evidence as a third argument; the APK port adds that parameter.
+ */
+export interface Game2DContext extends Omit<CartridgeGameConfigContext, 'input' | 'complete'> {
+  /** The APK `GameInput`, or the whole story for `inputMode: 'story'` (the port adds it to `GameInput`). */
+  input: GameInput | StoryInput;
+  complete: (result: unknown, outcome?: GameTerminalOutcome, evidence?: StoryGameEvidence) => void;
+  i18n?: ScopedI18n;
+  options?: SessionOptions;
+  host?: HostServices;
+}
+
+/** The `options` a 2D view uses when the APK factory mounts it (no hero choice, no helper). */
+export const SESSION_OPTIONS_DEFAULT: SessionOptions = { helper: false, hero: 'knight', looks: {} };
+
+/**
+ * One cartridge, one or two renderers. `manifest.renderers` lists the renderers; each listed
+ * renderer has its method (`validateCartridge` checks it).
+ */
+export interface Cartridge {
   manifest: Cartridge3DManifest;
   /** The game's English catalog (merged by the host). */
   strings: Catalog;
   /** The start screen, from the game's catalog scope (the APK briefing contract). */
   briefing(i18n: ScopedI18n, input: GameInput | StoryInput): GameBriefing;
-  createGame(context: Game3DContext): Promise<Game3DInstance>;
+  /** The three.js path ('three'). */
+  createGame?(context: Game3DContext): Promise<Game3DInstance>;
+  /** The Phaser path ('phaser'): the APK `RuntimeCartridge.createGameConfig` shape. */
+  createGameConfig?(context: Game2DContext): Readonly<Record<string, unknown>>;
 }
+
+/** A cartridge with the three.js path. */
+export type ThreeCartridge = Cartridge & Required<Pick<Cartridge, 'createGame'>>;
+
+/** A cartridge with the Phaser path. */
+export type PhaserCartridge = Cartridge & Required<Pick<Cartridge, 'createGameConfig'>>;
 
 // ---------------------------------------------------------------- the APK boundary
 
@@ -136,6 +173,8 @@ export interface GateVerdict {
  */
 export interface ThreeFactoryContext {
   container: HTMLElement;
+  /** Ignored by the three factory; present so one options object serves both renderers. */
+  edition2d?: RuntimeEdition;
   /**
    * The page's stage, when the host keeps one renderer for the whole page (the standalone host
    * does: phones limit WebGL contexts). The factory then draws into it, clears it on destroy, and
@@ -154,4 +193,48 @@ export interface ThreeFactoryContext {
   host: HostServices;
   complete(result: GameResults, outcome: GameTerminalOutcome, evidence: StoryGameEvidence): void;
   diagnostic(event: APKDiagnosticInput): void;
+}
+
+/**
+ * The APK `GameFactoryContext` for a Phaser cartridge, with the kit services the standalone host
+ * passes (`i18n`, `options`, `host`); the factory hands them to `createGameConfig` as the optional
+ * `Game2DContext` fields.
+ */
+export interface PhaserFactoryContext {
+  container: HTMLElement;
+  cartridge: PhaserCartridge;
+  input: GameInput | StoryInput;
+  edition: RuntimeEdition;
+  complete(result: unknown, outcome?: GameTerminalOutcome, evidence?: StoryGameEvidence): void;
+  diagnostic(event: APKDiagnosticInput): void;
+  inputController: APKInputController;
+  sessionMode: APKSessionMode;
+  composition?: SupportedResponsiveComposition;
+  seed?: number;
+  listening?: unknown;
+  answerAudio?: unknown;
+  i18n?: ScopedI18n;
+  options?: SessionOptions;
+  host?: HostServices;
+}
+
+/** The Phaser game factory the kit copies from the APK. */
+export type PhaserGameFactory = (context: PhaserFactoryContext) => Promise<APKGameInstance>;
+
+/** One mounted game of either renderer: the APK lifecycle plus `start` and the renderer id. */
+export interface MountedGame {
+  readonly renderer: RendererId;
+  start(): void;
+  pause(): void;
+  resume(): void;
+  resize(width: number, height: number): void;
+  captureResponsiveState(): unknown;
+  restoreResponsiveState(state: unknown): void;
+  recompose(composition: Composition3D): void;
+  setMuted(muted: boolean): void;
+  destroy(): Promise<void>;
+  /** The 3D game, when the renderer is 'three' (the QC driver reads `instance.test`). */
+  readonly three?: MountedThreeGame;
+  /** The Phaser instance, when the renderer is 'phaser'. */
+  readonly phaser?: APKGameInstance;
 }

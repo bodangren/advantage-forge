@@ -12,7 +12,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Potion Rush',
   description: 'Brew every sentence the customers order: drag the words into the cauldrons in order, then serve.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'portrait',

@@ -6,7 +6,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Monster Encounters',
   description: 'Turn-based battles in the Sunken Vault: every hero action needs an answer from the story.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'turn',
   orientation: 'any',

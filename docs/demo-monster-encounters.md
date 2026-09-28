@@ -86,7 +86,7 @@ Stories come from the Primary workbook generator (`../Workbooks/primary/**/NN-Ti
 through `scripts/apk3d-import.ts`, which writes `demo/public/stories/<id>/story.json` as a
 `StoryInput` pack (section 5 of `docs/apk3d-cartridge.md`), WebP images, and
 `demo/public/stories/index.json`. The demo converts a pack with `toStoryPack` in
-`src/demo/core/content.ts`. Besides the two workbook sentences, the importer takes sentences of 3
+`src/apk3d/contracts/story-input.ts` (the old `src/demo/core/content.ts`). Besides the two workbook sentences, the importer takes sentences of 3
 to 8 words from the paragraphs (up to 12 per story, no quotation marks, no duplicates). Chosen
 stories:
 
@@ -104,8 +104,8 @@ stories:
 
 | Path | Owner | Role |
 | --- | --- | --- |
-| `src/demo/core/types.ts` | shared | The contract: story pack, challenges, events, quest API |
-| `src/demo/core/*.ts` | game core | Schema, seeded random, quest rules, class boss |
+| `src/games/monster-encounters/core/types.ts` | shared | The contract: story pack, challenges, events, quest API |
+| `src/games/monster-encounters/core/*.ts` | game core | Quest rules and the `Simulation` wrapper (seeded random in `src/apk3d/sim`, the class boss in `src/host/classBoss.ts`) |
 | `scripts/apk3d-import.ts` | game core | Workbook JSON to `StoryInput` packs and WebP images |
 | `tests/demo/*.test.ts` | game core | Rules and import tests |
 | `src/games/monster-encounters/*` | frontend | The 3D cartridge: manifest, strings, start screen, battle stage, HUD, game loop |

@@ -44,6 +44,11 @@ export interface SpritesRequest {
   readonly outline: OutlineMode;
   /** Empty space around the sprite as a fraction of the frame. */
   readonly margin: number;
+  /**
+   * Fixed pixels per meter (game sprite sets: every asset at one scale). The cell then grows to
+   * fit the asset; without it the asset's rest pose fills `size`.
+   */
+  readonly ppm?: number;
   /** Animate: render this clip as `frames` evenly spaced poses per direction. */
   readonly clip?: string;
   readonly frames?: number;
@@ -413,10 +418,11 @@ async function renderSprites(req: SpritesRequest): Promise<{
   const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
   const R0 = radius(restBox);
   const h0 = Math.max(restBox.max.y, 0.01);
-  const ppm = req.size / spanOf(R0, h0);
+  const ppm = req.ppm ?? req.size / spanOf(R0, h0);
   const R = Math.max(R0, radius(box));
   const h = Math.max(h0, box.max.y);
-  const cellPx = clip ? Math.max(req.size, Math.ceil((spanOf(R, h) * ppm) / 4) * 4) : req.size;
+  const fitted = Math.ceil((spanOf(R, h) * ppm) / 4) * 4;
+  const cellPx = req.ppm ? Math.max(8, fitted) : clip ? Math.max(req.size, fitted) : req.size;
   const span = cellPx / ppm;
   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
   const cam = studio.ortho;

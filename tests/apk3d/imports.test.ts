@@ -27,13 +27,33 @@ const RULES: Record<string, readonly ModuleId[]> = {
   'apk3d/audio': ['apk3d/contracts', 'apk3d/sim', 'three'],
   'apk3d/i18n': ['apk3d/contracts'],
   'apk3d/device': ['apk3d/contracts'],
-  'apk3d/factory': ['apk3d/contracts', 'apk3d/sim', 'apk3d/stage', 'apk3d/hud', 'apk3d/audio', 'apk3d/device', 'apk3d/i18n', 'three'],
-  'apk3d/qc': ['apk3d/contracts', 'apk3d/sim', 'apk3d/stage', 'apk3d/hud', 'apk3d/audio', 'apk3d/device', 'apk3d/i18n', 'three'],
+  'apk3d/view2d': ['apk3d/contracts', 'apk3d/sim'],
+  'apk3d/factory': [
+    'apk3d/contracts',
+    'apk3d/sim',
+    'apk3d/stage',
+    'apk3d/hud',
+    'apk3d/audio',
+    'apk3d/device',
+    'apk3d/i18n',
+    'three',
+    'phaser',
+  ],
+  'apk3d/qc': [
+    'apk3d/contracts',
+    'apk3d/sim',
+    'apk3d/stage',
+    'apk3d/hud',
+    'apk3d/audio',
+    'apk3d/device',
+    'apk3d/i18n',
+    'three',
+  ],
   'games/STAR/core': ['apk3d/contracts', 'apk3d/sim'],
   'games/STAR/manifest': ['apk3d/contracts'],
   'games/STAR/strings': ['apk3d/contracts'],
   'games/STAR/briefing': ['apk3d/contracts'],
-  'games/STAR/view': ['games/self/*', 'apk3d/*', 'three'],
+  'games/STAR/view': ['games/self/*', 'apk3d/*', 'three', 'phaser'],
   'games/STAR/index': ['games/self/*', 'apk3d/*'],
   host: ['apk3d/*', 'three', 'games/STAR/manifest', 'games/STAR/strings', 'dynamic:games/STAR/index'],
 };
@@ -43,11 +63,6 @@ const RULES: Record<string, readonly ModuleId[]> = {
  * violation anywhere else still fails the test.
  */
 const TRANSITIONAL: readonly { file: string; specifier: string; until: string }[] = [
-  {
-    file: 'src/games/monster-encounters/core/index.ts',
-    specifier: '../../../demo/core/index.js',
-    until: 'task 11 moves the Monster Encounters core out of src/demo (a one-line bridge until then)',
-  },
   {
     file: 'src/games/monster-encounters/view/battle-stage.ts',
     specifier: '../../../../scenes/sunken-vault.js',
@@ -73,10 +88,14 @@ export interface ImportUse {
 }
 
 /** `import ... from 'x'`, `export ... from 'x'`, `import 'x'`, and `import('x')`. */
-const IMPORT_LINE = /(?:^|\n)\s*(?:import|export)\b[^'"\n]*?\bfrom\s*['"]([^'"]+)['"]|(?:^|\n)\s*import\s*['"]([^'"]+)['"]|\bimport\(\s*['"]([^'"]+)['"]\s*\)/g;
+const IMPORT_LINE =
+  /(?:^|\n)\s*(?:import|export)\b[^'"\n]*?\bfrom\s*['"]([^'"]+)['"]|(?:^|\n)\s*import\s*['"]([^'"]+)['"]|\bimport\(\s*['"]([^'"]+)['"]\s*\)/g;
 
 export function importsOf(source: string): ImportUse[] {
-  return [...source.matchAll(IMPORT_LINE)].map((m) => ({ specifier: (m[1] ?? m[2] ?? m[3])!, dynamic: m[3] !== undefined }));
+  return [...source.matchAll(IMPORT_LINE)].map((m) => ({
+    specifier: (m[1] ?? m[2] ?? m[3])!,
+    dynamic: m[3] !== undefined,
+  }));
 }
 
 /** The module id of a source file under src/. */
@@ -98,10 +117,15 @@ export function moduleOf(file: string): ModuleId {
 }
 
 /** The module id of an import specifier seen from `file`. */
-export function targetOf(file: string, specifier: string): { kind: 'css' | 'library' | 'module'; id: ModuleId } {
+export function targetOf(
+  file: string,
+  specifier: string,
+): { kind: 'css' | 'library' | 'module'; id: ModuleId } {
   if (/\.css$/.test(specifier)) return { kind: 'css', id: specifier };
   if (!specifier.startsWith('.')) {
-    const name = specifier.startsWith('@') ? specifier.split('/').slice(0, 2).join('/') : specifier.split('/')[0]!;
+    const name = specifier.startsWith('@')
+      ? specifier.split('/').slice(0, 2).join('/')
+      : specifier.split('/')[0]!;
     return { kind: 'library', id: name };
   }
   const target = resolve(dirname(file), specifier).replace(/\.js$/, '.ts');
@@ -117,9 +141,13 @@ export function allowed(source: ModuleId, target: ModuleId, dynamic = false): bo
   return rule.some((entry) => {
     const dynamicOnly = entry.startsWith('dynamic:');
     if (dynamicOnly && !dynamic) return false;
-    const pattern = (dynamicOnly ? entry.slice('dynamic:'.length) : entry).replace('games/self/', `games/${game}/`);
+    const pattern = (dynamicOnly ? entry.slice('dynamic:'.length) : entry).replace(
+      'games/self/',
+      `games/${game}/`,
+    );
     if (pattern.endsWith('/*')) return target.startsWith(pattern.slice(0, -1));
-    if (pattern.startsWith('games/STAR/')) return /^games\/[^/]+\//.test(target) && target.endsWith(pattern.slice('games/STAR'.length));
+    if (pattern.startsWith('games/STAR/'))
+      return /^games\/[^/]+\//.test(target) && target.endsWith(pattern.slice('games/STAR'.length));
     return target === pattern;
   });
 }
@@ -141,7 +169,9 @@ describe('import rules', () => {
         if (target.kind === 'css') continue;
         if (TRANSITIONAL.some((t) => t.file === path && t.specifier === specifier)) continue;
         if (!allowed(source, target.id, dynamic)) {
-          problems.push(`${path} (${source}) imports '${specifier}' (${target.id}${dynamic ? ', dynamic' : ''})`);
+          problems.push(
+            `${path} (${source}) imports '${specifier}' (${target.id}${dynamic ? ', dynamic' : ''})`,
+          );
         }
       }
     }
@@ -159,12 +189,25 @@ describe('import rules', () => {
     expect(moduleOf(at('games/potion-rush/strings.en.ts'))).toBe('games/potion-rush/strings');
     expect(moduleOf(at('games/potion-rush/index.ts'))).toBe('games/potion-rush/index');
     expect(moduleOf(at('host/selector.ts'))).toBe('host');
-    expect(targetOf(at('apk3d/hud/root.ts'), '../stage/stage.js')).toEqual({ kind: 'module', id: 'apk3d/stage' });
+    expect(targetOf(at('apk3d/hud/root.ts'), '../stage/stage.js')).toEqual({
+      kind: 'module',
+      id: 'apk3d/stage',
+    });
     expect(targetOf(at('apk3d/hud/root.ts'), './hud.css')).toEqual({ kind: 'css', id: './hud.css' });
-    expect(targetOf(at('host/registry.ts'), '../games/potion-rush/manifest.js')).toEqual({ kind: 'module', id: 'games/potion-rush/manifest' });
-    expect(targetOf(at('apk3d/stage/loader.ts'), 'three/addons/loaders/GLTFLoader.js')).toEqual({ kind: 'library', id: 'three' });
+    expect(targetOf(at('host/registry.ts'), '../games/potion-rush/manifest.js')).toEqual({
+      kind: 'module',
+      id: 'games/potion-rush/manifest',
+    });
+    expect(targetOf(at('apk3d/stage/loader.ts'), 'three/addons/loaders/GLTFLoader.js')).toEqual({
+      kind: 'library',
+      id: 'three',
+    });
     expect(targetOf(at('apk3d/contracts/apk.ts'), 'zod')).toEqual({ kind: 'library', id: 'zod' });
-    expect(importsOf(`import { z } from 'zod';\nimport './x.css';\nexport * from './y.js';\nconst m = await import('./z.js');`)).toEqual([
+    expect(
+      importsOf(
+        `import { z } from 'zod';\nimport './x.css';\nexport * from './y.js';\nconst m = await import('./z.js');`,
+      ),
+    ).toEqual([
       { specifier: 'zod', dynamic: false },
       { specifier: './x.css', dynamic: false },
       { specifier: './y.js', dynamic: false },
@@ -188,7 +231,7 @@ describe('import rules', () => {
     // Games.
     expect(allowed('games/potion-rush/core', 'apk3d/sim')).toBe(true);
     expect(allowed('games/potion-rush/core', 'apk3d/stage')).toBe(false);
-    expect(allowed('games/potion-rush/core', 'demo/core')).toBe(false);
+    expect(allowed('games/potion-rush/core', 'host')).toBe(false);
     expect(allowed('games/potion-rush/manifest', 'apk3d/contracts')).toBe(true);
     expect(allowed('games/potion-rush/manifest', 'apk3d/stage')).toBe(false);
     expect(allowed('games/potion-rush/strings', 'apk3d/contracts')).toBe(true);
@@ -212,6 +255,6 @@ describe('import rules', () => {
     expect(allowed('host', 'games/potion-rush/index', true)).toBe(true);
     expect(allowed('host', 'games/potion-rush/view', true)).toBe(false);
     expect(allowed('host', 'games/potion-rush/core')).toBe(false);
-    expect(allowed('host', 'demo/core')).toBe(false);
+    expect(allowed('host', 'games/potion-rush/core')).toBe(false);
   });
 });

@@ -2,7 +2,9 @@
  * Model assets (section 7 of docs/apk3d-cartridge.md): a GLB file entry, a pack manifest
  * (`demo/public/packs/<pack>/pack.json`, written by scripts/apk3d-models.ts), and the 3D
  * edition that maps semantic binding keys to pack files. The pack is the APK `AssetPackManifest`
- * shape with a new asset kind `'model'` and a `format: 'glb'` branch.
+ * shape with a new asset kind `'model'` and a `format: 'glb'` branch. It carries no hash field:
+ * the monorepo hashing policy forbids a new hash on a new kind; `provenance.forgeCommit` is the
+ * identity of a file, and the loader caches by pack id, version, and path.
  */
 import { z } from 'zod';
 import { semanticAssetKeySchema } from './apk.js';
@@ -12,8 +14,6 @@ export const MODEL_LICENSE = 'AGPL-3.0-or-later';
 
 /** The tool that writes pack manifests; provenance names it so a hand-edited pack is visible. */
 export const MODEL_PACK_TOOL = 'scripts/apk3d-models.ts';
-
-const sha256 = z.string().regex(/^[0-9a-f]{64}$/, 'sha256 must be 64 lowercase hex digits');
 
 export const modelProvenanceSchema = z
   .object({
@@ -34,7 +34,6 @@ export const modelAssetFileSchema = z
     kind: z.literal('model'),
     format: z.literal('glb'),
     byteSize: z.number().int().nonnegative(),
-    sha256,
     triangles: z.number().int().nonnegative(),
     /** Atlas edge in pixels; 0 for vertex colors only. */
     textureSize: z.number().int().nonnegative(),

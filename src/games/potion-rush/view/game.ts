@@ -45,7 +45,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const t = ctx.i18n.scope('hud').t;
   const hero = ctx.options.hero || 'wizard';
   await stage.loader.preload([...SHOP_MODELS, hero].map(model));
-  const shop = buildShop(stage, hero);
+  const built = buildShop(stage, hero);
+  const shop = { ...built, alchemist: built.alchemist! };
   const look = ctx.options.looks[hero];
   if (look && look !== 'default') void stage.loader.texture(`models/${hero}/${look}.webp`).then((tex) => shop.alchemist.setMap(tex)).catch(() => undefined);
   /** The teal brew of an idle cauldron. */

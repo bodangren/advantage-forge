@@ -1,14 +1,16 @@
 /**
- * The quest: four encounters in the Sunken Vault, one challenge per hero turn, built from a story
- * pack. Pure rules on a seeded state: no DOM, no clock, no Math.random. The rules are written up in
+ * The quest: four encounters in the Sunken Vault, one challenge per hero turn, built from a
+ * `StoryInput`. Pure rules on a seeded state: no DOM, no clock, no Math.random. The rules are written up in
  * docs/demo-monster-encounters.md; the comments here point at the rule each block implements.
+ * `sim.ts` wraps the quest in the kit `Simulation` shape; the view uses that.
  *
  * Event order per answer (the frontend animates them in this order):
  *   correct: answer, heroAttack, enemyHit, [enemyDefeated], [heal (Cleric)], xp,
  *            then either turn, or encounterCleared, xp, (encounterStart, turn | xp, victory)
  *   wrong:   answer, heroMiss, enemyAttack, [rest], turn
  */
-import { createRng, type Rng } from './rng.js';
+import { createRng, type Rng } from '../../../apk3d/sim/index.js';
+import type { StoryInput } from '../../../apk3d/contracts/index.js';
 import type {
   Challenge,
   ChallengeKind,
@@ -26,7 +28,6 @@ import type {
   QuestResults,
   QuestState,
   Response,
-  StoryPack,
 } from './types.js';
 
 // ---------------------------------------------------------------- constants
@@ -70,7 +71,7 @@ interface Place {
   name: string;
   kind: ChallengeKind;
   scene: string;
-  enemies: (pack: StoryPack) => { kind: EnemyKind; name: string; hp: number }[];
+  enemies: (pack: StoryInput) => { kind: EnemyKind; name: string; hp: number }[];
 }
 
 const PLACES: readonly Place[] = [
@@ -162,38 +163,40 @@ function judgeChoice(options: readonly ChoiceOption[], isCorrect: (text: string)
   };
 }
 
-function wordItems(pack: StoryPack): Item[] {
+function wordItems(pack: StoryInput): Item[] {
   return pack.vocabulary.map((w) => ({
     id: w.id,
     kind: 'word',
-    label: w.word,
-    correctText: w.th,
-    explanation: `"${w.word}" means ${w.th}: ${w.definition}`,
+    label: w.term,
+    correctText: w.translation,
+    explanation: `"${w.term}" means ${w.translation}: ${w.definition}`,
     build(rng, helper, challengeId, retry) {
       // Distractors: other words' Thai meanings, never the same text twice.
       const pool = distinct(
-        pack.vocabulary.filter((o) => o.id !== w.id && o.th !== w.th).map((o) => o.th),
+        pack.vocabulary
+          .filter((o) => o.id !== w.id && o.translation !== w.translation)
+          .map((o) => o.translation),
         (a, b) => a === b,
       );
-      const options = choiceOptions(rng, w.th, pool, helper ? 3 : 4);
+      const options = choiceOptions(rng, w.translation, pool, helper ? 3 : 4);
       const hint = helper ? w.definition : w.phonetic;
       return {
         challenge: {
           kind: 'word',
           itemId: w.id,
           challengeId,
-          prompt: w.word,
+          prompt: w.term,
           ...(hint ? { hint } : {}),
           options,
           retry,
         },
-        judge: judgeChoice(options, (text) => text === w.th),
+        judge: judgeChoice(options, (text) => text === w.translation),
       };
     },
   }));
 }
 
-function fillItems(pack: StoryPack): Item[] {
+function fillItems(pack: StoryInput): Item[] {
   return pack.fills.map((f) => {
     const filled = f.sentence.replace('___', f.answer);
     const same = (a: string, b: string) => lower(a) === lower(b);
@@ -209,7 +212,7 @@ function fillItems(pack: StoryPack): Item[] {
         const pool = distinct(
           [
             ...pack.fills.filter((o) => o.id !== f.id).map((o) => o.answer),
-            ...pack.vocabulary.map((w) => w.word),
+            ...pack.vocabulary.map((w) => w.term),
           ].filter((t) => !same(t, f.answer)),
           same,
         );
@@ -223,7 +226,7 @@ function fillItems(pack: StoryPack): Item[] {
   });
 }
 
-function questionItems(pack: StoryPack): Item[] {
+function questionItems(pack: StoryInput): Item[] {
   return pack.questions.map((q) => {
     const answer = q.options[q.answer]!;
     return {
@@ -258,13 +261,13 @@ function shuffleTokens(rng: Rng, words: readonly string[]): string[] {
   return [...words.slice(1), words[0]!];
 }
 
-function sentenceItems(pack: StoryPack): Item[] {
+function sentenceItems(pack: StoryInput): Item[] {
   return pack.sentences.map((s) => ({
     id: s.id,
     kind: 'sentence',
-    label: s.answer,
-    correctText: s.answer,
-    explanation: `The sentence is "${s.answer}". Tap the words in this order.`,
+    label: s.text,
+    correctText: s.text,
+    explanation: `The sentence is "${s.text}". Tap the words in this order.`,
     ...(s.paragraph !== undefined ? { paragraph: s.paragraph } : {}),
     build(rng, _helper, challengeId, retry) {
       const tokens = shuffleTokens(rng, s.words).map((text, i) => ({ id: `t${i + 1}`, text }));
@@ -309,7 +312,7 @@ export function resolveKind(wanted: ChallengeKind, counts: Record<ChallengeKind,
   throw new Error('the story has no items to build a quest from');
 }
 
-function buildEncounters(pack: StoryPack): Encounter[] {
+function buildEncounters(pack: StoryInput): Encounter[] {
   const byKind: Record<ChallengeKind, Item[]> = {
     word: wordItems(pack),
     fill: fillItems(pack),
@@ -372,7 +375,7 @@ interface Evidence {
   wrongEver: boolean;
 }
 
-export function createQuest(pack: StoryPack, options: QuestOptions): Quest {
+export function createQuest(pack: StoryInput, options: QuestOptions): Quest {
   const rng = createRng(options.seed);
   const encounters = buildEncounters(pack);
 

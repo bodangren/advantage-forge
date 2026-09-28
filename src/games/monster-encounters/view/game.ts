@@ -3,9 +3,22 @@
  * event in order on the battle stage and the HUD, asks the student, and reports the run once to
  * the host (results, outcome, evidence).
  */
-import { practiceOf, toGameResults, type StoryGameEvidence, type StoryInput } from '../../../apk3d/contracts/index.js';
+import {
+  practiceOf,
+  toGameResults,
+  type StoryGameEvidence,
+  type StoryInput,
+} from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
-import { createQuest, toStoryPack, type Challenge, type GameEvent, type HeroId, type Quest, type QuestResults, type Response } from '../core/index.js';
+import {
+  createMonsterEncounters,
+  type Challenge,
+  type GameEvent,
+  type HeroId,
+  type MonsterEncountersSim,
+  type QuestResults,
+  type Response,
+} from '../core/index.js';
 import { BattleStage } from './battle-stage.js';
 import { BattleHud } from './hud.js';
 
@@ -14,7 +27,6 @@ const PRESET_HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   if (Array.isArray(ctx.input)) throw new Error('Monster Encounters needs a story input.');
   const story: StoryInput = ctx.input;
-  const pack = toStoryPack(story);
   const stage = new BattleStage(ctx.stage);
   const hud = new BattleHud(ctx.hud, stage, ctx.i18n, ctx.audio, ctx.host);
   const portrait = (): boolean => ctx.composition.profile === 'compact';
@@ -25,7 +37,11 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   }
   stage.setLayout(portrait());
   stage.setFreeArea(true);
-  const quest: Quest = createQuest(pack, { seed: ctx.seed, helper: ctx.options.helper });
+  // The core: `quest.state` is the snapshot the HUD reads; commands go through `dispatch`.
+  const quest: MonsterEncountersSim = createMonsterEncounters(story, {
+    seed: ctx.seed,
+    helper: ctx.options.helper,
+  });
   const startedAt = performance.now();
   let score = 0;
   let destroyed = false;
@@ -35,7 +51,15 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     const items = r.items.map((i) => {
       const source = [...story.sentences, ...story.fills, ...story.questions].find((x) => x.id === i.itemId);
       const paragraph = source && 'paragraph' in source ? source.paragraph : undefined;
-      return { itemId: i.itemId, itemKind: i.kind, label: i.label, attempts: Math.max(1, i.attempts), correctFirstTry: i.correctFirstTry, solved: i.solved, ...(paragraph !== undefined ? { paragraph } : {}) };
+      return {
+        itemId: i.itemId,
+        itemKind: i.kind,
+        label: i.label,
+        attempts: Math.max(1, i.attempts),
+        correctFirstTry: i.correctFirstTry,
+        solved: i.solved,
+        ...(paragraph !== undefined ? { paragraph } : {}),
+      };
     });
     const evidence: StoryGameEvidence = {
       schemaVersion: 1,
@@ -83,7 +107,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
           active = ev.hero;
           challenge = ev.challenge;
           response = await hud.ask(ev.hero, ev.challenge);
-          queue.push(...quest.answer(response));
+          queue.push(...quest.dispatch({ type: 'answer', response }));
           break;
         case 'answer':
           await hud.answer(ev.feedback, response, challenge);
@@ -146,7 +170,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   }
 
   return {
-    start: () => void run(quest.start()),
+    start: () => void run(quest.dispatch({ type: 'start' })),
     pause: () => undefined,
     resume: () => undefined,
     resize: () => undefined,
@@ -164,7 +188,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     },
     test: {
       state: () => quest.state,
-      dispatch: () => undefined,
+      dispatch: (command) => void quest.dispatch(command as never),
       tick: () => undefined,
     },
   };

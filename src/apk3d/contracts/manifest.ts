@@ -1,7 +1,7 @@
 /**
  * Cartridge3DManifest: the APK `runtimeCartridgeManifestSchema` plus the additive 3D fields
- * (section 2.1 of docs/apk3d-cartridge.md). The APK validator keeps its fields; a Phaser host
- * that reads only the base fields still accepts a 3D manifest.
+ * (section 2.1 of docs/apk3d-cartridge.md) and `renderers` (the "Dual renderer" section). The APK
+ * validator keeps its fields; a Phaser host that reads only the base fields still accepts it.
  */
 import { z } from 'zod';
 import { APK_RUNTIME_API_VERSION, runtimeCartridgeManifestSchema, semanticAssetKeySchema } from './apk.js';
@@ -39,9 +39,22 @@ export const storyNeedsSchema = z
   })
   .strict();
 
+/** The renderers a cartridge can expose: `createGame` (three.js) and `createGameConfig` (Phaser). */
+export const rendererIdSchema = z.enum(['three', 'phaser']);
+
+export type RendererId = z.infer<typeof rendererIdSchema>;
+
 export const cartridge3DManifestSchema = runtimeCartridgeManifestSchema.extend({
-  /** Phaser cartridges: absent or 'phaser'. The host picks the factory by this field. */
-  renderer: z.literal('three'),
+  /**
+   * The renderers this cartridge implements, each backed by its method on the cartridge
+   * (`createGame` for 'three', `createGameConfig` for 'phaser'); the host picks one with
+   * `selectRenderer` (the device gate, then a player setting). A plain APK cartridge has no
+   * field: it is 'phaser' only.
+   */
+  renderers: z
+    .array(rendererIdSchema)
+    .min(1)
+    .refine((ids) => new Set(ids).size === ids.length, { message: 'renderers must be unique' }),
   /** 'story' = the whole StoryInput (section 5); the other two are the APK derived arrays. */
   inputMode: z.enum(['vocabulary', 'sentence', 'story']),
   /** Both run on the fixed step (section 10); a turn game returns no events from `tick`. */
@@ -65,6 +78,13 @@ export const cartridge3DManifestSchema = runtimeCartridgeManifestSchema.extend({
 });
 
 export type Cartridge3DManifest = z.infer<typeof cartridge3DManifestSchema>;
+
+/** The same manifest under the name the dual-renderer kit uses. */
+export type CartridgeManifest = Cartridge3DManifest;
+
+/** True when the manifest lists the renderer. */
+export const hasRenderer = (manifest: Pick<CartridgeManifest, 'renderers'>, renderer: RendererId): boolean =>
+  manifest.renderers.includes(renderer);
 
 /** The runtime API version a 3D manifest declares (the APK constant). */
 export const CARTRIDGE_3D_RUNTIME_API_VERSION = APK_RUNTIME_API_VERSION;

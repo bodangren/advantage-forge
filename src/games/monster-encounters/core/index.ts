@@ -1,5 +1,13 @@
-/**
- * Temporary bridge: the Monster Encounters rules still live in `src/demo/core` until task 11 of
- * docs/apk3d-cartridge.md moves them here as a `Simulation`. Only this file reaches outside.
- */
-export * from '../../../demo/core/index.js';
+/** Public API of the Monster Encounters game core (renderer-free). */
+export type * from './types.js';
+export {
+  createQuest,
+  resolveKind,
+  PARTY,
+  MAX_COURAGE,
+  REST_COURAGE,
+  HERO_DAMAGE,
+  XP,
+  XP_REASON,
+} from './quest.js';
+export { createMonsterEncounters, type MonsterEncountersCommand, type MonsterEncountersSim } from './sim.js';

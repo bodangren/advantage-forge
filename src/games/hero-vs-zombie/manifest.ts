@@ -12,7 +12,7 @@ export const manifest = validateCartridge3DManifest({
   title: 'Hero vs. Zombie',
   description: 'Run to the orb with the meaning of the story word, charge your Blast, and knock the churchyard zombies flat until dawn.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderer: 'three',
+  renderers: ['three'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',
