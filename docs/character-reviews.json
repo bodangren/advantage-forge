@@ -1726,5 +1726,37 @@
       "Move the fur toward the left shoulder and enlarge the boot cuffs."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "bard": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the rogue base (knee bones, eight clips): a young bard with curly brown hair, a wide teal cap with a gold badge and a big red plume, a teal doublet with gold buttons, puffed sleeves and gold cuffs, a short dark cape, and a ribbed wooden lute held across the body. The attack is a strum that sends a glowing gold note; attack2 swings the lute; victory strums and hops. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The cap with the red plume and the lute read as a bard at a glance and at 128 px.",
+      "The glowing note gives the attack a clear read without a weapon.",
+      "Hair, eye, skin, and clothing variants with three presets: troubadour, minstrel, wanderer."
+    ],
+    "issues": [
+      "61,684 triangles; the lute strings alone are 11k.",
+      "The cap brim is flat like a sun hat; the mockup brim turns up at the front.",
+      "The cape is short and narrow; the mockup cape flares wide and nearly reaches the ground."
+    ],
+    "next": [
+      "Cap the string triangles.",
+      "Turn up the front of the brim and lengthen the cape."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
