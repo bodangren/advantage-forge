@@ -1535,5 +1535,37 @@
       "Add sharper plates and a helmet-like brow."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "death-knight": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the skeleton-knight base (knee bones, seven clips): a closed black horned helmet with glowing icy-blue visor eyes, black spiked plate with a cold sheen, a purple knit layer and scarf, a tattered purple cape to the ground, and a broad black greatsword with five glowing rune glyphs. The attack is a two-handed overhead chop. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The horns, visor eyes, and runed greatsword read as a death knight at a glance and at 128 px.",
+      "The overhead chop is clear and the sword never touches the head or horns.",
+      "Cloth and glow variants with three presets: nightfall, bloodsworn, plaguebound."
+    ],
+    "issues": [
+      "The mockup shows a grey face with big round eyes under an open helmet; this helmet is closed with a slit, as asked.",
+      "The helmet is taller and egg-shaped, without cheek guards.",
+      "In the chop the forearms go up to 6 cm into the breastplate (short chibi arms)."
+    ],
+    "next": [
+      "Add cheek guards and lower the helmet crown.",
+      "Widen the cape at the front sides."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
