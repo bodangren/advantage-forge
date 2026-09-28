@@ -1,120 +1,87 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — blacksmith anvil (props/craft-and-trade/anvil).
- *
- * Role: hero tool of the blacksmith shop set (forge, quench-tub, grinding-wheel,
- *   bellows); must read at 128 px as "anvil" from silhouette alone.
- * Size: 0.57 m long with the horn, 0.2 m wide, 0.35 m tall, stands on y = 0,
- *   horn pointing +X, face level with a workbench.
- * One idea: a heavy dark-iron body that pinches to a narrow waist and flares
- *   into four splayed feet, crowned by a bright worn face and one long,
- *   slightly drooping polished horn.
- * Shape language: square dominant (face, heel, waist, feet), one strong
- *   triangle/round secondary (the tapered horn breaking the outline).
- * Palette: iron #4a4f55 (dominant), shadow #363a3f (waist, feet, underside),
- *   worn face #a8acb1 (focal accent on the top face and horn).
- * Materials: one worn cast-iron body (roughness 0.5, metalness 0.7), hammered
- *   texture in tiny `bump` only.
- * Detail: primary face slab + horn + heel; secondary waist + four splayed feet;
- *   tertiary hardy hole (square) and pritchel hole (round) cut through the
- *   face, edge wear and mottling on the top. Focal point: bright face vs dark
- *   body.
- * Rig/animation: none (static prop).
+ * Anvil on a stump (props/blacksmith/anvil), the focal prop of the blacksmith shop
+ * (docs/blacksmith-mockups/blacksmith-quest_001.jpg). Size: 0.62 m long, 0.5 m tall, on y = 0.
+ * One idea: a classic waisted anvil (wide feet, narrow waist, flat face, long tapered horn,
+ * square heel with a hardy hole) sitting on a thick banded tree stump.
+ * Palette: iron #3d4148 / edge #5a5f67, polished face #9aa0a8, stump #7a5234 / bark #4e3320 /
+ * end grain #b08a5a, band #2f3236. Materials: iron (0.45, metal 0.8), wood (0.85).
  */
 
-const IRON = rgb('#4a4f55');
-const IRON_DARK = rgb('#363a3f');
-const IRON_WORN = rgb('#a8acb1');
+const IRON = rgb('#3d4148');
+const IRON_EDGE = rgb('#5a5f67');
+const FACE = rgb('#9aa0a8');
+const WOOD = rgb('#7a5234');
+const BARK = rgb('#4e3320');
+const END = rgb('#b08a5a');
 
-const ss = (a: number, b: number, v: number) => {
-  const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
-  return t * t * (3 - 2 * t);
-};
+const STUMP_H = 0.26;
+const clamp = (v: number, lo = 0, hi = 1) => (v < lo ? lo : v > hi ? hi : v);
+const ground = (s: ReturnType<typeof sdf.sphere>) =>
+  s.intersect(sdf.halfSpace([0, -1, 0], 0).intersect(sdf.box([2, 2, 2]).at(0, 0.8, 0)));
 
 export default defineAsset({
   name: 'anvil',
-  description:
-    'Classic blacksmith anvil: dark iron body with a narrow waist, four splayed feet, a long tapered horn, a square heel, a hardy hole and a pritchel hole, and a bright worn face.',
-  detail: 0.005,
+  description: 'A classic waisted iron anvil with a long horn and a polished face, on a thick banded tree stump.',
+  detail: 0.006,
   reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------- main mass
-    // Face slab + square heel: one rounded block, top at y = 0.35.
-    const face = sdf.box([0.4, 0.035, 0.2], 0.008).at(-0.06, 0.3325, 0);
-    // Horn: long cone sweeping out and slightly down from the face end to a
-    // point (~0.19 m of reach past the face center line).
-    const horn = sdf.cone([0.125, 0.31, 0], [0.315, 0.289, 0], 0.046, 0.004);
-    // Waist: clearly narrower block under the face.
-    const waist = sdf.box([0.25, 0.15, 0.088], 0.01).at(-0.05, 0.235, 0);
-    // Four splayed feet: tapered cones flaring out from the waist corners.
-    const leg = (tx: number, tz: number) =>
-      sdf.cone(
-        [tx, 0.17, tz * 0.032],
-        [tx + Math.sign(tx) * 0.055, 0.004, tz * 0.082],
-        0.05,
-        0.057,
-      );
-    const legs = sdf.union(
-      leg(-0.155, 1),
-      leg(-0.155, -1),
-      leg(0.055, 1),
-      leg(0.055, -1),
+    // Stump: a thick log with a slightly flared foot and bark ridges.
+    const stump = sdf
+      .smoothUnion(
+        0.04,
+        sdf.cylinder(0.19, STUMP_H, 0.015).at(0, STUMP_H / 2, 0),
+        sdf.cylinder(0.215, 0.05, 0.02).at(0, 0.025, 0),
+      )
+      .displace(0.004, (x, y, z) => Math.pow(0.5 + 0.5 * Math.cos(Math.atan2(z, x) * 22 + noise.noise3(x * 8, y * 3, z * 8) * 2), 3));
+    k.body(
+      'stump',
+      ground(stump).paintFn((x, y, z) => {
+        const r = Math.hypot(x, z);
+        const n = 0.5 + 0.5 * noise.fbm(x * 20, y * 5, z * 20, 2);
+        if (y > STUMP_H - 0.004 && r < 0.18) return mixRgb(END, WOOD, 0.4 * Math.pow(0.5 + 0.5 * Math.sin(r * 160), 2));
+        return mixRgb(WOOD, BARK, 0.3 + 0.5 * n);
+      }),
+      { color: '#7a5234', roughness: 0.85, metalness: 0, detail: 0.008 },
     );
+    // Two iron bands around the stump.
+    const bands = sdf.union(
+      ...[0.06, STUMP_H - 0.05].map((y) => sdf.cylinder(0.197, 0.028, 0.006).at(0, y, 0).subtract(sdf.cylinder(0.17, 0.1, 0).at(0, y, 0))),
+    );
+    k.body('bands', bands, { color: '#2f3236', roughness: 0.5, metalness: 0.7, detail: 0.005 });
 
-    const mass = face
-      .smoothUnion(0.018, horn)
-      .smoothUnion(0.02, waist)
-      .smoothUnion(0.02, legs)
-      // Flat cut at the ground plane so all four feet sit perfectly.
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
-
-    // ------------------------------------------------------------- face holes
-    // Hardy hole (square, near the horn) and pritchel hole (round, near the
-    // heel), cut through the face slab.
-    const hardy = sdf.box([0.028, 0.05, 0.028], 0.002).at(0.03, 0.35, 0);
-    const pritchel = sdf.cylinder(0.011, 0.05).at(-0.19, 0.35, 0);
-    const iron = mass.subtract(hardy, pritchel);
-
-    // ------------------------------------------------------------- paint
-    const paint = (x: number, y: number, z: number) => {
-      const patch = 0.5 + 0.5 * noise.fbm(x * 9 + 3, y * 9, z * 9, 2);
-      let c = mixRgb(IRON, IRON_DARK, 0.1 + 0.22 * patch);
-
-      // Shadow under the face overhang and down the waist.
-      const under = ss(0.318, 0.3, y) * ss(0.17, 0.24, y);
-      c = mixRgb(c, IRON_DARK, 0.5 * under);
-
-      // Damp dark feet.
-      const low = 1 - ss(0.02, 0.1, y);
-      c = mixRgb(c, IRON_DARK, 0.55 * low);
-
-      // Worn bright top face (focal point), mottled by use. The threshold
-      // reaches just past the top edge bevel so the face reads bright from
-      // the front and side views too.
-      const topY = ss(0.334, 0.342, y);
-      const faceX = ss(-0.275, -0.255, x) * (1 - ss(0.13, 0.15, x));
-      const faceZ = 1 - ss(0.08, 0.1, Math.abs(z));
-      const mottle = 0.5 + 0.5 * noise.fbm(x * 26, 1, z * 26, 2);
-      c = mixRgb(c, IRON_WORN, topY * faceX * faceZ * (0.82 + 0.18 * mottle));
-
-      // Polished horn, lighter than the body but not as bright as the face.
-      const hornMask = ss(0.1, 0.16, x) * ss(0.265, 0.295, y);
-      c = mixRgb(c, mixRgb(IRON, IRON_WORN, 0.5), 0.85 * hornMask);
-
-      return c;
-    };
-
-    k.body('iron', iron.paintFn(paint), {
-      color: '#4a4f55',
-      roughness: 0.5,
-      metalness: 0.7,
+    // Anvil: feet, waist, and body blended into a waisted block, then the horn and heel.
+    const Y = STUMP_H;
+    const feet = sdf.box([0.34, 0.05, 0.24], 0.015).at(0, Y + 0.025, 0);
+    const waist = sdf.box([0.16, 0.08, 0.1], 0.02).at(0, Y + 0.09, 0);
+    const body = sdf.box([0.4, 0.075, 0.16], 0.012).at(-0.01, Y + 0.165, 0);
+    const horn = sdf
+      .cone([0.17, Y + 0.17, 0], [0.33, Y + 0.155, 0], 0.052, 0.01)
+      .intersect(sdf.halfSpace([0, 1, 0], Y + 0.2));
+    const heel = sdf.box([0.08, 0.06, 0.12], 0.01).at(-0.235, Y + 0.172, 0);
+    const hardy = sdf.box([0.024, 0.08, 0.024]).at(-0.2, Y + 0.2, 0);
+    const anvil = sdf
+      .smoothUnion(0.045, feet, waist)
+      .smoothUnion(0.035, body)
+      .smoothUnion(0.02, horn, heel)
+      .subtract(hardy)
+      .paintFn((x, y, z) => {
+        const n = 0.5 + 0.5 * noise.fbm(x * 40, y * 40, z * 40, 2);
+        let c = mixRgb(IRON, IRON_EDGE, 0.35 * n);
+        // Polished working face on top.
+        c = mixRgb(c, FACE, clamp((y - (Y + 0.195)) / 0.006) * (0.7 + 0.3 * n));
+        return c;
+      });
+    k.body('anvil', anvil, {
+      color: '#3d4148',
+      roughness: 0.45,
+      metalness: 0.8,
       detail: 0.005,
       paintWeight: 2,
-      bump: (x, y, z) => 0.0005 * noise.fbm(x * 46, y * 46, z * 46, 2),
-      maxTriangles: 3900,
+      bump: (x, y, z) => 0.0008 * noise.fbm(x * 50, y * 50, z * 50, 2),
     });
   },
 });
