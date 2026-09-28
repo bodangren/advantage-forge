@@ -341,15 +341,15 @@ export default defineAsset({
       .paintFn((_x, y, _z, _base): Rgb => {
         // hot core near the base, bright tips near the top
         const t = clamp01((y - flameBaseY) / 0.21);
-        return mixRgb(FLAME_HOT, FLAME, t);
+        return mixRgb(rgb('#6a3a0a'), rgb('#4a1405'), t);
       });
     k.body('flame', flameShape, {
       // Dark base color per the emissive rule so studio light does not wash the glow.
       color: '#4a1405',
       roughness: 0.3,
       metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 2.4,
+      emissive: '#ff6a12',
+      emissiveIntensity: 1.7,
       detail: 0.006,
       maxTriangles: 420,
       paintWeight: 3,
