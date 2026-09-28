@@ -63,7 +63,7 @@ export default defineAsset({
     // Iron: spikes out of the four sides and the four upper corners, round studs below.
     const spike = (dir: [number, number, number], at: [number, number, number], len: number) => {
       const n = Math.hypot(...dir);
-      const d = dir.map((v) => v / n);
+      const d: [number, number, number] = [dir[0] / n, dir[1] / n, dir[2] / n];
       return sdf.cone(at, [at[0] + d[0] * len, at[1] + d[1] * len, at[2] + d[2] * len], 0.02, 0.003);
     };
     const iron = [];

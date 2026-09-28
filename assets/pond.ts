@@ -71,7 +71,7 @@ export default defineAsset({
       const x = Math.cos(t) * (A + 0.08);
       const z = Math.sin(t) * (B + 0.08);
       const yaw = (-t * 180) / Math.PI + 90 + 30 * (noise.random(i, 3, 0, 5) - 0.5);
-      const color = STONE_COLORS[Math.floor(noise.random(i, 4, 0, 5) * STONE_COLORS.length)];
+      const color = STONE_COLORS[Math.floor(noise.random(i, 4, 0, 5) * STONE_COLORS.length)]!;
       stones.push(
         sdf
           .ellipsoid([r * 1.25, r * (0.75 + 0.3 * noise.random(i, 6, 0, 5)), r])

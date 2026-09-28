@@ -51,7 +51,7 @@ export default defineAsset({
       const a = Math.atan2(z, x);
       const rho = Math.hypot(x, z);
       const iy = Math.min(2, Math.max(0, Math.round((y - TUBE_R) / (2 * TUBE_R))));
-      const phi = Math.atan2(y - RING_YS[iy], rho - RING_R);
+      const phi = Math.atan2(y - RING_YS[iy]!, rho - RING_R);
       return 0.5 + 0.5 * Math.cos(3 * phi + (a * RING_R * 2 * Math.PI) / LAY);
     };
     const twist = (a: number, y: number) => 0.5 + 0.5 * Math.cos(3 * (a + y * 34));

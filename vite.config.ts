@@ -80,6 +80,9 @@ export default defineConfig({
   plugins: [forgeApi()],
   // Read-only node_modules (benchmark containers) need the dependency cache elsewhere.
   ...(process.env.FORGE_VITE_CACHE ? { cacheDir: process.env.FORGE_VITE_CACHE } : {}),
+  // Scan only the app pages for dependencies. The default scans every *.html under the root,
+  // which includes the trial workspaces under bench/runs and takes minutes.
+  optimizeDeps: { entries: ['index.html', 'render.html', 'hamlet.html', 'showcase.html'] },
   server: {
     host: '127.0.0.1',
     watch: {

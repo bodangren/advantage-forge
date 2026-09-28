@@ -74,7 +74,7 @@ export default defineAsset({
       .intersect(sdf.box([2, TOP, 2]).at(0, TOP / 2, 0))
       .paintFn((x, y, z) => {
         const { edge, id } = cells(x, z);
-        const base = STONES[id % STONES.length];
+        const base = STONES[id % STONES.length]!;
         const n = 0.5 + 0.5 * noise.fbm(x * 14, y * 14, z * 14, 2);
         let c = mixRgb(base, STONE_DARK, 0.25 * n);
         c = mixRgb(c, STONE_DARK, 1 - smooth(0.012, 0.04, edge));

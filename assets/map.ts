@@ -78,7 +78,7 @@ const mapPaint = (x: number, y: number, z: number) => {
     }
     // Dashed trail.
     for (let i = 0; i < TRAIL.length - 1; i++) {
-      const s = seg(x, z, TRAIL[i], TRAIL[i + 1]);
+      const s = seg(x, z, TRAIL[i]!, TRAIL[i + 1]!);
       const along = (i + s.t) * 6;
       if (s.d < 0.0035 && along - Math.floor(along) < 0.55) c = RED;
     }
