@@ -1503,5 +1503,37 @@
       "Widen the sleeves and the hem."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "stone-golem": {
+    "overall": 7,
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the minotaur-guard base (knee bones, eight clips): a stocky golem of grey chiseled stone blocks with moss on the tops, huge shoulder boulders, big block fists, glowing blue eyes, and a glowing blue rune plate on the chest, over a sage-green stone core. The attack is a two-fist ground slam. The build has no warnings.",
+    "strengths": [
+      "The blocky stone silhouette, moss, and blue glow read as a stone golem at 128 px.",
+      "The two-fist slam reads clearly.",
+      "Stone and glow variants with three presets: desert, deep, ember."
+    ],
+    "issues": [
+      "The sage-green core shows between the stones, so the body reads greener than the grey mockup.",
+      "The rocks are rounded stacked boxes; the mockup has more sharp-edged plates.",
+      "The head is a smooth dome; the mockup head looks like a helmet with cheek plates. 48k triangles."
+    ],
+    "next": [
+      "Make the core grey so only the moss is green.",
+      "Add sharper plates and a helmet-like brow."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
