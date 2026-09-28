@@ -1471,5 +1471,37 @@
       "Bunch the capelet into a lumpy cowl."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "necromancer": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the cultist base (knee bones, seven clips): a black hood with a curled tip over a pale grey-green face with heavy brows and big glowing green eyes, a black robe open over a dark green under-robe, bone-white star patches, a bone buckle, a small skull shoulder pad, and a wooden staff with a skull and a flickering green flame. The attack raises the staff, flares the flame, and casts forward. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The hood, the green eyes, and the skull staff read as a necromancer at a glance and at 128 px.",
+      "The flame follows the eye color slot and flares in the attack.",
+      "Robe, under-robe, and eye variants with three presets: gravecaller, bloodbinder, frostwight."
+    ],
+    "issues": [
+      "The mockup hood is taller and more tapered with a deeper opening.",
+      "The robe is compact; the mockup has bell sleeves, more folds, and a wider hem.",
+      "The staff is in the character's left hand (the mockup's viewer-right); in the attack the lower staff goes about 1 cm into the robe."
+    ],
+    "next": [
+      "Make the hood taller and more pointed.",
+      "Widen the sleeves and the hem."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
