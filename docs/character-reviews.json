@@ -1790,5 +1790,36 @@
       "Enlarge the wand flame a little."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "priest": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the cleric base with the rogue's human face and proportions (knee bones, eight clips): a young priest with dark swept hair, a long white robe with bell sleeves, a gold yoke, a gold stole with a cross and fringe, a wooden staff with a gold sunburst in the right hand, and a small book with a gold cross in the left. The attack raises the staff and bursts a glowing star; attack2 is a book blessing. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The white and gold vestments and the sun staff read as a priest at a glance and at 128 px.",
+      "It matches the hero set's young face and proportions.",
+      "Hair, eye, skin, and trim variants with three presets: moon, martyr, pilgrim."
+    ],
+    "issues": [
+      "The hair is a round mushroom shape; the mockup has sharper wave locks.",
+      "The white collar at the neck does not show.",
+      "The sleeves are thinner and less puffy than in the mockup."
+    ],
+    "next": [
+      "Add two or three wave locks to the hair."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
