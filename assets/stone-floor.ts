@@ -68,7 +68,7 @@ export default defineAsset({
       return onTop * (groove + sink + lump);
     };
     const floor = sdf
-      .box([2, TOP, 2], 0.003)
+      .box([2.1, TOP, 2.1], 0.003)
       .at(0, TOP / 2, 0)
       .displace(0.024, carve, 1.4)
       .intersect(sdf.box([2, TOP, 2]).at(0, TOP / 2, 0))
