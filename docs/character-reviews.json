@@ -1662,5 +1662,37 @@
       "Consider a two-hand bow rest pose for the idle clip."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "monk": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the rogue base (knee bones, eight clips): a young monk with a shaved head and a small top knot, an orange wrap robe with saffron collar bands and bell sleeves, a brown sash with a bow, wooden prayer beads, wide trousers, striped hand and shin wraps, and sandals. The attack is a palm strike; attack2 is a jumping spin kick; victory is a salute and a bow. The build has no warnings.",
+    "strengths": [
+      "The shaved head, top knot, and saffron robe read as a monk at a glance and at 128 px.",
+      "Unarmed clips (palm strike, spin kick, salute) fit the role; the skirt follows the legs in the kick.",
+      "Eye, skin, and robe variants with three presets: temple, mountain, novice."
+    ],
+    "issues": [
+      "The arms hang at the sides; the mockup holds them out, and its hands are bigger.",
+      "The cuff edges are a little jagged in close renders.",
+      "The underskirt is a thin band; the mockup has a wide yellow underlayer and a pointed front flap."
+    ],
+    "next": [
+      "Give the idle clip a ready stance with the arms out.",
+      "Enlarge the hands a little."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
