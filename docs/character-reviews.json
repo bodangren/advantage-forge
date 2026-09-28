@@ -1631,5 +1631,36 @@
       "Raise the hammer arm in the rest pose."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "ranger": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the archer base (the rogue's face and proportions, knee bones, eight clips): a young ranger with a forest-green hood up, auburn hair, green eyes, a green capelet with a gold clasp, a long open cloak, a brown leather jerkin with a belt, cross-strap, and pouch, green bracers, tall boots, a longbow in the left hand, and a quiver worn over the cloak. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The hood, hair, and bow read as a ranger at a glance and at 128 px.",
+      "It matches the P0 hero set: same head construction and proportions as the rogue and archer.",
+      "Eye, hair, skin, and cloak variants with three presets: dusk, wanderer, warden."
+    ],
+    "issues": [
+      "The mockup holds the bow across the body in both hands; the ranger holds it upright like the archer.",
+      "The mockup tunic under the capelet is green; this one is a brown leather jerkin.",
+      "The bow goes 1 to 2 cm into the jerkin in the attacks, as on the archer."
+    ],
+    "next": [
+      "Consider a two-hand bow rest pose for the idle clip."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
