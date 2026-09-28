@@ -344,7 +344,8 @@ async function playDragonFlight(page: Page, shot: (name: string) => Promise<void
  * screenshots at the start, after the first right word, and whenever a new room or sentence starts.
  */
 async function playArena(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
-  await page.waitForSelector('.arena-tag', { timeout: 120_000 });
+  if (TWO_D) await page.waitForFunction(() => (window as any).__apk3d.renderer() === 'phaser' && (window as any).__apk3d.game()?.state(), undefined, { timeout: 120_000, polling: 250 });
+  else await page.waitForSelector('.arena-tag', { timeout: 120_000 });
   await page.waitForTimeout(1500);
   await shot('start');
   // A real finger: a touch drag to the right must move the character (the joystick works).
@@ -399,6 +400,9 @@ const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) =
 /** The 2D (Phaser) players, for `--2d`. */
 const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
   'potion-rush': playPotionRush2D,
+  'hero-vs-zombie': playArena,
+  'devourer-slime': playArena,
+  'dungeon-liberator': playArena,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {

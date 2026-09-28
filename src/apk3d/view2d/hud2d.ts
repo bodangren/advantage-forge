@@ -57,13 +57,14 @@ export function banner(scene: Phaser.Scene, title: string, body: string, seconds
   box.fillStyle(COLORS.paper, 0.97).fillRoundedRect(-w / 2, -44, w, body ? 88 : 60, 20);
   const t1 = text(scene, 0, body ? -22 : -14, title, 26, '#6a3fd1').setOrigin(0.5);
   const t2 = text(scene, 0, 16, body, 16, COLORS.ink, false).setOrigin(0.5);
-  const c = scene.add.container(width / 2, 150, [box, t1, t2]).setDepth(20_000).setScrollFactor(0).setAlpha(0);
+  // Under the status bar and a word panel (a tall screen has room for it lower down).
+  const c = scene.add.container(width / 2, Math.max(150, scene.scale.height * 0.3), [box, t1, t2]).setDepth(20_000).setScrollFactor(0).setAlpha(0);
   return new Promise((resolve) => {
     scene.tweens.add({ targets: c, alpha: 1, duration: 300, hold: seconds * 1000, yoyo: true, onComplete: () => (c.destroy(), resolve()) });
   });
 }
 
-/** A round button with a label (Serve!, Blast); `onTap` on click or tap. */
+/** A round button with a label (Serve!, Blast) in screen space; `onTap` on click or tap. */
 export function button(scene: Phaser.Scene, x: number, y: number, value: string, onTap: () => void, fill = COLORS.gold, color = COLORS.ink): Phaser.GameObjects.Container {
   const label = text(scene, 0, 0, value, 20, color).setOrigin(0.5);
   const w = Math.max(80, label.width + 30);
@@ -71,7 +72,7 @@ export function button(scene: Phaser.Scene, x: number, y: number, value: string,
   const box = scene.add.graphics();
   box.fillStyle(0x000000, 0.3).fillRoundedRect(-w / 2, -h / 2 + 5, w, h, 24);
   box.fillStyle(fill, 1).fillRoundedRect(-w / 2, -h / 2, w, h, 24);
-  const c = scene.add.container(x, y, [box, label]).setSize(w, h);
+  const c = scene.add.container(x, y, [box, label]).setSize(w, h).setScrollFactor(0);
   c.setInteractive({ useHandCursor: true }).on('pointerup', onTap);
   return c;
 }
@@ -109,5 +110,75 @@ export class StatusBar2D {
     this.edge -= 2 * r + 6;
     this.right.setX(this.edge - 8);
     return t;
+  }
+}
+
+/**
+ * A word panel under the status bar, in screen space: a sentence to build (done words green, the
+ * next word highlighted in Helper mode) or a label over one big word ("Find the meaning of" /
+ * "brave"). `bottom` is the screen y under the panel, for the arena's free area.
+ */
+export class WordPanel2D {
+  private box: Phaser.GameObjects.Container | null = null;
+  bottom: number;
+
+  constructor(
+    private readonly scene: Phaser.Scene,
+    private readonly y = 66,
+  ) {
+    this.bottom = y;
+  }
+
+  sentence(words: readonly string[], next: number, helper: boolean): void {
+    const size = 20;
+    const maxW = Math.min(this.scene.scale.width - 40, 640);
+    const labels = words.map((w, k) => {
+      const done = k < next;
+      const t = text(this.scene, 0, 0, w, size, done ? '#2fa84f' : COLORS.ink).setOrigin(0, 0).setPadding(3, 1, 3, 1);
+      if (!done && k === next && helper) t.setBackgroundColor('#ffe98a');
+      return t;
+    });
+    // Lines of words, each line centered.
+    const lines: Phaser.GameObjects.Text[][] = [[]];
+    let x = 0;
+    for (const t of labels) {
+      if (x + t.width > maxW && lines[lines.length - 1]!.length) {
+        lines.push([]);
+        x = 0;
+      }
+      lines[lines.length - 1]!.push(t);
+      x += t.width + 6;
+    }
+    const lineH = size + 12;
+    const width = Math.max(...lines.map((l) => l.reduce((sum, t) => sum + t.width + 6, -6))) + 28;
+    lines.forEach((line, i) => {
+      let lx = -line.reduce((sum, t) => sum + t.width + 6, -6) / 2;
+      for (const t of line) {
+        t.setPosition(lx, 10 + i * lineH);
+        lx += t.width + 6;
+      }
+    });
+    this.show(labels, width, lines.length * lineH + 12);
+  }
+
+  target(label: string, value: string): void {
+    const small = text(this.scene, 0, 8, label, 14, '#6a3fd1').setOrigin(0.5, 0);
+    const big = text(this.scene, 0, 28, value, 26, COLORS.ink).setOrigin(0.5, 0);
+    this.show([small, big], Math.max(small.width, big.width) + 40, 68);
+  }
+
+  hide(): void {
+    this.box?.destroy();
+    this.box = null;
+    this.bottom = this.y;
+  }
+
+  private show(children: Phaser.GameObjects.GameObject[], width: number, height: number): void {
+    this.box?.destroy();
+    const bg = this.scene.add.graphics();
+    bg.fillStyle(0x000000, 0.3).fillRoundedRect(-width / 2, 4, width, height, 14);
+    bg.fillStyle(COLORS.paper, 0.97).fillRoundedRect(-width / 2, 0, width, height, 14);
+    this.box = this.scene.add.container(this.scene.scale.width / 2, this.y, [bg, ...children]).setScrollFactor(0).setDepth(18_500);
+    this.bottom = this.y + height + 8;
   }
 }

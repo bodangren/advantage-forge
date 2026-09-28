@@ -7,18 +7,38 @@
  */
 import { APK3D_CAPABILITIES, CARTRIDGE_3D_RUNTIME_API_VERSION, validateCartridge3DManifest } from '../../apk3d/contracts/index.js';
 
+/** The heroes a student may play and the clips the 2D view plays (files of `primary-chibi-2d`). */
+export const HEROES_2D = ['knight', 'wizard', 'cleric'] as const;
+export const HERO_CLIPS_2D = ['idle', 'run', 'hit', 'victory'] as const;
+export const SKELETON_CLIPS_2D = ['idle', 'walk', 'rise', 'attack'] as const;
+export const VILLAGER_CLIPS_2D: Readonly<Record<string, readonly string[]>> = {
+  villager: ['idle', 'walk', 'talk', 'wave'],
+  farmer: ['idle', 'walk', 'talk', 'wave'],
+  innkeeper: ['idle', 'walk', 'talk', 'wave'],
+  druid: ['idle', 'walk', 'victory'],
+  guard: ['idle', 'walk', 'salute'],
+};
+
+/** Every 2D file the game uses (`requiredAssetBindings`: binding key = file id). */
+export const FILES_2D: readonly string[] = [
+  'background.dungeon-liberator',
+  ...HEROES_2D.flatMap((h) => HERO_CLIPS_2D.map((c) => `${h}.${c}`)),
+  ...SKELETON_CLIPS_2D.map((c) => `skeleton.${c}`),
+  ...Object.entries(VILLAGER_CLIPS_2D).flatMap(([kind, clips]) => clips.map((c) => `${kind}.${c}`)),
+];
+
 export const manifest = validateCartridge3DManifest({
   id: 'dungeon-liberator',
   title: 'Dungeon Liberator',
   description: 'Free the villagers of the Sunken Vault in the order of the sentence, then lead the line out through the gate.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderers: ['three'],
+  renderers: ['three', 'phaser'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',
   levels: ['A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
-  requiredAssetBindings: [],
+  requiredAssetBindings: [...FILES_2D],
   requiredModelBindings: [],
   packs: ['heroes', 'vault'],
   capabilities: [...APK3D_CAPABILITIES],

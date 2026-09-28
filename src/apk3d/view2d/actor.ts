@@ -85,18 +85,22 @@ export class Actor2D {
 
   /** A looping clip (the idle clip when missing). */
   loop(clip: string): void {
+    this.busy = 0;
     this.current = this.has(clip) ? clip : this.idle;
     this.refresh(true);
   }
 
-  /** A one-shot clip; resolves when it ends, then the actor returns to its loop. */
-  play(clip: string, speed = 1): Promise<void> {
+  /**
+   * A one-shot clip; resolves when it ends, then the actor returns to its loop. With `hold`, the
+   * actor keeps the last frame (a knocked-down zombie stays down) until the next `play` or `loop`.
+   */
+  play(clip: string, speed = 1, hold = false): Promise<void> {
     if (!this.has(clip)) return Promise.resolve();
     const key = animationKeyOf(this.edition, `${this.model}.${clip}`, this.animName(clip));
     const anim = this.scene.anims.get(key);
     if (!anim) return Promise.resolve();
     this.sprite.play({ key, timeScale: speed });
-    this.busy = anim.duration / 1000 / speed;
+    this.busy = hold ? Infinity : anim.duration / 1000 / speed;
     return new Promise((resolve) => this.sprite.once('animationcomplete', () => resolve()));
   }
 

@@ -15,7 +15,7 @@ import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { Actor2D, banner, button, COLORS, depthOf, popup, project, recolorTag, registerSheetAnimations, StatusBar2D, tag, text, textureKeyOf } from '../../../apk3d/view2d/index.js';
+import { Actor2D, banner, button, COLORS, depthOf, fitGameSize, popup, project, recolorTag, registerSheetAnimations, StatusBar2D, tag, text, textureKeyOf } from '../../../apk3d/view2d/index.js';
 import { createPotionRush, evidenceOf, scoreOf, targetFor, type Mood, type PotionRushCommand, type PotionRushEvent, type PotionRushState } from '../core/index.js';
 import { CUSTOMER_CLIPS_2D, FILES_2D, HERO_CLIPS_2D, HEROES_2D } from '../manifest.js';
 import { nextDrop } from '../qc/bot.js';
@@ -49,15 +49,6 @@ interface Layout2D {
   gap: number;
   /** Half the belt length on screen (meters): the visible part of the conveyor in portrait. */
   beltHalf: number;
-}
-
-/**
- * The game size in game pixels: 480 across the short side, the long side from the screen's
- * aspect (so FIT scaling leaves no wide bars), within limits the layout handles.
- */
-export function gameSize(vw = typeof innerWidth === 'number' ? innerWidth : 390, vh = typeof innerHeight === 'number' ? innerHeight : 844): [number, number] {
-  const clamp = (v: number, lo: number, hi: number): number => Math.round(Math.min(hi, Math.max(lo, v)));
-  return vh > vw ? [480, clamp((480 * vh) / vw, 720, 960)] : [clamp((480 * vw) / vh, 640, 1000), 480];
 }
 
 export function layoutFor(width: number, height: number): Layout2D {
@@ -142,7 +133,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     if (model! in CUSTOMER_CLIPS_2D) return kinds.has(model as never);
     return true;
   }).filter((id) => edition.bindings[id]);
-  const [width, height] = gameSize();
+  const [width, height] = fitGameSize();
 
   const audio = ctx.audio ?? new AudioBus();
   const unlock = ctx.audio ? null : installAudioUnlock(audio);

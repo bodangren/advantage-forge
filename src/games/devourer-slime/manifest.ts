@@ -7,18 +7,32 @@
  */
 import { APK3D_CAPABILITIES, CARTRIDGE_3D_RUNTIME_API_VERSION, validateCartridge3DManifest } from '../../apk3d/contracts/index.js';
 
+/** The clips the 2D view plays on the slime and on each guard kind (files of `primary-chibi-2d`). */
+export const SLIME_CLIPS_2D = ['idle', 'walk', 'attack', 'spit', 'hit'] as const;
+export const GUARD_CLIPS_2D: Readonly<Record<string, readonly string[]>> = {
+  guard: ['idle', 'walk', 'salute'],
+  bandit: ['idle', 'walk', 'attack', 'hit'],
+};
+
+/** Every 2D file the game uses (`requiredAssetBindings`: binding key = file id). */
+export const FILES_2D: readonly string[] = [
+  'background.devourer-slime',
+  ...SLIME_CLIPS_2D.map((c) => `slime.${c}`),
+  ...Object.entries(GUARD_CLIPS_2D).flatMap(([kind, clips]) => clips.map((c) => `${kind}.${c}`)),
+];
+
 export const manifest = validateCartridge3DManifest({
   id: 'devourer-slime',
   title: 'Devourer Slime',
   description: 'Eat the word bubbles of each sentence in order; grow with every right word and swallow the guards.',
   runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
-  renderers: ['three'],
+  renderers: ['three', 'phaser'],
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'any',
   levels: ['A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
-  requiredAssetBindings: [],
+  requiredAssetBindings: [...FILES_2D],
   requiredModelBindings: [],
   packs: ['clearing'],
   capabilities: [...APK3D_CAPABILITIES],

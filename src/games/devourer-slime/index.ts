@@ -1,8 +1,9 @@
-/** The cartridge: what the host loads (lazily) to play the game. */
-import type { ThreeCartridge } from '../../apk3d/factory/index.js';
+/** The Devourer Slime cartridge: what the host loads (lazily) to play the game, in 3D or in 2D. */
+import type { Cartridge } from '../../apk3d/factory/index.js';
 import { briefing } from './briefing.js';
 import { manifest } from './manifest.js';
 import strings from './strings.en.js';
 import { createGame } from './view/game.js';
+import { createGameConfig } from './view2d/game.js';
 
-export const cartridge: ThreeCartridge = { manifest, strings, briefing, createGame };
+export const cartridge: Cartridge = { manifest, strings, briefing, createGame, createGameConfig };

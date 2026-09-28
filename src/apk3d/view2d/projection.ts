@@ -47,3 +47,14 @@ export function directionRow(dx: number, dz: number, dirs: 1 | 4 | 8): number {
 
 /** Row order names of forge sheets (8 directions); a 4-direction sheet uses every second one. */
 export const DIRECTION_NAMES_8 = ['S', 'SW', 'W', 'NW', 'N', 'NE', 'E', 'SE'] as const;
+
+/**
+ * The game size of a 2D view in game pixels: 480 across the short side of the screen, the long
+ * side from the screen's aspect (so FIT scaling leaves no wide bars), within limits a layout can
+ * handle. A 2D view calls it in `createGameConfig` (the APK factory then replaces the size with
+ * the safe rect when it has a responsive composition).
+ */
+export function fitGameSize(vw = typeof innerWidth === 'number' ? innerWidth : 390, vh = typeof innerHeight === 'number' ? innerHeight : 844, short = 480): [number, number] {
+  const clamp = (v: number, lo: number, hi: number): number => Math.round(Math.min(hi, Math.max(lo, v)));
+  return vh > vw ? [short, clamp((short * vh) / vw, short * 1.5, short * 2)] : [clamp((short * vw) / vh, short * 1.33, short * 2.08), short];
+}
