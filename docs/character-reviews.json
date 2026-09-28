@@ -1342,5 +1342,38 @@
     ],
     "next": "Mute the hood green, make the mask beige, and hold the bow diagonally in the rest pose.",
     "reviewedAt": "2026-09-27T20:10:02.841Z"
+  },
+  "zombie-soldier": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 dungeon enemy on the zombie base (knee bones, seven clips): a bald grey-green cracked skull with one milky eye and one yellow eye, a wide grimace, a torn faded-teal tunic with a leather mantle, a cross strap, a belt with pouches, bracers, grey trousers, brown boots, and a notched rusty short sword in the right hand. The attack is a sword chop while the left hand grabs. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The head, the two different eyes, and the teal tunic read as the mockup at a glance.",
+      "The sword chop gives the attack a clear read.",
+      "Eye, skin, and clothing variants with three presets: deserter, bog, veteran."
+    ],
+    "issues": [
+      "The leather mantle is a thick collar ring; the mockup has a large draped shoulder cape.",
+      "The mouth is small and reads weakly at 128 px.",
+      "30,796 triangles is heavy for a small enemy.",
+      "In the death clip the sword comes to the skin of the head (the check still passes)."
+    ],
+    "next": [
+      "Enlarge the shoulder cape on the left.",
+      "Make the mouth wider and darker."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
