@@ -79,6 +79,7 @@ export default defineAsset({
       color: C.stone,
       roughness: 0.92,
       detail: 0.012,
+      maxTriangles: 2500,
       bump: plinthBump,
     });
 
@@ -256,6 +257,7 @@ export default defineAsset({
       color: C.stone,
       roughness: 0.9,
       detail: 0.005,
+      maxTriangles: 6000,
       textureDensity: 2,
       bump: (x, y, z) => 0.0015 * noise.fbm(x * 24, y * 24, z * 24, 2),
     });
