@@ -122,6 +122,9 @@ async function main(): Promise<void> {
     configFile: false,
     ...(process.env.FORGE_VITE_CACHE ? { cacheDir: process.env.FORGE_VITE_CACHE } : {}),
     logLevel: 'error',
+    // Scan only the render page for dependencies. The default scans every *.html under the root,
+    // including the trial workspaces under bench/runs (a symlink to thousands of repo copies).
+    optimizeDeps: { entries: ['render.html'] },
     server: {
       port: 5400 + Math.floor(Math.random() * 400),
       strictPort: false,
