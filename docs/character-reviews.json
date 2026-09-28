@@ -1758,5 +1758,37 @@
       "Turn up the front of the brim and lengthen the cape."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "mage": {
+    "overall": 8.5,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the wizard base (knee bones, eight clips): a young beardless mage with silver hair and round black glasses, a tall deep-blue hat with raised silver stars and a hooked point, a blue robe with silver bands over a grey under-robe, a blue cowl and cape, a belt with a pouch, a short wand with a glowing blue flame, and a red spellbook on the left palm. The attack is a wand flick; attack2 fires the flame as a bolt. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The starred hat, glasses, and glowing wand read as a mage at a glance and at 128 px.",
+      "It keeps the hero set's young face while matching the mockup's outfit.",
+      "Eye, hair, skin, and robe variants with three presets: arcanist, tidecaller, sage."
+    ],
+    "issues": [
+      "65,640 triangles is heavy.",
+      "The robe has narrow silver bands and no wide grey side panels; the hat hook curls less than in the mockup.",
+      "The wand and flame are small."
+    ],
+    "next": [
+      "Cap the triangle count.",
+      "Enlarge the wand flame a little."
+    ],
+    "reviewedAt": "2026-09-28"
   }
 }
