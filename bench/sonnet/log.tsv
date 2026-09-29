@@ -16,3 +16,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-29	cloth-robe	armor	low	1	2393	4	1.0	7	7.0	7	pass	v3 same agent: strip bottom clean; ACCEPTED at 7.0; total 43589 tokens over 3 passes (low tier + 2 feedback passes)
 2026-09-29	yurt	structure	medium	1	9580	5	1.7	7	7.5	7	pass	v2 same agent: squat dome, scalloped skirt, lumpy felt, bands ride the felt, door recess + knob; ACCEPTED at 7.5; total 52936 over 2 passes
 2026-09-29	mantle	armor	medium	1	36667	9	1.5	7	7.0	7	pass	v3 fresh medium agent with retry notes: clean, no holes, clasp on the cloth, folds, wavy hem, fur ring; narrow cone vs the mockup flare; ACCEPTED at 7.0; total 80251 incl. the failed low passes
+2026-09-29	greenhouse	structure	medium	1	12284	11	4.6	7	7.2	7	pass	v2 same agent: 0.14 frame in peach cream, stepped base with ledges, clearer glass; ACCEPTED at 7.2; total 68372 over 2 passes

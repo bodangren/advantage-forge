@@ -4,11 +4,11 @@ ivy	plant	medium	-	3	accepted	7.5	committed d02fc7f
 samurai	hero	high	-	2	accepted	8.2	committed d02fc7f
 cloth-robe	armor	low	a9fdd4b6acdd5dcef	3	accepted	7.0	43589 tokens
 mantle	armor	low->medium	a45aafcf0b0ed1b7f	3	accepted	7.0	80251 tokens incl. 2 failed low passes
-greenhouse	structure	medium	a8607c5722e83d14b	1	feedback	7.0	v1 7.0: thin frame, plain base; pass 2
+greenhouse	structure	medium	a8607c5722e83d14b	2	accepted	7.2	68372 tokens
 yurt	structure	medium	a8e4a50ff3f3e8323	2	accepted	7.5	52936 tokens
-pier	structure	medium	-	0	queued	-	
-cave-mouth	terrain	medium	-	0	queued	-	
-city-wall	structure	medium	-	0	queued	-	
+pier	structure	medium	ae55d85c6505404f9	0	running	-	round 2
+cave-mouth	terrain	medium	ab9405aa8a9ce3833	0	running	-	round 2
+city-wall	structure	medium	a272a4c6f715baf15	0	running	-	round 2
 rampart	structure	medium	-	0	queued	-	
 greenhouse-dome	structure	medium	-	0	queued	-	
 cliff-face	terrain	medium	-	0	queued	-	
