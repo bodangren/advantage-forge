@@ -36,6 +36,6 @@ goblin-king	enemy	high	aef4b880fd4f97636	2	accepted	8.0	173443 tokens
 orc-archer	enemy	high	a5dc29980006ffe04	3	accepted	8.0	186751 tokens
 orc-shaman	enemy	high	a1f517959db00a47b	2	accepted	8.0	198890 tokens
 ogre-brute	enemy	high	a9fff0d258b208e5a	3	skipped	7.8	below the 8 bar after 3 passes; uncommitted
-wood-golem	enemy-rework	high	ae9552047ba3298b9	2	feedback	7.3	rework 3.8 -> 7.3; pass 3
-minotaur-guard	enemy-rework	high	a7c400d50f0c64a34	0	running	-	retry after the first agent stalled
+wood-golem	enemy-rework	high	ae9552047ba3298b9	3	skipped	7.5	3.8 -> 7.5, below the bar; untracked source
+minotaur-guard	enemy-rework	high	a7c400d50f0c64a34	0	skipped	-	agent stalled twice
 mummy	enemy-rework	high	a74ad731e917c7399	1	accepted	8.0	75483 tokens (7.5 -> 8.0)

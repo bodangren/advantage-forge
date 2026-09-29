@@ -1826,39 +1826,36 @@
     "reviewedAt": "2026-09-28"
   },
   "wood-golem": {
-    "overall": 3.8,
+    "overall": 7.5,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
       "color": 4,
-      "materials": 3,
+      "materials": 4,
       "detail": 4,
       "technical": 4,
       "gameReady": 4,
       "sprite": 3,
       "motion": 4
     },
-    "summary": "A new P1 forest enemy on the stone-golem base (knee bones, seven clips): a driftwood bundle with a split-plank crown, amber eye slits under a heavy brow, a six-petal amber core burning in a hollow chest, rope coils at the neck, wrists, and ankles, moss clumps, four curling vines, and knotted root fists over splayed root feet. Dark seams between the head billets and the trunk staves carry the wood grain. 60,000 triangles, no build warnings, clip clearance ok.",
+    "summary": "Wood golem reworked 2026-09-30 by a Sonnet 5.5 high-tier agent in three passes (120,760 tokens), from 3.8 to 7.5: glowing amber eye slits and a flower-sigil core, darker lumpy moss on paler planks with dark seams, a seven-stave crown fan, arm plank seams, root grooves and rope wraps on the shins, root-clump feet, five vines. 70,148 triangles, no warnings, ground ok. Still below the 8 bar; the source stays uncommitted (untracked, owned by the dungeon denizens session).",
     "strengths": [
-      "The split-plank crown and the curling vines break the outline in every view.",
-      "The amber core reads as the focal point from the front, three-quarter, and side, and it holds at 128 px.",
-      "Three bark and glow slots with swamp, ember, and winter presets all rebuild with textures and sprites.",
-      "The walk, run, and two-fist slam come from the shared golem rig, so it reads as a set with the stone and bone golems."
+      "The crown fan, vines, and rope wraps break the outline in every sprite direction.",
+      "The core sigil reads at 128 px and in the three-quarter view.",
+      "Materials now separate: pale planks, near-black seams, dark moss, tan rope."
     ],
     "issues": [
-      "The eye slits are weak at 128 px: two dark bars rather than two glowing eyes.",
-      "The wood and the moss sit close in value, so the moss reads as a green smear at small sizes.",
-      "The legs are smooth cones; the mockup legs are splayed roots with rope wraps.",
-      "The side view is the weakest silhouette; the crown reads as a single flat crest."
+      "The eye slits show only as small amber flecks in the S, SW, and SE sprites; the brow shades them at the sprite camera angle.",
+      "The head is a stack of gapped slabs, not carved wavy billets.",
+      "The arms are smooth staves with faint seams."
     ],
     "next": [
-      "Widen and brighten the eye slits, or add an amber glow ring painted on the slot floor.",
-      "Darken the moss one step and raise its roughness so it separates from the bark.",
-      "Carve root grooves into the shins and add rope wraps below the knees."
+      "Raise the eye slot 0.02 and push the slits to z 0.12 so the brow does not shade them.",
+      "Carve two wavy billets into the face planks."
     ],
-    "reviewedAt": "2026-09-28"
+    "reviewedAt": "2026-09-29T16:38:55+00:00"
   },
   "samurai": {
     "overall": 8.2,

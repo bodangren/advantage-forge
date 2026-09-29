@@ -75,3 +75,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-29	minotaur-guard	enemy-rework	high	R1	0	0	45	-	-	8	stalled	agent produced no output for 45 min after launch (149-byte log, API drop); stopped and respawned
 2026-09-29	mummy	enemy-rework	high	R1	0	0	40	-	-	8	stalled	agent produced no output for 40 min after launch (149-byte log, API drop); stopped and respawned
 2026-09-30	mummy	enemy-rework	high	R1	75483	16	17.9	8	8.0	8	pass	rework from 7.5 (retry agent): smaller glowing eye in a bigger dark hole, arms down at rest, V collar, looser wraps, two hanging ends, 27216 tris, ground ok; ACCEPTED at 8.0
+2026-09-30	wood-golem	enemy-rework	high	R1	13898	10	19.1	7	7.5	8	skipped	rework pass 3: eyes proud with painted sockets, raised petal sigil core, 70148 tris; eyes still small flecks in the front sprites; 3.8 -> 7.5 after three passes (120760 tokens), below the bar; source untracked (other session), review entry updated
+2026-09-30	minotaur-guard	enemy-rework	high	R1	0	0	19	-	-	8	skipped	retry agent stalled again (149-byte log for 19 min); stopped; SKIPPED after two stalls; brief kept in bench/sonnet/briefs/minotaur-guard-rework.md
