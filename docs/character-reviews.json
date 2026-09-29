@@ -2613,5 +2613,33 @@
     ],
     "next": "Optional: lower the core emissive to 1.4 on a darker base; darken the brass base to #7a6030.",
     "reviewedAt": "2026-09-29T22:32:00+00:00"
+  },
+  "animated-weapon": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Haunted floating longsword with no wielder on the animated-armor skeleton: a dark iron blade with a glowing violet rune line, a ribbed grip and a round pommel, a two-turn bead coil of violet magic around the blade, a small bronze shield with an eye emblem hovering on the left, and a lumpy lilac mist bank with glowing flame wisps at the ground; the blade tip stands in the mist. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The rune line, the eye shield, the coil and the mist read in every sprite direction.",
+      "The mockup's composition matches: blade in the mist, shield on the left, coil under the guard.",
+      "Clearance and ground checks pass; 19,244 triangles, no warnings."
+    ],
+    "issues": [
+      "The shield edge touches the coil by 1.5 cm in the idle and walk clips (info lines only).",
+      "The coil reads as two bead bands rather than one continuous spiral."
+    ],
+    "next": "Optional: move the shield out to x -0.2; join the coil turns with a continuous chain.",
+    "reviewedAt": "2026-09-29T22:33:23+00:00"
   }
 }
