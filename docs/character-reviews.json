@@ -2528,5 +2528,34 @@
     ],
     "next": "Optional: widen the arm arcs in death and awaken; darken the brass base one step.",
     "reviewedAt": "2026-09-29T21:52:18+00:00"
+  },
+  "living-statue": {
+    "overall": 7.8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3,
+      "color": 3,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Animated marble knight on the knight base: a round helm with a laurel crown band, glowing pale blue oval eyes in a dark visor band over a faceted mask, flanged pauldrons, a carved skirt with a medallion tab, a cape, a marble sword and a ringed round shield with a stacked boss; marble painted by surface direction with dark cracks. Three passes (7.3, 7.7, 7.8); just below the 8 bar, source uncommitted.",
+    "strengths": [
+      "The glowing eyes, the shield rings and the sword read at 128 px.",
+      "The marble now has value contrast and painted cracks.",
+      "Clearance and ground checks pass; 36,358 triangles, no warnings."
+    ],
+    "issues": [
+      "The helm is a hemisphere dome with a brim rather than the mockup's taller cap helm.",
+      "The whole figure still reads pale; the pauldron flanges hide behind the shield.",
+      "The cracks are long wavy noise lines rather than sparse short cracks."
+    ],
+    "next": "Raise the helm into a cap (ellipsoid 0.22 x 0.26 x 0.22) with a curled laurel and a gem; lower the marble base one more step; replace the noise cracks with six short hand-placed strokes.",
+    "reviewedAt": "2026-09-29T21:58:49+00:00"
   }
 }
