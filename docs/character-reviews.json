@@ -1113,7 +1113,7 @@
     "reviewedAt": "2026-09-27T16:33:12.024Z"
   },
   "mummy": {
-    "overall": 7.5,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
@@ -1127,19 +1127,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "A new P1 dungeon denizen for the Sunken Vault on the zombie base (shared skeleton, knee bones, seven clips): a chibi mummy wrapped head to toe in stepped cream linen bands with crossing straps, three frayed loose ends, a dark face hole with one glowing yellow eye, and a faded blue-and-gold collar. The walk is a stiff shuffle with the arms forward. The ground check passes, and the textured build has no warnings.",
+    "summary": "Mummy on the zombie base, reworked 2026-09-30 by a Sonnet 5.5 high-tier agent (75,483 tokens): a small linen bundle with one glowing yellow eye in a dark face hole, arms hanging at rest, a V of wrap ends at the collar, looser varied chest wraps, and two free hanging ends.",
     "strengths": [
-      "The wraps, face hole, single eye, collar, and loose ends read as the mockup mummy.",
-      "The stepped bands give real relief, and a linen grain lives in the normal map.",
-      "Wrap and eye variants with three presets: desert, crypt, cursed."
+      "The eye is a bright yellow point in a dark hole in every front-facing sprite.",
+      "The hanging arms and the loose wraps match the mockup's pose and layering.",
+      "27,216 triangles, no warnings, ground check ok."
     ],
     "issues": [
-      "The eye is a flat pale yellow disc with little visible glow, and it is larger than in the mockup.",
-      "In the rest pose the arms point out to the sides (kept from the zombie); in the mockup they hang down.",
-      "The collar is a full ring; the mockup shows only a small V at the front, and the chest wraps are more regular than the loose layers of the mockup."
+      "The face hole is glossy and larger than the mockup's.",
+      "The hanging ends are thin at 128 px.",
+      "The head wraps are more regular than the mockup's loose layers."
     ],
-    "next": "Make the eye smaller with a stronger glow (dark base, higher intensity) and lower the rest-pose arms.",
-    "reviewedAt": "2026-09-27T16:59:21.208Z"
+    "next": [
+      "Matte the face hole (roughness 0.9) and shrink it 10 percent.",
+      "Thicken the two hanging ends."
+    ],
+    "reviewedAt": "2026-09-29T16:37:36+00:00"
   },
   "kobold-warrior": {
     "overall": 8,

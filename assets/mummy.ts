@@ -25,9 +25,9 @@ const C = {
   wraps: '#e8dcc0',
   wrapMid: '#d8cbae',
   wrapLine: '#c8b89a',
-  face: '#1c1411',
+  face: '#14110c',
   eye: '#ffd23a',
-  eyeBase: '#5a4408',
+  eyeBase: '#3a2a05',
   gold: '#bf9f52',
   blue: '#4e7896',
   paleBlue: '#6f97ae',
@@ -45,10 +45,11 @@ const unit = (d: V3): V3 => {
 };
 const frac = (v: number) => v - Math.floor(v);
 
-// Joints (the zombie's): the arms reach out and a little forward.
-const SHOULDER: V3 = [0.13, 0.385, 0];
-const ELBOW: V3 = [0.215, 0.345, 0.045];
-const WRIST: V3 = [0.29, 0.285, 0.095];
+// Joints: the arms hang down (upper arm about 10 degrees off vertical, a slight bend at the
+// elbow, the hands at the hips); the zombie's reaching pose lives only in the clips.
+const SHOULDER: V3 = [0.165, 0.385, 0];
+const ELBOW: V3 = [0.185, 0.282, 0.01];
+const WRIST: V3 = [0.205, 0.19, 0.05];
 const HIP: V3 = [0.068, 0.195, 0];
 const ANKLE: V3 = [0.098, 0.07, 0];
 const KNEE: V3 = [0.083, 0.1325, 0]; // the knee: splits the leg (shin.L takes the weight below it)
@@ -166,7 +167,7 @@ export default defineAsset({
     const lowU = along([0.22, 1, -0.12], 0.04);
     const headU: Band = (x, y, z) => (y > HEAD_Y + 0.07 - 0.15 * x - 0.05 * z ? crownU(x, y, z) : lowU(x, y, z));
     const FACE_Y = 0.645;
-    const oval = Array.from({ length: 20 }, (_, i) => [0.142 * Math.cos((i / 20) * 2 * Math.PI), 0.086 * Math.sin((i / 20) * 2 * Math.PI)] as [number, number]);
+    const oval = Array.from({ length: 20 }, (_, i) => [0.17 * Math.cos((i / 20) * 2 * Math.PI), 0.103 * Math.sin((i / 20) * 2 * Math.PI)] as [number, number]);
     const faceCut = sdf.extrude(profile.polygon(oval, { smooth: true }), 0.3, 0.02).at(0, FACE_Y, 0.27);
     const head = sdf
       .union(
@@ -184,10 +185,10 @@ export default defineAsset({
     const faceZ = (x: number, y: number) => sdf.raycast(faceBody, [x, y, 1], [0, 0, -1])![2];
     // ONE big eye, a little to the right (-X): a dark base, so the yellow glow keeps its hue.
     const EYE: V3 = [-0.042, FACE_Y + 0.004, faceZ(0.042, FACE_Y) - 0.014];
-    k.body('eye', sdf.sphere(0.032).at(...EYE).bone('head'), {
+    k.body('eye', sdf.sphere(0.028).at(...EYE).bone('head'), {
       color: T.eyeBase,
       emissive: T.eye,
-      emissiveIntensity: 1.6,
+      emissiveIntensity: 2.2,
       roughness: 0.2,
       textureDensity: 2,
       detail: 0.003,
@@ -214,10 +215,13 @@ export default defineAsset({
       )
       .scale([1, 1, 0.8]);
     const hips = sdf.ellipsoid([0.12, 0.06, 0.09]).at(0, 0.205, 0);
+    // Loose chest wraps: bands of different widths, each tilted a little differently, overlapping.
     const straps = sdf.union(
-      strap(torso, 0.009, 0.036, (s) => s.rotateZ(32).at(0, 0.345, 0)),
-      strap(torso, 0.013, 0.036, (s) => s.rotateZ(-32).at(0, 0.345, 0)), // lies over the first: an X on the chest
-      strap(torso, 0.01, 0.04, (s) => s.rotateZ(6).at(0, 0.258, 0)), // the waist
+      strap(torso, 0.009, 0.058, (s) => s.rotateX(-3).rotateZ(34).at(0, 0.352, 0)),
+      strap(torso, 0.013, 0.04, (s) => s.rotateX(4).rotateZ(-29).at(0, 0.342, 0)), // lies over the first
+      strap(torso, 0.016, 0.03, (s) => s.rotateX(-2).rotateZ(21).at(0, 0.372, 0)),
+      strap(torso, 0.01, 0.052, (s) => s.rotateX(3).rotateZ(7).at(0, 0.258, 0)), // the waist
+      strap(torso, 0.014, 0.032, (s) => s.rotateX(-3).rotateZ(-10).at(0, 0.297, 0)),
     );
 
     // ------------------------------------------------------------------ arms: stubby, a rolled cuff, mitts
@@ -257,15 +261,14 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ loose bandage ends
     const ends = sdf.union(
-      ribbon([-0.286, 0.28, 0.085], [[0, 0, 0], [-0.01, -0.07, 0.02], [-0.018, -0.15, 0.03]], 0.019).bone('forearm.R'),
-      ribbon([0.295, 0.285, 0.07], [[0, 0, 0], [0.006, -0.05, 0.03]], 0.016).bone('forearm.L'),
-      ribbon([0.105, 0.24, 0.075], [[0, 0, 0], [0.004, -0.055, 0.012], [0.008, -0.11, 0.02]], 0.017).bone('leg.L'), // from the waist, down the left thigh
+      ribbon([0.245, 0.25, 0.03], [[0, 0, 0], [0.012, -0.075, 0.01], [0.02, -0.15, 0.02]], 0.02).bone('forearm.L'), // from the left arm
+      ribbon([0.105, 0.24, 0.075], [[0, 0, 0], [0.004, -0.075, 0.012], [0.008, -0.15, 0.02]], 0.018).bone('leg.L'), // from the waist, down the left thigh
     );
 
     const wraps = sdf.union(
       sdf.smoothUnion(
         0.025,
-        wrapped(torso, along([0.12, 1, 0], 0.036)).bone('spine'),
+        wrapped(torso, along([0.2, 1, 0.05], 0.042)).bone('spine'),
         wrapped(hips, along([0, 1, 0.08], 0.034, 0.2)).bone('hips'),
         neck,
         leg.bone('leg.L').mirror('x'),
@@ -279,6 +282,7 @@ export default defineAsset({
     );
     k.body('wraps', wraps, {
       color: T.wraps,
+      detail: 0.0056,
       roughness: 0.92,
       textureDensity: 1.4,
       // A fine linen grain in the normal map.
@@ -286,16 +290,25 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ collar: faded blue and gold
-    const collar = torso
-      .round(0.016)
-      .subtract(torso.round(0.006))
-      .intersect(sdf.halfSpace([0, -1, 0], -0.415))
-      .paintFn((x, _y, z) => {
-        const r = Math.hypot(x, z / 0.8);
-        if (r > 0.131 || r < 0.075 || (r > 0.098 && r < 0.104)) return rgb(C.gold);
-        if (r > 0.104) return Math.sin(Math.atan2(z, x) * 26) > 0.6 ? rgb(C.gold) : rgb(C.blue); // gold beads in the outer row
-        return rgb(C.paleBlue);
-      });
+    // A small V of three layered flat strips at the front of the neck, and a seam at the back.
+    const front = sdf.halfSpace([0, 0, -1], -0.02).intersect(sdf.box([0.6, 0.6, 0.6]).at(0, 0.45, 0.3));
+    const back = sdf.halfSpace([0, 0, 1], -0.02).intersect(sdf.box([0.6, 0.6, 0.6]).at(0, 0.45, -0.3));
+    const vStrip = (vy: number, w: number, lift: number, deg: number, pal: (d: number) => ReturnType<typeof rgb>) => {
+      const half = (s: 1 | -1) => sdf.box([0.11, w, 0.9], 0.003).at(0.055 * s, 0, 0).rotateZ(deg * s).at(0, vy, 0);
+      const slab = sdf.union(half(1), half(-1));
+      return torso.round(lift).intersect(slab).intersect(front).paintFn((x, y, z) => pal(slab.dist(x, y, z)));
+    };
+    const edge = (inner: ReturnType<typeof rgb>, rim: ReturnType<typeof rgb>) => (d: number) => (d > -0.006 ? rim : inner);
+    const collar = sdf.union(
+      vStrip(0.398, 0.024, 0.009, 32, edge(rgb(C.blue), rgb(C.gold))),
+      vStrip(0.42, 0.024, 0.013, 32, edge(rgb(C.gold), rgb(C.blue))),
+      vStrip(0.442, 0.022, 0.017, 32, edge(rgb(C.paleBlue), rgb(C.gold))),
+      torso
+        .round(0.012)
+        .intersect(sdf.box([0.6, 0.026, 0.9], 0.003).rotateZ(4).at(0, 0.432, 0))
+        .intersect(back)
+        .paintFn((x, y, z) => (Math.abs(y - 0.432 - 0.07 * x) > 0.008 ? rgb(C.gold) : rgb(C.blue))),
+    );
     k.body('collar', collar.bone('spine'), { color: C.gold, roughness: 0.5, metalness: 0.2, textureDensity: 1.5 });
 
     // ------------------------------------------------------------------ animation
@@ -309,8 +322,8 @@ export default defineAsset({
         chest: { rotate: [2 * wave(p, 1, 0.2), 0, 0] },
         // The head lolls to one side and back.
         head: { rotate: [3 + 2 * wave(p, 1, 0.3), 4 * wave(p, 1, 0.1), 5 * wave(p, 1, 0.25)] },
-        'upperarm.L': { rotate: [-26 + 3 * wave(p, 1, 0.15), 0, -8 + 2 * wave(p, 1, 0.4)] },
-        'upperarm.R': { rotate: [-26 + 3 * wave(p, 1, 0.35), 0, 8 - 2 * wave(p, 1, 0.1)] },
+        'upperarm.L': { rotate: [-3 + 2 * wave(p, 1, 0.15), 0, 2 + 1.5 * wave(p, 1, 0.4)] },
+        'upperarm.R': { rotate: [-3 + 2 * wave(p, 1, 0.35), 0, -2 - 1.5 * wave(p, 1, 0.1)] },
         'forearm.L': { rotate: [-6 * bump(p), 0, 0] },
         'forearm.R': { rotate: [-6 * bump(p, 1, 0.5), 0, 0] },
       }),
@@ -360,8 +373,8 @@ export default defineAsset({
             chest: { rotate: [wave(p, 2, 0.1), -0.7 * o.turn * s, 0] as const },
             head: { rotate: [-o.lean * 0.5 + 2 * wave(p, 2, 0.3), 3 * s, 4 * wave(p, 1, 0.25)] as const },
             // Both arms stay straight out in front, bobbing a little out of step with each other.
-            'upperarm.L': { rotate: [-o.reach + 2 * wave(p, 2, 0.2), 0, -24 + 2 * s] as const },
-            'upperarm.R': { rotate: [-o.reach + 2 * wave(p, 2, 0.45), 0, 24 + 2 * s] as const },
+            'upperarm.L': { rotate: [-o.reach + 2 * wave(p, 2, 0.2), 0, 4 + 2 * s] as const },
+            'upperarm.R': { rotate: [-o.reach + 2 * wave(p, 2, 0.45), 0, -4 + 2 * s] as const },
             'forearm.L': { rotate: [-4 - 2 * wave(p, 2, 0.3), 0, 0] as const },
             'forearm.R': { rotate: [-4 - 2 * wave(p, 2, 0.55), 0, 0] as const },
           };
