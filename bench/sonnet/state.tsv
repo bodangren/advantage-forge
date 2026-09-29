@@ -32,7 +32,8 @@ cloth-hood	armor-fit	medium	a90958415c1506749	1	accepted	fit-ok	34823 tokens
 leather-cap	armor-fit	medium	a546cf60609d4210c	1	accepted	fit-ok	30665 tokens
 crown	armor-fit	medium	a491c825f167e17b9	1	accepted	fit-ok	34440 tokens
 circlet	armor-fit	medium	a0a3525f9cbce54f0	1	accepted	fit-ok	27426 tokens
-goblin-king	enemy	high	aef4b880fd4f97636	0	running	-	enemies round 1 (Labyrinth boss)
-orc-archer	enemy	high	a5dc29980006ffe04	0	running	-	enemies round 1
-orc-shaman	enemy	high	a1f517959db00a47b	0	running	-	enemies round 1
-ogre-brute	enemy	high	-	0	queued	-	enemies round 1 (after circlet)
+goblin-king	enemy	high	aef4b880fd4f97636	1	feedback	7.5	v1 7.5: face, crown, vest
+orc-archer	enemy	high	a5dc29980006ffe04	3	accepted	8.0	186751 tokens
+orc-shaman	enemy	high	a1f517959db00a47b	1	feedback	7.8	v1 7.8: beard, hood, feathers
+ogre-brute	enemy	high	a9fff0d258b208e5a	1	feedback	7.0	v1 7.0: club, bracers, fists, belly
+wood-golem	enemy-rework	high	-	0	queued	-	owner asked 2026-09-29; review 3.8; file untracked

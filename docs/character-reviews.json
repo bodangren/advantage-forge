@@ -1821,5 +1821,108 @@
       "Add two or three wave locks to the hair."
     ],
     "reviewedAt": "2026-09-28"
+  },
+  "wood-golem": {
+    "overall": 3.8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 3,
+      "motion": 4
+    },
+    "summary": "A new P1 forest enemy on the stone-golem base (knee bones, seven clips): a driftwood bundle with a split-plank crown, amber eye slits under a heavy brow, a six-petal amber core burning in a hollow chest, rope coils at the neck, wrists, and ankles, moss clumps, four curling vines, and knotted root fists over splayed root feet. Dark seams between the head billets and the trunk staves carry the wood grain. 60,000 triangles, no build warnings, clip clearance ok.",
+    "strengths": [
+      "The split-plank crown and the curling vines break the outline in every view.",
+      "The amber core reads as the focal point from the front, three-quarter, and side, and it holds at 128 px.",
+      "Three bark and glow slots with swamp, ember, and winter presets all rebuild with textures and sprites.",
+      "The walk, run, and two-fist slam come from the shared golem rig, so it reads as a set with the stone and bone golems."
+    ],
+    "issues": [
+      "The eye slits are weak at 128 px: two dark bars rather than two glowing eyes.",
+      "The wood and the moss sit close in value, so the moss reads as a green smear at small sizes.",
+      "The legs are smooth cones; the mockup legs are splayed roots with rope wraps.",
+      "The side view is the weakest silhouette; the crown reads as a single flat crest."
+    ],
+    "next": [
+      "Widen and brighten the eye slits, or add an amber glow ring painted on the slot floor.",
+      "Darken the moss one step and raise its roughness so it separates from the bark.",
+      "Carve root grooves into the shins and add rope wraps below the knees."
+    ],
+    "reviewedAt": "2026-09-28"
+  },
+  "samurai": {
+    "overall": 8.2,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 5,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the paladin base (the knight's body, the rogue's face, knee bones, eight clips), built by a Sonnet 5.5 subagent in two passes: a red lacquer kabuto with a black lacquer bowl, gold rivets, a thick gold crescent crest and gold side fins, a black topknot, a red scale cuirass with dark scale rows over indigo sleeves and hakama, a red cord sash, red forearm guards, red sandals, a katana rigid in the right hand, and a wakizashi at the left hip. Attack is a horizontal slash, attack2 an overhead cut. 49,672 triangles, no build warnings, forge check result ok.",
+    "strengths": [
+      "The black bowl, gold crescent, and red cuirass give three clear value masses, so the head reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same head construction, face, and proportions as the knight and paladin, beardless as the set requires.",
+      "The dark scale rows follow the armor tint, so the black, green, and indigo lacquer presets keep the pattern.",
+      "The attack clips keep the grip and bracers clear of the cuirass, and the katana never crosses the head."
+    ],
+    "issues": [
+      "The crest tips are flatter than the mockup's steep horns; steeper horns would break the 0.95 m height.",
+      "The neck guard is a plain bucket from the back.",
+      "The gold rivets on the bowl are too small to read at 128 px.",
+      "The death clip still reports small body contact: 1.3 cm for the katana fitting and 0.8 cm for the left hand on the wakizashi."
+    ],
+    "next": [
+      "Raise the crest tips by 2 cm and accept a 0.97 m height, or shorten the topknot to keep the height.",
+      "Add two or three lame plates to the neck guard so the back view is not a plain dome.",
+      "Move the left hand off the wakizashi in the death clip."
+    ],
+    "reviewedAt": "2026-09-29T12:00:32+00:00"
+  },
+  "orc-archer": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Orc archer on the orc warrior base: bald head with a topknot, small tusks, a dark jerkin with a quiver strap, two belts, a flat longbow across the body, and a quiver of arrows. Built by a Sonnet 5.5 high-tier agent in three passes (186,751 tokens).",
+    "strengths": [
+      "The bow and quiver give a clear ranged silhouette in all eight sprite directions.",
+      "The tusks, topknot, and yellow eyes read at 128 px.",
+      "Clearance check ok; the draw hand clears the jerkin in attack."
+    ],
+    "issues": [
+      "The skin renders a saturated green even with a dark base.",
+      "The collar notches are hidden by the jaw from the front.",
+      "The bowstring is static and does not follow the draw hand."
+    ],
+    "next": [
+      "Animate the bowstring with a bone on the draw hand.",
+      "Try a desaturated skin option for the forest preset."
+    ],
+    "reviewedAt": "2026-09-29T15:12:20+00:00"
   }
 }
