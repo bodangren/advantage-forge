@@ -2669,5 +2669,35 @@
     ],
     "next": "Optional: darken the cuff bands to #4a3a2c and thicken them; tilt the bow 20 degrees in the rest pose.",
     "reviewedAt": "2026-09-29T22:44:51+00:00"
+  },
+  "brigand": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Rough human outlaw on the bandit base: olive hood draped over the shoulders with a riveted skullcap band, angry tilted brows with a forehead scar, a full brown beard, a dark leather jerkin with a mail collar, a bearded hand axe, and a round buckler. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The hood, the beard, the axe, and the buckler read at 128 px in all eight directions.",
+      "The bearded axe head with a light edge band reads as an axe, not a cleaver.",
+      "The angry brow, the scar, and the open mouth give the mockup expression.",
+      "Check ok (closest 0.3 cm), ground ok, 45,058 triangles, no warnings."
+    ],
+    "issues": [
+      "The hood cape hangs as a smooth bell at the back; the mockup hood tapers more.",
+      "The face skin is smooth and pale next to the mockup's rougher face.",
+      "The axe head reads dark at sprite size."
+    ],
+    "next": "Taper the hood cape toward the waist, add a faint skin roughness in bump, and lighten the axe edge band one step.",
+    "reviewedAt": "2026-09-29T23:13:42+00:00"
   }
 }
