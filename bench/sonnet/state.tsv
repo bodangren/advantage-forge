@@ -12,9 +12,9 @@ city-wall	structure	medium	a272a4c6f715baf15	2	accepted	7.0	67065 tokens
 rampart	structure	medium	a9682a4610f18acd6	2	accepted	7.0	59945 tokens
 greenhouse-dome	structure	medium	ad413bbb748b57cd4	1	accepted	7.3	38863 tokens
 cliff-face	terrain	medium	af30a4fb714a3a9e2	0	running	-	round 3
-ancient-tree	plant	medium	a0b018f4b45a8c0be	0	running	-	round 3
-roots	plant	medium	aa8295f2677fdb53f	0	running	-	round 3
-watermill	structure	medium	-	0	queued	-	
+ancient-tree	plant	medium	a0b018f4b45a8c0be	2	accepted	7.0	51069 tokens
+roots	plant	medium	aa8295f2677fdb53f	2	feedback	4.0	v2 4.0: y/z swap bug; pass 3
+watermill	structure	medium	a2354c810c6e0e348	2	accepted	7.3	63626 tokens
 townhouse	structure	medium	-	0	queued	-	
 longhouse	structure	medium	-	0	queued	-	
 crypt-chapel	structure	medium	-	0	queued	-	
