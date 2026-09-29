@@ -2359,5 +2359,33 @@
     ],
     "next": "Optional: shift the skin toward #7a8a66; widen the club head to r 0.11.",
     "reviewedAt": "2026-09-29T20:26:43+00:00"
+  },
+  "clay-golem": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Stocky terracotta construct on the stone-golem rig: a rounded head with hollow eyes, a slot mouth and an amber forehead gem in a rim, big pressed-clay shoulders, a carved rune word on the chest and a shield panel on the belly, short thick arms with blocky hands, thick legs with knee pads and wide three-toed feet, pressed seams and cracks. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The silhouette matches the mockup in every sprite direction.",
+      "The carved rune and shield read at 128 px.",
+      "Ground check passes; 21,908 triangles, no warnings; no held items."
+    ],
+    "issues": [
+      "The gem renders pale cream rather than glowing amber at sprite size.",
+      "The hands lack a thumb and knuckle shape."
+    ],
+    "next": "Optional: darken the gem base to #6a3a08 so the emissive stays amber; add a thumb bump per hand.",
+    "reviewedAt": "2026-09-29T20:34:56+00:00"
   }
 }

@@ -51,9 +51,9 @@ specter	character	high	aee81a2219faeddb7	3	accepted	8.0	fresh rework accepted; c
 troll-guard	character	high	a6f49884230e5d9d9	2	accepted	8.0	feedback pass accepted; committed
 gnoll-warrior	character	high	af6cf25a8e6e4dd53	1	feedback	7.7	v1 7.7: dense mane ruff, browner fur, muzzle lips, wraps, spear
 poltergeist	character	high	a15a1c4c1d0ee55bc	2	accepted	8.0	feedback pass accepted; committed
-plague-bearer	character	high	a3692f32f14cd6dea	1	feedback	6.8	v1 6.8: hood shape, open coat, hunch, feet, bandages
+plague-bearer	character	high	ad6da2ed93ba2d511	2	running	7.0	fresh high agent rework (second retry, hood over a recessed head)
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
-clay-golem	character	high	af7505dfe85228626	1	feedback	7.3	v1 7.3: forehead gem, shoulders, arm length, carved marks, legs
+clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	0	running	-	enemies run 2
 living-statue	character	high	-	0	queued	-	enemies run 2
 kobold-sorcerer	character	high	-	0	queued	-	enemies run 2
