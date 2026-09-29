@@ -46,3 +46,8 @@ CLOSED 2026-09-30 00:45. Final: bench/sonnet/overnight-summary.md. Enemy phase: 
 orc-shaman 8.0, mummy rework 8.0 committed; ogre-brute 7.8 and wood-golem 7.5 (from 3.8) below the bar, sources
 uncommitted, review entries on the page; minotaur-guard skipped (two agents stalled with empty logs after the
 API drop around 23:20-23:35). Preview watcher (scripts/asset-preview.mjs --watch) left running.
+
+REOPENED 2026-09-30 00:55 (stop hook: enemy list not empty, tokens 3.05M < 4M). Enemies round 2 running: minotaur-guard
+rework retry 3, dark-knight (death-knight base), wight (vampire base), revenant (zombie-soldier base). Mockups made with mmx.
+Stall guard: check each agent's task output size 10 min after launch (a 149-byte file means the agent never started).
+Stop spawning when logged tokens pass 3.6M so the in-flight passes end under 4.0M.
