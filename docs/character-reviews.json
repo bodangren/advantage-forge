@@ -2415,5 +2415,62 @@
     ],
     "next": "Optional: lighten the muzzle top by one step; lengthen the blade to 0.4 m.",
     "reviewedAt": "2026-09-29T20:39:59+00:00"
+  },
+  "kobold-sorcerer": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Small hooded kobold caster on the kobold-warrior base: rust-red scales with a tan belly, big yellow eyes, a fanged grin, fan ears, two ridged horns through a purple hood and cape, crossed straps with a silver bell, a curled tail, and a crooked staff topped by a skull with a green flame; the attack is a cast. Reviewed 8.0 on the first build.",
+    "strengths": [
+      "The horns, hood, yellow eyes and skull staff read in every sprite direction.",
+      "The palette and silhouette match the mockup.",
+      "Clearance and ground checks pass; 50,470 triangles, no warnings."
+    ],
+    "issues": [
+      "The snout is longer and more crocodile-like than the mockup's short wide snout.",
+      "The hood is a small smooth bowl rather than a draped cowl."
+    ],
+    "next": "Optional: shorten the snout by 0.03 m and widen the grin; enlarge the hood with a fold.",
+    "reviewedAt": "2026-09-29T21:20:02+00:00"
+  },
+  "plague-bearer": {
+    "overall": 7.8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3,
+      "color": 4,
+      "materials": 4,
+      "detail": 3,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Bloated hooded undead on the zombie base: a draped pale hood over a shadowed green face with one big eye and a leather beak, bandaged sleeves, a pale coat open over a bloated belly, a belt, ragged trousers, big bare feet, and a rusty lantern with green fumes. Three passes (6.8, 7.0, 7.8); just below the 8 bar, source uncommitted.",
+    "strengths": [
+      "The hood pocket now shadows the face in the front and three-quarter views.",
+      "The belly, bandages, feet and lantern read at 128 px.",
+      "Clearance and ground checks pass; 50,826 triangles, no warnings."
+    ],
+    "issues": [
+      "The beak is short and stubby; the mockup beak is long and cracked.",
+      "The hood is a smooth near-white cone without the mockup's heavy wrinkles.",
+      "The coat lacks torn ribbons and straps."
+    ],
+    "next": "Lengthen the beak to 0.18 m with cracks in bump; displace the hood with low-frequency folds and darken it to #c8c2b0; add three hanging coat straps.",
+    "reviewedAt": "2026-09-29T21:20:02+00:00"
   }
 }
