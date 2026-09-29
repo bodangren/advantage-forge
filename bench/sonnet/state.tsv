@@ -25,10 +25,10 @@ plate-armor	armor	medium	a91410ad9773ebb10	2	accepted	7.5	67780 tokens; contract
 belt	armor-fit	medium	ac4d23b4de57bcc47	1	accepted	fit-ok	36200 tokens
 iron-helmet	armor-fit	medium	a8a141703be01a44b	1	accepted	fit-ok	32941 tokens
 steel-helmet	armor-fit	medium	adb3cb270fced20c0	1	accepted	fit-ok	35654 tokens
-chainmail	armor-fit	medium	a777e8666d04422a5	0	running	-	fit rework 1
-leather-armor	armor-fit	medium	-	0	queued	-	fit rework 2 (P0, bar 7.5)
-horned-helmet	armor-fit	medium	-	0	queued	-	fit rework 2
-cloth-hood	armor-fit	medium	-	0	queued	-	fit rework 2
+chainmail	armor-fit	medium	a777e8666d04422a5	1	accepted	fit-ok	41269 tokens
+leather-armor	armor-fit	medium	a9a77ac906eae6460	0	running	-	fit rework 2 (P0, bar 7.5)
+horned-helmet	armor-fit	medium	a2110dbdf4aa3d4e1	0	running	-	fit rework 2
+cloth-hood	armor-fit	medium	a90958415c1506749	0	running	-	fit rework 2
 leather-cap	armor-fit	medium	-	0	queued	-	fit rework 2
 crown	armor-fit	medium	-	0	queued	-	fit rework 3
 circlet	armor-fit	medium	-	0	queued	-	fit rework 3

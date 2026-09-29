@@ -4,7 +4,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Design note — chainmail shirt on an invisible torso (equipment/armor/chainmail).
  *
  * Role: equipment item for the Chibi Quest heroes; must read at 128 px.
- * Size: 0.7 m tall overall; chest ~0.52 m wide; hem on y = 0, centered on Y, front toward +Z.
+ * Size: 0.56 m wide, 0.64 m tall, 0.44 m deep (torso contract v2 shell; sleeves reach ~0.63 m wide); hem on y = 0, centered on Y, front toward +Z.
  * One idea: a heavy grey ring-mail shirt that stands on its own like a torso is inside —
  *   short puffy sleeves angled down, a round neck with a dark leather collar, a straight
  *   leather-bound hem.
@@ -81,33 +81,19 @@ export default defineAsset({
       .revolve(
         profile.polygon(
           [
-            [0, 0.02],
-            [0.205, 0.02],
-            [0.235, 0.04],
-            [0.252, 0.075],
-            [0.258, 0.14],
-            [0.25, 0.22],
-            [0.24, 0.29],
-            [0.226, 0.36],
-            [0.208, 0.44],
-            [0.184, 0.5],
-            [0.158, 0.555],
-            [0.128, 0.6],
-            [0.098, 0.63],
-            [0.075, 0.652],
-            [0.058, 0.662],
-            [0, 0.668],
+            [0, 0],[0.264, 0],[0.28, 0.026],[0.276, 0.096],[0.26, 0.196],[0.248, 0.276],[0.26, 0.376],[0.25, 0.496],[0.21, 0.576],[0.14, 0.636],[0, 0.636],
           ],
           { smooth: true, samples: 8 },
         ),
       )
-      .scale([1, 1, 0.52]);
+      .scale([1, 1, 0.78])
+      .intersect(sdf.box([1, 0.636, 1]).at(0, 0.318, 0));
 
     // Sleeves: tapered tubes on a downward-outward axis, cut square at the cuff end.
     // Local frame: axis d from a, in-plane normal e, arc coordinate u = phi * sleeve radius.
-    const a: [number, number, number] = [0.12, 0.575, 0];
+    const a: [number, number, number] = [0.17, 0.53, 0];
     const d: [number, number, number] = [0.96, -0.28, 0];
-    const len = 0.145;
+    const len = 0.15;
     const b: [number, number, number] = [
       a[0] + d[0] * len,
       a[1] + d[1] * len,
@@ -115,11 +101,11 @@ export default defineAsset({
     ];
     const cutOffset = d[0] * b[0] + d[1] * b[1] + d[2] * b[2];
     const sleeveR = sdf
-      .cone(a, b, 0.085, 0.075)
+      .cone(a, b, 0.092, 0.082)
       .smoothIntersect(0.004, sdf.halfSpace(d, cutOffset - 0.002));
 
     // Round neck opening, cut down from above so a rim remains under the collar.
-    const neckCut = sdf.cylinder(0.058, 0.24, 0.008).at(0, 0.72, 0);
+    const neckCut = sdf.cylinder(0.108, 0.24, 0.008).at(0, 0.75, 0);
 
     const mail = torso
       .smoothUnion(0.03, sleeveR, sleeveR.mirror('x', 0))
@@ -135,19 +121,19 @@ export default defineAsset({
     };
     const paint = (x: number, y: number, z: number, base: typeof IRON) => {
       let c = mailPaint(x, y, z, base);
-      if (Math.abs(x) > 0.09) {
+      if (Math.abs(x) > 0.22 && y > 0.42) {
         // Sleeve zone: dark inside the opening, near the flat cut.
         c = mixRgb(c, DARK, 0.75 * ss(len - 0.03, len - 0.006, sleeveFrame(x, y, z).ax));
-      } else if (y > 0.6) {
+      } else if (y > 0.6 && Math.abs(x) < 0.18) {
         // Dark inside the neck hole.
-        c = mixRgb(c, DARK, 0.85 * ss(0.075, 0.055, Math.hypot(x, z)));
+        c = mixRgb(c, DARK, 0.85 * ss(0.125, 0.1, Math.hypot(x, z)));
       }
       return c;
     };
     const bump = (x: number, y: number, z: number) => {
       let u: number;
       let v: number;
-      if (Math.abs(x) > 0.09 && y > 0.44) {
+      if (Math.abs(x) > 0.22 && y > 0.42) {
         ({ u, v } = sleeveFrame(x, y, z));
       } else {
         u = Math.atan2(z, x) * Math.hypot(x, z);
@@ -167,18 +153,18 @@ export default defineAsset({
 
     // ------------------------------------------------------------- leather trim
     // Collar ring around the neck, a cuff on each sleeve end, a hem band at the bottom.
-    const collar = sdf.torus(0.052, 0.017).at(0, 0.652, 0);
+    const collar = sdf.torus(0.122, 0.02).at(0, 0.634, 0).scale([1, 1, 0.9]);
     // Sleeve cuff: torus axis (initially +Y) rotated onto the sleeve axis d.
-    const cuff = sdf.torus(0.076, 0.012).rotateZ(-106).at(b[0] - 0.003, b[1] + 0.002, b[2]);
+    const cuff = sdf.torus(0.084, 0.012).rotateZ(-106).at(b[0] - 0.003, b[1] + 0.002, b[2]);
     const hemBand = mail
       .round(0.0035)
-      .smoothIntersect(0.005, sdf.box([0.6, 0.07, 0.34], 0.012).at(0, 0.05, 0));
+      .smoothIntersect(0.005, sdf.box([0.66, 0.09, 0.56], 0.012).at(0, 0.045, 0));
     const leather = sdf
       .union(collar, cuff, cuff.mirror('x', 0), hemBand)
       .paintFn((x, y, z, base) => {
         const mottle = 0.5 + 0.5 * noise.fbm(x * 30, y * 30, z * 30, 2);
         let c = mixRgb(base, LEATHER, 0.32 * mottle);
-        c = mixRgb(c, LEATHER_DARK, 0.3 * ss(0.045, 0.02, y)); // worn lower hem edge
+        c = mixRgb(c, LEATHER_DARK, 0.3 * ss(0.06, 0.02, y)); // worn lower hem edge
         return c;
       });
     k.body('leather', leather, {
