@@ -19,6 +19,6 @@ townhouse	structure	medium	acfb65ceab3ba3700	1	accepted	7.3	49637 tokens
 longhouse	structure	medium	afb11c2d520277b2d	1	accepted	7.0	54161 tokens
 crypt-chapel	structure	medium	aad31a8136eb4a90f	1	accepted	7.3	48362 tokens
 scale-armor	armor	medium	abaccbc3b963d6a9d	2	accepted	7.3	50928 tokens
-studded-leather	armor	medium	acc8f7d131dfd9c9d	3	accepted	7.0	48880 tokens; contract pass pending
+studded-leather	armor	medium	acc8f7d131dfd9c9d	4	accepted	7.0	49070 tokens; contract v2
 vines	plant	medium	abafc6b0c21ad5c5c	1	accepted	7.2	43535 tokens
-plate-armor	armor	medium	a91410ad9773ebb10	1	feedback	6.8	v1 6.8: pauldrons, torso; contract in pass 2low tier failed twice on armor in round 1; use medium
+plate-armor	armor	medium	a91410ad9773ebb10	2	accepted	7.5	67780 tokens; contract v2

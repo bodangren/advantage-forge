@@ -25,21 +25,23 @@ const body = () =>
     .revolve(
       profile.polygon(
         [
-          [0, 0.62],
-          [0.09, 0.615],
-          [0.11, 0.6],
-          [0.19, 0.53],
-          [0.24, 0.45],
-          [0.225, 0.33],
-          [0.21, 0.2],
-          [0.22, 0.08],
-          [0.22, 0.0],
-          [0, 0.0],
+          [0, 0.64],
+          [0.09, 0.64],
+          [0.14, 0.636],
+          [0.21, 0.576],
+          [0.25, 0.496],
+          [0.26, 0.376],
+          [0.248, 0.276],
+          [0.26, 0.196],
+          [0.276, 0.096],
+          [0.28, 0.026],
+          [0.264, 0],
+          [0, 0],
         ],
         { smooth: true, samples: 8 },
       ),
     )
-    .scale([1, 1, 0.7]);
+    .scale([1, 1, 0.78]);
 
 export default defineAsset({
   name: 'studded-leather',
@@ -50,7 +52,7 @@ export default defineAsset({
 
   build(k) {
     const cut = sdf.box([0.06, 0.8, 0.5], 0.008).at(0, 0.3, 0.25);
-    const collar = sdf.torus(0.12, 0.02).scale([1, 2.0, 0.7]).at(0, 0.6, 0);
+    const collar = sdf.torus(0.14, 0.02).scale([1, 2.0, 0.78]).at(0, 0.63, 0);
     const outer = sdf
       .union(body(), collar)
       .smoothSubtract(0.006, cut, sdf.box([0.5, 0.05, 0.5]).at(0, 0.61, 0).scale(0.0001))
@@ -58,13 +60,13 @@ export default defineAsset({
     // Stitch lines along the panel edges and hem.
     const paint = (x: number, y: number, z: number, base: typeof LEATHER) => {
       let c = mixRgb(base, LIT, 0.35 * ss(0.3, 0.55, y) * (0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2)));
-      c = mixRgb(c, DARK, 0.5 * ss(0.19, 0.245, Math.abs(x)));
+      c = mixRgb(c, DARK, 0.5 * ss(0.21, 0.27, Math.abs(x)));
       if (z > 0.04) {
         const dash = Math.sin((y * Math.PI * 2) / 0.02) > -0.2;
         const ax = Math.abs(x);
         if (dash && Math.abs(ax - 0.05) < 0.0035 && y > 0.08 && y < 0.52) c = mixRgb(c, STITCH, 0.9);
         const dashx = Math.sin((x * Math.PI * 2) / 0.02) > -0.2;
-        if (dashx && Math.abs(y - 0.035) < 0.0035 && ax > 0.05) c = mixRgb(c, STITCH, 0.9);
+        if (dashx && Math.abs(y - 0.05) < 0.0035 && ax > 0.05) c = mixRgb(c, STITCH, 0.9);
       }
       return c;
     };
