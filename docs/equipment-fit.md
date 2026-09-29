@@ -26,12 +26,30 @@ Height about 1.0 m, standing on y = 0, facing +Z, +X is the character's left.
 |---|---|---|---|
 | Chest armor (leather, chainmail, scale, studded, plate) | 2x | the torso revolve; hem on y = 0 | `chest`, lift 0.152 m after the 0.5 scale |
 | Robes and mantles | 2x | shoulder width 0.52, neck opening r 0.14 at y 0.636 | `chest` |
-| Helmets and hats | to set | the head ellipsoid | `head` |
-| Boots and greaves | to set | shin from the knee to the foot | `shin.L` / `shin.R` |
-| Gloves, bracers | to set | forearm from the elbow to the wrist | `forearm.L` / `forearm.R` |
-| Belts | 2x | the waist ring r 0.124 | `hips` |
-| Weapons and shields | 1x | the grip in the hand | `hand.L` / `hand.R` |
+| Helmets, hoods, caps, crowns, circlets | 1x (fit = display) | the head ellipsoid + 0.01 m clearance: inner radii 0.215 x 0.21 x 0.20; outer about 0.43 x 0.42 x 0.40 | `head` |
+| Boots and greaves | 2x | shin from the knee (y 0.1325) to the foot; foot 0.1 m long | `shin.L` / `shin.R` |
+| Gloves, gauntlets, bracers | 2x | forearm from the elbow to the wrist (0.09 m) | `forearm.L` / `forearm.R` |
+| Belts | 2x | the waist ring r 0.124, z scale 0.78: 0.50 wide x 0.39 deep at 2x | `hips` |
+| Weapons and shields | real-world size; hand fit 0.45x | the grip in the hand | `hand.L` / `hand.R` |
 
 The chest contract numbers (the 2x torso profile) are in `bench/sonnet/briefs/torso-contract.md`.
-Set the remaining "to set" scales before the first piece of that class is built, from the existing
-P0 pieces (iron-helmet, boots) so the family stays consistent.
+Accessories (rings, amulets, pouches, lanterns) are shop icons at 4x to 6x with no body fit; the
+necklace and amulet take the `neck` anchor later.
+
+## Audit of the existing equipment (2026-09-29)
+
+Measured from `out/<name>/stats.json` bounds against the hero base.
+
+| Class | Compliant | Rework |
+|---|---|---|
+| Chest | plate-armor, scale-armor, studded-leather (contract v2); cloth-robe, mage-robe, cape, cloak, mantle at 2x | chainmail (depth 0.27, 1.2x: too flat); leather-armor (P0; shell 0.50 x 0.42 x 0.22: 1.8x / 1.3x / 1x) |
+| Head | none at the 1x fit | iron-helmet (P0) and steel-helmet 0.9x (0.37 wide); horned-helmet 0.9x; cloth-hood 0.8x; leather-cap and crown 0.6x; circlet 0.5x |
+| Arms | gauntlets, gloves, bracers (2x) | none |
+| Legs | boots, greaves (2x) | none |
+| Belt | none | belt (0.38 x 0.46: rotated 90 degrees; target 0.50 x 0.39) |
+| Shoulders | shoulder-armor (2x) | none |
+| Weapons, shields | all (real-world size family) | none |
+| Accessories | out of scope | none |
+
+Rework order: belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood,
+leather-cap, crown, circlet.
