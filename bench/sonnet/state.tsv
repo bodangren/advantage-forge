@@ -6,10 +6,10 @@ cloth-robe	armor	low	a9fdd4b6acdd5dcef	3	accepted	7.0	43589 tokens
 mantle	armor	low->medium	a45aafcf0b0ed1b7f	3	accepted	7.0	80251 tokens incl. 2 failed low passes
 greenhouse	structure	medium	a8607c5722e83d14b	2	accepted	7.2	68372 tokens
 yurt	structure	medium	a8e4a50ff3f3e8323	2	accepted	7.5	52936 tokens
-pier	structure	medium	ae55d85c6505404f9	0	running	-	round 2
-cave-mouth	terrain	medium	ab9405aa8a9ce3833	0	running	-	round 2
-city-wall	structure	medium	a272a4c6f715baf15	0	running	-	round 2
-rampart	structure	medium	-	0	queued	-	
+pier	structure	medium	ae55d85c6505404f9	1	accepted	7.0	46021 tokens
+cave-mouth	terrain	medium	ab9405aa8a9ce3833	2	accepted	7.0	43525 tokens
+city-wall	structure	medium	a272a4c6f715baf15	1	feedback	6.5	v1 6.5: parapet artifacts, yellow blocks
+rampart	structure	medium	a9682a4610f18acd6	1	feedback	6.5	v1 6.5: white stone, voronoi paint, slab stubs
 greenhouse-dome	structure	medium	-	0	queued	-	
 cliff-face	terrain	medium	-	0	queued	-	
 ancient-tree	plant	medium	-	0	queued	-	
