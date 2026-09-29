@@ -55,10 +55,10 @@ plague-bearer	character	high	ad6da2ed93ba2d511	3	skipped	7.8	three passes just u
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	a5b2d7b30b5c5db17	1	feedback	7.3	v1 7.3: V mask face, oval eyes, marble value contrast, scrolls, shield rings
+living-statue	character	high	a5a6a067cb70196c9	2	running	7.7	fresh high agent rework (second retry, value contrast and helm)
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
-gnoll-hunter	character	high	aa6497e35f1fdff45	0	running	-	enemies run 2
-kobold-trapper	character	high	a6732c980a19f2cef	0	running	-	enemies run 2
-clockwork-sentry	character	high	ac241e6566fa826d6	0	running	-	enemies run 2
+gnoll-hunter	character	high	aa6497e35f1fdff45	1	feedback	7.5	v1 7.5: dark grey face and dense mane, bow held up, shaggy cuffs, hands
+kobold-trapper	character	high	a6732c980a19f2cef	1	feedback	7.5	v1 7.5: cupped leaf ears, olive scales, closer shaggy hood, rope knot and wraps
+clockwork-sentry	character	high	ac241e6566fa826d6	2	accepted	8.0	feedback pass accepted; committed
 clockwork-soldier	character	high	-	0	queued	-	enemies run 2
 animated-weapon	character	high	-	0	queued	-	enemies run 2

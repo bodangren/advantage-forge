@@ -2500,5 +2500,33 @@
     ],
     "next": "Optional: raise the halo opacity to 0.5; add four more shards per fist.",
     "reviewedAt": "2026-09-29T21:22:19+00:00"
+  },
+  "clockwork-sentry": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Small brass automaton on the animated-armor rig: a wide domed head with side clips, a blue lens and a winding key, a barrel body with a glowing gear porthole and side gear discs, copper coil joints on rod arms with a crossbow and a three-prong claw, rod legs on a riveted brown iron base plate with gear blocks. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The dome, lens, porthole and round base read in every sprite direction.",
+      "The worn brass and the saturated blue glow match the mockup's materials.",
+      "Clearance and ground checks pass; 38,992 triangles, no warnings."
+    ],
+    "issues": [
+      "The claw and crossbow clip into the collar in the death and awaken clips (info lines only).",
+      "The mockup's brass is darker and browner."
+    ],
+    "next": "Optional: widen the arm arcs in death and awaken; darken the brass base one step.",
+    "reviewedAt": "2026-09-29T21:52:18+00:00"
   }
 }
