@@ -40,5 +40,9 @@ wood-golem	enemy-rework	high	ae9552047ba3298b9	3	skipped	7.5	3.8 -> 7.5, below t
 mummy	enemy-rework	high	a74ad731e917c7399	1	accepted	8.0	75483 tokens (7.5 -> 8.0)
 minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	1	accepted	8.0	66143 tokens (7.0 -> 8.0)
 dark-knight	character	high	a8e9be475c3b62cb1	2	accepted	8.0	feedback pass accepted; committed
-wight	enemy	high	a09f06b2a5f0b51cd	1	feedback	7.5	v1 7.5: crown disc, eyes, strands
+wight	character	high	a09f06b2a5f0b51cd	2	failed	7.7	fresh high agent rework next (wight-rework brief)
 revenant	enemy	high	a94f51d5f888db355	0	running	-	enemies round 2
+bandit-captain	character	high	a60d63923daafb467	0	running	-	enemies run 2
+orc-warlord	character	high	a728d5f92bd35cdf7	0	running	-	enemies run 2
+banshee	character	high	-	0	queued	-	enemies run 2
+iron-golem	character	high	-	0	queued	-	enemies run 2

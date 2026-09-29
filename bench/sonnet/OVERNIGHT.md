@@ -51,3 +51,14 @@ REOPENED 2026-09-30 00:55 (stop hook: enemy list not empty, tokens 3.05M < 4M). 
 rework retry 3, dark-knight (death-knight base), wight (vampire base), revenant (zombie-soldier base). Mockups made with mmx.
 Stall guard: check each agent's task output size 10 min after launch (a 149-byte file means the agent never started).
 Stop spawning when logged tokens pass 3.6M so the in-flight passes end under 4.0M.
+Correction 01:00: the 149-byte task output file is normal while an agent runs; the two "stalled" minotaur agents had
+edited the file. Judge progress by the target file mtime. Minotaur-guard accepted 8.0 on the third launch.
+Round 2 agents confirmed working (dark-knight, wight, revenant sources written 00:57-00:58).
+
+COUNTER RESET 2026-09-30 01:35 (owner): "start the token counter over again and stop after the next 4 million". Rows with
+batch `run2` in log.tsv count toward the new 4.0M limit (sum: awk -F'\t' '$5=="run2"{s+=$6}END{print s}' bench/sonnet/log.tsv).
+Dark-knight accepted 8.0 (53bbf0e) before the reset. Open P1 enemies (37) ordered by game need (the games use bandit, orc-warrior,
+skeleton, zombie, goblin-warrior; dungeon denizens first): bandit-captain, orc-warlord, banshee, iron-golem, then gargoyle,
+specter, poltergeist, plague-bearer, vampire-lord, clay-golem, crystal-golem, living-statue, animated-weapon, clockwork-sentry,
+clockwork-soldier, gnoll-warrior, gnoll-hunter, troll-guard, kobold-sorcerer, kobold-trapper, brigand, highwayman, raider,
+mercenary, deserter, assassin, smuggler, pirate, pirate-captain, hunter-rival, dark-mage, warlock, witch, cult-leader, evil-priest.
