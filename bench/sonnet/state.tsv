@@ -47,6 +47,10 @@ orc-warlord	character	high	a728d5f92bd35cdf7	2	accepted	8.0	feedback pass accept
 banshee	character	high	ac2a5cf58a26d90af	2	running	6.5	fresh high agent rework (second retry, new hair approach)
 iron-golem	character	high	a9490d22f9f7aaf5f	2	accepted	8.0	feedback pass accepted; committed
 gargoyle	character	high	ad554ed46a2cbd24a	1	feedback	7.5	v1 7.5: stone value, chest ridges, eyes, wing rims, crest
-specter	character	high	a20381e3bc4e4edf4	0	running	-	enemies run 2
-troll-guard	character	high	-	0	queued	-	enemies run 2
+specter	character	high	a20381e3bc4e4edf4	1	feedback	7.3	v1 7.3: mist wisps, cowl wraps, dark bony arms, robe layers
+troll-guard	character	high	a6f49884230e5d9d9	0	running	-	enemies run 2
 gnoll-warrior	character	high	-	0	queued	-	enemies run 2
+poltergeist	character	high	-	0	queued	-	enemies run 2
+plague-bearer	character	high	-	0	queued	-	enemies run 2
+vampire-lord	character	high	-	0	queued	-	enemies run 2
+clay-golem	character	high	-	0	queued	-	enemies run 2
