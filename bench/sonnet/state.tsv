@@ -9,9 +9,9 @@ yurt	structure	medium	a8e4a50ff3f3e8323	2	accepted	7.5	52936 tokens
 pier	structure	medium	ae55d85c6505404f9	1	accepted	7.0	46021 tokens
 cave-mouth	terrain	medium	ab9405aa8a9ce3833	2	accepted	7.0	43525 tokens
 city-wall	structure	medium	a272a4c6f715baf15	1	feedback	6.5	v1 6.5: parapet artifacts, yellow blocks
-rampart	structure	medium	a9682a4610f18acd6	1	feedback	6.5	v1 6.5: white stone, voronoi paint, slab stubs
-greenhouse-dome	structure	medium	-	0	queued	-	
-cliff-face	terrain	medium	-	0	queued	-	
+rampart	structure	medium	a9682a4610f18acd6	2	accepted	7.0	59945 tokens
+greenhouse-dome	structure	medium	ad413bbb748b57cd4	0	running	-	round 3
+cliff-face	terrain	medium	af30a4fb714a3a9e2	0	running	-	round 3
 ancient-tree	plant	medium	-	0	queued	-	
 roots	plant	medium	-	0	queued	-	
 watermill	structure	medium	-	0	queued	-	
