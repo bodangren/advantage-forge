@@ -54,3 +54,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-29	steel-helmet	armor-fit	medium	fit1	35654	8	1.4	8	fit-ok	7	pass	fit rework: uniform 1.36 (shell was thick), bounds 0.49 x 0.45 x 0.51, 4834 tris (+19%); design unchanged
 2026-09-29	belt	armor-fit	medium	fit1	36200	6	1.9	8	fit-ok	7	pass	fit rework: loop ellipse 0.50 x 0.39 (waist at 2x), bounds 0.51 x 0.10 x 0.40, 2324 tris; buckle and pouch on the loop
 2026-09-29	chainmail	armor-fit	medium	fit1	41269	11	2.2	8	fit-ok	7	pass	fit rework: contract v2 shell 0.56 x 0.64 x 0.44, sleeves and bands moved, hem on y 0, 5340 tris; clean
+2026-09-29	horned-helmet	armor-fit	medium	fit2	33791	6	1.6	8	fit-ok	7	pass	fit rework: scale [1.55,1.5,1.45], bowl 0.46 x 0.43, cavity 0.215 x 0.21 x 0.20, 3850 tris; design unchanged
+2026-09-29	cloth-hood	armor-fit	medium	fit2	34823	6	1.7	7	fit-ok	7	pass	fit rework: shell scale [1.6,1.75,1.5], explicit cavity 0.215 x 0.21 x 0.20 at y 0.43, bounds 0.53 x 0.68 x 0.45, 2894 tris; strong bump
+2026-09-29	leather-cap	armor-fit	medium	fit2	-	-	-	8	fit-ok	7	pass	fit rework: uniform 1.8, bounds 0.43 x 0.18 x 0.55 incl. visor, cavity 0.19 x 0.15 x 0.20 (a cap sits on the head, height ok), 7876 tris, detail 0.005

@@ -4,7 +4,8 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Design note — cloth hood (equipment/armor/cloth-hood).
  *
  * Role: gear for the chibi heroes; must read as "green hood" at 128 px on the shelf and in hand.
- * Size: 0.4 m tall, stands on y = 0, centered on Y, the open face toward +Z.
+ * Size: about 0.53 wide x 0.70 tall x 0.46 deep (fit contract: 1x, inner cavity radii 0.215 x 0.21 x 0.20
+ *   around the hero head, 0.01 m clearance; head center y 0.43 in this frame); stands on y = 0, open face toward +Z.
  * One idea: a soft leaf-green hood standing on an invisible head, the crown swept to a
  *   backward point, the dark open face reading as the focal hollow.
  * Shape language: round and soft (dome, bell cape, rolled rim); one backward point breaks
@@ -22,6 +23,7 @@ const GREEN = rgb('#568e3e');
 const DARK = rgb('#33582a');
 const LIGHT = rgb('#84bb60');
 const INTERIOR = rgb('#1d2b18');
+const SC: [number, number, number] = [1.6, 1.75, 1.5]; // design scale to the hero-head fit
 
 export default defineAsset({
   name: 'cloth-hood',
@@ -34,11 +36,12 @@ export default defineAsset({
   build(k) {
     // ------------------------------------------------------------- hood mass
     // Rounded dome over the invisible head, with a soft point swept up and backward.
-    const dome = sdf.ellipsoid([0.15, 0.13, 0.15]).at(0, 0.243, 0.002);
+    const dome = sdf.ellipsoid([0.15, 0.14, 0.15]).at(0, 0.243, 0.002);
     const tip = sdf.cone([0, 0.335, -0.045], [0, 0.378, -0.155], 0.04, 0.01);
     const hoodMass = sdf
       .smoothUnion(0.05, dome, tip)
-      .displace(0.0025, (x, y, z) => noise.fbm(x * 8, y * 8, z * 8, 2), 1.1);
+      .displace(0.0025, (x, y, z) => noise.fbm(x * 8, y * 8, z * 8, 2), 1.1)
+      .scale(SC);
 
     // ------------------------------------------------------------- cape (bell with folds)
     const capeProfile = profile.polygon(
@@ -66,11 +69,12 @@ export default defineAsset({
       .revolve(capeProfile)
       .scale([1, 1, 0.78])
       .displace(0.008, fold)
-      .displace(0.0025, (x, y, z) => noise.fbm(x * 7, y * 7, z * 7, 2), 1.1);
+      .displace(0.0025, (x, y, z) => noise.fbm(x * 7, y * 7, z * 7, 2), 1.1)
+      .scale(SC);
 
     // ------------------------------------------------------------- shell, face opening, rim
-    const cavity = sdf.ellipsoid([0.126, 0.113, 0.127]).at(0, 0.248, 0.0);
-    const opening = sdf.ellipsoid([0.118, 0.096, 0.27]).at(0, 0.258, 0.165);
+    const cavity = sdf.ellipsoid([0.215, 0.21, 0.2]).at(0, 0.43, 0);
+    const opening = sdf.ellipsoid([0.118, 0.096, 0.27]).at(0, 0.258, 0.165).scale(SC);
 
     const clothMass = sdf.smoothUnion(0.035, cape, hoodMass);
     const hood = clothMass.subtract(cavity.round(-0.003)).smoothSubtract(0.02, opening);
@@ -83,8 +87,8 @@ export default defineAsset({
 
     const clothPaint = (x: number, y: number, z: number, base: ReturnType<typeof rgb>) => {
       let c = base; // GREEN on the surface
-      c = mixRgb(c, LIGHT, 0.62 * Math.min(1, Math.max(0, (y - 0.2) / 0.15))); // sunlit crown
-      c = mixRgb(c, DARK, 0.5 * Math.min(1, Math.max(0, (0.08 - y) / 0.08))); // damp hem shadow
+      c = mixRgb(c, LIGHT, 0.62 * Math.min(1, Math.max(0, (y - 0.35) / 0.26))); // sunlit crown
+      c = mixRgb(c, DARK, 0.5 * Math.min(1, Math.max(0, (0.14 - y) / 0.14))); // damp hem shadow
       c = mixRgb(c, DARK, 0.12 * (0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2))); // patchiness
       return c;
     };
@@ -105,7 +109,7 @@ export default defineAsset({
 
     // ------------------------------------------------------------- front tie
     // A small knot with two short ribbon ends, rooted on the cape's front surface.
-    const anchor = sdf.surfacePoint(cape, [0, 0.155, 0.3], 0.006);
+    const anchor = sdf.surfacePoint(cape, [0, 0.27, 0.6], 0.006);
     const tieLocal = sdf
       .smoothUnion(
         0.01,
@@ -113,7 +117,7 @@ export default defineAsset({
         sdf.cone([-0.007, -0.006, 0], [-0.042, -0.082, 0.014], 0.014, 0.007),
         sdf.cone([0.007, -0.006, 0], [0.042, -0.082, 0.014], 0.014, 0.007),
       )
-      .scale([1, 1, 0.7])
+        .scale([1.6, 1.6, 1.1])
       .at(anchor[0], anchor[1], anchor[2]);
     k.body('tie', tieLocal, { color: GREEN, roughness: 0.9, metalness: 0, detail: 0.004, maxTriangles: 300 });
   },

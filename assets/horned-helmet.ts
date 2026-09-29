@@ -5,8 +5,9 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: hero gear for the chibi party; seen as a pickup, an icon, and on a head,
  *   so the dome, brow band, nasal, and above all the two horns must read at 128 px.
- * Size: 0.30 m wide, ~0.25 m tall to the crown, ~0.46 m to the horn tips,
- *   resting on its rim on y = 0, face toward +Z, open at the bottom.
+ * Size: fit contract 1x (docs/equipment-fit.md): inner cavity radii ~0.215 x 0.21 x 0.20 over
+ *   the hero head, bowl ~0.46 wide x 0.43 deep, ~0.38 m to the crown, ~0.60 m to the horn tips,
+ *   built at 0.30 m and scaled by FIT below, resting on its rim on y = 0, face toward +Z, open at the bottom.
  * One idea: a round iron nasal helm carrying two big cream horns that sweep
  *   outward, then curl up — the horns are the silhouette, oversized on purpose.
  * Shape language: round dominant (dome, rivets, curled horns); the nasal point
@@ -26,6 +27,8 @@ const IRON_DARK = rgb('#363a3f');
 const IRON_HI = rgb('#a8acb1');
 const HORN = rgb('#e9dcbc');
 const HORN_TIP = rgb('#f4ead2');
+
+const FIT: [number, number, number] = [1.55, 1.5, 1.45]; // whole build, about the origin
 
 const BAND_Y = 0.121; // brow band center height
 
@@ -197,7 +200,8 @@ export default defineAsset({
         return c;
       })
       .paintWhere(domeInner.round(0.004), IRON_DARK, 0.01)
-      .paintWhere(rivets.round(0.002), IRON_HI, 0.005);
+      .paintWhere(rivets.round(0.002), IRON_HI, 0.005)
+      .scale(FIT);
 
     k.body('iron', helmet, {
       color: '#4a4f55',
@@ -212,14 +216,14 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ horns
     // Cream horn, paler toward the tip, a warm accent against the iron.
-    k.body('horn', horn, {
+    k.body('horn', horn.scale(FIT), {
       color: '#e9dcbc',
       roughness: 0.45,
       metalness: 0,
       detail: 0.0055,
       maxTriangles: 1500,
       paintFn: (x, y, z, base) => {
-        const t = Math.min(1, Math.max(0, (Math.hypot(x, z) - 0.14) / 0.1 + (y - 0.17) / 0.25));
+        const t = Math.min(1, Math.max(0, (Math.hypot(x / FIT[0], z / FIT[2]) - 0.14) / 0.1 + (y / FIT[1] - 0.17) / 0.25));
         return mixRgb(base, HORN_TIP, 0.65 * Math.min(1, Math.max(0, t)));
       },
     });
