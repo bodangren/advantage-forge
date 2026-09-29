@@ -2247,5 +2247,33 @@
     ],
     "next": "Scale the head to one third of the body; replace the fan blades with 20 to 30 medium chains (r 0.015) packed over a thinner cap; make the wisps flat ribbons with an emissive inner face.",
     "reviewedAt": "2026-09-29T19:12:28+00:00"
+  },
+  "specter": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Floating hooded phantom on the wraith base: a deep peaked hood over a black void face with two glowing green eyes, layered scarf bands, a grey-blue robe with a torn front panel and hem, dark bony arms with clawed hands and wrist chains, curling green mist at the hem. Reviewed 8.0 after three passes (one feedback pass, one fresh rework).",
+    "strengths": [
+      "The hood, green eyes and mist read in every sprite direction.",
+      "The cloth reads as smooth matte clay in the textured build.",
+      "Clearance and ground checks pass; 45,884 triangles, no warnings."
+    ],
+    "issues": [
+      "The cowl is a smooth stacked collar rather than crumpled scarf folds.",
+      "The robe is a wide cylinder; the mockup tapers to a narrower hem."
+    ],
+    "next": "Optional: displace the top scarf band with a low-frequency fold; taper the robe profile by 0.03 at the hem.",
+    "reviewedAt": "2026-09-29T19:34:40+00:00"
   }
 }
