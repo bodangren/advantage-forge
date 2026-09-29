@@ -11,3 +11,38 @@ Tokens so far (batch 1 incl. probe): 325,020.
 
 Round 1 status: cloth-robe pass 3 (same agent), yurt pass 2 (same agent), greenhouse pass 2 (same agent), mantle fresh medium agent. Low tier: both armor pieces failed at v1 (6.5); use medium for the remaining armor.
 Tokens: probe 325,020 + round 1 so far 35568+8516+41196+43356+56088 = 509,744.
+
+Round 1 closed 2026-09-29: cloth-robe 7.0 (43.6K), mantle 7.0 (80.3K incl. failed low), greenhouse 7.2 (68.4K), yurt 7.5 (52.9K). Commits 7af3a6c + greenhouse.
+Round 2 running: pier, cave-mouth, city-wall, rampart (all medium). Round 3 briefs ready: greenhouse-dome, cliff-face, ancient-tree, roots.
+Tokens: 325,020 probe + 245,153 round 1 = 570,173.
+
+Round 2 closed: pier 7.0 (46.0K), cave-mouth 7.0 (43.5K), rampart 7.0 (59.9K); city-wall on pass 2.
+Round 3 running: cliff-face, ancient-tree, roots; greenhouse-dome accepted 7.3 (38.9K).
+Round 4 briefs ready: watermill, townhouse, longhouse, crypt-chapel. Round 5 briefs ready: scale-armor, studded-leather, plate-armor (medium), vines.
+Preview page: out/preview/index.html (scripts/asset-preview.mjs --watch running, pid in scratchpad log).
+Tokens: 570,173 + round 2 (46021+43525+59945+41098 so far) + greenhouse-dome 38863 = 799,625 (city-wall pass 2 pending).
+
+Round 3/4 status: ancient-tree 7.0 (51.1K), watermill 7.3 (63.6K) accepted; cliff-face on pass 2 (v1 5.0, reduction fight); roots on pass 3 (y/z swap bug fix).
+Running: townhouse, longhouse. Queue left: crypt-chapel, scale-armor, studded-leather, plate-armor, vines (briefs ready).
+Accepted so far: 14 (incl. probe). Tokens: about 1,062,000 through watermill v2 (see log.tsv for exact per-pass figures).
+
+Batch 1 queue closed 2026-09-29 ~21:50: 19 accepted + cliff-face skipped. Owner then set the equipment fit rule
+(docs/equipment-fit.md) and asked for an audit; 10 reworks queued (state.tsv rows "armor-fit"). Fit rework round 1
+running: belt, iron-helmet, steel-helmet, chainmail. Then round 2: leather-armor, horned-helmet, cloth-hood,
+leather-cap; round 3: crown, circlet. After that: the P1 enemies (ghoul, minotaur-guard, mummy, vampire have mockups
+in docs/enemy-mockups/), forge-sonnet-high, one per agent, bar 8.
+Tokens through batch 1: 1,513,803 logged (plus 325,020 probe = 1.84M) (sum log.tsv col 6).
+
+Fit reworks closed 2026-09-29 ~22:40: all 10 accepted (354K tokens). Equipment track task ticked.
+Enemy phase (forge-sonnet-high, bar 8, one per agent): goblin-king (Labyrinth boss, game need), orc-archer, orc-shaman, ogre-brute running.
+Mockups made with mmx (bench/overnight/make-denizen-mocks.sh style suffix) and committed. The four mockup enemies that
+already existed (ghoul 8, vampire 8, mummy 7.5, minotaur-guard 7) need no build; mummy and minotaur-guard are below the
+character bar and are rework candidates, as are wraith (7) and wood-golem (3.8, file untracked, owned by another session).
+Review a character: render.png + sprites/preview.png + ./forge check output; then node scripts/set-review.mjs <name> <entry.json>
+and node scripts/character-review.mjs. Tokens logged so far: see awk sum of log.tsv col 6 (about 1.87M + 325K probe).
+Budget note (about 23:05): 2.36M logged + 325K probe = 2.69M of the 4.0M stop. Remaining plan: finish the four characters in flight (goblin-king p2, orc-archer p3, orc-shaman v1, ogre-brute p2), then wood-golem rework (owner request), then stop and write bench/sonnet/overnight-summary.md. No new enemy builds after wood-golem unless the total stays under 3.6M.
+
+CLOSED 2026-09-30 00:45. Final: bench/sonnet/overnight-summary.md. Enemy phase: goblin-king 8.0, orc-archer 8.0,
+orc-shaman 8.0, mummy rework 8.0 committed; ogre-brute 7.8 and wood-golem 7.5 (from 3.8) below the bar, sources
+uncommitted, review entries on the page; minotaur-guard skipped (two agents stalled with empty logs after the
+API drop around 23:20-23:35). Preview watcher (scripts/asset-preview.mjs --watch) left running.
