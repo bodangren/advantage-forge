@@ -57,8 +57,8 @@ clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepte
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
 living-statue	character	high	a5b2d7b30b5c5db17	1	feedback	7.3	v1 7.3: V mask face, oval eyes, marble value contrast, scrolls, shield rings
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
-gnoll-hunter	character	high	-	0	queued	-	enemies run 2
-kobold-trapper	character	high	-	0	queued	-	enemies run 2
-clockwork-sentry	character	high	-	0	queued	-	enemies run 2
+gnoll-hunter	character	high	aa6497e35f1fdff45	0	running	-	enemies run 2
+kobold-trapper	character	high	a6732c980a19f2cef	0	running	-	enemies run 2
+clockwork-sentry	character	high	ac241e6566fa826d6	0	running	-	enemies run 2
 clockwork-soldier	character	high	-	0	queued	-	enemies run 2
 animated-weapon	character	high	-	0	queued	-	enemies run 2
