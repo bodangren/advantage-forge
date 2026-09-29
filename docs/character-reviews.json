@@ -1924,5 +1924,37 @@
       "Try a desaturated skin option for the forest preset."
     ],
     "reviewedAt": "2026-09-29T15:12:20+00:00"
+  },
+  "goblin-king": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Goblin king, the Labyrinth boss, on the goblin warrior base: a wide grinning face with fangs and lowered brows, a five-point gold crown with a red gem between two ivory horns, a fur collar, a purple cape with shoulder flaps, crossed straps with a bone medallion over a studded vest, a big belly, a gold-buckled belt, a strip loincloth, and a bone club. Built by a Sonnet 5.5 high-tier agent in two passes (173,443 tokens).",
+    "strengths": [
+      "The crown, ears, and club read in every sprite direction.",
+      "The grin and lowered brows make him a boss, not a cute warrior.",
+      "Clearance check ok; seven clips including two attacks."
+    ],
+    "issues": [
+      "1.04 m to the crown tip, a little under the 1.1 m target.",
+      "The crown points are plain cones.",
+      "The cape back is a smooth bag; no draped folds."
+    ],
+    "next": [
+      "Add two crown side spikes with gems for a more ornate silhouette.",
+      "Fold the cape with two vertical drapes on the back."
+    ],
+    "reviewedAt": "2026-09-29T15:25:43+00:00"
   }
 }
