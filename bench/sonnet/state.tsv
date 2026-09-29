@@ -44,7 +44,7 @@ wight	character	high	a2dac84e4b244a4d8	3	accepted	8.0	fresh rework accepted; com
 revenant	character	high	a94f51d5f888db355	2	accepted	8.0	feedback pass accepted; committed
 bandit-captain	character	high	abb1745842a57ceb7	3	accepted	8.0	fresh rework accepted; committed
 orc-warlord	character	high	a728d5f92bd35cdf7	2	accepted	8.0	feedback pass accepted; committed
-banshee	character	high	ac2a5cf58a26d90af	2	running	6.5	fresh high agent rework (second retry, new hair approach)
+banshee	character	high	ac2a5cf58a26d90af	3	skipped	7.3	three passes below the bar; review entry added; source uncommitted
 iron-golem	character	high	a9490d22f9f7aaf5f	2	accepted	8.0	feedback pass accepted; committed
 gargoyle	character	high	ad554ed46a2cbd24a	2	accepted	8.0	feedback pass accepted; committed
 specter	character	high	a20381e3bc4e4edf4	1	feedback	7.3	v1 7.3: mist wisps, cowl wraps, dark bony arms, robe layers

@@ -2218,5 +2218,34 @@
     ],
     "next": "Optional: add two curved membrane ridges per wing in bump; raise the tail 0.05 m.",
     "reviewedAt": "2026-09-29T19:11:45+00:00"
+  },
+  "banshee": {
+    "overall": 7.3,
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 3,
+      "color": 4,
+      "materials": 4,
+      "detail": 3,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Wailing floating ghost on the ghost base: a white hair mass streaming up and back with curling locks, slanted cyan eyes in dark sockets, an open screaming mouth, thin raised claw arms, a draped grey-green gown with a ragged hem and cyan drips, four translucent curling wisps. Three passes (6.0, 6.5, 7.3); below the 8 bar, source uncommitted.",
+    "strengths": [
+      "The hair reads as a white mane in all eight sprite directions.",
+      "The gown drape, collar rings and ragged hem match the mockup's shape.",
+      "Ground check passes; 41,010 triangles, no warnings."
+    ],
+    "issues": [
+      "The hair mass is a smooth scalloped shell with horn-like locks; the mockup has many thin wavy strands.",
+      "The head and face are small at 128 px; the scream and teeth do not read.",
+      "The wisps are plain tubes rather than twisting ribbons with a glowing inner face."
+    ],
+    "next": "Scale the head to one third of the body; replace the fan blades with 20 to 30 medium chains (r 0.015) packed over a thinner cap; make the wisps flat ribbons with an emissive inner face.",
+    "reviewedAt": "2026-09-29T19:12:28+00:00"
   }
 }
