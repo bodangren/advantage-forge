@@ -2557,5 +2557,33 @@
     ],
     "next": "Raise the helm into a cap (ellipsoid 0.22 x 0.26 x 0.22) with a curled laurel and a gem; lower the marble base one more step; replace the noise cracks with six short hand-placed strokes.",
     "reviewedAt": "2026-09-29T21:58:49+00:00"
+  },
+  "kobold-trapper": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Small hooded kobold trapper on the kobold-warrior base: olive scales with a pale belly, a long crocodile snout, one yellow eye and a leather eyepatch, broad cupped ears, a fitted fur-trimmed leather hood with a shaggy mantle, crossed straps with a rope knot, a rope belt with pouches and a ring, a long tail, a ringed hook tool and a spike pin. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The ears, hood, snout and eyepatch read in every sprite direction.",
+      "The olive palette and the gear match the mockup.",
+      "Clearance and ground checks pass; 57,350 triangles, no warnings."
+    ],
+    "issues": [
+      "The fur cones on the mantle read as spikes rather than soft tufts.",
+      "The hood lacks the mockup's pointed peak and folds."
+    ],
+    "next": "Optional: soften the fur cones with a displace; add a peak fold to the hood.",
+    "reviewedAt": "2026-09-29T22:19:16+00:00"
   }
 }
