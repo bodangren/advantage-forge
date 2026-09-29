@@ -2275,5 +2275,33 @@
     ],
     "next": "Optional: displace the top scarf band with a low-frequency fold; taper the robe profile by 0.03 at the hem.",
     "reviewedAt": "2026-09-29T19:34:40+00:00"
+  },
+  "poltergeist": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Grinning pale violet ghost on the ghost base: a wide egg head with big glossy black eyes under mischievous brows, a huge square-toothed grin, thumbs-up fists, a short scalloped sheet body, and four orbiting objects (stool, plate, candlestick, book) on their own bones that circle in every clip. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The eyes and grin read at 128 px in the front directions.",
+      "The orbiting objects give a unique silhouette in every direction.",
+      "Ground check passes; 27,596 triangles, no warnings; no held items."
+    ],
+    "issues": [
+      "The grin corners do not curl up like the mockup's.",
+      "The stool and candle sit close together in some directions."
+    ],
+    "next": "Optional: curve the mouth cut upward at the corners; spread the orbit offsets evenly at 90 degrees.",
+    "reviewedAt": "2026-09-29T19:48:58+00:00"
   }
 }

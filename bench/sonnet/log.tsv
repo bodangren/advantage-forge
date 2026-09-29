@@ -101,3 +101,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30	specter	character	high	run2	30399	11	8	7.5	7.7	8	failed	feedback pass: peaked hood, dark bony arms, chains, front flap, rising mist done; cloth bump reads as pebbled stone; mist wisps stubby spikes; cowl a lumpy ring; second retry = fresh high agent
 2026-09-30	poltergeist	character	high	run2	84114	20	18	7.0	7.4	8	feedback	v1: orbiting objects, grin, sheet body read in the render; at 128 px the eyes are dots and the grin a thin line; plain sphere head; spread-finger hands
 2026-09-30	specter	character	high	run2	61986	15	16	7.8	8.0	8	accepted	fresh high agent rework (second retry): smooth cloth folds, curling mist wisps, layered scarf bands; check ok
+2026-09-30	poltergeist	character	high	run2	20940	9	16	7.8	8.0	8	accepted	feedback pass: big glossy eyes with brows, wide toothy grin with a lip rim, egg head, thumbs-up fists, lower orbit ring; ground ok
