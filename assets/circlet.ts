@@ -2,18 +2,19 @@ import { defineAsset, rgb, sdf } from '../src/index.js';
 
 /**
  * Gold circlet (equipment/armor/circlet), matched to docs/item-mockups/circlet-mock.jpg.
- * Size: 0.2 m across, lying flat on y = 0, front toward +Z. One idea: a thin gold band with small
+ * Size: 0.48 m wide x 0.47 m deep (band inner radius 0.215, uniform 2.4x fit scale for the hero head), lying flat on y = 0, front toward +Z. One idea: a thin gold band with small
  * leaves along it and a raised setting at the front holding a blue gem. Palette: gold #d4a93a,
  * gem #2fb8d0.
  */
 
 const R = 0.095;
 const T = 0.0055;
+const S = 2.4; // hero head fit: inner radius (R - T) x S = 0.215
 
 export default defineAsset({
   name: 'circlet',
   description: 'A thin gold circlet with small leaves along the band and a blue gem in a raised setting at the front.',
-  detail: 0.0018,
+  detail: 0.0043,
   reference: 'docs/item-mockups/circlet-mock.jpg',
   texture: { size: 512 },
 
@@ -37,7 +38,7 @@ export default defineAsset({
       sdf.cylinder(0.02, 0.012, 0.004).rotateX(90).at(0, 0.02, R),
       sdf.cone([0, 0.03, R], [0, 0.046, R], 0.008, 0.002),
     );
-    k.body('gold', sdf.smoothUnion(0.003, band, ...leaves).smoothUnion(0.005, setting), { color: '#d4a93a', roughness: 0.3, metalness: 1 });
-    k.body('gem', sdf.ellipsoid([0.014, 0.014, 0.009]).at(0, 0.02, R + 0.006), { color: '#2fb8d0', roughness: 0.12, metalness: 0, flat: true });
+    k.body('gold', sdf.smoothUnion(0.003, band, ...leaves).smoothUnion(0.005, setting).scale(S), { color: '#d4a93a', roughness: 0.3, metalness: 1 });
+    k.body('gem', sdf.ellipsoid([0.014, 0.014, 0.009]).at(0, 0.02, R + 0.006).scale(S), { color: '#2fb8d0', roughness: 0.12, metalness: 0, flat: true });
   },
 });

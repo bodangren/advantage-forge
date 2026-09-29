@@ -31,4 +31,8 @@ horned-helmet	armor-fit	medium	a2110dbdf4aa3d4e1	1	accepted	fit-ok	33791 tokens
 cloth-hood	armor-fit	medium	a90958415c1506749	1	accepted	fit-ok	34823 tokens
 leather-cap	armor-fit	medium	a546cf60609d4210c	1	accepted	fit-ok	30665 tokens
 crown	armor-fit	medium	a491c825f167e17b9	1	accepted	fit-ok	34440 tokens
-circlet	armor-fit	medium	a0a3525f9cbce54f0	0	running	-	fit rework 3
+circlet	armor-fit	medium	a0a3525f9cbce54f0	1	accepted	fit-ok	27426 tokens
+goblin-king	enemy	high	aef4b880fd4f97636	0	running	-	enemies round 1 (Labyrinth boss)
+orc-archer	enemy	high	a5dc29980006ffe04	0	running	-	enemies round 1
+orc-shaman	enemy	high	a1f517959db00a47b	0	running	-	enemies round 1
+ogre-brute	enemy	high	-	0	queued	-	enemies round 1 (after circlet)
