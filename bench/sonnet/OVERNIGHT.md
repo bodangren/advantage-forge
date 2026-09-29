@@ -80,3 +80,7 @@ brigand v1 scored 7.7 (axe head a plain wedge, flat brow, hood side lobes, flat 
 ## Counter reset 2 (07:03, 2026-09-30)
 
 The owner compacted and reset the token counter again. Rows with batch run3 in log.tsv count toward a new 4,000,000 limit. The brigand feedback pass in flight counts as the first run3 row. The run continues with the 14 open P1 enemies in game-need order: assassin, cult-leader, dark-mage, deserter, evil-priest, highwayman, hunter-rival, mercenary, pirate, pirate-captain, raider, smuggler, warlock, witch.
+
+## Status 07:30 (2026-09-30)
+
+brigand accepted 8.0 (71378a4). Run 3 in flight: highwayman, raider, mercenary (fresh builds) and banshee (rework 2). The owner noted that banshee, plague-bearer, and living-statue sit below the bar; under the reset budget each gets one fresh rework by a new high-tier agent ahead of the remaining enemies. Queue after them: deserter (brief and mockup ready), assassin, smuggler, pirate, pirate-captain, hunter-rival, dark-mage, warlock, witch, cult-leader, evil-priest.

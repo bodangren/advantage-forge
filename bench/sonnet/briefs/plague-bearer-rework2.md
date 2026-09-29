@@ -1,0 +1,11 @@
+# plague-bearer rework 2 (enemies/undead/plague-bearer) -> assets/plague-bearer.ts
+
+Rework the existing assets/plague-bearer.ts (a fresh agent; the file builds, `./forge check` ok). Bar 8/10 (character). The last review scored 7.8. Mockup: docs/enemy-mockups/plague-bearer_001.jpg (already the `reference`). Keep the rig, the clips, the variants, the coat, the belly, the lantern, the bandaged arms, the feet, the draped hood shape, and the shadowed face. Fix only the three review issues, largest first:
+
+1. Beak. The beak is short and stubby. Lengthen the leather beak to 0.18 m: a cone from r 0.05 at the face to r 0.01 at the tip, angled 20 degrees down, with a slight downward curve (build it from two cones joined with smoothUnion k 0.02, the second one 10 degrees steeper). Add three cracks along its length as thin grooves in bump (a dark line paint #3a2a1e along each crack too), and a lighter worn ridge on top (#8a6a48 over #5a3a26). Two small brass rivet spheres where the beak meets the mask.
+2. Hood. The hood is a smooth near-white cone. Darken it to #c8c2b0 with #9a9280 in the folds, and displace it with low-frequency folds: `displace(0.02, (x, y, z) => noise.fbm(x * 4, y * 2.5, z * 4, 2))` plus four deliberate long vertical creases (subtract four thin rounded boxes 0.012 wide, 0.008 deep, from the peak to the shoulder, at different angles). Add a dirt band near the hem (paintFn darker toward y 0.6). Keep the face opening and the shadowed inside (#2a2622).
+3. Coat. The coat lacks torn ribbons and straps. Add three hanging leather straps (rounded boxes 0.03 x 0.14 x 0.01, #4a3222 with brass #c9a24a buckles) across the chest and belly, and a ragged coat hem: eight subtracted wedges of different depths (0.03 to 0.07 m) around the hem, plus three thin torn ribbons (flat chains 0.02 wide, 0.1 long) that hang from the hem at the back and sides. Keep the clips clear of the ground: the ribbons end 0.02 m above y 0.
+
+Check every fix in out/plague-bearer/render.png and out/plague-bearer/sprites/preview.png. Report the three largest remaining differences.
+
+Limits: under 65,000 triangles. No `warning:` lines. `./forge check plague-bearer` must end with `result ok` and the ground line must be ok. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only edit assets/plague-bearer.ts. Finish with one `./forge all plague-bearer`.
