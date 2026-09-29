@@ -2078,5 +2078,33 @@
     ],
     "next": "Optional: break the hair dome with two or three raised locks; add an embossed plate line.",
     "reviewedAt": "2026-09-29T18:12:01+00:00"
+  },
+  "revenant": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Undead soldier on the zombie-soldier base: cracked iron helm with a nasal spade, brow rim, cheek flaps and a red plume; mismatched eyes (black pit, orange with a pupil) in dark sockets; stitched grin; pointed ears; crossed leather straps over a tattered teal-grey tunic; rusted axe and round shield. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The mismatched eyes, plume, cracked helm and shield read at 128 px.",
+      "Silhouette and colors match the mockup in all four views.",
+      "Clearance and ground checks pass; 49,284 triangles, no warnings."
+    ],
+    "issues": [
+      "The plume is three spikes rather than the mockup's curled stub.",
+      "The shoulder leather caps hide under the pauldrons; the bracer is a plain cone."
+    ],
+    "next": "Optional: curl the plume with a chain; wrap the bracer with two strap rings.",
+    "reviewedAt": "2026-09-29T18:21:22+00:00"
   }
 }
