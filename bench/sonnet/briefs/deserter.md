@@ -1,0 +1,17 @@
+# deserter (enemies/humanoid/deserter) -> assets/deserter.ts
+
+A human army deserter about 1.0 m tall, faces +Z, on the guard base (assets/guard.ts: the rogue rig with knee bones, a spear in `hand.R`, mail, a tabard, a helmet, pauldrons; clips idle, walk, run, attack, hit, death, taunt; variant slots and presets). Bar 8/10 (character).
+
+Mockup: docs/enemy-mockups/deserter_001.jpg (set `reference` to that path). Match its idea: no helmet; a short brown tuft of hair on top of a bare head; a dirty grey-beige cloth bandage wrapped around the head that covers the left eye (three overlapping band turns with a loose end); one open tired eye with a heavy brow; a full brown beard with a moustache; a rusty mail shirt with short sleeves (dimple bump, a rust tint); a faded blue soldier tabard with worn edges, a gold fleur emblem on the chest, chipped paint (light spots by noise); a thin brown belt with a small iron buckle and a hanging red-and-yellow ribbon tab; ragged grey-brown trousers; scuffed dark boots with a folded top; a worn spear (a long dark haft, a plain leaf head) held upright in the right hand like a staff; a cloth sack with a bread loaf in the left hand.
+
+Palette: skin #f0c8a0; hair and beard #5a3a26 with #7a5236 lit; brows #3a2a1e; bandage #c8c0ac with #a89e88 shade and a #8a4a3a stain near the eye; mail #6a6660 with #8a5a3a rust spots (metalness 0.5, roughness 0.7); tabard #4a86b8 with #6aa0cc lit, #c8c0ac chipped spots, edges #3a6a94; emblem #d4a83a; belt #4a3222 with an iron #6a6c70 buckle, ribbon tab #a83a30 and #d4a83a; trousers #6a6258; boots #4a3a2c; spear haft #3a2a1e, head #7a7c84; sack #b8ae98; bread #c89a5a.
+Variants: tabard (blue default, red #8a3a30, green #4a6a3a), beard (brown default, black #24201c, grey #8a8a84), bandage (beige default, white #e0dcd0, grey #8a8880).
+
+Construction recipe:
+1. Copy assets/guard.ts. Remove the helmet, the pauldrons, the gauntlets, and the flag with its pennant bone use. Keep the rig, the clips, the mail, the tabard, the belt, the gold emblem, the trousers, the boots, and the spear.
+2. Head: a hair tuft (five short cones in a cluster on the crown), a bandage (three stacked tori R 0.13 r 0.02 at slightly different tilts, one dropped over the left eye as a flattened patch, a loose end flap on the right), one open eye with a tired brow, a big nose, a full beard (a rounded bib 0.18 x 0.13 x 0.09 with a moustache lobe, strand grooves in bump).
+3. Body: the mail shirt with short sleeves and rust paint spots; the tabard worn (paintFn chipped spots, a ragged hem with six subtracted wedges); the belt with a buckle and a ribbon tab; ragged trousers; boots with a folded top band.
+4. Weapon: the spear held upright as a staff in `hand.R` (the haft foot near the ground next to the right boot, the head above the crown); a sack (a rounded ellipsoid 0.07 x 0.09 x 0.06 with a gathered neck) and a bread loaf (an ellipsoid 0.05 x 0.035 x 0.035) in `hand.L`. The attack is a spear thrust. `./forge check deserter` must end with `result ok` and the ground check must be ok.
+5. Sprites: the bandage over the eye, the beard, the blue tabard with the emblem, and the spear must read at 128 px.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/deserter.ts. Finish with one `./forge all deserter`.

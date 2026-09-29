@@ -1,0 +1,17 @@
+# mercenary (enemies/humanoid/mercenary) -> assets/mercenary.ts
+
+A human sell-sword about 1.0 m tall, faces +Z, on the knight base (assets/knight.ts: the rogue rig with knee bones, a sword in `hand.R`, a heater shield on `forearm.L`; clips idle, walk, run, attack, hit, death, taunt; variant slots and presets). Bar 8/10 (character).
+
+Mockup: docs/enemy-mockups/mercenary_001.jpg (set `reference` to that path). Match its idea: no helmet; short spiky black hair swept back; thick angry black brows, dark eyes, a big nose, a scar mark on the forehead; a full short black beard that covers the chin and cheeks; a dented steel breastplate with a small embossed lion emblem on the left chest and a center ridge; two steel pauldrons with a rivet; a dark blue padded gambeson under the plate (short sleeves with quilted grooves); a red cloth wrap under the plate hem and a red sash tied at the belt with a hanging tail; a wide leather belt with a big square buckle; leather bracers; a brown leather skirt with a split; dark boots; a broad longsword held low in the right hand, the left hand a bare fist.
+
+Palette: skin #f0c8a0; hair, brows, beard #24201c with #3a3430 lit strands in bump; scar #8a5a45; plate #8a8c92 with #b8babe lit and #5a5c62 dents (metalness 0.8, roughness 0.45), lion emblem #6e7076 raised 0.004 m; gambeson #2e4a6a with #3e5e80 lit and #223a54 quilt grooves; red sash #a83a30 with #7a2a22 shade; belt #4a3222 with a #6e7076 iron buckle; bracers #4a3222; skirt #5a3a26; boots #3a2418; sword steel #a0a4aa with a #d0d4d8 edge, grip #4a3222, pommel #8a8c92.
+Variants: gambeson (blue default, green #3a5a3a, black #24242a), sash (red default, yellow #c8a030, white #d8d4c8), hair (black default, brown #5a3a26, grey #8a8a84).
+
+Construction recipe:
+1. Copy assets/knight.ts. Remove the helm, the helm gold, the feathers and the plume bone use, the shield bodies, the scarf, and the cape. Keep the rig, the clips, the cuirass, the pauldrons, the gauntlets (recolor to leather bracers), the belt, the tabard flaps (recolor to the leather skirt), the sword. Rewrite the idle and taunt so the empty left hand does not hold a shield pose (a fist at the side).
+2. Head: spiky hair (a cap with six to eight tapered cone spikes swept back, k 0.02), thick tilted brows, dark eyes, a big nose, a scar (a short extruded stroke), a full short beard (a rounded bib 0.18 x 0.12 x 0.09 that leaves the nose and eyes bare, strand grooves in bump).
+3. Body: the cuirass with a center ridge and a raised lion emblem (a small extruded circle with a rough mane ring, 0.04 m), two dents (smoothSubtract two spheres 0.02 m), pauldrons with a rivet sphere, a gambeson body with short quilted sleeves (diagonal grooves in bump), a red wrap band below the plate hem, a red sash (a torus band at the belt plus a hanging tail flap 0.08 m on the left hip), leather bracers, a split leather skirt, boots.
+4. Weapon: the knight's sword widened to 0.05 m and lengthened to 0.42 m, held low. The attack is a two-hand sweep. `./forge check mercenary` must end with `result ok` and the ground check must be ok.
+5. Sprites: the spiky hair, the black beard, the steel plate, the red sash, and the sword must read at 128 px.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/mercenary.ts. Finish with one `./forge all mercenary`.
