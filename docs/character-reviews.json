@@ -1956,5 +1956,37 @@
       "Fold the cape with two vertical drapes on the back."
     ],
     "reviewedAt": "2026-09-29T15:25:43+00:00"
+  },
+  "orc-shaman": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Orc shaman on the orc warrior base: a hunched sage-green caster with a bushy grey beard and one tusk, white face paint, a horned hood with a skull on the brow and two barbed feathers, a shaggy fur mantle, a bead necklace, a hide skirt with a rope belt, and a gnarled staff with a glowing green skull and flame. Built by a Sonnet 5.5 high-tier agent in two passes (198,890 tokens).",
+    "strengths": [
+      "The glowing skull staff and the feathers give a tall, unmistakable silhouette in every sprite direction.",
+      "The beard, mantle, and hide read as three materials.",
+      "Clearance check ok; eight clips; sprites for the default and three presets."
+    ],
+    "issues": [
+      "The hood still reads as a cap from the front.",
+      "The white face paint is faint at 128 px.",
+      "The staff wrap is thin; attack2 is a one-hand slam."
+    ],
+    "next": [
+      "Raise the paint contrast or widen the band one more step.",
+      "Braid the staff wrap with a bump pattern."
+    ],
+    "reviewedAt": "2026-09-29T15:31:28+00:00"
   }
 }
