@@ -49,8 +49,8 @@ iron-golem	character	high	a9490d22f9f7aaf5f	2	accepted	8.0	feedback pass accepte
 gargoyle	character	high	ad554ed46a2cbd24a	2	accepted	8.0	feedback pass accepted; committed
 specter	character	high	a20381e3bc4e4edf4	1	feedback	7.3	v1 7.3: mist wisps, cowl wraps, dark bony arms, robe layers
 troll-guard	character	high	a6f49884230e5d9d9	0	running	-	enemies run 2
-gnoll-warrior	character	high	-	0	queued	-	enemies run 2
-poltergeist	character	high	-	0	queued	-	enemies run 2
+gnoll-warrior	character	high	af6cf25a8e6e4dd53	0	running	-	enemies run 2
+poltergeist	character	high	a15a1c4c1d0ee55bc	0	running	-	enemies run 2
 plague-bearer	character	high	-	0	queued	-	enemies run 2
 vampire-lord	character	high	-	0	queued	-	enemies run 2
 clay-golem	character	high	-	0	queued	-	enemies run 2
