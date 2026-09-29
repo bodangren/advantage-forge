@@ -2472,5 +2472,33 @@
     ],
     "next": "Lengthen the beak to 0.18 m with cracks in bump; displace the hood with low-frequency folds and darken it to #c8c2b0; add three hanging coat straps.",
     "reviewedAt": "2026-09-29T21:20:02+00:00"
+  },
+  "crystal-golem": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Faceted violet crystal construct on the stone-golem rig: a tall spiky crown, a visor with two glowing cyan eye slits, huge shoulder shard clusters, a glowing cyan core diamond in the chest, shard-cluster fists, faceted legs with shin shards, flat-shaded facets painted by surface direction. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "Light and dark facets read at 128 px in every direction.",
+      "The crown, shoulder clusters, eyes and core match the mockup's silhouette and glow points.",
+      "Ground check passes; 41,798 triangles, no warnings; no held items."
+    ],
+    "issues": [
+      "The eye halos are faint; the mockup's visor bloom is stronger.",
+      "The fists are still blockier than the mockup's shard clusters."
+    ],
+    "next": "Optional: raise the halo opacity to 0.5; add four more shards per fist.",
+    "reviewedAt": "2026-09-29T21:22:19+00:00"
   }
 }
