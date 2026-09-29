@@ -45,4 +45,8 @@ revenant	character	high	a94f51d5f888db355	2	accepted	8.0	feedback pass accepted;
 bandit-captain	character	high	a60d63923daafb467	1	feedback	7.0	v1 7.0: beard shape, bandana band, long coat with collar, hooked cutlass
 orc-warlord	character	high	a728d5f92bd35cdf7	1	feedback	7.0	v1 7.0: ground fail, skin, axe heads, iron lit edges, boots, eyes
 banshee	character	high	a3f6638fce2d15c7f	0	running	-	enemies run 2
-iron-golem	character	high	-	0	queued	-	enemies run 2
+iron-golem	character	high	a9490d22f9f7aaf5f	0	running	-	enemies run 2
+gargoyle	character	high	-	0	queued	-	enemies run 2
+specter	character	high	-	0	queued	-	enemies run 2
+troll-guard	character	high	-	0	queued	-	enemies run 2
+gnoll-warrior	character	high	-	0	queued	-	enemies run 2
