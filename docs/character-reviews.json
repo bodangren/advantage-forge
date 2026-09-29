@@ -2585,5 +2585,33 @@
     ],
     "next": "Optional: soften the fur cones with a displace; add a peak fold to the hood.",
     "reviewedAt": "2026-09-29T22:19:16+00:00"
+  },
+  "clockwork-soldier": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Brass clockwork knight on the animated-armor rig: a boxy riveted head with a glowing gear window, a top dome and a side dial, round pauldrons over visible spring-coil arms, a riveted chest with oil streaks, coil thighs and box shins in a wide stance, a halberd in the right hand and a grapple hook with a chain on the left. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The boxy head, the window, the pauldrons and the halberd read in every sprite direction.",
+      "The spring coils and the wide stance now match the mockup's silhouette.",
+      "Clearance and ground checks pass; 56,394 triangles, no warnings."
+    ],
+    "issues": [
+      "The core renders pale peach because the emissive clips; the mockup core is saturated orange.",
+      "The brass is a flat yellow-olive rather than the mockup's grimy bronze."
+    ],
+    "next": "Optional: lower the core emissive to 1.4 on a darker base; darken the brass base to #7a6030.",
+    "reviewedAt": "2026-09-29T22:32:00+00:00"
   }
 }
