@@ -13,12 +13,12 @@ rampart	structure	medium	a9682a4610f18acd6	2	accepted	7.0	59945 tokens
 greenhouse-dome	structure	medium	ad413bbb748b57cd4	1	accepted	7.3	38863 tokens
 cliff-face	terrain	medium->high	a7dbd4a9f346ae2db	4	skipped	6.5	grass mat never reached the bar; rock ok; 126K tokens; file left uncommitted
 ancient-tree	plant	medium	a0b018f4b45a8c0be	2	accepted	7.0	51069 tokens
-roots	plant	medium	aa8295f2677fdb53f	3	feedback	6.5	v3 6.5: pancake; pass 4 last
+roots	plant	medium	aa8295f2677fdb53f	4	accepted	7.0	68164 tokens
 watermill	structure	medium	a2354c810c6e0e348	2	accepted	7.3	63626 tokens
 townhouse	structure	medium	acfb65ceab3ba3700	1	accepted	7.3	49637 tokens
-longhouse	structure	medium	afb11c2d520277b2d	0	running	-	round 4
+longhouse	structure	medium	afb11c2d520277b2d	1	accepted	7.0	54161 tokens
 crypt-chapel	structure	medium	aad31a8136eb4a90f	1	accepted	7.3	48362 tokens
-scale-armor	armor	medium	-	0	queued	-	low tier failed twice on armor in round 1; use medium
-studded-leather	armor	medium	-	0	queued	-	low tier failed twice on armor in round 1; use medium
+scale-armor	armor	medium	abaccbc3b963d6a9d	0	running	-	round 5low tier failed twice on armor in round 1; use medium
+studded-leather	armor	medium	acc8f7d131dfd9c9d	0	running	-	round 5low tier failed twice on armor in round 1; use medium
 vines	plant	medium	-	0	queued	-	
 plate-armor	armor	medium	-	0	queued	-	low tier failed twice on armor in round 1; use medium
