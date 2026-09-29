@@ -5,7 +5,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: hero gear item / pickup. Reads at 128 px as a chunky tan leather loop
  *   with one bright brass square buckle. Focal point: the buckle.
- * Size: loop 0.35 m wide, 0.07 m of belt width, 0.024 m thick, ~0.096 m tall;
+ * Size: elliptical loop 0.50 m wide (x) by 0.39 m deep (z), the hero waist at 2x (fit contract, anchor hips), 0.07 m of belt width, 0.024 m thick, ~0.096 m tall;
  *   lies flat on y = 0, centred on the Y axis, buckle toward +Z.
  * One idea: a loose leather belt coiled flat on the ground, its big square
  *   brass buckle standing up at the front and a small riveted pouch on the
@@ -36,16 +36,25 @@ const ss = (a: number, b: number, t: number) => {
 };
 
 // Loop: outer radius 0.175 (0.35 m across), belt 0.07 m wide, 0.024 m thick.
-const R_OUT = 0.175;
+const R_OUT = 0.195; // z outer semi-axis; x is stretched by SX to 0.25
+const SX = 0.25 / R_OUT;
+/** Elliptical radius: 1 unit = the loop centre line scale of the revolve. */
+const er = (x: number, z: number) => Math.hypot(x / SX, z);
 const THICK = 0.012; // radial half-thickness
 const WIDTH = 0.07; // vertical belt width
 const R_MAJOR = R_OUT - THICK; // 0.1675
 const BAND_Y = WIDTH / 2; // 0.0325, so the band rests on y = 0
 
-const POUCH_ANGLE = 62; // degrees from +Z toward +X
+const th = (62 * Math.PI) / 180; // ellipse parameter of the pouch, from +Z toward +X
+const ex = 0.25 * Math.sin(th);
+const ez = R_OUT * Math.cos(th);
+const nl = Math.hypot(ex / 0.25 ** 2, ez / R_OUT ** 2);
+const nx = ex / 0.25 ** 2 / nl;
+const nz = ez / R_OUT ** 2 / nl;
+const POUCH_ANGLE = (Math.atan2(nx, nz) * 180) / Math.PI; // outward normal direction
 const pa = (POUCH_ANGLE * Math.PI) / 180;
-const POUCH_X = Math.sin(pa) * (R_OUT + 0.012);
-const POUCH_Z = Math.cos(pa) * (R_OUT + 0.012);
+const POUCH_X = ex + nx * 0.004;
+const POUCH_Z = ez + nz * 0.004;
 
 /** Shared leather paint: warm grain, darker toward the ground, lit top edge. */
 function leatherPaint(x: number, y: number, z: number): readonly [number, number, number] {
@@ -77,7 +86,7 @@ function pouchPaint(x: number, y: number, z: number): readonly [number, number, 
 function bandPaint(x: number, y: number, z: number): readonly [number, number, number] {
   const patch = 0.5 + 0.5 * noise.fbm(x * 8 + 2, y * 8, z * 8, 2);
   const grain = 0.5 + 0.5 * noise.fbm(x * 55, y * 90, z * 55, 2);
-  const r = Math.hypot(x, z);
+  const r = er(x, z);
   const t = clamp01(y / WIDTH);
   let c = mixRgb(LEATHER, LEATHER_LIGHT, 0.05 + 0.2 * patch);
   c = mixRgb(c, LEATHER_DARK, 0.06 + 0.2 * grain);
@@ -121,7 +130,7 @@ export default defineAsset({
   build(k) {
     // ------------------------------------------------------------------ leather loop
     // A surface of revolution: a flat belt band laid in the XZ plane.
-    const band = sdf.revolve(bandProfile);
+    const band = sdf.revolve(bandProfile).scale([SX, 1, 1]);
     k.body('belt', band.paintFn(bandPaint), {
       color: '#8a5a35',
       roughness: 0.65,
@@ -140,11 +149,11 @@ export default defineAsset({
       .box([0.05, 0.013, 0.1], 0.005)
       .union(sdf.cylinder(0.0065, 0.014, 0.003).at(0, 0, 0.048))
       .rotateY(9)
-      .at(0.016, 0.008, 0.235);
+      .at(0.02, 0.008, 0.132);
     k.body('strap', strap.paintFn((x, y, z) => {
       let c = leatherPaint(x, y, z);
       // Worn darker tip past the last hole.
-      c = mixRgb(c, LEATHER_DARK, 0.4 * Math.max(0, Math.min(1, (z - 0.268) / 0.03)));
+      c = mixRgb(c, LEATHER_DARK, 0.4 * Math.max(0, Math.min(1, (z - 0.16) / 0.03)));
       return c;
     }), {
       color: '#8a5a35',
@@ -158,11 +167,14 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ keeper collar
     // A dark leather keeper wraps the band just before the buckle.
-    const ka = (22 * Math.PI) / 180;
+    const kt = (22 * Math.PI) / 180;
+    const kx = SX * R_MAJOR * Math.sin(kt);
+    const kz = R_MAJOR * Math.cos(kt);
+    const kl = Math.hypot(kx / (SX * R_MAJOR) ** 2, kz / R_MAJOR ** 2);
     const keeper = sdf
       .box([0.018, 0.078, 0.036], 0.008)
-      .rotateY(22)
-      .at(Math.sin(ka) * R_MAJOR, BAND_Y + 0.005, Math.cos(ka) * R_MAJOR);
+      .rotateY((Math.atan2(kx / (SX * R_MAJOR) ** 2 / kl, kz / R_MAJOR ** 2 / kl) * 180) / Math.PI)
+      .at(kx, BAND_Y + 0.005, kz);
     k.body('keeper', keeper.paintFn(leatherPaint), {
       color: '#5c3a22',
       roughness: 0.7,
@@ -205,7 +217,7 @@ export default defineAsset({
     // ------------------------------------------------------------------ buckle
     // Big square brass frame standing at the front (+Z), face toward the viewer.
     const BUCKLE_Y = 0.0475;
-    const BUCKLE_Z = 0.172;
+    const BUCKLE_Z = 0.19;
     const frame = sdf
       .box([0.1, 0.095, 0.02], 0.01)
       .smoothSubtract(0.007, sdf.box([0.066, 0.061, 0.04], 0.008))

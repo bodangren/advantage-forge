@@ -4,7 +4,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Design note — steel great helm (equipment/armor/steel-helmet).
  *
  * Role: smithy pickup and icon. The T-slit, crest, and rim must read at 128 px.
- * Size: 0.36 m wide, about 0.33 m tall, on its rim at y = 0, face toward +Z.
+ * Size: fit shape 1x (equipment-fit contract), whole build scaled by FIT = 1.36: inner cavity 0.215 m radius (head 0.205 + 0.01), about 0.49 wide, 0.45 tall, on its rim at y = 0, face toward +Z.
  * One idea: a rounded steel bucket with a raised crest and a clear T-shaped visor slit.
  * Shape language: round dominant (dome, rim, crest tube, hook bars). The slit is the crisp accent.
  * Palette: iron shell #4a4f55, shadow #363a3f, highlight #a8acb1. Bright trim is steel
@@ -24,6 +24,9 @@ const STEEL = rgb('#c8ccd2');
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 // Brow band centre. The eye slit sits just under this band.
+// Uniform fit scale of the whole build about the origin (rim centre on y = 0).
+const FIT = 1.36;
+
 const BAND_Y = 0.146;
 
 export default defineAsset({
@@ -138,7 +141,8 @@ export default defineAsset({
         return c;
       })
       .paintWhere(domeInner.round(0.005), IRON_DARK, 0.01)
-      .paintWhere(slit, IRON_DARK, 0.008);
+      .paintWhere(slit, IRON_DARK, 0.008)
+      .scale(FIT);
 
     k.body('shell', shell, {
       color: '#4a4f55',
@@ -239,7 +243,8 @@ export default defineAsset({
         const up = clamp01((y - 0.08) / 0.22);
         const n = 0.5 + 0.5 * noise.fbm(x * 18, y * 18, z * 18, 2);
         return mixRgb(STEEL, IRON_HI, 0.1 * n * (1 - up));
-      });
+      })
+      .scale(FIT);
 
     k.body('trim', trim, {
       color: '#c8ccd2',
@@ -257,7 +262,8 @@ export default defineAsset({
     const studs = sdf
       .sphere(0.011)
       .at(tip[0] + 0.004, tip[1] - 0.008, tip[2] + 0.012)
-      .mirror('x', 0);
+      .mirror('x', 0)
+      .scale(FIT);
     k.body('studs', studs, {
       color: '#6b4226',
       roughness: 0.55,

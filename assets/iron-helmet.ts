@@ -5,7 +5,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: hero gear for the chibi party; seen as a pickup, an icon, and on a head, so the dome,
  *   brow band, and nasal must read at 128 px.
- * Size: 0.36 m wide, 0.30 m tall, 0.38 m deep, resting on its rim on y = 0, face toward +Z.
+ * Size: about 0.46 m wide, 0.42 m tall, 0.46 m deep (cavity 0.215 x 0.21 x 0.20 over the hero head, 1x fit), resting on its rim on y = 0, face toward +Z.
  * One idea: an open iron nasal helm — a round bowl shell with a raised riveted brow band, a
  *   ridged nasal plate hanging over the face, and two short cheek guards at the sides.
  * Shape language: round dominant (dome, rivets, rounded plates); the nasal point is the one
@@ -22,6 +22,8 @@ const IRON = rgb('#4a4f55');
 const IRON_DARK = rgb('#363a3f');
 const IRON_HI = rgb('#a8acb1');
 
+// Fit contract: the whole build is scaled about its origin so the cavity is 0.215 x 0.21 x 0.20.
+const FIT: [number, number, number] = [1.25, 1.4, 1.17];
 const BAND_Y = 0.146; // brow band center height
 
 export default defineAsset({
@@ -186,7 +188,7 @@ export default defineAsset({
       .paintWhere(domeInner.round(0.004), IRON_DARK, 0.01)
       .paintWhere(rivets.round(0.002), IRON_HI, 0.005);
 
-    k.body('iron', helmet, {
+    k.body('iron', helmet.scale(FIT), {
       color: '#4a4f55',
       roughness: 0.5,
       metalness: 0.7,

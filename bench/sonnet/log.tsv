@@ -50,3 +50,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-29	plate-armor	armor	medium	5	21837	11	2.3	7	7.5	7	pass	v2 same agent: torso contract v2 shell, pauldrons hug the shoulders with gold piping, one flared faulds plate with a studded steel belt band, thicker gold; ACCEPTED at 7.5; total 67780 over 2 passes
 2026-09-29	studded-leather	armor	medium	5	3990	3	3.6	7	7.0	7	pass	contract pass: v2 torso profile, studs and laces probed to the surface, collar moved; bounds 0.59 x 0.75 x 0.46; ACCEPTED; total 49070 over 4 passes
 2026-09-29	scale-armor	armor	medium	5	11240	5	2.3	7	7.3	7	pass	contract v2 pass: 0.56 x 0.64 x 0.44 shell, pauldrons at y 0.5, belt moved to clear a reduction warning; ACCEPTED; total 62168 over 4 passes
+2026-09-29	iron-helmet	armor-fit	medium	fit1	32941	6	1.4	8	fit-ok	7.5	pass	fit rework: scale [1.25,1.4,1.17], bounds 0.465 x 0.42 x 0.46, cavity 0.21 x 0.40 x 0.20, 5200 tris unchanged; design unchanged; P0 quality as before
+2026-09-29	steel-helmet	armor-fit	medium	fit1	35654	8	1.4	8	fit-ok	7	pass	fit rework: uniform 1.36 (shell was thick), bounds 0.49 x 0.45 x 0.51, 4834 tris (+19%); design unchanged
+2026-09-29	belt	armor-fit	medium	fit1	36200	6	1.9	8	fit-ok	7	pass	fit rework: loop ellipse 0.50 x 0.39 (waist at 2x), bounds 0.51 x 0.10 x 0.40, 2324 tris; buckle and pouch on the loop
