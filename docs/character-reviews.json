@@ -2331,5 +2331,33 @@
     ],
     "next": "Optional: darken the eye base to #8a0a0a under the emissive; add a bat-crest emblem outline to the chest.",
     "reviewedAt": "2026-09-29T20:05:38+00:00"
+  },
+  "troll-guard": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Hunched troll on the orc-warrior base: a big warty nose, small blue eyes under a heavy brow, an underbite with fat curved tusks, long pointed ears, a shaggy rope mane to the belly, a small cross-hatched riveted iron helmet, a patched torn kilt with a rope belt, and a banded studded club over the right shoulder. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The tusks, helmet, mane and club read in every sprite direction.",
+      "The face matches the mockup's expression: brow, nose, underbite.",
+      "Clearance and ground checks pass; 64,732 triangles, no warnings."
+    ],
+    "issues": [
+      "The skin renders one step greener than the mockup's muted clay.",
+      "The club head is smaller than the mockup's flared drum head."
+    ],
+    "next": "Optional: shift the skin toward #7a8a66; widen the club head to r 0.11.",
+    "reviewedAt": "2026-09-29T20:26:43+00:00"
   }
 }
