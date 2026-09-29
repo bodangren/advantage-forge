@@ -68,3 +68,7 @@ kobold-sorcerer, crystal-golem, clockwork-sentry, plus dark-knight before the re
 plague-bearer 7.8, living-statue 7.8 (review entries on the page, sources uncommitted). In flight: gnoll-hunter and
 kobold-trapper (feedback passes), clockwork-soldier, animated-weapon. These are the last launches: the four passes
 end near 3.6M, and one more character would risk the limit. After they land: review, commit, regenerate the summary, stop.
+Run 2 status 06:45: 3.65M of 4.0M. gnoll-hunter accepted 8.0 on the fresh rework (eaba455); animated-weapon 8.0 (3d8d79c);
+clockwork-soldier 8.0 (72603b3). Summary regenerated (63 assets, 57 accepted, 6 skipped). One more character fits under
+the limit with one feedback pass: brigand (bandit base) launches as the final build; a second retry would pass 4.0M and
+counts as a budget skip.
