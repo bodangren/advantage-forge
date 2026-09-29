@@ -1174,33 +1174,36 @@
     "reviewedAt": "2026-09-27T17:31:52.515Z"
   },
   "minotaur-guard": {
-    "overall": 7,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 3,
+      "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3,
+      "technical": 4,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "A new P1 dungeon mini-boss on the orc-warrior base (knee bones, eight clips): a bull-headed brute about 1.2 m tall with crescent horns, a brass nose ring, a shaggy mane and pointed beard, an iron chest plate and pauldrons, a studded belt with a brass buckle, a fur loincloth, hooves, and one big iron maul. The forge check shows result ok with head clearance 3.1 cm, and the build has no warnings. A second forge all completed every preset sprite.",
+    "summary": "Minotaur guard reworked 2026-09-30 by Sonnet 5.5 high-tier agents (three launches, about 66,000 tokens on the pass that finished): thick low crescent horns, a round fluffy mane, a chunky fur loincloth with leather flaps, iron pauldrons and chest plate, a brass nose ring, and one two-handed maul held low. 57,358 triangles, no warnings, check ok with no body contact.",
     "strengths": [
-      "The horns, nose ring, mane, beard, and armor read as a minotaur at a glance.",
-      "The overhead swing goes outside the right horn, so the maul never passes through the head.",
-      "Fur, horn, and eye variants with three presets: blackhide, sandhorn, greybeard."
+      "The horn crescents read as a wide silhouette in all eight sprite directions.",
+      "The maul clears the plate, bracer, and mane in both attacks.",
+      "Fur, iron, leather, and horn read as four materials."
     ],
     "issues": [
-      "The horns are thinner and rise more steeply than the thick low crescents of the mockup.",
-      "The fur loincloth reads as long strands like a grass skirt; the mockup has chunky fur with leather flaps.",
-      "The mane has tall vertical locks like a hairstyle; the mockup mane is round and fluffy. The maul touches the chest plate and bracer by 1 to 2.5 cm in the attacks. 82,546 triangles."
+      "The horns are ivory and pointed; the mockup's are rounder grey-and-cream crescents.",
+      "The mane is a smooth puff, not layered locks.",
+      "The eyes are red, not brown; the face is smaller than the mockup's."
     ],
-    "next": "Thicken and lower the horns, make the loincloth chunky fur, round the mane.",
-    "reviewedAt": "2026-09-27T22:12:13.662Z"
+    "next": [
+      "Paint a grey gradient on the horn bases.",
+      "Add three lock strands to the mane."
+    ],
+    "reviewedAt": "2026-09-29T17:00:18+00:00"
   },
   "lich": {
     "overall": 8,

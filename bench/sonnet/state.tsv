@@ -39,7 +39,7 @@ ogre-brute	enemy	high	a9fff0d258b208e5a	3	skipped	7.8	below the 8 bar after 3 pa
 wood-golem	enemy-rework	high	ae9552047ba3298b9	3	skipped	7.5	3.8 -> 7.5, below the bar; untracked source
 minotaur-guard	enemy-rework	high	a7c400d50f0c64a34	0	skipped	-	agent stalled twice
 mummy	enemy-rework	high	a74ad731e917c7399	1	accepted	8.0	75483 tokens (7.5 -> 8.0)
-minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	0	running	-	retry 3 after two stalls
+minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	1	accepted	8.0	66143 tokens (7.0 -> 8.0)
 dark-knight	enemy	high	a8e9be475c3b62cb1	0	running	-	enemies round 2
 wight	enemy	high	a09f06b2a5f0b51cd	0	running	-	enemies round 2
 revenant	enemy	high	a94f51d5f888db355	0	running	-	enemies round 2

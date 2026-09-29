@@ -37,7 +37,7 @@ const C = {
   nostril: '#2e1610',
   fur: '#6e4526',
   furDark: '#4a2c18',
-  horn: '#e6d8b8',
+  horn: '#d9ccb0',
   hornTip: '#605a55',
   iron: '#50555c',
   ironLight: '#7c828a',
@@ -237,23 +237,33 @@ export default defineAsset({
       .paintWhere(lids.intersect(eyeBall.round(0.006)), C.lid, 0.002)
       .paintWhere(mouth, C.mouth, 0.003)
       .paintWhere(pair(sdf.extrude(profile.rect([0.006, 0.07], 0.003), 0.4).rotateZ(-8).at(0.055, 0.36, 0.2)), C.skinDark, 0.01); // belly lines
-    k.body('skin', skin, { color: C.skin, roughness: 0.6, textureDensity: 2 });
+    k.body('skin', skin, { color: C.skin, roughness: 0.6, textureDensity: 2, detail: 0.0056 });
 
     // ------------------------------------------------------------------ mane, beard, brows, forelock (fur)
+    // Soft puffy break-up for the mane.
+    const puffy = (x: number, y: number, z: number) => noise.fbm(x * 26, y * 26, z * 26, 2);
     // Shaggy locks: vertical tufts around the head with a noisy break-up.
     const locks = (x: number, y: number, z: number) =>
       0.6 * Math.sin(Math.atan2(x, z) * 15 + Math.sin(y * 45) * 0.9 + noise.fbm(x * 14, y * 10, z * 14, 2) * 2) + 0.4 * noise.fbm(x * 28, y * 22, z * 28, 2);
-    // The mane: a thick cap over the skull and a ruff around the neck, open over the face.
+    // The mane: a round fluffy mass. Twelve overlapping puffs ring the face and neck (open over
+    // the face), joined with the skull cap, then broken up with soft noise.
     const faceMask = sdf.ellipsoid([0.19, 0.2, 0.2]).at(0, 0.66, 0.17);
+    const puffR = [0.095, 0.09, 0.1, 0.085, 0.11, 0.09, 0.1, 0.085, 0.105, 0.09, 0.095, 0.1];
+    const puffs = puffR.map((r, i) => {
+      const a = (i / puffR.length) * Math.PI * 2 + 0.26;
+      const bottom = Math.max(0, -Math.sin(a));
+      return sdf.sphere(r).at(0.175 * Math.cos(a), 0.745 + 0.145 * Math.sin(a) - 0.05 * bottom, -0.015 - 0.03 * bottom);
+    });
     const mane = sdf
       .smoothUnion(
-        0.05,
-        cranium.round(0.028).bone('head'),
-        pair(sdf.ellipsoid([0.085, 0.14, 0.11]).at(0.165, 0.68, -0.01)).bone('head'), // full locks at the cheeks
-        sdf.ellipsoid([0.215, 0.14, 0.17]).at(0, 0.62, -0.06).bone('neck'),
+        0.03,
+        cranium.round(0.03).bone('head'),
+        sdf.sphere(0.15).at(0, 0.74, -0.07).bone('head'),
+        ...puffs.map((s) => s.bone('head')),
+        sdf.ellipsoid([0.215, 0.13, 0.17]).at(0, 0.6, -0.055).bone('neck'),
       )
       .smoothSubtract(0.02, faceMask)
-      .displace(0.012, locks, 2);
+      .displace(0.01, puffy, 2);
     // A wide, pointed beard that hangs from the chin over the chest plate.
     const jawZ = faceZ(0, 0.56);
     const beardStrands = (x: number, y: number, _z: number) => Math.sin(x * 90 + Math.sin(y * 30) * 1.5);
@@ -297,38 +307,42 @@ export default defineAsset({
     const furPaint = (x: number, y: number, z: number, base: readonly [number, number, number]) =>
       locks(x, y, z) < -0.2 ? plus(base, furDark) : locks(x, y, z) < 0.05 ? plus(base, furDark, 0.45) : base;
     const furBump = (x: number, y: number, z: number) => 0.0012 * noise.fbm(x * 90, y * 25, z * 90, 2);
-    k.body('mane', sdf.union(sdf.smoothUnion(0.015, mane, forelock), beard, brows).paintFn(furPaint), {
+    const manePaint = (x: number, y: number, z: number, base: readonly [number, number, number]) =>
+      puffy(x, y, z) < -0.25 ? plus(base, furDark) : puffy(x, y, z) < 0 ? plus(base, furDark, 0.4) : base;
+    k.body('mane', sdf.union(sdf.smoothUnion(0.015, mane, forelock), beard, brows).paintFn((x, y, z, base) => (y > 0.66 && Math.abs(x) < 0.05 && z > -0.1 ? furPaint(x, y, z, base) : manePaint(x, y, z, base))), {
       color: T.fur,
       roughness: 0.92,
-      detail: 0.0055,
+      detail: 0.0076,
       bump: furBump,
     });
 
     // ------------------------------------------------------------------ horns
-    // Big crescent horns: out from the top of the skull, then up, the tips curling in and a little
-    // back. Ivory at the root, dark toward the tip.
+    // Thick, low crescents: out sideways from the temples, then curling up and a little forward.
+    // Ivory, with dark bases where they leave the mane and a dark tip.
     const horns = pair(
       sdf.chain(
         [
-          [0.12, 0.89, 0.0, 0.066],
-          [0.2, 0.93, -0.01, 0.064],
-          [0.28, 0.99, -0.025, 0.056],
-          [0.33, 1.06, -0.045, 0.046],
-          [0.34, 1.13, -0.065, 0.035],
-          [0.31, 1.19, -0.08, 0.025],
-          [0.255, 1.215, -0.085, 0.014],
+          [0.13, 0.875, 0.0, 0.08],
+          [0.235, 0.875, 0.02, 0.078],
+          [0.33, 0.9, 0.045, 0.07],
+          [0.4, 0.97, 0.07, 0.058],
+          [0.405, 1.06, 0.09, 0.04],
+          [0.365, 1.12, 0.1, 0.024],
         ],
-        0.025,
+        0.03,
       ),
     ).bone('head');
     const hornTip = shadeOf(C.horn, C.hornTip);
+    const hornBase = shadeOf(C.horn, '#8a7a68');
     k.body(
       'horns',
       horns.paintFn((x, y, z, base) => {
-        const t = smooth01(1.2, 1.3, y + 0.6 * Math.abs(x) + 0.02 * noise.fbm(x * 30, y * 30, z * 30, 2));
-        return plus(base, hornTip, t);
+        const ax = Math.abs(x);
+        const tipT = smooth01(1.0, 1.08, y + 0.02 * noise.fbm(x * 30, y * 30, z * 30, 2));
+        const baseT = 1 - smooth01(0.2, 0.28, ax);
+        return plus(plus(base, hornTip, tipT * 0.8), hornBase, baseT);
       }),
-      { color: T.horn, roughness: 0.4, detail: 0.004 },
+      { color: T.horn, roughness: 0.4, detail: 0.005 },
     );
 
     // ------------------------------------------------------------------ iron: chest plate, pauldrons
@@ -351,6 +365,7 @@ export default defineAsset({
       roughness: 0.5,
       metalness: 0.75,
       bump: ironBump,
+      detail: 0.006,
     });
 
     // ------------------------------------------------------------------ leather: bracers, belt
@@ -373,7 +388,23 @@ export default defineAsset({
     const trunkShape = sdf.smoothUnion(0.06, sdf.ellipsoid([0.2, 0.16, 0.15]).at(0, 0.47, 0), sdf.ellipsoid([0.17, 0.13, 0.14]).at(0, 0.35, 0.02));
     const beltY = 0.33;
     const belt = trunkShape.round(0.016).smoothIntersect(0.006, sdf.box([0.6, 0.06, 0.6], 0.008).at(0, beltY, 0));
-    k.body('leather', sdf.union(bracers, belt.bone('spine')), { color: C.leather, roughness: 0.6 });
+    // Three leather flaps hang from the belt over the fur, each with a brass stud.
+    const flapAt = (deg: number, w: number, h: number, y: number) => {
+      const ang = (deg * Math.PI) / 180;
+      const R = 0.245;
+      return sdf
+        .box([w, h, 0.022], 0.009)
+        .rotateX(-4)
+        .rotateY(deg)
+        .at(R * Math.sin(ang), y, 0.018 + R * 0.84 * Math.cos(ang));
+    };
+    const FLAPS: readonly [number, number, number, number][] = [
+      [0, 0.1, 0.17, 0.2],
+      [-38, 0.085, 0.14, 0.21],
+      [38, 0.085, 0.14, 0.21],
+    ];
+    const flaps = sdf.union(...FLAPS.map(([d, w, h, y]) => flapAt(d, w, h, y))).bone('hips');
+    k.body('leather', sdf.union(bracers, belt.bone('spine'), flaps), { color: C.leather, roughness: 0.6, detail: 0.006 });
 
     // ------------------------------------------------------------------ brass: nose ring, buckle, belt studs, plate rivets
     const ringZ = faceZ(0, NOSE_Y - 0.03) - 0.004;
@@ -396,7 +427,16 @@ export default defineAsset({
         ...[-0.19, -0.12, 0.12, 0.19].map((x) => sdf.sphere(0.011).at(...sdf.surfacePoint(plate, [x, 0.468, 0.3], 0.002))),
       )
       .bone('chest');
-    k.body('brass', sdf.union(noseRing, buckle, studs, rivets), { color: C.brass, roughness: 0.3, metalness: 1, detail: 0.004 });
+    const flapStuds = sdf
+      .union(
+        ...FLAPS.map(([d, , h, y]) => {
+          const ang = (d * Math.PI) / 180;
+          const R = 0.245 + 0.014;
+          return sdf.sphere(0.012).at(R * Math.sin(ang), y + h * 0.22, 0.018 + R * 0.84 * Math.cos(ang));
+        }),
+      )
+      .bone('hips');
+    k.body('brass', sdf.union(noseRing, buckle, studs, rivets, flapStuds), { color: C.brass, roughness: 0.3, metalness: 1, detail: 0.005 });
 
     // ------------------------------------------------------------------ the maul
     // Local frame: the grip at the origin, the haft down (-Y), the slab head across the haft along
@@ -418,7 +458,7 @@ export default defineAsset({
     const GRIP: V3 = [-WRIST[0] - 0.006, WRIST[1] - 0.064, WRIST[2] + 0.02];
     // Held ready at the side: the haft out and forward, the slab head upright like the mockup's hammers.
     const maulPose = (s: sdf.Shape) => s.rotateY(90).rotateZ(-40).rotateX(-85).at(...GRIP);
-    k.body('maul-head', maulPose(maulHead), { color: C.iron, roughness: 0.45, metalness: 0.8, bump: ironBump, bone: 'hand.R', detail: 0.004 });
+    k.body('maul-head', maulPose(maulHead), { color: C.iron, roughness: 0.45, metalness: 0.8, bump: ironBump, bone: 'hand.R', detail: 0.005 });
     k.body('haft', maulPose(haft), {
       color: C.wood,
       roughness: 0.75,
@@ -427,47 +467,38 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ fur: loincloth and leg fur
-    // A shaggy fur wrap around the hips: a flared shell under the belt, hanging in locks, with a
-    // ragged hem of V tears and slits.
+    // A chunky fur wrap around the hips: a plain shell under the belt, with two staggered rows of
+    // fat teardrop tufts hanging over it (ten in the upper row, nine in the hem row).
     const skirtCone = (grow: number, top: number) =>
       sdf
         .revolve(
           profile.polygon([
             [0, top],
-            [0.182 + grow, top],
-            [0.182 + grow, 0.33],
-            [0.212 + grow, 0.25],
-            [0.24 + grow, 0.16],
-            [0.248 + grow, 0.12],
-            [0, 0.12],
+            [0.176 + grow, top],
+            [0.176 + grow, 0.33],
+            [0.2 + grow, 0.25],
+            [0.222 + grow, 0.17],
+            [0.226 + grow, 0.14],
+            [0, 0.14],
           ]),
         )
         .scale([1, 1, 0.84])
         .at(0, 0, 0.018);
-    const hangingLocks = (x: number, y: number, z: number) =>
-      (0.65 * Math.sin(Math.atan2(x, z) * 16 + Math.sin(y * 40) * 0.7 + noise.fbm(x * 10, y * 4, z * 10, 2) * 2) + 0.35 * noise.fbm(x * 28, y * 14, z * 28, 2)) *
-      Math.min(1, Math.max(0, (0.32 - y) / 0.06));
-    const tearCut = (i: number, w: number, top: number) =>
-      sdf
-        .extrude(
-          profile.polygon([
-            [-w, 0.06],
-            [w, 0.06],
-            [0, top],
-          ]),
-          0.3,
-        )
-        .at(0, 0, 0.25)
-        .rotateY(i);
-    const tears = sdf.union(
-      ...Array.from({ length: 11 }, (_, i) =>
-        tearCut(i * 32.7 + (noise.random(i, 7, 1) - 0.5) * 12, 0.024 + noise.random(i, 7, 2) * 0.016, 0.15 + noise.random(i, 7, 3) * 0.04),
-      ),
-    );
-    const skirt = skirtCone(0, 0.33)
-      .subtract(skirtCone(-0.014, 0.45))
-      .displace(0.008, hangingLocks, 1.5)
-      .subtract(tears);
+    const tuft = (a: number, y: number, R: number, rx: number, ry: number, i: number) => {
+      const ang = (a * Math.PI) / 180;
+      const r = R + (noise.random(i, 3, 1) - 0.5) * 0.012;
+      return sdf
+        .ellipsoid([rx, ry, rx * 0.95])
+        .rotateZ((noise.random(i, 3, 2) - 0.5) * 8)
+        .at(r * Math.sin(ang), y, 0.018 + r * 0.84 * Math.cos(ang));
+    };
+    const tufts1 = Array.from({ length: 10 }, (_, i) => tuft(i * 36 + 18, 0.2, 0.19, 0.06 + noise.random(i, 4, 1) * 0.01, 0.09, i));
+    const tufts2 = Array.from({ length: 9 }, (_, i) => tuft(i * 40, 0.15, 0.205, 0.056 + noise.random(i, 4, 2) * 0.012, 0.085, i + 20));
+    const clumpy = (x: number, y: number, z: number) => noise.fbm(x * 30, y * 30, z * 30, 2);
+    const skirt = sdf
+      .smoothUnion(0.02, skirtCone(0, 0.33).subtract(skirtCone(-0.014, 0.45)), ...tufts1, ...tufts2)
+      .intersect(sdf.halfSpace([0, 1, 0], 0.34))
+      .displace(0.008, clumpy, 1.5);
     const loincloth = sdf.union(
       skirt.intersect(sdf.halfSpace([0, -1, 0], -0.25)).bone('hips'),
       skirt.intersect(sdf.halfSpace([0, 1, 0], 0.3)).intersect(sdf.halfSpace([-1, 0, 0], 0)).bone('leg.L'),
@@ -493,14 +524,14 @@ export default defineAsset({
       .displace(0.012, locks, 2)
       .paintFn(furPaint);
     const skirtPaint = (x: number, y: number, z: number, base: readonly [number, number, number]) => {
-      const g = hangingLocks(x, y, z);
-      const hem = Math.min(1, Math.max(0, (0.2 - y) / 0.08));
-      return plus(base, furDark, Math.min(1, (g < -0.3 ? 0.65 : g < 0 ? 0.3 : 0) + hem * 0.35));
+      const g = clumpy(x, y, z);
+      const hem = Math.min(1, Math.max(0, (0.24 - y) / 0.1));
+      return plus(base, furDark, Math.min(1, (g < -0.25 ? 0.6 : g < 0 ? 0.25 : 0) + hem * 0.3));
     };
     k.body(
       'fur',
       sdf.union(shoulderFur, loincloth.paintFn(skirtPaint), legFur.paintFn((x, y, z, base) => (tufts(x < 0 ? -x : x, y, z) > 0.25 ? plus(base, furDark) : base))),
-      { color: T.fur, roughness: 0.95, bump: furBump, detail: 0.0068 },
+      { color: T.fur, roughness: 0.95, bump: furBump, detail: 0.0088 },
     );
 
     // ------------------------------------------------------------------ hooves
@@ -620,7 +651,7 @@ export default defineAsset({
             [0.25, [-0.37, 0.6, -0.12]],
             [0.34, [-0.385, 0.7, -0.09]],
             [0.43, [-0.39, 0.7, -0.1]], // the hold: coiled at the top, out beside the head
-            [0.48, [-0.39, 0.66, 0.07]],
+            [0.48, [-0.4, 0.62, 0.1]],
             [0.52, [-0.34, 0.63, 0.13]],
             [0.56, [-0.24, 0.55, 0.14]], // impact at body height
             [0.62, [-0.12, 0.46, 0.24]], // the follow-through: down and across the body
@@ -641,7 +672,7 @@ export default defineAsset({
               [0.25, [-0.25, 0.1, -1]], // straight back
               [0.34, [-0.3, 0.75, -0.6]], // up and back behind the shoulder
               [0.43, [-0.3, 0.62, -0.72]], // the head sags back in the hold
-              [0.48, [-0.3, 0.93, 0.2]], // over the top
+              [0.48, [-0.5, 0.85, 0.2]], // over the top, out past the horn
               [0.52, [-0.15, 0.75, 0.64]], // forward and up
               [0.56, [0.05, 0.28, 1]], // level in front: impact (the chest leans it down a little)
               [0.62, [0.45, -0.2, 0.87]], // down and across
@@ -730,10 +761,10 @@ export default defineAsset({
         q,
         [
           [0, AXE.dir],
-          [0.15, [0.4, -0.15, 0.9]],
-          [0.36, [0.4, -0.15, 0.9]],
-          [0.45, [0.4, -0.15, 0.9]],
-          [0.49, [0.7, -0.15, 0.6]], // cocked: the head to the left
+          [0.15, [0.85, 0.05, 0.5]],
+          [0.36, [0.85, 0.05, 0.5]],
+          [0.45, [0.85, 0.05, 0.5]],
+          [0.49, [0.7, 0.05, 0.65]], // cocked: the head to the left
           [0.54, [0.35, -0.12, 0.93]],
           [0.58, [-0.3, -0.12, 0.95]], // contact: level and forward
           [0.62, [-0.8, -0.1, 0.55]],
@@ -768,11 +799,11 @@ export default defineAsset({
           p,
           [
             [0, mx(WRIST)],
-            [0.15, [-0.2, 0.34, 0.2]], // tucked: the fist in front of the right side of the belly
-            [0.36, [-0.2, 0.34, 0.2]],
-            [0.45, [-0.19, 0.34, 0.2]],
-            [0.49, [-0.15, 0.34, 0.2]], // cocked across the belly
-            [0.54, [-0.21, 0.35, 0.21]],
+            [0.15, [-0.27, 0.36, 0.27]], // tucked: the fist in front of the right side of the belly
+            [0.36, [-0.27, 0.36, 0.27]],
+            [0.45, [-0.26, 0.36, 0.27]],
+            [0.49, [-0.26, 0.37, 0.3]], // cocked across the belly
+            [0.54, [-0.28, 0.35, 0.28]],
             [0.58, [-0.27, 0.41, 0.18]], // contact in front
             [0.62, [-0.33, 0.41, 0.1]],
             [0.66, [-0.36, 0.4, 0]],
