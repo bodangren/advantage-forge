@@ -4,7 +4,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Design note — royal crown (equipment/armor/crown).
  *
  * Role: hero head gear and treasure pickup for the Chibi Quest hamlet; must read at 128 px.
- * Size: 0.24 m wide, about 0.14 m tall, standing on y = 0, centred on Y, the front toward +Z.
+ * Size: about 0.62 m wide x 0.58 m deep, 0.31 m tall (0.24 x 0.14 x 0.24 scaled 2.56 x 2.2 x 2.4 to sit on the hero head, inner radii 0.215 x 0.20), standing on y = 0, centred on Y, the front toward +Z.
  * One idea: a chunky golden band flaring into a rolled foot, carrying five rounded points with
  *   ball finials; red and blue gems stud the band and a red velvet cap fills the inside.
  * Shape language: round dominant (rolled foot, ball finials, cabochon gems, soft dome cap);
@@ -48,6 +48,7 @@ const R_GEM = 0.099;
 const R_GEM_BLUE = 0.104;
 const Y_GEM = 0.051;
 
+const SC: [number, number, number] = [2.56, 2.2, 2.4];
 const ss = (a: number, b: number, x: number) => {
   const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
   return t * t * (3 - 2 * t);
@@ -104,11 +105,12 @@ export default defineAsset({
       .smoothUnion(0.006, foot)
       .smoothUnion(0.006, ...points)
       .intersect(sdf.halfSpace([0, -1, 0], 0))
+      .scale(SC)
       .paintFn((x, y, z, base) => {
         let c = base;
         // Sunlit points and balls, shaded foot.
-        c = mixRgb(c, GOLD_LIGHT, 0.3 * ss(0.08, 0.15, y));
-        c = mixRgb(c, GOLD_DARK, 0.26 * (1 - ss(0.004, 0.028, y)));
+        c = mixRgb(c, GOLD_LIGHT, 0.3 * ss(0.176, 0.33, y));
+        c = mixRgb(c, GOLD_DARK, 0.26 * (1 - ss(0.009, 0.062, y)));
         // A whisper of tarnish so the metal is not a flat mirror.
         const speck = 0.5 + 0.5 * noise.fbm(x * 44, y * 44, z * 44, 2);
         c = mixRgb(c, GOLD_DARK, 0.06 * speck);
@@ -118,8 +120,8 @@ export default defineAsset({
       color: GOLD,
       roughness: 0.32,
       metalness: 1,
-      detail: 0.007,
-      maxTriangles: 2000,
+      detail: 0.011,
+      maxTriangles: 5000,
       bump: (x, y, z) => 0.00035 * noise.fbm(x * 120, y * 120, z * 120, 2),
     });
 
@@ -129,12 +131,13 @@ export default defineAsset({
       .ellipsoid([0.09, 0.031, 0.09])
       .at(0, 0.05, 0)
       .intersect(sdf.halfSpace([0, -1, 0], -0.04))
-      .displace(0.002, (x, y, z) => noise.fbm(x * 26, y * 26, z * 26, 2));
+      .displace(0.002, (x, y, z) => noise.fbm(x * 26, y * 26, z * 26, 2))
+      .scale(SC);
     k.body('cap', cap, {
       color: VELVET,
       roughness: 0.9,
       metalness: 0,
-      detail: 0.005,
+      detail: 0.012,
       maxTriangles: 200,
       paintWeight: 2,
     });
@@ -169,14 +172,14 @@ export default defineAsset({
       place(smallGemProto, -108, R_GEM, Y_GEM),
       place(smallGemProto, 180, R_GEM, Y_GEM),
     ];
-    k.body('gem-red', sdf.union(...redGems), {
+    k.body('gem-red', sdf.union(...redGems).scale(SC), {
       color: GEM_RED_BASE,
       roughness: 0.1,
       metalness: 0,
       emissive: GEM_RED_GLOW,
       emissiveIntensity: 0.4,
       flat: true,
-      detail: 0.0045,
+      detail: 0.011,
       maxTriangles: 420,
     });
 
@@ -186,14 +189,14 @@ export default defineAsset({
       place(blueGemProto, 144, R_GEM_BLUE, Y_GEM),
       place(blueGemProto, -144, R_GEM_BLUE, Y_GEM),
     ];
-    k.body('gem-blue', sdf.union(...blueGems), {
+    k.body('gem-blue', sdf.union(...blueGems).scale(SC), {
       color: GEM_BLUE_BASE,
       roughness: 0.1,
       metalness: 0,
       emissive: GEM_BLUE_GLOW,
       emissiveIntensity: 0.4,
       flat: true,
-      detail: 0.0045,
+      detail: 0.011,
       maxTriangles: 300,
     });
   },
