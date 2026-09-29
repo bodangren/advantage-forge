@@ -1,4 +1,4 @@
-# Overnight summary, 2026-09-29 (Sonnet 5.5 orchestration)
+# Overnight summary, 2026-09-29 to 2026-09-30 (Sonnet 5.5 orchestration)
 
 Bars: 7 ordinary, 7.5 P0 or game-pack rows, 8 characters. Every pass is in `bench/sonnet/log.tsv`; queue state in `bench/sonnet/state.tsv`; briefs in `bench/sonnet/briefs/`.
 
@@ -42,17 +42,44 @@ Bars: 7 ordinary, 7.5 P0 or game-pack rows, 8 characters. Every pass is in `benc
 | ogre-brute | enemy | high | 3 | 241,959 | 7.8 | 8 | skipped |
 | orc-shaman | enemy | high | 2 | 198,890 | 8.0 | 8 | accepted |
 | wood-golem (rework) | enemy-rework | high | 3 | 120,760 | 7.5 | 8 | skipped |
-| minotaur-guard (rework) | enemy-rework | high | 2 | 0 | - | 8 | skipped |
+| minotaur-guard (rework) | enemy-rework | high | 3 | 66,143 | 8.0 | 8 | accepted |
 | mummy (rework) | enemy-rework | high | 2 | 75,483 | 8.0 | 8 | accepted |
+| dark-knight | enemy | high | 2 | 130,217 | 8.0 | 8 | accepted |
+| wight | enemy | high | 3 | 244,384 | 8.0 | 8 | accepted |
+| revenant | character | high | 2 | 192,527 | 8.0 | 8 | accepted |
+| bandit-captain | character | high | 3 | 248,432 | 8.0 | 8 | accepted |
+| orc-warlord | character | high | 2 | 197,402 | 8.0 | 8 | accepted |
+| banshee | character | high | 3 | 190,773 | 7.3 | 8 | skipped |
+| iron-golem | character | high | 2 | 118,659 | 8.0 | 8 | accepted |
+| gargoyle | character | high | 2 | 143,795 | 8.0 | 8 | accepted |
+| specter | character | high | 3 | 184,461 | 8.0 | 8 | accepted |
+| poltergeist | character | high | 2 | 105,054 | 8.0 | 8 | accepted |
+| gnoll-warrior | character | high | 2 | 206,339 | 8.0 | 8 | accepted |
+| plague-bearer | character | high | 3 | 274,251 | 7.8 | 8 | skipped |
+| troll-guard | character | high | 2 | 186,234 | 8.0 | 8 | accepted |
+| vampire-lord | character | high | 1 | 86,474 | 8.0 | 8 | accepted |
+| clay-golem | character | high | 2 | 92,817 | 8.0 | 8 | accepted |
+| crystal-golem | character | high | 2 | 106,289 | 8.0 | 8 | accepted |
+| kobold-sorcerer | character | high | 1 | 132,483 | 8.0 | 8 | accepted |
+| living-statue | character | high | 3 | 243,735 | 7.8 | 8 | skipped |
+| clockwork-sentry | character | high | 2 | 140,021 | 8.0 | 8 | accepted |
+| gnoll-hunter | character | high | 3 | 248,492 | 8.0 | 8 | accepted |
+| kobold-trapper | character | high | 2 | 142,089 | 8.0 | 8 | accepted |
+| clockwork-soldier | character | high | 2 | 183,278 | 8.0 | 8 | accepted |
+| animated-weapon | character | high | 2 | 127,723 | 8.0 | 8 | accepted |
 
-Totals: 40 assets, 36 accepted, 4 skipped, 2,865,507 subagent tokens logged (including the 325,020 probe).
+Totals: 63 assets, 57 accepted, 6 skipped, 6,857,579 subagent tokens logged (including the 325,020 probe).
+
+Run 1 (batch 1, fit reworks, enemies round 1 and 2) stopped at 4.0M by the token rule after dark-knight. The owner reset the counter at 01:35 on 2026-09-30; run 2 (rows with batch run2) used 3,650,850 tokens of a new 4,000,000 limit and stopped when the last in-flight agent landed, with the next character unlikely to fit under the limit.
 
 ## Skipped
 
 - cliff-face: fresh high agent reworked the grass only: cap a thick plank, ledge mats small, wedges plain; SKIPPED after 4 passes (medium 78789 + high 47555 = 126344); rock body usable; lesson: the textured build reduces the rock to 302 tris while --fast reports 5350, so maxError 0.04 hides facets
 - ogre-brute: v3 same agent: v1 arm lengths restored, belly paint strengthened, 72346 tris, check ok; the hanging arm still reaches the hem and the shading is faint; 7.8 after three passes: SKIPPED (below the character bar); source left uncommitted, review entry added for the owner
 - wood-golem (rework): rework pass 3: eyes proud with painted sockets, raised petal sigil core, 70148 tris; eyes still small flecks in the front sprites; 3.8 -> 7.5 after three passes (120760 tokens), below the bar; source untracked (other session), review entry updated
-- minotaur-guard (rework): retry agent stalled again (149-byte log for 19 min); stopped; SKIPPED after two stalls; brief kept in bench/sonnet/briefs/minotaur-guard-rework.md
+- banshee: fresh high agent rework (second retry): hair now a white mane but a scalloped shell with horn locks; head small at 128 px; wisps plain tubes; skipped after three passes; source uncommitted
+- plague-bearer: fresh high agent rework (second retry): draped hood over a shadowed face done; beak stubby; hood pale and flat; skipped after three passes just under the bar; source uncommitted
+- living-statue: fresh high agent rework (second retry): value contrast, painted cracks, mask below the band, flanges, stacked boss done; helm still a hemisphere dome; pale; skipped after three passes; source uncommitted
 
 ## Lessons
 
@@ -63,3 +90,6 @@ Totals: 40 assets, 36 accepted, 4 skipped, 2,865,507 subagent tokens logged (inc
 - Queued SendMessage deliveries can be lost when the agent stops; send feedback after the completion notice and confirm "Resuming agent".
 - The renderer lifts saturated greens about one step; compensate in the source palette.
 - Owner rule (2026-09-29): every equipment piece fits the chibi humanoid base; contract in docs/equipment-fit.md and bench/sonnet/briefs/torso-contract.md.
+- Run 2 (enemies): 20 of 23 characters reached 8 in one build plus one feedback pass or one fresh rework (95K to 250K tokens each); the three skips (banshee, plague-bearer, living-statue) all fell on cloth or fur volume: draped hoods, streaming hair, and shaggy cuffs read as blobs at 128 px. Give those briefs explicit band and strand sizes.
+- Emissive cores clip to pale peach or pink in the renderer; use a dark base and an emissive of 1.4 to 1.8, not 2.4.
+- The task output file stays at 149 bytes while an agent runs; judge progress by the mtime of assets/<name>.ts and out/<name>/render.png.
