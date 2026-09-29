@@ -1988,5 +1988,36 @@
       "Braid the staff wrap with a bump pattern."
     ],
     "reviewedAt": "2026-09-29T15:31:28+00:00"
+  },
+  "ogre-brute": {
+    "overall": 7.8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Ogre brute on the orc warrior base scaled 1.25: a round-bellied tan ogre with a small tusked face in a dark mane, three-band bracers with red wraps, a rope belt with a tassel, a strip loincloth, and a big spiked club with a hanging rope toggle. Built by a Sonnet 5.5 high-tier agent in three passes (about 250,000 tokens). Below the 8 bar; the source is left uncommitted for the owner's call.",
+    "strengths": [
+      "The belly, club, and tusks read at 128 px in every direction.",
+      "Clearance check ok, eight clips, sprites for the default and presets."
+    ],
+    "issues": [
+      "The hanging left arm reaches the loincloth hem and reads stiff (the chibi arm length on a 1.3 m body).",
+      "The belly gradient and pec bulges are faint in the render.",
+      "The left hand stops short of the haft in the two-hand attack."
+    ],
+    "next": [
+      "Bend the hanging arm at the elbow and turn the fist inward.",
+      "Paint the belly and pecs with a stronger value step, not a hue step."
+    ],
+    "reviewedAt": "2026-09-29T15:48:43+00:00"
   }
 }

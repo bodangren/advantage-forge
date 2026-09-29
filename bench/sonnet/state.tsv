@@ -35,7 +35,7 @@ circlet	armor-fit	medium	a0a3525f9cbce54f0	1	accepted	fit-ok	27426 tokens
 goblin-king	enemy	high	aef4b880fd4f97636	2	accepted	8.0	173443 tokens
 orc-archer	enemy	high	a5dc29980006ffe04	3	accepted	8.0	186751 tokens
 orc-shaman	enemy	high	a1f517959db00a47b	2	accepted	8.0	198890 tokens
-ogre-brute	enemy	high	a9fff0d258b208e5a	1	feedback	7.0	v1 7.0: club, bracers, fists, belly
+ogre-brute	enemy	high	a9fff0d258b208e5a	3	skipped	7.8	below the 8 bar after 3 passes; uncommitted
 wood-golem	enemy-rework	high	ae9552047ba3298b9	0	running	-	owner asked 2026-09-29; review 3.8; file untracked
 minotaur-guard	enemy-rework	high	a6e2712c13a67f327	0	running	-	review 7.0; rework to the bar
-mummy	enemy-rework	high	-	0	running	-	review 7.5; rework
+mummy	enemy-rework	high	ac9b70434f8b4a54d	0	running	-	review 7.5; rework
