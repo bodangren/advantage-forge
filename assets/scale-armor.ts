@@ -16,7 +16,7 @@ const GOLD = rgb('#d4a93a');
 
 const ROWS = 7;
 const Y0 = 0.04;
-const Y1 = 0.6;
+const Y1 = 0.62;
 const RH = (Y1 - Y0) / ROWS;
 
 export default defineAsset({
@@ -31,29 +31,31 @@ export default defineAsset({
       .revolve(
         profile.polygon(
           [
-            [0, 0.62],
-            [0.13, 0.62],
-            [0.22, 0.56],
-            [0.3, 0.45],
-            [0.28, 0.32],
-            [0.27, 0.2],
-            [0.3, 0.05],
-            [0.3, 0],
+            [0, 0.636],
+            [0.14, 0.636],
+            [0.21, 0.576],
+            [0.25, 0.496],
+            [0.26, 0.376],
+            [0.248, 0.276],
+            [0.26, 0.196],
+            [0.276, 0.096],
+            [0.28, 0.026],
+            [0.264, 0],
             [0, 0],
           ],
           { smooth: true, samples: 8 },
         ),
       )
-      .scale([1, 1, 0.75]);
+      .scale([1, 1, 0.78]);
     // neck opening
-    const neck = sdf.cylinder(0.13, 0.2, 0.01).scale([1, 1, 0.75]).at(0, 0.72, 0);
+    const neck = sdf.cylinder(0.14, 0.2, 0.01).scale([1, 1, 0.78]).at(0, 0.7, 0);
     const shell = torso.smoothSubtract(0.01, neck);
 
     const scaled = shell.paintFn((x, y, z, base) => {
       const row = Math.floor((y - Y0) / RH);
       if (row < 0 || row >= ROWS) return mixRgb(base, DARK, 0.3);
       const across = 0.07 * 1.0;
-      const th = Math.atan2(x, z) * 0.28; // arc-length at ~0.24 m radius
+      const th = Math.atan2(x, z) * 0.26; // arc-length at ~0.24 m radius
       const u = th / across + (row % 2) * 0.5;
       const fx = u - Math.floor(u) - 0.5;
       const fy = (y - Y0) / RH - row; // 0 bottom .. 1 top
@@ -80,7 +82,7 @@ export default defineAsset({
       .smoothUnion(0.01, cap)
       .smoothUnion(0.01, rivet)
       .rotateZ(-20)
-      .at(0.27, 0.4, 0);
+      .at(0.29, 0.5, 0);
     k.body('iron', pauldron.mirror('x', 0), {
       color: IRON,
       roughness: 0.5,
@@ -90,10 +92,10 @@ export default defineAsset({
     });
 
     // raised iron collar with a shield plate (iron body)
-    const collar = sdf.torus(0.15, 0.035).scale([1, 1, 0.75]).at(0, 0.62, 0);
+    const collar = sdf.torus(0.16, 0.034).scale([1, 1, 0.78]).at(0, 0.636, 0);
     const plate = sdf
       .extrude(profile.polygon([[-0.05, 0.07], [0.05, 0.07], [0.05, -0.01], [0, -0.07], [-0.05, -0.01]]), 0.03, 0.006)
-      .at(0, 0.5, 0.19);
+      .at(0, 0.53, 0.19);
     k.body('collar', sdf.union(collar, plate), {
       color: IRON,
       roughness: 0.5,
@@ -104,8 +106,8 @@ export default defineAsset({
 
     // belt
     const belt = shell
-      .round(0.006)
-      .smoothIntersect(0.005, sdf.box([0.8, 0.06, 0.7], 0.01).at(0, 0.12, 0));
+      .round(0.008)
+      .smoothIntersect(0.005, sdf.box([0.8, 0.07, 0.7], 0.01).at(0, 0.14, 0));
     k.body('leather', belt, {
       color: BELT,
       roughness: 0.65,
@@ -116,11 +118,11 @@ export default defineAsset({
 
     // gold trim, buckle, emblem
     const hemY = 0.035;
-    const trim = sdf.torus(0.31, 0.02).scale([1, 1, 0.75]).at(0, hemY, 0);
-    const buckle = sdf.box([0.08, 0.06, 0.02], 0.008).at(0, 0.12, 0.225);
+    const trim = sdf.torus(0.29, 0.02).scale([1, 1, 0.78]).at(0, hemY, 0);
+    const buckle = sdf.box([0.08, 0.06, 0.02], 0.008).at(0, 0.14, 0.23);
     const emblem = sdf
       .extrude(profile.polygon([[0, 0.05], [0.032, 0], [0, -0.05], [-0.032, 0]]), 0.02, 0.004)
-      .at(0, 0.51, 0.205);
+      .at(0, 0.54, 0.21);
     k.body('gold', sdf.union(trim, buckle, emblem), {
       color: GOLD,
       roughness: 0.3,
