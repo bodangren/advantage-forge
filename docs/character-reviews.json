@@ -2190,5 +2190,33 @@
     ],
     "next": "Optional: darken the visor base so the emissive core stays orange; lengthen the shins by 0.03 m.",
     "reviewedAt": "2026-09-29T19:06:37+00:00"
+  },
+  "gargoyle": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Crouching winged stone demon on the imp rig: ridged horns, a spine crest, angry yellow eyes under heavy brows, a fanged grin, carved chest and belly bands, big bat wings with thick rims and elbow claws, a spade-tipped tail, dark grey stone with moss stains. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The spread wings, horns, yellow eyes and grin read in every sprite direction.",
+      "The stone value separates from the shadows at 128 px.",
+      "Ground check passes; 40,678 triangles, no warnings; no held items."
+    ],
+    "issues": [
+      "The wing membranes are flat panels without the mockup's carved relief.",
+      "The tail is half hidden by the leg in the front sprite."
+    ],
+    "next": "Optional: add two curved membrane ridges per wing in bump; raise the tail 0.05 m.",
+    "reviewedAt": "2026-09-29T19:11:45+00:00"
   }
 }
