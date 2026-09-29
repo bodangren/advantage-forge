@@ -1,0 +1,17 @@
+# raider (enemies/humanoid/raider) -> assets/raider.ts
+
+A northern human raider about 1.0 m tall, faces +Z, on the brigand base (assets/brigand.ts: the bandit rig with knee bones and a weapon hand, a hand axe in `hand.R`, a round buckler on `forearm.L`, a full beard; clips idle, walk, run, attack, hit, death, taunt; variant slots and presets). Bar 8/10 (character).
+
+Mockup: docs/enemy-mockups/raider_001.jpg (set `reference` to that path). Match its idea: a grey iron dome helmet with a riveted brow band and a wide flat nose guard that runs from the crown down over the nose; an angry face with thick blond tilted brows, small dark eyes, a big nose, a bared-teeth grin; a huge blond beard with a moustache, combed into thick strands, that covers the chin and cheeks and hangs to the chest; a grey wolf fur collar over both shoulders (a thick ring, strand grooves in bump, ragged lower edge); a dark brown leather jerkin with cross-stitch marks, a wide belt with a round iron buckle and a hanging tab; dark trousers with a leather kilt flap, dark boots; a bearded iron axe in the right hand and a big round grey iron shield (r 0.16) with a center boss on the left forearm; wrapped forearms.
+
+Palette: helmet #6a6c70 with #8a8c90 rivets and a #4e5054 brow band (metalness 0.7, roughness 0.5); skin #f0c8a0 with a #e09a80 nose; beard and brows #d8a850 with #b08838 grooves in bump; teeth #f0ece0; fur #7a7a74 with #5a5a56 shade and #9a9a94 tips (roughness 1); jerkin #5a3a26 with #7a5236 lit; belt #3a2a1e with iron #6a6c70; trousers #3a3a40; kilt flap #6a6a64; boots #4a3020; axe head #7a7c84 with a #b9c0c8 edge band and a #5a3a24 haft; shield #6e7076 with a #4e5054 rim and a #8a8c90 boss.
+Variants: beard (blond default, red #b0522a, black #24201c), fur (grey default, brown #5a4a3a, white #c8c4bc), jerkin (brown default, black #2a2622, green #4a5a34).
+
+Construction recipe:
+1. Copy assets/brigand.ts. Remove the hood, the skullcap band, the scar, the mail collar, and the buckler. Keep the rig, the clips, the beard shape (recolor and enlarge it), and the axe (keep the bearded head).
+2. Head: an iron dome helmet (a revolve profile, a rounded top, a straight brow band ring 0.02 m tall with eight rivet spheres, a nose guard as a rounded box 0.03 x 0.12 x 0.012 down the face center from the band to the nose tip); thick tilted blond brows, small dark eyes, a big nose; a grin (a dark mouth slot with a light teeth strip inside); the beard enlarged to a bib 0.24 x 0.22 x 0.12 with a moustache lobe and six vertical strand grooves in bump.
+3. Body: a fur collar (a torus R 0.14 r 0.05 at the shoulders, displaced by noise 0.008 for a shaggy edge, strand grooves in bump); a leather jerkin with cross-stitch grooves in bump; a wide belt with a round buckle and a hanging tab; a kilt flap panel over the trousers; boots; wrapped forearms.
+4. Weapons: the bearded axe in `hand.R`; a round iron shield r 0.16, thickness 0.02, with a rim and a center boss (sphere r 0.03), rigid on `forearm.L`. The attack is a chop. `./forge check raider` must end with `result ok` and the ground check must be ok. If the bigger shield clips the head in taunt, tilt the shield arm out by 5 to 10 degrees.
+5. Sprites: the helmet with the nose guard, the blond beard, the fur collar, and the big shield must read at 128 px.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/raider.ts. Finish with one `./forge all raider`.

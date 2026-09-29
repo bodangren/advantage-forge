@@ -72,3 +72,11 @@ Run 2 status 06:45: 3.65M of 4.0M. gnoll-hunter accepted 8.0 on the fresh rework
 clockwork-soldier 8.0 (72603b3). Summary regenerated (63 assets, 57 accepted, 6 skipped). One more character fits under
 the limit with one feedback pass: brigand (bandit base) launches as the final build; a second retry would pass 4.0M and
 counts as a budget skip.
+
+## Status 07:02 (2026-09-30)
+
+brigand v1 scored 7.7 (axe head a plain wedge, flat brow, hood side lobes, flat jerkin). One feedback pass is in progress. Run-2 counter: 3,774,609 of 4,000,000. The feedback pass is the last pass of the run; a second retry is a budget skip.
+
+## Counter reset 2 (07:03, 2026-09-30)
+
+The owner compacted and reset the token counter again. Rows with batch run3 in log.tsv count toward a new 4,000,000 limit. The brigand feedback pass in flight counts as the first run3 row. The run continues with the 14 open P1 enemies in game-need order: assassin, cult-leader, dark-mage, deserter, evil-priest, highwayman, hunter-rival, mercenary, pirate, pirate-captain, raider, smuggler, warlock, witch.

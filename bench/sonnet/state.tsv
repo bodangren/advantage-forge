@@ -63,3 +63,4 @@ clockwork-sentry	character	high	ac241e6566fa826d6	2	accepted	8.0	feedback pass a
 clockwork-soldier	character	high	aa8e7ad16bee151a2	2	accepted	8.0	feedback pass accepted; committed
 animated-weapon	character	high	ab046233610c8f180	2	accepted	8.0	feedback pass accepted; committed
 brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final build; accepted after one feedback pass
+highwayman	character	high	aa454d71b0c488777	0	running	-	enemies run 3
