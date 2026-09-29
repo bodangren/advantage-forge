@@ -18,7 +18,7 @@ watermill	structure	medium	a2354c810c6e0e348	2	accepted	7.3	63626 tokens
 townhouse	structure	medium	acfb65ceab3ba3700	1	accepted	7.3	49637 tokens
 longhouse	structure	medium	afb11c2d520277b2d	1	accepted	7.0	54161 tokens
 crypt-chapel	structure	medium	aad31a8136eb4a90f	1	accepted	7.3	48362 tokens
-scale-armor	armor	medium	abaccbc3b963d6a9d	0	running	-	round 5low tier failed twice on armor in round 1; use medium
-studded-leather	armor	medium	acc8f7d131dfd9c9d	0	running	-	round 5low tier failed twice on armor in round 1; use medium
-vines	plant	medium	-	0	queued	-	
-plate-armor	armor	medium	-	0	queued	-	low tier failed twice on armor in round 1; use medium
+scale-armor	armor	medium	abaccbc3b963d6a9d	2	accepted	7.3	50928 tokens
+studded-leather	armor	medium	acc8f7d131dfd9c9d	2	feedback	6.5	v2 6.5: armhole bowls; pass 3 removes the cut
+vines	plant	medium	abafc6b0c21ad5c5c	1	accepted	7.2	43535 tokens
+plate-armor	armor	medium	a91410ad9773ebb10	0	running	-	round 5low tier failed twice on armor in round 1; use medium
