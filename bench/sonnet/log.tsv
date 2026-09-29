@@ -1,0 +1,9 @@
+date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar	result	notes
+2026-09-29	farmhouse	structure	medium	1	44973	8	2.0	7	7.0	7	pass-borderline	v1: clean, follows brief; thin flat thatch, no scallop flaps, no foot stones, grey base; 2 renders viewed
+2026-09-29	ivy	plant	low	1	39539	14	2.9	6	5.0	7	fail	v1: straight zigzag stems in front of blob leaves, gaps, no lobed leaves; retry at medium with recipe
+2026-09-29	farmhouse	structure	medium	1	7553	4	2.3	7.5	7.0	7	retry-same-agent	v2: warm thatch, eave scallops, foot stones, chimney up; straw ridges render as grooves with nubs at gables; tokens = pass delta (52526 cumulative)
+2026-09-29	farmhouse	structure	medium	1	3213	4	3.2	-	7.5	7	pass	v3: ridge chains removed; clean; ACCEPTED; total 55739 tokens over 3 passes
+2026-09-29	ivy	plant	medium	1	40658	13	6.2	6	6.5	7	fail-narrow	v2 fresh medium agent with recipe: real vine, ground spill, leaves front; blob leaves, 0.45 m deep, sparse top
+2026-09-29	samurai	hero	high	1	163759	25	17.7	7	7.8	8	fail-narrow	v1 on paladin base: strong silhouette and sprite; helmet all red (no black crown bowl), flat crescent, faint scale pattern, hands 3-6 cm into cuirass in attacks; check ok, no warnings, 48k tris
+2026-09-29	samurai	hero	high	1	24930	15	14.1	7.8	8.2	8	pass	v2 same agent: black lacquer bowl + rivets, thicker crest, dark scale rows via tint, attack hands clear; ACCEPTED; total 188689 tokens over 2 passes
+2026-09-29	ivy	plant	medium	1	395	1	0.2	-	7.5	7	pass	v3 same agent: flat, dense, lobed leaves, one vine, ground spill; ACCEPTED; the v3 work ran inside the v2 segment (queued message delivered before exit), total 41053 tokens for v2+v3, 80592 with the failed low v1
