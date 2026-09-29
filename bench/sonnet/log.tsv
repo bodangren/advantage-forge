@@ -93,3 +93,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30	iron-golem	character	high	run2	82701	22	12	7.0	7.2	8	feedback	v1: boxy silhouette, rivets, hatch, visor, toe blocks match; iron near-black in sprites, thin visor strip, flat salmon hatch, small head, straight arms
 2026-09-30	bandit-captain	character	high	run2	85827	19	19	7.8	8.0	8	accepted	fresh high agent rework (second retry): shaped beard and mustache, long flared coat with lapels, hooked cutlass; check ok
 2026-09-30	banshee	character	high	run2	41419	13	14	6.5	6.5	8	failed	feedback pass: face, wisps, drape improved a little; hair still stiff twig-like branches; head small; gown a cone; second retry = fresh high agent with a new hair approach
+2026-09-30	gargoyle	character	high	run2	116279	25	17	7.5	7.5	8	feedback	v1: wings, horns, grin, eyes, tail read; stone too light; smooth body without chest ridges; small eyes; thin wing rims; stub brow crest
+2026-09-30	iron-golem	character	high	run2	35958	19	28	7.8	8.0	8	accepted	feedback pass: mid-grey iron with rust streaks, bold visor frame, rusty riveted hatch, bigger faceted head, bent arms with chamfered fists; ground ok

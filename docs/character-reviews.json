@@ -2162,5 +2162,33 @@
     ],
     "next": "Optional: lighten the lapel and cuff tones one step; tilt the hat brim up at the front by a few degrees.",
     "reviewedAt": "2026-09-29T18:44:33+00:00"
+  },
+  "iron-golem": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Blocky riveted iron construct on the stone-golem rig: chamfered plates, a small faceted head with a glowing visor slit and a rust spike, a rusty riveted furnace hatch, bent arms with chamfered knuckle fists, box legs with vents and three-toed feet, rust streaks from every rivet. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The boxy silhouette, rivets and rust read in every sprite direction.",
+      "The iron value now separates from the shadows at 128 px.",
+      "Ground check passes; 24,562 triangles, no warnings; no held items."
+    ],
+    "issues": [
+      "The visor glow renders pale peach rather than saturated orange at sprite size.",
+      "The legs are shorter and more upright than the mockup's tapered blocks."
+    ],
+    "next": "Optional: darken the visor base so the emissive core stays orange; lengthen the shins by 0.03 m.",
+    "reviewedAt": "2026-09-29T19:06:37+00:00"
   }
 }
