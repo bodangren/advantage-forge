@@ -1,0 +1,24 @@
+asset	class	tier	agent_id	passes	status	score	note
+farmhouse	structure	medium	-	3	accepted	7.5	committed d02fc7f
+ivy	plant	medium	-	3	accepted	7.5	committed d02fc7f
+samurai	hero	high	-	2	accepted	8.2	committed d02fc7f
+cloth-robe	armor	low	a9fdd4b6acdd5dcef	3	accepted	7.0	43589 tokens
+mantle	armor	low->medium	a45aafcf0b0ed1b7f	3	accepted	7.0	80251 tokens incl. 2 failed low passes
+greenhouse	structure	medium	a8607c5722e83d14b	1	feedback	7.0	v1 7.0: thin frame, plain base; pass 2
+yurt	structure	medium	a8e4a50ff3f3e8323	2	accepted	7.5	52936 tokens
+pier	structure	medium	-	0	queued	-	
+cave-mouth	terrain	medium	-	0	queued	-	
+city-wall	structure	medium	-	0	queued	-	
+rampart	structure	medium	-	0	queued	-	
+greenhouse-dome	structure	medium	-	0	queued	-	
+cliff-face	terrain	medium	-	0	queued	-	
+ancient-tree	plant	medium	-	0	queued	-	
+roots	plant	medium	-	0	queued	-	
+watermill	structure	medium	-	0	queued	-	
+townhouse	structure	medium	-	0	queued	-	
+longhouse	structure	medium	-	0	queued	-	
+crypt-chapel	structure	medium	-	0	queued	-	
+scale-armor	armor	low	-	0	queued	-	low tier failed twice on armor in round 1; use medium
+studded-leather	armor	low	-	0	queued	-	low tier failed twice on armor in round 1; use medium
+vines	plant	medium	-	0	queued	-	
+plate-armor	armor	low	-	0	queued	-	low tier failed twice on armor in round 1; use medium
