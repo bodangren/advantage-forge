@@ -2699,5 +2699,34 @@
     ],
     "next": "Taper the hood cape toward the waist, add a faint skin roughness in bump, and lighten the axe edge band one step.",
     "reviewedAt": "2026-09-29T23:13:42+00:00"
+  },
+  "raider": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Northern human raider on the brigand base: an iron dome helmet with a nose guard and a rivet band, a huge blond beard with strand lobes, a shaggy grey fur collar, a leather jerkin with a chest strap, a bearded axe raised at chest height, and a big round iron shield. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The helmet, the blond beard, the fur collar, and the shield read at 128 px in all eight directions.",
+      "The sideways glare and the bared-teeth grin match the mockup expression.",
+      "Check ok (closest 0.5 cm), ground ok, 55,594 triangles, no warnings."
+    ],
+    "issues": [
+      "The axe edge band renders pale in the textured build.",
+      "The face has no cheek volume; the eyes stay round.",
+      "The fur has no visible strand clumps at sprite size."
+    ],
+    "next": "Darken the axe edge band one step, add cheek spheres under the eyes, and give the fur clumps a bump groove each.",
+    "reviewedAt": "2026-09-29T23:50:26+00:00"
   }
 }

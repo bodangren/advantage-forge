@@ -131,3 +131,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30	gnoll-hunter	character	high	run2	83314	19	16	7.9	8.0	8	accepted	fresh high agent rework (second retry): short fur bands with visible limbs, tall recurve bow with a string, face fur and brow patches; check ok
 2026-09-30 07:01	brigand	character	high	run2	123759	21	16	7	7.7	8	feedback	v1: silhouette, beard, hood band, shield good; axe head plain wedge, flat brow, hood side lobes read as ear flaps, jerkin flat
 2026-09-30 07:15	brigand	character	high	run3	35620	14	8	7.8	8.0	8	accepted	v2 feedback pass: bearded axe, angry brow with scar, draped hood cape, darker jerkin with mail collar; check ok 0.3 cm, ground ok, 45058 tris
+2026-09-30 07:27	raider	character	high	run3	95843	13	13	7.5	7.6	8	feedback	v1: helmet, beard, shield, axe read; fur collar hidden at the front, bland face (round eyes, small mouth), plain jerkin, axe hangs low
+2026-09-30 07:40	raider	character	high	run3	39752	11	18	8	8.0	8	accepted	v2 feedback pass: fur collar rises beside the beard, glare and teeth grin, beard lobes, chest strap, axe raised; check ok 0.5 cm, ground ok, 55594 tris
