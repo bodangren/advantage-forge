@@ -48,11 +48,11 @@ banshee	character	high	ac2a5cf58a26d90af	3	skipped	7.3	three passes below the ba
 iron-golem	character	high	a9490d22f9f7aaf5f	2	accepted	8.0	feedback pass accepted; committed
 gargoyle	character	high	ad554ed46a2cbd24a	2	accepted	8.0	feedback pass accepted; committed
 specter	character	high	aee81a2219faeddb7	3	accepted	8.0	fresh rework accepted; committed
-troll-guard	character	high	a6f49884230e5d9d9	0	running	-	enemies run 2
-gnoll-warrior	character	high	af6cf25a8e6e4dd53	0	running	-	enemies run 2
+troll-guard	character	high	a6f49884230e5d9d9	1	feedback	7.5	v1 7.5: fat curved tusks, club head, underbite, longer mane, helmet hatch
+gnoll-warrior	character	high	af6cf25a8e6e4dd53	1	feedback	7.7	v1 7.7: dense mane ruff, browner fur, muzzle lips, wraps, spear
 poltergeist	character	high	a15a1c4c1d0ee55bc	2	accepted	8.0	feedback pass accepted; committed
-plague-bearer	character	high	a3692f32f14cd6dea	0	running	-	enemies run 2
-vampire-lord	character	high	aea28b07536006656	0	running	-	enemies run 2
+plague-bearer	character	high	a3692f32f14cd6dea	1	feedback	6.8	v1 6.8: hood shape, open coat, hunch, feet, bandages
+vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	-	0	queued	-	enemies run 2
 crystal-golem	character	high	-	0	queued	-	enemies run 2
 living-statue	character	high	-	0	queued	-	enemies run 2

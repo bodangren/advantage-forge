@@ -2303,5 +2303,33 @@
     ],
     "next": "Optional: curve the mouth cut upward at the corners; spread the orbit offsets evenly at 90 degrees.",
     "reviewedAt": "2026-09-29T19:48:58+00:00"
+  },
+  "vampire-lord": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Regal armored vampire on the vampire base: slicked black hair with a widow's peak, pale grey skin, heavy brows, red glowing eyes, a fanged grimace, a red-lined high collar, a black cloak with a bat-wing hem, a gold-trimmed black breastplate with pauldrons, a gold-buckled belt, black boots, clawed hands. Reviewed 8.0 on the first build.",
+    "strengths": [
+      "The collar, hair peak, red eyes and cloak hem read in every sprite direction.",
+      "The silhouette and colors match the mockup in all four views.",
+      "Clearance and ground checks pass; 41,674 triangles, no warnings."
+    ],
+    "issues": [
+      "The eyes render pink rather than deep red because the emissive washes the base.",
+      "The gold trim is thinner than the mockup's ornate bat crest."
+    ],
+    "next": "Optional: darken the eye base to #8a0a0a under the emissive; add a bat-crest emblem outline to the chest.",
+    "reviewedAt": "2026-09-29T20:05:38+00:00"
   }
 }
