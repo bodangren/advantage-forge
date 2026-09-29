@@ -1,0 +1,12 @@
+# bandit-captain rework (enemies/humanoid/bandit-captain) -> assets/bandit-captain.ts
+
+Rework the existing assets/bandit-captain.ts (a fresh agent; the file builds, 50,450 triangles, `./forge check` ok). Bar 8/10 (character). The last review gave 7.4. Mockup: docs/enemy-mockups/bandit-captain_001.jpg (already the `reference`).
+
+Fix these three differences, largest first. Zoom with `./forge render bandit-captain --fast --focus 0,0.62,0.12,0.2` to check the face.
+1. Beard and mustache do not read. Make them read at 128 px like the mockup: the beard is a wide rounded bib (an ellipsoid 0.24 x 0.16 x 0.12 under the chin, smoothUnion with two cheek lobes r 0.06 at the jaw corners) that leaves the mouth and the upper cheeks bare; the mustache is a separate body of two thick curled lobes (chains from the nose center out to x +-0.09, curling up at the tips, r 0.02 to 0.012) that sits ON TOP of the beard and 0.01 m in front of it. Use two colors: beard #1c1815 and mustache #2c2622 with a paintFn top-light of #3e3832 on every upward-facing part, so the mustache separates from the beard. Cut a visible mouth line (a dark extruded arc) between them. Show bare skin cheeks r 0.05 beside the nose.
+2. The coat is a short puffy jacket. Rebuild it as a long heavy coat like the mockup: the coat body is a shell around the torso from the collar (y 0.5) down to y 0.09, flared at the hem (r 0.19 at the hip growing to 0.24 at the hem), open in front from the chest down (subtract a wedge 0.1 wide) so the vest and belt show, with a back slit. Two big folded lapels (flat rounded boxes 0.07 x 0.12, rotated 25 degrees outward) on the chest opening and a standing collar (two rounded boxes 0.03 thick, 0.07 tall behind the neck). Sleeves are straight, not puffy: cones r 0.05 to 0.045 with a folded cuff torus. Coat #33302e with #4a4542 on the lapels, collar, cuffs and hem so the folds read. Keep the brass buttons on the lapels.
+3. Cutlass: shorten the blade to a stubby hook like the mockup (0.32 long, 0.07 wide at the belly, a strong upward hook in the last third), with a brass cup guard.
+
+Check every fix in out/bandit-captain/render.png and out/bandit-captain/sprites/preview.png. Report the three largest remaining differences.
+
+Limits: under 60,000 triangles. No `warning:` lines. `./forge check bandit-captain` must end with `result ok` and the ground check must be ok. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only edit assets/bandit-captain.ts. Finish with one `./forge all bandit-captain`.
