@@ -2106,5 +2106,33 @@
     ],
     "next": "Optional: curl the plume with a chain; wrap the bracer with two strap rings.",
     "reviewedAt": "2026-09-29T18:21:22+00:00"
+  },
+  "orc-warlord": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Orc chieftain on the orc-warrior base: horned iron helm with a red crest, yellow eyes in dark sockets, jaw tusks, red-brown beard, huge spiked riveted pauldrons with fur trim, chest harness, studded belt and hand-print tabard, tall iron boots with skull bosses, a broad double-headed axe held across the body. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The horns, crest, pauldrons and double axe give the mockup's silhouette in every sprite direction.",
+      "Lit rims and rivets keep the iron from reading as flat black at 128 px.",
+      "Clearance and ground checks pass; 68,024 triangles, no warnings."
+    ],
+    "issues": [
+      "The skin still renders one step brighter than the mockup.",
+      "The beard hides the chest harness; the red hand print sits behind the axe haft in the front view."
+    ],
+    "next": "Optional: darken the skin one more step; shorten the beard so the harness emblem shows.",
+    "reviewedAt": "2026-09-29T18:34:59+00:00"
   }
 }

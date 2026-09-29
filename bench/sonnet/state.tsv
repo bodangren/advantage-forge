@@ -42,9 +42,9 @@ minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	1	accepted	8.0	66143 tokens (
 dark-knight	character	high	a8e9be475c3b62cb1	2	accepted	8.0	feedback pass accepted; committed
 wight	character	high	a2dac84e4b244a4d8	3	accepted	8.0	fresh rework accepted; committed
 revenant	character	high	a94f51d5f888db355	2	accepted	8.0	feedback pass accepted; committed
-bandit-captain	character	high	a60d63923daafb467	1	feedback	7.0	v1 7.0: beard shape, bandana band, long coat with collar, hooked cutlass
-orc-warlord	character	high	a728d5f92bd35cdf7	1	feedback	7.0	v1 7.0: ground fail, skin, axe heads, iron lit edges, boots, eyes
-banshee	character	high	a3f6638fce2d15c7f	0	running	-	enemies run 2
+bandit-captain	character	high	abb1745842a57ceb7	2	running	7.4	fresh high agent rework (second retry)
+orc-warlord	character	high	a728d5f92bd35cdf7	2	accepted	8.0	feedback pass accepted; committed
+banshee	character	high	a3f6638fce2d15c7f	1	feedback	6.0	v1 6.0: hair, head size, face, gown drape, wisps
 iron-golem	character	high	a9490d22f9f7aaf5f	0	running	-	enemies run 2
 gargoyle	character	high	-	0	queued	-	enemies run 2
 specter	character	high	-	0	queued	-	enemies run 2
