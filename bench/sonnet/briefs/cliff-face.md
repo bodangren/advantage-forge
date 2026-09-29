@@ -16,3 +16,8 @@ Construction recipe:
 5. `paintFn`: tan on faces with normals toward +Z (front-lit), grey elsewhere, dark in the crevices (lower noise value).
 
 Limits: whole asset under 7,000 triangles; `detail` 0.014 on rock, 0.01 on grass. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/cliff-face.ts.
+
+## Rework notes (2026-09-29, after three medium passes scored 5.0, 6.5, 6.5)
+The rock body in assets/cliff-face.ts is accepted as is (tapering faceted chunks, spread foot, tan/grey split, flat back). Do not change the rock body or its detail/maxError settings (0.07 / 0.04 were needed to stay under the cap).
+The grass fails: the top mat reads as a flat saucer wider than the rock, and the ledge mats and wedges are small blobs. Target, from the mockup: a thick (0.25 m) turf cap whose outline follows the rock top with 5 to 6 rounded lobes that overhang the front and side edges by 0.1 to 0.25 m, with a drooping lip on the front; two ledge turfs that sit on the ledge slabs and overhang their front edge; three flat grass wedges leaning on the face. The mat must not extend past the flat back plane (z -0.5) and must not be wider than the rock plus the overhang.
+Approach that should work: build the cap as an extruded 2D profile (`sdf.extrude(profile.polygon(points, { smooth: true }), 0.25)` rotated to lie flat), where the points trace the rock's top outline with lobes, then `.round(0.06)`; sample the rock outline from the chunk positions in the file. Grass body `detail` 0.016, `maxError` 0.006, no `maxTriangles`.
