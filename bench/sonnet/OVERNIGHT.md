@@ -62,3 +62,9 @@ skeleton, zombie, goblin-warrior; dungeon denizens first): bandit-captain, orc-w
 specter, poltergeist, plague-bearer, vampire-lord, clay-golem, crystal-golem, living-statue, animated-weapon, clockwork-sentry,
 clockwork-soldier, gnoll-warrior, gnoll-hunter, troll-guard, kobold-sorcerer, kobold-trapper, brigand, highwayman, raider,
 mercenary, deserter, assassin, smuggler, pirate, pirate-captain, hunter-rival, dark-mage, warlock, witch, cult-leader, evil-priest.
+Run 2 status 2026-09-30 06:00: 3.16M of the new 4.0M limit. Accepted since the reset (16): wight, revenant, orc-warlord,
+bandit-captain, iron-golem, gargoyle, specter, poltergeist, vampire-lord, troll-guard, clay-golem, gnoll-warrior,
+kobold-sorcerer, crystal-golem, clockwork-sentry, plus dark-knight before the reset. Skipped (3): banshee 7.3,
+plague-bearer 7.8, living-statue 7.8 (review entries on the page, sources uncommitted). In flight: gnoll-hunter and
+kobold-trapper (feedback passes), clockwork-soldier, animated-weapon. These are the last launches: the four passes
+end near 3.6M, and one more character would risk the limit. After they land: review, commit, regenerate the summary, stop.
