@@ -2134,5 +2134,33 @@
     ],
     "next": "Optional: darken the skin one more step; shorten the beard so the harness emblem shows.",
     "reviewedAt": "2026-09-29T18:34:59+00:00"
+  },
+  "bandit-captain": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Outlaw leader on the bandit base: wide flat-brim hat with a red feather, red bandana, eyepatch, full beard with a curled mustache, red neckerchief, long flared black coat with lapels and brass buttons over a brown vest and buckled belt, hooked cutlass and dagger. Reviewed 8.0 after three passes (one feedback pass, one fresh rework).",
+    "strengths": [
+      "The hat, feather, coat and cutlass read in every sprite direction.",
+      "The beard and mustache now separate; the bandana shows under the brim.",
+      "Clearance and ground checks pass; 50,732 triangles, no warnings."
+    ],
+    "issues": [
+      "The coat folds read weakly because the lit tones sit close to the base color.",
+      "The hat brim hides the face in the top-down sprite angle."
+    ],
+    "next": "Optional: lighten the lapel and cuff tones one step; tilt the hat brim up at the front by a few degrees.",
+    "reviewedAt": "2026-09-29T18:44:33+00:00"
   }
 }
