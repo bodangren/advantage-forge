@@ -60,5 +60,5 @@ kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build acce
 gnoll-hunter	character	high	aa6497e35f1fdff45	1	feedback	7.5	v1 7.5: dark grey face and dense mane, bow held up, shaggy cuffs, hands
 kobold-trapper	character	high	a6732c980a19f2cef	1	feedback	7.5	v1 7.5: cupped leaf ears, olive scales, closer shaggy hood, rope knot and wraps
 clockwork-sentry	character	high	ac241e6566fa826d6	2	accepted	8.0	feedback pass accepted; committed
-clockwork-soldier	character	high	-	0	queued	-	enemies run 2
+clockwork-soldier	character	high	aa8e7ad16bee151a2	0	running	-	enemies run 2
 animated-weapon	character	high	-	0	queued	-	enemies run 2
