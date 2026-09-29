@@ -108,3 +108,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30	vampire-lord	character	high	run2	86474	23	15	7.5	8.0	8	accepted	v1: swept hair with peak, brows, red eyes, fangs, red-lined collar, gold-trimmed plate, bat-hem cloak; check ok
 2026-09-30	clay-golem	character	high	run2	68107	13	16	7.0	7.3	8	feedback	v1: clay color, hollow eyes, mouth slot match; gem a pale disc on the crown; no big shoulder masses; long splayed arms; rune and belly panel faint; thin legs
 2026-09-30	troll-guard	character	high	run2	33375	17	20	7.5	8.0	8	accepted	feedback pass: curved tusks, big nose with underbite, warts, banded club, mane to the belly, cross-hatched helmet, patched kilt; check ok
+2026-09-30	plague-bearer	character	high	run2	46462	20	27	6.5	7.0	8	failed	feedback pass: bandage sleeves, belly, belt, feet improved; hood still a huge white dome reading as a helmet with a detached visor; no face depth; second retry = fresh high agent

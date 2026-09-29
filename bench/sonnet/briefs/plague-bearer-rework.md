@@ -1,0 +1,14 @@
+# plague-bearer rework (enemies/undead/plague-bearer) -> assets/plague-bearer.ts
+
+Rework the existing assets/plague-bearer.ts (a fresh agent; the file builds, 54,936 triangles, `./forge check` ok). Bar 8/10 (character). Two passes scored 6.8 and 7.0. Mockup: docs/enemy-mockups/plague-bearer_001.jpg (already the `reference`). Keep the rig, the clips, the variants, the coat, the bandaged sleeves, the belly, the belt, the trousers, the feet, and the lantern. Rebuild the head and hood.
+
+The hood concept must change. Now it is a huge white dome that reads as a helmet with a detached visor. Build it as draped cloth over a recessed head:
+1. Head: shrink the skull to a 0.2 x 0.2 x 0.2 ellipsoid and push it BACK 0.04 m and DOWN 0.03 m so it sits deep inside the hood. Keep the big eye (r 0.05, with the wrinkle rings) and the leather beak (a cone 0.16 long, r 0.05 to 0.012, angled 20 degrees down) on the front of the skull; the beak tip must still poke out past the hood opening.
+2. Hood: a draped cloth shape, not a sphere. Build it from a revolve profile that is a soft cone: r 0.02 at the peak (y 0.98, tilted 15 degrees back), r 0.2 at eye level (y 0.78), r 0.27 at the shoulders (y 0.6); then cut the face opening with a subtracted ellipsoid 0.18 x 0.22 x 0.2 centered 0.06 m in front of the skull center, so a deep pocket forms around the face. Give the opening a folded edge (a torus segment r 0.02 along the rim, front only) and a peaked overhang at the top (extend the rim torus 0.04 forward at the brow). Add one dark inner body (an ellipsoid slightly smaller than the pocket, color #1e1e18) behind the skull so every view into the pocket shows darkness around the face. Displace the hood with fbm amplitude 0.008 for cloth wrinkles and add two fold grooves in bump down the sides. The hood must end at the shoulders in a ragged collar (subtract wedges) that overlaps the coat.
+3. Hood color #d8d2c0 with #a8a090 in the folds by paintFn and dirt spots, matching the coat.
+4. Hands: enlarge both hands 1.3x with longer claw fingers (cones 0.05, r 0.008) so they read like the mockup.
+5. Shins: lengthen the shin bones and shin bodies by 0.03 m (edit the skeleton `shin` joint y and the foot y together, then run the walk clip and confirm the ground check) so the legs are not stubby. If the ground check fails after two tries, keep the base length and say so.
+
+Check every fix in out/plague-bearer/render.png and out/plague-bearer/sprites/preview.png. The face must sit in shadow inside the hood in the front and three-quarter views. Report the three largest remaining differences.
+
+Limits: under 65,000 triangles. No `warning:` lines. `./forge check plague-bearer` must end with `result ok` and the ground check must be ok. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only edit assets/plague-bearer.ts. Finish with one `./forge all plague-bearer`.
