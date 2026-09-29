@@ -2387,5 +2387,33 @@
     ],
     "next": "Optional: darken the gem base to #6a3a08 so the emissive stays amber; add a thumb bump per hand.",
     "reviewedAt": "2026-09-29T20:34:56+00:00"
+  },
+  "gnoll-warrior": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Hyena-headed warrior on the orc-warrior base: a dark muzzle with a black nose and a fanged snarl, big dark eyes, tall pointed ears, forehead marks, a dense dark mane ruff, warm tan fur with a lighter belly and dark paws, a leather X harness with a bone necklace, stacked wraps, a studded belt with a loincloth, and a faceted spear held upright. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "The ears, mane, muzzle and spear read in every sprite direction.",
+      "The fur color and the mane density now match the mockup.",
+      "Clearance and ground checks pass; 68,876 triangles, no warnings."
+    ],
+    "issues": [
+      "The face reads slightly flat in the front sprite because the muzzle and mane share a dark value.",
+      "The spear blade is shorter than the mockup's long faceted blade."
+    ],
+    "next": "Optional: lighten the muzzle top by one step; lengthen the blade to 0.4 m.",
+    "reviewedAt": "2026-09-29T20:39:59+00:00"
   }
 }
