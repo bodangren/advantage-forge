@@ -128,3 +128,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30	gnoll-hunter	character	high	run2	62319	26	42	7.5	7.7	8	failed	feedback pass: dark grey head, mane, raised bow, claws done; fur cuffs and shin fur are huge bulbous pods that hide the arms and legs; bow thin; second retry = fresh high agent
 2026-09-30	clockwork-soldier	character	high	run2	45286	16	14	8.0	8.0	8	accepted	feedback pass: gear window with a glowing core, weathered brass with oil streaks, visible coils, wide stance, head rivets and dial; check ok
 2026-09-30	animated-weapon	character	high	run2	13946	8	8	8.0	8.0	8	accepted	feedback pass: blade into a lumpy glowing mist, soft flame wisps, two-turn bead coil, shield on the left; check ok
+2026-09-30	gnoll-hunter	character	high	run2	83314	19	16	7.9	8.0	8	accepted	fresh high agent rework (second retry): short fur bands with visible limbs, tall recurve bow with a string, face fur and brow patches; check ok

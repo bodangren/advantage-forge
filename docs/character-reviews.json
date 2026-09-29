@@ -2641,5 +2641,33 @@
     ],
     "next": "Optional: move the shield out to x -0.2; join the coil turns with a continuous chain.",
     "reviewedAt": "2026-09-29T22:33:23+00:00"
+  },
+  "gnoll-hunter": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Hyena-headed archer on the orc-archer base: a dark grey head with yellow eyes, a black nose and fangs, a dense mane, a pale wolf-pelt hood with ear flaps, tan fur limbs with dark paws and short fur cuff bands, a leather harness with a quiver of arrows, a wrap belt and loincloth, and a tall recurve bow with a string held upright. Reviewed 8.0 after three passes (one feedback pass, one fresh rework).",
+    "strengths": [
+      "The ears, muzzle, pelt hood, quiver and bow read in every sprite direction.",
+      "The limbs now show between short fur bands, matching the mockup's proportions.",
+      "Clearance and ground checks pass; 63,698 triangles, no warnings."
+    ],
+    "issues": [
+      "The fur cuffs are thinner and paler than the mockup's dark fur boots.",
+      "The bow is upright rather than angled, so its curve reads weakly from the front."
+    ],
+    "next": "Optional: darken the cuff bands to #4a3a2c and thicken them; tilt the bow 20 degrees in the rest pose.",
+    "reviewedAt": "2026-09-29T22:44:51+00:00"
   }
 }
