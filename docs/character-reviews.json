@@ -2022,5 +2022,33 @@
       "Paint the belly and pecs with a stronger value step, not a hue step."
     ],
     "reviewedAt": "2026-09-29T15:48:43+00:00"
+  },
+  "dark-knight": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Horned dark knight on the knight base: brow band, cheek plates and crest on the helm, red visor glow, purple wing panels and trim, tabard emblem, ragged red cape, short blocky sword. Reviewed 8.0 after one feedback pass.",
+    "strengths": [
+      "Silhouette matches the mockup in all four views: horns, crest, pauldrons, cape.",
+      "Sprites read horns, crest, red visor and cape at 128 px.",
+      "Clearance and ground checks pass; 43,730 triangles, no warnings."
+    ],
+    "issues": [
+      "The chest reads more purple than the mockup's grey-violet.",
+      "The resting sword tip sits close to the ground in the front view."
+    ],
+    "next": "Optional: desaturate the wing panels one step; raise the rest grip a few degrees.",
+    "reviewedAt": "2026-09-29T17:30:44+00:00"
   }
 }

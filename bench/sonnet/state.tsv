@@ -37,9 +37,8 @@ orc-archer	enemy	high	a5dc29980006ffe04	3	accepted	8.0	186751 tokens
 orc-shaman	enemy	high	a1f517959db00a47b	2	accepted	8.0	198890 tokens
 ogre-brute	enemy	high	a9fff0d258b208e5a	3	skipped	7.8	below the 8 bar after 3 passes; uncommitted
 wood-golem	enemy-rework	high	ae9552047ba3298b9	3	skipped	7.5	3.8 -> 7.5, below the bar; untracked source
-minotaur-guard	enemy-rework	high	a7c400d50f0c64a34	0	skipped	-	agent stalled twice
 mummy	enemy-rework	high	a74ad731e917c7399	1	accepted	8.0	75483 tokens (7.5 -> 8.0)
 minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	1	accepted	8.0	66143 tokens (7.0 -> 8.0)
-dark-knight	enemy	high	a8e9be475c3b62cb1	0	running	-	enemies round 2
-wight	enemy	high	a09f06b2a5f0b51cd	0	running	-	enemies round 2
+dark-knight	character	high	a8e9be475c3b62cb1	2	accepted	8.0	feedback pass accepted; committed
+wight	enemy	high	a09f06b2a5f0b51cd	1	feedback	7.5	v1 7.5: crown disc, eyes, strands
 revenant	enemy	high	a94f51d5f888db355	0	running	-	enemies round 2
