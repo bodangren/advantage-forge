@@ -3196,5 +3196,35 @@
     ],
     "next": "Done for P1. A later polish pass could add scale grooves in bump on the pauldrons and thicken the wings.",
     "reviewedAt": "2026-09-30T06:34:11+00:00"
+  },
+  "beast-rider": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the ranger base (the archer's body, face, and chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a grey-tan furred wolf-pelt hood with two ears, inner-ear discs, a fold ridge, and a bone-bead trim; a dark hair fringe, big green eyes, three cheek stripes, a small smile; a cream shaggy fur collar and cuffs; a tan hide tunic with a dark leather chest strap and an iron ring; a twisted rope wrap with a knot and a coil; a leather skirt panel with straps and a jagged hem; a spear with a leaf head and grip wraps held upright in the right hand. Attack is a thrust, attack2 an overhead strike. 54,526 triangles, no build warnings, forge check result ok at 2.1 cm, ground ok.",
+    "strengths": [
+      "The ear hood, the pale collar, and the upright spear give a silhouette that reads at 128 px in all eight directions.",
+      "The value steps (dark hood, cream collar, tan tunic, leather skirt) separate the layers at sprite size.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the ranger."
+    ],
+    "issues": [
+      "The hood is a smooth furred dome; the mockup hood has folds and larger open ears.",
+      "The rope wrap and the leather panels are simpler than the mockup's knots and straps.",
+      "The wolf cub companion from the mockup is not part of the asset."
+    ],
+    "next": "Done for P1. A companion cub could be a separate wildlife asset later.",
+    "reviewedAt": "2026-09-30T06:48:49+00:00"
   }
 }
