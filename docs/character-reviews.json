@@ -2989,5 +2989,34 @@
     ],
     "next": "Darken the gauntlet to #8a8478 and scale it 1.2x, thicken the moustache to r 0.015, and soften the flame with a lower-frequency displacement.",
     "reviewedAt": "2026-09-30T02:48:23+00:00"
+  },
+  "dark-mage": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Hooded human dark mage on the necromancer base: a deep purple hood with a seam ridge and drape folds over glowing violet eyes and a black goatee, a black mantle with a silver chain and pendant, a purple robe with a silver trim column and chevrons, a twisted black staff with a clawed crystal, and a rough amethyst orb held out in the idle carry pose. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The hood, the violet eyes, the silver column, the crystal, and the orb read at 128 px in all eight directions.",
+      "The emissives stay violet with dark bases.",
+      "Check ok (closest 1.0 cm), ground ok, 51,436 triangles, no warnings."
+    ],
+    "issues": [
+      "The rest-pose render and the static sprite preview show the arms down; the carry pose lives in the clips.",
+      "The hood is still a tall smooth dome.",
+      "The claw and crystal are simpler than the mockup's branching claw."
+    ],
+    "next": "Bend the rest-pose elbows so the static sprites show the carry pose, widen the hood 10 percent, and add two more branching talons.",
+    "reviewedAt": "2026-09-30T02:53:57+00:00"
   }
 }

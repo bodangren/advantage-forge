@@ -72,8 +72,8 @@ smuggler	character	high	ab20554d0da86785a	2	accepted	8.0	enemies run 3; accepted
 pirate	character	high	a5af297403cbe02e6	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 pirate-captain	character	high	a8672da7d9e65a6f6	3	accepted	8.0	enemies run 3; accepted after a feedback pass and a fresh rework
 hunter-rival	character	high	ac17370466e234ac8	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-dark-mage	character	high	a1baed82a4a863f72	1	feedback	7.7	enemies run 3; one feedback pass sent
+dark-mage	character	high	a1baed82a4a863f72	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 warlock	character	high	abddb9815917ece1a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 witch	character	high	a0a0d2f4e2c28160f	0	running	-	enemies run 3
 cult-leader	character	high	a65f4ca6a015e24cc	0	running	-	enemies run 3
-evil-priest	character	high	-	0	running	-	enemies run 3 (last open enemy)
+evil-priest	character	high	a37c4398c86f02286	0	running	-	enemies run 3 (last open enemy)
