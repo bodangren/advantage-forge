@@ -3676,5 +3676,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T17:18:28+00:00"
+  },
+  "swashbuckler": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young swashbuckler on the rogue base: swept dark locks with a front curl under a red bandana with tails, a gold earring, a cream open shirt under a dark vest with lacing, a teal sash, brown boots, a curved sabre with a gold guard and a dagger. Seven clips, check ok (closest 4.0 cm). 45,554 triangles.",
+    "strengths": [
+      "The bandana, vest, sash and boots match the mockup palette and read at 128 px.",
+      "The sabre reads as a wide curved blade with a dark spine and a gold guard after the feedback pass.",
+      "The bandana back is clean after the hair cap was cut around the band."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The hair is a tidy fan of locks; the mockup locks are looser and curlier.",
+      "The dagger is small at sprite size."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T17:52:03+00:00"
   }
 }
