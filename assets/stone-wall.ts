@@ -12,7 +12,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  *   recessed mortar — a wall that was laid by someone who took pride in it.
  * Shape language: square and sturdy (workshop) with soft 20 mm bevels on every stone edge
  *   (chibi soft). Blocks are cut boxes, not blobs.
- * Palette (construction.md §1): stone #8a8a82 dominant, mortar/joints #5e5e58 (shaded in
+ * Rework: dark rough fieldstone #6e6a64..#8a847a, 6 irregular courses, mortar #3a3632, sooty cap, oak sill #5a3a22.
+ * Old palette: stone #8a8a82 dominant, mortar/joints #5e5e58 (shaded in
  *   its own hue to #5f5b52 / #3f3f38 for worn blocks and joint cores), worn light #a6a398.
  *   Capstone band and joints share the darker #5e5e58. Sill beam matches timber-wall:
  *   walnut #6b4226 / deep #54331d.
@@ -23,17 +24,17 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  * Rig/animation: none.
  */
 
-const STONE = rgb('#8a8a82'); // warm grey block base (contract)
-const STONE_DARK = rgb('#5f5b52'); // shaded blocks, warm dark grey
-const STONE_LIGHT = rgb('#a6a398'); // worn pale blocks
-const MORTAR = rgb('#5e5e58'); // recessed joints (contract)
-const MORTAR_DEEP = rgb('#3f3f38'); // joint core, in the mortar's own hue
-const CAP_DARK = rgb('#52524d'); // capstone shade
-const CAP_LIGHT = rgb('#6c6c66'); // capstone worn top
+const STONE = rgb('#7a6e62'); // warm brown-grey fieldstone base
+const STONE_DARK = rgb('#5e544a'); // darker blocks blocks
+const STONE_LIGHT = rgb('#948878'); // lightest stones
+const MORTAR = rgb('#3a3632'); // deep dark joints
+const MORTAR_DEEP = rgb('#2b2825'); // joint core
+const CAP_DARK = rgb('#645a50'); // capstone shade, one step below the field
+const CAP_LIGHT = rgb('#857a6c'); // capstone worn top
 const LICHEN = rgb('#8f9a76'); // one small patch of place
-const WALNUT = rgb('#6b4226'); // sill beam (contract, shared with timber-wall)
-const WALNUT_DEEP = rgb('#54331d');
-const WALNUT_LIFT = rgb('#7d5233');
+const WALNUT = rgb('#3e2c20'); // dark oak sill (less saturated: #4a3020 rendered orange)
+const WALNUT_DEEP = rgb('#2e2016');
+const WALNUT_LIFT = rgb('#4c3828');
 
 const LEN = 2.0;
 const H = 1.5;
@@ -42,22 +43,22 @@ const SILL_H = 0.18; // matches timber-wall sill band
 const CAP_H = 0.18; // coping band, matches timber-wall top rail
 const FIELD_BOT = SILL_H; // first bed joint sits on the sill
 const FIELD_TOP = H - CAP_H; // 1.32: top of the block field
-const ROWS = 4; // four-row bond (contract)
+const ROWS = 6; // six courses of fieldstone
 const ROW_H = (FIELD_TOP - FIELD_BOT) / ROWS; // 0.285 m course height
-const GAP = 0.038; // mortar joint width
+const GAP = 0.03; // mortar joint width
 const BLOCK_D = 0.152; // base block depth; per-block jitter sits proud of the core
 const CAP_D = 0.17; // coping overhangs the field so the top reads as a cap
 
 /** Ashlar course widths, bottom to top. Each row sums to LEN, so the bond is periodic
  *  over the tile and continues across every butt joint; end blocks keep a cut face at
  *  x = ±1. No vertical joint lines up with the course above or below. */
-const COURSES: number[][] = [
-  [0.52, 0.46, 0.56, 0.46],
-  [0.36, 0.58, 0.44, 0.62],
-  [0.6, 0.42, 0.52, 0.46],
-  [0.44, 0.54, 0.48, 0.54],
-];
-const CAP_COURSE = [0.5, 0.5, 0.5, 0.5];
+const COURSES: number[][] = Array.from({ length: ROWS }, (_, row) => {
+  const n = 4 + (row % 2) + (row === 2 ? 1 : 0);
+  const raw = Array.from({ length: n }, (_, i) => 0.55 + 0.9 * noise.random(row, i, 41));
+  const sum = raw.reduce((a, v) => a + v, 0);
+  return raw.map((v) => (v / sum) * LEN);
+});
+const CAP_COURSE = [0.62, 0.41, 0.55, 0.42];
 
 const EPS = 1e-4;
 const atEnd = (v: number): boolean => Math.abs(Math.abs(v) - LEN / 2) < EPS;
@@ -101,12 +102,12 @@ function buildCourse(widths: number[], row: number, idBase: number): Block[] {
     blocks.push({
       x0,
       x1,
-      y0: y0 + (r - 0.5) * 0.007, // courses stay level; blocks settle a hair
-      y1: y1 + (r - 0.5) * 0.007,
-      d: BLOCK_D + (noise.random(id, 5, 17) - 0.5) * 0.024,
-      bevel: 0.02 * (0.8 + 0.5 * noise.random(id, 7, 23)),
+      y0: y0 + (r - 0.5) * 0.035, // courses stay level; blocks settle a hair
+      y1: y1 + (noise.random(id, 9, 31) - 0.5) * 0.03 + (r - 0.5) * 0.035,
+      d: BLOCK_D + (noise.random(id, 5, 17) - 0.5) * 0.02 - 0.004 + 0.012 * noise.random(id, 19, 53),
+      bevel: 0.02 + 0.01 * noise.random(id, 7, 23),
       id,
-      z: 0,
+      z: 0.006 * noise.random(id, 19, 53) + 0.003,
     });
     lo = hi;
   }
@@ -114,10 +115,10 @@ function buildCourse(widths: number[], row: number, idBase: number): Block[] {
 }
 
 const FIELD_BLOCKS: Block[] = COURSES.flatMap((w, row) => buildCourse(w, row, row * 8 + 1));
-const CAP_BLOCKS: Block[] = buildCourse(CAP_COURSE, 0, 71).map((b) => ({
+const CAP_BLOCKS: Block[] = buildCourse(CAP_COURSE, 0, 71).map((b, i) => ({
   ...b,
   y0: FIELD_TOP,
-  y1: H,
+  y1: i === 0 ? H : H - 0.04 * noise.random(i, 61, 67),
   d: CAP_D,
   bevel: 0.024,
 }));
@@ -145,19 +146,22 @@ function blockAt(x: number, y: number): { b: Block; cap: boolean } | null {
 function blockPaint(x: number, y: number, z: number, b: Block): Rgb {
   // The mason's hand: some blocks near-joint dark, some worn pale, most in between.
   const t = (noise.random(b.id, 13, 29) - 0.5) * 2;
-  let c = t < 0 ? mixRgb(STONE, STONE_DARK, -t * 0.85) : mixRgb(STONE, STONE_LIGHT, t * 0.4);
+  let c = mixRgb(STONE, STONE_LIGHT, clamp01(0.5 + t * 0.5));
+  if (noise.random(b.id, 43, 47) > 0.86) c = mixRgb(c, STONE_DARK, 0.75);
   const mottle = noise.fbm(x * 6, y * 6, z * 6, 3, 5);
   c = mottle < 0 ? mixRgb(c, STONE_DARK, -mottle * 0.2) : mixRgb(c, STONE_LIGHT, mottle * 0.12);
   // Slight dark bias: the reference wall's average sits below the base grey.
-  c = mixRgb(c, STONE_DARK, 0.1);
+  c = mixRgb(c, STONE_DARK, 0.05);
   const din = Math.max(0, faceInset(b, x, y));
   // Worn crown: the middle of each face softens lighter, like the reference blocks.
   const wear = smoothstep(0.02, 0.1, din);
-  c = mixRgb(c, STONE_LIGHT, wear * wear * 0.22);
+  c = mixRgb(c, STONE_LIGHT, wear * wear * 0.12);
   // Shade toward the joint, faking the groove's occlusion.
   c = mixRgb(c, STONE_DARK, (1 - smoothstep(0, 0.06, din)) * 0.5);
   // Damp rise from the ground and the sill's shadow.
   c = mixRgb(c, STONE_DARK, smoothstep(0.42, 0.18, y) * 0.3);
+  // Soot creeping down from the cap.
+  c = mixRgb(c, rgb('#2a2724'), smoothstep(1.0, 1.32, y) * 0.35);
   // One small lichen patch, low on the left, where rain runs off the sill joint.
   const lx = x + 0.62;
   const ly = y - 0.3;
@@ -169,13 +173,14 @@ function blockPaint(x: number, y: number, z: number, b: Block): Rgb {
 /** Capstone paint: the darker coping stone, worn lighter on top, tight value range. */
 function capPaint(x: number, y: number, z: number, b: Block): Rgb {
   const t = (noise.random(b.id, 31, 37) - 0.5) * 2;
-  let c = t < 0 ? mixRgb(MORTAR, CAP_DARK, 0.22 - t * 0.3) : mixRgb(MORTAR, CAP_LIGHT, t * 0.26);
+  let c = t < 0 ? mixRgb(STONE, CAP_DARK, 0.5 - t * 0.3) : mixRgb(STONE, CAP_LIGHT, t * 0.4);
   const mottle = noise.fbm(x * 7, y * 7, z * 7, 3, 5);
   c = mottle < 0 ? mixRgb(c, CAP_DARK, -mottle * 0.16) : mixRgb(c, CAP_LIGHT, mottle * 0.1);
   // Anchor the band a step below the field so the coping reads at sprite size.
   c = mixRgb(c, CAP_DARK, 0.26);
   // Weathered top face and outer edge catch the light.
-  c = mixRgb(c, CAP_LIGHT, smoothstep(1.44, 1.5, y) * 0.3);
+  c = mixRgb(c, CAP_LIGHT, smoothstep(1.44, 1.5, y) * 0.2);
+  c = mixRgb(c, rgb('#23201d'), 0.06 + 0.14 * smoothstep(1.35, 1.5, y));
   return c;
 }
 
@@ -193,8 +198,8 @@ function stoneBump(x: number, y: number, z: number): number {
   if (hit) {
     const din = Math.max(0, faceInset(hit.b, x, y));
     // Gentle face crown on the cut block, plus grit.
-    const dome = 0.0011 * smoothstep(0, 0.11, din);
-    const grit = 0.0008 * noise.fbm(x * 34, y * 34, z * 34, 3, 7) + 0.0004 * noise.noise3(x * 90, y * 90, z * 90, 7);
+    const dome = 0.002 * smoothstep(0, 0.07, din);
+    const grit = 0.0022 * noise.fbm(x * 22, y * 34, z * 34, 3, 7) + 0.0004 * noise.noise3(x * 90, y * 90, z * 90, 7);
     return dome + grit;
   }
   // Mortar bed sits a touch deeper and rougher.
@@ -217,21 +222,33 @@ function sillPaint(x: number, y: number, z: number, base: Rgb): Rgb {
 export default defineAsset({
   name: 'stone-wall',
   description:
-    'Ashlar stone wall tile: four courses of warm-grey cut blocks with soft bevels in dark recessed mortar, a darker segmented coping on top, and a walnut sill beam. 2 m long, tiles on a 2 m grid.',
+    'Ashlar stone wall tile: six courses of dark rough fieldstone in deep mortar, a sooty darker coping, and a dark oak sill. 2 m long, tiles on a 2 m grid.',
   reference: 'docs/blacksmith-mockups/blacksmith-quest_001.jpg',
-  detail: 0.012,
+  detail: 0.009,
   texture: { size: 1024 },
 
   build(k) {
     // ------------------------------------------------------------------ stone field
     // The mortar core is the wall itself; every block is a cut box seated through it and
     // proud on both faces, so the wall reads identically from the street and the shop.
-    const core = sdf.box([LEN, FIELD_TOP - FIELD_BOT + CAP_H, CORE_D]).at(0, (FIELD_BOT + H) / 2, 0);
+    const core = sdf.box([LEN, FIELD_TOP - FIELD_BOT + CAP_H - 0.05, CORE_D]).at(0, (FIELD_BOT + H - 0.05) / 2, 0);
 
-    const blockShape = (b: Block): Sdf =>
-      sdf
-        .box([b.x1 - b.x0, b.y1 - b.y0, b.d], b.bevel)
-        .at((b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2, b.z);
+    const blockShape = (b: Block): Sdf => {
+      let sh: Sdf = sdf.box([b.x1 - b.x0, b.y1 - b.y0, b.d], b.bevel);
+      const r = noise.random(b.id, 71, 73);
+      if (r > 0.64) {
+        // chipped corner: a small tilted box cut from a front corner (never at a tile end)
+        const sx = noise.random(b.id, 79, 83) > 0.5 ? 1 : -1;
+        const sy = noise.random(b.id, 89, 97) > 0.5 ? 1 : -1;
+        const cx = sx > 0 ? (atEnd(b.x1) ? -1 : 1) : atEnd(b.x0) ? 1 : -1;
+        const chip = sdf
+          .box([0.05, 0.045, 0.06], 0.008)
+          .rotate(25 * sy, 30 * cx, 20)
+          .at((cx * (b.x1 - b.x0)) / 2, (sy * (b.y1 - b.y0)) / 2, b.d / 2);
+        sh = sdf.subtract(sh, chip);
+      }
+      return sh.at((b.x0 + b.x1) / 2, (b.y0 + b.y1) / 2, b.z);
+    };
 
     const stones: Sdf[] = FIELD_BLOCKS.map(blockShape);
     const caps: Sdf[] = CAP_BLOCKS.map(blockShape);
@@ -245,9 +262,9 @@ export default defineAsset({
       color: STONE,
       roughness: 0.92,
       metalness: 0,
-      detail: 0.011,
-      maxError: 0.0022,
-      maxTriangles: 4600,
+      detail: 0.009,
+      maxError: 0.002,
+      maxTriangles: 8200,
       paintWeight: 2,
       bump: stoneBump,
     });
@@ -262,7 +279,7 @@ export default defineAsset({
       metalness: 0,
       detail: 0.011,
       maxError: 0.002,
-      maxTriangles: 900,
+      maxTriangles: 600,
       paintWeight: 2,
       bump: (x, y, z) => 0.0016 * sillGrain(x, y, z) + 0.00035 * noise.noise3(x * 80, y * 80, z * 80, 7),
     });

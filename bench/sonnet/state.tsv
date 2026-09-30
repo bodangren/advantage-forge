@@ -248,7 +248,7 @@ crate	world	medium	a12ff5b840276e7bb	2	accepted	7.6	catchup1 rework (P0 bar 7.5)
 table	world	medium	a589b51af24d26dd5	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
 chair	world	medium	a67fbce0250278865	1	accepted	7.6	catchup1 rework (P0 bar 7.5); accepted on v1
 signpost	world	medium	a43e21c85e6877ef6	1	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted on v1
-stone-wall	world	medium	a81a5d495dfc33759	0	running	7.0	catchup1 rework (P0 bar 7.5)
+stone-wall	world	medium	a81a5d495dfc33759	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass plus an orchestrator color edit
 key-iron	item	medium	afbab06f54ddacfab	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
 fern	world	medium	af4766cbf88215bca	0	running	5.5	catchup1 rework (P1 bar 7.0)
 brazier	world	medium	a2e9fa7dbefcc13ce	1	accepted	7.6	catchup1 rework (P1 bar 7.0); accepted on v1
@@ -256,5 +256,7 @@ barn	world	medium	ab94170cfe652ce12	1	accepted	7.6	catchup1 rework (P1 bar 7.0);
 bread	world	medium	a5b946bc0b4cc7501	1	accepted	7.5	catchup1 rework (P1 bar 7.0); accepted on v1
 fireplace	world	medium	ab998e86bcd06762a	1	accepted	7.0	catchup1 rework (P1 bar 7.0); accepted on v1 plus an orchestrator edit
 chains	world	medium	ade0cdf8f3c3d937c	1	accepted	7.0	catchup1 rework (P1 bar 7.0); accepted on v1
-hay-bale	world	medium	a12f8eb77467cfa0b	0	running	6.5	catchup1 rework (P1 bar 7.0)
-rock-cluster	world	medium	ae4a41e620ee708b9	0	running	6.5	catchup1 rework (P1 bar 7.0)
+hay-bale	world	medium	a12f8eb77467cfa0b	1	accepted	7.0	catchup1 rework (P1 bar 7.0); accepted on v1
+rock-cluster	world	medium	ae4a41e620ee708b9	1	accepted	7.3	catchup1 rework (P1 bar 7.0); accepted on v1
+sack	world	medium	adb6b2759f6fb9e70	0	running	6.5	catchup1 rework (P1 bar 7.0)
+sarcophagus	world	medium	a256bf6d308abb7f1	0	running	6.8	catchup1 rework (P1 bar 7.0, build warning)
