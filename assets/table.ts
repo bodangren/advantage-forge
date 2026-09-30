@@ -1,7 +1,8 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — sturdy square tavern table (props/furniture/table).
+ * Design note — sturdy square tavern table (props/furniture/table), reworked: four gapped planks (#b07a45) with
+ * rounded ends, knots, grain bump, worn center; chamfered legs, stretchers, corner brackets, cleats (#7a4e2a).
  *
  * Role: tavern seating prop, the anchor furniture piece of the tavern set; must
  *   read instantly at 128 px as "a square slab on four legs".
@@ -21,11 +22,15 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * Rig/animation: none (static prop).
  */
 
-const OAK = rgb('#b5814a'); // honey oak top (dominant)
-const BROWN = rgb('#8a5a35'); // legs + stretchers (secondary)
+const TOP = rgb('#b07a45');
+const TOP_DARK = rgb('#7a5330');
+const KNOT = rgb('#4a2c14');
+const GAP = 0.014;
+const OAK = rgb('#b07a45'); // top
+const BROWN = rgb('#6a4424'); // legs + stretchers (secondary)
 const PALE = rgb('#c9a06a'); // pale cut wood, edge wear (accent)
 const OAK_DARK = rgb('#7a5330'); // plank lines / shaded oak
-const BROWN_DARK = rgb('#4e3018'); // foot grime / shaded brown
+const BROWN_DARK = rgb('#3e2512'); // foot grime / shaded brown
 
 const smoothstep = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -38,7 +43,7 @@ const TOP_Y0 = 0.53; // underside of the top
 const TOP_BEVEL = 0.014; // soft edge bevel
 const PLANKS = 5; // plank divisions across the top (running along X)
 
-const LEG_S = 0.1; // square leg cross-section
+const LEG_S = 0.08; // square leg cross-section
 const LEG_X = 0.36; // leg center inset from the middle
 const LEG_H = TOP_Y0; // legs run from the floor to the underside of the top
 const STRETCH_Y = 0.14; // stretcher frame center height (low, near the floor)
@@ -55,44 +60,65 @@ export default defineAsset({
 
   build(k) {
     // ------------------------------------------------------------------ top
-    // One bold slab: 0.95 x 0.07 x 0.95, beveled edges, planks running along X.
-    const topShape = sdf
-      .box([TOP_W, TOP_T, TOP_W], TOP_BEVEL)
-      .at(0, TOP_Y0 + TOP_T / 2, 0);
+    // Four planks along X with gaps, rounded ends, worn center, dark knots.
+    const PW = (TOP_W - 3 * GAP) / 4;
+    const plankZ = (i: number) => -TOP_W / 2 + PW / 2 + i * (PW + GAP);
+    const planks = [0, 1, 2, 3].map((i) =>
+      sdf
+        .box([TOP_W - 0.004 * (i % 2) * 2, TOP_T, PW], 0.02)
+        .at(0, TOP_Y0 + TOP_T / 2, plankZ(i)),
+    );
+    const topShape = sdf.union(...planks);
+
+    const plankOf = (z: number) =>
+      Math.min(3, Math.max(0, Math.floor((z + TOP_W / 2) / (PW + GAP))));
+    const KNOTS: [number, number, number, number][] = [
+      [-0.22, 0.0, 1, 0.03],
+      [0.25, 0.0, 2, 0.025],
+      [0.05, 0.0, 0, 0.022],
+    ];
+    const knotAmt = (x: number, z: number) => {
+      let m = 0;
+      for (const [kx, , pi, r] of KNOTS) {
+        const dx = (x - kx) / (r * 1.8);
+        const dz = (z - plankZ(pi)) / r;
+        m = Math.max(m, 1 - smoothstep(0.6, 1, Math.sqrt(dx * dx + dz * dz)));
+      }
+      return m;
+    };
 
     const topPaint = (x: number, y: number, z: number) => {
-      // Planks across Z: index, boundary groove, per-plank tint.
-      const u = ((z + TOP_W / 2) / TOP_W) * PLANKS;
-      const idx = Math.floor(u);
-      const f = u - idx;
-      const line = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 10);
-      // Grain runs along X: slow along the board, quick across it.
+      const idx = plankOf(z);
       const grain = noise.fbm(x * 4, y * 7, z * 34, 2);
       const patch = 0.5 + 0.5 * noise.fbm(x * 5, y * 5, z * 5, 2);
-      let c = mixRgb(OAK, OAK_DARK, 0.06 + 0.16 * noise.random(idx, 3, 9));
-      c = mixRgb(c, OAK_DARK, 0.28 * patch);
-      c = mixRgb(c, PALE, 0.09 * (0.5 + 0.5 * grain));
-      // Faint plank division.
-      c = mixRgb(c, OAK_DARK, 0.45 * line);
-      // Pale cut-wood edge wear: a band around the rim, over bevel and face.
-      const edge = Math.max(Math.abs(x), Math.abs(z));
-      c = mixRgb(c, PALE, 0.7 * smoothstep(0.443, 0.466, edge));
+      let c = mixRgb(TOP, TOP_DARK, 0.06 + 0.16 * noise.random(idx, 3, 9));
+      c = mixRgb(c, TOP_DARK, 0.22 * patch);
+      c = mixRgb(c, PALE, 0.1 * (0.5 + 0.5 * grain));
+      // Lighter worn center.
+      const r = Math.hypot(x, z);
+      c = mixRgb(c, PALE, 0.4 * (1 - smoothstep(0.1, 0.38, r)));
+      // Dark plank sides near the gaps.
+      const f = (z + TOP_W / 2) / (PW + GAP) - Math.floor((z + TOP_W / 2) / (PW + GAP));
+      const edgeD = Math.min(f, 1 - f) * (PW + GAP);
+      c = mixRgb(c, TOP_DARK, 0.5 * (1 - smoothstep(0.004, 0.02, edgeD)));
+      c = mixRgb(c, KNOT, 0.9 * knotAmt(x, z));
+      const edge = Math.abs(x);
+      c = mixRgb(c, TOP_DARK, 0.55 * smoothstep(0.43, 0.47, edge));
       return c;
     };
 
     k.body('top', topShape.paintFn(topPaint), {
-      color: '#b5814a',
+      color: '#b07a45',
       roughness: 0.78,
       metalness: 0,
-      detail: 0.0065,
+      detail: 0.006,
       textureDensity: 2,
       paintWeight: 2,
-      maxTriangles: 3000,
+      maxTriangles: 5000,
       bump: (x, y, z) => {
-        const u = ((z + TOP_W / 2) / TOP_W) * PLANKS;
-        const f = u - Math.floor(u);
-        const line = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 10);
-        return -0.0022 * line + 0.0011 * noise.fbm(x * 4, y * 7, z * 34, 2);
+        const g = noise.fbm(x * 4, y * 7, z * 40, 2);
+        const ring = Math.sin((z + 0.3 * noise.fbm(x * 3, 0, z * 3, 2)) * 220);
+        return 0.0012 * g + 0.0008 * ring - 0.002 * knotAmt(x, z);
       },
     });
 
@@ -100,7 +126,7 @@ export default defineAsset({
     // Four chunky square legs slightly inset from the corners, joined by a low
     // rectangular stretcher frame whose bars run into the legs.
     const legAt = (sx: number, sz: number) =>
-      sdf.box([LEG_S, LEG_H, LEG_S], 0.016).at(sx * LEG_X, LEG_H / 2, sz * LEG_X);
+      sdf.box([LEG_S, LEG_H, LEG_S], 0.012).at(sx * LEG_X, LEG_H / 2, sz * LEG_X);
     const barX = (sz: number) =>
       sdf.box([2 * LEG_X + LEG_S, STRETCH_H, STRETCH_D], 0.012).at(
         0,
@@ -114,9 +140,19 @@ export default defineAsset({
         0,
       );
 
+    // Apron: 0.07 tall, 0.03 thick boards under the top edge, joining the legs.
+    const APR_Y = TOP_Y0 - 0.035;
+    const L2 = 2 * LEG_X + LEG_S;
+    const brackets = [-1, 1].flatMap((s) => [
+      sdf.box([L2, 0.07, 0.03], 0.008).at(0, APR_Y, s * LEG_X),
+      sdf.box([0.03, 0.07, L2], 0.008).at(s * LEG_X, APR_Y, 0),
+    ]);
+    const cleats = [-LEG_X, LEG_X].map((z) =>
+      sdf.box([2 * LEG_X + LEG_S, 0.04, 0.06], 0.01).at(0, TOP_Y0 - 0.02, z),
+    );
     const frame = sdf
       .union(legAt(1, 1), legAt(-1, 1), legAt(1, -1), legAt(-1, -1))
-      .smoothUnion(0.01, barX(1), barX(-1), barZ(1), barZ(-1));
+      .smoothUnion(0.01, barX(1), barX(-1), barZ(1), barZ(-1), ...brackets, ...cleats);
 
     const legPaint = (x: number, y: number, z: number) => {
       // Grain runs along Y for legs and bars.
@@ -130,11 +166,11 @@ export default defineAsset({
     };
 
     k.body('legs', frame.paintFn(legPaint), {
-      color: '#8a5a35',
+      color: '#6a4424',
       roughness: 0.84,
       metalness: 0,
       detail: 0.008,
-      maxTriangles: 2400,
+      maxTriangles: 3000,
       bump: (x, y, z) => 0.0012 * noise.fbm(x * 26, y * 4, z * 26, 2),
     });
   },

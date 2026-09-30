@@ -4,13 +4,13 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf } fro
  * Design note — forest campfire (catalog `forest/prop/campfire`).
  *
  * Role: small warming fire prop and the map's only warm accent; must read at the 128 px sprite.
- * Size: ~0.7 m wide stone ring, flame tip about 0.24 m tall; stands on y = 0, faces +Z. No rig.
- * One idea: a ring of chunky rounded stones cradling a bright teardrop flame, with split logs
+ * Size: ~0.7 m wide stone ring, flame tip about 0.46 m tall (footprint kept); stands on y = 0, faces +Z. No rig.
+ * One idea: a ring of chunky rounded stones cradling a cluster of orange tongues with a yellow core, with split logs
  *   leaning together into the fire. The flame is the single focal point.
  * Shape language: round/soft dominant (rounded stones, D-section logs, flame belly) with one
  *   pointed accent (the flame tip) for a readable silhouette.
  * Palette: cool gray stone #8a94a0 (dominant), warm bark #8a5a35 / dark #5f3d22, pale cut wood
- *   #c9a06a, pale ash #cfc9bd, char #3a342e; warm accent flame #ff9a3c (emissive, intensity 2).
+ *   #c9a06a, pale ash #cfc9bd, char #3a342e; flame orange #ff7a1a, core #ffd23a, embers #ff5a1a (emissive 0.5-0.7).
  *   Value plan: mid-gray stones, dark log undersides and char, bright emissive flame focal point.
  * Materials: stone (rough 0.9), wood (rough 0.82), ash (rough 0.95), flame + embers (emissive).
  * Detail list: primary 9 stones + 4 leaning split logs + ash bed; secondary teardrop flame;
@@ -18,15 +18,15 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf } fro
  * Rig/animation: none (static prop).
  */
 
-const STONE = rgb('#7d8794');
-const STONE_DARK = rgb('#4b545f');
-const STONE_LIGHT = rgb('#9ba5b1');
+const STONE = rgb('#8a8580');
+const STONE_DARK = rgb('#57524d');
+const STONE_LIGHT = rgb('#a8a39c');
 const WOOD = rgb('#8a5a35');
 const WOOD_DARK = rgb('#5f3d22');
 const WOOD_CUT = rgb('#c9a06a');
 const ASH_LIGHT = rgb('#cfc9bd');
 const ASH_DARK = rgb('#8f887c');
-const CHAR = rgb('#332d28');
+const CHAR = rgb('#2a1e18');
 const FLAME = rgb('#ff9a3c');
 const FLAME_HOT = rgb('#ffd98a');
 const GLOW = rgb('#d97e33');
@@ -54,7 +54,13 @@ function stoneAt(a: number, i: number): Sdf {
     ry * 0.45,
     (noise.random(i, 6) - 0.5) * rz * 0.7,
   );
-  const stone = lump.smoothUnion(0.018, shoulder);
+  let stone = lump.smoothUnion(0.018, shoulder);
+  for (let c = 0; c < 3; c++) {
+    const az = noise.random(i, 40 + c) * Math.PI * 2;
+    const el = 0.25 + noise.random(i, 50 + c) * 0.9;
+    const n: [number, number, number] = [Math.cos(az) * Math.cos(el), Math.sin(el), Math.sin(az) * Math.cos(el)];
+    stone = stone.smoothIntersect(0.006, sdf.halfSpace(n, Math.min(rx, rz) * (0.72 + noise.random(i, 60 + c) * 0.1)));
+  }
   return stone
     .rotate(noise.random(i, 7) * 50 - 25, noise.random(i, 8) * 360, noise.random(i, 9) * 40 - 20)
     .at(Math.cos(a) * ring, ry * 0.72, Math.sin(a) * ring);
@@ -78,14 +84,14 @@ function splitLogLocal(): Sdf {
     return color;
   };
   const splitFace = sdf.halfSpace([-1, 0, 0], -(c - 0.001)); // surface x >= c
-  const tip = sdf.halfSpace([0, 1, 0], LOG_L / 2 - 0.01); // inner end, charred by the fire
-  return cut.paintFn(bark).paintWhere(splitFace, WOOD_CUT, 0.004).paintWhere(tip, CHAR, 0.008);
+  const tip = sdf.halfSpace([0, 1, 0], LOG_L / 2 - 0.05); // inner end, charred by the fire
+  return cut.paintFn(bark).paintWhere(splitFace, WOOD_CUT, 0.004).paintWhere(tip, CHAR, 0.02);
 }
 
 export default defineAsset({
   name: 'campfire',
   description:
-    'A small forest campfire: a ring of chunky rounded stones around a shallow ash bed, four split logs leaning together, a bright teardrop flame, and a few glowing embers.',
+    'A small forest campfire: a ring of chunky rounded stones around a shallow ash bed, four split logs leaning together, a cluster of orange flame tongues around a yellow core, an ember bed with coals, and a few glowing embers.',
   detail: 0.01,
   texture: { size: 1024 },
 
@@ -98,9 +104,9 @@ export default defineAsset({
     }
     const stoneShape = sdf.union(...stones).intersect(sdf.halfSpace([0, -1, 0], 0));
     const stonePaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
-      const t = clamp01(y / 0.08);
-      let color = mixRgb(STONE_DARK, base, clamp01(0.3 + t * 0.7));
-      color = mixRgb(color, STONE_LIGHT, clamp01((t - 0.5) / 0.5) * 0.5);
+      const t = clamp01(y / 0.075);
+      let color = mixRgb(STONE_DARK, base, clamp01(0.15 + t * 0.85));
+      color = mixRgb(color, STONE_LIGHT, clamp01((t - 0.45) / 0.5) * 0.85);
       const n = noise.fbm(x * 9, y * 9, z * 9, 3);
       color = mixRgb(color, STONE_DARK, clamp01(-n) * 0.38);
       color = mixRgb(color, STONE_LIGHT, clamp01(n) * 0.14);
@@ -115,7 +121,7 @@ export default defineAsset({
       roughness: 0.9,
       metalness: 0,
       detail: 0.01,
-      maxTriangles: 1500,
+      maxTriangles: 1600,
       paintWeight: 3,
       bump: (x, y, z) =>
         0.002 * noise.fbm(x * 30, y * 30, z * 30, 3, 7) + 0.0008 * noise.noise3(x * 90, y * 90, z * 90, 11),
@@ -179,57 +185,81 @@ export default defineAsset({
       bump: (x, y, z) => 0.0018 * noise.fbm(x * 50, y * 14, z * 50, 3, 3),
     });
 
-    // ------------------------------------------------------------------ flame
-    const flameProfile = profile.polygon(
-      [
-        [0, 0],
-        [0.03, 0.007],
-        [0.053, 0.034],
-        [0.062, 0.075],
-        [0.057, 0.115],
-        [0.042, 0.156],
-        [0.019, 0.19],
-        [0, 0.204],
-      ],
-      { smooth: true, samples: 10 },
-    );
-    const flameShape = sdf.revolve(flameProfile).at(0, 0.038, 0);
-    const flamePaint = (x: number, y: number, z: number): Rgb => {
-      let color = FLAME;
-      const t = clamp01((y - 0.038) / 0.204);
-      const r = Math.hypot(x, z);
-      const core = clamp01((0.055 - r) / 0.055) * clamp01(1 - t * 1.6);
-      color = mixRgb(color, FLAME_HOT, core * 0.45);
-      return color;
-    };
-    k.body('flame', flameShape.paintFn(flamePaint), {
-      color: '#ff9a3c',
-      roughness: 0.45,
-      metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 3,
-      detail: 0.007,
-      maxTriangles: 380,
-      paintWeight: 3,
+    // ------------------------------------------------------------------ flame tongues
+    // [x, z, height, base radius, lean x, lean z]: ring of tongues around a central core
+    const RING = 0.095;
+    const ringH = [0.39, 0.27, 0.31, 0.24, 0.29];
+    const tongues: Array<readonly [number, number, number, number, number, number]> = ringH.map((h, i) => {
+      const a = (i / ringH.length) * Math.PI * 2 + 0.4;
+      return [Math.cos(a) * RING, Math.sin(a) * RING, h, 0.042, -Math.cos(a) * 0.03, -Math.sin(a) * 0.03] as const;
     });
-
-    // ------------------------------------------------------------------ embers
-    const spots: ReadonlyArray<readonly [number, number, number]> = [
-      [0.14, 0.062, 0.0],
-      [0.0, 0.062, 0.14],
-      [-0.13, 0.058, -0.05],
-    ];
-    const emberShape = sdf.union(
-      ...spots.map((p, i) => sdf.sphere(0.013 + noise.random(i, 31) * 0.005).at(p[0], p[1], p[2])),
-    );
-    k.body('embers', emberShape, {
-      color: '#ffb257',
+    const tongue = (t: readonly number[], scale: number): Sdf => {
+      const [x, z, h, r, lx, lz] = t;
+      const y0 = 0.045;
+      return sdf.chain(
+        [
+          [x, y0, z, r * scale],
+          [x + lx * 0.4, y0 + h * 0.35, z + lz * 0.4, r * 0.82 * scale],
+          [x + lx * 0.9, y0 + h * 0.7, z + lz * 0.9, r * 0.45 * scale],
+          [x + lx * 1.4, y0 + h, z + lz * 1.4, 0.008],
+        ],
+        0.02,
+      );
+    };
+    const outer = sdf.smoothUnion(0.02, ...tongues.map((t) => tongue(t, 1)));
+    k.body('flame', outer.paint(rgb('#ff7a1a')), {
+      color: '#ff7a1a',
       roughness: 0.5,
       metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 2.4,
+      emissive: '#ff7a1a',
+      emissiveIntensity: 0.6,
       detail: 0.006,
-      maxTriangles: 150,
+      maxTriangles: 1800,
+    });
+    const coreShape = tongue([0, 0, 0.34, 0.058, 0.004, -0.004], 1);
+    k.body('flame-core', coreShape.paint(rgb('#ffd23a')), {
+      color: '#ffd23a',
+      roughness: 0.5,
+      metalness: 0,
+      emissive: '#ffd23a',
+      emissiveIntensity: 0.7,
+      detail: 0.006,
+      maxTriangles: 1000,
+    });
+
+    // ------------------------------------------------------------------ embers and coals
+    const bed = sdf.cylinder(0.15, 0.03, 0.012).at(0, 0.058, 0);
+    k.body('embers', bed.paint(rgb('#ff5a1a')), {
+      color: '#ff5a1a',
+      roughness: 0.6,
+      metalness: 0,
+      emissive: '#ff5a1a',
+      emissiveIntensity: 0.5,
+      detail: 0.008,
+      maxTriangles: 500,
+    });
+    const coalSpots: ReadonlyArray<readonly [number, number, number]> = [
+      [0.1, 0.07, 0.04],
+      [-0.09, 0.07, 0.07],
+      [0.03, 0.07, 0.11],
+      [-0.06, 0.07, -0.09],
+      [0.09, 0.07, -0.07],
+    ];
+    const coals = sdf.union(
+      ...coalSpots.map((p, i) =>
+        sdf
+          .ellipsoid([0.032 + noise.random(i, 31) * 0.01, 0.022, 0.028])
+          .rotateY(noise.random(i, 32) * 180)
+          .at(p[0], p[1], p[2]),
+      ),
+    );
+    k.body('coals', coals.paint(rgb('#2a1e18')), {
+      color: '#2a1e18',
+      roughness: 0.95,
+      metalness: 0,
+      detail: 0.008,
+      maxTriangles: 400,
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 50, y * 50, z * 50, 3, 4),
     });
   },
 });

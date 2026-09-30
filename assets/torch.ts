@@ -4,14 +4,14 @@ import { defineAsset, mixRgb, noise, profile, rgb, type Rgb, sdf } from '../src/
  * Design note — standing torch (props/furniture/torch).
  *
  * Role: warm path light for the village edge, a camp marker, a dungeon prop. Reads at 128 px.
- * Size: ~1.3 m tall, ~0.32 m wide at the stone base; stands on y = 0, faces +Z.
- * One idea: a chunky walnut pole planted in earth and three fist-sized stones, topped by a
- *   banded iron cup of pitch-soaked cloth and a chunky teardrop flame. The flame is the focal
+ * Size: ~1.59 m tall, ~0.45 m wide at the stone base; stands on y = 0, faces +Z.
+ * One idea: a chunky walnut pole planted in earth and a ring of nine chunky stones, topped by a
+ *   dark banded iron cup of pitch-soaked cloth and one teardrop flame with a yellow-to-red gradient. The flame is the focal
  *   point; everything else is silhouette and weight.
  * Shape language: round dominant (rounded stones, swollen wooden pole, banded iron cup,
  *   teardrop flame) with one pointed accent (the flame tip). Soft bevels everywhere.
  * Palette: dark walnut #6b4226 / #54331d (dominant), iron #4a4f55 (secondary, with shadow
- *   #363a3f and highlight #a8acb1), warm accent flame #ff9a3c core, #ffd66b tips
+ *   #363a3f and highlight #a8acb1), warm accent flame #ff6a00 tongues, #ffd23a core
  *   (emissive, focal point).
  * Materials: walnut wood (rough 0.82), iron banded cup (metalness 0.7, rough 0.5), pitch cloth
  *   (rough 0.7), earth (rough 0.92), stone (rough 0.9), emissive flame (rough 0.3).
@@ -24,8 +24,8 @@ const WALNUT = rgb('#6b4226');
 const WALNUT_DEEP = rgb('#54331d');
 const WALNUT_LIGHT = rgb('#8a5a35');
 
-const IRON = rgb('#4a4f55');
-const IRON_DARK = rgb('#363a3f');
+const IRON = rgb('#3a3a3e');
+const IRON_DARK = rgb('#2a2a2e');
 const IRON_LIGHT = rgb('#a8acb1');
 
 const EARTH = rgb('#6f5235');
@@ -53,7 +53,7 @@ const POLE_TOP_Y = 1.155; // top of the pole, just below the cup
 const CUP_Y = 1.155; // base of the iron cup
 const CUP_H = 0.14;
 const CLOTH_Y = POLE_TOP_Y - 0.01; // cloth wrap just below the cup, on the pole top
-const FLAME_Y = CUP_Y + CUP_H - 0.015; // flame base sits inside the cup opening
+const FLAME_Y = CUP_Y + CUP_H - 0.03; // flame base sits inside the cup opening
 
 export default defineAsset({
   name: 'torch',
@@ -65,53 +65,49 @@ export default defineAsset({
 
   build(k) {
     // ======================================================================
-    // STONES (three fist-sized stones around the base) — bottom rests at y = 0
+    // STONES (9 chunky faceted stones around the foot) — bottoms rest at y = 0
     // ======================================================================
-    // Big chunky stones, half buried, framing the pole. Reference has 4-5 stones; three
-    // large ones reads cleaner at 128 px than many small pebbles.
-    const stonesData: ReadonlyArray<readonly [number, number, number, number, number, number]> =
-      [
-        [0.155, 0.07, 0.04, 0.085, 0.07, 8], // x, yCenter, z, rx, ry, rotDeg
-        [-0.12, 0.06, 0.115, 0.075, 0.06, 28],
-        [-0.07, 0.055, -0.14, 0.07, 0.055, -22],
-        [0.045, 0.05, -0.145, 0.065, 0.05, -45],
-      ];
-    const stones: ReturnType<typeof sdf.sphere>[] = stonesData.map(
-      ([x, y, z, rx, ry, deg]) => {
-        const rz = rx * 1.1;
-        const lump = sdf.ellipsoid([rx, ry, rz]);
-        const shoulder = sdf.ellipsoid([rx * 0.55, ry * 0.55, rz * 0.55]).at(
-          (noise.random(x * 100, 5) - 0.5) * rx * 0.5,
-          ry * 0.35,
-          (noise.random(z * 100, 6) - 0.5) * rz * 0.5,
-        );
-        return lump
-          .smoothUnion(0.018, shoulder)
-          .rotate(0, deg, (noise.random(x * 100, 8) - 0.5) * 14)
-          .at(x, y, z);
-      },
-    );
-    const stoneShape = sdf
-      .union(...stones)
-      .paintFn((x, y, z, base): Rgb => {
-        let c = mixRgb(STONE_DARK, base, clamp01(y / 0.08) * 0.65);
-        c = mixRgb(c, STONE_LIGHT, clamp01((y - 0.025) / 0.06) * 0.3);
-        const n = noise.fbm(x * 12, y * 12, z * 12, 3);
-        c = mixRgb(c, STONE_DARK, clamp01(-n) * 0.32);
-        c = mixRgb(c, STONE_LIGHT, clamp01(n) * 0.14);
-        // small warm bounce near the pole where the torch light would catch
-        const g = clamp01(1 - Math.hypot(x, z) / 0.25) * clamp01((y - 0.0) / 0.08);
-        c = mixRgb(c, GLOW, 0.2 * g);
-        return c;
-      });
+    // x, z, half-w, half-h, half-d, rotY, rotZ, layer (0 ground, 1 mid, 2 top)
+    const stonesData: ReadonlyArray<readonly number[]> = [
+      [0.16, 0.03, 0.07, 0.055, 0.06, 20, 6, 0],
+      [0.1, 0.13, 0.065, 0.05, 0.06, -30, -5, 0],
+      [-0.03, 0.16, 0.07, 0.055, 0.055, 15, 8, 0],
+      [-0.14, 0.09, 0.065, 0.055, 0.06, 50, -7, 0],
+      [-0.17, -0.05, 0.06, 0.05, 0.058, -15, 5, 0],
+      [-0.08, -0.15, 0.07, 0.055, 0.055, 35, -6, 0],
+      [0.05, -0.15, 0.065, 0.05, 0.06, -40, 7, 0],
+      [0.15, -0.1, 0.06, 0.05, 0.055, 10, -4, 0],
+      [0.07, 0.07, 0.06, 0.055, 0.055, -20, 8, 1],
+      [-0.06, 0.07, 0.06, 0.055, 0.055, 40, -8, 1],
+      [-0.03, -0.08, 0.06, 0.055, 0.055, 10, 6, 1],
+      [0.08, -0.04, 0.055, 0.055, 0.05, 25, -6, 1],
+      [0.0, 0.0, 0.05, 0.06, 0.05, 30, 10, 2],
+    ];
+    const stones = stonesData.map(([x, z0, hw, hh0, hd, ry, rz, layer]) => {
+      const z = z0 * 0.92;
+      const xs = x * 0.92;
+      const hh = hh0 * 1.3;
+      const y = hh - 0.004 + layer * 0.085;
+      return sdf.box([hw * 2, hh * 2, hd * 2], 0.03).rotate(0, ry, rz).at(xs, y, z);
+    });
+    const stoneShape = sdf.union(...stones).paintFn((x, y, z, base): Rgb => {
+      const h = noise.random(Math.round(x * 12), Math.round(z * 12), 3);
+      const tone = h < 0.33 ? rgb('#9a9290') : h < 0.66 ? rgb('#a88f88') : rgb('#7f7a78');
+      let c = mixRgb(STONE_DARK, tone, 0.75 + 0.2 * clamp01(y / 0.05));
+      c = mixRgb(c, STONE_LIGHT, clamp01((y - 0.05) / 0.12) * 0.45);
+      const n = noise.fbm(x * 14, y * 14, z * 14, 3);
+      c = mixRgb(c, STONE_DARK, clamp01(-n) * 0.3);
+      const g = clamp01(1 - Math.hypot(x, z) / 0.22) * clamp01(y / 0.1);
+      return mixRgb(c, GLOW, 0.15 * g);
+    });
     k.body('stones', stoneShape, {
       color: STONE,
       roughness: 0.9,
       metalness: 0,
-      detail: 0.013,
-      maxTriangles: 850,
+      detail: 0.008,
+      maxTriangles: 2200,
       paintWeight: 2,
-      bump: (x, y, z) => 0.0015 * noise.fbm(x * 32, y * 32, z * 32, 3),
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 40, y * 40, z * 40, 3),
     });
 
     // ======================================================================
@@ -148,50 +144,38 @@ export default defineAsset({
     // silhouette — like the reference's organic wooden pole rather than a turned dowel.
     // Larger smoothUnion blends merge the bumps into one continuous swelling.
     const poleLen = POLE_TOP_Y - POLE_BASE_Y;
-    const segments: ReturnType<typeof sdf.sphere>[] = [];
-    const segCount = 5;
-    for (let i = 0; i < segCount; i++) {
-      const t = i / (segCount - 1);
-      const y = POLE_BASE_Y + t * poleLen;
-      // chunkier at the base, slimmer near the top, with bumps that swell in and out
-      const rxz =
-        0.052 - 0.012 * t + 0.006 * Math.sin(t * Math.PI * 2.4) + 0.004 * Math.sin(t * 5.1 + 0.7);
-      const ry = (poleLen / (segCount - 1)) * 0.7;
-      // small asymmetry so the pole feels hand-carved, not lathe-turned
-      const dx = 0.006 * Math.sin(i * 1.3 + 0.4);
-      const dz = 0.006 * Math.cos(i * 1.7);
-      segments.push(sdf.ellipsoid([rxz, ry, rxz * 0.94]).at(dx, y, dz));
+    const polePts: Array<[number, number, number, number]> = [];
+    for (let i = 0; i <= 8; i++) {
+      const t = i / 8;
+      polePts.push([
+        0.014 * Math.sin(t * 7.0 + 0.5) * (1 - t * 0.5),
+        POLE_BASE_Y + t * poleLen,
+        0.012 * Math.cos(t * 5.3),
+        0.045 - 0.01 * t + 0.003 * Math.sin(t * 17 + 1),
+      ]);
     }
-    // one prominent knuckle bulge near the lower third for hand-hewn character
-    segments.push(sdf.sphere(0.06).at(0.006, POLE_BASE_Y + poleLen * 0.32, -0.004));
     const poleShape = sdf
-      .smoothUnion(0.02, ...segments)
-      .displace(0.005, (x, y, z) => noise.fbm(x * 14, y * 4, z * 14, 2))
+      .chain(polePts, 0.02)
+      .smoothUnion(0.02, sdf.sphere(0.06).at(0.004, POLE_BASE_Y + poleLen * 0.25, 0), sdf.sphere(0.052).at(-0.01, POLE_BASE_Y + poleLen * 0.55, 0.008), sdf.sphere(0.048).at(0.008, POLE_BASE_Y + poleLen * 0.8, -0.006))
+      .displace(0.004, (x, y, z) => noise.fbm(x * 14, y * 4, z * 14, 2))
       .paintFn((x, y, z, base): Rgb => {
-        // warm wood gradient: darker at the base, slightly warmer mid-way up
         const t = clamp01((y - POLE_BASE_Y) / poleLen);
         let c = mixRgb(WALNUT_DEEP, base, 0.55 + 0.4 * t);
-        c = mixRgb(c, WALNUT_LIGHT, 0.18 * t);
-        // vertical grain stripes via stretched noise
+        c = mixRgb(c, WALNUT_LIGHT, 0.2 * t);
         const grain = noise.fbm(x * 32, y * 4, z * 32, 3);
-        c = mixRgb(c, WALNUT_DEEP, clamp01(-grain) * 0.22);
-        c = mixRgb(c, WALNUT_LIGHT, clamp01(grain) * 0.14);
-        // dark vertical cracks between grain bands
-        const crack = Math.abs(Math.sin((x + z * 0.6) * 80 + y * 6));
-        c = mixRgb(c, WALNUT_DEEP, clamp01(1 - crack) * 0.18);
-        // a subtle warm bounce from the flame near the top of the pole
+        c = mixRgb(c, WALNUT_DEEP, clamp01(-grain) * 0.25);
+        c = mixRgb(c, WALNUT_LIGHT, clamp01(grain) * 0.15);
         const glow = clamp01(1 - (CUP_Y + CUP_H - y) / 0.4) * clamp01((y - (CUP_Y - 0.05)) / 0.05);
-        c = mixRgb(c, GLOW, 0.18 * glow);
-        return c;
+        return mixRgb(c, GLOW, 0.18 * glow);
       });
     k.body('pole', poleShape, {
       color: WALNUT,
       roughness: 0.82,
       metalness: 0,
-      detail: 0.011,
-      maxTriangles: 700,
+      detail: 0.006,
+      maxTriangles: 1200,
       paintWeight: 3,
-      bump: (x, y, z) => 0.0018 * noise.fbm(x * 28, y * 6, z * 28, 3),
+      bump: (x, y, z) => 0.003 * noise.fbm(x * 40, y * 5, z * 40, 3),
     });
 
     // ======================================================================
@@ -247,7 +231,7 @@ export default defineAsset({
       ],
       { smooth: true, samples: 8 },
     );
-    const cupOuter = sdf.revolve(cupProfile).at(0, CUP_Y, 0);
+    const cupOuter = sdf.revolve(cupProfile).scale([0.8, 1, 0.8]).at(0, CUP_Y, 0);
     // Hollow out the inside so the cup has visible thickness.
     const cupInnerProfile = profile.polygon(
       [
@@ -263,7 +247,7 @@ export default defineAsset({
       ],
       { smooth: true, samples: 8 },
     );
-    const cupInner = sdf.revolve(cupInnerProfile).at(0, CUP_Y, 0);
+    const cupInner = sdf.revolve(cupInnerProfile).scale([0.8, 1, 0.8]).at(0, CUP_Y, 0);
     const cupShape = cupOuter.subtract(cupInner).paintFn((x, y, z, base): Rgb => {
       // band shadows: dark between the bulged rings; highlight on the tops
       // band centers in local cup frame (y measured from CUP_Y)
@@ -282,7 +266,7 @@ export default defineAsset({
       // on a band: highlight; between bands: shadow
       const onBand = 1 - bandT;
       let c = mixRgb(IRON_DARK, base, 0.7 + 0.3 * bandT);
-      c = mixRgb(c, IRON_LIGHT, 0.5 * onBand);
+      c = mixRgb(c, rgb('#5a5a60'), 0.95 * onBand);
       // micro-noise so the iron does not look like plastic
       const n = noise.fbm(x * 22, y * 22, z * 22, 3);
       c = mixRgb(c, IRON_DARK, clamp01(-n) * 0.18);
@@ -296,8 +280,8 @@ export default defineAsset({
       color: IRON,
       roughness: 0.5,
       metalness: 0.7,
-      detail: 0.012,
-      maxTriangles: 1300,
+      detail: 0.006,
+      maxTriangles: 1700,
       paintWeight: 3,
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 40, y * 40, z * 40, 2),
     });
@@ -309,53 +293,58 @@ export default defineAsset({
     // INSIDE the main belly so they read as one continuous flame, not detached blobs.
     // Dark base color (per the emissive rule) so the orange glow reads saturated.
     const flameBaseY = FLAME_Y;
-    const mainFlame = sdf.smoothUnion(
-      0.018,
-      sdf.sphere(0.085).at(0, flameBaseY + 0.055, 0),
-      sdf.sphere(0.06).at(0, flameBaseY + 0.115, 0),
-      sdf.sphere(0.034).at(0, flameBaseY + 0.16, 0),
-      sdf.sphere(0.018).at(0, flameBaseY + 0.195, 0),
-    );
-    // Left lick: chain starting inside the belly, sweeping up and outward.
-    const lickL = sdf.chain(
+    const fy = flameBaseY;
+    // [baseX, baseZ, lean x, lean z, height, base radius, twist]
+    const tongues: ReadonlyArray<readonly number[]> = [
+      [0, 0, 0.0, 0.0, 0.3, 0.05, 0.5],
+      [-0.04, 0.01, -0.05, 0.0, 0.2, 0.038, -0.6],
+      [0.04, -0.01, 0.055, 0.01, 0.23, 0.038, 0.8],
+      [0.01, 0.04, 0.0, 0.05, 0.16, 0.032, 0.4],
+      [-0.01, -0.04, 0.02, -0.05, 0.19, 0.034, -0.3],
+    ];
+    const body = sdf.chain(
       [
-        [-0.035, flameBaseY + 0.085, 0.005, 0.032],
-        [-0.065, flameBaseY + 0.125, 0.0, 0.02],
-        [-0.08, flameBaseY + 0.165, -0.005, 0.011],
-        [-0.085, flameBaseY + 0.195, 0.0, 0.005],
+        [0, fy + 0.04, 0, 0.058],
+        [0, fy + 0.12, 0, 0.072],
+        [0.005, fy + 0.2, 0.003, 0.058],
+        [0.012, fy + 0.27, 0.005, 0.03],
+        [0.02, fy + 0.31, 0.005, 0.008],
       ],
-      0.013,
+      0.04,
     );
-    // Right lick: chain starting inside the belly, sweeping up and outward.
-    const lickR = sdf.chain(
-      [
-        [0.04, flameBaseY + 0.075, -0.005, 0.03],
-        [0.07, flameBaseY + 0.115, 0.005, 0.019],
-        [0.085, flameBaseY + 0.155, 0.0, 0.01],
-        [0.082, flameBaseY + 0.185, -0.005, 0.004],
-      ],
-      0.013,
-    );
-    const flameShape = mainFlame
-      .smoothUnion(0.014, lickL, lickR)
-      .paintFn((_x, y, _z, _base): Rgb => {
-        // hot core near the base, bright tips near the top
-        const t = clamp01((y - flameBaseY) / 0.21);
-        return mixRgb(rgb('#ff6a12'), rgb('#ffd66b'), t);
-      })
-      .at(0, -flameBaseY, 0)
-      .scale(1.3)
-      .at(0, flameBaseY, 0);
+    const lobe = (x0: number, z0: number, dx: number, dz: number, h: number, r: number) =>
+      sdf.chain(
+        [
+          [x0, fy + 0.14, z0, r],
+          [x0 + dx * 0.5, fy + 0.14 + h * 0.5, z0 + dz * 0.5, r * 0.75],
+          [x0 + dx, fy + 0.14 + h, z0 + dz, r * 0.2],
+        ],
+        0.02,
+      );
+    const flameShape = body
+      .smoothUnion(
+        0.03,
+        lobe(-0.06, 0, -0.03, 0.01, 0.18, 0.04),
+        lobe(0.06, 0, 0.05, -0.01, 0.15, 0.04),
+        lobe(0.01, 0.06, -0.02, 0.04, 0.12, 0.035),
+        lobe(-0.01, -0.06, 0.03, -0.04, 0.14, 0.035),
+      )
+      .paintFn((x, y, z, _b): Rgb => {
+        // One hot gradient: yellow at the base and the axis, orange in the belly, red-orange tips.
+        const t = clamp01((y - fy) / 0.32 + Math.hypot(x, z) * 2.5);
+        if (t < 0.3) return mixRgb(rgb('#ffd23a'), rgb('#ffa010'), t / 0.3);
+        if (t < 0.7) return mixRgb(rgb('#ffa010'), rgb('#ff6a00'), (t - 0.3) / 0.4);
+        return mixRgb(rgb('#ff6a00'), rgb('#e8400a'), (t - 0.7) / 0.3);
+      });
+    // Matte surface: a glossy highlight on the emissive orange washed the flame to salmon.
     k.body('flame', flameShape, {
-      // Full-brightness base with a moderate emissive (the tested potion rule): a dark base
-      // under a strong emissive rendered as pale salmon.
-      color: '#ff6a12',
-      roughness: 0.3,
+      color: '#ff8a10',
+      roughness: 0.95,
       metalness: 0,
-      emissive: '#ff8a20',
-      emissiveIntensity: 0.7,
-      detail: 0.006,
-      maxTriangles: 420,
+      emissive: '#ff5a00',
+      emissiveIntensity: 0.25,
+      detail: 0.005,
+      maxTriangles: 1500,
       paintWeight: 3,
     });
   },

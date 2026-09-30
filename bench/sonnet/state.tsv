@@ -242,3 +242,9 @@ barrel	world	medium	aada23d68b771e426	2	accepted	7.6	catchup1 rework (P0 bar 7.5
 boulder	world	medium	a9fd3981c67094506	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass plus an orchestrator edit
 oak-tree	world	medium	ac1da436ef5f8ee49	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
 cottage	world	medium	a551116c440a77e5c	1	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted on v1
+campfire	world	medium	a64e8e24294c1f15f	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
+torch	world	medium	a2734d40e2265c38c	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass plus an orchestrator flame edit
+crate	world	medium	a12ff5b840276e7bb	2	accepted	7.6	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
+table	world	medium	a589b51af24d26dd5	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
+chair	world	medium	a67fbce0250278865	1	accepted	7.6	catchup1 rework (P0 bar 7.5); accepted on v1
+signpost	world	medium	a43e21c85e6877ef6	1	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted on v1

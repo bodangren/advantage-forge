@@ -3,46 +3,56 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 /**
  * Design note:
  * - Role: landmark background prop for a cozy chibi hamlet. Must read at 128 px.
- * - Size: ~2.15 m tall, ~1.3 m wide; stands on y = 0 and faces +Z.
- * - The one idea: two chunky arrow boards slice opposite ways from a sturdy log post.
- * - Shape language: round/soft dominant (turned log post, flared foot, domed cap, rounded
- *   board edges) with a triangular secondary (the two arrowheads) that breaks the outline.
- * - Palette: oak post #84501f (dominant), dark grain #3f220e, bleached top #e8cf9f, pale
- *   board #ad7038, dark aged board #4f2e14 (secondary value), moss #55702f, iron #3d4047.
- * - Materials: wood (roughness 0.85, metalness 0), iron nails (roughness 0.5, metalness 0.8).
- * - Details: flared foot, collar ring, domed cap, per-board tint and grain, two nails each.
+ * - Size: ~2.15 m tall, ~1.25 m wide, ~0.48 m deep; stands on y = 0 and faces +Z.
+ * - The one idea: two chunky arrow boards with notched tails and carved letters on a dark post.
+ * - Shape language: round post and stone pile, triangular arrowheads break the outline.
+ * - Palette: post #7a5634 (dark, dominant), boards #a8743e (lighter, secondary), board edges
+ *   and carved strokes #2a1608, moss #55702f, stones #8a8880, iron #3d4047.
+ * - Materials: wood (roughness 0.85), stone (0.92), iron nails (roughness 0.5, metalness 0.8).
+ * - Details: domed cap, collar, stone pile at the foot, grain in bump, darker edges, nails.
  * - Rig/animation: none (static prop).
  */
 
 const POST_TOP = 2.147;
 
-const WOOD = rgb('#84501f');
-const WOOD_DARK = rgb('#3f220e');
-const WOOD_LIGHT = rgb('#e8cf9f');
-const BOARD_A = rgb('#ad7038');
-const BOARD_B = rgb('#4f2e14');
+const WOOD = rgb('#7a5634');
+const WOOD_DARK = rgb('#3a2312');
+const WOOD_LIGHT = rgb('#a48458');
+const BOARD_A = rgb('#a8743e');
+const BOARD_B = rgb('#a8743e');
+const CARVE = rgb('#2a1608');
 const MOSS = rgb('#55702f');
 const IRON = '#3d4047';
 
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
-/** An arrow-shaped plank profile pointing +X, from the post axis (x = 0) to the tip. */
+/** An arrow-shaped plank profile pointing +X with a notched tail behind the post. */
 function arrowProfile(L: number, shaft: number, headL: number, headH: number) {
   const s = shaft / 2;
   const h = headH / 2;
+  const t = -0.16;
   return profile.polygon(
     [
-      [0, -s],
+      [t, -s],
       [L - headL, -s],
       [L - headL, -h],
       [L, 0],
       [L - headL, h],
       [L - headL, s],
-      [0, s],
+      [t, s],
+      [t + 0.07, 0],
     ],
     { smooth: false },
   );
 }
+
+/** Carved letter strokes in board-local coordinates (x along the board, y across). */
+const STROKES: [number, number, number, number][] = [
+  [0.14, 0.03, 0.05, 0.11],
+  [0.25, -0.02, 0.1, 0.05],
+  [0.32, 0.03, 0.05, 0.11],
+  [0.44, -0.02, 0.09, 0.05],
+];
 
 export default defineAsset({
   name: 'signpost',
@@ -70,7 +80,7 @@ export default defineAsset({
         if (fine > 0.68) c = mixRgb(c, rgb('#1e1006'), 0.55);
         const w = 0.5 + 0.5 * noise.noise3(x * 9, y * 3, z * 9);
         const weather = clamp01((y - 0.45) / 1.25);
-        c = mixRgb(c, WOOD_LIGHT, weather * (0.34 + 0.6 * w));
+        c = mixRgb(c, WOOD_LIGHT, weather * (0.12 + 0.25 * w));
         // Contact shadow where each board meets the post.
         const shade =
           clamp01(1 - Math.abs(y - 1.86) / 0.17) * 0.34 + clamp01(1 - Math.abs(y - 1.44) / 0.17) * 0.34;
@@ -81,16 +91,27 @@ export default defineAsset({
         return mixRgb(c, MOSS, 0.7 * moss);
       });
     k.body('post', post, {
-      color: '#9a6437',
+      detail: 0.009,
+      color: '#7a5634',
       roughness: 0.85,
       paintWeight: 2,
-      bump: (x, y, z) => 0.0016 * noise.fbm(x * 30, y * 3, z * 30, 2),
+      bump: (x, y, z) => 0.003 * noise.fbm(x * 30, y * 3, z * 30, 2),
     });
 
     // ------------------------------------------------------------ two arrow boards
     // Chunky planks, one on the front face and one on the back face, swept slightly toward
     // the camera so the silhouette reads from the front and keeps depth from the side.
-    const geom = sdf.extrude(arrowProfile(0.64, 0.22, 0.17, 0.38), 0.08, 0.02);
+    const geom = sdf.extrude(arrowProfile(0.64, 0.22, 0.17, 0.38), 0.08, 0.02).paintFn((x, y, z, _base) => {
+      const g = 0.5 + 0.5 * noise.noise3(x * 2, y * 18, z * 6);
+      let c = mixRgb(BOARD_A, WOOD_DARK, 0.04 + 0.3 * g);
+      // darker edges: distance to the plank outline approximated by |y| and the tip
+      const edge = clamp01((Math.abs(y) - 0.085) / 0.03);
+      c = mixRgb(c, rgb('#4a2c14'), 0.6 * edge);
+      for (const [sx, sy, w, h] of STROKES) {
+        if (Math.abs(x - sx) < w / 2 && Math.abs(y - sy) < h / 2) c = CARVE;
+      }
+      return c;
+    });
 
     const boards = [
       {
@@ -117,7 +138,7 @@ export default defineAsset({
       },
     ] as const;
 
-    const boardBump = (x: number, y: number, z: number) => 0.0016 * noise.fbm(x * 3, y * 30, z * 30, 2);
+    const boardBump = (x: number, y: number, z: number) => 0.003 * noise.fbm(x * 3, y * 30, z * 30, 2);
     const nails: sdf.Shape[] = [];
 
     for (const b of boards) {
@@ -125,17 +146,7 @@ export default defineAsset({
         .rotateY(b.yaw)
         .rotateZ(b.tilt)
         .at(0, b.y, b.z)
-        .paintFn((x, y, z, _base) => {
-          // Grain streaks run along the board length (X); the top edge is sun-bleached.
-          const g = 0.5 + 0.5 * noise.noise3(x * 2, y * 18, z * 6);
-          const fine = 0.5 + 0.5 * noise.noise3(x * 6, y * 50, z * 20);
-          let c = mixRgb(b.base, WOOD_DARK, 0.05 + 0.7 * g + noise.random(b.seed, 5) * 0.14);
-          if (fine > 0.74) c = mixRgb(c, rgb('#1e1108'), 0.55);
-          const up = clamp01((y - b.y + 0.19) / 0.38);
-          c = mixRgb(c, WOOD_LIGHT, b.bleach * up);
-          const down = clamp01((b.y + 0.19 - y) / 0.2);
-          return mixRgb(c, rgb('#2a1a0e'), 0.3 * down);
-        });
+        ;
       k.body(b.name, shape, { color: '#8a5530', roughness: 0.85, paintWeight: 2, bump: boardBump });
 
       // Two nails through the board's outer face, right where it meets the post.
@@ -148,11 +159,34 @@ export default defineAsset({
       }
     }
 
+    const stones = sdf.smoothUnion(
+      0.02,
+      ...(
+        [
+          [0.17, 0.0, 0.1, 0.06],
+          [-0.15, 0.06, 0.09, 0.05],
+          [0.06, 0.14, 0.09, 0.05],
+          [-0.08, -0.13, 0.1, 0.06],
+          [0.13, -0.12, 0.07, 0.045],
+          [-0.04, 0.12, 0.06, 0.04],
+        ] as const
+      ).map(([x, z, r, h]) => sdf.ellipsoid([r, h, r]).at(x, h * 0.6, z)),
+    ).paintFn((x, y, z, _b) => {
+      const n = 0.5 + 0.5 * noise.noise3(x * 25, y * 25, z * 25);
+      return mixRgb(rgb('#5e5c57'), rgb('#85827a'), n * 0.8 + noise.random(Math.round(x * 20), Math.round(z * 20), 3) * 0.2);
+    });
+    k.body('stones', stones, {
+      color: '#8a8880',
+      roughness: 0.92,
+      detail: 0.012,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 40, y * 40, z * 40, 2),
+    });
+
     k.body('nails', sdf.union(...nails), {
       color: IRON,
       roughness: 0.5,
       metalness: 0.8,
-      detail: 0.004,
+      detail: 0.006,
     });
   },
 });
