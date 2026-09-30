@@ -171,3 +171,10 @@ pendant	static-rework	medium	a5e07602d9216ac20	1	accepted	7.5	run 4; upright tea
 sling	static-rework	medium	a5e07602d9216ac20	1	accepted	7.3	run 4; pouch with stone and strap
 gloves	static-rework	medium	a5a2cc4d6badb0b0d	2	accepted	7.3	run 4; feedback pass: fat fingers, gap
 scabbard	static-rework	medium	a5a2cc4d6badb0b0d	1	accepted	7.2	run 4; upright sheathed sword
+copper-ore	item	medium	pending	1	running	-	run 4 wave 2; ore base
+gold-ore	item	medium	pending	1	running	-	run 4 wave 2; ore base
+silver-ore	item	medium	pending	1	running	-	run 4 wave 2; ore base
+ancient-scroll	item	medium	pending	1	running	-	run 4 wave 2; scroll base
+magic-scroll	item	medium	pending	1	running	-	run 4 wave 2; scroll base
+treasure-map	item	medium	pending	1	running	-	run 4 wave 2; map base
+map-fragment	item	medium	pending	1	running	-	run 4 wave 2; map base

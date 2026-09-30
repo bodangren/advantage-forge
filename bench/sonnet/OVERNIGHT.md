@@ -119,3 +119,14 @@ Run 4 scope: the P1 catalog rows with no source (36): 32 heroes, silo, wall-gate
 20:20 owner: "You do not need to stop at 4M tokens anymore because I have set your autocompact to 500K now. You can ignore that." The run-4 token stop is lifted. Tokens stay logged per pass for cost tracking. The remaining stop rules: empty lists, or 6 skips in a row. Queue after the three hero closes: P2 items wave 1 (18), then the 88 sub-7 grafted P1 statics by scene, then P2 items wave 2 (scrolls, gems, ores, crafting materials), then the 16 open P1 heroes.
 
 20:55 lessons from the potion base: (1) a `.shell()` glass with opacity draws its inner surface as crack lines; use a solid glass body and let the liquid body sit inside it. (2) The sprite renderer makes alpha binary at coverage 0.5 (src/render/pixel.ts), so any body below opacity 0.5 vanishes from sprites; glass must stay at 0.5 or more (recorded as TD-13). (3) Through a 0.5 glass, emissive above about 0.5 turns the liquid pastel; use a saturated base at about 75 percent of the glow color with emissiveIntensity 0.5. The health-potion base is accepted at 7.5 with these numbers; the nine potion briefs carry them. Also: the low tier looked at one render for three items; item batches run on the medium tier from now on. The equipment-parts plan (owner request) is written as the Measure track asset_equipment_parts_20260930 (status new, six open questions in its spec), uncommitted with the rest of measure/.
+
+## 22:20 static reworks, wave 1
+
+The sub-7 overnight list is stale for about half its entries, so every candidate gets a spot-check
+of its current render before a brief. Result so far: 35 assets kept without rework, 30 reworked and
+accepted at 7.0 to 7.5 (blacksmith, dungeon, nature, architecture, props, equipment), 0 skips.
+The medium tier with a construction recipe in the brief lands at 7 on the first pass about four
+times in five; the misses were fixed by one feedback pass or by an orchestrator edit (materials,
+thickness). Lessons: put fine ripples in `bump`, not in `displace`; a glass shell reads as cracks;
+an emissive body needs a full-brightness base and a moderate intensity; a thin item lying flat
+never reads at 128 px, so stand it up and thicken it.
