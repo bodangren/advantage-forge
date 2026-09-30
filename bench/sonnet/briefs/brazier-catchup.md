@@ -8,7 +8,7 @@ Construction recipe:
 1. Legs: three slim wrought-iron legs (radius 0.022 m) that splay outward and end in small curled scroll feet (a short torus arc); a thin ring brace at mid height.
 2. Bowl: a shallow iron bowl with a rolled rim and two ring handles. Iron #3b3a3f, metalness 0.7, roughness 0.5, a faint rust tint on the rim (paintFn).
 3. Coals: dark lumps #2a1a14 with glowing red-orange cracks #ff5a1a (emissive 0.5).
-4. Flames: 3 to 5 tongue shapes (tapered cones or short chains, slightly twisted, different heights), a yellow core #ffd23a inside orange #ff7a1a tongues, full-brightness base colors with emissive in the same hue at emissiveIntensity 0.5 to 0.7. A dark base with a high intensity renders pale salmon, which is the current fault.
+4. Flames: one wide wavy flame mass with 3 to 5 lobes that curl up from it (smoothUnion 0.03), not thin separate cones. One body, painted as one gradient with `paintFn`: yellow #ffd23a at the base and along the axis, orange #ffa010 to #ff6a00 in the belly, red-orange #e8400a at the tips. Matte: roughness 0.95, emissive #ff5a00 at emissiveIntensity 0.25. A glossy surface or a higher intensity renders the flame salmon or pale; a separate core body shows as a yellow band.
 
 Rules: put fine surface detail (grain, grooves, straw, stone pits, weave) in the body option `bump` as a function `(x, y, z) => number` in meters (a plain number breaks the textured build); keep `displace` at 0.01 m or less (a strong displace reduces to crumpled facets). Parts that must read at 128 px are at least 0.03 m thick. Keep the file path, the `name`, and the export.
 
