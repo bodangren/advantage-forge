@@ -92,3 +92,7 @@ Run 3: 688,581 of 4,000,000 tokens. Accepted: brigand, raider, plague-bearer (re
 ## Note 09:06 (2026-09-30)
 
 The living-statue rework 2 agent and the deserter build agent stalled after their first two reads (no file writes, no forge processes, transcripts frozen at 08:27 for 37 minutes). Both were stopped with TaskStop and relaunched as fresh agents. Lesson: a transcript under ~/.claude/projects/<session>/subagents/agent-<id>.jsonl that stops growing for 30 minutes with no forge process is a stall; the 149-byte task output file is not a signal either way.
+
+## Status 10:58 (2026-09-30)
+
+Run 3: 2,316,825 of 4,000,000 tokens. Accepted (11): brigand, raider, plague-bearer, highwayman, assassin, deserter, banshee, pirate, smuggler, hunter-rival, pirate-captain. Skipped (2): mercenary 7.6, living-statue 7.6. In flight: dark-mage, warlock (feedback), witch, cult-leader. Last open enemy: evil-priest.
