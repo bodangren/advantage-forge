@@ -170,3 +170,37 @@ the track has no contract (static geometry or a looping clip, size, how games co
 that is an owner question. Next by the standing queue: the 16 open P1 heroes (briefs and mockups
 ready), one per forge-sonnet-high agent, bar 8: artificer, enchanter, oracle, rune-smith first.
 Run 4 tokens so far: about 6.4M.
+
+## 00:55 heroes: oracle accepted, shaman feedback
+
+Oracle reached 8.0 after the agent's feedback pass plus one orchestrator edit on the hair: the
+flat pile base under the rolls and the 0.016 blend had merged the rolls into a dome, so the base
+went lower and smaller, the rolls blend at 0.006 with two more low crossing rolls, and the paint
+darkens the valleys by height instead of radial stripes. The rolls now read as loops at 128 px.
+Shaman landed at 7.5 (flat cap, thin antlers, small held feather) and is on its feedback pass.
+Apprentice launched into the freed slot. Run 4 tokens: about 6.7M.
+
+## 02:45 heroes: swashbuckler, spear-warden, shaman accepted
+
+Swashbuckler (sabre, dagger, bandana bleed) and spear-warden (angular helmet, plated cuirass,
+pteruges, leaf javelin) reached 8.0 on one feedback pass each. Shaman needed the feedback pass
+plus an orchestrator edit: its held feather was face-on but only 0.06 m wide and gripped at the
+hand, so it read as a strip; a 0.096 m vane gripped low on the quill fixed it. Apprentice is in
+the same state (mantle rebuilt as a back cape, full build running). Pattern for the run: when the
+feedback pass leaves one local geometry miss, a direct edit and one fast render is cheaper than a
+fresh rework agent (60K to 110K). Captain, caravan-guard and explorer are on first builds.
+Run 4 tokens: about 7.6M.
+
+## 05:15 (2026-10-01) heroes complete; run 4 closes
+
+The last of the 16 resumed heroes (treasure-hunter) reached 8.0. All 16 accepted at 8.0 and
+committed: rune-smith, enchanter, artificer, oracle, swashbuckler, spear-warden, shaman, apprentice,
+captain, caravan-guard, explorer, monster-hunter, noble-champion, sailor, pilgrim, treasure-hunter.
+Every one needed exactly one feedback pass; four (oracle, shaman, apprentice, caravan-guard) also
+took one small orchestrator edit after that pass instead of a second rework agent. Run 4 total:
+about 9.74M subagent tokens across 98 assets (82 accepted in run 4 alone; the rest closed earlier
+or were grouped item rows). Track asset_p1_heroes_20260928 is completed; every P1 hero, enemy,
+prop, item and vehicle family in the catalog now has an accepted source. Open for the owner:
+summoner (7.8, uncommitted), living-statue (7.8, pending approval), the nine ground tiles, the six
+equipment-parts spec questions, the four fx-geometry questions, and key-skeleton (6.8,
+uncommitted, another session's file). Summary table: bench/sonnet/overnight-summary.md.
