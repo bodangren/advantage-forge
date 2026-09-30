@@ -80,4 +80,4 @@ evil-priest	character	high	a37c4398c86f02286	2	accepted	8.0	enemies run 3; accep
 alchemist	hero	high	ab1126b54e0e7d147	1	running	-	run 4 (game need: Alchemist's Synthesis)
 sorcerer	hero	high	a14eba6a4f7e4cd3e	1	running	-	run 4 (game need: Sorcerer Ziggurat)
 dragoon	hero	high	a45507ca29ab58820	1	running	-	run 4 (game need: Dragon Rider)
-silo	structure	medium	ab8a4b72bd3646d22	2	running	6.8	run 4; feedback pass in flight (chunky roof, plinth, door)
+silo	structure	medium	ab8a4b72bd3646d22	2	accepted	7.2	run 4; 58346 tokens; from the 2026-09-28 trial file plus one feedback pass
