@@ -1,6 +1,6 @@
 # Chibi Quest: The Great Battle (teaser storyboards)
 
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-09-30
 **Status:** Approved for production (owner decisions of 2026-09-30)
 **Track:** [showcase_battle_teaser_20260930](../measure/tracks/showcase_battle_teaser_20260930/)
@@ -36,7 +36,7 @@ accent at 36.77 s. From 34.54 s to the impact, the world runs at 0.3x (slow moti
 | 36.77 to 37.51 | White flash, then black | cut to silence; a deep boom |
 | 37.51 to 45.00 | After the battle; end card | 97.61 onward (the song's own fade), faded out |
 
-## Voice-over (Thai drafts; a native speaker checks them before publication)
+## Voice-over (Thai; the owner checks it)
 
 | Time | Line | Meaning |
 | --- | --- | --- |
@@ -113,7 +113,7 @@ side free of text.
 - The company LINE QR code with "สอบถามทาง LINE" (from the website's contact page).
 - No launch date.
 
-## Publishing (Thai drafts; a native speaker checks them before publication)
+## Publishing (Thai; the owner checks it)
 
 The copy names Chibi Quest, Primary Advantage, and Tutor Advantage only. It has no launch date
 and no learning-outcome claim. The numbers are the ones on screen.
@@ -189,3 +189,4 @@ node --import tsx scripts/battle.ts thumb 9x16 '?bg=/out/battle/thumb-bg-16x9.pn
 | 1.0 | 2026-09-30 | First storyboards for both formats. |
 | 1.1 | 2026-09-30 | Enemy count 54 to 68 (counter and voice line vo2); S3 ends lower and closer. After the still review: S2 and S4 stop at the ends of the front rank; parade cuts hide the units in front; the slime stays clear of the end card. |
 | 1.2 | 2026-09-30 | Publishing: titles, description, tags, the thumbnail, and the Reels cover (`battle.ts thumb`; the page takes `?cam=` and `?turn=` for the still). |
+| 1.3 | 2026-09-30 | The owner checks the Thai; no separate native-speaker review. |
