@@ -238,7 +238,7 @@ noble-champion	hero	high	a5a78e917eeaacc96	2	accepted	8.0	run 4 heroes resume; o
 pilgrim	hero	high	ab44837143334dc02	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 sailor	hero	high	aefd43c36ab36ef57	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 treasure-hunter	hero	high	a1464dce8afbb786d	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed; last of the 16
-barrel	world	medium	aada23d68b771e426	0	running	6.5	catchup1 rework (P0 bar 7.5)
-boulder	world	medium	a9fd3981c67094506	0	running	6.0	catchup1 rework (P0 bar 7.5)
-oak-tree	world	medium	ac1da436ef5f8ee49	0	running	6.8	catchup1 rework (P0 bar 7.5)
-cottage	world	medium	a551116c440a77e5c	0	running	6.8	catchup1 rework (P0 bar 7.5)
+barrel	world	medium	aada23d68b771e426	2	accepted	7.6	catchup1 rework (P0 bar 7.5); accepted after v1 plus a hoop triangle cap
+boulder	world	medium	a9fd3981c67094506	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass plus an orchestrator edit
+oak-tree	world	medium	ac1da436ef5f8ee49	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
+cottage	world	medium	a551116c440a77e5c	1	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted on v1

@@ -1,175 +1,147 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — chunky wooden barrel (props/containers/barrel).
+ * Design note — chunky wooden barrel (props/containers/barrel), tavern style.
  *
- * Role: background storage prop for a cozy chibi hamlet; must read at 128 px sprite.
- * Size: 0.9 m tall, 0.65 m wide at the belly, stands on y = 0, faces +Z.
- * One idea: a squat, cheerfully bulged barrel — belly much wider than the ends,
- *   hugged by two thick dark iron hoops.
- * Shape language: round dominant (bulged revolved body, domed lid, round bung),
- *   square secondary (narrow hoop bands give a sturdy read).
- * Palette: warm honey-brown wood family from fence/barn — mid #8a5a30 (dominant),
- *   light #d6a561 (sun-lit top / lid), dark #3a2210 (stave seams, shaded foot);
- *   dark iron hoops #3d4047 (lantern metal family).
- * Materials: wood (roughness 0.82, metalness 0), worn iron (roughness 0.55,
- *   metalness 0.7). Stave grooves + grain in `bump` only.
- * Detail: primary bulged body + 2 hoops + lid; secondary bung + hoop rivets;
- *   tertiary stave seams and grain in bump. Focal point: belly bulge vs dark hoops.
+ * Role: background storage prop for a cozy hamlet/tavern; must read at 128 px sprite.
+ * Size: 0.92 m tall, 0.67 m wide at the belly, stands on y = 0, faces +Z.
+ * One idea: a squat barrel with a smooth bulged belly, hugged by four dark iron hoops.
+ * Shape language: round dominant (revolved body, round lid and bung), square secondary (hoops).
+ * Palette: two alternating stave tones #9a6534 / #86552a (dominant), dark seams #3a2210,
+ *   iron hoops #3a3d42, lighter lid #b9844a.
+ * Materials: wood (roughness 0.82), iron (roughness 0.45, metalness 0.8).
+ * Detail: primary smooth revolved body; secondary 4 hoops with 6 rivets each, inset lid with
+ *   three plank lines and a bung; tertiary 16 stave grooves and grain in `bump` only.
  * Rig/animation: none (static prop).
  */
 
-const WOOD_MID = rgb('#8a5a30');
-const WOOD_LIGHT = rgb('#d6a561');
+const WOOD_A = rgb('#9a6534');
+const WOOD_B = rgb('#86552a');
+const WOOD_LIGHT = rgb('#b9844a');
 const WOOD_DARK = rgb('#3a2210');
-const IRON = '#3d4047';
+const IRON = '#3a3d42';
 
-const H = 0.86; // body height (lid caps it to 0.9 total)
-const BELLY_R = 0.325; // max radius at mid height (0.65 m wide)
-const END_R = 0.265; // radius at top/bottom rims
-const STAVES = 14;
-const HOOP_Y_LOW = 0.22;
-const HOOP_Y_HIGH = 0.64;
-const HOOP_W = 0.075;
+const TOP = 0.9; // rim height
+const LID_TOP = 0.88; // lid inset 0.02 below the rim
+const STAVES = 16;
+const HOOPS = [0.08, 0.22, 0.68, 0.82];
+const HOOP_W = 0.035;
+const rad = (y: number) => 0.325 - 0.03 * Math.pow((y - 0.45) / 0.45, 2);
 
 export default defineAsset({
   name: 'barrel',
   description:
-    'Chunky wooden barrel with bulged staves, two dark iron hoops, and a lid with a round bung.',
+    'Chunky wooden barrel with a smooth bulged body, four dark iron hoops, and an inset lid with a round bung.',
   detail: 0.008,
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------------ body
-    // Squat revolved barrel: narrow foot, wide friendly belly, tucked top rim.
-    const bodyProfile = profile.polygon(
-      [
-        [0.12, 0.002],
-        [END_R - 0.02, 0.002],
-        [END_R, 0.03],
-        [0.295, 0.12],
-        [0.315, 0.28],
-        [BELLY_R, 0.45],
-        [0.315, 0.62],
-        [0.293, 0.76],
-        [END_R, 0.83],
-        [0.2, 0.808],
-        [0.1, 0.81],
-        [0, 0.81],
-      ],
-      { smooth: true, samples: 16 },
-    );
-    // Flat foot on y = 0 so the ground line is perfect (as in fence.ts).
+    const pts: [number, number][] = [[0, 0], [0.25, 0], [0.272, 0.012], [0.285, 0.03]];
+    for (let y = 0.06; y < 0.87; y += 0.03) pts.push([rad(y), y]);
+    pts.push([0.292, 0.88], [0.283, 0.895], [0.27, TOP], [0, TOP]);
     const bodyShape = sdf
-      .revolve(bodyProfile)
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
+      .revolve(profile.polygon(pts))
+      .subtract(sdf.cylinder(0.27, 0.05).at(0, TOP, 0));
 
-    // Staves: per-stave tint + dark seams, plus a fence-like vertical value plan
-    // (shaded foot, sun-lit shoulder). Seams also get relief in `bump` below.
-    const stavePaint = (x: number, y: number, z: number) => {
-      const a = Math.atan2(z, x); // -pi..pi
-      const u = ((a + Math.PI) / (Math.PI * 2)) * STAVES;
+    const stavePos = (x: number, z: number) => {
+      const u = ((Math.atan2(z, x) + Math.PI) / (Math.PI * 2)) * STAVES;
       const idx = Math.floor(u);
-      const f = u - idx;
-      const edge = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 6);
-      const tint = noise.random(idx, 7, 3);
-      const patch = 0.5 + 0.5 * noise.fbm(x * 5, y * 5, z * 5, 2);
-      const grain = 0.5 + 0.5 * noise.fbm(x * 10, y * 42, z * 10, 2);
-      let c = mixRgb(WOOD_MID, WOOD_LIGHT, 0.12 + 0.3 * tint);
-      c = mixRgb(c, WOOD_MID, 0.35 * patch);
-      c = mixRgb(c, WOOD_LIGHT, 0.1 * grain);
-      // Sun-lit shoulder, damp shaded foot.
-      const t = Math.min(1, Math.max(0, y / H));
-      const shade = 1 - t;
-      c = mixRgb(c, WOOD_DARK, 0.32 * shade * shade);
-      c = mixRgb(c, WOOD_LIGHT, 0.22 * Math.max(0, (t - 0.55) / 0.45));
-      // Dark seam lines between staves.
-      c = mixRgb(c, WOOD_DARK, 0.72 * edge);
-      return c;
+      return { idx, f: u - idx };
+    };
+    const stavePaint = (x: number, y: number, z: number) => {
+      const { idx, f } = stavePos(x, z);
+      let c = mixRgb(idx % 2 ? WOOD_A : WOOD_B, WOOD_LIGHT, 0.12 * noise.random(idx, 3, 1));
+      const grain = 0.5 + 0.5 * noise.fbm(x * 8, y * 40, z * 8, 2);
+      c = mixRgb(c, WOOD_DARK, 0.18 * grain);
+      const edge = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 10);
+      c = mixRgb(c, WOOD_DARK, 0.6 * edge);
+      const t = y / TOP;
+      return mixRgb(c, WOOD_DARK, 0.25 * (1 - t) * (1 - t));
     };
     const staveBump = (x: number, y: number, z: number) => {
-      const a = Math.atan2(z, x);
-      const u = ((a + Math.PI) / (Math.PI * 2)) * STAVES;
-      const f = u - Math.floor(u);
-      const edge = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 6);
-      return -0.003 * edge + 0.0016 * noise.fbm(x * 26, y * 8, z * 26, 2);
+      const { f } = stavePos(x, z);
+      const edge = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 10);
+      return -0.004 * edge + 0.0015 * noise.fbm(x * 8, y * 60, z * 8, 2);
     };
     k.body('staves', bodyShape.paintFn(stavePaint), {
-      color: '#8a5a30',
+      color: '#9a6534',
       roughness: 0.82,
       metalness: 0,
-      detail: 0.01,
+      detail: 0.008,
       paintWeight: 2,
       bump: staveBump,
-      maxTriangles: 3800,
+      maxTriangles: 6000,
     });
 
-    // ------------------------------------------------------------------ hoops
-    // Thin shells of the body surface, cut into bands so they hug the bulge.
-    const shell = bodyShape.round(0.013).subtract(bodyShape.round(-0.002));
-    const bandAt = (y: number) =>
-      shell.intersect(sdf.box([1.2, HOOP_W, 1.2], 0.008).at(0, y, 0));
-    // Round rivet studs sitting proud on each hoop, 8 per hoop.
-    const rivets: ReturnType<typeof sdf.sphere>[] = [];
-    for (const y of [HOOP_Y_LOW, HOOP_Y_HIGH]) {
-      for (let i = 0; i < 8; i++) {
-        const a = (i / 8) * Math.PI * 2 + (y > 0.4 ? Math.PI / 8 : 0);
-        // Belly radius near the hoops is ~0.307; shell outer face sits ~+0.013.
-        const r = 0.318;
-        rivets.push(sdf.sphere(0.017).at(Math.cos(a) * r, y, Math.sin(a) * r));
+    // Hoops: revolved bands following the bulge, proud by 0.012 m, 0.035 m tall.
+    const parts: ReturnType<typeof sdf.sphere>[] = [];
+    for (const y of HOOPS) {
+      const y0 = y - HOOP_W / 2;
+      const y1 = y + HOOP_W / 2;
+      parts.push(
+        sdf
+          .revolve(
+            profile.polygon([
+              [rad(y0) - 0.01, y0],
+              [rad(y0) + 0.008, y0],
+              [rad(y0) + 0.012, y0 + 0.004],
+              [rad(y1) + 0.012, y1 - 0.004],
+              [rad(y1) + 0.008, y1],
+              [rad(y1) - 0.01, y1],
+            ]),
+          )
+          .round(0.002),
+      );
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2 + (y > 0.4 ? Math.PI / 6 : 0);
+        const r = rad(y) + 0.008;
+        parts.push(sdf.sphere(0.0155).at(Math.cos(a) * r, y, Math.sin(a) * r));
       }
     }
-    const hoops = sdf.union(bandAt(HOOP_Y_LOW), bandAt(HOOP_Y_HIGH), ...rivets);
-    k.body('hoops', hoops, {
+    k.body('hoops', sdf.union(...parts), {
       color: IRON,
-      roughness: 0.55,
-      metalness: 0.7,
-      detail: 0.007,
-      maxTriangles: 3000,
+      roughness: 0.45,
+      metalness: 0.8,
+      detail: 0.006,
+      maxTriangles: 7000,
     });
 
-    // ------------------------------------------------------------------ lid + bung
-    // Close-fitting lid: rounded-edge disc dropped into the top rim, planks along X.
-    const lidShape = sdf.cylinder(0.252, 0.055, 0.012).at(0, H - 0.012, 0);
-    const lidPaint = (x: number, y: number, z: number) => {
-      const along = x + 0.3;
-      const f = along / 0.1 - Math.floor(along / 0.1);
-      const g = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 4);
-      const board = 0.5 + 0.5 * noise.fbm(along * 30, 0, z * 4, 2);
-      let c = mixRgb(WOOD_LIGHT, WOOD_MID, 0.3 + 0.3 * board);
-      c = mixRgb(c, WOOD_DARK, 0.55 * g);
-      const r = Math.hypot(x, z);
-      c = mixRgb(c, WOOD_DARK, 0.35 * Math.max(0, (r - 0.19) / 0.07));
-      return c;
+    // Lid inset 0.02 m below the rim, three plank lines along X.
+    const lidShape = sdf.cylinder(0.272, 0.03, 0.006).at(0, LID_TOP - 0.015, 0);
+    const plank = (x: number) => {
+      const f = (x + 0.3) / 0.2 - Math.floor((x + 0.3) / 0.2);
+      return Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 14);
     };
-    k.body('lid', lidShape.paintFn(lidPaint), {
-      color: '#d6a561',
-      roughness: 0.82,
-      metalness: 0,
-      detail: 0.005,
-      maxTriangles: 600,
-      bump: (x, y, z) => {
-        const along = x + 0.3;
-        const f = along / 0.1 - Math.floor(along / 0.1);
-        const g = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 4);
-        return -0.0025 * g + 0.0012 * noise.fbm(x * 30, y * 8, z * 30, 2);
+    k.body(
+      'lid',
+      lidShape.paintFn((x, y, z) => {
+        const board = 0.5 + 0.5 * noise.fbm(x * 4, 0, z * 40, 2);
+        let c = mixRgb(WOOD_LIGHT, WOOD_A, 0.3 + 0.3 * board);
+        return mixRgb(c, WOOD_DARK, 0.6 * plank(x));
+      }),
+      {
+        color: '#b9844a',
+        roughness: 0.82,
+        metalness: 0,
+        detail: 0.005,
+        maxTriangles: 1200,
+        bump: (x, y, z) => -0.004 * plank(x) + 0.0012 * noise.fbm(x * 4, y, z * 40, 2),
       },
-    });
+    );
 
-    // Small round bung plug near the lid edge, with a dark seating ring.
     const bung = sdf
       .smoothUnion(
         0.008,
-        sdf.cylinder(0.038, 0.03, 0.008).at(0.11, H + 0.022, 0.07),
-        sdf.sphere(0.02).at(0.11, H + 0.035, 0.07),
+        sdf.cylinder(0.04, 0.03, 0.008).at(0.11, LID_TOP + 0.005, 0.08),
+        sdf.sphere(0.022).at(0.11, LID_TOP + 0.015, 0.08),
       )
-      .paintWhere(sdf.torus(0.04, 0.008).at(0.11, H + 0.012, 0.07), WOOD_DARK, 0.006);
+      .paintWhere(sdf.torus(0.042, 0.008).at(0.11, LID_TOP, 0.08), WOOD_DARK, 0.006);
     k.body('bung', bung, {
-      color: '#8a5a30',
+      color: '#86552a',
       roughness: 0.82,
       metalness: 0,
       detail: 0.004,
-      maxTriangles: 300,
+      maxTriangles: 600,
     });
   },
 });

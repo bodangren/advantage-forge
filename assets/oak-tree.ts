@@ -12,8 +12,8 @@ import type { Sdf } from '../src/index.js';
  * Palette: fresh green #6fae43, sunlit top #b2d95e, dark underside #3e7331, shadow #2c5226,
  *          bark #7d4a27, root flare #a9713c — the pine family, unchanged.
  * Materials: bark trunk (roughness 0.9), foliage crown (roughness 0.72).
- * Detail list: forked trunk and flared roots (primary), seven clump masses with per-clump
- *   lighting and scalloped rims (primary), bark grooves and leaf bump (tertiary).
+ * Detail list: forked trunk and flared roots (primary), 17 clusters lit by height and distance
+ *   from center (#3a6e26 dark inner, #6fae3c outer, light top) with six scallop lobes per rim, two open gaps (side, back) (primary), bark grooves and leaf bump (tertiary).
  *   Focal point: the sunlit crown top.
  * Rig: none. Animation: none.
  */
@@ -22,10 +22,10 @@ const bark = rgb('#7d4a27');
 const barkLight = rgb('#a9713c');
 const barkDark = rgb('#3d2415');
 const moss = rgb('#5b8a3c');
-const leafDark = rgb('#3e7331');
-const leafShadow = rgb('#2c5226');
-const leaf = rgb('#6fae43');
-const leafLight = rgb('#b2d95e');
+const leafDark = rgb('#2f5f22');
+const leafShadow = rgb('#26501b');
+const leaf = rgb('#5f9e34');
+const leafLight = rgb('#7cb848');
 
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
 const smoothstep = (a: number, b: number, v: number): number => {
@@ -40,15 +40,24 @@ interface Clump {
   readonly r: number;
 }
 
-// One dominant mass, six satellites: wide in X, domed on top, open under the rim so limbs show.
+// 17 ellipsoid clusters in a broad dome; the underside stays open so three limbs show as they
+// enter the crown.
 const clumps: readonly Clump[] = [
-  { x: 0.0, y: 3.4, z: 0.0, r: 1.0 }, // central dome
-  { x: -0.95, y: 3.0, z: 0.12, r: 0.72 }, // left shoulder
-  { x: 0.95, y: 3.05, z: -0.08, r: 0.72 }, // right shoulder
-  { x: 0.1, y: 2.8, z: 0.85, r: 0.68 }, // front skirt
-  { x: -0.12, y: 2.85, z: -0.82, r: 0.66 }, // back skirt
-  { x: 0.42, y: 3.95, z: 0.2, r: 0.58 }, // top-left lobe
-  { x: -0.46, y: 3.9, z: -0.16, r: 0.55 }, // top-right lobe
+  { x: 0.0, y: 3.5, z: 0.0, r: 0.85 },
+  { x: -0.85, y: 3.1, z: 0.1, r: 0.78 },
+  { x: 0.88, y: 3.1, z: -0.05, r: 0.78 },
+  { x: 0.05, y: 2.95, z: 0.85, r: 0.65 },
+  { x: -0.1, y: 2.95, z: -0.85, r: 0.65 },
+  { x: 0.45, y: 3.95, z: 0.2, r: 0.6 },
+  { x: -0.45, y: 3.85, z: -0.2, r: 0.6 },
+  { x: -0.6, y: 3.3, z: 0.75, r: 0.55 },
+  { x: 0.7, y: 3.3, z: 0.7, r: 0.55 },
+  { x: 0.65, y: 3.3, z: -0.75, r: 0.55 },
+  { x: -1.15, y: 2.85, z: 0.0, r: 0.5 },
+  { x: 0.0, y: 4.0, z: -0.5, r: 0.5 },
+  { x: 0.0, y: 3.9, z: 0.6, r: 0.5 },
+  { x: 0.85, y: 3.85, z: -0.3, r: 0.5 },
+  { x: -0.85, y: 3.8, z: 0.2, r: 0.5 },
 ];
 
 /**
@@ -58,18 +67,14 @@ const clumps: readonly Clump[] = [
 function clumpShape(c: Clump, i: number): Sdf {
   const main = sdf.ellipsoid([c.r * 1.05, c.r * 0.9, c.r * 1.02]).at(c.x, c.y, c.z);
   const lobes: Sdf[] = [];
-  for (let j = 0; j < 3; j++) {
-    const a = (j / 3) * Math.PI * 2 + noise.random(i, j, 1) * 1.7 + i * 0.9;
-    const lr = c.r * (0.4 + 0.12 * noise.random(i, j, 7));
-    lobes.push(
-      sdf.ellipsoid([lr, lr * 0.82, lr]).at(
-        c.x + Math.cos(a) * c.r * 0.86,
-        c.y - c.r * 0.36 + (noise.random(i, j, 13) - 0.5) * c.r * 0.22,
-        c.z + Math.sin(a) * c.r * 0.86,
-      ),
-    );
+  for (let j = 0; j < 6; j++) {
+    const a = (j / 6) * Math.PI * 2 + noise.random(i, j, 1) * 0.8 + i * 0.9;
+    const lr = 0.12 + 0.06 * noise.random(i, j, 7);
+    const up = (noise.random(i, j, 13) - 0.3) * c.r * 0.7;
+    const rim = Math.sqrt(Math.max(0.05, 1 - (up / c.r) ** 2)) * c.r * 0.88;
+    lobes.push(sdf.sphere(lr).at(c.x + Math.cos(a) * rim, c.y + up, c.z + Math.sin(a) * rim));
   }
-  return sdf.smoothUnion(0.07, main, ...lobes);
+  return sdf.smoothUnion(0.05, main, ...lobes);
 }
 
 /** Nearest clump to a point, used so every blob lights itself: dark rim, bright top. */
@@ -88,7 +93,7 @@ function nearestClump(x: number, y: number, z: number): Clump {
 
 export default defineAsset({
   name: 'oak-tree',
-  description: 'Stylized chibi oak, 4.5 m tall: forked trunk, flared roots, seven-blob dome crown.',
+  description: 'Stylized chibi oak, 4.5 m tall: forked trunk, flared roots, 17-cluster dome crown.',
   detail: 0.02,
   texture: { size: 1024 },
 
@@ -162,33 +167,26 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ crown
     const crown = sdf
-      .smoothUnion(0.24, ...clumps.map(clumpShape))
-      .displace(0.05, (x, y, z) => noise.fbm(x * 1.2, y * 1.2, z * 1.2, 2, 5))
+      .smoothUnion(0.08, ...clumps.map(clumpShape))
+      .displace(0.01, (x, y, z) => noise.fbm(x * 9, y * 9, z * 9, 2, 5))
       .paintFn((x, y, z) => {
         const c = nearestClump(x, y, z);
-        // 0 under this clump, 1 at its top; a global gradient adds altitude light.
-        const local = clamp01(((y - c.y) / c.r) * 0.6 + 0.45);
-        const global = clamp01((y - 2.2) / 2.3);
+        const up = clamp01(((y - c.y) / c.r) * 0.5 + 0.5);
+        const height = clamp01((y - 2.6) / 1.8);
+        const outer = clamp01(Math.hypot(c.x, c.z) / 1.0);
         const patch = 0.5 + 0.5 * noise.fbm(x * 2.4, y * 2.4, z * 2.4, 2, 21);
-        const wob = 0.08 * noise.fbm(x * 1.7, y * 1.7, z * 1.7, 2, 33);
-        // Dark band over the lower part of every clump, with a wavy organic edge (pine family).
-        const band = smoothstep(0.28, 0.78, local + wob);
-        const base = mixRgb(leafDark, leaf, band * (0.86 + 0.14 * patch));
-        const under = smoothstep(0.3, 0.0, local);
-        const shaded = mixRgb(base, leafShadow, under * 0.85);
-        const top = smoothstep(0.6, 0.95, local);
-        const lift = top * (0.45 + 0.55 * global) * (0.55 + 0.45 * patch);
-        const lit = mixRgb(shaded, leafLight, lift);
-        // Gentle light and dark patches, so the big faces are not one flat color.
-        const n = noise.fbm(x * 1.2, y * 1.2, z * 1.2, 2, 7);
-        return n >= 0 ? mixRgb(lit, leafLight, n * 0.12) : mixRgb(lit, leafShadow, -n * 0.14);
+        const light = clamp01(0.6 * up * up + 0.35 * height + 0.15 * outer + 0.1 * (patch - 0.5) - 0.12);
+        let col = mixRgb(leafDark, leaf, smoothstep(0.25, 0.65, light));
+        col = mixRgb(col, leafShadow, smoothstep(0.2, 0.0, light) * 0.5);
+        const isTop = c.y > 3.8;
+        return isTop ? mixRgb(col, leafLight, smoothstep(0.45, 0.8, light)) : col;
       });
     k.body('crown', crown, {
       color: '#6fae43',
       roughness: 0.72,
       detail: 0.036,
       paintWeight: 3,
-      bump: (x, y, z) => 0.004 * noise.fbm(x * 14, y * 14, z * 14, 2, 3),
+      bump: (x, y, z) => 0.02 * noise.fbm(x * 22, y * 22, z * 22, 3, 3),
     });
   },
 });
