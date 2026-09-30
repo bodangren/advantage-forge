@@ -5,6 +5,35 @@ Generated from bench/sonnet/log.tsv on 2026-10-01. One row per asset; passes cou
 Assets: 176. Accepted: 169. Skipped: 6. Other (deferred or open): 1. Subagent tokens: 19,736,377.
 
 
+## Batch 1: the 20 open queue rows (2026-09-29 to 09-30)
+
+The goal's queue (bench/overnight/queue.tsv and queue-hold.tsv, ivy and farmhouse already done). Sources are committed on 2026-09-29 unless noted; tokens are the subagent tokens of every logged pass.
+
+| asset | tier | passes | tokens | score | bar | result |
+|---|---|---|---|---|---|---|
+| greenhouse | medium | 2 | 68,372 | 7.2 | 7 | accepted (1ca8311) |
+| yurt | medium | 2 | 52,936 | 7.5 | 7 | accepted (7af3a6c) |
+| pier | medium | 1 | 46,021 | 7.0 | 7 | accepted (8f99088) |
+| cave-mouth | medium | 2 | 43,525 | 7.0 | 7 | accepted (8f99088) |
+| city-wall | medium | 2 | 67,065 | 7.0 | 7 | accepted (6344cdc) |
+| rampart | medium | 2 | 59,945 | 7.0 | 7 | accepted (47db000) |
+| greenhouse-dome | medium | 1 | 38,863 | 7.3 | 7 | accepted (3aa7bae) |
+| cliff-face | medium, then high | 4 | 126,344 | 6.5 | 7 | skipped |
+| ancient-tree | medium | 2 | 51,069 | 7.0 | 7 | accepted (421c1e6) |
+| roots | medium | 4 | 68,164 | 7.0 | 7 | accepted (72a4f9c) |
+| watermill | medium | 2 | 63,626 | 7.3 | 7 | accepted (421c1e6) |
+| cloth-robe | low | 3 | 43,589 | 7.0 | 7 | accepted (7af3a6c) |
+| mantle | low, then medium | 3 | 80,751 | 7.0 | 7 | accepted (7af3a6c) |
+| townhouse | medium | 1 | 49,637 | 7.3 | 7 | accepted (99d32a0) |
+| longhouse | medium | 1 | 54,161 | 7.0 | 7 | accepted (72a4f9c) |
+| crypt-chapel | medium | 1 | 48,362 | 7.3 | 7 | accepted (bab55d5) |
+| scale-armor | medium | 3 | 62,168 | 7.3 | 7 | accepted (4c18eb9) |
+| studded-leather | medium | 4 | 52,870 | 7.0 | 7 | accepted (e695565) |
+| vines | medium | 1 | 43,535 | 7.2 | 7 | accepted (f46e543) |
+| plate-armor | medium | 2 | 67,780 | 7.5 | 7 | accepted (e695565) |
+
+Batch 1 result: 19 of 20 accepted, 1 skipped (cliff-face at 6.5 after a medium build, two feedback passes and a fresh high rework: the grass cap and ledge mats stayed plain, and the textured build reduced the rock to 302 triangles while the fast build reported 5,350; the rock body is usable, source left uncommitted). Batch 1 subtotal: 1,188,783 tokens. The queue then emptied and the run continued with the P1 enemies by game need (runs 2 and 3), the equipment fits, the static rework wave, the P2 items, the P3 vehicles and the 32 P1 heroes (run 4), all in the tables above.
+
 ## Per batch
 
 | batch | assets | accepted | tokens |
