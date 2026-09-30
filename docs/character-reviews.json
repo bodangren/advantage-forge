@@ -2530,33 +2530,33 @@
     "reviewedAt": "2026-09-29T21:52:18+00:00"
   },
   "living-statue": {
-    "overall": 7.8,
+    "overall": 7.6,
     "scores": {
-      "mockup": 4,
-      "silhouette": 4,
+      "mockup": 3,
+      "silhouette": 3,
       "proportion": 4,
       "shape": 3,
-      "color": 3,
+      "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 4,
+      "technical": 5,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "Animated marble knight on the knight base: a round helm with a laurel crown band, glowing pale blue oval eyes in a dark visor band over a faceted mask, flanged pauldrons, a carved skirt with a medallion tab, a cape, a marble sword and a ringed round shield with a stacked boss; marble painted by surface direction with dark cracks. Three passes (7.3, 7.7, 7.8); just below the 8 bar, source uncommitted.",
+    "summary": "Marble knight statue on the knight base: a crowned cap helm with a garland band and a blue gem, a faceted mask with glowing eyes, riveted pauldrons, a ringed round shield with a stacked boss, a carved skirt, and a marble sword; darker marble with painted seams and six placed cracks. Five passes (7.3, 7.7, 7.8, 7.6, 7.6) across runs 2 and 3 (Sonnet 5.5 high tier); skipped just under the bar.",
     "strengths": [
-      "The glowing eyes, the shield rings and the sword read at 128 px.",
-      "The marble now has value contrast and painted cracks.",
-      "Clearance and ground checks pass; 36,358 triangles, no warnings."
+      "The helm, the mask, the pauldrons, the skirt, and the shield read as separate tones at 128 px.",
+      "The cracks are continuous painted lines with grooves.",
+      "Check ok (closest 0.3 cm), ground ok, 37,294 triangles, no warnings."
     ],
     "issues": [
-      "The helm is a hemisphere dome with a brim rather than the mockup's taller cap helm.",
-      "The whole figure still reads pale; the pauldron flanges hide behind the shield.",
-      "The cracks are long wavy noise lines rather than sparse short cracks."
+      "The helm is a flat-topped bowl with a spiky rim; the mockup has a rounded dome with a swagged crown and a center leaf.",
+      "The mask and the back read as flat grey.",
+      "The pauldron flanges stay small and hide behind the shield."
     ],
-    "next": "Raise the helm into a cap (ellipsoid 0.22 x 0.26 x 0.22) with a curled laurel and a gem; lower the marble base one more step; replace the noise cracks with six short hand-placed strokes.",
-    "reviewedAt": "2026-09-29T21:58:49+00:00"
+    "next": "Restore a rounded dome (0.14 tall) under the crown ring, swag the garland as overlapping leaves with a center leaf crest, and raise the pauldron flanges 0.02 m.",
+    "reviewedAt": "2026-09-30T01:51:08+00:00"
   },
   "kobold-trapper": {
     "overall": 8,
