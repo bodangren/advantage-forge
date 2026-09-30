@@ -2960,5 +2960,34 @@
     ],
     "next": "Lower the flap peaks 0.02 m, thin the gold rim to 0.006 m, and shift the coat to #7a2a2a.",
     "reviewedAt": "2026-09-30T02:45:42+00:00"
+  },
+  "warlock": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Bald human warlock on the mage base: a tattoo stripe on the scalp, glowing green eyes under lowered lids, a curled black moustache over a pointed beard, a sneer, a long dark green coat with a standing collar, shoulder flaps, and gold clasps, a green pendant, a belt chain, a bone-grey clawed gauntlet, and a grimoire wreathed in curling green flame. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The tattooed head, the green eyes, the beard point, the green coat, and the flame read at 128 px in all eight directions.",
+      "The emissives stay green with dark bases.",
+      "Check ok (closest 1.2 cm), ground ok, 46,246 triangles, no warnings."
+    ],
+    "issues": [
+      "The gauntlet is pale with short claws; the mockup piece is larger and darker.",
+      "The moustache curl is thin and the teeth are small.",
+      "The flame is faceted and pale mint."
+    ],
+    "next": "Darken the gauntlet to #8a8478 and scale it 1.2x, thicken the moustache to r 0.015, and soften the flame with a lower-frequency displacement.",
+    "reviewedAt": "2026-09-30T02:48:23+00:00"
   }
 }
