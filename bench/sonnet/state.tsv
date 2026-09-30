@@ -119,6 +119,9 @@ resistance-potion	item	medium	ade4972569cada1fa	2	accepted	7.3	run 4; accepted a
 silver-coin	item	medium	a80cc3e8aa6e2bcc7	2	running	6.4	run 4; feedback pass in flight
 copper-coin	item	medium	a80cc3e8aa6e2bcc7	1	accepted	7.2	run 4; accepted on the first pass
 ancient-key	item	medium	a80cc3e8aa6e2bcc7	2	running	6.4	run 4; feedback pass in flight
-invisibility-potion	item	medium	a6ec332770f569180	1	running	-	run 4; potions batch C (invisibility, elixir, poison-bottle)
-elixir	item	medium	a6ec332770f569180	1	running	-	run 4; same agent
-poison-bottle	item	medium	a6ec332770f569180	1	running	-	run 4; same agent
+invisibility-potion	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
+elixir	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
+poison-bottle	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
+bread-ration	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; food and container batch
+waterskin	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; same agent
+coin-purse	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; same agent
