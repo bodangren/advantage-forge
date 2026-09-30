@@ -2,34 +2,49 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Sling (equipment/ranged-weapons/sling), matched to docs/item-mockups/sling-mock.jpg.
- * Size: 0.7 m long, lying flat on y = 0. One idea: a cupped leather pouch holding a round grey
- * stone, with two long braided cords, one ending in a finger loop and one in a knot.
- * Palette: leather #8a5a35 / #6b4226, cords #7a5a3a, stone #8a94a0.
+ * Role: equipment pickup. Size: 0.5 m wide, 0.55 m tall, upright on y = 0, facing +Z.
+ * One idea: a fat round leather pouch with a grey stone in its open top and a wide strap arching over it.
+ * Shape language: round. Palette: leather #c8683a, pale trim #e8c880, stone #8a9298 with #b0b6bc top.
+ * Materials: leather (pouch, strap), trim (rim, buckle), stone.
  */
 
 export default defineAsset({
   name: 'sling',
-  description: 'A leather sling lying flat: a cupped pouch holding a round stone, two long cords with a loop and a knot.',
-  detail: 0.002,
+  description: 'A fat upright leather sling pouch holding a grey stone, with an arched strap and a pale buckle.',
+  detail: 0.007,
   reference: 'docs/item-mockups/sling-mock.jpg',
   texture: { size: 512 },
 
   build(k) {
     const pouch = sdf
-      .ellipsoid([0.06, 0.03, 0.045])
-      .at(0, 0.028, 0)
-      .subtract(sdf.ellipsoid([0.05, 0.03, 0.036]).at(0, 0.045, 0))
-      .intersect(sdf.halfSpace([0, -1, 0], 0).intersect(sdf.box([1, 1, 1]).at(0, 0.3, 0)));
-    k.body(
-      'pouch',
-      pouch.paintFn((x, y, z) => mixRgb(rgb('#8a5a35'), rgb('#6b4226'), 0.2 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 60, y * 60, z * 60, 2)))),
-      { color: '#8a5a35', roughness: 0.7, metalness: 0 },
+      .sphere(0.22)
+      .at(0, 0.22, 0)
+      .intersect(sdf.box([1, 0.34, 1]).at(0, 0.17, 0))
+      .subtract(sdf.sphere(0.17).at(0, 0.3, 0));
+    const strap = sdf
+      .torus(0.18, 0.03)
+      .rotateX(90)
+      .scale([1, 1, 1.8])
+      .at(0, 0.34, 0)
+      .intersect(sdf.box([1, 0.3, 1]).at(0, 0.49, 0));
+    const leather = sdf.smoothUnion(0.01, pouch, strap).paintFn((x, y, z, base) =>
+      mixRgb(base, rgb('#a85428'), 0.25 * (0.5 + 0.5 * noise.fbm(x * 30, y * 30, z * 30, 2))),
     );
-    k.body('stone', sdf.sphere(0.03).at(0, 0.04, 0).displace(0.002, (x, y, z) => noise.noise3(x * 60, y * 60, z * 60)), { color: '#8a94a0', roughness: 0.8, metalness: 0 });
-    const cordL = sdf.chain([[-0.055, 0.02, 0, 0.005], [-0.12, 0.006, 0.02, 0.005], [-0.2, 0.005, 0.01, 0.005], [-0.28, 0.005, -0.03, 0.005], [-0.33, 0.005, -0.02, 0.005]], 0.006);
-    const cordR = sdf.chain([[0.055, 0.02, 0, 0.005], [0.12, 0.006, -0.02, 0.005], [0.2, 0.005, -0.01, 0.005], [0.28, 0.005, 0.03, 0.005], [0.32, 0.005, 0.035, 0.005]], 0.006);
-    const loop = sdf.torus(0.02, 0.005).at(-0.35, 0.005, -0.02);
-    const knot = sdf.sphere(0.011).at(0.325, 0.009, 0.035);
-    k.body('cords', sdf.union(cordL, cordR, loop, knot), { color: '#7a5a3a', roughness: 0.8, metalness: 0 });
+    k.body('leather', leather, { color: '#c8683a', roughness: 0.7, metalness: 0 });
+
+    const rim = sdf.torus(0.19, 0.025).at(0, 0.34, 0);
+    const buckle = sdf.smoothUnion(
+      0.005,
+      sdf.box([0.1, 0.12, 0.04], 0.018).rotateY(-20).at(-0.08, 0.16, 0.2),
+      sdf.cylinder(0.02, 0.03).rotateX(90).at(-0.08, 0.16, 0.222),
+    );
+    k.body('trim', sdf.union(rim, buckle), { color: '#e8c880', roughness: 0.5, metalness: 0.1 });
+
+    const stone = sdf
+      .sphere(0.13)
+      .at(0, 0.36, 0)
+      .displace(0.01, (x, y, z) => noise.fbm(x * 20, y * 20, z * 20, 2))
+      .paintFn((_x, y, _z, base) => mixRgb(rgb('#8a9298'), rgb('#b0b6bc'), Math.min(1, Math.max(0, (y - 0.4) / 0.08))));
+    k.body('stone', stone, { color: '#8a9298', roughness: 0.9, metalness: 0 });
   },
 });
