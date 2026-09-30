@@ -3226,5 +3226,35 @@
     ],
     "next": "Done for P1. A companion cub could be a separate wildlife asset later.",
     "reviewedAt": "2026-09-30T06:48:49+00:00"
+  },
+  "warrior": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the barbarian base (the knight's body, face, and chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: thick dark brown hair swept back under a gold headband, a shaggy cream fur mantle, a steel breastplate with a V neck, a rim, and a diamond emblem over a red tunic, a belt with a steel buckle, engraved steel bracers, a short folded brown cape, fur-cuffed boots with steel toe plates, and a two-handed greatsword resting past the right shoulder. Attack is a two-hand sweep, attack2 an overhead chop. 40,614 triangles, no build warnings, forge check result ok at 4.3 cm, ground ok.",
+    "strengths": [
+      "The fur mantle, the red tunic, the steel plate, and the greatsword give four clear masses, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the barbarian and the knight.",
+      "The matte fullered blade stays grey in the sprite instead of washing to white."
+    ],
+    "issues": [
+      "The hair is a smooth low cap without the mockup's loose strands.",
+      "The fur mantle is smooth, and the bracer grooves vanish at 128 px.",
+      "The sword hilt passes into the tunic in the attack clips (the check allows body contact)."
+    ],
+    "next": "Done for P1. A later polish pass could add fur displacement to the mantle.",
+    "reviewedAt": "2026-09-30T07:09:27+00:00"
   }
 }
