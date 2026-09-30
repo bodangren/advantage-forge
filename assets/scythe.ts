@@ -22,8 +22,8 @@ export default defineAsset({
 
   build(k) {
     const snath = sdf.chain(
-      [[0.0, 0.02, 0, 0.024], [0.06, 0.45, 0, 0.022], [0.06, 0.95, 0, 0.021], [0.03, 1.35, 0, 0.02], [0.02, 1.62, 0, 0.02]],
-      0.012,
+      [[0.0, 0.02, 0, 0.042], [0.06, 0.45, 0, 0.04], [0.06, 0.95, 0, 0.038], [0.03, 1.35, 0, 0.036], [0.02, 1.62, 0, 0.034]],
+      0.02,
     );
     k.body(
       'snath',
@@ -31,18 +31,18 @@ export default defineAsset({
       { color: '#c08a50', roughness: 0.7, metalness: 0 },
     );
     const grips = sdf.union(
-      sdf.capsule([0.06, 0.62, 0], [0.06, 0.64, 0.17], 0.018),
-      sdf.capsule([0.045, 1.12, 0], [0.045, 1.14, 0.15], 0.018),
-      sdf.cylinder(0.026, 0.06, 0.006).at(0.02, 1.6, 0),
+      sdf.capsule([0.06, 0.62, 0], [0.06, 0.64, 0.2], 0.026),
+      sdf.capsule([0.045, 1.12, 0], [0.045, 1.14, 0.18], 0.026),
+      sdf.cylinder(0.05, 0.08, 0.01).at(0.02, 1.6, 0),
     );
     k.body('grips', grips, { color: '#7a4a2a', roughness: 0.7, metalness: 0 });
 
-    const arc = sdf.extrude(profile.arc(0.42, 0.11, -105, -12), 0.02, 0.003).at(C[0], C[1], 0);
+    const arc = sdf.extrude(profile.arc(0.42, 0.14, -105, -12), 0.036, 0.005).at(C[0], C[1], 0);
     const taper = sdf.cylinder(0.48, 0.2, 0).rotateX(90).at(C[0] + 0.03, C[1] + 0.09, 0);
     const blade = arc
       .intersect(taper)
-      .intersect(sdf.halfSpace([0, 0, 1], 0.008))
-      .intersect(sdf.halfSpace([0, 0, -1], 0.008))
+      .intersect(sdf.halfSpace([0, 0, 1], 0.016))
+      .intersect(sdf.halfSpace([0, 0, -1], 0.016))
       .paintFn((x, y) => {
         const r = Math.hypot(x - C[0], y - C[1]);
         return r < 0.39 ? EDGE : mixRgb(BLADE, EDGE, 0.1);

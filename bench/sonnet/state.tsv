@@ -157,3 +157,9 @@ mining-pick	static-rework	medium	a493a1b63fab93691	1	accepted	7.5	run 4; upright
 spear	static-rework	medium	a493a1b63fab93691	1	accepted	7.2	run 4; spiral shaft, leaf blade
 
 vial	static-rework	orchestrator	-	1	accepted	7.0	run 4; solid hue-matched glass
+javelin	static-rework	medium	a446225b0b629d4f2	1	running	-	run 4; equipment set; brief javelin-rework.md
+rune-stone	static-rework	medium	a446225b0b629d4f2	1	running	-	run 4; equipment set; brief rune-stone-rework.md
+sickle	static-rework	medium	a446225b0b629d4f2	1	running	-	run 4; equipment set; brief sickle-rework.md
+staff	static-rework	medium	a846507376d0b240a	1	running	-	run 4; equipment set; brief staff-rework.md
+pike	static-rework	orchestrator	-	1	accepted	7.0	run 4; thicker pole, butt knobs
+scythe	static-rework	orchestrator	-	1	accepted	7.0	run 4; thicker snath and blade
