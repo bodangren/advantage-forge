@@ -138,5 +138,5 @@ sand-dune	static-rework	medium	a66f36d794f3774de	2	running	6.5	run 4; feedback p
 lava-rock	static-rework	medium	a5462548adc9c5b33	2	accepted	7.0	run 4; feedback pass: irregular plates, thin glowing cracks
 ruin-column	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.3	run 4; short stump, capital, rubble, moss
 stairs-stone	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.5	run 4; chunky block steps and parapets
-roof-slate	static-rework	medium	pending	1	running	-	run 4; architecture set; brief roof-slate-rework.md
-roof-thatch	static-rework	medium	pending	1	running	-	run 4; architecture set; brief roof-thatch-rework.md
+roof-slate	static-rework	medium	a8176ec432f7118f8	1	accepted	7.3	run 4; pillow tile courses, ridge tiles
+roof-thatch	static-rework	medium	a8176ec432f7118f8	1	accepted	7.0	run 4; capsule bundle courses, ridge roll
