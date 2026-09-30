@@ -12,6 +12,7 @@ const DIRT = rgb('#4a3a2c');
 
 export default defineAsset({
   name: 'monster-bone',
+  reference: 'docs/item-mockups/monster-bone-mock.jpg',
   description: 'A chunky cartoon monster bone leaning on a dirt clump. About 0.3 m.',
   detail: 0.004,
   texture: { size: 1024 },
@@ -29,7 +30,7 @@ export default defineAsset({
       });
     // lower knob is 0.5*(0.14+0.01)+... rotate 55 deg from vertical; lowest point ~ y = 0.02
     const bone = local.rotateZ(-55).at(0, 0.17, 0);
-    k.body('bone', bone, { color: BONE, roughness: 0.6, detail: 0.004, bump: 0.3 });
+    k.body('bone', bone, { color: BONE, roughness: 0.6, detail: 0.004, bump: (x, y, z) => 0.0008 * noise.noise3(x * 70, y * 70, z * 70) });
     const dirt = sdf
       .smoothUnion(
         0.03,

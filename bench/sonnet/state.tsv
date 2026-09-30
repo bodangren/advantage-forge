@@ -186,7 +186,7 @@ wood-log	item	medium	af0bfdca5910bb553	1	accepted	7.3	run 4 wave 2; log with stu
 plank	item	medium	af0bfdca5910bb553	1	accepted	7.0	run 4 wave 2; three boards
 healing-herb	item	medium	a6e9fabda3f97ee03	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 herb-root	item	medium	a6e9fabda3f97ee03	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
-flower-petal	item	medium	a6e9fabda3f97ee03	2	running	6.0	run 4 wave 2 batch B; feedback pass in flight
+flower-petal	item	medium	a6e9fabda3f97ee03	2	accepted	7.0	run 4 wave 2; accepted; committed
 mushroom-cap	item	medium	a6e9fabda3f97ee03	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
 monster-bone	item	medium	a261f2c9eae704905	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
 monster-claw	item	medium	a261f2c9eae704905	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
@@ -201,9 +201,9 @@ letter-sealed	item	medium	aaab9ab9d73f851df	1	accepted	7.2	run 4 wave 2 batch B;
 quest-document	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 royal-seal	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 rune-tablet	item	medium	aaab9ab9d73f851df	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
-leather	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; textile
-hide	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; textile
-bandage	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; food
-relic-orb	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; quest
-artifact-idol	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; quest
-ration	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; food
+leather	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; textile
+hide	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; textile
+bandage	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; food
+relic-orb	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
+artifact-idol	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
+ration	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
