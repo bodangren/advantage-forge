@@ -237,4 +237,4 @@ monster-hunter	hero	high	ad036415332fb137f	2	accepted	8.0	run 4 heroes resume; o
 noble-champion	hero	high	a5a78e917eeaacc96	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 pilgrim	hero	high	ab44837143334dc02	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 sailor	hero	high	aefd43c36ab36ef57	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
-treasure-hunter	hero	high	a1464dce8afbb786d	2	running	7.5	run 4 heroes resume; feedback pass in flight (flame, idol, whip)
+treasure-hunter	hero	high	a1464dce8afbb786d	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed; last of the 16

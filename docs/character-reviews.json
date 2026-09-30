@@ -4006,5 +4006,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T19:57:15+00:00"
+  },
+  "treasure-hunter": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young grinning treasure hunter on the adventurer base: a wide brown hat, dark curls, a closed grin, a bulky orange scarf, a brown leather jacket over a cream shirt, a satchel strap, a belt with a gold buckle, grey trousers and brown boots, a boxy carved gold totem idol held up in one hand, a torch with an orange flame in the other, and a braided whip coiled at the hip. Eight clips, check ok (above 5 cm). 50,130 triangles.",
+    "strengths": [
+      "The hat, orange scarf and orange flame read at 128 px.",
+      "The flame is saturated orange after the base color was set to full brightness under an emissive of 0.6.",
+      "The gold totem idol and the braided whip coil match the mockup's kit."
+    ],
+    "issues": [
+      "The whip coil is stiff; the mockup's whip drapes off the hip.",
+      "The torch is simpler than the mockup's carved torch.",
+      "The smile is small."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T20:02:24+00:00"
   }
 }
