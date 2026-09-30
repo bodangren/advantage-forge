@@ -1,0 +1,13 @@
+# healer rework (heroes/magic/healer) -> assets/healer.ts
+
+Fresh rework of an existing file. assets/healer.ts (high tier, two passes, 7.8/10) has an accepted body: the white robe, the blue collar and stole, the gold heart clasp, the belt and pouch, the gold winged staff with the crescent, the gold orb on the left palm, the sandals, the clips, and a clean check (result ok, ground ok). Keep all of that. Rebuild only the hood and the fringe. Bar 8/10 (character). Mockup: docs/hero-mockups/healer_001.jpg (keep `reference` on that path).
+
+Problem: the hood is a smooth white sphere with no rim, so at 128 px it reads as a bald cap; the gold trim is invisible; the fringe is a flat band; the neck collar is a doughnut ring. The mockup hood has a thick rolled rim around the face that stands proud, a soft gold trim on that rim, thick wavy hair under it, and the hood falls into a soft cowl over the shoulders.
+
+Hood recipe:
+1. Hood body: keep a sphere 0.03 larger than the skull, centered 0.01 behind the head, cut open at the face by a rounded box whose top edge sits at y 0.78 and whose sides sit 0.012 outside the cheeks. Blend the hood into a shoulder cowl (a smooth shell from the neck to y 0.36, 0.36 wide) with smoothUnion 0.03, so there is no ring at the neck: remove the doughnut collar and paint the sky-blue collar as a band on the cowl instead, 0.05 tall, with a small blue V at the front.
+2. Rim: a thick rolled edge along the face opening: a torus-like tube r 0.022 that follows the opening (build it from 5 to 7 short capsules along the edge, smoothUnion 0.015), in the hood white, standing 0.015 proud of the hood. On the outer face of that rim, a gold stroke 0.01 wide (paintWhere with a thin extruded band) so the trim reads at 128 px.
+3. Fringe: 6 thick wavy locks (ellipsoids 0.075 x 0.04 x 0.03, smoothUnion 0.015) across the forehead under the rim, alternating up and down so the hairline waves, plus two curls beside the cheeks; blonde #e8c870 with #c0a050 grooves in bump.
+4. Sprite check: in the S sprite the rim must show as a pale ring with a gold edge around the face, the fringe as a yellow band, and the face inside. Keep the head clear of the staff (0.04 m in every clip).
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face and the rim, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only edit assets/healer.ts. Iterate with `./forge render healer --fast`; finish with one `./forge all healer` (600 s timeout; keep waiting for a build slot), then `./forge check healer` and one look at out/healer/sprites/preview.png.
