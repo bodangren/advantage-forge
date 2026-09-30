@@ -3346,5 +3346,35 @@
     ],
     "next": "Done for P1. A later polish pass could add cap folds and a larger feather.",
     "reviewedAt": "2026-09-30T07:49:33+00:00"
+  },
+  "scout": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the ranger base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build, one feedback pass, and one fresh hair rework: a tousled blond mane of fifteen locks over a cap with darker undersides and low bangs, green eyes, a grey wool scarf, a grey-green jerkin under a short open dark grey cloak, a leather chest strap, a belt with a steel buckle and a pouch, tan shorts, brown boots, a brass spyglass raised in the right hand, and a 0.16 m dagger with a crossguard in the left hand in front of the belly. 43,064 triangles, no build warnings, forge check result ok at 4.3 cm, ground ok.",
+    "strengths": [
+      "The blond mane, the grey cloak, the tan shorts, and the brown boots give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the ranger and the rogue.",
+      "The raised spyglass and the dagger read as props in the front and three-quarter sprites."
+    ],
+    "issues": [
+      "The locks are rounder and thinner than the mockup's flat leaf-shaped locks.",
+      "The eyes are larger than the mockup's, and the scarf is pale against the jerkin.",
+      "The dagger passes 1.3 cm into the leather in the attack clip (the check allows body contact)."
+    ],
+    "next": "Done for P1. A later polish pass could flatten the locks and darken the scarf.",
+    "reviewedAt": "2026-09-30T08:05:50+00:00"
   }
 }
