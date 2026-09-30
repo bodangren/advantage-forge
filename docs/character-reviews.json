@@ -2844,5 +2844,34 @@
     ],
     "next": "Add a mail collar band with dimple bump, more chipped paint on the tabard, and a second bandage turn with a fold.",
     "reviewedAt": "2026-09-30T01:37:43+00:00"
+  },
+  "pirate": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Grinning pirate deckhand on the bandit base: a red bandana with folds and two tails, gold hoop earrings, a curled black moustache with a toothy grin, a blue and cream striped shirt under an open leather vest, a belt with a brass buckle, rolled trousers, bare feet with toes, and a hooked cutlass held low. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The bandana, the moustache grin, the stripes, the vest, and the cutlass read at 128 px in all eight directions.",
+      "The cutlass hangs down and forward as in the mockup.",
+      "Check ok (closest 0.4 cm), ground ok, 36,274 triangles, no warnings."
+    ],
+    "issues": [
+      "The torso is small next to the thick bare legs.",
+      "The temple tufts read as dark horns at the bandana edge.",
+      "The blade is thin and pale."
+    ],
+    "next": "Widen the torso 10 percent, soften the temple tufts into the skin, and widen the blade to 0.04 m in a darker steel.",
+    "reviewedAt": "2026-09-30T02:13:14+00:00"
   }
 }
