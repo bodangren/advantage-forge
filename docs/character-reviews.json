@@ -3826,5 +3826,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T18:33:46+00:00"
+  },
+  "caravan-guard": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young caravan guard on the adventurer base: a wide-brimmed tan hat with a tall pinched crown and a leather band, tousled brown locks with a fringe, a quilted tan gambeson with puffy panels, a two-cape leather yoke with a chest strap, a belt with a round buckle and a flask, a round wooden shield on the back, brown boots, and a halberd. Eight clips, check ok (above 5 cm). 56,164 triangles.",
+    "strengths": [
+      "The wide hat and the halberd give a clear silhouette at 128 px after the crown was narrowed and the brim widened to 0.3 m.",
+      "The quilted panels and the two-cape yoke read as separate pieces.",
+      "The round shield and belt buckle match the mockup."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The quilt grid is pale and busy at sprite size.",
+      "The boots lack the mockup's wrapped leather."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T18:56:29+00:00"
   }
 }
