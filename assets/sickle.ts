@@ -1,55 +1,74 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Sickle (equipment/melee-weapons/sickle), matched to docs/item-mockups/sickle-mock.jpg.
- * Size: 0.42 m long, lying flat on y = 0. One idea: a crescent steel blade that sweeps round to a
- * point, set in a curved wooden handle with an iron ferrule. Palette: steel #9aa0a8 / edge
- * #d3d8de, handle #b07a45 / grain #7a4f2a, ferrule #5a5f67.
+ * Role: item icon. Size: 0.9 m tall, standing upright on its handle, facing +Z; the hook
+ * curls in the XY plane. One idea: a thick steel hook curled like a question mark over a
+ * chunky honey-wood handle. Palette: wood #d8a060, dots #5a3a20, steel #b8c0c8, edge #dde1e6.
+ * Materials: handle (wood), collar and blade (steel).
  */
 
-const STEEL = rgb('#9aa0a8');
-const EDGE = rgb('#d3d8de');
-const WOOD = rgb('#b07a45');
-const GRAIN = rgb('#7a4f2a');
-const Y = 0.016; // handle axis height
-const C: [number, number] = [0.02, -0.1]; // blade arc center (x, z); the heel is at the handle (0, 0)
+const WOOD = rgb('#d8a060');
+const GRAIN = rgb('#c08a4c');
+const STEEL = rgb('#b8c0c8');
+const EDGE = rgb('#dde1e6');
+const DOT = rgb('#5a3a20');
 
 export default defineAsset({
   name: 'sickle',
-  description: 'A sickle: a crescent steel blade with a bright inner edge, on a curved wooden handle with an iron ferrule.',
-  detail: 0.0025,
+  description: 'A sickle standing upright: a chunky honey-wood handle, a fat steel collar, and a thick curled steel hook with a barb.',
+  detail: 0.005,
   reference: 'docs/item-mockups/sickle-mock.jpg',
   texture: { size: 512 },
 
   build(k) {
-    // Blade: an arc stroke laid flat, thick at the heel and tapering toward the tip.
-    const arc = sdf
-      .extrude(profile.arc(0.102, 0.036, -101, 119), 0.008, 0.002)
-      .rotateX(-90)
-      .at(C[0], Y, C[1]);
-    const taper = sdf.cylinder(0.125, 0.1, 0).at(C[0] - 0.006, Y, C[1] + 0.029);
-    const blade = arc.intersect(taper).paintFn((x, _y, z) => {
-      const r = Math.hypot(x - C[0], z - C[1]);
-      const n = 0.5 + 0.5 * noise.fbm(x * 40, 0, z * 40, 2);
-      return mixRgb(mixRgb(STEEL, EDGE, 0.2 * n), EDGE, r < 0.09 ? 1 : 0);
-    });
-    k.body('blade', blade, { color: '#9aa0a8', roughness: 0.35, metalness: 0.85, textureDensity: 2 });
-
-    const handle = sdf.chain(
-      [
-        [-0.02, Y, 0.0, 0.015],
-        [-0.12, Y, 0.012, 0.016],
-        [-0.22, Y, 0.03, 0.017],
-        [-0.3, Y - 0.001, 0.05, 0.018],
-      ],
-      0.02,
-    );
+    const handle = sdf
+      .chain(
+        [
+          [0.02, 0.04, 0, 0.04],
+          [0.015, 0.2, 0, 0.038],
+          [0.005, 0.35, 0, 0.036],
+          [0, 0.5, 0, 0.035],
+        ],
+        0.03,
+      )
+      .smoothUnion(0.02, sdf.sphere(0.045).at(0.02, 0.045, 0));
+    const dots = sdf.union(sdf.sphere(0.012).at(0.012, 0.3, 0.035), sdf.sphere(0.012).at(0.008, 0.4, 0.034));
     k.body(
       'handle',
-      handle.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.15 + 0.35 * (0.5 + 0.5 * noise.fbm(x * 8, y * 80, z * 80, 3)))),
-      { color: '#b07a45', roughness: 0.7, metalness: 0 },
+      handle.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.5 + 0.5 * noise.fbm(x * 30, y * 5, z * 30, 3))).paintWhere(dots.round(0.004), DOT, 0.005),
+      { color: '#d8a060', roughness: 0.7, metalness: 0, bump: (x, y, z) => 0.0015 * noise.fbm(x * 40, y * 6, z * 40, 2) },
     );
-    const ferrule = sdf.cylinder(0.019, 0.03, 0.004).rotateZ(90).at(-0.02, Y, 0.0);
-    k.body('ferrule', ferrule, { color: '#5a5f67', roughness: 0.5, metalness: 0.7 });
+
+    const collar = sdf.union(
+      sdf.torus(0.05, 0.025).at(0, 0.52, 0),
+      sdf.cone([0, 0.5, 0], [0, 0.58, 0], 0.06, 0.045),
+    );
+    // Hook: a wide torus arc in the XY plane, cut to run from -60 deg over the top to 200 deg.
+    const C: [number, number] = [-0.06, 0.78];
+    const wedge = (a1: number, a2: number) => {
+      const r1 = (a1 * Math.PI) / 180;
+      const r2 = (a2 * Math.PI) / 180;
+      return sdf
+        .intersect(
+          sdf.halfSpace([Math.sin(r1), -Math.cos(r1), 0], 0),
+          sdf.halfSpace([-Math.sin(r2), Math.cos(r2), 0], 0),
+        )
+        .intersect(sdf.box([1, 1, 1]))
+        .at(C[0], C[1], 0);
+    };
+    const ring = sdf
+      .union(sdf.torus(0.13, 0.035), sdf.torus(0.16, 0.025).scale([1, 0.3, 1]))
+      .rotateX(90)
+      .at(C[0], C[1], 0);
+    const arc = sdf.subtract(ring, wedge(200, 300));
+    const neck = sdf.capsule([0.01, 0.56, 0], [0.01, 0.7, 0], 0.035);
+    const barb = sdf.cone([-0.06, 0.88, 0], [-0.06, 0.94, 0], 0.02, 0.002);
+    const hook = sdf.smoothUnion(0.03, arc, neck).smoothUnion(0.01, barb);
+    const blade = hook.paintFn((x, y, z) => {
+      const inner = Math.hypot(x - C[0], y - C[1]) < 0.125 ? 1 : 0;
+      return mixRgb(STEEL, EDGE, inner * 0.8 + 0.1 * (0.5 + 0.5 * noise.fbm(x * 30, y * 30, z * 30, 2)));
+    });
+    k.body('steel', sdf.union(collar.paint(STEEL), blade), { color: '#b8c0c8', roughness: 0.35, metalness: 0.85 });
   },
 });
