@@ -3018,5 +3018,34 @@
     ],
     "next": "Bend the rest-pose elbows so the static sprites show the carry pose, widen the hood 10 percent, and add two more branching talons.",
     "reviewedAt": "2026-09-30T02:53:57+00:00"
+  },
+  "cult-leader": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Masked human cult leader on the cultist base: a gold ceremonial mask with a brow ridge, cheek plates, crescent horns, a tall crest with a dark gem, and black eye holes, a grey moustache over a pointed strand beard, a crimson cape with a standing collar over a black robe with gold columns and a zigzag hem, an eye medallion, a belt with a plate, a raised dagger, and a black candle on a gold dish. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The horned mask, the grey beard, the crimson cape, the medallion, the dagger, and the candle flame read at 128 px in all eight directions.",
+      "The mask reads as a crested ceremonial mask, not a helmet cap.",
+      "Check ok (closest 0.3 cm), ground ok, 47,220 triangles, no warnings."
+    ],
+    "issues": [
+      "The mask lacks the mockup's curled brow ornament.",
+      "The beard is stiffer and paler than the mockup's soft beard.",
+      "The candle passes into the cape in the death clip (a body note, not a head contact)."
+    ],
+    "next": "Add a curled ornament at the brow center, soften the beard color to #a8a8a0, and move the death-clip left hand outward.",
+    "reviewedAt": "2026-09-30T03:15:17+00:00"
   }
 }
