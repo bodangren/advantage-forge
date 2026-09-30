@@ -3286,5 +3286,35 @@
     ],
     "next": "Done for P1. A later polish pass could thicken the fringe waves and widen the gold trim.",
     "reviewedAt": "2026-09-30T07:32:33+00:00"
+  },
+  "fighter": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the knight base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a dark open helmet with a steel brow band, three steel ridges that meet at the crown, and a nasal bar over a full dark hair cap with side locks, a short blue scarf and cape, a mail shirt with a leather strap and a brass belt plate, brass-cuffed bracers, a blue skirt panel, orange boot cuffs, a round wooden shield with a gold boss on the left arm, and a 0.30 m fullered sword with a gold crossguard resting low across the front. 44,078 triangles, no build warnings, forge check result ok at 4.2 cm, ground ok.",
+    "strengths": [
+      "The dark helmet, the grey mail, the blue scarf and cape, and the gold shield give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the knight and the paladin.",
+      "The steel at roughness 0.35 stays grey in the sprites instead of washing to white."
+    ],
+    "issues": [
+      "The mail ring paint reads as flat grey at 128 px.",
+      "The sword tip points steeply down and crosses part of the skirt panel.",
+      "The side and nape locks are spiky, and the brass and orange cuffs are larger than the mockup's."
+    ],
+    "next": "Done for P1. A later polish pass could level the sword and soften the side locks.",
+    "reviewedAt": "2026-09-30T07:47:07+00:00"
   }
 }
