@@ -55,7 +55,7 @@ plague-bearer	character	high	a5a8569f13f1b210e	4	accepted	8.0	accepted on rework
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	-	6	running	7.6	owner: one more high pass, marble focus
+living-statue	character	high	a5b8c987430a80932	6	running	7.6	owner: one more high pass, marble focus
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
 gnoll-hunter	character	high	aad4c05a699c8474d	3	accepted	8.0	fresh rework accepted; committed
 kobold-trapper	character	high	a6732c980a19f2cef	2	accepted	8.0	feedback pass accepted; committed
@@ -76,4 +76,4 @@ dark-mage	character	high	a1baed82a4a863f72	2	accepted	8.0	enemies run 3; accepte
 warlock	character	high	abddb9815917ece1a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 witch	character	high	a0a0d2f4e2c28160f	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 cult-leader	character	high	a65f4ca6a015e24cc	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-evil-priest	character	high	a37c4398c86f02286	1	feedback	7.8	enemies run 3; one feedback pass sent
+evil-priest	character	high	a37c4398c86f02286	2	accepted	8.0	enemies run 3; accepted after one feedback pass

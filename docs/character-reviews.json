@@ -3076,5 +3076,34 @@
     ],
     "next": "Narrow the eyes 15 percent, add a jacket hem line at the waist, and rotate the potion hand so the bottle hangs.",
     "reviewedAt": "2026-09-30T03:16:45+00:00"
+  },
+  "evil-priest": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Evil human priest on the priest base: a tall black hat with a purple symbol, slicked grey hair with a widow's peak, a gaunt face with cheek hollows, forehead wrinkles, thick angled brows, and a wide cruel grin, a black cassock with a rolled collar and a rope belt with a grey panel, a purple stole with gold symbols, an iron chain symbol, and a gnarled black staff with a skull knob wreathed in curling purple flame. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The tall hat, the grey hair, the grin, the purple stole, and the purple flame read at 128 px in all eight directions.",
+      "The flame stays purple with a dark base.",
+      "Check ok (closest 4.7 cm), ground ok, 52,926 triangles, no warnings."
+    ],
+    "issues": [
+      "The face stays rounder than the mockup's gaunt skull.",
+      "The hair strands are thick and glossy from the back.",
+      "The skull knob and the belt panel are small and dark at sprite size."
+    ],
+    "next": "Deepen the cheek hollows to 0.02 m, lower the hair roughness to 0.8 with thinner strands, and lighten the skull knob to #8a8880.",
+    "reviewedAt": "2026-09-30T03:31:51+00:00"
   }
 }
