@@ -1,158 +1,119 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — three-arm table candelabra, lit (props/furniture/candelabra).
+ * Design note - slim turned-iron three-socket candelabra, lit (props/furniture/candelabra).
  *
- * Role: warm accent light on tavern tables; must read at 128 px as one dark
- *   metal silhouette with three warm flame blobs.
- * Size: ~0.46 m tall, ~0.33 m wide over the cups; stands on y = 0, faces +Z.
- * One idea: three curved iron arms cradle three lit flames above a chunky
- *   swelled column on a strapped walnut foot.
- * Shape language: round dominant (swelled column, S-curved arms, cup dishes);
- *   square secondary (flat walnut disc, straight strap band).
- * Palette: dark iron #4a4f55 (dominant), walnut #6b4226 base, wax cream
- *   #f2eadb, flame amber #ffb255 + hot core #fff1c2 (accent, emissive).
- * Materials: worn iron (roughness 0.5, metalness 0.7), walnut (0.8), wax
- *   (0.6), flame (emissive 2.2). Turned-wood grain in base bump only.
- * Detail: base + strap, swelled column, junction collar, three chain arms,
- *   revolved drip cups, candle stumps, teardrop flames. Focal: the flames.
+ * Role: warm accent light on tavern tables; reads at 128 px as a slim dark
+ *   iron silhouette with two scroll arms and three warm flames.
+ * Size: ~0.30 m wide, ~0.46 m tall, ~0.2 m deep; stands on y = 0, faces +Z.
+ * One idea: a slim turned stem with knops, two S-scroll arms curling out to
+ *   each side, three brass drip pans under three cream candles.
+ * Shape language: round (turned stem, scrolls); triangular flames on top.
+ * Palette: dark iron #2e2a28 (dominant), brass #b08a3a (pans), wax #efe2c0,
+ *   flame yellow #ffd23a to red-orange #e8400a (accent, emissive 0.25).
+ * Materials: iron (0.5, metal 0.7), brass (0.4, metal 0.8), wax (0.6),
+ *   flame (roughness 0.95, one paintFn gradient, low emissive).
+ * Detail: domed foot with ring and bead, stem with 3 knops, 2 scroll arms
+ *   with tip curls, 3 pans, candles with drips and wicks, teardrop flames.
  * Rig/animation: none (static prop).
  */
 
-const IRON = '#4a4f55';
-const IRON_DARK = '#3e4349';
-const WALNUT = '#6b4226';
-const WALNUT_DEEP = '#54331d';
-const WAX = '#f2eadb';
-const FLAME = '#ffb255';
-const FLAME_HOT = '#fff1c2';
+const IRON = '#2e2a28';
+const BRASS = '#b08a3a';
+const WAX = '#efe2c0';
 
 export default defineAsset({
   name: 'candelabra',
-  description:
-    'Three-arm iron table candelabra on a strapped walnut foot, with drip cups and three lit amber flames.',
+  description: 'Slim turned-iron three-socket candelabra with scroll arms, brass drip pans, and three lit candles.',
   detail: 0.005,
   texture: { size: 1024 },
   reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
 
   build(k) {
-    // ------------------------------------------------------------------ walnut foot
-    const base = sdf.cylinder(0.08, 0.025, 0.006).at(0, 0.0125, 0);
-    const basePaint = (x: number, y: number, z: number) => {
-      const r = Math.hypot(x, z);
-      const ring = 0.5 + 0.5 * Math.sin(r * 240 + 3 * noise.fbm(x * 6, y * 6, z * 6, 2));
-      const streak = 0.5 + 0.5 * noise.fbm(x * 28, y * 9, z * 28, 2);
-      let c = mixRgb(rgb(WALNUT), rgb(WALNUT_DEEP), 0.28 * ring + 0.22 * streak);
-      c = mixRgb(c, rgb('#7d4f2e'), 0.15 * (0.5 + 0.5 * noise.fbm(x * 9, y * 3, z * 9, 2)));
-      // Sun-catch the top face so the wood reads against the iron foot ring.
-      const top = Math.max(0, Math.min(1, (y - 0.016) / 0.009));
-      c = mixRgb(c, rgb('#7a4a2c'), 0.16 * top);
-      return c;
-    };
-    k.body('base', base.paintFn(basePaint), {
-      color: WALNUT,
-      roughness: 0.8,
-      metalness: 0,
-      detail: 0.005,
-      maxTriangles: 500,
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 30, y * 10, z * 30, 2),
-    });
-
-    // ------------------------------------------------------------------ ironwork
-    // Strap band hugging the foot disc: thin shell of the base, cut to a band.
-    const baseShell = base.round(0.006).subtract(base.round(-0.004));
-    const strap = baseShell.intersect(sdf.box([0.3, 0.012, 0.3], 0.005).at(0, 0.011, 0));
-    // Column: foot ring, tapering stem, low swell, junction hub + collar.
-    // Column: foot ring, tapering stem, low swell, junction hub + collar.
-    // The cone starts high enough that its rounded cap stays inside the wood.
-    const column = sdf.smoothUnion(
-      0.012,
-      sdf.torus(0.046, 0.015).at(0, 0.034, 0),
-      sdf.cone([0, 0.07, 0], [0, 0.296, 0], 0.05, 0.026),
-      sdf.sphere(0.055).at(0, 0.115, 0),
-      sdf.sphere(0.037).at(0, 0.3, 0),
-      sdf.torus(0.03, 0.012).at(0, 0.288, 0),
+    // Foot: domed revolve with foot ring and bead molding.
+    const footProfile = profile.polygon(
+      [
+        [0, 0.05], [0.03, 0.046], [0.065, 0.032], [0.09, 0.02], [0.1, 0.012],
+        [0.1, 0], [0.085, 0], [0.085, 0.008], [0.06, 0.018], [0, 0.018],
+      ].slice(0, 6).concat([[0.1, 0], [0, 0]] as any),
+      { smooth: false },
     );
-    // One S-curved arm along +Z (dips out of the hub, then sweeps up), copied
-    // to three seats at 120°. Ends embedded in a small revolved drip cup.
+    const foot = sdf.revolve(footProfile).round(0.004);
+    const bead = sdf.torus(0.045, 0.008).at(0, 0.048, 0);
+    const stemKnops = [0.095, 0.17, 0.25];
+    const stem = sdf.smoothUnion(
+      0.01,
+      sdf.cylinder(0.014, 0.3).at(0, 0.17, 0),
+      sdf.sphere(0.024).at(0, 0.095, 0).scale([1, 0.8, 1]),
+      sdf.sphere(0.022).at(0, 0.17, 0).scale([1, 0.8, 1]),
+      sdf.sphere(0.024).at(0, 0.25, 0).scale([1, 0.8, 1]),
+      sdf.sphere(0.02).at(0, 0.05, 0),
+    );
+    void stemKnops;
+    // S-scroll arm to +X: out from stem, dips, sweeps up to the pan; tip curl.
     const arm = sdf.chain(
       [
-        [0, 0.298, 0.018, 0.018],
-        [0, 0.29, 0.06, 0.0145],
-        [0, 0.3, 0.098, 0.0125],
-        [0, 0.337, 0.122, 0.011],
-        [0, 0.363, 0.132, 0.0105],
+        [0.01, 0.2, 0, 0.0095],
+        [0.05, 0.175, 0, 0.009],
+        [0.09, 0.2, 0, 0.009],
+        [0.12, 0.25, 0, 0.009],
+        [0.125, 0.28, 0, 0.009],
       ],
-      0.008,
+      0.01,
     );
-    const cupProfile = profile.polygon(
-      [
-        [0, 0],
-        [0.012, 0],
-        [0.014, 0.012],
-        [0.03, 0.02],
-        [0.034, 0.03],
-        [0.033, 0.036],
-      ],
-      { smooth: true, samples: 8 },
-    );
-    const cup = sdf.revolve(cupProfile).at(0, 0.355, 0.132);
-    const armSet = sdf.union(
-      arm,
-      cup,
-      arm.rotateY(120),
-      cup.rotateY(120),
-      arm.rotateY(240),
-      cup.rotateY(240),
-    );
-    const ironPaint = (x: number, y: number, z: number) => {
-      const n = 0.5 + 0.5 * noise.fbm(x * 14, y * 14, z * 14, 2);
-      return mixRgb(rgb(IRON), rgb(IRON_DARK), 0.35 * n);
-    };
-    const iron = sdf
-      .union(column, armSet, strap)
-      .intersect(sdf.halfSpace([0, -1, 0], 0))
-      .paintFn(ironPaint);
-    k.body('iron', iron, {
+    const curl = sdf.torus(0.016, 0.0085).rotateX(90).at(0.088, 0.225, 0);
+    const curl2 = sdf.torus(0.014, 0.0085).rotateX(90).at(0.042, 0.19, 0).scale(1);
+    const armR = sdf.smoothUnion(0.008, arm, curl);
+    void curl2;
+    const arms = sdf.union(armR, armR.mirror('x', 0));
+    const ironShape = sdf.smoothUnion(0.008, foot, bead, stem).union(arms);
+    k.body('iron', ironShape.paintFn((x, y, z) => mixRgb(rgb(IRON), rgb('#3a3532'), 0.5 + 0.5 * noise.fbm(x * 15, y * 15, z * 15, 2))), {
       color: IRON,
       roughness: 0.5,
       metalness: 0.7,
-      detail: 0.0065,
-      maxTriangles: 3400,
+      detail: 0.004,
+      maxTriangles: 2600,
+      bump: (x, y, z) => 0.0008 * noise.fbm(x * 40, y * 40, z * 40, 2),
     });
 
-    // ------------------------------------------------------------------ candles + flames
-    const candle = sdf.cylinder(0.012, 0.052, 0.005).at(0, 0.401, 0.132);
-    const candles = sdf.union(candle, candle.rotateY(120), candle.rotateY(240));
-    k.body('wax', candles, {
-      color: WAX,
-      roughness: 0.6,
-      metalness: 0,
-      detail: 0.005,
-      maxTriangles: 300,
-    });
+    // Sockets: center on stem top, two at arm tips.
+    const seats: Array<[number, number, number]> = [[0, 0.3, 0], [0.125, 0.285, 0], [-0.125, 0.285, 0]];
+    const panProfile = profile.polygon([[0, 0], [0.012, 0], [0.016, 0.004], [0.03, 0.01], [0.03, 0.014], [0.02, 0.012], [0, 0.012]], { smooth: false });
+    const pan = sdf.revolve(panProfile);
+    const pans = sdf.union(...seats.map(([x, y, z]) => pan.at(x, y - 0.012, z)));
+    k.body('pans', pans.round(0.002), { color: BRASS, roughness: 0.4, metalness: 0.8, detail: 0.004, maxTriangles: 800 });
 
-    // Teardrop flame: round belly + smaller tip, pale hot core at the bottom.
-    const flame = sdf
-      .smoothUnion(
-        0.007,
-        sdf.sphere(0.015).at(0, 0.436, 0.132),
-        sdf.sphere(0.008).at(0, 0.453, 0.132),
-      )
-      .paintFn((_x, y, _z) => {
-        const t = Math.max(0, Math.min(1, (y - 0.424) / 0.04));
-        const core = Math.max(0, Math.min(1, t / 0.4));
-        const tip = Math.max(0, Math.min(1, (t - 0.6) / 0.4));
-        return mixRgb(mixRgb(rgb(FLAME_HOT), rgb(FLAME), core), rgb('#f59e33'), tip);
+    // Candles (center taller), drips, wicks, flames.
+    const heights = [0.08, 0.06, 0.06];
+    const candleShapes = seats.map(([x, y, z], i) => {
+      const h = heights[i];
+      const c = sdf.cylinder(0.014, h, 0.004).at(x, y + h / 2, z);
+      const drip = sdf.capsule([x + 0.012, y + h, z + 0.004], [x + 0.013, y + h - 0.02, z + 0.004], 0.0045);
+      const drip2 = sdf.capsule([x - 0.008, y + h, z + 0.011], [x - 0.009, y + h - 0.014, z + 0.012], 0.0042);
+      return sdf.smoothUnion(0.004, c, drip, drip2);
+    });
+    k.body('wax', sdf.union(...candleShapes), { color: WAX, roughness: 0.6, metalness: 0, detail: 0.004, maxTriangles: 900 });
+    const wicks = sdf.union(...seats.map(([x, y, z], i) => sdf.capsule([x, y + heights[i], z], [x, y + heights[i] + 0.012, z], 0.0025)));
+    k.body('wick', wicks, { color: '#151210', roughness: 0.9, detail: 0.002, maxTriangles: 200 });
+
+    const flameFor = (x: number, y: number, z: number) => {
+      const base = y;
+      const f = sdf.smoothUnion(0.012, sdf.sphere(0.0135).at(x, base + 0.014, z), sdf.sphere(0.006).at(x, base + 0.034, z), sdf.sphere(0.003).at(x, base + 0.05, z));
+      return f.paintFn((_px, py) => {
+        const t = Math.max(0, Math.min(1, (py - base) / 0.05));
+        if (t < 0.33) return mixRgb(rgb('#ffd23a'), rgb('#ffa010'), t / 0.33);
+        if (t < 0.66) return mixRgb(rgb('#ffa010'), rgb('#ff6a00'), (t - 0.33) / 0.33);
+        return mixRgb(rgb('#ff6a00'), rgb('#e8400a'), (t - 0.66) / 0.34);
       });
-    const flames = sdf.union(flame, flame.rotateY(120), flame.rotateY(240));
+    };
+    const flames = sdf.union(...seats.map(([x, y, z], i) => flameFor(x, y + heights[i] + 0.008, z)));
     k.body('flame', flames, {
-      color: FLAME,
-      roughness: 0.2,
+      color: '#ffa010',
+      roughness: 0.95,
       metalness: 0,
-      emissive: FLAME,
-      emissiveIntensity: 2.0,
-      detail: 0.0045,
+      emissive: '#ff5a00',
+      emissiveIntensity: 0.25,
+      detail: 0.003,
       maxTriangles: 700,
     });
   },

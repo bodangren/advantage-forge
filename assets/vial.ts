@@ -5,8 +5,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: hero pickup / inventory prop for chibi adventurers; must read at 128 px.
  * Size: 0.12 m tall, 0.066 m wide at the round bottom, stands on y = 0, faces +Z.
- * One idea: a tiny round-bottomed glass vial whose lower half is a fat glowing
- *   green bulb — the glow is the silhouette and the focal point.
+ * One idea: a tiny round-bottomed glass vial whose lower half is a teardrop flask (no shoulders), liquid two thirds full, short cork — the glow is the silhouette and the focal point.
  * Shape language: round dominant (bulb bottom, rolled lip, cork), no secondary.
  * Palette: glass pale mint tint #cfe8d8 (dominant, transparent), glow green
  *   emissive #3dff70 on dark base #0b3d18 (accent, strongest value contrast),
@@ -21,7 +20,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 const GLASS = '#bfe0cc';
 const GLOW = '#2fe066';
 const GLOW_DARK = '#0b3d18';
-const CORK = rgb('#c9a06a');
+const CORK = rgb('#b88a58');
 const CORK_DARK = rgb('#8a5a35');
 
 export default defineAsset({
@@ -38,16 +37,18 @@ export default defineAsset({
     // Profile goes up the outside, over the lip, and down the inside wall.
     const glassProfile = profile.polygon(
       [
-        [0, 0.006],
-        [0.02, 0.0],
-        [0.03, 0.01],
+        [0, 0.0],
+        [0.012, 0.0005],
+        [0.022, 0.004],
+        [0.029, 0.012],
         [0.033, 0.026],
-        [0.03, 0.044],
-        [0.024, 0.062],
-        [0.02, 0.076],
-        [0.0235, 0.084], // rolled rim outer
-        [0.0235, 0.093],
-        [0, 0.093], // solid glass: a shell shows its inner surface as cracks
+        [0.029, 0.042],
+        [0.02, 0.058],
+        [0.0135, 0.074],
+        [0.0115, 0.088],
+        [0.0145, 0.091], // lip ring
+        [0.0145, 0.098],
+        [0, 0.098],
       ],
       { smooth: true, samples: 14 },
     );
@@ -65,19 +66,7 @@ export default defineAsset({
     // ------------------------------------------------------------------ liquid
     // Glowing potion hugging the inside of the bulb, filled to ~63% height,
     // flat meniscus cut. Dark base color so the emissive glow reads saturated.
-    const liquidProfile = profile.polygon(
-      [
-        [0, 0.016],
-        [0.014, 0.017],
-        [0.021, 0.027],
-        [0.021, 0.04],
-        [0.018, 0.048],
-        [0.015, 0.062],
-        [0, 0.062],
-      ],
-      { smooth: true, samples: 12 },
-    );
-    k.body('liquid', sdf.revolve(liquidProfile), {
+    k.body('liquid', glassShape.round(-0.002).intersect(sdf.halfSpace([0, 1, 0], 0.06)), {
       color: '#2fe066',
       roughness: 0.2,
       metalness: 0,
@@ -92,8 +81,8 @@ export default defineAsset({
     const corkShape = sdf
       .smoothUnion(
         0.003,
-        sdf.cone([0, 0.091, 0], [0, 0.111, 0], 0.0132, 0.0108),
-        sdf.sphere(0.0098).at(0, 0.111, 0),
+        sdf.cone([0, 0.094, 0], [0, 0.112, 0], 0.0105, 0.0125, 0.002),
+        sdf.sphere(0.0001).at(0, 0.112, 0),
       )
       .paintFn((x, y, z) => {
         const streak = 0.5 + 0.5 * noise.fbm(x * 60, y * 8, z * 60, 2);
@@ -105,8 +94,9 @@ export default defineAsset({
         return c;
       });
     k.body('cork', corkShape, {
-      color: '#c9a06a',
+      color: '#b88a58',
       roughness: 0.9,
+      bump: (x, y, z) => 0.0015 * noise.fbm(x * 500, y * 500, z * 500, 2),
       metalness: 0,
       detail: 0.004,
       maxTriangles: 400,

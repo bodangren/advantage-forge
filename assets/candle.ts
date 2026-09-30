@@ -6,7 +6,7 @@ import { defineAsset, sdf, profile, rgb, mixRgb, noise } from '../src/index.js';
 // - The one idea: a squat beeswax stub whose amber flame is the only bright accent in a dark room.
 // - Shape language: round/soft dominant (dished saucer, bulged wax column, teardrop flame).
 // - Palette: beeswax cream #f3dfa4 shading to #d8b878, dark iron #4a4f55 saucer,
-//   flame amber #ffb255 with hot core #fff1c2. Dark iron base vs bright flame = focal contrast.
+//   flame gradient #ffd23a / #ffa010 / #ff6a00 / #e8400a (matte, emissive #ff5a00 at 0.25). Dark iron base vs bright flame = focal contrast.
 // - Materials: dark iron (metal), beeswax (wax), blackened wick, emissive flame.
 // - Details: saucer lip ring, melt taper + drip ridge near the wax top, tiny black wick nub.
 // - Rig/animation: none (static prop).
@@ -16,7 +16,10 @@ const WAX_LIGHT = '#f3dfa4';
 const WAX_DARK = '#d8b878';
 const WICK = '#241a10';
 const FLAME = '#ffb255';
-const FLAME_HOT = '#fff1c2';
+const smooth = (e0: number, e1: number, v: number): number => {
+  const t = Math.max(0, Math.min(1, (v - e0) / (e1 - e0)));
+  return t * t * (3 - 2 * t);
+};
 
 export default defineAsset({
   name: 'candle',
@@ -67,19 +70,22 @@ export default defineAsset({
     k.body('wick', wick, { color: WICK, roughness: 0.8, metalness: 0, detail: 0.0025 });
 
     // ------------------------------------------------------------- flame
-    // Teardrop flame: round belly + smaller tip, pale hot core at the bottom.
+    // Teardrop flame: round belly tapering to a point. Matte gradient flame (yellow base to
+    // red-orange tip) with a low emissive, so it reads orange instead of salmon.
     const flame = sdf
-      .smoothUnion(0.007, sdf.sphere(0.0115).at(0, 0.167, 0), sdf.sphere(0.006).at(0, 0.181, 0))
-      .paintFn((_x, y, _z, _base) => {
-        const t = Math.max(0, Math.min(1, (y - 0.156) / 0.03));
-        return mixRgb(rgb(FLAME_HOT), rgb(FLAME), t * t);
+      .chain([[0, 0.166, 0, 0.0125], [0, 0.18, 0, 0.008], [0, 0.198, 0, 0.0012]], 0.006)
+      .paintFn((x, y, z, _base) => {
+        const t = Math.max(0, Math.min(1, (y - 0.156) / 0.042 + Math.hypot(x, z) * 8));
+        let c = mixRgb(rgb('#ffd23a'), rgb('#ffa010'), smooth(0, 0.35, t));
+        c = mixRgb(c, rgb('#ff6a00'), smooth(0.35, 0.7, t));
+        return mixRgb(c, rgb('#e8400a'), smooth(0.7, 1, t));
       });
     k.body('flame', flame, {
       color: FLAME,
-      roughness: 0.4,
+      roughness: 0.95,
       metalness: 0,
-      emissive: '#ff7a10',
-      emissiveIntensity: 0.65,
+      emissive: '#ff5a00',
+      emissiveIntensity: 0.25,
       detail: 0.0025,
     });
   },

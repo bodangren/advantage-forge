@@ -102,7 +102,7 @@ export default defineAsset({
       metalness: 0,
       detail: 0.005,
       paintWeight: 2,
-      maxTriangles: 900,
+      maxTriangles: 2400,
       bump: (x, y, z) => {
         const r = Math.hypot(x, z);
         const u = r / RING_W;
