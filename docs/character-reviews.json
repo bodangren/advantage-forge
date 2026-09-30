@@ -2220,33 +2220,33 @@
     "reviewedAt": "2026-09-29T19:11:45+00:00"
   },
   "banshee": {
-    "overall": 7.3,
+    "overall": 8,
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 4,
-      "proportion": 3,
-      "shape": 3,
+      "proportion": 4,
+      "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "Wailing floating ghost on the ghost base: a white hair mass streaming up and back with curling locks, slanted cyan eyes in dark sockets, an open screaming mouth, thin raised claw arms, a draped grey-green gown with a ragged hem and cyan drips, four translucent curling wisps. Three passes (6.0, 6.5, 7.3); below the 8 bar, source uncommitted.",
+    "summary": "Screaming banshee: a gaunt grey-green face with glowing cyan eyes and a wide toothed scream, a white mane of thirty hooked locks that stream up and back, a wrapped collar over a folded gown with cyan drips, and four broad twisting ribbon wisps with a cyan core that reach the ground. Reviewed 8.0 after two builds, two feedback passes, and two fresh reworks (Sonnet 5.5 high tier).",
     "strengths": [
-      "The hair reads as a white mane in all eight sprite directions.",
-      "The gown drape, collar rings and ragged hem match the mockup's shape.",
-      "Ground check passes; 41,010 triangles, no warnings."
+      "The white mane, the glowing face, the gown, and the cyan ribbons read at 128 px in all eight directions.",
+      "The head is one third of the body and the scream reads.",
+      "Ground ok, 55,154 triangles, no warnings, no held items."
     ],
     "issues": [
-      "The hair mass is a smooth scalloped shell with horn-like locks; the mockup has many thin wavy strands.",
-      "The head and face are small at 128 px; the scream and teeth do not read.",
-      "The wisps are plain tubes rather than twisting ribbons with a glowing inner face."
+      "The locks are thick tubes; the mockup strands are thinner and more flame-like.",
+      "The face is smoother than the mockup's gaunt skull.",
+      "The ribbons are still band-like next to the mockup's sheets."
     ],
-    "next": "Scale the head to one third of the body; replace the fan blades with 20 to 30 medium chains (r 0.015) packed over a thinner cap; make the wisps flat ribbons with an emissive inner face.",
-    "reviewedAt": "2026-09-29T19:12:28+00:00"
+    "next": "Thin the lock tips to r 0.003, add cheek hollows, and widen the ribbons to 0.14 m at the hem.",
+    "reviewedAt": "2026-09-30T01:37:44+00:00"
   },
   "specter": {
     "overall": 8,
@@ -2815,5 +2815,34 @@
     ],
     "next": "Tilt the hood front rim up 5 degrees, add a thick black band above the mask, and add two small buckle boxes at the hips.",
     "reviewedAt": "2026-09-30T01:14:07+00:00"
+  },
+  "deserter": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Human army deserter on the guard base: a bald head with a hair tuft, a stained bandage over one eye, a full brown beard, a rusty mail shirt under a worn blue tabard with a gold fleur, a belt with a ribbon tab, a spear held upright as a staff, and a bread sack in the left hand. Reviewed 8.0 after one build (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The bandage, the beard, the blue tabard with the emblem, the spear, and the sack read at 128 px in all eight directions.",
+      "The tired one-eyed expression matches the mockup.",
+      "Check ok (closest 2.9 cm), ground ok, 39,416 triangles, no warnings."
+    ],
+    "issues": [
+      "The mail reads as a plain grey sleeve without a collar.",
+      "The tabard is cleaner than the mockup's worn cloth.",
+      "The bandage is a thin band, not folded cloth."
+    ],
+    "next": "Add a mail collar band with dimple bump, more chipped paint on the tabard, and a second bandage turn with a fold.",
+    "reviewedAt": "2026-09-30T01:37:43+00:00"
   }
 }
