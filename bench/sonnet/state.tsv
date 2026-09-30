@@ -217,8 +217,8 @@ riverboat	vehicle	high	a6f0e2313978da3f1	1	accepted	7.0	run 4 P3 vehicles; accep
 sleigh	vehicle	medium	a3d02433440fd9b22	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
 war-wagon	vehicle	medium	a40c9eb23aa6e1130	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
 flying-carpet	vehicle	medium	a6925a44b9f45c5b8	1	accepted	7.2	run 4 P3 vehicles; accepted; committed
-longship	vehicle	high	ac261f47f0e74b26c	2	running	6.8	run 4 P3 vehicles; feedback pass in flight
+longship	vehicle	high	ac261f47f0e74b26c	2	accepted	7.3	run 4 P3 vehicles; accepted; committed
 merchant-ship	vehicle	high	a687828363e9b6026	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
 pirate-ship	vehicle	high	a42e3db32684a723b	1	running	-	run 4 P3 vehicles; ship, no mockup
-balloon-basket	vehicle	high	a75306d0982b0cd01	1	running	-	run 4 P3 vehicles; air
-airship	vehicle	high	pending	1	running	-	run 4 P3 vehicles; air
+balloon-basket	vehicle	high	a75306d0982b0cd01	1	accepted	7.5	run 4 P3 vehicles; accepted; committed
+airship	vehicle	high	aeb224d0781c6b099	1	running	-	run 4 P3 vehicles; air
