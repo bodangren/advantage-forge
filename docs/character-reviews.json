@@ -2759,33 +2759,33 @@
     "reviewedAt": "2026-09-30T00:27:47+00:00"
   },
   "mercenary": {
-    "overall": 7.6,
+    "overall": 7.9,
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3,
+      "detail": 4,
       "technical": 5,
       "gameReady": 4,
-      "sprite": 3,
+      "sprite": 4,
       "motion": 4
     },
-    "summary": "Human sell-sword on the knight base: a steel breastplate with a lion emblem over a blue gambeson, small riveted pauldrons, a black beard, a forehead scar, a red sash, bare forearms, a split leather skirt with a curled tail, and a broad longsword. Three passes scored 7.5, 7.7, and 7.6 (Sonnet 5.5 high tier); skipped just under the bar.",
+    "summary": "Human sell-sword on the knight base: a swept spiky black fringe over angry brows with a forehead scar, a short black beard, a bright steel breastplate with a raised lion emblem, a center ridge, and dents over a blue gambeson with red cuffs, small riveted pauldrons, bare thick forearms, a red sash, a split leather skirt with a curled tail, and a broad longsword. Four passes (7.5, 7.7, 7.6, 7.9); accepted at 7.9 on the owner's instruction after the final rework (Sonnet 5.5 high tier).",
     "strengths": [
-      "The plate, the sash, the sword, and the skirt read as separate shapes at 128 px.",
-      "The bulk and the bare forearms match the mockup's stocky build.",
-      "Check ok (closest 1.2 cm), ground ok, 44,420 triangles, no warnings."
+      "The spiky hair, the beard, the steel plate, the red sash, the skirt, and the sword read as separate shapes at 128 px.",
+      "The plate's upper edge and the blue collar show between the beard and the pauldrons.",
+      "Check ok (closest 1.2 cm), ground ok, 45,876 triangles, no warnings."
     ],
     "issues": [
-      "The hair is a flat black cap with tiny spikes; the mockup has a wild swept fringe.",
-      "The lion emblem is tiny at sprite size.",
-      "The beard and the pauldrons still crowd the plate in the front sprite."
+      "The spikes are thin cones next to the mockup's wide blade-like pile.",
+      "The beard is a jaw rind, so it reads thinner than the mockup's full beard.",
+      "The body is rounder than the mockup's squarer build."
     ],
-    "next": "Restore the swept spiky fringe from pass 2 (spikes 0.08 m, swept back), enlarge the emblem to 0.06 m, and drop the beard 0.01 m so the plate top shows.",
-    "reviewedAt": "2026-09-30T00:41:46+00:00"
+    "next": "Widen the crown spikes to r 0.03 at the base, fill the beard bib to 0.06 deep, and square the torso with a boxier cuirass.",
+    "reviewedAt": "2026-09-30T03:25:37+00:00"
   },
   "assassin": {
     "overall": 8,

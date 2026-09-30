@@ -65,7 +65,7 @@ animated-weapon	character	high	ab046233610c8f180	2	accepted	8.0	feedback pass ac
 brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final build; accepted after one feedback pass
 highwayman	character	high	aa454d71b0c488777	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-mercenary	character	high	a04bf376aed7a6c5c	4	running	7.6	owner: one more pass, then accept even at 7.9
+mercenary	character	high	a04bf376aed7a6c5c	4	accepted	7.9	accepted at 7.9 per the owner note after rework 2
 deserter	character	high	af2f450d57635b57b	1	accepted	8.0	enemies run 3; accepted on the first build
 assassin	character	high	a9fc8a442a84564d7	3	accepted	8.0	enemies run 3; accepted after one feedback pass and a fresh rework
 smuggler	character	high	ab20554d0da86785a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
@@ -76,4 +76,4 @@ dark-mage	character	high	a1baed82a4a863f72	2	accepted	8.0	enemies run 3; accepte
 warlock	character	high	abddb9815917ece1a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 witch	character	high	a0a0d2f4e2c28160f	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 cult-leader	character	high	a65f4ca6a015e24cc	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-evil-priest	character	high	a37c4398c86f02286	0	running	-	enemies run 3 (last open enemy)
+evil-priest	character	high	a37c4398c86f02286	1	feedback	7.8	enemies run 3; one feedback pass sent
