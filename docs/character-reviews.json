@@ -2931,5 +2931,34 @@
     ],
     "next": "Thicken the fringe locks to r 0.022, soften the half-lid to the skin color, and add a silver pendant to the necklace.",
     "reviewedAt": "2026-09-30T02:33:07+00:00"
+  },
+  "pirate-captain": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Human pirate captain on the bandit-captain base: a black tricorn with gold-trimmed flaps and a skull badge, a red bandana band, an eye patch, a braided black beard with gold beads, a long red coat with gold buttons, cream cuffs, and a standing collar, a grey neck cloth, a belt with a pistol, tall black boots, and a cutlass held low. Reviewed 8.0 after one build, one feedback pass, and a fresh rework for the hat (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The tricorn, the eye patch, the beard, the red coat, and the cutlass read at 128 px in all eight directions.",
+      "The tricorn uses the highwayman's brim construction, so the two hats match as a set.",
+      "Check ok, ground ok, 58,048 triangles, no warnings."
+    ],
+    "issues": [
+      "The hat flaps are tall and peaked with a thick gold rim; the mockup brim is lower with a thin rim.",
+      "The coat is bright red next to the mockup's maroon.",
+      "The braided beard is bulkier than the mockup's."
+    ],
+    "next": "Lower the flap peaks 0.02 m, thin the gold rim to 0.006 m, and shift the coat to #7a2a2a.",
+    "reviewedAt": "2026-09-30T02:45:42+00:00"
   }
 }
