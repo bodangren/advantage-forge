@@ -212,6 +212,10 @@ merchant-cart	vehicle	medium	a19e2f887e7c960ff	1	accepted	7.0	run 4 P3 vehicles;
 caravan-wagon	vehicle	medium	adad4aadb0d7f573a	1	accepted	7.3	run 4 P3 vehicles; accepted; committed
 rowboat	vehicle	medium	a34826190f0ab68b4	3	accepted	7.0	run 4 P3 vehicles; accepted after an orchestrator edit; committed
 fishing-boat	vehicle	medium	a248e2c2dc852aab7	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
-covered-wagon	vehicle	medium	abe00723812dd3f7e	1	running	-	run 4 P3 vehicles; wagon, no mockup
-riverboat	vehicle	high	a6f0e2313978da3f1	1	running	-	run 4 P3 vehicles; ship
-sleigh	vehicle	medium	pending	1	running	-	run 4 P3 vehicles; no mockup
+covered-wagon	vehicle	medium	abe00723812dd3f7e	1	accepted	7.2	run 4 P3 vehicles; accepted; committed
+riverboat	vehicle	high	a6f0e2313978da3f1	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
+sleigh	vehicle	medium	a3d02433440fd9b22	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
+war-wagon	vehicle	medium	pending	1	running	-	run 4 P3 vehicles; wagon, no mockup
+flying-carpet	vehicle	medium	pending	1	running	-	run 4 P3 vehicles; air
+longship	vehicle	high	pending	1	running	-	run 4 P3 vehicles; ship
+merchant-ship	vehicle	high	pending	1	running	-	run 4 P3 vehicles; ship
