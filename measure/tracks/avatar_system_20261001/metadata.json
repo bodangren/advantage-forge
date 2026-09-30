@@ -1,0 +1,18 @@
+{
+  "track_id": "avatar_system_20261001",
+  "type": "feature",
+  "status": "planned",
+  "created_at": "2026-10-01T00:00:00Z",
+  "updated_at": "2026-10-01T00:00:00Z",
+  "description": "Player avatar system: avatar base, equipment fit and declaration, avatar pack, portraits, composer",
+  "estimated_tasks": 12,
+  "actual_tasks": null,
+  "deviation_notes": "Owner decisions of 2026-10-01 recorded in the spec.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "docs/avatar-system.md",
+    "docs/chibi-quest-progression.md"
+  ],
+  "dependencies": []
+}

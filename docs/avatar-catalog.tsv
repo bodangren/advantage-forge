@@ -1,0 +1,101 @@
+id	slot	tier	two_handed	status	override	triangles	rating	price
+cloth-hood	head	1	0	rework		2894		45
+leather-cap	head	1	0	rework		7876	7.1	50
+circlet	head	2	0	rework		4886		90
+horned-helmet	head	2	0	rework		3850		90
+iron-helmet	head	2	0	rework		5200		95
+steel-helmet	head	2	0	rework		4834	7	95
+crown	head	3	0	rework		4696	7.1	190
+leather-armor	chest	1	0	rework		7326		60
+studded-leather	chest	1	0	planned		5100	7	65
+chainmail	chest	2	0	rework		5340		120
+scale-armor	chest	2	0	planned		6700	7.3	130
+plate-armor	chest	3	0	planned		6692	7.5	260
+cloth-robe	robe	1	0	later		4600	7	60
+mage-robe	robe	2	0	later		4898		110
+shoulder-armor	shoulders	2	0	planned		18914	7.1	85
+cape	back	1	0	planned		3340		35
+cloak	back	2	0	planned		3698	7.1	70
+mantle	back	2	0	planned		3492	7	70
+bracers	hands	1	0	planned		2424	7	20
+gloves	hands	1	0	planned		4700	7.3	25
+gauntlets	hands	2	0	planned		6228		50
+belt	waist	1	0	rework		2324		20
+boots	feet	1	0	planned		2770	7.1	25
+greaves	feet	2	0	planned		3350	7.1	50
+buckler	offhand	1	0	planned		2910		45
+lantern-handheld	offhand	1	0	planned		3934		45
+round-shield	offhand	1	0	planned		5414		50
+kite-shield	offhand	2	0	planned		4960		90
+orb	offhand	2	0	planned		2850		90
+spellbook	offhand	2	0	planned		2242		80
+tome	offhand	2	0	planned		2260		80
+grimoire	offhand	3	0	planned		10092	7.4	225
+tower-shield	offhand	3	0	planned		4628		175
+axe	mainhand	1	0	planned		3448		55
+club	mainhand	1	0	planned		12886	7.1	70
+dagger	mainhand	1	0	planned		2656		55
+hand-axe	mainhand	1	0	planned		2514		55
+javelin	mainhand	1	0	planned		3448	7	60
+mace	mainhand	1	0	planned		2440		50
+quarterstaff	mainhand	1	1	planned		1586		50
+short-sword	mainhand	1	0	planned		2640		55
+shortbow	mainhand	1	1	planned		4140	7	60
+sickle	mainhand	1	0	planned		5542	7	65
+sling	mainhand	1	0	planned		8258	7.3	70
+spear	mainhand	1	0	planned		3612	7.4	60
+throwing-axe	mainhand	1	0	planned		6350	7.4	65
+throwing-knife	mainhand	1	0	planned		1300		50
+wand	mainhand	1	0	planned		3416		55
+whip	mainhand	1	0	planned		2950		55
+battle-axe	mainhand	2	0	planned		3400		110
+crossbow	mainhand	2	1	planned		4414		110
+crystal-focus	mainhand	2	0	planned		5298		120
+falchion	mainhand	2	0	planned		1390		100
+flail	mainhand	2	0	planned		2900		110
+katana	mainhand	2	0	planned		2112		100
+long-sword	mainhand	2	0	planned		4520	7	120
+longbow	mainhand	2	1	planned		3564		110
+morningstar	mainhand	2	0	planned		2638		110
+rapier	mainhand	2	0	planned		1584		100
+ritual-dagger	mainhand	2	0	planned		1490		100
+rune-stone	mainhand	2	0	planned		3504	7	120
+scimitar	mainhand	2	0	planned		2680		110
+staff	mainhand	2	1	planned		5568	7.2	130
+trident	mainhand	2	0	planned		2848		110
+warhammer	mainhand	2	0	planned		2580		110
+glaive	mainhand	3	1	planned		4358	7.1	240
+great-axe	mainhand	3	1	planned		9216		260
+greatsword	mainhand	3	1	planned		3900		220
+halberd	mainhand	3	1	planned		12114		260
+heavy-crossbow	mainhand	3	1	planned		9264	7	280
+magic-scepter	mainhand	3	0	planned		6850		240
+maul	mainhand	3	1	planned		5214		240
+pike	mainhand	3	1	planned		9640	7	280
+scythe	mainhand	3	1	planned		7556	7	260
+backpack	accessory	1	0	later		5292		35
+belt-pouch	accessory	1	0	later		1856		30
+satchel	accessory	1	0	later		2468	7	35
+scabbard	accessory	1	0	later		2602	6.9	35
+amulet	accessory	2	0	later		3298	7.4	70
+bracelet	accessory	2	0	later		2790	7	70
+brooch	accessory	2	0	later		1464		60
+earring	accessory	2	0	later		5686	7.3	80
+necklace	accessory	2	0	later		9468		80
+pendant	accessory	2	0	later		2532	7.3	70
+ring	accessory	2	0	later		1350		60
+compass	tool	1	0	later		1588	7.1	35
+drum	tool	1	0	later		2790		35
+fishing-pole	tool	1	0	later		9444	7.2	40
+flute	tool	1	0	later		2212		30
+horn	tool	1	0	later		8044	7	40
+lantern	tool	1	0	later		7151	7.5	40
+lockpick	tool	1	0	later		2472		30
+map	tool	1	0	later		8190		40
+mining-pick	tool	1	0	later		4850	7.4	35
+quiver	tool	1	0	later		3714	7	35
+scroll	tool	1	0	later		3652		35
+spyglass	tool	1	0	later		644		30
+lute	tool	2	0	later		4776	7.3	70
+arrow	none	1	0	excluded		1388	7	0
+bolt	none	1	0	excluded		2704	7	0
