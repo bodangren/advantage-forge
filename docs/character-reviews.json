@@ -3646,5 +3646,35 @@
     ],
     "next": "Optional: a thicker fringe and bolt heads on the gauntlet plates.",
     "reviewedAt": "2026-09-30T16:57:10+00:00"
+  },
+  "oracle": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young oracle on the priest base: a pile of six lavender hair rolls over a wide white silk headband, long locks to the shoulders, a white robe with gold trim and bell sleeves, a pale blue underskirt, sandals, and a floating crystal ball with stars over the left hand. Seven clips, check ok (closest 1.6 cm). 50,626 triangles.",
+    "strengths": [
+      "The hair rolls read as separate loops in 3D and at 128 px after the pile base was lowered and the valleys shaded by height.",
+      "The white and gold robe, the belt, the bell sleeves with gold cuffs, and the sandals match the mockup.",
+      "The crystal ball glows and stays clear of the head in every clip."
+    ],
+    "issues": [
+      "The mockup has pointed elf ears; the build keeps small round human ears by the hero rule.",
+      "The pile is taller and narrower than the mockup's wide swirl.",
+      "The robe folds are softer than the mockup's crisp drape."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T17:18:28+00:00"
   }
 }
