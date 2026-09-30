@@ -3466,5 +3466,35 @@
     ],
     "next": "Done for P1. A later polish pass could widen the blade and show more fringe.",
     "reviewedAt": "2026-09-30T08:42:05+00:00"
+  },
+  "gladiator": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the barbarian base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a bronze helmet with a flared brim, a raised V ridge, wedge cheek guards, and a thin crest fin with a dark brush, brown hair as fifteen locks (fringe, side, nape) under the brim, a red neck scarf with a hanging tail, a bare chest with a leather harness and a gold buckle, leather bracers, a red pleated skirt with a studded belt, sandals, a short leather cape, a leaf-shaped short sword with a dark fuller held tip down, and a bronze-rimmed round wooden shield. 52,242 triangles, no build warnings, forge check result ok at 4.5 cm, ground ok.",
+    "strengths": [
+      "Gold helmet, warm skin, dark leather, and red cloth give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the barbarian and the knight.",
+      "The helmet brim, cheek guards, and crest read from every angle after the feedback pass."
+    ],
+    "issues": [
+      "The crest brush reads as a round tuft from the side; the mockup shows a thin tall spike.",
+      "The mockup is heavier and darker, with a fuller cape behind both shoulders and a curved blade.",
+      "In the death clip the shield enters the body by about 1.5 cm."
+    ],
+    "next": "Done for P1. A later polish pass could thin the crest brush into a spike and widen the cape.",
+    "reviewedAt": "2026-09-30T12:21:05+00:00"
   }
 }
