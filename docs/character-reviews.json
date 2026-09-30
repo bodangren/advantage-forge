@@ -1855,6 +1855,7 @@
       "The arms are smooth staves with faint seams."
     ],
     "next": [
+      "Deferred by the owner (2026-10-01); the source stays uncommitted.",
       "Raise the eye slot 0.02 and push the slits to z 0.12 so the brow does not shade them.",
       "Carve two wavy billets into the face planks."
     ],
@@ -2018,6 +2019,7 @@
       "The left hand stops short of the haft in the two-hand attack."
     ],
     "next": [
+      "Accepted by the owner at 7.8 (2026-10-01).",
       "Bend the hanging arm at the elbow and turn the fist inward.",
       "Paint the belly and pecs with a stronger value step, not a hue step."
     ],
@@ -2556,7 +2558,7 @@
       "The veins lean blue-purple; the mockup's veins are neutral grey.",
       "The helm keeps a crown-point ring and a blue gem, where the mockup has a smooth dome with a laurel swag; the mockup's dark cracks are more prominent."
     ],
-    "next": "Owner call: accept at 7.8 or ask for a fourth pass with neutral grey veins, a stronger dark-crack pass, and one value step between the helm and the shield for the sprite.",
+    "next": "Accepted by the owner at 7.8 (2026-10-01). Owner call: accept at 7.8 or ask for a fourth pass with neutral grey veins, a stronger dark-crack pass, and one value step between the helm and the shield for the sprite.",
     "reviewedAt": "2026-09-30T03:58:41+00:00"
   },
   "kobold-trapper": {
@@ -4036,5 +4038,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T20:02:24+00:00"
+  },
+  "summoner": {
+    "overall": 7.8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P1 hero on the priest base, built by a Sonnet 5.5 subagent in one build, one feedback pass, and a fresh hair rework: violet hair of 16 chain locks under a thin gold circlet, a long violet braid over the left shoulder, violet eyes, a green robe open over a cream front with gold edges and a gold collar band, a brown belt with a green gem and chain links, a brown book in the left hand, and a lime spirit with a face and leaf wings off the +X shoulder. The owner accepted it at 7.8 on 2026-10-01.",
+    "strengths": [
+      "The violet hair, the green robe with its cream front, and the lime spirit give three clear color masses at 128 px.",
+      "The spirit, the book, and the gem belt make the summoner role clear from the front.",
+      "It shares the round beardless face, proportions, and clip set of the other P1 heroes."
+    ],
+    "issues": [
+      "From the side and the back, the hair locks read as crossing ropes, not the swept mane of the mockup.",
+      "The spirit is a smooth lime blob; the mockup shows a small golden creature with a round face.",
+      "The robe lacks the long flared coat tails of the mockup."
+    ],
+    "next": "Accepted by the owner at 7.8 (2026-10-01). A later polish pass could sweep the back locks in one direction and add coat tails.",
+    "reviewedAt": "2026-10-01T06:40:00+00:00"
   }
 }

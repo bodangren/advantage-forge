@@ -11,7 +11,7 @@ cave-mouth	terrain	medium	ab9405aa8a9ce3833	2	accepted	7.0	43525 tokens
 city-wall	structure	medium	a272a4c6f715baf15	2	accepted	7.0	67065 tokens
 rampart	structure	medium	a9682a4610f18acd6	2	accepted	7.0	59945 tokens
 greenhouse-dome	structure	medium	ad413bbb748b57cd4	1	accepted	7.3	38863 tokens
-cliff-face	terrain	medium->high	a7dbd4a9f346ae2db	4	skipped	6.5	grass mat never reached the bar; rock ok; 126K tokens; file left uncommitted
+cliff-face	terrain	medium->high	a7dbd4a9f346ae2db	4	deferred	6.5	grass mat never reached the bar; rock ok; 126K tokens; file left uncommitted; owner deferred (2026-10-01); source stays uncommitted
 ancient-tree	plant	medium	a0b018f4b45a8c0be	2	accepted	7.0	51069 tokens
 roots	plant	medium	aa8295f2677fdb53f	4	accepted	7.0	68164 tokens
 watermill	structure	medium	a2354c810c6e0e348	2	accepted	7.3	63626 tokens
@@ -35,8 +35,8 @@ circlet	armor-fit	medium	a0a3525f9cbce54f0	1	accepted	fit-ok	27426 tokens
 goblin-king	enemy	high	aef4b880fd4f97636	2	accepted	8.0	173443 tokens
 orc-archer	enemy	high	a5dc29980006ffe04	3	accepted	8.0	186751 tokens
 orc-shaman	enemy	high	a1f517959db00a47b	2	accepted	8.0	198890 tokens
-ogre-brute	enemy	high	a9fff0d258b208e5a	3	skipped	7.8	below the 8 bar after 3 passes; uncommitted
-wood-golem	enemy-rework	high	ae9552047ba3298b9	3	skipped	7.5	3.8 -> 7.5, below the bar; untracked source
+ogre-brute	enemy	high	a9fff0d258b208e5a	3	accepted	7.8	below the 8 bar after 3 passes; uncommitted; owner accepted at 7.8 (2026-10-01); committed
+wood-golem	enemy-rework	high	ae9552047ba3298b9	3	deferred	7.5	3.8 -> 7.5, below the bar; untracked source; owner deferred (2026-10-01); source stays uncommitted
 mummy	enemy-rework	high	a74ad731e917c7399	1	accepted	8.0	75483 tokens (7.5 -> 8.0)
 minotaur-guard	enemy-rework	high	a59e99bd8c98ddea7	1	accepted	8.0	66143 tokens (7.0 -> 8.0)
 dark-knight	character	high	a8e9be475c3b62cb1	2	accepted	8.0	feedback pass accepted; committed
@@ -55,7 +55,7 @@ plague-bearer	character	high	a5a8569f13f1b210e	4	accepted	8.0	accepted on rework
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	a5b8c987430a80932	7	pending-owner	7.8	rework 3 (marble) reached 7.8; awaiting the owner call; source uncommitted
+living-statue	character	high	a5b8c987430a80932	7	accepted	7.8	rework 3 (marble) reached 7.8; awaiting the owner call; source uncommitted; owner accepted at 7.8 (2026-10-01); committed
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
 gnoll-hunter	character	high	aad4c05a699c8474d	3	accepted	8.0	fresh rework accepted; committed
 kobold-trapper	character	high	a6732c980a19f2cef	2	accepted	8.0	feedback pass accepted; committed
@@ -99,7 +99,7 @@ elementalist	hero	high	ad9b23279305ca91c	2	accepted	8.0	run 4; accepted after on
 scout	hero	high	afeb52899b9e85229	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high hair rework
 duelist	hero	high	aecf71eb7af20d8f1	2	accepted	8.0	run 4; accepted after one feedback pass
 gladiator	hero	high	a8f53fc6fd90a1279	2	accepted	8.0	run 4; accepted after one feedback pass (resumed after the session exit)
-summoner	hero	high	a025d1c8786fad721	3	skipped	7.8	run 4; hair rework reads as crossing ropes from the side and back; second retry used; source uncommitted for the owner
+summoner	hero	high	a025d1c8786fad721	3	accepted	7.8	run 4; hair rework reads as crossing ropes from the side and back; second retry used; source uncommitted for the owner; owner accepted at 7.8 (2026-10-01); committed
 guardian	hero	high	a07bd6fd0546d9151	2	failed	7.8	run 4; plates flat and hammer small after the feedback pass; fresh high rework next
 shield-maiden	hero	high	a2cb7c444c0a3c093	2	accepted	8.0	run 4; accepted after one feedback pass (resumed after the session exit)
 mana-potion	item	low	a2e7820f9cf8d3174	1	failed	5.5	run 4; base flask is bad; waits for the health-potion base rework
@@ -108,7 +108,7 @@ strength-potion	item	low	a2e7820f9cf8d3174	1	failed	5.5	run 4; base flask is bad
 health-potion	item	medium	a4920a2e10fc19155	3	accepted	7.5	run 4; P0 base rework accepted after one feedback pass and an orchestrator material pass; base for the nine potion copies
 key-gold	item	medium	a5ae16425721cd8d1	2	accepted	7.0	run 4; accepted after one feedback pass
 key-bronze	item	high	a496d25ae63a0ad34	3	accepted	7.0	run 4; accepted after a fresh high bow rework
-key-skeleton	item	high	a496d25ae63a0ad34	3	skipped	6.8	run 4; skull face reads only from the east; second retry used; source uncommitted
+key-skeleton	item	high	a496d25ae63a0ad34	3	deferred	6.8	run 4; skull face reads only from the east; second retry used; source uncommitted; owner deferred (2026-10-01); source stays uncommitted
 guardian	hero	high	a9d4c335c51237960	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high armor rework
 mana-potion	item	medium	a9a19b34887f3faed	2	accepted	7.0	run 4; accepted after one feedback pass and an orchestrator glass tint pass
 stamina-potion	item	medium	a9a19b34887f3faed	2	accepted	7.0	run 4; accepted after one feedback pass and an orchestrator glass tint pass
