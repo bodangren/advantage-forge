@@ -133,8 +133,8 @@ spike-trap	static-rework	medium	ac3f0301939374017	1	accepted	7.3	run 4; four blo
 stalactite	static-rework	medium	ac3f0301939374017	1	accepted	7.2	run 4; clean slab, five cones
 
 puddle	static-rework	orchestrator	-	1	accepted	7.0	run 4; sky-blue recolor
-willow-tree	static-rework	medium	a66f36d794f3774de	1	running	-	run 4; nature set; brief willow-tree-rework.md
-sand-dune	static-rework	medium	a66f36d794f3774de	1	running	-	run 4; nature set; brief sand-dune-rework.md
+willow-tree	static-rework	medium	a66f36d794f3774de	1	accepted	7.2	run 4; scalloped crown, slim fronds
+sand-dune	static-rework	medium	a66f36d794f3774de	2	running	6.5	run 4; feedback pass in flight
 lava-rock	static-rework	medium	a5462548adc9c5b33	2	accepted	7.0	run 4; feedback pass: irregular plates, thin glowing cracks
 ruin-column	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.3	run 4; short stump, capital, rubble, moss
 stairs-stone	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.5	run 4; chunky block steps and parapets

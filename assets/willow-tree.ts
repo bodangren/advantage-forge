@@ -12,8 +12,8 @@ import type { Sdf } from '../src/index.js';
  * Palette: sunlit leaf #8fd14f, leaf #5cb85c, underside #3f9248, shadow #2f6b38,
  *   bark #8a5a35, groove #5f3d22, flare #c49a62.
  * Materials: bark trunk (roughness 0.88), foliage crown and strands (roughness 0.74).
- * Detail: bent trunk and flared roots, nine scalloped clumps, drooping leaf stacks.
- *   Focal point: the light hanging curtain.
+ * Detail: bent trunk and flared roots, one scalloped dome of 24 small clumps (#a9d95a top to
+ *   #3f9248 underside), 14 slim tapered fronds with leaf pairs. Focal point: the frond curtain.
  * Rig: none. Animation: none.
  */
 
@@ -22,9 +22,9 @@ const barkLight = rgb('#c49a62');
 const barkDark = rgb('#5f3d22');
 const moss = rgb('#4a9a4f');
 const leafDark = rgb('#3f9248');
-const leafShadow = rgb('#2f6b38');
 const leaf = rgb('#5cb85c');
 const leafLight = rgb('#8fd14f');
+const sunlit = rgb('#a9d95a');
 
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
 const smoothstep = (a: number, b: number, v: number): number => {
@@ -32,119 +32,59 @@ const smoothstep = (a: number, b: number, v: number): number => {
   return t * t * (3 - 2 * t);
 };
 
-interface Clump {
-  readonly x: number;
-  readonly y: number;
-  readonly z: number;
-  readonly r: number;
-}
-
-// One dominant mass, satellites pulled apart so each clump stays a separate lump.
-const clumps: readonly Clump[] = [
-  { x: 0.0, y: 2.42, z: 0.0, r: 0.58 },
-  { x: -0.74, y: 2.24, z: 0.08, r: 0.46 },
-  { x: 0.76, y: 2.28, z: -0.04, r: 0.44 },
-  { x: 0.04, y: 2.18, z: 0.7, r: 0.4 },
-  { x: -0.06, y: 2.22, z: -0.68, r: 0.38 },
-  { x: 0.18, y: 2.86, z: 0.08, r: 0.39 },
-  { x: -0.32, y: 2.8, z: -0.1, r: 0.32 },
-  { x: 0.46, y: 2.52, z: 0.42, r: 0.34 },
-  { x: -0.44, y: 2.5, z: -0.4, r: 0.32 },
-];
-
-/** One leaf clump: a squashed blob plus a low ring of three lobes. */
-function clumpShape(c: Clump, i: number): Sdf {
-  const main = sdf.ellipsoid([c.r * 1.08, c.r * 0.86, c.r * 1.04]).at(c.x, c.y, c.z);
-  const lobes: Sdf[] = [];
-  for (let j = 0; j < 3; j++) {
-    const a = (j / 3) * Math.PI * 2 + noise.random(i, j, 1) * 1.4 + i * 0.8;
-    const lr = c.r * (0.4 + 0.1 * noise.random(i, j, 7));
-    lobes.push(
-      sdf.ellipsoid([lr * 1.05, lr * 0.78, lr]).at(
-        c.x + Math.cos(a) * c.r * 0.82,
-        c.y - c.r * 0.32 + (noise.random(i, j, 13) - 0.5) * c.r * 0.16,
-        c.z + Math.sin(a) * c.r * 0.82,
-      ),
-    );
-  }
-  return sdf.smoothUnion(0.04, main, ...lobes);
-}
-
-function nearestClump(x: number, y: number, z: number): Clump {
-  let best = clumps[0]!;
-  let bestD = Infinity;
-  for (const c of clumps) {
-    const d = (x - c.x) ** 2 + (y - c.y) ** 2 + (z - c.z) ** 2;
-    if (d < bestD) {
-      bestD = d;
-      best = c;
-    }
-  }
-  return best;
-}
-
-interface Drape {
-  /** Radians. 0 is +X. pi/2 is +Z (front). */
-  readonly angle: number;
-  readonly reach: number;
-  readonly top: number;
-  readonly tip: number;
-  readonly wide: number;
-  readonly thick: number;
-  readonly sway: number;
-  readonly leaves: number;
-}
-
-// Paired curtains. They share one radius so the leaves stack and stay joined.
-const drapes: readonly Drape[] = [
-  { angle: 0.18, reach: 0.78, top: 2.02, tip: 0.4, wide: 0.15, thick: 0.1, sway: 0.02, leaves: 4 },
-  { angle: 0.5, reach: 0.7, top: 1.92, tip: 0.62, wide: 0.13, thick: 0.09, sway: -0.02, leaves: 3 },
-  { angle: 1.25, reach: 0.72, top: 1.88, tip: 0.85, wide: 0.12, thick: 0.088, sway: 0.02, leaves: 3 },
-  { angle: 2.15, reach: 0.8, top: 2.04, tip: 0.36, wide: 0.155, thick: 0.1, sway: 0.02, leaves: 4 },
-  { angle: 2.48, reach: 0.7, top: 1.9, tip: 0.58, wide: 0.13, thick: 0.09, sway: -0.02, leaves: 3 },
-  { angle: 3.45, reach: 0.76, top: 2.0, tip: 0.42, wide: 0.145, thick: 0.096, sway: 0.02, leaves: 4 },
-  { angle: 3.82, reach: 0.68, top: 1.88, tip: 0.7, wide: 0.12, thick: 0.086, sway: -0.02, leaves: 3 },
-  { angle: 4.7, reach: 0.78, top: 2.02, tip: 0.38, wide: 0.15, thick: 0.1, sway: 0.02, leaves: 4 },
-  { angle: 5.08, reach: 0.68, top: 1.9, tip: 0.64, wide: 0.125, thick: 0.09, sway: -0.02, leaves: 3 },
-];
-
-/**
- * One curtain. Leaves share a vertical axis and overlap, so the strand cannot split.
- * The top leaf reaches into the crown.
- */
-function drapeShape(s: Drape, i: number): Sdf {
-  const ux = Math.cos(s.angle);
-  const uz = Math.sin(s.angle);
-  const lx = -uz;
-  const lz = ux;
-  const yaw = (s.angle * 180) / Math.PI;
-  const n = s.leaves;
-  const yTop = s.top;
-  const yBot = Math.max(s.tip, 0.38);
-  const spacing = (yTop - yBot) / Math.max(1, n - 1);
-  const ry = spacing * 0.62;
-  const leaves: Sdf[] = [];
-  for (let j = 0; j < n; j++) {
-    const t = n === 1 ? 0 : j / (n - 1);
-    const shrink = 1 - t * 0.12;
-    const y = yTop + (yBot - yTop) * t;
-    const zig = (j % 2 === 0 ? 1 : -1) * 0.02 * noise.random(i, j, 3);
-    const x = ux * s.reach + lx * zig;
-    const z = uz * s.reach + lz * zig;
-    leaves.push(
+/** Crown clumps: 24 small ellipsoids scattered over a dome (Fibonacci spiral, upper hemisphere). */
+const CROWN_C = { x: 0, y: 2.3, z: 0, r: 1.1 };
+function crownClumps(): Sdf[] {
+  const out: Sdf[] = [];
+  const n = 24;
+  for (let i = 0; i < n; i++) {
+    const t = (i + 0.5) / n;
+    const cy = 1 - t * 1.5; // 1 .. -0.5 : from the pole down past the rim
+    const rad = Math.sqrt(1 - cy * cy);
+    const a = i * 2.39996 + 0.4;
+    const jit = 0.9 + 0.12 * noise.random(i, 2, 5);
+    const R = CROWN_C.r * 0.82 * jit;
+    out.push(
       sdf
-        .ellipsoid([s.thick * shrink, ry, s.wide * shrink])
-        .rotateY(-yaw)
-        .at(x, y, z),
+        .ellipsoid([0.32, 0.22, 0.28])
+        .rotateY(-(a * 180) / Math.PI)
+        .at(Math.cos(a) * rad * R, CROWN_C.y + cy * R * 0.85, Math.sin(a) * rad * R),
     );
   }
-  return sdf.smoothUnion(0.022, ...leaves);
+  return out;
+}
+
+/** One frond: a tapered cone with three small leaf ellipsoids along it. */
+function frondShape(i: number, n: number): Sdf {
+  const a = (i / n) * Math.PI * 2 + 0.2;
+  const ux = Math.cos(a);
+  const uz = Math.sin(a);
+  const len = 0.9 + 0.5 * noise.random(i, 4, 8);
+  const r0 = 0.8;
+  const top = 1.95;
+  const lean = Math.tan((6 * Math.PI) / 180) * len;
+  const p0: [number, number, number] = [ux * r0, top, uz * r0];
+  const p1: [number, number, number] = [ux * (r0 + lean), top - len, uz * (r0 + lean)];
+  const parts: Sdf[] = [sdf.cone(p0, p1, 0.06, 0.02)];
+  const yaw = -(a * 180) / Math.PI;
+  for (let j = 1; j <= 3; j++) {
+    const t = j / 4;
+    const rr = r0 + lean * t;
+    const side = j % 2 === 0 ? 1 : -1;
+    parts.push(
+      sdf
+        .ellipsoid([0.05, 0.09, 0.03])
+        .rotateY(yaw)
+        .at(ux * rr - uz * side * 0.03, top - len * t, uz * rr + ux * side * 0.03),
+    );
+  }
+  return sdf.smoothUnion(0.015, ...parts);
 }
 
 export default defineAsset({
   name: 'willow-tree',
   description: 'Stylized weeping willow, 3.2 m tall: bent trunk, clumped crown, leafy strands to the ground.',
-  detail: 0.02,
+  detail: 0.03,
   texture: { size: 1024 },
   reference: 'docs/item-mockups/willow-tree-mock.jpg',
 
@@ -191,49 +131,34 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ foliage
-    const crown = sdf.smoothUnion(0.085, ...clumps.map(clumpShape));
-    // Dark leafy mass under the dome, so strands grow out of foliage, not a bare neck.
-    const shade = sdf.smoothUnion(
-      0.08,
-      sdf.ellipsoid([0.82, 0.4, 0.74]).at(0.0, 2.02, 0.0),
-      sdf.ellipsoid([0.36, 0.26, 0.32]).at(-0.3, 1.8, -0.14),
-      sdf.ellipsoid([0.34, 0.24, 0.3]).at(0.32, 1.82, 0.16),
-    );
-    const curtain = sdf.smoothUnion(0.05, ...drapes.map(drapeShape));
-    const foliage = sdf
-      .smoothUnion(0.08, crown, shade, curtain)
-      .intersect(sdf.halfSpace([0, -1, 0], 0))
-      .paintFn((x, y, z) => {
-        const c = nearestClump(x, y, z);
-        const local = clamp01(((y - c.y) / c.r) * 0.6 + 0.45);
-        const global = clamp01((y - 1.75) / 1.45);
-        const patch = 0.5 + 0.5 * noise.fbm(x * 2.2, y * 2.2, z * 2.2, 2, 21);
-        const wob = 0.08 * noise.fbm(x * 1.6, y * 1.6, z * 1.6, 2, 33);
-        const band = smoothstep(0.26, 0.76, local + wob);
-        const base = mixRgb(leafDark, leaf, band * (0.84 + 0.16 * patch));
-        const under = smoothstep(0.42, 0.02, local);
-        const shaded = mixRgb(base, leafShadow, under * 0.92);
-        const top = smoothstep(0.55, 0.92, local);
-        const lift = top * (0.45 + 0.55 * global) * (0.45 + 0.55 * patch);
-        const lit = mixRgb(shaded, leafLight, Math.min(1, lift * 1.15));
-        // Outer strands lighten toward the tip. The inner mass stays dark.
-        const radial = Math.hypot(x, z);
-        const hang = smoothstep(2.05, 1.6, y) * smoothstep(0.42, 0.68, radial);
-        const tip = clamp01((1.55 - y) / 1.3);
-        const seg = 0.5 + 0.5 * Math.sin(y * 15 + radial * 4);
-        let drape = mixRgb(leaf, leafLight, 0.4 + seg * 0.5 + tip * 0.1);
-        drape = mixRgb(drape, leafDark, (1 - seg) * 0.2);
-        const n = noise.fbm(x * 1.3, y * 1.3, z * 1.3, 2, 7);
-        const crowned = n >= 0 ? mixRgb(lit, leafLight, n * 0.1) : mixRgb(lit, leafShadow, -n * 0.14);
-        return mixRgb(crowned, drape, hang);
-      });
-    k.body('foliage', foliage, {
+    const core = sdf.ellipsoid([0.85, 0.6, 0.85]).at(0, 2.3, 0);
+    const dome = sdf
+      .smoothUnion(0.06, core, ...crownClumps())
+      .displace(0.03, (x, y, z) => noise.fbm(x * 3, y * 3, z * 3, 2, 11))
+      .intersect(sdf.halfSpace([0, -1, 0], -1.75));
+    const crownPaint = dome.paintFn((x, y) => {
+      const t = clamp01((y - 1.75) / 1.0);
+      const mid = mixRgb(leafDark, leaf, smoothstep(0.0, 0.35, t));
+      return mixRgb(mid, sunlit, smoothstep(0.45, 0.95, t));
+    });
+    k.body('crown', crownPaint, {
       color: '#5cb85c',
       roughness: 0.74,
-      detail: 0.044,
+      detail: 0.045,
+      maxTriangles: 4800,
       paintWeight: 3,
-      maxError: 0.0075,
       bump: (x, y, z) => 0.004 * noise.fbm(x * 12, y * 12, z * 12, 2, 3),
+    });
+    const nF = 14;
+    const fronds = sdf
+      .union(...Array.from({ length: nF }, (_, i) => frondShape(i, nF)))
+      .paintFn((x, y) => mixRgb(leaf, leafLight, smoothstep(0.7, 1.85, y)));
+    k.body('fronds', fronds, {
+      color: '#8fd14f',
+      roughness: 0.74,
+      detail: 0.022,
+      maxTriangles: 4200,
+      paintWeight: 3,
     });
   },
 });
