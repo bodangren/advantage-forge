@@ -3376,5 +3376,35 @@
     ],
     "next": "Done for P1. A later polish pass could flatten the locks and darken the scarf.",
     "reviewedAt": "2026-09-30T08:05:50+00:00"
+  },
+  "elementalist": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 3,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the mage base (the chibi skeleton with knee bones and a new ice bone, eight rewritten clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: soft white wavy hair of fifteen swept locks with a fringe, amber eyes, a robe split orange on the right and blue on the left with a matching collar, gold shoulder plates, a rope belt, brown boots, a layered orange fire with a yellow core over the right palm, and a translucent blue ice flame with two crystal spikes over the left palm. Attack throws the fire, attack2 the ice. 52,036 triangles, no build warnings, forge check result ok at 4.0 cm, ground ok.",
+    "strengths": [
+      "The split orange and blue robe with the white hair gives three clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the mage and the sorcerer.",
+      "The white waves follow the mockup's hair closely after the feedback pass."
+    ],
+    "issues": [
+      "The fire and the ice are pale and translucent; the yellow core reads only as a faint glow at 128 px.",
+      "The back locks form a flat block with a hard tone edge.",
+      "The collar reads as a scarf, and the robe halves have no buttons or fold shading."
+    ],
+    "next": "Done for P1. A later polish pass could make the flames opaque with a brighter core.",
+    "reviewedAt": "2026-09-30T08:28:10+00:00"
   }
 }
