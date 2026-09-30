@@ -222,9 +222,10 @@ merchant-ship	vehicle	high	a687828363e9b6026	1	accepted	7.0	run 4 P3 vehicles; a
 pirate-ship	vehicle	high	a42e3db32684a723b	1	accepted	7.3	run 4 P3 vehicles; accepted; committed
 balloon-basket	vehicle	high	a75306d0982b0cd01	1	accepted	7.5	run 4 P3 vehicles; accepted; committed
 airship	vehicle	high	aeb224d0781c6b099	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
-artificer	hero	high	a3da3c8a5dd8e52ce	2	running	7.8	run 4 heroes resume; feedback pass in flight
+artificer	hero	high	a3da3c8a5dd8e52ce	2	accepted	8.0	run 4 heroes resume; accepted; committed
 enchanter	hero	high	adc95501064523253	2	accepted	8.0	run 4 heroes resume; accepted; committed
 oracle	hero	high	a636251da85cb4763	2	running	7.8	run 4 heroes resume; feedback pass in flight
 rune-smith	hero	high	adaa4cfc46215b9f9	2	accepted	8.0	run 4 heroes resume; accepted; committed
 shaman	hero	high	aca69e2a63a5b3bcb	1	running	-	run 4 heroes resume
-spear-warden	hero	high	pending	1	running	-	run 4 heroes resume
+spear-warden	hero	high	a756c5e51dfad0aff	1	running	-	run 4 heroes resume
+swashbuckler	hero	high	pending	1	running	-	run 4 heroes resume

@@ -3616,5 +3616,35 @@
     ],
     "next": "Optional: soften the hair locks with a fbm bump and add a cup tip to the staff.",
     "reviewedAt": "2026-09-30T16:52:31+00:00"
+  },
+  "artificer": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero built by a Sonnet 5.5 subagent in one build and one feedback pass: a seamed leather cap with a wide peak, a studded band and brass goggles, a dark brown fringe, a striped shirt under a stitched leather vest with a gear buckle, a segmented riveted brass gauntlet with an elbow cap on the left arm, a brass drone rigid in the right hand, green trousers and cuffed boots; 51,982 triangles; eight clips; check ok 1.1 cm; slots eyes, hair, skin, clothing with presets default, blue, rust.",
+    "strengths": [
+      "The goggled cap and brass gauntlet give an unmistakable silhouette at 128 px.",
+      "The drone reads in every sprite direction.",
+      "Warm leather, brass and green make a coherent palette."
+    ],
+    "issues": [
+      "The fringe under the peak is thin.",
+      "The gauntlet and drone carry less mechanical detail than the mockup.",
+      "The leather is smoother than the mockup's."
+    ],
+    "next": "Optional: a thicker fringe and bolt heads on the gauntlet plates.",
+    "reviewedAt": "2026-09-30T16:57:10+00:00"
   }
 }
