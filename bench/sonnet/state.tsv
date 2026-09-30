@@ -201,9 +201,9 @@ letter-sealed	item	medium	aaab9ab9d73f851df	1	accepted	7.2	run 4 wave 2 batch B;
 quest-document	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 royal-seal	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 rune-tablet	item	medium	aaab9ab9d73f851df	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
-leather	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; textile
-hide	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; textile
-bandage	item	medium	aead10642afd9657f	1	running	-	run 4 wave 2 batch C; food
+leather	item	medium	aead10642afd9657f	1	accepted	7.0	run 4 wave 2; accepted; committed
+hide	item	medium	aead10642afd9657f	1	accepted	7.0	run 4 wave 2; accepted; committed
+bandage	item	medium	aead10642afd9657f	1	accepted	7.2	run 4 wave 2; accepted; committed
 relic-orb	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
 artifact-idol	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
 ration	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
