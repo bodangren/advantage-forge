@@ -182,5 +182,5 @@ gem-ruby	item	medium	a18d46fe375c20f25	1	running	-	run 4 wave 2; gem recipe
 gem-emerald	item	medium	a18d46fe375c20f25	1	running	-	run 4 wave 2; gem recipe
 gem-sapphire	item	medium	a18d46fe375c20f25	1	running	-	run 4 wave 2; gem recipe
 crystal-shard	item	medium	a18d46fe375c20f25	1	running	-	run 4 wave 2; gem recipe
-wood-log	item	medium	af0bfdca5910bb553	1	running	-	run 4 wave 2; log base
-plank	item	medium	af0bfdca5910bb553	1	running	-	run 4 wave 2; log base
+wood-log	item	medium	af0bfdca5910bb553	1	accepted	7.3	run 4 wave 2; log with stub and leaves
+plank	item	medium	af0bfdca5910bb553	1	accepted	7.0	run 4 wave 2; three boards
