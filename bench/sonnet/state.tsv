@@ -71,6 +71,7 @@ assassin	character	high	a9fc8a442a84564d7	3	accepted	8.0	enemies run 3; accepted
 smuggler	character	high	ab20554d0da86785a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 pirate	character	high	a5af297403cbe02e6	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 pirate-captain	character	high	a8672da7d9e65a6f6	3	running	7.5	fresh rework (second retry, tricorn) under run 3
-hunter-rival	character	high	ac17370466e234ac8	1	feedback	7.7	enemies run 3; one feedback pass sent
+hunter-rival	character	high	ac17370466e234ac8	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 dark-mage	character	high	a1baed82a4a863f72	0	running	-	enemies run 3
 warlock	character	high	abddb9815917ece1a	0	running	-	enemies run 3
+witch	character	high	-	0	running	-	enemies run 3

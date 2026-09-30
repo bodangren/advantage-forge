@@ -2902,5 +2902,34 @@
     ],
     "next": "Widen the grin to 0.1 m, thicken the vest flaps to 0.02 m with a tan edge band, and deepen the hat crown dent.",
     "reviewedAt": "2026-09-30T02:15:17+00:00"
+  },
+  "hunter-rival": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Smug rival hunter on the ranger base: a flat leather cap with a fur band, a wavy red-brown fringe, one raised brow and one half-lidded eye over a lopsided grin, a full red beard, a green knit tunic with fur cuffs and hem, an open leather vest with a strap, a bead-and-fang necklace, a quiver, and a dark recurve bow. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The cap, the red beard, the green tunic, the bow, and the quiver read at 128 px in all eight directions.",
+      "The raised brow and the lopsided grin give the smug expression of the mockup.",
+      "Check ok (closest 0.2 cm), ground ok, 59,460 triangles, no warnings."
+    ],
+    "issues": [
+      "The fringe is thinner than the mockup's big hair swoop.",
+      "The half-lid shows as a dark smudge at 128 px.",
+      "The necklace lacks the mockup's chunky silver beads and pendant."
+    ],
+    "next": "Thicken the fringe locks to r 0.022, soften the half-lid to the skin color, and add a silver pendant to the necklace.",
+    "reviewedAt": "2026-09-30T02:33:07+00:00"
   }
 }
