@@ -122,6 +122,6 @@ ancient-key	item	medium	a80cc3e8aa6e2bcc7	2	accepted	7.0	run 4; accepted after o
 invisibility-potion	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
 elixir	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
 poison-bottle	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on the first pass
-bread-ration	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; food and container batch
-waterskin	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; same agent
-coin-purse	item	medium	aaed0aa38b6dd4167	1	running	-	run 4; same agent
+bread-ration	item	medium	aaed0aa38b6dd4167	2	running	6.6	run 4; feedback pass in flight
+waterskin	item	medium	aaed0aa38b6dd4167	2	running	6.6	run 4; feedback pass in flight
+coin-purse	item	medium	aaed0aa38b6dd4167	1	accepted	7.3	run 4; accepted on the first pass
