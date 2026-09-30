@@ -85,4 +85,5 @@ wall-gate	structure	medium	a62e55739797f4af4	2	accepted	7.3	run 4; 83621 tokens;
 palm-tree	tree	medium->high	a104a06334ed37d35	2	failed	6.8	run 4; 59704 tokens on the medium agent; fresh high rework next
 beast-rider	hero	high	a066b32d1933f8e50	1	running	-	run 4 (game need: Griffin Riders)
 warrior	hero	high	a5de2ca09942d6777	1	running	-	run 4
-palm-tree	tree	high	ac4244983e6dd7abd	3	running	6.8	run 4; fresh high rework of the crown (smooth-arc fronds)
+palm-tree	tree	high	ac4244983e6dd7abd	3	accepted	7.0	run 4; 106801 tokens in all (two medium passes plus one high rework)
+healer	hero	high	a3fbcc9dd0f3a2cba	1	running	-	run 4
