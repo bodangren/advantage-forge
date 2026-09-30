@@ -3706,5 +3706,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T17:52:03+00:00"
+  },
+  "spear-warden": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8.5,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young spear warden on the knight base: an angular gold helmet with a brow plate, cheek guards and a swept red fin crest, a plated gold cuirass with pauldrons over brown leather, a green cape and underskirt under leather pteruges, a tall leaf-headed spear in one hand and a bronze javelin in the other. Seven clips, check ok (above 5 cm). 60,012 triangles.",
+    "strengths": [
+      "The gold helmet, red crest and leaf-headed spear read clearly at 128 px.",
+      "The cuirass reads as plates after the feedback pass: pectoral bulges, an abdomen band, rims and pauldrons.",
+      "The javelin points up and forward at 45 degrees and stays clear of the head in every clip."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The green cloth shows less from the front than in the mockup: the pteruges cover most of the skirt.",
+      "The crest reads as a thin line from the front."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T17:59:26+00:00"
   }
 }
