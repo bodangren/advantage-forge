@@ -3556,5 +3556,35 @@
     ],
     "next": "Done for P1. A later polish pass could enlarge the hammer head and widen the gold rims.",
     "reviewedAt": "2026-09-30T12:57:49+00:00"
+  },
+  "rune-smith": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero built by a Sonnet 5.5 subagent in one build and one feedback pass: red swept hair with goggles perched on top, a light grey cowl over a dark tunic with a leather bib and brass studs, a leather apron belt with a rune buckle, a rune hammer with cyan rune dots and a glowing cyan face, boots; 46,182 triangles; eight clips; check ok above 5 cm; variant slots eyes, hair, skin, runes with presets default, gold, violet.",
+    "strengths": [
+      "The goggles and red hair make a clear top silhouette at 128 px.",
+      "The cyan rune hammer reads in every sprite direction.",
+      "The cowl, bib and belt separate into three readable bands."
+    ],
+    "issues": [
+      "The goggles perch on the hair rather than sit on the forehead as in the mockup.",
+      "The model is 0.92 m tall, below the brief's 0.96 m.",
+      "The bracer sinks 0.8 cm into the tunic in the death clip (informational)."
+    ],
+    "next": "Optional: lower the goggles to the brow band and enlarge the hammer head 10 percent.",
+    "reviewedAt": "2026-09-30T16:47:20+00:00"
   }
 }
