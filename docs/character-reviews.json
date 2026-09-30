@@ -3796,5 +3796,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T18:16:16+00:00"
+  },
+  "captain": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8.5,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young guard captain on the paladin base: wavy blond locks with a forehead curl, green eyes, a red scarf, dark steel pauldrons, cuirass, bracers and greaves with gold rims, a gold lion crest plate on the chest, red sleeves, steel tassets over a red skirt, brown boots with steel toe caps, a red cape, a dark steel round shield with a gold rim and lion boss, and a sword. Seven clips, check ok (closest 4.8 cm). 57,630 triangles.",
+    "strengths": [
+      "The steel, gold and red palette reads at 128 px from every direction.",
+      "The cuirass, pauldrons and tassets read as separate plates after the gold rims were added.",
+      "The shield boss and chest crest match the mockup's gold accents."
+    ],
+    "issues": [
+      "The hair is one wavy mass; the mockup's locks flow more loosely and the forehead curl is stronger.",
+      "The tassets are straight plates; the mockup's are curved.",
+      "The bracers are smaller than the mockup's chunky forearm armor."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T18:33:46+00:00"
   }
 }

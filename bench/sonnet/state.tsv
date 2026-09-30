@@ -230,6 +230,7 @@ shaman	hero	high	aca69e2a63a5b3bcb	3	accepted	8.0	run 4 heroes resume; feedback 
 spear-warden	hero	high	a756c5e51dfad0aff	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 swashbuckler	hero	high	a1a1e81978750a37f	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 apprentice	hero	high	a55e0b9014bd45360	3	accepted	8.0	run 4 heroes resume; feedback pass + orchestrator mantle/wand edit; accepted; committed
-captain	hero	high	a477d71c5df18caad	1	running	-	run 4 heroes resume
-caravan-guard	hero	high	ac81a3d92a25f32c7	1	running	-	run 4 heroes resume
+captain	hero	high	a477d71c5df18caad	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
+caravan-guard	hero	high	ac81a3d92a25f32c7	2	running	7.7	run 4 heroes resume; feedback pass in flight (hat, hair, quilting)
 explorer	hero	high	a529469881aa2756d	1	running	-	run 4 heroes resume
+monster-hunter	hero	high	ad036415332fb137f	1	running	-	run 4 heroes resume
