@@ -77,11 +77,12 @@ warlock	character	high	abddb9815917ece1a	2	accepted	8.0	enemies run 3; accepted 
 witch	character	high	a0a0d2f4e2c28160f	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 cult-leader	character	high	a65f4ca6a015e24cc	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 evil-priest	character	high	a37c4398c86f02286	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-alchemist	hero	high	ab1126b54e0e7d147	2	accepted	8.0	run 4; 175793 tokens; accepted after one feedback pass
+alchemist	hero	high	ab1126b54e0e7d147	2	accepted	8.0	run 4; 178702 tokens; accepted after one feedback pass
 sorcerer	hero	high	a14eba6a4f7e4cd3e	2	accepted	8.0	run 4; 175081 tokens; accepted after one feedback pass
-dragoon	hero	high	a45507ca29ab58820	2	running	7.0	run 4; feedback pass in flight (plate parts, helm, wings)
+dragoon	hero	high	a45507ca29ab58820	2	accepted	8.0	run 4; 258028 tokens; accepted after one feedback pass
 silo	structure	medium	ab8a4b72bd3646d22	2	accepted	7.2	run 4; 58346 tokens; from the 2026-09-28 trial file plus one feedback pass
 wall-gate	structure	medium	a62e55739797f4af4	2	accepted	7.3	run 4; 83621 tokens; from the 2026-09-28 trial file plus one feedback pass
 palm-tree	tree	medium->high	a104a06334ed37d35	2	failed	6.8	run 4; 59704 tokens on the medium agent; fresh high rework next
 beast-rider	hero	high	a066b32d1933f8e50	1	running	-	run 4 (game need: Griffin Riders)
 warrior	hero	high	a5de2ca09942d6777	1	running	-	run 4
+palm-tree	tree	high	ac4244983e6dd7abd	3	running	6.8	run 4; fresh high rework of the crown (smooth-arc fronds)

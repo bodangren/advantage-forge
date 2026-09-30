@@ -3166,5 +3166,35 @@
     ],
     "next": "Done for P1. A later polish pass could flare the collar wings and add a second lock layer.",
     "reviewedAt": "2026-09-30T06:11:31+00:00"
+  },
+  "dragoon": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the knight base (the rogue's body, face, and chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a grey-blue steel helm open at the face with cheek guards, a riveted silver brim band, a center spike, two horn blades, and bat wings at the temples; a cuirass with silver rims and a winged diamond emblem, three-plate pauldrons, six tasset plates over a mail skirt, silver wrist cuffs, a short red cape; a 1.5 m lance with a ring guard and a ridged leaf head held upright in the right hand. Attack is a lance thrust, attack2 a jump strike. 59,212 triangles, no build warnings, forge check result ok at 3.7 cm, ground ok.",
+    "strengths": [
+      "The winged helm, the upright lance, and the red cape give a silhouette that reads at 128 px in all eight directions.",
+      "The silver rims separate the plates, so the armor reads as parts, not one suit.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the knight."
+    ],
+    "issues": [
+      "The plate is smooth; the mockup has sculpted scale relief on the pauldrons and the chest.",
+      "The wings and horn blades are thinner than the mockup's.",
+      "The plate reads as a cleaner blue than the mockup's grey steel."
+    ],
+    "next": "Done for P1. A later polish pass could add scale grooves in bump on the pauldrons and thicken the wings.",
+    "reviewedAt": "2026-09-30T06:34:11+00:00"
   }
 }
