@@ -3436,5 +3436,35 @@
     ],
     "next": "Done for P1. A later polish pass could split the locks finer and sharpen the skull.",
     "reviewedAt": "2026-09-30T08:40:10+00:00"
+  },
+  "duelist": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the bard base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a grey cavalier hat with a broad drooping brim, a gold edge band, a dented crown, and a tall white plume, dark brown hair with a fringe, a white ruffle collar with eight pleats, a purple doublet with gold buttons and a gold hem band, slim sleeves with cream forearms, a brown belt with a gold buckle, cream breeches, dark boots, a purple cape, and a 0.30 m rapier with a gold cup guard held tip up beside the right shoulder. Attack is a forward lunge. 50,470 triangles, no build warnings, forge check result ok at over 5 cm, ground ok.",
+    "strengths": [
+      "The grey hat, the white plume and ruffle, the purple doublet, and the cream breeches give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the bard and the rogue.",
+      "The brim droops and curls on one side like the mockup after the feedback pass."
+    ],
+    "issues": [
+      "The rapier blade reads thin at 128 px.",
+      "The fringe barely shows under the front brim.",
+      "The cape is broader than the mockup's, and the ruffle is plainer."
+    ],
+    "next": "Done for P1. A later polish pass could widen the blade and show more fringe.",
+    "reviewedAt": "2026-09-30T08:42:05+00:00"
   }
 }
