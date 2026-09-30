@@ -83,3 +83,4 @@ dragoon	hero	high	a45507ca29ab58820	2	running	7.0	run 4; feedback pass in flight
 silo	structure	medium	ab8a4b72bd3646d22	2	accepted	7.2	run 4; 58346 tokens; from the 2026-09-28 trial file plus one feedback pass
 wall-gate	structure	medium	a62e55739797f4af4	2	accepted	7.3	run 4; 83621 tokens; from the 2026-09-28 trial file plus one feedback pass
 palm-tree	tree	medium	a104a06334ed37d35	1	running	-	run 4; starts from the 2026-09-28 external trial file
+beast-rider	hero	high	a066b32d1933f8e50	1	running	-	run 4 (game need: Griffin Riders)
