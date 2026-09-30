@@ -260,10 +260,10 @@ hay-bale	world	medium	a12f8eb77467cfa0b	1	accepted	7.0	catchup1 rework (P1 bar 7
 rock-cluster	world	medium	ae4a41e620ee708b9	1	accepted	7.3	catchup1 rework (P1 bar 7.0); accepted on v1
 sack	world	medium	adb6b2759f6fb9e70	2	accepted	7.1	catchup1 rework (P1 bar 7.0), 2 passes
 sarcophagus	world	medium	a256bf6d308abb7f1	1	accepted	7.2	catchup1 rework (P1 bar 7.0, build warning); accepted on v1
-fallen-tree	world	medium	a2a80276d63aaa07d	0	running	6.3	catchup2 rework (P1 bar 7.0)
+fallen-tree	world	medium	a2a80276d63aaa07d	1	accepted	7.0	catchup2 rework (P1 bar 7.0), orchestrator moss edit
 candelabra	world	medium	acb6c2c77164a9b4c	1	accepted	7.4	catchup2 rework (P1 bar 7.0)
 vial	world	low	a5651e42dfbccd54c	1	accepted	7.2	catchup2 rework (P1 bar 7.0)
 tankard	world	low	a0b45a1a21a9c3d6b	1	accepted	7.1	catchup2 rework (P1 bar 7.0)
-cabbage	world	low	a832c091eab3e71f1	0	running	6.8	catchup2 rework (P1 bar 7.0)
-workbench	world	medium	ae521d004755278ed	0	running	6.7	catchup2 rework (P1 bar 7.0)
-ritual-circle	world	medium	a7d7107eb857a6b75	0	running	6.7	catchup2 rework (P1 bar 7.0)
+cabbage	world	low	a832c091eab3e71f1	1	accepted	7.0	catchup2 rework (P1 bar 7.0)
+workbench	world	medium	ae521d004755278ed	1	accepted	7.1	catchup2 rework (P1 bar 7.0)
+ritual-circle	world	medium	a7d7107eb857a6b75	1	accepted	7.0	catchup2 rework (P1 bar 7.0), orchestrator candle and flame size edit

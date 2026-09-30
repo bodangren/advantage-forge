@@ -16,6 +16,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  *   iron vice (metalness 0.85, roughness 0.45).
  * Detail: primary slab + legs + stretchers; secondary vice base, jaws, screw;
  *   tertiary plank seams, grain, wear. Focal: the iron vice.
+ * Rework: top carries a hammer, chisel, saw, wood block and shavings plus two
+ *   stains and knife marks; the lower shelf holds two boards and a small box.
  * Rig: none (static prop).
  */
 
@@ -71,7 +73,15 @@ const topPaint = (x: number, y: number, z: number) => {
   c = mixRgb(c, HONEY_DEEP, 0.3 * low);
   const under = clamp01((0.795 - y) / 0.012);
   c = mixRgb(c, WALNUT_DEEP, 0.45 * under);
-  c = mixRgb(c, HONEY_DEEP, 0.65 * seam);
+  c = mixRgb(c, HONEY_DEEP, 0.85 * seam);
+  // Two dark oil stains and knife marks on the working face.
+  if (y > 0.84) {
+    const s1 = clamp01(1 - Math.hypot((x + 0.05) / 0.13, (z - 0.02) / 0.07));
+    const s2 = clamp01(1 - Math.hypot((x - 0.32) / 0.08, (z + 0.17) / 0.06));
+    c = mixRgb(c, WALNUT_DEEP, 0.75 * Math.max(s1, s2) ** 0.5 * (s1 + s2 > 0 ? 1 : 0));
+    const cut = Math.max(0, 1 - Math.abs(Math.sin((x * 9 + z * 31) * 3.1)) * 9) * (noise.random(Math.floor(x * 14), Math.floor(z * 14), 1) > 0.8 ? 1 : 0);
+    c = mixRgb(c, HONEY_DEEP, 0.7 * cut);
+  }
   return c;
 };
 
@@ -132,9 +142,10 @@ export default defineAsset({
         const v = (z + HALF_D) / 0.2;
         const f = v - Math.floor(v);
         const seam = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * f), 12);
-        return -0.002 * seam + 0.001 * (noise.fbm(x * 24, y * 40, z * 24, 2) - 0.5);
+        const cut = Math.max(0, 1 - Math.abs(Math.sin((x * 9 + z * 31) * 3.1)) * 9) * (noise.random(Math.floor(x * 14), Math.floor(z * 14), 1) > 0.8 ? 1 : 0);
+        return -0.003 * seam - 0.0015 * cut + 0.001 * (noise.fbm(x * 24, y * 40, z * 24, 2) - 0.5);
       },
-      maxTriangles: 1300,
+      maxTriangles: 1000,
     });
 
     // ---------------------------------------------------------------- frame
@@ -163,7 +174,7 @@ export default defineAsset({
       detail: 0.008,
       paintWeight: 2,
       bump: (x, y, z) => 0.0012 * (noise.fbm(x * 18, y * 5, z * 18, 2) - 0.5),
-      maxTriangles: 1700,
+      maxTriangles: 900,
     });
 
     // ----------------------------------------------------------------- vice
@@ -186,7 +197,67 @@ export default defineAsset({
       metalness: 0.85,
       detail: 0.0045,
       paintWeight: 2,
-      maxTriangles: 900,
+      maxTriangles: 700,
+    });
+
+    // ---------------------------------------------------------------- tools
+    const TY = 0.85;
+    const woodTool = sdf.union(
+      // Hammer handle.
+      sdf.capsule([-0.44, TY + 0.016, 0.12], [-0.2, TY + 0.016, 0.12], 0.016),
+      // Chisel handle.
+      sdf.capsule([-0.1, TY + 0.02, -0.04], [-0.02, TY + 0.02, -0.06], 0.02),
+      // Saw grip.
+      sdf.box([0.07, 0.045, 0.035], 0.012).at(-0.36, TY + 0.025, -0.17).rotateY(8),
+      // Block of wood.
+      sdf.box([0.13, 0.07, 0.085], 0.012).at(0.16, TY + 0.035, -0.12).rotateY(-12),
+      // Shavings.
+      sdf.torus(0.022, 0.008).rotateX(70).at(0.05, TY + 0.02, 0.1),
+      sdf.torus(0.018, 0.007).rotateX(20).rotateY(40).at(0.12, TY + 0.018, 0.04),
+      sdf.torus(0.024, 0.008).rotateX(80).rotateY(70).at(-0.05, TY + 0.02, 0.17),
+      sdf.torus(0.016, 0.007).rotateX(50).at(0.25, TY + 0.016, 0.08),
+    );
+    k.body('tools-wood', woodTool.paintFn((x, y, z) => mixRgb(HONEY_PALE, HONEY_DEEP, 0.35 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 20, y * 20, z * 20, 2)))), {
+      color: '#c9a06a',
+      roughness: 0.8,
+      metalness: 0,
+      detail: 0.004,
+      paintWeight: 2,
+      bump: (x, y, z) => 0.001 * (noise.fbm(x * 30, y * 8, z * 30, 2) - 0.5),
+      maxTriangles: 800,
+    });
+    const ironTool = sdf.union(
+      // Hammer head, 0.04 m square face, with a peen.
+      sdf.box([0.05, 0.045, 0.04], 0.008).at(-0.19, TY + 0.03, 0.12),
+      sdf.box([0.03, 0.03, 0.03], 0.008).at(-0.155, TY + 0.025, 0.12),
+      // Chisel shaft and edge.
+      sdf.capsule([-0.02, TY + 0.02, -0.06], [0.11, TY + 0.02, -0.085], 0.013),
+      // Saw blade, thickened for the sprite.
+      sdf.box([0.26, 0.04, 0.012], 0.004).at(-0.15, TY + 0.03, -0.17).rotateY(8),
+    );
+    k.body('tools-iron', ironTool.paintFn(vicePaint), {
+      color: '#3a3a3e',
+      roughness: 0.45,
+      metalness: 0.7,
+      detail: 0.0035,
+      maxTriangles: 600,
+    });
+
+    // ---------------------------------------------------------- lower shelf
+    const shelf = sdf.union(
+      sdf.box([0.76, 0.03, 0.16], 0.008).at(0, 0.155, 0.1),
+      sdf.box([0.76, 0.03, 0.16], 0.008).at(0, 0.155, -0.1),
+      sdf.box([0.56, 0.03, 0.15], 0.008).at(0.05, 0.185, 0.1).rotateY(3),
+      sdf.box([0.22, 0.12, 0.17], 0.012).at(-0.22, 0.23, -0.1),
+    );
+    k.body('shelf', shelf.paintFn(framePaint), {
+      color: '#8a5a35',
+      roughness: 0.85,
+      metalness: 0,
+      detail: 0.006,
+      paintWeight: 2,
+      bump: (x, y, z) => 0.0012 * (noise.fbm(x * 18, y * 5, z * 18, 2) - 0.5),
+      maxTriangles: 700,
     });
   },
 });

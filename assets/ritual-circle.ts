@@ -3,32 +3,26 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 /**
  * Design note — ritual circle, lit (props/world/ritual-circle).
  *
- * Role: a floor landmark in the Sunken Vault dungeon; must read at 128 px as a
- *   dark stone disc with a glowing purple pentagram and five candle flames.
- * Size: 2.0 m wide, 0.05 m slab, stones and candles rise above it;
- *   stands on y = 0, faces +Z (one candle vertex on the front axis).
- * One idea: a ring of chunky dark stones around a glowing purple pentagram,
- *   with five black candles burning small violet flames at the star points.
- * Shape language: round dominant (stones, slab, flames), triangular secondary
- *   (the pentagram star breaks the circular outline).
- * Palette: dungeon stone cool gray #6f7680 / dark #4b525c (dominant), dark
- *   painted stones #383d45, black wax #17131a, purple glow #b46cf5 on a dark
- *   #2a1540 base (accent, emissive).
- * Materials: stone slab (0.9), painted stones (0.85), wax (0.5), runes + flames
- *   (emissive 1.8 to 2.0, dark base color so the glow does not wash out).
- * Detail: slab worley cells, pentagram chords + pentagon outline + center gem,
- *   five candle stumps with wicks, teardrop flames. Focal: the glowing star.
- * Rig/animation: none (static prop).
+ * Role: floor landmark in the Sunken Vault dungeon; reads at 128 px as a ring of
+ *   purple-gray stones, a glowing violet pentagram, and five lit violet candles.
+ * Size: 2.0 x 0.37 x 1.97 m, slab 0.05 m; on y = 0, faces +Z; flames rise to 0.37 m (one candle on the axis).
+ * One idea: five purple candles with violet teardrop flames on the star points.
+ * Shape language: round dominant (stones, wax, flames), triangular secondary (star).
+ * Palette: dark slab #4b525c, stones #6a5a7e / tops #8a7aa0, wax #3a2350,
+ *   glow #a060ff (emissive 0.3), flames #f4e2ff -> #c070ff -> #7a2cd0.
+ * Materials: slab, stones, runes (low emissive), wax, flames (rough 0.95, emissive 0.25).
+ * Detail: slab worley cells, star + circle lines, wax drips and puddles.
+  * Rig/animation: none (static prop).
  */
 
 const STONE_MID = rgb('#6f7680');
 const STONE_DARK = rgb('#4b525c');
-const ROCK = rgb('#383d45');
-const ROCK_DEEP = rgb('#2d323a');
-const ROCK_PURPLE = rgb('#5b3d7a');
-const WAX = '#17131a';
-const WAX_TOP = rgb('#241d28');
-const GLOW = '#b46cf5';
+const ROCK = rgb('#6a5a7e');
+const ROCK_DEEP = rgb('#5c4d70');
+const ROCK_PURPLE = rgb('#7a5ca0');
+const WAX = '#3a2350';
+const WAX_TOP = rgb('#56377a');
+const GLOW = '#a060ff';
 const GLOW_BASE = '#2a1540';
 
 const SLAB_R = 1.0;
@@ -112,11 +106,11 @@ export default defineAsset({
       const stain = Math.max(0, Math.min(1, (0.98 - r) / 0.22)) * (0.4 + 0.6 * tint);
       c = mixRgb(c, ROCK_PURPLE, 0.35 * stain);
       // Lighter crown where light catches the top of each stone.
-      c = mixRgb(c, rgb('#4a505a'), 0.3 * Math.max(0, Math.min(1, (y - 0.07) / 0.06)));
+      c = mixRgb(c, rgb('#8a7aa0'), 0.85 * Math.max(0, Math.min(1, (y - 0.06) / 0.05)));
       return c;
     };
     k.body('stones', ring.paintFn(rockPaint), {
-      color: '#383d45',
+      color: '#6a5a7e',
       roughness: 0.85,
       metalness: 0,
       detail: 0.008,
@@ -135,64 +129,76 @@ export default defineAsset({
       lines.push(sdf.capsule(vertexAt(i, R, yLine), vertexAt((i + 2) % N_CANDLES, R, yLine), 0.02));
       lines.push(sdf.capsule(vertexAt(i, R, yLine), vertexAt((i + 1) % N_CANDLES, R, yLine), 0.014));
     }
+    const circle = sdf.torus(R + 0.05, 0.012).at(0, yLine, 0);
     const gem = sdf.sphere(0.055).scale([1, 0.42, 1]).at(0, yLine, 0);
-    k.body('runes', sdf.union(...lines, gem), {
+    k.body('runes', sdf.union(...lines, circle, gem), {
       color: GLOW_BASE,
       roughness: 0.4,
       metalness: 0,
       emissive: GLOW,
-      emissiveIntensity: 1.8,
+      emissiveIntensity: 0.3,
       detail: 0.004,
       maxTriangles: 700,
     });
 
-    // ------------------------------------------------------------------ black candles
-    // Five chunky candle stumps on the star points with melted tops and wicks.
+    // ------------------------------------------------------------------ candles
     const candles: ReturnType<typeof sdf.cylinder>[] = [];
     for (let i = 0; i < N_CANDLES; i++) {
       const [cx, , cz] = vertexAt(i, R, 0);
-      const c = sdf
-        .smoothUnion(
+      const drips = [0, 1, 2].map((d) => {
+        const a = d * 2.1 + i;
+        return sdf.capsule([cx + Math.sin(a) * 0.054, 0.19, cz + Math.cos(a) * 0.054], [cx + Math.sin(a) * 0.059, 0.13 - d * 0.02, cz + Math.cos(a) * 0.059], 0.014);
+      });
+      candles.push(
+        sdf.smoothUnion(
           0.012,
-          sdf.cylinder(0.048, 0.15, 0.012).at(cx, 0.125, cz),
-          sdf.sphere(0.048).scale([1, 0.45, 1]).at(cx, 0.2, cz),
-          sdf.cylinder(0.007, 0.03).at(cx, 0.215, cz),
-        )
-        .paintFn((x, yy, z) => {
-          const melt = Math.max(0, Math.min(1, (yy - 0.16) / 0.05));
-          return mixRgb(rgb(WAX), WAX_TOP, 0.6 * melt);
-        });
-      candles.push(c);
+          sdf.cylinder(0.055, 0.15, 0.015).at(cx, 0.115, cz),
+          sdf.sphere(0.055).scale([1, 0.4, 1]).at(cx, 0.19, cz),
+          sdf.cylinder(0.075, 0.03).at(cx, 0.03, cz),
+          ...drips,
+        ),
+      );
     }
-    k.body('candles', sdf.union(...candles), {
+    k.body('candles', sdf.union(...candles).paintFn((x, yy, z) => mixRgb(rgb(WAX), WAX_TOP, Math.max(0, Math.min(1, (yy - 0.12) / 0.08)))), {
       color: WAX,
       roughness: 0.5,
       metalness: 0,
       detail: 0.005,
-      maxTriangles: 600,
+      maxTriangles: 1200,
     });
 
     // ------------------------------------------------------------------ violet flames
-    // Small teardrop flames: round belly + smaller tip, all emissive violet.
     const flames: ReturnType<typeof sdf.sphere>[] = [];
+    const FY = 0.205;
     for (let i = 0; i < N_CANDLES; i++) {
       const [cx, , cz] = vertexAt(i, R, 0);
       flames.push(
         sdf.smoothUnion(
-          0.009,
-          sdf.sphere(0.03).at(cx, 0.25, cz),
-          sdf.sphere(0.013).at(cx, 0.29, cz),
+          0.01,
+          sdf.sphere(0.04).at(cx, FY + 0.04, cz),
+          sdf.cone([cx, FY + 0.035, cz], [cx, FY + 0.16, cz], 0.037, 0.005),
         ),
       );
     }
-    k.body('flames', sdf.union(...flames), {
-      color: GLOW_BASE,
-      roughness: 0.2,
-      metalness: 0,
-      emissive: GLOW,
-      emissiveIntensity: 2.2,
-      detail: 0.004,
-      maxTriangles: 300,
-    });
+    const base = rgb('#f4e2ff');
+    const mid = rgb('#c070ff');
+    const tip = rgb('#7a2cd0');
+    k.body(
+      'flames',
+      sdf.union(...flames).paintFn((x, yy, z) => {
+        const t = Math.max(0, Math.min(1, (yy - FY) / 0.15));
+        return t < 0.45 ? mixRgb(base, mid, t / 0.45) : mixRgb(mid, tip, (t - 0.45) / 0.55);
+      }),
+      {
+        color: '#c070ff',
+        roughness: 0.95,
+        metalness: 0,
+        emissive: '#8a3cff',
+        emissiveIntensity: 0.25,
+        detail: 0.004,
+        maxTriangles: 500,
+        paintWeight: 2,
+      },
+    );
   },
 });

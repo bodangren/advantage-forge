@@ -4,8 +4,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf, type Vec3 } f
  * Fallen tree — Chibi Quest terrain prop (catalog `nature/terrain/fallen-tree`).
  *
  * Role: forest-floor landmark and path obstacle. It must read at 128 px.
- * Size: a 3 m trunk along X, 0.4 m thick, on y = 0, centred, front toward +Z.
- * One idea: a chunky log with a pale cut at -X and a tall upturned root plate at +X.
+ * Size: 3.58 x 1.04 x 1.04 m, a 0.75 m thick log along X with a cut face at -X and a root flare at +X.
+ * One idea: a short chunky log, ringed cut end, splayed roots, tall broken branch stub, moss on top.
  * Shape language: round and chunky, with soft bevels. The plate breaks the silhouette.
  * Palette: bark #8a5a35 / #5f3d22, cut wood #c9a06a, earth #6b4a32 / #4a3222,
  * moss and fern #2f7a3f / #4a9a4f / #7ec850, stone flecks #8a94a0 in the earth.
@@ -19,6 +19,8 @@ const barkDark = rgb('#5f3d22');
 const barkDeep = rgb('#3d2717');
 const barkLight = rgb('#a4713f');
 const cutWood = rgb('#c9a06a');
+const pale = rgb('#c89a62');
+const darkRing = rgb('#8a5a32');
 const cutLight = rgb('#e4c49a');
 const cutRing = rgb('#a87d4b');
 const cutDark = rgb('#6e4a28');
@@ -27,7 +29,7 @@ const earthDark = rgb('#4a3222');
 const earthLight = rgb('#8a6244');
 const mossMid = rgb('#4a9a4f');
 const mossDark = rgb('#2f7a3f');
-const mossLight = rgb('#7ec850');
+const mossLight = rgb('#9cc848'); // yellow-green tops
 const fernDeep = rgb('#2f7a3f');
 const fernMid = rgb('#4a9a4f');
 const fernLight = rgb('#7ec850');
@@ -57,42 +59,15 @@ const rotZ = (v: Vec3, deg: number): Vec3 => {
   return [c * v[0] - s * v[1], s * v[0] + c * v[1], v[2]];
 };
 
-// Root plate: a disc at the +X end. The wood face points toward the trunk and the front camera.
-const PLATE_YAW = 34;
-const PLATE_LEAN = -16;
-const PLATE_R = 0.5;
-const PLATE_T = 0.18;
-const PLATE_C: Vec3 = [1.16, 0.54, 0.0];
-const plateN: Vec3 = rotZ(rotY(rotZ([0, 1, 0], 90), PLATE_YAW), PLATE_LEAN);
-
-const plateUp = (): Vec3 => {
-  const n = plateN;
-  const hint: Vec3 = Math.abs(n[1]) > 0.85 ? [1, 0, 0] : [0, 1, 0];
-  const d = dot(hint, n);
-  return norm([hint[0] - n[0] * d, hint[1] - n[1] * d, hint[2] - n[2] * d]);
-};
-const plateV = plateUp();
-const plateU: Vec3 = norm([
-  plateN[1] * plateV[2] - plateN[2] * plateV[1],
-  plateN[2] * plateV[0] - plateN[0] * plateV[2],
-  plateN[0] * plateV[1] - plateN[1] * plateV[0],
-]);
-
-/** A point in the plate frame. depth is along the wood-face normal. */
-const platePoint = (ang: number, rad: number, depth: number): Vec3 => {
-  const a = (ang * Math.PI) / 180;
-  return add(add(add(PLATE_C, plateU, Math.cos(a) * rad), plateV, Math.sin(a) * rad), plateN, depth);
-};
-
-// Pale cut at the -X end, turned toward +Z so the front view sees the oval.
-const cutN = norm([-0.86, 0.05, 0.51]);
-const cutAt: Vec3 = [-1.56, 0.175, 0.03];
+// Cut face at the -X end, turned a little toward +Z so the front view sees the oval.
+const cutN = norm([-0.8, 0.03, 0.6]);
+const cutAt: Vec3 = [-1.74, 0.29, 0.0];
 const cutOff = dot(cutN, cutAt);
 
-const stubUpA: Vec3 = [0.05, 0.34, 0.04];
-const stubUpB: Vec3 = [0.14, 0.68, 0.12];
-const stubSideA: Vec3 = [-0.52, 0.3, 0.14];
-const stubSideB: Vec3 = [-0.4, 0.46, 0.44];
+const stubUpA: Vec3 = [0.05, 0.5, 0.05];
+const stubUpB: Vec3 = [0.12, 0.98, 0.1];
+const stubSideA: Vec3 = [-0.75, 0.45, -0.2];
+const stubSideB: Vec3 = [-0.62, 0.6, -0.5];
 
 const ground = sdf.halfSpace([0, -1, 0], 0);
 
@@ -118,31 +93,16 @@ const woodPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
   const mossW = clamp01((y - 0.18) / 0.2) * clamp01(mossN + 0.15) * 0.55;
   if (mossW > 0.02) c = mixRgb(c, mixRgb(mossDark, mossMid, clamp01(0.4 + mossN)), mossW);
 
-  // Root-plate wood face: a few bold rings and a dark bark lip.
-  const pf = plateFrame(x, y, z);
-  const onPlate = smoothstep(0.04, 0.08, pf.depth) * smoothstep(PLATE_R + 0.03, PLATE_R - 0.015, pf.radial);
-  if (onPlate > 0.01) {
-    const ring = 0.5 + 0.5 * Math.sin(pf.radial * 20 + 0.4);
-    let pc = mixRgb(cutWood, cutLight, 0.35 * (1 - ring));
-    pc = mixRgb(pc, cutDark, smoothstep(0.25, 0.85, ring) * 0.72);
-    pc = mixRgb(pc, cutDark, clamp01((0.05 - pf.radial) / 0.05) * 0.45);
-    pc = mixRgb(pc, barkDark, smoothstep(PLATE_R - 0.09, PLATE_R - 0.02, pf.radial));
-    const spoke = Math.abs(Math.sin(pf.ang * 1.5 + 0.6));
-    pc = mixRgb(pc, barkDeep, smoothstep(0.28, 0.05, spoke) * smoothstep(0.1, 0.2, pf.radial) * 0.45);
-    c = mixRgb(c, pc, onPlate);
-  }
-
   // Cut oval at the -X end.
   const cutDepth = cutOff - dot(cutN, [x, y, z]);
   const relC: Vec3 = [x - cutAt[0], y - cutAt[1], z - cutAt[2]];
   const cutRadial = Math.sqrt(Math.max(0, dot(relC, relC) - cutDepth * cutDepth));
-  const onCut = smoothstep(0.018, 0.004, cutDepth) * smoothstep(0.2, 0.13, cutRadial);
+  const onCut = smoothstep(0.03, 0.008, cutDepth) * smoothstep(0.42, 0.3, cutRadial);
   if (onCut > 0.01) {
-    const ring = 0.5 + 0.5 * Math.sin(cutRadial * 42);
-    let pc = mixRgb(cutWood, cutLight, 0.3 * (1 - ring));
-    pc = mixRgb(pc, cutRing, ring * 0.55);
-    pc = mixRgb(pc, cutDark, clamp01((0.022 - cutRadial) / 0.022) * 0.4);
-    pc = mixRgb(pc, barkDark, smoothstep(0.11, 0.16, cutRadial));
+    const ring = Math.floor(cutRadial / 0.048) % 2 === 0 ? 0 : 1;
+    let pc = mixRgb(pale, darkRing, ring * 0.85);
+    pc = mixRgb(pc, darkRing, clamp01((0.03 - cutRadial) / 0.03) * 0.6);
+    pc = mixRgb(pc, barkDark, smoothstep(0.255, 0.275, cutRadial));
     c = mixRgb(c, pc, onCut);
   }
 
@@ -158,14 +118,9 @@ const woodPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
 };
 
 const woodBump = (x: number, y: number, z: number): number => {
-  const pf = plateFrame(x, y, z);
-  const onPlate = smoothstep(0.035, 0.075, pf.depth) * smoothstep(PLATE_R, PLATE_R - 0.04, pf.radial);
   const cutDepth = cutOff - dot(cutN, [x, y, z]);
-  const onCut = smoothstep(0.016, 0.0, cutDepth);
-  const face = Math.max(onPlate, onCut);
-  const groove = 0.0045 * ridges(x, y, z) * (1 - 0.75 * face);
-  const ring = -0.0028 * onPlate * smoothstep(0.2, 0.8, 0.5 + 0.5 * Math.sin(pf.radial * 20));
-  return groove + ring;
+  const onCut = smoothstep(0.03, 0.0, cutDepth);
+  return 0.008 * ridges(x, y, z) * (1 - 0.85 * onCut);
 };
 
 const earthPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
@@ -191,13 +146,18 @@ const fernPaint = (x: number, y: number, z: number, _base: Rgb): Rgb => {
   return c;
 };
 
-const mossClump = (cx: number, cy: number, cz: number, s: number): Sdf =>
-  sdf
-    .sphere(0.06 * s)
-    .at(cx, cy, cz)
-    .smoothUnion(0.022 * s, sdf.sphere(0.046 * s).at(cx + 0.05 * s, cy + 0.01 * s, cz + 0.022 * s))
-    .smoothUnion(0.02 * s, sdf.sphere(0.04 * s).at(cx - 0.038 * s, cy + 0.014 * s, cz - 0.02 * s))
-    .smoothUnion(0.018 * s, sdf.sphere(0.034 * s).at(cx + 0.012 * s, cy + 0.03 * s, cz + 0.04 * s));
+// Bubbly moss cushions: a flat pad under a cluster of small distinct bumps, like the
+// mockup's clay moss (single smooth spheres read as pills).
+const mossClump = (cx: number, cy: number, cz: number, s: number): Sdf => {
+  const parts: Sdf[] = [sdf.ellipsoid([0.085 * s, 0.022 * s, 0.075 * s]).at(cx, cy, cz)];
+  for (let i = 0; i < 11; i++) {
+    const a = noise.random(i, Math.round(cx * 100), 3) * Math.PI * 2;
+    const d = Math.sqrt(noise.random(i, Math.round(cz * 100), 5)) * 0.07 * s;
+    const r = (0.02 + 0.016 * noise.random(i, 7, Math.round(s * 10))) * s;
+    parts.push(sdf.sphere(r).at(cx + Math.cos(a) * d, cy + 0.012 * s, cz + Math.sin(a) * d));
+  }
+  return sdf.smoothUnion(0.006 * s, ...parts);
+};
 
 const FERN: Vec3 = [0.82, 0, 0.4];
 
@@ -211,137 +171,90 @@ export default defineAsset({
 
   build(k) {
     // ------------------------------------------------------------------ wood
-    // The trunk sags onto the ground and rises into the centre of the plate. 3 m along X.
     let trunk = sdf.chain(
       [
-        [-1.66, 0.175, 0.02, 0.165],
-        [-1.02, 0.158, 0.035, 0.192],
-        [-0.25, 0.15, -0.015, 0.21],
-        [0.45, 0.162, 0.025, 0.198],
-        [0.9, 0.24, 0.01, 0.18],
-        [1.12, 0.4, 0.0, 0.145],
+        [-1.8, 0.28, 0.0, 0.3],
+        [-0.8, 0.3, 0.0, 0.335],
+        [0.4, 0.325, 0.0, 0.365],
+        [1.15, 0.33, 0.0, 0.39],
       ],
-      0.065,
+      0.1,
     );
-    // Two knots so the log is not a pipe.
     trunk = trunk
-      .smoothUnion(0.03, sdf.ellipsoid([0.07, 0.055, 0.06]).at(-0.7, 0.3, 0.12))
-      .smoothUnion(0.028, sdf.ellipsoid([0.06, 0.05, 0.055]).at(0.35, 0.28, -0.1));
+      .smoothUnion(0.04, sdf.ellipsoid([0.12, 0.1, 0.1]).at(-0.3, 0.6, 0.25))
+      .smoothUnion(0.04, sdf.ellipsoid([0.1, 0.09, 0.09]).at(0.7, 0.55, -0.25));
 
-    let plate = sdf
-      .cylinder(PLATE_R, PLATE_T, 0.034)
-      .rotateZ(90)
-      .rotateY(PLATE_YAW)
-      .rotateZ(PLATE_LEAN)
-      .at(PLATE_C[0], PLATE_C[1], PLATE_C[2]);
-    for (const ang of [28, 125, 210, 310]) {
-      const p = platePoint(ang, PLATE_R * 0.78, 0);
-      plate = plate.smoothUnion(0.045, sdf.sphere(0.09).at(p[0], p[1], p[2]));
-    }
-
-    // Roots grip the ground. Radii stay moderate so the wood mesh can reduce cleanly.
-    const roots = sdf.smoothUnion(
-      0.028,
-      sdf.chain(
-        [
-          [1.05, 0.28, 0.14, 0.072],
-          [0.86, 0.1, 0.36, 0.055],
-          [0.7, -0.02, 0.5, 0.04],
-        ],
-        0.02,
-      ),
-      sdf.chain(
-        [
-          [1.22, 0.3, -0.08, 0.066],
-          [1.38, 0.1, -0.26, 0.05],
-          [1.48, -0.02, -0.38, 0.038],
-        ],
-        0.02,
-      ),
-      sdf.chain(
-        [
-          [1.4, 0.28, 0.02, 0.06],
-          [1.58, 0.1, 0.08, 0.046],
-          [1.72, -0.02, 0.12, 0.036],
-        ],
-        0.018,
-      ),
-      sdf.chain(
-        [
-          [1.02, 0.16, 0.02, 0.055],
-          [0.9, 0.06, 0.2, 0.042],
-          [0.82, -0.02, 0.3, 0.034],
-        ],
-        0.016,
-      ),
+    const rootDefs: Array<[Vec3, Vec3, Vec3, number]> = [
+      [[1.1, 0.4, 0.2], [1.3, 0.12, 0.42], [1.4, -0.02, 0.5], 0.13],
+      [[1.15, 0.4, -0.2], [1.3, 0.14, -0.42], [1.4, -0.02, -0.5], 0.13],
+      [[1.25, 0.35, 0.05], [1.5, 0.12, 0.25], [1.68, -0.02, 0.32], 0.11],
+      [[1.25, 0.35, -0.05], [1.5, 0.12, -0.25], [1.68, -0.02, -0.32], 0.11],
+      [[1.3, 0.3, 0.0], [1.55, 0.1, 0.0], [1.74, -0.02, 0.0], 0.1],
+      [[1.0, 0.25, 0.3], [1.0, 0.08, 0.45], [0.95, -0.02, 0.52], 0.09],
+      [[1.0, 0.25, -0.3], [1.0, 0.08, -0.45], [0.95, -0.02, -0.52], 0.09],
+    ];
+    const rootShapes = rootDefs.map(([a, m, e, r]) =>
+      sdf.chain([[a[0], a[1], a[2], r], [m[0], m[1], m[2], r * 0.75], [e[0], e[1], e[2], r * 0.55]], 0.03),
     );
-    const stubUp = sdf.cone(stubUpA, stubUpB, 0.078, 0.042);
-    const stubSide = sdf.cone(stubSideA, stubSideB, 0.068, 0.038);
-    const cutStub = sdf.cone([-1.54, 0.1, 0.06], [-1.84, 0.05, 0.16], 0.042, 0.028);
+    const roots = sdf.smoothUnion(0.04, ...rootShapes);
+    const flare = sdf.ellipsoid([0.34, 0.36, 0.4]).at(1.25, 0.3, 0);
+    const stubUp = sdf.cone(stubUpA, stubUpB, 0.11, 0.07);
+    const stubSide = sdf.cone(stubSideA, stubSideB, 0.085, 0.055);
 
     const wood = trunk
-      .smoothUnion(0.05, plate)
-      .smoothUnion(0.028, stubUp)
-      .smoothUnion(0.024, stubSide)
-      .smoothIntersect(0.014, sdf.halfSpace(cutN, cutOff))
-      .smoothUnion(0.016, cutStub)
+      .smoothUnion(0.08, flare)
+      .smoothUnion(0.05, stubUp)
+      .smoothUnion(0.04, stubSide)
+      .smoothIntersect(0.02, sdf.halfSpace(cutN, cutOff))
       .intersect(ground);
 
     k.body('wood', wood.paintFn(woodPaint), {
       color: bark,
       roughness: 0.86,
       metalness: 0,
-      detail: 0.024,
-      maxTriangles: 3800,
+      detail: 0.022,
+      maxTriangles: 3500,
       textureDensity: 1.3,
       bump: woodBump,
     });
 
-    // Roots are a second wood body so the long log can reduce without their creases.
     k.body('roots', roots.intersect(ground).paintFn(woodPaint), {
       color: bark,
       roughness: 0.86,
       metalness: 0,
-      detail: 0.018,
-      maxTriangles: 900,
+      detail: 0.016,
+      maxTriangles: 1500,
       bump: woodBump,
     });
 
     // ------------------------------------------------------------------ earth
-    // A low mound under the plate, plus soil still stuck to the lower rim. Not a second disc.
-    const rimSoil = platePoint(200, 0.4, -0.05);
-    const sideBreak = platePoint(20, 0.42, -0.02);
     const earth = sdf
-      .ellipsoid([0.42, 0.1, 0.32])
-      .at(1.16, 0.015, 0.02)
-      .smoothUnion(0.045, sdf.ellipsoid([0.16, 0.12, 0.12]).at(rimSoil[0], Math.max(0.08, rimSoil[1]), rimSoil[2]))
-      .smoothUnion(0.04, sdf.sphere(0.11).at(sideBreak[0], sideBreak[1], sideBreak[2]))
-      .smoothUnion(0.04, sdf.ellipsoid([0.14, 0.08, 0.12]).at(0.76, 0.04, 0.38))
-      .smoothUnion(0.035, sdf.ellipsoid([0.13, 0.07, 0.11]).at(1.55, 0.04, 0.1))
-      .smoothUnion(0.03, sdf.ellipsoid([0.12, 0.06, 0.1]).at(1.34, 0.035, -0.24))
+      .ellipsoid([0.5, 0.08, 0.5])
+      .at(1.25, 0.0, 0)
+      .smoothUnion(0.04, sdf.ellipsoid([0.14, 0.07, 0.12]).at(0.6, 0.02, 0.45))
       .intersect(ground);
     k.body('earth', earth.paintFn(earthPaint), {
       color: earthMid,
       roughness: 0.94,
       metalness: 0,
       detail: 0.02,
-      maxTriangles: 1500,
+      maxTriangles: 700,
       bump: (x, y, z) => 0.0035 * noise.fbm(x * 5, y * 5, z * 5, 2, 3),
     });
 
     // ------------------------------------------------------------------ moss
-    const plateMoss = platePoint(90, 0.36, 0.04);
-    const moss = mossClump(-0.22, 0.35, 0.08, 1.35)
-      .smoothUnion(0.012, mossClump(0.42, 0.34, 0.1, 1.05))
-      .smoothUnion(0.016, mossClump(plateMoss[0], plateMoss[1] + 0.03, plateMoss[2], 1.55))
-      .smoothUnion(0.01, mossClump(0.12, 0.045, 0.4, 0.85));
+    const moss = mossClump(-1.1, 0.64, 0.05, 2)
+      .smoothUnion(0.012, mossClump(-0.35, 0.68, -0.05, 2.2))
+      .smoothUnion(0.012, mossClump(0.5, 0.7, 0.05, 2))
+      .smoothUnion(0.012, mossClump(0.95, 0.7, -0.05, 1.8))
+      .smoothUnion(0.01, mossClump(0.0, 0.04, 0.42, 0.9));
     k.body('moss', moss.paintFn(mossPaint), {
       color: mossMid,
       roughness: 0.92,
       metalness: 0,
-      detail: 0.014,
-      maxTriangles: 620,
-      bump: (x, y, z) => 0.0018 * noise.fbm(x * 18, y * 18, z * 18, 2, 4),
+      detail: 0.009,
+      maxTriangles: 2200,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 45, y * 45, z * 45, 3, 4),
     });
 
     // ------------------------------------------------------------------ fern
@@ -349,7 +262,7 @@ export default defineAsset({
     const fern = sdf
       .sphere(0.055)
       .at(FERN[0], 0.045, FERN[2])
-      .smoothUnion(0.018, sdf.ellipsoid([0.07, 0.14, 0.04]).at(0.82, 0.16, 0.54))
+      .smoothUnion(0.018, sdf.ellipsoid([0.07, 0.14, 0.04]).at(0.82, 0.16, 0.5))
       .smoothUnion(0.016, sdf.ellipsoid([0.06, 0.12, 0.038]).rotateZ(-22).at(0.66, 0.14, 0.5))
       .smoothUnion(0.016, sdf.ellipsoid([0.06, 0.12, 0.038]).rotateZ(20).at(0.98, 0.14, 0.52))
       .smoothUnion(0.014, sdf.ellipsoid([0.05, 0.09, 0.034]).rotateZ(-32).at(0.54, 0.1, 0.46))
@@ -360,7 +273,7 @@ export default defineAsset({
       roughness: 0.78,
       metalness: 0,
       detail: 0.01,
-      maxTriangles: 900,
+      maxTriangles: 600,
     });
   },
 });

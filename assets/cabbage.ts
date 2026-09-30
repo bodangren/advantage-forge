@@ -5,8 +5,8 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: cozy chibi farm/market food prop; must read at 128 px sprite.
  * Size: ~0.25 m wide, ~0.19 m tall; stands on y = 0, centred on Y, faces +Z.
- * One idea: a fat pale-green head cuddled in a cup of thick wrapper leaves —
- *   a low green lip at the front, tall curled leaves rising around the sides and back.
+ * One idea: a pale round head of overlapping leaf caps with raised lips, in a ring of
+ *   six wide, cupped, wavy dark outer leaves flaring low (tips below the crown).
  * Shape language: round dominant (head, cupped leaves); soft ruffled edges secondary.
  * Palette: head #9ed36a pale (60), wrapper leaf #5cb85c (30), vein/fold dark #3c7a3d
  *   and sun-lit leaf rim #86d47e (10 accent at the ruffled edge).
@@ -16,10 +16,10 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Rig/animation: none (static prop).
  */
 
-const HEAD = rgb('#9ed36a');
-const HEAD_LIGHT = rgb('#c3e88f');
+const HEAD = rgb('#b8dc84');
+const HEAD_LIGHT = rgb('#d8efb0');
 const HEAD_DARK = rgb('#6fae43');
-const LEAF = rgb('#5cb85c');
+const LEAF = rgb('#5f9e3a');
 const LEAF_DARK = rgb('#3c7a3d');
 const LEAF_LIGHT = rgb('#86d47e');
 
@@ -134,44 +134,66 @@ export default defineAsset({
         const m = 0.5 + 0.5 * noise.fbm(x * 16, y * 16, z * 16, 2);
         return mixRgb(c, HEAD_LIGHT, m * 0.12);
       });
-    // A few small nub bumps on the crown, as in the mock.
-    const nubs = [
-      sdf.sphere(0.012).at(0.035, 0.155, 0.04),
-      sdf.sphere(0.01).at(-0.05, 0.15, -0.022),
-      sdf.sphere(0.009).at(0.006, 0.168, -0.04),
-      sdf.sphere(0.008).at(-0.022, 0.163, 0.032),
-    ];
-    k.body('head', sdf.union(head, ...nubs), {
-      color: '#9ed36a',
+    // Overlapping leaf caps: thick shells of the head cut by offset spheres, each with a raised lip.
+    const caps = [
+      [0.0, 0.17, 0.06, 0.1, 0.006],
+      [-0.06, 0.1, -0.03, 0.095, 0.009],
+      [0.06, 0.11, -0.03, 0.095, 0.012],
+    ].map(([cx, cy, cz, r, g]) =>
+      sdf
+        .ellipsoid([HEAD_RX + g, HEAD_RY + g, HEAD_RZ + g])
+        .at(0, HEAD_CY, 0)
+        .intersect(sdf.sphere(r).at(cx, cy, cz))
+        .paintFn((x, y, z) => {
+          const rib = Math.exp(-Math.pow((x - cx) / 0.012, 2));
+          const v = Math.exp(-Math.pow((Math.abs(x - cx) - 0.03 - 0.3 * (y - cy) * 0) / 0.006, 2));
+          return mixRgb(mixRgb(HEAD, HEAD_LIGHT, 0.3 + 0.5 * Math.max(rib, v * 0.7)), HEAD_DARK, 0.15);
+        }),
+    );
+    k.body('head', sdf.union(head, ...caps), {
+      color: '#b8dc84',
       roughness: 0.55,
       metalness: 0,
-      detail: 0.006,
+      detail: 0.005,
       textureDensity: 2,
       paintWeight: 2,
-      maxTriangles: 1200,
-      bump: (x, y, z) => 0.0008 * noise.fbm(x * 34, y * 34, z * 34, 2),
+      maxTriangles: 1700,
+      bump: (x, y, z) => 0.0012 * noise.fbm(x * 40, y * 40, z * 40, 2),
     });
 
-    // -------------------------------------------------------------- leaves
-    // Four big wrapper leaves rising out of a low cupped base.
+    // Six wide wavy outer leaves, cupped, flaring low and wide.
+    const leafShape = (az: number, sc: number) => {
+      const blade = sdf.ellipsoid([0.05, 0.04, 0.07]);
+      return blade
+        .subtract(sdf.ellipsoid([0.048, 0.04, 0.068]).at(0, 0.03, 0.0))
+        .displace(0.006, (x, y, z) => Math.sin(x * 70) * Math.max(0, z) * 6)
+        .scale(sc)
+        .rotateX(-50)
+        .at(0, 0.075, 0.075)
+        .rotateY(az)
+        .paintFn((x, y, z) => {
+          const phi = Math.atan2(x, z) - deg(az);
+          const d = Math.atan2(Math.sin(phi), Math.cos(phi));
+          const rib = Math.exp(-Math.pow(d / 0.1, 2));
+          const c = mixRgb(LEAF_DARK, LEAF, 0.5 + 0.5 * Math.min(1, y / 0.08));
+          return mixRgb(c, HEAD_LIGHT, 0.35 * rib);
+        });
+    };
     const leaves = sdf
       .union(
-        baseLip,
-        wrapperLeaf(45, 14, 0.02, 0.072, 0.97),
-        wrapperLeaf(135, 8, 0.03, 0.076, 1.12),
-        wrapperLeaf(225, 8, 0.03, 0.076, 1.12),
-        wrapperLeaf(315, 14, 0.02, 0.072, 0.97),
+        sdf.cylinder(0.06, 0.03, 0.01).at(0, 0.02, 0),
+        ...[0, 60, 120, 180, 240, 300].map((a, i) => leafShape(a + 15, i % 2 ? 1.0 : 1.12)),
       )
-      .intersect(sdf.halfSpace([0, -1, 0], 0)); // flat, clean ground contact
+      .intersect(sdf.halfSpace([0, -1, 0], 0));
     k.body('leaves', leaves, {
-      color: '#5cb85c',
+      color: '#5f9e3a',
       roughness: 0.72,
       metalness: 0,
-      detail: 0.006,
+      detail: 0.005,
       textureDensity: 2,
       paintWeight: 2,
-      maxTriangles: 1650,
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 22, y * 22, z * 22, 2),
+      maxTriangles: 2000,
+      bump: (x, y, z) => 0.0015 * noise.fbm(x * 30, y * 30, z * 30, 2),
     });
   },
 });
