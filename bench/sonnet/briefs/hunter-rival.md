@@ -1,0 +1,17 @@
+# hunter-rival (enemies/humanoid/hunter-rival) -> assets/hunter-rival.ts
+
+A smug rival human hunter about 1.0 m tall, faces +Z, on the ranger base (assets/ranger.ts: the rogue rig with knee bones, a bow on `bowgrip`, a quiver, a nocked arrow, a hood, a cloak; clips idle, walk, run, attack, hit, death, taunt; variant slots and presets). Bar 8/10 (character).
+
+Mockup: docs/enemy-mockups/hunter-rival_001.jpg (set `reference` to that path). Match its idea, with one change: the ears are small round HUMAN ears, not pointed. A flat brown leather cap with a wide fur-textured band; a red-brown wavy fringe under the cap; one raised brow and one lowered brow, big dark eyes, rosy cheeks, a wide smug teeth-baring grin; a full red-brown beard; a dark green wool tunic (knit bump) with fur cuffs and a fur hem band; a brown leather vest open at the front; a wolf-tooth necklace (a string of small white teeth with a bigger fang at the center); a wide brown belt with a round steel buckle and a small pouch; a quiver of arrows on the back over the right shoulder; a dark recurve bow held low in the left hand; fingerless gloves; tall brown laced boots with fur tops.
+
+Palette: cap #7a5a3a with a #9a7a58 fur band (roughness 1, fur grooves in bump); hair, brows, beard #7a3a22 with #9a4a2a lit strands; skin #f0c8a0 with #e8a090 cheeks; teeth #f0ece0; tunic #3a4a30 with #4a5a3e lit (knit bump); fur cuffs and hem #9a7a58; vest #5a3a26 with #7a5236 lit; necklace teeth #ece4d0 on a #3a2a1e string; belt #4a3222 with a #8a8c92 buckle; gloves #3a2a1e; boots #4a3020 with #9a7a58 fur tops and #2a1e14 laces; bow #3a2a1e with a #5a3a24 grip; arrows #8a6a44 with #ece4d0 fletching.
+Variants: tunic (green default, brown #5a4a30, blue #2a4a5a), beard (red-brown default, black #24201c, blond #c8a050), cap (brown default, grey #6a6a64, black #2a2622).
+
+Construction recipe:
+1. Copy assets/ranger.ts. Remove the hood, the cowl, and the cloak. Keep the rig, the clips, the bow, the bowstring bones, the quiver, the arrows, the nocked arrow, the jerkin (recolor to the vest), the belt, the pouch, the pants, the boots.
+2. Head: a flat cap (a squashed ellipsoid 0.3 x 0.08 x 0.28 on the crown with a fur band torus R 0.14 r 0.03 at the brim, fur grooves in bump); a wavy fringe (three overlapping chains) under the front of the band; round human ears; one raised brow and one lowered brow; big eyes; a wide grin (an arc cut 0.08 wide with a teeth strip 0.06 x 0.014); a full beard (a rounded bib 0.18 x 0.12 x 0.08, strand grooves in bump).
+3. Body: a wool tunic (the torso body, knit bump) with fur cuff tori at the wrists and a fur hem torus at the hip; an open vest shell with two front flaps; a necklace (a torus R 0.09 r 0.004 with nine small cone teeth along the front half and one fang 0.025 long at the center); a belt with a round buckle and a pouch; fingerless gloves (a glove color band on the palms only); laced boots with a fur top torus and three lace grooves in bump.
+4. Weapon: the bow held low in the left hand (the ranger's pose), the quiver on the back. The attack is the ranger's draw and release. `./forge check hunter-rival` must end with `result ok` and the ground check must be ok.
+5. Sprites: the flat cap, the red beard, the green tunic, the bow, and the quiver must read at 128 px.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/hunter-rival.ts. Finish with one `./forge all hunter-rival`.
