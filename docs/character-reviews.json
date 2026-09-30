@@ -3496,5 +3496,35 @@
     ],
     "next": "Done for P1. A later polish pass could thin the crest brush into a spike and widen the cape.",
     "reviewedAt": "2026-09-30T12:21:05+00:00"
+  },
+  "shield-maiden": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the knight base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a mid-grey steel helm with two swept wings, a diamond gem, and a riveted brow band, blonde hair as two striped braids over the shoulders with a fringe and eight nape locks, a puffed fur collar and fur boot cuffs, a teal tunic with a knotwork hem, a brown leather harness with a buckle and a hip pouch, a bearded axe with a hammer poll and a leather wrap held low in the right hand, and a round blue shield with a white spiral. 58,182 triangles, no build warnings, forge check result ok at 4.1 cm, ground ok.",
+    "strengths": [
+      "Grey steel, gold hair, teal cloth, and brown leather give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round face and proportions as the knight and the paladin.",
+      "The winged helm and the spiral shield make the silhouette unique from every angle."
+    ],
+    "issues": [
+      "The axe head is smaller and flatter than the mockup's.",
+      "The braids are thick coils; the mockup hair is looser and flows behind.",
+      "The helm has no radiating ridge lines and the face has no lashes."
+    ],
+    "next": "Done for P1. A later polish pass could enlarge the axe head and loosen the braids.",
+    "reviewedAt": "2026-09-30T12:46:14+00:00"
   }
 }

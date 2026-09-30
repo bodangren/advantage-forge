@@ -101,15 +101,15 @@ duelist	hero	high	aecf71eb7af20d8f1	2	accepted	8.0	run 4; accepted after one fee
 gladiator	hero	high	a8f53fc6fd90a1279	2	accepted	8.0	run 4; accepted after one feedback pass (resumed after the session exit)
 summoner	hero	high	a025d1c8786fad721	3	skipped	7.8	run 4; hair rework reads as crossing ropes from the side and back; second retry used; source uncommitted for the owner
 guardian	hero	high	a07bd6fd0546d9151	2	failed	7.8	run 4; plates flat and hammer small after the feedback pass; fresh high rework next
-shield-maiden	hero	high	a2cb7c444c0a3c093	2	running	7.5	run 4; feedback pass in flight (steel shading, bearded axe, hair, clearance)
+shield-maiden	hero	high	a2cb7c444c0a3c093	2	accepted	8.0	run 4; accepted after one feedback pass (resumed after the session exit)
 mana-potion	item	low	a2e7820f9cf8d3174	1	failed	5.5	run 4; base flask is bad; waits for the health-potion base rework
 stamina-potion	item	low	a2e7820f9cf8d3174	1	failed	5.5	run 4; base flask is bad; waits for the health-potion base rework
 strength-potion	item	low	a2e7820f9cf8d3174	1	failed	5.5	run 4; base flask is bad; waits for the health-potion base rework
 health-potion	item	medium	a4920a2e10fc19155	3	accepted	7.5	run 4; P0 base rework accepted after one feedback pass and an orchestrator material pass; base for the nine potion copies
 key-gold	item	medium	a5ae16425721cd8d1	2	accepted	7.0	run 4; accepted after one feedback pass
-key-bronze	item	medium	a5ae16425721cd8d1	2	failed	6.5	run 4; bow still weak after the feedback pass; fresh high rework next
-key-skeleton	item	medium	a5ae16425721cd8d1	2	failed	6.5	run 4; bow still weak after the feedback pass; fresh high rework next
+key-bronze	item	high	a496d25ae63a0ad34	3	accepted	7.0	run 4; accepted after a fresh high bow rework
+key-skeleton	item	high	a496d25ae63a0ad34	3	skipped	6.8	run 4; skull face reads only from the east; second retry used; source uncommitted
 guardian	hero	high	a9d4c335c51237960	3	running	7.8	run 4; fresh high rework of the armor plates and hammer
-mana-potion	item	medium	a9a19b34887f3faed	1	running	-	run 4; three potions per agent on the reworked base (mana, stamina, strength)
-stamina-potion	item	medium	a9a19b34887f3faed	1	running	-	run 4; same agent
-strength-potion	item	medium	a9a19b34887f3faed	1	running	-	run 4; same agent
+mana-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
+stamina-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
+strength-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
