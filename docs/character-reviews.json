@@ -3946,5 +3946,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T19:31:54+00:00"
+  },
+  "sailor": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young cheerful sailor on the adventurer base: a flat blue knit beret set back over a brown fringe, a soft closed smile, a blue and white striped shirt with a red neckerchief, a thick braided rope from the shoulder to the hip with a coil and a leather holster, a brown belt, rolled cream trousers, bare feet, and a cutlass. Eight clips, check ok (above 5 cm). 52,426 triangles.",
+    "strengths": [
+      "The beret, stripes and red neckerchief read at 128 px from every direction.",
+      "The braided rope with its hip coil matches the mockup's rope.",
+      "The closed smile and calmer eyes match the mockup's expression after the feedback pass."
+    ],
+    "issues": [
+      "The fringe is a row of narrow locks; the mockup has one broad swept lock.",
+      "The beret is plain blue; the mockup's knit reads in color.",
+      "The rope coil reads as a ring rather than a hanging loop."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T19:50:07+00:00"
   }
 }
