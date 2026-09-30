@@ -65,5 +65,6 @@ animated-weapon	character	high	ab046233610c8f180	2	accepted	8.0	feedback pass ac
 brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final build; accepted after one feedback pass
 highwayman	character	high	aa454d71b0c488777	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-mercenary	character	high	a00df57eac366789c	1	feedback	7.5	enemies run 3; one feedback pass sent
+mercenary	character	high	a351a2faadca9af51	3	skipped	7.6	three passes 7.5, 7.7, 7.6; hair regressed on the rework; source uncommitted, review entry added
 deserter	character	high	a42ef1f2f0a2130ef	0	running	-	enemies run 3
+assassin	character	high	-	0	running	-	enemies run 3

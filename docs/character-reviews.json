@@ -2757,5 +2757,34 @@
     ],
     "next": "Lengthen the coat skirt 0.04 m, scale the pistol 1.2x, and raise the boot fold bands above the hem line.",
     "reviewedAt": "2026-09-30T00:27:47+00:00"
+  },
+  "mercenary": {
+    "overall": 7.6,
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 3,
+      "motion": 4
+    },
+    "summary": "Human sell-sword on the knight base: a steel breastplate with a lion emblem over a blue gambeson, small riveted pauldrons, a black beard, a forehead scar, a red sash, bare forearms, a split leather skirt with a curled tail, and a broad longsword. Three passes scored 7.5, 7.7, and 7.6 (Sonnet 5.5 high tier); skipped just under the bar.",
+    "strengths": [
+      "The plate, the sash, the sword, and the skirt read as separate shapes at 128 px.",
+      "The bulk and the bare forearms match the mockup's stocky build.",
+      "Check ok (closest 1.2 cm), ground ok, 44,420 triangles, no warnings."
+    ],
+    "issues": [
+      "The hair is a flat black cap with tiny spikes; the mockup has a wild swept fringe.",
+      "The lion emblem is tiny at sprite size.",
+      "The beard and the pauldrons still crowd the plate in the front sprite."
+    ],
+    "next": "Restore the swept spiky fringe from pass 2 (spikes 0.08 m, swept back), enlarge the emblem to 0.06 m, and drop the beard 0.01 m so the plate top shows.",
+    "reviewedAt": "2026-09-30T00:41:46+00:00"
   }
 }
