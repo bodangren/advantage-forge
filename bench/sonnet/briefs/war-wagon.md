@@ -1,0 +1,11 @@
+# war-wagon (vehicles/land/war-wagon) -> assets/war-wagon.ts
+
+A war wagon: a four-wheeled wagon armored with dark iron plates (#4a4f55) on the sides, each plate with a row of rivet domes, a crenellated wooden wall on top with two arrow slits, iron spikes (cones 0.15 m) on the wheel hubs, a crossbow-like ballista on a pivot at the front, and a red pennant on a pole at the back.
+
+Size: about 2.6 m long (Z), 1.1 m wide (X), up to 1.8 m tall with a cover; four wheels on y = 0; drawbar shaft toward +Z. Chibi scale: a character is 1 m tall, a barrel 0.9 m; keep the vehicle's proportions chunky (wheels big, planks thick, nothing thinner than 0.04 m).
+Mockup: docs/vehicle-mockups/war-wagon-mock.jpg (set `reference` to that path). Match its idea and colors, not every detail.
+Base file: assets/wagon.ts (four-wheeled farm wagon, 433 lines, 15,000 triangles). Read it first. Copy the base with cp, keep its plank bed, low sides, four spoked wheels, axles and drawbar, and change only what the description says (the cargo, the cover, the fittings). Wood palette shared by every vehicle: honey oak #b5814a (dominant), warm brown #8a5a35 and walnut #6b4226 (secondary), pale cut wood #c9a06a on lit tops, worn iron #4a4f55 for fittings (roughness 0.5, metalness 0.8). Wood roughness 0.8, no metalness. Plank seams and grain go in `bump` (a function) and in `paintFn` noise, never in subtracted grooves.
+
+Art direction (Chibi Quest): rounded chunky forms, soft bevels, oversized readable features, a silhouette that reads at 128 px. One body per material with its own roughness and metalness. Emissive bodies use a full-brightness base color with emissiveIntensity 0.35 to 0.7. Glass and magic use opacity 0.5 or more. The `bump` body option is a function `(x, y, z) => number`.
+
+Limits: whole asset under 20,000 triangles; `detail` 0.006 to 0.01 for the big forms, 0.004 for small fittings. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Iterate with `./forge render war-wagon --fast` (at most three looks at out/war-wagon/render.png: silhouette first, then proportions, then color), then run `./forge all war-wagon` once and confirm from its output that the textured build passed. Never commit. Only create or edit assets/war-wagon.ts. Report triangles, warnings, your self-score out of 10, and the three largest differences from the mockup.

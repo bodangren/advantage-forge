@@ -1,0 +1,11 @@
+# merchant-cart (vehicles/land/merchant-cart) -> assets/merchant-cart.ts
+
+A merchant cart: a two-wheeled cart with a red-and-white striped canvas awning on four posts over the bed (awning 1.5 x 1.1 m, scalloped edge, 1.5 m high), and a display of goods: rolled cloth bolts in three colors (#c8302a, #2f6aa8, #e0bb60), a stack of three small crates, and a hanging lantern at the front post.
+
+Size: about 1.4 m long (Z), 0.9 m wide (X), 1.0 m tall; stands on y = 0 on both wheels and the shaft tips; shafts toward +Z. Chibi scale: a character is 1 m tall, a barrel 0.9 m; keep the vehicle's proportions chunky (wheels big, planks thick, nothing thinner than 0.04 m).
+Mockup: docs/vehicle-mockups/merchant-cart-mock.jpg (set `reference` to that path). Match its idea and colors, not every detail.
+Base file: assets/market-cart.ts (two-wheeled cart, 487 lines). Read it first. Copy the base with cp, keep its bed, side boards, two spoked wheels, axle and shafts, and change only what the description says (the cargo, the canopy, the fittings). Wood palette shared by every vehicle: honey oak #b5814a (dominant), warm brown #8a5a35 and walnut #6b4226 (secondary), pale cut wood #c9a06a on lit tops, worn iron #4a4f55 for fittings (roughness 0.5, metalness 0.8). Wood roughness 0.8, no metalness. Plank seams and grain go in `bump` (a function) and in `paintFn` noise, never in subtracted grooves.
+
+Art direction (Chibi Quest): rounded chunky forms, soft bevels, oversized readable features, a silhouette that reads at 128 px. One body per material with its own roughness and metalness. Emissive bodies use a full-brightness base color with emissiveIntensity 0.35 to 0.7. Glass and magic use opacity 0.5 or more. The `bump` body option is a function `(x, y, z) => number`.
+
+Limits: whole asset under 12,000 triangles; `detail` 0.006 to 0.01 for the big forms, 0.004 for small fittings. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Iterate with `./forge render merchant-cart --fast` (at most three looks at out/merchant-cart/render.png: silhouette first, then proportions, then color), then run `./forge all merchant-cart` once and confirm from its output that the textured build passed. Never commit. Only create or edit assets/merchant-cart.ts. Report triangles, warnings, your self-score out of 10, and the three largest differences from the mockup.
