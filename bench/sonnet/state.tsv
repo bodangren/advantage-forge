@@ -74,6 +74,6 @@ pirate-captain	character	high	a8672da7d9e65a6f6	3	accepted	8.0	enemies run 3; ac
 hunter-rival	character	high	ac17370466e234ac8	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 dark-mage	character	high	a1baed82a4a863f72	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 warlock	character	high	abddb9815917ece1a	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-witch	character	high	a0a0d2f4e2c28160f	1	feedback	7.9	enemies run 3; one feedback pass sent
+witch	character	high	a0a0d2f4e2c28160f	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 cult-leader	character	high	a65f4ca6a015e24cc	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 evil-priest	character	high	a37c4398c86f02286	0	running	-	enemies run 3 (last open enemy)

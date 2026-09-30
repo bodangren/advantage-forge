@@ -3047,5 +3047,34 @@
     ],
     "next": "Add a curled ornament at the brow center, soften the beard color to #a8a8a0, and move the death-clip left hand outward.",
     "reviewedAt": "2026-09-30T03:15:17+00:00"
+  },
+  "witch": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Cackling human witch on the mage base: a tall bent black hat with a purple band, a gold buckle, and a patch, wild grey-green hair with curly fringe locks, a long crooked nose with a wart, a wide gap-toothed grin, a ragged black dress with purple patches, loose sleeves, and hanging hem strips, a green shawl, curled black shoes, a gnarled broom held bristles-up, and a glowing green potion. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The bent hat, the hair, the crooked nose, the grin, the broom, and the green potion read at 128 px in all eight directions.",
+      "The hat tilt keeps the eyes visible in the front sprites.",
+      "Check ok, ground ok, 55,238 triangles, no warnings."
+    ],
+    "issues": [
+      "The eyes are bigger and rounder than the mockup's.",
+      "The dress is a short cone rather than a jacket over a skirt.",
+      "The potion sits on an upturned palm instead of hanging from the fingers."
+    ],
+    "next": "Narrow the eyes 15 percent, add a jacket hem line at the waist, and rotate the potion hand so the bottle hangs.",
+    "reviewedAt": "2026-09-30T03:16:45+00:00"
   }
 }
