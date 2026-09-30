@@ -88,3 +88,4 @@ warrior	hero	high	a5de2ca09942d6777	1	running	-	run 4
 palm-tree	tree	high	ac4244983e6dd7abd	3	accepted	7.0	run 4; 106801 tokens in all (two medium passes plus one high rework)
 healer	hero	high	a3fbcc9dd0f3a2cba	1	running	-	run 4
 giant-crystal	terrain	medium	aeb189079278bbc82	2	accepted	7.2	run 4; 55862 tokens; accepted after one feedback pass
+hunter	hero	high	a7fd8880af890f4c8	1	running	-	run 4
