@@ -2728,5 +2728,34 @@
     ],
     "next": "Darken the axe edge band one step, add cheek spheres under the eyes, and give the fur clumps a bump groove each.",
     "reviewedAt": "2026-09-29T23:50:26+00:00"
+  },
+  "highwayman": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Masked human highwayman on the bandit base: a big black leather tricorn with a stitched brim, a red cloth mask, a long grey wool coat with a raised collar, lapels, brass buttons, and a flared skirt, tall folded boots, a flintlock pistol in the right hand, and a gold coin purse in the left. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The tricorn, the red mask, the grey coat, the pistol, and the purse read at 128 px in all eight directions.",
+      "The coat flares at the hem with a front opening and a back vent, so it reads as a coat, not a jacket.",
+      "Check ok (closest over 5 cm), ground ok, 40,968 triangles, no warnings."
+    ],
+    "issues": [
+      "The coat is still shorter than the mockup's knee-length coat.",
+      "The pistol is small next to the mockup's.",
+      "The boot shafts hide under the coat hem."
+    ],
+    "next": "Lengthen the coat skirt 0.04 m, scale the pistol 1.2x, and raise the boot fold bands above the hem line.",
+    "reviewedAt": "2026-09-30T00:27:47+00:00"
   }
 }
