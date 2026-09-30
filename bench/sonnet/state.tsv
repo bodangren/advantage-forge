@@ -110,6 +110,12 @@ key-gold	item	medium	a5ae16425721cd8d1	2	accepted	7.0	run 4; accepted after one 
 key-bronze	item	high	a496d25ae63a0ad34	3	accepted	7.0	run 4; accepted after a fresh high bow rework
 key-skeleton	item	high	a496d25ae63a0ad34	3	skipped	6.8	run 4; skull face reads only from the east; second retry used; source uncommitted
 guardian	hero	high	a9d4c335c51237960	3	running	7.8	run 4; fresh high rework of the armor plates and hammer
-mana-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
-stamina-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
-strength-potion	item	medium	a9a19b34887f3faed	2	running	6.8	run 4; feedback pass (full glow color as the liquid base)
+mana-potion	item	medium	a9a19b34887f3faed	2	accepted	7.0	run 4; accepted after one feedback pass and an orchestrator glass tint pass
+stamina-potion	item	medium	a9a19b34887f3faed	2	accepted	7.0	run 4; accepted after one feedback pass and an orchestrator glass tint pass
+strength-potion	item	medium	a9a19b34887f3faed	2	accepted	7.0	run 4; accepted after one feedback pass and an orchestrator glass tint pass
+speed-potion	item	medium	ade4972569cada1fa	2	running	6.8	run 4; feedback pass in flight (cone flask; shield emblem)
+antidote	item	medium	ade4972569cada1fa	1	accepted	7.0	run 4; accepted on the first pass (with the glass tint update)
+resistance-potion	item	medium	ade4972569cada1fa	2	running	6.8	run 4; feedback pass in flight (cone flask; shield emblem)
+silver-coin	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; coins and ancient key batch
+copper-coin	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; same agent
+ancient-key	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; same agent
