@@ -144,3 +144,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-09-30 09:03	assassin	character	high	run3	23769	7	7	7.7	7.7	8	failed	feedback pass: hood peak, rolled collar, angry eyes with red rims, drips, neutral leather, longer daggers done; at 128 px the hood rim hides the eyes so the face reads as a black blob; second retry = fresh high agent
 2026-09-30 09:06	living-statue	character	high	run3	0	2	38	-	-	8	stalled	rework 2 agent stopped: no activity after its first two reads for 37 min; relaunched
 2026-09-30 09:06	deserter	character	high	run3	0	2	37	-	-	8	stalled	build agent stopped: no activity after its first two reads for 37 min; relaunched
+2026-09-30 09:16	assassin	character	high	run3	76568	18	10	8	8.0	8	accepted	fresh rework (second retry): hood opening raised, eyes lifted with a light emissive, mask lifted; the sprite face reads; check ok 0.6 cm, ground ok, 44098 tris

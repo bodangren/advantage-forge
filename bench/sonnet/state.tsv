@@ -67,4 +67,5 @@ highwayman	character	high	aa454d71b0c488777	2	accepted	8.0	enemies run 3; accept
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 mercenary	character	high	a351a2faadca9af51	3	skipped	7.6	three passes 7.5, 7.7, 7.6; hair regressed on the rework; source uncommitted, review entry added
 deserter	character	high	af2f450d57635b57b	0	running	-	enemies run 3; relaunched after a stall
-assassin	character	high	a9fc8a442a84564d7	3	running	7.7	fresh rework (second retry, sprite face) under run 3
+assassin	character	high	a9fc8a442a84564d7	3	accepted	8.0	enemies run 3; accepted after one feedback pass and a fresh rework
+smuggler	character	high	-	0	running	-	enemies run 3

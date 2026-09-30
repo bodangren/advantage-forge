@@ -2786,5 +2786,34 @@
     ],
     "next": "Restore the swept spiky fringe from pass 2 (spikes 0.08 m, swept back), enlarge the emblem to 0.06 m, and drop the beard 0.01 m so the plate top shows.",
     "reviewedAt": "2026-09-30T00:41:46+00:00"
+  },
+  "assassin": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Hooded human assassin on the rogue base: a deep black hood with a forward peak, folds, and a rolled collar, a grey knit mask, narrow angry eyes with red corner marks under black hair drips, a leather harness with silver buckles, a red sash, hip tassets, and two curved daggers in a reverse grip. Reviewed 8.0 after one build, one feedback pass, and a fresh rework for the sprite face (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The hood, the red sash, the harness, and the two blades read at 128 px in all eight directions.",
+      "The pale eyes and the grey mask now show inside the hood in the front sprite.",
+      "Check ok (closest 0.6 cm), ground ok, 44,098 triangles, no warnings."
+    ],
+    "issues": [
+      "The sprite face is still small; the SW and SE views show only a wedge of it.",
+      "The hood is smoother than the mockup's heavy draped hood.",
+      "The gear lacks the mockup's buckle cluster and hip anchors."
+    ],
+    "next": "Tilt the hood front rim up 5 degrees, add a thick black band above the mask, and add two small buckle boxes at the hips.",
+    "reviewedAt": "2026-09-30T01:14:07+00:00"
   }
 }
