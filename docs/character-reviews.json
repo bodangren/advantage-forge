@@ -3886,5 +3886,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T18:57:45+00:00"
+  },
+  "monster-hunter": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young monster hunter on the ranger base: a wide black hat with a band and a silver buckle plate, dark brown locks, a charcoal coat with leather trim panels and stitch lines, a brown bandolier with silver ball vials, a chain and a tooth necklace, a silver-buckled belt, brown boots with buckle straps, a cleaver in the right hand and a spiked club in the left. Eight clips, check ok (above 5 cm). 59,586 triangles.",
+    "strengths": [
+      "The hat, the pale face and the brown bandolier and boots give the dark figure value contrast at 128 px.",
+      "The cleaver and spiked club read as two different weapons.",
+      "The bandolier vials, chain and tooth necklace match the mockup's kit."
+    ],
+    "issues": [
+      "The mockup has a heavy beard; the build keeps the beardless hero face by rule.",
+      "The cleaver blade is flat, not crescent-shaped, and its handle is long.",
+      "The hat brim reads thin from the front."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T19:19:46+00:00"
   }
 }
