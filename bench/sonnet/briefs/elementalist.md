@@ -1,0 +1,17 @@
+# elementalist (heroes/magic/elementalist) -> assets/elementalist.ts
+
+A young elementalist hero about 1.0 m to the top of the hair, faces +Z, on the mage base (assets/mage.ts: the wizard's body, skeleton with `skirt`, `cloak`, `hatroot`, `hattip`, `orb`, and knee bones; a wand rigid in `hand.R`, a book on `hand.L`; clips idle, walk, run, attack, attack2, hit, death, victory; variant slots eyes, hair, skin, clothing with presets). Bar 8/10 (character).
+
+Mockup: docs/hero-mockups/elementalist_001.jpg (set `reference` to that path). Match its idea, with one change: no beard or mustache; every hero on this set has the young, round, beardless face. White hair swept up and back in thick soft locks; a serious brow, big amber eyes; a long robe split down the middle: the character's left half (+X) ice blue, the right half (-X) flame orange, with wide sleeves in the same split; gold shoulder rings; a rope belt; a spike of pale ice held up in the left hand and a ball of fire held up in the right hand; brown boots; no hat, no cape.
+
+Palette: hair #f0ece4 with #c8c4bc grooves; skin #f2c7a4; robe blue half #4a9ad8 with #2f6aa8 folds, orange half #e8783a with #b84a1c folds (roughness 0.85); gold rings #e0b040 (metalness 0.7, roughness 0.4); rope belt #8a7a5a; ice #a0e0ff emissive 0.8 on a #205070 base, opacity 0.85, roughness 0.15; fire #ff9a3c emissive 1.5 on a #5a1a05 base, opacity 0.85, with a #ffe060 core; boots #5a3a24.
+Variants (the hero slot set): eyes (amber default #b8742a, blue #2f6aa8, green #3d7a45), hair (white default, black #2a2426, auburn #7a3a22), skin (fair default, tan #d49a72, brown #8a5a3e), clothing (blue-orange default: the blue half is the slot; violet #6a4a9e, green #2e7a3c). Presets: default, violet, green.
+
+Construction recipe:
+1. Copy assets/mage.ts. Remove the hat, the glasses, the wand, the book, and the cape. Keep the rig (keep `orb`; add a second `ice` bone as a child of `hand.L`), the clips (rewrite attack as a fire throw from the right hand and attack2 as an ice spike thrust from the left), the robe (split paint at x = 0 with a 0.01 gold seam stroke), the sleeves, the belt (as a rope torus), the under-robe, the boots.
+2. Head: hair as 10 to 12 thick soft locks (chains r 0.03, smoothUnion 0.015) swept up and back from a cap, two locks over the brow; a serious brow; big eyes; round human ears.
+3. Body: the split robe (one body, `paintFn` picks blue for x > 0 and orange for x < 0 with a gold seam band 0.01 wide at the center front and back); the sleeves split the same way; two gold shoulder rings (tori R 0.05 r 0.012 on the shoulders); the rope belt (a torus with a twist groove).
+4. Held items: the fire (a displaced cone 0.14 tall, emissive, with a bright core sphere) on `orb` above the open right palm; the ice spike (three sharp cones 0.16, 0.11, 0.08 tall in a cluster, emissive) on the `ice` bone above the open left palm; both arms forward and out at chest height with palms up in idle. Attack is a fire throw (the fire flies forward 0.35 m and back); attack2 is an ice thrust. `./forge check elementalist` must end with `result ok` and the ground check must be ok.
+5. Sprites: the white hair, the blue and orange halves, the fire, and the ice must read at 128 px; the fire must stay orange and the ice pale blue, not white.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/elementalist.ts. Finish with one `./forge all elementalist`.
