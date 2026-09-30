@@ -3526,5 +3526,35 @@
     ],
     "next": "Done for P1. A later polish pass could enlarge the axe head and loosen the braids.",
     "reviewedAt": "2026-09-30T12:46:14+00:00"
+  },
+  "guardian": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the paladin base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build, one feedback pass, and one fresh armor rework: a white dome helm with a gold crest, a crown-notched gold brow band, brown hair, white stacked pauldrons with gold rims, a raised white cuirass with a gold rim, a gold sun emblem and a gold diamond buckle, a teal skirt and cape, white gauntlets and greaves, a short iron war hammer with gold end caps held low in the right hand, and a large teal kite shield with a gold rim and a white four-point star angled toward the viewer. 63,298 triangles, no build warnings, forge check result ok at 4.3 cm, ground ok.",
+    "strengths": [
+      "White plate, gold trim, teal cloth, and brown hair give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the paladin and the knight.",
+      "The crested helm and the star shield make the silhouette unique from every angle."
+    ],
+    "issues": [
+      "The hammer head reads small next to the mockup's heavy block.",
+      "The gold rims are thinner than the mockup's fat gold edges, and the neck guard is missing.",
+      "The sun emblem is small at sprite size."
+    ],
+    "next": "Done for P1. A later polish pass could enlarge the hammer head and widen the gold rims.",
+    "reviewedAt": "2026-09-30T12:57:49+00:00"
   }
 }
