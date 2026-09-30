@@ -130,3 +130,15 @@ times in five; the misses were fixed by one feedback pass or by an orchestrator 
 thickness). Lessons: put fine ripples in `bump`, not in `displace`; a glass shell reads as cracks;
 an emissive body needs a full-brightness base and a moderate intensity; a thin item lying flat
 never reads at 128 px, so stand it up and thicken it.
+
+## 23:10 P2 items, wave 2
+
+Batch A (13 items: ores, gems, scrolls, maps, wood) closed with 13 accepted at 7.0 to 7.3 and 0
+skips, about 300K subagent tokens. Three of five groups needed one feedback pass (ores: a wide
+rock with a large bevelled metal face; maps: propped at 70 degrees with a raised X; sapphire and
+crystal-shard: crisp facets, a slender cluster). Two orchestrator edits closed the last gaps
+(thinner ore veins; a full X and a soft sea wash on map-fragment). Batch B (17 items: herbs,
+monster parts, shell and feather, textiles, quest documents) runs on four medium agents. mmx
+returned "Network request failed" for eight mockups; those items build from the brief text and a
+retry job runs in the background. Six items wait for the next slots: leather, hide, relic-orb,
+artifact-idol, ration, bandage.
