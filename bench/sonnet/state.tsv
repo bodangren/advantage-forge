@@ -164,5 +164,10 @@ staff	static-rework	medium	a846507376d0b240a	1	accepted	7.2	run 4; faceted cyan 
 pike	static-rework	orchestrator	-	1	accepted	7.0	run 4; thicker pole, butt knobs
 scythe	static-rework	orchestrator	-	1	accepted	7.0	run 4; thicker snath and blade
 
-grimoire	static-rework	medium	pending	1	running	-	run 4; equipment set; brief grimoire-rework.md
-throwing-axe	static-rework	medium	pending	1	running	-	run 4; equipment set; brief throwing-axe-rework.md
+grimoire	static-rework	medium	ab28896bbd7aa1c33	1	running	-	run 4; equipment set; brief grimoire-rework.md
+throwing-axe	static-rework	medium	ab28896bbd7aa1c33	1	running	-	run 4; equipment set; brief throwing-axe-rework.md
+earring	static-rework	medium	a5e07602d9216ac20	1	running	-	run 4; equipment set
+pendant	static-rework	medium	a5e07602d9216ac20	1	running	-	run 4; equipment set
+sling	static-rework	medium	a5e07602d9216ac20	1	running	-	run 4; equipment set
+gloves	static-rework	medium	a5a2cc4d6badb0b0d	2	running	6.5	run 4; feedback pass in flight
+scabbard	static-rework	medium	a5a2cc4d6badb0b0d	1	accepted	7.2	run 4; upright sheathed sword

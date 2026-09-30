@@ -1,153 +1,82 @@
-import { defineAsset, mixRgb, noise, profile, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Scabbard (equipment/accessories): a 0.8 m leather sword scabbard lying flat on y = 0,
- * length along Z, throat and hilt toward +Z. Chibi Quest style: rounded chunky leather,
- * brass throat and chape, a riveted strap, a belt loop, and the sword's hilt sticking out
- * of the throat (the idea of the concept mockup).
+ * Design note — sheathed short sword (equipment/accessories/scabbard).
  *
- * - Role: hero gear / pickup icon; must read at 128 px.
- * - Size: 0.8 m scabbard, ~1.0 m overall with the hilt; stands on y = 0, centered on Y.
- * - One idea: a well-kept brown leather scabbard dressed with bright brass fittings.
- * - Shape language: long rounded triangle (soft), accent bumps at both ends (brass).
- * - Palette: leather #8a5a35 (dominant), dark leather #5c3a22 (strap, loop, grip),
- *   brass/gold #d4a93a (accent: throat, chape, rivets, guard, pommel).
- * - Materials: leather, dark leather, brass. No rig; static accessory.
+ * Role: hero gear pickup icon; must read at 128 px.
+ * Size: 0.8 m tall, standing upright on its chape (y = 0), facing +Z.
+ * One idea: a chunky sheathed sword: dark leather scabbard, bright gold guard, fat grip.
+ * Shape language: square/rounded boxes (sturdy) with a round pommel.
+ * Palette: scabbard #5a3a28 with #8a5a35 center strip, grip #a8603a, gold #d4a93a.
+ * Materials: leather (roughness 0.7), grip leather (0.75), gold (roughness 0.35, metal 1).
+ * Detail: primary scabbard, guard, grip; secondary chape, throat, belt-loop band, rivets,
+ *   pommel lobes; tertiary leather bump. Focal point: the gold guard.
+ * Rig/animation: none.
  */
-
-const LAY_Y = 0.031; // scabbard axis height (flattened half-height)
-const LAY_Z = -0.39; // profile v 0..0.78 maps to z -0.39..0.39
-const FLAT: [number, number, number] = [1.2, 0.55, 1];
-
-// Lay a revolved profile (axis +Y, v 0..0.78) down along Z.
-const lay = (s: ReturnType<typeof sdf.revolve>) =>
-  s.rotateX(90).scale(FLAT).at(0, LAY_Y, LAY_Z);
 
 export default defineAsset({
   name: 'scabbard',
   description:
-    'Leather sword scabbard lying flat: brass throat and chape, riveted strap, belt loop, hilt sticking out.',
-  detail: 0.006,
+    'Upright sheathed short sword: dark leather scabbard, gold chape, throat and guard, chunky wrapped grip with belt-loop band and rivets, round pommel.',
+  detail: 0.005,
   reference: 'docs/item-mockups/scabbard-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------- leather body
-    const bodyProfile = profile.polygon(
-      [
-        [0.006, 0.0],
-        [0.022, 0.03],
-        [0.031, 0.08],
-        [0.04, 0.18],
-        [0.047, 0.32],
-        [0.051, 0.48],
-        [0.053, 0.62],
-        [0.055, 0.72],
-        [0.056, 0.78],
-      ],
-      { smooth: true },
-    );
-    const body = lay(sdf.revolve(bodyProfile));
-    k.body('leather', body, {
-      color: '#8a5a35',
-      roughness: 0.65,
-      detail: 0.007,
-      maxTriangles: 1050,
-      bump: (x, y, z) => 0.0004 * noise.fbm(x * 240, y * 240, z * 240, 2), // leather grain
-      paintFn: (x, y, z) => {
-        // Mottled hide, darker toward the thin side edges (the seam sides).
-        let c = mixRgb('#8a5a35', '#9a6a3e', 0.5 + 0.5 * noise.fbm(x * 30, y * 30, z * 6, 3));
-        const edge = Math.min(1, Math.max(0, (Math.abs(x) - 0.044) / 0.014));
-        return mixRgb(c, '#5c3a22', edge * 0.9);
+    // Scabbard: tapered rounded slab, narrow at the tip.
+    const outline = profile.polygon([
+      [-0.034, 0.02],
+      [0.034, 0.02],
+      [0.05, 0.44],
+      [-0.05, 0.44],
+    ]);
+    const slab = sdf.extrude(outline, 0.05, 0.02);
+    const strip = sdf.box([0.028, 0.4, 0.06], 0.008).at(0, 0.23, 0.005);
+    k.body(
+      'leather',
+      slab.paintWhere(strip, '#8a5a35', 0.004).paint('#5a3a28').paintWhere(strip, '#8a5a35', 0.004),
+      {
+        color: '#5a3a28',
+        roughness: 0.7,
+        maxTriangles: 1400,
+        bump: (x, y, z) => 0.0006 * noise.fbm(x * 90, y * 90, z * 90, 2),
       },
-    });
-
-    // ------------------------------------------------------------- dark leather: strap, loop, grip
-    const strapProfile = profile.polygon(
-      [
-        [0.05, 0.42],
-        [0.056, 0.445],
-        [0.056, 0.515],
-        [0.05, 0.55],
-      ],
-      { smooth: true },
-    );
-    const strap = lay(sdf.revolve(strapProfile));
-
-    const loop = sdf.chain(
-      [
-        [-0.042, 0.04, 0.22, 0.0095],
-        [-0.042, 0.082, 0.22, 0.0095],
-        [0, 0.108, 0.22, 0.0095],
-        [0.042, 0.082, 0.22, 0.0095],
-        [0.042, 0.04, 0.22, 0.0095],
-      ],
-      0.018,
     );
 
-    const grip = sdf.capsule([0, LAY_Y, 0.432], [0, LAY_Y, 0.545], 0.02);
-
-    k.body('leather-dark', sdf.union(strap, loop, grip), {
-      color: '#5c3a22',
-      roughness: 0.7,
-      maxTriangles: 650,
-      bump: (x, y, z) => 0.0004 * noise.fbm(x * 200, y * 200, z * 200, 2),
-      paintFn: (x, y, z, base) =>
-        // Spiral wrap on the grip only.
-        z > 0.41
-          ? mixRgb(base, '#7a4e2c', 0.5 + 0.5 * Math.sin(Math.atan2(y - LAY_Y, x) * 3 + z * 320))
-          : base,
-    });
-
-    // ------------------------------------------------------------- brass: throat, chape, rivets, hilt furniture
-    const throatProfile = profile.polygon(
-      [
-        [0.055, 0.64],
-        [0.057, 0.68],
-        [0.0585, 0.74],
-        [0.0585, 0.79],
-        [0.056, 0.815],
-      ],
-      { smooth: true },
-    );
-    const chapeProfile = profile.polygon(
-      [
-        [0.004, -0.014],
-        [0.02, -0.004],
-        [0.03, 0.02],
-        [0.036, 0.05],
-        [0.039, 0.09],
-        [0.040, 0.13],
-        [0.0405, 0.165],
-      ],
-      { smooth: true },
-    );
-    const throat = lay(sdf.revolve(throatProfile));
-    const chape = lay(sdf.revolve(chapeProfile));
-
-    const rivets = sdf.union(
-      sdf.sphere(0.009).at(-0.03, 0.058, 0.085),
-      sdf.sphere(0.009).at(0.03, 0.058, 0.085),
-    );
-
-    const guard = sdf
-      .box([0.18, 0.052, 0.036], 0.014)
-      .union(sdf.sphere(0.017).at(-0.09, 0, 0).mirror('x', 0))
-      .at(0, LAY_Y, 0.408);
-    const pommel = sdf
-      .smoothUnion(
-        0.009,
-        sdf.ellipsoid([0.03, 0.03, 0.024]).at(0, LAY_Y, 0.578),
-        sdf.cone([0, LAY_Y, 0.548], [0, LAY_Y, 0.568], 0.021, 0.026),
+    // Grip with belt-loop band and pommel.
+    const grip = sdf.capsule([0, 0.5, 0], [0, 0.72, 0], 0.045);
+    const band = sdf.box([0.14, 0.1, 0.09], 0.025).at(0, 0.6, 0);
+    const grp = sdf
+      .smoothUnion(0.01, grip, band)
+      .paintFn((x, y, z, base) =>
+        mixRgb(base, rgb('#8a4a2a'), 0.5 + 0.5 * Math.sin(y * 150 + Math.atan2(z, x) * 2) ) ,
       );
+    k.body('grip', grp, {
+      color: '#a8603a',
+      roughness: 0.75,
+      maxTriangles: 1000,
+      bump: (x, y, z) => 0.0007 * noise.fbm(x * 80, y * 80, z * 80, 2),
+    });
 
-    k.body('brass', sdf.union(throat, chape, rivets, guard, pommel), {
+    // Gold: chape, throat, guard, rivets, pommel.
+    const chape = sdf.box([0.09, 0.06, 0.06], 0.02).at(0, 0.035, 0);
+    const throat = sdf.box([0.11, 0.035, 0.062], 0.014).at(0, 0.425, 0);
+    const guard = sdf.box([0.24, 0.05, 0.06], 0.02).at(0, 0.47, 0);
+    const rivets = sdf.union(
+      sdf.sphere(0.018).at(-0.04, 0.6, 0.045),
+      sdf.sphere(0.018).at(0.04, 0.6, 0.045),
+    );
+    const pommel = sdf.union(
+      sdf.sphere(0.05).at(0, 0.76, 0),
+      sdf.sphere(0.02).at(-0.05, 0.76, 0),
+      sdf.sphere(0.02).at(0.05, 0.76, 0),
+    );
+    k.body('gold', sdf.union(chape, throat, guard, rivets, pommel), {
       color: '#d4a93a',
-      roughness: 0.3,
+      roughness: 0.35,
       metalness: 1,
-      detail: 0.005,
-      maxTriangles: 800,
-      bump: (x, y, z) => 0.0002 * noise.fbm(x * 300, y * 300, z * 300, 2),
+      detail: 0.004,
+      maxTriangles: 1400,
     });
   },
 });
