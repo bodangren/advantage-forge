@@ -3106,5 +3106,35 @@
     ],
     "next": "Deepen the cheek hollows to 0.02 m, lower the hair roughness to 0.8 with thinner strands, and lighten the skull knob to #8a8880.",
     "reviewedAt": "2026-09-30T03:31:51+00:00"
+  },
+  "alchemist": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the adventurer base (the rogue's head and chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: messy copper hair as a lobed cap with a three-tuft fringe, brass goggles with black lenses at the hairline on a brass strap, a wide smile with teeth, a green tunic with a folded collar, a brown leather apron bib and skirt panel, a bandolier with a glowing green bottle, dark gloves, and a big round glass flask of teal liquid held up in the left hand. Attack is a flask toss, attack2 a shake and splash. 58,232 triangles, no build warnings, forge check result ok at 4.2 cm, ground ok.",
+    "strengths": [
+      "The copper hair, the brass goggles, the green tunic, and the teal flask give four clear color masses, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face, proportions, and clip set as the adventurer.",
+      "The flask liquid keeps its teal in the sprite, and the bandolier bottle glows green as a second accent."
+    ],
+    "issues": [
+      "The hair is a smooth lobed cap and lacks the mockup's swept tufts; the fringe hides under the goggles.",
+      "The flask glass is nearly invisible at 128 px, so the flask reads as a teal disc with a cork.",
+      "The gloves and forearms are plain against the mockup's stitched leather."
+    ],
+    "next": "Done for P1. A later polish pass could add three swept tufts above the goggles and a thin white rim on the flask for the sprite.",
+    "reviewedAt": "2026-09-30T06:07:47+00:00"
   }
 }
