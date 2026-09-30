@@ -234,6 +234,7 @@ captain	hero	high	a477d71c5df18caad	2	accepted	8.0	run 4 heroes resume; one feed
 caravan-guard	hero	high	ac81a3d92a25f32c7	3	accepted	8.0	run 4 heroes resume; feedback pass + orchestrator hat edit; accepted; committed
 explorer	hero	high	a529469881aa2756d	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 monster-hunter	hero	high	ad036415332fb137f	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
-noble-champion	hero	high	a5a78e917eeaacc96	2	running	7.7	run 4 heroes resume; feedback pass in flight (hair, hands, gold)
+noble-champion	hero	high	a5a78e917eeaacc96	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 pilgrim	hero	high	ab44837143334dc02	1	running	-	run 4 heroes resume
 sailor	hero	high	aefd43c36ab36ef57	1	running	-	run 4 heroes resume
+treasure-hunter	hero	high	a1464dce8afbb786d	1	running	-	run 4 heroes resume; last of the 16

@@ -3916,5 +3916,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T19:19:46+00:00"
+  },
+  "noble-champion": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8.5,
+      "materials": 8.5,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young noble champion on the paladin base: twelve thick brown locks swept up and back with two bold brow locks, white plate with swooping gold pauldron bands, a gold V line and a blue throat gem on the cuirass, a gold belt plate, four gold-rimmed tassets, segmented greaves with gold knee caps, gold boots and gauntlets, a long blue cape with a gold hem, and a broad sword with an ornate gold guard and a blue gem held level in both hands. Eight clips, check ok (closest 4.8 cm). 54,220 triangles.",
+    "strengths": [
+      "The white, gold and blue palette matches the mockup and reads at 128 px.",
+      "The two gold fists separate on the grip and the broad blade reads as a sword after the feedback pass.",
+      "The swept locks give the head volume like the mockup's messy waves."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The locks are stiffer and more combed than the mockup's soft waves.",
+      "The greaves and tassets are mostly hidden by the gold boots and the cape."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T19:31:54+00:00"
   }
 }
