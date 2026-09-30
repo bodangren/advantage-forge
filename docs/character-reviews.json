@@ -3766,5 +3766,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T18:14:14+00:00"
+  },
+  "apprentice": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young apprentice on the mage base: twelve swept brown ribbon locks with a fringe over one lens of round black glasses, a hopeful open mouth, a pale blue robe with an open V hood collar and soft wrinkles, a brown leather back cape, a belt with a square gold buckle, a satchel with three scrolls, chunky scuffed shoes, and a short training wand with a teardrop flame held up in the right hand. Eight clips, check ok (above 5 cm). 48,832 triangles.",
+    "strengths": [
+      "The glasses, open mouth and swept locks read at 128 px.",
+      "The satchel, belt buckle and scrolls match the mockup.",
+      "The back cape reads as a cape after the front was cut away; the first shell wrapped the arms like a band."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The robe is brighter than the mockup's muted teal.",
+      "The cape does not show from the front; the mockup shows it at the sides."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T18:16:16+00:00"
   }
 }
