@@ -88,3 +88,7 @@ brigand accepted 8.0 (71378a4). Run 3 in flight: highwayman, raider, mercenary (
 ## Status 08:35 (2026-09-30)
 
 Run 3: 688,581 of 4,000,000 tokens. Accepted: brigand, raider, plague-bearer (rework 2), highwayman. In flight: mercenary and banshee (feedback passes), living-statue (rework 2), deserter. All 14 open enemies have committed briefs and mockups.
+
+## Note 09:06 (2026-09-30)
+
+The living-statue rework 2 agent and the deserter build agent stalled after their first two reads (no file writes, no forge processes, transcripts frozen at 08:27 for 37 minutes). Both were stopped with TaskStop and relaunched as fresh agents. Lesson: a transcript under ~/.claude/projects/<session>/subagents/agent-<id>.jsonl that stops growing for 30 minutes with no forge process is a stall; the 149-byte task output file is not a signal either way.

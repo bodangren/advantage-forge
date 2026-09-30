@@ -55,7 +55,7 @@ plague-bearer	character	high	a5a8569f13f1b210e	4	accepted	8.0	accepted on rework
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	a4b1e617ab68ad532	3	running	7.8	rework 2 under the run 3 budget (owner note)
+living-statue	character	high	a868245f2765e1b63	3	running	7.8	rework 2 relaunched after a stall
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
 gnoll-hunter	character	high	aad4c05a699c8474d	3	accepted	8.0	fresh rework accepted; committed
 kobold-trapper	character	high	a6732c980a19f2cef	2	accepted	8.0	feedback pass accepted; committed
@@ -66,5 +66,5 @@ brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final buil
 highwayman	character	high	aa454d71b0c488777	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 mercenary	character	high	a351a2faadca9af51	3	skipped	7.6	three passes 7.5, 7.7, 7.6; hair regressed on the rework; source uncommitted, review entry added
-deserter	character	high	a42ef1f2f0a2130ef	0	running	-	enemies run 3
-assassin	character	high	-	0	running	-	enemies run 3
+deserter	character	high	af2f450d57635b57b	0	running	-	enemies run 3; relaunched after a stall
+assassin	character	high	a9fc8a442a84564d7	3	running	7.7	fresh rework (second retry, sprite face) under run 3
