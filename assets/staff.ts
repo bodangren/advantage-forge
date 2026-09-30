@@ -5,12 +5,12 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *
  * Role: equipment pickup and icon. It must read at 128 px.
  * Size: 1.2 m tall, stands on y = 0, centred on Y, faces +Z.
- * One idea: three curling wood claws cradle a glowing crystal on a gnarled shaft.
+ * One idea: a bright cyan faceted teardrop crystal in a gold four-prong cup on a dark wood knot.
  * Shape language: round and soft. Curls break the pole from every side.
  * Palette: walnut #6b4226 / #54331d, sap #9a6840, leather #8a5632, cord #c4a574,
- *   iron #6a7078, crystal #6ad0ff on a dark base. The crystal is the accent.
- * Materials: wood, leather, iron, emissive core, glass shell.
- * Detail: gnarled shaft, grip wrap, ferrule, three tines, faceted orb. No rig.
+ *   iron #6a7078, gold #d4a93a, crystal #38c8ff. The crystal is the accent.
+ * Materials: wood, leather, iron, gold cup, emissive crystal.
+ * Detail: gnarled shaft, grip wrap, ferrule, knot, four prongs, faceted crystal. No rig.
  */
 
 const WOOD = '#6b4226';
@@ -22,29 +22,21 @@ const LEATHER_DARK = '#4e3018';
 const CORD = '#c4a574';
 const IRON = '#6a7078';
 const IRON_DARK = '#3c424a';
-const ORB_BASE = '#102838';
-const ORB_GLOW = '#6ad0ff';
-const SHELL_BASE = '#0c2432';
+const ORB_GLOW = '#38c8ff';
+const GOLD = '#d4a93a';
+const LEAN = 15;
 
-/** Belly centre. Crystal local top is 0.114, so the point lands at y = 1.2. */
-const ORB_Y = 1.086;
+/** Crystal centre. Ellipsoid top lands at y = 1.24. */
+const ORB_Y = 1.1;
 
-/**
- * Faceted teardrop, belly at the origin, point at local y = 0.114.
- * Side and front cuts keep the outline a gem from front and side.
- */
+/** Faceted teardrop: an ellipsoid cut by eight tilted planes that taper to the top. */
 function crystal() {
-  const drop = sdf.smoothUnion(
-    0.014,
-    sdf.sphere(0.07),
-    sdf.sphere(0.04).at(0, 0.042, 0),
-    sdf.sphere(0.018).at(0, 0.102, 0),
+  const t = (12 * Math.PI) / 180;
+  const n: [number, number, number] = [Math.cos(t), Math.sin(t), 0];
+  const cuts = [0, 1, 2, 3, 4, 5, 6, 7].map((i) =>
+    sdf.halfSpace(n, 0.062).rotateY(i * 45),
   );
-  return sdf.intersect(
-    drop,
-    sdf.box([0.112, 0.28, 0.12], 0.006),
-    sdf.box([0.12, 0.28, 0.12], 0.006).rotateY(40),
-  );
+  return sdf.intersect(sdf.ellipsoid([0.075, 0.14, 0.075]), ...cuts);
 }
 
 export default defineAsset({
@@ -80,37 +72,8 @@ export default defineAsset({
       sdf.sphere(0.018).at(0.002, 0.988, 0.008),
     );
 
-    // Three curls. Each reverses direction so the tip hooks, instead of pointing up like a finger.
-    const tineLeft = sdf.chain(
-      [
-        [-0.01, 0.94, 0.008, 0.013],
-        [-0.03, 0.99, 0.016, 0.012],
-        [-0.05, 1.04, 0.012, 0.011],
-        [-0.048, 1.085, 0.006, 0.011],
-        [-0.026, 1.115, -0.002, 0.009],
-      ],
-      0.005,
-    );
-    const tineFront = sdf.chain(
-      [
-        [0.008, 0.935, 0.014, 0.013],
-        [0.022, 0.985, 0.038, 0.012],
-        [0.032, 1.04, 0.052, 0.011],
-        [0.04, 1.075, 0.028, 0.01],
-        [0.018, 1.055, 0.016, 0.008],
-      ],
-      0.005,
-    );
-    const tineBack = sdf.chain(
-      [
-        [0.002, 0.935, -0.014, 0.013],
-        [0.01, 0.99, -0.04, 0.012],
-        [0.004, 1.045, -0.052, 0.011],
-        [0.026, 1.085, -0.028, 0.01],
-        [0.044, 1.115, -0.006, 0.009],
-      ],
-      0.005,
-    );
+    // Dark wood knot under the cup, joining the shaft.
+    const knot = sdf.ellipsoid([0.06, 0.05, 0.06]).at(0, 0.94, 0);
 
     // Chunky curls on the bare shaft, below and above the grip.
     const rootlets = sdf.union(
@@ -152,7 +115,7 @@ export default defineAsset({
 
     const wood = sdf
       .smoothUnion(0.014, shaft, knots)
-      .smoothUnion(0.005, tineLeft, tineFront, tineBack)
+      .smoothUnion(0.02, knot)
       .smoothUnion(0.008, rootlets)
       .paintFn((x, y, z, base) => {
         const n = noise.fbm(x * 6, y * 2.2, z * 6, 3);
@@ -173,7 +136,7 @@ export default defineAsset({
       roughness: 0.84,
       metalness: 0,
       detail: 0.0075,
-      maxTriangles: 2700,
+      maxTriangles: 2300,
       bump: (x, y, z) => 0.0015 * noise.fbm(x * 22, y * 7, z * 22, 3),
     });
 
@@ -238,36 +201,42 @@ export default defineAsset({
       bump: (x, y, z) => 0.0003 * noise.fbm(x * 40, y * 36, z * 40, 2),
     });
 
-    // Glass skin around the belly. The top is open so the glowing point is not buried.
-    // Thin glass skin, open at the top. Dark base, mild glow. The core carries the bright cyan.
-    const shell = crystal()
-      .round(0.005)
-      .shell(0.008)
-      .subtract(sdf.box([0.16, 0.1, 0.16]).at(0, 0.1, 0))
-      .at(0, ORB_Y, 0);
-    k.body('orb-shell', shell, {
-      color: SHELL_BASE,
-      roughness: 0.1,
-      metalness: 0.04,
-      opacity: 0.32,
-      emissive: ORB_GLOW,
-      emissiveIntensity: 0.45,
-      detail: 0.005,
-      maxError: 0.0012,
-      textureDensity: 2,
-      flat: true,
-    });
-
+    // Faceted cyan crystal, one body.
     k.body('orb', crystal().at(0, ORB_Y, 0), {
-      color: ORB_BASE,
-      roughness: 0.3,
+      color: ORB_GLOW,
+      roughness: 0.15,
       metalness: 0,
       emissive: ORB_GLOW,
-      emissiveIntensity: 2,
+      emissiveIntensity: 0.6,
       detail: 0.0045,
       maxError: 0.0008,
       textureDensity: 2,
       flat: true,
+    });
+
+    // Gold cup: four leaf prongs leaning inward, plus a ring.
+    const leaf = sdf.extrude(
+      profile.polygon(
+        [
+          [0, 0], [0.02, 0.02], [0.025, 0.05], [0.014, 0.078],
+          [0, 0.09], [-0.014, 0.078], [-0.025, 0.05], [-0.02, 0.02],
+        ],
+        { smooth: true },
+      ),
+      0.015,
+    );
+    const prongs = [0, 1, 2, 3].map((i) =>
+      leaf.at(0, 0, 0).rotateX(-LEAN).at(0, 0, 0.078).at(0, 0.975, 0).rotateY(i * 90),
+    );
+    const cup = sdf
+      .smoothUnion(0.006, ...prongs, sdf.torus(0.065, 0.02).at(0, 0.97, 0))
+      .paintFn((x, y, z, base) => rgb(base));
+    k.body('cup', cup, {
+      color: GOLD,
+      roughness: 0.35,
+      metalness: 1,
+      detail: 0.004,
+      maxTriangles: 1300,
     });
   },
 });
