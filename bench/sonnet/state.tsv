@@ -44,7 +44,7 @@ wight	character	high	a2dac84e4b244a4d8	3	accepted	8.0	fresh rework accepted; com
 revenant	character	high	a94f51d5f888db355	2	accepted	8.0	feedback pass accepted; committed
 bandit-captain	character	high	abb1745842a57ceb7	3	accepted	8.0	fresh rework accepted; committed
 orc-warlord	character	high	a728d5f92bd35cdf7	2	accepted	8.0	feedback pass accepted; committed
-banshee	character	high	abe4aa7f9289077b1	4	feedback	7.6	rework 2 under run 3; one feedback pass pending the notice
+banshee	character	high	abe4aa7f9289077b1	4	feedback	7.6	rework 2 under run 3; one feedback pass sent
 iron-golem	character	high	a9490d22f9f7aaf5f	2	accepted	8.0	feedback pass accepted; committed
 gargoyle	character	high	ad554ed46a2cbd24a	2	accepted	8.0	feedback pass accepted; committed
 specter	character	high	aee81a2219faeddb7	3	accepted	8.0	fresh rework accepted; committed
@@ -66,4 +66,4 @@ brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final buil
 highwayman	character	high	aa454d71b0c488777	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
 mercenary	character	high	a00df57eac366789c	1	feedback	7.5	enemies run 3; one feedback pass sent
-deserter	character	high	-	0	running	-	enemies run 3
+deserter	character	high	a42ef1f2f0a2130ef	0	running	-	enemies run 3

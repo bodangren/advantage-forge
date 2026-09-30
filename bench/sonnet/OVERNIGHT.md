@@ -84,3 +84,7 @@ The owner compacted and reset the token counter again. Rows with batch run3 in l
 ## Status 07:30 (2026-09-30)
 
 brigand accepted 8.0 (71378a4). Run 3 in flight: highwayman, raider, mercenary (fresh builds) and banshee (rework 2). The owner noted that banshee, plague-bearer, and living-statue sit below the bar; under the reset budget each gets one fresh rework by a new high-tier agent ahead of the remaining enemies. Queue after them: deserter (brief and mockup ready), assassin, smuggler, pirate, pirate-captain, hunter-rival, dark-mage, warlock, witch, cult-leader, evil-priest.
+
+## Status 08:35 (2026-09-30)
+
+Run 3: 688,581 of 4,000,000 tokens. Accepted: brigand, raider, plague-bearer (rework 2), highwayman. In flight: mercenary and banshee (feedback passes), living-statue (rework 2), deserter. All 14 open enemies have committed briefs and mockups.
