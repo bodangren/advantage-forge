@@ -1,36 +1,28 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf } from '../src/index.js';
 
 /**
- * Design note — tavern stone hearth (catalog `props/furniture/fireplace`).
- *
- * Role: the tavern wall's warm anchor and the room's only light source; a big background prop
- *   that must read at the 128 px sprite. The fire is the single focal point.
- * Size: 1.60 m wide (X), 1.50 m tall (Y), 0.45 m deep (Z); back at z = 0, faces +Z, stands on y = 0.
- * One idea: a chunky cool-gray stone chimney breast with an arched black fire box, and a bright
- *   orange fire burning inside it. Exaggerate: a thick mantel band and a stepped chimney top
- *   break the outline; the fire is the brightest, highest-contrast thing on screen.
- * Shape language: square/blocky stone mass (sturdy, safe) softened by big round bevels, with the
- *   pointed flame tongues as the only sharp accent.
- * Palette: stone cool gray #8a94a0 (dominant), dark #5b6670 (mortar, shadow), sooty box #2a2723;
- *   charred wood #3d2717 / #5f3d22; emissive #ff9a3c with a pale #ffd66b core. Value plan: mid
- *   stone, dark joint and dark fire box, one very bright emissive focal point. No baked light.
- * Materials: stone (roughness 0.9), charred wood (0.85), embers + flames (emissive, intensity 2.5).
- * Detail list: primary mass + fire box; secondary mantel band, jamb pilasters, hearth kerb;
- *   tertiary masonry paint, mortar bump, ember bed, three logs, three flame tongues.
- * Rig/animation: none (static prop).
+ * Design note: warm tavern fieldstone hearth (catalog `props/furniture/fireplace`).
+ * Role: the tavern's warm anchor and light source; background prop, readable at 128 px.
+ * Size: 1.66 x 1.50 x 0.48 m; back at z = 0, faces +Z, stands on y = 0.
+ * One idea: rough warm fieldstone around a soot-dark opening with one wide wavy flame mass.
+ * Shape language: blocky stone softened by bevels; flame lobes are the only curling accent.
+ * Palette: stone #a08a70 to #7a6a5a, mortar #3e342c, soot #201a16, mantel beam #6a4424,
+ *   flame gradient #ffd23a / #ffa010 / #ff6a00 / #e8400a (matte, emissive #ff5a00 at 0.25).
+ * Materials: stone (bump), mantel wood, embers, charred logs, flames (one painted body).
+ * Rig/animation: none.
  */
 
-const STONE = rgb('#8a94a0'); // contract: cool gray stone
-const STONE_LIGHT = rgb('#a4adb8');
-const STONE_DARK = rgb('#5b6670'); // contract: stone dark / mortar
-const MORTAR = rgb('#3c444e');
-const SOOT = rgb('#2a2723'); // inside the fire box
+const STONE = rgb('#8f7a62');
+const STONE_LIGHT = rgb('#a08a70');
+const STONE_DARK = rgb('#7a6a5a');
+const MORTAR = rgb('#3e342c');
+const SOOT = rgb('#201a16'); // inside the fire box
 const CHAR = rgb('#3d2717'); // contract: charred wood
 const CHAR_WARM = rgb('#5f3d22'); // contract: charred wood, warm side
-const FLAME = rgb('#ff9a3c'); // contract: emissive flame
-const FLAME_CORE = rgb('#ffd66b'); // contract: pale core
+const FLAME = rgb('#ffa010');
+const FLAME_CORE = rgb('#ffd23a');
 const EMBER = rgb('#ffb257');
-const GLOW = rgb('#ff9a3c');
+const GLOW = rgb('#ff5a00');
 
 const W = 1.6; // outer width
 const H = 1.5; // total height
@@ -45,10 +37,12 @@ const smoothstep = (e0: number, e1: number, v: number): number => {
 
 // Masonry layout shared by the paint and the bump so grooves and dark joints line up.
 const COURSE = 0.30; // block course height
-const BLOCK = 0.42; // block width
+const BLOCK = 0.36; // block width
 /** Horizontal coordinate for the masonry grid: front faces use x, side faces use z. */
 const blockU = (x: number, z: number): number => (Math.abs(x) > 0.66 ? z : x);
-function masonry(u: number, y: number): { joint: number; col: number; row: number } {
+function masonry(u0: number, y0: number): { joint: number; col: number; row: number } {
+  const u = u0 + 0.05 * noise.noise3(u0 * 6, y0 * 6, 1.3);
+  const y = y0 + 0.04 * noise.noise3(u0 * 5, y0 * 5, 7.7);
   const row = Math.floor(y / COURSE);
   const off = (Math.abs(row) % 2) * BLOCK * 0.5;
   const col = Math.floor((u + off) / BLOCK);
@@ -88,13 +82,12 @@ export default defineAsset({
     const stepped = fireBox.smoothSubtract(0.02, chimneyCut);
 
     // Raised mantel shelf, projecting jamb pilasters, and a hearth kerb inside the box.
-    const mantel = sdf.box([1.66, 0.13, 0.46], 0.022).at(0, 1.045, 0.235);
     const pilaster = sdf
       .box([0.30, 1.0, 0.10], 0.02)
       .at(0.625, 0.5, 0.435)
       .mirror('x', 0);
     const kerb = sdf.box([0.90, 0.11, 0.32], 0.025).at(0, 0.055, 0.295);
-    const stone = sdf.union(stepped, mantel, pilaster, kerb);
+    const stone = sdf.union(stepped, pilaster, kerb);
 
     const stonePaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       const { joint, col, row } = masonry(blockU(x, z), y);
@@ -123,12 +116,18 @@ export default defineAsset({
       metalness: 0,
       detail: 0.012,
       maxError: 0.008,
-      maxTriangles: 4400,
+      maxTriangles: 6500,
       paintWeight: 3,
       bump: (x, y, z) => {
         const { joint } = masonry(blockU(x, z), y);
         return -0.006 * joint + 0.0018 * noise.fbm(x * 34, y * 34, z * 34, 3, 9);
       },
+    });
+
+    const beam = sdf.box([1.66, 0.14, 0.45], 0.025).at(0, 1.05, 0.255); // back face 0.03 m inside the stone (a shared plane showed as a streak)
+    k.body('mantel', beam.paintFn((x, y, z) => mixRgb(rgb('#6a4424'), rgb('#4a2e16'), clamp01(0.5 + 0.5 * noise.fbm(x * 3, y * 40, z * 40, 3)) * 0.6)), {
+      color: rgb('#6a4424'), roughness: 0.85, metalness: 0, detail: 0.01, maxError: 0.005, maxTriangles: 900,
+      paintWeight: 3, bump: (x, y, z) => 0.003 * noise.fbm(x * 4, y * 50, z * 50, 3, 3),
     });
 
     // ------------------------------------------------------------------ ember bed
@@ -151,7 +150,7 @@ export default defineAsset({
       roughness: 0.6,
       metalness: 0,
       emissive: GLOW,
-      emissiveIntensity: 2,
+      emissiveIntensity: 0.6,
       detail: 0.016,
       maxError: 0.012,
       maxTriangles: 320,
@@ -186,42 +185,30 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ flames
-    const tongue = profile.polygon(
-      [
-        [0, 0],
-        [0.045, 0.012],
-        [0.078, 0.058],
-        [0.09, 0.125],
-        [0.082, 0.195],
-        [0.06, 0.26],
-        [0.028, 0.315],
-        [0, 0.35],
-      ],
-      { smooth: true, samples: 10 },
-    );
-    const flameAt = (x: number, y: number, z: number, s: number, lean: number): Sdf => {
-      const shape = sdf.revolve(tongue).scale([s * 0.95, s, s]).rotateZ(lean);
-      return shape.at(x, y, z);
-    };
-    const flames = sdf.union(
-      flameAt(-0.16, 0.16, 0.31, 1.05, 7),
-      flameAt(0.02, 0.16, 0.275, 1.35, -2),
-      flameAt(0.185, 0.15, 0.33, 0.85, -9),
+    const lobe = (x: number, z: number, h: number, lean: number, r: number): Sdf =>
+      sdf.chain([[x, 0.17, z, r], [x + lean * 0.4, 0.17 + h * 0.5, z, r * 0.75], [x + lean, 0.17 + h, z, r * 0.2]], 0.03);
+    const flames = sdf.smoothUnion(
+      0.03,
+      sdf.ellipsoid([0.3, 0.07, 0.11]).at(0, 0.21, 0.3),
+      lobe(-0.2, 0.3, 0.3, -0.05, 0.09),
+      lobe(-0.07, 0.31, 0.46, 0.06, 0.1),
+      lobe(0.08, 0.29, 0.38, -0.05, 0.095),
+      lobe(0.21, 0.3, 0.27, 0.06, 0.08),
     );
     const flamePaint = (x: number, y: number, z: number): Rgb => {
-      const t = clamp01((y - 0.16) / 0.47);
-      const r = Math.hypot(x - 0.02, z - 0.29);
-      const core = clamp01((0.07 - r) / 0.07) * clamp01(1 - t * 1.6);
-      let c = mixRgb(FLAME, FLAME_CORE, core * 0.7);
-      c = mixRgb(c, FLAME, t * 0.35);
-      return c;
+      const t = clamp01((y - 0.17) / 0.4);
+      const axis = clamp01(1 - Math.abs(x) / 0.25) * clamp01(1 - t * 1.2);
+      let c = mixRgb(rgb('#ffd23a'), rgb('#ffa010'), smoothstep(0.0, 0.3, t));
+      c = mixRgb(c, rgb('#ff6a00'), smoothstep(0.3, 0.65, t));
+      c = mixRgb(c, rgb('#e8400a'), smoothstep(0.65, 1.0, t));
+      return mixRgb(c, rgb('#ffd23a'), axis * 0.5);
     };
     k.body('flames', flames.paintFn(flamePaint), {
       color: FLAME,
-      roughness: 0.45,
+      roughness: 0.95,
       metalness: 0,
       emissive: GLOW,
-      emissiveIntensity: 2.5,
+      emissiveIntensity: 0.25,
       detail: 0.008,
       maxError: 0.003,
       maxTriangles: 900,
