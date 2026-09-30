@@ -3976,5 +3976,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T19:50:07+00:00"
+  },
+  "pilgrim": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young humble pilgrim on the priest base: a wide wavy straw hat, a dark brown hooded cloak with a rimmed hood opening and a short shoulder cape over a tan tunic, small dark curls inside the hood, a rope belt with a gold scallop badge, an olive gourd on a cord in the left hand, a tall dark staff with a knob, brass cap, bell and ferrule in the right, and sandals. Seven clips, check ok (above 5 cm). 61,992 triangles.",
+    "strengths": [
+      "The wide straw hat and the tall staff give a clear silhouette at 128 px.",
+      "The darker hood reads as a hood over the tan tunic after the feedback pass.",
+      "The gourd, rope belt and scallop badge match the mockup's kit."
+    ],
+    "issues": [
+      "The cloak reads as a cape and skirt rather than one hooded cloak.",
+      "The curls read as a dark mass with few tufts at sprite size.",
+      "The staff leans outward to keep clear of the hat brim."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T19:57:15+00:00"
   }
 }
