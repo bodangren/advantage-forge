@@ -142,3 +142,16 @@ monster parts, shell and feather, textiles, quest documents) runs on four medium
 returned "Network request failed" for eight mockups; those items build from the brief text and a
 retry job runs in the background. Six items wait for the next slots: leather, hide, relic-orb,
 artifact-idol, ration, bandage.
+
+## 23:58 P2 items complete; P3 vehicles start
+
+All 56 P2 items have an accepted source at 7.0 or above. Wave 2 batches B and C (23 items) closed
+with 0 skips: five needed one feedback pass (monster-claw, dragon-scale, rune-tablet, wool,
+flower-petal). Wave 2 cost about 1.0M subagent tokens for 36 items. Two lessons: `bump` must be a
+function (a number breaks the textured build and the fast build hides it; ask agents to confirm
+the `forge all` output), and the mmx "Network request failed" errors clear on a later retry.
+The P2 rows still without a source are all characters (npcs, monsters, wildlife: 239 rows). The
+last static family without sources is P3 vehicles (15 rows): briefs and mmx mockups from
+`bench/sonnet/make-p3-vehicle-briefs.mjs`, carts and wagons on the wagon and market-cart bases,
+boats, ships and air vehicles from recipes; medium tier for carts, wagons, boats, sleigh and carpet,
+high tier for the ships, balloon and airship. Run 4 tokens so far: about 5.6M.
