@@ -119,3 +119,6 @@ resistance-potion	item	medium	ade4972569cada1fa	2	running	6.8	run 4; feedback pa
 silver-coin	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; coins and ancient key batch
 copper-coin	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; same agent
 ancient-key	item	medium	a80cc3e8aa6e2bcc7	1	running	-	run 4; same agent
+invisibility-potion	item	medium	a6ec332770f569180	1	running	-	run 4; potions batch C (invisibility, elixir, poison-bottle)
+elixir	item	medium	a6ec332770f569180	1	running	-	run 4; same agent
+poison-bottle	item	medium	a6ec332770f569180	1	running	-	run 4; same agent
