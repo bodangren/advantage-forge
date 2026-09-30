@@ -5,8 +5,9 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js'
  *
  * Role: dungeon landmark prop. Must read at 128 px as a gallows with a cage.
  * Size: 2.0 m tall. Stands on y = 0, centred on the Y axis, faces +Z.
- * One idea: a stout hewn post and one arm, with a chunky iron cage of bones
- *   hanging from a short chain. The cage is the focal point.
+ * One idea: a stout hewn post and one arm, with a big barrel iron cage (0.55 m
+ *   tall, 0.34 m wide, eight bars, three hoops, dome cap) holding a skull and bones,
+ *   hanging on a three-link chain 0.45 m from the post. The cage is the focal point.
  * Shape language: square timber (sturdy, grim) with round iron and cobbles.
  * Palette: oak #9a6840 / dark #5a3820 (dominant), stone #6f7680 / #4b525c,
  *   iron #4a4f55 / #363a3f / #a8acb1, bone #f0e2c4, gold stud #d4a93a.
@@ -35,7 +36,7 @@ const PX = 0.1;
 const ARM_Y = 1.58;
 const YAW = 32;
 const HANG = 0.16;
-const HOOK_X = -0.5; // local X, cage side of the post
+const HOOK_X = -0.45; // local X, cage side of the post
 const ARM_LEN = 0.9;
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
@@ -129,7 +130,12 @@ export default defineAsset({
       c = mixRgb(c, WOOD_LIGHT, 0.26 * clamp01((y - 1.7) / 0.28));
       return c;
     };
-    const post = sdf.box([0.2, 1.9, 0.17], 0.034).at(PX, 1.05, 0).paintFn(postPaint);
+    const shaft = sdf.box([0.16, 1.9, 0.16], 0.02).at(PX, 1.05, 0);
+    const foot = sdf.box([0.22, 0.3, 0.22], 0.03).at(PX, 0.17, 0);
+    const post = sdf
+      .smoothUnion(0.02, shaft, foot)
+      .displace(0.006, (x, y, z) => noise.fbm(x * 4, y * 9, z * 4, 3))
+      .paintFn(postPaint);
     k.body('post', post, { ...woodOpts, paintWeight: 0, detail: 0.012, maxTriangles: 750 });
 
     // Arm, chain, and cage are built straight, then yawed so the side view
@@ -143,61 +149,56 @@ export default defineAsset({
         .smoothUnion(0.028, arm, brace(0.07), brace(-0.07))
         .paintFn(woodPaint)
         .paintWhere(knotEnd, WOOD_DEEP, 0.012);
-      g.body('arm', armWood, { ...woodOpts, maxTriangles: 900 });
+      g.body("arm", armWood, { ...woodOpts, maxTriangles: 900 });
 
-      // Hook ring around the beam, a thick drop, two collar wraps, basket cage.
-      const hook = sdf.torus(0.11, 0.026).rotateZ(90).at(HOOK_X, ARM_Y, 0);
-      const drop = sdf.chain(
-        [
-          [HOOK_X, ARM_Y - 0.09, 0, 0.022],
-          [HOOK_X, 1.34, 0, 0.02],
-          [HOOK_X, 1.22, 0, 0.018],
-          [HOOK_X, 1.12, 0, 0.016],
-        ],
-        0.014,
-      );
-      const collar = sdf.torus(0.038, 0.014).at(HOOK_X, 1.32, 0);
-      const cageBot = 0.8;
-      const cageTop = 1.12;
-      const botR = 0.15;
-      const topR = 0.052;
+      // Hook ring around the beam, three chain links, barrel cage.
+      const hook = sdf.torus(0.05, 0.02).rotateZ(90).at(HOOK_X, ARM_Y, 0);
+      const link = (y: number, ry: number) =>
+        sdf.torus(0.03, 0.008).rotateX(90).rotateY(ry).at(HOOK_X, y, 0);
+      const chainLinks = [link(1.49, 0), link(1.435, 90), link(1.385, 0)];
+      const rAt = (y: number) => {
+        const t = (y - 0.83) / (1.3 - 0.83);
+        return t < 0.5 ? 0.13 + (0.17 - 0.13) * Math.sin((t / 0.5) * Math.PI / 2)
+          : 0.17 - (0.17 - 0.12) * (1 - Math.cos(((t - 0.5) / 0.5) * Math.PI / 2));
+      };
+      const ys = [0.83, 1.07, 1.3];
+      const rs = [0.13, 0.17, 0.12];
       const bars = [];
-      for (let i = 0; i < 6; i++) {
-        const a = (i / 6) * Math.PI * 2 + Math.PI / 2 + Math.PI / 6;
+      for (let i = 0; i < 8; i++) {
+        const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
         const c = Math.cos(a);
         const s = Math.sin(a);
-        bars.push(
-          sdf.capsule(
-            [HOOK_X + c * botR, cageBot, s * botR],
-            [HOOK_X + c * topR, cageTop, s * topR],
-            0.02,
-          ),
-        );
+        const p = (j: number): [number, number, number] => [HOOK_X + c * rs[j], ys[j], s * rs[j]];
+        bars.push(sdf.capsule(p(0), p(1), 0.012), sdf.capsule(p(1), p(2), 0.012));
       }
-      const hoops = sdf.smoothUnion(
-        0.012,
-        sdf.torus(botR, 0.028).at(HOOK_X, cageBot, 0),
-        sdf.torus(topR, 0.018).at(HOOK_X, cageTop, 0),
-      );
-      g.body('iron', sdf.smoothUnion(0.016, hook, drop, collar, ...bars, hoops).paintFn(ironPaint), {
+      void rAt;
+      const hoops = ys.map((y, j) => sdf.torus(rs[j], 0.012).at(HOOK_X, y, 0));
+      const floor = sdf
+        .smoothUnion(0.01, sdf.cylinder(0.125, 0.02, 0.008).at(HOOK_X, 0.81, 0), sdf.ellipsoid([0.12, 0.02, 0.12]).at(HOOK_X, 0.79, 0))
+        ;
+      const dome = sdf.ellipsoid([0.12, 0.065, 0.12]).at(HOOK_X, 1.3, 0).shell(0.008);
+      const domeCut = sdf.box([0.5, 0.2, 0.5]).at(HOOK_X, 1.3 + 0.1 - 0.0, 0);
+      void domeCut;
+      const capRing = sdf.torus(0.026, 0.009).rotateX(90).at(HOOK_X, 1.352, 0);
+      g.body('iron', sdf.smoothUnion(0.008, hook, ...chainLinks, ...bars, ...hoops, floor, dome, capRing).paintFn(ironPaint), {
         color: '#5a6068',
         roughness: 0.5,
         metalness: 0.7,
-        detail: 0.013,
+        detail: 0.006,
         paintWeight: 2,
         bump: (x, y, z) => 0.001 * noise.fbm(x * 14, y * 14, z * 14, 2),
-        maxTriangles: 1500,
+        maxTriangles: 4600,
       });
 
-      const skullY = 0.98;
-      const sockL = sdf.sphere(0.016).at(HOOK_X - 0.026, skullY + 0.012, 0.05);
-      const sockR = sdf.sphere(0.016).at(HOOK_X + 0.026, skullY + 0.012, 0.05);
-      const nose = sdf.sphere(0.01).at(HOOK_X, skullY - 0.018, 0.055);
+      const skullY = 0.9;
+      const sockL = sdf.sphere(0.02).at(HOOK_X - 0.03, skullY + 0.01, 0.06);
+      const sockR = sdf.sphere(0.02).at(HOOK_X + 0.03, skullY + 0.01, 0.06);
+      const nose = sdf.sphere(0.011).at(HOOK_X, skullY - 0.02, 0.068);
       const skull = sdf
         .smoothUnion(
           0.014,
-          sdf.ellipsoid([0.066, 0.06, 0.056]).at(HOOK_X, skullY, 0.008),
-          sdf.ellipsoid([0.04, 0.026, 0.032]).at(HOOK_X, skullY - 0.042, 0.026),
+          sdf.sphere(0.07).at(HOOK_X, skullY, 0),
+          sdf.box([0.07, 0.04, 0.06], 0.012).at(HOOK_X, skullY - 0.055, 0.02),
         )
         .smoothSubtract(0.006, sockL, sockR, nose)
         .paintWhere(sockL.round(0.005), SOCKET, 0.005)
@@ -205,18 +206,18 @@ export default defineAsset({
         .paintWhere(nose.round(0.004), SOCKET, 0.004);
       const femur = sdf.smoothUnion(
         0.008,
-        sdf.capsule([HOOK_X - 0.06, 0.86, -0.01], [HOOK_X + 0.055, 0.88, 0.02], 0.014),
-        sdf.sphere(0.022).at(HOOK_X - 0.065, 0.858, -0.008),
-        sdf.sphere(0.02).at(HOOK_X + 0.06, 0.882, 0.02),
+        sdf.capsule([HOOK_X - 0.09, 0.845, -0.07], [HOOK_X + 0.08, 0.845, -0.05], 0.014),
+        sdf.sphere(0.022).at(HOOK_X - 0.095, 0.845, -0.07),
+        sdf.sphere(0.02).at(HOOK_X + 0.085, 0.845, -0.05),
       );
-      const shard = sdf.capsule([HOOK_X + 0.015, 0.9, -0.025], [HOOK_X - 0.02, 0.95, -0.005], 0.012);
+      const shard = sdf.capsule([HOOK_X + 0.05, 0.845, 0.08], [HOOK_X - 0.06, 0.845, 0.09], 0.013);
       g.body('bones', sdf.union(skull, femur, shard).paintFn(bonePaint), {
         color: '#f0e2c4',
         roughness: 0.45,
         metalness: 0,
         detail: 0.005,
         textureDensity: 2,
-        maxTriangles: 520,
+        maxTriangles: 900,
       });
 
       const aim: [number, number, number] = [-0.06, ARM_Y, 0.4];

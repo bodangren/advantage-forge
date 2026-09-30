@@ -125,3 +125,9 @@ poison-bottle	item	medium	a6ec332770f569180	1	accepted	7.1	run 4; accepted on th
 bread-ration	item	medium	aaed0aa38b6dd4167	2	accepted	7.0	run 4; feedback pass: loaf with slashes, cloth band, twine bow
 waterskin	item	medium	aaed0aa38b6dd4167	2	accepted	7.0	run 4; feedback pass: round bag, collar, tilted spout, strap
 coin-purse	item	medium	aaed0aa38b6dd4167	1	accepted	7.3	run 4; accepted on the first pass
+bellows	static-rework	medium	a1cea4c3034001e11	1	running	-	run 4; blacksmith set; brief bellows-rework.md
+saw	static-rework	medium	a0f3f3f089bd34008	1	accepted	7.0	run 4; thick blade, zigzag teeth, hollow grip
+tongs	static-rework	medium	a0f3f3f089bd34008	1	accepted	7.2	run 4; V reins, domed rivet, pincer jaws with glowing stub
+gibbet	static-rework	medium	a9c796db79e8b1b66	1	accepted	7.2	run 4; barrel cage with skull, chain, hewn post
+spike-trap	static-rework	medium	ac3f0301939374017	1	running	-	run 4; dungeon props; brief spike-trap-rework.md
+stalactite	static-rework	medium	ac3f0301939374017	1	running	-	run 4; dungeon props; brief stalactite-rework.md
