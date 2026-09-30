@@ -102,3 +102,6 @@ gladiator	hero	high	a8f53fc6fd90a1279	2	running	7.3	run 4; feedback pass in flig
 summoner	hero	high	a025d1c8786fad721	3	skipped	7.8	run 4; hair rework reads as crossing ropes from the side and back; second retry used; source uncommitted for the owner
 guardian	hero	high	a07bd6fd0546d9151	1	running	-	run 4
 shield-maiden	hero	high	a2cb7c444c0a3c093	1	running	-	run 4
+mana-potion	item	low	a2e7820f9cf8d3174	1	running	-	run 4; three potions per agent (mana, stamina, strength)
+stamina-potion	item	low	a2e7820f9cf8d3174	1	running	-	run 4; same agent
+strength-potion	item	low	a2e7820f9cf8d3174	1	running	-	run 4; same agent
