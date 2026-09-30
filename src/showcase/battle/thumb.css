@@ -1,0 +1,249 @@
+/* The thumbnail dressing (thumb.ts). The fonts and .title-text come from battle.css. */
+.thumb {
+  --u: min(1vw, 1vh);
+  --purple: #2b0f45;
+  /* Where the leaders meet: the center of the speed lines, the burst, and VS. */
+  --cx: 47%;
+  --cy: 44%;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  font-family: 'Fredoka', 'Mitr', system-ui, sans-serif;
+  background: #000;
+}
+.thumb > * {
+  position: absolute;
+}
+
+/* ---------------------------------------------------------------- the still and its light */
+.thumb .half {
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.thumb .half.full {
+  top: 0;
+  height: 100%;
+}
+.thumb .half img {
+  position: absolute;
+  max-width: none;
+  filter: saturate(1.3) contrast(1.08);
+}
+/* Speed lines from the point where the leaders meet; the center stays clear. */
+.thumb .rays {
+  inset: 0;
+  background: repeating-conic-gradient(from 0deg at var(--cx) var(--cy), rgba(255, 255, 255, 0) 0deg 5deg, rgba(255, 255, 255, 0.55) 5deg 6.2deg);
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at var(--cx) var(--cy), transparent 45%, #000 100%);
+  mask-image: radial-gradient(ellipse 70% 80% at var(--cx) var(--cy), transparent 45%, #000 100%);
+  opacity: 0.5;
+}
+.thumb .burst {
+  inset: 0;
+  background: radial-gradient(ellipse 22% 30% at var(--cx) var(--cy), rgba(255, 255, 235, 0.95) 0%, rgba(255, 214, 90, 0.7) 30%, rgba(255, 120, 30, 0.3) 62%, rgba(255, 120, 30, 0) 100%);
+  mix-blend-mode: screen;
+}
+.thumb .vignette {
+  inset: 0;
+  background: radial-gradient(ellipse 75% 75% at 50% 45%, rgba(25, 10, 45, 0) 55%, rgba(25, 10, 45, 0.6) 100%);
+}
+
+/* ---------------------------------------------------------------- text */
+.thumb .logo {
+  left: 3%;
+  top: 4%;
+  font-size: calc(var(--u) * 11);
+  -webkit-text-stroke: calc(var(--u) * 0.9) var(--purple);
+  filter: drop-shadow(0 calc(var(--u) * 0.9) 0 var(--purple)) drop-shadow(0 0 calc(var(--u) * 2) rgba(0, 0, 0, 0.45));
+  white-space: nowrap;
+}
+.thumb .soon {
+  right: 3%;
+  top: 5%;
+  transform: rotate(6deg);
+  padding: calc(var(--u) * 0.8) calc(var(--u) * 3) calc(var(--u) * 1.2);
+  background: #e8202a;
+  border: calc(var(--u) * 0.7) solid #fff;
+  border-radius: calc(var(--u) * 2.4);
+  box-shadow: 0 calc(var(--u) * 1) 0 var(--purple);
+}
+.thumb .soon span {
+  font-family: 'Mitr', 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--u) * 6.2);
+  color: #fff;
+  white-space: nowrap;
+}
+.thumb .vs {
+  left: var(--cx);
+  top: var(--cy);
+  transform: translate(-50%, -50%) rotate(-8deg) skewX(-8deg);
+  font-size: calc(var(--u) * 24);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #fff27a 35%, #ffb21f 70%, #ff5a1f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: calc(var(--u) * 1.3) var(--purple);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 calc(var(--u) * 1.2) 0 var(--purple)) drop-shadow(0 0 calc(var(--u) * 3) rgba(255, 60, 30, 0.9));
+}
+.thumb .question {
+  left: 50%;
+  bottom: 3%;
+  transform: translateX(-50%) rotate(-2deg);
+  font-family: 'Mitr', 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--u) * 13);
+  line-height: 1.25;
+  white-space: nowrap;
+  color: #ffe45c;
+  -webkit-text-stroke: calc(var(--u) * 1.4) var(--purple);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 calc(var(--u) * 1) 0 #e8202a) drop-shadow(0 0 calc(var(--u) * 2) rgba(0, 0, 0, 0.5));
+}
+
+/* ---------------------------------------------------------------- the counters (as in the video) */
+.thumb .badge {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 1.4);
+  padding: calc(var(--u) * 0.8) calc(var(--u) * 2.8) calc(var(--u) * 1.3);
+  color: #fff;
+  border: calc(var(--u) * 0.7) solid #fff;
+  border-radius: calc(var(--u) * 3);
+  box-shadow: 0 calc(var(--u) * 1) 0 rgba(43, 29, 58, 0.6);
+  white-space: nowrap;
+}
+.thumb .badge.hero {
+  left: 6%;
+  bottom: 15%;
+  background: #e08a12;
+  transform: rotate(-4deg);
+}
+.thumb .badge.enemy {
+  right: 6%;
+  bottom: 15%;
+  background: #7a3fd6;
+  transform: rotate(4deg);
+}
+.thumb .badge .pre,
+.thumb .badge .post {
+  font-family: 'Mitr', 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--u) * 5.6);
+}
+.thumb .badge .num {
+  font-weight: 700;
+  font-size: calc(var(--u) * 10);
+  line-height: 0.9;
+  color: #ffe45c;
+  -webkit-text-stroke: calc(var(--u) * 0.5) #3a1f5c;
+  paint-order: stroke fill;
+  text-shadow: 0 calc(var(--u) * 0.7) 0 #3a1f5c;
+}
+
+/* ---------------------------------------------------------------- the arrow */
+.thumb .arrow {
+  right: 15%;
+  top: 17%;
+  width: calc(var(--u) * 20);
+  height: calc(var(--u) * 20);
+  overflow: visible;
+  filter: drop-shadow(0 calc(var(--u) * 0.8) 0 var(--purple));
+}
+.thumb .arrow .shaft {
+  fill: none;
+  stroke-linecap: round;
+}
+.thumb .arrow .head {
+  stroke-linejoin: round;
+}
+.thumb .arrow .edge .shaft {
+  stroke: #fff;
+  stroke-width: 52;
+}
+.thumb .arrow .edge .head {
+  fill: #fff;
+  stroke: #fff;
+  stroke-width: 22;
+}
+.thumb .arrow .body .shaft {
+  stroke: #ff2b2b;
+  stroke-width: 30;
+}
+.thumb .arrow .body .head {
+  fill: #ff2b2b;
+}
+
+/* ---------------------------------------------------------------- 9:16 (a Reels cover)
+   The orc warlord above a diagonal cut (56% at the left, 44% at the right), the knight below it.
+   Profile grids show a 3:4 crop of the center, so VS, the faces, and the question stay inside it. */
+.format-9x16 {
+  --cx: 50%;
+  --cy: 50%;
+}
+.format-9x16 .enemy-half {
+  top: 0;
+  height: 58%;
+  clip-path: polygon(0 0, 100% 0, 100% 75.9%, 0 96.6%);
+}
+.format-9x16 .hero-half {
+  top: 42%;
+  height: 58%;
+  clip-path: polygon(0 24.1%, 100% 3.4%, 100% 100%, 0 100%);
+}
+.format-9x16 .cut {
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: calc(var(--u) * 1.8);
+  transform: translate(-50%, -50%) rotate(-12deg);
+  background: #fff;
+  box-shadow: 0 0 calc(var(--u) * 2) #ffd84a, 0 0 calc(var(--u) * 5) rgba(255, 120, 30, 0.8);
+}
+.format-9x16 .rays {
+  -webkit-mask-image: radial-gradient(ellipse 80% 55% at var(--cx) var(--cy), transparent 50%, #000 100%);
+  mask-image: radial-gradient(ellipse 80% 55% at var(--cx) var(--cy), transparent 50%, #000 100%);
+}
+.format-9x16 .burst {
+  background: radial-gradient(ellipse 45% 22% at var(--cx) var(--cy), rgba(255, 255, 235, 0.9) 0%, rgba(255, 214, 90, 0.6) 30%, rgba(255, 120, 30, 0.25) 62%, rgba(255, 120, 30, 0) 100%);
+}
+.format-9x16 .vignette {
+  background: radial-gradient(ellipse 90% 70% at 50% 50%, rgba(25, 10, 45, 0) 60%, rgba(25, 10, 45, 0.55) 100%);
+}
+.format-9x16 .logo {
+  left: 50%;
+  top: 3%;
+  width: max-content;
+  transform: translateX(-50%);
+  font-size: calc(var(--u) * 13);
+}
+.format-9x16 .vs {
+  font-size: calc(var(--u) * 30);
+}
+.format-9x16 .badge.enemy {
+  right: 4%;
+  bottom: auto;
+  top: 36%;
+}
+.format-9x16 .badge.hero {
+  left: 4%;
+  bottom: auto;
+  top: 55%;
+}
+.format-9x16 .soon {
+  right: auto;
+  left: 4%;
+  top: 14%;
+  transform: rotate(-6deg);
+}
+.format-9x16 .question {
+  bottom: 13%;
+  font-size: calc(var(--u) * 15);
+}
+.format-9x16 .arrow {
+  display: none;
+}

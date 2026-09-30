@@ -1,0 +1,2111 @@
+[
+ {
+  "name": "animated-armor",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.047,
+  "width": 0.627,
+  "depth": 0.628,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "awaken"
+  ],
+  "presets": [
+   "barrow",
+   "hellforged",
+   "wraith"
+  ],
+  "committed": true
+ },
+ {
+  "name": "animated-weapon",
+  "side": "enemy",
+  "group": "construct",
+  "height": 0.843,
+  "width": 0.702,
+  "depth": 0.326,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "awaken"
+  ],
+  "presets": [
+   "emberedge",
+   "frostbrand"
+  ],
+  "committed": true
+ },
+ {
+  "name": "assassin",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.018,
+  "width": 0.833,
+  "depth": 0.609,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "nightblade",
+   "sellsword",
+   "viper"
+  ],
+  "committed": true
+ },
+ {
+  "name": "bandit",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.004,
+  "width": 0.789,
+  "depth": 0.48,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "brigand",
+   "highwayman",
+   "outlaw"
+  ],
+  "committed": true
+ },
+ {
+  "name": "bandit-archer",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.072,
+  "width": 0.717,
+  "depth": 0.54,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "cutthroat",
+   "poacher",
+   "raider"
+  ],
+  "committed": true
+ },
+ {
+  "name": "bandit-captain",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.077,
+  "width": 0.784,
+  "depth": 0.714,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "captain",
+   "corsair",
+   "ranger"
+  ],
+  "committed": true
+ },
+ {
+  "name": "banshee",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.283,
+  "width": 1.035,
+  "depth": 1.068,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "crypt",
+   "fen",
+   "frost"
+  ],
+  "committed": true
+ },
+ {
+  "name": "bone-golem",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.002,
+  "width": 1.08,
+  "depth": 0.397,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ancient",
+   "ashen",
+   "crypt"
+  ],
+  "committed": true
+ },
+ {
+  "name": "brigand",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.955,
+  "width": 0.765,
+  "depth": 0.575,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "forester",
+   "raider",
+   "reaver"
+  ],
+  "committed": true
+ },
+ {
+  "name": "clay-golem",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.04,
+  "width": 1.038,
+  "depth": 0.4,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ash",
+   "kiln",
+   "umber"
+  ],
+  "committed": true
+ },
+ {
+  "name": "clockwork-sentry",
+  "side": "enemy",
+  "group": "construct",
+  "height": 0.932,
+  "width": 0.705,
+  "depth": 0.558,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "awaken"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "clockwork-soldier",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.042,
+  "width": 0.773,
+  "depth": 0.377,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "awaken"
+  ],
+  "presets": [
+   "ember",
+   "ironclad",
+   "verdigris"
+  ],
+  "committed": true
+ },
+ {
+  "name": "crystal-golem",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.216,
+  "width": 1.279,
+  "depth": 0.528,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "amber",
+   "emerald",
+   "rose"
+  ],
+  "committed": true
+ },
+ {
+  "name": "cult-leader",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.002,
+  "width": 0.643,
+  "depth": 0.459,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "ash-prophet",
+   "high-priest",
+   "void-seer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "cultist",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.97,
+  "width": 0.726,
+  "depth": 0.45,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "mirecaller",
+   "shade",
+   "zealot"
+  ],
+  "committed": true
+ },
+ {
+  "name": "dark-knight",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.037,
+  "width": 0.917,
+  "depth": 1.06,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "frost",
+   "gilded",
+   "tyrant"
+  ],
+  "committed": true
+ },
+ {
+  "name": "dark-mage",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.981,
+  "width": 0.716,
+  "depth": 0.525,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "death-knight",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.027,
+  "width": 0.846,
+  "depth": 0.795,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "deserter",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.963,
+  "width": 0.624,
+  "depth": 0.443,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "forest-flight",
+   "red-company",
+   "royal-runaway"
+  ],
+  "committed": true
+ },
+ {
+  "name": "evil-priest",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.021,
+  "width": 0.766,
+  "depth": 0.513,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bloodpriest",
+   "inquisitor",
+   "plaguepriest"
+  ],
+  "committed": true
+ },
+ {
+  "name": "gargoyle",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.205,
+  "width": 1.194,
+  "depth": 0.477,
+  "clips": [
+   "idle",
+   "fly",
+   "attack",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ancient",
+   "obsidian",
+   "sandstone"
+  ],
+  "committed": true
+ },
+ {
+  "name": "ghost",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.801,
+  "width": 0.655,
+  "depth": 0.485,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "phantom",
+   "shade",
+   "wisp"
+  ],
+  "committed": true
+ },
+ {
+  "name": "ghoul",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.9,
+  "width": 0.843,
+  "depth": 0.41,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bog",
+   "butcher",
+   "crypt"
+  ],
+  "committed": true
+ },
+ {
+  "name": "gnoll-hunter",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.133,
+  "width": 0.837,
+  "depth": 0.646,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashpack",
+   "dune",
+   "emberpack"
+  ],
+  "committed": true
+ },
+ {
+  "name": "gnoll-warrior",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.102,
+  "width": 0.921,
+  "depth": 0.451,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashen",
+   "bloodpack",
+   "rustmane"
+  ],
+  "committed": true
+ },
+ {
+  "name": "goblin-archer",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.997,
+  "width": 0.774,
+  "depth": 0.483,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bog",
+   "cave",
+   "raider"
+  ],
+  "committed": true
+ },
+ {
+  "name": "goblin-king",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.042,
+  "width": 0.997,
+  "depth": 0.634,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "cave",
+   "dune",
+   "swamp"
+  ],
+  "committed": true
+ },
+ {
+  "name": "goblin-shaman",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.04,
+  "width": 0.937,
+  "depth": 0.446,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bogseer",
+   "firecaller",
+   "hexer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "goblin-warrior",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.924,
+  "width": 0.745,
+  "depth": 0.421,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bog",
+   "cave",
+   "raider"
+  ],
+  "committed": true
+ },
+ {
+  "name": "highwayman",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.97,
+  "width": 0.709,
+  "depth": 0.664,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "gentleman",
+   "ghost",
+   "nightrider"
+  ],
+  "committed": true
+ },
+ {
+  "name": "hunter-rival",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.952,
+  "width": 0.623,
+  "depth": 0.495,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "poacher",
+   "stalker",
+   "trapper"
+  ],
+  "committed": true
+ },
+ {
+  "name": "iron-golem",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.166,
+  "width": 1.394,
+  "depth": 0.568,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "aged",
+   "frost",
+   "toxic"
+  ],
+  "committed": true
+ },
+ {
+  "name": "kobold-sorcerer",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.979,
+  "width": 0.626,
+  "depth": 0.771,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bogcaller",
+   "emberpriest",
+   "frostmage"
+  ],
+  "committed": true
+ },
+ {
+  "name": "kobold-trapper",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.942,
+  "width": 0.602,
+  "depth": 0.826,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bog",
+   "ember",
+   "frost"
+  ],
+  "committed": true
+ },
+ {
+  "name": "kobold-warrior",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.086,
+  "width": 0.669,
+  "depth": 0.789,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "deep",
+   "dune",
+   "swamp"
+  ],
+  "committed": true
+ },
+ {
+  "name": "lich",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.116,
+  "width": 0.786,
+  "depth": 0.476,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "cast",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "blood-lich",
+   "frost-lich",
+   "shadow-lich"
+  ],
+  "committed": true
+ },
+ {
+  "name": "living-statue",
+  "side": "enemy",
+  "group": "construct",
+  "height": 0.839,
+  "width": 0.887,
+  "depth": 0.516,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [],
+  "committed": false
+ },
+ {
+  "name": "mercenary",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.962,
+  "width": 0.562,
+  "depth": 0.644,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "ashen",
+   "veteran",
+   "woodsman"
+  ],
+  "committed": true
+ },
+ {
+  "name": "minotaur-guard",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.144,
+  "width": 1.158,
+  "depth": 0.697,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "blackhide",
+   "greybeard",
+   "sandhorn"
+  ],
+  "committed": true
+ },
+ {
+  "name": "mummy",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.887,
+  "width": 0.533,
+  "depth": 0.409,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "crypt",
+   "cursed",
+   "desert"
+  ],
+  "committed": true
+ },
+ {
+  "name": "necromancer",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.995,
+  "width": 0.713,
+  "depth": 0.466,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bloodbinder",
+   "frostwight",
+   "gravecaller"
+  ],
+  "committed": true
+ },
+ {
+  "name": "ogre-brute",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.739,
+  "width": 1.474,
+  "depth": 0.801,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "bogbrute",
+   "hillclan",
+   "stoneback"
+  ],
+  "committed": false
+ },
+ {
+  "name": "orc-archer",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.998,
+  "width": 0.965,
+  "depth": 0.756,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashen",
+   "bloodfang",
+   "bog"
+  ],
+  "committed": true
+ },
+ {
+  "name": "orc-shaman",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.363,
+  "width": 0.889,
+  "depth": 0.503,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashen",
+   "bloodfang",
+   "bog"
+  ],
+  "committed": true
+ },
+ {
+  "name": "orc-warlord",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.175,
+  "width": 1.296,
+  "depth": 0.546,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashen",
+   "bloodfang",
+   "frostbite"
+  ],
+  "committed": true
+ },
+ {
+  "name": "orc-warrior",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.034,
+  "width": 1.071,
+  "depth": 0.469,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ashen",
+   "bloodfang",
+   "bog"
+  ],
+  "committed": true
+ },
+ {
+  "name": "pirate",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.913,
+  "width": 0.526,
+  "depth": 0.579,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "buccaneer",
+   "corsair",
+   "deckhand"
+  ],
+  "committed": true
+ },
+ {
+  "name": "pirate-captain",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.971,
+  "width": 0.621,
+  "depth": 0.7,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "ghost",
+   "navy",
+   "pirate"
+  ],
+  "committed": true
+ },
+ {
+  "name": "plague-bearer",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.039,
+  "width": 0.75,
+  "depth": 0.555,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "blight",
+   "gravedigger",
+   "rustbelly"
+  ],
+  "committed": true
+ },
+ {
+  "name": "poltergeist",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.862,
+  "width": 0.97,
+  "depth": 0.948,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "imp",
+   "wisp"
+  ],
+  "committed": true
+ },
+ {
+  "name": "raider",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.97,
+  "width": 0.815,
+  "depth": 0.509,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "firebeard",
+   "nightwolf",
+   "northman"
+  ],
+  "committed": true
+ },
+ {
+  "name": "revenant",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.039,
+  "width": 0.968,
+  "depth": 0.538,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "ashen",
+   "bog",
+   "crimson"
+  ],
+  "committed": true
+ },
+ {
+  "name": "skeleton",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.953,
+  "width": 0.764,
+  "depth": 0.461,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "barrow",
+   "dread",
+   "rustbone"
+  ],
+  "committed": true
+ },
+ {
+  "name": "skeleton-archer",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.973,
+  "width": 0.642,
+  "depth": 0.55,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "emberbow",
+   "gravewarden",
+   "nightshade"
+  ],
+  "committed": true
+ },
+ {
+  "name": "skeleton-knight",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.069,
+  "width": 0.749,
+  "depth": 0.462,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "ancient",
+   "blackguard",
+   "drowned"
+  ],
+  "committed": true
+ },
+ {
+  "name": "skeleton-mage",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.113,
+  "width": 0.767,
+  "depth": 0.389,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "smuggler",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.003,
+  "width": 0.727,
+  "depth": 0.702,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "dockhand",
+   "harbor",
+   "rustler"
+  ],
+  "committed": true
+ },
+ {
+  "name": "specter",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.118,
+  "width": 0.726,
+  "depth": 0.752,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "ember",
+   "frost",
+   "ossuary"
+  ],
+  "committed": true
+ },
+ {
+  "name": "stone-golem",
+  "side": "enemy",
+  "group": "construct",
+  "height": 0.985,
+  "width": 1.208,
+  "depth": 0.447,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "deep",
+   "desert",
+   "ember"
+  ],
+  "committed": true
+ },
+ {
+  "name": "troll-guard",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.34,
+  "width": 1.074,
+  "depth": 0.827,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "cave",
+   "hill",
+   "moor"
+  ],
+  "committed": true
+ },
+ {
+  "name": "vampire",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.969,
+  "width": 0.676,
+  "depth": 0.498,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "vampire-lord",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.971,
+  "width": 0.827,
+  "depth": 0.562,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "gilded",
+   "lord",
+   "nightshade"
+  ],
+  "committed": true
+ },
+ {
+  "name": "warlock",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 0.875,
+  "width": 0.735,
+  "depth": 0.411,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bogwitch",
+   "cinder",
+   "hexer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "wight",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.969,
+  "width": 0.617,
+  "depth": 0.83,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "barrow",
+   "bone",
+   "frost"
+  ],
+  "committed": true
+ },
+ {
+  "name": "witch",
+  "side": "enemy",
+  "group": "humanoid",
+  "height": 1.123,
+  "width": 0.741,
+  "depth": 0.717,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "crone",
+   "hag",
+   "swamp"
+  ],
+  "committed": true
+ },
+ {
+  "name": "wood-golem",
+  "side": "enemy",
+  "group": "construct",
+  "height": 1.173,
+  "width": 1.133,
+  "depth": 0.444,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "roar",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "ember",
+   "swamp",
+   "winter"
+  ],
+  "committed": false
+ },
+ {
+  "name": "wraith",
+  "side": "enemy",
+  "group": "undead",
+  "height": 1.007,
+  "width": 0.878,
+  "depth": 0.618,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "bog",
+   "dusk",
+   "grave"
+  ],
+  "committed": true
+ },
+ {
+  "name": "zombie",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.976,
+  "width": 0.688,
+  "depth": 0.448,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [
+   "ancient",
+   "drowned",
+   "plague"
+  ],
+  "committed": true
+ },
+ {
+  "name": "zombie-soldier",
+  "side": "enemy",
+  "group": "undead",
+  "height": 0.898,
+  "width": 0.749,
+  "depth": 0.419,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "rise"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "adventurer",
+  "side": "hero",
+  "group": "support",
+  "height": 0.994,
+  "width": 0.605,
+  "depth": 0.619,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "pathfinder",
+   "pilgrim",
+   "wanderer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "archer",
+  "side": "hero",
+  "group": "martial",
+  "height": 1.02,
+  "width": 0.719,
+  "depth": 0.513,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "hunter",
+   "sylvan",
+   "warden"
+  ],
+  "committed": true
+ },
+ {
+  "name": "barbarian",
+  "side": "hero",
+  "group": "martial",
+  "height": 1.049,
+  "width": 0.844,
+  "depth": 0.492,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "ember",
+   "highlander",
+   "wildwood"
+  ],
+  "committed": true
+ },
+ {
+  "name": "bard",
+  "side": "hero",
+  "group": "magic",
+  "height": 1.161,
+  "width": 0.716,
+  "depth": 0.547,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "minstrel",
+   "troubadour",
+   "wanderer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "cleric",
+  "side": "hero",
+  "group": "magic",
+  "height": 0.957,
+  "width": 1.02,
+  "depth": 0.559,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "bishop",
+   "pilgrim",
+   "templar"
+  ],
+  "committed": true
+ },
+ {
+  "name": "druid",
+  "side": "hero",
+  "group": "magic",
+  "height": 1.112,
+  "width": 1.015,
+  "depth": 0.821,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "autumn",
+   "grove",
+   "heath"
+  ],
+  "committed": true
+ },
+ {
+  "name": "knight",
+  "side": "hero",
+  "group": "martial",
+  "height": 1.178,
+  "width": 0.811,
+  "depth": 0.521,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "champion",
+   "royal",
+   "warden"
+  ],
+  "committed": true
+ },
+ {
+  "name": "mage",
+  "side": "hero",
+  "group": "magic",
+  "height": 1.095,
+  "width": 0.81,
+  "depth": 0.744,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "arcanist",
+   "sage",
+   "tidecaller"
+  ],
+  "committed": true
+ },
+ {
+  "name": "monk",
+  "side": "hero",
+  "group": "martial",
+  "height": 0.985,
+  "width": 0.552,
+  "depth": 0.38,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [],
+  "committed": true
+ },
+ {
+  "name": "paladin",
+  "side": "hero",
+  "group": "martial",
+  "height": 0.955,
+  "width": 0.846,
+  "depth": 0.61,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "crusader",
+   "dawn",
+   "warden"
+  ],
+  "committed": true
+ },
+ {
+  "name": "priest",
+  "side": "hero",
+  "group": "magic",
+  "height": 0.993,
+  "width": 0.668,
+  "depth": 0.433,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "martyr",
+   "moon",
+   "pilgrim"
+  ],
+  "committed": true
+ },
+ {
+  "name": "ranger",
+  "side": "hero",
+  "group": "martial",
+  "height": 0.999,
+  "width": 0.644,
+  "depth": 0.578,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "dusk",
+   "wanderer",
+   "warden"
+  ],
+  "committed": true
+ },
+ {
+  "name": "rogue",
+  "side": "hero",
+  "group": "martial",
+  "height": 1.024,
+  "width": 0.711,
+  "depth": 0.498,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "noble",
+   "nomad",
+   "ranger"
+  ],
+  "committed": true
+ },
+ {
+  "name": "samurai",
+  "side": "hero",
+  "group": "martial",
+  "height": 0.968,
+  "width": 0.747,
+  "depth": 0.51,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "attack2",
+   "victory"
+  ],
+  "presets": [
+   "crimson",
+   "daimyo",
+   "ranger",
+   "ronin"
+  ],
+  "committed": true
+ },
+ {
+  "name": "wizard",
+  "side": "hero",
+  "group": "magic",
+  "height": 1.064,
+  "width": 0.925,
+  "depth": 0.744,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "attack2",
+   "hit",
+   "death",
+   "victory"
+  ],
+  "presets": [
+   "frost",
+   "mystic",
+   "sage"
+  ],
+  "committed": true
+ },
+ {
+  "name": "dire-wolf",
+  "side": "monster",
+  "group": "beast",
+  "height": 0.796,
+  "width": 0.585,
+  "depth": 0.925,
+  "clips": [
+   "walk",
+   "run",
+   "idle",
+   "attack",
+   "hit",
+   "death",
+   "howl"
+  ],
+  "presets": [
+   "frost",
+   "shadow",
+   "timber"
+  ],
+  "committed": true
+ },
+ {
+  "name": "dragon-fire",
+  "side": "monster",
+  "group": "dragon",
+  "height": 1.015,
+  "width": 1.215,
+  "depth": 0.679,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "fly",
+   "attack",
+   "hit",
+   "death",
+   "roar"
+  ],
+  "presets": [
+   "copper",
+   "ember",
+   "magma"
+  ],
+  "committed": true
+ },
+ {
+  "name": "giant-bat",
+  "side": "monster",
+  "group": "small",
+  "height": 0.712,
+  "width": 0.955,
+  "depth": 0.501,
+  "clips": [
+   "idle",
+   "fly",
+   "attack",
+   "hit",
+   "death",
+   "screech"
+  ],
+  "presets": [
+   "cave",
+   "dusk",
+   "vampire"
+  ],
+  "committed": true
+ },
+ {
+  "name": "giant-rat",
+  "side": "monster",
+  "group": "small",
+  "height": 0.752,
+  "width": 0.654,
+  "depth": 0.821,
+  "clips": [
+   "idle",
+   "walk",
+   "run",
+   "attack",
+   "hit",
+   "death",
+   "taunt"
+  ],
+  "presets": [
+   "cellar",
+   "plague",
+   "sewer"
+  ],
+  "committed": true
+ },
+ {
+  "name": "giant-spider",
+  "side": "monster",
+  "group": "small",
+  "height": 0.593,
+  "width": 0.944,
+  "depth": 0.802,
+  "clips": [
+   "walk",
+   "run",
+   "idle",
+   "attack",
+   "spit",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "cave",
+   "tomb",
+   "widow"
+  ],
+  "committed": true
+ },
+ {
+  "name": "imp",
+  "side": "monster",
+  "group": "small",
+  "height": 0.815,
+  "width": 1.088,
+  "depth": 0.529,
+  "clips": [
+   "idle",
+   "fly",
+   "attack",
+   "hit",
+   "death",
+   "cast"
+  ],
+  "presets": [
+   "ash",
+   "brimstone",
+   "cinder"
+  ],
+  "committed": true
+ },
+ {
+  "name": "mimic",
+  "side": "monster",
+  "group": "small",
+  "height": 0.833,
+  "width": 0.737,
+  "depth": 0.666,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "reveal",
+   "hit",
+   "death"
+  ],
+  "presets": [
+   "crypt",
+   "royal",
+   "sunken"
+  ],
+  "committed": true
+ },
+ {
+  "name": "slime",
+  "side": "monster",
+  "group": "small",
+  "height": 0.624,
+  "width": 0.794,
+  "depth": 0.635,
+  "clips": [
+   "idle",
+   "walk",
+   "attack",
+   "hit",
+   "death",
+   "spit"
+  ],
+  "presets": [
+   "fire",
+   "ice",
+   "poison"
+  ],
+  "committed": true
+ }
+]
