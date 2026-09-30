@@ -1,0 +1,17 @@
+# sorcerer (heroes/magic/sorcerer) -> assets/sorcerer.ts
+
+A young sorcerer hero about 1.0 m to the top of the hair, faces +Z, on the mage base (assets/mage.ts: the wizard's body, skeleton with `skirt`, `cloak`, `hatroot`, `hattip`, `orb`, and knee bones; a wand rigid in `hand.R`, a book on `hand.L`; clips idle, walk, run, attack, attack2, hit, death, victory; variant slots eyes, hair, skin, clothing with presets). Bar 8/10 (character). Game: Sorcerer Ziggurat (the player casts bolts), so the violet fire orb is the focal prop.
+
+Mockup: docs/hero-mockups/sorcerer_001.jpg (set `reference` to that path). Match its idea, with one change: no beard; every hero on this set has the young, round, beardless face. Wild black spiky hair swept up and back; heavy dark brows over big eyes and a small confident smile; a crimson robe with a black high stand-up collar, gold trim down both front panels, gold zigzag runes on the panels, wide black-lined sleeves; a wide black belt with a white skull buckle; a violet fire orb floating above the open right palm; a violet flame licking from the open left palm; black boots; no hat, no cape.
+
+Palette: hair #1a1614 with #302a28 lit ridges; skin #f2c7a4; robe crimson #a8282a with #6e1a1c folds; collar and sleeve lining #1c1418; gold trim #e0b040 (metalness 0.6, roughness 0.4); belt #1c1418, skull #f0ece0; orb #c060ff emissive 1.5 on a #3a1050 base, opacity 0.85; the flames #d080ff emissive 1.4 on a #3a1050 base, opacity 0.8; boots #16141a.
+Variants (the hero slot set): eyes (violet default #6a4a9e, brown #6e4020, blue #2f6aa8), hair (black default, white #d8d4c8, auburn #7a3a22), skin (fair default, tan #d49a72, brown #8a5a3e), clothing (crimson default, midnight #2a2a5a, emerald #2a6a3a). Presets: default, midnight, emerald.
+
+Construction recipe:
+1. Copy assets/mage.ts. Remove the hat, the glasses, the wand, the book, and the cape. Keep the rig (the `hatroot` and `hattip` bones may stay unused or be removed; keep `orb`), the clips, the robe (recolor crimson, add the front panels and trim), the sleeves, the belt, the under-robe, the boots.
+2. Head: hair as 12 to 14 pointed spikes (cones, smoothUnion 0.012) swept up and back from a cap, two spikes over the brow; heavy brows (rounded boxes tilted 10 degrees in); big eyes; a small smile; round human ears.
+3. Body: the high collar (a shell ring around the neck, open at the front, 0.06 tall); two gold trim strips down the robe front (thin boxes 0.012 wide) with a zigzag rune stroke on each panel in paint; the wide belt (a band 0.05 tall) with a skull buckle (a sphere r 0.028 with two eye pits and a jaw box).
+4. Held items: the orb (a sphere r 0.055, emissive) on the `orb` bone placed 0.08 above the open right palm, with a small flame cone on top; a flame cone 0.09 tall on the open left palm. Both hands open, palms up, forearms forward at the waist in idle. Attack is an orb cast (the right arm pushes forward, the orb flies forward 0.3 m and back); attack2 is a two-hand blast (both arms forward, both flames flare). `./forge check sorcerer` must end with `result ok` and the ground check must be ok.
+5. Sprites: the black spiky hair, the crimson robe, the gold trim, and the violet orb must read at 128 px. The orb must stay violet, not white.
+
+Limits: under 65,000 triangles, `detail` 0.004 on the face, 0.006 elsewhere. No `warning:` lines. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only create or edit assets/sorcerer.ts. Finish with one `./forge all sorcerer`.

@@ -2530,33 +2530,34 @@
     "reviewedAt": "2026-09-29T21:52:18+00:00"
   },
   "living-statue": {
-    "overall": 7.6,
+    "overall": 7.8,
+    "group": "enemies",
     "scores": {
       "mockup": 3,
-      "silhouette": 3,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3,
+      "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 5,
+      "technical": 4,
       "gameReady": 4,
-      "sprite": 4,
+      "sprite": 3,
       "motion": 4
     },
-    "summary": "Marble knight statue on the knight base: a crowned cap helm with a garland band and a blue gem, a faceted mask with glowing eyes, riveted pauldrons, a ringed round shield with a stacked boss, a carved skirt, and a marble sword; darker marble with painted seams and six placed cracks. Five passes (7.3, 7.7, 7.8, 7.6, 7.6) across runs 2 and 3 (Sonnet 5.5 high tier); skipped just under the bar.",
+    "summary": "Rework 3 (marble focus, per the owner note) on the dark-knight base by a Sonnet 5.5 subagent: an off-white marble base (#e4e0d8, roughness 0.35) with a fine grain bump on every marble body, ridge veins in two scales (cool blue-grey on the helm, shield, and sword; warm grey on the body, pauldrons, skirt, and cape), darker recesses and cracks, a chipped pauldron corner and shield rim, a rounded helm dome under the crown ring, and blue-glow eyes on a dark base. 36,946 triangles, no build warnings, forge check result ok, ground ok.",
     "strengths": [
-      "The helm, the mask, the pauldrons, the skirt, and the shield read as separate tones at 128 px.",
-      "The cracks are continuous painted lines with grooves.",
-      "Check ok (closest 0.3 cm), ground ok, 37,294 triangles, no warnings."
+      "The surface now reads as veined polished marble in all four views: the off-white tone, the vein network, and the soft specular are the three marble cues the previous passes lacked.",
+      "The chipped rim and pauldron corner and the darker recesses give the statue an old, carved read.",
+      "The sprite keeps the veins and the blue eyes at 128 px in the south, south-west, and south-east directions."
     ],
     "issues": [
-      "The helm is a flat-topped bowl with a spiky rim; the mockup has a rounded dome with a swagged crown and a center leaf.",
-      "The mask and the back read as flat grey.",
-      "The pauldron flanges stay small and hide behind the shield."
+      "Tone separation at 128 px is weak: the helm, pauldrons, skirt, and shield are all near-white, so the sprite reads as one pale mass in the north directions.",
+      "The veins lean blue-purple; the mockup's veins are neutral grey.",
+      "The helm keeps a crown-point ring and a blue gem, where the mockup has a smooth dome with a laurel swag; the mockup's dark cracks are more prominent."
     ],
-    "next": "Restore a rounded dome (0.14 tall) under the crown ring, swag the garland as overlapping leaves with a center leaf crest, and raise the pauldron flanges 0.02 m.",
-    "reviewedAt": "2026-09-30T01:51:08+00:00"
+    "next": "Owner call: accept at 7.8 or ask for a fourth pass with neutral grey veins, a stronger dark-crack pass, and one value step between the helm and the shield for the sprite.",
+    "reviewedAt": "2026-09-30T03:58:41+00:00"
   },
   "kobold-trapper": {
     "overall": 8,

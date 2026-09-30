@@ -104,3 +104,10 @@ The owner: "Mercenary was sidelined, but it looks fine to me. Give it one more a
 ## Owner note 11:50 (2026-09-30)
 
 The owner: "rework living-statue in one high pass before asking me for approval" and "The problem is it needs to more resemble marble." Rework 3 launches as a fresh high agent with a marble-surface brief (veins, polished roughness, tone separation, a rounded dome).
+
+12:00 living-statue rework 3 (marble) closed at 7.8 (self 7.5, 75,897 tokens, check ok, ground ok, 36,946 tris). The marble now reads (off-white base, two-scale veins, polish, chipped rim). Remaining gaps: weak tone separation at 128 px, blue-purple veins, a crown ring instead of the mockup's smooth dome. Per the owner note ("rework living-statue in one high pass before asking me for approval") the source stays uncommitted and the result goes to the owner for approval. Run 3 total: 3,012,858 tokens, 18 assets, 17 accepted.
+
+COUNTER RESET 3 2026-09-30 12:00 (owner): "Once the living-statue is complete, reset the token counter and continue working on the remaining assets". Rows with batch `run4` count toward a new 4,000,000 stop:
+`awk -F'\t' '$5=="run4"{s+=$6}END{print s}' bench/sonnet/log.tsv`.
+
+Run 4 scope: the P1 catalog rows with no source (36): 32 heroes, silo, wall-gate (village), palm-tree, giant-crystal. Order by game need: alchemist (Alchemist's Synthesis), sorcerer (Sorcerer Ziggurat), dragoon (Dragon Rider), beast-rider (Griffin Riders), then the magic, martial, and support heroes by group. The four structures go through one medium slot in turn (silo, wall-gate, palm-tree, giant-crystal); silo, wall-gate, and palm-tree start from the 2026-09-28 external trial files in /home/daniebo/forge-trials (reviewed: silo and wall-gate near the bar, palm-tree needs new fronds and a taller trunk). Hero rule: beardless, the young round hero face, on an existing hero base; mockups made with mmx in docs/hero-mockups/.
