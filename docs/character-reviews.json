@@ -3316,5 +3316,35 @@
     ],
     "next": "Done for P1. A later polish pass could level the sword and soften the side locks.",
     "reviewedAt": "2026-09-30T07:47:07+00:00"
+  },
+  "hunter": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the archer base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: a floppy brown leather cap with a wide peak, a dark band, and a grey and cream feather on the left, brown hair under the rim, a dark green laced vest over a cream shirt with rolled cuffs, a leather chest strap with a brass buckle, a belt with a buckle, a bedroll on the back, a knife sheath at the lower back, dark boots, and a crossbow hanging from the right hand at the hip in idle and raised with both hands in the attack clips. 49,742 triangles, no build warnings, forge check result ok at 4.2 cm, ground ok.",
+    "strengths": [
+      "The brown cap, the green vest, the cream sleeves, and the pale bedroll give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the archer and the ranger.",
+      "The crossbow hangs low, so the vest lace, the strap, and the buckle stay visible from the front."
+    ],
+    "issues": [
+      "The cap is smooth; the mockup's draped folds do not read.",
+      "The feather is small, and the crossbow stock hides behind the hand in the front sprite.",
+      "The hair ends in a hard bowl edge at the nape."
+    ],
+    "next": "Done for P1. A later polish pass could add cap folds and a larger feather.",
+    "reviewedAt": "2026-09-30T07:49:33+00:00"
   }
 }

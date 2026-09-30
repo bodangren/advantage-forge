@@ -88,10 +88,11 @@ warrior	hero	high	a5de2ca09942d6777	2	accepted	8.0	run 4; 158393 tokens; accepte
 palm-tree	tree	high	ac4244983e6dd7abd	3	accepted	7.0	run 4; 106801 tokens in all (two medium passes plus one high rework)
 healer	hero	high	a3fbcc9dd0f3a2cba	2	failed	7.8	run 4; hood still a smooth ball after the feedback pass; fresh high rework next
 giant-crystal	terrain	medium	aeb189079278bbc82	2	accepted	7.2	run 4; 55862 tokens; accepted after one feedback pass
-hunter	hero	high	a7fd8880af890f4c8	2	running	7.2	run 4; feedback pass in flight (feather, cap, vest)
+hunter	hero	high	a7fd8880af890f4c8	2	accepted	8.0	run 4; accepted after one feedback pass
 scout	hero	high	a6e6f79f9a23fd204	2	running	7.0	run 4; feedback pass in flight (hair, props, cloak)
 healer	hero	high	ab8a1e2ee9e61f4aa	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high hood rework
 fighter	hero	high	a82fb6e71f06c1916	2	accepted	8.0	run 4; accepted after one feedback pass
 berserker	hero	high	a08a2be18467c0426	1	stalled	-	run 4; froze after the base reads; relaunched
 berserker	hero	high	ad1435959cdb119f9	1	running	-	run 4; relaunch after a stall
 summoner	hero	high	a4446e9fb9a0c1b10	1	running	-	run 4
+elementalist	hero	high	ad9b23279305ca91c	1	running	-	run 4
