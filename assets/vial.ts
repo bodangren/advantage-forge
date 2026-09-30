@@ -47,22 +47,17 @@ export default defineAsset({
         [0.02, 0.076],
         [0.0235, 0.084], // rolled rim outer
         [0.0235, 0.093],
-        [0.014, 0.093], // rolled rim inner
-        [0.0148, 0.085],
-        [0.015, 0.076],
-        [0.0165, 0.062],
-        [0.021, 0.038],
-        [0.013, 0.02],
-        [0, 0.014], // inner floor
+        [0, 0.093], // solid glass: a shell shows its inner surface as cracks
       ],
       { smooth: true, samples: 14 },
     );
     const glassShape = sdf.revolve(glassProfile);
     k.body('glass', glassShape, {
-      color: GLASS,
-      roughness: 0.12,
+      // Solid, hue-matched at about 45 percent brightness, opacity 0.5 (sprites drop lower).
+      color: '#1e6a2e',
+      roughness: 0.05,
       metalness: 0,
-      opacity: 0.45,
+      opacity: 0.5,
       detail: 0.004,
       maxTriangles: 1400,
     });
@@ -83,11 +78,11 @@ export default defineAsset({
       { smooth: true, samples: 12 },
     );
     k.body('liquid', sdf.revolve(liquidProfile), {
-      color: GLOW_DARK,
+      color: '#2fe066',
       roughness: 0.2,
       metalness: 0,
       emissive: GLOW,
-      emissiveIntensity: 2,
+      emissiveIntensity: 0.6,
       detail: 0.006,
       maxTriangles: 500,
     });

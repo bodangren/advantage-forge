@@ -148,10 +148,12 @@ distillation-flask	static-rework	orchestrator	-	1	accepted	7.2	run 4; solid hue-
 kiln	static-rework	orchestrator	-	1	accepted	7.0	run 4; recessed fire
 glaive	static-rework	medium	a7c8d5ec4a755238f	1	accepted	7.3	run 4; thick pole, crescent blade
 greaves	static-rework	medium	a7c8d5ec4a755238f	1	accepted	7.0	run 4; red sleeves, knee diamond, steel boots
-fishing-pole	static-rework	medium	af421ebb4b1b9c889	1	running	-	run 4; equipment set; brief fishing-pole-rework.md
-fishing-rod	static-rework	medium	af421ebb4b1b9c889	1	running	-	run 4; equipment set; brief fishing-rod-rework.md
-lute	static-rework	medium	ada4b30c6a0d58b1f	1	running	-	run 4; equipment set; brief lute-rework.md
+fishing-pole	static-rework	medium	af421ebb4b1b9c889	1	accepted	7.2	run 4; upright cane, float
+fishing-rod	static-rework	medium	af421ebb4b1b9c889	1	accepted	7.2	run 4; upright rod, red reel, bobber
+lute	static-rework	medium	ada4b30c6a0d58b1f	1	accepted	7.3	run 4; upright teardrop lute
 
-amulet	static-rework	medium	a493a1b63fab93691	1	running	-	run 4; equipment set; brief amulet-rework.md
-mining-pick	static-rework	medium	a493a1b63fab93691	1	running	-	run 4; equipment set; brief mining-pick-rework.md
-spear	static-rework	medium	a493a1b63fab93691	1	running	-	run 4; equipment set; brief spear-rework.md
+amulet	static-rework	medium	a493a1b63fab93691	1	accepted	7.5	run 4; star medallion, red gem
+mining-pick	static-rework	medium	a493a1b63fab93691	1	accepted	7.5	run 4; upright hammer-pick
+spear	static-rework	medium	a493a1b63fab93691	1	accepted	7.2	run 4; spiral shaft, leaf blade
+
+vial	static-rework	orchestrator	-	1	accepted	7.0	run 4; solid hue-matched glass

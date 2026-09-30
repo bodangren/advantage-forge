@@ -1,221 +1,165 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Lute (equipment/tools/lute). A pickup that lies on its back.
- * Size: 0.46 m long, 0.29 m wide, 0.24 m tall. It rests on y = 0.
- * The neck points to +Z. The asset is centred on the Y axis.
- * One idea: a plump round honey-oak bowl, a gold sound-hole rose, and a peg head bent back.
- * Shape language: round bowl and pegs, one steep head that breaks the side line.
- * Palette: pale oak #d4b483, honey #b5814a, warm brown #8a5a35, walnut #6b4226,
- *   ivory strings #f6f1e4, gold #d4a93a. The rose is the accent.
- * Materials: oak (rough 0.84), walnut fittings (rough 0.7), strings (rough 0.52), gold (metal 1).
- * Detail: bowl, pale soundboard, neck, bent peg head, four pegs, frets, bridge, four strings.
+ * Lute (equipment/instruments/lute). A held or displayed instrument, seen at pickup size.
+ * Size: 0.9 m tall, 0.42 m wide, stands on y = 0 on its rounded bottom, faces +Z,
+ * leans back 12 degrees around the base.
+ * One idea: a plump teardrop soundboard with a gold rose, a deep dark bowl, a bent-back peg head.
+ * Shape language: round bowl and knobs, one slim neck, a head that breaks the outline.
+ * Palette: pale board #e8c07a, bowl #8a4a2a, neck #b07a48, dark wood #4a2c18, strings #efe4c8,
+ *   gold #d4a93a (the accent).
+ * Materials: board, bowl, neck (wood, rough 0.8), fittings (dark wood), strings, gold rose (metal).
+ * Detail: six rib grooves, sound hole, rosette, two frets, fingerboard, four pegs, bridge, four strings.
  * No rig.
  */
 
-const HONEY = rgb('#b5814a');
-const WARM = rgb('#8a5a35');
-const PALE = rgb('#d4b483');
-const PALE_LIGHT = rgb('#e4cba0');
-const WALNUT = rgb('#6b4226');
-const WALNUT_DEEP = rgb('#4a2c18');
-const BOWL = rgb('#6b4226');
+const PALE = rgb('#e8c07a');
+const BOWL = rgb('#8a4a2a');
+const BOWL_DARK = rgb('#5e3019');
+const NECK = rgb('#b07a48');
+const DARK = rgb('#4a2c18');
 const GOLD = rgb('#d4a93a');
-const GOLD_DEEP = rgb('#a67c22');
-const HOLE = rgb('#2a140c');
-const FRET = rgb('#e4cba0');
+const LEAN = -12;
 
-const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const lean = <T extends { rotateX: (d: number) => T }>(s: T): T => s.rotateX(LEAN);
 
-// Neck points to +Z. The peg head rises from the joint and bends back toward the player.
-const BODY_Z = -0.1;
-const JOINT_Y = 0.114;
-const JOINT_Z = 0.2;
-const BEND = -98;
-const HOLE_Z = -0.07;
-const BRIDGE_Z = -0.165;
-const STRING_Y = 0.134;
-const BOARD_TOP = 0.118;
-
-const bendCos = Math.cos((BEND * Math.PI) / 180);
-const bendSin = Math.sin((BEND * Math.PI) / 180);
-
-/** Map a point in peg-head space (joint at the origin, head along +Z) into the world. */
-const headPoint = (x: number, y: number, z: number): [number, number, number] => [
-  x,
-  JOINT_Y + bendCos * y - bendSin * z,
-  JOINT_Z + bendSin * y + bendCos * z,
+// Teardrop outline, x half-width by y: wide at y 0.2, narrow at y 0.5, round bottom at y 0.
+const half: [number, number][] = [
+  [0.0, 0.0],
+  [0.09, 0.02],
+  [0.17, 0.07],
+  [0.208, 0.14],
+  [0.21, 0.2],
+  [0.185, 0.29],
+  [0.13, 0.39],
+  [0.075, 0.46],
+  [0.06, 0.5],
 ];
-
-const headPose = <T extends { rotateX: (d: number) => T; at: (x: number, y: number, z: number) => T }>(s: T): T =>
-  s.rotateX(BEND).at(0, JOINT_Y, JOINT_Z);
-
-const woodPaint = (x: number, y: number, z: number) => {
-  const grain = 0.5 + 0.5 * noise.fbm(x * 10, y * 6, z * 14, 3);
-  const streak = 0.5 + 0.5 * noise.fbm(x * 26, y * 4, z * 5, 2);
-  const hole = Math.hypot(x, z - HOLE_Z);
-  if (hole < 0.027 && y < BOARD_TOP + 0.004 && y > 0.09) return mixRgb(HOLE, WALNUT_DEEP, 0.25);
-  const fromBody = Math.hypot(x, z - BODY_Z);
-  const onFace = y > 0.11 && y < 0.126 && fromBody < 0.134 && z < 0.04;
-  if (onFace) {
-    const rim = clamp01((fromBody - 0.1) / 0.03);
-    return mixRgb(mixRgb(PALE_LIGHT, PALE, 0.25 + 0.4 * streak), WARM, rim * 0.4);
-  }
-  const under = clamp01((0.045 - y) / 0.045);
-  const stave = 0.5 + 0.5 * Math.cos(Math.atan2(z - BODY_Z, x) * 12);
-  let side = mixRgb(BOWL, WALNUT_DEEP, 0.15 + 0.4 * under + 0.14 * stave);
-  side = mixRgb(side, WARM, 0.12 * grain);
-  // Honey neck and peg head sit above the bowl.
-  const neck = clamp01((y - 0.1) / 0.02) * clamp01((z + 0.02) / 0.06);
-  return mixRgb(side, mixRgb(HONEY, PALE, 0.3 + 0.2 * grain), neck);
+const outline = (shrink: number) => {
+  const pts: [number, number][] = [
+    ...half.map(([x, y]): [number, number] => [x - shrink * (y === 0 ? 0 : 1), y + (y === 0 ? shrink : 0)]),
+    ...[...half].reverse().slice(1).map(([x, y]): [number, number] => [-(x - shrink), y]),
+  ];
+  return profile.polygon(pts, { smooth: true });
 };
-
-const fittingPaint = (x: number, y: number, z: number) => {
-  // Pale fret bars sit above the dark fingerboard. Pegs are farther forward.
-  if (y > 0.126 && y < 0.142 && z > 0.0 && z < 0.185 && Math.abs(x) < 0.022) return FRET;
-  const n = 0.5 + 0.5 * noise.fbm(x * 16, y * 12, z * 16, 2);
-  return mixRgb(WALNUT, WALNUT_DEEP, 0.25 + 0.3 * n);
+const halfWidth = (y: number) => {
+  for (let i = 1; i < half.length; i++) {
+    const [x0, y0] = half[i - 1]!;
+    const [x1, y1] = half[i]!;
+    if (y <= y1) return x0 + ((x1 - x0) * (y - y0)) / (y1 - y0);
+  }
+  return 0.06;
 };
 
 export default defineAsset({
   name: 'lute',
-  description:
-    'A honey-oak lute on its back, with a gold sound-hole rose, a bent peg head, frets, and four pale strings.',
+  description: 'An upright lute with a teardrop board, gold rose, dark ribbed bowl, bent peg head, and four strings.',
   reference: 'docs/item-mockups/lute-mock.jpg',
   detail: 0.005,
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------------ plump round bowl, pale cap, neck, bent head
-    const bowl = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.02, 0.0],
-            [0.07, 0.006],
-            [0.11, 0.022],
-            [0.136, 0.048],
-            [0.146, 0.074],
-            [0.144, 0.096],
-            [0.118, 0.104],
-            [0.0, 0.104],
-          ],
-          { smooth: true, samples: 10 },
-        ),
-      )
-      .at(0, 0, BODY_Z)
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
+    // ---------------------------------------------------------------- soundboard and bowl
+    const hole = sdf.cylinder(0.06, 0.02, 0).rotateX(90).at(0, 0.3, 0.012);
+    const board = sdf
+      .extrude(outline(0), 0.02, 0.004)
+      .subtract(hole)
+      .paintFn((x, y, z) => {
+        const r = Math.hypot(x, y - 0.3);
+        if (r < 0.056) return DARK;
+        const n = 0.5 + 0.5 * noise.fbm(x * 30, y * 6, 1, 2);
+        const rim = Math.max(0, (Math.abs(x) - halfWidth(y) + 0.03) / 0.03);
+        return mixRgb(mixRgb(PALE, rgb('#f1d497'), n * 0.5), BOWL, Math.min(1, rim) * 0.45);
+      });
+    k.body('board', lean(board), { color: '#e8c07a', roughness: 0.7, detail: 0.007, maxTriangles: 900 });
 
-    const board = sdf.cylinder(0.13, 0.016, 0.005).at(0, 0.11, BODY_Z);
-    const hole = sdf.cylinder(0.024, 0.04, 0.001).at(0, 0.112, HOLE_Z);
-    const boardCut = board.smoothSubtract(0.003, hole);
-
-    const neck = sdf.box([0.042, 0.018, 0.2], 0.007).at(0, 0.112, 0.09);
-    // A flat paddle, longer than the neck is thick, so the bend reads from the side.
-    const pegbox = headPose(
-      sdf.smoothUnion(
-        0.007,
-        sdf.box([0.048, 0.026, 0.118], 0.008).at(0, 0, 0.052),
-        sdf.ellipsoid([0.028, 0.016, 0.022]).at(0, 0, 0.104),
-      ),
-    );
-
-    const wood = bowl
-      .smoothUnion(0.008, boardCut, neck)
-      .smoothUnion(0.006, pegbox)
-      .paintFn(woodPaint);
-
-    k.body('wood', wood, {
-      color: '#8a5a35',
-      roughness: 0.84,
-      metalness: 0,
-      detail: 0.006,
-      maxTriangles: 1500,
-      bump: (x, y, z) => {
-        const grain = 0.001 * noise.fbm(x * 14, y * 8, z * 10, 3);
-        if (y > 0.108) return grain * 0.6;
-        const seam = Math.abs(Math.sin(Math.atan2(z - BODY_Z, x) * 6));
-        return grain - (seam < 0.16 ? 0.0015 * (1 - seam / 0.16) : 0);
+    const bowlShape = sdf
+      .extrude(outline(0.06), 0.08)
+      .round(0.06)
+      .at(0, 0, -0.11)
+      .intersect(sdf.box([1, 1.2, 0.4]).at(0, 0.5, -0.21))
+      .paintFn((x, y, z) => {
+        const w = Math.max(0.05, halfWidth(y));
+        const s = Math.abs(Math.sin((x / w) * Math.PI * 3.5));
+        const groove = s < 0.14 ? 1 - s / 0.14 : 0;
+        const n = 0.5 + 0.5 * noise.fbm(x * 12, y * 8, z * 12, 2);
+        return mixRgb(mixRgb(BOWL, rgb('#9c5a34'), n * 0.4), BOWL_DARK, groove * 0.8);
+      });
+    k.body('bowl', lean(bowlShape), {
+      color: '#8a4a2a',
+      roughness: 0.6,
+      detail: 0.01,
+      maxTriangles: 1600,
+      bump: (x, y) => {
+        const w = Math.max(0.05, halfWidth(y));
+        const s = Math.abs(Math.sin((x / w) * Math.PI * 3.5));
+        return s < 0.14 ? -0.002 * (1 - s / 0.14) : 0;
       },
     });
 
-    // ------------------------------------------------------------------ fingerboard, pale frets, pegs, bridge
-    const finger = sdf.box([0.028, 0.005, 0.16], 0.002).at(0, 0.123, 0.09);
-    const fretZ = [0.02, 0.055, 0.09, 0.125, 0.158];
-    const frets = sdf.union(
-      ...fretZ.map((z) => sdf.box([0.04, 0.008, 0.007], 0.002).at(0, 0.129, z)),
+    // ---------------------------------------------------------------- neck, frets, head
+    const HEAD_A = -60;
+    const neck = sdf.box([0.09, 0.32, 0.05], 0.012).at(0, 0.63, 0.0);
+    const fretBands = sdf.union(
+      ...[0.58, 0.68].map((y) => sdf.box([0.1, 0.014, 0.06], 0.005).at(0, y, 0.0)),
     );
-    const nut = sdf.box([0.036, 0.01, 0.009], 0.003).at(0, 0.128, 0.192);
+    const headBox = sdf.box([0.1, 0.16, 0.06], 0.012).at(0, 0.075, 0).rotateX(HEAD_A).at(0, 0.78, 0);
+    const woodNeck = neck
+      .smoothUnion(0.01, headBox)
+      .paintFn((x, y, z) => {
+        const g = 0.5 + 0.5 * noise.fbm(x * 30, y * 5, z * 30, 2);
+        return mixRgb(NECK, rgb('#c48f58'), g * 0.5);
+      });
+    k.body('neck', lean(woodNeck), { color: '#b07a48', roughness: 0.75, detail: 0.005, maxTriangles: 800 });
 
-    // Pegs angle toward the tip, so the knobs rise above the paddle in the side view.
-    const peg = (z: number, side: number) =>
+    const finger = sdf.box([0.05, 0.3, 0.012], 0.004).at(0, 0.63, 0.027);
+    const fretBars = sdf.union(
+      ...[0.58, 0.68].map((y) => sdf.box([0.104, 0.014, 0.066], 0.006).at(0, y, 0.0)),
+    );
+    const peg = (side: number, ly: number) =>
       sdf.smoothUnion(
-        0.005,
-        sdf.capsule([side * 0.008, 0, z], [side * 0.036, 0.006, z + 0.016], 0.0085),
-        sdf.sphere(0.015).at(side * 0.044, 0.008, z + 0.022),
+        0.004,
+        sdf.cylinder(0.015, 0.06, 0.004).rotateZ(90).at(side * 0.08, ly, 0),
+        sdf.sphere(0.024).at(side * 0.115, ly, 0),
       );
-    const pegs = headPose(sdf.union(peg(0.036, 1), peg(0.074, 1), peg(0.036, -1), peg(0.074, -1)));
-
-    const bridge = sdf
-      .smoothUnion(
-        0.005,
-        sdf.box([0.064, 0.02, 0.016], 0.005),
-        sdf.sphere(0.011).at(-0.032, 0.002, 0),
-        sdf.sphere(0.011).at(0.032, 0.002, 0),
-      )
-      .at(0, 0.128, BRIDGE_Z);
-
-    k.body('walnut', sdf.union(finger, frets, nut, pegs, bridge).paintFn(fittingPaint), {
-      color: '#6b4226',
-      roughness: 0.7,
-      metalness: 0,
-      detail: 0.0038,
-      maxTriangles: 900,
-      bump: (x, y, z) => 0.0005 * noise.fbm(x * 20, y * 14, z * 20, 2),
+    const pegs = sdf
+      .union(peg(1, 0.05), peg(-1, 0.05), peg(1, 0.125), peg(-1, 0.125))
+      .rotateX(HEAD_A)
+      .at(0, 0.78, 0);
+    const bridge = sdf.box([0.14, 0.02, 0.02], 0.006).at(0, 0.12, 0.024);
+    const nut = sdf.box([0.06, 0.012, 0.016], 0.004).at(0, 0.782, 0.028);
+    const fittings = sdf.union(finger, fretBars, pegs, bridge, nut).paintFn((x, y, z) => {
+      if (y > 0.57 && y < 0.69 && Math.abs(y - 0.58) < 0.009) return GOLD;
+      if (Math.abs(y - 0.68) < 0.009 && y < 0.7) return GOLD;
+      return mixRgb(DARK, rgb('#6b4226'), 0.3 * (0.5 + 0.5 * noise.fbm(x * 20, y * 20, z * 20, 2)));
     });
+    k.body('fittings', lean(fittings), { color: '#4a2c18', roughness: 0.6, detail: 0.004, maxTriangles: 900 });
 
-    // ------------------------------------------------------------------ four pale strings, spaced so they stay separate
-    const nutX = [-0.018, -0.006, 0.006, 0.018];
-    const bridgeX = [-0.028, -0.01, 0.01, 0.028];
-    const pegZ = [0.074, 0.036, 0.036, 0.074];
-    const pegSide = [-1, -1, 1, 1];
-    const runs = nutX.map((nx, i) => {
-      const side = pegSide[i]!;
-      const fromNut = headPoint(nx, 0.014, 0.008);
-      const toPeg = headPoint(side * 0.018, 0.006, pegZ[i]! + 0.01);
-      return sdf.union(
-        sdf.capsule([bridgeX[i]!, STRING_Y, BRIDGE_Z + 0.006], [nx, STRING_Y, 0.19], 0.0028),
-        sdf.capsule(fromNut, toPeg, 0.0024),
-      );
-    });
-    k.body('strings', sdf.union(...runs), {
-      color: '#f6f1e4',
-      roughness: 0.52,
-      metalness: 0,
-      detail: 0.0024,
-      maxTriangles: 500,
-    });
+    // ---------------------------------------------------------------- strings
+    const bx = [-0.05, -0.017, 0.017, 0.05];
+    const nx = [-0.018, -0.006, 0.006, 0.018];
+    const rad = (HEAD_A * Math.PI) / 180;
+    const hy = 0.03;
+    const headPt = (x: number, ly: number, lz: number): [number, number, number] => [
+      x,
+      0.78 + Math.cos(rad) * ly - Math.sin(rad) * lz,
+      Math.sin(rad) * ly + Math.cos(rad) * lz,
+    ];
+    const strings = sdf.union(
+      ...bx.map((x, i) =>
+        sdf.union(
+          sdf.capsule([x, 0.135, 0.036], [nx[i]!, 0.79, 0.038], 0.004),
+          sdf.capsule([nx[i]!, 0.79, 0.038], headPt(nx[i]!, hy + 0.04, 0.034), 0.004),
+        ),
+      ),
+    );
+    k.body('strings', lean(strings), { color: '#efe4c8', roughness: 0.5, detail: 0.003, maxTriangles: 500 });
 
-    // ------------------------------------------------------------------ gold rose around the sound hole
-    const petal = (deg: number) =>
-      sdf
-        .ellipsoid([0.007, 0.005, 0.012])
-        .at(0, 0.003, 0.038)
-        .rotateY(deg);
+    // ---------------------------------------------------------------- rosette
     const rose = sdf
-      .union(
-        sdf.torus(0.03, 0.0055),
-        sdf.torus(0.044, 0.0042),
-        ...[0, 60, 120, 180, 240, 300].map(petal),
-      )
-      .at(0, BOARD_TOP + 0.004, HOLE_Z)
-      .paintFn((_x, y) => mixRgb(GOLD_DEEP, GOLD, clamp01((y - BOARD_TOP) / 0.01)));
-    k.body('rose', rose, {
-      color: '#d4a93a',
-      roughness: 0.32,
-      metalness: 1,
-      detail: 0.0032,
-      maxTriangles: 560,
-    });
+      .union(sdf.torus(0.066, 0.005), sdf.torus(0.078, 0.0035))
+      .rotateX(90)
+      .at(0, 0.3, 0.02);
+    k.body('rose', lean(rose), { color: '#d4a93a', roughness: 0.32, metalness: 1, detail: 0.003, maxTriangles: 500 });
   },
 });

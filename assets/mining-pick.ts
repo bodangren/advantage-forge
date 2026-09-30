@@ -1,97 +1,80 @@
 import { defineAsset, noise, profile, sdf } from '../src/index.js';
 
-/**
- * Mining pick (equipment/tools/mining-pick), 0.85 m long, lying flat on y = 0.
- * Role: hero tool / pickup icon, reads at 128 px as a silhouette.
- * The one idea: a curved double-pointed iron head crowning a straight honey-oak haft.
- * Shape language: square-ish sturdy haft (secondary) + triangular tapering points (dominant).
- * Palette: honey oak #b5814a haft (dominant), dark iron #4a4f55 head (secondary),
- *   gold #d4a93a collar (accent), pale cut wood butt, dark walnut grip.
- * Materials: wood (rough 0.8), leather grip (rough 0.7), worn iron (rough 0.5, metal 0.7),
- *   steel edge paint on the tips, gold collar (metal 1).
- * Detail list: haft + head (primary), eye block and collar (secondary), grain bump (tertiary).
- * No rig: a static tool lying flat, head at the +Z end, tips along X.
- */
+// Design note — hammer-pick (equipment/tools/mining-pick).
+//
+// Role: hero tool / pickup icon; reads at 128 px as an upright silhouette.
+// Size: 0.8 m tall (0.785 built), stands on its pommel on y = 0, head runs along X, faces +Z.
+// One idea: a chunky steel hammer-pick head (flat face on -X, curved spike on +X)
+//   on a fat rounded wooden grip with a cream wrapped band.
+// Shape language: round grip (secondary), blocky head and pointed spike (dominant).
+// Palette: wood #c8763a / #a85a28, cream wrap #e8d9a8, steel #a8acb1 / #6c737a /
+//   #dde1e6, brass collar #d4a93a.
+// Materials: wood, wrap, steel (metal 0.85, rough 0.4), brass.
+// Detail: pommel, neck, grip, five wrap rings, bulb, head block, hammer face,
+//   three-segment spike, brass collar, dark square hole outline.
+// Rig/animation: none.
 
-const HAFT_R = 0.024;
-const HAFT_Y = HAFT_R; // lying on the ground
-const HEAD_Z = 0.3; // head sits at the +Z end of the haft
-const HEAD_Y = 0.052;
+const HEAD_Y = 0.74;
 
 export default defineAsset({
   name: 'mining-pick',
-  description: 'Curved double-pointed iron mining pick on a honey-oak haft (equipment/tools/mining-pick).',
-  detail: 0.004,
+  description: 'Upright hammer-pick with a steel head and a wrapped wooden grip (equipment/tools/mining-pick).',
+  detail: 0.005,
   reference: 'docs/item-mockups/mining-pick-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------------ haft (honey oak)
-    // Straight haft from z = -0.46 (butt) to z = +0.34, lying on y = 0.
-    const haft = sdf.cylinder(HAFT_R, 0.8, 0.012).rotateX(90).at(0, HAFT_Y, -0.06);
-    k.body('haft', haft, {
-      color: '#b5814a',
+    const handle = sdf
+      .smoothUnion(
+        0.03,
+        sdf.sphere(0.055).at(0, 0.055, 0),
+        sdf.capsule([0, 0.05, 0], [0, 0.14, 0], 0.03),
+        sdf.ellipsoid([0.05, 0.13, 0.05]).at(0, 0.22, 0),
+        sdf.capsule([0, 0.3, 0], [0, 0.61, 0], 0.036),
+        sdf.ellipsoid([0.055, 0.09, 0.055]).at(0, 0.5, 0),
+      )
+      .paintWhere(sdf.box([0.3, 0.16, 0.3]).at(0, 0.11, 0), '#a85a28', 0.04);
+    k.body('wood', handle, {
+      color: '#c8763a',
       roughness: 0.8,
-      detail: 0.007,
-      // Grain stretched along the haft, plus a subtle per-streak tint.
-      paintFn: (x, y, z, base) => {
-        const g = noise.fbm(x * 40, y * 40, z * 6, 3);
-        return g > 0.25 ? '#8a5a35' : base;
-      },
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 60, y * 60, z * 8, 2),
+      detail: 0.006,
+      bump: (x, y, z) => 0.0012 * noise.fbm(x * 50, y * 10, z * 50, 2),
     });
 
-    // Pale cut-wood cap on the butt end.
-    const buttCap = sdf.cylinder(0.019, 0.012, 0.004).rotateX(90).at(0, HAFT_Y, -0.458);
-    k.body('butt-cap', buttCap, { color: '#c9a06a', roughness: 0.85 });
+    const rings: sdf.Shape[] = [];
+    for (let i = 0; i < 5; i++) rings.push(sdf.torus(0.045, 0.012).at(0, 0.32 + i * 0.025, 0));
+    k.body('wrap', sdf.union(...rings), { color: "#e8d9a8", roughness: 0.85, detail: 0.006, maxTriangles: 1200 });
 
-    // ------------------------------------------------------------------ grip (dark leather)
-    const grip = sdf.cylinder(0.028, 0.18, 0.01).rotateX(90).at(0, HAFT_Y + 0.002, -0.33);
-    k.body('grip', grip, {
-      color: '#5c3a22',
-      roughness: 0.7,
-      detail: 0.007,
-      // Leather strap wound in a spiral around the grip.
-      bump: (x, y, z) => 0.0015 * Math.abs(Math.sin(Math.atan2(y - HAFT_Y, x) + z * 150)),
+    const block = sdf.box([0.16, 0.09, 0.09], 0.02).at(0, HEAD_Y, 0);
+    const face = sdf.box([0.07, 0.11, 0.11], 0.02).at(-0.1, HEAD_Y, 0);
+    const spike = sdf.chain(
+      [
+        [0.08, HEAD_Y, 0, 0.04],
+        [0.17, HEAD_Y - 0.03, 0, 0.026],
+        [0.24, HEAD_Y - 0.09, 0, 0.014],
+        [0.28, HEAD_Y - 0.16, 0, 0.005],
+      ],
+      0.01,
+    );
+    const hole = sdf.box([0.04, 0.04, 0.3], 0.004).at(0.0, HEAD_Y, 0);
+    const holeRim = sdf.box([0.05, 0.05, 0.3]).at(0, HEAD_Y, 0);
+    const head = sdf
+      .smoothUnion(0.012, block, face, spike, sdf.capsule([0, 0.6, 0], [0, HEAD_Y, 0], 0.024))
+      .paintWhere(sdf.subtract(holeRim, hole), '#3a3f45', 0.004)
+      .paintWhere(sdf.box([0.01, 0.2, 0.2]).at(-0.135, HEAD_Y, 0), '#dde1e6', 0.01)
+      .paintWhere(sdf.box([0.2, 0.03, 0.3]).at(0.04, HEAD_Y - 0.045, 0), '#6c737a', 0.02);
+    k.body('head', head, {
+      color: '#a8acb1',
+      roughness: 0.4,
+      metalness: 0.85,
+      detail: 0.005,
     });
 
-    // ------------------------------------------------------------------ head (worn iron)
-    // Curved double point: a tapered chain sweeping out to sharp tips along X,
-    // center seated in a chunky eye block around the haft.
-    const points: number[][] = [
-      [-0.3, 0.03, 0.385, 0.008],
-      [-0.23, 0.04, 0.375, 0.014],
-      [-0.15, 0.048, 0.355, 0.022],
-      [-0.07, 0.052, 0.325, 0.032],
-      [0, HEAD_Y, HEAD_Z, 0.042],
-      [0.07, 0.052, 0.325, 0.032],
-      [0.15, 0.048, 0.355, 0.022],
-      [0.23, 0.04, 0.375, 0.014],
-      [0.3, 0.03, 0.385, 0.008],
-    ];
-    const pickArc = sdf.chain(points, 0.02);
-    const eyeBlock = sdf.box([0.085, 0.078, 0.07], 0.016).at(0, HEAD_Y, HEAD_Z);
-    const head = pickArc.smoothUnion(0.018, eyeBlock);
-    // Steel edge on both points: a soft stencil near each tip.
-    const edgeL = sdf.sphere(0.032).at(-0.285, 0.031, 0.388);
-    const edgeR = sdf.sphere(0.032).at(0.285, 0.031, 0.388);
-    k.body(
-      'head',
-      head.paintWhere(edgeL, '#c8ccd2', 0.01).paintWhere(edgeR, '#c8ccd2', 0.01),
-      {
-        color: '#4a4f55',
-        roughness: 0.5,
-        metalness: 0.7,
-        detail: 0.007,
-        bump: (x, y, z) => 0.0004 * noise.fbm(x * 300, y * 300, z * 300, 2), // hammered iron
-      },
-    );
-
-    // ------------------------------------------------------------------ collar and pin (gold accent)
-    const gold = sdf.union(
-      sdf.torus(0.026, 0.007).rotateX(90).at(0, HAFT_Y, 0.2),
-      sdf.sphere(0.013).at(0, HEAD_Y + 0.045, HEAD_Z),
-    );
-    k.body('gold', gold, { color: '#d4a93a', roughness: 0.3, metalness: 1, detail: 0.006 });
+    k.body('collar', sdf.torus(0.034, 0.011).at(0, 0.61, 0), {
+      color: '#d4a93a',
+      roughness: 0.3,
+      metalness: 1,
+      detail: 0.005,
+    });
   },
 });
