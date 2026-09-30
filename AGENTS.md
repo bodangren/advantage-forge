@@ -1,3 +1,109 @@
+# Project management with Measure
+
+Start at [measure/index.md](measure/index.md) for status, plans, debt, and lessons.
+The owning track plan records execution status. Existing design documents retain technical detail.
+
+- Read the relevant track, debt registry, and lessons before implementation.
+- Create a track before starting new work.
+- Update the plan, metadata, registry, and evidence when status changes.
+- Run `./measure/generate.sh` after changing managed facts.
+- Run `./measure/doctor.sh` before closing a track.
+- Preserve existing source, output, script, and design paths.
+- Obtain owner approval before changing paths that callers, tools, or users depend on.
+- Commit only assigned paths during concurrent work. Other agents share the git index.
+
+## What this repository is now
+
+Forge began as a code-first asset tool (see the history in [README.md](README.md)). The rebuild
+of 26 September 2026 replaced the closed part catalog with signed distance shape code. Since
+then the repository has three connected goals. A Measure track owns each goal.
+
+1. **Assets.** Build the full fantasy catalog as TypeScript sources: 856 catalog targets and 100
+   scene blueprints in [docs/fantasy-world-asset-catalog.md](docs/fantasy-world-asset-catalog.md).
+   Each source yields a textured, rigged GLB, animation clips, color presets, and sprites. About
+   600 sources exist in `assets/`. The catalog defines scope, not acceptance: a built file, a
+   reviewed asset, and an accepted game asset are different states. Owner rule: all equipment
+   fits the chibi humanoid base ([docs/equipment-fit.md](docs/equipment-fit.md)).
+2. **Games.** Each reading game has one deterministic rules core, a three.js view, and a Phaser
+   2D view for older phones. Six games run locally. The program ports them into the Advantage
+   Play Kit (APK) and rewrites 23 legacy 2D games. See
+   [docs/apk-2d3d-program.md](docs/apk-2d3d-program.md) and [measure/game-roadmap.md](measure/game-roadmap.md).
+3. **Player progression.** A student earns XP, turns it into GP (Guild Points), buys equipment, and
+   plays as that avatar. In Guild Mode the class fights one cooperative boss each week. Primary
+   Advantage comes first, with rigid equipment slots first and no real-time multiplayer. See
+   [docs/chibi-quest-progression.md](docs/chibi-quest-progression.md),
+   [docs/avatar-system.md](docs/avatar-system.md), and the track
+   `measure/tracks/avatar_system_20261001/`.
+
+The product name for players is **Chibi Quest**. Marketing names Primary Advantage and Tutor
+Advantage, never Reading Advantage, as the products.
+
+## Connected repositories
+
+| Repository | Path | Relation |
+| --- | --- | --- |
+| Reading Advantage monorepo | `../reading-advantage-monorepo` | Owns the apps (Primary Advantage is `apps/primary-advantage`), the database, and the game platform packages. Receives the game port and the avatar and Guild Mode backend. |
+| Tutor Advantage | `../tutor-advantage` | Separate repository (npm, three services and three apps: `tutor-pwa`, `student-liff`, `admin-console`). A Chibi Quest product. No code here imports it. |
+
+**The monorepo.** Packages that matter here: `packages/advantage-play-kit` (the APK runtime),
+`packages/game-contracts` (zod contracts for results, class challenges, and RPG state),
+`packages/game-cartridges`, `packages/domain` (server rules), and `packages/db` (Drizzle
+schema). Existing tables this work uses: `xpLogs` (one row per activity, unique per user and
+activity), `gameCompletions`, the `gameChallenge*` tables (class challenges), and
+`studentCosmeticUnlocks` and `studentRpgProfiles` (three fixed cosmetics). The port follows
+[docs/apk-port.md](docs/apk-port.md) and the tracks `game_platform_port_20260928` and
+`game_model_packs_20260928`.
+
+Rules for work in the monorepo:
+
+- This repository records the dependency, the evidence, and the plan. The monorepo owns its
+  implementation commits and deployment checks.
+- Work in an isolated branch and review it as a pull request. The port branch is `apk3d-port`.
+  Another agent may have uncommitted edits there: check `git status` and keep them apart.
+- Read the monorepo `AGENTS.md` first. It forbids new hash fields or hash chains unless an
+  existing contract requires one. The model-pack format has no hash field for this reason.
+- Backend work is the main test target there. Run its tests and its graph check after each change.
+- Demos here stay standalone but keep the APK shapes: one mount function, content through a
+  launch context, one `GameResults`, and persistence through a host adapter. Record each
+  difference in `docs/apk-port.md`.
+
+**Tutor Advantage.** `apps/tutor-pwa` runs its own copies of the legacy games (`src/lib/games/`)
+inside live lessons and reads Primary Advantage articles and content from the Primary database.
+Its XP preview code names the monorepo domain calculation as the authoritative one. The teaser
+videos use its logo. Avatars, GP, and Guild Mode target Primary Advantage first. A later track
+must decide how Tutor Advantage receives them. Do not add a dependency on it here without a
+track.
+
+## Measure tracks since 24 September
+
+Status counts are in [measure/generated/status.md](measure/generated/status.md) (72 tracks at the
+last generation). The [rework history](measure/history.md) maps 615 commits to 11 history tracks.
+Active track families:
+
+| Family | Tracks | Scope |
+| --- | --- | --- |
+| Asset quality and delivery | `asset_quality_*`, `asset_p0_acceptance_*`, `asset_delivery_*` | Type errors, acceptance review, exports |
+| Asset production | `asset_p1_*`, `asset_p2_items_*`, `asset_equipment_parts_*` | P1 and P2 families: heroes (done), enemies, equipment, props, architecture, nature |
+| Game platform | `game_platform_port_*`, `game_model_packs_*`, `game_2d_parity_*` | Port into the monorepo, model packs, 2D parity |
+| Games | `game_*_port_*` (six initial), `game_*` (23 legacy rewrites) | Rune Match and Labyrinth are in progress |
+| Showcase | `showcase_battle_teaser_*` | The 45 second Chibi Quest teaser |
+| Avatars | `avatar_system_20261001` | Avatar base, equipment fit, pack, composer, GP price |
+
+Assets have priorities: P0 is the first production set and P1 is the next. Priority records build
+order, not quality. Reviews use a rating out of 10 with a bar of 7.
+
+## Working rules learned in this period
+
+- Validate mesh content and types before accepting a trial source. A build once produced an
+  empty mesh.
+- Shared staged files entered unrelated commits during overnight work. Stage and commit explicit
+  paths.
+- Trial tools must write only inside their trial directory. Check isolation before a batch.
+- Keep heavy builds within machine capacity: two textured build slots for the whole machine.
+- Record a game port and a local game as separate completions.
+- Full lessons are in [measure/lessons-learned.md](measure/lessons-learned.md). Open debt is in
+  [measure/tech-debt.md](measure/tech-debt.md).
+
 # Authoring assets in Fantasy Asset Forge
 
 You make a 3D asset by writing a TypeScript file in `assets/`. The file describes the asset as

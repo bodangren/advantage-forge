@@ -1,5 +1,7 @@
 # Fantasy Asset Forge
 
+Project status and planning: [Measure index](measure/index.md).
+
 Code-first 3D game assets, with 2D pixel-art sprites rendered from the same model.
 
 An LLM writes each asset as a TypeScript program, renders it, looks at the result, and revises
@@ -14,6 +16,42 @@ and sentences to beat monsters in the Sunken Vault. See
 [docs/demo-monster-encounters.md](docs/demo-monster-encounters.md).
 
 ![wizard turnaround: reference, front, three-quarter, side, back](docs/showcase/wizard-turnaround.jpg)
+
+## Project goals and status
+
+Since the rebuild of 26 September 2026 the repository has three connected goals. Measure tracks
+own the plans and the status: start at the [Measure index](measure/index.md) and the
+[generated status](measure/generated/status.md).
+
+| Goal | What it means | Where it stands |
+| --- | --- | --- |
+| **Assets** | The full fantasy catalog as TypeScript sources: 856 catalog targets and 100 scene blueprints ([catalog](docs/fantasy-world-asset-catalog.md)). | About 600 sources in `assets/`. All P0 and all 32 P1 heroes are done, with color presets. Enemies, equipment, props, architecture, and nature are in review. Every equipment piece must fit the chibi humanoid ([fit contract](docs/equipment-fit.md)). |
+| **Games** | Reading games for primary students. Each has one rules core, a three.js view, and a Phaser 2D view for older phones. | Six games run locally in 3D and 2D. The platform port into the monorepo is in progress, starting with Potion Rush. 23 legacy games wait for rewrites ([program](docs/apk-2d3d-program.md), [roadmap](measure/game-roadmap.md)). |
+| **Player progression** | Students earn XP, turn it into GP, buy equipment for one avatar, and play as that avatar. In Guild Mode the class fights one weekly boss together. | Specified on 1 October 2026. Primary Advantage first, rigid equipment slots first, no real-time multiplayer. Phase 1 (avatar base, equipment fit, pack, composer) is planned in this repository ([plan](docs/chibi-quest-progression.md), [spec](docs/avatar-system.md)). |
+
+The players' name for the product is **Chibi Quest**. A [45 second battle teaser](docs/guild-battle-teaser.md)
+shows the 15 hero classes against 68 kinds of enemies.
+
+The work also runs as a method. Sonnet agents build assets in tiers with review bars, and
+[Forge Bench](bench/README.md) scores models on the same task. The rules learned are in
+[measure/lessons-learned.md](measure/lessons-learned.md).
+
+## Connected repositories
+
+| Repository | Path | Relation |
+| --- | --- | --- |
+| Reading Advantage monorepo | `../reading-advantage-monorepo` | Owns the apps (Primary Advantage is `apps/primary-advantage`), the database, and the Advantage Play Kit (APK) game platform. Receives the game port and the avatar and Guild Mode backend. |
+| Tutor Advantage | `../tutor-advantage` | A separate repository: three backend services and three apps (`tutor-pwa`, `student-liff`, `admin-console`). Chibi Quest is branded for it. |
+
+- **Monorepo.** The demos here are standalone, but they keep the APK shapes: one mount function,
+  content through a launch context, one `GameResults`, persistence through a host adapter. The
+  monorepo already holds the XP log, game completions, class challenges, and three fixed
+  cosmetics that the avatar work extends. This repository plans and records the port; the
+  monorepo owns its own commits and deployment checks. See [docs/apk-port.md](docs/apk-port.md).
+- **Tutor Advantage.** Its tutor app runs its own copies of the legacy games inside live
+  lessons. It uses this repository only through the teaser's logo. Avatars, GP, and Guild Mode
+  go to Primary Advantage first, and a later track decides how Tutor Advantage receives them.
+
 
 ## Showcase
 
@@ -183,7 +221,8 @@ stylized chibi, medium-poly look (a full-quality hero is about 40k to 70k triang
 textures, color variants, skeletal rigs, animation clips, GLB, and eight-direction pixel-art
 sprites.
 
-Not yet: image-texture projection (textures are baked from code, not painted from files), LODs,
+Not yet: image-texture projection (textures are baked from code, not painted from files), LODs
+(a reduced avatar model is planned as a second output),
 blend shapes, inverse kinematics, and engine-specific exporters.
 
 ## History
@@ -193,3 +232,8 @@ and patch operations. The LLM could only rearrange what already existed, and new
 product code changes. Its last commit is `5d03ddd`. This rebuild keeps the loop that
 makes the Blender workflow succeed (the LLM writes geometry code and looks at the result) and
 replaces only the runtime.
+
+The rebuild began on 26 September 2026 and, with the Measure tracks that followed, changed the
+goals of the repository. It grew from a modeling tool into an asset catalog, a game platform
+kit, and now a player progression system. [Measure history](measure/history.md) maps the 615
+rebuild commits to 11 tracks. Project management moved to Measure on 28 September 2026.
