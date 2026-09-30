@@ -91,3 +91,4 @@ giant-crystal	terrain	medium	aeb189079278bbc82	2	accepted	7.2	run 4; 55862 token
 hunter	hero	high	a7fd8880af890f4c8	1	running	-	run 4
 scout	hero	high	a6e6f79f9a23fd204	1	running	-	run 4
 healer	hero	high	ab8a1e2ee9e61f4aa	3	running	7.8	run 4; fresh high rework of the hood (rim, fringe, cowl)
+fighter	hero	high	a82fb6e71f06c1916	1	running	-	run 4
