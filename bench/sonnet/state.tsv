@@ -97,5 +97,5 @@ berserker	hero	high	ad1435959cdb119f9	2	running	7.2	run 4; feedback pass in flig
 summoner	hero	high	a4446e9fb9a0c1b10	2	running	7.3	run 4; feedback pass in flight (hair, spirit, coat, belt)
 elementalist	hero	high	ad9b23279305ca91c	2	accepted	8.0	run 4; accepted after one feedback pass
 scout	hero	high	afeb52899b9e85229	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high hair rework
-duelist	hero	high	aecf71eb7af20d8f1	1	running	-	run 4
-gladiator	hero	high	pending	1	running	-	run 4
+duelist	hero	high	aecf71eb7af20d8f1	2	running	7.3	run 4; feedback pass in flight (hat brim, rapier, breeches, sleeves)
+gladiator	hero	high	a8f53fc6fd90a1279	1	running	-	run 4
