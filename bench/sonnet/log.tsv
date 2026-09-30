@@ -340,3 +340,58 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-01 05:00	pilgrim	hero	high	run4	44776	12	17	8.0	8.0	8	accepted	feedback pass: darker hooded cloak with a rimmed opening and shoulder cape over a tan tunic, 15 small curls, eye streaks removed, staff to 1.05 m with a knob and brass, gourd in the hand, gold badge; 61,992 tris; check ok (>5 cm); committed
 2026-10-01 05:10	treasure-hunter	hero	high	run4	23668	10	9	7.8	8.0	8	accepted	feedback pass: bright-base orange flame with tongues, boxy gold totem idol (scaled 1.45x to read), braided whip coil on the hip, closed grin with a tooth row, bulkier scarf; 50,130 tris; check ok (>5 cm); committed; last of the 16 open P1 heroes
 2026-10-01 06:45	owner-decision	character	-	run5	0	0	0	-	-	-	note	owner 2026-10-01: accepted summoner 7.8, ogre-brute 7.8, living-statue 7.8 (committed); deferred wood-golem 7.5, cliff-face 6.5, key-skeleton 6.8 (sources stay uncommitted); bars P0 7.5, P1 7.0; ground tiles become 0.3 m slabs; track asset_world_catchup_20261001 starts
+2026-10-01 07:30	apple	world	-	catchup1	0	0	0	-	7.5	7	accepted	catch-up review of the current --fast render: glossy red apple, stem and leaf; clean
+2026-10-01 07:30	arch	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: blue voussoir arch reads; thin slab from the side; teal specks at the base look like beads
+2026-10-01 07:30	barn	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: plain gable shed: no gambrel roof, no X-braced doors, flat plain sides and back vs the red barn mockup
+2026-10-01 07:30	barrel	world	-	catchup1	0	0	0	-	6.5	7.5	rework	catch-up review of the current --fast render: reads as a barrel, but the staves are crumpled facets (no stave lines), hoops lumpy; P0 bar 7.5
+2026-10-01 07:30	bottle	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: dark red wine bottle, cream label, cork; label mark is a crude brown blob
+2026-10-01 07:30	boulder	world	-	catchup1	0	0	0	-	6.0	7.5	rework	catch-up review of the current --fast render: one smooth grey lobed blob with a moss patch; mockup is a cluster of three textured stones with mossy tops; P0 bar 7.5
+2026-10-01 07:30	brazier	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: legs are thick black rubber tubes that dominate; pale flames; bowl reads
+2026-10-01 07:30	bread	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: smooth yellow ellipsoid on a board: no crust shading, no score slashes
+2026-10-01 07:30	bridge	world	-	catchup1	0	0	0	-	7.5	7.5	accepted	catch-up review of the current --fast render: arched plank footbridge with posts and rails; clean
+2026-10-01 07:30	bush	world	-	catchup1	0	0	0	-	7.5	7.5	accepted	catch-up review of the current --fast render: clover-leaf mound matches the mockup; a little uniform in value
+2026-10-01 07:30	campfire	world	-	catchup1	0	0	0	-	6.5	7.5	rework	catch-up review of the current --fast render: stone ring and crossed logs read; the flame is one pale peach teardrop; P0 bar 7.5
+2026-10-01 07:30	cauldron	world	-	catchup1	0	0	0	-	7.2	7	accepted	catch-up review of the current --fast render: black pot, teal brew, paddle, fire under it; stone base plate shape is odd
+2026-10-01 07:30	chains	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: chain on a ring plus a coiled pile read; a plain untextured blue block dominates; links small
+2026-10-01 07:30	chair	world	-	catchup1	0	0	0	-	7.0	7.5	rework	catch-up review of the current --fast render: clean chunky wooden chair; plain back and seat, no grain; P0 bar 7.5
+2026-10-01 07:30	chandelier	world	-	catchup1	0	0	0	-	7.2	7	accepted	catch-up review of the current --fast render: iron wheel, candles, rod and hook; flames small and pale
+2026-10-01 07:30	cottage	world	-	catchup1	0	0	0	-	6.8	7.5	rework	catch-up review of the current --fast render: red gable house with round window, arched door, chimney, shrubs; reference is the barn mockup; sides and back plain red, no windows; P0 bar 7.5
+2026-10-01 07:30	counter	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: long plank bar counter with brass foot rail; plain top and back
+2026-10-01 07:30	crate	world	-	catchup1	0	0	0	-	7.0	7.5	rework	catch-up review of the current --fast render: clean plank box with dark iron edge bands; reads more as a trunk (overhanging lid, back latch), no cross brace; P0 bar 7.5
+2026-10-01 07:30	crystal-cluster	world	-	catchup1	0	0	0	-	7.5	7	accepted	catch-up review of the current --fast render: teal faceted spires on a blue-grey rock; clean
+2026-10-01 07:30	dead-tree	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: bare forked trunk with bark; a green moss smear on the back
+2026-10-01 07:30	dirt-ground	world	-	catchup1	0	0	0	-	6.5	7	deferred-slab	catch-up review of the current --fast render: thin mottled dirt sheet; ground tile, goes to the 0.3 m slab phase
+2026-10-01 07:30	farm-field	world	-	catchup1	0	0	0	-	6.5	7	deferred-slab	catch-up review of the current --fast render: thin framed soil sheet with scattered sprout dots, no rows; ground tile, goes to the slab phase
+2026-10-01 07:30	fence	world	-	catchup1	0	0	0	-	7.2	7	accepted	catch-up review of the current --fast render: round-log posts and two rails; clean
+2026-10-01 07:30	fern	world	-	catchup1	0	0	0	-	5.5	7	rework	catch-up review of the current --fast render: tubular stalks with striped curled tips read as green worms; no fronds with leaflets
+2026-10-01 07:30	fireplace	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: brick hearth reads, but the stone is pale cold grey-white and the flame a flat peach shape; no mantel; tavern mockup is warm stone
+2026-10-01 07:30	gate	world	-	catchup1	0	0	0	-	7.2	7	accepted	catch-up review of the current --fast render: iron portcullis with spikes and a top ring; reads
+2026-10-01 07:30	hay-bale	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: yellow block with bands and a few straw sticks; crumpled facets, no straw texture
+2026-10-01 07:30	key-iron	world	-	catchup1	0	0	0	-	7.0	7.5	rework	catch-up review of the current --fast render: dark iron key lying flat; reads only from above; mockup is a rusty key with a double-ring bow; P0 bar 7.5
+2026-10-01 07:30	lantern	world	-	catchup1	0	0	0	-	7.5	7	accepted	catch-up review of the current --fast render: black iron lamp post, glass box with candle, gold bands; clean
+2026-10-01 07:30	long-sword	world	-	catchup1	0	0	0	-	7.0	7.5	deferred-equip	catch-up review of the current --fast render: matches the mockup shape but the blade is a thin line from the side; P0 bar 7.5; route to the equipment-parts track
+2026-10-01 07:30	mushroom	world	-	catchup1	0	0	0	-	7.3	7	accepted	catch-up review of the current --fast render: cluster of tan and brown caps on a grass pad; clean
+2026-10-01 07:30	oak-tree	world	-	catchup1	0	0	0	-	6.8	7.5	rework	catch-up review of the current --fast render: trunk and roots good; canopy is smooth green lumps (broccoli), no leaf texture or value break; P0 bar 7.5
+2026-10-01 07:30	pillar	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: blue block pillar with cap and plinth; teal specks at the base
+2026-10-01 07:30	pine-tree	world	-	catchup1	0	0	0	-	7.3	7	accepted	catch-up review of the current --fast render: three scalloped tiers and trunk match the mockup; tiers lack the darker underside
+2026-10-01 07:30	plaster-wall	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: timber frame, diagonal brace, cream plaster panel; plain but correct for a wall module
+2026-10-01 07:30	pumpkin	world	-	catchup1	0	0	0	-	7.5	7	accepted	catch-up review of the current --fast render: ribbed orange pumpkin with a green stem; clean
+2026-10-01 07:30	rock-cluster	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: smooth grey blobs on a flat green disc; no stone facets or texture
+2026-10-01 07:30	round-table	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: plank round top on a turned pedestal with feet; pedestal lumpy
+2026-10-01 07:30	sack	world	-	catchup1	0	0	0	-	6.5	7	rework	catch-up review of the current --fast render: smooth tan blob with a tied neck; no folds, seams, or weave
+2026-10-01 07:30	sarcophagus	world	-	catchup1	0	0	0	-	6.8	7	rework	catch-up review of the current --fast render: blue stone coffin, lid with cross, feet; plain; build warning: lid triangle reduction failed its surface check
+2026-10-01 07:30	shelf	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: empty plank bookcase with three shelves; plain but correct
+2026-10-01 07:30	shop-stall	world	-	catchup1	0	0	0	-	7.5	7.5	accepted	catch-up review of the current --fast render: scalloped red-white striped awning, plank counter with fruit, crates, and a hanging sign; clean
+2026-10-01 07:30	shortbow	world	-	catchup1	0	0	0	-	7.0	7.5	deferred-equip	catch-up review of the current --fast render: matches the mockup; thin from the front; P0 bar 7.5; route to the equipment-parts track
+2026-10-01 07:30	signpost	world	-	catchup1	0	0	0	-	7.2	7.5	rework	catch-up review of the current --fast render: pale post with two arrow boards and nails; plain boards, washed-out post; P0 bar 7.5
+2026-10-01 07:30	staff	world	-	catchup1	0	0	0	-	7.2	7.5	deferred-equip	catch-up review of the current --fast render: gnarled staff with a blue crystal in a gold crown; P0 bar 7.5; route to the equipment-parts track
+2026-10-01 07:30	stone-floor	world	-	catchup1	0	0	0	-	7.0	7.5	deferred-slab	catch-up review of the current --fast render: cobble sheet; ground tile, goes to the slab phase
+2026-10-01 07:30	stone-wall	world	-	catchup1	0	0	0	-	7.0	7.5	rework	catch-up review of the current --fast render: pale regular grey bricks with a dark top course and a wood base strip; blacksmith mockup shows dark rough stone; P0 bar 7.5
+2026-10-01 07:30	stool	world	-	catchup1	0	0	0	-	7.2	7	accepted	catch-up review of the current --fast render: three-legged stool with a foot ring; clean
+2026-10-01 07:30	table	world	-	catchup1	0	0	0	-	7.0	7.5	rework	catch-up review of the current --fast render: plain square plank table with stretchers; no grain or wear; P0 bar 7.5
+2026-10-01 07:30	tall-grass	world	-	catchup1	0	0	0	-	7.3	7	accepted	catch-up review of the current --fast render: grass blades with pale seed heads; clean
+2026-10-01 07:30	torch	world	-	catchup1	0	0	0	-	6.5	7.5	rework	catch-up review of the current --fast render: thin shaft, pale peach flame, small rock base; mockup has a big orange flame, iron cup, rock pile; P0 bar 7.5
+2026-10-01 07:30	wall-corner	world	-	catchup1	0	0	0	-	7.0	7	accepted	catch-up review of the current --fast render: blue block L corner; teal specks at the base
+2026-10-01 07:30	well	world	-	catchup1	0	0	0	-	7.5	7	accepted	catch-up review of the current --fast render: fieldstone well, tiled red roof, bucket and crank; clean
+2026-10-01 07:30	wildflowers	world	-	catchup1	0	0	0	-	7.3	7	accepted	catch-up review of the current --fast render: mixed flowers on a grass mound; matches the mockup
+2026-10-01 07:30	wood-floor	world	-	catchup1	0	0	0	-	7.0	7	deferred-slab	catch-up review of the current --fast render: plank sheet; floor tile, goes to the slab phase
