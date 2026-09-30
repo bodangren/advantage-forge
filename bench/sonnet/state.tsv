@@ -249,6 +249,8 @@ table	world	medium	a589b51af24d26dd5	2	accepted	7.5	catchup1 rework (P0 bar 7.5)
 chair	world	medium	a67fbce0250278865	1	accepted	7.6	catchup1 rework (P0 bar 7.5); accepted on v1
 signpost	world	medium	a43e21c85e6877ef6	1	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted on v1
 stone-wall	world	medium	a81a5d495dfc33759	0	running	7.0	catchup1 rework (P0 bar 7.5)
-key-iron	item	medium	afbab06f54ddacfab	0	running	7.0	catchup1 rework (P0 bar 7.5)
+key-iron	item	medium	afbab06f54ddacfab	2	accepted	7.5	catchup1 rework (P0 bar 7.5); accepted after one feedback pass
 fern	world	medium	af4766cbf88215bca	0	running	5.5	catchup1 rework (P1 bar 7.0)
-brazier	world	medium	a2e9fa7dbefcc13ce	0	running	6.5	catchup1 rework (P1 bar 7.0)
+brazier	world	medium	a2e9fa7dbefcc13ce	1	accepted	7.6	catchup1 rework (P1 bar 7.0); accepted on v1
+barn	world	medium	ab94170cfe652ce12	0	running	6.5	catchup1 rework (P1 bar 7.0)
+bread	world	medium	a5b946bc0b4cc7501	0	running	6.5	catchup1 rework (P1 bar 7.0)

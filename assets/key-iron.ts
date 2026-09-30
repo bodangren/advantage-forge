@@ -1,108 +1,66 @@
 import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js';
 
 /*
- * Design note — items/quest-and-treasure/key-iron (Chibi Quest quest key).
+ * Design note - items/quest-and-treasure/key-iron (Chibi Quest quest key), reworked upright.
  *
- * Role: quest pickup and door key, seen as a 128 px icon lying in the world and held in a
- *   chibi hand, so it reads as a bold flat silhouette from above.
- * Size: 0.24 m long, 0.09 m across the bow, about 0.034 m thick; lying flat on y = 0,
- *   the ring bow toward -X and the toothed bit toward +X.
- * One idea: a chunky ring bow with a big open hole on one end and a blocky two-tooth bit on
- *   the other, joined by a short collared shaft. The hole and the two teeth are the read.
- * Shape language: round dominant (bow ring, round shaft, disc collars) with square secondary
- *   (the rectangular bit and its two teeth), every edge softly beveled.
- * Palette (60/30/10): worn iron #4a4f55 dominant; shadow #363a3f in the low recesses and
- *   underside; highlight #a8acb1 worn onto the top edges and the collar rims.
- * Materials: one body, iron — roughness 0.5, metalness 0.7, pitting in the normal-map bump.
- * Detail: primary bow ring, shaft, and bit (big); two collars (medium); worn paint and pit
- *   texture (small). Focal point: the bright collar rims against the dark ring hole.
- * Rig/animation: none (static pickup).
+ * Role: quest pickup and door key, a 128 px icon standing in the world.
+ * Size: about 0.33 m tall with the small ring, 0.12 m wide base; stands on y = 0 in a flat
+ *   grey stone base, bow facing +Z at the top, bit at the bottom pointing +X.
+ * One idea: a rusty key with a big ring bow and a small second ring hung through it.
+ * Shape language: round dominant (rings, shaft), square secondary (bit teeth, base).
+ * Palette: dark brown iron #5e3f2c, recess #3a281c, rust patches #8a5230, brass tip #c8a070, base stone #6b6e72.
+ * Materials: iron (metalness 0.6, roughness 0.55, pit bump) and stone base.
+ * Detail: bow + shaft + bit (big); two collars, small ring (medium); rust paint (small).
+ * Rig/animation: none.
  */
 
-const IRON = '#4a4f55';
-const IRON_SHADOW = '#363a3f';
-const IRON_HIGHLIGHT = '#a8acb1';
-
-// The key lies flat; AXIS_Y is the shaft centreline. The widest collars set the rest height.
-const AXIS_Y = 0.017;
-const BOW_X = -0.074; // ring bow centre, toward -X
-const RING_R = 0.030; // ring mean radius
-const RING_T = 0.014; // ring tube radius
-
+const RUST = '#5e3f2c';
+const RUST_DARK = '#3a281c';
+const RUST_EDGE = '#8a5230';
+const STONE = '#6b6e72';
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
+const BOW_Y = 0.23;
 
 export default defineAsset({
   name: 'key-iron',
   description:
-    'Old iron quest key lying flat: a chunky ring bow with an open hole, a short round shaft with two collars, and a blocky two-tooth bit; about 0.24 m.',
+    'Rusty iron quest key standing upright on a stone base: double-ring bow, collared shaft, two-tooth bit.',
   detail: 0.004,
   reference: 'docs/item-mockups/key-iron-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------------ bow ring
-    // A thick torus lying in the ground plane: the hole is the strongest read from above.
-    const bow = sdf.torus(RING_R, RING_T).at(BOW_X, AXIS_Y, 0);
-
-    // ------------------------------------------------------------------ shaft
-    // Short round shaft from inside the bow to the bit; overlaps both so the union is solid.
-    const shaft = sdf.capsule([-0.050, AXIS_Y, 0], [0.060, AXIS_Y, 0], 0.013);
-
-    // ------------------------------------------------------------------ collars
-    // Two chunky disc collars threaded on the shaft: one before the bit, one behind the bow.
-    const collarShape = (x: number): sdf.Shape =>
-      sdf.cylinder(0.017, 0.013, 0.005).rotateZ(90).at(x, AXIS_Y, 0);
-    const collars = sdf.union(collarShape(-0.032), collarShape(0.050));
-
-    // ------------------------------------------------------------------ bit
-    // A rectangular base at the shaft end with two beveled teeth reaching toward +Z.
-    const bitBase = sdf.box([0.055, 0.024, 0.020], 0.006).at(0.088, 0.015, 0.006);
-    const toothTip = sdf.box([0.018, 0.022, 0.026], 0.005).at(0.104, 0.015, 0.024);
-    const toothNear = sdf.box([0.020, 0.022, 0.020], 0.005).at(0.070, 0.015, 0.021);
-    const bit = bitBase.smoothUnion(0.005, toothTip).smoothUnion(0.005, toothNear);
-
-    // ------------------------------------------------------------------ paint
-    // Value plan: dark iron low and under, base iron mid, worn highlight gathering on the
-    // up-facing tops and the outer edges; small noise speckle reads as age.
-    const ironPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
-      const patch = 0.5 + 0.5 * noise.fbm(x * 13, y * 13, z * 13, 3, 5);
-      const speck = 0.5 + 0.5 * noise.fbm(x * 46, y * 46, z * 46, 2, 9);
-
-      // Underside and low recesses sink into shadow.
-      let c = mixRgb(base, rgb(IRON_SHADOW), clamp01((0.020 - y) / 0.020) * 0.75);
-
-      // Worn highlight gathers on the up-facing tops, broken by patches.
-      const up = clamp01((y - 0.017) / 0.017);
-      c = mixRgb(c, rgb(IRON_HIGHLIGHT), up * (0.22 + 0.5 * patch));
-
-      // Bright speckled wear like rubbed edges.
-      c = mixRgb(c, rgb(IRON_HIGHLIGHT), clamp01((speck - 0.66) * 2.6) * 0.45);
-
+    const bow = sdf.torus(0.05, 0.014).rotateX(90).at(0, BOW_Y, 0);
+    const small = sdf.torus(0.027, 0.01).rotateZ(90).at(0, BOW_Y + 0.05, 0);
+    const shaft = sdf.cylinder(0.016, 0.155, 0.004).at(0, 0.1225, 0);
+    const collar = (y: number): sdf.Shape => sdf.cylinder(0.023, 0.014, 0.005).at(0, y, 0);
+    const bitBase = sdf.box([0.05, 0.045, 0.024], 0.004).at(0.041, 0.0725, 0);
+    const notch = sdf.box([0.02, 0.014, 0.04]).at(0.062, 0.0725, 0);
+    const bit = sdf.subtract(bitBase, notch);
+    const paint = (x: number, y: number, z: number, base: Rgb): Rgb => {
+      const p = 0.5 + 0.5 * noise.fbm(x * 30, y * 30, z * 30, 3, 5);
+      let c = mixRgb(base, rgb(RUST_DARK), clamp01(0.4 - p) * 1.6);
+      c = mixRgb(c, rgb(RUST_EDGE), clamp01((p - 0.6) * 6) * 0.85);
       return c;
     };
-
     const key = sdf
-      .union(bow, shaft, collars, bit)
-      .round(0.0015)
-      .paintFn(ironPaint)
-      // Keep the wide collar rims and the bit teeth bright so the read survives at 128 px.
-      .paintWhere(sdf.cylinder(0.020, 0.05, 0.01).rotateZ(90).at(-0.032, AXIS_Y, 0), IRON_HIGHLIGHT, 0.006)
-      .paintWhere(sdf.cylinder(0.020, 0.05, 0.01).rotateZ(90).at(0.050, AXIS_Y, 0), IRON_HIGHLIGHT, 0.006)
-      // Clean flat base where the key meets the ground.
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
-
+      .union(bow, small, shaft, collar(0.2), collar(0.178), bit)
+      .round(0.001)
+      .paintFn(paint)
+      ;
     k.body('key', key, {
-      color: IRON,
-      roughness: 0.5,
-      metalness: 0.7,
-      detail: 0.004,
-      textureDensity: 2,
-      paintWeight: 2,
-      maxTriangles: 2800,
-      // Light pitting and casting grain; tiny amplitude, metal amplifies relief.
-      bump: (x, y, z) =>
-        0.0006 * noise.fbm(x * 70, y * 70, z * 70, 3, 7) +
-        0.0003 * noise.noise3(x * 150, y * 150, z * 150, 4),
+      color: RUST, roughness: 0.55, metalness: 0.6, detail: 0.004, textureDensity: 2,
+      paintWeight: 2, maxTriangles: 4000,
+      bump: (x, y, z) => 0.0004 * noise.fbm(x * 70, y * 70, z * 70, 3, 7),
+    });
+    const tip = sdf.capsule([0, 0.046, 0], [0, 0.046, 0], 0.0165).elongate(0, 0.0, 0).union(sdf.cylinder(0.0165, 0.03, 0.002).at(0, 0.048, 0));
+    k.body('tip', tip.intersect(sdf.box([0.1, 0.06, 0.1]).at(0, 0.06, 0)), {
+      color: '#c8a070', roughness: 0.4, metalness: 0.7, detail: 0.004, maxTriangles: 800,
+    });
+    const base = sdf.box([0.12, 0.03, 0.08], 0.006).at(0, 0.015, 0);
+    k.body('base', base, {
+      color: STONE, roughness: 0.9, metalness: 0, detail: 0.005, maxTriangles: 800,
+      bump: (x, y, z) => 0.001 * noise.fbm(x * 60, y * 60, z * 60, 3, 3),
     });
   },
 });

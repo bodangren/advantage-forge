@@ -1,25 +1,22 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — standing iron brazier (dungeon/light/brazier).
+ * Design note — standing iron brazier (dungeon/light/brazier), reworked.
  *
- * Role: dungeon light prop; the warm focal point in a cool stone room. Reads at 128 px.
- * Size: 0.71 m tall with flame, 0.45 m wide at the feet, stands on y = 0, faces +Z.
- * One idea: a wide shallow iron dish riding high on three splayed legs over live coals.
- * Shape language: round dominant (dish, rim ring, side lugs), triangular secondary
- *   (tripod splay, flame tongues) for a stable, dangerous read.
- * Palette: cool dark iron #3a3f47 (dominant), rust #7a4a2c (secondary),
- *   warm accent #ff9a3c on the rim glow, coals and flames (focal point).
- * Materials: worn iron (metalness 0.8, roughness 0.55), charcoal (roughness 0.9),
- *   ember bed and flames emissive #ff9a3c.
- * Detail: primary dish + tripod; secondary rim ring, side lugs, coal lumps;
- *   tertiary rust patches and firelight paint. Rig/animation: none (static prop).
+ * Role: dungeon light prop; warm focal point in a cool stone room. Reads at 128 px.
+ * Size: 0.58 x 0.72+ m (flame to about 0.85 m), stands on y = 0, faces +Z.
+ * One idea: a shallow iron dish on three slim splayed legs, crowned by one wide flame.
+ * Shape language: round dish, rolled rim, ring handles; triangular splay and flame lobes.
+ * Palette: iron #3b3a3f (dominant), rust on the rim, coals #2a1a14 with #ff5a1a cracks,
+ *   flame gradient #ffd23a / #ffa010 / #ff6a00 / #e8400a (focal point).
+ * Materials: iron (metal 0.7, rough 0.5), coals, matte emissive flame.
+ * Detail: slim legs with curled scroll feet and a ring brace, bump on iron. Static prop.
  */
 
-const IRON = rgb('#3a3f47');
+const IRON = rgb('#3b3a3f');
 const RUST = rgb('#7a4a2c');
 const GLOW = rgb('#ff9a3c');
-const COAL = '#2a1f1a';
+const COAL = '#2a1a14';
 const COAL_HOT = rgb('#93401c');
 const FLAME = '#ff9a3c';
 const FLAME_HOT = '#ffab45';
@@ -70,7 +67,7 @@ export default defineAsset({
     );
     const bowl = outer.subtract(cavity);
     // Small ring rim: a slim torus that rounds the lip.
-    const rim = sdf.torus(0.204, 0.015).at(0, RIM_Y, 0);
+    const rim = sdf.torus(0.204, 0.02).at(0, RIM_Y, 0);
     // Two carry rings hanging off the sides; they break the silhouette.
     const lug = (side: number) =>
       sdf.torus(0.037, 0.014).rotateX(90).at(side * 0.241, 0.546, 0);
@@ -81,16 +78,13 @@ export default defineAsset({
       const a = (deg * Math.PI) / 180;
       const cx = Math.cos(a);
       const cz = Math.sin(a);
-      legParts.push(
-        sdf.cone([cx * 0.05, 0.37, cz * 0.05], [cx * 0.155, 0.08, cz * 0.155], 0.064, 0.055),
-      );
-      // Chunky foot pad, long axis pointing outward.
-      legParts.push(
-        sdf.box([0.14, 0.082, 0.115], 0.028).rotateY(-deg).at(cx * 0.16, 0.041, cz * 0.16),
-      );
+      legParts.push(sdf.cone([cx * 0.06, 0.42, cz * 0.06], [cx * 0.165, 0.06, cz * 0.165], 0.024, 0.022));
+      // Curled scroll foot: a torus ring in the radial vertical plane, outside the leg.
+      legParts.push(sdf.torus(0.03, 0.015).rotateX(90).at(0.192, 0.046, 0).rotateY(-deg));
     }
-    const hub = sdf.sphere(0.085).at(0, 0.34, 0);
-    const undercarriage = sdf.smoothUnion(0.03, hub, ...legParts);
+    const brace = sdf.torus(0.117, 0.014).at(0, 0.22, 0);
+    const hub = sdf.sphere(0.05).at(0, 0.40, 0);
+    const undercarriage = sdf.smoothUnion(0.012, hub, brace, ...legParts);
 
     const iron = sdf
       .union(bowl, rim, lug(1), lug(-1), undercarriage)
@@ -100,18 +94,18 @@ export default defineAsset({
         const p = noise.fbm(x * 20, y * 6, z * 20, 3);
         // Firelight glow: only the lip of the dish picks up warm light.
         const g = clamp01((y - 0.53) / 0.05);
-        let c = mixRgb(base, RUST, 0.6 * clamp01((p - 0.12) * 2.4) * (1 - 0.5 * g));
+        let c = mixRgb(base, RUST, 0.45 * clamp01((p - 0.25) * 2.4) * (1 - 0.5 * g) * (y > 0.5 ? 1.5 : 0.4));
         c = mixRgb(c, GLOW, 0.4 * g * g);
         return c;
       });
     k.body('iron', iron, {
-      color: '#3a3f47',
-      roughness: 0.55,
-      metalness: 0.8,
-      detail: 0.013,
+      color: '#3b3a3f',
+      roughness: 0.5,
+      metalness: 0.7,
+      detail: 0.008,
       paintWeight: 2,
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 55, y * 55, z * 55, 2),
-      maxTriangles: 2080,
+      maxTriangles: 3400,
     });
 
     // ------------------------------------------------------------------ coals
@@ -133,11 +127,11 @@ export default defineAsset({
       .displace(0.011, (x, y, z) => noise.fbm(x * 24, y * 24, z * 24, 2));
     k.body('embers', embers, {
       // Very dark ember base so the emissive glow reads saturated, not washed.
-      color: '#5a1c06',
+      color: '#ff5a1a',
       roughness: 0.95,
       metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 1.5,
+      emissive: '#ff5a1a',
+      emissiveIntensity: 0.5,
       detail: 0.014,
       maxTriangles: 300,
     });
@@ -194,43 +188,45 @@ export default defineAsset({
       metalness: 0,
       detail: 0.011,
       paintWeight: 2,
-      maxTriangles: 800,
+      maxTriangles: 1500,
     });
 
     // ------------------------------------------------------------------ flames
-    // Two tapered tongues: one tall centre flame, one small side flame.
+    // One wide wavy mass with five curling lobes, one body, one gradient.
+    const lobe = (pts: [number, number, number, number][]) => sdf.chain(pts, 0.02);
     const flames = sdf
-      .chain(
-        [
-          [-0.012, 0.572, 0.012, 0.05],
-          [0.018, 0.632, -0.01, 0.03],
-          [-0.01, 0.68, 0.01, 0.016],
-          [0.014, 0.714, -0.004, 0.009],
-        ],
-        0.013,
+      .smoothUnion(
+        0.03,
+        sdf.ellipsoid([0.15, 0.05, 0.14]).at(0, 0.615, 0),
+        lobe([[0, 0.6, 0, 0.085], [0.02, 0.69, 0.01, 0.06], [0.05, 0.77, 0, 0.038], [0.09, 0.85, -0.01, 0.014]]),
+        lobe([[0.08, 0.6, 0.03, 0.06], [0.11, 0.66, 0.04, 0.045], [0.15, 0.72, 0.03, 0.022]]),
+        lobe([[-0.08, 0.6, 0.02, 0.06], [-0.11, 0.67, 0.03, 0.045], [-0.14, 0.74, 0.02, 0.022]]),
+        lobe([[0.02, 0.6, 0.09, 0.055], [0.0, 0.66, 0.11, 0.04], [-0.03, 0.71, 0.11, 0.02]]),
+        lobe([[-0.02, 0.6, -0.09, 0.055], [0.01, 0.66, -0.1, 0.04], [0.04, 0.71, -0.1, 0.02]]),
       )
-      .union(
-        sdf.chain(
-          [
-            [0.09, 0.568, -0.05, 0.03],
-            [0.108, 0.614, -0.046, 0.016],
-            [0.1, 0.652, -0.05, 0.009],
-          ],
-          0.011,
-        ),
-      )
+      .displace(0.008, (x, y, z) => noise.fbm(x * 14, y * 10, z * 14, 2))
       .paintFn((x, y, z, _base) => {
-        const t = clamp01((y - 0.56) / 0.15);
-        return mixRgb(rgb(FLAME_HOT), rgb(FLAME_DEEP), t);
+        const t = clamp01((y - 0.58) / 0.27);
+        const rad = clamp01(Math.hypot(x, z) / 0.16);
+        const u = clamp01(t * 0.9 + rad * 0.35 * t);
+        const yellow = rgb('#ffd23a');
+        const orange = rgb('#ffa010');
+        const deep = rgb('#ff6a00');
+        const tip = rgb('#e8400a');
+        let c = u < 0.3 ? mixRgb(yellow, orange, u / 0.3) : mixRgb(orange, deep, clamp01((u - 0.3) / 0.3));
+        if (u >= 0.6) c = mixRgb(deep, tip, clamp01((u - 0.6) / 0.3));
+        // Yellow along the axis.
+        return mixRgb(c, yellow, 0.5 * (1 - rad) * (1 - t));
       });
     k.body('flames', flames, {
-      color: FLAME,
-      roughness: 0.35,
+      color: '#ffa010',
+      roughness: 0.95,
       metalness: 0,
-      emissive: '#ff9a3c',
-      emissiveIntensity: 2,
+      emissive: '#ff5a00',
+      emissiveIntensity: 0.25,
       detail: 0.01,
-      maxTriangles: 620,
+      paintWeight: 2,
+      maxTriangles: 1500,
     });
   },
 });
