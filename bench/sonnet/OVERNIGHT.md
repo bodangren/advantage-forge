@@ -96,3 +96,7 @@ The living-statue rework 2 agent and the deserter build agent stalled after thei
 ## Status 10:58 (2026-09-30)
 
 Run 3: 2,316,825 of 4,000,000 tokens. Accepted (11): brigand, raider, plague-bearer, highwayman, assassin, deserter, banshee, pirate, smuggler, hunter-rival, pirate-captain. Skipped (2): mercenary 7.6, living-statue 7.6. In flight: dark-mage, warlock (feedback), witch, cult-leader. Last open enemy: evil-priest.
+
+## Owner note 11:20 (2026-09-30)
+
+The owner: "Mercenary was sidelined, but it looks fine to me. Give it one more attempt and then just pass it even if it is still 7.9/10 after the next pass." Mercenary rework 2 launches as a fresh high agent; the result is accepted after that pass.
