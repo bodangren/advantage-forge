@@ -3256,5 +3256,35 @@
     ],
     "next": "Done for P1. A later polish pass could add fur displacement to the mantle.",
     "reviewedAt": "2026-09-30T07:09:27+00:00"
+  },
+  "healer": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the priest base (the chibi skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build, one feedback pass, and one fresh hood rework: a white hood with a rolled rim and a gold front stroke over a wavy blonde fringe with temple locks, a shoulder cowl with a blue collar band and a gold bead, a white robe with a blue stole, a gold heart clasp, a brown belt with a pouch, sandals, a gold staff with a crescent and wings, and a glowing gold orb in the left hand. 49,680 triangles, no build warnings, forge check result ok at 2.8 cm, ground ok.",
+    "strengths": [
+      "The white hood and robe, the blue stole, and the gold staff give three clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the priest and the cleric.",
+      "The rolled hood rim and the fringe finally separate the hood from the face, which the first two passes lacked."
+    ],
+    "issues": [
+      "The gold hood trim is faint in the front sprite.",
+      "The fringe is a low-relief band, not the mockup's thick swept waves.",
+      "The cowl is a round bulge under the chin, and the staff comes within 2.8 cm of the head in attack2."
+    ],
+    "next": "Done for P1. A later polish pass could thicken the fringe waves and widen the gold trim.",
+    "reviewedAt": "2026-09-30T07:32:33+00:00"
   }
 }

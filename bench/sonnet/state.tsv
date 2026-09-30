@@ -90,5 +90,5 @@ healer	hero	high	a3fbcc9dd0f3a2cba	2	failed	7.8	run 4; hood still a smooth ball 
 giant-crystal	terrain	medium	aeb189079278bbc82	2	accepted	7.2	run 4; 55862 tokens; accepted after one feedback pass
 hunter	hero	high	a7fd8880af890f4c8	2	running	7.2	run 4; feedback pass in flight (feather, cap, vest)
 scout	hero	high	a6e6f79f9a23fd204	2	running	7.0	run 4; feedback pass in flight (hair, props, cloak)
-healer	hero	high	ab8a1e2ee9e61f4aa	3	running	7.8	run 4; fresh high rework of the hood (rim, fringe, cowl)
+healer	hero	high	ab8a1e2ee9e61f4aa	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high hood rework
 fighter	hero	high	a82fb6e71f06c1916	2	running	7.3	run 4; feedback pass in flight (helmet, hair, mantle, blade)
