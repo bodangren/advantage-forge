@@ -149,12 +149,14 @@ export default defineAsset({
       .subtract(sdf.sphere(0.02).at(0.171, 0.406, 0.051));
     // Upper bulb and neck: a hollow translucent glass shell. Two glass faces over each pixel
     // keep the silhouette solid in the binary sprite pass (a single 0.45 face is dropped there).
-    const glassShape = flask.intersect(sdf.halfSpace([0, -1, 0], -LIQUID_TOP)).shell(0.005);
+    const glassShape = flask.intersect(sdf.halfSpace([0, -1, 0], -LIQUID_TOP));
     k.body('glass', glassShape, {
-      color: GLASS,
-      roughness: 0.1,
+      // Solid glass body, hue-matched to the liquid at about 45 percent brightness (a shell shows
+      // its inner surface as cracks; opacity below 0.5 vanishes from sprites).
+      color: '#3a6a10',
+      roughness: 0.05,
       metalness: 0,
-      opacity: 0.45,
+      opacity: 0.5,
       detail: 0.004,
       maxTriangles: 4000,
     });
@@ -177,11 +179,11 @@ export default defineAsset({
         return c;
       });
     k.body('liquid', liquid, {
-      color: LIQUID_BASE,
+      color: '#5ce02a',
       roughness: 0.2,
       metalness: 0,
-      emissive: LIQUID_GLOW,
-      emissiveIntensity: 1.8,
+      emissive: '#5ce02a',
+      emissiveIntensity: 0.6,
       detail: 0.007,
       maxTriangles: 550,
     });

@@ -48,12 +48,12 @@ export default defineAsset({
       bump: (x, y, z) => -0.006 * Math.max(0, 1 - brickEdge(x, y, z) / 0.08),
     });
     // The glowing fire inside, seen through the opening.
-    k.body('fire', inside.round(-0.02).intersect(sdf.box([0.6, 0.5, 0.6]).at(0, 0.25, 0.2)), {
-      color: '#4a1405',
+    k.body('fire', inside.round(-0.02).intersect(sdf.box([0.6, 0.5, 0.6]).at(0, 0.25, -0.22)), {
+      color: '#ff7a1a',
       roughness: 0.5,
       metalness: 0,
-      emissive: '#ff7a1a',
-      emissiveIntensity: 1.8,
+      emissive: '#ff9a30',
+      emissiveIntensity: 0.7,
     });
     const pot = (x: number, z: number, s: number) =>
       sdf

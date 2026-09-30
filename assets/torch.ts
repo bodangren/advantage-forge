@@ -341,15 +341,19 @@ export default defineAsset({
       .paintFn((_x, y, _z, _base): Rgb => {
         // hot core near the base, bright tips near the top
         const t = clamp01((y - flameBaseY) / 0.21);
-        return mixRgb(rgb('#6a3a0a'), rgb('#4a1405'), t);
-      });
+        return mixRgb(rgb('#ff6a12'), rgb('#ffd66b'), t);
+      })
+      .at(0, -flameBaseY, 0)
+      .scale(1.3)
+      .at(0, flameBaseY, 0);
     k.body('flame', flameShape, {
-      // Dark base color per the emissive rule so studio light does not wash the glow.
-      color: '#4a1405',
+      // Full-brightness base with a moderate emissive (the tested potion rule): a dark base
+      // under a strong emissive rendered as pale salmon.
+      color: '#ff6a12',
       roughness: 0.3,
       metalness: 0,
-      emissive: '#ff6a12',
-      emissiveIntensity: 1.7,
+      emissive: '#ff8a20',
+      emissiveIntensity: 0.7,
       detail: 0.006,
       maxTriangles: 420,
       paintWeight: 3,
