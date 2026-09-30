@@ -51,7 +51,7 @@ export default defineAsset({
   name: 'map-fragment',
   description: 'A torn quarter of a map propped on a wood wedge: jagged torn edges, a raised red X, a pale sea wash and two forest domes.',
   detail: 0.004,
-  reference: 'docs/item-mockups/map-mock.jpg', // TODO map-fragment-mock.jpg once mmx generates it
+  reference: 'docs/item-mockups/map-fragment-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {

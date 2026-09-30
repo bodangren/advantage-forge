@@ -12,6 +12,7 @@ const GUM = rgb('#d87a8a');
 
 export default defineAsset({
   name: 'monster-fang',
+  reference: 'docs/item-mockups/monster-fang-mock.jpg',
   description: 'A thick curved ivory monster fang, point-up, on a pink gum stub. About 0.26 m.',
   detail: 0.004,
   texture: { size: 1024 },

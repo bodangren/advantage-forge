@@ -184,20 +184,20 @@ gem-sapphire	item	medium	a18d46fe375c20f25	2	accepted	7.0	run 4 wave 2; accepted
 crystal-shard	item	medium	a18d46fe375c20f25	2	accepted	7.3	run 4 wave 2; accepted; committed
 wood-log	item	medium	af0bfdca5910bb553	1	accepted	7.3	run 4 wave 2; log with stub and leaves
 plank	item	medium	af0bfdca5910bb553	1	accepted	7.0	run 4 wave 2; three boards
-healing-herb	item	medium	a6e9fabda3f97ee03	1	running	-	run 4 wave 2 batch B; herb
-herb-root	item	medium	a6e9fabda3f97ee03	1	running	-	run 4 wave 2 batch B; herb, no mockup
-flower-petal	item	medium	a6e9fabda3f97ee03	1	running	-	run 4 wave 2 batch B; herb
-mushroom-cap	item	medium	a6e9fabda3f97ee03	1	running	-	run 4 wave 2 batch B; herb
-monster-bone	item	medium	a261f2c9eae704905	1	running	-	run 4 wave 2 batch B; part, no mockup
-monster-claw	item	medium	a261f2c9eae704905	1	running	-	run 4 wave 2 batch B; part, no mockup
-monster-fang	item	medium	a261f2c9eae704905	1	running	-	run 4 wave 2 batch B; part, no mockup
-dragon-scale	item	medium	a261f2c9eae704905	1	running	-	run 4 wave 2 batch B; part
-shell	item	medium	a68d8781a66e37378	1	running	-	run 4 wave 2 batch B; part
-feather	item	medium	a68d8781a66e37378	1	running	-	run 4 wave 2 batch B; part
-cloth	item	medium	a68d8781a66e37378	1	running	-	run 4 wave 2 batch B; textile
-thread	item	medium	a68d8781a66e37378	1	running	-	run 4 wave 2 batch B; textile
-wool	item	medium	a68d8781a66e37378	1	running	-	run 4 wave 2 batch B; textile
-letter-sealed	item	medium	aaab9ab9d73f851df	1	running	-	run 4 wave 2 batch B; quest
-quest-document	item	medium	aaab9ab9d73f851df	1	running	-	run 4 wave 2 batch B; quest
-royal-seal	item	medium	aaab9ab9d73f851df	1	running	-	run 4 wave 2 batch B; quest
-rune-tablet	item	medium	aaab9ab9d73f851df	1	running	-	run 4 wave 2 batch B; quest
+healing-herb	item	medium	a6e9fabda3f97ee03	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+herb-root	item	medium	a6e9fabda3f97ee03	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+flower-petal	item	medium	a6e9fabda3f97ee03	2	running	6.0	run 4 wave 2 batch B; feedback pass in flight
+mushroom-cap	item	medium	a6e9fabda3f97ee03	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+monster-bone	item	medium	a261f2c9eae704905	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+monster-claw	item	medium	a261f2c9eae704905	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+monster-fang	item	medium	a261f2c9eae704905	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+dragon-scale	item	medium	a261f2c9eae704905	2	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+shell	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+feather	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+cloth	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+thread	item	medium	a68d8781a66e37378	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+wool	item	medium	a68d8781a66e37378	2	running	6.5	run 4 wave 2 batch B; feedback pass in flight
+letter-sealed	item	medium	aaab9ab9d73f851df	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+quest-document	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+royal-seal	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
+rune-tablet	item	medium	aaab9ab9d73f851df	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
