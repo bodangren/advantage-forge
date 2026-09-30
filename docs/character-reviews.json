@@ -3406,5 +3406,35 @@
     ],
     "next": "Done for P1. A later polish pass could make the flames opaque with a brighter core.",
     "reviewedAt": "2026-09-30T08:28:10+00:00"
+  },
+  "berserker": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the barbarian base (the chibi skeleton with knee bones, eight clips with two-axe attacks), built by a Sonnet 5.5 subagent in one build plus one feedback pass after a first agent stalled: a bone bear-skull cap with round ears, dark eye pits, a nose notch, and teeth, a wild red mane of fifteen locks that burst out from the cap rim, green eyes, a fierce grin, blue war paint on the cheeks, the arms, and the chest, a shaggy fur vest with pauldrons, a leather chest strap, a wide belt with a brass claw buckle, a blue loincloth, spiked bracers, fur-cuffed boots, and two crescent hand axes held at chest height. 47,782 triangles, no build warnings, forge check result ok at 4.6 cm, ground ok.",
+    "strengths": [
+      "The bone cap, the red mane, the tan fur, and the grey axes give four clear values, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the barbarian and the warrior.",
+      "The mane bursts outward after the feedback pass, wider than the cap in the front and side views."
+    ],
+    "issues": [
+      "The mane locks are chunky and blocky instead of fine shaggy strands.",
+      "The cap is large and smooth; the mockup's skull has sharper brow ridges.",
+      "The axes pass 0.5 cm into the leather at the end of the attack clip (the check allows body contact)."
+    ],
+    "next": "Done for P1. A later polish pass could split the locks finer and sharpen the skull.",
+    "reviewedAt": "2026-09-30T08:40:10+00:00"
   }
 }
