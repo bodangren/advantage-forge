@@ -207,3 +207,7 @@ bandage	item	medium	aead10642afd9657f	1	accepted	7.2	run 4 wave 2; accepted; com
 relic-orb	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
 artifact-idol	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
 ration	item	medium	af5e53698043ae8e6	1	accepted	7.0	run 4 wave 2; accepted; committed
+handcart	vehicle	medium	adae7c06ed43fd9a5	1	running	-	run 4 P3 vehicles; cart
+merchant-cart	vehicle	medium	a19e2f887e7c960ff	1	accepted	7.0	run 4 P3 vehicles; accepted; committed
+caravan-wagon	vehicle	medium	adad4aadb0d7f573a	1	running	-	run 4 P3 vehicles; wagon
+rowboat	vehicle	medium	pending	1	running	-	run 4 P3 vehicles; boat
