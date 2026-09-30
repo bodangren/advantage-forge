@@ -1,13 +1,13 @@
 # Sonnet 5.5 orchestration summary
 
-Generated from bench/sonnet/log.tsv on 2026-10-01. One row per asset; passes count every logged pass (builds, feedback passes, reworks, orchestrator edits); tokens are the subagent tokens of those passes.
+Generated from bench/sonnet/log.tsv on 2026-10-01. One row per agent task: a grouped row (for example `saw+tongs`) holds several items, and a feedback row can repeat items of an earlier grouped row (for example `gloves+scabbard`, then `gloves`). Passes count every logged pass (builds, feedback passes, reworks, orchestrator edits); tokens are the subagent tokens of those passes.
 
-Assets: 176. Accepted: 169. Skipped: 6. Other (deferred or open): 1. Subagent tokens: 19,736,377.
+Rows: 176 (169 accepted, 6 skipped, 1 other). Items, with grouped rows split and repeats counted once: 218. Accepted: 212. Skipped: 5. Other (deferred or open): 1. Subagent tokens logged: 19,736,377; the real total is higher (see Token gaps).
 
 
-## Batch 1: the 20 open queue rows (2026-09-29 to 09-30)
+## Queue batch: the 20 open queue rows (2026-09-29 to 09-30)
 
-The goal's queue (bench/overnight/queue.tsv and queue-hold.tsv, ivy and farmhouse already done). Sources are committed on 2026-09-29 unless noted; tokens are the subagent tokens of every logged pass.
+The goal's queue (bench/overnight/queue.tsv and queue-hold.tsv, ivy and farmhouse already done). These rows ran in log batches 1 to 5 of the Per batch table. Sources are committed on 2026-09-29 unless noted; tokens are the subagent tokens of every logged pass.
 
 | asset | tier | passes | tokens | score | bar | result |
 |---|---|---|---|---|---|---|
@@ -32,9 +32,11 @@ The goal's queue (bench/overnight/queue.tsv and queue-hold.tsv, ivy and farmhous
 | vines | medium | 1 | 43,535 | 7.2 | 7 | accepted (f46e543) |
 | plate-armor | medium | 2 | 67,780 | 7.5 | 7 | accepted (e695565) |
 
-Batch 1 result: 19 of 20 accepted, 1 skipped (cliff-face at 6.5 after a medium build, two feedback passes and a fresh high rework: the grass cap and ledge mats stayed plain, and the textured build reduced the rock to 302 triangles while the fast build reported 5,350; the rock body is usable, source left uncommitted). Batch 1 subtotal: 1,188,783 tokens. The queue then emptied and the run continued with the P1 enemies by game need (runs 2 and 3), the equipment fits, the static rework wave, the P2 items, the P3 vehicles and the 32 P1 heroes (run 4), all in the tables above.
+Queue batch result: 19 of 20 accepted, 1 skipped (cliff-face at 6.5 after a medium build, two feedback passes and a fresh high rework: the grass cap and ledge mats stayed plain, and the textured build reduced the rock to 302 triangles while the fast build reported 5,350; the rock body is usable, source left uncommitted). Queue batch subtotal: 1,188,783 tokens. The queue then emptied and the run continued with the P1 enemies by game need (runs 2 and 3), the equipment fits, the static rework wave, the P2 items, the P3 vehicles and the 32 P1 heroes (run 4), all in the tables below.
 
 ## Per batch
+
+The batch column of log.tsv. Assets and accepted count rows, as in the Per asset table.
 
 | batch | assets | accepted | tokens |
 |---|---|---|---|
@@ -241,8 +243,18 @@ Batch 1 result: 19 of 20 accepted, 1 skipped (cliff-face at 6.5 after a medium b
 - wood-golem: score 7.5 against bar 8; rework pass 3: eyes proud with painted sockets, raised petal sigil core, 70148 tris; eyes still small flecks in the front sprites; 3.8 -> 7.5 after three passes (120760 tokens), below the bar; source untracked (other session), review entry updated
 - summoner: score 7.8 against bar 8; fresh high hair rework (second retry): 16 locks over the whole skull, wider circlet; front and three-quarter read as a swept mane, side and back read as crossing ropes; 57,234 tris; check ok over 5 cm; source left uncommitted for the owner
 - key-gold+key-bronze+key-skeleton (grouped agent row): key-gold accepted 7.0; key-bronze accepted 7.0; key-skeleton skipped 6.8. Only the skipped item counts as a skip.
-- key-bronze+key-skeleton (grouped agent row): key-bronze accepted 7.0; key-skeleton skipped 6.8. Only the skipped item counts as a skip.
+- key-bronze+key-skeleton (grouped agent row): key-bronze accepted 7.0; key-skeleton skipped 6.8. This is the same key-skeleton as in the row above: the rows count 6 skips, the items count 5.
 
 ## Other outcomes
 
 - living-statue: pending-owner; rework 3 (marble): off-white base, two-scale ridge veins, grain bump, chipped rim and pauldron, rounded dome; marble now reads; sprite tone separation weak; 7.8
+
+## Token gaps
+
+The logged total of 19,736,377 misses at least these subagent tokens:
+
+- shaman: log.tsv has no row for the first build. state.tsv records 3 passes; the log has only the feedback pass (31,832) and the orchestrator edit (0). The build tokens are unknown.
+- caravan-wagon: 0 logged; an API connection loss killed the agent after the hand-back (about 45K by its note).
+- sleigh: 0 logged; the harness did not report the tokens (about 40K by its note).
+
+Two other 0 rows are correct: the rune-tablet tokens are in the letter-sealed+quest-document+royal-seal+rune-tablet row, and the shaman orchestrator edit used no subagent.
