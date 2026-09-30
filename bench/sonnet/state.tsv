@@ -84,9 +84,9 @@ silo	structure	medium	ab8a4b72bd3646d22	2	accepted	7.2	run 4; 58346 tokens; from
 wall-gate	structure	medium	a62e55739797f4af4	2	accepted	7.3	run 4; 83621 tokens; from the 2026-09-28 trial file plus one feedback pass
 palm-tree	tree	medium->high	a104a06334ed37d35	2	failed	6.8	run 4; 59704 tokens on the medium agent; fresh high rework next
 beast-rider	hero	high	a066b32d1933f8e50	2	accepted	8.0	run 4; 176316 tokens; accepted after one feedback pass
-warrior	hero	high	a5de2ca09942d6777	1	running	-	run 4
+warrior	hero	high	a5de2ca09942d6777	2	running	7.4	run 4; feedback pass in flight (hair, sword rest, breastplate)
 palm-tree	tree	high	ac4244983e6dd7abd	3	accepted	7.0	run 4; 106801 tokens in all (two medium passes plus one high rework)
-healer	hero	high	a3fbcc9dd0f3a2cba	1	running	-	run 4
+healer	hero	high	a3fbcc9dd0f3a2cba	2	running	7.3	run 4; feedback pass in flight (cowl hood, staff, orb)
 giant-crystal	terrain	medium	aeb189079278bbc82	2	accepted	7.2	run 4; 55862 tokens; accepted after one feedback pass
 hunter	hero	high	a7fd8880af890f4c8	1	running	-	run 4
 scout	hero	high	a6e6f79f9a23fd204	1	running	-	run 4
