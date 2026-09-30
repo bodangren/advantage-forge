@@ -1,6 +1,8 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
+ * Rework: 6 cut vertical folds, 7-lobe ruffled flare over the rope, crosshatch weave bump,
+ *   sewn patch with stitch dashes on the front (#c9a26a cloth, #9c7a48 folds).
  * Design note — plump grain sack (props/containers/sack).
  *
  * Role: tavern / storeroom clutter prop; must read at 128 px as one stout
@@ -22,8 +24,8 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 const BURLAP = rgb('#c2a06a');
 const BURLAP_SHADE = rgb('#9a7d4c');
 const BURLAP_LIGHT = rgb('#d8b888');
-const ROPE = rgb('#8a6a3a');
-const ROPE_DARK = rgb('#6f5430');
+const ROPE = rgb('#6a4e2a');
+const ROPE_DARK = rgb('#4f3a1e');
 
 const H = 0.4; // total height
 const BELLY_R = 0.175; // 0.35 m wide at the belly
@@ -45,66 +47,101 @@ export default defineAsset({
     const sackProfile = profile.polygon(
       [
         [0.0, 0.0],
-        [BASE_R - 0.02, 0.0],
-        [BASE_R, 0.015],
-        [0.168, 0.08],
-        [BELLY_R, 0.17],
-        [0.168, 0.25],
-        [0.135, 0.3],
+        [0.145, 0.0],
+        [0.163, 0.02],
+        [0.166, 0.07],
+        [0.152, 0.14],
+        [0.125, 0.21],
+        [0.097, 0.27],
         [NECK_R, ROPE_Y - 0.008],
-        [0.074, 0.35], // gathers flare just above the rope
-        [0.048, 0.382], // bunched top
-        [0.0, H],
+        [0.058, 0.35],
+        [0.04, 0.37],
+        [0.0, 0.38],
       ],
       { smooth: true, samples: 32 },
     );
     // Slightly elliptical (slumped front-to-back), low-frequency cloth
     // irregularity, then a clean cut on the ground plane.
-    const bodyShape = sdf
+    const base = sdf
       .revolve(sackProfile)
       .scale([1, 1, 0.92])
-      .displace(0.003, (x, y, z) => noise.fbm(x * 5 + 3, y * 5, z * 5, 2))
+      .smoothUnion(0.05, sdf.ellipsoid([0.155, 0.1, 0.145]).at(0.022, 0.09, 0))
+      .rotateZ(-2)
+      .displace(0.004, (x, y, z) => noise.fbm(x * 5 + 3, y * 5, z * 5, 2));
+    // Soft vertical folds: thin capsules cut 0.01 m into the belly.
+    const foldAngles = [-150, -95, -40, 25, 70, 130];
+    const folds = foldAngles.map((deg, i) => {
+      const a = (deg * Math.PI) / 180;
+      const r = 0.172 + (i % 2) * 0.004;
+      const x0 = Math.sin(a) * (r + 0.008);
+      const z0 = Math.cos(a) * (r + 0.008) * 0.92;
+      return sdf.capsule([x0, 0.1 + (i % 3) * 0.02, z0], [x0, 0.25 - (i % 2) * 0.03, z0], 0.012);
+    });
+    const bodyShape = sdf
+      .smoothSubtract(0.01, base, ...folds)
       .intersect(sdf.halfSpace([0, -1, 0], 0));
-    // The tied nub: a small flop of gathered cloth leaning off-axis, so the
-    // top of the silhouette breaks the lathe symmetry.
-    const nub = sdf
-      .sphere(0.052)
-      .scale([1, 0.6, 0.85])
-      .rotateZ(14)
-      .rotateX(-6)
-      .at(0.012, H - 0.008, 0.004);
-    const bodyFull = bodyShape.smoothUnion(0.02, nub);
+    // Ruffled flared top: 7 lobes fanned out above the rope.
+    const lobes = [0, 1, 2, 3, 4, 5, 6].map((i) => {
+      const hgt = 0.028 + (i % 3) * 0.004;
+      return sdf
+        .cone([0.02, ROPE_Y + 0.085 - hgt * 0.5, 0], [0.09, ROPE_Y + 0.02 + hgt * 0.2, 0], 0.03, 0.008)
+        .rotateY(((i / 7) * 360 + 10) % 360);
+    });
+    const ruffle = sdf.smoothUnion(0.01, ...lobes);
+    const bodyFull = bodyShape.smoothUnion(0.02, ruffle);
 
-    // Soft tonal variation + value plan: shaded seated base, sun-lit
-    // shoulder. The neck crease under the rope is painted by a stencil
-    // below so the cinch reads at 128 px.
+    const patchBox = sdf.box([0.1, 0.085, 0.12], 0.01).at(0.0, 0.14, 0.17);
+    const stitch = (x: number, y: number, w: number, h: number) =>
+      sdf.box([w, h, 0.12]).at(x, y, 0.17);
+    const stitches: ReturnType<typeof stitch>[] = [];
+    for (let i = 0; i < 4; i++) {
+      const o = -0.036 + i * 0.024;
+      stitches.push(stitch(o, 0.1, 0.012, 0.004), stitch(o, 0.18, 0.012, 0.004));
+    }
+    for (let i = 0; i < 3; i++) {
+      const o = 0.112 + i * 0.024;
+      stitches.push(stitch(-0.046, o + 0.02, 0.004, 0.012), stitch(0.046, o + 0.02, 0.004, 0.012));
+    }
+    const PATCH = rgb('#b48f58');
+    const THREAD = rgb('#5e4526');
+
     const burlapPaint = (x: number, y: number, z: number) => {
       const patch = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2);
-      const mottle = 0.5 + 0.5 * noise.fbm(x * 11 + 5, y * 11, z * 11, 2);
-      let c = mixRgb(BURLAP, BURLAP_LIGHT, 0.06 * patch);
-      c = mixRgb(c, BURLAP_SHADE, 0.18 + 0.32 * mottle);
+      let c = mixRgb(BURLAP, BURLAP_LIGHT, 0.15 * patch);
+      // darker folds: angular bands matching the cut grooves
+      const ang = Math.atan2(x, z);
+      let f = 0;
+      for (const deg of foldAngles) {
+        let d = Math.abs(ang - (deg * Math.PI) / 180);
+        d = Math.min(d, Math.PI * 2 - d);
+        f = Math.max(f, Math.max(0, 1 - d / 0.12));
+      }
+      c = mixRgb(c, BURLAP_SHADE, 0.75 * f * (y < 0.3 ? 1 : 0));
       const t = Math.min(1, Math.max(0, y / H));
-      c = mixRgb(c, BURLAP_SHADE, 0.5 * Math.pow(1 - t, 1.6)); // damp seated base
-      c = mixRgb(c, BURLAP_LIGHT, 0.1 * Math.max(0, (t - 0.55) / 0.45)); // lit shoulder
+      c = mixRgb(c, BURLAP_SHADE, 0.35 * Math.pow(1 - t, 1.6));
+      c = mixRgb(c, BURLAP_LIGHT, 0.15 * Math.max(0, (t - 0.6) / 0.4));
       return c;
     };
-    const bodyPainted = bodyFull
+    let bodyPainted = bodyFull
       .paintFn(burlapPaint)
-      .paintWhere(sdf.torus(0.075, 0.028).at(0, ROPE_Y - 0.008, 0), BURLAP_SHADE, 0.015);
+      .paintWhere(sdf.torus(0.078, 0.03).at(0, ROPE_Y - 0.012, 0), BURLAP_SHADE, 0.015)
+      .paintWhere(patchBox, PATCH, 0.004);
+    bodyPainted = bodyPainted.paintWhere(sdf.union(...stitches), THREAD, 0.002);
 
     k.body('burlap', bodyPainted, {
       color: '#c2a06a',
       roughness: 0.9,
       metalness: 0,
-      detail: 0.009,
+      detail: 0.007,
       paintWeight: 2,
-      maxTriangles: 1700,
+      maxTriangles: 4200,
       // Coarse weave hint: two stretched-noise thread directions (hoop +
       // vertical), non-periodic so it cannot moire into rings in the bake.
-      bump: (x, y, z) =>
-        0.0007 * noise.fbm(x * 190, y * 5, z * 190, 2) +
-        0.0007 * noise.fbm(x * 5 + 9, y * 190, z * 5 + 9, 2) +
-        0.0005 * noise.fbm(x * 42, y * 42, z * 42, 2),
+      bump: (x, y, z) => {
+        const u = Math.atan2(x, z) * 0.16 * 780;
+        const v = y * 780;
+        return 0.00045 * (Math.sin(u) * Math.sin(v) + 0.5 * Math.sin(u * 0.5 + v)) + 0.00025 * noise.fbm(x * 42, y * 42, z * 42, 2);
+      },
     });
 
     // ------------------------------------------------------------------ rope
@@ -119,8 +156,9 @@ export default defineAsset({
     const tail = sdf.chain(
       [
         [0.082, ROPE_Y - 0.004, 0.02, 0.016],
-        [0.096, 0.298, 0.032, 0.013],
-        [0.108, 0.26, 0.042, 0.01],
+        [0.096, 0.30, 0.04, 0.014],
+        [0.11, 0.25, 0.06, 0.012],
+        [0.118, 0.215, 0.07, 0.01],
       ],
       0.012,
     );
@@ -133,7 +171,7 @@ export default defineAsset({
         return c;
       });
     k.body('rope', ropeShape, {
-      color: '#8a6a3a',
+      color: '#6a4e2a',
       roughness: 0.85,
       metalness: 0,
       detail: 0.005,
