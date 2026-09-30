@@ -94,7 +94,7 @@ healer	hero	high	ab8a1e2ee9e61f4aa	3	accepted	8.0	run 4; accepted after one feed
 fighter	hero	high	a82fb6e71f06c1916	2	accepted	8.0	run 4; accepted after one feedback pass
 berserker	hero	high	a08a2be18467c0426	1	stalled	-	run 4; froze after the base reads; relaunched
 berserker	hero	high	ad1435959cdb119f9	1	running	-	run 4; relaunch after a stall
-summoner	hero	high	a4446e9fb9a0c1b10	1	running	-	run 4
-elementalist	hero	high	ad9b23279305ca91c	1	running	-	run 4
+summoner	hero	high	a4446e9fb9a0c1b10	2	running	7.3	run 4; feedback pass in flight (hair, spirit, coat, belt)
+elementalist	hero	high	ad9b23279305ca91c	2	running	7.3	run 4; feedback pass in flight (hair, fire, ice, mouth)
 scout	hero	high	afeb52899b9e85229	3	accepted	8.0	run 4; accepted after one feedback pass and one fresh high hair rework
 duelist	hero	high	aecf71eb7af20d8f1	1	running	-	run 4
