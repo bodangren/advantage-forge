@@ -3136,5 +3136,35 @@
     ],
     "next": "Done for P1. A later polish pass could add three swept tufts above the goggles and a thin white rim on the flask for the sprite.",
     "reviewedAt": "2026-09-30T06:07:47+00:00"
+  },
+  "sorcerer": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 5,
+      "shape": 4,
+      "color": 5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A new P1 hero on the mage base (the wizard's body and skeleton with knee bones, eight clips), built by a Sonnet 5.5 subagent in one build plus one feedback pass: twelve flat black locks swept up and back with two over the brow, heavy brows and big violet eyes, a crimson robe with gold zigzag-runed front panels and a black high collar open in a V with a gold edge, two gold buttons and a chevron clasp, a wide black belt with a white skull buckle, a solid violet fire orb above the open right palm and a violet flame on the left palm, black boots. Attack is an orb cast, attack2 a two-hand blast. 52,400 triangles, no build warnings, forge check result ok at 4.2 cm, ground ok.",
+    "strengths": [
+      "The black hair, the crimson robe, the gold trim, and the violet orb give four clear color masses, so the hero reads at 128 px in all eight directions.",
+      "It matches the P0 hero set: the same round beardless face and proportions as the mage.",
+      "The orb keeps its violet in the sprite thanks to the dark base and the 1.7 emissive."
+    ],
+    "issues": [
+      "The locks are smooth wedges, not the mockup's sculpted tufts.",
+      "The collar has no flared gold-edged wings.",
+      "The boots are slimmer and the sleeves shorter than the mockup's."
+    ],
+    "next": "Done for P1. A later polish pass could flare the collar wings and add a second lock layer.",
+    "reviewedAt": "2026-09-30T06:11:31+00:00"
   }
 }
