@@ -55,7 +55,7 @@ plague-bearer	character	high	a5a8569f13f1b210e	4	accepted	8.0	accepted on rework
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	a868245f2765e1b63	5	skipped	7.6	five passes 7.3, 7.7, 7.8, 7.6, 7.6; helm shape never matched; source uncommitted, review entry updated
+living-statue	character	high	-	6	running	7.6	owner: one more high pass, marble focus
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
 gnoll-hunter	character	high	aad4c05a699c8474d	3	accepted	8.0	fresh rework accepted; committed
 kobold-trapper	character	high	a6732c980a19f2cef	2	accepted	8.0	feedback pass accepted; committed

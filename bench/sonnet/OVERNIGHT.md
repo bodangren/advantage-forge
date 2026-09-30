@@ -100,3 +100,7 @@ Run 3: 2,316,825 of 4,000,000 tokens. Accepted (11): brigand, raider, plague-bea
 ## Owner note 11:20 (2026-09-30)
 
 The owner: "Mercenary was sidelined, but it looks fine to me. Give it one more attempt and then just pass it even if it is still 7.9/10 after the next pass." Mercenary rework 2 launches as a fresh high agent; the result is accepted after that pass.
+
+## Owner note 11:50 (2026-09-30)
+
+The owner: "rework living-statue in one high pass before asking me for approval" and "The problem is it needs to more resemble marble." Rework 3 launches as a fresh high agent with a marble-surface brief (veins, polished roughness, tone separation, a rounded dome).
