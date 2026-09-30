@@ -2873,5 +2873,34 @@
     ],
     "next": "Widen the torso 10 percent, soften the temple tufts into the skin, and widen the blade to 0.04 m in a darker steel.",
     "reviewedAt": "2026-09-30T02:13:14+00:00"
+  },
+  "smuggler": {
+    "overall": 8,
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "Sly human smuggler on the bandit base: a wide olive felt hat, a dark fringe, big eyes with rosy cheeks and a gold-tooth grin, a red knotted neckerchief, a striped shirt under an open leather vest, a belt with pouches, rolled shorts, sandals, a wooden crate in one hand, and a glowing iron lantern in the other. Reviewed 8.0 after one build and one feedback pass (Sonnet 5.5 high tier).",
+    "strengths": [
+      "The hat, the red neckerchief, the striped shirt, the crate, and the glowing lantern read at 128 px in all eight directions.",
+      "The face reads with the eyes, the cheeks, and one white teeth bar.",
+      "Check ok (closest 3.6 cm), ground ok, 41,712 triangles, no warnings."
+    ],
+    "issues": [
+      "The grin is smaller than the mockup's wide smile.",
+      "The vest is a thin shell without bulky flaps or tan piping.",
+      "The hat brim is smooth, with less dent and droop than the mockup."
+    ],
+    "next": "Widen the grin to 0.1 m, thicken the vest flaps to 0.02 m with a tan edge band, and deepen the hat crown dent.",
+    "reviewedAt": "2026-09-30T02:15:17+00:00"
   }
 }
