@@ -3856,5 +3856,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T18:56:29+00:00"
+  },
+  "explorer": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young explorer on the adventurer base: a soft khaki bucket hat with a dent and a wide brim, brown tousled locks, big amber eyes with an open mouth, a khaki shirt with pockets, straps and buttons, a rope collar, a leather pack with a teal bedroll, a belt with pouches, shorts with knee socks and brown boots, a rolled map in one hand and an orange caged lantern in the other. Eight clips, check ok (above 5 cm). 58,674 triangles.",
+    "strengths": [
+      "The bucket hat, rope collar and orange lantern read at 128 px.",
+      "The pack with the bedroll and the pouch belt match the mockup.",
+      "The face is expressive: wide eyes and an open mouth."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The map is a plain short roll.",
+      "The hat crown is lower and stiffer than the mockup's."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T18:57:45+00:00"
   }
 }
