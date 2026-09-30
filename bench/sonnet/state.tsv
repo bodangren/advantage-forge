@@ -140,3 +140,5 @@ ruin-column	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.3	run 4; short s
 stairs-stone	static-rework	medium	a8827a77f8ec10ac7	1	accepted	7.5	run 4; chunky block steps and parapets
 roof-slate	static-rework	medium	a8176ec432f7118f8	1	accepted	7.3	run 4; pillow tile courses, ridge tiles
 roof-thatch	static-rework	medium	a8176ec432f7118f8	1	accepted	7.0	run 4; capsule bundle courses, ridge roll
+pit-trap	static-rework	medium	a3e01d70103cd09f1	1	accepted	7.2	run 4; raised tile, tall spikes, skull, planks
+magic-rune	static-rework	medium	a2699bead2affaee5	1	accepted	7.2	run 4; block base, raised glowing disc

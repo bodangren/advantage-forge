@@ -1,62 +1,57 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { defineAsset, noise, sdf } from '../src/index.js';
 
 /**
- * Magic rune slab (props/world/magic-rune), matched to docs/item-mockups/magic-rune-mock.jpg.
- * Size: 1.2 m square, 0.06 m thick, lying on y = 0. One idea: a worn grey stone slab with a
- * carved rune circle that glows purple: two rings, a five-point star, and eight small glyphs.
- * Palette: stone #6f7680 / #555c66, glow #b060ff on a dark base #2a0a3a.
+ * Magic rune (props/world/magic-rune), matched to docs/item-mockups/magic-rune-mock.jpg.
+ * Role: floor prop, seen from above at a distance. Size: 1.2 x 1.2 m footprint, 0.32 m tall,
+ * standing on y = 0, facing +Z.
+ * One idea: a chunky pale block base carrying a thick glowing purple disc with a white-hot core.
+ * Shape language: square base (sturdy), round disc (magic). Rest area: the plain block sides.
+ * Palette: stone #cfc6d6 / gaps #9a8fa6, purple #c07af0, core #ffffff.
+ * Materials: base (stone), disc (emissive purple, rings, dome, eight raised bars), glow (core).
+ * Every mark is geometry; there is no painted line art.
  */
 
-const STONE = rgb('#6f7680');
-const STONE_DARK = rgb('#555c66');
-const TOP = 0.06;
-
-/** A mark on the slab: a shape in the XZ plane, stretched through Y so it crosses the top. */
-const stroke = (a: [number, number], b: [number, number], r = 0.012) => sdf.capsule([a[0], 0, a[1]], [b[0], 0, b[1]], r).elongate(0, 0.2, 0);
-const ring = (r: number, w: number) => sdf.cylinder(r + w, 0.4, 0).subtract(sdf.cylinder(r - w, 0.5, 0));
+const PITCH = 0.4;
 
 export default defineAsset({
   name: 'magic-rune',
-  description: 'A worn grey stone slab with a carved rune circle glowing purple: two rings, a five-point star, and eight glyphs.',
-  detail: 0.004,
+  description: 'A raised base of nine pale stone blocks with a thick glowing purple disc, two raised rings, eight rune bars, and a white-hot center.',
+  detail: 0.005,
   reference: 'docs/item-mockups/magic-rune-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    const star = [];
-    const pts: [number, number][] = Array.from({ length: 5 }, (_, i) => {
-      const a = -Math.PI / 2 + (i * 2 * Math.PI) / 5;
-      return [Math.cos(a) * 0.3, Math.sin(a) * 0.3];
-    });
-    for (let i = 0; i < 5; i++) star.push(stroke(pts[i]!, pts[(i + 2) % 5]!, 0.014));
-    const glyphs = [];
-    for (let i = 0; i < 8; i++) {
-      const a = (i * Math.PI) / 4 + Math.PI / 8;
-      const c: [number, number] = [Math.cos(a) * 0.39, Math.sin(a) * 0.39];
-      const t: [number, number] = [-Math.sin(a) * 0.025, Math.cos(a) * 0.025];
-      const n: [number, number] = [Math.cos(a) * 0.025, Math.sin(a) * 0.025];
-      glyphs.push(stroke([c[0] - n[0], c[1] - n[1]], [c[0] + n[0], c[1] + n[1]], 0.01));
-      glyphs.push(stroke([c[0] + n[0], c[1] + n[1]], [c[0] + n[0] + t[0], c[1] + n[1] + t[1]], 0.01));
+    const blocks = [];
+    for (let i = -1; i <= 1; i++) {
+      for (let j = -1; j <= 1; j++) {
+        blocks.push(sdf.box([0.38, 0.2, 0.38], 0.05).at(i * PITCH, 0.1, j * PITCH));
+      }
     }
-    const pattern = sdf.union(ring(0.46, 0.018), ring(0.32, 0.012), ...star, ...glyphs);
-    const topLayer = sdf.halfSpace([0, -1, 0], -(TOP - 0.004)).intersect(sdf.box([2, 1, 2]).at(0, 0.3, 0));
+    const base = sdf.union(...blocks).displace(0.008, (x, y, z) => noise.fbm(x * 9, y * 9, z * 9, 2));
+    k.body('base', base.paintFn((x, y, z) => {
+      const gx = Math.abs(((x + 0.6) % PITCH) - PITCH / 2) > 0.17;
+      const gz = Math.abs(((z + 0.6) % PITCH) - PITCH / 2) > 0.17;
+      const n = 0.5 + 0.5 * noise.fbm(x * 8, y * 8, z * 8, 2);
+      const edge = gx || gz || y < 0.05 ? 1 : 0;
+      const t = Math.min(1, 0.15 * n + edge * 0.7);
+      return [0.72 - 0.2 * t, 0.68 - 0.2 * t, 0.76 - 0.17 * t];
+    }), { color: '#cfc6d6', roughness: 0.9, metalness: 0, maxTriangles: 4200, detail: 0.007, bump: (x, y, z) => 0.002 * noise.fbm(x * 25, y * 25, z * 25, 2) });
 
-    const slab = sdf
-      .box([1.2, TOP, 1.2], 0.02)
-      .at(0, TOP / 2, 0)
-      .displace(0.003, (x, y, z) => noise.fbm(x * 6, y * 6, z * 6, 2));
-    k.body(
-      'slab',
-      slab.subtract(pattern.intersect(topLayer)).paintFn((x, y, z) => mixRgb(STONE, STONE_DARK, 0.2 + 0.5 * (0.5 + 0.5 * noise.fbm(x * 8, y * 8, z * 8, 3)))),
-      { color: '#6f7680', roughness: 0.9, metalness: 0, bump: (x, y, z) => 0.0015 * noise.fbm(x * 30, y * 30, z * 30, 2) },
-    );
-    k.body('rune', slab.round(-0.0015).intersect(pattern).intersect(topLayer), {
-      color: '#2a0a3a',
-      roughness: 0.3,
-      metalness: 0,
-      emissive: '#b060ff',
-      emissiveIntensity: 2.4,
-      detail: 0.003,
+    const bars = [];
+    for (let i = 0; i < 8; i++) {
+      const a = (i * 360) / 8 + 22.5;
+      const r = 0.28;
+      const rad = (a * Math.PI) / 180;
+      bars.push(sdf.box([0.08, 0.015, 0.03], 0.005).rotateY(-a + 90).at(Math.cos(rad) * r, 0.262, Math.sin(rad) * r));
+    }
+    const disc = sdf
+      .cylinder(0.5, 0.06, 0.02)
+      .at(0, 0.23, 0)
+      .smoothUnion(0.01, sdf.torus(0.36, 0.025).at(0, 0.26, 0), sdf.torus(0.2, 0.02).at(0, 0.26, 0), sdf.ellipsoid([0.09, 0.06, 0.09]).at(0, 0.26, 0), ...bars);
+    k.body('disc', disc, { color: '#c07af0', roughness: 0.3, metalness: 0, emissive: '#c07af0', emissiveIntensity: 0.6, maxTriangles: 2200 });
+
+    k.body('glow', sdf.cylinder(0.07, 0.02, 0.006).at(0, 0.309, 0), {
+      color: '#ffffff', roughness: 0.3, metalness: 0, emissive: '#f4e8ff', emissiveIntensity: 0.9, detail: 0.004, maxTriangles: 300,
     });
   },
 });
