@@ -226,8 +226,9 @@ artificer	hero	high	a3da3c8a5dd8e52ce	2	accepted	8.0	run 4 heroes resume; accept
 enchanter	hero	high	adc95501064523253	2	accepted	8.0	run 4 heroes resume; accepted; committed
 oracle	hero	high	a636251da85cb4763	2	accepted	8.0	run 4 heroes resume; feedback pass + orchestrator hair edit; accepted; committed
 rune-smith	hero	high	adaa4cfc46215b9f9	2	accepted	8.0	run 4 heroes resume; accepted; committed
-shaman	hero	high	aca69e2a63a5b3bcb	2	running	7.5	run 4 heroes resume; feedback pass in flight (cap, antlers, feather)
+shaman	hero	high	aca69e2a63a5b3bcb	3	accepted	8.0	run 4 heroes resume; feedback pass + orchestrator feather/cap edit; accepted; committed
 spear-warden	hero	high	a756c5e51dfad0aff	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
 swashbuckler	hero	high	a1a1e81978750a37f	2	accepted	8.0	run 4 heroes resume; one feedback pass; accepted; committed
-apprentice	hero	high	a55e0b9014bd45360	2	running	7.3	run 4 heroes resume; feedback pass in flight (hair, collar, wand)
+apprentice	hero	high	a55e0b9014bd45360	3	running	7.7	run 4 heroes resume; feedback pass + orchestrator mantle/wand edit; full build pending
 captain	hero	high	a477d71c5df18caad	1	running	-	run 4 heroes resume
+caravan-guard	hero	high	ac81a3d92a25f32c7	1	running	-	run 4 heroes resume

@@ -3736,5 +3736,35 @@
     ],
     "next": "none",
     "reviewedAt": "2026-09-30T17:59:26+00:00"
+  },
+  "shaman": {
+    "overall": 8,
+    "group": "heroes",
+    "scores": {
+      "mockup": 8,
+      "silhouette": 8,
+      "proportion": 8,
+      "shape": 8,
+      "color": 8,
+      "materials": 8,
+      "detail": 8,
+      "technical": 8,
+      "gameReady": 8,
+      "sprite": 8,
+      "motion": 8
+    },
+    "summary": "Young tribal shaman on the priest base: a tall fur cap with a teal band, branching antlers with tines and a fan of red, teal and yellow feathers, a dark bob of hair, a cream fur mantle with hanging points, a bead necklace with a bone charm, a red sash, a fringed hide skirt, bare feet with coral anklets, a rattle staff in the right hand and a large cream feather in the left. Seven clips, check ok (closest 3.5 cm). 53,996 triangles.",
+    "strengths": [
+      "The antlers, feather fan and cap read at 128 px.",
+      "The rattle staff has a wrapped gourd head with hanging feathers and a teal puff on attack.",
+      "The held feather reads as a wide cream vane with a brown tip after it was widened and gripped low on the quill."
+    ],
+    "issues": [
+      "The mockup has a beard; the build keeps the beardless hero face by rule.",
+      "The held feather is flat, so the side views see its edge.",
+      "The cap is lower than the mockup's chunky fur cap."
+    ],
+    "next": "none",
+    "reviewedAt": "2026-09-30T18:14:14+00:00"
   }
 }
