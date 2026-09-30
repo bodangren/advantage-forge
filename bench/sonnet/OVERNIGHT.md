@@ -155,3 +155,18 @@ last static family without sources is P3 vehicles (15 rows): briefs and mmx mock
 `bench/sonnet/make-p3-vehicle-briefs.mjs`, carts and wagons on the wagon and market-cart bases,
 boats, ships and air vehicles from recipes; medium tier for carts, wagons, boats, sleigh and carpet,
 high tier for the ships, balloon and airship. Run 4 tokens so far: about 5.6M.
+
+## 00:10 (2026-10-01) P3 vehicles complete; heroes resume
+
+All 15 P3 vehicles accepted at 7.0 to 7.5 in about 90 minutes and 790K subagent tokens: carts and
+wagons on the market-cart and wagon bases (medium), boats and the sleigh from a hull recipe
+(medium), ships, balloon and airship on the high tier. Three needed one feedback pass (handcart,
+rowboat, longship) and the rowboat one orchestrator edit. Hull recipe that held: a stretched
+ellipsoid centered low so the y = 0 cut leaves a flat keel strip, hollowed thick, cut at the
+gunwale, keel inside the hull body, plank rows in paint and bump. With the P1 reworks, the P2
+items and the vehicles closed, every static family in the catalog has an accepted source. The 33
+P3 fx-geometry effects are deferred: the catalog defines them only as "geometry effect" rows and
+the track has no contract (static geometry or a looping clip, size, how games consume them), so
+that is an owner question. Next by the standing queue: the 16 open P1 heroes (briefs and mockups
+ready), one per forge-sonnet-high agent, bar 8: artificer, enchanter, oracle, rune-smith first.
+Run 4 tokens so far: about 6.4M.
