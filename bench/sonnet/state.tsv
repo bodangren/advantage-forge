@@ -196,8 +196,14 @@ shell	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepte
 feather	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 cloth	item	medium	a68d8781a66e37378	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 thread	item	medium	a68d8781a66e37378	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
-wool	item	medium	a68d8781a66e37378	2	running	6.5	run 4 wave 2 batch B; feedback pass in flight
+wool	item	medium	a68d8781a66e37378	2	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 letter-sealed	item	medium	aaab9ab9d73f851df	1	accepted	7.2	run 4 wave 2 batch B; accepted; committed
 quest-document	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 royal-seal	item	medium	aaab9ab9d73f851df	1	accepted	7.0	run 4 wave 2 batch B; accepted; committed
 rune-tablet	item	medium	aaab9ab9d73f851df	2	accepted	7.2	run 4 wave 2 batch B; accepted; committed
+leather	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; textile
+hide	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; textile
+bandage	item	medium	pending-A	1	running	-	run 4 wave 2 batch C; food
+relic-orb	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; quest
+artifact-idol	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; quest
+ration	item	medium	pending-B	1	running	-	run 4 wave 2 batch C; food
