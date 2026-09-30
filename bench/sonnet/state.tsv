@@ -259,4 +259,4 @@ chains	world	medium	ade0cdf8f3c3d937c	1	accepted	7.0	catchup1 rework (P1 bar 7.0
 hay-bale	world	medium	a12f8eb77467cfa0b	1	accepted	7.0	catchup1 rework (P1 bar 7.0); accepted on v1
 rock-cluster	world	medium	ae4a41e620ee708b9	1	accepted	7.3	catchup1 rework (P1 bar 7.0); accepted on v1
 sack	world	medium	adb6b2759f6fb9e70	0	running	6.5	catchup1 rework (P1 bar 7.0)
-sarcophagus	world	medium	a256bf6d308abb7f1	0	running	6.8	catchup1 rework (P1 bar 7.0, build warning)
+sarcophagus	world	medium	a256bf6d308abb7f1	1	accepted	7.2	catchup1 rework (P1 bar 7.0, build warning); accepted on v1

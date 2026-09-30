@@ -10,8 +10,10 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/
  * Palette: slate shadow #2a3547, mid block #4a5d75, worn top #7a8ba0, interior #16202e,
  *   moss specks #3fae9a on the shaded head end, faint warm torch bounce #ff9a3c.
  * Materials: one stone body per part (roughness 0.9, grain bump). No light source here.
- * Detail list: tapered hollow box (big), two plinths (medium), stepped lid (medium),
- *   two band lines and a plus emblem recess (small). Focal point: the dark open slot.
+ * Detail list: tapered hollow box (big), two plinths (medium), bevelled stepped lid (medium),
+ *   raised border moldings, two raised panels per long side, front skull crest, raised 0.015 m
+ *   cross on the lid, chipped corners and one painted crack (small). Focal point: the lid cross.
+ * Kit stone color matches assets/wall-corner.ts (#2a3547 / #4a5d75 / #7a8ba0).
  * Rig: none. No clips.
  */
 
@@ -84,7 +86,7 @@ export default defineAsset({
   name: 'sarcophagus',
   description:
     'Tapered stone sarcophagus on two plinths with a slid ajar lid, band lines, and a plus emblem.',
-  detail: 0.016,
+  detail: 0.02,
   texture: { size: 1024 },
 
   build(k) {
@@ -117,7 +119,37 @@ export default defineAsset({
     const bands = [0.25, 0.44] as const;
     const bandStencil = (y: number) => sdf.box([3, 0.034, 3]).at(0, y, 0);
 
+    // Raised border moldings (base and rim) and two raised panels on each long side.
+    const molding = (y: number, h: number) =>
+      sdf.extrude(profile.offsetProfile(plan, 0.018), h, 0.012).rotateX(-90).at(0, y, 0);
+    const edgeZ = (x: number) => 0.35 - (0.05 * (x + 0.55)) / 1.0;
+    const panel = (x: number, sgn: number) =>
+      sdf
+        .box([0.4, 0.22, 0.07], 0.012)
+        .rotateY(sgn * 2.9)
+        .at(x, 0.35, sgn * (edgeZ(x) - 0.02));
+    const panels = sdf.union(
+      ...[-0.42, 0.42].flatMap((x) => [panel(x, 1), panel(x, -1)]),
+    );
+    // Skull crest centered on the front (+Z) long side between the panels.
+    const skullBase = sdf
+      .ellipsoid([0.075, 0.085, 0.045])
+      .at(0, 0.37, edgeZ(0) - 0.012)
+      .smoothUnion(0.01, sdf.box([0.08, 0.05, 0.06], 0.012).at(0, 0.29, edgeZ(0) - 0.018));
+    const skull = skullBase.subtract(
+      sdf.sphere(0.02).at(-0.032, 0.38, edgeZ(0) + 0.03),
+      sdf.sphere(0.02).at(0.032, 0.38, edgeZ(0) + 0.03),
+      sdf.box([0.02, 0.03, 0.04], 0.005).at(0, 0.335, edgeZ(0) + 0.03),
+    );
+    const fittings = sdf.union(
+      molding(0.15, 0.05),
+      molding(0.55, 0.05),
+      panels,
+      skull,
+    );
+
     const boxBody = boxSolid
+      .union(fittings)
       .subtract(cavity)
       .paintFn(stonePaint(BOX_Y0, BOX_Y1, 11))
       .paintWhere(bandStencil(bands[0]), grooveCol, 0.005)
@@ -129,8 +161,8 @@ export default defineAsset({
       color: '#4a5d75',
       roughness: 0.9,
       metalness: 0,
-      detail: 0.016,
-      maxTriangles: 3100,
+      detail: 0.02,
+      maxTriangles: 7000,
       paintWeight: 2,
       bump: bandedBump(bands),
     });
@@ -143,12 +175,23 @@ export default defineAsset({
       .rotateX(-90)
       .at(0, 0.07, 0);
     const lidSolid = lidSlab.smoothUnion(0.025, lidPlateau);
+    const lidShape = () => lidSolid;
 
-    // Plus-shaped emblem recess sunk 2.5 cm into the plateau top (local y = 0.12).
-    const emblem = sdf.union(
-      sdf.box([0.36, 0.05, 0.11], 0.02).at(0, 0.12, 0),
-      sdf.box([0.11, 0.05, 0.36], 0.02).at(0, 0.12, 0),
+    // Raised plus (0.015 m proud of the plateau top at local y = 0.12), part of the lid body.
+    const cross = sdf
+      .union(
+        sdf.box([0.46, 0.03, 0.12], 0.008).at(0, 0.12, 0),
+        sdf.box([0.12, 0.03, 0.30], 0.008).at(0, 0.12, 0),
+      )
+      .at(-0.08, 0, 0);
+    const emblem = cross;
+    // Chipped corners.
+    const chips = sdf.union(
+      sdf.sphere(0.04).at(0.93, 0.05, 0.14),
+      sdf.sphere(0.035).at(-0.93, 0.05, -0.2),
+      sdf.sphere(0.03).at(-0.5, 0.05, 0.36),
     );
+    const crack = sdf.box([0.3, 0.3, 0.008]).rotateY(35).at(0.45, 0.1, 0.12);
 
     // Slid toward the foot and tipped up at the head: contacts the rim near the foot,
     // opens a wedge gap plus a full open slot at the head end.
@@ -158,18 +201,20 @@ export default defineAsset({
     const sinT = Math.sin((TILT * Math.PI) / 180);
     const LID_Y = BOX_Y1 - 0.003 - ((0.95 - SLIDE_X) * sinT - 0.05);
 
-    const lidBody = lidSolid
-      .subtract(emblem)
-      .paintFn(stonePaint(-0.05, 0.12, 17))
-      .paintWhere(emblem.round(0.008), grooveCol, 0.004)
+    const lidBody = lidShape()
+      .subtract(chips)
+      .union(cross)
+      .paintFn(stonePaint(-0.05, 0.14, 17))
+      .paintWhere(cross.round(0.004), pale, 0.006)
+      .paintWhere(crack, grooveCol, 0.004)
       .rotate(0, YAW, TILT)
       .at(SLIDE_X, LID_Y, 0.012);
     k.body('lid', lidBody, {
       color: '#4a5d75',
       roughness: 0.9,
       metalness: 0,
-      detail: 0.011,
-      maxTriangles: 1800,
+      detail: 0.014,
+      maxTriangles: 5000,
       paintWeight: 2,
       bump: stoneBump,
     });
