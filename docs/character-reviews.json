@@ -2445,33 +2445,33 @@
     "reviewedAt": "2026-09-29T21:20:02+00:00"
   },
   "plague-bearer": {
-    "overall": 7.8,
+    "overall": 8,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 3,
+      "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3,
-      "technical": 4,
+      "detail": 4,
+      "technical": 5,
       "gameReady": 4,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "Bloated hooded undead on the zombie base: a draped pale hood over a shadowed green face with one big eye and a leather beak, bandaged sleeves, a pale coat open over a bloated belly, a belt, ragged trousers, big bare feet, and a rusty lantern with green fumes. Three passes (6.8, 7.0, 7.8); just below the 8 bar, source uncommitted.",
+    "summary": "Hooded plague-bearer on the zombie base: a draped beige hood with long creases and a dirt band over a shadowed face, one big pale eye, a long cracked leather beak, bandaged arms, a green belly with three buckled straps, a ragged coat hem with hanging ribbons, and a glowing lantern. Reviewed 8.0 after two builds, one feedback pass, and two fresh reworks (Sonnet 5.5 high tier).",
     "strengths": [
-      "The hood pocket now shadows the face in the front and three-quarter views.",
-      "The belly, bandages, feet and lantern read at 128 px.",
-      "Clearance and ground checks pass; 50,826 triangles, no warnings."
+      "The hood, the beak, the green skin, and the lantern read at 128 px in all eight directions.",
+      "The hood now drapes with folds and creases instead of a smooth dome.",
+      "Check ok (closest 1.2 cm), ground ok, 55,272 triangles, no warnings."
     ],
     "issues": [
-      "The beak is short and stubby; the mockup beak is long and cracked.",
-      "The hood is a smooth near-white cone without the mockup's heavy wrinkles.",
-      "The coat lacks torn ribbons and straps."
+      "The beak still points at the camera in the front view, so it reads short there.",
+      "The coat and sleeves are smooth white; the mockup cloth is heavily wrinkled with moss.",
+      "The arms hang straight and stiff."
     ],
-    "next": "Lengthen the beak to 0.18 m with cracks in bump; displace the hood with low-frequency folds and darken it to #c8c2b0; add three hanging coat straps.",
-    "reviewedAt": "2026-09-29T21:20:02+00:00"
+    "next": "Angle the beak 15 degrees to the side in the rest pose, add cloth wrinkle displacement to the coat, and bend the elbows in idle.",
+    "reviewedAt": "2026-09-30T00:26:04+00:00"
   },
   "crystal-golem": {
     "overall": 8,

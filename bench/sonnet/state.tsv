@@ -51,11 +51,11 @@ specter	character	high	aee81a2219faeddb7	3	accepted	8.0	fresh rework accepted; c
 troll-guard	character	high	a6f49884230e5d9d9	2	accepted	8.0	feedback pass accepted; committed
 gnoll-warrior	character	high	af6cf25a8e6e4dd53	2	accepted	8.0	feedback pass accepted; committed
 poltergeist	character	high	a15a1c4c1d0ee55bc	2	accepted	8.0	feedback pass accepted; committed
-plague-bearer	character	high	-	3	running	7.8	rework 2 under the run 3 budget (owner note)
+plague-bearer	character	high	a5a8569f13f1b210e	4	accepted	8.0	accepted on rework 2 under the run 3 budget
 vampire-lord	character	high	aea28b07536006656	1	accepted	8.0	first build accepted; committed
 clay-golem	character	high	af7505dfe85228626	2	accepted	8.0	feedback pass accepted; committed
 crystal-golem	character	high	a208efdb3c28e0abb	2	accepted	8.0	feedback pass accepted; committed
-living-statue	character	high	a5a6a067cb70196c9	3	skipped	7.8	three passes just under the bar; review entry added; source uncommitted
+living-statue	character	high	-	3	running	7.8	rework 2 under the run 3 budget (owner note)
 kobold-sorcerer	character	high	a2a830ef009d620df	1	accepted	8.0	first build accepted; committed
 gnoll-hunter	character	high	aad4c05a699c8474d	3	accepted	8.0	fresh rework accepted; committed
 kobold-trapper	character	high	a6732c980a19f2cef	2	accepted	8.0	feedback pass accepted; committed
@@ -63,6 +63,6 @@ clockwork-sentry	character	high	ac241e6566fa826d6	2	accepted	8.0	feedback pass a
 clockwork-soldier	character	high	aa8e7ad16bee151a2	2	accepted	8.0	feedback pass accepted; committed
 animated-weapon	character	high	ab046233610c8f180	2	accepted	8.0	feedback pass accepted; committed
 brigand	character	high	acc137740a4b0c5a8	2	accepted	8.0	enemies run 2 final build; accepted after one feedback pass
-highwayman	character	high	aa454d71b0c488777	0	running	-	enemies run 3
+highwayman	character	high	aa454d71b0c488777	1	feedback	7.6	enemies run 3; one feedback pass sent
 raider	character	high	ad69522f45e69e711	2	accepted	8.0	enemies run 3; accepted after one feedback pass
-mercenary	character	high	a00df57eac366789c	0	running	-	enemies run 3
+mercenary	character	high	a00df57eac366789c	1	feedback	7.5	enemies run 3; one feedback pass sent
