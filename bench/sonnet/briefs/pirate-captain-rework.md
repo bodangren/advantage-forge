@@ -1,0 +1,13 @@
+# pirate-captain rework (enemies/humanoid/pirate-captain) -> assets/pirate-captain.ts
+
+Rework the existing assets/pirate-captain.ts (a fresh agent; the file builds, 61,366 triangles, `./forge check` ok). Bar 8/10 (character). Two passes scored 7.6 and 7.5. Mockup: docs/enemy-mockups/pirate-captain_001.jpg (already the `reference`). Keep the rig, the clips, the variants, the eye patch, the bandana band, the braided beard with beads, the red coat with the gold buttons and cream cuffs, the standing collar, the neck cloth, the belt, the pistol, the boots, the cutlass pose.
+
+The one blocking issue is the hat: it is a flat brim with three framed rectangles standing on it. Replace the whole hat with the highwayman's tricorn construction, which reads well:
+1. Open assets/highwayman.ts and copy its tricorn: the `brimAt` height function (lines about 110 to 135: a thin brim sheet whose height follows three folds, points drooping at +-60 degrees), the `brimSheet` Sdf, and the crown/brim assembly in the build (the section marked `the tricorn`, about lines 354 to 372). Paste them into pirate-captain.ts and remove the current hat bodies (brim, flaps, crown, trim) and the skull badge placement.
+2. Adapt it: crown r 0.19 and 0.12 tall so it sits on this head (the bandana band stays visible under the front edge); scale the brim span to 0.6 m; keep the three raised flaps and the drooping points. Color #26221f (roughness 0.6). Gold trim: paintWhere a band 0.012 wide along the brim edge (#d4a83a, metalness 0.8) using an offset of the brim sheet, as the highwayman does for its stitch line but painted gold. Put the skull badge (a small extruded skull outline 0.03 m, #ece4d0) on the raised right flap, facing forward and outward.
+3. Check the hat against the head in every view and in the sprites: the flaps must rise on the left and right with a dip at the front center, and nothing may poke through the crown. Run `./forge check pirate-captain` after the change; if the taunt or attack cuff touches the wider brim, move those wrist keys outward.
+4. Two small extras if the triangle budget allows (cap 65,000; lower the coat and boots detail to 0.007 if needed): shrink the open right eye to r 0.02 with a half-lid (the mockup eye is small), and lengthen the coat skirt to y 0.16 with the split at the back.
+
+Report the three largest remaining differences.
+
+Limits: under 65,000 triangles. No `warning:` lines. `./forge check pirate-captain` must end with `result ok` and the ground line must be ok. Set `FORGE_WORKERS=2` on every forge command. Never commit. Only edit assets/pirate-captain.ts. Finish with one `./forge all pirate-captain`.
