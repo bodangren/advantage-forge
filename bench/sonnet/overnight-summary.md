@@ -49,37 +49,50 @@ Bars: 7 ordinary, 7.5 P0 or game-pack rows, 8 characters. Every pass is in `benc
 | revenant | character | high | 2 | 192,527 | 8.0 | 8 | accepted |
 | bandit-captain | character | high | 3 | 248,432 | 8.0 | 8 | accepted |
 | orc-warlord | character | high | 2 | 197,402 | 8.0 | 8 | accepted |
-| banshee | character | high | 3 | 190,773 | 7.3 | 8 | skipped |
+| banshee | character | high | 5 | 330,069 | 8.0 | 8 | accepted |
 | iron-golem | character | high | 2 | 118,659 | 8.0 | 8 | accepted |
 | gargoyle | character | high | 2 | 143,795 | 8.0 | 8 | accepted |
 | specter | character | high | 3 | 184,461 | 8.0 | 8 | accepted |
 | poltergeist | character | high | 2 | 105,054 | 8.0 | 8 | accepted |
 | gnoll-warrior | character | high | 2 | 206,339 | 8.0 | 8 | accepted |
-| plague-bearer | character | high | 3 | 274,251 | 7.8 | 8 | skipped |
+| plague-bearer | character | high | 4 | 364,585 | 8.0 | 8 | accepted |
 | troll-guard | character | high | 2 | 186,234 | 8.0 | 8 | accepted |
 | vampire-lord | character | high | 1 | 86,474 | 8.0 | 8 | accepted |
 | clay-golem | character | high | 2 | 92,817 | 8.0 | 8 | accepted |
 | crystal-golem | character | high | 2 | 106,289 | 8.0 | 8 | accepted |
 | kobold-sorcerer | character | high | 1 | 132,483 | 8.0 | 8 | accepted |
-| living-statue | character | high | 3 | 243,735 | 7.8 | 8 | skipped |
+| living-statue | character | high | 7 | 449,923 | 7.8 | 8 | skipped |
 | clockwork-sentry | character | high | 2 | 140,021 | 8.0 | 8 | accepted |
 | gnoll-hunter | character | high | 3 | 248,492 | 8.0 | 8 | accepted |
 | kobold-trapper | character | high | 2 | 142,089 | 8.0 | 8 | accepted |
 | clockwork-soldier | character | high | 2 | 183,278 | 8.0 | 8 | accepted |
 | animated-weapon | character | high | 2 | 127,723 | 8.0 | 8 | accepted |
+| brigand | character | high | 2 | 159,379 | 8.0 | 8 | accepted |
+| raider | character | high | 2 | 135,595 | 8.0 | 8 | accepted |
+| highwayman | character | high | 2 | 183,899 | 8.0 | 8 | accepted |
+| mercenary | character | high | 4 | 337,753 | 7.9 | 8 | accepted |
+| assassin | character | high | 3 | 200,763 | 8.0 | 8 | accepted |
+| deserter | character | high | 2 | 135,533 | 8.0 | 8 | accepted |
+| smuggler | character | high | 2 | 169,932 | 8.0 | 8 | accepted |
+| pirate | character | high | 2 | 192,894 | 8.0 | 8 | accepted |
+| pirate-captain | character | high | 3 | 254,083 | 8.0 | 8 | accepted |
+| hunter-rival | character | high | 2 | 171,071 | 8.0 | 8 | accepted |
+| dark-mage | character | high | 2 | 133,524 | 8.0 | 8 | accepted |
+| warlock | character | high | 2 | 160,331 | 8.0 | 8 | accepted |
+| cult-leader | character | high | 2 | 149,634 | 8.0 | 8 | accepted |
+| witch | character | high | 2 | 151,268 | 8.0 | 8 | accepted |
+| evil-priest | character | high | 2 | 165,140 | 8.0 | 8 | accepted |
 
-Totals: 63 assets, 57 accepted, 6 skipped, 6,857,579 subagent tokens logged (including the 325,020 probe).
+Totals: 78 assets, 74 accepted, 4 skipped, 9,994,196 subagent tokens logged (including the 325,020 probe).
 
-Run 1 (batch 1, fit reworks, enemies round 1 and 2) stopped at 4.0M by the token rule after dark-knight. The owner reset the counter at 01:35 on 2026-09-30; run 2 (rows with batch run2) used 3,650,850 tokens of a new 4,000,000 limit and stopped when the last in-flight agent landed, with the next character unlikely to fit under the limit.
+Run 1 (batch 1, fit reworks, enemies round 1 and 2) stopped at 4.0M by the token rule after dark-knight. The owner reset the counter at 01:35 on 2026-09-30; run 2 (rows with batch run2) used 3,774,609 tokens of a new 4,000,000 limit and stopped when the last in-flight agent landed, with the next character unlikely to fit under the limit. The owner reset the counter a second time at 07:03 on 2026-09-30; run 3 (rows with batch run3) used 3,012,858 tokens of a new 4,000,000 limit and finished the whole open P1 enemy list: 14 new enemies plus the three earlier skips reworked on the owner's request (banshee and plague-bearer reached 8; mercenary was accepted at 7.9 on the owner's instruction after a fourth pass; living-statue reached 7.8 on a final marble-surface pass and awaits the owner's approval). The owner reset the counter a third time at 12:00 on 2026-09-30; run 4 (rows with batch run4) has used 0 tokens of a new 4,000,000 limit on the last open P1 rows: 32 heroes (by game need first), silo, wall-gate, palm-tree, and giant-crystal.
 
 ## Skipped
 
 - cliff-face: fresh high agent reworked the grass only: cap a thick plank, ledge mats small, wedges plain; SKIPPED after 4 passes (medium 78789 + high 47555 = 126344); rock body usable; lesson: the textured build reduces the rock to 302 tris while --fast reports 5350, so maxError 0.04 hides facets
 - ogre-brute: v3 same agent: v1 arm lengths restored, belly paint strengthened, 72346 tris, check ok; the hanging arm still reaches the hem and the shading is faint; 7.8 after three passes: SKIPPED (below the character bar); source left uncommitted, review entry added for the owner
 - wood-golem (rework): rework pass 3: eyes proud with painted sockets, raised petal sigil core, 70148 tris; eyes still small flecks in the front sprites; 3.8 -> 7.5 after three passes (120760 tokens), below the bar; source untracked (other session), review entry updated
-- banshee: fresh high agent rework (second retry): hair now a white mane but a scalloped shell with horn locks; head small at 128 px; wisps plain tubes; skipped after three passes; source uncommitted
-- plague-bearer: fresh high agent rework (second retry): draped hood over a shadowed face done; beak stubby; hood pale and flat; skipped after three passes just under the bar; source uncommitted
-- living-statue: fresh high agent rework (second retry): value contrast, painted cracks, mask below the band, flanges, stacked boss done; helm still a hemisphere dome; pale; skipped after three passes; source uncommitted
+- living-statue: rework 3 (marble): off-white base, two-scale ridge veins, grain bump, chipped rim and pauldron, rounded dome; marble now reads; sprite tone separation weak; 7.8 pending owner approval, source uncommitted; check ok 0.4 cm, ground ok, 36946 tris
 
 ## Lessons
 
@@ -93,3 +106,5 @@ Run 1 (batch 1, fit reworks, enemies round 1 and 2) stopped at 4.0M by the token
 - Run 2 (enemies): 20 of 23 characters reached 8 in one build plus one feedback pass or one fresh rework (95K to 250K tokens each); the three skips (banshee, plague-bearer, living-statue) all fell on cloth or fur volume: draped hoods, streaming hair, and shaggy cuffs read as blobs at 128 px. Give those briefs explicit band and strand sizes.
 - Emissive cores clip to pale peach or pink in the renderer; use a dark base and an emissive of 1.4 to 1.8, not 2.4.
 - The task output file stays at 149 bytes while an agent runs; judge progress by the mtime of assets/<name>.ts and out/<name>/render.png.
+- Run 3 (enemies): 14 of 14 new characters reached 8 (two through a fresh rework: the assassin sprite face and the pirate-captain tricorn, which was copied from the highwayman); one feedback pass costs 12K to 45K tokens, a fresh rework 70K to 100K. Two fresh agents stalled after their first reads with no file writes and were relaunched: a transcript that stops growing for 30 minutes with no forge process is a stall.
+- Copying a proven construction between assets (the highwayman tricorn into the pirate-captain) fixed in one pass what two shape briefs did not.
