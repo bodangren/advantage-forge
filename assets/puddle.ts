@@ -19,9 +19,9 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *   drops, tertiary thin muddy rim and a soaked-earth halo. Rig/animation: none.
  */
 
-const WATER = rgb('#33414f');
-const WATER_DEEP = rgb('#1a222b');
-const WATER_SHEEN = rgb('#9ab4cb');
+const WATER = rgb('#4a9be0');
+const WATER_DEEP = rgb('#2f74c0');
+const WATER_SHEEN = rgb('#b8e4fb');
 const MUD = rgb('#4a2c16');
 const MUD_LIGHT = rgb('#6b4226');
 const MUD_DARK = rgb('#2a190b');
@@ -121,8 +121,8 @@ export default defineAsset({
       return c;
     };
     k.body('water', water.paintFn(waterPaint), {
-      color: '#33414f',
-      roughness: 0.05,
+      color: '#4a9be0',
+      roughness: 0.12,
       metalness: 0,
       detail: 0.007,
       paintWeight: 2,
