@@ -56,123 +56,62 @@ export default defineAsset({
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------- glass shell
-    // Revolved flask: flat foot at y = 0, spherical belly, pinched shoulder,
-    // short chunky neck, slight outward lip. The top closes at GLASS_TOP_Y
-    // so the cork can sit proudly above the lip without overlapping the
-    // closed dome.
-    const glassProfile = profile.polygon(
-      [
-        [0.018, 0.0],
-        [0.032, 0.004],
-        [0.05, 0.014],
-        [BELLY_R, 0.045],
-        [BELLY_R - 0.003, 0.072],
-        [0.05, 0.094],
-        [0.036, BULB_TOP],
-        [0.022, SHOULDER_Y],
-        [NECK_R, NECK_Y0],
-        [NECK_R, NECK_Y1],
-        [LIP_R, LIP_Y],
-        [0.005, GLASS_TOP_Y - 0.002],
-        [0, GLASS_TOP_Y],
-      ],
-      { smooth: true, samples: 14 },
-    );
-    const glassShell = sdf
-      .revolve(glassProfile)
-      .intersect(sdf.halfSpace([0, -1, 0], 0))
-      .paintFn((x, y, z, _base) => {
-        const yT = y / BULB_TOP;
-        let c = mixRgb(GLASS_SHADE, GLASS_TINT, Math.min(1, yT * 1.5));
-        const rim = Math.exp(-Math.pow((y - FILL_Y) * 30, 2));
-        c = mixRgb(c, GLASS_HI, 0.45 * rim);
-        const a = Math.atan2(z, x);
-        const d = Math.abs(a - (-1.0));
-        const w = Math.min(d, Math.PI * 2 - d);
-        const streak = Math.exp(-(w * w) / 0.18) * Math.sin(Math.PI * Math.min(1, y / 0.13));
-        c = mixRgb(c, GLASS_HI, 0.5 * streak);
-        const m = noise.fbm(x * 35, y * 35, z * 35, 2) * 0.05;
-        return mixRgb(c, GLASS_TINT, 0.5 + m);
-      });
+    // glass: ball + short neck + lip, true shell, open at the top
+    const BY = 0.058;
+    const glassSolid = sdf
+      .smoothUnion(
+        0.008,
+        sdf.sphere(0.058).at(0, BY, 0),
+        sdf.cylinder(0.014, 0.05).at(0, 0.125, 0),
+      )
+      .smoothUnion(0.004, sdf.torus(0.015, 0.0035).at(0, 0.149, 0))
+      .subtract(sdf.cylinder(0.011, 0.03).at(0, 0.157, 0))
+      .intersect(sdf.halfSpace([0, -1, 0], 0));
+    const glassShell = glassSolid;
     k.body('glass', glassShell, {
-      color: '#c8dee2',
-      roughness: 0.08,
+      color: '#4a5a64',
+      roughness: 0.05,
       metalness: 0,
-      opacity: 0.35,
-      detail: 0.0045,
-      paintWeight: 2,
-      maxTriangles: 1100,
-    });
-
-    // ------------------------------------------------------------- liquid
-    const LIQUID_R = BELLY_R - 0.005;
-    const liquidProfile = profile.polygon(
-      [
-        [0.0, 0.005],
-        [0.022, 0.005],
-        [0.042, 0.012],
-        [LIQUID_R, 0.045],
-        [LIQUID_R - 0.002, FILL_Y],
-        [LIQUID_R - 0.012, FILL_Y - 0.001],
-        [LIQUID_R - 0.022, FILL_Y - 0.002],
-        [LIQUID_R - 0.03, FILL_Y - 0.003],
-        [0.024, FILL_Y - 0.005],
-        [0.01, FILL_Y - 0.006],
-        [0, FILL_Y - 0.007],
-      ],
-      { smooth: true, samples: 12 },
-    );
-    const liquid = sdf
-      .revolve(liquidProfile)
-      .intersect(sdf.halfSpace([0, 1, 0], FILL_Y))
-      .paintFn((x, y, z, _base) => {
-        const fill = Math.max(0, Math.min(1, (y - 0.005) / (FILL_Y - 0.008)));
-        let c = mixRgb(LIQUID, LIQUID_LIGHT, fill * 0.8);
-        const a = Math.atan2(z, x);
-        const w = Math.abs(a - (-2.4));
-        const wd = Math.min(w, Math.PI * 2 - w);
-        const shade = Math.exp(-(wd * wd) / 0.5);
-        c = mixRgb(c, LIQUID_DARK, 0.45 * shade * (1 - fill * 0.4));
-        return c;
-      });
-    k.body('liquid', liquid, {
-      color: '#820a1c',
-      roughness: 0.35,
-      metalness: 0.1,
-      emissive: LIQUID_GLOW,
-      emissiveIntensity: 0.4,
+      opacity: 0.5,
       detail: 0.004,
-      paintWeight: 2,
-      maxTriangles: 1000,
+      maxTriangles: 2000,
     });
 
-    // ------------------------------------------------------------- cork
-    // Chunky cork stopper pressed into the neck. The shaft starts inside
-    // the closed glass shell and pokes through the surface so the cork
-    // appears attached; a wider flange and rounded crown sit above the lip.
+    // liquid: two-thirds fill, flat top, glowing
+    const liquid = sdf
+      .sphere(0.052)
+      .at(0, BY, 0)
+      .intersect(sdf.halfSpace([0, 1, 0], 0.072))
+      .intersect(sdf.halfSpace([0, -1, 0], -0.003));
+    k.body('liquid', liquid, {
+      color: '#c01424',
+      roughness: 0.25,
+      metalness: 0,
+      emissive: '#ff2a3c',
+      emissiveIntensity: 0.5,
+      detail: 0.004,
+      maxTriangles: 450,
+    });
+
+    // cork: shaft 0.012 m inside the neck, wider crown sphere
     const corkShape = sdf
       .smoothUnion(
-        0.0025,
-        sdf.cylinder(NECK_R + 0.001, CORK_SHAFT_H, 0.0015).at(0, CORK_SHAFT_Y + CORK_SHAFT_H / 2, 0),
-        sdf.cylinder(LIP_R + 0.001, 0.005, 0.002).at(0, CORK_FLANGE_Y, 0),
-        sdf.sphere(0.0145).at(0, CORK_CROWN_Y, 0),
+        0.003,
+        sdf.cylinder(0.014, 0.022, 0.003).at(0, 0.153, 0),
+        sdf.ellipsoid([0.017, 0.011, 0.017]).at(0, 0.166, 0),
       )
       .paintFn((x, y, z, _base) => {
         let c = mixRgb(CORK, CORK_DARK, 0.35 + 0.5 * noise.fbm(x * 50, y * 18, z * 50, 2));
-        const top = Math.max(0, Math.min(1, (y - 0.18) / 0.014));
-        c = mixRgb(c, CORK_LIGHT, top * 0.55);
-        const under = Math.max(0, Math.min(1, (0.166 - y) / 0.01));
-        c = mixRgb(c, CORK_DARK, under * 0.6);
-        return c;
+        const top = Math.max(0, Math.min(1, (y - 0.165) / 0.012));
+        return mixRgb(c, CORK_LIGHT, top * 0.55);
       });
     k.body('cork', corkShape, {
-      color: '#8a6a3a',
+      color: '#b08a5a',
       roughness: 0.85,
       metalness: 0,
       detail: 0.003,
       bump: (x, y, z) => 0.001 * noise.fbm(x * 60, y * 22, z * 60, 2),
-      maxTriangles: 500,
+      maxTriangles: 350,
     });
 
     // ------------------------------------------------------------- twine
@@ -180,11 +119,11 @@ export default defineAsset({
     // the lip, plus a knot bead and a single visible bow loop on the +X side.
     // Wraps sit at the lip line, just below the cork flange, so the rope
     // appears to hold the cork in place.
-    const twineY = LIP_Y + 0.005;
+    const twineY = 0.134;
     const wraps = sdf.union(
-      sdf.torus(LIP_R + 0.0025, 0.0028).at(0, twineY, 0),
-      sdf.torus(LIP_R + 0.0025, 0.0028).at(0, twineY + 0.0045, 0),
-      sdf.torus(LIP_R + 0.0025, 0.0028).at(0, twineY + 0.009, 0),
+      sdf.torus(0.0165, 0.0025).at(0, twineY, 0),
+      sdf.torus(0.0165, 0.0025).at(0, twineY + 0.0045, 0),
+      sdf.torus(0.0165, 0.0025).at(0, twineY + 0.009, 0),
       sdf.sphere(0.0046).at(LIP_R + 0.005, twineY + 0.005, 0),
     );
     // Bow loop: ring in the XY plane (axis along Z), so the loop shows as
@@ -214,12 +153,12 @@ export default defineAsset({
         return c;
       });
     k.body('twine', twine, {
-      color: '#a08050',
+      color: '#c9a878',
       roughness: 0.9,
       metalness: 0,
       detail: 0.003,
       bump: (x, y, z) => 0.0008 * noise.fbm(x * 110, y * 25, z * 110, 2),
-      maxTriangles: 700,
+      maxTriangles: 1000,
     });
   },
 });
