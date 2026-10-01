@@ -18,6 +18,9 @@ Working rules:
 2. Iterate with `./forge render <name> --fast`, then look at `out/<name>/render.png`. Compare silhouette, then proportions, then color, then details. Fix the largest difference first.
 3. Run `./forge all <name>` exactly once, when the shape is right. Characters also run `./forge check <name>` and one `./forge sprites` look at `sprites/preview.png`.
 4. Never run `pnpm`; use `./forge` and `node_modules/.bin/*`. Never commit. Never edit files outside `assets/<name>.ts` unless the brief says so.
-5. Stop when the asset meets the brief or when you have used the image budget. Do not polish past the brief.
+5. Before the final report, run `node scripts/typecheck-asset.mjs <name>` and fix every error it lists in
+   your file with real types: a guard, a default value, or a typed tuple. Never add `any`, `@ts-ignore`,
+   or `@ts-expect-error`. The report says `typecheck ok` or lists what is left.
+6. Stop when the asset meets the brief or when you have used the image budget. Do not polish past the brief.
 
-Final report, under 200 words, in this order: the asset name and file; triangle count and any `warning:` lines; your self-score out of 10 against the reference; the three largest remaining differences; the number of renders you viewed. No transcript, no code.
+Final report, under 200 words, in this order: the asset name and file; triangle count and any `warning:` lines; the typecheck result; your self-score out of 10 against the reference; the three largest remaining differences; the number of renders you viewed. No transcript, no code.
