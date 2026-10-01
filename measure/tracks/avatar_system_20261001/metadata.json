@@ -1,9 +1,9 @@
 {
   "track_id": "avatar_system_20261001",
   "type": "feature",
-  "status": "planned",
+  "status": "in_progress",
   "created_at": "2026-10-01T00:00:00Z",
-  "updated_at": "2026-10-01T00:00:00Z",
+  "updated_at": "2026-10-01T19:00:00Z",
   "description": "Player avatar system: avatar base, equipment fit and declaration, avatar pack, portraits, composer",
   "estimated_tasks": 12,
   "actual_tasks": null,
@@ -12,7 +12,10 @@
   "retrospective": false,
   "evidence": [
     "docs/avatar-system.md",
-    "docs/chibi-quest-progression.md"
+    "docs/chibi-quest-progression.md",
+    "assets/avatar-base.ts",
+    "assets/parts/avatar-hair.ts",
+    "docs/avatar-catalog.tsv"
   ],
   "dependencies": []
 }
