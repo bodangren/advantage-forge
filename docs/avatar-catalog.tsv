@@ -19,7 +19,7 @@ cloak	back	2	0	planned		3698	7.1	70
 mantle	back	2	0	planned		3492	7	70
 bracers	hands	1	0	planned		2424	7	20
 gloves	hands	1	0	planned		4700	7.3	25
-gauntlets	hands	2	0	planned		6228		50
+gauntlets	hands	2	0	planned		7739	6.3	50
 belt	waist	1	0	rework		2324		20
 boots	feet	1	0	planned		2770	7.1	25
 greaves	feet	2	0	planned		3350	7.1	50
@@ -67,14 +67,14 @@ warhammer	mainhand	2	0	planned		2580		110
 glaive	mainhand	3	1	planned		4358	7.1	240
 great-axe	mainhand	3	1	planned		9216		260
 greatsword	mainhand	3	1	planned		3900		220
-halberd	mainhand	3	1	planned		12114		260
+halberd	mainhand	3	1	planned		12158	6.5	260
 heavy-crossbow	mainhand	3	1	planned		9264	7	280
 magic-scepter	mainhand	3	0	planned		6850		240
 maul	mainhand	3	1	planned		5214		240
-pike	mainhand	3	1	planned		9640	7	280
-scythe	mainhand	3	1	planned		7556	7	260
+pike	mainhand	3	1	planned		12599	7	280
+scythe	mainhand	3	1	planned		8351	7	280
 backpack	accessory	1	0	later		5292		35
-belt-pouch	accessory	1	0	later		1856		30
+belt-pouch	accessory	1	0	later		1827	6.3	30
 satchel	accessory	1	0	later		2468	7	35
 scabbard	accessory	1	0	later		2602	6.9	35
 amulet	accessory	2	0	later		3298	7.4	70
@@ -99,3 +99,68 @@ spyglass	tool	1	0	later		644		30
 lute	tool	2	0	later		4776	7.3	70
 arrow	none	1	0	excluded		1388	7	0
 bolt	none	1	0	excluded		2704	7	0
+rogue-hood	head	1	0	planned		8258		50
+wizard-hat	head	1	0	planned		12796		50
+witch-hat	head	1	0	planned		7298		50
+bard-hat	head	1	0	planned		8534		50
+duelist-hat	head	1	0	planned		8332		50
+treasure-hunter-hat	head	1	0	planned		6454		50
+explorer-hat	head	1	0	planned		5482		50
+druid-cap	head	1	0	planned		16598		50
+shaman-cap	head	1	0	planned		8184		50
+swashbuckler-bandana	head	1	0	rework		2210		40
+knight-helm	head	2	0	planned		16576		105
+guardian-helm	head	2	0	planned		7908		95
+gladiator-helmet	head	2	0	planned		11210		105
+shield-maiden-helm	head	2	0	planned		8650		105
+dragoon-helm	head	2	0	rework		17896		105
+fighter-cap	head	2	0	rework		6796		95
+spear-warden-crest	head	2	0	rework		1084		80
+fighter-buckler	offhand	1	0	planned		4236		45
+gladiator-shield	offhand	1	0	planned		3552		45
+shield-maiden-shield	offhand	1	0	planned		6350		50
+captain-shield	offhand	1	0	rework		4142		45
+adventurer-lantern	offhand	1	0	planned		1240		40
+treasure-hunter-torch	offhand	1	0	planned		3132		45
+adventurer-map	offhand	1	0	planned		818		40
+explorer-map	offhand	1	0	planned		1144		40
+enchanter-scroll	offhand	1	0	planned		3112		45
+shaman-feather	offhand	1	0	planned		870		40
+witch-potion	offhand	1	0	rework		2332		40
+skeleton-knight-shield	offhand	2	0	planned		5162		95
+paladin-shield	offhand	2	0	rework		4134		90
+mage-spellbook	offhand	2	0	planned		666		80
+cleric-book	offhand	2	0	planned		4520		90
+warlock-book	offhand	2	0	planned		3462		90
+guardian-shield	offhand	3	0	rework		4954		175
+adventurer-sword	mainhand	1	0	planned		1286		50
+gladiator-sword	mainhand	1	0	planned		1206		50
+rogue-dagger	mainhand	1	0	planned		508		50
+swashbuckler-dagger	mainhand	1	0	planned		794		50
+shield-maiden-axe	mainhand	1	0	planned		1702		50
+spear-warden-javelin	mainhand	1	0	planned		918		50
+mage-wand	mainhand	1	0	planned		1808		50
+apprentice-wand	mainhand	1	0	planned		1142		50
+witch-broom	mainhand	1	0	planned		3418		55
+treasure-hunter-whip	mainhand	1	0	rework		3844		55
+fighter-sword	mainhand	2	0	planned		1276		100
+captain-sword	mainhand	2	0	planned		1344		100
+samurai-katana	mainhand	2	0	planned		1542		100
+duelist-rapier	mainhand	2	0	planned		2948		110
+swashbuckler-sabre	mainhand	2	0	planned		1270		100
+barbarian-axe	mainhand	2	0	planned		5160		120
+guardian-hammer	mainhand	2	0	planned		2266		100
+paladin-hammer	mainhand	2	0	planned		5772		120
+wizard-staff	mainhand	2	1	planned		4894		110
+druid-staff	mainhand	2	1	planned		5130		120
+shaman-staff	mainhand	2	1	planned		6542		120
+enchanter-staff	mainhand	2	1	planned		1352		100
+archer-bow	mainhand	2	1	planned		3094		110
+ranger-bow	mainhand	2	1	planned		3094		110
+warrior-sword	mainhand	3	1	planned		1760		200
+cleric-hammer	mainhand	3	1	planned		6178		240
+spear-warden-spear	mainhand	3	1	planned		4572		220
+dragoon-lance	mainhand	3	1	planned		4274		220
+clockwork-soldier-halberd	mainhand	3	1	planned		2392		200
+apprentice-glasses	accessory	2	0	later		4722		65
+bard-lute	tool	2	0	later		2620		65

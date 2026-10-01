@@ -17,6 +17,8 @@ base measurements.
 `<host>` is the character that first wore the part, for example `knight-helm`, `mage-wand`, and
 `skeleton-knight-shield`. Existing catalog items (for example `iron-helmet`, `wand`, `kite-shield`)
 keep their paths, names, and designs. A worn part becomes a new standalone asset next to them.
+Owner decision, 2026-10-01: no part replaces a catalog item. Each part is also an avatar item in
+`docs/avatar-catalog.tsv`. Players choose, and the shop sorts by popularity (`docs/avatar-system.md`).
 
 ## The part contract
 

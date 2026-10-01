@@ -3,7 +3,7 @@ import { profile, sdf, type Part } from '../../src/index.js';
 /**
  * Ranger recurve bow (part of `assets/ranger.ts`; standalone `assets/ranger-bow.ts`).
  *
- * A dark wood longbow bow with a leather grip and a cream string in two halves that meet at the
+ * A dark wood recurve bow with a leather grip and a cream string in two halves that meet at the
  * nocking point. `rangerArrow` is a second part: the shot arrow, in the quiver frame.
  * Class: hand-held. Local frame: the origin is the grip in the left fist, the axes are the
  * character axes (the bow is turned by BOW_YAW and BOW_TILT inside the part); the host moves it by GRIP.

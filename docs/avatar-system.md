@@ -19,7 +19,7 @@ display catalog and the avatar.
 | Part | Repo | What it is |
 | --- | --- | --- |
 | The avatar base | this repo, `assets/avatar-base.ts` | The full chibi body with skin, hair, eyes, and underclothes |
-| Equipment pieces | this repo, `assets/*.ts` (100 in the catalog) | Each piece declares its slot, anchor, and fit |
+| Equipment pieces | this repo, `assets/*.ts` (165 in the catalog: 100 catalog items, 65 hero parts) | Each piece declares its slot, anchor, and fit |
 | The equipment manifest | this repo, `docs/avatar-catalog.tsv` + generated `catalog.json` | Slot, tier, price, hides, dyes per piece |
 | The avatar pack | this repo, `out/packs/avatar/<version>/` | Reduced GLBs, portrait layers, the catalog |
 | The composer | this repo, `src/apk3d/avatar/` | Builds the rigged 3D avatar or the portrait from a loadout |
@@ -72,6 +72,10 @@ Later phases: `robe` (cloth-robe, mage-robe: skinned to spine, chest, and legs),
 Two-handed weapons (greatsword, great-axe, maul, halberd, pike, longbow, heavy-crossbow, staff)
 fill both hand slots.
 
+Hero parts (`<host>-<piece>`, see [equipment-parts.md](equipment-parts.md)) come from heroes on the
+shared skeleton and the base head. They have the worn size, so they attach at 1x in every slot.
+The shop view scales a hero part for display. The 17 head parts fit the base head with no rework.
+
 ## 5. The equipment declaration
 
 Every equipment asset gains one `equip` block in `defineAsset`. The forge validates it against
@@ -107,6 +111,21 @@ and computed `triangles, rating, price` (see "GP price"). Dyes and class presets
 `catalog.json` with a `catalogVersion`. The monorepo stores item ids as text and the catalog
 version on each loadout row. A piece with `status != ready` is not in the pack.
 
+Owner decision, 2026-10-01: the catalog keeps every variant. No piece replaces another piece.
+Players choose what they like, and the shop sorts by popularity (see "Shop order"). Every id is
+unique. The 65 hero parts are rows next to the 100 catalog items. A hero part takes the slot,
+tier, and two-handed value of the catalog item of the same kind and size (for example
+`warrior-sword` is a greatsword: tier 3, two-handed). Headwear without a catalog kind uses the
+material: cloth and leather are tier 1, and metal is tier 2.
+
+Status values: `planned` (phase 1, needs its `equip` block), `later` (a later-phase slot),
+`rework` (a fix before `ready`: the fit, or a shape defect in the display), and `excluded`. The
+hero parts with `rework` have shape defects that the equipment-parts track lists: three shields
+show their face through the back, and the fighter cap, the bandana, the dragoon helm, the
+spear-warden crest, the witch potion cork, and the whip display pose need a fix.
+
+`archer-bow` and `ranger-bow` have the same shape in two colors. Both stay as separate items.
+
 ### GP price
 
 The price comes from a formula, so a new piece needs a slot and a tier and nothing else.
@@ -132,7 +151,7 @@ price = round5( slotBase x (1 + triangleBonus + ratingBonus) x tierMultiplier )
 - The `override` column of `docs/avatar-catalog.tsv` replaces a computed price for one piece.
 - `node --import tsx scripts/avatar-price.ts` fills `triangles`, `rating`, and `price`. With
   `--check` it exits 1 when the table is out of date. The code is `src/apk3d/avatar/price.ts`.
-- Result on the 98 priced pieces: tier 1 costs 20 to 70 GP, tier 2 costs 50 to 130 GP, and tier 3
+- Result on the 163 priced pieces: tier 1 costs 20 to 70 GP, tier 2 costs 50 to 130 GP, and tier 3
   costs 175 to 280 GP. The slot bases and the tier list are placeholders until the median weekly
   GP per active Primary student is measured (see `chibi-quest-progression.md`).
 
@@ -141,6 +160,13 @@ dye is a separate purchase: `<id>:<preset>`.
 
 Starter sets: one per hero class (15). A preset lists the tint preset and one piece per slot from
 tier 1. A new student picks a class and receives its starter set for free.
+
+### Shop order
+
+The shop shows every piece that the student's level opens. The default order is popularity: the
+number of `purchase` rows in `avatar_inventory` for the item in the last 30 days, over all
+schools. The count needs no new table. A filter by slot narrows the list. Items with the same
+count sort by tier, then by price. The catalog sets no order and no "best" pick.
 
 ## 7. The avatar pack
 
@@ -223,7 +249,7 @@ the avatar as their default and keep the fixed hero as the fallback when no avat
 
 - `avatar-base` builds with no warnings, has all listed clips, and passes `forge check`.
 - Every phase 1 piece has an `equip` block, passes the fit check, and appears in the pack.
-- The 10 rework pieces meet the fit contract (the audit table in `equipment-fit.md` shows them
+- The 10 fit-rework pieces meet the fit contract (the audit table in `equipment-fit.md` shows them
   compliant).
 - `composeAvatar` shows the 15 starter sets with no piece intersecting the skin in idle, walk,
   and attack. Reviewed by renders.
@@ -246,7 +272,7 @@ Phase 1 (this repo, the track above):
 6. Portrait layers and the canvas composer.
 7. `composeAvatar` and a review page (`avatar.html`) with the 15 starter sets and random loadouts.
 
-Phase 2 (monorepo): tables, domain functions, API, the avatar page, the shop, GP grants.
+Phase 2 (monorepo): tables, domain functions, API, the avatar page, the shop (popularity order), GP grants.
 
 Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild Mode.
 
@@ -256,3 +282,5 @@ Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild 
   `hides` list per piece covers this; confirm with the first crown render.
 - Whether weapons need a `sheathed` attachment on the back for idle and walk.
 - Whether the reduced pass uses KTX2 in the APK today. If not, 512 px PNG atlases first.
+- How a new item gets seen when the shop sorts by popularity. A new item has no purchases, so it
+  starts at the end of its tier. One option is a "new" shelf for the first 14 days.
