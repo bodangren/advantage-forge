@@ -16,6 +16,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/shaman_001.jpg',
   texture: { size: 512 },
   variants: { cloth: { teal: '#4ab8b0', red: '#a83a32', violet: '#6a4a9e' } },
+  equip: { slot: 'mainhand', origin: [0, FOOT_Y, 0], twoHanded: true },
   build(k) {
     addPart(k, shamanStaff(k.tint), { pose: (s) => holdPose(GRIP, STAFF_AXIS).local(s.at(...MOUNT)).at(0, FOOT_Y, 0), bones: null });
   },

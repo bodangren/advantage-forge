@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Throwing axe (equipment/ranged-weapons/throwing-axe): chunky chibi axe, 0.55 m tall, standing on
@@ -22,6 +22,7 @@ export default defineAsset({
   description: 'A chunky throwing axe standing on its pommel: a leather-wrapped handle and a big bearded steel head.',
   detail: 0.004,
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.15, 0] },
 
   build(k) {
     const handle = sdf

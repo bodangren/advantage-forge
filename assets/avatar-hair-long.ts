@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.005,
   texture: { size: 512 },
   variants: { hair: { brown: '#5a301d', black: '#231a17', blond: '#c4974a', auburn: '#8e3b1c', silver: '#b8b4c4', teal: '#2f6f6a' } },
+  equip: { slot: 'head', origin: [0, LIFT, 0], hides: ['hair'] },
 
   build(k) {
     addPart(k, avatarHair('long', k.tint), { pose: (s) => s.at(0, LIFT, 0), bones: null });

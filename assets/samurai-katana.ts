@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/samurai_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, POMMEL, 0] },
 
   build(k) {
     addPart(k, samuraiKatana(), { pose: (s) => s.rotateZ(180).at(0, POMMEL, 0), bones: null });

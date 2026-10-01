@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — greatsword (equipment/melee-weapons/greatsword).
@@ -113,6 +113,7 @@ export default defineAsset({
   detail: 0.0035,
   reference: 'docs/item-mockups/greatsword-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.238, 0], twoHanded: true },
 
   build(k) {
     // ------------------------------------------------------------------ blade

@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf, profile } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf, profile } from '../src/index.js';
 
 /**
  * Design note — flanged mace (equipment/melee-weapons/mace).
@@ -107,6 +107,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/mace-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.36, 0], rotate: [0, 0, 180] },
 
   build(k) {
     // ============================================================== iron head

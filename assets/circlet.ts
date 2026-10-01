@@ -17,6 +17,7 @@ export default defineAsset({
   detail: 0.0043,
   reference: 'docs/item-mockups/circlet-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, 0.005, 0] },
 
   build(k) {
     const band = sdf.torus(R, T).scale([1, 1.3, 1]).at(0, T * 1.3, 0);

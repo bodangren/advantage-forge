@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Maul (equipment/melee-weapons/maul), matched to docs/item-mockups/maul-mock.jpg.
@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/maul-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.8, 0], rotate: [0, 0, 180], twoHanded: true },
 
   build(k) {
     const head = sdf.box([0.26, 0.15, 0.15], 0.022).at(0, 0.075, 0);

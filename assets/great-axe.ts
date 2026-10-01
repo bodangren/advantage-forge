@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Great axe (equipment/melee-weapons/great-axe), matched to docs/item-mockups/great-axe-mock.jpg.
@@ -21,6 +21,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/great-axe-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.45, 0], twoHanded: true },
 
   build(k) {
     const haft = sdf.smoothUnion(

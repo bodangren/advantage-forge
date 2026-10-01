@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/treasure-hunter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, -0.055, 0] },
   build(k) {
     // Tipped 10 degrees as worn, resting on the lowest brim edge.
     addPart(k, treasureHunterHat(), { pose: (s) => s.rotateX(-10).at(0, 0.08, 0), bones: null });

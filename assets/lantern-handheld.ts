@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — handheld lantern (equipment/accessories/lantern-handheld).
@@ -37,6 +37,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/lantern-handheld-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'offhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.34, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ iron frame

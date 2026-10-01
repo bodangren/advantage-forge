@@ -141,8 +141,12 @@ tier, and two-handed value of the catalog item of the same kind and size (for ex
 `warrior-sword` is a greatsword: tier 3, two-handed). Headwear without a catalog kind uses the
 material: cloth and leather are tier 1, and metal is tier 2.
 
-Status values: `planned` (phase 1, needs its `equip` block), `later` (a later-phase slot),
-`rework` (a fix before `ready`: the fit, or a shape defect in the display), and `excluded`. The
+Status values: `ready` (the `equip` block passes `forge check` on the avatar base and the worn
+render reads well), `planned` (phase 1, needs its `equip` block or a check change), `later` (a
+later-phase slot), `rework` (a fix before `ready`: the fit, or a shape defect in the display), and
+`excluded`. On 2026-10-01, 120 pieces are `ready` and 16 are `rework` (the list and the reasons are
+in [equipment-fit.md](equipment-fit.md#fit-on-the-avatar-base-2026-10-01)). The 4 hair styles stay
+`planned` until the capped hair styles give them their own slot rule. The
 9 hero parts with shape defects were fixed on 2026-10-01 and are `planned`: the three shields
 show steel on the back, the fighter cap has a padded lining (`fighterCap({ lining: true })`, the
 fighter keeps his hair), the bandana is a ring, the dragoon helm has smooth cheek guards, the

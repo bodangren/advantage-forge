@@ -17,6 +17,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/druid_001.png',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, FOOT, 0], twoHanded: true },
 
   build(k) {
     const up = holdPose(GRIP, STAFF_AXIS).local;

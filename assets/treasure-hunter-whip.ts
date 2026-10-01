@@ -17,6 +17,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/treasure-hunter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', frame: 'body', origin: [-0.037, 0.038, 0.115] },
   build(k) {
     const part = treasureHunterWhip();
     // From the hero frame: back to the coil center, undo the hip turn, and lay the coil axis (Z) up.

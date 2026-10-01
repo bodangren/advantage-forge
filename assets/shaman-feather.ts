@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/shaman_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', origin: [0, 0.0462, 0] },
   build(k) {
     addPart(k, shamanFeather(), { pose: (s) => s.at(0, 0.0462, 0), bones: null });
   },

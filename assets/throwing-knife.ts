@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Throwing knife (equipment/ranged-weapons/throwing-knife), matched to docs/item-mockups/throwing-knife-mock.jpg.
@@ -17,6 +17,7 @@ export default defineAsset({
   detail: 0.0018,
   reference: 'docs/item-mockups/throwing-knife-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [-0.03, 0.01, 0], rotate: [0, -90, -90] },
 
   build(k) {
     const outline = profile.polygon([[0.0, 0.012], [0.08, 0.016], [0.15, 0.008], [0.175, 0.0], [0.15, -0.008], [0.08, -0.016], [0.0, -0.012]], { smooth: true });

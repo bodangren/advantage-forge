@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — short sword (equipment/melee-weapons/short-sword).
@@ -93,6 +93,7 @@ export default defineAsset({
   detail: 0.0035,
   reference: 'docs/item-mockups/short-sword-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.106, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ blade

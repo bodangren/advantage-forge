@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — crossbow (equipment/ranged-weapons/crossbow).
@@ -66,6 +66,7 @@ export default defineAsset({
   reference: 'docs/item-mockups/crossbow-mock.jpg',
   detail: 0.006,
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.05, -0.07], twoHanded: true },
 
   build(k) {
     // ------------------------------------------------------------------ wood stock

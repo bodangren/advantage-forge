@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/paladin_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, -POINT_Y, 0] },
 
   build(k) {
     addPart(k, paladinShield(), { pose: (s) => s.at(0, -POINT_Y, 0), bones: null });

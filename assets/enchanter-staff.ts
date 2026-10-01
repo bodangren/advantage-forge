@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/enchanter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, FOOT, 0], twoHanded: true },
   build(k) {
     const upright = holdPose(STAFF_GRIP, STAFF_AXIS).local;
     // The part is translated by -MOUNT; undo that, turn it upright about the grip, then stand it.

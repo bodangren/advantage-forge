@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/druid_001.png',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0.0042, -0.0584, -0.0166], rotate: [18.98, -0.98, 2.84] },
 
   build(k) {
     addPart(k, druidCap(), { pose: (s) => s.at(0, RIM, 0), bones: null });

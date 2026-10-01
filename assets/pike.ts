@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Pike (equipment/melee-weapons/pike), matched to docs/item-mockups/pike-mock.jpg.
@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/pike-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.9, 0], twoHanded: true },
 
   build(k) {
     k.body(

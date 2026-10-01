@@ -33,6 +33,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/iron-helmet-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'head', origin: [0, 0.2, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ shell

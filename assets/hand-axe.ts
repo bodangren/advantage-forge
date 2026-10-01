@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Hand axe (equipment/weapons/hand-axe), matched to docs/item-mockups/hand-axe-mock.jpg.
@@ -23,6 +23,7 @@ export default defineAsset({
   detail: 0.003,
   reference: 'docs/item-mockups/hand-axe-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.19, 0] },
 
   build(k) {
     const haft = sdf.smoothUnion(

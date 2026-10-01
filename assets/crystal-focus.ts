@@ -1,4 +1,4 @@
-import { defineAsset, profile, rgb, sdf, mixRgb } from '../src/index.js';
+import { HAND_FIT, defineAsset, profile, rgb, sdf, mixRgb } from '../src/index.js';
 
 /**
  * Crystal focus (equipment/magic-weapons/crystal-focus), matched to docs/item-mockups/crystal-focus-mock.jpg.
@@ -33,6 +33,7 @@ export default defineAsset({
   detail: 0.0025,
   reference: 'docs/item-mockups/crystal-focus-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.03, 0], offset: [-0.03, -0.02, 0.03] },
 
   build(k) {
     const base = sdf.smoothUnion(

@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/apprentice_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, BUTT_DROP, 0] },
 
   build(k) {
     addPart(k, apprenticeWand(), { pose: stand, bones: null });

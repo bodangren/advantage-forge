@@ -13,6 +13,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/shaman_001.jpg',
   texture: { size: 512 },
   variants: { cloth: { teal: '#4ab8b0', red: '#a83a32', violet: '#6a4a9e' } },
+  equip: { slot: 'head', origin: [0, -0.0895, 0] },
   build(k) {
     const part = shamanCap(k.tint);
     addPart(k, part, { pose: (s) => s.at(0, -0.0895, 0), bones: null });

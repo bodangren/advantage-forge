@@ -25,6 +25,12 @@ export interface EquipDeclaration {
   readonly slot: EquipSlot;
   /** Hand slots only: `grip` (default) or `shield` (offhand only). */
   readonly hold?: EquipHold;
+  /**
+   * `socket` (default): `origin` and `rotate` place the socket frame. `body`: they place the
+   * character axes at the socket point instead, for an item that is not a pointing item (a
+   * crossbow held level, a lantern that hangs, a book, a bow): it is worn as the asset shows it.
+   */
+  readonly frame?: 'socket' | 'body';
   /** Display size / worn size: 1 for hero parts, 2 for the 2x catalog armor, 1 / 0.45 for catalog weapons. Default 1. */
   readonly fitScale?: number;
   /**
@@ -113,9 +119,10 @@ export const SOCKETS = {
   'grip.R': { bone: 'knife.R', at: mirrorX(BASE_JOINTS['knife.L']!), turns: [['y', -90], ['x', 70]], scales: [1, HAND_FIT], hides: [] },
   'grip.L': { bone: 'knife.L', at: BASE_JOINTS['knife.L']!, turns: [['y', 90], ['x', 70]], scales: [1, HAND_FIT], hides: [] },
   // The hero shield hold (the knight base's shieldPose turn) on the outside of the lower forearm;
-  // the back plane is 5 cm in front of the fist center, so the fist stays behind the shield. On the
+  // the back plane is in front of and outside the fist, low enough that a 0.45 m shield clears the
+  // jaw and the ground. On the
   // hand bone, so that a clip can turn the shield away from the head with the wrist.
-  shield: { bone: 'hand.L', at: [0.2415, 0.276, 0.0816], turns: [['z', -4], ['x', 4], ['y', 38]], scales: [1, HAND_FIT], hides: [] },
+  shield: { bone: 'hand.L', at: [0.262, 0.25, 0.075], turns: [['z', -4], ['x', 4], ['y', 38]], scales: [1, HAND_FIT], hides: [] },
 } as const satisfies Record<string, Socket>;
 
 export type SocketName = keyof typeof SOCKETS;
@@ -170,6 +177,7 @@ export function validateEquip(eq: EquipDeclaration, bodies: readonly string[]): 
     if (!(socket.hides as readonly string[]).includes(h))
       throw new Error(`${where}: cannot hide '${h}'. This slot hides: ${socket.hides.join(', ') || 'nothing'}.`);
   if (eq.twoHanded && eq.slot !== 'mainhand') throw new Error(`${where}: only a mainhand piece is two-handed.`);
+  if (eq.frame !== undefined && eq.frame !== 'socket' && eq.frame !== 'body') throw new Error(`${where}: frame is 'socket' or 'body'.`);
   for (const name of eq.displayOnly ?? [])
     if (!bodies.includes(name)) throw new Error(`${where}: displayOnly names '${name}', which is not a body. Bodies: ${bodies.join(', ')}.`);
   if (bodies.length > 0 && bodies.every((b) => (eq.displayOnly ?? []).includes(b))) throw new Error(`${where}: every body is displayOnly.`);
@@ -198,7 +206,7 @@ export function wornMatrices(eq: EquipDeclaration): { bone: string; matrix: THRE
   const [dx, dy, dz] = eq.offset ?? [0, 0, 0];
   const w = new THREE.Matrix4()
     .makeTranslation(...socket.at)
-    .multiply(turnMatrix(socket.turns))
+    .multiply(turnMatrix(eq.frame === 'body' ? [] : socket.turns))
     .multiply(new THREE.Matrix4().makeTranslation(dx, dy, dz))
     .multiply(new THREE.Matrix4().makeScale(1 / f, 1 / f, 1 / f))
     .multiply(turnMatrix([['x', rx], ['y', ry], ['z', rz]]).invert())
@@ -310,7 +318,8 @@ async function wearPiece(k: AssetContext, piece: WornPiece): Promise<void> {
       const local = shape.transform(frame.elements);
       for (const [i, { bone, matrix, half }] of worn.entries()) {
         const cut = half ? local.intersect(halfSpace([-1, 0, 0], 0)) : local;
-        k.body(`${piece.name}:${name}${i > 0 ? '.R' : ''}`, cut.transform(matrix.elements), wornOptions(piece.def, options, f, bone, matrix));
+        const shape = cut.transform(matrix.elements);
+        k.body(`${piece.name}:${name}${i > 0 ? '.R' : ''}`, shape, wornOptions(piece.def, options, f, bone, matrix, shape));
       }
     },
     add() {
@@ -335,16 +344,23 @@ async function wearPiece(k: AssetContext, piece: WornPiece): Promise<void> {
   await piece.def.build(context(new THREE.Matrix4()));
 }
 
+/** The largest side of a shape's bounds (meters). */
+function wornExtent(shape: Sdf): number {
+  const b = shape.bounds;
+  return Math.max(b.max[0] - b.min[0], b.max[1] - b.min[1], b.max[2] - b.min[2]);
+}
+
 /** Body options of a worn piece body: sizes in meters shrink with the fit scale; a bump follows the piece. */
-function wornOptions(def: AssetDefinition, o: BodyOptions, f: number, bone: string, matrix: THREE.Matrix4): BodyOptions {
+function wornOptions(def: AssetDefinition, o: BodyOptions, f: number, bone: string, matrix: THREE.Matrix4, shape: Sdf): BodyOptions {
   const { bump, ...rest } = o;
   const inv = matrix.clone().invert();
   const p = new THREE.Vector3();
   return {
     ...rest,
     bone,
-    // The worn piece is smaller, so it needs finer cells; 3 mm keeps the review builds quick.
-    detail: Math.max(0.003, (o.detail ?? def.detail ?? 0.006) / f),
+    // The worn piece is smaller, so it needs finer cells; 3 mm keeps the review builds quick, and
+    // loose shape bounds (turned boxes grow) keep the grid under about 380 cells a side.
+    detail: Math.max(0.003, (o.detail ?? def.detail ?? 0.006) / f, wornExtent(shape) / 380),
     ...(o.maxError !== undefined ? { maxError: o.maxError / f } : {}),
     ...(bump ? { bump: (x: number, y: number, z: number) => bump(...p.set(x, y, z).applyMatrix4(inv).toArray()) / f } : {}),
   };

@@ -126,6 +126,7 @@ export default defineAsset({
   detail: 0.008,
   reference: 'docs/item-mockups/belt-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'waist', fitScale: 2, origin: [0, 0.035, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ leather loop

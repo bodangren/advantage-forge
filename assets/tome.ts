@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Spell tome (equipment/magic-weapons/tome), matched to docs/item-mockups/tome-mock.jpg.
@@ -23,6 +23,7 @@ export default defineAsset({
   detail: 0.003,
   reference: 'docs/item-mockups/tome-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'offhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.04, -0.12], rotate: [90, 0, 90] },
 
   build(k) {
     const board = (y: number) => sdf.box([W, 0.014, D], 0.006).at(0, y, 0);

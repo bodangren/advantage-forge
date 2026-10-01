@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — buckler (catalog `equipment/armor/buckler`).
@@ -41,6 +41,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/buckler-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'offhand', hold: 'shield', fitScale: HAND_FIT, origin: [0, 0.175, -0.02] },
 
   build(k) {
     // ------------------------------------------------------------------ iron face

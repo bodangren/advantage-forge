@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Crystal wand (equipment/weapons/wand), matched to docs/item-mockups/wand-mock.jpg.
@@ -36,6 +36,7 @@ export default defineAsset({
   detail: 0.0025,
   reference: 'docs/item-mockups/wand-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.1, 0] },
 
   build(k) {
     // Shaft: a gently wandering chain with a spiral groove.

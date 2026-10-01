@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/paladin_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, -BOTTOM_Y, 0] },
 
   build(k) {
     addPart(k, paladinHammer(), { pose: (s) => s.at(0, -BOTTOM_Y, 0), bones: null });

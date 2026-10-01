@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — round wooden shield (equipment/armor/round-shield).
@@ -45,6 +45,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/round-shield-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'offhand', hold: 'shield', fitScale: HAND_FIT, origin: [0, 0.3, -0.04] },
 
   build(k) {
     // ------------------------------------------------------------------ wooden disc

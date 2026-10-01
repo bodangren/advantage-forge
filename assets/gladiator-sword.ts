@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/gladiator_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.068, 0] },
 
   build(k) {
     addPart(k, gladiatorSword(), { pose: (s) => s.rotateZ(180).at(0, 0.068, 0), bones: null });

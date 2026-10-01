@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/duelist_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.075, 0] },
   build(k) {
     // Local +Z (blade) becomes +Y; the pommel bottom (z = -0.075) rests on y = 0.
     addPart(k, duelistRapier(), { pose: (s) => s.rotateX(-90).at(0, 0.075, 0), bones: null });

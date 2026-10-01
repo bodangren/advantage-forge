@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — katana (equipment/melee-weapons/katana).
@@ -153,6 +153,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/katana-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.169, 0] },
 
   build(k) {
     // --------------------------------------------------------------- blade

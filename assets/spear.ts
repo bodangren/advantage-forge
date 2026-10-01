@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 // Design note — spear (equipment/weapons/spear).
 //
@@ -21,6 +21,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/spear-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.6, 0] },
 
   build(k) {
     const shaft = sdf

@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — warhammer (equipment/melee-weapons/warhammer).
@@ -180,6 +180,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/warhammer-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.133, 0] },
 
   build(k) {
     // ============================================================== iron head

@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/shield-maiden_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, 0.086, 0] },
 
   build(k) {
     addPart(k, shieldMaidenHelm(), { pose: (s) => s.at(0, 0.086, 0), bones: null });

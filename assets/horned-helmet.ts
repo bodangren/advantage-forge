@@ -39,6 +39,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/horned-helmet-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'head', origin: [0, 0.15, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ shell

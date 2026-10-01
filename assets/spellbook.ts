@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
 
 /**
  * Design note
@@ -27,6 +27,7 @@ export default defineAsset({
   description: 'Thick closed spellbook with a purple leather cover, gold corner caps and clasp, a glowing rune, and cream page edges.',
   detail: 0.006,
   reference: 'docs/item-mockups/spellbook-mock.jpg',
+  equip: { slot: 'offhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.05, -0.08], rotate: [90, 0, 90] },
 
   build(k) {
     // ------------------------------------------------------------------ pages: cream block, inset from the cover

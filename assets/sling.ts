@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Sling (equipment/ranged-weapons/sling), matched to docs/item-mockups/sling-mock.jpg.
@@ -14,6 +14,7 @@ export default defineAsset({
   detail: 0.007,
   reference: 'docs/item-mockups/sling-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.53, 0] },
 
   build(k) {
     const pouch = sdf

@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Spiked wooden club (equipment/weapons/club), matched to docs/item-mockups/club-mock.jpg.
@@ -24,6 +24,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/club-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.62, 0], rotate: [0, 0, 180] },
 
   build(k) {
     // Head: a rounded, slightly swollen block with a lumpy hand-carved surface.

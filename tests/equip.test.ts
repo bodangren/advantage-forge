@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import avatarBase from '../assets/avatar-base.js';
 import { buildAsset, collectBodies, defineAsset } from '../src/asset.js';
 import { BASE_JOINTS, HAND_FIT, SOCKETS, jointOf, resolveEquip, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
+import { checkEquip } from '../src/equip-check.js';
 import { toGlb } from '../src/gltf.js';
 import { sdf } from '../src/index.js';
 
@@ -86,6 +87,15 @@ describe('equipment declaration', () => {
     expect(up.z).toBeCloseTo(0, 5);
   });
 
+  it('places a body-frame item with the character axes at the socket point', () => {
+    // A crossbow held level: its +Z (the front) stays forward and its +Y up.
+    const bow = resolveEquip({ slot: 'mainhand', frame: 'body', origin: [0, 0.05, -0.07] });
+    const grip = attached(bow.attach[0]!, [0, 0.05, -0.07]);
+    expect(grip.distanceTo(new THREE.Vector3(...SOCKETS['grip.R'].at))).toBeLessThan(1e-6);
+    const front = attached(bow.attach[0]!, [0, 0.05, 0.93]).sub(grip);
+    expect(front.z).toBeCloseTo(1, 5);
+  });
+
   it('mirrors a pair onto the right bone and keeps the left half', () => {
     const boots = resolveEquip({ slot: 'feet', fitScale: 2, origin: [0.07, 0.12, 0] });
     expect(boots.attach.map((a) => [a.bone, a.half])).toEqual([
@@ -139,5 +149,39 @@ describe('equipment declaration', () => {
     const worn = pending[1]!.shape;
     expect(worn.dist(0, 0.675 + 0.22, 0)).toBeLessThan(0.002);
     expect(worn.dist(0, 0.2 + 0.22, 0)).toBeGreaterThan(0.1);
+  });
+
+  it('counts a show-through point for the outer base layer only', async () => {
+    // A base head with hair over the top, and a cap that is too small: it sinks into the skull.
+    const base = defineAsset({
+      name: 'test-head',
+      detail: 0.012,
+      texture: false,
+      build(k) {
+        k.skeleton({ hips: { at: [0, 0.2, 0] }, head: { parent: 'hips', at: [0, 0.48, -0.01] } });
+        k.body('skin', sdf.sphere(0.2).at(0, 0.675, 0).bone('head'));
+        k.body('hair', sdf.sphere(0.22).at(0, 0.675, 0).intersect(sdf.box([1, 0.3, 1]).at(0, 0.85, 0)), { bone: 'head' });
+      },
+    });
+    const small = (hides: 'hair'[]) =>
+      defineAsset({
+        name: 'test-small-cap',
+        detail: 0.012,
+        texture: false,
+        equip: { slot: 'head', hides },
+        build(k) {
+          k.body('cap', sdf.sphere(0.192).subtract(sdf.sphere(0.18)).intersect(sdf.box([1, 0.2, 1]).at(0, 0.15, 0)));
+        },
+      });
+    // Under the hair, the hair is the outer layer: a note, not a failure.
+    const kept = await checkEquip({ name: 'test-small-cap', def: small([]) }, base);
+    const contact = (r: typeof kept, name: string) => r.contacts.find((c) => c.base === name)!;
+    expect(contact(kept, 'skin').shows).toBe(0);
+    expect(contact(kept, 'hair').shows).toBeGreaterThan(0);
+    expect(kept.ok).toBe(true);
+    // With the hair hidden, the skull shows through the cap.
+    const bald = await checkEquip({ name: 'test-small-cap', def: small(['hair']) }, base);
+    expect(contact(bald, 'skin').fails).toBe(true);
+    expect(bald.ok).toBe(false);
   });
 });

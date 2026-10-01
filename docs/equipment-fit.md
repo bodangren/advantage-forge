@@ -69,6 +69,45 @@ not fit:
 | cape | The shirt comes through the cape, the cape hangs in front of the legs, and the hem goes 3 cm below the ground. |
 
 These pilot pieces pass: knight-helm, rogue-hood, shoulder-armor, fighter-sword, warrior-sword,
-wizard-staff, dragoon-lance, and captain-shield. guardian-shield (a tower shield) touches the head
-at rest; it needs its own `offset` and `rotate`, as the guardian holds it far out.
+wizard-staff, dragoon-lance, and captain-shield.
+
+### Every phase 1 piece (2026-10-01)
+
+138 assets have an `equip` block: every phase 1 row of `docs/avatar-catalog.tsv` except gloves and
+gauntlets. 122 pass `forge check`. The 10 pieces of the audit above were resized to the contract
+on 2026-09-29; on the avatar, circlet, crown, leather-cap, leather-armor (worn at 1x), and
+cloth-hood pass and read well in the worn render. The catalog marks the passing pieces `ready`
+and these 16 pieces `rework`:
+
+| Piece | Finding on the avatar base |
+| --- | --- |
+| iron-helmet | The bowl reaches down to the chin, and the cheek guards cover the eyes. The brow band also makes a hidden ring inside the cavity (the shell of an open profile wraps its closing chord); worn, the ring is in the head. |
+| horned-helmet | The same hidden ring in the cavity. The fit is otherwise good. |
+| steel-helmet | It passes the check, but the face guard covers the eyes (render review). |
+| belt | The shirt comes through the back of the belt (at the spine, up to 5.3 cm). |
+| chainmail | The upper arms come through the shoulders (214 points). |
+| plate-armor | The upper arms cut through the gold arm cuffs under the pauldrons (119 points). |
+| bracers | Inside the forearm: the wrist radius at 1x is 0.025 m, and the base forearm is 0.032 m. |
+| boots | Inside the shin and the foot: the shaft radius at 1x is 0.026 m. |
+| greaves | Too tall: the tops go into the hips, and the shirt and the pants come through. |
+| cape | The shirt comes through the cape, and the hem goes 3 cm below the ground. |
+| cloak | It sits inside the body: the hips, the shirt, and the pants come through below the waist. |
+| mantle | It sits inside the torso: only the hem trim shows. |
+| guardian-shield | 0.70 m tall at fit scale 1: 14 cm below the ground at rest, and in the jaw in walk and run. It needs an avatar size. |
+| enchanter-scroll | 0.64 m tall with the flame: 13 cm below the ground, and the sparks go into the head in run and cast. |
+| gloves, gauntlets | No block: the base has fists, and the gauntlets model a right hand at +X (a pair keeps the +X half). They need a closed-fist shape. |
+
+The 4 hair styles stay `planned`. Three of them fail on the skin at the jaw, where the side locks
+go into the cheeks as on the base hair. The capped hair task gives them their own slot rule.
+
+Placement rules that the rollout found:
+
+- Bows use the socket frame, the limbs forward and 20 degrees up. Held upright in the character
+  frame, a longbow goes below the ground and into the head.
+- The heavy crossbow, the whip, and the sling use the socket frame, so the attack clip sweeps them
+  as it sweeps a sword.
+- Books are carried at the side, the cover outward (`rotate: [0, -90, 0]`), 4 to 6 cm outside the
+  fist. An orb and the crystal focus sit 3 to 4 cm outside and in front of the fist.
+- The shield socket point is 2 cm farther outward and 2.6 cm lower than in the pilot, so the
+  tower shield clears the jaw and the ground.
 

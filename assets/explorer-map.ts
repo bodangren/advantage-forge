@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/hero-mockups/explorer_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, 0.0445, -0.045] },
   build(k) {
     addPart(k, explorerMap(), { pose: (s) => s.at(0, 0.0445, -0.045), bones: null });
   },

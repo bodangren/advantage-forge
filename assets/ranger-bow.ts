@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/ranger_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.223, 0], twoHanded: true },
 
   build(k) {
     // Keep the bow's curve in the XY plane, so the front view shows the full arc and the string;

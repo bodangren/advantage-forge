@@ -17,6 +17,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/bard_001.jpg',
   variants: { clothing: { teal: '#3d8479', plum: '#74405f', mustard: '#a3842f' } },
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [-0.0098, -0.1195, -0.0265], rotate: [14.97, 1.03, -3.86] },
 
   build(k) {
     addPart(k, bardHat(k.tint), { pose: (s) => s.at(0, 0.018, 0), bones: null });

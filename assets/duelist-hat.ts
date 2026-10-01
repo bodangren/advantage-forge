@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/duelist_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, -0.0556, -0.0085], rotate: [8, 0, 0] },
   build(k) {
     // The brim's lowest edge touches the ground.
     addPart(k, duelistHat(), { pose: (s) => s.at(0, 0.0412, 0), bones: null });

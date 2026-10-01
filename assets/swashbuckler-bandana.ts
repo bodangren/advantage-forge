@@ -12,6 +12,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/swashbuckler_001.jpg',
   texture: { size: 512 },
   variants: { clothing: { red: '#c93a32', blue: '#2f58b8', green: '#2e7a3c' } },
+  equip: { slot: 'head', origin: [0, 0.026, 0] },
   build(k) {
     addPart(k, swashbucklerBandana(k.tint), { pose: (s) => s.at(0, 0.026, 0), bones: null });
   },

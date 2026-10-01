@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Javelin (equipment/ranged-weapons/javelin), matched to docs/item-mockups/javelin-mock.jpg.
@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/javelin-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.55, 0] },
 
   build(k) {
     const shaft = sdf.capsule([0, 0.1, 0], [0, 1.0, 0], 0.03);

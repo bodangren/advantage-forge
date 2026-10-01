@@ -49,6 +49,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/studded-leather-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
 
   build(k) {
     const cut = sdf.box([0.06, 0.8, 0.5], 0.008).at(0, 0.3, 0.25);

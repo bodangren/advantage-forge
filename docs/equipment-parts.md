@@ -145,6 +145,7 @@ equip: {
   slot: 'head',           // head, chest, shoulders, back, hands, waist, feet, mainhand, offhand
   hold: 'shield',         // offhand only: a shield on the hand; default 'grip' (in the fist)
   fitScale: 2,            // display size / worn size: 1 (hero parts), 2 (2x catalog armor), HAND_FIT (catalog weapons, 1 / 0.45)
+  frame: 'body',          // hand slots: keep the character axes at the socket point (default 'socket')
   origin: [0, LIFT, 0],   // where the socket frame stands in the asset (display meters)
   rotate: [-20, 0, 0],    // how the socket frame is turned in the asset (degrees, X then Y then Z)
   offset: [0, 0.01, 0],   // a small shift in worn meters, in the socket frame
@@ -158,6 +159,19 @@ For the standalone of a part, `origin` and `rotate` are the move and the turn of
 `addPart(k, part, { pose: (s) => s.rotateX(-20).at(0, LIFT, 0) })` gives `origin: [0, LIFT, 0]`
 and `rotate: [-20, 0, 0]`. A hand-held standalone that stands upright, with the business end up and
 the flat toward +Z, needs only the height of its grip center: `origin: [0, GRIP_Y, 0]`.
+
+Rules for held items:
+
+- A shield has the center of its back plane at the origin and its face toward +Z.
+- A bow uses the socket frame: the grip at the origin, the limbs along +Y. Held, the limbs point
+  forward and 20 degrees up, and the bow plane is upright. A bow that curves toward +Z (the stave
+  in the YZ plane) needs `rotate: [0, -90, 0]`.
+- `frame: 'body'` keeps the character axes of the asset at the socket point. Use it for an item
+  that the hand holds level and the clips must not tip: a crossbow, a book, an orb, a lantern, a
+  sling. The socket turn does not apply; `rotate` still undoes the turn of the rest pose.
+- A worn piece meshes at its display `detail` divided by the fit scale, but never finer than 3 mm
+  or than 1/380 of its largest worn size. A tall catalog shield at `HAND_FIT` stays within the
+  grid limit for this reason.
 
 ### Sockets
 
@@ -175,14 +189,16 @@ rotation, so the socket axes are the character axes unless the table gives a tur
 | `feet` | feet | `shin.L` | (0.098, 0.07, 0), the left ankle | character axes | the +X half, mirrored onto `shin.R` |
 | `grip.R` | mainhand | `knife.R` | (-0.232, 0.172, 0.022), the grip center in the right fist | the business end (+Y) forward and 20 degrees up; the flat (+Z) outward | none |
 | `grip.L` | offhand | `knife.L` | (0.232, 0.172, 0.022) | the mirror of `grip.R` | none |
-| `shield` | offhand, `hold: 'shield'` | `hand.L` | (0.2415, 0.276, 0.0816), outside the lower forearm | the hero shield turn (Z -4, X 4, Y 38): the face forward and outward | none |
+| `shield` | offhand, `hold: 'shield'` | `hand.L` | (0.262, 0.25, 0.075), in front of and outside the left fist | the hero shield turn (Z -4, X 4, Y 38): the face forward and outward | none |
 
 - The fit scales that the contract allows: head 1; chest, shoulders, back, hands, waist, and feet 2
   or 1; mainhand and offhand 1 or `HAND_FIT` (1 / 0.45).
 - A pair (boots, gloves, bracers) shows both pieces. `origin` and `rotate` describe the piece at
   +X (the left one). The worn piece keeps the +X half of the asset (x >= 0 in the asset frame) on the
   left bone and its mirror on the right bone (`half: '+x'`, scale x negative in `forgeEquip`).
-- The shield socket is on the hand bone, so that a clip can turn the shield with the wrist.
+- The shield socket is on the hand bone, so that a clip can turn the shield with the wrist. The
+  socket point is low and outside the fist: a 0.47 m shield (the tower shield at `HAND_FIT`) clears
+  the ground by 1.5 cm and the jaw by 3 cm.
 
 ### Rigid and skinned parts
 
@@ -192,8 +208,9 @@ rotation, so the socket axes are the character axes unless the table gives a tur
 - A skinned piece (robe, skirt, a cape that bends) comes later. It will take the skin weights of the
   base body under it, from the `.bone()` tags, in place of one bone.
 - The base clips turn the wrists with `motion.orient`, so a held item keeps a safe direction: it
-  stays steady in walk and run, sweeps flat in the attack, rises up and outward with its flat
-  outward in cheer, and points ahead in cast. A held piece needs no clip of its own.
+  keeps its rest direction in idle, walk, run, hit, rest, and the shield arm of the attack, sweeps
+  flat in the attack, rises up and outward with its flat outward in cheer, and points ahead in
+  cast. A held piece needs no clip of its own.
 
 ### Fit check
 

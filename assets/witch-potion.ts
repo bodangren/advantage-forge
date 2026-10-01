@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/enemy-mockups/witch_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, 0.05, 0] },
 
   build(k) {
     addPart(k, witchPotion([0, 0.05, 0]), { pose: (s) => s, bones: null });

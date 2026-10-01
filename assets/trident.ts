@@ -1,4 +1,4 @@
-import { defineAsset, noise, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, sdf } from '../src/index.js';
 
 /**
  * Trident, 1.6 m tall, standing on y = 0, centred on the Y axis, prongs up (+Y).
@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/trident-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.17, 0] },
 
   build(k) {
     // ------------------------------------------------------------- wood pole

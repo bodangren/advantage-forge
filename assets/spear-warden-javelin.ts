@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/spear-warden_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.2, 0] },
 
   build(k) {
     addPart(k, spearWardenJavelin(), { pose: (s) => s.at(0, 0.0115, 0), bones: null });

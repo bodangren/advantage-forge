@@ -18,6 +18,7 @@ export default defineAsset({
   variants: {
     metal: { brass: '#9a7a36', iron: '#5a5a60', copper: '#9a5a3a' },
   },
+  equip: { slot: 'mainhand', origin: [0, 0.265, 0], twoHanded: true },
 
   build(k) {
     // Local frame: the pole runs from -0.26 (the butt) up; the blade flat already faces +Z.

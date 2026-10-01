@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/fighter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, 0.133, 0.02] },
 
   build(k) {
     addPart(k, fighterBuckler(), { pose: (s) => s.at(0, 0.133, 0), bones: null });

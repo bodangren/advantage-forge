@@ -10,7 +10,10 @@ import { meshSdf } from './sdf/mesher.js';
  * stays visible (skin, pants, and the hair, undershirt, and shoes unless the piece hides them).
  *
  * - Shows through: a point of the piece's outer surface (its normal faces away from the base body)
- *   is inside a base body, so the base body shows through the piece there. Skin and clothes fail
+ *   is inside a base body, so the base body shows through the piece there. A point inside two base
+ *   bodies counts for the outer one (the deeper inside, as hair over the skull): only the outer
+ *   layer shows. A point inside another body of the piece (a horn root in the helmet shell) is not
+ *   on the visible surface and does not count. Skin and clothes fail
  *   the check above 2% of the piece's points; hair is reported (the capped hair styles of the
  *   avatar track fix it). The report names the base bone and the mean point of each group.
  * - Hidden contact: the piece's inner surface goes into a base body. It does not show; reported.
@@ -129,7 +132,8 @@ export async function checkEquip(piece: WornPiece, base: AssetDefinition, option
     return bone;
   };
 
-  // The piece's surface points and normals, at most about 3000 per body.
+  // The piece's surface points and normals, at most about 3000 per body. A point buried in another
+  // body of the piece is not on its visible surface; it counts for the floor and the bounds only.
   const pts: number[] = [];
   const nrm: number[] = [];
   let first: { min: number[]; max: number[] } | null = null;
@@ -149,6 +153,7 @@ export async function checkEquip(piece: WornPiece, base: AssetDefinition, option
         }
       }
       if (i % stride !== 0) continue;
+      if (pieceBodies.some((o) => o !== b && o.shape.dist(p[0]!, p[1]!, p[2]!) < -tol)) continue;
       pts.push(...p);
       nrm.push(mesh.normals[i * 3]!, mesh.normals[i * 3 + 1]!, mesh.normals[i * 3 + 2]!);
     }
@@ -172,6 +177,8 @@ export async function checkEquip(piece: WornPiece, base: AssetDefinition, option
       if (!dist) continue;
       const d = dist(x, y, z);
       if (d >= -tol) continue;
+      // Another base body that is deeper here covers this one (hair over the skull, a shirt over the skin).
+      if (measured.some((o) => o.body !== body && o.dist !== null && o.dist(x, y, z) < d)) continue;
       // Does the piece surface here face the way the base surface faces (its outer side)?
       const gx = dist(x + h, y, z) - dist(x - h, y, z);
       const gy = dist(x, y + h, z) - dist(x, y - h, z);

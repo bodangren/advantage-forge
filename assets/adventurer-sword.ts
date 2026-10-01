@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/adventurer_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.103, 0] },
 
   build(k) {
     addPart(k, adventurerSword(), { pose: (s) => s.rotateZ(180).at(0, 0.103, 0), bones: null });

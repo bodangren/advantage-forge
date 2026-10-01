@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/greaves-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'feet', fitScale: 2, origin: [X, 0.14, 0], hides: ['shoes'] },
 
   build(k) {
     const sleeve = sdf.cone([0, 0.06, 0], [0, 0.5, 0], 0.11, 0.12);

@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 /**
  * Tower shield (catalog: equipment/armor/tower-shield), 1.0 m tall, standing on its bottom
@@ -71,6 +71,7 @@ export default defineAsset({
   reference: 'docs/item-mockups/tower-shield-mock.jpg',
   detail: 0.005,
   texture: { size: 1024 },
+  equip: { slot: 'offhand', hold: 'shield', fitScale: HAND_FIT, origin: [0, 0.5, -0.1] },
 
   build(k) {
     const outer = profile.polygon(towerOutline());

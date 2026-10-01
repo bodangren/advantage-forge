@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Long sword (common shop version), about 1.0 m, standing on its round pommel with the blade up
@@ -42,6 +42,7 @@ export default defineAsset({
   reference: 'docs/item-mockups/long-sword-mock.jpg',
   detail: 0.004,
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.115, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ blade

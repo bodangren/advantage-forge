@@ -11,6 +11,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/spear-warden_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.35, 0], twoHanded: true },
 
   build(k) {
     addPart(k, spearWardenSpear(), { pose: (s) => s.at(0, 0.0165, 0), bones: null });

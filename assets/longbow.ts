@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Longbow, 1.3 m, standing on its lower tip at y = 0. The stave bows toward +Z; the
@@ -45,6 +45,7 @@ export default defineAsset({
   reference: 'docs/item-mockups/longbow-mock.jpg',
   detail: 0.006,
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.65, 0.058], rotate: [0, -90, 0], twoHanded: true },
 
   build(k) {
     // ------------------------------------------------------------------ walnut stave

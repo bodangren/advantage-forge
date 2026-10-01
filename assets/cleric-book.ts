@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/cleric_001.png',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, HALF_H, 0], rotate: [0, -90, 0], offset: [0.04, -0.02, 0] },
 
   build(k) {
     const stand = (s: sdf.Shape) => s.at(0, HALF_H, 0);

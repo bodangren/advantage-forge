@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 /**
  * Glaive, 1.6 m tall, standing on its brass butt on y = 0, centered on the Y axis, facing +Z.
@@ -15,6 +15,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/glaive-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.5, 0], twoHanded: true },
 
   build(k) {
     const pole = sdf.capsule([0, 0.05, 0], [0, 1.15, 0], 0.032);

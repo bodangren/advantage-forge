@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
 
 /**
  * Design note — magic orb on a stand (equipment/magic-weapons/orb).
@@ -61,6 +61,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/item-mockups/orb-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'offhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.06, 0], offset: [0.04, -0.02, 0.03] },
 
   build(k) {
     // ------------------------------------------------------------------ wooden base

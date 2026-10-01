@@ -18,6 +18,7 @@ export default defineAsset({
   variants: {
     plate: { blue: '#4a5a7a', black: '#2a2d36', crimson: '#8a2e3a' },
   },
+  equip: { slot: 'head', origin: [0, -RIM_Y, 0] },
 
   build(k) {
     addPart(k, dragoonHelm(k.tint), { pose: (s) => s.at(0, -RIM_Y, 0), bones: null });

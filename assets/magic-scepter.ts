@@ -1,4 +1,4 @@
-import { defineAsset, profile, rgb, sdf, mixRgb } from '../src/index.js';
+import { HAND_FIT, defineAsset, profile, rgb, sdf, mixRgb } from '../src/index.js';
 
 /**
  * Magic scepter (equipment/magic-weapons/magic-scepter), matched to docs/item-mockups/magic-scepter-mock.jpg.
@@ -16,6 +16,7 @@ export default defineAsset({
   detail: 0.0025,
   reference: 'docs/item-mockups/magic-scepter-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.15, 0] },
 
   build(k) {
     const ribs = (y: number) => Math.pow(0.5 + 0.5 * Math.cos(y * 260), 6);

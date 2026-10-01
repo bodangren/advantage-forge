@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 /**
  * Falchion (equipment/melee-weapons/falchion), 0.8 m, standing on its pommel with the blade up
@@ -27,6 +27,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/item-mockups/falchion-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.137, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ blade

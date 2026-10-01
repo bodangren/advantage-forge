@@ -12,6 +12,7 @@ export default defineAsset({
   reference: 'docs/enemy-mockups/witch_001.jpg',
   variants: { band: { purple: '#7a3aa0', red: '#a83a30', green: '#3a8a3a' } },
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0.0122, 0.0097, -0.0099], rotate: [17.74, -3.08, 9.52] },
 
   build(k) {
     addPart(k, witchHat(k.tint), { pose: (s) => s.at(0, 0.079, 0), bones: null });

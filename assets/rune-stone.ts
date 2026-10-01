@@ -1,4 +1,4 @@
-import { defineAsset, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Rune stone (equipment/magic-weapons/rune-stone), matched to docs/item-mockups/rune-stone-mock.jpg.
@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/item-mockups/rune-stone-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.24, 0] },
 
   build(k) {
     let body = sdf.ellipsoid([0.21, 0.26, 0.19]);

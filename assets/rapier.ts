@@ -1,4 +1,4 @@
-import { defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 /**
  * Rapier, 1.0 m, standing on its pommel with the blade up (+Y), flat of the blade facing +Z.
@@ -27,6 +27,7 @@ export default defineAsset({
   detail: 0.003,
   reference: 'docs/item-mockups/rapier-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.15, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ blade

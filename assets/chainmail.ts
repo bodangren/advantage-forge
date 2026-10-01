@@ -72,6 +72,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/chainmail-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
 
   build(k) {
     // ------------------------------------------------------------- mail shirt (iron)

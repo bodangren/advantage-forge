@@ -61,6 +61,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/crown-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'head', origin: [0, -0.075, 0] },
 
   build(k) {
     // Angle 0 is the front (+Z); positive angles swing toward +X (the crown's left).

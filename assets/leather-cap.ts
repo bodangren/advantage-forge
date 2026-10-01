@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/leather-cap-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'head', origin: [0, -0.06, 0] },
 
   build(k) {
     const dome = sdf.ellipsoid([0.115, 0.09, 0.12]);

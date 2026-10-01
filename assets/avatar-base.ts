@@ -293,6 +293,8 @@ export default defineAsset({
         'upperarm.R': { rotate: [2 * wave(p, 1, 0.1), 0, -3 * bump(p)] },
         'forearm.L': { rotate: [-5 * bump(p), 0, 0] },
         'forearm.R': { rotate: [-5 * bump(p), 0, 0] },
+        'hand.L': { rotate: steady(armL, [2 * wave(p, 1, 0.1), 0, 3 * bump(p)], [-5 * bump(p), 0, 0]) },
+        'hand.R': { rotate: steady(armR, [2 * wave(p, 1, 0.1), 0, -3 * bump(p)], [-5 * bump(p), 0, 0]) },
       }),
     });
 
@@ -360,6 +362,8 @@ export default defineAsset({
     };
     /** The rest aim of a right-hand item: forward and 20 degrees up, the flat outward. */
     const AIM_REST = { dir: ITEM_DIR, up: [-1, 0, 0] as V3 };
+    /** The wrist turn that keeps a held item (a shield) as it is at rest while the arm moves. */
+    const steady = (arm: typeof armR, upper: V3, lower: V3) => orient([upper, lower], arm.item, { dir: arm.m(AIM_REST.dir), up: arm.m(AIM_REST.up) });
     const armR = armRig(-1);
     const armL = armRig(1);
     // A crouch with the feet planted: the thigh swings forward by `a`, the shin back by 2a, and the
@@ -432,6 +436,7 @@ export default defineAsset({
           ...armR.pose(wrist, pole, { dir, up }),
           'upperarm.L': { rotate: [-12 * balance, 0, 14 * balance] },
           'forearm.L': { rotate: [-20 * balance, 0, 0] },
+          'hand.L': { rotate: steady(armL, [-12 * balance, 0, 14 * balance], [-20 * balance, 0, 0]) },
           'leg.L': { rotate: [0, -turn, 0] },
           'leg.R': { rotate: [0, -turn, 0] },
         };
@@ -462,6 +467,8 @@ export default defineAsset({
           'forearm.L': { rotate: [-16 * h, 0, 0] },
           'upperarm.R': { rotate: [-8 * h, 0, -14 * h] },
           'forearm.R': { rotate: [-12 * h, 0, 0] },
+          'hand.L': { rotate: steady(armL, [-12 * h, 0, 16 * h], [-16 * h, 0, 0]) },
+          'hand.R': { rotate: steady(armR, [-8 * h, 0, -14 * h], [-12 * h, 0, 0]) },
           'leg.L': { rotate: [-lean, 0, 0] },
           'leg.R': { rotate: [lean + 8 * lift, 0, 0] },
           'foot.L': { rotate: [lean, 0, 0] },
@@ -490,6 +497,8 @@ export default defineAsset({
           'upperarm.R': { rotate: [-14 - 3 * breath, 0, -4] },
           'forearm.L': { rotate: [-18, 0, 0] },
           'forearm.R': { rotate: [-18, 0, 0] },
+          'hand.L': { rotate: steady(armL, [-14 - 3 * breath, 0, 4], [-18, 0, 0]) },
+          'hand.R': { rotate: steady(armR, [-14 - 3 * breath, 0, -4], [-18, 0, 0]) },
         };
       },
     });

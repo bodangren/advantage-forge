@@ -13,6 +13,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/enemy-mockups/witch_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.364, 0] },
 
   build(k) {
     addPart(k, witchBroom(rest), { pose: (s) => s, bones: null });

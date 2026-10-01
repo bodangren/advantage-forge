@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/adventurer_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, 0.12, 0] },
 
   build(k) {
     addPart(k, adventurerMap(), { pose: (s) => s.at(0, 0.12, 0), bones: null });

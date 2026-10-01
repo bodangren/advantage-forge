@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Halberd (equipment/melee-weapons/halberd), matched to docs/item-mockups/halberd-mock.jpg.
@@ -24,6 +24,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/halberd-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.8, 0], twoHanded: true },
 
   build(k) {
     const pole = sdf.cylinder(0.024, 1.5, 0.006).at(0, 0.8, 0);

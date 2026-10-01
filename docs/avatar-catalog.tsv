@@ -1,78 +1,78 @@
 id	slot	tier	two_handed	status	override	triangles	rating	price
-cloth-hood	head	1	0	rework		2894		45
-leather-cap	head	1	0	rework		7876	7.1	50
-circlet	head	2	0	rework		4886		90
+cloth-hood	head	1	0	ready		2894		45
+leather-cap	head	1	0	ready		7876	7.1	50
+circlet	head	2	0	ready		4886		90
 horned-helmet	head	2	0	rework		3850		90
 iron-helmet	head	2	0	rework		5200		95
 steel-helmet	head	2	0	rework		4834	7	95
-crown	head	3	0	rework		4696	7.1	190
-leather-armor	chest	1	0	rework		7326		60
-studded-leather	chest	1	0	planned		5100	7	65
+crown	head	3	0	ready		4696	7.1	190
+leather-armor	chest	1	0	ready		7326		60
+studded-leather	chest	1	0	ready		5100	7	65
 chainmail	chest	2	0	rework		5340		120
-scale-armor	chest	2	0	planned		6700	7.3	130
-plate-armor	chest	3	0	planned		6692	7.5	260
+scale-armor	chest	2	0	ready		6700	7.3	130
+plate-armor	chest	3	0	rework		6692	7.5	260
 cloth-robe	robe	1	0	later		4600	7	60
 mage-robe	robe	2	0	later		4898		110
-shoulder-armor	shoulders	2	0	planned		18914	7.1	85
-cape	back	1	0	planned		3340		35
-cloak	back	2	0	planned		3698	7.1	70
-mantle	back	2	0	planned		3492	7	70
-bracers	hands	1	0	planned		2424	7	20
-gloves	hands	1	0	planned		4700	7.3	25
-gauntlets	hands	2	0	planned		7739	6.3	50
+shoulder-armor	shoulders	2	0	ready		18914	7.1	85
+cape	back	1	0	rework		3340		35
+cloak	back	2	0	rework		3698	7.1	70
+mantle	back	2	0	rework		3492	7	70
+bracers	hands	1	0	rework		2424	7	20
+gloves	hands	1	0	rework		4700	7.3	25
+gauntlets	hands	2	0	rework		7739	6.3	50
 belt	waist	1	0	rework		2324		20
-boots	feet	1	0	planned		2770	7.1	25
-greaves	feet	2	0	planned		3350	7.1	50
-buckler	offhand	1	0	planned		2910		45
-lantern-handheld	offhand	1	0	planned		3934		45
-round-shield	offhand	1	0	planned		5414		50
-kite-shield	offhand	2	0	planned		4960		90
-orb	offhand	2	0	planned		2850		90
-spellbook	offhand	2	0	planned		2242		80
-tome	offhand	2	0	planned		2260		80
-grimoire	offhand	3	0	planned		10092	7.4	225
-tower-shield	offhand	3	0	planned		4628		175
-axe	mainhand	1	0	planned		3448		55
-club	mainhand	1	0	planned		12886	7.1	70
-dagger	mainhand	1	0	planned		2656		55
-hand-axe	mainhand	1	0	planned		2514		55
-javelin	mainhand	1	0	planned		3448	7	60
-mace	mainhand	1	0	planned		2440		50
-quarterstaff	mainhand	1	1	planned		1586		50
-short-sword	mainhand	1	0	planned		2640		55
-shortbow	mainhand	1	1	planned		4140	7	60
-sickle	mainhand	1	0	planned		5542	7	65
-sling	mainhand	1	0	planned		8258	7.3	70
-spear	mainhand	1	0	planned		3612	7.4	60
-throwing-axe	mainhand	1	0	planned		6350	7.4	65
-throwing-knife	mainhand	1	0	planned		1300		50
-wand	mainhand	1	0	planned		3416		55
-whip	mainhand	1	0	planned		2950		55
-battle-axe	mainhand	2	0	planned		3400		110
-crossbow	mainhand	2	1	planned		4414		110
-crystal-focus	mainhand	2	0	planned		5298		120
-falchion	mainhand	2	0	planned		1390		100
-flail	mainhand	2	0	planned		2900		110
-katana	mainhand	2	0	planned		2112		100
-long-sword	mainhand	2	0	planned		4520	7	120
-longbow	mainhand	2	1	planned		3564		110
-morningstar	mainhand	2	0	planned		2638		110
-rapier	mainhand	2	0	planned		1584		100
-ritual-dagger	mainhand	2	0	planned		1490		100
-rune-stone	mainhand	2	0	planned		3504	7	120
-scimitar	mainhand	2	0	planned		2680		110
-staff	mainhand	2	1	planned		5568	7.2	130
-trident	mainhand	2	0	planned		2848		110
-warhammer	mainhand	2	0	planned		2580		110
-glaive	mainhand	3	1	planned		4358	7.1	240
-great-axe	mainhand	3	1	planned		9216		260
-greatsword	mainhand	3	1	planned		3900		220
-halberd	mainhand	3	1	planned		12158	6.5	260
-heavy-crossbow	mainhand	3	1	planned		9264	7	280
-magic-scepter	mainhand	3	0	planned		6850		240
-maul	mainhand	3	1	planned		5214		240
-pike	mainhand	3	1	planned		12599	7	280
-scythe	mainhand	3	1	planned		8351	7	280
+boots	feet	1	0	rework		2770	7.1	25
+greaves	feet	2	0	rework		3350	7.1	50
+buckler	offhand	1	0	ready		2910		45
+lantern-handheld	offhand	1	0	ready		3934		45
+round-shield	offhand	1	0	ready		5414		50
+kite-shield	offhand	2	0	ready		4960		90
+orb	offhand	2	0	ready		2850		90
+spellbook	offhand	2	0	ready		2242		80
+tome	offhand	2	0	ready		2260		80
+grimoire	offhand	3	0	ready		10092	7.4	225
+tower-shield	offhand	3	0	ready		4628		175
+axe	mainhand	1	0	ready		3448		55
+club	mainhand	1	0	ready		12886	7.1	70
+dagger	mainhand	1	0	ready		2656		55
+hand-axe	mainhand	1	0	ready		2514		55
+javelin	mainhand	1	0	ready		3448	7	60
+mace	mainhand	1	0	ready		2440		50
+quarterstaff	mainhand	1	1	ready		1586		50
+short-sword	mainhand	1	0	ready		2640		55
+shortbow	mainhand	1	1	ready		4140	7	60
+sickle	mainhand	1	0	ready		5542	7	65
+sling	mainhand	1	0	ready		8258	7.3	70
+spear	mainhand	1	0	ready		3612	7.4	60
+throwing-axe	mainhand	1	0	ready		6350	7.4	65
+throwing-knife	mainhand	1	0	ready		1300		50
+wand	mainhand	1	0	ready		3416		55
+whip	mainhand	1	0	ready		2950		55
+battle-axe	mainhand	2	0	ready		3400		110
+crossbow	mainhand	2	1	ready		4414		110
+crystal-focus	mainhand	2	0	ready		5298		120
+falchion	mainhand	2	0	ready		1390		100
+flail	mainhand	2	0	ready		2900		110
+katana	mainhand	2	0	ready		2112		100
+long-sword	mainhand	2	0	ready		4520	7	120
+longbow	mainhand	2	1	ready		3564		110
+morningstar	mainhand	2	0	ready		2638		110
+rapier	mainhand	2	0	ready		1584		100
+ritual-dagger	mainhand	2	0	ready		1490		100
+rune-stone	mainhand	2	0	ready		3504	7	120
+scimitar	mainhand	2	0	ready		2680		110
+staff	mainhand	2	1	ready		5568	7.2	130
+trident	mainhand	2	0	ready		2848		110
+warhammer	mainhand	2	0	ready		2580		110
+glaive	mainhand	3	1	ready		4358	7.1	240
+great-axe	mainhand	3	1	ready		9216		260
+greatsword	mainhand	3	1	ready		3900		220
+halberd	mainhand	3	1	ready		12158	6.5	260
+heavy-crossbow	mainhand	3	1	ready		9264	7	280
+magic-scepter	mainhand	3	0	ready		6850		240
+maul	mainhand	3	1	ready		5214		240
+pike	mainhand	3	1	ready		12599	7	280
+scythe	mainhand	3	1	ready		8351	7	280
 backpack	accessory	1	0	later		5292		35
 belt-pouch	accessory	1	0	later		1827	6.3	30
 satchel	accessory	1	0	later		2468	7	35
@@ -99,72 +99,72 @@ spyglass	tool	1	0	later		644		30
 lute	tool	2	0	later		4776	7.3	70
 arrow	none	1	0	excluded		1388	7	0
 bolt	none	1	0	excluded		2704	7	0
-rogue-hood	head	1	0	planned		8258		50
-wizard-hat	head	1	0	planned		12796		50
-witch-hat	head	1	0	planned		7298		50
-bard-hat	head	1	0	planned		8534		50
-duelist-hat	head	1	0	planned		8332		50
-treasure-hunter-hat	head	1	0	planned		6454		50
-explorer-hat	head	1	0	planned		5482		50
-druid-cap	head	1	0	planned		16598		50
-shaman-cap	head	1	0	planned		8184		50
-swashbuckler-bandana	head	1	0	planned		3742		45
-knight-helm	head	2	0	planned		16576		105
-guardian-helm	head	2	0	planned		7908		95
-gladiator-helmet	head	2	0	planned		11210		105
-shield-maiden-helm	head	2	0	planned		8650		105
-dragoon-helm	head	2	0	planned		20208		105
-fighter-cap	head	2	0	planned		9094		105
-spear-warden-crest	head	2	0	planned		8064		105
-fighter-buckler	offhand	1	0	planned		4236		45
-gladiator-shield	offhand	1	0	planned		3552		45
-shield-maiden-shield	offhand	1	0	planned		6350		50
-captain-shield	offhand	1	0	planned		3108		45
-adventurer-lantern	offhand	1	0	planned		1240		40
-treasure-hunter-torch	offhand	1	0	planned		3132		45
-adventurer-map	offhand	1	0	planned		818		40
-explorer-map	offhand	1	0	planned		1144		40
-enchanter-scroll	offhand	1	0	planned		3112		45
-shaman-feather	offhand	1	0	planned		870		40
-witch-potion	offhand	1	0	planned		2332		40
-skeleton-knight-shield	offhand	2	0	planned		5162		95
-paladin-shield	offhand	2	0	planned		3944		90
-mage-spellbook	offhand	2	0	planned		666		80
-cleric-book	offhand	2	0	planned		4520		90
-warlock-book	offhand	2	0	planned		3462		90
-guardian-shield	offhand	3	0	planned		4900		175
-adventurer-sword	mainhand	1	0	planned		1286		50
-gladiator-sword	mainhand	1	0	planned		1206		50
-rogue-dagger	mainhand	1	0	planned		508		50
-swashbuckler-dagger	mainhand	1	0	planned		794		50
-shield-maiden-axe	mainhand	1	0	planned		1702		50
-spear-warden-javelin	mainhand	1	0	planned		918		50
-mage-wand	mainhand	1	0	planned		1808		50
-apprentice-wand	mainhand	1	0	planned		1142		50
-witch-broom	mainhand	1	0	planned		3418		55
-treasure-hunter-whip	mainhand	1	0	planned		3688		55
-fighter-sword	mainhand	2	0	planned		1276		100
-captain-sword	mainhand	2	0	planned		1344		100
-samurai-katana	mainhand	2	0	planned		1542		100
-duelist-rapier	mainhand	2	0	planned		2948		110
-swashbuckler-sabre	mainhand	2	0	planned		1270		100
-barbarian-axe	mainhand	2	0	planned		5160		120
-guardian-hammer	mainhand	2	0	planned		2266		100
-paladin-hammer	mainhand	2	0	planned		5772		120
-wizard-staff	mainhand	2	1	planned		4894		110
-druid-staff	mainhand	2	1	planned		5130		120
-shaman-staff	mainhand	2	1	planned		6542		120
-enchanter-staff	mainhand	2	1	planned		1352		100
-archer-bow	mainhand	2	1	planned		3094		110
-ranger-bow	mainhand	2	1	planned		3094		110
-warrior-sword	mainhand	3	1	planned		1760		200
-cleric-hammer	mainhand	3	1	planned		6178		240
-spear-warden-spear	mainhand	3	1	planned		4572		220
-dragoon-lance	mainhand	3	1	planned		4274		220
-clockwork-soldier-halberd	mainhand	3	1	planned		2392		200
+rogue-hood	head	1	0	ready		8258		50
+wizard-hat	head	1	0	ready		12796		50
+witch-hat	head	1	0	ready		7298		50
+bard-hat	head	1	0	ready		8534		50
+duelist-hat	head	1	0	ready		8332		50
+treasure-hunter-hat	head	1	0	ready		6454		50
+explorer-hat	head	1	0	ready		5482		50
+druid-cap	head	1	0	ready		16598		50
+shaman-cap	head	1	0	ready		8184		50
+swashbuckler-bandana	head	1	0	ready		3742		45
+knight-helm	head	2	0	ready		16576		105
+guardian-helm	head	2	0	ready		7908		95
+gladiator-helmet	head	2	0	ready		11210		105
+shield-maiden-helm	head	2	0	ready		8650		105
+dragoon-helm	head	2	0	ready		20208		105
+fighter-cap	head	2	0	ready		9094		105
+spear-warden-crest	head	2	0	ready		8064		105
+fighter-buckler	offhand	1	0	ready		4236		45
+gladiator-shield	offhand	1	0	ready		3552		45
+shield-maiden-shield	offhand	1	0	ready		6350		50
+captain-shield	offhand	1	0	ready		3108		45
+adventurer-lantern	offhand	1	0	ready		1240		40
+treasure-hunter-torch	offhand	1	0	ready		3132		45
+adventurer-map	offhand	1	0	ready		818		40
+explorer-map	offhand	1	0	ready		1144		40
+enchanter-scroll	offhand	1	0	rework		3112		45
+shaman-feather	offhand	1	0	ready		870		40
+witch-potion	offhand	1	0	ready		2332		40
+skeleton-knight-shield	offhand	2	0	ready		5162		95
+paladin-shield	offhand	2	0	ready		3944		90
+mage-spellbook	offhand	2	0	ready		666		80
+cleric-book	offhand	2	0	ready		4520		90
+warlock-book	offhand	2	0	ready		3462		90
+guardian-shield	offhand	3	0	rework		4900		175
+adventurer-sword	mainhand	1	0	ready		1286		50
+gladiator-sword	mainhand	1	0	ready		1206		50
+rogue-dagger	mainhand	1	0	ready		508		50
+swashbuckler-dagger	mainhand	1	0	ready		794		50
+shield-maiden-axe	mainhand	1	0	ready		1702		50
+spear-warden-javelin	mainhand	1	0	ready		918		50
+mage-wand	mainhand	1	0	ready		1808		50
+apprentice-wand	mainhand	1	0	ready		1142		50
+witch-broom	mainhand	1	0	ready		3418		55
+treasure-hunter-whip	mainhand	1	0	ready		3688		55
+fighter-sword	mainhand	2	0	ready		1276		100
+captain-sword	mainhand	2	0	ready		1344		100
+samurai-katana	mainhand	2	0	ready		1542		100
+duelist-rapier	mainhand	2	0	ready		2948		110
+swashbuckler-sabre	mainhand	2	0	ready		1270		100
+barbarian-axe	mainhand	2	0	ready		5160		120
+guardian-hammer	mainhand	2	0	ready		2266		100
+paladin-hammer	mainhand	2	0	ready		5772		120
+wizard-staff	mainhand	2	1	ready		4894		110
+druid-staff	mainhand	2	1	ready		5130		120
+shaman-staff	mainhand	2	1	ready		6542		120
+enchanter-staff	mainhand	2	1	ready		1352		100
+archer-bow	mainhand	2	1	ready		3094		110
+ranger-bow	mainhand	2	1	ready		3094		110
+warrior-sword	mainhand	3	1	ready		1760		200
+cleric-hammer	mainhand	3	1	ready		6178		240
+spear-warden-spear	mainhand	3	1	ready		4572		220
+dragoon-lance	mainhand	3	1	ready		4274		220
+clockwork-soldier-halberd	mainhand	3	1	ready		2392		200
 apprentice-glasses	accessory	2	0	later		4722		65
 bard-lute	tool	2	0	later		2620		65
-spear-warden-helm	head	2	0	planned		6980		95
+spear-warden-helm	head	2	0	ready		6980		95
 avatar-hair-swept	head	1	0	planned	0	7292		0
 avatar-hair-short	head	1	0	planned	0	6746		0
 avatar-hair-long	head	1	0	planned	0	7276		0

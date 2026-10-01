@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Morningstar, 0.7 m, standing on its handle end with the head up (+Y), facing +Z.
@@ -35,6 +35,7 @@ export default defineAsset({
   detail: 0.004,
   texture: { size: 1024 },
   reference: 'docs/item-mockups/morningstar-mock.jpg',
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.16, 0] },
 
   build(k) {
     // ---------------------------------------------------------------- wood handle

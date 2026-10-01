@@ -69,6 +69,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/leather-armor-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'chest', fitScale: 2, origin: [0, Y_HEM, 0], hides: ['undershirt'], displayOnly: ['stand'] },
 
   build(k) {
     // ------------------------------------------------------------------ stand (walnut)

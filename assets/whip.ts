@@ -1,4 +1,4 @@
-import { defineAsset, noise, sdf, mixRgb, rgb } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, sdf, mixRgb, rgb } from '../src/index.js';
 
 /**
  * Whip (equipment/melee-weapons/whip), about 0.42 m wide, lying flat on y = 0.
@@ -27,6 +27,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/whip-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0.215, 0.021, 0], rotate: [0, 90, 90] },
 
   build(k) {
     // ---------------------------------------------------------------- thong

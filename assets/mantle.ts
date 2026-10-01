@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/mantle-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'back', fitScale: 2, origin: [0, 0.42, 0] },
 
   build(k) {
     const prof = profile.polygon(

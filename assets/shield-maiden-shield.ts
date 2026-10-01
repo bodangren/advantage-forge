@@ -12,6 +12,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/shield-maiden_001.jpg',
   texture: { size: 512 },
   variants: { shield: { blue: '#3a8ab8', crimson: '#8a2a3a', forest: '#2e6a3c' } },
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, 0.163, 0] },
 
   build(k) {
     addPart(k, shieldMaidenShield(k.tint), { pose: (s) => s.at(0, 0.163, 0), bones: null });

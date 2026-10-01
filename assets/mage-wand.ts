@@ -22,6 +22,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/mage_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, -BUTT_Y, 0] },
 
   build(k) {
     addPart(k, mageWand(), { pose: stand, bones: null });

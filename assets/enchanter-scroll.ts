@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/enchanter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, DROP, 0], rotate: [0, FACE, 0] },
   build(k) {
     addPart(k, enchanterScroll(), { pose: (s) => s.rotateY(FACE).at(0, DROP, 0), bones: null });
     addPart(k, enchanterScrollFlame(), { pose: (s) => s.at(...FLAME_MOUNT).at(-ROLL[0], -ROLL[1], -ROLL[2]).rotateY(-FLAME_YAW).rotateY(FACE).at(0, DROP, 0), bones: null });

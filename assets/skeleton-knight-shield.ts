@@ -23,6 +23,7 @@ export default defineAsset({
   variants: {
     armor: { iron: '#4a4f55', rusted: '#6b4a36', bronze: '#7a6436' },
   },
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, -POINT_Y, 0] },
 
   build(k) {
     addPart(k, skeletonKnightShield(k.tint), { pose: (s) => s.at(0, -POINT_Y, 0), bones: null });

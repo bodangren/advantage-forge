@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/rogue_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.053, 0] },
   build(k) {
     addPart(k, rogueDagger('L'), { pose: (s) => s.at(0, 0.053, 0), bones: null });
   },

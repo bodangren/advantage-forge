@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — ritual dagger (equipment/magic-weapons/ritual-dagger).
@@ -107,6 +107,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/ritual-dagger-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [-0.09, 0.04, 0], rotate: [0, 0, -90] },
 
   build(k) {
     // ------------------------------------------------------------------ blade

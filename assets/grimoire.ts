@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, rgb, sdf } from '../src/index.js';
 
 /**
  * Grimoire (equipment/magic-weapons/grimoire): a chunky chibi spell book, 0.5 m wide and 0.42 m
@@ -23,6 +23,7 @@ export default defineAsset({
   description: 'A chunky open grimoire tilted on a walnut lectern: red leather, fat pages, iron corners, a glowing green sigil, and a ribbon.',
   detail: 0.004,
   texture: { size: 1024 },
+  equip: { slot: 'offhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.2, 0], displayOnly: ['lectern'] },
 
   build(k) {
     // Lectern wedge: the top follows the underside of the book.

@@ -23,6 +23,7 @@ export default defineAsset({
   variants: {
     flame: { green: '#40ff80', purple: '#c060ff', orange: '#ff8030' },
   },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, HALF_H, 0], rotate: [0, -90, 0], offset: [0.06, -0.02, 0] },
   build(k) {
     addPart(k, warlockBook(), { pose: stand, bones: null });
     addPart(k, warlockBookFlame(mapTint(k, {})), { pose: (s) => stand(s.at(0, 0.065 + 0.03, 0)), bones: null });

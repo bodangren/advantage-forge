@@ -18,10 +18,10 @@ Status: in_progress (2026-10-01: the avatar base and the 9 part fixes started). 
 - [x] Task: Record the socket of each part class (bone, offset in bone-local meters, rotation in degrees) and the rule for skinned and rigid parts; add it to `docs/equipment-parts.md` and link it from `docs/equipment-fit.md` (moved from `asset_equipment_parts_20260930` Phase 4). (2026-10-01: see "Equip record".)
 - [x] Task: Extend `forge check` to equipment: fit bounds, skin intersection in the rest pose, weapon clearance on the base clips. (2026-10-01: show-through replaces the bounds rule; see "Equip record".)
 - [x] Task: Make the base clips pass the clearance check with held items: the wrists aim the item (`motion.orient`) in walk, run, attack, cheer, and cast. (2026-10-01.)
-- [ ] Task: Rework the 10 non-compliant pieces (belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood, leather-cap, crown, circlet).
-- [ ] Task: Rework the 4 pieces that the avatar fit check fails (plate-armor arm cuffs, bracers, boots, cape; `docs/equipment-fit.md`), and give guardian-shield its own `offset` and `rotate`.
+- [ ] Task: Rework the 10 non-compliant pieces (belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood, leather-cap, crown, circlet). (2026-10-01: circlet, crown, leather-cap, leather-armor, and cloth-hood pass on the avatar and are `ready`; left: iron-helmet, horned-helmet, steel-helmet, belt, chainmail.)
+- [ ] Task: Rework the pieces that the avatar fit check fails (`docs/equipment-fit.md`): plate-armor, bracers, boots, cape, cloak, mantle, greaves, guardian-shield (an avatar size), enchanter-scroll, and closed-fist gloves and gauntlets.
 - [x] Task: Write `docs/avatar-catalog.tsv` (100 pieces: slot, tier, status) and the GP price formula (`src/apk3d/avatar/price.ts`, `scripts/avatar-price.ts`, `tests/apk3d/avatar-price.test.ts`).
-- [ ] Task: Add `equip` blocks to every phase 1 piece.
+- [x] Task: Add `equip` blocks to every phase 1 piece. (2026-10-01: 138 blocks, 122 pass; gloves and gauntlets need a closed-fist shape first; see "Equip rollout record".)
 - [x] Task: Add the 65 hero parts (`asset_equipment_parts_20260930`) to `docs/avatar-catalog.tsv` (owner decision 2026-10-01: keep every variant; the shop sorts by popularity).
 - [x] Task: Fix the 9 hero parts with status `rework` (shape defects; list in `docs/avatar-system.md` section 6). (2026-10-01: see "Part fix record".)
 - [ ] Task: Add a capped version of each hair style (the skull cap above the brow line, the locks below it) for wear under head pieces that keep the hair; the composer shows it (fit test of 2026-10-01 in `docs/avatar-system.md` section 14).
@@ -80,6 +80,24 @@ y = 0. The 8 changed hosts built textured with sprites: no warnings; `forge chec
   Follow-up task in Phase 3 (capped hair styles); recorded in `docs/avatar-system.md` section 14.
 - Catalog: `spear-warden-helm` (head, tier 2) and the 4 hair styles (head, tier 1, override 0)
   added; the 9 fixed parts are `planned`. 170 rows; `scripts/avatar-price.ts --check` passes.
+
+## Equip rollout record (2026-10-01)
+
+- Blocks: 138 assets (every phase 1 catalog row except gloves and gauntlets). `forge check`: 122
+  pass. Catalog: 120 `ready`, 16 `rework` (reasons in `docs/equipment-fit.md`, "Every phase 1
+  piece"), the 4 hair styles `planned` (the capped hair task). Contact sheets of 45 worn renders
+  were reviewed; the steel helmet passes the check but covers the eyes, so it stays `rework`.
+- Socket and clip changes: the shield socket moved to (0.262, 0.25, 0.075) (outward and lower);
+  idle, hit, rest, and the shield arm of the attack keep a held item at its rest direction
+  (`steady` in `assets/avatar-base.ts`). Bows, the heavy crossbow, the whip, and the sling use the
+  socket frame; books ride at the side with the cover outward; orbs sit outside the fist.
+- Engine: `frame: 'body'` (character axes at the socket point) for level items; a worn piece
+  meshes no finer than 1/380 of its worn size (the tower shield grid error).
+- Check changes: a point inside two base bodies counts for the outer one (hair over the skull);
+  a piece point buried in another body of the piece does not count. The first change passes the
+  bandana; plate-armor, cape, and the helmets still fail, as the renders show.
+- Found: iron-helmet and horned-helmet have a hidden ring inside the cavity. The brow band is a
+  shell of an open revolve profile, and the shell also wraps the profile's closing chord.
 
 ## Equip record (2026-10-01)
 

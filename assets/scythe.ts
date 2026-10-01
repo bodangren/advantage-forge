@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Farm scythe (equipment/melee-weapons/scythe), matched to docs/item-mockups/scythe-mock.jpg.
@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/scythe-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.65, 0], twoHanded: true },
 
   build(k) {
     const snath = sdf.chain(

@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/fighter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, LIFT, 0], rotate: [TILT, 0, 0] },
 
   build(k) {
     addPart(k, fighterCap({ lining: true }), { pose: (s) => s.rotateX(TILT).at(0, LIFT, 0), bones: null });

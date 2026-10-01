@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/swashbuckler_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.0545, 0] },
   build(k) {
     addPart(k, swashbucklerDagger(), { pose: (s) => s.at(0, 0.0545, 0), bones: null });
   },

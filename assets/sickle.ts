@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Sickle (equipment/melee-weapons/sickle), matched to docs/item-mockups/sickle-mock.jpg.
@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/sickle-mock.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.25, 0] },
 
   build(k) {
     const handle = sdf

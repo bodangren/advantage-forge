@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — scimitar (equipment/melee-weapons/scimitar).
@@ -150,6 +150,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/scimitar-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.127, 0] },
 
   build(k) {
     // --------------------------------------------------------------- blade

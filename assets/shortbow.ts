@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Shortbow, 0.9 m, standing on the lower horn tip at y = 0. The stave curves
@@ -36,6 +36,7 @@ export default defineAsset({
   reference: 'docs/item-mockups/shortbow-mock.jpg',
   detail: 0.006,
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.45, 0.205], rotate: [0, -90, 0], twoHanded: true },
 
   build(k) {
     // ------------------------------------------------------------------ walnut limbs

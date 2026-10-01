@@ -20,6 +20,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/mage_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, HALF_H, 0], rotate: [0, -90, 0], offset: [0.04, 0, 0] },
 
   build(k) {
     addPart(k, mageSpellbook(), { pose: (s) => s.at(0, HALF_H, 0), bones: null });

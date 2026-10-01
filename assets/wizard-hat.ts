@@ -17,6 +17,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/wizard_001.png',
   variants: { clothing: { red: '#b8322b', blue: '#2e4a9e', purple: '#6b3294' } },
   texture: { size: 512 },
+  equip: { slot: 'head', origin: [0, 0.1085, 0.0117] },
 
   build(k) {
     addPart(k, wizardHat(k.tint), { pose: (s) => s.at(0, 0.169, 0), bones: null });

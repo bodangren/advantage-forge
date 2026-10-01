@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — leaf dagger (equipment/melee-weapons/dagger).
@@ -120,6 +120,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/dagger-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.096, 0] },
 
   build(k) {
     // ------------------------------------------------------------------ blade
