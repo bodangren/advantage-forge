@@ -8,13 +8,15 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   horns, fur, armor, and maul are gone, and the attack is a two-fist ground slam).
  * Role: a slow, heavy dungeon brute; at 128 px the huge boulder shoulders, the fists, and the
  *   three blue glows (two eyes, one chest rune) must read.
- * One idea: a hunched heap of chiselled grey boulders around a mossy sage-stone core, a small
- *   head sunk between the shoulders, glowing rune eyes, and fists as big as its head.
- * Proportions: head top 0.98, eyes 0.86, shoulder boulders 0.94 top and 0.5 m out, rune 0.64,
- *   belt 0.28 to 0.43, fists 0.17 to 0.58, knee blocks 0.25 top, feet 0.13 top.
- * Palette: grey stone #575b5e (slot `stone`); sage core #6b8769 and olive plates #708a46 (they
+ * One idea: a hunched heap of chiselled grey boulders around a mossy sage-stone core, a big
+ *   square head sunk between the shoulders (heavy grey brow ridge and cheek visor, two glowing rune
+ *   eyes under the brow), and rock fists as big as the head.
+ * Proportions: head 0.3 m wide, top 0.99, eyes 0.85, shoulder boulders 0.94 top and 0.5 m out, rune 0.64,
+ *   belt 0.28 to 0.43, fists 0.15 to 0.42 (three stacked chamfered blocks, two green knuckle stones), knee blocks 0.25 top, feet 0.13 top.
+ * Palette: grey stone #575b5e (slot `stone`); sage core #6b8769 and olive plates #5a6e3e (they
  *   follow the stone slot partly); moss #56752a / #3d561b on the tops; glow #3fd6ff (slot `glow`) on a
  *   dark base.
+ * Chest: moss-green plates (two pecs, three rows of abs per side) on dark seams around the rune.
  * Bodies: core (head, neck, trunk, upper arms, knuckles, thighs), mantle (shoulder boulders,
  *   collar, rune plate; rigid on the chest), belt (rigid on the hips), limbs (forearm and fist
  *   blocks, knee blocks, feet), eyes, rune.
@@ -25,7 +27,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
 const C = {
   stone: '#575b5e',
   sage: '#6b8769',
-  olive: '#708a46',
+  olive: '#5a6e3e',
   sageDark: '#34403a',
   moss: '#56752a',
   mossDark: '#3d561b',
@@ -53,7 +55,7 @@ const ANKLE: V3 = [0.18, 0.09, 0.01];
 // The ends of the flat bottom of the left foot block (y = 0): heel and toe.
 const SOLE_HEEL: V3 = [0.18, 0, -0.1];
 const SOLE_TOE: V3 = [0.18, 0, 0.15];
-const HEAD_Y = 0.86;
+const HEAD_Y = 0.85;
 
 /** Mottled stone: a slow and a fine grey variation over the color underneath. */
 const mottle = (x: number, y: number, z: number, base: Rgb): Rgb => {
@@ -145,18 +147,19 @@ export default defineAsset({
 
     const stoneBump = (x: number, y: number, z: number) => 0.0015 * noise.fbm(x * 45, y * 45, z * 45, 2);
 
-    // ------------------------------------------------------------------ head: a small rounded block
+    // ------------------------------------------------------------------ head: a square stone block with a brow ridge and a cheek visor
     const skull = sdf.smoothUnion(
       0.04,
-      sdf.box([0.2, 0.14, 0.18], 0.05).at(0, HEAD_Y - 0.01, 0.005), // the blocky face
-      sdf.ellipsoid([0.118, 0.1, 0.108]).at(0, HEAD_Y + 0.025, -0.01), // the dome
+      sdf.box([0.3, 0.2, 0.26], 0.05).at(0, HEAD_Y - 0.01, 0.005), // the square face
+      sdf.ellipsoid([0.15, 0.085, 0.13]).at(0, HEAD_Y + 0.055, -0.01), // the flat dome
     );
-    const brow = sdf.box([0.215, 0.034, 0.05], 0.014).rotateX(-12).at(0, HEAD_Y + 0.04, 0.078);
-    const head0 = skull.smoothUnion(0.02, brow);
+    const brow = sdf.box([0.32, 0.06, 0.09], 0.016).rotateX(-14).at(0, HEAD_Y + 0.05, 0.13); // the heavy brow ridge
+    const visor = sdf.box([0.27, 0.06, 0.09], 0.02).rotateX(8).at(0, HEAD_Y - 0.05, 0.13); // the cheek plate
+    const head0 = skull.smoothUnion(0.02, brow).smoothUnion(0.012, visor);
     const faceZ0 = (x: number, y: number) => sdf.raycast(head0, [x, y, 1], [0, 0, -1])![2];
-    const EYE: V3 = [0.05, HEAD_Y - 0.002, 0];
+    const EYE: V3 = [0.062, HEAD_Y - 0.003, 0];
     const eyeZ = faceZ0(EYE[0], EYE[1]);
-    const sockets = pair(sdf.ellipsoid([0.038, 0.029, 0.03]).at(EYE[0], EYE[1], eyeZ));
+    const sockets = pair(sdf.ellipsoid([0.048, 0.035, 0.034]).at(EYE[0], EYE[1], eyeZ));
     const head = head0.smoothSubtract(0.008, sockets).bone('head');
     const neck = sdf.capsule([0, 0.68, -0.02], [0, 0.8, -0.02], 0.08).bone('neck');
 
@@ -167,18 +170,24 @@ export default defineAsset({
     const traps = pair(sdf.sphere(0.1).at(0.15, 0.7, -0.03));
     const trunkBase = sdf.smoothUnion(0.06, chestE, bellyE, hipsE, traps);
     const onTrunk = (x: number, y: number) => sdf.raycast(trunkBase, [x, y, 1], [0, 0, -1])!;
-    const slab = (size: V3, seed: number, x: number, y: number, tilt: number) => {
+    const slab = (size: V3, seed: number, x: number, y: number, tilt: number, out = 0.25) => {
       const p = onTrunk(x, y);
-      return rock(size, seed, 0.84, 0.002).rotateZ(tilt).at(p[0], p[1], p[2] - size[2] * 0.25);
+      return rock(size, seed, 0.84, 0.002).rotateZ(tilt).at(p[0], p[1], p[2] - size[2] * (0.5 - out));
     };
-    const pecs = pair(slab([0.15, 0.1, 0.08], 11, 0.1, 0.6, -8));
-    const abs = pair(sdf.union(slab([0.075, 0.045, 0.05], 12, 0.047, 0.505, 4), slab([0.08, 0.045, 0.05], 13, 0.052, 0.455, -3)));
+    const pecs = pair(slab([0.17, 0.115, 0.09], 11, 0.115, 0.605, -8, 0.4));
+    const abs = pair(
+      sdf.union(
+        slab([0.1, 0.042, 0.055], 12, 0.08, 0.542, 3, 0.4),
+        slab([0.1, 0.042, 0.055], 13, 0.08, 0.497, -3, 0.4),
+        slab([0.095, 0.042, 0.055], 14, 0.075, 0.452, 2, 0.4),
+      ),
+    );
     const trunk = sdf
       .smoothUnion(0.06, chestE.bone('chest'), bellyE.bone('spine'), hipsE.bone('hips'), traps.bone('chest'))
       .smoothUnion(0.012, pecs.bone('chest'), abs.bone('spine'));
 
-    // Upper arms and knuckle balls of sage stone; the forearm is hidden in the forearm block.
-    const KNUCKLE: V3 = [0.42, 0.25, 0.17];
+    // Upper arms of sage stone; the forearm is hidden in the forearm block.
+    const KNUCKLE: V3 = [0.44, 0.3, 0.08]; // inside the fist block
     const armAt = (s: 1 | -1) => {
       const f = (p: V3): V3 => (s > 0 ? p : mx(p));
       const side = s > 0 ? 'L' : 'R';
@@ -188,7 +197,6 @@ export default defineAsset({
         sdf.sphere(0.078).at(...f(lerp(SHOULDER, ELBOW, 0.8))).bone(`upperarm.${side}`),
         sdf.cone(f(ELBOW), f(WRIST), 0.08, 0.07).bone(`forearm.${side}`),
         sdf.capsule(f(WRIST), f(KNUCKLE), 0.05).bone(`hand.${side}`),
-        sdf.sphere(0.066).at(...f(KNUCKLE)).bone(`hand.${side}`),
       );
     };
     const legs = pair(sdf.smoothUnion(0.02, sdf.capsule(HIP, KNEE, 0.1).bone('leg.L'), sdf.capsule(KNEE, ANKLE, 0.08).bone('shin.L')));
@@ -208,6 +216,9 @@ export default defineAsset({
       .union(armAt(1), armAt(-1))
       .smoothUnion(0.03, legs)
       .paintFn(mottle)
+      .paintWhere(brow.round(0.004).union(visor.round(0.004)), T.stone, 0.004)
+      .paintWhere(sdf.box([0.6, 0.3, 0.6]).at(0, HEAD_Y + 0.03 + 0.15, 0), T.stone, 0.008) // a grey stone top and back of the head // the stone brow and cheek plate
+      .paintWhere(sdf.ellipsoid([0.2, 0.17, 0.2]).at(0, 0.53, 0.09), T.sageDark, 0.01) // the dark seams between the plates
       .paintWhere(pecs.round(0.004).union(abs.round(0.004)), T.olive, 0.004)
       .paintWhere(sockets.round(0.012), T.sageDark, 0.006);
     const coreMossy = moss(core, mossCore, 0.008);
@@ -263,7 +274,16 @@ export default defineAsset({
       .rotateZ(20)
       .at(...lerp(ELBOW, WRIST, 0.62))
       .bone('forearm.L');
-    const fistL = crack(rock([0.25, 0.22, 0.27], 32), sdf.union(sdf.box([0.014, 0.5, 0.5]).rotateZ(8).at(0.01, 0, 0), sdf.box([0.5, 0.014, 0.5]).rotateX(10).at(0, 0.035, 0)))
+    // The fist: three stacked, chamfered stone blocks with two green knuckle stones set in the front.
+    const fistBlocks = sdf.union(
+      rock([0.25, 0.1, 0.27], 41, 0.86, 0.003).at(0, -0.085, 0),
+      rock([0.23, 0.1, 0.25], 42, 0.86, 0.003).rotateY(8).at(0.005, 0.017, -0.005),
+      rock([0.2, 0.08, 0.22], 43, 0.86, 0.003).rotateY(-10).at(-0.01, 0.097, -0.01),
+    );
+    const knuckles = sdf.union(sdf.sphere(0.026).at(-0.05, -0.01, 0.118), sdf.sphere(0.026).at(0.05, -0.01, 0.118));
+    const fistL = sdf
+      .union(fistBlocks, knuckles)
+      .paintWhere(knuckles.round(0.003), T.sage, 0.004)
       .rotateZ(6)
       .at(0.47, 0.28, 0.06)
       .bone('hand.L');
@@ -272,7 +292,7 @@ export default defineAsset({
     k.body('limbs', pair(sdf.union(gauntletL, fistL, kneeL, footL)), { color: T.stone, roughness: 0.9, detail: 0.0055, bump: stoneBump });
 
     // ------------------------------------------------------------------ glow: rune eyes and the chest rune (emissive on a dark base)
-    const eyes = pair(sdf.ellipsoid([0.026, 0.022, 0.014]).at(EYE[0], EYE[1], eyeZ - 0.013));
+    const eyes = pair(sdf.ellipsoid([0.035, 0.029, 0.017]).at(EYE[0], EYE[1], eyeZ - 0.012));
     k.body('eyes', eyes, { color: T.glowDark, emissive: T.glow, emissiveIntensity: 2.2, roughness: 0.3, bone: 'head', detail: 0.004 });
     const star = sdf.union(...[0, 60, 120].map((a) => sdf.box([0.056, 0.009, 0.1], 0.003).rotateZ(a).at(RUNE[0], RUNE[1], RUNE[2])));
     const rune = sdf.cylinder(0.04, 0.03, 0.006).rotateX(90).at(RUNE[0], RUNE[1], RUNE[2] - 0.025).paintWhere(star, T.glowPale, 0.002);

@@ -1511,13 +1511,13 @@
     "reviewedAt": "2026-09-28"
   },
   "stone-golem": {
-    "overall": 7,
+    "overall": 7.5,
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 3,
+      "color": 4,
       "materials": 4,
       "detail": 4,
       "technical": 4,
@@ -1525,22 +1525,24 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "A new P1 dungeon enemy on the minotaur-guard base (knee bones, eight clips): a stocky golem of grey chiseled stone blocks with moss on the tops, huge shoulder boulders, big block fists, glowing blue eyes, and a glowing blue rune plate on the chest, over a sage-green stone core. The attack is a two-fist ground slam. The build has no warnings.",
+    "summary": "Stone golem reworked 2026-10-02 (closeout track, Sonnet 5.5 high tier, two passes, plus an orchestrator color fix): a square grey stone head with a brow and a cheek visor and two glowing blue eyes, olive moss chest plates around the blue rune, huge segmented stone arms, and grey stone fists with two small green knuckle stones. Accepted at 7.5 under the owner rule of 2026-10-02 (characters at 7.5 are acceptable; the rating sets how much games use it).",
     "strengths": [
-      "The blocky stone silhouette, moss, and blue glow read as a stone golem at 128 px.",
-      "The two-fist slam reads clearly.",
+      "The square head with the visor and the glowing eyes matches the mockup.",
+      "The chest rune, the olive plates, and the moss on the tops read at 128 px.",
       "Stone and glow variants with three presets: desert, deep, ember."
     ],
     "issues": [
-      "The sage-green core shows between the stones, so the body reads greener than the grey mockup.",
-      "The rocks are rounded stacked boxes; the mockup has more sharp-edged plates.",
-      "The head is a smooth dome; the mockup head looks like a helmet with cheek plates. 48k triangles."
+      "The stone is smoother and less chiselled than the mockup.",
+      "The visor and the collar form a flat grey mask, not the mockup's gorget.",
+      "The chest plates are flat blocks; the mockup has rounder mossy muscles.",
+      "From the side (W and E sprites) the golem is a thin column: 0.43 m deep for 1.22 m wide."
     ],
     "next": [
-      "Make the core grey so only the moss is green.",
-      "Add sharper plates and a helmet-like brow."
+      "Deeper shoulder boulders and fists, so the side sprites read as a heavy body.",
+      "Sharper chisel facets on the shoulder and arm boulders.",
+      "Rounder mossy chest muscles."
     ],
-    "reviewedAt": "2026-09-28"
+    "reviewedAt": "2026-10-01T23:41:49+00:00"
   },
   "death-knight": {
     "overall": 8,
