@@ -1,4 +1,5 @@
-import { defineAsset, motion, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
+import { warlockBook, warlockBookFlame } from './parts/warlock-book.js';
 
 /**
  * Warlock — Chibi Quest enemy (catalog `enemies/humanoid/warlock`), about 1.0 m tall, faces +Z.
@@ -124,48 +125,6 @@ const BOOK_AT: V3 = add(WRIST_L, rotY([0.085, 0.077, 0.012], HAND_L_YAW));
 const bookPose = (s: sdf.Shape) => s.rotateZ(-8).rotateY(-22).at(...BOOK_AT);
 const bookPoint = (p: V3): V3 => add(rotY(rotZ(p, -8), -22), BOOK_AT);
 const FLAME_AT = bookPoint([0, 0.058, 0.0]);
-
-/** A curling flame at the origin: a tall center tongue and three side tongues that curl out and up. */
-const flame = () =>
-  sdf.smoothUnion(
-    0.02,
-    sdf.chain(
-      [
-        [0, 0, 0, 0.034],
-        [0.006, 0.05, 0, 0.022],
-        [0.024, 0.1, 0, 0.009],
-        [0.05, 0.135, 0, 0.003],
-      ],
-      0.02,
-    ),
-    sdf.chain(
-      [
-        [-0.034, 0.0, 0, 0.02],
-        [-0.06, 0.03, 0.004, 0.012],
-        [-0.072, 0.07, 0.006, 0.006],
-        [-0.062, 0.1, 0.006, 0.0035],
-      ],
-      0.012,
-    ),
-    sdf.chain(
-      [
-        [0.036, 0.0, 0, 0.02],
-        [0.062, 0.028, 0, 0.012],
-        [0.078, 0.062, 0.004, 0.006],
-        [0.092, 0.09, 0.004, 0.0035],
-      ],
-      0.012,
-    ),
-    sdf.chain(
-      [
-        [0.0, 0.004, 0.022, 0.02],
-        [0.006, 0.036, 0.046, 0.012],
-        [-0.014, 0.072, 0.056, 0.006],
-        [-0.03, 0.1, 0.05, 0.0035],
-      ],
-      0.012,
-    ),
-  );
 
 export default defineAsset({
   name: 'warlock',
@@ -558,40 +517,8 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ the grimoire and its flame
-    const cover = sdf.box([0.1, 0.13, 0.04], 0.005);
-    const bookShape = cover.paintWhere(sdf.box([0.1, 0.16, 0.028]).at(0.01, 0, 0), C.page);
-    k.body('book', bookPose(bookShape), { color: C.cover, roughness: 0.65, detail: 0.003, bone: 'hand.L' });
-    const emblem = sdf
-      .smoothUnion(
-        0.004,
-        sdf.ellipsoid([0.026, 0.034, 0.008]).at(0, -0.006, 0.02),
-        sdf.chain(
-          [
-            [0, 0.03, 0.02, 0.006],
-            [0, 0.02, 0.022, 0.008],
-          ],
-          0.004,
-        ),
-      )
-      .subtract(hard(sdf.ellipsoid([0.006, 0.004, 0.01]).at(0.011, 0.002, 0.03)))
-      .subtract(sdf.box([0.024, 0.005, 0.02]).at(0, -0.02, 0.03));
-    k.body('book-emblem', bookPose(emblem), { color: C.emblem, roughness: 0.6, detail: 0.003, bone: 'hand.L' });
-    const corners = sdf.union(sdf.box([0.032, 0.032, 0.06]).at(0.05, 0.065, 0), sdf.box([0.032, 0.032, 0.06]).at(0.05, -0.065, 0)).mirror('x', 0);
-    const bookGold = sdf.union(cover.round(0.0025).intersect(corners), sdf.box([0.024, 0.018, 0.048], 0.003).at(0.05, 0, 0));
-    k.body('book-gold', bookPose(bookGold), { color: C.gold, roughness: 0.35, metalness: 0.8, detail: 0.003, bone: 'hand.L' });
-    const flameShape = flame()
-      .rotateZ(-10)
-      .displace(0.008, (x, y, z) => noise.fbm(x * 12, y * 12, z * 12, 2))
-      .at(...FLAME_AT);
-    k.body('flame', flameShape, {
-      color: T.flameBase,
-      emissive: T.flame,
-      emissiveIntensity: 1.6,
-      opacity: 0.8,
-      roughness: 0.4,
-      detail: 0.0035,
-      bone: 'orb',
-    });
+    addPart(k, warlockBook(), { pose: bookPose });
+    addPart(k, warlockBookFlame(mapTint(k)), { pose: (s) => s.at(...FLAME_AT) });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, quat } = motion;

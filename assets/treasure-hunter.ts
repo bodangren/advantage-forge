@@ -1,4 +1,7 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { treasureHunterHat } from './parts/treasure-hunter-hat.js';
+import { treasureHunterTorch } from './parts/treasure-hunter-torch.js';
+import { treasureHunterWhip } from './parts/treasure-hunter-whip.js';
+import { addPart, defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Treasure hunter — Chibi Quest hero (catalog `heroes/support/treasure-hunter`), about 1.02 m to the
@@ -289,56 +292,7 @@ export default defineAsset({
     // the crown's radius (0.19) and 0.024 thick.
     const BRIM_Y = 0.81;
     const hatPose = (s: sdf.Shape) => s.rotateX(-10).at(0, BRIM_Y, 0);
-    const brim = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.12, 0.014],
-            [0.24, 0.012],
-            [0.292, 0.008],
-            [0.305, -0.002],
-            [0.305, -0.026],
-            [0.292, -0.022],
-            [0.24, -0.014],
-            [0.12, -0.014],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-      )
-      .scale([1, 1, 1.02]);
-    const crown0 = sdf.revolve(
-      profile.polygon(
-        [
-          [0, 0.198],
-          [0.05, 0.196],
-          [0.11, 0.186],
-          [0.155, 0.162],
-          [0.178, 0.12],
-          [0.188, 0.06],
-          [0.192, 0.0],
-          [0.19, -0.02],
-          [0, -0.02],
-        ],
-        { smooth: true, samples: 6 },
-      ),
-    );
-    // A groove along the top and two pinches at the front corners: the fedora's crown.
-    const groove = sdf.box([0.05, 0.07, 0.5], 0.022).at(0, 0.228, 0.01);
-    const pinches = pair(sdf.sphere(0.042).at(0.152, 0.13, 0.108));
-    const crown = crown0.smoothSubtract(0.03, groove, pinches);
-    const hatShape = sdf.smoothUnion(0.012, crown, brim).paintFn((x, y, z, base) => {
-      const t = Math.min(1, Math.max(0, (y - 0.1) / 0.08)) * 0.45;
-      const l = rgb(C.hatLight);
-      return [base[0] + (l[0] - base[0]) * t, base[1] + (l[1] - base[1]) * t, base[2] + (l[2] - base[2]) * t];
-    });
-    k.body('hat', hatPose(hatShape), {
-      color: C.hat,
-      roughness: 0.85,
-      bone: 'head',
-      bump: (x, y, z) => 0.0008 * noise.fbm(x * 90, y * 90, z * 90, 2),
-    });
-    const hatBand = sdf.torus(0.19, 0.0125).scale([1, 1, 1.02]).at(0, 0.034, 0);
-    k.body('hat-band', hatPose(hatBand), { color: C.hatBand, roughness: 0.75, bone: 'head', detail: 0.005 });
+    addPart(k, treasureHunterHat(), { pose: hatPose });
 
     // ------------------------------------------------------------------ hair: dark curls under the brim
     // A cap under the brim, six round curls across the forehead, thick curled locks at the sides and
@@ -568,19 +522,9 @@ export default defineAsset({
 
     // The whip: a three-turn coil on the belt (rigid on the `whip` bone) and a lash of six
     // segments that hang from it, each on its own bone.
-    const coil = sdf.union(
-      ...[0, 1, 2].map((i) => sdf.torus(COIL_R - i * 0.002, 0.016).rotateX(90).at(0, 0, (i - 1) * 0.022)),
-    );
-    const whipBump = (x: number, y: number, z: number) => 0.0016 * Math.sin((x * 1.3 + y + z * 0.7) * 330);
-    k.body('whip-coil', coilPose(coil), { color: C.whip, roughness: 0.75, bone: 'whip', detail: 0.004, bump: whipBump });
-    const lash = sdf.smoothUnion(
-      0.008,
-      ...tailPts.slice(0, 6).map((p, i) => sdf.capsule(p, tailPts[i + 1]!, 0.0135 - i * 0.0013).bone(`whip${i + 1}`)),
-    );
-    // The short handle: a leather grip sticking out of the top of the coil.
-    const handle = sdf.capsule([-0.02, 0.05, 0], [-0.07, 0.085, 0], 0.0135);
-    k.body('whip-handle', coilPose(handle), { color: C.cloth, roughness: 0.6, bone: 'whip', detail: 0.004 });
-    k.body('whip-lash', lash, { color: C.whip, roughness: 0.75, detail: 0.004, bump: whipBump });
+    const whipPart = treasureHunterWhip();
+    addPart(k, { ...whipPart, bodies: whipPart.bodies.filter((b) => b.name !== 'whip-lash') }, { pose: coilPose });
+    addPart(k, { ...whipPart, bodies: whipPart.bodies.filter((b) => b.name === 'whip-lash') });
 
     // ------------------------------------------------------------------ boots
     // A foot with a tall shaft and a turned-down cuff: the trousers are tucked in.
@@ -628,48 +572,7 @@ export default defineAsset({
     // ------------------------------------------------------------------ the torch in the left fist
     // Local frame: the grip center at the origin, the stick along +Y. A wrapped stick, a dark cup,
     // and a flame of three tongues (orange, emissive).
-    const stick = sdf.cylinder(0.0125, 0.21, 0.004).at(0, 0.035, 0);
-    k.body('torch', torchPose(stick), { color: C.torch, roughness: 0.75, detail: 0.004, bone: 'hand.L' });
-    const wrap = sdf.cylinder(0.0185, 0.078, 0.006).at(0, 0.086, 0);
-    k.body('torch-wrap', torchPose(wrap), {
-      color: C.wrap,
-      roughness: 0.9,
-      detail: 0.004,
-      bone: 'hand.L',
-      bump: (x, y, z) => 0.0014 * Math.sin((x + y * 1.4 + z) * 420),
-    });
-    const cup = sdf
-      .union(sdf.cone([0, 0.12, 0], [0, 0.17, 0], 0.016, 0.032).round(0.003), sdf.torus(0.032, 0.0055).at(0, 0.17, 0))
-      .subtract(sdf.cylinder(0.025, 0.02).at(0, 0.18, 0));
-    k.body('torch-head', torchPose(cup), { color: C.torchHead, roughness: 0.85, detail: 0.004, bone: 'hand.L' });
-    // A dark cloth band wraps the cup.
-    const clothBand = sdf.cylinder(0.0275, 0.017, 0.004).at(0, 0.142, 0).subtract(sdf.cylinder(0.02, 0.05));
-    k.body('torch-band', torchPose(clothBand), { color: C.cloth, roughness: 0.95, detail: 0.004, bone: 'hand.L' });
-    // The flame: a teardrop 0.09 tall with two thin tongues leaning out, and a yellow core on the
-    // front (full-bright colors under a moderate emissive, so it stays saturated orange).
-    const flame = sdf.smoothUnion(
-      0.01,
-      sdf.cone([0, 0.165, 0], [0.001, 0.256, 0], 0.03, 0.004),
-      sdf.cone([0.014, 0.17, 0.002], [0.034, 0.23, 0.004], 0.014, 0.003),
-      sdf.cone([-0.014, 0.17, -0.002], [-0.032, 0.222, 0], 0.013, 0.003),
-    );
-    k.body('flame', torchPose(flame), {
-      color: C.flame,
-      roughness: 0.5,
-      emissive: C.flameGlow,
-      emissiveIntensity: 0.6,
-      detail: 0.004,
-      bone: 'hand.L',
-    });
-    const core = sdf.smoothUnion(0.008, sdf.sphere(0.021).at(0, 0.19, 0.008), sdf.cone([0, 0.19, 0.008], [0, 0.236, 0.006], 0.019, 0.004));
-    k.body('flame-core', torchPose(core), {
-      color: C.flameCore,
-      roughness: 0.5,
-      emissive: C.flameCore,
-      emissiveIntensity: 0.7,
-      detail: 0.004,
-      bone: 'hand.L',
-    });
+    addPart(k, treasureHunterTorch(), { pose: torchPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;

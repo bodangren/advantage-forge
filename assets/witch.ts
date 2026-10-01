@@ -1,4 +1,7 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { witchBroom } from './parts/witch-broom.js';
+import { witchHat } from './parts/witch-hat.js';
+import { witchPotion } from './parts/witch-potion.js';
 
 /**
  * Witch - Chibi Quest enemy (catalog `enemies/humanoid/witch`), about 1.07 m to the hat tip, faces +Z.
@@ -65,7 +68,6 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const EYE = [0.105, 0.628] as const;
 const pair = (s: sdf.Shape) => s.mirror('x');
-const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 // Joints (the mage's). The right fist holds the broom upright at his side; the left hand is open,
 // palm up, with the potion bottle standing on it.
@@ -278,99 +280,11 @@ export default defineAsset({
     // ------------------------------------------------------------------ the hat
     // Local frame: the crown's base center at the origin. A wide wavy brim, a tall cone crown whose
     // top bends over to his right (-X) and droops, a purple band with a gold buckle, one patch.
-    const BRIM_MID = [
-      [0, 0.021],
-      [0.2, 0.016],
-      [0.26, 0.004],
-      [0.32, -0.0215],
-      [0.36, -0.047],
-      [0.6, -0.1],
-    ] as const;
-    const brimMid = (r: number) => {
-      let i = 0;
-      while (i < BRIM_MID.length - 2 && r > BRIM_MID[i + 1]![0]) i++;
-      const [r0, y0] = BRIM_MID[i]!;
-      const [r1, y1] = BRIM_MID[i + 1]!;
-      return y0 + (y1 - y0) * Math.min(1, Math.max(0, (r - r0) / (r1 - r0)));
-    };
-    const brimWave = (x: number, z: number) => Math.sin(Math.atan2(z, x) * 3 - 0.6) * Math.min(1, Math.max(0, (Math.hypot(x, z) - 0.2) / 0.15));
     const hatPose = (s: sdf.Shape) => s.rotateX(-18).rotateZ(-10).at(...HAT_AT);
-    const brim = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.0, 0.012],
-            [0.2, 0.006],
-            [0.27, -0.008],
-            [0.32, -0.03],
-            [0.35, -0.058],
-            [0.364, -0.052],
-            [0.357, -0.036],
-            [0.32, -0.013],
-            [0.26, 0.014],
-            [0.2, 0.026],
-            [0.0, 0.03],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-      )
-      .displace(0.02, (x, y, z) => brimWave(x, z) * Math.tanh((y - brimMid(Math.hypot(x, z))) / 0.004), 2);
-    const crownCone = sdf.revolve(
-      profile.polygon(
-        [
-          [0, -0.02],
-          [0.215, -0.02],
-          [0.2, 0.04],
-          [0.172, 0.1],
-          [0.14, 0.16],
-          [0.108, 0.212],
-          [0.085, 0.245],
-          [0, 0.25],
-        ],
-        { smooth: true, samples: 6 },
-      ),
-    );
-    const point = sdf.chain(
-      [
-        [0.0, 0.215, 0, 0.095],
-        [-0.005, 0.255, 0, 0.072],
-        [-0.018, 0.295, 0, 0.053],
-        [-0.055, 0.33, 0, 0.038],
-        [-0.108, 0.35, 0, 0.026],
-        [-0.16, 0.345, 0, 0.017],
-        [-0.2, 0.325, 0, 0.011],
-        [-0.225, 0.302, 0, 0.007],
-      ],
-      0.02,
-    );
-    const hatInner = sdf.ellipsoid([0.212, 0.2, 0.2]).at(0, -0.06, 0.01);
-    const crown = sdf.smoothUnion(0.03, crownCone, point);
-    const patchAt = sdf.surfacePoint(crown, [0.06, 0.2, 0.3], 0);
-    const hatLit = rgb(C.hatLit);
-    const hatDark = rgb(C.hatInside);
-    const hatLocal = sdf
-      .smoothUnion(0.03, brim.bone('hatroot'), crownCone.bone('hatroot'), point.bone('hattip'))
-      .subtract(hatInner)
-      .paintFn((x, y, z, base) => {
-        const r = Math.hypot(x, z);
-        if (r < 0.4 && y < brimMid(r) - 0.016 * brimWave(x, z)) return hatDark;
-        return noise.fbm(x * 14, y * 9, z * 14, 2) > 0.28 ? hatLit : base;
-      })
-      .paintWhere(sdf.ellipsoid([0.03, 0.034, 0.03]).at(...patchAt), C.patch);
-    k.body('hat', hatPose(hatLocal), { color: C.hat, roughness: 0.9, detail: 0.007 });
-    // The band: a thin raised ring of the crown; the buckle is a gold frame on the front.
-    const BAND_Y = 0.062;
-    const band = crownCone.round(0.008).smoothIntersect(0.006, sdf.box([1, 0.052, 1]).at(0, BAND_Y, 0));
-    k.body('band', hatPose(band), { color: T.band, roughness: 0.7, bone: 'hatroot' });
-    const crownZ = sdf.raycast(crownCone, [0, BAND_Y, 1], [0, 0, -1])![2];
-    const buckle = sdf
-      .union(
-        sdf.box([0.06, 0.056, 0.014], 0.004).subtract(sdf.box([0.036, 0.03, 0.05])),
-        sdf.box([0.007, 0.032, 0.012], 0.002),
-      )
-      .rotateX(-14)
-      .at(0, BAND_Y, crownZ + 0.012);
-    k.body('buckle', hatPose(buckle), { color: C.gold, roughness: 0.32, metalness: 0.9, detail: 0.003, bone: 'hatroot' });
+    const hatPart = witchHat(mapTint(k));
+    addPart(k, hatPart, { pose: hatPose });
+    const hatInner = hatPart.regions!.inner!;
+    const brim = hatPart.regions!.brim!;
 
     // ------------------------------------------------------------------ wild hair
     // A cap, a ragged fringe over the brows, and thick S-waved locks that fall behind the ears, over
@@ -642,82 +556,11 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ the broom
     // Built along +Y with the grip at the origin: a crooked stick, a cord, and a bristle bundle on top.
-    const stick = sdf.chain(
-      [
-        [0, -0.33, 0, 0.011],
-        [0.008, -0.2, 0.004, 0.0135],
-        [-0.006, -0.06, -0.004, 0.0145],
-        [0.004, 0.06, 0.006, 0.0135],
-        [0.0, 0.17, 0.0, 0.0125],
-      ],
-      0.01,
-    );
-    const BR_Y = 0.17;
-    const bristles = sdf.smoothUnion(
-      0.012,
-      sdf.cone([0, BR_Y - 0.01, 0], [0, BR_Y + 0.11, 0], 0.02, 0.04),
-      ...Array.from({ length: 12 }, (_, i) => {
-        const a = (i / 12) * 360 + (i % 2) * 15;
-        const spread = 0.038 + 0.016 * noise.random(i, 2, 3);
-        const len = 0.16 + 0.03 * noise.random(i, 5, 6);
-        const p = rotY([spread, 0, 0], a);
-        return sdf.cone([p[0] * 0.3, BR_Y, p[2] * 0.3], [p[0], BR_Y + len, p[2]], 0.014, 0.0065);
-      }),
-    );
-    const cord = sdf.torus(0.02, 0.0075).at(0, BR_Y - 0.003, 0);
-    const woodDark = rgb(C.stickDark);
-    k.body(
-      'broom',
-      broomPose(stick).paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 14, z * 90, 2) > 0.25 ? woodDark : base)),
-      { color: C.stick, roughness: 0.8, detail: 0.004, bone: 'hand.R', bump: (x, y, z) => 0.0015 * noise.fbm(x * 90, y * 12, z * 90, 2) },
-    );
-    const bristleDark = rgb(C.bristleDark);
-    k.body(
-      'bristles',
-      broomPose(bristles).paintFn((x, y, z, base) => (noise.fbm(x * 70, y * 40, z * 70, 2) > 0.1 ? bristleDark : base)),
-      { color: C.bristle, roughness: 0.9, detail: 0.0035, bone: 'hand.R', bump: (x, y, z) => 0.002 * noise.fbm(x * 60, y * 200, z * 60, 2) },
-    );
-    k.body('cord', broomPose(cord), { color: C.cord, roughness: 0.85, detail: 0.003, bone: 'hand.R' });
+    addPart(k, witchBroom(broomPose));
 
     // ------------------------------------------------------------------ the potion bottle
     // A round glass flask with a neck and a cork on the palm; a bright liquid core and a few bubbles.
-    const bottleShape = (r: number) =>
-      sdf.smoothUnion(
-        0.012,
-        sdf.sphere(r),
-        sdf.cylinder(0.0145 * (r / 0.05), 0.05).at(0, r + 0.005, 0),
-        sdf.torus(0.0165 * (r / 0.05), 0.005).at(0, r + 0.03, 0),
-      );
-    const bubbleStencil = [
-      [0.03, 0.028, 0.02, 0.011],
-      [-0.028, 0.02, 0.028, 0.009],
-      [0.01, 0.036, -0.03, 0.008],
-    ] as const;
-    const bubbles = sdf.union(...bubbleStencil.map(([x, y, z, r]) => sdf.sphere(r).at(x, y, z)));
-    const glass = sdf.smoothUnion(0.008, bottleShape(0.05), bubbles);
-    k.body('potion', glass.at(...BOTTLE_AT), {
-      color: C.potion,
-      roughness: 0.15,
-      emissive: C.potionGlow,
-      emissiveIntensity: 1.2,
-      opacity: 0.85,
-      detail: 0.0035,
-      bone: 'hand.L',
-    });
-    k.body('liquid', sdf.sphere(0.037).at(0, -0.003, 0).at(...BOTTLE_AT), {
-      color: C.potionCore,
-      roughness: 0.3,
-      emissive: C.potionCore,
-      emissiveIntensity: 1.2,
-      detail: 0.0035,
-      bone: 'hand.L',
-    });
-    k.body('cork', sdf.cylinder(0.0155, 0.02, 0.004).at(BOTTLE_AT[0], BOTTLE_AT[1] + 0.05 + 0.06, BOTTLE_AT[2]), {
-      color: C.cork,
-      roughness: 0.85,
-      detail: 0.003,
-      bone: 'hand.L',
-    });
+    addPart(k, witchPotion(BOTTLE_AT));
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, follow, quat, euler } = motion;

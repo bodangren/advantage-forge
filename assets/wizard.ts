@@ -1,4 +1,6 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { MOUNT as HAT_MOUNT, wizardHat } from './parts/wizard-hat.js';
+import { MOUNT as STAFF_MOUNT, ORB_BASE_MOUNT, wizardStaff, wizardStaffFire } from './parts/wizard-staff.js';
 
 /**
  * Wizard — Chibi Quest hero (catalog `heroes/magic/wizard`), about 1.05 m to the hat point,
@@ -120,19 +122,11 @@ const handR = (s: sdf.Shape) => s.rotateX(HAND_R.pitch).rotateZ(HAND_R.roll).at(
 const handRPoint = (p: V3) => add(rotZ(rotX(p, HAND_R.pitch), HAND_R.roll), WRIST_R);
 const STAFF_AXIS = rotZ(rotX([0, 0, 1], HAND_R.pitch), HAND_R.roll);
 const GRIP = handRPoint([-0.007, -0.04, 0.004]);
-const L_DOWN = (GRIP[1] - 0.03) / STAFF_AXIS[1];
 const L_UP = (0.785 - GRIP[1]) / STAFF_AXIS[1];
 const along = (t: number): V3 => add(GRIP, scale(STAFF_AXIS, t));
 const STAFF_TOP = along(L_UP);
-// Below the fist the pole bows gently in, so its foot stands beside the boot, clear of the hem:
-// the foot sits where a less tilted staff (pitch -80, roll 12) would put it.
-const FOOT_AXIS = rotZ(rotX([0, 0, 1], -80), 12);
-const FOOT_SHIFT = sub(add(GRIP, scale(FOOT_AXIS, -(GRIP[1] - 0.03) / FOOT_AXIS[1])), along(-L_DOWN));
-/** A point on the pole: straight above the grip (t >= 0), bowed below it. */
-const pole = (t: number): V3 => (t >= 0 ? along(t) : add(along(t), scale(FOOT_SHIFT, (t / L_DOWN) ** 2)));
 /** The fire orb in the staff head (and the `orb` bone that flares it). */
 const ORB: V3 = add(STAFF_TOP, [-0.012, 0.085, 0.004]);
-const ORB_FLAME = 0.26;
 /** The hat's pivot: the center of the crown's base (and the `hatroot` bone). */
 const HAT_AT: V3 = [0, 0.735, -0.012];
 
@@ -418,73 +412,9 @@ export default defineAsset({
       // Soft felt: the edge rises and falls in four broad waves. The sign flips across the
       // brim's middle surface, so both faces move the same way and the brim keeps its thickness.
       .displace(0.016, (x, y, z) => brimWave(x, z) * Math.tanh((y - brimMid(Math.hypot(x, z))) / 0.004), 2);
-    const crownCone = sdf.cone([0, 0.0, 0], [0, 0.19, -0.006], 0.212, 0.1);
-    const point = sdf.chain(
-      [
-        [0.0, 0.18, -0.008, 0.1],
-        [0.02, 0.25, -0.02, 0.072],
-        [0.08, 0.305, -0.04, 0.05],
-        [0.17, 0.322, -0.06, 0.034],
-        [0.24, 0.285, -0.07, 0.022],
-        [0.272, 0.228, -0.07, 0.013],
-        [0.268, 0.19, -0.066, 0.006],
-      ],
-      0.03,
-    );
+    // The hat itself is the part `wizard-hat`; the brim and the cavity here shape the hair.
     const hatInner = sdf.ellipsoid([0.212, 0.2, 0.2]).at(0, -0.06, 0.01);
-    // A few gold sparks are stitched over the felt.
-    const sparks = (x: number, y: number, z: number, base: readonly [number, number, number]) => {
-      const c = 0.055;
-      const i = Math.floor(x / c);
-      const j = Math.floor(y / c);
-      const l = Math.floor(z / c);
-      if (noise.random(i, j, l) < 0.8) return base;
-      const cx = (i + 0.3 + 0.4 * noise.random(j, l, i)) * c;
-      const cy = (j + 0.3 + 0.4 * noise.random(l, i, j)) * c;
-      const cz = (l + 0.3 + 0.4 * noise.random(i, l, j)) * c;
-      return Math.hypot(x - cx, y - cy, z - cz) < 0.008 ? rgb(C.gold) : base;
-    };
-    const hatLocal = sdf
-      .smoothUnion(0.03, brim.bone('hatroot'), crownCone.bone('hatroot'), point.bone('hattip'))
-      .subtract(hatInner)
-      .paintFn((x, y, z, base) => {
-        // The underside of the brim and the inside of the crown are dark.
-        const r = Math.hypot(x, z);
-        return r < 0.4 && y < brimMid(r) - 0.016 * brimWave(x, z) ? rgb(T.hatInside) : base;
-      });
-    k.body('hat', hatPose(hatLocal).paintFn(sparks), { color: T.cloth, roughness: 0.85 });
-    // Band around the crown with a gold flame emblem and a red gem on the front left.
-    const band = crownCone
-      .round(0.009)
-      .smoothIntersect(0.004, sdf.box([0.6, 0.048, 0.6], 0.008).at(0, 0.058, 0))
-      .subtract(hatInner);
-    const emblemAt: V3 = [0.086, 0.064, 0.183];
-    const emblem = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [0, -0.026],
-            [0.024, -0.006],
-            [0.022, 0.018],
-            [0.006, 0.042],
-            [0.004, 0.016],
-            [-0.012, 0.03],
-            [-0.022, 0.004],
-          ],
-          { smooth: true, samples: 4 },
-        ),
-        0.016,
-        0.004,
-      )
-      .scale(1.6)
-      .rotateY(25)
-      .at(...emblemAt);
-    const emblemGem = sdf.sphere(0.018).scale([1, 1.2, 0.7]).rotateY(25).at(emblemAt[0] + 0.006, emblemAt[1] - 0.004, emblemAt[2] + 0.012);
-    k.body('hat-band', hatPose(band.union(emblem.paint(C.gold), emblemGem.paint(C.gem))), {
-      color: C.leather,
-      roughness: 0.6,
-      bone: 'hatroot',
-    });
+    addPart(k, wizardHat(mapTint(k)), { pose: (s) => s.at(...HAT_MOUNT) });
 
     // ------------------------------------------------------------------ hair
     // Wavy locks fall from under the hat to the shoulders; side-swept bangs over the brow.
@@ -768,48 +698,10 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ the staff and its fire orb
-    // A gnarled pole along the staff axis through the fist, with a forked head cradling the orb.
-    const wobble = (t: number, a: number): V3 => [Math.sin(t * 23) * a, 0, Math.cos(t * 17) * a];
-    const polePts = [-L_DOWN, -L_DOWN * 0.6, -L_DOWN * 0.25, 0, L_UP * 0.35, L_UP * 0.7, L_UP].map((t, i) => {
-      const p = add(pole(t), wobble(t, i === 3 ? 0 : 0.006));
-      return [p[0], p[1], p[2], 0.016 - i * 0.0006] as [number, number, number, number];
-    });
-    const top = STAFF_TOP;
-    // Two gnarled prongs curl up around the orb; the outer one reaches farther.
-    const prong = (side: 1 | -1) =>
-      sdf.chain(
-        [
-          [top[0], top[1], top[2], 0.015],
-          [top[0] + side * 0.05, top[1] + 0.03, top[2] + 0.004, 0.013],
-          [ORB[0] + side * 0.088, ORB[1] - 0.01, ORB[2], 0.011],
-          [ORB[0] + side * (side < 0 ? 0.1 : 0.08), ORB[1] + 0.06, ORB[2] - 0.004, 0.009],
-          [ORB[0] + side * (side < 0 ? 0.075 : 0.05), ORB[1] + 0.1, ORB[2], 0.006],
-        ],
-        0.008,
-      );
-    const knots = sdf.union(sdf.sphere(0.02).at(...along(L_UP * 0.45)), sdf.sphere(0.018).at(...pole(-L_DOWN * 0.5)));
-    const staff = sdf
-      .smoothUnion(0.012, sdf.chain(polePts, 0.02), prong(1), prong(-1), knots)
-      .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 12, z * 90, 2) > 0.25 ? rgb(C.woodDark) : base));
-    k.body('staff', staff, {
-      color: C.wood,
-      roughness: 0.8,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 160, y * 25, z * 160, 2),
-    });
-
-    // Fire: the orb in the staff head and the small flame over the open palm.
-    const orbBase: V3 = [ORB[0], ORB[1] - ORB_FLAME * 0.3, ORB[2]];
-    const orbFlame = flame(ORB_FLAME).at(...orbBase);
+    // The gnarled staff and the orb flame are the part `wizard-staff`; the palm flame stays here.
+    addPart(k, wizardStaff(), { pose: (s) => s.at(...STAFF_MOUNT) });
+    addPart(k, wizardStaffFire(), { pose: (s) => s.at(...ORB_BASE_MOUNT) });
     const palmFlame = flame(0.1).at(...PALM_FLAME);
-    k.body('fire', orbFlame.paintFn(firePaint(orbBase, ORB_FLAME)), {
-      color: C.fire,
-      roughness: 0.4,
-      emissive: '#ff5a14',
-      emissiveIntensity: 0.5,
-      detail: 0.004,
-      bone: 'orb',
-    });
     k.body('palm-fire', palmFlame.paintFn(firePaint(PALM_FLAME, 0.1)), {
       color: C.fire,
       roughness: 0.4,

@@ -1,4 +1,7 @@
-import { defineAsset, motion, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, mixRgb, sdf } from '../src/index.js';
+import { shamanCap, MOUNT as CAP_MOUNT } from './parts/shaman-cap.js';
+import { shamanStaff, MOUNT as STAFF_MOUNT } from './parts/shaman-staff.js';
+import { shamanFeather } from './parts/shaman-feather.js';
 
 /**
  * Shaman — Chibi Quest P1 hero (catalog `heroes/magic/shaman`), about 1.15 m to the antler tips,
@@ -70,7 +73,6 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const EYE = [0.105, 0.628] as const;
 const pair = (s: sdf.Shape) => s.mirror('x');
-const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 // Joints: human shoulders like the rogue's. The right fist holds the staff upright beside the
 // hip; the left fist holds the feather up at the side.
@@ -97,11 +99,6 @@ const rotX = (p: V3, d: number): V3 => {
   const s = Math.sin(d * rad);
   return [p[0], p[1] * c - p[2] * s, p[1] * s + p[2] * c];
 };
-const rotY = (p: V3, d: number): V3 => {
-  const c = Math.cos(d * rad);
-  const s = Math.sin(d * rad);
-  return [p[0] * c + p[2] * s, p[1], -p[0] * s + p[2] * c];
-};
 const rotZ = (p: V3, d: number): V3 => {
   const c = Math.cos(d * rad);
   const s = Math.sin(d * rad);
@@ -127,9 +124,7 @@ const GRIP = handPoint(HAND_R, WRIST_R, [-0.008 * FIST, -0.044 * FIST, 0.004 * F
 const STAFF_AXIS = norm(rotZ(rotX([0, 0, 1], HAND_R.pitch), HAND_R.roll));
 
 // The rattle staff: the butt just above the floor, the grip in the fist, the rattle head on top.
-const STAFF_DOWN = (GRIP[1] - 0.008) / STAFF_AXIS[1];
 const RATTLE_T = 0.665; // the rattle head's center, along the staff from the grip
-const RATTLE_R = 0.06;
 const staffAt = (t: number): V3 => add(GRIP, [STAFF_AXIS[0] * t, STAFF_AXIS[1] * t, STAFF_AXIS[2] * t]);
 const RATTLE_AT = staffAt(RATTLE_T);
 const STAFF_TILT = { x: 90 + HAND_R.pitch, z: HAND_R.roll };
@@ -141,24 +136,6 @@ const FEATHER_AXIS = norm(rotZ(rotX([0, 0, 1], HAND_L.pitch), HAND_L.roll));
 const FEATHER_TILT = { x: 90 + HAND_L.pitch, z: HAND_L.roll };
 const FEATHER_FACE = norm(rotZ(rotX([0, 0, 1], FEATHER_TILT.x), FEATHER_TILT.z));
 const featherPose = (s: sdf.Shape) => s.rotateX(FEATHER_TILT.x).rotateZ(FEATHER_TILT.z).at(...GRIP_L);
-const rattlePose = (s: sdf.Shape) => s.rotateX(STAFF_TILT.x).rotateZ(STAFF_TILT.z).at(...RATTLE_AT);
-
-/**
- * A flat feather outline, base at the origin, tip at +Y (length len, half width w): a notched
- * vane like barbs, and a bare quill stub at the base.
- */
-const featherShape = (len: number, w: number, thick = 0.012) => {
-  const n = 10;
-  const right: [number, number][] = [];
-  for (let i = 1; i < n; i++) {
-    const f = i / n;
-    const v = Math.max(0, (f - 0.1) / 0.9);
-    const hw = Math.max(0.004, w * Math.pow(Math.sin(Math.PI * Math.pow(v, 0.6)), 0.7));
-    right.push([hw * (i % 2 ? 0.85 : 1), f * len]);
-  }
-  const pts: [number, number][] = [[0.004, 0], ...right, [0, len], ...right.map(([x, y]) => [-x, y] as [number, number]).reverse(), [-0.004, 0]];
-  return sdf.extrude(profile.polygon(pts), thick, 0.0035);
-};
 
 export default defineAsset({
   name: 'shaman',
@@ -366,83 +343,8 @@ export default defineAsset({
     k.body('hair', hairShape, { color: T.hair, roughness: 0.55, detail: 0.006, bone: 'head' });
 
     // ------------------------------------------------------------------ fur cap, band, antlers, feathers
-    const BAND_Y = 0.805;
-    const BAND_TILT = 6; // the front of the band is lower than the back
-    const skullOut = (d: number) => sdf.ellipsoid([HEAD[0] + d, HEAD[1] + d, HEAD[2] + d]).at(0, HEAD_Y, 0);
-    const capPlane = sdf.halfSpace(norm([0, -Math.cos(BAND_TILT * rad), -Math.sin(BAND_TILT * rad)]), -(BAND_Y + 0.02) * Math.cos(BAND_TILT * rad));
-    // A tall fur dome (0.08 m above the band) on a rolled brim 0.03 m thick that follows the band.
-    const dome = sdf.smoothUnion(0.03, skullOut(0.032), sdf.ellipsoid([0.15, 0.1, 0.14]).at(0, 0.862, -0.01)).intersect(capPlane);
-    const brim = skullOut(0.05).smoothIntersect(0.012, sdf.box([0.7, 0.03, 0.7], 0.012).rotateX(BAND_TILT).at(0, BAND_Y + 0.033, 0));
-    const capShape = sdf
-      .smoothUnion(0.012, dome, brim)
-      .displace(0.004, (x, y, z) => noise.fbm(x * 26, y * 26, z * 26, 3));
-    const capWithFolds = capShape.paintFn((x, y, z, base) => {
-      const f = noise.fbm(x * 70 + 3, y * 40, z * 70, 2);
-      return f > 0.12 ? mixRgb(base, rgb(C.hideDark), Math.min(1, (f - 0.12) * 4)) : base;
-    });
-    k.body('cap', capWithFolds, { color: C.hide, roughness: 0.9, detail: 0.007, bone: 'head', bump: (x, y, z) => 0.003 * noise.fbm(x * 60, y * 60, z * 60, 2) });
-
-    const bandShape = skullOut(0.022).smoothIntersect(0.004, sdf.box([0.7, 0.04, 0.7], 0.006).rotateX(BAND_TILT).at(0, BAND_Y, 0));
-    k.body('band', bandShape, { color: T.cloth, roughness: 0.8, detail: 0.005, bone: 'head' });
-
-    // Two antlers that sweep out and up and curve in at the tips: a main beam of 5 points
-    // (radius 0.022 tapering to 0.012) and two tines, on a round burl. The tips reach 0.24 m above
-    // the cap top.
-    const antler = sdf
-      .smoothUnion(
-        0.012,
-        sdf.chain(
-          [
-            [0.09, 0.875, -0.01, 0.022],
-            [0.135, 0.925, -0.02, 0.0195],
-            [0.19, 0.98, -0.04, 0.017],
-            [0.222, 1.045, -0.07, 0.0145],
-            [0.215, 1.105, -0.1, 0.012],
-          ],
-          0.015,
-        ),
-        sdf.chain(
-          [
-            [0.19, 0.98, -0.04, 0.0135],
-            [0.25, 1.03, -0.025, 0.0115],
-            [0.284, 1.09, -0.012, 0.0095],
-            [0.29, 1.15, -0.01, 0.0075],
-          ],
-          0.012,
-        ),
-        sdf.chain(
-          [
-            [0.222, 1.045, -0.07, 0.0125],
-            [0.178, 1.092, -0.07, 0.0105],
-            [0.152, 1.15, -0.07, 0.0075],
-          ],
-          0.012,
-        ),
-        sdf.sphere(0.032).at(0.09, 0.878, -0.01),
-      )
-      .paintFn((x, y, z, base) => {
-        const tip = Math.min(1, Math.max(0, (y - 1.03) / 0.07));
-        const groove = noise.fbm(x * 90, y * 22, z * 90, 2) > 0.35 ? 0.35 : 0;
-        return mixRgb(mixRgb(base, rgb(C.antlerTip), tip), rgb(C.hideDark), groove);
-      });
-    k.body('antlers', hard(antler), { color: C.antler, roughness: 0.75, detail: 0.005, bone: 'head', bump: (x, y, z) => 0.002 * noise.fbm(x * 70, y * 20, z * 70, 2) });
-
-    // Three feathers (red, yellow, teal) fan up at the front of the cap.
-    const capTop = (x: number) => sdf.raycast(capShape, [x, 1.3, 0.07], [0, -1, 0])![1];
-    const headFeather = (h: number, w: number, tilt: number, x: number, lean: number, color: string) => {
-      const f = sdf
-        .union(featherShape(h, w, 0.012).paint(color), sdf.capsule([0, -0.012, 0], [0, h * 0.94, 0], 0.0042).paint(C.quill))
-        .rotateX(-lean)
-        .rotateZ(tilt)
-        .at(x, capTop(x) - 0.012, 0.07);
-      return f;
-    };
-    const feathers = sdf.union(
-      headFeather(0.12, 0.0175, 30, -0.05, 12, C.red),
-      headFeather(0.12, 0.0175, -2, 0, 5, T.cloth),
-      headFeather(0.12, 0.0175, -32, 0.05, 12, C.yellow),
-    );
-    k.body('feathers', feathers, { color: C.yellow, roughness: 0.7, detail: 0.004, bone: 'head' });
+const capPart = shamanCap(mapTint(k));
+addPart(k, capPart, { pose: (s) => s.at(...CAP_MOUNT) });
 
     // ------------------------------------------------------------------ the tunic
     const tunicShape = sdf
@@ -639,52 +541,7 @@ export default defineAsset({
     k.body('anklets', anklets, { color: C.anklet, roughness: 0.6, detail: 0.006 });
 
     // ------------------------------------------------------------------ the rattle staff (right hand)
-    const sp = (t: number, w: number, r: number): [number, number, number, number] => {
-      const p = add(staffAt(t), [w, 0, w * 0.6]);
-      return [p[0], p[1], p[2], r];
-    };
-    const shaft = sdf.chain(
-      [
-        sp(-STAFF_DOWN, 0, 0.017),
-        sp(-0.12, 0.004, 0.0155),
-        sp(-0.03, 0, 0.0148),
-        sp(0.06, -0.001, 0.0148),
-        sp(0.2, 0.006, 0.016),
-        sp(0.3, 0.001, 0.0145),
-        sp(0.42, -0.006, 0.0158),
-        sp(0.52, 0.003, 0.0145),
-        sp(0.6, 0, 0.0138),
-        sp(RATTLE_T - 0.02, 0, 0.014),
-      ],
-      0.02,
-    );
-    const knots = sdf.union(
-      sdf.ellipsoid([0.021, 0.03, 0.021]).at(...staffAt(0.2)),
-      sdf.ellipsoid([0.02, 0.028, 0.02]).at(...staffAt(0.42)),
-      sdf.sphere(0.0195).at(...staffAt(-STAFF_DOWN + 0.023)),
-    );
-    const staffShape = sdf.smoothUnion(0.01, shaft, knots).paintFn((x, y, z, base) => (noise.fbm(x * 80, y * 14, z * 80, 2) > 0.3 ? mixRgb(base, rgb('#2a1a10'), 0.6) : base));
-    k.body('staff', staffShape, { color: C.staff, roughness: 0.85, bone: 'hand.R', detail: 0.005 });
-    // A wrapped round rattle head: a lumpy hide-brown ball with three cord wraps.
-    const rattleHead = sdf.ellipsoid([RATTLE_R, RATTLE_R + 0.008, RATTLE_R]).displace(0.004, (x, y, z) => noise.fbm(x * 55, y * 55, z * 55, 2));
-    k.body('rattle', rattlePose(rattleHead), { color: C.rattle, roughness: 0.85, bone: 'hand.R', detail: 0.005, bump: (x, y, z) => 0.002 * noise.fbm(x * 70, y * 20, z * 70, 2) });
-    const wrapRing = (d: number, r: number) => sdf.torus(Math.sqrt(Math.max(0.0004, (RATTLE_R + 0.004) ** 2 - d * d)) + 0.0015, r).at(0, d, 0);
-    const wraps = sdf.union(
-      wrapRing(-0.028, 0.0055),
-      wrapRing(0, 0.0065),
-      wrapRing(0.028, 0.0055),
-      sdf.torus(0.0185, 0.0062).at(0, -0.078, 0),
-      sdf.torus(0.019, 0.0062).at(0, -0.3, 0),
-    );
-    k.body('rattle-wrap', rattlePose(wraps), { color: C.wrap, roughness: 0.9, bone: 'hand.R', detail: 0.006 });
-    // Two feathers hang from cords under the rattle head.
-    const hang = (x: number, rot: number, len: number, color: string) =>
-      sdf
-        .union(featherShape(len, 0.024, 0.012).paint(color), sdf.capsule([0, -0.008, 0], [0, len * 0.92, 0], 0.0037).paint(C.quill))
-        .rotateZ(180 + rot)
-        .at(x, -0.035, 0.004);
-    const rattleFeathers = sdf.union(hang(0.046, 10, 0.125, C.fur), hang(-0.046, -10, 0.115, T.cloth));
-    k.body('rattle-feathers', rattlePose(rattleFeathers), { color: C.fur, roughness: 0.8, bone: 'hand.R', detail: 0.004 });
+addPart(k, shamanStaff(mapTint(k)), { pose: (s) => s.at(...STAFF_MOUNT) });
     // The spirit puff: a small teal glow hidden inside the rattle head; the attack scales it up.
     k.body('spirit-puff', sdf.sphere(0.034).displace(0.004, (x, y, z) => noise.fbm(x * 70, y * 70, z * 70, 2)).at(...RATTLE_AT), {
       color: T.cloth,
@@ -696,15 +553,7 @@ export default defineAsset({
       detail: 0.005,
     });
 
-    // ------------------------------------------------------------------ the large feather (left hand)
-    // 0.28 m long, 0.06 m wide: a cream vane with a brown tip and a brown quill that runs through the fist.
-    const bigFeather = sdf
-      .union(
-        featherShape(0.32, 0.048, 0.016).paintFn((_x, y, _z, base) => (y > 0.23 ? mixRgb(base, rgb(C.hide), clamp01((y - 0.23) / 0.04)) : base)),
-        sdf.capsule([0, -0.14, 0], [0, 0.31, 0], 0.0062).paint(C.quill),
-      )
-      .at(0, 0.1, 0); // the fist grips low on the quill, so the vane rises beside the shoulder
-    k.body('feather', featherPose(bigFeather), { color: C.fur, roughness: 0.75, bone: 'hand.L', detail: 0.004 });
+addPart(k, shamanFeather(), { pose: featherPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, keys, reach, orient } = motion;

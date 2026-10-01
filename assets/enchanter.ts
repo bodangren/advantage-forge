@@ -1,4 +1,6 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
+import { enchanterStaff, MOUNT as STAFF_MOUNT } from './parts/enchanter-staff.js';
+import { enchanterScroll, enchanterScrollFlame, FLAME_MOUNT } from './parts/enchanter-scroll.js';
 
 /**
  * Enchanter — Chibi Quest hero (catalog `heroes/magic/enchanter`), about 1.0 m to the top of the
@@ -73,7 +75,6 @@ const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
 const lerp = (a: V3, b: V3, t: number): V3 => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
-const scale = (a: V3, k: number): V3 => [a[0] * k, a[1] * k, a[2] * k];
 const norm = (a: V3): V3 => {
   const l = Math.hypot(a[0], a[1], a[2]);
   return [a[0] / l, a[1] / l, a[2] / l];
@@ -111,10 +112,7 @@ const fistLocal = (s: 1 | -1) =>
 // The wand hand swings forward and tips out, so the wand leans outward.
 const HAND_R = { pitch: -78, roll: 19 };
 const handR = (s: sdf.Shape) => s.rotateX(HAND_R.pitch).rotateZ(HAND_R.roll).at(...WRIST_R);
-const handRPoint = (p: V3) => add(rotZ(rotX(p, HAND_R.pitch), HAND_R.roll), WRIST_R);
 const WAND_AXIS = rotZ(rotX([0, 0, 1], HAND_R.pitch), HAND_R.roll);
-const GRIP = handRPoint([-0.007, -0.04, 0.004]);
-const along = (t: number): V3 => add(GRIP, scale(WAND_AXIS, t));
 /** The hat bones are unused (the mage's rig kept whole): the hat's pivot and the point's bone. */
 const HAT_AT: V3 = [0, 0.735, -0.012];
 const hatPoint = (p: V3) => add(rotZ(rotX(p, -12), -10), HAT_AT);
@@ -139,12 +137,6 @@ const SCROLL_YAW = 72;
 const ROLL_C: V3 = add(WRIST_L, rotY([0.1, 0.034, 0], HAND_L_YAW));
 const scrollPoint = (p: V3): V3 => add(rotY(p, SCROLL_YAW), ROLL_C);
 const scrollPose = (s: sdf.Shape) => s.rotateY(SCROLL_YAW).at(...ROLL_C);
-const STRIP = { y0: -0.3, y1: 0, w: 0.16, half: 0.006 };
-/** The sheet hangs from the roll in a slight curve (its bulge is along the local X). */
-const stripX = (y: number) => {
-  const t = (y - STRIP.y0) / (STRIP.y1 - STRIP.y0);
-  return 0.02 * Math.sin(t * Math.PI * 1.4) * Math.min(1, (1 - t) * 3);
-};
 /** The pink flame rises from the roll; the `orb` bone sits at its base. */
 const ORB_L: V3 = scrollPoint([0, 0.05, 0]);
 
@@ -541,7 +533,6 @@ export default defineAsset({
     // Small cuffs on the puffed sleeves.
     const cuffAt = (s: V3, e: V3, tag: string) => sdf.cone(lerp(s, e, 0.4), lerp(s, e, 0.47), 0.056, 0.056).round(0.002).bone(tag);
     // The staff's gold knob and collar, the chevrons on the under-skirt, and the cape's edge band.
-    const knob = sdf.union(sdf.sphere(0.035).at(...along(0.36)), sdf.torus(0.022, 0.006).rotateX(90).at(...along(0.3))).bone('hand.R');
     const chevron = (y: number) =>
       under
         .round(0.004)
@@ -572,7 +563,6 @@ export default defineAsset({
       cuffAt(SHOULDER, ELBOW_L, 'upperarm.L'),
       cuffAt(mx(SHOULDER), ELBOW_R, 'upperarm.R'),
       pair(toeCap),
-      knob,
       chevrons,
       capeBand,
     );
@@ -592,58 +582,11 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ the staff (walnut, gold knob)
-    const woodDark = rgb(C.woodDark);
-    const staff = sdf
-      .chain(
-        [
-          [...along(-0.26), 0.017],
-          [...along(0.0), 0.018],
-          [...along(0.34), 0.018],
-        ] as [number, number, number, number][],
-        0.01,
-      )
-      .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 12, z * 90, 2) > 0.25 ? woodDark : base));
-    k.body('staff', staff, { color: C.wood, roughness: 0.55, bone: 'hand.R' });
+    addPart(k, enchanterStaff(), { pose: (s) => s.at(...STAFF_MOUNT) });
 
     // ------------------------------------------------------------------ the scroll and its flame
-    // A cream sheet 0.16 wide, 0.3 long, 0.012 thick hangs from a roll in the open left hand.
-    const roll = sdf.cylinder(0.02, STRIP.w + 0.008, 0.006).rotateX(90);
-    const stripPts: [number, number][] = [];
-    const N = 18;
-    for (let i = 0; i <= N; i++) {
-      const y = STRIP.y0 + ((STRIP.y1 - STRIP.y0) * i) / N;
-      stripPts.push([stripX(y) - STRIP.half, y]);
-    }
-    for (let i = N; i >= 0; i--) {
-      const y = STRIP.y0 + ((STRIP.y1 - STRIP.y0) * i) / N;
-      stripPts.push([stripX(y) + STRIP.half, y]);
-    }
-    const strip = sdf.extrude(profile.polygon(stripPts), STRIP.w, 0.003);
-    const paperC = rgb(C.paper);
-    const glowC = rgb(C.glow);
-    const scroll = sdf.smoothUnion(0.006, roll, strip).paintFn((x, y, z) => {
-      const e = 0.35 * smooth(STRIP.w / 2 - 0.014, STRIP.w / 2, Math.abs(z));
-      return [paperC[0] + (glowC[0] - paperC[0]) * e, paperC[1] + (glowC[1] - paperC[1]) * e, paperC[2] + (glowC[2] - paperC[2]) * e] as const;
-    });
-    k.body('scroll', scrollPose(scroll), { color: C.paper, roughness: 0.7, detail: 0.003, bone: 'hand.L' });
-
-    // The magic: a flame rising 0.2 m above the roll (a tapered chain), full-bright pink, see-through.
-    const flameLocal: [number, number, number, number][] = [
-      [0, 0.03, 0, 0.032],
-      [0.014, 0.09, 0, 0.025],
-      [-0.014, 0.15, 0, 0.015],
-      [0.016, 0.2, 0, 0.008],
-      [0, 0.235, 0, 0.002],
-    ];
-    const flame = sdf.chain(flameLocal.map(([x, y, z, r]) => [...scrollPoint([x, y, z]), r] as [number, number, number, number]), 0.02);
-    k.body('flame', flame, { color: C.glow, roughness: 0.4, emissive: C.glow, emissiveIntensity: 0.6, opacity: 0.6, detail: 0.003, bone: 'orb' });
-    // Sparks above the flame (pink, not white).
-    const sparks = sdf.union(
-      sdf.sphere(0.016).at(...scrollPoint([0.034, 0.27, 0])),
-      sdf.sphere(0.012).at(...scrollPoint([-0.03, 0.3, 0.01])),
-      sdf.sphere(0.01).at(...scrollPoint([0.02, 0.325, -0.01])),
-    );
-    k.body('sparks', sparks, { color: C.sparkBase, roughness: 0.4, emissive: C.spark, emissiveIntensity: 1.4, opacity: 0.8, detail: 0.003, bone: 'orb' });
+    addPart(k, enchanterScroll(), { pose: scrollPose });
+    addPart(k, enchanterScrollFlame(), { pose: (s) => s.at(...FLAME_MOUNT) });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;

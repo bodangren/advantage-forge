@@ -1,4 +1,7 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, profile, rgb, sdf } from '../src/index.js';
+import { SPEAR_WARDEN_CREST_MOUNT, spearWardenCrest } from './parts/spear-warden-crest.js';
+import { spearWardenJavelin } from './parts/spear-warden-javelin.js';
+import { spearWardenSpear } from './parts/spear-warden-spear.js';
 
 /**
  * Spear warden — Chibi Quest hero (catalog `heroes/martial/spear-warden`), about 1.12 m to the top
@@ -347,46 +350,8 @@ export default defineAsset({
       detail: 0.006,
     });
 
-    // The crest: one broad swept fin from the brow to the nape, 0.03 thick, fanned with 6 grooves
-    // (paint and bump) so it reads as horsehair feathers.
-    const finSide: [number, number][] = [
-      [0.14, 0.83],
-      [0.155, 0.9],
-      [0.13, 0.97],
-      [0.08, 1.05],
-      [0.02, 1.105],
-      [-0.05, 1.125],
-      [-0.12, 1.09],
-      [-0.18, 1.02],
-      [-0.235, 0.94],
-      [-0.215, 0.89],
-      [-0.15, 0.85],
-      [-0.08, 0.82],
-      [0.0, 0.84],
-      [0.08, 0.82],
-    ];
-    const fin = sdf
-      .extrude(profile.polygon(finSide.map(([z, y]) => [-z, y] as [number, number]), { smooth: true, samples: 6 }), 0.03, 0.01)
-      .rotateY(90);
-    const PZ = -0.06;
-    const PY = 0.8;
-    const grooveAt = [-50, -31, -12, 7, 26, 44];
-    const grooveD = (y: number, z: number) => {
-      const t = Math.atan2(PZ - z, y - PY) / rad;
-      return Math.min(...grooveAt.map((g) => Math.abs(t - g)));
-    };
-    const crest = fin.paintFn((x, y, z, base) => {
-      const d = grooveD(y, z);
-      const shade = y < 0.93 ? mixRgb(base, rgb(C.redDark), 0.55) : base;
-      return d < 2.6 && y > 0.88 ? mixRgb(shade, rgb(C.redDark), 0.9) : shade;
-    });
-    k.body('crest', crest, {
-      color: C.red,
-      roughness: 0.7,
-      bone: 'plume',
-      detail: 0.005,
-      bump: (x, y, z) => -0.0022 * Math.max(0, 1 - grooveD(y, z) / 3.4) + 0.0008 * noise.noise3(x * 120, y * 40, z * 120),
-    });
+    // The crest: the shared part (assets/parts/spear-warden-crest.ts), mounted at the head center.
+    addPart(k, spearWardenCrest(), { pose: (s) => s.at(...SPEAR_WARDEN_CREST_MOUNT) });
 
     // ------------------------------------------------------------------ torso: skin, skirt, cuirass, belt
     const torso = sdf
@@ -652,114 +617,13 @@ export default defineAsset({
     k.body('straps', pair(footPose(straps).bone('foot.L')), { color: C.leather, roughness: 0.7, detail: 0.007 });
 
     // ------------------------------------------------------------------ the spear (right hand) and the javelin (left hand)
-    const SP_TOP = 1.5;
     const spearPose = (s: sdf.Shape) => s.rotateZ(TILT).at(...BUTT);
-    const shaftLen = 1.3;
-    const shaft = sdf.capsule([0, 0, 0], [0, shaftLen, 0], 0.014).paintFn((x, y, z, base) => (y > 0.22 && y < 0.36 ? mixRgb(base, rgb('#2e1c10'), 0.6) : base));
-    k.body('spear', spearPose(shaft), {
-      color: C.shaft,
-      roughness: 0.75,
-      bone: 'hand.R',
-      detail: 0.004,
-      bump: (x, y, z) => 0.0007 * noise.noise3(x * 80, y * 10, z * 80),
-    });
-    // A bigger leaf head: 0.27 long, 0.1 wide, with a midrib and dark rims, on a gold collar.
-    const HEAD_LEN = 0.27;
-    const leaf = profile.polygon(
-      (
-        [
-          [-0.014, 0.0],
-          [0.014, 0.0],
-          [0.032, 0.035],
-          [0.05, 0.09],
-          [0.037, 0.16],
-          [0.015, 0.23],
-          [0, 0.27],
-          [-0.015, 0.23],
-          [-0.037, 0.16],
-          [-0.05, 0.09],
-          [-0.032, 0.035],
-        ] as [number, number][]
-      ).map(([x, y]) => [x, y] as [number, number]),
-      { smooth: true, samples: 4 },
-    );
-    const bladeAt = (s: sdf.Shape) => s.at(0, SP_TOP - HEAD_LEN, 0);
-    const blade = bladeAt(
-      sdf.smoothUnion(
-        0.006,
-        sdf.extrude(leaf, 0.01, 0.004),
-        sdf.capsule([0, 0.0, 0], [0, HEAD_LEN - 0.02, 0], 0.0085), // midrib
-      ),
-    ).paintWhere(
-      bladeAt(sdf.extrude(leaf, 0.3).subtract(sdf.extrude(profile.offsetProfile(leaf, -0.008), 0.3))),
-      C.bronzeDark,
-      0.0015,
-    );
-    const socket = sdf.union(
-      sdf.cone([0, SP_TOP - HEAD_LEN - 0.03, 0], [0, SP_TOP - HEAD_LEN + 0.02, 0], 0.016, 0.024),
-      sdf.cylinder(0.0245, 0.022, 0.006).at(0, SP_TOP - HEAD_LEN - 0.04, 0),
-      sdf.torus(0.02, 0.006).at(0, SP_TOP - HEAD_LEN - 0.065, 0),
-    );
-    const buttCap = sdf.cone([0, -0.004, 0], [0, 0.05, 0], 0.012, 0.0205).smoothUnion(0.006, sdf.torus(0.019, 0.0055).at(0, 0.05, 0));
-    k.body('spear-bronze', spearPose(sdf.union(blade, socket, buttCap)), {
-      color: C.bronze,
-      roughness: 0.45,
-      metalness: 0.7,
-      bone: 'hand.R',
-      detail: 0.003,
-    });
-    const tassel = sdf.union(
-      ...[0, 1, 2, 3, 4, 5].map((i) => {
-        const a = (i * 60 + 15) * rad;
-        const top: V3 = [0.013 * Math.cos(a), SP_TOP - HEAD_LEN - 0.05, 0.013 * Math.sin(a)];
-        const tip: V3 = [0.03 * Math.cos(a), SP_TOP - HEAD_LEN - 0.125, 0.03 * Math.sin(a)];
-        return sdf.cone(top, tip, 0.0105, 0.0035);
-      }),
-    );
-    k.body('spear-tassel', spearPose(tassel), { color: C.red, roughness: 0.75, bone: 'hand.R', detail: 0.003 });
+    addPart(k, spearWardenSpear(), { pose: spearPose });
 
-    // The javelin: a bronze shaft 0.38 long with a leaf blade 0.14 long and 0.05 wide, held in the fist
-    // and pointing up and forward at about 45 degrees.
+    // The javelin: held in the fist and pointing up and forward at about 45 degrees.
     const jav = aim(DL);
     const javPose = (s: sdf.Shape) => s.rotateX(jav.a).rotateZ(jav.b).at(...JAV_BUTT);
-    k.body('javelin', javPose(sdf.capsule([0, 0, 0], [0, 0.4, 0], 0.0115)), {
-      color: C.bronze,
-      roughness: 0.4,
-      metalness: 0.8,
-      bone: 'hand.L',
-      detail: 0.004,
-    });
-    const jleaf = profile.polygon(
-      [
-        [-0.01, 0],
-        [0.01, 0],
-        [0.021, 0.02],
-        [0.025, 0.055],
-        [0.017, 0.1],
-        [0, 0.14],
-        [-0.017, 0.1],
-        [-0.025, 0.055],
-        [-0.021, 0.02],
-      ],
-      { smooth: true, samples: 4 },
-    );
-    const jleafAt = (sh: sdf.Shape) => sh.at(0, 0.38, 0);
-    k.body(
-      'javelin-blade',
-      javPose(
-        sdf.union(
-          jleafAt(sdf.extrude(jleaf, 0.008, 0.003)),
-          sdf.cone([0, 0.35, 0], [0, 0.385, 0], 0.012, 0.0175),
-        ),
-      ).paintWhere(javPose(jleafAt(sdf.extrude(jleaf, 0.3).subtract(sdf.extrude(profile.offsetProfile(jleaf, -0.006), 0.3)))), C.bronzeDark, 0.0012),
-      {
-        color: C.bronze,
-        roughness: 0.4,
-        metalness: 0.8,
-        bone: 'hand.L',
-        detail: 0.003,
-      },
-    );
+    addPart(k, spearWardenJavelin(), { pose: javPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

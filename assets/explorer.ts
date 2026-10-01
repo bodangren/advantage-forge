@@ -1,4 +1,7 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, sdf } from '../src/index.js';
+
+import { explorerHat } from './parts/explorer-hat.js';
+import { explorerMap } from './parts/explorer-map.js';
 
 /**
  * Explorer — Chibi Quest hero (catalog `heroes/support/explorer`), about 0.96 m to the top of the
@@ -280,41 +283,8 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2, detail: 0.004 });
 
     // ------------------------------------------------------------------ the soft bucket hat
-    // Local frame: the brim's plane at y = 0 on the head's axis; tilted up 10 degrees at the front
-    // and set on the head, so the brow and the eyes show below it.
     const hatPose = (s: sdf.Shape) => s.rotateX(-10).at(0, 0.765, 0);
-    // A low rounded crown (0.08 m above the brim) with a shallow dent on top and one soft crease
-    // down the front.
-    const crown = sdf.ellipsoid([0.218, 0.13, 0.212]).intersect(sdf.halfSpace([0, -1, 0], 0.004));
-    const dent = sdf.ellipsoid([0.1, 0.025, 0.1]).at(0, 0.148, -0.005);
-    const crease = sdf.box([0.014, 0.07, 0.022], 0.006).rotateX(-8).at(0, 0.06, 0.168);
-    // The brim: wide (r 0.23), 0.018 thick, drooping 0.02 at the edge, rounded rim.
-    const brim = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.11, 0.01],
-            [0.17, 0.009],
-            [0.235, 0.0],
-            [0.262, -0.012],
-            [0.262, -0.03],
-            [0.235, -0.018],
-            [0.17, -0.009],
-            [0.11, -0.008],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-      )
-      .scale([1, 1, 1.02]);
-    const hatShape = crown.smoothSubtract(0.02, dent, crease).smoothUnion(0.015, brim);
-    k.body('hat', hatPose(hatShape), {
-      color: T.shirt,
-      roughness: 0.85,
-      bone: 'head',
-      bump: (x, y, z) => 0.0008 * noise.fbm(x * 90, y * 90, z * 90, 2),
-    });
-    const hatBand = sdf.torus(0.2145, 0.012).scale([1, 1, 0.975]).at(0, 0.026, 0);
-    k.body('hat-band', hatPose(hatBand), { color: T.band, roughness: 0.75, bone: 'head', detail: 0.006 });
+    addPart(k, explorerHat(mapTint(k, { hat: 'clothing' })), { pose: hatPose });
 
     // ------------------------------------------------------------------ hair: thick dark locks under the brim
     const DEG = Math.PI / 180;
@@ -679,25 +649,7 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ the rolled map in the right fist
-    const R_MAP = 0.037;
-    const mapRoll = sdf
-      .cylinder(R_MAP, 0.19, 0.008)
-      .rotateX(90)
-      .at(0, 0, 0.045)
-      .subtract(sdf.cylinder(0.016, 0.07, 0.002).rotateX(90).at(0, 0, 0.12))
-      .union(sdf.torus(R_MAP + 0.002, 0.0055).rotateX(90).at(0, 0, 0.075).paint(C.mapRed));
-    const mapPainted = mapRoll
-      .paintWhere(sdf.cylinder(0.0165, 0.07).rotateX(90).at(0, 0, 0.12), '#4a3a24')
-      // The spiral of the rolled sheet shows on the open end.
-      .paintFn((x, y, z, base) => (z > 0.11 && Math.sin(Math.hypot(x, y) * 330) > 0.3 ? rgb(C.mapEdge) : base));
-    k.body('map', rollPose(mapPainted), {
-      bone: 'hand.R',
-      color: C.map,
-      roughness: 0.85,
-      detail: 0.004,
-      textureDensity: 2,
-      bump: (x, y, z) => 0.0004 * noise.fbm(x * 200, y * 200, z * 200, 2),
-    });
+    addPart(k, explorerMap(), { pose: rollPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;

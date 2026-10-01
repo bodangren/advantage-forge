@@ -1,4 +1,7 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, profile, rgb, sdf } from '../src/index.js';
+
+import { apprenticeGlasses, EYE_X as GLASS_EYE_X, GLASS_Y, MOUNT as GLASSES_MOUNT } from './parts/apprentice-glasses.js';
+import { apprenticeWand, apprenticeWandGlow, MOUNT as WAND_MOUNT, GLOW_MOUNT } from './parts/apprentice-wand.js';
 
 /**
  * Apprentice — Chibi Quest support hero (catalog `heroes/support/apprentice`), about 0.98 m to
@@ -62,7 +65,6 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const EYE = [0.105, 0.628] as const;
 const pair = (s: sdf.Shape) => s.mirror('x');
-const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 // Joints (the mage's rig). The right arm is raised: the fist holds the wand up beside the
 // head; the left arm hangs loose with a fist.
@@ -88,11 +90,6 @@ const rotX = (p: V3, d: number): V3 => {
   const c = Math.cos(d * rad);
   const s = Math.sin(d * rad);
   return [p[0], p[1] * c - p[2] * s, p[1] * s + p[2] * c];
-};
-const rotY = (p: V3, d: number): V3 => {
-  const c = Math.cos(d * rad);
-  const s = Math.sin(d * rad);
-  return [p[0] * c + p[2] * s, p[1], -p[0] * s + p[2] * c];
 };
 const rotZ = (p: V3, d: number): V3 => {
   const c = Math.cos(d * rad);
@@ -127,25 +124,11 @@ const GRIP = handRPoint([-0.008, -0.043, 0.004]);
 const along = (t: number): V3 => add(GRIP, scale(WAND_AXIS, t));
 const WAND_TIP = along(0.2);
 /** The spark at the wand tip (and the `orb` bone that flares it): its height and base center. */
-const FLAME_H = 0.085;
 const ORB: V3 = add(WAND_TIP, [0, 0.02, 0]);
 
 /** The left fist hangs loose from the wrist, angled forward. */
 const HAND_L_PITCH = -25;
 const handL = (s: sdf.Shape) => s.rotateX(HAND_L_PITCH).at(...WRIST_L);
-
-/** A teardrop flame: a round base (0.03 m wide) drawn up to a point. `h` is its height. */
-const flame = (h: number) =>
-  sdf.smoothUnion(h * 0.12, sdf.sphere(h * 0.27).at(0, h * 0.27, 0), sdf.cone([0, h * 0.25, 0], [h * 0.05, h, 0], h * 0.24, h * 0.02));
-/** Spark color: yellow at the base, orange toward the tip. */
-const glowPaint = (base: V3, h: number) => {
-  const core = rgb(C.sparkCore);
-  const outer = rgb(C.sparkOuter);
-  return (_x: number, y: number, _z: number) => {
-    const t = Math.min(1, Math.max(0, ((y - base[1]) / h - 0.3) / 0.7));
-    return [core[0] + (outer[0] - core[0]) * t, core[1] + (outer[1] - core[1]) * t, core[2] + (outer[2] - core[2]) * t] as const;
-  };
-};
 
 export default defineAsset({
   name: 'apprentice',
@@ -282,37 +265,8 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ round glasses
-    const GLASS_Y = EYE[1] + 0.004;
-    const LENS_R = 0.064;
-    const lensC: V3 = [EYE[0], GLASS_Y, faceZ(EYE[0], GLASS_Y) + 0.016];
-    const onLens = (p: V3) => add(rotY(p, 20), lensC);
-    const rim = sdf.torus(LENS_R, 0.0088).rotateX(90).rotateY(20).at(...lensC);
-    const lensIn = onLens([-LENS_R, 0.004, 0]);
-    const lensOut = onLens([LENS_R, 0.004, 0]);
-    const bridgeZ = Math.max(lensIn[2], faceZ(0, GLASS_Y + 0.012) + 0.012);
-    const bridge = sdf.chain(
-      [
-        [lensIn[0], lensIn[1], lensIn[2], 0.0062],
-        [0, GLASS_Y + 0.014, bridgeZ, 0.0058],
-        [-lensIn[0], lensIn[1], lensIn[2], 0.0062],
-      ],
-      0.004,
-    );
-    const temple = sdf.chain(
-      [
-        [lensOut[0], lensOut[1], lensOut[2], 0.006],
-        [0.2, GLASS_Y + 0.01, 0.07, 0.0055],
-        [0.216, GLASS_Y + 0.012, -0.01, 0.005],
-      ],
-      0.004,
-    );
-    k.body('glasses', sdf.union(hard(sdf.union(rim, temple)), bridge), {
-      color: C.glass,
-      roughness: 0.3,
-      metalness: 0.4,
-      detail: 0.003,
-      bone: 'head',
-    });
+    const face = { lens: faceZ(GLASS_EYE_X, GLASS_Y), bridge: faceZ(0, GLASS_Y + 0.012) };
+    addPart(k, apprenticeGlasses(face), { pose: (s) => s.at(...GLASSES_MOUNT) });
 
     // ------------------------------------------------------------------ hair
     // Messy brown hair as thick swept locks over a close cap. The cap is cut away at the face;
@@ -512,25 +466,9 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.7 });
 
     // ------------------------------------------------------------------ the wand and its spark
-    // A plain tapered training stick through the fist, 0.2 m long.
-    const wandPts = [-0.04, 0.0, 0.07, 0.14, 0.2].map((t, i) => {
-      const p = along(t);
-      return [p[0], p[1], p[2], 0.0125 - i * 0.0003] as [number, number, number, number];
-    });
-    const woodDark = rgb(C.woodDark);
-    const wand = sdf
-      .smoothUnion(0.006, sdf.chain(wandPts, 0.01), sdf.sphere(0.0145).at(...along(-0.042)))
-      .paintFn((x, y, z, base) => (noise.fbm(x * 200, y * 30, z * 200, 2) > 0.25 ? woodDark : base));
-    k.body('wand', wand, { color: C.wood, roughness: 0.6, bone: 'hand.R' });
-    const flameBase: V3 = add(WAND_TIP, [0, -0.002, 0]);
-    k.body('glow', flame(FLAME_H).at(...flameBase).paintFn(glowPaint(flameBase, FLAME_H)), {
-      color: C.sparkBase,
-      roughness: 0.4,
-      emissive: C.sparkCore,
-      emissiveIntensity: 1.4,
-      detail: 0.003,
-      bone: 'orb',
-    });
+    // A plain tapered training stick through the fist, 0.2 m long (assets/parts/apprentice-wand.ts).
+    addPart(k, apprenticeWand(), { pose: (s) => s.at(...WAND_MOUNT) });
+    addPart(k, apprenticeWandGlow(), { pose: (s) => s.at(...GLOW_MOUNT) });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;

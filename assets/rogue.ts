@@ -1,4 +1,7 @@
-import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+
+import { ROGUE_HOOD_MOUNT, rogueHood } from './parts/rogue-hood.js';
+import { rogueDagger } from './parts/rogue-dagger.js';
 
 /**
  * Rogue — Chibi Quest hero (catalog `heroes/martial/rogue`), 1.0 m tall, faces +Z.
@@ -211,31 +214,9 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hood
-    const hoodOuter = sdf.smoothUnion(
-      0.07,
-      sdf.ellipsoid([0.285, 0.275, 0.272]).at(0, 0.685, -0.025),
-      sdf.cone([0, 0.9, -0.05], [0, 0.99, -0.085], 0.12, 0.022), // the soft point on top
-    );
-    const cavity = sdf.ellipsoid([0.247, 0.235, 0.235]).at(0, 0.68, -0.015);
-    const opening = sdf.ellipsoid([0.25, 0.23, 0.42]).at(0, 0.68, 0.3);
-    // A thick rolled rim around the face opening.
-    const rim = hoodOuter
-      .round(0.018)
-      .subtract(cavity.round(-0.004))
-      .intersect(opening.round(0.04))
-      .subtract(opening);
-    // A raised seam over the crown: a thin skin of the hood, cut to a strip, not into the face.
-    const seam = hoodOuter
-      .round(0.006)
-      .subtract(hoodOuter.round(-0.01))
-      .intersect(sdf.box([0.014, 0.4, 0.8], 0.005).at(0, 0.82, -0.05))
-      .intersect(sdf.halfSpace([0, 0, 1], 0.1)) // the hood's front skin passes in front of the face
-      .subtract(opening.round(0.02));
-    const hood = sdf
-      .smoothUnion(0.012, hoodOuter.subtract(cavity).smoothSubtract(0.02, opening), rim, seam)
-      .intersect(sdf.halfSpace([0, -1, 0], -0.43))
-      .paintWhere(cavity.round(0.006), T.clothInside, 0.012);
-    k.body('hood', hood, { color: T.cloth, roughness: 0.85, bone: 'head' });
+    const hoodPart = rogueHood(mapTint(k, { cloth: 'clothing' }));
+    addPart(k, hoodPart, { pose: (s) => s.at(...ROGUE_HOOD_MOUNT) });
+    const cavity = sdf.ellipsoid([0.247, 0.235, 0.235]).at(0, 0.68, -0.015); // the hood's inside, for the hair
 
     // ------------------------------------------------------------------ hair (inside the hood)
     const insideHood = cavity.round(-0.003);
@@ -520,27 +501,6 @@ export default defineAsset({
     // back beside the forearm; the gold pommel shows under the thumb at the front of the fist.
     // The blade in the hand is about 30 percent longer and 15 percent wider than the sheath outline,
     // so it reads as a blade at 128 px; the guard, the grip, and the pommel keep their size.
-    const GUARD = 0.034;
-    const longBlade = sdf.extrude(
-      profile.polygon(
-        [
-          [-0.0185, 0],
-          [0.0185, 0],
-          [0.014, -0.105],
-          [0, -0.153],
-          [-0.014, -0.105],
-        ],
-        { smooth: false },
-      ),
-      0.017,
-      0.005,
-    );
-    const handBlade = sdf.union(
-      longBlade.rotateZ(180).at(0, GUARD, 0).paint(C.blade),
-      sdf.box([0.052, 0.012, 0.024], 0.004).at(0, GUARD, 0).paint(C.gold), // guard
-      sdf.sphere(0.013).at(0, -0.04, 0).paint(C.gold), // pommel
-    );
-    const handGrip = sdf.capsule([0, -0.032, 0], [0, GUARD, 0], 0.011);
     const inHand = (s: sdf.Shape, side: 1 | -1) =>
       s
         .rotateY(GRIP.roll * side)
@@ -551,13 +511,8 @@ export default defineAsset({
       [1, 'L'],
       [-1, 'R'],
     ] as const) {
-      k.body(`dagger.${tag}`, inHand(handBlade, side), {
-        color: C.blade,
-        roughness: 0.3,
-        metalness: 0.85,
-        bone: `knife.${tag}`,
-      });
-      k.body(`daggerGrip.${tag}`, inHand(handGrip, side), { color: C.grip, roughness: 0.6, bone: `knife.${tag}` });
+      const part = rogueDagger(tag);
+      addPart(k, part, { pose: (s) => inHand(s, side) });
     }
 
     // ------------------------------------------------------------------ animation

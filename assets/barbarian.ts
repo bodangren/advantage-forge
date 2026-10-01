@@ -1,4 +1,6 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+
+import { barbarianAxe } from './parts/barbarian-axe.js';
 
 /**
  * Barbarian — Chibi Quest P1 hero (catalog `heroes/martial/barbarian`), about 1.0 m to the top
@@ -57,7 +59,6 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const EYE = [0.105, 0.628] as const; // x (each side), y
 const pair = (s: sdf.Shape) => s.mirror('x');
-const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 // Joints (the knight's). The right hand holds the axe low and out; the left fist hangs forward.
 const SHOULDER: V3 = [0.13, 0.385, 0];
@@ -124,10 +125,10 @@ const handPose = (h: { pitch: number; roll: number }, w: V3) => (s: sdf.Shape) =
 const handPoint = (h: { pitch: number; roll: number }, w: V3, p: V3) => add(rotZ(rotX(p, h.pitch), h.roll), w);
 
 // ------------------------------------------------------------------ the axe's frame
-// Local frame: the right fist's grip at the origin, the haft along Y with the head toward -Y
-// (AXE_L below the grip), the two blades along +-X, the flats facing +-Z. At rest the haft points
-// down and out to the right, the head beside the right knee, the flats to the front (the mockup).
-const AXE_L = 0.25;
+// Local frame (assets/parts/barbarian-axe.ts): the right fist's grip at the origin, the haft along
+// Y with the head toward -Y (0.25 m below the grip), the two blades along +-X, the flats facing
+// +-Z. At rest the haft points down and out to the right, the head beside the right knee, the
+// flats to the front (the mockup).
 const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
 const HAFT_WANT = norm([-0.85, -0.38, 0.3]);
 const AXE_Z = Math.asin(HAFT_WANT[0]) / rad; // local +Y goes to -HAFT_WANT
@@ -151,27 +152,6 @@ const FLAT = axeTurn([0, 0, 1], AXE_ROLL); // the flats' normal at rest
 const axePose = (s: sdf.Shape) => s.rotateY(AXE_ROLL).rotateZ(AXE_Z).rotateX(AXE_X).at(...GRIP);
 // Where the left fist closes on the haft, below the right one (toward the butt).
 const GRIP_L = add(GRIP, HAFT_DIR, -0.075);
-
-// One blade (+X side) around the head's center: narrow at the socket, a long curved edge.
-const bladeProfile = profile.polygon(
-  [
-    [0.02, 0.026],
-    [0.05, 0.042],
-    [0.08, 0.07],
-    [0.104, 0.1],
-    [0.118, 0.07],
-    [0.126, 0.03],
-    [0.128, 0],
-    [0.126, -0.03],
-    [0.118, -0.07],
-    [0.104, -0.1],
-    [0.08, -0.07],
-    [0.05, -0.042],
-    [0.02, -0.026],
-  ],
-  { smooth: true, samples: 4 },
-);
-const hexagon = profile.polygon([0, 60, 120, 180, 240, 300].map((a) => [0.044 * Math.cos((a + 30) * rad), 0.044 * Math.sin((a + 30) * rad)] as [number, number]));
 
 export default defineAsset({
   name: 'barbarian',
@@ -534,31 +514,7 @@ export default defineAsset({
     k.body('bronze', sdf.union(buckle, studs, ring), { color: C.bronze, roughness: 0.35, metalness: 0.8 });
 
     // ------------------------------------------------------------------ the double-bladed axe in the right hand
-    const bevel = sdf.intersect(
-      sdf.halfSpace(norm([0.07, 0, 1]), 0.0114 / Math.hypot(0.07, 1)),
-      sdf.halfSpace(norm([0.07, 0, -1]), 0.0114 / Math.hypot(0.07, 1)),
-    );
-    const blades = hard(sdf.extrude(bladeProfile, 0.03, 0.002).intersect(bevel).scale([1.12, 1.12, 1]))
-      .paintWhere(hard(sdf.box([0.03, 0.4, 0.2]).at(0.141, 0, 0)), C.steelLight, 0.006)
-      .union(sdf.union(sdf.sphere(0.011).at(0, 0, 0.024), sdf.sphere(0.011).at(0, 0, -0.024)))
-      .at(0, -AXE_L, 0);
-    k.body('axe', axePose(blades), { color: C.steel, roughness: 0.35, metalness: 0.85, detail: 0.003, bone: 'hand.R' });
-    const socket = sdf.extrude(hexagon, 0.046, 0.006).at(0, -AXE_L, 0);
-    const spike = sdf.cone([0, -AXE_L - 0.05, 0], [0, -AXE_L - 0.09, 0], 0.02, 0.004);
-    const butt = sdf.smoothUnion(0.006, sdf.sphere(0.019).at(0, 0.097, 0), sdf.cylinder(0.018, 0.018, 0.004).at(0, 0.08, 0));
-    k.body('axe-iron', axePose(sdf.union(socket, spike, butt)), { color: C.iron, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'hand.R' });
-    const haftShape = sdf
-      .cylinder(0.0145, 0.41, 0.004)
-      .at(0, -0.115, 0)
-      .union(sdf.cylinder(0.0168, 0.14, 0.004).at(0, 0.01, 0))
-      .paintWhere(sdf.cylinder(0.03, 0.14).at(0, 0.01, 0), C.wrap);
-    k.body('haft', axePose(haftShape), {
-      color: C.haft,
-      roughness: 0.7,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.001 * Math.abs(Math.sin(noise.noise3(x * 3, y * 3, z * 3) + (x + y) * 240)),
-    });
+    addPart(k, barbarianAxe(), { pose: axePose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, edgeUp, follow } = motion;

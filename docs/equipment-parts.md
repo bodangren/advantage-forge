@@ -71,14 +71,30 @@ transforms cancel. Paint functions and noise still see the original coordinates.
      Example: `assets/parts/cleric-hammer.ts`. A rotation round trip (`holdPose` in the host, as on
      the mage wand) can re-mesh the body: it passed on the wand (0.29%) and failed on the cleric
      hammer (up to 2.8%).
+   - **Painted after the pose** (`pose(s).paintFn(...)`, or a single combined `.at(x, y + d, z)`):
+     the paint and the translation see the character frame, so a local shape with a host pose is not
+     exact. Wrap the painted shape with a rounded-mount translation, or let the part function take
+     the pose or the point as an argument and build the host expression inside
+     (`assets/parts/witch-broom.ts`, `assets/parts/witch-potion.ts`).
+   - **A value the host measures on its own body** (a face depth from `sdf.raycast`): the part takes
+     it as a parameter, with the host's value as the default for the standalone
+     (`assets/parts/apprentice-glasses.ts`). A frozen number does not follow a later face change.
+   - Place a local-frame part with the exact expression that the old code used: if the host wrote
+     `flame.at(...FLAME_AT)`, the host pose is `(s) => s.at(...FLAME_AT)`, not a rounded mount. A
+     rounded mount moves the body by up to 0.5 mm and re-meshes it (the warlock flame: 1,437 to
+     1,558 vertices).
 5. A body that must stay upright when the piece turns (a flame), or that a clip moves on its own
    bone (the cleric's holy cross on `relic`), is a second part in the same module. The host places
    it where it was; the standalone adds it too, so the item looks complete.
 6. A host body that mixes part shapes and other shapes (rivets and a belt buckle in one body)
    splits in two. The part gets a new body name `<part>-<name>` (for example `shield-studs`).
-   Record the split in the track.
+   Record the split in the track. The rest of the split body re-meshes, because its bounds and
+   its sample grid move: the enchanter `gold` body (circlet, trims, cuffs) lost the staff knob and
+   changed up to 1.08% of a view, only on the gold trims and a few edges. The orchestrator accepts
+   such a change after a diff image.
 7. Replace the host code with `addPart(k, part(...), { pose })`. Keep the host's own constants
-   that its skeleton and clips use.
+   that its skeleton and clips use. Remove the host code that only the moved bodies used:
+   `tsc --noEmit --noUnusedLocals` must print nothing for the host and its parts.
 8. Write `assets/<host>-<part>.ts`: `addPart(k, part(...), { pose: rest, bones: null })`. The rest
    pose stands the piece on y = 0, the front toward +Z. Use the host's `detail` and `reference`,
    `texture: { size: 512 }`, and a design note with the size.
@@ -95,6 +111,10 @@ moved more than 0.001 mm.
 A translation round trip (`s.at(-MOUNT)` in the part, `s.at(...MOUNT)` in the host) gives the
 same mesh. A rotation round trip (`holdPose`) can change a few vertices of that body, because the
 floating-point error changes the mesher's samples. The image check catches a visible change.
+
+A part that groups bodies that the host built apart (a cap and its leaves, added in two places)
+changes the body order. The meshes stay identical, but the texture atlas moves, so the views can
+change up to about 0.4% (druid 0.23%, dragoon 0.375%). That is within the tolerance.
 
 ## Pilot results (2026-10-01)
 

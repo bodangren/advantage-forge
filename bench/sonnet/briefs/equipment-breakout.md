@@ -40,19 +40,25 @@ nocked arrow, a flame) is a second part in the same module.
    toward +Z, the host's `detail` and `reference`, `texture: { size: 512 }`, and `variants` for
    the part's tint slots with the host's options for those slots.
 5. Run `./forge render <host>` and `./forge sprites <host>`. Run
-   `node scripts/part-check.mjs compare <host>`. It must end with `result PASS`. If it fails,
-   find the body that moved and fix the placement. Do not change the tolerance.
+   `node scripts/part-check.mjs compare <host>`. It must end with `result PASS`, and every body
+   must be identical (`N of N bodies identical`) unless the orchestrator named a body split. A
+   body with a new vertex count moved: the host must apply the original placement exactly (for a
+   local-frame part, the same pose function or `.at(...)` that the old code used; for a mount, the
+   rounded mount on both sides). Do not change the tolerance.
 6. Run `./forge check <host>`. It must report `result ok` (or `no held items to check`).
 7. Run `./forge render <host>-<piece> --fast` for each piece and look at each render once. Read
    `bounds.min[1]` in `out/<host>-<piece>/stats.json`: it must be between 0 and 0.002 (the lowest
    point on the ground). Lift or lower the rest pose by the difference.
-8. Run `node_modules/.bin/tsc --noEmit -p . 2>&1 | grep -E "assets/(parts/)?<host>"`. It must
-   print nothing.
+8. Run `node_modules/.bin/tsc --noEmit --noUnusedLocals -p . 2>&1 | grep -E "assets/(parts/)?<host>"`.
+   It must print nothing: remove the host constants and helpers that only the moved code used.
 
 ## Rules
 
 - Edit only `assets/<host>.ts`, `assets/parts/<host>-*.ts`, and `assets/<host>-*.ts`.
 - Never edit `src/`, other assets, or `scripts/`. Never commit. Never run `pnpm`.
+- Other agents share this working tree. Never run `git stash`, `git reset`, `git restore`, or
+  `git checkout` on any path other than your own host file. To see the old host, use
+  `git show HEAD:assets/<host>.ts`.
 - Do not change a body name unless a host body mixes part and non-part shapes (recipe step 6).
 - Do not run `./forge all` on the host; the orchestrator does it after the review.
 

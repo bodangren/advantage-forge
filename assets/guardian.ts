@@ -1,4 +1,7 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, mixRgb, motion, profile, rgb, sdf } from '../src/index.js';
+import { GUARDIAN_HELM_MOUNT, guardianHelm } from './parts/guardian-helm.js';
+import { guardianHammer } from './parts/guardian-hammer.js';
+import { guardianShield } from './parts/guardian-shield.js';
 
 /**
  * Guardian: Chibi Quest hero (catalog `heroes/martial/guardian`), about 1.0 m to the top of the
@@ -108,38 +111,6 @@ const HAND_R = { pitch: -70, roll: -30 };
 const HAND_L = { pitch: -62, roll: 26 };
 const handPose = (h: { pitch: number; roll: number }, w: V3) => (s: sdf.Shape) => s.rotateX(h.pitch).rotateZ(h.roll).at(...w);
 const handPoint = (h: { pitch: number; roll: number }, w: V3, p: V3) => add(rotZ(rotX(p, h.pitch), h.roll), w);
-
-/** The tower shield outline in the shield's frame: the face toward +Z, a pointed bottom, 0.6 m tall. */
-const tower = profile.polygon(
-  [
-    [-0.14, 0.24],
-    [-0.145, 0.15],
-    [-0.14, 0.0],
-    [-0.115, -0.14],
-    [-0.07, -0.26],
-    [0, -0.34],
-    [0.07, -0.26],
-    [0.115, -0.14],
-    [0.14, 0.0],
-    [0.145, 0.15],
-    [0.14, 0.24],
-    [0.07, 0.262],
-    [-0.07, 0.262],
-  ],
-  { smooth: true, samples: 4 },
-);
-
-/** A four-pointed star, longest toward the bottom (the mockup's shield emblem). */
-const starProfile = profile.polygon([
-  [0, 0.115],
-  [0.03, 0.03],
-  [0.085, 0.0],
-  [0.03, -0.03],
-  [0, -0.13],
-  [-0.03, -0.03],
-  [-0.085, 0.0],
-  [-0.03, 0.03],
-]);
 
 /** A ring of radius R around the axis from a to b, at the fraction t (a torus turned to the axis). */
 const ringAlong = (a: V3, b: V3, t: number, R: number, r: number) => {
@@ -305,54 +276,7 @@ export default defineAsset({
 
     // The helm: a round dome over the crown, a gold brow band around the head at y 0.735, and a
     // gold center crest over the top from the band to the back. Open at the face.
-    const HELM_C = [0.226, 0.245, 0.214] as const;
-    const helmAt = (s: sdf.Shape) => s.at(0, 0.71, -0.008);
-    const dome = helmAt(sdf.ellipsoid(HELM_C)).intersect(sdf.halfSpace([0, -1, 0], -0.72)).round(0.004);
-    const helm = dome.paintFn((x, y, z, base) => mixRgb(base, rgb(C.steelDark), Math.min(0.55, Math.max(0, (0.83 - y) * 3.2) * (x * x * 25 + 0.2))));
-    k.body('helm', helm, { color: C.steel, roughness: 0.5, metalness: 0.6, detail: 0.005, bone: 'head' });
-    const band = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.196, 0.714],
-            [0.233, 0.714],
-            [0.239, 0.735],
-            [0.234, 0.756],
-            [0.196, 0.756],
-          ],
-          { smooth: true, samples: 3 },
-        ),
-      )
-      .scale([1, 1, 0.945])
-      .at(0, 0, -0.008);
-    // A raised peak at the center of the band, and the ridge over the crown.
-    const peak = sdf
-      .extrude(
-        profile.polygon([
-          [-0.06, 0.716],
-          [-0.03, 0.75],
-          [0, 0.79],
-          [0.03, 0.75],
-          [0.06, 0.716],
-        ]),
-        0.02,
-        0.004,
-      )
-      .at(0, 0, 0.208);
-    const notches = sdf.union(
-      ...[-60, -30, 30, 60].map((a) => {
-        const px = 0.236 * Math.sin(a * rad);
-        const pz = 0.236 * 0.945 * Math.cos(a * rad) - 0.008;
-        return sdf.cone([px, 0.744, pz], [px, 0.772, pz], 0.012, 0.002);
-      }),
-    );
-    const ridgeShape = sdf
-      .ellipsoid([HELM_C[0] + 0.01, HELM_C[1] + 0.045, HELM_C[2] + 0.008])
-      .at(0, 0.71, -0.008)
-      .intersect(sdf.box([0.05, 0.6, 0.6], 0.016).at(0, 0.8, 0))
-      .intersect(sdf.halfSpace([0, -1, 0], -0.735))
-      .round(0.004);
-    k.body('helm-gold', sdf.union(band, peak, ridgeShape, notches), { color: C.gold, roughness: 0.35, metalness: 1, detail: 0.004, bone: 'head' });
+    addPart(k, guardianHelm(), { pose: (s) => s.at(...GUARDIAN_HELM_MOUNT) });
 
     // ------------------------------------------------------------------ torso: a big cuirass
     const torso = sdf
@@ -613,55 +537,19 @@ export default defineAsset({
     // Local frame: the grip center at the origin, the haft along +Y (the head up). The head's axis
     // lies across the haft, turned 45 degrees between +X and +Z, so both faces show from the front.
     // A short heavy block: the head sits just above the fist, the haft ends a little below it.
-    const HAFT_TOP = 0.15;
-    const HEAD_TURN = 45;
-    const headAxis = (s: sdf.Shape) => s.rotateY(HEAD_TURN).at(0, HAFT_TOP, 0);
-    const hammerHead = headAxis(sdf.box([0.15, 0.085, 0.085], 0.018));
-    const capBox = (x: number) => sdf.box([0.022, 0.09, 0.09], 0.007).at(x, 0, 0);
-    const hammerGold = sdf.union(
-      headAxis(sdf.union(capBox(0.064), capBox(-0.064), sdf.box([0.016, 0.092, 0.092], 0.006))),
-      sdf.cylinder(0.021, 0.03, 0.007).at(0, -0.062, 0), // the ferrule
-    );
-    const haft = sdf.capsule([0, -0.07, 0], [0, HAFT_TOP, 0], 0.016);
-    const gripWrap = sdf.cylinder(0.02, 0.07, 0.006).at(0, 0.07, 0);
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     // The haft points forward and 20 degrees out, so the head hangs low in front of the right hip.
     const HAMMER_TILT = { x: 80, z: 20 };
+    const HEAD_TURN = 45; // the head's turn about the haft (see parts/guardian-hammer.ts)
     const hammerPose = (s: sdf.Shape) => s.rotateX(HAMMER_TILT.x).rotateZ(HAMMER_TILT.z).at(...GRIP);
-    k.body('hammer', hammerPose(hammerHead), { color: C.hammer, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'hand.R' });
-    k.body('hammer-gold', hammerPose(hammerGold), { color: C.gold, roughness: 0.35, metalness: 1, detail: 0.004, bone: 'hand.R' });
-    k.body('haft', hammerPose(haft), {
-      color: C.walnut,
-      roughness: 0.7,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0008 * noise.noise3(x * 90, y * 12, z * 90),
-    });
-    k.body('hammer-grip', hammerPose(gripWrap), { color: C.grip, roughness: 0.85, detail: 0.004, bone: 'hand.R', bump: (x, y, z) => 0.0007 * Math.sin(y * 260 + (x + z) * 40) });
+    addPart(k, guardianHammer(), { pose: hammerPose });
 
     // ------------------------------------------------------------------ tower shield on the left forearm
     // Local frame: the face toward +Z, the point down, 0.6 m tall. A pale back plate, a raised gold
     // rim around a teal field, and a raised pale star. The shield turns out at the left side, the top
     // leans out (clear of the cheek), and the point stands 0.02 m above the ground.
     const shieldPose = (s: sdf.Shape) => s.scale(1.15).rotateZ(SHIELD_ROLL).rotateX(SHIELD_TILT).rotateY(SHIELD_YAW).at(...SHIELD_C);
-    const inner = profile.offsetProfile(tower, -0.024);
-    const handle = sdf.capsule([-0.09, -0.01, -0.028], [-0.09, -0.14, -0.028], 0.014);
-    k.body('shield', shieldPose(sdf.union(sdf.extrude(tower, 0.024, 0.006), handle)), {
-      color: C.steelDark,
-      roughness: 0.5,
-      metalness: 0.5,
-      bone: 'forearm.L',
-    });
-    const face = sdf.extrude(profile.offsetProfile(tower, -0.02), 0.028, 0.005);
-    k.body('shield-face', shieldPose(face), { color: T.cloth, roughness: 0.75, bone: 'forearm.L' });
-    const outline = sdf
-      .extrude(profile.offsetProfile(starProfile, 0.008), 0.031, 0.002)
-      .subtract(sdf.extrude(starProfile, 0.1))
-      .at(0, 0.03, 0);
-    const rim = sdf.extrude(tower, 0.04, 0.014).subtract(sdf.extrude(inner, 0.1));
-    k.body('shield-gold', shieldPose(sdf.union(rim, outline)), { color: C.gold, roughness: 0.35, metalness: 1, bone: 'forearm.L' });
-    const star = sdf.extrude(starProfile, 0.034, 0.004).at(0, 0.03, 0);
-    k.body('shield-star', shieldPose(star), { color: C.pearl, roughness: 0.5, metalness: 0.3, bone: 'forearm.L' });
+    addPart(k, guardianShield(mapTint(k, { cloth: 'clothing' })), { pose: shieldPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

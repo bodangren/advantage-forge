@@ -1,4 +1,6 @@
-import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { druidCap } from './parts/druid-cap.js';
+import { druidStaff, druidStaffLantern, STAFF_MOUNT, LANTERN_MOUNT } from './parts/druid-staff.js';
 
 /**
  * Druid — Chibi Quest hero (catalog `heroes/magic/druid`), a mushroom forager, about 1.0 m to the
@@ -144,8 +146,6 @@ const handR = (s: sdf.Shape) => s.rotateY(HAND_R_YAW).at(...WRIST_R);
 const FLASK: V3 = add(WRIST_R, rotY([0.042, 0.02, 0.0], HAND_R_YAW)); // bottom of the flask, on the palm
 /** The cap's pivot: the center of its underside (and the `caproot` bone). */
 const CAP_AT: V3 = [0, 0.755, -0.01];
-/** The cap is wider and taller than the skull cavity under it. */
-const CAP_SCALE: V3 = [1.24, 1.16, 1.24];
 
 export default defineAsset({
   name: 'druid',
@@ -183,7 +183,6 @@ export default defineAsset({
       dressDark: k.tint('clothing', -0.36),
     };
     // ------------------------------------------------------------------ the staff line (needed for the skeleton)
-    const L_DOWN = (GRIP[1] - 0.03) / STAFF_AXIS[1];
     const L_UP = (0.8 - GRIP[1]) / STAFF_AXIS[1];
     const along = (t: number): V3 => add(GRIP, scale(STAFF_AXIS, t));
     const HOOK: V3 = add(along(L_UP * 0.72), [0.07, 0.02, 0.0]);
@@ -324,61 +323,11 @@ export default defineAsset({
     // Tipped well back so the wide cream underside shows and the rim clears the eyes in side view,
     // and a little down toward her left, like the mockup.
     const capPose = (s: sdf.Shape) => s.rotateX(-19).rotateZ(-3).at(...CAP_AT);
-    const dome = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.0, 0.25],
-            [0.12, 0.235],
-            [0.23, 0.18],
-            [0.31, 0.1],
-            [0.345, 0.03],
-            [0.338, -0.004],
-            [0.31, -0.012],
-            [0.26, 0.004],
-            [0.0, 0.03],
-          ],
-          { smooth: true, samples: 8 },
-        ),
-      )
-      .displace(0.004, (x, y, z) => noise.fbm(x * 12, y * 12, z * 12, 2))
-      .scale(CAP_SCALE);
-    const capInner = sdf.ellipsoid([0.21, 0.2, 0.2]).at(0, -0.07, 0.01);
-    // Spots: flat patches where small spheres cross the dome.
-    const spots = sdf.union(
-      ...(
-        [
-          [0.0, 0.25, 0.02, 0.05],
-          [0.15, 0.21, 0.1, 0.045],
-          [-0.17, 0.2, 0.07, 0.04],
-          [0.24, 0.13, -0.09, 0.038],
-          [-0.12, 0.2, -0.15, 0.042],
-          [0.08, 0.2, -0.19, 0.036],
-          [-0.27, 0.1, -0.06, 0.034],
-          [0.28, 0.1, 0.1, 0.034],
-          [-0.05, 0.17, 0.25, 0.04],
-          [0.2, 0.12, 0.22, 0.032],
-          [-0.23, 0.12, 0.19, 0.03],
-        ] as const
-      ).map(([x, y, z, r]) => sdf.sphere(r).at(x, y, z)),
-    ).scale(CAP_SCALE);
-    const capTop = dome
-      .subtract(capInner)
-      .intersect(sdf.halfSpace([0, -1, 0], -0.012))
-      .paintWhere(spots, C.spot, 0.004);
-    k.body('cap', capPose(capTop), { color: C.cap, roughness: 0.6, bone: 'caproot' });
-    // The gills: the underside between the rim and the stem, in radial folds.
-    const gillShell = dome.round(0.002).intersect(sdf.halfSpace([0, 1, 0], 0.016)).subtract(capInner.round(0.004));
-    const gills = gillShell.paintFn((x, _y, z, base) => (Math.sin(Math.atan2(z, x) * 36) > 0.8 ? rgb(C.gillsDark) : base));
-    // The radial folds live in the normal map (fine, regular detail), not in the mesh.
-    const gillFolds = (x: number, y: number, z: number) => {
-      const p = [x, y - CAP_AT[1], z - CAP_AT[2]] as const;
-      return 0.0035 * Math.abs(Math.sin(Math.atan2(p[2], p[0]) * 36));
-    };
-    k.body('gills', capPose(gills), { color: C.gills, roughness: 0.8, bone: 'caproot', bump: gillFolds });
+    const druidCapPart = druidCap();
+    addPart(k, druidCapPart, { pose: capPose });
 
     // ------------------------------------------------------------------ hair: an auburn bob with bangs
-    const underCap = capPose(capInner.round(-0.004).union(sdf.halfSpace([0, 1, 0], -0.004)));
+    const underCap = capPose(druidCapPart.regions!.inside!.round(-0.004).union(sdf.halfSpace([0, 1, 0], -0.004)));
     const cap = sdf
       .ellipsoid([HEAD[0] + 0.016, HEAD[1] + 0.012, HEAD[2] + 0.016])
       .at(0, HEAD_Y + 0.004, -0.014)
@@ -657,28 +606,6 @@ export default defineAsset({
     );
     k.body('leaves', basketPose(leaves).bone('chest'), { color: C.leaf, roughness: 0.7, detail: 0.0035 });
 
-    // Two small mushrooms and a sprig of leaves grow from the cap on her right, as in the mockup.
-    const onCap = (x: number, z: number) => sdf.surfacePoint(dome, [x, 0.4, z], 0);
-    const capShroom = (x: number, z: number, h: number, r: number, tilt: number, yaw: number) => {
-      const p = onCap(x, z);
-      return shroom(0, 0, h, r, tilt).rotateY(yaw).at(p[0], p[1] - 0.17 - 0.01, p[2]);
-    };
-    const capGrowth = sdf.union(capShroom(-0.4, 0.02, 0.1, 0.075, 38, 0), capShroom(-0.34, -0.14, 0.075, 0.056, 26, 40));
-    const capLeaves = sdf.union(
-      ...(
-        [
-          [-0.36, 0.12, 55, 20, 0.11],
-          [-0.28, 0.06, 20, -30, 0.1],
-          [-0.4, -0.08, 75, 60, 0.1],
-        ] as const
-      ).map(([x, z, rz, ry, len]) => {
-        const p = onCap(x, z);
-        return leafShape(len).rotateZ(rz).rotateY(ry).at(p[0], p[1] - 0.006, p[2]);
-      }),
-    );
-    k.body('cap-growth', capPose(capGrowth), { color: C.cap, roughness: 0.6, detail: 0.004, bone: 'caproot' });
-    k.body('cap-leaves', capPose(capLeaves), { color: C.leaf, roughness: 0.7, detail: 0.0035, bone: 'caproot' });
-
     // ------------------------------------------------------------------ legs and boots
     const legs = sdf.smoothUnion(
       0.03,
@@ -699,73 +626,9 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ the mossy staff with a mushroom and a lantern
-    const wobble = (t: number, a: number): V3 => [Math.sin(t * 23) * a, 0, Math.cos(t * 17) * a];
-    const polePts = [-L_DOWN, -L_DOWN * 0.55, -L_DOWN * 0.2, 0, L_UP * 0.35, L_UP * 0.7, L_UP].map((t, i) => {
-      const p = add(along(t), wobble(t, i === 3 ? 0 : 0.006));
-      return [p[0], p[1], p[2], 0.016 - i * 0.0007] as [number, number, number, number];
-    });
-    const top = along(L_UP);
-    // A side branch carries the lantern hook; the crook at the top curls back.
-    const branch = sdf.chain(
-      [
-        [...along(L_UP * 0.62), 0.011] as [number, number, number, number],
-        [HOOK[0] - 0.03, HOOK[1] + 0.012, HOOK[2], 0.009],
-        [HOOK[0], HOOK[1] + 0.004, HOOK[2], 0.007],
-      ],
-      0.01,
-    );
-    const crook = sdf.chain(
-      [
-        [top[0], top[1], top[2], 0.013],
-        [top[0] + 0.03, top[1] + 0.04, top[2], 0.011],
-        [top[0] + 0.07, top[1] + 0.035, top[2], 0.009],
-      ],
-      0.01,
-    );
-    const mossAt = (t: number) => sdf.sphere(0.02).scale([1.3, 0.8, 1.3]).at(...along(t));
-    const staff = sdf
-      .smoothUnion(0.012, sdf.chain(polePts, 0.02), branch, crook)
-      .union(mossAt(L_UP * 0.5).paint(C.moss), mossAt(-L_DOWN * 0.4).paint(C.moss))
-      // Dark grain on the wood only; the moss (a greener base) keeps its color.
-      .paintFn((x, y, z, base) => (noise.fbm(x * 90, y * 12, z * 90, 2) > 0.3 && base[1] < 0.2 ? rgb(C.woodDark) : base));
-    k.body('staff', staff, {
-      color: C.wood,
-      roughness: 0.8,
-      bone: 'hand.L',
-      bump: (x, y, z) => 0.0012 * noise.fbm(x * 160, y * 25, z * 160, 2),
-    });
-    // A little mushroom sprouting from the crook, which curls outward, away from the cap.
-    const crookTip: V3 = [top[0] + 0.07, top[1] + 0.035, top[2]];
-    const topShroom = sdf
-      .union(
-        sdf.cone([0, 0, 0], [0, 0.05, 0], 0.012, 0.01).paint(C.stem),
-        sdf
-          .revolve(profile.polygon([[0, 0.078], [0.03, 0.07], [0.048, 0.048], [0.044, 0.04], [0, 0.052]], { smooth: true, samples: 4 }))
-          .paintWhere(sdf.sphere(0.012).at(0.018, 0.074, 0.01), C.spot),
-      )
-      .rotateZ(-15)
-      .at(...crookTip);
-    k.body('staff-mushroom', topShroom, { color: C.cap, roughness: 0.6, detail: 0.004, bone: 'hand.L' });
-
+    addPart(k, druidStaff(), { pose: (s) => s.at(...STAFF_MOUNT) });
     // The lantern hangs from the hook on a short bail and swings on its own bone.
-    const LANTERN: V3 = [HOOK[0], HOOK[1] - 0.09, HOOK[2]];
-    const lanternFrame = sdf
-      .union(
-        sdf.cylinder(0.034, 0.014, 0.004).at(0, 0.03, 0), // cap
-        sdf.cone([0, 0.036, 0], [0, 0.052, 0], 0.026, 0.01), // roof
-        sdf.cylinder(0.036, 0.014, 0.004).at(0, -0.036, 0), // base
-        ...[0, 90, 180, 270].map((a) => sdf.capsule([0.03, -0.03, 0], [0.03, 0.026, 0], 0.004).rotateY(a + 45)), // bars
-        sdf.torus(0.022, 0.004).rotateX(90).at(0, 0.074, 0), // bail
-      )
-      .at(...LANTERN);
-    k.body('lantern-frame', lanternFrame.bone('lantern'), { color: C.leatherDark, roughness: 0.4, metalness: 0.6 });
-    const glow = sdf.cylinder(0.027, 0.06, 0.012).at(...LANTERN);
-    k.body('lantern-light', glow.bone('lantern'), {
-      color: C.lanternGlow,
-      roughness: 0.3,
-      emissive: C.lanternGlow,
-      emissiveIntensity: 0.8,
-    });
+    addPart(k, druidStaffLantern(), { pose: (s) => s.at(...LANTERN_MOUNT) });
     // The nature spell: a small glowing green orb with pale swirls. At rest it is buried in the crook
     // mushroom's cap; the attack lifts it out, grows it to about 4 times this size, and throws it.
     const orb = sdf

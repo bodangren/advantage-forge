@@ -1,4 +1,7 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { shieldMaidenAxe } from './parts/shield-maiden-axe.js';
+import { SHIELD_MAIDEN_HELM_MOUNT, shieldMaidenHelm } from './parts/shield-maiden-helm.js';
+import { shieldMaidenShield } from './parts/shield-maiden-shield.js';
 
 /**
  * Shield-maiden — Chibi Quest hero (catalog `heroes/martial/shield-maiden`), 1.05 m to the top of
@@ -215,74 +218,10 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2, detail: 0.004 });
 
     // ------------------------------------------------------------------ helm: an open dome
-    const helmOuter = sdf.ellipsoid([0.246, 0.25, 0.246]).at(0, 0.685, -0.012);
-    const helmInner = sdf.ellipsoid([0.226, 0.23, 0.226]).at(0, 0.685, -0.012);
-    const shellOf = (s: sdf.Shape, out: number, inn: number) => s.round(out).subtract(s.round(-inn));
-    // The rim is a tilted plane: y = 0.67 + 0.34 z. High over the brow, low over the ears and nape.
-    const RIM_N = [0, -0.947, 0.322] as const;
-    const RIM_D = -0.634;
-    const rimY = (z: number) => 0.67 + 0.34 * z;
-    const rimKeep = sdf.halfSpace([...RIM_N], RIM_D);
-    // A low comb over the crown, from the brow plate back to the nape.
-    const comb = shellOf(helmOuter, 0.011, 0.01)
-      .smoothIntersect(0.006, sdf.box([0.024, 0.5, 0.7], 0.01).at(0, 0.9, -0.1))
-      .smoothIntersect(0.01, sdf.halfSpace([0, 0, 1], 0.12));
-    const helm = helmOuter
-      .smoothUnion(0.008, comb)
-      .subtract(helmInner)
-      .intersect(rimKeep)
-      .paintWhere(helmInner.round(0.005), C.steelDark, 0.01)
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.72), C.steelDark, 0.03)
-      .paintFn((x, y, z, base) => (y - rimY(z) < 0.026 ? rgb(C.steelDark) : base));
-    k.body('helm', helm, { color: C.steel, roughness: 0.45, metalness: 0.8, bone: 'head', detail: 0.0055 });
-
-    // The diamond brow plate: a rhombus that follows the dome, its lower point below the rim.
-    const plateAt = 0.785;
-    const rhombus = profile.polygon([
-      [0, plateAt + 0.062],
-      [0.056, plateAt],
-      [0, plateAt - 0.07],
-      [-0.056, plateAt],
-    ]);
-    const plate = shellOf(helmOuter, 0.016, 0.016)
-      .smoothIntersect(0.004, sdf.extrude(rhombus, 0.6, 0.004).at(0, 0, 0.3))
-      .paintWhere(sdf.halfSpace([0, 1, 0], plateAt - 0.012), C.steelDark, 0.012);
-    k.body('plate', plate, { color: C.steel, roughness: 0.45, metalness: 0.8, bone: 'head', detail: 0.004 });
-
-    // Rivets: four on the plate, then a row along the rim on both sides.
-    const rivetAt = (x: number, y: number, z: number) => {
-      const p = sdf.surfacePoint(helmOuter.round(0.016), [x * 1.4, y, z * 1.4 + 0.02], 0);
-      return sdf.sphere(0.0085).at(...p);
-    };
-    const rivetSpots: [number, number][] = [];
-    for (let i = 0; i < 5; i++) {
-      const a = (18 + i * 26) * rad;
-      rivetSpots.push([Math.sin(a) * 0.24, Math.cos(a) * 0.24]);
-    }
-    const rimRivets = rivetSpots.map(([x, z]) => rivetAt(x, rimY(z) + 0.028, z));
-    const plateRivets = [
-      rivetAt(0, plateAt + 0.034, 0.5),
-      rivetAt(0.034, plateAt - 0.004, 0.5),
-      rivetAt(0, plateAt - 0.044, 0.5),
-      rivetAt(-0.034, plateAt - 0.004, 0.5),
-    ];
-    k.body('rivets', sdf.union(hard(sdf.union(...rimRivets)), ...plateRivets), {
-      color: C.rivet,
-      roughness: 0.45,
-      metalness: 0.8,
-      bone: 'head',
-      detail: 0.006,
-    });
-
-    // Wings: three overlapping feathers fan up and out from each temple and sweep back.
-    const feather = (deg: number, len: number) =>
-      sdf.ellipsoid([len, 0.0135, 0.0065]).at(len * 0.85, 0, 0).rotateZ(deg);
-    const wingLocal = sdf
-      .smoothUnion(0.005, feather(16, 0.05), feather(48, 0.056), feather(80, 0.046), sdf.sphere(0.014))
-      .paintWhere(sdf.halfSpace([0, 1, 0], 0.026), C.steelDark, 0.012)
-      .paintFn((x, y, z, base) => (Math.abs(z) < 0.0012 ? mixRgb(base, rgb(C.steelDark), 0.5) : base));
-    const wing = wingLocal.scale(1.35).rotateY(24).rotateZ(-4).at(0.205, 0.795, -0.03).bone('head');
-    k.body('wings', hard(wing), { color: C.steel, roughness: 0.45, metalness: 0.8, bone: 'head', detail: 0.0038 });
+    const helmPose = (s: sdf.Shape) => s.at(...SHIELD_MAIDEN_HELM_MOUNT);
+    const helmPart = shieldMaidenHelm();
+    addPart(k, helmPart, { pose: helmPose });
+    const helmInner = helmPose(helmPart.regions!.inside!);
 
     // ------------------------------------------------------------------ hair
     // Under the helm and around the skull: a cap with a face window, and 16 locks laid over the
@@ -617,87 +556,15 @@ export default defineAsset({
     // ------------------------------------------------------------------ axe in the right hand
     // Local frame: the grip center at the origin, the haft toward -Y, the blade edge toward +X, the flat facing +Z.
     // A bearded head: 0.078 wide, 0.12 tall; the curved cutting edge drops below the haft in a beard.
-    const bladeProfile = profile.polygon(
-      [
-        [0.006, -0.205],
-        [0.04, -0.196],
-        [0.07, -0.188],
-        [0.079, -0.215],
-        [0.074, -0.25],
-        [0.064, -0.28],
-        [0.058, -0.312],
-        [0.04, -0.298],
-        [0.024, -0.282],
-        [0.006, -0.276],
-      ],
-      { smooth: true, samples: 3 },
-    );
-    const bladeLocal = sdf.extrude(bladeProfile, 0.012, 0.003).paintWhere(sdf.halfSpace([0, 1, 0], -0.255), C.steelDark, 0.012);
-    const socketLocal = sdf.union(
-      sdf.box([0.038, 0.062, 0.03], 0.008).at(0.001, -0.242, 0),
-      sdf.box([0.025, 0.036, 0.03], 0.006).at(-0.026, -0.242, 0), // the hammer poll
-      sdf.sphere(0.011).at(0, -0.316, 0),
-    ).paintWhere(sdf.halfSpace([0, 1, 0], -0.255), C.steelDark, 0.012);
-    const haftLocal = sdf.cylinder(0.0135, 0.345, 0.004).at(0, -0.1425, 0);
-    const wrapLocal = sdf.union(sdf.cylinder(0.0165, 0.028, 0.005).at(0, -0.17, 0), sdf.cylinder(0.0165, 0.012, 0.004).at(0, -0.115, 0));
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     const AXE_TILT = 16; // the haft leans back a little, so a swing of the arm never dips the head
     const axePose = (s: sdf.Shape) => s.rotateX(AXE_TILT).rotateZ(-44).at(...GRIP);
-    k.body('axe', axePose(sdf.union(bladeLocal, socketLocal)), {
-      color: C.steel,
-      roughness: 0.45,
-      metalness: 0.8,
-      detail: 0.003,
-      bone: 'hand.R',
-    });
-    k.body('axe-wrap', axePose(wrapLocal), { color: C.strap, roughness: 0.8, detail: 0.003, bone: 'hand.R' });
-    k.body('axe-haft', axePose(haftLocal), {
-      color: C.haft,
-      roughness: 0.75,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0012 * Math.abs(Math.sin(noise.noise3(x * 3, y * 3, z * 3) + (x + y) * 260)),
-    });
+    addPart(k, shieldMaidenAxe(), { pose: axePose });
 
     // ------------------------------------------------------------------ round shield on the left forearm
     // Local frame: the face toward +Z. A steel rim, a blue face with a raised pale spiral, a wooden back.
     const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(...SHIELD_C);
-    const rim = sdf.torus(0.146, 0.017).rotateX(90).at(0, 0, 0.006);
-    const handle = sdf.capsule([-0.03, 0.01, -0.03], [0.03, 0.01, -0.03], 0.011);
-    k.body('shield', shieldPose(sdf.union(rim, handle).paintWhere(sdf.halfSpace([0, 1, 0], 0), C.steelDark, 0.02)), {
-      color: C.steel,
-      roughness: 0.45,
-      metalness: 0.8,
-      detail: 0.004,
-      bone: 'forearm.L',
-    });
-    const faceDisc = sdf
-      .cylinder(0.145, 0.026, 0.006)
-      .rotateX(90)
-      .at(0, 0, 0.006)
-      .paintFn((x, y, z, base) => (Math.abs(Math.hypot(x, y) - 0.128) < 0.0035 ? rgb(C.spiral) : base));
-    k.body('shield-face', shieldPose(faceDisc), { color: T.shield, roughness: 0.55, metalness: 0.1, bone: 'forearm.L', detail: 0.004 });
-    k.body('shield-back', shieldPose(sdf.cylinder(0.146, 0.022, 0.005).rotateX(90).at(0, 0, -0.012)), {
-      color: C.wood,
-      roughness: 0.85,
-      bone: 'forearm.L',
-      detail: 0.005,
-      bump: (x, y, z) => 0.0015 * Math.abs(Math.sin(y * 90 + noise.noise3(x * 5, y * 5, z * 5) * 3)),
-    });
-    const spiralPts: [number, number, number, number][] = [];
-    for (let i = 0; i <= 44; i++) {
-      const th = (i / 44) * Math.PI * 3.6 + 0.4;
-      const r = 0.014 + 0.0068 * th;
-      spiralPts.push([r * Math.cos(th), r * Math.sin(th) - 0.004, 0.0195, 0.0068]);
-    }
-    k.body('spiral', shieldPose(sdf.chain(spiralPts, 0.003)), {
-      color: C.spiral,
-      roughness: 0.6,
-      metalness: 0.2,
-      detail: 0.0042,
-      bone: 'forearm.L',
-    });
-
+    addPart(k, shieldMaidenShield(mapTint(k, { shield: 'clothing' })), { pose: shieldPose });
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
     const LEG = 0.19;

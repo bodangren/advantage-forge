@@ -1,4 +1,6 @@
-import { defineAsset, motion, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, profile, rgb, sdf } from '../src/index.js';
+import { DRAGOON_HELM_MOUNT, dragoonHelm } from './parts/dragoon-helm.js';
+import { dragoonLance } from './parts/dragoon-lance.js';
 
 /**
  * Dragoon — Dragon Rider hero (catalog `heroes/martial/dragoon`), 1.0 m to the helm crown, the
@@ -55,7 +57,6 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const EYE = [0.105, 0.628] as const; // x (each side), y
 const pair = (s: sdf.Shape) => s.mirror('x');
-const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 // Joints. The right forearm carries the lance out to the side of the helm; the left arm hangs.
 const SHOULDER: V3 = [0.13, 0.385, 0];
@@ -118,7 +119,6 @@ const handPoint = (h: { pitch: number; roll: number }, w: V3, p: V3) => add(rotZ
 
 // The fist center on the lance axis; the lance stands on the ground with the butt at y = 0.
 const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
-const LANCE_LEN = 1.5;
 
 export default defineAsset({
   name: 'dragoon',
@@ -219,123 +219,13 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ helm: dome, brim, spike, horns, wings
-    const helmOuter = sdf.ellipsoid([0.246, 0.275, 0.246]).at(0, 0.69, -0.012);
-    const helmInner = sdf.ellipsoid([0.226, 0.255, 0.226]).at(0, 0.69, -0.012);
-    const BROW_Y = 0.745;
-    const HEM_Y = 0.585; // the dome ends at the jaw line at the back and the sides
-    // The face opening: ear to ear under the brim; the fringe and the brows show.
-    const opening = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [-0.2, BROW_Y],
-            [0.2, BROW_Y],
-            [0.212, 0.66],
-            [0.2, 0.5],
-            [-0.2, 0.5],
-            [-0.212, 0.66],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-        0.5,
-        0.01,
-      )
-      .at(0, 0, 0.27);
-    const helm = helmOuter
-      .subtract(helmInner)
-      .smoothSubtract(0.006, opening)
-      .intersect(sdf.halfSpace([0, -1, 0], -HEM_Y))
-      .paintWhere(helmInner.round(0.005), T.plateDark, 0.01);
-    // Two flat cheek guards beside the face, hugging the head, with a silver lower edge.
-    const CHEEK_Y = 0.604;
-    const cheekGuard = head
-      .round(0.026)
-      .subtract(head.round(0.01))
-      .intersect(sdf.box([0.1, 0.104, 0.14], 0.012).at(0.2, CHEEK_Y + 0.052, 0.02))
-      .paintWhere(sdf.halfSpace([0, 1, 0], CHEEK_Y + 0.011), C.silver, 0.004);
-    k.body('helm', sdf.union(helm, hard(cheekGuard)), { color: T.plate, roughness: 0.55, metalness: 0.4, bone: 'head' });
-
-    // Silver: a riveted brim band standing 0.01 proud, three ribs up the dome, the horn blades,
-    // the center spike.
-    const shellOf = (s: sdf.Shape, out: number, inn: number) => s.round(out).subtract(s.round(-inn));
-    const BAND_Y = BROW_Y + 0.0135;
-    const band = shellOf(helmOuter, 0.01, 0.016)
-      .smoothIntersect(0.004, sdf.box([0.8, 0.025, 0.8], 0.008).at(0, BAND_Y, 0))
-      .smoothSubtract(0.004, opening.round(-0.004));
-    const rib = (x: number, w: number) =>
-      shellOf(helmOuter, 0.012, 0.016)
-        .smoothIntersect(0.004, sdf.box([w, 0.7, 0.7], 0.008).at(x, 0.9, 0))
-        .intersect(sdf.halfSpace([0, -1, 0], -(BROW_Y + 0.02)))
-        .intersect(sdf.halfSpace([0, 0, -1], 0.03));
-    const ribs = sdf.union(hard(rib(0.135, 0.036)), rib(0, 0.03));
-    // A curved horn blade rises from the top of each side rib, tip leaning out.
-    const blade = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [0.104, 0.89],
-            [0.17, 0.89],
-            [0.188, 0.94],
-            [0.212, 0.99],
-            [0.228, 1.035],
-            [0.174, 1.0],
-            [0.132, 0.958],
-          ],
-          { smooth: true, samples: 4 },
-        ),
-        0.03,
-        0.006,
-      )
-      .at(0, 0, -0.02);
-    const crownAt = sdf.surfacePoint(helmOuter, [0, 1.1, -0.012], 0);
-    const spike = sdf
-      .cone([0, crownAt[1] - 0.012, crownAt[2]], [0, crownAt[1] + 0.14, crownAt[2]], 0.032, 0.005)
-      .union(sdf.cylinder(0.042, 0.026, 0.008).at(0, crownAt[1] + 0.002, crownAt[2]));
-    // Eight rivets on the front half of the brim.
-    const rivet = (a: number) => {
-      const s = Math.sin(a * rad);
-      const c = Math.cos(a * rad);
-      const p = sdf.raycast(band, [0.7 * s, BAND_Y, -0.012 + 0.7 * c], [-s, 0, -c]);
-      return sdf.sphere(0.0075).at(...(p ?? [0, BAND_Y, 0.25]));
-    };
-    const rivets = sdf.union(...[-82, -58, -34, -11, 11, 34, 58, 82].map(rivet));
-    // A bat wing on each side of the helm at the temple: a thin membrane, an arm along the
-    // leading edge (silver), and three fingers, swept back.
-    const rootAt = sdf.surfacePoint(helmOuter, [0.4, 0.7, -0.012], -0.014);
-    const WING = [
-      [0, 0.02],
-      [0.03, 0.05],
-      [0.075, 0.075],
-      [0.118, 0.06],
-      [0.16, 0.035],
-      [0.125, 0.03],
-      [0.146, -0.015],
-      [0.102, -0.003],
-      [0.096, -0.04],
-      [0.058, -0.008],
-      [0.016, -0.022],
-    ] as const;
-    const WRIST = [0.075, 0.072] as const;
-    const wingPose = (s: sdf.Shape) => s.scale(1.3).rotateZ(12).rotateY(30).at(...rootAt);
-    const membrane = wingPose(sdf.extrude(profile.polygon(WING.map(([x, y]) => [x, y] as [number, number])), 0.009, 0.003));
-    const fingers = wingPose(
-      sdf.union(...[WING[4], WING[6], WING[8]].map(([x, y]) => sdf.capsule([WRIST[0], WRIST[1], 0], [x * 0.97, y * 0.97 + 0.002, 0], 0.0072))),
-    );
-    const leading = wingPose(
-      sdf.union(sdf.capsule([0.004, 0.02, 0], [WRIST[0], WRIST[1], 0], 0.0095), sdf.capsule([WRIST[0], WRIST[1], 0], [0.158, 0.038, 0], 0.0085)),
-    );
-    k.body('wings', hard(sdf.union(membrane, fingers)), { color: T.plate, roughness: 0.55, metalness: 0.4, detail: 0.0042, bone: 'head' });
-    k.body('helm-silver', sdf.union(band, ribs, hard(blade), spike, hard(leading)), {
-      color: C.silver,
-      roughness: 0.35,
-      metalness: 0.8,
-      detail: 0.0045,
-      bone: 'head',
-    });
-    k.body('rivets', rivets, { color: C.rivet, roughness: 0.3, metalness: 0.85, detail: 0.004, bone: 'head' });
+    const helmPart = dragoonHelm(mapTint(k, { plate: 'armor' }));
+    const helmPose = (s: sdf.Shape) => s.at(...DRAGOON_HELM_MOUNT);
+    addPart(k, helmPart, { pose: helmPose });
 
     // ------------------------------------------------------------------ hair under the helm
-    const insideHelm = helmInner.round(-0.003).union(opening.round(-0.008).intersect(helmOuter.round(-0.002)));
+    const BROW_Y = 0.745;
+    const insideHelm = helmPose(helmPart.regions!.inside!);
     const cap = sdf
       .ellipsoid([HEAD[0] + 0.012, HEAD[1] + 0.014, HEAD[2] + 0.012])
       .at(0, HEAD_Y + 0.008, -0.01)
@@ -613,48 +503,8 @@ export default defineAsset({
     );
 
     // ------------------------------------------------------------------ the lance, rigid on the right hand
-    // Built from the butt (b = 0) up along +Y, with the fist center on the shaft. Silver collars
-    // and a ring guard sit above the hand; a leaf head sits on top.
-    const at0 = (b: number) => b - GRIP[1]; // local y of a height b above the butt at rest
-    const SHAFT_R = 0.018;
-    const shaftLocal = sdf.cylinder(SHAFT_R, 1.3, 0.003).at(0, at0(0.04 + 0.65), 0);
-    const gripLocal = sdf.cylinder(SHAFT_R + 0.004, 0.17, 0.004).at(0, at0(0.27), 0);
-    const buttLocal = sdf.smoothUnion(0.006, sdf.cone([0, at0(0.0), 0], [0, at0(0.06), 0], 0.01, 0.024), sdf.sphere(0.013).at(0, at0(0.01), 0));
-    const collar = (b: number, r: number) =>
-      sdf.smoothUnion(0.004, sdf.cone([0, at0(b - 0.02), 0], [0, at0(b), 0], 0.018, r), sdf.cone([0, at0(b), 0], [0, at0(b + 0.02), 0], r, 0.018));
-    // The ring guard: a torus R 0.04 around a hub, 0.55 m above the butt.
-    const ringGuard = sdf.torus(0.04, 0.008).at(0, at0(0.55), 0).union(sdf.cylinder(0.026, 0.03, 0.006).at(0, at0(0.55), 0));
-    const socket = sdf.cylinder(0.024, 0.05, 0.005).at(0, at0(1.3), 0);
-    // The leaf head: 0.22 tall, 0.07 wide, a lens section with a raised center ridge.
-    const HEAD_W = 0.07;
-    const HEAD_T = 0.014;
-    const LR = ((HEAD_W / 2) ** 2 + (HEAD_T / 2) ** 2) / HEAD_T;
-    const lens = sdf.intersect(
-      sdf.cylinder(LR, 4).at(0, 0, LR - HEAD_T / 2),
-      sdf.cylinder(LR, 4).at(0, 0, -(LR - HEAD_T / 2)),
-    );
-    const leafOutline = profile.polygon([
-      [0, at0(1.28)],
-      [0.026, at0(1.31)],
-      [HEAD_W / 2, at0(1.365)],
-      [0.028, at0(1.43)],
-      [0, at0(LANCE_LEN)],
-      [-0.028, at0(1.43)],
-      [-HEAD_W / 2, at0(1.365)],
-      [-0.026, at0(1.31)],
-    ]);
-    const leaf = sdf
-      .extrude(leafOutline, 0.2)
-      .intersect(lens)
-      .union(sdf.capsule([0, at0(1.3), 0], [0, at0(1.475), 0], 0.0085).intersect(sdf.extrude(leafOutline, 0.2)));
     const lanceAt = (s: sdf.Shape) => s.at(GRIP[0], GRIP[1], GRIP[2]);
-    k.body('lance', lanceAt(shaftLocal), { color: C.shaft, roughness: 0.5, metalness: 0.6, detail: 0.004, bone: 'hand.R' });
-    k.body('lance-grip', lanceAt(gripLocal), { color: C.leather, roughness: 0.75, detail: 0.004, bone: 'hand.R' });
-    k.body(
-      'lance-steel',
-      lanceAt(sdf.union(buttLocal, collar(0.63, 0.026), collar(1.0, 0.024), ringGuard, socket, leaf)),
-      { color: C.silver, roughness: 0.35, metalness: 0.8, detail: 0.003, bone: 'hand.R' },
-    );
+    addPart(k, dragoonLance(), { pose: lanceAt });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;
