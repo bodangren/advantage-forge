@@ -6,21 +6,21 @@ import { warriorSword } from './parts/warrior-sword.js';
  * part `assets/parts/warrior-sword.ts`, at the exact worn size (a shop view scales it for display).
  *
  * Role: loot drop, shop icon, and avatar part; the long tapered blade, the guard, and the wrapped
- * grip read at 128 px. Size: 0.1 m wide, 0.78 m tall (blade), standing point-down on y = 0, the
- * flat toward +Z. Static: no rig. No tint slots.
+ * grip read at 128 px. Size: 0.21 m wide, 0.92 m tall, standing on its pommel on y = 0, the point
+ * up (like the other swords of the set), the flat toward +Z. Static: no rig. No tint slots.
  */
 
-/** The tip of the blade in the part frame (local Y coordinate). */
-const BLADE_TIP = -0.78;
+/** The pommel's top in the part frame (local Y); the blade points to -Y. */
+const POMMEL = 0.1400;
 
 export default defineAsset({
   name: 'warrior-sword',
-  description: 'The warrior\'s large greatsword with a long tapered blade, a cross-guard with horns, and a leather-wrapped grip, standing point-down.',
+  description: 'The warrior\'s large greatsword with a long tapered blade, a cross-guard with horns, and a leather-wrapped grip, standing on its pommel.',
   detail: 0.006,
   reference: 'docs/hero-mockups/warrior_001.jpg',
   texture: { size: 512 },
 
   build(k) {
-    addPart(k, warriorSword(), { pose: (s) => s.at(0, -BLADE_TIP, 0), bones: null });
+    addPart(k, warriorSword(), { pose: (s) => s.rotateZ(180).at(0, POMMEL, 0), bones: null });
   },
 });
