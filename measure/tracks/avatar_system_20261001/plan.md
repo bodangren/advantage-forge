@@ -14,10 +14,12 @@ Status: in_progress (2026-10-01: the avatar base and the 9 part fixes started). 
 
 ## Phase 3: Equipment declaration and fit
 
-- [ ] Task: Add the `equip` block to `defineAsset`, validate it against the fit contract, write it to GLB extras.
-- [ ] Task: Record the socket of each part class (bone, offset in bone-local meters, rotation in degrees) and the rule for skinned and rigid parts; add it to `docs/equipment-parts.md` and link it from `docs/equipment-fit.md` (moved from `asset_equipment_parts_20260930` Phase 4).
-- [ ] Task: Extend `forge check` to equipment: fit bounds, skin intersection in the rest pose, weapon clearance on the base clips.
+- [x] Task: Add the `equip` block to `defineAsset`, validate it against the fit contract, write it to GLB extras. (2026-10-01: see "Equip record".)
+- [x] Task: Record the socket of each part class (bone, offset in bone-local meters, rotation in degrees) and the rule for skinned and rigid parts; add it to `docs/equipment-parts.md` and link it from `docs/equipment-fit.md` (moved from `asset_equipment_parts_20260930` Phase 4). (2026-10-01: see "Equip record".)
+- [x] Task: Extend `forge check` to equipment: fit bounds, skin intersection in the rest pose, weapon clearance on the base clips. (2026-10-01: show-through replaces the bounds rule; see "Equip record".)
+- [x] Task: Make the base clips pass the clearance check with held items: the wrists aim the item (`motion.orient`) in walk, run, attack, cheer, and cast. (2026-10-01.)
 - [ ] Task: Rework the 10 non-compliant pieces (belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood, leather-cap, crown, circlet).
+- [ ] Task: Rework the 4 pieces that the avatar fit check fails (plate-armor arm cuffs, bracers, boots, cape; `docs/equipment-fit.md`), and give guardian-shield its own `offset` and `rotate`.
 - [x] Task: Write `docs/avatar-catalog.tsv` (100 pieces: slot, tier, status) and the GP price formula (`src/apk3d/avatar/price.ts`, `scripts/avatar-price.ts`, `tests/apk3d/avatar-price.test.ts`).
 - [ ] Task: Add `equip` blocks to every phase 1 piece.
 - [x] Task: Add the 65 hero parts (`asset_equipment_parts_20260930`) to `docs/avatar-catalog.tsv` (owner decision 2026-10-01: keep every variant; the shop sorts by popularity).
@@ -78,3 +80,30 @@ y = 0. The 8 changed hosts built textured with sprites: no warnings; `forge chec
   Follow-up task in Phase 3 (capped hair styles); recorded in `docs/avatar-system.md` section 14.
 - Catalog: `spear-warden-helm` (head, tier 2) and the 4 hair styles (head, tier 1, override 0)
   added; the 9 fixed parts are `planned`. 170 rows; `scripts/avatar-price.ts --check` passes.
+
+## Equip record (2026-10-01)
+
+- Code: `src/equip.ts` (declaration, sockets, validation, the resolved `forgeEquip` record, and
+  `wearAsset`, which dresses a base in pieces), `src/equip-check.ts` (the fit check), the CLI
+  (`forge check <piece>` for an asset with `equip`; `--wear a,b` on render, animate, sprites, and
+  all), worker threads dress the base the same way. Tests: `tests/equip.test.ts` (8): the socket
+  joints match `avatar-base`, validation errors, the resolved transforms, the mirrored pair, the
+  rest-pose turn, the GLB extras, and the dressed base.
+- Authoring: `origin` and `rotate` say where the socket frame stands in the asset, so a part
+  standalone copies its rest pose. The plan's `anchor` field is not needed (the slot gives the bone).
+- Socket changes against the first plan: pauldrons on the upper arms, the shield on `hand.L`, the
+  back socket at the torso neck opening. Table: `docs/equipment-parts.md`.
+- Check rules: show-through of skin or clothes at more than 2% of the piece's points (calibrated on
+  renders), gap 2 cm, floor 1 cm, and the clip clearance on the worn base for pieces on arm bones.
+  The bounds rule of the plan ("within 5%") was dropped: display bounds include plumes and brims.
+- Base clips: before the change, every held test piece passed through the head in cheer and cast
+  (and in attack and run for some). The wrists now aim the item: steady in walk and run, a flat
+  sweep in the attack, up and outward with the flat outward in cheer (the wrists at x 0.31), ahead
+  in cast. Result: fighter-sword, warrior-sword, wizard-staff, dragoon-lance, and captain-shield
+  pass every clip (cheer clearance more than 5 cm). Strips: `out/avatar-base+warrior-sword+captain-shield/anim/`.
+- Pilot blocks (13): pass: knight-helm, rogue-hood, shoulder-armor, fighter-sword, warrior-sword,
+  wizard-staff, dragoon-lance, captain-shield. Fail (rework task): plate-armor (arm cuffs, 3.6%),
+  bracers and boots (inside the body), cape (shirt through it, hem 3 cm under the ground),
+  guardian-shield (touches the head at rest).
+- Hair: knight-helm shows hair at the brow (147 points, a note, not a failure) — the capped hair task.
+

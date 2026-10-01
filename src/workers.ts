@@ -12,7 +12,12 @@ export interface Pool {
  * Open a pool. Worker threads re-import the asset module at `source`, because shapes are closures
  * and cannot be sent between threads. Without a source, or with FORGE_WORKERS=1, tasks run here.
  */
-export async function openPool(ctx: TaskContext, source: string | undefined, jobs: number): Promise<Pool> {
+export async function openPool(
+  ctx: TaskContext,
+  source: string | undefined,
+  jobs: number,
+  wear?: readonly { readonly name: string; readonly source: string }[],
+): Promise<Pool> {
   const size = Math.min(
     jobs,
     Number(process.env.FORGE_WORKERS ?? Math.max(1, Math.floor(availableParallelism() / 2))),
@@ -23,7 +28,7 @@ export async function openPool(ctx: TaskContext, source: string | undefined, job
     await Promise.all(
       Array.from({ length: size }, () => {
         const worker = new Worker(new URL('./mesh-worker.ts', import.meta.url), {
-          workerData: { source },
+          workerData: { source, wear: wear ?? [] },
           execArgv: ['--import', 'tsx'],
         });
         workers.push(worker);

@@ -45,10 +45,12 @@ export async function buildToGlb(
   def: AssetDefinition,
   source?: string,
   textureSize?: number,
+  wear?: readonly { readonly name: string; readonly source: string }[],
 ): Promise<{ result: BuildResult; glb: Uint8Array }> {
   const result = await buildAsset(def, {
     ...(source ? { source } : {}),
     ...(textureSize !== undefined ? { textureSize } : {}),
+    ...(wear && wear.length > 0 ? { wear } : {}),
   });
   const glb = await toGlb(result.root);
   return { result, glb };

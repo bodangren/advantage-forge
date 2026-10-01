@@ -13,6 +13,7 @@ export default defineAsset({
   reference: 'docs/hero-mockups/captain_001.jpg',
   texture: { size: 512 },
   variants: {},
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, 0.132, 0] },
   build(k) {
     addPart(k, captainShield(), { pose: (s) => s.at(0, 0.132, 0), bones: null });
   },

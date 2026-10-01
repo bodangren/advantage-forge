@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/wizard_001.png',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, REST_Y, 0], twoHanded: true },
 
   build(k) {
     addPart(k, wizardStaff(), { pose: (s) => holdPose(GRIP, STAFF_AXIS).local(s.at(...MOUNT)).at(0, REST_Y, 0), bones: null });

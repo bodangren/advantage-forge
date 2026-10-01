@@ -27,6 +27,8 @@ export interface ClipCheckOptions {
   readonly headMargin?: number;
   /** Only these clips (default: all). */
   readonly clips?: readonly string[];
+  /** More bones whose items count as held (with the bones below them), for example `upperarm.L` for a pauldron. */
+  readonly heldBones?: readonly string[];
 }
 
 export interface Contact {
@@ -135,7 +137,12 @@ export async function checkClips(def: AssetDefinition, options: ClipCheckOptions
   const below = (b: string): string[] => [b, ...children(b).flatMap(below)];
   const head = new Set(skeleton.head ? below('head') : []);
   const body = new Set(BODY_BONES.filter((b) => b in skeleton));
-  const held = new Set(names.filter((n) => HELD.test(n)).flatMap(below).filter((b) => !head.has(b)));
+  const held = new Set(
+    names
+      .filter((n) => HELD.test(n) || (options.heldBones ?? []).includes(n))
+      .flatMap(below)
+      .filter((b) => !head.has(b)),
+  );
   const order: string[] = [];
   const visit = (b: string) => {
     order.push(b);

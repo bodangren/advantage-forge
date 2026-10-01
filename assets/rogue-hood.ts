@@ -17,6 +17,7 @@ export default defineAsset({
   variants: {
     cloth: { teal: '#2f625e', crimson: '#7a2a30', forest: '#3b5a2a' },
   },
+  equip: { slot: 'head', origin: [0, -RIM_Y, 0] },
   build(k) {
     addPart(k, rogueHood(k.tint), { pose: (s) => s.at(0, -RIM_Y, 0), bones: null });
   },

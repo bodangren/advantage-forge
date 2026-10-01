@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/hero-mockups/dragoon_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, DRAGOON_LANCE_GRIP_Y + 0.01, 0], twoHanded: true },
 
   build(k) {
     addPart(k, dragoonLance(), { pose: (s) => s.at(0, DRAGOON_LANCE_GRIP_Y + 0.01, 0), bones: null });

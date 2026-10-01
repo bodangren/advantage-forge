@@ -122,8 +122,10 @@ export async function toGlb(root: THREE.Object3D): Promise<Uint8Array> {
   // multiplies masked texels by option / default per slot), and each preset as a material
   // variant (KHR_materials_variants) with a ready recolored atlas, for engines without a shader.
   const variants = root.userData.forgeVariants as Record<string, unknown> | undefined;
+  // An equipment piece: its slot and the bone-local transform for each bone it attaches to (src/equip.ts).
+  const equip = root.userData.forgeEquip as Record<string, unknown> | undefined;
+  if (variants || equip) doc.getRoot().setExtras({ ...(variants ? { forgeVariants: variants } : {}), ...(equip ? { forgeEquip: equip } : {}) });
   if (variants) {
-    doc.getRoot().setExtras({ forgeVariants: variants });
     if (atlas?.tintMask) doc.createTexture('tintMask').setImage(atlas.tintMask).setMimeType('image/png');
     const presets = Object.entries(atlas?.presets ?? {});
     if (presets.length > 0) {

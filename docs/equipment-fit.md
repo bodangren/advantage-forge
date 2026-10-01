@@ -53,3 +53,22 @@ Measured from `out/<name>/stats.json` bounds against the hero base.
 
 Rework order: belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood,
 leather-cap, crown, circlet.
+
+## Fit on the avatar base (2026-10-01)
+
+The audit above measures display bounds only. The `equip` block and the fit check
+(`forge check <piece>`, sockets in [equipment-parts.md](equipment-parts.md#avatar-sockets-and-the-equip-block))
+wear each piece on `avatar-base`. The first pilot found four pieces of the "compliant" rows that do
+not fit:
+
+| Piece | Finding on the avatar base |
+| --- | --- |
+| plate-armor | The upper arms cut through the gold arm cuffs under the pauldrons (skin shows through at 3.6% of the points). |
+| bracers | Inside the forearm: the wrist radius at 1x is 0.025 m, and the base forearm is 0.032 m. |
+| boots | Inside the shin and the foot: the shaft radius at 1x is 0.026 m. |
+| cape | The shirt comes through the cape, the cape hangs in front of the legs, and the hem goes 3 cm below the ground. |
+
+These pilot pieces pass: knight-helm, rogue-hood, shoulder-armor, fighter-sword, warrior-sword,
+wizard-staff, dragoon-lance, and captain-shield. guardian-shield (a tower shield) touches the head
+at rest; it needs its own `offset` and `rotate`, as the guardian holds it far out.
+

@@ -18,6 +18,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/plate-armor-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
 
   build(k) {
     const Z = 0.78;

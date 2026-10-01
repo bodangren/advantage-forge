@@ -19,6 +19,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/warrior_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, POMMEL, 0], twoHanded: true },
 
   build(k) {
     addPart(k, warriorSword(), { pose: (s) => s.rotateZ(180).at(0, POMMEL, 0), bones: null });

@@ -10,6 +10,7 @@ import { openPool } from './workers.js';
 import { groundClip } from './grounding.js';
 import { buildRig, sampleAnimation, skinWeights, type AnimationDef, type SkeletonDef } from './rig.js';
 import { checkPresets, recolor, slotTable, type Slot, type VariantPresets, type VariantSlots } from './variants.js';
+import { resolveEquip, validateEquip, type EquipDeclaration, type ResolvedEquip } from './equip.js';
 
 export interface BodyOptions {
   /** Base color where no paint covers the surface. Default '#cccccc'. */
@@ -112,6 +113,12 @@ export interface AssetDefinition {
   readonly variants?: VariantSlots;
   /** Named slot combinations, baked as ready textures (glTF material variants) and sprite sets. */
   readonly presets?: VariantPresets;
+  /**
+   * An equipment piece for the avatar: its slot, the point and turn that put it on the slot's
+   * socket, and its fit scale (src/equip.ts, docs/avatar-system.md). Validated at build time and
+   * written to the GLB root extras (`forgeEquip`) and stats.json.
+   */
+  readonly equip?: EquipDeclaration;
   build(k: AssetContext): void | Promise<void>;
 }
 
@@ -161,6 +168,7 @@ export interface BuildResult {
     readonly texture: { readonly size: number; readonly milliseconds: number } | null;
     readonly bones: number;
     readonly animations: readonly { readonly name: string; readonly duration: number }[];
+    readonly equip?: ResolvedEquip;
     readonly milliseconds: number;
   };
 }
@@ -280,12 +288,21 @@ export interface BuildOptions {
   readonly source?: string;
   /** Override the asset's texture size; 0 disables textures (vertex colors only). */
   readonly textureSize?: number;
+  /**
+   * `def` is the asset at `source` wearing these equipment pieces (`wearAsset`): the worker threads
+   * import each piece module too and dress the base the same way.
+   */
+  readonly wear?: readonly { readonly name: string; readonly source: string }[];
 }
 
 /** Run an asset's build function, mesh every body, and (by default) unwrap and bake textures. */
 export async function buildAsset(def: AssetDefinition, options: BuildOptions = {}): Promise<BuildResult> {
   const t0 = performance.now();
   const { root, pending, skeleton, animations } = await collectBodies(def);
+  if (def.equip) {
+    if (skeleton) throw new Error('An equipment piece (equip) has no skeleton: the avatar base moves it.');
+    validateEquip(def.equip, pending.map((b) => b.name));
+  }
   const ctx = makeContext(def, root, pending);
   const rig = skeleton ? buildRig(skeleton) : null;
   if (rig) {
@@ -299,7 +316,7 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
   }
   const threeSkeleton = rig ? new THREE.Skeleton([...rig.bones]) : null;
   const size = options.textureSize ?? (def.texture === false ? 0 : (def.texture?.size ?? 1024));
-  const pool = await openPool(ctx, options.source, pending.length);
+  const pool = await openPool(ctx, options.source, pending.length, options.wear);
 
   let meshed: MeshResult[];
   let uvMeshes: UvMesh[] | null = null;
@@ -406,6 +423,8 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
     bodies.push({ name: body.name, ...stats });
   });
   if (images) root.userData.forgeTextures = images;
+  const equip = def.equip ? resolveEquip(def.equip) : null;
+  if (equip) root.userData.forgeEquip = equip;
   const table = slotTable(def.variants);
   if (table.length > 0) {
     const r5 = (v: number) => Math.round(v * 1e5) / 1e5;
@@ -466,6 +485,7 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
       texture: images ? { size: images.size, milliseconds: textureMs } : null,
       bones: rig ? rig.bones.length : 0,
       animations: root.animations.map((c) => ({ name: c.name, duration: c.duration })),
+      ...(equip ? { equip } : {}),
       milliseconds: Math.round(performance.now() - t0),
     },
   };

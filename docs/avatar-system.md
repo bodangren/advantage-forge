@@ -62,18 +62,23 @@ cast). Equipment pieces carry no clips.
 ## 4. Slots (rigid first)
 
 Each slot takes one piece. A piece attaches to one bone with the inverse of its display scale.
+The socket points and axes of each slot are in [equipment-parts.md](equipment-parts.md#avatar-sockets-and-the-equip-block).
 
-| Slot | Anchor bone | Display scale | Phase 1 pieces (compliant today) | Rework first |
+| Slot | Anchor bone | Display scale | Phase 1 pieces (compliant by bounds) | Rework first |
 | --- | --- | --- | --- | --- |
 | `head` | `head` | 1x | none | iron-helmet, steel-helmet, horned-helmet, cloth-hood, leather-cap, crown, circlet |
-| `chest` | `chest` | 2x, lift 0.152 after the 0.5 scale | plate-armor, scale-armor, studded-leather | chainmail, leather-armor |
-| `shoulders` | `chest` | 2x | shoulder-armor | |
-| `back` | `cloak` | 2x | cape, cloak, mantle (rigid to the cloak bone in phase 1) | |
-| `hands` | `forearm.L`, `forearm.R` (one piece, mirrored) | 2x | gauntlets, gloves, bracers | |
+| `chest` | `chest` | 2x, lift 0.152 after the 0.5 scale | plate-armor (fails on the avatar: arm cuffs), scale-armor, studded-leather | chainmail, leather-armor |
+| `shoulders` | `upperarm.L`, `upperarm.R` (one pauldron, mirrored) | 2x | shoulder-armor | |
+| `back` | `cloak` | 2x | cape (fails on the avatar), cloak, mantle (rigid to the cloak bone in phase 1) | |
+| `hands` | `forearm.L`, `forearm.R` (a pair; the left piece, mirrored) | 2x | gauntlets, gloves, bracers (fails on the avatar: too thin) | |
 | `waist` | `hips` | 2x | none | belt |
-| `feet` | `shin.L`, `shin.R` (one piece, mirrored) | 2x | boots, greaves | |
+| `feet` | `shin.L`, `shin.R` (a pair; the left piece, mirrored) | 2x | boots (fails on the avatar: too thin), greaves | |
 | `mainhand` | `knife.R` (the grip bone) | real size, hand fit 0.45x | all melee, magic, and ranged weapons | |
-| `offhand` | `knife.L` | real size, hand fit 0.45x | buckler, round-shield, kite-shield, tower-shield, tome, orb, lantern-handheld | |
+| `offhand` | `knife.L`; a shield on `hand.L` | real size, hand fit 0.45x | buckler, round-shield, kite-shield, tower-shield, tome, orb, lantern-handheld | |
+
+Changes of 2026-10-01 (Phase 3): pauldrons attach to the upper arms (on the chest, a raised arm
+goes through them); a shield attaches to the hand bone (a clip turns it with the wrist). The fit
+check found four "compliant" pieces that do not fit the avatar (see `equipment-fit.md`).
 
 Later phases: `robe` (cloth-robe, mage-robe: skinned to spine, chest, and legs), `skirt`,
 `accessory` (necklace, amulet, pendant: the `neck` anchor), `tool` (a back-mounted lute, quiver).
@@ -87,31 +92,40 @@ The shop view scales a hero part for display. The 17 head parts fit the base hea
 
 ## 5. The equipment declaration
 
-Every equipment asset gains one `equip` block in `defineAsset`. The forge validates it against
-the fit contract at build time and writes it to the GLB root extras and the pack catalog.
+Every equipment asset gains one `equip` block in `defineAsset` (built 2026-10-01: `src/equip.ts`).
+The forge validates it against the fit contract at build time (slot, hold, fit scale, hides,
+two-handed, display-only bodies) and writes the resolved block to the GLB root extras
+(`forgeEquip`) and `stats.json`. The pack catalog takes it from there.
 
 ```ts
 export default defineAsset({
-  name: 'iron-helmet',
+  name: 'knight-helm',
   // ...
   equip: {
     slot: 'head',
-    anchor: 'head',
-    fitScale: 1,            // display size / fit size
-    offset: [0, 0, 0],      // meters, in the bone frame after the inverse scale
-    rotate: [0, 0, 0],      // degrees
-    hides: ['hair'],        // base bodies hidden while equipped
-    twoHanded: false,       // weapons only
+    fitScale: 1,              // display size / fit size (default 1)
+    origin: [0, -RIM_Y, 0],   // where the socket frame stands in the asset (the rest pose move)
+    rotate: [0, 0, 0],        // how the socket frame is turned in the asset (the rest pose turn)
+    hides: ['hair'],          // base bodies hidden while equipped
+    twoHanded: false,         // weapons only
   },
 });
 ```
 
-Build-time checks (`forge check <name>` extends to equipment):
+The forge resolves the block into one bone-local transform for each bone (`attach`: bone,
+position, quaternion, scale, and `half` for one piece of a pair). The composer only adds the piece
+under the bone with that transform. The authoring rules and the socket table are in
+[equipment-parts.md](equipment-parts.md#avatar-sockets-and-the-equip-block).
 
-- The fit bounds match the slot's contract within 5%.
-- The piece does not intersect the base skin when attached in the rest pose.
-- A `mainhand` piece never passes through the head in any base clip (the existing clearance check
-  run against the base skeleton).
+Fit checks (`forge check <name>` for an asset with an `equip` block, worn on `avatar-base`):
+
+- No base skin or clothes show through the piece at more than 2% of its points (rest pose). This
+  replaces the first plan of "fit bounds within 5%": display bounds include pauldrons, plumes, and
+  brims, so a bounds rule fails good pieces and passes pieces that sit inside the body.
+- The piece is no more than 2 cm from the base (no floating) and no more than 1 cm below the ground.
+- A piece on an arm bone (weapons, shields, hand and shoulder pieces) never passes through the head
+  in any base clip (the clip clearance check on the worn base). The base clips aim held items with
+  the wrists, so every held piece uses the same clips.
 
 ## 6. The catalog
 

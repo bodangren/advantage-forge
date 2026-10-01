@@ -22,6 +22,7 @@ export default defineAsset({
   variants: {
     plume: { red: '#c93a32', blue: '#2f58b8', green: '#2e7a3c' },
   },
+  equip: { slot: 'head', origin: [0, -RIM_Y, 0] },
 
   build(k) {
     addPart(k, knightHelm(k.tint), { pose: (s) => s.at(0, -RIM_Y, 0), bones: null });

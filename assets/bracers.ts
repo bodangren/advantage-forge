@@ -61,6 +61,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/bracers-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'hands', fitScale: 2, origin: [CX, 0, 0], rotate: [10.8, 0, -14.6] },
 
   build(k) {
     // ------------------------------------------------------------------ leather cuffs

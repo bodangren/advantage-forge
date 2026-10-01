@@ -11,6 +11,8 @@ import * as motion from './motion.js';
 export { defineAsset } from './asset.js';
 export type { AssetContext, AssetDefinition, BodyOptions, GroupOptions } from './asset.js';
 export { addPart, mapTint } from './part.js';
+export { HAND_FIT } from './equip.js';
+export type { EquipDeclaration, EquipSlot, EquipHold, BaseLayer } from './equip.js';
 export type { Part, PartBody, PartTint, PlaceOptions } from './part.js';
 export { Sdf } from './sdf/core.js';
 export type { Vec3 } from './sdf/core.js';

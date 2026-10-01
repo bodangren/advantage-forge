@@ -43,6 +43,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/item-mockups/boots-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'feet', fitScale: 2, origin: [X0, 0.14, 0], hides: ['shoes'] },
 
   build(k) {
     // ------------------------------------------------------------------ single boot body

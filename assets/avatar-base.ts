@@ -276,7 +276,7 @@ export default defineAsset({
     k.body('shoes', pair(shoe), { color: C.shoe, roughness: 0.6 });
 
     // ------------------------------------------------------------------ animation
-    const { wave, bump, keys, reach } = motion;
+    const { wave, bump, keys, reach, orient } = motion;
     const LEG = 0.19;
     const rad = Math.PI / 180;
     type V3 = readonly [number, number, number];
@@ -324,6 +324,9 @@ export default defineAsset({
           'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
           'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
           'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
+          // The wrists take back most of the arm swing, so a held weapon or shield stays steady.
+          'hand.L': { rotate: [-0.8 * (armSwing * s - armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s)), 0, 0] as const },
+          'hand.R': { rotate: [-0.8 * (-armSwing * s - armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s)), 0, 0] as const },
         };
       },
     });
@@ -332,20 +335,31 @@ export default defineAsset({
 
     // One arm from a wrist target and an elbow pole, both in the chest's rest frame. Keys are
     // written for the right arm (x < 0); `m` mirrors them for the left arm.
+    // The held item (src/equip.ts, the grip socket): at rest its business end points forward and
+    // 20 degrees up and its flat faces outward. `aim` turns the hand so that the item points along
+    // `dir` with the flat toward `up` (chest frame, right-arm keys); a shield on the hand turns with it.
+    const ITEM_DIR: V3 = [0, Math.sin(20 * rad), Math.cos(20 * rad)];
     const armRig = (side: 1 | -1) => {
       const m = (v: V3): V3 => [side === 1 ? -v[0] : v[0], v[1], v[2]];
       const tag = side === 1 ? 'L' : 'R';
       const chain = { root: m(mx(SHOULDER)), mid: m(mx(ELBOW)), end: m(mx(WRIST)) };
-      const pose = (wrist: V3, pole: V3, handX = 0) => {
+      const item = { dir: ITEM_DIR, up: m([-1, 0, 0]) };
+      const pose = (wrist: V3, pole: V3, aim?: { dir: V3; up: V3 }) => {
         const a = reach(chain, wrist, pole);
         return {
           [`upperarm.${tag}`]: { rotate: a.upper },
           [`forearm.${tag}`]: { rotate: a.lower },
-          [`hand.${tag}`]: { rotate: [handX, 0, 0] as V3 },
+          [`hand.${tag}`]: { rotate: aim ? orient([a.upper, a.lower], item, { dir: m(aim.dir), up: m(aim.up) }) : ([0, 0, 0] as V3) },
         };
       };
-      return { m, chain, pose, rest: m([-0.58, 0.6, -0.015]) };
+      return { m, chain, pose, item, rest: m([-0.58, 0.6, -0.015]) };
     };
+    const norm = (v: V3): V3 => {
+      const l = Math.hypot(...v);
+      return [v[0] / l, v[1] / l, v[2] / l];
+    };
+    /** The rest aim of a right-hand item: forward and 20 degrees up, the flat outward. */
+    const AIM_REST = { dir: ITEM_DIR, up: [-1, 0, 0] as V3 };
     const armR = armRig(-1);
     const armL = armRig(1);
     // A crouch with the feet planted: the thigh swings forward by `a`, the shin back by 2a, and the
@@ -390,6 +404,21 @@ export default defineAsset({
           [0.6, [-0.4, 0.3, 0.1]],
           [1, armR.rest],
         ] as [number, V3][]);
+        // The blade: up and back over the right shoulder in the wind-up, then a flat sweep out in
+        // front and across to the left (the flat faces up, so the edge leads), and back to rest.
+        const dir = norm(
+          keys(p, [
+            [0, AIM_REST.dir],
+            [0.25, [-0.55, 0.75, -0.35]],
+            [0.33, [-0.55, 0.75, -0.35]],
+            [0.43, [-0.55, 0.2, 0.8]],
+            [0.52, [0.45, 0.05, 0.9]],
+            [0.6, [0.85, -0.1, 0.5]],
+            [0.8, [0.2, 0.2, 0.95]],
+            [1, AIM_REST.dir],
+          ] as [number, V3][], 'spline'),
+        );
+        const up = norm(keys(p, [[0, AIM_REST.up], [0.3, [-0.9, 0.1, 0.4]], [0.43, [0, 1, 0.3]], [0.6, [0, 1, 0.3]], [1, AIM_REST.up]] as [number, V3][]));
         const turn = keys(p, [[0, 0], [0.25, -14], [0.33, -14], [0.52, 16], [0.62, 16], [1, 0]] as const);
         const chestY = keys(p, [[0, 0], [0.25, -18], [0.33, -18], [0.5, 20], [0.62, 20], [1, 0]] as const);
         const lean = keys(p, [[0, 0], [0.25, 3], [0.45, 9], [0.62, 7], [1, 0]] as const);
@@ -400,7 +429,7 @@ export default defineAsset({
           chest: { rotate: [lean / 3, chestY, 0] },
           head: { rotate: [-0.6 * lean, -0.6 * (turn + chestY), 0] },
           cloak: { rotate: [6 * balance, 0, 0] },
-          ...armR.pose(wrist, pole),
+          ...armR.pose(wrist, pole, { dir, up }),
           'upperarm.L': { rotate: [-12 * balance, 0, 14 * balance] },
           'forearm.L': { rotate: [-20 * balance, 0, 0] },
           'leg.L': { rotate: [0, -turn, 0] },
@@ -467,8 +496,8 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ cheer: fists up and a hop
     // A dip, a hop with both fists pumped up beside the cheeks, a landing that gives in the knees.
-    // Loops. The fists stay outside the cheeks (x 0.24), so held items stay clear of the head.
-    const UP: V3 = [-0.24, 0.5, 0.035];
+    // Loops. The wrists stay well outside the cheeks (x 0.31), so held items stay clear of the head.
+    const UP: V3 = [-0.31, 0.5, 0.05];
     k.animation('cheer', {
       duration: 0.8,
       pose: (_t, p) => {
@@ -476,8 +505,11 @@ export default defineAsset({
         const air = clamp01(Math.sin(clamp01((p - 0.3) / 0.45) * Math.PI));
         const legs = crouch(22 * bend);
         const up = keys(p, [[0, 0.75], [0.2, 0.6], [0.4, 1], [0.7, 1], [1, 0.75]] as const, 'spline');
-        const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UP]] as [number, V3][]), keys(up, [[0, armR.rest], [1, [-0.7, 0.1, 0.2]]] as [number, V3][]));
-        const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UP)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m([-0.7, 0.1, 0.2])]] as [number, V3][]));
+        // A held item rises with the fist: up and a little out, the flat outward, so a crossguard
+        // or a shield rim spans front to back beside the head and never toward the cheek.
+        const aim = { dir: norm(keys(up, [[0, AIM_REST.dir], [1, [-0.45, 0.88, 0.12]]] as [number, V3][])), up: AIM_REST.up };
+        const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UP]] as [number, V3][]), keys(up, [[0, armR.rest], [1, [-0.7, 0.1, 0.2]]] as [number, V3][]), aim);
+        const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UP)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m([-0.7, 0.1, 0.2])]] as [number, V3][]), aim);
         return {
           ...legs.bones,
           hips: { move: [0, 0.05 * air - legs.drop, 0] },
@@ -504,14 +536,16 @@ export default defineAsset({
           keys(p, [[0, a.chain.end], [0.3, a.m(GATHER)], [0.42, a.m(GATHER)], [0.52, a.m(PUSH)], [0.74, a.m(PUSH)], [1, a.chain.end]] as [number, V3][], 'spline');
         const pole = (a: typeof armR) => keys(p, [[0, a.rest], [0.3, a.m([-0.6, -0.2, -0.3])], [0.52, a.m([-0.7, -0.3, 0.1])], [1, a.rest]] as [number, V3][]);
         const lean = keys(p, [[0, 0], [0.3, -5], [0.42, -6], [0.52, 9], [0.74, 8], [1, 0]] as const);
-        const wristBend = keys(p, [[0, 0], [0.42, 0], [0.52, -35], [0.74, -35], [1, 0]] as const);
+        // Held items point ahead and a little up through the gather and the push.
+        const ahead = keys(p, [[0, 0], [0.3, 1], [0.74, 1], [1, 0]] as const);
+        const aim = { dir: norm(keys(ahead, [[0, AIM_REST.dir], [1, [0, 0.12, 1]]] as [number, V3][])), up: AIM_REST.up };
         return {
           spine: { rotate: [lean, 0, 0] },
           chest: { rotate: [lean / 2, 0, 0] },
           head: { rotate: [-0.7 * lean, 0, 0] },
           cloak: { rotate: [-lean, 0, 0] },
-          ...armR.pose(wrist(armR), pole(armR), wristBend),
-          ...armL.pose(wrist(armL), pole(armL), wristBend),
+          ...armR.pose(wrist(armR), pole(armR), aim),
+          ...armL.pose(wrist(armL), pole(armL), aim),
         };
       },
     });

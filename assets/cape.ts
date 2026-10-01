@@ -34,6 +34,7 @@ export default defineAsset({
   detail: 0.008,
   reference: 'docs/item-mockups/cape-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'back', fitScale: 2, origin: [0, 1.005, 0] },
 
   build(k) {
     // ------------------------------------------------------------- cloth

@@ -277,6 +277,10 @@ Motion (`motion.*`): `wave(phase, cycles, offset)` in [-1, 1], `bump(phase, cycl
   `addPart(k, part, { pose })`, and `assets/<host>-<piece>.ts` stands it on the ground as its own
   asset and avatar item (a row in `docs/avatar-catalog.tsv`). Contract and extraction recipe:
   `docs/equipment-parts.md`. Check a refactor with `node scripts/part-check.mjs save|compare <host>`.
+- **Equipment on the avatar:** every equipment asset declares an `equip` block (slot, `origin` and
+  `rotate` = its rest pose, fit scale, hides). `./forge check <piece>` wears it on `avatar-base`
+  (show-through, gap, floor, clip clearance); `./forge render avatar-base --wear a,b --fast` shows
+  it. Sockets and rules: `docs/equipment-parts.md` ("Avatar sockets and the equip block").
 - **Surface texture:** `.displace(0.004, (x, y, z) => noise.fbm(x * 18, y * 6, z * 18, 3))` for wood,
   stone, bark. The normal map keeps this detail even after triangle reduction. Keep amplitude
   small on shiny metal; reflections exaggerate it.

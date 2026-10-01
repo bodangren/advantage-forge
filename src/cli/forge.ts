@@ -14,6 +14,8 @@ import type {
 } from '../render/page.js';
 import type * as Pipeline from '../pipeline.js';
 import type * as ClipCheck from '../clip-check.js';
+import type * as Equip from '../equip.js';
+import type * as EquipCheck from '../equip-check.js';
 import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
 
 const HELP = `forge — build and look at 3D assets
@@ -30,6 +32,8 @@ const HELP = `forge — build and look at 3D assets
                                         through the head (fails) or the body (reported) in any clip?
                                         Does any clip sink below the ground (fails)?
                                         --clip attack,victory  --fps 60 (no browser)
+                                        An equipment piece (an equip block) is checked worn on
+                                        avatar-base instead: show-through, gap, and clip clearance
 
 render options
   --views front,three-quarter,side,back,top,back-three-quarter  (default: first four)
@@ -59,6 +63,8 @@ common
   --fast               skip UV unwrap and texture baking (vertex colors; about 3x faster)
   --texture 2048       atlas size (default: the asset's texture.size, else 1024; 0 = off)
   --watch              keep running; rebuild and re-render when a file changes
+  --wear a,b           dress a base (avatar-base) in equipment pieces (assets with an equip block);
+                       the outputs go to out/<base>+<a>+<b>/
 `;
 
 const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
@@ -103,6 +109,7 @@ async function main(): Promise<void> {
       preset: { type: 'string' },
       ppm: { type: 'string' },
       into: { type: 'string' },
+      wear: { type: 'string' },
       help: { type: 'boolean', short: 'h' },
     },
   });
@@ -119,6 +126,10 @@ async function main(): Promise<void> {
     throw new Error(`Unknown command '${command}'.\n${HELP}`);
   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
   const file = assetPath(name);
+  const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
+  if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
+  // A base in equipment writes beside the base, never over its outputs.
+  const outName = [name, ...wear].join('+');
 
   const server = await createServer({
     root: ROOT,
@@ -175,6 +186,18 @@ async function main(): Promise<void> {
       if (command === 'check') {
         const checker = (await server.ssrLoadModule('/src/clip-check.ts')) as typeof ClipCheck;
         const def = pipeline.checkDefinition(await server.ssrLoadModule(file), name);
+        if (def.equip) {
+          // An equipment piece: the fit check, worn on the avatar base.
+          const fit = (await server.ssrLoadModule('/src/equip-check.ts')) as typeof EquipCheck;
+          const base = pipeline.checkDefinition(await server.ssrLoadModule(assetPath('avatar-base')), 'avatar-base');
+          const report = await fit.checkEquip({ name, def }, base, {
+            ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
+            ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
+          });
+          console.log(fit.formatEquipCheck(name, report));
+          if (!report.ok) process.exitCode = 1;
+          return;
+        }
         const report = await checker.checkClips(def, {
           ...(values.fps !== undefined ? { fps: num(values.fps, 60) } : {}),
           ...(values.clip !== undefined && values.clip !== 'all' ? { clips: String(values.clip).split(',') } : {}),
@@ -197,13 +220,20 @@ async function main(): Promise<void> {
           : values.texture !== undefined
             ? num(values.texture, 1024)
             : undefined;
-        built = await pipeline.buildToGlb(pipeline.checkDefinition(mod, name), file, textureSize);
+        let def = pipeline.checkDefinition(mod, name);
+        const worn: { name: string; source: string; def: typeof def }[] = [];
+        for (const w of wear) {
+          const source = assetPath(w);
+          worn.push({ name: w, source, def: pipeline.checkDefinition(await server.ssrLoadModule(source), w) });
+        }
+        if (worn.length > 0) def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
+        built = await pipeline.buildToGlb(def, file, textureSize, worn.map(({ name: n, source }) => ({ name: n, source })));
       } catch (error) {
         server.ssrFixStacktrace(error as Error);
         throw error;
       }
       const { result, glb } = built;
-      const out = join(OUT_DIR, name);
+      const out = join(OUT_DIR, outName);
       mkdirSync(out, { recursive: true });
       const glbPath = join(out, `${name}.glb`);
       writeFileSync(glbPath, glb);
@@ -248,7 +278,7 @@ async function main(): Promise<void> {
         },
       );
       const def = (await server.ssrLoadModule(file)).default as { reference?: string };
-      const useRef = values['no-ref'] !== true && def.reference !== undefined;
+      const useRef = values['no-ref'] !== true && def.reference !== undefined && wear.length === 0;
       if (useRef) {
         const refFile = join(ROOT, def.reference!);
         await page.route(
@@ -272,7 +302,7 @@ async function main(): Promise<void> {
             views: viewList(values),
             size: num(values.size, 512),
             background: values.bg ?? '#aeb3ba',
-            title: preset ? `${name} · ${preset}` : name,
+            title: preset ? `${outName} · ${preset}` : outName,
             ...(useRef ? { referenceUrl: `/__forge/reference?t=${Date.now()}` } : {}),
             ...(preset ? { preset } : {}),
           };

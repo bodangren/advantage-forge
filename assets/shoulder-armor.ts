@@ -24,6 +24,7 @@ export default defineAsset({
   detail: 0.003,
   reference: 'docs/item-mockups/shoulder-armor-mock.jpg',
   texture: { size: 1024 },
+  equip: { slot: 'shoulders', fitScale: 2, origin: [0, 0.08, 0] },
 
   build(k) {
     const cap = lame([0.13, 0.11, 0.12], 0.0, 0.08, 0.1, 0.2);

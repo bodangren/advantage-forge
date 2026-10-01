@@ -19,6 +19,7 @@ export default defineAsset({
   variants: {
     cloth: { teal: '#3a7a88', crimson: '#9a2c34', royal: '#2f58b8' },
   },
+  equip: { slot: 'offhand', hold: 'shield', origin: [0, -POINT_Y, 0] },
   build(k) {
     addPart(k, guardianShield(k.tint), { pose: (s) => s.scale(1.15).at(0, -POINT_Y, 0), bones: null });
   },

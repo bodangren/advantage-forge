@@ -1,0 +1,143 @@
+import { NodeIO } from '@gltf-transform/core';
+import * as THREE from 'three';
+import { describe, expect, it } from 'vitest';
+import avatarBase from '../assets/avatar-base.js';
+import { buildAsset, collectBodies, defineAsset } from '../src/asset.js';
+import { BASE_JOINTS, HAND_FIT, SOCKETS, jointOf, resolveEquip, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
+import { toGlb } from '../src/gltf.js';
+import { sdf } from '../src/index.js';
+
+/** A cap that rests on y = 0 with its head center 0.2 m up, one tint slot, and a display stand. */
+const cap = defineAsset({
+  name: 'test-cap',
+  detail: 0.01,
+  texture: false,
+  variants: { trim: { red: '#c03030', blue: '#3050c0' } },
+  equip: { slot: 'head', origin: [0, 0.2, 0], hides: ['hair'], displayOnly: ['stand'] },
+  build(k) {
+    k.body('cap', sdf.ellipsoid([0.23, 0.22, 0.21]).at(0, 0.2, 0).subtract(sdf.ellipsoid([0.215, 0.21, 0.2]).at(0, 0.2, 0)).intersect(sdf.box([1, 0.3, 1]).at(0, 0.35, 0)), {
+      color: k.tint('trim'),
+    });
+    k.body('stand', sdf.cylinder(0.05, 0.1).at(0, 0.05, 0));
+  },
+});
+
+/** Apply a resolved attach (bone-local TRS) to an asset point, then move it to the bone's rest joint. */
+const attached = (a: ReturnType<typeof resolveEquip>['attach'][number], p: readonly [number, number, number]) =>
+  new THREE.Vector3(...p)
+    .applyMatrix4(
+      new THREE.Matrix4().compose(new THREE.Vector3(...a.position), new THREE.Quaternion(...a.quaternion), new THREE.Vector3(...a.scale)),
+    )
+    .add(new THREE.Vector3(...jointOf(a.bone)));
+
+describe('equipment declaration', () => {
+  it('uses the joint positions of the avatar base skeleton', async () => {
+    const { skeleton } = await collectBodies(avatarBase);
+    for (const [bone, at] of Object.entries(BASE_JOINTS)) expect(skeleton![bone]!.at, bone).toEqual(at);
+    expect(skeleton!['knife.R']!.at).toEqual(jointOf('knife.R'));
+    for (const socket of Object.values(SOCKETS)) expect(skeleton![socket.bone], socket.bone).toBeDefined();
+  });
+
+  it('rejects declarations outside the fit contract', () => {
+    const bodies = ['helm'];
+    const bad: [EquipDeclaration, RegExp][] = [
+      [{ slot: 'head', fitScale: 2 }, /fitScale 2 is not in the fit contract/],
+      [{ slot: 'chest', hides: ['hair'] }, /cannot hide 'hair'/],
+      [{ slot: 'offhand', twoHanded: true }, /only a mainhand piece is two-handed/],
+      [{ slot: 'mainhand', hold: 'shield' }, /a shield is held in the offhand/],
+      [{ slot: 'head', hold: 'grip' }, /only for mainhand and offhand/],
+      [{ slot: 'head', displayOnly: ['stand'] }, /not a body/],
+      [{ slot: 'head', displayOnly: ['helm'] }, /every body is displayOnly/],
+      [{ slot: 'hat' as 'head' }, /unknown slot 'hat'/],
+    ];
+    for (const [eq, error] of bad) expect(() => validateEquip(eq, bodies)).toThrow(error);
+    expect(() => validateEquip({ slot: 'mainhand', fitScale: HAND_FIT, twoHanded: true }, bodies)).not.toThrow();
+    expect(() => validateEquip({ slot: 'chest', fitScale: 2, hides: ['undershirt'] }, bodies)).not.toThrow();
+  });
+
+  it('puts the origin on the socket, scaled and turned', () => {
+    // A 2x chest piece: the hem center (the origin) goes to the hero hem; 0.6 m up is 0.3 m worn.
+    const chest = resolveEquip({ slot: 'chest', fitScale: 2 });
+    expect(chest.attach).toHaveLength(1);
+    expect(chest.attach[0]!.bone).toBe('chest');
+    expect(attached(chest.attach[0]!, [0, 0, 0]).toArray().map((v) => +v.toFixed(6))).toEqual([0, 0.152, 0]);
+    expect(attached(chest.attach[0]!, [0, 0.6, 0]).y).toBeCloseTo(0.452, 6);
+    // A weapon: the grip goes into the right fist, and the business end (+Y) points forward and 20 degrees up.
+    const sword = resolveEquip({ slot: 'mainhand', origin: [0, 0.1, 0] });
+    const grip = attached(sword.attach[0]!, [0, 0.1, 0]);
+    expect(grip.toArray().map((v) => +v.toFixed(6))).toEqual(SOCKETS['grip.R'].at);
+    const tip = attached(sword.attach[0]!, [0, 1.1, 0]).sub(grip);
+    expect(tip.z).toBeCloseTo(Math.cos((20 * Math.PI) / 180), 5); // the extras keep 6 decimals
+    expect(tip.y).toBeCloseTo(Math.sin((20 * Math.PI) / 180), 5);
+    // The flat (+Z) faces outward: -X for the right hand.
+    const flat = attached(sword.attach[0]!, [0, 0.1, 1]).sub(grip);
+    expect(flat.x).toBeCloseTo(-1, 5);
+  });
+
+  it('undoes the turn of the socket frame in the asset (a standalone rest pose)', () => {
+    // A cap shown tipped back 20 degrees, its head center 0.05 m up: worn, the turn is undone.
+    const tipped = resolveEquip({ slot: 'head', origin: [0, 0.05, 0], rotate: [-20, 0, 0] });
+    const center = attached(tipped.attach[0]!, [0, 0.05, 0]);
+    expect(center.toArray().map((v) => +v.toFixed(6) + 0)).toEqual(SOCKETS.head.at);
+    // The socket's up (+Y), turned as the rest pose turns it, is up again when worn.
+    const r = (20 * Math.PI) / 180;
+    const up = attached(tipped.attach[0]!, [0, 0.05 + Math.cos(r), -Math.sin(r)]).sub(center);
+    expect(up.y).toBeCloseTo(1, 5);
+    expect(up.z).toBeCloseTo(0, 5);
+  });
+
+  it('mirrors a pair onto the right bone and keeps the left half', () => {
+    const boots = resolveEquip({ slot: 'feet', fitScale: 2, origin: [0.07, 0.12, 0] });
+    expect(boots.attach.map((a) => [a.bone, a.half])).toEqual([
+      ['shin.L', '+x'],
+      ['shin.R', '+x'],
+    ]);
+    expect(boots.attach[1]!.scale[0]).toBeCloseTo(-0.5, 6);
+    const left = attached(boots.attach[0]!, [0.1, 0.05, 0.03]);
+    const right = attached(boots.attach[1]!, [0.1, 0.05, 0.03]);
+    expect(right.x).toBeCloseTo(-left.x, 6);
+    expect(right.y).toBeCloseTo(left.y, 6);
+    expect(right.z).toBeCloseTo(left.z, 6);
+    // The worn matrices agree with the resolved attach.
+    const w = wornMatrices({ slot: 'feet', fitScale: 2, origin: [0.07, 0.12, 0] });
+    expect(new THREE.Vector3(0.1, 0.05, 0.03).applyMatrix4(w[1]!.matrix).distanceTo(right)).toBeLessThan(1e-6);
+  });
+
+  it('writes the resolved block to the GLB root extras and the stats', async () => {
+    const { root, stats } = await buildAsset(cap);
+    expect(stats.equip?.slot).toBe('head');
+    const doc = await new NodeIO().readBinary(await toGlb(root));
+    const extras = doc.getRoot().getExtras() as { forgeEquip?: { slot: string; hides: string[]; displayOnly: string[]; attach: { bone: string }[] }; forgeVariants?: unknown };
+    expect(extras.forgeEquip?.slot).toBe('head');
+    expect(extras.forgeEquip?.hides).toEqual(['hair']);
+    expect(extras.forgeEquip?.displayOnly).toEqual(['stand']);
+    expect(extras.forgeEquip?.attach.map((a) => a.bone)).toEqual(['head']);
+    expect(extras.forgeVariants).toBeDefined();
+  });
+
+  it('fails the build of an invalid block', async () => {
+    await expect(buildAsset({ ...cap, equip: { slot: 'head', fitScale: 0.5 } })).rejects.toThrow(/fit contract/);
+  });
+
+  it('dresses a base: the piece on its bone, hidden and display-only bodies left out', async () => {
+    const base = defineAsset({
+      name: 'test-base',
+      detail: 0.02,
+      texture: false,
+      build(k) {
+        k.skeleton({ hips: { at: [0, 0.2, 0] }, head: { parent: 'hips', at: [0, 0.48, -0.01] } });
+        k.body('skin', sdf.sphere(0.2).at(0, 0.675, 0).bone('head'));
+        k.body('hair', sdf.sphere(0.21).at(0, 0.7, 0), { bone: 'head' });
+      },
+    });
+    const { pending } = await collectBodies(wearAsset(base, [{ name: 'test-cap', def: cap }]));
+    expect(pending.map((b) => [b.name, b.options.bone])).toEqual([
+      ['skin', undefined],
+      ['test-cap:cap', 'head'],
+    ]);
+    // The cap's rim (asset y 0.2 + 0.15 = 0.35 up from the center) sits on the head: worn center y 0.675.
+    const worn = pending[1]!.shape;
+    expect(worn.dist(0, 0.675 + 0.22, 0)).toBeLessThan(0.002);
+    expect(worn.dist(0, 0.2 + 0.22, 0)).toBeGreaterThan(0.1);
+  });
+});

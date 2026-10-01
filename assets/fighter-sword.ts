@@ -12,6 +12,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/fighter_001.jpg',
   texture: { size: 512 },
+  equip: { slot: 'mainhand', origin: [0, 0.07, 0] },
 
   build(k) {
     addPart(k, fighterSword(), { pose: (s) => s.rotateZ(180).at(0, 0.07, 0), bones: null });
