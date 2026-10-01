@@ -1,4 +1,5 @@
-import { defineAsset, motion, noise, profile, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, sdf, THREE } from '../src/index.js';
+import { clockworkSoldierHalberd } from './parts/clockwork-soldier-halberd.js';
 
 /**
  * Clockwork soldier — Chibi Quest construct enemy: a brass wind-up knight about 0.8 m to the top
@@ -85,7 +86,6 @@ const weathered = (o: { cy: number; hy: number; bias?: number; rivets?: readonly
   }
   return scaleRgb(base, m);
 };
-const brassPaint = weathered({ cy: 0.4, hy: 0.4 });
 /** Riveted panels on a box: a dark seam line 2.4 cm in from each edge of each face. */
 const panelled = (cx: number, cy: number, cz: number, hx: number, hy: number, hz: number, wp: (x: number, y: number, z: number, base: Rgb) => Rgb, skip?: (x: number, y: number, z: number) => boolean) => (x: number, y: number, z: number, base: Rgb): Rgb => {
   const d = [hx - Math.abs(x - cx), hy - Math.abs(y - cy), hz - Math.abs(z - cz)].sort((a, b) => a - b) as [number, number, number];
@@ -419,46 +419,7 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ halberd (in the right fist)
-    // Local frame: the fist center at the origin, the pole along Y from -0.235 to 0.765, the blade
-    // toward -X (outward), its flat in the XY plane.
-    const pole = sdf.cylinder(0.0155, 0.72, 0.004).at(0, 0.125, 0); // -0.235 to 0.485
-    const shaftUp = sdf.cylinder(0.0155, 0.26, 0.004).at(0, 0.49, 0); // to 0.62
-    const spike = sdf.cone([0, 0.6, 0], [0, 0.765, 0], 0.026, 0.003).round(0.002);
-    const butt = sdf.cone([0, -0.235, 0], [0, -0.26, 0], 0.014, 0.004).round(0.002);
-    const BY = 0.47; // blade center height
-    const bladeD = profile.polygon(
-      [
-        [0.0, BY + 0.14],
-        [-0.07, BY + 0.135],
-        [-0.15, BY + 0.1],
-        [-0.208, BY + 0.03],
-        [-0.208, BY - 0.03],
-        [-0.15, BY - 0.1],
-        [-0.07, BY - 0.135],
-        [0.0, BY - 0.14],
-      ],
-      { smooth: true, samples: 5 },
-    );
-    const bladeShape = sdf
-      .extrude(bladeD, 0.02, 0.004)
-      .subtract(sdf.cylinder(0.13, 0.1).rotateX(90).at(0.09, BY, 0))
-      .paintWhere(sdf.box([0.05, 0.4, 0.2]).at(-0.208, BY, 0), SLOT.brassLit, 0.006)
-      .paintFn((x, y, z, base) => scaleRgb(base, noise.fbm(x * 40, y * 40, z * 40, 2) > 0.45 ? 1.25 : 1));
-    const bladeMount = sdf.box([0.05, 0.3, 0.032], 0.01).at(-0.005, BY, 0);
-    k.body('halberd', halberdPose(sdf.union(pole, shaftUp, spike, butt, bladeShape, bladeMount)), {
-      color: C.steel,
-      roughness: 0.42,
-      metalness: 0.7,
-      detail: 0.004,
-      bone: 'weapon',
-      bump: dents,
-    });
-    const collars = sdf.union(
-      ...[0.325, 0.6].map((y) => sdf.cylinder(0.022, 0.02, 0.006).at(0, y, 0)),
-      sdf.cylinder(0.02, 0.05, 0.006).at(0, 0.11, 0),
-      sdf.cylinder(0.021, 0.03, 0.006).at(0, -0.17, 0),
-    );
-    k.body('halberd-trim', halberdPose(collars).paintFn(brassPaint), { color: SLOT.brass, roughness: 0.4, metalness: 0.8, detail: 0.004, bone: 'weapon' });
+    addPart(k, clockworkSoldierHalberd(mapTint(k)), { pose: halberdPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, quat, euler } = motion;

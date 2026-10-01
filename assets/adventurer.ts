@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Adventurer — Chibi Quest hero (catalog `heroes/support/adventurer`), about 0.97 m to the top of
@@ -25,6 +25,10 @@ import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
  *   under the pack), victory (a crouch, a jump with the sword
  *   thrust up at the top, and a soft landing on bent knees).
  */
+
+import { adventurerLantern } from './parts/adventurer-lantern.js';
+import { adventurerMap } from './parts/adventurer-map.js';
+import { adventurerSword } from './parts/adventurer-sword.js';
 
 const C = {
   skin: '#f2c7a4',
@@ -639,87 +643,13 @@ export default defineAsset({
     k.body('bedroll', packPose(rollPose(bedroll)).bone('chest'), { color: C.teal, roughness: 0.85 });
     // A brass lantern hangs from a ring on the pack's left side and swings on its own bone.
     const LANTERN: V3 = [HOOK[0], HOOK[1] - 0.085, HOOK[2]];
-    const lanternFrame = sdf
-      .union(
-        sdf.cylinder(0.03, 0.012, 0.004).at(0, 0.028, 0),
-        sdf.cone([0, 0.032, 0], [0, 0.048, 0], 0.024, 0.01),
-        sdf.cylinder(0.032, 0.012, 0.004).at(0, -0.034, 0),
-        ...[0, 90, 180, 270].map((a) => sdf.capsule([0.026, -0.028, 0], [0.026, 0.024, 0], 0.004).rotateY(a + 45)),
-        sdf.torus(0.02, 0.004).rotateX(90).at(0, 0.068, 0),
-      )
-      .at(...LANTERN);
-    k.body('lantern-frame', lanternFrame.bone('lantern'), { color: C.brass, roughness: 0.35, metalness: 0.8 });
-    k.body('lantern-light', sdf.cylinder(0.024, 0.056, 0.01).at(...LANTERN).bone('lantern'), {
-      color: C.glow,
-      roughness: 0.3,
-      emissive: C.glow,
-      emissiveIntensity: 0.8,
-    });
+    addPart(k, adventurerLantern(), { pose: (s) => s.at(...LANTERN) });
 
     // ------------------------------------------------------------------ the map in the left hand
-    // Local frame: the top roll along X through the fist, the sheet hanging down (-Y), its face +Z.
-    const MAP_W = 0.1;
-    const MAP_H = 0.105;
-    const MAP_X = 0.022; // the sheet hangs a little outward of the fist
-    const sheet = sdf.box([MAP_W, MAP_H, 0.005], 0.0022).at(MAP_X, -MAP_H / 2 - 0.004, 0.006);
-    const topRoll = sdf.capsule([MAP_X - MAP_W / 2 - 0.004, 0, 0], [MAP_X + MAP_W / 2 + 0.004, 0, 0], 0.013);
-    const lowRoll = sdf.capsule([MAP_X - MAP_W / 2, -MAP_H - 0.004, 0.014], [MAP_X + MAP_W / 2, -MAP_H - 0.004, 0.014], 0.011);
-    // The ink on the sheet's face, painted: a coast line, a dotted trail, and a red X. The stencils
-    // are pushed through the sheet along its normal.
-    const ink = (s: sdf.Shape) => s.at(MAP_X, -MAP_H / 2 - 0.004, 0.006);
-    const coast = sdf.extrude(profile.arc(0.05, 0.006, 200, 300), 0.03).at(0.012, 0.03, 0);
-    const trail = sdf.union(
-      ...Array.from({ length: 6 }, (_, i) => {
-        const t = i / 5;
-        return sdf.cylinder(0.005, 0.03).rotateX(90).at(-0.032 + t * 0.052, 0.028 - t * 0.05 + 0.012 * Math.sin(t * 5), 0);
-      }),
-    );
-    const cross2 = sdf
-      .union(sdf.box([0.028, 0.0075, 0.03], 0.001).rotateZ(45), sdf.box([0.028, 0.0075, 0.03], 0.001).rotateZ(-45))
-      .at(0.026, -0.03, 0);
-    const mapShape = sdf
-      .union(sheet, topRoll, lowRoll.paint(C.mapEdge))
-      .paintWhere(ink(sdf.union(coast, trail)), C.mapInk, 0.001)
-      .paintWhere(ink(cross2), C.mapRed, 0.001);
-    k.body('map', mapPose(mapShape), {
-      bone: 'hand.L',
-      color: C.map,
-      roughness: 0.85,
-      detail: 0.003,
-      textureDensity: 2,
-      bump: (x, y, z) => 0.0004 * noise.fbm(x * 200, y * 200, z * 200, 2),
-    });
+    addPart(k, adventurerMap(), { pose: mapPose });
 
     // ------------------------------------------------------------------ the short sword in the right fist
-    // Local frame: the grip center at the origin, the pommel up (+Y), the blade down (-Y), the
-    // blade's width along X and its flat facing +Z.
-    const bladeLocal = sdf
-      .extrude(
-        profile.polygon([
-          [-0.025, -0.048],
-          [0.025, -0.048],
-          [0.023, -0.226],
-          [0.0, -0.272],
-          [-0.023, -0.226],
-        ]),
-        0.013,
-        0.0035,
-      )
-      .paintWhere(sdf.box([0.008, 0.15, 0.1], 0.003).at(0, -0.12, 0), C.steelDark, 0.003);
-    k.body('sword', swordPose(bladeLocal), { color: C.steel, roughness: 0.3, metalness: 0.9, detail: 0.003, bone: 'hand.R' });
-    const guard = sdf.union(
-      sdf.box([0.1, 0.018, 0.03], 0.008).at(0, -0.042, 0),
-      hard(sdf.sphere(0.013).at(0.052, -0.038, 0)),
-    );
-    const pommel = sdf.sphere(0.021).at(0, 0.082, 0);
-    // The leather-wrapped grip shows only between the fist and the pommel, so it is painted into
-    // the hilt body.
-    const grip = sdf
-      .cylinder(0.0125, 0.108, 0.004)
-      .at(0, 0.019, 0)
-      .paint(C.leather)
-      .paintFn((x, y, z, base) => (Math.sin(y * 330 + Math.atan2(z, x)) > 0.5 ? rgb(C.leatherDark) : base));
-    k.body('hilt', swordPose(sdf.union(guard, pommel, grip)), { color: C.iron, roughness: 0.45, metalness: 0.7, detail: 0.0035, bone: 'hand.R' });
+    addPart(k, adventurerSword(), { pose: swordPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, edgeUp } = motion;

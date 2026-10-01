@@ -1,4 +1,6 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { captainShield } from './parts/captain-shield.js';
+import { captainSword } from './parts/captain-sword.js';
 
 /**
  * Captain — Chibi Quest hero (catalog `heroes/support/captain`), about 1.0 m to the top of the
@@ -578,64 +580,17 @@ export default defineAsset({
       { color: C.gold, roughness: 0.35, metalness: 0.8, detail: 0.0062 },
     );
 
-    // ------------------------------------------------------------------ longsword in the right hand
-    // Local frame: the grip center at the origin, the blade along +Y (the tip up), flat faces toward
-    // +Z and -Z, edges toward +X and -X.
-    const BLADE = profile.polygon([
-      [-0.025, 0.064],
-      [0.025, 0.064],
-      [0.025, 0.42],
-      [0, 0.464],
-      [-0.025, 0.42],
-    ]);
-    const blade = sdf
-      .extrude(BLADE, 0.014, 0.003)
-      .paintWhere(sdf.extrude(profile.rect([0.012, 0.3], 0.004), 0.1).at(0, 0.24, 0), C.steelDark, 0.004);
-    const guard = sdf.union(
-      sdf.box([0.12, 0.016, 0.03], 0.006).at(0, 0.054, 0),
-      sdf.sphere(0.012).at(0.06, 0.054, 0),
-      sdf.sphere(0.012).at(-0.06, 0.054, 0),
-      sdf.sphere(0.022).at(0, -0.072, 0),
-    );
-    const grip = sdf.smoothUnion(0.004, sdf.cylinder(0.0155, 0.11, 0.004).at(0, -0.005, 0), sdf.ellipsoid([0.02, 0.014, 0.02]).at(0, 0.03, 0));
+    // ------------------------------------------------------------------ longsword and round shield
+    // Parts: assets/parts/captain-sword.ts (grip center at the origin, blade up) and
+    // assets/parts/captain-shield.ts (disc center on the back plane, face toward +Z).
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     // The blade leans out to the right and a little forward: held low beside the hip.
     const SWORD_TILT = { x: 12, z: 34 };
     const swordPose = (s: sdf.Shape) => s.rotateX(SWORD_TILT.x).rotateZ(SWORD_TILT.z).at(...GRIP);
-    k.body('sword-blade', swordPose(blade), { color: C.blade, roughness: 0.3, metalness: 0.9, detail: 0.004, bone: 'hand.R' });
-    k.body('sword-guard', swordPose(guard), { color: C.guard, roughness: 0.35, metalness: 0.85, detail: 0.004, bone: 'hand.R' });
-    k.body('sword-grip', swordPose(grip), {
-      color: C.grip,
-      roughness: 0.75,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0008 * noise.noise3(x * 90, y * 12, z * 90),
-    });
-
-    // ------------------------------------------------------------------ round shield on the left forearm
-    // Local frame: the face toward +Z. A steel back disc, a dark raised rim, a light steel field,
-    // and a gold crest on a boss. It sits low on the forearm, so the top edge keeps clear of the cheek.
+    addPart(k, captainSword(), { pose: swordPose });
+    // It sits low on the forearm, so the top edge keeps clear of the cheek.
     const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(0.236, 0.28, 0.092);
-    const handle = sdf.capsule([-0.03, 0.02, -0.02], [0.03, -0.01, -0.02], 0.012);
-    k.body('shield', shieldPose(sdf.union(sdf.extrude(profile.circle(0.13), 0.024, 0.006), handle)), {
-      color: C.shieldSteel,
-      roughness: 0.4,
-      metalness: 0.85,
-      bone: 'forearm.L',
-    });
-    k.body('shield-face', shieldPose(sdf.extrude(profile.circle(0.118), 0.03, 0.005)), {
-      color: C.shieldSteel,
-      roughness: 0.4,
-      metalness: 0.85,
-      bone: 'forearm.L',
-    });
-    const shieldRim = sdf.extrude(profile.circle(0.132), 0.038, 0.009).subtract(sdf.extrude(profile.circle(0.112), 0.1));
-    const shieldCrest = sdf.union(
-      sdf.extrude(crestProfile(0.096), 0.036, 0.004),
-      sdf.extrude(profile.circle(0.04), 0.046, 0.012).at(0, 0.0, 0),
-    );
-    k.body('shield-gold', shieldPose(shieldCrest), { color: C.gold, roughness: 0.35, metalness: 0.8, bone: 'forearm.L' });
-    k.body('shield-rim', shieldPose(shieldRim), { color: C.goldRim, roughness: 0.35, metalness: 0.8, bone: 'forearm.L' });
+    addPart(k, captainShield(), { pose: shieldPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

@@ -24,6 +24,11 @@ Rigid equipment only: head pieces (helmets, hats, hoods, crowns), held items (we
 wands, books, tools, lanterns), and shields. Skinned clothing and armor (robes, cuirasses, capes,
 boots) stay in the host. Eye glows and body effects stay in the host.
 
+A piece may hang on its own bones (a hat on `hatroot` and `hattip`, a bow on `bowgrip` and
+`string.top`, a lantern on `lantern`). Keep its `.bone('...')` skin tags inside the part's shapes;
+they work in a static standalone too. A detail that the host animates apart from the piece (a
+nocked arrow, a flame) is a second part in the same module.
+
 ## Steps
 
 1. Run `./forge render <host>` and `./forge sprites <host>`. Run `node scripts/part-check.mjs save <host>`.
