@@ -24,8 +24,9 @@ export interface Place {
 const TILE = 2;
 const RIVER_Z = 12;
 
-const XS: readonly number[] = range(-18, 18, TILE);
-const ZS: readonly number[] = range(-16, 14, TILE);
+// One grass ring beyond the border trees, so every trunk and canopy stands on the ground.
+const XS: readonly number[] = range(-20, 20, TILE);
+const ZS: readonly number[] = range(-18, 16, TILE);
 
 type Gate = 'n' | 's' | 'e' | 'w';
 
@@ -46,12 +47,13 @@ const HOUSES: readonly House[] = [
   { x: -5, z: -6.6, yaw: 0, yardW: 7.2, yardD: 6.6, gate: 's', path: [-5, -1.35] },
   { x: 8.2, z: -12.2, yaw: 0, yardW: 7.4, yardD: 6.8, gate: 's', path: [9.2, -1.35] },
   { x: 13.8, z: -6.5, yaw: 270, yardW: 7.2, yardD: 6.6, gate: 'w', path: [9.6, -1.35] },
-  { x: -3.2, z: 5.8, yaw: 180, yardW: 7.2, yardD: 6.6, gate: 'n', path: [-3.2, 1.4] },
+  { x: -4.6, z: 5.8, yaw: 180, yardW: 6.4, yardD: 6.6, gate: 'n', path: [-4.6, 1.4] }, // yard x -7.8 to -1.4: clear of the N-S road (x -1 to 1) and the farm fence (x -8.2)
   { x: 7.4, z: 6.2, yaw: 180, yardW: 7.4, yardD: 6.8, gate: 'n', path: [7.4, 1.4] },
 ];
 
 /**
  * x, z, asset, yaw, scale. Border trees sit in clumps with gaps, not on a frame.
+ * Every trunk and canopy stays on the ground (the outer grass ring carries them).
  * A few smaller trees stand in the meadows.
  */
 const TREES: readonly (readonly [number, number, 'oak-tree' | 'pine-tree', number, number])[] = [
@@ -91,16 +93,16 @@ const TREES: readonly (readonly [number, number, 'oak-tree' | 'pine-tree', numbe
   [18.6, 8.2, 'pine-tree', 200, 0.66],
   [-16.4, 13.2, 'oak-tree', 28, 1.1],
   [-14.2, 15.2, 'pine-tree', 75, 0.78],
-  [-15.6, 16.4, 'oak-tree', 140, 0.64],
+  [-15.6, 15.8, 'oak-tree', 140, 0.64],
   [-8.6, 13.6, 'pine-tree', 18, 0.92],
-  [-10.4, 15.8, 'oak-tree', 260, 1.16],
-  [-6.2, 16.2, 'oak-tree', 95, 0.72],
+  [-10.4, 14.9, 'oak-tree', 260, 1.16],
+  [-6.2, 15.7, 'oak-tree', 95, 0.72],
   [4.6, 15.4, 'oak-tree', 33, 0.8],
   [6.8, 13.4, 'pine-tree', 150, 1.05],
-  [8.2, 16.2, 'oak-tree', 70, 0.66],
+  [8.2, 15.8, 'oak-tree', 70, 0.66],
   [13.2, 14.8, 'oak-tree', 210, 1.14],
   [15.6, 13.2, 'pine-tree', 48, 0.76],
-  [16.8, 15.6, 'oak-tree', 120, 0.9],
+  [16.8, 15.4, 'oak-tree', 120, 0.9],
   [3.6, -9.2, 'oak-tree', 64, 0.7],
   [2.2, 9.6, 'oak-tree', 18, 0.66],
   [-15.2, 1.2, 'oak-tree', 100, 0.72],
@@ -111,14 +113,14 @@ const BUSHES: readonly (readonly [number, number, number])[] = [
   [-7.2, -9.2, 60],
   [5.4, -9.6, 10],
   [11.2, -9.2, 80],
-  [-7.4, 3.6, 30],
+  [-7.0, 8.4, 30], // back corner of the yard at x -4.6
   [4.2, 3.8, 110],
   [-7.4, 1.7, 0],
   [14.2, 3.2, 40],
   [-3.2, -14.6, 15],
   [10.4, 10.2, 70],
   [1.8, -5.2, 50],
-  [-1.6, 3.6, 90],
+  [-2.1, 3.4, 90], // front corner of the yard at x -4.6
 ];
 
 const FLOWERS: readonly (readonly [number, number])[] = [
@@ -127,7 +129,7 @@ const FLOWERS: readonly (readonly [number, number])[] = [
   [-3.6, -6.2],
   [6.6, -11.2],
   [12.2, -6.6],
-  [-3.2, 5.2],
+  [-3.2, 3.3], // in front of the cottage at x -4.6
   [6.0, 5.6],
   [1.6, 4.2],
   [-2.2, -4.4],

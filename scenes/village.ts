@@ -9,8 +9,9 @@
  */
 import type { Place } from './chibi-quest.js';
 
-const XS = range(-16, 16, 2);
-const ZS = range(-12, 12, 2);
+// One grass ring beyond the border trees, so every trunk and canopy stands on the ground.
+const XS = range(-18, 18, 2);
+const ZS = range(-14, 14, 2);
 const ROAD_Z = 2;
 
 type Gate = 'n' | 's' | 'e' | 'w';
@@ -48,7 +49,7 @@ const INN: readonly (readonly [number, number])[] = [
   [14, 8],
 ];
 
-/** x, z, asset, yaw, scale. Border trees in clumps with gaps; roads stay open. */
+/** x, z, asset, yaw, scale. Border trees in clumps with gaps; roads stay open. Canopies stay on the ground. */
 const TREES: readonly (readonly [number, number, 'oak-tree' | 'pine-tree', number, number])[] = [
   [-16.6, -12.4, 'pine-tree', 18, 0.9],
   [-14.2, -12.8, 'oak-tree', 140, 1.1],
@@ -60,14 +61,14 @@ const TREES: readonly (readonly [number, number, 'oak-tree' | 'pine-tree', numbe
   [11.6, -12.9, 'oak-tree', 70, 1.15],
   [14.4, -12.2, 'oak-tree', 160, 0.8],
   [16.8, -12.8, 'pine-tree', 40, 1.08],
-  [-17.2, -8.8, 'oak-tree', 110, 1.12],
+  [-17.0, -8.8, 'oak-tree', 110, 1.12],
   [-16.8, -5.6, 'pine-tree', 20, 0.72],
   [-17.4, -1.4, 'oak-tree', 300, 0.9],
   [17.2, -8.6, 'oak-tree', 45, 0.96],
   [16.9, -5.4, 'pine-tree', 80, 1.04],
   [17.4, -0.8, 'oak-tree', 15, 0.78],
   [-17.2, 5.6, 'pine-tree', 55, 0.94],
-  [-17.4, 9.6, 'oak-tree', 125, 1.1],
+  [-17.0, 9.6, 'oak-tree', 125, 1.1],
   [-16.2, 12.8, 'oak-tree', 8, 0.8],
   [17.4, 4.6, 'oak-tree', 210, 0.86],
   [17.2, 11.4, 'pine-tree', 35, 1.0],
