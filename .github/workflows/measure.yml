@@ -1,0 +1,23 @@
+name: Measure project records
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  project-records:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test Measure checks
+        run: node --test measure/tests/measure-tools.node.mjs
+      - name: Check project records and generated facts
+        run: ./measure/doctor.sh --structural-only
+      - name: Check memory budgets
+        run: ./scripts/measure/check_context_budget.sh

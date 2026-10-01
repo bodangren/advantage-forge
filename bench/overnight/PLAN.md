@@ -1,5 +1,8 @@
 # Overnight build, 2026-09-27 → 28
 
+> Measure owns execution status. See the [track crosswalk](../../measure/plan-crosswalk.md).
+> This document retains its original design and historical notes.
+
 Goal from the owner: make the remaining assets and sample maps. Scope: P0 first, then P1 by scene.
 Hybrid: OpenCode models make first passes of props, structures, items, and equipment; Claude makes
 rigged characters and does every review, fix, graft, scene, and commit (one commit per asset on

@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "host_registry": "src/host/registry.ts",
+  "entrypoints": [
+    {
+      "name": "APK host",
+      "path": "src/host/main.ts"
+    },
+    {
+      "name": "Asset viewer",
+      "path": "src/viewer/main.ts"
+    },
+    {
+      "name": "Scene viewer",
+      "path": "src/scene/main.ts"
+    },
+    {
+      "name": "Showcase",
+      "path": "src/showcase/main.ts"
+    }
+  ],
+  "games": [
+    {
+      "id": "devourer-slime",
+      "index": "src/games/devourer-slime/index.ts",
+      "manifest": "src/games/devourer-slime/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "dragon-flight",
+      "index": "src/games/dragon-flight/index.ts",
+      "manifest": "src/games/dragon-flight/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "dungeon-liberator",
+      "index": "src/games/dungeon-liberator/index.ts",
+      "manifest": "src/games/dungeon-liberator/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "hero-vs-zombie",
+      "index": "src/games/hero-vs-zombie/index.ts",
+      "manifest": "src/games/hero-vs-zombie/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "labyrinth",
+      "index": null,
+      "manifest": null,
+      "registered": false
+    },
+    {
+      "id": "monster-encounters",
+      "index": "src/games/monster-encounters/index.ts",
+      "manifest": "src/games/monster-encounters/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "potion-rush",
+      "index": "src/games/potion-rush/index.ts",
+      "manifest": "src/games/potion-rush/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "rune-match",
+      "index": null,
+      "manifest": null,
+      "registered": false
+    }
+  ],
+  "source_roots": [
+    {
+      "path": "src/apk3d",
+      "typescript_files": 56
+    },
+    {
+      "path": "src/cli",
+      "typescript_files": 1
+    },
+    {
+      "path": "src/games",
+      "typescript_files": 100
+    },
+    {
+      "path": "src/host",
+      "typescript_files": 14
+    },
+    {
+      "path": "src/render",
+      "typescript_files": 3
+    },
+    {
+      "path": "src/scene",
+      "typescript_files": 1
+    },
+    {
+      "path": "src/sdf",
+      "typescript_files": 7
+    },
+    {
+      "path": "src/showcase",
+      "typescript_files": 9
+    },
+    {
+      "path": "src/texture",
+      "typescript_files": 4
+    },
+    {
+      "path": "src/types",
+      "typescript_files": 1
+    },
+    {
+      "path": "src/viewer",
+      "typescript_files": 1
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "track_id": "showcase_battle_teaser_20260930",
+  "type": "feature",
+  "status": "in_progress",
+  "created_at": "2026-09-29T23:25:27Z",
+  "updated_at": "2026-09-30T00:19:11Z",
+  "description": "Chibi Quest battle teaser videos (16:9 and 9:16)",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": "Owner decisions of 2026-09-30 recorded in the spec.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "docs/guild-battle-teaser.md",
+    "docs/showcase.md"
+  ],
+  "dependencies": []
+}

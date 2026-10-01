@@ -1,0 +1,25 @@
+{
+  "track_id": "history_environment_kits_20260928",
+  "type": "feature",
+  "status": "completed",
+  "created_at": "2026-09-28T23:11:36Z",
+  "updated_at": "2026-09-28T23:11:36Z",
+  "description": "History: Build reusable scene kits and environment layouts",
+  "estimated_tasks": null,
+  "actual_tasks": null,
+  "deviation_notes": "Historical scope is inferred from repository evidence.",
+  "workstream": "assets",
+  "retrospective": true,
+  "evidence": [
+    "measure/evidence/history-commit-map.tsv",
+    "AGENTS.md",
+    "bench/overnight/PLAN.md",
+    "docs/fantasy-world-asset-catalog.md"
+  ],
+  "dependencies": [],
+  "historical_start": "2026-09-26",
+  "historical_end": "2026-09-28",
+  "commit_count": 26,
+  "source_revision_start": "b1b7d78305ee82869efa2ae0fc74fc615c1affcc",
+  "source_revision_end": "461b66b104bacb3c4889ae15d977181c0100696b"
+}

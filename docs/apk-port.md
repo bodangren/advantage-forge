@@ -1,5 +1,8 @@
 # Porting the APK 3D kit and the games into the monorepo
 
+> Measure owns execution status. See the [track crosswalk](../measure/plan-crosswalk.md).
+> This document retains its original design and historical notes.
+
 Status: plan, 2026-09-28 (task 20 of `docs/apk3d-cartridge.md`; Phase C of
 `docs/apk-2d3d-program.md`). Target: `../reading-advantage-monorepo` at commit fe6aedc2b, the
 commit every APK copy in `src/apk3d/contracts/apk.ts` and `sprite-asset.ts` was taken from.

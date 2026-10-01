@@ -1,0 +1,166 @@
+assets/bear-trap.ts(73,50): error TS2345: Argument of type 'number[][]' is not assignable to parameter of type 'readonly Vec2[]'.
+  Type 'number[]' is not assignable to type 'Vec2'.
+    Target requires 2 element(s) but source may have fewer.
+assets/bookshelf.ts(133,35): error TS2345: Argument of type '(x: number, y: number, z: number, base: readonly number[]) => readonly number[]' is not assignable to parameter of type '(x: number, y: number, z: number, base: Rgb) => Rgb'.
+  Type 'readonly number[]' is not assignable to type 'Rgb'.
+    Target requires 3 element(s) but source may have fewer.
+assets/bracers.ts(216,26): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/bracers.ts(216,38): error TS2532: Object is possibly 'undefined'.
+assets/bracers.ts(216,65): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/bracers.ts(216,78): error TS2532: Object is possibly 'undefined'.
+assets/bracers.ts(219,25): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/bracers.ts(219,37): error TS2532: Object is possibly 'undefined'.
+assets/bracers.ts(220,24): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/bracers.ts(220,37): error TS2532: Object is possibly 'undefined'.
+assets/brick-wall.ts(103,14): error TS2532: Object is possibly 'undefined'.
+assets/brick-wall.ts(104,14): error TS2532: Object is possibly 'undefined'.
+assets/brick-wall.ts(127,3): error TS2322: Type 'Piece | undefined' is not assignable to type 'Piece'.
+  Type 'undefined' is not assignable to type 'Piece'.
+assets/cabin.ts(100,28): error TS2532: Object is possibly 'undefined'.
+assets/cabin.ts(116,29): error TS2532: Object is possibly 'undefined'.
+assets/cabin.ts(129,41): error TS18048: 'endX' is possibly 'undefined'.
+assets/cabin.ts(132,30): error TS2532: Object is possibly 'undefined'.
+assets/cheese.ts(45,3): error TS2532: Object is possibly 'undefined'.
+assets/cheese.ts(93,7): error TS2554: Expected 2 arguments, but got 3.
+assets/cheese.ts(99,18): error TS2532: Object is possibly 'undefined'.
+assets/cheese.ts(100,18): error TS2532: Object is possibly 'undefined'.
+assets/dirt-road-crossing.ts(160,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/dirt-road-crossing.ts(160,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/dirt-road-crossing.ts(160,20): error TS7006: Parameter '_y' implicitly has an 'any' type.
+assets/dirt-road-crossing.ts(160,24): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/dirt-road-crossing.ts(160,27): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/dirt-road-t-junction.ts(160,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/dirt-road-t-junction.ts(160,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/dirt-road-t-junction.ts(160,20): error TS7006: Parameter '_y' implicitly has an 'any' type.
+assets/dirt-road-t-junction.ts(160,24): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/dirt-road-t-junction.ts(160,27): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/floor-cracked.ts(100,17): error TS2488: Type 'Pt | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+assets/fountain.ts(162,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/glaive.ts(32,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/glaive.ts(32,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/glaive.ts(32,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/glaive.ts(32,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/glaive.ts(32,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/gloves.ts(55,49): error TS18048: 'tip' is possibly 'undefined'.
+assets/gloves.ts(55,57): error TS18048: 'tip' is possibly 'undefined'.
+assets/gloves.ts(55,65): error TS18048: 'tip' is possibly 'undefined'.
+assets/gloves.ts(189,33): error TS2345: Argument of type 'Vec3' is not assignable to parameter of type '[number, number, number]'.
+  The type 'Vec3' is 'readonly' and cannot be assigned to the mutable type '[number, number, number]'.
+assets/hanging-cage.ts(60,12): error TS2532: Object is possibly 'undefined'.
+assets/hanging-cage.ts(60,32): error TS2532: Object is possibly 'undefined'.
+assets/hanging-cage.ts(62,11): error TS2488: Type '[number, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+assets/hanging-cage.ts(70,10): error TS2532: Object is possibly 'undefined'.
+assets/horned-helmet.ts(221,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/horned-helmet.ts(221,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/horned-helmet.ts(221,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/horned-helmet.ts(221,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/horned-helmet.ts(221,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/market-cart.ts(249,15): error TS18048: 'best' is possibly 'undefined'.
+assets/market-cart.ts(249,38): error TS18048: 'best' is possibly 'undefined'.
+assets/market-cart.ts(249,61): error TS18048: 'best' is possibly 'undefined'.
+assets/market-cart.ts(249,79): error TS18048: 'best' is possibly 'undefined'.
+assets/market-cart.ts(285,21): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(285,29): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(285,42): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(285,50): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(285,71): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(285,79): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(288,12): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(288,19): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(288,26): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(289,12): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(289,20): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(289,28): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(290,12): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(290,19): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(290,26): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(312,47): error TS2345: Argument of type 'readonly number[] | undefined' is not assignable to parameter of type 'readonly number[]'.
+  Type 'undefined' is not assignable to type 'readonly number[]'.
+assets/market-cart.ts(364,13): error TS2488: Type 'readonly [number, number, number, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+assets/market-cart.ts(437,20): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(437,26): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(437,39): error TS2322: Type 'number | undefined' is not assignable to type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+assets/market-cart.ts(437,47): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(437,54): error TS18048: 'dx' is possibly 'undefined'.
+assets/market-cart.ts(437,58): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(437,72): error TS2532: Object is possibly 'undefined'.
+assets/market-cart.ts(437,79): error TS18048: 'dz' is possibly 'undefined'.
+assets/mining-pick.ts(37,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/mining-pick.ts(37,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/mining-pick.ts(37,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/mining-pick.ts(37,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/mining-pick.ts(37,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/mining-pick.ts(72,31): error TS2345: Argument of type 'number[][]' is not assignable to parameter of type 'readonly (readonly [number, number, number, number])[]'.
+  Type 'number[]' is not assignable to type 'readonly [number, number, number, number]'.
+    Target requires 4 element(s) but source may have fewer.
+assets/morningstar.ts(79,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(80,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(81,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(84,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(85,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(86,24): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(106,28): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(107,28): error TS2532: Object is possibly 'undefined'.
+assets/morningstar.ts(108,28): error TS2532: Object is possibly 'undefined'.
+assets/quench-tub.ts(151,56): error TS2532: Object is possibly 'undefined'.
+assets/quench-tub.ts(151,85): error TS2532: Object is possibly 'undefined'.
+assets/roof-thatch.ts(130,28): error TS2532: Object is possibly 'undefined'.
+assets/roof-tile.ts(99,51): error TS2532: Object is possibly 'undefined'.
+assets/scabbard.ts(57,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/scabbard.ts(57,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/scabbard.ts(57,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/scabbard.ts(57,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/scabbard.ts(59,24): error TS2345: Argument of type 'string' is not assignable to parameter of type 'Rgb'.
+assets/scabbard.ts(61,26): error TS2345: Argument of type 'string' is not assignable to parameter of type 'Rgb'.
+assets/scabbard.ts(95,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/scabbard.ts(95,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/scabbard.ts(95,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/scabbard.ts(95,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/scabbard.ts(95,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/scabbard.ts(98,26): error TS2345: Argument of type 'string' is not assignable to parameter of type 'Rgb'.
+assets/staff.ts(46,5): error TS2554: Expected 2 arguments, but got 3.
+assets/stalactite.ts(1,62): error TS2724: '"../src/index.js"' has no exported member named 'Profile'. Did you mean 'profile'?
+assets/stalagmite.ts(1,62): error TS2724: '"../src/index.js"' has no exported member named 'Profile'. Did you mean 'profile'?
+assets/stone-wall.ts(75,17): error TS2322: Type 'number[] | undefined' is not assignable to type 'number[]'.
+  Type 'undefined' is not assignable to type 'number[]'.
+assets/stone-wall.ts(94,21): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,4): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,16): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,27): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,39): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,50): error TS2532: Object is possibly 'undefined'.
+assets/torch-sconce.ts(52,62): error TS2532: Object is possibly 'undefined'.
+assets/trident.ts(32,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/trident.ts(32,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/trident.ts(32,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/trident.ts(32,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/trident.ts(32,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+assets/urn.ts(161,58): error TS2694: Namespace '"/home/daniebo/Desktop/fantasy-asset-forge/src/sdf/shapes"' has no exported member 'Sdf'.
+assets/urn.ts(162,25): error TS2694: Namespace '"/home/daniebo/Desktop/fantasy-asset-forge/src/sdf/shapes"' has no exported member 'Sdf'.
+assets/wagon.ts(421,13): error TS2488: Type '[number, number, number, number] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator.
+assets/windmill.ts(172,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/windmill.ts(172,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/windmill.ts(172,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/windmill.ts(172,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/wood-wall.ts(144,7): error TS2353: Object literal may only specify known properties, and 'paintFn' does not exist in type 'BodyOptions'.
+assets/wood-wall.ts(144,17): error TS7006: Parameter 'x' implicitly has an 'any' type.
+assets/wood-wall.ts(144,20): error TS7006: Parameter 'y' implicitly has an 'any' type.
+assets/wood-wall.ts(144,23): error TS7006: Parameter 'z' implicitly has an 'any' type.
+assets/wood-wall.ts(144,26): error TS7006: Parameter 'base' implicitly has an 'any' type.
+tests/games/labyrinth/bot.test.ts(47,43): error TS2339: Property 'dir' does not exist on type 'LabyrinthCommand'.
+  Property 'dir' does not exist on type '{ type: "stop"; }'.

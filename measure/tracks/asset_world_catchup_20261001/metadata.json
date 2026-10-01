@@ -1,0 +1,22 @@
+{
+  "track_id": "asset_world_catchup_20261001",
+  "type": "feature",
+  "status": "completed",
+  "created_at": "2026-10-01T06:30:00Z",
+  "updated_at": "2026-10-01T16:00:00Z",
+  "description": "Bring P0 and P1 world assets to their bars, game-used first",
+  "estimated_tasks": 16,
+  "actual_tasks": 16,
+  "deviation_notes": "Batch 1 is the 55 world assets that the ported games reference or that are P0, without a recorded score at the bar. Ground tiles: the top moved to y = 0 (the forge-assets terrain rule) instead of the old standing heights; farm-field became an overlay rework, not a slab. The P0 acceptance and P1 family tracks (architecture, nature, props, equipment) use this track's results; they are not prerequisites.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "docs/fantasy-world-asset-catalog.tsv",
+    "bench/overnight/log.tsv",
+    "bench/sonnet/log.tsv",
+    "bench/sonnet/overnight-summary.md",
+    "measure/tracks/asset_world_catchup_20261001/evidence.md",
+    "bench/sonnet/briefs/ground-slab-recipe.md"
+  ],
+  "dependencies": []
+}

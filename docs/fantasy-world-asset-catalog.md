@@ -1,5 +1,8 @@
 # Fantasy world production catalog
 
+> Measure owns execution status. See the [track crosswalk](../measure/plan-crosswalk.md).
+> This document retains its original design and historical notes.
+
 This plan has two lists. The [asset catalog](./fantasy-world-asset-catalog.tsv) has 856 buildable 3D targets. The [scene blueprint list](./fantasy-world-scene-blueprints.tsv) has 100 places that need map mockups. A place such as a hamlet is an assembly of assets, not one asset.
 
 ## Source and scope

@@ -1,0 +1,35 @@
+asset size
+cobble-floor 2.00x0.06x2.00 minY 0.00
+cobble-road-corner 2.00x0.08x2.00 minY 0.00
+cobble-road-crossing 2.00x0.08x2.00 minY 0.00
+cobble-road-straight 2.00x0.08x2.00 minY 0.00
+cobble-road-t-junction 2.00x0.08x2.00 minY 0.00
+desert-ground 2.00x0.12x2.00 minY 0.00
+dirt-floor 2.00x0.17x2.00 minY 0.00
+dirt-ground 2.00x0.11x2.00 minY 0.00
+dirt-road-corner 2.00x0.08x2.00 minY 0.00
+dirt-road-crossing 2.00x0.09x2.00 minY 0.00
+dirt-road-straight 2.00x0.09x2.00 minY 0.00
+dirt-road-t-junction 2.00x0.09x2.00 minY 0.00
+footpath-corner 2.00x0.09x2.00 minY 0.00
+footpath-straight 2.00x0.09x2.00 minY 0.00
+forest-ground 2.00x0.11x2.00 minY 0.00
+grass-ground 2.00x0.08x2.00 minY 0.00
+lake-shore 2.00x0.19x2.00 minY 0.00
+river-bank 2.00x0.08x2.00 minY 0.00
+river-bend 2.00x0.08x2.00 minY 0.00
+river-junction 2.00x0.14x2.00 minY 0.00
+river-straight 2.00x0.16x2.00 minY 0.00
+snow-ground 2.00x0.12x2.00 minY 0.00
+stepping-stone 2.00x0.16x2.00 minY 0.00
+stone-floor 2.00x0.08x2.00 minY 0.00
+stone-ground 2.00x0.08x2.00 minY 0.00
+tile-floor 2.00x0.06x2.00 minY 0.00
+tilled-field 2.00x0.08x2.00 minY 0.00
+wood-floor 2.00x0.08x2.00 minY 0.00
+grass-floor 2.00x0.20x2.00
+hill-slope 2.00x1.05x2.00
+marsh-ground 2.00x0.33x2.00
+meadow-ground 2.00x0.23x2.00
+valley-slope 2.00x0.60x2.00
+farm-field 4.28x0.23x3.28

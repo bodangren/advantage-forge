@@ -1,5 +1,8 @@
 # The APK 2D and 3D program
 
+> Measure owns execution status. See the [track crosswalk](../measure/plan-crosswalk.md).
+> This document retains its original design and historical notes.
+
 Status: plan, 2026-09-28. Owner goal (verbatim): "1. to create 2D fallbacks (old hardware) for all
 games using the sprites we have created from the 3D assets. 2. I want us to start porting the 3D
 games into the monorepo with the new 3D APK platform. 3. I want to completely rewrite all current

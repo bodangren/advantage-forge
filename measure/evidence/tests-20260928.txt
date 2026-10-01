@@ -1,0 +1,57 @@
+
+ RUN  v4.1.10 /home/daniebo/Desktop/fantasy-asset-forge
+
+ ❯ tests/games/labyrinth/mazes.test.ts (9 tests | 1 failed) 84ms
+     × parseMaze rejects a malformed picture 15ms
+ ❯ tests/games/labyrinth/rules.test.ts (28 tests | 1 failed) 335ms
+     × a bump sends the hero to the last crossing, the goblin home, and gives 1.5 s of safety 45ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/games/labyrinth/mazes.test.ts > mazes > parseMaze rejects a malformed picture
+Error: maze t: no den cell 'D'
+ ❯ parseMaze src/games/labyrinth/core/mazes.ts:214:32
+    212|   const border = neighborOf(found.cell, found.side);
+    213|   if (inBounds({ cols, rows }, border)) throw new Error(`maze ${id}: t…
+    214|   if (dens.length === 0) throw new Error(`maze ${id}: no den cell 'D'`…
+       |                                ^
+    215|   return { id, rows, cols, walls, start, dens, gate: found.cell, gateS…
+    216| }
+ ❯ tests/games/labyrinth/mazes.test.ts:108:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/games/labyrinth/rules.test.ts > goblins > a bump sends the hero to the last crossing, the goblin home, and gives 1.5 s of safety
+AssertionError: expected [ { type: 'heroBumped', …(2) } ] to deeply equal [ { type: 'heroBumped', …(2) } ]
+
+- Expected
++ Received
+
+  [
+    {
+      "cell": {
+        "col": 2,
+-       "row": 2,
++       "row": 3,
+      },
+      "goblinId": "g1",
+      "type": "heroBumped",
+    },
+  ]
+
+ ❯ tests/games/labyrinth/rules.test.ts:325:19
+    323|     const events = tickN(sim, 30);
+    324|     const bumps = ofType(events, 'heroBumped');
+    325|     expect(bumps).toEqual([{ type: 'heroBumped', goblinId: 'g1', cell:…
+       |                   ^
+    326|     expect(g.returning).toBe(true);
+    327|     // The hero rests at the crossing, safe; the goblin walks home and…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 43 passed (45)
+      Tests  2 failed | 645 passed (647)
+   Start at  19:18:46
+   Duration  21.07s (transform 5.27s, setup 0ms, import 21.60s, tests 22.84s, environment 13ms)
+

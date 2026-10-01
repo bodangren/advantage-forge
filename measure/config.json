@@ -1,0 +1,18 @@
+{
+  "measure_zone": ".",
+  "managed_paths": [
+    "assets",
+    "scenes",
+    "src",
+    "scripts",
+    "tests",
+    "docs",
+    "bench"
+  ],
+  "preserve_existing_paths": true,
+  "historical_base": "b1b7d78305ee82869efa2ae0fc74fc615c1affcc",
+  "historical_head": "461b66b104bacb3c4889ae15d977181c0100696b",
+  "memory_line_budget": 50,
+  "graph_mode": "not_enabled",
+  "boundary_test": "tests/apk3d/imports.test.ts"
+}

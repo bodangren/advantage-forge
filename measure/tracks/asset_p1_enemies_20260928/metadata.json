@@ -1,0 +1,26 @@
+{
+  "track_id": "asset_p1_enemies_20260928",
+  "type": "feature",
+  "status": "in_progress",
+  "created_at": "2026-09-28T23:11:36Z",
+  "updated_at": "2026-09-28T23:11:36Z",
+  "description": "Complete P1 enemies",
+  "estimated_tasks": 9,
+  "actual_tasks": null,
+  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Batch 1 added the wood-golem source, mockup, textures, clips, sprites, presets, and a review record.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "docs/fantasy-world-asset-catalog.tsv",
+    "docs/fantasy-world-asset-catalog.md",
+    "bench/overnight/PLAN.md",
+    "assets/wood-golem.ts",
+    "docs/enemy-mockups/wood-golem_001.jpg",
+    "out/wood-golem/render.png",
+    "out/wood-golem/sprites/preview.png",
+    "docs/character-reviews.json"
+  ],
+  "dependencies": [
+    "asset_quality_20260928"
+  ]
+}

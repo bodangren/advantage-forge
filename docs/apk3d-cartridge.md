@@ -1,5 +1,8 @@
 # APK 3D: the cartridge, the kit, and the host
 
+> Measure owns execution status. See the [track crosswalk](../measure/plan-crosswalk.md).
+> This document retains its original design and historical notes.
+
 Status: design, 2026-09-27; the dual-renderer section (15) added 2026-09-28. Owner decisions are
 fixed (see the list at the end of the introduction). Everything else in this document is decided
 here. Open items that only the owner can decide are in section 13.

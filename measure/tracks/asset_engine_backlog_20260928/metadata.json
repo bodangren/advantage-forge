@@ -1,0 +1,19 @@
+{
+  "track_id": "asset_engine_backlog_20260928",
+  "type": "chore",
+  "status": "new",
+  "created_at": "2026-09-28T23:11:36Z",
+  "updated_at": "2026-09-28T23:11:36Z",
+  "description": "Plan deferred Forge capabilities",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "README.md",
+    "src/motion.ts",
+    ".agents/skills/forge-assets/SKILL.md"
+  ],
+  "dependencies": []
+}
