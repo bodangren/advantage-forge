@@ -3,16 +3,16 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 /**
  * Design note — steel great helm (equipment/armor/steel-helmet).
  *
- * Role: smithy pickup and icon. The T-slit, crest, and rim must read at 128 px.
+ * Role: smithy pickup, icon, and avatar head piece. The opening, crest, and rim must read at 128 px.
  * Size: fit shape 1x (equipment-fit contract), whole build scaled by FIT = 1.36: inner cavity 0.215 m radius (head 0.205 + 0.01), about 0.49 wide, 0.45 tall, on its rim at y = 0, face toward +Z.
- * One idea: a rounded steel bucket with a raised crest and a clear T-shaped visor slit.
- * Shape language: round dominant (dome, rim, crest tube, hook bars). The slit is the crisp accent.
+ * One idea: a rounded steel bucket with a raised crest and an open face framed by two hooks.
+ * Shape language: round dominant (dome, rim, crest tube, hook bars). The opening is the crisp accent.
  * Palette: iron shell #4a4f55, shadow #363a3f, highlight #a8acb1. Bright trim is steel
  *   edge #c8ccd2. Hook studs are walnut #6b4226 so they read on the bright bar.
  * Materials: worn iron (roughness 0.5, metalness 0.7) and polished steel trim
  *   (roughness 0.32, metalness 0.9). Displacement on the metal stays under 1.2 mm.
  * Detail: primary bucket shell; secondary crest, brow band, rim, cheek hooks, nasal point;
- *   tertiary breathing holes, studs, crown highlights. Focal point: the T-slit.
+ *   tertiary breathing holes, studs, crown highlights. Focal point: the face opening.
  * Rig: none. Static item.
  */
 
@@ -23,7 +23,7 @@ const STEEL = rgb('#c8ccd2');
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
-// Brow band centre. The eye slit sits just under this band.
+// Brow band centre. The face opening ends just under this band.
 // Uniform fit scale of the whole build about the origin (rim centre on y = 0).
 const FIT = 1.36;
 
@@ -32,11 +32,12 @@ const BAND_Y = 0.146;
 export default defineAsset({
   name: 'steel-helmet',
   description:
-    'Polished steel great helm for a chibi hero: a rounded bucket, a T-shaped visor slit, breathing holes, a raised crest, and bright steel trim.',
+    'Polished steel helm for a chibi hero: a rounded bucket, an open face framed by two curled hooks, breathing holes, a raised crest, and bright steel trim.',
   detail: 0.005,
   reference: 'docs/item-mockups/steel-helmet-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'head', origin: [0, 0.19, 0] },
+  // The origin sits 2.7 cm under the old 0.19, so the brow band clears the large chibi eyes.
+  equip: { slot: 'head', origin: [0, 0.163, 0], hides: ['hair'] },
 
   build(k) {
     // ------------------------------------------------------------------ shell
@@ -100,13 +101,11 @@ export default defineAsset({
     const domeOuter = sdf.revolve(outerProfile);
     const domeInner = sdf.revolve(innerProfile);
 
-    // T-shaped eye and nose slit. The bar is wide and sits just under the brow.
-    // The stem is narrower and runs down to the rim. The cutter stops before the back wall.
-    const eyeSlit = sdf.box([0.26, 0.038, 0.24], 0.008).at(0, 0.118, 0.16);
-    const noseSlit = sdf.box([0.07, 0.09, 0.24], 0.008).at(0, 0.072, 0.16);
-    const slit = eyeSlit.smoothUnion(0.012, noseSlit);
+    // Face opening, as in the mock: the whole front between the hooks, from the brow band down
+    // to the bottom edge. Worn, it shows both eyes. The cutter stops before the back wall.
+    const slit = sdf.box([0.24, 0.16, 0.24], 0.03).at(0, 0.05, 0.16);
 
-    // Breathing holes: two in the brow band, two on the lower cheeks, two on the sides.
+    // Breathing holes: two in the brow band and two on the sides.
     const radialHole = (yawDeg: number, y: number, radius: number) => {
       const a = (yawDeg * Math.PI) / 180;
       const s = Math.sin(a);
@@ -115,8 +114,6 @@ export default defineAsset({
     };
     const browHoles = sdf.union(radialHole(62, BAND_Y, 0.007), radialHole(-62, BAND_Y, 0.007));
     const cheekHoles = sdf.union(
-      radialHole(42, 0.058, 0.0062),
-      radialHole(-42, 0.058, 0.0062),
       radialHole(98, 0.086, 0.0062),
       radialHole(-98, 0.086, 0.0062),
     );
@@ -163,7 +160,11 @@ export default defineAsset({
 
     // Chunky round rim. Outer radius 0.18 m, so the helm is 0.36 m wide.
     // The bottom of the tube sits on y = 0.
-    const rim = sdf.torus(0.163, 0.017).at(0, 0.017, 0);
+    // The rim stops at the hooks: the face opening reaches the bottom edge.
+    const rim = sdf
+      .torus(0.163, 0.017)
+      .at(0, 0.017, 0)
+      .subtract(sdf.box([0.22, 0.08, 0.2]).at(0, 0.017, 0.17));
 
     // Raised crest. Points follow the known dome profile, pushed 9 mm outward, so the
     // bar sits on the crown instead of bridging over it. Front runs to the back.
@@ -195,16 +196,17 @@ export default defineAsset({
     });
     const crest = sdf.chain(crestPts, 0.014);
 
-    // Cheek hooks. Each is a thick open curve on the lower front, mirrored hard.
-    // Points are probed onto the uncut dome so the bar sits on the iron, not in it.
-    // The lowest point stays above the rim so the tip and stud stay readable.
+    // Cheek hooks, as in the mock: each hook trims one side of the face opening, from the rim up,
+    // and curls outward at the top. Points are probed onto the uncut dome so the bar sits on the
+    // iron, not in it. The bar stays outside the eyes when the helm is worn. The last point is the
+    // bottom tip with the stud.
     const hookXY: Array<[number, number, number]> = [
-      [0.05, 0.098, 0.013],
-      [0.074, 0.094, 0.014],
-      [0.098, 0.072, 0.014],
-      [0.1, 0.048, 0.014],
-      [0.078, 0.036, 0.013],
-      [0.056, 0.04, 0.012],
+      [0.158, 0.094, 0.012],
+      [0.148, 0.112, 0.013],
+      [0.132, 0.108, 0.014],
+      [0.124, 0.082, 0.014],
+      [0.122, 0.05, 0.014],
+      [0.12, 0.024, 0.013],
     ];
     const hookPts = hookXY.map(([x, y, r]) => {
       const hit = sdf.raycast(domeOuter, [x, y, 0.5], [0, 0, -1]);
@@ -214,7 +216,7 @@ export default defineAsset({
     });
     const hooks = sdf.chain(hookPts, 0.01).mirror('x', 0);
 
-    // Short nasal point. It hangs from the brow into the top of the T-slit.
+    // Short nasal point. It hangs from the brow into the top of the face opening.
     const nasal = sdf
       .extrude(
         profile.polygon(

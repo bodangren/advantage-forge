@@ -39,7 +39,7 @@ export default defineAsset({
   detail: 0.004,
   reference: 'docs/item-mockups/horned-helmet-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'head', origin: [0, 0.15, 0] },
+  equip: { slot: 'head', origin: [0, 0.15, 0], hides: ['hair'] },
 
   build(k) {
     // ------------------------------------------------------------------ shell
@@ -142,7 +142,9 @@ export default defineAsset({
         ],
         0.02,
       )
-      .mirror('x', 0);
+      .mirror('x', 0)
+      // Trim the roots at the inner wall, so they do not reach into the cavity (into the head when worn).
+      .subtract(sdf.ellipsoid([0.135, 0.125, 0.135]).at(0, 0.11, 0));
 
     // ------------------------------------------------------------------ nasal guard
     // A shield plate tucked under the band, with a center ridge and two rivets.
@@ -171,10 +173,11 @@ export default defineAsset({
     // ------------------------------------------------------------------ brow band + rivets
     const shellOf = (s: sdf.Shape, out: number, inn: number) =>
       s.round(out).subtract(s.round(-inn));
-    const band = shellOf(domeOuter, 0.005, 0.004).smoothIntersect(
-      0.005,
-      sdf.box([0.44, 0.032, 0.44], 0.008).at(0, BAND_Y, 0),
-    );
+    // The cylinder cut keeps only the outer band: the closed outer profile also has a chord from the
+    // crown to the rim, and its shell would leave a hidden ring inside the cavity.
+    const band = shellOf(domeOuter, 0.005, 0.004)
+      .smoothIntersect(0.005, sdf.box([0.44, 0.032, 0.44], 0.008).at(0, BAND_Y, 0))
+      .subtract(sdf.cylinder(0.11, 0.08).at(0, BAND_Y, 0));
     // Six rivets across the front of the band, probed on the dome surface.
     const bandRivets = [];
     for (const deg of [-68, -43, -18, 18, 43, 68]) {
@@ -217,16 +220,16 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ horns
     // Cream horn, paler toward the tip, a warm accent against the iron.
-    k.body('horn', horn.scale(FIT), {
+    const hornPainted = horn.paintFn((x, y, z, base) => {
+      const t = Math.min(1, Math.max(0, (Math.hypot(x, z) - 0.14) / 0.1 + (y - 0.17) / 0.25));
+      return mixRgb(base, HORN_TIP, 0.65 * t);
+    });
+    k.body('horn', hornPainted.scale(FIT), {
       color: '#e9dcbc',
       roughness: 0.45,
       metalness: 0,
       detail: 0.0055,
       maxTriangles: 1500,
-      paintFn: (x, y, z, base) => {
-        const t = Math.min(1, Math.max(0, (Math.hypot(x / FIT[0], z / FIT[2]) - 0.14) / 0.1 + (y / FIT[1] - 0.17) / 0.25));
-        return mixRgb(base, HORN_TIP, 0.65 * Math.min(1, Math.max(0, t)));
-      },
     });
   },
 });

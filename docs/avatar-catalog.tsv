@@ -2,9 +2,9 @@ id	slot	tier	two_handed	status	override	triangles	rating	price
 cloth-hood	head	1	0	ready		2894		45
 leather-cap	head	1	0	ready		7876	7.1	50
 circlet	head	2	0	ready		4886		90
-horned-helmet	head	2	0	rework		3850		90
-iron-helmet	head	2	0	rework		5200		95
-steel-helmet	head	2	0	rework		4834	7	95
+horned-helmet	head	2	0	ready		3850	7.2	95
+iron-helmet	head	2	0	ready		6500	7.5	105
+steel-helmet	head	2	0	ready		4854	7.2	95
 crown	head	3	0	ready		4696	7.1	190
 leather-armor	chest	1	0	ready		7326		60
 studded-leather	chest	1	0	ready		5100	7	65

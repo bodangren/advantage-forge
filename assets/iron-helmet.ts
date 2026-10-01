@@ -7,7 +7,8 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *   brow band, and nasal must read at 128 px.
  * Size: about 0.46 m wide, 0.42 m tall, 0.46 m deep (cavity 0.215 x 0.21 x 0.20 over the hero head, 1x fit), resting on its rim on y = 0, face toward +Z.
  * One idea: an open iron nasal helm — a round bowl shell with a raised riveted brow band, a
- *   ridged nasal plate hanging over the face, and two short cheek guards at the sides.
+ *   crest ridge over the crown, a ridged nasal plate hanging over the face, and two short cheek
+ *   guards at the sides.
  * Shape language: round dominant (dome, rivets, rounded plates); the nasal point is the one
  *   crisp accent.
  * Palette: one iron family — body #4a4f55 everywhere, shadow #363a3f inside, worn highlight
@@ -29,11 +30,11 @@ const BAND_Y = 0.146; // brow band center height
 export default defineAsset({
   name: 'iron-helmet',
   description:
-    'Open iron nasal helm for a chibi hero: a round riveted brow band, a ridged nasal plate, and short cheek guards over a dark shell interior.',
+    'Open iron nasal helm for a chibi hero: a round riveted brow band, a crest ridge over the crown, a ridged nasal plate, and short cheek guards over a dark shell interior.',
   detail: 0.004,
   reference: 'docs/item-mockups/iron-helmet-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'head', origin: [0, 0.2, 0] },
+  equip: { slot: 'head', origin: [0, 0.185, 0], hides: ['hair'] },
 
   build(k) {
     // ------------------------------------------------------------------ shell
@@ -122,44 +123,65 @@ export default defineAsset({
     ).at(0, 0, 0.22);
 
     // ------------------------------------------------------------------ cheek guards
-    // One rounded plate hugging the side of the shell, mirrored hard.
+    // One rounded plate hugging the side of the shell, mirrored hard. The plates sit at the sides of
+    // the head (64 degrees from the front), so the large chibi eyes stay clear.
+    // The plate tapers toward the bottom and ends in a small hook, as in the mock.
     const cheek = sdf
-      .box([0.105, 0.115, 0.04], 0.012)
-      .rotateY(38)
-      .at(0.113, 0.085, 0.144)
+      .extrude(
+        profile.polygon(
+          [
+            [-0.052, 0.062],
+            [0.052, 0.062],
+            [0.046, 0.0],
+            [0.034, -0.045],
+            [0.044, -0.068],
+            [0.022, -0.082],
+            [-0.012, -0.07],
+            [-0.03, -0.04],
+            [-0.046, 0.0],
+          ],
+          { smooth: true, samples: 6 },
+        ),
+        0.034,
+        0.01,
+      )
+      .rotateY(64)
+      .at(0.165, 0.082, 0.08)
       .mirror('x', 0);
 
     // ------------------------------------------------------------------ nasal guard
-    // A shield plate tucked under the band, with a center ridge and two rivets.
+    // A short shield plate tucked under the band, with a center ridge and two rivets. It ends above
+    // the nose, so the face reads.
     const nasalPlate = sdf.extrude(
       profile.polygon(
         [
           [-0.045, 0.172],
           [0.045, 0.172],
-          [0.038, 0.1],
-          [0.028, 0.058],
-          [0, 0.022],
-          [-0.028, 0.058],
-          [-0.038, 0.1],
+          [0.038, 0.129],
+          [0.028, 0.104],
+          [0, 0.082],
+          [-0.028, 0.104],
+          [-0.038, 0.129],
         ],
         { smooth: true, samples: 6 },
       ),
       0.02,
       0.006,
     ).at(0, 0, 0.19);
-    const nasalRidge = sdf.capsule([0, 0.16, 0.201], [0, 0.04, 0.198], 0.0055);
+    const nasalRidge = sdf.capsule([0, 0.16, 0.201], [0, 0.095, 0.199], 0.0055);
     const nasalRivets = sdf.union(
-      sdf.sphere(0.0085).at(-0.018, 0.118, 0.198),
-      sdf.sphere(0.0085).at(0.018, 0.118, 0.198),
+      sdf.sphere(0.0085).at(-0.018, 0.13, 0.198),
+      sdf.sphere(0.0085).at(0.018, 0.13, 0.198),
     );
 
     // ------------------------------------------------------------------ brow band + rivets
     const shellOf = (s: sdf.Shape, out: number, inn: number) =>
       s.round(out).subtract(s.round(-inn));
-    const band = shellOf(domeOuter, 0.006, 0.005).smoothIntersect(
-      0.005,
-      sdf.box([0.5, 0.036, 0.5], 0.01).at(0, BAND_Y, 0),
-    );
+    // The cylinder cut keeps only the outer band: the closed outer profile also has a chord from the
+    // crown to the rim, and its shell would leave a hidden ring inside the cavity.
+    const band = shellOf(domeOuter, 0.006, 0.005)
+      .smoothIntersect(0.005, sdf.box([0.5, 0.036, 0.5], 0.01).at(0, BAND_Y, 0))
+      .subtract(sdf.cylinder(0.13, 0.1).at(0, BAND_Y, 0));
     // Six rivets across the front of the band, probed on the dome surface.
     const bandRivets = [];
     for (const deg of [-70, -45, -20, 20, 45, 70]) {
@@ -169,12 +191,22 @@ export default defineAsset({
     }
     const rivets = sdf.union(...bandRivets, nasalRivets);
 
+    // ------------------------------------------------------------------ crest
+    // A raised ridge from the brow band over the crown to the nape, as in the mock: a thin slab of
+    // the shell grown 12 mm. It follows the real shell (the closed outer profile bulges at the
+    // crown), and the cavity cut keeps the inside empty.
+    const crest = dome
+      .round(0.012)
+      .subtract(domeInner)
+      .smoothIntersect(0.004, sdf.box([0.02, 0.4, 0.5], 0.007).at(0, 0.362, 0));
+
     // ------------------------------------------------------------------ combine + paint
     const helmet = dome
       .smoothSubtract(0.006, opening)
       .smoothUnion(0.005, cheek)
       .smoothUnion(0.004, nasalPlate)
       .smoothUnion(0.003, nasalRidge)
+      .smoothUnion(0.005, crest)
       .union(band)
       .union(rivets)
       .intersect(sdf.halfSpace([0, -1, 0], 0))
@@ -186,7 +218,8 @@ export default defineAsset({
         c = mixRgb(c, IRON_HI, 0.45 * crown * crown * Math.max(0, (wear - 0.38) / 0.62));
         return c;
       })
-      .paintWhere(domeInner.round(0.004), IRON_DARK, 0.01)
+      // The wall is only 12 mm thick: a wider soft edge darkens the outside in jagged spots.
+      .paintWhere(domeInner.round(0.002), IRON_DARK, 0.004)
       .paintWhere(rivets.round(0.002), IRON_HI, 0.005);
 
     k.body('iron', helmet.scale(FIT), {
@@ -196,7 +229,7 @@ export default defineAsset({
       detail: 0.004,
       textureDensity: 2,
       paintWeight: 2,
-      maxTriangles: 5200,
+      maxTriangles: 6500,
       bump: (x, y, z) => 0.0004 * noise.fbm(x * 90, y * 90, z * 90, 2),
     });
   },

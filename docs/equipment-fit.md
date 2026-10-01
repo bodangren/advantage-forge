@@ -77,13 +77,13 @@ wizard-staff, dragoon-lance, and captain-shield.
 gauntlets. 122 pass `forge check`. The 10 pieces of the audit above were resized to the contract
 on 2026-09-29; on the avatar, circlet, crown, leather-cap, leather-armor (worn at 1x), and
 cloth-hood pass and read well in the worn render. The catalog marks the passing pieces `ready`
-and these 16 pieces `rework`:
+and these 16 pieces `rework` (13 after the helmet fixes of 2026-10-02):
 
 | Piece | Finding on the avatar base |
 | --- | --- |
-| iron-helmet | The bowl reaches down to the chin, and the cheek guards cover the eyes. The brow band also makes a hidden ring inside the cavity (the shell of an open profile wraps its closing chord); worn, the ring is in the head. |
-| horned-helmet | The same hidden ring in the cavity. The fit is otherwise good. |
-| steel-helmet | It passes the check, but the face guard covers the eyes (render review). |
+| iron-helmet | The bowl reaches down to the chin, and the cheek guards cover the eyes. The brow band also makes a hidden ring inside the cavity (the shell of an open profile wraps its closing chord); worn, the ring is in the head. Fixed 2026-10-02 (`ready`): the cheek guards at 64 degrees, a short nasal, a cylinder cut on the band, and a crest. |
+| horned-helmet | The same hidden ring in the cavity. The fit is otherwise good. Fixed 2026-10-02 (`ready`). |
+| steel-helmet | It passes the check, but the face guard covers the eyes (render review). Fixed 2026-10-02 (`ready`): an open face below the brow band, as in the mock, and worn 2.7 cm higher. |
 | belt | The shirt comes through the back of the belt (at the spine, up to 5.3 cm). |
 | chainmail | The upper arms come through the shoulders (214 points). |
 | plate-armor | The upper arms cut through the gold arm cuffs under the pauldrons (119 points). |
