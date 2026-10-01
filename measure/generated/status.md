@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 73.
-Tracks by status: new: 38; in_progress: 19; completed: 16.
+Tracks by status: new: 38; in_progress: 18; completed: 17.
 Tracks by workstream: assets: 29; games: 38; foundation: 6.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -11,7 +11,7 @@ Tracks by workstream: assets: 29; games: 38; foundation: 6.
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_equipment_parts_20260930](../tracks/asset_equipment_parts_20260930/) | completed | assets | 31/31 | 24 | 31 |
 | [asset_p0_acceptance_20260928](../tracks/asset_p0_acceptance_20260928/) | new | assets | 0/9 | 9 | — |
-| [asset_p0p1_closeout_20261002](../tracks/asset_p0p1_closeout_20261002/) | in_progress | assets | 3/14 | 14 | — |
+| [asset_p0p1_closeout_20261002](../tracks/asset_p0p1_closeout_20261002/) | in_progress | assets | 13/14 | 14 | — |
 | [asset_p1_architecture_20260928](../tracks/asset_p1_architecture_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_p1_enemies_20260928](../tracks/asset_p1_enemies_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p1_equipment_20260928](../tracks/asset_p1_equipment_20260928/) | in_progress | assets | 1/10 | 9 | — |
@@ -25,7 +25,7 @@ Tracks by workstream: assets: 29; games: 38; foundation: 6.
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p3_vehicles_20260928](../tracks/asset_p3_vehicles_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_production_controls_20260928](../tracks/asset_production_controls_20260928/) | new | assets | 0/5 | 5 | — |
-| [asset_quality_20260928](../tracks/asset_quality_20260928/) | in_progress | assets | 1/10 | 10 | — |
+| [asset_quality_20260928](../tracks/asset_quality_20260928/) | in_progress | assets | 2/10 | 10 | — |
 | [asset_scenes_adventure_20260928](../tracks/asset_scenes_adventure_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_scenes_civic_20260928](../tracks/asset_scenes_civic_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
@@ -77,7 +77,7 @@ Tracks by workstream: assets: 29; games: 38; foundation: 6.
 | [history_recolors_sprites_20260928](../tracks/history_recolors_sprites_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_six_games_20260928](../tracks/history_six_games_20260928/) | completed | games | 3/3 | — | — |
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
-| [measure_migration_20260928](../tracks/measure_migration_20260928/) | in_progress | foundation | 2/9 | 9 | — |
+| [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
 | [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/7 | 5 | — |
 
 ## Project health

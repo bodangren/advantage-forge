@@ -1,6 +1,6 @@
 # Migrate project management to Measure
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: completed. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Scope and evidence
 
@@ -9,13 +9,13 @@ Status: in_progress. This plan owns execution status. Source documents retain de
 
 ## Phase 2: Migration
 
-- [~] Task: Create historical tracks and current planning tracks.
-- [~] Task: Create the index, workflow, debt registry, and lessons.
-- [~] Task: Add generators and structural checks.
+- [x] Task: Create historical tracks and current planning tracks.
+- [x] Task: Create the index, workflow, debt registry, and lessons.
+- [x] Task: Add generators and structural checks.
 
 ## Phase 3: Verification
 
-- [ ] Task: Validate track links, metadata, scope coverage, and historical evidence.
-- [ ] Task: Run generator, tooling tests, and doctor.
-- [ ] Task: Review the diff for unrelated edits and preserve existing paths.
-- [ ] Task: Commit the Measure migration with explicit file paths.
+- [x] Task: Validate track links, metadata, scope coverage, and historical evidence. (doctor, 2026-10-02)
+- [x] Task: Run generator, tooling tests, and doctor. (2026-10-02: measure-tools 8/8 pass)
+- [x] Task: Review the diff for unrelated edits and preserve existing paths.
+- [x] Task: Commit the Measure migration with explicit file paths. (6b70d6f, 2026-10-02)

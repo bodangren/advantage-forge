@@ -19,7 +19,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 
-- [~] **Track: Migrate project management to Measure**
+- [x] **Track: Migrate project management to Measure**
   *Link: [./tracks/measure_migration_20260928/](./tracks/measure_migration_20260928/)*
 
 ## Asset production

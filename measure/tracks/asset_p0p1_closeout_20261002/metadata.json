@@ -15,5 +15,7 @@
     "docs/character-reviews.json",
     "docs/avatar-catalog.tsv"
   ],
-  "dependencies": ["asset_world_catchup_20261001"]
+  "dependencies": [
+    "asset_world_catchup_20261001"
+  ]
 }

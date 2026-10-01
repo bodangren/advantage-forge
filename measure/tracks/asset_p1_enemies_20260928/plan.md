@@ -236,3 +236,7 @@ Known limits, carried to the next batch:
   enemies at 8.0, banshee and plague-bearer reworked to 8.0, mercenary at 7.9 per the owner);
   living-statue at 7.8 pending the owner. No open P1 enemy rows remain. Uncommitted sources for
   the owner: living-statue, ogre-brute (7.8), wood-golem (7.5).
+
+## Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)
+
+The closeout brought the 5 rows of this family below their bar to it: stone-golem 7.5, wraith 7.5, wood-golem 7.5 (one more pass, owner decision); bone-golem 7.5 and bandit-archer 7.5 by the character rule. Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).

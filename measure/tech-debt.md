@@ -6,7 +6,7 @@ Baseline evidence comes from September 28, 2026; rerun checks before closing an 
 
 | ID | Date | Track | Item | Severity | Status | Evidence or exit condition |
 | --- | --- | --- | --- | --- | --- | --- |
-| TD-01 | 2026-09-28 | [Asset quality](./tracks/asset_quality_20260928/) | 139 asset type errors | High | Open | [Compiler output](./evidence/typecheck-20260928.txt); compiler and affected reviews must pass. |
+| TD-01 | 2026-09-28 | [Asset quality](./tracks/asset_quality_20260928/) | 139 asset type errors at the baseline; 347 on 2026-10-02 ([classification](./tracks/asset_quality_20260928/classification-20261002.md)) | High | Open | [Compiler output](./evidence/typecheck-20260928.txt); compiler and affected reviews must pass. |
 | TD-02 | 2026-09-28 | [Labyrinth](./tracks/game_labyrinth_goblin_king_20260928/) | Two rules failures and one test type error | High | Open | [Test output](./evidence/tests-20260928.txt); focused tests and compiler must pass. |
 | TD-03 | 2026-09-28 | [Model packs](./tracks/game_model_packs_20260928/) | Pack generator remains absent; battle view imports the vault scene | High | Open | Generate validated packs and remove the transitional import. |
 | TD-04 | 2026-09-28 | [Asset delivery](./tracks/asset_delivery_20260928/) | Export and sprite acceptance lacks a complete source-revision record | Medium | Open | Reconcile source, export, clips, presets, and review evidence. |

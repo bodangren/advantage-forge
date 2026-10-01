@@ -72,3 +72,7 @@ and make every part chibi-thick (pole r 0.03 or more, blades 0.03 to 0.05 m thic
 The world catch-up reviewed or reworked 6 assets of this family. 3 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
 
 belt-pouch 6.3 (to the equipment-parts track), gauntlets 6.3 (to the equipment-parts track), halberd 6.5 (to the equipment-parts track), lantern 7.5, pike 7.0, scythe 7.0.
+
+## Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)
+
+The closeout brought the rows of this family below their bar to it: halberd 7.0, gauntlets 7.0, belt-pouch 7.2, cloth-hood 7.0 (review of the current render); horned-helmet 7.2 and steel-helmet 7.2 now fit the avatar base (0b14487). Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).

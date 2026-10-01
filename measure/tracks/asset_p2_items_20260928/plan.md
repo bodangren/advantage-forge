@@ -92,3 +92,7 @@ lands at 7 on the first pass about three times in four; flat items must stand or
 `bump` is a function; glass is a solid body at opacity 0.5; emissive bodies use a full-brightness
 base at 0.35 to 0.7. Follow-ups: the mockups' faceted looks (relic-orb, sapphire) are simplified;
 the mmx network failures (eight prompts) resolved on retry.
+
+## Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)
+
+The closeout gave key-skeleton one more pass (owner decision): 7.2, at the P2 bar (19f193e). Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).
