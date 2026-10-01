@@ -1,4 +1,4 @@
-import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
 
 /**
  * Bard — Chibi Quest hero (catalog `heroes/support/bard`), about 1.0 m tall (the plume a little
@@ -17,6 +17,9 @@ import { defineAsset, motion, noise, profile, rgb, sdf, THREE } from '../src/ind
  *   with a bounce that sends a note), attack2 (a one-handed lute swing), hit, death (the lute drops
  *   beside her), victory (a strum and hop, a note, and a flourish).
  */
+
+import { bardHat } from './parts/bard-hat.js';
+import { bardLute } from './parts/bard-lute.js';
 
 const C = {
   skin: '#f2c7a4',
@@ -85,6 +88,8 @@ const luteWorld = (q: V3): V3 => {
   return [LUTE_AT[0] + p[0] * LC - p[1] * LS, LUTE_AT[1] + p[0] * LS + p[1] * LC, LUTE_AT[2] + p[2]];
 };
 const lutePose = (s: sdf.Shape) => s.scale(LUTE_SCALE).rotateZ(LUTE_TILT).at(...LUTE_AT);
+/** The lute part is already at the worn scale; the host tilts and sets it. */
+const hostLutePose = (s: sdf.Shape) => s.rotateZ(LUTE_TILT).at(...LUTE_AT);
 const LUTE_AXIS: V3 = [LC, LS, 0];
 const ACROSS: V3 = [-LS, LC, 0]; // across the strings, toward the upper edge
 
@@ -252,71 +257,8 @@ export default defineAsset({
     // ------------------------------------------------------------------ cap with the plume
     // Built at its own origin (the brim plane), then tipped back and a little to her left.
     const hatPose = (s: sdf.Shape) => s.rotateX(-15).rotateZ(4).at(0, 0.815, -0.01);
-    const crown = sdf.ellipsoid([0.19, 0.2, 0.18]).at(0, 0, -0.005).intersect(sdf.halfSpace([0, -1, 0], 0.01));
-    const brim = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0, -0.012],
-            [0.22, -0.012],
-            [0.3, -0.002],
-            [0.335, 0.022],
-            [0.345, 0.036],
-            [0.333, 0.04],
-            [0.305, 0.02],
-            [0.22, 0.008],
-            [0, 0.008],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-      )
-      .scale([1, 1, 0.82]);
-    const hat = hatPose(sdf.smoothUnion(0.02, crown, brim).paintWhere(sdf.box([0.5, 0.03, 0.5]).at(0, 0.022, 0), T.clothDark, 0.004));
-    k.body('hat', hat, { color: T.cap, roughness: 0.85, bone: 'head' });
-    // A gold badge on the front of the crown, and the big red plume rising behind it.
-    // It follows the crown: a thin shell of the crown, cut to the outline where it crosses the front.
-    const badge = crown
-      .round(0.01)
-      .subtract(crown.round(-0.004))
-      .intersect(
-        sdf
-          .extrude(
-            profile.polygon(
-              [
-                [-0.075, 0],
-                [0.075, 0],
-                [0.06, 0.062],
-                [0.025, 0.038],
-                [0, 0.07],
-                [-0.025, 0.038],
-                [-0.06, 0.062],
-              ],
-              { smooth: false },
-            ),
-            0.4,
-          )
-          .at(0, 0.022, 0.2),
-      );
-    k.body('badge', hatPose(badge), { color: C.gold, roughness: 0.32, metalness: 0.9, bone: 'head' });
-    const plume = sdf
-      .chain(
-        [
-          [-0.01, 0.05, 0, 0.014],
-          [-0.025, 0.15, 0, 0.032],
-          [-0.055, 0.235, 0, 0.044],
-          [-0.115, 0.29, 0, 0.046],
-          [-0.195, 0.3, 0, 0.04],
-          [-0.262, 0.262, 0, 0.03],
-          [-0.3, 0.19, 0, 0.015],
-        ],
-        0.03,
-      )
-      .displace(0.004, (x, y) => Math.sin((x - y) * 150))
-      .scale([1, 1, 0.35])
-      .rotateY(-20)
-      .at(0, 0, 0.12)
-      .paintWhere(sdf.halfSpace([0, -1, 0], -0.2), C.featherDark, 0.05);
-    k.body('plume', hatPose(plume), { color: C.feather, roughness: 0.75, detail: 0.004, bone: 'head' });
+    const hatPart = bardHat(mapTint(k));
+    addPart(k, hatPart, { pose: hatPose });
 
     // ------------------------------------------------------------------ curly hair under the cap
     const faceMask = sdf.ellipsoid([0.23, 0.16, 0.22]).at(0, 0.6, 0.15);
@@ -459,33 +401,7 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ the lute (rigid on `lute`)
-    const bowl = sdf
-      .smoothUnion(0.04, sdf.ellipsoid([0.105, 0.076, 0.045]).at(-0.015, 0, 0), sdf.ellipsoid([0.07, 0.05, 0.035]).at(0.06, 0, 0))
-      .intersect(sdf.halfSpace([0, 0, 1], 0.012));
-    const luteNeck = sdf.box([0.19, 0.03, 0.02], 0.006).at(0.19, 0, 0.001);
-    const PEG_DIR: V3 = [Math.cos(38 * rad), 0, -Math.sin(38 * rad)];
-    const pegbox = sdf.box([0.085, 0.034, 0.02], 0.007).at(0.042, 0, 0).rotateY(38).at(0.282, 0, 0);
-    const bridge = sdf.box([0.012, 0.05, 0.008], 0.003).at(-0.068, 0, 0.013);
-    const rib = rgb(C.woodRib);
-    const lute = sdf
-      .union(bowl, luteNeck, pegbox, bridge.paint(C.fingerboard))
-      .paintFn((x, y, z, base) => (z < 0.006 && Math.sin(Math.atan2(y, -z) * 9) > 0.85 ? rib : base))
-      .paintWhere(sdf.halfSpace([0, 0, -1], -0.009).intersect(sdf.box([0.3, 0.2, 0.1]).at(-0.02, 0, 0)), C.soundboard)
-      .paintWhere(sdf.cylinder(0.027, 0.1).rotateX(90).at(0.035, 0, 0.012), C.fingerboard)
-      .paintWhere(sdf.cylinder(0.02, 0.1).rotateX(90).at(0.035, 0, 0.012), C.hole)
-      .paintWhere(sdf.box([0.2, 0.04, 0.012]).at(0.19, 0, 0.012), C.fingerboard);
-    k.body('luteBody', lutePose(lute), { color: C.wood, roughness: 0.5, textureDensity: 1.5, bone: 'lute' });
-    const strings = sdf.union(
-      ...[-0.0105, -0.0035, 0.0035, 0.0105].map((y) => sdf.capsule([-0.068, y, 0.0135], [0.282, y * 0.7, 0.0135], 0.0022)),
-    );
-    k.body('strings', lutePose(strings), { color: C.string, roughness: 0.4, detail: 0.002, bone: 'lute' });
-    const pegs = sdf.union(
-      ...[0.028, 0.062].flatMap((t) => {
-        const p = add([0.282, 0, 0], PEG_DIR, t);
-        return [-1, 1].map((s) => sdf.capsule(p, add(p, [0, 0.03 * s, 0]), 0.005).union(sdf.sphere(0.012).at(...add(p, [0, 0.035 * s, 0]))));
-      }),
-    );
-    k.body('pegs', lutePose(pegs), { color: C.gold, roughness: 0.32, metalness: 0.9, bone: 'lute' });
+    addPart(k, bardLute(), { pose: hostLutePose });
     // The note hides inside the lute body until a strum sends it out (bone `note`, scaled up in flight).
     const noteShape = sdf
       .union(

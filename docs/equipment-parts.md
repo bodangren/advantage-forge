@@ -38,7 +38,7 @@ keep their paths, names, and designs. A worn part becomes a new standalone asset
 | Class | Origin | Axes |
 | --- | --- | --- |
 | Head (helmets, hats, hoods) | the head center of the 1x hero base, (0, 0.675, 0) in the character frame | the character axes: +Y up, the face toward +Z |
-| Hand-held (weapons, wands, tools) | the grip center in the fist | the shaft along +Y, the business end up; the flat or the front toward +Z |
+| Hand-held (weapons, wands, tools) | the grip center in the fist | for new parts: the shaft along +Y, the business end up, the flat or the front toward +Z; an extracted part may keep the host's axes (see the recipe) |
 | Shield | the center of the outline on the back plane (the handle) | the face toward +Z, the top toward +Y |
 | Upright effect (a flame on a wand or a torch) | the center of the flame base | +Y up; the host keeps it upright |
 
@@ -60,13 +60,20 @@ transforms cancel. Paint functions and noise still see the original coordinates.
    - **Built in a local frame with a pose function** (`swordPose(bladeLocal)`, `bookPose(book)`):
      return the local shapes. The host keeps its pose function: `addPart(k, part, { pose: swordPose })`.
    - **Built in the character frame with no rotation** (a helm around the head): define
-     `MOUNT` (for example the head center) and return `s.at(-MOUNT)`. The host uses
-     `{ pose: (s) => s.at(...MOUNT) }`.
-   - **Built in the character frame along a tilted axis** (a wand made with `along(t)`): use
-     `holdPose(grip, axis)` from `assets/parts/mage-wand.ts`. Return `local(shape)`. The host uses
-     `holdPose(GRIP, AXIS).pose`.
-5. A body that must stay upright when the piece turns (a flame) is a second part with its own
-   origin. The host places it where it was.
+     `MOUNT` (for example the head center, rounded to 1/1024 m when it is not a short decimal) and
+     return `s.at(-MOUNT)`. The host uses `{ pose: (s) => s.at(...MOUNT) }`.
+   - **Built in the character frame along a tilted axis** (a wand or a hammer made with
+     `along(t)`): prefer a translation only. Round the grip to 1/1024 m
+     (`MOUNT = GRIP.map((v) => Math.round(v * 1024) / 1024)`), return `s.at(-MOUNT)`, and let the host
+     use `{ pose: (s) => s.at(...MOUNT) }`. A translation by a multiple of 1/1024 m is exact in
+     floating point, so the mesh stays the same. The part keeps the host's axes; the standalone
+     asset turns it upright with `holdPose(GRIP, AXIS).local` (from `assets/parts/mage-wand.ts`).
+     Example: `assets/parts/cleric-hammer.ts`. A rotation round trip (`holdPose` in the host, as on
+     the mage wand) can re-mesh the body: it passed on the wand (0.29%) and failed on the cleric
+     hammer (up to 2.8%).
+5. A body that must stay upright when the piece turns (a flame), or that a clip moves on its own
+   bone (the cleric's holy cross on `relic`), is a second part in the same module. The host places
+   it where it was; the standalone adds it too, so the item looks complete.
 6. A host body that mixes part shapes and other shapes (rivets and a belt buckle in one body)
    splits in two. The part gets a new body name `<part>-<name>` (for example `shield-studs`).
    Record the split in the track.

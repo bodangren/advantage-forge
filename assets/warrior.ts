@@ -1,4 +1,5 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { warriorSword } from './parts/warrior-sword.js';
 
 /**
  * Warrior — Chibi Quest P0 hero (catalog `heroes/martial/warrior`), about 1.0 m to the top of the
@@ -568,25 +569,8 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ the greatsword, rigid in the right hand
-    const bevelN = (sx: number, sz: number) => sdf.halfSpace(norm([0.14 * sx, 0, sz]), 0.008 / Math.hypot(0.14, 1));
-    const bladeShape = sdf
-      .extrude(bladeProfile, 0.03, 0.002)
-      .intersect(sdf.intersect(bevelN(1, 1), bevelN(-1, 1), bevelN(1, -1), bevelN(-1, -1)))
-      .paintWhere(sdf.box([0.02, 0.56, 0.2]).at(0, -0.36, 0), C.guard, 0.004);
-    k.body('blade', axePose(bladeShape), { color: C.blade, roughness: 0.5, metalness: 0.85, detail: 0.004, bone: 'hand.R' });
-    const guard = sdf.smoothUnion(
-      0.008,
-      sdf.capsule([-0.092, -0.08, 0], [0, -0.06, 0], 0.015),
-      sdf.capsule([0.092, -0.08, 0], [0, -0.06, 0], 0.015),
-      sdf.sphere(0.02).at(0, -0.062, 0),
-    );
-    const pommel = sdf.smoothUnion(0.006, sdf.sphere(0.028).at(0, 0.112, 0), sdf.cylinder(0.018, 0.02, 0.004).at(0, 0.092, 0));
-    k.body('sword-iron', axePose(sdf.union(guard, pommel)), { color: C.guard, roughness: 0.45, metalness: 0.8, detail: 0.004, bone: 'hand.R' });
-    const gripShape = sdf
-      .cylinder(0.0175, 0.16, 0.004)
-      .at(0, 0.015, 0)
-      .paintFn((x, y, z, base) => (Math.sin((x + y + z) * 320) > 0.5 ? mixRgb(base, rgb('#6a4a32'), 0.7) : base));
-    k.body('grip', axePose(gripShape), { color: C.grip, roughness: 0.75, detail: 0.004, bone: 'hand.R' });
+    const swordPose = (s: sdf.Shape) => s.rotateY(AXE_ROLL).rotateZ(AXE_Z).rotateX(AXE_X).at(...GRIP);
+    addPart(k, warriorSword(), { pose: swordPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, edgeUp, follow } = motion;

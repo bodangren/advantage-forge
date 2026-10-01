@@ -1,10 +1,16 @@
 # Equipment breakout brief (one character per agent)
 
 Track `asset_equipment_parts_20260930`. Contract and recipe: `docs/equipment-parts.md`. Read it
-first. Worked examples: `assets/parts/knight-helm.ts` (head, translation), `assets/parts/mage-wand.ts`
-(hand-held along a tilted axis, an upright flame as a second part), `assets/parts/mage-spellbook.ts`
-and `assets/parts/skeleton-knight-shield.ts` (local frame with a host pose function), and their
-hosts `assets/knight.ts`, `assets/mage.ts`, `assets/skeleton-knight.ts`.
+first. Worked examples: `assets/parts/knight-helm.ts` (head, translation),
+`assets/parts/cleric-hammer.ts` (hand-held along a tilted axis: a translation by a mount rounded to
+1/1024 m; use this before `holdPose`), `assets/parts/cleric-book.ts` (a second part on its own
+bone), `assets/parts/mage-wand.ts` (an upright flame as a second part),
+`assets/parts/mage-spellbook.ts` and `assets/parts/skeleton-knight-shield.ts` (local frame with a
+host pose function), and their hosts `assets/knight.ts`, `assets/cleric.ts`, `assets/mage.ts`,
+`assets/skeleton-knight.ts`.
+
+Each standalone shows the whole piece: if the host keeps an effect or a moving detail of the
+piece on its own bone (a cross, a flame, a gem), put it in the module as a second part.
 
 The orchestrator fills in, per agent:
 

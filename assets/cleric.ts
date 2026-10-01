@@ -1,4 +1,6 @@
-import { defineAsset, motion, noise, profile, rgb, Sdf, sdf } from '../src/index.js';
+import { addPart, defineAsset, motion, noise, profile, rgb, Sdf, sdf } from '../src/index.js';
+import { clericBook, clericBookCross } from './parts/cleric-book.js';
+import { clericHammer, MOUNT } from './parts/cleric-hammer.js';
 
 /**
  * Cleric — Chibi Quest hero (catalog `heroes/magic/cleric`), a dwarf battle-priest, about 0.97 m
@@ -547,86 +549,13 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.55 });
 
     // ------------------------------------------------------------------ the warhammer (right hand)
-    const haftAt = (t: number): V3 => add(GRIP, [HAFT_AXIS[0] * t, HAFT_AXIS[1] * t, HAFT_AXIS[2] * t]);
-    const haft = sdf
-      .capsule(haftAt(-HAFT_DOWN), haftAt(HAFT_UP), 0.018)
-      .paintFn((x, y, z, base) => (Math.sin(y * 150 + Math.atan2(z - GRIP[2], x - GRIP[0]) * 2) > 0.55 ? rgb(C.leatherDark) : base));
-    k.body('hammer-haft', haft, { color: C.haft, roughness: 0.75, bone: 'hand.R' });
-    // Head: a big octagonal block with a cross on the front and back, a beveled striking block on
-    // each end, riveted, a steel socket under it and a gold spike on top.
-    const headCenter = haftAt(HEAD_T);
-    const octo = (r: number, len: number, bevel: number) =>
-      sdf.intersect(sdf.box([len, r * 2, r * 2], bevel), sdf.box([len, r * 2, r * 2], bevel).rotateX(45));
-    const endBlock = (sx: number) =>
-      sdf.intersect(octo(0.086, 0.09, 0.008), sdf.box([0.09, 0.3, 0.3]).at(0, 0, 0)).at(sx * 0.13, 0, 0);
-    const hammerLocal = sdf.union(octo(0.095, 0.18, 0.008), endBlock(1), endBlock(-1));
-    const rivetsLocal = sdf.union(
-      ...[-1, 1].flatMap((sx) =>
-        [-1, 1].flatMap((sy) =>
-          [-1, 1].flatMap((sz) => [
-            sdf.sphere(0.009).at(sx * 0.13 + sx * 0.02, sy * 0.05, sz * 0.078),
-            sdf.sphere(0.009).at(sx * 0.064, sy * 0.064, sz * 0.09),
-          ]),
-        ),
-      ),
-    );
-    const socket = sdf.smoothUnion(
-      0.006,
-      sdf.cylinder(0.03, 0.07, 0.008).at(0, -0.12, 0),
-      sdf.cylinder(0.036, 0.018, 0.006).at(0, -0.094, 0),
-      sdf.cylinder(0.034, 0.014, 0.005).at(0, -0.148, 0),
-    );
-    const headPose = (s: sdf.Shape) => s.at(...headCenter);
-    k.body('hammer-head', headPose(sdf.union(hammerLocal, rivetsLocal, socket)), {
-      color: C.iron,
-      roughness: 0.5,
-      metalness: 0.75,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0015 * noise.fbm(x * 60, y * 60, z * 60, 3),
-    });
-    const faceCross = (z: number) => crossP(0.1, 0.13, 0.028).scale([1, 1, 0.04]).at(0, -0.008, z);
-    const spike = sdf.smoothUnion(
-      0.01,
-      sdf.cylinder(0.04, 0.02, 0.006).at(0, 0.1, 0),
-      sdf.cone([0, 0.1, 0], [0, 0.17, 0], 0.036, 0.004),
-    );
-    const pommel = sdf.smoothUnion(0.008, sdf.cylinder(0.026, 0.022, 0.005).at(...haftAt(-HAFT_DOWN + 0.012)), sdf.sphere(0.03).at(...haftAt(-HAFT_DOWN - 0.02)));
-    const gripRing = sdf.cylinder(0.023, 0.016, 0.004).at(...haftAt(-0.07));
-    k.body('hammer-gold', sdf.union(headPose(sdf.union(faceCross(0.094), faceCross(-0.094), spike)), pommel, gripRing), {
-      color: C.gold,
-      roughness: 0.3,
-      metalness: 0.9,
-      bone: 'hand.R',
-    });
+    addPart(k, clericHammer(), { pose: (s) => s.at(...MOUNT) });
 
     // ------------------------------------------------------------------ the holy book (left hand)
     const bookPose = (s: sdf.Shape) => s.rotateY(BOOK_TURN.y).rotateZ(BOOK_TURN.z).at(...BOOK_AT);
-    const coverShape = sdf.box([0.2, 0.26, 0.078], 0.012);
-    const pagesCut = sdf.box([0.21, 0.24, 0.056]).at(0.012, 0, 0);
-    const bookLocal = sdf
-      .union(coverShape.subtract(pagesCut), sdf.box([0.192, 0.24, 0.056], 0.004).at(0.004, 0, 0).paint(C.pages))
-      .paintFn((x, y, z, base) => (Math.abs(z) < 0.027 && x > 0.085 && Math.sin(y * 900) > 0.6 ? [base[0] * 0.85, base[1] * 0.85, base[2] * 0.85] : base));
-    k.body('book', bookPose(bookLocal), { color: C.cover, roughness: 0.7, bone: 'hand.L' });
-    const corner = (sx: number, sy: number) =>
-      sdf.box([0.036, 0.036, 0.082], 0.006).subtract(sdf.box([0.042, 0.042, 0.058]).at(-sx * 0.012, -sy * 0.012, 0)).at(sx * 0.09, sy * 0.12, 0);
-    const bookGold = sdf.union(
-      corner(1, 1),
-      corner(1, -1),
-      corner(-1, 1),
-      corner(-1, -1),
-      sdf.box([0.022, 0.25, 0.082], 0.006).at(-0.098, 0, 0), // spine band
-      sdf.box([0.13, 0.016, 0.006], 0.003).at(0.02, 0.1, 0.04), // two cover bands
-      sdf.box([0.13, 0.016, 0.006], 0.003).at(0.02, -0.1, 0.04),
-    );
-    k.body('book-gold', bookPose(bookGold), { color: C.gold, roughness: 0.3, metalness: 0.9, bone: 'hand.L' });
+    addPart(k, clericBook(), { pose: bookPose });
     // The cross on the cover glows a little; the blessing scales it up out of the book.
-    k.body('holy-cross', bookPose(crossP(0.09, 0.14, 0.026).scale([1, 1, 0.024]).at(0.005, 0.0, 0.04)).bone('relic'), {
-      color: C.gold,
-      roughness: 0.3,
-      metalness: 0.6,
-      emissive: C.holy,
-      emissiveIntensity: 0.45,
-    });
+    addPart(k, clericBookCross(), { pose: bookPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;

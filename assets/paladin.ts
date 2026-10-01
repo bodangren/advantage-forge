@@ -1,4 +1,6 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { paladinHammer } from './parts/paladin-hammer.js';
+import { paladinShield } from './parts/paladin-shield.js';
 
 /**
  * Paladin — Chibi Quest hero (catalog `heroes/martial/paladin`), about 0.95 m to the top of the
@@ -110,25 +112,6 @@ const HAND_R = { pitch: -70, roll: -30 };
 const HAND_L = { pitch: -62, roll: 26 };
 const handPose = (h: { pitch: number; roll: number }, w: V3) => (s: sdf.Shape) => s.rotateX(h.pitch).rotateZ(h.roll).at(...w);
 const handPoint = (h: { pitch: number; roll: number }, w: V3, p: V3) => add(rotZ(rotX(p, h.pitch), h.roll), w);
-
-const heater = profile.polygon(
-  [
-    [-0.12, 0.2],
-    [-0.126, 0.12],
-    [-0.12, 0.03],
-    [-0.098, -0.07],
-    [-0.06, -0.155],
-    [0, -0.24],
-    [0.06, -0.155],
-    [0.098, -0.07],
-    [0.12, 0.03],
-    [0.126, 0.12],
-    [0.12, 0.2],
-    [0.04, 0.214],
-    [-0.04, 0.214],
-  ],
-  { smooth: true, samples: 4 },
-);
 
 /** A sun: a star of long and short rays around a disc (radius `outer`), centered at the origin. */
 const sunProfile = (rays: number, outer: number, inner: number) =>
@@ -538,80 +521,16 @@ export default defineAsset({
       { color: C.gold, roughness: 0.3, metalness: 0.9 },
     );
 
-    // ------------------------------------------------------------------ war hammer in the right hand
-    // Local frame: the grip center at the origin, the haft along +Y (the head up). The head's axis
-    // lies across the haft, turned 45 degrees between +X and +Z, so both bells show from the front.
-    const HAFT_TOP = 0.32;
+    // ------------------------------------------------------------------ war hammer and shield (parts)
+    // Parts: `assets/parts/paladin-hammer.ts` and `paladin-shield.ts`. Local frames: grip center; shield handle plane.
     const HEAD_TURN = 45;
-    const headAxis = (s: sdf.Shape) => s.rotateX(90).rotateY(HEAD_TURN).at(0, HAFT_TOP, 0);
-    const bells = sdf.revolve(
-      profile.polygon(
-        [
-          [0, -0.126],
-          [0.068, -0.126],
-          [0.076, -0.115],
-          [0.066, -0.085],
-          [0.044, -0.04],
-          [0.038, 0],
-          [0.044, 0.04],
-          [0.066, 0.085],
-          [0.076, 0.115],
-          [0.068, 0.126],
-          [0, 0.126],
-        ],
-        { smooth: true, samples: 4 },
-      ),
-    );
-    const hammerHead = headAxis(bells);
-    const hammerGold = sdf.union(
-      headAxis(sdf.union(sdf.torus(0.068, 0.007).at(0, 0.095, 0), sdf.torus(0.068, 0.007).at(0, -0.095, 0))),
-      sdf.cylinder(0.022, 0.024, 0.005).at(0, HAFT_TOP - 0.046, 0),
-    );
-    const haft = sdf.smoothUnion(
-      0.012,
-      sdf.cylinder(0.0155, 0.4, 0.004).at(0, 0.11, 0),
-      sdf.sphere(0.025).at(0, -0.098, 0),
-      sdf.ellipsoid([0.023, 0.034, 0.023]).at(0, 0.225, 0),
-    );
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     // The haft leans out to the right and a little forward, so the head stands beside the cheek.
     const HAMMER_TILT = { x: 7, z: 22 };
     const hammerPose = (s: sdf.Shape) => s.rotateX(HAMMER_TILT.x).rotateZ(HAMMER_TILT.z).at(...GRIP);
-    k.body('hammer', hammerPose(hammerHead), { color: C.steel, roughness: 0.3, metalness: 0.9, detail: 0.004, bone: 'hand.R' });
-    k.body('hammer-gold', hammerPose(hammerGold), { color: C.gold, roughness: 0.3, metalness: 0.9, detail: 0.004, bone: 'hand.R' });
-    k.body('haft', hammerPose(haft), {
-      color: C.wood,
-      roughness: 0.7,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0008 * noise.noise3(x * 90, y * 12, z * 90),
-    });
-
-    // ------------------------------------------------------------------ heater shield on the left forearm
-    // Local frame: the face toward +Z, the point down. A steel back plate, a raised gold rim around
-    // a pearl-white field, and a raised gold sun. The top tips a little forward and the shield sits
-    // low on the forearm, so the top edge keeps clear of the left cheek.
+    addPart(k, paladinHammer(), { pose: hammerPose });
     const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(0.236, 0.28, 0.092);
-    const inner = profile.offsetProfile(heater, -0.022);
-    const handle = sdf.capsule([-0.03, 0.02, -0.02], [0.03, -0.01, -0.02], 0.012);
-    k.body('shield', shieldPose(sdf.union(sdf.extrude(heater, 0.024, 0.006), handle)), {
-      color: C.steel,
-      roughness: 0.4,
-      metalness: 0.8,
-      bone: 'forearm.L',
-    });
-    const face = sdf.extrude(profile.offsetProfile(heater, -0.018), 0.028, 0.005);
-    k.body('shield-face', shieldPose(face), { color: C.pearl, roughness: 0.35, metalness: 0.3, bone: 'forearm.L' });
-    const rim = sdf.extrude(heater, 0.036, 0.008).subtract(sdf.extrude(inner, 0.1));
-    const shieldSun = sdf
-      .union(sdf.extrude(sunProfile(8, 0.1, 0.034), 0.034, 0.003), sdf.extrude(profile.circle(0.032), 0.042, 0.008))
-      .at(0, 0.02, 0);
-    k.body('shield-gold', shieldPose(sdf.union(rim, shieldSun)), {
-      color: C.gold,
-      roughness: 0.3,
-      metalness: 0.9,
-      bone: 'forearm.L',
-    });
+    addPart(k, paladinShield(), { pose: shieldPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;
