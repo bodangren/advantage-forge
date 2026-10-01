@@ -4,9 +4,10 @@
  *
  * Role: a background landscape tile the player walks on; must read at 128 px and join its
  *   neighbours without seams. No rig, no clips.
- * Size: exactly 2 m x 2 m in plan, standing on y = 0. The top rises from 0.06 m at the +Z edge
- *   to 1.06 m at the -Z edge (front faces +Z, so the low toe is in front). Sides are flat and
- *   the edge heights are exact, so tiles placed at 2 m intervals line up.
+ * Size: exactly 2 m x 2 m in plan, a slab down to y = -0.3. The top rises from y = 0 at the +Z
+ *   edge to y = 1.0 at the -Z edge (front faces +Z, so the low toe is in front). Sides are flat
+ *   and the edge heights are exact, so tiles placed at 2 m intervals line up.
+ *   Sides: a grass lip with a wavy drip edge over warm soil strata that follow the slope.
  * One idea: a grassy bank peeled up out of the earth, with a few soft mossy hummocks and a
  *   handful of tiny stones and wildflowers. Exaggerate the grass cap over the brown soil.
  * Shape language: round and soft (friendly) on a square tile footprint (sturdy).
@@ -21,8 +22,10 @@
 import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js';
 
 const HALF = 1.0; // tile half width along X and Z (2 m tile)
-const LOW_Y = 0.06; // top height at the +Z (front) edge
-const HIGH_Y = 1.06; // top height at the -Z (back) edge
+const SLAB = 0.3; // soil under the walkable top: the body goes down to y = -0.3
+const EDGE = 0.001; // 1 mm of overlap so neighbours never show a gap
+const LOW_Y = 0; // top height at the +Z (front) edge
+const HIGH_Y = 1.0; // top height at the -Z (back) edge
 const SLOPE = (HIGH_Y - LOW_Y) / 2; // rise per metre along -Z
 const MID_Y = (LOW_Y + HIGH_Y) / 2; // top height at z = 0
 const TOP_N = Math.hypot(1, SLOPE);
@@ -70,7 +73,9 @@ function tileNoise(x: number, z: number, frequency: number, octaves: number, see
  * outer face is exactly on the tile boundary, so neighbours join flush.
  */
 function tileWedge() {
-  const box = sdf.box([HALF * 2, 1.2, HALF * 2]).at(0, 0.6, 0);
+  const top = MID_Y + 0.5; // box reaches above the highest point of the slope
+  const h = top + SLAB;
+  const box = sdf.box([HALF * 2 + 2 * EDGE, h + 2 * EDGE, HALF * 2 + 2 * EDGE]).at(0, (top - SLAB) / 2, 0);
   const plane = sdf.halfSpace([0, 1, SLOPE], MID_Y / TOP_N);
   return sdf.intersect(box, plane);
 }
@@ -88,24 +93,35 @@ const HUMPS: ReadonlyArray<readonly [number, number, number, number, number, num
 
 // ================================================================== painting
 
-/** Grass on top fading to bare soil down the sides, with a wavy, noisy soil line. */
-function groundPaint(x: number, y: number, z: number, base: Rgb): Rgb {
+const soilPebble = rgb('#9a8a78');
+const soilSide = rgb('#7a4a2a');
+const soilStrata = rgb('#57331d');
+
+/** Grass color of the top at (x, z). The side lip reuses it with y = 0. */
+function topColor(x: number, z: number): Rgb {
   const patch = tileNoise(x, z, 2.0, 3, 3); // large soft patches
   const fine = tileNoise(x, z, 7, 2, 7); // small speckle
   const t = clamp01(0.32 + patch * 0.75);
-  let grass = mixRgb(C.grassDark, C.grass, t);
-  grass = mixRgb(grass, C.grassLight, clamp01(fine) * 0.4);
+  const g = mixRgb(C.grassDark, C.grass, t);
+  return mixRgb(g, C.grassLight, clamp01(fine) * 0.4);
+}
 
-  // Depth below the sloped surface: 0 on the top, growing down the vertical faces.
-  const depth = topY(z) - y;
-  const line = 0.2 + 0.06 * tileNoise(x, z, 1.4, 2, 21);
-  const soilMask = sstep(line - 0.045, line + 0.045, depth);
-
-  let soil = mixRgb(C.soil, C.soilMid, clamp01(0.5 + fine * 0.5));
-  soil = mixRgb(soil, C.soilDark, sstep(0.4, 0.02, y)); // darker near the ground
-  soil = mixRgb(soil, C.soilDark, 0.3 * clamp01(tileNoise(x, z, 3, 2, 41))); // damp patches
-
-  return mixRgb(base, mixRgb(grass, soil, soilMask), 1); // fully override the base color
+/** Grass on top; on the four sides a grass lip over soil strata that follow the slope. */
+function groundPaint(x: number, y: number, z: number, _base: Rgb): Rgb {
+  const grass = topColor(x, z);
+  const onEdge = Math.abs(x) > 0.985 || Math.abs(z) > 0.985;
+  const depth = topY(z) - y; // depth below the sloped surface
+  if (!onEdge || depth < 0.012) return grass;
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.055 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (depth < drip) return mixRgb(grass, C.grassDark, 0.15 + 0.3 * (depth / drip));
+  const low = clamp01((y + SLAB) / (topY(z) + SLAB)); // 0 at the bottom
+  let c = mixRgb(soilSide, soilStrata, 0.15 + (1 - low) * 0.45);
+  const strata = Math.sin((depth + 0.02 * Math.sin(along * Math.PI * 2)) * 50);
+  c = mixRgb(c, soilStrata, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, soilPebble, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
 }
 
 // ================================================================== stones and flowers
@@ -153,7 +169,7 @@ const FLOWERS: ReadonlyArray<readonly [number, number, number, Rgb]> = [
 export default defineAsset({
   name: 'hill-slope',
   description:
-    'A 2 m square modular grass slope tile rising from 0.06 m at the front to 1.06 m at the back, with soft mossy hummocks, small stones, and wildflowers.',
+    'A 2 m square modular grass slope tile, a 0.3 m slab: the top rises from y = 0 at the front to y = 1.0 at the back, with hummocks, stones, and wildflowers. Sides show a grass lip over soil strata.',
   detail: 0.03,
   texture: { size: 1024 },
   reference: 'docs/item-mockups/hill-slope-mock.jpg',

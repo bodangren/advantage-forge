@@ -249,7 +249,7 @@ function ground(): Place[] {
     const [x, z] = k.split(':').map(Number) as [number, number];
     places.push(prop(cell.asset, x!, z!, cell.yaw));
   }
-  places.push(prop('bridge', 0, RIVER_Z, 90, 0.09));
+  places.push(prop('bridge', 0, RIVER_Z, 90, 0.01)); // 1 cm above the river banks at y = 0
   return places;
 }
 

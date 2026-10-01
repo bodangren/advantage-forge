@@ -23,7 +23,7 @@ export function tavernInteriorPlaces(): Place[] {
   };
 
   // Floor and walls.
-  for (const x of [-5, -3, -1, 1, 3, 5]) for (const z of [-3, -1, 1, 3]) put('wood-floor', x, z, 0, -0.08); // tile top at y = 0
+  for (const x of [-5, -3, -1, 1, 3, 5]) for (const z of [-3, -1, 1, 3]) put('wood-floor', x, z); // tile top at y = 0 (a 0.3 m slab)
   for (const x of [-5, -3, -1, 1, 3, 5]) put(x === -1 || x === 1 ? 'plaster-wall-window' : 'plaster-wall', x, -4);
   for (const z of [-3, -1, 1, 3]) put(z === 1 ? 'plaster-wall-door' : 'plaster-wall', -6, z, 90);
 

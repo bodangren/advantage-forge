@@ -3,7 +3,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 // footpath-corner — modular 2 m forest tile: a narrow dirt footpath bending 90 degrees.
 //
 // Role: forest map tile that joins two footpath-straight tiles; read top-down and at 128 px.
-// Size: exactly 2 x 2 m, 0.08 m thick, grass top at y = 0.08, standing on y = 0. The path is
+// Size: exactly 2 x 2 m, 0.08 m thick, grass top at y = 0 (0.3 m slab), standing on y = 0. The path is
 // paint on one flat slab (same convention as dirt-road-straight), so the height at every tile
 // edge matches a straight footpath tile and the two sit side by side without a seam.
 // One idea: a narrow trodden tan path that sweeps one smooth quarter circle around the inside
@@ -17,8 +17,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 // No rig, no animation.
 
 const TILE = 2; // grid size in meters
-const THICK = 0.08; // tile thickness, top surface at y = 0.08
-const TOP = THICK;
+const TOP = 0; // walkable top at y = 0 (the slab goes down to y = -0.3)
 const AXIS_X = 1; // inside corner of the bend (grass wedge sits here)
 const AXIS_Z = -1;
 const PATH_HALF = 0.5; // the footpath is about 1 m wide
@@ -36,6 +35,27 @@ const DIRT_LIGHT = rgb('#ddc18d'); // dusty grain and worn rim
 const DIRT_TRACK = rgb('#b28e52'); // faint foot-worn centerline
 const STONE = rgb('#8a94a0'); // cool gray pebbles
 const STONE_DARK = rgb('#6f7883');
+
+
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE_OVERLAP = 0.001; // 1 mm of overlap so neighbours never show a gap
+const SOIL = rgb('#7a4a2a'); // side soil
+const SOIL_DARK = rgb('#57331d'); // soil strata and the lower side
+const PEBBLE_SIDE = rgb('#9a8a78'); // small stones in the soil
+
+/** Side color: the top paint as a lip with a wavy drip edge, over soil strata. */
+const sideColorAt = (x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) => {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return top(x, z);
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE_SIDE, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+};
 
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 const smoothstep = (a: number, b: number, t: number) => {
@@ -117,21 +137,24 @@ const LEAF_COLORS = [LEAF_PALE, LEAF_BROWN, LEAF_DEEP] as const;
 export default defineAsset({
   name: 'footpath-corner',
   description:
-    'Modular 2 m forest tile: a narrow tan footpath bending 90 degrees from the north edge to the east edge (bend axis at the NE tile corner).',
+    'Modular 2 m forest tile, a 0.3 m slab with the top at y = 0; sides show a top-paint lip over warm layered soil. Top: a narrow tan footpath bending 90 degrees from the north edge to the east edge (bend axis at the NE tile corner).',
   detail: 0.02,
   texture: { size: 1024 },
 
   build(k) {
-    // One slab carries grass AND path: the top is a single flat surface at y = 0.08, so the
+    // One slab carries grass AND path: the top is a single flat surface at y = 0 (0.3 m slab), so the
     // path can never sit raised and the tile edges always match a straight footpath tile.
     const terrain = sdf
-      .box([TILE, THICK, TILE])
-      .at(0, THICK / 2, 0)
-      .paintFn((x, _y, z) => mixRgb(grassColor(x, z), dirtColor(x, z), pathMask(x, z)));
+      .box([TILE + 2 * EDGE_OVERLAP, SLAB + 2 * EDGE_OVERLAP, TILE + 2 * EDGE_OVERLAP])
+      .at(0, -SLAB / 2, 0)
+      .paintFn((x, y, z) => {
+        const top = (tx: number, tz: number) => mixRgb(grassColor(tx, tz), dirtColor(tx, tz), pathMask(tx, tz));
+        return y > -0.01 ? top(x, z) : sideColorAt(x, y, z, top);
+      });
     k.body('terrain', terrain, {
       color: GRASS,
       roughness: 0.95,
-      detail: 0.02,
+      detail: 0.03,
       // Packed-earth grain in the path, finer grass nap on the shoulders — normal-map only.
       bump: (x, y, z) => {
         const m = pathMask(x, z);

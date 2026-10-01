@@ -1,11 +1,11 @@
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Dirt floor tile (architecture/building-parts/dirt-floor) for the Sunken Vault.
+ * Dirt floor tile, a 0.3 m slab (top at y = 0, packed soil to y = -0.3) (architecture/building-parts/dirt-floor) for the Sunken Vault.
  *
  * - Role: modular 2 x 2 m floor tile — a warm packed-earth patch between the cool stone
  *   tiles of the dungeon. Read from a 3/4 top-down camera and at 128 px.
- * - Size: 2 m square, 0.05 m thick, top at y = 0.05, bottom on y = 0. Edges stay exactly at
+ * - Size: 2 m square, 0.3 m slab, top at y = 0, bottom at y = -0.3. Edges stay exactly at
  *   x = ±1, z = ±1 so tiles butt together without gaps.
  * - One idea: soft-lumped warm earth scattered with big readable pebbles and pale straw
  *   bits (from the mockup) — a warm accent in a cool gray dungeon.
@@ -19,7 +19,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * - No rig, no animation.
  */
 
-const TOP = 0.05; // slab top surface height in meters
+const TOP = 0.05; // old design top height; the design is shifted down by TOP so the walkable top is y = 0
 const LUMP = 0.01; // subtle hand-made noise on top of the big mounds
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
@@ -67,7 +67,7 @@ const lumpN = (x: number, y: number, z: number) => {
 };
 
 /** Height of the finished dirt top at (x, z) — used to seat pebbles and straw. */
-const topAt = (x: number, z: number) => moundTop(x, z) + LUMP * lumpN(x, TOP, z);
+const topAt = (x: number, z: number) => moundTop(x, z) + LUMP * lumpN(x, TOP, z) - TOP;
 
 // Palette: warm brown earth straight from the brief, shadows toward deeper brown.
 const DIRT = rgb('#7a5a3a');
@@ -140,10 +140,34 @@ const STRAWS: Array<[number, number, number, number, number]> = [
   [-0.14, 0.54, 138, -8, 1.15],
 ];
 
+const SLAB = 0.3;
+const EDGE = 0.001;
+const SOIL = rgb('#6a4428');
+const STRATA = rgb('#4a2e1a');
+const SPECK = rgb('#9a8a78');
+/** Side color: a lip of the top color with a wavy edge, then packed soil with strata and pebbles. */
+function sideColor(x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return top(x, z);
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, STRATA, 0.1 + depth * 0.6);
+  // Broken strata and soft clumps, so the side reads as earth and not as planks.
+  const strata = Math.sin((y + 0.03 * noise.fbm(along * 3, y * 3, 5.3, 2)) * 45);
+  const breakUp = Math.max(0, Math.min(1, 0.5 + noise.fbm(along * 4, y * 12, 7.1, 2)));
+  c = mixRgb(c, STRATA, Math.max(0, strata - 0.7) * 0.9 * breakUp);
+  const clump = noise.fbm(along * 14, y * 14, 11.7, 2);
+  c = mixRgb(c, clump > 0 ? STRATA : SPECK, Math.min(1, Math.abs(clump)) * 0.3);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, SPECK, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+}
+
+
 export default defineAsset({
   name: 'dirt-floor',
   description:
-    'A 2 m square packed-dirt floor tile, 0.05 m thick: warm brown earth with soft lumps, pebbles and straw bits.',
+    'A 2 m square packed-dirt floor tile, a 0.3 m slab with its top at y = 0: warm brown earth with soft lumps, pebbles and straw bits.',
   detail: 0.012,
   reference: 'docs/item-mockups/dirt-floor-mock.jpg',
   texture: { size: 1024 },
@@ -156,14 +180,19 @@ export default defineAsset({
         sdf.ellipsoid([rx, ry, rx * 0.92]).at(mx, TOP - ry * 0.35, mz),
       ),
     );
-    const slab = sdf.box([2, TOP, 2], 0.012)
+    const top = sdf.box([2, TOP, 2], 0.012)
       .at(0, TOP / 2, 0)
       .smoothUnion(MOUND_K, moundShape)
       .displace(LUMP, lumpN, 1.6)
       // Trim flush: flat on the ground (mound undersides poke out) and exactly 2 x 2 m.
       .intersect(sdf.halfSpace([0, -1, 0], 0))
       .intersect(sdf.box([2, 0.3, 2]).at(0, 0.15, 0))
-      .paintFn((x, y, z) => dirtColor(x, y, z, moundShape.dist(x, TOP, z)));
+      .at(0, -TOP, 0);
+    const base = sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0);
+    const topColor = (x: number, z: number) => dirtColor(x, TOP, z, moundShape.dist(x, TOP, z));
+    const slab = sdf.union(top, base).paintFn((x, y, z) =>
+      y > -0.01 ? dirtColor(x, y + TOP, z, moundShape.dist(x, TOP, z)) : sideColor(x, y, z, topColor),
+    );
 
     k.body('dirt', slab, {
       color: '#7a5a3a',
@@ -171,11 +200,11 @@ export default defineAsset({
       metalness: 0,
       detail: 0.012,
       maxError: 0.0022,
-      maxTriangles: 1900,
+      maxTriangles: 7000,
       paintWeight: 2,
       // Packed-earth grain, normal-map only so the mesh stays light.
       bump: (x, y, z) =>
-        0.0022 * noise.fbm(x * 11, y * 3, z * 11, 3) + 0.0012 * noise.fbm(x * 30, 0, z * 30, 2),
+        y < -0.01 ? 0 : 0.0022 * noise.fbm(x * 11, y * 3, z * 11, 3) + 0.0012 * noise.fbm(x * 30, 0, z * 30, 2),
     });
 
     // Pebbles: egg-smooth flattened stones sunk about half their height into the dirt,

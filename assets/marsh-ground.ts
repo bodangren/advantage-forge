@@ -4,7 +4,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  * marsh-ground — a 2 x 2 m modular marsh tile (architecture/landscape-parts/marsh-ground).
  *
  * Role: background ground tile that butts against neighbour tiles; read top-down and at 128 px.
- * Size: 2 x 2 m, 0.06 m thick, top at y = 0.06, edges at x = +-1 and z = +-1, on y = 0, faces +Z.
+ * Size: 2 x 2 m, 0.3 m slab, top at y = 0, bottom at y = -0.3, edges at x = +-1 and z = +-1, on y = 0, faces +Z.
  * The one idea: dark wet mud holding two still, sky-blue pools; tall green reed tufts break the
  *   flat silhouette and the pools are the bright focal point.
  * Shape language: square modular slab (reliable) plus round pools and soft blade tufts (friendly).
@@ -21,8 +21,13 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  */
 
 const TILE = 2.0; // tile footprint (m)
-const TOP = 0.06; // slab thickness / mud surface height
-const WATER_Y = 0.047; // water surface, 1.3 cm below the mud
+const TOP = 0; // mud surface height: the walkable top is at y = 0
+const SLAB = 0.3; // tile depth: bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap
+const WATER_Y = -0.02; // water surface, 2 cm below the mud
+const CLAY = rgb('#5a6068'); // blue-gray clay stratum
+const WET_MUD = rgb('#3a2e22'); // dark wet mud under the lip
+const ROOT = rgb('#5a4630'); // root threads
 
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
 const smoothstep = (a: number, b: number, v: number): number => {
@@ -101,7 +106,7 @@ function poolRimWeight(x: number, z: number): number {
 
 // ------------------------------------------------------------------ mud paint
 function mudColorAt(x: number, y: number, z: number): Rgb {
-  const topness = clamp01((y - 0.028) / 0.028); // full detail on top, less on the slab sides
+  const topness = clamp01((y + 0.032) / 0.028); // full detail on top, less below
 
   const big = tileNoise(x, z, 1.7, 3, 3); // large wet / dry patches
   const mid = tileNoise(x, z, 5.0, 2, 19); // medium clumps
@@ -119,9 +124,25 @@ function mudColorAt(x: number, y: number, z: number): Rgb {
   c = mixRgb(c, MUD_DRY, clamp01((Math.abs(grit) - 0.35) * 5) * 0.2 * topness);
 
   // Sides and bottom sit in shadow so the slab reads as one solid mass.
-  if (topness < 1) c = mixRgb(c, MUD_DARK, (1 - topness) * 0.55);
   return c;
 }
+
+/** Side color: a moss lip (the top paint at y = 0) over dark wet mud, a clay stratum, root threads. */
+function sideColorAt(x: number, y: number, z: number): Rgb {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(mudColorAt(x, 0, z), MOSS_DARK, 0.35);
+  const depth = -y / SLAB;
+  let c = mixRgb(WET_MUD, MUD_DARK, 0.1 + depth * 0.6);
+  const band = Math.sin((y + 0.015 * Math.sin(along * Math.PI * 2)) * 60 + 1.0);
+  c = mixRgb(c, CLAY, Math.max(0, band - 0.75) * 3 * 0.7 * (y < -0.1 && y > -0.22 ? 1 : 0));
+  const n = noise.fbm(along * 12, y * 30, 3.7, 2);
+  if (n > 0.3) c = mixRgb(c, ROOT, Math.min(1, (n - 0.3) * 5) * 0.7 * (y > -0.15 ? 1 : 0.3));
+  return c;
+}
+
+const topOrSide = (x: number, y: number, z: number): Rgb =>
+  y > -0.01 ? mudColorAt(x, y, z) : sideColorAt(x, y, z);
 
 // ------------------------------------------------------------------ water paint
 function waterColorAt(x: number, y: number, z: number): Rgb {
@@ -244,7 +265,7 @@ function pebbleColorAt(x: number, y: number, z: number, base: Rgb): Rgb {
 export default defineAsset({
   name: 'marsh-ground',
   description:
-    'A 2 m square modular marsh tile: dark wet mud with two still sky-blue pools, green reed tufts, moss patches and a few pebbles.',
+    'A 2 m square modular marsh tile, a 0.3 m slab with its top at y = 0 (moss lip over wet mud and clay on the sides): dark wet mud with two still sky-blue pools, green reed tufts, moss patches and a few pebbles.',
   detail: 0.012,
   reference: 'docs/item-mockups/marsh-ground-mock.jpg',
   texture: { size: 1024 },
@@ -254,21 +275,21 @@ export default defineAsset({
     // neighbouring tiles meet with no shaded gap. Gentle wet-mud relief fades to zero at the
     // tile edges, so repeated tiles stay flush and seamless.
     const mudRelief = (x: number, y: number, z: number): number => {
-      const top = clamp01((y - 0.03) / 0.03);
+      const top = clamp01((y + 0.03) / 0.03);
       const edge =
         Math.min(smoothstep(0, 0.14, 1 - Math.abs(x)), smoothstep(0, 0.14, 1 - Math.abs(z)));
       return top * edge * tileNoise(x, z, 6, 3, 61);
     };
     const mud = sdf
-      .box([TILE, TOP, TILE], 0.006)
-      .at(0, TOP / 2, 0)
+      .box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE])
+      .at(0, -SLAB / 2, 0)
       .displace(0.009, mudRelief, 0.6)
-      .intersect(sdf.box([TILE, TOP, TILE]).at(0, TOP / 2, 0))
+      .intersect(sdf.box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE]).at(0, -SLAB / 2, 0))
       .smoothSubtract(
         0.01,
         ...POOLS.map((p) => sdf.ellipsoid([p.rx, p.depth, p.rz]).at(p.cx, TOP, p.cz)),
       )
-      .paintFn(mudColorAt);
+      .paintFn(topOrSide);
 
     k.body('mud', mud, {
       color: MUD,
@@ -276,9 +297,9 @@ export default defineAsset({
       metalness: 0,
       detail: 0.012,
       textureDensity: 2,
-      maxTriangles: 1600,
+      maxTriangles: 7000,
       maxError: 0.0025,
-      bump: (x, y, z) => 0.0016 * noise.fbm(x * 22, y * 22, z * 22, 2, 71),
+      bump: (x, y, z) => y < -0.01 ? 0 : 0.0016 * noise.fbm(x * 22, y * 22, z * 22, 2, 71),
     });
 
     // Water: flat elliptical discs sunk into the carved pools, wide enough to tuck under the mud
@@ -293,7 +314,7 @@ export default defineAsset({
     );
     k.body('water', water.paintFn(waterColorAt), {
       color: WATER_MID,
-      roughness: 0.1,
+      roughness: 0.55, // matte enough that the sprite light never turns the pools white
       metalness: 0,
       detail: 0.016,
       paintWeight: 2,

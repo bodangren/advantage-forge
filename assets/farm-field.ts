@@ -1,177 +1,173 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Farm field plot for a cozy chibi hamlet. A 4 m x 3 m rectangle of dark tilled soil framed by a
- * low chunky wooden border, with neat rows of small green sprout dots across the top. Stands on
- * y = 0 with the soil surface at y = 0.1. The frame peeks a little above the soil so it reads as
- * a planter bed from any angle.
- *
- * Design:
- *  - Role: background prop for a cozy hamlet scene; reads clearly at 128 px.
- *  - The one idea: tidy framed patch of dark earth with bright green rows.
- *  - Shape language: rounded chunky (Chibi Quest: soft bevels, no razor edges).
- *  - Palette: dark brown soil, warm wood beam, fresh green sprouts (60/30/10).
- *  - Materials: rough tilled soil, rough warm wood, matte leaf green.
- *  - No rig, no animation.
+ * Farm field plot for the hamlet kit. Overlay on grass tiles: stands on y = 0, 4.28 x 0.23 x 3.28 m.
+ * Role: P1 game prop, seen from above by the sprite camera, so the top is the main face.
+ * The one idea: a chunky wooden bed holding 7 tidy ridges, each with a row of 9 green cabbage rosettes.
+ * Shape language: square and sturdy frame, round soft ridges and rosettes.
+ * Palette (60/30/10): tilled soil #5d3d23 with furrows #452c19 and light flecks; warm wood #8a5a32
+ * with dark end grain and corner posts; accent = fresh green #6fb04a with light centers #a8d76c.
+ * Materials: soil (matte), ridges (matte), frame (wood), crops (leaf). Grain and crumbs in bump.
+ * No rig, no animation. Budget: 12,000 triangles.
  */
 
-const SOIL_W = 4.0;
-const SOIL_D = 3.0;
-const SOIL_H = 0.1;
+const W = 4.0;
+const D = 3.0;
+const FW = 0.14; // beam thickness
+const FH = 0.19; // beam height
+const PH = 0.23; // post height
+const SOIL_TOP = 0.06;
+const RIDGES = 7;
+const RZ = 0.4; // ridge spacing
+const COLS = 9;
 
-const FRAME_W = 0.14; // beam thickness
-const FRAME_H = 0.18; // beam height (sticks above soil)
+const soil = rgb('#5d3d23');
+const soilDark = rgb('#452c19');
+const soilLight = rgb('#8a6840');
+const wood = rgb('#8a5a32');
+const woodDark = rgb('#5a3819');
+const leaf = rgb('#6fb04a');
+const leafLight = rgb('#a8d76c');
+const leafDark = rgb('#4e8a34');
 
-const soil = rgb('#5a3a25');
-const soilDark = rgb('#3a2415');
-const soilLight = rgb('#7a5236');
-
-const wood = rgb('#b08358');
-const woodDark = rgb('#7a4f2c');
-const woodLight = rgb('#d6a578');
-
-const leaf = rgb('#6fa84a');
-const leafDark = rgb('#3f6a25');
-const leafLight = rgb('#a8d65a');
-
-// Soil bump: low-frequency lumps (clods) plus fine grain.
-const soilBump = (x: number, y: number, z: number) =>
-  0.55 * noise.fbm(x * 5, y * 5, z * 5, 3, 11) + 0.45 * noise.noise3(x * 22, y * 22, z * 22, 3);
-
-// Wood grain: streaks along the long axis of each beam.
-const woodGrain = (axis: 'x' | 'z') => (x: number, y: number, z: number) => {
-  const along = axis === 'x' ? z : x; // grain runs across the beam
-  return noise.fbm(along * 22, y * 4, (axis === 'x' ? x : z) * 3, 3, 7);
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const ridgeZ = (i: number) => (i - (RIDGES - 1) / 2) * RZ;
+const nearRidge = (z: number) => {
+  let d = 9;
+  for (let i = 0; i < RIDGES; i++) d = Math.min(d, Math.abs(z - ridgeZ(i)));
+  return d;
 };
 
 export default defineAsset({
   name: 'farm-field',
-  description: 'A 4m x 3m framed farm field of tilled soil with sprout rows, for cozy chibi hamlets.',
-  detail: 0.012,
+  description: 'A 4 m x 3 m framed farm field: wooden border with corner posts, tilled soil with seven ridges, rows of cabbage rosettes.',
+  detail: 0.01,
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------ soil slab
-    // Furrow stripes along the sprout rows (X-axis strips darker than the gaps). The stripes
-    // match the sprout row positions, so the tilled look lines up with what is planted.
-    const ROW_STRIPES = 4;
-    const STRIPE_W = 0.18;
-    const furrowZ = (z: number) => {
-      const half = SOIL_D / 2 - 0.32;
-      const step = (half * 2) / (ROW_STRIPES - 1);
-      const idx = Math.round((z + half) / step);
-      const cz = -half + idx * step;
-      return Math.abs(z - cz) < STRIPE_W ? 1 - Math.abs(z - cz) / STRIPE_W : 0;
-    };
-    const soilShape = sdf
-      .box([SOIL_W, SOIL_H, SOIL_D], 0.025)
-      .at(0, SOIL_H / 2, 0)
-      .displace(0.01, soilBump)
+    // soil bed
+    const bed = sdf
+      .box([W + 0.02, SOIL_TOP, D + 0.02], 0.01)
+      .at(0, SOIL_TOP / 2, 0)
       .paintFn((x, y, z) => {
-        const clod = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 3, 1);
-        const micro = 0.5 + 0.5 * noise.noise3(x * 28, y * 28, z * 28, 5);
-        const t = clod * 0.55 + micro * 0.45;
-        // Base mid-brown, with dark clods and brighter highlights.
-        const base = mixRgb(soil, soilDark, 0.3 + 0.55 * t);
-        const hi = mixRgb(base, soilLight, Math.max(0, t - 0.55) * 0.7);
-        // Darker furrows under the sprout rows.
-        return mixRgb(hi, soilDark, furrowZ(z) * 0.45);
+        const f = noise.fbm(x * 4, 1.3, z * 4, 2);
+        let c = mixRgb(soil, soilDark, 0.35 + 0.3 * f);
+        const fleck = noise.noise3(x * 30, 2.1, z * 30);
+        if (fleck > 0.6) c = mixRgb(c, soilLight, 0.7);
+        return mixRgb(c, soilDark, 0.4 * clamp01(1 - nearRidge(z) / 0.2));
       });
-    k.body('soil', soilShape, {
-      color: '#5a3a25',
+    k.body('soil', bed, {
+      color: '#452c19',
       roughness: 0.95,
-      bump: soilBump,
-      maxError: 0.004,
+      detail: 0.02,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 20, y * 20, z * 20, 2),
     });
 
-    // ------------------------------------------------ wooden border frame
-    const beamLongLen = SOIL_W + FRAME_W * 2;
-    const beamShortLen = SOIL_D + FRAME_W * 2;
-    const beamZ = SOIL_D / 2 + FRAME_W / 2;
-    const beamX = SOIL_W / 2 + FRAME_W / 2;
+    // ridges
+    const rows = [];
+    for (let i = 0; i < RIDGES; i++) rows.push(sdf.ellipsoid([1.92, 0.04, 0.14]).at(0, SOIL_TOP, ridgeZ(i)));
+    const ridges = sdf
+      .union(...rows)
+      .intersect(sdf.box([W, 0.3, D]).at(0, 0.15, 0))
+      .paintFn((x, y, z) => {
+        const crest = clamp01((y - SOIL_TOP) / 0.04);
+        const n = noise.noise3(x * 26, y * 26, z * 26);
+        let c = mixRgb(soilDark, soil, 0.4 + 0.6 * crest);
+        if (n > 0.55) c = mixRgb(c, soilLight, 0.6);
+        return c;
+      });
+    k.body('ridges', ridges, {
+      color: '#5d3d23',
+      roughness: 0.95,
+      detail: 0.012,
+      maxTriangles: 2000,
+      bump: (x, y, z) => 0.005 * noise.fbm(x * 22, y * 22, z * 22, 2),
+    });
 
-    // Brighter top edge highlight (where the sun catches the beam crown) plus the body variation.
-    const woodPaintX = (x: number, y: number, z: number) => {
-      const grain = 0.5 + 0.5 * woodGrain('x')(x, y, z);
-      const knot = noise.fbm(x * 3, y * 3, z * 3, 2, 9);
-      const t = 0.25 + 0.4 * grain + 0.25 * Math.max(0, knot - 0.45);
-      const base = mixRgb(wood, woodDark, Math.min(0.75, t));
-      const topHi = Math.max(0, (y - FRAME_H * 0.35) / (FRAME_H * 0.65));
-      return mixRgb(base, woodLight, topHi * 0.4);
+    // wooden frame
+    const grain = (x: number, y: number, z: number) => {
+      const g = noise.fbm(x * 3, y * 30, z * 30, 2);
+      return mixRgb(wood, woodDark, clamp01(0.3 + 0.5 * g));
     };
-    const woodPaintZ = (x: number, y: number, z: number) => {
-      const grain = 0.5 + 0.5 * woodGrain('z')(x, y, z);
-      const knot = noise.fbm(x * 3, y * 3, z * 3, 2, 13);
-      const t = 0.25 + 0.4 * grain + 0.25 * Math.max(0, knot - 0.45);
-      const base = mixRgb(wood, woodDark, Math.min(0.75, t));
-      const topHi = Math.max(0, (y - FRAME_H * 0.35) / (FRAME_H * 0.65));
-      return mixRgb(base, woodLight, topHi * 0.4);
+    const grainZ = (x: number, y: number, z: number) => {
+      const g = noise.fbm(x * 30, y * 30, z * 3, 2);
+      return mixRgb(wood, woodDark, clamp01(0.3 + 0.5 * g));
     };
-
-    const frontBeam = sdf
-      .box([beamLongLen, FRAME_H, FRAME_W], 0.018)
-      .at(0, FRAME_H / 2, beamZ)
-      .paintFn(woodPaintX);
-    const backBeam = sdf
-      .box([beamLongLen, FRAME_H, FRAME_W], 0.018)
-      .at(0, FRAME_H / 2, -beamZ)
-      .paintFn(woodPaintX);
-    const rightBeam = sdf
-      .box([FRAME_W, FRAME_H, beamShortLen], 0.018)
-      .at(beamX, FRAME_H / 2, 0)
-      .paintFn(woodPaintZ);
-    const leftBeam = sdf
-      .box([FRAME_W, FRAME_H, beamShortLen], 0.018)
-      .at(-beamX, FRAME_H / 2, 0)
-      .paintFn(woodPaintZ);
-
-    const frame = sdf.union(frontBeam, backBeam, rightBeam, leftBeam);
-    k.body('frame', frame, { color: '#b08358', roughness: 0.85, maxError: 0.004 });
-
-    // ------------------------------------------------ sprout rows
-    // Four short rows along the long axis, with six sprouts per row, alternate rows offset
-    // like a hand-sown plot. Tiny ellipsoids rest on the soil surface (top at y = 0.1).
-    const NUM_ROWS = 4;
-    const NUM_COLS = 6;
-    const marginX = 0.32;
-    const marginZ = 0.32;
-    const innerW = SOIL_W - marginX * 2;
-    const innerD = SOIL_D - marginZ * 2;
-
-    const sproutBump = (x: number, y: number, z: number) =>
-      0.5 * noise.noise3(x * 14, y * 14, z * 14, 17) + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2, 19);
-
-    const sprouts: ReturnType<typeof sdf.ellipsoid>[] = [];
-    for (let row = 0; row < NUM_ROWS; row++) {
-      const z = -innerD / 2 + (row / (NUM_ROWS - 1)) * innerD;
-      const offset = row % 2 === 1 ? innerW / (NUM_COLS * 2) : 0;
-      for (let col = 0; col < NUM_COLS; col++) {
-        const x = -innerW / 2 + offset + (col / (NUM_COLS - 1)) * (innerW - offset * 2);
-        if (Math.abs(x) > innerW / 2 - 0.05) continue;
-        const jx = (noise.random(col, row, 1) - 0.5) * 0.04;
-        const jz = (noise.random(col, row, 2) - 0.5) * 0.04;
-        // Slight height variation for a hand-planted look.
-        const h = 0.055 + noise.random(col, row, 3) * 0.025;
-        sprouts.push(
+    const LX = W + FW * 2;
+    const LZ = D + FW * 2;
+    const bz = D / 2 + FW / 2;
+    const bx = W / 2 + FW / 2;
+    const beams = sdf.union(
+      sdf.box([LX - 0.2, FH, FW], 0.025).at(0, FH / 2, bz).paintFn(grain),
+      sdf.box([LX - 0.2, FH, FW], 0.025).at(0, FH / 2, -bz).paintFn(grain),
+      sdf.box([FW, FH, LZ - 0.2], 0.025).at(bx, FH / 2, 0).paintFn(grainZ),
+      sdf.box([FW, FH, LZ - 0.2], 0.025).at(-bx, FH / 2, 0).paintFn(grainZ),
+    );
+    k.body('frame', beams, {
+      color: '#8a5a32',
+      roughness: 0.85,
+      detail: 0.02,
+      maxTriangles: 2600,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 8, y * 40, z * 40, 2) + 0.003 * noise.fbm(x * 40, y * 40, z * 8, 2),
+    });
+    const px = LX / 2 - 0.09;
+    const pz = LZ / 2 - 0.09;
+    const posts = [];
+    for (const sx of [-1, 1])
+      for (const sz of [-1, 1])
+        posts.push(
           sdf
-            .ellipsoid([0.075, h, 0.075])
-            .at(x + jx, SOIL_H + h * 0.55, z + jz)
-            .paintFn((px, py, pz) => {
-              const t = 0.5 + 0.5 * noise.fbm(px * 6, py * 6, pz * 6, 2, col * 7 + row * 13);
-              const tip = Math.max(0, py - (SOIL_H + h * 0.3)) * 6; // brighter at top
-              const base = mixRgb(leaf, leafDark, 0.2 + 0.55 * t);
-              return mixRgb(base, leafLight, Math.min(0.7, tip * (0.4 + 0.6 * t)));
-            })
-            .displace(0.006, sproutBump),
+            .box([0.18, PH, 0.18], 0.03)
+            .at(sx * px, PH / 2, sz * pz)
+            .paintFn((x, y, z) => {
+              const g = noise.fbm(x * 30, y * 4, z * 30, 2);
+              return mixRgb(mixRgb(wood, woodDark, clamp01(0.45 + 0.4 * g)), woodDark, clamp01((y - 0.2) * 12) * 0.6);
+            }),
         );
+    k.body('posts', sdf.union(...posts), {
+      color: '#6e4526',
+      roughness: 0.85,
+      detail: 0.015,
+      maxTriangles: 900,
+      bump: (x, y, z) => 0.004 * noise.fbm(x * 30, y * 6, z * 30, 2),
+    });
+
+    // cabbage rosettes
+    const plants = [];
+    const span = 3.3;
+    for (let i = 0; i < RIDGES; i++) {
+      for (let c = 0; c < COLS; c++) {
+        const x = -span / 2 + (c / (COLS - 1)) * span + (noise.random(c, i, 1) - 0.5) * 0.06;
+        const z = ridgeZ(i) + (noise.random(c, i, 2) - 0.5) * 0.03;
+        const base = SOIL_TOP + 0.035;
+        const n = 4 + ((c + i) % 2);
+        const leaves = [];
+        for (let l = 0; l < n; l++) {
+          const a = (l / n) * 360 + noise.random(c, i, 3 + l) * 40;
+          leaves.push(
+            sdf
+              .ellipsoid([0.11, 0.024, 0.07])
+              .rotateZ(28)
+              .at(0.08, 0.045, 0)
+              .rotateY(a),
+          );
+        }
+        const heart = sdf.sphere(0.065).at(0, 0.05, 0); // rosettes 0.3 m across, so each reads at 128 px
+        plants.push(sdf.union(...leaves, heart).at(x, base, z));
       }
     }
-    const sproutsShape = sdf.union(...sprouts);
-    k.body('sprouts', sproutsShape, {
-      color: '#6fa84a',
+    const crops = sdf.union(...plants).paintFn((x, y, z) => {
+      const h = clamp01((y - SOIL_TOP - 0.035) / 0.11);
+      const n = noise.noise3(x * 40, y * 40, z * 40);
+      const c = mixRgb(leafDark, leaf, 0.35 + 0.65 * h + 0.1 * n);
+      return mixRgb(c, leafLight, clamp01((h - 0.45) * 2));
+    });
+    k.body('crops', crops, {
+      color: '#6fb04a',
       roughness: 0.75,
-      bump: sproutBump,
-      maxError: 0.004,
+      detail: 0.01,
+      maxTriangles: 8000,
+      bump: (x, y, z) => 0.002 * noise.fbm(x * 50, y * 50, z * 50, 2),
     });
   },
 });

@@ -4,7 +4,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * architecture/landscape-parts/stepping-stone — cottage-yard stepping-stone path piece.
  *
  * Role: short garden path the player walks past; must read at the 128 px sprite size.
- * Size: 2 m square flush grass base (top at y = 0.08, matches grass-ground tiles),
+ * Size: 2 m square, 0.3 m slab (top at y = 0, soil down to y = -0.3, like grass-ground),
  *   5 rounded stones in a gentle S-line along Z over ~1.6 m, each 0.25–0.35 m across
  *   and 0.035–0.05 m proud of the grass. Faces +Z. No rig, no animation.
  * One idea: five worn pebble-soft stones wandering through bright cottage grass.
@@ -18,7 +18,12 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  *   cone-triple tufts between stones (small).
  */
 
-const TOP = 0.08;
+const TOP = 0; // walkable grass top at y = 0
+const SLAB = 0.3;
+const EDGE = 0.001;
+const SOIL = rgb('#7a4a2a');
+const SOIL_DARK = rgb('#57331d');
+const PEBBLE = rgb('#9a8a78');
 
 const STONE = rgb('#9c988d');
 const STONE_DARK = rgb('#67645c');
@@ -68,31 +73,42 @@ const STONES: ReadonlyArray<readonly [number, number, number, number, number]> =
 export default defineAsset({
   name: 'stepping-stone',
   description:
-    'Cottage-yard stepping-stone path: five worn light-gray stones in a gentle line on a flush 2 m grass base with tufts.',
+    'Cottage-yard stepping-stone path: five worn light-gray stones in a gentle line on a 2 m grass slab (0.3 m, top at y = 0, grass lip over layered soil sides) with tufts.',
   detail: 0.01,
   texture: { size: 1024 },
 
   build(k) {
     // ------------------------------------------------------------- grass base
     // Same footprint as grass-ground (2 x 0.08 x 2 m) so it tiles beside grass tiles.
-    const tile = sdf.box([2, 0.08, 2], 0.006).at(0, 0.04, 0);
-    const grassBody = tile.paintFn((x, y, z) => {
-      const onTop = y > 0.07;
-      if (!onTop) return mixRgb(GRASS, GRASS_DARK, 0.35);
+    const tile = sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0);
+    const topColor = (x: number, z: number) => {
       const big = noise.fbm(x * 2.4, 0, z * 2.4, 3);
       const small = noise.fbm(x * 7, 0, z * 7, 2);
       const v = clamp01(big * 0.45 + small * 0.25 + 0.5);
       const top = mixRgb(GRASS, GRASS_DARK, v * 0.45);
       const w = fleckWeight(x, z);
       return w > 0 ? mixRgb(top, GRASS_FLECK, w * 0.75) : top;
+    };
+    const grassBody = tile.paintFn((x, y, z) => {
+      if (y > -0.01) return topColor(x, z);
+      const along = Math.abs(x) > Math.abs(z) ? z : x;
+      const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+      if (y > -drip) return mixRgb(topColor(x, z), GRASS_DARK, 0.25 + 0.3 * Math.min(1, -y / drip));
+      const depth = -y / SLAB;
+      let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+      const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+      c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+      const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+      if (n > 0.45) c = mixRgb(c, PEBBLE, Math.min(1, (n - 0.45) * 6) * 0.8);
+      return c;
     });
     k.body('grass', grassBody, {
       color: '#5fb14d',
       roughness: 0.85,
       metalness: 0,
-      detail: 0.02,
-      maxTriangles: 1100,
-      bump: (x, y, z) => (y > 0.07 ? 0.004 * noise.fbm(x * 14, 0, z * 14, 2) : 0),
+      detail: 0.025,
+      maxTriangles: 6000,
+      bump: (x, y, z) => (y > -0.01 ? 0.004 * noise.fbm(x * 14, 0, z * 14, 2) : 0),
     });
 
     // ------------------------------------------------------------- stones

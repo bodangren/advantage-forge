@@ -2,7 +2,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
  * Modular plank floor tile for the Chibi Quest tavern (same family as the hamlet
- * ground tiles). Exactly 2 m square, 0.08 m thick, top at y = 0.08, clean square
+ * ground tiles). Exactly 2 m square, a 0.3 m slab, top at y = 0 (sides: plank ends, joist band, stone blocks), clean square
  * edges so tiles butt seamlessly in every direction.
  *
  * The one idea: warm honey-oak planks running along X, each plank its own tone,
@@ -21,6 +21,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * lives in `bump`. No rig, no animation.
  */
 
+const SLAB = 0.3;
+const EDGE = 0.001;
 const PLANKS = 7; // 6 to 8 planks across the 2 m
 const PW = 2 / PLANKS; // plank width along z (~0.286 m)
 const HALF = PW / 2;
@@ -116,19 +118,38 @@ function wearAt(x: number, z: number, i: number): number {
   return clamp01(edge * along * 0.85 * weary + scuff * 0.7 * weary);
 }
 
-/** Painted side of the slab: darkened cut wood, per-plank tone, joints, ground grime. */
-function sideColor(z: number, y: number): readonly [number, number, number] {
-  // Clamp the tone so the darkened cut wood never extrapolates past the seam color.
-  let c = mixRgb(honeyOak, warmBrown, Math.min(0.7, plankTone(plankIndex(z))));
-  c = mixRgb(c, seamDark, 0.42);
-  const joint = Math.max(0, 1 - seamDist(z) / 0.01); // end-grain joints on the x sides
-  c = mixRgb(c, seamDark, joint * 0.5);
-  c = mixRgb(c, seamDark, clamp01((0.05 - y) / 0.05) * 0.35); // darker toward the ground
+const beam = rgb('#4a2e1a'); // joist beam band
+const stone = rgb('#6a625a'); // foundation blocks
+const mortar = rgb('#45403a'); // mortar lines
+
+/** Painted side: plank ends over a joist beam band over stone foundation blocks. */
+function sideColor(x: number, y: number, z: number): readonly [number, number, number] {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  if (y > -0.05) {
+    // Plank ends: plank color from the top paint, a dark line where each plank ends.
+    let c = woodColorAt(x, 0, z);
+    if (Math.abs(x) > Math.abs(z)) c = mixRgb(c, seamDark, Math.max(0, 1 - seamDist(z) / 0.008) * 0.9);
+    return mixRgb(c, seamDark, clamp01(-y / 0.05) * 0.25);
+  }
+  if (y > -0.17) {
+    let c = mixRgb(beam, seamDark, 0.2 + 0.2 * noise.fbm(along * 12, y * 12, 1.7, 2));
+    const e = Math.abs(((along + 1) / 0.5) % 1 - 0.5) * 0.5; // beam ends every 0.5 m
+    c = mixRgb(c, rgb('#2a1a0e'), Math.max(0, 1 - e / 0.008) * 0.8);
+    return c;
+  }
+  // Foundation blocks 0.065 m tall, offset every other course, mortar between.
+  const row = Math.floor((-y - 0.17) / 0.065);
+  const col = (along + 1) / 0.4 + (row % 2 ? 0.5 : 0);
+  const fx = Math.abs((col % 1) - 0.5) * 0.4; // distance to the block edge
+  const fy = Math.abs((((-y - 0.17) / 0.065) % 1) - 0.5) * 0.065;
+  let c = mixRgb(stone, rgb('#544d46'), 0.15 * row + 0.2 * noise.fbm(along * 8, y * 8, 2.3, 2));
+  if (0.2 - fx < 0.008 || 0.0325 - fy < 0.004) c = mortar;
   return c;
 }
 
 /** Top color: per-plank tone, grain streaks, wear, knots, and dark seams. */
 function woodColorAt(x: number, y: number, z: number): readonly [number, number, number] {
+  if (y < -0.01) return sideColor(x, y, z);
   const i = plankIndex(z);
   const sd = seamDist(z);
   const tone = plankTone(i);
@@ -163,14 +184,12 @@ function woodColorAt(x: number, y: number, z: number): readonly [number, number,
   const shoulder = Math.max(0, 1 - sd / 0.034);
   c = mixRgb(c, seamDark, shoulder * shoulder * 0.4);
 
-  // Blend to the darker cut-wood sides at the top edge.
-  const topness = clamp01((y - 0.072) / 0.006);
-  if (topness < 1) c = mixRgb(sideColor(z, y), c, topness);
   return c;
 }
 
 /** All fine relief in `bump`: seam grooves, plank crowns, grain, wear, knot dimples. */
 function woodBump(x: number, y: number, z: number): number {
+  if (y < -0.01) return 0;
   const i = plankIndex(z);
   const sd = seamDist(z);
   // Seam groove with a rounded shoulder.
@@ -191,7 +210,7 @@ function woodBump(x: number, y: number, z: number): number {
 
 export default defineAsset({
   name: 'wood-floor',
-  description: 'Modular 2 m honey-oak plank floor tile, 0.08 m thick, with dark seams and soft wear.',
+  description: 'Modular 2 m honey-oak plank floor tile, a 0.3 m slab with its top at y = 0: dark seams and soft wear on top; plank ends, a joist beam band, and stone foundation blocks on the sides.',
   detail: 0.008,
   reference: 'docs/tavern-mockups/tavern-quest_001.jpg',
   texture: { size: 1024 },
@@ -199,7 +218,7 @@ export default defineAsset({
   build(k) {
     // Tile body: 2 x 0.08 x 2 m. Bottom at y = 0, top at y = 0.08. Outer edges stay
     // square so adjacent cells meet without a shaded gap (same as the hamlet tiles).
-    const slab = sdf.box([2, 0.08, 2]).at(0, 0.04, 0);
+    const slab = sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0);
 
     k.body('planks', slab.paintFn(woodColorAt), {
       color: '#b5814a',

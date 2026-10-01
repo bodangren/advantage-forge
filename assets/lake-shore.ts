@@ -5,8 +5,10 @@ import type { Rgb } from '../src/index.js';
  * lake-shore — modular lakeshore ground tile (architecture/landscape-parts/lake-shore).
  *
  * Role: modular terrain tile for the cozy chibi hamlet map, seen from above and at 128 px.
- * Size: exactly 2 x 2 m, 0.06 m thick, top surface at y = 0.06, standing on y = 0, centred on
- *   Y, front toward +Z. Tile edges are at x = +-1 and z = +-1 so it chains in a grid.
+ * Size: exactly 2 x 2 m, a 0.3 m slab: the grass top is at y = 0 and the soil goes down to
+ *   y = -0.3, front toward +Z. Tile edges are at x = +-1 and z = +-1 so it chains in a grid.
+ *   Sides: a grass or sand lip over warm soil strata; where the lake meets an edge, a blue
+ *   water face from the surface down to a sand bed at y = -0.18.
  * One idea: a calm lake edge — bright grass on the -Z half drops over a pale sand beach into
  *   one broad sheet of blue water on the +Z half, with rounded stones on the waterline.
  * Shape language: round and soft (one smooth shore terrace, domed hummocks, pebble stones)
@@ -14,18 +16,19 @@ import type { Rgb } from '../src/index.js';
  * Palette 60/30/10: grass #7ec850 dominant (dark #4a8a3f, pale flecks #b6e07a), sand
  *   #e8d39c secondary (wet #c2a372), water #3fa8c8 accent and focal point (shallow #7fd4e0).
  * Materials: one ground body (grass + sand + silt + cut soil, roughness 0.9); hummock body
- *   (grass, roughness 0.9); water body (roughness 0.12, opacity 0.9); stone body
+ *   (grass, roughness 0.9); water body (roughness 0.55, opacity 0.9); stone body
  *   (roughness 0.88). No rig, no animation.
  * Detail: primary shore profile; secondary hummocks + stranded stones; tertiary grass
  *   patch and sand grain in paint and bump. Focal point: the waterline stones.
  */
 
 const TILE = 2.0;
-const TOP = 0.06; // grass surface height
-const SHELF = 0.05; // dry sand beach shelf height
-const BED = 0.018; // lake bed height (hidden under the water)
-const WATER_Y = 0.038; // water surface height
-const BEVEL = 0.006; // tile edge round-over
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap
+const TOP = 0; // grass surface height
+const SHELF = -0.01; // dry sand beach shelf height
+const BED = -0.18; // lake bed height (under the water)
+const WATER_Y = -0.022; // water surface height, 2.2 cm below the grass as before
 
 const C = {
   grass: rgb('#7ec850'),
@@ -34,8 +37,10 @@ const C = {
   sand: rgb('#e8d39c'),
   sandWet: rgb('#c2a372'),
   silt: rgb('#6b5c41'),
-  soil: rgb('#8a6a48'),
-  soilDark: rgb('#6a4f34'),
+  soil: rgb('#7a4a2a'),
+  soilDark: rgb('#57331d'),
+  sideSand: rgb('#d8c08a'),
+  pebble: rgb('#9a8a78'),
   waterDeep: rgb('#349ec2'),
   waterShallow: rgb('#7fd0e2'),
   waterGlint: rgb('#c9f0f4'),
@@ -55,7 +60,7 @@ const sstep = (a: number, b: number, v: number): number => {
  * drop to the flat lake bed. Only z matters, so the tile tiles cleanly along X.
  */
 const h = (z: number): number =>
-  TOP - (TOP - SHELF) * sstep(-0.12, 0.12, z) - (SHELF - BED) * sstep(0.33, 0.56, z);
+  TOP - (TOP - SHELF) * sstep(-0.12, 0.12, z) - (SHELF - BED) * sstep(0.3, 0.75, z);
 
 /** Repeat noise across the 2 m tile so opposite painted edges get the same color. */
 function tileNoise(x: number, z: number, frequency: number, octaves: number): number {
@@ -100,31 +105,46 @@ function grassColor(x: number, z: number): Rgb {
   return c;
 }
 
-/**
- * Ground paint: cut turf soil on the sides and underside, then along Z the grass, the wide
- * dry sand beach, a damp band at the waterline, and the dark silt bed under the water.
- */
-const groundPaint = (x: number, y: number, z: number): Rgb => {
-  const surface = h(z);
-  // 0 on the cut sides / underside, 1 on the top surface.
-  const onTop = sstep(-0.012, -0.003, y - surface);
-  const soil = mixRgb(C.soil, C.soilDark, 0.5 - 0.5 * noise.fbm(x * 12, y * 12, z * 12, 2));
-
-  // Wavy offsets so the shore lines are organic curves, not ruler-straight. The grass/sand
-  // edge wanders more than the waterline bands, which must follow the real water surface.
+/** Top color (no sides) at (x, z): grass, beach sand, damp band, silt bed. */
+const topColorAt = (x: number, z: number): Rgb => {
+  // Wavy offsets so the shore lines are organic curves, not ruler-straight.
   const zGrass = z + 0.06 * tileNoise(x, z, 2.6, 2) + 0.02 * tileNoise(x, z, 7, 2);
   const zWet = z + 0.02 * tileNoise(x, z, 3.2, 2) + 0.008 * tileNoise(x, z, 9, 2);
 
   const grassW = 1 - sstep(-0.03, 0.15, zGrass);
-  const wetW = sstep(0.36, 0.44, zWet) * (1 - sstep(0.45, 0.55, zWet));
-  const siltW = sstep(0.45, 0.56, zWet);
+  const wetW = sstep(0.29, 0.35, zWet) * (1 - sstep(0.36, 0.42, zWet));
+  const siltW = sstep(0.36, 0.48, zWet);
 
   let top = mixRgb(C.sand, grassColor(x, z), grassW);
   top = mixRgb(top, C.sandWet, 0.85 * wetW);
   top = mixRgb(top, C.silt, siltW);
   // A little dry-sand grain so the beach is not a flat fill.
-  top = mixRgb(top, C.sand, 0.08 * Math.max(0, noise.fbm(x * 40, 0, z * 40, 2)));
-  return mixRgb(soil, top, onTop);
+  return mixRgb(top, C.sand, 0.08 * Math.max(0, noise.fbm(x * 40, 0, z * 40, 2)));
+};
+
+/** Side color: a lip (top paint, or sand at the lake) with a wavy drip edge over soil strata. */
+const sideColorAt = (x: number, y: number, z: number): Rgb => {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  const below = h(z) - y; // depth under the tile surface at this (x, z)
+  if (below < drip) {
+    const lip = z > 0.36 ? C.sideSand : topColorAt(x, z);
+    return mixRgb(lip, C.soilDark, 0.25 * Math.min(1, Math.max(0, below) / drip));
+  }
+  const depth = -y / SLAB;
+  let c = mixRgb(C.soil, C.soilDark, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, C.soilDark, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, C.pebble, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+};
+
+const groundPaint = (x: number, y: number, z: number): Rgb => {
+  // 0 on the cut sides / underside, 1 on the top surface.
+  const onTop = sstep(-0.012, -0.003, y - h(z));
+  if (onTop >= 1) return topColorAt(x, z);
+  return mixRgb(sideColorAt(x, y, z), topColorAt(x, z), onTop);
 };
 
 /** Calm water: shallow and pale by the shore, deepening toward the front edge. */
@@ -139,22 +159,22 @@ const waterPaint = (x: number, y: number, z: number): Rgb => {
 const pts: [number, number][] = [];
 const STEPS = 96;
 for (let i = 0; i <= STEPS; i++) {
-  const z = -1 + (2 * i) / STEPS;
+  const z = -(1 + EDGE) + (2 * (1 + EDGE) * i) / STEPS;
   pts.push([z, h(z)]);
 }
-pts.push([TILE / 2, 0], [-TILE / 2, 0]);
+pts.push([TILE / 2 + EDGE, -SLAB - EDGE], [-TILE / 2 - EDGE, -SLAB - EDGE]);
 
 export default defineAsset({
   name: 'lake-shore',
   description:
-    'Modular 2 m lakeshore tile: grass on the -Z half drops over a pale sand beach into blue water on the +Z half, with rounded stones on the waterline; 0.06 m thick, top at 0.06.',
+    'Modular 2 m lakeshore tile, slab: grass on the -Z half drops over a pale sand beach into blue water on the +Z half, with rounded stones on the waterline; a 0.3 m slab with its top at y = 0, grass or sand lip over soil on the sides and a blue water face at the lake edges.',
   detail: 0.02,
   reference: 'docs/item-mockups/lake-shore-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
     // ------------------------------------------------------------------ ground
-    const shore = sdf.extrude(profile.polygon(pts), TILE, BEVEL).rotateY(-90);
+    const shore = sdf.extrude(profile.polygon(pts), TILE + 2 * EDGE).rotateY(-90);
     k.body('ground', shore.paintFn(groundPaint), {
       color: C.grass,
       roughness: 0.9,
@@ -162,7 +182,7 @@ export default defineAsset({
       paintWeight: 2,
       textureDensity: 2,
       detail: 0.02,
-      maxTriangles: 2600,
+      maxTriangles: 7000,
       bump: (x, y, z) => {
         const onTop = sstep(-0.012, -0.003, y - h(z));
         const nap = 0.0028 * noise.fbm(x * 34, y * 34, z * 34, 3) + 0.0016 * noise.fbm(x * 9, 5, z * 9, 2);
@@ -172,47 +192,47 @@ export default defineAsset({
     });
 
     // ------------------------------------------------------------------ water
-    // One flat sheet over the +Z half; its back end is buried in the beach.
+    // One flat sheet over the +Z half, from the surface down to the bed, flush with the tile edges
+    // (1 mm recessed, so the blue side face shows); its back end is buried in the beach.
     const water = sdf
-      .box([TILE, 0.028, 0.98], 0.004)
-      .at(0, WATER_Y - 0.014, 0.51)
+      .box([TILE, WATER_Y - BED + 0.005, 0.7])
+      .at(0, (WATER_Y + BED - 0.005) / 2, 0.65)
       .paintFn(waterPaint);
     k.body('water', water, {
       color: C.waterDeep,
-      roughness: 0.35,
+      roughness: 0.55,
       metalness: 0,
       opacity: 0.9,
       paintWeight: 2,
       textureDensity: 2,
       detail: 0.012,
-      maxTriangles: 400,
+      maxTriangles: 600,
       bump: (x, y, z) => 0.0006 * noise.fbm(x * 10, y * 10, z * 10, 2),
     });
 
     // ------------------------------------------------------------------ hummocks
-    // A few low grassy domes on the back half, like the mock's soft mounds. Their bases sit
-    // on the tile underside so they never dip below the ground plane.
+    // A few low grassy domes on the back half, like the mock's soft mounds. They rise at most
+    // 0.045 m above the walkable top and sink into the slab.
     const hummock = (x: number, z: number, r: number, sq: number): sdf.Shape => {
       const ry = r * sq;
-      return sdf.ellipsoid([r, ry, r * 0.92]).rotateY(r * 90).at(x, ry + 0.002, z);
+      return sdf.ellipsoid([r, ry, r * 0.92]).rotateY(r * 90).at(x, 0.045 - ry, z);
     };
     k.body(
       'hummocks',
       sdf
-        .union(hummock(-0.5, -0.55, 0.26, 0.36), hummock(0.48, -0.62, 0.21, 0.34), hummock(-0.05, -0.82, 0.18, 0.36))
+        .union(hummock(-0.5, -0.55, 0.26, 0.2), hummock(0.48, -0.62, 0.21, 0.25), hummock(-0.05, -0.82, 0.18, 0.28))
         .paintFn((x, _y, z) => grassColor(x, z)),
       { color: C.grass, roughness: 0.9, metalness: 0, paintWeight: 2, detail: 0.03, maxTriangles: 800 },
     );
 
     // ------------------------------------------------------------------ stranded stones
-    // Rounded pebbles straddling the waterline, half sunk so none float and none leave the
-    // ground plane.
+    // Rounded pebbles straddling the waterline, sunk into the shore (y follows the profile) so none float.
     const stone = (x: number, z: number, rs: number, yaw: number): sdf.Shape => {
       const ry = rs * 0.5;
       return sdf
         .ellipsoid([rs, ry, rs * 1.05])
         .rotateY(yaw)
-        .at(x, ry + 0.002, z)
+        .at(x, h(z) + ry * 0.3, z)
         .paintFn((px, py, pz, base) =>
           mixRgb(base, C.stoneDark, 0.2 + 0.35 * clamp01(noise.noise3(px * 55, py * 55, pz * 55))),
         );

@@ -1,8 +1,7 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
-import { tileSurface } from '../src/tile-surface.js';
 
 /**
- * Dirt road straight — a modular 2 m x 2 m terrain tile (0.08 m thick, top at y = 0.08) for a
+ * Dirt road straight — a modular 2 m x 2 m terrain tile (0.3 m slab, top at y = 0, soil sides) for a
  * cozy chibi fantasy hamlet map. The road runs straight across the tile along Z, about 1.2 m
  * wide, flush with the grass on both sides: ONE body, so there is no step or seam — the road
  * is a painted band with soft, noise-worn edges. Warm packed brown center (matches a bare dirt
@@ -22,8 +21,7 @@ import { tileSurface } from '../src/tile-surface.js';
  */
 
 const TILE = 2; // grid size in meters
-const THICK = 0.08; // tile thickness, top surface at y = 0.08
-const TOP = THICK;
+const TOP = 0; // walkable top at y = 0
 const ROAD_HALF = 0.6; // road is ~1.2 m wide along the full Z length
 
 const GRASS = rgb('#6fb43c');
@@ -97,30 +95,51 @@ const PEBBLES: Array<[number, number, number]> = [
   [0.05, 0.78, 0.024],
 ];
 
+
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap after meshing
+const SOIL = rgb('#7a4a2a');
+const SOIL_DARK = rgb('#57331d');
+const PEBBLE_SOIL = rgb('#9a8a78');
+
+/** Side color: a lip of the top paint (same x, z) with a wavy drip edge over soil strata. */
+function sideColorAt(x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(top(x, z), SOIL_DARK, 0.15 * Math.min(1, -y / drip));
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE_SOIL, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+}
+
 export default defineAsset({
   name: 'dirt-road-straight',
   description:
-    'Straight 2 m dirt road tile, flush with bright grass on both sides, warm packed brown with stone flecks.',
+    'Straight 2 m dirt road tile, flush with bright grass on both sides, warm packed brown with stone flecks, a 0.3 m slab with top at y = 0 over layered soil sides.',
   detail: 0.01,
   texture: { size: 1024 },
 
   build(k) {
-    // One slab carries grass AND road: the top is a single flat surface at y = 0.08, so the
+    // One slab carries grass AND road: the top is a single flat surface at y = 0, so the
     // road can never sit raised and no seam can appear between road and grass.
-    const terrain = sdf.box([TILE, THICK, TILE]).at(0, THICK / 2, 0).paintFn((x, _y, z) => terrainColor(x, z));
+    const terrain = sdf.box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE]).at(0, -SLAB / 2, 0).paintFn((x, y, z) => (y > -0.01 ? terrainColor(x, z) : sideColorAt(x, y, z, terrainColor)));
     k.body('terrain', terrain, {
       color: GRASS,
       roughness: 0.95,
       detail: 0.02,
       // Packed-earth grain in the road, finer grass nap on the edges — normal-map only.
-      bump: (x, _y, z) => {
+      bump: (x, y, z) => {
+        if (y < -0.01) return 0;
         const m = roadMask(x, z);
         const dirt = 0.0035 * tileNoise(x, z, 1, 30, 3);
         const grass = 0.002 * tileNoise(x, z, 4, 50, 2);
         return m * dirt + (1 - m) * grass;
       },
     });
-    k.add('terrain-top', tileSurface('terrain-top', terrainColor));
 
     // Pebbles: small flattened stones sunk into the road surface, slightly varied tint.
     const pebbles = sdf.union(

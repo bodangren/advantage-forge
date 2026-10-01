@@ -4,9 +4,9 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js'
  * forest-ground — a 2 x 2 m modular forest-floor tile for the Chibi Quest forest set.
  *
  * Role: side-by-side ground tile that must butt against hamlet `grass-ground` and
- *   `dirt-ground` cells, so it shares their footprint exactly: 2 m square, 0.08 m thick,
- *   top surface at y = 0.08, square outer edge.
- * Size: 2 x 0.08 x 2 m, centered on the Y axis, standing on y = 0, facing +Z. No rig.
+ *   `dirt-ground` cells, so it shares their footprint exactly: 2 m square, a 0.3 m slab,
+ *   top surface at y = 0 (soil down to y = -0.3), square outer edge.
+ * Size: 2 x 0.3 x 2 m, centered on the Y axis, top at y = 0, facing +Z. No rig.
  * The one idea: shaded forest green strewn with warm fallen leaf blobs; the leaf scatter
  *   is the focal point and must stay clear of the tile edges so repeats read seamless.
  * Shape language: square modular slab (sturdy, reliable) plus round leaf blobs (soft).
@@ -37,6 +37,12 @@ const capBrown = rgb('#8a5a35');
 const capDeep = rgb('#5f3d22');
 const capTan = rgb('#c9a06a');
 
+const SLAB = 0.3;
+const EDGE = 0.001;
+const soil = rgb('#4a3020'); // humus
+const root = rgb('#6a4a30'); // root threads
+const strata = rgb('#33221a'); // dark strata
+
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 // ------------------------------------------------------------------ tiling noise
@@ -58,8 +64,26 @@ function tileNoise(x: number, z: number, frequency: number, octaves: number, see
 // ------------------------------------------------------------------ ground paint
 // Dominant shaded green with soft deep patches, moss, and a few sunny flecks. A faint
 // warm-earth tinge in the lightest spots keeps the green from going flat.
+function sideColorAt(x: number, y: number, z: number): Rgb {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.06 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) {
+    const top = groundColorAt(x, 0, z);
+    const lit = noise.random(Math.floor(along * 14) + 50, 1, 2) < 0.4 ? leafBrown : leafPale;
+    return mixRgb(mixRgb(top, lit, 0.2), groundDeep, 0.25 * Math.min(1, -y / drip));
+  }
+  const depth = -y / SLAB;
+  let c = mixRgb(soil, strata, 0.1 + depth * 0.5);
+  const st = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, strata, Math.max(0, st - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.4) c = mixRgb(c, root, Math.min(1, (n - 0.4) * 6) * 0.8);
+  return c;
+}
+
 function groundColorAt(x: number, y: number, z: number): Rgb {
-  const topness = clamp01((y - 0.03) / 0.045); // full detail on the top, less on the sides
+  if (y < -0.01) return sideColorAt(x, y, z);
+  const topness = 1;
 
   const patch = tileNoise(x, z, 1.8, 3, 3); // large shade / sun patches
   const mossN = tileNoise(x, z, 4.5, 2, 17); // medium moss clumps
@@ -82,8 +106,6 @@ function groundColorAt(x: number, y: number, z: number): Rgb {
   const litterMask = clamp01((Math.abs(litterN) - 0.22) * 6) * topness;
   c = mixRgb(c, litterN > 0 ? leafPale : leafBrown, litterMask * 0.22);
 
-  // Sides and bottom sit in shadow so the slab reads as one solid mass.
-  if (topness < 1) c = mixRgb(c, groundDeep, (1 - topness) * 0.45);
   return c;
 }
 
@@ -145,7 +167,7 @@ function leafColorAt(x: number, y: number, z: number): Rgb {
   // Slight per-leaf tone shift and a darker underside so each blob reads round.
   const v = noise.random(best, 3, 9);
   let c = mixRgb(base, leafDeep, v * 0.12);
-  if (y < 0.086) c = mixRgb(c, leafDeep, clamp01((0.086 - y) / 0.01) * 0.4);
+  if (y < 0.006) c = mixRgb(c, leafDeep, clamp01((0.006 - y) / 0.01) * 0.4);
   return c;
 }
 
@@ -162,9 +184,9 @@ function twig(cx: number, cz: number, angleDeg: number, length: number, r: numbe
   const dz = Math.sin(a);
   const half = length * 0.5;
   return {
-    a: [cx - dx * half, 0.086, cz - dz * half],
-    b: [cx, 0.089, cz],
-    c: [cx + dx * half, 0.085, cz + dz * half],
+    a: [cx - dx * half, 0.006, cz - dz * half],
+    b: [cx, 0.009, cz],
+    c: [cx + dx * half, 0.005, cz + dz * half],
   };
 }
 
@@ -200,7 +222,7 @@ function twigColorAt(x: number, y: number, z: number): Rgb {
   }
   let c = mixRgb(twigBark, twigDeep, clamp01(0.4 + noise.fbm(x * 30, y * 20, z * 30, 2, 5) * 0.6) * 0.5);
   c = mixRgb(c, cutWood, clamp01((0.026 - bestTip) / 0.02) * 0.7);
-  c = mixRgb(c, twigDeep, clamp01((0.086 - y) / 0.012) * 0.45);
+  c = mixRgb(c, twigDeep, clamp01((0.006 - y) / 0.012) * 0.45);
   return c;
 }
 
@@ -210,17 +232,17 @@ const MUSHROOM_Z = -0.06;
 
 function mushroomShape() {
   // Kept under the 0.03 m relief limit: cap top reaches 0.110 m against a 0.08 m floor.
-  const stem = sdf.cylinder(0.012, 0.028, 0.004).at(MUSHROOM_X, 0.088, MUSHROOM_Z);
-  const cap = sdf.ellipsoid([0.033, 0.013, 0.033]).at(MUSHROOM_X, 0.097, MUSHROOM_Z);
+  const stem = sdf.cylinder(0.012, 0.028, 0.004).at(MUSHROOM_X, 0.008, MUSHROOM_Z);
+  const cap = sdf.ellipsoid([0.033, 0.013, 0.033]).at(MUSHROOM_X, 0.017, MUSHROOM_Z);
   return stem.smoothUnion(0.006, cap);
 }
 
 function mushroomColorAt(x: number, y: number, z: number): Rgb {
   const d = Math.hypot(x - MUSHROOM_X, z - MUSHROOM_Z);
-  const cap = clamp01((y - 0.089) / 0.008); // 1 inside the cap, 0 down the stem
+  const cap = clamp01((y - 0.009) / 0.008); // 1 inside the cap, 0 down the stem
   let c = mixRgb(cutWood, capTan, clamp01(1 - d / 0.016) * 0.4);
   let mc = mixRgb(capBrown, capDeep, clamp01((d - 0.016) / 0.018) * 0.7);
-  mc = mixRgb(mc, capDeep, clamp01((0.098 - y) / 0.016) * 0.5);
+  mc = mixRgb(mc, capDeep, clamp01((0.018 - y) / 0.016) * 0.5);
   c = mixRgb(c, mc, cap);
   return c;
 }
@@ -232,28 +254,28 @@ const mushroomBump = (x: number, y: number, z: number): number =>
 export default defineAsset({
   name: 'forest-ground',
   description:
-    'A 2 m square modular forest-floor tile: shaded green ground scattered with pale-tan and warm-brown fallen leaves, three tiny twigs and a tiny mushroom.',
+    'A 2 m square modular forest-floor tile, a 0.3 m slab with its top at y = 0 and a leaf-litter lip over dark humus sides: shaded green ground scattered with pale-tan and warm-brown fallen leaves, three tiny twigs and a tiny mushroom.',
   detail: 0.02,
   texture: { size: 1024 },
 
   build(k) {
-    // Square slab, 2 x 0.08 x 2 m. Bottom at y = 0, top at y = 0.08. Square outer edge so
+    // Square slab, 2 x 0.3 x 2 m. Top at y = 0, bottom at y = -0.3. Square outer edge so
     // neighbouring hamlet ground tiles meet without a shaded gap.
-    const slab = sdf.box([2, 0.08, 2]).at(0, 0.04, 0);
+    const slab = sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0);
 
     k.body('ground', slab.paintFn(groundColorAt), {
       color: '#4a8a3f',
       roughness: 0.9,
       metalness: 0,
       detail: 0.02,
-      maxTriangles: 700,
+      maxTriangles: 4000,
       textureDensity: 2,
     });
 
     // Fallen leaves: squashed ellipsoid blobs sunk just into the top surface. No blob is
     // taller than 0.03 m and none reaches the tile edge.
     const leavesShape = sdf.union(
-      ...LEAVES.map((l) => sdf.ellipsoid([l.len, l.h, l.wid]).rotateY((l.rot * 180) / Math.PI).at(l.x, 0.082, l.z)),
+      ...LEAVES.map((l) => sdf.ellipsoid([l.len, l.h, l.wid]).rotateY((l.rot * 180) / Math.PI).at(l.x, 0.002, l.z)),
     );
     k.body('leaves', leavesShape.paintFn(leafColorAt), {
       color: '#c8a86b',

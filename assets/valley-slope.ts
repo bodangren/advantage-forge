@@ -5,8 +5,8 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/
  *
  * Role: modular 2 m terrain tile for the chibi hamlet / forest map, read from above and at
  *   128 px. It is a valley "dip" that sits between raised banks, so the player walks down into it.
- * Size: exactly 2 x 2 m in XZ, standing on y = 0. The top surface is a channel that runs along Z:
- *   0.6 m high at the -X and +X edges, dipping to 0.06 m along the middle. Edges at x = ±1 are
+ * Size: exactly 2 x 2 m in XZ, a 0.3 m slab down to y = -0.3. The top is a channel along Z:
+ *   0.54 m high at the -X and +X edges, dipping to y = 0 along the middle. Sides: grass lip over soil strata. Edges at x = ±1 are
  *   vertical walls, so tiles chain in X; the z = ±1 cross-section repeats in Z.
  * One idea: a soft grassy bowl with a few cool gray stones resting on its floor — the stones are
  *   the focal point and the value contrast, the grass is the calm rest area.
@@ -22,8 +22,10 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/
  */
 
 const HALF = 1; // tile half width: 2 m tile
-const TOP = 0.6; // surface height at the -X and +X edges
-const FLOOR = 0.06; // surface height in the middle
+const SLAB = 0.3; // soil under the walkable floor: the body goes down to y = -0.3
+const EDGE = 0.001; // 1 mm of overlap so neighbours never show a gap
+const TOP = 0.54; // surface height at the -X and +X edges (floor is y = 0)
+const FLOOR = 0; // surface height in the middle
 const RC = 0.06; // rounded crest radius at the top of the outer walls
 const PLATEAU = HALF - RC; // x where the valley top meets the crest round
 const LUMP_AMP = 0.018; // gentle unevenness on the bowl surface only
@@ -33,9 +35,9 @@ const C = {
   grassDark: rgb('#4a8a3f'), // shade patches (contract)
   grassSun: rgb('#a8d76c'), // pale sunlit flecks
   grassDeep: rgb('#3c7133'), // lusher green, in the valley floor
-  earth: rgb('#8a5a35'), // cut soil, upper band (contract bark family)
-  earthDeep: rgb('#5f3d22'), // cut soil, lower band
-  earthLight: rgb('#a9764a'), // dry soil highlight
+  earth: rgb('#7a4a2a'), // cut soil, upper band
+  earthDeep: rgb('#57331d'), // cut soil, lower band
+  pebble: rgb('#9a8a78'), // pebble specks in the soil
   blade: rgb('#4a9a4f'), // tuft blades, between the two greens
   stone: rgb('#8a94a0'), // granite accent (contract)
   stoneDark: rgb('#5b6570'),
@@ -87,13 +89,13 @@ const surfaceHeight = (x: number, z: number): number =>
  */
 function valleyProfile(): [number, number][] {
   const pts: [number, number][] = [];
-  pts.push([-HALF, 0]);
-  pts.push([HALF, 0]);
-  pts.push([HALF, TOP - RC]);
+  pts.push([-HALF - EDGE, -SLAB - EDGE]);
+  pts.push([HALF + EDGE, -SLAB - EDGE]);
+  pts.push([HALF + EDGE, TOP - RC]);
   const arcSteps = 6;
   for (let i = 1; i <= arcSteps; i++) {
     const a = (Math.PI / 2) * (i / arcSteps);
-    pts.push([HALF - RC + RC * Math.cos(a), TOP - RC + RC * Math.sin(a)]);
+    pts.push([HALF - RC + (RC + EDGE) * Math.cos(a), TOP - RC + RC * Math.sin(a)]);
   }
   const topSteps = 46;
   for (let i = 1; i <= topSteps; i++) {
@@ -102,7 +104,7 @@ function valleyProfile(): [number, number][] {
   }
   for (let i = 1; i <= arcSteps; i++) {
     const a = (Math.PI / 2) * (1 + i / arcSteps);
-    pts.push([-(HALF - RC) + RC * Math.cos(a), TOP - RC + RC * Math.sin(a)]);
+    pts.push([-(HALF - RC) + (RC + EDGE) * Math.cos(a), TOP - RC + RC * Math.sin(a)]);
   }
   return pts;
 }
@@ -111,11 +113,6 @@ function valleyProfile(): [number, number][] {
 /** Grass over soil. A wavy boundary lets the turf drape a little over the crest, like the mock. */
 const slabPaint = (x: number, y: number, z: number): Rgb => {
   const surf = surfaceHeight(x, z);
-  // Lobed grass drape: deeper at the crest, with a broad wavy lower edge like thick turf.
-  const lobe = 0.5 + 0.5 * tileNoise(x, z, 1.3, 2);
-  const fringe = 0.05 + 0.055 * lobe;
-  const dirt = smooth(fringe - 0.03, fringe + 0.03, surf - y); // 0 in grass, 1 in soil
-
   const patch = tileNoise(x, z, 1.9, 3);
   const shade = clamp01(-patch * 2.4);
   const sun = clamp01((patch - 0.03) * 2.2);
@@ -123,16 +120,23 @@ const slabPaint = (x: number, y: number, z: number): Rgb => {
   let g = mixRgb(C.grass, C.grassDark, shade * 0.6);
   g = mixRgb(g, C.grassSun, sun * 0.4);
   g = mixRgb(g, C.grassSun, clamp01((speck - 0.12) * 2.2) * 0.22);
-  g = mixRgb(g, C.grassDeep, 0.3 * (1 - smooth(0.06, 0.28, surf))); // lusher in the floor
-  g = mixRgb(g, C.grassSun, 0.22 * smooth(0.38, TOP, surf)); // sunlit crests
+  g = mixRgb(g, C.grassDeep, 0.3 * (1 - smooth(0, 0.22, surf))); // lusher in the floor
+  g = mixRgb(g, C.grassSun, 0.22 * smooth(0.32, TOP, surf)); // sunlit crests
 
-  const depth = clamp01((0.3 - y) / 0.3); // lower soil is darker
-  let s = mixRgb(C.earth, C.earthDeep, 0.15 + depth * 0.7);
-  const strata = tileNoise(x, z, 5.5, 2);
-  s = mixRgb(s, C.earthLight, clamp01(strata) * 0.18 * (1 - depth));
-  s = mixRgb(s, C.earthDeep, clamp01(tileNoise(x, z, 15, 2)) * 0.12);
-
-  return mixRgb(s, g, 1 - dirt);
+  const depthBelow = surf - y;
+  const onEdge = Math.abs(x) > 0.985 || Math.abs(z) > 0.985;
+  if (!onEdge || depthBelow < 0.012) return g;
+  // Side: the lip is the top paint at the same (x, z); soil strata follow the surface.
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.075 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (depthBelow < drip) return mixRgb(g, C.grassDark, 0.15 + 0.3 * (depthBelow / drip));
+  const low = clamp01(-y / SLAB); // 0 at the top, 1 at the bottom
+  let s = mixRgb(C.earth, C.earthDeep, 0.15 + low * 0.5);
+  const strata = Math.sin((depthBelow + 0.02 * Math.sin(along * Math.PI * 2)) * 50);
+  s = mixRgb(s, C.earthDeep, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) s = mixRgb(s, C.pebble, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return s;
 };
 
 const slabBump = (x: number, y: number, z: number): number => {
@@ -160,7 +164,7 @@ function stoneShape(i: number): ReturnType<typeof sdf.ellipsoid> {
 }
 
 const stonePaint = (x: number, y: number, z: number): Rgb => {
-  const top = clamp01((y - 0.03) / 0.12);
+  const top = clamp01((y + 0.03) / 0.12);
   let c = mixRgb(C.stoneDark, C.stone, 0.35 + top * 0.65);
   c = mixRgb(c, C.stoneLight, top * clamp01(noise.fbm(x * 6, y * 6, z * 6, 2, 4)) * 0.5);
   c = mixRgb(c, C.stoneDark, clamp01(noise.fbm(x * 30, y * 30, z * 30, 3, 11)) * 0.4);
@@ -191,15 +195,15 @@ function tuft(i: number): ReturnType<typeof sdf.cone> {
 
 const bladePaint = (x: number, y: number, z: number): Rgb => {
   const n = 0.5 + 0.5 * noise.fbm(x * 24, y * 24, z * 24, 2, 9);
-  let c = mixRgb(C.grassDark, C.grass, clamp01((y - 0.05) / 0.14) * (0.7 + n * 0.3));
-  c = mixRgb(c, C.grassSun, clamp01((y - 0.18) / 0.06) * 0.35);
+  let c = mixRgb(C.grassDark, C.grass, clamp01((y + 0.01) / 0.14) * (0.7 + n * 0.3));
+  c = mixRgb(c, C.grassSun, clamp01((y - 0.12) / 0.06) * 0.35);
   return c;
 };
 
 export default defineAsset({
   name: 'valley-slope',
   description:
-    'Modular 2 m grass valley tile: a soft grassy channel dipping from 0.6 m at the ±X edges to 0.06 m in the middle, with a few stones on the floor; stands on y = 0.',
+    'Modular 2 m grass valley tile, a 0.3 m slab: a soft grassy channel dipping from y = 0.54 at the ±X edges to y = 0 in the middle, with a few stones; sides show a grass lip over soil strata.',
   detail: 0.02,
   reference: 'docs/item-mockups/valley-slope-mock.jpg',
   texture: { size: 1024 },
@@ -209,7 +213,7 @@ export default defineAsset({
     // The whole solid is the extruded cross-section, then only the bowl surface gets gentle
     // lumps (they fade at every edge, so the tiling faces stay exact).
     const ext = sdf
-      .extrude(profile.polygon(valleyProfile()), 2, 0.012)
+      .extrude(profile.polygon(valleyProfile()), 2 + 2 * EDGE)
       .displace(LUMP_AMP, (x, y, z) => lumpField(x, z) * edgeFall(x, z) * smooth(0.05, 0.015, valleyY(x) - y), 1.4)
       .paintFn(slabPaint);
 

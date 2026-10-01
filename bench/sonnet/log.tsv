@@ -470,3 +470,37 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-01 13:30	cabbage	world	low	catchup2	36189	10	1.1	6.5	7.0	7	accepted	v1: pale head with 3 leaf caps, rib and veins, six cupped outer leaves; leaves read as tulip petals with smooth edges; no face; 3,684 tris
 2026-10-01 13:30	ritual-circle	world	medium	catchup2	35398	8	1.1	6.5	7.0	7	accepted	v1: purple-gray stones, glowing pentagram and circle line, 5 purple candles with drips, violet gradient flames; orchestrator edit: candles 0.074 -> 0.11 m thick and flames 0.07 -> 0.12 m tall so they read (height 0.30 -> 0.37 m, flames only); 3,704 tris
 2026-10-01 13:30	workbench	world	medium	catchup2	36980	9	1.5	7	7.1	7	accepted	v1: plank seams, stains and knife marks, hammer, chisel, saw, block and shavings on top, lower shelf with boards and a box; tools thin at 128 px; 4,700 tris
+2026-10-01 15:30	grass-ground	world	orchestrator	slab	0	0	0	-	7.3	7	accepted	pilot: 0.3 m slab, top at y = 0, grass lip over soil; tileSurface plane removed (it baked dark blocks in the textured build); 2 mm edge margin; 28 tris textured
+2026-10-01 15:30	dirt-road-straight	world	low	slab	12918	4	1.0	7	7.0	7	accepted	slab family of 4 (agent total 51,670 tokens, 14 tools, 4.1 min); tileSurface removed
+2026-10-01 15:30	dirt-road-corner	world	low	slab	12918	4	1.0	7.5	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	dirt-road-t-junction	world	low	slab	12918	3	1.0	7	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	dirt-road-crossing	world	low	slab	12916	3	1.1	7	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	river-straight	world	medium	slab	23480	7	1.8	7	7.0	7	accepted	slab family of 3 (70,440 tokens); channel bed -0.18, water -0.03, blue water face at the exits; orchestrator: water roughness 0.3 -> 0.55 (sprite glare)
+2026-10-01 15:30	river-bend	world	medium	slab	23480	6	1.8	7	7.0	7	accepted	slab family of 3; water/bank seam at one exit edge
+2026-10-01 15:30	river-junction	world	medium	slab	23480	6	1.8	6.5	7.0	7	accepted	slab family of 3; orchestrator: water roughness 0.4 -> 0.55
+2026-10-01 15:30	cobble-floor	world	low	slab	13662	4	1.5	6.5	7.0	7	accepted	slab family of 3 (40,985 tokens); stone block foundation; orchestrator: maxError 0.01 -> 0.004 and displace 0.03 (domes were flattened)
+2026-10-01 15:30	stone-floor	world	low	slab	13662	4	1.5	7.5	7.5	7.5	accepted	slab family of 3; orchestrator: joints 0.024 -> 0.034 deep, foundation courses 0.11 m; P0
+2026-10-01 15:30	tile-floor	world	low	slab	13661	4	1.5	7	7.0	7	accepted	slab family of 3; terracotta lip over a stone foundation
+2026-10-01 15:30	dirt-ground	world	low	slab	16684	5	2.0	6.5	7.0	7	accepted	slab family of 3 (50,051 tokens); tileSurface removed; orchestrator: broken strata and clumps (sides read as planks)
+2026-10-01 15:30	dirt-floor	world	low	slab	16684	5	2.0	7	7.0	7	accepted	slab family of 3; chunky pebbles rise to 0.12 m (mockup style); orchestrator: earth strata
+2026-10-01 15:30	tilled-field	world	low	slab	16683	5	2.0	6.5	7.0	7	accepted	slab family of 3; orchestrator: raised soil rows 0.035 m high between the furrows, earth strata
+2026-10-01 15:30	cobble-road-straight	world	low	slab	9185	2	1.7	6.5	7.0	7	accepted	slab family of 4 (36,738 tokens); gravel bedding under the road band
+2026-10-01 15:30	cobble-road-corner	world	low	slab	9185	2	1.7	6.5	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	cobble-road-t-junction	world	low	slab	9184	2	1.7	6.5	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	cobble-road-crossing	world	low	slab	9184	1	1.6	6.5	7.0	7	accepted	slab family of 4
+2026-10-01 15:30	forest-ground	world	low	slab	18417	5	1.6	7	7.0	7	accepted	slab family of 3 (55,252 tokens); leaf-litter lip over humus
+2026-10-01 15:30	meadow-ground	world	low	slab	18417	5	1.6	7	7.0	7	accepted	slab family of 3; tufts 0.175 m (old design)
+2026-10-01 15:30	grass-floor	world	low	slab	18418	4	1.5	6.5	7.0	7	accepted	slab family of 3; orchestrator: 4 big flat daisies like the mockup, 23K -> 6K tris, 2 mm edge gap closed
+2026-10-01 15:30	wood-floor	world	low	slab	35689	9	1.1	7	7.2	7	accepted	plank ends, joist band, stone foundation, like the tavern mockup floor edge
+2026-10-01 15:30	hill-slope	world	medium	slab	24747	6	3.4	7	7.0	7	accepted	slab family of 2 (49,494 tokens); front edge y = 0, back y = 1.0
+2026-10-01 15:30	valley-slope	world	medium	slab	24747	5	3.4	7	7.0	7	accepted	slab family of 2; floor y = 0, edges 0.54
+2026-10-01 15:30	desert-ground	world	low	slab	16322	5	2.5	6.5	7.0	7	accepted	slab family of 3 (48,967 tokens); sandstone strata
+2026-10-01 15:30	snow-ground	world	low	slab	16322	5	2.5	6.5	7.0	7	accepted	slab family of 3; snow lip over frozen soil
+2026-10-01 15:30	stone-ground	world	low	slab	16323	5	2.6	6.5	7.0	7	accepted	slab family of 3; orchestrator: grooves 1.6 -> 4.2 cm wide, displace 0.038
+2026-10-01 15:30	marsh-ground	world	low	slab	39080	8	3.9	7	7.2	7	accepted	pools at -0.02, moss lip over wet mud; orchestrator: water roughness 0.1 -> 0.55 (pools turned white in two sprite directions)
+2026-10-01 15:30	footpath-straight	world	low	slab	21145	7	3.8	7	7.0	7	accepted	slab family of 2 (42,290 tokens)
+2026-10-01 15:30	footpath-corner	world	low	slab	21145	6	3.8	7	7.0	7	accepted	slab family of 2
+2026-10-01 15:30	stepping-stone	world	low	slab	31937	6	1.0	7	7.0	7	accepted	body `grass` kept (the scene viewer hides it, scenes show only the stones)
+2026-10-01 15:30	farm-field	world	medium	slab	37759	7	1.7	7	7.5	7.5	accepted	overlay, not a slab: frame with posts, 7 soil ridges, 63 cabbage rosettes; orchestrator: rosettes 0.13 -> 0.3 m across (were flecks at 128 px); 11,036 tris
+2026-10-01 15:45	river-bank	world	medium	slab	30022	7	3.6	7	7.0	7	accepted	slab family of 2 (60,043 tokens); bed -0.18, water face at the exit; thin sand strip under the bed; orchestrator: water roughness 0.42 -> 0.55
+2026-10-01 15:45	lake-shore	world	medium	slab	30021	6	3.6	7	7.0	7	accepted	slab family of 2; lake bed -0.18, sand lip on the lake edges; orchestrator: water roughness 0.35 -> 0.55

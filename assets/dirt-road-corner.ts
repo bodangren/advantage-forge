@@ -3,7 +3,7 @@ import { defineAsset, sdf, profile, noise, rgb, mixRgb } from '../src/index.js';
 // dirt-road-corner — a modular 2 m terrain tile: a 90-degree dirt-road bend.
 //
 // Role: hamlet map tile that joins two straight road tiles; read top-down and at 128 px.
-// Size: exactly 2 x 2 m, 0.08 m thick, grass top at y = 0.08, standing on y = 0.
+// Size: exactly 2 x 2 m, 0.3 m slab, grass top at y = 0, soil sides down to y = -0.3.
 // One idea: a sunken packed-dirt path that sweeps one smooth quarter circle around the
 // inside corner, full-bleed through the mid-edges of two adjacent sides, with wheel ruts
 // and dusty worn edges melting into the grass.
@@ -39,15 +39,15 @@ const roadMask = (x: number, z: number): number =>
 // this relief; the softness lives in the profile, not in a blend radius.
 const dishProfile = profile.polygon(
   [
-    [0.216, 0.096], [0.304, 0.088], [0.392, 0.0805], // inner shoulder, above grass level
-    [0.49, 0.0748], [0.588, 0.0715], // inner worn slope
-    [0.7, 0.0702], [0.812, 0.0692], // inner wheel rut
-    [0.91, 0.0709], [1.0, 0.0716], // crowned centerline
-    [1.098, 0.0709], [1.196, 0.0692], // outer wheel rut
-    [1.308, 0.0702], [1.42, 0.0715], // outer worn slope
-    [1.518, 0.0748], [1.616, 0.0805], // outer shoulder
-    [1.704, 0.088], [1.792, 0.096], // outer shoulder, above grass level
-    [1.792, 0.14], [0.216, 0.14], // closed over the top, in the air
+    [0.216, 0.016], [0.304, 0.008], [0.392, 0.0005], // inner shoulder, above grass level
+    [0.49, 0.0032], [0.588, -0.0001], // inner worn slope
+    [0.7, -0.0014], [0.812, -0.0024], // inner wheel rut
+    [0.91, -0.0007], [1.0, 0.0], // crowned centerline, flush with the other road tiles
+    [1.098, -0.0007], [1.196, -0.0024], // outer wheel rut
+    [1.308, -0.0014], [1.42, -0.0001], // outer worn slope
+    [1.518, 0.0032], [1.616, 0.0005], // outer shoulder
+    [1.704, 0.008], [1.792, 0.016], // outer shoulder, above grass level
+    [1.792, 0.06], [0.216, 0.06], // closed over the top, in the air
   ],
   { smooth: true },
 );
@@ -61,17 +61,37 @@ const DIRT_DUSTY = rgb('#9c7c52');
 const DIRT_RUT = rgb('#67492c');
 const DIRT_DARK = rgb('#5a4227');
 
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap after meshing
+const SOIL = rgb('#7a4a2a');
+const SOIL_DARK = rgb('#57331d');
+const PEBBLE_SOIL = rgb('#9a8a78');
+
+/** Side color: a lip of the top paint (same x, z) with a wavy drip edge over soil strata. */
+function sideColorAt(x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(top(x, z), SOIL_DARK, 0.15 * Math.min(1, -y / drip));
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE_SOIL, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+}
+
 export default defineAsset({
   name: 'dirt-road-corner',
-  description: 'Modular 2 m dirt road corner tile: a packed-dirt quarter bend on a grass base.',
+  description: 'Modular 2 m dirt road corner tile, a 0.3 m slab with top at y = 0 over layered soil sides: a packed-dirt quarter bend on grass.',
   detail: 0.008,
   texture: { size: 1024 },
   build(k) {
-    const grassSlab = sdf.box([2, 0.08, 2], 0.006).at(0, 0.04, 0);
+    const grassSlab = sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0);
     const dish = sdf.revolve(dishProfile).at(AXIS_X, 0, AXIS_Z);
     // Sink the road dish into the slab with an exact cut; the profile's sloped shoulders
     // are the soft worn edge.
-    const tile = grassSlab.subtract(dish).paintFn((x, y, z) => {
+    const topColor = (x: number, z: number) => {
       const r = roadRadius(x, z);
       const road = roadMask(x, z);
 
@@ -97,7 +117,10 @@ export default defineAsset({
       if (speck > 0.35) dirt = mixRgb(dirt, DIRT_DARK, clamp01((speck - 0.35) * 1.2));
 
       return mixRgb(grass, dirt, road);
-    });
+    };
+    const tile = grassSlab.subtract(dish).paintFn((x, y, z) =>
+      y > -0.01 ? topColor(x, z) : sideColorAt(x, y, z, topColor),
+    );
 
     k.body('tile', tile, {
       color: '#79b447',
@@ -106,6 +129,7 @@ export default defineAsset({
       paintWeight: 2,
       // Fine grain only in the normal map: dirt grain and cracks, fine grass tufting.
       bump: (x, y, z) => {
+        if (y < -0.01) return 0;
         const road = roadMask(x, z);
         const crack = noise.worley(x * 12, 4, z * 12);
         const dirtBump =

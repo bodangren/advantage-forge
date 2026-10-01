@@ -4,8 +4,8 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * Forest footpath straight — catalog id `architecture/landscape-parts/footpath-straight`.
  * A modular 2 m x 2 m ground tile for the sunny forest set: a narrow dirt footpath about
  * 1 m wide runs straight along Z, centered on X, between bright grass shoulders. It swaps
- * 1:1 with the hamlet dirt-road tiles: same 2 m footprint, same 0.08 m slab with the top
- * surface at y = 0.08 (the "about 0.1 m" tile height of the hamlet kit), clean square edges.
+ * 1:1 with the hamlet dirt-road tiles: same 2 m footprint, same 0.3 m slab with the top
+ * surface at y = 0 (0.3 m slab) (the "about 0.1 m" tile height of the hamlet kit), clean square edges.
  *
  * One idea: a soft, foot-worn tan trail that wanders gently and melts into shaded forest
  * floor (forest-ground styling) — wheel-free, so the wear is a subtle darker center patch
@@ -24,8 +24,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  */
 
 const TILE = 2; // grid size in meters
-const THICK = 0.08; // matches the hamlet dirt-road tiles, top surface at y = 0.08
-const TOP = THICK;
+const TOP = 0; // walkable top at y = 0 (the slab goes down to y = -0.3)
 const PATH_HALF = 0.5; // footpath is ~1.0 m wide along the full Z length
 
 const GRASS = rgb('#4a8a3f'); // shaded forest-floor green — dominant (matches forest-ground)
@@ -40,6 +39,27 @@ const DIRT_LIGHT = rgb('#d9bd85');
 const EDGE = rgb('#8f8a4e'); // shadowed fringe where the trail sinks into the grass
 const STONE = rgb('#8a94a0');
 const STONE_DARK = rgb('#6f7883');
+
+
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE_OVERLAP = 0.001; // 1 mm of overlap so neighbours never show a gap
+const SOIL = rgb('#7a4a2a'); // side soil
+const SOIL_DARK = rgb('#57331d'); // soil strata and the lower side
+const PEBBLE_SIDE = rgb('#9a8a78'); // small stones in the soil
+
+/** Side color: the top paint as a lip with a wavy drip edge, over soil strata. */
+const sideColorAt = (x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) => {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return top(x, z);
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE_SIDE, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+};
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -132,14 +152,14 @@ const LEAF_COLORS = [LEAF_PALE, LEAF_BROWN, LEAF_DEEP] as const;
 export default defineAsset({
   name: 'footpath-straight',
   description:
-    'Straight 2 m forest footpath tile: narrow foot-worn tan trail between shaded forest-floor shoulders with fallen leaves, with half-sunk pebbles.',
+    'Straight 2 m forest footpath tile, a 0.3 m slab with the top at y = 0; sides show a top-paint lip over warm layered soil. Top: narrow foot-worn tan trail between shaded forest-floor shoulders with fallen leaves, with half-sunk pebbles.',
   detail: 0.01,
   texture: { size: 1024 },
 
   build(k) {
-    // One slab carries grass AND trail: the top is a single flat surface at y = 0.08, so the
+    // One slab carries grass AND trail: the top is a single flat surface at y = 0 (0.3 m slab), so the
     // path can never sit raised and no seam can appear between path and grass.
-    const terrain = sdf.box([TILE, THICK, TILE]).at(0, THICK / 2, 0).paintFn((x, _y, z) => terrainColor(x, z));
+    const terrain = sdf.box([TILE + 2 * EDGE_OVERLAP, SLAB + 2 * EDGE_OVERLAP, TILE + 2 * EDGE_OVERLAP]).at(0, -SLAB / 2, 0).paintFn((x, y, z) => (y > -0.01 ? terrainColor(x, z) : sideColorAt(x, y, z, terrainColor)));
     k.body('terrain', terrain, {
       color: GRASS,
       roughness: 0.95,

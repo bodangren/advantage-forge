@@ -51,8 +51,12 @@ Closest examples: `cottage.ts` (stone with `noise.worley`, bump), `oak-tree.ts` 
   tile center at ground level, top surface at `y = 0`, with edges that match the neighbors so
   tiles repeat without seams. Keep noise and paint continuous across tile borders by using
   world-space noise (`noise.fbm(x, y, z)`), and keep edge heights exactly equal on all tiles.
-- A ground tile is a box from `y = -0.2` to `y = 0` whose top gets gentle `displace` (keep it at
-  0 near the edges with a falloff so edges match) and `paintFn` for grass, dirt, or stone.
+- A ground tile is a 0.3 m slab: a box from `y = -0.3` to `y = 0` (make it 2 mm larger than the
+  tile so neighbours never show a gap), whose top gets gentle `displace` (keep it at 0 near the
+  edges with a falloff so edges match) and `paintFn` for grass, dirt, or stone. Paint the sides
+  as the mockups show: a lip of the top material over soil, sandstone, or a stone foundation.
+  Do not add a flat `k.add` plane on top: it bakes dark blocks in a textured build. Recipe and
+  worked example: `bench/sonnet/briefs/ground-slab-recipe.md`, `assets/grass-ground.ts`.
 - Roads and paths: paint a band (`paintWhere` with a box or an extruded path profile) in a dirt
   or cobble color, slightly lowered, with pebbles as small spheres or Worley cobbles in `bump`.
   Make straight, corner, T, and cross pieces from one shared function.

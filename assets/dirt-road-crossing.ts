@@ -1,7 +1,7 @@
 import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
 
 /**
- * Dirt road crossing — a modular 2 m x 2 m terrain tile (0.08 m thick, top at y = 0.08) for a
+ * Dirt road crossing — a modular 2 m x 2 m terrain tile (0.3 m slab, top at y = 0, soil sides) for a
  * cozy chibi fantasy hamlet map, made from dirt-road-t-junction. Roads enter at the middle of all
  * four edges and cross at the tile centre: a through road along X and one along Z. ONE flat slab
  * carries grass AND road, so the packed road is flush with the grass — no raised slab, no seam;
@@ -23,8 +23,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  */
 
 const TILE = 2; // grid size in meters
-const THICK = 0.08; // tile thickness, top surface at y = 0.08
-const TOP = THICK;
+const TOP = 0; // walkable top at y = 0
 const ROAD_HALF = 0.6; // road arms are ~1.2 m wide, like the straight dirt-road tile
 const CORNER_R = 0.1; // rounding of the road edges at the junction
 const BLEND_K = 0.1; // soft fillet where the stub meets the through road
@@ -108,6 +107,8 @@ const grassColor = (x: number, z: number) => {
   return c;
 };
 
+const terrainColor = (x: number, z: number) => mixRgb(grassColor(x, z), dirtColor(x, z), roadMask(x, z));
+
 // A few small pebbles half-sunk in the road, deterministic positions in the three arms,
 // kept off the junction centre so the convergence reads clean.
 const PEBBLES: Array<[number, number, number]> = [
@@ -121,25 +122,46 @@ const PEBBLES: Array<[number, number, number]> = [
   [-0.15, 0.62, 0.022],
 ];
 
+
+const SLAB = 0.3; // ground tile depth: top at y = 0, bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap after meshing
+const SOIL = rgb('#7a4a2a');
+const SOIL_DARK = rgb('#57331d');
+const PEBBLE_SOIL = rgb('#9a8a78');
+
+/** Side color: a lip of the top paint (same x, z) with a wavy drip edge over soil strata. */
+function sideColorAt(x: number, y: number, z: number, top: (x: number, z: number) => ReturnType<typeof rgb>) {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(top(x, z), SOIL_DARK, 0.15 * Math.min(1, -y / drip));
+  const depth = -y / SLAB;
+  let c = mixRgb(SOIL, SOIL_DARK, 0.15 + depth * 0.55);
+  const strata = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, SOIL_DARK, Math.max(0, strata - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE_SOIL, Math.min(1, (n - 0.45) * 6) * 0.8);
+  return c;
+}
+
 export default defineAsset({
   name: 'dirt-road-crossing',
   description:
-    'Crossing 2 m dirt road tile, four flush arms meeting at the centre, warm packed brown with stone flecks.',
+    'Crossing 2 m dirt road tile, four flush arms meeting at the centre, warm packed brown with stone flecks, a 0.3 m slab with top at y = 0 over layered soil sides.',
   detail: 0.01,
   texture: { size: 1024 },
 
   build(k) {
-    // One slab carries grass AND road: the top is a single flat surface at y = 0.08, so the
+    // One slab carries grass AND road: the top is a single flat surface at y = 0, so the
     // road can never sit raised and no seam can appear between road and grass.
-    const terrain = sdf.box([TILE, THICK, TILE], 0.004)
-      .at(0, THICK / 2, 0)
-      .paintFn((x, _y, z) => mixRgb(grassColor(x, z), dirtColor(x, z), roadMask(x, z)));
+    const terrain = sdf.box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE]).at(0, -SLAB / 2, 0)
+      .paintFn((x, y, z) => (y > -0.01 ? terrainColor(x, z) : sideColorAt(x, y, z, terrainColor)));
     k.body('terrain', terrain, {
       color: GRASS,
       roughness: 0.95,
       detail: 0.02,
       // Packed-earth grain in the road, finer grass nap on the corners — normal-map only.
-      bump: (x, _y, z) => {
+      bump: (x, y, z) => {
+        if (y < -0.01) return 0;
         const m = roadMask(x, z);
         const dirt = 0.0035 * noise.fbm(x * 30, 1, z * 30, 3);
         const grass = 0.002 * noise.fbm(x * 50, 4, z * 50, 2);

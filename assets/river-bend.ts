@@ -4,12 +4,13 @@ import type { Rgb } from '../src/index.js';
 // river-bend — modular 90-degree river bend tile, catalog id architecture/landscape-parts.
 //
 // Role: hamlet map tile that joins river-straight tiles around a corner; read top-down and
-// at 128 px. Exactly 2 x 2 m, 0.08 m thick, grass top at y = 0.08, standing on y = 0. The
+// at 128 px. Exactly 2 x 2 m, a 0.3 m slab: grass top at y = 0, soil down to y = -0.3. The
 // river enters at the middle of the front edge (z = -1) and leaves at the middle of the
 // right edge (x = +1), sweeping one smooth quarter turn around the inside corner at
 // (1, -1), so every channel function is a function of the radius from that vertical axis.
 // One idea: a calm blue-green ribbon curving around a tiny grassy inside corner, framed by
-// thin warm sand shores, sunk 2.5 cm below grass-level banks.
+// thin warm sand shores, water 2.5 cm below grass-level banks, bed at y = -0.18.
+// Sides: at the stream edges a blue water face over a sand-and-gravel bed band and soil; elsewhere a grass lip over soil strata.
 // Shape language: rounded and soft (eased bank lip and toe, beveled slab, round pebbles);
 // the tile edges stay straight and clean so neighbours repeat without seams.
 // Palette (60/30/10): grass #5fb14d dominant — the grass-ground tile's exact green, with its
@@ -19,8 +20,10 @@ import type { Rgb } from '../src/index.js';
 // (roughness 0.55, opacity 0.85), three probed pebbles. No rig, no animation.
 
 const TILE = 2.0; // tile footprint (m)
-const TOP = 0.08; // slab thickness / grass-level bank height
-const WATER_Y = 0.055; // water surface, 2.5 cm below the grass
+const SLAB = 0.3;
+const EDGE = 0.001;
+const WATER_Y = -0.025; // water surface, 2.5 cm below the grass (top at y = 0)
+const BED_Y = -0.18; // channel bed
 const AXIS_X = 1; // the bend sweeps around the vertical axis through
 const AXIS_Z = -1; // the inside corner of the turn (front-right tile corner)
 
@@ -76,8 +79,8 @@ function fleckWeight(x: number, z: number): number {
 export default defineAsset({
   name: 'river-bend',
   description:
-    'Modular 2 m river bend tile: calm blue-green water in a quarter turn, thin sandy shores, grass margins.',
-  detail: 0.014,
+    'Modular 2 m river bend tile, a 0.3 m slab with its top at y = 0: calm blue-green water 0.18 m deep in a quarter turn, thin sandy shores, grass margins; water, gravel bed and soil show on the sides.',
+  detail: 0.02,
   texture: { size: 1024 },
 
   build(k) {
@@ -87,37 +90,39 @@ export default defineAsset({
     // down to the floor at 0.02, and the smooth polygon keeps lip and toe soft.
     const bankProfile = profile.polygon(
       [
-        [0.2, 0.12],
-        [0.25, 0.084],
-        [0.32, 0.052],
-        [0.4, 0.024],
-        [0.5, 0.02],
-        [1.5, 0.02],
-        [1.6, 0.024],
-        [1.68, 0.052],
-        [1.75, 0.084],
-        [1.8, 0.12],
-        [1.8, 0.16],
-        [0.2, 0.16],
+        [0.2, 0.04],
+        [0.25, 0.004],
+        [0.3, -0.04],
+        [0.36, -0.1],
+        [0.44, -0.16],
+        [0.55, BED_Y],
+        [1.45, BED_Y],
+        [1.56, -0.16],
+        [1.64, -0.1],
+        [1.7, -0.04],
+        [1.75, 0.004],
+        [1.8, 0.04],
+        [1.8, 0.1],
+        [0.2, 0.1],
       ],
       { smooth: true },
     );
     const valley = sdf.revolve(bankProfile).at(AXIS_X, 0, AXIS_Z);
     const ground = sdf
-      .box([TILE, TOP, TILE], 0.006)
-      .at(0, TOP / 2, 0)
+      .box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE])
+      .at(0, -SLAB / 2, 0)
       .smoothSubtract(0.02, valley);
 
     // Grass uses grass-ground's exact world-space recipe so neighbour tiles continue the
     // pattern. Sand shore: from under the waterline up the bank and onto the flat grass,
     // edges wobbling; silt bed below the waterline reads through the water.
-    const groundPaint = (x: number, y: number, z: number): Rgb => {
+    const topPaint = (x: number, y: number, z: number): Rgb => {
       const d = Math.abs(bendRadius(x, z) - 1);
       const big = noise.fbm(x * 2.4, 0, z * 2.4, 3);
       const small = noise.fbm(x * 7, 0, z * 7, 2);
       const v = clamp01(big * 0.45 + small * 0.25 + 0.5);
-      let col = y > 0.07 ? mixRgb(grass, grassDark, v * 0.45) : mixRgb(grass, grassDark, 0.35);
-      if (y > 0.07) {
+      let col = y > -0.01 ? mixRgb(grass, grassDark, v * 0.45) : mixRgb(grass, grassDark, 0.35);
+      if (y > -0.01) {
         const w = fleckWeight(x, z);
         if (w > 0) col = mixRgb(col, fleckColor, w);
       }
@@ -143,7 +148,7 @@ export default defineAsset({
       const cx = (ci + 0.5) * cell;
       const cz = (cj + 0.5) * cell;
       const cr = bendRadius(cx, cz);
-      if (y > 0.07 && noise.random(ci, cj, 11) < 0.22 && cr > 1.87 && cr < 1.99) {
+      if (y > -0.01 && noise.random(ci, cj, 11) < 0.22 && cr > 1.87 && cr < 1.99) {
         const dot = 1 - smoothstep(0.008, 0.014, Math.hypot(x - cx, z - cz));
         if (dot > 0) {
           const warm = noise.random(ci, cj, 23) < 0.5;
@@ -153,11 +158,41 @@ export default defineAsset({
       return col;
     };
 
+    const soilC = rgb('#7a4a2a');
+    const strataC = rgb('#57331d');
+    const pebbleC = rgb('#9a8a78');
+    const bandC = rgb('#a89a78');
+    const groundPaint = (x: number, y: number, z: number): Rgb => {
+      const edge = Math.abs(x) > 0.995 || Math.abs(z) > 0.995;
+      if (!((edge && y < -0.01) || y < -0.25)) return topPaint(x, y, z);
+      const along = Math.abs(x) > Math.abs(z) ? z : x;
+      const soilAt = (yy: number): Rgb => {
+        let c = mixRgb(soilC, strataC, 0.15 + (-yy / SLAB) * 0.55);
+        const st = Math.sin((yy + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+        c = mixRgb(c, strataC, Math.max(0, st - 0.6) * 0.8);
+        const n = noise.fbm(along * 9, yy * 9, 3.1, 2);
+        if (n > 0.45) c = mixRgb(c, pebbleC, Math.min(1, (n - 0.45) * 6) * 0.8);
+        return c;
+      };
+      const d = Math.abs(bendRadius(x, z) - 1);
+      if (edge && d < 0.78) {
+        const yb = BED_Y * (1 - smoothstep(0.55, 0.76, d));
+        if (y > yb - 0.055) {
+          const n = noise.fbm(along * 30, y * 30, 1.7, 2);
+          return mixRgb(bandC, rgb('#6f6a60'), clamp01(n * 0.8 - 0.1) * 0.6);
+        }
+        return soilAt(y);
+      }
+      const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+      if (y > -drip) return mixRgb(topPaint(x, 0, z), grassDark, 0.15 * Math.min(1, -y / drip));
+      return soilAt(y);
+    };
+
     k.body('ground', ground.paintFn(groundPaint), {
       color: grass,
       roughness: 0.9,
       paintWeight: 2,
-      detail: 0.014,
+      detail: 0.02,
       bump: (x, y, z) => 0.0016 * noise.fbm(x * 26, y * 26, z * 26, 3),
     });
 
@@ -169,8 +204,8 @@ export default defineAsset({
     const waterRing = sdf
       .revolve(
         profile.polygon([
-          [0.22, 0.002],
-          [1.78, 0.002],
+          [0.22, BED_Y - 0.005],
+          [1.78, BED_Y - 0.005],
           [1.78, WATER_Y],
           [0.22, WATER_Y],
         ]),
@@ -186,7 +221,7 @@ export default defineAsset({
           smoothstep(0, 0.13, 1 - Math.abs(z)),
       );
     const water = waterRing.intersect(
-      sdf.box([TILE - 0.006, 0.1, TILE - 0.006]).at(0, 0.05, 0),
+      sdf.box([TILE + 2 * EDGE, 0.4, TILE + 2 * EDGE]).at(0, -0.2, 0),
     );
 
     const waterPaint = (x: number, y: number, z: number): Rgb => {
@@ -194,15 +229,15 @@ export default defineAsset({
       // Deep blue-green through the middle of the channel; lighter aqua as a thin rim at the
       // banks, with a slight tone drift so the surface is not perfectly uniform.
       let col = mixRgb(waterShallow, waterDeep, 1 - smoothstep(0.5, 0.64, d));
-      return mixRgb(col, waterDeep, 0.1 * noise.fbm(x * 5, y * 5, z * 5, 2));
+      col = mixRgb(col, waterDeep, 0.1 * noise.fbm(x * 5, y * 5, z * 5, 2));
+      return mixRgb(col, waterDeep, clamp01((WATER_Y - y) / 0.15) * 0.7);
     };
 
     k.body('water', water.paintFn(waterPaint), {
       color: waterDeep,
       roughness: 0.55,
-      opacity: 0.85,
-      paintWeight: 2,
-      detail: 0.012,
+            paintWeight: 2,
+      detail: 0.02,
       bump: (x, y, z) => 0.0011 * noise.fbm(x * 45, y * 25, z * 45, 2),
     });
 

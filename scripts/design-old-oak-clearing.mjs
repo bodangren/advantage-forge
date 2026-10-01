@@ -35,7 +35,7 @@ const PATH = new Map([
 
 const places = [];
 const put = (asset, x, z, opts = {}) => {
-  const p = { asset, at: [x, opts.y ?? 0.08, z] };
+  const p = { asset, at: [x, opts.y ?? 0, z] }; // ground tiles are 0.3 m slabs with their top at y = 0
   if (opts.yaw) p.yaw = opts.yaw;
   if (opts.scale) p.scale = opts.scale;
   places.push(p);
@@ -68,9 +68,9 @@ put('reeds', -7.7, -5.6, { yaw: 15 });
 put('reeds', -7.8, -1.4, { yaw: 160 });
 put('reeds', -7.7, 2.8, { yaw: 75 });
 put('reeds', -7.8, 5.6, { yaw: 240 });
-put('stepping-stone', -9, 2.5, { y: 0.02 }); // crossing at r6
-put('stepping-stone', -9, 3.05, { y: 0.02 });
-put('stepping-stone', -9, 3.6, { y: 0.02 });
+put('stepping-stone', -9, 2.5, { y: -0.06 }); // crossing at r6, stones just above the water
+put('stepping-stone', -9, 3.05, { y: -0.06 });
+put('stepping-stone', -9, 3.6, { y: -0.06 });
 put('rock-cluster', -7.3, -3.0, { yaw: 80 }); // north stream bank
 
 // --- floor dressing ---------------------------------------------------------
@@ -124,7 +124,7 @@ const TREES = [
   // far bank west of the stream, for depth
   [-11, -4, 'oak-tree', 15, 1.1], [-11, 2, 'pine-tree', 215, 1.0], [-11, 6, 'oak-tree', 145, 0.9],
 ];
-for (const [x, z, asset, yaw, scale] of TREES) put(asset, x, z, { yaw, scale, y: x < -10 ? 0 : 0.08 });
+for (const [x, z, asset, yaw, scale] of TREES) put(asset, x, z, { yaw, scale });
 
 // --- figures (scale) ---------------------------------------------------------
 put('adventurer', 2.8, 6.4, { yaw: 180 }); // walking in from the south entry

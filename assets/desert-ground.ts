@@ -5,8 +5,9 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js'
  *
  * Role: side-by-side terrain tile that must butt against its neighbours, so it keeps a
  *   square 2 m footprint, straight vertical sides, and a top surface that meets the tile
- *   edge at exactly y = 0.06 (the ripple relief fades out before every edge).
- * Size: 2 x 0.06 x 2 m, centered on the Y axis, standing on y = 0, facing +Z. No rig.
+ *   edge at exactly y = 0 (the ripple relief fades out before every edge).
+ * Size: 2 x 0.3 x 2 m slab, top at y = 0, bottom at y = -0.3, facing +Z. No rig.
+ * Sides: a sand lip over layered sandstone (#c89a5a, strata #a8784a / #d8b070).
  * The one idea: a chunky slab of warm sand combed by broad, soft wind ripples; the
  *   light/dark ripple bands are the focal point, with a few small pebbles and a dry twig
  *   as seasoning that breaks the flat silhouette.
@@ -23,8 +24,9 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb } from '../src/index.js'
  */
 
 const TILE = 2; // exact grid size in meters
-const THICK = 0.06; // slab thickness, top face at y = 0.06
-const TOP = THICK;
+const SLAB = 0.3; // slab depth: top at y = 0, bottom at y = -0.3
+const EDGE = 0.001; // 1 mm overlap so neighbours never show a gap
+const TOP = 0;
 const RIPPLE_AMP = 0.032; // dune relief amplitude in meters (above the 5 mm displace limit)
 
 const SAND = rgb('#e3c38a'); // warm sand — dominant
@@ -65,17 +67,36 @@ function rippleWave(x: number, z: number): number {
 const edgeMask = (x: number, z: number): number =>
   1 - ramp(0.9, 0.98, Math.max(Math.abs(x), Math.abs(z)));
 /** Vertical mask: relief only near the top face, zero at the bottom so y = 0 stays flat. */
-const topMask = (y: number): number => ramp(TOP - 0.05, TOP - 0.014, y);
+const topMask = (y: number): number => ramp(-0.05, -0.014, y);
 
 /** World height of the sand surface at (x, z): the top face plus its ripple relief. */
 const surfaceY = (x: number, z: number): number =>
   TOP + RIPPLE_AMP * rippleWave(x, z) * edgeMask(x, z);
 
 /** 1 on the open top face, 0 on the lower sides and bottom. */
-const onTop = (y: number): number => ramp(TOP - 0.03, TOP - 0.006, y);
+const onTop = (y: number): number => ramp(-0.03, -0.006, y);
 
 /** Warm sand: ripple-band value plan, dry patches, fine speckle, shaded sides. */
+const SANDSTONE = rgb('#c89a5a');
+const STRATA_DARK = rgb('#a8784a');
+const STRATA_LIGHT = rgb('#d8b070');
+
+/** Side: a sand lip with a wavy lower edge over layered sandstone, darker toward the bottom. */
+function sideColorAt(x: number, y: number, z: number): Rgb {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.015 * Math.sin(along * Math.PI * 3 + 0.7) + 0.01 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(SAND, SAND_MID, 0.3 + 0.4 * clamp01(-y / drip));
+  let c = SANDSTONE;
+  const w = Math.sin((y + 0.015 * Math.sin(along * Math.PI * 2)) * 60);
+  c = mixRgb(c, STRATA_DARK, clamp01(w - 0.4) * 0.9);
+  c = mixRgb(c, STRATA_LIGHT, clamp01(-w - 0.5) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, PEBBLE, clamp01((n - 0.45) * 6) * 0.6);
+  return mixRgb(c, STRATA_DARK, clamp01(-y / SLAB) * 0.45);
+}
+
 function sandColorAt(x: number, y: number, z: number): Rgb {
+  if (y < -0.01) return sideColorAt(x, y, z);
   const r = rippleWave(x, z) * edgeMask(x, z);
   const topness = onTop(y);
 
@@ -94,9 +115,6 @@ function sandColorAt(x: number, y: number, z: number): Rgb {
   c = mixRgb(c, SAND_LIGHT, clamp01((speck - 0.1) * 2.6) * 0.28);
   c = mixRgb(c, SAND_DARK, clamp01((-speck - 0.2) * 2.6) * 0.22);
 
-  // Sides sit in their own shade; the very bottom takes the contact shadow.
-  c = mixRgb(c, SAND_DARK, (1 - topness) * 0.42);
-  c = mixRgb(c, SAND_DEEP, clamp01((0.016 - y) / 0.016) * 0.45);
   return c;
 }
 
@@ -216,7 +234,7 @@ function twigColorAt(x: number, y: number, z: number): Rgb {
   const grain = clamp01(0.5 + 0.5 * noise.fbm(x * 30, y * 20, z * 30, 2));
   let c = mixRgb(TWIG, TWIG_DARK, grain * 0.55);
   c = mixRgb(c, CUT, clamp01((0.03 - bestTip) / 0.02) * 0.7);
-  c = mixRgb(c, TWIG_DARK, clamp01((0.075 - y) / 0.014) * 0.4);
+  c = mixRgb(c, TWIG_DARK, clamp01((0.015 - y) / 0.014) * 0.4);
   return c;
 }
 
@@ -224,26 +242,26 @@ function twigColorAt(x: number, y: number, z: number): Rgb {
 export default defineAsset({
   name: 'desert-ground',
   description:
-    'A 2 m square modular desert sand tile, 0.06 m thick with the top at y = 0.06: warm sand combed by soft wind ripples, with five small pebbles and a dry forked twig, straight tile edges.',
+    'A 2 m square modular desert sand tile, a 0.3 m slab with the top at y = 0: warm sand combed by soft wind ripples, with five small pebbles and a dry forked twig, straight tile edges; a sand lip over layered sandstone on the sides.',
   detail: 0.02,
   reference: 'docs/item-mockups/desert-ground-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // Square slab, 2 x 0.06 x 2 m: bottom on y = 0, top at y = 0.06. The dune relief is
+    // Square slab, 2 x 0.3 x 2 m: top at y = 0, bottom at y = -0.3. The dune relief is
     // displaced on the open top only (masked off near every edge and below the top), so
-    // the sides stay straight and neighbouring tiles meet flush at y = 0.06.
+    // the sides stay straight and neighbouring tiles meet flush at y = 0.
     const slab = sdf
-      .box([TILE, THICK, TILE], 0.004)
-      .at(0, THICK / 2, 0)
+      .box([TILE + 2 * EDGE, SLAB + 2 * EDGE, TILE + 2 * EDGE])
+      .at(0, -SLAB / 2, 0)
       .displace(RIPPLE_AMP, (x, y, z) => rippleWave(x, z) * edgeMask(x, z) * topMask(y));
 
     k.body('sand', slab.paintFn(sandColorAt), {
       color: '#e3c38a',
       roughness: 0.95,
       metalness: 0,
-      detail: 0.05,
-      maxTriangles: 2200,
+      detail: 0.03,
+      maxTriangles: 7000,
       paintWeight: 2,
       textureDensity: 2,
       // Fine sand grain and micro-ripples only; the big ripples are real geometry above.

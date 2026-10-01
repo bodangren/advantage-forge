@@ -5,7 +5,7 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  *
  * Role: sunny meadow ground cell that butts against the other 2 m hamlet tiles; seen whole in
  *   forest-quest_001.jpg, styled like the chibi-quest treatment (round, soft, cheerful).
- * Size: 2 x 0.05 x 2 m, bottom on y = 0, top at y = 0.05, square edges at x = ±1, z = ±1.
+ * Size: 2 x 0.3 x 2 m slab, top at y = 0, bottom at y = -0.3, square edges at x = ±1, z = ±1.
  *   No rig. Soft lumps on the top fade to zero at the edges so repeats stay seamless.
  * The one idea: a bright grass "cookie" with an earth-brown base peeking out under the rim,
  *   chunky rounded tufts ringing the edge, and tiny daisies tucked between them.
@@ -20,7 +20,12 @@ import { defineAsset, mixRgb, noise, rgb, sdf, type Rgb, type Sdf } from '../src
  * Rig/animation: none.
  */
 
-const TOP = 0.05; // slab thickness, top surface height
+const TOP = 0; // top surface height (walkable top at y = 0)
+const SLAB = 0.3;
+const EDGE = 0.001;
+const soilC = rgb('#7a4a2a');
+const strataC = rgb('#57331d');
+const pebbleC = rgb('#9a8a78');
 const LUMP_AMP = 0.02; // max height of the soft lumps
 
 // grass (contract palette)
@@ -82,35 +87,36 @@ const surfaceHeight = (x: number, z: number): number =>
 // ------------------------------------------------------------------ ground paint
 // Green grass on top, earth-brown rim below a wavy boundary on the sides, like the mock's
 // grass-over-dirt "cookie". Big sun/shade patches plus fine speckle, all tile-periodic.
-function groundColorAt(x: number, y: number, z: number): Rgb {
-  const rim = 0.025 + 0.006 * tileNoise(x, z, 3.1, 2, 7); // wavy grass/earth boundary
-  const dirt = clamp01((rim - y) / 0.005); // 1 in the earth, 0 in the grass
-
-  let c: Rgb;
-  if (dirt > 0) {
-    // Earth rim: warm brown, deepening toward the bottom, faint grain.
-    const depth = clamp01((0.012 - y) / 0.014);
-    c = mixRgb(earth, earthDeep, 0.35 + depth * 0.5);
-    c = mixRgb(c, earthDeep, clamp01(tileNoise(x, z, 9, 2, 13)) * 0.25 * dirt);
-    c = mixRgb(c, grassDark, (1 - dirt) * 0.7); // blend up into grass
-  } else {
-    const patch = tileNoise(x, z, 1.9, 3, 3); // big sun / shade patches
-    const shade = clamp01((0.02 - patch) * 2.4);
-    const sun = clamp01((patch - 0.05) * 2.2);
-    const speck = tileNoise(x, z, 11, 2, 41);
-    c = mixRgb(grassLight, grassDark, shade * 0.7);
-    c = mixRgb(c, grassSun, sun * 0.45);
-    c = mixRgb(c, grassSun, clamp01((speck - 0.14) * 2.2) * 0.22);
-    // Slightly deeper green on the side faces so the slab reads as one mass.
-    const side = clamp01((TOP - 0.006 - y) / 0.012) * (1 - clamp01((y - TOP + 0.004) / 0.004));
-    c = mixRgb(c, grassDark, side * 0.35);
-  }
+function sideColorAt(x: number, y: number, z: number): Rgb {
+  const along = Math.abs(x) > Math.abs(z) ? z : x;
+  const drip = 0.05 + 0.02 * Math.sin(along * Math.PI * 3 + 0.7) + 0.015 * Math.sin(along * Math.PI * 7 + 2.1);
+  if (y > -drip) return mixRgb(topColorAt(x, z), grassDark, 0.25 + 0.3 * Math.min(1, -y / drip));
+  const depth = -y / SLAB;
+  let c = mixRgb(soilC, strataC, 0.15 + depth * 0.55);
+  const st = Math.sin((y + 0.02 * Math.sin(along * Math.PI * 2)) * 70);
+  c = mixRgb(c, strataC, Math.max(0, st - 0.6) * 0.8);
+  const n = noise.fbm(along * 9, y * 9, 3.1, 2);
+  if (n > 0.45) c = mixRgb(c, pebbleC, Math.min(1, (n - 0.45) * 6) * 0.8);
   return c;
+}
+
+function topColorAt(x: number, z: number): Rgb {
+  const patch = tileNoise(x, z, 1.9, 3, 3); // big sun / shade patches
+  const shade = clamp01((0.02 - patch) * 2.4);
+  const sun = clamp01((patch - 0.05) * 2.2);
+  const speck = tileNoise(x, z, 11, 2, 41);
+  let c = mixRgb(grassLight, grassDark, shade * 0.7);
+  c = mixRgb(c, grassSun, sun * 0.45);
+  return mixRgb(c, grassSun, clamp01((speck - 0.14) * 2.2) * 0.22);
+}
+
+function groundColorAt(x: number, y: number, z: number): Rgb {
+  return y < -0.01 ? sideColorAt(x, y, z) : topColorAt(x, z);
 }
 
 // Grass grain on the top only (the sides stay smooth for tiling).
 const groundBump = (x: number, y: number, z: number): number =>
-  0.0035 * tileNoise(x, z, 15, 2, 23) * edgeFall(x, z) * smooth(0.01, 0.03, y);
+  0.0035 * tileNoise(x, z, 15, 2, 23) * edgeFall(x, z) * smooth(-0.04, -0.02, y);
 
 // ------------------------------------------------------------------ tufts
 // Plump teardrop blades — oriented ellipsoids, like the mock's gumdrop tufts. One tall
@@ -185,8 +191,8 @@ const bladeShape = (b: Blade): Sdf => {
 // mock's sunlit tufts.
 function tuftColorAt(x: number, y: number, z: number): Rgb {
   const n = 0.5 + 0.5 * noise.fbm(x * 24, y * 24, z * 24, 2, 9);
-  let c = mixRgb(grassDark, grassLight, clamp01((y - 0.02) / 0.14) * (0.7 + n * 0.3));
-  c = mixRgb(c, grassSun, clamp01((y - 0.12) / 0.07) * (0.35 + n * 0.3));
+  let c = mixRgb(grassDark, grassLight, clamp01((y + 0.03) / 0.14) * (0.7 + n * 0.3));
+  c = mixRgb(c, grassSun, clamp01((y - 0.07) / 0.07) * (0.35 + n * 0.3));
   c = mixRgb(c, grassDark, clamp01((surfaceHeight(x, z) - 0.004 - y) / 0.02) * 0.5);
   return c;
 }
@@ -250,26 +256,26 @@ function flowerColorAt(x: number, y: number, z: number): Rgb {
 export default defineAsset({
   name: 'meadow-ground',
   description:
-    'A 2 m square modular meadow tile: bright grass over an earth rim, soft lumps, chunky grass tufts and tiny white and yellow daisies.',
+    'A 2 m square modular meadow tile, a 0.3 m slab with its top at y = 0 and a grass lip over layered soil sides: bright grass over an earth rim, soft lumps, chunky grass tufts and tiny white and yellow daisies.',
   detail: 0.02,
   reference: 'docs/item-mockups/meadow-ground-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // Slab: 2 x 0.05 x 2 m with soft lumps on top, trimmed back to the exact square
+    // Slab: 2 x 0.3 x 2 m with soft lumps on top, trimmed back to the exact square
     // footprint so the edges at x = ±1, z = ±1 stay flush for tiling.
     const slab = sdf
-      .box([2, TOP, 2])
-      .at(0, TOP / 2, 0)
-      .displace(LUMP_AMP, (x, y, z) => lumpField(x, z) * edgeFall(x, z) * smooth(0.012, 0.03, y))
-      .intersect(sdf.box([2, TOP, 2]).at(0, TOP / 2, 0));
+      .box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE])
+      .at(0, -SLAB / 2, 0)
+      .displace(LUMP_AMP, (x, y, z) => lumpField(x, z) * edgeFall(x, z) * smooth(-0.038, -0.02, y))
+      .intersect(sdf.box([2 + 2 * EDGE, SLAB + 2 * EDGE, 2 + 2 * EDGE]).at(0, -SLAB / 2, 0));
 
     k.body('ground', slab.paintFn(groundColorAt), {
       color: '#7ec850',
       roughness: 0.9,
       metalness: 0,
       detail: 0.02,
-      maxTriangles: 2200,
+      maxTriangles: 6000,
       // Tight error budget: the soft lumps are 1-2 cm of real form, so the simplifier
       // must not flatten the top into a plate (its error check is skipped when
       // maxTriangles is set).
