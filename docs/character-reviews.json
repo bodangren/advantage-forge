@@ -1447,12 +1447,12 @@
     "reviewedAt": "2026-09-28"
   },
   "wraith": {
-    "overall": 7,
+    "overall": 7.5,
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 3,
+      "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
@@ -1461,22 +1461,22 @@
       "sprite": 4,
       "motion": 4
     },
-    "summary": "A new P1 dungeon enemy on the ghost base (floating rig, six clips): a big slate hood around a black void with two pale-blue glowing eyes, a capelet with a tie knot and cords, drooping sleeves with a large bony claw on the right and a bony left hand holding a rusty cage lantern with a blue flame, and ragged strips that reach the floor. The attack is a reaching claw with a lantern swing. The forge check shows result ok, and the build has no warnings.",
+    "summary": "Wraith reworked 2026-10-02 (closeout track, Sonnet 5.5 high tier, three passes, plus an orchestrator strip fix): a round hood with a back peak around the black void and two pale-blue eyes, a sloped cowl with long folds over a narrower body, a tie knot with two cords, a bony claw, and a rusty lantern with a blue flame. The orchestrator made the ragged strips hang straight and flat to the floor; before, they ran out along the floor and curled up like tentacles. Accepted at 7.5 under the owner rule of 2026-10-02.",
     "strengths": [
       "The hood, the void face, and the blue eyes read as a wraith at a glance.",
-      "The lantern glass and flame follow the eye color slot.",
+      "The lantern and the blue flame read in the front sprites.",
       "Cloak and glow variants with three presets: dusk, bog, grave."
     ],
     "issues": [
-      "The strips are round ribbons that spread on the floor, so they read a little like tentacles; the mockup strips are thin, frayed, and hang straight.",
-      "The capelet is smooth; the mockup has a thick bunched cowl.",
-      "The mockup also shows a tall blue flame above the lantern."
+      "The cowl and the body are still a wide smooth mass; the mockup has thin rough felt drapes.",
+      "The tie cords read as low ridges with low contrast.",
+      "The flame is smaller than in the mockup."
     ],
     "next": [
-      "Make the strips thinner and flatter, hanging straight down.",
-      "Bunch the capelet into a lumpy cowl."
+      "Rough felt texture in the bump, and a thinner drape.",
+      "Darker, freer tie cords."
     ],
-    "reviewedAt": "2026-09-28"
+    "reviewedAt": "2026-10-01T23:51:11+00:00"
   },
   "necromancer": {
     "overall": 8,

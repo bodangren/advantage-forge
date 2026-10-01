@@ -14,12 +14,12 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
  *   the strips touch y = 0 in the rest pose.
  * Shape language: soft and saggy cloth (round hood, lumpy cowl, drooping sleeves) against thin,
  *   sharp bones (long knuckled fingers with pointed tips) and the hard little lantern cage.
- * Palette (60/30/10): dark blue-grey felt #5c6c73, darker at the hem; black void #0b0a0e; pale
- *   bone #d3cbae; rusty iron #6a3a22; glowing pale blue #8fe6ff eyes and flame as the accent.
+ * Palette (60/30/10): dark blue-grey felt #5c6c73, darker at the hem; matte black void #050608 (roughness 1, no highlight); pale
+ *   bone #d3cbae; rusty iron #6a3a22; glowing pale blue #8fe6ff eyes, blue flame #4ab0ff (rising 0.12 m above the lantern, cyan glass glow) as the accent.
  * Value plan: the black void inside the grey hood is the strongest contrast; the two glowing eyes
  *   in it are the focal point; the lantern glow is the second accent.
- * Bodies: cloak (hood, capelet, knot, cords, cloak, strips, sleeves), eyes (the black void),
- *   pupils (the glowing eyes), hands, lantern-frame, lantern-glass, flame.
+ * Bodies: cloak (round hood with a soft back peak, draped cowl with vertical folds, cloth-tie knot with two 0.1 m ends, cloak, strips, sleeves), eyes (the black void),
+ *   pupils (the glowing eyes), hands, lantern-frame, lantern-glass, flame (inside), flame-top (three curled tongues).
  * Rig: the ghost's root, body, head, arm.L/arm.R, tail1 to tail3 (the long trailing strip), plus
  *   hand.L, hand.R, and lantern (hanging from hand.L). The lower cloak and the strips ride the
  *   root, so the rags lag when the body leans. Clips: idle (hover bob, lantern sway), walk (float
@@ -30,12 +30,13 @@ import { defineAsset, motion, noise, profile, sdf } from '../src/index.js';
 const C = {
   cloak: '#5c6c73',
   inner: '#121016',
-  void: '#0b0a0e',
+  void: '#050608',
   glow: '#8fe6ff',
   glowBase: '#0d3444',
-  glass: '#256a80',
+  glass: '#3aa6c4',
   bone: '#d3cbae',
   rust: '#6a3a22',
+  flame: '#4ab0ff',
 };
 
 type V3 = readonly [number, number, number];
@@ -121,6 +122,8 @@ export default defineAsset({
       glow: k.tint('eyes'),
       pupil: k.tint('eyes', { color: C.glowBase, follow: 1 }),
       glass: k.tint('eyes', { color: C.glass, follow: 1 }),
+      flame: k.tint('eyes', { color: C.flame, follow: 1 }),
+      tie: k.tint('cloak', -0.35),
     };
     k.skeleton({
       root: { at: ROOT_AT },
@@ -140,16 +143,19 @@ export default defineAsset({
     // A big round hood with a soft peak at the back, a thick rolled rim around a tall oval opening.
     const HOOD_Y = 0.745;
     const hoodOuter = sdf.smoothUnion(
-      0.07,
-      sdf.ellipsoid([0.245, 0.25, 0.235]).at(0, HOOD_Y, -0.02),
-      sdf.ellipsoid([0.06, 0.07, 0.06]).at(0, 0.92, -0.09),
+      0.09,
+      // The crown: a round dome, narrower toward the neck so the back and front curve in.
+      sdf.ellipsoid([0.245, 0.2, 0.22]).at(0, 0.79, -0.015),
+      sdf.ellipsoid([0.2, 0.17, 0.19]).at(0, 0.67, 0.0),
       // The brim: the hood's top reaches forward over the void.
-      sdf.ellipsoid([0.17, 0.1, 0.12]).at(0, 0.87, 0.1),
+      sdf.ellipsoid([0.16, 0.07, 0.12]).at(0, 0.835, 0.095),
     );
     const opening = sdf.ellipsoid([0.15, 0.178, 0.3]).at(0, HOOD_Y + 0.005, 0.25);
     const rimBand = hoodOuter.round(0.016).smoothIntersect(0.012, opening.round(0.034));
-    const hood = hoodOuter.smoothUnion(0.012, rimBand).smoothSubtract(0.01, opening).bone('head');
-    // The void: a black glossy ball deep in the hood.
+    // A clear point at the back of the hood that hangs back and down.
+    const peak = sdf.chain([[0, 0.9, -0.12, 0.08], [0, 0.85, -0.2, 0.06], [0, 0.77, -0.27, 0.042], [0, 0.69, -0.3, 0.026], [0, 0.63, -0.3, 0.012]], 0.02);
+    const hood = hoodOuter.smoothUnion(0.012, rimBand).smoothSubtract(0.01, opening).smoothUnion(0.03, peak).bone('head');
+    // The void: a matte black ball deep in the hood (no highlight).
     const voidShape = sdf.ellipsoid([0.165, 0.185, 0.15]).at(0, HOOD_Y, 0.005);
     const onVoid = (x: number, y: number): V3 => sdf.raycast(voidShape, [x, y, 1], [0, 0, -1])!;
     // The eyes: two tall glowing ovals a little proud of the void.
@@ -160,23 +166,25 @@ export default defineAsset({
     const pupils = facing(sdf.ellipsoid([0.0115, 0.027, 0.009]), eyeN, eyeAt).mirror('x');
 
     // ------------------------------------------------------------------ capelet
-    // A lumpy cowl around the shoulders under the hood, with a wavy lower edge.
-    // It flares out over the shoulders, with vertical folds and an uneven lower edge.
+    // A draped cowl: it falls from the hood over the shoulders and hugs the cloak, with soft vertical
+    // folds and an uneven lower edge (no flared rim).
     const capHalf: [number, number][] = [
       [0.14, 0.64],
-      [0.23, 0.585],
-      [0.275, 0.51],
-      [0.29, 0.44],
-      [0.285, 0.385],
-      [0.255, 0.38],
-      [0.21, 0.43],
-      [0.16, 0.5],
+      [0.185, 0.61],
+      [0.21, 0.56],
+      [0.215, 0.5],
+      [0.2, 0.44],
+      [0.188, 0.39],
+      [0.18, 0.35],
+      [0.15, 0.35],
     ];
     const capOutline = [[0, 0.66], ...capHalf, [0, 0.53], ...capHalf.map(([u, v]) => [-u, v]).reverse()] as [number, number][];
     const capRim = (x: number, z: number) => Math.min(1, Math.hypot(x, z) / 0.1);
     const capFolds = (x: number, y: number, z: number) => {
       const a = Math.atan2(x, z);
-      return smooth01(0.6, 0.42, y) * Math.cos(8 * a + 0.8 * Math.sin(3 * a)) * capRim(x, z);
+      // Six long thin ridges: sharpened cosine peaks, so the drape has ridges and shallow valleys.
+      const ridge = Math.max(0, Math.cos(6 * a + 0.5 * Math.sin(2 * a)));
+      return smooth01(0.67, 0.6, y) * (2 * ridge * ridge - 0.6) * capRim(x, z);
     };
     const capEdge = (x: number, _y: number, z: number) => {
       const a = Math.atan2(x, z);
@@ -185,7 +193,7 @@ export default defineAsset({
     const capelet = sdf
       .revolve(profile.polygon(capOutline, { smooth: true }))
       .displace(0.012, capFolds, 2.2)
-      .smoothIntersect(0.022, sdf.halfSpace([0, -1, 0], -0.425).displace(0.022, capEdge, 2))
+      .smoothIntersect(0.022, sdf.halfSpace([0, -1, 0], -0.36).displace(0.01, capEdge, 2))
       .bone('body');
 
     // ------------------------------------------------------------------ cloak
@@ -193,13 +201,13 @@ export default defineAsset({
     // length, and the underside is hollow.
     const bellHalf: [number, number][] = [
       [0.12, 0.62],
-      [0.19, 0.57],
-      [0.215, 0.49],
-      [0.21, 0.41],
-      [0.195, 0.32],
-      [0.18, 0.23],
-      [0.172, 0.14],
-      [0.168, 0.08],
+      [0.165, 0.57],
+      [0.165, 0.49],
+      [0.155, 0.41],
+      [0.145, 0.32],
+      [0.135, 0.23],
+      [0.13, 0.14],
+      [0.128, 0.08],
     ];
     const bell = [[0, 0.64], ...bellHalf, [0, 0.06], ...bellHalf.map(([u, v]) => [-u, v]).reverse()] as [number, number][];
     const N = 9;
@@ -221,7 +229,7 @@ export default defineAsset({
       .revolve(profile.polygon(bell, { smooth: true }))
       .displace(0.012, folds, 2)
       .smoothIntersect(0.006, sdf.halfSpace([0, -1, 0], -0.19).displace(0.08, hemFn, 3.5))
-      .smoothSubtract(0.02, sdf.ellipsoid([0.135, 0.12, 0.135]).at(0, 0.1, 0));
+      .smoothSubtract(0.02, sdf.ellipsoid([0.1, 0.12, 0.1]).at(0, 0.1, 0));
     const SPLIT = 0.3;
     const cloakUpper = cloakShape.intersect(sdf.box([0.8, 0.5, 0.8]).at(0, SPLIT + 0.25, 0)).bone('body');
     const cloakLower = cloakShape.intersect(sdf.box([0.8, 0.4, 0.8]).at(0, SPLIT - 0.2, 0)).bone('root');
@@ -230,15 +238,18 @@ export default defineAsset({
 
     // Ragged strips hanging from the tatters: [radius, y, angle offset, thickness] in polar terms.
     const polar = (a0: number, pts: [number, number, number, number][]): V4[] =>
-      pts.map(([r, y, da, rad]) => [r * Math.sin(a0 + da), y, r * Math.cos(a0 + da), rad]);
+      pts.map(([r0, y, da, rad]) => {
+        const r = r0 - 0.03 * smooth01(0.02, 0.2, y);
+        return [r * Math.sin(a0 + da), y, r * Math.cos(a0 + da), rad];
+      });
+    // The long strips hang nearly straight and end on the floor; a strip that ran out along the
+    // floor and curled up read as a tentacle.
     const long = (tw: number): [number, number, number, number][] => [
       [0.15, 0.24, 0, 0.013],
-      [0.163, 0.14, 0.12 * tw, 0.0105],
-      [0.172, 0.07, 0.3 * tw, 0.0085],
-      [0.18, 0.02, 0.5 * tw, 0.0075],
-      [0.203, 0.0085, 0.75 * tw, 0.007],
-      [0.226, 0.016, 0.95 * tw, 0.0068],
-      [0.23, 0.034, 0.9 * tw, 0.0068],
+      [0.16, 0.15, 0.08 * tw, 0.011],
+      [0.168, 0.08, 0.15 * tw, 0.009],
+      [0.175, 0.03, 0.2 * tw, 0.008],
+      [0.18, 0.008, 0.22 * tw, 0.007],
     ];
     const short = (tw: number): [number, number, number, number][] => [
       [0.15, 0.24, 0, 0.013],
@@ -248,7 +259,7 @@ export default defineAsset({
     ];
     // Flat ribbons: wide around the cloak, thin outward.
     const ribbon = (a0: number, pts: [number, number, number, number][]) =>
-      sdf.chain(polar(0, pts), 0.012).scale([1.7, 1, 1]).rotateY(a0 * DEG);
+      sdf.chain(polar(0, pts), 0.012).scale([2.4, 1, 0.8]).rotateY(a0 * DEG);
     const strips = sdf
       .union(
         ribbon(0.02, long(0.3)),
@@ -272,21 +283,17 @@ export default defineAsset({
     const surfZ = (x: number, y: number) => sdf.raycast(front, [x, y, 1], [0, 0, -1])![2];
     const KNOT_Y = 0.525;
     const kz = surfZ(0, KNOT_Y);
-    const loop = (s: number) => sdf.torus(0.017, 0.007).rotateX(90).rotateZ(s * 28).at(s * 0.027, KNOT_Y + 0.006, kz - 0.002);
-    const cord = (s: number, ys: number[], xs: number[]) =>
+    // The knot: a ball at the throat with two round cords that hang 0.15 m down the chest.
+    const cord = (side: 1 | -1, xs: number[]) =>
       sdf.chain(
-        ys.map((y, i): V4 => [s * xs[i]!, y, surfZ(s * xs[i]!, y) + 0.008, 0.009 - 0.0006 * i]),
+        xs.map((x, i): V4 => {
+          const y = KNOT_Y - 0.01 - i * 0.03;
+          return [side * x, y, surfZ(side * x, y) + 0.013, 0.0105 - 0.0003 * i];
+        }),
         0.01,
       );
     const knot = sdf
-      .smoothUnion(
-        0.006,
-        sdf.ellipsoid([0.026, 0.022, 0.018]).at(0, KNOT_Y, kz + 0.008),
-        loop(1),
-        loop(-1),
-        cord(1, [0.515, 0.46, 0.41, 0.35, 0.3], [0.008, 0.018, 0.014, 0.022, 0.016]),
-        cord(-1, [0.515, 0.46, 0.4, 0.34, 0.27], [0.008, 0.014, 0.02, 0.012, 0.02]),
-      )
+      .smoothUnion(0.008, sdf.sphere(0.0195).at(0, KNOT_Y, kz + 0.012), cord(1, [0.008, 0.014, 0.012, 0.02, 0.016, 0.022]), cord(-1, [0.008, 0.01, 0.018, 0.013, 0.02, 0.014]))
       .bone('body');
 
     // ------------------------------------------------------------------ sleeves
@@ -332,7 +339,6 @@ export default defineAsset({
       .smoothUnion(0.025, sleeveL, sleeveR)
       .smoothUnion(0.014, strips)
       .smoothUnion(0.014, tail)
-      .smoothUnion(0.005, knot)
       .paintWhere(opening.round(0.006).intersect(sdf.box([0.6, 0.4, 0.7]).at(0, 0.8, 0.1)), C.inner, 0.006)
       .paintWhere(sdf.box([1.2, 0.3, 1.2]).at(0, 0, 0), T.hem, 0.12);
     k.body('cloak', cloth, {
@@ -343,7 +349,8 @@ export default defineAsset({
       // Felted wool: a fine fuzzy grain in the normal map.
       bump: (x, y, z) => 0.0009 * noise.fbm(x * 80, y * 80, z * 80, 2),
     });
-    k.body('eyes', voidShape.bone('head'), { color: C.void, roughness: 0.28, bone: 'head' });
+    k.body('tie', knot, { color: T.tie, roughness: 0.92, detail: 0.003, bone: 'body' });
+    k.body('eyes', voidShape.bone('head'), { color: C.void, roughness: 1, metalness: 0, bone: 'head' });
     k.body('pupils', pupils.bone('head'), { color: T.pupil, roughness: 0.3, emissive: T.glow, emissiveIntensity: 1.6, detail: 0.003, bone: 'head' });
 
     // ------------------------------------------------------------------ hands
@@ -423,8 +430,8 @@ export default defineAsset({
       color: T.glass,
       roughness: 0.1,
       opacity: 0.55,
-      emissive: T.glow,
-      emissiveIntensity: 0.5,
+      emissive: T.glass,
+      emissiveIntensity: 0.9,
       detail: 0.003,
       bone: 'lantern',
     });
@@ -437,7 +444,19 @@ export default defineAsset({
       ],
       0.01,
     );
-    k.body('flame', flame, { color: T.pupil, roughness: 0.3, emissive: T.glow, emissiveIntensity: 2, detail: 0.003, bone: 'lantern' });
+    k.body('flame', flame, { color: T.flame, roughness: 0.3, emissive: T.flame, emissiveIntensity: 1.2, detail: 0.003, bone: 'lantern' });
+    // The blue flame rises about 0.08 m above the lantern roof, outboard of the gripping fingers:
+    // a tall curled tongue and two short ones.
+    const fx = gx;
+    const fy = gy - 0.045;
+    const tongue = (pts: V4[]) => sdf.chain(pts.map(([x, y, z, r]): V4 => [fx + x, fy + y, gz + z, r]), 0.008);
+    const flameTop = sdf.smoothUnion(
+      0.012,
+      tongue([[0, 0, 0, 0.02], [0.002, 0.04, 0, 0.018], [-0.006, 0.08, 0, 0.013], [-0.016, 0.108, 0.002, 0.008], [-0.012, 0.128, 0.002, 0.004]]),
+      tongue([[0, 0, 0, 0.016], [0.014, 0.03, 0.004, 0.013], [0.026, 0.06, 0.004, 0.009], [0.026, 0.085, 0.004, 0.004]]),
+      tongue([[0, 0, 0, 0.015], [-0.014, 0.025, -0.004, 0.012], [-0.028, 0.05, -0.004, 0.008], [-0.034, 0.07, -0.004, 0.004]]),
+    );
+    k.body('flame-top', flameTop, { color: T.flame, roughness: 0.3, emissive: T.flame, emissiveIntensity: 1.2, detail: 0.003, bone: 'lantern' });
 
     // ------------------------------------------------------------------ animation
     const { wave, keys } = motion;
