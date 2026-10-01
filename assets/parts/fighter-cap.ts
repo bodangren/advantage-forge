@@ -1,4 +1,4 @@
-import { sdf, type Part, type Vec3 } from '../../src/index.js';
+import { rgb, sdf, type Part, type PartBody, type Vec3 } from '../../src/index.js';
 
 /**
  * Fighter cap (part of `assets/fighter.ts`; standalone `assets/fighter-cap.ts`).
@@ -6,11 +6,12 @@ import { sdf, type Part, type Vec3 } from '../../src/index.js';
  * A plain steel skull cap: a brow band, a Y of three ridges over the crown with a boss, and a
  * nasal bar down to the nose tip. Class: head. Local frame: the origin is the head center of the
  * hero base (rounded to 1/1024 m), +Y up, the face toward +Z.
- * Bodies: cap-band, cap (bone `head`). No tint slot.
+ * Bodies: cap-band, cap (bone `head`), and with `lining: true` a padded leather cap-lining that
+ * fills the open frame (the standalone item; the fighter shows his hair there). No tint slot.
  * The shape code is the fighter's, unchanged; the host pose moves the mount point back.
  */
 
-const C = { steel: '#bcc2cb', band: '#a9b0ba' };
+const C = { steel: '#bcc2cb', band: '#a9b0ba', lining: '#4a3426', quilt: '#36251b' };
 
 /** The mount point in the fighter frame: the head center (0.675 m) rounded to 1/1024 m. */
 export const FIGHTER_CAP_MOUNT: Vec3 = [0, Math.round(0.675 * 1024) / 1024, 0];
@@ -20,7 +21,12 @@ const HEAD_Y = 0.675;
 const HEAD = [0.205, 0.2, 0.19] as const;
 const pair = (s: sdf.Shape) => s.mirror('x');
 
-export function fighterCap(): Part {
+export interface FighterCapOptions {
+  /** Fill the open frame with a padded leather lining (for the item on its own or on a hairless head). */
+  readonly lining?: boolean;
+}
+
+export function fighterCap({ lining = false }: FighterCapOptions = {}): Part {
   const head = sdf.smoothUnion(
     0.06,
     sdf.ellipsoid(HEAD).at(0, HEAD_Y, 0),
@@ -57,11 +63,17 @@ export function fighterCap(): Part {
   );
   const helmSteel = sdf.smoothUnion(0.006, ridges, crownBoss, nasal);
 
-  return {
-    name: 'fighter-cap',
-    bodies: [
-      { name: 'cap-band', shape: local(band), options: { color: C.band, roughness: 0.35, metalness: 0.8, detail: 0.004 }, bone: 'head' },
-      { name: 'cap', shape: local(helmSteel), options: { color: C.steel, roughness: 0.35, metalness: 0.8, detail: 0.004 }, bone: 'head' },
-    ],
-  };
+  const bodies: PartBody[] = [
+    { name: 'cap-band', shape: local(band), options: { color: C.band, roughness: 0.35, metalness: 0.8, detail: 0.004 }, bone: 'head' },
+    { name: 'cap', shape: local(helmSteel), options: { color: C.steel, roughness: 0.35, metalness: 0.8, detail: 0.004 }, bone: 'head' },
+  ];
+  if (lining) {
+    // The hair dome from 0.03 under the brow band up, inside the band and the ridges, quilted.
+    const padded = hairDome
+      .round(0.004)
+      .intersect(sdf.halfSpace([0, -1, 0], -(BROW_Y - 0.03)))
+      .paintFn((x, _y, z, base) => (Math.sin(Math.atan2(x, z + 0.03) * 12) > 0.93 ? rgb(C.quilt) : base));
+    bodies.push({ name: 'cap-lining', shape: local(padded), options: { color: C.lining, roughness: 0.75, detail: 0.005 }, bone: 'head' });
+  }
+  return { name: 'fighter-cap', bodies };
 }

@@ -18,8 +18,9 @@ export function swashbucklerBandana(tint: PartTint): Part {
   };
     const skull = (grow: number) => sdf.ellipsoid([HEAD[0] + grow, HEAD[1] + grow, HEAD[2] + grow]).at(0, HEAD_Y, -0.005);
     const slab = sdf.box([0.7, 0.056, 0.7], 0.008).rotateX(-9).at(0, 0.768, 0);
-    const bandShape = skull(0.024).intersect(slab);
-    const bandSurface = (x: number, y: number) => sdf.raycast(bandShape, [x, y, 1], [0, 0, -1])![2];
+    // Hollow: the inside follows the skull 0.006 under its surface, so a worn band looks the same
+    // and a band on its own reads as a ring.
+    const bandShape = skull(0.024).intersect(slab).subtract(skull(-0.006));
     const KX = 0.065;
     const knot = sdf.ellipsoid([0.034, 0.03, 0.028]).at(KX, 0.752, -0.224);
     // Two tails, 0.09 long and 0.03 wide, 0.022 thick, hanging from the knot at the back left.

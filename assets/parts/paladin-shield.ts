@@ -1,4 +1,4 @@
-import { noise, profile, sdf, type Part } from '../../src/index.js';
+import { profile, sdf, type Part } from '../../src/index.js';
 
 /**
  * Paladin heater shield (part of `assets/paladin.ts`; standalone `assets/paladin-shield.ts`).
@@ -38,19 +38,23 @@ const sunProfile = (rays: number, outer: number, inner: number) =>
     }),
   );
 
+/** Keeps the front of a decoration: its back stays inside the plate (back plane z = -0.012). */
+const front = (s: sdf.Shape) => s.intersect(sdf.halfSpace([0, 0, -1], 0.006));
 
 export function paladinShield(): Part {
     const inner = profile.offsetProfile(heater, -0.022);
     const handle = sdf.capsule([-0.03, 0.02, -0.02], [0.03, -0.01, -0.02], 0.012);
-    const face = sdf.extrude(profile.offsetProfile(heater, -0.018), 0.028, 0.005);
+    const face = front(sdf.extrude(profile.offsetProfile(heater, -0.018), 0.028, 0.005));
     const rim = sdf.extrude(heater, 0.036, 0.008).subtract(sdf.extrude(inner, 0.1));
-    const shieldSun = sdf
+    const shieldSun = front(sdf
       .union(sdf.extrude(sunProfile(8, 0.1, 0.034), 0.034, 0.003), sdf.extrude(profile.circle(0.032), 0.042, 0.008))
-      .at(0, 0.02, 0);
+      .at(0, 0.02, 0));
+  // The plate sits 0.008 inside the rim so that the two surfaces never meet at the edge.
+  const plate = sdf.extrude(profile.offsetProfile(heater, -0.008), 0.024, 0.006);
   return {
     name: 'paladin-shield',
     bodies: [
-      { name: 'shield', shape: sdf.union(sdf.extrude(heater, 0.024, 0.006), handle), options: { color: C.steel, roughness: 0.4, metalness: 0.8 }, bone: 'forearm.L' },
+      { name: 'shield', shape: sdf.union(plate, handle), options: { color: C.steel, roughness: 0.4, metalness: 0.8 }, bone: 'forearm.L' },
       { name: 'shield-face', shape: face, options: { color: C.pearl, roughness: 0.35, metalness: 0.3 }, bone: 'forearm.L' },
       { name: 'shield-gold', shape: sdf.union(rim, shieldSun), options: { color: C.gold, roughness: 0.3, metalness: 0.9 }, bone: 'forearm.L' },
     ],

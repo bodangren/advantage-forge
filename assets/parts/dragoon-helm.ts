@@ -69,10 +69,12 @@ export function dragoonHelm(tint: PartTint): Part {
       .paintWhere(helmInner.round(0.005), T.plateDark, 0.01);
     // Two flat cheek guards beside the face, hugging the head, with a silver lower edge.
     const CHEEK_Y = 0.604;
-    const cheekGuard = head
-      .round(0.026)
-      .subtract(head.round(0.01))
-      .intersect(sdf.box([0.1, 0.104, 0.14], 0.012).at(0.2, CHEEK_Y + 0.052, 0.02))
+    // A smooth skull under the plate (not the bulging cheeks), 0.02 thick, with rounded cut edges.
+    const jaw = sdf.ellipsoid([0.212, 0.2, 0.196]).at(0, 0.66, 0);
+    const cheekGuard = jaw
+      .round(0.028)
+      .subtract(jaw.round(0.008))
+      .smoothIntersect(0.006, sdf.box([0.1, 0.104, 0.14], 0.012).at(0.2, CHEEK_Y + 0.052, 0.02))
       .paintWhere(sdf.halfSpace([0, 1, 0], CHEEK_Y + 0.011), C.silver, 0.004);
     const helmBody = sdf.union(helm, hard(cheekGuard));
 
@@ -153,7 +155,8 @@ export function dragoonHelm(tint: PartTint): Part {
   return {
     name: 'dragoon-helm',
     bodies: [
-      { name: 'helm', shape: local(helmBody), options: { color: T.plate, roughness: 0.55, metalness: 0.4 }, bone: 'head' },
+      // A finer mesh than the asset default keeps the thin shell's hem and cheek-guard edges clean.
+      { name: 'helm', shape: local(helmBody), options: { color: T.plate, roughness: 0.55, metalness: 0.4, detail: 0.0035 }, bone: 'head' },
       { name: 'wings', shape: local(wingsBody), options: { color: T.plate, roughness: 0.55, metalness: 0.4, detail: 0.0042 }, bone: 'head' },
       { name: 'helm-silver', shape: local(silverBody), options: { color: C.silver, roughness: 0.35, metalness: 0.8, detail: 0.0045 }, bone: 'head' },
       { name: 'rivets', shape: local(rivets), options: { color: C.rivet, roughness: 0.3, metalness: 0.85, detail: 0.004 }, bone: 'head' },

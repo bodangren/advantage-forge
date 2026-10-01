@@ -42,7 +42,8 @@ export function witchPotion(at: V3): Part {
       },
       {
         name: 'cork',
-        shape: sdf.cylinder(0.0155, 0.02, 0.004).at(at[0], at[1] + 0.05 + 0.06, at[2]),
+        // The cork sits in the mouth: half inside the neck, half above the lip (top of the lip 0.085).
+        shape: sdf.cylinder(0.0155, 0.02, 0.004).at(at[0], at[1] + 0.05 + 0.035, at[2]),
         options: { color: C.cork, roughness: 0.85, detail: 0.003 },
         bone: 'hand.L',
       },

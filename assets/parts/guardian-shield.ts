@@ -41,21 +41,26 @@ const starProfile = profile.polygon([
   [-0.03, 0.03],
 ]);
 
+/** Keeps the front of a decoration: its back stays inside the plate (back plane z = -0.012). */
+const front = (s: sdf.Shape) => s.intersect(sdf.halfSpace([0, 0, -1], 0.006));
+
 export function guardianShield(tint: PartTint): Part {
   const cloth = tint('cloth');
   const inner = profile.offsetProfile(tower, -0.024);
   const handle = sdf.capsule([-0.09, -0.01, -0.028], [-0.09, -0.14, -0.028], 0.014);
-  const face = sdf.extrude(profile.offsetProfile(tower, -0.02), 0.028, 0.005);
-  const outline = sdf
+  const face = front(sdf.extrude(profile.offsetProfile(tower, -0.02), 0.028, 0.005));
+  const outline = front(sdf
     .extrude(profile.offsetProfile(starProfile, 0.008), 0.031, 0.002)
     .subtract(sdf.extrude(starProfile, 0.1))
-    .at(0, 0.03, 0);
+    .at(0, 0.03, 0));
   const rim = sdf.extrude(tower, 0.04, 0.014).subtract(sdf.extrude(inner, 0.1));
-  const star = sdf.extrude(starProfile, 0.034, 0.004).at(0, 0.03, 0);
+  const star = front(sdf.extrude(starProfile, 0.034, 0.004).at(0, 0.03, 0));
+  // The plate sits 0.008 inside the rim so that the two surfaces never meet at the edge.
+  const plate = sdf.extrude(profile.offsetProfile(tower, -0.008), 0.024, 0.006);
   return {
     name: 'guardian-shield',
     bodies: [
-      { name: 'shield', shape: sdf.union(sdf.extrude(tower, 0.024, 0.006), handle), options: { color: C.steelDark, roughness: 0.5, metalness: 0.5 }, bone: 'forearm.L' },
+      { name: 'shield', shape: sdf.union(plate, handle), options: { color: C.steelDark, roughness: 0.5, metalness: 0.5 }, bone: 'forearm.L' },
       { name: 'shield-face', shape: face, options: { color: cloth, roughness: 0.75 }, bone: 'forearm.L' },
       { name: 'shield-gold', shape: sdf.union(rim, outline), options: { color: C.gold, roughness: 0.35, metalness: 1 }, bone: 'forearm.L' },
       { name: 'shield-star', shape: star, options: { color: C.pearl, roughness: 0.5, metalness: 0.3 }, bone: 'forearm.L' },
