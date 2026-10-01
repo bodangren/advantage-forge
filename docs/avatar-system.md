@@ -166,7 +166,13 @@ tier 1. A new student picks a class and receives its starter set for free.
 The shop shows every piece that the student's level opens. The default order is popularity: the
 number of `purchase` rows in `avatar_inventory` for the item in the last 30 days, over all
 schools. The count needs no new table. A filter by slot narrows the list. Items with the same
-count sort by tier, then by price. The catalog sets no order and no "best" pick.
+count sort in a fixed random order for each student (the user id is the seed). The catalog sets
+no order and no "best" pick.
+
+At go-live every item is new and has zero purchases. So the first order is the random order of
+each student. A fixed order (for example by tier or price) puts the same items first for every
+student, and those items then become popular because of their position. The popularity order
+takes over when purchases come in.
 
 ## 7. The avatar pack
 
@@ -282,5 +288,5 @@ Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild 
   `hides` list per piece covers this; confirm with the first crown render.
 - Whether weapons need a `sheathed` attachment on the back for idle and walk.
 - Whether the reduced pass uses KTX2 in the APK today. If not, 512 px PNG atlases first.
-- How a new item gets seen when the shop sorts by popularity. A new item has no purchases, so it
-  starts at the end of its tier. One option is a "new" shelf for the first 14 days.
+- Items added after go-live start with zero purchases and sort after the items that students
+  bought. Decide after go-live whether they need a "new" shelf.
