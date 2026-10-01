@@ -1,4 +1,5 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mapTint, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { KNIGHT_HELM_MOUNT, knightHelm } from './parts/knight-helm.js';
 
 /**
  * Knight — Chibi Quest hero (catalog `heroes/martial/knight`), 1.0 m to the helm crown, plume
@@ -249,121 +250,15 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ helm
-    const helmOuter = sdf.ellipsoid([0.246, 0.275, 0.246]).at(0, 0.69, -0.012);
-    const helmInner = sdf.ellipsoid([0.226, 0.255, 0.226]).at(0, 0.69, -0.012);
-    const shellOf2 = (s: sdf.Shape) => s.round(0.011).subtract(s.round(-0.01));
-    // The face opening: straight across under the brow band, down between the cheek guards,
-    // which close in toward the chin.
+    // The helm, its gold trims, and the plume are a part (assets/parts/knight-helm.ts), shared
+    // with the standalone knight-helm asset. Its origin is the head center.
     const BROW_Y = 0.745;
-    const opening = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [-0.168, BROW_Y],
-            [0.168, BROW_Y],
-            [0.176, 0.68],
-            [0.162, 0.6],
-            [0.13, 0.53],
-            [0.11, 0.4],
-            [-0.11, 0.4],
-            [-0.13, 0.53],
-            [-0.162, 0.6],
-            [-0.176, 0.68],
-          ],
-          { smooth: true, samples: 6 },
-        ),
-        0.5,
-        0.01,
-      )
-      .at(0, 0, 0.27);
-    // A notch behind each cheek guard separates it from the neck guard.
-    const notch = hard(sdf.capsule([0.25, 0.46, -0.045], [0.25, 0.575, -0.045], 0.016));
-    // A low comb over the crown, from the crest plate back to the nape.
-    const comb = shellOf2(helmOuter)
-      .smoothIntersect(0.006, sdf.box([0.024, 0.5, 0.7], 0.01).at(0, 0.9, -0.1))
-      .smoothIntersect(0.01, sdf.halfSpace([0, 0, 1], 0.12));
-    const helm = helmOuter
-      .smoothUnion(0.008, comb)
-      .subtract(helmInner)
-      .smoothSubtract(0.006, opening, notch)
-      .intersect(sdf.halfSpace([0, -1, 0], -0.49))
-      .paintWhere(helmInner.round(0.005), C.steelDark, 0.01);
-    k.body('helm', helm, { color: C.steel, roughness: 0.4, metalness: 0.8, bone: 'head' });
-
-    // Gold: the brow band all around, the crest plate over the brow, ear discs, and the finial.
-    const shellOf = (s: sdf.Shape, out: number, inn: number) => s.round(out).subtract(s.round(-inn));
-    // Smooth intersections: hard cuts leave crumpled side walls that metal highlights exaggerate.
-    const band = shellOf(helmOuter, 0.008, 0.016)
-      .smoothIntersect(0.006, sdf.box([0.8, 0.044, 0.8], 0.01).at(0, BROW_Y + 0.02, 0))
-      .smoothSubtract(0.004, opening);
-    const crest = shellOf(helmOuter, 0.014, 0.016).smoothIntersect(
-      0.005,
-      sdf
-        .extrude(
-          profile.polygon([
-            [0, BROW_Y - 0.03],
-            [0.058, BROW_Y + 0.02],
-            [0.05, BROW_Y + 0.12],
-            [-0.05, BROW_Y + 0.12],
-            [-0.058, BROW_Y + 0.02],
-          ]),
-          0.4,
-          0.006,
-        )
-        .at(0, 0, 0.3),
-    );
-    const earAt = sdf.surfacePoint(helmOuter, [0.3, 0.64, 0.01], 0.004);
-    const earDisc = hard(
-      sdf
-        .cylinder(0.044, 0.02, 0.008)
-        .union(sdf.sphere(0.014).at(0, 0.012, 0))
-        .rotateZ(-90)
-        .at(...earAt),
-    );
-    const crownAt = sdf.surfacePoint(helmOuter, [0, 1.1, -0.012], 0);
-    const finial = sdf
-      .union(sdf.cylinder(0.034, 0.03, 0.008).at(0, 0.01, 0), sdf.cylinder(0.024, 0.02, 0.006).at(0, 0.03, 0))
-      .at(...crownAt);
-    k.body('helm-gold', sdf.union(band, crest, earDisc, finial), {
-      color: C.gold,
-      roughness: 0.3,
-      metalness: 0.9,
-      detail: 0.0035,
-      bone: 'head',
-    });
-
-    // Plume: a tuft of feathers rises out of the finial and falls over toward the right (-X)
-    // and back; the tips droop. Strands blend into one soft mass; darker streaks read as barbs.
-    const feather = (dx: number, dz: number, h: number, r: number) =>
-      sdf.chain(
-        [
-          [PLUME_AT[0], PLUME_AT[1], PLUME_AT[2], r * 0.7],
-          [PLUME_AT[0] + dx * 0.15, PLUME_AT[1] + h * 0.55, PLUME_AT[2] + dz * 0.2, r],
-          [PLUME_AT[0] + dx * 0.5, PLUME_AT[1] + h * 0.95, PLUME_AT[2] + dz * 0.6, r * 0.85],
-          [PLUME_AT[0] + dx * 0.85, PLUME_AT[1] + h * 0.85, PLUME_AT[2] + dz * 0.9, r * 0.5],
-          [PLUME_AT[0] + dx, PLUME_AT[1] + h * 0.6, PLUME_AT[2] + dz, r * 0.18],
-        ],
-        0.012,
-      );
-    const feathers = sdf
-      .smoothUnion(
-        0.022,
-        feather(-0.2, -0.02, 0.13, 0.022),
-        feather(-0.17, -0.07, 0.16, 0.026),
-        feather(-0.12, -0.1, 0.175, 0.027),
-        feather(-0.07, -0.09, 0.17, 0.025),
-        feather(-0.03, -0.05, 0.15, 0.022),
-        feather(0.04, -0.04, 0.12, 0.018),
-        feather(-0.15, 0.03, 0.14, 0.02),
-      )
-      .paintWhere(sdf.sphere(0.07).at(...PLUME_AT), T.plumeDark, 0.04)
-      .paintFn((x, y, z, base) =>
-        Math.sin(Math.atan2(x - PLUME_AT[0], z - PLUME_AT[2]) * 26 + y * 40) > 0.6 ? mixRgb(base, rgb(T.clothBlack), 0.2) : base,
-      );
-    k.body('feathers', feathers, { color: T.plume, roughness: 0.8, detail: 0.004, bone: 'plume' });
+    const helmPose = (s: sdf.Shape) => s.at(...KNIGHT_HELM_MOUNT);
+    const helmPart = knightHelm(mapTint(k, { plume: 'clothing' }));
+    addPart(k, helmPart, { pose: helmPose });
 
     // ------------------------------------------------------------------ hair under the helm
-    const insideHelm = helmInner.round(-0.003).union(opening.round(-0.008).intersect(helmOuter.round(-0.002)));
+    const insideHelm = helmPose(helmPart.regions!.inside!);
     const cap = sdf
       .ellipsoid([HEAD[0] + 0.012, HEAD[1] + 0.014, HEAD[2] + 0.012])
       .at(0, HEAD_Y + 0.008, -0.01)

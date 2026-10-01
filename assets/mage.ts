@@ -1,4 +1,6 @@
-import { defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { mageSpellbook } from './parts/mage-spellbook.js';
+import { holdPose, mageWand, mageWandFlame } from './parts/mage-wand.js';
 
 /**
  * Mage — Chibi Quest hero (catalog `heroes/magic/mage`), about 1.07 m to the hat point, faces +Z.
@@ -136,51 +138,6 @@ const handL = (s: sdf.Shape) => s.rotateY(HAND_L_YAW).at(...WRIST_L);
 /** The book stands on the open palm, out on the fingers, its cover turned to the front. */
 const BOOK_AT: V3 = add(WRIST_L, rotY([0.085, 0.077, 0.012], HAND_L_YAW));
 const bookPose = (s: sdf.Shape) => s.rotateZ(-8).rotateY(-22).at(...BOOK_AT);
-
-/** A flame: a round base that rises into two or three curling tongues. `h` is its height. */
-const flame = (h: number) =>
-  sdf.smoothUnion(
-    h * 0.08,
-    sdf.sphere(h * 0.3).at(0, h * 0.3, 0),
-    sdf.chain(
-      [
-        [0, h * 0.35, 0, h * 0.28],
-        [h * 0.05, h * 0.7, 0, h * 0.16],
-        [-h * 0.04, h, 0, h * 0.03],
-      ],
-      h * 0.1,
-    ),
-    sdf.chain(
-      [
-        [h * 0.14, h * 0.4, 0.0, h * 0.13],
-        [h * 0.3, h * 0.66, 0, h * 0.07],
-        [h * 0.26, h * 0.86, 0, h * 0.018],
-      ],
-      h * 0.06,
-    ),
-    sdf.chain(
-      [
-        [-h * 0.15, h * 0.36, 0, h * 0.12],
-        [-h * 0.3, h * 0.58, 0.02 * h, h * 0.06],
-        [-h * 0.3, h * 0.76, 0, h * 0.016],
-      ],
-      h * 0.06,
-    ),
-  );
-/**
- * Magic flame color: a lighter cyan core low in the flame, deep blue toward the tips (the
- * emissive glow adds the light). The colors convert when the build calls this, not at load.
- */
-const glowPaint = (base: V3, h: number) => {
-  const core = rgb(C.glowCore);
-  const outer = rgb(C.glow);
-  return (x: number, y: number, z: number) => {
-    const t = Math.min(1, Math.max(0, (y - base[1]) / h));
-    const r = Math.hypot(x - base[0], z - base[2]) / (h * 0.3);
-    const k = Math.min(1, Math.max(0, t * 0.9 + r * 0.5 - 0.15));
-    return [core[0] + (outer[0] - core[0]) * k, core[1] + (outer[1] - core[1]) * k, core[2] + (outer[2] - core[2]) * k] as const;
-  };
-};
 
 /** A five-point star in the XY plane, point up. */
 const starProfile = (R: number) =>
@@ -656,37 +613,16 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ the wand and its flame
-    // A short, tapered wand through the fist, a round butt knob, a silver band below the tip.
-    const wandPts = [-0.062, -0.03, 0, 0.05, 0.1, 0.15].map((t, i) => {
-      const p = along(t);
-      return [p[0], p[1], p[2], 0.0115 - i * 0.0009] as [number, number, number, number];
-    });
-    const woodDark = rgb(C.woodDark);
-    const wand = sdf
-      .smoothUnion(0.006, sdf.chain(wandPts, 0.01), sdf.sphere(0.016).at(...along(-0.068)))
-      .paintWhere(sdf.sphere(0.013).at(...along(0.128)), C.silver)
-      .paintWhere(sdf.sphere(0.013).at(...along(-0.04)), C.silver)
-      .paintFn((x, y, z, base) => (noise.fbm(x * 200, y * 30, z * 200, 2) > 0.3 ? woodDark : base));
-    k.body('wand', wand, { color: C.wood, roughness: 0.55, bone: 'hand.R' });
+    // The wand, its flame, and the book are parts (assets/parts/mage-wand.ts and
+    // assets/parts/mage-spellbook.ts), shared with the standalone mage-wand and mage-spellbook
+    // assets. The wand's grip is in the right fist; the flame stays upright above the tip.
+    addPart(k, mageWand(), { pose: holdPose(GRIP, WAND_AXIS).pose });
     const flameBase: V3 = [ORB[0], ORB[1] - FLAME_H * 0.3, ORB[2]];
-    k.body('glow', flame(FLAME_H).at(...flameBase).paintFn(glowPaint(flameBase, FLAME_H)), {
-      color: C.glow,
-      roughness: 0.4,
-      emissive: '#3cc0f0',
-      emissiveIntensity: 0.8,
-      detail: 0.0035,
-      bone: 'orb',
-    });
+    addPart(k, mageWandFlame(), { pose: (s) => s.at(...flameBase) });
 
     // ------------------------------------------------------------------ the spellbook
-    // A small leather-bound book standing on the open palm: pages on the three open edges,
-    // gold corner caps and a gold clasp on the fore-edge.
-    const cover = sdf.box([0.1, 0.13, 0.04], 0.005);
-    const book = cover.paintWhere(sdf.box([0.1, 0.16, 0.028]).at(0.01, 0, 0), C.page);
-    k.body('book', bookPose(book), { color: C.cover, roughness: 0.65, detail: 0.003, bone: 'hand.L' });
-    const corners = sdf.union(sdf.box([0.032, 0.032, 0.06]).at(0.05, 0.065, 0), sdf.box([0.032, 0.032, 0.06]).at(0.05, -0.065, 0)).mirror('x', 0);
-    const bookGold = sdf.union(cover.round(0.0025).intersect(corners), sdf.box([0.024, 0.018, 0.048], 0.003).at(0.05, 0, 0));
-    k.body('book-gold', bookPose(bookGold), { color: C.gold, roughness: 0.32, metalness: 0.9, detail: 0.003, bone: 'hand.L' });
+    // A small leather-bound book standing on the open palm.
+    addPart(k, mageSpellbook(), { pose: bookPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient, follow, quat, euler } = motion;

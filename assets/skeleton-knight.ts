@@ -1,4 +1,5 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, mapTint, mixRgb, motion, noise, profile, rgb, sdf, THREE } from '../src/index.js';
+import { skeletonKnightShield } from './parts/skeleton-knight-shield.js';
 
 /**
  * Skeleton knight — Chibi Quest P1 dungeon enemy for the Sunken Vault (catalog
@@ -131,23 +132,6 @@ const boneFistAt = (w: V3) =>
       0.004,
     ),
   );
-
-// The kite shield's outline: a rounded top and a long point down (local frame, face toward +Z).
-const KITE_PTS: [number, number][] = [
-  [0, 0.165],
-  [0.085, 0.158],
-  [0.135, 0.12],
-  [0.145, 0.04],
-  [0.125, -0.06],
-  [0.075, -0.155],
-  [0, -0.235],
-  [-0.075, -0.155],
-  [-0.125, -0.06],
-  [-0.145, 0.04],
-  [-0.135, 0.12],
-  [-0.085, 0.158],
-];
-const kite = profile.polygon(KITE_PTS, { smooth: true, samples: 6 });
 
 export default defineAsset({
   name: 'skeleton-knight',
@@ -582,22 +566,12 @@ export default defineAsset({
     k.body('grip', swordPose(sdf.capsule([0, -0.118, 0], [0, -0.005, 0], 0.013)), { color: C.grip, roughness: 0.75, detail: 0.004, bone: 'weapon' });
 
     // ------------------------------------------------------------------ battered kite shield on the left forearm
-    // Local frame: the face toward +Z. A dented iron face in a raised rim with a worn outer edge,
-    // a chip bitten out of the upper edge, and a sword gash across the face.
+    // The shield and its rivets are a part (assets/parts/skeleton-knight-shield.ts), shared with
+    // the standalone skeleton-knight-shield asset. Local frame: the face toward +Z.
     const shieldPose = (s: sdf.Shape) => s.at(0, -0.02, 0).rotateY(34).rotateX(-4).at(...SHIELD_C);
-    const chip = sdf.sphere(0.024).at(0.142, 0.1, 0);
-    const gash = sdf.box([0.1, 0.006, 0.02], 0.002).rotateZ(28).at(-0.035, -0.03, 0.014);
-    const face = dents(sdf.extrude(kite, 0.024, 0.006), 0.003, 14).subtract(gash);
-    const rim = sdf.extrude(kite, 0.034, 0.008).subtract(sdf.extrude(profile.offsetProfile(kite, -0.018), 0.1));
-    const handle = sdf.capsule([-0.03, 0.02, -0.024], [0.03, -0.01, -0.024], 0.012);
-    const shieldLocal = patina(sdf.union(face, rim, handle).subtract(chip), 24)
-      .paintWhere(sdf.extrude(kite, 0.3).subtract(sdf.extrude(profile.offsetProfile(kite, -0.007), 0.4)), SLOT.worn, 0.003)
-      .paintWhere(chip.round(0.006), SLOT.worn, 0.003)
-      .paintWhere(gash.round(0.003), SLOT.worn, 0.002);
-    k.body('kite-shield', shieldPose(shieldLocal), { color: SLOT.iron, roughness: 0.55, metalness: 0.3, bone: 'shield', bump: ironBump });
-    // Rivets around the rim, and the belt buckle.
-    const shieldRivets = sdf.union(...KITE_PTS.filter((_, i) => i !== 2).map(([x, y]) => sdf.sphere(0.009).at(x * 0.9, y * 0.9 + (y < -0.2 ? 0.012 : 0), 0.016)));
-    k.body('studs', sdf.union(buckle.bone('spine'), shieldPose(shieldRivets).bone('shield')), {
+    addPart(k, skeletonKnightShield(mapTint(k)), { pose: shieldPose });
+    // The belt buckle.
+    k.body('studs', buckle.bone('spine'), {
       color: SLOT.worn,
       roughness: 0.4,
       metalness: 0.8,
