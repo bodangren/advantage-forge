@@ -108,31 +108,31 @@ treasure-hunter-hat	head	1	0	planned		6454		50
 explorer-hat	head	1	0	planned		5482		50
 druid-cap	head	1	0	planned		16598		50
 shaman-cap	head	1	0	planned		8184		50
-swashbuckler-bandana	head	1	0	rework		2210		40
+swashbuckler-bandana	head	1	0	planned		3742		45
 knight-helm	head	2	0	planned		16576		105
 guardian-helm	head	2	0	planned		7908		95
 gladiator-helmet	head	2	0	planned		11210		105
 shield-maiden-helm	head	2	0	planned		8650		105
-dragoon-helm	head	2	0	rework		17896		105
-fighter-cap	head	2	0	rework		6796		95
-spear-warden-crest	head	2	0	rework		1084		80
+dragoon-helm	head	2	0	planned		20208		105
+fighter-cap	head	2	0	planned		9094		105
+spear-warden-crest	head	2	0	planned		8064		105
 fighter-buckler	offhand	1	0	planned		4236		45
 gladiator-shield	offhand	1	0	planned		3552		45
 shield-maiden-shield	offhand	1	0	planned		6350		50
-captain-shield	offhand	1	0	rework		4142		45
+captain-shield	offhand	1	0	planned		3108		45
 adventurer-lantern	offhand	1	0	planned		1240		40
 treasure-hunter-torch	offhand	1	0	planned		3132		45
 adventurer-map	offhand	1	0	planned		818		40
 explorer-map	offhand	1	0	planned		1144		40
 enchanter-scroll	offhand	1	0	planned		3112		45
 shaman-feather	offhand	1	0	planned		870		40
-witch-potion	offhand	1	0	rework		2332		40
+witch-potion	offhand	1	0	planned		2332		40
 skeleton-knight-shield	offhand	2	0	planned		5162		95
-paladin-shield	offhand	2	0	rework		4134		90
+paladin-shield	offhand	2	0	planned		3944		90
 mage-spellbook	offhand	2	0	planned		666		80
 cleric-book	offhand	2	0	planned		4520		90
 warlock-book	offhand	2	0	planned		3462		90
-guardian-shield	offhand	3	0	rework		4954		175
+guardian-shield	offhand	3	0	planned		4900		175
 adventurer-sword	mainhand	1	0	planned		1286		50
 gladiator-sword	mainhand	1	0	planned		1206		50
 rogue-dagger	mainhand	1	0	planned		508		50
@@ -142,7 +142,7 @@ spear-warden-javelin	mainhand	1	0	planned		918		50
 mage-wand	mainhand	1	0	planned		1808		50
 apprentice-wand	mainhand	1	0	planned		1142		50
 witch-broom	mainhand	1	0	planned		3418		55
-treasure-hunter-whip	mainhand	1	0	rework		3844		55
+treasure-hunter-whip	mainhand	1	0	planned		3688		55
 fighter-sword	mainhand	2	0	planned		1276		100
 captain-sword	mainhand	2	0	planned		1344		100
 samurai-katana	mainhand	2	0	planned		1542		100
@@ -164,3 +164,8 @@ dragoon-lance	mainhand	3	1	planned		4274		220
 clockwork-soldier-halberd	mainhand	3	1	planned		2392		200
 apprentice-glasses	accessory	2	0	later		4722		65
 bard-lute	tool	2	0	later		2620		65
+spear-warden-helm	head	2	0	planned		6980		95
+avatar-hair-swept	head	1	0	planned	0	7292		0
+avatar-hair-short	head	1	0	planned	0	6746		0
+avatar-hair-long	head	1	0	planned	0	7276		0
+avatar-hair-ponytail	head	1	0	planned	0	9092		0

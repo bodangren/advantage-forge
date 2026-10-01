@@ -19,7 +19,7 @@ display catalog and the avatar.
 | Part | Repo | What it is |
 | --- | --- | --- |
 | The avatar base | this repo, `assets/avatar-base.ts` | The full chibi body with skin, hair, eyes, and underclothes |
-| Equipment pieces | this repo, `assets/*.ts` (165 in the catalog: 100 catalog items, 65 hero parts) | Each piece declares its slot, anchor, and fit |
+| Equipment pieces | this repo, `assets/*.ts` (170 in the catalog: 100 catalog items, 66 hero parts, 4 hair styles) | Each piece declares its slot, anchor, and fit |
 | The equipment manifest | this repo, `docs/avatar-catalog.tsv` + generated `catalog.json` | Slot, tier, price, hides, dyes per piece |
 | The avatar pack | this repo, `out/packs/avatar/<version>/` | Reduced GLBs, portrait layers, the catalog |
 | The composer | this repo, `src/apk3d/avatar/` | Builds the rigged 3D avatar or the portrait from a loadout |
@@ -30,6 +30,11 @@ display catalog and the avatar.
 A new asset, `avatar-base`, on the shared hero skeleton. The skeleton is identical in every hero
 file today (hips at `[0, 0.2, 0]`, head at `[0, 0.48, -0.01]`, knees with `split`), so the base
 copies it without change.
+
+Built 2026-10-01: `assets/avatar-base.ts`. The skeleton, the head, the face paint, the arms, and
+the fists are the rogue's without change, so every hero part fits as on a hero. The torso is the
+hero torso of the chest-armor contract. `knife.R` and `knife.L` are the grip points in the fists
+(the mainhand and offhand anchors); `cloak` is the back anchor.
 
 Bodies in the base:
 
@@ -43,9 +48,13 @@ Bodies in the base:
 
 Color slots (`variants`, up to four): `skin`, `hair`, `eyes`, `cloth` (the underclothes). The
 options fit the role rule: natural skin tones, natural and fantasy hair, eye colors. The 15 hero
-classes become **presets**: a tint preset plus a starter loadout.
+classes become **presets**: a tint preset plus a starter loadout. The base has four tint presets
+today (sunny, forest, night, frost); the class presets come with the starter sets.
 
-Hair styles are head-slot pieces with `hides: ['hair']` and no cost. The base ships with 4.
+Hair styles are head-slot pieces with `hides: ['hair']` and no cost. The base ships with 4:
+`swept` (the default, the rogue's fringe), `short`, `long`, and `ponytail`, from
+`assets/parts/avatar-hair.ts`. Each style is also a standalone `assets/avatar-hair-<style>.ts`
+and a catalog row with the price override 0.
 
 Clips: the base carries every clip the games use (idle, walk, run, attack, hit, rest, cheer,
 cast). Equipment pieces carry no clips.
@@ -120,9 +129,11 @@ material: cloth and leather are tier 1, and metal is tier 2.
 
 Status values: `planned` (phase 1, needs its `equip` block), `later` (a later-phase slot),
 `rework` (a fix before `ready`: the fit, or a shape defect in the display), and `excluded`. The
-hero parts with `rework` have shape defects that the equipment-parts track lists: three shields
-show their face through the back, and the fighter cap, the bandana, the dragoon helm, the
-spear-warden crest, the witch potion cork, and the whip display pose need a fix.
+9 hero parts with shape defects were fixed on 2026-10-01 and are `planned`: the three shields
+show steel on the back, the fighter cap has a padded lining (`fighterCap({ lining: true })`, the
+fighter keeps his hair), the bandana is a ring, the dragoon helm has smooth cheek guards, the
+crest stands on the new `spear-warden-helm` part, the potion cork sits in the neck, and the whip
+lies flat.
 
 `archer-bow` and `ranger-bow` have the same shape in two colors. Both stay as separate items.
 
@@ -151,7 +162,7 @@ price = round5( slotBase x (1 + triangleBonus + ratingBonus) x tierMultiplier )
 - The `override` column of `docs/avatar-catalog.tsv` replaces a computed price for one piece.
 - `node --import tsx scripts/avatar-price.ts` fills `triangles`, `rating`, and `price`. With
   `--check` it exits 1 when the table is out of date. The code is `src/apk3d/avatar/price.ts`.
-- Result on the 163 priced pieces: tier 1 costs 20 to 70 GP, tier 2 costs 50 to 130 GP, and tier 3
+- Result on the 164 priced pieces (the 4 hair styles are free by override): tier 1 costs 20 to 70 GP, tier 2 costs 50 to 130 GP, and tier 3
   costs 175 to 280 GP. The slot bases and the tier list are placeholders until the median weekly
   GP per active Primary student is measured (see `chibi-quest-progression.md`).
 
@@ -286,6 +297,11 @@ Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild 
 
 - Whether hair styles need their own slot so a hood can hide hair but a crown keeps it. The
   `hides` list per piece covers this; confirm with the first crown render.
+  Fit test 2026-10-01 (the base head and the `swept` hair under four hero head parts): the rogue
+  hood fits; the knight helm and the dragoon helm show small spots of hair at the brim; the swept
+  fringe comes through the front of the wizard hat. Proposal: a capped version of each style (the
+  skull cap above the brow line, the locks below it) that the composer shows under any head piece
+  that does not hide the hair.
 - Whether weapons need a `sheathed` attachment on the back for idle and walk.
 - Whether the reduced pass uses KTX2 in the APK today. If not, 512 px PNG atlases first.
 - Items added after go-live start with zero purchases and sort after the items that students

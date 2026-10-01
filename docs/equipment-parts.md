@@ -19,6 +19,9 @@ base measurements.
 keep their paths, names, and designs. A worn part becomes a new standalone asset next to them.
 Owner decision, 2026-10-01: no part replaces a catalog item. Each part is also an avatar item in
 `docs/avatar-catalog.tsv`. Players choose, and the shop sorts by popularity (`docs/avatar-system.md`).
+A standalone can set a display option of its part (for example `fighterCap({ lining: true })`
+fills the open frame); the host keeps the default, so the host mesh does not change. A standalone
+can also show two parts together (`spear-warden-crest` shows the crest on `spear-warden-helm`).
 
 ## The part contract
 
