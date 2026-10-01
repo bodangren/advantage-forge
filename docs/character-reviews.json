@@ -1842,26 +1842,26 @@
       "detail": 4,
       "technical": 4,
       "gameReady": 4,
-      "sprite": 3,
+      "sprite": 4,
       "motion": 4
     },
-    "summary": "Wood golem reworked 2026-09-30 by a Sonnet 5.5 high-tier agent in three passes (120,760 tokens), from 3.8 to 7.5: glowing amber eye slits and a flower-sigil core, darker lumpy moss on paler planks with dark seams, a seven-stave crown fan, arm plank seams, root grooves and rope wraps on the shins, root-clump feet, five vines. 70,148 triangles, no warnings, ground ok. Still below the 8 bar; the source stays uncommitted (untracked, owned by the dungeon denizens session).",
+    "summary": "Wood golem: one more pass on 2026-10-02 by the owner decision (closeout track, Sonnet 5.5 high tier), plus an orchestrator color fix: a rounded mask head with wrapped planks, a brow and a jaw plank, two amber eye slits in a dark visor, a split-plank crown, a flower core in a round cavity, olive vine wraps on the arms and legs, and curling tendrils. The eye and petal glow dropped from emissive 1.5 and 1.2 to 0.7 and 0.6, so the amber stays saturated (it rendered pale peach), and the wraps went from #54792f (rendered lime) to #3f5a22. Accepted at 7.5 under the owner rule of 2026-10-02.",
     "strengths": [
-      "The crown fan, vines, and rope wraps break the outline in every sprite direction.",
-      "The core sigil reads at 128 px and in the three-quarter view.",
-      "Materials now separate: pale planks, near-black seams, dark moss, tan rope."
+      "The crown, the visor with two amber slits, and the flower core read at 128 px.",
+      "The vine wraps and tendrils break the outline in every sprite direction.",
+      "Bark and glow variants with presets."
     ],
     "issues": [
-      "The eye slits show only as small amber flecks in the S, SW, and SE sprites; the brow shades them at the sprite camera angle.",
-      "The head is a stack of gapped slabs, not carved wavy billets.",
-      "The arms are smooth staves with faint seams."
+      "The wood is paler and smoother than the finely carved dark grain of the mockup.",
+      "The core is a round cavity with a flat floor; the mockup cavity is oval and lit orange.",
+      "The hands and feet are smooth blobs, not knotted roots."
     ],
     "next": [
-      "Deferred by the owner (2026-10-01); the source stays uncommitted.",
-      "Raise the eye slot 0.02 and push the slits to z 0.12 so the brow does not shade them.",
-      "Carve two wavy billets into the face planks."
+      "Darker warm bark with carved grain.",
+      "An oval core cavity with an orange-lit floor.",
+      "Knotted root fists and feet."
     ],
-    "reviewedAt": "2026-09-29T16:38:55+00:00"
+    "reviewedAt": "2026-10-01T23:56:16+00:00"
   },
   "samurai": {
     "overall": 8.2,
