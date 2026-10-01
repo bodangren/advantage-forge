@@ -1,234 +1,158 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
- * Design note — leather belt pouch (equipment/accessories/belt-pouch).
+ * Design note - leather belt pouch (equipment/accessories/belt-pouch).
  *
- * Role: hero gear accessory. Reads at 128 px as a chunky little leather
- *   pouch worn on a belt; one focal point (the brass button on the closure).
- * Size: 0.15 m wide, ~0.11 m tall, 0.04 m deep, stands on y = 0, faces +Z.
- * One idea: a chubby rounded leather sack, wider than tall, with a folded
- *   flap, a vertical closure strap, a brass button + brass keeper, and a
- *   thin leather belt loop on the back.
- * Shape language: round dominant (squat body, folded rounded flap, circular
- *   brass button, soft scalloped trim), square secondary (flat flap edge,
- *   brass keeper bar).
- * Palette: leather #8a5a35 dominant, dark leather #5c3a22 secondary,
- *   brass #d4a93a accent (button + keeper = focal), pale thread #d8b878.
- * Value plan: mid leather body, dark trim peeking under the flap, mid-dark
- *   belt-loop leather behind; the bright brass button is the focal point.
- * Materials: leather (rough 0.62), dark leather (rough 0.68) on belt loop,
- *   polished brass (rough 0.3, metal 1) on button + keeper.
- * Detail: pouch body, folded flap with stitch line, scalloped trim band,
- *   vertical strap with stitched edges, brass button with raised rim,
- *   brass keeper bar, back belt loop with stitch holes.
- * Rig/animation: none (static item).
+ * Role: hero gear accessory, read at 128 px. Focal point: the brass button.
+ * Size: 0.17 m wide, 0.16 m tall, 0.08 m body depth (0.096 with flap), on y = 0, faces +Z.
+ * One idea: a neat, puffy leather pouch with a round bottom, a dark lower
+ *   panel with zigzag teeth, a scalloped stitched flap, and a pointed strap.
+ * Shape language: round dominant, square secondary (brass bar slider).
+ * Palette: leather #b5703f, dark leather #6b3a24, cream stitch #e8cfa0, brass #c9a04a.
+ * Value plan: mid leather flap and body, dark panel below the flap, bright brass.
+ * Materials: leather (rough 0.6), dark leather belt loop (0.68), brass (rough 0.3, metal 1).
+ * Detail: welt rim, flap with wavy stitch line, strap with stitched edges,
+ *   dome button, bar slider, painted teeth, back belt loop.
+ * Rig/animation: none.
  */
 
-const LEATHER = rgb('#8a5a35');
-const LEATHER_DARK = rgb('#5c3a22');
-const LEATHER_LIGHT = rgb('#a57144');
-const THREAD = rgb('#d8b878');
-const BRASS = '#d4a93a';
+const LEATHER = rgb('#b5703f');
+const LEATHER_DARK = rgb('#6b3a24');
+const THREAD = rgb('#e8cfa0');
+const BRASS = '#c9a04a';
 
-const W = 0.15;
-const BODY_H = 0.135;
-const D = 0.04;
+const W = 0.17;
+const H = 0.16;
+const D = 0.08;
+const FLAP_W = 0.16;
+const FLAP_H = 0.1;
+const FLAP_TOP = 0.16;
+const TOOTH = rgb('#4e2a18');
+const FLAP_CY = FLAP_TOP - FLAP_H / 2;
+const FLAP_Z = D / 2 + 0.004;
+const STRAP_W = 0.045;
+const STRAP_BOT = 0.022;
+
+/** Signed distance (negative inside) to a rounded rectangle centred on (cx, cy). */
+const rrDist = (x: number, y: number, cx: number, cy: number, w: number, h: number, r: number): number => {
+  const qx = Math.abs(x - cx) - (w / 2 - r);
+  const qy = Math.abs(y - cy) - (h / 2 - r);
+  return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - r;
+};
 
 export default defineAsset({
   name: 'belt-pouch',
   description:
-    'A small chunky leather belt pouch with a folded flap, scalloped trim peeking below the flap, a stitched closure strap with brass button and brass keeper, and a leather belt loop on the back.',
+    'A puffy leather belt pouch with a round bottom, a dark zigzag-trimmed lower panel, a scalloped stitched flap, a pointed strap with a brass button and bar slider, and a belt loop on the back.',
   detail: 0.005,
   reference: 'docs/item-mockups/belt-pouch-mock.jpg',
   texture: { size: 1024 },
 
   build(k) {
-    // ------------------------------------------------------------------ pouch body
-    // A squashed rounded ellipsoid (slightly wider than tall, flat in Z)
-    // clipped at y = 0 so the asset stands on the ground plane.
-    const bodyShape = sdf
-      .ellipsoid([W / 2 - 0.005, BODY_H / 2, D / 2 - 0.003])
-      .at(0, BODY_H / 2, 0)
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
+    const body = sdf.extrude(profile.rect([W, H], 0.07), D, 0.016).at(0, H / 2, 0);
+    const flap = sdf
+      .extrude(profile.rect([FLAP_W, FLAP_H], 0.055), 0.008, 0.003)
+      .at(0, FLAP_CY, FLAP_Z);
+    const strapProfile = profile.polygon(
+      [
+        [-STRAP_W / 2, 0.16],
+        [STRAP_W / 2, 0.16],
+        [STRAP_W / 2, 0.052],
+        [0, STRAP_BOT],
+        [-STRAP_W / 2, 0.052],
+      ],
+      { smooth: false },
+    );
+    const strap = sdf.extrude(strapProfile, 0.008, 0.003).at(0, 0, FLAP_Z + 0.006);
+    const shape = sdf.smoothUnion(0.004, body, flap, strap);
 
-    // ------------------------------------------------------------------ flap
-    // A folded flap that drapes over the top portion of the body. It is
-    // visibly wider and deeper than the body so it overhangs; the smoothUnion
-    // blend is small enough that the flap edge still reads as a seam.
-    const flapShape = sdf
-      .smoothUnion(
-        0.018,
-        sdf.box([W + 0.02, BODY_H * 0.5, D + 0.018], 0.018).at(0, BODY_H * 0.76, 0),
-        sdf.ellipsoid([W / 2 + 0.024, 0.018, D / 2 + 0.018]).at(0, BODY_H * 0.94, 0),
-      )
-      .intersect(sdf.halfSpace([0, -1, 0], BODY_H * 0.5));
-
-    // ------------------------------------------------------------------ trim (peeks under flap)
-    // A thin leather band that sits where the flap overlaps the body. It is
-    // a separate piece because it gets the dark accent color and stitch holes.
-    const TRIM_Y = BODY_H * 0.49;
-    const trimShape = sdf
-      .box([W + 0.022, 0.014, D + 0.02], 0.004)
-      .at(0, TRIM_Y, 0)
-      .intersect(bodyShape.round(0.006));
-
-    // ------------------------------------------------------------------ closure strap
-    // A vertical leather strap over the flap, from just below the flap top
-    // down to a tapered point just below the brass keeper. Slightly proud of
-    // the flap surface.
-    const STRAP_TOP = BODY_H * 0.94;
-    const STRAP_BOT = BODY_H * 0.5;
-    const STRAP_W = 0.024;
-    const STRAP_D = 0.008;
-    const STRAP_Z = D / 2 + 0.007;
-    const strapShape = sdf
-      .smoothUnion(
-        0.005,
-        sdf.box([STRAP_W, (STRAP_TOP - STRAP_BOT) * 0.95, STRAP_D], 0.004).at(
-          0,
-          (STRAP_TOP + STRAP_BOT) / 2 + 0.004,
-          STRAP_Z,
-        ),
-        sdf.cone(
-          [-STRAP_W / 2, STRAP_BOT + 0.002, STRAP_Z],
-          [STRAP_W / 2, STRAP_BOT + 0.002, STRAP_Z],
-          STRAP_W / 2 + 0.002,
-          0.002,
-        ),
-      )
-      .intersect(sdf.halfSpace([0, -1, 0], STRAP_BOT - 0.001));
-
-    // ------------------------------------------------------------------ combined leather
-    const leatherShape = sdf
-      .smoothUnion(0.01, bodyShape, flapShape, trimShape, strapShape)
-      .intersect(sdf.halfSpace([0, -1, 0], 0));
-
-    // ------------------------------------------------------------------ leather paint
-    // Warm mid brown with low-frequency leather patches, high-frequency grain,
-    // a sun-lit upper shoulder and a shaded lower belly. Painted detail:
-    // - dark trim band just below the flap edge
-    // - pale stitch dashes on the flap edge (front and back)
-    // - scalloped triangular pattern on the lower front
-    // - pale stitch dashes down each side of the vertical strap
     const leatherPaint = (x: number, y: number, z: number): readonly [number, number, number] => {
-      const patch = 0.5 + 0.5 * noise.fbm(x * 7 + 3, y * 7, z * 7, 2);
-      const grain = 0.5 + 0.5 * noise.fbm(x * 40, y * 70, z * 40, 2);
-      let c = mixRgb(LEATHER, LEATHER_LIGHT, 0.06 + 0.32 * patch);
-      c = mixRgb(c, LEATHER_DARK, 0.08 + 0.24 * grain);
-      const t = Math.min(1, Math.max(0, y / BODY_H));
-      // Stronger sun-lit top-shoulder lift on the flap shoulder.
-      c = mixRgb(c, LEATHER_LIGHT, 0.42 * Math.max(0, (t - 0.6) / 0.4));
-      // Deeper shaded lower belly.
-      c = mixRgb(c, LEATHER_DARK, 0.38 * Math.max(0, (0.32 - y) / 0.32));
-      // Slight dark crease right at the flap bottom edge where flap meets body.
-      const atFlapEdge = Math.abs(y - TRIM_Y + 0.005) < 0.0025;
-      if (atFlapEdge && Math.abs(z) < D / 2 + 0.022) {
-        c = mixRgb(c, LEATHER_DARK, 0.55);
-      }
-
-      // Scalloped trim band: 5 bold triangular teeth that reach up to the flap
-      // edge from a darker band underneath. The teeth show scallops; the
-      // narrower valleys between show the band color.
-      const N_SCALLOP = 5;
-      const SCALLOP_FRONT = z > 0.008;
-      const SCALLOP_BACK = z < -0.008;
-      const onSideFace = SCALLOP_FRONT || SCALLOP_BACK;
-      const SCALLOP_BAND_BOTTOM = TRIM_Y - 0.024;
-      const SCALLOP_AMP = 0.02;
-      if (onSideFace && y < TRIM_Y + 0.001 && y > SCALLOP_BAND_BOTTOM) {
-        const phase = ((x + W * 0.45) / (W * 0.9)) * N_SCALLOP;
-        const tScallop = phase - Math.floor(phase);
-        const distFromPeak = Math.min(tScallop, 1 - tScallop);
-        const waveY = TRIM_Y - distFromPeak * 2 * SCALLOP_AMP;
-        if (y < waveY) {
-          c = mixRgb(c, LEATHER_DARK, 0.85);
-        }
-      }
-
-// Stitched flap edge: pale thread dashes running along the flap bottom
-const onFlapStitchFront =
-  Math.abs(y - TRIM_Y + 0.004) < 0.002 &&
-  z > D / 2 - 0.002 &&
-  z < D / 2 + 0.025 &&
-  Math.sin(x * 280) > 0.1;
-const onFlapStitchBack =
-  Math.abs(y - TRIM_Y + 0.004) < 0.002 &&
-  z < -(D / 2 - 0.002) &&
-  z > -(D / 2 + 0.025) &&
-  Math.sin(x * 280) > 0.1;
-if (onFlapStitchFront || onFlapStitchBack) c = mixRgb(c, THREAD, 0.85);
-
-      // Stitched strap edges (vertical dashes on each side of the strap)
-      const onStrap = z > D / 2 + 0.003 && y > STRAP_BOT && y < STRAP_TOP - 0.006;
-      const onStrapEdgeL = onStrap && Math.abs(x + STRAP_W / 2) < 0.0015;
-      const onStrapEdgeR = onStrap && Math.abs(x - STRAP_W / 2) < 0.0015;
-      const stitchPhaseL = Math.sin(y * 200 + 1.2) > -0.05;
-      const stitchPhaseR = Math.sin(y * 200 - 1.2) > -0.05;
-      if ((onStrapEdgeL && stitchPhaseL) || (onStrapEdgeR && stitchPhaseR)) {
-        c = mixRgb(c, THREAD, 0.85);
+      let c = LEATHER;
+      if (z > 0) {
+        const dBody = rrDist(x, y, 0, H / 2, W, H, 0.07);
+        const dFlap = rrDist(x, y, 0, FLAP_CY, FLAP_W, FLAP_H, 0.055);
+        const onFlapLayer = z > D / 2 + 0.002;
+        // dark lower panel inside a welt margin, with zigzag teeth on top edge
+        const tooth = Math.abs(((x + 1) / 0.022) % 1 - 0.5) * 2; // 0..1 triangle wave
+        void tooth;
+        if (!onFlapLayer && dBody < -0.014 && dFlap > 0) c = LEATHER_DARK;
+        // body welt stitches
+        if (!onFlapLayer && Math.abs(dBody + 0.007) < 0.0012 && Math.sin((x + y) * 330) > 0.1) c = THREAD;
+        // wavy flap border stitch
+        const wave = 0.0035 * Math.sin((x + y) * 260);
+        if (onFlapLayer && Math.abs(dFlap + 0.011 + wave) < 0.0011 && Math.abs(x) > STRAP_W / 2 + 0.004) c = THREAD;
+        // strap edge stitches
+        const sx = Math.abs(Math.abs(x) - (STRAP_W / 2 - 0.006));
+        if (z > FLAP_Z + 0.008 && sx < 0.0012 && y > 0.04 && Math.sin(y * 320) > 0) c = THREAD;
       }
       return c;
     };
 
-    k.body('leather', leatherShape.paintFn(leatherPaint), {
-      color: '#8a5a35',
-      roughness: 0.62,
+    k.body('leather', shape.paintFn(leatherPaint), {
+      color: '#b8683a',
+      roughness: 0.6,
       metalness: 0,
-      detail: 0.005,
-      paintWeight: 2,
-      maxTriangles: 1200,
+      detail: 0.0045,
+      maxTriangles: 9000,
       bump: (x, y, z) =>
-        0.0008 * noise.fbm(x * 30, y * 60, z * 30, 2) +
-        0.0005 * noise.fbm(x * 110, y * 110, z * 110, 2),
+        0.00022 * noise.fbm(x * 40, y * 60, z * 40, 2) + 0.00012 * noise.fbm(x * 120, y * 120, z * 120, 1),
     });
 
-    // ------------------------------------------------------------------ dark leather (belt loop)
-    // Belt loop on the back: a rounded rectangle minus a slightly smaller
-    // rounded rectangle for the belt slot. Sticks out 14 mm from the back
-    // so it reads from a back view.
-    const beltLoopOuter = sdf.box([0.05, BODY_H * 0.78, 0.022], 0.006);
-    const beltLoopInner = sdf.box([0.034, BODY_H * 0.66, 0.026], 0.004);
-    const beltLoop = beltLoopOuter
-      .subtract(beltLoopInner)
-      .at(0, BODY_H * 0.55, -(D / 2 + 0.012))
-      .paintFn((x, y, z) => {
-        const grain = 0.5 + 0.5 * noise.fbm(x * 60, y * 90, z * 60, 2);
-        let c = mixRgb(LEATHER_DARK, LEATHER, 0.16 + 0.14 * grain);
-        const topBand = Math.abs(y - BODY_H * 0.88) < 0.0035;
-        const botBand = Math.abs(y - BODY_H * 0.22) < 0.0035;
-        const onStitch = (topBand || botBand) && Math.abs(z) > 0.008 && Math.sin(x * 220) > 0.05;
-        if (onStitch) c = mixRgb(c, THREAD, 0.7);
-        return c;
-      });
+    // Raised zigzag teeth under the flap edge (8 triangles, 0.012 m, 0.003 m proud).
+    const toothPts: [number, number][] = [];
+    for (const sgn of [-1, 1]) {
+      for (const ax of [0.036, 0.048, 0.06, 0.072]) {
+        const dx = Math.max(0, ax - (FLAP_W / 2 - 0.055));
+        const edge = FLAP_CY - FLAP_H / 2 + 0.055 - Math.sqrt(Math.max(0, 0.055 * 0.055 - dx * dx));
+        toothPts.push([sgn * ax, edge]);
+      }
+    }
+    const toothShapes = toothPts.map(([tx, ty]) =>
+      sdf
+        .extrude(
+          profile.polygon(
+            [
+              [-0.006, 0],
+              [0.006, 0],
+              [0, 0.012],
+            ],
+            { smooth: false },
+          ),
+          0.008,
+          0.0015,
+        )
+        .rotateZ(180)
+        .at(tx, ty - 0.001, D / 2),
+    );
+    k.body('teeth', sdf.union(...toothShapes).paintFn(() => TOOTH), {
+      color: '#4e2a18',
+      roughness: 0.6,
+      metalness: 0,
+      detail: 0.003,
+      maxTriangles: 1500,
+    });
 
-    k.body('leather-dark', beltLoop, {
-      color: '#5c3a22',
+    const loop = sdf
+      .box([0.05, 0.1, 0.022], 0.006)
+      .subtract(sdf.box([0.034, 0.08, 0.03], 0.004))
+      .at(0, 0.09, -(D / 2 + 0.008));
+    k.body('leather-dark', loop.paintFn(() => LEATHER_DARK), {
+      color: '#6b3a24',
       roughness: 0.68,
       metalness: 0,
       detail: 0.0045,
-      paintWeight: 1,
-      maxTriangles: 300,
-      bump: (x, y, z) => 0.0008 * noise.fbm(x * 50, y * 80, z * 50, 2),
+      maxTriangles: 800,
     });
 
-    // ------------------------------------------------------------------ brass
-    // Round brass button with a raised rim torus, plus a horizontal brass
-    // keeper bar below the button. Bright accent = the visual focal point.
-    const BUTTON_Y = BODY_H * 0.66;
-    const KEEPER_Y = BODY_H * 0.5;
-    const BUTTON_Z = D / 2 + 0.024;
-    const KEEPER_Z = D / 2 + 0.018;
-    const button = sdf.sphere(0.0125).at(0, BUTTON_Y, BUTTON_Z - 0.002);
-    const buttonRim = sdf.torus(0.0125, 0.0024).at(0, BUTTON_Y, BUTTON_Z - 0.001);
-    const keeper = sdf.box([0.032, 0.011, 0.012], 0.003).at(0, KEEPER_Y, KEEPER_Z);
-
-    k.body('brass', sdf.union(button, buttonRim, keeper), {
+    const BZ = FLAP_Z + 0.006 + 0.004;
+    const button = sdf.sphere(0.016).scale([1, 1, 0.6]).at(0, 0.11, BZ + 0.002);
+    const slider = sdf.box([0.06, 0.016, 0.01], 0.003).at(0, 0.074, BZ + 0.002);
+    k.body('brass', sdf.union(button, slider), {
       color: BRASS,
       roughness: 0.3,
       metalness: 1,
       detail: 0.0035,
-      maxTriangles: 400,
-      bump: (x, y, z) => 0.0004 * noise.fbm(x * 80, y * 80, z * 80, 2),
+      maxTriangles: 1200,
     });
   },
 });

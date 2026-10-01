@@ -4,45 +4,49 @@ import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/
  * Design note — wizard staff (equipment/magic-weapons/staff).
  *
  * Role: equipment pickup and icon. It must read at 128 px.
- * Size: 1.2 m tall, stands on y = 0, centred on Y, faces +Z.
- * One idea: a bright cyan faceted teardrop crystal in a gold four-prong cup on a dark wood knot.
+ * Size: 1.24 m tall, stands on y = 0, centred on Y, faces +Z.
+ * One idea: a bright cyan faceted teardrop crystal in a gold six-petal crown on a dark wood shaft wrapped in orange vines.
  * Shape language: round and soft. Curls break the pole from every side.
- * Palette: walnut #6b4226 / #54331d, sap #9a6840, leather #8a5632, cord #c4a574,
- *   iron #6a7078, gold #d4a93a, crystal #38c8ff. The crystal is the accent.
- * Materials: wood, leather, iron, gold cup, emissive crystal.
- * Detail: gnarled shaft, grip wrap, ferrule, knot, four prongs, faceted crystal. No rig.
+ * Palette: walnut #6b4228 / #54331d, grain #8a5a35, vine orange #d9822b, leather #8a5632,
+ *   cord #c4a574, gold #d4a93a, crystal #38c8ff. The crystal is the accent, vines second.
+ * Materials: wood, vines, leather, gold crown, emissive crystal.
+ * Detail: gnarled shaft, grip wrap, root-flare foot, six spiral vines with curls, six petals,
+ *   faceted crystal. No rig.
  */
 
-const WOOD = '#6b4226';
+const WOOD = '#6b4228';
 const WOOD_DARK = '#54331d';
-const WOOD_LIGHT = '#7d5434';
+const WOOD_LIGHT = '#8a5a35';
+const VINE = '#d9822b';
 const SAP = '#9a6840';
 const LEATHER = '#8a5632';
 const LEATHER_DARK = '#4e3018';
 const CORD = '#c4a574';
-const IRON = '#6a7078';
-const IRON_DARK = '#3c424a';
 const ORB_GLOW = '#38c8ff';
 const GOLD = '#d4a93a';
-const LEAN = 15;
+const FLARE = 24;
 
-/** Crystal centre. Ellipsoid top lands at y = 1.24. */
-const ORB_Y = 1.1;
+/** Crystal centre. The apex lands at y = 1.24. */
+const ORB_Y = 1.109;
 
-/** Faceted teardrop: an ellipsoid cut by eight tilted planes that taper to the top. */
+/** Faceted teardrop: 6 side planes and 6 tilted top planes that meet at the apex. */
 function crystal() {
-  const t = (12 * Math.PI) / 180;
+  const t = (35 * Math.PI) / 180;
   const n: [number, number, number] = [Math.cos(t), Math.sin(t), 0];
-  const cuts = [0, 1, 2, 3, 4, 5, 6, 7].map((i) =>
-    sdf.halfSpace(n, 0.062).rotateY(i * 45),
+  const top = [0, 1, 2, 3, 4, 5].map((i) => sdf.halfSpace(n, 0.075).rotateY(i * 60 + 30));
+  const side = [0, 1, 2, 3, 4, 5].map((i) =>
+    sdf.halfSpace([1, 0, 0], 0.074).rotateY(i * 60),
   );
-  return sdf.intersect(sdf.ellipsoid([0.075, 0.14, 0.075]), ...cuts);
+  return [...top, ...side].reduce(
+    (acc, c) => sdf.intersect(acc, c),
+    sdf.ellipsoid([0.09, 0.15, 0.09]),
+  );
 }
 
 export default defineAsset({
   name: 'staff',
   description:
-    'Gnarled walnut wizard staff with a leather grip, iron ferrule, and a glowing crystal orb in three curling tines.',
+    'Gnarled walnut wizard staff with a leather grip, orange vines, and a glowing faceted crystal in a gold crown.',
   detail: 0.007,
   reference: 'docs/item-mockups/staff-mock.jpg',
   texture: { size: 1024 },
@@ -59,7 +63,7 @@ export default defineAsset({
         [-0.012, 0.64, 0.01, 0.022],
         [0.015, 0.78, -0.012, 0.023],
         [-0.006, 0.9, 0.005, 0.028],
-        [0.0, 0.96, 0.0, 0.028],
+        [0.0, 0.94, 0.0, 0.03],
       ],
       0.018,
     );
@@ -74,50 +78,28 @@ export default defineAsset({
     );
 
     // Dark wood knot under the cup, joining the shaft.
-    const knot = sdf.ellipsoid([0.06, 0.05, 0.06]).at(0, 0.94, 0);
+    const knot = sdf
+      .revolve(
+        profile.polygon(
+          [[0, 0.88], [0.032, 0.88], [0.036, 0.92], [0.05, 0.97], [0.054, 1.0], [0, 1.0]],
+          { smooth: true, samples: 8 },
+        ),
+      );
 
-    // Chunky curls on the bare shaft, below and above the grip.
-    const rootlets = sdf.union(
-      sdf.chain(
-        [
-          [-0.012, 0.17, 0.006, 0.015],
-          [-0.038, 0.23, 0.024, 0.013],
-          [-0.028, 0.3, 0.04, 0.011],
-          [-0.006, 0.35, 0.026, 0.01],
-        ],
-        0.008,
-      ),
-      sdf.chain(
-        [
-          [0.012, 0.22, -0.008, 0.014],
-          [0.036, 0.28, -0.028, 0.012],
-          [0.02, 0.34, -0.022, 0.01],
-        ],
-        0.007,
-      ),
-      sdf.chain(
-        [
-          [0.01, 0.66, -0.01, 0.015],
-          [0.036, 0.72, -0.032, 0.013],
-          [0.022, 0.78, -0.04, 0.011],
-          [0.004, 0.83, -0.022, 0.01],
-        ],
-        0.008,
-      ),
-      sdf.chain(
-        [
-          [-0.01, 0.74, 0.008, 0.014],
-          [-0.032, 0.8, 0.028, 0.012],
-          [-0.016, 0.86, 0.02, 0.01],
-        ],
-        0.007,
-      ),
-    );
+    // Root flare at the foot, standing on y = 0.
+    const foot = sdf
+      .revolve(
+        profile.polygon(
+          [[0, 0], [0.036, 0], [0.04, 0.008], [0.03, 0.026], [0.022, 0.06], [0, 0.06]],
+          { smooth: true, samples: 8 },
+        ),
+      )
+      .intersect(sdf.halfSpace([0, -1, 0], 0));
 
     const wood = sdf
       .smoothUnion(0.014, shaft, knots)
       .smoothUnion(0.02, knot)
-      .smoothUnion(0.008, rootlets)
+      .smoothUnion(0.012, foot)
       .paintFn((x, y, z, base) => {
         const n = noise.fbm(x * 6, y * 2.2, z * 6, 3);
         const along = Math.min(1, Math.max(0, (y - 0.06) / 0.9));
@@ -168,38 +150,48 @@ export default defineAsset({
       bump: (x, y, z) => 0.0013 * Math.abs(Math.sin(Math.atan2(z, x) + y * 145)),
     });
 
-    // Iron shoe. Lifted a few millimetres so the mesh foot sits on y = 0, not under it.
-    const ferrule = sdf
-      .revolve(
-        profile.polygon(
-          [
-            [0.0, 0.0],
-            [0.038, 0.0],
-            [0.04, 0.01],
-            [0.03, 0.022],
-            [0.027, 0.04],
-            [0.033, 0.052],
-            [0.03, 0.064],
-            [0.02, 0.074],
-            [0.0, 0.074],
-          ],
-          { smooth: true, samples: 10 },
-        ),
-      )
-      .intersect(sdf.halfSpace([0, -1, 0], 0))
-      .paintFn((x, y, z, base) => {
-        const n = noise.fbm(x * 32, y * 24, z * 32, 2);
-        if (y < 0.02) return rgb(IRON_DARK);
-        if (n > 0.32) return mixRgb(rgb(base), rgb(IRON_DARK), 0.5);
-        return rgb(base);
-      });
-    k.body('ferrule', ferrule, {
-      color: IRON,
+    // Orange vines: short spirals around the shaft, ending in small outward curls.
+    const vineAt = (y: number, ang: number, r: number): [number, number, number] => [
+      r * Math.cos(ang),
+      y,
+      r * Math.sin(ang),
+    ];
+    const vineSpec: Array<[number, number, number]> = [
+      // y start, start angle (deg), turn direction: clusters low, middle, and under the crown
+      [0.06, 20, 1],
+      [0.13, 200, -1],
+      [0.62, 60, -1],
+      [0.7, 230, 1],
+      [0.8, 330, -1],
+      [0.84, 130, 1],
+    ];
+    const vines = sdf.union(
+      ...vineSpec.map(([y0, a0, dir]) => {
+        const pts: Array<[number, number, number, number]> = [];
+        const steps = 4;
+        for (let i = 0; i <= steps; i++) {
+          const u = i / steps;
+          const ang = ((a0 + dir * u * 200) * Math.PI) / 180;
+          const [px, py, pz] = vineAt(y0 + u * 0.08, ang, 0.032);
+          pts.push([px, py, pz, 0.016 - 0.004 * u]);
+        }
+        // curl: leave the shaft, loop up and hook back
+        const last = ((a0 + dir * 200) * Math.PI) / 180;
+        const [cx, cy, cz] = vineAt(y0 + 0.1, last, 0.055);
+        pts.push([cx, cy, cz, 0.012]);
+        const [dx, dy, dz] = vineAt(y0 + 0.135, last + dir * 0.4, 0.065);
+        pts.push([dx, dy, dz, 0.011]);
+        const [ex, ey, ez] = vineAt(y0 + 0.15, last + dir * 0.9, 0.05);
+        pts.push([ex, ey, ez, 0.01]);
+        return sdf.chain(pts, 0.008);
+      }),
+    );
+    k.body('vines', vines, {
+      color: VINE,
       roughness: 0.5,
-      metalness: 0.76,
-      detail: 0.006,
-      maxTriangles: 420,
-      bump: (x, y, z) => 0.0003 * noise.fbm(x * 40, y * 36, z * 40, 2),
+      metalness: 0,
+      detail: 0.005,
+      maxTriangles: 1900,
     });
 
     // Faceted cyan crystal, one body.
@@ -215,29 +207,27 @@ export default defineAsset({
       flat: true,
     });
 
-    // Gold cup: four leaf prongs leaning inward, plus a ring.
-    const leaf = sdf.extrude(
+    // Gold crown: six broad rounded petals flaring outward around the lower third of the crystal.
+    const petal = sdf.extrude(
       profile.polygon(
-        [
-          [0, 0], [0.02, 0.02], [0.025, 0.05], [0.014, 0.078],
-          [0, 0.09], [-0.014, 0.078], [-0.025, 0.05], [-0.02, 0.02],
-        ],
+        [[-0.034, 0], [0.034, 0], [0.042, 0.03], [0.036, 0.055], [0.015, 0.072], [0, 0.074], [-0.015, 0.072], [-0.036, 0.055], [-0.042, 0.03]],
         { smooth: true },
       ),
       0.015,
+      0.004,
     );
-    const prongs = [0, 1, 2, 3].map((i) =>
-      leaf.at(0, 0, 0).rotateX(-LEAN).at(0, 0, 0.078).at(0, 0.975, 0).rotateY(i * 90),
+    const petals = [0, 1, 2, 3, 4, 5].map((i) =>
+      petal.rotateX(FLARE).at(0, 0, 0.062).at(0, 1.005, 0).rotateY(i * 60 + 30),
     );
     const cup = sdf
-      .smoothUnion(0.006, ...prongs, sdf.torus(0.065, 0.02).at(0, 0.97, 0))
+      .smoothUnion(0.006, ...petals, sdf.torus(0.066, 0.02).at(0, 1.015, 0))
       .paintFn((x, y, z, base) => rgb(base));
     k.body('cup', cup, {
       color: GOLD,
       roughness: 0.35,
       metalness: 1,
       detail: 0.004,
-      maxTriangles: 1300,
+      maxTriangles: 1500,
     });
   },
 });

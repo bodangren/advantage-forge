@@ -2,70 +2,95 @@ import { HAND_FIT, defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/
 
 /**
  * Halberd (equipment/melee-weapons/halberd), matched to docs/item-mockups/halberd-mock.jpg.
- * Size: 1.85 m tall, standing on its butt. One idea: a long wooden pole with leather wraps under a
- * steel head: an axe blade toward +X, a back hook toward -X, and a leaf spear point on top.
- * Palette: pole #9a6a3a / grain #6e4424, wraps #b8502a, steel #b8bec6 / edge #dde2e8, socket #5a5f67.
+ * Role: two-handed melee weapon, avatar item. Size: 2.04 m tall, standing on its knob; blade 0.5 m tall, haft of fat barrel segments, blade toward +X.
+ * One idea: a chunky chibi head, a big crescent axe blade (top spike, bottom hook) against a fan-lobed fluke.
+ * Shape language: heavy angular steel on a round banded haft.
+ * Palette: haft #8a5a35, brass rings #c9a04a, blade #b9c0c8 / edge #dfe4ea, socket and fluke #5a6068.
+ * Materials: haft (wood, grain in bump), rings (brass), socket and fluke (dark steel), blade (bright steel).
+ * Focal point: the blade's bright edge band.
  */
 
-const WOOD = rgb('#9a6a3a');
-const GRAIN = rgb('#6e4424');
-const STEEL = rgb('#b8bec6');
-const EDGE = rgb('#dde2e8');
-const HEAD_Y = 1.55;
-const big = (s: ReturnType<typeof sdf.sphere>) => s.at(0, -HEAD_Y, 0).scale(1.5).at(0, HEAD_Y, 0);
+const WOOD = rgb('#8a5a35');
+const GRAIN = rgb('#5e3a20');
+const STEEL = rgb('#b9c0c8');
+const EDGE = rgb('#dfe4ea');
+const HEAD_Y = 1.75;
+const HAFT_TOP = 1.6;
 
 const clamp = (v: number, lo = 0, hi = 1) => (v < lo ? lo : v > hi ? hi : v);
-const thin = (s: ReturnType<typeof sdf.sphere>, half: number, slope: number) =>
-  s.intersect(sdf.halfSpace([slope, 0, 1], half)).intersect(sdf.halfSpace([slope, 0, -1], half));
+const pt = (x: number, y: number): [number, number] => [x, HEAD_Y + y];
 
 export default defineAsset({
   name: 'halberd',
-  description: 'A halberd: a long wooden pole with leather wraps and a steel head with an axe blade, a back hook, and a spear point.',
+  description: 'A halberd: a thick banded wooden haft under a chunky steel head with a crescent axe blade and a fan-lobed fluke.',
   detail: 0.004,
   reference: 'docs/item-mockups/halberd-mock.jpg',
   texture: { size: 1024 },
   equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.8, 0], twoHanded: true },
 
   build(k) {
-    const pole = sdf.cylinder(0.024, 1.5, 0.006).at(0, 0.8, 0);
+    const SEG0 = 0.17;
+    const SEGS = 6;
+    const segLen = (HAFT_TOP - SEG0) / SEGS;
+    const segments = Array.from({ length: SEGS }, (_, i) =>
+      sdf.ellipsoid([0.036, segLen / 2 - 0.004, 0.036]).at(0, SEG0 + segLen * (i + 0.5), 0),
+    );
+    const haft = sdf.union(sdf.cylinder(0.026, HAFT_TOP - 0.1, 0.004).at(0, (HAFT_TOP + 0.1) / 2, 0), ...segments);
     k.body(
-      'pole',
-      pole.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.15 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 80, y * 6, z * 80, 3)))),
-      { color: '#9a6a3a', roughness: 0.7, metalness: 0 },
+      'haft',
+      haft.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.15 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 60, y * 5, z * 60, 3)))),
+      {
+        color: '#8a5a35',
+        roughness: 0.75,
+        metalness: 0,
+        bump: (x, y, z) => 0.0015 * noise.fbm(x * 90, y * 7, z * 90, 3),
+      },
     );
-    const wraps = sdf.union(
-      ...[0.55, 0.6, 0.65, 0.95, 1.0, 1.05].map((y) => sdf.torus(0.023, 0.007).at(0, y, 0)),
-      sdf.cylinder(0.024, 0.12, 0.004).at(0, 0.6, 0),
-      sdf.cylinder(0.024, 0.12, 0.004).at(0, 1.0, 0),
-    );
-    k.body('wraps', wraps, { color: '#b8502a', roughness: 0.75, metalness: 0 });
+    k.body('brass', sdf.union(sdf.sphere(0.052).at(0, 0.052, 0), sdf.sphere(0.04).at(0, 0.14, 0)), {
+      color: '#c9a04a',
+      roughness: 0.4,
+      metalness: 0.8,
+    });
 
-    const iron = sdf.union(
-      big(sdf.cylinder(0.03, 0.16, 0.008).at(0, HEAD_Y - 0.03, 0)),
-      sdf.cone([0, 0.0, 0], [0, 0.06, 0], 0.012, 0.026),
-      big(sdf.box([0.012, 0.3, 0.04], 0.004).at(0, HEAD_Y - 0.2, 0)),
+    const socket = sdf.union(
+      sdf.cylinder(0.042, 0.2, 0.01).at(0, HAFT_TOP + 0.04, 0),
+      sdf
+        .box([0.13, 0.13, 0.08], 0.004)
+        .intersect(sdf.box([0.16, 0.16, 0.2], 0.004).rotateZ(45))
+        .intersect(sdf.box([0.2, 0.16, 0.115], 0.004).rotateY(45))
+        .at(0, HEAD_Y, 0),
     );
-    k.body('iron', iron, { color: '#5a5f67', roughness: 0.5, metalness: 0.75 });
+    const flukeOutline = profile.polygon(
+      [
+        [-0.06, 0.035], [-0.17, 0.045], [-0.21, 0.115], [-0.285, 0.095], [-0.3, 0.04], [-0.265, 0],
+        [-0.3, -0.04], [-0.285, -0.095], [-0.21, -0.115], [-0.17, -0.045], [-0.06, -0.035],
+      ].map(([x = 0, y = 0]) => pt(x, y)),
+    );
+    const fluke = sdf.extrude(flukeOutline, 0.04, 0.008);
+    k.body('socket', sdf.smoothUnion(0.01, socket, fluke), { color: '#5a6068', roughness: 0.5, metalness: 0.75 });
 
-    const axeOutline = profile.polygon(
-      [[0.02, HEAD_Y + 0.05], [0.12, HEAD_Y + 0.1], [0.2, HEAD_Y + 0.16], [0.23, HEAD_Y + 0.08], [0.235, HEAD_Y - 0.02], [0.21, HEAD_Y - 0.12], [0.15, HEAD_Y - 0.1], [0.02, HEAD_Y - 0.05]],
+    const bladeOutline = profile.polygon(
+      [
+        pt(0.05, 0.09), pt(0.14, 0.15), pt(0.24, 0.24), pt(0.3, 0.29), pt(0.335, 0.15), pt(0.35, 0.0),
+        pt(0.33, -0.1), pt(0.26, -0.18), pt(0.22, -0.21), pt(0.2, -0.12), pt(0.12, -0.08), pt(0.05, -0.08),
+      ],
       { smooth: true },
     );
-    const axe = thin(sdf.extrude(axeOutline, 0.03, 0.002), 0.012, 0.05);
-    const hook = sdf.chain(
-      [[-0.02, HEAD_Y, 0, 0.018], [-0.08, HEAD_Y + 0.01, 0, 0.013], [-0.13, HEAD_Y + 0.04, 0, 0.008], [-0.15, HEAD_Y + 0.08, 0, 0.003]],
-      0.01,
-    ).scale([1, 1, 0.6]);
-    const spear = sdf
-      .smoothUnion(0.01, sdf.cone([0, HEAD_Y + 0.05, 0], [0, HEAD_Y + 0.14, 0], 0.02, 0.045), sdf.cone([0, HEAD_Y + 0.14, 0], [0, HEAD_Y + 0.32, 0], 0.045, 0.001))
-      .scale([1, 1, 0.4]);
+    // Thickness 0.036 at the socket (x 0.06) tapering to 0.008 at the edge (x 0.3).
+    const slope = 0.045;
+    const half = 0.0175 + slope * 0.05;
+    // Unit normals keep the distance field exact, so the bevel planes mesh flat.
+    const len = Math.hypot(slope, 1);
+    const blade = sdf
+      .extrude(bladeOutline, 0.05, 0.002)
+      .intersect(sdf.halfSpace([slope / len, 0, 1 / len], half / len))
+      .intersect(sdf.halfSpace([slope / len, 0, -1 / len], half / len));
     k.body(
-      'steel',
-      big(sdf.smoothUnion(0.008, axe, hook, spear)).paintFn((x, y) => {
-        const edge = Math.max(clamp((x - 0.285) / 0.03), clamp((y - (HEAD_Y + 0.33)) / 0.06));
-        return mixRgb(STEEL, EDGE, edge);
-      }),
-      { color: '#b8bec6', roughness: 0.3, metalness: 0.85 },
+      'blade',
+      blade.paintFn((x) => mixRgb(STEEL, EDGE, clamp((x - 0.27) / 0.05))),
+      // Flat shading: the blade faces are planes, and smooth normals over the long reduced
+      // triangles showed crumpled creases.
+      { color: '#b9c0c8', roughness: 0.3, metalness: 0.9, flat: true },
     );
   },
 });

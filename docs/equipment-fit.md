@@ -77,7 +77,7 @@ wizard-staff, dragoon-lance, and captain-shield.
 gauntlets. 122 pass `forge check`. The 10 pieces of the audit above were resized to the contract
 on 2026-09-29; on the avatar, circlet, crown, leather-cap, leather-armor (worn at 1x), and
 cloth-hood pass and read well in the worn render. The catalog marks the passing pieces `ready`
-and these 16 pieces `rework` (13 after the helmet fixes of 2026-10-02):
+and these 16 pieces `rework` (12 after the helmet and gauntlet fixes of 2026-10-02):
 
 | Piece | Finding on the avatar base |
 | --- | --- |
@@ -95,7 +95,7 @@ and these 16 pieces `rework` (13 after the helmet fixes of 2026-10-02):
 | mantle | It sits inside the torso: only the hem trim shows. |
 | guardian-shield | 0.70 m tall at fit scale 1: 14 cm below the ground at rest, and in the jaw in walk and run. It needs an avatar size. |
 | enchanter-scroll | 0.64 m tall with the flame: 13 cm below the ground, and the sparks go into the head in run and cast. |
-| gloves, gauntlets | No block: the base has fists, and the gauntlets model a right hand at +X (a pair keeps the +X half). They need a closed-fist shape. |
+| gloves, gauntlets | No block: the base has fists, and the gauntlets model a right hand at +X (a pair keeps the +X half). They need a closed-fist shape. Gauntlets fixed 2026-10-02 (`ready`): a closed-fist pair, `hands` at fit scale 2; gloves remain. |
 
 The 4 hair styles stay `planned`. Three of them fail on the skin at the jaw, where the side locks
 go into the cheeks as on the base hair. The capped hair task gives them their own slot rule.

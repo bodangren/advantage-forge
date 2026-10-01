@@ -1,12 +1,12 @@
 id	slot	tier	two_handed	status	override	triangles	rating	price
-cloth-hood	head	1	0	ready		2894		45
+cloth-hood	head	1	0	ready		2890	7	50
 leather-cap	head	1	0	ready		7876	7.1	50
 circlet	head	2	0	ready		4886		90
 horned-helmet	head	2	0	ready		3850	7.2	95
 iron-helmet	head	2	0	ready		6500	7.5	105
 steel-helmet	head	2	0	ready		4854	7.2	95
 crown	head	3	0	ready		4696	7.1	190
-leather-armor	chest	1	0	ready		7326		60
+leather-armor	chest	1	0	ready		12430		65
 studded-leather	chest	1	0	ready		5100	7	65
 chainmail	chest	2	0	rework		5340		120
 scale-armor	chest	2	0	ready		6700	7.3	130
@@ -19,7 +19,7 @@ cloak	back	2	0	rework		3698	7.1	70
 mantle	back	2	0	rework		3492	7	70
 bracers	hands	1	0	rework		2424	7	20
 gloves	hands	1	0	rework		4700	7.3	25
-gauntlets	hands	2	0	rework		7739	6.3	50
+gauntlets	hands	2	0	ready		17930	7	55
 belt	waist	1	0	rework		2324		20
 boots	feet	1	0	rework		2770	7.1	25
 greaves	feet	2	0	rework		3350	7.1	50
@@ -40,7 +40,7 @@ javelin	mainhand	1	0	ready		3448	7	60
 mace	mainhand	1	0	ready		2440		50
 quarterstaff	mainhand	1	1	ready		1586		50
 short-sword	mainhand	1	0	ready		2640		55
-shortbow	mainhand	1	1	ready		4140	7	60
+shortbow	mainhand	1	1	ready		4114	7.5	60
 sickle	mainhand	1	0	ready		5542	7	65
 sling	mainhand	1	0	ready		8258	7.3	70
 spear	mainhand	1	0	ready		3612	7.4	60
@@ -54,27 +54,27 @@ crystal-focus	mainhand	2	0	ready		5298		120
 falchion	mainhand	2	0	ready		1390		100
 flail	mainhand	2	0	ready		2900		110
 katana	mainhand	2	0	ready		2112		100
-long-sword	mainhand	2	0	ready		4520	7	120
+long-sword	mainhand	2	0	ready		5278	7.5	130
 longbow	mainhand	2	1	ready		3564		110
 morningstar	mainhand	2	0	ready		2638		110
 rapier	mainhand	2	0	ready		1584		100
 ritual-dagger	mainhand	2	0	ready		1490		100
 rune-stone	mainhand	2	0	ready		3504	7	120
 scimitar	mainhand	2	0	ready		2680		110
-staff	mainhand	2	1	ready		5568	7.2	130
+staff	mainhand	2	1	ready		6410	7.5	130
 trident	mainhand	2	0	ready		2848		110
 warhammer	mainhand	2	0	ready		2580		110
 glaive	mainhand	3	1	ready		4358	7.1	240
 great-axe	mainhand	3	1	ready		9216		260
 greatsword	mainhand	3	1	ready		3900		220
-halberd	mainhand	3	1	ready		12158	6.5	260
+halberd	mainhand	3	1	ready		8532	7	280
 heavy-crossbow	mainhand	3	1	ready		9264	7	280
 magic-scepter	mainhand	3	0	ready		6850		240
 maul	mainhand	3	1	ready		5214		240
 pike	mainhand	3	1	ready		12599	7	280
 scythe	mainhand	3	1	ready		8351	7	280
 backpack	accessory	1	0	later		5292		35
-belt-pouch	accessory	1	0	later		1827	6.3	30
+belt-pouch	accessory	1	0	later		2232	7.2	35
 satchel	accessory	1	0	later		2468	7	35
 scabbard	accessory	1	0	later		2602	6.9	35
 amulet	accessory	2	0	later		3298	7.4	70
