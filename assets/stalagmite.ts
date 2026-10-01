@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Profile, type Rgb, type Sdf, type Vec3 } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf, type Vec3 } from '../src/index.js';
 
 /**
  * Design note — cave stalagmite cluster (nature/terrain/stalagmite).
@@ -51,7 +51,7 @@ interface Ring {
  * closed-spline corner tangents run along the axis instead of dragging the
  * flare below ground or the tip above `h`.
  */
-const coneProfile = (r0: number, h: number, rings: Ring[]): Profile => {
+const coneProfile = (r0: number, h: number, rings: Ring[]): profile.Profile => {
   const taper = (y: number): number => r0 * (1 - y / (h * 1.06));
   const pts: Array<[number, number]> = [
     [0, 0.004],

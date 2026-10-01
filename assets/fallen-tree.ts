@@ -73,14 +73,6 @@ const ground = sdf.halfSpace([0, -1, 0], 0);
 
 const ridges = (x: number, y: number, z: number): number => noise.fbm(y * 14, z * 14, x * 2.2, 3, 41);
 
-const plateFrame = (x: number, y: number, z: number): { depth: number; radial: number; ang: number } => {
-  const rel: Vec3 = [x - PLATE_C[0], y - PLATE_C[1], z - PLATE_C[2]];
-  const depth = dot(rel, plateN);
-  const u = dot(rel, plateU);
-  const v = dot(rel, plateV);
-  return { depth, radial: Math.hypot(u, v), ang: Math.atan2(v, u) };
-};
-
 const woodPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
   let c = mixRgb(base, barkDark, 0.1 + 0.14 * (0.5 + 0.5 * noise.fbm(x * 1.4, y * 1.8, z * 1.8, 2, 11)));
   const g = ridges(x, y, z);

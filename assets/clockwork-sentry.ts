@@ -425,7 +425,7 @@ export default defineAsset({
     };
 
     const IDLE = 2.4;
-    const idlePose = (p: number): Record<string, { move?: V3; rotate?: V3 }> => ({
+    const idlePose = (p: number): Record<string, { move?: V3; rotate?: V3; scale?: V3 }> => ({
       hips: { move: [0, -0.003 * bump(p), 0] },
       chest: { rotate: [1.5 * wave(p), 2 * wave(p, 1, 0.25), 0] },
       head: { rotate: [2 * wave(p, 1, 0.35), 5 * wave(p, 1, 0.1), 2 * wave(p, 2, 0.2)] },

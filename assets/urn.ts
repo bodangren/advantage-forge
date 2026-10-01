@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf, type Rgb, type Sdf } from '../src/index.js';
 
 /**
  * Design note — funerary stone urn (props/containers/urn).
@@ -158,8 +158,8 @@ const RUNE_SHAPES: readonly (readonly Seg[])[] = [
  * Build a single stencil shape that covers all six rune glyphs, used as a
  * paintWhere region to paint the carved marks onto the stone surface.
  */
-const buildRuneStencil = (bodyRadiusAtBand: number): sdf.Sdf => {
-  const runeBodies: sdf.Sdf[] = [];
+const buildRuneStencil = (bodyRadiusAtBand: number): Sdf => {
+  const runeBodies: Sdf[] = [];
   for (let i = 0; i < RUNE_ANGLES.length; i++) {
     const a = (RUNE_ANGLES[i]! * Math.PI) / 180;
     const cx = Math.cos(a);
