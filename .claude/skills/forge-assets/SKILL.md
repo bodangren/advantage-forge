@@ -202,6 +202,10 @@ asset and match it.
   over its share almost always has fine `displace` that should be `bump`, or hidden surfaces.
 - **Iterate with `--fast`** (vertex colors, about 5 s). Textured builds take 15 to 30 s; do them
   when the shape is right, and to check bump detail.
+- **Worn equipment is a part module.** Build a character's helmet, hat, weapon, or shield in
+  `assets/parts/<host>-<piece>.ts` (a function that returns a `Part`), add it to the character
+  with `addPart(k, part, { pose })`, and give it a standalone `assets/<host>-<piece>.ts` that
+  stands it on the ground. The part keeps the exact worn size. Follow `docs/equipment-parts.md`.
 - **If the tool is missing something, extend `src/`** with a small, tested function rather than
   forcing a hack into the asset. Run `pnpm test` and `pnpm typecheck` afterwards.
 

@@ -272,6 +272,11 @@ Motion (`motion.*`): `wave(phase, cycles, offset)` in [-1, 1], `bump(phase, cycl
   wavy fringe), intersected with the inside of the hat so it never pokes through.
 - **Local frames:** write a helper like `const helmetPose = (s) => s.rotateX(-13).at(0, 0.73, 0)`
   and build the part at its own origin.
+- **Equipment as a part module:** a helmet, hat, weapon, or shield that a character wears lives in
+  `assets/parts/<host>-<piece>.ts` and returns a `Part`. The character adds it with
+  `addPart(k, part, { pose })`, and `assets/<host>-<piece>.ts` stands it on the ground as its own
+  asset and avatar item (a row in `docs/avatar-catalog.tsv`). Contract and extraction recipe:
+  `docs/equipment-parts.md`. Check a refactor with `node scripts/part-check.mjs save|compare <host>`.
 - **Surface texture:** `.displace(0.004, (x, y, z) => noise.fbm(x * 18, y * 6, z * 18, 3))` for wood,
   stone, bark. The normal map keeps this detail even after triangle reduction. Keep amplitude
   small on shiny metal; reflections exaggerate it.
