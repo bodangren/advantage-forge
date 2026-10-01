@@ -18,9 +18,6 @@ const C = {
   rivet: '#d8dce0',
 };
 const rad = Math.PI / 180;
-const HEAD_Y = 0.675;
-const HEAD = [0.205, 0.2, 0.19] as const;
-const pair = (s: sdf.Shape) => s.mirror('x');
 const hard = (s: sdf.Shape) => s.mirror('x', 0);
 
 /** The mount point: the head center, rounded to 1/1024 m. */
@@ -32,14 +29,6 @@ export function dragoonHelm(tint: PartTint): Part {
     plate: tint('plate'),
     plateDark: tint('plate', { color: C.plateDark, follow: 1 }),
   };
-    const head = sdf
-      .smoothUnion(
-        0.06,
-        sdf.ellipsoid(HEAD).at(0, HEAD_Y, 0),
-        pair(sdf.sphere(0.1).at(0.095, 0.575, 0.072)), // round cheeks
-        sdf.ellipsoid([0.11, 0.055, 0.085]).at(0, 0.53, 0.058), // soft chin
-      )
-      .bone('head');
     const helmOuter = sdf.ellipsoid([0.246, 0.275, 0.246]).at(0, 0.69, -0.012);
     const helmInner = sdf.ellipsoid([0.226, 0.255, 0.226]).at(0, 0.69, -0.012);
     const BROW_Y = 0.745;
