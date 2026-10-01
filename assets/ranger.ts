@@ -1,4 +1,5 @@
-import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+import { rangerArrow, rangerBow } from './parts/ranger-bow.js';
 
 /**
  * Ranger — Chibi Quest hero (catalog `heroes/martial/ranger`), 1.0 m tall, faces +Z.
@@ -558,12 +559,7 @@ export default defineAsset({
     k.body('arrows', quiverPose(arrows).bone('chest'), { color: C.shaft, roughness: 0.7, detail: 0.004 });
     // The arrow for the shot, in the middle of the quiver (quiver frame: nock up at 0.43, the
     // head down in the tube). Its bone hides it in every clip but the shot.
-    const shotArrow = sdf.union(
-      sdf.capsule([0, 0.2, 0], [0, 0.43, 0], 0.0055),
-      sdf.cone([0, 0.205, 0], [0, 0.165, 0], 0.012, 0.002).paint(C.arrowhead),
-      fletching.at(0, 0.358, 0).paint(C.fletch),
-    );
-    k.body('nocked-arrow', quiverPose(shotArrow), { color: C.shaft, roughness: 0.7, detail: 0.0035, bone: 'arrow' });
+    addPart(k, rangerArrow(), { pose: quiverPose });
 
     // ------------------------------------------------------------------ legs and tall boots
     const pants = sdf.smoothUnion(
@@ -593,33 +589,8 @@ export default defineAsset({
     k.body('boots', pair(boot), { color: C.boot, roughness: 0.6 });
 
     // ------------------------------------------------------------------ recurve longbow in the left hand
-    // Local frame: grip at the origin, limbs along Y, the back of the bow toward +Z, the string
-    // behind it at -Z. Each limb bends back toward the string, then the tip curls forward.
-    const limb = (len: number, sign: 1 | -1) =>
-      sdf.chain(
-        [
-          [0, 0, 0, 0.017],
-          [0, 0.22 * len * sign, -0.007, 0.0135],
-          [0, 0.48 * len * sign, -0.03, 0.0115],
-          [0, 0.72 * len * sign, -0.056, 0.0098],
-          [0, 0.88 * len * sign, -0.066, 0.0086],
-          [0, 0.97 * len * sign, -0.052, 0.0078],
-          [0, 1.02 * len * sign, -0.026, 0.0072],
-          [0, 1.03 * len * sign, 0.0, 0.0068],
-          [0, 1.015 * len * sign, 0.02, 0.0064],
-        ],
-        0.01,
-      );
-    const bowLocal = sdf
-      .union(limb(UPPER, 1), limb(LOWER, -1))
-      .paintWhere(sdf.box([0.1, 0.07, 0.1]), C.grip);
-    // The back of the bow faces out (+X), so the front view shows the whole curve.
-    const bowPose = (s: sdf.Shape) => s.rotateY(100).rotateZ(BOW_TILT).at(...GRIP);
-    k.body('bow', bowPose(bowLocal), { color: C.bow, roughness: 0.55, detail: 0.004, bone: 'bowgrip' });
-    // The string in two halves that meet at the nocking point, each on its own bone.
-    const stringLook = { color: C.string, roughness: 0.8, detail: 0.003 };
-    k.body('bowstring', sdf.capsule(NOCK_TOP, NOCK_MID, 0.0035), { ...stringLook, bone: 'string.top' });
-    k.body('bowstring-low', sdf.capsule(NOCK_BOT, NOCK_MID, 0.0035), { ...stringLook, bone: 'string.bot' });
+    // The bow and its two string halves (see assets/parts/ranger-bow.ts).
+    addPart(k, rangerBow(), { pose: (s) => s.at(...GRIP) });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

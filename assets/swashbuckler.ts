@@ -1,4 +1,8 @@
-import { defineAsset, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+import { addPart, defineAsset, mapTint, motion, profile, rgb, sdf, THREE } from '../src/index.js';
+
+import { SWASHBUCKLER_BANDANA_MOUNT, swashbucklerBandana } from './parts/swashbuckler-bandana.js';
+import { swashbucklerDagger } from './parts/swashbuckler-dagger.js';
+import { swashbucklerSabre } from './parts/swashbuckler-sabre.js';
 
 /**
  * Swashbuckler: Chibi Quest hero (catalog `heroes/martial/swashbuckler`), 1.0 m to the top of the
@@ -244,33 +248,7 @@ export default defineAsset({
     const slab = sdf.box([0.7, 0.056, 0.7], 0.008).rotateX(-9).at(0, 0.768, 0);
     const bandShape = skull(0.024).intersect(slab);
     const bandSurface = (x: number, y: number) => sdf.raycast(bandShape, [x, y, 1], [0, 0, -1])![2];
-    const KX = 0.065;
-    const knot = sdf.ellipsoid([0.034, 0.03, 0.028]).at(KX, 0.752, -0.224);
-    // Two tails, 0.09 long and 0.03 wide, 0.022 thick, hanging from the knot at the back left.
-    const tail = (turn: number, len: number) =>
-      sdf
-        .extrude(
-          profile.polygon([
-            [-0.015, 0],
-            [0.015, 0],
-            [0.019, -len],
-            [0, -len + 0.02],
-            [-0.019, -len - 0.004],
-          ]),
-          0.022,
-          0.006,
-        )
-        .rotateX(10)
-        .rotateZ(turn)
-        .at(KX, 0.742, -0.234);
-    const bandana = sdf
-      .smoothUnion(0.01, bandShape, knot, tail(16, 0.09), tail(-12, 0.085))
-      .paintFn((x, y, z, base) => {
-        const a = Math.atan2(x, z);
-        const fold = Math.sin(a * 9 + y * 26) > 0.86 || (y > 0.772 && Math.sin(a * 5 - y * 40) > 0.93);
-        return fold ? rgb(T.fold) : base;
-      });
-    k.body('bandana', bandana, { color: T.cloth, roughness: 0.85, detail: 0.004, bone: 'head' });
+    addPart(k, swashbucklerBandana(mapTint(k)), { pose: (s) => s.at(...SWASHBUCKLER_BANDANA_MOUNT) });
 
     // ------------------------------------------------------------------ hair: a cap and a fan of thick locks
     const faceMask = sdf.ellipsoid([0.25, 0.16, 0.23]).rotateZ(10).at(0.0, 0.62, 0.14);
@@ -546,62 +524,8 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ the rapier (right hand) and the dagger (left hand)
     // Local frame: origin at the grip center, the blade up (+Y), the flat facing +Z.
-    // The sabre: a curved blade 0.34 long and 0.035 wide at the base, 0.01 thick. The curve bends the
-    // tip toward the cutting edge (-X in the local frame, which points outward in the right hand).
-    const BL0 = 0.046;
-    const BLEN = 0.34;
-    const sabreX = (t: number) => -0.042 * t * t; // the centerline
-    const sabreHalf = (t: number) => 0.0175 * (1 - 0.55 * t) * (t > 0.92 ? Math.max(0.15, (1 - t) / 0.08) : 1);
-    const sabrePts: [number, number][] = [];
-    const steps = 10;
-    for (let n = 0; n <= steps; n++) {
-      const t = n / steps;
-      sabrePts.push([sabreX(t) + sabreHalf(t), BL0 + BLEN * t]); // the spine side (+X)
-    }
-    for (let n = steps; n >= 0; n--) {
-      const t = n / steps;
-      sabrePts.push([sabreX(t) - sabreHalf(t), BL0 + BLEN * t]); // the edge side (-X)
-    }
-    const sabreBlade = sdf
-      .extrude(profile.polygon(sabrePts, { smooth: false }), 0.01, 0.003)
-      .paintFn((x, y, z, base) => {
-        const t = Math.min(1, Math.max(0, (y - BL0) / BLEN));
-        const h = sabreHalf(t);
-        const u = x - sabreX(t);
-        if (u < -h + 0.0048) return rgb('#f2f5f7'); // the bright edge line
-        if (u > h - 0.0085) return rgb('#6f767e'); // the darker spine
-        return base;
-      });
-    const guardOf = (w: number) => sdf.box([w, 0.011, 0.016], 0.005).at(0, 0.04, 0).paint(C.gold);
-    const sabre = sdf.union(
-      sabreBlade,
-      guardOf(0.07),
-      sdf.capsule([0, -0.032, 0], [0, 0.036, 0], 0.014).paintFn((x, y, z, base) => (Math.sin(y * 330) > 0.35 ? rgb('#2a1c14') : base)).paint(C.grip),
-      sdf.sphere(0.0185).at(0, -0.05, 0).paint(C.gold),
-    );
-    // The dagger: 0.17 overall, the blade 0.024 wide, the same guard style.
-    const dagger = sdf.union(
-      sdf
-        .extrude(
-          profile.polygon(
-            [
-              [-0.012, 0],
-              [0.012, 0],
-              [0.0085, 0.085],
-              [0, 0.115],
-              [-0.0085, 0.085],
-            ],
-            { smooth: false },
-          ),
-          0.01,
-          0.003,
-        )
-        .at(0, 0.04, 0)
-        .paint(C.blade),
-      guardOf(0.05),
-      sdf.capsule([0, -0.026, 0], [0, 0.036, 0], 0.012).paint(C.grip),
-      sdf.sphere(0.0145).at(0, -0.04, 0).paint(C.gold),
-    );
+    const sabrePart = swashbucklerSabre();
+    const daggerPart = swashbucklerDagger();
     const inHand = (s: sdf.Shape, side: 1 | -1) => {
       const tag = side === 1 ? 'L' : 'R';
       const g = GRIPS[tag];
@@ -611,8 +535,8 @@ export default defineAsset({
         .rotateX(-g.back)
         .at(...sx(ARMS[tag].G, side));
     };
-    k.body('sabre', inHand(sabre, -1), { color: C.blade, roughness: 0.3, metalness: 0.9, detail: 0.003, bone: 'knife.R' });
-    k.body('dagger', inHand(dagger, 1), { color: C.blade, roughness: 0.3, metalness: 0.9, detail: 0.003, bone: 'knife.L' });
+    addPart(k, sabrePart, { pose: (s) => inHand(s, -1) });
+    addPart(k, daggerPart, { pose: (s) => inHand(s, 1) });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop, keys, reach, orient } = motion;
