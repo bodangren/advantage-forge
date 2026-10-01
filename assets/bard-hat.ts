@@ -19,6 +19,6 @@ export default defineAsset({
   texture: { size: 512 },
 
   build(k) {
-    addPart(k, bardHat(k.tint), { pose: (s) => s.at(0, 0.012, 0), bones: null });
+    addPart(k, bardHat(k.tint), { pose: (s) => s.at(0, 0.018, 0), bones: null });
   },
 });

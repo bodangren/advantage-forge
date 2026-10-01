@@ -20,7 +20,7 @@ export default defineAsset({
   build(k) {
     // Keep the bow's curve in the XY plane, so the front view shows the full arc and the string;
     // stand the lower tip on the ground (tip about 0.216 m below the grip).
-    const stand = (s: sdf.Shape) => s.at(0, 0.217, 0);
+    const stand = (s: sdf.Shape) => s.at(0, 0.223, 0);
     addPart(k, archerBow(), { pose: stand, bones: null });
   },
 });

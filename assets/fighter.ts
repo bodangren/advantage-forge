@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Fighter — Chibi Quest hero (catalog `heroes/martial/fighter`), 1.0 m to the cap crown, faces +Z.
@@ -56,6 +56,10 @@ const C = {
   leggings: '#4a3e34',
   bootCuff: '#b5652f',
 };
+
+import { fighterBuckler } from './parts/fighter-buckler.js';
+import { FIGHTER_CAP_MOUNT, fighterCap } from './parts/fighter-cap.js';
+import { fighterSword } from './parts/fighter-sword.js';
 
 type V3 = readonly [number, number, number];
 
@@ -243,36 +247,7 @@ export default defineAsset({
     const hair = sdf.smoothUnion(0.012, hairCap, locks, sideLocks, napeLock).subtract(earCut);
     k.body('hair', hair, { color: T.hair, roughness: 0.6, detail: 0.004, bone: 'head' });
 
-    // The brow band: a steel ring 0.022 m tall around the hair, just outside the dome.
-    const band = hairDome
-      .round(0.011)
-      .subtract(hairDome.round(-0.011))
-      .smoothIntersect(0.004, sdf.box([0.8, 0.022, 0.8], 0.006).at(0, BROW_Y, 0));
-    k.body('cap-band', band, { color: C.band, roughness: 0.35, metalness: 0.8, detail: 0.004, bone: 'head' });
-
-    // The Y: three thin ridges meet at the crown and run down to the band (front, back left, back right).
-    const ridgeShell = hairDome.round(0.017).subtract(hairDome.round(-0.006));
-    const ridgeArm = (deg: number) => sdf.box([0.032, 0.5, 0.5], 0.012).at(0, 0.9, 0.25).rotateY(deg).at(0, 0, -0.03);
-    const ridges = ridgeShell
-      .smoothIntersect(0.004, sdf.union(ridgeArm(0), ridgeArm(120), ridgeArm(-120)))
-      .intersect(sdf.halfSpace([0, -1, 0], -(BROW_Y - 0.006)));
-    const crownTop = sdf.raycast(hairDome.round(0.017), [0, 1.3, -0.03], [0, -1, 0])![1];
-    const crownBoss = sdf.sphere(0.024).scale([1, 0.55, 1]).at(0, crownTop - 0.004, -0.03);
-    // The nasal bar: 0.012 m wide, from the band down the nose bridge to the nose tip.
-    const zTip = faceZ(0, 0.566) + 0.011;
-    const nasal = sdf.chain(
-      [
-        [0, 0.758, 0.19, 0.006],
-        [0, 0.72, faceZ(0, 0.72) + 0.009, 0.006],
-        [0, 0.68, faceZ(0, 0.68) + 0.008, 0.006],
-        [0, 0.64, faceZ(0, 0.64) + 0.008, 0.006],
-        [0, 0.6, faceZ(0, 0.6) + 0.009, 0.006],
-        [0, 0.572, zTip, 0.0065],
-      ],
-      0.01,
-    );
-    const helmSteel = sdf.smoothUnion(0.006, ridges, crownBoss, nasal);
-    k.body('cap', helmSteel, { color: C.steel, roughness: 0.35, metalness: 0.8, detail: 0.004, bone: 'head' });
+    addPart(k, fighterCap(), { pose: (s) => s.at(...FIGHTER_CAP_MOUNT) });
 
     // ------------------------------------------------------------------ torso: mail shirt
     const torso = sdf
@@ -453,88 +428,17 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ arming sword in the right hand
     // Local frame: the grip center at the origin, the blade toward -Y, the flat facing +Z.
-    const BLADE_W = 0.05;
-    const BLADE_T = 0.014;
-    const R = ((BLADE_W / 2) ** 2 + (BLADE_T / 2) ** 2) / BLADE_T;
-    const lens = sdf.intersect(
-      sdf.cylinder(R, 1).at(0, 0, R - BLADE_T / 2),
-      sdf.cylinder(R, 1).at(0, 0, -(R - BLADE_T / 2)),
-    );
-    // A blade 0.30 m long with a clear fuller (a groove on both flats, painted darker).
-    const fuller = sdf.union(
-      sdf.box([0.014, 0.21, 0.008], 0.004).at(0, -0.18, BLADE_T / 2),
-      sdf.box([0.014, 0.21, 0.008], 0.004).at(0, -0.18, -BLADE_T / 2),
-    );
-    const bladeLocal = sdf
-      .extrude(
-        profile.polygon([
-          [-BLADE_W / 2, -0.07],
-          [BLADE_W / 2, -0.07],
-          [BLADE_W / 2, -0.315],
-          [0, -0.37],
-          [-BLADE_W / 2, -0.315],
-        ]),
-        0.2,
-      )
-      .intersect(lens)
-      .subtract(fuller)
-      .paintWhere(sdf.box([0.017, 0.24, 0.3]).at(0, -0.18, 0), '#8c939d', 0.002);
-    const guardLocal = sdf
-      .box([0.13, 0.024, 0.03], 0.01)
-      .union(hard(sdf.sphere(0.0155).at(0.065, 0, 0)))
-      .at(0, -0.064, 0);
-    const pommelLocal = sdf.smoothUnion(0.008, sdf.sphere(0.02).at(0, 0.05, 0), sdf.cone([0, 0.03, 0], [0, 0.045, 0], 0.013, 0.016));
-    const gripLocal = sdf.cylinder(0.0135, 0.11, 0.004).at(0, -0.014, 0);
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     // The sword rests low across the front, the tip forward, down, and toward his left, clear of the skirt panel.
     const SWORD = { x: -34, z: 72 };
     const swordPose = (s: sdf.Shape) => s.rotateX(SWORD.x).rotateZ(SWORD.z).at(...GRIP);
-    k.body('sword', swordPose(bladeLocal), { color: C.blade, roughness: 0.3, metalness: 0.9, detail: 0.0035, bone: 'hand.R' });
-    k.body('hilt', swordPose(sdf.union(guardLocal, pommelLocal)), {
-      color: C.brass,
-      roughness: 0.3,
-      metalness: 0.9,
-      detail: 0.004,
-      bone: 'hand.R',
-    });
-    k.body('grip', swordPose(gripLocal), {
-      color: C.grip,
-      roughness: 0.75,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0012 * Math.abs(Math.sin(noise.noise3(x * 3, y * 3, z * 3) + (x + y) * 260)),
-    });
+    addPart(k, fighterSword(), { pose: swordPose });
 
     // ------------------------------------------------------------------ buckler on the left forearm
     // Local frame: the face toward +Z. A round wooden disc with a brass rim, a pointed brass
     // boss, and three studs. It sits low on the forearm so the top edge keeps clear of the cheek.
     const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(0.236, 0.28, 0.092);
-    const LZ = 0.06; // the disc stands this far in front of the arm's frame, so the fist stays behind it
-    const front = (s: sdf.Shape) => s.at(0, 0, LZ);
-    const BR = 0.13;
-    const disc = sdf.cylinder(BR - 0.004, 0.026, 0.008).rotateX(90);
-    const handle = sdf.capsule([-0.035, 0.0, -0.022], [0.035, 0.0, -0.022], 0.012);
-    const plank = (x: number, y: number) => Math.sin(x * 62 + noise.noise3(x * 5, y * 1.2, 0) * 1.6);
-    const wood = sdf.union(disc, handle).paintFn((x, y, z, base) => (plank(x, y) > 0.55 ? rgb(C.woodGrain) : base));
-    k.body('buckler', shieldPose(front(wood)), {
-      color: C.wood,
-      roughness: 0.75,
-      detail: 0.005,
-      bone: 'forearm.L',
-      bump: (x, y, z) => 0.0008 * plank(x, y),
-    });
-    const rim = sdf.torus(BR - 0.011, 0.014).rotateX(90);
-    const boss = sdf
-      .smoothUnion(0.01, sdf.cone([0, 0, 0.008], [0, 0, 0.088], 0.056, 0.004), sdf.cylinder(0.06, 0.016, 0.006).rotateX(90).at(0, 0, 0.016))
-      .round(0.002);
-    const stud = (deg: number) => sdf.sphere(0.013).scale([1, 1, 0.7]).at(Math.sin(deg * rad) * 0.098, Math.cos(deg * rad) * 0.098, 0.016);
-    k.body('buckler-brass', shieldPose(front(sdf.union(rim, boss, stud(0), stud(120), stud(240)))), {
-      color: C.brass,
-      roughness: 0.3,
-      metalness: 0.9,
-      detail: 0.004,
-      bone: 'forearm.L',
-    });
+    addPart(k, fighterBuckler(), { pose: shieldPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

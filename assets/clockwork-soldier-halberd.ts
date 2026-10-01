@@ -21,6 +21,6 @@ export default defineAsset({
 
   build(k) {
     // Local frame: the pole runs from -0.26 (the butt) up; the blade flat already faces +Z.
-    addPart(k, clockworkSoldierHalberd(k.tint), { pose: (s) => s.at(0, 0.26, 0), bones: null });
+    addPart(k, clockworkSoldierHalberd(k.tint), { pose: (s) => s.at(0, 0.265, 0), bones: null });
   },
 });

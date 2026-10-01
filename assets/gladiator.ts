@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
+import { addPart, defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Gladiator — Chibi Quest P1 hero (catalog `heroes/martial/gladiator`), about 1.05 m to the top
@@ -51,6 +51,10 @@ const C = {
   shieldDark: '#6e4426',
   crest: '#5a3320',
 };
+
+import { GLADIATOR_HELMET_MOUNT, gladiatorHelmet } from './parts/gladiator-helmet.js';
+import { gladiatorShield } from './parts/gladiator-shield.js';
+import { gladiatorSword } from './parts/gladiator-sword.js';
 
 type V3 = readonly [number, number, number];
 
@@ -278,86 +282,8 @@ export default defineAsset({
     // and the back; a raised V ridge (0.012 wide) from the brow up the front; a rounded-wedge cheek
     // plate on each side; a neck guard; a 0.012 crown ridge that rises into a tapered crest, with a
     // dark brush on top.
-    const outer = sdf.ellipsoid([0.226, 0.216, 0.208]).at(0, 0.685, -0.014);
-    const inner = sdf.ellipsoid([0.206, 0.196, 0.188]).at(0, 0.678, -0.012);
-    const keepZone = sdf.union(sdf.box([1, 1, 1]).at(0, 0.665 + 0.5, 0), sdf.box([1, 1, 0.5]).at(0, 0.6 + 0.5, -0.075 - 0.25));
-    const faceWindow = sdf
-      .extrude(
-        profile.polygon([
-          [-0.25, 0.6],
-          [-0.25, 0.7],
-          [-0.19, 0.735],
-          [-0.12, 0.756],
-          [0, 0.728],
-          [0.12, 0.756],
-          [0.19, 0.735],
-          [0.25, 0.7],
-          [0.25, 0.6],
-        ]),
-        0.5,
-      )
-      .at(0, 0, 0.25);
-    // The brim: a shell 0.012 to 0.02 outside the dome, level all round at the brow, with a dip of
-    // 0.03 at the front (a narrow tab over the nose bridge) and at the back.
-    const flangeShell = outer.round(0.02).subtract(outer.round(0.011));
-    const level = sdf.box([0.7, 0.017, 0.7]).at(0, 0.7435, 0);
-    const dipFront = sdf.box([0.056, 0.05, 0.3]).at(0, 0.7135 + 0.008, 0.25).round(0.006);
-    const dipBack = sdf.box([0.26, 0.05, 0.3]).at(0, 0.7135 + 0.008, -0.25).round(0.006);
-    const brim = flangeShell.intersect(sdf.smoothUnion(0.008, level, dipFront, dipBack));
-    // The V ridge: two strokes 0.012 wide from the brow center up and out, hugging the dome.
-    const stroke = (sgn: number) => {
-      const A: [number, number] = [0, 0.722];
-      const B: [number, number] = [0.052 * sgn, 0.87];
-      const dx = B[0] - A[0];
-      const dy = B[1] - A[1];
-      const l = Math.hypot(dx, dy);
-      const nx = (dy / l) * 0.006;
-      const ny = (-dx / l) * 0.006;
-      return sdf.extrude(profile.polygon([[A[0] + nx, A[1] + ny], [B[0] + nx, B[1] + ny], [B[0] - nx, B[1] - ny], [A[0] - nx, A[1] - ny]]), 0.3);
-    };
-    const vRidge = sdf.union(stroke(1), stroke(-1)).at(0, 0, 0.2).intersect(outer.round(0.011));
-    const dome = sdf.smoothUnion(0.008, outer.intersect(keepZone), vRidge).subtract(inner).subtract(faceWindow);
-    // Cheek plate: a rounded wedge, wide at the helmet edge and narrowing toward the jaw.
-    const wedge = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [0.058, 0.715],
-            [0.0, 0.722],
-            [-0.05, 0.7],
-            [-0.05, 0.64],
-            [-0.028, 0.585],
-            [-0.006, 0.55],
-            [0.02, 0.575],
-            [0.046, 0.63],
-          ],
-          { smooth: true, samples: 3 },
-        ),
-        0.02,
-        0.007,
-      )
-      .rotateY(70)
-      .at(0.199, 0, 0.078);
-    const cheekPlate = hard(wedge);
-    const domeY = (z: number) => 0.685 + 0.216 * Math.sqrt(Math.max(0, 1 - ((z + 0.014) / 0.208) ** 2));
-    const finTop: [number, number][] = [];
-    for (let z = 0.15; z >= -0.171; z -= 0.04) finTop.push([-z, domeY(z) + 0.014 + 0.066 * Math.cos((z * Math.PI) / 0.42) ** 2]);
-    const fin = sdf
-      .extrude(profile.polygon([[-0.19, 0.735], ...finTop, [0.2, 0.72], [0.1, 0.78], [-0.1, 0.78]]), 0.014, 0.004)
-      .rotateY(90);
-    const helmet = sdf
-      .union(dome, brim, cheekPlate.bone('head'), fin)
-      .bone('head')
-      .paintFn((x, y, z, base) => mixRgb(base, rgb(C.bronzeDark), Math.min(0.55, Math.max(0, (0.72 - y) / 0.12) * 0.55 + 0.25 * Math.max(0, noise.fbm(x * 30, y * 30, z * 30, 2)))));
-    k.body('helmet', helmet, { color: C.bronze, roughness: 0.4, metalness: 0.7, detail: 0.0048, bone: 'head' });
-    // The dark brown brush on top of the fin: a displaced box along the crown.
-    const brush = sdf
-      .smoothUnion(
-        0.012,
-        ...[-0.05, -0.025, 0, 0.025, 0.05].map((z, i) => sdf.ellipsoid([0.011, 0.034 + 0.008 * (i % 2) - 0.006 * Math.abs(z) * 20, 0.02]).at(0, 1.0 - 0.006 * Math.abs(i - 2), -0.014 + z)),
-      )
-      .displace(0.003, (x, y, z) => noise.fbm(x * 90, y * 60, z * 90, 2));
-    k.body('crest', brush, { color: C.crest, roughness: 0.75, detail: 0.004, bone: 'plume' });
+    // The helmet, sword, and shield are parts (assets/parts/gladiator-*.ts).
+    addPart(k, gladiatorHelmet(), { pose: (s) => s.at(...GLADIATOR_HELMET_MOUNT) });
 
     // ------------------------------------------------------------------ bare torso, arms, legs, feet (skin)
     const torso = sdf
@@ -540,72 +466,14 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ the gladius in the right hand
     // Local frame: the grip center at the origin, the blade toward -Y, the flat facing +Z.
-    const BLADE_W = 0.05;
-    const BLADE_T = 0.013;
-    const LENS_R = ((BLADE_W / 2) ** 2 + (BLADE_T / 2) ** 2) / BLADE_T;
-    const lens = sdf.intersect(
-      sdf.cylinder(LENS_R, 1).at(0, 0, LENS_R - BLADE_T / 2),
-      sdf.cylinder(LENS_R, 1).at(0, 0, -(LENS_R - BLADE_T / 2)),
-    );
-    const bladeLocal = sdf
-      .extrude(
-        profile.polygon(
-          [
-            [-0.021, -0.06],
-            [-0.025, -0.11],
-            [-0.02, -0.19],
-            [-0.011, -0.29],
-            [0, -0.33],
-            [0.011, -0.29],
-            [0.02, -0.19],
-            [0.025, -0.11],
-            [0.021, -0.06],
-          ],
-          { smooth: true, samples: 4 },
-        ),
-        0.2,
-      )
-      .subtract(sdf.union(sdf.box([0.011, 0.17, 0.006], 0.003).at(0, -0.18, 0.0068), sdf.box([0.011, 0.17, 0.006], 0.003).at(0, -0.18, -0.0068)))
-      .intersect(lens)
-      .scale([1.45, 1, 1])
-      .paintWhere(sdf.box([0.017, 0.17, 0.2]).at(0, -0.18, 0), '#4a5058', 0.003);
-    const guardLocal = sdf.box([0.09, 0.016, 0.026], 0.007).bend(4).at(0, -0.063, 0);
-    const pommelLocal = sdf.smoothUnion(0.008, sdf.sphere(0.02).at(0, 0.048, 0), sdf.cone([0, 0.03, 0], [0, 0.042, 0], 0.013, 0.016));
-    const gripLocal = sdf.cylinder(0.0135, 0.1, 0.004).at(0, -0.012, 0);
     const GRIP = handPoint(HAND_R, WRIST_R, [-0.007, -0.04, 0.004]);
     const SWORD_Z = -36; // the idle hold: the tip points down and out
     const swordPose = (s: sdf.Shape) => s.rotateX(-12).rotateZ(SWORD_Z).at(...GRIP);
-    k.body('blade', swordPose(bladeLocal), { color: C.steel, roughness: 0.4, metalness: 0.85, detail: 0.003, bone: 'hand.R' });
-    k.body('hilt', swordPose(sdf.union(guardLocal, pommelLocal)), { color: C.bronze, roughness: 0.45, metalness: 0.7, detail: 0.004, bone: 'hand.R' });
-    k.body('grip', swordPose(gripLocal), {
-      color: C.grip,
-      roughness: 0.75,
-      detail: 0.004,
-      bone: 'hand.R',
-      bump: (x, y, z) => 0.0012 * Math.abs(Math.sin(noise.noise3(x * 3, y * 3, z * 3) + (x + y) * 260)),
-    });
+    addPart(k, gladiatorSword(), { pose: swordPose });
 
     // ------------------------------------------------------------------ round shield on the left forearm
-    // Local frame (the knight's shield frame): the face toward +Z, centered on the origin. A brown
-    // wooden face, a raised bronze rim, a domed bronze boss with six studs around it.
     const shieldPose = (s: sdf.Shape) => s.rotateZ(-4).rotateX(4).rotateY(38).at(0.236, 0.28, 0.092);
-    const SHIELD_R = 0.13;
-    const face = sdf
-      .cylinder(SHIELD_R - 0.006, 0.02, 0.004)
-      .rotateX(90)
-      .at(0, -0.006, 0)
-      .paintFn((x, y, z, base) => {
-        const g = Math.sin(noise.noise3(x * 4, y * 4, z * 4) * 3 + y * 120);
-        return g > 0.4 ? mixRgb(base, rgb(C.shieldDark), 0.5) : base;
-      });
-    const rim = sdf.cylinder(SHIELD_R, 0.032, 0.006).subtract(sdf.cylinder(SHIELD_R - 0.019, 0.2)).rotateX(90).at(0, -0.006, 0);
-    const boss = sdf.smoothUnion(0.008, sdf.sphere(0.036).scale([1, 1, 0.55]).at(0, -0.006, 0.01), sdf.cylinder(0.042, 0.012, 0.004).rotateX(90).at(0, -0.006, 0.006));
-    const bossStuds = sdf.union(
-      ...[0, 60, 120, 180, 240, 300].map((a) => sdf.sphere(0.0075).at(0.075 * Math.cos(a * rad), -0.006 + 0.075 * Math.sin(a * rad), 0.012)),
-    );
-    const handle = sdf.capsule([-0.035, -0.006, -0.026], [0.035, -0.006, -0.026], 0.011);
-    k.body('shield-bronze', shieldPose(sdf.union(rim, boss, bossStuds, handle)), { color: C.bronze, roughness: 0.45, metalness: 0.7, detail: 0.005, bone: 'forearm.L' });
-    k.body('shield', shieldPose(face), { color: C.shieldFace, roughness: 0.75, detail: 0.004, bone: 'forearm.L' });
+    addPart(k, gladiatorShield(), { pose: shieldPose });
 
     // ------------------------------------------------------------------ animation
     const { wave, bump, legDrop } = motion;

@@ -43,7 +43,9 @@ nocked arrow, a flame) is a second part in the same module.
    `node scripts/part-check.mjs compare <host>`. It must end with `result PASS`. If it fails,
    find the body that moved and fix the placement. Do not change the tolerance.
 6. Run `./forge check <host>`. It must report `result ok` (or `no held items to check`).
-7. Run `./forge render <host>-<piece> --fast` for each piece and look at each render once.
+7. Run `./forge render <host>-<piece> --fast` for each piece and look at each render once. Read
+   `bounds.min[1]` in `out/<host>-<piece>/stats.json`: it must be between 0 and 0.002 (the lowest
+   point on the ground). Lift or lower the rest pose by the difference.
 8. Run `node_modules/.bin/tsc --noEmit -p . 2>&1 | grep -E "assets/(parts/)?<host>"`. It must
    print nothing.
 

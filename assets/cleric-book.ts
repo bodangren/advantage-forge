@@ -11,7 +11,7 @@ import { clericBook, clericBookCross } from './parts/cleric-book.js';
  */
 
 /** Half the height of the book: the lowest point. */
-const HALF_H = 0.13;
+const HALF_H = 0.138; // the gold corner caps reach 8 mm below the cover
 
 export default defineAsset({
   name: 'cleric-book',
