@@ -637,3 +637,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	ice-cave	map-p2	medium	maps50	98591	34				7.0	pass	after 1 feedback; no cyan water
 2026-10-03	desert-oasis	map-p2	medium	maps50	89345	31				7.0	pass	Castle Defense; after 1 feedback; heavy brown trail
 2026-10-03	barracks	map-p2	medium	maps50	55000	15				7.0	pass	not re-viewed by orchestrator
+2026-10-03	mausoleum	map-p2	medium	maps50	50000	15				6.5	feedback	low walls, busy floor
+2026-10-03	armory	map-p2	medium	maps50	54928	26				7.0	pass	shots predate one workbench move
+2026-10-03	quarry	map-p2	medium	maps50	53601	18				6.5	feedback	no mockup at build time
