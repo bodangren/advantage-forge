@@ -35,6 +35,7 @@ interface Tile {
 }
 
 const GAP = 5;
+const THAI = /[\u0E00-\u0E7F]/;
 
 export class Board2D {
   private readonly tiles = new Map<string, Tile>();
@@ -168,11 +169,16 @@ export class Board2D {
         fontStyle: '700',
         color: '#ffffff',
         align: 'center',
-        wordWrap: { width: this.size - 8, useAdvancedWrap: true },
+        // Thai has no spaces: shrink the word to fit on one line instead of breaking inside it.
+        ...(THAI.test(cell.text) ? {} : { wordWrap: { width: this.size - 8, useAdvancedWrap: true } }),
       })
       .setResolution(2)
       .setOrigin(0.5)
       .setStroke('#00000055', 3);
+    if (THAI.test(cell.text)) {
+      let px = 15;
+      while (label.width > this.size - 8 && px > 8) label.setFontSize(`${--px}px`);
+    }
     const box = this.scene.add.container(x, y, [bg, label]).setSize(this.size, this.size).setScrollFactor(0).setDepth(this.depth);
     const t: Tile = { box, bg, label, cell, row, col };
     this.paint(t, false);

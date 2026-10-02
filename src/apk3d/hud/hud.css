@@ -475,6 +475,14 @@
 }
 .board .rune.th {
   font-family: 'Mali', 'Noto Sans Thai', system-ui, sans-serif;
+  /* Thai has no spaces: keep one word on one line and shrink it, never break inside a word. */
+  font-size: clamp(9px, 2.3vw, 13px);
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+.board .rune.th.long {
+  font-size: clamp(8px, 2vw, 11px);
 }
 .board .rune.glow {
   box-shadow: 0 0 0 4px rgba(255, 244, 168, 0.75), inset 0 6px 0 rgba(255, 255, 255, 0.18);
