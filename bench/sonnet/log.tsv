@@ -610,3 +610,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	town	map-p2	medium	maps50	51554	5				7.0	pass	after 1 feedback
 2026-10-02	coast	map-p2	medium	maps50	134511	22				5.5	reserve	no solid sea tile; water maps blocked (harbor, lighthouse replaced)
 2026-10-02	arena	map-p2	medium	maps50	128670	63				6.5	reserve	after 2 passes; plaster-wall reads dark, jagged edge
+2026-10-02	throne-room	map-p2	medium	maps50	110984	23				7.0	pass	after 1 feedback; dark stone palette
