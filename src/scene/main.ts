@@ -13,6 +13,12 @@ import { villagePlaces } from '../../scenes/village.js';
 import { blacksmithShopPlaces } from '../../scenes/blacksmith-shop.js';
 import './hamlet.css';
 
+// New maps: scenes/maps/<slug>.ts exports places(); the scene name is the slug (?scene=<slug>).
+// Lighting groups for the new maps are set here by the orchestrator, not by map agents.
+const NEW_MAPS = import.meta.glob('../../scenes/maps/*.ts') as Record<string, () => Promise<{ places: () => Place[] }>>;
+const NEW_DARK = new Set(['crypt', 'crystal-cave', 'labyrinth', 'mine', 'boss-arena']);
+const NEW_INTERIOR = new Set(['library', 'alchemy-lab', 'inn', 'arcane-sanctum', 'wizard-tower']);
+
 const FLAT = new Set([
   'grass-ground',
   'dirt-ground',
@@ -31,10 +37,10 @@ const FLAT = new Set([
 
 const params = new URLSearchParams(location.search);
 const sceneName = params.get('scene') ?? 'hamlet';
-const dark = sceneName === 'dungeon' || sceneName === 'vault';
+const dark = sceneName === 'dungeon' || sceneName === 'vault' || NEW_DARK.has(sceneName);
 // Interior cutaways (roof off, two or three walls standing): a warm room light from the camera
 // side, so the standing walls face the light, on a dark backdrop as in the mockups.
-const interior = sceneName === 'tavern' || sceneName === 'blacksmith';
+const interior = sceneName === 'tavern' || sceneName === 'blacksmith' || NEW_INTERIOR.has(sceneName);
 const clean = params.has('clean');
 
 const root = document.createElement('div');
@@ -204,8 +210,10 @@ root.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((button) => {
 });
 
 async function build(): Promise<void> {
-  const places =
-    sceneName === 'dungeon'
+  const newMap = NEW_MAPS[`../../scenes/maps/${sceneName}.ts`];
+  const places = newMap
+    ? (await newMap()).places()
+    : sceneName === 'dungeon'
       ? dungeonCheckPlaces()
       : sceneName === 'vault'
         ? sunkenVaultPlaces()
