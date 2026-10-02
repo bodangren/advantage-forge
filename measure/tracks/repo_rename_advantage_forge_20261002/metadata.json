@@ -1,7 +1,7 @@
 {
   "track_id": "repo_rename_advantage_forge_20261002",
   "type": "chore",
-  "status": "completed",
+  "status": "in_progress",
   "created_at": "2026-10-02T00:00:00Z",
   "updated_at": "2026-10-02T00:00:00Z",
   "description": "Rename the repository to advantage-forge and plan the asset pack layout (Chibi Quest, Riven Lands)",
