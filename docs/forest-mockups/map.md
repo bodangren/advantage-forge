@@ -11,7 +11,7 @@ center: x = (c-5.5)·2, z = (r-4.5)·2; +X east, -Z north.
   ~ . . . . . = . . .
   ~ . . . . . = . c .
   ~ . . O . L = . . .
-  ~ . W . + = + . D .
+  ~ . B . + = + . D .
   ~ . . . = . . . . .
   ~ . . . + = + . . .
   ~ . C . . . = T . .
@@ -35,28 +35,29 @@ clearing; the dead tree stands out on the east treeline.
 
 | component | count | where |
 |-----------|-------|-------|
-| forest-ground | 106 | |
-| oak-tree | 13 | |
-| pine-tree | 12 | |
+| forest-ground | 90 | |
+| grass-ground | 16 | |
 | river-straight | 10 | |
 | footpath-straight | 10 | |
 | tall-grass | 8 | |
 | fern | 6 | |
 | bush | 6 | |
+| pine-tree | 5 | |
+| oak-tree | 5 | |
 | footpath-corner | 4 | |
 | reeds | 4 | |
+| rock-cluster | 3 | |
 | stepping-stone | 3 | |
 | mushroom | 3 | |
 | bramble | 3 | |
 | wildflowers | 3 | |
-| rock-cluster | 2 | |
+| fallen-log | 2 | |
+| tree-stump | 2 | |
 | ancient-oak | 1 | |
-| well | 1 | |
+| boulder | 1 | |
 | campfire | 1 | |
 | campfire-out | 1 | |
-| fallen-log | 1 | |
-| tree-stump | 1 | |
 | dead-tree | 1 | |
 | signpost | 1 | |
 
-Total placed instances: 203 (plus 2 figures).
+Total placed instances: 191 (plus 2 figures).

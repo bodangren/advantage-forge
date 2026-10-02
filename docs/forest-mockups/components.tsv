@@ -2,24 +2,25 @@ asset_id	instances	placement
 forest/structure/ancient-oak	1	north of the path's west arm (-2.5,-3.5); 5.4 m tall, six buttress-root fins, 5 m crown — THE old tree
 forest/prop/campfire	1	lit state: SW clearing by the stream (-5.6,4.4); the map's warm emissive accent
 forest/prop/campfire-out	1	burned-out state: NE hunters' camp (6.8,-5.4); same pit, cold — the requested two-state pair
-forest/prop/tree-stump	1	SE clearing (4.2,4.8); wide with growth rings and tiny mushrooms
-forest/prop/fallen-log	1	between the path's north arms (1.2,-3.6), yaw 35; mossy rest log
+forest/prop/tree-stump	2	SE clearing (4.2,4.8); wide with growth rings and tiny mushrooms
+forest/prop/fallen-log	2	between the path's north arms (1.2,-3.6), yaw 35; mossy rest log
 forest/structure/dead-tree	1	east treeline accent (7.6,-0.8); bare snag with cut branch tips
 forest/dressing/fern	6	shade scatter: tree bases and stream side
 forest/dressing/bramble	3	treeline thickets at the NW, SE, and E border gaps
 forest/dressing/tall-grass	8	clearing and trail-edge tufts with seed heads
 forest/dressing/mushroom	3	warm-capped clusters: oak skirt, stream bank, NE camp
-forest/dressing/rock-cluster	2	small mossy stone groups: north stream bank, south clearing
+forest/dressing/rock-cluster	3	small mossy stone groups: north stream bank, south clearing
 forest/dressing/reeds	4	stream east-bank clusters along c2
-forest/ground/forest-ground	60	the shaded forest-floor tile (replaces the planned grass-ground reuse)
-forest/ground/footpath-straight	8	the S-route trail runs (replaces planned dirt-road reuse)
+forest/ground/forest-ground	90	the shaded forest-floor tile (replaces the planned grass-ground reuse)
+forest/ground/grass-ground	16	the sunlit clearing around the oak and the trail bends (reused from the hamlet)
+forest/ground/footpath-straight	10	the S-route trail runs (replaces planned dirt-road reuse)
 forest/ground/footpath-corner	4	the S-route trail bends
-architecture/landscape-parts/river-straight	8	reuse hamlet set: the west-edge stream, N-S column at c1
+architecture/landscape-parts/river-straight	10	reuse hamlet set: the west-edge stream, N-S column at c1
 architecture/landscape-parts/stepping-stone	3	reuse: stream crossing at r6
-architecture/landscape-parts/well	1	reuse: west of the oak (-4.8,-0.6)
+architecture/landscape-parts/boulder	1	reuse: wild boulder west of the oak (-4.8,-0.6), replaces the well
 architecture/street-furniture/signpost	1	reuse: at the south path entry (4.0,6.2)
-nature/trees/oak-tree	13	reuse: treeline ring (scale 0.85-1.1)
-nature/trees/pine-tree	12	reuse: treeline ring (scale 0.8-1.1)
+nature/trees/oak-tree	5	reuse: treeline ring (scale 0.85-1.1)
+nature/trees/pine-tree	5	reuse: treeline ring (scale 0.8-1.1)
 nature/undergrowth/bush	6	reuse: border fill
 nature/undergrowth/wildflowers	3	reuse: clearing scatter
 hero/adventurer	1	figure for scale: walking in from the south entry (2.8,6.4)

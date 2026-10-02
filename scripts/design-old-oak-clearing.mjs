@@ -52,13 +52,23 @@ for (let c = -1; c <= 11; c++)
     }
     const path = PATH.get(`${c},${r}`) ?? (c === 7 && (r === 0 || r === 9) ? ['footpath-straight', 0] : undefined);
     if (path) put(path[0], X(c), Z(r), { yaw: path[1], y: 0 });
-    else put('forest-ground', X(c), Z(r), { y: 0 });
+    // The sunlit clearing: grass-ground inside an irregular blob around the oak and the trail,
+    // shaded forest floor outside it. (A dirt-ground blob was tried on 2026-10-02: the dark 2 m
+    // tiles read as tilled plots.)
+    else {
+      const dx = (X(c) + 1) / 6.2, dz = (Z(r) + 0.6) / 4.6;
+      const wob = 0.22 * Math.sin(c * 2.7 + r * 1.3) + 0.12 * Math.cos(c * 1.1 - r * 3.1);
+      put(dx * dx + dz * dz < 1 + wob ? 'grass-ground' : 'forest-ground', X(c), Z(r), { y: 0 });
+    }
   }
 
 // --- landmarks (v3 mockup anchors) -----------------------------------------
-put('ancient-oak', -2.5, -3.5, { yaw: 20 }); // THE old tree, west-of-center north
-put('well', -4.8, -0.6); // stone well west of the oak
-put('campfire', -5.6, 4.4); // lit fire, SW clearing near the stream
+put('ancient-oak', -2.5, -3.5, { yaw: 20, scale: 1.3 }); // THE old tree, west-of-center north
+put('boulder', -4.8, -0.6, { yaw: 40 }); // wild boulder west of the oak (replaces the hamlet well)
+put('rock-cluster', -4.2, 0.3, { yaw: 120 });
+put('fallen-log', -4.4, 5.7, { yaw: 80 }); // log seat by the campfire
+put('tree-stump', -6.6, 5.5, { yaw: 20 }); // stump seat by the campfire
+put('campfire', -5.6, 4.4, { scale: 1.6 }); // lit fire, SW clearing near the stream
 put('campfire-out', 6.8, -5.4, { yaw: 140 }); // burned-out hunters' fire, NE corner
 put('fallen-log', 1.2, -3.6, { yaw: 35 }); // mossy log between the path's north arms
 put('tree-stump', 4.2, 4.8, { yaw: 300 }); // stump with mushrooms, SE clearing
@@ -77,7 +87,7 @@ put('rock-cluster', -7.3, -3.0, { yaw: 80 }); // north stream bank
 
 // --- floor dressing ---------------------------------------------------------
 put('mushroom', -3.6, -5.0); // at the oak's skirt
-put('mushroom', -7.4, 1.8, { yaw: 120 }); // stream bank
+put('mushroom', -7.6, -0.4, { yaw: 120 }); // stream bank
 put('mushroom', 5.6, -5.8, { yaw: 70 }); // NE camp
 put('rock-cluster', 1.8, 6.0, { yaw: 190 }); // south clearing
 put('tall-grass', -3.2, 1.8);
@@ -126,11 +136,11 @@ const TREES = [
   // far bank west of the stream, for depth
   [-11, -4, 'oak-tree', 15, 1.1], [-11, 2, 'pine-tree', 215, 1.0], [-11, 6, 'oak-tree', 145, 0.9],
 ];
-for (const [x, z, asset, yaw, scale] of TREES) put(asset, x, z, { yaw, scale });
+for (const [x, z, asset, yaw, scale] of TREES.filter(([x, z]) => !((x === 9 && [-3, 3, 5].includes(z)) || (x === 7 && z === 7) || (x === 9 && z === -7) || (x === 5 && z === 7)) && Math.hypot(x + 2.5, z + 3.5) > 5.8 && Math.hypot(x + 2.5, z + 3.5) > 5.5 && Math.hypot(x + 5.6, z - 4.4) > 3.8).map(([x, z, ...r]) => [Math.abs(x - 9) < 0.1 ? 10.2 : x, Math.abs(z) === 7 ? Math.sign(z) * 7.8 : z, ...r])) put(asset, x, z, { yaw, scale });
 
 // --- figures (scale) ---------------------------------------------------------
 put('adventurer', 2.8, 6.4, { yaw: 180 }); // walking in from the south entry
-put('druid', -5.0, 4.0, { yaw: 230 }); // tending the campfire
+put('druid', -6.4, 3.4, { yaw: 40 }); // tending the campfire, 1.3 m off so the fire shows
 
 // --- ASCII map ---------------------------------------------------------------
 const glyph = Array.from({ length: 8 }, () => Array(10).fill('.'));
@@ -144,7 +154,7 @@ const mark = (x, z, g) => {
   if (c >= 1 && c <= 10 && r >= 1 && r <= 8) glyph[r - 1][c - 1] = g;
 };
 mark(-2.5, -3.5, 'O'); // ancient oak
-mark(-4.8, -0.6, 'W'); // well
+mark(-4.8, -0.6, 'B'); // boulder
 mark(-5.6, 4.4, 'C'); // campfire
 mark(6.8, -5.4, 'c'); // campfire-out
 mark(1.2, -3.6, 'L'); // fallen log
