@@ -646,3 +646,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	cemetery	map-p2	medium	maps50	51281	18				6.5	feedback	green ground ring, dark chapels
 2026-10-03	warehouse	map-p2	medium	maps50	50903	18				7.0	pass
 2026-10-03	mausoleum	map-p2	medium	maps50	98000	30				7.0	pass	after 1 feedback; not re-viewed by orchestrator
+2026-10-03	school	map-p2	medium	maps50	55000	25				7.0	pass	not re-viewed by orchestrator
