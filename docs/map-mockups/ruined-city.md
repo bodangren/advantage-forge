@@ -10,28 +10,27 @@ plaza, a statue stands by the street, and rubble, rocks, bushes, vines, and bone
 ## Tally
 | asset | count |
 |---|---|
-| grass-ground | 131 |
-| cobble-floor | 37 |
-| rubble | 31 |
-| rock-cluster | 14 |
-| broken-wall | 11 |
-| bush | 10 |
+| grass-ground | 143 |
+| rubble | 36 |
+| cobble-floor | 25 |
+| rock-cluster | 22 |
+| vines | 14 |
+| broken-wall | 9 |
 | wall | 9 |
+| ruined-house | 9 |
 | stone-wall | 8 |
-| vines | 8 |
-| tall-grass | 8 |
-| moss-tuft | 6 |
-| ruin-column | 4 |
+| bush | 5 |
 | bone-pile | 4 |
 | barrel | 4 |
 | dead-tree | 3 |
 | wall-corner | 2 |
 | column | 2 |
-| cottage | 2 |
+| ruin-column | 2 |
 | stairs-stone | 2 |
 | ivy | 2 |
 | tower | 1 |
+| cottage | 1 |
 | fountain | 1 |
 | statue | 1 |
 
-Total placements: 301.
+Total placements: 305.

@@ -32,7 +32,7 @@ for (let c = 1; c <= 14; c++)
     if (street.has(k)) {
       // a few cracked or missing street slabs
       const h = (c * 7 + r * 13) % 11;
-      if (h === 0) put('grass-ground', x, z);
+      if (h % 3 === 0) put('grass-ground', x, z);
       else if (h === 3 || h === 8) put('cobble-floor', x, z, { yaw: 90 * (h % 4) }), put('rubble', x + 0.4, z - 0.3, { yaw: h * 40 });
       else put('cobble-floor', x, z, { yaw: 90 * ((c + r) % 4) });
     } else put('grass-ground', x, z);
@@ -62,7 +62,7 @@ put('ruin-column', -13.2, 8.5); put('ruin-column', 13.0, 8.8, { yaw: 180 });
 
 // --- zones ---
 // West: ruined cottage with vines and steps
-put('cottage', -9.4, -0.3, { yaw: 90 }); keep(-9.4, -0.3, 2);
+
 put('stairs-stone', -7.3, -0.3, { yaw: 90 }); keep(-7.3, -0.3, 0.8);
 put('vines', -10.7, 0.9, { yaw: 90 }); put('ivy', -10.7, -1.4, { yaw: 90 });
 // East: ruined cottage
@@ -74,14 +74,13 @@ put('fountain', 0, 7.4, { scale: 1.1 }); keep(0, 7.4, 1.8);
 put('statue', -2.6, 3.2, { yaw: 30, scale: 0.9 }); keep(-2.6, 3.2, 0.9);
 put('rubble', -2.0, 4.6, { yaw: 60, scale: 1.2 }); put('rubble', -3.3, 2.4, { yaw: 120 });
 // Collapsed house by the north wall (west), broken walls
-put('broken-wall', -6, -8.2, { yaw: 0 }); put('broken-wall', -8, -7.5, { yaw: 90 });
-put('broken-wall', 6, -7.8, { yaw: 180 }); put('broken-wall', 8, -6.6, { yaw: 90 });
-put('ruin-column', -5, -6); put('ruin-column', 5.4, -5.4, { yaw: 120 });
-for (const [x, z] of [[-6, -8.2], [-8, -7.5], [6, -7.8], [8, -6.6], [-5, -6], [5.4, -5.4]]) keep(x, z, 1.2);
+const HOUSES = [[-10.5,-8.5,0,1],[-5,-8.5,0,1.1],[5.5,-8.5,180,0.95],[10.5,-8.5,0,1.1],[-9.5,-0.3,90,1],[-10,5.5,90,1.2],[10,6,270,1],[-6,9.5,0,0.9],[6,9.5,180,1.1]];
+for (const [x, z, yaw, sc] of HOUSES) { put('ruined-house', x, z, { yaw, scale: sc }); keep(x, z, 2.6 * sc); }
+put('broken-wall', -2.6, -6.8, { yaw: 0 }); put('broken-wall', 2.8, -6.2, { yaw: 180 }); keep(-2.6,-6.8,1); keep(2.8,-6.2,1);
 // North-west and north-east rubble yards
 put('bone-pile', 4.5, -3.2, { yaw: 40 }); put('barrel', -4.6, -2.4); put('barrel', -4.0, -2.8, { yaw: 40 });
-put('barrel', 11.5, 8.2); put('barrel', 3.5, 9.5, { yaw: 70 });
-for (const [x, z] of [[4.5, -3.2], [-4.6, -2.4], [-4, -2.8], [11.5, 8.2], [3.5, 9.5]]) keep(x, z, 0.5);
+put('barrel', 12, 10); put('barrel', 3.5, 9.5, { yaw: 70 });
+for (const [x, z] of [[4.5, -3.2], [-4.6, -2.4], [-4, -2.8], [12, 10], [3.5, 9.5]]) keep(x, z, 0.5);
 
 // --- scatter dressing ---
 const scatter = (asset, n, xr, zr, o = {}) => {
@@ -97,14 +96,14 @@ const scatter = (asset, n, xr, zr, o = {}) => {
     n--;
   }
 };
-scatter('rubble', 20, [-12.5, 12.5], [-10.2, 10.8], { scale: [0.8, 1.5], r: 0.6 });
-scatter('rock-cluster', 14, [-12.5, 12.5], [-10.2, 10.8], { offStreet: true, scale: [0.6, 1.1], r: 0.6 });
-scatter('bush', 10, [-12.5, 12.5], [-10, 10.8], { offStreet: true, r: 0.7, scale: [0.6, 1.0] });
-scatter('tall-grass', 8, [-12.5, 12.5], [-10, 10.8], { offStreet: true, r: 0.4 });
-scatter('moss-tuft', 6, [-12.5, 12.5], [-10, 10.8], { r: 0.3 });
+scatter('rubble', 30, [-12.5, 12.5], [-10.2, 10.8], { scale: [0.8, 1.5], r: 0.6 });
+scatter('rock-cluster', 22, [-12.5, 12.5], [-10.2, 10.8], { offStreet: true, scale: [0.6, 1.1], r: 0.6 });
+scatter('bush', 5, [-12.5, 12.5], [-10, 10.8], { offStreet: true, r: 0.7, scale: [0.6, 1.0] });
+scatter('tall-grass', 0, [-12.5, 12.5], [-10, 10.8], { offStreet: true, r: 0.4 });
+scatter('moss-tuft', 0, [-12.5, 12.5], [-10, 10.8], { r: 0.3 });
 scatter('bone-pile', 3, [-12, 12], [-9, 10], { offStreet: true, r: 0.5 });
 scatter('dead-tree', 3, [-12, 12], [-9, 9], { offStreet: true, r: 1.0, scale: [0.7, 0.9] });
-scatter('vines', 6, [-12, 12], [-10, 10], { offStreet: true, r: 0.5, scale: [0.6, 0.8] });
+scatter('vines', 12, [-12, 12], [-10, 10], { offStreet: true, r: 0.5, scale: [0.6, 0.8] });
 
 // --- tally ---
 const tally = {};

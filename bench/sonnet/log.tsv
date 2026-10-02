@@ -700,3 +700,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	desert-city	map-p2	medium	maps-rest	59000	19				7.0	pass	agent 6.8 after feedback with sandstone-house; orchestrator rated 7.0; red-cone tower, no camel
 2026-10-03	underground-city	map-p2	medium	maps-rest	53000	15				7.0	pass	agent 6.5; orchestrator rated 7.0; flat terraces
 2026-10-03	floating-city	map-p2	medium	maps-rest	55000	14				7.0	pass	agent 6.5; orchestrator rated 7.0; boxy island outline, no clouds
+2026-10-03	ruined-city	map-p2	medium	maps-rest	102000	16				7.0	pass	after 1 feedback with new ruined-house; orchestrator viewed 3q; rubble reads dark blue
