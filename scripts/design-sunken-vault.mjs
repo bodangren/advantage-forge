@@ -165,7 +165,14 @@ for (let c = 1; c <= 12; c++)
     if (cracked) crackedCount++;
     put(cracked ? 'floor-cracked' : 'floor', (c - 6.5) * 2, (r - 4.5) * 2);
   }
-const floorCount = 77 - crackedCount;
+// Approach run outside the gate: c6-c8, rows 9-10 (z 8..12).
+for (const c of [6, 7, 8])
+  for (const r of [9, 10]) {
+    const cracked = (c + r) % 3 === 0;
+    if (cracked) crackedCount++;
+    put(cracked ? 'floor-cracked' : 'floor', (c - 6.5) * 2, (r - 4.5) * 2);
+  }
+const floorCount = 77 + 6 - crackedCount;
 
 // Stairs replace the (c9,r1) floor and rise out through the north wall gap.
 put('stairs', 5, -7, { yaw: 180 });
@@ -203,7 +210,7 @@ const props = [
   ['torch-sconce', -1, 7.7, 180], ['torch-sconce', 3, 7.7, 180],
   ['torch-sconce', -3, -7.7, 0], ['torch-sconce', 3, -7.7, 0],
   // braziers flank the gate outside, on bare ground
-  ['brazier', -1, 9.2, 0, 0], ['brazier', 3, 9.2, 0, 0],
+  ['brazier', -1, 9.2], ['brazier', 3, 9.2],
   // hall centerpiece
   ['hanging-cage', 0, 2],
   // crypt
@@ -225,6 +232,13 @@ const props = [
   // flooded strips
   ['mushroom-cluster', -11, 7], ['mushroom-cluster', -7, 7.6],
   ['mushroom-cluster', 7, 7], ['mushroom-cluster', 11, 7.5],
+  // story dressing: cells (chains, bones), treasury (gold, chests), sanctum (altar, candles)
+  ['chains', -11, -1.6], ['bone-pile', -11.2, 2.6], ['bone-pile', -9.2, 5.6], ['barrel', -5.2, 3.4],
+  ['crate', -5.2, 4.6], ['candle-cluster', -4.8, -2.6],
+  ['treasure-chest', 11.2, 5, 270], ['treasure-chest', 6.2, 5, 90], ['gold-pile', 8.2, -0.6], ['gold-pile', 6.4, 1.6],
+  ['gold-pile', 11.2, -2.4], ['crate', 9.4, 5.2], ['barrel', 11.4, 2.2], ['candle-cluster', 9.4, -2.6],
+  ['candle-cluster', 3.6, -7], ['candle-cluster', -0.8, -7], ['candle-cluster', 0, -3.4], ['bone-pile', -3, -4.8],
+  ['mushroom-cluster', 4, -3.6], ['crystal-cluster', 1.6, -4.4],
   ['walkway', -9, 7], ['moss-tuft', -11.4, 3], ['moss-tuft', -9, -1.5],
 ];
 for (const [asset, x, z, yaw = 0, y = FLOOR_Y] of props) put(asset, x, z, { yaw, y });
@@ -232,7 +246,7 @@ for (const [asset, x, z, yaw = 0, y = FLOOR_Y] of props) put(asset, x, z, { yaw,
 // Scale figures.
 put('adventurer', -0.6, 3.4, { y: FLOOR_Y });
 put('skeleton', -9.4, -1.2, { yaw: 120, y: FLOOR_Y });
-put('adventurer', 1, 10.6, { yaw: 180 });
+put('adventurer', 1, 10.6, { yaw: 180, y: FLOOR_Y });
 
 // ---------------------------------------------------------------------------
 const fmt = (p) => {

@@ -1,6 +1,6 @@
 asset_id	instances	placement
-dungeon/structure/floor	58	room floors and corridor beds; cracked variant scatters every 4th tile
-dungeon/structure/floor-cracked	19	sparse breaks in floor runs and near rubble
+dungeon/structure/floor	62	room floors and corridor beds; cracked variant scatters every 4th tile
+dungeon/structure/floor-cracked	21	sparse breaks in floor runs and near rubble
 dungeon/structure/wall	31	room and corridor perimeters, two blocks high
 dungeon/structure/wall-corner	15	outer corners of the four chambers
 dungeon/structure/wall-alcove	4	wall segments with one arched niche; sanctum and crypt walls, dressing slots inside
@@ -12,16 +12,19 @@ dungeon/structure/pillar	6	two flanking the hall, four in the treasury
 dungeon/structure/rubble	3	one per side chamber against a wall
 dungeon/light/torch-sconce	8	wall-mounted at entrances, corners, and the hall
 dungeon/light/brazier	2	flanking the south gate
-dungeon/light/candle-cluster	3	on the altar and two side chambers
-dungeon/prop/chains	4	coiled by cells and pillars, one hanging at the gate
-dungeon/prop/bone-pile	3	side chambers and near the cell block
+dungeon/light/candle-cluster	8	on the altar and two side chambers
+dungeon/prop/chains	5	coiled by cells and pillars, one hanging at the gate
+dungeon/prop/bone-pile	6	side chambers and near the cell block
 dungeon/prop/sarcophagus	1	southeast crypt chamber
 dungeon/prop/cell-bars	2	west cell block frontage
 dungeon/prop/hanging-cage	1	over the central hall
 dungeon/prop/altar	1	north chamber focal point
 dungeon/prop/cauldron	1	east side chamber
-dungeon/dressing/mushroom-cluster	4	damp floor edges away from torches
-dungeon/dressing/crystal-cluster	5	chamber corners and wall bases
+dungeon/dressing/mushroom-cluster	5	damp floor edges away from torches
+dungeon/dressing/crystal-cluster	6	chamber corners and wall bases
 dungeon/dressing/moss-tuft	8	floor edges and wall bases, like wildflowers
-dungeon/dressing/gold-pile	3	treasury floor and one side chamber
+dungeon/dressing/gold-pile	6	treasury floor and one side chamber
 dungeon/dressing/walkway	1	crossing the flooded strip in the south corridor
+dungeon/prop/barrel	2	cell block and treasury dressing
+dungeon/prop/crate	2	cell block and treasury dressing
+dungeon/prop/treasure-chest	2	treasury walls

@@ -38,8 +38,8 @@ const BEVEL = 0.01; // soft edge on every slab
 // Palette (dungeon contract)
 const DEEP = rgb('#2a3547'); // grout, slab feet, cracks
 const MID = rgb('#4a5d75'); // slab sides and shaded tops
-const PALE = rgb('#7a8ba0'); // worn slab tops
-const PALE_LIT = rgb('#8b9caf'); // worn-smooth highlights
+const PALE = rgb('#5d7088'); // worn slab tops
+const PALE_LIT = rgb('#6a7d95'); // worn-smooth highlights
 const WET = rgb('#5a6c82'); // wet stone: darker, glossier
 const MOSS = rgb('#3f8a7a'); // teal-green seasoning in the grout
 

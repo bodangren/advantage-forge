@@ -68,8 +68,8 @@ Total wall-system pieces: 60.
 | door | 3 | gatehouse→hall, hall→cell block guard door, treasury→crypt |
 | gate | 1 | south entry (c7) |
 | cell-bars | 2 | barred fronts of the two cells |
-| floor | 58 | every zone tile except the stairs tile and cracked tiles |
-| floor-cracked | 19 | every 4th tile ((c+2r) mod 4 = 0) |
+| floor | 62 | every zone tile except the stairs tile and cracked tiles |
+| floor-cracked | 21 | every 4th tile ((c+2r) mod 4 = 0) |
 | stairs | 1 | c9 r1, rising out through the north breach |
 | pillar | 6 | hall pair (±1.2, z=2), treasury colonnade ×4 |
 | torch-sconce | 8 | hall ×4, gatehouse ×2, sanctum ×2 |
@@ -77,18 +77,18 @@ Total wall-system pieces: 60.
 | hanging-cage | 1 | hall center, between the pillars |
 | sarcophagus | 1 | crypt (c11-12, r7) |
 | altar | 1 | sanctum axis (c7, r1) |
-| candle-cluster | 3 | altar, crypt, cell-block guard post |
+| candle-cluster | 8 | altar, crypt, cell-block guard post |
 | cauldron | 1 | treasury NE |
-| gold-pile | 3 | treasury ×2, cell-block guard post |
-| chains | 4 | bars frontage, gate, hall pillar, treasury pillar |
-| bone-pile | 3 | both cells, guard corridor |
+| gold-pile | 6 | treasury ×2, cell-block guard post |
+| chains | 5 | bars frontage, gate, hall pillar, treasury pillar |
+| bone-pile | 6 | both cells, guard corridor |
 | rubble | 3 | sanctum SW, treasury E, guard corridor |
-| crystal-cluster | 5 | sanctum ×2, hall SW, gatehouse E, SW cell |
-| mushroom-cluster | 4 | flooded strips ×4 |
+| crystal-cluster | 6 | sanctum ×2, hall SW, gatehouse E, SW cell |
+| mushroom-cluster | 5 | flooded strips ×4 |
 | moss-tuft | 8 | scattered wall bases ×8 |
 | walkway | 1 | jetty into the west flooded strip (c2, r8) |
 
 Reconciliation with the old open problem (fit-check.md): the designed map
 replaces the hand-counted zone union. Wall plan derives from cell edges, so
 slots, corners, and pieces reconcile by construction: 60 wall-system
-pieces, 77 floor tiles, 195 total placed instances.
+pieces, 77 floor tiles, 221 total placed instances.

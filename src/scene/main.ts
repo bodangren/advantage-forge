@@ -139,6 +139,22 @@ async function loadAsset(name: string): Promise<THREE.Object3D | null> {
   return gltf.scene;
 }
 
+/** Warm point lights at the flames of dark maps, so torches cast light pools as in the mockups. */
+const FLAMES: Record<string, { intensity: number; range: number }> = {
+  'torch-sconce': { intensity: 8, range: 7 },
+  brazier: { intensity: 10, range: 8 },
+  'candle-cluster': { intensity: 2, range: 3 },
+};
+
+function addFlame(source: THREE.Object3D, place: Place): void {
+  const flame = FLAMES[place.asset];
+  if (!flame) return;
+  const top = new THREE.Box3().setFromObject(source).max.y * (place.scale ?? 1);
+  const light = new THREE.PointLight(0xffa04a, flame.intensity, flame.range, 2);
+  light.position.set(place.at[0], place.at[1] + top * 0.9, place.at[2]);
+  scene.add(light);
+}
+
 function addPlace(source: THREE.Object3D, place: Place): void {
   // Skinned rigs need SkeletonUtils.clone: Object3D.clone leaves the skinned
   // mesh bound to the source skeleton, so rigged figures never render.
@@ -213,6 +229,7 @@ async function build(): Promise<void> {
       continue;
     }
     addPlace(source, place);
+    if (dark) addFlame(source, place);
     shown += 1;
   }
   if (sceneName === 'hamlet' || sceneName === 'village') addTerrainUnderlays(places);

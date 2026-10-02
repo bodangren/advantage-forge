@@ -26,20 +26,20 @@ const GROUT = rgb('#2a3547');
 const GROUT_DEEP = rgb('#222b3a');
 const SLAB_DARK = rgb('#3d4e64');
 const SLAB_LIGHT = rgb('#556a82');
-const WORN = rgb('#7a8ba0');
-const EDGE_LIGHT = rgb('#7d90a6');
+const WORN = rgb('#5d7088');
+const EDGE_LIGHT = rgb('#62768e');
 const DAMP = rgb('#3a4a5f');
-const SHEEN = rgb('#8fa3b8');
+const SHEEN = rgb('#6e829a');
 const PATCH = rgb('#46576d');
 const CRACK = rgb('#1e2634');
 const SIDE = rgb('#273245');
 const SIDE_DEEP = rgb('#1d2532');
-const BREAK_PALE = rgb('#6e8095');
+const BREAK_PALE = rgb('#5a6d84');
 const BREAK_DEEP = rgb('#4a5b72');
 const SOIL = rgb('#2a2015');
 const SOIL_DEEP = rgb('#1d150d');
 const SOIL_SPECK = rgb('#463524');
-const CHIP_PALE = rgb('#8496ab');
+const CHIP_PALE = rgb('#667a91');
 
 const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
 const smoothstep = (a: number, b: number, t: number) => {
@@ -97,7 +97,10 @@ function cellDist(x: number, z: number, i: number, j: number): number {
   let d = Infinity;
   const line = (segs: Pt[][] | undefined) => {
     if (!segs) return;
-    for (const [[ax, az], [bx, bz]] of segs) d = Math.min(d, segDist(x, z, ax, az, bx, bz));
+    for (const seg of segs) {
+      const a = seg[0], b = seg[1];
+      if (a && b) d = Math.min(d, segDist(x, z, a[0], a[1], b[0], b[1]));
+    }
   };
   if (i > 0) line(VLINE[i]);
   if (i < 3) line(VLINE[i + 1]);
