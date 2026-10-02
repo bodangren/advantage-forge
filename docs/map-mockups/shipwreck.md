@@ -22,27 +22,27 @@ Notes: missing crab and driftwood pieces; planks and logs stand in for driftwood
 |---|---|
 | desert-ground | 73 |
 | sea-water | 26 |
-| shell | 23 |
-| tall-grass | 11 |
-| plank | 10 |
-| boulder | 10 |
-| palm-tree | 7 |
-| sand-dune | 7 |
-| log | 6 |
-| reeds | 6 |
+| boulder | 6 |
+| shell | 6 |
+| plank | 5 |
 | rock-cluster | 5 |
 | coral | 5 |
-| crate | 3 |
-| barrel | 3 |
-| sack | 3 |
+| log | 4 |
+| palm-tree | 4 |
+| reeds | 4 |
+| tall-grass | 4 |
 | bush | 3 |
 | rowboat | 2 |
+| crate | 2 |
+| barrel | 2 |
 | rope-coil | 2 |
 | bottle | 2 |
+| sand-dune | 2 |
 | flag | 2 |
 | fern | 2 |
-| pirate-ship | 1 |
+| shipwreck-hull | 1 |
 | chest | 1 |
+| sack | 1 |
 | fishing-net | 1 |
 | sailor | 1 |
 | campfire | 1 |
@@ -50,4 +50,4 @@ Notes: missing crab and driftwood pieces; planks and logs stand in for driftwood
 | bone-pile | 1 |
 | lantern | 1 |
 
-Total: 219
+Total: 170

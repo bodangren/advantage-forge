@@ -31,16 +31,16 @@ for (let r = 0; r < 9; r++) {
 }
 
 // Focal: the beached ship, listing and half buried in the sand.
-put('pirate-ship', SHIP[0], SHIP[1], { yaw: 125, y: -0.45, scale: 1 });
+put('shipwreck-hull', SHIP[0], SHIP[1], { yaw: 180, scale: 1.2 });
 put('rowboat', -5.6, 2.3, { yaw: 60, y: -0.12 }); // washed up in the surf
 put('rowboat', -7.2, 4.8, { yaw: 200, y: -0.02, scale: 0.8 });
 
 // Story A: cargo spilled from the hull, east of the ship.
 put('chest', 6.6, -1.4, { yaw: 215 });
 put('treasure-chest', 6.8, -1.2, { yaw: 215, scale: 0.01 });
-put('crate', 2.6, 0.6, { yaw: 20 }); put('crate', 3.2, 1.2, { yaw: 70 }); put('crate', 2.9, -0.2, { yaw: 100, scale: 0.9 });
-put('barrel', 3.9, 0.2, { yaw: 0 }); put('barrel', 1.2, 2.2, { yaw: 40 }); put('barrel', 0.2, 1.4, { yaw: 120, scale: 0.9 });
-put('sack', 2.2, 1.9, { yaw: 30 }); put('sack', 4.4, 1.5, { yaw: 160 }); put('sack', -0.6, 2.9, { yaw: 300 });
+put('crate', 2.6, 0.6, { yaw: 20 }); put('crate', 3.2, 1.2, { yaw: 70 });
+put('barrel', 3.9, 0.2, { yaw: 0 }); put('barrel', 1.2, 2.2, { yaw: 40 });
+put('sack', 2.2, 1.9, { yaw: 30 }); 
 put('rope-coil', 1.0, 0.2, { yaw: 80 }); put('rope-coil', 4.8, -0.6, { yaw: 200 });
 put('fishing-net', 0.6, 3.6, { yaw: 40 });
 put('bottle', 5.1, 2.4, { yaw: 50 }); put('bottle', -3.2, 3.8, { yaw: 120 });
@@ -53,22 +53,22 @@ put('treasure-map', 4.8, -2.8, { yaw: 30, scale: 0.8 });
 put('bone-pile', -6.0, -4.2, { yaw: 60 });
 
 // Planks and driftwood scattered along the tide line and around the hull.
-for (let i = 0; i < 22; i++) {
-  const a = rnd() * 6.28, d = 3 + rnd() * 4;
+for (let i = 0; i < 9; i++) {
+  const a = rnd() * 6.28, d = 4.5 + rnd() * 3;
   const x = SHIP[0] + Math.cos(a) * d * 1.3, z = SHIP[1] + Math.sin(a) * d * 0.9;
   if (ok(x, z) && !inWater(x, z)) put(rnd() > 0.35 ? 'plank' : 'log', x, z, { yaw: rnd() * 360, scale: 0.8 + rnd() * 0.4 });
 }
 // Rocks: boulders and clusters on the east and north.
-for (const [x, z, s] of [[7.4, -3.8, 1.0], [6.0, -6.4, 0.8], [-4.2, -6.6, 1.1], [8.6, 3.2, 0.9], [8.4, 6.2, 1.2], [-8.6, -2.0, 1.0], [0.4, -6.4, 0.7], [-8.6, -5.8, 1.0]])
+for (const [x, z, s] of [[7.4, -3.8, 1.0], [-4.2, -6.6, 1.1], [8.4, 6.2, 1.0], [-8.6, -5.8, 1.0]])
   put('boulder', x, z, { yaw: rnd() * 360, scale: s });
 for (const [x, z] of [[7.8, -1.4], [5.8, 5.6], [-1.6, 6.4], [-6.4, -1.6], [2.2, -6.2]]) put('rock-cluster', x, z, { yaw: rnd() * 360 });
 // Palms: east and north edges, leaning toward the chest.
-for (const [x, z, s] of [[8.2, -1.0, 0.9], [8.9, -2.4, 0.7], [-9.0, -4.4, 0.9], [-2.2, -7.2, 0.8], [7.6, 6.4, 0.85], [9.2, 1.0, 0.8], [2.0, -7.4, 0.9]])
+for (const [x, z, s] of [[8.2, -1.0, 0.9], [-9.0, -4.4, 0.9], [-2.2, -7.2, 0.8], [7.6, 6.4, 0.85], ])
   put('palm-tree', x, z, { yaw: rnd() * 360, scale: s });
 // Dunes along the back.
-for (const [x, z] of [[-6.6, -7.0], [5.6, -7.2], [9.0, -5.4], [-9.2, -0.2], [9.2, 4.2], [4.4, 6.8], [-0.2, 7.2]]) put('sand-dune', x, z, { yaw: rnd() * 360 });
+for (const [x, z] of [[5.6, -7.2], [9.2, 4.2]]) put('sand-dune', x, z, { yaw: rnd() * 360 });
 // Shells and bottles on the sand and in the shallows.
-for (let i = 0; i < 46; i++) {
+for (let i = 0; i < 20; i++) {
   const x = (rnd() - 0.5) * 19.2, z = (rnd() - 0.5) * 15.2;
   const d = x - z + 5.5;
   if (d > -3 && d < 6 && ok(x, z, 0.5)) put('shell', x, z, { yaw: rnd() * 360, scale: 0.5 + rnd() * 0.5, y: inWater(x, z) ? -0.03 : 0 });
@@ -77,7 +77,7 @@ for (let i = 0; i < 46; i++) {
 for (const [x, z] of [[-8.6, 1.8], [-7.4, 6.2], [-9.2, 5.0], [-5.0, 6.8], [-8.0, 3.0]]) if (inWater(x, z)) put('coral', x, z, { yaw: rnd() * 360, y: -0.03, scale: 0.9 });
 put('boulder', -9.0, 7.0, { y: -0.03, scale: 0.7 }); put('boulder', -6.4, 7.2, { y: -0.03, scale: 0.6, yaw: 90 });
 // Grass tufts and reeds at the back and east.
-for (let i = 0; i < 34; i++) {
+for (let i = 0; i < 14; i++) {
   const x = (rnd() - 0.5) * 19, z = (rnd() - 0.5) * 15;
   if (ok(x, z, 0.8) && !inWater(x, z) && x - z > -1 && Math.hypot(x - SHIP[0], (z - SHIP[1]) * 0.8) > 4.4) put(rnd() > 0.5 ? 'tall-grass' : 'reeds', x, z, { yaw: rnd() * 360 });
 }
