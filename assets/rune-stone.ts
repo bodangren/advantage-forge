@@ -12,13 +12,17 @@ const STONE = rgb('#7d8a99');
 const HOLLOW = rgb('#55606c');
 const RIM = rgb('#8fb8cc');
 
+// The lowest point sat 2.5 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.025;
+
 export default defineAsset({
   name: 'rune-stone',
   description: 'A chunky faceted grey stone standing upright, with a big glowing cyan gem set in a hollow on its front.',
   detail: 0.006,
   reference: 'docs/item-mockups/rune-stone-mock.jpg',
   texture: { size: 512 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.24, 0] },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.24 + LIFT, 0] },
 
   build(k) {
     let body = sdf.ellipsoid([0.21, 0.26, 0.19]);
@@ -35,14 +39,14 @@ export default defineAsset({
     const hollow = sdf.sphere(0.12).at(0, 0.27, 0.16);
     const stone = sdf.subtract(body, hollow).paintWhere(sdf.sphere(0.15).at(0, 0.27, 0.16), RIM, 0.05);
     const painted = stone.paintWhere(hollow.round(0.005), HOLLOW, 0.01);
-    k.body('stone', painted.paintFn((x, y, z, base) => base), {
+    k.body('stone', painted.paintFn((x, y, z, base) => base).at(0, LIFT, 0), {
       color: '#7d8a99',
       roughness: 0.85,
       metalness: 0,
       flat: true,
       bump: (x, y, z) => 0.003 * noise.fbm(x * 20, y * 20, z * 20, 2),
     });
-    k.body('gem', sdf.sphere(0.095).at(0, 0.27, 0.13), {
+    k.body('gem', sdf.sphere(0.095).at(0, 0.27, 0.13).at(0, LIFT, 0), {
       color: '#40e0ff',
       roughness: 0.1,
       metalness: 0,

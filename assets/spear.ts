@@ -15,13 +15,17 @@ import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
 
 const BONE = '#e8dcc0';
 
+// The lowest point sat 2 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.02;
+
 export default defineAsset({
   name: 'spear',
   description: 'Chunky pale-wood spear with a spiral wrap, bone socket and prongs, and a leaf steel head.',
   detail: 0.005,
   reference: 'docs/item-mockups/spear-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.6, 0] },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.6 + LIFT, 0] },
 
   build(k) {
     const shaft = sdf
@@ -33,7 +37,7 @@ export default defineAsset({
       rings.push(sdf.torus(0.04, 0.012).rotateZ(20).rotateY(i * 40).at(0, 0.3 + i * (0.9 / 7), 0));
     }
     const wrap = sdf.union(...rings).paint('#b8905a');
-    k.body('wood', sdf.union(shaft, wrap), {
+    k.body('wood', sdf.union(shaft, wrap).at(0, LIFT, 0), {
       color: '#e0b878',
       roughness: 0.8,
       detail: 0.005,
@@ -52,7 +56,7 @@ export default defineAsset({
         ],
         0.01,
       );
-    k.body('bone', sdf.smoothUnion(0.01, butt, socket, prong(1), prong(-1)), {
+    k.body('bone', sdf.smoothUnion(0.01, butt, socket, prong(1), prong(-1)).at(0, LIFT, 0), {
       color: BONE,
       roughness: 0.7,
       detail: 0.005,
@@ -78,7 +82,7 @@ export default defineAsset({
       .extrude(outline, 0.03, 0.006)
       .at(0, 1.44, 0)
       .paintWhere(sdf.box([0.018, 0.22, 0.3]).at(0, 1.56, 0), '#8e959e', 0.008);
-    k.body('blade', blade, {
+    k.body('blade', blade.at(0, LIFT, 0), {
       color: '#c8ccd2',
       roughness: 0.3,
       metalness: 1,

@@ -20,7 +20,7 @@ See the [baseline evidence](./evidence/baseline-20260928.md).
 
 ## Next work
 
-1. [Avatar system](./tracks/avatar_system_20261001/): the fit reworks are done (no `rework` rows); next the capped hair, the reduced output, the pack, the composer, and the review page. Debt TD-14: 11 displays off y = 0.
+1. [Avatar system](./tracks/avatar_system_20261001/): the fit reworks are done (no `rework` rows); next the capped hair, the reduced output, the pack, the composer, and the review page. Debt TD-14: 7 `later` displays off y = 0 (the 11 `ready` ones are fixed).
 2. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); 297 type errors remain; class B by file.
 3. P2 production can start: P0 and P1 are at their bars (owner decision of 2026-10-01).
 4. [Complete model packs](./tracks/game_model_packs_20260928/).

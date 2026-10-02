@@ -43,13 +43,17 @@ const body = () =>
     )
     .scale([1, 1, 0.78]);
 
+// The lowest point sat 5.3 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.053;
+
 export default defineAsset({
   name: 'studded-leather',
   description: 'Open brown leather vest with brass studs, stand-up collar, shoulder caps, and side laces.',
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/studded-leather-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
+  equip: { slot: 'chest', fitScale: 2, origin: [0, LIFT, 0], hides: ['undershirt'] },
 
   build(k) {
     const cut = sdf.box([0.06, 0.8, 0.5], 0.008).at(0, 0.3, 0.25);
@@ -71,7 +75,7 @@ export default defineAsset({
       }
       return c;
     };
-    k.body('leather', outer.paintFn(paint), {
+    k.body('leather', outer.paintFn(paint).at(0, LIFT, 0), {
       color: LEATHER,
       roughness: 0.65,
       metalness: 0,
@@ -80,7 +84,7 @@ export default defineAsset({
       maxTriangles: 3000,
       bump: (x, y, z) => 0.001 * noise.fbm(x * 36, y * 36, z * 36, 2),
     });
-    k.body('lining', body().scale(0.97), {
+    k.body('lining', body().scale(0.97).at(0, LIFT, 0), {
       color: DARK,
       roughness: 0.75,
       metalness: 0,
@@ -99,9 +103,9 @@ export default defineAsset({
       );
     };
     for (const sx of [1, -1]) {
-      for (const [x, y] of [[0.075, 0.15], [0.075, 0.35], [0.14, 0.3], [0.14, 0.5]]) stud([x * sx, y, 0.6], [0, 0, -1]);
+      for (const [x, y] of [[0.075, 0.15], [0.075, 0.35], [0.14, 0.3], [0.14, 0.5]] as const) stud([x * sx, y, 0.6], [0, 0, -1]);
     }
-    k.body('studs', sdf.union(...studs), {
+    k.body('studs', sdf.union(...studs).at(0, LIFT, 0), {
       color: BRASS,
       roughness: 0.3,
       metalness: 1,
@@ -121,7 +125,7 @@ export default defineAsset({
       return out;
     };
     const lace = (sx: number) => sdf.chain(pts(sx), 0.004);
-    k.body('laces', lace(1).union(lace(-1)), {
+    k.body('laces', lace(1).union(lace(-1)).at(0, LIFT, 0), {
       color: LACE,
       roughness: 0.8,
       metalness: 0,

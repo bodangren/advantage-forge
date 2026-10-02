@@ -13,13 +13,18 @@ const BLADE = rgb('#4a4f55');
 const EDGE = rgb('#d3d8de');
 const C: [number, number] = [-0.39, 1.72]; // blade arc center (x, y)
 
+// The lowest point sat 2.2 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change. 21 mm, not 22: the blade reduction fails
+// its surface check at 18, 19, 22, and 24 mm.
+const LIFT = 0.021;
+
 export default defineAsset({
   name: 'scythe',
   description: 'A farm scythe: a curved wooden snath with two hand grips and a long curved steel blade with a bright edge.',
   detail: 0.004,
   reference: 'docs/item-mockups/scythe-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.65, 0], twoHanded: true },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.65 + LIFT, 0], twoHanded: true },
 
   build(k) {
     const snath = sdf.chain(
@@ -28,7 +33,7 @@ export default defineAsset({
     );
     k.body(
       'snath',
-      snath.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.15 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 80, y * 6, z * 80, 3)))),
+      snath.paintFn((x, y, z) => mixRgb(WOOD, GRAIN, 0.15 + 0.4 * (0.5 + 0.5 * noise.fbm(x * 80, y * 6, z * 80, 3)))).at(0, LIFT, 0),
       { color: '#c08a50', roughness: 0.7, metalness: 0 },
     );
     const grips = sdf.union(
@@ -36,7 +41,7 @@ export default defineAsset({
       sdf.capsule([0.045, 1.12, 0], [0.045, 1.14, 0.18], 0.026),
       sdf.cylinder(0.05, 0.08, 0.01).at(0.02, 1.6, 0),
     );
-    k.body('grips', grips, { color: '#7a4a2a', roughness: 0.7, metalness: 0 });
+    k.body('grips', grips.at(0, LIFT, 0), { color: '#7a4a2a', roughness: 0.7, metalness: 0 });
 
     const arc = sdf.extrude(profile.arc(0.42, 0.14, -105, -12), 0.036, 0.005).at(C[0], C[1], 0);
     const taper = sdf.cylinder(0.48, 0.2, 0).rotateX(90).at(C[0] + 0.03, C[1] + 0.09, 0);
@@ -48,6 +53,6 @@ export default defineAsset({
         const r = Math.hypot(x - C[0], y - C[1]);
         return r < 0.39 ? EDGE : mixRgb(BLADE, EDGE, 0.1);
       });
-    k.body('blade', blade, { color: '#4a4f55', roughness: 0.35, metalness: 0.85 });
+    k.body('blade', blade.at(0, LIFT, 0), { color: '#4a4f55', roughness: 0.35, metalness: 0.85 });
   },
 });

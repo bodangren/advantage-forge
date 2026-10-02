@@ -27,13 +27,17 @@ function crystal(len: number, r: number, tip: number) {
   return s;
 }
 
+// The lowest point sat 3 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.03;
+
 export default defineAsset({
   name: 'crystal-focus',
   description: 'A pointed hexagonal purple crystal held by three curved silver claws on a small round silver base.',
   detail: 0.0025,
   reference: 'docs/item-mockups/crystal-focus-mock.jpg',
   texture: { size: 512 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.03, 0], offset: [-0.03, -0.02, 0.03] },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, frame: 'body', origin: [0, 0.03 + LIFT, 0], offset: [-0.03, -0.02, 0.03] },
 
   build(k) {
     const base = sdf.smoothUnion(
@@ -58,10 +62,10 @@ export default defineAsset({
     });
     k.body(
       'silver',
-      sdf.smoothUnion(0.01, base, ...claws).paintFn((_x, y) => mixRgb(SILVER_DARK, SILVER, Math.min(1, y / 0.08))),
+      sdf.smoothUnion(0.01, base, ...claws).paintFn((_x, y) => mixRgb(SILVER_DARK, SILVER, Math.min(1, y / 0.08))).at(0, LIFT, 0),
       { color: '#c0c6cc', roughness: 0.3, metalness: 0.9 },
     );
-    k.body('crystal', crystal(0.16, 0.042, 0.06).at(0, 0.05, 0), {
+    k.body('crystal', crystal(0.16, 0.042, 0.06).at(0, 0.05, 0).at(0, LIFT, 0), {
       color: '#2a0a3a',
       roughness: 0.12,
       metalness: 0,

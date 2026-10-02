@@ -19,13 +19,17 @@ const Y0 = 0.04;
 const Y1 = 0.62;
 const RH = (Y1 - Y0) / ROWS;
 
+// The lowest point sat 4.5 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.045;
+
 export default defineAsset({
   name: 'scale-armor',
   description: 'Chunky bronze-green scale cuirass with iron pauldrons, leather collar and belt, gold trim.',
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/scale-armor-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
+  equip: { slot: 'chest', fitScale: 2, origin: [0, LIFT, 0], hides: ['undershirt'] },
 
   build(k) {
     const torso = sdf
@@ -69,7 +73,7 @@ export default defineAsset({
     });
     k.body(
       'scales',
-      scaled.displace(0.004, (_x, y) => Math.cos(((y - Y0) / RH) * Math.PI * 2 - Math.PI / 2) * 0.5 + 0.5),
+      scaled.displace(0.004, (_x, y) => Math.cos(((y - Y0) / RH) * Math.PI * 2 - Math.PI / 2) * 0.5 + 0.5).at(0, LIFT, 0),
       { color: SCALE, roughness: 0.5, metalness: 0.6, detail: 0.005, textureDensity: 2, maxTriangles: 3300 },
     );
 
@@ -84,7 +88,7 @@ export default defineAsset({
       .smoothUnion(0.01, rivet)
       .rotateZ(-20)
       .at(0.29, 0.5, 0);
-    k.body('iron', pauldron.mirror('x', 0), {
+    k.body('iron', pauldron.mirror('x', 0).at(0, LIFT, 0), {
       color: IRON,
       roughness: 0.5,
       metalness: 0.7,
@@ -97,7 +101,7 @@ export default defineAsset({
     const plate = sdf
       .extrude(profile.polygon([[-0.05, 0.07], [0.05, 0.07], [0.05, -0.01], [0, -0.07], [-0.05, -0.01]]), 0.03, 0.006)
       .at(0, 0.53, 0.19);
-    k.body('collar', sdf.union(collar, plate), {
+    k.body('collar', sdf.union(collar, plate).at(0, LIFT, 0), {
       color: IRON,
       roughness: 0.5,
       metalness: 0.7,
@@ -109,7 +113,7 @@ export default defineAsset({
     const belt = shell
       .round(0.008)
       .smoothIntersect(0.005, sdf.box([0.8, 0.07, 0.7], 0.01).at(0, 0.14, 0));
-    k.body('leather', belt, {
+    k.body('leather', belt.at(0, LIFT, 0), {
       color: BELT,
       roughness: 0.65,
       metalness: 0,
@@ -124,7 +128,7 @@ export default defineAsset({
     const emblem = sdf
       .extrude(profile.polygon([[0, 0.05], [0.032, 0], [0, -0.05], [-0.032, 0]]), 0.02, 0.004)
       .at(0, 0.54, 0.21);
-    k.body('gold', sdf.union(trim, buckle, emblem), {
+    k.body('gold', sdf.union(trim, buckle, emblem).at(0, LIFT, 0), {
       color: GOLD,
       roughness: 0.3,
       metalness: 1,

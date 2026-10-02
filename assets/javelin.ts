@@ -14,19 +14,23 @@ const GRAIN = rgb('#c8a668');
 const GOLD = rgb('#d8b040');
 const DARKGOLD = rgb('#a88020');
 
+// The lowest point sat 1 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.01;
+
 export default defineAsset({
   name: 'javelin',
   description: 'A javelin standing upright: a chunky ash shaft, an orange collar and butt, and a faceted golden leaf point.',
   detail: 0.004,
   reference: 'docs/item-mockups/javelin-mock.jpg',
   texture: { size: 512 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.55, 0] },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.55 + LIFT, 0] },
 
   build(k) {
     const shaft = sdf.capsule([0, 0.1, 0], [0, 1.0, 0], 0.03);
     k.body(
       'shaft',
-      shaft.paintFn((x, y, z) => mixRgb(ASH, GRAIN, 0.5 + 0.5 * noise.fbm(x * 30, y * 4, z * 30, 3))),
+      shaft.paintFn((x, y, z) => mixRgb(ASH, GRAIN, 0.5 + 0.5 * noise.fbm(x * 30, y * 4, z * 30, 3))).at(0, LIFT, 0),
       { color: '#e0c48a', roughness: 0.7, metalness: 0, bump: (x, y, z) => 0.001 * noise.fbm(x * 40, y * 6, z * 40, 2) },
     );
 
@@ -35,7 +39,7 @@ export default defineAsset({
       sdf.torus(0.04, 0.015).at(0, 0.13, 0),
       sdf.torus(0.045, 0.02).at(0, 1.0, 0),
     );
-    k.body('fittings', orange, { color: '#e0602a', roughness: 0.6, metalness: 0, detail: 0.006 });
+    k.body('fittings', orange.at(0, LIFT, 0), { color: '#e0602a', roughness: 0.6, metalness: 0, detail: 0.006 });
 
     let leaf = sdf.ellipsoid([0.07, 0.18, 0.04]);
     for (let i = 0; i < 6; i++) {
@@ -48,7 +52,7 @@ export default defineAsset({
     const point = leaf.at(0, 1.14, 0);
     k.body(
       'point',
-      point.paintWhere(sdf.box([0.5, 0.3, 0.5]).at(0, 0.99, 0), DARKGOLD, 0.02),
+      point.paintWhere(sdf.box([0.5, 0.3, 0.5]).at(0, 0.99, 0), DARKGOLD, 0.02).at(0, LIFT, 0),
       { color: '#d8b040', roughness: 0.35, metalness: 0.9, flat: true },
     );
   },

@@ -36,21 +36,21 @@ axe	mainhand	1	0	ready		3448		55
 club	mainhand	1	0	ready		12886	7.1	70
 dagger	mainhand	1	0	ready		2656		55
 hand-axe	mainhand	1	0	ready		2514		55
-javelin	mainhand	1	0	ready		3448	7	60
+javelin	mainhand	1	0	ready		3456	7	60
 mace	mainhand	1	0	ready		2440		50
 quarterstaff	mainhand	1	1	ready		1586		50
 short-sword	mainhand	1	0	ready		2640		55
 shortbow	mainhand	1	1	ready		4114	7.5	60
 sickle	mainhand	1	0	ready		5542	7	65
 sling	mainhand	1	0	ready		8258	7.3	70
-spear	mainhand	1	0	ready		3612	7.4	60
+spear	mainhand	1	0	ready		3634	7.4	60
 throwing-axe	mainhand	1	0	ready		6350	7.4	65
 throwing-knife	mainhand	1	0	ready		1300		50
 wand	mainhand	1	0	ready		3416		55
 whip	mainhand	1	0	ready		2950		55
 battle-axe	mainhand	2	0	ready		3400		110
 crossbow	mainhand	2	1	ready		4414		110
-crystal-focus	mainhand	2	0	ready		5298		120
+crystal-focus	mainhand	2	0	ready		5334		120
 falchion	mainhand	2	0	ready		1390		100
 flail	mainhand	2	0	ready		2900		110
 katana	mainhand	2	0	ready		2112		100
@@ -68,11 +68,11 @@ glaive	mainhand	3	1	ready		4358	7.1	240
 great-axe	mainhand	3	1	ready		9216		260
 greatsword	mainhand	3	1	ready		3900		220
 halberd	mainhand	3	1	ready		8532	7	280
-heavy-crossbow	mainhand	3	1	ready		9264	7	280
+heavy-crossbow	mainhand	3	1	ready		9256	7	280
 magic-scepter	mainhand	3	0	ready		6850		240
-maul	mainhand	3	1	ready		5214		240
-pike	mainhand	3	1	ready		12599	7	280
-scythe	mainhand	3	1	ready		8351	7	280
+maul	mainhand	3	1	ready		5220		240
+pike	mainhand	3	1	ready		9662	7	280
+scythe	mainhand	3	1	ready		7448	7	280
 backpack	accessory	1	0	later		5292		35
 belt-pouch	accessory	1	0	later		2232	7.2	35
 satchel	accessory	1	0	later		2468	7	35

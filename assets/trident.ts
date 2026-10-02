@@ -14,13 +14,17 @@ import { HAND_FIT, defineAsset, noise, sdf } from '../src/index.js';
  * Grip centre is at about y = 0.17 for attaching to a character hand.
  */
 
+// The lowest point sat 0.6 cm below y = 0; LIFT stands the display on y = 0, and the equip
+// origin moves with it so the worn fit does not change.
+const LIFT = 0.006;
+
 export default defineAsset({
   name: 'trident',
   description: 'Bronze-gold trident with three barbed prongs on a honey-oak pole.',
   detail: 0.004,
   reference: 'docs/item-mockups/trident-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.17, 0] },
+  equip: { slot: 'mainhand', fitScale: HAND_FIT, origin: [0, 0.17 + LIFT, 0] },
 
   build(k) {
     // ------------------------------------------------------------- wood pole
@@ -31,7 +35,7 @@ export default defineAsset({
       const g = 0.3 + 0.7 * t;
       return [base[0] * g, base[1] * g, base[2] * g];
     });
-    k.body('pole', poleShade, {
+    k.body('pole', poleShade.at(0, LIFT, 0), {
       color: '#b5814a',
       roughness: 0.8,
       detail: 0.006,
@@ -40,7 +44,7 @@ export default defineAsset({
 
     // ------------------------------------------------------------- leather grip
     const grip = sdf.cylinder(0.02, 0.22, 0.008).at(0, 0.17, 0);
-    k.body('grip', grip, {
+    k.body('grip', grip.at(0, LIFT, 0), {
       color: '#6b4226',
       roughness: 0.7,
       detail: 0.008,
@@ -101,7 +105,7 @@ export default defineAsset({
           base[2] * shade,
         ];
       });
-    k.body('gold', gold, {
+    k.body('gold', gold.at(0, LIFT, 0), {
       color: '#d4a93a',
       roughness: 0.3,
       metalness: 1,
