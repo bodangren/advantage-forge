@@ -618,3 +618,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	tomb	map-p2	medium	maps50	51785	19				6.5	feedback	slate walls
 2026-10-02	catacombs	map-p2	medium	maps50	48430	17				6.5	feedback	square hall
 2026-10-02	ancient-ruin	map-p2	medium	maps50	99000	30				7.0	pass	after 1 feedback; not re-viewed by orchestrator
+2026-10-02	catacombs	map-p2	medium	maps50	108800	42				7.0	pass	after 1 feedback
