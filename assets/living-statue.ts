@@ -188,16 +188,18 @@ export default defineAsset({
     // A hand-placed crack: a thin polyline stroke (0.004 wide, mitered bends) in the XY plane, extruded
     // along +Z (z 0 to 0.3) so it crosses the front of the surface it sits on. Painted and grooved 3 mm.
     const stroke = (pts: [number, number][], w = 0.002) => {
-      const nrm = pts.map((p, i) => {
-        const a = pts[Math.max(0, i - 1)];
-        const b = pts[Math.min(pts.length - 1, i + 1)];
+      const at = (i: number): [number, number] => pts[Math.max(0, Math.min(pts.length - 1, i))] ?? [0, 0];
+      const nrm = pts.map((_p, i): [number, number] => {
+        const a = at(i - 1);
+        const b = at(i + 1);
         const dx = b[0] - a[0];
         const dy = b[1] - a[1];
         const l = Math.hypot(dx, dy) || 1;
-        return [-dy / l, dx / l] as [number, number];
+        return [-dy / l, dx / l];
       });
-      const left = pts.map((p, i) => [p[0] + nrm[i][0] * w, p[1] + nrm[i][1] * w] as [number, number]);
-      const right = pts.map((p, i) => [p[0] - nrm[i][0] * w, p[1] - nrm[i][1] * w] as [number, number]).reverse();
+      const n = (i: number): [number, number] => nrm[i] ?? [0, 0];
+      const left = pts.map((p, i): [number, number] => [p[0] + n(i)[0] * w, p[1] + n(i)[1] * w]);
+      const right = pts.map((p, i): [number, number] => [p[0] - n(i)[0] * w, p[1] - n(i)[1] * w]).reverse();
       return sdf.extrude(profile.polygon([...left, ...right]), 0.3).at(0, 0, 0.15);
     };
     const grooveOf = (shapes: sdf.Shape[]) => {
@@ -256,12 +258,11 @@ export default defineAsset({
       1,
       0.006,
     );
-    const wedge = sdf.intersect(
-      sdf.halfSpace([0.5, 0, 0.866], 0.866 * RIDGE_Z),
-      sdf.halfSpace([-0.5, 0, 0.866], 0.866 * RIDGE_Z),
-      sdf.halfSpace([0, -0.42, 0.91], -0.42 * 0.6 + 0.91 * RIDGE_Z),
-      vPrism,
-    );
+    const wedge = sdf
+      .halfSpace([0.5, 0, 0.866], 0.866 * RIDGE_Z)
+      .intersect(sdf.halfSpace([-0.5, 0, 0.866], 0.866 * RIDGE_Z))
+      .intersect(sdf.halfSpace([0, -0.42, 0.91], -0.42 * 0.6 + 0.91 * RIDGE_Z))
+      .intersect(vPrism);
     const MASK_TOP = 0.665;
     const mask = faceBase.smoothIntersect(0.006, wedge).intersect(sdf.halfSpace([0, 1, 0], MASK_TOP));
     const faceZ = (x: number, y: number) => sdf.raycast(mask, [x, y, 1], [0, 0, -1])![2];
@@ -682,7 +683,8 @@ export default defineAsset({
     const shift = (s: sdf.Shape) => shieldPose(s.at(0.05, -0.005, 0));
     const field = shift(sdf.cylinder(0.16, 0.05).rotateX(90).at(0, 0, 0.02));
     const tops = shift(ringsLocal(0.015).intersect(sdf.halfSpace([0, 0, -1], -0.02)));
-    const shieldStrokes = [shift(stroke([[0.1, 0.0], [0.12, 0.035], [0.102, 0.07], [0.122, 0.105]]))];
+    const shieldCrack = shift(stroke([[0.1, 0.0], [0.12, 0.035], [0.102, 0.07], [0.122, 0.105]]));
+    const shieldStrokes = [shieldCrack];
     // Recess paint: the grooves between the rings.
     const valleys = shift(sdf.union(...[0.07, 0.11, 0.151].map((R) => sdf.torus(R, 0.007).rotateX(90).at(0, 0, 0.012))));
     stone('shield', shieldParts, {
@@ -692,7 +694,7 @@ export default defineAsset({
       detail: 0.006,
       maxTriangles: 6500,
       bump: grooveOf(shieldStrokes),
-      after: (s) => s.paintWhere(field, T.field).paintWhere(tops, T.lit).paintWhere(valleys, T.rec).paintWhere(shieldStrokes[0], T.crack),
+      after: (s) => s.paintWhere(field, T.field).paintWhere(tops, T.lit).paintWhere(valleys, T.rec).paintWhere(shieldCrack, T.crack),
     });
 
     // ------------------------------------------------------------------ animation

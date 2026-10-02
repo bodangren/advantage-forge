@@ -15,6 +15,21 @@ A correction changes the render, and each corrected asset needs a new render rev
 | `paintFn` passed as a body option (TS2353) | dirt-road-crossing, dirt-road-t-junction, fountain, glaive, trident, windmill, wood-wall | The pipeline never reads `options.paintFn`, so that paint is missing. Correction: call `.paintFn(...)` on the shape. |
 | `sdf.intersect` with 4 arguments (TS2554) | living-statue (line 262), parts/warrior-sword (line 57) | `intersect` takes 2 shapes; the third and fourth cutters are ignored. |
 
+### Class A corrected (2026-10-02)
+
+All 9 files are corrected, and each has a textured render compared with its earlier render (0 warnings):
+
+| File | Correction | Render review |
+| --- | --- | --- |
+| dirt-road-crossing, dirt-road-t-junction | Pebble tint moved onto the shape | No visible change at tile scale; no regression. |
+| fountain | Stone paint moved onto the shape | Dark mortar lines now separate the stones. |
+| glaive | Pole grain moved onto the shape; the dark color is an `rgb()` value | The darker grain shows on the pole. |
+| trident | Pole shade moved onto the shape | The pole now darkens toward the butt. |
+| windmill | Plank paint moved onto the cap | The cap now shows its planks and grooves. |
+| wood-wall | Nail wear moved onto the shape | No visible change at wall scale; no regression. |
+| living-statue | Four mask cutters chained (were 2 of 4); class B index errors in the crack stroke and the shield crack also corrected | The lower face mask now ends in the V point of the mockup. |
+| parts/warrior-sword | Four bevel planes chained (were 2 of 4) | The back of the blade is now bevelled; the side view is clean. Also used by warrior. |
+
 ## Class B: no visible change when corrected
 
 | Defect | Files | Note |

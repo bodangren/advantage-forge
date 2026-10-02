@@ -175,14 +175,14 @@ export default defineAsset({
         sdf.ellipsoid([r, r * 0.5, r * 0.9]).at(px, TOP - r * 0.22, pz),
       ),
     );
-    k.body('pebbles', pebbles, {
+    const pebbleTint = pebbles.paintFn((x, _y, z, base) => {
+      const tint = noise.random(Math.floor(x * 60 + 11), 3, Math.floor(z * 60 + 7));
+      return mixRgb(base, STONE_DARK, 0.25 + 0.45 * tint);
+    });
+    k.body('pebbles', pebbleTint, {
       color: STONE,
       roughness: 0.85,
       detail: 0.007,
-      paintFn: (x, _y, z, base) => {
-        const tint = noise.random(Math.floor(x * 60 + 11), 3, Math.floor(z * 60 + 7));
-        return mixRgb(base, STONE_DARK, 0.25 + 0.45 * tint);
-      },
     });
   },
 });

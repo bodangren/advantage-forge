@@ -154,12 +154,11 @@ export default defineAsset({
       .union(basin, column, upperBowl, finial, pebbles)
       .intersect(sdf.halfSpace([0, -1, 0], 0));
 
-    k.body('stone', stoneShape, {
+    k.body('stone', stoneShape.paintFn(stonePaint), {
       color: C.stone,
       roughness: 0.9,
       detail: 0.02,
       maxError: 0.008,
-      paintFn: stonePaint,
       bump: stoneBump,
     });
 

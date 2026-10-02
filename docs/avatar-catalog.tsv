@@ -6,7 +6,7 @@ horned-helmet	head	2	0	ready		3850	7.2	95
 iron-helmet	head	2	0	ready		6500	7.5	105
 steel-helmet	head	2	0	ready		4854	7.2	95
 crown	head	3	0	ready		4696	7.1	190
-leather-armor	chest	1	0	ready		12050	7.3	70
+leather-armor	chest	1	0	ready		12086	7.5	70
 studded-leather	chest	1	0	ready		5100	7	65
 chainmail	chest	2	0	rework		5340		120
 scale-armor	chest	2	0	ready		6700	7.3	130
@@ -157,7 +157,7 @@ shaman-staff	mainhand	2	1	ready		6542		120
 enchanter-staff	mainhand	2	1	ready		1352		100
 archer-bow	mainhand	2	1	ready		3094		110
 ranger-bow	mainhand	2	1	ready		3094		110
-warrior-sword	mainhand	3	1	ready		1760		200
+warrior-sword	mainhand	3	1	ready		1940		200
 cleric-hammer	mainhand	3	1	ready		6178		240
 spear-warden-spear	mainhand	3	1	ready		4572		220
 dragoon-lance	mainhand	3	1	ready		4274		220

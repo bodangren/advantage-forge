@@ -1,4 +1,4 @@
-import { HAND_FIT, defineAsset, noise, profile, sdf } from '../src/index.js';
+import { HAND_FIT, defineAsset, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Glaive, 1.6 m tall, standing on its brass butt on y = 0, centered on the Y axis, facing +Z.
@@ -19,11 +19,11 @@ export default defineAsset({
 
   build(k) {
     const pole = sdf.capsule([0, 0.05, 0], [0, 1.15, 0], 0.032);
-    k.body('pole', pole, {
+    const poleDark = rgb('#74472a');
+    k.body('pole', pole.paintFn((x, y, z, base) => (noise.fbm(x * 30, y * 3, z * 30, 2) > 0.3 ? poleDark : base)), {
       color: '#8a5a35',
       roughness: 0.82,
       detail: 0.006,
-      paintFn: (x, y, z, base) => (noise.fbm(x * 30, y * 3, z * 30, 2) > 0.3 ? '#74472a' : base),
       bump: (x, y, z) => 0.0012 * noise.fbm(x * 40, y * 3, z * 40, 2),
     });
 

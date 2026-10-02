@@ -54,7 +54,10 @@ export function warriorSword(): Part {
   const bevelN = (sx: number, sz: number) => sdf.halfSpace(norm([0.14 * sx, 0, sz]), 0.008 / Math.hypot(0.14, 1));
   const bladeShape = sdf
     .extrude(bladeProfile, 0.03, 0.002)
-    .intersect(sdf.intersect(bevelN(1, 1), bevelN(-1, 1), bevelN(1, -1), bevelN(-1, -1)))
+    .intersect(bevelN(1, 1))
+    .intersect(bevelN(-1, 1))
+    .intersect(bevelN(1, -1))
+    .intersect(bevelN(-1, -1))
     .paintWhere(sdf.box([0.02, 0.56, 0.2]).at(0, -0.36, 0), C.guard, 0.004);
 
   const guard = sdf.smoothUnion(

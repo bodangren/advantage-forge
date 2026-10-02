@@ -164,19 +164,19 @@ export default defineAsset({
       .revolve(capProfile)
       .intersect(sdf.halfSpace([0, 1, 0], 4.88))
       .union(finial);
-    k.body('cap', cap, {
+    const capPlanks = cap.paintFn((x, y, z) => {
+      const a = (Math.atan2(z, x) / Math.PI / 2 + 0.5) * 16;
+      const plank = Math.floor(a);
+      const tint = noise.random(plank, 3);
+      let c = mixRgb(C.walnut, C.walnutDark, 0.12 + 0.3 * tint);
+      c = mixRgb(c, C.walnutDark, 0.75 * grooveAt(a));
+      return mixRgb(c, C.oak, 0.28 * sstep(4.45, 4.85, y));
+    });
+    k.body('cap', capPlanks, {
       color: C.walnut,
       roughness: 0.8,
       detail: 0.016,
       maxError: 0.006,
-      paintFn: (x, y, z) => {
-        const a = (Math.atan2(z, x) / Math.PI / 2 + 0.5) * 16;
-        const plank = Math.floor(a);
-        const tint = noise.random(plank, 3);
-        let c = mixRgb(C.walnut, C.walnutDark, 0.12 + 0.3 * tint);
-        c = mixRgb(c, C.walnutDark, 0.75 * grooveAt(a));
-        return mixRgb(c, C.oak, 0.28 * sstep(4.45, 4.85, y));
-      },
       bump: (x, y, z) => {
         const a = (Math.atan2(z, x) / Math.PI / 2 + 0.5) * 16;
         return 0.005 * grooveAt(a) + 0.002 * noise.fbm(x * 20, y * 8, z * 20, 2);

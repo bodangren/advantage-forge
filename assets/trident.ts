@@ -25,16 +25,16 @@ export default defineAsset({
   build(k) {
     // ------------------------------------------------------------- wood pole
     const pole = sdf.cylinder(0.016, 1.07, 0.005).at(0, 0.555, 0);
-    k.body('pole', pole, {
+    // Darker toward the butt, lighter toward the head.
+    const poleShade = pole.paintFn((_x, y, _z, base) => {
+      const t = Math.min(1, Math.max(0, y / 1.1));
+      const g = 0.3 + 0.7 * t;
+      return [base[0] * g, base[1] * g, base[2] * g];
+    });
+    k.body('pole', poleShade, {
       color: '#b5814a',
       roughness: 0.8,
       detail: 0.006,
-      // Darker toward the butt, lighter toward the head.
-      paintFn: (x, y, z, base) => {
-        const t = Math.min(1, Math.max(0, y / 1.1));
-        const g = 0.3 + 0.7 * t;
-        return [base[0] * g, base[1] * g, base[2] * g];
-      },
       bump: (x, y, z) => 0.0005 * noise.fbm(x * 90, y * 8, z * 90, 3), // grain along the pole
     });
 

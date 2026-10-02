@@ -135,18 +135,18 @@ export default defineAsset({
         nails.push(sdf.sphere(0.02).scale([1, 1, 0.55]).at(sx * (LEN / 2 - 0.07), y, RAIL_D / 2 + 0.004));
       }
     }
-    k.body('nails', sdf.union(...nails), {
+    const nailWear = sdf.union(...nails).paintFn((x, y, z, base) => {
+      const w = noise.fbm(x * 60, y * 60, z * 60, 2, 3);
+      let c = mixRgb(base, IRON_DARK, clamp01(-w) * 0.45); // worn dark speckle
+      c = mixRgb(c, IRON_LIFT, clamp01(w) * 0.3); // burnished highlights
+      return c;
+    });
+    k.body('nails', nailWear, {
       color: IRON,
       roughness: 0.5,
       metalness: 0.7,
       detail: 0.008,
       maxTriangles: 160,
-      paintFn: (x, y, z, base) => {
-        const w = noise.fbm(x * 60, y * 60, z * 60, 2, 3);
-        let c = mixRgb(base, IRON_DARK, clamp01(-w) * 0.45); // worn dark speckle
-        c = mixRgb(c, IRON_LIFT, clamp01(w) * 0.3); // burnished highlights
-        return c;
-      },
     });
   },
 });
