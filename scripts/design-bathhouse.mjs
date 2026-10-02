@@ -19,24 +19,24 @@ for (let c = 0; c < 7; c++)
     const x = (c - 3) * 2, z = (r - 2.5) * 2;
     const water = waterX.includes(x) && waterZ.includes(z);
     const rim = Math.abs(x) <= 4 && Math.abs(z) <= 3;
-    put(water ? 'sea-water' : rim ? 'stone-floor' : 'tile-floor', x, z);
+    put(water ? 'sea-water' : 'marble-floor', x, z);
   }
 // entrance apron
-for (const x of [-2, 0, 2]) put('stone-floor', x, 7);
+for (const x of [-2, 0, 2]) put('marble-floor', x, 7);
 
 // Walls (plaster, 2 m, along X). North, west, east full; south has a door gap in the middle.
-for (let x = -6; x <= 6; x += 2) put(x === 0 ? 'plaster-wall-window' : 'plaster-wall', x, -6);
+for (let x = -6; x <= 6; x += 2) put(x === 0 ? 'sandstone-wall' : 'sandstone-wall', x, -6);
 for (let z = -5; z <= 5; z += 2) {
-  put(z === -1 ? 'plaster-wall-window' : 'plaster-wall', -7, z, { yaw: 90 });
-  put(z === 1 ? 'plaster-wall-window' : 'plaster-wall', 7, z, { yaw: 90 });
+  put(z === -1 ? 'sandstone-wall' : 'sandstone-wall', -7, z, { yaw: 90 });
+  put(z === 1 ? 'sandstone-wall' : 'sandstone-wall', 7, z, { yaw: 90 });
 }
-for (const x of [-6, -4, 4, 6]) put('plaster-wall', x, 6);
+for (const x of [-6, -4, 4, 6]) put('sandstone-wall', x, 6);
 put('plaster-wall-door', -2, 6);
 put('plaster-wall-door', 2, 6);
 // Corner and door columns
 for (const [x, z] of [[-7, -6], [7, -6], [-7, 6], [7, 6], [-6, -6], [6, -6], [0, 6], [-7, 0], [7, 0], [-3, -6], [3, -6]]) put('column', x, z);
 // Pool columns at the rim corners
-for (const [x, z] of [[-4.6, -3.6], [4.6, -3.6], [-4.6, 3.6], [4.6, 3.6]]) put('column', x, z);
+for (const [x, z] of [[-1.8, -5.5], [1.8, -5.5], [-4.6, 5.5], [4.6, 5.5]]) put('column', x, z);
 put('fountain', 0, -4.9);
 put('statue', -5.3, -5.1); put('statue', 5.3, -5.1, { yaw: 0 });
 
