@@ -654,3 +654,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	general-store	map-p2	medium	maps50	100000	36				7.0	pass	after 1 feedback; not re-viewed by orchestrator
 2026-10-03	clearing	map-p2	medium	maps50	120000	32				7.0	pass	after 1 feedback; orchestrator viewed 3q
 2026-10-03	grove	map-p2	medium	maps50	100000	45				7.2	pass	after 1 feedback; orchestrator viewed 3q
+2026-10-03	marsh	map-p2	medium	maps50	120000	41				7.0	pass	after 1 feedback; orchestrator viewed 3q
