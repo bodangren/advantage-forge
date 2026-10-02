@@ -570,3 +570,20 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	map-tavern	map	medium	completion	38625	11	12.0	7.5	7.5	7.5	pass	P0 map: south half filled (three round tables, patrons, food), hearth group with bard and lute, dressed bar; 148 pieces; orchestrator put four patrons from y 0.2 onto the floor and listed the new characters; remaining: patrons stand, few wall decorations
 2026-10-02	map-village	map	medium	completion	48353	12	12.3	6.5	7.5	7.5	pass	P0 map: two-tile lanes, a large square, fences kept only for the farm and two yards; orchestrator replaced the dark dirt-ground with warm sand (desert-ground), removed three grass-edged corner tiles, and set exact component counts; remaining: square tile steps, cottages far from the square
 2026-10-02	map-vault	map	medium	completion	43777	11	5.9	7.5	7.5	7.5	pass	P0 map: floor tops one step darker toward the slate canon, a floor run outside the gate, room dressing (cells, treasury, sanctum); 221 pieces; orchestrator added warm point lights at torches, braziers, and candles in dark maps; remaining: small props, wall-top fragments
+2026-10-02	ivy	typefix	medium	completion	30887	4					pass	class B type errors 33 -> 0; mesh-same SAME for each file
+2026-10-02	market-cart	typefix	medium	completion	29986	7					pass	class B type errors 29 -> 0; mesh-same SAME for each file
+2026-10-02	campfire	typefix	medium	completion	27343	5					pass	class B type errors 20 -> 0; mesh-same SAME for each file
+2026-10-02	vines	typefix	medium	completion	28850	5					pass	class B type errors 19 -> 0; mesh-same SAME for each file
+2026-10-02	fishing-rod+fishing-pole	typefix	low	completion	27619	4					pass	class B type errors 17 -> 0; mesh-same SAME for each file
+2026-10-02	hay-bale+cabbage	typefix	low	completion	30848	7					pass	class B type errors 21 -> 0; mesh-same SAME for each file
+2026-10-02	assassin+hunter-rival+mercenary	typefix	low	completion	28674	7					pass	class B type errors 16 -> 0; mesh-same SAME for each file
+2026-10-02	candelabra+torch	typefix	low	completion	31882	8					pass	class B type errors 16 -> 0; mesh-same SAME for each file
+2026-10-02	morningstar+chains+bear-trap	typefix	low	completion	30467	7					pass	class B type errors 14 -> 0; mesh-same SAME for each file
+2026-10-02	pit-trap+gibbet+cheese	typefix	low	completion	30014	6					pass	class B type errors 14 -> 0; mesh-same SAME for each file
+2026-10-02	rampart+cabin+crypt-chapel+brick-wall	typefix	low	completion	31495	7					pass	class B type errors 14 -> 0; mesh-same SAME for each file
+2026-10-02	plague-bearer+spear-warden+caravan-guard+warrior	typefix	low	completion	31255	11					pass	class B type errors 11 -> 0; mesh-same SAME for each file
+2026-10-02	grimoire+stone-wall+snow-ground+giant-crystal	typefix	low	completion	30099	6					pass	class B type errors 9 -> 0; mesh-same SAME for each file
+2026-10-02	roof-tile+captain+greenhouse-dome+bookshelf	typefix	low	completion	30267	8					pass	class B type errors 4 -> 0; mesh-same SAME for each file
+2026-10-02	farmhouse+city-wall+wagon+vial+shield-maiden	typefix	low	completion	28908	6					pass	class B type errors 7 -> 0; mesh-same SAME for each file
+2026-10-02	torch-sconce+hanging-cage+quench-tub	typefix	low	completion	28720	6					pass	class B type errors 12 -> 0; mesh-same SAME for each file
+2026-10-02	silver-ore+gold-ore+copper-ore	typefix	low	completion	26925	4					pass	class B type errors 6 -> 0; mesh-same SAME for each file

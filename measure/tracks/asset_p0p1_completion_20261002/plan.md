@@ -14,6 +14,16 @@ Status: in_progress. This plan owns execution status.
 - [ ] Task: Fix each source that fails or warns (one Sonnet agent per source).
 - [ ] Task: Check the outputs again; every row passes.
 
+## Phase 2b: Type-only corrections (TD-01 class B, P0 and P1 sources)
+
+The compiler finds 244 of the 297 errors in 40 P0 and P1 asset sources (3 P0: campfire, torch,
+stone-wall). A source that does not compile is not complete. One Sonnet agent per file or small
+group corrects the types; `scripts/mesh-same.mjs` must print SAME (identical bounds, triangles
+per body, and GLB data) for each file. Brief: `bench/sonnet/briefs/typefix-rules.md`.
+
+- [x] Task: Correct the 40 files (15 agents, waves of three). (All SAME by mesh-same; 15 forge-sonnet-low and medium agents, about 449K tokens; then 2 agents for the 6 map pieces with 18 errors. Full compiler: 297 -> 32 errors, none in P0, P1, or map sources.)
+- [ ] Task: Run `./forge all` on each corrected file and confirm no warnings.
+
 ## Phase 3: Maps
 
 - [x] Task: Shoot the overview renders of the five P0 maps and compare them with the mockups. (Before: vault 6.5, village 6.5, tavern 6.5, forest 6.0, blacksmith 5.5. Interiors took a warm key light (c0bc297) and dark maps a weaker key (9f4a136).)
