@@ -722,7 +722,7 @@ export default defineAsset({
       const up = flatFor(d);
       const A = basis(SD0, UP0);
       const B = basis(d, up);
-      const c = [dot(A[0], G), dot(A[1], G), dot(A[2], G)];
+      const c: V3 = [dot(A[0], G), dot(A[1], G), dot(A[2], G)];
       const gv = add(add(scl(B[0], c[0]), scl(B[1], c[1])), scl(B[2], c[2]));
       const wrist = sub(grip, gv);
       const a = reach(ARM_R, wrist, pole);

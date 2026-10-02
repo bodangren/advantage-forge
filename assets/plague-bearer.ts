@@ -66,7 +66,7 @@ const lift = (p: V3): V3 => [p[0], p[1] + UP, p[2]];
 /** A torus ring of radius `R` and tube `r` around the axis through `c` along `d` (Y turned to `d`). */
 const ringAt = (c: V3, d: V3, R: number, r: number) => {
   const n = Math.hypot(...d);
-  const u = [d[0] / n, d[1] / n, d[2] / n];
+  const u: V3 = [d[0] / n, d[1] / n, d[2] / n];
   const h = Math.hypot(u[0], u[2]);
   const a = -Math.acos(Math.max(-1, Math.min(1, u[1]))) * (180 / Math.PI);
   const phi = h < 1e-6 ? 0 : Math.atan2(-u[2], u[0]) * (180 / Math.PI);

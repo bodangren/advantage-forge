@@ -299,7 +299,7 @@ export default defineAsset({
     };
     const locks = sdf.smoothUnion(
       0.03,
-      ...[
+      ...([
         [0, 46],
         [34, 50],
         [-34, 50],
@@ -309,7 +309,7 @@ export default defineAsset({
         [-104, 54],
         [140, 55],
         [-140, 55],
-      ].map(([a, phi]) => lockAt(a, phi)),
+      ] as [number, number][]).map(([a, phi]) => lockAt(a, phi)),
     );
     // Two short tufts fall over the headband at the front.
     const tufts = pair(sdf.ellipsoid([0.032, 0.05, 0.024]).rotateZ(-14).at(0.045, 0.775, 0.196)).bone('head');
