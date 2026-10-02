@@ -17,6 +17,9 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Detail: ring-mail bump lattice everywhere on the mail, broad soft tonal drift in the paint,
  *   dark neck and sleeve openings. Focal point: the leather collar at the neck.
  * Rig/animation: none (static equipment).
+ * Avatar fit (2026-10-02): sleeves now angle 37 deg down (d 0.8,-0.6), radius 0.125, length 0.2, so the
+ *   avatar upper arm sits inside with clearance; neck cut radius 0.14 and collar R 0.158 at y 0.62 keep
+ *   neck and head clear. Equip block unchanged.
  */
 
 const IRON = rgb('#4a4f55');
@@ -92,9 +95,9 @@ export default defineAsset({
 
     // Sleeves: tapered tubes on a downward-outward axis, cut square at the cuff end.
     // Local frame: axis d from a, in-plane normal e, arc coordinate u = phi * sleeve radius.
-    const a: [number, number, number] = [0.17, 0.53, 0];
-    const d: [number, number, number] = [0.96, -0.28, 0];
-    const len = 0.15;
+    const a: [number, number, number] = [0.16, 0.5, 0];
+    const d: [number, number, number] = [0.8, -0.6, 0];
+    const len = 0.2;
     const b: [number, number, number] = [
       a[0] + d[0] * len,
       a[1] + d[1] * len,
@@ -102,11 +105,11 @@ export default defineAsset({
     ];
     const cutOffset = d[0] * b[0] + d[1] * b[1] + d[2] * b[2];
     const sleeveR = sdf
-      .cone(a, b, 0.092, 0.082)
+      .cone(a, b, 0.125, 0.115)
       .smoothIntersect(0.004, sdf.halfSpace(d, cutOffset - 0.002));
 
     // Round neck opening, cut down from above so a rim remains under the collar.
-    const neckCut = sdf.cylinder(0.108, 0.24, 0.008).at(0, 0.75, 0);
+    const neckCut = sdf.cylinder(0.14, 0.24, 0.008).at(0, 0.75, 0);
 
     const mail = torso
       .smoothUnion(0.03, sleeveR, sleeveR.mirror('x', 0))
@@ -154,9 +157,9 @@ export default defineAsset({
 
     // ------------------------------------------------------------- leather trim
     // Collar ring around the neck, a cuff on each sleeve end, a hem band at the bottom.
-    const collar = sdf.torus(0.122, 0.02).at(0, 0.634, 0).scale([1, 1, 0.9]);
+    const collar = sdf.torus(0.158, 0.02).at(0, 0.62, 0).scale([1, 1, 0.9]);
     // Sleeve cuff: torus axis (initially +Y) rotated onto the sleeve axis d.
-    const cuff = sdf.torus(0.084, 0.012).rotateZ(-106).at(b[0] - 0.003, b[1] + 0.002, b[2]);
+    const cuff = sdf.torus(0.115, 0.012).rotateZ(-127).at(b[0] - 0.003, b[1] + 0.002, b[2]);
     const hemBand = mail
       .round(0.0035)
       .smoothIntersect(0.005, sdf.box([0.66, 0.09, 0.56], 0.012).at(0, 0.045, 0));

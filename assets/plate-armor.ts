@@ -8,6 +8,7 @@ import { defineAsset, profile, rgb, sdf } from '../src/index.js';
  * Shape language: round dominant, diamond accents secondary.
  * Palette: steel #8d9096 / #a8acb1 / #5f6369, gold #d4a93a (accent), belt #5c3a22.
  * Materials: steel, gold, leather belt. Focal point: gold diamond boss on the chest.
+ * Fit rework 2026-10-02: arm cuffs are taller and wider (r 0.1, h 0.22, y 0.5) so upper arms stay inside; neck hole 0.135.
  */
 const STEEL = rgb('#8d9096');
 const GOLD = rgb('#d4a93a');
@@ -44,7 +45,7 @@ export default defineAsset({
       )
       .round(0.004)
       .scale([1, 1, Z]);
-    const neckHole = sdf.cylinder(0.125, 0.2).scale([1, 1, Z]).at(0, 0.72, 0);
+    const neckHole = sdf.cylinder(0.135, 0.2).scale([1, 1, Z]).at(0, 0.72, 0);
     const ridge = sdf.cone([0, 0.5, 0.197], [0, 0.36, 0.197], 0.016, 0.008);
     const faulds = chestRev.smoothUnion(0.008, ridge).subtract(neckHole);
     const chest = faulds;
@@ -65,7 +66,7 @@ export default defineAsset({
       .intersect(sdf.box([0.5, 0.18, 0.5]).at(0, 0.05, 0))
       .round(0.006);
     const pauldron = (s: number) => tf(dome, s).subtract(torsoBig);
-    const cuff = (s: number) => sdf.cylinder(0.09, 0.1, 0.02).at(0.31 * s, 0.45, 0);
+    const cuff = (s: number) => sdf.cylinder(0.1, 0.22, 0.02).at(0.31 * s, 0.5, 0);
 
     // Front bosses are gold; steel body gets everything else.
     const steel = sdf.union(chest, faulds, belt, beltRivets, pauldron(1), pauldron(-1), cuff(1), cuff(-1));
