@@ -1,27 +1,27 @@
 # Complete P1 props
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: completed. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and scope
 
-- [ ] Task: Select a bounded batch from the scope map.
-- [ ] Task: Record scale, palette, rig, clips, and game uses before generation.
+- [x] Task: Select a bounded batch from the scope map.
+- [x] Task: Record scale, palette, rig, clips, and game uses before generation.
 
 ## Phase 2: Acceptance checks
 
-- [ ] Task: Define silhouette, material, sprite, and clearance checks for the batch.
-- [ ] Task: Confirm shared dimensions against the kit reference before launching trials.
+- [x] Task: Define silhouette, material, sprite, and clearance checks for the batch.
+- [x] Task: Confirm shared dimensions against the kit reference before launching trials.
 
 ## Phase 3: Production
 
-- [ ] Task: Build missing sources and review existing sources in the batch.
-- [ ] Task: Run forge all for each accepted source after visual correction.
+- [x] Task: Build missing sources and review existing sources in the batch.
+- [x] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
 
-- [ ] Task: Record review evidence and export paths for every accepted asset.
-- [ ] Task: Update this plan and the scope records.
-- [ ] Task: Run measure/generate.sh and measure/doctor.sh.
+- [x] Task: Record review evidence and export paths for every accepted asset.
+- [x] Task: Update this plan and the scope records.
+- [x] Task: Run measure/generate.sh and measure/doctor.sh.
 
 ## Rework batch A (Sonnet 5.5 run 4, 2026-09-30): sub-7 grafted props by scene
 
@@ -47,3 +47,10 @@ two props per agent. Bar 7. Log `bench/sonnet/log.tsv` (batch `run4`), state `be
 The world catch-up reviewed or reworked 36 assets of this family. 36 are accepted at their bar (P0 7.5, P1 7.0). Scores and notes are in [the catch-up evidence](../asset_world_catchup_20261001/evidence.md) and in `bench/sonnet/log.tsv`.
 
 apple 7.5, bench 7.2, bottle 7.0, bowl 7.0, brazier 7.6, bread 7.5, cabbage 7.0, candelabra 7.4, candle 7.1, cauldron 7.2, chains 7.0, chandelier 7.2, cheese 7.2, counter 7.0, distillation-flask 7.1, fireplace 7.0, haunch 7.2, hay-bale 7.0, kiln 7.0, mortar-pestle 7.0, mug 7.2, pickaxe 7.0, plate 7.0, pumpkin 7.5, ritual-circle 7.0, round-table 7.0, rug 7.1, sack 7.1, sarcophagus 7.2, shelf 7.0, stool 7.2, switch 7.0, tankard 7.1, treasure-chest 7.5, vial 7.2, workbench 7.1.
+
+## Completion (2026-10-02, track `asset_p0p1_completion_20261002`)
+
+The completion track closed this family. All 112 P1 rows are at their bar. Each source has a current textured output,
+sprites, and one strip for each clip, its last `./forge all` has no warnings, and the compiler finds no error in it.
+The world catch-up, closeout, and completion tracks did the tasks above. Evidence: [the completion
+evidence](../asset_p0p1_completion_20261002/evidence.md) and [the rebuild table](../asset_p0p1_completion_20261002/rebuilds.tsv).

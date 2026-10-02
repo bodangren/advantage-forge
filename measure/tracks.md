@@ -42,16 +42,16 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Plan deferred Forge capabilities**
   *Link: [./tracks/asset_engine_backlog_20260928/](./tracks/asset_engine_backlog_20260928/)*
 
-- [ ] **Track: Accept the P0 asset set**
+- [x] **Track: Accept the P0 asset set**
   *Link: [./tracks/asset_p0_acceptance_20260928/](./tracks/asset_p0_acceptance_20260928/)*
 
-- [~] **Track: Complete P1 structures**
+- [x] **Track: Complete P1 structures**
   *Link: [./tracks/asset_p1_architecture_20260928/](./tracks/asset_p1_architecture_20260928/)*
 
-- [~] **Track: Complete P1 enemies**
+- [x] **Track: Complete P1 enemies**
   *Link: [./tracks/asset_p1_enemies_20260928/](./tracks/asset_p1_enemies_20260928/)*
 
-- [~] **Track: Complete P1 equipment**
+- [x] **Track: Complete P1 equipment**
   *Link: [./tracks/asset_p1_equipment_20260928/](./tracks/asset_p1_equipment_20260928/)*
 
 - [x] **Track: Reusable equipment parts**
@@ -63,16 +63,16 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Close the remaining P0 and P1 rows**
   *Link: [./tracks/asset_p0p1_closeout_20261002/](./tracks/asset_p0p1_closeout_20261002/)*
 
-- [~] **Track: Complete P0 and P1 assets and maps**
+- [x] **Track: Complete P0 and P1 assets and maps**
   *Link: [./tracks/asset_p0p1_completion_20261002/](./tracks/asset_p0p1_completion_20261002/)*
 
 - [x] **Track: Complete P1 heroes**
   *Link: [./tracks/asset_p1_heroes_20260928/](./tracks/asset_p1_heroes_20260928/)*
 
-- [~] **Track: Complete P1 nature**
+- [x] **Track: Complete P1 nature**
   *Link: [./tracks/asset_p1_nature_20260928/](./tracks/asset_p1_nature_20260928/)*
 
-- [~] **Track: Complete P1 props**
+- [x] **Track: Complete P1 props**
   *Link: [./tracks/asset_p1_props_20260928/](./tracks/asset_p1_props_20260928/)*
 
 - [x] **Track: Produce P2 items**

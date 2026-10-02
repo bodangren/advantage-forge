@@ -20,7 +20,9 @@ need acceptance. This track closes those two gaps.
    (`scenes/blacksmith-shop.ts`), and village (`scenes/village.ts`). Each map has a style mockup,
    a component list, and a scene source. No map has a recorded acceptance, and every blueprint row
    still says `mockup-needed` (TD-05).
-3. **The P2 status report**: source coverage, review scores, and the next P2 work.
+3. **Type errors in P0 and P1 sources** (TD-01 class B): 244 errors in 40 files on 2026-10-02.
+   Each correction must leave the mesh and colors the same (`scripts/mesh-same.mjs`).
+4. **The P2 status report**: source coverage, review scores, and the next P2 work.
 
 The 95 P2 blueprint rows are P2 work. The P2 report covers them; this track does not build them.
 
@@ -33,8 +35,8 @@ The 95 P2 blueprint rows are P2 work. The P2 report covers them; this track does
 
 ## Acceptance
 
-- Assets: every P0 and P1 row has a current textured output, sprites, and clip strips, and its last
-  build has no warnings.
+- Assets: every P0 and P1 row has a current textured output, sprites, and clip strips, its last
+  build has no warnings, and its source has no compiler errors.
 - Maps: every component in the map's component list has a source; the overview renders match the
   mockup zones, portals, and paths; the map scores 7.5 or more (P0 bar). The blueprint row then
   says `accepted`.

@@ -1,6 +1,6 @@
 # Complete P1 enemies
 
-Status: in_progress. This plan owns execution status. Source documents retain design details.
+Status: completed. This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and scope
 
@@ -14,14 +14,14 @@ Status: in_progress. This plan owns execution status. Source documents retain de
 
 ## Phase 3: Production
 
-- [~] Task: Build missing sources and review existing sources in the batch.
-- [ ] Task: Run forge all for each accepted source after visual correction.
+- [x] Task: Build missing sources and review existing sources in the batch.
+- [x] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
 
-- [ ] Task: Record review evidence and export paths for every accepted asset.
-- [ ] Task: Update this plan and the scope records.
-- [ ] Task: Run measure/generate.sh and measure/doctor.sh.
+- [x] Task: Record review evidence and export paths for every accepted asset.
+- [x] Task: Update this plan and the scope records.
+- [x] Task: Run measure/generate.sh and measure/doctor.sh.
 
 ## Batch 1: wood-golem
 
@@ -240,3 +240,10 @@ Known limits, carried to the next batch:
 ## Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)
 
 The closeout brought the 5 rows of this family below their bar to it: stone-golem 7.5, wraith 7.5, wood-golem 7.5 (one more pass, owner decision); bone-golem 7.5 and bandit-archer 7.5 by the character rule. Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).
+
+## Completion (2026-10-02, track `asset_p0p1_completion_20261002`)
+
+The completion track closed this family. All 63 P1 rows are at their bar. Each source has a current textured output,
+sprites, and one strip for each clip, its last `./forge all` has no warnings, and the compiler finds no error in it.
+The world catch-up, closeout, and completion tracks did the tasks above. Evidence: [the completion
+evidence](../asset_p0p1_completion_20261002/evidence.md) and [the rebuild table](../asset_p0p1_completion_20261002/rebuilds.tsv).

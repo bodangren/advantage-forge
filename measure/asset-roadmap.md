@@ -8,8 +8,36 @@ The generated inventory of 2026-10-02 lists 735 asset sources; 586 of the 856 ca
 Source coverage by priority: P0 54/54, P1 450/450, P2 67/304, and P3 15/48.
 Review scores against the bars (P0 7.5, P1 and later 7.0, characters 7.5): P0 54/54, P1 450/450, P2 66/67, and P3 15/15.
 The one row below its bar is iron-ore (P2, 6.0).
-A score at the bar is not full acceptance: export and sprite acceptance is a separate state (TD-04, TD-08).
+P0 and P1 are complete since 2026-10-02: all 504 rows have current textured outputs, sprites, and clip strips, the last builds have no warnings,
+the sources have no compiler errors, and the five P0 maps are accepted at 7.5 ([evidence](./tracks/asset_p0p1_completion_20261002/evidence.md); TD-08 resolved for P0 and P1).
+For P2 and P3, a score at the bar is not full acceptance: export and sprite acceptance is a separate state (TD-04).
 The migration baseline of 2026-09-28 contained 426 source files.
+
+## P2 status (2026-10-02)
+
+P0 and P1 are complete (track [asset_p0p1_completion_20261002](./tracks/asset_p0p1_completion_20261002/)), so P2 is the next production level.
+
+| Family | Rows | With a source | At the bar | Open | Track |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Items | 56 | 56 | 55 (iron-ore 6.0) | 0 | [items](./tracks/asset_p2_items_20260928/), completed |
+| Monsters | 80 | 4 | 4 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7) | 76 | [monsters](./tracks/asset_p2_monsters_20260928/), new |
+| NPCs | 107 | 7 | 7 (cultist, healer, hunter, priest, pilgrim, sailor, scout, all 8.0) | 100 | [NPCs](./tracks/asset_p2_npcs_20260928/), new |
+| Wildlife | 61 | 0 | 0 | 61 | [wildlife](./tracks/asset_p2_wildlife_20260928/), new |
+| **Total** | **304** | **67** | **66** | **237** | |
+
+- Every open P2 row is a rigged character, and none has a mockup yet (`docs/monster-mockups/`, `docs/npc-mockups/`, `docs/wildlife-mockups/` hold the P0 and P1 ones only).
+- Cost from the run log: a character takes one build plus one feedback pass, about 115K to 250K agent tokens on the high tier, so 237 characters need about 30M to 55M tokens, plus the mockups.
+- Maps: 95 P2 blueprint rows (33 adventure, 30 civic, 20 wilderness, 12 settlements). 94 are `mockup-needed`; the hamlet is `mockup-ready` and already has its sample map (`scenes/chibi-quest.ts`), the quality reference of the five P0 maps.
+- Quality: 30 of the 32 remaining compiler errors are in P2 and P3 sources (rowboat, airship, plank, waterskin, mushroom-cap, wool, merchant-cart, longship).
+- P3 for comparison: 15 vehicles accepted; 33 fx-geometry rows wait for four owner questions.
+
+## Completion (2026-10-02)
+
+The [completion track](./tracks/asset_p0p1_completion_20261002/) closed P0 and P1 and the five P0 maps with Sonnet 5.5 agents.
+Maps: blacksmith shop, forest, tavern, village, and dungeon went from 5.5 to 6.5 to 7.5 each (five medium agents, two feedback passes).
+Types: 46 sources corrected with identical meshes (`scripts/mesh-same.mjs`); the compiler went from 297 to 32 errors (TD-01).
+Outputs: 211 `forge all` builds with 0 failures and 0 warnings; 526 outputs pass the final check.
+The six P0 and P1 family tracks are closed.
 
 ## Closeout (2026-10-02)
 

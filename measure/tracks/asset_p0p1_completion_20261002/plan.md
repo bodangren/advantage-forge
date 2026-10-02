@@ -1,6 +1,6 @@
 # Complete P0 and P1 assets and maps
 
-Status: in_progress. This plan owns execution status.
+Status: completed. This plan owns execution status.
 
 ## Phase 1: Contract
 
@@ -10,9 +10,9 @@ Status: in_progress. This plan owns execution status.
 
 ## Phase 2: Final outputs
 
-- [ ] Task: Run `./forge all` on the 144 sources and record exit codes and warnings.
-- [ ] Task: Fix each source that fails or warns (one Sonnet agent per source).
-- [ ] Task: Check the outputs again; every row passes.
+- [x] Task: Run `./forge all` on the 144 sources and record exit codes and warnings. (143 in list `outputs`; warrior went to `typefix`. 21 map pieces with old outputs added. `rebuilds.tsv`.)
+- [x] Task: Fix each source that fails or warns (one Sonnet agent per source). (No source failed or warned; no agent needed.)
+- [x] Task: Check the outputs again; every row passes. (526 names: 495 catalog sources and 31 map-only assets; all pass. `evidence.md`.)
 
 ## Phase 2b: Type-only corrections (TD-01 class B, P0 and P1 sources)
 
@@ -22,7 +22,7 @@ group corrects the types; `scripts/mesh-same.mjs` must print SAME (identical bou
 per body, and GLB data) for each file. Brief: `bench/sonnet/briefs/typefix-rules.md`.
 
 - [x] Task: Correct the 40 files (15 agents, waves of three). (All SAME by mesh-same; 15 forge-sonnet-low and medium agents, about 449K tokens; then 2 agents for the 6 map pieces with 18 errors. Full compiler: 297 -> 32 errors, none in P0, P1, or map sources.)
-- [ ] Task: Run `./forge all` on each corrected file and confirm no warnings.
+- [x] Task: Run `./forge all` on each corrected file and confirm no warnings. (47 builds in lists `typefix` and `typefix-maps`: 0 failed, 0 warnings.)
 
 ## Phase 3: Maps
 
@@ -33,6 +33,6 @@ per body, and GLB data) for each file. Brief: `bench/sonnet/briefs/typefix-rules
 
 ## Phase 4: Close
 
-- [ ] Task: Update the family plans, the scene plans, the asset roadmap, and the project status.
-- [ ] Task: Write the P2 status report.
-- [ ] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`.
+- [x] Task: Update the family plans, the scene plans, the asset roadmap, and the project status. (Six family tracks closed with a completion section.)
+- [x] Task: Write the P2 status report. (`measure/asset-roadmap.md`, section "P2 status (2026-10-02)".)
+- [x] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`.

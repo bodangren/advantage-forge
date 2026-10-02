@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 74.
-Tracks by status: new: 38; in_progress: 18; completed: 18.
+Tracks by status: new: 37; in_progress: 12; completed: 25.
 Tracks by workstream: assets: 30; games: 38; foundation: 6.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -10,15 +10,15 @@ Tracks by workstream: assets: 30; games: 38; foundation: 6.
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_equipment_parts_20260930](../tracks/asset_equipment_parts_20260930/) | completed | assets | 31/31 | 24 | 31 |
-| [asset_p0_acceptance_20260928](../tracks/asset_p0_acceptance_20260928/) | new | assets | 0/9 | 9 | — |
+| [asset_p0_acceptance_20260928](../tracks/asset_p0_acceptance_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p0p1_closeout_20261002](../tracks/asset_p0p1_closeout_20261002/) | completed | assets | 14/14 | 14 | 14 |
-| [asset_p0p1_completion_20261002](../tracks/asset_p0p1_completion_20261002/) | in_progress | assets | 8/15 | 16 | 0 |
-| [asset_p1_architecture_20260928](../tracks/asset_p1_architecture_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [asset_p1_enemies_20260928](../tracks/asset_p1_enemies_20260928/) | in_progress | assets | 4/9 | 9 | — |
-| [asset_p1_equipment_20260928](../tracks/asset_p1_equipment_20260928/) | in_progress | assets | 1/10 | 9 | — |
+| [asset_p0p1_completion_20261002](../tracks/asset_p0p1_completion_20261002/) | completed | assets | 15/15 | 16 | 15 |
+| [asset_p1_architecture_20260928](../tracks/asset_p1_architecture_20260928/) | completed | assets | 9/9 | 9 | 9 |
+| [asset_p1_enemies_20260928](../tracks/asset_p1_enemies_20260928/) | completed | assets | 9/9 | 9 | 9 |
+| [asset_p1_equipment_20260928](../tracks/asset_p1_equipment_20260928/) | completed | assets | 10/10 | 9 | 9 |
 | [asset_p1_heroes_20260928](../tracks/asset_p1_heroes_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p1_nature_20260928](../tracks/asset_p1_nature_20260928/) | in_progress | assets | 0/9 | 9 | — |
-| [asset_p1_props_20260928](../tracks/asset_p1_props_20260928/) | in_progress | assets | 0/9 | 9 | — |
+| [asset_p1_nature_20260928](../tracks/asset_p1_nature_20260928/) | completed | assets | 9/9 | 9 | 9 |
+| [asset_p1_props_20260928](../tracks/asset_p1_props_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p2_items_20260928](../tracks/asset_p2_items_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 0/9 | 9 | — |
@@ -84,5 +84,5 @@ Tracks by workstream: assets: 30; games: 38; foundation: 6.
 ## Project health
 
 Completed feature tracks with comparable estimates and actuals: 3.
-Recent feature velocity: 20.33 tasks per track.
-Estimate accuracy ratio: 1.10.
+Recent feature velocity: 11.00 tasks per track.
+Estimate accuracy ratio: 0.98.

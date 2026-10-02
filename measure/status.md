@@ -5,7 +5,7 @@ Generated status and asset counts appear in `measure/generated/`.
 
 | Workstream | Delivered evidence | Current work | Next acceptance step |
 | --- | --- | --- | --- |
-| Assets | Forge pipeline, 735 asset sources, 586 of 856 catalog rows with a source; P0 54/54 and P1 450/450 rows at their bars (2026-10-02) | Avatar equipment fit; asset quality gates | Pass the fit check on the 10 remaining `rework` pieces, then the class B type errors. |
+| Assets | Forge pipeline, 735 asset sources, 586 of 856 catalog rows with a source; P0 54/54 and P1 450/450 rows complete with current outputs, and the five P0 maps accepted (2026-10-02) | Avatar capped hair; P2 planning | Mockups for the first P2 character batch; iron-ore (P2) to its bar. |
 | Games | Six local games with 2D and 3D views | Monorepo port, Rune Match, and Labyrinth | Complete the platform and Potion Rush port. |
 | Management | Measure migration committed (6b70d6f); indexed tracks, catalog ownership, history, debt, and lessons | Status upkeep | Run the generator and the doctor after each status change. |
 
@@ -14,6 +14,7 @@ Generated status and asset counts appear in `measure/generated/`.
 The audit found 140 compiler errors: 139 asset errors and one test error.
 On 2026-10-02 the compiler found 347 errors. Reworks after the baseline added them; since 9217cfa each
 rework agent runs the per-asset type check. The [classification](./tracks/asset_quality_20260928/classification-20261002.md) names 9 files whose correction changes the render; they are corrected (451ce00).
+After the P0, P1, and map corrections of 2026-10-02, 32 errors remain: 30 in P2 and P3 sources and 2 in tests.
 The baseline suite passed 645 tests and failed two Labyrinth tests.
 These failures remain explicit debt. Measure structural checks do not replace application verification.
 See the [baseline evidence](./evidence/baseline-20260928.md).
@@ -21,8 +22,8 @@ See the [baseline evidence](./evidence/baseline-20260928.md).
 ## Next work
 
 1. [Avatar system](./tracks/avatar_system_20261001/): the fit reworks are done (no `rework` rows); next the capped hair, the reduced output, the pack, the composer, and the review page. Debt TD-14: 7 `later` displays off y = 0 (the 11 `ready` ones are fixed).
-2. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); 297 type errors remain; class B by file.
-3. P2 production can start: P0 and P1 are at their bars (owner decision of 2026-10-01).
+2. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); class B is done for P0, P1, and map sources; 32 type errors remain (30 in P2 and P3 sources).
+3. P2 production: P0 and P1 are complete (track `asset_p0p1_completion_20261002`). See the P2 status in the [asset roadmap](./asset-roadmap.md): 237 rigged characters need mockups first.
 4. [Complete model packs](./tracks/game_model_packs_20260928/).
 5. [Complete the platform port](./tracks/game_platform_port_20260928/).
 6. Complete Potion Rush integration and the two active game rewrites.
