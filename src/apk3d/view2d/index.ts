@@ -6,3 +6,4 @@ export { banner, button, COLORS, FONT, popup, recolorTag, StatusBar2D, tag, text
 export { Arena2D, type Arena2DOptions } from './arena.js';
 export { Joystick2D, type Joystick2DOptions } from './joystick.js';
 export { Card2D, type ArrangeLabels, type CardAction, type CardOption, type CardTarget, type Rect } from './card2d.js';
+export { Board2D, type BoardCell, type Cell } from './board2d.js';

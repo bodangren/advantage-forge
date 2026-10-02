@@ -75,3 +75,43 @@ State: `board` (rows x cols of `{ id, kind: 'word' | 'heal' | 'shield', wordId?,
 Evidence: one item per target word (`itemKind: 'word'`); attempts = swaps while that word was the
 target (a swap that makes any line counts as a try; the target line is the correct one);
 `correctFirstTry` = the first line made was the target's line.
+
+### 6.1 Decisions of the core (BACKEND, 2026-09-28)
+
+The core is `src/games/rune-match/core/` (`createRuneMatch(story, { seed, helper })`); the QC bot
+is `src/games/rune-match/qc/bot.ts` (`nextSwap(state)`). It also accepts the APK `VocabularyInput`.
+Points the design left open, as built:
+
+- Board: 8 rows of 6 runes (6 rows of 6 in Helper mode); row 0 is the top, new runes enter there.
+- Palette: the target plus 5 decoy meanings (3 in Helper mode) in `state.palette`, the target
+  first. A new target that is not in the palette takes the slot of the old target. Runes of a
+  word no longer in the palette stay until they burst (old runes). 12% of new runes are heal or
+  shield runes.
+- Monsters: the skeleton guards the first 4 target words, the mimic the next 4, the fire dragon
+  every word after that. A monster's HP is the number of words it guards; every target line is one
+  `heroStrike` of damage 1 by the next hero in the order knight, wizard, cleric.
+- Coins: 10 per rune of a line, times the cascade number plus one (30 for a first line of 3, 60 for
+  a line of 3 in the first cascade). `linesBurst` carries the `coins` of the step.
+- Courage: 5 at the start; a wrong swap costs 1; at 0 the team rests back to 3. A heal line gives
+  1 courage back (`heal` event); a shield line raises one shield (`shield` event) that blocks the
+  next strike. Two events added for the view: `heal { courage }` and `shield`.
+- Command added: `{ type: 'start' }` once, when the stage is ready: it replays `monsterAppeared`
+  and `targetShown` for the first monster and word (a second `start` returns []).
+- A wrong swap emits `swapped` twice (there and back), then `monsterStrike` and maybe `rest`.
+- The guaranteed target move: when no swap makes the target's line, the core writes three target
+  runes (two in a row and one beside the gap) and emits `runesFell` with `moves: []` and the
+  placed runes. In a 13-word story this happens after about 70% of the swaps: the view needs a
+  glow-in for placed runes. A line made by a cascade for the current target counts as a correct
+  first try when the word had no attempt yet.
+- Evidence items: only target words with at least one line-making swap (a word never tried is not
+  an item). `resultsOf` returns `victory` when every word was matched, else `complete`.
+
+### 6.2 Views (2026-10-02)
+
+Both views share one event player, `src/games/rune-match/view/driver.ts`. It reads the events of
+each swap in order and calls a `Presentation` (board, stage, HUD). The 3D view
+(`view/game.ts`, `view/hud.ts`) uses the Monster Encounters battle stage and the HTML `Board` in the
+kit card. The 2D view (`view2d/game.ts`) uses `BattleStage2D` and `Board2D`, with the baked hall
+of Monster Encounters. Rune colors come from the word id and stay stable when the palette changes;
+heal and shield runes use ❤ and 🛡. A guaranteed move (`runesFell` with no moves) redraws the
+settled board. The cartridge is in the host registry. Tests: `tests/games/rune-match/driver.test.ts`.

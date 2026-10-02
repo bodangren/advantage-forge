@@ -33,10 +33,10 @@ At the September 29 audit, the sibling `reading-advantage-monorepo` checkout was
 
 | Game | Family | Measure track | Status |
 | --- | --- | --- | --- |
-| Rune Match | Battle and board | [game_rune_match_20260928](./tracks/game_rune_match_20260928/) | In progress: core tests exist; 3D and Phaser views remain. |
+| Rune Match | Battle and board | [game_rune_match_20260928](./tracks/game_rune_match_20260928/) | In progress: core, 3D view, and Phaser view exist with unit tests; a browser renderer check remains. |
 | RPG Battle | Battle and board | [game_rpg_battle_20260928](./tracks/game_rpg_battle_20260928/) | New. |
 | Paladins Twin Soul | Battle and board | [game_paladins_twin_soul_20260928](./tracks/game_paladins_twin_soul_20260928/) | New. |
-| Labyrinth Goblin King | Arena | [game_labyrinth_goblin_king_20260928](./tracks/game_labyrinth_goblin_king_20260928/) | In progress: two local rules tests fail; views remain. |
+| Labyrinth Goblin King | Arena | [game_labyrinth_goblin_king_20260928](./tracks/game_labyrinth_goblin_king_20260928/) | In progress: rules tests pass; views remain. |
 | Astral Mage | arena | [game_astral_mage_20260928](./tracks/game_astral_mage_20260928/) | New. |
 | Village Guardian | arena | [game_village_guardian_20260928](./tracks/game_village_guardian_20260928/) | New. |
 | Haunted Library | arena | [game_haunted_library_20260928](./tracks/game_haunted_library_20260928/) | New. |

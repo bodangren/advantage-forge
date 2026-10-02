@@ -8,7 +8,7 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 ## Phase 2: Tests
 
-- [~] Task: Fix the malformed-maze and collision-recovery failures.
+- [x] Task: Fix the malformed-maze and collision-recovery failures. Both were stale test data (commit 4f812a3); all 70 Labyrinth tests pass (2026-10-02).
 - [x] Task: Add replay, rules, maze, helper, and bot tests.
 
 ## Phase 3: Implementation

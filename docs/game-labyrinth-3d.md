@@ -86,3 +86,23 @@ never straight back unless a dead end. After a bump, the hero cannot be bumped a
 
 Evidence: one `sentence` item per sentence (as Dungeon Liberator): attempts = wrong orbs + 1,
 `correctFirstTry` = no wrong orb in that sentence, `solved` = built.
+
+Decisions of the core (BACKEND, 2026-09-28), where the table above leaves a choice:
+
+- The shift is up to 5 sentences of 3 to 7 words in a seeded order (as Dungeon Liberator); the
+  maze is a seeded pick of the three, and `options.maze` forces one for tests and QC.
+- `orbsMoved` carries the same orb ids at new cells (after a wrong orb); a new event `orbsPlaced`
+  (`{ id, word, cell }[]`) brings the orbs of the next word. Orb ids are `o<wave>-<n>`.
+- Orbs never sit on the hero's cell or its neighbors, on a den or a den's neighbor, or on a
+  shortest path from the hero to the right orb, so the direct way never forces a wrong orb.
+- The reverse direction applies at once, between cells (the hero walks back); other turns wait
+  for a cell that allows them. A bump clears the queued turn.
+- A bumped goblin walks home at 3 cells per second and rests 2 s in its den (`restMs`); a caught
+  goblin is sent to its den at once with the same rest. A resting or returning goblin neither
+  bumps nor is caught. The aura lasts 5 s; the next sentence starts at once, under the aura.
+- The "last sentences" are the last two of a shift of 4 or more and the last of 3: three goblins
+  at 2.4 cells per second. Helper mode changes the orbs only.
+- While the gate is open, goblins flee and never bump; the shift completes when the hero walks
+  onto the gate cell. `positionOf(mover)` gives cell units; one cell is `CELL_M` = 2 m.
+- Coins: 10 per right word, 30 per caught goblin. `score` = coins.
+

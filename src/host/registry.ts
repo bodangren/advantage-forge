@@ -7,6 +7,8 @@ import { isCompatible, type Cartridge3DManifest, type StoryInput } from '../apk3
 import type { Cartridge } from '../apk3d/factory/index.js';
 import { manifest as monsterEncounters } from '../games/monster-encounters/manifest.js';
 import monsterEncountersStrings from '../games/monster-encounters/strings.en.js';
+import { manifest as runeMatch } from '../games/rune-match/manifest.js';
+import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as potionRush } from '../games/potion-rush/manifest.js';
 import potionRushStrings from '../games/potion-rush/strings.en.js';
 import { manifest as dragonFlight } from '../games/dragon-flight/manifest.js';
@@ -39,6 +41,15 @@ export const GAMES: GameEntry[] = [
     pitchKey: 'monsterEncounters.pitch',
     manifest: monsterEncounters,
     load: () => import('../games/monster-encounters/index.js').then((m) => m.cartridge),
+  },
+  {
+    id: 'rune-match',
+    icon: '🔮',
+    tint: ['#a78bfa', '#4c1d95'],
+    titleKey: 'runeMatch.title',
+    pitchKey: 'runeMatch.pitch',
+    manifest: runeMatch,
+    load: () => import('../games/rune-match/index.js').then((m) => m.cartridge),
   },
   {
     id: 'potion-rush',
@@ -88,7 +99,7 @@ export const GAMES: GameEntry[] = [
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 

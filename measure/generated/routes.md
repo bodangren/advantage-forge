@@ -18,4 +18,4 @@ This report lists source entrypoints. It does not define URL routes.
 - labyrinth: no cartridge entrypoint; not registered by the host.
 - monster-encounters: [`src/games/monster-encounters/index.ts`](../../src/games/monster-encounters/index.ts), [`src/games/monster-encounters/manifest.ts`](../../src/games/monster-encounters/manifest.ts); registered by the host.
 - potion-rush: [`src/games/potion-rush/index.ts`](../../src/games/potion-rush/index.ts), [`src/games/potion-rush/manifest.ts`](../../src/games/potion-rush/manifest.ts); registered by the host.
-- rune-match: no cartridge entrypoint; not registered by the host.
+- rune-match: [`src/games/rune-match/index.ts`](../../src/games/rune-match/index.ts), [`src/games/rune-match/manifest.ts`](../../src/games/rune-match/manifest.ts); registered by the host.

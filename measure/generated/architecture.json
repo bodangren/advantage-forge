@@ -64,9 +64,9 @@
     },
     {
       "id": "rune-match",
-      "index": null,
-      "manifest": null,
-      "registered": false
+      "index": "src/games/rune-match/index.ts",
+      "manifest": "src/games/rune-match/manifest.ts",
+      "registered": true
     }
   ],
   "source_roots": [
@@ -80,7 +80,7 @@
     },
     {
       "path": "src/games",
-      "typescript_files": 100
+      "typescript_files": 109
     },
     {
       "path": "src/host",
