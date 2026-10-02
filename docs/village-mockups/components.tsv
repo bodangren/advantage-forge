@@ -1,22 +1,47 @@
 asset_id	instances	wave	role
-architecture/building-parts/dirt-road-straight	~12	1	2 m straight dirt road tile (catalog road family, dirt variant)
-architecture/building-parts/dirt-road-corner	~4	1	2 m dirt road corner tile
-architecture/building-parts/cottage	~3	1	small village cottage with thatched roof (catalog cottage row)
+architecture/building-parts/dirt-road-straight	0	1	2 m straight dirt road tile (catalog road family, dirt variant)
+architecture/building-parts/dirt-road-corner	0	1	2 m dirt road corner tile
+architecture/landscape-parts/desert-ground	88	1	warm sand square, lanes, and door fronts (2 m tile; reused from the desert set)
+architecture/building-parts/cottage	6	1	small village cottage with thatched roof (catalog cottage row)
 architecture/building-parts/well	1	1	stone village well (catalog well row)
-architecture/building-parts/farm-field	~6	1	2 m tilled farm field tile (catalog farm-field row)
-architecture/building-parts/fence	~6	1	wooden fence section (catalog fence row)
+architecture/building-parts/farm-field	2	1	2 m tilled farm field tile (catalog farm-field row)
+architecture/building-parts/fence	38	1	wooden fence section (catalog fence row)
 architecture/building-parts/barn	1	1	wooden barn with thatched roof (catalog barn row)
-architecture/building-parts/clothesline	1	1	clothesline between two posts (catalog clothesline row)
-architecture/building-parts/shop-stall	1	1	open market shop stall (catalog shop-stall row)
-props/plants/oak-tree	~3	1	scattered oak trees (catalog oak-tree row)
-props/plants/pine-tree	~3	1	scattered pine trees (catalog pine-tree row)
-props/plants/bush	~4	1	scattered bushes
-props/plants/wildflowers	~4	1	scattered wildflower patches
-props/plants/fallen-log	~2	1	scattered fallen logs
-props/plants/rock-cluster	~3	1	scattered rock clusters
+architecture/building-parts/clothesline	2	1	clothesline between two posts (catalog clothesline row)
+architecture/building-parts/shop-stall	2	1	open market shop stall (catalog shop-stall row)
+props/plants/oak-tree	18	1	scattered oak trees (catalog oak-tree row)
+props/plants/pine-tree	10	1	scattered pine trees (catalog pine-tree row)
+props/plants/bush	12	1	scattered bushes
+props/plants/wildflowers	12	1	scattered wildflower patches
+props/plants/fallen-log	1	1	scattered fallen logs
+props/plants/rock-cluster	2	1	scattered rock clusters
 hero/farmer	1	reuse	patron by the field
-hero/merchant	1	reuse	patron at the stall
+hero/shopkeeper	1	reuse	shopkeeper at the stall
 npc/adventurer	1	reuse	patron on the road
+reuse/grass-ground	197	reuse	placed since the 2026-10-02 map rework
+reuse/lantern	4	reuse	placed since the 2026-10-02 map rework
+reuse/barrel	5	reuse	placed since the 2026-10-02 map rework
+reuse/crate	3	reuse	placed since the 2026-10-02 map rework
+reuse/sack	2	reuse	placed since the 2026-10-02 map rework
+reuse/pumpkin	3	reuse	placed since the 2026-10-02 map rework
+reuse/apple	2	reuse	placed since the 2026-10-02 map rework
+reuse/signpost	4	reuse	placed since the 2026-10-02 map rework
+reuse/torch	4	reuse	placed since the 2026-10-02 map rework
+reuse/hay-bale	3	reuse	placed since the 2026-10-02 map rework
+reuse/stepping-stone	10	reuse	placed since the 2026-10-02 map rework
+reuse/round-table	2	reuse	placed since the 2026-10-02 map rework
+reuse/stool	5	reuse	placed since the 2026-10-02 map rework
+reuse/bench	1	reuse	placed since the 2026-10-02 map rework
+reuse/tankard	2	reuse	placed since the 2026-10-02 map rework
+reuse/mug	1	reuse	placed since the 2026-10-02 map rework
+reuse/bread	1	reuse	placed since the 2026-10-02 map rework
+reuse/quest-giver	1	reuse	placed since the 2026-10-02 map rework
+reuse/villager	1	reuse	placed since the 2026-10-02 map rework
+reuse/innkeeper	1	reuse	placed since the 2026-10-02 map rework
+reuse/guard	1	reuse	placed since the 2026-10-02 map rework
+reuse/blacksmith	1	reuse	placed since the 2026-10-02 map rework
+reuse/tree-stump	1	reuse	placed since the 2026-10-02 map rework
+reuse/boulder	2	reuse	placed since the 2026-10-02 map rework
 
 Notes:
 - Open map layout (like the forest): ~20×16 m, dirt road winds through, buildings scattered along it.

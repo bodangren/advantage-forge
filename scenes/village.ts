@@ -37,9 +37,14 @@ const HOUSES: readonly House[] = [
 ];
 
 /** Market square cells (dirt), north of the road. */
-const SQUARE: readonly (readonly [number, number])[] = [-4, -2, 0, 2, 4].flatMap((x) =>
-  [-4, -2, 0].map((z) => [x, z] as const),
+const SQUARE: readonly (readonly [number, number])[] = [-6, -4, -2, 0, 2, 4, 6].flatMap((x) =>
+  [-6, -4, -2, 0].map((z) => [x, z] as const),
 );
+
+/** Dirt patches in front of cottage doors. */
+const FRONTS: readonly (readonly [number, number])[] = [
+  [-4, -8], [-2, -8], [4, -8], [-8, -4], [-8, -2], [8, -4], [8, -2], [-2, 6], [6, 4], [6, 6], [-4, 4], [-4, 6],
+];
 
 /** Inn corner cells (dirt), south-east. */
 const INN: readonly (readonly [number, number])[] = [
@@ -88,8 +93,8 @@ const BUSHES: readonly (readonly [number, number, number])[] = [
   [14.9, -0.4, 80],
   [-5.6, 0.9, 30],
   [5.7, 0.8, 110],
-  [3.2, 5.0, 0],
-  [10.2, 4.9, 40],
+  [3.2, 6.0, 0],
+  [10.2, 5.8, 40],
   [-7.0, 12.4, 15],
   [15.6, 9.8, 70],
   [-3.2, -6.6, 50],
@@ -138,12 +143,12 @@ export function villagePlaces(): Place[] {
   places.push(prop('signpost', -5.4, 1.4, 0));
 
   // North lane gate and the road ends.
-  places.push(prop('signpost', 1.5, -12.4, 180));
-  places.push(prop('signpost', -16.2, 3.4, 90));
-  places.push(prop('signpost', 16.2, 0.6, 270));
+  places.push(prop('signpost', 2.2, -12.4, 180));
+  places.push(prop('signpost', -16.2, 6.0, 90));
+  places.push(prop('signpost', 16.2, -1.6, 270));
   for (const z of [-11.4, -7.6]) {
-    places.push(prop('torch', -1.35, z, 0, 0, 1, true));
-    places.push(prop('torch', 1.35, z, 0, 0, 1, true));
+    places.push(prop('torch', -3.4, z, 0, 0, 1, true));
+    places.push(prop('torch', 1.4, z, 0, 0, 1, true));
   }
 
   // Farm: the barn faces the road; two fields behind a fence to the south.
@@ -160,7 +165,8 @@ export function villagePlaces(): Place[] {
   // Cottages with fenced yards and stepping-stone paths.
   for (const house of HOUSES) {
     places.push(prop('cottage', house.x, house.z, house.yaw));
-    places.push(...fenceRect(house.x, house.z, house.yardW, house.yardD, house.gate));
+    if (house === HOUSES[1] || house === HOUSES[4])
+      places.push(...fenceRect(house.x, house.z, house.yardW, house.yardD, house.gate));
     const [dx, dz] = offset(house.yaw, 1.45);
     const gate = gateCenter(house);
     const out = beyond(house.x, house.z, gate, 1.1);
@@ -194,7 +200,7 @@ export function villagePlaces(): Place[] {
   places.push(prop('shopkeeper', 0.2, -5.4, 0, 0, 1, true));
   places.push(prop('quest-giver', -0.9, -0.2, 110, 0, 1, true));
   places.push(prop('adventurer', 0.4, 0.3, 250));
-  places.push(prop('villager', 7.6, 1.9, 270, 0, 1, true));
+  places.push(prop('villager', 7.6, -1.9, 270, 0, 1, true));
   places.push(prop('innkeeper', 13.6, 7.0, 220, 0, 1, true));
   places.push(prop('farmer', -9.6, 10.6, 200));
   places.push(prop('guard', -0.9, -12.0, 180));
@@ -207,7 +213,7 @@ export function villagePlaces(): Place[] {
   places.push(prop('rock-cluster', 15.2, 11.2, 280));
   places.push(prop('fallen-log', 13.8, -10.8, 35));
   places.push(prop('tree-stump', -13.4, -9.4, 0));
-  places.push(prop('boulder', 9.8, 3.6, 20, 0, 0.9));
+  places.push(prop('boulder', 9.8, 5.6, 20, 0, 0.9));
   places.push(prop('boulder', -10.4, -0.2, 60, 0, 0.8));
   return places;
 }
@@ -219,10 +225,25 @@ function ground(): Place[] {
   const paint = (x: number, z: number, asset: string, yaw = 0) => {
     if (cells.has(id(x, z))) cells.set(id(x, z), { asset, yaw });
   };
-  for (const [x, z] of SQUARE) paint(x, z, 'dirt-ground');
-  for (const [x, z] of INN) paint(x, z, 'dirt-ground');
-  for (const x of XS) paint(x, ROAD_Z, 'dirt-road-straight', 90);
-  for (const z of ZS) if (z <= -6) paint(0, z, 'dirt-road-straight', 0);
+  // Warm sand for the square, the lanes, and the door fronts, as in the mockup (dirt-ground
+  // read as dark mud at this size).
+  const SAND = 'desert-ground';
+  for (const [x, z] of SQUARE) paint(x, z, SAND);
+  for (const [x, z] of INN) paint(x, z, SAND);
+  for (const [x, z] of FRONTS) paint(x, z, SAND);
+  // Wide east-west lane (two tiles) that bends north-east at x = 8.
+  for (const x of XS) {
+    if (x <= 6) {
+      paint(x, ROAD_Z, SAND);
+      paint(x, ROAD_Z + 2, SAND);
+    } else {
+      paint(x, 0, SAND);
+      paint(x, ROAD_Z, SAND);
+    }
+  }
+  paint(8, 4, SAND);
+  // Wide north lane out of the square.
+  for (const z of ZS) if (z <= -8) { paint(-2, z, SAND); paint(0, z, SAND); }
   const places: Place[] = [];
   for (const [k, cell] of cells) {
     const [x, z] = k.split(':').map(Number) as [number, number];
