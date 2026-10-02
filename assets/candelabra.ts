@@ -31,11 +31,12 @@ export default defineAsset({
 
   build(k) {
     // Foot: domed revolve with foot ring and bead molding.
+    const footPoints: [number, number][] = [
+      [0, 0.05], [0.03, 0.046], [0.065, 0.032], [0.09, 0.02], [0.1, 0.012],
+      [0.1, 0], [0.085, 0], [0.085, 0.008], [0.06, 0.018], [0, 0.018],
+    ];
     const footProfile = profile.polygon(
-      [
-        [0, 0.05], [0.03, 0.046], [0.065, 0.032], [0.09, 0.02], [0.1, 0.012],
-        [0.1, 0], [0.085, 0], [0.085, 0.008], [0.06, 0.018], [0, 0.018],
-      ].slice(0, 6).concat([[0.1, 0], [0, 0]] as any),
+      footPoints.slice(0, 6).concat([[0.1, 0], [0, 0]]),
       { smooth: false },
     );
     const foot = sdf.revolve(footProfile).round(0.004);
@@ -86,14 +87,14 @@ export default defineAsset({
     // Candles (center taller), drips, wicks, flames.
     const heights = [0.08, 0.06, 0.06];
     const candleShapes = seats.map(([x, y, z], i) => {
-      const h = heights[i];
+      const h = heights[i] ?? 0.06;
       const c = sdf.cylinder(0.014, h, 0.004).at(x, y + h / 2, z);
       const drip = sdf.capsule([x + 0.012, y + h, z + 0.004], [x + 0.013, y + h - 0.02, z + 0.004], 0.0045);
       const drip2 = sdf.capsule([x - 0.008, y + h, z + 0.011], [x - 0.009, y + h - 0.014, z + 0.012], 0.0042);
       return sdf.smoothUnion(0.004, c, drip, drip2);
     });
     k.body('wax', sdf.union(...candleShapes), { color: WAX, roughness: 0.6, metalness: 0, detail: 0.004, maxTriangles: 900 });
-    const wicks = sdf.union(...seats.map(([x, y, z], i) => sdf.capsule([x, y + heights[i], z], [x, y + heights[i] + 0.012, z], 0.0025)));
+    const wicks = sdf.union(...seats.map(([x, y, z], i) => sdf.capsule([x, y + (heights[i] ?? 0.06), z], [x, y + (heights[i] ?? 0.06) + 0.012, z], 0.0025)));
     k.body('wick', wicks, { color: '#151210', roughness: 0.9, detail: 0.002, maxTriangles: 200 });
 
     const flameFor = (x: number, y: number, z: number) => {
@@ -106,7 +107,7 @@ export default defineAsset({
         return mixRgb(rgb('#ff6a00'), rgb('#e8400a'), (t - 0.66) / 0.34);
       });
     };
-    const flames = sdf.union(...seats.map(([x, y, z], i) => flameFor(x, y + heights[i] + 0.008, z)));
+    const flames = sdf.union(...seats.map(([x, y, z], i) => flameFor(x, y + (heights[i] ?? 0.06) + 0.008, z)));
     k.body('flame', flames, {
       color: '#ffa010',
       roughness: 0.95,

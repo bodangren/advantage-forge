@@ -37,7 +37,7 @@ const strawPaint = (x: number, y: number, z: number) => {
 };
 
 // 26 wisps: [x, y, z, dirX, dirY, dirZ, length]; bases sit just inside the surface.
-const WISPS: number[][] = [];
+const WISPS: [number, number, number, number, number, number, number][] = [];
 for (let i = 0; i < 26; i++) {
   const r = (n: number) => noise.random(i, n, 5);
   const side = r(1) < 0.5 ? -1 : 1;

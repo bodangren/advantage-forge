@@ -30,7 +30,7 @@ const strands = cfg.map((c, i) => {
     pts.push([x0 + c.dx * 0.12 * Math.sin(u * Math.PI * 2), y, 0.1 * c.dz * Math.sin(u * Math.PI * 2 + 0.6) * 0.8 + 0.04]);
   }
   if (c.curl) {
-    const [x, y, z] = pts[N];
+    const [x, y, z] = pts[N] ?? [0, 0, 0];
     const s = -c.dx;
     pts.push([x + s * 0.05, y + 0.02, z], [x + s * 0.09, y + 0.07, z], [x + s * 0.05, y + 0.12, z], [x + s * 0.01, y + 0.09, z]);
   }
@@ -64,7 +64,8 @@ const leaf = (size: number) => {
     .scale([1, 1, 0.3]);
 };
 
-const leaves: any[] = [];
+const pt = (p: P[], i: number): P => p[i] ?? [0, 0, 0];
+const leaves: ReturnType<typeof leaf>[] = [];
 const rnd = (a: number, b: number) => noise.random(a, b, 7);
 let flowers: [number, number, number][] = [];
 strands.forEach((p, i) => {
@@ -73,9 +74,9 @@ strands.forEach((p, i) => {
     const f = ((j + 0.7) / (M + 0.4)) * 9;
     const a = Math.floor(f);
     const u = f - a;
-    const x = p[a][0] + (p[a + 1][0] - p[a][0]) * u;
-    const y = p[a][1] + (p[a + 1][1] - p[a][1]) * u;
-    const z = p[a][2] + (p[a + 1][2] - p[a][2]) * u;
+    const x = pt(p, a)[0] + (pt(p, a + 1)[0] - pt(p, a)[0]) * u;
+    const y = pt(p, a)[1] + (pt(p, a + 1)[1] - pt(p, a)[1]) * u;
+    const z = pt(p, a)[2] + (pt(p, a + 1)[2] - pt(p, a)[2]) * u;
     const side = j % 2 ? 1 : -1;
     const s = 0.17 * (0.9 + 0.2 * rnd(i, j));
     const lf = leaf(s)
@@ -86,9 +87,9 @@ strands.forEach((p, i) => {
     leaves.push(lf);
   }
   if (i === 1 || i === 3 || i === 5) {
-    flowers.push([p[6][0], p[6][1], p[6][2] + 0.03], [p[8][0], p[8][1], p[8][2] + 0.03]);
+    flowers.push([pt(p, 6)[0], pt(p, 6)[1], pt(p, 6)[2] + 0.03], [pt(p, 8)[0], pt(p, 8)[1], pt(p, 8)[2] + 0.03]);
   }
-  if (i === 5) flowers.push([p[4][0], p[4][1], p[4][2] + 0.03]);
+  if (i === 5) flowers.push([pt(p, 4)[0], pt(p, 4)[1], pt(p, 4)[2] + 0.03]);
 });
 const light = rgb('#8ad45a');
 const mid = rgb('#4a9c3f');

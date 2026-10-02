@@ -135,11 +135,11 @@ export default defineAsset({
         return mixRgb(c, HEAD_LIGHT, m * 0.12);
       });
     // Overlapping leaf caps: thick shells of the head cut by offset spheres, each with a raised lip.
-    const caps = [
+    const caps = ([
       [0.0, 0.17, 0.06, 0.1, 0.006],
       [-0.06, 0.1, -0.03, 0.095, 0.009],
       [0.06, 0.11, -0.03, 0.095, 0.012],
-    ].map(([cx, cy, cz, r, g]) =>
+    ] as [number, number, number, number, number][]).map(([cx, cy, cz, r, g]) =>
       sdf
         .ellipsoid([HEAD_RX + g, HEAD_RY + g, HEAD_RZ + g])
         .at(0, HEAD_CY, 0)

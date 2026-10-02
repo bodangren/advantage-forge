@@ -68,7 +68,7 @@ export default defineAsset({
     // STONES (9 chunky faceted stones around the foot) — bottoms rest at y = 0
     // ======================================================================
     // x, z, half-w, half-h, half-d, rotY, rotZ, layer (0 ground, 1 mid, 2 top)
-    const stonesData: ReadonlyArray<readonly number[]> = [
+    const stonesData: [number, number, number, number, number, number, number, number][] = [
       [0.16, 0.03, 0.07, 0.055, 0.06, 20, 6, 0],
       [0.1, 0.13, 0.065, 0.05, 0.06, -30, -5, 0],
       [-0.03, 0.16, 0.07, 0.055, 0.055, 15, 8, 0],
