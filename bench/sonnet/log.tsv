@@ -651,3 +651,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	stable	map-p2	medium	maps50	54527	20				6.5	feedback	loose clutter, hidden stalls
 2026-10-03	cemetery	map-p2	medium	maps50	69632	31				7.0	pass	after 1 feedback; dark chapels
 2026-10-03	bakery	map-p2	medium	maps50	95000	38				7.0	pass	after 1 feedback; 115 pieces; not re-viewed by orchestrator
+2026-10-03	general-store	map-p2	medium	maps50	100000	36				7.0	pass	after 1 feedback; not re-viewed by orchestrator
