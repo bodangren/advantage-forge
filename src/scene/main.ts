@@ -16,7 +16,7 @@ import './hamlet.css';
 // New maps: scenes/maps/<slug>.ts exports places(); the scene name is the slug (?scene=<slug>).
 // Lighting groups for the new maps are set here by the orchestrator, not by map agents.
 const NEW_MAPS = import.meta.glob('../../scenes/maps/*.ts') as Record<string, () => Promise<{ places: () => Place[] }>>;
-const NEW_DARK = new Set(['crypt', 'crystal-cave', 'labyrinth', 'mine', 'boss-arena', 'treasure-vault', 'catacombs', 'tomb', 'sewer', 'ice-cave', 'lava-cave']);
+const NEW_DARK = new Set(['crypt', 'crystal-cave', 'labyrinth', 'mine', 'boss-arena', 'treasure-vault', 'catacombs', 'tomb', 'sewer', 'ice-cave', 'lava-cave', 'mausoleum']);
 const NEW_INTERIOR = new Set(['library', 'alchemy-lab', 'inn', 'arcane-sanctum', 'wizard-tower', 'throne-room', 'portal-chamber', 'apothecary', 'armory', 'temple', 'guild-hall']);
 
 const FLAT = new Set([

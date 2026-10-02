@@ -608,3 +608,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	market-square	map-p2	medium	maps50	45625	18				7.0	pass	agent 6.5, orchestrator 7.0; palette differs from mockup
 2026-10-02	mine	map-p2	medium	maps50	61490	9				7.0	pass	after 1 feedback; plain floor centre
 2026-10-02	town	map-p2	medium	maps50	51554	5				7.0	pass	after 1 feedback
+2026-10-02	coast	map-p2	medium	maps50	134511	22				5.5	reserve	no solid sea tile; water maps blocked (harbor, lighthouse replaced)
