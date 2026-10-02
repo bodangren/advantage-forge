@@ -681,3 +681,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	shipwreck	map-p2	medium	maps-rest	118000	22				7.0	pass	after rebuild with new shipwreck-hull; orchestrator flipped hull yaw 180 and viewed 3q
 2026-10-03	coral-reef	map-p2	medium	maps-rest	104000	17				6.8	reserve	after rebuild with coral-reef-cluster; tiled sea slab, no kelp or clam; borderline
 2026-10-03	archive	map-p2	medium	maps-rest	55000	17				7.0	pass	agent 6.5; orchestrator rated 7.0; corner cupboards crowd edge
+2026-10-03	courthouse	map-p2	medium	maps-rest	56000	16				7.0	pass	agent 6.8; orchestrator rated 7.0; all-wood palette
+2026-10-03	bathhouse	map-p2	medium	maps-rest	56000	16				6.5	reserve	needs sandstone-wall (building), towel rack, steam
