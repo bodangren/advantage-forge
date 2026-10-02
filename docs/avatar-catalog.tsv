@@ -10,11 +10,11 @@ leather-armor	chest	1	0	ready		12086	7.5	70
 studded-leather	chest	1	0	ready		5100	7	65
 chainmail	chest	2	0	ready		5384	7	130
 scale-armor	chest	2	0	ready		6700	7.3	130
-plate-armor	chest	3	0	ready		6690	7.3	260
+plate-armor	chest	3	0	ready		6688	7.3	260
 cloth-robe	robe	1	0	later		4600	7	60
 mage-robe	robe	2	0	later		4898		110
 shoulder-armor	shoulders	2	0	ready		18914	7.1	85
-cape	back	1	0	ready		9268	7	40
+cape	back	1	0	ready		9420	7	40
 cloak	back	2	0	ready		4594	7	70
 mantle	back	2	0	ready		3600	7	70
 bracers	hands	1	0	ready		3556	7	25

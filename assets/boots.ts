@@ -24,6 +24,9 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  *   +X half that the wearer keeps; `origin` x moved from 0.072 to X0 for this reason.
  */
 
+// The heel round sinks 1.1 cm below the sole line in the model frame; LIFT stands the display on
+// y = 0, and the origin moves with it so the worn fit does not change.
+const LIFT = 0.011;
 const LEATHER = rgb('#7d4d2a'); // shaft, mid brown
 const LEATHER_LIGHT = rgb('#c98a4a'); // cuff and toe cap, sun-lit tan
 const LEATHER_DARK = rgb('#4e3018'); // fold shadow
@@ -47,7 +50,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/item-mockups/boots-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'feet', fitScale: 2, origin: [X0, 0.14, 0], hides: ['shoes'] },
+  equip: { slot: 'feet', fitScale: 2, origin: [X0, 0.14 + LIFT, 0], hides: ['shoes'] },
 
   build(k) {
     // ------------------------------------------------------------------ single boot body
@@ -101,7 +104,7 @@ export default defineAsset({
       return c;
     };
 
-    k.body('leather', boot.paintFn(leatherPaint).mirror('x', 0), {
+    k.body('leather', boot.paintFn(leatherPaint).mirror('x', 0).at(0, LIFT, 0), {
       color: LEATHER,
       roughness: 0.66,
       metalness: 0,
@@ -123,7 +126,7 @@ export default defineAsset({
       c = mixRgb(c, LEATHER_DARK, 0.3 * ss(0.05, 0.14, z));
       return c;
     };
-    k.body('sole', sole.paintFn(solePaint).mirror('x', 0), {
+    k.body('sole', sole.paintFn(solePaint).mirror('x', 0).at(0, LIFT, 0), {
       color: SOLE,
       roughness: 0.78,
       metalness: 0,
@@ -136,7 +139,7 @@ export default defineAsset({
     const strap = sdf
       .cylinder(0.124, 0.026, 0.008)
       .at(X0, 0.176, 0.002);
-    k.body('strap', strap.paint(SOLE).mirror('x', 0), {
+    k.body('strap', strap.paint(SOLE).mirror('x', 0).at(0, LIFT, 0), {
       color: SOLE,
       roughness: 0.62,
       metalness: 0,
@@ -152,7 +155,7 @@ export default defineAsset({
     const buckle = sdf
       .union(frame, sdf.box([0.005, 0.03, 0.008], 0.002))
       .at(X0, 0.176, 0.128);
-    k.body('buckle', buckle.mirror('x', 0), {
+    k.body('buckle', buckle.mirror('x', 0).at(0, LIFT, 0), {
       color: BRASS,
       roughness: 0.3,
       metalness: 1,

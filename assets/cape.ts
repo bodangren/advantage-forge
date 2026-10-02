@@ -21,7 +21,7 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Rig/animation: none (static display piece).
  * Fit (avatar base, slot back): a full bell over the shoulders. The wall stays 3.5 cm (asset) outside
  *   the hanging arms and fists at 2x (shoulder x 0.34, elbow 0.43, fist 0.50), flares to 0.63 at the hem
- *   (hem 11 cm up = 2.3 cm worn above the ground), and one wedge cut opens the front below the chest so
+ *   (hem 11 cm up in the model frame = 2.3 cm worn above the ground; the display drops it to y = 0), and one wedge cut opens the front below the chest so
  *   the legs and feet show. The collar ring stands clear of the torso at 2x (R 0.29) and of the neck.
  */
 
@@ -30,7 +30,8 @@ const RED_DEEP = rgb('#8e2a20');
 const RED_IN = rgb('#7a2119');
 const RED_LIGHT = rgb('#dc654c');
 const GOLD = '#d4a93a';
-const HEM = 0.11; // hem 11 cm up in asset meters = 2.3 cm above the ground worn
+const HEM = 0.11; // hem 11 cm up in the model frame = 2.3 cm above the ground worn
+const DROP = HEM; // the display moves down by DROP so the hem stands on y = 0 (the origin moves too)
 
 export default defineAsset({
   name: 'cape',
@@ -39,7 +40,7 @@ export default defineAsset({
   detail: 0.008,
   reference: 'docs/item-mockups/cape-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'back', fitScale: 2, origin: [0, 1.005, 0] },
+  equip: { slot: 'back', fitScale: 2, origin: [0, 1.005 - DROP, 0] },
 
   build(k) {
     // ------------------------------------------------------------- cloth
@@ -97,7 +98,7 @@ export default defineAsset({
       const patch = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2);
       return mixRgb(c, RED_DEEP, 0.12 * patch);
     };
-    k.body('cloth', clothShape.paintFn(clothPaint).paintWhere(cavity, RED_IN, 0.008), {
+    k.body('cloth', clothShape.paintFn(clothPaint).paintWhere(cavity, RED_IN, 0.008).at(0, -DROP, 0), {
       color: '#c44636',
       roughness: 0.85,
       metalness: 0,
@@ -120,7 +121,7 @@ export default defineAsset({
       const patch = 0.5 + 0.5 * noise.fbm(x * 5, y * 5, z * 5, 2);
       return mixRgb(c, RED_DEEP, 0.1 * patch);
     };
-    k.body('collar', collarShape.paintFn(collarPaint), {
+    k.body('collar', collarShape.paintFn(collarPaint).at(0, -DROP, 0), {
       color: '#c8493a',
       roughness: 0.85,
       metalness: 0,
@@ -145,7 +146,7 @@ export default defineAsset({
         0.005,
       )
       .at(0, 0.9, 0.325);
-    k.body('clasp', sdf.union(band, diamond), {
+    k.body('clasp', sdf.union(band, diamond).at(0, -DROP, 0), {
       color: GOLD,
       roughness: 0.3,
       metalness: 1,

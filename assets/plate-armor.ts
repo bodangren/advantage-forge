@@ -10,6 +10,9 @@ import { defineAsset, profile, rgb, sdf } from '../src/index.js';
  * Materials: steel, gold, leather belt. Focal point: gold diamond boss on the chest.
  * Fit rework 2026-10-02: arm cuffs are taller and wider (r 0.1, h 0.22, y 0.5) so upper arms stay inside; neck hole 0.135.
  */
+// The faulds hang 5.2 cm below the torso hem (the chest socket, y = 0 in the model frame); LIFT
+// stands the display on y = 0, and the origin moves with it so the worn fit does not change.
+const LIFT = 0.052;
 const STEEL = rgb('#8d9096');
 const GOLD = rgb('#d4a93a');
 
@@ -19,7 +22,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'bench/overnight/refs/p1-gear/plate-armor-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'chest', fitScale: 2, hides: ['undershirt'] },
+  equip: { slot: 'chest', fitScale: 2, origin: [0, LIFT, 0], hides: ['undershirt'] },
 
   build(k) {
     const Z = 0.78;
@@ -71,7 +74,7 @@ export default defineAsset({
     // Front bosses are gold; steel body gets everything else.
     const steel = sdf.union(chest, faulds, belt, beltRivets, pauldron(1), pauldron(-1), cuff(1), cuff(-1));
     const groove = (y: number, w: number) => Math.exp(-(((y - 0) / w) ** 2));
-    k.body('steel', steel, {
+    k.body('steel', steel.at(0, LIFT, 0), {
       color: STEEL,
       roughness: 0.45,
       metalness: 0.75,
@@ -94,6 +97,6 @@ export default defineAsset({
     const hem = sdf.torus(0.272, 0.017).scale([1, 1, Z]).at(0, 0.02, 0);
     const fauldDia = diamond(0.075).at(0, 0.105, Z * 0.274 + 0.002);
     const gold = sdf.union(neck, boss, rivets, rim(1), rim(-1), rivetTop(1), rivetTop(-1), cuffRing(1), cuffRing(-1), hem, fauldDia);
-    k.body('gold', gold, { color: GOLD, roughness: 0.3, metalness: 1, detail: 0.004, maxTriangles: 1700 });
+    k.body('gold', gold.at(0, LIFT, 0), { color: GOLD, roughness: 0.3, metalness: 1, detail: 0.004, maxTriangles: 1700 });
   },
 });
