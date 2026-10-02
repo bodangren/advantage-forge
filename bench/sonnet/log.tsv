@@ -613,3 +613,7 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	throne-room	map-p2	medium	maps50	110984	23				7.0	pass	after 1 feedback; dark stone palette
 2026-10-02	treasure-vault	map-p2	medium	maps50	46873	13				7.0	pass
 2026-10-02	portal-chamber	map-p2	medium	maps50	42982	14				7.0	pass	agent 6.8, orchestrator 7.0; floor a bit sparse
+2026-10-02	tundra	map-p2	medium	maps50	97585	23				7.0	pass	Castle Defense; after 1 feedback; flat slab
+2026-10-02	bandit-camp	map-p2	medium	maps50	41321	11				7.0	pass
+2026-10-02	tomb	map-p2	medium	maps50	51785	19				6.5	feedback	slate walls
+2026-10-02	catacombs	map-p2	medium	maps50	48430	17				6.5	feedback	square hall
