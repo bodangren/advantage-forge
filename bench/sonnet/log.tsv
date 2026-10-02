@@ -694,3 +694,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	fortified-city	map-p2	medium	maps-rest	55000	14				7.0	pass	orchestrator reshot and viewed 3q; thin grey walls, low keep
 2026-10-03	cliff-village	map-p2	medium	maps-rest	58000	16				7.0	pass	agent 6.5; orchestrator rated 7.0; flat terraces, no waterfall
 2026-10-03	desert-city	map-p2	medium	maps-rest	50000	14				6.0	reserve	needs sandstone-house (building), dome and minaret pieces, camel
+2026-10-03	port-city	map-p2	medium	maps-rest	49000	14				7.0	pass	agent 6.5; orchestrator rated 7.0; identical townhouses, sparse south quay
