@@ -96,7 +96,7 @@ const sstep = (e0: number, e1: number, v: number) => {
 
 /** Terracotta: per-course and per-column tints, shaded gaps, lap shadows, moss. */
 const tilePaint = (x: number, y: number, z: number): Rgb => {
-  const row = Math.max(0, Math.min(3, Math.floor((LIPS[0] - z) / 0.34)));
+  const row = Math.max(0, Math.min(3, Math.floor((LIPS[0]! - z) / 0.34)));
   const col = Math.floor((x + W / 2) * WAVES / W);
   const gap = Math.pow(0.5 + 0.5 * Math.cos(Math.PI * 2 * ((x + W / 2) / LAMBDA)), CREST_POW);
   const rowTint = noise.random(row * 3 + 1, 31);

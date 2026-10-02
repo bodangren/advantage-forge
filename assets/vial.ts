@@ -81,7 +81,7 @@ export default defineAsset({
     const corkShape = sdf
       .smoothUnion(
         0.003,
-        sdf.cone([0, 0.094, 0], [0, 0.112, 0], 0.0105, 0.0125, 0.002),
+        sdf.cone([0, 0.094, 0], [0, 0.112, 0], 0.0105, 0.0125),
         sdf.sphere(0.0001).at(0, 0.112, 0),
       )
       .paintFn((x, y, z) => {

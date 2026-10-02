@@ -92,7 +92,7 @@ export default defineAsset({
     );
     k.body('plants', plants.paintFn((x, y, z, base) => mixRgb(base, C.leafDark, Math.max(0, Math.min(1, (0.9 - y) / 0.6)) * 0.6)),
       { color: C.leaf, roughness: 0.8, detail: 0.008, maxTriangles: 1300 });
-    const fruit = [[-0.6, 0.85, 0.72], [0.62, 0.8, 0.7], [-0.88, 0.75, -0.15], [0.35, 0.9, -0.68]];
+    const fruit = [[-0.6, 0.85, 0.72], [0.62, 0.8, 0.7], [-0.88, 0.75, -0.15], [0.35, 0.9, -0.68]] as const;
     k.body('fruit', sdf.union(...fruit.map(([x, y, z]) => sdf.sphere(0.05).at(x, y, z))),
       { color: C.red, roughness: 0.6, detail: 0.008, maxTriangles: 300 });
     k.body('fruit2', sdf.union(sdf.sphere(0.05).at(0.85, 0.82, -0.05), sdf.sphere(0.05).at(-0.3, 0.9, -0.75)),

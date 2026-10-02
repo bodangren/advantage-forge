@@ -70,7 +70,7 @@ export default defineAsset({
     const DX = [0, 0.05, -0.03, 0.06, 0];
     for (let i = 0; i < 5; i++) {
       const top = 0.48 * (i + 1);
-      steps.push(sdf.box([W[i], top, 0.45], 0.06).at(-1.4 + DX[i], top / 2, -0.575 - 0.4 * (4 - i)));
+      steps.push(sdf.box([W[i]!, top, 0.45], 0.06).at(-1.4 + DX[i]!, top / 2, -0.575 - 0.4 * (4 - i)));
     }
     k.body('stair', sdf.union(...steps).paintFn((x, y, z) => mixRgb(TAN, CREAM, 0.3 * noise.random(Math.floor(y / 0.6), 1, 2) + 0.1)), {
       color: TAN, roughness: 0.9, detail: 0.01, maxTriangles: 1000, bump: (x, y, z) => 0.002 * noise.fbm(x * 30, y * 30, z * 30, 3),

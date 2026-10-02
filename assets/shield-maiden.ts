@@ -372,7 +372,7 @@ export default defineAsset({
         const u = (i / n) * (BRAID.length - 1);
         const a = Math.min(BRAID.length - 2, Math.floor(u));
         const f = u - a;
-        out.push(lerp(BRAID[a]!, BRAID[a + 1]!, f));
+        out.push([...lerp(BRAID[a]!, BRAID[a + 1]!, f)] as [number, number, number]);
       }
       return out;
     };

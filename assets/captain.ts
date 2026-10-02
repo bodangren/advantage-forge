@@ -571,7 +571,7 @@ export default defineAsset({
         [-0.078, 0.428],
         [0.092, 0.318],
         [-0.092, 0.318],
-      ].map(([x, y]) => sdf.sphere(0.0105).at(...rivetAt(x, y))),
+      ].map(([x = 0, y = 0]) => sdf.sphere(0.0105).at(...rivetAt(x, y))),
     );
     const kneeGold = pair(sdf.ellipsoid([0.028, 0.024, 0.012]).at(0.095, 0.11, 0.068).bone('leg.L'));
     k.body(

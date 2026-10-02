@@ -1,3 +1,4 @@
+import type { Rgb } from '../src/index.js';
 import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
@@ -119,7 +120,7 @@ export default defineAsset({
       sdf.box([0.86, 0.045, 0.33], 0.01).at(0, 0.9725, 0), // shelf 2
       ...pegs,
     );
-    const woodPaint = (x: number, y: number, z: number, base: readonly number[]) => {
+    const woodPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
       if (closeTo(base, C.walnut)) return base; // pegs keep their dark color
       const patch = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2);
       const grain = 0.5 + 0.5 * noise.fbm(x * 26, y * 3, z * 26, 2);

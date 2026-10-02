@@ -86,7 +86,7 @@ export default defineAsset({
     const flaps = sdf.union(...[-1, 1].flatMap((sz) => [0, 1, 2, 3, 4, 5].map((i) =>
       sdf.ellipsoid([0.6, 0.3, 0.3]).at(-2.75 + i * 1.1, 2.3, sz * 2.72))));
     // Raised curved straw ridges on each slope.
-    const sideR = (sz: number) => [[2.15, 3.32], [1.2, 3.97]].map(([z, y], j) =>
+    const sideR = (sz: number) => ([[2.15, 3.32], [1.2, 3.97]] as [number, number][]).map(([z, y], j) =>
       sdf.chain([-2.4, -1.2, 0, 1.2, 2.4].map((x, i) => [x, y + 0.07 + 0.09 * Math.sin(i * 1.7 + j * 2 + sz), sz * (z + 0.1 + 0.05 * Math.sin(i * 1.3 + j)), 0.1]), 0.05));
     const thatch = sdf.smoothUnion(0.12, roof, ridge, flaps)
       .displace(0.03, (x, y, z) => noise.fbm(x * 5, y * 9, z * 5, 3));

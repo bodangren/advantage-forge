@@ -409,7 +409,7 @@ export default defineAsset({
         [-0.08, 1.13, 0.28, 0.9],
         [0.16, 1.02, 0.08, 0.6],
       ];
-      let best = specs[0];
+      let best = specs[0]!;
       let bd = Infinity;
       for (const a of specs) {
         const d = (x - a[0]) ** 2 + (y - a[1]) ** 2 + (z - a[2]) ** 2;
