@@ -622,3 +622,8 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	tomb	map-p2	medium	maps50	120900	47				7.0	pass	after 1 feedback; heavy sand frame
 2026-10-02	orc-camp	map-p2	medium	maps50	60000	14				7.0	pass	bright roof; light mood
 2026-10-02	lava-cave	map-p2	medium	maps50	47330	16				5.0	reserve	no glowing lava tile or obsidian spike; volcanic-field has the same risk
+2026-10-02	bridge	map-p2	medium	maps50	117800	49				7.0	pass	after 1 feedback; wooden bridge
+2026-10-02	fortress	map-p2	medium	maps50	44448	14				7.0	pass	not re-viewed by orchestrator
+2026-10-02	observatory	map-p2	medium	maps50	132700	49				7.0	pass	agent 6.8; flat telescope
+2026-10-02	witch-hut	map-p2	medium	maps50	85000	28				6.5	reserve	after 1 feedback
+2026-10-02	abandoned-fort	map-p2	medium	maps50	44163	15				6.0	feedback	low dark walls

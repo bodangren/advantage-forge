@@ -1,0 +1,151 @@
+#!/usr/bin/env node
+// Observatory map designer: 12 m x 12 m daylight tower roof with a plaster parapet.
+// Zones: telescope platform (NE, two stacked slabs), star-chart desk under the stair-house
+// wall (NW), stair house with hatch and ladder (SW), chart table and benches (SE),
+// orb pedestal and bookshelves (W). Rugs mark the path from the stairs to the platform.
+// Writes scenes/maps/observatory.ts and docs/map-mockups/observatory.md.
+import { writeFileSync } from 'node:fs';
+
+const places = [];
+const put = (asset, x, y, z, o = {}) => {
+  const p = { asset, at: [x, y, z] };
+  if (o.yaw) p.yaw = o.yaw;
+  if (o.scale) p.scale = o.scale;
+  places.push(p);
+};
+
+// floor: one warm wood-floor family, 6 x 6 tiles
+for (const x of [-5, -3, -1, 1, 3, 5]) for (const z of [-5, -3, -1, 1, 3, 5]) put('wood-floor', x, 0, z);
+
+// parapet: plaster wall tiles 1.5 m tall; north run has the window, tapestry wall and door
+const E = 5.9;
+const north = { '-5': 'plaster-wall-window', '-3': 'plaster-wall', '-1': 'plaster-wall-door' };
+for (const x of [-5, -3, -1, 1, 3, 5]) {
+  put(north[x] ?? 'plaster-wall', x, 0, -E, { yaw: 0 });
+  put('plaster-wall', x, 0, E, { yaw: 180 });
+}
+for (const z of [-4, -2, 0, 2, 4]) {
+  put('plaster-wall', -E, 0, z, { yaw: 90 });
+  put('plaster-wall', E, 0, z, { yaw: 270 });
+}
+// corner posts with orb caps on the south pair
+for (const [sx, sz] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) {
+  put('pillar', sx * 5.5, 0, sz * 5.4, { scale: 1.3 });
+  if (sz === 1) put('orb', sx * 5.5, 1.86, sz * 5.4, { scale: 0.8 });
+}
+// merlons and pennant flags on the wall tops (y = 1.5)
+for (const x of [-5, -3, -1, 1, 3, 5]) put('pillar', x, 1.5, E, { scale: 0.42 });
+for (const x of [1, 3, 5]) put('pillar', x, 1.5, -E, { scale: 0.42 });
+for (const z of [-4, -2, 0, 2, 4]) {
+  put('pillar', -E, 1.5, z, { scale: 0.42 });
+  put('pillar', E, 1.5, z, { scale: 0.42 });
+}
+for (const x of [-4, -2, 0, 2, 4]) put('flag', x, 1.5, E, { scale: 0.3 });
+for (const x of [2, 4]) put('flag', x, 1.5, -E, { scale: 0.3 });
+for (const z of [-3, -1, 1, 3]) {
+  put('flag', -E, 1.5, z, { scale: 0.3 });
+  put('flag', E, 1.5, z, { scale: 0.3 });
+}
+
+// telescope platform NE: two stacked slab levels (y 0.3 and 0.6)
+for (const x of [2, 4]) for (const z of [-5, -3]) put('wood-floor', x, 0.3, z);
+put('wood-floor', 3, 0.6, -4);
+put('pillar', 3, 0.6, -4.2, { scale: 0.6 });
+put('spyglass', 3, 1.46, -4.2, { scale: 3, yaw: 160 });
+put('compass', 3.9, 0.9, -3.4);
+put('stool', 4.7, 0.3, -2.5);
+put('orb', 4.7, 0.75, -2.5, { scale: 2 });
+put('banner', 1.35, 0.3, -5.1);
+put('banner', 1.35, 0.3, -2.4);
+put('lantern', 4.9, 0.3, -5.0);
+put('candle-cluster', 2.1, 0.3, -2.3);
+
+// star-chart desk NW under the window and tapestry
+put('desk', -4.6, 0, -5.0);
+put('chair', -4.6, 0, -4.1, { yaw: 180 });
+put('scroll', -4.9, 0.75, -4.95);
+put('compass', -4.2, 0.75, -4.95);
+put('candle', -4.35, 0.75, -5.2);
+put('rug', -4.6, 0, -3.3);
+put('tapestry', -3, 0.15, -5.7, { scale: 0.9 });
+put('lantern', -2.3, 0, -5.1);
+put('bookshelf', -5.4, 0, -1.7, { yaw: 90 });
+put('bookshelf', -5.4, 0, -0.5, { yaw: 90 });
+put('scroll', -4.1, 0.0, -1.0, { yaw: 20 });
+
+// orb pedestal and bunting line, west
+put('pillar', -4.9, 0, 1.3, { scale: 0.7 });
+put('orb', -4.9, 1.0, 1.3, { scale: 2.5 });
+put('clothesline', -2.6, 0, 0.7);
+
+// stair house SW: stairs down, hatch, ladder, supplies
+put('stairs-stone', -3.0, 0, 4.6);
+put('trapdoor', -3.0, 0, 3.2);
+put('ladder', -2.0, 0, 5.4, { yaw: 180 });
+put('crate', -5.2, 0, 4.9);
+put('crate', -4.6, 0, 4.95, { yaw: 12 });
+put('crate', -4.9, 0.41, 4.9, { yaw: 30, scale: 0.8 });
+put('barrel', -5.2, 0, 3.7);
+put('barrel', -5.2, 0, 2.8, { yaw: 40, scale: 0.9 });
+put('sack', -4.1, 0, 4.9);
+put('rope-coil', -1.2, 0, 4.7);
+put('bucket', -0.6, 0, 5.2);
+put('treasure-chest', 0.4, 0, 5.2);
+put('lantern', -3.9, 0, 2.6);
+
+// SE chart table zone
+put('table', 4.2, 0, 2.6, { yaw: 90 });
+put('map', 4.2, 0.75, 2.6, { yaw: 90 });
+put('candle', 4.2, 0.75, 3.1);
+put('scroll', 4.0, 0.75, 2.4, { yaw: 80 });
+put('stool', 3.2, 0, 2.6);
+put('stool', 4.2, 0, 1.6, { yaw: 90 });
+put('bench', 4.6, 0, 4.9, { yaw: 180 });
+put('bench', 3.3, 0, 3.8);
+put('barrel', 5.2, 0, 4.0, { scale: 0.9 });
+put('sack', 3.4, 0, 5.0);
+put('lantern', 5.1, 0, 3.7);
+put('bookshelf', 5.45, 0, 1.0, { yaw: 270 });
+put('crate', 5.1, 0, -0.2, { yaw: 20 });
+put('crate', 5.2, 0.41, -0.2, { yaw: 50, scale: 0.7 });
+put('crate', 5.0, 0, -1.0, { yaw: 80 });
+
+// central stargazing rug
+put('rug', -0.8, 0, -2.4, { scale: 2 });
+put('stool', -1.8, 0, -2.4);
+put('stool', 0.3, 0, -2.4);
+put('scroll', -0.8, 0.05, -2.3, { yaw: 30 });
+put('compass', -0.2, 0.05, -1.9);
+put('candle-cluster', -2.2, 0, -3.5);
+
+// path: rugs from the stairs east, then north to the platform
+for (const x of [-1.0, 0.6, 2.2]) put('rug', x, 0, 3.6);
+for (const z of [2.3, 0.7, -0.9]) put('rug', 2.2, 0, z, { yaw: 90 });
+
+writeFileSync('scenes/maps/observatory.ts', `// GENERATED by scripts/design-observatory.mjs — edit the generator, not this file.
+import type { Place } from '../chibi-quest.js';
+export function places(): Place[] {
+  return [
+${places.map((p) => `  { asset: '${p.asset}', at: [${p.at.map((v) => +v.toFixed(2)).join(', ')}]${p.yaw ? `, yaw: ${p.yaw}` : ''}${p.scale ? `, scale: ${p.scale}` : ''} },`).join('\n')}
+  ];
+}
+`);
+const tally = {};
+for (const p of places) tally[p.asset] = (tally[p.asset] ?? 0) + 1;
+writeFileSync('docs/map-mockups/observatory.md', `# Observatory map (generated)
+
+GENERATED by \`scripts/design-observatory.mjs\`.
+
+12 m x 12 m daylight tower roof on a warm wood floor, low plaster parapet with pillar merlons and pennants.
+NE: telescope platform (two stacked slabs, spyglass on a pillar, compass, orb on a stool, blue banners).
+NW: window, tapestry and door in the north wall; star-chart desk, bookshelves.
+W: orb pedestal and a bunting line. SW: stair house (stairs, hatch, ladder) with crates, barrels, sack, rope.
+SE: chart table, benches, bookshelf, crates. Rugs run from the stairs east, then north to the platform.
+
+| piece | count |
+|---|---|
+${Object.entries(tally).sort((a, b) => b[1] - a[1]).map(([k, v]) => `| ${k} | ${v} |`).join('\n')}
+
+Total: ${places.length}
+`);
+console.log('wrote', places.length);
