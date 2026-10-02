@@ -132,7 +132,7 @@ paladin-shield	offhand	2	0	ready		3944		90
 mage-spellbook	offhand	2	0	ready		666		80
 cleric-book	offhand	2	0	ready		4520		90
 warlock-book	offhand	2	0	ready		3462		90
-guardian-shield	offhand	3	0	rework		4900		175
+guardian-shield	offhand	3	0	ready		4900	7	190
 adventurer-sword	mainhand	1	0	ready		1286		50
 gladiator-sword	mainhand	1	0	ready		1206		50
 rogue-dagger	mainhand	1	0	ready		508		50
