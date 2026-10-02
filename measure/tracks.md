@@ -16,6 +16,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: History: Add color variants and shared sprite output**
   *Link: [./tracks/history_recolors_sprites_20260928/](./tracks/history_recolors_sprites_20260928/)*
 
+- [ ] **Track: Rename the repository to advantage-forge and plan the pack layout**
+  *Link: [./tracks/repo_rename_advantage_forge_20261002/](./tracks/repo_rename_advantage_forge_20261002/)*
+
 - [~] **Track: Resolve dependency launcher reconciliation**
   *Link: [./tracks/measure_dependency_launcher_20260928/](./tracks/measure_dependency_launcher_20260928/)*
 

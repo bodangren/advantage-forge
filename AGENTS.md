@@ -35,8 +35,11 @@ then the repository has three connected goals. A Measure track owns each goal.
    [docs/avatar-system.md](docs/avatar-system.md), and the track
    `measure/tracks/avatar_system_20261001/`.
 
-The product name for players is **Chibi Quest**. Marketing names Primary Advantage and Tutor
-Advantage, never Reading Advantage, as the products.
+**Packs and products.** Chibi Quest is the first asset pack (skin) for the games, aimed at primary
+students. A second pack, Riven Lands, is planned for secondary students. The products are the
+Advantage suite: Reading Advantage (grades 7-12), Primary Advantage (grades 3-6), and Tutor Advantage
+(families). The canonical source is `../advantage-pr` (`03-products/`, `08-strategy/`). Read it before
+you write any statement about a product.
 
 ## Connected repositories
 

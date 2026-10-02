@@ -15110,6 +15110,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/rune-match/briefing.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/rune-match/core/content.ts",
       "source_present": true
     },
@@ -15130,7 +15134,39 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/rune-match/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/manifest.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/rune-match/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-match/view2d/projection.gen.ts",
       "source_present": true
     },
     {
