@@ -1,6 +1,9 @@
 // Writes briefs (bench/sonnet/briefs/map-p2-<slug>.md) and make-map-mocks2.sh for P2 map batch 2.
 import { writeFileSync, existsSync } from 'node:fs';
-import { M2 } from './map-batch2-data.mjs';
+import { M2 as M2A } from './map-batch2-data.mjs';
+import { M2B } from './map-batch2b-data.mjs';
+
+const M2 = [...M2A, ...M2B];
 
 const has = (n) => existsSync(`out/${n}/${n}.glb`);
 let sh = `#!/usr/bin/env bash
