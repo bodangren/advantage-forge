@@ -599,3 +599,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	goblin-camp	map-p2	medium	maps20	46937	17				7.0	pass	missing totem, weapon-rack
 2026-10-02	shrine	map-p2	medium	maps20	42887	13				7.0	pass
 2026-10-02	boss-arena	map-p2	medium	maps20	37349	12				6.5	feedback	empty field, green caps
+2026-10-02	boss-arena	map-p2	medium	maps20	47302	6				7.0	pass	after 1 feedback; no towers on wall
