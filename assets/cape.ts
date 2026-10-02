@@ -19,6 +19,10 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Detail: primary bell + collar; secondary clasp band and diamond; tertiary
  *   pleats, wavy hem, weave. Focal point: the gold clasp at the throat.
  * Rig/animation: none (static display piece).
+ * Fit (avatar base, slot back): a full bell over the shoulders. The wall stays 3.5 cm (asset) outside
+ *   the hanging arms and fists at 2x (shoulder x 0.34, elbow 0.43, fist 0.50), flares to 0.63 at the hem
+ *   (hem 11 cm up = 2.3 cm worn above the ground), and one wedge cut opens the front below the chest so
+ *   the legs and feet show. The collar ring stands clear of the torso at 2x (R 0.29) and of the neck.
  */
 
 const RED = rgb('#c44636');
@@ -26,6 +30,7 @@ const RED_DEEP = rgb('#8e2a20');
 const RED_IN = rgb('#7a2119');
 const RED_LIGHT = rgb('#dc654c');
 const GOLD = '#d4a93a';
+const HEM = 0.11; // hem 11 cm up in asset meters = 2.3 cm above the ground worn
 
 export default defineAsset({
   name: 'cape',
@@ -38,129 +43,80 @@ export default defineAsset({
 
   build(k) {
     // ------------------------------------------------------------- cloth
-    // A bell of cloth open at the top and the bottom, squashed a little in Z.
-    // The profile runs down the outside and back up the inside, so the wall has
-    // real thickness and the inside can be painted as deep shadow.
-    const clothProfile = profile.polygon(
-      [
-        [0.15, 1.0], // outer top rim, hidden under the collar
-        [0.168, 0.955],
-        [0.2, 0.895],
-        [0.215, 0.78],
-        [0.238, 0.62],
-        [0.272, 0.43],
-        [0.315, 0.22],
-        [0.352, 0.06],
-        [0.368, 0.01],
-        [0.35, 0.0], // hem, outer bottom
-        [0.318, 0.0], // hem, inner bottom
-        [0.3, 0.05],
-        [0.26, 0.23],
-        [0.226, 0.43],
-        [0.194, 0.63],
-        [0.174, 0.79],
-        [0.156, 0.9],
-        [0.136, 0.965],
-        [0.128, 0.995], // inner top rim
-        [0, 1.02], // the top closes over, hidden under the collar
-      ],
-      { smooth: true, samples: 12 },
-    );
-    // Six pleats that grow from the shoulders to the hem, plus a slow warp so
-    // the hem line is not machine-perfect. `lower` fades the folds in at the
-    // collar where the clasp gathers the cloth.
+    // Outer wall of the bell (radius, height) in asset meters; the inner wall is 0.02 m inside it.
+    const outer: [number, number][] = [
+      [0.27, 0.975], [0.33, 0.925], [0.39, 0.87], [0.45, 0.8], [0.5, 0.72], [0.545, 0.6], [0.58, 0.42], [0.61, 0.25], [0.63, 0.1], [0.635, 0.05],
+    ];
+    const solid = sdf.revolve(profile.polygon([...outer, [0, 0.05], [0, 0.975]], { smooth: false })).scale([1, 1, 0.8]);
+    // Seven to nine soft vertical folds: 0.006 m at the shoulders growing to 0.015 m at the hem.
     const foldFn = (x: number, y: number, z: number) => {
       const a = Math.atan2(z, x);
-      const lower = Math.min(1, Math.max(0, (0.9 - y) / 0.65));
-      const pleat = Math.sin(a * 6 + 0.9) * (0.25 + 0.75 * lower);
-      const warp = Math.sin(a * 3 - 0.7) * 0.4 * lower;
-      return (pleat + warp) * 0.8;
+      const lower = Math.min(1, Math.max(0, (0.9 - y) / 0.8));
+      return Math.cos(a * 8 + 0.4) * (0.4 + 0.6 * lower);
     };
-    // The front opening: a trapezoid narrow at the throat, wide at the hem.
+    // Open front: an arch (inverted V, apex under the clasp) removes the front below the chest.
     const frontGap = sdf
       .extrude(
         profile.polygon([
-          [-0.035, 1.02],
-          [0.035, 1.02],
-          [0.17, -0.01],
-          [-0.17, -0.01],
+          [-0.75, 0.55],
+          [0, 0.8], // apex just below the clasp diamond
+          [0.75, 0.55],
+          [0.75, -0.2],
+          [-0.75, -0.2],
         ]),
-        0.5,
+        0.9,
+        0.03,
       )
-      .at(0, 0, 0.12);
-    // The wavy hem: keep cloth above a scalloped plane. Where a fold ridge
-    // meets the plane the hem reaches y = 0 (a point); between ridges it rises.
-    const hemCut = sdf.halfSpace([0, -1, 0], 0).displace(
-      0.07,
+      .at(0, 0, 0.5);
+    // Wavy hem: keep cloth above a scalloped plane (points at the fold ridges).
+    const hemCut = sdf.halfSpace([0, -1, 0], -HEM).displace(
+      0.05,
       (x, y, z) => {
-        const a = Math.atan2(z, x);
-        const t = 0.5 - 0.5 * Math.sin(a * 6 + 0.9);
+        const t = 0.5 - 0.5 * Math.cos(Math.atan2(z, x) * 8 + 0.4);
         return t * t;
       },
       1.3,
     );
-    const clothShape = sdf
-      .revolve(clothProfile)
-      .scale([1, 1, 0.82])
-      .displace(0.017, foldFn, 1.5)
-      .displace(0.003, (x, y, z) => noise.fbm(x * 6, y * 6, z * 6, 3), 1.2)
-      .smoothSubtract(0.012, frontGap)
+    // Fold the solid first, then hollow it, so the wall keeps its 0.02 m thickness everywhere.
+    const folded = solid.displace(0.015, foldFn, 1.5);
+    // The core and the neck opening hold no cloth: they remove the bottom lid, the top cap, and any axis sliver.
+    const neckHole = sdf.union(sdf.cylinder(0.27, 0.5).at(0, 1.1, 0), sdf.cylinder(0.3, 1.0).at(0, 0.35, 0));
+    const clothShape = folded
+      .subtract(folded.round(-0.02))
+      .subtract(neckHole)
+      .smoothSubtract(0.02, frontGap)
       .smoothIntersect(0.006, hemCut);
-    // The cavity stencil: mid-wall cone; inner-wall surface points sit inside
-    // it and get the deep inside color.
-    const cavity = sdf.revolve(
-      profile.polygon(
-        [
-          [0, 1.02],
-          [0.142, 0.93],
-          [0.185, 0.78],
-          [0.21, 0.62],
-          [0.243, 0.43],
-          [0.28, 0.22],
-          [0.31, 0.04],
-          [0, 0.0],
-        ],
-        { smooth: true, samples: 10 },
-      ),
-    );
+    const cavity = folded.round(-0.01);
     const clothPaint = (x: number, y: number, z: number) => {
       let c = RED;
-      // Sun-caught shoulders, damp shadow near the ground.
       c = mixRgb(c, RED_LIGHT, 0.3 * Math.max(0, (y - 0.72) / 0.24));
-      c = mixRgb(c, RED_DEEP, 0.42 * Math.min(1, Math.max(0, (0.42 - y) / 0.4)));
-      // Fold valleys dark, ridges light, so the pleats read as value stripes.
+      c = mixRgb(c, RED_DEEP, 0.42 * Math.min(1, Math.max(0, (0.5 - y) / 0.4)));
       const f = foldFn(x, y, z);
       if (f > 0) c = mixRgb(c, RED_LIGHT, 0.38 * f);
       else c = mixRgb(c, RED_DEEP, 0.38 * -f);
-      // Cloth patchiness.
       const patch = 0.5 + 0.5 * noise.fbm(x * 4, y * 4, z * 4, 2);
       return mixRgb(c, RED_DEEP, 0.12 * patch);
     };
-    k.body(
-      'cloth',
-      clothShape.paintFn(clothPaint).paintWhere(cavity, RED_IN, 0.025),
-      {
-        color: '#c44636',
-        roughness: 0.85,
-        metalness: 0,
-        detail: 0.0075,
-        paintWeight: 2,
-        maxTriangles: 2400,
-        bump: (x, y, z) =>
-          0.0016 * noise.fbm(x * 60, y * 60, z * 60, 2) + 0.0008 * noise.fbm(x * 130, y * 130, z * 130, 1),
-      },
-    );
+    k.body('cloth', clothShape.paintFn(clothPaint).paintWhere(cavity, RED_IN, 0.008), {
+      color: '#c44636',
+      roughness: 0.85,
+      metalness: 0,
+      detail: 0.006,
+      paintWeight: 2,
+      maxTriangles: 9000,
+      bump: (x, y, z) =>
+        0.0016 * noise.fbm(x * 60, y * 60, z * 60, 2) + 0.0008 * noise.fbm(x * 130, y * 130, z * 130, 1),
+    });
 
     // ------------------------------------------------------------- collar
-    // The rolled collar the cape hangs from: a fat red ring sitting over the
-    // top rim, its hole showing the dark inside.
+    // A full rolled ring around the neck, clear of the torso and the head.
     const collarShape = sdf
-      .torus(0.13, 0.05)
-      .scale([1, 0.85, 0.82])
-      .at(0, 1.005, 0)
+      .torus(0.29, 0.045)
+      .scale([1, 1, 0.8])
+      .at(0, 0.95, 0)
       .displace(0.002, (x, y, z) => noise.fbm(x * 8, y * 8, z * 8, 2), 1.1);
     const collarPaint = (x: number, y: number, z: number) => {
-      let c = mixRgb(RED, RED_LIGHT, 0.25);
+      const c = mixRgb(RED, RED_LIGHT, 0.25);
       const patch = 0.5 + 0.5 * noise.fbm(x * 5, y * 5, z * 5, 2);
       return mixRgb(c, RED_DEEP, 0.1 * patch);
     };
@@ -169,13 +125,12 @@ export default defineAsset({
       roughness: 0.85,
       metalness: 0,
       detail: 0.005,
-      maxTriangles: 550,
+      maxTriangles: 900,
       bump: (x, y, z) => 0.0015 * noise.fbm(x * 60, y * 60, z * 60, 2),
     });
 
     // ------------------------------------------------------------- clasp
-    // Gold band around the collar and a diamond at the throat (focal point).
-    const band = sdf.torus(0.155, 0.02).scale([1, 1, 0.85]).at(0, 0.978, 0);
+    const band = sdf.torus(0.385, 0.02).scale([1, 1, 0.8]).at(0, 0.9, 0);
     const diamond = sdf
       .extrude(
         profile.polygon([
@@ -189,13 +144,13 @@ export default defineAsset({
         0.024,
         0.005,
       )
-      .at(0, 0.978, 0.146);
+      .at(0, 0.9, 0.325);
     k.body('clasp', sdf.union(band, diamond), {
       color: GOLD,
       roughness: 0.3,
       metalness: 1,
       detail: 0.003,
-      maxTriangles: 400,
+      maxTriangles: 700,
     });
   },
 });
