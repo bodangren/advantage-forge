@@ -124,7 +124,7 @@ adventurer-lantern	offhand	1	0	ready		1240		40
 treasure-hunter-torch	offhand	1	0	ready		3132		45
 adventurer-map	offhand	1	0	ready		818		40
 explorer-map	offhand	1	0	ready		1144		40
-enchanter-scroll	offhand	1	0	rework		3112		45
+enchanter-scroll	offhand	1	0	ready		3112	7	50
 shaman-feather	offhand	1	0	ready		870		40
 witch-potion	offhand	1	0	ready		2332		40
 skeleton-knight-shield	offhand	2	0	ready		5162		95

@@ -7,6 +7,8 @@ import { enchanterScroll, enchanterScrollFlame, FLAME_MOUNT, FLAME_YAW } from '.
  * sheet hangs from its roll and stands on its lower edge on y = 0, its face toward +Z, the flame
  * above the roll.
  * Static: no rig, no tint slots.
+ * Avatar fit (2026-10-02): fitScale 2.2222 (the contract value) makes it about 0.25 m worn, so it clears
+ * the ground and the head in every clip; offset 4 cm carries it at the side like the books.
  */
 const ROLL = FLAME_MOUNT; // the roll center (rounded; the host shifts the flame by it)
 const DROP = 0.3005; // the roll center above the sheet's lower edge
@@ -18,7 +20,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/enchanter_001.jpg',
   texture: { size: 512 },
-  equip: { slot: 'offhand', frame: 'body', origin: [0, DROP, 0], rotate: [0, FACE, 0] },
+  equip: { slot: 'offhand', frame: 'body', origin: [0, DROP, 0], rotate: [0, FACE, 0], fitScale: 2.2222, offset: [0.04, 0.0, 0] },
   build(k) {
     addPart(k, enchanterScroll(), { pose: (s) => s.rotateY(FACE).at(0, DROP, 0), bones: null });
     addPart(k, enchanterScrollFlame(), { pose: (s) => s.at(...FLAME_MOUNT).at(-ROLL[0], -ROLL[1], -ROLL[2]).rotateY(-FLAME_YAW).rotateY(FACE).at(0, DROP, 0), bones: null });
