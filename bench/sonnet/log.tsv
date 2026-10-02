@@ -602,3 +602,7 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	boss-arena	map-p2	medium	maps20	47302	6				7.0	pass	after 1 feedback; no towers on wall
 2026-10-02	swamp	map-p2	medium	maps20	46427	10				7.0	pass	Castle Defense level 5 path; missing stilt-hut
 2026-10-02	mountain-pass	map-p2	medium	maps50	71788	11				7.0	pass	Castle Defense level 3; after 1 feedback; path blocky
+2026-10-02	gatehouse	map-p2	medium	maps50	67122	12				7.0	pass	after 1 feedback; bright grass
+2026-10-02	castle	map-p2	medium	maps50	81482	36				7.0	pass	after 1 feedback; longhouse roof covers throne corner
+2026-10-02	inn	map-p2	medium	maps50	57271	24				7.0	pass	missing hanging lantern
+2026-10-02	market-square	map-p2	medium	maps50	45625	18				7.0	pass	agent 6.5, orchestrator 7.0; palette differs from mockup

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# mmx mockups for P2 map batch 2 -> docs/map-mockups/<slug>.jpg. Usage: make-map-mocks2.sh [slug ...]
+cd "$(dirname "$0")/../.." || exit 1
+S="Cute chibi 3D game map diorama for a fantasy RPG, isometric three-quarter overhead view from about 45 degrees, the whole map as one floating tile-based diorama on a plain warm beige studio background, matte clay toy look, rounded chunky forms, soft bevels, cheerful saturated palette, soft studio lighting, no characters larger than a few small figures, no text, no UI."
+declare -A P
+P[throne-room]="A long royal hall: red carpet runner to a raised throne dais, pillars along both sides, banners, braziers, guards, a chandelier, windows."
+P[treasure-vault]="A vault of gold: piles of coins and gems, open and locked chests, a central pedestal with a relic, traps, a heavy iron door, torches."
+P[catacombs]="Narrow bone-lined tunnels meeting at a small round hall, skull niches, sarcophagi, candles, chains, iron gates, rubble, a few skeletons."
+P[tomb]="A sandstone tomb: a central sarcophagus on a dais, carved pillars, mummies, urns, a hidden lever door, sand drifts, torches, a trap corridor."
+P[portal-chamber]="A stone chamber with a large glowing portal arch at the north as the focal object, a rune circle at its base, four crystal pylons, steps, cool blue light."
+P[observatory]="A rooftop observatory: a big telescope on a platform, star charts, a brass sphere, a desk, a stair hatch, a parapet, bunting, night-blue accents."
+P[witch-hut]="A crooked witch hut with a smoking chimney, a cauldron over a fire, herb-drying racks, a garden bed of strange plants, cages, a broom, mushrooms, dead trees, a lantern path."
+P[bandit-camp]="A bandit camp beside a road: tents, a campfire with log seats, stolen loot crates and wagons, a lookout post, a barricade across the road, bedrolls, bandit characters."
+P[orc-camp]="A big orc war camp: hide tents and a longhouse, a bonfire, a spiked palisade, weapon piles, a war drum, banners, a warlord seat, skulls, dead trees, dirt and ash ground."
+P[abandoned-fort]="A broken fort: partly collapsed stone walls, a leaning watchtower, rubble, an empty barracks, a rusted gate, overgrown vines, a dry well, scattered crates."
+P[fortress]="A big stone fortress: a thick outer wall with two gate towers, an inner keep, corner towers, banners, a cobble parade ground, a moat bridge."
+P[ancient-ruin]="Overgrown temple ruins: broken columns, a fallen arch, a central altar or obelisk, mossy steps, vines, a statue, scattered tablets, trees growing through."
+P[sewer]="Brick sewer tunnels: a green-water channel with a plank walkway, grates, barrels, rats, a sluice lever, torches, moss."
+P[ice-cave]="A frozen cavern: ice spires, snow drifts, a frozen pool, blue glowing crystals, icicles, a snowy path, a frozen chest."
+P[lava-cave]="A volcanic cave: dark lava-rock ground, glowing lava channels, a stone bridge over a lava gap, obsidian spikes, a fire altar, charred bones, embers."
+P[bridge]="A river crossing: a big arched stone bridge in the middle, a toll hut, a guard post, a cobble road on both banks, reeds, a fishing boat, trees."
+P[harbor]="A busy harbor: wooden docks and piers with ships, crates, barrels, nets, a warehouse, a cobble quay, dock workers."
+P[lighthouse]="A lighthouse on a rocky headland: a tall striped tower with a lit lantern room, a keeper cottage, a stair path, cliff edges, water around, a small boat, a sunny coast."
+P[pirate-cove]="A pirate cove: a beached pirate ship, a sandy shore, half-buried treasure chests, rum barrels, tents, a skull flag, palm trees, a cave mouth."
+P[tundra]="A tundra level: snow ground, ice patches, bare dead trees and pines, boulders, a frozen pond, snowbanks, a winding path of trampled snow. A Castle Defense level: one clear path from edge to edge."
+P[desert-oasis]="A desert oasis: sand dunes, a palm-ringed pond, a nomad tent, a caravan wagon, cactus, rock arches, a dirt trail across the dunes. A Castle Defense level: one clear trail from edge to edge."
+P[canyon]="A canyon: tall red-rock walls on both sides, a winding dry riverbed path, a rope bridge, a cave mouth, dead trees, boulders, a wagon wreck. A Castle Defense level: one path from edge to edge."
+P[volcanic-field]="A volcanic field: black lava-rock ground, glowing lava streams, smoking rock cones, charred dead trees, an obsidian altar, a bridge over lava, ash. A Castle Defense level: one path from edge to edge."
+P[waterfall]="A waterfall glen: a tall cliff at the north with water flowing down into a pool, mossy rocks, stepping stones, a small wooden bridge, ferns, willow and birch trees."
+P[meadow]="A flower meadow: bright flower fields in patches, a small windmill or barn at the edge, a creek, a wooden bridge, tall grass, a picnic spot with a bench and basket."
+P[forest-village]="A forest village: round huts and cabins among big trees, plank walkways, a central fire pit, drying racks, a shared long table, lanterns, ferns."
+P[apothecary]="A herbalist shop: shelves of jars and bottles, hanging dried herbs, a counter with scales, a mortar and pestle, a small cauldron, a drying rack, warm light."
+P[armory]="An armory: weapon racks along the walls with swords, spears and shields, armor stands with plate and chainmail, a grindstone, a workbench, banners, a guard desk."
+P[temple]="A temple: a long nave with pews, a central aisle rug, an altar with candles and a holy symbol, tall pillars, stained glass windows, hanging banners, a priest."
+P[guild-hall]="An adventurers guild hall: a quest notice board, a long counter with a clerk, round tables with maps, banners on the walls, a big fireplace, a stair to rooms."
+for slug in "${@:-${!P[@]}}"; do
+  out="docs/map-mockups/$slug.jpg"
+  [ -f "$out" ] || timeout 240 mmx image generate --prompt "${P[$slug]} $S" --aspect-ratio 4:3 --out "$out" --quiet > /dev/null 2>&1
+  echo "$slug $([ -f "$out" ] && echo ok || echo FAILED)"
+done
