@@ -20,7 +20,7 @@ const HEAD_R = 0.08;
 const headCenter = { x: HEAD[0], y: HEAD[1], z: HEAD[2] };
 
 // Unit spike directions: up, down, and 6 around at 45 degrees elevation.
-const spikeDirs: number[][] = [[0, 1, 0], [0, -1, 0]];
+const spikeDirs: [number, number, number][] = [[0, 1, 0], [0, -1, 0]];
 for (let i = 0; i < 6; i++) {
   const az = (i * Math.PI) / 3;
   const e = Math.PI / 4;

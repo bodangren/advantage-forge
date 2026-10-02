@@ -64,8 +64,8 @@ export default defineAsset({
       const y0 = r * COURSE + (r === 0 ? 0 : GAP / 2);
       const y1 = (r + 1) * COURSE - (r === 1 ? 0 : GAP / 2);
       for (let i = 0; i < cuts.length - 1; i++) {
-        const x0 = cuts[i] + (i === 0 ? 0 : GAP / 2);
-        const x1 = cuts[i + 1] - (i === cuts.length - 2 ? 0 : GAP / 2);
+        const x0 = (cuts[i] ?? 0) + (i === 0 ? 0 : GAP / 2);
+        const x1 = (cuts[i + 1] ?? 0) - (i === cuts.length - 2 ? 0 : GAP / 2);
         blocks.push(
           sdf
             .box([x1 - x0, y1 - y0, WZ1 - WZ0], 0.03)
@@ -115,8 +115,9 @@ export default defineAsset({
     }
     // Open manacle under the second chain: C cuff with a hinge knuckle.
     {
-      const x = hangs[1].x;
-      const lastY = RY - 0.012 - 0.03 - 0.008 - (hangs[1].n - 1) * PITCH - 0.02;
+      const h1 = hangs[1] ?? { x: 0, n: 0 };
+      const x = h1.x;
+      const lastY = RY - 0.012 - 0.03 - 0.008 - (h1.n - 1) * PITCH - 0.02;
       const my = lastY - PITCH - 0.012;
       const cuff = sdf
         .torus(0.046, 0.016)

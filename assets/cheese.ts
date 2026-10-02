@@ -42,7 +42,7 @@ const HOLES = [
 ];
 // Inward normal of each cut face (points into the remaining cheese).
 const faceInwardNormal = (dir: number[]) =>
-  dir[0] > 0 ? { x: C30, z: -S30 } : { x: -C30, z: -S30 };
+  (dir[0] ?? 0) > 0 ? { x: C30, z: -S30 } : { x: -C30, z: -S30 };
 
 export default defineAsset({
   name: 'cheese',
@@ -90,14 +90,13 @@ export default defineAsset({
     const wedge = sdf.intersect(
       sdf.halfSpace([C30, 0, -S30], 0),
       sdf.halfSpace([-C30, 0, -S30], 0),
-      sdf.box([0.5, 0.34, 0.5]).at(0, WHEEL_CY, 0),
     );
     const wheelCutters = [wedge];
     for (const h of HOLES) {
       const n = faceInwardNormal(h.dir);
       const depth = h.r * 0.35; // shallow sphere center: a wide, round opening
-      const cx = h.dir[0] * h.s + n.x * depth;
-      const cz = h.dir[1] * h.s + n.z * depth;
+      const cx = (h.dir[0] ?? 0) * h.s + n.x * depth;
+      const cz = (h.dir[1] ?? 0) * h.s + n.z * depth;
       wheelCutters.push(sdf.sphere(h.r).at(cx, h.y, cz));
     }
     const wheelCut = sdf.subtract(wheel, ...wheelCutters);

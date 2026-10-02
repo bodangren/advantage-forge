@@ -41,8 +41,8 @@ const JAW_T = 0.02; // jaw plate thickness
 const JAW_Y = 0.03; // jaw plate mid height
 
 /** Half-disc jaw plate with a sawtooth arc, in profile space (+Y maps to +Z). */
-function jawProfile(): number[][] {
-  const pts: number[][] = [[-R, 0], [R, 0]];
+function jawProfile(): [number, number][] {
+  const pts: [number, number][] = [[-R, 0], [R, 0]];
   // Walk the arc from 180 deg to 360 deg (bulging toward -Y) with triangular teeth.
   const steps = 40;
   for (let i = 0; i <= steps; i++) {

@@ -162,17 +162,17 @@ export default defineAsset({
           : 0.17 - (0.17 - 0.12) * (1 - Math.cos(((t - 0.5) / 0.5) * Math.PI / 2));
       };
       const ys = [0.83, 1.07, 1.3];
-      const rs = [0.13, 0.17, 0.12];
+      const rs: number[] = [0.13, 0.17, 0.12];
       const bars = [];
       for (let i = 0; i < 8; i++) {
         const a = (i / 8) * Math.PI * 2 + Math.PI / 8;
         const c = Math.cos(a);
         const s = Math.sin(a);
-        const p = (j: number): [number, number, number] => [HOOK_X + c * rs[j], ys[j], s * rs[j]];
+        const p = (j: number): [number, number, number] => [HOOK_X + c * (rs[j] ?? 0), ys[j] ?? 0, s * (rs[j] ?? 0)];
         bars.push(sdf.capsule(p(0), p(1), 0.012), sdf.capsule(p(1), p(2), 0.012));
       }
       void rAt;
-      const hoops = ys.map((y, j) => sdf.torus(rs[j], 0.012).at(HOOK_X, y, 0));
+      const hoops = ys.map((y, j) => sdf.torus(rs[j] ?? 0, 0.012).at(HOOK_X, y, 0));
       const floor = sdf
         .smoothUnion(0.01, sdf.cylinder(0.125, 0.02, 0.008).at(HOOK_X, 0.81, 0), sdf.ellipsoid([0.12, 0.02, 0.12]).at(HOOK_X, 0.79, 0))
         ;

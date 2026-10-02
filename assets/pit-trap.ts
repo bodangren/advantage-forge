@@ -38,9 +38,10 @@ export default defineAsset({
       tile = tile.subtract(sdf.box([0.03, 0.06, 2.2]).at(g, TOP, 0), sdf.box([2.2, 0.06, 0.03]).at(0, TOP, g));
     }
     tile = tile.displace(0.01, (x, y, z) => noise.fbm(x * 9, y * 9, z * 9, 2));
-    const pebbles = [
+    const pebbleData: [number, number, number, number][] = [
       [0.82, 0.7, 0.06, 0], [-0.78, 0.82, 0.05, 40], [0.86, -0.3, 0.045, 80], [-0.85, -0.6, 0.055, 10], [0.2, -0.85, 0.04, 60],
-    ].map(([x, z, r, a]) => sdf.ellipsoid([r, r * 0.6, r * 0.85]).rotateY(a).at(x, TOP + r * 0.35, z));
+    ];
+    const pebbles = pebbleData.map(([x, z, r, a]) => sdf.ellipsoid([r, r * 0.6, r * 0.85]).rotateY(a).at(x, TOP + r * 0.35, z));
     const stone = sdf.union(tile, ...pebbles).paintFn((x, y, z) => {
       const n = 0.5 + 0.5 * noise.fbm(x * 8, y * 8, z * 8, 2);
       let c = mixRgb(STONE, STONE_DARK, 0.15 + 0.3 * n);
