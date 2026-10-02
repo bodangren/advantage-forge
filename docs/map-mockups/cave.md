@@ -18,12 +18,11 @@ Zones: west winding tunnel (cave-mouth, boulders, lantern) into the north sand c
 central pool with stepping stones; south-east ledge camp; east treasure nook (chest, crystals).
 Boulder walls on north, west, east; the south edge stays open.
 
-Total placements: 235
+Total placements: 201
 
 - bone-pile: 5
-- boulder: 72
+- boulder: 6
 - campfire: 2
-- cave-mouth: 1
 - chest: 1
 - crystal-cluster: 2
 - dirt-ground: 44
@@ -31,10 +30,11 @@ Total placements: 235
 - lantern: 2
 - monster-bone: 1
 - mushroom: 6
-- river-rock: 12
+- river-rock: 10
 - rock-cluster: 19
+- rock-wall: 36
 - sea-water: 16
 - stalagmite: 17
 - stepping-stone: 3
 - stone-ground: 20
-- torch-sconce: 5
+- torch-sconce: 4
