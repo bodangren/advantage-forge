@@ -628,3 +628,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	witch-hut	map-p2	medium	maps50	85000	28				6.5	reserve	after 1 feedback
 2026-10-02	abandoned-fort	map-p2	medium	maps50	44163	15				6.0	feedback	low dark walls
 2026-10-02	abandoned-fort	map-p2	medium	maps50	90000	30				6.5	reserve	after 1 feedback; broken-wall colour mismatch
+2026-10-02	temple	map-p2	medium	maps50	47442	19				7.0	pass
