@@ -193,7 +193,7 @@ export default defineAsset({
       const a = (i / ringH.length) * Math.PI * 2 + 0.4;
       return [Math.cos(a) * RING, Math.sin(a) * RING, h, 0.042, -Math.cos(a) * 0.03, -Math.sin(a) * 0.03] as const;
     });
-    const tongue = (t: readonly number[], scale: number): Sdf => {
+    const tongue = (t: readonly [number, number, number, number, number, number], scale: number): Sdf => {
       const [x, z, h, r, lx, lz] = t;
       const y0 = 0.045;
       return sdf.chain(

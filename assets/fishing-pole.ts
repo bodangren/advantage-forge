@@ -53,7 +53,7 @@ export default defineAsset({
     k.body('knob', knob, { color: '#8a5a35', roughness: 0.75, metalness: 0 });
 
     // Line from the tip, arcing out to +X and down, in the front-view plane.
-    const tip = [SHIFT - H * Math.sin((LEAN * Math.PI) / 180), 0.02 + H * Math.cos((LEAN * Math.PI) / 180), 0];
+    const tip: [number, number, number] = [SHIFT - H * Math.sin((LEAN * Math.PI) / 180), 0.02 + H * Math.cos((LEAN * Math.PI) / 180), 0];
     const dx = 0.15;
     const line = sdf.chain(
       [

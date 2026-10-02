@@ -24,8 +24,8 @@ const along = (u: number) => {
   const f = Math.min(PTS.length - 1.0001, u * (PTS.length - 1));
   const i = Math.floor(f);
   const t = f - i;
-  const a = PTS[i];
-  const b = PTS[i + 1];
+  const a = PTS[i] as [number, number, number, number];
+  const b = PTS[i + 1] as [number, number, number, number];
   return {
     x: a[0] + (b[0] - a[0]) * t,
     y: a[1] + (b[1] - a[1]) * t,
@@ -67,7 +67,7 @@ export default defineAsset({
     const cknob = sdf.sphere(0.02).at(0.08, 0.5, 0.085);
     k.body('reel', sdf.union(disc, hub, arm, cknob), { color: '#d84a3a', roughness: 0.5, metalness: 0 });
 
-    const tip = PTS[4];
+    const tip = PTS[4] as [number, number, number, number];
     const line = sdf.chain(
       [
         [tip[0], tip[1], 0, 0.01],

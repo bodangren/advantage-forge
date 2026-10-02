@@ -236,7 +236,7 @@ export default defineAsset({
     );
     const applePaint = (x: number, y: number, z: number) => {
       // Per-apple shading relative to the nearest apple centre.
-      let best = apples[0];
+      let best = apples[0]!;
       let bd = Infinity;
       for (const a of apples) {
         const d = (x - a[0]) ** 2 + (y - a[1]) ** 2 + (z - a[2]) ** 2;
@@ -281,8 +281,8 @@ export default defineAsset({
     // ------------------------------------------------------------------ carrots
     // Six tapered roots leaning on the heap, thick ends up with green tufts,
     // tips buried in the apple layers. Rings painted along each root.
-    const carrot = (p0: readonly number[], p2: readonly number[]) => {
-      const mid = [(p0[0] + p2[0]) / 2, (p0[1] + p2[1]) / 2 + 0.018, (p0[2] + p2[2]) / 2];
+    const carrot = (p0: readonly [number, number, number], p2: readonly [number, number, number]) => {
+      const mid: [number, number, number] = [(p0[0] + p2[0]) / 2, (p0[1] + p2[1]) / 2 + 0.018, (p0[2] + p2[2]) / 2];
       return sdf.chain(
         [
           [p0[0], p0[1], p0[2], 0.027],
@@ -292,7 +292,7 @@ export default defineAsset({
         0.008,
       );
     };
-    const carrotEnds: readonly (readonly number[])[] = [
+    const carrotEnds: readonly (readonly [number, number, number])[] = [
       [-0.06, 0.78, 0.3],
       [0.25, 0.76, 0.18],
       [-0.28, 0.72, -0.05],
@@ -300,7 +300,7 @@ export default defineAsset({
       [-0.17, 0.72, -0.3],
       [0.19, 0.73, -0.32],
     ];
-    const carrotTips: readonly (readonly number[])[] = [
+    const carrotTips: readonly (readonly [number, number, number])[] = [
       [-0.03, 0.55, 0.48],
       [0.33, 0.52, 0.35],
       [-0.34, 0.5, 0.1],
@@ -309,7 +309,7 @@ export default defineAsset({
       [0.25, 0.5, -0.17],
     ];
     const carrots = sdf.union(
-      ...carrotEnds.map((p0, i) => carrot(p0, carrotTips[i])),
+      ...carrotEnds.map((p0, i) => carrot(p0, carrotTips[i] ?? p0)),
     );
     const carrotPaint = (x: number, y: number, z: number) => {
       const band = Math.pow(0.5 + 0.5 * Math.cos((x + y * 0.6 + z) * 88), 3);
@@ -352,7 +352,7 @@ export default defineAsset({
       ),
     );
     const headPaint = (x: number, y: number, z: number) => {
-      let best = cabbages[0];
+      let best = cabbages[0]!;
       let bd = Infinity;
       for (const a of cabbages) {
         const d = (x - a[0]) ** 2 + (y - a[1]) ** 2 + (z - a[2]) ** 2;
@@ -427,7 +427,7 @@ export default defineAsset({
     for (const [cx, cy, cz, az, lean, s] of leafSpecs) leaves.push(leafAt(cx, cy, cz, az, lean, s));
     // Carrot top tufts: three thin blades fanning from each thick end.
     for (const p of carrotEnds) {
-      for (const [dx, dz] of [
+      for (const [dx, dz] of <[number, number][]>[
         [0.014, 0.008],
         [-0.012, 0.012],
         [0.002, -0.015],
