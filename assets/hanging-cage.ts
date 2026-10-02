@@ -50,7 +50,7 @@ const ironBump = (x: number, y: number, z: number) =>
 // Bar centerline radius at height y: pinched foot, fat belly, tight crown.
 // Control radii the bands below are matched to.
 function barR(y: number) {
-  const stops: [number, number][] = [
+  const stops: [number, number][] & { 0: [number, number] } = [
     [1.05, 0.175],
     [1.16, 0.193],
     [1.28, 0.2],
@@ -59,15 +59,18 @@ function barR(y: number) {
   ];
   if (y <= stops[0][0]) return stops[0][1];
   for (let i = 0; i < stops.length - 1; i++) {
-    const [y0, r0] = stops[i];
-    const [y1, r1] = stops[i + 1];
+    const a = stops[i];
+    const b = stops[i + 1];
+    if (!a || !b) continue;
+    const [y0, r0] = a;
+    const [y1, r1] = b;
     if (y <= y1) {
       const t = (y - y0) / (y1 - y0);
       const s = t * t * (3 - 2 * t);
       return r0 + (r1 - r0) * s;
     }
   }
-  return stops[stops.length - 1][1];
+  return stops[stops.length - 1]?.[1] ?? 0.075;
 }
 
 export default defineAsset({

@@ -146,9 +146,10 @@ export default defineAsset({
     const rivetR = [0.158, 0.184]; // outer wall radius at the low/high strap
     const rivets: ReturnType<typeof sdf.sphere>[] = [];
     [BAND_LO, BAND_HI].forEach((y, bi) => {
+      const rr = rivetR[bi] ?? 0.184;
       for (let i = 0; i < 4; i++) {
         const a = (i / 4) * Math.PI * 2 + (bi === 0 ? Math.PI / 4 : 0);
-        rivets.push(sdf.sphere(0.009).at(Math.cos(a) * rivetR[bi], y, Math.sin(a) * rivetR[bi]));
+        rivets.push(sdf.sphere(0.009).at(Math.cos(a) * rr, y, Math.sin(a) * rr));
       }
     });
     const straps = sdf

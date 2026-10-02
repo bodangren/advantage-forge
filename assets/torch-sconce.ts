@@ -48,8 +48,11 @@ const glow = (x: number, y: number, z: number) => {
   const t = Math.max(0, 1 - (d - 0.13) / 0.3);
   return t * t;
 };
-const warmLight = (c: readonly number[], g: number, k: readonly number[]) =>
-  [c[0] * (1 + k[0] * g), c[1] * (1 + k[1] * g), c[2] * (1 + k[2] * g)] as const;
+const warmLight = (
+  c: readonly [number, number, number],
+  g: number,
+  k: readonly [number, number, number],
+) => [c[0] * (1 + k[0] * g), c[1] * (1 + k[1] * g), c[2] * (1 + k[2] * g)] as const;
 
 // ---------------------------------------------------------------- brick pattern
 const ROW = 0.15; // course height
