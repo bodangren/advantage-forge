@@ -439,5 +439,241 @@
   "source": {
     "file": "content/primary/bank-4/b001.json",
     "translationsGenerated": true
+  },
+  "audio": {
+    "article": "article.mp3",
+    "sentences": [
+      {
+        "text": "Mia and Leo are at the village funfair.",
+        "start": 0,
+        "end": 3.197,
+        "paragraph": 0
+      },
+      {
+        "text": "A band plays near the big tree.",
+        "start": 3.647,
+        "end": 6.158,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Look, Leo! That's my aunt,\" says Mia.",
+        "start": 6.608,
+        "end": 10.758,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Which one?\" asks Leo.",
+        "start": 11.208,
+        "end": 13.745,
+        "paragraph": 0
+      },
+      {
+        "text": "\"She's the woman with the red hat. Her name is Anna.\"",
+        "start": 14.195,
+        "end": 18.135,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Anna is Grandma's daughter, and I'm her granddaughter.\"",
+        "start": 18.585,
+        "end": 23.134,
+        "paragraph": 0
+      },
+      {
+        "text": "\"So Grandma and Grandpa are your grandparents,\" says Leo.",
+        "start": 23.584,
+        "end": 28.928,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Yes! They're here with a big blue bag.\"",
+        "start": 29.378,
+        "end": 32.63,
+        "paragraph": 0
+      },
+      {
+        "text": "\"I'm very happy to see them,\" says Mia.",
+        "start": 33.08,
+        "end": 36.892,
+        "paragraph": 0
+      },
+      {
+        "text": "The band is very loud.",
+        "start": 37.792,
+        "end": 40.229,
+        "paragraph": 1
+      },
+      {
+        "text": "\"What? I can't hear you!\" shouts Leo.",
+        "start": 40.679,
+        "end": 44.556,
+        "paragraph": 1
+      },
+      {
+        "text": "\"It isn't noise, Leo. It's music!\" Mia laughs.",
+        "start": 45.006,
+        "end": 49.665,
+        "paragraph": 1
+      },
+      {
+        "text": "Aunt Anna plays the guitar and dances.",
+        "start": 50.115,
+        "end": 53.338,
+        "paragraph": 1
+      },
+      {
+        "text": "She jumps up and down.",
+        "start": 53.788,
+        "end": 55.705,
+        "paragraph": 1
+      },
+      {
+        "text": "Then her red hat flies off her head.",
+        "start": 56.155,
+        "end": 58.906,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Oh no! It's coming to us!\" says Mia.",
+        "start": 59.356,
+        "end": 63.68,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Don't worry, I'm quick,\" says Leo.",
+        "start": 64.13,
+        "end": 67.905,
+        "paragraph": 1
+      },
+      {
+        "text": "He puts up both hands.",
+        "start": 68.355,
+        "end": 70.198,
+        "paragraph": 1
+      },
+      {
+        "text": "Leo catches the hat!",
+        "start": 71.098,
+        "end": 72.997,
+        "paragraph": 2
+      },
+      {
+        "text": "Grandma and Grandpa clap and smile.",
+        "start": 73.447,
+        "end": 76.491,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Thank you, Leo,\" says Aunt Anna.",
+        "start": 76.941,
+        "end": 79.717,
+        "paragraph": 2
+      },
+      {
+        "text": "\"We're a good band, but we aren't good at hats!\"",
+        "start": 80.167,
+        "end": 83.958,
+        "paragraph": 2
+      },
+      {
+        "text": "\"I'm not a good guitar player,\" says Leo.",
+        "start": 84.408,
+        "end": 87.775,
+        "paragraph": 2
+      },
+      {
+        "text": "\"But I can catch!\"",
+        "start": 88.225,
+        "end": 89.747,
+        "paragraph": 2
+      },
+      {
+        "text": "Aunt Anna gives him a sweet.",
+        "start": 90.197,
+        "end": 92.659,
+        "paragraph": 2
+      },
+      {
+        "text": "Now the band plays a new song.",
+        "start": 93.109,
+        "end": 95.734,
+        "paragraph": 2
+      },
+      {
+        "text": "Mia and Leo sing with them.",
+        "start": 96.184,
+        "end": 98.463,
+        "paragraph": 2
+      },
+      {
+        "text": "It's a happy day.",
+        "start": 98.913,
+        "end": 100.512,
+        "paragraph": 2
+      }
+    ],
+    "words": "words.mp3",
+    "wordTimes": [
+      {
+        "text": "aunt",
+        "start": 0,
+        "end": 0.771
+      },
+      {
+        "text": "daughter",
+        "start": 1.471,
+        "end": 2.333
+      },
+      {
+        "text": "granddaughter",
+        "start": 3.033,
+        "end": 4.236
+      },
+      {
+        "text": "grandparent",
+        "start": 4.936,
+        "end": 6.278
+      },
+      {
+        "text": "band",
+        "start": 6.978,
+        "end": 7.986
+      },
+      {
+        "text": "catch",
+        "start": 8.686,
+        "end": 9.463
+      },
+      {
+        "text": "loud",
+        "start": 10.163,
+        "end": 10.771
+      },
+      {
+        "text": "noise",
+        "start": 11.471,
+        "end": 12.47
+      },
+      {
+        "text": "shout",
+        "start": 13.17,
+        "end": 14.063
+      },
+      {
+        "text": "laugh",
+        "start": 14.763,
+        "end": 15.56
+      },
+      {
+        "text": "sing",
+        "start": 16.26,
+        "end": 17.267
+      },
+      {
+        "text": "play",
+        "start": 17.967,
+        "end": 18.86
+      }
+    ]
   }
 }

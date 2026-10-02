@@ -208,6 +208,29 @@
   font-size: 14px;
   font-weight: 700;
 }
+.sent {
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.sent.on {
+  background: #fff1a8;
+  box-shadow: 0 0 0 3px #fff1a8;
+}
+.listen-all {
+  border: 0;
+  border-radius: 99px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  background: var(--purple);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+}
+.listen-all.playing,
+.para .tools button.playing {
+  background: #ffd24a;
+  color: #3a2a00;
+}
 .para.flash {
   animation: flash 1.2s ease;
 }

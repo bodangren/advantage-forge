@@ -45,7 +45,7 @@ export const manifest = validateCartridge3DManifest({
   inputMode: 'story',
   simulation: 'realtime',
   orientation: 'portrait',
-  levels: ['A0', 'A0+', 'A1'],
+  levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
   requiredAssetBindings: [...FILES_2D],
   requiredModelBindings: [],

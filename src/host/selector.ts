@@ -7,7 +7,7 @@ import { baseLevel, type StoryIndexEntry, type StoryInput, type Translate } from
 import { esc } from '../apk3d/hud/index.js';
 import { fits, GAMES, playable, type GameEntry } from './registry.js';
 
-const LEVELS = ['A0', 'A1', 'A2'] as const;
+const LEVELS = ['Pre-A1', 'A0', 'A1', 'A2'] as const;
 /** The six best-reviewed heroes (docs/character-reviews.json), in the order the lobby shows them. */
 export const HEROES = ['knight', 'wizard', 'cleric', 'adventurer', 'ranger', 'paladin'] as const;
 const HERO_ICON: Record<string, string> = { knight: '🛡️', wizard: '🔥', cleric: '✨', adventurer: '🧭', ranger: '🏹', paladin: '⚜️' };

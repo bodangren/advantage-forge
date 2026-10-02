@@ -431,5 +431,253 @@
   "source": {
     "file": "content/primary/bank-3/b001.json",
     "translationsGenerated": true
+  },
+  "audio": {
+    "article": "article.mp3",
+    "sentences": [
+      {
+        "text": "Mia is at Lily's house.",
+        "start": 0,
+        "end": 2.244,
+        "paragraph": 0
+      },
+      {
+        "text": "They play an animal game.",
+        "start": 2.694,
+        "end": 4.253,
+        "paragraph": 0
+      },
+      {
+        "text": "They have fun.",
+        "start": 4.703,
+        "end": 6.242,
+        "paragraph": 0
+      },
+      {
+        "text": "\"I am a big bear,\" says Mia.",
+        "start": 6.692,
+        "end": 9.996,
+        "paragraph": 0
+      },
+      {
+        "text": "Her body is big and brown.",
+        "start": 10.446,
+        "end": 13.45,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Look at my big arms!\" says Mia.",
+        "start": 13.9,
+        "end": 16.743,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Now I am a bat,\" says Lily.",
+        "start": 17.193,
+        "end": 20.642,
+        "paragraph": 0
+      },
+      {
+        "text": "She opens her arms and runs.",
+        "start": 21.092,
+        "end": 23.559,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Look at me, Mia!\"",
+        "start": 24.009,
+        "end": 25.713,
+        "paragraph": 0
+      },
+      {
+        "text": "\"You are a good bat!\" says Mia.",
+        "start": 26.163,
+        "end": 29.474,
+        "paragraph": 0
+      },
+      {
+        "text": "Pip comes to the room.",
+        "start": 30.374,
+        "end": 32.28,
+        "paragraph": 1
+      },
+      {
+        "text": "He sees the big bear.",
+        "start": 32.73,
+        "end": 34.587,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Woof! Woof!\" says Pip.",
+        "start": 35.037,
+        "end": 38.453,
+        "paragraph": 1
+      },
+      {
+        "text": "Mia stops.",
+        "start": 38.903,
+        "end": 40.199,
+        "paragraph": 1
+      },
+      {
+        "text": "Pip runs behind the sofa.",
+        "start": 40.649,
+        "end": 42.755,
+        "paragraph": 1
+      },
+      {
+        "text": "He looks at Mia with big eyes.",
+        "start": 43.205,
+        "end": 45.863,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Is Pip sad?\" asks Lily.",
+        "start": 46.313,
+        "end": 49.084,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Pip, it is me,\" says Mia.",
+        "start": 49.534,
+        "end": 52.465,
+        "paragraph": 1
+      },
+      {
+        "text": "\"It is a game!\"",
+        "start": 52.915,
+        "end": 54.568,
+        "paragraph": 1
+      },
+      {
+        "text": "Mia sits on the floor.",
+        "start": 55.468,
+        "end": 57.625,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Come here, Pip,\" she says.",
+        "start": 58.075,
+        "end": 60.522,
+        "paragraph": 2
+      },
+      {
+        "text": "Pip looks at her face.",
+        "start": 60.972,
+        "end": 62.569,
+        "paragraph": 2
+      },
+      {
+        "text": "Then he comes to her.",
+        "start": 63.019,
+        "end": 64.772,
+        "paragraph": 2
+      },
+      {
+        "text": "Mia says, \"Sorry, Pip.\"",
+        "start": 65.222,
+        "end": 68.014,
+        "paragraph": 2
+      },
+      {
+        "text": "She holds his small head.",
+        "start": 68.464,
+        "end": 70.787,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Woof!\" says Pip.",
+        "start": 71.237,
+        "end": 73.434,
+        "paragraph": 2
+      },
+      {
+        "text": "Pip is happy now.",
+        "start": 73.884,
+        "end": 75.603,
+        "paragraph": 2
+      },
+      {
+        "text": "Lily smiles.",
+        "start": 76.053,
+        "end": 77.727,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Is Pip a bear?\" asks Lily.",
+        "start": 78.177,
+        "end": 81.068,
+        "paragraph": 2
+      },
+      {
+        "text": "\"No, Pip is a dog!\" says Mia.",
+        "start": 81.518,
+        "end": 84.737,
+        "paragraph": 2
+      }
+    ],
+    "words": "words.mp3",
+    "wordTimes": [
+      {
+        "text": "animal",
+        "start": 0,
+        "end": 0.819
+      },
+      {
+        "text": "bear",
+        "start": 1.519,
+        "end": 2.322
+      },
+      {
+        "text": "bat",
+        "start": 3.022,
+        "end": 3.616
+      },
+      {
+        "text": "arm",
+        "start": 4.316,
+        "end": 5.166
+      },
+      {
+        "text": "body",
+        "start": 5.866,
+        "end": 6.783
+      },
+      {
+        "text": "sofa",
+        "start": 7.483,
+        "end": 8.602
+      },
+      {
+        "text": "floor",
+        "start": 9.302,
+        "end": 10.29
+      },
+      {
+        "text": "eye",
+        "start": 10.99,
+        "end": 11.59
+      },
+      {
+        "text": "face",
+        "start": 12.29,
+        "end": 13.084
+      },
+      {
+        "text": "head",
+        "start": 13.784,
+        "end": 14.678
+      },
+      {
+        "text": "sorry",
+        "start": 15.378,
+        "end": 16.335
+      },
+      {
+        "text": "game",
+        "start": 17.035,
+        "end": 17.81
+      }
+    ]
   }
 }

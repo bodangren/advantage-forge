@@ -4,7 +4,7 @@
  * mode (from a game) it opens at a paragraph over the paused game and returns to it.
  */
 import type { StoryInput, Translate } from '../apk3d/contracts/index.js';
-import { canSpeak, speak, stopSpeaking } from '../apk3d/audio/index.js';
+import { canSpeak, ClipPlayer, speak, stopSpeaking } from '../apk3d/audio/index.js';
 import { esc } from '../apk3d/hud/index.js';
 
 type Word = StoryInput['vocabulary'][number];
@@ -20,6 +20,9 @@ export interface ReaderHandlers {
 
 export class Reader {
   private story: StoryInput | null = null;
+  private readonly clips = new ClipPlayer();
+  /** The button whose read-aloud is playing (a second tap stops it). */
+  private playing: HTMLElement | null = null;
   private readonly gloss: HTMLElement;
 
   constructor(
@@ -37,7 +40,7 @@ export class Reader {
       const target = e.target as HTMLElement;
       if (target.closest('.close')) this.gloss.classList.remove('on');
       const say = target.closest<HTMLElement>('[data-say]');
-      if (say) void speak(say.dataset.say ?? '', 0.75);
+      if (say) this.sayWord(say.dataset.say ?? '');
     });
   }
 
@@ -60,6 +63,23 @@ export class Reader {
     return out + esc(text.slice(last));
   }
 
+  /** The paragraph cut at its recorded sentences: `sentence` is the index in `audio.sentences`. */
+  private segments(story: StoryInput, p: number): { text: string; sentence?: number }[] {
+    const text = story.paragraphs[p]!.text;
+    const out: { text: string; sentence?: number }[] = [];
+    let cursor = 0;
+    story.audio?.sentences.forEach((s, sentence) => {
+      if (s.paragraph !== p) return;
+      const at = text.indexOf(s.text, cursor);
+      if (at < 0) return;
+      if (at > cursor) out.push({ text: text.slice(cursor, at) });
+      out.push({ text: s.text, sentence });
+      cursor = at + s.text.length;
+    });
+    if (cursor < text.length || out.length === 0) out.push({ text: text.slice(cursor) });
+    return out;
+  }
+
   /** `gameTitle` names the game on the end button in read mode. */
   show(story: StoryInput, mode: 'read' | 'lookback', gameTitle: string, paragraph?: number): void {
     const t = this.t;
@@ -70,8 +90,14 @@ export class Reader {
         const image = story.images[i];
         const img = image ? `<img src="${esc(this.file(story.id, image))}" alt="" loading="${i ? 'lazy' : 'eager'}" />` : '';
         const tr = p.translation ? `<div class="th" hidden>${esc(p.translation)}</div>` : '';
-        const tools = [canSpeak ? `<button data-read="${i}">${esc(t('host.reader.readToMe'))}</button>` : '', p.translation ? `<button data-th="${i}">${esc(t('host.reader.thai'))}</button>` : ''].join('');
-        return `<section class="para" data-p="${i}">${img}<p>${this.markup(p.text, story.vocabulary, re)}</p>${tr}<div class="tools">${tools}</div></section>`;
+        const body = this.segments(story, i)
+          .map((seg) => {
+            const html = this.markup(seg.text, story.vocabulary, re);
+            return seg.sentence === undefined ? html : `<span class="sent" data-s="${seg.sentence}">${html}</span>`;
+          })
+          .join('');
+        const tools = [canSpeak || story.audio ? `<button data-read="${i}">${esc(t('host.reader.readToMe'))}</button>` : '', p.translation ? `<button data-th="${i}">${esc(t('host.reader.thai'))}</button>` : ''].join('');
+        return `<section class="para" data-p="${i}">${img}<p>${body}</p>${tr}<div class="tools">${tools}</div></section>`;
       })
       .join('');
     const end =
@@ -86,6 +112,7 @@ export class Reader {
       </div>
       <div class="page">
         <div class="hint">${mode === 'read' ? t('host.reader.readHint') : esc(t('host.reader.lookHint'))}</div>
+        ${story.audio ? `<button class="listen-all" data-read-all>${esc(t('host.reader.listenAll'))}</button>` : ''}
         ${paras}
         ${end}
       </div>`;
@@ -101,6 +128,7 @@ export class Reader {
   }
 
   hide(): void {
+    this.stopReading();
     stopSpeaking();
     this.gloss.classList.remove('on');
   }
@@ -123,10 +151,19 @@ export class Reader {
       this.on.page();
       return;
     }
+    const all = target.closest<HTMLElement>('[data-read-all]');
+    if (all) {
+      void this.readAloud(all, 0, story.paragraphs.length - 1);
+      return;
+    }
     const read = target.closest<HTMLElement>('[data-read]');
     if (read) {
-      const p = story.paragraphs[Number(read.dataset.read)];
-      if (p) void speak(p.text);
+      const n = Number(read.dataset.read);
+      if (story.audio) void this.readAloud(read, n, n);
+      else {
+        const p = story.paragraphs[n];
+        if (p) void speak(p.text);
+      }
       return;
     }
     if (target.closest('[data-next]')) {
@@ -138,6 +175,51 @@ export class Reader {
       this.hide();
       this.on.back();
     }
+  }
+
+  /** Stops the recording and clears the sentence mark. */
+  private stopReading(): void {
+    this.clips.stop();
+    this.playing?.classList.remove('playing');
+    this.playing = null;
+    this.el.querySelectorAll('.sent.on').forEach((n) => n.classList.remove('on'));
+  }
+
+  /** Plays the recording from the first sentence of paragraph `from` to the last of `to`, marking the sentence. */
+  private async readAloud(button: HTMLElement, from: number, to: number): Promise<void> {
+    const story = this.story;
+    const audio = story?.audio;
+    if (!story || !audio) return;
+    const stopping = this.playing === button;
+    this.stopReading();
+    if (stopping) return;
+    const first = audio.sentences.findIndex((s) => s.paragraph >= from && s.paragraph <= to);
+    const last = audio.sentences.findLastIndex((s) => s.paragraph >= from && s.paragraph <= to);
+    if (first < 0) return;
+    this.playing = button;
+    button.classList.add('playing');
+    let mark = -1;
+    await this.clips.play(this.file(story.id, audio.article), audio.sentences[first]!.start, audio.sentences[last]!.end, (time) => {
+      const now = audio.sentences.findIndex((s, i) => i >= first && i <= last && time >= s.start - 0.05 && time < s.end + 0.2);
+      if (now < 0 || now === mark) return;
+      mark = now;
+      this.el.querySelectorAll('.sent.on').forEach((n) => n.classList.remove('on'));
+      const node = this.el.querySelector<HTMLElement>(`.sent[data-s="${now}"]`);
+      node?.classList.add('on');
+      if (from !== to) node?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+    if (this.playing === button) this.stopReading();
+  }
+
+  /** A glossary word: the recorded word when the story has it, else the browser voice. */
+  private sayWord(term: string): void {
+    const story = this.story;
+    const audio = story?.audio;
+    const key = term.toLowerCase();
+    const hit = audio?.wordTimes?.find((w) => w.text.toLowerCase() === key) ?? audio?.wordTimes?.find((w) => key.startsWith(w.text.toLowerCase()) || w.text.toLowerCase().startsWith(key));
+    this.stopReading();
+    if (story && audio?.words && hit) void this.clips.play(this.file(story.id, audio.words), hit.start, hit.end);
+    else void speak(term, 0.75);
   }
 
   private showGloss(w: Word): void {

@@ -364,5 +364,205 @@
   "source": {
     "file": "content/primary/bank-1/b001.json",
     "translationsGenerated": true
+  },
+  "audio": {
+    "article": "article.mp3",
+    "sentences": [
+      {
+        "text": "Lily has a big toy box.",
+        "start": 0,
+        "end": 2.614,
+        "paragraph": 0
+      },
+      {
+        "text": "It is in her bedroom.",
+        "start": 3.064,
+        "end": 4.703,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Mia, look!\" says Lily.",
+        "start": 5.153,
+        "end": 8.541,
+        "paragraph": 0
+      },
+      {
+        "text": "\"How many animals?\" asks Mia.",
+        "start": 8.991,
+        "end": 12.362,
+        "paragraph": 0
+      },
+      {
+        "text": "Lily counts.",
+        "start": 12.812,
+        "end": 14.44,
+        "paragraph": 0
+      },
+      {
+        "text": "\"One bear.\"",
+        "start": 14.89,
+        "end": 16.294,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Two bats.\"",
+        "start": 16.744,
+        "end": 17.906,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Three frogs.\"",
+        "start": 18.356,
+        "end": 19.804,
+        "paragraph": 0
+      },
+      {
+        "text": "\"Four ducks.\"",
+        "start": 20.704,
+        "end": 22.055,
+        "paragraph": 1
+      },
+      {
+        "text": "Mia claps.",
+        "start": 22.505,
+        "end": 24.116,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Ten animals!\" says Mia.",
+        "start": 24.566,
+        "end": 27.36,
+        "paragraph": 1
+      },
+      {
+        "text": "Lily looks in the box again.",
+        "start": 27.81,
+        "end": 30.06,
+        "paragraph": 1
+      },
+      {
+        "text": "She sees an alien.",
+        "start": 30.51,
+        "end": 32.597,
+        "paragraph": 1
+      },
+      {
+        "text": "It is green.",
+        "start": 33.047,
+        "end": 34.389,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Is it a toy?\" asks Mia.",
+        "start": 34.839,
+        "end": 37.494,
+        "paragraph": 1
+      },
+      {
+        "text": "\"Yes, it is,\" says Lily.",
+        "start": 37.944,
+        "end": 40.442,
+        "paragraph": 1
+      },
+      {
+        "text": "Then Lily sees balloons.",
+        "start": 41.342,
+        "end": 44.12,
+        "paragraph": 2
+      },
+      {
+        "text": "\"How many balloons?\" asks Lily.",
+        "start": 44.57,
+        "end": 47.277,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Five red balloons and one blue balloon.\"",
+        "start": 47.727,
+        "end": 50.706,
+        "paragraph": 2
+      },
+      {
+        "text": "\"Six balloons!\" says Lily.",
+        "start": 51.156,
+        "end": 54.512,
+        "paragraph": 2
+      },
+      {
+        "text": "Lily and Mia are happy.",
+        "start": 54.962,
+        "end": 57.26,
+        "paragraph": 2
+      },
+      {
+        "text": "\"I like my toys,\" says Lily.",
+        "start": 57.71,
+        "end": 60.457,
+        "paragraph": 2
+      }
+    ],
+    "words": "words.mp3",
+    "wordTimes": [
+      {
+        "text": "toy",
+        "start": 0,
+        "end": 0.922
+      },
+      {
+        "text": "box",
+        "start": 1.622,
+        "end": 2.672
+      },
+      {
+        "text": "bedroom",
+        "start": 3.372,
+        "end": 4.106
+      },
+      {
+        "text": "count",
+        "start": 4.806,
+        "end": 5.686
+      },
+      {
+        "text": "many",
+        "start": 6.386,
+        "end": 7.122
+      },
+      {
+        "text": "animal",
+        "start": 7.822,
+        "end": 8.67
+      },
+      {
+        "text": "bear",
+        "start": 9.37,
+        "end": 10.165
+      },
+      {
+        "text": "bat",
+        "start": 10.865,
+        "end": 11.693
+      },
+      {
+        "text": "frog",
+        "start": 12.393,
+        "end": 13.419
+      },
+      {
+        "text": "alien",
+        "start": 14.119,
+        "end": 15.125
+      },
+      {
+        "text": "balloon",
+        "start": 15.825,
+        "end": 17.136
+      },
+      {
+        "text": "clap",
+        "start": 17.836,
+        "end": 18.606
+      }
+    ]
   }
 }

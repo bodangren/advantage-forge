@@ -27,6 +27,7 @@ export default {
       readHint: 'Read the story. Tap a <b>yellow word</b> to see what it means.',
       lookHint: 'Look for the answer in the story.',
       readToMe: '🔊 Read to me',
+      listenAll: '🎧 Listen to the whole story',
       thai: 'ไทย',
       finished: 'You finished the story! Now use its words in the game.',
       next: 'Play {game} ▶',

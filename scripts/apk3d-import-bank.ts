@@ -9,7 +9,7 @@
  * article per level (bank-1 to bank-4). These are not in the published workbooks.
  * The workbook stories stay in tests/fixtures/stories (scripts/apk3d-import.ts).
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import sharp from 'sharp';
 import {
@@ -48,6 +48,12 @@ export interface LessonPackage {
   bank: { mcq: { id: string; question: string; options: string[]; answer: string; evidence: string }[] };
   thai: { paragraphs: Pair[][] };
   images: { position: string; file: string }[];
+  audio?: {
+    article?: string;
+    sentences?: { text: string; startTime: number; endTime: number }[];
+    words?: string;
+    wordTimes?: { text: string; startTime: number; endTime: number }[];
+  };
   approval: { thai: { status: string } };
 }
 
@@ -59,6 +65,31 @@ function blankOut(sentence: string, word: string): StoryFill | null {
   if (!m) return null;
   const blanked = `${sentence.slice(0, m.index)}___${sentence.slice(m.index + m[0].length)}`;
   return blanked.split('___').length === 2 ? { id: '', sentence: blanked, answer: m[0] } : null;
+}
+
+const span = (s: { text: string; startTime: number; endTime: number }) => ({ text: s.text, start: s.startTime, end: s.endTime });
+
+/** The read-aloud block: each sentence tied to its paragraph, in order; null when the package has none. */
+function buildAudio(id: string, pkg: LessonPackage, paragraphTexts: readonly string[]) {
+  const a = pkg.audio;
+  if (!a?.article || !a.sentences?.length) return null;
+  let paragraph = 0;
+  let cursor = 0;
+  const sentences = a.sentences.map((s) => {
+    for (; paragraph < paragraphTexts.length; paragraph++, cursor = 0) {
+      const at = paragraphTexts[paragraph]!.indexOf(s.text, cursor);
+      if (at >= 0) {
+        cursor = at + s.text.length;
+        return { ...span(s), paragraph };
+      }
+    }
+    throw new Error(`${id}: audio sentence "${s.text}" is not in the story text, in order`);
+  });
+  return {
+    article: 'article.mp3',
+    sentences,
+    ...(a.words && a.wordTimes?.length ? { words: 'words.mp3', wordTimes: a.wordTimes.map(span) } : {}),
+  };
 }
 
 /** A validated StoryInput from one lesson package; `imageCount` pictures are named img-N.webp. */
@@ -106,6 +137,7 @@ export function buildBankStory(id: string, file: string, pkg: LessonPackage, ima
     };
   });
 
+  const audio = buildAudio(id, pkg, paragraphTexts);
   const level = LEVELS[pkg.meta.cefrLevel];
   if (!level) throw new Error(`${id}: no demo level for "${pkg.meta.cefrLevel}"`);
   return parseStoryInput(
@@ -123,6 +155,7 @@ export function buildBankStory(id: string, file: string, pkg: LessonPackage, ima
       sentences,
       fills,
       questions,
+      ...(audio ? { audio } : {}),
       source: {
         file: `content/primary/${file}.json`,
         ...(pkg.approval.thai.status === 'approved' ? {} : { translationsGenerated: true }),
@@ -159,6 +192,11 @@ async function main(): Promise<void> {
       if (existsSync(target) && !FORCE) continue;
       await sharp(source).resize({ width: IMAGE_WIDTH, withoutEnlargement: true }).webp({ quality: IMAGE_QUALITY }).toFile(target);
       console.log(`  ${target.split('/').pop()}`);
+    }
+    for (const [name, source] of [['article.mp3', pkg.audio?.article], ['words.mp3', pkg.audio?.words]] as const) {
+      const from = source ? join(PACKAGES, source) : '';
+      if (from && existsSync(from)) copyFileSync(from, join(dir, name));
+      else if (pkg.audio?.[name === 'article.mp3' ? 'article' : 'words']) throw new Error(`${id}: the package lists ${name}, but the file is missing`);
     }
     const built = buildBankStory(id, file, pkg, files.length);
     writeFileSync(join(dir, 'story.json'), JSON.stringify(built, null, 2) + '\n');

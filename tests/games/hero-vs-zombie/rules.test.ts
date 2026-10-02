@@ -58,7 +58,7 @@ describe('content', () => {
       inputMode: 'story',
       simulation: 'realtime',
       orientation: 'any',
-      levels: ['A0', 'A0+', 'A1'],
+      levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
       needs: { vocabulary: 4 },
       packs: ['heroes', 'churchyard'],
       briefingKey: 'heroVsZombie.briefing',

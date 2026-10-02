@@ -131,6 +131,23 @@ export const storySourceSchema = z
   })
   .strict();
 
+const audioFile = z.string().regex(/^[a-z0-9-]+\.(mp3|ogg|m4a)$/);
+const audioSpan = z.object({ text, start: z.number().nonnegative(), end: z.number().positive() }).strict();
+
+/**
+ * Recorded read-aloud: one file for the whole story (each sentence is a time span in it, in story
+ * order) and one file with the glossary words (a time span for each). Files sit in the story folder.
+ */
+export const storyAudioSchema = z
+  .object({
+    article: audioFile,
+    sentences: z.array(audioSpan.extend({ paragraph: paragraphIndex })).min(1),
+    words: audioFile.optional(),
+    wordTimes: z.array(audioSpan).optional(),
+  })
+  .strict()
+  .refine((a) => a.sentences.every((s) => s.end > s.start), { message: 'a sentence ends before it starts', path: ['sentences'] });
+
 const uniqueIds = (items: readonly { id: string }[]) => new Set(items.map((i) => i.id)).size === items.length;
 
 export const storyInputSchema = z
@@ -151,6 +168,7 @@ export const storyInputSchema = z
     fills: z.array(storyFillSchema),
     questions: z.array(storyQuestionSchema),
     source: storySourceSchema,
+    audio: storyAudioSchema.optional(),
   })
   .strict()
   .superRefine((story, ctx) => {
@@ -180,6 +198,7 @@ export const storyInputSchema = z
   });
 
 export type StoryInput = z.infer<typeof storyInputSchema>;
+export type StoryAudio = z.infer<typeof storyAudioSchema>;
 export type StoryParagraph = z.infer<typeof storyParagraphSchema>;
 export type StoryVocabulary = z.infer<typeof storyVocabularySchema>;
 export type StorySentence = z.infer<typeof storySentenceSchema>;

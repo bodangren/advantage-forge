@@ -141,3 +141,12 @@ simplified to 10k to 16k triangles, with 512 px WebP textures and Meshopt compre
 meshes (one draw call per piece type) and simplified harder (their detail lives in the normal
 map). The vault and the heroes load first (about 4 MB); the monsters load while the student
 reads. The whole site is about 8 MB; the script is about 210 KB gzipped.
+
+## Demo content and read-aloud (2026-10-02)
+
+The published demo has four stories: the first article of `bank-1` to `bank-4` in the Workbooks lesson
+packages (`scripts/apk3d-import-bank.ts`). These are not workbook articles. The workbook stories stay
+in `tests/fixtures/stories` for the tests only (`scripts/apk3d-import.ts`). A story can carry `audio`:
+`article.mp3` with a time span for each sentence (and its paragraph), and `words.mp3` with a span for each
+glossary word. The reader plays a paragraph or the whole story, marks the sentence being read, and plays
+recorded words in the word card. A story with no `audio` uses the browser voice. All games accept `Pre-A1`.
