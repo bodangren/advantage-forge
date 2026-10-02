@@ -661,3 +661,8 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	cathedral	map-p2	medium	maps50	100000	30				6.5	reserve	below bar; plaster walls, thin pews; no feedback pass (goal met)
 2026-10-03	prison	map-p2	medium	maps50	100000	18				7.0	pass	no feedback pass; orchestrator viewed 3q
 2026-10-03	canyon	map-p2	medium	maps50	100000	30				6.5	reserve	below bar; needs red-rock cliff piece and dry-riverbed tile
+2026-10-03	cliff	map-p2	medium	maps-rest	102000	32				6.5	reserve	below bar after 1 feedback; needs waterfall, sandstone ruin, warm dirt
+2026-10-03	waterfall	map-p2	medium	maps-rest	58000	16				6.0	reserve	below bar; needs waterfall-sheet piece
+2026-10-03	harbor	map-p2	medium	maps-rest	114000	18				7.0	pass	after 1 feedback with new sea-water tile; orchestrator viewed 3q
+2026-10-03	pirate-cove	map-p2	medium	maps-rest	47000	14				7.0	pass	orchestrator viewed 3q; lagoon tile seams
+2026-10-03	volcanic-field	map-p2	medium	maps-rest	104000	16				7.0	pass	after 1 feedback with ash-ground and lava-ground; orchestrator viewed 3q
