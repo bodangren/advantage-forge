@@ -6,14 +6,16 @@ import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
  * Role: shop display piece / equipment item for the Chibi Quest hamlet; must read at 128 px.
  * Size: stand 1.11 m tall; torso shell 0.56 m wide, 0.64 m tall, 0.44 m deep (chest armor
  *   contract v2, 2x the hero torso); on y = 0, front toward +Z. Hem height above base 0.34 m.
- * One idea: a smooth brown leather vest with a big pointed chest flap, crossed shoulder straps
- *   and rolled two-lame pauldrons, like a clay toy armor, on a round wooden disc base.
- * Shape language: round dominant (rolled lames, rounded flap), square secondary (belt, peplum).
+ * One idea: a smooth brown leather vest with a scoop neck and rolled collar, a rounded chest flap
+ *   where two shoulder straps meet in a V, and rimmed plate pauldrons, like a clay toy armor, on
+ *   a round wooden disc base.
+ * Shape language: round dominant (rolled rims, rounded flap), square secondary (plates, belt, peplum).
  * Palette (60/30/10): leather #a0613a, dark edge #6e3f22, strap #8a5230, walnut #4a2c17 (stand),
- *   cream stitch #e6cfa3; brass #d9a93a buckles and studs (accent); iron #3d4047 side buckles.
+ *   cream stitch #e6cfa3; brass #d9a93a buckles and studs (accent); brown leather side loops.
  * Materials: walnut (rough 0.85), leather (0.65), iron (0.55, metal 0.7), brass (0.3, metal 1).
- * Detail: peplum skirt with a shallow front point and stitched hem; two lames and a strap per
- *   shoulder; two crossed chest straps with brass buckles; diagonal chest flap with stitching;
+ * Detail: peplum skirt with a shallow front point and stitched hem; per shoulder a large bent top
+ *   plate and a smaller arm plate, each with a raised rim, and a strap; two chest straps in a V
+ *   with brass buckles; rounded chest flap with a dark edge;
  *   belt with 6 brass studs and a brass buckle. Focal point: the chest flap and belt buckle.
  * Rig/animation: none (static display prop).
  */
@@ -79,7 +81,8 @@ function strapPoly(x0: number, y0: number, x1: number, y1: number, w: number): P
   ];
 }
 
-const STRAP_A: readonly [number, number, number, number] = [-0.12, 1.0, 0.045, 0.7];
+// The two chest straps meet in a V at the flap, as in the mock (they crossed in an X).
+const STRAP_A: readonly [number, number, number, number] = [-0.12, 1.0, -0.005, 0.69];
 
 // Hem line of the peplum in local y (below the vest hem): shallow point at the front center.
 const hemY = (x: number) => -0.05 - 0.035 * Math.max(0, 1 - Math.abs(x) / 0.3);
@@ -97,7 +100,8 @@ export default defineAsset({
     // ------------------------------------------------------------------ stand (walnut)
     const base = sdf.cylinder(0.2, 0.06, 0.02).at(0, 0.03, 0);
     const post = sdf.cylinder(0.032, 1.06, 0.01).at(0, 0.53, 0);
-    const crossbar = sdf.cylinder(0.02, 0.6, 0.008).rotateZ(90).at(0, 0.93, 0);
+    // Inside the vest only: a longer bar showed through the pauldron plates.
+    const crossbar = sdf.cylinder(0.02, 0.36, 0.008).rotateZ(90).at(0, 0.93, 0);
     const knob = sdf.sphere(0.036).at(0, 1.075, 0);
     const wood = sdf.union(base, post, crossbar, knob).paintFn((x, y, z, c0) => {
       const patch = 0.5 + 0.5 * noise.fbm(x * 6, y * 6, z * 6, 2);
@@ -138,19 +142,29 @@ export default defineAsset({
       )
       .scale([1, 1, 0.78])
       .at(0, Y_HEM, 0);
-    const vNeck = sdf
-      .extrude(
-        profile.polygon([
-          [-0.13, 1.06],
-          [0.13, 1.06],
-          [0, 0.87],
-        ]),
-        0.5,
-        0.006,
-      )
-      .at(0, 0, 0.15);
+    // A wide, shallow scoop neck with a rolled collar, as in the mock (a V-neck read as a tunic).
+    const scoop = profile.polygon(
+      [
+        [-0.155, 1.08],
+        [0.155, 1.08],
+        [0.15, 0.965],
+        [0.105, 0.925],
+        [0.05, 0.908],
+        [0, 0.904],
+        [-0.05, 0.908],
+        [-0.105, 0.925],
+        [-0.15, 0.965],
+      ],
+      { smooth: true },
+    );
+    const vNeck = sdf.extrude(scoop, 0.5, 0.006).at(0, 0, 0.15);
     const armHole = sdf.cylinder(0.09, 0.28, 0.01).rotateZ(90).scale([1, 1, 1.2]).at(0.29, 0.83, 0);
     const shell = torso.smoothSubtract(0.004, vNeck, armHole, armHole.mirror('x', 0));
+    // The rolled collar: the vest grown a little, kept in a band along the scoop edge.
+    const collar = shell
+      .round(0.008)
+      .intersect(sdf.extrude(profile.offsetProfile(scoop, 0.02), 0.5).at(0, 0, 0.15))
+      .intersect(sdf.box([0.5, 0.3, 0.4]).at(0, 0.93, 0.2));
 
     // Peplum: a flared ring below the hem; the front half is cut by a shallow V so it ends in a point.
     const ring = (lo: number) =>
@@ -183,18 +197,16 @@ export default defineAsset({
       .union(ring(-0.05), ring(-0.09).intersect(vCut))
       .round(0.004);
 
-    // Pauldrons: two overlapping rolled lames per side (domed caps), plus a short strap over them.
-    const lame = (rx: number, ry: number, rz: number) => {
-      const outer = sdf.ellipsoid([rx, ry, rz]);
-      const inner = sdf.ellipsoid([rx - 0.012, ry - 0.012, rz - 0.012]);
-      const cap = outer
-        .subtract(inner)
-        .intersect(sdf.box([rx * 2.4, ry * 2, rz * 2.4]).at(0, ry * 0.8 - 0.002, 0));
-      const rim = sdf.torus(1, 0.011).scale([rx - 0.004, 1, rz - 0.004]).at(0, 0.0, 0);
-      return cap.union(rim).round(0.003);
+    // Pauldrons as in the mock: a large top plate over the shoulder and a smaller, steeper plate
+    // over the arm. Each plate is a rounded leather slab with a raised rolled rim around its edge,
+    // bent so that its ends drop over the shoulder.
+    const plate = (w: number, d: number, bendK: number) => {
+      const slab = sdf.box([w, 0.03, d], 0.013);
+      const frame = sdf.box([w + 0.01, 0.046, d + 0.01], 0.021).subtract(sdf.box([w - 0.04, 0.2, d - 0.04], 0.014));
+      return slab.smoothUnion(0.006, frame).bend(bendK);
     };
-    const lameLow = lame(0.13, 0.075, 0.13).rotateZ(-40).at(0.25, 0.88, 0);
-    const lameHigh = lame(0.095, 0.055, 0.105).rotateZ(-22).at(0.2, 0.96, 0);
+    const lameLow = plate(0.15, 0.2, 5).rotateZ(-68).at(0.315, 0.845, 0);
+    const lameHigh = plate(0.2, 0.25, 4).rotateZ(-30).at(0.235, 0.95, 0);
     const pads = sdf.union(lameLow, lameHigh);
     const padsBoth = pads.mirror('x', 0);
 
@@ -212,9 +224,6 @@ export default defineAsset({
       c = mixRgb(c, EDGE, 0.5 * ss(0.23, 0.28, Math.abs(x)) * (1 - ss(0.0, 0.02, y - 0.34))); // side edge
       // Dark edge bands on the hem, neckline, and arm holes.
       c = mixRgb(c, EDGE, 0.7 * (1 - ss(0.345, 0.365, y)));
-      const nd = seg(x, y, 0.0, 0.92, 0.1, 0.99).d;
-      const nd2 = seg(x, y, 0.0, 0.92, -0.1, 0.99).d;
-      c = mixRgb(c, EDGE, 0.5 * (1 - ss(0.012, 0.024, Math.min(nd, nd2))) * ss(0.05, 0.1, z));
       // Peplum hem edge and stitch (cream dashes 16 mm above the hem line).
       if (y < Y_HEM + 0.025) {
         const h = Y_HEM + hemY(x);
@@ -226,7 +235,7 @@ export default defineAsset({
       }
       return c;
     };
-    k.body('leather', sdf.union(shell, padsBoth, peplum).paintFn(leatherPaint), {
+    k.body('leather', sdf.union(shell, collar, padsBoth, peplum).paintFn(leatherPaint), {
       color: LEATHER,
       roughness: 0.65,
       metalness: 0,
@@ -269,7 +278,7 @@ export default defineAsset({
     const chestStraps = sdf.union(chestStrap(1), chestStrap(-1));
     // Short strap over each pauldron: a slab through both lames.
     const padStrap = (m: number) => {
-      const slab = sdf.box([0.034, 0.5, 0.5]).at(0.2 * m, 0.95, 0);
+      const slab = sdf.box([0.034, 0.5, 0.5]).at(0.22 * m, 0.95, 0);
       return padsBoth.round(0.01).intersect(slab);
     };
     const padStraps = sdf.union(padStrap(1), padStrap(-1));
@@ -312,7 +321,7 @@ export default defineAsset({
       parts.push(frame);
     }
     for (const m of [1, -1]) {
-      const top = sdf.raycast(padsBoth, [0.2 * m, 1.3, 0], [0, -1, 0]);
+      const top = sdf.raycast(padsBoth, [0.22 * m, 1.3, 0], [0, -1, 0]);
       if (top) {
         parts.push(
           sdf
