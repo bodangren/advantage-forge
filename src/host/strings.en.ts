@@ -82,7 +82,7 @@ export default {
         unknown: 'This device cannot run this game.',
       },
     },
-    heroes: { knight: 'Knight', wizard: 'Wizard', cleric: 'Cleric' },
+    heroes: { knight: 'Knight', wizard: 'Wizard', cleric: 'Cleric', adventurer: 'Adventurer', ranger: 'Ranger', paladin: 'Paladin' },
     games: {
       comingSoon: 'Coming soon',
     },

@@ -8,13 +8,17 @@ import { esc } from '../apk3d/hud/index.js';
 import { fits, GAMES, playable, type GameEntry } from './registry.js';
 
 const LEVELS = ['A0', 'A1', 'A2'] as const;
-export const HEROES = ['knight', 'wizard', 'cleric'] as const;
-const HERO_ICON: Record<string, string> = { knight: '🛡️', wizard: '🔥', cleric: '✨' };
+/** The six best-reviewed heroes (docs/character-reviews.json), in the order the lobby shows them. */
+export const HEROES = ['knight', 'wizard', 'cleric', 'adventurer', 'ranger', 'paladin'] as const;
+const HERO_ICON: Record<string, string> = { knight: '🛡️', wizard: '🔥', cleric: '✨', adventurer: '🧭', ranger: '🏹', paladin: '⚜️' };
 /** Every hero's color presets, in unlock order (3 stars unlock the next one). */
 export const PRESETS: Record<string, string[]> = {
   knight: ['royal', 'champion', 'warden'],
   wizard: ['frost', 'mystic', 'sage'],
   cleric: ['templar', 'bishop', 'pilgrim'],
+  adventurer: ['wanderer', 'pathfinder', 'pilgrim'],
+  ranger: ['wanderer', 'dusk', 'warden'],
+  paladin: ['dawn', 'crusader', 'warden'],
 };
 
 export interface SelectorChoice {

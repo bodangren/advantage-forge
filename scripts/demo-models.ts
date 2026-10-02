@@ -28,6 +28,9 @@ const CHARACTERS: Record<string, number> = {
   knight: 14000,
   wizard: 14000,
   cleric: 14000,
+  adventurer: 14000,
+  ranger: 14000,
+  paladin: 14000,
   skeleton: 12000,
   'giant-bat': 10000,
   mimic: 10000,
@@ -47,7 +50,7 @@ const CHARACTERS: Record<string, number> = {
   zombie: 8000,
 };
 /** Heroes whose color presets the demo can unlock. */
-const HEROES = ['knight', 'wizard', 'cleric'];
+const HEROES = ['knight', 'wizard', 'cleric', 'adventurer', 'ranger', 'paladin'];
 /**
  * Map pieces repeat many times (the vault has about a hundred floor tiles), so they get small
  * budgets and a looser error limit: their surface detail lives in the normal map anyway.

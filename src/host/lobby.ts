@@ -6,12 +6,21 @@
 import * as THREE from 'three';
 import { Actor, OrbitRig, type Stage3D } from '../apk3d/stage/index.js';
 
-const HEROES = ['wizard', 'knight', 'cleric'] as const;
-const SPOTS: Record<(typeof HEROES)[number], [number, number, number]> = { wizard: [-1.05, 0.12, -0.35], knight: [0, 0.12, 0.15], cleric: [1.05, 0.12, -0.35] };
+const HEROES = ['knight', 'wizard', 'cleric', 'adventurer', 'ranger', 'paladin'] as const;
+type HeroId = (typeof HEROES)[number];
+/** Each hero keeps one place on a shallow arc across the back of the dais; the chosen hero steps out of it. */
+const SPOTS = Object.fromEntries(
+  HEROES.map((id, i): [HeroId, [number, number, number]] => {
+    const a = THREE.MathUtils.degToRad(-68 + (136 / (HEROES.length - 1)) * i);
+    return [id, [1.7 * Math.sin(a), 0.12, -0.45 - 0.4 * Math.cos(a)]];
+  }),
+) as Record<HeroId, [number, number, number]>;
+/** Where the chosen hero stands and turns. */
+const STAGE: [number, number, number] = [0, 0.12, 0.45];
 const model = (name: string): string => `models/${name}.glb`;
 /** The chosen hero turns on the dais this fast, in degrees per second. */
 const TURN = 42;
-const restYaw = (id: (typeof HEROES)[number]): number => SPOTS[id][0] * -8;
+const restYaw = (id: HeroId): number => SPOTS[id][0] * -14;
 
 export class Lobby {
   private readonly actors = new Map<string, Actor>();
@@ -20,7 +29,7 @@ export class Lobby {
   /** Counts moves per hero: a newer move cancels an older tween that is still running. */
   private readonly moves = new Map<string, number>();
   /** Wide screens: a slow swing in front of the dais. Phones: closer, for the low band above the panel. */
-  private readonly wide = new OrbitRig([0, 0.85, 0], 4.2, 1.5, 0.45, 0.14, 38);
+  private readonly wide = new OrbitRig([0, 0.8, 0], 5.8, 1.7, 0.3, 0.14, 38);
   private readonly close = new OrbitRig([0, 0.6, -0.1], 2.5, 1.05, 0.35, 0.14, 30);
 
   constructor(private readonly stage: Stage3D) {}
@@ -83,19 +92,15 @@ export class Lobby {
   }
 
   /**
-   * The chosen hero steps to the middle of the dais and turns on it (a turntable). The others step
-   * back, stop turning, and face the middle again.
+   * The chosen hero steps to the front of the dais and turns on it (a turntable). The others go
+   * back to their places, stop turning, and face front again.
    */
   focus(hero: string): void {
     this.turning = null;
-    // The two heroes that are not chosen take the left and right places, never the middle.
-    const sides = HEROES.filter((id) => id !== hero);
     for (const [id, actor] of this.actors) {
-      const key = id as (typeof HEROES)[number];
-      const [, y, z] = SPOTS[key];
+      const key = id as HeroId;
       const chosen = id === hero;
-      const side = sides.indexOf(key) === 0 ? -1 : 1;
-      const to = new THREE.Vector3(chosen ? 0 : side * 1.1, y, chosen ? 0.3 : z - 0.15);
+      const to = new THREE.Vector3(...(chosen ? STAGE : SPOTS[key]));
       const from = actor.root.position.clone();
       const move = (this.moves.get(id) ?? 0) + 1;
       this.moves.set(id, move);
