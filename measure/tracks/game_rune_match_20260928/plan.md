@@ -19,4 +19,4 @@ Status: in progress. The plan records execution state. Linked documents retain d
 ## Phase 4: Port and verification
 
 - [ ] Task: Port the game through the battle family pattern.
-- [ ] Task: Run both renderer checks and record review evidence.
+- [x] Task: Run both renderer checks and record review evidence. (2026-10-02: headless Chromium, 3D and Phaser 2D, read screen, briefing, battle and board render, no console errors; Thai tile wrap fixed in 9ca8829. A full play-through and the monorepo port are open.)

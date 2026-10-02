@@ -15,7 +15,7 @@ This report lists source entrypoints. It does not define URL routes.
 - dragon-flight: [`src/games/dragon-flight/index.ts`](../../src/games/dragon-flight/index.ts), [`src/games/dragon-flight/manifest.ts`](../../src/games/dragon-flight/manifest.ts); registered by the host.
 - dungeon-liberator: [`src/games/dungeon-liberator/index.ts`](../../src/games/dungeon-liberator/index.ts), [`src/games/dungeon-liberator/manifest.ts`](../../src/games/dungeon-liberator/manifest.ts); registered by the host.
 - hero-vs-zombie: [`src/games/hero-vs-zombie/index.ts`](../../src/games/hero-vs-zombie/index.ts), [`src/games/hero-vs-zombie/manifest.ts`](../../src/games/hero-vs-zombie/manifest.ts); registered by the host.
-- labyrinth: no cartridge entrypoint; not registered by the host.
+- labyrinth: [`src/games/labyrinth/index.ts`](../../src/games/labyrinth/index.ts), [`src/games/labyrinth/manifest.ts`](../../src/games/labyrinth/manifest.ts); registered by the host.
 - monster-encounters: [`src/games/monster-encounters/index.ts`](../../src/games/monster-encounters/index.ts), [`src/games/monster-encounters/manifest.ts`](../../src/games/monster-encounters/manifest.ts); registered by the host.
 - potion-rush: [`src/games/potion-rush/index.ts`](../../src/games/potion-rush/index.ts), [`src/games/potion-rush/manifest.ts`](../../src/games/potion-rush/manifest.ts); registered by the host.
 - rune-match: [`src/games/rune-match/index.ts`](../../src/games/rune-match/index.ts), [`src/games/rune-match/manifest.ts`](../../src/games/rune-match/manifest.ts); registered by the host.

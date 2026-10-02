@@ -46,9 +46,9 @@
     },
     {
       "id": "labyrinth",
-      "index": null,
-      "manifest": null,
-      "registered": false
+      "index": "src/games/labyrinth/index.ts",
+      "manifest": "src/games/labyrinth/manifest.ts",
+      "registered": true
     },
     {
       "id": "monster-encounters",
@@ -80,7 +80,7 @@
     },
     {
       "path": "src/games",
-      "typescript_files": 109
+      "typescript_files": 118
     },
     {
       "path": "src/host",

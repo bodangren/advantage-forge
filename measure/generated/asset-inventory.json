@@ -14974,6 +14974,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/labyrinth/briefing.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/labyrinth/core/content.ts",
       "source_present": true
     },
@@ -14998,7 +15002,39 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/labyrinth/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/manifest.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/labyrinth/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/view/geometry.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/view/maze.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/labyrinth/view2d/projections.gen.ts",
       "source_present": true
     },
     {
