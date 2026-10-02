@@ -32,6 +32,9 @@ const FLAT = new Set([
 const params = new URLSearchParams(location.search);
 const sceneName = params.get('scene') ?? 'hamlet';
 const dark = sceneName === 'dungeon' || sceneName === 'vault';
+// Interior cutaways (roof off, two or three walls standing): a warm room light from the camera
+// side, so the standing walls face the light, on a dark backdrop as in the mockups.
+const interior = sceneName === 'tavern' || sceneName === 'blacksmith';
 const clean = params.has('clean');
 
 const root = document.createElement('div');
@@ -68,8 +71,9 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(dark ? '#0e141d' : '#cfe6f4');
-scene.fog = new THREE.Fog(dark ? '#0e141d' : '#cfe6f4', dark ? 34 : 42, dark ? 80 : 78);
+const backdrop = dark ? '#0e141d' : interior ? '#16110d' : '#cfe6f4';
+scene.background = new THREE.Color(backdrop);
+scene.fog = new THREE.Fog(backdrop, dark ? 34 : 42, dark ? 80 : 78);
 
 const camera = new THREE.PerspectiveCamera(32, 1, 0.4, 180);
 const controls = new OrbitControls(camera, canvas);
@@ -81,10 +85,12 @@ controls.update();
 scene.add(
   dark
     ? new THREE.HemisphereLight(0xa9c2ec, 0x1a2433, 0.9)
-    : new THREE.HemisphereLight(0xd7ecff, 0x6d8f45, 0.62),
+    : interior
+      ? new THREE.HemisphereLight(0xffe4c4, 0x4a3524, 0.9)
+      : new THREE.HemisphereLight(0xd7ecff, 0x6d8f45, 0.62),
 );
-const sun = new THREE.DirectionalLight(dark ? 0xffe2b8 : 0xfff3df, dark ? 3.4 : 2.7);
-sun.position.set(...((dark ? [-5, 46, -3] : [-22, 32, -14]) as [number, number, number]));
+const sun = new THREE.DirectionalLight(dark ? 0xffe2b8 : interior ? 0xffd9a8 : 0xfff3df, dark ? 3.4 : interior ? 2.6 : 2.7);
+sun.position.set(...((dark ? [-5, 46, -3] : interior ? [14, 30, 20] : [-22, 32, -14]) as [number, number, number]));
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
 sun.shadow.camera.left = -26;
