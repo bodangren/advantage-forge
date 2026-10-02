@@ -6,7 +6,7 @@ Baseline evidence comes from September 28, 2026; rerun checks before closing an 
 
 | ID | Date | Track | Item | Severity | Status | Evidence or exit condition |
 | --- | --- | --- | --- | --- | --- | --- |
-| TD-01 | 2026-09-28 | [Asset quality](./tracks/asset_quality_20260928/) | 139 asset type errors at the baseline; 347 on 2026-10-02 ([classification](./tracks/asset_quality_20260928/classification-20261002.md)) | High | Open | [Compiler output](./evidence/typecheck-20260928.txt); compiler and affected reviews must pass. |
+| TD-01 | 2026-09-28 | [Asset quality](./tracks/asset_quality_20260928/) | 139 asset type errors at the baseline; 347 on 2026-10-02 ([classification](./tracks/asset_quality_20260928/classification-20261002.md)); 297 after the class A corrections | High | Open | [Compiler output](./evidence/typecheck-20260928.txt); compiler and affected reviews must pass. |
 | TD-02 | 2026-09-28 | [Labyrinth](./tracks/game_labyrinth_goblin_king_20260928/) | Two rules failures and one test type error | High | Open | [Test output](./evidence/tests-20260928.txt); focused tests and compiler must pass. |
 | TD-03 | 2026-09-28 | [Model packs](./tracks/game_model_packs_20260928/) | Pack generator remains absent; battle view imports the vault scene | High | Open | Generate validated packs and remove the transitional import. |
 | TD-04 | 2026-09-28 | [Asset delivery](./tracks/asset_delivery_20260928/) | Export and sprite acceptance lacks a complete source-revision record | Medium | Open | Reconcile source, export, clips, presets, and review evidence. |
@@ -21,6 +21,7 @@ Baseline evidence comes from September 28, 2026; rerun checks before closing an 
 | TD-11 | 2026-09-28 | [2D parity](./tracks/game_2d_parity_20260928/) | Sprites omit unlocked looks; the fallback lobby uses a plain background | Medium | Open | Verify the agreed fallback presentation and preset behavior. |
 | TD-12 | 2026-09-28 | [Thai content](./tracks/game_thai_localization_20260928/) | Generated Thai glosses need human review before the port | High | Open | Record reviewer evidence and localization checks. |
 | TD-13 | 2026-09-30 | [Engine backlog](./tracks/asset_engine_backlog_20260928/) | The sprite renderer drops every surface below opacity 0.5 (binary alpha, coverage 0.5 in src/render/pixel.ts), so glass and mist vanish from sprites unless the body opacity is 0.5 or more | Medium | Open | Sprites keep see-through bodies (a hit-based coverage or a per-body sprite opacity) and the potion glass renders at its 3D opacity. |
+| TD-14 | 2026-10-02 | [Avatar system](./tracks/avatar_system_20261001/) | 11 `ready` avatar catalog displays do not stand on y = 0 (more than 5 mm off in `out/<name>/stats.json`): studded-leather -5.3 cm, scale-armor -4.6 cm, crystal-focus -3.0 cm, rune-stone -2.5 cm, scythe -2.2 cm, spear and pike -2.0 cm, heavy-crossbow -1.4 cm, javelin -1.0 cm, trident and maul -0.6 cm; 7 `later` rows also | Low | Open | Each display stands within 5 mm of y = 0; move the bodies and `equip.origin` by the same amount so the worn fit does not change (as cape, plate-armor, and boots in 99a1b5f). |
 
 Planned features remain in tracks. Debt records known deficiencies, shortcuts, and missing verification.
 The game roadmap also records preset parity and content-review requirements before port acceptance.

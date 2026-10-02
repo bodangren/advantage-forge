@@ -31,6 +31,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - Keep heavy builds within the measured machine capacity.
 - Prove a shape-code move with mesh identity per body (`scripts/part-check.mjs`), not a pixel score. Exact pose expressions keep meshes identical; rounded mounts and body splits re-mesh.
 - Simple props and mechanical edits pass on the Sonnet low tier for about 30K tokens each. Give every agent a triangle budget.
+- Build worn equipment from the avatar body it covers. Keep it solid there: skin in a closed bore counts as show-through. Check that the display stands on y = 0.
 
 ## Planning practices
 

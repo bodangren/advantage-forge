@@ -3,11 +3,11 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-10-01T00:00:00Z",
-  "updated_at": "2026-10-01T23:30:00Z",
+  "updated_at": "2026-10-02T12:00:00Z",
   "description": "Player avatar system: avatar base, equipment fit and declaration, avatar pack, portraits, composer",
   "estimated_tasks": 12,
   "actual_tasks": null,
-  "deviation_notes": "Owner decisions of 2026-10-01 recorded in the spec. Phase 3: the fit bounds rule became a show-through rule; pauldrons on the upper arms; shields on hand.L; base clips aim held items. Rollout: 138 equip blocks, 122 pass; 16 pieces moved to rework; the shield socket moved outward and lower; gloves and gauntlets need a closed-fist shape.",
+  "deviation_notes": "Owner decisions of 2026-10-01 recorded in the spec. Phase 3: the fit bounds rule became a show-through rule; pauldrons on the upper arms; shields on hand.L; base clips aim held items. Rollout: 138 equip blocks, 122 pass; 16 pieces moved to rework; the shield socket moved outward and lower; gloves and gauntlets need a closed-fist shape. 2026-10-02: all 12 fit reworks are ready (7.0 or more, fit ok); no catalog row is rework. Three displays moved onto y = 0 with their origins (cape, plate-armor, boots).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
@@ -20,7 +20,8 @@
     "src/equip-check.ts",
     "tests/equip.test.ts",
     "docs/equipment-parts.md",
-    "docs/equipment-fit.md"
+    "docs/equipment-fit.md",
+    "bench/sonnet/log.tsv"
   ],
   "dependencies": []
 }

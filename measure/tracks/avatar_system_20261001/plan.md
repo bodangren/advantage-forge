@@ -1,6 +1,6 @@
 # Avatar system: base, equipment fit, pack, composer
 
-Status: in_progress (2026-10-01: the avatar base and the 9 part fixes started). The plan records execution state. The specification retains design detail.
+Status: in_progress (2026-10-02: Phase 3 fit reworks done, no catalog row is `rework`; next the capped hair, then Phase 4 pack and Phase 5 composer). The plan records execution state. The specification retains design detail.
 
 ## Phase 1: Documents
 
@@ -18,8 +18,8 @@ Status: in_progress (2026-10-01: the avatar base and the 9 part fixes started). 
 - [x] Task: Record the socket of each part class (bone, offset in bone-local meters, rotation in degrees) and the rule for skinned and rigid parts; add it to `docs/equipment-parts.md` and link it from `docs/equipment-fit.md` (moved from `asset_equipment_parts_20260930` Phase 4). (2026-10-01: see "Equip record".)
 - [x] Task: Extend `forge check` to equipment: fit bounds, skin intersection in the rest pose, weapon clearance on the base clips. (2026-10-01: show-through replaces the bounds rule; see "Equip record".)
 - [x] Task: Make the base clips pass the clearance check with held items: the wrists aim the item (`motion.orient`) in walk, run, attack, cheer, and cast. (2026-10-01.)
-- [ ] Task: Rework the 10 non-compliant pieces (belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood, leather-cap, crown, circlet). (2026-10-01: circlet, crown, leather-cap, leather-armor, and cloth-hood pass on the avatar and are `ready`. 2026-10-02: iron-helmet 7.5, horned-helmet 7.2, and steel-helmet 7.2 are `ready`; the edits of a crashed session were reviewed and finished; see `bench/sonnet/log.tsv`, batch `closeout`. Left: belt, chainmail.)
-- [ ] Task: Rework the pieces that the avatar fit check fails (`docs/equipment-fit.md`): plate-armor, bracers, boots, cape, cloak, mantle, greaves, guardian-shield (an avatar size), enchanter-scroll, and closed-fist gloves and gauntlets.
+- [x] Task: Rework the 10 non-compliant pieces (belt, iron-helmet, steel-helmet, chainmail, leather-armor, horned-helmet, cloth-hood, leather-cap, crown, circlet). (2026-10-01: circlet, crown, leather-cap, leather-armor, and cloth-hood pass on the avatar and are `ready`. 2026-10-02: iron-helmet 7.5, horned-helmet 7.2, and steel-helmet 7.2 are `ready`; the edits of a crashed session were reviewed and finished; see `bench/sonnet/log.tsv`, batch `closeout`. 2026-10-02: belt 7.0 and chainmail 7.0 are `ready`, batch `avatar-fit`.)
+- [x] Task: Rework the pieces that the avatar fit check fails (`docs/equipment-fit.md`): plate-armor, bracers, boots, cape, cloak, mantle, greaves, guardian-shield (an avatar size), enchanter-scroll, and closed-fist gloves and gauntlets. (2026-10-02: all 12 `ready` at 7.0 or more, fit ok; commits 660f544, 214aecb, 771dc6e, 2f7c691, 05807f7, c609b45, 162199c, 2093a95, 49f6687, 99a1b5f; table and rules in `docs/equipment-fit.md`, "Fit reworks (2026-10-02)"; no catalog row is `rework`.)
 - [x] Task: Write `docs/avatar-catalog.tsv` (100 pieces: slot, tier, status) and the GP price formula (`src/apk3d/avatar/price.ts`, `scripts/avatar-price.ts`, `tests/apk3d/avatar-price.test.ts`).
 - [x] Task: Add `equip` blocks to every phase 1 piece. (2026-10-01: 138 blocks, 122 pass; gloves and gauntlets need a closed-fist shape first; see "Equip rollout record".)
 - [x] Task: Add the 65 hero parts (`asset_equipment_parts_20260930`) to `docs/avatar-catalog.tsv` (owner decision 2026-10-01: keep every variant; the shop sorts by popularity).

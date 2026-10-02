@@ -77,7 +77,8 @@ wizard-staff, dragoon-lance, and captain-shield.
 gauntlets. 122 pass `forge check`. The 10 pieces of the audit above were resized to the contract
 on 2026-09-29; on the avatar, circlet, crown, leather-cap, leather-armor (worn at 1x), and
 cloth-hood pass and read well in the worn render. The catalog marks the passing pieces `ready`
-and these 16 pieces `rework` (12 after the helmet and gauntlet fixes of 2026-10-02):
+and these 16 pieces `rework` (12 after the helmet and gauntlet fixes of 2026-10-02, and none after
+the fit reworks of 2026-10-02 below):
 
 | Piece | Finding on the avatar base |
 | --- | --- |
@@ -96,6 +97,44 @@ and these 16 pieces `rework` (12 after the helmet and gauntlet fixes of 2026-10-
 | guardian-shield | 0.70 m tall at fit scale 1: 14 cm below the ground at rest, and in the jaw in walk and run. It needs an avatar size. |
 | enchanter-scroll | 0.64 m tall with the flame: 13 cm below the ground, and the sparks go into the head in run and cast. |
 | gloves, gauntlets | No block: the base has fists, and the gauntlets model a right hand at +X (a pair keeps the +X half). They need a closed-fist shape. Gauntlets fixed 2026-10-02 (`ready`): a closed-fist pair, `hands` at fit scale 2; gloves remain. |
+
+### Fit reworks (2026-10-02)
+
+The 12 pieces of the table above that were still `rework` are now `ready`. Each piece ends `fit ok`
+in `forge check`, and each review rating is 7.0 or more (the P1 bar). The briefs are
+`bench/sonnet/briefs/<piece>-fit.md`. The log rows are in `bench/sonnet/log.tsv` (batch `avatar-fit`).
+
+| Piece | Rating | Rework |
+| --- | --- | --- |
+| chainmail | 7.0 | Sleeves 37 degrees down and larger, so the upper arms stay inside; a wider and lower neck. |
+| plate-armor | 7.3 | Taller and wider arm cuffs (radius 0.1, height 0.22); a wider neck hole. |
+| belt | 7.0 | The band is the avatar torso at 2x; the ring is 10.5 cm up and the pouch is 1.8x, so the pouch hangs to the ground as in the mock. |
+| boots | 7.0 | The foot, shaft, and cuff are built around the avatar foot and shin at 2x, grown 12 to 16 mm. |
+| greaves | 7.0 | Built around the avatar shin and foot at 2x; the top stays below the shirt hem (worn y 0.15). |
+| bracers | 7.0 | Built on the avatar forearm at 2x; an upright pair turned by `equip.rotate`; only the end rings are open. |
+| gloves | 7.0 | The gauntlets recipe (the closed fist and forearm at 2x); the display stands the cuffs on the ground with the fists up (`equip.rotate`). |
+| cape | 7.0 | One hollow bell (0.02 m) from a rolled collar; an arched front cut. Worn: a capelet over the chest and a long cape at the back. |
+| cloak | 7.0 | A solid bell over the body with a cowl at the neck; a raised hood that only the display shows (`displayOnly`); the brooch below the chin. |
+| mantle | 7.0 | A flared bell cape with a front slit; a fur collar that sits on the shoulders. |
+| guardian-shield | 7.0 | Fit scale 2.2222 (0.31 m worn, as the captain shield); the origin is on the back plane. |
+| enchanter-scroll | 7.0 | Fit scale 2.2222 and a 4 cm offset carry the scroll at the side. |
+
+Rules that the reworks found:
+
+- Build a worn piece from the avatar body that it covers: copy the avatar profile, scale it by the
+  fit scale, and grow it outward (`round`). Do not scale an existing design until it fits.
+- Keep the piece solid where it covers the body. The check counts avatar skin inside a closed hollow
+  or bore of the piece as showing through (a full bore failed the bracers at 110 points). An
+  opening on the outer surface (the arched front of the cape, the slit of the mantle) is allowed.
+- A pair on a limb (bracers, gloves) stands upright in the display: turn it with `equip.rotate`,
+  and the worn piece applies the inverse. Gloves with the cuff up read as clay pots in the sprites.
+- A cloak shows its hood up only on the display: put the raised hood in `displayOnly` and give the
+  worn piece a cowl.
+- Place a clasp or brooch on the outer surface and below the chin. At the neck opening, the chibi
+  head hides it.
+- Stand the display on y = 0. When the model frame puts the hem above or below the ground, move
+  every body and `equip.origin` by the same amount; the worn fit does not change. The mantle hung
+  15 cm below the ground, the cape floated 11 cm above it, and plate-armor sank 5.2 cm.
 
 The 4 hair styles stay `planned`. Three of them fail on the skin at the jaw, where the side locks
 go into the cheeks as on the base hair. The capped hair task gives them their own slot rule.

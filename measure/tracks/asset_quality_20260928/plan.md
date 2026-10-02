@@ -14,7 +14,7 @@ Status: in_progress. This plan owns execution status. Source documents retain de
 
 ## Phase 3: Repair
 
-- [~] Task: Correct source types without suppressing compiler checks. (2026-10-02: type-only corrections in fallen-tree, stalagmite, urn, and clockwork-sentry, 573664b; the closeout reworks passed the per-asset gate; the full count is 347.)
+- [~] Task: Correct source types without suppressing compiler checks. (2026-10-02: type-only corrections in fallen-tree, stalagmite, urn, and clockwork-sentry, 573664b; the closeout reworks passed the per-asset gate; the full count is 347. Later on 2026-10-02, after the class A corrections (451ce00) and the avatar fit reworks: 297, led by ivy 33, market-cart 29, campfire 20, vines 19, fishing-rod 15.)
 - [x] Task: Review paintFn body options and mixRgb inputs for behavioral defects. (2026-10-02: the 9 class A files are corrected with render reviews; see the classification.)
 - [ ] Task: Add a type gate to the import workflow after the baseline passes. (2026-10-02: the per-asset gate `scripts/typecheck-asset.mjs` is in the rework agent rules, 9217cfa; the full gate waits for 0 errors.)
 
