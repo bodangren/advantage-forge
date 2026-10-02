@@ -114,8 +114,8 @@ export default defineAsset({
       const q = aim(stone, CENTER, norm(d));
       metalFace = metalFace.union(sdf.sphere(0.015).at(q[0], q[1], q[2]));
     }
-    const va = [aim(stone, CENTER, norm([-0.2, 0.9, 0.3])), aim(stone, CENTER, norm([-0.9, 0.3, -0.1]))];
-    const vb = [aim(stone, CENTER, norm([0.2, 1, -0.4])), aim(stone, CENTER, norm([0.9, 0.2, -0.4]))];
+    const va: [Vec3, Vec3] = [aim(stone, CENTER, norm([-0.2, 0.9, 0.3])), aim(stone, CENTER, norm([-0.9, 0.3, -0.1]))];
+    const vb: [Vec3, Vec3] = [aim(stone, CENTER, norm([0.2, 1, -0.4])), aim(stone, CENTER, norm([0.9, 0.2, -0.4]))];
     const veinA = sdf.capsule(va[0], va[1], 0.005);
     const veinB = sdf.capsule(vb[0], vb[1], 0.005);
 

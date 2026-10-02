@@ -114,8 +114,8 @@ export default defineAsset({
       const q = aim(stone, CENTER, norm(d));
       metalFace = metalFace.smoothUnion(0.004, sdf.ellipsoid(r).at(q[0], q[1], q[2]));
     }
-    const va = [aim(stone, CENTER, norm([-0.7, 0.2, 0.7])), aim(stone, CENTER, norm([-0.1, 0.75, 0.6]))];
-    const vb = [aim(stone, CENTER, norm([-0.6, 0.85, -0.3])), aim(stone, CENTER, norm([0.5, 0.2, -0.85]))];
+    const va: [Vec3, Vec3] = [aim(stone, CENTER, norm([-0.7, 0.2, 0.7])), aim(stone, CENTER, norm([-0.1, 0.75, 0.6]))];
+    const vb: [Vec3, Vec3] = [aim(stone, CENTER, norm([-0.6, 0.85, -0.3])), aim(stone, CENTER, norm([0.5, 0.2, -0.85]))];
     const veinA = sdf.capsule(va[0], va[1], 0.005);
     const veinB = sdf.capsule(vb[0], vb[1], 0.005);
 

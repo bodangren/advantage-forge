@@ -110,8 +110,8 @@ export default defineAsset({
     const nodule = sdf.ellipsoid([0.024, 0.016, 0.02]).at(nodP[0], nodP[1], nodP[2]);
     const facePt = aim(stone, CENTER, norm([0.12, 0.62, 0.8]));
     let metalFace = sdf.ellipsoid([0.057, 0.045, 0.03]).rotateX(-35).at(facePt[0], facePt[1], facePt[2]);
-    const va = [aim(stone, CENTER, norm([-0.7, 0.2, 0.7])), aim(stone, CENTER, norm([-0.1, 0.75, 0.6]))];
-    const vb = [aim(stone, CENTER, norm([-0.6, 0.85, -0.3])), aim(stone, CENTER, norm([0.5, 0.2, -0.85]))];
+    const va: [Vec3, Vec3] = [aim(stone, CENTER, norm([-0.7, 0.2, 0.7])), aim(stone, CENTER, norm([-0.1, 0.75, 0.6]))];
+    const vb: [Vec3, Vec3] = [aim(stone, CENTER, norm([-0.6, 0.85, -0.3])), aim(stone, CENTER, norm([0.5, 0.2, -0.85]))];
     const veinA = sdf.capsule(va[0], va[1], 0.005);
     const veinB = sdf.capsule(vb[0], vb[1], 0.005);
     const leafA = aim(stone, CENTER, norm([0.3, 0.05, 1]));
