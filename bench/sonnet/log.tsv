@@ -635,3 +635,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	desert-oasis	map-p2	medium	maps50	45000	12				6.5	feedback	arch clashes, small pond
 2026-10-02	ice-cave	map-p2	medium	maps50	45156	14				6.5	feedback	brick wall ring, puddle pool
 2026-10-02	ice-cave	map-p2	medium	maps50	98591	34				7.0	pass	after 1 feedback; no cyan water
+2026-10-03	desert-oasis	map-p2	medium	maps50	89345	31				7.0	pass	Castle Defense; after 1 feedback; heavy brown trail
