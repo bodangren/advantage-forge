@@ -649,3 +649,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	school	map-p2	medium	maps50	55000	25				7.0	pass	not re-viewed by orchestrator
 2026-10-03	monastery	map-p2	medium	maps50	51476	17				7.0	pass	mockup generated after build; chapel and tower are stand-ins
 2026-10-03	stable	map-p2	medium	maps50	54527	20				6.5	feedback	loose clutter, hidden stalls
+2026-10-03	cemetery	map-p2	medium	maps50	69632	31				7.0	pass	after 1 feedback; dark chapels
