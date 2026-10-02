@@ -33,7 +33,7 @@ The architecture family includes 29 new landscape parts. These parts cover groun
 
 ## Scene blueprint list
 
-A blueprint row names a place to design. It is not a forge build command. The list covers 13 settlements, 32 civic places, 34 adventure sites, and 21 wilderness scenes. The hamlet now has [paired mockups](./hamlet-mockups/README.md). The five P0 rows (dungeon, blacksmith-shop, tavern, village, and forest) have `accepted` status: each has a mockup, a component list, and a sample map scored 7.5 or more on 2026-10-02 (track `asset_p0p1_completion_20261002`). The other rows have `mockup-needed` status.
+A blueprint row names a place to design. It is not a forge build command. The list covers 13 settlements, 32 civic places, 34 adventure sites, and 21 wilderness scenes. The hamlet now has [paired mockups](./hamlet-mockups/README.md). The hamlet row and the five P0 rows (dungeon, blacksmith-shop, tavern, village, and forest) have `accepted` status: each has a mockup, a component list, and a sample map scored 7.5 or more on 2026-10-02 (track `asset_p0p1_completion_20261002`). The other rows have `mockup-needed` status.
 
 | Scene type | Examples |
 |---|---|

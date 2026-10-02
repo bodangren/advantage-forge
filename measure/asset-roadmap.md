@@ -27,7 +27,7 @@ P0 and P1 are complete (track [asset_p0p1_completion_20261002](./tracks/asset_p0
 
 - Every open P2 row is a rigged character, and none has a mockup yet (`docs/monster-mockups/`, `docs/npc-mockups/`, `docs/wildlife-mockups/` hold the P0 and P1 ones only).
 - Cost from the run log: a character takes one build plus one feedback pass, about 115K to 250K agent tokens on the high tier, so 237 characters need about 30M to 55M tokens, plus the mockups.
-- Maps: 95 P2 blueprint rows (33 adventure, 30 civic, 20 wilderness, 12 settlements). 94 are `mockup-needed`; the hamlet is `mockup-ready` and already has its sample map (`scenes/chibi-quest.ts`), the quality reference of the five P0 maps.
+- Maps: 95 P2 blueprint rows (33 adventure, 30 civic, 20 wilderness, 12 settlements). 94 are `mockup-needed`; the hamlet is `accepted` (owner review 2026-10-02) with its sample map (`scenes/chibi-quest.ts`), the quality reference of the five P0 maps.
 - Quality: 30 of the 32 remaining compiler errors are in P2 and P3 sources (rowboat, airship, plank, waterskin, mushroom-cap, wool, merchant-cart, longship).
 - P3 for comparison: 15 vehicles accepted; 33 fx-geometry rows wait for four owner questions.
 

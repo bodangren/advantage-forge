@@ -9375,7 +9375,7 @@
       "source_id": "locations/settlements/hamlet",
       "group": "settlements",
       "priority": "P2",
-      "status": "mockup-ready",
+      "status": "accepted",
       "candidate_source_path": "scenes/hamlet.ts",
       "filename_match": false,
       "track_id": "asset_scenes_settlements_20260928"

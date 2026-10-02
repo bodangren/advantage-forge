@@ -9,9 +9,16 @@ import { Actor, OrbitRig, type Stage3D } from '../apk3d/stage/index.js';
 const HEROES = ['wizard', 'knight', 'cleric'] as const;
 const SPOTS: Record<(typeof HEROES)[number], [number, number, number]> = { wizard: [-1.05, 0.12, -0.35], knight: [0, 0.12, 0.15], cleric: [1.05, 0.12, -0.35] };
 const model = (name: string): string => `models/${name}.glb`;
+/** The chosen hero turns on the dais this fast, in degrees per second. */
+const TURN = 42;
+const restYaw = (id: (typeof HEROES)[number]): number => SPOTS[id][0] * -8;
 
 export class Lobby {
   private readonly actors = new Map<string, Actor>();
+  /** The hero on the turntable, if any. */
+  private turning: Actor | null = null;
+  /** Counts moves per hero: a newer move cancels an older tween that is still running. */
+  private readonly moves = new Map<string, number>();
   /** Wide screens: a slow swing in front of the dais. Phones: closer, for the low band above the panel. */
   private readonly wide = new OrbitRig([0, 0.85, 0], 4.2, 1.5, 0.45, 0.14, 38);
   private readonly close = new OrbitRig([0, 0.6, -0.1], 2.5, 1.05, 0.35, 0.14, 30);
@@ -52,12 +59,17 @@ export class Lobby {
       stage.onFrame((_dt, t) => (fire.intensity = 9 * (0.85 + 0.1 * Math.sin(t * 11 + x) + 0.05 * Math.sin(t * 23 + x))));
     }
     this.actors.clear();
+    this.turning = null;
+    this.moves.clear();
+    stage.onFrame((dt) => {
+      if (this.turning) this.turning.yaw += TURN * dt;
+    });
     HEROES.forEach((id, i) => {
       const g = stage.loader.get(model(id));
       if (!g) return;
       const actor = stage.addActor(new Actor(id, g, stage.timeline, { phase: i * 0.37 }));
       const [x, y, z] = SPOTS[id];
-      actor.placeAt(x, y, z, x * -8);
+      actor.placeAt(x, y, z, restYaw(id));
       this.actors.set(id, actor);
     });
     void this.setLooks(looks);
@@ -70,17 +82,39 @@ export class Lobby {
     this.stage.setRig(band ? this.close : this.wide);
   }
 
-  /** The chosen hero steps forward (the others step back a little) and cheers. */
+  /**
+   * The chosen hero steps to the middle of the dais and turns on it (a turntable). The others step
+   * back, stop turning, and face the middle again.
+   */
   focus(hero: string): void {
+    this.turning = null;
+    // The two heroes that are not chosen take the left and right places, never the middle.
+    const sides = HEROES.filter((id) => id !== hero);
     for (const [id, actor] of this.actors) {
-      const [x, y, z] = SPOTS[id as keyof typeof SPOTS];
-      const to = new THREE.Vector3(x * (id === hero ? 0 : 1.1), y, id === hero ? 0.3 : z - 0.15);
+      const key = id as (typeof HEROES)[number];
+      const [, y, z] = SPOTS[key];
+      const chosen = id === hero;
+      const side = sides.indexOf(key) === 0 ? -1 : 1;
+      const to = new THREE.Vector3(chosen ? 0 : side * 1.1, y, chosen ? 0.3 : z - 0.15);
       const from = actor.root.position.clone();
+      const move = (this.moves.get(id) ?? 0) + 1;
+      this.moves.set(id, move);
+      if (!chosen) {
+        // Unwind the turns so the hero faces its rest direction by the shortest way.
+        const rest = THREE.MathUtils.degToRad(restYaw(key));
+        const turned = actor.root.rotation.y - rest;
+        actor.root.rotation.y = rest + Math.atan2(Math.sin(turned), Math.cos(turned));
+        actor.yaw = restYaw(key);
+      } else {
+        actor.yaw = THREE.MathUtils.radToDeg(actor.root.rotation.y);
+      }
       void this.stage.timeline.tween(0.45, (u) => {
+        if (this.moves.get(id) !== move) return;
         actor.root.position.lerpVectors(from, to, u * u * (3 - 2 * u));
         actor.home.copy(actor.root.position);
       });
     }
+    this.turning = this.actors.get(hero) ?? null;
     this.cheer(hero);
   }
 
