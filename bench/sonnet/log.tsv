@@ -675,3 +675,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	cave	map-p2	medium	maps-rest	104000	17				7.0	pass	agent 6.5; orchestrator rated 7.0 after rebuild with rock-wall; walls read as brick
 2026-10-03	riverbank	map-p2	medium	maps-rest	51000	13				7.0	pass	agent 6.5; orchestrator rated 7.0; flat tile grid, no arched gate
 2026-10-03	island	map-p2	medium	maps-rest	47000	14				6.8	reserve	tile staircase coast, sparse; borderline
+2026-10-03	glacier	map-p2	medium	maps-rest	51000	15				6.5	reserve	needs ice-ground tile (building), ice terrace piece
+2026-10-03	coral-reef	map-p2	medium	maps-rest	49000	14				6.0	reserve	needs bright coral (building), kelp, giant clam
