@@ -99,7 +99,7 @@ const soilDark = rgb('#32261f');
 const iceSpeck = rgb('#cfe0ea');
 
 /** Side: a thick snow lip with a wavy edge over frozen soil with ice specks. */
-const sideColor = (x: number, y: number, z: number) => {
+const sideColor = (x: number, y: number, z: number): ReturnType<typeof rgb> => {
   const along = Math.abs(x) > Math.abs(z) ? z : x;
   const drip = 0.07 + 0.012 * Math.sin(along * Math.PI * 3 + 0.7) + 0.008 * Math.sin(along * Math.PI * 8 + 2.1);
   if (y > -drip) return mixRgb(snowColor(x, 0, z), C.snow, 0.5);
@@ -109,7 +109,7 @@ const sideColor = (x: number, y: number, z: number) => {
   return c;
 };
 
-function snowColor(x: number, y: number, z: number) {
+function snowColor(x: number, y: number, z: number): ReturnType<typeof rgb> {
   if (y < -0.01) return sideColor(x, y, z);
   const crest = smoothstep(TOP - 0.005, TOP + 0.055, y);
   // Flat snow shade sits a touch toward blue; drift crests are the bright white.

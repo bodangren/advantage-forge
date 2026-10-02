@@ -40,7 +40,8 @@ const place = (s: sdf.Shape, lean: number, head: number, x: number, z: number, y
   s.rotateX(lean).rotateY(head).at(x, y, z);
 
 const nrm = (v: number[]) => {
-  const l = Math.hypot(v[0], v[1], v[2]);
+  const [a = 0, b = 0, c = 0] = v;
+  const l = Math.hypot(a, b, c);
   return v.map((c) => c / l) as [number, number, number];
 };
 
@@ -88,7 +89,8 @@ export default defineAsset({
     ];
     let rk = slab.union(chunk1, chunk2);
     for (const [x, y, z, r] of pebbles) rk = rk.union(sdf.sphere(r).at(x, y, z));
-    const shards = [[0.4, 0.42, 0.2, 18, 40], [-0.45, 0.42, 0.15, -20, 140], [0.15, 0.42, 0.42, 25, 250]]
+    const shardList: [number, number, number, number, number][] = [[0.4, 0.42, 0.2, 18, 40], [-0.45, 0.42, 0.15, -20, 140], [0.15, 0.42, 0.42, 25, 250]];
+    const shards = shardList
       .map(([x, y, z, l, hd]) => place(crystal(0.16, 0.04, 0.08), l, hd, x, z, y))
       .reduce((a, b) => a.union(b));
     const rock = rk.paintFn((x, y) => mixRgb(rgb('#6a6e78'), rgb('#8a8e98'), Math.min(1, Math.max(0, (y - 0.12) / 0.2))));

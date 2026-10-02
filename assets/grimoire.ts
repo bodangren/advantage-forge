@@ -27,7 +27,7 @@ export default defineAsset({
 
   build(k) {
     // Lectern wedge: the top follows the underside of the book.
-    const n = [0, Math.cos((TILT * Math.PI) / 180), Math.sin((TILT * Math.PI) / 180)];
+    const n: [number, number, number] = [0, Math.cos((TILT * Math.PI) / 180), Math.sin((TILT * Math.PI) / 180)];
     const off = n[1] * CENTER[1] + 0 - 0.016;
     k.body(
       'lectern',

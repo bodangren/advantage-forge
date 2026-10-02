@@ -73,7 +73,7 @@ const smoothstep = (a: number, b: number, v: number): number => {
 function courseAt(y: number): { row: number; widths: number[] } | null {
   if (y < FIELD_BOT - EPS || y >= FIELD_TOP + EPS) return null;
   const row = Math.min(ROWS - 1, Math.max(0, Math.floor((y - FIELD_BOT) / ROW_H)));
-  return { row, widths: COURSES[row] };
+  return { row, widths: COURSES[row] ?? [] };
 }
 
 /** A laid block: x span, y span, depth, bevel, tint id. */
@@ -92,7 +92,7 @@ function buildCourse(widths: number[], row: number, idBase: number): Block[] {
   const blocks: Block[] = [];
   let lo = -LEN / 2;
   for (let cell = 0; cell < widths.length; cell++) {
-    const hi = lo + widths[cell];
+    const hi = lo + (widths[cell] ?? 0);
     const x0 = lo + (atEnd(lo) ? 0 : GAP / 2);
     const x1 = hi - (atEnd(hi) ? 0 : GAP / 2);
     const y0 = FIELD_BOT + row * ROW_H + GAP / 2;
