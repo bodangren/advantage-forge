@@ -1,0 +1,19 @@
+{
+  "track_id": "asset_p0p1_completion_20261002",
+  "type": "feature",
+  "status": "in_progress",
+  "created_at": "2026-10-02T00:00:00Z",
+  "updated_at": "2026-10-02T00:00:00Z",
+  "description": "Complete every P0 and P1 asset row and the five P0 maps with Sonnet 5.5 agents, then report the P2 status",
+  "estimated_tasks": 16,
+  "actual_tasks": 0,
+  "deviation_notes": "Maps in scope are the five P0 blueprint rows; the 95 P2 blueprint rows go to the P2 report.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "bench/sonnet/log.tsv"
+  ],
+  "dependencies": [
+    "asset_p0p1_closeout_20261002"
+  ]
+}

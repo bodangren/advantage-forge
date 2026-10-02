@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 735,
+    "listed": 736,
     "catalog_matched": 570,
-    "off_catalog": 165
+    "off_catalog": 166
   },
   "asset_sources": [
     {
@@ -14153,6 +14153,11 @@
     {
       "id": "walkway",
       "source_path": "assets/walkway.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "wall-alcove",
+      "source_path": "assets/wall-alcove.ts",
       "catalog_source_ids": []
     },
     {

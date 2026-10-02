@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 73.
-Tracks by status: new: 38; in_progress: 17; completed: 18.
-Tracks by workstream: assets: 29; games: 38; foundation: 6.
+Tracks: 74.
+Tracks by status: new: 38; in_progress: 18; completed: 18.
+Tracks by workstream: assets: 30; games: 38; foundation: 6.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -12,6 +12,7 @@ Tracks by workstream: assets: 29; games: 38; foundation: 6.
 | [asset_equipment_parts_20260930](../tracks/asset_equipment_parts_20260930/) | completed | assets | 31/31 | 24 | 31 |
 | [asset_p0_acceptance_20260928](../tracks/asset_p0_acceptance_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p0p1_closeout_20261002](../tracks/asset_p0p1_closeout_20261002/) | completed | assets | 14/14 | 14 | 14 |
+| [asset_p0p1_completion_20261002](../tracks/asset_p0p1_completion_20261002/) | in_progress | assets | 3/13 | 16 | 0 |
 | [asset_p1_architecture_20260928](../tracks/asset_p1_architecture_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_p1_enemies_20260928](../tracks/asset_p1_enemies_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p1_equipment_20260928](../tracks/asset_p1_equipment_20260928/) | in_progress | assets | 1/10 | 9 | — |

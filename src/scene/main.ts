@@ -89,7 +89,7 @@ scene.add(
       ? new THREE.HemisphereLight(0xffe4c4, 0x4a3524, 0.9)
       : new THREE.HemisphereLight(0xd7ecff, 0x6d8f45, 0.62),
 );
-const sun = new THREE.DirectionalLight(dark ? 0xffe2b8 : interior ? 0xffd9a8 : 0xfff3df, dark ? 3.4 : interior ? 2.6 : 2.7);
+const sun = new THREE.DirectionalLight(dark ? 0xffe2b8 : interior ? 0xffd9a8 : 0xfff3df, dark ? 2.2 : interior ? 2.6 : 2.7);
 sun.position.set(...((dark ? [-5, 46, -3] : interior ? [14, 30, 20] : [-22, 32, -14]) as [number, number, number]));
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
