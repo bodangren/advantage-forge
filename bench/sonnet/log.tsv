@@ -589,3 +589,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	silver-ore+gold-ore+copper-ore	typefix	low	completion	26925	4					pass	class B type errors 6 -> 0; mesh-same SAME for each file
 2026-10-02	alchemy-lab	map-p2	medium	maps20	46772	18				7.0	pass	agent 6.5, orchestrator 7.0
 2026-10-02	library	map-p2	medium	maps20	47240	17				6.5	feedback	bare wood floor, loose tomes
+2026-10-02	crypt	map-p2	medium	maps20	55915	15				7.0	pass	missing iron-gate, cobweb
