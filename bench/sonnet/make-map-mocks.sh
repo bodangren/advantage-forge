@@ -23,6 +23,7 @@ P[coast]="A rocky coast level: a sandy beach strip with a gentle sea at one edge
 P[mine]="A mine level: a dark rock cavern with wooden support beams, rail tracks with a loaded mine cart, ore veins glowing in the walls, lanterns, a pickaxe rack, a lift shaft, barrels, low rock walls so the interior is visible from above."
 P[arena]="A civic gladiator arena: an oval sand pit surrounded by stepped stone stands with small cheering crowds, banners, two gates at the ends, a central podium, flagpoles, sunny colours."
 P[town]="A small medieval town: a cobble main street with a market corner, two rows of timber and stone houses with tiled roofs, a church with a bell tower, a well, hanging signs, a town gate, window boxes with flowers."
+P[shrine]="A small forest shrine: a round stone platform with a carved stone shrine and a glowing offering bowl, stone lanterns, a short stone path with steps, a torii-like arch of timber, wind chimes, ferns and mossy rocks, cherry trees, soft golden light."
 for slug in "${@:-${!P[@]}}"; do
   out="docs/map-mockups/$slug.jpg"
   [ -f "$out" ] || timeout 240 mmx image generate --prompt "${P[$slug]} $S" --aspect-ratio 4:3 --out "$out" --quiet > /dev/null 2>&1

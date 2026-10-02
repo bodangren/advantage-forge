@@ -8,7 +8,7 @@ Lighting group (set by the orchestrator): day.
 Size: 24 m x 22 m keep with courtyard.
 Shot distances: 3q `dist=42`, top `dist=40`.
 
-What the map holds: A keep (tower, wall pieces, castle-style from the kit) with four corner towers, a courtyard of cobble-floor, a well, training dummies area corner, banners, a gate, a throne hall hinted with a red rug. This map is Castle Defense level 6 later.
+What the map holds: A keep (tower, wall pieces, castle-style from the kit) with four corner towers, a courtyard of cobble-floor, a well, training dummies area, banners, a gate, a throne hall hinted with a red rug. This map is Castle Defense level 6 later.
 
 Pieces likely to fit (check each exists in `out/`): tower, city-wall, rampart, wall-gate, cobble-floor, cobble-road-straight, well, banner, flag, horse, guard, knight, throne, rug, barrel, crate, hay-bale.
 
