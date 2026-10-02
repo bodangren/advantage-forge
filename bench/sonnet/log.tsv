@@ -677,3 +677,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	island	map-p2	medium	maps-rest	47000	14				6.8	reserve	tile staircase coast, sparse; borderline
 2026-10-03	glacier	map-p2	medium	maps-rest	51000	15				6.5	reserve	needs ice-ground tile (building), ice terrace piece
 2026-10-03	coral-reef	map-p2	medium	maps-rest	49000	14				6.0	reserve	needs bright coral (building), kelp, giant clam
+2026-10-03	glacier	map-p2	medium	maps-rest	107000	20				7.0	pass	after 1 feedback with new ice-ground tile; orchestrator viewed 3q; flat ground
