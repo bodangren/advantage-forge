@@ -606,3 +606,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	castle	map-p2	medium	maps50	81482	36				7.0	pass	after 1 feedback; longhouse roof covers throne corner
 2026-10-02	inn	map-p2	medium	maps50	57271	24				7.0	pass	missing hanging lantern
 2026-10-02	market-square	map-p2	medium	maps50	45625	18				7.0	pass	agent 6.5, orchestrator 7.0; palette differs from mockup
+2026-10-02	mine	map-p2	medium	maps50	61490	9				7.0	pass	after 1 feedback; plain floor centre
