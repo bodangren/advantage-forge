@@ -612,3 +612,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	arena	map-p2	medium	maps50	128670	63				6.5	reserve	after 2 passes; plaster-wall reads dark, jagged edge
 2026-10-02	throne-room	map-p2	medium	maps50	110984	23				7.0	pass	after 1 feedback; dark stone palette
 2026-10-02	treasure-vault	map-p2	medium	maps50	46873	13				7.0	pass
+2026-10-02	portal-chamber	map-p2	medium	maps50	42982	14				7.0	pass	agent 6.8, orchestrator 7.0; floor a bit sparse
