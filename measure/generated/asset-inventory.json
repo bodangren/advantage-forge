@@ -8826,7 +8826,7 @@
       "source_id": "locations/adventure/dungeon",
       "group": "adventure",
       "priority": "P0",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/dungeon.ts",
       "filename_match": false,
       "track_id": "asset_scenes_adventure_20260928"
@@ -9105,7 +9105,7 @@
       "source_id": "locations/civic/blacksmith-shop",
       "group": "civic",
       "priority": "P0",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/blacksmith-shop.ts",
       "filename_match": true,
       "track_id": "asset_scenes_civic_20260928"
@@ -9267,7 +9267,7 @@
       "source_id": "locations/civic/tavern",
       "group": "civic",
       "priority": "P0",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/tavern.ts",
       "filename_match": false,
       "track_id": "asset_scenes_civic_20260928"
@@ -9429,7 +9429,7 @@
       "source_id": "locations/settlements/village",
       "group": "settlements",
       "priority": "P0",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/village.ts",
       "filename_match": true,
       "track_id": "asset_scenes_settlements_20260928"
@@ -9501,7 +9501,7 @@
       "source_id": "locations/wilderness/forest",
       "group": "wilderness",
       "priority": "P0",
-      "status": "mockup-needed",
+      "status": "accepted",
       "candidate_source_path": "scenes/forest.ts",
       "filename_match": false,
       "track_id": "asset_scenes_wilderness_20260928"

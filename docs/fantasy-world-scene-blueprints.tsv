@@ -10,7 +10,7 @@ locations/adventure/catacombs	adventure	P2	mockup-needed
 locations/adventure/cave	adventure	P2	mockup-needed
 locations/adventure/crypt	adventure	P2	mockup-needed
 locations/adventure/crystal-cave	adventure	P2	mockup-needed
-locations/adventure/dungeon	adventure	P0	mockup-needed
+locations/adventure/dungeon	adventure	P0	accepted
 locations/adventure/fortress	adventure	P2	mockup-needed
 locations/adventure/gatehouse	adventure	P2	mockup-needed
 locations/adventure/goblin-camp	adventure	P2	mockup-needed
@@ -41,7 +41,7 @@ locations/civic/bakery	civic	P2	mockup-needed
 locations/civic/bank	civic	P2	mockup-needed
 locations/civic/barracks	civic	P2	mockup-needed
 locations/civic/bathhouse	civic	P2	mockup-needed
-locations/civic/blacksmith-shop	civic	P0	mockup-needed
+locations/civic/blacksmith-shop	civic	P0	accepted
 locations/civic/castle	civic	P2	mockup-needed
 locations/civic/cathedral	civic	P2	mockup-needed
 locations/civic/cemetery	civic	P2	mockup-needed
@@ -59,7 +59,7 @@ locations/civic/prison	civic	P2	mockup-needed
 locations/civic/school	civic	P2	mockup-needed
 locations/civic/shrine	civic	P2	mockup-needed
 locations/civic/stable	civic	P2	mockup-needed
-locations/civic/tavern	civic	P0	mockup-needed
+locations/civic/tavern	civic	P0	accepted
 locations/civic/temple	civic	P2	mockup-needed
 locations/civic/theater	civic	P2	mockup-needed
 locations/civic/town-hall	civic	P2	mockup-needed
@@ -77,7 +77,7 @@ locations/settlements/port-city	settlements	P2	mockup-needed
 locations/settlements/ruined-city	settlements	P2	mockup-needed
 locations/settlements/town	settlements	P2	mockup-needed
 locations/settlements/underground-city	settlements	P2	mockup-needed
-locations/settlements/village	settlements	P0	mockup-needed
+locations/settlements/village	settlements	P0	accepted
 locations/wilderness/beach	wilderness	P2	mockup-needed
 locations/wilderness/canyon	wilderness	P2	mockup-needed
 locations/wilderness/clearing	wilderness	P2	mockup-needed
@@ -85,7 +85,7 @@ locations/wilderness/cliff	wilderness	P2	mockup-needed
 locations/wilderness/coast	wilderness	P2	mockup-needed
 locations/wilderness/coral-reef	wilderness	P2	mockup-needed
 locations/wilderness/desert-oasis	wilderness	P2	mockup-needed
-locations/wilderness/forest	wilderness	P0	mockup-needed
+locations/wilderness/forest	wilderness	P0	accepted
 locations/wilderness/glacier	wilderness	P2	mockup-needed
 locations/wilderness/grassland	wilderness	P2	mockup-needed
 locations/wilderness/grove	wilderness	P2	mockup-needed

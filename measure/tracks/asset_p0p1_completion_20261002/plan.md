@@ -16,10 +16,10 @@ Status: in_progress. This plan owns execution status.
 
 ## Phase 3: Maps
 
-- [ ] Task: Shoot the overview renders of the five P0 maps and compare them with the mockups.
-- [ ] Task: Build or rename the missing map components (`wall-alcove` in the dungeon list, `merchant` in the village list).
-- [ ] Task: Fix each map below 7.5 (one Sonnet agent per map).
-- [ ] Task: Record each map score and set the five blueprint rows to `accepted`.
+- [x] Task: Shoot the overview renders of the five P0 maps and compare them with the mockups. (Before: vault 6.5, village 6.5, tavern 6.5, forest 6.0, blacksmith 5.5. Interiors took a warm key light (c0bc297) and dark maps a weaker key (9f4a136).)
+- [x] Task: Build or rename the missing map components (`wall-alcove` in the dungeon list, `merchant` in the village list). (wall-alcove grafted from the dungeon trial; the village stall uses the shopkeeper.)
+- [x] Task: Fix each map below 7.5 (one Sonnet agent per map). (Five forge-sonnet-medium agents, two feedback passes, about 308K tokens; orchestrator fixes: cart overlap, forest and village ground tiles, floating patrons, flame lights.)
+- [x] Task: Record each map score and set the five blueprint rows to `accepted`. (All five at 7.5; `bench/sonnet/log.tsv` rows `map-*`; scene plans updated; TD-05 narrowed.)
 
 ## Phase 4: Close
 
