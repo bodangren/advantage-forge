@@ -146,7 +146,7 @@ export default defineAsset({
     const eyeLid = pair(eyeLidOne);
     const pupilOne = at(sdf.ellipsoid([0.0155 * 1.12, 0.018 * 1.12, 0.07]), EYE[0], EYE[1] - 0.0005);
     const pupil = pair(pupilOne);
-    const cornerAt = [EYE[0] + 0.056 * EG * Math.cos((EYE_TILT * Math.PI) / 180), EYE[1] + 0.056 * EG * Math.sin((EYE_TILT * Math.PI) / 180)];
+    const cornerAt: [number, number] = [EYE[0] + 0.056 * EG * Math.cos((EYE_TILT * Math.PI) / 180), EYE[1] + 0.056 * EG * Math.sin((EYE_TILT * Math.PI) / 180)];
     const corners = pair(
       sdf
         .union(
@@ -331,7 +331,7 @@ export default defineAsset({
         .bone('upperarm.L'),
     );
     // Segmented bracers: three stacked short cones per forearm.
-    const lerp3 = (a: readonly number[], b: readonly number[], t: number) =>
+    const lerp3 = (a: readonly [number, number, number], b: readonly [number, number, number], t: number) =>
       [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t] as [number, number, number];
     const bElbow = [0.186, 0.345, 0.014] as const;
     const bWrist = [0.207, 0.232, 0.031] as const;

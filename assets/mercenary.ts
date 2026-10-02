@@ -278,9 +278,9 @@ export default defineAsset({
       return sdf.cone(b, add(b, [d[0] * len, d[1] * len, d[2] * len]), r, 0.005);
     };
     const ring = sdf.union(
-      ...[
+      ...([
         [110, 40], [-110, 40], [150, 35], [-150, 35], [180, 30],
-      ].map(([yaw, elev]) => ringSpike(yaw, elev, 0.04, 0.03)),
+      ] as [number, number][]).map(([yaw, elev]) => ringSpike(yaw, elev, 0.04, 0.03)),
     );
     // Thick brows, tilted hard: the inner end low. Each is a wedge pressed on the forehead.
     const browWedge = profile.polygon(

@@ -789,7 +789,7 @@ export default defineAsset({
       return { arm, hand };
     };
 
-    const HAND_OUT = [14, 20]; // extra degrees on the bow hand (attack, taunt): the bow limbs clear the belt and cuffs
+    const HAND_OUT: [number, number] = [14, 20]; // extra degrees on the bow hand (attack, taunt): the bow limbs clear the belt and cuffs
     const RELEASE = 0.58;
     k.animation('attack', {
       duration: 1.0,
