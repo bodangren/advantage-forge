@@ -668,3 +668,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	volcanic-field	map-p2	medium	maps-rest	104000	16				7.0	pass	after 1 feedback with ash-ground and lava-ground; orchestrator viewed 3q
 2026-10-03	lighthouse	map-p2	medium	maps-rest	138000	21				7.0	pass	after 1 feedback with new lighthouse asset and sea-water; orchestrator viewed 3q
 2026-10-03	beach	map-p2	medium	maps-rest	116000	37				7.0	pass	agent 6.8; orchestrator rated 7.0 after 1 feedback; stepped shoreline, no starfish
+2026-10-03	sewer	map-p2	medium	maps-rest	108000	20				7.0	pass	after 1 feedback with new sewer-water tile; orchestrator viewed 3q; no arch piece
+2026-10-03	shipwreck	map-p2	medium	maps-rest	57000	18				6.5	reserve	needs shipwreck-hull (building), driftwood, crab
+2026-10-03	cave	map-p2	medium	maps-rest	49000	14				6.5	reserve	needs rock-wall slab (building), pool rim, ledge tile
