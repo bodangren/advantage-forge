@@ -100,8 +100,8 @@ const capJoints = [-1, -0.5, 0, 0.5, 1];
 
 for (let b = 0; b < 4; b++) {
   const outer = b === 0 || b === 3;
-  const x0 = capJoints[b] + (b === 0 ? 0 : 0.0075);
-  const x1 = capJoints[b + 1] - (b === 3 ? 0 : 0.0075);
+  const x0 = (capJoints[b] ?? 0) + (b === 0 ? 0 : 0.0075);
+  const x1 = (capJoints[b + 1] ?? 0) - (b === 3 ? 0 : 0.0075);
   const drop = noise.random(b * 5 + 3, 2, 8) * 0.006; // uneven capping, tops level
   const hgt = CAP_H - drop;
   const dx = outer ? 0 : (noise.random(b * 9 + 1, 4, 3) - 0.5) * 0.008;
@@ -113,7 +113,7 @@ const cap = sdf.union(...capShapes);
 
 /** Nearest piece id, y weighted so neighbours on the course above never win. */
 const nearest = (x: number, y: number, pieces: Piece[]): Piece => {
-  let best = pieces[0];
+  let best = pieces[0] as Piece;
   let bd = Infinity;
   for (const p of pieces) {
     const dx = x - p.x;

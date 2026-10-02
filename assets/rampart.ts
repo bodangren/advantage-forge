@@ -95,7 +95,7 @@ export default defineAsset({
     const stubBlocks: ReturnType<typeof sdf.box>[] = [];
     for (let c = 0; c < 3; c++) {
       const y = 0.4 + c * 0.8;
-      const slots = c % 2 ? [[1.0, 0.4], [1.5, 0.6], [2.0, 0.4]] : [[1.2, 0.6], [1.8, 0.6]];
+      const slots: [number, number][] = c % 2 ? [[1.0, 0.4], [1.5, 0.6], [2.0, 0.4]] : [[1.2, 0.6], [1.8, 0.6]];
       for (const [al, w] of slots) {
         for (const s of [1, -1]) {
           stubBlocks.push(sdf.box([w - 0.03, 0.7, 0.1], 0.04).at(al, y, s * 0.29));

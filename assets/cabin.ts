@@ -97,7 +97,7 @@ const courseAt = (y: number): number => {
   let best = 0;
   let bd = Infinity;
   for (let i = 0; i < COURSE_Y.length; i++) {
-    const d = Math.abs(y - COURSE_Y[i]);
+    const d = Math.abs(y - (COURSE_Y[i] ?? 0));
     if (d < bd) {
       bd = d;
       best = i;
@@ -113,7 +113,7 @@ const logPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
   const groove = clamp01(1 - distTo(y, GROOVE_Y) / 0.032);
   const ci = courseAt(y);
   // Slow per-course value shift: each log reads a little lighter toward its top.
-  const lift = clamp01((y - COURSE_Y[ci]) / 0.28);
+  const lift = clamp01((y - (COURSE_Y[ci] ?? 0)) / 0.28);
 
   // Bark: slow horizontal-ish furrows plus gentle plates (low frequency keeps the
   // vertex-color mesh light so reduction can do its job).
@@ -125,11 +125,11 @@ const logPaint = (x: number, y: number, z: number, base: Rgb): Rgb => {
   c = mixRgb(c, C.barkDeep, groove * 0.95);
 
   // Pale cut end discs on the +/- X end faces, per course end position.
-  const endX = COURSE_END[ci];
+  const endX = COURSE_END[ci] ?? 0;
   const faceW = clamp01((Math.abs(x) - (endX - 0.06)) / 0.045);
   if (faceW > 0.002) {
     const zc = z > 0 ? FRONT_Z - R : -(FRONT_Z - R);
-    const d = Math.hypot(y - COURSE_Y[ci], z - zc);
+    const d = Math.hypot(y - (COURSE_Y[ci] ?? 0), z - zc);
     const disc = clamp01((R - 0.02 - d) / 0.03);
     const w = faceW * disc;
     if (w > 0.002) {

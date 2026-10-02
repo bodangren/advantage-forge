@@ -44,7 +44,7 @@ export default defineAsset({
       (side ? sdf.box([0.2, H, w], 0.08) : sdf.box([w, H, 0.2], 0.08)).at(x, y, z);
     // front and back faces
     for (let c = 0; c < 3; c++) {
-      const y = courseY[c];
+      const y = courseY[c] ?? 0;
       const w = c === 1 ? 0.6 : 0.7;
       const cx = c === 1 ? 1.2 : 1.17;
       for (const s of [1, -1]) parts.push(blk(w, y, s * cx, 1.9, false));
@@ -55,7 +55,7 @@ export default defineAsset({
     // side faces
     for (let c = 0; c < 3; c++) {
       const xs = c === 1 ? [-1.2, -0.3, 0.6, 1.5] : [-1.5, -0.6, 0.3, 1.2];
-      for (const s of [1, -1]) for (const z of xs) if (Math.abs(z) < 1.7) parts.push(blk(0.86, courseY[c], s * 1.4, z, true));
+      for (const s of [1, -1]) for (const z of xs) if (Math.abs(z) < 1.7) parts.push(blk(0.86, courseY[c] ?? 0, s * 1.4, z, true));
     }
     // doorway: jamb voussoirs and gable slab
     for (const s of [1, -1]) {
