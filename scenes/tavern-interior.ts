@@ -30,8 +30,13 @@ export function tavernInteriorPlaces(): Place[] {
   // Hearth corner: fireplace on the north wall, rug, and two chairs facing the fire.
   put('fireplace', -3.0, NORTH);
   put('rug', -3.0, -2.5);
-  put('chair', -3.6, -1.9, 180);
-  put('chair', -2.4, -1.9, 180);
+  places.push({ asset: 'round-table', at: [-3.0, 0, -1.7], scale: 0.6 });
+  put('mug', -3.1, -1.7, 30, 0.38);
+  put('candle', -2.85, -1.6, 0, 0.38);
+  put('stool', -3.8, -1.9);
+  put('stool', -2.2, -1.9);
+  put('bard', -2.2, -1.9, 200, 0, true);
+  put('lute', -3.8, -2.3, 20, 0.0, true);
   put('wall-sconce', -4.6, NORTH, 0, 1.0);
   put('wall-sconce', -1.9, NORTH, 0, 1.0);
 
@@ -46,6 +51,19 @@ export function tavernInteriorPlaces(): Place[] {
   put('mug', 5.2, NORTH + 0.18, 0, 0.48);
   put('barrel', 2.0, -3.3, 20);
   put('barrel', 2.0, -2.5, 60);
+  put('barrel', 5.6, -3.4, 0);
+  put('barrel', 5.6, -2.7, 40);
+  put('bottle', 3.6, NORTH + 0.18, 0, 0.98);
+  put('bottle', 3.9, NORTH + 0.18, 0, 0.98);
+  put('bottle', 4.2, NORTH + 0.18, 0, 0.98);
+  put('bottle', 3.0, NORTH + 0.18, 0, 0.48);
+  put('bottle', 3.4, NORTH + 0.18, 0, 0.48);
+  put('bottle', 4.2, NORTH + 0.18, 0, 0.48);
+  put('mug', 4.5, NORTH + 0.18, 0, 0.48);
+  put('mug', 5.0, NORTH + 0.18, 0, 0.98);
+  put('tankard', 5.4, NORTH + 0.18, 0, 0.98);
+  put('plate', 4.5, -1.5, 0, BAR);
+  put('bread', 4.0, -1.7, 20, BAR);
   put('innkeeper', 4.0, -2.5, 0, 0, true);
   put('tankard', 2.6, -1.6, 20, BAR);
   put('mug', 3.4, -1.5, 80, BAR);
@@ -93,6 +111,37 @@ export function tavernInteriorPlaces(): Place[] {
   put('goblet', 5.0, 2.8, 0, TABLE);
   put('villager', 1.6, 3.0, 40, 0, true);
   put('shopkeeper', 5.5, 3.2, 230, 0, true);
+
+  // South half: more round tables, each with seats, food, and drink; patrons seated and standing.
+  put('round-table', -2.7, 3.1);
+  put('stool', -3.4, 3.1);
+  put('stool', -2.0, 3.1);
+  put('stool', -2.7, 3.7);
+  put('mug', -2.8, 3.0, 20, TABLE);
+  put('plate', -2.5, 3.2, 0, TABLE);
+  put('bread', -2.5, 3.2, 0, TABLE + 0.02);
+  put('candle', -2.7, 3.0, 0, TABLE);
+  put('farmer', -3.4, 3.1, 90, 0, true);
+  put('round-table', 0.3, 3.0, 15);
+  put('chair', -0.4, 3.0, 90);
+  put('chair', 1.0, 3.0, 270);
+  put('stool', 0.3, 3.7);
+  put('tankard', 0.2, 2.9, 0, TABLE);
+  put('mug', 0.45, 3.1, 120, TABLE);
+  put('cheese', 0.3, 3.0, 0, TABLE);
+  put('cleric', 0.3, 3.7, 180, 0, true);
+  put('round-table', -4.3, 0.6, 50);
+  put('stool', -4.3, -0.1);
+  put('stool', -3.7, 0.9, 90);
+  put('goblet', -4.3, 0.6, 0, TABLE);
+  put('plate', -4.1, 0.75, 0, TABLE);
+  put('candle', -4.5, 0.5, 0, TABLE);
+  put('ranger', -4.3, -0.1, 0, 0, true);
+  put('rogue', 3.9, 0.9, 200, 0, true);
+  put('barrel', 5.6, 0.7, 10);
+  put('barrel', 5.6, 1.4, 50);
+  put('sack', 5.3, 0.3, 20);
+  put('sack', 5.5, 3.9, 80);
 
   // West wall: bookshelf and cupboard, a tapestry, the storage corner.
   put('bookshelf', WEST + 0.17, -2.4, 90);
