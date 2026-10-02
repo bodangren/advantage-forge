@@ -687,3 +687,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	bathhouse	map-p2	medium	maps-rest	115000	19				7.0	pass	after 1 feedback with sandstone-wall and marble-floor; orchestrator viewed 3q; no steam
 2026-10-03	theater	map-p2	medium	maps-rest	47000	13				7.0	pass	agent 6.5; orchestrator rated 7.0; flat stage, no proscenium
 2026-10-03	town-hall	map-p2	medium	maps-rest	51000	13				7.0	pass	orchestrator viewed 3q; separate tower, dark stair dais
+2026-10-03	granary	map-p2	medium	maps-rest	48000	11				7.0	pass	agent 6.5; orchestrator rated 7.0; no chickens
