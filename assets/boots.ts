@@ -1,4 +1,4 @@
-import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
+import { defineAsset, mixRgb, noise, profile, rgb, sdf } from '../src/index.js';
 
 /**
  * Design note — leather boots (equipment/armor/boots).
@@ -19,6 +19,9 @@ import { defineAsset, mixRgb, noise, rgb, sdf } from '../src/index.js';
  * Detail: primary foot + shaft + cuff; secondary sole with a heel, ankle
  *   strap; tertiary leather grain in bump. Focal point: the brass buckle.
  * Rig/animation: none (static equipment item).
+ * Avatar fit (2026-10-02): the foot, shaft, and cuff are built in avatar meters around the avatar
+ *   foot and shin, grown 0.012 to 0.016 m, then scaled by 2. X0 = 0.13 keeps the inner edge in the
+ *   +X half that the wearer keeps; `origin` x moved from 0.072 to X0 for this reason.
  */
 
 const LEATHER = rgb('#7d4d2a'); // shaft, mid brown
@@ -28,7 +31,8 @@ const SOLE = rgb('#4a2c17'); // dark sole and strap
 const SOLE_EDGE = rgb('#33200f');
 const BRASS = rgb('#d4a93a');
 
-const X0 = 0.072; // center of one boot (the pair straddles x = 0)
+const X0 = 0.13; // asset x of the left ankle (the +X half is kept and mirrored)
+const AX = 0.098; // avatar ankle x
 
 const ss = (a: number, b: number, x: number) => {
   const t = Math.max(0, Math.min(1, (x - a) / (b - a)));
@@ -47,30 +51,32 @@ export default defineAsset({
 
   build(k) {
     // ------------------------------------------------------------------ single boot body
-    // Foot: a low, long rounded pad with a smaller bulbous toe at the front.
-    const footPad = sdf.box([0.108, 0.072, 0.19], 0.026);
-    const toe = sdf.ellipsoid([0.052, 0.05, 0.06]).at(0, 0.004, 0.078);
-    const foot = sdf
-      .smoothUnion(0.026, footPad, toe)
-      .scale([1, 0.68, 1])
-      .at(X0, 0.052, 0.028);
-
-    // Shaft: a slightly oval cylinder rising from the ankle.
+    // Built in avatar meters around the avatar foot and shin, then scaled by 2 to the asset frame.
+    const toAsset = (s: ReturnType<typeof sdf.sphere>) => s.scale(2).at(X0 - 2 * AX, 0, 0);
+    const foot = sdf.smoothUnion(
+      0.02,
+      sdf.ellipsoid([0.05, 0.044, 0.072]).at(AX, 0.042, 0.02),
+      sdf.ellipsoid([0.046, 0.04, 0.046]).at(AX, 0.036, 0.068),
+    );
     const shaft = sdf
-      .cylinder(0.051, 0.175, 0.022)
-      .scale([0.93, 1, 0.98])
-      .at(X0, 0.1, -0.012);
-
-    // Cuff: a wide band with a rolled lower lip; it overhangs the shaft.
+      .revolve(
+        profile.polygon([
+          [0, 0.05],
+          [0.056, 0.05],
+          [0.06, 0.128],
+          [0, 0.128],
+        ]),
+      )
+      .at(AX, 0, 0.001);
+    // Cuff: a wide band with a rolled lower lip; it overhangs the shaft and the pants hem.
     const cuff = sdf.union(
       sdf
-        .cylinder(0.06, 0.06, 0.018)
-        .displace(0.003, (x, y, z) => noise.fbm(x * 11, y * 10, z * 11, 2))
-        .at(X0, 0.212, -0.012),
-      sdf.torus(0.057, 0.012).at(X0, 0.186, -0.012),
+        .cylinder(0.066, 0.03, 0.009)
+        .displace(0.0015, (x, y, z) => noise.fbm(x * 22, y * 20, z * 22, 2))
+        .at(AX, 0.116, 0),
+      sdf.torus(0.062, 0.007).at(AX, 0.101, 0),
     );
-
-    const boot = foot.smoothUnion(0.032, shaft).smoothUnion(0.02, cuff);
+    const boot = toAsset(foot.smoothUnion(0.016, shaft).smoothUnion(0.01, cuff));
 
     // Paint: mid leather shaft, lighter cuff and toe cap, dark fold shadow.
     const leatherPaint = (x: number, y: number, z: number, base: typeof LEATHER) => {
@@ -79,18 +85,18 @@ export default defineAsset({
       let c = mixRgb(base, LEATHER_DARK, 0.16 * mottle);
       c = mixRgb(c, LEATHER_LIGHT, 0.12 * grain);
       // Lighter turned-down cuff.
-      const cuffT = ss(0.178, 0.2, y);
+      const cuffT = ss(0.2, 0.215, y);
       // Lighter rounded toe cap on the front of the foot.
-      const toeT = ss(0.055, 0.09, z) * (1 - ss(0.088, 0.108, y));
+      const toeT = ss(0.12, 0.17, z) * (1 - ss(0.1, 0.12, y));
       c = mixRgb(c, LEATHER_LIGHT, clamp01(cuffT + toeT) * 0.9);
       // Dark fold line where the cuff meets the shaft.
-      const fold = ss(0.158, 0.174, y) * (1 - ss(0.174, 0.192, y));
+      const fold = ss(0.185, 0.2, y) * (1 - ss(0.2, 0.212, y));
       c = mixRgb(c, LEATHER_DARK, 0.55 * fold);
       // Stitched seam where the toe cap meets the foot.
       const seam =
-        (1 - ss(0.003, 0.007, Math.abs(z - 0.058))) *
-        (1 - ss(0.085, 0.105, y)) *
-        ss(-0.03, 0.0, y);
+        (1 - ss(0.003, 0.007, Math.abs(z - 0.12))) *
+        (1 - ss(0.1, 0.12, y)) *
+        ss(0.0, 0.03, y);
       c = mixRgb(c, LEATHER_DARK, 0.45 * seam);
       return c;
     };
@@ -101,14 +107,14 @@ export default defineAsset({
       metalness: 0,
       detail: 0.006,
       paintWeight: 1.5,
-      maxTriangles: 1750,
+      maxTriangles: 2600,
       bump: (x, y, z) => 0.001 * noise.fbm(x * 40, y * 26, z * 40, 2),
     });
 
     // ------------------------------------------------------------------ soles
     // A dark slab that lips out past the foot, with a raised heel block.
-    const soleBase = sdf.box([0.118, 0.02, 0.275], 0.008).at(X0, 0.012, 0.047);
-    const heel = sdf.box([0.112, 0.032, 0.072], 0.013).at(X0, 0.018, -0.052);
+    const soleBase = sdf.cylinder(0.098, 0.03, 0.012).scale([1, 1, 1.65]).at(X0, 0.015, 0.06);
+    const heel = sdf.cylinder(0.09, 0.04, 0.014).at(X0, 0.02, -0.06);
     const sole = sdf.smoothUnion(0.01, soleBase, heel);
     const solePaint = (x: number, y: number, z: number, base: typeof SOLE) => {
       const grain = 0.5 + 0.5 * noise.fbm(x * 45, y * 45, z * 45, 2);
@@ -128,9 +134,8 @@ export default defineAsset({
 
     // ------------------------------------------------------------------ ankle strap (dark leather)
     const strap = sdf
-      .cylinder(0.055, 0.023, 0.006)
-      .scale([0.94, 1, 0.99])
-      .at(X0, 0.116, -0.012);
+      .cylinder(0.124, 0.026, 0.008)
+      .at(X0, 0.176, 0.002);
     k.body('strap', strap.paint(SOLE).mirror('x', 0), {
       color: SOLE,
       roughness: 0.62,
@@ -146,7 +151,7 @@ export default defineAsset({
       .subtract(sdf.box([0.024, 0.018, 0.03], 0.002));
     const buckle = sdf
       .union(frame, sdf.box([0.005, 0.03, 0.008], 0.002))
-      .at(X0, 0.116, 0.046);
+      .at(X0, 0.176, 0.128);
     k.body('buckle', buckle.mirror('x', 0), {
       color: BRASS,
       roughness: 0.3,
