@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 75.
-Tracks by status: new: 38; in_progress: 12; completed: 25.
+Tracks by status: new: 37; in_progress: 13; completed: 25.
 Tracks by workstream: assets: 30; games: 38; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -79,7 +79,7 @@ Tracks by workstream: assets: 30; games: 38; foundation: 7.
 | [history_six_games_20260928](../tracks/history_six_games_20260928/) | completed | games | 3/3 | — | — |
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
-| [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | new | foundation | 0/14 | 14 | 0 |
+| [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | in_progress | foundation | 6/14 | 14 | 6 |
 | [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/7 | 5 | — |
 
 ## Project health
