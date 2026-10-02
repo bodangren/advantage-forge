@@ -31,4 +31,4 @@ barrel 7.6, boulder 7.5, bridge 7.5, bush 7.5, campfire 7.5, chair 7.6, cottage 
 
 ## Closeout (2026-10-02, track `asset_p0p1_closeout_20261002`)
 
-The closeout reworked or reviewed the 8 rows of this family below their bar. 7 are at the bar: long-sword 7.5, shortbow 7.5, staff 7.5, iron-helmet 7.5; farmer 7.6, quest-giver 7.5, and horse 7.5 by the character rule. leather-armor is at 7.3 after three passes (fit ok) and stays below the bar. Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).
+The closeout reworked or reviewed the 8 rows of this family below their bar. 7 are at the bar: long-sword 7.5, shortbow 7.5, staff 7.5, iron-helmet 7.5; farmer 7.6, quest-giver 7.5, and horse 7.5 by the character rule. leather-armor reached 7.5 after three agent passes and an orchestrator pass (0109749, fit ok). All 54 P0 rows are at the bar. Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`. Bars: P0 7.5, P1 7.0, characters 7.5 (owner decision of 2026-10-02).

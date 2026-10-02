@@ -6,8 +6,8 @@ The production catalog remains at its existing path. Measure owns execution stat
 
 The generated inventory of 2026-10-02 lists 735 asset sources; 586 of the 856 catalog rows have a source.
 Source coverage by priority: P0 54/54, P1 450/450, P2 67/304, and P3 15/48.
-Review scores against the bars (P0 7.5, P1 and later 7.0, characters 7.5): P0 53/54, P1 450/450, P2 66/67, and P3 15/15.
-The rows below their bar are leather-armor (P0, 7.3) and iron-ore (P2, 6.0).
+Review scores against the bars (P0 7.5, P1 and later 7.0, characters 7.5): P0 54/54, P1 450/450, P2 66/67, and P3 15/15.
+The one row below its bar is iron-ore (P2, 6.0).
 A score at the bar is not full acceptance: export and sprite acceptance is a separate state (TD-04, TD-08).
 The migration baseline of 2026-09-28 contained 426 source files.
 
@@ -17,7 +17,7 @@ The [closeout track](./tracks/asset_p0p1_closeout_20261002/) reworked the P0 and
 Owner decisions: a character at 7.5 is acceptable, with the rating recorded so that games use it less; the deferred assets get one more pass; cliff-face must reach its bar.
 Accepted: long-sword, shortbow, staff, iron-helmet, stone-golem, wraith, and wood-golem at 7.5; key-skeleton, belt-pouch, horned-helmet, steel-helmet, and cliff-face at 7.2; halberd, gauntlets, and cloth-hood at 7.0.
 Five characters reached the bar by the 7.5 rule with their earlier reviews: farmer 7.6, quest-giver, horse, bone-golem, and bandit-archer 7.5.
-The orchestrator rebuilt cliff-face. Leather-armor went from 7.0 to 7.3 in three passes and still fits the avatar base.
+The orchestrator rebuilt cliff-face. Leather-armor went from 7.0 to 7.3 in three agent passes and to 7.5 in an orchestrator pass; it still fits the avatar base.
 Scores and notes are in `bench/sonnet/log.tsv` (batch `closeout`) and in `docs/character-reviews.json`.
 
 ## World catch-up (2026-10-01)

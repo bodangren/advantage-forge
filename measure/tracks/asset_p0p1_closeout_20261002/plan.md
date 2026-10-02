@@ -1,6 +1,6 @@
 # Close the remaining P0 and P1 rows
 
-Status: in_progress. This plan owns execution status.
+Status: completed. This plan owns execution status.
 
 ## Phase 1: Contract
 
@@ -10,7 +10,7 @@ Status: in_progress. This plan owns execution status.
 
 ## Phase 2: Equipment
 
-- [~] Task: Rework long-sword, shortbow, staff, and leather-armor to 7.5 (P0). (19f193e: long-sword, shortbow, staff at 7.5. 99ae12c: leather-armor 7.0 to 7.3 after three passes, fit ok, still below the bar.)
+- [x] Task: Rework long-sword, shortbow, staff, and leather-armor to 7.5 (P0). (19f193e: long-sword, shortbow, staff at 7.5. leather-armor: 7.3 after three agent passes (99ae12c), then 7.5 after an orchestrator pass (0109749): scoop collar, rimmed plate pauldrons, V straps; fit ok.)
 - [x] Task: Rework halberd, gauntlets, and belt-pouch to 7.0 (P1). (19f193e: halberd 7.0, gauntlets 7.0, belt-pouch 7.2)
 - [x] Task: Review cloth-hood from its current render. (7.0, log row 2026-10-02)
 

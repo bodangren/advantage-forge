@@ -60,7 +60,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Bring P0 and P1 world assets to their bars**
   *Link: [./tracks/asset_world_catchup_20261001/](./tracks/asset_world_catchup_20261001/)*
 
-- [~] **Track: Close the remaining P0 and P1 rows**
+- [x] **Track: Close the remaining P0 and P1 rows**
   *Link: [./tracks/asset_p0p1_closeout_20261002/](./tracks/asset_p0p1_closeout_20261002/)*
 
 - [x] **Track: Complete P1 heroes**
