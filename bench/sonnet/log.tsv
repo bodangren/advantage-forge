@@ -590,3 +590,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	alchemy-lab	map-p2	medium	maps20	46772	18				7.0	pass	agent 6.5, orchestrator 7.0
 2026-10-02	library	map-p2	medium	maps20	47240	17				6.5	feedback	bare wood floor, loose tomes
 2026-10-02	crypt	map-p2	medium	maps20	55915	15				7.0	pass	missing iron-gate, cobweb
+2026-10-02	arcane-sanctum	map-p2	medium	maps20	51137	14				7.0	pass	
+2026-10-02	crystal-cave	map-p2	medium	maps20	43107	13				6.0	feedback	patchwork floor, boulder ring
