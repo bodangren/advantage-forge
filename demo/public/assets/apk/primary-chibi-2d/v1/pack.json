@@ -9067,6 +9067,54 @@
     "license": "AGPL-3.0-or-later"
    }
   },
+  "background.labyrinth-1": {
+   "id": "background.labyrinth-1",
+   "path": "backgrounds/labyrinth-1.png",
+   "kind": "image",
+   "view": "world",
+   "width": 1254,
+   "height": 770,
+   "format": "png",
+   "alpha": false,
+   "byteSize": 152482,
+   "sha256": "a428e2556c4b7d5e4f08659803021f3e13664706ad002f7e6d517492208f9f57",
+   "provenance": {
+    "source": "advantage-forge/src/games/labyrinth-1/view (the 3D set, baked)",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "background.labyrinth-2": {
+   "id": "background.labyrinth-2",
+   "path": "backgrounds/labyrinth-2.png",
+   "kind": "image",
+   "view": "world",
+   "width": 1254,
+   "height": 770,
+   "format": "png",
+   "alpha": false,
+   "byteSize": 157656,
+   "sha256": "d23ac5c3e9e21240d203064d7e87a16686e5ad3d87d4d36717eec4f86ff3e975",
+   "provenance": {
+    "source": "advantage-forge/src/games/labyrinth-2/view (the 3D set, baked)",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
+  "background.labyrinth-3": {
+   "id": "background.labyrinth-3",
+   "path": "backgrounds/labyrinth-3.png",
+   "kind": "image",
+   "view": "world",
+   "width": 1254,
+   "height": 770,
+   "format": "png",
+   "alpha": false,
+   "byteSize": 156284,
+   "sha256": "5edd0fa9f0d3d508686500e20dc3d2666ce84a40fab07d39ee6c08a3d7fe1cc2",
+   "provenance": {
+    "source": "advantage-forge/src/games/labyrinth-3/view (the 3D set, baked)",
+    "license": "AGPL-3.0-or-later"
+   }
+  },
   "background.monster-encounters": {
    "id": "background.monster-encounters",
    "path": "backgrounds/monster-encounters.png",

@@ -68,6 +68,13 @@ export const TUNING = {
   auraMs: 5000,
   /** Two movers touch inside this distance in cell units. */
   touchRadius: 0.5,
+  /**
+   * A side turn pressed within this share of a cell after the hero left a crossing still takes
+   * that crossing (the hero steps back into it), so a late press never skips the corridor the
+   * student aimed at. It applies only when the turn is closed at the cell ahead (a press for the
+   * cell ahead keeps its meaning). Beyond the grace, the turn waits for the next crossing.
+   */
+  turnGrace: 0.5,
 } as const;
 
 export interface LabyrinthOptions {
@@ -442,6 +449,14 @@ export function createLabyrinth(input: LabyrinthInput, options: LabyrinthOptions
         h.next = from;
         h.progress = 1 - h.progress;
         h.dir = command.dir;
+        h.queued = null;
+        return [];
+      }
+      if (h.next && h.dir && command.dir !== h.dir && h.progress < TUNING.turnGrace && canMove(maze, h.cell, command.dir) && !canMove(maze, h.next, command.dir)) {
+        // A late side turn: back into the cell just left, then out along the new direction.
+        h.dir = command.dir;
+        h.next = neighborOf(h.cell, command.dir);
+        h.progress = 0;
         h.queued = null;
         return [];
       }

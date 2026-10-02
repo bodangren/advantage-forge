@@ -9,6 +9,8 @@ import { manifest as monsterEncounters } from '../games/monster-encounters/manif
 import monsterEncountersStrings from '../games/monster-encounters/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
+import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
+import labyrinthStrings from '../games/labyrinth/strings.en.js';
 import { manifest as potionRush } from '../games/potion-rush/manifest.js';
 import potionRushStrings from '../games/potion-rush/strings.en.js';
 import { manifest as dragonFlight } from '../games/dragon-flight/manifest.js';
@@ -50,6 +52,15 @@ export const GAMES: GameEntry[] = [
     pitchKey: 'runeMatch.pitch',
     manifest: runeMatch,
     load: () => import('../games/rune-match/index.js').then((m) => m.cartridge),
+  },
+  {
+    id: 'labyrinth',
+    icon: '🏰',
+    tint: ['#f59e0b', '#78350f'],
+    titleKey: 'labyrinth.title',
+    pitchKey: 'labyrinth.pitch',
+    manifest: labyrinth,
+    load: () => import('../games/labyrinth/index.js').then((m) => m.cartridge),
   },
   {
     id: 'potion-rush',
@@ -99,7 +110,7 @@ export const GAMES: GameEntry[] = [
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 

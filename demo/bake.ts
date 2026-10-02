@@ -12,6 +12,8 @@ import { Stage3D } from '../src/apk3d/stage/index.js';
 import { buildRoom, ROOM_MODELS } from '../src/games/dungeon-liberator/view/room.js';
 import { buildClearing, CLEARING_MODELS } from '../src/games/devourer-slime/view/clearing.js';
 import { buildChurchyard, CHURCHYARD_MODELS } from '../src/games/hero-vs-zombie/view/churchyard.js';
+import { buildMaze, MAZE_MODELS } from '../src/games/labyrinth/view/maze.js';
+import { MAZES } from '../src/games/labyrinth/core/index.js';
 import { buildShop, SHOP_MODELS } from '../src/games/potion-rush/view/shop.js';
 import { buildVaultBackdrop, vaultModels } from '../src/games/shared/battle/stage3d.js';
 
@@ -30,6 +32,11 @@ const SETS: Record<string, BakeSet> = {
   // The great hall of the vault around the battle (the party south, the monsters north).
   'monster-encounters': { models: vaultModels(), build: buildVaultBackdrop, bounds: [-4.6, 4.6, -2.6, 9.6] },
 };
+
+/** One set per maze of the Labyrinth: the maze with its walls, torches, and gate arch (no portcullis). */
+for (const maze of MAZES) {
+  SETS[maze.id] = { models: MAZE_MODELS, build: (s) => void buildMaze(s, maze, { dynamic: false, wallHeight: 0.55 }), bounds: [-9.8, 9.8, -7.8, 7.8] };
+}
 
 async function bake(): Promise<void> {
   const params = new URLSearchParams(location.search);

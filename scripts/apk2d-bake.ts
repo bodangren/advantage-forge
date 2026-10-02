@@ -12,7 +12,7 @@ import { chromium } from 'playwright';
 import { createServer } from 'vite';
 
 const ROOT = process.cwd();
-const GAMES = ['potion-rush', 'dungeon-liberator', 'devourer-slime', 'hero-vs-zombie', 'monster-encounters'];
+const GAMES = ['potion-rush', 'dungeon-liberator', 'devourer-slime', 'hero-vs-zombie', 'monster-encounters', 'labyrinth-1', 'labyrinth-2', 'labyrinth-3'];
 export const ELEVATION = 45;
 export const PPM = 64;
 
