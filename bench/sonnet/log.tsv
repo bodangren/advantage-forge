@@ -621,3 +621,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-02	catacombs	map-p2	medium	maps50	108800	42				7.0	pass	after 1 feedback
 2026-10-02	tomb	map-p2	medium	maps50	120900	47				7.0	pass	after 1 feedback; heavy sand frame
 2026-10-02	orc-camp	map-p2	medium	maps50	60000	14				7.0	pass	bright roof; light mood
+2026-10-02	lava-cave	map-p2	medium	maps50	47330	16				5.0	reserve	no glowing lava tile or obsidian spike; volcanic-field has the same risk
