@@ -32,8 +32,8 @@ const house = (x0, z0, x1, z1, doorX) => {
   roof(x0, z0, x1, z1);
 };
 
-// --- ground: sand everywhere, marble plaza around the fountain, a paved street to the gate ---
-const plaza = (x, z) => (Math.abs(x) <= 3 && Math.abs(z) <= 3) || (Math.abs(x + 6) <= 1 && z >= 3) || (z === 5 && x <= 3 && x >= -7);
+// --- ground: sand everywhere, sand plaza around the fountain, a paved street to the gate ---
+const plaza = (x, z) => false;
 for (let x = -13; x <= 13; x += 2)
   for (let z = -11; z <= 11; z += 2) put(plaza(x, z) ? 'marble-floor' : 'desert-ground', x, z);
 
@@ -52,15 +52,13 @@ put('tower', -11.5, -9.5, { scale: 0.6 });
 put('tower', 11.5, -9.8, { scale: 0.6 });
 
 // --- west bazaar house (arcade with awnings facing the plaza), east gate house ---
-house(-12, -8, -4, -4, -6);
-house(4, -8, 12, -4, 8);
-put('awning', -9, -3.7); put('awning', -5.4, -3.7);
-put('awning', 6, -3.7);
-put('lantern', -7.6, -3.6); put('lantern', 8.6, -3.6);
-put('jar', -10.3, -3.5); put('jar', 10.5, -3.6); put('pot', 10.9, -3.4);
+for (const x of [-10, -6, 6, 10]) put('sandstone-house', x, -6, { yaw: 0 });
+for (const x of [-10, 6, 10]) put('sandstone-house', x, 7, { yaw: 180 });
+put('sandstone-house', -11.8, -0.5, { yaw: 90 });
+put('sandstone-house', 11.8, 0.5, { yaw: 270 });
+put('lantern', -8.0, -3.6); put('lantern', 8.0, -3.6);
+
 // small house west and a ruin-like compound in the SE
-house(-12, 2, -8, 6, -10);
-wallRun(6, 6, 12, 6, [9]); wallRun(6, 6, 6, 10, []);
 
 put('barrel', -10.9, 0.0); put('crate', -7.9, -0.6); put('sack', 8.2, 9.2); put('jar', -5.4, 9.3);
 // --- oasis fountain focal ---
@@ -70,20 +68,19 @@ put('lantern', -3.3, 2.7); put('lantern', 3.3, -2.8);
 put('statue', -3.4, -2.6, { yaw: 200, scale: 0.8 });
 
 // --- bazaar (west plaza and street) ---
-put('market-tent', -9.2, 0.2, { yaw: 0 });
+put('market-tent', -8.4, 0.2, { yaw: 0 });
 put('market-tent', -3.9, 8.6, { yaw: 0 });
 put('market-cart', -6.9, 3.4, { yaw: 40 });
 put('market-cart', 4.8, 4.4, { yaw: 300 });
-put('rug', -9.2, 1.4); put('rug', -3.9, 9.8);
+put('rug', -8.4, 1.4); put('rug', -3.9, 9.8);
 
 // --- caravan yard by the gate (east of the street) ---
 put('sand-dune', 4, 9, { scale: 0.8, yaw: 20 });
-put('sand-dune', 12, 1.8, { scale: 1.1, yaw: 200 });
-put('well', 10.5, 3.2, { scale: 0.8 });
-put('barrel', 9.0, 2.2); put('crate', 11.8, 4.4);
+put('well', 7.6, 2.6, { scale: 0.8 });
+put('barrel', 8.6, 3.4);
 
 // --- edge dressing: palms, cacti, lanterns ---
-put('palm-tree', -12.6, -1.4, { yaw: 90 }); put('palm-tree', 12.4, -0.2, { yaw: 270 });
+put('palm-tree', -12.6, -3.6, { yaw: 90 });
 put('palm-tree', 12.4, 11.2, { yaw: 300 }); put('palm-tree', -12.4, 11.0, { yaw: 40 });
 put('cactus', 5.6, 11.0); put('cactus', 12.6, 8.0, { yaw: 120 });
 put('cactus', -2.0, -6.6, { yaw: 200 }); put('cactus', 2.4, -6.4, { yaw: 60 });
@@ -110,7 +107,7 @@ const rows = Object.entries(tally).sort((a, b) => b[1] - a[1]).map(([k, v]) => `
 writeFileSync('docs/map-mockups/desert-city.md',
 `# Desert city map
 
-28 m x 24 m (14 x 12 tiles). Focal object: the oasis fountain on a marble plaza at the center.
+28 m x 24 m (14 x 12 tiles). Focal object: the oasis fountain on a sand plaza at the center.
 Zones: bazaar (west plaza, street, tents and carts), the two walled houses with awnings (north), the caravan yard and ruin compound (south-east).
 Path: caravan gate in the south wall at x=-6, paved street north to the plaza.
 Walls are sandstone-wall; house roofs are desert-ground slabs at y=1.5. Anchor: desert-city.jpg.
