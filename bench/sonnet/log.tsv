@@ -658,3 +658,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	meadow	map-p2	medium	maps50	80000	28				7.2	pass	after 1 feedback; orchestrator viewed 3q
 2026-10-03	watchtower	map-p2	medium	maps50	100000	34				6.8	reserve	below bar after 1 feedback; flat ground, sparse dressing
 2026-10-03	stable	map-p2	medium	maps50	150000	45				7.0	pass	orchestrator rated 7.0 (agent 6.8); clear stable, dirt ground bare
+2026-10-03	cathedral	map-p2	medium	maps50	100000	30				6.5	reserve	below bar; plaster walls, thin pews; no feedback pass (goal met)
