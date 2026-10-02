@@ -1,6 +1,6 @@
 # Rename the repository to advantage-forge
 
-Status: in_progress (phases 1 and 2 done except owner approval). This plan owns execution status.
+Status: completed for the rename (2026-10-02). Phase 5 waits for the Primary Advantage cutover. This plan owns execution status.
 
 ## Phase 1: Contract
 
@@ -13,20 +13,28 @@ Status: in_progress (phases 1 and 2 done except owner approval). This plan owns 
 - [x] Task: Write `docs/pack-layout.md`: the shared Forge tool and catalog, and one directory for each pack. (docs/pack-layout.md)
 - [x] Task: List what a pack owns: assets, catalog rows, maps, base character, equipment fit, sprites, models, and review ratings. (docs/pack-layout.md)
 - [x] Task: Write the Riven Lands brief: art direction for secondary students, base character, and the per-pack equipment fit rule. (docs/pack-layout.md)
-- [~] Task: Ask the owner to approve the design before any path moves.
+- [x] Task: Ask the owner to approve the design before any path moves. (2026-10-02: stage 1 approved; Riven Lands deferred until the Primary cutover is complete; stage 2 not decided)
 
 ## Phase 3: Rename
 
-- [ ] Task: Stop all agents. Commit or park every uncommitted edit with explicit paths.
-- [ ] Task: Rename the GitHub repository and update the `origin` remote.
-- [ ] Task: Rename the local directory. Update `package.json`, scripts, tests, docs, and `.github/workflows/measure.yml`.
-- [ ] Task: Move the Claude Code project memory to the directory of the new path.
-- [ ] Task: Update the sibling repositories that name this repository.
+- [x] Task: Stop all agents. Commit or park every uncommitted edit with explicit paths. (No agent of this session ran. Other sessions kept three Vite servers and a bench script in the directory; a compatibility link keeps their absolute paths working.)
+- [x] Task: Rename the GitHub repository and update the `origin` remote. (bodangren/advantage-forge; Pages now at https://bodangren.github.io/advantage-forge/)
+- [x] Task: Rename the local directory. Update `package.json`, scripts, tests, docs, and `.github/workflows/measure.yml`. (`../advantage-forge`; symlink `../fantasy-asset-forge` left for other sessions; remove it when they finish)
+- [x] Task: Move the Claude Code project memory to the directory of the new path. (Copied to `~/.claude/projects/-home-daniebo-Desktop-advantage-forge/memory`; the old copy remains until the old session ends)
+- [x] Task: Update the sibling repositories that name this repository. (`../advantage-pr` product strategy line 41, uncommitted in that repository)
 
 ## Phase 4: Close
 
-- [ ] Task: Run `pnpm typecheck`, `pnpm test`, `./forge render`, and the demo build in the new directory.
-- [ ] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`. Update AGENTS.md, README.md, and the roadmaps.
+- [x] Task: Run `pnpm typecheck`, `pnpm test`, `./forge render`, and the demo build in the new directory. (669 tests pass; render and demo build pass; 31 known compiler errors in P2 and P3 sources)
+- [x] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`. Update AGENTS.md, README.md, and the roadmaps.
+
+## Phase 5: Stage 1 of the pack layout (deferred)
+
+Start after the Primary Advantage cutover is complete (cutover Oct 14 to 16, last date Oct 20).
+
+- [ ] Task: Add `packs/riven-lands/` (assets, scenes, `fit.md`, `pack.json`) and a `--pack` option to the CLI. Keep `assets/` in place.
+- [ ] Task: Get the owner's answers to the open questions in `docs/pack-layout.md` (base character, skeleton names, first batch, first game).
+- [ ] Task: Remove the `../fantasy-asset-forge` compatibility link.
 
 ## Rename inventory (2026-10-02)
 

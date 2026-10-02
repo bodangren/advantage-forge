@@ -1,6 +1,8 @@
-# Fantasy Asset Forge
+# Advantage Forge
 
 Project status and planning: [Measure index](measure/index.md).
+
+This repository was named `fantasy-asset-forge` until 2026-10-02. It builds the asset packs (skins) for the Advantage games. Chibi Quest is the first pack.
 
 Code-first 3D game assets, with 2D pixel-art sprites rendered from the same model.
 
@@ -10,7 +12,7 @@ and the sprite pass renders that GLB into eight-direction pixel art, one sheet p
 clip and one sprite set per color preset. You get a 3D asset and a 2.5D sprite character from
 one source file.
 
-**Play the demo:** [Chibi Quest: Monster Encounters](https://bodangren.github.io/fantasy-asset-forge/),
+**Play the demo:** [Chibi Quest: Monster Encounters](https://bodangren.github.io/advantage-forge/),
 a reading game for grades 3 to 6 built from these assets. Read a short story, then use its words
 and sentences to beat monsters in the Sunken Vault. See
 [docs/demo-monster-encounters.md](docs/demo-monster-encounters.md).

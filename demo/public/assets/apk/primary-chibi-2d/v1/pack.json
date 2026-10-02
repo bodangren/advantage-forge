@@ -26,7 +26,7 @@
     "y": 0.6875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/apple.ts",
+    "source": "advantage-forge/assets/apple.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -53,7 +53,7 @@
     "y": 0.7213114754098361
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/arch.ts",
+    "source": "advantage-forge/assets/arch.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -134,7 +134,7 @@
     "y": 0.6854838709677419
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bandit.ts",
+    "source": "advantage-forge/assets/bandit.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -215,7 +215,7 @@
     "y": 0.6277777777777778
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bandit.ts",
+    "source": "advantage-forge/assets/bandit.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -296,7 +296,7 @@
     "y": 0.6742424242424242
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bandit.ts",
+    "source": "advantage-forge/assets/bandit.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -377,7 +377,7 @@
     "y": 0.7053571428571429
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bandit.ts",
+    "source": "advantage-forge/assets/bandit.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -458,7 +458,7 @@
     "y": 0.6982758620689655
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bandit.ts",
+    "source": "advantage-forge/assets/bandit.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -485,7 +485,7 @@
     "y": 0.75
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bottle.ts",
+    "source": "advantage-forge/assets/bottle.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -512,7 +512,7 @@
     "y": 0.640625
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/boulder.ts",
+    "source": "advantage-forge/assets/boulder.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -539,7 +539,7 @@
     "y": 0.6111111111111112
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bread.ts",
+    "source": "advantage-forge/assets/bread.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -566,7 +566,7 @@
     "y": 0.6538461538461539
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/bush.ts",
+    "source": "advantage-forge/assets/bush.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -593,7 +593,7 @@
     "y": 0.6944444444444444
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cauldron.ts",
+    "source": "advantage-forge/assets/cauldron.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -726,7 +726,7 @@
     "y": 0.6402439024390244
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -859,7 +859,7 @@
     "y": 0.6666666666666666
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -992,7 +992,7 @@
     "y": 0.6571428571428571
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1125,7 +1125,7 @@
     "y": 0.6833333333333333
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1258,7 +1258,7 @@
     "y": 0.6666666666666666
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1391,7 +1391,7 @@
     "y": 0.6785714285714286
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1524,7 +1524,7 @@
     "y": 0.671875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cleric.ts",
+    "source": "advantage-forge/assets/cleric.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1551,7 +1551,7 @@
     "y": 0.672077922077922
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/cottage.ts",
+    "source": "advantage-forge/assets/cottage.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1578,7 +1578,7 @@
     "y": 0.7083333333333334
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/crystal-cluster.ts",
+    "source": "advantage-forge/assets/crystal-cluster.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1711,7 +1711,7 @@
     "y": 0.6764705882352942
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1844,7 +1844,7 @@
     "y": 0.6337209302325582
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -1977,7 +1977,7 @@
     "y": 0.6987179487179487
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2110,7 +2110,7 @@
     "y": 0.6691176470588235
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2243,7 +2243,7 @@
     "y": 0.6642857142857143
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2376,7 +2376,7 @@
     "y": 0.6714285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2509,7 +2509,7 @@
     "y": 0.6666666666666666
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/dragon-fire.ts",
+    "source": "advantage-forge/assets/dragon-fire.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2590,7 +2590,7 @@
     "y": 0.6838235294117647
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/druid.ts",
+    "source": "advantage-forge/assets/druid.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2671,7 +2671,7 @@
     "y": 0.6857142857142857
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/druid.ts",
+    "source": "advantage-forge/assets/druid.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2752,7 +2752,7 @@
     "y": 0.6893939393939394
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/druid.ts",
+    "source": "advantage-forge/assets/druid.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2833,7 +2833,7 @@
     "y": 0.6982758620689655
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/farmer.ts",
+    "source": "advantage-forge/assets/farmer.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2914,7 +2914,7 @@
     "y": 0.6982758620689655
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/farmer.ts",
+    "source": "advantage-forge/assets/farmer.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -2995,7 +2995,7 @@
     "y": 0.6982758620689655
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/farmer.ts",
+    "source": "advantage-forge/assets/farmer.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3076,7 +3076,7 @@
     "y": 0.6982758620689655
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/farmer.ts",
+    "source": "advantage-forge/assets/farmer.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3103,7 +3103,7 @@
     "y": 0.65625
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/fence.ts",
+    "source": "advantage-forge/assets/fence.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3130,7 +3130,7 @@
     "y": 0.65
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/fern.ts",
+    "source": "advantage-forge/assets/fern.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3211,7 +3211,7 @@
     "y": 0.6764705882352942
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3292,7 +3292,7 @@
     "y": 0.6833333333333333
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3373,7 +3373,7 @@
     "y": 0.6964285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3454,7 +3454,7 @@
     "y": 0.6896551724137931
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3535,7 +3535,7 @@
     "y": 0.6964285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3616,7 +3616,7 @@
     "y": 0.7
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/giant-bat.ts",
+    "source": "advantage-forge/assets/giant-bat.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3697,7 +3697,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/goblin-warrior.ts",
+    "source": "advantage-forge/assets/goblin-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3778,7 +3778,7 @@
     "y": 0.6944444444444444
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/goblin-warrior.ts",
+    "source": "advantage-forge/assets/goblin-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3859,7 +3859,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/goblin-warrior.ts",
+    "source": "advantage-forge/assets/goblin-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -3940,7 +3940,7 @@
     "y": 0.7407407407407407
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/guard.ts",
+    "source": "advantage-forge/assets/guard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4021,7 +4021,7 @@
     "y": 0.7410714285714286
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/guard.ts",
+    "source": "advantage-forge/assets/guard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4102,7 +4102,7 @@
     "y": 0.75
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/guard.ts",
+    "source": "advantage-forge/assets/guard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4129,7 +4129,7 @@
     "y": 0.6923076923076923
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/hay-bale.ts",
+    "source": "advantage-forge/assets/hay-bale.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4210,7 +4210,7 @@
     "y": 0.73
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/innkeeper.ts",
+    "source": "advantage-forge/assets/innkeeper.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4291,7 +4291,7 @@
     "y": 0.73
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/innkeeper.ts",
+    "source": "advantage-forge/assets/innkeeper.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4372,7 +4372,7 @@
     "y": 0.73
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/innkeeper.ts",
+    "source": "advantage-forge/assets/innkeeper.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4453,7 +4453,7 @@
     "y": 0.73
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/innkeeper.ts",
+    "source": "advantage-forge/assets/innkeeper.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4586,7 +4586,7 @@
     "y": 0.6928571428571428
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4719,7 +4719,7 @@
     "y": 0.7045454545454546
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4852,7 +4852,7 @@
     "y": 0.7109375
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -4985,7 +4985,7 @@
     "y": 0.725
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5118,7 +5118,7 @@
     "y": 0.7109375
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5251,7 +5251,7 @@
     "y": 0.725
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5384,7 +5384,7 @@
     "y": 0.717741935483871
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/knight.ts",
+    "source": "advantage-forge/assets/knight.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5465,7 +5465,7 @@
     "y": 0.6696428571428571
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5546,7 +5546,7 @@
     "y": 0.6851851851851852
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5627,7 +5627,7 @@
     "y": 0.6826923076923077
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5708,7 +5708,7 @@
     "y": 0.69
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5789,7 +5789,7 @@
     "y": 0.71
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5870,7 +5870,7 @@
     "y": 0.6851851851851852
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mimic.ts",
+    "source": "advantage-forge/assets/mimic.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5897,7 +5897,7 @@
     "y": 0.625
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/mushroom.ts",
+    "source": "advantage-forge/assets/mushroom.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -5924,7 +5924,7 @@
     "y": 0.7121848739495799
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/oak-tree.ts",
+    "source": "advantage-forge/assets/oak-tree.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6005,7 +6005,7 @@
     "y": 0.6818181818181818
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/orc-warrior.ts",
+    "source": "advantage-forge/assets/orc-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6086,7 +6086,7 @@
     "y": 0.6838235294117647
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/orc-warrior.ts",
+    "source": "advantage-forge/assets/orc-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6167,7 +6167,7 @@
     "y": 0.6764705882352942
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/orc-warrior.ts",
+    "source": "advantage-forge/assets/orc-warrior.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6194,7 +6194,7 @@
     "y": 0.7336065573770492
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/pine-tree.ts",
+    "source": "advantage-forge/assets/pine-tree.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6221,7 +6221,7 @@
     "y": 0.6538461538461539
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/pumpkin.ts",
+    "source": "advantage-forge/assets/pumpkin.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6248,7 +6248,7 @@
     "y": 0.5740740740740741
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/rock-cluster.ts",
+    "source": "advantage-forge/assets/rock-cluster.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6329,7 +6329,7 @@
     "y": 0.6964285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6410,7 +6410,7 @@
     "y": 0.6486486486486487
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6491,7 +6491,7 @@
     "y": 0.6964285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6572,7 +6572,7 @@
     "y": 0.7291666666666666
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6653,7 +6653,7 @@
     "y": 0.6486486486486487
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6734,7 +6734,7 @@
     "y": 0.72
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/skeleton.ts",
+    "source": "advantage-forge/assets/skeleton.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6815,7 +6815,7 @@
     "y": 0.6285714285714286
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6896,7 +6896,7 @@
     "y": 0.6388888888888888
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -6977,7 +6977,7 @@
     "y": 0.6630434782608695
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7058,7 +7058,7 @@
     "y": 0.6630434782608695
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7139,7 +7139,7 @@
     "y": 0.6630434782608695
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7220,7 +7220,7 @@
     "y": 0.6666666666666666
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/slime.ts",
+    "source": "advantage-forge/assets/slime.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7301,7 +7301,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/villager.ts",
+    "source": "advantage-forge/assets/villager.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7382,7 +7382,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/villager.ts",
+    "source": "advantage-forge/assets/villager.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7463,7 +7463,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/villager.ts",
+    "source": "advantage-forge/assets/villager.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7544,7 +7544,7 @@
     "y": 0.71875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/villager.ts",
+    "source": "advantage-forge/assets/villager.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7571,7 +7571,7 @@
     "y": 0.7142857142857143
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/well.ts",
+    "source": "advantage-forge/assets/well.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7598,7 +7598,7 @@
     "y": 0.6527777777777778
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wildflowers.ts",
+    "source": "advantage-forge/assets/wildflowers.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7731,7 +7731,7 @@
     "y": 0.6275510204081632
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7864,7 +7864,7 @@
     "y": 0.6838235294117647
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -7997,7 +7997,7 @@
     "y": 0.6714285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8130,7 +8130,7 @@
     "y": 0.6935483870967742
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8263,7 +8263,7 @@
     "y": 0.6785714285714286
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8396,7 +8396,7 @@
     "y": 0.6923076923076923
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8529,7 +8529,7 @@
     "y": 0.6875
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/wizard.ts",
+    "source": "advantage-forge/assets/wizard.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8610,7 +8610,7 @@
     "y": 0.6896551724137931
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8691,7 +8691,7 @@
     "y": 0.6447368421052632
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8772,7 +8772,7 @@
     "y": 0.6964285714285714
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8853,7 +8853,7 @@
     "y": 0.72
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -8934,7 +8934,7 @@
     "y": 0.6774193548387096
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9015,7 +9015,7 @@
     "y": 0.72
    },
    "provenance": {
-    "source": "fantasy-asset-forge/assets/zombie.ts",
+    "source": "advantage-forge/assets/zombie.ts",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9031,7 +9031,7 @@
    "byteSize": 238948,
    "sha256": "d71db26c1134b314b029043feefa8bc8e71014491ae743f32f14ea7f08141916",
    "provenance": {
-    "source": "fantasy-asset-forge/src/games/devourer-slime/view (the 3D set, baked)",
+    "source": "advantage-forge/src/games/devourer-slime/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9047,7 +9047,7 @@
    "byteSize": 196792,
    "sha256": "35ac967b3aadd32aa6c0e76bb463013215ee81681c9baeecec084333a88d2d8e",
    "provenance": {
-    "source": "fantasy-asset-forge/src/games/dungeon-liberator/view (the 3D set, baked)",
+    "source": "advantage-forge/src/games/dungeon-liberator/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9063,7 +9063,7 @@
    "byteSize": 202703,
    "sha256": "293804b1eaa96c2da1467f77ff54495b48f2eaf02b737f654d2f3dabfda79b1e",
    "provenance": {
-    "source": "fantasy-asset-forge/src/games/hero-vs-zombie/view (the 3D set, baked)",
+    "source": "advantage-forge/src/games/hero-vs-zombie/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9079,7 +9079,7 @@
    "byteSize": 133944,
    "sha256": "8e3558a8b0c9f65ac9ac63dda3f204c3431f1e69d712364dcc3d4efc43478380",
    "provenance": {
-    "source": "fantasy-asset-forge/src/games/monster-encounters/view (the 3D set, baked)",
+    "source": "advantage-forge/src/games/monster-encounters/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   },
@@ -9095,7 +9095,7 @@
    "byteSize": 95713,
    "sha256": "6eadc1b4fd733e38638a73267f2e66197fa6f346bf6e4d2a9ff2524be72894fc",
    "provenance": {
-    "source": "fantasy-asset-forge/src/games/potion-rush/view (the 3D set, baked)",
+    "source": "advantage-forge/src/games/potion-rush/view (the 3D set, baked)",
     "license": "AGPL-3.0-or-later"
    }
   }

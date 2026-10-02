@@ -433,7 +433,7 @@ describe('model assets', () => {
     clips: ['idle', 'walk'],
     presets: ['ranger'],
     provenance: {
-      source: `fantasy-asset-forge/assets/${id}.ts`,
+      source: `advantage-forge/assets/${id}.ts`,
       license: MODEL_LICENSE,
       forgeCommit: 'ce692ca',
       tool: 'scripts/apk3d-models.ts',

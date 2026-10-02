@@ -65,7 +65,7 @@ rmSync(DEST, { recursive: true, force: true });
 const spritesDir = join(RAW, 'sprites');
 for (const model of existsSync(spritesDir) ? readdirSync(spritesDir).sort() : []) {
   const dir = join(spritesDir, model);
-  const source = `fantasy-asset-forge/assets/${model}.ts`;
+  const source = `advantage-forge/assets/${model}.ts`;
   // A prop: one still frame (dirs 1, no clip).
   if (existsSync(join(dir, 'S.png'))) {
     const m = JSON.parse(readFileSync(join(dir, 'metrics.json'), 'utf8')) as Metrics;
@@ -97,7 +97,7 @@ for (const game of existsSync(bgDir) ? readdirSync(bgDir).sort() : []) {
   const path = `backgrounds/${game}.png`;
   const data = await writePng(join(bgDir, game, 'background.png'), join(DEST, path), true);
   const id = `background.${game}`;
-  files[id] = fileEntry(id, path, data, projection.width!, projection.height!, `fantasy-asset-forge/src/games/${game}/view (the 3D set, baked)`, { kind: 'image', view: 'world', alpha: false });
+  files[id] = fileEntry(id, path, data, projection.width!, projection.height!, `advantage-forge/src/games/${game}/view (the 3D set, baked)`, { kind: 'image', view: 'world', alpha: false });
   const gen = join(ROOT, 'src', 'games', game, 'view2d');
   mkdirSync(gen, { recursive: true });
   writeFileSync(

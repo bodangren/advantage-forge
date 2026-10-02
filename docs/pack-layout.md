@@ -1,6 +1,9 @@
 # Pack layout: one Forge, several asset packs
 
-Status: design for owner approval (track `repo_rename_advantage_forge_20261002`, phase 2). No path moves until the owner approves it.
+Status: stage 1 approved by the owner on 2026-10-02. Riven Lands work is deferred until the Primary Advantage monorepo cutover is
+complete. The cutover calendar (`../advantage-pr/08-strategy/product-strategy-2026-2027.md`): rehearsals on Oct 8 to 9 and Oct 12 to 13,
+cutover on Oct 14 to 16 if rehearsal 2 passes, last date Oct 20. If the gate has not passed by Oct 20, Primary stays on the legacy
+build for semester 2. Stage 2 (moving Chibi Quest) still needs separate owner approval.
 
 ## Why
 
@@ -64,7 +67,7 @@ I recommend stage 1 now. It gives the Riven Lands work a place at no risk to the
 - Model files in `demo/public/models/` need a pack folder (`models/<pack>/<name>.glb`) so two `cottage.glb` files do not collide.
   The host and each game pick the pack from the launch context. This touches every `loader.get(model(...))` call. Decide it in the
   game-platform track, not here.
-- Provenance strings in the sprite pack, `fantasy-asset-forge/assets/x.ts`, become `advantage-forge/packs/<pack>/assets/x.ts`.
+- Provenance strings in the sprite pack, `advantage-forge/assets/x.ts`, become `advantage-forge/packs/<pack>/assets/x.ts` after stage 2.
 
 ## Scope tables that gain a pack column
 
@@ -103,9 +106,9 @@ needs a pack key (or one file per pack) so the same ID has a Chibi Quest status 
 3. Port the goblin warrior from its turnaround as the first rigged character.
 4. Review with the same rubric and bar.
 
-## Open questions for the owner
+## Open questions for the owner (answer when Riven Lands starts)
 
-1. Approve stage 1 (add `packs/riven-lands`, keep `assets/` in place) now, and stage 2 later?
+1. Stage 1 is approved (2026-10-02) and deferred. Stage 2 needs a later decision.
 2. Riven Lands base character: proportions and height?
 3. Do Riven Lands characters keep the same bone, clip, and socket names?
 4. First batch: the hamlet and its cast?

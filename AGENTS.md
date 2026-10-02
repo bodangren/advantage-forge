@@ -107,7 +107,7 @@ order, not quality. Reviews use a rating out of 10 with a bar of 7.
 - Full lessons are in [measure/lessons-learned.md](measure/lessons-learned.md). Open debt is in
   [measure/tech-debt.md](measure/tech-debt.md).
 
-# Authoring assets in Fantasy Asset Forge
+# Authoring assets in Advantage Forge
 
 You make a 3D asset by writing a TypeScript file in `assets/`. The file describes the asset as
 code: signed distance shapes (SDF), blended and painted, which Forge meshes into smooth

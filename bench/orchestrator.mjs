@@ -14,7 +14,7 @@ import { readdirSync, statSync, existsSync, readFileSync, writeFileSync, copyFil
 import { join, dirname } from "node:path";
 import { spawn } from "node:child_process";
 
-const repo = "/home/daniebo/Desktop/fantasy-asset-forge";
+const repo = "/home/daniebo/Desktop/advantage-forge";
 const TAVERN_KIT = [
   "bottle","bench","bowl","bread","candelabra","candle","chair","chandelier","cheese",
   "counter","crate","fireplace","haunch","mug","plaster-wall","plaster-wall-door",

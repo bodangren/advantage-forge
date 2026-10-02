@@ -42,7 +42,7 @@ const walk = (): PhysicalAssetFile => ({
   grid: forgeSheetGrid(128, 8, 8),
   animations: forgeSheetAnimations('walk', 8, 8, 10, true),
   origin: forgeOrigin([64, 101], 128),
-  provenance: { source: 'fantasy-asset-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' },
+  provenance: { source: 'advantage-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' },
 });
 
 const edition = (over: Partial<RuntimeEdition> = {}): RuntimeEdition => ({

@@ -5,7 +5,7 @@
  *   node --import tsx scripts/demo-publish.ts            build and push
  *   node --import tsx scripts/demo-publish.ts --dry-run  build and prepare, but do not push
  *
- * One-time setup (already done for bodangren/fantasy-asset-forge): GitHub Pages serves the
+ * One-time setup (already done for bodangren/advantage-forge): GitHub Pages serves the
  * gh-pages branch from its root. The page is then at https://<owner>.github.io/<repo>/.
  */
 import { execFileSync } from 'node:child_process';

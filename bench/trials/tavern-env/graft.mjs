@@ -5,7 +5,7 @@ import { readdirSync, statSync, existsSync, copyFileSync, writeFileSync } from "
 import { join } from "node:path";
 import { spawn } from "node:child_process";
 
-const repo = "/home/daniebo/Desktop/fantasy-asset-forge";
+const repo = "/home/daniebo/Desktop/advantage-forge";
 const ROOTS = [`${repo}/bench/runs/tavern-env-r1`, `${repo}/bench/runs/tavern-env-r2`, `${repo}/bench/runs/tavern-env-r3`];
 
 const discovered = new Map();

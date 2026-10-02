@@ -1,4 +1,4 @@
-# Fantasy Asset Forge design
+# Advantage Forge design
 
 This document records the existing design direction. It does not introduce a visual redesign.
 

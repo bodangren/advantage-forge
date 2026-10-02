@@ -131,7 +131,7 @@ node --import tsx scripts/apk3d-shot.ts both --dist     # play the built site, s
 node --import tsx scripts/demo-publish.ts                # publish to GitHub Pages
 ```
 
-Public page: https://bodangren.github.io/fantasy-asset-forge/
+Public page: https://bodangren.github.io/advantage-forge/
 
 ### Web weight
 

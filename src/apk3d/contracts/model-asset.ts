@@ -17,7 +17,7 @@ export const MODEL_PACK_TOOL = 'scripts/apk3d-models.ts';
 
 export const modelProvenanceSchema = z
   .object({
-    /** The asset source in this repo, e.g. 'fantasy-asset-forge/assets/knight.ts'. */
+    /** The asset source in this repo, e.g. 'advantage-forge/assets/knight.ts'. */
     source: z.string().min(1),
     license: z.literal(MODEL_LICENSE),
     /** Git sha of the source at build time. */

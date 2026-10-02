@@ -458,7 +458,7 @@ export const modelAssetFileSchema = z.object({
   triangles: z.number().int(), textureSize: z.number().int(), skinned: z.boolean(),
   clips: z.array(z.string()), presets: z.array(z.string()),
   provenance: z.object({
-    source: z.string(),          // 'fantasy-asset-forge/assets/knight.ts'
+    source: z.string(),          // 'advantage-forge/assets/knight.ts'
     license: z.string(),         // 'AGPL-3.0-or-later' (owner decision; LICENSE at the repo root)
     forgeCommit: z.string(),     // git sha of the source at build time
     tool: z.literal('scripts/apk3d-models.ts'),
@@ -845,7 +845,7 @@ baked backgrounds line up:
 | `animations` | `forgeSheetAnimations(clip, directions, frames, fps, loop)`: one per direction, named `<clip>.<dir>` in lower case (`walk.s`, `walk.sw`, ...), `repeat` -1 for a loop, 0 for a one-shot |
 | `origin` | `forgeOrigin(metrics.pivot, cell)`: the asset's ground point, so the game places it on the floor |
 | `collision` | absent. A sheet with both `origin` and `collision` must be a canonical APK actor sheet (4x8 top-down or 4x4 side-scroll, 128 px); forge sheets are not, so they omit `collision` and the game sets bodies in code |
-| `provenance` | `{ source: 'fantasy-asset-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' }` |
+| `provenance` | `{ source: 'advantage-forge/assets/knight.ts', license: 'AGPL-3.0-or-later' }` |
 
 Direction rows follow `src/render/page.ts`: `S, SW, W, NW, N, NE, E, SE` for 8, `S, W, N, E` for
 4, `S` for 1 (`FORGE_DIRECTIONS_8`, `FORGE_DIRECTIONS_4`). Heroes and the dragon have 8
