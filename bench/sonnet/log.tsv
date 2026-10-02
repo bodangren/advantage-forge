@@ -679,3 +679,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	coral-reef	map-p2	medium	maps-rest	49000	14				6.0	reserve	needs bright coral (building), kelp, giant clam
 2026-10-03	glacier	map-p2	medium	maps-rest	107000	20				7.0	pass	after 1 feedback with new ice-ground tile; orchestrator viewed 3q; flat ground
 2026-10-03	shipwreck	map-p2	medium	maps-rest	118000	22				7.0	pass	after rebuild with new shipwreck-hull; orchestrator flipped hull yaw 180 and viewed 3q
+2026-10-03	coral-reef	map-p2	medium	maps-rest	104000	17				6.8	reserve	after rebuild with coral-reef-cluster; tiled sea slab, no kelp or clam; borderline

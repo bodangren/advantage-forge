@@ -17,7 +17,7 @@ const yawr = () => Math.round(r2(0, 359));
 const cols = [-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10];
 const rows = [-8, -6, -4, -2, 0, 2, 4, 6, 8];
 // Sand: NW bank (diagonal channel edge) plus two shoals in the sea.
-const sand = (x, z) => x + z * 0.9 < -5.5 || (x === 6 && z === -6) || (x === -2 && z === 6) || (x === -4 && z === 8) || (x === 10 && z === 8) || (x === 8 && z === -8) || (x === 2 && z === -6 && false);
+const sand = (x, z) => x + z * 0.9 < -5.5 || (x === 6 && z === -6) || (x === -2 && z === 6) || (x === -4 && z === 8) || (x === 10 && z === 8) || (x === 8 && z === -8) || (x === -8 && z === 2) || (x === -6 && z === 2) || (x === 8 && z === 0) || (x === 10 && z === 0) || (x === 0 && z === 4) || (x === 8 && z === 6) || (x === -6 && z === 6) || (x === 2 && z === 8);
 const glyph = [];
 for (const z of rows) {
   let row = '';
@@ -38,14 +38,16 @@ put('shell', -4.4, -6.2, { y: 1.5, yaw: 200, scale: 2.2 });
 // ---- rowboat on the sand bank
 put('rowboat', -3.6, -1.2, { yaw: 55, scale: 0.9 });
 // ---- coral clusters: big ones at the corners, many small ones on the reef
-const coralBig = [[-8.4, -0.6, 3.2], [8.4, -0.8, 3.6], [-1.0, -7.6, 2.8], [9.2, 6.2, 3.0], [-6.6, 2.0, 2.6], [-0.5, 5.0, 2.4], [6.4, 6.6, 2.2]];
-for (const [x, z, k] of coralBig) put('coral', x, z, { yaw: yawr(), scale: k });
-for (let i = 0; i < 30; i++) {
-  const x = r2(-10, 10), z = r2(-8, 8);
-  if (x + z * 0.9 < -4.5 && z < 0) continue; // keep the NW bank for rocks
-  if (Math.hypot(x - 3.2, z - 0.4) < 3.6) continue; // keep the chest/wreck pool clear
-  if (Math.hypot(x + 3.6, z + 1.2) < 1.6) continue;
-  put('coral', x, z, { yaw: yawr(), scale: r2(1.3, 2.2), y: sand(Math.round(x / 2) * 2, Math.round(z / 2) * 2) ? 0 : -0.03 });
+// groups of 2 to 4 candy clumps on sand tiles (shoals) and on the NW bank
+const groups = [];
+for (const z of rows) for (const x of cols) if (sand(x, z) && !(x + z * 0.9 < -5.5 && z < 0 && x < -3)) groups.push([x, z]);
+groups.push([-4.2, 0.4], [-8, -1.2], [-2.4, -2.6]);
+for (const [gx, gz] of groups) {
+  const n = 2 + Math.floor(rnd() * 3);
+  for (let i = 0; i < n; i++) {
+    const a = r2(0, 6.28), d = i === 0 ? 0 : r2(0.55, 0.85);
+    put('coral-reef-cluster', gx + Math.cos(a) * d, gz + Math.sin(a) * d, { yaw: yawr(), scale: r2(0.8, 1.6) });
+  }
 }
 // ---- wreck prow, chest, clam
 put('shipwreck-hull', 5.0, -2.4, { yaw: 215, scale: 0.8, y: -0.03 });
