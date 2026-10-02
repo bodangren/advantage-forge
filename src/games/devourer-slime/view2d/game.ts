@@ -3,7 +3,7 @@
  * choose. It runs the same core, rules, catalog, and evidence as the 3D view (../view/game.ts),
  * with the forge sprites of the `primary-chibi-2d` pack over the clearing baked from the 3D set.
  * The slime grows and the view pulls back; word bubbles float with tags that stay on screen; the
- * sentence panel shows the words eaten so far; the guards patrol until the slime is big enough.
+ * sentence panel shows the words eaten so far; a slime that grows big is powered for a countdown and swallows guards.
  */
 import type * as Phaser from 'phaser';
 import { preloadAssetBindings, toGameResults, type StoryInput } from '../../../apk3d/contracts/index.js';
@@ -154,7 +154,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         const next = s.helper && b.index === s.next && !b.eaten;
         recolorTag(view.tag, next ? COLORS.purple : COLORS.tagFill, next ? COLORS.gold : 0xffffff);
       }
-      status.set(t('sentence', { index: Math.min(s.sentence + 1, s.sentences), total: s.sentences }), `${t('size')} ${s.slime.size.toFixed(1)}`);
+      const power = s.slime.poweredMs > 0 ? ` ${t('power', { seconds: Math.ceil(s.slime.poweredMs / 1000) })}` : '';
+      status.set(t('sentence', { index: Math.min(s.sentence + 1, s.sentences), total: s.sentences }), `${t('size')} ${s.slime.size.toFixed(1)}${power}`);
     }
 
     // ---------------------------------------------------------------- events
@@ -203,6 +204,17 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
           const at = slimeTop();
           popup(scene, at.x, at.y, t('oof'), 'miss');
           void guards.get(ev.guardId)?.play('attack');
+          break;
+        }
+        case 'powerStarted': {
+          audio.play('victory');
+          const at = slimeTop();
+          popup(scene, at.x, at.y, t('powerUp'), 'good');
+          break;
+        }
+        case 'powerEnded': {
+          const at = slimeTop();
+          popup(scene, at.x, at.y, t('powerDown'), 'miss');
           break;
         }
         case 'guardEaten': {
@@ -259,6 +271,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const manual = createManualClock();
     const loop = createFixedStepLoop<DevourerSlimeState, DevourerSlimeCommand, DevourerSlimeEvent>(sim, { render: (events) => events.forEach(handle) }, manual.clock);
     let last = 0;
+    let shownSecs = 0;
     frame = (time: number) => {
       manual.run(time);
       const dt = Math.min(0.1, last ? (time - last) / 1000 : 0);
@@ -272,7 +285,17 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       const wobble = 1 + Math.sin(time / 140) * 0.03;
       slime.sprite.setScale(shownSize * SLIME_SCALE * wobble, (shownSize * SLIME_SCALE) / wobble);
       arena.zoom(baseScale / (1 + (shownSize - 1) * 0.35));
-      for (const g of s.guards) if (!g.eaten) guards.get(g.id)?.moveTo(g.x, g.z);
+      for (const g of s.guards) guards.get(g.id)?.moveTo(g.x, g.z);
+      // Powered: a gold tint that blinks in the last two seconds. The status text counts down once a second.
+      const ms = s.slime.poweredMs;
+      const glow = ms > 0 && (ms >= 2000 || Math.floor(ms / 150) % 2 === 0);
+      if (glow) slime.sprite.setTint(0xffe27a);
+      else slime.sprite.clearTint();
+      const secs = Math.ceil(ms / 1000);
+      if (secs !== shownSecs) {
+        shownSecs = secs;
+        drawHud();
+      }
       for (const g of guards.values()) g.update(dt);
       for (const b of s.bubbles) {
         const view = bubbles.get(b.id);

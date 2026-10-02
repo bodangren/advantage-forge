@@ -33,7 +33,7 @@ describe('bot', () => {
     expect(sim.state.shift.every((s) => s.complete)).toBe(true);
     // The bot reads: few wrong words (a brush past another bubble in a crowded 7-word round).
     expect(ofType(events, 'wordSpat').length).toBeLessThanOrEqual(sim.state.sentences * 2);
-    expect(sim.state.slime.size).toBeGreaterThan(TUNING_GUARD_SIZE);
+    expect(ofType(events, 'powerStarted').length).toBeGreaterThan(0);
   });
 
   it('returns null with nothing to do, and stops while the next bubble is spat', () => {
@@ -49,4 +49,3 @@ describe('bot', () => {
   });
 });
 
-const TUNING_GUARD_SIZE = 1.35;

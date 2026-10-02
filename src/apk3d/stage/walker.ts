@@ -43,6 +43,16 @@ export class Walker {
     }
   }
 
+  /** Puts the character at (x, z) facing `yaw` degrees, standing, with no glide (a new room). */
+  teleport(x: number, z: number, yaw: number): void {
+    this.actor.placeAt(x, 0, z, yaw);
+    this.actor.root.rotation.y = THREE.MathUtils.degToRad(yaw);
+    this.last.copy(this.actor.root.position);
+    this.moving = false;
+    this.busy = 0;
+    this.actor.loop(this.actor.idle, 0);
+  }
+
   /** Plays a one-shot clip (a cheer, a bump) and holds the loops until it ends. */
   play(clip: string, speed = 1): void {
     if (!this.actor.has(clip)) return;

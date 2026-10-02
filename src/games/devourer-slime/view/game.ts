@@ -53,6 +53,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   status.innerHTML = `
     <div class="place"><small>${esc(t('place'))}</small><span data-sentence></span></div>
     <div class="meter">${esc(t('size'))}<b data-size>1.0</b></div>
+    <div class="meter power" data-power hidden></div>
     ${ctx.host.openStory ? `<button class="book" data-story>${esc(t('story'))}</button>` : ''}
     ${ctx.host.toggleMute ? `<button class="book" data-mute aria-label="Sound">🔊</button>` : ''}`;
   hud.el.prepend(status);
@@ -131,6 +132,22 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     status.querySelector('[data-size]')!.textContent = s.slime.size.toFixed(1);
   }
 
+  /** The power-up countdown in the HUD, and a gold glow on the slime that blinks in the last two seconds. */
+  const powerEl = status.querySelector<HTMLElement>('[data-power]')!;
+  let glowing = false;
+  function drawPower(): void {
+    const ms = sim.state.slime.poweredMs;
+    powerEl.hidden = ms === 0;
+    if (ms > 0) powerEl.textContent = t('power', { seconds: Math.ceil(ms / 1000) });
+    const on = ms > 0 && (ms >= 2000 || Math.floor(ms / 150) % 2 === 0);
+    if (on === glowing) return;
+    glowing = on;
+    for (const m of slime.actor.materials) {
+      m.emissive.setRGB(on ? 1 : 0, on ? 0.8 : 0, on ? 0.15 : 0);
+      m.emissiveIntensity = on ? 0.6 : 0;
+    }
+  }
+
   // ---------------------------------------------------------------- events
   let finished = false;
   const slimeTop = (): { x: number; y: number; visible: boolean } => stage.screenOf(slime.actor, 0.9);
@@ -169,9 +186,18 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
         guards.get(ev.guardId)?.play('attack');
         break;
       }
+      case 'powerStarted':
+        audio.play('victory');
+        hud.popup(slimeTop(), t('powerUp'), 'good');
+        break;
+      case 'powerEnded':
+        hud.popup(slimeTop(), t('powerDown'), 'miss');
+        break;
       case 'guardEaten': {
         const g = guards.get(ev.guardId);
         if (g) {
+          // The guard is back at once under the same id: take it off the map before it shrinks away.
+          guards.delete(ev.guardId);
           const a = g.actor;
           const from = a.root.position.clone();
           void stage.timeline
@@ -179,10 +205,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
               a.root.position.lerpVectors(from, slime.actor.root.position, u);
               a.root.scale.setScalar(1 - u);
             })
-            .then(() => {
-              stage.removeActor(a);
-              guards.delete(ev.guardId);
-            });
+            .then(() => stage.removeActor(a));
         }
         slime.play('attack', 1.2);
         stage.shake(0.08, 0.35);
@@ -234,7 +257,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     slime.actor.root.scale.set(shownSize * SLIME_SCALE * wobble, shownSize * SLIME_SCALE / wobble, shownSize * SLIME_SCALE * wobble);
     target.set(s.slime.x * 0.7, 0, s.slime.z * 0.8);
     aim();
-    for (const g of s.guards) if (!g.eaten) guards.get(g.id)?.update(dt, g.x, g.z);
+    for (const g of s.guards) guards.get(g.id)?.update(dt, g.x, g.z);
+    drawPower();
     for (const b of s.bubbles) {
       const view = bubbles.get(b.id);
       if (!view || b.eaten) continue;

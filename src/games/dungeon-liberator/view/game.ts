@@ -10,7 +10,7 @@ import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index
 import { attachJoystick, esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
-import { createDungeonLiberator, evidenceOf, KNIGHT_START, scoreOf, type DungeonLiberatorCommand, type DungeonLiberatorEvent, type DungeonLiberatorState } from '../core/index.js';
+import { createDungeonLiberator, evidenceOf, GATE, KNIGHT_START, scoreOf, type DungeonLiberatorCommand, type DungeonLiberatorEvent, type DungeonLiberatorState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
 import { buildRoom, model, ROOM_MODELS } from './room.js';
 
@@ -123,11 +123,74 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     return v ? stage.screenOf(v.walker.actor, 1.5) : { x: 0, y: 0, visible: false };
   };
 
-  function handle(ev: DungeonLiberatorEvent): void {
+  /** The Knight and the freed line walk out through the open gate, one after the other, then the screen fades. */
+  const WALK_OUT = { speed: 2.4, gap: 0.45, beyond: 2.2 };
+  async function fileOut(line: readonly string[]): Promise<void> {
+    exiting = true;
+    const gate = new THREE.Vector3(GATE.x, 0, GATE.z);
+    const beyond = new THREE.Vector3(GATE.x, 0, GATE.z - WALK_OUT.beyond);
+    // After the last room the Knight stays at the gate and cheers; only the line files out.
+    const last = sim.state.phase === 'complete';
+    const walkers = [...(last ? [] : [hero]), ...line.map((id) => villagers.get(id)?.walker).filter((w): w is Walker => !!w)];
+    await Promise.all(
+      walkers.map(async (w, i) => {
+        await stage.timeline.wait(i * WALK_OUT.gap);
+        const a = w.actor;
+        a.loop(w === hero ? 'run' : 'walk', 0.1);
+        const from = a.root.position.clone();
+        const first = from.distanceTo(gate);
+        const total = first + gate.distanceTo(beyond);
+        await stage.timeline.tween(total / WALK_OUT.speed, (u) => {
+          const d = u * total;
+          const [p, q, k] = d < first ? [from, gate, d / Math.max(first, 1e-6)] : [gate, beyond, (d - first) / (total - first)];
+          a.root.position.lerpVectors(p, q, k);
+          a.yaw = THREE.MathUtils.radToDeg(Math.atan2(q.x - p.x, q.z - p.z));
+        });
+        a.root.visible = false;
+        const entry = [...villagers.values()].find((v) => v.walker === w);
+        if (entry) entry.tag.style.display = 'none';
+      }),
+    );
+    if (last) return;
+    await stage.timeline.wait(0.2);
+    await fade(1);
+  }
+
+  /** A black cover over the stage: 1 hides the room, 0 shows it. */
+  const cover = document.createElement('div');
+  cover.style.cssText = 'position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .25s;z-index:30';
+  hud.el.append(cover);
+  async function fade(to: number): Promise<void> {
+    cover.style.opacity = String(to);
+    await stage.timeline.wait(0.3);
+  }
+
+  // Events play one after another, so the walk out can finish before the next room appears.
+  const queue: DungeonLiberatorEvent[] = [];
+  let draining = false;
+  async function drain(): Promise<void> {
+    if (draining) return;
+    draining = true;
+    while (queue.length > 0) await handle(queue.shift()!);
+    draining = false;
+  }
+  let exiting = false;
+  let lineBefore: string[] = [];
+
+  async function handle(ev: DungeonLiberatorEvent): Promise<void> {
     switch (ev.type) {
-      case 'roomStarted':
+      case 'roomStarted': {
         startRoom(ev);
+        const k = sim.state.knight;
+        hero.actor.root.visible = true;
+        hero.teleport(k.x, k.z, 180);
+        if (exiting) {
+          exiting = false;
+          await fade(0);
+          loop.reset();
+        }
         break;
+      }
       case 'villagerFreed': {
         const v = villagers.get(ev.id);
         if (v) v.walker.play(v.walker.actor.has('wave') ? 'wave' : 'salute');
@@ -166,9 +229,10 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       }
       case 'roomCleared':
         audio.play('victory');
+        await fileOut(lineBefore);
         break;
       case 'shiftComplete':
-        void finish();
+        await finish();
         break;
     }
     drawBar();
@@ -191,17 +255,23 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   let stageMs = 0;
   let nextFrame: (() => void) | null = null;
   const clock: LoopClock = { now: () => stageMs, requestFrame: (cb) => ((nextFrame = cb), 1), cancelFrame: () => (nextFrame = null) };
-  const loop = createFixedStepLoop<DungeonLiberatorState, DungeonLiberatorCommand, DungeonLiberatorEvent>(sim, { render: (events) => events.forEach(handle) }, clock);
+  const loop = createFixedStepLoop<DungeonLiberatorState, DungeonLiberatorCommand, DungeonLiberatorEvent>(sim, { render: (events) => (queue.push(...events), void drain()) }, clock);
 
   stage.onFrame((dt) => {
     stageMs += dt * 1000;
-    const cb = nextFrame;
-    nextFrame = null;
-    cb?.();
+    if (!exiting) {
+      lineBefore = sim.state.line.slice();
+      const cb = nextFrame;
+      nextFrame = null;
+      cb?.();
+    }
     const s = sim.state;
-    hero.update(dt, s.knight.x, s.knight.z);
-    target.set(s.knight.x * 0.6, 0, s.knight.z);
-    for (const v of s.villagers) villagers.get(v.id)?.walker.update(dt, v.x, v.z);
+    if (exiting) target.set(hero.actor.root.position.x * 0.6, 0, hero.actor.root.position.z);
+    else {
+      hero.update(dt, s.knight.x, s.knight.z);
+      target.set(s.knight.x * 0.6, 0, s.knight.z);
+      for (const v of s.villagers) villagers.get(v.id)?.walker.update(dt, v.x, v.z);
+    }
     for (const k of s.skeletons) skeletons.get(k.id)?.update(dt, k.x, k.z);
   });
 
@@ -229,7 +299,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       state: () => sim.state,
       dispatch: (command) => loop.dispatch(command as DungeonLiberatorCommand),
       tick: (steps) => {
-        for (let i = 0; i < steps; i++) sim.tick().forEach(handle);
+        // QC fast-forward: no walk out (it needs frames), so a cleared room is not played.
+        for (let i = 0; i < steps; i++) sim.tick().forEach((ev) => void (ev.type === 'roomCleared' ? undefined : handle(ev)));
       },
       auto: () => {
         const command = nextSteer(sim.state);

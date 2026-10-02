@@ -4,10 +4,10 @@ import { join } from 'node:path';
 import { parseStoryInput, type StoryInput } from '../../../src/apk3d/contracts/index.js';
 import { STEP_MS } from '../../../src/apk3d/sim/index.js';
 import {
-  CLEARING,
   createDevourerSlime,
   type DevourerSlimeEvent,
   type DevourerSlimeSimulation,
+  type Guard,
 } from '../../../src/games/devourer-slime/core/index.js';
 
 const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
@@ -29,28 +29,20 @@ export const tickN = (sim: DevourerSlimeSimulation, n: number): DevourerSlimeEve
   return events;
 };
 
+const parked = new WeakMap<DevourerSlimeSimulation, Guard[]>();
+
 /**
- * Parks every guard: eaten with no return, at the edge, still. An eaten guard never moves,
- * bumps, or gets swallowed. A test that needs a guard sets `eaten = false` on it again.
+ * Takes every guard out of play, so none moves, bumps, or gets swallowed. A test that needs a
+ * guard puts it back next to the slime with `wakeGuard`.
  */
 export function parkGuards(sim: DevourerSlimeSimulation): void {
-  sim.state.guards.forEach((g, i) => {
-    if (g.eaten) return; // a guard the slime swallowed keeps its return
-    const a = (i / sim.state.guards.length) * Math.PI * 2;
-    g.x = Math.cos(a) * (CLEARING.r - 0.7);
-    g.z = Math.sin(a) * (CLEARING.r - 0.7);
-    g.vx = 0;
-    g.vz = 0;
-    g.eaten = true;
-    g.returnAt = null;
-  });
+  parked.set(sim, [...(parked.get(sim) ?? []), ...sim.state.guards.splice(0)]);
 }
 
-/** Un-parks guard `index` next to the slime, still, so a test can use it. */
+/** Puts parked guard `index` back in play next to the slime, still, so a test can use it. */
 export function wakeGuard(sim: DevourerSlimeSimulation, index: number, dx = 0.5, dz = 0) {
-  const g = sim.state.guards[index]!;
-  g.eaten = false;
-  g.returnAt = null;
+  const g = (parked.get(sim) ?? sim.state.guards)[index]!;
+  if (!sim.state.guards.includes(g)) sim.state.guards.push(g);
   g.x = sim.state.slime.x + dx;
   g.z = sim.state.slime.z + dz;
   g.vx = -1.3;

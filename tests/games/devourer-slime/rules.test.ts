@@ -8,6 +8,7 @@ import {
   GUARD_KINDS,
   ROUND_WORDS,
   SLIME_START,
+  SPAWN_POINTS,
   TUNING,
   createDevourerSlime,
   evidenceOf,
@@ -112,7 +113,7 @@ describe('the clearing', () => {
     expect(sim.state.guards).toHaveLength(3);
     for (const g of sim.state.guards) {
       expect(GUARD_KINDS).toContain(g.kind);
-      expect(g).toMatchObject({ size: TUNING.guardSize, eaten: false, returnAt: null });
+      expect(g).toMatchObject({ size: TUNING.guardSize });
       expect(Math.hypot(g.vx, g.vz)).toBeCloseTo(TUNING.guardSpeed);
       expect(distance(g, SLIME_START)).toBeGreaterThanOrEqual(TUNING.guardKeepOutSlime);
     }
@@ -254,7 +255,6 @@ describe('guards', () => {
     expect(s.bumpedMs).toBe(TUNING.bumpedMs);
     expect(s.size).toBeCloseTo(size - TUNING.shrinkPerBump);
     expect(g.vx).toBeGreaterThan(0); // the guard walks away
-    expect(g.eaten).toBe(false);
     expect(sim.state.shift[0]!.wrong).toBe(wrong);
     // No control while bumped: the slime slides away from the guard, the steer is ignored.
     const x0 = s.x;
@@ -275,62 +275,65 @@ describe('guards', () => {
     expect(s.size).toBe(1);
   });
 
-  it('a slime bigger than a guard swallows it for coins; the guard comes back after the next sentence', () => {
+  it('a powered slime swallows a guard for coins; the guard is back at once at a spawn point far from the slime', () => {
     const sim = create(3);
     parkGuards(sim);
     const s = sim.state.slime;
-    s.size = TUNING.guardSize + 0.01;
+    s.poweredMs = TUNING.powerMs;
     const g = wakeGuard(sim, 0, 0, 0);
     const events = sim.tick();
     expect(ofType(events, 'guardEaten')).toEqual([{ type: 'guardEaten', guardId: g.id, size: s.size, coins: TUNING.guardCoins }]);
     expect(ofType(events, 'slimeBumped')).toHaveLength(0);
-    expect(g.eaten).toBe(true);
-    expect(g.returnAt).toBe(2);
     expect(sim.state.coins).toBe(TUNING.guardCoins);
     expect(sim.state.guardsEaten).toBe(1);
     expect(s.bumpedMs).toBe(0);
-    // An eaten guard does not move and does not bump.
-    const at = { x: g.x, z: g.z };
-    expect(tickN(sim, 30)).toEqual([]);
-    expect(g).toMatchObject(at);
-    // Sentence 2 starts: not back yet. Sentence 3 starts: back, away from the slime.
-    const second = eatAll(sim);
-    expect(ofType(second, 'guardReturned')).toHaveLength(0);
-    expect(g.eaten).toBe(true);
-    const third = eatAll(sim);
-    const returned = ofType(third, 'guardReturned');
-    expect(returned).toEqual([{ type: 'guardReturned', guardId: g.id, kind: g.kind, x: g.x, z: g.z }]);
-    expect(g.eaten).toBe(false);
-    expect(g.returnAt).toBeNull();
-    expect(distance(g, s)).toBeGreaterThanOrEqual(TUNING.guardKeepOutSlime);
+    // The guard came back in the same step, at one of the farthest spawn points, and moves.
+    expect(ofType(events, 'guardReturned')).toEqual([{ type: 'guardReturned', guardId: g.id, kind: g.kind, x: g.x, z: g.z }]);
+    expect(events.findIndex((e) => e.type === 'guardReturned')).toBeGreaterThan(events.findIndex((e) => e.type === 'guardEaten'));
+    const farthest = [...SPAWN_POINTS].sort((a, b) => distance(b, s) - distance(a, s)).slice(0, TUNING.spawnFarthest);
+    expect(farthest.some((p) => p.x === g.x && p.z === g.z)).toBe(true);
+    expect(distance(g, s)).toBeGreaterThan(TUNING.spawnRing - 1);
     expect(Math.hypot(g.vx, g.vz)).toBeCloseTo(TUNING.guardSpeed);
-    expect(third.indexOf(returned[0]!)).toBeGreaterThan(third.findIndex((e) => e.type === 'sentenceStarted'));
   });
 
-  it('an equal size is not enough to eat a guard', () => {
+  it('a slime that is not powered is bumped by a guard, even at a big size', () => {
     const sim = create(3);
     parkGuards(sim);
     const s = sim.state.slime;
-    s.size = TUNING.guardSize;
+    s.size = TUNING.guardSize + 0.5;
     wakeGuard(sim, 0, 0, 0);
     const events = sim.tick();
     expect(ofType(events, 'guardEaten')).toHaveLength(0);
     expect(ofType(events, 'slimeBumped')).toHaveLength(1);
   });
 
-  it('the slime can eat a guard after five right words', () => {
+  it('the slime is powered after five right words, for a countdown, then it is back to its start size', () => {
     const sim = create(3);
     parkGuards(sim);
     // Sentences of 3 to 4 words: eat on across sentences until the slime outgrows a guard.
     let eaten = 0;
-    while (sim.state.phase === 'playing' && sim.state.slime.size <= TUNING.guardSize) {
+    let started: ReturnType<typeof ofType<'powerStarted'>> = [];
+    while (sim.state.phase === 'playing' && started.length === 0) {
       const b = nextBubbleOf(sim.state)!;
-      eat(sim, b.id);
+      started = ofType(eat(sim, b.id), 'powerStarted');
       eaten += 1;
-      if (eaten === 4) expect(sim.state.slime.size).toBeLessThanOrEqual(TUNING.guardSize);
+      if (eaten === 4) expect(sim.state.slime.poweredMs).toBe(0);
     }
-    expect(sim.state.slime.size).toBeGreaterThan(TUNING.guardSize);
     expect(eaten).toBe(5);
+    expect(started).toEqual([{ type: 'powerStarted', durationMs: TUNING.powerMs, size: sim.state.slime.size }]);
+    expect(sim.state.slime.size).toBeGreaterThan(TUNING.guardSize);
+    expect(sim.state.slime.poweredMs).toBe(TUNING.powerMs);
+    // The countdown runs on game steps; more right words do not restart it.
+    tickN(sim, 10);
+    expect(sim.state.slime.poweredMs).toBeCloseTo(TUNING.powerMs - 10 * STEP_MS, 3);
+    // At zero the slime is back to its start size, and the end is announced once.
+    const ended = [];
+    while (sim.state.slime.poweredMs > 0 && sim.state.phase === 'playing') ended.push(...ofType(sim.tick(), 'powerEnded'));
+    expect(ended).toEqual([{ type: 'powerEnded', size: TUNING.minSize }]);
+    expect(sim.state.slime.size).toBe(TUNING.minSize);
+    // A guard now bumps the slime again, and the power must be earned again.
+    wakeGuard(sim, 0, 0, 0);
+    expect(ofType(sim.tick(), 'slimeBumped')).toHaveLength(1);
   });
 });
 
@@ -345,7 +348,6 @@ describe('the shift', () => {
     expect(all.at(-1)!.type).toBe('shiftComplete');
     expect(sim.state.shift.every((s) => s.complete)).toBe(true);
     expect(sim.state.eaten).toBe(sim.state.shift.reduce((n, s) => n + s.words.length, 0));
-    expect(sim.state.slime.size).toBeCloseTo(1 + TUNING.growPerWord * sim.state.eaten);
     expect(sim.tick()).toEqual([]);
     expect(sim.dispatch({ type: 'steer', x: 1, z: 0 })).toEqual([]);
     expect(nextSteer(sim.state)).toBeNull();
@@ -439,8 +441,8 @@ describe('evidence', () => {
   it('a played shift is a victory with 5 solved items and coins for the eaten guards', () => {
     const sim = create(2);
     while (sim.state.phase === 'playing') {
-      // Swallow a guard whenever the slime is big enough (score), then eat the sentence.
-      if (sim.state.slime.size > TUNING.guardSize) {
+      // Swallow a guard whenever the slime is powered (score), then eat the sentence.
+      if (sim.state.slime.poweredMs > 0) {
         wakeGuard(sim, 0, 0, 0);
         expect(ofType(sim.tick(), 'guardEaten')).toHaveLength(1);
       }

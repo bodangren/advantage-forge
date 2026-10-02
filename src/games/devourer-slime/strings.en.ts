@@ -9,7 +9,7 @@ export default {
       instructions: {
         read: { title: 'Read the sentence', description: 'Word bubbles float in the clearing: the words of a sentence from the story.' },
         eat: { title: 'Eat them in order', description: 'The first word first. Every right word makes the slime bigger.' },
-        gulp: { title: 'Gulp the guards', description: 'When the slime is bigger than a guard, it can swallow the guard!' },
+        gulp: { title: 'Power up and gulp', description: 'A big slime glows gold. While it glows, it can swallow guards! Then it shrinks back.' },
       },
       controls: {
         touch: { label: 'Hold and drag', action: 'Move toward your finger' },
@@ -23,6 +23,9 @@ export default {
       place: 'Forest clearing',
       sentence: 'Sentence {index}/{total}',
       size: 'Size',
+      power: '⚡ Power {seconds}s',
+      powerUp: 'Power up!',
+      powerDown: 'Back to normal',
       story: '📖 Story',
       move: 'Drag to move',
       yum: 'Yum!',

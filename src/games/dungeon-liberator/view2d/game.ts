@@ -149,11 +149,73 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       return v ? arena.at(v.x, 1.5, v.z) : arena.at(hero.x, 1.5, hero.z);
     };
 
-    function handle(ev: DungeonLiberatorEvent): void {
+    // The Knight and the freed line walk out through the open gate, one after the other; then the screen fades.
+    const WALK_OUT = { speed: 2.4, gap: 0.45, beyond: 2.2 };
+    type Exit = { actor: Actor2D; from: { x: number; z: number }; delay: number };
+    let exit: { walkers: Exit[]; time: number; total: (e: Exit) => number; done: () => void } | null = null;
+    let lineBefore: string[] = [];
+    /** True from the walk out until the next room shows: the core waits, so the room does not move on unseen. */
+    let hold = false;
+    let faded = false;
+
+    function fileOut(line: readonly string[]): Promise<void> {
+      const last = sim.state.phase === 'complete';
+      const actors = [...(last ? [] : [hero]), ...line.map((id) => villagers.get(id)?.actor).filter((a): a is Actor2D => !!a)];
+      hold = true;
+      for (const id of line) villagers.get(id)?.tag.setVisible(false);
+      return new Promise((resolve) => {
+        const first = (e: Exit): number => Math.hypot(GATE.x - e.from.x, GATE.z - e.from.z);
+        exit = {
+          walkers: actors.map((actor, i) => ({ actor, from: { x: actor.x, z: actor.z }, delay: i * WALK_OUT.gap })),
+          time: 0,
+          total: (e) => first(e) + WALK_OUT.beyond,
+          done: () => {
+            exit = null;
+            if (last) return resolve();
+            faded = true;
+            scene.cameras.main.fadeOut(250, 0, 0, 0);
+            scene.cameras.main.once('camerafadeoutcomplete', () => resolve());
+          },
+        };
+      });
+    }
+
+    /** Where a walker is after `d` meters of its way: to the gate, then on through the gate. */
+    function along(e: Exit, d: number): { x: number; z: number } {
+      const first = Math.hypot(GATE.x - e.from.x, GATE.z - e.from.z);
+      if (d < first) {
+        const k = d / Math.max(first, 1e-6);
+        return { x: e.from.x + (GATE.x - e.from.x) * k, z: e.from.z + (GATE.z - e.from.z) * k };
+      }
+      return { x: GATE.x, z: GATE.z - (d - first) };
+    }
+
+    const queue: DungeonLiberatorEvent[] = [];
+    let draining = false;
+    async function drain(): Promise<void> {
+      if (draining) return;
+      draining = true;
+      while (queue.length > 0) await handle(queue.shift()!);
+      draining = false;
+    }
+
+    async function handle(ev: DungeonLiberatorEvent): Promise<void> {
       switch (ev.type) {
-        case 'roomStarted':
+        case 'roomStarted': {
           startRoom(ev);
+          hero.placeAt(sim.state.knight.x, sim.state.knight.z);
+          hero.sprite.setVisible(true);
+          hero.face(0, -1);
+          arena.follow(sim.state.knight.x, sim.state.knight.z, 0, true);
+          if (faded) {
+            faded = false;
+            scene.cameras.main.fadeIn(250, 0, 0, 0);
+            await new Promise<void>((r) => scene.cameras.main.once('camerafadeincomplete', () => r()));
+          }
+          hold = false;
+          loop.reset();
           break;
+        }
         case 'villagerFreed': {
           const v = villagers.get(ev.id)?.actor;
           if (v) void v.play(v.has('wave') ? 'wave' : v.has('salute') ? 'salute' : 'victory');
@@ -192,9 +254,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
           break;
         case 'roomCleared':
           audio.play('victory');
+          await fileOut(lineBefore);
           break;
         case 'shiftComplete':
-          void finish();
+          await finish();
           break;
       }
       drawHud();
@@ -215,13 +278,32 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
 
     // ---------------------------------------------------------------- the loop, on Phaser's frames
     const manual = createManualClock();
-    const loop = createFixedStepLoop<DungeonLiberatorState, DungeonLiberatorCommand, DungeonLiberatorEvent>(sim, { render: (events) => events.forEach(handle) }, manual.clock);
+    const loop = createFixedStepLoop<DungeonLiberatorState, DungeonLiberatorCommand, DungeonLiberatorEvent>(sim, { render: (events) => (queue.push(...events), void drain()) }, manual.clock);
     let last = 0;
     frame = (time: number) => {
-      manual.run(time);
       const dt = Math.min(0.1, last ? (time - last) / 1000 : 0);
       last = time;
       const s = sim.state;
+      if (exit) {
+        // The walk out replaces the core's positions: each walker follows a point along its way.
+        exit.time += dt;
+        let allOut = true;
+        for (const e of exit.walkers) {
+          const d = Math.max(0, exit.time - e.delay) * WALK_OUT.speed;
+          const p = along(e, Math.min(d, exit.total(e)));
+          e.actor.moveTo(p.x, p.z);
+          e.actor.update(dt);
+          if (d < exit.total(e) + 0.4) allOut = false;
+          else e.actor.sprite.setVisible(false);
+        }
+        arena.follow(hero.x, hero.z, dt);
+        arena.sort();
+        if (allOut) exit.done();
+        return;
+      }
+      if (hold) return;
+      lineBefore = s.line.slice();
+      manual.run(time);
       if (!finished) joystick.update();
       hero.moveTo(s.knight.x, s.knight.z);
       hero.update(dt);
@@ -247,7 +329,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       state: () => sim.state,
       dispatch: (command: DungeonLiberatorCommand) => loop.dispatch(command),
       tick: (steps: number) => {
-        for (let k = 0; k < steps; k++) sim.tick().forEach(handle);
+        // QC fast-forward: no walk out (it needs frames), so a cleared room is not played.
+        for (let k = 0; k < steps; k++) sim.tick().forEach((ev) => void (ev.type === 'roomCleared' ? undefined : handle(ev)));
       },
       auto: () => {
         const command = nextSteer(sim.state);

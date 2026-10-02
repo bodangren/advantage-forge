@@ -28,7 +28,7 @@ export function nextSteer(state: DevourerSlimeState): DevourerSlimeCommand | nul
   const slimeRadius = radiusOf(state.slime.size);
   const obstacles: Circle[] = [];
   for (const g of state.guards) {
-    if (g.eaten || g.size < state.slime.size) continue;
+    if (state.slime.poweredMs > 0) continue;
     obstacles.push({ x: g.x + g.vx * PREDICT_S, z: g.z + g.vz * PREDICT_S, r: radiusOf(g.size) + slimeRadius + 0.5 });
   }
   for (const b of state.bubbles) {

@@ -28,7 +28,8 @@ and happy.
 | 2D | 3D | Why |
 | --- | --- | --- |
 | 3 lives; a hit costs a life and 20% size; 0 lives is a defeat | a guard bigger than the slime pushes it back (0.8 s) and costs 5% size; no lives, no defeat | no game over |
-| enemy count by difficulty (2 to 6) | 2 guards in Helper mode, 3 otherwise; eaten guards come back after the next sentence | calm enough to read |
+| enemy count by difficulty (2 to 6) | 2 guards in Helper mode, 3 otherwise | calm enough to read |
+| a bigger slime eats enemies for good | Power-up, as in Pac-Man without the maze: a slime that grows past a guard (size > 1.35, after five right words) is powered for 8 s (a countdown in the HUD, a gold glow that blinks in the last 2 s). A powered slime swallows guards for coins. At zero the slime is back to its start size and must earn the power again. An eaten guard is back at once at a spawn point far from the slime (one of the 3 farthest of 8 points on a ring of radius 5.6 m, clear of other guards) | the power is a short reward, not a permanent state |
 | score only | coins for eaten guards; XP by the apps' rule from the words | the same results as every game |
 
 ## 4. Screen and camera
@@ -62,8 +63,10 @@ helpers. The clearing is a circle of radius 7 m around `(0, 0)`.
 | `wordEaten` | id, index, size |
 | `wordSpat` | id (wrong word; the bubble bounces 1.5 m away), size |
 | `slimeBumped` | guardId, size |
+| `powerStarted` | durationMs, size |
+| `powerEnded` | size (back to 1) |
 | `guardEaten` | guardId, size, coins |
-| `guardReturned` | guardId, kind, x, z |
+| `guardReturned` | guardId, kind, x, z (the respawn, in the same step as `guardEaten`) |
 | `sentenceComplete` | sentenceId |
 | `shiftComplete` | sentences, size |
 
@@ -81,9 +84,9 @@ Core notes (BACKEND, 2026-09-28): the shift list is `shift` (`ShiftSentence[]`: 
 words, paragraph, wrong, started, complete); `sentence` is the zero-based index and `sentences`
 the count. Extra state: `steer` (the held command), `eaten` (right words), `guardsEaten`; a
 bubble has `spatMs` (0.8 s after a spit it cannot be eaten again, so one wrong touch counts
-one attempt); a guard has `returnAt` (the sentence index at whose start it comes back: the one
-after the next). Size is additive: +0.08 per right word, -0.03 per wrong word, -0.05 per bump,
-never below 1; a slime eats a guard only when its size is strictly larger. A spat bubble lands
+one attempt); the slime has `poweredMs` (the power countdown, 0 = normal); a guard has no return rule: it respawns at
+once (section 3). Size is additive: +0.08 per right word, -0.03 per wrong word, -0.05 per bump,
+never below 1; a slime eats a guard only while it is powered (`poweredMs > 0`), and the power ends with a reset to size 1. A spat bubble lands
 `max(1.5, slime radius + 0.3 + 0.6)` m from the slime, toward the center when the away
 direction leaves the clearing, so the slime is never left touching it. The bubbles of a new
 sentence keep `max(1.5, 2 x slime radius + 0.8)` m apart and at least `radius + 1.5` m from the

@@ -42,6 +42,8 @@ export interface Slime {
   facing: number;
   /** Milliseconds left without control after a guard bump (0 = in control). */
   bumpedMs: number;
+  /** Milliseconds left of the power-up (0 = normal). Only a powered slime swallows guards. */
+  poweredMs: number;
   /** The push direction of the bump (a unit vector) while `bumpedMs` runs. */
   pushX: number;
   pushZ: number;
@@ -67,11 +69,8 @@ export interface Guard {
   /** Velocity in meters per second. */
   vx: number;
   vz: number;
-  /** Same scale as the slime: a slime with a larger `size` swallows the guard. */
+  /** Body size on the slime's scale (the radius is `bodyRadius * size`). */
   size: number;
-  eaten: boolean;
-  /** The index of the sentence at whose start the eaten guard comes back, or null. */
-  returnAt: number | null;
 }
 
 export interface DevourerSlimeState {
@@ -121,7 +120,12 @@ export type DevourerSlimeEvent =
   | { type: 'wordSpat'; id: string; size: number }
   /** A bigger guard pushed the slime back (0.8 s without control). Not a reading error. */
   | { type: 'slimeBumped'; guardId: string; size: number }
+  /** The slime grew past a guard: it is powered for `durationMs` and can swallow guards. */
+  | { type: 'powerStarted'; durationMs: number; size: number }
+  /** The countdown ran out: the slime is back to its start size. */
+  | { type: 'powerEnded'; size: number }
   | { type: 'guardEaten'; guardId: string; size: number; coins: number }
+  /** An eaten guard is back at once, at a spawn point far from the slime. */
   | { type: 'guardReturned'; guardId: string; kind: GuardKind; x: number; z: number }
   | { type: 'sentenceComplete'; sentenceId: string }
   | { type: 'shiftComplete'; sentences: number; size: number };
@@ -134,6 +138,8 @@ export const DEVOURER_SLIME_EVENT_TYPES: readonly DevourerSlimeEventType[] = [
   'wordEaten',
   'wordSpat',
   'slimeBumped',
+  'powerStarted',
+  'powerEnded',
   'guardEaten',
   'guardReturned',
   'sentenceComplete',

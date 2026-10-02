@@ -13,6 +13,7 @@ export {
 export {
   CLEARING,
   SLIME_START,
+  SPAWN_POINTS,
   TUNING,
   bubbleSpacingFor,
   createDevourerSlime,
