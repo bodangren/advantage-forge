@@ -26,7 +26,8 @@ import {
 
 const ROOT = process.cwd();
 const WORKBOOKS = process.env.DEMO_WORKBOOKS ?? resolve(ROOT, '..', 'Workbooks', 'primary');
-const OUT = join(ROOT, 'demo', 'public', 'stories');
+// The workbook stories are test fixtures only: they are not published with the demo.
+const OUT = join(ROOT, 'tests', 'fixtures', 'stories');
 const FORCE = process.argv.includes('--force');
 const ONLY = process.argv.includes('--only') ? process.argv[process.argv.indexOf('--only') + 1] : undefined;
 const IMAGE_WIDTH = 1024;
@@ -146,7 +147,7 @@ const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
  * of a longer word ("Flower" -> "flowers" -> "flower"), else the word as given. When both cases
  * occur, the lowercase form wins (a capital usually only starts a sentence).
  */
-function storyCase(word: string, story: string): string {
+export function storyCase(word: string, story: string): string {
   const forms = (re: RegExp, len: number) => [...story.matchAll(re)].map((m) => m[0].slice(0, len));
   const whole = forms(new RegExp(`\\b${escapeRegExp(word)}\\b`, 'gi'), word.length);
   const found = whole.length ? whole : forms(new RegExp(`\\b${escapeRegExp(word)}\\w*`, 'gi'), word.length);
@@ -179,7 +180,7 @@ const contentWords = (text: string): string[] => [
  * The paragraph that clearly contains `needle`: a verbatim match, else the best content-word
  * overlap when it beats every other paragraph. Undefined when unsure.
  */
-function findParagraph(needle: string, paragraphs: readonly string[]): number | undefined {
+export function findParagraph(needle: string, paragraphs: readonly string[]): number | undefined {
   const lower = needle.toLowerCase();
   const verbatim = paragraphs.findIndex((p) => p.toLowerCase().includes(lower));
   if (verbatim >= 0) return verbatim;
@@ -194,7 +195,7 @@ function findParagraph(needle: string, paragraphs: readonly string[]): number | 
   return scores.indexOf(best);
 }
 
-const slug = (s: string) =>
+export const slug = (s: string) =>
   s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')

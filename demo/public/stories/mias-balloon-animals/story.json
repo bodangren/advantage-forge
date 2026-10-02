@@ -1,0 +1,427 @@
+{
+  "schemaVersion": 1,
+  "id": "mias-balloon-animals",
+  "title": "Mia's Balloon Animals",
+  "series": "Level 2",
+  "lesson": 1,
+  "level": "A0",
+  "genre": "Toys & Play",
+  "paragraphs": [
+    {
+      "text": "Mia has a lot of balloons. \"Look, Lily!\" says Mia. \"I make animal balloons.\" Mia makes a red bear. Then she makes a black bat. \"Is it scary?\" asks Lily. \"No, it is funny,\" says Mia. Lily smiles.",
+      "translation": "เมียมีบอลลูนเยอะมาก \"ดูนี่สิ ลิลลี่!\" เมียพูด \"ฉันทำบอลลูนรูปสัตว์\" เมียทำหมีสีแดง แล้วเธอก็ทำค้างคาวสีดำ \"มันน่ากลัวไหม\" ลิลลี่ถาม \"ไม่หรอก มันตลกต่างหาก\" เมียพูด ลิลลี่ยิ้ม"
+    },
+    {
+      "text": "Leo comes to the door. He has a green hat. It has two big eyes. \"I am an alien!\" says Leo. \"Hello, Mia! Hello, Lily!\" Leo wants a balloon. \"A bear, please,\" he says. Mia gives him the red bear. Leo holds it and says, \"Thank you!\"",
+      "translation": "ลีโอมาที่ประตู เขาใส่หมวกสีเขียว หมวกมีตาโตสองดวง \"ฉันเป็นมนุษย์ต่างดาว!\" ลีโอพูด \"สวัสดี เมีย! สวัสดี ลิลลี่!\" ลีโออยากได้บอลลูน \"ขอหมีหน่อยนะ\" เขาพูด เมียให้หมีสีแดงกับเขา ลีโอถือมันไว้และพูดว่า \"ขอบคุณ!\""
+    },
+    {
+      "text": "Pip runs into the room. \"Woof!\" Pip hits the bat balloon. The black bat is on the floor. \"Is Pip angry?\" asks Lily. \"No, he wants to play,\" says Mia. Mia makes a small dog balloon. Pip sits next to Leo. They are happy.",
+      "translation": "ปิ๊ปวิ่งเข้ามาในห้อง \"โฮ่ง!\" ปิ๊ปตีบอลลูนค้างคาว ค้างคาวสีดำอยู่บนพื้น \"ปิ๊ปโกรธหรือเปล่า\" ลิลลี่ถาม \"ไม่ใช่ เขาอยากเล่น\" เมียพูด เมียทำบอลลูนหมาตัวเล็ก ปิ๊ปนั่งอยู่ข้างลีโอ พวกเขามีความสุข"
+    }
+  ],
+  "images": [
+    "img-1.webp",
+    "img-2.webp",
+    "img-3.webp"
+  ],
+  "vocabulary": [
+    {
+      "id": "w-animal",
+      "term": "animal",
+      "translation": "สัตว์",
+      "definition": "A living thing like a dog, a cat, or a bear."
+    },
+    {
+      "id": "w-bat",
+      "term": "bat",
+      "translation": "ค้างคาว",
+      "definition": "A small black animal that flies at night."
+    },
+    {
+      "id": "w-bear",
+      "term": "bear",
+      "translation": "หมี",
+      "definition": "A big animal with brown fur."
+    },
+    {
+      "id": "w-alien",
+      "term": "alien",
+      "translation": "มนุษย์ต่างดาว",
+      "definition": "A funny person from another planet."
+    },
+    {
+      "id": "w-balloon",
+      "term": "balloon",
+      "translation": "บอลลูน, ลูกโป่ง",
+      "definition": "A toy that you fill with air."
+    },
+    {
+      "id": "w-scary",
+      "term": "scary",
+      "translation": "น่ากลัว",
+      "definition": "Not nice. It makes you afraid."
+    },
+    {
+      "id": "w-funny",
+      "term": "funny",
+      "translation": "ตลก, น่าขัน",
+      "definition": "Not sad. It makes you smile."
+    },
+    {
+      "id": "w-hold",
+      "term": "hold",
+      "translation": "ถือ, จับ",
+      "definition": "To have something in your hands."
+    },
+    {
+      "id": "w-hit",
+      "term": "hit",
+      "translation": "ตี",
+      "definition": "To touch something fast with your hand."
+    },
+    {
+      "id": "w-floor",
+      "term": "floor",
+      "translation": "พื้น",
+      "definition": "The part of a room under your feet."
+    },
+    {
+      "id": "w-small",
+      "term": "small",
+      "translation": "เล็ก",
+      "definition": "Not big."
+    },
+    {
+      "id": "w-smile",
+      "term": "smile",
+      "translation": "ยิ้ม",
+      "definition": "To look happy with your mouth."
+    }
+  ],
+  "sentences": [
+    {
+      "id": "s-1",
+      "text": "Mia has a lot of balloons.",
+      "words": [
+        "Mia",
+        "has",
+        "a",
+        "lot",
+        "of",
+        "balloons."
+      ],
+      "translation": "เมียมีบอลลูนเยอะมาก",
+      "paragraph": 0
+    },
+    {
+      "id": "s-2",
+      "text": "Then she makes a black bat.",
+      "words": [
+        "Then",
+        "she",
+        "makes",
+        "a",
+        "black",
+        "bat."
+      ],
+      "translation": "แล้วเธอก็ทำค้างคาวสีดำ",
+      "paragraph": 0
+    },
+    {
+      "id": "s-3",
+      "text": "Leo comes to the door.",
+      "words": [
+        "Leo",
+        "comes",
+        "to",
+        "the",
+        "door."
+      ],
+      "translation": "ลีโอมาที่ประตู",
+      "paragraph": 1
+    },
+    {
+      "id": "s-4",
+      "text": "He has a green hat.",
+      "words": [
+        "He",
+        "has",
+        "a",
+        "green",
+        "hat."
+      ],
+      "translation": "เขาใส่หมวกสีเขียว",
+      "paragraph": 1
+    },
+    {
+      "id": "s-5",
+      "text": "It has two big eyes.",
+      "words": [
+        "It",
+        "has",
+        "two",
+        "big",
+        "eyes."
+      ],
+      "translation": "หมวกมีตาโตสองดวง",
+      "paragraph": 1
+    },
+    {
+      "id": "s-6",
+      "text": "Mia gives him the red bear.",
+      "words": [
+        "Mia",
+        "gives",
+        "him",
+        "the",
+        "red",
+        "bear."
+      ],
+      "translation": "เมียให้หมีสีแดงกับเขา",
+      "paragraph": 1
+    },
+    {
+      "id": "s-7",
+      "text": "Pip runs into the room.",
+      "words": [
+        "Pip",
+        "runs",
+        "into",
+        "the",
+        "room."
+      ],
+      "translation": "ปิ๊ปวิ่งเข้ามาในห้อง",
+      "paragraph": 2
+    },
+    {
+      "id": "s-8",
+      "text": "The black bat is on the floor.",
+      "words": [
+        "The",
+        "black",
+        "bat",
+        "is",
+        "on",
+        "the",
+        "floor."
+      ],
+      "translation": "ค้างคาวสีดำอยู่บนพื้น",
+      "paragraph": 2
+    },
+    {
+      "id": "s-9",
+      "text": "Mia makes a small dog balloon.",
+      "words": [
+        "Mia",
+        "makes",
+        "a",
+        "small",
+        "dog",
+        "balloon."
+      ],
+      "translation": "เมียทำบอลลูนหมาตัวเล็ก",
+      "paragraph": 2
+    },
+    {
+      "id": "s-10",
+      "text": "Pip sits next to Leo.",
+      "words": [
+        "Pip",
+        "sits",
+        "next",
+        "to",
+        "Leo."
+      ],
+      "translation": "ปิ๊ปนั่งอยู่ข้างลีโอ",
+      "paragraph": 2
+    },
+    {
+      "id": "s-11",
+      "text": "They are happy.",
+      "words": [
+        "They",
+        "are",
+        "happy."
+      ],
+      "translation": "พวกเขามีความสุข",
+      "paragraph": 2
+    }
+  ],
+  "fills": [
+    {
+      "id": "f-1",
+      "sentence": "I make ___ balloons.",
+      "answer": "animal",
+      "paragraph": 0
+    },
+    {
+      "id": "f-2",
+      "sentence": "Then she makes a black ___.",
+      "answer": "bat",
+      "paragraph": 0
+    },
+    {
+      "id": "f-3",
+      "sentence": "Mia makes a red ___.",
+      "answer": "bear",
+      "paragraph": 0
+    },
+    {
+      "id": "f-4",
+      "sentence": "I am an ___!",
+      "answer": "alien",
+      "paragraph": 1
+    },
+    {
+      "id": "f-5",
+      "sentence": "Mia has a lot of ___.",
+      "answer": "balloons",
+      "paragraph": 0
+    },
+    {
+      "id": "f-6",
+      "sentence": "Is it ___?",
+      "answer": "scary",
+      "paragraph": 0
+    },
+    {
+      "id": "f-7",
+      "sentence": "\"No, it is ___,\" says Mia.",
+      "answer": "funny",
+      "paragraph": 0
+    },
+    {
+      "id": "f-8",
+      "sentence": "Leo ___ it and says, Thank you!",
+      "answer": "holds",
+      "paragraph": 1
+    }
+  ],
+  "questions": [
+    {
+      "id": "q-1",
+      "question": "What does Mia make?",
+      "options": [
+        "paper boats",
+        "red hats",
+        "small cakes",
+        "balloon animals"
+      ],
+      "answer": 3,
+      "paragraph": 0
+    },
+    {
+      "id": "q-2",
+      "question": "What color is the bear?",
+      "options": [
+        "green",
+        "blue",
+        "black",
+        "red"
+      ],
+      "answer": 3,
+      "paragraph": 0
+    },
+    {
+      "id": "q-3",
+      "question": "What color is the bat?",
+      "options": [
+        "red",
+        "green",
+        "white",
+        "black"
+      ],
+      "answer": 3,
+      "paragraph": 0
+    },
+    {
+      "id": "q-4",
+      "question": "Does Mia think the bat is scary?",
+      "options": [
+        "Yes, it is very scary.",
+        "Yes, it is big.",
+        "No, it is a bear.",
+        "No, it is funny."
+      ],
+      "answer": 3,
+      "paragraph": 0
+    },
+    {
+      "id": "q-5",
+      "question": "What does Leo have on his head?",
+      "options": [
+        "a red balloon",
+        "a black bat",
+        "a blue bag",
+        "a green hat"
+      ],
+      "answer": 3,
+      "paragraph": 1
+    },
+    {
+      "id": "q-6",
+      "question": "What is Leo?",
+      "options": [
+        "a bear",
+        "a dog",
+        "a bat",
+        "an alien"
+      ],
+      "answer": 3,
+      "paragraph": 1
+    },
+    {
+      "id": "q-7",
+      "question": "Which balloon does Leo want?",
+      "options": [
+        "the bat",
+        "the alien",
+        "the dog",
+        "the bear"
+      ],
+      "answer": 3,
+      "paragraph": 1
+    },
+    {
+      "id": "q-8",
+      "question": "What does Pip hit?",
+      "options": [
+        "Leo's hat",
+        "the door",
+        "the bear balloon",
+        "the bat balloon"
+      ],
+      "answer": 3,
+      "paragraph": 2
+    },
+    {
+      "id": "q-9",
+      "question": "Why does Pip hit the balloon?",
+      "options": [
+        "He is angry.",
+        "He is hungry.",
+        "He is sad.",
+        "He wants to play."
+      ],
+      "answer": 3,
+      "paragraph": 2
+    },
+    {
+      "id": "q-10",
+      "question": "What does Mia make for Pip?",
+      "options": [
+        "a big bear balloon",
+        "a green alien",
+        "a red hat",
+        "a small dog balloon"
+      ],
+      "answer": 3,
+      "paragraph": 2
+    }
+  ],
+  "source": {
+    "file": "content/primary/bank-2/b001.json",
+    "translationsGenerated": true
+  }
+}

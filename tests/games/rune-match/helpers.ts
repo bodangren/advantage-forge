@@ -13,7 +13,7 @@ import {
 } from '../../../src/games/rune-match/core/index.js';
 import { nextSwap } from '../../../src/games/rune-match/qc/bot.js';
 
-const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
+const STORIES_DIR = join(process.cwd(), 'tests', 'fixtures', 'stories');
 
 /** Every story of the demo, in selector order. */
 export const STORY_IDS = [

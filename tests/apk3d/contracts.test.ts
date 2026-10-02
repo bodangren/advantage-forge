@@ -40,7 +40,7 @@ import {
   type StoryInput,
 } from '../../src/apk3d/contracts/index.js';
 
-const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
+const STORIES_DIR = join(process.cwd(), 'tests', 'fixtures', 'stories');
 const STORY_IDS = readdirSync(STORIES_DIR, { withFileTypes: true })
   .filter((d) => d.isDirectory())
   .map((d) => d.name);

@@ -9,7 +9,7 @@ import type {
   Response,
 } from '../../../src/games/monster-encounters/core/types.js';
 
-export const STORIES_DIR = join(process.cwd(), 'demo', 'public', 'stories');
+export const STORIES_DIR = join(process.cwd(), 'tests', 'fixtures', 'stories');
 /** Every story of the demo, in selector order (scripts/apk3d-import.ts STORIES). */
 export const STORY_IDS = [
   'pip-is-brave',
