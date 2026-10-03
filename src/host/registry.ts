@@ -11,6 +11,8 @@ import { manifest as rpgBattle } from '../games/rpg-battle/manifest.js';
 import rpgBattleStrings from '../games/rpg-battle/strings.en.js';
 import { manifest as paladinsTwinSoul } from '../games/paladins-twin-soul/manifest.js';
 import paladinsTwinSoulStrings from '../games/paladins-twin-soul/strings.en.js';
+import { manifest as villageGuardian } from '../games/village-guardian/manifest.js';
+import villageGuardianStrings from '../games/village-guardian/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
@@ -129,10 +131,19 @@ export const GAMES: GameEntry[] = [
     manifest: paladinsTwinSoul,
     load: () => import('../games/paladins-twin-soul/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'village-guardian',
+    icon: '🛡️',
+    tint: ['#86efac', '#166534'],
+    titleKey: 'villageGuardian.title',
+    pitchKey: 'villageGuardian.pitch',
+    manifest: villageGuardian,
+    load: () => import('../games/village-guardian/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
