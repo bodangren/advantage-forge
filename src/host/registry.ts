@@ -19,6 +19,8 @@ import { manifest as astralMage } from '../games/astral-mage/manifest.js';
 import astralMageStrings from '../games/astral-mage/strings.en.js';
 import { manifest as spellweaversRun } from '../games/spellweavers-run/manifest.js';
 import spellweaversRunStrings from '../games/spellweavers-run/strings.en.js';
+import { manifest as hauntedLibrary } from '../games/haunted-library/manifest.js';
+import hauntedLibraryStrings from '../games/haunted-library/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
@@ -173,10 +175,19 @@ export const GAMES: GameEntry[] = [
     manifest: spellweaversRun,
     load: () => import('../games/spellweavers-run/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'haunted-library',
+    icon: '📚',
+    tint: ['#4b3a73', '#1e1535'],
+    titleKey: 'hauntedLibrary.title',
+    pitchKey: 'hauntedLibrary.pitch',
+    manifest: hauntedLibrary,
+    load: () => import('../games/haunted-library/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings, archersRevengeStrings, astralMageStrings, spellweaversRunStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings, archersRevengeStrings, astralMageStrings, spellweaversRunStrings, hauntedLibraryStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
