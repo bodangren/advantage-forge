@@ -52,6 +52,8 @@ import { RIDER_MODELS } from '../../src/games/dragon-rider/view/land.js';
 import { manifest as griffinRidersEscape } from '../../src/games/griffin-riders-escape/manifest.js';
 import { ESCAPE_MODELS } from '../../src/games/griffin-riders-escape/view/land.js';
 import { manifest as castleDefense } from '../../src/games/castle-defense/manifest.js';
+import { manifest as sorcererZiggurat } from '../../src/games/sorcerer-ziggurat/manifest.js';
+import { ZIGGURAT_MODELS } from '../../src/games/sorcerer-ziggurat/view/ziggurat.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -88,6 +90,7 @@ const GAMES = {
   'dragon-rider': { manifest: dragonRider, named: RIDER_MODELS },
   'griffin-riders-escape': { manifest: griffinRidersEscape, named: ESCAPE_MODELS },
   'castle-defense': { manifest: castleDefense, named: vaultModels() },
+  'sorcerer-ziggurat': { manifest: sorcererZiggurat, named: ZIGGURAT_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
