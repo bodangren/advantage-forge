@@ -7,8 +7,6 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
-export const ROOM_PACKS = ['sunken-vault', 'heroes', 'folk', 'dungeon-monsters'];
 
 export const ROOM_MODELS = ['floor', 'floor-cracked', 'wall', 'wall-corner', 'arch', 'gate', 'pillar', 'cell-bars', 'hanging-cage', 'torch-sconce', 'bone-pile', 'chains', 'skeleton', 'villager', 'farmer', 'innkeeper', 'druid', 'guard'];
 

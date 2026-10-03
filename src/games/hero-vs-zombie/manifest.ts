@@ -22,6 +22,9 @@ export const FILES_2D: readonly string[] = [
   ...ZOMBIE_CLIPS_2D.map((c) => `zombie.${c}`),
 ];
 
+/** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
+export const MODELS_3D: readonly string[] = ['bone-pile', 'boulder', 'bush', 'campfire-out', 'candle-cluster', 'cleric', 'dead-tree', 'dirt-ground', 'fence', 'knight', 'lantern', 'rock-cluster', 'sarcophagus', 'tall-grass', 'wizard', 'zombie'];
+
 export const manifest = validateCartridge3DManifest({
   id: 'hero-vs-zombie',
   title: 'Hero vs. Zombie',
@@ -34,8 +37,8 @@ export const manifest = validateCartridge3DManifest({
   levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { vocabulary: 4 },
   requiredAssetBindings: [...FILES_2D],
-  requiredModelBindings: [],
-  packs: ['heroes', 'churchyard'],
+  requiredModelBindings: [...MODELS_3D],
+  packs: ['heroes',  'folk',  'outdoor-props',  'flight-land',  'sunken-vault',  'potion-shop'],
   capabilities: [...APK3D_CAPABILITIES],
   device: {},
   budget: { firstLoadBytes: 4_000_000, totalBytes: 8_000_000 },

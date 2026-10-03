@@ -17,8 +17,6 @@ const FLAT = new Set(['floor', 'floor-cracked', 'walkway']);
 const NOT_BUILT = new Set(['wall-alcove']);
 const LIGHT_ASSETS = ['torch-sconce', 'brazier', 'candle-cluster'];
 const DRAGON_SCALE = 2.1;
-/** The model packs of the battle stage (`MODEL_PACKS` in contracts/model-pack.ts): the vault, the heroes, the monsters. */
-export const BATTLE_PACKS = ['sunken-vault', 'heroes', 'dungeon-monsters', 'potion-shop', 'outdoor-props'];
 
 import { FLOOR_Y, HALL, type StageDef } from './hall.js';
 
@@ -108,7 +106,6 @@ export class BattleStage {
   async load(progress: (p: number) => void): Promise<void> {
     const places = vaultPlaces();
     const names = [...vaultModels(), ...HEROES];
-    await this.kit.loader.loadPacks(BATTLE_PACKS);
     await this.kit.loader.preload(names.map((n) => this.kit.loader.modelPath(n)), progress);
     this.set = new InstancedSet(places, (a) => this.kit.loader.get(this.kit.loader.modelPath(a)), FLAT);
     this.kit.scene.add(this.set.group);

@@ -9,8 +9,6 @@ import { InstancedSet, type Placement, type Stage3D } from '../../../apk3d/stage
 import type { Maze } from '../core/index.js';
 import { edgePoint, inwardYaw, piecesOf } from './geometry.js';
 
-/** The model packs of the Labyrinth (the maze set, the heroes, the goblins). */
-export const MAZE_PACKS = ['sunken-vault', 'heroes', 'folk'];
 
 /** The models of the maze set (the characters load separately). */
 export const MAZE_MODELS = ['floor', 'floor-cracked', 'wall', 'pillar', 'arch', 'gate', 'torch-sconce'];

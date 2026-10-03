@@ -13,7 +13,7 @@ import { Actor, burst, ShotRig, smooth } from '../../../apk3d/stage/index.js';
 import { createPotionRush, evidenceOf, scoreOf, targetFor, type PotionRushCommand, type PotionRushEvent, type PotionRushState } from '../core/index.js';
 import { nextDrop } from '../qc/bot.js';
 import { BREW, INGREDIENT_SCALE } from './layout.js';
-import { beltX, buildShop, LAYOUT, SHOP_MODELS, SHOP_PACKS } from './shop.js';
+import { beltX, buildShop, LAYOUT, SHOP_MODELS } from './shop.js';
 import './potion-rush.css';
 
 const MOOD_ICON = { happy: '😊', waiting: '😐', grumpy: '😤' } as const;
@@ -41,7 +41,6 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const hero = ctx.options.hero || 'wizard';
-  await stage.loader.loadPacks(SHOP_PACKS);
   await stage.loader.preload([...SHOP_MODELS, hero].map((n) => stage.loader.modelPath(n)));
   const built = buildShop(stage, hero);
   const shop = { ...built, alchemist: built.alchemist! };

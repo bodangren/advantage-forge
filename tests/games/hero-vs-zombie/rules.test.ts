@@ -60,7 +60,7 @@ describe('content', () => {
       orientation: 'any',
       levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
       needs: { vocabulary: 4 },
-      packs: ['heroes', 'churchyard'],
+      packs: ['heroes', 'folk', 'outdoor-props', 'flight-land', 'sunken-vault', 'potion-shop'],
       briefingKey: 'heroVsZombie.briefing',
     });
   });

@@ -14,6 +14,9 @@ export const LAND_PROPS_2D = ['arch', 'oak-tree', 'pine-tree', 'bush', 'fern', '
 /** Every 2D file the game uses (`requiredAssetBindings`: binding key = file id). */
 export const FILES_2D: readonly string[] = [...DRAGON_CLIPS_2D.map((c) => `dragon-fire.${c}`), ...LAND_PROPS_2D.map((p) => `prop.${p}`)];
 
+/** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
+export const MODELS_3D: readonly string[] = ['ancient-oak', 'arch', 'barn', 'boulder', 'bush', 'cleric', 'cottage', 'dragon-fire', 'farm-field', 'fence', 'fern', 'forest-ground', 'gate', 'grass-ground', 'hay-bale', 'knight', 'oak-tree', 'pine-tree', 'river-straight', 'rock-cluster', 'well', 'wildflowers', 'wizard'];
+
 export const manifest = validateCartridge3DManifest({
   id: 'dragon-flight',
   title: 'Dragon Flight',
@@ -26,8 +29,8 @@ export const manifest = validateCartridge3DManifest({
   levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { vocabulary: 4 },
   requiredAssetBindings: [...FILES_2D],
-  requiredModelBindings: [],
-  packs: ['heroes', 'flight'],
+  requiredModelBindings: [...MODELS_3D],
+  packs: ['heroes',  'dungeon-monsters',  'outdoor-props',  'flight-land',  'sunken-vault'],
   capabilities: [...APK3D_CAPABILITIES],
   device: {},
   budget: { firstLoadBytes: 4_000_000, totalBytes: 8_000_000 },

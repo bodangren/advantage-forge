@@ -8,8 +8,6 @@ import * as THREE from 'three';
 import { Actor, type GLTF, type Stage3D } from '../../../apk3d/stage/index.js';
 import { LAYOUT } from './layout.js';
 
-/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
-export const SHOP_PACKS = ['potion-shop', 'heroes', 'folk', 'dungeon-monsters'];
 
 /** Models the shop needs before the first frame (customers load later, one kind at a time). */
 export const SHOP_MODELS = [

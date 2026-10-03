@@ -5,7 +5,8 @@
  * and calls these functions; `tests/apk3d/model-pack.test.ts` and `tests/apk3d/budget.test.ts`
  * check them. A model sits in exactly one pack, so a binding is `{ pack, file }` with one answer.
  */
-import { MODEL_BUDGET, modelAssetFileSchema, modelPackSchema, type ModelAssetFile, type ModelPack } from './model-asset.js';
+import { CARTRIDGE_3D_RUNTIME_API_VERSION } from './manifest.js';
+import { MODEL_BUDGET, modelAssetFileSchema, modelPackSchema, runtimeEdition3DSchema, type EditionId, type ModelAssetFile, type ModelPack, type RuntimeEdition3D } from './model-asset.js';
 
 export const MODEL_PACK_VERSION = '1.0.0';
 
@@ -63,7 +64,7 @@ export const GAME_LOADS: Readonly<Record<string, GameModelLoad>> = {
     models: ['arch', 'bone-pile', 'cell-bars', 'chains', 'floor', 'floor-cracked', 'gate', 'hanging-cage', 'pillar', 'torch-sconce', 'wall', 'wall-corner', 'skeleton', 'druid', 'farmer', 'guard', 'innkeeper', 'villager'],
     hero: true,
   },
-  'devourer-slime': { models: ['slime', 'guard', 'bandit', 'boulder', 'bush', 'fern', 'mushroom-cluster', 'oak-tree', 'pine-tree', 'rock-cluster', 'tree-stump', 'wildflowers'], hero: true },
+  'devourer-slime': { models: ['slime', 'guard', 'bandit', 'boulder', 'bush', 'fern', 'mushroom-cluster', 'oak-tree', 'pine-tree', 'rock-cluster', 'tree-stump', 'wildflowers'] },
   'hero-vs-zombie': {
     models: ['zombie', 'bone-pile', 'boulder', 'bush', 'campfire-out', 'candle-cluster', 'dead-tree', 'dirt-ground', 'fence', 'lantern', 'rock-cluster', 'sarcophagus', 'tall-grass'],
     hero: true,
@@ -208,4 +209,60 @@ export function buildModelIndex(packs: Iterable<ModelPack>): ModelIndex {
       return hit && hit.file.presets.includes(preset) ? `${hit.root}/${hero}/${preset}.webp` : undefined;
     },
   };
+}
+
+/**
+ * The 3D edition of a game: each required key (a model name, as the 2D edition uses a file id)
+ * bound to the file of that name in one of the packs. An unknown key is an error, so a manifest
+ * that lists a model no pack holds fails when the host builds the edition. Only the packs that
+ * hold a bound file go into the edition.
+ */
+export function modelEditionOf(
+  packs: Readonly<Record<string, ModelPack>>,
+  keys: readonly string[],
+  options: { id?: EditionId; title?: string } = {},
+): RuntimeEdition3D {
+  const owner = new Map<string, string>();
+  for (const pack of Object.values(packs)) for (const file of Object.values(pack.files)) owner.set(file.id, pack.id);
+  const bindings: RuntimeEdition3D['bindings'] = {};
+  const used: Record<string, ModelPack> = {};
+  for (const key of keys) {
+    const packId = owner.get(key);
+    if (!packId) throw new Error(`unknown model binding "${key}": no loaded pack holds it`);
+    bindings[key] = { pack: packId, file: key };
+    used[packId] = packs[packId]!;
+  }
+  return runtimeEdition3DSchema.parse({
+    id: options.id ?? 'standard',
+    title: options.title ?? 'Primary Chibi',
+    runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION,
+    packs: used,
+    bindings,
+    tuning: { speed: 1, intensity: 1 },
+  });
+}
+
+/** The index of an edition: only its bound keys resolve. */
+export function editionModelIndex(edition: RuntimeEdition3D): ModelIndex {
+  const entry = (key: string): { root: string; file: ModelAssetFile } | undefined => {
+    const binding = edition.bindings[key];
+    const pack = binding && edition.packs[binding.pack];
+    const file = pack && binding && pack.files[binding.file];
+    return pack && file ? { root: pack.root, file } : undefined;
+  };
+  return {
+    path: (key) => {
+      const hit = entry(key);
+      return hit && `${hit.root}/${hit.file.path}`;
+    },
+    preset: (hero, preset) => {
+      const hit = entry(hero);
+      return hit && hit.file.presets.includes(preset) ? `${hit.root}/${hero}/${preset}.webp` : undefined;
+    },
+  };
+}
+
+/** The keys a manifest must bind that the edition does not. */
+export function unboundModelKeys(edition: RuntimeEdition3D, required: readonly string[]): string[] {
+  return required.filter((key) => !edition.bindings[key]);
 }

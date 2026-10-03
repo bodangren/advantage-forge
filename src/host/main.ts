@@ -6,7 +6,7 @@
  * without WebGL2 gets no 3D stage and no lobby: it plays the games that have a 2D view.
  */
 /// <reference types="vite/client" />
-import { assetPackSchema, CARTRIDGE_3D_RUNTIME_API_VERSION, classBossDamage, spritePackRoot, starsOf, validateEdition, type AssetPackManifest, type RuntimeEdition, type RuntimeEdition3D, type StoryInput } from '../apk3d/contracts/index.js';
+import { assetPackSchema, CARTRIDGE_3D_RUNTIME_API_VERSION, classBossDamage, modelEditionOf, spritePackRoot, starsOf, validateEdition, type AssetPackManifest, type RuntimeEdition, type RuntimeEdition3D, type StoryInput } from '../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../apk3d/audio/index.js';
 import { checkDevice } from '../apk3d/device/gate.js';
 import { createCartridgeMounter, createPhaserGameFactory, createThreeGameFactory, selectRenderer, type Cartridge, type Composition3D, type MountedGame, type RendererSetting } from '../apk3d/factory/index.js';
@@ -110,11 +110,22 @@ let lookingBack = false;
 const gameTitle = (g: GameEntry | null): string => (g ? t(g.titleKey) : '');
 let lobbyShown = false;
 
-/**
- * The standard edition. Packs and bindings arrive with task 13 (pack manifests); until then games
- * load their models by path.
- */
+/** The empty 3D edition: a game without WebGL, or one whose packs failed to load, binds nothing. */
 const EDITION: RuntimeEdition3D = { id: 'standard', title: 'Primary Chibi', runtimeApiVersion: CARTRIDGE_3D_RUNTIME_API_VERSION, packs: {}, bindings: {}, tuning: { speed: 1, intensity: 1 } };
+
+/**
+ * The 3D edition of a game: the keys its manifest requires, bound to files of the packs it lists
+ * (`modelEditionOf`). A failure is a diagnostic and the game falls back to the legacy model paths.
+ */
+async function edition3dOf(c: Cartridge): Promise<RuntimeEdition3D> {
+  if (!stage) return EDITION;
+  try {
+    return modelEditionOf(await stage.loader.fetchPacks(c.manifest.packs), c.manifest.requiredModelBindings);
+  } catch (err) {
+    diagnostics.push({ level: 'error', code: 'apk3d/edition-3d', message: String(err) });
+    return EDITION;
+  }
+}
 
 let pack2d: Promise<AssetPackManifest> | null = null;
 
@@ -320,13 +331,14 @@ async function startGame(): Promise<void> {
     el.canvas.classList.add('off');
   }
   const run = { game: entry.id, story: story.id };
+  const edition3d = await edition3dOf(cartridge);
   mounted = await mount({
     renderer,
     container: el.game,
     ...(stage ? { stage } : {}),
     cartridge,
     input: story,
-    edition3d: EDITION,
+    edition3d,
     ...(edition2d ? { edition2d, resolveUrl: (pack: AssetPackManifest, file: { path: string }) => `${BASE}${pack.root.slice(1)}/${file.path}` } : {}),
     seed: randomSeed(),
     sessionMode: 'playing',

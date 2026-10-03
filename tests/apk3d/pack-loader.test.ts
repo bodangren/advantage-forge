@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { modelEditionOf } from '../../src/apk3d/contracts/index.js';
 import { ModelLoader } from '../../src/apk3d/stage/loader.js';
 
 const SITE = join(process.cwd(), 'demo', 'public');
@@ -35,6 +36,19 @@ describe('ModelLoader packs', () => {
     expect(loader.modelPath('knight')).toBe('packs/heroes/1.0.0/knight.glb');
     expect(loader.presetPath('knight', 'champion')).toBe('packs/heroes/1.0.0/knight/champion.webp');
     expect(loader.modelPath('not-a-model')).toBe('models/not-a-model.glb');
+  });
+
+  it('binds an edition: only its keys resolve, and the newest edition wins', async () => {
+    stubFetch();
+    const loader = new ModelLoader('site/');
+    const packs = await loader.fetchPacks(['sunken-vault', 'heroes']);
+    loader.bind(modelEditionOf(packs, ['wall', 'knight']));
+    expect(loader.modelPath('wall')).toBe('packs/sunken-vault/1.0.0/wall.glb');
+    expect(loader.modelPath('floor')).toBe('models/floor.glb');
+    expect(loader.presetPath('knight', 'champion')).toBe('packs/heroes/1.0.0/knight/champion.webp');
+    loader.bind(modelEditionOf(packs, ['floor']));
+    expect(loader.modelPath('floor')).toBe('packs/sunken-vault/1.0.0/floor.glb');
+    expect(loader.modelPath('wall')).toBe('packs/sunken-vault/1.0.0/wall.glb');
   });
 
   it('rejects when a pack manifest is missing, and retries on the next call', async () => {

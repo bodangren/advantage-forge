@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createHeroVsZombie, evidenceOf, scoreOf, type HeroVsZombieCommand, type HeroVsZombieEvent, type HeroVsZombieState } from '../core/index.js';
 import { nextCommand } from '../qc/bot.js';
-import { buildChurchyard, CHURCHYARD_MODELS, CHURCHYARD_PACKS } from './churchyard.js';
+import { buildChurchyard, CHURCHYARD_MODELS } from './churchyard.js';
 import './hero-vs-zombie.css';
 
 const ORB_COLOR = 0xfff1a8;
@@ -24,7 +24,6 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.loadPacks(CHURCHYARD_PACKS);
   await stage.loader.preload([...CHURCHYARD_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
   const yard = buildChurchyard(stage);
   const sim = createHeroVsZombie(story, { seed: ctx.seed, helper: ctx.options.helper });

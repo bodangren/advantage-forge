@@ -21,6 +21,9 @@ export const FILES_2D: readonly string[] = [
   ...Object.entries(GUARD_CLIPS_2D).flatMap(([kind, clips]) => clips.map((c) => `${kind}.${c}`)),
 ];
 
+/** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
+export const MODELS_3D: readonly string[] = ['bandit', 'boulder', 'bush', 'fern', 'guard', 'mushroom-cluster', 'oak-tree', 'pine-tree', 'rock-cluster', 'slime', 'tree-stump', 'wildflowers'];
+
 export const manifest = validateCartridge3DManifest({
   id: 'devourer-slime',
   title: 'Devourer Slime',
@@ -33,8 +36,8 @@ export const manifest = validateCartridge3DManifest({
   levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
   requiredAssetBindings: [...FILES_2D],
-  requiredModelBindings: [],
-  packs: ['clearing'],
+  requiredModelBindings: [...MODELS_3D],
+  packs: ['folk',  'outdoor-props'],
   capabilities: [...APK3D_CAPABILITIES],
   device: {},
   budget: { firstLoadBytes: 4_000_000, totalBytes: 8_000_000 },

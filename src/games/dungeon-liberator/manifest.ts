@@ -27,6 +27,9 @@ export const FILES_2D: readonly string[] = [
   ...Object.entries(VILLAGER_CLIPS_2D).flatMap(([kind, clips]) => clips.map((c) => `${kind}.${c}`)),
 ];
 
+/** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
+export const MODELS_3D: readonly string[] = ['arch', 'bone-pile', 'cell-bars', 'chains', 'cleric', 'druid', 'farmer', 'floor', 'floor-cracked', 'gate', 'guard', 'hanging-cage', 'innkeeper', 'knight', 'pillar', 'skeleton', 'torch-sconce', 'villager', 'wall', 'wall-corner', 'wizard'];
+
 export const manifest = validateCartridge3DManifest({
   id: 'dungeon-liberator',
   title: 'Dungeon Liberator',
@@ -39,8 +42,8 @@ export const manifest = validateCartridge3DManifest({
   levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
   requiredAssetBindings: [...FILES_2D],
-  requiredModelBindings: [],
-  packs: ['heroes', 'vault'],
+  requiredModelBindings: [...MODELS_3D],
+  packs: ['heroes',  'folk',  'dungeon-monsters',  'sunken-vault'],
   capabilities: [...APK3D_CAPABILITIES],
   device: {},
   budget: { firstLoadBytes: 4_000_000, totalBytes: 8_000_000 },

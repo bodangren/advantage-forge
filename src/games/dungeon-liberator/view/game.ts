@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createDungeonLiberator, evidenceOf, GATE, KNIGHT_START, scoreOf, type DungeonLiberatorCommand, type DungeonLiberatorEvent, type DungeonLiberatorState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
-import { buildRoom, ROOM_MODELS, ROOM_PACKS } from './room.js';
+import { buildRoom, ROOM_MODELS } from './room.js';
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const story = ctx.input as StoryInput;
@@ -21,7 +21,6 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.loadPacks(ROOM_PACKS);
   await stage.loader.preload([...ROOM_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
   const room = buildRoom(stage);
   const sim = createDungeonLiberator(story, { seed: ctx.seed, helper: ctx.options.helper });

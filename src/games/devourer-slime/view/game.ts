@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createDevourerSlime, evidenceOf, scoreOf, type DevourerSlimeCommand, type DevourerSlimeEvent, type DevourerSlimeState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
-import { buildClearing, CLEARING_MODELS, CLEARING_PACKS } from './clearing.js';
+import { buildClearing, CLEARING_MODELS } from './clearing.js';
 
 /** Model scale per unit of `size` (the slime model is 0.8 m wide; the rules' radius is 0.45 m x size). */
 const SLIME_SCALE = 1.13;
@@ -24,7 +24,6 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;
   const hud = ctx.hud;
-  await stage.loader.loadPacks(CLEARING_PACKS);
   await stage.loader.preload(CLEARING_MODELS.map((n) => stage.loader.modelPath(n)));
   buildClearing(stage);
   const sim = createDevourerSlime(story, { seed: ctx.seed, helper: ctx.options.helper });

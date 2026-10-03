@@ -69,7 +69,7 @@ describe('content', () => {
     expect(createDevourerSlime([], { seed: 1, helper: false }).state.phase).toBe('complete');
   });
 
-  it('the manifest is a story cartridge for A0 to A1 with the clearing pack', () => {
+  it('the manifest is a story cartridge for A0 to A1 with the folk and outdoor-props packs', () => {
     expect(manifest).toMatchObject({
       id: 'devourer-slime',
       inputMode: 'story',
@@ -77,7 +77,7 @@ describe('content', () => {
       orientation: 'any',
       levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
       needs: { sentences: 3 },
-      packs: ['clearing'],
+      packs: ['folk', 'outdoor-props'],
       briefingKey: 'devourerSlime.briefing',
     });
   });

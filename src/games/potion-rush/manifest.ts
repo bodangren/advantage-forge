@@ -36,6 +36,9 @@ export const FILES_2D: readonly string[] = [
   ...INGREDIENTS_2D.map((k) => `prop.${k}`),
 ];
 
+/** The models the 3D view loads, by Forge asset name: the keys of `RuntimeEdition3D.bindings` (docs/apk3d-cartridge.md section 7). */
+export const MODELS_3D: readonly string[] = ['apple', 'barrel', 'bottle', 'bread', 'candle-cluster', 'cauldron', 'chandelier', 'cleric', 'counter', 'crate', 'crystal-cluster', 'druid', 'farmer', 'fireplace', 'goblin-warrior', 'guard', 'innkeeper', 'knight', 'lantern', 'mushroom', 'orc-warrior', 'plaster-wall', 'plaster-wall-door', 'plaster-wall-window', 'pumpkin', 'round-table', 'sack', 'shelf', 'skeleton', 'stool', 'villager', 'wizard', 'wood-floor'];
+
 export const manifest = validateCartridge3DManifest({
   id: 'potion-rush',
   title: 'Potion Rush',
@@ -48,8 +51,8 @@ export const manifest = validateCartridge3DManifest({
   levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
   needs: { sentences: 3 },
   requiredAssetBindings: [...FILES_2D],
-  requiredModelBindings: [],
-  packs: ['heroes', 'potion-shop'],
+  requiredModelBindings: [...MODELS_3D],
+  packs: ['heroes',  'folk',  'potion-shop',  'dungeon-monsters'],
   capabilities: [...APK3D_CAPABILITIES],
   device: {},
   budget: { firstLoadBytes: 4_000_000, totalBytes: 8_000_000 },

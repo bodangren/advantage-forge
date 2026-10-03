@@ -497,6 +497,14 @@ binding key to `{ pack, file }`. The kit loader caches a parsed GLB by pack id, 
 for the page session, so a second game in the same visit loads `heroes` once. Repeat visits rely
 on HTTP caching of the versioned pack URL (`packs/<id>/<version>/...`), not on a content hash.
 
+Binding keys are model names, as the 2D keys are file ids: `requiredModelBindings` of a manifest
+lists every model the game loads (`MODELS_3D`), and `packs` lists the packs that hold them. The host
+builds the edition with `modelEditionOf(packs, keys)` (an unknown key throws), the three factory
+calls `stage.loader.bind(edition)` before the game starts, and the views resolve names with
+`stage.loader.modelPath(name)` and `presetPath(hero, preset)`. A name no bound edition holds falls
+back to `models/<name>.glb` until that folder goes. `tests/apk3d/pack-bindings.test.ts` fails when
+a view names a model the manifest does not list.
+
 Edition swap: two editions share the same bindings, `standard` and `lite`. `lite` points to
 the same pack built with the smaller budgets (8k triangles, 384 px textures) and is selected by
 the device tier (section 9). Editions never change rules or input.

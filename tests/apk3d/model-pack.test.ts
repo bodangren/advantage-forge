@@ -1,7 +1,7 @@
 /** Model pack assembly and budget checks (src/apk3d/contracts/model-pack.ts). */
 import { describe, expect, it } from 'vitest';
 import { MODEL_BUDGET, modelPackSchema } from '../../src/apk3d/contracts/index.js';
-import { assembleModelPack, buildModelIndex, fileBudgetErrors, gameBudgetErrors, gameLoadFiles, modelFileEntry, modelPackJson, modelPackRoot, packBudgetErrors, type MeasuredModel } from '../../src/apk3d/contracts/model-pack.js';
+import { assembleModelPack, buildModelIndex, editionModelIndex, modelEditionOf, unboundModelKeys, fileBudgetErrors, gameBudgetErrors, gameLoadFiles, modelFileEntry, modelPackJson, modelPackRoot, packBudgetErrors, type MeasuredModel } from '../../src/apk3d/contracts/model-pack.js';
 
 const model = (name: string, extra: Partial<MeasuredModel> = {}): MeasuredModel => ({
   name,
@@ -112,5 +112,35 @@ describe('buildModelIndex', () => {
   it('rejects a model that sits in two packs', () => {
     const other = assembleModelPack('other', [model('wall')]);
     expect(() => buildModelIndex([props, other])).toThrow(/two packs/);
+  });
+});
+
+describe('modelEditionOf', () => {
+  const packs = {
+    heroes: assembleModelPack('heroes', [model('knight', { skinned: true, presets: ['royal'] })]),
+    props: assembleModelPack('props', [model('wall'), model('floor')]),
+  };
+
+  it('binds each key to the pack that holds it and keeps only the packs it uses', () => {
+    const edition = modelEditionOf(packs, ['knight', 'wall']);
+    expect(edition.bindings).toEqual({ knight: { pack: 'heroes', file: 'knight' }, wall: { pack: 'props', file: 'wall' } });
+    expect(Object.keys(edition.packs).sort()).toEqual(['heroes', 'props']);
+    expect(Object.keys(modelEditionOf(packs, ['wall']).packs)).toEqual(['props']);
+  });
+
+  it('rejects a key no pack holds', () => {
+    expect(() => modelEditionOf(packs, ['dragon'])).toThrow(/unknown model binding "dragon"/);
+  });
+
+  it('resolves only bound keys, and presets of bound heroes', () => {
+    const index = editionModelIndex(modelEditionOf(packs, ['knight', 'wall']));
+    expect(index.path('wall')).toBe('packs/props/1.0.0/wall.glb');
+    expect(index.path('floor')).toBeUndefined();
+    expect(index.preset('knight', 'royal')).toBe('packs/heroes/1.0.0/knight/royal.webp');
+  });
+
+  it('lists the required keys an edition does not bind', () => {
+    const edition = modelEditionOf(packs, ['wall']);
+    expect(unboundModelKeys(edition, ['wall', 'floor'])).toEqual(['floor']);
   });
 });

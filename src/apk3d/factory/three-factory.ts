@@ -45,6 +45,7 @@ export function createThreeGameFactory(options: ThreeFactoryOptions): (context: 
       context.container.append(canvas);
       stage = new Stage3D(canvas, { base: options.base, tier: verdict.status === 'lite' ? 'low' : verdict.tier });
     }
+    stage.loader.bind(context.edition);
     context.container.append(layer);
     const hud = new HudRoot(layer, stage);
     let completed = false;

@@ -71,7 +71,7 @@ describe('content', () => {
     expect(createDungeonLiberator([], { seed: 1, helper: false }).state.phase).toBe('complete');
   });
 
-  it('the manifest is a story cartridge for A0 to A1 with the heroes and vault packs', () => {
+  it('the manifest is a story cartridge for A0 to A1 with the heroes, folk, monster, and vault packs', () => {
     expect(manifest).toMatchObject({
       id: 'dungeon-liberator',
       inputMode: 'story',
@@ -79,7 +79,7 @@ describe('content', () => {
       orientation: 'any',
       levels: ['Pre-A1', 'A0', 'A0+', 'A1'],
       needs: { sentences: 3 },
-      packs: ['heroes', 'vault'],
+      packs: ['heroes', 'folk', 'dungeon-monsters', 'sunken-vault'],
       briefingKey: 'dungeonLiberator.briefing',
     });
   });

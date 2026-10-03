@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import { GLTFLoader, type GLTF } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { MODEL_PACK_VERSION, buildModelIndex, modelPackRoot, modelPackSchema, type ModelIndex, type ModelPack } from '../contracts/index.js';
+import { MODEL_PACK_VERSION, editionModelIndex, modelEditionOf, modelPackRoot, modelPackSchema, type ModelIndex, type ModelPack, type RuntimeEdition3D } from '../contracts/index.js';
 
 export type { GLTF };
 
@@ -15,8 +15,8 @@ export class ModelLoader {
   private readonly ready = new Map<string, GLTF>();
   private readonly textures = new Map<string, Promise<THREE.Texture>>();
   private readonly packs = new Map<string, Promise<ModelPack>>();
-  private readonly loadedPacks = new Map<string, ModelPack>();
-  private index: ModelIndex = buildModelIndex([]);
+  /** The bound editions, newest last: a name resolves in the newest edition that binds it. */
+  private readonly indexes: ModelIndex[] = [];
 
   /** `base` is the site root that relative paths start from (for example './'). */
   constructor(private readonly base: string) {
@@ -24,13 +24,12 @@ export class ModelLoader {
   }
 
   /**
-   * Loads the manifests of model packs (`packs/<id>/<version>/pack.json`), once each. Afterwards
-   * `modelPath` and `presetPath` answer from them. A manifest that fails to load rejects: a game
-   * that names a pack needs it.
+   * Fetches the manifests of model packs (`packs/<id>/<version>/pack.json`), once each. A manifest
+   * that fails to load rejects (and is retried on the next call): a game that names a pack needs it.
    */
-  async loadPacks(ids: readonly string[], version: string = MODEL_PACK_VERSION): Promise<void> {
-    await Promise.all(
-      ids.map((id) => {
+  async fetchPacks(ids: readonly string[], version: string = MODEL_PACK_VERSION): Promise<Record<string, ModelPack>> {
+    const entries = await Promise.all(
+      ids.map(async (id) => {
         let p = this.packs.get(id);
         if (!p) {
           p = fetch(`${this.base}${modelPackRoot(id, version)}/pack.json`).then(async (res) => {
@@ -40,20 +39,39 @@ export class ModelLoader {
           p.catch(() => this.packs.delete(id));
           this.packs.set(id, p);
         }
-        return p.then((pack) => void this.loadedPacks.set(id, pack));
+        return [id, await p] as const;
       }),
     );
-    this.index = buildModelIndex(this.loadedPacks.values());
+    return Object.fromEntries(entries);
   }
 
-  /** The path of a model: from a loaded pack, else the legacy `models/<name>.glb`. */
+  /** Binds a 3D edition: its bound keys resolve through `modelPath` and `presetPath`. */
+  bind(edition: RuntimeEdition3D): void {
+    this.indexes.push(editionModelIndex(edition));
+  }
+
+  /** Fetches the packs and binds every file of them under its own name (tools and the lobby; a game binds its edition). */
+  async loadPacks(ids: readonly string[], version: string = MODEL_PACK_VERSION): Promise<void> {
+    const packs = await this.fetchPacks(ids, version);
+    this.bind(modelEditionOf(packs, Object.values(packs).flatMap((p) => Object.keys(p.files))));
+  }
+
+  /** The path of a model: from a bound edition, else the legacy `models/<name>.glb`. */
   modelPath(name: string): string {
-    return this.index.path(name) ?? `models/${name}.glb`;
+    for (let i = this.indexes.length - 1; i >= 0; i--) {
+      const path = this.indexes[i]!.path(name);
+      if (path) return path;
+    }
+    return `models/${name}.glb`;
   }
 
-  /** The path of a hero's preset texture: from a loaded pack, else the legacy `models/<hero>/<preset>.webp`. */
+  /** The path of a hero's preset texture: from a bound edition, else the legacy `models/<hero>/<preset>.webp`. */
   presetPath(hero: string, preset: string): string {
-    return this.index.preset(hero, preset) ?? `models/${hero}/${preset}.webp`;
+    for (let i = this.indexes.length - 1; i >= 0; i--) {
+      const path = this.indexes[i]!.preset(hero, preset);
+      if (path) return path;
+    }
+    return `models/${hero}/${preset}.webp`;
   }
 
   /** Loads `path` (relative to the base), once. */
@@ -119,8 +137,7 @@ export class ModelLoader {
     this.ready.clear();
     this.textures.clear();
     this.packs.clear();
-    this.loadedPacks.clear();
-    this.index = buildModelIndex([]);
+    this.indexes.length = 0;
   }
 }
 

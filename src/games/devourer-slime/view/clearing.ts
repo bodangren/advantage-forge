@@ -5,8 +5,6 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
-export const CLEARING_PACKS = ['folk', 'outdoor-props'];
 
 export const CLEARING_MODELS = ['slime', 'guard', 'bandit', 'oak-tree', 'pine-tree', 'bush', 'boulder', 'rock-cluster', 'fern', 'wildflowers', 'mushroom-cluster', 'tree-stump'];
 

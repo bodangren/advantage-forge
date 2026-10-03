@@ -14,7 +14,7 @@ import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createLabyrinth, evidenceOf, positionOf, rightOrbOf, scoreOf, type LabyrinthCommand, type LabyrinthEvent, type LabyrinthState, type Mover } from '../core/index.js';
 import { nextTurn } from '../qc/bot.js';
 import { dirOfStick, fitCamera, heldTurn, worldOf, worldOfCell } from './geometry.js';
-import { buildMaze, MAZE_MODELS, MAZE_PACKS } from './maze.js';
+import { buildMaze, MAZE_MODELS } from './maze.js';
 
 /** A jump longer than this (meters) is a teleport of the core, not a walk. */
 const SNAP_M = 1.5;
@@ -34,7 +34,6 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.loadPacks(MAZE_PACKS);
   await stage.loader.preload([...MAZE_MODELS, heroId, 'goblin-warrior'].map((n) => stage.loader.modelPath(n)));
   const sim = createLabyrinth(story, { seed: ctx.seed, helper: ctx.options.helper });
   const maze = sim.state.maze;
