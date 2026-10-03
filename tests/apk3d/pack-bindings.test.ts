@@ -18,6 +18,8 @@ import { CHURCHYARD_MODELS } from '../../src/games/hero-vs-zombie/view/churchyar
 import { manifest as labyrinth } from '../../src/games/labyrinth/manifest.js';
 import { MAZE_MODELS } from '../../src/games/labyrinth/view/maze.js';
 import { manifest as monsterEncounters } from '../../src/games/monster-encounters/manifest.js';
+import { manifest as paladinsTwinSoul } from '../../src/games/paladins-twin-soul/manifest.js';
+import { manifest as rpgBattle } from '../../src/games/rpg-battle/manifest.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -36,6 +38,8 @@ const GAMES = {
   'devourer-slime': { manifest: devourerSlime, named: CLEARING_MODELS },
   'hero-vs-zombie': { manifest: heroVsZombie, named: CHURCHYARD_MODELS },
   'monster-encounters': { manifest: monsterEncounters, named: vaultModels() },
+  'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
+  'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
 
 describe('3D editions', () => {

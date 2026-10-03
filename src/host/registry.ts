@@ -7,6 +7,10 @@ import { isCompatible, type Cartridge3DManifest, type StoryInput } from '../apk3
 import type { Cartridge } from '../apk3d/factory/index.js';
 import { manifest as monsterEncounters } from '../games/monster-encounters/manifest.js';
 import monsterEncountersStrings from '../games/monster-encounters/strings.en.js';
+import { manifest as rpgBattle } from '../games/rpg-battle/manifest.js';
+import rpgBattleStrings from '../games/rpg-battle/strings.en.js';
+import { manifest as paladinsTwinSoul } from '../games/paladins-twin-soul/manifest.js';
+import paladinsTwinSoulStrings from '../games/paladins-twin-soul/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
@@ -107,10 +111,28 @@ export const GAMES: GameEntry[] = [
     manifest: heroVsZombie,
     load: () => import('../games/hero-vs-zombie/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'rpg-battle',
+    icon: '🗡️',
+    tint: ['#ef4444', '#7f1d1d'],
+    titleKey: 'rpgBattle.title',
+    pitchKey: 'rpgBattle.pitch',
+    manifest: rpgBattle,
+    load: () => import('../games/rpg-battle/index.js').then((m) => m.cartridge),
+  },
+  {
+    id: 'paladins-twin-soul',
+    icon: '👻',
+    tint: ['#f59e0b', '#7c2d12'],
+    titleKey: 'paladinsTwinSoul.title',
+    pitchKey: 'paladinsTwinSoul.pitch',
+    manifest: paladinsTwinSoul,
+    load: () => import('../games/paladins-twin-soul/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
