@@ -22,6 +22,7 @@ import { manifest as paladinsTwinSoul } from '../../src/games/paladins-twin-soul
 import { manifest as rpgBattle } from '../../src/games/rpg-battle/manifest.js';
 import { manifest as villageGuardian } from '../../src/games/village-guardian/manifest.js';
 import { VILLAGE_MODELS } from '../../src/games/village-guardian/view/village.js';
+import { manifest as runeMatch } from '../../src/games/rune-match/manifest.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -41,6 +42,7 @@ const GAMES = {
   'hero-vs-zombie': { manifest: heroVsZombie, named: CHURCHYARD_MODELS },
   'monster-encounters': { manifest: monsterEncounters, named: vaultModels() },
   'village-guardian': { manifest: villageGuardian, named: VILLAGE_MODELS },
+  'rune-match': { manifest: runeMatch, named: vaultModels() },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
