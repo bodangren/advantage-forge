@@ -6,21 +6,20 @@ Zones: cave mouth (south-west) where a 9-tile cobble path starts; mushroom grove
 west; glowing pool with puddles in the east; giant-crystal grotto at the north end of the path
 (focal). Stalactites sit in the high rim, stalagmites and moss dress the rim edge.
 
-## Tally (182 placements)
+## Tally (214 placements)
 
-- blue-mushroom: 2
-- boulder: 31
-- cave-mouth: 1
-- crystal-cluster: 6
-- crystal-shard: 7
-- giant-crystal: 3
-- glowing-mushroom: 14
+- boulder: 8
+- cobble-floor: 9
+- crystal-cluster: 14
+- crystal-shard: 20
+- giant-crystal: 9
+- glowing-mushroom: 11
 - lichen: 5
-- moss: 7
-- pond: 1
-- puddle: 3
-- rock-cluster: 7
-- stalactite: 6
-- stalagmite: 4
-- stone-ground: 56
-- stone-wall: 29
+- moss: 6
+- mushroom: 2
+- rock-cluster: 23
+- rock-wall: 24
+- sea-water: 4
+- stalactite: 14
+- stalagmite: 22
+- stone-ground: 43
