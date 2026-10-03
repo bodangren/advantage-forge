@@ -705,3 +705,4 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	arena	map-p2	medium	maps-rest	88000	18				7.0	pass	agent 7.0 after rebuild with weapon-rack and rock-wall; orchestrator viewed 3q
 2026-10-03	canyon	map-p2	medium	maps-rest	41000	8				5.5	reserve	second pass with rock-wall-red and dry-riverbed was worse; restored the 6.5 version; needs taller cliff piece, winding river
 2026-10-03	cliff	map-p2	medium	maps-rest	58000	3				7.0	pass	rework with rock-wall and waterfall-sheet; orchestrator viewed 3q; dark dirt, flat plateau
+2026-10-03	coast	map-p2	medium	maps-rest	48000	14				7.0	pass	agent 6.5 after rebuild with sea-water; orchestrator rated 7.0; black rock slabs, flat rectangle
