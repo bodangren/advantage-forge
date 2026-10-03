@@ -16,7 +16,8 @@ Audit 2026-10-03: before this work no pack generator existed. Games loaded 87 GL
 
 - [x] Task: Implement the pack manifest generator and game pack declarations. `scripts/apk3d-models.ts` and `src/apk3d/contracts/model-pack.ts` (`MODEL_PACKS`, `GAME_LOADS`). Output is `demo/public/packs/<pack>/<version>/`. The output is deterministic. 2026-10-03.
 - [ ] Task: Move the dungeon set into a generated pack and remove the transitional import. The `sunken-vault` pack exists. `src/games/shared/battle/stage3d.ts` still imports `scenes/sunken-vault.ts` and loads `models/<name>.glb`.
-- [ ] Task: Add a pack loader to the 3D kit and move the games from `models/` paths to pack bindings (`RuntimeEdition3D`). Both renderer paths must load pack files.
+- [x] Task: Add a pack loader to the 3D kit. `ModelLoader.loadPacks`, `modelPath`, and `presetPath` (`src/apk3d/stage/loader.ts`) and `buildModelIndex` (`contracts/model-pack.ts`) resolve names from the manifests and fall back to `models/<name>.glb` for a name no loaded pack holds. Tests: `tests/apk3d/pack-loader.test.ts`. 2026-10-03.
+- [~] Task: Move the games from `models/` paths to pack bindings. Labyrinth is done: the 3D view loads the maze, hero, and goblin from `sunken-vault`, `heroes`, and `folk`, with no console errors in headless Chromium (software GL, 2026-10-03). Open: Potion Rush, Dragon Flight, Dungeon Liberator, Devourer Slime, Hero vs. Zombie, Monster Encounters (shared `stage3d.ts`), the host lobby hero preview, and `demo/bake.ts`. The 3D `RuntimeEdition3D` bindings and the Phaser path are not yet connected to packs.
 
 ## Phase 4: Verification
 

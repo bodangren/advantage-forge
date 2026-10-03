@@ -9,7 +9,8 @@ import { InstancedSet, type Placement, type Stage3D } from '../../../apk3d/stage
 import type { Maze } from '../core/index.js';
 import { edgePoint, inwardYaw, piecesOf } from './geometry.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of the Labyrinth (the maze set, the heroes, the goblins). */
+export const MAZE_PACKS = ['sunken-vault', 'heroes', 'folk'];
 
 /** The models of the maze set (the characters load separately). */
 export const MAZE_MODELS = ['floor', 'floor-cracked', 'wall', 'pillar', 'arch', 'gate', 'torch-sconce'];
@@ -55,7 +56,7 @@ export function buildMaze(stage: Stage3D, maze: Maze, options: MazeOptions = {})
   // A warm, darker floor against the cool wall stone: the corridors read at a glance. The loader
   // belongs to this stage, so the change touches only this set.
   for (const name of ['floor', 'floor-cracked']) {
-    stage.loader.get(model(name))?.scene.traverse((n) => {
+    stage.loader.get(stage.loader.modelPath(name))?.scene.traverse((n) => {
       if (!(n as THREE.Mesh).isMesh) return;
       const mat = (n as THREE.Mesh).material as THREE.MeshStandardMaterial;
       mat.color.multiply(new THREE.Color(0.82, 0.58, 0.42));
@@ -72,7 +73,7 @@ export function buildMaze(stage: Stage3D, maze: Maze, options: MazeOptions = {})
     // Low walls are flattened copies (the instanced set scales every axis alike).
     const flat = wallHeight / WALL_HEIGHT;
     const copy = (name: string, p: { x: number; z: number; yaw: number }, sx: number, sy: number): void => {
-      const g = stage.loader.get(model(name));
+      const g = stage.loader.get(stage.loader.modelPath(name));
       if (!g) return;
       const obj = g.scene.clone();
       obj.position.set(p.x, 0, p.z);
@@ -104,7 +105,7 @@ export function buildMaze(stage: Stage3D, maze: Maze, options: MazeOptions = {})
   torch({ col: 0, row: Math.floor(maze.rows / 2) }, 'left');
   torch({ col: maze.cols - 1, row: Math.floor(maze.rows / 2) }, 'right');
 
-  const set = new InstancedSet(placements, (a) => stage.loader.get(model(a)), new Set(['floor', 'floor-cracked']));
+  const set = new InstancedSet(placements, (a) => stage.loader.get(stage.loader.modelPath(a)), new Set(['floor', 'floor-cracked']));
   scene.add(set.group);
 
   // The dark ground beyond the walls.
@@ -119,7 +120,7 @@ export function buildMaze(stage: Stage3D, maze: Maze, options: MazeOptions = {})
   glow.position.set(gateEdge.x + inward[0]! * 0.6, 1.2, gateEdge.z + inward[1]! * 0.6);
   scene.add(glow);
   if (dynamic) {
-    const g = stage.loader.get(model('gate'));
+    const g = stage.loader.get(stage.loader.modelPath('gate'));
     if (g) {
       portcullis = g.scene.clone();
       portcullis.position.set(gateEdge.x, 0, gateEdge.z);

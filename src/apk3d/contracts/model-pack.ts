@@ -177,3 +177,32 @@ export function gameBudgetErrors(game: string, load: GameModelLoad, packs: Reado
   const total = files.reduce((sum, f) => sum + f.byteSize, 0);
   return total > MODEL_BUDGET.totalBytes ? [`${game}: models total ${total} bytes, over the limit of ${MODEL_BUDGET.totalBytes}`] : [];
 }
+
+/** Where a game finds a model: the URL path of a file, by Forge asset name. */
+export interface ModelIndex {
+  /** `packs/<id>/<version>/<file>` for a model of a loaded pack, else undefined. */
+  path(name: string): string | undefined;
+  /** The preset texture of a hero (`packs/heroes/<version>/knight/royal.webp`), else undefined. */
+  preset(hero: string, preset: string): string | undefined;
+}
+
+/** An index over loaded packs. A model in two packs is an error: a binding has one answer. */
+export function buildModelIndex(packs: Iterable<ModelPack>): ModelIndex {
+  const owner = new Map<string, { root: string; file: ModelAssetFile }>();
+  for (const pack of packs)
+    for (const file of Object.values(pack.files)) {
+      const prior = owner.get(file.id);
+      if (prior && prior.root !== pack.root) throw new Error(`model "${file.id}" is in two packs: ${prior.root} and ${pack.root}`);
+      owner.set(file.id, { root: pack.root, file });
+    }
+  return {
+    path: (name) => {
+      const hit = owner.get(name);
+      return hit && `${hit.root}/${hit.file.path}`;
+    },
+    preset: (hero, preset) => {
+      const hit = owner.get(hero);
+      return hit && hit.file.presets.includes(preset) ? `${hit.root}/${hero}/${preset}.webp` : undefined;
+    },
+  };
+}

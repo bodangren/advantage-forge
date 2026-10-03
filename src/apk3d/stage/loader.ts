@@ -5,6 +5,7 @@
 import * as THREE from 'three';
 import { GLTFLoader, type GLTF } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { MODEL_PACK_VERSION, buildModelIndex, modelPackRoot, modelPackSchema, type ModelIndex, type ModelPack } from '../contracts/index.js';
 
 export type { GLTF };
 
@@ -13,10 +14,46 @@ export class ModelLoader {
   private readonly models = new Map<string, Promise<GLTF>>();
   private readonly ready = new Map<string, GLTF>();
   private readonly textures = new Map<string, Promise<THREE.Texture>>();
+  private readonly packs = new Map<string, Promise<ModelPack>>();
+  private readonly loadedPacks = new Map<string, ModelPack>();
+  private index: ModelIndex = buildModelIndex([]);
 
   /** `base` is the site root that relative paths start from (for example './'). */
   constructor(private readonly base: string) {
     this.gltf.setMeshoptDecoder(MeshoptDecoder);
+  }
+
+  /**
+   * Loads the manifests of model packs (`packs/<id>/<version>/pack.json`), once each. Afterwards
+   * `modelPath` and `presetPath` answer from them. A manifest that fails to load rejects: a game
+   * that names a pack needs it.
+   */
+  async loadPacks(ids: readonly string[], version: string = MODEL_PACK_VERSION): Promise<void> {
+    await Promise.all(
+      ids.map((id) => {
+        let p = this.packs.get(id);
+        if (!p) {
+          p = fetch(`${this.base}${modelPackRoot(id, version)}/pack.json`).then(async (res) => {
+            if (!res.ok) throw new Error(`model pack "${id}": ${res.status} ${res.statusText}`);
+            return modelPackSchema.parse(await res.json());
+          });
+          p.catch(() => this.packs.delete(id));
+          this.packs.set(id, p);
+        }
+        return p.then((pack) => void this.loadedPacks.set(id, pack));
+      }),
+    );
+    this.index = buildModelIndex(this.loadedPacks.values());
+  }
+
+  /** The path of a model: from a loaded pack, else the legacy `models/<name>.glb`. */
+  modelPath(name: string): string {
+    return this.index.path(name) ?? `models/${name}.glb`;
+  }
+
+  /** The path of a hero's preset texture: from a loaded pack, else the legacy `models/<hero>/<preset>.webp`. */
+  presetPath(hero: string, preset: string): string {
+    return this.index.preset(hero, preset) ?? `models/${hero}/${preset}.webp`;
   }
 
   /** Loads `path` (relative to the base), once. */
@@ -81,6 +118,9 @@ export class ModelLoader {
     this.models.clear();
     this.ready.clear();
     this.textures.clear();
+    this.packs.clear();
+    this.loadedPacks.clear();
+    this.index = buildModelIndex([]);
   }
 }
 

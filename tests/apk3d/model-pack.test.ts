@@ -1,7 +1,7 @@
 /** Model pack assembly and budget checks (src/apk3d/contracts/model-pack.ts). */
 import { describe, expect, it } from 'vitest';
 import { MODEL_BUDGET, modelPackSchema } from '../../src/apk3d/contracts/index.js';
-import { assembleModelPack, fileBudgetErrors, gameBudgetErrors, gameLoadFiles, modelFileEntry, modelPackJson, modelPackRoot, packBudgetErrors, type MeasuredModel } from '../../src/apk3d/contracts/model-pack.js';
+import { assembleModelPack, buildModelIndex, fileBudgetErrors, gameBudgetErrors, gameLoadFiles, modelFileEntry, modelPackJson, modelPackRoot, packBudgetErrors, type MeasuredModel } from '../../src/apk3d/contracts/model-pack.js';
 
 const model = (name: string, extra: Partial<MeasuredModel> = {}): MeasuredModel => ({
   name,
@@ -89,5 +89,28 @@ describe('game loads', () => {
     const big = { props: assembleModelPack('props', Array.from({ length: 7 }, (_, i) => model(`m${i}`, { byteSize: 900_000 }))) };
     expect(gameBudgetErrors('g', { packs: ['props'] }, big)[0]).toMatch(/g: models total 6300000/);
     expect(gameBudgetErrors('g', {}, big)).toEqual([]);
+  });
+});
+
+describe('buildModelIndex', () => {
+  const heroes = assembleModelPack('heroes', [model('knight', { skinned: true, presets: ['royal'] })]);
+  const props = assembleModelPack('props', [model('wall')]);
+
+  it('maps a model name to its versioned pack path', () => {
+    const index = buildModelIndex([heroes, props]);
+    expect(index.path('wall')).toBe('packs/props/1.0.0/wall.glb');
+    expect(index.path('nothing')).toBeUndefined();
+  });
+
+  it('maps a hero preset only when the hero lists it', () => {
+    const index = buildModelIndex([heroes]);
+    expect(index.preset('knight', 'royal')).toBe('packs/heroes/1.0.0/knight/royal.webp');
+    expect(index.preset('knight', 'gold')).toBeUndefined();
+    expect(index.preset('wall', 'royal')).toBeUndefined();
+  });
+
+  it('rejects a model that sits in two packs', () => {
+    const other = assembleModelPack('other', [model('wall')]);
+    expect(() => buildModelIndex([props, other])).toThrow(/two packs/);
   });
 });

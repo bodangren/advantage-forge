@@ -14,7 +14,7 @@ import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createLabyrinth, evidenceOf, positionOf, rightOrbOf, scoreOf, type LabyrinthCommand, type LabyrinthEvent, type LabyrinthState, type Mover } from '../core/index.js';
 import { nextTurn } from '../qc/bot.js';
 import { dirOfStick, fitCamera, heldTurn, worldOf, worldOfCell } from './geometry.js';
-import { buildMaze, MAZE_MODELS, model } from './maze.js';
+import { buildMaze, MAZE_MODELS, MAZE_PACKS } from './maze.js';
 
 /** A jump longer than this (meters) is a teleport of the core, not a walk. */
 const SNAP_M = 1.5;
@@ -34,7 +34,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...MAZE_MODELS, heroId, 'goblin-warrior'].map(model));
+  await stage.loader.loadPacks(MAZE_PACKS);
+  await stage.loader.preload([...MAZE_MODELS, heroId, 'goblin-warrior'].map((n) => stage.loader.modelPath(n)));
   const sim = createLabyrinth(story, { seed: ctx.seed, helper: ctx.options.helper });
   const maze = sim.state.maze;
   const world = (m: Mover): { x: number; z: number } => worldOf(maze, positionOf(m));
@@ -43,7 +44,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
 
   // ---------------------------------------------------------------- the hero
   const body = (kind: string, walk: string, stiffness: number, at: { x: number; z: number }, phase = 0): Body => {
-    const actor = stage.addActor(new Actor(kind, stage.loader.get(model(kind))!, stage.timeline, { phase, scale: CHARACTER_SCALE }));
+    const actor = stage.addActor(new Actor(kind, stage.loader.get(stage.loader.modelPath(kind))!, stage.timeline, { phase, scale: CHARACTER_SCALE }));
     actor.placeAt(at.x, 0, at.z, 180);
     return { actor, walker: new Walker(actor, walk, stiffness) };
   };
@@ -59,7 +60,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const start = worldOfCell(maze, maze.start);
   const hero = body(heroId, 'run', 18, start);
   const look = ctx.options.looks[heroId];
-  if (look && look !== 'default') void stage.loader.texture(`models/${heroId}/${look}.webp`).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
+  if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
   // The golden aura under the hero.
   const auraMat = new THREE.MeshBasicMaterial({ color: 0xffd84a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false });
   const aura = new THREE.Mesh(new THREE.CircleGeometry(1.15, 32), auraMat);
