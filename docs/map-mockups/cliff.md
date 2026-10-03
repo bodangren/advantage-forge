@@ -4,13 +4,13 @@
 west sides, over a sunken ground ring at y=-3. A worn path enters at the west edge, bends north, runs east
 and exits north. Zones: viewpoint (bench, signpost, SW), lone oak (N-center), ruined watch post (NE).
 
-- grass-ground: 50
-- footpath-straight: 11
+- grass-ground: 63
 - meadow-ground: 13
-- dirt-ground: 22
-- footpath-corner: 3
+- dirt-ground: 23
 - desert-ground: 44
-- cliff-face: 40
+- rock-wall: 11
+- waterfall-sheet: 1
+- cliff-face: 29
 - boulder: 25
 - wildflowers: 28
 - bench: 1
@@ -23,4 +23,4 @@ and exits north. Zones: viewpoint (bench, signpost, SW), lone oak (N-center), ru
 - tall-grass: 14
 - fern: 8
 
-Total: 287. Notes: no waterfall piece exists (missing: waterfall - blue falls down the cliff).
+Total: 288. Notes: no waterfall piece exists (missing: waterfall - blue falls down the cliff).

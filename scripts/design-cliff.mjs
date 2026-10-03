@@ -13,20 +13,14 @@ const put = (asset, x, z, o = {}) => {
   places.push(p);
 };
 // path: west edge -> east along r7 -> north on c4 -> east along r4 -> north on c8 to the north edge
-const PATH = new Map([
-  ['1,7', ['footpath-straight', 90]], ['2,7', ['footpath-straight', 90]], ['3,7', ['footpath-straight', 90]],
-  ['4,7', ['footpath-corner', 90]], ['4,6', ['footpath-straight', 0]], ['4,5', ['footpath-straight', 0]],
-  ['4,4', ['footpath-corner', 270]], ['5,4', ['footpath-straight', 90]], ['6,4', ['footpath-straight', 90]],
-  ['7,4', ['footpath-straight', 90]], ['8,4', ['footpath-corner', 90]], ['8,3', ['footpath-straight', 0]],
-  ['8,2', ['footpath-straight', 0]], ['8,1', ['footpath-straight', 0]],
-]);
+const PATH = new Map(['3,8','3,7','4,7','4,6','5,6','5,5','6,5','6,4','7,4','7,3','8,3','8,2','8,1','3,9'].map((k) => [k, ['dirt-ground', 0]]));
 for (let c = 1; c <= 11; c++) for (let r = 1; r <= 9; r++) {
   const p = PATH.get(`${c},${r}`);
   if (p) put(p[0], X(c), Z(r), { yaw: p[1] });
   else {
     const stony = (c >= 9 && r <= 3 && c + (4 - r) > 9) || (c === 10 && r === 2);
     const key = `${c},${r}`;
-    const WIDE = ['3,6', '5,5', '3,5', '5,6', '4,3', '5,3', '6,3', '7,3', '7,5', '9,4', '9,3', '2,6', '3,8', '2,8'];
+    const WIDE = [].concat(['3,6', '5,5', '3,5', '5,6', '4,3', '5,3', '6,3', '7,3', '7,5', '9,4', '9,3', '2,6', '3,8', '2,8'].slice(0,0));
     const MEAD = ['6,6', '7,6', '8,7', '9,7', '2,3', '2,4', '10,6', '6,8', '10,8', '6,1', '5,1', '3,2', '10,5'];
     put(stony || WIDE.includes(key) ? 'dirt-ground' : MEAD.includes(key) ? 'meadow-ground' : 'grass-ground', X(c), Z(r));
   }
@@ -40,7 +34,8 @@ for (let c = 0; c <= 12; c++) for (let r = 1; r <= 11; r++) {
 }
 // cliff faces (3.06 m tall, 3.5 m wide) base at y=-3, crown just under the lip
 const faceY = -3.1;
-for (let i = 0; i < 11; i++) put('cliff-face', -10 + i * 2, 9.2, { y: faceY, yaw: (i % 2) * 10 - 5 });
+for (let i = 0; i < 11; i++) put('rock-wall', -10 + i * 2, 9.35, { y: -2.75 });
+put('waterfall-sheet', -6, 9.85, { y: -3, scale: 1.15 });
 for (let i = 0; i < 9; i++) put('cliff-face', 10.7, -8 + i * 2, { y: faceY, yaw: 90 + (i % 2) * 8 });
 for (let i = 0; i < 9; i++) put('cliff-face', -10.7, -8 + i * 2, { y: faceY, yaw: 270 + (i % 2) * 8 });
 for (let i = 0; i < 11; i++) put('cliff-face', -10 + i * 2, -9.2, { y: faceY, yaw: 180 });
@@ -50,8 +45,8 @@ for (let i = 0; i < 11; i++) put('cliff-face', -10 + i * 2, -9.2, { y: faceY, ya
 // lip dressing: boulders and tufts at the south edge, the sheer drop
 [[-8, 8.3], [-3.5, 8.5], [2, 8.2], [6.5, 8.6], [9.2, 8.2]].forEach(([x, z], i) => put('boulder', x, z, { yaw: i * 70, scale: 0.8 }));
 // zone 1: viewpoint (west-south): bench + signpost facing the sea
-put('bench', -6.2, 6.9, { yaw: 0 });
-put('signpost', -8.2, 6.4, { yaw: 20 });
+put('bench', -8.4, 7.2, { yaw: 0 });
+put('signpost', -9.8, 6.6, { yaw: 20 });
 put('wildflowers', -4.8, 7.6, { yaw: 30 });
 put('wildflowers', -9.6, 7.9, { yaw: 120 });
 put('rock-cluster', -3.0, 7.9, { yaw: 60, scale: 0.8 });
