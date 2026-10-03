@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // Lava cave map designer: 16 x 14 m volcanic cavern. Writes scenes/maps/lava-cave.ts
-// and docs/map-mockups/lava-cave.md. Tiles are stone-ground; the lava channel is a band of
-// sunken tiles packed with lava-rock. North is -Z. Wall ring: stone-wall, 2 courses, scale 1.5.
+// and docs/map-mockups/lava-cave.md. Ash-ground floor, lava-ground channels, rock-wall ring. North is -Z.
 import { writeFileSync } from 'node:fs';
 
 const out = [];
@@ -11,66 +10,25 @@ const put = (asset, x, z, o = {}) => {
 };
 let seed = 7;
 const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
-const lavaCells = new Set();
-for (let x = -7; x <= 7; x += 2) { lavaCells.add(`${x},0`); lavaCells.add(`${x},2`); }
-for (const x of [5, 7]) lavaCells.add(`${x},4`);
-lavaCells.add('-7,-4'); // lava bay in the bone corner edge
-
-// ground: whole footprint x -8..8, z -7..7
-for (let x = -7; x <= 7; x += 2)
-  for (let z = -6; z <= 6; z += 2) {
-    if (lavaCells.has(`${x},${z}`)) {
-      put('stone-ground', x, z, { y: -0.35 });
-      for (const dx of [-0.5, 0.5]) for (const dz of [-0.5, 0.5])
-        put('lava-rock', x + dx + (rnd() - 0.5) * 0.2, z + dz + (rnd() - 0.5) * 0.2, { y: -0.35, scale: 0.95, yaw: Math.floor(rnd() * 360) });
-    } else put('stone-ground', x, z);
-  }
-// bridge over the channel (runs N-S at x=0)
-put('bridge', 0, 1, { yaw: 90 });
-put('coal', -1.4, -1.6, { scale: 1.4 }); put('coal', 1.4, 3.6, { scale: 1.4, yaw: 90 });
-
-// wall ring: inner faces ~ x +-7.9, z +-6.9; two courses
-const course = [0, 2.25];
-for (const y of course) {
-  for (const x of [-6, -3, 0, 3, 6]) put('stone-wall', x, -6.9, { y, scale: 1.5 });
-  for (const x of [-6, 6, -3, 3]) put('stone-wall', x, 6.9, { y, scale: 1.5, yaw: 180 });
-  for (const z of [-5.5, -2.5, 0.5, 3.5]) {
-    put('stone-wall', -7.9, z, { y, scale: 1.5, yaw: 90 });
-    put('stone-wall', 7.9, z, { y, scale: 1.5, yaw: -90 });
-  }
-  put('stone-wall', -7.9, 6.0, { y, scale: 1.5, yaw: 90 }); put('stone-wall', 7.9, 6.0, { y, scale: 1.5, yaw: -90 });
-}
-// south entry (gap at x=0): boulders flank, torches
-for (const [x, z, s] of [[-2.2, 6.4, 1.0], [2.2, 6.4, 1.0], [-7.2, 6.4, 1.2], [7.2, 6.4, 1.2], [-7.2, -6.4, 1.2], [7.2, -6.4, 1.2], [-7.3, 0, 0.9], [7.3, 0.2, 0.9], [-7.2, 3, 1], [7.2, -3.4, 1]])
-  put('coal', x, z, { scale: s * 2.4, yaw: Math.floor(rnd() * 360) });
-put('torch', -1.6, 6.3); put('torch', 1.6, 6.3);
-
-// zone: fire altar (north centre, focal)
-put('altar', 0, -5.2, { scale: 1.4 });
-put('brazier', -2.0, -5.2, { scale: 1.2 }); put('brazier', 2.0, -5.2, { scale: 1.2 });
-put('brazier', -1.1, -3.4); put('brazier', 1.1, -3.4);
-put('stalagmite', -3.8, -5.9, { scale: 1.2 }); put('stalagmite', 3.8, -5.9, { scale: 1.3, yaw: 40 });
-put('coal', -0.9, -4.2, { scale: 0.9 }); put('coal', 0.9, -4.2, { scale: 0.9, yaw: 60 });
-
-// zone: bone and ember corner (north-west)
-put('bone-pile', -6.2, -5.0, { scale: 1.4 }); put('bone-pile', -5.2, -3.6, { scale: 1.1, yaw: 70 });
-put('bone-pile', -6.6, -2.9, { scale: 1.2, yaw: 150 });
-put('coal', -4.8, -5.4); put('coal', -5.8, -3.9, { yaw: 30 }); put('coal', -4.6, -4.1, { scale: 0.8 });
-put('stalagmite', -6.8, -6.0, { scale: 1.1 });
-
-// zone: ember ledge (north-east) with obsidian spikes
-put('stalagmite', 6.2, -5.4, { scale: 1.3 }); put('stalagmite', 5.0, -3.8, { scale: 1.0, yaw: 90 });
-put('stalagmite', 6.9, -3.6, { scale: 1.1, yaw: 200 });
-put('coal', 5.6, -4.8); put('coal', 6.3, -4.0, { yaw: 120, scale: 0.8 });
-put('coal', 4.6, -5.8, { scale: 2 });
-
-// zone: south-west rest and south-east ruin
-put('coal', -5.8, 5.3, { scale: 2 }); put('stalagmite', -4.4, 5.8, { scale: 1.0, yaw: 120 });
-put('bone-pile', -3.6, 4.4, { scale: 1.0, yaw: 20 });
-put('brazier', 4.6, 4.8); put('coal', 5.6, 5.4, { yaw: 10 }); put('stalagmite', 6.6, 5.4, { scale: 1.2 });
-put('coal', 3.4, 5.6, { scale: 1.6 });
-// path dressing: coal edging along the bridge approach
-put('coal', -0.9, 3.4, { scale: 0.7 }); put('coal', 0.9, -1.4, { scale: 0.7, yaw: 90 });
+const lava = new Set(['-1,-6','-1,-4','-1,-2','-1,0','-1,2','-1,4','1,-2','3,-2','3,0','5,2','5,4','7,4','-5,4','-7,4','-5,2']);
+for (let x = -7; x <= 7; x += 2) for (let z = -6; z <= 6; z += 2) put(lava.has(`${x},${z}`) ? 'lava-ground' : 'ash-ground', x, z);
+put('bridge', -1, 0, { yaw: 0, scale: 1.0 });
+put('bridge', 5, 3, { yaw: 90, scale: 0.9 });
+// rock-wall ring
+for (let x = -7; x <= 7; x += 2) { put('rock-wall', x, -7.45); put('rock-wall', x, 7.45, { yaw: 180 }); }
+for (let z = -6; z <= 6; z += 2) { put('rock-wall', -8.45, z, { yaw: 90 }); put('rock-wall', 8.45, z, { yaw: -90 }); }
+// fire altar NE plateau
+put('altar', 4.5, -4.8, { scale: 1.5 });
+for (const [x, z] of [[3.2, -4.2], [5.8, -4.2], [3.6, -6.0], [5.4, -6.0]]) put('brazier', x, z, { scale: 1.2 });
+put('brazier', -2.6, 1.4); put('brazier', 0.6, -1.4); put('brazier', 0.6, 1.4); put('brazier', -2.6, -1.4);
+put('torch', -2.2, 6.4); put('torch', 2.2, 6.4);
+// obsidian spikes
+const sp = [[-6.5,-6.2,1.5],[-4.5,-5.6,1.2],[-2.8,-6.3,1.3],[1.8,-6.4,1.2],[7,-6.3,1.4],[7.2,-0.5,1.3],[6.2,0.2,1.0],[-7,0.5,1.3],[-6.4,2.6,1.0],[3,5.5,1.2],[7,6,1.4],[-3,5.8,1.2],[-6.8,6,1.5],[1.4,2.5,1.0],[-3.4,-3,1.0],[2.6,-0.6,1.0],[1.5,5.6,0.9]];
+sp.forEach(([x,z,s],i)=>put('stalagmite',x,z,{scale:s,yaw:i*47}));
+// bones corner (SW) and embers
+for (const [x,z,s] of [[-6,-3.2,1.3],[-5,-4.2,1.1],[-6.4,-4.8,1.2],[-4.2,3.6,1.0],[4.4,5,1.1],[6.4,-2.6,1.0],[0,5.2,0.9]]) put('bone-pile',x,z,{scale:s,yaw:s*90});
+for (let i=0;i<46;i++){ const x=-7.4+rnd()*14.8,z=-6.4+rnd()*12.8; const cx=Math.round((x+1)/2)*2-1; const cz=Math.round(z/2)*2; if(lava.has(`${cx},${cz}`)||(Math.abs(x-4.5)<2&&Math.abs(z+5)<1.6)||(Math.abs(x+1)<2.4&&Math.abs(z)<1.2)) continue; put(i%3?'coal':'lava-rock',x,z,{scale:0.7+rnd()*0.8,yaw:i*37}); }
+put('lava-rock', -6.8, -1.2, { scale: 1.8 }); put('lava-rock', 6.8, 2, { scale: 1.6 });
 
 const src = `// GENERATED by scripts/design-lava-cave.mjs — edit the generator, not this file.
 import type { Place } from '../chibi-quest.js';
@@ -85,8 +43,7 @@ const tally = {};
 for (const p of out) tally[p.asset] = (tally[p.asset] ?? 0) + 1;
 const doc = `# Lava cave map
 
-16 x 14 m cavern, 8 x 7 stone-ground tiles. A two-tile lava channel (sunken tiles packed with lava-rock) crosses
-west to east; a bridge spans it north-south at x=0. Zones: fire altar with braziers (north centre, focal);
+16 x 14 m cavern, 8 x 7 ash-ground tiles with lava-ground channels; a bridge spans the main channel at x=-1. Zones: fire altar with braziers (north centre, focal);
 bone and ember corner (north-west); obsidian ember ledge (north-east); south entry with torches; south-east brazier ruin.
 Walls: stone-wall at scale 1.5, two courses, with a south gap and boulders.
 

@@ -1,19 +1,19 @@
 # Lava cave map
 
-16 x 14 m cavern, 8 x 7 stone-ground tiles. A two-tile lava channel (sunken tiles packed with lava-rock) crosses
-west to east; a bridge spans it north-south at x=0. Zones: fire altar with braziers (north centre, focal);
+16 x 14 m cavern, 8 x 7 ash-ground tiles with lava-ground channels; a bridge spans the main channel at x=-1. Zones: fire altar with braziers (north centre, focal);
 bone and ember corner (north-west); obsidian ember ledge (north-east); south entry with torches; south-east brazier ruin.
 Walls: stone-wall at scale 1.5, two courses, with a south gap and boulders.
 
-Pieces: 216
+Pieces: 155
 
-- stone-ground: 56
-- lava-rock: 76
-- bridge: 1
-- coal: 25
-- stone-wall: 38
-- torch: 2
+- ash-ground: 41
+- lava-ground: 15
+- bridge: 2
+- rock-wall: 30
 - altar: 1
-- brazier: 5
-- stalagmite: 8
-- bone-pile: 4
+- brazier: 8
+- torch: 2
+- stalagmite: 17
+- bone-pile: 7
+- lava-rock: 16
+- coal: 16
