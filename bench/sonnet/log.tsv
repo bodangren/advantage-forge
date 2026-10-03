@@ -713,3 +713,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	witch-hut	map-p2	medium	maps-rest	43000	10				7.0	pass	rework with sewer-water and ruined-house; orchestrator viewed 3q; straight cabin, bright roof
 2026-10-03	watchtower	map-p2	medium	maps-rest	51000	11				7.0	pass	rework with rock-wall rise; orchestrator viewed 3q; flat grass lowland
 2026-10-03	library	map-p2	medium	maps-rest	0	0				7.0	pass	commit 19c4f92 says 7.0 after 1 feedback; orchestrator viewed 3q; log row 6.5 was the first pass
+2026-10-03	mountain-city	map-p2	medium	maps-rest	72000	3				7.0	pass	second pass with mountain-peak; orchestrator viewed 3q; peaks bulky, hide temple
+2026-10-03	abandoned-fort	map-p2	medium	maps-rest	45000	12				7.0	pass	rework with rock-wall and ruined-house; orchestrator viewed 3q; tower does not lean, flat orange court

@@ -32,7 +32,7 @@ const MOUNT = (c, r) => c <= 3 || c === 14 || r === 12;
 for (let c = 1; c <= 14; c++)
   for (let r = 1; r <= 12; r++) {
     const y = hh(c, r);
-    const kind = ICE(c, r) ? 'ice-ground' : MOUNT(c, r) ? 'snow-ground' : (c + r * 3) % 7 === 0 && h(c, r) > 0 ? 'snow-ground' : 'stone-ground';
+    const kind = ICE(c, r) ? 'marble-floor' : MOUNT(c, r) ? 'snow-ground' : (c + r * 3) % 7 === 0 && h(c, r) > 0 ? 'snow-ground' : 'desert-ground';
     put(kind, X(c), Z(r), { y });
   }
 
@@ -66,14 +66,11 @@ put('rock-wall', 13.1, 10.8, { y: -1.7, scale: 0.7, yaw: 90 });
 put('rock-wall', -7.4, 10.8, { y: -1.7, scale: 0.7, yaw: 90 });
 
 // --- peaks (ice spires with rock feet)
-const PEAKS = [
-  [-12, -9, 3.4], [-10.5, -4.5, 3.0], [-12.2, -0.5, 3.6], [-9.6, 2.6, 2.8], [-12, 5, 3.3], [-9.5, 8.6, 2.5], 
-  [12.6, -9.5, 3.2], [13, -4, 2.9], [12.8, 1.5, 3.4],  [-5, -11.2, 2.6], [1, -11.4, 2.2],
+const PEAKS = [ // [x, z, scale, yaw, y]
+  [-10.5, -9.5, 1.5, 20, 0], [-11, -1, 1.3, 140, 0], [-10.5, 7, 1.2, 250, 0],
+  [-4, -12.2, 1.1, 80, HI], [3, -12.4, 1.3, 200, LO], [11, -12.3, 1.2, 300, HI], [12, -2, 1.4, 45, 0],
 ];
-PEAKS.forEach(([x, z, s], i) => {
-  const y = x > -8 && x < 12 && z < -10 ? (x < -2 ? HI : LO) : 0;
-  put('ice-spire', x, z, { y, scale: s, yaw: i * 47 });
-});
+for (const [x, z, s, yaw, y] of PEAKS) put('mountain-peak', x, z, { y, scale: s, yaw });
 const FEET = [[-11.5, -6.5, 1.5, 20], [-11.8, -2, 1.7, 100], [-10.5, 1.2, 1.4, 200], [-11.6, 7.2, 1.6, 300], [-10.5, 4.2, 1.2, 40],
   [-11.5, -10.8, 1.5, 90], [12.2, -7, 1.6, 160], [12.4, -1.5, 1.6, 250], [12.4, 4, 1.5, 10], [12.2, 8.4, 1.4, 120], [-8.6, -6.2, 1.1, 330], [-8.8, 6.4, 1.2, 70]];
 for (const [x, z, s, yaw] of FEET) put('boulder', x, z, { scale: s * 2, yaw });

@@ -15,117 +15,67 @@ const put = (asset, x, z, o = {}) => {
 let s = 7;
 const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
 
-// --- ground: stone-ground ring, cobble core, grass-ground taking over in patches, wood-floor barracks
-const inBarracks = (x, z) => [3, 5, 7].includes(x) && [2, 4, 6].includes(z);
-const grassy = (x, z) => Math.sin(x * 0.55 + z * 0.3) + Math.cos(z * 0.5 - x * 0.35) > 0.9;
+// --- ground: dirt courtyard, stone-ground ring, grass patches
+const grassy = (x, z) => Math.sin(x * 0.7 + z * 0.4) + Math.cos(z * 0.6 - x * 0.45) > 1.1;
 for (let x = -9; x <= 9; x += 2)
-  for (let z = -8; z <= 8; z += 2) {
-    let a = 'stone-ground';
-    if (inBarracks(x, z)) a = 'wood-floor';
-    else if (grassy(x, z)) a = 'grass-ground';
-    else if ((Math.abs(x) <= 5 && z >= -4 && z <= 2) || (x === 3 && z <= -4)) a = 'cobble-floor';
+  for (let z = -9; z <= 9; z += 2) {
+    const edge = Math.abs(x) >= 9 || Math.abs(z) >= 9;
+    let a = edge ? 'stone-ground' : 'dirt-ground';
+    if (grassy(x, z)) a = 'grass-ground';
     put(a, x, z);
   }
 
-// --- perimeter: city-wall (scale 0.7 -> 2.8 m long, 2.1 m tall) standing, broken-wall (scale 1.4) ruins
-const C = 'city-wall', B = 'broken-wall';
-const S = 2.8, AX = [-8.4, -5.6, -2.8, 0, 2.8, 5.6, 8.4];
-const wall = (a, x, z, yaw) => put(a, x, z, { yaw, scale: a === C ? 0.7 : 1.4 });
-// north z=-8.2 (gate at x=2.8; broken east of it)
-['C','C','B','G','GATE','B','G'].forEach((k, i) => {
-  const x = AX[i];
-  if (k === 'C') wall(C, x, -8.2, 180);
-  if (k === 'B') wall(B, x, -8.2, i < 4 ? 180 : 0);
-});
-put('wall-gate', 2.8, -8.2, { scale: 0.75 });
-put('rubble', 1.6, -6.6, { yaw: 30, scale: 1.5 }); // smashed gate debris
-put('rubble', 4.2, -6.7, { yaw: 120, scale: 1.5 });
-put('crate', 3.6, -6.2, { yaw: 40, scale: 0.7 }); // broken door beside the gate
-// south z=8.2: collapsed middle
-['C','C','B','G','G','B','C'].forEach((k, i) => {
-  const x = AX[i];
-  if (k === 'C') wall(C, x, 8.2, 0);
-  if (k === 'B') wall(B, x, 8.2, i < 3 ? 0 : 180);
-});
-put('rubble', -1.4, 7.2, { yaw: 50, scale: 1.5 });
-put('rubble', 0.2, 7.5, { yaw: 120, scale: 1.5 });
-put('rubble', 1.8, 7.3, { yaw: 200, scale: 1.5 });
-// west x=-9.2 and east x=9.2 (z step 2.8, between the corner pieces)
-const AZ = [-5.6, -2.8, 0, 2.8, 5.6];
-['C','C','G','B','C'].forEach((k, i) => {
-  if (k === 'C') wall(C, -9.2, AZ[i], 270);
-  if (k === 'B') wall(B, -9.2, AZ[i], 270);
-});
-put('rubble', -8.2, 0, { yaw: 80, scale: 1.5 });
-['C','B','C','C','G'].forEach((k, i) => {
-  if (k === 'C') wall(C, 9.2, AZ[i], 90);
-  if (k === 'B') wall(B, 9.2, AZ[i], 90);
-});
-put('rubble', 8.2, 5.6, { yaw: 10, scale: 1.5 });
+// --- perimeter: ONE stone family, rock-wall (2 m wide, 2.6 m tall, 0.9 m thick), gaps where it fell
+const W = 'rock-wall';
+const gapN = [-1, 7], gapS = [-5, -1, 1], gapW = [1, 3], gapE = [-3];
+for (let x = -9; x <= 9; x += 2) {
+  if (x === 3) continue; // gate slot
+  if (!gapN.includes(x)) put(W, x, -8.5, { yaw: 0, scale: gapN.includes(x + 2) || gapN.includes(x - 2) ? 0.7 : 1 });
+  else { put('rubble', x, -8.3, { yaw: x * 30, scale: 1.6 }); put('rubble', x + 0.5, -7.4, { yaw: 40, scale: 1.1 }); }
+  if (!gapS.includes(x)) put(W, x, 8.5, { yaw: 180, scale: gapS.includes(x + 2) || gapS.includes(x - 2) ? 0.65 : 1 });
+  else { put('rubble', x, 8.3, { yaw: x * 50, scale: 1.7 }); if (x !== -5) put('rubble', x - 0.4, 7.3, { yaw: 120, scale: 1.2 }); }
+}
+for (let z = -7; z <= 7; z += 2) {
+  if (!gapW.includes(z)) put(W, -9.5, z, { yaw: 90, scale: gapW.includes(z + 2) || gapW.includes(z - 2) ? 0.7 : 1 });
+  else { put('rubble', -9.2, z, { yaw: z * 40, scale: 1.7 }); put('rubble', -8.2, z + 0.5, { yaw: 10, scale: 1.1 }); }
+  if (!gapE.includes(z)) put(W, 9.5, z, { yaw: 270, scale: gapE.includes(z + 2) || gapE.includes(z - 2) ? 0.7 : 1 });
+  else { put('rubble', 9.2, z, { yaw: z * 25, scale: 1.7 }); put('rubble', 8.2, z - 0.4, { yaw: 70, scale: 1.2 }); }
+}
+// rusted gate (north) with debris
+put('wall-gate', 3, -8.15, { scale: 0.75 });
+put('rubble', 1.6, -7.2, { yaw: 30 }); put('rubble', 4.6, -7.2, { yaw: 120 });
+put('crate', 4.2, -6.5, { yaw: 40, scale: 0.7 });
+put('banner', 1.2, -7.4, { scale: 0.8 });
 
-// --- corners: one block each
-put('tower', -8.2, -7.4, { scale: 0.75, yaw: 20 }); // watchtower NW
-put('rampart', 8.2, -7.4, { scale: 0.65, yaw: 180 }); // NE, merlons missing
-put('rampart', -8.3, 7.4, { scale: 0.5, yaw: 90 }); // SW stub
-put('ruin-column', 8.3, 7.4, { yaw: 220 }); // SE
-// fallen column group
-put('ruin-column', 5.6, 0.2, { yaw: 70 });
-put('ruin-column', 6.6, -0.6, { yaw: 160 });
-put('ruin-column', 6.2, 1.2, { yaw: 20, scale: 0.8 });
-put('rubble', 5.4, -0.9, { yaw: 100, scale: 1.2 });
+// --- leaning watchtower NW (no tilt in Place: yawed, with a fallen heap on the lean side)
+put('tower', -7, -6.2, { scale: 0.85, yaw: 25 });
+put('rubble', -5.4, -5.2, { yaw: 40, scale: 1.5 });
+put('rubble', -5.8, -4.2, { yaw: 100, scale: 1.2 });
+put('rubble', -8.2, -3.6, { yaw: 10, scale: 1.2 });
 
-// --- barracks (empty, roofless): only a north and a west timber wall
-for (const x of [3, 5, 7]) put('timber-wall', x, 1, { yaw: 0 });
-for (const z of [2, 4]) put('timber-wall', 2, z, { yaw: 90 });
-put('crate', 3.6, 2.8, { yaw: 20 });
-put('crate', 4.4, 2.7, { yaw: 70 });
-put('barrel', 7.6, 2.8);
-put('bone-pile', 5.2, 5.8, { yaw: 30 });
-put('crate', 7.2, 6.4, { yaw: 300 });
+// --- empty barracks SE: ruined house
+put('ruined-house', 5.6, 4.6, { yaw: 0, scale: 1.1 });
+put('rubble', 3.0, 3.0, { yaw: 60 }); put('rubble', 8.0, 6.6, { yaw: 160, scale: 1.1 });
+put('crate', 3.2, 6.8, { yaw: 20 }); put('crate', 4.0, 7.2, { yaw: 80, scale: 0.8 }); put('barrel', 8.0, 1.8);
 
-// --- left-behind items
-put('wagon', -4.6, 4.8, { yaw: 35 }); // broken wagon
-put('banner', -1.2, 5.0, { yaw: 80, scale: 0.8 });
-put('vines', 4, 0.75, { scale: 0.9 });
+// --- dry well (focal) and left-behind items
+put('well', -1.5, 0.5, { scale: 0.9 });
+put('rubble', -3.0, -0.4, { yaw: 60, scale: 0.8 });
+put('bone-pile', -0.2, 2.0, { yaw: 120, scale: 0.8 });
+put('crate', -5.2, 3.2, { yaw: 40 }); put('crate', -4.4, 3.8, { yaw: 100, scale: 0.8 }); put('barrel', -5.8, 4.2);
+put('wagon', -2.6, 5.6, { yaw: 35 });
+put('dead-tree', -7.4, 1.0, { yaw: 40, scale: 0.8 });
+put('ruin-column', 1.0, -2.4, { yaw: 70 }); put('ruin-column', 2.2, -1.6, { yaw: 160, scale: 0.8 });
+put('rubble', 1.8, -2.0, { yaw: 100 });
+put('rubble', 5.0, -3.0, { yaw: 200 }); put('rubble', -3.0, 7.0, { yaw: 130 });
 
-// --- dry well yard
-put('well', -2, 0.5, { scale: 0.9 });
-put('rubble', -3.4, -0.4, { yaw: 60 });
-put('bone-pile', -0.6, 1.8, { yaw: 120, scale: 0.8 });
-put('crate', -4.8, 2.4, { yaw: 40 });
-put('barrel', -5.6, 2.8);
-put('crate', -5.0, 3.4, { yaw: 100, scale: 0.8 });
-put('dead-tree', -6.8, -1.6, { yaw: 40, scale: 0.8 });
-
-// --- gate story: rubble and fallen stones near the gate and breaks
-put('rubble', 3.2, -6.4, { yaw: 10 });
-put('rubble', 1.6, -6.9, { yaw: 100, scale: 0.9 });
-put('rubble', -5, -6.6, { yaw: 200 });
-put('rubble', -3.2, 6.8, { yaw: 130, scale: 1.1 });
-put('rubble', 0.2, 7.2, { yaw: 20, scale: 1.3 });
-put('rubble', 2.0, 7.0, { yaw: 250 });
-put('rubble', -8.2, -1.4, { yaw: 300 });
-put('rubble', -8.0, 0.4, { yaw: 30, scale: 1.1 });
-put('rubble', 8.2, -3.8, { yaw: 160 });
-put('rubble', 4.0, 7.0, { yaw: 70, scale: 0.8 });
-put('banner', 1.0, -6.8, { yaw: 0, scale: 0.8 });
-
-// --- vines/ivy climbing wall inner faces
-put('vines', 0, -7.55, { scale: 1.2 });
-put('ivy', -4.2, -7.55, { scale: 1.2 });
-put('ivy', -6.8, -7.5);
-put('vines', -8.55, -2.8, { yaw: 90, scale: 1.2 });
-put('ivy', -8.55, 3, { yaw: 90 });
-put('ivy', 8.55, -2.8, { yaw: 270, scale: 1.2 });
-put('vines', 8.55, 2.8, { yaw: 270 });
-put('ivy', -5.6, 7.55, { yaw: 180, scale: 1.2 });
-put('vines', 6, 7.55, { yaw: 180 });
-put('tall-grass', -0.5, -1.5); put('tall-grass', 3.4, -3.2, { yaw: 60 }); put('tall-grass', -4, -3.4, { yaw: 120 });
-put('tall-grass', 1.6, 3.6, { yaw: 30 }); put('tall-grass', -6.6, 1.2); put('tall-grass', 0.6, 5.4, { yaw: 200 });
-
-// --- overgrowth: bushes tucked at the inner wall feet
-const BUSH = [[-7.4,-5.2],[-7.6,1.6],[-7.6,5.2],[7.4,-5.2],[7.6,-1.8],[7.6,3.6],[-6,7.3],[1.8,-7.3],[-1.4,-7.3],[6.6,-7.3],[-2.6,7.4],[8.2,6.2]];
-BUSH.forEach(([x, z], i) => put('bush', x, z, { yaw: (i * 67) % 360, scale: 0.8 + (i % 3) * 0.2 }));
+// --- vines on wall inner faces, grass and bushes
+[[-4, -7.9, 0], [7, -7.9, 0], [-8.9, 5, 90], [8.9, -5, 270], [2, 7.9, 180], [-7.5, 7.9, 180]].forEach(([x, z, yw], i) =>
+  put(i % 2 ? 'ivy' : 'vines', x, z, { yaw: yw, scale: 1.2 }));
+put('vines', -6.2, -4.9, { scale: 1.1, yaw: 25 });
+[[0, -4], [4, 0], [-4, -2], [2, 3], [-6, 3], [6, -5]].forEach(([x, z], i) => put('tall-grass', x, z, { yaw: i * 55 }));
+[[-8, 3],[-8, 7],[8, -6],[8, -2],[6.5, 7.5],[-1, -7.4],[-3,7.3],[8,7]].forEach(([x, z], i) =>
+  put('bush', x, z, { yaw: (i * 67) % 360, scale: 0.8 + (i % 3) * 0.2 }));
 
 writeFileSync('scenes/maps/abandoned-fort.ts', `// GENERATED by scripts/design-abandoned-fort.mjs \u2014 edit the generator, not this file.
 import type { Place } from '../chibi-quest.js';
@@ -135,7 +85,7 @@ const tally = {};
 for (const p of places) tally[p.asset] = (tally[p.asset] ?? 0) + 1;
 writeFileSync('docs/map-mockups/abandoned-fort.md', `# Abandoned fort (generated)
 
-20 m x 18 m. Stone-ground, cobble courtyard, wood-floor barracks (SE), leaning tower (NW), rampart ruin (NE),
+20 m x 18 m. Dirt courtyard, rock-wall perimeter with gaps, ruined-house barracks (SE), tower (NW),
 rusted gate (north, x=3), dry well yard (centre-west), collapsed south wall. ${places.length} pieces.
 
 Tally: ${Object.entries(tally).map(([k, v]) => k + ' ' + v).join(', ')}
