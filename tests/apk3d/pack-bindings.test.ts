@@ -43,6 +43,8 @@ import { SKY_MODELS } from '../../src/games/gryphon-patrol/view/sky.js';
 import { manifest as magicDefense } from '../../src/games/magic-defense/manifest.js';
 import { manifest as griffinSkyJoust } from '../../src/games/griffin-sky-joust/manifest.js';
 import { SCENE_MODELS } from '../../src/games/griffin-sky-joust/view/scene.js';
+import { manifest as abyssalWell } from '../../src/games/abyssal-well/manifest.js';
+import { WELL_MODELS } from '../../src/games/abyssal-well/view/well.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -74,6 +76,7 @@ const GAMES = {
   'gryphon-patrol': { manifest: gryphonPatrol, named: SKY_MODELS },
   'magic-defense': { manifest: magicDefense, named: vaultModels() },
   'griffin-sky-joust': { manifest: griffinSkyJoust, named: SCENE_MODELS },
+  'abyssal-well': { manifest: abyssalWell, named: WELL_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
