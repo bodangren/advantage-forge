@@ -38,6 +38,8 @@ import { manifest as alchemistsSynthesis } from '../../src/games/alchemists-synt
 import { LAB_MODELS } from '../../src/games/alchemists-synthesis/view/lab.js';
 import { manifest as enchantedLibrary } from '../../src/games/enchanted-library/manifest.js';
 import { HALL_MODELS } from '../../src/games/enchanted-library/view/hall.js';
+import { manifest as gryphonPatrol } from '../../src/games/gryphon-patrol/manifest.js';
+import { SKY_MODELS } from '../../src/games/gryphon-patrol/view/sky.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -66,6 +68,7 @@ const GAMES = {
   'realm-carver': { manifest: realmCarver, named: REALM_MODELS },
   'alchemists-synthesis': { manifest: alchemistsSynthesis, named: LAB_MODELS },
   'enchanted-library': { manifest: enchantedLibrary, named: HALL_MODELS },
+  'gryphon-patrol': { manifest: gryphonPatrol, named: SKY_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
