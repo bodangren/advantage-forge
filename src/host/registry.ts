@@ -23,6 +23,8 @@ import { manifest as hauntedLibrary } from '../games/haunted-library/manifest.js
 import hauntedLibraryStrings from '../games/haunted-library/strings.en.js';
 import { manifest as shadowGateDungeon } from '../games/shadow-gate-dungeon/manifest.js';
 import shadowGateDungeonStrings from '../games/shadow-gate-dungeon/strings.en.js';
+import { manifest as realmCarver } from '../games/realm-carver/manifest.js';
+import realmCarverStrings from '../games/realm-carver/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
@@ -195,10 +197,19 @@ export const GAMES: GameEntry[] = [
     manifest: shadowGateDungeon,
     load: () => import('../games/shadow-gate-dungeon/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'realm-carver',
+    icon: '🗺️',
+    tint: ['#a78bfa', '#4c1d95'],
+    titleKey: 'realmCarver.title',
+    pitchKey: 'realmCarver.pitch',
+    manifest: realmCarver,
+    load: () => import('../games/realm-carver/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings, archersRevengeStrings, astralMageStrings, spellweaversRunStrings, hauntedLibraryStrings, shadowGateDungeonStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings, archersRevengeStrings, astralMageStrings, spellweaversRunStrings, hauntedLibraryStrings, shadowGateDungeonStrings, realmCarverStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
