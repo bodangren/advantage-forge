@@ -1,10 +1,10 @@
 # Port Monster Encounters to the monorepo
 
-Status: new. The plan records execution state. Linked documents retain design detail.
+Status: in progress. The plan records execution state. Linked documents retain design detail.
 
 ## Phase 1: Contract and baseline
 
-- [ ] Task: Record current local rules, evidence, strings, and 2D and 3D entrypoints.
+- [x] Task: Record current local rules, evidence, strings, and 2D and 3D entrypoints. Audit 2026-10-03: rules core, three.js view, Phaser view, and registry entry exist and the tests pass (Monster Encounters: 1,560 lines, no QC bot). Strings are English only. The game loads models by path, not from a model pack.
 
 ## Phase 2: Tests
 

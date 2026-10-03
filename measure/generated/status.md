@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 76.
-Tracks by status: new: 38; in_progress: 13; completed: 25.
+Tracks by status: new: 33; in_progress: 18; completed: 25.
 Tracks by workstream: assets: 31; games: 38; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -39,23 +39,23 @@ Tracks by workstream: assets: 31; games: 38; foundation: 7.
 | [game_archers_revenge_20260928](../tracks/game_archers_revenge_20260928/) | new | games | 0/8 | 8 | — |
 | [game_astral_mage_20260928](../tracks/game_astral_mage_20260928/) | new | games | 0/8 | 8 | — |
 | [game_castle_defense_20260928](../tracks/game_castle_defense_20260928/) | new | games | 0/8 | 8 | — |
-| [game_devourer_slime_port_20260928](../tracks/game_devourer_slime_port_20260928/) | new | games | 0/6 | 6 | — |
-| [game_dragon_flight_port_20260928](../tracks/game_dragon_flight_port_20260928/) | new | games | 0/6 | 6 | — |
+| [game_devourer_slime_port_20260928](../tracks/game_devourer_slime_port_20260928/) | in_progress | games | 1/6 | 6 | — |
+| [game_dragon_flight_port_20260928](../tracks/game_dragon_flight_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_dragon_rider_20260928](../tracks/game_dragon_rider_20260928/) | new | games | 0/8 | 8 | — |
-| [game_dungeon_liberator_port_20260928](../tracks/game_dungeon_liberator_port_20260928/) | new | games | 0/6 | 6 | — |
+| [game_dungeon_liberator_port_20260928](../tracks/game_dungeon_liberator_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_enchanted_library_20260928](../tracks/game_enchanted_library_20260928/) | new | games | 0/8 | 8 | — |
 | [game_griffin_riders_escape_20260928](../tracks/game_griffin_riders_escape_20260928/) | new | games | 0/8 | 8 | — |
 | [game_griffin_sky_joust_20260928](../tracks/game_griffin_sky_joust_20260928/) | new | games | 0/8 | 8 | — |
 | [game_gryphon_patrol_20260928](../tracks/game_gryphon_patrol_20260928/) | new | games | 0/8 | 8 | — |
 | [game_haunted_library_20260928](../tracks/game_haunted_library_20260928/) | new | games | 0/8 | 8 | — |
-| [game_hero_vs_zombie_port_20260928](../tracks/game_hero_vs_zombie_port_20260928/) | new | games | 0/6 | 6 | — |
+| [game_hero_vs_zombie_port_20260928](../tracks/game_hero_vs_zombie_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_labyrinth_goblin_king_20260928](../tracks/game_labyrinth_goblin_king_20260928/) | in_progress | games | 5/7 | 7 | — |
 | [game_magic_defense_20260928](../tracks/game_magic_defense_20260928/) | new | games | 0/8 | 8 | — |
-| [game_model_packs_20260928](../tracks/game_model_packs_20260928/) | in_progress | games | 0/7 | 7 | — |
-| [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | new | games | 0/6 | 6 | — |
+| [game_model_packs_20260928](../tracks/game_model_packs_20260928/) | in_progress | games | 4/8 | 8 | — |
+| [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_paladins_twin_soul_20260928](../tracks/game_paladins_twin_soul_20260928/) | new | games | 0/8 | 8 | — |
-| [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 0/10 | 10 | — |
-| [game_potion_rush_port_20260928](../tracks/game_potion_rush_port_20260928/) | in_progress | games | 0/6 | 6 | — |
+| [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 1/10 | 10 | — |
+| [game_potion_rush_port_20260928](../tracks/game_potion_rush_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_realm_carver_20260928](../tracks/game_realm_carver_20260928/) | new | games | 0/8 | 8 | — |
 | [game_rpg_battle_20260928](../tracks/game_rpg_battle_20260928/) | new | games | 0/8 | 8 | — |
 | [game_rune_forge_chamber_20260928](../tracks/game_rune_forge_chamber_20260928/) | new | games | 0/8 | 8 | — |

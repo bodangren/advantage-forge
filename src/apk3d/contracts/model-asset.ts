@@ -1,6 +1,6 @@
 /**
  * Model assets (section 7 of docs/apk3d-cartridge.md): a GLB file entry, a pack manifest
- * (`demo/public/packs/<pack>/pack.json`, written by scripts/apk3d-models.ts), and the 3D
+ * (`demo/public/packs/<pack>/<version>/pack.json`, written by scripts/apk3d-models.ts), and the 3D
  * edition that maps semantic binding keys to pack files. The pack is the APK `AssetPackManifest`
  * shape with a new asset kind `'model'` and a `format: 'glb'` branch. It carries no hash field:
  * the monorepo hashing policy forbids a new hash on a new kind; `provenance.forgeCommit` is the

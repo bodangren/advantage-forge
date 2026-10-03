@@ -4,7 +4,7 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 ## Phase 1: Contract and package boundary
 
-- [~] Task: Review the existing monorepo contract changes on apk3d-port.
+- [x] Task: Review the existing monorepo contract changes on apk3d-port. Audit 2026-10-03: the uncommitted edits add a Primary story input mode, not 3D or renderer selection. The monorepo has no three.js code and no model-pack package.
 - [ ] Task: Finalize package boundaries and resolve current uncommitted owners.
 
 ## Phase 2: Tests

@@ -70,6 +70,7 @@ function propBudget(name: string): number {
   if (INGREDIENTS.includes(name)) return 600;
   if (TREES.includes(name)) return 2500;
   if (/^(grass-ground|forest-ground|dirt-ground)$/.test(name)) return 300;
+  if (name === 'farm-field') return 900;
   if (/^(floor|floor-cracked|walkway|wood-floor)$/.test(name)) return 300;
   if (/^(wall|wall-corner|arch|door|gate|cell-bars|stairs)$/.test(name)) return 900;
   return 1500;
@@ -77,6 +78,8 @@ function propBudget(name: string): number {
 const PROP_ERROR = 0.02;
 const CHARACTER_ERROR = 0.008;
 const TEXTURE_SIZE = 512;
+/** Customers, patrols, and the far field are small on screen: 384 px keeps a game under its byte budget (section 7.3). */
+const SMALL_TEXTURE = ['farmer', 'villager', 'innkeeper', 'guard', 'druid', 'orc-warrior', 'goblin-warrior', 'bandit', 'farm-field'];
 
 function triangles(doc: Document): number {
   let n = 0;
@@ -122,7 +125,13 @@ function mergeSkinned(doc: Document): void {
     }
     for (const prims of byMaterial.values()) {
       if (prims.length < 2) continue;
-      const joined = joinPrimitives(prims);
+      // Primitives with different attribute sets (a rigged prop such as the chest) stay separate.
+      let joined: ReturnType<typeof joinPrimitives>;
+      try {
+        joined = joinPrimitives(prims);
+      } catch {
+        continue;
+      }
       for (const prim of prims) {
         mesh.removePrimitive(prim);
         prim.dispose();
@@ -148,6 +157,7 @@ async function build(name: string, budget: number, error: number): Promise<void>
     if (ext.extensionName === 'KHR_materials_variants') ext.dispose();
   const before = triangles(doc);
   const ratio = Math.min(1, budget / Math.max(1, before));
+  const tex = SMALL_TEXTURE.includes(name) ? 384 : TEXTURE_SIZE;
   await doc.transform(dedup());
   mergeSkinned(doc);
   await doc.transform(
@@ -156,7 +166,7 @@ async function build(name: string, budget: number, error: number): Promise<void>
     weld(),
     simplify({ simplifier: MeshoptSimplifier, ratio, error, lockBorder: false }),
     prune(),
-    textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [TEXTURE_SIZE, TEXTURE_SIZE], quality: 82 }),
+    textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [tex, tex], quality: 82 }),
     meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
   );
   const dest = join(DEST, `${name}.glb`);

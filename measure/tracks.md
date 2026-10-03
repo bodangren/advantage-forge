@@ -152,16 +152,16 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Rewrite Castle Defense as a dual renderer game**
   *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
 
-- [ ] **Track: Port Devourer Slime to the monorepo**
+- [~] **Track: Port Devourer Slime to the monorepo**
   *Link: [./tracks/game_devourer_slime_port_20260928/](./tracks/game_devourer_slime_port_20260928/)*
 
-- [ ] **Track: Port Dragon Flight to the monorepo**
+- [~] **Track: Port Dragon Flight to the monorepo**
   *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
 
 - [ ] **Track: Rewrite Dragon Rider as a dual renderer game**
   *Link: [./tracks/game_dragon_rider_20260928/](./tracks/game_dragon_rider_20260928/)*
 
-- [ ] **Track: Port Dungeon Liberator to the monorepo**
+- [~] **Track: Port Dungeon Liberator to the monorepo**
   *Link: [./tracks/game_dungeon_liberator_port_20260928/](./tracks/game_dungeon_liberator_port_20260928/)*
 
 - [ ] **Track: Rewrite Enchanted Library as a dual renderer game**
@@ -179,7 +179,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Rewrite Haunted Library as a dual renderer game**
   *Link: [./tracks/game_haunted_library_20260928/](./tracks/game_haunted_library_20260928/)*
 
-- [ ] **Track: Port Hero vs. Zombie to the monorepo**
+- [~] **Track: Port Hero vs. Zombie to the monorepo**
   *Link: [./tracks/game_hero_vs_zombie_port_20260928/](./tracks/game_hero_vs_zombie_port_20260928/)*
 
 - [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
@@ -191,7 +191,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Generate and validate model packs**
   *Link: [./tracks/game_model_packs_20260928/](./tracks/game_model_packs_20260928/)*
 
-- [ ] **Track: Port Monster Encounters to the monorepo**
+- [~] **Track: Port Monster Encounters to the monorepo**
   *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
 
 - [ ] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
