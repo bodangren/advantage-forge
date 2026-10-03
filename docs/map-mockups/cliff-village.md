@@ -8,18 +8,18 @@ Missing: waterfall - a falling-water sheet for the river lip at the mid terrace 
 
 | component | count |
 |---|---|
-| rock-wall | 46 |
+| rock-wall | 56 |
 | grass-ground | 43 |
-| pine-tree | 32 |
 | forest-ground | 24 |
 | meadow-ground | 24 |
 | bush | 17 |
-| tall-grass | 17 |
 | fence | 15 |
+| pine-tree | 15 |
 | stone-ground | 11 |
 | wildflowers | 10 |
+| tall-grass | 10 |
 | footpath-straight | 9 |
-| river-straight | 9 |
+| river-straight | 8 |
 | boulder | 7 |
 | rock-cluster | 6 |
 | lantern | 6 |
@@ -36,6 +36,8 @@ Missing: waterfall - a falling-water sheet for the river lip at the mid terrace 
 | villager | 2 |
 | stairs-stone | 2 |
 | stepping-stone | 2 |
+| river-bank | 1 |
+| waterfall-sheet | 1 |
 | water-trough | 1 |
 | clothesline | 1 |
 | farmer | 1 |
@@ -43,4 +45,4 @@ Missing: waterfall - a falling-water sheet for the river lip at the mid terrace 
 | torch | 1 |
 | tower | 1 |
 
-Total: 321
+Total: 308

@@ -32,21 +32,22 @@ crystals give the light.
 - stone-ground: 32
 - sea-water: 28
 - dirt-floor: 20
-- giant-crystal: 17
+- stone-wall: 17
 - lantern: 15
 - mushroom: 12
 - cottage: 9
+- giant-crystal: 9
 - torch-sconce: 8
 - rock-cluster: 6
 - barrel: 6
-- crate: 6
-- moss-tuft: 6
 - stairs-stone: 4
 - stalagmite: 3
+- crate: 3
 - banner: 2
 - tower: 2
 - fountain: 1
 - statue: 1
 - bridge: 1
+- moss-tuft: 0
 
 Total: 319
