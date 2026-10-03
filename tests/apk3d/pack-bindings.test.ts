@@ -36,6 +36,8 @@ import { manifest as realmCarver } from '../../src/games/realm-carver/manifest.j
 import { REALM_MODELS } from '../../src/games/realm-carver/view/realm.js';
 import { manifest as alchemistsSynthesis } from '../../src/games/alchemists-synthesis/manifest.js';
 import { LAB_MODELS } from '../../src/games/alchemists-synthesis/view/lab.js';
+import { manifest as enchantedLibrary } from '../../src/games/enchanted-library/manifest.js';
+import { HALL_MODELS } from '../../src/games/enchanted-library/view/hall.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -63,6 +65,7 @@ const GAMES = {
   'shadow-gate-dungeon': { manifest: shadowGateDungeon, named: DUNGEON_MODELS },
   'realm-carver': { manifest: realmCarver, named: REALM_MODELS },
   'alchemists-synthesis': { manifest: alchemistsSynthesis, named: LAB_MODELS },
+  'enchanted-library': { manifest: enchantedLibrary, named: HALL_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
