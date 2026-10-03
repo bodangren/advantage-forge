@@ -16,6 +16,7 @@ let s = 7;
 const rnd = () => ((s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff);
 
 // --- ground: marsh-ground everywhere, lantern path (cobble footpath) from the south edge to the hut door
+const POOL = new Set(['7,7', '8,7', '7,8', '8,8', '0,3', '0,4', '1,4', '9,1']);
 const PATH = new Map([
   ['5,8', ['footpath-straight', 0]], ['5,7', ['footpath-straight', 0]], ['5,6', ['footpath-straight', 0]],
   ['5,5', ['footpath-corner', 180]], ['4,5', ['footpath-corner', 0]], ['4,4', ['footpath-straight', 0]],
@@ -27,12 +28,17 @@ for (let c = 0; c <= 9; c++)
     const x = (c - 4.5) * 2, z = (r - 4) * 2;
     const pa = PATH.get(`${c},${r}`);
     if (pa) put(pa[0], x, z, { yaw: pa[1] });
-    else put('forest-ground', x, z);
+    else if (POOL.has(`${c},${r}`)) put('sewer-water', x, z);
+    else put('marsh-ground', x, z);
   }
 
 // --- focal: the hut. Door faces +Z at the head of the path (path column x=-1, z -> -2).
 const HUT = [-1, -5.0];
-put('cabin', HUT[0], HUT[1], { scale: 1.3, yaw: 6 });
+put('cabin', HUT[0], HUT[1], { scale: 1.75, yaw: 8 });
+put('ruined-house', -6.2, -5.6, { yaw: 25, scale: 0.8 });
+put('rock-wall', 6.5, -6.6, { yaw: 10, scale: 0.7 });
+put('hanging-cage', 1.8, -3.6, { scale: 0.8 });
+put('bone-pile', 1.4, -3.0, { yaw: 30, scale: 0.8 });
 put('witch-broom', 1.5, -2.6, { yaw: 20 });
 put('lantern', -3.0, -2.5);
 put('herb-drying-rack', 2.6, -2.4);
@@ -53,7 +59,7 @@ for (let i = 0; i < 5; i++) {
 put('firewood', -6.6, -2.8, { yaw: 30 });
 put('bucket', -3.6, -0.6, { yaw: 100 });
 put('barrel', -2.5, -3.9, { yaw: 20 });
-put('witch', -3.6, 0.7, { yaw: 220 });
+put('witch', -3.6, 1.2, { yaw: 220 });
 put('witch-broom', -6.5, -0.2, { yaw: 80 });
 put('stump', -6.8, 0.9, { yaw: 0 });
 put('log', -7.0, -4.4, { yaw: 70 });
@@ -76,8 +82,8 @@ for (const x of [3.0, 4.94, 6.88]) put('fence', x, 4.0, { yaw: 0 });
 for (const z of [-2.0, 0.0, 2.0]) put('fence', 7.95, z, { yaw: 90 });
 put('fence', 7.95, 3.94, { yaw: 90 });
 // cage and bone corner (south-west)
-put('cage', -6.2, 4.4, { yaw: 15 });
-put('cage', -4.4, 5.4, { yaw: 340 });
+put('cage', -6.2, 4.4, { yaw: 15, scale: 0.6 });
+put('cage', -4.4, 5.4, { yaw: 340, scale: 0.6 });
 put('bone-pile', -5.4, 3.4, { yaw: 40 });
 put('bone-pile', -3.4, 3.9, { yaw: 200, scale: 1.2 });
 put('bone-pile', -7.0, 5.9, { yaw: 120 });
@@ -88,7 +94,8 @@ put('mushroom-cluster', -4.0, 6.5, { yaw: 160 });
 // lantern path: lanterns line the path in pairs
 for (const [x, z] of [[2.7, 6.6], [-0.7, 6.6], [2.7, 3.8], [-0.7, 3.8], [-2.7, 0.8], [0.7, 0.8], [-2.7, -1.6], [0.7, -1.6]]) put('lantern', x, z, {});
 // bog: pond, reeds, cattails, willows (south-east and north)
-put('pond', 4.6, 6.0, { scale: 1.1 });
+put('lantern', 4.0, 4.6);
+put('lantern', 6.0, 4.6);
 put('reeds', 3.0, 6.9, { yaw: 20 });
 put('reeds', 6.2, 5.2, { yaw: 100 });
 put('cattails', 6.4, 6.9, { yaw: 60 });
@@ -100,6 +107,8 @@ put('dead-tree', 3.0, -6.6, { yaw: 200 });
 put('dead-tree', 7.2, -6.2, { yaw: 300, scale: 1.1 });
 put('dead-tree', 3.8, 7.6, { yaw: 100, scale: 0.9 });
 put('dead-tree', -2.0, -6.7, { yaw: 30, scale: 0.8 });
+for (const [x,z,y] of [[-8,-3,40],[-8.2,2,130],[0.5,7.4,250],[8,-1,10],[-5.5,6.8,300]]) put('dead-tree', x, z, { yaw: y, scale: 1.0 });
+for (const [x,z] of [[-5.6,0.6],[-1.6,6.2],[1.6,-5.0],[5.0,3.6],[-0.6,-3.4]]) put('mushroom-cluster', x, z, { yaw: x * 40 });
 put('bush', 1.2, -6.8, { yaw: 40 });
 put('fern', 2.0, -1.6, { yaw: 40 });
 put('fern', -2.4, -2.0, { yaw: 120 });
@@ -113,7 +122,7 @@ for (let i = 0; i < 9; i++) put('fence', -7.7 + i * 1.94, -7.7, { yaw: 0 });
 for (let i = 0; i < 3; i++) put('fence', -7.95, -5.8 + i * 1.94 + 2.5, { yaw: 90 });
 const ring = ['fern', 'reeds', 'cattails', 'bush', 'tall-grass', 'mushroom-cluster'];
 const near = (x, z) => places.some((p) => !p.asset.includes('ground') && !p.asset.startsWith('footpath') && Math.hypot(p.at[0] - x, p.at[2] - z) < 0.9)
-  || (x > -4.6 && x < 2.6 && z > -7.4 && z < -1.8)
+  || (x > -4.6 && x < 2.6 && z > -7.4 && z < -1.8) || (x > 3 && x < 9.1 && z > 4.8) || (x < -7.2 && z > -4.6 && z < 0.8)
   || (Math.abs(x - 0) < 2.6 && z > -2.2 && z < 8) ;
 let tries = 0, n = 0;
 while (n < 34 && tries++ < 600) {
