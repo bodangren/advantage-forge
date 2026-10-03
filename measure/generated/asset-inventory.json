@@ -15323,6 +15323,302 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/abyssal-well/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/geometry.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/view/well.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/abyssal-well/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/view/lab.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/view/layout.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/alchemists-synthesis/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/archers-revenge/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/view/circle.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/astral-mage/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/castle-defense/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/devourer-slime/briefing.ts",
       "source_present": true
     },
@@ -15435,6 +15731,62 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/dragon-rider/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/view/land-plan.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/view/land.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/dragon-rider/view2d/game.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/dungeon-liberator/briefing.ts",
       "source_present": true
     },
@@ -15488,6 +15840,294 @@
     },
     {
       "source_path": "src/games/dungeon-liberator/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/view/hall.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/enchanted-library/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/view/land-plan.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/view/land.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-riders-escape/view2d/prompt.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/view/scene.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/griffin-sky-joust/view2d/prompt.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/view/sky-plan.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/view/sky.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/gryphon-patrol/view2d/prompt.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/view/library.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/haunted-library/view2d/ground.ts",
       "source_present": true
     },
     {
@@ -15611,6 +16251,66 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/magic-defense/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/magic-defense/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/monster-encounters/briefing.ts",
       "source_present": true
     },
@@ -15656,6 +16356,66 @@
     },
     {
       "source_path": "src/games/monster-encounters/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/paladins-twin-soul/view2d/projection.gen.ts",
       "source_present": true
     },
     {
@@ -15719,6 +16479,186 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/realm-carver/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/view/geometry.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/view/realm.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/realm-carver/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/view/driver.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/view/hud.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rpg-battle/view2d/projection.gen.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/view/forge.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/view/layout.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/rune-forge-chamber/view2d/ground.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/rune-match/briefing.ts",
       "source_present": true
     },
@@ -15779,6 +16719,62 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/shadow-gate-dungeon/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/view/dungeon.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shadow-gate-dungeon/view2d/projection.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/shared/battle/hall.ts",
       "source_present": true
     },
@@ -15792,6 +16788,234 @@
     },
     {
       "source_path": "src/games/shared/battle/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/view/ziggurat.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/sorcerer-ziggurat/view2d/ground.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/view/land-plan.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/view/land.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/spellweavers-run/view2d/prompt.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/view/tower.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/storm-castle-tower/view2d/tower.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/briefing.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/core/content.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/core/evidence.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/core/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/core/sim.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/core/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/manifest.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/qc/bot.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/strings.en.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/view/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/view/village.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/view2d/game.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/village-guardian/view2d/ground.ts",
       "source_present": true
     },
     {

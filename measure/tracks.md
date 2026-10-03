@@ -137,19 +137,19 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Complete 2D look and lobby parity**
   *Link: [./tracks/game_2d_parity_20260928/](./tracks/game_2d_parity_20260928/)*
 
-- [ ] **Track: Rewrite Abyssal Well as a dual renderer game**
+- [~] **Track: Rewrite Abyssal Well as a dual renderer game**
   *Link: [./tracks/game_abyssal_well_20260928/](./tracks/game_abyssal_well_20260928/)*
 
-- [ ] **Track: Rewrite Alchemists Synthesis as a dual renderer game**
+- [~] **Track: Rewrite Alchemists Synthesis as a dual renderer game**
   *Link: [./tracks/game_alchemists_synthesis_20260928/](./tracks/game_alchemists_synthesis_20260928/)*
 
-- [ ] **Track: Rewrite Archers Revenge as a dual renderer game**
+- [~] **Track: Rewrite Archers Revenge as a dual renderer game**
   *Link: [./tracks/game_archers_revenge_20260928/](./tracks/game_archers_revenge_20260928/)*
 
-- [ ] **Track: Rewrite Astral Mage as a dual renderer game**
+- [~] **Track: Rewrite Astral Mage as a dual renderer game**
   *Link: [./tracks/game_astral_mage_20260928/](./tracks/game_astral_mage_20260928/)*
 
-- [ ] **Track: Rewrite Castle Defense as a dual renderer game**
+- [~] **Track: Rewrite Castle Defense as a dual renderer game**
   *Link: [./tracks/game_castle_defense_20260928/](./tracks/game_castle_defense_20260928/)*
 
 - [~] **Track: Port Devourer Slime to the monorepo**
@@ -158,25 +158,25 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Port Dragon Flight to the monorepo**
   *Link: [./tracks/game_dragon_flight_port_20260928/](./tracks/game_dragon_flight_port_20260928/)*
 
-- [ ] **Track: Rewrite Dragon Rider as a dual renderer game**
+- [~] **Track: Rewrite Dragon Rider as a dual renderer game**
   *Link: [./tracks/game_dragon_rider_20260928/](./tracks/game_dragon_rider_20260928/)*
 
 - [~] **Track: Port Dungeon Liberator to the monorepo**
   *Link: [./tracks/game_dungeon_liberator_port_20260928/](./tracks/game_dungeon_liberator_port_20260928/)*
 
-- [ ] **Track: Rewrite Enchanted Library as a dual renderer game**
+- [~] **Track: Rewrite Enchanted Library as a dual renderer game**
   *Link: [./tracks/game_enchanted_library_20260928/](./tracks/game_enchanted_library_20260928/)*
 
-- [ ] **Track: Rewrite Griffin Riders Escape as a dual renderer game**
+- [~] **Track: Rewrite Griffin Riders Escape as a dual renderer game**
   *Link: [./tracks/game_griffin_riders_escape_20260928/](./tracks/game_griffin_riders_escape_20260928/)*
 
-- [ ] **Track: Rewrite Griffin Sky Joust as a dual renderer game**
+- [~] **Track: Rewrite Griffin Sky Joust as a dual renderer game**
   *Link: [./tracks/game_griffin_sky_joust_20260928/](./tracks/game_griffin_sky_joust_20260928/)*
 
-- [ ] **Track: Rewrite Gryphon Patrol as a dual renderer game**
+- [~] **Track: Rewrite Gryphon Patrol as a dual renderer game**
   *Link: [./tracks/game_gryphon_patrol_20260928/](./tracks/game_gryphon_patrol_20260928/)*
 
-- [ ] **Track: Rewrite Haunted Library as a dual renderer game**
+- [~] **Track: Rewrite Haunted Library as a dual renderer game**
   *Link: [./tracks/game_haunted_library_20260928/](./tracks/game_haunted_library_20260928/)*
 
 - [~] **Track: Port Hero vs. Zombie to the monorepo**
@@ -185,7 +185,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Labyrinth Goblin King as a dual renderer game**
   *Link: [./tracks/game_labyrinth_goblin_king_20260928/](./tracks/game_labyrinth_goblin_king_20260928/)*
 
-- [ ] **Track: Rewrite Magic Defense as a dual renderer game**
+- [~] **Track: Rewrite Magic Defense as a dual renderer game**
   *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
 
 - [~] **Track: Generate and validate model packs**
@@ -194,7 +194,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Port Monster Encounters to the monorepo**
   *Link: [./tracks/game_monster_encounters_port_20260928/](./tracks/game_monster_encounters_port_20260928/)*
 
-- [ ] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
+- [~] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
   *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
 
 - [ ] **Track: Map variants and randomized maps**
@@ -206,33 +206,33 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Port Potion Rush to the monorepo**
   *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
 
-- [ ] **Track: Rewrite Realm Carver as a dual renderer game**
+- [~] **Track: Rewrite Realm Carver as a dual renderer game**
   *Link: [./tracks/game_realm_carver_20260928/](./tracks/game_realm_carver_20260928/)*
 
-- [ ] **Track: Rewrite RPG Battle as a dual renderer game**
+- [~] **Track: Rewrite RPG Battle as a dual renderer game**
   *Link: [./tracks/game_rpg_battle_20260928/](./tracks/game_rpg_battle_20260928/)*
 
-- [ ] **Track: Rewrite Rune Forge Chamber as a dual renderer game**
+- [~] **Track: Rewrite Rune Forge Chamber as a dual renderer game**
   *Link: [./tracks/game_rune_forge_chamber_20260928/](./tracks/game_rune_forge_chamber_20260928/)*
 
 - [~] **Track: Rewrite Rune Match as a dual renderer game**
   *Link: [./tracks/game_rune_match_20260928/](./tracks/game_rune_match_20260928/)*
 
-- [ ] **Track: Rewrite Shadow Gate Dungeon as a dual renderer game**
+- [~] **Track: Rewrite Shadow Gate Dungeon as a dual renderer game**
   *Link: [./tracks/game_shadow_gate_dungeon_20260928/](./tracks/game_shadow_gate_dungeon_20260928/)*
 
-- [ ] **Track: Rewrite Sorcerer Ziggurat as a dual renderer game**
+- [~] **Track: Rewrite Sorcerer Ziggurat as a dual renderer game**
   *Link: [./tracks/game_sorcerer_ziggurat_20260928/](./tracks/game_sorcerer_ziggurat_20260928/)*
 
-- [ ] **Track: Rewrite Spellweavers Run as a dual renderer game**
+- [~] **Track: Rewrite Spellweavers Run as a dual renderer game**
   *Link: [./tracks/game_spellweavers_run_20260928/](./tracks/game_spellweavers_run_20260928/)*
 
-- [ ] **Track: Rewrite Storm Castle Tower as a dual renderer game**
+- [~] **Track: Rewrite Storm Castle Tower as a dual renderer game**
   *Link: [./tracks/game_storm_castle_tower_20260928/](./tracks/game_storm_castle_tower_20260928/)*
 
 - [ ] **Track: Review Thai story content**
   *Link: [./tracks/game_thai_localization_20260928/](./tracks/game_thai_localization_20260928/)*
 
-- [ ] **Track: Rewrite Village Guardian as a dual renderer game**
+- [~] **Track: Rewrite Village Guardian as a dual renderer game**
   *Link: [./tracks/game_village_guardian_20260928/](./tracks/game_village_guardian_20260928/)*
 

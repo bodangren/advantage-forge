@@ -21,6 +21,36 @@
   ],
   "games": [
     {
+      "id": "abyssal-well",
+      "index": "src/games/abyssal-well/index.ts",
+      "manifest": "src/games/abyssal-well/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "alchemists-synthesis",
+      "index": "src/games/alchemists-synthesis/index.ts",
+      "manifest": "src/games/alchemists-synthesis/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "archers-revenge",
+      "index": "src/games/archers-revenge/index.ts",
+      "manifest": "src/games/archers-revenge/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "astral-mage",
+      "index": "src/games/astral-mage/index.ts",
+      "manifest": "src/games/astral-mage/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "castle-defense",
+      "index": "src/games/castle-defense/index.ts",
+      "manifest": "src/games/castle-defense/manifest.ts",
+      "registered": true
+    },
+    {
       "id": "devourer-slime",
       "index": "src/games/devourer-slime/index.ts",
       "manifest": "src/games/devourer-slime/manifest.ts",
@@ -33,9 +63,45 @@
       "registered": true
     },
     {
+      "id": "dragon-rider",
+      "index": "src/games/dragon-rider/index.ts",
+      "manifest": "src/games/dragon-rider/manifest.ts",
+      "registered": true
+    },
+    {
       "id": "dungeon-liberator",
       "index": "src/games/dungeon-liberator/index.ts",
       "manifest": "src/games/dungeon-liberator/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "enchanted-library",
+      "index": "src/games/enchanted-library/index.ts",
+      "manifest": "src/games/enchanted-library/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "griffin-riders-escape",
+      "index": "src/games/griffin-riders-escape/index.ts",
+      "manifest": "src/games/griffin-riders-escape/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "griffin-sky-joust",
+      "index": "src/games/griffin-sky-joust/index.ts",
+      "manifest": "src/games/griffin-sky-joust/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "gryphon-patrol",
+      "index": "src/games/gryphon-patrol/index.ts",
+      "manifest": "src/games/gryphon-patrol/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "haunted-library",
+      "index": "src/games/haunted-library/index.ts",
+      "manifest": "src/games/haunted-library/manifest.ts",
       "registered": true
     },
     {
@@ -51,9 +117,21 @@
       "registered": true
     },
     {
+      "id": "magic-defense",
+      "index": "src/games/magic-defense/index.ts",
+      "manifest": "src/games/magic-defense/manifest.ts",
+      "registered": true
+    },
+    {
       "id": "monster-encounters",
       "index": "src/games/monster-encounters/index.ts",
       "manifest": "src/games/monster-encounters/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "paladins-twin-soul",
+      "index": "src/games/paladins-twin-soul/index.ts",
+      "manifest": "src/games/paladins-twin-soul/manifest.ts",
       "registered": true
     },
     {
@@ -63,9 +141,57 @@
       "registered": true
     },
     {
+      "id": "realm-carver",
+      "index": "src/games/realm-carver/index.ts",
+      "manifest": "src/games/realm-carver/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "rpg-battle",
+      "index": "src/games/rpg-battle/index.ts",
+      "manifest": "src/games/rpg-battle/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "rune-forge-chamber",
+      "index": "src/games/rune-forge-chamber/index.ts",
+      "manifest": "src/games/rune-forge-chamber/manifest.ts",
+      "registered": true
+    },
+    {
       "id": "rune-match",
       "index": "src/games/rune-match/index.ts",
       "manifest": "src/games/rune-match/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "shadow-gate-dungeon",
+      "index": "src/games/shadow-gate-dungeon/index.ts",
+      "manifest": "src/games/shadow-gate-dungeon/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "sorcerer-ziggurat",
+      "index": "src/games/sorcerer-ziggurat/index.ts",
+      "manifest": "src/games/sorcerer-ziggurat/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "spellweavers-run",
+      "index": "src/games/spellweavers-run/index.ts",
+      "manifest": "src/games/spellweavers-run/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "storm-castle-tower",
+      "index": "src/games/storm-castle-tower/index.ts",
+      "manifest": "src/games/storm-castle-tower/manifest.ts",
+      "registered": true
+    },
+    {
+      "id": "village-guardian",
+      "index": "src/games/village-guardian/index.ts",
+      "manifest": "src/games/village-guardian/manifest.ts",
       "registered": true
     }
   ],
@@ -80,7 +206,7 @@
     },
     {
       "path": "src/games",
-      "typescript_files": 118
+      "typescript_files": 424
     },
     {
       "path": "src/host",
