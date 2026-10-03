@@ -11,38 +11,41 @@ west, east and south-west edges; a few low trees and bushes at the rim.
 ## Tally
 | piece | count |
 |---|---|
-| grass-ground | 131 |
-| stone-wall | 27 |
-| bush | 10 |
-| rock-cluster | 8 |
-| cobble-floor | 7 |
-| boulder | 7 |
-| stone-ground | 6 |
-| broken-wall | 6 |
+| grass-ground | 114 |
+| rock-wall | 34 |
+| stone-wall | 32 |
+| stone-ground | 24 |
+| fence | 24 |
+| rock-cluster | 14 |
+| cobble-floor | 9 |
+| banner | 6 |
+| pine-tree | 6 |
+| barrel | 5 |
+| boulder | 4 |
+| lantern | 4 |
 | guard | 4 |
+| wildflowers | 4 |
 | oak-tree | 4 |
-| pine-tree | 4 |
+| broken-wall | 3 |
+| weapon-rack | 3 |
+| torch | 3 |
+| crate | 3 |
 | bench | 3 |
-| barrel | 3 |
+| stairs-stone | 2 |
 | brazier | 2 |
-| lantern | 2 |
-| crate | 2 |
 | hay-bale | 2 |
-| fence | 2 |
+| tent | 2 |
 | tower | 1 |
 | horn | 1 |
 | ladder | 1 |
 | flag | 1 |
 | signpost | 1 |
 | campfire | 1 |
-| tent | 1 |
 | villager | 1 |
 | horse | 1 |
 | deer | 1 |
 | fallen-log | 1 |
 | tree-stump | 1 |
 | stump | 1 |
-| wildflowers | 1 |
-| torch | 1 |
 
-Total: 245
+Total: 323
