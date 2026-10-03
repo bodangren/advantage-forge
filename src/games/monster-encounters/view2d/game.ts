@@ -25,7 +25,7 @@ const HERO_LOOK: Record<HeroId, { color: number; emoji: string }> = {
 };
 
 export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, unknown>> {
-  if (Array.isArray(ctx.input)) throw new Error('Monster Encounters needs a story input.');
+  if (Array.isArray(ctx.input) || !('questions' in ctx.input)) throw new Error('Monster Encounters needs a story input.');
   const story = ctx.input as StoryInput;
   const i18n = ctx.i18n ?? createI18n([strings]).scope('monsterEncounters');
   const t = i18n.scope('hud').t;
@@ -142,7 +142,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         const paragraph = source && 'paragraph' in source ? source.paragraph : undefined;
         return { itemId: i.itemId, itemKind: i.kind, label: i.label, attempts: Math.max(1, i.attempts), correctFirstTry: i.correctFirstTry, solved: i.solved, ...(paragraph !== undefined ? { paragraph } : {}) };
       });
-      const evidence: StoryGameEvidence = { schemaVersion: 1, kind: 'story-game', gameId: 'monster-encounters', storyId: story.id, level: story.level, seed, durationMs: Math.round(performance.now() - startedAt), items, practice: practiceOf(items) };
+      const evidence: StoryGameEvidence = { schemaVersion: 1, kind: 'story-game', gameId: 'monster-encounters', inputId: story.id, level: story.level, seed, durationMs: Math.round(performance.now() - startedAt), items, practice: practiceOf(items) };
       ctx.complete(toGameResults(evidence, score), 'victory', evidence);
     };
 

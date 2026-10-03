@@ -25,7 +25,7 @@ import { BattleHud } from './hud.js';
 const PRESET_HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
-  if (Array.isArray(ctx.input)) throw new Error('Monster Encounters needs a story input.');
+  if (Array.isArray(ctx.input) || !('questions' in ctx.input)) throw new Error('Monster Encounters needs a story input.');
   const story: StoryInput = ctx.input;
   const stage = new BattleStage(ctx.stage);
   const hud = new BattleHud(ctx.hud, stage, ctx.i18n, ctx.audio, ctx.host);
@@ -65,7 +65,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       schemaVersion: 1,
       kind: 'story-game',
       gameId: 'monster-encounters',
-      storyId: story.id,
+      inputId: story.id,
       level: story.level,
       seed: ctx.seed,
       durationMs: Math.round(performance.now() - startedAt),

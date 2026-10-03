@@ -1,14 +1,14 @@
 /**
  * Castle Defense content: the sentences of a run (one wave each), the attackers of a wave, and
- * the card of a step (the next word among distractors). A `StoryInput` keeps its sentence ids
+ * the card of a step (the next word among distractors). A `PracticeInput` keeps its sentence ids
  * and paragraphs for the evidence; a plain APK `SentenceInput` gets ids `s-1`, `s-2`, ... and
  * words from `term.split(' ')`.
  */
-import type { SentenceInput, StoryInput } from '../../../apk3d/contracts/index.js';
+import type { SentenceInput, PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import { KIND_OF, type Attacker, type Choice, type EnemyType, type WaveSentence } from './types.js';
 
-export type CastleDefenseInput = StoryInput | SentenceInput;
+export type CastleDefenseInput = PracticeInput | SentenceInput;
 
 export function isSentenceInput(input: CastleDefenseInput): input is SentenceInput {
   return Array.isArray(input);

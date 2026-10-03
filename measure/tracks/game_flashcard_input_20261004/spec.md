@@ -27,39 +27,35 @@ should be used based on the mastery-advantage graph state. So while the games ar
   fill-in items, English definitions, and phonetics. All 29 games accept levels Pre-A1 to A1. The
   story `level` selects the games and labels the evidence.
 
-## Proposed design
+## Design
 
-1. **Game input.** Each game reads the APK `VocabularyInput` or `SentenceInput` (`term`,
-   `translation`) and a level, not a `StoryInput`. The Forge demo makes this input from its story
-   packs with `toVocabularyInput` and `toSentenceInput`. The change is made in Forge and copied
-   with `port-game.mjs`.
-2. **Selection.** The server chooses the items from the memory state. Today that state is FSRS:
-   due items first, then weak items (low stability, many lapses), then new items. One selection
-   function has the KST outer fringe as its later source, when Primary Advantage adds the graph.
-3. **Host.** Primary Advantage shows games, not stories. A game card shows how many saved items
-   the game can use. When the student has too few items, the card is locked and shows the number
-   that is missing. Sentence games skip a sentence that is longer than their word limit.
+1. **Game input.** The 28 student games read a `PracticeInput`: an id, a level, and the
+   `vocabulary` and `sentences` lists with the item ids. A `StoryInput` is also a valid
+   `PracticeInput`, so the Forge demo keeps its stories. The change is made in Forge and copied
+   with `port-game.mjs`. The evidence field `storyId` becomes `inputId`.
+2. **Selection.** The server chooses the items by FSRS state: `due` ascending (the item that is
+   nearest to being forgotten comes first), then the newest. At most 10 words and 8 sentences:
+   the largest round of any game.
+3. **Host.** Primary Advantage shows the games, not stories. When the student has too few saved
+   items, the game card is locked. It shows the number of missing items and a button that opens
+   the reading page, where the student can read more and save more words.
 4. **Results.** Completion and XP stay as they are: `recordGameCompletion`, and the server
-   calculates the XP. The evidence names the flashcard records instead of a story.
+   calculates the XP. The evidence names the flashcard records (their ids).
 
-## Open decisions (owner)
+## Owner decisions (2026-10-04)
 
-1. KST or FSRS: the canonical source says that Primary Advantage has no KST graph yet. Proposal:
-   select by FSRS state now, and add the KST fringe through the same function later.
-2. FSRS write-back: does a game answer count as a flashcard review? Proposal: no. The game reads
-   the state and records evidence only.
-3. Too few saved items: lock the game, or add items from another source (the last article, or the
-   level word list)? Proposal: lock the game and show the missing number.
-4. Monster Encounters: flashcards have no questions or fill-in items. Proposal: use vocabulary
-   only in Primary Advantage, or keep the game out of Primary Advantage until a question source
-   exists.
-5. Stories in Primary Advantage: remove the story picker, or keep stories as a second source?
-   Proposal: remove it, and keep the stories in the Forge demo only.
+1. Selection by FSRS state now. The KST fringe comes later through the same selection function.
+2. No FSRS update from the games. The games read the state and record evidence only.
+3. Too few saved items: lock the game, and offer a button to read more and save more vocabulary.
+4. Monster Encounters leaves the student games. It becomes a teacher-led game in the reading
+   lesson, with student avatars and names. Deferred: the Forge source stays, and the game
+   roadmap records it.
+5. No story picker. The stories stay in the Forge demo only.
 
 ## Acceptance criteria
 
 - Primary Advantage has no story picker for these games.
-- Each game receives only the signed-in student's saved items, or the source that decision 3 names.
+- Each game receives only the signed-in student's saved items. A game without enough items is locked and links to the reading page.
 - Domain tests cover the selection order and the student scope.
 - The Forge games and the monorepo copies match through `port-game.mjs`.
 - Browser QC passes in 3D and 2D for all games with seeded flashcards

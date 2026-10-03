@@ -1,13 +1,13 @@
 /**
  * Dragon Rider content: the ride's words from a story, and the two gates of a round. A
- * `StoryInput` keeps its vocabulary ids for the evidence; a plain APK `VocabularyInput` gets ids
+ * `PracticeInput` keeps its vocabulary ids for the evidence; a plain APK `VocabularyInput` gets ids
  * `w-1`, `w-2`, ... from the index. The decoy is the meaning of another word of the ride.
  */
-import type { StoryInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import type { GateOption, RideWord } from './types.js';
 
-export type DragonRiderInput = StoryInput | VocabularyInput;
+export type DragonRiderInput = PracticeInput | VocabularyInput;
 
 export function isVocabularyInput(input: DragonRiderInput): input is VocabularyInput {
   return Array.isArray(input);

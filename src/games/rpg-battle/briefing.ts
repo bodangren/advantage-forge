@@ -1,7 +1,7 @@
 /** The start screen of RPG Battle, in the APK briefing shape, from catalog keys. */
-import type { GameBriefing, GameInput, ScopedI18n, StoryInput } from '../../apk3d/contracts/index.js';
+import type { GameBriefing, GameInput, ScopedI18n, PracticeInput } from '../../apk3d/contracts/index.js';
 
-export function briefing(i18n: ScopedI18n, _input: GameInput | StoryInput): GameBriefing {
+export function briefing(i18n: ScopedI18n, _input: GameInput | PracticeInput): GameBriefing {
   const t = i18n.scope('briefing').t;
   return {
     title: i18n.t('title'),

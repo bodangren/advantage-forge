@@ -6,7 +6,7 @@
  * freed line follows, skeletons patrol, and the gate glows open when the sentence is complete.
  */
 import type * as Phaser from 'phaser';
-import { preloadAssetBindings, toGameResults, type StoryInput } from '../../../apk3d/contracts/index.js';
+import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
@@ -22,7 +22,7 @@ import { BACKGROUND_FILE, PROJECTION } from './projection.gen.js';
 const ARCH = { x: GATE.x, y: 1.0, z: -5.2 };
 
 export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, unknown>> {
-  const story = ctx.input as StoryInput;
+  const story = ctx.input as PracticeInput;
   const t = (ctx.i18n ?? createI18n([strings]).scope('dungeonLiberator')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = (HEROES_2D as readonly string[]).includes(options.hero) ? options.hero : 'knight';

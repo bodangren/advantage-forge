@@ -14,10 +14,13 @@ import {
   gameBriefingSchema,
   gameResultsSchema,
   isCompatible,
+  missingFor,
+  parsePracticeInput,
   parseStoryInput,
   modelPackSchema,
   normalizeCefrLevel,
   parseStoryIndex,
+  practiceInputSchema,
   practiceOf,
   runtimeCartridgeManifestSchema,
   runtimeEdition3DSchema,
@@ -29,6 +32,7 @@ import {
   storyInputSchema,
   toGameResults,
   toOutcome,
+  toPracticeInput,
   toSentenceInput,
   toStoryIndexEntry,
   toVocabularyInput,
@@ -91,7 +95,7 @@ const evidence = (items: StoryGameEvidenceItem[]): StoryGameEvidence =>
     schemaVersion: 1,
     kind: 'story-game',
     gameId: 'monster-encounters',
-    storyId: 'pip-is-brave',
+    inputId: 'pip-is-brave',
     level: 'A0',
     seed: 7,
     durationMs: 120_000,
@@ -260,6 +264,48 @@ describe('derived inputs', () => {
   });
 });
 
+describe('practice input', () => {
+  const saved = {
+    schemaVersion: 1,
+    id: 'saved',
+    level: 'A1',
+    vocabulary: [
+      { id: '3f1c0d52-0000-4000-8000-000000000001', term: 'bridge', translation: 'สะพาน' },
+      { id: '3f1c0d52-0000-4000-8000-000000000002', term: 'lantern', translation: 'โคมไฟ' },
+    ],
+    sentences: [
+      { id: '3f1c0d52-0000-4000-8000-000000000003', text: 'The river is wide.', words: ['The', 'river', 'is', 'wide.'] },
+    ],
+  };
+
+  it('accepts saved flashcards: record ids, no English definition, no paragraphs', () => {
+    expect(parsePracticeInput(saved).vocabulary[0]!.term).toBe('bridge');
+  });
+
+  it('every real story is a valid practice input', () => {
+    for (const id of STORY_IDS) {
+      const story = loadStory(id);
+      const input = toPracticeInput(story);
+      expect(practiceInputSchema.safeParse(input).success, id).toBe(true);
+      expect(input).toEqual({ schemaVersion: 1, id: story.id, level: story.level, vocabulary: story.vocabulary, sentences: story.sentences });
+    }
+  });
+
+  it('rejects duplicate ids, words that do not join to the text, and unknown keys', () => {
+    const twice = { ...saved, vocabulary: [saved.vocabulary[0], saved.vocabulary[0]] };
+    expect(practiceInputSchema.safeParse(twice).success).toBe(false);
+    const broken = { ...saved, sentences: [{ ...saved.sentences[0], words: ['The', 'river'] }] };
+    expect(practiceInputSchema.safeParse(broken).success).toBe(false);
+    expect(practiceInputSchema.safeParse({ ...saved, title: 'x' }).success).toBe(false);
+  });
+
+  it('missingFor counts the items a game still needs', () => {
+    expect(missingFor({ needs: { vocabulary: 4, sentences: 0, fills: 0, questions: 0 } }, saved)).toEqual({ vocabulary: 2, sentences: 0 });
+    expect(missingFor({ needs: { vocabulary: 0, sentences: 3, fills: 0, questions: 0 } }, saved)).toEqual({ vocabulary: 0, sentences: 2 });
+    expect(missingFor({ needs: { vocabulary: 2, sentences: 1, fills: 0, questions: 0 } }, saved)).toEqual({ vocabulary: 0, sentences: 0 });
+  });
+});
+
 describe('manifest', () => {
   it('extends the APK manifest with the 3D fields and keeps the base validation', () => {
     const m = manifest();
@@ -294,6 +340,7 @@ describe('manifest', () => {
     expect(manifest({ renderers: ['three', 'phaser'] }).renderers).toEqual(['three', 'phaser']);
     expect(manifest({ renderers: ['phaser'] }).renderers).toEqual(['phaser']);
     expect(manifest({ inputMode: 'story' }).inputMode).toBe('story');
+    expect(manifest({ inputMode: 'practice' }).inputMode).toBe('practice');
   });
 
   it('isCompatible checks the level and the item minimums', () => {

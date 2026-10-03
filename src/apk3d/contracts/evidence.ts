@@ -13,7 +13,7 @@ export type StoryItemKind = z.infer<typeof storyItemKindSchema>;
 
 export const storyGameEvidenceItemSchema = z
   .object({
-    /** The StoryInput item id. */
+    /** The input item id (a story item id, or a flashcard record id). */
     itemId: z.string().min(1),
     itemKind: storyItemKindSchema,
     /** Short label for the results list ("brave", "Pip is a brave puppy now."). */
@@ -37,7 +37,8 @@ export const storyGameEvidenceSchema = z
     schemaVersion: z.literal(1),
     kind: z.literal('story-game'),
     gameId: z.string().min(1),
-    storyId: z.string().min(1),
+    /** The input id: the story id, or the saved-item set ("saved"). */
+    inputId: z.string().min(1),
     level: cefrLevelSchema,
     seed: z.number().int(),
     durationMs: z.number().int().min(0),

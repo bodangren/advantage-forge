@@ -1,14 +1,14 @@
 /**
  * Rune Match content: the target words of a run from a story, the monsters that guard them, and
- * the palette of meanings the board draws from. A `StoryInput` keeps its vocabulary ids for the
+ * the palette of meanings the board draws from. A `PracticeInput` keeps its vocabulary ids for the
  * evidence; a plain APK `VocabularyInput` gets ids `w-1`, `w-2`, ...
  */
-import type { StoryInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import { MONSTER_KINDS, type Monster, type TargetWord } from './types.js';
 
 /** The input the core accepts: the whole story (the host passes it) or the APK vocabulary array. */
-export type RuneMatchInput = StoryInput | VocabularyInput;
+export type RuneMatchInput = PracticeInput | VocabularyInput;
 
 export function isVocabularyInput(input: RuneMatchInput): input is VocabularyInput {
   return Array.isArray(input);

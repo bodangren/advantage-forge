@@ -5,7 +5,7 @@
  * the run once to the host.
  */
 import * as THREE from 'three';
-import type { StoryInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { Actor, burst, FollowRig, projectile } from '../../../apk3d/stage/index.js';
@@ -42,7 +42,7 @@ interface EnemyView {
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   if (Array.isArray(ctx.input)) throw new Error('Abyssal Well needs a story input.');
-  const story: StoryInput = ctx.input;
+  const story: PracticeInput = ctx.input;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;

@@ -1,16 +1,16 @@
 /**
  * Gryphon Patrol content: the sentences of a patrol from a story, and the word enemies of a
- * round. A `StoryInput` keeps its sentence ids and paragraphs for the evidence; a plain APK
+ * round. A `PracticeInput` keeps its sentence ids and paragraphs for the evidence; a plain APK
  * `SentenceInput` gets ids `s-1`, `s-2`, ... and words from `term.split(/\s+/)`. A patrol takes
  * sentences of 3 to 8 words (all sentences when none fits). Decoy enemies carry other words of the
  * story.
  */
-import type { SentenceInput, StoryInput } from '../../../apk3d/contracts/index.js';
+import type { SentenceInput, PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import type { Enemy, PatrolSentence } from './types.js';
 
 /** The input the core accepts: the whole story (the host passes it) or the APK sentence array. */
-export type PatrolInput = StoryInput | SentenceInput;
+export type PatrolInput = PracticeInput | SentenceInput;
 
 export function isSentenceInput(input: PatrolInput): input is SentenceInput {
   return Array.isArray(input);

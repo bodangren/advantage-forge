@@ -5,7 +5,7 @@
  * tags over the cubes, pinned to the screen edge when off screen), and never decides a rule.
  */
 import * as THREE from 'three';
-import { toGameResults, type StoryInput } from '../../../apk3d/contracts/index.js';
+import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { smooth } from '../../../apk3d/stage/timeline.js';
@@ -27,7 +27,7 @@ import './sorcerer-ziggurat.css';
 const KEY_LANES: Readonly<Record<string, Lane>> = { ArrowLeft: 'left', a: 'left', ArrowUp: 'forward', w: 'forward', ArrowRight: 'right', d: 'right' };
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
-  const story = ctx.input as StoryInput;
+  const story = ctx.input as PracticeInput;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;

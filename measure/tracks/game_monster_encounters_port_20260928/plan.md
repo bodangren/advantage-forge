@@ -19,3 +19,10 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 - [ ] Task: Run package and host tests, type checks, localization checks, and browser input checks.
 - [ ] Task: Record pull request and integration evidence.
+
+## Deferred direction (owner, 2026-10-04)
+
+Monster Encounters leaves the student games in Primary Advantage. It needs questions and
+fill-in items, and the saved flashcards have neither. Later, it becomes a teacher-led game in the
+reading lesson, with student avatars and names. The Forge source stays unchanged until then. The
+open tasks above wait for that design.

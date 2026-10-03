@@ -1,13 +1,13 @@
 /**
  * RPG Battle content: the words of a run from a story (each with an action and a power), the
- * monsters that guard them, and the question options. A `StoryInput` keeps its vocabulary ids for
+ * monsters that guard them, and the question options. A `PracticeInput` keeps its vocabulary ids for
  * the evidence; a plain APK `VocabularyInput` gets ids `w-1`, `w-2`, ...
  */
-import type { StoryInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import { ACTIONS, MONSTER_KINDS, type Monster, type QuestionOption, type TargetWord } from './types.js';
 
-export type RpgBattleInput = StoryInput | VocabularyInput;
+export type RpgBattleInput = PracticeInput | VocabularyInput;
 
 export function isVocabularyInput(input: RpgBattleInput): input is VocabularyInput {
   return Array.isArray(input);

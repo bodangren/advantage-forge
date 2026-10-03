@@ -4,7 +4,7 @@
  * sentence, and the word buttons (then the posts), and the run is reported once to the host
  * (results, outcome, evidence).
  */
-import type { StoryInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { BattleStage } from '../../shared/battle/stage3d.js';
 import { createCastleDefense, type CastleDefenseCommand, type CastleDefenseInput } from '../core/index.js';
@@ -16,7 +16,7 @@ const SFX: Record<Sfx, string> = { pick: 'tap', correct: 'correct', wrong: 'wron
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   if (Array.isArray(ctx.input)) throw new Error('Castle Defense needs a story input.');
-  const story: StoryInput = ctx.input;
+  const story: PracticeInput = ctx.input;
   const stage = new BattleStage(ctx.stage);
   const hud = new CastleHud(ctx.hud, stage, ctx.i18n, ctx.audio, ctx.host);
   const audio = ctx.audio;

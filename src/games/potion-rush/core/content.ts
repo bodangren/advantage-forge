@@ -1,14 +1,14 @@
 /**
  * Potion Rush content (task 16): the shift's orders from a story, with customers from a seeded
- * list. A `StoryInput` keeps its sentence ids and paragraphs for the evidence; a plain APK
+ * list. A `PracticeInput` keeps its sentence ids and paragraphs for the evidence; a plain APK
  * `SentenceInput` gets ids `s-1`, `s-2`, ... and words from `term.split(' ')`.
  */
-import type { SentenceInput, StoryInput } from '../../../apk3d/contracts/index.js';
+import type { SentenceInput, PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import { CUSTOMER_KINDS, type CustomerKind, type Order } from './types.js';
 
 /** The input the core accepts: the whole story (the host passes it) or the APK sentence array. */
-export type PotionRushInput = StoryInput | SentenceInput;
+export type PotionRushInput = PracticeInput | SentenceInput;
 
 export function isSentenceInput(input: PotionRushInput): input is SentenceInput {
   return Array.isArray(input);

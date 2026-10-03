@@ -5,7 +5,7 @@
  * events. It never decides a rule.
  */
 import * as THREE from 'three';
-import { toGameResults, type StoryInput } from '../../../apk3d/contracts/index.js';
+import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
@@ -51,7 +51,7 @@ interface BookEntry {
 }
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
-  const story = ctx.input as StoryInput;
+  const story = ctx.input as PracticeInput;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;

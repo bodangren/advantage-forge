@@ -1,13 +1,13 @@
 {
   "track_id": "game_flashcard_input_20261004",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-10-04T00:00:00Z",
   "updated_at": "2026-10-04T00:00:00Z",
   "description": "Games read the student's saved vocabulary and sentences, chosen by memory state, instead of fixed stories",
   "estimated_tasks": 14,
   "actual_tasks": null,
-  "deviation_notes": "None.",
+  "deviation_notes": "Design changed from the plain APK arrays to PracticeInput, because the evidence must keep the flashcard record ids. Selection is FSRS due order (owner decision 1).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [

@@ -1,14 +1,14 @@
 /**
  * Archer's Revenge content: the words of a run from a story, the waves that hold them, the
  * monster formation of a wave, and the lanes of a round (the right English word among shielded
- * distractors). A `StoryInput` keeps its vocabulary ids for the evidence; a plain APK
+ * distractors). A `PracticeInput` keeps its vocabulary ids for the evidence; a plain APK
  * `VocabularyInput` gets ids `w-1`, `w-2`, ...
  */
-import type { StoryInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput, VocabularyInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import { MONSTER_KINDS, type Lane, type MonsterKind, type Round, type TargetWord, type WaveEnemy } from './types.js';
 
-export type ArchersRevengeInput = StoryInput | VocabularyInput;
+export type ArchersRevengeInput = PracticeInput | VocabularyInput;
 
 export function isVocabularyInput(input: ArchersRevengeInput): input is VocabularyInput {
   return Array.isArray(input);

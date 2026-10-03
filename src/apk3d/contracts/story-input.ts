@@ -283,6 +283,62 @@ export function isCompatible(
   );
 }
 
+// ---------------------------------------------------------------- the practice input
+
+/**
+ * PracticeInput: what a practice game reads. In Primary Advantage the items are the student's
+ * saved flashcards (the ids are the record ids); in the demo they are a story's items. Every
+ * `StoryInput` is a valid `PracticeInput`, so a game typed on it plays both.
+ */
+export const practiceWordSchema = storyVocabularySchema.extend({ definition: text.optional() }).strict();
+
+export const practiceSentenceSchema = storySentenceSchema;
+
+export const practiceInputSchema = z
+  .object({
+    schemaVersion: z.literal(1),
+    /** The story id, or the name of the saved-item set ("saved"). */
+    id,
+    level: cefrLevelSchema,
+    vocabulary: z.array(practiceWordSchema),
+    sentences: z.array(practiceSentenceSchema),
+  })
+  .strict()
+  .superRefine((input, ctx) => {
+    for (const key of ['vocabulary', 'sentences'] as const) {
+      if (!uniqueIds(input[key])) ctx.addIssue({ code: 'custom', message: 'duplicate ids', path: [key] });
+    }
+  });
+
+export type PracticeInput = z.infer<typeof practiceInputSchema>;
+export type PracticeWord = z.infer<typeof practiceWordSchema>;
+export type PracticeSentence = z.infer<typeof practiceSentenceSchema>;
+
+export function parsePracticeInput(json: unknown, label = 'practice input'): PracticeInput {
+  const result = practiceInputSchema.safeParse(json);
+  if (!result.success) throw new Error(`Invalid ${label}:\n${z.prettifyError(result.error)}`);
+  return result.data;
+}
+
+/** The practice part of a story: its id, level, words, and sentences. */
+export function toPracticeInput(story: StoryInput): PracticeInput {
+  return { schemaVersion: 1, id: story.id, level: story.level, vocabulary: story.vocabulary, sentences: story.sentences };
+}
+
+/**
+ * The items a game still needs from the input: 0 and 0 when it can play. A locked game shows
+ * these numbers ("save 2 more sentences").
+ */
+export function missingFor(
+  manifest: Pick<Cartridge3DManifest, 'needs'>,
+  input: Pick<PracticeInput, 'vocabulary' | 'sentences'>,
+): { vocabulary: number; sentences: number } {
+  return {
+    vocabulary: Math.max(0, manifest.needs.vocabulary - input.vocabulary.length),
+    sentences: Math.max(0, manifest.needs.sentences - input.sentences.length),
+  };
+}
+
 // ---------------------------------------------------------------- migration from the demo StoryPack
 
 /** The old demo `StoryPack` shape (src/demo/core/types.ts) as JSON; unknown keys are dropped. */

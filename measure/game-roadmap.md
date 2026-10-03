@@ -25,7 +25,7 @@ The 3D model pack generator was missing at the audit. Games loaded 87 simplified
 | Game | Track | Local views | Monorepo port |
 | --- | --- | --- | --- |
 | Potion Rush | [storm_castle_tower](./tracks/game_potion_rush_port_20260928/) | Built locally and tested (audit 2026-10-03) | Not started |
-| Monster Encounters | [storm_castle_tower](./tracks/game_monster_encounters_port_20260928/) | Built locally and tested (audit 2026-10-03) | Pending |
+| Monster Encounters | [storm_castle_tower](./tracks/game_monster_encounters_port_20260928/) | Built locally and tested (audit 2026-10-03) | Removed from the student games (owner, 2026-10-04). Deferred: a teacher-led game in the reading lesson, with student avatars and names. |
 | Dragon Flight | [storm_castle_tower](./tracks/game_dragon_flight_port_20260928/) | Built locally and tested (audit 2026-10-03) | Pending |
 | Dungeon Liberator | [storm_castle_tower](./tracks/game_dungeon_liberator_port_20260928/) | Built locally and tested (audit 2026-10-03) | Pending |
 | Devourer Slime | [storm_castle_tower](./tracks/game_devourer_slime_port_20260928/) | Built locally and tested (audit 2026-10-03) | Pending |

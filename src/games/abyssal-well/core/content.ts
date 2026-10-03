@@ -1,16 +1,16 @@
 /**
- * Abyssal Well content: the descents of a run from a story. A `StoryInput` keeps its sentence
+ * Abyssal Well content: the descents of a run from a story. A `PracticeInput` keeps its sentence
  * ids and paragraphs for the evidence; a plain APK `SentenceInput` gets ids `s-1`, `s-2`, ...
  * and words from `term.split(/\s+/)`. A descent takes a sentence of 3 to 8 words; a run is up to
  * 4 descents in a seeded order. Each descent adds one echo enemy: a word of another sentence
  * that is not in this one.
  */
-import type { SentenceInput, StoryInput } from '../../../apk3d/contracts/index.js';
+import type { SentenceInput, PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Rng } from '../../../apk3d/sim/index.js';
 import type { Descent } from './types.js';
 
 /** The input the core accepts: the whole story (the host passes it) or the APK sentence array. */
-export type AbyssalWellInput = StoryInput | SentenceInput;
+export type AbyssalWellInput = PracticeInput | SentenceInput;
 
 export function isSentenceInput(input: AbyssalWellInput): input is SentenceInput {
   return Array.isArray(input);

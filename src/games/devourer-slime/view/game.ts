@@ -5,7 +5,7 @@
  * rule.
  */
 import * as THREE from 'three';
-import { toGameResults, type StoryInput } from '../../../apk3d/contracts/index.js';
+import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
@@ -20,7 +20,7 @@ const SLIME_SCALE = 1.13;
 const BUBBLE_COLORS = [0x8b5cf6, 0x3b82f6, 0x22c55e, 0xf59e0b, 0xef4444, 0x14b8a6, 0xec4899];
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
-  const story = ctx.input as StoryInput;
+  const story = ctx.input as PracticeInput;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;

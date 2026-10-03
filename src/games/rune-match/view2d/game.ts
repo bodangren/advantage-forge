@@ -6,7 +6,7 @@
  * the rune board (`Board2D`). On a phone the battle is above the board; on a wide screen, beside it.
  */
 import type * as Phaser from 'phaser';
-import { preloadAssetBindings, type StoryInput } from '../../../apk3d/contracts/index.js';
+import { preloadAssetBindings, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
@@ -32,7 +32,7 @@ export interface RuneMatch2DTest {
 
 export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, unknown>> {
   if (Array.isArray(ctx.input)) throw new Error('Rune Match needs a story input.');
-  const story = ctx.input as StoryInput;
+  const story = ctx.input as PracticeInput;
   const i18n = ctx.i18n ?? createI18n([strings]).scope('runeMatch');
   const t = i18n.scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;

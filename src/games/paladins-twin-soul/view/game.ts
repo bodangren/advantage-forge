@@ -3,7 +3,7 @@
  * (./driver.ts) plays each event in order on the shared battle stage and the HUD, and reports
  * the run once to the host (results, outcome, evidence).
  */
-import type { StoryInput } from '../../../apk3d/contracts/index.js';
+import type { PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { BattleStage } from '../../shared/battle/stage3d.js';
 import { createTwinSoul, type TwinSoulCommand, type TwinSoulInput } from '../core/index.js';
@@ -15,7 +15,7 @@ const SFX: Record<Sfx, string> = { reject: 'wrong', freed: 'correct', hit: 'hit'
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   if (Array.isArray(ctx.input)) throw new Error('Paladin’s Twin Soul needs a story input.');
-  const story: StoryInput = ctx.input;
+  const story: PracticeInput = ctx.input;
   const stage = new BattleStage(ctx.stage);
   const hud = new TwinSoulHud(ctx.hud, stage, ctx.i18n, ctx.audio, ctx.host);
   const audio = ctx.audio;
