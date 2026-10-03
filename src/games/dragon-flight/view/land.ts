@@ -7,7 +7,8 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
+export const FLIGHT_PACKS = ['flight-land', 'outdoor-props', 'dungeon-monsters', 'sunken-vault'];
 
 export const FLIGHT_MODELS = ['dragon-fire', 'arch', 'oak-tree', 'pine-tree', 'ancient-oak', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'barn', 'well', 'fence', 'hay-bale', 'farm-field'];
 
@@ -47,7 +48,7 @@ export function buildLand(stage: Stage3D): Land {
     const kind: Kind = PATTERN[((index % PATTERN.length) + PATTERN.length) % PATTERN.length]!;
     const r = rng(index * 7919 + 13);
     for (const [name, count] of kind === 'forest' ? FOREST : VILLAGE) {
-      const g = stage.loader.get(model(name));
+      const g = stage.loader.get(stage.loader.modelPath(name));
       if (!g) continue;
       for (let i = 0; i < count; i++) {
         const side = r() < 0.5 ? -1 : 1;
@@ -82,7 +83,7 @@ export function buildLand(stage: Stage3D): Land {
     },
     bossHill(at) {
       for (const [name, dx, dz, s] of [['rock-cluster', 0, 0, 3.2], ['boulder', -2.6, 0.8, 2.4], ['boulder', 2.8, 0.4, 2.1], ['rock-cluster', 0.5, -2.2, 2.6]] as [string, number, number, number][]) {
-        const g = stage.loader.get(model(name));
+        const g = stage.loader.get(stage.loader.modelPath(name));
         if (!g) continue;
         const obj = g.scene.clone();
         obj.position.set(at.x + dx, 0, at.z + dz);

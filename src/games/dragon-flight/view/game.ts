@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, projectile } from '../../../apk3d/stage/index.js';
 import { createDragonFlight, evidenceOf, scoreOf, type DragonFlightCommand, type DragonFlightEvent, type DragonFlightState } from '../core/index.js';
 import { nextChoice } from '../qc/bot.js';
-import { buildLand, FLIGHT_MODELS, model } from './land.js';
+import { buildLand, FLIGHT_MODELS, FLIGHT_PACKS } from './land.js';
 import './dragon-flight.css';
 
 const DRAGON_SCALE = 0.8;
@@ -38,13 +38,14 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;
   const hud = ctx.hud;
-  await stage.loader.preload(FLIGHT_MODELS.map(model));
+  await stage.loader.loadPacks(FLIGHT_PACKS);
+  await stage.loader.preload(FLIGHT_MODELS.map((n) => stage.loader.modelPath(n)));
   const land = buildLand(stage);
   const sim = createDragonFlight(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- dragons
-  const dragonGltf = stage.loader.get(model('dragon-fire'))!;
+  const dragonGltf = stage.loader.get(stage.loader.modelPath('dragon-fire'))!;
   const dragon = stage.addActor(new Actor('dragon-fire', dragonGltf, stage.timeline, { idle: 'fly', scale: DRAGON_SCALE }));
   dragon.placeAt(0, CRUISE_Y, 0, 180);
   const flock: Actor[] = [];
@@ -106,7 +107,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
 
   // ---------------------------------------------------------------- gates
   const gates = new Map<string, Gate[]>();
-  const archGltf = stage.loader.get(model('arch'));
+  const archGltf = stage.loader.get(stage.loader.modelPath('arch'));
 
   function choose(gate: number): void {
     const s = sim.state;
@@ -220,7 +221,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       case 'wordReturns':
         break;
       case 'bossAppeared': {
-        const g = stage.loader.get(model('dragon-fire'))!;
+        const g = stage.loader.get(stage.loader.modelPath('dragon-fire'))!;
         boss = stage.addActor(new Actor('dragon-fire', g, stage.timeline, { scale: BOSS_SCALE }));
         // The core flies the dragon to `bossAt` and stops; the dark dragon waits 16 m beyond.
         const at = new THREE.Vector3(0, 0.3, -((s.bossAt ?? s.distance) + 12));

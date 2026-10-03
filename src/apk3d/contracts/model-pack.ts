@@ -38,6 +38,9 @@ export const MODEL_PACKS: Readonly<Record<string, readonly string[]>> = {
 /** The pack that the generator fills from the vault scene. */
 export const VAULT_PACK = 'sunken-vault';
 
+/** Every pack id: the named packs and the vault pack. */
+export const MODEL_PACK_IDS: readonly string[] = [...Object.keys(MODEL_PACKS), VAULT_PACK];
+
 /** What one game loads: whole packs, single models, and one playable hero of the `heroes` pack. */
 export interface GameModelLoad {
   /** Packs the game loads in full. */

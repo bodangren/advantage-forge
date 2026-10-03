@@ -17,7 +17,8 @@ const FLAT = new Set(['floor', 'floor-cracked', 'walkway']);
 const NOT_BUILT = new Set(['wall-alcove']);
 const LIGHT_ASSETS = ['torch-sconce', 'brazier', 'candle-cluster'];
 const DRAGON_SCALE = 2.1;
-const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of the battle stage (`MODEL_PACKS` in contracts/model-pack.ts): the vault, the heroes, the monsters. */
+export const BATTLE_PACKS = ['sunken-vault', 'heroes', 'dungeon-monsters', 'potion-shop', 'outdoor-props'];
 
 import { FLOOR_Y, HALL, type StageDef } from './hall.js';
 
@@ -59,7 +60,7 @@ export function buildVaultBackdrop(kit: Stage3D): void {
   scene.background = new THREE.Color('#0c1118');
   scene.add(new THREE.HemisphereLight(0x9fb8e8, 0x2a3040, 1.25));
   kit.addSun(0xc8dcff, 1.1, [-3, 14, 6], [0, 0, 2]);
-  const set = new InstancedSet(vaultPlaces(), (a) => kit.loader.get(model(a)), FLAT);
+  const set = new InstancedSet(vaultPlaces(), (a) => kit.loader.get(kit.loader.modelPath(a)), FLAT);
   scene.add(set.group);
   set.cutaway(HALL.cutaway);
   for (const p of nearestSpots(lightSpots(set), HALL).slice(0, 4)) {
@@ -107,8 +108,9 @@ export class BattleStage {
   async load(progress: (p: number) => void): Promise<void> {
     const places = vaultPlaces();
     const names = [...vaultModels(), ...HEROES];
-    await this.kit.loader.preload(names.map(model), progress);
-    this.set = new InstancedSet(places, (a) => this.kit.loader.get(model(a)), FLAT);
+    await this.kit.loader.loadPacks(BATTLE_PACKS);
+    await this.kit.loader.preload(names.map((n) => this.kit.loader.modelPath(n)), progress);
+    this.set = new InstancedSet(places, (a) => this.kit.loader.get(this.kit.loader.modelPath(a)), FLAT);
     this.kit.scene.add(this.set.group);
     this.torchSpots.push(...lightSpots(this.set));
     // Dark stone beyond the map, so no view ever looks into a void.
@@ -119,11 +121,11 @@ export class BattleStage {
     this.kit.scene.add(ground);
     HEROES.forEach((id, i) => this.makeActor(id, id, { phase: i * 0.37 }));
     this.setStage(0, true);
-    for (const kind of ENEMY_KINDS) void this.kit.loader.load(model(kind)).catch(() => undefined);
+    for (const kind of ENEMY_KINDS) void this.kit.loader.load(this.kit.loader.modelPath(kind)).catch(() => undefined);
   }
 
   private makeActor(id: string, asset: string, options: { idle?: string; scale?: number; phase?: number } = {}): Actor {
-    const g = this.kit.loader.get(model(asset));
+    const g = this.kit.loader.get(this.kit.loader.modelPath(asset));
     if (!g) throw new Error(`Model ${asset} is not loaded.`);
     const actor = this.kit.addActor(new Actor(asset, g, this.kit.timeline, options));
     this.actors.set(id, actor);
@@ -198,7 +200,7 @@ export class BattleStage {
       this.kit.removeActor(actor);
       this.actors.delete(id);
     }
-    await Promise.all([...new Set(enemies.map((e) => e.kind))].map((k) => this.kit.loader.load(model(k))));
+    await Promise.all([...new Set(enemies.map((e) => e.kind))].map((k) => this.kit.loader.load(this.kit.loader.modelPath(k))));
     const entrances: Promise<void>[] = [];
     enemies.forEach((e, i) => {
       const boss = e.kind === 'dragon-fire';
@@ -333,7 +335,7 @@ export class BattleStage {
   async setPreset(hero: HeroId, preset: string | null): Promise<void> {
     const actor = this.actors.get(hero);
     if (!actor) return;
-    actor.setMap(preset ? await this.kit.loader.texture(`models/${hero}/${preset}.webp`) : null);
+    actor.setMap(preset ? await this.kit.loader.texture(this.kit.loader.presetPath(hero, preset)) : null);
   }
 
   // ---------------------------------------------------------------- screen positions (HUD labels)

@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createDungeonLiberator, evidenceOf, GATE, KNIGHT_START, scoreOf, type DungeonLiberatorCommand, type DungeonLiberatorEvent, type DungeonLiberatorState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
-import { buildRoom, model, ROOM_MODELS } from './room.js';
+import { buildRoom, ROOM_MODELS, ROOM_PACKS } from './room.js';
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const story = ctx.input as StoryInput;
@@ -21,17 +21,18 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...ROOM_MODELS, heroId].map(model));
+  await stage.loader.loadPacks(ROOM_PACKS);
+  await stage.loader.preload([...ROOM_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
   const room = buildRoom(stage);
   const sim = createDungeonLiberator(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the hero
-  const heroGltf = stage.loader.get(model(heroId))!;
+  const heroGltf = stage.loader.get(stage.loader.modelPath(heroId))!;
   const hero = new Walker(stage.addActor(new Actor(heroId, heroGltf, stage.timeline)), 'run');
   hero.actor.placeAt(KNIGHT_START.x, 0, KNIGHT_START.z, 180);
   const look = ctx.options.looks[heroId];
-  if (look && look !== 'default') void stage.loader.texture(`models/${heroId}/${look}.webp`).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
+  if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
 
   // ---------------------------------------------------------------- camera
   const target = new THREE.Vector3();
@@ -82,7 +83,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   function startRoom(ev: Extract<DungeonLiberatorEvent, { type: 'roomStarted' }>): void {
     clearRoom();
     for (const v of ev.villagers) {
-      const g = stage.loader.get(model(v.kind)) ?? stage.loader.get(model('villager'))!;
+      const g = stage.loader.get(stage.loader.modelPath(v.kind)) ?? stage.loader.get(stage.loader.modelPath('villager'))!;
       const actor = stage.addActor(new Actor(v.kind, g, stage.timeline, { phase: Math.random() }));
       actor.placeAt(v.x, 0, v.z, 0);
       const tag = document.createElement('div');
@@ -92,7 +93,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
       villagers.set(v.id, { walker: new Walker(actor), tag });
     }
     for (const s of ev.skeletons) {
-      const actor = stage.addActor(new Actor('skeleton', stage.loader.get(model('skeleton'))!, stage.timeline, { phase: Math.random() }));
+      const actor = stage.addActor(new Actor('skeleton', stage.loader.get(stage.loader.modelPath('skeleton'))!, stage.timeline, { phase: Math.random() }));
       actor.placeAt(s.x, 0, s.z, 0);
       actor.hold('rise');
       void actor.play('rise');

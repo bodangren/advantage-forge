@@ -17,7 +17,8 @@ const SPOTS = Object.fromEntries(
 ) as Record<HeroId, [number, number, number]>;
 /** Where the chosen hero stands and turns. */
 const STAGE: [number, number, number] = [0, 0.12, 0.45];
-const model = (name: string): string => `models/${name}.glb`;
+/** The lobby shows the heroes by the brazier of the vault. */
+export const LOBBY_PACKS = ['heroes', 'sunken-vault'];
 /** The chosen hero turns on the dais this fast, in degrees per second. */
 const TURN = 42;
 const restYaw = (id: HeroId): number => SPOTS[id][0] * -14;
@@ -35,8 +36,10 @@ export class Lobby {
   constructor(private readonly stage: Stage3D) {}
 
   /** Loads the models; `progress` gets 0 to 1. */
-  load(progress: (p: number) => void): Promise<unknown> {
-    return this.stage.loader.preload([...HEROES.map(model), model('brazier')], progress);
+  async load(progress: (p: number) => void): Promise<unknown> {
+    const loader = this.stage.loader;
+    await loader.loadPacks(LOBBY_PACKS);
+    return loader.preload([...HEROES, 'brazier'].map((n) => loader.modelPath(n)), progress);
   }
 
   /** Builds the scene on the (cleared) page stage. */
@@ -55,7 +58,7 @@ export class Lobby {
     ground.position.y = -0.1;
     ground.receiveShadow = true;
     scene.add(dais, ground);
-    const brazier = stage.loader.get(model('brazier'));
+    const brazier = stage.loader.get(stage.loader.modelPath('brazier'));
     for (const x of [-2.0, 2.0]) {
       if (brazier) {
         const b = brazier.scene.clone();
@@ -74,7 +77,7 @@ export class Lobby {
       if (this.turning) this.turning.yaw += TURN * dt;
     });
     HEROES.forEach((id, i) => {
-      const g = stage.loader.get(model(id));
+      const g = stage.loader.get(stage.loader.modelPath(id));
       if (!g) return;
       const actor = stage.addActor(new Actor(id, g, stage.timeline, { phase: i * 0.37 }));
       const [x, y, z] = SPOTS[id];
@@ -132,7 +135,7 @@ export class Lobby {
   async setLooks(looks: Readonly<Record<string, string>>): Promise<void> {
     for (const [hero, actor] of this.actors) {
       const look = looks[hero];
-      actor.setMap(look && look !== 'default' ? await this.stage.loader.texture(`models/${hero}/${look}.webp`).catch(() => null) : null);
+      actor.setMap(look && look !== 'default' ? await this.stage.loader.texture(this.stage.loader.presetPath(hero, look)).catch(() => null) : null);
     }
   }
 }

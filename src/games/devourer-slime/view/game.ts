@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createDevourerSlime, evidenceOf, scoreOf, type DevourerSlimeCommand, type DevourerSlimeEvent, type DevourerSlimeState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
-import { buildClearing, CLEARING_MODELS, model } from './clearing.js';
+import { buildClearing, CLEARING_MODELS, CLEARING_PACKS } from './clearing.js';
 
 /** Model scale per unit of `size` (the slime model is 0.8 m wide; the rules' radius is 0.45 m x size). */
 const SLIME_SCALE = 1.13;
@@ -24,13 +24,14 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;
   const hud = ctx.hud;
-  await stage.loader.preload(CLEARING_MODELS.map(model));
+  await stage.loader.loadPacks(CLEARING_PACKS);
+  await stage.loader.preload(CLEARING_MODELS.map((n) => stage.loader.modelPath(n)));
   buildClearing(stage);
   const sim = createDevourerSlime(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the slime
-  const slime = new Walker(stage.addActor(new Actor('slime', stage.loader.get(model('slime'))!, stage.timeline)), 'walk', 14);
+  const slime = new Walker(stage.addActor(new Actor('slime', stage.loader.get(stage.loader.modelPath('slime'))!, stage.timeline)), 'walk', 14);
   let shownSize = 1;
 
   // ---------------------------------------------------------------- camera: pulls back as the slime grows
@@ -111,7 +112,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   }
 
   function addGuard(id: string, kind: string, x: number, z: number): void {
-    const g = stage.loader.get(model(kind)) ?? stage.loader.get(model('guard'))!;
+    const g = stage.loader.get(stage.loader.modelPath(kind)) ?? stage.loader.get(stage.loader.modelPath('guard'))!;
     const actor = stage.addActor(new Actor(kind, g, stage.timeline, { phase: Math.random() }));
     actor.placeAt(x, 0, z, 0);
     guards.set(id, new Walker(actor, 'walk', 10));

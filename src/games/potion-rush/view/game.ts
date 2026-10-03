@@ -13,7 +13,7 @@ import { Actor, burst, ShotRig, smooth } from '../../../apk3d/stage/index.js';
 import { createPotionRush, evidenceOf, scoreOf, targetFor, type PotionRushCommand, type PotionRushEvent, type PotionRushState } from '../core/index.js';
 import { nextDrop } from '../qc/bot.js';
 import { BREW, INGREDIENT_SCALE } from './layout.js';
-import { beltX, buildShop, LAYOUT, model, SHOP_MODELS } from './shop.js';
+import { beltX, buildShop, LAYOUT, SHOP_MODELS, SHOP_PACKS } from './shop.js';
 import './potion-rush.css';
 
 const MOOD_ICON = { happy: '😊', waiting: '😐', grumpy: '😤' } as const;
@@ -41,11 +41,12 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const hero = ctx.options.hero || 'wizard';
-  await stage.loader.preload([...SHOP_MODELS, hero].map(model));
+  await stage.loader.loadPacks(SHOP_PACKS);
+  await stage.loader.preload([...SHOP_MODELS, hero].map((n) => stage.loader.modelPath(n)));
   const built = buildShop(stage, hero);
   const shop = { ...built, alchemist: built.alchemist! };
   const look = ctx.options.looks[hero];
-  if (look && look !== 'default') void stage.loader.texture(`models/${hero}/${look}.webp`).then((tex) => shop.alchemist.setMap(tex)).catch(() => undefined);
+  if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(hero, look)).then((tex) => shop.alchemist.setMap(tex)).catch(() => undefined);
   /** The teal brew of an idle cauldron. */
   const baseBrew = shop.brews[0]!.clone();
   const shots = new ShotRig(0.06);
@@ -117,7 +118,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     hud.el.classList.remove('dragging-word');
   };
   const ingredient = (kind: string): THREE.Object3D => {
-    const g = stage.loader.get(model(kind));
+    const g = stage.loader.get(stage.loader.modelPath(kind));
     const obj = g ? g.scene.clone() : new THREE.Mesh(new THREE.SphereGeometry(0.12), new THREE.MeshStandardMaterial({ color: 0xcccccc }));
     obj.scale.setScalar(INGREDIENT_SCALE[kind] ?? 1);
     obj.traverse((n) => ((n as THREE.Mesh).isMesh ? (n.castShadow = true) : undefined));
@@ -260,7 +261,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   }
 
   async function arrive(slot: number, customerId: string, kind: string, from: THREE.Vector3): Promise<void> {
-    const g = await stage.loader.load(model(kind)).catch(() => stage.loader.load(model('villager')));
+    const g = await stage.loader.load(stage.loader.modelPath(kind)).catch(() => stage.loader.load(stage.loader.modelPath('villager')));
     const actor = stage.addActor(new Actor(kind, g, stage.timeline, { phase: Math.random() }));
     actor.placeAt(from.x, from.y, from.z);
     const bubble = document.createElement('div');

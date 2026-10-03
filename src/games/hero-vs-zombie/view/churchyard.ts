@@ -6,7 +6,8 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
+export const CHURCHYARD_PACKS = ['folk', 'outdoor-props', 'flight-land', 'sunken-vault', 'potion-shop', 'heroes'];
 
 export const CHURCHYARD_MODELS = ['zombie', 'dirt-ground', 'sarcophagus', 'dead-tree', 'fence', 'lantern', 'boulder', 'rock-cluster', 'bush', 'tall-grass', 'bone-pile', 'candle-cluster', 'campfire-out'];
 
@@ -26,7 +27,7 @@ export function buildChurchyard(stage: Stage3D): Churchyard {
   const moon = stage.addSun(0xa9bfff, 0.9, [-6, 12, -4], [0, 0, 0], 9);
 
   const place = (name: string, x: number, z: number, yaw = 0, scale = 1): void => {
-    const g = stage.loader.get(model(name));
+    const g = stage.loader.get(stage.loader.modelPath(name));
     if (!g) return;
     const obj = g.scene.clone();
     obj.position.set(x, 0, z);

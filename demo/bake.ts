@@ -8,6 +8,7 @@
  * ground point, so a sprite drawn at its entity's ground point lines up with the background.
  */
 import * as THREE from 'three';
+import { MODEL_PACK_IDS } from '../src/apk3d/contracts/index.js';
 import { Stage3D } from '../src/apk3d/stage/index.js';
 import { buildRoom, ROOM_MODELS } from '../src/games/dungeon-liberator/view/room.js';
 import { buildClearing, CLEARING_MODELS } from '../src/games/devourer-slime/view/clearing.js';
@@ -49,7 +50,8 @@ async function bake(): Promise<void> {
   const canvas = document.getElementById('bake') as HTMLCanvasElement;
   const stage = new Stage3D(canvas, { base: import.meta.env.BASE_URL, tier: 'high' });
   stage.pause();
-  await stage.loader.preload(set.models.map((m) => `models/${m}.glb`));
+  await stage.loader.loadPacks(MODEL_PACK_IDS);
+  await stage.loader.preload(set.models.map((m) => stage.loader.modelPath(m)));
   set.build(stage);
   stage.scene.fog = null;
   stage.scene.updateMatrixWorld(true);

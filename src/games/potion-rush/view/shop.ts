@@ -8,7 +8,8 @@ import * as THREE from 'three';
 import { Actor, type GLTF, type Stage3D } from '../../../apk3d/stage/index.js';
 import { LAYOUT } from './layout.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
+export const SHOP_PACKS = ['potion-shop', 'heroes', 'folk', 'dungeon-monsters'];
 
 /** Models the shop needs before the first frame (customers load later, one kind at a time). */
 export const SHOP_MODELS = [
@@ -31,7 +32,7 @@ export interface Shop {
 }
 
 function place(stage: Stage3D, name: string, at: V3, yaw = 0, scale = 1): THREE.Object3D | null {
-  const g: GLTF | undefined = stage.loader.get(model(name));
+  const g: GLTF | undefined = stage.loader.get(stage.loader.modelPath(name));
   if (!g) return null;
   const obj = g.scene.clone();
   obj.position.set(...at);
@@ -175,7 +176,7 @@ export function buildShop(stage: Stage3D, hero: string): Shop {
   // The alchemist: the student's hero, facing the cauldrons.
   let alchemist: Actor | null = null;
   if (hero) {
-    const g = stage.loader.get(model(hero)) ?? stage.loader.get(model('wizard'))!;
+    const g = stage.loader.get(stage.loader.modelPath(hero)) ?? stage.loader.get(stage.loader.modelPath('wizard'))!;
     alchemist = stage.addActor(new Actor(hero, g, stage.timeline));
     alchemist.placeAt(LAYOUT.alchemist[0], 0, LAYOUT.alchemist[2], 70);
   }

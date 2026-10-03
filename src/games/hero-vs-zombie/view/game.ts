@@ -12,7 +12,7 @@ import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js
 import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
 import { createHeroVsZombie, evidenceOf, scoreOf, type HeroVsZombieCommand, type HeroVsZombieEvent, type HeroVsZombieState } from '../core/index.js';
 import { nextCommand } from '../qc/bot.js';
-import { buildChurchyard, CHURCHYARD_MODELS, model } from './churchyard.js';
+import { buildChurchyard, CHURCHYARD_MODELS, CHURCHYARD_PACKS } from './churchyard.js';
 import './hero-vs-zombie.css';
 
 const ORB_COLOR = 0xfff1a8;
@@ -24,16 +24,17 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...CHURCHYARD_MODELS, heroId].map(model));
+  await stage.loader.loadPacks(CHURCHYARD_PACKS);
+  await stage.loader.preload([...CHURCHYARD_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
   const yard = buildChurchyard(stage);
   const sim = createHeroVsZombie(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the hero
-  const hero = new Walker(stage.addActor(new Actor(heroId, stage.loader.get(model(heroId))!, stage.timeline)), 'run');
+  const hero = new Walker(stage.addActor(new Actor(heroId, stage.loader.get(stage.loader.modelPath(heroId))!, stage.timeline)), 'run');
   hero.actor.placeAt(sim.state.hero.x, 0, sim.state.hero.z, 180);
   const look = ctx.options.looks[heroId];
-  if (look && look !== 'default') void stage.loader.texture(`models/${heroId}/${look}.webp`).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
+  if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
   // A soft light that follows the hero, so the hero never stands in the dark.
   const heroLight = new THREE.PointLight(0xfff0c8, 6, 6, 1.6);
   stage.scene.add(heroLight);
@@ -115,7 +116,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   function addZombie(id: string, x: number, z: number): void {
     const old = zombies.get(id);
     if (old) stage.removeActor(old.actor);
-    const actor = stage.addActor(new Actor('zombie', stage.loader.get(model('zombie'))!, stage.timeline, { phase: Math.random() }));
+    const actor = stage.addActor(new Actor('zombie', stage.loader.get(stage.loader.modelPath('zombie'))!, stage.timeline, { phase: Math.random() }));
     actor.placeAt(x, 0, z, 0);
     actor.hold('rise');
     void actor.play('rise', 0.5, 1.2);

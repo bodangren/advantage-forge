@@ -5,7 +5,8 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
+export const CLEARING_PACKS = ['folk', 'outdoor-props'];
 
 export const CLEARING_MODELS = ['slime', 'guard', 'bandit', 'oak-tree', 'pine-tree', 'bush', 'boulder', 'rock-cluster', 'fern', 'wildflowers', 'mushroom-cluster', 'tree-stump'];
 
@@ -26,7 +27,7 @@ export function buildClearing(stage: Stage3D): void {
   scene.add(ground, meadow);
 
   const place = (name: string, x: number, z: number, yaw: number, scale: number): void => {
-    const g = stage.loader.get(model(name));
+    const g = stage.loader.get(stage.loader.modelPath(name));
     if (!g) return;
     const obj = g.scene.clone();
     obj.position.set(x, 0, z);

@@ -7,7 +7,8 @@
 import * as THREE from 'three';
 import type { Stage3D } from '../../../apk3d/stage/index.js';
 
-export const model = (name: string): string => `models/${name}.glb`;
+/** The model packs of this game (`MODEL_PACKS` in contracts/model-pack.ts); the loader reads their manifests first. */
+export const ROOM_PACKS = ['sunken-vault', 'heroes', 'folk', 'dungeon-monsters'];
 
 export const ROOM_MODELS = ['floor', 'floor-cracked', 'wall', 'wall-corner', 'arch', 'gate', 'pillar', 'cell-bars', 'hanging-cage', 'torch-sconce', 'bone-pile', 'chains', 'skeleton', 'villager', 'farmer', 'innkeeper', 'druid', 'guard'];
 
@@ -26,7 +27,7 @@ export function buildRoom(stage: Stage3D): Room {
   stage.addSun(0xd0dcff, 1.0, [-4, 12, 7], [0, 0, 0], 8);
 
   const place = (name: string, x: number, z: number, yaw = 0, y = 0, scale = 1): THREE.Object3D | null => {
-    const g = stage.loader.get(model(name));
+    const g = stage.loader.get(stage.loader.modelPath(name));
     if (!g) return null;
     const obj = g.scene.clone();
     obj.position.set(x, y, z);
