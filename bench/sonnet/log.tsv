@@ -701,3 +701,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	underground-city	map-p2	medium	maps-rest	53000	15				7.0	pass	agent 6.5; orchestrator rated 7.0; flat terraces
 2026-10-03	floating-city	map-p2	medium	maps-rest	55000	14				7.0	pass	agent 6.5; orchestrator rated 7.0; boxy island outline, no clouds
 2026-10-03	ruined-city	map-p2	medium	maps-rest	102000	16				7.0	pass	after 1 feedback with new ruined-house; orchestrator viewed 3q; rubble reads dark blue
+2026-10-03	waterfall	map-p2	medium	maps-rest	126000	20				7.0	pass	after rebuild with waterfall-sheet and rock-wall; orchestrator scaled falls 1.5 and viewed 3q
+2026-10-03	arena	map-p2	medium	maps-rest	88000	18				7.0	pass	agent 7.0 after rebuild with weapon-rack and rock-wall; orchestrator viewed 3q
+2026-10-03	canyon	map-p2	medium	maps-rest	41000	8				5.5	reserve	second pass with rock-wall-red and dry-riverbed was worse; restored the 6.5 version; needs taller cliff piece, winding river

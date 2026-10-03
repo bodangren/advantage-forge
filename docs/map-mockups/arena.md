@@ -10,13 +10,16 @@ stand at the corners; a bench by the pit holds sword, shield, and helmet.
 
 | piece | count |
 |-------|-------|
-| desert-ground | 176 |
-| plaster-wall | 54 |
+| desert-ground | 224 |
+| rock-wall | 33 |
 | dirt-ground | 28 |
 | villager | 25 |
+| weapon-rack | 8 |
 | guard | 8 |
 | column | 4 |
+| torch | 4 |
 | banner | 4 |
+| flag | 4 |
 | archway | 2 |
 | gladiator | 2 |
 | statue | 1 |
@@ -25,4 +28,4 @@ stand at the corners; a bench by the pit holds sword, shield, and helmet.
 | gladiator-shield | 1 |
 | gladiator-helmet | 1 |
 
-Total: 308.
+Total: 351.

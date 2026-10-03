@@ -5,7 +5,7 @@
 // stand in the middle. Writes scenes/maps/arena.ts and docs/map-mockups/arena.md.
 import { writeFileSync } from 'node:fs';
 
-const COLS = 12, ROWS = 10;
+const COLS = 14, ROWS = 12;
 const X = (c) => (c - (COLS + 1) / 2) * 2;
 const Z = (r) => (r - (ROWS + 1) / 2) * 2;
 const A = 11, B = 9.2; // stand ellipse semi-axes
@@ -47,20 +47,20 @@ for (const dx of [-1, 1]) for (const dz of [-1, 1]) put('desert-ground', dx, 0.3
 put('statue', 0, 0.6, 0, { scale: 0.7 });
 
 // ring wall
-const WA = 11.3, WB = 9.5;
+const WA = 11.9, WB = 10.1;
 const rampartT = [Math.PI / 4, (3 * Math.PI) / 4, (5 * Math.PI) / 4, (7 * Math.PI) / 4];
 const pt = (t) => [WA * Math.cos(t), WB * Math.sin(t)];
 const ramp = rampartT.map(pt);
 for (let t = 0; t < Math.PI * 2; ) {
   const [x, z] = pt(t);
-  const dt = 2 / Math.hypot(WA * Math.sin(t), WB * Math.cos(t));
+  const dt = 1.8 / Math.hypot(WA * Math.sin(t), WB * Math.cos(t));
   const tm = t + dt / 2;
   const [mx, mz] = pt(tm);
   const gate = Math.abs(mz) < 2.6 && Math.abs(mx) > 8;
   const nearRamp = false;
   if (!gate && !nearRamp) {
     const tx = -WA * Math.sin(tm), tz = WB * Math.cos(tm);
-    for (const wy of [0, 1.5]) put('plaster-wall', mx, wy, mz, { yaw: (Math.atan2(-tz, tx) * 180) / Math.PI });
+    put('rock-wall', mx, 0, mz, { yaw: (Math.atan2(-tz, tx) * 180) / Math.PI });
   }
   t += dt;
 }
@@ -71,11 +71,23 @@ for (const s of [-1, 1]) {
   for (const dz of [-1.6, 1.6]) {
     put('column', gx, 0, dz);
   }
+  put('weapon-rack', s * 9.6, 0, -1.95, { yaw: 0 });
+  put('weapon-rack', s * 9.6, 0, 1.95, { yaw: 180 });
+  for (const dz of [-1.6, 1.6]) put('torch', gx - s * 0.9, 0, dz * 1.15);
   put('banner', gx + s * 0.9, 0, -4.6, { yaw: s > 0 ? 90 : 270 });
   put('banner', gx + s * 0.9, 0, 4.6, { yaw: s > 0 ? 90 : 270 });
-  put('guard', s * 9.0, 0, -1.2, { yaw: s > 0 ? 270 : 90 });
-  put('guard', s * 9.0, 0, 1.2, { yaw: s > 0 ? 270 : 90 });
+  put('guard', s * 7.4, 0, -0.8, { yaw: s > 0 ? 270 : 90 });
+  put('guard', s * 7.4, 0, 0.8, { yaw: s > 0 ? 270 : 90 });
 }
+// weapon racks along the inner wall on the top tier, facing the pit; corner flags outside
+for (let i = 0; i < 12; i++) {
+  const t = (i + 0.5) * Math.PI / 6 + 0.12;
+  const x = 10.2 * Math.cos(t), z = 8.55 * Math.sin(t);
+  if (Math.abs(z) < 3.4 && Math.abs(x) > 6) continue;
+  if (i % 2) continue;
+  put('weapon-rack', x, 0.9, z, { yaw: faceCenter(x, z) });
+}
+for (const [fx, fz] of [[-12.6, -9.4], [12.6, -9.4], [-12.6, 9.4], [12.6, 9.4]]) put('flag', fx, 0, fz);
 // crowds on the tiers
 for (const [x, z, L] of tiers) {
   const n = rnd() < 0.62 ? 1 : 0;
