@@ -26,6 +26,8 @@ import { manifest as runeMatch } from '../../src/games/rune-match/manifest.js';
 import { manifest as archersRevenge } from '../../src/games/archers-revenge/manifest.js';
 import { manifest as astralMage } from '../../src/games/astral-mage/manifest.js';
 import { CIRCLE_MODELS } from '../../src/games/astral-mage/view/circle.js';
+import { manifest as spellweaversRun } from '../../src/games/spellweavers-run/manifest.js';
+import { RUN_MODELS } from '../../src/games/spellweavers-run/view/land.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -48,6 +50,7 @@ const GAMES = {
   'rune-match': { manifest: runeMatch, named: vaultModels() },
   'archers-revenge': { manifest: archersRevenge, named: vaultModels() },
   'astral-mage': { manifest: astralMage, named: CIRCLE_MODELS },
+  'spellweavers-run': { manifest: spellweaversRun, named: RUN_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
