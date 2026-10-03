@@ -15,6 +15,20 @@ radius green (section "Tests to run") and a fresh `repo-graph affected` run; not
 monorepo changes before Phase B gives Potion Rush its 2D view (the catalog tests need
 `createGameConfig` on every listed cartridge, step 5).
 
+## Status of 3 October 2026
+
+Steps 1 to 6 exist on a local monorepo branch (`apk3d-games-port`, worktree `reading-advantage-monorepo-3d`, not pushed). Differences from this plan:
+
+- The kit lives in `packages/advantage-play-kit-3d` and the 29 games in `packages/game-cartridges-3d`. The games keep their own registry; `cartridgeCatalog` stays unchanged.
+- The host is `startStoryGame` and `StoryGameHost` (React). `APKGameHost` stays unchanged.
+- Story and model-pack JSON ship as static assets, copied into the app `public/` by `scripts/sync-assets.mjs`.
+- The story contracts (`story-input`, `evidence`) live in `@reading-advantage/game-contracts`.
+- Primary Advantage offers the games at `student/games/story`. Completion goes through `recordGameCompletion` with game type `<game>-story`; the server computes XP.
+- `scripts/port-game.mjs` in the games package copies a game from this repository and rewrites its imports.
+- The copies in `contracts/apk.ts` and `sprite-asset.ts` are still copies. Replace them with APK imports.
+
+The monorepo track is `measure/tracks/apk3d_games_port_20261003/`.
+
 ## 1. Packages
 
 | Move | From (this repo) | To (monorepo) | Package name |
