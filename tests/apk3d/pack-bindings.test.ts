@@ -30,6 +30,8 @@ import { manifest as spellweaversRun } from '../../src/games/spellweavers-run/ma
 import { RUN_MODELS } from '../../src/games/spellweavers-run/view/land.js';
 import { manifest as hauntedLibrary } from '../../src/games/haunted-library/manifest.js';
 import { LIBRARY_MODELS } from '../../src/games/haunted-library/view/library.js';
+import { manifest as shadowGateDungeon } from '../../src/games/shadow-gate-dungeon/manifest.js';
+import { DUNGEON_MODELS } from '../../src/games/shadow-gate-dungeon/view/dungeon.js';
 import { manifest as potionRush } from '../../src/games/potion-rush/manifest.js';
 import { SHOP_MODELS } from '../../src/games/potion-rush/view/shop.js';
 import { HEROES } from '../../src/games/shared/battle/stage2d.js';
@@ -54,6 +56,7 @@ const GAMES = {
   'astral-mage': { manifest: astralMage, named: CIRCLE_MODELS },
   'spellweavers-run': { manifest: spellweaversRun, named: RUN_MODELS },
   'haunted-library': { manifest: hauntedLibrary, named: LIBRARY_MODELS },
+  'shadow-gate-dungeon': { manifest: shadowGateDungeon, named: DUNGEON_MODELS },
   'rpg-battle': { manifest: rpgBattle, named: vaultModels() },
   'paladins-twin-soul': { manifest: paladinsTwinSoul, named: vaultModels() },
 } as const;
