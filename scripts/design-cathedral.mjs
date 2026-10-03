@@ -11,52 +11,56 @@ const put = (asset, x, y, z, o = {}) => {
   places.push(p);
 };
 const S = [-1, 1];
-// floor
-for (let i = 0; i < 9; i++) for (let j = 0; j < 7; j++) put('stone-floor', -8 + 2 * i, 0, -6 + 2 * j);
+// floor: marble nave, stone-floor under the pew side blocks stays marble too
+for (let i = 0; i < 9; i++) for (let j = 0; j < 7; j++) put('marble-floor', -8 + 2 * i, 0, -6 + 2 * j);
 // raised choir (0.3) across the apse, altar step (0.15)
-for (let i = 0; i < 9; i++) put('stone-floor', -8 + 2 * i, 0.3, -6);
-for (const x of [-4, -2, 0, 2, 4]) put('stone-floor', x, 0.15, -4);
-// walls: north 3 layers, sides 2 layers
-for (let i = 0; i < 9; i++) { const x = -8 + 2 * i; for (const y of [0, 1.5, 3.0]) put('plaster-wall', x, y, -6.78); }
-for (const s of S) for (let j = 0; j < 7; j++) { const z = -6 + 2 * j; for (const y of [0, 1.5]) put('plaster-wall', s * 8.78, y, z, { yaw: 90 }); }
-// windows: big apse window, side windows between pillars
-put('stained-glass-window', 0, 0.9, -6.5, { scale: 1.9 });
-for (const x of [-5.5, 5.5]) put('stained-glass-window', x, 0.5, -6.52, { scale: 1.2 });
-for (const s of S) for (const z of [-2.8, 0, 2.8]) put('stained-glass-window', s * 8.52, 0.45, z, { yaw: s * -90, scale: 1.2 });
-// columns: nave rows (x 3.6) and wall pilasters (x 8.2)
+for (let i = 0; i < 9; i++) put('marble-floor', -8 + 2 * i, 0.3, -6);
+for (const x of [-2, 0, 2]) put('marble-floor', x, 0.15, -4);
+// walls: sandstone, two courses (3 m); north behind the apse, sides along the nave
+for (let i = 0; i < 9; i++) for (const y of [0, 1.5]) put('sandstone-wall', -8 + 2 * i, y, -6.91);
+for (const s of S) for (let j = 0; j < 7; j++) for (const y of [0, 1.5]) put('sandstone-wall', s * 8.91, y, -6 + 2 * j, { yaw: 90 });
+// windows on the wall faces
+put('stained-glass-window', 0, 0.9, -6.8, { scale: 1.9 });
+for (const x of [-5.5, 5.5]) put('stained-glass-window', x, 0.6, -6.8, { scale: 1.3 });
+for (const s of S) for (const z of [-3.9, -1.3, 1.3, 3.9]) put('stained-glass-window', s * 8.8, 0.6, z, { yaw: s * -90, scale: 1.3 });
+// nave columns and wall pilasters
 const CZ = [-4.2, -1.4, 1.4, 4.2];
-for (const s of S) for (const z of CZ) { put('column', s * 3.6, 0, z, { scale: 1.45 }); put('column', s * 8.2, 0, z, { scale: 1.45 }); }
-for (const s of S) { put('column', s * 8.3, 0, 6.5, { scale: 1.45 }); put('column', s * 3.6, 0, 6.5, { scale: 1.45 }); put('column', s * 8.3, 0.3, -6.3, { scale: 1.45 }); }
+for (const s of S) for (const z of CZ) { put('column', s * 5.2, 0, z, { scale: 1.45 }); put('column', s * 8.4, 0, z, { scale: 1.45 }); }
+for (const s of S) put('column', s * 5.2, 0, 6.5, { scale: 1.45 });
 // altar group on the choir dais
 put('altar', 0, 0.3, -6.0, { scale: 1.3 });
 put('candle-cluster', -0.6, 1.5, -6.0); put('candle-cluster', 0.6, 1.5, -6.0);
 for (const s of S) { put('candelabra', s * 1.8, 0.3, -6.1, { scale: 1.6 }); put('brazier', s * 2.8, 0.3, -5.4); put('banner', s * 3.6, 0.3, -6.3, { scale: 1.1 }); }
 put('cleric', -1.4, 0.3, -4.8, { yaw: 180 });
 put('priest', 1.2, 0.3, -5.0, { yaw: 180 });
-// choir stalls facing each other
-for (const s of S) for (const z of [-6.2, -5.0]) put('bench', s * 5.2, 0.3, z, { yaw: -s * 90 });
-// pulpit and lectern
+// choir stalls
+for (const s of S) for (const z of [-6.0, -5.0]) put('bench', s * 5.8, 0.3, z, { yaw: -s * 90, scale: 1.2 });
 put('lectern', -2.6, 0.15, -3.6, { yaw: 150, scale: 1.2 });
 put('lectern', 2.6, 0.15, -3.6, { yaw: 210 });
-// rug along the aisle
+// red carpet aisle
 for (let k = 0; k < 6; k++) put('rug', 0, 0.01, -3.2 + 2.0 * k, { yaw: 90, scale: 1.6 });
-// inner pews
-const PZ = [-2.2, -1.1, 0, 1.1, 2.2, 3.3, 4.4, 5.5];
-for (const z of PZ) for (const s of S) put('bench', s * 1.9, 0, z, { yaw: 180 });
-// outer pews
-for (const z of [-2.8, -1.4, 0, 1.4, 2.8, 4.2]) for (const s of S) put('bench', s * 5.4, 0, z, { yaw: 180 });
-// side chapels along the walls
-for (const s of S) for (const z of [-2.8, 0, 2.8]) {
-  put('statue', s * 7.8, 0, z, { yaw: s * -90 });
-  put('candelabra', s * 6.9, 0, z - 0.5, { scale: 1.4 });
-  put('candle-cluster', s * 6.9, 0, z + 0.5);
+// thick pews: two benches end to end, doubled in depth, both sides of the aisle
+for (let r = 0; r < 9; r++) {
+  const z = -2.4 + 1.0 * r;
+  for (const s of S) {
+    for (const x of [1.9, 3.7]) for (const dz of [-0.2, 0.2]) put('bench', s * x, 0, z + dz, { yaw: 180, scale: 1.2 });
+    put('bench', s * 6.6, 0, z + 0.2, { yaw: 180, scale: 1.2 });
+    put('bench', s * 6.6, 0, z - 0.2, { yaw: 180, scale: 1.2 });
+  }
 }
-for (const s of S) for (const z of [-4.2, 4.2]) put('brazier', s * 6.7, 0, z);
-// banners and chandeliers
+// side chapels
+for (const s of S) for (const z of [-2.6, 0, 2.6]) {
+  put('statue', s * 8.0, 0, z, { yaw: s * -90 });
+  put('candle-cluster', s * 7.5, 0, z + 0.9);
+}
+for (const s of S) for (const z of [-4.8, 5.6]) put('brazier', s * 7.2, 0, z);
+for (const s of S) for (const z of [-2.6, 2.6]) put('brazier', s * 4.4, 0, z);
+for (const s of S) for (const z of [-2.8, 2.8]) put('banner', s * 8.5, 0.0, z + 1.4, { yaw: s * -90, scale: 1.1 });
+// chandeliers
 for (const z of [-2, 1.5, 5]) put('chandelier', 0, 3.2, z, { scale: 2 });
-for (const s of S) for (const z of [-2.8, 2.8]) put('chandelier', s * 5.4, 3.0, z, { scale: 1.6 });
+for (const s of S) for (const z of [-2.8, 2.8]) put('chandelier', s * 3.4, 3.0, z, { scale: 1.6 });
 // entrance
-for (const s of S) { put('statue', s * 2.2, 0, 6.5, { yaw: 180 }); put('brazier', s * 1.0, 0, 6.6); put('banner', s * 6.2, 0, 6.5); }
+for (const s of S) { put('statue', s * 2.2, 0, 6.5, { yaw: 180 }); put('brazier', s * 1.0, 0, 6.6); put('banner', s * 7.0, 0, 6.5); }
 put('candelabra', -0.9, 0, 6.7, { scale: 1.4 }); put('candelabra', 0.9, 0, 6.7, { scale: 1.4 });
 
 const src = `// GENERATED by scripts/design-cathedral.mjs — edit the generator, not this file.

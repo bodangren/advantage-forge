@@ -7,6 +7,6 @@ glass window; an altar step with two lecterns; a nave with a rug aisle, 16 inner
 double pillar rows; side chapels with statues; chandeliers over the nave; banners; cream plaster walls on
 the north, west and east; open south edge (cutaway).
 
-Total placements: 251
+Total placements: 320
 
-Tally: stone-floor 77, plaster-wall 55, stained-glass-window 9, column 22, altar 1, candle-cluster 8, candelabra 10, brazier 8, banner 4, cleric 1, priest 1, bench 32, lectern 2, rug 6, statue 8, chandelier 7
+Tally: marble-floor 75, sandstone-wall 46, stained-glass-window 11, column 18, altar 1, candle-cluster 8, candelabra 4, brazier 12, banner 8, cleric 1, priest 1, bench 112, lectern 2, rug 6, statue 8, chandelier 7

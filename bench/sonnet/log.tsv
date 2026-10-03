@@ -708,3 +708,5 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	coast	map-p2	medium	maps-rest	48000	14				7.0	pass	agent 6.5 after rebuild with sea-water; orchestrator rated 7.0; black rock slabs, flat rectangle
 2026-10-03	crystal-cave	map-p2	medium	maps-rest	48000	12				7.0	pass	agent 6.5 after rebuild with rock-wall; orchestrator rated 7.0; brick-looking walls
 2026-10-03	lava-cave	map-p2	medium	maps-rest	43000	9				7.0	pass	agent 6.5 after rebuild with lava-ground; orchestrator rated 7.0; rectilinear lava strips, pale lava
+2026-10-03	quarry	map-p2	medium	maps-rest	50000	11				7.0	pass	rework with rock-wall terraces; orchestrator viewed 3q; dark walls, no crane or stone-block piece
+2026-10-03	cathedral	map-p2	medium	maps-rest	44000	10				7.0	pass	rework with marble-floor and sandstone-wall; orchestrator viewed 3q; dense pews, dark columns
