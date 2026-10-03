@@ -29,6 +29,19 @@ Steps 1 to 6 exist on a local monorepo branch (`apk3d-games-port`, worktree `rea
 
 The monorepo track is `measure/tracks/apk3d_games_port_20261003/`.
 
+### Changes of 4 October 2026
+
+- Forge is the source of the games. Edit a game in Forge, then copy it with `port-game.mjs`. The
+  play-test edits of 3 October existed only in the monorepo copies; they moved to Forge (89a4769),
+  and the script now reproduces the monorepo files.
+- The game input is wrong. The owner rejected the story picker (owner decision 1 in section 6):
+  the games must read the student's saved vocabulary and sentences, chosen by memory state. Track
+  `game_flashcard_input_20261004` owns the change.
+- The old uncommitted edits of 28 September in the main monorepo checkout are removed. The port
+  branch replaces them.
+- The port branch rebase waits until the input change is done. Its base `apk3d-port` carries 18
+  unrelated `www` commits.
+
 ## 1. Packages
 
 | Move | From (this repo) | To (monorepo) | Package name |

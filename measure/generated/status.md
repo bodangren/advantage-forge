@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 76.
-Tracks by status: new: 12; in_progress: 39; completed: 25.
-Tracks by workstream: assets: 31; games: 38; foundation: 7.
+Tracks: 77.
+Tracks by status: new: 13; in_progress: 39; completed: 25.
+Tracks by workstream: assets: 31; games: 39; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -44,6 +44,7 @@ Tracks by workstream: assets: 31; games: 38; foundation: 7.
 | [game_dragon_rider_20260928](../tracks/game_dragon_rider_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_dungeon_liberator_port_20260928](../tracks/game_dungeon_liberator_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_enchanted_library_20260928](../tracks/game_enchanted_library_20260928/) | in_progress | games | 5/8 | 8 | — |
+| [game_flashcard_input_20261004](../tracks/game_flashcard_input_20261004/) | new | games | 0/13 | 14 | — |
 | [game_griffin_riders_escape_20260928](../tracks/game_griffin_riders_escape_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_griffin_sky_joust_20260928](../tracks/game_griffin_sky_joust_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_gryphon_patrol_20260928](../tracks/game_gryphon_patrol_20260928/) | in_progress | games | 5/8 | 8 | — |
@@ -54,7 +55,7 @@ Tracks by workstream: assets: 31; games: 38; foundation: 7.
 | [game_model_packs_20260928](../tracks/game_model_packs_20260928/) | in_progress | games | 6/9 | 8 | — |
 | [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_paladins_twin_soul_20260928](../tracks/game_paladins_twin_soul_20260928/) | in_progress | games | 5/8 | 8 | — |
-| [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 1/10 | 10 | — |
+| [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 6/12 | 10 | — |
 | [game_potion_rush_port_20260928](../tracks/game_potion_rush_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_realm_carver_20260928](../tracks/game_realm_carver_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_rpg_battle_20260928](../tracks/game_rpg_battle_20260928/) | in_progress | games | 5/8 | 8 | — |
