@@ -13,6 +13,10 @@ import { manifest as paladinsTwinSoul } from '../games/paladins-twin-soul/manife
 import paladinsTwinSoulStrings from '../games/paladins-twin-soul/strings.en.js';
 import { manifest as villageGuardian } from '../games/village-guardian/manifest.js';
 import villageGuardianStrings from '../games/village-guardian/strings.en.js';
+import { manifest as archersRevenge } from '../games/archers-revenge/manifest.js';
+import archersRevengeStrings from '../games/archers-revenge/strings.en.js';
+import { manifest as astralMage } from '../games/astral-mage/manifest.js';
+import astralMageStrings from '../games/astral-mage/strings.en.js';
 import { manifest as runeMatch } from '../games/rune-match/manifest.js';
 import runeMatchStrings from '../games/rune-match/strings.en.js';
 import { manifest as labyrinth } from '../games/labyrinth/manifest.js';
@@ -140,10 +144,28 @@ export const GAMES: GameEntry[] = [
     manifest: villageGuardian,
     load: () => import('../games/village-guardian/index.js').then((m) => m.cartridge),
   },
+  {
+    id: 'archers-revenge',
+    icon: '🏹',
+    tint: ['#22c55e', '#14532d'],
+    titleKey: 'archersRevenge.title',
+    pitchKey: 'archersRevenge.pitch',
+    manifest: archersRevenge,
+    load: () => import('../games/archers-revenge/index.js').then((m) => m.cartridge),
+  },
+  {
+    id: 'astral-mage',
+    icon: '🔮',
+    tint: ['#c4b5fd', '#4c1d95'],
+    titleKey: 'astralMage.title',
+    pitchKey: 'astralMage.pitch',
+    manifest: astralMage,
+    load: () => import('../games/astral-mage/index.js').then((m) => m.cartridge),
+  },
 ];
 
 /** The English catalogs of every game (the host merges them with its own). */
-export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings];
+export const GAME_STRINGS = [monsterEncountersStrings, runeMatchStrings, labyrinthStrings, potionRushStrings, dragonFlightStrings, dungeonLiberatorStrings, devourerSlimeStrings, heroVsZombieStrings, rpgBattleStrings, paladinsTwinSoulStrings, villageGuardianStrings, archersRevengeStrings, astralMageStrings];
 
 export const playable = (g: GameEntry): boolean => !!g.load && !!g.manifest;
 
