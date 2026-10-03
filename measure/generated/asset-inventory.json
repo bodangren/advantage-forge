@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 736,
+    "listed": 755,
     "catalog_matched": 570,
-    "off_catalog": 166
+    "off_catalog": 185
   },
   "asset_sources": [
     {
@@ -9819,6 +9819,11 @@
       "catalog_source_ids": [
         "heroes/magic/artificer"
       ]
+    },
+    {
+      "id": "ash-ground",
+      "source_path": "assets/ash-ground.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "assassin",
@@ -10655,6 +10660,11 @@
       ]
     },
     {
+      "id": "coral-reef-cluster",
+      "source_path": "assets/coral-reef-cluster.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "coral",
       "source_path": "assets/coral.ts",
       "catalog_source_ids": [
@@ -10894,6 +10904,11 @@
       ]
     },
     {
+      "id": "dome-pavilion",
+      "source_path": "assets/dome-pavilion.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "door",
       "source_path": "assets/door.ts",
       "catalog_source_ids": [
@@ -10961,6 +10976,11 @@
       "catalog_source_ids": [
         "equipment/tools/drum"
       ]
+    },
+    {
+      "id": "dry-riverbed",
+      "source_path": "assets/dry-riverbed.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "duelist-hat",
@@ -11757,6 +11777,11 @@
       ]
     },
     {
+      "id": "ice-ground",
+      "source_path": "assets/ice-ground.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "ice-spire",
       "source_path": "assets/ice-spire.ts",
       "catalog_source_ids": [
@@ -11950,6 +11975,11 @@
       ]
     },
     {
+      "id": "lava-ground",
+      "source_path": "assets/lava-ground.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "lava-rock",
       "source_path": "assets/lava-rock.ts",
       "catalog_source_ids": [
@@ -12011,6 +12041,11 @@
       "catalog_source_ids": [
         "nature/plants/lichen"
       ]
+    },
+    {
+      "id": "lighthouse",
+      "source_path": "assets/lighthouse.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "living-statue",
@@ -12177,6 +12212,11 @@
       ]
     },
     {
+      "id": "marble-floor",
+      "source_path": "assets/marble-floor.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "market-cart",
       "source_path": "assets/market-cart.ts",
       "catalog_source_ids": [
@@ -12334,6 +12374,11 @@
       "catalog_source_ids": [
         "nature/plants/moss"
       ]
+    },
+    {
+      "id": "mountain-peak",
+      "source_path": "assets/mountain-peak.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "mug",
@@ -13199,6 +13244,16 @@
       ]
     },
     {
+      "id": "rock-wall-red",
+      "source_path": "assets/rock-wall-red.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "rock-wall",
+      "source_path": "assets/rock-wall.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "rogue-dagger",
       "source_path": "assets/rogue-dagger.ts",
       "catalog_source_ids": []
@@ -13298,6 +13353,11 @@
       ]
     },
     {
+      "id": "ruined-house",
+      "source_path": "assets/ruined-house.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "rune-smith",
       "source_path": "assets/rune-smith.ts",
       "catalog_source_ids": [
@@ -13351,6 +13411,16 @@
       "catalog_source_ids": [
         "nature/terrain/sand-dune"
       ]
+    },
+    {
+      "id": "sandstone-house",
+      "source_path": "assets/sandstone-house.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sandstone-wall",
+      "source_path": "assets/sandstone-wall.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "sarcophagus",
@@ -13424,6 +13494,16 @@
       ]
     },
     {
+      "id": "sea-water",
+      "source_path": "assets/sea-water.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sewer-water",
+      "source_path": "assets/sewer-water.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "shaman-cap",
       "source_path": "assets/shaman-cap.ts",
       "catalog_source_ids": []
@@ -13487,6 +13567,11 @@
       "catalog_source_ids": [
         "heroes/martial/shield-maiden"
       ]
+    },
+    {
+      "id": "shipwreck-hull",
+      "source_path": "assets/shipwreck-hull.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "shop-stall",
@@ -14254,6 +14339,11 @@
       ]
     },
     {
+      "id": "waterfall-sheet",
+      "source_path": "assets/waterfall-sheet.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "watermill",
       "source_path": "assets/watermill.ts",
       "catalog_source_ids": [
@@ -14266,6 +14356,11 @@
       "catalog_source_ids": [
         "items/consumables/waterskin"
       ]
+    },
+    {
+      "id": "weapon-rack",
+      "source_path": "assets/weapon-rack.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "well-apron",
@@ -14484,6 +14579,476 @@
       "source_present": true
     },
     {
+      "id": "abandoned-fort",
+      "source_path": "scenes/maps/abandoned-fort.ts",
+      "source_present": true
+    },
+    {
+      "id": "alchemy-lab",
+      "source_path": "scenes/maps/alchemy-lab.ts",
+      "source_present": true
+    },
+    {
+      "id": "ancient-ruin",
+      "source_path": "scenes/maps/ancient-ruin.ts",
+      "source_present": true
+    },
+    {
+      "id": "apothecary",
+      "source_path": "scenes/maps/apothecary.ts",
+      "source_present": true
+    },
+    {
+      "id": "arcane-sanctum",
+      "source_path": "scenes/maps/arcane-sanctum.ts",
+      "source_present": true
+    },
+    {
+      "id": "archive",
+      "source_path": "scenes/maps/archive.ts",
+      "source_present": true
+    },
+    {
+      "id": "arena",
+      "source_path": "scenes/maps/arena.ts",
+      "source_present": true
+    },
+    {
+      "id": "armory",
+      "source_path": "scenes/maps/armory.ts",
+      "source_present": true
+    },
+    {
+      "id": "bakery",
+      "source_path": "scenes/maps/bakery.ts",
+      "source_present": true
+    },
+    {
+      "id": "bandit-camp",
+      "source_path": "scenes/maps/bandit-camp.ts",
+      "source_present": true
+    },
+    {
+      "id": "bank",
+      "source_path": "scenes/maps/bank.ts",
+      "source_present": true
+    },
+    {
+      "id": "barracks",
+      "source_path": "scenes/maps/barracks.ts",
+      "source_present": true
+    },
+    {
+      "id": "bathhouse",
+      "source_path": "scenes/maps/bathhouse.ts",
+      "source_present": true
+    },
+    {
+      "id": "beach",
+      "source_path": "scenes/maps/beach.ts",
+      "source_present": true
+    },
+    {
+      "id": "boss-arena",
+      "source_path": "scenes/maps/boss-arena.ts",
+      "source_present": true
+    },
+    {
+      "id": "bridge",
+      "source_path": "scenes/maps/bridge.ts",
+      "source_present": true
+    },
+    {
+      "id": "canyon",
+      "source_path": "scenes/maps/canyon.ts",
+      "source_present": true
+    },
+    {
+      "id": "castle",
+      "source_path": "scenes/maps/castle.ts",
+      "source_present": true
+    },
+    {
+      "id": "catacombs",
+      "source_path": "scenes/maps/catacombs.ts",
+      "source_present": true
+    },
+    {
+      "id": "cathedral",
+      "source_path": "scenes/maps/cathedral.ts",
+      "source_present": true
+    },
+    {
+      "id": "cave",
+      "source_path": "scenes/maps/cave.ts",
+      "source_present": true
+    },
+    {
+      "id": "cemetery",
+      "source_path": "scenes/maps/cemetery.ts",
+      "source_present": true
+    },
+    {
+      "id": "city",
+      "source_path": "scenes/maps/city.ts",
+      "source_present": true
+    },
+    {
+      "id": "clearing",
+      "source_path": "scenes/maps/clearing.ts",
+      "source_present": true
+    },
+    {
+      "id": "cliff-village",
+      "source_path": "scenes/maps/cliff-village.ts",
+      "source_present": true
+    },
+    {
+      "id": "cliff",
+      "source_path": "scenes/maps/cliff.ts",
+      "source_present": true
+    },
+    {
+      "id": "coast",
+      "source_path": "scenes/maps/coast.ts",
+      "source_present": true
+    },
+    {
+      "id": "coral-reef",
+      "source_path": "scenes/maps/coral-reef.ts",
+      "source_present": true
+    },
+    {
+      "id": "courthouse",
+      "source_path": "scenes/maps/courthouse.ts",
+      "source_present": true
+    },
+    {
+      "id": "crypt",
+      "source_path": "scenes/maps/crypt.ts",
+      "source_present": true
+    },
+    {
+      "id": "crystal-cave",
+      "source_path": "scenes/maps/crystal-cave.ts",
+      "source_present": true
+    },
+    {
+      "id": "desert-city",
+      "source_path": "scenes/maps/desert-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "desert-oasis",
+      "source_path": "scenes/maps/desert-oasis.ts",
+      "source_present": true
+    },
+    {
+      "id": "floating-city",
+      "source_path": "scenes/maps/floating-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "forest-village",
+      "source_path": "scenes/maps/forest-village.ts",
+      "source_present": true
+    },
+    {
+      "id": "fortified-city",
+      "source_path": "scenes/maps/fortified-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "fortress",
+      "source_path": "scenes/maps/fortress.ts",
+      "source_present": true
+    },
+    {
+      "id": "gatehouse",
+      "source_path": "scenes/maps/gatehouse.ts",
+      "source_present": true
+    },
+    {
+      "id": "general-store",
+      "source_path": "scenes/maps/general-store.ts",
+      "source_present": true
+    },
+    {
+      "id": "glacier",
+      "source_path": "scenes/maps/glacier.ts",
+      "source_present": true
+    },
+    {
+      "id": "goblin-camp",
+      "source_path": "scenes/maps/goblin-camp.ts",
+      "source_present": true
+    },
+    {
+      "id": "granary",
+      "source_path": "scenes/maps/granary.ts",
+      "source_present": true
+    },
+    {
+      "id": "grassland",
+      "source_path": "scenes/maps/grassland.ts",
+      "source_present": true
+    },
+    {
+      "id": "grove",
+      "source_path": "scenes/maps/grove.ts",
+      "source_present": true
+    },
+    {
+      "id": "guild-hall",
+      "source_path": "scenes/maps/guild-hall.ts",
+      "source_present": true
+    },
+    {
+      "id": "harbor",
+      "source_path": "scenes/maps/harbor.ts",
+      "source_present": true
+    },
+    {
+      "id": "ice-cave",
+      "source_path": "scenes/maps/ice-cave.ts",
+      "source_present": true
+    },
+    {
+      "id": "inn",
+      "source_path": "scenes/maps/inn.ts",
+      "source_present": true
+    },
+    {
+      "id": "island",
+      "source_path": "scenes/maps/island.ts",
+      "source_present": true
+    },
+    {
+      "id": "labyrinth",
+      "source_path": "scenes/maps/labyrinth.ts",
+      "source_present": true
+    },
+    {
+      "id": "lake-shore",
+      "source_path": "scenes/maps/lake-shore.ts",
+      "source_present": true
+    },
+    {
+      "id": "lava-cave",
+      "source_path": "scenes/maps/lava-cave.ts",
+      "source_present": true
+    },
+    {
+      "id": "library",
+      "source_path": "scenes/maps/library.ts",
+      "source_present": true
+    },
+    {
+      "id": "lighthouse",
+      "source_path": "scenes/maps/lighthouse.ts",
+      "source_present": true
+    },
+    {
+      "id": "market-square",
+      "source_path": "scenes/maps/market-square.ts",
+      "source_present": true
+    },
+    {
+      "id": "marsh",
+      "source_path": "scenes/maps/marsh.ts",
+      "source_present": true
+    },
+    {
+      "id": "mausoleum",
+      "source_path": "scenes/maps/mausoleum.ts",
+      "source_present": true
+    },
+    {
+      "id": "meadow",
+      "source_path": "scenes/maps/meadow.ts",
+      "source_present": true
+    },
+    {
+      "id": "mill",
+      "source_path": "scenes/maps/mill.ts",
+      "source_present": true
+    },
+    {
+      "id": "mine",
+      "source_path": "scenes/maps/mine.ts",
+      "source_present": true
+    },
+    {
+      "id": "monastery",
+      "source_path": "scenes/maps/monastery.ts",
+      "source_present": true
+    },
+    {
+      "id": "mountain-city",
+      "source_path": "scenes/maps/mountain-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "mountain-pass",
+      "source_path": "scenes/maps/mountain-pass.ts",
+      "source_present": true
+    },
+    {
+      "id": "observatory",
+      "source_path": "scenes/maps/observatory.ts",
+      "source_present": true
+    },
+    {
+      "id": "orc-camp",
+      "source_path": "scenes/maps/orc-camp.ts",
+      "source_present": true
+    },
+    {
+      "id": "palace",
+      "source_path": "scenes/maps/palace.ts",
+      "source_present": true
+    },
+    {
+      "id": "pirate-cove",
+      "source_path": "scenes/maps/pirate-cove.ts",
+      "source_present": true
+    },
+    {
+      "id": "port-city",
+      "source_path": "scenes/maps/port-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "portal-chamber",
+      "source_path": "scenes/maps/portal-chamber.ts",
+      "source_present": true
+    },
+    {
+      "id": "prison",
+      "source_path": "scenes/maps/prison.ts",
+      "source_present": true
+    },
+    {
+      "id": "quarry",
+      "source_path": "scenes/maps/quarry.ts",
+      "source_present": true
+    },
+    {
+      "id": "riverbank",
+      "source_path": "scenes/maps/riverbank.ts",
+      "source_present": true
+    },
+    {
+      "id": "ruined-city",
+      "source_path": "scenes/maps/ruined-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "school",
+      "source_path": "scenes/maps/school.ts",
+      "source_present": true
+    },
+    {
+      "id": "sewer",
+      "source_path": "scenes/maps/sewer.ts",
+      "source_present": true
+    },
+    {
+      "id": "shipwreck",
+      "source_path": "scenes/maps/shipwreck.ts",
+      "source_present": true
+    },
+    {
+      "id": "shrine",
+      "source_path": "scenes/maps/shrine.ts",
+      "source_present": true
+    },
+    {
+      "id": "stable",
+      "source_path": "scenes/maps/stable.ts",
+      "source_present": true
+    },
+    {
+      "id": "swamp",
+      "source_path": "scenes/maps/swamp.ts",
+      "source_present": true
+    },
+    {
+      "id": "temple",
+      "source_path": "scenes/maps/temple.ts",
+      "source_present": true
+    },
+    {
+      "id": "theater",
+      "source_path": "scenes/maps/theater.ts",
+      "source_present": true
+    },
+    {
+      "id": "throne-room",
+      "source_path": "scenes/maps/throne-room.ts",
+      "source_present": true
+    },
+    {
+      "id": "tomb",
+      "source_path": "scenes/maps/tomb.ts",
+      "source_present": true
+    },
+    {
+      "id": "town-hall",
+      "source_path": "scenes/maps/town-hall.ts",
+      "source_present": true
+    },
+    {
+      "id": "town",
+      "source_path": "scenes/maps/town.ts",
+      "source_present": true
+    },
+    {
+      "id": "treasure-vault",
+      "source_path": "scenes/maps/treasure-vault.ts",
+      "source_present": true
+    },
+    {
+      "id": "tundra",
+      "source_path": "scenes/maps/tundra.ts",
+      "source_present": true
+    },
+    {
+      "id": "underground-city",
+      "source_path": "scenes/maps/underground-city.ts",
+      "source_present": true
+    },
+    {
+      "id": "volcanic-field",
+      "source_path": "scenes/maps/volcanic-field.ts",
+      "source_present": true
+    },
+    {
+      "id": "warehouse",
+      "source_path": "scenes/maps/warehouse.ts",
+      "source_present": true
+    },
+    {
+      "id": "watchtower",
+      "source_path": "scenes/maps/watchtower.ts",
+      "source_present": true
+    },
+    {
+      "id": "waterfall",
+      "source_path": "scenes/maps/waterfall.ts",
+      "source_present": true
+    },
+    {
+      "id": "witch-hut",
+      "source_path": "scenes/maps/witch-hut.ts",
+      "source_present": true
+    },
+    {
+      "id": "wizard-tower",
+      "source_path": "scenes/maps/wizard-tower.ts",
+      "source_present": true
+    },
+    {
       "id": "old-oak-clearing",
       "source_path": "scenes/old-oak-clearing.ts",
       "source_present": true
@@ -14507,6 +15072,10 @@
   "source_files": [
     {
       "source_path": "src/apk3d/audio/bus.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/audio/clip.ts",
       "source_present": true
     },
     {

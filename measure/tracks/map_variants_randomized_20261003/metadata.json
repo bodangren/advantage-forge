@@ -1,0 +1,20 @@
+{
+  "track_id": "map_variants_randomized_20261003",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-03T00:00:00Z",
+  "updated_at": "2026-10-03T00:00:00Z",
+  "description": "Piece color variants in maps and seeded randomized maps for the main map types",
+  "estimated_tasks": 12,
+  "actual_tasks": null,
+  "deviation_notes": "None.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "scenes/chibi-quest.ts",
+    "scripts/design-cliff-village.mjs",
+    "docs/map-review.html",
+    "bench/sonnet/briefs/map-p2-rules.md"
+  ],
+  "dependencies": []
+}

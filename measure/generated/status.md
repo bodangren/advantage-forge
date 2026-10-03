@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 75.
-Tracks by status: new: 37; in_progress: 13; completed: 25.
-Tracks by workstream: assets: 30; games: 38; foundation: 7.
+Tracks: 76.
+Tracks by status: new: 38; in_progress: 13; completed: 25.
+Tracks by workstream: assets: 31; games: 38; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -77,6 +77,7 @@ Tracks by workstream: assets: 30; games: 38; foundation: 7.
 | [history_forge_engine_20260928](../tracks/history_forge_engine_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_recolors_sprites_20260928](../tracks/history_recolors_sprites_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_six_games_20260928](../tracks/history_six_games_20260928/) | completed | games | 3/3 | — | — |
+| [map_variants_randomized_20261003](../tracks/map_variants_randomized_20261003/) | new | assets | 0/15 | 12 | — |
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
 | [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | in_progress | foundation | 14/17 | 17 | 14 |

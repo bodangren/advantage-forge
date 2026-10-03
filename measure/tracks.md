@@ -197,6 +197,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Rewrite Paladins Twin Soul as a dual renderer game**
   *Link: [./tracks/game_paladins_twin_soul_20260928/](./tracks/game_paladins_twin_soul_20260928/)*
 
+- [ ] **Track: Map variants and randomized maps**
+  *Link: [./tracks/map_variants_randomized_20261003/](./tracks/map_variants_randomized_20261003/)*
+
 - [~] **Track: Port the dual renderer into the monorepo**
   *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
 

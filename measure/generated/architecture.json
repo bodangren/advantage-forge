@@ -72,7 +72,7 @@
   "source_roots": [
     {
       "path": "src/apk3d",
-      "typescript_files": 56
+      "typescript_files": 57
     },
     {
       "path": "src/cli",
