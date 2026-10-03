@@ -715,3 +715,6 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	library	map-p2	medium	maps-rest	0	0				7.0	pass	commit 19c4f92 says 7.0 after 1 feedback; orchestrator viewed 3q; log row 6.5 was the first pass
 2026-10-03	mountain-city	map-p2	medium	maps-rest	72000	3				7.0	pass	second pass with mountain-peak; orchestrator viewed 3q; peaks bulky, hide temple
 2026-10-03	abandoned-fort	map-p2	medium	maps-rest	45000	12				7.0	pass	rework with rock-wall and ruined-house; orchestrator viewed 3q; tower does not lean, flat orange court
+2026-10-03	canyon	map-p2	medium	maps-rest	53000	5				7.0	pass	third pass terraces with rock-wall-red and dry-riverbed; orchestrator replaced checkered dirt by desert-ground and viewed 3q; brick-like walls
+2026-10-03	palace	map-p2	medium	maps-rest	62000	7				7.0	pass	rework with dome-pavilion, sandstone-house; orchestrator viewed 3q; red-roofed gate towers clash
+2026-10-03	island	map-p2	medium	maps-rest	52000	12				7.0	pass	agent 7.3 rework with raised hill; orchestrator viewed 3q; rectangular hill, dense palms

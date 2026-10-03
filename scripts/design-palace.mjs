@@ -38,28 +38,29 @@ for (let c = 0; c < 14; c++)
   }
 
 // ---- Palace: two wings, central domed block -----------------------------
-rect('sandstone-wall', -13, -11, -3, -3, [], [-9], [], []);   // west wing
-rect('sandstone-wall', 3, -11, 13, -3, [], [11], [], []); // east wing (gap mid south)
-// internal wall dividing each wing into two rooms
-runX('sandstone-wall', -13, -3, -7, [-9]); runZ('sandstone-wall', -11, -3, -8, [-5]);
-runX('sandstone-wall', 3, 13, -7, [11]); runZ('sandstone-wall', -11, -3, 8, [-5]);
-// central block: dome between wings, towers flank
-put('greenhouse-dome', 0, -7.4, { scale: 1.5 });
-put('tower', -3.6, -9.6, { scale: 0.9 }); put('tower', 3.6, -9.6, { scale: 0.9 });
+// two-course continuous wing walls (second course at y=1.5), houses inside, pavilions
+const course = (asset, x0, z0, x1, z1) => {
+  for (const y of [0, 1.5]) {
+    for (let x = x0 + 1; x < x1; x += 2) { put(asset, x, z0, { y }); put(asset, x, z1, { y }); }
+    for (let z = z0 + 1; z < z1; z += 2) { put(asset, x0, z, { y, yaw: 90 }); put(asset, x1, z, { y, yaw: 90 }); }
+  }
+};
+course('sandstone-wall', -13, -11, -3, -3);
+course('sandstone-wall', 3, -11, 13, -3);
+put('sandstone-house', -7, -8.6); put('sandstone-house', 7, -8.6);
+put('dome-pavilion', 0, -7.6, { scale: 1.4 });
+put('dome-pavilion', -11, -5, { scale: 1.0 }); put('dome-pavilion', 11, -5, { scale: 1.0 });
 runX('sandstone-wall', -3, 3, -11, []);
 runX('sandstone-wall', -3, 3, -3, [0]);
 put('wall-gate', 0, -3.0, { scale: 0.6 });
-for (const [x, z] of [[-13, -11], [-3, -11], [3, -11], [13, -11], [-13, -3], [-3, -3], [3, -3], [13, -3], [-8, -11], [8, -11], [-8, -3], [8, -3]]) put('column', x, z);
-// wing interiors: garden room (grass) and rooms with banners and statues
-for (const [x, z] of [[-10, -9], [-10, -8], [10, -9], [10, -8]]) put('bush', x, z);
-put('statue', -5, -5); put('statue', 5, -5); put('statue', -10, -5); put('statue', 10, -5);
-for (const x of [-11, -5, 5, 11]) put('banner', x, -2.7);
-put('throne', 0, -9.6, { scale: 0.7 });
-put('royal-seal', 0, -5.2);
+for (const [x, z] of [[-13, -11], [-3, -11], [3, -11], [13, -11], [-13, -3], [-3, -3], [3, -3], [13, -3]]) put('column', x, z);
+put('statue', -5, -4.8); put('statue', 5, -4.8);
+for (const x of [-9, -5, 5, 9]) put('banner', x, -2.7);
 put('lantern', -6, -2.5); put('lantern', 6, -2.5);
 
 // ---- Fountain court -----------------------------------------------------
 put('fountain', 0, 0, { scale: 1.6 });
+for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; put('fountain', Math.cos(a) * 2.6, Math.sin(a) * 2.6, { scale: 0.3 }); }
 for (const [x, z] of [[-3.6, -2.6], [3.6, -2.6], [-3.6, 2.6], [3.6, 2.6]]) put('lantern', x, z);
 for (const [x, z] of [[-2.8, 0], [2.8, 0]]) put('statue', x, z, { yaw: x < 0 ? 90 : 270 });
 for (const [x, z] of [[-4.5, -1.5], [4.5, -1.5], [-4.5, 1.5], [4.5, 1.5]]) put('bush', x, z, { scale: 0.8 });
@@ -67,14 +68,13 @@ for (const [x, z] of [[-4.5, -1.5], [4.5, -1.5], [-4.5, 1.5], [4.5, 1.5]]) put('
 // ---- Hedge gardens ------------------------------------------------------
 for (const [x0, z0, x1, z1] of beds) {
   rect('hedge', x0, z0, x1, z1, [], [], [], []);
-  for (let x = x0 + 1.5; x < x1; x += 2.4) for (let z = z0 + 2; z < z1; z += 2.4) put('bush', x, z, { scale: 0.9 });
 }
 put('statue', -9, 5.9, { yaw: 180 }); put('statue', 9, 5.9, { yaw: 180 });
 
 
 // ---- Approach road and gate ---------------------------------------------
 for (const z of [5, 9]) { put('lantern', -1.6, z); put('lantern', 1.6, z); }
-for (const z of [6, 9]) { put('banner', -2.4, z); put('banner', 2.4, z); }
+
 put('wall-gate', 0, 10.6, { yaw: 180, scale: 0.9 });
 put('tower', -4, 10.3, { scale: 0.8 }); put('tower', 4, 10.3, { scale: 0.8 });
 put('guard', -1.2, 9.2, { yaw: 180 }); put('guard', 1.2, 9.2, { yaw: 180 });
