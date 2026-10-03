@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 77.
-Tracks by status: new: 13; in_progress: 39; completed: 25.
+Tracks by status: new: 12; in_progress: 40; completed: 25.
 Tracks by workstream: assets: 31; games: 39; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -53,7 +53,7 @@ Tracks by workstream: assets: 31; games: 39; foundation: 7.
 | [game_labyrinth_goblin_king_20260928](../tracks/game_labyrinth_goblin_king_20260928/) | in_progress | games | 5/7 | 7 | — |
 | [game_magic_defense_20260928](../tracks/game_magic_defense_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_model_packs_20260928](../tracks/game_model_packs_20260928/) | in_progress | games | 6/9 | 8 | — |
-| [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | new | games | 1/6 | 6 | — |
+| [game_monster_encounters_port_20260928](../tracks/game_monster_encounters_port_20260928/) | in_progress | games | 1/6 | 6 | — |
 | [game_paladins_twin_soul_20260928](../tracks/game_paladins_twin_soul_20260928/) | in_progress | games | 5/8 | 8 | — |
 | [game_platform_port_20260928](../tracks/game_platform_port_20260928/) | in_progress | games | 6/12 | 10 | — |
 | [game_potion_rush_port_20260928](../tracks/game_potion_rush_port_20260928/) | in_progress | games | 1/6 | 6 | — |
