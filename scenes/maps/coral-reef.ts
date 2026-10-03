@@ -3,7 +3,7 @@ import type { Place } from '../chibi-quest.js';
 export function places(): Place[] {
   return [
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -10,
         0,
@@ -11,7 +11,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -8,
         0,
@@ -19,7 +19,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -6,
         0,
@@ -27,7 +27,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -4,
         0,
@@ -35,7 +35,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -2,
         0,
@@ -43,7 +43,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         0,
         0,
@@ -75,7 +75,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         8,
         0,
@@ -91,7 +91,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -10,
         0,
@@ -123,7 +123,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -2,
         0,
@@ -179,7 +179,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -10,
         0,
@@ -211,7 +211,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -2,
         0,
@@ -227,7 +227,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         2,
         0,
@@ -235,7 +235,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -243,7 +243,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -251,7 +251,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         8,
         0,
@@ -299,7 +299,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -2,
         0,
@@ -315,7 +315,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         2,
         0,
@@ -323,7 +323,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -331,7 +331,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -339,7 +339,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         8,
         0,
@@ -347,7 +347,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         10,
         0,
@@ -379,7 +379,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -4,
         0,
@@ -387,7 +387,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -2,
         0,
@@ -411,7 +411,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -419,7 +419,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -467,7 +467,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -4,
         0,
@@ -475,7 +475,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -2,
         0,
@@ -499,7 +499,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -507,7 +507,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -515,7 +515,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         8,
         0,
@@ -523,7 +523,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         10,
         0,
@@ -531,7 +531,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -10,
         0,
@@ -539,7 +539,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -8,
         0,
@@ -547,7 +547,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -6,
         0,
@@ -555,7 +555,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -4,
         0,
@@ -563,7 +563,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         -2,
         0,
@@ -571,7 +571,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         0,
         0,
@@ -587,7 +587,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -595,7 +595,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -603,7 +603,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         8,
         0,
@@ -651,7 +651,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -2,
         0,
@@ -675,7 +675,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         4,
         0,
@@ -683,7 +683,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "sea-water",
+      "asset": "desert-ground",
       "at": [
         6,
         0,
@@ -731,7 +731,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         -4,
         0,
@@ -755,7 +755,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         2,
         0,
@@ -787,7 +787,7 @@ export function places(): Place[] {
       ]
     },
     {
-      "asset": "desert-ground",
+      "asset": "sea-water",
       "at": [
         10,
         0,
@@ -797,88 +797,1377 @@ export function places(): Place[] {
     {
       "asset": "boulder",
       "at": [
-        -7.6,
+        -8.9,
         0,
-        -3.6
+        -6.75
+      ],
+      "scale": 0.7722675809507573
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.9,
+        0,
+        -6
+      ],
+      "yaw": 104,
+      "scale": 0.9052754617320725
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -8.9,
+        0,
+        -5.25
+      ],
+      "yaw": 262,
+      "scale": 0.4065428608593265
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -8.75,
+        0,
+        -6.9
+      ],
+      "yaw": 118,
+      "scale": 0.9008212072312931
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -8,
+        0,
+        -6.9
+      ],
+      "yaw": 271,
+      "scale": 0.6399975950550277
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.25,
+        0,
+        -6.9
+      ],
+      "yaw": 246,
+      "scale": 1.117957302237841
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -6.75,
+        0,
+        -6.9
+      ],
+      "yaw": 293,
+      "scale": 0.348400954738446
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -6,
+        0,
+        -6.9
+      ],
+      "yaw": 134,
+      "scale": 0.8831605413384551
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -5.25,
+        0,
+        -6.9
+      ],
+      "yaw": 251,
+      "scale": 0.4688605562173112
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.1,
+        0,
+        -6.75
+      ],
+      "yaw": 246,
+      "scale": 1.0339478313149641
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -3.1,
+        0,
+        -6
+      ],
+      "yaw": 331,
+      "scale": 0.46148179730469446
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -3.1,
+        0,
+        -5.25
+      ],
+      "yaw": 44,
+      "scale": 0.8052221852379023
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -4.75,
+        0,
+        -6.9
+      ],
+      "yaw": 331,
+      "scale": 0.6909755050861163
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -4,
+        0,
+        -6.9
+      ],
+      "yaw": 231,
+      "scale": 1.0887163680459915
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -3.25,
+        0,
+        -6.9
+      ],
+      "yaw": 327,
+      "scale": 0.4816668322224481
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        6.9,
+        0,
+        -6.75
+      ],
+      "yaw": 134,
+      "scale": 0.734154511119311
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        6.9,
+        0,
+        -6
+      ],
+      "yaw": 301,
+      "scale": 0.5662880585837589
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.9,
+        0,
+        -5.25
+      ],
+      "yaw": 55,
+      "scale": 0.9488197914552037
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        5.1,
+        0,
+        -6.75
+      ],
+      "yaw": 154,
+      "scale": 0.3589746803319895
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        5.1,
+        0,
+        -6
+      ],
+      "yaw": 336,
+      "scale": 0.8229482780317535
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        5.1,
+        0,
+        -5.25
+      ],
+      "yaw": 262,
+      "scale": 0.7572482012246029
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.25,
+        0,
+        -6.9
+      ],
+      "yaw": 21,
+      "scale": 0.9367454224437222
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        6,
+        0,
+        -6.9
+      ],
+      "yaw": 201,
+      "scale": 0.40176023612812173
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        6.75,
+        0,
+        -6.9
+      ],
+      "yaw": 151,
+      "scale": 0.6771799600111227
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -8.9,
+        0,
+        -4.75
+      ],
+      "yaw": 326,
+      "scale": 0.46920794384517145
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.9,
+        0,
+        -4
+      ],
+      "yaw": 131,
+      "scale": 0.9720611775163847
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -8.9,
+        0,
+        -3.25
+      ],
+      "yaw": 239,
+      "scale": 0.4848695764247652
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -3.1,
+        0,
+        -4.75
+      ],
+      "yaw": 185,
+      "scale": 0.6662201611633506
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -3.1,
+        0,
+        -4
+      ],
+      "yaw": 146,
+      "scale": 0.5492579020556332
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.1,
+        0,
+        -3.25
+      ],
+      "yaw": 131,
+      "scale": 1.0119751464165632
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        1.1,
+        0,
+        -4.75
+      ],
+      "yaw": 119,
+      "scale": 0.40633205264170286
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        1.1,
+        0,
+        -4
+      ],
+      "yaw": 220,
+      "scale": 0.6932922352539805
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        1.1,
+        0,
+        -3.25
+      ],
+      "yaw": 325,
+      "scale": 0.61024287820805
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        1.25,
+        0,
+        -4.9
+      ],
+      "yaw": 310,
+      "scale": 1.1175651320803748
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        2,
+        0,
+        -4.9
+      ],
+      "yaw": 228,
+      "scale": 0.4032487052973587
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        2.75,
+        0,
+        -4.9
+      ],
+      "yaw": 181,
+      "scale": 0.8755980144606894
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        3.25,
+        0,
+        -4.9
+      ],
+      "yaw": 337,
+      "scale": 0.5888527328562237
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4,
+        0,
+        -4.9
+      ],
+      "yaw": 254,
+      "scale": 0.9255603873289937
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        4.75,
+        0,
+        -4.9
+      ],
+      "yaw": 211,
+      "scale": 0.37011757719801625
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        8.9,
+        0,
+        -4.75
+      ],
+      "yaw": 119,
+      "scale": 0.7565727309121624
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8.9,
+        0,
+        -4
+      ],
+      "yaw": 285,
+      "scale": 0.7571451702188445
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.9,
+        0,
+        -3.25
+      ],
+      "yaw": 40,
+      "scale": 1.2095935541715443
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        7.25,
+        0,
+        -4.9
+      ],
+      "yaw": 28,
+      "scale": 0.38136078504908866
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        8,
+        0,
+        -4.9
+      ],
+      "yaw": 55,
+      "scale": 0.6311535956483117
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8.75,
+        0,
+        -4.9
+      ],
+      "yaw": 358,
+      "scale": 0.5270019234516667
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -10,
+        0,
+        -2.9
+      ],
+      "yaw": 227,
+      "scale": 0.8721264088396572
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -9.25,
+        0,
+        -2.9
+      ],
+      "yaw": 164,
+      "scale": 0.41858318313890286
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.1,
+        0,
+        -2.75
+      ],
+      "yaw": 49,
+      "scale": 0.9687483683082966
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -1.1,
+        0,
+        -2
+      ],
+      "yaw": 318,
+      "scale": 0.7617010666577617
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -1.1,
+        0,
+        -1.25
+      ],
+      "yaw": 318,
+      "scale": 1.2538811545138626
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -2.75,
+        0,
+        -2.9
+      ],
+      "yaw": 273,
+      "scale": 0.35508431589933315
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -2,
+        0,
+        -2.9
+      ],
+      "yaw": 4,
+      "scale": 0.6993175710082602
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -1.25,
+        0,
+        -2.9
+      ],
+      "yaw": 27,
+      "scale": 0.45055428654912594
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        1.1,
+        0,
+        -2.75
+      ],
+      "yaw": 221,
+      "scale": 0.915688140325103
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        1.1,
+        0,
+        -2
+      ],
+      "yaw": 266,
+      "scale": 0.3978721666605548
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        1.1,
+        0,
+        -1.25
+      ],
+      "yaw": 247,
+      "scale": 0.6952194225486459
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        1.25,
+        0,
+        -1.1
+      ],
+      "yaw": 317,
+      "scale": 0.5323068293427615
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        2,
+        0,
+        -1.1
+      ],
+      "yaw": 134,
+      "scale": 1.2471386437989487
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        2.75,
+        0,
+        -1.1
+      ],
+      "yaw": 42,
+      "scale": 0.3978521207803172
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        9.25,
+        0,
+        -2.9
+      ],
+      "yaw": 1,
+      "scale": 0.965196333250588
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        10,
+        0,
+        -2.9
+      ],
+      "yaw": 229,
+      "scale": 0.7727409620409557
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -1.1,
+        0,
+        -0.75
+      ],
+      "yaw": 8,
+      "scale": 1.250026421551605
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -1.1,
+        0,
+        0
+      ],
+      "yaw": 68,
+      "scale": 0.49374743001244376
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.1,
+        0,
+        0.75
+      ],
+      "yaw": 203,
+      "scale": 0.8717502533792286
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        3.1,
+        0,
+        -0.75
+      ],
+      "yaw": 96,
+      "scale": 0.5279718645280096
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.1,
+        0,
+        0
+      ],
+      "yaw": 75,
+      "scale": 1.082205400887041
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        3.1,
+        0,
+        0.75
+      ],
+      "yaw": 19,
+      "scale": 0.45388469926728153
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -10,
+        0,
+        2.9
+      ],
+      "yaw": 252,
+      "scale": 0.8856309439454372
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -9.25,
+        0,
+        2.9
+      ],
+      "yaw": 179,
+      "scale": 0.46145585810833417
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -1.1,
+        0,
+        1.25
+      ],
+      "yaw": 40,
+      "scale": 1.2595148081237055
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -1.1,
+        0,
+        2
+      ],
+      "yaw": 47,
+      "scale": 0.43757235702945496
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.1,
+        0,
+        2.75
+      ],
+      "yaw": 321,
+      "scale": 0.6148243740270027
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        3.1,
+        0,
+        1.25
+      ],
+      "yaw": 317,
+      "scale": 0.7514783993835926
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.1,
+        0,
+        2
+      ],
+      "yaw": 356,
+      "scale": 1.27714538242535
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        3.1,
+        0,
+        2.75
+      ],
+      "yaw": 275,
+      "scale": 0.3839203690569477
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        9.25,
+        0,
+        2.9
+      ],
+      "yaw": 89,
+      "scale": 0.8910663941367838
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        10,
+        0,
+        2.9
+      ],
+      "yaw": 317,
+      "scale": 0.5894051384364278
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.9,
+        0,
+        3.25
+      ],
+      "yaw": 84,
+      "scale": 1.002442047513296
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -8.9,
+        0,
+        4
+      ],
+      "yaw": 318,
+      "scale": 0.4117552381529264
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -8.9,
+        0,
+        4.75
+      ],
+      "yaw": 126,
+      "scale": 0.8486043884645237
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -8.75,
+        0,
+        4.9
+      ],
+      "yaw": 264,
+      "scale": 0.5672579175174506
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8,
+        0,
+        4.9
+      ],
+      "yaw": 260,
+      "scale": 1.0113761714246945
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -7.25,
+        0,
+        4.9
+      ],
+      "yaw": 71,
+      "scale": 0.36234289857668006
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -4.75,
+        0,
+        4.9
+      ],
+      "yaw": 354,
+      "scale": 0.9976588899258798
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -4,
+        0,
+        4.9
+      ],
+      "yaw": 227,
+      "scale": 0.7552669371037124
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.25,
+        0,
+        4.9
+      ],
+      "yaw": 330,
+      "scale": 0.899769298965004
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -1.1,
+        0,
+        3.25
+      ],
+      "yaw": 232,
+      "scale": 0.32707797280842343
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.1,
+        0,
+        4
+      ],
+      "yaw": 179,
+      "scale": 0.8229492806936378
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -1.1,
+        0,
+        4.75
+      ],
+      "yaw": 277,
+      "scale": 0.7810179523569616
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -2.75,
+        0,
+        4.9
+      ],
+      "yaw": 173,
+      "scale": 0.8935754944074785
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -2,
+        0,
+        4.9
+      ],
+      "yaw": 160,
+      "scale": 0.3332202369501908
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.25,
+        0,
+        4.9
+      ],
+      "yaw": 238,
+      "scale": 0.8086883208754884
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        3.1,
+        0,
+        3.25
+      ],
+      "yaw": 202,
+      "scale": 0.6273585411614546
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.1,
+        0,
+        4
+      ],
+      "yaw": 272,
+      "scale": 0.981226598416095
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        3.1,
+        0,
+        4.75
+      ],
+      "yaw": 270,
+      "scale": 0.3052037702897581
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        8.9,
+        0,
+        3.25
+      ],
+      "yaw": 107,
+      "scale": 0.8166764504353872
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8.9,
+        0,
+        4
+      ],
+      "yaw": 73,
+      "scale": 0.7030256331679531
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.9,
+        0,
+        4.75
+      ],
+      "yaw": 104,
+      "scale": 0.9178574276239879
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -5.1,
+        0,
+        5.25
+      ],
+      "yaw": 237,
+      "scale": 0.38583417995173214
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -5.1,
+        0,
+        6
+      ],
+      "yaw": 27,
+      "scale": 0.9091526832008514
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -5.1,
+        0,
+        6.75
+      ],
+      "yaw": 295,
+      "scale": 0.7704062894314557
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.9,
+        0,
+        5.25
+      ],
+      "yaw": 327,
+      "scale": 1.140452159447806
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -6.9,
+        0,
+        6
+      ],
+      "yaw": 344,
+      "scale": 0.3050426843599615
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -6.9,
+        0,
+        6.75
+      ],
+      "yaw": 274,
+      "scale": 0.8404170652108347
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -6.75,
+        0,
+        6.9
+      ],
+      "yaw": 260,
+      "scale": 0.7643697837667399
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6,
+        0,
+        6.9
+      ],
+      "yaw": 13,
+      "scale": 0.8679800163805392
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        -5.25,
+        0,
+        6.9
+      ],
+      "yaw": 29,
+      "scale": 0.3216467524979481
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        3.1,
+        0,
+        5.25
       ],
       "yaw": 30,
-      "scale": 1.7
+      "scale": 0.6037985373306081
     },
     {
       "asset": "boulder",
       "at": [
-        -4.4,
+        3.1,
         0,
-        -6.2
+        6
       ],
-      "yaw": 200,
+      "yaw": 217,
+      "scale": 0.7810119119384382
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.1,
+        0,
+        6.75
+      ],
+      "yaw": 69,
+      "scale": 0.8668234133938437
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        3.25,
+        0,
+        6.9
+      ],
+      "yaw": 73,
+      "scale": 0.4349823675746947
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        4,
+        0,
+        6.9
+      ],
+      "yaw": 87,
+      "scale": 0.7825428442016908
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        4.75,
+        0,
+        6.9
+      ],
+      "yaw": 357,
+      "scale": 0.5979107403885158
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.25,
+        0,
+        6.9
+      ],
+      "yaw": 242,
+      "scale": 1.1871719189394134
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        6,
+        0,
+        6.9
+      ],
+      "yaw": 142,
+      "scale": 0.3832874537833442
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        6.75,
+        0,
+        6.9
+      ],
+      "yaw": 22,
+      "scale": 0.6920523029249405
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8.9,
+        0,
+        5.25
+      ],
+      "yaw": 290,
+      "scale": 0.7910277474396992
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.9,
+        0,
+        6
+      ],
+      "yaw": 55,
+      "scale": 1.2627687488509198
+    },
+    {
+      "asset": "sand-dune",
+      "at": [
+        8.9,
+        0,
+        6.75
+      ],
+      "yaw": 183,
+      "scale": 0.3244327973688174
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        7.25,
+        0,
+        6.9
+      ],
+      "yaw": 75,
+      "scale": 0.8410464813192592
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8,
+        0,
+        6.9
+      ],
+      "yaw": 61,
+      "scale": 0.47732762853956207
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.75,
+        0,
+        6.9
+      ],
+      "yaw": 98,
+      "scale": 1.123274710133334
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -8.2,
+        0,
+        -4.6
+      ],
+      "yaw": 20,
       "scale": 1.8
     },
     {
       "asset": "boulder",
       "at": [
-        -9.2,
-        0,
-        -6.6
+        -8.1,
+        1.26,
+        -4.6
       ],
-      "yaw": 100,
+      "yaw": 90,
+      "scale": 1.1700000000000002
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -8.1,
+        2.16,
+        -4.6
+      ],
+      "yaw": 20,
+      "scale": 1.8
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -6,
+        0,
+        -5.6
+      ],
+      "yaw": 160,
       "scale": 1.4
     },
     {
       "asset": "boulder",
       "at": [
-        -1.6,
+        -5.9,
+        0.9799999999999999,
+        -5.6
+      ],
+      "yaw": 230,
+      "scale": 0.9099999999999999
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -5.9,
+        1.68,
+        -5.6
+      ],
+      "yaw": 160,
+      "scale": 1.8
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -2.6,
         0,
-        -7.6
+        -6.4
       ],
       "yaw": 300,
       "scale": 1.3
     },
     {
-      "asset": "rock-cluster",
+      "asset": "boulder",
       "at": [
-        -5.8,
-        0,
-        -3.4
+        -2.5,
+        0.9099999999999999,
+        -6.4
       ],
-      "yaw": 60,
-      "scale": 1.1
-    },
-    {
-      "asset": "rock-cluster",
-      "at": [
-        -2.2,
-        0,
-        -6
-      ],
-      "yaw": 160
+      "yaw": 370,
+      "scale": 0.8450000000000001
     },
     {
       "asset": "shell",
       "at": [
-        -7.6,
-        1.4,
-        -3.6
+        -2.5,
+        1.56,
+        -6.4
       ],
-      "yaw": 20,
-      "scale": 2.2
+      "yaw": 300,
+      "scale": 1.8
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8,
+        0,
+        -5.4
+      ],
+      "yaw": 80,
+      "scale": 1.6
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        8.1,
+        1.1199999999999999,
+        -5.4
+      ],
+      "yaw": 150,
+      "scale": 1.04
     },
     {
       "asset": "shell",
       "at": [
-        -4.4,
-        1.5,
-        -6.2
+        8.1,
+        1.92,
+        -5.4
       ],
-      "yaw": 200,
-      "scale": 2.2
+      "yaw": 80,
+      "scale": 1.8
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -7.4,
+        0,
+        3.2
+      ],
+      "yaw": 90,
+      "scale": 1.6
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -5,
+        0,
+        3.2
+      ],
+      "yaw": 90,
+      "scale": 1.6
+    },
+    {
+      "asset": "boulder",
+      "at": [
+        -6.2,
+        1.3,
+        3.2
+      ],
+      "scale": 1.2
     },
     {
       "asset": "rowboat",
       "at": [
-        -3.6,
+        -3,
         0,
-        -1.2
+        0.4
       ],
       "yaw": 55,
       "scale": 0.9
@@ -886,819 +2175,729 @@ export function places(): Place[] {
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -2,
-        0,
-        -8
-      ],
-      "yaw": 104,
-      "scale": 0.9684407387713161
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.093382274257999,
-        0,
-        -8.703644852871458
-      ],
-      "yaw": 118,
-      "scale": 1.4016424144625863
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0,
-        0,
-        -8
-      ],
-      "yaw": 246,
-      "scale": 1.3087316835805456
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0.25207889392505123,
-        0,
-        -8.569287953938991
-      ],
-      "yaw": 134,
-      "scale": 1.3663210826769103
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -0.18274541750816456,
-        0,
-        -8.53586217282093
-      ],
-      "yaw": 246,
-      "scale": 1.1743165301039427
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0.6988169104850623,
-        0,
-        -8.373191272150832
-      ],
-      "yaw": 44,
-      "scale": 1.2104443704758048
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8,
-        0,
-        -8
-      ],
-      "yaw": 231,
-      "scale": 1.2619461888735863
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8.698673117602825,
-        0,
-        -8.43400752671826
-      ],
-      "yaw": 134,
-      "scale": 1.068309022238622
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8.336828310305831,
-        0,
-        -8.55554020296684
-      ],
-      "yaw": 55,
-      "scale": 1.0381116663283259
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        7.425321411181043,
-        0,
-        -7.721830499207011
-      ],
-      "yaw": 336,
-      "scale": 1.2458965560635071
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2,
-        0,
-        -6
-      ],
-      "yaw": 21,
-      "scale": 1.0187926759099555
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.652734929764398,
-        0,
-        -6.260078024455705
-      ],
-      "yaw": 151,
-      "scale": 0.9543599200222455
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -1.5245831996976054,
-        0,
-        -6.307993952465532
-      ],
-      "yaw": 131,
-      "scale": 1.0752978840262155
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.425222677730141,
-        0,
-        -6.709660613315748
-      ],
-      "yaw": 185,
-      "scale": 0.9324403223267014
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        6,
-        0,
-        -6
-      ],
-      "yaw": 131,
-      "scale": 1.139160234266501
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        5.648848521991847,
-        0,
-        -5.383493581911555
-      ],
-      "yaw": 220,
-      "scale": 0.986584470507961
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        6.570995668091745,
-        0,
-        -6.3826426493453905
-      ],
-      "yaw": 310,
-      "scale": 1.3081042113285997
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2,
-        0,
-        -4
-      ],
-      "yaw": 181,
-      "scale": 1.351196028921379
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -1.3793725380760844,
-        0,
-        -4.249809531971398
-      ],
-      "yaw": 254,
-      "scale": 1.00089661972639
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.5606371793738627,
-        0,
-        -4.339031006550604
-      ],
-      "yaw": 119,
-      "scale": 1.1131454618243248
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -10,
+        -7.5,
         0,
         0
-      ],
-      "yaw": 40,
-      "scale": 1.455349686674471
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.406449964949108,
-        0,
-        0.31517883851178835
-      ],
-      "yaw": 55,
-      "scale": 0.8623071912966237
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.384223152200574,
-        0,
-        -0.016640459184809317
-      ],
-      "yaw": 227,
-      "scale": 0.9154022541434516
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -10.701317361801578,
-        0,
-        0.19482208728070466
-      ],
-      "yaw": 49,
-      "scale": 1.5374967366165933
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -8,
-        0,
-        0
-      ],
-      "yaw": 318,
-      "scale": 1.5262098472221801
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -7.9573340551343374,
-        0,
-        -0.6311860839430313
-      ],
-      "yaw": 4,
-      "scale": 0.9986351420165204
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -7.51110504860863,
-        0,
-        0.2529912355373045
-      ],
-      "yaw": 221,
-      "scale": 0.9851010245201649
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -8.040374111194328,
-        0,
-        -0.6956375984667261
-      ],
-      "yaw": 247,
-      "scale": 0.9904388450972917
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6,
-        0,
-        0
-      ],
-      "yaw": 134,
-      "scale": 1.5154218300783178
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -5.487042316736665,
-        0,
-        0.47156574190281114
-      ],
-      "yaw": 1,
-      "scale": 1.530392666501176
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6.540365304782365,
-        0,
-        -0.6255644994743341
-      ],
-      "yaw": 8,
-      "scale": 1.520042274482568
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -5.680938564672924,
-        0,
-        0.7777169857599345
-      ],
-      "yaw": 203,
-      "scale": 1.3435005067584573
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8,
-        0,
-        0
-      ],
-      "yaw": 75,
-      "scale": 1.2515286414192657
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8.73901638974794,
-        0,
-        0.2520826372030494
-      ],
-      "yaw": 252,
-      "scale": 1.3712618878908744
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        10,
-        0,
-        0
-      ],
-      "yaw": 40,
-      "scale": 1.5352236929979286
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        10.515353970787025,
-        0,
-        0.5536140524630725
-      ],
-      "yaw": 321,
-      "scale": 0.8296487480540056
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        10.598567363605735,
-        0,
-        -0.5433635347182884
-      ],
-      "yaw": 356,
-      "scale": 1.56343261188056
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -10,
-        0,
-        2
-      ],
-      "yaw": 89,
-      "scale": 1.3821327882735677
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.506900718963095,
-        0,
-        1.547153317309274
-      ],
-      "yaw": 84,
-      "scale": 1.1239072760212736
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.457142266891275,
-        0,
-        1.5306361758941431
-      ],
-      "yaw": 126,
-      "scale": 1.2972087769290475
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -10.063172011326554,
-        0,
-        1.35256785977676
-      ],
-      "yaw": 260,
-      "scale": 1.1382018742795112
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -8,
-        0,
-        2
-      ],
-      "yaw": 354,
-      "scale": 1.5953177798517597
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -8.547812088871185,
-        0,
-        1.4010929879129153
-      ],
-      "yaw": 330,
-      "scale": 0.9596308783440064
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6,
-        0,
-        2
-      ],
-      "yaw": 179,
-      "scale": 1.2458985613872757
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -5.890256482495545,
-        0,
-        1.1735246351192115
-      ],
-      "yaw": 173,
-      "scale": 0.9497207910519656
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6.56618729735049,
-        0,
-        2.198061605589201
-      ],
-      "yaw": 238,
-      "scale": 1.2173766417509768
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -10,
-        0,
-        4
-      ],
-      "yaw": 272,
-      "scale": 1.089962557465752
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.998252879837903,
-        0,
-        3.442197080676334
-      ],
-      "yaw": 107,
-      "scale": 1.2333529008707744
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -9.775213102707966,
-        0,
-        4.733194671636425
-      ],
-      "yaw": 104,
-      "scale": 0.9885718841983806
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0,
-        0,
-        4
-      ],
-      "yaw": 27,
-      "scale": 1.418305366401703
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0.3625525474896245,
-        0,
-        3.2593402790737627
-      ],
-      "yaw": 327,
-      "scale": 1.3447234551164897
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        0.5386273087509992,
-        0,
-        3.855922708385085
-      ],
-      "yaw": 274,
-      "scale": 1.2808341304216695
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6,
-        0,
-        6
-      ],
-      "yaw": 13,
-      "scale": 0.9087680262088628
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -5.48998344412632,
-        0,
-        6.281344208430182
-      ],
-      "yaw": 30,
-      "scale": 0.8075970746612163
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -6.659619717826605,
-        0,
-        5.490099653856935
-      ],
-      "yaw": 69,
-      "scale": 0.9069174614301498
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -5.777004672393806,
-        0,
-        6.718672059680359
-      ],
-      "yaw": 87,
-      "scale": 1.1650856884033818
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2,
-        0,
-        6
-      ],
-      "yaw": 242,
-      "scale": 1.4194750703030616
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.537642257268799,
-        0,
-        6.408010908979505
-      ],
-      "yaw": 22,
-      "scale": 0.984104605849881
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -1.703608294890616,
-        0,
-        5.211560245018282
-      ],
-      "yaw": 55,
-      "scale": 1.5404299981614715
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -2.5858194224348017,
-        0,
-        5.968808919094518
-      ],
-      "yaw": 75,
-      "scale": 1.2820929626385185
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        8,
-        0,
-        6
-      ],
-      "yaw": 98,
-      "scale": 1.3172395362133344
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        7.348077098845699,
-        0,
-        5.761471125554319
       ],
       "yaw": 357,
-      "scale": 0.8601850856375811
+      "scale": 1.5376156785234882
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.196321950178099,
+        0,
+        0.4224555753699969
+      ],
+      "yaw": 1,
+      "scale": 0.8043070997131556
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.005663530746858,
+        0,
+        0.30658313755572053
+      ],
+      "yaw": 84,
+      "scale": 1.4468462082309865
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.286093104181436,
+        0,
+        -1.2457016937367968
+      ],
+      "yaw": 157,
+      "scale": 1.3984574112568318
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.2360346085905825,
+        0,
+        -0.30802131178491915
+      ],
+      "yaw": 238,
+      "scale": 1.200514287129284
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.023197106949182,
+        0,
+        0.7408906560587945
+      ],
+      "yaw": 178,
+      "scale": 1.1463793180167579
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.5,
+        0,
+        -2.5
+      ],
+      "yaw": 239,
+      "scale": 1.816407716281902
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.685552323498182,
+        0,
+        -3.872012911620851
+      ],
+      "yaw": 303,
+      "scale": 1.4917716809975783
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.412722947582509,
+        0,
+        -2.12421123827944
+      ],
+      "yaw": 344,
+      "scale": 1.482563838913368
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.862407257870899,
+        0,
+        -2.048171094873619
+      ],
+      "yaw": 123,
+      "scale": 1.4178554094014015
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.822788570035525,
+        0,
+        -3.695264071223667
+      ],
+      "yaw": 343,
+      "scale": 1.3509040845795088
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.3028299791075515,
+        0,
+        -1.7886576229002942
+      ],
+      "yaw": 287,
+      "scale": 0.8728827804666398
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
         -4,
         0,
-        8
-      ],
-      "yaw": 1,
-      "scale": 0.8049223996721778
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -4.493742090192441,
-        0,
-        8.299355183734415
-      ],
-      "yaw": 84,
-      "scale": 1.5392528094068416
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -3.868132334807325,
-        0,
-        7.232059474983151
-      ],
-      "yaw": 157,
-      "scale": 1.483951327150665
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        2,
-        0,
-        8
-      ],
-      "yaw": 238,
-      "scale": 1.257730613862039
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        1.6123041707997954,
-        0,
-        8.549009567201788
-      ],
-      "yaw": 178,
-      "scale": 1.1958620777334377
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        1.3006673268852569,
-        0,
-        7.686152564182399
-      ],
-      "yaw": 239,
-      "scale": 1.3062523460510431
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        1.890725954687583,
-        0,
-        7.192004722726381
-      ],
-      "yaw": 303,
-      "scale": 1.5905962068543753
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        10,
-        0,
-        8
-      ],
-      "yaw": 344,
-      "scale": 1.580072958758135
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        9.641002438478639,
-        0,
-        8.447577888252502
-      ],
-      "yaw": 123,
-      "scale": 1.5061204678873161
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        9.798876831095024,
-        0,
-        7.255254615563647
-      ],
-      "yaw": 343,
-      "scale": 1.4296046680908674
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -4.2,
-        0,
-        0.4
-      ],
-      "yaw": 287,
-      "scale": 0.8832946062475884
-    },
-    {
-      "asset": "coral-reef-cluster",
-      "at": [
-        -3.5197275976071625,
-        0,
-        -0.0017649333276176238
+        2.5
       ],
       "yaw": 228,
-      "scale": 1.3691693163333318
+      "scale": 1.8557308227083325
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -8,
+        -4.919525241839011,
         0,
-        -1.2
+        2.29080160692238
       ],
       "yaw": 313,
-      "scale": 1.2507109513742436
+      "scale": 1.194372082452463
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -7.558607115387523,
+        -3.461116367844485,
         0,
-        -1.6511696293217017
+        1.9491802268616287
       ],
       "yaw": 247,
-      "scale": 1.1472074771054124
+      "scale": 1.1038065424672359
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -8.478765236684868,
+        -4.54293822349162,
         0,
-        -0.8280740718078397
+        2.9217783315291945
       ],
       "yaw": 211,
-      "scale": 0.9851561297593434
+      "scale": 0.9620116135394254
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -2.4,
+        -2.93837044544215,
         0,
-        -2.6
+        1.7121031222953875
       ],
       "yaw": 121,
-      "scale": 1.3462903494696554
+      "scale": 1.2780040557859484
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -1.9815047469207925,
+        -3.5592153552963555,
         0,
-        -3.008442814925538
+        2.069803194339615
       ],
       "yaw": 110,
-      "scale": 1.5367407064590328
+      "scale": 1.4446481181516537
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -1.8104759695329111,
+        -3.3682076407703914,
         0,
-        -2.5951247390378906
+        2.5052248126724717
       ],
       "yaw": 143,
-      "scale": 0.8172638952812478
+      "scale": 0.8151059083710919
     },
     {
       "asset": "coral-reef-cluster",
       "at": [
-        -2.689579343362208,
+        -6.5,
         0,
-        -3.366476780271303
+        6
       ],
       "yaw": 62,
-      "scale": 0.9696410936162068
+      "scale": 1.6060256835101292
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.366459406651046,
+        0,
+        5.606685049222679
+      ],
+      "yaw": 63,
+      "scale": 0.8817836978387943
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.861903965057238,
+        0,
+        5.6322854709267585
+      ],
+      "yaw": 291,
+      "scale": 1.214108751487969
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.497070178813711,
+        0,
+        5.371945235883319
+      ],
+      "yaw": 119,
+      "scale": 1.3003729717342059
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -5.494562257818229,
+        0,
+        5.704925833578951
+      ],
+      "yaw": 211,
+      "scale": 1.3442191790529616
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -6.865463857961009,
+        0,
+        4.821717632464307
+      ],
+      "yaw": 215,
+      "scale": 0.8701809818717563
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -4.3248035564072485,
+        0,
+        4.72835026555824
+      ],
+      "yaw": 292,
+      "scale": 0.967634548883715
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.6,
+        0,
+        2
+      ],
+      "yaw": 248,
+      "scale": 1.7033614556786425
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.300542068987259,
+        0,
+        0.8796775765445841
+      ],
+      "yaw": 289,
+      "scale": 0.873257787094106
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.725987226342212,
+        0,
+        1.5123456127576678
+      ],
+      "yaw": 295,
+      "scale": 1.097453823125667
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.74132366865095,
+        0,
+        1.0364956346765468
+      ],
+      "yaw": 261,
+      "scale": 1.435479307191204
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -8.167639167454697,
+        0,
+        1.4619250872017586
+      ],
+      "yaw": 258,
+      "scale": 0.9082101308778907
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.57680199092958,
+        0,
+        3.0255006888208924
+      ],
+      "yaw": 343,
+      "scale": 0.8395284026579598
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -7.925276752130173,
+        0,
+        2.354044929009986
+      ],
+      "yaw": 338,
+      "scale": 1.4088278459891805
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.2,
+        0,
+        -3.2
+      ],
+      "yaw": 71,
+      "scale": 1.5148887320025306
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -4.240149947668255,
+        0,
+        -2.998865732090854
+      ],
+      "yaw": 51,
+      "scale": 1.026175799419254
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.921417132687111,
+        0,
+        -3.1120867440448747
+      ],
+      "yaw": 20,
+      "scale": 0.8310742819826465
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -2.259850743794388,
+        0,
+        -2.5742616788906667
+      ],
+      "yaw": 168,
+      "scale": 1.3657112919565808
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.3408435280942776,
+        0,
+        -4.200920489347702
+      ],
+      "yaw": 251,
+      "scale": 1.0716207152566037
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -4.310807107756742,
+        0,
+        -4.155527435282691
+      ],
+      "yaw": 277,
+      "scale": 1.4734157236634826
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        -3.4665700378356163,
+        0,
+        -4.270682459798515
+      ],
+      "yaw": 288,
+      "scale": 0.9198277981112841
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.5,
+        0,
+        -3
+      ],
+      "yaw": 127,
+      "scale": 1.6723151107655443
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.8520377514953115,
+        0,
+        -1.9158018309914877
+      ],
+      "yaw": 45,
+      "scale": 0.8365265138151714
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.835707789472675,
+        0,
+        -2.986606021443676
+      ],
+      "yaw": 312,
+      "scale": 0.8311023803106986
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.591125204994378,
+        0,
+        -3.813134574745801
+      ],
+      "yaw": 144,
+      "scale": 1.4357266452329824
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.5,
+        0,
+        -1.5
+      ],
+      "yaw": 357,
+      "scale": 1.6027441795928143
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.920171234286226,
+        0,
+        -2.2239956631325164
+      ],
+      "yaw": 12,
+      "scale": 0.9208977644894728
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.53893194495798,
+        0,
+        -2.7532628291710255
+      ],
+      "yaw": 89,
+      "scale": 1.4002837771551142
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.815746445819242,
+        0,
+        -2.254529398392066
+      ],
+      "yaw": 165,
+      "scale": 1.0092150470750476
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.472642276677403,
+        0,
+        -0.11874118018843394
+      ],
+      "yaw": 312,
+      "scale": 1.274739628273407
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.133373794918472,
+        0,
+        -1.4847332891050644
+      ],
+      "yaw": 294,
+      "scale": 1.3691695415736964
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.595159585171427,
+        0,
+        -2.9672685781152377
+      ],
+      "yaw": 248,
+      "scale": 0.9997797627466637
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.4,
+        0,
+        2.4
+      ],
+      "yaw": 310,
+      "scale": 1.5814793045080635
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.050664401889274,
+        0,
+        1.4414520741744294
+      ],
+      "yaw": 293,
+      "scale": 1.1268552990289662
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.773345316670339,
+        0,
+        1.1247015580546302
+      ],
+      "yaw": 15,
+      "scale": 0.9622738656877885
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.57599336354276,
+        0,
+        2.892879203982916
+      ],
+      "yaw": 207,
+      "scale": 1.368330994187077
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.4541731471049695,
+        0,
+        1.4318949416238804
+      ],
+      "yaw": 311,
+      "scale": 1.3693963951288706
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.681375643356389,
+        0,
+        3.4245357918877977
+      ],
+      "yaw": 165,
+      "scale": 1.0702431575722262
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.5,
+        0,
+        3.6
+      ],
+      "yaw": 186,
+      "scale": 1.6918991993609347
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.7552434003420805,
+        0,
+        3.6026485843534566
+      ],
+      "yaw": 252,
+      "scale": 1.340162323666812
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.279301350322555,
+        0,
+        4.321576759948543
+      ],
+      "yaw": 220,
+      "scale": 1.1861698548245103
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.487641949851257,
+        0,
+        3.1926396527235252
+      ],
+      "yaw": 114,
+      "scale": 1.2201821577829226
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        6.482564310978482,
+        0,
+        3.0950661104657042
+      ],
+      "yaw": 205,
+      "scale": 0.9130449283463159
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        7.658938650289248,
+        0,
+        4.1975267401299226
+      ],
+      "yaw": 120,
+      "scale": 1.2437682055140697
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.2,
+        0,
+        6.2
+      ],
+      "yaw": 140,
+      "scale": 1.673659730317844
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.698593720221237,
+        0,
+        6.574141237594796
+      ],
+      "yaw": 56,
+      "scale": 0.8371710151607036
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.33421757563603,
+        0,
+        6.332487080571004
+      ],
+      "yaw": 33,
+      "scale": 1.2439568350296266
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.413510568421278,
+        0,
+        6.746103371034281
+      ],
+      "yaw": 36,
+      "scale": 1.3881830149740833
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.079057710087445,
+        0,
+        6.994237263782674
+      ],
+      "yaw": 44,
+      "scale": 0.9420423735594574
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        4.554163635184901,
+        0,
+        6.469096660879319
+      ],
+      "yaw": 218,
+      "scale": 1.2046544755830684
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        5.228867358072523,
+        0,
+        4.915622019773384
+      ],
+      "yaw": 177,
+      "scale": 1.4068589906240156
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        8.118338550968996,
+        0,
+        4.6333422726982425
+      ],
+      "yaw": 320,
+      "scale": 1.2059544870191974
+    },
+    {
+      "asset": "coral-reef-cluster",
+      "at": [
+        3.2454131112825735,
+        0,
+        -0.5960352805698579
+      ],
+      "yaw": 209,
+      "scale": 1.4657353877396022
     },
     {
       "asset": "shipwreck-hull",
       "at": [
-        5,
-        -0.03,
-        -2.4
+        6.6,
+        0,
+        -1.6
       ],
       "yaw": 215,
       "scale": 0.8
@@ -1706,9 +2905,9 @@ export function places(): Place[] {
     {
       "asset": "treasure-chest",
       "at": [
-        2.6,
-        -0.03,
-        1.8
+        3.8,
+        0,
+        2.2
       ],
       "yaw": 25,
       "scale": 1.2
@@ -1716,18 +2915,18 @@ export function places(): Place[] {
     {
       "asset": "chest",
       "at": [
-        1.4,
-        -0.03,
-        3.2
+        -5.2,
+        0,
+        0.9
       ],
       "yaw": 300
     },
     {
       "asset": "shell",
       "at": [
-        4.4,
-        -0.03,
-        4.6
+        8,
+        0,
+        2
       ],
       "yaw": 160,
       "scale": 4.5
@@ -1735,739 +2934,489 @@ export function places(): Place[] {
     {
       "asset": "giant-crystal",
       "at": [
-        4.4,
+        8,
         0.4,
-        4.6
+        2
       ],
       "scale": 0.12
     },
     {
       "asset": "barrel",
       "at": [
-        7,
-        -0.03,
-        2.6
+        6.2,
+        0,
+        4.4
       ],
       "yaw": 60
     },
     {
       "asset": "crate",
       "at": [
-        0.2,
-        -0.03,
-        -3
+        -4.2,
+        0,
+        3.8
       ],
       "yaw": 20
     },
     {
       "asset": "reeds",
       "at": [
-        8.946510189653612,
+        2.2826109045569822,
         -0.03,
-        3.1974060066032255
-      ],
-      "yaw": 63,
-      "scale": 0.8584169270277102
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        2.5317021890225355,
-        -0.03,
-        -7.745047278583537
-      ],
-      "yaw": 291,
-      "scale": 1.0957919653485493
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        5.022464522636712,
-        -0.03,
-        -5.951014435827274
-      ],
-      "yaw": 119,
-      "scale": 1.1574092655244326
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        9.101026765583562,
-        -0.03,
-        0.7654793303299137
-      ],
-      "yaw": 211,
-      "scale": 1.1887279850378298
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        4.04978123216414,
-        -0.03,
-        3.7385351861540865
-      ],
-      "yaw": 215,
-      "scale": 0.8501292727655402
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        -5.502372652060526,
-        -0.03,
-        1.2982694549943652
-      ],
-      "yaw": 90,
-      "scale": 0.9115196054389326
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        2.4003444856034335,
-        -0.03,
-        2.0718156295231616
-      ],
-      "yaw": 292,
-      "scale": 0.9197389634883679
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        8.110373959927994,
-        -0.03,
-        -7.155884392166456
-      ],
-      "yaw": 248,
-      "scale": 1.0033614556786425
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        5.839423637762398,
-        -0.03,
-        2.5544638980899297
-      ],
-      "yaw": 289,
-      "scale": 0.8523269907815042
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        8.389362589637454,
-        -0.03,
-        0.01363522932568273
-      ],
-      "yaw": 295,
-      "scale": 1.0124670165183336
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        7.325864945224424,
-        -0.03,
-        4.649707509507289
-      ],
-      "yaw": 261,
-      "scale": 1.25391379085086
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        7.163313216140175,
-        -0.03,
-        -4.955821065677247
-      ],
-      "yaw": 258,
-      "scale": 0.8772929506270648
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        -7.495152436893039,
-        -0.03,
-        7.178394510959459
-      ],
-      "yaw": 343,
-      "scale": 0.8282345733271141
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        8.814624566032844,
-        -0.03,
-        5.916065051181272
-      ],
-      "yaw": 343,
-      "scale": 0.9385196124382874
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        -0.6032493387364077,
-        -0.03,
-        0.9506910857514903
-      ],
-      "yaw": 51,
-      "scale": 0.9615541424423243
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        -0.38111887424305024,
-        -0.03,
-        -4.3719355223569725
-      ],
-      "yaw": 20,
-      "scale": 0.8221959157018903
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        -0.6410327137638969,
-        -0.03,
-        4.9305438161504185
-      ],
-      "yaw": 261,
-      "scale": 1.055390622539162
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        4.007720627825577,
-        -0.03,
-        -1.7915265084204854
-      ],
-      "yaw": 220,
-      "scale": 1.282619462992353
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        5.412580499151991,
-        -0.03,
-        7.392359398022462
-      ],
-      "yaw": 255,
-      "scale": 1.101683902880961
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        6.054228812481384,
-        -0.03,
-        -5.261078900313507
-      ],
-      "yaw": 23,
-      "scale": 1.1632904956411991
-    },
-    {
-      "asset": "reeds",
-      "at": [
-        2.934409665378933,
-        -0.03,
-        -1.101403181022686
-      ],
-      "yaw": 196,
-      "scale": 0.9934757673616874
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -9.020000808043406,
-        -0.06,
-        -7.07019986522859
-      ],
-      "yaw": 127,
-      "scale": 0.5378520886124355
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -6.23722792148461,
-        -0.06,
-        2.350645991205539
-      ],
-      "yaw": 45,
-      "scale": 0.42087229360866935
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -10.366788592919143,
-        -0.06,
-        5.641019037198749
-      ],
-      "yaw": 312,
-      "scale": 0.41777278874897067
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -2.031600513882749,
-        -0.06,
-        6.857439485591575
-      ],
-      "yaw": 286,
-      "scale": 0.40464076511777974
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        10.261645395244306,
-        -0.06,
-        -4.947795565681437
-      ],
-      "yaw": 231,
-      "scale": 0.571024768506654
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -9.709216850674347,
-        -0.06,
-        -5.498453652252655
-      ],
-      "yaw": 271,
-      "scale": 0.7015469533864163
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -5.218430594177186,
-        -0.06,
-        6.006810651722741
-      ],
-      "yaw": 292,
-      "scale": 0.5271722313608845
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -0.8479909159466583,
-        -0.06,
-        -3.378838870198856
-      ],
-      "yaw": 91,
-      "scale": 0.7526118887367714
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        7.696727943651718,
-        -0.06,
-        2.9937510785617647
-      ],
-      "yaw": 179,
-      "scale": 0.7466845901434704
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        6.6511401479370615,
-        -0.06,
-        5.260068997768718
-      ],
-      "yaw": 273,
-      "scale": 0.7881404494811504
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        7.571094754511067,
-        -0.06,
-        -5.662295368529063
-      ],
-      "yaw": 303,
-      "scale": 0.6634096744765573
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        6.1511774579767025,
-        -0.06,
-        5.524240788595863
-      ],
-      "yaw": 15,
-      "scale": 0.49272792325016485
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -6.3332845929699415,
-        -0.06,
-        -8.007585960071342
-      ],
-      "yaw": 207,
-      "scale": 0.7247605681069011
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        2.6451449797698956,
-        -0.06,
-        5.937891340226816
-      ],
-      "yaw": 311,
-      "scale": 0.725369368645069
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -6.085101481007925,
-        -0.06,
-        1.0495224113806731
-      ],
-      "yaw": 165,
-      "scale": 0.5544246614698436
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        0.7948368303453712,
-        -0.06,
-        4.218259996463667
-      ],
-      "yaw": 186,
-      "scale": 0.5535193594887478
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -0.006503776091385305,
-        -0.06,
-        -4.288010004855697
-      ],
-      "yaw": 252,
-      "scale": 0.7086641849524641
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -4.214262204717035,
-        -0.06,
-        -4.123168010135725
-      ],
-      "yaw": 220,
-      "scale": 0.6206684884711489
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        9.11485819905757,
-        -0.06,
-        1.1483377989140973
-      ],
-      "yaw": 114,
-      "scale": 0.6401040901616701
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        1.5310540537960158,
-        -0.06,
-        2.282120197770242
-      ],
-      "yaw": 205,
-      "scale": 0.4645971019121805
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -6.0584244231034186,
-        -0.06,
-        -6.412494657008208
-      ],
-      "yaw": 120,
-      "scale": 0.6535818317223256
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        7.791979370541862,
-        -0.06,
-        2.420880563008078
-      ],
-      "yaw": 140,
-      "scale": 0.5389277842542752
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -2.1179619966624124,
-        -0.06,
-        -6.289724461869208
-      ],
-      "yaw": 56,
-      "scale": 0.42124058009183063
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -0.4976606233500238,
-        -0.06,
-        -2.085539596940177
-      ],
-      "yaw": 33,
-      "scale": 0.6536896200169295
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -2.0049315242119743,
-        -0.06,
-        -0.7141029247614101
-      ],
-      "yaw": 36,
-      "scale": 0.7361045799851905
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -4.696857823010935,
-        -0.06,
-        -3.303002239997965
-      ],
-      "yaw": 44,
-      "scale": 0.48116707060540426
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -1.3023054184868492,
-        -0.06,
-        -5.04578994915159
-      ],
-      "yaw": 218,
-      "scale": 0.6312311289046105
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        5.282341988981861,
-        -0.06,
-        4.782999430030118
-      ],
-      "yaw": 177,
-      "scale": 0.7467765660708662
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        3.834789558423118,
-        -0.06,
-        -6.374220124433851
-      ],
-      "yaw": 224,
-      "scale": 0.6945175470293116
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        8.133471925246281,
-        -0.06,
-        1.3429076884607358
-      ],
-      "yaw": 347,
-      "scale": 0.5162371589412155
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        10.292376900414181,
-        -0.06,
-        -7.771158827548455
-      ],
-      "yaw": 37,
-      "scale": 0.5230881462446825
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        7.408644587643744,
-        -0.06,
-        6.695433657567683
-      ],
-      "yaw": 260,
-      "scale": 0.6186764852230794
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        -5.4242684966997565,
-        -0.06,
-        0.5810344350435948
-      ],
-      "yaw": 279,
-      "scale": 0.47420269757239275
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        6.486381158645441,
-        -0.06,
-        3.0758000166508364
-      ],
-      "yaw": 209,
-      "scale": 0.780420221565487
-    },
-    {
-      "asset": "stepping-stone",
-      "at": [
-        -4.021479740748871,
-        -0.06,
-        -7.923463772760455
-      ],
-      "yaw": 264,
-      "scale": 0.6058812192668586
-    },
-    {
-      "asset": "river-rock",
-      "at": [
-        2.373915340739263,
-        -0.06,
-        3.226837226947227
+        3.073178311378312
       ],
       "yaw": 245,
-      "scale": 0.4181997085074893
+      "scale": 0.9272995627612339
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
         4.125044268614166,
         -0.03,
         7.69521807865017
       ],
       "yaw": 304,
-      "scale": 1.2758253660406105
+      "scale": 1.3078503137490947
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        1.340772701120363,
+        2.6013773645280747,
         -0.03,
-        -4.5065698160354835
+        1.079492498691888
       ],
-      "yaw": 226,
-      "scale": 1.1972277968177703
+      "yaw": 158,
+      "scale": 0.9135608794230786
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        7.25668212271141,
+        9.526754058677124,
         -0.03,
-        2.445149128532572
+        -3.075628650875589
       ],
-      "yaw": 351,
-      "scale": 1.015441246524193
+      "yaw": 267,
+      "scale": 1.4629643954164182
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        4.886580917465771,
+        1.4197921247313694,
         -0.03,
-        7.012383877771153
+        1.9569922881000643
       ],
-      "yaw": 205,
-      "scale": 1.2356184126043779
+      "yaw": 71,
+      "scale": 1.0452054486354838
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
         -1.0674927807727332,
-        -0.03,
+        0,
         -1.0809331578579418
       ],
       "yaw": 17,
-      "scale": 1.1973253167687568
+      "scale": 1.240564557230363
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        5.617112356991093,
-        -0.03,
-        5.445907159450421
+        -8.297963895973732,
+        0,
+        -3.103359704419672
       ],
-      "yaw": 31,
-      "scale": 1.0142280129316394
+      "yaw": 221,
+      "scale": 1.153405749450161
     },
     {
-      "asset": "shell",
-      "at": [
-        2.2918097732084846,
-        -0.03,
-        -1.2425133479957067
-      ],
-      "yaw": 114,
-      "scale": 1.0029601501780376
-    },
-    {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
         -1.3576068036992144,
-        -0.03,
+        0,
         2.1619601818555783
       ],
       "yaw": 181,
-      "scale": 1.1805261116384185
+      "scale": 1.2261652385472157
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        -1.3611912314599337,
+        7.956738536225977,
         -0.03,
-        1.9671782823126662
+        7.12366267997942
       ],
-      "yaw": 322,
-      "scale": 1.4616602422490996
+      "yaw": 166,
+      "scale": 1.3994697804094618
     },
     {
-      "asset": "shell",
+      "asset": "reeds",
       "at": [
-        -0.751671982347812,
-        -0.03,
-        5.319194144252313
-      ],
-      "yaw": 352,
-      "scale": 1.2539943570056904
-    },
-    {
-      "asset": "shell",
-      "at": [
-        -1.9097658674743805,
-        -0.03,
-        2.0520522864777835
-      ],
-      "yaw": 19,
-      "scale": 1.0005426202437573
-    },
-    {
-      "asset": "boulder",
-      "at": [
-        -9.5,
+        9.619978060768908,
         0,
-        2.5
+        2.3770138744157805
       ],
-      "yaw": 10,
-      "scale": 0.8522004813664594
+      "yaw": 145,
+      "scale": 1.276951960742917
     },
     {
-      "asset": "boulder",
+      "asset": "reeds",
       "at": [
-        -5,
-        0,
-        6.5
+        -9.433758947734608,
+        -0.03,
+        5.450692339544506
       ],
       "yaw": 40,
-      "scale": 0.6719105087555528
+      "scale": 1.0438210175111056
     },
     {
-      "asset": "boulder",
+      "asset": "reeds",
       "at": [
-        9.6,
+        3.3280436384156538,
         0,
-        -4
+        -4.456455318469766
       ],
-      "yaw": 239,
-      "scale": 0.6664414627786919
+      "yaw": 98,
+      "scale": 0.9846704434066408
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        2.4909331800839567,
+        -0.03,
+        4.091166136828795
+      ],
+      "yaw": 5,
+      "scale": 1.3950405642832817
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        8.225463637255814,
+        0,
+        4.293881086769458
+      ],
+      "yaw": 342,
+      "scale": 0.9435597514005191
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        -6.37527371587943,
+        -0.03,
+        -7.380274228463077
+      ],
+      "yaw": 353,
+      "scale": 1.1859978529093778
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        6.708166653620157,
+        0,
+        3.3255579151797843
+      ],
+      "yaw": 284,
+      "scale": 0.9057873926152417
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        4.986717316781505,
+        -0.03,
+        -6.593645482600501
+      ],
+      "yaw": 103,
+      "scale": 1.14317618144824
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        5.402720018943176,
+        0,
+        2.812286702362954
+      ],
+      "yaw": 227,
+      "scale": 0.9941011621123651
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        8.607720750667024,
+        -0.03,
+        7.970125168548023
+      ],
+      "yaw": 222,
+      "scale": 1.3330038754423166
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        -6.808063442263782,
+        0,
+        -2.4978193019040953
+      ],
+      "yaw": 250,
+      "scale": 1.1526612970291923
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        -0.7193610122051837,
+        -0.03,
+        7.759574293978314
+      ],
+      "yaw": 161,
+      "scale": 1.23095712984491
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        3.2160434467792705,
+        -0.03,
+        -6.366231984629404
+      ],
+      "yaw": 61,
+      "scale": 1.010626687160985
+    },
+    {
+      "asset": "reeds",
+      "at": [
+        6.757703822458957,
+        0,
+        -2.617484745857066
+      ],
+      "yaw": 358,
+      "scale": 1.2247621347777369
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -7.4266930191901945,
+        0,
+        -0.3436588236799736
+      ],
+      "yaw": 182,
+      "scale": 0.8091854138808258
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -8.662895988050334,
+        0,
+        2.1657030704271527
+      ],
+      "yaw": 156,
+      "scale": 0.8909551357342653
+    },
+    {
+      "asset": "shell",
+      "at": [
+        8.255155579305793,
+        0,
+        3.519857113957338
+      ],
+      "yaw": 319,
+      "scale": 1.2685415255224992
+    },
+    {
+      "asset": "shell",
+      "at": [
+        3.6405559040794877,
+        0,
+        5.458463891157166
+      ],
+      "yaw": 99,
+      "scale": 1.2730306487870546
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -7.555674192288739,
+        0,
+        -6.572919837465938
+      ],
+      "yaw": 21,
+      "scale": 1.1611461702087644
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -7.609065751363088,
+        0,
+        -4.454466527539523
+      ],
+      "yaw": 130,
+      "scale": 1.2581109744301582
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -5.110078638005107,
+        0,
+        -4.0733351614667725
+      ],
+      "yaw": 257,
+      "scale": 1.325184538925618
+    },
+    {
+      "asset": "shell",
+      "at": [
+        3.6155920818520677,
+        0,
+        5.80489575015609
+      ],
+      "yaw": 65,
+      "scale": 0.994441764286925
+    },
+    {
+      "asset": "shell",
+      "at": [
+        1.840788680985936,
+        0,
+        -1.4917109354826206
+      ],
+      "yaw": 198,
+      "scale": 1.415279165522791
+    },
+    {
+      "asset": "shell",
+      "at": [
+        7.055284044265413,
+        0,
+        -1.4728544249538587
+      ],
+      "yaw": 129,
+      "scale": 1.48120530572776
+    },
+    {
+      "asset": "shell",
+      "at": [
+        4.787810470344411,
+        0,
+        6.984460062805777
+      ],
+      "yaw": 86,
+      "scale": 1.4725082709791644
+    },
+    {
+      "asset": "shell",
+      "at": [
+        8.471724194694183,
+        0,
+        3.4148321800934305
+      ],
+      "yaw": 204,
+      "scale": 1.2534733219321228
+    },
+    {
+      "asset": "shell",
+      "at": [
+        5.408756162695937,
+        0,
+        3.9718611445146905
+      ],
+      "yaw": 248,
+      "scale": 1.2283217738048742
+    },
+    {
+      "asset": "shell",
+      "at": [
+        5.199096330999907,
+        0,
+        0.9696280923530587
+      ],
+      "yaw": 12,
+      "scale": 1.1860861087618797
+    },
+    {
+      "asset": "shell",
+      "at": [
+        9.049999424745327,
+        0,
+        2.6722653557882943
+      ],
+      "yaw": 197,
+      "scale": 1.4024537829227994
+    },
+    {
+      "asset": "shell",
+      "at": [
+        8.306559528366925,
+        0,
+        6.676794610301403
+      ],
+      "yaw": 20,
+      "scale": 1.3279201675802097
+    },
+    {
+      "asset": "shell",
+      "at": [
+        -2.7355279832778168,
+        0,
+        3.1849480397929195
+      ],
+      "yaw": 32,
+      "scale": 1.0884248000515742
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -2.2151338365930755,
+        -0.06,
+        -7.803513295857009
+      ],
+      "yaw": 143,
+      "scale": 0.6669495167988118
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        1.435276237984782,
+        -0.06,
+        2.1501854481874894
+      ],
+      "yaw": 49,
+      "scale": 0.5468234440529828
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.918790075890156,
+        -0.06,
+        -7.2838443886879105
+      ],
+      "yaw": 99,
+      "scale": 0.7657032410920147
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -6.281348325443151,
+        -0.06,
+        7.502955421573928
+      ],
+      "yaw": 318,
+      "scale": 0.7236248775495332
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -1.27112688090239,
+        -0.06,
+        -3.063589861180442
+      ],
+      "yaw": 140,
+      "scale": 0.578229478038023
+    },
+    {
+      "asset": "river-rock",
+      "at": [
+        -9.858130747386316,
+        -0.06,
+        -4.482777057440382
+      ],
+      "yaw": 224,
+      "scale": 0.7622010198711422
     }
   ];
 }
