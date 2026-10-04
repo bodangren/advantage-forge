@@ -1,13 +1,13 @@
 {
   "track_id": "asset_p2_monsters_20260928",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-09-28T23:11:36Z",
-  "updated_at": "2026-10-04T15:06:47Z",
+  "updated_at": "2026-10-04T16:12:02Z",
   "description": "Produce P2 monsters",
   "estimated_tasks": 9,
-  "actual_tasks": null,
-  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Batch 1 (2026-10-04) was built by the orchestrator, not by Sonnet agents, because the owner has not asked for workflows.",
+  "actual_tasks": 9,
+  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Batch 1 (2026-10-04) was built by the orchestrator, not by Sonnet agents, because the owner has not asked for workflows. The asset_quality_20260928 dependency was dropped at close (2026-10-05), as for the items and P1 tracks: every monster carries its own review score in docs/character-reviews.json, and the new sources add no compiler errors.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [
@@ -32,7 +32,5 @@
     "docs/fantasy-world-asset-catalog.md",
     "docs/fantasy-world-asset-catalog.tsv"
   ],
-  "dependencies": [
-    "asset_quality_20260928"
-  ]
+  "dependencies": []
 }

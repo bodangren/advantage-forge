@@ -6207,5 +6207,155 @@
       "A shorter, thicker goat neck with a fur ruff if the chimera gets a rework."
     ],
     "reviewedAt": "2026-10-04T15:10:09+00:00"
+  },
+  "pixie-swarm": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4.5,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/small/pixie-swarm), a new standalone asset: three baby pixies with big round bald heads, glossy dark eyes, rosy cheeks, a small smile, and a leaf clip, in rompers with straps and a button, on butterfly wings with pale dots; a sky blue one in front and a pink and a yellow one behind and higher, with four glowing sparkles. Each pixie has its own body, head, arm, and wing bones; the clips hover, fly, dart forward one after another in the attack, flinch, and drop to sit in a row in the death. Slots skin, front, left, and right. Mockup docs/monster-mockups/pixie-swarm_001.jpg (mmx from the fairy sprite mockup).",
+    "strengths": [
+      "The three pastel colors and the big heads read as a group at 128 px.",
+      "Ground ok and 0 warnings; the pixies move on their own phases, so the swarm looks alive."
+    ],
+    "issues": [
+      "The mockup pixies sit; the asset floats them with the legs bent, so the pose differs.",
+      "The wings look dark from behind in the sprites."
+    ],
+    "next": [
+      "A small sparkle burst from the hands if the attack needs more effect."
+    ],
+    "reviewedAt": "2026-10-04T15:22:11+00:00"
+  },
+  "centaur": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/centaur) on the horse kind with the new option head: false: the pony body, legs, and tail, and a chibi boy's upper body in the same chestnut coat with a big round head, tall horse ears, big glossy black eyes, thick brows, a pink nose, a wide smile with teeth, and messy dark brown hair; a green saddle blanket with a leather girth, a green waist wrap, a chest strap and a quiver, a small golden bow in the left hand, and a golden arrow in the right. The new horse kind options bones, probes, and pose drive the boy's arms and head in every horse clip; the attack is a bow shot with the bow turned flat (arm angles solved with forward kinematics). Mockup docs/monster-mockups/centaur_001.jpg (mmx from the horse mockup).",
+    "strengths": [
+      "The big head with horse ears, the green blanket, and the golden bow read at 128 px.",
+      "The horse kind options keep horse, unicorn, nightmare, and kelpie identical (mesh-same); check result ok with no body clearance lines; ground ok; 0 warnings."
+    ],
+    "issues": [
+      "The boy's torso is bare and plain between the strap and the wrap.",
+      "The hair is a smooth cap with a fringe; the mockup's swoop is softer."
+    ],
+    "next": [
+      "A short vest if the centaur needs more costume detail."
+    ],
+    "reviewedAt": "2026-10-04T15:48:24+00:00"
+  },
+  "dryad": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/dryad), a new source on the villager (the rogue's head, face, and skeleton, the stride) with both hands free: a forest girl in a hood of leaf shingles with leaves around the face and five leaves on top, long wavy olive-blonde hair down the back and in front of the shoulders (strand displacement), long pointed ears out through the hood, big brown eyes with lashes, a leaf dress with a pointed hem, leaf-scale paint, and five pink flowers, a twisted vine belt, and ridged bark boots with leaf cuffs. The attack is a spell: a whirl of glowing leaves (hidden in the chest at 35 %) grows between the hands and flies forward; the death is the druid's topple. Mockup docs/monster-mockups/dryad_001.jpg (mmx from the fairy sprite mockup).",
+    "strengths": [
+      "The hood with leaves, the long hair, and the pointed ears read at 128 px from every side.",
+      "Ground ok and 0 warnings; the leaf spell reads in the attack."
+    ],
+    "issues": [
+      "The skirt's leaf scales read as a regular triangle pattern, not as loose leaves.",
+      "The hood is a smooth ball behind; the mockup's hood is looser."
+    ],
+    "next": [
+      "Loose leaf shapes on the skirt if she gets a rework."
+    ],
+    "reviewedAt": "2026-10-04T15:58:39+00:00"
+  },
+  "satyr": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/satyr), a new source on the dryad (the villager's head, face, and skeleton, the stride, the topple): a faun boy with messy brown curls, big ringed olive ram horns that curl out and down, long goat ears with pink insides, big brown eyes, a white shirt with rolled sleeves and a hem below a green V-neck vest with a button, a brown belt with a gold buckle and a cream pouch, shaggy tan goat legs (fur follows the hair slot), dark cloven hooves, a small tail on its own bone, and wooden pan pipes in the right fist on a `pipes` bone. The attack is a horn butt (wind-up, lunge with the head down, recover); the death is the topple. Mockup docs/monster-mockups/satyr_001.jpg (mmx from the fairy sprite mockup).",
+    "strengths": [
+      "The horns, the goat ears, and the green vest read at 128 px from every side.",
+      "check result ok (closest 2.4 cm, pipes in the death); ground ok; 0 warnings."
+    ],
+    "issues": [
+      "The curls are a lumpy cap; the mockup has swept locks.",
+      "The horn butt wind-up is small, so the attack starts slowly."
+    ],
+    "next": [
+      "A stronger wind-up and a step forward in the attack."
+    ],
+    "reviewedAt": "2026-10-04T16:02:01+00:00"
+  },
+  "selkie": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/selkie), a new source on the dryad (the villager's head, face, and skeleton, the stride, the topple): a girl in a grey seal-skin robe whose hood is the seal's head (two glossy black eyes, a black nose, whisker pads with dots, flaps at the sides), two seal flippers at the shoulders, wide sleeves, black hair with a side fringe and side locks, big glossy dark eyes, rosy cheeks, little bare feet with round toes, and a white pearl on a `pearl` bone that both hands hold (arm IK in every clip). The attack lifts the pearl and sends a water bubble (hidden in the pearl at 40 %); she waddles a little in the walk. Mockup docs/monster-mockups/selkie_001.jpg (mmx from the fairy sprite mockup).",
+    "strengths": [
+      "The seal face on the hood and the girl's face read together at 128 px, as in the mockup.",
+      "Ground ok and 0 warnings; the hands stay on the pearl in every clip."
+    ],
+    "issues": [
+      "The back is one plain grey mass (the hood ball and the robe).",
+      "The walk is small: the arms hold the pearl, so only the body waddles."
+    ],
+    "next": [
+      "A seal tail flap at the back of the robe for a better back view."
+    ],
+    "reviewedAt": "2026-10-04T16:12:02+00:00"
   }
 }

@@ -14,14 +14,14 @@ Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. 
 
 ## Phase 3: Production
 
-- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 to 4 done; 47 rows open).
-- [ ] Task: Run forge all for each accepted source after visual correction.
+- [x] Task: Build missing sources and review existing sources in the batch (batches 1 to 11: all 80 rows).
+- [x] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
 
-- [ ] Task: Record review evidence and export paths for every accepted asset.
-- [ ] Task: Update this plan and the scope records.
-- [ ] Task: Run measure/generate.sh and measure/doctor.sh.
+- [x] Task: Record review evidence and export paths for every accepted asset.
+- [x] Task: Update this plan and the scope records.
+- [x] Task: Run measure/generate.sh and measure/doctor.sh.
 
 ## Acceptance checks (all batches)
 
@@ -271,6 +271,43 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   and "no logo, no watermark" in the prompt fixed both.
 - All nine: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 11 (2026-10-04 to 10-05): the last five monsters
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| pixie-swarm | monsters/small/pixie-swarm | new standalone source: three baby pixies, each on its own bones | 7.6 |
+| centaur | monsters/fey-and-spirit/centaur | horse kind with `head: false` and a boy's upper body on extra bones | 7.6 |
+| dryad | monsters/fey-and-spirit/dryad | new source on the villager (rogue head, face, skeleton), both hands free | 7.6 |
+| satyr | monsters/fey-and-spirit/satyr | the dryad re-dressed: horns, goat ears, vest, fur legs, hooves, pan pipes | 7.6 |
+| selkie | monsters/fey-and-spirit/selkie | the dryad re-dressed: seal hood with the seal face, robe, flippers, pearl | 7.6 |
+
+- New default-safe horse kind options: `head` (false drops the horse head, neck, ears, eyes, muzzle,
+  halter, and mane), `bones`, `probes` (ground probes for extra bones in the rear, neigh, and death
+  clips), and `pose` (extra bone poses in every clip). `mesh-same` shows horse, unicorn, nightmare,
+  and kelpie identical. `HIPS_AT` and `SPINE_AT` are exported for probe chains.
+- The chibi arms are short. The centaur's bow draw across the chest put the draw hand inside the
+  torso, so the bow turns flat in front of the chest; the arm angles came from a grid search with
+  `motion.follow`. The satyr cannot reach his mouth, so his attack is a horn butt, not the pipes.
+- The dryad's first death (kneel and bow) read as a bow; the druid's topple onto the left side with a
+  lift and a head bend reads as a fall and keeps the wide hood above the ground. The satyr and the
+  selkie reuse it.
+- Hidden effects (the leaf whirl, the water bubble) sit inside the chest or the pearl at 35 to 40 %
+  and scale up in the attack.
+- A vertex-color render showed the satyr's fur and the centaur's arrow shadow as lines; the zoomed
+  render and the textured build showed no defect.
+- All five: `ground ok`, `check` result ok or no held item, `forge all` with 0 warnings, a mockup from
+  mmx.
+
+## Close (2026-10-05)
+
+All 80 P2 monster rows have a source and a review at the character bar of 7.5 or above. The track
+made 17 kind factories in `assets/parts/` (bird, boar, dragon, goblin, golem, horse, imp, octopus,
+ogre, serpent, slime, spider, spirit, toad, wolf, and the element features) and standalone sources
+for the rest. Each new kind option kept the older assets identical (`scripts/mesh-same.mjs`). The
+orchestrator built every batch; no subagent ran, because the owner did not ask for workflows.
+Follow-ups: the succubus row waits for the owner's rename decision (`little-demon`); the bird,
+toad, and serpent kinds can serve the wildlife track.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
@@ -282,4 +319,4 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - [x] Task: Batch 8: giant-eagle, roc, and cockatrice on a new bird kind.
 - [x] Task: Batch 9: giant-snake, sea-serpent, lindworm, and cave-worm on a new serpent kind, and hydra on the dragon kind.
 - [x] Task: Batch 10: centipede, wyvern, giant-toad, treant, void-tentacle, kraken, ancient-treant, manticore, and chimera.
-- [ ] Task: Batch 11: the last five monsters (centaur, dryad, satyr, selkie, pixie-swarm); mockups exist; humanoids from the closest hero source, the centaur on the horse kind.
+- [x] Task: Batch 11: pixie-swarm, centaur, dryad, satyr, and selkie.

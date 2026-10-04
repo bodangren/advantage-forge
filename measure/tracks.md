@@ -81,7 +81,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Produce P2 items**
   *Link: [./tracks/asset_p2_items_20260928/](./tracks/asset_p2_items_20260928/)*
 
-- [~] **Track: Produce P2 monsters**
+- [x] **Track: Produce P2 monsters**
   *Link: [./tracks/asset_p2_monsters_20260928/](./tracks/asset_p2_monsters_20260928/)*
 
 - [ ] **Track: Produce P2 npcs**

@@ -1,13 +1,14 @@
 import { defineAsset, motion, noise, profile, sdf } from '../../src/index.js';
-import type { AssetContext, AssetDefinition, BodyOptions } from '../../src/index.js';
+import type { AnimationDef, AssetContext, AssetDefinition, BodyOptions, BonePose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 /**
  * Horse kinds — the horse of `assets/horse.ts` (catalog `wildlife/land/horse`) and the fey horses
  * (the unicorn, the nightmare, the kelpie). One body, head, rig, and clip set; each kind sets the
  * palette and the slots, may drop the halter, the blaze, and the socks, may change the material of
- * the mane and the tail (fire, seaweed), and may add paint and bodies (a horn, fins). The design
- * notes of the body, the rig, and the clips are in `assets/horse.ts`.
+ * the mane and the tail (fire, seaweed), and may add paint and bodies (a horn, fins). A kind may
+ * also drop the head and the neck and add its own upper body on extra bones (the centaur). The
+ * design notes of the body, the rig, and the clips are in `assets/horse.ts`.
  */
 
 const HORSE_COLORS = {
@@ -31,8 +32,8 @@ const mx = (v: V3): V3 => [-v[0], v[1], v[2]];
 const RAD = Math.PI / 180;
 
 // Joint positions (rest pose). Straight sturdy legs: each knee sits right under its shoulder or hip.
-const HIPS_AT: V3 = [0, 0.5, -0.24];
-const SPINE_AT: V3 = [0, 0.52, 0.02];
+export const HIPS_AT: V3 = [0, 0.5, -0.24];
+export const SPINE_AT: V3 = [0, 0.52, 0.02];
 const NECK_AT: V3 = [0, 0.64, 0.1];
 const HEAD_AT: V3 = [0, 0.84, 0.22];
 const MANE_AT: V3 = [0, 0.95, 0.1];
@@ -94,6 +95,17 @@ export interface HorseKind {
   paintHair?(hair: sdf.Shape, horse: HorseShape): sdf.Shape;
   /** Extra bodies (a horn, fins, flames on the hooves). */
   extra?(k: AssetContext, horse: HorseShape): void;
+  /** False: no horse head and neck (no ears, eyes, muzzle, halter, forelock, or crest); the kind adds its own upper body (default true). */
+  readonly head?: boolean;
+  /** Extra bones (a rider's torso and arms), added to the skeleton. */
+  readonly bones?: Record<string, { readonly parent: string; readonly at: V3; readonly tail?: V3 }>;
+  /**
+   * Ground probes for extra bones: points carried by `bone`, with the bones and joints from `hips`
+   * down to it. The clips that rest the body on the ground (rear, neigh, death) keep them above it.
+   */
+  readonly probes?: readonly { readonly bone: string; readonly chain: readonly (readonly [bone: string, joint: V3])[]; readonly points: readonly V3[] }[];
+  /** Poses of the extra bones in a clip (`walk`, `run`, `idle`, `rear`, `neigh`, `hit`, `death`). */
+  pose?(clip: string, p: number): Record<string, BonePose>;
 }
 
 /** The horse's shapes, joints, and slot colors that a kind builds on. */
@@ -142,6 +154,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         'bshin.L': { parent: 'bleg.L', at: BKNEE },
         'bleg.R': { parent: 'hips', at: mx(HIP) },
         'bshin.R': { parent: 'bleg.R', at: mx(BKNEE) },
+        ...kind.bones,
       });
 
       // ------------------------------------------------------------------ body and legs
@@ -191,7 +204,8 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
           .paintWhere(cyl(0.021, -0.006, -0.003), C.pupil, 0.002)
           .paintWhere(sdf.sphere(0.011).at(EC[0] + shineOff[0], EC[1] + shineOff[1], EC[2] + Math.sqrt(EYE_R ** 2 - shineOff[0] ** 2 - shineOff[1] ** 2)), '#ffffff', 0.002),
       );
-      k.body('eyes', eyes, { color: C.sclera, roughness: 0.12, detail: 0.004, textureDensity: 2, bone: 'head', ...kind.eyes });
+      const withHead = kind.head !== false;
+      if (withHead) k.body('eyes', eyes, { color: C.sclera, roughness: 0.12, detail: 0.004, textureDensity: 2, bone: 'head', ...kind.eyes });
 
       // The blaze from the forelock down to the noseband, and short brows above the eyes.
       const blaze = sdf
@@ -206,7 +220,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const brows = pair(sdf.extrude(profile.arc(0.064, 0.012, 58, 112), 0.3).at(EC[0], EC[1], EC[2]));
 
       // ------------------------------------------------------------------ coat
-      const trunk = sdf.smoothUnion(0.05, barrel, sdf.smoothUnion(0.06, neck.bone('neck'), headCoat.bone('head')));
+      const trunk = withHead ? sdf.smoothUnion(0.05, barrel, sdf.smoothUnion(0.06, neck.bone('neck'), headCoat.bone('head'))) : barrel;
       const tone = (slot: string, color: string, follow = 1) => k.tint(slot, { color, follow });
       const horse: HorseShape = {
         head: headAll,
@@ -215,8 +229,8 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         tint: { coat: T.coat, coatDark: T.coatDark, mane: T.mane, eye: T.eye },
         tone,
       };
-      const coatShape = trunk.smoothUnion(0.035, legs).smoothUnion(0.015, ears.bone('head'));
-      const coatPainted = (kind.blaze === false ? coatShape : coatShape.paintWhere(blaze, C.white, 0.006)).paintWhere(brows, T.brow, 0.003);
+      const coatShape = withHead ? trunk.smoothUnion(0.035, legs).smoothUnion(0.015, ears.bone('head')) : trunk.smoothUnion(0.035, legs);
+      const coatPainted = withHead ? (kind.blaze === false ? coatShape : coatShape.paintWhere(blaze, C.white, 0.006)).paintWhere(brows, T.brow, 0.003) : coatShape;
       const coat = kind.paint?.(coatPainted, horse) ?? coatPainted;
       k.body('coat', coat, {
         color: T.coat,
@@ -235,7 +249,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         .smoothSubtract(0.008, nostrils)
         .paintWhere(nostrils.round(0.007), C.nostril, 0.004)
         .paintWhere(smile, C.nostril, 0.002);
-      k.body('muzzle', muzzle, { color: T.muzzle, roughness: 0.6, detail: 0.005, textureDensity: 2, bone: 'head' });
+      if (withHead) k.body('muzzle', muzzle, { color: T.muzzle, roughness: 0.6, detail: 0.005, textureDensity: 2, bone: 'head' });
 
       // ------------------------------------------------------------------ halter
       const nN = [Math.cos(NB_A * RAD), -Math.sin(NB_A * RAD)] as const; // (y, z) normal of the noseband
@@ -258,7 +272,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
           .rotateY(28)
           .at(bh[0] + 0.006, bh[1], bh[2]),
       );
-      if (kind.halter !== false) {
+      if (withHead && kind.halter !== false) {
         k.body('halter', sdf.union(noseband, cheekStrap), { color: C.leather, roughness: 0.55, detail: 0.004, bone: 'head' });
         k.body('buckle', buckle, { color: C.buckle, roughness: 0.45, detail: 0.004, bone: 'head' });
       }
@@ -295,7 +309,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         ...locks.map((l, i) => l.bone(i === 0 ? 'head' : 'mane')),
       );
       const hairPaint = (h: sdf.Shape) => kind.paintHair?.(h, horse) ?? h;
-      k.body('maneHair', hairPaint(hair(mane)), { color: T.mane, roughness: 0.7, detail: 0.005, textureDensity: 1.2, ...kind.hair });
+      if (withHead) k.body('maneHair', hairPaint(hair(mane)), { color: T.mane, roughness: 0.7, detail: 0.005, textureDensity: 1.2, ...kind.hair });
 
       const TAIL_PTS: [number, number, number, number][] = [
         [0, 0.63, -0.42, 0.045],
@@ -393,11 +407,19 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const PROBES: [string, V3[]][] = [
         ['hips', ell(RUMP_C, RUMP_R)],
         ['spine', ell(CHEST_C, CHEST_R)],
-        ['neck', ell([0, 0.72, 0.14], [0.12, 0.14, 0.12])],
-        ['head', [...ell(HEAD_C, SKULL_R), ...ell(FACE_C, FACE_R), ...ell(MUZ_C, MUZ_R), ...ell(CHEEK_C, [0.09, 0.09, 0.09]), ...ell(mx(CHEEK_C), [0.09, 0.09, 0.09]), EAR_TIP, mx(EAR_TIP), [0, 1.175, 0.2], [0.07, 1.165, 0.3]]],
-        ['mane', LOCK_TIPS.flatMap((t) => [t, [t[0] + 0.02, t[1], t[2]] as V3])],
+        ...(withHead
+          ? ([
+              ['neck', ell([0, 0.72, 0.14], [0.12, 0.14, 0.12])],
+              ['head', [...ell(HEAD_C, SKULL_R), ...ell(FACE_C, FACE_R), ...ell(MUZ_C, MUZ_R), ...ell(CHEEK_C, [0.09, 0.09, 0.09]), ...ell(mx(CHEEK_C), [0.09, 0.09, 0.09]), EAR_TIP, mx(EAR_TIP), [0, 1.175, 0.2], [0.07, 1.165, 0.3]]],
+              ['mane', LOCK_TIPS.flatMap((t) => [t, [t[0] + 0.02, t[1], t[2]] as V3])],
+            ] as [string, V3[]][])
+          : []),
         ['tail', TAIL_PTS.flatMap(([x, y, z, r]) => [[x + 0.6 * r, y, z], [x - 0.6 * r, y, z], [x, y - r, z], [x, y, z - r]] as V3[])],
       ];
+      for (const pr of kind.probes ?? []) {
+        CH[pr.bone] = { bones: pr.chain.map(([b]) => b), joints: pr.chain.map(([, j]) => j) };
+        PROBES.push([pr.bone, [...pr.points]]);
+      }
       for (const s of ['L', 'R'] as const) {
         const m = (v: V3) => (s === 'L' ? v : mx(v));
         CH[`fleg.${s}`] = { bones: ['hips', 'spine', `fleg.${s}`], joints: [HIPS_AT, SPINE_AT, m(SHOULDER)] };
@@ -462,17 +484,20 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
           return pose;
         },
       });
+      // Extra bones of a kind take their poses from its `pose` hook in every clip.
+      const animate = (name: string, def: AnimationDef) =>
+        k.animation(name, kind.pose ? { ...def, pose: (t, p) => ({ ...def.pose(t, p), ...kind.pose!(name, p) }) } : def);
       // Four-beat walk: left hind, left fore, right hind, right fore.
-      k.animation(
+      animate(
         'walk',
         gait({ duration: 1.1, swing: 16, front: [22, 70], hind: [18, 60], phase: [0.5, 0, 0.75, 0.25], pitch: 1.5, pitchCycles: 2, hop: 0, nod: 3, headDip: 0, tailUp: 0, maneSwing: 5 }),
       );
       // Gallop: the hind legs, then the fore legs, one after the other, with a rocking body.
-      k.animation(
+      animate(
         'run',
         gait({ duration: 0.55, swing: 30, front: [40, 110], hind: [30, 90], phase: [0.35, 0.25, 0.75, 0.65], pitch: 5, pitchCycles: 1, hop: 0.03, nod: 7, headDip: 8, tailUp: 25, maneSwing: 10 }),
       );
-      k.animation('idle', {
+      animate('idle', {
         duration: 3.2,
         pose: (_t, p) => ({
           neck: { rotate: [3 * bump(p), 4 * wave(p, 1, 0.2), 0] },
@@ -498,7 +523,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         hum: [[0.3, 0], [0.34, 1], [0.56, 1], [0.6, 0]],
         tail: [[0, 0], [0.3, 30], [0.6, 30], [0.8, 5], [1, 0]], // world lift, + = up behind
       };
-      k.animation('rear', {
+      animate('rear', {
         duration: 2.2,
         loop: false,
         pose: (t, p) => {
@@ -545,7 +570,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         pawU: [[0.55, 0], [0.62, -38], [0.69, -14], [0.74, 10], [0.8, -38], [0.87, -14], [0.92, 10], [1, 0]],
         pawS: [[0.55, 0], [0.62, 50], [0.69, -4], [0.74, 8], [0.8, 50], [0.87, -4], [0.92, 8], [1, 0]],
       };
-      k.animation('neigh', {
+      animate('neigh', {
         duration: 2.4,
         loop: false,
         pose: (t, p) => {
@@ -576,7 +601,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       // and planted; the hips sink by the height the leaning upper legs lose.
       const DEG = 180 / Math.PI;
       const UPPER = SHOULDER[1] - FKNEE[1]; // shoulder or hip joint to knee (the same front and back)
-      k.animation('hit', {
+      animate('hit', {
         duration: 0.45,
         loop: false,
         pose: (_t, p) => {
@@ -610,7 +635,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       // Death: a recoil and a stagger, then the front knees buckle (the cannons fold back under the
       // forearms) and the hind legs fold, the chest drops, and the horse rolls onto its right side
       // with the legs out and the head down. groundY rests the lowest point on the ground each frame.
-      k.animation('death', {
+      animate('death', {
         duration: 1.8,
         loop: false,
         pose: (_t, p) => {

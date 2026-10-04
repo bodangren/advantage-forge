@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 657,
-    "source_missing": 199,
+    "source_present": 662,
+    "source_missing": 194,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 138,
-        "source_missing": 166
+        "source_present": 143,
+        "source_missing": 161
       },
       "P3": {
         "listed": 48,
@@ -4760,7 +4760,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/centaur.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4770,7 +4770,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dryad.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4830,7 +4830,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/satyr.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4840,7 +4840,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/selkie.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -5070,7 +5070,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/pixie-swarm.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,8 +9625,8 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 842,
-    "catalog_matched": 641,
+    "listed": 847,
+    "catalog_matched": 646,
     "off_catalog": 201
   },
   "asset_sources": [
@@ -10437,6 +10437,13 @@
       "catalog_source_ids": []
     },
     {
+      "id": "centaur",
+      "source_path": "assets/centaur.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/centaur"
+      ]
+    },
+    {
       "id": "centipede",
       "source_path": "assets/centipede.ts",
       "catalog_source_ids": [
@@ -11128,6 +11135,13 @@
       "id": "dry-riverbed",
       "source_path": "assets/dry-riverbed.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "dryad",
+      "source_path": "assets/dryad.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/dryad"
+      ]
     },
     {
       "id": "duelist-hat",
@@ -13422,6 +13436,13 @@
       ]
     },
     {
+      "id": "pixie-swarm",
+      "source_path": "assets/pixie-swarm.ts",
+      "catalog_source_ids": [
+        "monsters/small/pixie-swarm"
+      ]
+    },
+    {
       "id": "plague-bearer",
       "source_path": "assets/plague-bearer.ts",
       "catalog_source_ids": [
@@ -13930,6 +13951,13 @@
       ]
     },
     {
+      "id": "satyr",
+      "source_path": "assets/satyr.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/satyr"
+      ]
+    },
+    {
       "id": "saw",
       "source_path": "assets/saw.ts",
       "catalog_source_ids": [
@@ -14004,6 +14032,13 @@
       "id": "sea-water",
       "source_path": "assets/sea-water.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "selkie",
+      "source_path": "assets/selkie.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/selkie"
+      ]
     },
     {
       "id": "sewer-water",
