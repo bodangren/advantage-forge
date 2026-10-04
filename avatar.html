@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Avatar review</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #c9ced6;
+        font: 13px system-ui, sans-serif;
+        color: #1d232c;
+      }
+      #bar {
+        position: fixed;
+        inset: 0 0 auto 0;
+        padding: 6px 10px;
+        background: #ffffffcc;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        z-index: 2;
+      }
+      #labels span {
+        position: fixed;
+        transform: translateX(-50%);
+        background: #ffffffd9;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      canvas {
+        display: block;
+      }
+      #portraits {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 256px);
+        gap: 8px;
+        padding: 40px 10px 10px;
+      }
+      #portraits figure {
+        margin: 0;
+        background: #aeb3ba;
+        border-radius: 6px;
+      }
+      #portraits canvas {
+        width: 256px;
+        height: 256px;
+      }
+      #portraits figcaption {
+        padding: 2px 6px 4px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bar"></div>
+    <div id="labels"></div>
+    <script type="module" src="/src/avatar-review/main.ts"></script>
+  </body>
+</html>

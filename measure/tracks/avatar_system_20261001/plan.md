@@ -1,6 +1,6 @@
 # Avatar system: base, equipment fit, pack, composer
 
-Status: in_progress (2026-10-04: Phase 3 done with the capped hair; next Phase 4 pack and Phase 5 composer). The plan records execution state. The specification retains design detail.
+Status: completed (2026-10-04: Phases 4 and 5 done: the avatar pack, the portraits, the composer, and the review). The monorepo tables, API, and pages are a monorepo track. The plan records execution state. The specification retains design detail.
 
 ## Phase 1: Documents
 
@@ -28,21 +28,63 @@ Status: in_progress (2026-10-04: Phase 3 done with the capped hair; next Phase 4
 
 ## Phase 4: Pack and portraits
 
-- [ ] Task: Add the reduced output pass (coarser `maxError`, 512 px atlas) as a second output of the same asset file.
-- [ ] Task: Write `scripts/avatar-pack.ts` (catalog join, reduced GLBs, portrait layers).
-- [ ] Task: Render portrait layers at the fixed camera and write the canvas composer.
+- [x] Task: Add the reduced output pass (coarser `maxError`, 512 px atlas) as a second output of the same asset file. (2026-10-04: see "Pack, composer, and portrait record".)
+- [x] Task: Write `scripts/avatar-pack.ts` (catalog join, reduced GLBs, portrait layers). (2026-10-04: the portrait layers are `scripts/avatar-portraits.ts`, run after the pack.)
+- [x] Task: Render portrait layers at the fixed camera and write the canvas composer. (2026-10-04)
 
 ## Phase 5: Composer and review
 
-- [ ] Task: Write `src/apk3d/avatar/compose.ts` and the review page `avatar.html` with the 15 starter sets and random loadouts.
-- [ ] Task: Review renders of the starter sets in idle, walk, and attack; record the evidence here.
-- [ ] Task: Measure the pack size and the 30-avatar composite frame rate; record the evidence here.
+- [x] Task: Write `src/apk3d/avatar/compose.ts` and the review page `avatar.html` with the 15 starter sets and random loadouts. (2026-10-04)
+- [x] Task: Review renders of the starter sets in idle, walk, and attack; record the evidence here. (2026-10-04)
+- [x] Task: Measure the pack size and the 30-avatar composite frame rate; record the evidence here. (2026-10-04)
 
 ## Monorepo notes
 
 - The shop sorts by popularity: `purchase` rows in `avatar_inventory` for each item in the last
   30 days, over all schools (owner decision 2026-10-01). Ties (and every item at go-live, when all
   counts are zero) sort in a fixed random order for each student, seeded by the user id.
+
+## Pack, composer, and portrait record (2026-10-04)
+
+- Reduced pass: `./forge build <id> --reduced` (4x `maxError`, 512 px atlas; `--capped` and
+  `--tucked` for the hair forms) writes `out/<id>[+form]+reduced/`. Code: `REDUCED_*` in
+  `src/asset.ts`, `errorScale` on the mesh task, `wornAs` for the worn state in the workers.
+- Pack: `scripts/avatar-pack.ts --build` built 144 reduced inputs (two slots, about one a minute)
+  and writes 149 GLBs: the base, 136 pieces, and 4 hair styles with their capped and tucked forms.
+  14.98 MB in total (budget 25 MB); the base 288 KB (budget 2 MB); the largest piece
+  shoulder-armor 283 KB (budget 400 KB); 203,741 triangles in all.
+- Defects found and fixed in this phase:
+  1. Lossless WebP set the tint mask color to black under zero alpha (all 196,866 such texels of
+     the base; the whole hair mask of each style). The mask stays PNG.
+  2. `avatarModelOf` searched the glTF textures for the mask, but the GLB holds it as an image
+     only: no tint in 3D and black portrait masks. It now loads the named image.
+  3. A hair style kept its own default color. It now takes the base hair color.
+  4. A full `prune()` in the pack removed the tint mask of 23 dyed pieces. The pack now joins
+     without it and fails when a GLB names a mask that it does not hold.
+  5. The capped hair came through the top of the explorer hat: its avatar fit is 1 cm higher. The
+     long falls, the low ponytail, and the side tufts came through 6 pieces that cover the nape or
+     the cheeks: these pieces tuck the hair (`tuckHair`, the cap alone).
+- Composer: `src/apk3d/avatar/compose.ts` with `tint.ts`, `hair.ts`, `pack.ts`, and `starters.ts`
+  (15 starter sets of ready tier 1 pieces). Tests: `tests/apk3d/avatar-compose.test.ts` (7),
+  `avatar-starters.test.ts` (2), `avatar-portrait.test.ts` (4). The kit import rule allows
+  `apk3d/avatar` to import contracts and three (`docs/apk3d-cartridge.md` section 4).
+- Draw calls: the first pack drew 1,038 calls for 30 avatars (about 35 for each). The pack now
+  drops the display-only bodies and joins the bodies of a piece into one mesh: 373 calls.
+- Review: `avatar.html` with `scripts/avatar-review.ts`. Renders of the 15 starter sets:
+  `out/avatar-review/idle.png`, `walk.png` (0.25 s), and `attack.png` (0.3 s). Every piece follows
+  its bone; no loadout errors. The hair check (`scripts/avatar-portraits.ts --hair`) passes all 76
+  pairs of the 19 head pieces that cap or tuck the hair and the 4 styles (limit 100 pixels in a
+  1024 px head frame).
+- Portraits: 223 layers (3 base layers, 136 pieces, 72 hair layers of 4 styles in 6 colors and 3
+  forms, 12 open head pieces over each style), 609 KB in all; the largest is 6.8 KB color and
+  5.6 KB mask (budgets 48 KB and 24 KB); no layer touches the frame. Check
+  (`--check`, `out/avatar-review/portrait-check.png`): each starter portrait from its layers
+  against the 3D render at the portrait camera; at most 1.92% of the figure (witch) differs by
+  more than 48 of 255 (bar 2%). The review page composes the 15 portraits in 3.0 s
+  (`out/avatar-review/portraits.png`).
+- Frame rate: 30 random loadouts walking, 28.5 to 32.7 fps over four runs (373 draw calls,
+  746,043 triangles), on the 2012 quad-core with Intel HD 4000 graphics. The acceptance names a
+  2020 laptop, which is faster; this machine was the only one available.
 
 ## Capped hair record (2026-10-04)
 

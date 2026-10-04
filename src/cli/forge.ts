@@ -17,6 +17,7 @@ import type * as ClipCheck from '../clip-check.js';
 import type * as Equip from '../equip.js';
 import type * as EquipCheck from '../equip-check.js';
 import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
+import { REDUCED_ERROR_SCALE, REDUCED_TEXTURE_SIZE } from '../asset.js';
 
 const HELP = `forge — build and look at 3D assets
 
@@ -65,6 +66,12 @@ common
   --watch              keep running; rebuild and re-render when a file changes
   --wear a,b           dress a base (avatar-base) in equipment pieces (assets with an equip block);
                        the outputs go to out/<base>+<a>+<b>/
+  --reduced            the reduced output pass of the avatar pack: a 512 px atlas and 4x the
+                       reduction error; the outputs go to out/<name>+reduced/
+  --capped             build the capped hair (a hair style or the base under a head piece that
+                       keeps the hair); the outputs go to out/<name>+capped/
+  --tucked             build the tucked hair (the cap only, under a head piece that covers the
+                       nape or the cheeks); the outputs go to out/<name>+tucked/
 `;
 
 const NAMED_VIEWS: Record<string, Omit<ViewSpec, 'name' | 'focus'>> = {
@@ -110,6 +117,9 @@ async function main(): Promise<void> {
       ppm: { type: 'string' },
       into: { type: 'string' },
       wear: { type: 'string' },
+      capped: { type: 'boolean' },
+      tucked: { type: 'boolean' },
+      reduced: { type: 'boolean' },
       help: { type: 'boolean', short: 'h' },
     },
   });
@@ -128,8 +138,8 @@ async function main(): Promise<void> {
   const file = assetPath(name);
   const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
   if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
-  // A base in equipment writes beside the base, never over its outputs.
-  const outName = [name, ...wear].join('+');
+  // A base in equipment (or the capped hair) writes beside the base, never over its outputs.
+  const outName = [name, ...wear, ...(values.capped ? ['capped'] : []), ...(values.tucked ? ['tucked'] : []), ...(values.reduced ? ['reduced'] : [])].join('+');
 
   const server = await createServer({
     root: ROOT,
@@ -219,7 +229,9 @@ async function main(): Promise<void> {
           ? 0
           : values.texture !== undefined
             ? num(values.texture, 1024)
-            : undefined;
+            : values.reduced
+              ? REDUCED_TEXTURE_SIZE
+              : undefined;
         let def = pipeline.checkDefinition(mod, name);
         const worn: { name: string; source: string; def: typeof def }[] = [];
         for (const w of wear) {
@@ -227,7 +239,14 @@ async function main(): Promise<void> {
           worn.push({ name: w, source, def: pipeline.checkDefinition(await server.ssrLoadModule(source), w) });
         }
         if (worn.length > 0) def = ((await server.ssrLoadModule('/src/equip.ts')) as typeof Equip).wearAsset(def, worn);
-        built = await pipeline.buildToGlb(def, file, textureSize, worn.map(({ name: n, source }) => ({ name: n, source })));
+        built = await pipeline.buildToGlb(
+          def,
+          file,
+          textureSize,
+          worn.map(({ name: n, source }) => ({ name: n, source })),
+          values.tucked ? { capHair: true, tuckHair: true } : values.capped ? { capHair: true } : undefined,
+          values.reduced ? REDUCED_ERROR_SCALE : undefined,
+        );
       } catch (error) {
         server.ssrFixStacktrace(error as Error);
         throw error;

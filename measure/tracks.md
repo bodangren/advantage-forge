@@ -119,7 +119,7 @@ This registry gives each historical, current, and planned work item one Measure 
 
 ## Games
 
-- [~] **Track: Player avatar system: base, equipment fit, pack, composer**
+- [x] **Track: Player avatar system: base, equipment fit, pack, composer**
   *Link: [./tracks/avatar_system_20261001/](./tracks/avatar_system_20261001/)*
 
 - [x] **Track: History: Build the local APK 3D cartridge platform**

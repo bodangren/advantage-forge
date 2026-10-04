@@ -1,6 +1,7 @@
 import { availableParallelism } from 'node:os';
 import { Worker } from 'node:worker_threads';
 import { runTask, type Task, type TaskContext, type TaskResult } from './tasks.js';
+import type { AssetContext } from './asset.js';
 
 /** Runs tasks on worker threads (or in-process when threads are unavailable or not wanted). */
 export interface Pool {
@@ -17,6 +18,7 @@ export async function openPool(
   source: string | undefined,
   jobs: number,
   wear?: readonly { readonly name: string; readonly source: string }[],
+  worn?: NonNullable<AssetContext['worn']>,
 ): Promise<Pool> {
   const size = Math.min(
     jobs,
@@ -28,7 +30,7 @@ export async function openPool(
     await Promise.all(
       Array.from({ length: size }, () => {
         const worker = new Worker(new URL('./mesh-worker.ts', import.meta.url), {
-          workerData: { source, wear: wear ?? [] },
+          workerData: { source, wear: wear ?? [], worn: worn ?? null },
           execArgv: ['--import', 'tsx'],
         });
         workers.push(worker);

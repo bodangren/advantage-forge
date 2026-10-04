@@ -12,7 +12,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/hero-mockups/gladiator_001.jpg',
   texture: { size: 512 },
-  equip: { slot: 'head', origin: [0, -RIM_Y, 0] },
+  equip: { slot: 'head', origin: [0, -RIM_Y, 0], tuckHair: true },
 
   build(k) {
     addPart(k, gladiatorHelmet(), { pose: (s) => s.at(0, -RIM_Y, 0), bones: null });

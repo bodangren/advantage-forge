@@ -27,6 +27,7 @@ const RULES: Record<string, readonly ModuleId[]> = {
   'apk3d/audio': ['apk3d/contracts', 'apk3d/sim', 'three'],
   'apk3d/i18n': ['apk3d/contracts'],
   'apk3d/device': ['apk3d/contracts'],
+  'apk3d/avatar': ['apk3d/contracts', 'three'],
   'apk3d/view2d': ['apk3d/contracts', 'apk3d/sim', 'apk3d/audio', 'phaser'],
   'apk3d/factory': [
     'apk3d/contracts',

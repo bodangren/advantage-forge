@@ -1,6 +1,6 @@
 import { existsSync, readdirSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
-import { buildAsset, type AssetDefinition, type BuildResult } from './asset.js';
+import { buildAsset, type AssetContext, type AssetDefinition, type BuildResult } from './asset.js';
 import { toGlb } from './gltf.js';
 
 function findRoot(start: string): string {
@@ -46,11 +46,15 @@ export async function buildToGlb(
   source?: string,
   textureSize?: number,
   wear?: readonly { readonly name: string; readonly source: string }[],
+  worn?: NonNullable<AssetContext['worn']>,
+  errorScale?: number,
 ): Promise<{ result: BuildResult; glb: Uint8Array }> {
   const result = await buildAsset(def, {
     ...(source ? { source } : {}),
     ...(textureSize !== undefined ? { textureSize } : {}),
     ...(wear && wear.length > 0 ? { wear } : {}),
+    ...(worn ? { worn } : {}),
+    ...(errorScale ? { errorScale } : {}),
   });
   const glb = await toGlb(result.root);
   return { result, glb };

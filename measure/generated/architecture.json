@@ -198,7 +198,11 @@
   "source_roots": [
     {
       "path": "src/apk3d",
-      "typescript_files": 59
+      "typescript_files": 65
+    },
+    {
+      "path": "src/avatar-review",
+      "typescript_files": 2
     },
     {
       "path": "src/cli",

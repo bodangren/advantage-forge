@@ -14,7 +14,8 @@ import { sdf, type Part, type PartTint } from '../../src/index.js';
  * Each style also has a capped form, for wear under a head piece that keeps the hair (`capHair`
  * in `src/equip.ts`): a thin cap 0.005 m out above the cap line `CAP_LINE`, and the style's low
  * locks below it (side tufts, the long back and falls, a low ponytail from the nape). It has no
- * fringe, so a brim or a helmet edge covers the top of the hair.
+ * fringe, so a brim or a helmet edge covers the top of the hair. The tucked form, under a piece
+ * that covers the nape or the cheeks (`tuckHair`), is the cap alone: the locks would come through.
  */
 
 export type AvatarHairStyle = 'swept' | 'short' | 'long' | 'ponytail';
@@ -192,11 +193,13 @@ const CAPPED: Record<AvatarHairStyle, () => sdf.Shape> = {
 export interface AvatarHairOptions {
   /** The capped form, for wear under a head piece that keeps the hair. */
   readonly capped?: boolean;
+  /** The tucked form, the cap without locks, under a head piece that covers the nape or the cheeks. */
+  readonly tucked?: boolean;
 }
 
 export function avatarHair(style: AvatarHairStyle, tint: PartTint, options: AvatarHairOptions = {}): Part {
   const lines = tint('hair', { color: LOCK_LINE, follow: 1 });
-  const shape = (options.capped ? CAPPED : STYLES)[style]();
+  const shape = options.tucked ? capped() : (options.capped ? CAPPED : STYLES)[style]();
   return {
     name: `avatar-hair-${style}`,
     bodies: [

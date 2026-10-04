@@ -15087,7 +15087,31 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/avatar/compose.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/hair.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/pack.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/portrait.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/avatar/price.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/starters.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/tint.ts",
       "source_present": true
     },
     {
@@ -15308,6 +15332,14 @@
     },
     {
       "source_path": "src/asset.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/avatar-review/main.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/avatar-review/portraits.ts",
       "source_present": true
     },
     {

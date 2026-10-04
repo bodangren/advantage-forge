@@ -10,7 +10,7 @@ import { openPool } from './workers.js';
 import { groundClip } from './grounding.js';
 import { buildRig, sampleAnimation, skinWeights, type AnimationDef, type SkeletonDef } from './rig.js';
 import { checkPresets, recolor, slotTable, type Slot, type VariantPresets, type VariantSlots } from './variants.js';
-import { resolveEquip, validateEquip, type EquipDeclaration, type ResolvedEquip } from './equip.js';
+import { resolveEquip, validateEquip, wornAs, type EquipDeclaration, type ResolvedEquip } from './equip.js';
 
 export interface BodyOptions {
   /** Base color where no paint covers the surface. Default '#cccccc'. */
@@ -90,9 +90,10 @@ export interface AssetContext {
   tint(slot: string, partial: { readonly color: string; readonly follow: number }): string;
   /**
    * Set only while the asset is worn on (or is) an avatar base with equipment (`wearAsset`):
-   * `capHair` is true when a worn head piece keeps the hair, so a hair body builds its capped form.
+   * `capHair` is true when a worn head piece keeps the hair, so a hair body builds its capped form;
+   * `tuckHair` is true when that piece covers the nape or the cheeks: the tucked form, the cap only.
    */
-  readonly worn?: { readonly capHair: boolean };
+  readonly worn?: { readonly capHair: boolean; readonly tuckHair?: boolean };
 }
 
 export interface AssetDefinition {
@@ -298,11 +299,23 @@ export interface BuildOptions {
    * import each piece module too and dress the base the same way.
    */
   readonly wear?: readonly { readonly name: string; readonly source: string }[];
+  /** Build the asset in this worn state (`k.worn`; `wornAs`): `capHair` gives the capped hair. */
+  readonly worn?: NonNullable<AssetContext['worn']>;
+  /**
+   * Multiply every body's triangle reduction error (the default is 0.12 of its cell size): the
+   * reduced output pass of the avatar pack uses `REDUCED_ERROR_SCALE`.
+   */
+  readonly errorScale?: number;
 }
 
+/** The reduced output pass (`forge build <name> --reduced`): reduction error and atlas size. */
+export const REDUCED_ERROR_SCALE = 4;
+export const REDUCED_TEXTURE_SIZE = 512;
+
 /** Run an asset's build function, mesh every body, and (by default) unwrap and bake textures. */
-export async function buildAsset(def: AssetDefinition, options: BuildOptions = {}): Promise<BuildResult> {
+export async function buildAsset(asset: AssetDefinition, options: BuildOptions = {}): Promise<BuildResult> {
   const t0 = performance.now();
+  const def = options.worn ? wornAs(asset, options.worn) : asset;
   const { root, pending, skeleton, animations } = await collectBodies(def);
   if (def.equip) {
     if (skeleton) throw new Error('An equipment piece (equip) has no skeleton: the avatar base moves it.');
@@ -321,7 +334,7 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
   }
   const threeSkeleton = rig ? new THREE.Skeleton([...rig.bones]) : null;
   const size = options.textureSize ?? (def.texture === false ? 0 : (def.texture?.size ?? 1024));
-  const pool = await openPool(ctx, options.source, pending.length, options.wear);
+  const pool = await openPool(ctx, options.source, pending.length, options.wear, options.worn);
 
   let meshed: MeshResult[];
   let uvMeshes: UvMesh[] | null = null;
@@ -329,7 +342,7 @@ export async function buildAsset(def: AssetDefinition, options: BuildOptions = {
   let textureMs = 0;
   try {
     meshed = (await pool.run(
-      pending.map((_, index) => ({ kind: 'mesh' as const, index, paintSeams: size === 0 })),
+      pending.map((_, index) => ({ kind: 'mesh' as const, index, paintSeams: size === 0, ...(options.errorScale ? { errorScale: options.errorScale } : {}) })),
     )) as MeshResult[];
     for (const [i, r] of meshed.entries())
       if (r.mesh.indices.length === 0)

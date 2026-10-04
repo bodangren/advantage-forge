@@ -15,7 +15,7 @@ export default defineAsset({
   variants: {
     hat: { khaki: '#c8b890', olive: '#7a7a48', slate: '#6a7a8a' },
   },
-  equip: { slot: 'head', origin: [0, -0.0581, -0.0156], rotate: [10, 0, 0] },
+  equip: { slot: 'head', origin: [0, -0.0681, -0.0156], rotate: [10, 0, 0] },
   build(k) {
     addPart(k, explorerHat(k.tint), { pose: (s) => s.at(0, 0.0305, 0), bones: null });
   },

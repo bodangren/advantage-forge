@@ -19,6 +19,6 @@ export default defineAsset({
   equip: { slot: 'hair', origin: [0, LIFT, 0], hides: ['hair'] },
 
   build(k) {
-    addPart(k, avatarHair('swept', k.tint, { capped: k.worn?.capHair ?? false }), { pose: (s) => s.at(0, LIFT, 0), bones: null });
+    addPart(k, avatarHair('swept', k.tint, { capped: k.worn?.capHair ?? false, tucked: k.worn?.tuckHair ?? false }), { pose: (s) => s.at(0, LIFT, 0), bones: null });
   },
 });

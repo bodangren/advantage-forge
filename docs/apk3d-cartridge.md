@@ -260,6 +260,7 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | `src/apk3d/stage`, `audio` | `contracts`, `sim`, `three` |
 | `src/apk3d/hud` | `contracts`, `sim`, `stage`, `three` (HudRoot anchors labels on the stage frame and uses its Timeline) |
 | `src/apk3d/i18n`, `device` | `contracts` |
+| `src/apk3d/avatar` (the avatar composer, portraits, prices, starter sets) | `contracts`, `three` |
 | `src/apk3d/view2d` (the 2D kit: projection, sheets, actors, HUD, card, arena) | `contracts`, `sim`, `audio`, `phaser` |
 | `src/apk3d/factory`, `qc` | `contracts`, `sim`, `stage`, `hud`, `audio`, `device`, `i18n`, `three`, `phaser` (factory only) |
 | `src/games/*/core` | `src/apk3d/contracts`, `src/apk3d/sim` |

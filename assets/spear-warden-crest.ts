@@ -15,7 +15,7 @@ export default defineAsset({
   detail: 0.006,
   reference: 'docs/hero-mockups/spear-warden_001.jpg',
   texture: { size: 512 },
-  equip: { slot: 'head', origin: [0, REST.lift, 0], rotate: [REST.tilt, 0, 0] },
+  equip: { slot: 'head', origin: [0, REST.lift, 0], rotate: [REST.tilt, 0, 0], tuckHair: true },
 
   build(k) {
     const rest = (s: Sdf) => s.rotateX(REST.tilt).at(0, REST.lift, 0);

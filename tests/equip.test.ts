@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import avatarBase from '../assets/avatar-base.js';
 import { AVATAR_HAIR_STYLES, avatarHair } from '../assets/parts/avatar-hair.js';
 import { buildAsset, collectBodies, defineAsset } from '../src/asset.js';
-import { BASE_JOINTS, HAND_FIT, SOCKETS, capsHair, hairOf, jointOf, resolveEquip, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
+import { BASE_JOINTS, HAND_FIT, SOCKETS, capsHair, hairOf, jointOf, resolveEquip, tucksHair, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
 import { checkEquip } from '../src/equip-check.js';
 import { toGlb } from '../src/gltf.js';
 import { sdf } from '../src/index.js';
@@ -185,7 +185,7 @@ describe('equipment declaration', () => {
     expect(contact(bald, 'skin').fails).toBe(true);
     expect(bald.ok).toBe(false);
   });
-  it('tells the hair what a piece does: hide, cap, or keep it full', () => {
+  it('tells the hair what a piece does: hide, cap, tuck, or keep it full', () => {
     const piece = (equip: EquipDeclaration) => ({ name: 'p', def: defineAsset({ name: 'p', equip, build() {} }) });
     expect(hairOf({ slot: 'head', hides: ['hair'] })).toBe('hidden');
     expect(hairOf({ slot: 'head' })).toBe('capped');
@@ -201,6 +201,13 @@ describe('equipment declaration', () => {
     expect(capsHair([piece({ slot: 'chest' })])).toBe(false);
     expect(() => validateEquip({ slot: 'chest', fullHair: true }, ['a'])).toThrow(/only a head piece/);
     expect(() => validateEquip({ slot: 'head', fullHair: true, hides: ['hair'] }, ['a'])).toThrow(/cannot keep the full hair/);
+    // A piece over the nape or the cheeks tucks the hair: capped, and the cap alone.
+    expect(hairOf({ slot: 'head', tuckHair: true })).toBe('tucked');
+    expect(capsHair([style, piece({ slot: 'head', tuckHair: true })])).toBe(true);
+    expect(tucksHair([style, piece({ slot: 'head', tuckHair: true })])).toBe(true);
+    expect(tucksHair([style, piece({ slot: 'head' })])).toBe(false);
+    expect(() => validateEquip({ slot: 'chest', tuckHair: true }, ['a'])).toThrow(/only a head piece tucks/);
+    expect(() => validateEquip({ slot: 'head', tuckHair: true, fullHair: true }, ['a'])).toThrow(/cannot also keep or hide/);
   });
 
   it('builds the capped hair of the base and of a hair style under a head piece that keeps it', async () => {

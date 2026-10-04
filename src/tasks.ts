@@ -8,7 +8,8 @@ import type { UvMesh } from './texture/unwrap.js';
 
 /** Work that can run in a worker thread or in-process. Shapes stay where they were built. */
 export type Task =
-  | { readonly kind: 'mesh'; readonly index: number; readonly paintSeams: boolean }
+  /** `errorScale` multiplies the body's reduction error (the reduced output pass). */
+  | { readonly kind: 'mesh'; readonly index: number; readonly paintSeams: boolean; readonly errorScale?: number }
   /**
    * One body's maps, plus a tint mask for each color slot in `slots` (the slot white, all else
    * black), baked at the same surface points.
@@ -66,8 +67,11 @@ export async function runTask(task: Task, ctx: TaskContext): Promise<TaskResult>
     const kind: string = task.kind;
     if (kind !== 'mesh' && kind !== 'bake')
       throw new Error(`Unknown task '${kind}': forge changed while this build ran. Run the command again.`);
-    if (task.kind === 'mesh')
-      return await meshSdf(body.shape, { ...meshOptions(ctx.def, body), paintSeams: task.paintSeams });
+    if (task.kind === 'mesh') {
+      const o = meshOptions(ctx.def, body);
+      const scale = task.errorScale ?? 1;
+      return await meshSdf(body.shape, { ...o, ...(scale !== 1 ? { maxError: (o.maxError ?? o.cellSize * 0.12) * scale } : {}), paintSeams: task.paintSeams });
+    }
     // Each slot's mask colors come from the bodies built in that slot's mask mode, and are
     // evaluated in mask mode: colors a paint function makes while it runs are then mask values
     // too (the slot's white, or black), so a stitch painted over the cloth is left out of the

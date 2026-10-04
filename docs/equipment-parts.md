@@ -151,6 +151,7 @@ equip: {
   offset: [0, 0.01, 0],   // a small shift in worn meters, in the socket frame
   hides: ['hair'],        // base bodies hidden while worn: hair (hair, head), undershirt (chest), shoes (feet)
   fullHair: true,         // head only: an open piece (circlet, crown, band) over the full hair
+  tuckHair: true,         // head only: a piece over the nape or the cheeks; the hair is the cap only
   displayOnly: ['stand'], // bodies that only the display shows
   twoHanded: true,        // mainhand only
 },
@@ -176,7 +177,7 @@ Rules for held items:
 
 ### Hair under head pieces
 
-A hair style (slot `hair`) replaces the base hair. A head piece then does one of three things to
+A hair style (slot `hair`) replaces the base hair. A head piece then does one of four things to
 the hair, the base's or the style's, and the resolved block says which (`forgeEquip.hair`):
 
 - `hidden`: the piece hides it (`hides: ['hair']`: iron-helmet, steel-helmet, horned-helmet).
@@ -184,11 +185,15 @@ the hair, the base's or the style's, and the resolved block says which (`forgeEq
   skull above the cap line y = 0.66 + 0.3 z (the brow in front, the nape behind) and the style's
   low locks below it (slim side tufts, the long back and falls, a low ponytail from the nape). No
   fringe rises above the brow, so a brim or a helmet edge covers the top of the hair.
+- `tucked` (`tuckHair: true`): the piece covers the nape or the cheeks, so the low locks would
+  come through it. The hair builds its tucked form, the cap alone: cloth-hood, knight-helm,
+  gladiator-helmet, dragoon-helm, spear-warden-crest, spear-warden-helm.
 - `full` (`fullHair: true`): an open piece sits over the full hair: circlet, crown,
   swashbuckler-bandana.
 
-A build reads the state from `k.worn?.capHair` (`wearAsset` sets it; `capsHair` in `src/equip.ts`).
-The capped forms are in `assets/parts/avatar-hair.ts` (`avatarHair(style, tint, { capped })`). The
+A build reads the state from `k.worn?.capHair` and `k.worn?.tuckHair` (`wearAsset` sets them;
+`capsHair` and `tucksHair` in `src/equip.ts`). The capped and tucked forms are in
+`assets/parts/avatar-hair.ts` (`avatarHair(style, tint, { capped, tucked })`). The
 fit check of a head piece measures it against the capped hair, and a hair style may tuck its lower
 edge into the jaw and the neck skin, as the base hair does (a note, not a failure).
 

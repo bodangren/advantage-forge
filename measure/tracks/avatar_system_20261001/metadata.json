@@ -1,13 +1,13 @@
 {
   "track_id": "avatar_system_20261001",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-01T00:00:00Z",
-  "updated_at": "2026-10-04T12:00:00Z",
+  "updated_at": "2026-10-04T18:00:00Z",
   "description": "Player avatar system: avatar base, equipment fit and declaration, avatar pack, portraits, composer",
   "estimated_tasks": 12,
-  "actual_tasks": null,
-  "deviation_notes": "Owner decisions of 2026-10-01 recorded in the spec. Phase 3: the fit bounds rule became a show-through rule; pauldrons on the upper arms; shields on hand.L; base clips aim held items. Rollout: 138 equip blocks, 122 pass; 16 pieces moved to rework; the shield socket moved outward and lower; gloves and gauntlets need a closed-fist shape. 2026-10-02: all 12 fit reworks are ready (7.0 or more, fit ok); no catalog row is rework. Three displays moved onto y = 0 with their origins (cape, plate-armor, boots). 2026-10-04: capped hair done; hair styles moved to their own slot `hair` (a style stays under a hat); open pieces (circlet, crown, bandana) keep the full hair (`fullHair`).",
+  "actual_tasks": 20,
+  "deviation_notes": "Owner decisions of 2026-10-01 recorded in the spec. Phase 3: the fit bounds rule became a show-through rule; pauldrons on the upper arms; shields on hand.L; base clips aim held items. Rollout: 138 equip blocks, 122 pass; 16 pieces moved to rework; the shield socket moved outward and lower; gloves and gauntlets need a closed-fist shape. 2026-10-02: all 12 fit reworks are ready (7.0 or more, fit ok); no catalog row is rework. Three displays moved onto y = 0 with their origins (cape, plate-armor, boots). 2026-10-04: capped hair done; hair styles moved to their own slot `hair` (a style stays under a hat); open pieces (circlet, crown, bandana) keep the full hair (`fullHair`). 2026-10-04 Phases 4-5: the portrait layers are a second script (scripts/avatar-portraits.ts); the pack uses WebP and Meshopt (no KTX2 transcoder in the kit) and keeps the tint mask PNG; hair layers are rendered per hair color; open head pieces have a layer per hair style; a new hair form `tucked` (cap only) for 6 pieces over the nape or cheeks; the explorer hat sits 1 cm higher; the 30-avatar bench ran on the 2012 machine (28.5 to 32.7 fps), not on a 2020 laptop.",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
@@ -21,7 +21,18 @@
     "tests/equip.test.ts",
     "docs/equipment-parts.md",
     "docs/equipment-fit.md",
-    "bench/sonnet/log.tsv"
+    "bench/sonnet/log.tsv",
+    "src/apk3d/avatar/compose.ts",
+    "src/apk3d/avatar/portrait.ts",
+    "src/apk3d/avatar/starters.ts",
+    "scripts/avatar-pack.ts",
+    "scripts/avatar-portraits.ts",
+    "scripts/avatar-review.ts",
+    "avatar.html",
+    "portrait.html",
+    "tests/apk3d/avatar-compose.test.ts",
+    "tests/apk3d/avatar-portrait.test.ts",
+    "tests/apk3d/avatar-starters.test.ts"
   ],
   "dependencies": []
 }

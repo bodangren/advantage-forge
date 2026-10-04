@@ -55,6 +55,12 @@ export interface EquipDeclaration {
    * head piece that keeps the hair caps it: the hair builds its capped form (`capsHair`).
    */
   readonly fullHair?: boolean;
+  /**
+   * Head pieces only: the piece covers the nape or the cheeks (a hood with a mantle, a helmet with
+   * a neck or cheek guard), so the locks of a capped style would come through it. The hair builds
+   * its tucked form: the cap only (`hairOf`).
+   */
+  readonly tuckHair?: boolean;
   /** Bodies of the asset that only the display shows (a stand); the worn piece leaves them out. */
   readonly displayOnly?: readonly string[];
   /** Mainhand weapons only: the piece fills both hand slots. */
@@ -160,7 +166,7 @@ export interface ResolvedEquip {
   readonly fitScale: number;
   readonly hides: readonly BaseLayer[];
   /** What the piece does to the hair (the base's or a hair style's): the composer shows that form. */
-  readonly hair: 'full' | 'capped' | 'hidden';
+  readonly hair: 'full' | 'capped' | 'tucked' | 'hidden';
   readonly displayOnly: readonly string[];
   readonly twoHanded: boolean;
   readonly attach: readonly EquipAttach[];
@@ -188,6 +194,8 @@ export function validateEquip(eq: EquipDeclaration, bodies: readonly string[]): 
   if (eq.twoHanded && eq.slot !== 'mainhand') throw new Error(`${where}: only a mainhand piece is two-handed.`);
   if (eq.fullHair && eq.slot !== 'head') throw new Error(`${where}: only a head piece keeps the full hair.`);
   if (eq.fullHair && (eq.hides ?? []).includes('hair')) throw new Error(`${where}: a piece that hides the hair cannot keep the full hair.`);
+  if (eq.tuckHair && eq.slot !== 'head') throw new Error(`${where}: only a head piece tucks the hair.`);
+  if (eq.tuckHair && (eq.fullHair || (eq.hides ?? []).includes('hair'))) throw new Error(`${where}: a piece that tucks the hair cannot also keep or hide it.`);
   if (eq.frame !== undefined && eq.frame !== 'socket' && eq.frame !== 'body') throw new Error(`${where}: frame is 'socket' or 'body'.`);
   for (const name of eq.displayOnly ?? [])
     if (!bodies.includes(name)) throw new Error(`${where}: displayOnly names '${name}', which is not a body. Bodies: ${bodies.join(', ')}.`);
@@ -293,7 +301,7 @@ export function wearAsset(base: AssetDefinition, pieces: readonly WornPiece[]): 
   const missing = pieces.filter((p) => !p.def.equip);
   if (missing.length > 0) throw new Error(`No equip block in: ${missing.map((p) => p.name).join(', ')}.`);
   const hidden = new Set(pieces.flatMap((p) => p.def.equip!.hides ?? []));
-  const worn = { capHair: capsHair(pieces) };
+  const worn = { capHair: capsHair(pieces), tuckHair: tucksHair(pieces) };
   const def: AssetDefinition = {
     name: [base.name, ...pieces.map((p) => p.name)].join('+'),
     ...(base.detail !== undefined ? { detail: base.detail } : {}),
@@ -309,19 +317,33 @@ export function wearAsset(base: AssetDefinition, pieces: readonly WornPiece[]): 
   return def;
 }
 
-/** What a piece does to the hair: a head piece hides it, caps it, or (`fullHair`) keeps it full. */
+/** The asset built in a worn state (`k.worn`): the avatar pack builds the capped hair this way. */
+export function wornAs(def: AssetDefinition, worn: NonNullable<AssetContext['worn']>): AssetDefinition {
+  return { ...def, build: (k) => def.build({ ...k, worn }) };
+}
+
+/**
+ * What a piece does to the hair: a head piece hides it, caps it (the default), tucks it
+ * (`tuckHair`), or keeps it full (`fullHair`).
+ */
 export function hairOf(eq: EquipDeclaration): ResolvedEquip['hair'] {
   if ((eq.hides ?? []).includes('hair')) return 'hidden';
-  return eq.slot === 'head' && !eq.fullHair ? 'capped' : 'full';
+  if (eq.slot !== 'head' || eq.fullHair) return 'full';
+  return eq.tuckHair ? 'tucked' : 'capped';
 }
 
 /**
  * A worn head piece that keeps the hair caps it unless it declares `fullHair`: the hair (the
- * base's, or a worn hair style's) builds its capped form, a thin cap above the cap line, so it
- * stays under the brim.
+ * base's, or a worn hair style's) builds its capped form, a thin cap above the cap line and the
+ * style's low locks, so it stays under the brim. A piece that tucks the hair also caps it.
  */
 export function capsHair(pieces: readonly WornPiece[]): boolean {
-  return pieces.some((p) => p.def.equip !== undefined && hairOf(p.def.equip) === 'capped');
+  return pieces.some((p) => p.def.equip !== undefined && (hairOf(p.def.equip) === 'capped' || hairOf(p.def.equip) === 'tucked'));
+}
+
+/** A worn head piece that tucks the hair: the hair builds its tucked form, the cap without locks. */
+export function tucksHair(pieces: readonly WornPiece[]): boolean {
+  return pieces.some((p) => p.def.equip !== undefined && hairOf(p.def.equip) === 'tucked');
 }
 
 async function wearPiece(k: AssetContext, piece: WornPiece, wear: AssetContext['worn']): Promise<void> {

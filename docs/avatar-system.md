@@ -84,9 +84,10 @@ check found four "compliant" pieces that do not fit the avatar (see `equipment-f
 
 Hair under head pieces (2026-10-04): hair styles moved from the `head` slot to a `hair` slot, so a
 student keeps the chosen style under a hat. A head piece hides the hair (`hides: ['hair']`), caps it
-(the default), or keeps it full (`fullHair: true`: circlet, crown, swashbuckler-bandana). The
-capped form is a thin cap above a cap line from the brow to the nape and the style's low locks
-below it; the composer shows the form that `forgeEquip.hair` names. Rules and the cap line:
+(the default), tucks it (`tuckHair: true`), or keeps it full (`fullHair: true`: circlet, crown,
+swashbuckler-bandana). The capped form is a thin cap above a cap line from the brow to the nape and
+the style's low locks below it; the tucked form is the cap alone; the composer shows the form that
+`forgeEquip.hair` names. Rules and the cap line:
 [equipment-parts.md](equipment-parts.md#hair-under-head-pieces). Fit check of the 22 head pieces
 that kept the hair (hair points over the piece): the 19 capped pieces went from 3,506 points to
 295, and 10 of them to 0. Most of the rest are on inner surfaces: the back of wizard-hat (189) and
@@ -94,6 +95,13 @@ gladiator-helmet (40), and the cheek straps of the two spear-warden pieces (27 e
 of wizard-hat, gladiator-helmet, knight-helm, spear-warden-helm, and leather-cap show no hair
 through the piece. The 3 open pieces keep the full hair (17, 17, and 178 points, under the band or
 the fringe).
+
+Hair check of the pack (2026-10-04, `scripts/avatar-portraits.ts --hair`): each hair style under
+each head piece that caps the hair, in flat colors and depth from five views. The point fit check
+missed two defects that the pixels show. The capped hair came through the top of the explorer hat
+(2 of 2,518 points, but about 21,000 pixels): its avatar fit is now 1 cm higher. The long falls,
+the low ponytail, and the side tufts came through the pieces that cover the nape or the cheeks:
+these 6 pieces tuck the hair (`tuckHair`).
 
 Later phases: `robe` (cloth-robe, mage-robe: skinned to spine, chest, and legs), `skirt`,
 `accessory` (necklace, amulet, pendant: the `neck` anchor), `tool` (a back-mounted lute, quiver).
@@ -224,48 +232,107 @@ takes over when purchases come in.
 
 | File | Content | Budget |
 | --- | --- | --- |
-| `catalog.json` | the joined catalog | |
+| `pack.json` | the model pack manifest (`modelPackSchema`) of every GLB | |
+| `catalog.json` | every `ready` catalog row: price, rating, the resolved equip block (`forgeEquip`), the dye slots, the files | |
 | `base/avatar-base.glb` | the base with clips, the tint mask, and the slot table | under 2 MB |
-| `pieces/<id>.glb` | the reduced piece (a second output pass: coarser `maxError`, 512 px atlas, KTX2) | under 400 KB |
-| `portraits/base/<preset>.png`, `portraits/<id>.png` | portrait layers, see section 9 | under 40 KB each |
+| `pieces/<id>.glb` | the reduced piece | under 400 KB |
+| `pieces/<id>.capped.glb`, `pieces/<id>.tucked.glb` | the capped and tucked models of a hair style (section 4) | under 400 KB |
+| `portraits/<layer>.webp`, `portraits/<layer>.mask.webp` | the portrait layers, see section 9 | under 48 KB and 24 KB |
+| `portraits.json` | the portrait camera, the draw order, and the files of each layer | |
 
-The reduced pass comes from the same asset file, never from an edited copy. The full-quality
-GLBs stay the display catalog.
+Tools, in this order:
+
+1. `./forge build <id> --reduced` (with `--capped` or `--tucked` for the forms of a hair style) is
+   the reduced output pass: the same asset file, 4 times the triangle reduction error
+   (`maxError`), and a 512 px atlas. The output goes to `out/<id>+reduced/`
+   (`out/<id>+capped+reduced/`, `out/<id>+tucked+reduced/`).
+2. `scripts/avatar-pack.ts --build` builds the missing reduced inputs (two at a time) and writes
+   the pack. The pack drops the preset atlases (the composer recolors through the tint mask),
+   removes the display-only bodies of a piece and joins its other bodies into one mesh (one
+   material, so one draw call), stores the color, normal, and ORM textures as WebP (quality 82),
+   and compresses the geometry with Meshopt. The kit loader decodes both. The pack fails on a
+   missing input or a budget.
+3. `scripts/avatar-portraits.ts` renders the portrait layers into the pack.
+
+The tint mask stays PNG. Lossless WebP without the `exact` option sets the color of each texel
+with zero alpha to black, and the mask keeps three color slots in those texels (R, G, B). The
+first pack of 2026-10-04 had this defect: the hair styles lost the full hair mask.
+
+The full-quality GLBs stay the display catalog. The reduced pass never uses an edited copy.
 
 ## 8. The 3D composer
 
-`src/apk3d/avatar/compose.ts`:
+`src/apk3d/avatar/compose.ts` (pure three.js, no fetch; the caller loads and caches the files):
 
 ```ts
-composeAvatar(pack, loadout: { tints, pieces: Record<Slot, ItemRef> }): AvatarObject
+avatarModelOf(gltf): Promise<AvatarModel>           // scene, clips, forgeVariants, forgeEquip, tint mask
+composeAvatar(base: AvatarModel, loadout: { tints?, pieces: AvatarPiece[], defaultHair? }): ComposedAvatar
+loadoutErrors(pieces): string[]                     // two pieces in one slot, two hands and an offhand
 ```
 
-1. Load the base GLB once per page; clone the skeleton per avatar.
-2. Apply the tint preset through the tint mask (the existing recolor path).
-3. For each piece: load the reduced GLB (cached by id), select the dye variant, scale by
-   `1 / fitScale`, attach to the anchor bone with `offset` and `rotate`. A mirrored slot attaches
-   the reflected copy to the `.R` bone.
-4. Hide base bodies named in `hides`.
-5. Return the object with the base's `AnimationMixer`. Rigid pieces follow their bones.
+1. Clone the base skeleton per avatar (`SkeletonUtils.clone`).
+2. Recolor the base through the tint mask: a preset name or an option per slot (`tintScales`, the
+   shader formula of `docs/color-variants.md`).
+3. For each piece: attach a copy to each bone of `forgeEquip.attach` (bone-local position,
+   rotation, and fit scale). A pair keeps the +X half of the asset on each bone and mirrors the
+   right one. Display-only bodies are left out. A piece takes its dyes through its own tint mask.
+4. Hide the base bodies named in `hides`.
+5. Hair: a hair style (the chosen one or `defaultHair`) replaces the base hair and takes the base
+   hair color. A head piece hides it, caps it (the capped model), tucks it (the tucked model), or
+   keeps it full.
+6. Return the root, the `AnimationMixer` with one action per clip, and the material copies.
 
-The teacher composite loads one base and up to 30 loadouts. Pieces are shared by id, so a class
-of 30 with 6 slots loads at most the distinct pieces used, not 180 files.
+`avatarModelOf` loads the tint mask from its named image. No material uses the mask, so the GLB
+has no texture entry for it.
+
+The teacher composite loads one base and up to 30 loadouts. Pieces are shared by file, so a class
+of 30 with 6 slots loads only the distinct pieces in use, not 180 files.
+
+The review page `avatar.html` (`src/avatar-review/main.ts`) shows the 15 starter sets
+(`src/apk3d/avatar/starters.ts`) or random loadouts in a clip, the same looks as portraits
+(`?portraits`), and a frame rate bench (`?bench=30`). `scripts/avatar-review.ts` takes the
+screenshots and prints the frame rate.
 
 ## 9. Portrait layers
 
-A portrait is a 512 x 512 PNG with alpha. The forge renders the base and every piece at one fixed
-camera (front three-quarter, the sprite elevation) in the base's `idle` pose at frame 0. Every
-render uses the same canvas frame, so layers align by drawing in slot order.
+A portrait layer is 512 x 512. `scripts/avatar-portraits.ts` renders each layer through
+`portrait.html` (`src/avatar-review/portraits.ts`) at one fixed camera (`PORTRAIT_CAMERA`):
+orthographic, azimuth -35 degrees (from the avatar's right, so the weapon hand is near and the
+avatar looks to the image right), elevation 20 degrees, a frame of 1.56 m around (0, 0.62, 0). The
+pose is the base `idle` clip at 0 s. The light is the forge studio light without shadows.
 
-Draw order: `back`, `feet`, base `skin` + `pants` + `shoes`, `undershirt`, `chest`, `waist`,
-`shoulders`, `hands`, `hair`, `head`, `offhand`, `mainhand`. `hides` removes a layer.
+Each layer has two images:
 
-The client composes the portrait on a canvas from the loadout. This serves the phone HUD, the
-dashboard, the profile page, the shop, and the class list. A base portrait exists per tint preset
-(hair style is a head piece, so hair is a layer).
+- The color: WebP with alpha, in the default colors.
+- The tint mask: lossless WebP, opaque, twice as high. The top half holds the mask channels R, G,
+  and B; the bottom half holds A.
 
-Known limit: a layer order fixed per slot is right for one camera. A piece that needs a different
-order (a hood over hair and under a crown) uses two layers: `<id>.png` and `<id>.over.png`.
+The renderer draws each layer at 1024 px with 4x multisampling and reduces it with alpha-weighted
+averaging in linear light. The base body is a depth-only occluder in each layer, so a layer holds
+only the parts in front of the body.
+
+Layers: `base` (the skin and the pants), `shoes`, `undershirt`, every piece, and every hair style
+in each hair color, full, capped, and tucked (`<id>@<color>`, `<id>.capped@<color>`,
+`<id>.tucked@<color>`). A hair color
+multiplies the albedo by up to 5 (brown to blond). The same multiplier on a lit image also scales
+the highlights, so the hair layers are rendered in each color and get no multiplier. Draw order (`PORTRAIT_ORDER`): `base`, `shoes`, `undershirt`,
+`offhand` (the far hand), `back`, `feet`, `chest`, `waist`, `shoulders`, `hands`, `hair`, `head`,
+`mainhand` (the near hand). A piece removes the base layers in its `hides`.
+
+The client (`src/apk3d/avatar/portrait.ts`) needs no 3D:
+
+- `portraitPlan(loadout)` gives the layers in draw order and the color multipliers of each, with
+  the same rules as the 3D composer (base tints, the style layer in the base hair color, piece
+  dyes).
+- `recolorLayer(color, mask, scales)` recolors a layer in linear light.
+- `stackLayers(layers)` draws the layers over each other.
+
+This serves the phone HUD, the dashboard, the profile page, the shop, and the class list.
+`scripts/avatar-portraits.ts --check` composes each starter set from its layers, renders the same
+loadout in 3D at the portrait camera, and compares the two images.
+
+Known limit: one draw order per slot is right for most loadouts at one camera. Where two pieces
+overlap against the order (a cape clasp in front of a chest piece), the later layer wins.
 
 ## 10. Data model (monorepo, Primary Advantage)
 
@@ -336,5 +403,7 @@ Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild 
   slot, `hair`, and each style has a capped form (section 4, "Hair under head pieces").
 - Whether weapons need a `sheathed` attachment on the back for idle and walk.
 - Whether the reduced pass uses KTX2 in the APK today. If not, 512 px PNG atlases first.
+  Answered 2026-10-04: the kit loader has no KTX2 transcoder. The pack uses 512 px WebP atlases
+  (the tint mask PNG) and Meshopt geometry, which the kit loader decodes (section 7).
 - Items added after go-live start with zero purchases and sort after the items that students
   bought. Decide after go-live whether they need a "new" shelf.

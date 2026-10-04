@@ -32,7 +32,7 @@ export default defineAsset({
   detail: 0.005,
   reference: 'docs/item-mockups/cloth-hood-mock.jpg',
   texture: { size: 1024 },
-  equip: { slot: 'head', origin: [0, 0.45, 0] },
+  equip: { slot: 'head', origin: [0, 0.45, 0], tuckHair: true },
 
   build(k) {
     // ------------------------------------------------------------- hood mass

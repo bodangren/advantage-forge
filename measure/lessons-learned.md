@@ -13,13 +13,13 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 
 - Shared staged files entered unrelated commits during overnight work. Commit explicitly selected paths.
 - Some trial tools wrote outside their trial directory. Validate isolation before launching a batch.
-- A successful build once produced an empty mesh. Validate mesh content before importing the source.
-- Trial sources introduced type errors and unsupported paint options. Validate types and visual output before acceptance.
+- A successful build once produced an empty mesh, and trial sources introduced type errors and unsupported paint options. Validate mesh content, types, and visual output before acceptance.
 - Provider quotas and access failures interrupted batches. Record retry conditions without assuming a historical reset remains valid.
 - Concurrent dependency replacement interrupted builds. Coordinate dependency maintenance across sessions.
 - A flat `k.add` plane over a tile top baked dark blocks in textured builds. Review the textured render, not only `--fast`.
 - Glossy water (roughness below 0.5) turned white in some sprite directions. Use roughness 0.55 for water that the sprite camera sees.
 - An agent ran `git stash` on the shared tree. Every brief forbids stash, reset, restore, and checkout outside the agent's own file.
+- The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
 
 ## Effective practices
 
