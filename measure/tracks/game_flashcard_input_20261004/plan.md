@@ -15,15 +15,15 @@ Status: in progress. The plan records execution state. The spec records the desi
 
 ## Phase 3: Monorepo selection
 
-- [ ] Task: Add the selection by memory state next to `listGameLearningContent`, with domain tests for the order and the student scope.
-- [ ] Task: Return the number of usable items for each game (word limits included), so the host can lock a game.
+- [x] Task: Add the selection by memory state next to `listGameLearningContent`, with domain tests for the order and the student scope. `listGamePracticeInput` (monorepo f7c281716): FSRS `due` ascending, then newest; at most 10 words and 8 sentences; skips malformed cards, repeats, and translations that repeat the answer. 13 domain tests.
+- [x] Task: Return the number of usable items for each game, so the host can lock a game. `missingFor` in the kit (8794ebe04) and `missingItems` in the games registry. No per-game word window is needed: every sentence game falls back to all sentences when none fits its window.
 
 ## Phase 4: Monorepo host
 
-- [ ] Task: Copy the 29 games with `port-game.mjs`.
-- [ ] Task: Replace the story picker with a game list, locks, and the content request.
-- [ ] Task: Put the flashcard records in the evidence, and keep `recordGameCompletion` and server XP.
-- [ ] Task: Update the messages for all five locales.
+- [x] Task: Copy the 28 student games with `port-game.mjs` (monorepo bc9fcd964). Monster Encounters left the games package.
+- [x] Task: Replace the story picker with a game list, locks, and the content request (monorepo 5b7b4a6cd): `GET /api/v1/apk/practice`, locked cards with the missing count and a link to `/student/read`.
+- [x] Task: Put the flashcard records in the evidence, and keep `recordGameCompletion` and server XP. Item ids are record ids; `inputId` is "saved" (74d457eb7).
+- [x] Task: Update the messages for all five locales (Thai text in th; English text in en, cn, tw, and vi, as before).
 
 ## Phase 5: Verification
 

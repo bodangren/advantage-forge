@@ -5,7 +5,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 ## Architecture and design
 
 - One TypeScript source supplies models, clips, and sprites. Separate output presence from acceptance.
-- One game core serves both renderers. A local game and a monorepo port require separate completion records. Forge holds the game source: edit Forge, then copy with `port-game.mjs`. The next port deletes an edit made only in the monorepo copy.
+- One game core serves both renderers. A local game and a monorepo port require separate completion records. Forge holds the game and kit source: edit Forge, then copy with `port-game.mjs`. The next port deletes an edit made only in the monorepo copy. The server contracts and the app host stay with the monorepo.
 - Stable catalog IDs define scope. Repeated filenames across families can make coverage ambiguous.
 - Game-layer visibility, doors, and water behavior belong in game plans, not geometry assumptions.
 

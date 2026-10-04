@@ -23,6 +23,7 @@ The monorepo track `apk3d_games_port_20261003` (branch `apk3d-games-port`, workt
 
 ## Phase 4: Integration and verification
 
+- [x] Task: Copy the kit from Forge with a script (owner decision of 2026-10-04: Forge owns the kit). `fetchModelPack` and `installCss` moved into Forge; `port-kit.mjs --check` reports no difference (kit files and contract fixtures). A planted kit change and two planted contract changes were found.
 - [ ] Task: Run package, host, application type, lint, and catalog checks. Package checks pass; the Primary Advantage type check and lint are not run yet.
 - [ ] Task: Refresh repo-graph after every public contract change, and run `architecture-enforcement`.
 - [ ] Task: Rebase the port branch. Its base `apk3d-port` is `origin/master` plus 18 unrelated `www` commits. Rebase when the content change is done.

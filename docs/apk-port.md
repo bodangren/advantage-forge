@@ -42,6 +42,26 @@ The monorepo track is `measure/tracks/apk3d_games_port_20261003/`.
 - The port branch rebase waits until the input change is done. Its base `apk3d-port` carries 18
   unrelated `www` commits.
 
+### Kit ownership (owner, 2026-10-04)
+
+Forge owns the development of the 3D kit, as it owns the games. Changes are made in Forge and
+copied into `packages/advantage-play-kit-3d`. Two parts stay with the monorepo:
+
+- The contracts that the server also reads (`@reading-advantage/game-contracts`: the story and
+  practice input, the evidence, and the APK types). The server checks every completion with
+  them. The Forge copies in `src/apk3d/contracts` follow them, and a check compares the two.
+- The app host (`host/`, `react/`). It exists only for the apps; Forge has its own demo host.
+
+On 4 October, 52 of the 58 shared kit files were identical. The differences were the contract
+re-exports (by design), the CSS loading (`installCss`, which the copy script can make), and one
+loader refactor (`fetchModelPack`). Forge now has both (`hud/css.ts`, `stage/loader.ts`).
+
+`packages/advantage-play-kit-3d/scripts/port-kit.mjs <forge>` copies the kit; `--check` writes
+nothing and lists every kit file that differs from Forge. It also parses the same fixtures with
+the Forge contract copies and with `game-contracts` (every story, its practice part, a saved
+flashcard input, evidence, and broken variants) and lists every disagreement. Run the check
+before every monorepo commit that touches the kit or the contracts.
+
 ## 1. Packages
 
 | Move | From (this repo) | To (monorepo) | Package name |

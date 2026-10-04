@@ -6,6 +6,7 @@
 import type { Stage3D } from '../stage/stage.js';
 import type { ScreenPoint } from './dom.js';
 import { Banner, Card } from './widgets.js';
+import './theme.css';
 import './hud.css';
 
 export type PopKind = '' | 'miss' | 'good';
