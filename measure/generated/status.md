@@ -1,7 +1,7 @@
 # Measure status
 
 Tracks: 78.
-Tracks by status: new: 11; in_progress: 37; completed: 30.
+Tracks by status: new: 10; in_progress: 38; completed: 30.
 Tracks by workstream: assets: 31; games: 40; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
@@ -22,7 +22,7 @@ Tracks by workstream: assets: 31; games: 40; foundation: 7.
 | [asset_p2_items_20260928](../tracks/asset_p2_items_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | completed | assets | 19/19 | 9 | 9 |
 | [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 0/9 | 9 | — |
-| [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | new | assets | 0/9 | 9 | — |
+| [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p3_vehicles_20260928](../tracks/asset_p3_vehicles_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_production_controls_20260928](../tracks/asset_production_controls_20260928/) | new | assets | 0/5 | 5 | — |

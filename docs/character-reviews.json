@@ -6357,5 +6357,455 @@
       "A seal tail flap at the back of the robe for a better back view."
     ],
     "reviewedAt": "2026-10-04T16:12:02+00:00"
+  },
+  "riding-horse": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 mount on the horse kind: the chestnut horse with a black mane and tail, a leather bridle, and a brown saddle with a pommel, a cantle, side flaps, a girth, a breast strap, and stirrups on a periwinkle blanket with a gold trim (assets/parts/horse-tack.ts). The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The saddle and the blue blanket with the gold trim read in every sprite direction and tell it from the wild horse.",
+      "The tack is a shell of the trunk, so it skins with the chest and the rump in the walk, the gallop, and the rear.",
+      "Coat, mane, eye, and blanket slots with three presets."
+    ],
+    "issues": [
+      "The mane is the horse's full flowing mane; the mockup has one short swept forelock lock.",
+      "The cantle reads as a small ball from the side.",
+      "No reins."
+    ],
+    "next": "Add reins from the noseband to the pommel on the head bone, and a short-mane option for a groomed riding horse.",
+    "reviewedAt": "2026-10-04T17:00:07.000Z"
+  },
+  "warhorse": {
+    "overall": 7.8,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 mount on the horse kind in barding: a silver chanfron with eye openings and a ridge, a red plume, a red peytral with a scalloped hem, a gold trim, and a gold sun on each shoulder, a red caparison under a dark saddle, white feathering over black hooves, a dark slate coat, and a white mane and tail. The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The silver face, the red cloth, and the white mane make a strong knightly read at 128 px.",
+      "The cloth and the trims follow the chest in the rear clip.",
+      "Coat, mane, eye, and cloth slots with three presets (black and blue, grey and green, bay and purple)."
+    ],
+    "issues": [
+      "The sun emblem is small at sprite size.",
+      "The forelock covers the top of the chanfron.",
+      "The mockup's chanfron is a full mask with cheek plates; this one covers the forehead and the nose bridge."
+    ],
+    "next": "Enlarge the suns, add cheek plates to the chanfron, and drop the forelock under the plume.",
+    "reviewedAt": "2026-10-04T17:00:07.000Z"
+  },
+  "pony": {
+    "overall": 7.5,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 mount on the horse kind at 0.78 scale (assets/parts/scale-asset.ts): a pale cream pony with a fluffy curly topknot (the forelock option off), larger eyes (the eyeScale option), a brown patch over the rump and a small one on the right shoulder, a cream mane and tail, and brown hooves. The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The cream coat, the patch, and the curly topknot read as the mockup pony.",
+      "A patch slot gives piebald, chestnut, and grey ponies.",
+      "The scale helper keeps the clips, the ground probes, and the mesh detail of the horse."
+    ],
+    "issues": [
+      "The legs keep the horse's proportions; the mockup pony is stubbier and rounder.",
+      "The topknot sits on the crown; the mockup bun covers the forehead.",
+      "The mane is the horse's flowing mane, not a curly one."
+    ],
+    "next": "Add a leg-length option to the horse kind (joints and probes), and curl the mane and tail locks.",
+    "reviewedAt": "2026-10-04T17:00:07.000Z"
+  },
+  "donkey": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 farm animal on the horse kind at 0.88 scale with new kind options: very long wide ears spread to the sides (ears 2.1, earWidth 1.5, earSpread 30), a short upright brush mane with a spiky poll tuft, and a thin tufted tail; a grey coat with a pale muzzle, bib, and belly, a dark stripe along the back, dark stripes on the thighs, and blue eyes. The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The long ears, the brush mane, and the tufted tail make a clear donkey silhouette in every direction.",
+      "The new ear, mane, and tail options are default-safe (mesh-same: horse, unicorn, kelpie, centaur SAME).",
+      "Grey, brown, dark, and cream coats."
+    ],
+    "issues": [
+      "The eyes are smaller than the mockup's big blue eyes.",
+      "The thigh stripes are thin.",
+      "The muzzle is the horse muzzle; the mockup muzzle is wider."
+    ],
+    "next": "Use the eyeScale option at 1.15 and widen the stripes.",
+    "reviewedAt": "2026-10-04T17:00:07.000Z"
+  },
+  "mule": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 pack animal on the horse kind at 0.93 scale: long ears, a brush mane, a tufted tail, a brown coat with a tan muzzle and belly, pale fetlocks, a rope halter, and a pack saddle (a cloth pad, a wooden cross-buck frame, two woven wicker baskets with straps, and a blanket roll). The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The baskets and the roll read in every sprite direction.",
+      "The pack stays on the back in the death roll (the ground check passes).",
+      "Coat, mane, eye, and pad slots with three presets."
+    ],
+    "issues": [
+      "The fetlocks are the horse's fluffy socks; the mockup has smooth pale fetlocks.",
+      "No rope round the neck.",
+      "The muzzle is not as large as the mockup's."
+    ],
+    "next": "Add a smooth-sock option and a neck rope.",
+    "reviewedAt": "2026-10-04T17:00:07.000Z"
+  },
+  "stag": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 animal on the new deer kind factory (assets/parts/deer-kind.ts, the deer refactored with mesh-same SAME) at 1.15 scale: thick branching dark antlers (a curved beam with four tines a side, assets antlerShape helper), a red-brown coat, a white chest bib, a cream lower face, a white tail, and smaller ears; no spots or eye patches. The seven deer clips (idle, walk, run, graze, alert, hit, death), ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The antlers make a clear silhouette in every sprite direction.",
+      "The antler tips are ground probes, so the death roll keeps them above the ground.",
+      "Red, brown, grey, and gold coats."
+    ],
+    "issues": [
+      "The eyes are the deer's dark eyes; the mockup has teal irises.",
+      "The tines are straight cones; the mockup tines curve.",
+      "The ears have the deer's leaf shape."
+    ],
+    "next": "Curve the tines with chains and try a lighter iris in the eye slot.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "elk": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 animal on the deer kind at 1.3 scale: wide dark antlers that sweep out and back with four tines, a shaggy dark ruff under the neck on its own slot, a light tan coat, and a pale rump; no spots, bib, or eye patches. The seven deer clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The dark ruff and the tan coat tell it from the stag at 128 px.",
+      "Ruff slot (dark, black, red) with two presets.",
+      "The ruff stays on the neck bone in the graze and the death."
+    ],
+    "issues": [
+      "The antler silhouette is close to the stag's from the front.",
+      "No smile; the mockup elk smiles.",
+      "The pale rump patch is small."
+    ],
+    "next": "Sweep the beams further back and make the antlers wider than the stag's, and paint a smile.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "moose": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 animal on the deer kind at 1.4 scale: wide flat palm antlers (an extruded paddle with points on the top edge), a big droopy snout with nostrils and a mouth line, a beard bell, a crown tuft, a shoulder hump, a dark brown coat, pale stockings, and a dark tail. The seven deer clips (the snout reaches the grass in the graze), ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The palms and the long snout read as a moose in every direction.",
+      "Antler slot (brown, pale, dark) and two presets.",
+      "The palm tips and the snout are ground probes for the death roll."
+    ],
+    "issues": [
+      "The mockup has big white googly eyes; these are the deer's dark eyes.",
+      "The hump has a faint seam where it meets the body.",
+      "The mouth is a line; the mockup has an open smile."
+    ],
+    "next": "Merge the hump into the fur body through a kind option, and add an open-mouth paint.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "goat": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 farm animal on the deer kind at 0.85 scale with new ear options: drooping ears held out to the sides (earTilt -122, earTurn 28), thick ridged golden horns that curl back and down, a white beard on the jaw bone, a soft forehead tuft, a pink nose, and a cream-white coat with brown patches on a patch slot. The seven deer clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The curled horns, the beard, and the floppy ears read at 128 px.",
+      "Ridged horn bands from a paint function.",
+      "Cream, brown, and black goats with patch colors."
+    ],
+    "issues": [
+      "The ears droop lower than the mockup's level ears.",
+      "The chest has no heart-shaped tuft like the mockup.",
+      "The horn ridges are paint only."
+    ],
+    "next": "Raise the ears to -110 and add the chest tuft.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "pack-goat": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 pack animal on the deer kind at 0.95 scale: big ridged spiral horns, a long grey beard, drooping ears, a grey coat, a red pad on a pad slot, and two canvas saddle bags with darker flaps and brass buckles. The seven deer clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The spiral horns and the red pad with the bags read in every sprite direction.",
+      "The bags are rigid on the spine and the death roll keeps them above the ground (bulk option).",
+      "Grey, brown, white, and black goats with pad colors."
+    ],
+    "issues": [
+      "The mockup's shaggy grey hair along the back is missing.",
+      "The bags have no straps over the pad.",
+      "The eyes have no white sclera like the mockup."
+    ],
+    "next": "Add a back fringe of hair and two straps.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "sheep": {
+    "overall": 7.8,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 farm animal on the deer kind at 0.8 scale: a thick lumpy white wool coat (the trunk grown 7 cm with noise curls and a bump map) over the body and the neck, a curly wool cap of 20 curls, a cream face and legs with pink cheeks, ears held out with pink insides, and dark hooves. Wool slot (white, grey, brown, black) and three presets including a black face. The seven deer clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The round wool cloud and the cream face read as the mockup sheep at 128 px.",
+      "The wool skins with the body tags, so it follows the walk and the graze.",
+      "A blackface preset from the fur slot."
+    ],
+    "issues": [
+      "The deer tail shows as a small cream lump on the back of the wool.",
+      "The wool cap does not frame the face as far down as the mockup.",
+      "The wool curls are lumps, not the mockup's rope curls."
+    ],
+    "next": "Paint the tail with the wool color and extend the cap down the cheeks.",
+    "reviewedAt": "2026-10-04T17:28:44.000Z"
+  },
+  "cow": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 farm animal on the horse kind with new ear position and muzzle size options (earAt, muzzleScale 1.18): ears held out to the sides with pink insides, thick golden horns, a forehead tuft, a wide pink muzzle, a white coat with black patches (two on the head), a leather collar with a brass bell, and a tufted tail. Coat, patch, tuft, and eye slots with three presets. No udder (rated G). The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The black patches, the pink muzzle, and the bell read at 128 px.",
+      "The new horse kind options are default-safe (horse mesh-same SAME).",
+      "Brown, red, and jersey presets."
+    ],
+    "issues": [
+      "The collar sinks into the neck at the back.",
+      "The mockup muzzle covers more of the face.",
+      "The horns curve less than the mockup's."
+    ],
+    "next": "Raise the collar ring at the back and curl the horn tips inward.",
+    "reviewedAt": "2026-10-04T17:31:39.000Z"
+  },
+  "ox": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 farm animal on the horse kind at 1.05 scale: long wide cream horns with dark tips, heavy brows, ears out to the sides, a wide tan-pink muzzle, a brown coat with a pale belly and chest, a twisted rope collar with a brass bell, and a tufted tail. The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The wide horns make a strong silhouette in every direction.",
+      "The rope collar has a twist from a displacement.",
+      "Red, black, and grey presets."
+    ],
+    "issues": [
+      "The coat is warmer and lighter than the mockup's brown.",
+      "No yoke (a cart can add one).",
+      "The pale belly is small from the side."
+    ],
+    "next": "Darken the default coat and add a yoke as a separate equipment piece.",
+    "reviewedAt": "2026-10-04T17:31:39.000Z"
+  },
+  "yak": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 mountain animal on the horse kind at 0.95 scale: a long dark coat (the trunk grown and 42 hanging strands in rows, plus a chest skirt) over the body and the neck, a messy mop and a fringe that ends on the forehead surface, thick cream horns, ears out to the sides, a tan face with a cream muzzle, and a bushy tail. The legs move under the coat in the gallop. The seven horse clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The hanging coat and the horns read as a yak in every direction.",
+      "Hair slot with white, black, and red presets.",
+      "The strands carry the spine and hips tags, so they follow the body."
+    ],
+    "issues": [
+      "The strands are regular in rows; the mockup coat is messier.",
+      "The mop is less full than the mockup's.",
+      "The death roll lays the strands out stiffly."
+    ],
+    "next": "Jitter the strand lengths and angles more, and add a second row of mop locks.",
+    "reviewedAt": "2026-10-04T17:31:39.000Z"
+  },
+  "camel": {
+    "overall": 7.5,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A P2 desert mount on the deer kind at 1.35 scale (the deer's neck and thin legs suit a camel): one big hump under a striped woven blanket with gold tassels, a long droopy snout with slit nostrils and a split lip (the new nose option drops the deer nose), long lashes, small round ears, a crown tuft, knobby knees, wide pale feet, and a dark-tipped tail. The seven deer clips, ground ok, and forge all with 0 warnings.",
+    "strengths": [
+      "The hump with the bright blanket reads in every sprite direction.",
+      "Blanket slot with blue and green presets.",
+      "The deer nose option is default-safe (deer mesh-same SAME)."
+    ],
+    "issues": [
+      "The head is large and the neck short against the mockup's long curved neck.",
+      "The blanket stripes are flat bands; the mockup has rolled folds.",
+      "No second hump (the mockup shows one)."
+    ],
+    "next": "Add a neck-length option to the deer kind and lengthen the camel neck.",
+    "reviewedAt": "2026-10-04T17:31:39.000Z"
   }
 }

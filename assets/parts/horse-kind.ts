@@ -83,6 +83,24 @@ export interface HorseKind {
   readonly socks?: boolean;
   /** How much the muzzle follows the coat slot (the horse: 0.3). */
   readonly muzzleFollow?: number;
+  /** Ear length (default 1; a donkey 1.7, a mule 1.4). */
+  readonly ears?: number;
+  /** Ear width (default 1; a donkey's wide ears 1.4). */
+  readonly earWidth?: number;
+  /** False: no forelock on the flowing mane (a kind adds its own topknot). */
+  readonly forelock?: boolean;
+  /** Eye size (default 1). */
+  readonly eyeScale?: number;
+  /** The left ear root (default [0.11, 1.03, 0.25]; a cow's side ears sit lower and wider). */
+  readonly earAt?: V3;
+  /** Muzzle size (default 1; a cow's wide muzzle 1.15). */
+  readonly muzzleScale?: number;
+  /** Ear tilt to the side in degrees (default 18; a donkey 30). */
+  readonly earSpread?: number;
+  /** The mane: 'flowing' locks to the side (default), 'brush' a short upright crest (a donkey, a mule), or none. */
+  readonly mane?: 'flowing' | 'brush' | false;
+  /** The tail: 'flowing' (default) or 'tuft', a thin coat-colored tail with a tassel at the end. */
+  readonly tail?: 'flowing' | 'tuft';
   /** Material options for the mane and the tail (fire glows, seaweed shines). */
   readonly hair?: BodyOptions;
   /** Material options for the hooves. */
@@ -112,6 +130,8 @@ export interface HorseKind {
 export interface HorseShape {
   /** The head with the muzzle, for surface points. */
   readonly head: sdf.Shape;
+  /** The body without the neck and the legs (chest, rump, shoulders, thighs), with its bone tags: tack fits over it. */
+  readonly trunk: sdf.Shape;
   /** The point where a ray from the front (+Z) meets the head (without the muzzle) at (x, y). */
   faceHit(x: number, y: number): readonly [number, number, number];
   readonly joints: { readonly FKNEE: V3; readonly BKNEE: V3; readonly HOOF_DZ: number; readonly HEAD_C: V3 };
@@ -177,32 +197,39 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const face = sdf.ellipsoid(FACE_R).rotateX(-NB_A).at(...FACE_C);
       const cheeks = pair(sdf.sphere(0.09).at(...CHEEK_C));
       const headCoat = sdf.smoothUnion(0.06, skull, face, cheeks);
-      const muzzleShape = sdf.ellipsoid(MUZ_R).at(...MUZ_C);
+      const MS = kind.muzzleScale ?? 1;
+      const MR: V3 = MS === 1 ? MUZ_R : [MUZ_R[0] * MS, MUZ_R[1] * MS, MUZ_R[2] * MS];
+      const muzzleShape = sdf.ellipsoid(MR).at(...MUZ_C);
       const headAll = sdf.smoothUnion(0.03, headCoat, muzzleShape);
       const faceHit = (x: number, y: number) => sdf.raycast(headCoat, [x, y, 2], [0, 0, -1])!;
       // Tall leaf-shaped ears, tipped outward, with a darker cupped inside.
-      const earPose = (s: sdf.Shape) => s.rotateX(-10).rotateZ(-18).at(0.11, 1.03, 0.25);
+      const SPREAD = kind.earSpread ?? 18;
+      const EA = kind.earAt ?? ([0.11, 1.03, 0.25] as const);
+      const earPose = (s: sdf.Shape) => s.rotateX(-10).rotateZ(-SPREAD).at(EA[0], EA[1], EA[2]);
+      const E = kind.ears ?? 1;
+      const W = kind.earWidth ?? 1;
       const earLocal = sdf
-        .chain([[0, 0, 0, 0.045], [0, 0.08, 0, 0.05], [0, 0.18, 0, 0.008]], 0.03)
+        .chain([[0, 0, 0, 0.045], [0, 0.08 * E, 0, 0.05 * W], [0, 0.18 * E, 0, 0.008]], 0.03)
         .scale([1, 1, 0.55])
-        .smoothSubtract(0.008, sdf.ellipsoid([0.03, 0.075, 0.03]).at(0, 0.09, 0.03));
-      const earCup = sdf.ellipsoid([0.036, 0.085, 0.04]).at(0, 0.09, 0.025);
+        .smoothSubtract(0.008, sdf.ellipsoid([0.03 * W, 0.075 * E, 0.03]).at(0, 0.09 * E, 0.03));
+      const earCup = sdf.ellipsoid([0.036 * W, 0.085 * E, 0.04]).at(0, 0.09 * E, 0.025);
       const ears = pair(earPose(earLocal.paintWhere(earCup, T.coatDark, 0.006)));
 
       // Eyes: big glossy domes on the face.
-      const EYE_R = 0.048;
+      const ES = kind.eyeScale ?? 1;
+      const EYE_R = 0.048 * ES;
       const eh = faceHit(0.1, 0.87);
       const EC: V3 = [eh[0], eh[1], eh[2] - 0.02];
       const front = sdf.halfSpace([0, 0, -1], -EC[2]);
       const cyl = (r: number, dx: number, dy: number) => sdf.cylinder(r, 1).rotateX(90).at(EC[0] + dx, EC[1] + dy, 0).intersect(front);
-      const shineOff = [0.014, 0.017] as const;
+      const shineOff = [0.014 * ES, 0.017 * ES] as const;
       const eyes = pair(
         sdf
           .sphere(EYE_R)
           .at(...EC)
-          .paintWhere(cyl(0.037, -0.005, -0.002), T.eye, 0.002)
-          .paintWhere(cyl(0.021, -0.006, -0.003), C.pupil, 0.002)
-          .paintWhere(sdf.sphere(0.011).at(EC[0] + shineOff[0], EC[1] + shineOff[1], EC[2] + Math.sqrt(EYE_R ** 2 - shineOff[0] ** 2 - shineOff[1] ** 2)), '#ffffff', 0.002),
+          .paintWhere(cyl(0.037 * ES, -0.005 * ES, -0.002 * ES), T.eye, 0.002)
+          .paintWhere(cyl(0.021 * ES, -0.006 * ES, -0.003 * ES), C.pupil, 0.002)
+          .paintWhere(sdf.sphere(0.011 * ES).at(EC[0] + shineOff[0], EC[1] + shineOff[1], EC[2] + Math.sqrt(EYE_R ** 2 - shineOff[0] ** 2 - shineOff[1] ** 2)), '#ffffff', 0.002),
       );
       const withHead = kind.head !== false;
       if (withHead) k.body('eyes', eyes, { color: C.sclera, roughness: 0.12, detail: 0.004, textureDensity: 2, bone: 'head', ...kind.eyes });
@@ -224,6 +251,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const tone = (slot: string, color: string, follow = 1) => k.tint(slot, { color, follow });
       const horse: HorseShape = {
         head: headAll,
+        trunk: barrel,
         faceHit,
         joints: { FKNEE, BKNEE, HOOF_DZ, HEAD_C },
         tint: { coat: T.coat, coatDark: T.coatDark, mane: T.mane, eye: T.eye },
@@ -288,6 +316,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const CREST: V3[] = [[0, 1.0, 0.16], [0, 0.93, 0.085], [0, 0.84, 0.035], [0, 0.75, -0.005], [0, 0.67, -0.04]];
       const ridge = sdf.chain(CREST.map((c, i) => [c[0], c[1], c[2], 0.042 - i * 0.003] as const), 0.02);
       const LOCK_TIPS: V3[] = [];
+      const brush = kind.mane === 'brush';
       const locks = CREST.slice(0, 5).map((c, i) => {
         const len = 1 - i * 0.14;
         const tip: V3 = [c[0] + 0.13, c[1] - 0.2 * len, c[2] + 0.005];
@@ -302,29 +331,72 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
           0.02,
         );
       });
-      const mane = sdf.smoothUnion(
-        0.02,
-        forelock.bone('head'),
-        ridge.bone('mane'),
-        ...locks.map((l, i) => l.bone(i === 0 ? 'head' : 'mane')),
+      // The brush: short upright tufts from the poll down the crest, leaning back (a donkey's mane).
+      const BRUSH_TIPS: V3[] = [];
+      const tufts = Array.from({ length: 9 }, (_, i) => {
+        const t = i / 8;
+        const c: V3 = [0, 1.11 - 0.43 * t, 0.2 - 0.23 * t];
+        const len = 0.09 - 0.035 * t;
+        const tip: V3 = [0, c[1] + len * (0.78 - 0.3 * t), c[2] - len * (0.62 + 0.3 * t)];
+        BRUSH_TIPS.push(tip);
+        return sdf.cone(c, tip, 0.03 - 0.008 * t, 0.009).bone(t < 0.2 ? 'head' : 'mane');
+      });
+      // A spiky forelock tuft on the poll: five cones fanned to the sides and the front.
+      const pollTuft = [-2, -1, 0, 1, 2].map((i) =>
+        sdf.cone([0.012 * i, 1.08, 0.215], [0.035 * i, 1.19 - 0.012 * Math.abs(i), 0.25 - 0.006 * Math.abs(i)], 0.024, 0.008).bone('head'),
       );
+      const brushMane = sdf.smoothUnion(
+        0.015,
+        sdf.chain([[0, 1.1, 0.2, 0.03], [0, 1.0, 0.15, 0.034], [0, 0.85, 0.06, 0.032], [0, 0.68, -0.03, 0.026]], 0.02).bone('mane'),
+        ...tufts,
+        ...pollTuft,
+      );
+      if (brush) LOCK_TIPS.splice(0, LOCK_TIPS.length, ...BRUSH_TIPS);
+      const mane = brush
+        ? brushMane
+        : sdf.smoothUnion(
+            0.02,
+            ...(kind.forelock === false ? [] : [forelock.bone('head')]),
+            ridge.bone('mane'),
+            ...locks.map((l, i) => l.bone(i === 0 ? 'head' : 'mane')),
+          );
       const hairPaint = (h: sdf.Shape) => kind.paintHair?.(h, horse) ?? h;
-      if (withHead) k.body('maneHair', hairPaint(hair(mane)), { color: T.mane, roughness: 0.7, detail: 0.005, textureDensity: 1.2, ...kind.hair });
+      if (withHead && kind.mane !== false) k.body('maneHair', hairPaint(hair(mane)), { color: T.mane, roughness: 0.7, detail: 0.005, textureDensity: 1.2, ...kind.hair });
 
-      const TAIL_PTS: [number, number, number, number][] = [
-        [0, 0.63, -0.42, 0.045],
-        [0, 0.645, -0.52, 0.07],
-        [0, 0.56, -0.61, 0.085],
-        [0, 0.41, -0.65, 0.08],
-        [0, 0.28, -0.63, 0.055],
-        [0, 0.2, -0.58, 0.014],
-      ];
+      const tuft = kind.tail === 'tuft';
+      const TAIL_PTS: [number, number, number, number][] = tuft
+        ? [
+            [0, 0.63, -0.42, 0.03],
+            [0, 0.6, -0.5, 0.026],
+            [0, 0.5, -0.56, 0.022],
+            [0, 0.38, -0.58, 0.02],
+            [0, 0.3, -0.58, 0.04],
+            [0, 0.2, -0.57, 0.02],
+          ]
+        : [
+            [0, 0.63, -0.42, 0.045],
+            [0, 0.645, -0.52, 0.07],
+            [0, 0.56, -0.61, 0.085],
+            [0, 0.41, -0.65, 0.08],
+            [0, 0.28, -0.63, 0.055],
+            [0, 0.2, -0.58, 0.014],
+          ];
       const strand = (dx: number, dz: number, r: number) =>
         sdf.chain(
           TAIL_PTS.map(([x, y, z, rr], i) => [x + dx * (i / 5), y, z + dz * (i / 5), i === 0 || i === 5 ? rr : rr * r] as const),
           0.03,
         );
-      const tail = sdf.smoothUnion(0.02, strand(0, 0, 1), strand(0.02, -0.03, 0.75), strand(-0.02, 0.025, 0.75)).scale([0.6, 1, 1]);
+      // The tuft: a thin coat-colored tail and a tassel of hair at the end.
+      const stalk = sdf.chain(TAIL_PTS.slice(0, 4).map(([x, y, z, r]) => [x, y, z, r] as const), 0.02);
+      const tassel = sdf.smoothUnion(
+        0.015,
+        sdf.ellipsoid([0.04, 0.09, 0.04]).at(0, 0.29, -0.58),
+        sdf.cone([0, 0.3, -0.58], [0.018, 0.19, -0.575], 0.03, 0.01),
+        sdf.cone([0, 0.3, -0.58], [-0.016, 0.195, -0.59], 0.03, 0.01),
+      );
+      const tail = tuft
+        ? sdf.smoothUnion(0.02, stalk, tassel).paintWhere(sdf.box([0.2, 0.4, 0.4]).at(0, 0.565, -0.5), T.coat, 0.02)
+        : sdf.smoothUnion(0.02, strand(0, 0, 1), strand(0.02, -0.03, 0.75), strand(-0.02, 0.025, 0.75)).scale([0.6, 1, 1]);
       k.body('tailHair', hairPaint(hair(tail)), { color: T.mane, roughness: 0.7, detail: 0.005, bone: 'tail', ...kind.hair });
 
       // ------------------------------------------------------------------ socks and hooves
@@ -403,14 +475,14 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         mane: { bones: ['hips', 'spine', 'neck', 'mane'], joints: [HIPS_AT, SPINE_AT, NECK_AT, MANE_AT] },
         tail: { bones: ['hips', 'tail'], joints: [HIPS_AT, TAIL_AT] },
       };
-      const EAR_TIP: V3 = [0.11 + 0.18 * Math.sin(18 * RAD), 1.03 + 0.18 * Math.cos(18 * RAD), 0.22];
+      const EAR_TIP: V3 = [EA[0] + 0.18 * E * Math.sin(SPREAD * RAD), EA[1] + 0.18 * E * Math.cos(SPREAD * RAD), EA[2] - 0.03];
       const PROBES: [string, V3[]][] = [
         ['hips', ell(RUMP_C, RUMP_R)],
         ['spine', ell(CHEST_C, CHEST_R)],
         ...(withHead
           ? ([
               ['neck', ell([0, 0.72, 0.14], [0.12, 0.14, 0.12])],
-              ['head', [...ell(HEAD_C, SKULL_R), ...ell(FACE_C, FACE_R), ...ell(MUZ_C, MUZ_R), ...ell(CHEEK_C, [0.09, 0.09, 0.09]), ...ell(mx(CHEEK_C), [0.09, 0.09, 0.09]), EAR_TIP, mx(EAR_TIP), [0, 1.175, 0.2], [0.07, 1.165, 0.3]]],
+              ['head', [...ell(HEAD_C, SKULL_R), ...ell(FACE_C, FACE_R), ...ell(MUZ_C, MR), ...ell(CHEEK_C, [0.09, 0.09, 0.09]), ...ell(mx(CHEEK_C), [0.09, 0.09, 0.09]), EAR_TIP, mx(EAR_TIP), [0, 1.175, 0.2], [0.07, 1.165, 0.3]]],
               ['mane', LOCK_TIPS.flatMap((t) => [t, [t[0] + 0.02, t[1], t[2]] as V3])],
             ] as [string, V3[]][])
           : []),
