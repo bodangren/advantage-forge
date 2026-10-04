@@ -45,3 +45,7 @@ Waiting for the owner (2026-10-04). Each item has a proposal.
    the LINE in-app browser (Rune Match, Dragon Flight, Potion Rush: the board, the gates, and the
    drag), and reports any defect; the other games share the same kit HUD rules (section 9.1 of
    `docs/apk3d-cartridge.md`).
+7. `babel-architect` (an unfinished 2D sentence game in `apps/advantage-games`, track
+   `babel-architect-phaser-exemplar_20260708` there) is not one of the 23 rewrites and has no
+   cartridge. Proposal: do not rewrite it; Storm Castle Tower and Sorcerer's Ziggurat already
+   cover sentence building in the build family.
