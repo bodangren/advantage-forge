@@ -6807,5 +6807,326 @@
     ],
     "next": "Add a neck-length option to the deer kind and lengthen the camel neck.",
     "reviewedAt": "2026-10-04T17:31:39.000Z"
+  },
+  "wolf": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.5,
+      "silhouette": 7.8,
+      "proportion": 7.5,
+      "shape": 7.6,
+      "color": 7.5,
+      "materials": 7.4,
+      "detail": 7.4,
+      "technical": 8.0,
+      "gameReady": 7.8,
+      "sprite": 7.8,
+      "motion": 7.6
+    },
+    "summary": "The dire wolf kind at 0.9 scale as a friendly grey wolf: dark brown eyes, a smile, a smooth chest ruff, a cream muzzle and tail tip, and a darker back. It matches the mockup in silhouette and color. The sprite reads at 128 px.",
+    "strengths": [
+      "Friendly face: dark eyes, smile, no brows or cheek tufts",
+      "Smooth ruff and cream tail tip read in all directions",
+      "All dire wolf clips work at the new scale"
+    ],
+    "issues": [
+      "The ears are a little short against the mockup",
+      "The back paint is a soft blur, not a saddle pattern"
+    ],
+    "next": "Use as the forest wolf; a longer-ear option on the wolf kind can follow if a game needs it.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "fox": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.7,
+      "silhouette": 7.9,
+      "proportion": 7.6,
+      "shape": 7.7,
+      "color": 7.9,
+      "materials": 7.4,
+      "detail": 7.5,
+      "technical": 8.0,
+      "gameReady": 7.8,
+      "sprite": 7.9,
+      "motion": 7.6
+    },
+    "summary": "The wolf kind at 0.75 scale as a red fox: big ears with black tips and backs, white cheeks and chest, black socks, and its own bushy white-tipped tail. The orange and white contrast reads well at 128 px.",
+    "strengths": [
+      "Black ear tips and socks give a clear fox pattern",
+      "Bushy tail with a white tip makes the silhouette",
+      "Dark brown friendly eyes"
+    ],
+    "issues": [
+      "The tail joins the rump with a slight step",
+      "The muzzle is a little short for a fox"
+    ],
+    "next": "Accept; a muzzle-length option on the wolf kind would help the fox and a later jackal.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "dog": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.7,
+      "silhouette": 7.8,
+      "proportion": 7.6,
+      "shape": 7.7,
+      "color": 7.8,
+      "materials": 7.6,
+      "detail": 7.7,
+      "technical": 7.8,
+      "gameReady": 7.8,
+      "sprite": 7.9,
+      "motion": 7.6
+    },
+    "summary": "The wolf kind at 0.72 scale as a puppy: floppy brown ears in an ears slot, brow marks, a tongue out, a red collar from the neckline band with a gold tag, and a curled tail. It matches the mockup and reads clearly as a dog at 128 px.",
+    "strengths": [
+      "Floppy ears and the tongue change the wolf into a dog at once",
+      "Smooth collar band with no reduction warnings",
+      "Warm tan and white palette with a red accent"
+    ],
+    "issues": [
+      "The ears stay rigid on the head in fast clips",
+      "The tongue sits a little low on the jaw in the side view"
+    ],
+    "next": "Accept; ear bones for floppy ears are a later kind option.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "cat": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.6,
+      "silhouette": 7.7,
+      "proportion": 7.5,
+      "shape": 7.6,
+      "color": 7.8,
+      "materials": 7.4,
+      "detail": 7.6,
+      "technical": 7.8,
+      "gameReady": 7.7,
+      "sprite": 7.8,
+      "motion": 7.5
+    },
+    "summary": "A new cat helper (assets/parts/cat-kind.ts) on the wolf kind at 0.6 scale: big green eyes with large pupils, a pink nose, whiskers, white paws, tabby stripes on the head, back, and legs, and a long curled tail. The orange tabby matches the mockup.",
+    "strengths": [
+      "Tabby stripes from one tone follow the fur slot in every preset",
+      "Big eyes with large pupils read as a cat",
+      "Long curled tail gives a cat silhouette"
+    ],
+    "issues": [
+      "The body is a little long and the legs a little thick for a kitten",
+      "The leg rings are regular, not a natural tabby pattern"
+    ],
+    "next": "Accept; the cat helper also makes the familiar cat and later small cats.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "familiar-cat": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.6,
+      "silhouette": 7.6,
+      "proportion": 7.5,
+      "shape": 7.6,
+      "color": 7.7,
+      "materials": 7.6,
+      "detail": 7.7,
+      "technical": 7.8,
+      "gameReady": 7.6,
+      "sprite": 7.6,
+      "motion": 7.5
+    },
+    "summary": "The cat helper as a black witch's cat: glowing violet eyes with violet rims, a magic slot for the collar, a crescent moon charm, and a star on the tail tip that glow. The glow and the collar keep the black body readable at 128 px.",
+    "strengths": [
+      "Emissive eyes, charm, and tail star give clear focal points on black fur",
+      "The magic slot recolors collar and glow together",
+      "Same rig and clips as the cat"
+    ],
+    "issues": [
+      "The black fur hides the shape of the legs in the side sprite",
+      "The moon charm is small at 128 px"
+    ],
+    "next": "Accept; a lighter rim tone on the fur would help the side sprite.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "riding-wolf": {
+    "overall": 7.5,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.5,
+      "silhouette": 7.6,
+      "proportion": 7.4,
+      "shape": 7.5,
+      "color": 7.6,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 7.6,
+      "gameReady": 7.6,
+      "sprite": 7.6,
+      "motion": 7.4
+    },
+    "summary": "The wolf kind at 1.45 scale as a mount: grey fur with white socks, a leather saddle with a cantle and stirrups, a blanket in a slot with a gold trim, flaps, and a harness fitted to the wolf trunk. The saddle stays on the back in all clips.",
+    "strengths": [
+      "Tack fitted to the wolf trunk, not copied from the horse",
+      "Blanket slot gives team colors",
+      "Large size gives a clear mount silhouette"
+    ],
+    "issues": [
+      "The saddle is small for the body at 128 px",
+      "The stirrups swing with the spine, not freely",
+      "The face is the plain wolf face; the mockup is a little fiercer"
+    ],
+    "next": "Accept at the character bar; a larger saddle can follow when the riding system needs a seat point.",
+    "reviewedAt": "2026-10-04T18:42:06.000Z"
+  },
+  "boar": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.7,
+      "silhouette": 7.8,
+      "proportion": 7.6,
+      "shape": 7.7,
+      "color": 7.7,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 8.0,
+      "gameReady": 7.8,
+      "sprite": 7.8,
+      "motion": 7.7
+    },
+    "summary": "The giant boar of the boar kind at 0.8 scale as a friendly forest boar: big glossy dark eyes without brows or lid rings, short tusks, a low black mane, a pink snout, and no teeth. It matches the mockup and reads at 128 px.",
+    "strengths": [
+      "Friendly face from the new brows, lids, and teeth options",
+      "Pink snout and short tusks read in every direction",
+      "All boar clips work at the new scale"
+    ],
+    "issues": [
+      "The mane continues down the back; the mockup has spikes on the head only",
+      "The ears are smaller than in the mockup"
+    ],
+    "next": "Accept; a head-only mane option can follow if a game needs it.",
+    "reviewedAt": "2026-10-04T19:20:33.000Z"
+  },
+  "pig": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.7,
+      "silhouette": 7.8,
+      "proportion": 7.6,
+      "shape": 7.7,
+      "color": 7.8,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 8.0,
+      "gameReady": 7.8,
+      "sprite": 7.8,
+      "motion": 7.6
+    },
+    "summary": "The boar kind at 0.75 scale as a pink farm pig: smooth pink skin, a snout disc, big dark eyes, rosy cheeks, a smile, a curly tail, and dark hooves; no horns, tusks, mane, brows, or teeth. It matches the mockup and is rated G.",
+    "strengths": [
+      "Curly tail from the new tail option",
+      "Rosy cheeks and smile give a friendly face",
+      "Clean pink silhouette at 128 px"
+    ],
+    "issues": [
+      "The ears stand up; the mockup ears are larger and flop out",
+      "The hooves are large dark discs"
+    ],
+    "next": "Accept; floppy pig ears are a possible kind option later.",
+    "reviewedAt": "2026-10-04T19:20:33.000Z"
+  },
+  "bear": {
+    "overall": 7.7,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.7,
+      "silhouette": 7.8,
+      "proportion": 7.7,
+      "shape": 7.7,
+      "color": 7.7,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 8.0,
+      "gameReady": 7.8,
+      "sprite": 7.8,
+      "motion": 7.6
+    },
+    "summary": "The dire bear of the boar kind at 0.82 scale as a friendly bear cub: larger dark eyes without brows, a tan muzzle with a black nose, round ears, dark paws with short claws, and a stub tail. It matches the four-leg mockup.",
+    "strengths": [
+      "Round ears and the tan muzzle read at 128 px",
+      "Friendly face from the brows and lids options",
+      "Big round body fits the cub look"
+    ],
+    "issues": [
+      "The ears are a little small against the mockup",
+      "The legs are short and thick for a walking cub"
+    ],
+    "next": "Accept as the forest bear.",
+    "reviewedAt": "2026-10-04T19:20:33.000Z"
+  },
+  "badger": {
+    "overall": 7.6,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.6,
+      "silhouette": 7.6,
+      "proportion": 7.4,
+      "shape": 7.6,
+      "color": 7.8,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 8.0,
+      "gameReady": 7.7,
+      "sprite": 7.8,
+      "motion": 7.5
+    },
+    "summary": "The bear setup of the boar kind at 0.62 scale as a badger: a longer pointed muzzle (new muzzleLength option), a white face with black stripes through the eyes to the ears, a white crown stripe, dark ears with white rims, a grey body, and black legs. The striped face reads at 128 px.",
+    "strengths": [
+      "The black and white face pattern is clear in all directions",
+      "Ear rims and a white crown stripe match the mockup",
+      "Black legs give the badger color plan"
+    ],
+    "issues": [
+      "The body is short and tall; the mockup badger is long and low",
+      "The white face meets the grey body in a straight line in the side view"
+    ],
+    "next": "Accept; a long-body option on the boar kind would help the badger and later the otter.",
+    "reviewedAt": "2026-10-04T19:20:33.000Z"
+  },
+  "hedgehog": {
+    "overall": 7.5,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 7.6,
+      "silhouette": 7.6,
+      "proportion": 7.3,
+      "shape": 7.5,
+      "color": 7.6,
+      "materials": 7.5,
+      "detail": 7.6,
+      "technical": 7.8,
+      "gameReady": 7.6,
+      "sprite": 7.7,
+      "motion": 7.4
+    },
+    "summary": "The bear setup of the boar kind at 0.45 scale as a hedgehog: a cream face and body, a long pointed muzzle with a black nose, dark eyes, round ears, pink paws, and a dome of brown spines with paler tips over the back and the back of the head. The spine dome reads at 128 px.",
+    "strengths": [
+      "The spine dome is a ball shape like the mockup, with cones along its normals",
+      "Spine colors are a slot with four options",
+      "The ears stand clear in front of the spines"
+    ],
+    "issues": [
+      "The head is large and the legs long against the mockup",
+      "The pink claws are long thin spikes",
+      "The spine dome does not roll in the death clip"
+    ],
+    "next": "Accept at the bar; a curl-up clip would suit the hedgehog later.",
+    "reviewedAt": "2026-10-04T19:20:33.000Z"
   }
 }

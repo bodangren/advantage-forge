@@ -65,8 +65,10 @@ targets in the hunting and nature games; the familiars follow the hero (avatar p
 | donkey | wildlife/mounts-and-pets/donkey | 0.88 scale, long wide ears, brush mane, tufted tail, back and thigh stripes | 7.7 |
 | mule | wildlife/mounts-and-pets/mule | 0.93 scale, long ears, brush mane, rope halter, pack saddle with baskets and a roll | 7.7 |
 
-- New horse kind options, all default-safe (`node scripts/mesh-same.mjs` gave SAME for horse,
-  unicorn, kelpie, and centaur): `ears`, `earWidth`, `earSpread`, `mane` ('brush'), `tail`
+- New horse kind options, all default-safe (`node scripts/mesh-same.mjs <base> --rev 0576147^
+  --part assets/parts/horse-kind.ts` gave SAME for horse, unicorn, kelpie, nightmare, and
+  centaur on 2026-10-05; the first check without `--part` compared the working kind with itself):
+  `ears`, `earWidth`, `earSpread`, `mane` ('brush'), `tail`
   ('tuft'), `forelock`, `eyeScale`, and the `trunk` shape for tack.
 - `assets/parts/horse-tack.ts`: a riding saddle and a pack saddle that fit over the trunk.
 - `assets/parts/scale-asset.ts`: scales a whole asset (bodies, joints, clip moves, cell sizes).
@@ -103,6 +105,52 @@ targets in the hunting and nature games; the familiars follow the hero (avatar p
 | camel | wildlife/land/camel | deer kind at 1.35, hump, woven blanket, droopy snout, lashes | 7.5 |
 
 - New horse kind options `earAt` and `muzzleScale`; new deer kind option `nose` (both
-  default-safe: horse and deer mesh-same SAME). The cow has no udder (rated G).
+  default-safe: the horse kind check above, and `mesh-same deer --rev 0576147^` SAME against the
+  inline deer). The cow has no udder (rated G).
 - All four: the kind clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx (no
   subject reference).
+
+## Batch 4 (2026-10-05): wolf kind and a cat helper
+
+| Asset | Catalog ID | Base and features | Rating |
+| --- | --- | --- | ---: |
+| wolf | wildlife/forest/wolf | wolf kind at 0.9, dark friendly eyes, smile, smooth ruff, darker back | 7.6 |
+| fox | wildlife/forest/fox | wolf kind at 0.75, big black-tipped ears, white cheeks, black socks, bushy white-tipped tail | 7.7 |
+| dog | wildlife/mounts-and-pets/dog | wolf kind at 0.72, floppy ears slot, brow marks, tongue, red collar with a gold tag, curled tail | 7.7 |
+| cat | wildlife/mounts-and-pets/cat | cat helper, orange tabby stripes, green eyes, whiskers, white paws | 7.6 |
+| familiar-cat | wildlife/mounts-and-pets/familiar-cat | cat helper, black fur, glowing violet eyes, collar, moon charm, tail star | 7.6 |
+| riding-wolf | wildlife/mounts-and-pets/riding-wolf | wolf kind at 1.45, saddle, blanket slot, harness, and stirrups fitted to the wolf trunk | 7.5 |
+
+- New wolf kind options, all default-safe (`mesh-same <base> --part assets/parts/wolf-kind.ts`
+  SAME for dire-wolf, kitsune, manticore, shadow-hound, displacer-beast, abyssal-beast, and
+  chimera): `cheekTufts`, `ruff` ('smooth'), `ears`, `eyeScale`, `pupilScale`, `smileArc`,
+  `noseScale`, `claws`, and a `tone` argument to the `paint` hook.
+- `assets/parts/cat-kind.ts`: `catAsset` sets the wolf kind for a cat (big eyes and pupils, a small
+  nose, a smooth ruff, whiskers, white paws, optional tabby stripes, a long curled tail) and scales
+  it to 0.6.
+- `scripts/mesh-same.mjs --part <part>`: the committed build imports the committed copy of the
+  part, so a kind edit is compared too.
+- All six: the wolf kind clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
+## Batch 5 (2026-10-05): boar kind with friendly faces
+
+| Asset | Catalog ID | Base and features | Rating |
+| --- | --- | --- | ---: |
+| boar | wildlife/forest/boar | boar kind at 0.8, big dark eyes, short tusks, low mane, no brows or teeth | 7.7 |
+| pig | wildlife/land/pig | boar kind at 0.75, pink skin, rosy cheeks, smile, curly tail | 7.7 |
+| bear | wildlife/forest/bear | the dire bear setup at 0.82, a friendly cub face, tan muzzle | 7.7 |
+| badger | wildlife/forest/badger | bear setup at 0.62, longer muzzle, striped white face, rimmed ears, black legs | 7.6 |
+| hedgehog | wildlife/forest/hedgehog | bear setup at 0.45, long muzzle, a spine dome slot with cones along its normals | 7.5 |
+
+- New boar kind options, all default-safe (`mesh-same <base> --part assets/parts/boar-kind.ts`
+  SAME for horned-boar, giant-boar, and dire-bear; a 2 mm test change gave DIFF): `brows`,
+  `lids`, `teeth`, `tail` ('long', 'stub', 'curl'), `muzzleLength`, and deeper eyes when
+  `eyeScale` is above 1.
+- The bear and the hedgehog mockups were made again from the side without a subject reference,
+  because the first ones stood like bipeds.
+- All five: the boar kind clips, `ground ok`, `forge all` with 0 warnings.
+- Kind audit (2026-10-05): for all 16 committed kinds, each asset that used the kind at the
+  commit that added it was built at that commit and with the working kind
+  (`mesh-same <asset> --rev <commit> --part assets/parts/<kind>.ts`): 63 of 63 SAME. So every
+  later kind option is default-safe, also those that the earlier checks without `--part` did not
+  test.

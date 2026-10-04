@@ -4,15 +4,17 @@
 // temporary names with --fast, then compares the bounds, the raw and reduced triangle counts of
 // every body, and the GLB binary chunk (positions, normals, vertex colors).
 //
-//   node scripts/mesh-same.mjs <name> [--rev <git rev>]
+//   node scripts/mesh-same.mjs <name> [--rev <git rev>] [--part assets/parts/<part>.ts]...
 //
 // Prints SAME or DIFF with the differences; exit 0 on SAME, 1 on DIFF, 2 on a build error.
-// out/<name>/ is never touched; the temporary sources and outputs are removed. Only
-// assets/<name>.ts is compared: both builds import the working copies of any parts.
+// out/<name>/ is never touched; the temporary sources and outputs are removed. Without --part only
+// assets/<name>.ts is compared: both builds import the working copies of any parts. Each --part
+// makes the committed build import the committed copy of that part, so an edit of a kind factory
+// is compared too (the part must be imported directly by assets/<name>.ts).
 import { execFileSync, spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { basename, join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const name = process.argv[2];
@@ -22,6 +24,7 @@ if (!name || name.startsWith('-')) {
   console.error('usage: node scripts/mesh-same.mjs <name> [--rev <git rev>]');
   process.exit(2);
 }
+const parts = process.argv.flatMap((a, i) => (a === '--part' ? [process.argv[i + 1]] : []));
 const committed = execFileSync('git', ['show', `${rev}:assets/${name}.ts`], { cwd: root, encoding: 'utf8' });
 const working = readFileSync(join(root, 'assets', `${name}.ts`), 'utf8');
 
@@ -45,7 +48,24 @@ function build(code, tag) {
     console.error(`mesh-same: no "name: '${name}'" in the ${tag === 'a' ? rev : 'working'} source`);
     process.exit(2);
   }
-  writeFileSync(file, renamed);
+  // The committed build imports the committed parts under temporary names.
+  const partFiles = [];
+  let source = renamed;
+  if (tag === 'a')
+    for (const part of parts) {
+      const base = basename(part, '.ts');
+      const partTmp = `tmp-mesh-a-${base}`;
+      const swapped = source.replaceAll(`./parts/${base}.js`, `./parts/${partTmp}.js`);
+      if (swapped === source) {
+        console.error(`mesh-same: assets/${name}.ts does not import ./parts/${base}.js`);
+        process.exit(2);
+      }
+      source = swapped;
+      const partFile = join(root, 'assets', 'parts', `${partTmp}.ts`);
+      writeFileSync(partFile, execFileSync('git', ['show', `${rev}:${part}`], { cwd: root, encoding: 'utf8' }));
+      partFiles.push(partFile);
+    }
+  writeFileSync(file, source);
   try {
     const run = spawnSync(join(root, 'forge'), ['build', tmp, '--fast'], {
       cwd: root,
@@ -61,6 +81,7 @@ function build(code, tag) {
     return { stats, bin };
   } finally {
     rmSync(file, { force: true });
+    for (const f of partFiles) rmSync(f, { force: true });
     rmSync(join(root, 'out', tmp), { recursive: true, force: true });
   }
 }

@@ -63,10 +63,26 @@ export interface WolfKind {
   readonly forelock?: boolean;
   /** A thin closed smile in place of the toothy grin (no upper teeth). */
   readonly smile?: boolean;
+  /** The pointed cheek tufts (on by default). */
+  readonly cheekTufts?: boolean;
+  /** The chest: 'spiky' cream ruff points (default) or a 'smooth' cream bib (a dog, a cat). */
+  readonly ruff?: 'spiky' | 'smooth';
+  /** False for no pointed ears (the kind builds its own ears on the `head` bone in `extra`). */
+  readonly ears?: boolean;
+  /** The size of the painted eyes (default 1; a cat's big eyes 1.35). */
+  readonly eyeScale?: number;
+  /** The size of the pupils inside the painted eyes (default 1; a cat's big pupils 1.7). */
+  readonly pupilScale?: number;
+  /** The mouth line from and to these angles on the grin circle (default 226 to 314; a cat's small mouth 252 to 288). */
+  readonly smileArc?: readonly [number, number];
+  /** The size of the nose (default 1). */
+  readonly noseScale?: number;
+  /** The claws (on by default). */
+  readonly claws?: boolean;
   /** False for no bushy tail (the kind builds its own tail on the `tail` bone in `extra`). */
   readonly tail?: boolean;
   /** Paint on the fur (ear tips, markings), with the slot colors. */
-  paint?(fur: sdf.Shape, tint: WolfShape['tint']): sdf.Shape;
+  paint?(fur: sdf.Shape, tint: WolfShape['tint'], tone: WolfShape['tone']): sdf.Shape;
   /** Extra bones (a tentacle on `spine`, a smoke plume on `hips`). */
   readonly bones?: Record<string, { parent: string; at: V3; tail?: V3 }>;
   /** Extra bodies (smoke, tentacles), rigid on a bone or tagged to bones. */
@@ -79,6 +95,12 @@ export interface WolfKind {
 export interface WolfShape {
   /** The body without the legs: chest, rump, neck, and head. */
   readonly trunk: sdf.Shape;
+  /** The head with the muzzle (no ears or tufts). */
+  readonly head: sdf.Shape;
+  /** The point where a ray from the front (+Z) meets the head at (x, y). */
+  faceHit(x: number, y: number): readonly [number, number, number];
+  /** The center of the left eye on the face. */
+  readonly eye: V3;
   /** The point on `shape` nearest to (x, y, z), moved out along the normal by `lift`. */
   on(shape: sdf.Shape, x: number, y: number, z: number, lift?: number): V3;
   readonly tint: { readonly fur: string; readonly furDark: string; readonly markings: string; readonly eye: string };
@@ -210,13 +232,17 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       };
       const EYE_X = 0.078;
       const eL = eyeC(EYE_X);
-      const eyeRing = pair(sdf.cylinder(0.037, 1).rotateX(90).at(eL[0], eL[1], 0));
-      const eye = pair(sdf.cylinder(0.031, 1).rotateX(90).at(eL[0], eL[1], 0));
-      const pupil = pair(sdf.cylinder(0.014, 1).rotateX(90).at(eL[0] - 0.004, eL[1] - 0.002, 0));
-      const shine = pair(sdf.sphere(0.008).at(eL[0] + 0.01, eL[1] + 0.012, eL[2]));
+      const ES = kind.eyeScale ?? 1;
+      const PS = ES * (kind.pupilScale ?? 1);
+      // Larger eyes keep their paint near the eye (the long cylinders would also reach the bridge).
+      const nearEye = (s: sdf.Shape) => (ES === 1 ? s : s.intersect(pair(sdf.sphere(0.06 * ES).at(...eL))));
+      const eyeRing = nearEye(pair(sdf.cylinder(0.037 * ES, 1).rotateX(90).at(eL[0], eL[1], 0)));
+      const eye = nearEye(pair(sdf.cylinder(0.031 * ES, 1).rotateX(90).at(eL[0], eL[1], 0)));
+      const pupil = pair(sdf.cylinder(0.014 * PS, 1).rotateX(90).at(eL[0] - 0.004 * ES, eL[1] - 0.002 * ES, 0));
+      const shine = pair(sdf.sphere(0.008 * ES).at(eL[0] + 0.01 * ES, eL[1] + 0.012 * ES, eL[2]));
       const furLegs = trunk.smoothUnion(0.03, legs).smoothUnion(0.02, paws);
       const furLower = (kind.tail === false ? furLegs : furLegs.smoothUnion(0.02, tailShape.bone('tail')))
-        .smoothUnion(0.015, cheekTufts.bone('head'), ears.bone('head'))
+        .smoothUnion(0.015, ...(kind.cheekTufts === false ? [] : [cheekTufts.bone('head')]), ...(kind.ears === false ? [] : [ears.bone('head')]))
         // Lighter fur on the lower cheeks (below the eyes, so the dark face keeps the eye contrast)
         // and on the chest under the ruff.
         .paintWhere(pair(sdf.ellipsoid([0.12, 0.09, 0.13]).at(0.17, 0.4, 0.19)).intersect(sdf.halfSpace([0, 1, 0], 0.47)), T.furLight, 0.03)
@@ -229,7 +255,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         .paintWhere(pupil.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.pupil, 0.002)
         .paintWhere(shine, '#ffffff', 0.002);
       const tint = { fur: T.fur, furDark: T.furDark, markings: T.cream, eye: T.eye };
-      const fur = kind.paint ? kind.paint(furBase, tint) : furBase;
+      const fur = kind.paint ? kind.paint(furBase, tint, (slot, color, follow = 1) => k.tint(slot, { color, follow })) : furBase;
       // The lower jaw zone: below the grin circle and below the grin corners, inside a rounded
       // bound that keeps the outer cheeks and the cheek tufts on the head. The head keeps the rest;
       // the jaw pieces are rigid on `jaw` and reach 3 mm into the head, so no seam groove shows.
@@ -258,7 +284,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       // ------------------------------------------------------------------ cream: muzzle, brows, forelock, ruff
       // The grin: a dark band on the muzzle that curves up at the corners. The lower half of the
       // band goes with the lower jaw.
-      const grin = sdf.extrude(profile.arc(GRIN_R, kind.smile ? 0.011 : 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
+      const [ARC_FROM, ARC_TO] = kind.smileArc ?? [226, 314];
+      const grin = sdf.extrude(profile.arc(GRIN_R, kind.smile ? 0.011 : 0.028, ARC_FROM, ARC_TO), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
       const muzzleCream = muzzleWide.round(0.004).paintWhere(grin, C.mouth, 0.002);
       k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzleWide), C.mouth, 0.002), {
         color: T.cream,
@@ -300,12 +327,15 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           const to: V3 = [Math.sin(a) * (0.13 + len * 0.6), y - len, 0.15 + Math.cos(a) * reach];
           return sdf.cone(from, to, r, 0.004);
         });
-      const ruff = sdf.smoothUnion(
-        0.025,
-        sdf.ellipsoid([0.12, 0.1, 0.07]).at(0, 0.33, 0.14), // the cream chest
-        ...ruffRow(9, 0.39, 95, 0.13, 0.13, 0.05),
-        ...ruffRow(6, 0.31, 55, 0.13, 0.12, 0.042),
-      );
+      const ruff =
+        kind.ruff === 'smooth'
+          ? sdf.ellipsoid([0.115, 0.12, 0.075]).at(0, 0.31, 0.15)
+          : sdf.smoothUnion(
+              0.025,
+              sdf.ellipsoid([0.12, 0.1, 0.07]).at(0, 0.33, 0.14), // the cream chest
+              ...ruffRow(9, 0.39, 95, 0.13, 0.13, 0.05),
+              ...ruffRow(6, 0.31, 55, 0.13, 0.12, 0.042),
+            );
       const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzleWide), C.mouth, 0.002);
       const cream = sdf.union(
         muzzleTop.bone('head'),
@@ -317,7 +347,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
 
       // ------------------------------------------------------------------ nose, teeth, claws
       const noseAt = faceHit(0, 0.465);
-      k.body('nose', sdf.ellipsoid([0.05, 0.034, 0.036]).at(noseAt[0], noseAt[1], noseAt[2] - 0.004).bone('head'), {
+      const NS = kind.noseScale ?? 1;
+      k.body('nose', sdf.ellipsoid([0.05 * NS, 0.034 * NS, 0.036 * NS]).at(noseAt[0], noseAt[1], noseAt[2] - 0.004).bone('head'), {
         color: C.nose,
         roughness: 0.25,
       });
@@ -354,7 +385,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           ),
         ),
       );
-      k.body('claws', pair(claws), { color: C.claw, roughness: 0.4, detail: 0.003 });
+      if (kind.claws !== false) k.body('claws', pair(claws), { color: C.claw, roughness: 0.4, detail: 0.003 });
 
       // Glowing eyes: a thin skin over the painted eye discs (without the pupils) that glows.
       if (kind.eyeGlow) {
@@ -364,6 +395,9 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       }
       const wolf: WolfShape = {
         trunk,
+        head: headBase,
+        faceHit,
+        eye: eL,
         on: (shape, x, y, z, lift = 0) => sdf.surfacePoint(shape, [x, y, z], lift) as V3,
         tint,
         tone: (slot, color, follow = 1) => k.tint(slot, { color, follow }),

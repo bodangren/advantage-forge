@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 677,
-    "source_missing": 179,
+    "source_present": 712,
+    "source_missing": 144,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 158,
-        "source_missing": 146
+        "source_present": 193,
+        "source_missing": 111
       },
       "P3": {
         "listed": 48,
@@ -8080,7 +8080,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/bat.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8090,7 +8090,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/bee.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8100,7 +8100,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/butterfly.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8110,7 +8110,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/crow.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8120,7 +8120,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/eagle.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8130,7 +8130,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/falcon.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8140,7 +8140,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hawk.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8150,7 +8150,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/moth.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8160,7 +8160,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/owl.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8170,7 +8170,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/pigeon.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8180,7 +8180,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/raven.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8190,7 +8190,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/sparrow.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8200,7 +8200,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/wasp.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8210,7 +8210,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/badger.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8220,7 +8220,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/bear.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8230,7 +8230,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/boar.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8250,7 +8250,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cat.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8260,7 +8260,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/chicken.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8290,7 +8290,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dog.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8320,7 +8320,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fox.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8340,7 +8340,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hare.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8350,7 +8350,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hedgehog.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8390,7 +8390,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/pig.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8400,7 +8400,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/rabbit.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8410,7 +8410,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/rooster.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8430,7 +8430,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/squirrel.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8450,7 +8450,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/wolf.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8480,7 +8480,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/familiar-cat.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8490,7 +8490,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/familiar-owl.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8500,7 +8500,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/familiar-raven.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8520,7 +8520,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/messenger-bird.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8580,7 +8580,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/riding-wolf.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8600,7 +8600,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/crab.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8650,7 +8650,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/frog.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8660,7 +8660,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/octopus.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 865,
-    "catalog_matched": 661,
-    "off_catalog": 204
+    "listed": 905,
+    "catalog_matched": 696,
+    "off_catalog": 209
   },
   "asset_sources": [
     {
@@ -9902,6 +9902,13 @@
       ]
     },
     {
+      "id": "badger",
+      "source_path": "assets/badger.ts",
+      "catalog_source_ids": [
+        "wildlife/land/badger"
+      ]
+    },
+    {
       "id": "balcony",
       "source_path": "assets/balcony.ts",
       "catalog_source_ids": [
@@ -10015,6 +10022,13 @@
       ]
     },
     {
+      "id": "bat",
+      "source_path": "assets/bat.ts",
+      "catalog_source_ids": [
+        "wildlife/air/bat"
+      ]
+    },
+    {
       "id": "battle-axe",
       "source_path": "assets/battle-axe.ts",
       "catalog_source_ids": [
@@ -10036,6 +10050,13 @@
       ]
     },
     {
+      "id": "bear",
+      "source_path": "assets/bear.ts",
+      "catalog_source_ids": [
+        "wildlife/land/bear"
+      ]
+    },
+    {
       "id": "beast-rider",
       "source_path": "assets/beast-rider.ts",
       "catalog_source_ids": [
@@ -10054,6 +10075,13 @@
       "source_path": "assets/bedroll.ts",
       "catalog_source_ids": [
         "props/world/bedroll"
+      ]
+    },
+    {
+      "id": "bee",
+      "source_path": "assets/bee.ts",
+      "catalog_source_ids": [
+        "wildlife/air/bee"
       ]
     },
     {
@@ -10110,6 +10138,13 @@
       "source_path": "assets/blue-mushroom.ts",
       "catalog_source_ids": [
         "nature/plants/blue-mushroom"
+      ]
+    },
+    {
+      "id": "boar",
+      "source_path": "assets/boar.ts",
+      "catalog_source_ids": [
+        "wildlife/land/boar"
       ]
     },
     {
@@ -10279,6 +10314,13 @@
       ]
     },
     {
+      "id": "butterfly",
+      "source_path": "assets/butterfly.ts",
+      "catalog_source_ids": [
+        "wildlife/air/butterfly"
+      ]
+    },
+    {
       "id": "cabbage",
       "source_path": "assets/cabbage.ts",
       "catalog_source_ids": [
@@ -10411,6 +10453,13 @@
       ]
     },
     {
+      "id": "cat",
+      "source_path": "assets/cat.ts",
+      "catalog_source_ids": [
+        "wildlife/land/cat"
+      ]
+    },
+    {
       "id": "cattails",
       "source_path": "assets/cattails.ts",
       "catalog_source_ids": [
@@ -10504,6 +10553,13 @@
       "source_path": "assets/chest.ts",
       "catalog_source_ids": [
         "props/containers/chest"
+      ]
+    },
+    {
+      "id": "chicken",
+      "source_path": "assets/chicken.ts",
+      "catalog_source_ids": [
+        "wildlife/land/chicken"
       ]
     },
     {
@@ -10777,6 +10833,13 @@
       ]
     },
     {
+      "id": "crab",
+      "source_path": "assets/crab.ts",
+      "catalog_source_ids": [
+        "wildlife/water/crab"
+      ]
+    },
+    {
       "id": "crate",
       "source_path": "assets/crate.ts",
       "catalog_source_ids": [
@@ -10788,6 +10851,13 @@
       "source_path": "assets/crossbow.ts",
       "catalog_source_ids": [
         "equipment/ranged-weapons/crossbow"
+      ]
+    },
+    {
+      "id": "crow",
+      "source_path": "assets/crow.ts",
+      "catalog_source_ids": [
+        "wildlife/air/crow"
       ]
     },
     {
@@ -11023,6 +11093,13 @@
       ]
     },
     {
+      "id": "dog",
+      "source_path": "assets/dog.ts",
+      "catalog_source_ids": [
+        "wildlife/land/dog"
+      ]
+    },
+    {
       "id": "dome-pavilion",
       "source_path": "assets/dome-pavilion.ts",
       "catalog_source_ids": []
@@ -11182,6 +11259,13 @@
       ]
     },
     {
+      "id": "eagle",
+      "source_path": "assets/eagle.ts",
+      "catalog_source_ids": [
+        "wildlife/air/eagle"
+      ]
+    },
+    {
       "id": "earring",
       "source_path": "assets/earring.ts",
       "catalog_source_ids": [
@@ -11293,6 +11377,13 @@
       ]
     },
     {
+      "id": "falcon",
+      "source_path": "assets/falcon.ts",
+      "catalog_source_ids": [
+        "wildlife/air/falcon"
+      ]
+    },
+    {
       "id": "fallen-log",
       "source_path": "assets/fallen-log.ts",
       "catalog_source_ids": []
@@ -11302,6 +11393,27 @@
       "source_path": "assets/fallen-tree.ts",
       "catalog_source_ids": [
         "nature/terrain/fallen-tree"
+      ]
+    },
+    {
+      "id": "familiar-cat",
+      "source_path": "assets/familiar-cat.ts",
+      "catalog_source_ids": [
+        "wildlife/mounts-and-pets/familiar-cat"
+      ]
+    },
+    {
+      "id": "familiar-owl",
+      "source_path": "assets/familiar-owl.ts",
+      "catalog_source_ids": [
+        "wildlife/mounts-and-pets/familiar-owl"
+      ]
+    },
+    {
+      "id": "familiar-raven",
+      "source_path": "assets/familiar-raven.ts",
+      "catalog_source_ids": [
+        "wildlife/mounts-and-pets/familiar-raven"
       ]
     },
     {
@@ -11516,6 +11628,20 @@
       "source_path": "assets/fountain.ts",
       "catalog_source_ids": [
         "architecture/structure/fountain"
+      ]
+    },
+    {
+      "id": "fox",
+      "source_path": "assets/fox.ts",
+      "catalog_source_ids": [
+        "wildlife/land/fox"
+      ]
+    },
+    {
+      "id": "frog",
+      "source_path": "assets/frog.ts",
+      "catalog_source_ids": [
+        "wildlife/water/frog"
       ]
     },
     {
@@ -11972,10 +12098,24 @@
       "catalog_source_ids": []
     },
     {
+      "id": "hare",
+      "source_path": "assets/hare.ts",
+      "catalog_source_ids": [
+        "wildlife/land/hare"
+      ]
+    },
+    {
       "id": "haunch",
       "source_path": "assets/haunch.ts",
       "catalog_source_ids": [
         "props/food/haunch"
+      ]
+    },
+    {
+      "id": "hawk",
+      "source_path": "assets/hawk.ts",
+      "catalog_source_ids": [
+        "wildlife/air/hawk"
       ]
     },
     {
@@ -12020,6 +12160,13 @@
       "catalog_source_ids": [
         "architecture/building-parts/hedge",
         "nature/plants/hedge"
+      ]
+    },
+    {
+      "id": "hedgehog",
+      "source_path": "assets/hedgehog.ts",
+      "catalog_source_ids": [
+        "wildlife/land/hedgehog"
       ]
     },
     {
@@ -12707,6 +12854,13 @@
       ]
     },
     {
+      "id": "messenger-bird",
+      "source_path": "assets/messenger-bird.ts",
+      "catalog_source_ids": [
+        "wildlife/mounts-and-pets/messenger-bird"
+      ]
+    },
+    {
       "id": "milestone",
       "source_path": "assets/milestone.ts",
       "catalog_source_ids": [
@@ -12807,6 +12961,13 @@
       "source_path": "assets/moss.ts",
       "catalog_source_ids": [
         "nature/plants/moss"
+      ]
+    },
+    {
+      "id": "moth",
+      "source_path": "assets/moth.ts",
+      "catalog_source_ids": [
+        "wildlife/air/moth"
       ]
     },
     {
@@ -12912,6 +13073,13 @@
       ]
     },
     {
+      "id": "octopus",
+      "source_path": "assets/octopus.ts",
+      "catalog_source_ids": [
+        "wildlife/water/octopus"
+      ]
+    },
+    {
       "id": "ogre-brute",
       "source_path": "assets/ogre-brute.ts",
       "catalog_source_ids": [
@@ -12958,6 +13126,13 @@
       "source_path": "assets/orc-warrior.ts",
       "catalog_source_ids": [
         "enemies/humanoid/orc-warrior"
+      ]
+    },
+    {
+      "id": "owl",
+      "source_path": "assets/owl.ts",
+      "catalog_source_ids": [
+        "wildlife/air/owl"
       ]
     },
     {
@@ -13056,6 +13231,16 @@
       "catalog_source_ids": []
     },
     {
+      "id": "bat-kind",
+      "source_path": "assets/parts/bat-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "bird-extras",
+      "source_path": "assets/parts/bird-extras.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "bird-kind",
       "source_path": "assets/parts/bird-kind.ts",
       "catalog_source_ids": []
@@ -13076,6 +13261,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "cat-kind",
+      "source_path": "assets/parts/cat-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "cleric-book",
       "source_path": "assets/parts/cleric-book.ts",
       "catalog_source_ids": []
@@ -13088,6 +13278,11 @@
     {
       "id": "clockwork-soldier-halberd",
       "source_path": "assets/parts/clockwork-soldier-halberd.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "crab-kind",
+      "source_path": "assets/parts/crab-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -13223,6 +13418,11 @@
     {
       "id": "imp-kind",
       "source_path": "assets/parts/imp-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "insect-kind",
+      "source_path": "assets/parts/insect-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -13457,6 +13657,20 @@
       ]
     },
     {
+      "id": "pig",
+      "source_path": "assets/pig.ts",
+      "catalog_source_ids": [
+        "wildlife/land/pig"
+      ]
+    },
+    {
+      "id": "pigeon",
+      "source_path": "assets/pigeon.ts",
+      "catalog_source_ids": [
+        "wildlife/air/pigeon"
+      ]
+    },
+    {
       "id": "pike",
       "source_path": "assets/pike.ts",
       "catalog_source_ids": [
@@ -13684,6 +13898,13 @@
       ]
     },
     {
+      "id": "rabbit",
+      "source_path": "assets/rabbit.ts",
+      "catalog_source_ids": [
+        "wildlife/land/rabbit"
+      ]
+    },
+    {
       "id": "raider",
       "source_path": "assets/raider.ts",
       "catalog_source_ids": [
@@ -13731,6 +13952,13 @@
       ]
     },
     {
+      "id": "raven",
+      "source_path": "assets/raven.ts",
+      "catalog_source_ids": [
+        "wildlife/air/raven"
+      ]
+    },
+    {
       "id": "red-mushroom",
       "source_path": "assets/red-mushroom.ts",
       "catalog_source_ids": [
@@ -13770,6 +13998,13 @@
       "source_path": "assets/riding-horse.ts",
       "catalog_source_ids": [
         "wildlife/mounts-and-pets/riding-horse"
+      ]
+    },
+    {
+      "id": "riding-wolf",
+      "source_path": "assets/riding-wolf.ts",
+      "catalog_source_ids": [
+        "wildlife/mounts-and-pets/riding-wolf"
       ]
     },
     {
@@ -13895,6 +14130,13 @@
       "source_path": "assets/roof-tile.ts",
       "catalog_source_ids": [
         "architecture/building-parts/roof-tile"
+      ]
+    },
+    {
+      "id": "rooster",
+      "source_path": "assets/rooster.ts",
+      "catalog_source_ids": [
+        "wildlife/land/rooster"
       ]
     },
     {
@@ -14388,6 +14630,13 @@
       ]
     },
     {
+      "id": "sparrow",
+      "source_path": "assets/sparrow.ts",
+      "catalog_source_ids": [
+        "wildlife/air/sparrow"
+      ]
+    },
+    {
       "id": "spear-warden-crest",
       "source_path": "assets/spear-warden-crest.ts",
       "catalog_source_ids": []
@@ -14461,6 +14710,13 @@
       "source_path": "assets/spyglass.ts",
       "catalog_source_ids": [
         "equipment/tools/spyglass"
+      ]
+    },
+    {
+      "id": "squirrel",
+      "source_path": "assets/squirrel.ts",
+      "catalog_source_ids": [
+        "wildlife/land/squirrel"
       ]
     },
     {
@@ -15029,6 +15285,13 @@
       ]
     },
     {
+      "id": "wasp",
+      "source_path": "assets/wasp.ts",
+      "catalog_source_ids": [
+        "wildlife/air/wasp"
+      ]
+    },
+    {
       "id": "watchfire",
       "source_path": "assets/watchfire.ts",
       "catalog_source_ids": [
@@ -15200,6 +15463,13 @@
       "source_path": "assets/wizard.ts",
       "catalog_source_ids": [
         "heroes/magic/wizard"
+      ]
+    },
+    {
+      "id": "wolf",
+      "source_path": "assets/wolf.ts",
+      "catalog_source_ids": [
+        "wildlife/land/wolf"
       ]
     },
     {

@@ -67,6 +67,16 @@ export interface BoarKind {
   readonly eyeScale?: number;
   /** The glow of the eyes (default 0.9; 0 for plain eyes). */
   readonly eyeGlow?: number;
+  /** False: no heavy brows over the eyes (a friendly face). */
+  readonly brows?: boolean;
+  /** False: no lid rings in the skin color over the eyes. */
+  readonly lids?: boolean;
+  /** False: no teeth under the pig snout. */
+  readonly teeth?: boolean;
+  /** The tail: long and thin (default with the pig snout), a short stub (default with the bear muzzle), or a curly pig tail (no mane tuft). */
+  readonly tail?: 'long' | 'stub' | 'curl';
+  /** The length of the bear muzzle as a share of the bear's; above 1 it grows forward and thinner (a badger or hedgehog snout). */
+  readonly muzzleLength?: number;
   /** Extra paint on the fur (a face disc, a bib), with the slot colors. */
   paint?(fur: sdf.Shape, boar: BoarShape): sdf.Shape;
   /** Extra bodies (a beak, ear tufts), rigid on a bone or tagged to bones. */
@@ -150,7 +160,11 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const snoutPose = (s: sdf.Shape) => s.rotateX(82).at(...SNOUT);
       const snout = snoutPose(snoutLocal);
       // A bear muzzle: a round block on the front of the face, a little down.
-      const muzzle = sdf.ellipsoid([0.105, 0.08, 0.1]).at(0, 0.385, 0.37);
+      const ml = kind.muzzleLength ?? 1;
+      const muzzle =
+        ml === 1
+          ? sdf.ellipsoid([0.105, 0.08, 0.1]).at(0, 0.385, 0.37)
+          : sdf.ellipsoid([0.105 / Math.sqrt(ml), 0.08 / Math.sqrt(ml), 0.1 * ml]).at(0, 0.385, 0.37 + 0.1 * (ml - 1));
       const headBase =
         kind.snout === 'bear' ? sdf.smoothUnion(0.05, skull, muzzle) : kind.snout === false ? skull : sdf.smoothUnion(0.04, skull, snout);
 
@@ -162,8 +176,10 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const eyeNormal = sdf.normalAt(headBase, eyeHit);
       const es = kind.eyeScale ?? 1;
       const EYE_R = 0.05 * es;
-      // The eyeball center sits a little inside the surface, so the eye bulges out by about half.
-      const eyeCenter: V3 = [eyeHit[0] - eyeNormal[0] * 0.022, eyeHit[1] - eyeNormal[1] * 0.022, eyeHit[2] - eyeNormal[2] * 0.022];
+      // The eyeball center sits a little inside the surface, so the eye bulges out by about half; a
+      // bigger eye sits deeper, so it does not stand out of the face in the side view.
+      const inset = 0.022 + Math.max(0, EYE_R - 0.05) * 0.7;
+      const eyeCenter: V3 = [eyeHit[0] - eyeNormal[0] * inset, eyeHit[1] - eyeNormal[1] * inset, eyeHit[2] - eyeNormal[2] * inset];
       const out = (d: number): V3 => [eyeCenter[0] + eyeNormal[0] * d, eyeCenter[1] + eyeNormal[1] * d, eyeCenter[2] + eyeNormal[2] * d];
 
       // Pointed pig ears on the top corners of the head, cupped toward the front.
@@ -214,7 +230,18 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
           0.015,
         )
         .bone('tail');
-      const tail = kind.snout === 'bear' ? sdf.ellipsoid([0.045, 0.045, 0.04]).at(0, 0.33, -0.29).bone('tail') : longTail;
+      // A curly pig tail: up from the rump, then one loop behind it.
+      const curlTail = () => {
+        const C0: V3 = [0.022, 0.375, -0.35];
+        const loop = Array.from({ length: 7 }, (_, i): [number, number, number, number] => {
+          const a = Math.PI + (i / 6) * Math.PI * 1.7;
+          return [C0[0] + 0.026 * Math.cos(a), C0[1] + 0.026 * Math.sin(a), C0[2] - 0.004 * i, 0.014 - 0.0006 * i];
+        });
+        return sdf.chain([[0, 0.33, -0.29, 0.02], [0, 0.355, -0.33, 0.016], ...loop], 0.008).bone('tail');
+      };
+      const tailKind = kind.tail ?? (kind.snout === 'bear' ? 'stub' : 'long');
+      const tail =
+        tailKind === 'stub' ? sdf.ellipsoid([0.045, 0.045, 0.04]).at(0, 0.33, -0.29).bone('tail') : tailKind === 'curl' ? curlTail() : longTail;
 
       // ------------------------------------------------------------------ fur
       const trunk = sdf.smoothUnion(0.08, chest.bone('spine'), rump.bone('hips'), headBase.bone('head'));
@@ -222,11 +249,11 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const lidRing = pair(sdf.sphere(EYE_R + 0.012).at(...eyeCenter).intersect(sdf.halfSpace([0, 1, 0], eyeCenter[1] - 0.006)));
       const MOUTH_Y = 0.272;
       const mouth = sdf.extrude(profile.arc(0.16, 0.013, 236, 304), 0.5).at(0, MOUTH_Y + 0.16, 0.3);
-      const furBase = bodyShape
+      const furLegs = bodyShape
         .paintFn((x, y, z, base) => mixRgb(base, rgb(T.furDark), 0.22 * (0.5 + 0.5 * noise.fbm(x * 14, y * 14, z * 5, 2))))
         .paintWhere(sdf.ellipsoid([0.17, 0.08, 0.28]).at(0, 0.16, -0.04), T.belly, 0.05)
-        .paintWhere(limbs.intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04)
-        .paintWhere(lidRing, T.lid, 0.004);
+        .paintWhere(limbs.intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04);
+      const furBase = kind.lids === false ? furLegs : furLegs.paintWhere(lidRing, T.lid, 0.004);
       // The bear muzzle in the skin slot color: the front of the muzzle, below the eyes.
       const furMuzzle = kind.snout === 'bear' ? furBase.paintWhere(muzzle.round(0.012).intersect(sdf.halfSpace([0, 0, -1], -0.36)), T.snout, 0.012) : furBase;
       const furMouth = kind.snout === false ? furMuzzle : furMuzzle.paintWhere(mouth, C.mouth, 0.003);
@@ -265,7 +292,7 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
           return sdf.cone([p[0], p[1] - 0.012, p[2] - 0.008], [p[0], p[1] + 0.012, p[2] - 0.002], 0.011, 0.007);
         }),
       );
-      if ((kind.snout ?? 'pig') === 'pig') k.body('teeth', teeth.bone('head'), { color: C.ivory, roughness: 0.35, detail: 0.003 });
+      if ((kind.snout ?? 'pig') === 'pig' && kind.teeth !== false) k.body('teeth', teeth.bone('head'), { color: C.ivory, roughness: 0.35, detail: 0.003 });
 
       // ------------------------------------------------------------------ eyes: glowing irises, dark pupils
       const eyes = pair(sdf.sphere(EYE_R).at(...eyeCenter));
@@ -318,7 +345,16 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
           ].map(([dx, dy]) => sdf.cone(TAIL_TIP, [TAIL_TIP[0] + dx!, TAIL_TIP[1] + dy!, TAIL_TIP[2] - 0.05], 0.016, 0.003)),
         )
         .bone('tail');
-      k.body('mane', kind.mane === false ? brows : sdf.union(sdf.smoothUnion(0.02, ...spikes), brows, tuft), { color: C.black, roughness: 0.55 });
+      const noBrows = kind.brows === false;
+      const maneShape =
+        kind.mane === false
+          ? noBrows
+            ? undefined
+            : brows
+          : noBrows
+            ? sdf.union(sdf.smoothUnion(0.02, ...spikes), tuft)
+            : sdf.union(sdf.smoothUnion(0.02, ...spikes), brows, tuft);
+      if (maneShape) k.body('mane', maneShape, { color: C.black, roughness: 0.55 });
 
       // ------------------------------------------------------------------ horns and tusks: cream, darker at the root
       const hornRoot = sdf.raycast(headBase, [0.14, 2, 0.16], [0, -1, 0])!;
