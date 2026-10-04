@@ -5468,5 +5468,242 @@
       "Add a leg length option to the spider kind (also for the scorpion)."
     ],
     "reviewedAt": "2026-10-04T11:35:26+00:00"
+  },
+  "abyssal-beast": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/abyssal-beast) on the wolf kind: crimson fur with a near-black muzzle, ruff, and tail tip, small ears, no brows or forelock, two big curved black horns, round glowing orange eyes, black paws, and glowing orange ember spots on the shoulders and legs. Mockup docs/monster-mockups/abyssal-beast_001.jpg (mmx).",
+    "strengths": [
+      "The horns, the glowing eyes, and the ember spots match the mockup and read at 128 px.",
+      "It shares the body, the rig, and the seven wolf clips; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup chest is a smooth black oval; the wolf ruff is spiky and dark red.",
+      "The mockup embers have dark rims; these are plain glowing ovals."
+    ],
+    "next": [
+      "Add a smooth-chest option to the wolf kind (also open for the kitsune)."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "dire-bear": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/dire-bear) on the boar kind with new bear options: a bear muzzle in the skin slot with a black nose and a stub tail, round ears, paws with claws in the ivory slot, smaller plain eyes, and no horns, tusks, or mane (the brows stay). Brown fur, a cream muzzle, dark brows. Mockup docs/monster-mockups/dire-bear_001.jpg (mmx).",
+    "strengths": [
+      "The round ears, the cream muzzle, and the heavy body match the mockup; the bear reads from every side at 128 px.",
+      "Both boar bases stay identical after the new options (mesh-same SAME); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup eyes are closed angry slits; these are small open eyes.",
+      "The boar clips (charge, gore) are boar moves, not bear swipes."
+    ],
+    "next": [
+      "Add a bear swipe clip to the boar kind if the game needs one."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "owlbear": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 4.5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/beast/owlbear) on the goblin kind with new options (no ears, no face): a round brown body with a tan belly, a raised cream facial disc, big orange eyes, a hooked yellow beak, round bear ears, a white feather ruff, thick wing arms with black claws, and black talons. The image model drew the owlbear as a biped in three tries, so the asset is a biped. Mockup docs/monster-mockups/owlbear_001.jpg (mmx).",
+    "strengths": [
+      "The owl face with bear ears and the white ruff match the mockup and read at 128 px.",
+      "Both goblin bases stay identical after the new options (mesh-same SAME); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The right wing is raised in front at rest (the goblin dagger arm); in the attack and the taunt the claws go into the belly (hidden, 7 to 9 cm)."
+    ],
+    "next": [
+      "Give the goblin kind a relaxed right arm option for kinds without a held item."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "fairy-sprite": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/fairy-sprite) on the imp kind with new options: upright ears, no horns, crest, tail, claws, brows, or bat wings, and a smile mouth. Mint skin, closed eyes with lashes, two glowing dots, pink cheeks, a leaf crown, a chest leaf, a leaf skirt, and two pairs of clear veined dragonfly wings on the wing bones. Mockup docs/monster-mockups/fairy-sprite_001.jpg (mmx).",
+    "strengths": [
+      "The upright ears, the leaf crown, and the clear wings match the mockup.",
+      "The four imp bases stay identical after the new options (mesh-same SAME); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup holds its hands together; the imp arms reach forward.",
+      "The clear wings are faint at 128 px."
+    ],
+    "next": [
+      "Raise the wing opacity a little if the sprites need stronger wings."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "succubus": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/succubus) on the imp kind: lilac skin, long dark violet hair with a side fringe and locks, two curved dark horns, a calm face with arched brows, lashes, pink cheeks, a smile, glowing pink hearts in dark eyes, a dark slip dress, smaller dark violet bat wings, and the arrow tail. Mockup docs/monster-mockups/succubus_001.jpg (mmx).",
+    "strengths": [
+      "The heart eyes, the hair, and the horns match the mockup; the face reads at 128 px.",
+      "It shares the imp rig and the six imp clips; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup sits on the ground; the asset hovers like the imp.",
+      "The hair and the wings have the same dark violet, so the back view is one dark mass."
+    ],
+    "next": [
+      "Try a lighter or bluer hair shade if the back view needs more separation."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "eldritch-eye": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/eldritch-eye) on the spirit kind with new options (a head shape in place of the egg, no face): one big taupe eyeball with a white eye, a dark rim, faint red veins, a purple iris with a lumpy raised ring, and a black pupil, on a dark violet wisp body with taupe arms. Mockup docs/monster-mockups/eldritch-eye_001.jpg (mmx).",
+    "strengths": [
+      "The one huge eye makes the silhouette and reads at 128 px.",
+      "The ghost, the forest spirit, and the fire elemental stay identical after the new options (mesh-same SAME); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup lower body is a ragged cloak with strands; the wisp is smooth."
+    ],
+    "next": [
+      "Add ragged strands to the wisp if the abyss family needs more variety."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "eldritch-horror": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/eldritch-horror) on the slime kind with new options: a matte skin, hollow eyes, no frown, no floating bubbles, and an extra-bodies hook. Purple with a round studded orb on the crown bone, raised eye sockets, a wide maw with a lip, a green throat, and white teeth, studs, and nine thick tentacles. Mockup docs/monster-mockups/eldritch-horror_001.jpg (mmx).",
+    "strengths": [
+      "The orb, the toothy maw, and the tentacles match the mockup and read at 128 px.",
+      "Three slime bases stay identical after the new options (mesh-same SAME); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The tentacles are static on the core bone; they do not curl in the clips.",
+      "The mockup body is taller than the slime dome."
+    ],
+    "next": [
+      "Give the tentacles bones and a slow curl if the game shows it large."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "mushroom-creature": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/small/mushroom-creature) on the goblin kind (no ears, no face, own outfit): cream skin, a big red cap with raised white spots and pale gills, small round ears, black dot eyes, a small smile, a stem-like bell body, and short legs with round feet. Mockup docs/monster-mockups/mushroom-creature_001.jpg (mmx).",
+    "strengths": [
+      "The spotted cap and the cream stem match the mockup; the cap reads from every side and from above.",
+      "It shares the goblin rig and clips; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The right arm is raised in front at rest (the goblin dagger arm)."
+    ],
+    "next": [
+      "Use the relaxed right arm option when the goblin kind has one."
+    ],
+    "reviewedAt": "2026-10-04T12:29:34+00:00"
   }
 }

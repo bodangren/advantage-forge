@@ -109,7 +109,7 @@ export interface ImpKind {
   readonly name: string;
   readonly description: string;
   readonly reference: string;
-  /** Slots `skin`, `wings`, `eyes`, and `horns`; the first option of each is the default look. */
+  /** Slots `skin`, `wings`, `eyes`, and `horns` (no `horns` slot when `horns` is empty); the first option of each is the default look. */
   readonly variants: VariantSlots;
   readonly presets?: VariantPresets;
   /** Fixed colors and the default shades of the slots (skinDark, belly, brow, irisDark, vein). */
@@ -124,6 +124,18 @@ export interface ImpKind {
   readonly wingScale?: number;
   /** The little crest of spiky hair on the forehead (default true). */
   readonly crest?: boolean;
+  /** The tip of the left ear and the root radius, for ears that stand up (default: swept out and back). */
+  readonly ear?: { readonly tip: V3; readonly r: number };
+  /** False: no angry brows and no slanted lids (a calm face). */
+  readonly brows?: boolean;
+  /** The mouth: the wicked open grin with fangs (default) or a small closed smile. */
+  readonly mouth?: 'grin' | 'smile';
+  /** False: no bat wings (a kind may hang its own wings on `wing.L` and `wing.R`). */
+  readonly wings?: boolean;
+  /** False: no tail and no spade (the tail bones stay). */
+  readonly tail?: boolean;
+  /** False: no dark claws on the hands and the feet. */
+  readonly claws?: boolean;
   /** Extra skin paint (markings, a darker face). */
   paint?(skin: sdf.Shape, imp: ImpShape): sdf.Shape;
   /** Extra bodies (a crown, a cape, bracers), rigid on a bone or tagged to bones. */
@@ -134,6 +146,10 @@ export interface ImpKind {
 export interface ImpShape {
   /** The head (skull, cheeks, jaw, and brow), centered at `HEAD_C`. */
   readonly head: sdf.Shape;
+  /** The torso (chest, belly, and neck), tagged to its bones. */
+  readonly torso: sdf.Shape;
+  /** The center of the left eye on the face (x, y). */
+  readonly eye: readonly [number, number];
   /** The z of the front of the head at (x, y). */
   faceZ(x: number, y: number): number;
   readonly joints: { readonly HEAD_C: V3; readonly SHOULDER: V3; readonly ELBOW: V3; readonly WRIST: V3; readonly HIP: V3; readonly KNEE: V3; readonly ANKLE: V3; readonly WING_ROOT: V3 };
@@ -166,7 +182,7 @@ export function impAsset(kind: ImpKind): AssetDefinition {
         vein: k.tint('wings', { color: C.vein ?? '#cb6240', follow: 1 }),
         iris: k.tint('eyes'),
         irisDark: k.tint('eyes', { color: C.irisDark, follow: 1 }),
-        horn: k.tint('horns'),
+        horn: kind.horns?.length === 0 ? C.horn : k.tint('horns'),
       };
       k.skeleton({
         hips: { at: HIPS_AT },
@@ -205,11 +221,18 @@ export function impAsset(kind: ImpKind): AssetDefinition {
       const faceZ = (x: number, y: number) => sdf.raycast(head, [x, y, 1], [0, 0, -1])![2];
       const nose = sdf.ellipsoid([0.02, 0.016, 0.016]).at(0, 0.49, faceZ(0, 0.49) - 0.003);
       // Pointed ears swept out and back.
-      const ears = pair(
-        sdf
-          .cone([0.12, 0.52, 0.0], [0.24, 0.56, -0.05], 0.038, 0.004)
-          .smoothSubtract(0.004, sdf.cone([0.13, 0.52, 0.018], [0.22, 0.55, -0.03], 0.022, 0.002)),
-      );
+      const ear = kind.ear;
+      const ears = ear
+        ? pair(
+            sdf
+              .cone([0.12, 0.52, 0.0], ear.tip, ear.r, 0.004)
+              .smoothSubtract(0.004, sdf.cone([0.13, 0.52, ear.r * 0.5], lerp([0.12, 0.52, ear.r * 0.6], ear.tip, 0.85), ear.r * 0.6, 0.002)),
+          )
+        : pair(
+            sdf
+              .cone([0.12, 0.52, 0.0], [0.24, 0.56, -0.05], 0.038, 0.004)
+              .smoothSubtract(0.004, sdf.cone([0.13, 0.52, 0.018], [0.22, 0.55, -0.03], 0.022, 0.002)),
+          );
       // A little crest of spiky hair on the forehead.
       const crestAt = sdf.raycast(head, [0, 2, 0.06], [0, -1, 0])!;
       const crest = sdf.union(
@@ -346,26 +369,30 @@ export function impAsset(kind: ImpKind): AssetDefinition {
         )
         .at(0, MOUTH_Y, 0.1);
       const tongue = mouth.round(-0.005).intersect(sdf.sphere(0.024).at(0, MOUTH_Y - 0.028, 0.2).elongate(0.01, 0, 0.2));
-      const skin = sdf
+      const limbs = sdf
         .smoothUnion(0.03, head.bone('head'), torso)
         .smoothUnion(0.01, nose.bone('head'), ears.bone('head'), ...(kind.crest === false ? [] : [crest.bone('head')]))
-        .union(armAt(1), armAt(-1), legAt(1), legAt(-1))
-        .smoothUnion(0.012, tailShape)
-        .union(spade)
+        .union(armAt(1), armAt(-1), legAt(1), legAt(-1));
+      const calm = kind.brows === false;
+      const smile = kind.mouth === 'smile';
+      // A small closed smile: a thin arc, low on the face.
+      const smileLine = sdf.extrude(profile.arc(0.05, 0.007, 235, 305), 0.3).at(0, MOUTH_Y + 0.05, 0.1);
+      const bodyShape = kind.tail === false ? limbs : limbs.smoothUnion(0.012, tailShape).union(spade);
+      const painted = bodyShape
         .paintWhere(sdf.halfSpace([0, 0, 1], -0.06).intersect(sdf.sphere(0.4).at(0, 0.3, -0.1)), T.skinDark, 0.06) // a darker back
         .paintWhere(sdf.ellipsoid([0.06, 0.07, 0.1]).at(0, 0.3, 0.06), T.belly, 0.03)
         .paintWhere(eyeWhite, C.eyeWhite)
         .paintWhere(iris, T.iris)
         .paintWhere(irisDark, T.irisDark, 0.008)
         .paintWhere(pupil, C.pupil)
-        .paintWhere(shine, '#ffffff')
-        .paintWhere(lid.intersect(eyeWhite.round(0.004)), T.skinDark, 0.002)
-        .paintWhere(brows, T.brow, 0.002)
-        .paintWhere(mouth, C.mouth, 0.002)
-        .paintWhere(tongue, C.tongue, 0.004);
+        .paintWhere(shine, '#ffffff');
+      const faced = calm ? painted : painted.paintWhere(lid.intersect(eyeWhite.round(0.004)), T.skinDark, 0.002).paintWhere(brows, T.brow, 0.002);
+      const skin = smile ? faced.paintWhere(smileLine, C.mouth, 0.002) : faced.paintWhere(mouth, C.mouth, 0.002).paintWhere(tongue, C.tongue, 0.004);
       const tone = (slot: string, color: string, follow = 1) => k.tint(slot, { color, follow });
       const imp: ImpShape = {
         head,
+        torso,
+        eye: [EYE[0], EYE[1]],
         faceZ,
         joints: { HEAD_C, SHOULDER, ELBOW, WRIST, HIP, KNEE, ANKLE, WING_ROOT },
         tint: { skin: T.skin, skinDark: T.skinDark, belly: T.belly, brow: T.brow, membrane: T.membrane, iris: T.iris, horn: T.horn },
@@ -387,22 +414,24 @@ export function impAsset(kind: ImpKind): AssetDefinition {
           return sdf.cone([x, grinTop + 0.004, z], [x * 0.95, grinTop - (long ? 0.03 : 0.018), z + 0.004], long ? 0.011 : 0.009, 0.002);
         }),
       );
-      k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+      if (!smile) k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
 
       // ------------------------------------------------------------------ horns: big, curved, ringed
       const rings = kind.hornRings ?? 0.74;
       const chains = (kind.horns ?? [IMP_HORN]).map((h) => sdf.chain(h, 0.012));
-      const horn = (chains.length === 1 ? chains[0]! : sdf.union(...chains)).paintFn((_x, y, _z, base) =>
-        rings !== false && Math.sin(y * 260) > 0.6 && y < rings ? [base[0] * 1.25, base[1] * 1.25, base[2] * 1.25] : base,
-      );
-      k.body('horns', pair(horn).bone('head'), { color: T.horn, roughness: 0.45 });
+      if (chains.length > 0) {
+        const horn = (chains.length === 1 ? chains[0]! : sdf.union(...chains)).paintFn((_x, y, _z, base) =>
+          rings !== false && Math.sin(y * 260) > 0.6 && y < rings ? [base[0] * 1.25, base[1] * 1.25, base[2] * 1.25] : base,
+        );
+        k.body('horns', pair(horn).bone('head'), { color: T.horn, roughness: 0.45 });
+      }
       const claws = sdf.union(
         clawHand(WRIST, 1).claws.bone('hand.L'),
         clawHand(mx(WRIST), -1).claws.bone('hand.R'),
         clawFoot(ANKLE, 1).claws.bone('foot.L'),
         clawFoot(mx(ANKLE), -1).claws.bone('foot.R'),
       );
-      k.body('claws', claws, { color: C.claw, roughness: 0.35, detail: 0.003 });
+      if (kind.claws !== false) k.body('claws', claws, { color: C.claw, roughness: 0.35, detail: 0.003 });
 
       // ------------------------------------------------------------------ bat wings
       // Local frame: the root at the origin, the wing spread along +X, the membrane in the XY plane.
@@ -447,8 +476,10 @@ export function impAsset(kind: ImpKind): AssetDefinition {
         sdf.cone([KNUCKLE[0], KNUCKLE[1], 0], [KNUCKLE[0] - 0.01, KNUCKLE[1] + 0.05, 0], 0.012, 0.003), // the thumb claw
       );
       const wingPose = (s: sdf.Shape) => s.scale(kind.wingScale ?? 1.2).rotateY(22).rotateZ(10).at(...WING_ROOT);
-      k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: T.membrane, roughness: 0.6 });
-      k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.wingBone, roughness: 0.5 });
+      if (kind.wings !== false) {
+        k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: T.membrane, roughness: 0.6 });
+        k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: C.wingBone, roughness: 0.5 });
+      }
 
       // ------------------------------------------------------------------ the fireball (cast only)
       // A ball of fire 5.6 cm across: orange flame licks over a yellow-white core that shows in the

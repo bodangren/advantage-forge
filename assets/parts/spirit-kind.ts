@@ -30,8 +30,12 @@ export interface SpiritKind {
   readonly head?: Pick<BodyOptions, 'roughness' | 'metalness' | 'flat' | 'opacity' | 'emissiveIntensity'> & {
     /** The head glows in its own color. */
     readonly glow?: boolean;
+    /** A head shape in place of the egg (an eyeball); it must cover the top of the wisp. */
+    readonly shape?: sdf.Shape;
     paint?(head: sdf.Shape, spirit: SpiritShape): sdf.Shape;
   };
+  /** False: no eye hollows, pupils, or mouth; the kind paints or builds its own face. */
+  readonly face?: boolean;
   /** The wisp material (the body, the arms, and the tail), and its paint or surface. */
   readonly wisp?: Pick<BodyOptions, 'roughness' | 'metalness' | 'opacity' | 'flat' | 'emissiveIntensity' | 'bump'> & {
     /** The body width as a share of the default (an earth spirit is a boulder). */
@@ -160,7 +164,7 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
         [0.13, 0.279],
       ];
       const egg = [[0, 0.8], ...eggHalf, [0, 0.266], ...eggHalf.map(([u, v]) => [-u, v]).reverse()] as [number, number][];
-      const head = sdf.revolve(profile.polygon(egg, { smooth: true })).scale([1, 1, 0.9]);
+      const head = kind.head?.shape ?? sdf.revolve(profile.polygon(egg, { smooth: true })).scale([1, 1, 0.9]);
       const surf = (x: number, y: number): V3 => sdf.raycast(head, [x, y, 1], [0, 0, -1])!;
 
       // Eyes: deep oval hollows with crisp rims; the dark glass follows the head's curve 7 mm inside.
@@ -193,7 +197,9 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
         { smooth: true },
       );
       const mouth = sdf.extrude(mouthShape, 0.12).at(0, MOUTH_Y, surf(0, MOUTH_Y)[2]);
-      const headCarved = head.smoothSubtract(0.004, hollows).bone('head');
+      const faced = kind.face !== false;
+      const headCarved = faced ? head.smoothSubtract(0.004, hollows).bone('head') : head.bone('head');
+      const withMouth = (s: sdf.Shape) => (faced ? s.paintWhere(mouth, C.mouth, 0.002) : s);
 
       // ------------------------------------------------------------------ arms
       // Stubby arms held out, each ending in a blunt mitten with two finger bumps and a thumb.
@@ -261,9 +267,8 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
           .smoothUnion(0.02, arm.mirror('x'))
           .smoothUnion(0.03, tail)
           .smoothUnion(0.018, foot.mirror('x'))
-          .paintWhere(sdf.box([1, 0.3, 1]).at(0, 0.02, 0), T.bodyLow, 0.12)
-          .paintWhere(mouth, C.mouth, 0.002);
-        k.body('ghost', ghost, { color: T.body, roughness: 0.62, textureDensity: 1.5 });
+          .paintWhere(sdf.box([1, 0.3, 1]).at(0, 0.02, 0), T.bodyLow, 0.12);
+        k.body('ghost', withMouth(ghost), { color: T.body, roughness: 0.62, textureDensity: 1.5 });
       } else {
         // ---------------------------------------------------------------- wisp
         // A small round body under the head that tapers to a point and runs into the tail; its
@@ -284,7 +289,7 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
         const wisp = sdf.union(wispUpper, wispLower).smoothUnion(0.02, arm.mirror('x')).smoothUnion(0.03, tail);
         spirit = { ...spirit, wisp };
 
-        const headPainted = headCarved.paintWhere(mouth, C.mouth, 0.002);
+        const headPainted = withMouth(headCarved);
         k.body('face', kind.head?.paint?.(headPainted, spirit) ?? headPainted, {
           color: T.body,
           roughness: kind.head?.roughness ?? 0.62,
@@ -307,8 +312,10 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
           textureDensity: 1.5,
         });
       }
-      k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.12, detail: 0.003 });
-      k.body('pupils', pupils.bone('head'), { color: T.pupil, roughness: 0.3, emissive: T.glow, emissiveIntensity: 1.3, detail: 0.003 });
+      if (faced) {
+        k.body('eyes', eyes.bone('head'), { color: C.eye, roughness: 0.12, detail: 0.003 });
+        k.body('pupils', pupils.bone('head'), { color: T.pupil, roughness: 0.3, emissive: T.glow, emissiveIntensity: 1.3, detail: 0.003 });
+      }
       kind.extra?.build(k, spirit);
 
       // ------------------------------------------------------------------ animation

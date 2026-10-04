@@ -74,6 +74,16 @@ export interface SlimeKind {
   /** The emissive strength of the jelly (0.16 by default). */
   readonly glow?: number;
   readonly crown?: SlimeCrown;
+  /** A matte skin in place of the glossy jelly: rough, no glow, no bubbles seen inside. */
+  readonly matte?: boolean;
+  /** The eyes: glaring bulbs with irises and slanted lids (default), or dark hollow eyes set deeper. */
+  readonly eyes?: 'glare' | 'hollow';
+  /** False: no painted frown (the kind builds its own mouth). */
+  readonly frown?: boolean;
+  /** False: no floating bubbles (their bones stay). */
+  readonly bubbles?: boolean;
+  /** Extra bodies (tentacles, studs, a maw), tagged to the slime's bones. */
+  extra?(k: AssetContext, slime: SlimeShape): void;
 }
 
 /** Bodies on the `crown` bone (a child of `top`), and their motion in each clip. */
@@ -91,6 +101,10 @@ export interface SlimeShape {
   readonly body: sdf.Shape;
   /** A point on the jelly surface near (x, y, z), lifted along the normal. */
   surf(x: number, y: number, z: number, lift: number): V3;
+  /** The front point of the dome at (x, y). */
+  faceHit(x: number, y: number): V3;
+  /** The left eye center (x, y) on the dome. */
+  readonly eye: readonly [number, number];
   /** The jelly slot color and its mixed tones (each follows the slot). */
   readonly tint: { readonly jelly: string; readonly top: string; readonly low: string; readonly iris: string };
 }
@@ -232,7 +246,7 @@ export function slimeAsset(kind: SlimeKind): AssetDefinition {
           0.004,
         ),
       );
-      const jelly = jellyShape
+      const shaded = jellyShape
         // Lighter toward the top, darker toward the puddle, with soft mottling inside the jelly.
         .paintFn((x, y, z, c) => {
           const t = (y - 0.24) / 0.22;
@@ -242,18 +256,25 @@ export function slimeAsset(kind: SlimeKind): AssetDefinition {
           out = mix3(out, lowRgb, b * 0.65);
           return mix3(out, topRgb, (m - 0.5) * 0.25);
         })
-        .paintWhere(blisters.round(0.003), T.inner, 0.016)
-        // Bubbles seen inside the jelly: soft pale discs with a bright glint.
-        .paintWhere(innerBubbles, T.inner, 0.01)
-        .paintWhere(glints, T.bubble, 0.002)
-        .paintWhere(crease, T.crease, 0.004)
-        .paintWhere(mouth, T.mouth, 0.002);
-      k.body('jelly', jelly, { color: T.jelly, roughness: 0.2, emissive: T.jelly, emissiveIntensity: kind.glow ?? 0.16, textureDensity: 1.5 });
+        .paintWhere(blisters.round(0.003), T.inner, 0.016);
+      const matte = kind.matte === true;
+      // Bubbles seen inside the jelly: soft pale discs with a bright glint.
+      const bubbled = matte ? shaded : shaded.paintWhere(innerBubbles, T.inner, 0.01).paintWhere(glints, T.bubble, 0.002);
+      const creased = bubbled.paintWhere(crease, T.crease, 0.004);
+      const jelly = kind.frown === false ? creased : creased.paintWhere(mouth, T.mouth, 0.002);
+      k.body(
+        'jelly',
+        jelly,
+        matte
+          ? { color: T.jelly, roughness: 0.6, textureDensity: 1.5 }
+          : { color: T.jelly, roughness: 0.2, emissive: T.jelly, emissiveIntensity: kind.glow ?? 0.16, textureDensity: 1.5 },
+      );
 
       // ------------------------------------------------------------------ eyes: big glossy bulbs set into the dome
       const eyeHit = faceHit(EYE_X, EYE_Y);
       const EYE_R = 0.074;
-      const eyeC: V3 = [EYE_X, EYE_Y, eyeHit[2] - 0.022];
+      const hollow = kind.eyes === 'hollow';
+      const eyeC: V3 = [EYE_X, EYE_Y, eyeHit[2] - (hollow ? 0.05 : 0.022)];
       const disc = (r: number, dx: number, dy: number) => sdf.cylinder(r, 1).rotateX(90).at(eyeC[0] + dx, eyeC[1] + dy, 0);
       // Everything is built for the left eye and mirrored; the irises look a little inward.
       const eyeLocal = sdf
@@ -274,7 +295,13 @@ export function slimeAsset(kind: SlimeKind): AssetDefinition {
           T.brow,
           0.002,
         );
-      k.body('eyes', pair(eyeLocal.bone('eye.L')), { color: C.white, roughness: 0.1, textureDensity: 2 });
+      // Hollow eyes: dark glossy balls set deep in the dome, with one glint each.
+      const hollowLocal = sdf
+        .sphere(EYE_R)
+        .at(...eyeC)
+        .paintWhere(sdf.sphere(0.014).at(eyeC[0] + 0.012, eyeC[1] + 0.02, eyeC[2] + EYE_R - 0.006), C.white, 0.002);
+      if (hollow) k.body('eyes', pair(hollowLocal.bone('eye.L')), { color: '#1c1424', roughness: 0.12, textureDensity: 2 });
+      else k.body('eyes', pair(eyeLocal.bone('eye.L')), { color: C.white, roughness: 0.1, textureDensity: 2 });
 
       // ------------------------------------------------------------------ floating bubbles, each on its own bone
       const bubbles = sdf.union(
@@ -286,7 +313,7 @@ export function slimeAsset(kind: SlimeKind): AssetDefinition {
             .bone(`bubble${i + 1}`),
         ),
       );
-      k.body('bubbles', bubbles, { color: T.bubble, roughness: 0.05, emissive: T.jelly, emissiveIntensity: 0.3, opacity: 0.75, detail: 0.004 });
+      if (kind.bubbles !== false) k.body('bubbles', bubbles, { color: T.bubble, roughness: 0.05, emissive: T.jelly, emissiveIntensity: 0.3, opacity: 0.75, detail: 0.004 });
 
       // ------------------------------------------------------------------ acid glob: the spit shot
       // A blob of the slime's own jelly, 7.4 cm across, with a short tail that trails behind it in
@@ -298,7 +325,9 @@ export function slimeAsset(kind: SlimeKind): AssetDefinition {
         .paintWhere(sdf.sphere(GLOB_R * 0.28).at(GLOB_R * 0.3, GLOB_R * 0.55, GLOB_R * 0.75), C.white, 0.002)
         .at(...GLOB_AT);
       k.body('acid-glob', glob, { bone: 'glob', color: T.acid, roughness: 0.08, emissive: T.acid, emissiveIntensity: 0.3, opacity: 0.85, detail: 0.003 });
-      kind.crown?.build(k, { body, surf, tint: { jelly: T.jelly, top: T.top, low: T.low, iris: T.iris } });
+      const slime: SlimeShape = { body, surf, faceHit, eye: [EYE_X, EYE_Y], tint: { jelly: T.jelly, top: T.top, low: T.low, iris: T.iris } };
+      kind.crown?.build(k, slime);
+      kind.extra?.(k, slime);
 
       // ------------------------------------------------------------------ animation
       const { wave, bump, keys } = motion;

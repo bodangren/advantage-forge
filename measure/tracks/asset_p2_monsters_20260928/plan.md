@@ -162,6 +162,30 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   the stinger over the head (checked in the attack strip).
 - All five: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 7 (2026-10-04): eight monsters on wolf, boar, goblin, imp, spirit, and slime kinds
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| abyssal-beast | monsters/abyssal-and-cosmic/abyssal-beast | wolf kind: crimson, black horns, glowing eyes and ember spots | 7.6 |
+| dire-bear | monsters/beast/dire-bear | boar kind: bear muzzle, round ears, paws, stub tail | 7.6 |
+| owlbear | monsters/beast/owlbear | goblin kind: no ears or face; owl face, bear ears, ruff, wing arms | 7.5 |
+| fairy-sprite | monsters/fey-and-spirit/fairy-sprite | imp kind: upright ears, closed eyes, leaves, dragonfly wings | 7.6 |
+| succubus | monsters/abyssal-and-cosmic/succubus | imp kind: long hair, heart eyes, horns, dress | 7.5 |
+| eldritch-eye | monsters/abyssal-and-cosmic/eldritch-eye | spirit kind: an eyeball head shape, no face | 7.7 |
+| eldritch-horror | monsters/abyssal-and-cosmic/eldritch-horror | slime kind: matte, hollow eyes, maw, tentacles, orb crown | 7.6 |
+| mushroom-creature | monsters/small/mushroom-creature | goblin kind: no ears or face; spotted cap, stem body | 7.7 |
+
+- Kind options added (each base checked with mesh-same: SAME): the boar kind `mane`, `snout`
+  (`'bear'` or none), `ears: 'round'`, `feet: 'paws'`, `eyeScale`, `eyeGlow`, `paint`, and `extra`;
+  the goblin kind `ears: false` and `face: false`; the imp kind `ear`, `brows`, `mouth: 'smile'`,
+  `wings`, `tail`, `claws`, empty `horns` (no horns slot), and `torso` and `eye` in its shape; the
+  spirit kind `head.shape` and `face: false`; the slime kind `matte`, `eyes: 'hollow'`, `frown`,
+  `bubbles`, and `extra`.
+- The image model drew the owlbear as a biped in three tries (with the dire wolf, dire bear, and
+  boar mockups as references), so the owlbear is a biped on the goblin kind.
+- Prettier reformats a whole kind file (500 changed lines); edit kind files without the formatter.
+- All eight: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
@@ -169,4 +193,5 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - [x] Task: Batch 4: monsters on existing bases (spirit, imp, dragon, and boar kinds, and a griffin copy).
 - [x] Task: Batch 5: twelve monsters on horse, wolf, spider, ogre, golem, and goblin kinds.
 - [x] Task: Batch 6: giant-lizard, basilisk, kitsune, scorpion, and giant-crab on dragon, wolf, and spider kinds.
-- [ ] Task: Batch 7: the next monsters by base reuse (30 rows are open; candidates: cockatrice and giant-eagle on the griffin, dire-bear and owlbear, centaur and satyr, treant and ancient-treant); wyvern, lindworm, hydra, and the serpents need a new rig.
+- [x] Task: Batch 7: abyssal-beast, dire-bear, owlbear, fairy-sprite, succubus, eldritch-eye, eldritch-horror, and mushroom-creature on six kinds.
+- [ ] Task: Batch 8: the next monsters by base reuse (22 rows are open; candidates: cockatrice and giant-eagle on the griffin, centaur and satyr, treant and ancient-treant); wyvern, lindworm, hydra, and the serpents need a new rig.

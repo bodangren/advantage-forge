@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 632,
-    "source_missing": 224,
+    "source_present": 640,
+    "source_missing": 216,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 113,
-        "source_missing": 191
+        "source_present": 121,
+        "source_missing": 183
       },
       "P3": {
         "listed": 48,
@@ -4270,7 +4270,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/abyssal-beast.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4290,7 +4290,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/eldritch-eye.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4300,7 +4300,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/eldritch-horror.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4340,7 +4340,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/succubus.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4390,7 +4390,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dire-bear.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4530,7 +4530,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/owlbear.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4780,7 +4780,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fairy-sprite.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -5060,7 +5060,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/mushroom-creature.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,11 +9625,18 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 813,
-    "catalog_matched": 616,
+    "listed": 821,
+    "catalog_matched": 624,
     "off_catalog": 197
   },
   "asset_sources": [
+    {
+      "id": "abyssal-beast",
+      "source_path": "assets/abyssal-beast.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/abyssal-beast"
+      ]
+    },
     {
       "id": "adventurer-lantern",
       "source_path": "assets/adventurer-lantern.ts",
@@ -10883,6 +10890,13 @@
       ]
     },
     {
+      "id": "dire-bear",
+      "source_path": "assets/dire-bear.ts",
+      "catalog_source_ids": [
+        "monsters/beast/dire-bear"
+      ]
+    },
+    {
       "id": "dire-wolf",
       "source_path": "assets/dire-wolf.ts",
       "catalog_source_ids": [
@@ -11112,6 +11126,20 @@
       ]
     },
     {
+      "id": "eldritch-eye",
+      "source_path": "assets/eldritch-eye.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/eldritch-eye"
+      ]
+    },
+    {
+      "id": "eldritch-horror",
+      "source_path": "assets/eldritch-horror.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/eldritch-horror"
+      ]
+    },
+    {
       "id": "elementalist",
       "source_path": "assets/elementalist.ts",
       "catalog_source_ids": [
@@ -11171,6 +11199,13 @@
       "source_path": "assets/explorer.ts",
       "catalog_source_ids": [
         "heroes/support/explorer"
+      ]
+    },
+    {
+      "id": "fairy-sprite",
+      "source_path": "assets/fairy-sprite.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/fairy-sprite"
       ]
     },
     {
@@ -12666,6 +12701,13 @@
       "catalog_source_ids": []
     },
     {
+      "id": "mushroom-creature",
+      "source_path": "assets/mushroom-creature.ts",
+      "catalog_source_ids": [
+        "monsters/small/mushroom-creature"
+      ]
+    },
+    {
       "id": "mushroom",
       "source_path": "assets/mushroom.ts",
       "catalog_source_ids": [
@@ -12769,6 +12811,13 @@
       "source_path": "assets/orc-warrior.ts",
       "catalog_source_ids": [
         "enemies/humanoid/orc-warrior"
+      ]
+    },
+    {
+      "id": "owlbear",
+      "source_path": "assets/owlbear.ts",
+      "catalog_source_ids": [
+        "monsters/beast/owlbear"
       ]
     },
     {
@@ -14298,6 +14347,13 @@
       "source_path": "assets/stump.ts",
       "catalog_source_ids": [
         "nature/terrain/stump"
+      ]
+    },
+    {
+      "id": "succubus",
+      "source_path": "assets/succubus.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/succubus"
       ]
     },
     {

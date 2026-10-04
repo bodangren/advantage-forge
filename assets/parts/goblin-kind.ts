@@ -101,6 +101,10 @@ export interface GoblinKind {
   readonly nicks?: boolean;
   /** The crest of hair on the crown (on by default). */
   readonly tuft?: boolean;
+  /** False: no ears. */
+  readonly ears?: boolean;
+  /** False: no nose, no face paint, and no fang; the kind builds its own face (an owl face) in `extra`. */
+  readonly face?: boolean;
   /**
    * Clothes in place of the warrior's (tunic, scarf, belt and strap, pouch, brass, shoulder guard,
    * wraps, pants, and boots). The outfit must cover the torso and the legs and give the feet.
@@ -335,11 +339,11 @@ export function goblinAsset(kind: GoblinKind): AssetDefinition {
       const noseFront = sdf.raycast(nose, [0, 0.59, 1], [0, 0, -1])![2];
       const nostrils = pair(sdf.sphere(0.0075).at(0.016, 0.581, noseFront - 0.012));
 
-      const skin = sdf
-        .smoothUnion(0.03, head, neck)
-        .smoothUnion(0.012, nose, ...(kind.tuft === false ? [] : [tuft.bone('head')]))
-        .smoothUnion(0.02, ears)
-        .union(armL, armR)
+      const headNeck = sdf.smoothUnion(0.03, head, neck);
+      const bumps = [...(kind.face === false ? [] : [nose]), ...(kind.tuft === false ? [] : [tuft.bone('head')])];
+      const withBumps = bumps.length > 0 ? headNeck.smoothUnion(0.012, ...bumps) : headNeck;
+      const bare = (kind.ears === false ? withBumps : withBumps.smoothUnion(0.02, ears)).union(armL, armR);
+      const skin = kind.face === false ? bare : bare
         .paintWhere(blush, TS.blush, 0.018)
         .paintWhere(eyeWhite, C.eyeWhite)
         .paintWhere(iris, TS.iris)
@@ -360,7 +364,7 @@ export function goblinAsset(kind: GoblinKind): AssetDefinition {
         .cone([0, 0, 0], [0.001, -0.024, 0.004], 0.014, 0.006)
         .scale([1, 1, 0.7])
         .at(FANG_X, 0.567, fangTop - 0.002);
-      k.body('teeth', fang.bone('head'), { color: C.tooth, roughness: 0.35, detail: 0.003 });
+      if (kind.face !== false) k.body('teeth', fang.bone('head'), { color: C.tooth, roughness: 0.35, detail: 0.003 });
 
       // ------------------------------------------------------------------ tunic (sleeveless, jagged hem)
       const torso = sdf
