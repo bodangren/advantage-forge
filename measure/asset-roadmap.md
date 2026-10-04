@@ -20,12 +20,12 @@ P0 and P1 are complete (track [asset_p0p1_completion_20261002](./tracks/asset_p0
 | Family | Rows | With a source | At the bar | Open | Track |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Items | 56 | 56 | 55 (iron-ore 6.0) | 0 | [items](./tracks/asset_p2_items_20260928/), completed |
-| Monsters | 80 | 10 | 10 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7; batch 1: griffin 7.7, four element slimes 7.6 to 7.8, dragon-wyrmling 7.6) | 70 | [monsters](./tracks/asset_p2_monsters_20260928/), in progress |
+| Monsters | 80 | 14 | 14 (giant-bat 8.1, giant-rat 8.1, imp 8.2, mimic 8.7; batch 1: griffin 7.7, four element slimes 7.6 to 7.8, dragon-wyrmling 7.6; batch 2: four element dragons 7.7 to 8.0) | 66 | [monsters](./tracks/asset_p2_monsters_20260928/), in progress |
 | NPCs | 107 | 7 | 7 (cultist, healer, hunter, priest, pilgrim, sailor, scout, all 8.0) | 100 | [NPCs](./tracks/asset_p2_npcs_20260928/), new |
 | Wildlife | 61 | 0 | 0 | 61 | [wildlife](./tracks/asset_p2_wildlife_20260928/), new |
-| **Total** | **304** | **73** | **72** | **231** | |
+| **Total** | **304** | **77** | **76** | **227** | |
 
-- Monsters batch 1 (2026-10-04): griffin, green-, fire-, ice-, and poison-slime (on the slime kind factory `assets/parts/slime-kind.ts`), and dragon-wyrmling, each with an mmx mockup, a `forge all` build, and a review.
+- Monsters batch 1 (2026-10-04): griffin, green-, fire-, ice-, and poison-slime (on the slime kind factory `assets/parts/slime-kind.ts`), and dragon-wyrmling, each with an mmx mockup, a `forge all` build, and a review. Batch 2: dragon-ice, -poison, -shadow, and -storm on the dragon kind factory `assets/parts/dragon-kind.ts`.
 - Every open P2 row is a rigged character, and none has a mockup yet (`docs/monster-mockups/`, `docs/npc-mockups/`, `docs/wildlife-mockups/` hold the P0 and P1 ones only).
 - Cost from the run log: a character takes one build plus one feedback pass, about 115K to 250K agent tokens on the high tier, so 237 characters need about 30M to 55M tokens, plus the mockups.
 - Maps: 95 P2 blueprint rows (33 adventure, 30 civic, 20 wilderness, 12 settlements). 94 are `mockup-needed`; the hamlet is `accepted` (owner review 2026-10-02) with its sample map (`scenes/chibi-quest.ts`), the quality reference of the five P0 maps.

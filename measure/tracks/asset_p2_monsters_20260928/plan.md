@@ -14,7 +14,7 @@ Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. 
 
 ## Phase 3: Production
 
-- [ ] Task: Build missing sources and review existing sources in the batch (batch 1 done; 70 rows open).
+- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 and 2 done; 66 rows open).
 - [ ] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
@@ -52,7 +52,21 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - Evidence: `out/<name>/` (GLB, render, views, sprites with presets, `anim/` strips), the check
   output (ground ok for all six), and the review entries.
 
+## Batch 2 (2026-10-04): element dragons on a dragon kind factory
+
+| Asset | Catalog ID | Kind features | Rating |
+| --- | --- | --- | ---: |
+| dragon-ice | monsters/dragon/dragon-ice | ice horns and crest (see-through, faceted), frost breath | 7.7 |
+| dragon-poison | monsters/dragon/dragon-poison | purple crest and wings, venom drop on a fang, gas breath | 8.0 |
+| dragon-shadow | monsters/dragon/dragon-shadow | glowing violet crest and forehead gem, smoke breath | 7.9 |
+| dragon-storm | monsters/dragon/dragon-storm | glowing yellow crest, silver metal horns, lightning breath | 7.8 |
+
+- `assets/dragon-fire.ts` (P0) now calls `dragonAsset` in `assets/parts/dragon-kind.ts`;
+  `node scripts/mesh-same.mjs dragon-fire` gave SAME. A kind sets the slots, the fixed palette
+  (crest, wings, horns, brows, breath), the looks of the horns, crest, and wings, and extra bodies.
+- All four: the eight fire dragon clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
-- [ ] Task: Batch 2: the next monsters by scene and game demand (wyvern, drake, giant-spider-queen, mushroom-creature, will-o-wisp, and the elementals).
+- [ ] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).

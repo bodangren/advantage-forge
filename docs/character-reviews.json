@@ -4260,5 +4260,129 @@
       "Thicken the smile line and add paw pads on the soles."
     ],
     "reviewedAt": "2026-10-04T07:33:33+00:00"
+  },
+  "dragon-ice": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 5,
+      "proportion": 4.5,
+      "shape": 4.5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-ice) on the dragon kind factory: frost-blue scales, a snow-white belly, horns and crest spikes of clear faceted ice (see-through, flat shading, a faint glow), pale cyan wing membranes, ice-blue eyes, and a frost breath (white, pale blue, sky blue). Mockup docs/monster-mockups/dragon-ice_001.jpg (mmx).",
+    "strengths": [
+      "The ice horns and crest read as ice at 128 px and separate it from the other dragons.",
+      "The frost breath reuses the fire cone in cold colors, so the attack reads as a cold attack.",
+      "It shares the body, the face, the rig, and the eight clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire); no clip sinks below the ground."
+    ],
+    "issues": [
+      "The mockup face is friendly (lashes, a smile, no brows); the shared face keeps the heavy brows and the grin.",
+      "The pale scales and the white belly are close in value, so the body reads flatter than the fire dragon."
+    ],
+    "next": [
+      "A kind option for a softer face (lighter brows) would match the mockup."
+    ],
+    "reviewedAt": "2026-10-04T08:21:35+00:00"
+  },
+  "dragon-poison": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4.5,
+      "shape": 4.5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-poison) on the dragon kind factory: green scales, a pale yellow belly, purple crest spikes and wing membranes, cream horns, toxic yellow-green eyes, a glowing drop of venom on the left fang, and a toxic gas breath. Mockup docs/monster-mockups/dragon-poison_001.jpg (mmx).",
+    "strengths": [
+      "The purple crest and wings on the green body are the complement colors of the mockup and read at 128 px.",
+      "The venom drop on the fang adds the poison idea at the focal point.",
+      "It shares the body, the face, the rig, and the eight clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire); no clip sinks below the ground."
+    ],
+    "issues": [
+      "The mockup wings are dark red-purple with a wider membrane; the shared wings are smaller.",
+      "The mockup has a row of purple spikes down the tail; the shared tail has two small spines and a fin."
+    ],
+    "next": [
+      "Add a row of small spines down the tail for this kind."
+    ],
+    "reviewedAt": "2026-10-04T08:21:35+00:00"
+  },
+  "dragon-shadow": {
+    "overall": 7.9,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 5,
+      "proportion": 4.5,
+      "shape": 4.5,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-shadow) on the dragon kind factory: near-black purple scales, a grey-violet belly, glowing violet crest spikes, dark violet wing membranes, pale grey horns, violet eyes, a glowing diamond gem on the forehead, and a shadow smoke breath. Mockup docs/monster-mockups/dragon-shadow_001.jpg (mmx).",
+    "strengths": [
+      "The glowing violet crest and gem read on the dark body at 128 px.",
+      "The dark palette makes it read as a late or night boss next to the fire dragon.",
+      "It shares the body, the face, the rig, and the eight clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire); no clip sinks below the ground."
+    ],
+    "issues": [
+      "The dark scales hide the body forms in the side and back views; only the rim light separates them.",
+      "The mockup eyes glow; here the eyes are painted, not emissive."
+    ],
+    "next": [
+      "Make the eyes a separate emissive body for this kind."
+    ],
+    "reviewedAt": "2026-10-04T08:21:35+00:00"
+  },
+  "dragon-storm": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 5,
+      "proportion": 4.5,
+      "shape": 4.5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-storm) on the dragon kind factory: royal blue scales, a sky-blue belly, glowing yellow crest spikes, yellow-orange wing membranes, silver metal horns, yellow eyes, and a lightning breath (white, yellow, electric blue). Mockup docs/monster-mockups/dragon-storm_001.jpg (mmx).",
+    "strengths": [
+      "The yellow crest and wings on the blue body are a strong complement and read at 128 px.",
+      "The silver horns are metal (metalness 0.85), as in the mockup.",
+      "It shares the body, the face, the rig, and the eight clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire); no clip sinks below the ground."
+    ],
+    "issues": [
+      "The mockup crest is a few large lightning-bolt shards; the shared crest is many small spikes.",
+      "The breath is the fire cone in lightning colors, not a forked bolt."
+    ],
+    "next": [
+      "Give the kind a crest of three zigzag bolt shards."
+    ],
+    "reviewedAt": "2026-10-04T08:21:35+00:00"
   }
 }

@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 592,
-    "source_missing": 264,
+    "source_present": 596,
+    "source_missing": 260,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 73,
-        "source_missing": 231
+        "source_present": 77,
+        "source_missing": 227
       },
       "P3": {
         "listed": 48,
@@ -4590,7 +4590,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dragon-ice.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4600,7 +4600,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dragon-poison.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4610,7 +4610,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dragon-shadow.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4620,7 +4620,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dragon-storm.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 762,
-    "catalog_matched": 576,
-    "off_catalog": 186
+    "listed": 767,
+    "catalog_matched": 580,
+    "off_catalog": 187
   },
   "asset_sources": [
     {
@@ -10930,10 +10930,38 @@
       ]
     },
     {
+      "id": "dragon-ice",
+      "source_path": "assets/dragon-ice.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/dragon-ice"
+      ]
+    },
+    {
+      "id": "dragon-poison",
+      "source_path": "assets/dragon-poison.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/dragon-poison"
+      ]
+    },
+    {
       "id": "dragon-scale",
       "source_path": "assets/dragon-scale.ts",
       "catalog_source_ids": [
         "items/crafting/dragon-scale"
+      ]
+    },
+    {
+      "id": "dragon-shadow",
+      "source_path": "assets/dragon-shadow.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/dragon-shadow"
+      ]
+    },
+    {
+      "id": "dragon-storm",
+      "source_path": "assets/dragon-storm.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/dragon-storm"
       ]
     },
     {
@@ -12637,6 +12665,11 @@
     {
       "id": "clockwork-soldier-halberd",
       "source_path": "assets/parts/clockwork-soldier-halberd.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "dragon-kind",
+      "source_path": "assets/parts/dragon-kind.ts",
       "catalog_source_ids": []
     },
     {
