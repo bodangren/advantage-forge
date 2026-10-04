@@ -77,7 +77,7 @@ export const cartridge3DManifestSchema = runtimeCartridgeManifestSchema.extend({
   renderers: z.array(z.enum(['three', 'phaser'])).min(1),     // section 15; a plain APK cartridge has none
   inputMode: z.enum(['vocabulary', 'sentence', 'story']),     // 'story' = StoryInput (section 5)
   simulation: z.enum(['turn', 'realtime']),                   // fixed step is used by both (section 10)
-  orientation: z.enum(['portrait', 'landscape', 'any']),      // 'portrait' for every phone-first game
+  orientation: z.enum(['portrait', 'landscape', 'any']),      // 'portrait': covered on a phone on its side (section 9.1)
   levels: z.array(cefrLevelSchema).min(1),                    // CEFR levels the game plays well
   needs: z.object({                                           // story items the game must have
     vocabulary: z.number().int().min(0).default(0),
@@ -598,6 +598,22 @@ LINE in-app browser rules (kit and host):
 | memory | dispose textures and geometries on scene swap; one renderer per page; `preserveDrawingBuffer: false` |
 | devices with WebGL1 only (some old Android WebViews) | they get the gate screen (`unsupported: webgl`); the stage uses no float render targets, so mid-range WebGL2 phones keep working |
 | detection | `/Line\//.test(navigator.userAgent)` sets `details.line = true` for diagnostics only; rules above apply everywhere |
+
+### 9.1 Phone layout rules
+
+The phone QC (`qc/run.mjs --phone` at 390 × 844 and `--phone-landscape` at 844 × 390, touch
+events, two device pixels per CSS pixel) found these defects on 4 October 2026. The kit now
+prevents them for every game:
+
+| Defect | Kit rule |
+| --- | --- |
+| World labels covered each other in a narrow view | `HudRoot.anchor(el, where, { spread })` moves a label up or down where it covers another spread label (`sim/spread.ts`, eased). A pinned label spreads by default. The 2D `tag()` of `view2d/hud2d.ts` spreads after each scene update; a dragged tag and a hidden tag keep their place. |
+| Pinned labels covered the sentence bar on a short screen | Pinned and spread labels stay under the top panels: `.status`, `.sentence-bar`, and any element with the class `hud-top` (a game's own prompt). |
+| A gate word at the side of a portrait view was off screen | `{ keepX: true }` keeps a label inside the screen width; at the edge it gets an arrow, as a pinned label does. |
+| A Thai word broke inside the word in a narrow label | A label with the class `th` keeps one line (`.anchored.th`). |
+| A long 2D status line ran under the meters | `StatusBar2D.set` shrinks the value text into the room left of the right text. |
+| Rune Match tiles cut words on a phone | The board measures each word (`--em`) and the tile width (`--tile`); the CSS fits the font. The portrait card may take 76 % of the screen. |
+| A portrait game had no room on a phone on its side | `createCartridgeMounter` covers a game whose manifest says `portrait` on a screen in landscape that is 500 px high or less: a phone and a turn arrow, no words. The game pauses under the cover and resumes when the student turns the device. Rune Match, Potion Rush, Alchemist's Synthesis, and Rune Forge Chamber say `portrait`. |
 
 ## 10. Simulation and testing (decision i)
 

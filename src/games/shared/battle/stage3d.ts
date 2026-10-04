@@ -6,7 +6,7 @@
  */
 import * as THREE from 'three';
 import { Actor, burst, InstancedSet, OrbitRig, projectile, ShotRig, smooth, Stage3D, type ClipRun, type Shot, type V3 } from '../../../apk3d/stage/index.js';
-import { sunkenVaultPlaces } from '../../../../scenes/sunken-vault.js';
+import { sunkenVaultPlaces } from './vault-places.js';
 import type { BattleEnemy, EnemyKind, HeroId } from './types.js';
 
 const HEROES: HeroId[] = ['knight', 'wizard', 'cleric'];
@@ -144,9 +144,12 @@ export class BattleStage {
     this.shots.go(this.shot(), 0, this.kit.pose);
   }
 
-  /** Frames shots for the part of the screen that the battle card leaves free. */
-  setFreeArea(battle: boolean): void {
-    this.kit.setFreeArea(!battle ? null : this.portrait ? [0, 0, 1, 0.55] : [0, 0, 0.56, 1]);
+  /**
+   * Frames shots for the part of the screen that the battle card leaves free: in portrait, the
+   * top `portraitFree` of the screen (a game with a taller card gives its own share).
+   */
+  setFreeArea(battle: boolean, portraitFree = 0.55): void {
+    this.kit.setFreeArea(!battle ? null : this.portrait ? [0, 0, 1, portraitFree] : [0, 0, 0.56, 1]);
   }
 
   private shot(): Shot {

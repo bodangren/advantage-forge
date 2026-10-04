@@ -265,6 +265,20 @@ ${places.map(fmt).join('\n')}
 }
 `;
 writeFileSync('scenes/sunken-vault.ts', sceneSrc);
+// The battle games read the same places from their own folder (the monorepo games package has
+// no scenes folder): a copy with the Place type inlined. tests/games/vault-places.test.ts checks it.
+const placeType = `/** One placed model: the asset name, its position, and a yaw in degrees. */
+export interface Place {
+  asset: string;
+  at: readonly [number, number, number];
+  /** Degrees around Y. 0 faces south (+Z). */
+  yaw?: number;
+  scale?: number;
+  /** Absent GLB is a gap, not an error. */
+  optional?: boolean;
+}
+`;
+writeFileSync('src/games/shared/battle/vault-places.ts', sceneSrc.replace("import type { Place } from './chibi-quest.js';\n", placeType));
 
 // Component tally for the doc and components.tsv.
 const tally = {};

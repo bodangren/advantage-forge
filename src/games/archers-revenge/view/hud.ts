@@ -65,7 +65,7 @@ export class ArchersHud {
       el = document.createElement('div');
       el.className = 'ar-tag';
       this.tags.set(enemyId, el);
-      this.root.anchor(el, () => this.stage.screenOf(enemyId, 1.3));
+      this.root.anchor(el, () => this.stage.screenOf(enemyId, 1.3), { spread: true });
     }
     return el;
   }
