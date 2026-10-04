@@ -14,8 +14,10 @@ import { meshSdf } from './sdf/mesher.js';
  *   bodies counts for the outer one (the deeper inside, as hair over the skull): only the outer
  *   layer shows. A point inside another body of the piece (a horn root in the helmet shell) is not
  *   on the visible surface and does not count. Skin and clothes fail
- *   the check above 2% of the piece's points; hair is reported (the capped hair styles of the
- *   avatar track fix it). The report names the base bone and the mean point of each group.
+ *   the check above 2% of the piece's points; hair is reported (a head piece that keeps the hair
+ *   caps it, see `capsHair`). A hair style (slot `hair`) tucks its lower edge into the jaw and
+ *   the neck as the base hair does, so skin over it is reported, not a failure. The report names
+ *   the base bone and the mean point of each group.
  * - Hidden contact: the piece's inner surface goes into a base body. It does not show; reported.
  * - Gap: the closest the piece comes to the base. A piece that floats more than `gap` fails.
  * - Floor: the lowest worn point in the rest pose. A piece more than 1 cm below y = 0 fails.
@@ -196,12 +198,12 @@ export async function checkEquip(piece: WornPiece, base: AssetDefinition, option
         hiddenDepth = Math.max(hiddenDepth, -d);
       }
     }
-    const hair = name === 'hair';
+    const noted = name === 'hair' || (name === 'skin' && eq.slot === 'hair');
     const r3 = (v: number) => Math.round(v * 1000) / 1000;
     const showsBy = [...by]
       .map(([bone, e]) => ({ bone, points: e.points, depth: e.depth, at: e.sum.map((v) => r3(v / e.points)) as unknown as Vec3 }))
       .sort((a, b) => b.points - a.points);
-    return { base: name, shows, showsDepth, hidden, hiddenDepth, nearest, showsBy, fails: !hair && shows > allowed };
+    return { base: name, shows, showsDepth, hidden, hiddenDepth, nearest, showsBy, fails: !noted && shows > allowed };
   });
   const gap = Math.min(...contacts.map((c) => c.nearest));
 

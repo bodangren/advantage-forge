@@ -723,3 +723,7 @@ date	asset	class	tier	batch	tokens	tool_uses	minutes	self_score	review_score	bar
 2026-10-03	sewer	map-p2	medium	rejection-rework	0					7.0	pass	owner rejected: east walkway ended at the wall. Added archway exit, corridor and stairs; orchestrator viewed 3q
 2026-10-03	cliff-village	map-p2	medium	rejection-rework	0					7.0	pass	owner rejected: river ran through the cliff, east corner gaps. Added spring, waterfall at lip, corner walls; orchestrator viewed 3q
 2026-10-03	underground-city	map-p2	medium	rejection-rework	0					7.0	pass	owner rejected: stairs led nowhere. Terrace raised to 1 m with retaining walls, stairs face the terrace; orchestrator viewed 3q
+2026-10-04	avatar-hair-swept	avatar-hair	orchestrator	capped-hair	0				7.5	7.0	pass	orchestrator viewed front, 3q, side, back; full style on the base reads at 128 px; capped form: thin cap and slim tufts, clean under 19 head pieces
+2026-10-04	avatar-hair-short	avatar-hair	orchestrator	capped-hair	0				7.2	7.0	pass	orchestrator viewed front, 3q, side, back; short spiky fringe reads; capped form under leather-cap clean
+2026-10-04	avatar-hair-long	avatar-hair	orchestrator	capped-hair	0				7.0	7.0	pass	orchestrator viewed front, 3q, side, back; falls and back mass read; back mass is one smooth shell; capped form shows the back hair under knight-helm
+2026-10-04	avatar-hair-ponytail	avatar-hair	orchestrator	capped-hair	0				7.2	7.0	pass	orchestrator viewed front, 3q, side, back; high tail reads in side and back; capped form has a low tail from the nape under witch-hat

@@ -1,5 +1,5 @@
 id	slot	tier	two_handed	status	override	triangles	rating	price
-cloth-hood	head	1	0	ready		2890	7	50
+cloth-hood	head	1	0	ready		2894	7	50
 leather-cap	head	1	0	ready		7876	7.1	50
 circlet	head	2	0	ready		4886		90
 horned-helmet	head	2	0	ready		3850	7.2	95
@@ -72,7 +72,7 @@ heavy-crossbow	mainhand	3	1	ready		9256	7	280
 magic-scepter	mainhand	3	0	ready		6850		240
 maul	mainhand	3	1	ready		5220		240
 pike	mainhand	3	1	ready		9662	7	280
-scythe	mainhand	3	1	ready		7448	7	280
+scythe	mainhand	3	1	ready		7448	7	260
 backpack	accessory	1	0	later		5292		35
 belt-pouch	accessory	1	0	later		2232	7.2	35
 satchel	accessory	1	0	later		2468	7	35
@@ -89,7 +89,7 @@ drum	tool	1	0	later		2790		35
 fishing-pole	tool	1	0	later		9444	7.2	40
 flute	tool	1	0	later		2212		30
 horn	tool	1	0	later		8044	7	40
-lantern	tool	1	0	later		7151	7.5	40
+lantern	tool	1	0	later		6702	7.5	40
 lockpick	tool	1	0	later		2472		30
 map	tool	1	0	later		8190		40
 mining-pick	tool	1	0	later		4850	7.4	35
@@ -165,7 +165,7 @@ clockwork-soldier-halberd	mainhand	3	1	ready		2392		200
 apprentice-glasses	accessory	2	0	later		4722		65
 bard-lute	tool	2	0	later		2620		65
 spear-warden-helm	head	2	0	ready		6980		95
-avatar-hair-swept	head	1	0	planned	0	7292		0
-avatar-hair-short	head	1	0	planned	0	6746		0
-avatar-hair-long	head	1	0	planned	0	7276		0
-avatar-hair-ponytail	head	1	0	planned	0	9092		0
+avatar-hair-swept	hair	1	0	ready	0	7292	7.5	0
+avatar-hair-short	hair	1	0	ready	0	6746	7.2	0
+avatar-hair-long	hair	1	0	ready	0	7276	7	0
+avatar-hair-ponytail	hair	1	0	ready	0	9092	7.2	0

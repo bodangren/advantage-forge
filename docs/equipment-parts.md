@@ -142,14 +142,15 @@ GLB root extras (`forgeEquip`) and to `stats.json`. The code is `src/equip.ts`.
 
 ```ts
 equip: {
-  slot: 'head',           // head, chest, shoulders, back, hands, waist, feet, mainhand, offhand
+  slot: 'head',           // hair, head, chest, shoulders, back, hands, waist, feet, mainhand, offhand
   hold: 'shield',         // offhand only: a shield on the hand; default 'grip' (in the fist)
   fitScale: 2,            // display size / worn size: 1 (hero parts), 2 (2x catalog armor), HAND_FIT (catalog weapons, 1 / 0.45)
   frame: 'body',          // hand slots: keep the character axes at the socket point (default 'socket')
   origin: [0, LIFT, 0],   // where the socket frame stands in the asset (display meters)
   rotate: [-20, 0, 0],    // how the socket frame is turned in the asset (degrees, X then Y then Z)
   offset: [0, 0.01, 0],   // a small shift in worn meters, in the socket frame
-  hides: ['hair'],        // base bodies hidden while worn: hair (head), undershirt (chest), shoes (feet)
+  hides: ['hair'],        // base bodies hidden while worn: hair (hair, head), undershirt (chest), shoes (feet)
+  fullHair: true,         // head only: an open piece (circlet, crown, band) over the full hair
   displayOnly: ['stand'], // bodies that only the display shows
   twoHanded: true,        // mainhand only
 },
@@ -173,6 +174,24 @@ Rules for held items:
   or than 1/380 of its largest worn size. A tall catalog shield at `HAND_FIT` stays within the
   grid limit for this reason.
 
+### Hair under head pieces
+
+A hair style (slot `hair`) replaces the base hair. A head piece then does one of three things to
+the hair, the base's or the style's, and the resolved block says which (`forgeEquip.hair`):
+
+- `hidden`: the piece hides it (`hides: ['hair']`: iron-helmet, steel-helmet, horned-helmet).
+- `capped` (the default for a head piece): the hair builds its capped form, a thin cap 5 mm over the
+  skull above the cap line y = 0.66 + 0.3 z (the brow in front, the nape behind) and the style's
+  low locks below it (slim side tufts, the long back and falls, a low ponytail from the nape). No
+  fringe rises above the brow, so a brim or a helmet edge covers the top of the hair.
+- `full` (`fullHair: true`): an open piece sits over the full hair: circlet, crown,
+  swashbuckler-bandana.
+
+A build reads the state from `k.worn?.capHair` (`wearAsset` sets it; `capsHair` in `src/equip.ts`).
+The capped forms are in `assets/parts/avatar-hair.ts` (`avatarHair(style, tint, { capped })`). The
+fit check of a head piece measures it against the capped hair, and a hair style may tuck its lower
+edge into the jaw and the neck skin, as the base hair does (a note, not a failure).
+
 ### Sockets
 
 All points are in the character frame of the avatar base in the rest pose. Rest bones have no
@@ -180,6 +199,7 @@ rotation, so the socket axes are the character axes unless the table gives a tur
 
 | Socket | Slot | Bone | Socket point | Socket axes | Mirror |
 | --- | --- | --- | --- | --- | --- |
+| `hair` | hair | `head` | (0, 0.675, 0), the head center | character axes | none |
 | `head` | head | `head` | (0, 0.675, 0), the head center | character axes | none |
 | `chest` | chest | `chest` | (0, 0.152, 0), the hem center of the torso | character axes | none |
 | `shoulders` | shoulders | `upperarm.L` | (0.13, 0.385, 0), the left shoulder joint | character axes | a copy on `upperarm.R` |
@@ -191,7 +211,7 @@ rotation, so the socket axes are the character axes unless the table gives a tur
 | `grip.L` | offhand | `knife.L` | (0.232, 0.172, 0.022) | the mirror of `grip.R` | none |
 | `shield` | offhand, `hold: 'shield'` | `hand.L` | (0.262, 0.25, 0.075), in front of and outside the left fist | the hero shield turn (Z -4, X 4, Y 38): the face forward and outward | none |
 
-- The fit scales that the contract allows: head 1; chest, shoulders, back, hands, waist, and feet 2
+- The fit scales that the contract allows: hair and head 1; chest, shoulders, back, hands, waist, and feet 2
   or 1; mainhand and offhand 1 or `HAND_FIT` (1 / 0.45).
 - A pair (boots, gloves, bracers) shows both pieces. `origin` and `rotate` describe the piece at
   +X (the left one). The worn piece keeps the +X half of the asset (x >= 0 in the asset frame) on the

@@ -41,7 +41,7 @@ Bodies in the base:
 | Body | Content | Hidden by |
 | --- | --- | --- |
 | `skin` | head, neck, torso, arms, hands, legs, feet: one full body, face painted as in the rogue | never |
-| `hair` | the default hair style | a head piece with `hides: ['hair']` |
+| `hair` | the default hair style | a hair style piece (it replaces the hair) or a head piece with `hides: ['hair']`; other head pieces cap it or keep it full (section 4) |
 | `undershirt` | a plain tunic over the torso, hem at y 0.152 | a chest piece |
 | `pants` | plain trousers to the ankle | never in phase 1 |
 | `shoes` | plain shoes | a feet piece |
@@ -51,7 +51,8 @@ options fit the role rule: natural skin tones, natural and fantasy hair, eye col
 classes become **presets**: a tint preset plus a starter loadout. The base has four tint presets
 today (sunny, forest, night, frost); the class presets come with the starter sets.
 
-Hair styles are head-slot pieces with `hides: ['hair']` and no cost. The base ships with 4:
+Hair styles are pieces in their own slot, `hair`, with `hides: ['hair']` and no cost (slot base
+price 0). They stay under a hat or a helmet (section 4, "Hair under head pieces"). The base ships with 4:
 `swept` (the default, the rogue's fringe), `short`, `long`, and `ponytail`, from
 `assets/parts/avatar-hair.ts`. Each style is also a standalone `assets/avatar-hair-<style>.ts`
 and a catalog row with the price override 0.
@@ -66,6 +67,7 @@ The socket points and axes of each slot are in [equipment-parts.md](equipment-pa
 
 | Slot | Anchor bone | Display scale | Phase 1 pieces (compliant by bounds) | Rework first |
 | --- | --- | --- | --- | --- |
+| `hair` | `head` | 1x | the 4 hair styles (free) | |
 | `head` | `head` | 1x | none | iron-helmet, steel-helmet, horned-helmet, cloth-hood, leather-cap, crown, circlet |
 | `chest` | `chest` | 2x, lift 0.152 after the 0.5 scale | plate-armor (fails on the avatar: arm cuffs), scale-armor, studded-leather | chainmail, leather-armor |
 | `shoulders` | `upperarm.L`, `upperarm.R` (one pauldron, mirrored) | 2x | shoulder-armor | |
@@ -79,6 +81,19 @@ The socket points and axes of each slot are in [equipment-parts.md](equipment-pa
 Changes of 2026-10-01 (Phase 3): pauldrons attach to the upper arms (on the chest, a raised arm
 goes through them); a shield attaches to the hand bone (a clip turns it with the wrist). The fit
 check found four "compliant" pieces that do not fit the avatar (see `equipment-fit.md`).
+
+Hair under head pieces (2026-10-04): hair styles moved from the `head` slot to a `hair` slot, so a
+student keeps the chosen style under a hat. A head piece hides the hair (`hides: ['hair']`), caps it
+(the default), or keeps it full (`fullHair: true`: circlet, crown, swashbuckler-bandana). The
+capped form is a thin cap above a cap line from the brow to the nape and the style's low locks
+below it; the composer shows the form that `forgeEquip.hair` names. Rules and the cap line:
+[equipment-parts.md](equipment-parts.md#hair-under-head-pieces). Fit check of the 22 head pieces
+that kept the hair (hair points over the piece): the 19 capped pieces went from 3,506 points to
+295, and 10 of them to 0. Most of the rest are on inner surfaces: the back of wizard-hat (189) and
+gladiator-helmet (40), and the cheek straps of the two spear-warden pieces (27 each). The renders
+of wizard-hat, gladiator-helmet, knight-helm, spear-warden-helm, and leather-cap show no hair
+through the piece. The 3 open pieces keep the full hair (17, 17, and 178 points, under the band or
+the fringe).
 
 Later phases: `robe` (cloth-robe, mage-robe: skinned to spine, chest, and legs), `skirt`,
 `accessory` (necklace, amulet, pendant: the `neck` anchor), `tool` (a back-mounted lute, quiver).
@@ -317,9 +332,8 @@ Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild 
   `hides` list per piece covers this; confirm with the first crown render.
   Fit test 2026-10-01 (the base head and the `swept` hair under four hero head parts): the rogue
   hood fits; the knight helm and the dragoon helm show small spots of hair at the brim; the swept
-  fringe comes through the front of the wizard hat. Proposal: a capped version of each style (the
-  skull cap above the brow line, the locks below it) that the composer shows under any head piece
-  that does not hide the hair.
+  fringe comes through the front of the wizard hat. Answered 2026-10-04: hair styles have their own
+  slot, `hair`, and each style has a capped form (section 4, "Hair under head pieces").
 - Whether weapons need a `sheathed` attachment on the back for idle and walk.
 - Whether the reduced pass uses KTX2 in the APK today. If not, 512 px PNG atlases first.
 - Items added after go-live start with zero purchases and sort after the items that students

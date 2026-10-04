@@ -88,6 +88,11 @@ export interface AssetContext {
    * (0 to 1) of the slot's recoloring (a blush or lips that darken with a darker skin).
    */
   tint(slot: string, partial: { readonly color: string; readonly follow: number }): string;
+  /**
+   * Set only while the asset is worn on (or is) an avatar base with equipment (`wearAsset`):
+   * `capHair` is true when a worn head piece keeps the hair, so a hair body builds its capped form.
+   */
+  readonly worn?: { readonly capHair: boolean };
 }
 
 export interface AssetDefinition {

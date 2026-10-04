@@ -238,7 +238,7 @@ export default defineAsset({
     k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
 
     // ------------------------------------------------------------------ hair (the default style)
-    addPart(k, avatarHair('swept', mapTint(k)), { pose: (s) => s.at(0, HEAD_Y, 0) });
+    addPart(k, avatarHair('swept', mapTint(k), { capped: k.worn?.capHair ?? false }), { pose: (s) => s.at(0, HEAD_Y, 0) });
 
     // ------------------------------------------------------------------ undershirt
     // The hero torso with short sleeves to the elbow, a darker collar and hem, and a painted belt.

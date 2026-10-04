@@ -2,8 +2,9 @@ import { NodeIO } from '@gltf-transform/core';
 import * as THREE from 'three';
 import { describe, expect, it } from 'vitest';
 import avatarBase from '../assets/avatar-base.js';
+import { AVATAR_HAIR_STYLES, avatarHair } from '../assets/parts/avatar-hair.js';
 import { buildAsset, collectBodies, defineAsset } from '../src/asset.js';
-import { BASE_JOINTS, HAND_FIT, SOCKETS, jointOf, resolveEquip, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
+import { BASE_JOINTS, HAND_FIT, SOCKETS, capsHair, hairOf, jointOf, resolveEquip, validateEquip, wearAsset, wornMatrices, type EquipDeclaration } from '../src/equip.js';
 import { checkEquip } from '../src/equip-check.js';
 import { toGlb } from '../src/gltf.js';
 import { sdf } from '../src/index.js';
@@ -183,5 +184,81 @@ describe('equipment declaration', () => {
     const bald = await checkEquip({ name: 'test-small-cap', def: small(['hair']) }, base);
     expect(contact(bald, 'skin').fails).toBe(true);
     expect(bald.ok).toBe(false);
+  });
+  it('tells the hair what a piece does: hide, cap, or keep it full', () => {
+    const piece = (equip: EquipDeclaration) => ({ name: 'p', def: defineAsset({ name: 'p', equip, build() {} }) });
+    expect(hairOf({ slot: 'head', hides: ['hair'] })).toBe('hidden');
+    expect(hairOf({ slot: 'head' })).toBe('capped');
+    expect(hairOf({ slot: 'head', fullHair: true })).toBe('full');
+    expect(hairOf({ slot: 'hair', hides: ['hair'] })).toBe('hidden');
+    expect(hairOf({ slot: 'chest' })).toBe('full');
+    expect(resolveEquip({ slot: 'head' }).hair).toBe('capped');
+    // A hair style does not cap; a hat over it does, unless the hat keeps the full hair.
+    const style = piece({ slot: 'hair', hides: ['hair'] });
+    expect(capsHair([style])).toBe(false);
+    expect(capsHair([style, piece({ slot: 'head' })])).toBe(true);
+    expect(capsHair([style, piece({ slot: 'head', fullHair: true })])).toBe(false);
+    expect(capsHair([piece({ slot: 'chest' })])).toBe(false);
+    expect(() => validateEquip({ slot: 'chest', fullHair: true }, ['a'])).toThrow(/only a head piece/);
+    expect(() => validateEquip({ slot: 'head', fullHair: true, hides: ['hair'] }, ['a'])).toThrow(/cannot keep the full hair/);
+  });
+
+  it('builds the capped hair of the base and of a hair style under a head piece that keeps it', async () => {
+    const hair = (k: { worn?: { readonly capHair: boolean } }) => (k.worn?.capHair ? 0.205 : 0.23);
+    const base = defineAsset({
+      name: 'test-base',
+      detail: 0.02,
+      texture: false,
+      build(k) {
+        k.skeleton({ hips: { at: [0, 0.2, 0] }, head: { parent: 'hips', at: [0, 0.48, -0.01] } });
+        k.body('skin', sdf.sphere(0.2).at(0, 0.675, 0).bone('head'));
+        k.body('hair', sdf.sphere(hair(k)).at(0, 0.675, 0), { bone: 'head' });
+      },
+    });
+    const style = defineAsset({
+      name: 'test-style',
+      detail: 0.02,
+      texture: false,
+      equip: { slot: 'hair', hides: ['hair'] },
+      build(k) {
+        k.body('hair', sdf.sphere(hair(k)));
+      },
+    });
+    const hat = (equip: EquipDeclaration) => ({ name: 'test-hat', def: defineAsset({ name: 'test-hat', detail: 0.02, texture: false, equip, build: (k) => k.body('hat', sdf.box([0.1, 0.1, 0.1])) }) });
+    const radius = async (pieces: Parameters<typeof wearAsset>[1], name: string) => {
+      const { pending } = await collectBodies(wearAsset(base, pieces));
+      const body = pending.find((b) => b.name === name)!;
+      return 0.3 - body.shape.dist(0, 0.675 + 0.3, 0);
+    };
+    expect(await radius([hat({ slot: 'head' })], 'hair')).toBeCloseTo(0.205, 3);
+    expect(await radius([hat({ slot: 'head', fullHair: true })], 'hair')).toBeCloseTo(0.23, 3);
+    expect(await radius([{ name: 'test-style', def: style }], 'test-style:hair')).toBeCloseTo(0.23, 3);
+    expect(await radius([{ name: 'test-style', def: style }, hat({ slot: 'head' })], 'test-style:hair')).toBeCloseTo(0.205, 3);
+  });
+
+  it('keeps every capped hair style within a thin cap above the cap line', () => {
+    // Head-local frame: the skull ellipsoid (0.205, 0.2, 0.19) at (0, 0.008, -0.01); the cap line
+    // y = 0.66 + 0.3 z in the character frame (head center y 0.675). Points 9 mm outside the skull
+    // and 3 cm above the line are outside every capped style; the full styles reach past them.
+    const tint = ((slot: string) => (slot ? '#5a301d' : '#000000')) as Parameters<typeof avatarHair>[1];
+    const probes: [number, number, number][] = [];
+    for (let i = 0; i <= 12; i++)
+      for (let j = 0; j < 24; j++) {
+        const theta = (i / 12) * Math.PI;
+        const phi = (j / 24) * Math.PI * 2;
+        const x = (0.205 + 0.009) * Math.sin(theta) * Math.cos(phi);
+        const y = 0.008 + (0.2 + 0.009) * Math.cos(theta);
+        const z = -0.01 + (0.19 + 0.009) * Math.sin(theta) * Math.sin(phi);
+        if (y + 0.675 > 0.66 + 0.3 * z + 0.03) probes.push([x, y, z]);
+      }
+    expect(probes.length).toBeGreaterThan(100);
+    for (const style of AVATAR_HAIR_STYLES) {
+      const shapeOf = (capped: boolean) => avatarHair(style, tint, { capped }).bodies[0]!.shape;
+      const capped = shapeOf(true);
+      const inside = probes.filter(([x, y, z]) => capped.dist(x, y, z) < 0);
+      expect(inside, style).toEqual([]);
+      const full = shapeOf(false);
+      expect(probes.filter(([x, y, z]) => full.dist(x, y, z) < 0).length, style).toBeGreaterThan(0);
+    }
   });
 });

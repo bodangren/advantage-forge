@@ -10,6 +10,11 @@ import { sdf, type Part, type PartTint } from '../../src/index.js';
  * Every style starts from one cap that hugs the skull 0.012 to 0.014 m out and leaves the face
  * and the ears open, so the styles fit under the same helmets and hats as the heroes' hair. The
  * locks are thick so that they read at 128 px.
+ *
+ * Each style also has a capped form, for wear under a head piece that keeps the hair (`capHair`
+ * in `src/equip.ts`): a thin cap 0.005 m out above the cap line `CAP_LINE`, and the style's low
+ * locks below it (side tufts, the long back and falls, a low ponytail from the nape). It has no
+ * fringe, so a brim or a helmet edge covers the top of the hair.
  */
 
 export type AvatarHairStyle = 'swept' | 'short' | 'long' | 'ponytail';
@@ -22,12 +27,27 @@ const pair = (s: sdf.Shape) => s.mirror('x');
 const local = (s: sdf.Shape) => s.at(0, -HEAD_Y, 0);
 
 /** The skull cap, open for the face (the hairline rises on +X, the part side) and the ears. */
-function cap(): sdf.Shape {
+function cap(out = 0.012): sdf.Shape {
   const faceMask = sdf.ellipsoid([0.25, 0.16, 0.23]).rotateZ(14).at(0.02, 0.62, 0.14);
   return sdf
-    .ellipsoid([HEAD[0] + 0.012, HEAD[1] + 0.014, HEAD[2] + 0.012])
+    .ellipsoid([HEAD[0] + out, HEAD[1] + out + 0.002, HEAD[2] + out])
     .at(0, HEAD_Y + 0.008, -0.01)
     .smoothSubtract(0.015, faceMask);
+}
+
+/**
+ * The cap line of the capped hair (character frame): y = 0.66 + 0.3 z, at the brow (y 0.72) in
+ * front and at the nape (y 0.6) behind, where helmets and hat brims come lower. Head pieces cover
+ * the hair above it.
+ */
+const CAP_LINE = { y: 0.66, slope: 0.3 } as const;
+
+/** The capped form: a thin cap 0.005 m out, and the given low locks of a style below the cap line. */
+function capped(...locks: sdf.Shape[]): sdf.Shape {
+  const n = Math.hypot(1, CAP_LINE.slope);
+  const below = sdf.box([0.8, 0.8, 0.8]).at(0, 0.4, 0).intersect(sdf.halfSpace([0, 1 / n, -CAP_LINE.slope / n], CAP_LINE.y / n));
+  const low = locks.length > 0 ? sdf.smoothUnion(0.02, cap(), ...locks).smoothIntersect(0.012, below) : null;
+  return low ? sdf.smoothUnion(0.012, cap(0.005), low) : cap(0.005);
 }
 
 /**
@@ -45,6 +65,9 @@ const crownLimit = () => sdf.ellipsoid([0.262, 0.252, 0.25]).at(0, 0.685, -0.012
 
 /** Side tufts in front of the ears. */
 const tufts = () => pair(sdf.cone([0.185, 0.73, 0.09], [0.2, 0.635, 0.105], 0.03, 0.01));
+
+/** Slimmer side tufts for the capped forms: they lie on the cheek, under a helmet's cheek guard. */
+const cappedTufts = () => pair(sdf.cone([0.18, 0.72, 0.09], [0.19, 0.645, 0.1], 0.022, 0.007));
 
 /** The rogue's fringe: one big lock swept from the part (on +X) to the right brow, and a curl. */
 function sweptFringe(): sdf.Shape {
@@ -89,24 +112,31 @@ function short(): sdf.Shape {
   return sdf.smoothUnion(0.022, cap(), locks, tufts()).smoothIntersect(0.012, crownLimit());
 }
 
-function long(): sdf.Shape {
-  // Long hair: the swept fringe, a mass that falls behind the head to the shoulders, and two broad
-  // locks in front of the ears to the jaw.
-  const back = sdf
+/** Long hair: a mass that falls behind the head to the shoulders. */
+const longBack = () =>
+  sdf
     .ellipsoid([0.222, 0.25, 0.15])
     .at(0, 0.62, -0.085)
     .intersect(sdf.halfSpace([0, 0, 1], -0.005));
-  const fall = sdf.chain(
-    [
-      [0.17, 0.74, 0.03, 0.045],
-      [0.19, 0.66, 0.025, 0.045],
-      [0.19, 0.58, 0.0, 0.038],
-      [0.175, 0.51, -0.025, 0.026],
-    ],
-    0.03,
+
+/** Long hair: two broad locks in front of the ears to the jaw. */
+const longFalls = () =>
+  pair(
+    sdf.chain(
+      [
+        [0.17, 0.74, 0.03, 0.045],
+        [0.19, 0.66, 0.025, 0.045],
+        [0.19, 0.58, 0.0, 0.038],
+        [0.175, 0.51, -0.025, 0.026],
+      ],
+      0.03,
+    ),
   );
+
+function long(): sdf.Shape {
+  // Long hair: the swept fringe, the back mass, and the falls.
   const top = sdf.smoothUnion(0.02, cap(), sweptFringe()).smoothIntersect(0.012, crownLimit());
-  return sdf.smoothUnion(0.03, top, back, pair(fall)).smoothSubtract(0.006, fringeGrooves());
+  return sdf.smoothUnion(0.03, top, longBack(), longFalls()).smoothSubtract(0.006, fringeGrooves());
 }
 
 function ponytail(): sdf.Shape {
@@ -135,16 +165,44 @@ function ponytail(): sdf.Shape {
   return sdf.smoothUnion(0.02, cap(), fringe, tufts(), tail).union(tie);
 }
 
-const STYLES: Record<AvatarHairStyle, () => sdf.Shape> = { swept, short, long, ponytail };
+/** The capped ponytail: the high tail cannot pass a helmet, so a low tail falls from the nape. */
+function ponytailCapped(): sdf.Shape {
+  const tie = sdf.torus(0.024, 0.011).rotateX(80).at(0, 0.555, -0.2);
+  const tail = sdf.chain(
+    [
+      [0, 0.575, -0.185, 0.032],
+      [0, 0.54, -0.22, 0.038],
+      [0, 0.48, -0.235, 0.034],
+      [0, 0.42, -0.228, 0.022],
+      [0, 0.38, -0.215, 0.01],
+    ],
+    0.02,
+  );
+  return sdf.smoothUnion(0.015, capped(cappedTufts()), tail).union(tie);
+}
 
-export function avatarHair(style: AvatarHairStyle, tint: PartTint): Part {
+const STYLES: Record<AvatarHairStyle, () => sdf.Shape> = { swept, short, long, ponytail };
+const CAPPED: Record<AvatarHairStyle, () => sdf.Shape> = {
+  swept: () => capped(cappedTufts()),
+  short: () => capped(cappedTufts()),
+  long: () => capped(longBack(), longFalls()),
+  ponytail: ponytailCapped,
+};
+
+export interface AvatarHairOptions {
+  /** The capped form, for wear under a head piece that keeps the hair. */
+  readonly capped?: boolean;
+}
+
+export function avatarHair(style: AvatarHairStyle, tint: PartTint, options: AvatarHairOptions = {}): Part {
   const lines = tint('hair', { color: LOCK_LINE, follow: 1 });
+  const shape = (options.capped ? CAPPED : STYLES)[style]();
   return {
     name: `avatar-hair-${style}`,
     bodies: [
       {
         name: 'hair',
-        shape: local(STYLES[style]().paintWhere(lockLines(), lines, 0.004)),
+        shape: local(shape.paintWhere(lockLines(), lines, 0.004)),
         options: { color: tint('hair'), roughness: 0.6, detail: 0.004 },
         bone: 'head',
       },

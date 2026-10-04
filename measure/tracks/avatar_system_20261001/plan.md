@@ -1,6 +1,6 @@
 # Avatar system: base, equipment fit, pack, composer
 
-Status: in_progress (2026-10-02: Phase 3 fit reworks done, no catalog row is `rework`; next the capped hair, then Phase 4 pack and Phase 5 composer). The plan records execution state. The specification retains design detail.
+Status: in_progress (2026-10-04: Phase 3 done with the capped hair; next Phase 4 pack and Phase 5 composer). The plan records execution state. The specification retains design detail.
 
 ## Phase 1: Documents
 
@@ -24,7 +24,7 @@ Status: in_progress (2026-10-02: Phase 3 fit reworks done, no catalog row is `re
 - [x] Task: Add `equip` blocks to every phase 1 piece. (2026-10-01: 138 blocks, 122 pass; gloves and gauntlets need a closed-fist shape first; see "Equip rollout record".)
 - [x] Task: Add the 65 hero parts (`asset_equipment_parts_20260930`) to `docs/avatar-catalog.tsv` (owner decision 2026-10-01: keep every variant; the shop sorts by popularity).
 - [x] Task: Fix the 9 hero parts with status `rework` (shape defects; list in `docs/avatar-system.md` section 6). (2026-10-01: see "Part fix record".)
-- [ ] Task: Add a capped version of each hair style (the skull cap above the brow line, the locks below it) for wear under head pieces that keep the hair; the composer shows it (fit test of 2026-10-01 in `docs/avatar-system.md` section 14).
+- [x] Task: Add a capped version of each hair style (the skull cap above the brow line, the locks below it) for wear under head pieces that keep the hair; the composer shows it (fit test of 2026-10-01 in `docs/avatar-system.md` section 14). (2026-10-04: see "Capped hair record".)
 
 ## Phase 4: Pack and portraits
 
@@ -43,6 +43,32 @@ Status: in_progress (2026-10-02: Phase 3 fit reworks done, no catalog row is `re
 - The shop sorts by popularity: `purchase` rows in `avatar_inventory` for each item in the last
   30 days, over all schools (owner decision 2026-10-01). Ties (and every item at go-live, when all
   counts are zero) sort in a fixed random order for each student, seeded by the user id.
+
+## Capped hair record (2026-10-04)
+
+- Slot: the 4 hair styles moved from `head` to a new `hair` slot (socket on the head bone, hides the
+  base hair, base price 0), so a student keeps the chosen style under a hat. Catalog rows are
+  `ready`: swept 7.5, short 7.2, long 7.0, ponytail 7.2 (orchestrator review of the full styles on
+  the base and the capped forms under head pieces, `bench/sonnet/log.tsv`, batch `capped-hair`).
+- Rule: a head piece hides the hair (`hides: ['hair']`), caps it (the default), or keeps it full
+  (`fullHair: true`). The resolved block names it (`forgeEquip.hair`: `hidden`, `capped`, `full`)
+  for the composer. `wearAsset` sets `k.worn.capHair`; `capsHair` and `hairOf` in `src/equip.ts`.
+- Shape: `avatarHair(style, tint, { capped })` in `assets/parts/avatar-hair.ts`. A thin cap 5 mm over
+  the skull above the cap line y = 0.66 + 0.3 z (brow 0.72, nape 0.6), slim side tufts, the long
+  back and falls below the line, and a low ponytail from the nape. No fringe.
+- Full hair: circlet, crown, and swashbuckler-bandana. Renders with the capped hair looked bald under
+  these open pieces; with the full hair the fringe falls over the band.
+- Fit check of the 22 head pieces that kept the hair: the 19 capped pieces went from 3,506 hair
+  points to 295 (10 at 0). The rest are inner surfaces (wizard-hat 189 and gladiator-helmet 40 at
+  the back, spear-warden pieces 27 each at the cheek straps); the renders show no hair through any
+  piece. Evidence: `docs/avatar-system.md` section 4; renders `out/avatar-base+<piece>/render.png`.
+- Check change: a hair style tucks its lower edge into the jaw and neck skin as the base hair does,
+  so skin over a `hair` slot piece is a note. The swept, short, and ponytail standalones failed the
+  check for this reason before the change (the same result in the old `head` slot).
+- Tests: `tests/equip.test.ts` (hair rule, the wear flag for the base and a style, the capped forms
+  inside a thin cap above the line). Forge suite: 146 files, 2176 tests.
+- Follow-up: equipment GLBs built before 2026-10-04 have no `forgeEquip.hair` field. The Phase 4
+  pack rebuilds them.
 
 ## Part fix record (2026-10-01)
 
