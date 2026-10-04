@@ -4975,5 +4975,353 @@
       "Add a few dark bristle tufts on the flanks."
     ],
     "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "unicorn": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/unicorn) on the horse kind. A white horse with a rainbow mane and tail, a gold spiral horn on the head bone, gold hooves, and violet eyes; no halter, blaze, or socks. Mockup docs/monster-mockups/unicorn_001.jpg (mmx).",
+    "strengths": [
+      "The gold horn and the rainbow mane read at 128 px from the front and the side.",
+      "It shares the body, the head, the rig, and the horse clips through assets/parts/horse-kind.ts (mesh-same: SAME for horse); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The rainbow bands of the mane are soft, so the colors blend at their edges."
+    ],
+    "next": [
+      "Make the mane bands a little sharper."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "nightmare": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4.5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/nightmare) on the horse kind. A black horse with glowing red eyes, a glowing violet fire mane and tail with pale violet tips, and orange flame rings around the hooves (skinned to the shins). Mockup docs/monster-mockups/nightmare_001.jpg (mmx).",
+    "strengths": [
+      "The red eyes and the violet fire mane read on the black body at 128 px.",
+      "It shares the body, the rig, and the horse clips through assets/parts/horse-kind.ts; the hoof flames start above the ground (the rest pose was 2 cm low before the fix); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The hoof flames are short and orange, and the mockup flames are taller."
+    ],
+    "next": [
+      "Make the hoof flames taller and give them a yellow core."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "kelpie": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/kelpie) on the horse kind. A teal water horse with a dark green seaweed mane and tail, scale paint on the legs, cheek fins, and leg fins. Mockup docs/monster-mockups/kelpie_001.jpg (mmx).",
+    "strengths": [
+      "The teal coat, the seaweed mane, and the leg scales read as a water horse.",
+      "It shares the body, the rig, and the horse clips through assets/parts/horse-kind.ts; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The fins are small and show mainly in the side view."
+    ],
+    "next": [
+      "Make the cheek fins larger, so they show in the front view."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "shadow-hound": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/shadow-hound) on the wolf kind. A black wolf with violet markings, larger ears (1.15), glowing violet eyes, and violet smoke wisps on the back, the hips, and the tail tip (on their own bones, with a sway in every clip). Mockup docs/monster-mockups/shadow-hound_001.jpg (mmx).",
+    "strengths": [
+      "The glowing eyes and the violet markings read on the black body at 128 px.",
+      "It shares the body, the head, the rig, and the seven wolf clips through assets/parts/wolf-kind.ts (mesh-same: SAME for dire-wolf); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The smoke wisps are thin, so the shadow look is weak from the front."
+    ],
+    "next": [
+      "Add one more wisp on each shoulder."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "displacer-beast": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/displacer-beast) on the wolf kind. A blue-black beast with small ears, glowing green eyes, and two arched shoulder tentacles with spiked pads (two bones each); the attack whips the tentacles. Mockup docs/monster-mockups/displacer-beast_001.jpg (mmx).",
+    "strengths": [
+      "The two arched tentacles give a clear silhouette from the front and the back.",
+      "It shares the body, the rig, and the wolf clips through assets/parts/wolf-kind.ts; the tentacles are thicker and arched after the first render; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The head is a wolf head, and the mockup head is more like a cat."
+    ],
+    "next": [
+      "Give the kind a shorter muzzle option for cat heads."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "giant-spider-queen": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/giant-spider-queen) on the new spider kind (assets/parts/spider-kind.ts). A violet spider with a cute face (glossy black eyes with glowing ember pupils, white cheek dots, a small smile), round palps like ears, a lumpy gold crown with blue gems (a crown slot), near-black leg bands, small fangs (0.55), and an orange chest disc with a violet trident. Mockup docs/monster-mockups/giant-spider-queen_001.jpg (mmx).",
+    "strengths": [
+      "The crown, the palps, and the cute face match the mockup and read at 128 px, also from above.",
+      "The giant spider became the spider kind with face, chest mark, band, fang, and extra hooks (mesh-same: SAME for giant-spider); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "It keeps the giant spider size, and a game must scale it up to show a boss."
+    ],
+    "next": [
+      "Add a scale option to the spider kind if games need a bigger queen model."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "hill-giant": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/hill-giant) on the new ogre kind (assets/parts/ogre-kind.ts), 1.45 times the orc size. Tan human skin, a bigger head (1.15) with a round nose and no tusks, a big brown beard and mop of hair, a shaggy fur collar, a fur loincloth, and the spiked club. Mockup docs/monster-mockups/hill-giant_001.jpg (mmx).",
+    "strengths": [
+      "The beard, the fur collar, and the big belly read as a giant at 128 px.",
+      "The ogre brute became the ogre kind (mesh-same: SAME for ogre-brute); the hill giant shares its rig and eight clips; held items ok, ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup holds a plain club down at the side; here the spiked club is raised, as on the ogre."
+    ],
+    "next": [
+      "Give the hill giant a plain club without the spike."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "fire-giant": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/fire-giant) on the ogre kind, 1.45 times the orc size. Crimson skin, a round nose, a glowing orange flame beard and side locks (the strand shades are kind colors now), a crest of five flame tongues, dark iron shoulder plates (ogrePauldrons), iron bracers, and an iron war hammer. Mockup docs/monster-mockups/fire-giant_001.jpg (mmx).",
+    "strengths": [
+      "The flame hair and the dark iron plates on the red body match the mockup.",
+      "It shares the rig and the eight ogre clips; the hammer block lies across the haft, so it stays above the ground in the low swipe; held items ok (2.6 cm), ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The hammer is smaller than the mockup hammer, because a longer head went below the ground in attack2."
+    ],
+    "next": [
+      "Raise the low swipe of attack2 in the ogre kind, then make the hammer bigger."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "frost-giant": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/frost-giant) on the ogre kind, 1.45 times the orc size. Ice-blue skin, a round nose, a big white beard and side locks, a steel-blue helmet with a ridge and two white horns, steel-blue shoulder plates and bracers, a white fur loincloth, and a frozen club with an ice spike. Mockup docs/monster-mockups/frost-giant_001.jpg (mmx).",
+    "strengths": [
+      "The horned helmet and the white beard read at 128 px.",
+      "It shares the rig and the eight ogre clips; the club keeps the ogre club shape in ice colors; held items ok, ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup is armored on the legs too; here the legs are bare under the fur loincloth."
+    ],
+    "next": [
+      "Add steel-blue knee guards."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "cyclops": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/cyclops) on the ogre kind, 1.4 times the orc size with a bigger head (1.22). Olive green skin, one big eye under one heavy brow, a round nose, a wide grin with a row of teeth and small tusks (0.5), a short horn, a bald head, a fur loincloth, and a wooden mallet. The mockup was made again, because the first one had an eyeball for a head.",
+    "strengths": [
+      "The one big eye and the toothy grin match the mockup and read at 128 px.",
+      "The ogre kind got the options for one eye, a grin, a human nose, a head scale, and the mane parts; held items ok, ground ok after the mallet drum turned across the haft, 0 warnings."
+    ],
+    "issues": [
+      "The skin is a little more yellow than the olive mockup."
+    ],
+    "next": [
+      "Move the skin toward olive."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "colossal-golem": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/colossal-golem) on the new golem kind (assets/parts/golem-kind.ts). Dark charcoal stone with faceted shading and no moss, a dark core, glowing cyan eyes and chest rune, and glowing cyan veins: zigzag chains that lie on the shoulder boulders and the limb blocks. Mockup docs/monster-mockups/colossal-golem_001.jpg (mmx).",
+    "strengths": [
+      "The glowing veins and eyes on the dark stone read as an ancient colossus.",
+      "The stone golem became the golem kind (mesh-same: SAME for stone-golem); the veins are raycast chains, so they need no shell cut and reduce cleanly; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup head is a pointed helmet with angled eyes; here it keeps the round stone golem head, and the model keeps the stone golem size."
+    ],
+    "next": [
+      "Add a head option to the golem kind for a pointed helmet head."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "gremlin": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/small/gremlin) on the new goblin kind (assets/parts/goblin-kind.ts). A green tinkerer with bigger ears (1.28, no nicks), no crest, red eyes, two brown locks and a hair cap (a hair slot), a green body in brown overalls (bib, straps, two buttons), bare tan feet, and a steel wrench on the dagger bone. Mockup docs/monster-mockups/gremlin_001.jpg (mmx).",
+    "strengths": [
+      "The huge ears, the red eyes, the overalls, and the wrench match the mockup.",
+      "The goblin warrior became the goblin kind with outfit, weapon, and extra hooks (mesh-same: SAME for goblin-warrior); the gremlin keeps the seven goblin clips; held items ok, ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The hair is a smooth cap, and the mockup hair has rough locks."
+    ],
+    "next": [
+      "Add a few strand ridges to the hair cap."
+    ],
+    "reviewedAt": "2026-10-04T10:49:09+00:00"
   }
 }

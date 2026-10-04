@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 615,
-    "source_missing": 241,
+    "source_present": 627,
+    "source_missing": 229,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 96,
-        "source_missing": 208
+        "source_present": 108,
+        "source_missing": 196
       },
       "P3": {
         "listed": 48,
@@ -4330,7 +4330,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/shadow-hound.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4410,7 +4410,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/displacer-beast.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4800,7 +4800,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/kelpie.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4820,7 +4820,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/nightmare.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4860,7 +4860,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/unicorn.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4890,7 +4890,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/colossal-golem.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4900,7 +4900,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cyclops.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4910,7 +4910,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fire-giant.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4920,7 +4920,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/frost-giant.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4930,7 +4930,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/giant-spider-queen.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4940,7 +4940,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hill-giant.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -5020,7 +5020,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/gremlin.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 790,
-    "catalog_matched": 599,
-    "off_catalog": 191
+    "listed": 808,
+    "catalog_matched": 611,
+    "off_catalog": 197
   },
   "asset_sources": [
     {
@@ -10632,6 +10632,13 @@
       ]
     },
     {
+      "id": "colossal-golem",
+      "source_path": "assets/colossal-golem.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/colossal-golem"
+      ]
+    },
+    {
       "id": "column",
       "source_path": "assets/column.ts",
       "catalog_source_ids": [
@@ -10792,6 +10799,13 @@
       ]
     },
     {
+      "id": "cyclops",
+      "source_path": "assets/cyclops.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/cyclops"
+      ]
+    },
+    {
       "id": "dagger",
       "source_path": "assets/dagger.ts",
       "catalog_source_ids": [
@@ -10908,6 +10922,13 @@
       "source_path": "assets/dirt-road-t-junction.ts",
       "catalog_source_ids": [
         "architecture/landscape-parts/dirt-road-t-junction"
+      ]
+    },
+    {
+      "id": "displacer-beast",
+      "source_path": "assets/displacer-beast.ts",
+      "catalog_source_ids": [
+        "monsters/beast/displacer-beast"
       ]
     },
     {
@@ -11236,6 +11257,13 @@
       ]
     },
     {
+      "id": "fire-giant",
+      "source_path": "assets/fire-giant.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/fire-giant"
+      ]
+    },
+    {
       "id": "fire-slime",
       "source_path": "assets/fire-slime.ts",
       "catalog_source_ids": [
@@ -11372,6 +11400,13 @@
       ]
     },
     {
+      "id": "frost-giant",
+      "source_path": "assets/frost-giant.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/frost-giant"
+      ]
+    },
+    {
       "id": "fruit-basket",
       "source_path": "assets/fruit-basket.ts",
       "catalog_source_ids": [
@@ -11481,6 +11516,13 @@
       "source_path": "assets/giant-rat.ts",
       "catalog_source_ids": [
         "monsters/small/giant-rat"
+      ]
+    },
+    {
+      "id": "giant-spider-queen",
+      "source_path": "assets/giant-spider-queen.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/giant-spider-queen"
       ]
     },
     {
@@ -11672,6 +11714,13 @@
       ]
     },
     {
+      "id": "gremlin",
+      "source_path": "assets/gremlin.ts",
+      "catalog_source_ids": [
+        "monsters/small/gremlin"
+      ]
+    },
+    {
       "id": "griffin",
       "source_path": "assets/griffin.ts",
       "catalog_source_ids": [
@@ -11838,6 +11887,13 @@
       "source_path": "assets/highwayman.ts",
       "catalog_source_ids": [
         "enemies/humanoid/highwayman"
+      ]
+    },
+    {
+      "id": "hill-giant",
+      "source_path": "assets/hill-giant.ts",
+      "catalog_source_ids": [
+        "monsters/giant-and-ancient/hill-giant"
       ]
     },
     {
@@ -12017,6 +12073,13 @@
       "source_path": "assets/katana.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/katana"
+      ]
+    },
+    {
+      "id": "kelpie",
+      "source_path": "assets/kelpie.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/kelpie"
       ]
     },
     {
@@ -12597,6 +12660,13 @@
       ]
     },
     {
+      "id": "nightmare",
+      "source_path": "assets/nightmare.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/nightmare"
+      ]
+    },
+    {
       "id": "noble-champion",
       "source_path": "assets/noble-champion.ts",
       "catalog_source_ids": [
@@ -12868,6 +12938,16 @@
       "catalog_source_ids": []
     },
     {
+      "id": "goblin-kind",
+      "source_path": "assets/parts/goblin-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "golem-kind",
+      "source_path": "assets/parts/golem-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "guardian-hammer",
       "source_path": "assets/parts/guardian-hammer.ts",
       "catalog_source_ids": []
@@ -12880,6 +12960,11 @@
     {
       "id": "guardian-shield",
       "source_path": "assets/parts/guardian-shield.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "horse-kind",
+      "source_path": "assets/parts/horse-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -12900,6 +12985,11 @@
     {
       "id": "mage-wand",
       "source_path": "assets/parts/mage-wand.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "ogre-kind",
+      "source_path": "assets/parts/ogre-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -12993,6 +13083,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "spider-kind",
+      "source_path": "assets/parts/spider-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "spirit-kind",
       "source_path": "assets/parts/spirit-kind.ts",
       "catalog_source_ids": []
@@ -13060,6 +13155,11 @@
     {
       "id": "wizard-staff",
       "source_path": "assets/parts/wizard-staff.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "wolf-kind",
+      "source_path": "assets/parts/wolf-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -13713,6 +13813,13 @@
       "source_path": "assets/shadow-elemental.ts",
       "catalog_source_ids": [
         "monsters/elemental/shadow-elemental"
+      ]
+    },
+    {
+      "id": "shadow-hound",
+      "source_path": "assets/shadow-hound.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/shadow-hound"
       ]
     },
     {
@@ -14396,6 +14503,13 @@
       "source_path": "assets/turnip.ts",
       "catalog_source_ids": [
         "props/food/turnip"
+      ]
+    },
+    {
+      "id": "unicorn",
+      "source_path": "assets/unicorn.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/unicorn"
       ]
     },
     {

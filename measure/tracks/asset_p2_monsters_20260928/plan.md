@@ -112,9 +112,40 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - All nine: `ground ok`, `forge all` with 0 warnings, a mockup from mmx (with the base mockup as
   the subject reference).
 
+## Batch 5 (2026-10-04): twelve monsters on six kind factories
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| unicorn | monsters/fey-and-spirit/unicorn | horse kind: white coat, rainbow mane, gold horn and hooves | 8.0 |
+| nightmare | monsters/fey-and-spirit/nightmare | horse kind: black coat, red glowing eyes, violet fire mane, hoof flames | 7.8 |
+| kelpie | monsters/fey-and-spirit/kelpie | horse kind: teal coat, seaweed mane, leg scales, fins | 7.6 |
+| shadow-hound | monsters/abyssal-and-cosmic/shadow-hound | wolf kind: black fur, violet markings, glowing eyes, smoke wisps | 7.8 |
+| displacer-beast | monsters/beast/displacer-beast | wolf kind: two arched shoulder tentacles with spiked pads | 7.7 |
+| giant-spider-queen | monsters/giant-and-ancient/giant-spider-queen | spider kind: cute face, palps, gold crown, dark bands | 8.0 |
+| hill-giant | monsters/giant-and-ancient/hill-giant | ogre kind 1.45: human nose, brown beard, fur collar | 7.7 |
+| fire-giant | monsters/giant-and-ancient/fire-giant | ogre kind 1.45: flame beard and crest, iron plates, war hammer | 7.8 |
+| frost-giant | monsters/giant-and-ancient/frost-giant | ogre kind 1.45: white beard, horned helmet, ice club | 7.7 |
+| cyclops | monsters/giant-and-ancient/cyclops | ogre kind 1.4: one eye, grin with teeth, horn, mallet | 7.8 |
+| colossal-golem | monsters/giant-and-ancient/colossal-golem | golem kind: charcoal faceted stone, cyan glowing veins | 7.7 |
+| gremlin | monsters/small/gremlin | goblin kind: big ears, hair, overalls, bare feet, wrench | 7.7 |
+
+- New factories, each checked with `scripts/mesh-same.mjs` (SAME): `assets/horse.ts` calls
+  `horseAsset` (`assets/parts/horse-kind.ts`), `assets/dire-wolf.ts` calls `wolfAsset`,
+  `assets/giant-spider.ts` calls `spiderAsset`, `assets/ogre-brute.ts` calls `ogreAsset`,
+  `assets/stone-golem.ts` calls `golemAsset`, and `assets/goblin-warrior.ts` calls `goblinAsset`.
+- The ogre kind has a `scale` (orc space to meters), a `headScale`, `nose`, `eyes: 'one'`,
+  `mouth: 'grin'`, `tusks`, mane parts, `maneBody`, `weapon`, and `extra`; the slot base colors
+  come from the first variant options, so the painted shades follow each kind.
+- A held weapon with a long head across the swing goes below the ground in the ogre attack2
+  swipe. The mallet and the hammer heads lie along the side axis and stay near the grip.
+- The cyclops mockup was made again without a subject reference: with the ogre as the reference,
+  mmx put an eyeball on top of the head.
+- All twelve: `ground ok`, held items ok, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
 - [x] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).
 - [x] Task: Batch 4: monsters on existing bases (spirit, imp, dragon, and boar kinds, and a griffin copy).
-- [ ] Task: Batch 5: the next monsters by base reuse (wyvern and lindworm need a new rig; see the open rows).
+- [x] Task: Batch 5: twelve monsters on horse, wolf, spider, ogre, golem, and goblin kinds.
+- [ ] Task: Batch 6: the next monsters by base reuse (giant-lizard and basilisk on the dragon kind, kitsune on the wolf kind, scorpion and centipede on the spider kind); 35 rows are open, and wyvern, lindworm, hydra, and the serpents need a new rig.
