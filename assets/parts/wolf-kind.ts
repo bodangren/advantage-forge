@@ -63,6 +63,8 @@ export interface WolfKind {
   readonly forelock?: boolean;
   /** A thin closed smile in place of the toothy grin (no upper teeth). */
   readonly smile?: boolean;
+  /** False for no bushy tail (the kind builds its own tail on the `tail` bone in `extra`). */
+  readonly tail?: boolean;
   /** Paint on the fur (ear tips, markings), with the slot colors. */
   paint?(fur: sdf.Shape, tint: WolfShape['tint']): sdf.Shape;
   /** Extra bones (a tentacle on `spine`, a smoke plume on `hips`). */
@@ -212,17 +214,16 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       const eye = pair(sdf.cylinder(0.031, 1).rotateX(90).at(eL[0], eL[1], 0));
       const pupil = pair(sdf.cylinder(0.014, 1).rotateX(90).at(eL[0] - 0.004, eL[1] - 0.002, 0));
       const shine = pair(sdf.sphere(0.008).at(eL[0] + 0.01, eL[1] + 0.012, eL[2]));
-      const furBase = trunk
-        .smoothUnion(0.03, legs)
-        .smoothUnion(0.02, paws)
-        .smoothUnion(0.02, tailShape.bone('tail'))
+      const furLegs = trunk.smoothUnion(0.03, legs).smoothUnion(0.02, paws);
+      const furLower = (kind.tail === false ? furLegs : furLegs.smoothUnion(0.02, tailShape.bone('tail')))
         .smoothUnion(0.015, cheekTufts.bone('head'), ears.bone('head'))
         // Lighter fur on the lower cheeks (below the eyes, so the dark face keeps the eye contrast)
         // and on the chest under the ruff.
         .paintWhere(pair(sdf.ellipsoid([0.12, 0.09, 0.13]).at(0.17, 0.4, 0.19)).intersect(sdf.halfSpace([0, 1, 0], 0.47)), T.furLight, 0.03)
         .paintWhere(sdf.ellipsoid([0.13, 0.14, 0.1]).at(0, 0.22, 0.17), T.furLight, 0.04)
-        .paintWhere(sdf.union(legs, paws).intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04)
-        .paintWhere(sdf.sphere(0.12).at(...TAIL_TIP).intersect(sdf.halfSpace([-0.3, -0.6, 0.74], -0.55)), T.cream, 0.02)
+        .paintWhere(sdf.union(legs, paws).intersect(sdf.halfSpace([0, 1, 0], 0.16)), T.furDark, 0.04);
+      const furTip = kind.tail === false ? furLower : furLower.paintWhere(sdf.sphere(0.12).at(...TAIL_TIP).intersect(sdf.halfSpace([-0.3, -0.6, 0.74], -0.55)), T.cream, 0.02);
+      const furBase = furTip
         .paintWhere(eyeRing.intersect(sdf.halfSpace([0, 0, -1], -0.2)), T.eyeRim, 0.002)
         .paintWhere(eye.intersect(sdf.halfSpace([0, 0, -1], -0.2)), T.eye, 0.002)
         .paintWhere(pupil.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.pupil, 0.002)

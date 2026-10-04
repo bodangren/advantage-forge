@@ -61,6 +61,10 @@ export interface DragonKind {
   readonly headCrest?: boolean;
   /** False for a wingless dragon (a drake): no wing bodies and no fly clip. */
   readonly wings?: boolean;
+  /** False for no arms and no hand claws (a wyvern: the wings are its arms). */
+  readonly arms?: boolean;
+  /** The size of the wings (the fire dragon: 1.25). */
+  readonly wingScale?: number;
   /** True for a friendly face: no brows and no glaring lids over the eyes. */
   readonly friendly?: boolean;
   /** False for no fan of spines at the tail tip. */
@@ -256,8 +260,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         sdf
           .union(
             sdf.smoothUnion(0.05, trunk, head.bone('head')).smoothUnion(0.02, pair(frill).bone('head')),
-            armAt(1),
-            armAt(-1),
+            ...(kind.arms === false ? [] : [armAt(1), armAt(-1)]),
           )
           .smoothUnion(0.03, legs)
           .union(feet)
@@ -467,7 +470,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           .at(ANKLE[0], 0, ANKLE[2])
           .bone('foot.L'),
       );
-      k.body('claws', sdf.union(handClaws(1), handClaws(-1), footClaws), { color: C.claw, roughness: 0.4 });
+      k.body('claws', sdf.union(...(kind.arms === false ? [] : [handClaws(1), handClaws(-1)]), footClaws), { color: C.claw, roughness: 0.4 });
 
       // ------------------------------------------------------------------ wings: orange membranes on red bones
       // Local frame: the root at the origin, the wing spread along +X, the membrane in the XY plane.
@@ -494,7 +497,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         sdf.chain([[0.24, 0.2, 0, 0.016], [0.25, 0.02, 0, 0.006]], 0.006),
         sdf.chain([[0.24, 0.2, 0, 0.016], [0.12, -0.03, 0, 0.006]], 0.006),
       );
-      const wingPose = (s: sdf.Shape) => s.scale(1.25).rotateY(14).rotateZ(4).at(...WING_ROOT);
+      const wingPose = (s: sdf.Shape) => s.scale(kind.wingScale ?? 1.25).rotateY(14).rotateZ(4).at(...WING_ROOT);
       if (kind.wings !== false) {
         k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.orange, roughness: 0.6, ...kind.looks?.wings });
         k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: T.red, roughness: 0.55 });

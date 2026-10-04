@@ -237,6 +237,40 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   on the ground.
 - All five: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 10 (2026-10-04): nine monsters on two new kinds (toad, octopus) and four existing kinds
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| centipede | monsters/small/centipede | serpent kind: low body, round head, eight leg pairs, antenna bones | 7.6 |
+| wyvern | monsters/beast/wyvern | dragon kind: no arms, smaller wings, ear fins | 7.5 |
+| giant-toad | monsters/beast/giant-toad | new toad kind: eye bumps, smile, hidden tongue | 7.6 |
+| treant | monsters/fey-and-spirit/treant | goblin kind: bark trunk with a hollow, root feet, leaves | 7.5 |
+| void-tentacle | monsters/abyssal-and-cosmic/void-tentacle | new octopus kind: five tentacles out of a portal pot | 7.6 |
+| kraken | monsters/beast/kraken | octopus kind: eight grounded tentacles, collar | 7.7 |
+| ancient-treant | monsters/giant-and-ancient/ancient-treant | ogre kind at giant scale: bark ridges, moss beard, branch crown | 7.5 |
+| manticore | monsters/beast/manticore | wolf kind: mane, bat wings, scorpion tail | 7.5 |
+| chimera | monsters/beast/chimera | wolf kind: mane, goat head on a neck, snake tail | 7.5 |
+
+- New factory `assets/parts/toad-kind.ts`: a round body sitting up, a wide face with eye bumps, a
+  smile, a pale belly, chunky front legs, folded back legs, and a tongue on its own bone that is
+  built at 8% size and scaled up in the attack (as the dragon breath); clips idle, walk (a hop),
+  attack (a tongue lash), hit, death. It also serves the wildlife frog.
+- New factory `assets/parts/octopus-kind.ts`: a head dome, tentacles as chains in their own
+  vertical planes (points as out, up, radius) with one bone per joint, a face, and clips that curl
+  each bone in its plane; options eyes, smile, bumps, suckers, grounded (ground tentacles only
+  lift), paint, bones, extra, pose.
+- New default-safe options: dragon kind `arms` and `wingScale`; wolf kind `tail` (false drops the
+  bushy tail and its tip paint). `mesh-same` shows dragon-fire, drake, dire-wolf, and kitsune
+  identical.
+- A tongue or breath that is hidden at rest must still mesh: a 2% tongue (8 mm) produced no
+  surface; 8% works.
+- The octopus `grounded` option exists because a droop pushes ground tentacles into the floor, and
+  the renderer then lifts the whole model.
+- The ogre attack2 swipe sinks a club longer than 0.35 m below the ground (2.8 cm at 0.44 m).
+- mmx failed twice with "Network request failed" (exit 6) and once added a watermark; a retry loop
+  and "no logo, no watermark" in the prompt fixed both.
+- All nine: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
@@ -247,4 +281,5 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - [x] Task: Batch 7: abyssal-beast, dire-bear, owlbear, fairy-sprite, succubus, eldritch-eye, eldritch-horror, and mushroom-creature on six kinds.
 - [x] Task: Batch 8: giant-eagle, roc, and cockatrice on a new bird kind.
 - [x] Task: Batch 9: giant-snake, sea-serpent, lindworm, and cave-worm on a new serpent kind, and hydra on the dragon kind.
-- [ ] Task: Batch 10: the next monsters (14 rows are open: void-tentacle, chimera, giant-toad, kraken, manticore, wyvern, centaur, dryad, satyr, selkie, treant, ancient-treant, centipede, pixie-swarm); candidates: centipede on the serpent kind, wyvern on the dragon kind, treants and the giant toad on new or existing kinds.
+- [x] Task: Batch 10: centipede, wyvern, giant-toad, treant, void-tentacle, kraken, ancient-treant, manticore, and chimera.
+- [ ] Task: Batch 11: the last five monsters (centaur, dryad, satyr, selkie, pixie-swarm); mockups exist; humanoids from the closest hero source, the centaur on the horse kind.

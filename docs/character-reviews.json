@@ -5940,5 +5940,272 @@
       "A four-legged body if the game needs the hydra to walk like the mockup."
     ],
     "reviewedAt": "2026-10-04T13:51:28+00:00"
+  },
+  "centipede": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/centipede) on the serpent kind with no snake head: a fat orange body low along the ground in dark red bands with a lighter belly, eight pairs of short legs with round yellow feet (placed with the kind's frame helper), and a big round head at the raised front with big glossy eyes, a small round mouth, and two long antennae on their own bones. Mockup docs/monster-mockups/centipede_001.jpg (mmx).",
+    "strengths": [
+      "The big round head and the banded body read at 128 px from every side.",
+      "Its own poses give the short front a rear-up and a lunge in the attack; the antennae sway in every clip; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The legs do not step in the walk; they ride the slither wave of the body."
+    ],
+    "next": [
+      "Leg bones with a ripple step, if the game shows the centipede walk up close."
+    ],
+    "reviewedAt": "2026-10-04T14:18:28+00:00"
+  },
+  "wyvern": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/wyvern) on the dragon kind with the new options arms: false and wingScale, and friendly: a young green two-legged dragon with no arms, small olive bat wings, a cream belly, two short ridged horns, big round ear fins with ribs, big eyes, and an orange fin at the tail tip; the attack breathes a green-gold puff. Mockup docs/monster-mockups/wyvern_001.jpg (mmx from the drake mockup).",
+    "strengths": [
+      "The ear fins and the wings read at 128 px from every side; the fly clip of the kind works with the smaller wings.",
+      "The arms option keeps dragon-fire and drake identical (mesh-same); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The kind's grin shows teeth; the mockup has a closed smile.",
+      "The tail tip fan is larger than the small leaf in the mockup."
+    ],
+    "next": [
+      "A smile option on the dragon kind if more friendly dragons follow."
+    ],
+    "reviewedAt": "2026-10-04T14:18:28+00:00"
+  },
+  "giant-toad": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-toad) on the new toad kind (a round body sitting up, a wide face, eye bumps, a wide smile, a pale belly, chunky front legs, folded back legs, and a tongue on its own bone, built tiny and scaled up in the attack): olive green skin with warts and round yellow spots, a pale yellow belly, and big golden eyes; the walk is a hop and the attack a tongue lash. Mockup docs/monster-mockups/giant-toad_001.jpg (mmx from the giant lizard mockup).",
+    "strengths": [
+      "The eye bumps, the wide smile, and the yellow belly read at 128 px from every side.",
+      "The tongue stays out of the rest pose and the static sprites and shoots out only in the attack; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The smile is painted; the mockup mouth is open with a pink inside.",
+      "The hop rises in place with a small kick of the back legs."
+    ],
+    "next": [
+      "The toad kind also serves the wildlife frog (wildlife/water/frog) at a smaller size."
+    ],
+    "reviewedAt": "2026-10-04T14:25:41+00:00"
+  },
+  "treant": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/treant) on the goblin kind, built like the mushroom creature (no goblin ears, face, or clothes): bark skin, a wide bark trunk with wandering dark grooves that makes one potato shape with the head, a dark hollow in the belly, short root legs with three root toes, a raised bark mask around two sleepy eyes, a small smile, and four big round leaves with a middle vein on short stems on top of the head. Mockup docs/monster-mockups/treant_001.jpg (mmx from the forest spirit mockup).",
+    "strengths": [
+      "The leaves on top and the belly hollow read at 128 px from every side.",
+      "The goblin clips (waddle, slap, taunt) fit a sapling that wanders the forest; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mask and the eyes are smaller than in the mockup; the face reads less at 128 px.",
+      "The leaves are flatter than the puffy leaf clumps of the mockup."
+    ],
+    "next": [
+      "Bigger eyes in the mask if the treant talks to the player in a game."
+    ],
+    "reviewedAt": "2026-10-04T14:33:16+00:00"
+  },
+  "void-tentacle": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/void-tentacle) on the new octopus kind (a head dome, tentacles as chains in their own planes with one bone per joint, a face, curl and sway clips): a small purple octopus with a bumpy dome, glossy black eyes, and a small smile that rises out of a dark portal pot with blobby drips and a glowing swirl inside, two short front tentacles with glowing lilac tips, and three long tentacles that arch out to the sides and the back. Mockup docs/monster-mockups/void-tentacle_001.jpg (mmx from the eldritch eye mockup).",
+    "strengths": [
+      "The portal pot and the arching tentacles read at 128 px from every side.",
+      "Every tentacle bone curls in its own plane, so the idle wave, the slam of the attack, and the limp death need no per-asset poses; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The glowing tips are small at 128 px."
+    ],
+    "next": [
+      "A rise-out-of-the-portal spawn clip if a game needs one."
+    ],
+    "reviewedAt": "2026-10-04T14:46:28+00:00"
+  },
+  "kraken": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/kraken) on the octopus kind with the new options grounded (ground tentacles only lift in the clips) and smile: a young kraken with a big round pink-red head, glossy black eyes, rosy cheeks, a dark smile, a wavy purple collar, and eight thick purple tentacles that spread on the ground and curl up at the pale tips. Mockup docs/monster-mockups/kraken_001.jpg (mmx from the eldritch horror mockup).",
+    "strengths": [
+      "The round head and the spread of eight tentacles read at 128 px from every side.",
+      "The grounded option keeps the tentacles on the floor in every clip; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup tentacles curl under the body; the asset spreads them flat."
+    ],
+    "next": [
+      "A bigger sea kraken with a ship-sized scale, if a scene needs one."
+    ],
+    "reviewedAt": "2026-10-04T14:46:28+00:00"
+  },
+  "ancient-treant": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/giant-and-ancient/ancient-treant) on the ogre kind at giant scale (1.45): grey-brown bark skin with raised bark ridges down the trunk (a thin shell cut by vertical slabs), a broad wooden nose and a stern frown, a long beard and side locks of green moss, a bark skirt, a crown of forked bare branches with clusters of orange autumn leaves, small orange mushrooms on the shoulders, and a knotted log club. Mockup docs/monster-mockups/ancient-treant_001.jpg (mmx from the treant mockup).",
+    "strengths": [
+      "The branch crown with orange leaves and the moss beard read at 128 px from every side.",
+      "The ogre clips (stomp, club swings, roar) fit an old giant; check result ok, ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The ogre rope belt stays straw yellow; a vine belt would suit a tree better.",
+      "The first log club (0.44 m) sank 2.8 cm below the ground in the attack2 swipe; the club is now 0.35 m like the ogre's."
+    ],
+    "next": [
+      "A vine belt color for the leather slot if the owner wants it."
+    ],
+    "reviewedAt": "2026-10-04T14:58:52+00:00"
+  },
+  "manticore": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/manticore) on the wolf kind with the new option tail: false: a red lion cub with a peach muzzle, a closed smile, no brows or forelock, a thick shaggy dark red mane over the head and down the neck (a hole cut for the face), two small dark red bat wings on wing bones, and a segmented scorpion tail of shrinking beads on four bones that curls over the back to a round stinger. The wings flap and the tail stings in the attack. Mockup docs/monster-mockups/manticore_001.jpg (mmx from the displacer beast mockup).",
+    "strengths": [
+      "The mane and the curled scorpion tail read at 128 px from every side.",
+      "The tail option keeps dire-wolf and kitsune identical (mesh-same); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The wings are small and show mostly from behind.",
+      "The mockup has a lion tail with a tuft; the asset follows the catalog with a scorpion tail."
+    ],
+    "next": [
+      "Bigger wings if the manticore flies in a game."
+    ],
+    "reviewedAt": "2026-10-04T15:06:13+00:00"
+  },
+  "chimera": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/chimera) on the wolf kind with tail: false: a golden lion cub with a cream muzzle, a closed smile, and a fluffy orange-brown mane (a hole cut for the face); a small cream goat head with floppy ears, curled brown horns, and black eyes on a neck from the back (bones goatneck and goathead); and a green snake tail on four bones with black eyes and a forked pink tongue. The goat butts and the snake bites in the attack. Mockup docs/monster-mockups/chimera_001.jpg (mmx from the displacer beast mockup).",
+    "strengths": [
+      "The three heads (lion, goat, snake) read at 128 px from the side and the three-quarter views.",
+      "Ground ok and 0 warnings; the goat and the snake move on their own bones in every clip."
+    ],
+    "issues": [
+      "The goat neck is long and plain, so it looks like a pale tube from behind.",
+      "The tips of the wolf ears show through the mane as small orange points."
+    ],
+    "next": [
+      "A shorter, thicker goat neck with a fur ruff if the chimera gets a rework."
+    ],
+    "reviewedAt": "2026-10-04T15:10:09+00:00"
   }
 }
