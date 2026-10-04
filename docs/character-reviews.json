@@ -4070,5 +4070,38 @@
     ],
     "next": "Accepted by the owner at 7.8 (2026-10-01). A later polish pass could sweep the back locks in one direction and add coat tails.",
     "reviewedAt": "2026-10-01T06:40:00+00:00"
+  },
+  "griffin": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3,
+      "detail": 3,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/griffin), built by the orchestrator from the mockup docs/monster-mockups/griffin_001.jpg: a big white eagle head with a hooked yellow beak, amber eyes under yellow brows, a swept white crest, and a white feather ruff, on a tan lion body with yellow scaly shins and dark talons, a tufted tail, and two raised wings of tan arms, dark brown coverts, and cream flight feathers. It has a quadruped rig with wing bones and eight clips: idle, walk, run, fly, attack, hit, roar, and death. Attack, hit, and roar happen in the air and blend with the fly loop, because the three griffin games use it as a mount.",
+    "strengths": [
+      "The front view matches the mockup: the white head and ruff, the raised V of the wings, and the dark coverts between the tan arms and the cream feathers.",
+      "In flight, each wing turns about its arm (motion.orient), so the feathers trail back flat; a spread wing in the roar, the hit, and the attack wind-up turns back to its open face.",
+      "The face reads in all 8 sprite directions at 128 px, and no clip sinks below the ground (forge check: ground ok)."
+    ],
+    "issues": [
+      "The crest and the tail tuft are spiky cones; the mockup shows soft, rounded, layered feathers.",
+      "The talons are round dark balls and the toes are short; the mockup shows long yellow toes with hooked claws.",
+      "Materials are flat: the coat has no fur grooves and the feathers have no shafts or edge shading."
+    ],
+    "next": [
+      "Rebuild the crest and the tail tuft from flattened leaf feathers in two layers.",
+      "Give each toe a hooked claw and add fur grooves to the coat bump."
+    ],
+    "reviewedAt": "2026-10-04T07:11:49+00:00"
   }
 }
