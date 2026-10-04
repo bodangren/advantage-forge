@@ -170,7 +170,7 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 | dire-bear | monsters/beast/dire-bear | boar kind: bear muzzle, round ears, paws, stub tail | 7.6 |
 | owlbear | monsters/beast/owlbear | goblin kind: no ears or face; owl face, bear ears, ruff, wing arms | 7.5 |
 | fairy-sprite | monsters/fey-and-spirit/fairy-sprite | imp kind: upright ears, closed eyes, leaves, dragonfly wings | 7.6 |
-| succubus | monsters/abyssal-and-cosmic/succubus | imp kind: long hair, heart eyes, horns, dress | 7.5 |
+| succubus | monsters/abyssal-and-cosmic/succubus | imp kind: a friendly demon girl, long hair, horns, a lilac dress | 7.6 |
 | eldritch-eye | monsters/abyssal-and-cosmic/eldritch-eye | spirit kind: an eyeball head shape, no face | 7.7 |
 | eldritch-horror | monsters/abyssal-and-cosmic/eldritch-horror | slime kind: matte, hollow eyes, maw, tentacles, orb crown | 7.6 |
 | mushroom-creature | monsters/small/mushroom-creature | goblin kind: no ears or face; spotted cap, stem body | 7.7 |
@@ -183,6 +183,10 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   `bubbles`, and `extra`.
 - The image model drew the owlbear as a biped in three tries (with the dire wolf, dire bear, and
   boar mockups as references), so the owlbear is a biped on the goblin kind.
+- Owner rule (2026-10-04): every asset is rated G, with no sexual suggestion. The first succubus
+  (heart eyes, a slip dress) broke it; the rework is a pretty demon girl in a normal lilac dress
+  with puffed sleeves and a white collar, with a new mockup. The row name stays until the owner
+  decides (see the spec, "Open decisions").
 - Prettier reformats a whole kind file (500 changed lines); edit kind files without the formatter.
 - All eight: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 

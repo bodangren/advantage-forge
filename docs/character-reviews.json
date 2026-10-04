@@ -5589,34 +5589,35 @@
     "reviewedAt": "2026-10-04T12:29:34+00:00"
   },
   "succubus": {
-    "overall": 7.5,
+    "overall": 7.6,
     "group": "Monsters",
     "scores": {
       "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 4,
+      "color": 4.5,
       "materials": 4,
       "detail": 4,
-      "technical": 4.5,
+      "technical": 5,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 4
     },
-    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/succubus) on the imp kind: lilac skin, long dark violet hair with a side fringe and locks, two curved dark horns, a calm face with arched brows, lashes, pink cheeks, a smile, glowing pink hearts in dark eyes, a dark slip dress, smaller dark violet bat wings, and the arrow tail. Mockup docs/monster-mockups/succubus_001.jpg (mmx).",
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/succubus) on the imp kind, reworked to the owner rule that every asset is rated G: a friendly little demon girl with pale skin, long lavender hair, two curved mauve horns, dark eyes, pink cheeks, a small smile, a lilac dress with short puffed sleeves, a white collar, and a white hem, small violet bat wings, and the arrow tail. Mockup docs/monster-mockups/succubus_001.jpg (mmx, made again for the rework).",
     "strengths": [
-      "The heart eyes, the hair, and the horns match the mockup; the face reads at 128 px.",
+      "The dress, the hair, and the horns match the new mockup; the face reads as friendly at 128 px.",
       "It shares the imp rig and the six imp clips; ground ok, 0 warnings."
     ],
     "issues": [
-      "The mockup sits on the ground; the asset hovers like the imp.",
-      "The hair and the wings have the same dark violet, so the back view is one dark mass."
+      "The mockup has a pink bow on the collar and lace on the hem; the asset has a plain collar and hem.",
+      "The tail is skin-colored; the mockup tail is lilac.",
+      "The row name keeps its folklore meaning; a rename waits for the owner."
     ],
     "next": [
-      "Try a lighter or bluer hair shade if the back view needs more separation."
+      "Rename the row to little-demon if the owner agrees."
     ],
-    "reviewedAt": "2026-10-04T12:29:34+00:00"
+    "reviewedAt": "2026-10-04T12:40:15+00:00"
   },
   "eldritch-eye": {
     "overall": 7.7,

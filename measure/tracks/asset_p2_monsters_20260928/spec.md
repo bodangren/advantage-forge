@@ -21,3 +21,10 @@ Produce and accept the P2 catalog rows in the monsters family. Select batches fr
 ## Scope control
 
 Existing paths remain stable. Catalog IDs define scope; filename matches indicate source coverage only.
+
+## Open decisions
+
+- The catalog row `monsters/abyssal-and-cosmic/succubus`: in folklore the name means a demon that
+  seduces people. The asset is now a G-rated demon girl in a normal dress, but the name stays in
+  the catalog (TSV and Markdown), the asset file, the reviews, and the Measure files. Proposal:
+  rename the row and the asset to `little-demon` (a path change, so it waits for the owner).
