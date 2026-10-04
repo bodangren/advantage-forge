@@ -4103,5 +4103,129 @@
       "Give each toe a hooked claw and add fur grooves to the coat bump."
     ],
     "reviewedAt": "2026-10-04T07:11:49+00:00"
+  },
+  "green-slime": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/green-slime) on the slime kind factory: the P0 slime body in a brighter grass-green jelly with dark brown eyes, and a leaf sprout (a curved stem with two round veined leaves) on the dome that sways in every clip. Mockup docs/monster-mockups/green-slime_001.jpg (mmx).",
+    "strengths": [
+      "The sprout makes it read apart from the plain slime at 128 px in all 8 directions.",
+      "The brown eyes on the bright jelly give a clear focal point.",
+      "It shares the body, the face, the rig, and the six clips of the P0 slime (assets/parts/slime-kind.ts); the crown flickers or sways in every clip and melts away in the death, and no clip sinks below the ground."
+    ],
+    "issues": [
+      "The mockup body is a tall pear shape; the shared slime dome is lower and wider.",
+      "The floating bubbles are pale green spheres; the mockup shows clear bubbles."
+    ],
+    "next": [
+      "A kind option for the dome proportions (taller, narrower) would match the pear shape."
+    ],
+    "reviewedAt": "2026-10-04T07:29:07+00:00"
+  },
+  "fire-slime": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/fire-slime) on the slime kind factory: the P0 slime body in a glowing orange-red jelly with amber eyes, and three flame tongues (orange roots, yellow tips, emissive) on the dome that stretch and sway in every clip. Mockup docs/monster-mockups/fire-slime_001.jpg (mmx).",
+    "strengths": [
+      "The yellow flames over the red jelly read at 128 px and give the fire role at a glance.",
+      "The amber eyes and the stronger jelly glow fit the element.",
+      "It shares the body, the face, the rig, and the six clips of the P0 slime (assets/parts/slime-kind.ts); the crown flickers or sways in every clip and melts away in the death, and no clip sinks below the ground."
+    ],
+    "issues": [
+      "The floating bubbles are pale pink (mixed from the jelly); the mockup shows golden ember drops.",
+      "The mockup body is taller with a heavy brow and an open, shouting mouth; the shared face keeps the closed frown."
+    ],
+    "next": [
+      "Give the kind its own bubble color (gold ember drops) through a factory option."
+    ],
+    "reviewedAt": "2026-10-04T07:29:07+00:00"
+  },
+  "ice-slime": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/ice-slime) on the slime kind factory: the P0 slime body in a frost-blue jelly with ice-white eyes, and a cluster of five six-sided crystals with pointed tips (see-through, faceted, white at the tips) on the dome. Mockup docs/monster-mockups/ice-slime_001.jpg (mmx).",
+    "strengths": [
+      "The crystal cluster reads as ice from every direction, also in the side views.",
+      "The pale palette separates it from the other slimes at a glance.",
+      "It shares the body, the face, the rig, and the six clips of the P0 slime (assets/parts/slime-kind.ts); the crown flickers or sways in every clip and melts away in the death, and no clip sinks below the ground."
+    ],
+    "issues": [
+      "The crystals are close in value to the light jelly top, so they read less strongly than the flames or the goo.",
+      "The mockup puddle spreads wide in long drips; the shared puddle is compact."
+    ],
+    "next": [
+      "Darken the jelly top a little (the highlight slot) so the white crystals stand out more."
+    ],
+    "reviewedAt": "2026-10-04T07:29:07+00:00"
+  },
+  "poison-slime": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 5,
+      "sprite": 4,
+      "motion": 4.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/poison-slime) on the slime kind factory: the P0 slime body in a venom-purple jelly with toxic lime eyes, and a lumpy blob of glowing lime goo on the dome that boils (swells and settles) in every clip. Mockup docs/monster-mockups/poison-slime_001.jpg (mmx).",
+    "strengths": [
+      "The lime goo on the purple dome is the strongest hue contrast of the four kinds and reads at 128 px.",
+      "The lime eyes repeat the goo color and make the face the focal point.",
+      "It shares the body, the face, the rig, and the six clips of the P0 slime (assets/parts/slime-kind.ts); the crown flickers or sways in every clip and melts away in the death, and no clip sinks below the ground."
+    ],
+    "issues": [
+      "The mockup has purple drips running down from the goo; the dome here is smooth.",
+      "The mockup body is squat and wrinkled with a heavy brow."
+    ],
+    "next": [
+      "Add three purple drip ridges under the goo blob."
+    ],
+    "reviewedAt": "2026-10-04T07:29:07+00:00"
   }
 }
