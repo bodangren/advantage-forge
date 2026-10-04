@@ -14,7 +14,7 @@ Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. 
 
 ## Phase 3: Production
 
-- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 and 2 done; 66 rows open).
+- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 to 3 done; 56 rows open).
 - [ ] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
@@ -66,7 +66,31 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   (crest, wings, horns, brows, breath), the looks of the horns, crest, and wings, and extra bodies.
 - All four: the eight fire dragon clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 3 (2026-10-04): ten elementals on a spirit kind factory
+
+| Asset | Catalog ID | Kind features | Rating |
+| --- | --- | --- | ---: |
+| fire-elemental | monsters/elemental/fire-elemental | flame hair cap and five flickering tongues, glowing orange wisp | 7.8 |
+| water-elemental | monsters/elemental/water-elemental | wave crest curls and droplets, clear teal wisp | 7.6 |
+| air-elemental | monsters/elemental/air-elemental | two spiral wind ribbons, wind tuft | 7.5 |
+| earth-elemental | monsters/elemental/earth-elemental | sprout, cracked clay boulder body with moss and stones | 7.8 |
+| ice-elemental | monsters/elemental/ice-elemental | pointed ears, crown of ice crystals, white-to-teal wisp | 7.9 |
+| light-elemental | monsters/elemental/light-elemental | floating halo, small wings, glowing gold wisp | 7.7 |
+| shadow-elemental | monsters/elemental/shadow-elemental | cat ears, violet eye glass, smoke wisps | 7.8 |
+| storm-elemental | monsters/elemental/storm-elemental | lightning bolt crest, cloud rings on the wisp | 7.6 |
+| crystal-elemental | monsters/elemental/crystal-elemental | burst of sixteen crystals, pulsing chest gem | 7.8 |
+| magma-elemental | monsters/elemental/magma-elemental | rock hood, lava flame crest, glowing lava spots | 7.6 |
+
+- `assets/ghost.ts` (P1) now calls `spiritAsset` in `assets/parts/spirit-kind.ts` with
+  `lower: 'sheet'`; `node scripts/mesh-same.mjs ghost` gave SAME. An elemental kind uses the
+  wisp body (a small round body that tapers into the curled tail), sets the head and wisp
+  materials and paint, and adds element features with their own bones and clip poses.
+- Shared feature shapes are in `assets/parts/element-features.ts` (crystal, flame tongue, curl);
+  `assets/ice-slime.ts` now imports its crystal from there (mesh-same: SAME).
+- All ten: the six ghost clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
-- [ ] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).
+- [x] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).
+- [ ] Task: Batch 4: monsters on existing bases (dragon kinds: drake, wyvern, lindworm, dragon-ancient; griffin: hippogriff; imp: imp-lord, demon, horned-demon; spirit kinds: will-o-wisp, forest-spirit).

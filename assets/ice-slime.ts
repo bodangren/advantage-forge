@@ -1,4 +1,5 @@
 import { mixRgb, rgb, sdf } from '../src/index.js';
+import { crystal } from './parts/element-features.js';
 import { slimeAsset } from './parts/slime-kind.js';
 
 /**
@@ -16,20 +17,6 @@ import { slimeAsset } from './parts/slime-kind.js';
 
 const ICE = rgb('#c4f0ff');
 const ICE_TIP = rgb('#ffffff');
-
-/** A six-sided crystal along +Y from the origin: `r` across the faces, `len` to the tip. */
-function crystal(r: number, len: number): sdf.Shape {
-  const tip = (55 * Math.PI) / 180; // the tip faces lean 55 degrees from the side faces
-  // A finite box first, so the shape has bounds; the half spaces cut the faces and the tip.
-  const cuts: sdf.Shape[] = [sdf.box([2.4 * r, len + 0.08, 2.4 * r]).at(0, len / 2 - 0.03, 0)];
-  for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2;
-    cuts.push(sdf.halfSpace([Math.cos(a), 0, Math.sin(a)], r));
-    const n: [number, number, number] = [Math.cos(a) * Math.cos(tip), Math.sin(tip), Math.sin(a) * Math.cos(tip)];
-    cuts.push(sdf.halfSpace(n, len * Math.sin(tip)));
-  }
-  return cuts.slice(1).reduce((s, c) => sdf.intersect(s, c), cuts[0]!);
-}
 
 export default slimeAsset({
   name: 'ice-slime',

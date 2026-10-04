@@ -4384,5 +4384,320 @@
       "Give the kind a crest of three zigzag bolt shards."
     ],
     "reviewedAt": "2026-10-04T08:21:35+00:00"
+  },
+  "fire-elemental": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/fire-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A warm white head under a cap of flame hair (five tongues on a crown bone that flicker in every clip), a glowing orange wisp with a yellow core and a red tail tip, amber pupils. Mockup docs/monster-mockups/fire-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The flame cap and the glowing orange body read as fire at 128 px.",
+      "The flame tongues flicker (stretch and sway) in every clip on their own crown bone.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup flames are a tighter tuft with a bright yellow center; the cap here covers more of the head."
+    ],
+    "next": [
+      "Give the flames a stronger yellow core (a second emissive body)."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "water-elemental": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4.5,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/water-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A white head with a teal wave crest (three curls on a crown bone that sway) and four teal droplets, a clear teal wisp (opacity 0.82, glossy, lighter at the top), cyan pupils. Mockup docs/monster-mockups/water-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The clear glossy teal body reads as water.",
+      "The crest curls sway like water in every clip.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup body is a little robe of water with ripples; this wisp is plain.",
+      "The droplets are small at 128 px."
+    ],
+    "next": [
+      "Add ripple rings to the wisp and larger droplets."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "air-elemental": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/air-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A cream head and wisp wrapped in two mint wind ribbons that spiral close to the surface (one around the head above the eyes, one around the body under the arms) and trail off at their ends, a wind tuft on a crown bone, amber pupils. Mockup docs/monster-mockups/air-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The spiral ribbons read as wind at 128 px and give the plain body a clear element.",
+      "The ribbons ride the head and the body, so they never cross the face or the arms in any clip.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup ribbons are wide flat bands; these are round tubes.",
+      "The tuft on top reads as a small hook."
+    ],
+    "next": [
+      "Make the ribbons flat bands (an extruded strip along the spiral)."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "earth-elemental": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/earth-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A cream head with a curly green sprout (two leaves on a crown bone that sways), a boulder wisp 1.3 times as wide in cracked brown clay (displaced, bump-mapped, dark noise cracks, green moss), two grey stones set in its front, amber pupils. Mockup docs/monster-mockups/earth-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The cracked lumpy clay body and the moss match the mockup well.",
+      "The sprout reads at 128 px and sways in every clip.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup arms are twig branches; these are clay mittens.",
+      "The stones read pale in the textured render."
+    ],
+    "next": [
+      "Add twig fingers to the hands and darken the stones."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "ice-elemental": {
+    "overall": 7.9,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/ice-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A white head with two pointed ears and a crown of seven clear ice crystals (see-through, faceted, rigid on the head), a white wisp that turns teal toward the tail, ice-blue pupils. Mockup docs/monster-mockups/ice-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The crystal crown and the pointed ears give a clear silhouette in every direction.",
+      "The white-to-teal body matches the mockup palette.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup has ice shards around the tail; this tail is plain."
+    ],
+    "next": [
+      "Add a few small shards that orbit the tail."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "light-elemental": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/light-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A pale cream head with two small three-feather wings and a golden halo that floats above it (its own bone, it bobs in every clip), a glowing gold wisp that is paler at the top, gold pupils. Mockup docs/monster-mockups/light-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The halo and the glowing gold body read as a light spirit at 128 px.",
+      "The halo stays above the head in every clip and shrinks with the body in the death.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The wings are small next to the mockup's; the mockup also has sparkles."
+    ],
+    "next": [
+      "Make the wings larger and add a few glowing sparkles on their own bones."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "shadow-elemental": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/shadow-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A dark violet head and wisp (lighter toward the tail) with two cat ears, violet eye glass with bright lilac pupils, and two thin wisps of clear violet smoke that rise from the back of the head and sway. Mockup docs/monster-mockups/shadow-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The cat ears and the glowing violet eyes read on the dark body at 128 px.",
+      "The violet eye glass makes the eyes glow as in the mockup.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup head is a cat head (a muzzle, rounder); this is the shared egg.",
+      "The mockup has smoke around the tail; the tail here is solid."
+    ],
+    "next": [
+      "Add a smoke trail at the tail tip (see-through, on the tail3 bone)."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "storm-elemental": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/storm-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A dark slate head and wisp; the wisp has cloud rings (displaced ridges, darker grooves); a glowing yellow lightning bolt crest on a crown bone that twitches like a spark; orange pupils. Mockup docs/monster-mockups/storm-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The yellow bolt on the dark head reads at 128 px in every direction.",
+      "The ringed body gives the slate wisp a storm-cloud form.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup has a beak-like mouth and sparks around the body; the head here is plain."
+    ],
+    "next": [
+      "Add sparks on their own bones and a darker cloud cap on the head."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "crystal-elemental": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/crystal-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A soft pink head and wisp with a burst of sixteen sharp pink crystals rooted on the head along its normals (see-through, faceted), and a glowing violet bipyramid gem on the chest on its own bone that pulses in every clip; pink pupils. Mockup docs/monster-mockups/crystal-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The spiky crystal burst matches the mockup's spiky crown and reads at 128 px.",
+      "The chest gem pulses in every clip.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The mockup has small legs; this is the shared wisp body.",
+      "The crystals are a little blunt next to the mockup's spikes."
+    ],
+    "next": [
+      "Use a sharper crystal tip and more, thinner crystals."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "magma-elemental": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/elemental/magma-elemental) on the spirit kind factory assets/parts/spirit-kind.ts: the ghost's egg head, dark eye hollows with glowing pupils, smile, stubby arms, rig, and six clips (idle, walk, attack, hit, death, taunt), on a small wisp body that tapers into a tail curled to its left. A warm brown face framed by a dark rock hood (painted), a crest of five lava flame tongues on a crown bone that flicker, a dark rock wisp (displaced, bump-mapped) with eight glowing lava spots (a thin emissive skin), orange pupils. Mockup docs/monster-mockups/magma-elemental_001.jpg (mmx).",
+    "strengths": [
+      "The glowing lava spots and the flame crest read on the dark rock at 128 px.",
+      "It is clearly the darker cousin of the fire elemental.",
+      "It shares the head, the face, the rig, and the six ghost clips (ghost 8.5) through assets/parts/spirit-kind.ts (mesh-same: SAME for ghost); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The head is the ghost's egg for every element; the mockup head shape differs a little (rounder, smaller eyes).",
+      "The lava spots are round dots; the mockup has cracks and irregular pools.",
+      "The hood edge reads a little like hair."
+    ],
+    "next": [
+      "Shape the lava as cracks (noise bands) instead of round spots."
+    ],
+    "reviewedAt": "2026-10-04T09:02:50+00:00"
   }
 }
