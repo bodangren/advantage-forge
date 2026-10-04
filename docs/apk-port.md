@@ -39,8 +39,9 @@ The monorepo track is `measure/tracks/apk3d_games_port_20261003/`.
   `game_flashcard_input_20261004` owns the change.
 - The old uncommitted edits of 28 September in the main monorepo checkout are removed. The port
   branch replaces them.
-- The port branch rebase waits until the input change is done. Its base `apk3d-port` carries 18
-  unrelated `www` commits.
+- The port branch is rebased on `origin/master` (fe6aedc2b) without the 18 unrelated `www`
+  commits of `apk3d-port`. The pull request text is in
+  `measure/tracks/game_platform_port_20260928/pull-request.md`; the owner opens it.
 - The input change is done (track `game_flashcard_input_20261004`, completed 4 October). The
   games read `GET /api/v1/apk/practice`: at most 10 saved words and 8 saved sentences in FSRS
   due order. A game without enough items is locked and links to `/student/read`. Monster
