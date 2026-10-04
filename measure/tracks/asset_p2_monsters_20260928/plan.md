@@ -14,7 +14,7 @@ Status: in progress (batch 1 done 2026-10-04). This plan owns execution status. 
 
 ## Phase 3: Production
 
-- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 to 3 done; 56 rows open).
+- [ ] Task: Build missing sources and review existing sources in the batch (batches 1 to 4 done; 47 rows open).
 - [ ] Task: Run forge all for each accepted source after visual correction.
 
 ## Phase 4: Documentation and verification
@@ -89,8 +89,32 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   `assets/ice-slime.ts` now imports its crystal from there (mesh-same: SAME).
 - All ten: the six ghost clips, `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 4 (2026-10-04): monsters on existing bases
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| will-o-wisp | monsters/fey-and-spirit/will-o-wisp | spirit kind: glowing ghost flame, flickering flames | 7.6 |
+| forest-spirit | monsters/fey-and-spirit/forest-spirit | spirit kind: leaf hood, flower, moss wisp | 8.0 |
+| imp-lord | monsters/abyssal-and-cosmic/imp-lord | imp kind: crown, purple mantle, gold armlets | 7.8 |
+| demon | monsters/abyssal-and-cosmic/demon | imp kind: bulk 1.35, brow horn, stone armbands and belt | 7.5 |
+| horned-demon | monsters/abyssal-and-cosmic/horned-demon | imp kind: huge horns, orange markings | 7.9 |
+| drake | monsters/dragon/drake | dragon kind without wings, stripes | 7.6 |
+| dragon-ancient | monsters/dragon/dragon-ancient | dragon kind: long horns, white mane and beard | 8.0 |
+| hippogriff | monsters/beast/hippogriff | griffin copy with horse hindquarters, hooves, horse tail | 7.8 |
+| giant-boar | monsters/beast/giant-boar | boar kind without horns, big tusks, tall mane | 7.8 |
+
+- New factories: `assets/imp.ts` calls `impAsset` in `assets/parts/imp-kind.ts` (mesh-same:
+  SAME) and `assets/horned-boar.ts` calls `boarAsset` in `assets/parts/boar-kind.ts` (SAME).
+  The dragon kind gained `horn`, `hornBaseBelow`, `wings: false` (no wing bodies, no fly clip),
+  and `paint` (dragon-fire, -ice, and -storm: SAME). The spirit kind gained head glow and opacity.
+- The clip check counts any band on a forearm as a held item; the shared imp attack and death
+  clips bring the forearms against the head, so the imp kinds wear bands on the upper arms.
+- All nine: `ground ok`, `forge all` with 0 warnings, a mockup from mmx (with the base mockup as
+  the subject reference).
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
 - [x] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).
-- [ ] Task: Batch 4: monsters on existing bases (dragon kinds: drake, wyvern, lindworm, dragon-ancient; griffin: hippogriff; imp: imp-lord, demon, horned-demon; spirit kinds: will-o-wisp, forest-spirit).
+- [x] Task: Batch 4: monsters on existing bases (spirit, imp, dragon, and boar kinds, and a griffin copy).
+- [ ] Task: Batch 5: the next monsters by base reuse (wyvern and lindworm need a new rig; see the open rows).

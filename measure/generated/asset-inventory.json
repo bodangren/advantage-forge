@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 606,
-    "source_missing": 250,
+    "source_present": 615,
+    "source_missing": 241,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 87,
-        "source_missing": 217
+        "source_present": 96,
+        "source_missing": 208
       },
       "P3": {
         "listed": 48,
@@ -4280,7 +4280,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/demon.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4310,7 +4310,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/horned-demon.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4320,7 +4320,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/imp-lord.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4420,7 +4420,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/giant-boar.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4490,7 +4490,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hippogriff.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4570,7 +4570,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dragon-ancient.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4640,7 +4640,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/drake.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4790,7 +4790,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/forest-spirit.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4870,7 +4870,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/will-o-wisp.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 779,
-    "catalog_matched": 590,
-    "off_catalog": 189
+    "listed": 790,
+    "catalog_matched": 599,
+    "off_catalog": 191
   },
   "asset_sources": [
     {
@@ -10834,6 +10834,13 @@
       ]
     },
     {
+      "id": "demon",
+      "source_path": "assets/demon.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/demon"
+      ]
+    },
+    {
       "id": "desert-ground",
       "source_path": "assets/desert-ground.ts",
       "catalog_source_ids": [
@@ -10937,6 +10944,13 @@
       ]
     },
     {
+      "id": "dragon-ancient",
+      "source_path": "assets/dragon-ancient.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/dragon-ancient"
+      ]
+    },
+    {
       "id": "dragon-fire",
       "source_path": "assets/dragon-fire.ts",
       "catalog_source_ids": [
@@ -11000,6 +11014,13 @@
       "source_path": "assets/dragoon.ts",
       "catalog_source_ids": [
         "heroes/martial/dragoon"
+      ]
+    },
+    {
+      "id": "drake",
+      "source_path": "assets/drake.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/drake"
       ]
     },
     {
@@ -11330,6 +11351,13 @@
       ]
     },
     {
+      "id": "forest-spirit",
+      "source_path": "assets/forest-spirit.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/forest-spirit"
+      ]
+    },
+    {
       "id": "forge",
       "source_path": "assets/forge.ts",
       "catalog_source_ids": [
@@ -11425,6 +11453,13 @@
       "source_path": "assets/giant-bat.ts",
       "catalog_source_ids": [
         "monsters/small/giant-bat"
+      ]
+    },
+    {
+      "id": "giant-boar",
+      "source_path": "assets/giant-boar.ts",
+      "catalog_source_ids": [
+        "monsters/beast/giant-boar"
       ]
     },
     {
@@ -11813,6 +11848,13 @@
       ]
     },
     {
+      "id": "hippogriff",
+      "source_path": "assets/hippogriff.ts",
+      "catalog_source_ids": [
+        "monsters/beast/hippogriff"
+      ]
+    },
+    {
       "id": "horn",
       "source_path": "assets/horn.ts",
       "catalog_source_ids": [
@@ -11823,6 +11865,13 @@
       "id": "horned-boar",
       "source_path": "assets/horned-boar.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "horned-demon",
+      "source_path": "assets/horned-demon.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/horned-demon"
+      ]
     },
     {
       "id": "horned-helmet",
@@ -11884,6 +11933,13 @@
       "source_path": "assets/ice-spire.ts",
       "catalog_source_ids": [
         "nature/terrain/ice-spire"
+      ]
+    },
+    {
+      "id": "imp-lord",
+      "source_path": "assets/imp-lord.ts",
+      "catalog_source_ids": [
+        "monsters/abyssal-and-cosmic/imp-lord"
       ]
     },
     {
@@ -12692,6 +12748,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "boar-kind",
+      "source_path": "assets/parts/boar-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "captain-shield",
       "source_path": "assets/parts/captain-shield.ts",
       "catalog_source_ids": []
@@ -12819,6 +12880,11 @@
     {
       "id": "guardian-shield",
       "source_path": "assets/parts/guardian-shield.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "imp-kind",
+      "source_path": "assets/parts/imp-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -14581,6 +14647,13 @@
       "source_path": "assets/wildflowers.ts",
       "catalog_source_ids": [
         "nature/plants/wildflowers"
+      ]
+    },
+    {
+      "id": "will-o-wisp",
+      "source_path": "assets/will-o-wisp.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/will-o-wisp"
       ]
     },
     {

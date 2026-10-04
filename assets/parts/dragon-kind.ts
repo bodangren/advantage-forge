@@ -53,6 +53,14 @@ export interface DragonKind {
   /** Fixed colors that differ from the fire dragon (the slot defaults come from `variants`). */
   readonly palette?: Partial<DragonPalette>;
   readonly looks?: DragonLooks;
+  /** The left horn: [x, y, z, radius] from the root on the head to the tip (mirrored). */
+  readonly horn?: [number, number, number, number][];
+  /** The horn base color below this height (the fire dragon: 0.83). */
+  readonly hornBaseBelow?: number;
+  /** False for a wingless dragon (a drake): no wing bodies and no fly clip. */
+  readonly wings?: boolean;
+  /** Extra paint on the scales (stripes, spots), under the face paint; `dark` is the dark scale shade. */
+  paint?(scales: sdf.Shape, tint: { readonly scales: string; readonly dark: string }): sdf.Shape;
   /** Extra bodies, built after the wings (rigid on `head` or tagged to bones). */
   extra?(k: AssetContext, dragon: DragonShape): void;
 }
@@ -229,21 +237,24 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       );
       // The grin: a wide dark mouth that curves up at the corners.
       const grin = sdf.extrude(profile.arc(GRIN_R, 0.05, 236, 304), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
-      const scales = sdf
-        .union(
-          sdf.smoothUnion(0.05, trunk, head.bone('head')).smoothUnion(0.02, pair(frill).bone('head')),
-          armAt(1),
-          armAt(-1),
-        )
-        .smoothUnion(0.03, legs)
-        .union(feet)
-        .smoothUnion(0.03, tailShape)
-        .paintFn((x, y, z, base) => {
-          // Darker scales on the back and the top of the tail; a faint scale pattern.
-          const back = Math.min(1, Math.max(0, -z * 4 - 0.2));
-          const n = noise.fbm(x * 30, y * 30, z * 30, 2) > 0.45 ? 0.12 : 0;
-          return mixRgb(base, rgb(T.redDark), Math.min(1, back * 0.5 + n));
-        })
+      const kindPaint = (sh: sdf.Shape) => (kind.paint ? kind.paint(sh, { scales: T.red, dark: T.redDark }) : sh);
+      const scales = kindPaint(
+        sdf
+          .union(
+            sdf.smoothUnion(0.05, trunk, head.bone('head')).smoothUnion(0.02, pair(frill).bone('head')),
+            armAt(1),
+            armAt(-1),
+          )
+          .smoothUnion(0.03, legs)
+          .union(feet)
+          .smoothUnion(0.03, tailShape)
+          .paintFn((x, y, z, base) => {
+            // Darker scales on the back and the top of the tail; a faint scale pattern.
+            const back = Math.min(1, Math.max(0, -z * 4 - 0.2));
+            const n = noise.fbm(x * 30, y * 30, z * 30, 2) > 0.45 ? 0.12 : 0;
+            return mixRgb(base, rgb(T.redDark), Math.min(1, back * 0.5 + n));
+          }),
+      )
         .paintWhere(eyeWhite, '#fbf4e0')
         .paintWhere(iris, T.eye)
         .paintWhere(irisLow, T.eyeLow, 0.012)
@@ -300,9 +311,10 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       k.body('belly', belly, { color: T.cream, roughness: 0.6 });
 
       // ------------------------------------------------------------------ horns
+      const hornBelow = kind.hornBaseBelow ?? 0.83;
       const horn = sdf
         .chain(
-          [
+          kind.horn ?? [
             [0.13, 0.79, -0.03, 0.05],
             [0.2, 0.84, -0.04, 0.043],
             [0.235, 0.92, -0.03, 0.032],
@@ -310,7 +322,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           ],
           0.015,
         )
-        .paintFn((_x, y, _z, base) => (y < 0.83 ? rgb(C.hornBase) : base));
+        .paintFn((_x, y, _z, base) => (y < hornBelow ? rgb(C.hornBase) : base));
       k.body('horns', pair(horn).bone('head'), { color: C.horn, roughness: 0.4, ...kind.looks?.horns });
 
       // ------------------------------------------------------------------ crest: spines on the head and down the back and tail
@@ -467,8 +479,10 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         sdf.chain([[0.24, 0.2, 0, 0.016], [0.12, -0.03, 0, 0.006]], 0.006),
       );
       const wingPose = (s: sdf.Shape) => s.scale(1.25).rotateY(14).rotateZ(4).at(...WING_ROOT);
-      k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.orange, roughness: 0.6, ...kind.looks?.wings });
-      k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: T.red, roughness: 0.55 });
+      if (kind.wings !== false) {
+        k.body('wing-membranes', pair(wingPose(membrane).bone('wing.L')), { color: C.orange, roughness: 0.6, ...kind.looks?.wings });
+        k.body('wing-bones', pair(wingPose(wingBones).bone('wing.L')), { color: T.red, roughness: 0.55 });
+      }
 
       kind.extra?.(k, { skull, faceHit, topHit: top });
 
@@ -527,35 +541,38 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       k.animation('walk', stride(0.8, 26, 6, 3, 0, 12));
       k.animation('run', stride(0.5, 36, 7, 10, 0.02, 24));
 
-      // Flying: lifted off the ground and tilted forward, the wings beat through a full stroke,
-      // the body rises on each downstroke, the legs dangle back, and the tail trails and waves.
-      k.animation('fly', {
-        duration: 0.6,
-        pose: (_t, p) => {
-          const beat = wave(p); // +1 at the top of the upstroke
-          const rise = wave(p, 1, 0.25); // the body lags the wings by a quarter beat
-          return {
-            hips: { move: [0, 0.36 + 0.035 * rise, 0], rotate: [14, 0, 0] },
-            spine: { rotate: [4, 0, 0] },
-            chest: { rotate: [2 * rise, 0, 0] },
-            head: { rotate: [-16 - 2 * rise, 0, 0] },
-            'wing.L': { rotate: [0, 6 * rise, 10 + 42 * beat] },
-            'wing.R': { rotate: [0, -6 * rise, -10 - 42 * beat] },
-            'upperarm.L': { rotate: [-18, 0, 0] },
-            'upperarm.R': { rotate: [-18, 0, 0] },
-            'forearm.L': { rotate: [-30, 0, 0] },
-            'forearm.R': { rotate: [-30, 0, 0] },
-            'leg.L': { rotate: [28 + 4 * rise, 0, 4] },
-            'leg.R': { rotate: [28 + 4 * rise, 0, -4] },
-            'foot.L': { rotate: [30, 0, 0] },
-            'foot.R': { rotate: [30, 0, 0] },
-            tail1: { rotate: [18 + 5 * wave(p, 1, 0.35), 0, 0] },
-            tail2: { rotate: [6 + 8 * wave(p, 1, 0.5), 6 * wave(p, 1, 0.4), 0] },
-            tail3: { rotate: [8 * wave(p, 1, 0.65), 10 * wave(p, 1, 0.55), 0] },
-            breath: { scale: HIDE },
-          };
-        },
-      });
+      // Flying (winged kinds only): lifted off the ground and tilted forward, the wings beat
+      // through a full stroke, the body rises on each downstroke, the legs dangle back, and the
+      // tail trails and waves.
+      if (kind.wings !== false) {
+        k.animation('fly', {
+          duration: 0.6,
+          pose: (_t, p) => {
+            const beat = wave(p); // +1 at the top of the upstroke
+            const rise = wave(p, 1, 0.25); // the body lags the wings by a quarter beat
+            return {
+              hips: { move: [0, 0.36 + 0.035 * rise, 0], rotate: [14, 0, 0] },
+              spine: { rotate: [4, 0, 0] },
+              chest: { rotate: [2 * rise, 0, 0] },
+              head: { rotate: [-16 - 2 * rise, 0, 0] },
+              'wing.L': { rotate: [0, 6 * rise, 10 + 42 * beat] },
+              'wing.R': { rotate: [0, -6 * rise, -10 - 42 * beat] },
+              'upperarm.L': { rotate: [-18, 0, 0] },
+              'upperarm.R': { rotate: [-18, 0, 0] },
+              'forearm.L': { rotate: [-30, 0, 0] },
+              'forearm.R': { rotate: [-30, 0, 0] },
+              'leg.L': { rotate: [28 + 4 * rise, 0, 4] },
+              'leg.R': { rotate: [28 + 4 * rise, 0, -4] },
+              'foot.L': { rotate: [30, 0, 0] },
+              'foot.R': { rotate: [30, 0, 0] },
+              tail1: { rotate: [18 + 5 * wave(p, 1, 0.35), 0, 0] },
+              tail2: { rotate: [6 + 8 * wave(p, 1, 0.5), 6 * wave(p, 1, 0.4), 0] },
+              tail3: { rotate: [8 * wave(p, 1, 0.65), 10 * wave(p, 1, 0.55), 0] },
+              breath: { scale: HIDE },
+            };
+          },
+        });
+      }
 
       // The attack: a fire-breath roar. It draws back and up (the head tipped back, the chest filled
       // with air, the wings and the claws raised), hops 9 cm forward with the head level and the

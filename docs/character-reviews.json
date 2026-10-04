@@ -4699,5 +4699,281 @@
       "Shape the lava as cracks (noise bands) instead of round spots."
     ],
     "reviewedAt": "2026-10-04T09:02:50+00:00"
+  },
+  "will-o-wisp": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/will-o-wisp) on the spirit kind. A floating spirit of glowing sea-green ghost flame: the head glows (opaque, so the eye glass never shows from behind), the wisp glows and is a little see-through, paler glowing spots on the head, three flickering flame tongues on a crown bone, cyan pupils. Mockup docs/monster-mockups/will-o-wisp_001.jpg (mmx).",
+    "strengths": [
+      "The glow is the whole read at 128 px, so it stands out in dark scenes.",
+      "The flames flicker in every clip.",
+      "It shares the head, the face, the rig, and the six ghost clips through assets/parts/spirit-kind.ts; ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup body is a round blob with small arm nubs; this is the egg head and wisp of the spirit kind.",
+      "The paler spots are faint next to the glow."
+    ],
+    "next": [
+      "Make the head flames larger, and the spots brighter (a second emissive body)."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "forest-spirit": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/forest-spirit) on the spirit kind. A cream face in a hood of overlapping leaves (six rings, none over the face) (a shell around the head with an oval opening, leaves rooted on its surface along the normals), a pink five-petal flower on a crown bone that sways, a mossy green wisp body (displaced, mottled), green pupils. Mockup docs/monster-mockups/forest-spirit_001.jpg (mmx).",
+    "strengths": [
+      "The leaf hood matches the mockup closely and reads at 128 px.",
+      "The flower sways in every clip.",
+      "It shares the head, the face, the rig, and the six ghost clips through assets/parts/spirit-kind.ts; ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup face is a doll face with small eyes; this is the spirit's big dark-eye face.",
+      "The hood build is slow (254 s textured) because of the leaf union."
+    ],
+    "next": [
+      "Bake the leaves into a displaced shell if build time matters."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "imp-lord": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/imp-lord) on the imp kind. A red imp king: a gold circlet with five points and a red gem between the horns (metal), a royal purple mantle over the shoulders and the back with gold trim at the hem and the neck, gold armlets on the upper arms (skinned), smaller wings (1.0), plain dark horns, no hair crest, amber eyes. Mockup docs/monster-mockups/imp-lord_001.jpg (mmx).",
+    "strengths": [
+      "The crown and the purple mantle read at 128 px.",
+      "The armlets ride the upper arms, so the claw attack and the death keep the clip check clean.",
+      "It shares the head, the face, the body plan, the bat wings, the rig, and the six imp clips (imp 8.2) through assets/parts/imp-kind.ts (mesh-same: SAME for imp); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup holds a gold trident and has a high collar; both are left out (the attack lifts both hands beside the head, and the collar would sit inside the head).",
+      "The mockup stands; the shared clips hover."
+    ],
+    "next": [
+      "Give the lord a cast clip variant with a short scepter held low."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "demon": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4.5,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/demon) on the imp kind. A heavy dark crimson devil: the imp body and limbs at bulk 1.35, short black horns and a small brow horn, no hair crest, near-black wings, yellow eyes, dark stone armbands on the upper arms and a stone belt with a buckle. Mockup docs/monster-mockups/demon_001.jpg (mmx).",
+    "strengths": [
+      "The darker palette, the brow horn, and the belt set it apart from the imp at 128 px.",
+      "The armbands ride the upper arms (bands on the forearms failed the clip check in the shared death clip).",
+      "It shares the head, the face, the body plan, the bat wings, the rig, and the six imp clips (imp 8.2) through assets/parts/imp-kind.ts (mesh-same: SAME for imp); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup is a standing brute with big fists; this is still the imp's hovering body plan at 1.35 bulk.",
+      "The mockup bracers are on the forearms."
+    ],
+    "next": [
+      "Add a heavier kind option (bigger hands, a wider chest) and a ground stance."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "horned-demon": {
+    "overall": 7.9,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/abyssal-and-cosmic/horned-demon) on the imp kind. A purple devil with two huge black horns that sweep out and up (ringed at the base) and two small brow horns, no hair crest, dark violet wings, orange eyes, and orange flame markings (a drop on the chest and two bands on each forearm) that follow the eye slot. Mockup docs/monster-mockups/horned-demon_001.jpg (mmx).",
+    "strengths": [
+      "The huge horns make a strong silhouette in every direction.",
+      "The orange markings and eyes pop against the purple at 128 px.",
+      "It shares the head, the face, the body plan, the bat wings, the rig, and the six imp clips (imp 8.2) through assets/parts/imp-kind.ts (mesh-same: SAME for imp); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup stands; the shared clips hover."
+    ],
+    "next": [
+      "Add a fire glow (emissive) to the markings."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "drake": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4.5,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/drake) on the dragon kind, wingless. A wingless dragon (the new wings: false option drops the wing bodies and the fly clip): orange-brown scales with dark rust stripes across the back and the tail (below the head), a cream belly, short swept-back horns, a dark rust crest, yellow eyes. Mockup docs/monster-mockups/drake_001.jpg (mmx).",
+    "strengths": [
+      "The wingless outline and the stripes set it apart from the fire dragon.",
+      "Seven clips (idle, walk, run, attack, hit, death, roar) without the fly clip.",
+      "It shares the body, the face, the rig, and the clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire, -ice, -storm); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup drake is lean with a long neck; this is the fire dragon's chunky body.",
+      "The horns are pale; the mockup has small ear-like horns."
+    ],
+    "next": [
+      "Add a body-length option to the dragon kind for lean dragons (drake, lindworm)."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "dragon-ancient": {
+    "overall": 8.0,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-ancient) on the dragon kind. An old dragon: dark bronze-green scales, a pale gold belly, long brown horns that sweep back and out (the new horn option), a white mane (the crest) and bushy white brows, a spiky white beard rigid on the jaw (it opens with the mouth), dull olive wings, gold eyes. Mockup docs/monster-mockups/dragon-ancient_001.jpg (mmx).",
+    "strengths": [
+      "The beard, the white mane and brows, and the long horns read as old at 128 px.",
+      "The beard rides the jaw, so it moves with the roar and the bite.",
+      "It shares the body, the face, the rig, and the clips of the fire dragon (8.5) through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire, -ice, -storm); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup wings are small and tattered; these are the full fire dragon wings in olive."
+    ],
+    "next": [
+      "Add a tattered wing outline option to the dragon kind."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "hippogriff": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/hippogriff) on the griffin copy. A copy of the griffin with the back half of a horse: a chestnut coat, hind legs that end in near-black hooves (with a hoof sole for the ground plant), a long dark horse tail that hangs from the rump (a shade of the wings slot; it trails back in the air and falls back in the death), yellow eagle front legs with talons. Mockup docs/monster-mockups/hippogriff_001.jpg (mmx).",
+    "strengths": [
+      "The chestnut body, the hooves, and the horse tail set it apart from the griffin at 128 px.",
+      "It keeps the griffin's joints and clips, so it can replace the griffin as a mount.",
+      "It keeps the griffin's rig and eight clips (griffin 7.7); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup wings are all brown; these keep the cream flight feathers.",
+      "The body keeps the griffin's chibi proportions; the mockup horse body is longer."
+    ],
+    "next": [
+      "Add it as a mount option in the griffin games."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
+  },
+  "giant-boar": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4.5,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-boar) on the boar kind. The boar without horns: dark brown fur, big ivory tusks (1.5 times as long), a tall black mane (1.6 times as high), a pink snout, red eyes; the ivory slot is named tusks. Mockup docs/monster-mockups/giant-boar_001.jpg (mmx).",
+    "strengths": [
+      "The tall black mane and the big tusks match the mockup and read at 128 px.",
+      "It is the plain kind of the horned boar, which was built as this row's horned variant.",
+      "It shares the body, the head, the rig, and the seven horned boar clips through assets/parts/boar-kind.ts (mesh-same: SAME for horned-boar); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup has bristle tufts on the flanks; the body here is smooth."
+    ],
+    "next": [
+      "Add a few dark bristle tufts on the flanks."
+    ],
+    "reviewedAt": "2026-10-04T09:33:12+00:00"
   }
 }

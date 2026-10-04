@@ -27,7 +27,11 @@ export interface SpiritKind {
   /** The ghost's sheet and stub feet, or an elemental's wisp body. Default 'wisp'. */
   readonly lower?: 'sheet' | 'wisp';
   /** The head material, and its paint (a face mask, freckles). */
-  readonly head?: Pick<BodyOptions, 'roughness' | 'metalness' | 'flat'> & { paint?(head: sdf.Shape, spirit: SpiritShape): sdf.Shape };
+  readonly head?: Pick<BodyOptions, 'roughness' | 'metalness' | 'flat' | 'opacity' | 'emissiveIntensity'> & {
+    /** The head glows in its own color. */
+    readonly glow?: boolean;
+    paint?(head: sdf.Shape, spirit: SpiritShape): sdf.Shape;
+  };
   /** The wisp material (the body, the arms, and the tail), and its paint or surface. */
   readonly wisp?: Pick<BodyOptions, 'roughness' | 'metalness' | 'opacity' | 'flat' | 'emissiveIntensity' | 'bump'> & {
     /** The body width as a share of the default (an earth spirit is a boulder). */
@@ -286,6 +290,8 @@ export function spiritAsset(kind: SpiritKind): AssetDefinition {
           roughness: kind.head?.roughness ?? 0.62,
           ...(kind.head?.metalness !== undefined && { metalness: kind.head.metalness }),
           ...(kind.head?.flat && { flat: true }),
+          ...(kind.head?.opacity !== undefined && { opacity: kind.head.opacity }),
+          ...(kind.head?.glow && { emissive: T.body, emissiveIntensity: kind.head.emissiveIntensity ?? 0.5 }),
           textureDensity: 1.5,
         });
         const w = kind.wisp;
