@@ -5706,5 +5706,92 @@
       "Use the relaxed right arm option when the goblin kind has one."
     ],
     "reviewedAt": "2026-10-04T12:29:34+00:00"
+  },
+  "giant-eagle": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-eagle), the first asset on the new bird kind factory assets/parts/bird-kind.ts (egg body, head with painted eyes, hooked or short beak on a jaw bone, feathered thighs, scaly shins, four-toed feet, a fan tail, the griffin's wings, and the clips idle, walk, fly, attack, hit, death). A bald eagle: a dark brown egg body, a white head with white brow ridges and amber eyes, a hooked yellow beak, folded wings beside the body (wing rest -95, turn -35), a white tail fan, and yellow feet. Mockup docs/monster-mockups/giant-eagle_001.jpg (mmx).",
+    "strengths": [
+      "The white head on the dark egg body and the folded wings match the mockup and read at 128 px.",
+      "The waddle walk, the wing beats, the rear-up peck, and the fall onto the belly work (strips checked); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "In the fly clip the folded wing rest makes the wing thin when seen edge-on at the top of the stroke."
+    ],
+    "next": [
+      "Check the fly clip in a game camera before the eagle is a mount."
+    ],
+    "reviewedAt": "2026-10-04T13:00:12+00:00"
+  },
+  "roc": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/roc) on the bird kind: a big round orange head with a tall red crest and big round dark eyes in white rims, a hooked yellow beak, a small orange body with a red feather bib, raised wings with yellow coverts and red flight feathers, a red and gold tail fan, and orange legs with black talons. Mockup docs/monster-mockups/roc_001.jpg (mmx).",
+    "strengths": [
+      "The raised wings and the red crest make the silhouette, as in the mockup, also from behind.",
+      "It shares the bird rig and the six bird clips; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The wing arm in the body color shows as an orange bar in front of the yellow coverts; the mockup wing edge is yellow."
+    ],
+    "next": [
+      "Add a wing-arm color option to the bird kind."
+    ],
+    "reviewedAt": "2026-10-04T13:00:12+00:00"
+  },
+  "cockatrice": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/cockatrice) on the bird kind with a short beak, no tail fan, and three extra tail bones: a chubby white rooster with big yellow eyes, a red comb and wattle, a cream belly, small folded green wings, yellow feet, and a long green striped serpent tail with an arrow tip that sways in every clip and lashes in the attack. Mockup docs/monster-mockups/cockatrice_001.jpg (mmx).",
+    "strengths": [
+      "The red comb on the white head and the green serpent tail read at 128 px from every side.",
+      "The bird kind's bones and pose hooks carry the serpent tail; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup has white hands and large leafy wings; the asset has small folded wings."
+    ],
+    "next": [
+      "Larger wings if the game needs a flying cockatrice."
+    ],
+    "reviewedAt": "2026-10-04T13:00:12+00:00"
   }
 }

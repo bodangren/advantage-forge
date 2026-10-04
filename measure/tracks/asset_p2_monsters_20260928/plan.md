@@ -190,6 +190,25 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - Prettier reformats a whole kind file (500 changed lines); edit kind files without the formatter.
 - All eight: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 8 (2026-10-04): three birds on a new bird kind
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| giant-eagle | monsters/beast/giant-eagle | bird kind: egg body, white head, folded wings | 7.7 |
+| roc | monsters/beast/roc | bird kind: big head, red crest and bib, raised wings | 7.6 |
+| cockatrice | monsters/beast/cockatrice | bird kind: short beak, comb and wattle, serpent tail on three bones | 7.6 |
+
+- New factory `assets/parts/bird-kind.ts`: an egg body, a head with painted eyes, a hooked or a
+  short beak with a jaw, feathered thighs, scaly shins, four-toed feet with talons, a fan tail, and
+  the griffin's wings; the clips idle, walk (a waddle, feet planted with `motion.plant`), fly (the
+  griffin's `motion.orient` wing beat), attack (a rear-up and a peck), hit, and death. Options:
+  body and head sizes, beak, brows, eye size, wing rest angle, wing turn, wing size, tail, bones,
+  paint, extra, and pose. It also serves the 13 wildlife birds later.
+- A folded wing hangs beside the body with a rest turn of -95 degrees about Z and -35 about Y; a
+  rest turn about Z alone spreads the wing out like an arm.
+- The image model drew no bird on four legs, so the griffin body did not fit these rows.
+- All three: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
@@ -198,4 +217,5 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - [x] Task: Batch 5: twelve monsters on horse, wolf, spider, ogre, golem, and goblin kinds.
 - [x] Task: Batch 6: giant-lizard, basilisk, kitsune, scorpion, and giant-crab on dragon, wolf, and spider kinds.
 - [x] Task: Batch 7: abyssal-beast, dire-bear, owlbear, fairy-sprite, succubus, eldritch-eye, eldritch-horror, and mushroom-creature on six kinds.
-- [ ] Task: Batch 8: the next monsters by base reuse (22 rows are open; candidates: cockatrice and giant-eagle on the griffin, centaur and satyr, treant and ancient-treant); wyvern, lindworm, hydra, and the serpents need a new rig.
+- [x] Task: Batch 8: giant-eagle, roc, and cockatrice on a new bird kind.
+- [ ] Task: Batch 9: the next monsters (19 rows are open: void-tentacle, chimera, giant-snake, giant-toad, hydra, kraken, manticore, sea-serpent, wyvern, lindworm, centaur, dryad, satyr, selkie, treant, ancient-treant, cave-worm, centipede, pixie-swarm); candidates: a serpent kind (giant-snake, sea-serpent, cave-worm, lindworm, hydra), treants on the golem kind, centaur on the horse kind.
