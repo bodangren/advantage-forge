@@ -15179,6 +15179,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/hud/css.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/hud/dom.ts",
       "source_present": true
     },

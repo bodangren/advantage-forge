@@ -12,19 +12,19 @@ The monorepo track `apk3d_games_port_20261003` (branch `apk3d-games-port`, workt
 ## Phase 2: Tests
 
 - [x] Task: Add contract, runtime, renderer selection, host, and package tests. 2026-10-04: kit 144 tests, games 1946 tests (123 files), type checks and lint pass (warnings only) in both packages.
-- [ ] Task: Record graph impact and affected callers for each API change.
+- [x] Task: Record graph impact and affected callers for each API change. 2026-10-04, by a source search (the committed `graph.db` holds main-checkout paths, see Phase 4). `game-contracts`: the practice input (`practiceInputSchema`, `parsePracticeInput`, `toPracticeInput`) is new; callers are the 3D kit, the 3D games, `domain` (`listGamePracticeInput`), and the Primary game page. `storyGameEvidenceSchema` (`storyId` renamed `inputId`) is new on the branch, so no stored row has the old field; callers are the 3D kit, the 3D games, and the Primary completion code. `learningEvidenceSchema` accepts story-game evidence; its callers, the 2D kit and `domain` (`contributions.ts` now checks `effectiveModality` first), type check clean. `domain`: `listGamePracticeInput` and `gamePracticeInputRequestSchema` are new; one caller, the Primary route `/api/v1/apk/practice`.
 
 ## Phase 3: Implementation
 
 - [x] Task: Create the 3D kit and cartridge packages from the local source. All 29 games (8 initial ports, 21 legacy rewrites).
-- [ ] Task: Connect application contracts, host flow, content, and localization. Host flow, completion, and en and th messages are done. The content is wrong: Primary Advantage offers three fixed stories. The games must read the student's saved vocabulary and sentences. Track `game_flashcard_input_20261004` owns this change.
+- [x] Task: Connect application contracts, host flow, content, and localization. Host flow, completion, and the messages of five locales are done. The content is the student's saved vocabulary and sentences in FSRS due order (track `game_flashcard_input_20261004`, completed 2026-10-04).
 - [x] Task: Port Potion Rush as the first dual-view cartridge.
 - [x] Task: Keep Forge as the source of the games. 2026-10-04: play-test edits made only in the monorepo copies on 3 October moved to Forge (89a4769), and `port-game.mjs` reproduces the monorepo files (monorepo 50c589e68, fc429a01d, 79ca5ce75).
 
 ## Phase 4: Integration and verification
 
 - [x] Task: Copy the kit from Forge with a script (owner decision of 2026-10-04: Forge owns the kit). `fetchModelPack` and `installCss` moved into Forge; `port-kit.mjs --check` reports no difference (kit files and contract fixtures). A planted kit change and two planted contract changes were found.
-- [ ] Task: Run package, host, application type, lint, and catalog checks. Package checks pass; the Primary Advantage type check and lint are not run yet.
-- [ ] Task: Refresh repo-graph after every public contract change, and run `architecture-enforcement`.
+- [x] Task: Run package, host, application type, lint, and catalog checks. 2026-10-04: package tests and type checks pass; ESLint passes on the changed Primary files; the browser and app QC pass (flashcard track, Phase 5). The Primary type check has 14 older errors in two unchanged files (TD-16).
+- [ ] Task: Refresh repo-graph after every public contract change, and run `architecture-enforcement`. 2026-10-04: `architecture-enforcement` fails on `origin/master` with the same stale manifest hash (TD-15); the branch does not change the manifest. The committed `graph.db` (last refresh 2026-09-14) stores absolute paths of the main checkout, so an update from the worktree adds a second path root; an update of the 704 branch files also ran past 25 minutes and rolled back. Refresh the graph on the main checkout after the merge (waiting for the owner, with the pull request).
 - [ ] Task: Rebase the port branch. Its base `apk3d-port` is `origin/master` plus 18 unrelated `www` commits. Rebase when the content change is done.
 - [ ] Task: Open a pull request with the verified port and review evidence. The owner approves the pull request and the deployment.

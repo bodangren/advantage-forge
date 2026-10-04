@@ -1,20 +1,20 @@
 {
   "track_id": "game_flashcard_input_20261004",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-04T00:00:00Z",
-  "updated_at": "2026-10-04T00:00:00Z",
+  "updated_at": "2026-10-04T12:00:00Z",
   "description": "Games read the student's saved vocabulary and sentences, chosen by memory state, instead of fixed stories",
   "estimated_tasks": 14,
-  "actual_tasks": null,
-  "deviation_notes": "Design changed from the plain APK arrays to PracticeInput, because the evidence must keep the flashcard record ids. Selection is FSRS due order (owner decision 1).",
+  "actual_tasks": 14,
+  "deviation_notes": "Design changed from the plain APK arrays to PracticeInput, because the evidence must keep the flashcard record ids. Selection is FSRS due order (owner decision 1). One added task: the game briefings said \"your story\"; they now say \"your words\" and \"your sentences\". The Primary type check has 14 older errors (TD-16) and the architecture check fails on origin/master (TD-15).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
     "docs/apk-port.md",
-    "../reading-advantage-monorepo-3d/packages/domain/src/games/learning-content.ts"
+    "../reading-advantage-monorepo-3d/packages/domain/src/games/practice-input.ts",
+    "../reading-advantage-monorepo-3d/apps/primary-advantage/app/api/v1/apk/practice/route.ts",
+    "../reading-advantage-monorepo-3d/apps/primary-advantage/components/story-games/StoryGamesClient.tsx"
   ],
-  "dependencies": [
-    "game_platform_port_20260928"
-  ]
+  "dependencies": []
 }

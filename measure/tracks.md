@@ -203,7 +203,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Port the dual renderer into the monorepo**
   *Link: [./tracks/game_platform_port_20260928/](./tracks/game_platform_port_20260928/)*
 
-- [~] **Track: Games read the student's saved flashcards**
+- [x] **Track: Games read the student's saved flashcards**
   *Link: [./tracks/game_flashcard_input_20261004/](./tracks/game_flashcard_input_20261004/)*
 
 - [~] **Track: Port Potion Rush to the monorepo**

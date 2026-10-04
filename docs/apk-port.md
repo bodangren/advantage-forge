@@ -41,6 +41,16 @@ The monorepo track is `measure/tracks/apk3d_games_port_20261003/`.
   branch replaces them.
 - The port branch rebase waits until the input change is done. Its base `apk3d-port` carries 18
   unrelated `www` commits.
+- The input change is done (track `game_flashcard_input_20261004`, completed 4 October). The
+  games read `GET /api/v1/apk/practice`: at most 10 saved words and 8 saved sentences in FSRS
+  due order. A game without enough items is locked and links to `/student/read`. Monster
+  Encounters left the student games. The briefings say "Your words" and "one of your sentences",
+  not "your story".
+- App QC on a local database: seed the student with `seed-host-proof-session.ts` and
+  `seed-demo-queue.ts`, make a cookie with `make-demo-session.ts`, sync the assets
+  (`sync:3d-assets`), and start `next dev` on a free port. On the reference machine the first
+  request to a route compiles for up to 4 minutes, so warm each route with `curl` before a
+  browser run. The two seed scripts are local-only and not committed (owner decision open).
 
 ### Kit ownership (owner, 2026-10-04)
 
