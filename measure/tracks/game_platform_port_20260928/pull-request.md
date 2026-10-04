@@ -1,7 +1,7 @@
 # Pull request text (prepared 2026-10-04, not opened)
 
 Branch `apk3d-games-port` in `../reading-advantage-monorepo-3d`, rebased on `origin/master`
-fe6aedc2b, 45 commits. The owner opens the pull request and approves the deployment.
+fe6aedc2b, 47 commits. The owner opens the pull request and approves the deployment.
 
 ---
 
@@ -26,7 +26,7 @@ sentences that the student saved from reading.
 | Package | Change |
 | --- | --- |
 | `packages/game-contracts` | Practice input (`practiceInputSchema`, `parsePracticeInput`, `toPracticeInput`), story input, story-game evidence (`inputId`); `learningEvidenceSchema` accepts story-game evidence |
-| `packages/advantage-play-kit-3d` (new) | 3D kit runtime, HUD, model packs, the app host (`host/`, `react/`) |
+| `packages/advantage-play-kit-3d` (new) | 3D kit runtime, HUD, model packs, the app host (`host/`, `react/`), the avatar composer, prices, and portrait layers (`avatar/`, no app use yet) |
 | `packages/game-cartridges-3d` (new) | 28 games, model packs and sprites, browser QC (`qc/run.mjs`) |
 | `packages/domain` | `listGamePracticeInput`, `gamePracticeInputRequestSchema`; `contributions.ts` checks `effectiveModality` first |
 | `apps/primary-advantage` | Practice route, game page with locks, completion mapping, messages in five locales, asset sync (`sync:3d-assets`) |
@@ -40,7 +40,7 @@ Binary assets: 280 files, 29 MB (89 GLB models, 180 PNG and WebP images, 8 MP3 s
 ## Verification
 
 - `game-cartridges-3d`: 120 test files, 1885 tests pass; type check clean.
-- `advantage-play-kit-3d`: 12 test files, 145 tests pass; type check clean. `advantage-play-kit` (2D) and `domain` type check clean.
+- `advantage-play-kit-3d`: 13 test files, 150 tests pass; type check and lint clean. `advantage-play-kit` (2D) and `domain` type check clean.
 - `domain`: practice input tests pass (13). In the full domain suite under load,
   `mastery-persistence-public-api` can time out; it passes alone.
 - Primary: ESLint passes on the changed files; the practice route, page, and completion tests pass (3 files, 18 tests).
