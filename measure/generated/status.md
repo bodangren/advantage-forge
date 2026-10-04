@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 77.
-Tracks by status: new: 11; in_progress: 38; completed: 28.
-Tracks by workstream: assets: 31; games: 39; foundation: 7.
+Tracks: 78.
+Tracks by status: new: 11; in_progress: 38; completed: 29.
+Tracks by workstream: assets: 31; games: 40; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -20,7 +20,7 @@ Tracks by workstream: assets: 31; games: 39; foundation: 7.
 | [asset_p1_nature_20260928](../tracks/asset_p1_nature_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p1_props_20260928](../tracks/asset_p1_props_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p2_items_20260928](../tracks/asset_p2_items_20260928/) | completed | assets | 9/9 | 9 | 9 |
-| [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | in_progress | assets | 4/11 | 9 | — |
+| [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | in_progress | assets | 5/11 | 9 | — |
 | [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | new | assets | 0/9 | 9 | — |
@@ -45,6 +45,7 @@ Tracks by workstream: assets: 31; games: 39; foundation: 7.
 | [game_dungeon_liberator_port_20260928](../tracks/game_dungeon_liberator_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_enchanted_library_20260928](../tracks/game_enchanted_library_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_flashcard_input_20261004](../tracks/game_flashcard_input_20261004/) | completed | games | 14/14 | 14 | 14 |
+| [game_griffin_mount_20261004](../tracks/game_griffin_mount_20261004/) | completed | games | 7/7 | 7 | 7 |
 | [game_griffin_riders_escape_20260928](../tracks/game_griffin_riders_escape_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_griffin_sky_joust_20260928](../tracks/game_griffin_sky_joust_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_gryphon_patrol_20260928](../tracks/game_gryphon_patrol_20260928/) | in_progress | games | 6/8 | 8 | — |
@@ -87,5 +88,5 @@ Tracks by workstream: assets: 31; games: 39; foundation: 7.
 ## Project health
 
 Completed feature tracks with comparable estimates and actuals: 3.
-Recent feature velocity: 14.33 tasks per track.
+Recent feature velocity: 12.00 tasks per track.
 Estimate accuracy ratio: 1.26.

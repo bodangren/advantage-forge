@@ -76,16 +76,15 @@ not an XP rule.
 
 ## Models
 
-3D: the rider hero (session option, `knight` by default), `dragon-fire` (the gryphon, tinted
-gold; no gryphon model exists yet), `giant-bat` (the word bats), and the ground props `oak-tree`,
+3D: the rider hero (session option, `knight` by default), `griffin` (the gryphon, from the
+`mounts` pack; the rider seat is `GRIFFIN_SEAT` in `src/games/shared/griffin.ts`), `giant-bat` (the word bats), and the ground props `oak-tree`,
 `pine-tree`, `ancient-oak`, `bush`, `fern`, `wildflowers`, `boulder`, `rock-cluster`, `cottage`,
 `barn`, `well`, `hay-bale`. Orbs, shots, clouds, and the ground are drawn in code. On a tall screen
 the view spreads the sky out vertically (positions only). 2D: the three heroes (`idle`, `hit`,
-`victory`), `dragon-fire` (`fly`, `hit`, `roar`), `giant-bat` (`fly`, `hit`, `death`), and ten
+`victory`), `griffin` (`fly`, `hit`, `roar`), `giant-bat` (`fly`, `hit`, `death`), and ten
 `prop.*` sprites. The 2D view looks from the side with the east and west sprite rows.
 
 ## Known gaps
 
-- No browser run yet. The rider offset on the gryphon (`RIDER_LIFT` in `view/game.ts`), the model
-  sizes (`SIZES` in `view/sky-plan.ts`), and the 2D prop scale need a visual check.
-- A real gryphon model and sprites would replace the tinted fire dragon.
+- The model sizes (`SIZES` in `view/sky-plan.ts`) and the 2D prop scale had a browser check in
+  the monorepo QC only (2026-10-04, track `game_griffin_mount_20261004`).

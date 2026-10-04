@@ -1,0 +1,21 @@
+{
+  "track_id": "game_griffin_mount_20261004",
+  "type": "feature",
+  "status": "completed",
+  "created_at": "2026-10-04T16:10:00Z",
+  "updated_at": "2026-10-04T17:00:00Z",
+  "description": "The griffin replaces the tinted fire dragon as the mount of the three griffin games",
+  "estimated_tasks": 7,
+  "actual_tasks": 7,
+  "deviation_notes": "The browser QC ran in the monorepo package (qc/run.mjs), because the Forge screenshot tool has no bot for these games. One added fix: the fly clip tucks the hind legs, so the chase camera of Griffin Riders Escape sees the rider. The dependency on asset_p2_monsters_20260928 was removed at close: that track stays open for its other batches, and the griffin it delivered (d0c3d6b) is done.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "assets/griffin.ts",
+    "src/games/shared/griffin.ts",
+    "src/apk3d/contracts/model-pack.ts",
+    "demo/public/packs/mounts/1.0.0/pack.json",
+    "../reading-advantage-monorepo-3d/packages/game-cartridges-3d/src/shared/griffin.ts"
+  ],
+  "dependencies": []
+}

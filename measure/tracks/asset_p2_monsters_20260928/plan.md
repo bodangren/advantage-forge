@@ -40,7 +40,7 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 | fire-slime | monsters/small/fire-slime | slime kind factory, flames | same six | 7.7 | 4a171cd |
 | ice-slime | monsters/small/ice-slime | slime kind factory, crystals | same six | 7.6 | 4a171cd |
 | poison-slime | monsters/small/poison-slime | slime kind factory, goo | same six | 7.8 | 4a171cd |
-| dragon-wyrmling | monsters/dragon/dragon-wyrmling | fire-dragon rig and clips, new head and shell | idle, walk, run, fly, attack, hit, death, roar | 7.6 | (this commit) |
+| dragon-wyrmling | monsters/dragon/dragon-wyrmling | fire-dragon rig and clips, new head and shell | idle, walk, run, fly, attack, hit, death, roar | 7.6 | f18f5c2 |
 
 - Game use: the griffin replaces the fire dragon as the mount of Gryphon Patrol, Griffin Sky-Joust,
   and Griffin Riders Escape (integration is the next task, below). Its attack, hit, and roar happen
@@ -54,5 +54,5 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 
 ## Next
 
-- [ ] Task: Put the griffin into the three griffin games (Forge `src/games`, `GAME_LOADS`, model packs, `port-game.mjs`, rider height).
+- [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
 - [ ] Task: Batch 2: the next monsters by scene and game demand (wyvern, drake, giant-spider-queen, mushroom-creature, will-o-wisp, and the elementals).

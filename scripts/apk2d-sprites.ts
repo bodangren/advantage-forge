@@ -36,6 +36,8 @@ export const LIBRARY: Job[] = [
   ...['villager', 'farmer', 'innkeeper', 'guard', 'druid', 'orc-warrior', 'goblin-warrior'].map((model) => ({ model, clips: NPC, dirs: 4 as const })),
   ...['skeleton', 'zombie', 'slime', 'bandit', 'giant-bat', 'mimic'].map((model) => ({ model, clips: MONSTER, dirs: 4 as const })),
   { model: 'dragon-fire', clips: MONSTER, dirs: 8 },
+  // The mount of the griffin games: only the clips they play.
+  { model: 'griffin', clips: ['fly', 'hit', 'roar', 'attack'], dirs: 8 },
   ...['bottle', 'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread', 'cauldron'].map((model) => ({ model, dirs: 1 as const })),
   // Dragon Flight's land and gates (the 2D view places them in chunks, as the 3D view does).
   ...['arch', 'oak-tree', 'pine-tree', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'well', 'fence', 'hay-bale'].map((model) => ({ model, dirs: 1 as const })),

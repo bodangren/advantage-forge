@@ -16882,6 +16882,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/shared/griffin.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/sorcerer-ziggurat/briefing.ts",
       "source_present": true
     },
@@ -17342,6 +17346,11 @@
     {
       "id": "1.0",
       "source_path": "demo/public/packs/heroes/1.0.0/pack.json",
+      "source_present": true
+    },
+    {
+      "id": "1.0",
+      "source_path": "demo/public/packs/mounts/1.0.0/pack.json",
       "source_present": true
     },
     {

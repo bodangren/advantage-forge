@@ -8,7 +8,7 @@ import type { Stage3D } from '../../../apk3d/stage/index.js';
 import { groundLayout } from './sky-plan.js';
 
 /** The models the 3D view names (the hero comes from the session options). */
-export const SKY_MODELS = ['dragon-fire', 'giant-bat', 'oak-tree', 'pine-tree', 'ancient-oak', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'barn', 'well', 'hay-bale'];
+export const SKY_MODELS = ['griffin', 'giant-bat', 'oak-tree', 'pine-tree', 'ancient-oak', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'barn', 'well', 'hay-bale'];
 
 export interface Sky {
   /** Drifts the clouds; `seconds` is stage time. */

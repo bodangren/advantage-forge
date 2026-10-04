@@ -470,9 +470,10 @@ export default defineAsset({
     };
 
     // Flight: lifted 0.4 m and tilted forward, the wings beat through a full stroke, the body
-    // rises on each downstroke, the front legs tuck under the chest, the hind legs trail, and the
-    // tail trails and sways. The airborne clips (attack, hit, roar) are this pose with changes, so
-    // they blend with the fly loop in the games, where the griffin is a mount.
+    // rises on each downstroke, the front legs tuck under the chest, the hind legs tuck under the
+    // belly, and the tail trails low and sways (a chase camera behind sees the rider over it).
+    // The airborne clips (attack, hit, roar) are this pose with changes, so they blend with the
+    // fly loop in the games, where the griffin is a mount.
     const FLY_Y = 0.4;
     interface Air {
       pitch?: number; // hips pitch added to the flight tilt (+ = nose down)
@@ -504,15 +505,15 @@ export default defineAsset({
         neck: { rotate: [neck, 0, 0] },
         head: { rotate: [(o.head ?? 0) - pitch - spine - neck - 2 * rise, o.shake ?? 0, 0] },
         jaw: { rotate: [32 * (o.jaw ?? 0), 0, 0] },
-        tail: { rotate: [-22 + (o.tail ?? 0) + 6 * wave(p, cycles, 0.4), 8 * wave(p, cycles, 0.3), 0] },
+        tail: { rotate: [-44 + (o.tail ?? 0) + 6 * wave(p, cycles, 0.4), 8 * wave(p, cycles, 0.3), 0] },
         'wing.L': { rotate: wl },
         'wing.R': { rotate: wr },
       };
       for (const side of ['L', 'R']) {
         pose[`fleg.${side}`] = { rotate: [-40 - 45 * reach + 4 * rise, 0, 0] };
         pose[`fshin.${side}`] = { rotate: [80 - 70 * reach, 0, 0] };
-        pose[`bleg.${side}`] = { rotate: [40 - 4 * rise, 0, 0] };
-        pose[`bshin.${side}`] = { rotate: [30, 0, 0] };
+        pose[`bleg.${side}`] = { rotate: [-18 - 4 * rise, 0, 0] };
+        pose[`bshin.${side}`] = { rotate: [72, 0, 0] };
       }
       return pose;
     };

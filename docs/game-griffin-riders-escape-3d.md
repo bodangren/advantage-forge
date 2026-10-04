@@ -54,7 +54,8 @@ the next blank.
 - `src/games/griffin-riders-escape/core/`: types, content (lanes, gates, storms), sim, evidence.
 - `qc/bot.ts`: steers to the lane of the next word and around storms.
 - `view/`: three.js view (`game.ts`, `land.ts`, shared `land-plan.ts`, css). Scene models:
-  `ESCAPE_MODELS` in `view/land.ts`. Rider models: the session hero.
+  `ESCAPE_MODELS` in `view/land.ts` (the mount is `griffin`, from the `mounts` pack; the seat is
+  `GRIFFIN_SEAT` in `src/games/shared/griffin.ts`). Rider models: the session hero.
 - `view2d/`: Phaser view from above and behind (`game.ts`, `prompt.ts`).
 - Tests: `tests/games/griffin-riders-escape/` (rules, replay, bot over 30 seeds, manifest).
 

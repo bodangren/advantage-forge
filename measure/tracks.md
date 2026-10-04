@@ -206,6 +206,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Games read the student's saved flashcards**
   *Link: [./tracks/game_flashcard_input_20261004/](./tracks/game_flashcard_input_20261004/)*
 
+- [x] **Track: The griffin replaces the tinted fire dragon in the griffin games**
+  *Link: [./tracks/game_griffin_mount_20261004/](./tracks/game_griffin_mount_20261004/)*
+
 - [~] **Track: Port Potion Rush to the monorepo**
   *Link: [./tracks/game_potion_rush_port_20260928/](./tracks/game_potion_rush_port_20260928/)*
 

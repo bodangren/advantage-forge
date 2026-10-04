@@ -35,6 +35,8 @@ const CHARACTERS: Record<string, number> = {
   'giant-bat': 10000,
   mimic: 10000,
   'dragon-fire': 16000,
+  // The mount of the griffin games (src/games/shared/griffin.ts).
+  griffin: 16000,
   // Potion Rush customers (docs/game-potion-rush-3d.md): smaller on screen than the heroes.
   farmer: 8000,
   villager: 8000,

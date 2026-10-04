@@ -7,7 +7,7 @@ monorepo (and `advantage-games/src/lib/games/griffinSkyJoust.ts`). Code: `src/ga
 
 A sentence shows its meaning at the top, with blanks. Each word of the sentence rides a flying
 rider (a giant bat) that patrols the sky at its own height. The student flaps and slides a griffin
-(the fire dragon model, with the chosen hero on its back) and strikes from above the rider that
+(the griffin model, with the chosen hero on its back) and strikes from above the rider that
 carries the next word. A right strike fills the blank; the last word makes the sentence whole and
 a new sentence starts. A hit from the side or from below, or a strike on a wrong word, costs one
 courage.
@@ -47,14 +47,15 @@ rider of; `attempts` = wrong strikes + 1. A bump from the side is no miss.
 - 3D (`view/`): a side-on stage (the arena at z = 0, 40 px per meter), sky, clouds, hills with
   trees and rocks. Words are HTML tags over the riders (Thai prompt in HTML). A tap flaps, the
   left or right third also slides; Space or Up flaps, the arrows and A D slide.
-- 2D (`view2d/`): the same arena in Phaser with the dragon-fire and giant-bat sheets (east and
+- 2D (`view2d/`): the same arena in Phaser with the griffin and giant-bat sheets (east and
   west rows) and the hero sprite on the griffin.
 - Helper mode: slower riders (60 instead of 90 px/s) and the rider with the next word pulses.
 
 ## 6. Models
 
-`dragon-fire` (the griffin), `giant-bat` (riders), the chosen hero (rides the griffin), and the
-ground props `oak-tree`, `pine-tree`, `rock-cluster`, `bush`. No new art.
+`griffin` (the mount, from the `mounts` pack; the seat is `GRIFFIN_SEAT` in
+`src/games/shared/griffin.ts`), `giant-bat` (riders), the chosen hero (rides the griffin), and the
+ground props `oak-tree`, `pine-tree`, `rock-cluster`, `bush`.
 
 ## 7. QC bot
 
