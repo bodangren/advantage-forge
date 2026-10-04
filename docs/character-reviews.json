@@ -5793,5 +5793,152 @@
       "Larger wings if the game needs a flying cockatrice."
     ],
     "reviewedAt": "2026-10-04T13:00:12+00:00"
+  },
+  "giant-snake": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-snake) on the new serpent kind (a spine path with root, spine, and tail bones, belly plates, and the round snake head with a jaw and a tongue bone): a green snake in one coil with the neck raised in an S, a big round head with big glossy black eyes, a forked pink tongue, a pale yellow belly with plate lines, and dark green diamonds along the back. Mockup docs/monster-mockups/giant-snake_001.jpg (mmx).",
+    "strengths": [
+      "The raised head, the glossy eyes, and the yellow belly read at 128 px from every side.",
+      "The strike in the attack and the fall in the death bend only the raised part of the body; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The coil is one open ring; the mockup coil is tighter and fatter."
+    ],
+    "next": [
+      "A tighter coil with the tail tucked under, if the game needs it."
+    ],
+    "reviewedAt": "2026-10-04T13:47:03+00:00"
+  },
+  "sea-serpent": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/sea-serpent) on the serpent kind with the new drake head (a long snout with a grin of square teeth and big eyes on top): an upright teal serpent curved like the number 3, a cream belly with plate lines on the front, triangle fins down the back, two small chest fins, and a tail with a three-lobed fan fin. Mockup docs/monster-mockups/sea-serpent_001.jpg (mmx).",
+    "strengths": [
+      "The number-3 curve, the grin of teeth, and the tail fan read at 128 px from the sides.",
+      "The drake head and the frame helper of the kind serve the lindworm too; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "From the front the body is a narrow white column; the mockup only shows the side.",
+      "In the death the head folds into the lower loop for a moment."
+    ],
+    "next": [
+      "A wider lower loop or a slight turn of the body, if the front view must read better."
+    ],
+    "reviewedAt": "2026-10-04T13:47:03+00:00"
+  },
+  "lindworm": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4.5,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/lindworm) on the serpent kind with the drake head (fangs, an open grin, eyes set at the sides): a wingless olive serpent dragon sitting upright on two short front legs with yellow claws, big cream belly plates, ring grooves on the back, raised black nostrils, a crown of five yellow horns, yellow spikes on the neck and the tail, and a curled tail. Mockup docs/monster-mockups/lindworm_001.jpg (mmx).",
+    "strengths": [
+      "The upright neck, the horn crown, and the open grin read at 128 px from every side.",
+      "The legs on their own bones paddle in the walk and brace in the attack; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The death curls the neck down to the ground in front of the base; the mockup gives no death pose."
+    ],
+    "next": [
+      "A side fall in place of the forward curl, if the game shows it often."
+    ],
+    "reviewedAt": "2026-10-04T13:47:03+00:00"
+  },
+  "cave-worm": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A P2 monster (catalog monsters/small/cave-worm) on the serpent kind with no snake head and no belly paint: a fat terracotta egg with a big round mouth (a thick orange lip ring, a pink throat, four small white fangs), two tiny black eyes and a small nose, a fat roll at the base, stubby feet, small orange three-pronged bristles, and a white curly feeler. Mockup docs/monster-mockups/cave-worm_001.jpg (mmx).",
+    "strengths": [
+      "The ring mouth in the egg reads at 128 px from the front and the sides.",
+      "Its own poses give the short body a lunge in the attack and a flop to the side in the death; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The walk is a small sway in place; a worm has no legs to show steps."
+    ],
+    "next": [
+      "A hop or a squash-and-stretch walk if the game moves it a lot."
+    ],
+    "reviewedAt": "2026-10-04T13:47:03+00:00"
+  },
+  "hydra": {
+    "overall": 7.5,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/hydra) on the dragon kind as a wingless drake with the new kind options friendly (no brows, no glaring lids), tailFin, bones, and pose: purple scales with a big cream belly, small white horns and a yellow spot on the main head, a teal saddle with purple spots and white spikes down the back, and two small teal side heads with big black eyes on long purple necks (neck2 and head2 bones). The side heads snap forward in the attack while the main head sprays water. Mockup docs/monster-mockups/hydra_001.jpg (mmx).",
+    "strengths": [
+      "The three heads read at 128 px from every side.",
+      "The side necks have their own bones and poses in every clip; the change keeps drake, dragon-fire, and giant-lizard identical (mesh-same); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup stands on four legs; the asset is the upright drake on two legs with arms.",
+      "The main head keeps the dragon grin with teeth; the mockup has a closed smile."
+    ],
+    "next": [
+      "A four-legged body if the game needs the hydra to walk like the mockup."
+    ],
+    "reviewedAt": "2026-10-04T13:51:28+00:00"
   }
 }

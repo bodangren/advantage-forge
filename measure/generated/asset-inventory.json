@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 643,
-    "source_missing": 213,
+    "source_present": 648,
+    "source_missing": 208,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 124,
-        "source_missing": 180
+        "source_present": 129,
+        "source_missing": 175
       },
       "P3": {
         "listed": 48,
@@ -4460,7 +4460,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/giant-snake.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4500,7 +4500,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/hydra.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4550,7 +4550,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/sea-serpent.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4650,7 +4650,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/lindworm.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4950,7 +4950,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/cave-worm.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 825,
-    "catalog_matched": 627,
-    "off_catalog": 198
+    "listed": 831,
+    "catalog_matched": 632,
+    "off_catalog": 199
   },
   "asset_sources": [
     {
@@ -10415,6 +10415,13 @@
       "source_path": "assets/cave-mouth.ts",
       "catalog_source_ids": [
         "nature/terrain/cave-mouth"
+      ]
+    },
+    {
+      "id": "cave-worm",
+      "source_path": "assets/cave-worm.ts",
+      "catalog_source_ids": [
+        "monsters/small/cave-worm"
       ]
     },
     {
@@ -11589,6 +11596,13 @@
       ]
     },
     {
+      "id": "giant-snake",
+      "source_path": "assets/giant-snake.ts",
+      "catalog_source_ids": [
+        "monsters/beast/giant-snake"
+      ]
+    },
+    {
       "id": "giant-spider-queen",
       "source_path": "assets/giant-spider-queen.ts",
       "catalog_source_ids": [
@@ -12036,6 +12050,13 @@
       ]
     },
     {
+      "id": "hydra",
+      "source_path": "assets/hydra.ts",
+      "catalog_source_ids": [
+        "monsters/beast/hydra"
+      ]
+    },
+    {
       "id": "ice-elemental",
       "source_path": "assets/ice-elemental.ts",
       "catalog_source_ids": [
@@ -12347,6 +12368,13 @@
       "id": "lighthouse",
       "source_path": "assets/lighthouse.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "lindworm",
+      "source_path": "assets/lindworm.ts",
+      "catalog_source_ids": [
+        "monsters/dragon/lindworm"
+      ]
     },
     {
       "id": "living-statue",
@@ -13116,6 +13144,11 @@
     {
       "id": "samurai-katana",
       "source_path": "assets/parts/samurai-katana.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "serpent-kind",
+      "source_path": "assets/parts/serpent-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -13906,6 +13939,13 @@
       "source_path": "assets/scythe.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/scythe"
+      ]
+    },
+    {
+      "id": "sea-serpent",
+      "source_path": "assets/sea-serpent.ts",
+      "catalog_source_ids": [
+        "monsters/beast/sea-serpent"
       ]
     },
     {

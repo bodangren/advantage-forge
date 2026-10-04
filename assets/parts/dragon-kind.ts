@@ -1,5 +1,5 @@
 import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../../src/index.js';
-import type { AssetContext, AssetDefinition, BodyOptions } from '../../src/index.js';
+import type { AnimationDef, AssetContext, AssetDefinition, BodyOptions, BonePose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 /**
@@ -61,10 +61,21 @@ export interface DragonKind {
   readonly headCrest?: boolean;
   /** False for a wingless dragon (a drake): no wing bodies and no fly clip. */
   readonly wings?: boolean;
-  /** Extra paint on the scales (stripes, spots), under the face paint; `dark` is the dark scale shade. */
-  paint?(scales: sdf.Shape, tint: { readonly scales: string; readonly dark: string }): sdf.Shape;
+  /** True for a friendly face: no brows and no glaring lids over the eyes. */
+  readonly friendly?: boolean;
+  /** False for no fan of spines at the tail tip. */
+  readonly tailFin?: boolean;
+  /**
+   * Extra paint on the scales (stripes, spots), under the face paint; `dark` is the dark scale shade.
+   * `k` gives the kind's own slot colors (`k.tint`).
+   */
+  paint?(scales: sdf.Shape, tint: { readonly scales: string; readonly dark: string }, k: AssetContext): sdf.Shape;
   /** Extra bodies, built after the wings (rigid on `head` or tagged to bones). */
   extra?(k: AssetContext, dragon: DragonShape): void;
+  /** Extra bones (more heads, a tail club), added to the skeleton. */
+  readonly bones?: Record<string, { readonly parent: string; readonly at: V3; readonly tail?: V3 }>;
+  /** Poses of the extra bones in a clip (`idle`, `walk`, `run`, `fly`, `attack`, `hit`, `death`, `roar`). */
+  pose?(clip: string, p: number): Record<string, BonePose>;
 }
 
 /** The dragon's head shape and a ray helper for kinds that add bodies to the face. */
@@ -159,6 +170,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         'foot.L': { parent: 'leg.L', at: ANKLE },
         'leg.R': { parent: 'hips', at: mx(HIP) },
         'foot.R': { parent: 'leg.R', at: mx(ANKLE) },
+        ...kind.bones,
       });
 
       // ------------------------------------------------------------------ head
@@ -239,8 +251,8 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       );
       // The grin: a wide dark mouth that curves up at the corners.
       const grin = sdf.extrude(profile.arc(GRIN_R, 0.05, 236, 304), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
-      const kindPaint = (sh: sdf.Shape) => (kind.paint ? kind.paint(sh, { scales: T.red, dark: T.redDark }) : sh);
-      const scales = kindPaint(
+      const kindPaint = (sh: sdf.Shape) => (kind.paint ? kind.paint(sh, { scales: T.red, dark: T.redDark }, k) : sh);
+      const scalesEyes = kindPaint(
         sdf
           .union(
             sdf.smoothUnion(0.05, trunk, head.bone('head')).smoothUnion(0.02, pair(frill).bone('head')),
@@ -261,8 +273,8 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         .paintWhere(iris, T.eye)
         .paintWhere(irisLow, T.eyeLow, 0.012)
         .paintWhere(pupil, C.pupil)
-        .paintWhere(shine, '#ffffff')
-        .paintWhere(lid.intersect(eyeWhite.round(0.006)), T.red, 0.002)
+        .paintWhere(shine, '#ffffff');
+      const scales = (kind.friendly ? scalesEyes : scalesEyes.paintWhere(lid.intersect(eyeWhite.round(0.006)), T.red, 0.002))
         .paintWhere(grin, C.mouth, 0.003)
         .paintWhere(nostrils.round(0.006), C.mouth, 0.004);
       // The lower jaw zone: below the grin circle and below the grin corners, above the chin (y
@@ -365,7 +377,8 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         ].map(([dx, dy, dz]) => sdf.cone(tip, [tip[0] + dx!, tip[1] + dy!, tip[2] + dz!], 0.03, 0.005)),
       );
       const head3 = kind.headCrest === false ? [] : [headCrest.bone('head')];
-      k.body('crest', sdf.union(...head3, backCrest.bone('chest'), tailCrest.bone('tail1'), fin.bone('tail3')), {
+      const tailFin = kind.tailFin === false ? [] : [fin.bone('tail3')];
+      k.body('crest', sdf.union(...head3, backCrest.bone('chest'), tailCrest.bone('tail1'), ...tailFin), {
         color: C.orange,
         roughness: 0.5,
         ...kind.looks?.crest,
@@ -386,7 +399,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           0.01,
         ),
       );
-      k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.5 });
+      if (!kind.friendly) k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.5 });
       if (kind.headCrest !== false) k.body('crest-red', redCrest.bone('head'), { color: T.redDark, roughness: 0.5, ...kind.looks?.crestMid });
       const grinTop = (x: number) => GRIN_Y + GRIN_R - Math.sqrt(GRIN_R * GRIN_R - x * x) + 0.022;
       const teeth = sdf.union(
@@ -490,13 +503,16 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       kind.extra?.(k, { skull, faceHit, topHit: top });
 
       // ------------------------------------------------------------------ animation
+      // A kind's poses of its extra bones join every clip.
+      const animate = (name: string, def: AnimationDef) =>
+        k.animation(name, kind.pose ? { ...def, pose: (t, p) => ({ ...def.pose(t, p), ...kind.pose!(name, p) }) } : def);
       const { wave, bump, legDrop, keys } = motion;
       type R3 = [number, number, number];
       const DEG = 180 / Math.PI;
       const LEG = 0.11;
       const HIDE = [0.001, 0.001, 0.001] as const; // the fire breath, in every clip but the attack
 
-      k.animation('idle', {
+      animate('idle', {
         duration: 2.6,
         pose: (_t, p) => ({
           hips: { move: [0, -0.004 * bump(p), 0] },
@@ -541,14 +557,14 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           };
         },
       });
-      k.animation('walk', stride(0.8, 26, 6, 3, 0, 12));
-      k.animation('run', stride(0.5, 36, 7, 10, 0.02, 24));
+      animate('walk', stride(0.8, 26, 6, 3, 0, 12));
+      animate('run', stride(0.5, 36, 7, 10, 0.02, 24));
 
       // Flying (winged kinds only): lifted off the ground and tilted forward, the wings beat
       // through a full stroke, the body rises on each downstroke, the legs dangle back, and the
       // tail trails and waves.
       if (kind.wings !== false) {
-        k.animation('fly', {
+        animate('fly', {
           duration: 0.6,
           pose: (_t, p) => {
             const beat = wave(p); // +1 at the top of the upstroke
@@ -606,7 +622,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         t1: [[0, 0], [0.3, 14], [0.36, 14], [0.46, -8], [0.8, -8], [1, 0]],
         t3: [[0, 0], [0.3, -20], [0.36, -20], [0.46, 14], [0.8, 14], [1, 0]],
       };
-      k.animation('attack', {
+      animate('attack', {
         duration: 1.2,
         loop: false,
         pose: (_t, p) => {
@@ -648,7 +664,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
 
       // A hit: the head snaps back in a pained roar, the body flinches back on planted feet, the
       // wings flare for a moment, and the tail whips; then a quick return.
-      k.animation('hit', {
+      animate('hit', {
         duration: 0.4,
         loop: false,
         pose: (_t, p) => {
@@ -685,7 +701,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       // Death: it rears up with a last roar, then the legs buckle and it rolls onto its right side.
       // It ends with the head down, the tail limp, the right wing flat on the floor, and the left
       // wing over its back.
-      k.animation('death', {
+      animate('death', {
         duration: 1.4,
         loop: false,
         pose: (_t, p) => {
@@ -759,7 +775,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         t2: [[0, 0], [0.28, 10], [0.74, 10], [0.88, 0], [1, 0]],
         t3: [[0, 0], [0.3, 14], [0.74, 14], [0.9, -4], [1, 0]],
       };
-      k.animation('roar', {
+      animate('roar', {
         duration: 1.8,
         loop: false,
         pose: (_t, p) => {

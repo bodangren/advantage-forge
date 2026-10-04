@@ -209,6 +209,34 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - The image model drew no bird on four legs, so the griffin body did not fit these rows.
 - All three: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 9 (2026-10-04): four serpents on a new serpent kind, and a hydra on the dragon kind
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| giant-snake | monsters/beast/giant-snake | serpent kind: one coil, a raised neck, the round snake head | 7.7 |
+| sea-serpent | monsters/beast/sea-serpent | serpent kind: an upright number-3 curve, the drake head, fins | 7.5 |
+| lindworm | monsters/dragon/lindworm | serpent kind: an upright neck, the drake head with fangs and horns, two front legs | 7.6 |
+| cave-worm | monsters/small/cave-worm | serpent kind: a short egg body, a ring mouth, no snake head | 7.5 |
+| hydra | monsters/beast/hydra | dragon kind (wingless): two side heads on extra neck bones | 7.5 |
+
+- New factory `assets/parts/serpent-kind.ts`: a body along a spine path from the tail tip to the
+  head joint, one bone per joint (`root`, `spine1`... toward the head, `tail1`... toward the tip),
+  belly plates on the side that faces down or forward, and two heads: the round snake head (glossy
+  eyes, a jaw, a forked tongue on its own bone) and the drake head (a long snout with a grin of
+  square teeth, fangs, an open jaw at rest, eyes on top). Helpers `along` (arc length and side of a
+  point) and `frame` (the point, direction, belly, radius, and bone at a share of the length) place
+  paint, fins, spikes, and legs. Clips: idle, walk (a slither), attack (a rear-back and a strike of
+  the raised part), hit, and death (the raised part falls). It also serves the centipede and the
+  wildlife eel later.
+- The dragon kind has four new options: `friendly` (no brows, no glaring lids), `tailFin`, `bones`,
+  and `pose`; the paint hook also gets the asset context for the kind's own slots. `mesh-same`
+  shows drake, dragon-fire, and giant-lizard identical.
+- A body option `bone` binds the whole body, also the mirrored half: tag the shape with `.bone()`
+  before `.mirror('x')` so the right half follows the `.R` bone.
+- The dragon death rolls the body onto its right side; extra necks must swing back about Y to lie
+  on the ground.
+- All five: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
@@ -218,4 +246,5 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
 - [x] Task: Batch 6: giant-lizard, basilisk, kitsune, scorpion, and giant-crab on dragon, wolf, and spider kinds.
 - [x] Task: Batch 7: abyssal-beast, dire-bear, owlbear, fairy-sprite, succubus, eldritch-eye, eldritch-horror, and mushroom-creature on six kinds.
 - [x] Task: Batch 8: giant-eagle, roc, and cockatrice on a new bird kind.
-- [ ] Task: Batch 9: the next monsters (19 rows are open: void-tentacle, chimera, giant-snake, giant-toad, hydra, kraken, manticore, sea-serpent, wyvern, lindworm, centaur, dryad, satyr, selkie, treant, ancient-treant, cave-worm, centipede, pixie-swarm); candidates: a serpent kind (giant-snake, sea-serpent, cave-worm, lindworm, hydra), treants on the golem kind, centaur on the horse kind.
+- [x] Task: Batch 9: giant-snake, sea-serpent, lindworm, and cave-worm on a new serpent kind, and hydra on the dragon kind.
+- [ ] Task: Batch 10: the next monsters (14 rows are open: void-tentacle, chimera, giant-toad, kraken, manticore, wyvern, centaur, dryad, satyr, selkie, treant, ancient-treant, centipede, pixie-swarm); candidates: centipede on the serpent kind, wyvern on the dragon kind, treants and the giant toad on new or existing kinds.
