@@ -1,7 +1,7 @@
 # Pull request text (prepared 2026-10-04, not opened)
 
 Branch `apk3d-games-port` in `../reading-advantage-monorepo-3d`, rebased on `origin/master`
-fe6aedc2b, 47 commits. The owner opens the pull request and approves the deployment.
+fe6aedc2b, 51 commits. The owner opens the pull request and approves the deployment.
 
 ---
 
@@ -40,12 +40,16 @@ Binary assets: 280 files, 29 MB (89 GLB models, 180 PNG and WebP images, 8 MP3 s
 ## Verification
 
 - `game-cartridges-3d`: 120 test files, 1885 tests pass; type check clean.
-- `advantage-play-kit-3d`: 13 test files, 150 tests pass; type check and lint clean. `advantage-play-kit` (2D) and `domain` type check clean.
+- `advantage-play-kit-3d`: 14 test files, 155 tests pass; type check and lint clean. `advantage-play-kit` (2D) and `domain` type check clean.
 - `domain`: practice input tests pass (13). In the full domain suite under load,
   `mastery-persistence-public-api` can time out; it passes alone.
 - Primary: ESLint passes on the changed files; the practice route, page, and completion tests pass (3 files, 18 tests).
 - Browser QC (headless Chromium, software GL): 28 of 28 games in 3D and in 2D, no page errors,
   no legacy asset requests.
+- Phone QC (`qc/run.mjs --phone` 390 x 844 and `--phone-landscape` 844 x 390, touch events):
+  112 of 112 runs in 3D and 2D pass. The layout fixes it led to are in the kit (labels move
+  apart and stay on screen, Thai labels keep whole words, Rune Match tiles fit their words, a
+  portrait game shows a turn cover on a phone on its side).
 - App QC on a local database (seeded student, 390 x 844 viewport): the route returns 10 words
   and 8 sentences; the Thai and English pages open 28 games; Labyrinth (3D) and Rune Match (2D)
   show the saved items; with 3 words and no sentences, all 28 games lock and link to

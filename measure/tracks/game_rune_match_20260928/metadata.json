@@ -3,7 +3,7 @@
   "type": "feature",
   "status": "in_progress",
   "created_at": "2026-09-28T23:11:36Z",
-  "updated_at": "2026-09-28T23:11:36Z",
+  "updated_at": "2026-10-04T15:00:00Z",
   "description": "Rewrite Rune Match as a dual renderer game",
   "estimated_tasks": 7,
   "actual_tasks": null,

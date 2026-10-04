@@ -39,3 +39,9 @@ Waiting for the owner (2026-10-04). Each item has a proposal.
    it on master in a separate change, not in this pull request.
 5. The repository graph (`graph.db`) after the merge. Proposal: refresh it on the main checkout
    in a `chore(graph)` commit.
+6. A real touch-device check of the 28 games (each game plan names it). The phone QC emulates
+   touch at 390 × 844 and 844 × 390 in 3D and 2D, but it cannot judge feel, speed, or reading
+   size. Proposal: the owner plays three games on one iPhone and one mid-range Android phone in
+   the LINE in-app browser (Rune Match, Dragon Flight, Potion Rush: the board, the gates, and the
+   drag), and reports any defect; the other games share the same kit HUD rules (section 9.1 of
+   `docs/apk3d-cartridge.md`).

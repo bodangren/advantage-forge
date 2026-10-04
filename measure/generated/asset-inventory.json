@@ -15259,6 +15259,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/sim/spread.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/stage/actor.ts",
       "source_present": true
     },
@@ -16824,6 +16828,10 @@
     },
     {
       "source_path": "src/games/shared/battle/types.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/games/shared/battle/vault-places.ts",
       "source_present": true
     },
     {

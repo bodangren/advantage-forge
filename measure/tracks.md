@@ -188,7 +188,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Magic Defense as a dual renderer game**
   *Link: [./tracks/game_magic_defense_20260928/](./tracks/game_magic_defense_20260928/)*
 
-- [~] **Track: Generate and validate model packs**
+- [x] **Track: Generate and validate model packs**
   *Link: [./tracks/game_model_packs_20260928/](./tracks/game_model_packs_20260928/)*
 
 - [~] **Track: Port Monster Encounters to the monorepo**
