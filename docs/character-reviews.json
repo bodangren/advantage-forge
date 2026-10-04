@@ -4227,5 +4227,38 @@
       "Add three purple drip ridges under the goo blob."
     ],
     "reviewedAt": "2026-10-04T07:29:07+00:00"
+  },
+  "dragon-wyrmling": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/dragon/dragon-wyrmling) on the fire dragon's rig and clip set, with a new body: a huge round teal head with big glossy black eyes (white rim, two shines), a thin wide smile, a snout bump with nostrils, two curved yellow horns and a small middle horn, and a cracked eggshell cap with a jagged edge; a small chubby body with a cream segmented belly, tiny yellow bat wings, and a spade-tipped tail. The attack breathes a fire puff at 60 percent of the fire dragon's. Mockup docs/monster-mockups/dragon-wyrmling_001.jpg (mmx, sitting).",
+    "strengths": [
+      "The big dark eyes, the eggshell cap, and the yellow horns read at 128 px in all 8 directions.",
+      "It keeps all eight clips of the fire dragon (idle, walk, run, fly, attack, hit, death, roar); no clip sinks below the ground.",
+      "The eggshell reads as a hatchling at a glance and separates it from the fire dragon."
+    ],
+    "issues": [
+      "The mockup sits on its haunches with round paw pads; the rest pose stands, and the feet have no pads.",
+      "The wings keep the fire dragon's spiky bat shape; the mockup wings are rounder and softer.",
+      "The thin smile is hard to see in the sprites at 128 px."
+    ],
+    "next": [
+      "Round the wing outline and the membrane points.",
+      "Thicken the smile line and add paw pads on the soles."
+    ],
+    "reviewedAt": "2026-10-04T07:33:33+00:00"
   }
 }

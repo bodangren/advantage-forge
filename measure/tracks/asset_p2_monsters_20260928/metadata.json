@@ -1,19 +1,21 @@
 {
   "track_id": "asset_p2_monsters_20260928",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-09-28T23:11:36Z",
-  "updated_at": "2026-09-28T23:11:36Z",
+  "updated_at": "2026-10-04T16:00:00Z",
   "description": "Produce P2 monsters",
   "estimated_tasks": 9,
   "actual_tasks": null,
-  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance.",
+  "deviation_notes": "Imported from existing plans. Source presence does not establish acceptance. Batch 1 (2026-10-04) was built by the orchestrator, not by Sonnet agents, because the owner has not asked for workflows.",
   "workstream": "assets",
   "retrospective": false,
   "evidence": [
-    "docs/fantasy-world-asset-catalog.tsv",
+    "assets/parts/slime-kind.ts",
+    "bench/overnight/PLAN.md",
+    "docs/character-reviews.json",
     "docs/fantasy-world-asset-catalog.md",
-    "bench/overnight/PLAN.md"
+    "docs/fantasy-world-asset-catalog.tsv"
   ],
   "dependencies": [
     "asset_quality_20260928"
