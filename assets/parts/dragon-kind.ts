@@ -53,10 +53,12 @@ export interface DragonKind {
   /** Fixed colors that differ from the fire dragon (the slot defaults come from `variants`). */
   readonly palette?: Partial<DragonPalette>;
   readonly looks?: DragonLooks;
-  /** The left horn: [x, y, z, radius] from the root on the head to the tip (mirrored). */
-  readonly horn?: [number, number, number, number][];
+  /** The left horn: [x, y, z, radius] from the root on the head to the tip (mirrored); false for no horns. */
+  readonly horn?: [number, number, number, number][] | false;
   /** The horn base color below this height (the fire dragon: 0.83). */
   readonly hornBaseBelow?: number;
+  /** False for no spines on the head (the tall middle spines and the two side spines). */
+  readonly headCrest?: boolean;
   /** False for a wingless dragon (a drake): no wing bodies and no fly clip. */
   readonly wings?: boolean;
   /** Extra paint on the scales (stripes, spots), under the face paint; `dark` is the dark scale shade. */
@@ -314,7 +316,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
       const hornBelow = kind.hornBaseBelow ?? 0.83;
       const horn = sdf
         .chain(
-          kind.horn ?? [
+          (kind.horn || undefined) ?? [
             [0.13, 0.79, -0.03, 0.05],
             [0.2, 0.84, -0.04, 0.043],
             [0.235, 0.92, -0.03, 0.032],
@@ -323,7 +325,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           0.015,
         )
         .paintFn((_x, y, _z, base) => (y < hornBelow ? rgb(C.hornBase) : base));
-      k.body('horns', pair(horn).bone('head'), { color: C.horn, roughness: 0.4, ...kind.looks?.horns });
+      if (kind.horn !== false) k.body('horns', pair(horn).bone('head'), { color: C.horn, roughness: 0.4, ...kind.looks?.horns });
 
       // ------------------------------------------------------------------ crest: spines on the head and down the back and tail
       const top = (x: number, z: number) => sdf.raycast(skull, [x, 2, z], [0, -1, 0])!;
@@ -362,7 +364,8 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
           [-0.1, -0.02, 0.0],
         ].map(([dx, dy, dz]) => sdf.cone(tip, [tip[0] + dx!, tip[1] + dy!, tip[2] + dz!], 0.03, 0.005)),
       );
-      k.body('crest', sdf.union(headCrest.bone('head'), backCrest.bone('chest'), tailCrest.bone('tail1'), fin.bone('tail3')), {
+      const head3 = kind.headCrest === false ? [] : [headCrest.bone('head')];
+      k.body('crest', sdf.union(...head3, backCrest.bone('chest'), tailCrest.bone('tail1'), fin.bone('tail3')), {
         color: C.orange,
         roughness: 0.5,
         ...kind.looks?.crest,
@@ -384,7 +387,7 @@ export function dragonAsset(kind: DragonKind): AssetDefinition {
         ),
       );
       k.body('brows', brows.bone('head'), { color: C.brow, roughness: 0.5 });
-      k.body('crest-red', redCrest.bone('head'), { color: T.redDark, roughness: 0.5, ...kind.looks?.crestMid });
+      if (kind.headCrest !== false) k.body('crest-red', redCrest.bone('head'), { color: T.redDark, roughness: 0.5, ...kind.looks?.crestMid });
       const grinTop = (x: number) => GRIN_Y + GRIN_R - Math.sqrt(GRIN_R * GRIN_R - x * x) + 0.022;
       const teeth = sdf.union(
         ...[-0.06, -0.02, 0.02, 0.06].map((x) => {

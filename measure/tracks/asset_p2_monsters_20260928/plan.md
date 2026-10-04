@@ -142,10 +142,31 @@ review entry in `docs/character-reviews.json` (scores, issues, next steps).
   mmx put an eyeball on top of the head.
 - All twelve: `ground ok`, held items ok, `forge all` with 0 warnings, a mockup from mmx.
 
+## Batch 6 (2026-10-04): five monsters on dragon, wolf, and spider kinds
+
+| Asset | Catalog ID | Base | Rating |
+| --- | --- | --- | ---: |
+| giant-lizard | monsters/beast/giant-lizard | dragon kind: no wings, horns, or head spines; round yellow spots; acid spit | 7.6 |
+| basilisk | monsters/beast/basilisk | dragon kind: red spiked frill (a frill slot), petrifying breath | 7.7 |
+| kitsune | monsters/fey-and-spirit/kitsune | wolf kind: calm smile, forehead marks, three tails | 7.8 |
+| scorpion | monsters/small/scorpion | spider kind: no abdomen, pincers, curled tail with a stinger | 7.8 |
+| giant-crab | monsters/beast/giant-crab | spider kind: wide shell head, eye stalks, raised claws | 7.6 |
+
+- Kind options added (each base checked with mesh-same: SAME): the dragon kind `horn: false` and
+  `headCrest: false`; the wolf kind `brows`, `forelock`, `smile`, and `paint`; the spider kind
+  `abdomen`, `smallEyes`, `web`, `chestMark: false`, `bones`, `pose`, `head`, `bands: 'none'`,
+  `fangScale: 0`, and a face with only `paint`.
+- A paint region equal to the painted shape puts the surface on the region edge, so it gets about
+  half the color (the wolf's dark legs); a kind paints a clear region (below 8.5 cm) for black paws.
+- The scorpion tail strike first went into the head in the attack; a strike of 20 degrees keeps
+  the stinger over the head (checked in the attack strip).
+- All five: `ground ok`, `forge all` with 0 warnings, a mockup from mmx.
+
 ## Next
 
 - [x] Task: Put the griffin into the three griffin games. Done in the track `game_griffin_mount_20261004`.
 - [x] Task: Batch 3: the ten elementals on a factory from the ghost (one floating body plan, element features).
 - [x] Task: Batch 4: monsters on existing bases (spirit, imp, dragon, and boar kinds, and a griffin copy).
 - [x] Task: Batch 5: twelve monsters on horse, wolf, spider, ogre, golem, and goblin kinds.
-- [ ] Task: Batch 6: the next monsters by base reuse (giant-lizard and basilisk on the dragon kind, kitsune on the wolf kind, scorpion and centipede on the spider kind); 35 rows are open, and wyvern, lindworm, hydra, and the serpents need a new rig.
+- [x] Task: Batch 6: giant-lizard, basilisk, kitsune, scorpion, and giant-crab on dragon, wolf, and spider kinds.
+- [ ] Task: Batch 7: the next monsters by base reuse (30 rows are open; candidates: cockatrice and giant-eagle on the griffin, dire-bear and owlbear, centaur and satyr, treant and ancient-treant); wyvern, lindworm, hydra, and the serpents need a new rig.

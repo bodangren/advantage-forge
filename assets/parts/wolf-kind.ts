@@ -57,6 +57,14 @@ export interface WolfKind {
   readonly earScale?: number;
   /** The eyes glow in the eye slot color at this strength. */
   readonly eyeGlow?: number;
+  /** The heavy cream brows (on by default). */
+  readonly brows?: boolean;
+  /** The cream forelock on the crown (on by default). */
+  readonly forelock?: boolean;
+  /** A thin closed smile in place of the toothy grin (no upper teeth). */
+  readonly smile?: boolean;
+  /** Paint on the fur (ear tips, markings), with the slot colors. */
+  paint?(fur: sdf.Shape, tint: WolfShape['tint']): sdf.Shape;
   /** Extra bones (a tentacle on `spine`, a smoke plume on `hips`). */
   readonly bones?: Record<string, { parent: string; at: V3; tail?: V3 }>;
   /** Extra bodies (smoke, tentacles), rigid on a bone or tagged to bones. */
@@ -204,7 +212,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       const eye = pair(sdf.cylinder(0.031, 1).rotateX(90).at(eL[0], eL[1], 0));
       const pupil = pair(sdf.cylinder(0.014, 1).rotateX(90).at(eL[0] - 0.004, eL[1] - 0.002, 0));
       const shine = pair(sdf.sphere(0.008).at(eL[0] + 0.01, eL[1] + 0.012, eL[2]));
-      const fur = trunk
+      const furBase = trunk
         .smoothUnion(0.03, legs)
         .smoothUnion(0.02, paws)
         .smoothUnion(0.02, tailShape.bone('tail'))
@@ -219,6 +227,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         .paintWhere(eye.intersect(sdf.halfSpace([0, 0, -1], -0.2)), T.eye, 0.002)
         .paintWhere(pupil.intersect(sdf.halfSpace([0, 0, -1], -0.2)), C.pupil, 0.002)
         .paintWhere(shine, '#ffffff', 0.002);
+      const tint = { fur: T.fur, furDark: T.furDark, markings: T.cream, eye: T.eye };
+      const fur = kind.paint ? kind.paint(furBase, tint) : furBase;
       // The lower jaw zone: below the grin circle and below the grin corners, inside a rounded
       // bound that keeps the outer cheeks and the cheek tufts on the head. The head keeps the rest;
       // the jaw pieces are rigid on `jaw` and reach 3 mm into the head, so no seam groove shows.
@@ -247,7 +257,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       // ------------------------------------------------------------------ cream: muzzle, brows, forelock, ruff
       // The grin: a dark band on the muzzle that curves up at the corners. The lower half of the
       // band goes with the lower jaw.
-      const grin = sdf.extrude(profile.arc(GRIN_R, 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
+      const grin = sdf.extrude(profile.arc(GRIN_R, kind.smile ? 0.011 : 0.028, 226, 314), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
       const muzzleCream = muzzleWide.round(0.004).paintWhere(grin, C.mouth, 0.002);
       k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzleWide), C.mouth, 0.002), {
         color: T.cream,
@@ -296,7 +306,12 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         ...ruffRow(6, 0.31, 55, 0.13, 0.12, 0.042),
       );
       const muzzleTop = muzzleCream.subtract(jawZone).paintWhere(roofPaint(muzzleWide), C.mouth, 0.002);
-      const cream = sdf.union(muzzleTop.bone('head'), brows.bone('head'), forelock.bone('head'), ruff.bone('neck'));
+      const cream = sdf.union(
+        muzzleTop.bone('head'),
+        ...(kind.brows === false ? [] : [brows.bone('head')]),
+        ...(kind.forelock === false ? [] : [forelock.bone('head')]),
+        ruff.bone('neck'),
+      );
       k.body('cream', cream, { color: T.cream, roughness: 0.8, textureDensity: 1.5 });
 
       // ------------------------------------------------------------------ nose, teeth, claws
@@ -318,7 +333,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           return sdf.cone([h[0], h[1] + 0.004, h[2] - 0.004], [h[0], h[1] - 0.022, h[2] + 0.002], 0.011, 0.003);
         }),
       );
-      k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+      if (!kind.smile) k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
       // Two lower fangs on the jaw, 5 mm behind the lip: hidden in the closed grin, they stand up
       // from the jaw when it opens.
       const lowerFangs = sdf.union(
@@ -349,7 +364,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       const wolf: WolfShape = {
         trunk,
         on: (shape, x, y, z, lift = 0) => sdf.surfacePoint(shape, [x, y, z], lift) as V3,
-        tint: { fur: T.fur, furDark: T.furDark, markings: T.cream, eye: T.eye },
+        tint,
         tone: (slot, color, follow = 1) => k.tint(slot, { color, follow }),
       };
       kind.extra?.(k, wolf);

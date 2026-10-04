@@ -1,5 +1,5 @@
 import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../../src/index.js';
-import type { AssetContext, AssetDefinition } from '../../src/index.js';
+import type { AnimationDef, AssetContext, AssetDefinition, BonePose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 /**
@@ -71,20 +71,32 @@ export interface SpiderKind {
   readonly presets?: VariantPresets;
   /** Fixed colors and the default shades of the slots (bodyDark, brow, claw, irisRim, fang, ...). */
   readonly colors?: Partial<typeof SPIDER_COLORS>;
-  /** Another face in place of the angry brows, the two huge eyes, and the six small eyes. */
+  /** Another face in place of the angry brows, the two huge eyes, and the six small eyes (without `build`, the default face stays). */
   readonly face?: {
-    build(k: AssetContext, spider: SpiderShape): void;
+    build?(k: AssetContext, spider: SpiderShape): void;
     /** Paint on the carapace (a mouth, cheeks), in the posed frame (use `spider.headPose`). */
     paint?(carapace: sdf.Shape, spider: SpiderShape): sdf.Shape;
   };
-  /** The chest mark in place of the splat: a 2D stencil extruded along Z at the origin. */
-  readonly chestMark?: sdf.Shape;
-  /** The size of the fangs as a share of the giant spider's. */
+  /** The chest mark in place of the splat: a 2D stencil extruded along Z at the origin; false for none. */
+  readonly chestMark?: sdf.Shape | false;
+  /** The size of the fangs as a share of the giant spider's (0: no fangs). */
   readonly fangScale?: number;
-  /** The leg bands in the markings slot (the default) or in the dark claw shade. */
-  readonly bands?: 'markings' | 'dark';
-  /** Extra bodies (a crown, palps), rigid on the head or the body bone. */
+  /** The leg bands in the markings slot (the default), in the dark claw shade, or none. */
+  readonly bands?: 'markings' | 'dark' | 'none';
+  /** The head ellipsoid (upright, before the tilt): radii and center (the giant spider: 0.21, 0.175, 0.17 at 0, 0.37, 0.14). */
+  readonly head?: { readonly size: V3; readonly at: V3 };
+  /** The big abdomen behind, with its skull mark (on by default). */
+  readonly abdomen?: boolean;
+  /** The six small eyes on top of the head in the default face (on by default). */
+  readonly smallEyes?: boolean;
+  /** The web glob and the spit clip (on by default). */
+  readonly web?: boolean;
+  /** Extra bones (a tail, pincers). */
+  readonly bones?: Record<string, { parent: string; at: V3; tail?: V3 }>;
+  /** Extra bodies (a crown, palps), rigid on the head or the body bone, or tagged to extra bones. */
   extra?(k: AssetContext, spider: SpiderShape): void;
+  /** Poses of the extra bones in a clip (`idle`, `walk`, `run`, `attack`, `spit`, `hit`, `death`). */
+  pose?(clip: string, p: number): Record<string, BonePose>;
 }
 
 /** The spider's head frame and slot colors that a kind builds on. */
@@ -129,7 +141,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
       // ------------------------------------------------------------------ head (upright), thorax, abdomen
       const headUp = sdf.smoothUnion(
         0.05,
-        sdf.ellipsoid([0.21, 0.175, 0.17]).at(0, 0.37, 0.14),
+        sdf.ellipsoid(kind.head?.size ?? [0.21, 0.175, 0.17]).at(...(kind.head?.at ?? [0, 0.37, 0.14])),
         sdf.ellipsoid([0.15, 0.07, 0.11]).at(0, 0.255, 0.11), // the jaw under the face
       );
       const faceHit = (x: number, y: number) => sdf.raycast(headUp, [x, y, 2], [0, 0, -1])!;
@@ -155,6 +167,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
         bones[`leg${i}.R`] = { parent: 'body', at: mxp(legRoot(a)), tail: mxp(legKnee(a)) };
         bones[`shin${i}.R`] = { parent: `leg${i}.R`, at: mxp(legKnee(a)), tail: mxp(legTip(a)) };
       });
+      Object.assign(bones, kind.bones);
       k.skeleton(bones);
 
       const thorax = sdf.ellipsoid([0.19, 0.16, 0.18]).at(0, 0.19, 0.085);
@@ -200,16 +213,16 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
         .at(...ABD)
         .intersect(sdf.halfSpace([0, -axis[1], -axis[2]], -(axis[1] * ABD[1] + axis[2] * ABD[2])));
 
-      const carapaceShape = sdf
-        .smoothUnion(0.05, headPose(headUp).bone('head'), thorax.bone('body'))
-        .smoothUnion(0.04, abdomenShape.bone('abdomen'))
+      const front = sdf.smoothUnion(0.05, headPose(headUp).bone('head'), thorax.bone('body'));
+      const hasAbdomen = kind.abdomen !== false;
+      const shell = (hasAbdomen ? front.smoothUnion(0.04, abdomenShape.bone('abdomen')) : front)
         // Darker underneath.
         .paintFn((_x, y, _z, base) => {
           const t = Math.min(1, Math.max(0, (0.2 - y) / 0.14));
           return t <= 0 ? base : mixRgb(base, rgb(T.under), 0.35 * t);
-        })
-        .paintWhere(chestMark, T.markings, 0.003)
-        .paintWhere(skullStencil, T.markings, 0.003);
+        });
+      const marked = kind.chestMark === false ? shell : shell.paintWhere(chestMark, T.markings, 0.003);
+      const carapaceShape = hasAbdomen ? marked.paintWhere(skullStencil, T.markings, 0.003) : marked;
       const carapace = kind.face?.paint ? kind.face.paint(carapaceShape, shape) : carapaceShape;
       k.body('carapace', carapace, {
         color: T.body,
@@ -260,13 +273,14 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
         }),
       );
       const clawTips = sdf.union(...LEG_ANGLES.map((a) => sdf.sphere(0.09).at(...legTip(a)).intersect(sdf.halfSpace(norm(sub(legMid(a), legTip(a))), dotv(norm(sub(legMid(a), legTip(a))), lerp3(legMid(a), legTip(a), 0.64))))));
-      k.body('legs', pair(sdf.union(...legs).paintWhere(bands, kind.bands === 'dark' ? T.claw : T.markings, 0.004).paintWhere(clawTips, T.claw, 0.006)), {
+      const banded = kind.bands === 'none' ? sdf.union(...legs) : sdf.union(...legs).paintWhere(bands, kind.bands === 'dark' ? T.claw : T.markings, 0.004);
+      k.body('legs', pair(banded.paintWhere(clawTips, T.claw, 0.006)), {
         color: T.body,
         roughness: 0.75,
         bump: (x, y, z) => 0.001 * noise.fbm(x * 90, y * 90, z * 90, 2),
       });
 
-      if (kind.face) kind.face.build(k, shape);
+      if (kind.face?.build) kind.face.build(k, shape);
       else {
         // ------------------------------------------------------------------ brows: a heavy, wrinkled shelf in an angry V
         const EYE_X = 0.09;
@@ -329,7 +343,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
             .paintWhere(sdf.sphere(r * 0.24).at(c[0] + r * 0.2, c[1] + r * 0.72, c[2] + r * 0.62), C.eyeWhite, 0.001);
         };
         const smallEyes = pair(sdf.union(smallEye(0.048, 0.21, 0.034), smallEye(0.135, 0.17, 0.027), smallEye(0.062, 0.11, 0.03)));
-        k.body('small-eyes', headPose(smallEyes), { color: C.eyeWhite, roughness: 0.12, textureDensity: 2, bone: 'head' });
+        if (kind.smallEyes !== false) k.body('small-eyes', headPose(smallEyes), { color: C.eyeWhite, roughness: 0.12, textureDensity: 2, bone: 'head' });
 
       }
 
@@ -349,7 +363,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
       // A kind may scale the fangs about their roots (the bulb stays at the jaw).
       const fs = kind.fangScale;
       const fangShape = fs ? fang.at(-FANG_ROOT[0], -FANG_ROOT[1], -FANG_ROOT[2]).scale(fs).at(...FANG_ROOT) : fang;
-      k.body('fangs', pair(headPose(fangShape).bone('fang.L')), { color: C.fang, roughness: 0.35, detail: 0.004 });
+      if (fs !== 0) k.body('fangs', pair(headPose(fangShape).bone('fang.L')), { color: C.fang, roughness: 0.35, detail: 0.004 });
 
       // ------------------------------------------------------------------ web glob: the spit shot
       // A lumpy ball of sticky web about 5.5 cm across, with four short strands that trail behind it
@@ -381,10 +395,13 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
         })
         .at(...GLOB_AT);
       kind.extra?.(k, shape);
-      k.body('web-glob', glob, { color: C.web, roughness: 0.55, opacity: 0.9, bone: 'webshot', detail: 0.0025, textureDensity: 1.5 });
+      if (kind.web !== false) k.body('web-glob', glob, { color: C.web, roughness: 0.55, opacity: 0.9, bone: 'webshot', detail: 0.0025, textureDensity: 1.5 });
 
       // ------------------------------------------------------------------ animation
       const { wave, bump, keys, reach } = motion;
+      // Every clip also poses the kind's extra bones.
+      const anim = (name: string, def: AnimationDef) =>
+        k.animation(name, kind.pose ? { ...def, pose: (t, p) => ({ ...def.pose(t, p), ...kind.pose!(name, p) }) } : def);
       type P = Record<string, { rotate?: V3; move?: V3; scale?: V3 }>;
       // Lifting a leg that points along angle a (deg): rotate about the horizontal axis d x up.
       const lift = (a: number, side: 1 | -1, deg: number) => {
@@ -447,10 +464,10 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
           return pose;
         },
       });
-      k.animation('walk', gait(0.7, 20, 28, 0.01));
-      k.animation('run', gait(0.4, 26, 36, 0.016));
+      anim('walk', gait(0.7, 20, 28, 0.01));
+      anim('run', gait(0.4, 26, 36, 0.016));
 
-      k.animation('idle', {
+      anim('idle', {
         duration: 2.4,
         pose: (_t, p) => {
           const pose: P = {
@@ -474,7 +491,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
       // body pitches down 25 degrees and drives forward, the front legs slam down ahead to pin the
       // prey, and the fangs snap shut. Bite (0.15 s): it presses down with the fangs in. Then it
       // backs off, and the front feet step back to their rest spots.
-      k.animation('attack', {
+      anim('attack', {
         duration: 1.0,
         loop: false,
         pose: (_t, p) => {
@@ -548,7 +565,8 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
         ] as V3,
         head: keys(p, [[0, 0], [0.34, -8], [0.4, -9], [0.45, 8], [0.53, 7], [1, 0]] as const),
       });
-      k.animation('spit', {
+      if (kind.web !== false)
+        anim('spit', {
         duration: 1.1,
         loop: false,
         pose: (_t, p) => {
@@ -584,7 +602,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
       });
 
       // Hit: it jerks back and up, the legs flinch in, then it settles.
-      k.animation('hit', {
+      anim('hit', {
         duration: 0.45,
         loop: false,
         pose: (_t, p) => {
@@ -610,7 +628,7 @@ export function spiderAsset(kind: SpiderKind): AssetDefinition {
 
       // Death: a last recoil, the legs curl in tight, then it rolls over onto its back and lies there
       // with the curled legs in the air, a final twitch, and stillness.
-      k.animation('death', {
+      anim('death', {
         duration: 1.5,
         loop: false,
         pose: (_t, p) => {

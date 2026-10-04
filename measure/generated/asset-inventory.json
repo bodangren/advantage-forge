@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 627,
-    "source_missing": 229,
+    "source_present": 632,
+    "source_missing": 224,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 108,
-        "source_missing": 196
+        "source_present": 113,
+        "source_missing": 191
       },
       "P3": {
         "listed": 48,
@@ -4360,7 +4360,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/basilisk.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4430,7 +4430,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/giant-crab.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4450,7 +4450,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/giant-lizard.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -4810,7 +4810,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/kitsune.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -5090,7 +5090,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/scorpion.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_monsters_20260928"
     },
     {
@@ -9625,8 +9625,8 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 808,
-    "catalog_matched": 611,
+    "listed": 813,
+    "catalog_matched": 616,
     "off_catalog": 197
   },
   "asset_sources": [
@@ -9984,6 +9984,13 @@
       "source_path": "assets/barrel.ts",
       "catalog_source_ids": [
         "props/containers/barrel"
+      ]
+    },
+    {
+      "id": "basilisk",
+      "source_path": "assets/basilisk.ts",
+      "catalog_source_ids": [
+        "monsters/beast/basilisk"
       ]
     },
     {
@@ -11498,10 +11505,24 @@
       ]
     },
     {
+      "id": "giant-crab",
+      "source_path": "assets/giant-crab.ts",
+      "catalog_source_ids": [
+        "monsters/beast/giant-crab"
+      ]
+    },
+    {
       "id": "giant-crystal",
       "source_path": "assets/giant-crystal.ts",
       "catalog_source_ids": [
         "nature/terrain/giant-crystal"
+      ]
+    },
+    {
+      "id": "giant-lizard",
+      "source_path": "assets/giant-lizard.ts",
+      "catalog_source_ids": [
+        "monsters/beast/giant-lizard"
       ]
     },
     {
@@ -12122,6 +12143,13 @@
       "source_path": "assets/kite-shield.ts",
       "catalog_source_ids": [
         "equipment/armor/kite-shield"
+      ]
+    },
+    {
+      "id": "kitsune",
+      "source_path": "assets/kitsune.ts",
+      "catalog_source_ids": [
+        "monsters/fey-and-spirit/kitsune"
       ]
     },
     {
@@ -13774,6 +13802,13 @@
       "source_path": "assets/scimitar.ts",
       "catalog_source_ids": [
         "equipment/melee-weapons/scimitar"
+      ]
+    },
+    {
+      "id": "scorpion",
+      "source_path": "assets/scorpion.ts",
+      "catalog_source_ids": [
+        "monsters/small/scorpion"
       ]
     },
     {

@@ -5323,5 +5323,150 @@
       "Add a few strand ridges to the hair cap."
     ],
     "reviewedAt": "2026-10-04T10:49:09+00:00"
+  },
+  "giant-lizard": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-lizard) on the dragon kind. The drake without wings, horns (new option horn: false), or head spines (new option headCrest: false): green scales with round yellow spots (jittered grid points), a cream belly, small yellow spines on the back and the tail, gold eyes, dark green brows, and a pale green acid spit in place of fire. Mockup docs/monster-mockups/giant-lizard_001.jpg (mmx).",
+    "strengths": [
+      "The round yellow spots and the hornless head set it apart from the drake at 128 px.",
+      "It shares the body, the rig, and the drake clips through assets/parts/dragon-kind.ts (mesh-same: SAME for dragon-fire and drake after the two new options); ground ok, forge all with 0 warnings."
+    ],
+    "issues": [
+      "The mockup lizard is calm and stands low; this one keeps the dragon grin, the brows, and the upright chibi pose."
+    ],
+    "next": [
+      "Give the dragon kind a calm face option (no teeth, soft brows)."
+    ],
+    "reviewedAt": "2026-10-04T11:35:26+00:00"
+  },
+  "basilisk": {
+    "overall": 7.7,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/basilisk) on the dragon kind, without wings, horns, or head spines. Dark green scales, a pale yellow belly, a tall red spiked frill behind the head like a crown (a frill slot, with dark red rays), dark green back spines, yellow eyes, and a grey-green petrifying breath. Mockup docs/monster-mockups/basilisk_001.jpg (mmx).",
+    "strengths": [
+      "The red frill reads as a crown from the front and the back at 128 px.",
+      "It shares the body, the rig, and the drake clips through assets/parts/dragon-kind.ts; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The mockup basilisk has a slim serpent neck; here it keeps the round dragon body, and the frill is thin from the side."
+    ],
+    "next": [
+      "Add a long-neck option to the dragon kind for serpent kinds."
+    ],
+    "reviewedAt": "2026-10-04T11:35:26+00:00"
+  },
+  "kitsune": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/fey-and-spirit/kitsune) on the wolf kind with new calm-face options: no brows, no forelock, a thin closed smile without upper teeth, and a fur paint hook. Orange fur with white cheeks, muzzle, and chest, black ear tips and paws, a red triangle and dots on the forehead, white marks over the eyes, gold eyes, and three white-tipped tails (the wolf tail and two on their own bones that sway in every clip). Mockup docs/monster-mockups/kitsune_001.jpg (mmx).",
+    "strengths": [
+      "The three tails, the forehead marks, and the calm smile match the mockup.",
+      "It shares the body, the rig, and the seven wolf clips (mesh-same: SAME for dire-wolf after the new options); ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The chest ruff is spiky, and the mockup chest is smooth; the front legs take some white from the chest paint."
+    ],
+    "next": [
+      "Add a smooth-chest option to the wolf kind."
+    ],
+    "reviewedAt": "2026-10-04T11:35:26+00:00"
+  },
+  "scorpion": {
+    "overall": 7.8,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/small/scorpion) on the spider kind with new options (no abdomen, no small eyes, no web spit, no chest mark, extra bones, and poses in every clip). A sandy shell with brown bands on the legs and the back, big round eyes, small fangs, two big pincers on arms (the outer finger opens on its own bone), and a segmented tail on five bones that curls over the back to a dark stinger; the attack opens and snaps the claws and strikes the tail over the head. Mockup docs/monster-mockups/scorpion_001.jpg (mmx).",
+    "strengths": [
+      "The curled tail and the two pincers read at 128 px, also from above.",
+      "It shares the legs, the head, the rig, and the spider clips (mesh-same: SAME for giant-spider and giant-spider-queen); the tail strike stays above the head; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The spider legs are longer than the short legs of the mockup scorpion."
+    ],
+    "next": [
+      "Add a leg length option to the spider kind."
+    ],
+    "reviewedAt": "2026-10-04T11:35:26+00:00"
+  },
+  "giant-crab": {
+    "overall": 7.6,
+    "group": "Monsters",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 5,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 4
+    },
+    "summary": "A P2 monster (catalog monsters/beast/giant-crab) on the spider kind with a new head option (a wide, low red dome as the shell), no fangs, no leg bands, no abdomen, no chest mark, and no web. A cream underside, a grumpy painted face (two dot eyes and a flat mouth), two white eyeballs on stalks, and two big raised claws on arms (the outer finger opens on its own bone, and the claws snap in idle and attack). Mockup docs/monster-mockups/giant-crab_001.jpg (mmx).",
+    "strengths": [
+      "The raised claws and the eye stalks read as a crab at 128 px.",
+      "It shares the legs, the rig, and the spider clips; ground ok, 0 warnings."
+    ],
+    "issues": [
+      "The spider legs are long and thin, and the mockup crab legs are short and bent."
+    ],
+    "next": [
+      "Add a leg length option to the spider kind (also for the scorpion)."
+    ],
+    "reviewedAt": "2026-10-04T11:35:26+00:00"
   }
 }
