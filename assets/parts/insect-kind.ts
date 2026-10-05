@@ -1,4 +1,5 @@
 import { defineAsset, motion, noise, profile, rgb, sdf } from '../../src/index.js';
+import { curlField } from './curl-field.js';
 import type { AssetContext, AssetDefinition } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
@@ -52,6 +53,10 @@ export interface InsectKind {
   readonly stinger?: boolean;
   /** Fine fuzz on the body and the head (bump strength; default 0). */
   readonly fuzz?: number;
+  /** With the round body: its size as a share (default 1). */
+  readonly bodySize?: number;
+  /** With the round body: deep pom-pom fuzz as geometry, this many meters deep (default 0). */
+  readonly pompom?: number;
   /** A big fluffy mane round the face, in this slot's color. */
   readonly mane?: string;
   /** The antennae: long and thin with ball tips (default), short with big round knobs, or long with curled tips. */
@@ -77,7 +82,7 @@ export interface InsectKind {
   /** A fuzzy ring round the neck that joins the head to the body (default false). */
   readonly collar?: boolean;
   /** The mane: a smooth ring (default) or spiky fluffy fur. */
-  readonly maneStyle?: 'smooth' | 'spiky' | 'strands';
+  readonly maneStyle?: 'smooth' | 'spiky' | 'hood';
   /** The eyes: glossy dark balls (default), white balls with a big dark pupil, or dark balls with a colored iris. */
   readonly eyeStyle?: 'dark' | 'white' | 'iris';
   /** The iris color for `eyeStyle: 'iris'`. */
@@ -186,7 +191,9 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
       let bandAxis: (x: number, y: number, z: number) => number = (_x, y) => y;
       if (abdKind === 'round') {
         // A fuzzy ball, a little taller than wide.
-        thorax = sdf.ellipsoid([0.15, 0.155, 0.15]).at(...BODY_C);
+        const bs = kind.bodySize ?? 1;
+        thorax = bs === 1 ? sdf.ellipsoid([0.15, 0.155, 0.15]).at(...BODY_C) : sdf.ellipsoid([0.15 * bs, 0.155 * bs, 0.15 * bs]).at(...BODY_C);
+        if (kind.pompom) thorax = thorax.displace(kind.pompom, (x, y, z) => noise.fbm(x * 45, y * 45, z * 45, 2));
         const sr = kind.stripeRange ?? [0.12, -0.13];
         bands = [BODY_C[1] + sr[0], BODY_C[1] + sr[1]];
       } else if (abdKind === 'pointed') {
@@ -362,8 +369,8 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
         // A short stalk and a big round flat lobe that leans out (a moth's feathery antenna).
         antenna = sdf.smoothUnion(
           0.01,
-          sdf.chain([[ax, ay - 0.01, az, 0.013], [ax + 0.03, ay + 0.06, az + 0.005, 0.011]], 0.008),
-          sdf.ellipsoid([0.058, 0.07, 0.04]).rotateZ(-25).at(ax + 0.07, ay + 0.12, az + 0.005),
+          sdf.chain([[ax, ay - 0.01, az, 0.013], [ax + 0.035, ay + 0.1, az + 0.005, 0.011]], 0.008),
+          sdf.ellipsoid([0.058, 0.07, 0.04]).rotateZ(-25).at(ax + 0.075, ay + 0.16, az + 0.005),
         );
       } else {
         antenna = sdf.union(
@@ -379,36 +386,22 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
         );
       }
       k.body('antennae', pair(antenna).bone('head'), { color: kind.antennaSlot ? k.tint(kind.antennaSlot) : T.stripes, roughness: 0.5, detail: 0.003 });
-      if (kind.mane && kind.maneStyle === 'strands') {
-        // A soft mane of fur clumps round the face only: a ring of round clumps that point out from
-        // the edge of the face, and a few on top of the head, each with soft strand grooves.
+      if (kind.mane && kind.maneStyle === 'hood') {
+        // A fluffy hood (a moth): a thick soft layer over the top, the sides, and the back of the
+        // head that runs down under the chin onto the chest, with a round hole for the face. Round
+        // tufts are raised all over it (`curlField`), and fine strand grooves are in the normal map
+        // only (as geometry they split the mesh into thousands of UV charts and the bake fails).
         const fc: V3 = [HEAD_C[0], HEAD_C[1] - HR * 0.05, HEAD_C[2] + HR * 0.3];
-        // The base: the head grown out, without the face in front, so the fur is one thick mass.
-        const faceHole = sdf.cylinder(HR * 0.84, 1).rotateX(90).at(0, HEAD_C[1] - HR * 0.05, HEAD_C[2] + 0.5);
-        const clumps: sdf.Shape[] = [headShape.round(HR * 0.26).subtract(faceHole.intersect(sdf.halfSpace([0, 0, -1], -(HEAD_C[2] + HR * 0.1))))];
-        const NR = 20;
-        for (let i = 0; i < NR; i++) {
-          const a = (i / NR) * Math.PI * 2 + 0.1;
-          const ca = Math.cos(a);
-          const sa = Math.sin(a);
-          const r0 = HR * 0.98;
-          const inner: V3 = [fc[0] + ca * r0, fc[1] + sa * r0 * 0.95, fc[2] - HR * 0.08];
-          const len = HR * (0.3 + 0.1 * noise.random(i, 2, 5)) * (sa < -0.5 ? 1.3 : 1);
-          const outer: V3 = [inner[0] + ca * len, inner[1] + sa * len * 0.95, inner[2] - HR * 0.1];
-          clumps.push(sdf.capsule(inner, outer, HR * 0.24));
-        }
-        for (const [x, z] of [[-0.35, -0.1], [0.35, -0.1], [0, 0.05], [0, -0.35]] as const) {
-          const top = sdf.raycast(headShape, [HEAD_C[0] + HR * x, 2, HEAD_C[2] + HR * z], [0, -1, 0])!;
-          clumps.push(sdf.capsule([top[0], top[1] - HR * 0.05, top[2]], [top[0] + HR * x * 0.3, top[1] + HR * 0.22, top[2] - HR * 0.1], HR * 0.2));
-        }
-        // The strand grooves are in the normal map only: as geometry they split the mesh into
-        // thousands of UV charts and the texture bake fails.
-        const mane = sdf.smoothUnion(HR * 0.1, ...clumps).displace(0.004, (x, y, z) => noise.fbm(x * 30, y * 30, z * 30, 2));
+        const bib = sdf.ellipsoid([HR * 0.95, HR * 0.62, HR * 0.72]).at(HEAD_C[0], HEAD_C[1] - HR * 0.92, HEAD_C[2] + HR * 0.12);
+        const faceHole = sdf.cylinder(HR * 0.86, 1).rotateX(90).at(0, HEAD_C[1] - HR * 0.05, HEAD_C[2] + 0.5).intersect(sdf.halfSpace([0, 0, -1], -(HEAD_C[2] + HR * 0.15)));
+        const base = sdf.smoothUnion(HR * 0.25, headShape.round(HR * 0.22), bib).smoothSubtract(HR * 0.08, faceHole);
+        const curls = curlField(base, sdf.sphere(4).at(...HEAD_C), [HEAD_C[0], HEAD_C[1] - HR * 0.3, HEAD_C[2]], 190, HR * 0.24);
+        const mane = base.displace(-HR * 0.11, curls.dome, 2);
         k.body('mane', mane.bone('head'), {
           color: k.tint(kind.mane),
           roughness: 0.95,
-          detail: 0.005,
-          bump: (x, y, z) => 0.003 * (Math.abs(Math.sin(Math.atan2(y - fc[1], x - fc[0]) * 46)) - 0.5) + 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2),
+          detail: 0.004,
+          bump: (x, y, z) => 0.0015 * (Math.abs(Math.sin(Math.atan2(y - fc[1], x - fc[0]) * 46)) - 0.5) + 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2),
         });
       } else if (kind.mane) {
         // A fluffy ring that frames the face: the head grown out, without the face in front.
@@ -505,8 +498,8 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
       } else if (wingKind === 'moth') {
         fore = plate([[0, 0], [0.12, 0.06], [0.26, 0.09], [0.32, 0.03], [0.27, -0.04], [0.12, -0.05], [0.03, -0.03]], 0.012);
         hind = plate([[0, 0], [0.08, 0.0], [0.2, -0.04], [0.22, -0.11], [0.14, -0.15], [0.05, -0.11], [0.01, -0.04]], 0.012);
-        forePose = (s) => s.rotateZ(10).rotateY(14).at(...WING_ROOT);
-        hindPose = (s) => s.rotateZ(-10).rotateY(18).at(...WING2_ROOT);
+        forePose = (s) => s.rotateZ(2).rotateY(14).at(...WING_ROOT);
+        hindPose = (s) => s.rotateZ(-14).rotateY(18).at(...WING2_ROOT);
       } else {
         // Small clear wings behind the body, up and back.
         fore = plate([[0, 0], [0.1, 0.05], [0.25, 0.065], [0.31, 0.015], [0.25, -0.05], [0.1, -0.04]], 0.008);

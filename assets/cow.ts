@@ -6,10 +6,11 @@ import { horseAsset } from './parts/horse-kind.js';
  * 1.1 m from muzzle to tail, faces +Z. Target: docs/wildlife-mockups/cow_001.jpg (made with mmx).
  *
  * The horse of `assets/horse.ts` (body, head, rig, and clips from `assets/parts/horse-kind.ts`) as
- * a dairy cow: short cream horns, ears held out to the sides with pink insides, a wide pink
- * muzzle, a white coat with black patches (one over the right ear), a leather collar with a brass
- * bell, a thin tail with a black tuft, and dark hooves; no mane, halter, blaze, or socks. No
- * udder (the game is rated G).
+ * a stocky dairy cow: a big head (1.2) on a short body with short legs, short cream horns, ears
+ * held out to the sides with pink insides, a very wide pink muzzle with nostrils only (no smile
+ * line), a white coat with black patches (one over each horn base, spots on the flanks and the
+ * legs), a leather collar with a brass bell, a thin tail with a black tuft, and dark hooves; no
+ * mane, halter, blaze, or socks. No udder (the game is rated G).
  * Role: a farm animal for village and hamlet scenes; the black patches, the bell, and the pink
  *   muzzle read at 128 px.
  * Palette (60/30/10): white coat #f4f0e8 with black patches #2a2624; a pink muzzle #f0a8a0; cream
@@ -42,15 +43,23 @@ export default horseAsset({
   earWidth: 1.6,
   ears: 1.2,
   earAt: [0.15, 0.97, 0.24],
-  muzzleScale: 1.18,
+  muzzleScale: 1.3,
+  smile: false,
+  headScale: 1.2,
+  legLength: -0.07,
+  bodyLength: -0.06,
   paint(coat, horse) {
     const patch = horse.tone('patch', '#2a2624');
     const spots = sdf.union(
       sdf.ellipsoid([0.16, 0.13, 0.14]).at(0.17, 0.58, -0.24),
       sdf.ellipsoid([0.1, 0.1, 0.11]).at(-0.18, 0.5, 0.08),
       sdf.ellipsoid([0.08, 0.07, 0.07]).at(-0.12, 0.66, -0.3),
-      sdf.ellipsoid([0.1, 0.08, 0.1]).at(-0.14, 1.04, 0.24),
-      sdf.ellipsoid([0.07, 0.06, 0.08]).at(0.15, 1.05, 0.25),
+      // The head patches: round patches over each horn base that reach down toward the brows.
+      sdf.ellipsoid([0.095, 0.095, 0.12]).at(-0.12, 1.0, 0.35),
+      sdf.ellipsoid([0.08, 0.075, 0.11]).at(0.13, 1.02, 0.33),
+      // Spots on the legs: the right foreleg and the left hind leg.
+      sdf.ellipsoid([0.06, 0.06, 0.06]).at(-0.15, 0.26, 0.21),
+      sdf.ellipsoid([0.06, 0.07, 0.06]).at(0.15, 0.3, -0.27),
       sdf.ellipsoid([0.05, 0.05, 0.05]).at(0.14, 0.3, 0.14),
     );
     return coat.paintWhere(spots, patch, 0.008);

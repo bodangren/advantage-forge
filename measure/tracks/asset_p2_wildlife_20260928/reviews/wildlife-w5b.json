@@ -1,0 +1,142 @@
+{
+  "bear": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a chibi brown bear on four legs with round ears, a tan muzzle, and a black nose. It is the same animal as the mockup, but the pose, the side profile, and the feet are clearly different.",
+    "strengths": [
+      "The front face reads well: round ears, a tan muzzle, a black nose, and large glossy eyes.",
+      "The brown and tan palette matches the mockup.",
+      "The fur bump on the body and the gloss on the eyes and the nose make the materials read.",
+      "The sprites show a bear in all 8 directions. The face reads in the S, SW, and SE sprites."
+    ],
+    "issues": [
+      "The mockup bear stands in a low crouch with bent front legs and the head down. The model stands straight on four post legs. Bend the rest pose toward the crouch, or lower the head and the shoulders.",
+      "In the side view, the head merges into the shoulder hump with no neck. Make the head a distinct large sphere in front of a smaller body, as in the mockup.",
+      "The black feet are thick cylinders with a hard edge at the ankle. They look like boots. Make them flat paws with toes and a soft color blend, as in the mockup.",
+      "The eyes are small black beads with a light ring around them. The mockup eyes are larger, with a brown iris and a white highlight. Make the eyes larger and add a brown iris.",
+      "In the side view, the ear shows as a thin pointed flap. Give the ear more depth so that it reads round from every view.",
+      "The walk is readable, but the legs stay stiff and some paws tilt in the air. Add a body bob and keep the paws flat at contact."
+    ],
+    "next": "Give the head a distinct round shape and a neck in the side view, and lower the rest pose toward the crouch of the mockup."
+  },
+  "badger": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 3, 4, 4, 3],
+    "summary": "The model is a chibi badger with a striped white face, a grey body, and black legs. The palette and the front stripes match the mockup, but the expression and the side stripe are clearly different.",
+    "strengths": [
+      "The front view shows the correct badger mask: a white face with two black stripes through the eyes.",
+      "The grey body, the white chest, the black legs, and the white-rimmed ears follow the mockup palette.",
+      "The paws have toes, and the short grey tail matches the mockup.",
+      "The striped face reads in the S, SW, W, and E sprites."
+    ],
+    "issues": [
+      "The eyes have heavy dark upper lids. The expression is sleepy and sad. The mockup eyes are open and alert, and the mouth has a small smile. Lift the lids and add the smile line.",
+      "In the walk and run strips, the lifted legs and the far legs show grey, not black. Keep the black leg color on each leg in all frames.",
+      "In the side view, the black stripe is a thin band above the eye, and a dark block sits around the eye. In the mockup, a wide black stripe runs from the nose through the eye to the ear. Make the side stripe wider and continuous.",
+      "In the front view, the head is a wide ball with a short muzzle. The mockup head tapers to a pointed nose. Make the muzzle longer and narrower.",
+      "The black stripes have a speckled texture near the eyes. Make the stripe color clean.",
+      "The mockup has soft fur tufts at the cheeks. Add small cheek tufts."
+    ],
+    "next": "Open the eyes and add the small smile, so that the face has the alert expression of the mockup."
+  },
+  "moth": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 4, 3, 3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5],
+    "summary": "The model is a chibi moth with a round brown head, a cream collar, club antennae, and four spotted wings. The face matches the mockup, but the collar is spiky, not fluffy, and the side view is weak.",
+    "strengths": [
+      "The face matches the mockup: large glossy brown eyes, a small nose, and an open smile.",
+      "The club antennae, the egg-shaped body, and the four wings with dark spots follow the mockup.",
+      "The fly clip moves the wings with a clear flap and a body bob.",
+      "The front sprites (S, SW, SE) show the face, the collar, and the wing spots."
+    ],
+    "issues": [
+      "The collar is a ring of thin sharp spikes. The mockup collar is soft and fluffy, with round curls that cover the top of the head like a hood. Replace the spikes with soft rounded tufts.",
+      "In the side view, the collar is a flat plate in front of the head. Give the collar depth so that it wraps around the head and the neck.",
+      "The wings are pale beige. The mockup wings are a warm caramel color with darker edges. Make the wings warmer and darker.",
+      "The upper wings point up at a steep angle. In the mockup, the wings spread nearly level at the sides. Lower the wing angle.",
+      "The head and the body are darker brown than in the mockup. Make the head and the body a lighter caramel.",
+      "The W and E sprites show only a thin edge of the wings and the collar plate. The identity is weak from the side.",
+      "The mockup shows two small feet under the body. Add two small feet."
+    ],
+    "next": "Replace the spiky collar with a soft, curly hood that wraps around the head."
+  },
+  "squirrel": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3, 3, 3, 4, 3.5, 3.5],
+    "summary": "The model is an orange squirrel with tufted ears and a large curled tail on a four-legged stance. The tail and the palette match the mockup, but the face and the body read as a dog or a red panda.",
+    "strengths": [
+      "The large curled tail reads in every view and in every sprite direction.",
+      "The tufted ears and the cream chest follow the mockup.",
+      "The orange palette matches the mockup.",
+      "The run clip has a clear bound with a stretch and a gather."
+    ],
+    "issues": [
+      "The muzzle is a wide cream box with a flat mouth. It looks like a dog. The mockup has a small pointed orange snout, a black nose, and a smile. Make the snout small and pointed, and add the smile.",
+      "The eyes have a tan ring around an orange iris, and the white highlights stick out of the eye as small balls. Use large dark brown eyes, as in the mockup, and keep the highlights on the eye surface.",
+      "The body stands on long straight legs like a dog. The mockup squirrel is compact, with large hind thighs and small front paws. Shorten the legs, enlarge the thighs, and make the front paws smaller.",
+      "The cream color on the cheeks and the shoulders has soft blurred edges. Give the cream areas clean edges.",
+      "The tail surface has a lumpy pattern. The mockup tail shows fur locks. Add fur lock grooves that follow the curl.",
+      "The mockup shows a run with the front paws held at the chest. The run clip moves the front legs forward like a dog. Fold the front paws in the run."
+    ],
+    "next": "Rebuild the face with a small pointed snout, dark brown eyes, and a smile."
+  },
+  "hare": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4, 4],
+    "summary": "The model is a slim chibi hare with large flared black-tipped ears, large amber eyes, and thin legs with black feet. It matches the mockup with small differences in the eyes, the mouth, and the head color.",
+    "strengths": [
+      "The large flared ears with black tips match the mockup and read in every sprite direction.",
+      "The thin legs, the black feet, the cream chest, and the round tail follow the mockup.",
+      "The front view is very close to the mockup in silhouette and proportion.",
+      "The run clip has a full stretch and gather, and the ears move with the body."
+    ],
+    "issues": [
+      "The eyes have a thick orange rim that bulges out. The mockup eyes have a brown iris with an amber lower half and a thin dark outline. Make the rim thinner and flatter.",
+      "The face has no mouth. The mockup has a small mouth line. Add a small mouth line under the nose.",
+      "The head is one flat orange color. The mockup has a darker crown on the forehead and lighter cheeks. Add the darker crown.",
+      "The inner ears are pale cream. The mockup inner ears are a warmer peach. Make the inner ears warmer.",
+      "The tail is a brown ball. The mockup tail is darker, almost black. Make the tail darker."
+    ],
+    "next": "Make the eye rims thinner and flatter, and add the small mouth line."
+  },
+  "crocodile": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4, 3.5, 3.5],
+    "summary": "The model is a green chibi crocodile with large top eyes, a long snout, a cream belly, and a row of back spikes. It is the same animal as the mockup, but the body is lower and longer, and the head is smaller.",
+    "strengths": [
+      "The large top eyes, the cream jaw and belly, and the green back spikes match the mockup.",
+      "The long snout with small teeth reads in the side and three-quarter views.",
+      "The green and cream palette matches the mockup.",
+      "The W, E, SW, and SE sprites show the snout and the eyes clearly."
+    ],
+    "issues": [
+      "The body is low and long, and the legs splay out. The mockup crocodile stands higher on short straight legs, and the head is larger relative to the body. Raise the body, put the legs under it, and enlarge the head.",
+      "The tail is longer and thinner than in the mockup. Shorten the tail and make it thicker at the base.",
+      "In the front view and the S sprite, the snout is hidden and the crocodile looks like a frog. Raise the snout tip a little, as in the mockup, so that it shows from the front.",
+      "In the side view, the eye is a white dome with no pupil. Turn the pupils a little to the side so that they show in profile.",
+      "The mockup head has a raised brow behind the eyes and a round nose tip. Add the brow and make the nose tip rounder.",
+      "The card has no motion strip, and the walk strip in out/ is older than the current model. Render the walk again. The older walk is readable but stiff, and the tail does not sway."
+    ],
+    "next": "Raise the body on straighter legs and enlarge the head, to get the upright toy stance of the mockup."
+  },
+  "frog": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 4, 3, 3, 3, 3, 4, 3.5, 3.5],
+    "summary": "The model is a sitting green frog with large lidded eyes, a pale chin, and a cream belly. It is the same animal as the mockup, but the head is too narrow and tall, and the lip edge and the pupils show texture defects.",
+    "strengths": [
+      "The sitting pose with straight front legs and folded hind legs matches the mockup.",
+      "The large eyes with green upper lids and the pale chin are the focal point, as in the mockup.",
+      "The webbed toes and the cream belly follow the mockup.",
+      "The face reads in the S, SW, and SE sprites."
+    ],
+    "issues": [
+      "The lip edge between the green face and the pale chin has a jagged, hairy texture line. The pupils also have jagged edges. Make both edges clean.",
+      "The head is narrow and tall, with a large green area between the eyes and the mouth. The mockup head is wide and squat, and the mouth sits just under the eyes. Make the head wider and shorter.",
+      "The mouth is a flat straight line. The mockup mouth is a wide smile with raised corners and puffy cheeks. Curve the mouth up at the corners.",
+      "The green is a saturated lime with a strong plastic gloss. The mockup green is softer and more yellow, with a matte clay finish and darker spots on the legs. Lower the saturation and the gloss, and add the leg spots.",
+      "In the side view and in the W and E sprites, the eye is a white dome with no pupil. Turn the pupils a little to the side.",
+      "The card has no motion strip, and the walk strip in out/ is older than the current model. Render the walk again with the current build."
+    ],
+    "next": "Make the head wider and shorter, and clean the jagged lip and pupil edges."
+  }
+}

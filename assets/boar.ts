@@ -18,26 +18,30 @@ import { scaleAsset } from './parts/scale-asset.js';
 export default scaleAsset(
   boarAsset({
     name: 'boar',
-    description: 'Chibi boar: a friendly brown forest boar with big glossy green eyes, a pink snout, big ivory tusks that curve up at the cheeks, pointed ears, a tall curved black tuft on the head, spiky dark cheek tufts, and round black split hooves; quadruped rig.',
+    description: 'Chibi boar: a friendly brown forest boar with big glossy dark green eyes, a salmon snout, big ivory tusks that curve up at the cheeks, pointed ears, a tall curved black tuft on the head, spiky dark cheek tufts, short dark spikes along the neck and the shoulders, a short curly tail, and round black split hooves; quadruped rig.',
     reference: 'docs/wildlife-mockups/boar_001.jpg',
     variants: {
       fur: { brown: '#7a5236', grey: '#6a625c', russet: '#8a4a2a', dark: '#4a3a30' },
-      skin: { pink: '#e88a86', dusky: '#a88078', slate: '#7a6e70' },
-      eyes: { green: '#355a28', dark: '#2a1a12', amber: '#8a5a1a' },
+      skin: { salmon: '#ec9070', dusky: '#a88078', slate: '#7a6e70' },
+      eyes: { green: '#2f6a28', dark: '#2a1a12', amber: '#8a5a1a' },
       tusks: { ivory: '#efe6cf', yellowed: '#e0cc98', bone: '#c8c2b2' },
     },
     presets: {
       grey: { fur: 'grey', skin: 'slate', eyes: 'dark', tusks: 'bone' },
       russet: { fur: 'russet', skin: 'dusky', eyes: 'amber', tusks: 'yellowed' },
-      dark: { fur: 'dark', skin: 'pink', eyes: 'dark', tusks: 'ivory' },
+      dark: { fur: 'dark', skin: 'salmon', eyes: 'dark', tusks: 'ivory' },
     },
     colors: { furDark: '#5a3a24', belly: '#9a7050', earInner: '#d8807e', black: '#2a2420' },
     ivorySlot: 'tusks',
     horns: false,
     tuskScale: 0.95,
     mane: false,
+    tail: 'curl',
+    pupilScale: 1.45,
+    headScale: 1.25,
+    eyeInset: 0.012,
     hoofStyle: 'round',
-    eyeScale: 1.35,
+    eyeScale: 1.5,
     eyeGlow: 0,
     brows: false,
     lids: false,
@@ -72,9 +76,21 @@ export default scaleAsset(
         )
         .mirror('x');
       k.body('tufts', sdf.union(tuft, cheek).bone('head'), { color: black, roughness: 0.55, detail: 0.004 });
-      // A small soft tuft at the tail tip.
-      const tail = sdf.smoothUnion(0.006, ...[[0, 0], [0.012, 0.012], [-0.012, 0.01]].map(([dx, dy]) => sdf.ellipsoid([0.018, 0.018, 0.026]).at(0.02 + dx!, 0.34 + dy!, -0.425)));
-      k.body('tail-tuft', tail.bone('tail'), { color: black, roughness: 0.6, detail: 0.003 });
+      // A collar of short dark spikes on the sides of the neck and the shoulders, out and back.
+      const collar = sdf
+        .union(
+          ...[
+            [0.3, 0.17, 'neck'],
+            [0.25, 0.1, 'spine'],
+            [0.36, 0.08, 'spine'],
+            [0.2, 0.03, 'spine'],
+          ].map(([y, z, bone]) => {
+            const root = sdf.surfacePoint(b.trunk, [0.2, y as number, z as number], -0.012);
+            return sdf.cone(root, [root[0] + 0.05, root[1] + 0.01, root[2] - 0.035], 0.018, 0.003).bone(bone as string);
+          }),
+        )
+        .mirror('x');
+      k.body('collar-spikes', collar, { color: black, roughness: 0.55, detail: 0.004 });
     },
   }),
   0.8,

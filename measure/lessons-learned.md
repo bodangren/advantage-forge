@@ -27,10 +27,10 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - Build a shared material reference before producing a kit.
 - Derive dimensions from measured character bounds before writing prompts.
 - Derive map pieces from cell edges to prevent wall and corner count errors.
-- Use fast renders for shape iteration and textured output for final review.
-- Use bump detail for fine texture when displacement adds unnecessary triangles.
+- Use fast renders for shape iteration and textured output for final review: run `forge all` last, because a later `--fast` build replaces the final GLB and views (`scripts/review-cards.py` warns). Use bump detail for fine texture when displacement adds unnecessary triangles.
 - Keep heavy builds within the measured machine capacity.
 - Prove a shape-code move with mesh identity per body (`scripts/part-check.mjs`), not a pixel score. Exact pose expressions keep meshes identical; rounded mounts and body splits re-mesh. A kind factory (17 kinds made 80 P2 monsters) takes only default-safe options; `scripts/mesh-same.mjs` proves the older assets identical. For an edit of a kind file, pass `--part assets/parts/<kind>.ts`: without it, both builds import the working kind and the check is empty (found 2026-10-05). Chibi arms are short: solve a held item's pose with `motion.follow`, and choose actions the arms can reach.
+- Change the proportions of a kind with a space warp (`assets/parts/head-swell.ts`), not with new shapes: a warped context grows a head or shortens legs and a body, and paint and bone tags follow. Map the clips' ground probes and joints with the same point map (`headSwellPoint`, `stretchPoint`), or a lying or sitting pose sinks into the ground. A negative `displace` amplitude raises bumps; a positive one cuts them in. A reviewer can ask for opposite changes in two rounds (hawk eyes: larger and white, then smaller and dark): follow the mockup when a note disagrees with it.
 - Simple props and mechanical edits pass on the Sonnet low tier for about 30K tokens each. Give every agent a triangle budget.
 - Build worn equipment from the avatar body it covers. Keep it solid there: skin in a closed bore counts as show-through. Check that the display stands on y = 0.
 

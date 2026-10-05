@@ -41,12 +41,15 @@ export default scaleAsset(
     eyeScale: 0.85,
     glint: 1.9,
     talons: false,
-    walkBob: 0.9,
-    wingRest: -102,
+    walkBob: 1.5,
+    wingRest: -78,
     wingTurn: 16,
-    wingOut: 0.02,
+    wingOut: 0.04,
     wingScale: 0.72,
-    legLength: 0.85,
+    wingThick: 1.9,
+    legLength: 0.95,
+    thighs: false,
+    tailPose: { lift: 0.75, tilt: 40, scale: 1.15 },
     wingStyle: 'paddle',
     wingTips: 'feathers',
     neckScale: 1.9,
@@ -58,9 +61,9 @@ export default scaleAsset(
       const { HEAD_C, HR } = b.joints;
       const lobes = (
         [
-          [0.05, 0.05, 0.03, -10],
-          [0.005, 0.085, 0.034, 8],
-          [-0.04, 0.075, 0.032, -6],
+          [0.05, 0.085, 0.034, -10],
+          [0.005, 0.125, 0.038, 8],
+          [-0.042, 0.105, 0.036, -6],
         ] as const
       ).map(([z, h, r, tilt]) => {
         const root = b.topHit(0, HEAD_C[2] + z);

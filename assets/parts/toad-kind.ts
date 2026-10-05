@@ -55,9 +55,9 @@ const FROG = {
   HIP: [0.09, 0.12, -0.05] as V3,
   KNEE: [0.19, 0.12, -0.005] as V3,
   ANKLE: [0.19, 0.035, -0.085] as V3,
-  EYE: [0.088, 0.56 + FROG_DY, 0.035] as V3,
+  EYE: [0.09, 0.545 + FROG_DY, 0.035] as V3,
   EYE_R: 0.09,
-  MOUTH_Y: 0.37 + FROG_DY,
+  MOUTH_Y: 0.38 + FROG_DY,
   MOUTH_Z: 0.12,
 };
 
@@ -352,9 +352,11 @@ function buildFrog(
     sdf.ellipsoid([0.14, 0.105, 0.118]).at(0, 0.115, -0.015).bone('hips'),
     sdf.ellipsoid([0.11, 0.07, 0.095]).at(0, 0.19, 0.005).bone('chest'),
   );
-  const face = sdf.ellipsoid([0.185, 0.125, 0.165]).at(0, 0.425 + DY, 0.01);
-  // The chin bulges forward under the face as a thick lower lip.
-  const chin = sdf.ellipsoid([0.155, 0.072, 0.135]).at(0, 0.343 + DY, 0.08);
+  const face = sdf.ellipsoid([0.205, 0.118, 0.165]).at(0, 0.43 + DY, 0.01);
+  // The chin bulges forward under the face as a thick lower lip, and puffy cheeks round out the
+  // corners of the mouth.
+  const chin = sdf.ellipsoid([0.172, 0.07, 0.135]).at(0, 0.353 + DY, 0.08);
+  const cheeks = pair(sdf.ellipsoid([0.05, 0.045, 0.045]).at(0.145, F.MOUTH_Y + 0.012, 0.095));
   // Low mounds under the eyes, so the lids grow out of the head.
   const mounds = pair(sdf.ellipsoid([0.085, 0.06, 0.08]).at(F.EYE[0], F.EYE[1] - 0.04, F.EYE[2] - 0.01));
   // Lids: skin over the top and back of each eye, the front edge a little above the pupil; they
@@ -364,22 +366,23 @@ function buildFrog(
     .sphere(F.EYE_R + 0.007)
     .at(...F.EYE)
     .smoothIntersect(0.006, sdf.halfSpace([0, -0.9, 0.44], -0.9 * F.EYE[1] + 0.44 * F.EYE[2] - 0.026));
-  const head = sdf.smoothUnion(0.03, sdf.smoothUnion(0.014, face, chin), mounds, pair(lid)).bone('head');
+  const head = sdf.smoothUnion(0.03, sdf.smoothUnion(0.014, face, chin), cheeks, mounds, pair(lid)).bone('head');
   const body = sdf.smoothUnion(0.035, torso, head);
   const toad: ToadShape = { body, tint: { skin: T.skin, belly: T.belly, eye: T.eye }, tone: T.tone };
 
-  // The wide pale chest on the front of the body, the pale chin, and a flat closed mouth: a thin
-  // dark line in the crease between the green face and the thick pale lip, a little up at the ends.
+  // The wide pale chest on the front of the body, the pale chin, and a wide closed smile: a thin
+  // dark line in the crease between the green face and the thick pale lip, curved up at the
+  // corners into the cheeks.
   const bellyZone = sdf.ellipsoid([0.13, 0.15, 0.2]).at(0, 0.11, 0.09);
-  const SR = 0.9;
-  const smileY = F.MOUTH_Y - 0.012;
-  const mouth = sdf.extrude(profile.arc(SR, 0.011, 262, 278), 0.3).at(0, smileY + SR, 0.12);
+  const SR = 0.24;
+  const smileY = F.MOUTH_Y - 0.014;
+  const mouth = sdf.extrude(profile.arc(SR, 0.01, 243, 297), 0.3).at(0, smileY + SR, 0.12);
   const jaw = chin.round(0.003).intersect(sdf.halfSpace([0, 0, -1], 0.0));
   let skin = body.paintWhere(bellyZone, T.belly, 0.012).paintWhere(jaw, T.belly, 0.004);
   if (kind.paint) skin = kind.paint(skin, toad);
   skin = skin.paintWhere(mouth, T.tone('skin', C.mouth, 0.5), 0.002);
-  // Smooth, glossy skin (no bump).
-  k.body('skin', sized(skin), { color: T.skin, roughness: 0.3, textureDensity: 1.6 });
+  // Smooth skin with a soft clay sheen (no bump).
+  k.body('skin', sized(skin), { color: T.skin, roughness: 0.55, textureDensity: 1.6 });
 
   // ------------------------------------------------------------------ eyes and lids
   // Huge round eyes on top of the head, nearly touching: a slot-colored ball, a big dark pupil that
@@ -434,6 +437,9 @@ function buildFrog(
     sdf.chain([[F.KNEE[0], F.KNEE[1] - 0.03, F.KNEE[2], 0.04], [...A, 0.03]], 0.02).bone('shin.L'),
     sdf.smoothUnion(0.02, sdf.ellipsoid([0.032, 0.02, 0.07]).at(A[0] + 0.01, 0.024, A[2] + 0.05), toes).bone('foot.L'),
   );
-  k.body('legs', sized(pair(sdf.union(arm, leg)).paintWhere(sdf.halfSpace([0, 1, 0], 0.025), T.skinDark, 0.02)), { color: T.skin, roughness: 0.3 });
+  // Darker round spots on the haunches and the shins.
+  const spots = pair(sdf.union(sdf.sphere(0.022).at(0.235, 0.15, -0.03), sdf.sphere(0.018).at(0.2, 0.18, 0.02), sdf.sphere(0.016).at(0.245, 0.09, -0.07), sdf.sphere(0.014).at(0.15, 0.17, -0.07)));
+  const legPaint = pair(sdf.union(arm, leg)).paintWhere(sdf.halfSpace([0, 1, 0], 0.025), T.skinDark, 0.02).paintWhere(spots, T.tone('skin', '#5a8a2a', 0.7), 0.004);
+  k.body('legs', sized(legPaint), { color: T.skin, roughness: 0.55 });
   return toad;
 }

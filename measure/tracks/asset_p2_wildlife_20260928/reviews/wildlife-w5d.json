@@ -1,0 +1,191 @@
+{
+  "bee": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3, 3.5, 4, 4, 3.5, 3],
+    "summary": "The model is a round chibi bee with a good face. The mockup bee flies with long spread legs, but the model stands on short straight legs, and the black bands are weak.",
+    "strengths": [
+      "The large glossy eyes, the small nose, and the smile match the mockup face.",
+      "The antennae with ball tips match the mockup.",
+      "The clear wings are thin and show the body behind them.",
+      "The sprites read as a bee in every direction."
+    ],
+    "issues": [
+      "The pose is different. The mockup bee flies with its legs in the air. The model stands on its legs on the ground. Make the rest pose a hover above the ground.",
+      "The legs are short straight posts below the body. The mockup legs are long and thin, and they spread outward. Make the six legs longer and thinner, and spread them out.",
+      "The fly clip tilts the body forward but does not lift it. The legs stay stiff. Lift the body and swing the legs a little in the fly clip.",
+      "The black bands are weak. Only a thin black collar and a black tail end show. Add one or two wide black bands on the abdomen.",
+      "The bumpy fuzz texture also covers the face. The mockup face is smooth. Make the face area smooth."
+    ],
+    "next": "Lift the bee into a hover pose with long, thin, spread legs, as in the mockup."
+  },
+  "trout": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 4, 3.5],
+    "summary": "The model is a chubby olive trout with dark spots, a pink cheek, a rosy band, and a pale belly. Heavy white lids make the eyes look sleepy, and the head is smaller than in the mockup.",
+    "strengths": [
+      "The olive back, the pale belly, the pink cheek, and the gill line match the mockup palette.",
+      "The low fins act as feet, as in the mockup.",
+      "The fan tail and the round dorsal fin make a clear fish silhouette at 128 px.",
+      "The swim clip sweeps the tail and moves the fins."
+    ],
+    "issues": [
+      "Heavy white lids cover the top of each eye. The eyes look sleepy. The mockup eyes are round and wide open with a thin pale rim. Remove the lids and use a thin rim.",
+      "The head is small compared with the body. The mockup head is about 40 percent of the body length and has a round forehead. Make the head larger and shorten the body.",
+      "The mouth is a small pursed lip. The mockup mouth is larger with full pink lips. Make the mouth larger and pink.",
+      "The spots in the rosy band are pink rings near the tail. The mockup has red spots along the full band. Use red spots along the band.",
+      "The dark back spots are small and dense. They make noise at 128 px. Use fewer and larger spots."
+    ],
+    "next": "Replace the heavy eye lids with round, wide open eyes that have a thin pale rim."
+  },
+  "stag": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4.5, 4, 3.5],
+    "summary": "The model is an orange chibi stag with large branching antlers, a cream bib, and black hooves. It matches the mockup with small differences in the eyes, the legs, and the neck.",
+    "strengths": [
+      "The branching brown antlers make the silhouette in every sprite direction.",
+      "The orange coat, the cream bib, the cream muzzle, and the black hooves match the mockup palette.",
+      "The ears have pale insides, as in the mockup.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The eyes are dark brown globes. The mockup eyes have a teal iris and a white rim. Add the teal iris and the white rim.",
+      "The legs are thick straight tubes. The mockup legs are thin and taper to the hooves. Make the lower legs thinner.",
+      "The head sits low on the chest with almost no neck. Make the neck a little longer.",
+      "The antler beams are thinner than in the mockup. Make the beams thicker and rounder."
+    ],
+    "next": "Add the teal iris and the white rim to the eyes."
+  },
+  "elk": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4.5, 4.5, 3.5, 3.5],
+    "summary": "The model is a tan chibi elk with a dark ruff and wide antlers. The face is noticeably different: the head is a round ball with a short muzzle and small black eyes.",
+    "strengths": [
+      "The dark brown ruff reads at 128 px.",
+      "The tan coat, the large ears with pale insides, and the dark hooves match the mockup.",
+      "The wide antlers make a clear silhouette.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The head is a round ball with a very short muzzle. The mockup has a long muzzle that points forward, with a large black nose and a wide smile. Make the muzzle longer.",
+      "The eyes are small black dots. The mockup eyes are brown with white sclera and look up to the side. Make the eyes larger with a brown iris and white sclera.",
+      "The antlers are long with many thin tines, as on the stag. The mockup antlers are shorter and thicker with fewer tines. Make the antlers thicker with fewer tines.",
+      "The model looks like the stag in a tan color. Give the elk a longer, heavier face so that it reads as a different animal.",
+      "The cream chest patch below the ruff is missing. Add a cream patch below the ruff."
+    ],
+    "next": "Make the muzzle long, with the large nose and the wide smile of the mockup."
+  },
+  "moose": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4.5, 4, 3.5],
+    "summary": "The model is a dark brown chibi moose with palm antlers, a light snout, an open smile, and cream socks. It is the same character as the mockup, but the antlers, the snout, and the eyes are clearly different.",
+    "strengths": [
+      "The palm antlers make the silhouette at 128 px.",
+      "The open red smile, the dewlap, the cream socks, and the black hooves match the mockup.",
+      "The dark coat and the light snout give a clear value plan.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The antlers have pointed tines along the top edge and a light tan color. The mockup antlers are smooth round paddles with soft lobes. Round the tines into soft lobes and make the antlers darker brown.",
+      "The snout is smaller than in the mockup. The mockup snout is as wide as the head and hangs down. Make the snout larger and longer.",
+      "The eyes are small and set apart. The mockup eyes are large and bulge on top of the head. Make the eyes larger and move them closer together.",
+      "The hair tuft is a few small spikes. The mockup tuft is large, black, and messy. Make the tuft larger and darker."
+    ],
+    "next": "Change the antlers to smooth round paddles with soft lobes in a darker brown."
+  },
+  "goat": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a cream chibi goat with golden horns, large brown eyes, a chest tuft, and a brown rump patch. The horns, the forelock, and the ears are clearly different from the mockup.",
+    "strengths": [
+      "The large brown eyes with highlights and the small smile match the mockup face.",
+      "The cream coat, the golden horns, the brown rump patch, and the dark hooves match the mockup palette.",
+      "The white chest tuft and the upright tail match the mockup.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The horns are large arches that rise above the head and curve back. The mockup horns curl tightly in a spiral beside the forelock. Make the horns smaller and curl them near the head.",
+      "The forelock is a small flat tuft. In the side view it looks like a flap. The mockup forelock is a large swept tuft. Make the forelock larger.",
+      "The ears are short round cups. The mockup ears are long and floppy. Make the ears longer.",
+      "The brown brows of the mockup are missing. Add the brows.",
+      "The nose is a large pink ball. The mockup nose is small. Make the nose smaller.",
+      "The back dips between the shoulders and the rump in the side view. Fill the dip."
+    ],
+    "next": "Curl the horns in a tight spiral beside a larger swept forelock."
+  },
+  "pack-goat": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 3.5, 3.5, 3, 3.5, 4, 4, 3.5],
+    "summary": "The model is a gray chibi goat with arched horns, a beard, a red blanket, and two pairs of bags. The face and the body are noticeably different: the mockup goat has a long face and a long, low body.",
+    "strengths": [
+      "The horns, the red blanket, and the bags read at 128 px in every direction.",
+      "The gray coat, the tan horns, and the red blanket match the mockup palette.",
+      "The beard matches the mockup.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The head is a round ball with a short muzzle. The mockup has a long goat face with a smile and eyes with white sclera that look to the side. Make the face longer and add the white sclera.",
+      "The body is short and stands tall on long legs. The mockup body is long and low. Make the body longer and the legs shorter.",
+      "The mane is a row of black spikes on the neck and below the bags. The spikes look like spines. The mockup has long gray shaggy fur. Replace the spikes with soft gray locks.",
+      "The bags are hard yellow blocks. The mockup bags are soft leather bags with flaps, buckles, and straps. Round the bags and add the flaps and the straps.",
+      "The horns are simple arches. The mockup horns are large ridged spirals that curl back and down. Curl the horns more."
+    ],
+    "next": "Make the face long with a muzzle and side-looking eyes, and make the body long and low."
+  },
+  "sheep": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3, 3, 3, 3, 4.5, 4, 3.5],
+    "summary": "The model is a chibi sheep with a cream face, large eyes, pink cheeks, and a round wool body. The wool is gray bubbles, not warm cream curls, and the face shows seams and bulging eyes.",
+    "strengths": [
+      "The round wool shape reads at 128 px in every direction.",
+      "The cream face, the pink cheeks, the small nose, and the smile match the mockup face.",
+      "The cream legs and the dark hooves match the mockup.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The wool is gray-white bubbles. The mockup wool is warm cream with sculpted spiral curls. Make the wool warm cream and use spiral curls.",
+      "A row of small ring curls along the body side looks like a row of holes. Remove the row or spread the curls evenly.",
+      "A dark seam shows where the wool hood meets the face. Close the gap between the hood and the face.",
+      "The eye whites bulge past the face outline in the three-quarter view. Set the eyes deeper into the face.",
+      "The body is large compared with the head. The mockup has a large head on a small body. Make the body smaller.",
+      "The ears have pink insides. The mockup ears are plain tan. Make the ears tan."
+    ],
+    "next": "Change the wool to warm cream spiral curls and remove the row of ring curls."
+  },
+  "camel": {
+    "overall": 5.5,
+    "scores": [2.5, 2.5, 3, 2.5, 3.5, 3.5, 3, 3, 4, 3, 3],
+    "summary": "The model is a tan camel with a good face, but the hump and the blanket stand up as a tall slab directly behind the head. The long curved neck and the long low body of the mockup are missing.",
+    "strengths": [
+      "The face matches the mockup: a large snout, large eyes with lashes, a hair tuft, and a smile.",
+      "The bright stripes on the blanket edge give a colorful accent.",
+      "The walk clip keeps the hooves on the ground."
+    ],
+    "issues": [
+      "The hump stands tall and vertical directly behind the head. The blanket covers it like a shield. The mockup has a low round hump in the middle of a long back. Move the hump back and make it lower and rounder.",
+      "The neck is short, and the body is short and tall. The mockup has a long curved neck and a long low body. Make the neck longer and the body longer.",
+      "A gap shows between the front edge of the blanket and the neck in the side view. Attach the blanket to the body.",
+      "The blanket is a flat red sheet with striped edges. The mockup blanket has thick braided cords in many colors. Add the cord trim.",
+      "The legs are long and straight. The mockup legs are short with round knees. Make the legs shorter and add knees."
+    ],
+    "next": "Rebuild the body plan: a long curved neck, a long low back, and a low round hump in the middle under the blanket."
+  },
+  "pony": {
+    "overall": 6.5,
+    "scores": [3, 4, 4, 3.5, 2.5, 2.5, 3, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is a chibi pony with a large head, large dark eyes, a brown back patch, and a topknot. A rough fur texture and a khaki color make it clearly different from the smooth cream mockup.",
+    "strengths": [
+      "The large head, the large dark eyes with lashes and brows, and the pink nostrils match the mockup face.",
+      "The brown back patch and the dark brown hooves match the mockup.",
+      "The sprites read as a pony, and the face reads in the front directions.",
+      "The walk clip keeps the hooves on the ground and swings the tail."
+    ],
+    "issues": [
+      "A rough fur texture covers the full body. The mockup surface is smooth and glossy. Remove the fur texture or make it very small.",
+      "The coat is khaki with a green tint. The mockup coat is warm cream. Change the coat to warm cream.",
+      "The eyes bulge out of the head. In the side and three-quarter views, the white of the far eye shows past the head outline. Set the eyes into the head.",
+      "The topknot is a rough lumpy shape. The mockup topknot has clear tight curls. Make tight curls in the topknot.",
+      "The tail and the mane have the same rough texture. The mockup tail has smooth wavy strands. Give the tail smooth wavy strands."
+    ],
+    "next": "Make the surface smooth and glossy and change the coat to warm cream."
+  }
+}

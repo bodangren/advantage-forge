@@ -8,11 +8,11 @@ import { wolfAsset } from './parts/wolf-kind.js';
  * the dire wolf mockup).
  *
  * The dire wolf (`assets/dire-wolf.ts`; body, head, rig, and clips from `assets/parts/wolf-kind.ts`)
- * at 1.45 of its size, as a hero's mount: a confident closed smirk under dark brows, dark eyes, a
+ * at 1.45 of its size, as a hero's mount: a confident closed smirk, half-lidded dark eyes with a white edge, a
  * swept grey tuft on the head, soft round cheek fur, a grey coat with a darker back, a white muzzle,
  * cheeks, and chest, a bushy tail that hangs down with a white tip, black paws with white bands, and riding tack fitted to the wolf's back (a
- * brown saddle with a pommel and a cantle, side flaps, a teal pad with a gold trim and a gold sun
- * emblem, a girth, a breast strap, and stirrups).
+ * brown saddle with a pommel and a cantle, side flaps, a large teal pad with a gold trim and a pale
+ * diamond mark, a girth, a breast strap, and stirrups).
  * Role: a mount for the hero in the rider games and travel scenes; the saddle and the teal pad
  *   read at 128 px.
  * Palette (60/30/10): grey #8a8e96 with a dark back #4e525a; white #f4f2ee; brown leather #6a3c22;
@@ -23,7 +23,7 @@ import { wolfAsset } from './parts/wolf-kind.js';
 export default scaleAsset(
   wolfAsset({
     name: 'riding-wolf',
-    description: 'Chibi riding wolf: a big grey wolf with a confident closed smirk under dark brows, dark eyes, a swept grey head tuft, soft cheek fur, a white muzzle and chest, black paws with white bands, and a brown saddle with stirrups on a teal pad with a gold trim and a gold sun emblem; quadruped rig.',
+    description: 'Chibi riding wolf: a big grey wolf with a confident closed smirk, half-lidded dark eyes with a white edge, a swept grey head tuft, a long white muzzle, a wide white lower face and chest, black paws with white bands, and a brown saddle with stirrups on a large teal pad with a gold trim and a pale diamond mark, a chest strap with a metal ring and blue studs, and side bags; quadruped rig.',
     reference: 'docs/wildlife-mockups/riding-wolf_001.jpg',
     variants: {
       fur: { grey: '#8a8e96', timber: '#7a6a58', black: '#3a3838', white: '#e0e0dc' },
@@ -36,14 +36,18 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'white', eyes: 'amber', blanket: 'red' },
       snow: { fur: 'white', markings: 'white', eyes: 'ice', blanket: 'purple' },
     },
-    colors: { furLight: '#e8e8e4', furDark: '#8a8e96', earInner: '#8a6a5a', eyeRim: '#1a100a' },
+    colors: { furLight: '#e8e8e4', furDark: '#8a8e96', earInner: '#8a6a5a', eyeRim: '#f4f2ee' },
+    headScale: 1.25,
+    snout: 0.085,
+    muzzleWidth: 0.78,
+    noseScale: 0.75,
     eyeScale: 1.15,
     pupilScale: 1.25,
     cheekTufts: false,
     claws: false,
     fangs: false,
     tail: false,
-    smileArc: [258, 302],
+    smileArc: [250, 306],
     brows: false,
     forelock: false,
     smile: true,
@@ -68,13 +72,29 @@ export default scaleAsset(
         ].map(([x, y, z, dx, len, r]) => sdf.cone([x!, y! - 0.02, z!], [x! + dx!, y! + len! * 0.8, z! - len!], r!, r! * 0.45)),
       );
       k.body('head-tuft', tuft.bone('head'), { color: w.tone('fur', '#a6aab0', 0.9), roughness: 0.85, detail: 0.004 });
-      // Soft cheek fur below the eyes: a flare out to each side, in the light color.
-      const cheeks = sdf.chain([[0.13, 0.42, 0.21, 0.06], [0.2, 0.4, 0.16, 0.042], [0.26, 0.37, 0.11, 0.014]], 0.025).scale([1, 0.85, 1]).mirror('x');
-      k.body('cheek-fur', cheeks.bone('head'), { color: w.tint.markings, roughness: 0.9 });
-      // Thin dark brows over the eyes, almost level (a calm, confident look).
+      // Half-closed upper lids (a calm, confident look): a fur-colored cap over the top of each eye
+      // down to a level line, with a thin dark line along its edge.
       const e = w.eye;
-      const brow = sdf.capsule([e[0] - 0.035, e[1] + 0.06, e[2] - 0.004], [e[0] + 0.035, e[1] + 0.066, e[2] - 0.02], 0.007).mirror('x');
-      k.body('brows', brow.bone('head'), { color: '#2a2a30', roughness: 0.7, detail: 0.003 });
+      const LR = 0.047;
+      const th = 0;
+      const edgeY = e[1] + 0.024;
+      const lidCap = w.head
+        .round(0.0035)
+        .intersect(sdf.cylinder(LR, 1).rotateX(90).at(e[0], e[1], 0))
+        .intersect(sdf.halfSpace([Math.sin(th), -Math.cos(th), 0], Math.sin(th) * e[0] - Math.cos(th) * edgeY))
+        .intersect(sdf.halfSpace([0, 0, -1], -(e[2] - 0.06)));
+      k.body('lid-caps', lidCap.mirror('x').bone('head'), { color: w.tint.fur, roughness: 0.85, detail: 0.002 });
+      const lid = sdf
+        .chain(
+          [-0.95, -0.5, 0, 0.5, 0.95].map((u, i) => {
+            const x = e[0] + u * LR * 0.92;
+            const p = w.on(w.head, x, edgeY - Math.tan(th) * (x - e[0]), e[2], 0.002);
+            return [p[0], p[1], p[2], 0.0025 + i * 0.0006] as [number, number, number, number];
+          }),
+          0.003,
+        )
+        .mirror('x');
+      k.body('lids', lid.bone('head'), { color: '#2a2a30', roughness: 0.7, detail: 0.002 });
       // The bushy tail hangs down behind, with a white tip.
       const TIP: [number, number, number] = [0, 0.13, -0.5];
       const tail = sdf
@@ -86,17 +106,18 @@ export default scaleAsset(
       const SZ = -0.06;
       const leather = '#6a3c22';
       // The blanket over the back with a gold trim along its edge.
-      const blanket = trunk.round(0.009).smoothIntersect(0.008, sdf.box([0.5, 0.2, 0.26], 0.04).at(0, 0.36, SZ));
-      const inner = sdf.box([0.6, 0.16, 0.21], 0.03).at(0, 0.38, SZ);
-      // A gold sun emblem on each side of the pad.
-      const sun = sdf
-        .union(
-          sdf.cylinder(0.026, 1).rotateZ(90),
-          ...Array.from({ length: 8 }, (_, i) => sdf.box([1, 0.01, 0.05]).at(0, 0, 0.025).rotateX(i * 45)),
-        )
-        .intersect(sdf.sphere(0.05))
-        .at(0, 0.33, SZ - 0.04);
-      k.body('blanket', blanket.paintWhere(sdf.box([0.8, 1, 1]).at(0, 0.4, SZ).subtract(inner), '#e0b040', 0.003).paintWhere(sun, '#e0b040', 0.002), { color: k.tint('blanket'), roughness: 0.85, detail: 0.004 });
+      const blanket = trunk.round(0.009).smoothIntersect(0.008, sdf.box([0.5, 0.25, 0.32], 0.04).at(0, 0.335, SZ));
+      const inner = sdf.box([0.6, 0.21, 0.27], 0.03).at(0, 0.355, SZ);
+      // A pale diamond with a gold edge on each side of the pad.
+      const diamond = (r: number) => sdf.box([1, r, r]).rotateX(45).at(0, 0.315, SZ + 0.075);
+      k.body(
+        'blanket',
+        blanket
+          .paintWhere(sdf.box([0.8, 1, 1]).at(0, 0.4, SZ).subtract(inner), '#e0b040', 0.003)
+          .paintWhere(diamond(0.07), '#e0b040', 0.002)
+          .paintWhere(diamond(0.052), '#c8f0f0', 0.002),
+        { color: k.tint('blanket'), roughness: 0.85, detail: 0.004 },
+      );
       // The seat with a pommel and a cantle, and side flaps.
       const seat = trunk.round(0.022).smoothIntersect(0.01, sdf.box([0.22, 0.09, 0.2], 0.025).at(0, 0.445, SZ));
       const pommel = sdf.ellipsoid([0.05, 0.04, 0.032]).at(0, 0.47, SZ + 0.1).bone('spine');
@@ -106,8 +127,29 @@ export default scaleAsset(
       // The girth under the belly and the breast strap round the front of the chest.
       const shell = trunk.round(0.007).smoothSubtract(0.003, trunk.round(-0.008));
       const girth = shell.intersect(sdf.box([0.5, 0.2, 0.035], 0.008).at(0, 0.2, SZ + 0.03));
-      const breast = shell.intersect(sdf.box([0.5, 0.028, 0.4], 0.008).rotateX(15).at(0, 0.3, 0.1)).intersect(sdf.box([0.5, 0.5, 0.2]).at(0, 0.3, 0.15));
+      const breast = shell.intersect(sdf.box([0.5, 0.05, 0.4], 0.008).rotateX(15).at(0, 0.3, 0.1)).intersect(sdf.box([0.5, 0.5, 0.2]).at(0, 0.3, 0.15));
       k.body('harness', sdf.union(girth, breast), { color: leather, roughness: 0.55, detail: 0.003 });
+      // A metal ring at the front of the breast strap, and blue studs along it.
+      const ringAt = sdf.raycast(breast, [0, 0.3, 2], [0, 0, -1]);
+      if (ringAt) {
+        const ring = sdf.torus(0.024, 0.0065).rotateX(90).at(ringAt[0], ringAt[1] - 0.004, ringAt[2] + 0.004);
+        k.body('chest-ring', ring, { color: '#c8c4bc', roughness: 0.3, metalness: 0.85, detail: 0.003, bone: 'spine' });
+      }
+      const studs = [0.055, 0.1, 0.14].flatMap((sx) => {
+        const h = sdf.raycast(breast, [sx, 0.3, 2], [0, 0, -1]);
+        return h ? [sdf.sphere(0.011).at(h[0], h[1], h[2] - 0.002)] : [];
+      });
+      if (studs.length) k.body('studs', sdf.union(...studs).mirror('x'), { color: k.tint('blanket'), roughness: 0.35, metalness: 0.4, detail: 0.003, bone: 'spine' });
+      // Side bags on the flanks under the pad: a brown pouch with a flap in the pad color and a
+      // gold buckle.
+      const flank = sdf.raycast(trunk, [1, 0.27, SZ - 0.08], [-1, 0, 0])!;
+      const bx = flank[0] + 0.02;
+      const bag = sdf.box([0.045, 0.1, 0.12], 0.02).at(bx, 0.26, SZ - 0.08);
+      const flap = sdf.box([0.05, 0.045, 0.125], 0.012).at(bx + 0.004, 0.3, SZ - 0.08);
+      const buckle = sdf.box([0.01, 0.02, 0.02], 0.003).at(bx + 0.03, 0.28, SZ - 0.08);
+      k.body('bags', bag.mirror('x'), { color: leather, roughness: 0.6, detail: 0.004, bone: 'spine' });
+      k.body('bag-flaps', flap.mirror('x'), { color: k.tint('blanket'), roughness: 0.7, detail: 0.003, bone: 'spine' });
+      k.body('bag-buckles', buckle.mirror('x'), { color: '#e0b040', roughness: 0.3, metalness: 0.85, detail: 0.002, bone: 'spine' });
       // Stirrups on straps from the seat.
       const side = sdf.raycast(trunk, [1, 0.33, SZ + 0.01], [-1, 0, 0])!;
       const x = side[0] + 0.022;

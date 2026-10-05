@@ -31,8 +31,8 @@ export default scaleAsset(
       lanner: { body: 'buff', head: 'brown', wings: 'brown', eyes: 'amber' },
     },
     colors: { belly: '#f6f0e2', flight: '#5e6e68', eyeRim: '#2a2a2e' },
-    body: [0.19, 0.21, 0.18],
-    head: 0.16,
+    body: [0.165, 0.2, 0.17],
+    head: 0.19,
     beak: 'short',
     beakScale: 0.78,
     beakDroop: 30,
@@ -49,10 +49,18 @@ export default scaleAsset(
     wingOut: 0.07,
     wingScale: 0.72,
     legLength: 0.3,
+    tailPose: { lift: 0.5, tilt: -6 },
     wingStyle: 'paddle',
     neckScale: 1.35,
     cheeks: 0,
     wingSlim: 0.8,
+    paintBody(body, b) {
+      // The back and the shoulders in the hood color, with a soft edge, so the hood runs on down
+      // the back; the cream shows on the chest and the belly.
+      const { BODY_C, B } = b.joints;
+      const back = sdf.union(sdf.halfSpace([0, 0, 1], BODY_C[2] - B[2] * 0.25), sdf.halfSpace([0, -1, 0], -(BODY_C[1] + B[1] * 0.62)));
+      return body.paintWhere(back.intersect(sdf.box([2, 2, 2]).at(BODY_C[0], BODY_C[1], BODY_C[2])), b.tint.head, 0.04);
+    },
     paint(plumage, b) {
       const { HEAD_C, HR } = b.joints;
       const cream = b.tint.body;
@@ -61,7 +69,7 @@ export default scaleAsset(
       const e = b.eye.at;
       const es = b.eye.scale;
       const face = sdf
-        .smoothUnion(0.02, sdf.ellipsoid([HR * 1.02, HR * 0.62, HR]).at(0, HEAD_C[1] - HR * 0.42, HEAD_C[2] + HR * 0.4), sdf.sphere(HR * 0.42).at(e[0] + HR * 0.08, e[1], e[2]).mirror('x'))
+        .smoothUnion(0.02, sdf.ellipsoid([HR * 0.72, HR * 0.6, HR]).at(0, HEAD_C[1] - HR * 0.45, HEAD_C[2] + HR * 0.45), sdf.sphere(HR * 0.42).at(e[0] + HR * 0.08, e[1], e[2]).mirror('x'))
         .smoothSubtract(0.01, sdf.extrude(profile.polygon([[-HR * 0.3, HR * 0.7], [HR * 0.3, HR * 0.7], [0, -HR * 0.36]], { smooth: false }), 1).at(0, HEAD_C[1], 0));
       // The dark stripe: a line from the outer corner of each eye out to the side of the head.
       const front = sdf.halfSpace([0, 0, -1], -HEAD_C[2]);

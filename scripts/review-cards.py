@@ -37,6 +37,9 @@ def card(name: str, out_dir: str) -> str:
     glb = f'out/{name}/{name}.glb'
     if os.path.exists(glb):
         built = os.path.getmtime(glb) - 600
+        if strips and not any(os.path.getmtime(f'{anim_dir}/{f}') >= built for f in strips):
+            # A `--fast` build after `forge all` replaces the final GLB and the views (vertex colors).
+            print(f'warning: {name}: every clip strip is older than the GLB; run ./forge all {name} again', file=sys.stderr)
         strips = [f for f in strips if os.path.getmtime(f'{anim_dir}/{f}') >= built]
     for c in ('sit', 'walk', 'swim', 'fly', 'hop', 'idle'):
         if f'{c}.png' in strips:

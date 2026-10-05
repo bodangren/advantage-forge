@@ -63,6 +63,10 @@ export interface LizardKind {
   readonly eyeAngle?: number;
   /** The size of the eyes (default 1). */
   readonly eyeScale?: number;
+  /** With side eyes: how deep the eye center sits inside the face, as a share of its radius (default 0.45). */
+  readonly eyeSink?: number;
+  /** With side eyes: a dark pupil on the front of each eye (default false: one color with glints). */
+  readonly pupils?: boolean;
   /** A lower jaw in the belly color with a mouth behind it (default true); without it the kind paints a smile. */
   readonly jaw?: boolean;
   /** The jaw opening at rest in degrees (default 3). */
@@ -79,6 +83,8 @@ export interface LizardKind {
   readonly tailSway?: number;
   /** The leg thickness (default 1.25). */
   readonly legScale?: number;
+  /** The sideways reach of the knees and the feet from the shoulders and the hips (default 1; 0.3 stands the legs straight under the body). */
+  readonly legSpread?: number;
   /** Lowers the body by this much (meters) on shorter legs; the feet stay on the ground (default 0). */
   readonly drop?: number;
   /** Raises the chest, the shoulders, and the front knees by this much (meters; default 0), so the
@@ -103,6 +109,8 @@ export interface LizardShape {
   readonly trunk: sdf.Shape;
   readonly skull: sdf.Shape;
   readonly joints: { readonly HIPS: V3; readonly SPINE: V3; readonly HEAD_C: V3 };
+  /** With side eyes: the left eye (radius, outward direction, and center; scaled 1, 1.1, 0.8). */
+  readonly eye?: { readonly r: number; readonly dir: V3; readonly center: V3 };
   readonly tint: { readonly skin: string; readonly belly: string; readonly eye: string };
   /** A fixed default color that follows a slot (`k.tint(slot, { color, follow })`). */
   tone(slot: string, color: string, follow?: number): string;
@@ -159,10 +167,12 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
       const CL = kind.chestLift ?? 0;
       const SPINE: V3 = [SPINE0[0], SPINE0[1] + CL, SPINE0[2]];
       const SHOULDER: V3 = [SHOULDER0[0], SHOULDER0[1] + CL, SHOULDER0[2]];
-      const FKNEE: V3 = [FKNEE0[0], FKNEE0[1] + D * 0.5 + CL * 0.6, FKNEE0[2]];
-      const BKNEE = up(BKNEE0, 0.5);
-      const FFOOT = up(FFOOT0, 1);
-      const BFOOT = up(BFOOT0, 1);
+      const sp = kind.legSpread ?? 1;
+      const inX = (p: V3, root: V3): V3 => (sp === 1 ? p : [root[0] + (p[0] - root[0]) * sp, p[1], p[2]]);
+      const FKNEE: V3 = inX([FKNEE0[0], FKNEE0[1] + D * 0.5 + CL * 0.6, FKNEE0[2]], SHOULDER0);
+      const BKNEE = inX(up(BKNEE0, 0.5), HIP);
+      const FFOOT = inX(up(FFOOT0, 1), SHOULDER0);
+      const BFOOT = inX(up(BFOOT0, 1), HIP);
       const tone = (slot: string, color: string, follow = 1) => k.tint(slot, { color, follow });
       const T = { skin: k.tint('skin'), belly: k.tint('belly'), eye: k.tint('eyes') };
       const mx = (p: V3): V3 => [-p[0], p[1], p[2]];
@@ -261,7 +271,17 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
         ? pair(sdf.sphere(0.014).at(0.028, bulbC[1] + 0.05, bulbC[2] + 0.02))
         : pair(sdf.sphere(0.008 * hs).at(...sdf.raycast(skull, [0.022 * hs, SNOUT_Y + 0.012 * hs, 2], [0, 0, -1])!));
       skin = skin.paintWhere(nostril, C.nostril, 0.003);
-      const lizard: LizardShape = { trunk, skull, joints: { HIPS, SPINE, HEAD_C }, tint: T, tone };
+      // A side eye (the left one): its radius, its outward direction, and its center.
+      const sideEye = () => {
+        const r = 0.042 * es;
+        const a = ((kind.eyeAngle ?? 40) * Math.PI) / 180;
+        const dir: V3 = [Math.sin(a), 0, Math.cos(a)];
+        const h = sdf.raycast(skull, add(add(HEAD_C, [0, 0.02 * hs, 0]), [dir[0], 0, dir[2]]), [-dir[0], 0, -dir[2]])!;
+        const sink = kind.eyeSink ?? 0.45;
+        const center: V3 = [h[0] - dir[0] * r * sink, h[1], h[2] - dir[2] * r * sink];
+        return { r, dir, center };
+      };
+      const lizard: LizardShape = { trunk, skull, joints: { HIPS, SPINE, HEAD_C }, tint: T, tone, ...(eyesTop ? {} : { eye: sideEye() }) };
       if (kind.paint) skin = kind.paint(skin, lizard);
       k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 1.4 });
       const hasJaw = kind.jaw !== false;
@@ -282,15 +302,12 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
           .paintWhere(sdf.sphere(ER * 0.17).at(c[0] - ER * 0.02, c[1] + ER * 0.3, c[2] + ER * 0.96), '#ffffff', 0.002);
         k.body('eyes', pair(eye).bone('head'), { color: C.eyeWhite, roughness: 0.15, detail: 0.003 });
       } else {
-        const ER = 0.042 * es;
-        const a = ((kind.eyeAngle ?? 40) * Math.PI) / 180;
-        const dir: V3 = [Math.sin(a), 0, Math.cos(a)];
-        const h = sdf.raycast(skull, add(add(HEAD_C, [0, 0.02 * hs, 0]), [dir[0], 0, dir[2]]), [-dir[0], 0, -dir[2]])!;
-        const c: V3 = [h[0] - dir[0] * ER * 0.45, h[1], h[2] - dir[2] * ER * 0.45];
-        const eye = sdf
+        const { r: ER, dir, center: c } = sideEye();
+        const ball = sdf
           .sphere(ER)
           .scale([1, 1.1, 0.8])
-          .at(...c)
+          .at(...c);
+        const eye = (kind.pupils ? ball.paintWhere(sdf.sphere(ER * 0.5).at(c[0] + dir[0] * ER, c[1], c[2] + dir[2] * ER * 0.8), C.pupil, 0.002) : ball)
           .paintWhere(sdf.sphere(ER * 0.26).at(c[0] + dir[0] * ER * 0.7, c[1] + ER * 0.42, c[2] + dir[2] * ER * 0.7), '#ffffff', 0.002)
           .paintWhere(sdf.sphere(ER * 0.12).at(c[0] + dir[0] * ER * 0.85 - ER * 0.2, c[1] - ER * 0.3, c[2] + dir[2] * ER * 0.85), '#ffffff', 0.002);
         k.body('eyes', pair(eye).bone('head'), { color: T.eye, roughness: 0.12, detail: 0.003 });

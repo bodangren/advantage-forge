@@ -58,7 +58,7 @@ export function domeEyes(k: AssetContext, b: BirdShape, opts: { iris: string; lo
   const e = b.eye.at;
   const { HEAD_C } = b.joints;
   const R = 0.031 * s * (opts.r ?? 1.15);
-  const n = [e[0] - HEAD_C[0], e[1] - HEAD_C[1], e[2] - HEAD_C[2]];
+  const n: V3 = [e[0] - HEAD_C[0], e[1] - HEAD_C[1], e[2] - HEAD_C[2]];
   const nl = Math.hypot(n[0], n[1], n[2]) || 1;
   const d: V3 = [n[0] / nl, n[1] / nl, n[2] / nl];
   const c: V3 = [e[0] - d[0] * R * 0.3, e[1] - d[1] * R * 0.3, e[2] - d[2] * R * 0.3];
@@ -104,7 +104,7 @@ export function collarFront(b: BirdShape): V3 {
 }
 
 /** A comb of five round lobes in a fan on the crown and a wattle of two long drops under the beak (the rooster). */
-export function combAndWattle(b: BirdShape, size = 1): sdf.Shape {
+export function combAndWattle(b: BirdShape, size = 1, thick = 0.62): sdf.Shape {
   const { HEAD_C, HR } = b.joints;
   // The comb: five round lobes in a fan on the crown, the middle ones the tallest, on a low base,
   // flat from side to side, so each lobe shows in the side outline.
@@ -116,7 +116,7 @@ export function combAndWattle(b: BirdShape, size = 1): sdf.Shape {
     const r = (i === 2 ? 0.025 : i % 2 ? 0.023 : 0.02) * size;
     return sdf.capsule([0, root[1] - 0.012, root[2] - 0.01], [0, root[1] - 0.012 + Math.cos(a) * reach, root[2] - 0.01 + Math.sin(a) * reach], r);
   });
-  const comb = sdf.smoothUnion(0.006 * size, base, ...lobes).scale([0.62, 1, 1]);
+  const comb = sdf.smoothUnion(0.006 * size, base, ...lobes).scale([thick, 1, 1]);
   // The wattle: two long lobes that hang down from under the beak, close together, a little apart
   // at the bottom.
   const chin = b.faceHit(0, HEAD_C[1] - HR * 0.42);

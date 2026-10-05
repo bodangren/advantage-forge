@@ -1,5 +1,6 @@
 import { defineAsset, mixRgb, motion, noise, profile, rgb, sdf } from '../../src/index.js';
 import type { AssetContext, AssetDefinition } from '../../src/index.js';
+import { headSwell, legStretch } from './head-swell.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 /**
@@ -69,10 +70,22 @@ export interface BoarKind {
   readonly eyeScale?: number;
   /** How much deeper the eyes sit in the head, in meters (default 0): a set-in eye that does not bulge. */
   readonly eyeInset?: number;
+  /**
+   * Pupils as a dark cap that follows the eyeball, this share of the default pupil size and lifted,
+   * so the iris color shows only as a crescent at the bottom (1.7 for big glossy dark eyes). Unset:
+   * the default flat pupil.
+   */
+  readonly pupilScale?: number;
+  /** Meters added to the shins at the base size (default 0); the body and the head move up. */
+  readonly legLength?: number;
+  /** True: the paws are flat wide pads (bear kinds). */
+  readonly flatPaws?: boolean;
   /** False: no claws on the paws. */
   readonly claws?: boolean;
   /** False: no smile line (the kind paints its own mouth). */
   readonly mouth?: boolean;
+  /** The head size as a share of the boar's (default 1): see `head-swell.ts`. */
+  readonly headScale?: number;
   /** The glow of the eyes (default 0.9; 0 for plain eyes). */
   readonly eyeGlow?: number;
   /** False: no heavy brows over the eyes (a friendly face). */
@@ -85,6 +98,8 @@ export interface BoarKind {
   readonly tail?: 'long' | 'stub' | 'curl';
   /** The length of the bear muzzle as a share of the bear's; above 1 it grows forward and thinner (a badger or hedgehog snout). */
   readonly muzzleLength?: number;
+  /** The width and height of a longer bear muzzle as a share (default 1: it thins as it grows). */
+  readonly muzzleWidth?: number;
   /** Extra paint on the fur (a face disc, a bib), with the slot colors. */
   paint?(fur: sdf.Shape, boar: BoarShape): sdf.Shape;
   /** Extra bodies (a beak, ear tufts), rigid on a bone or tagged to bones. */
@@ -118,7 +133,19 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
     variants: kind.variants,
     ...(kind.presets ? { presets: kind.presets } : {}),
 
-    build(k) {
+    build(k00) {
+      // Longer legs (`legLength`): the shins stretch between the feet and the belly.
+      const k0 = (kind.legLength ?? 0) > 0 ? legStretch(k00, kind.legLength!, 0.1, 0.18) : k00;
+      // A larger head (`headScale`): the zones are the skull and the snout, and the chest, the
+      // shoulder hump, and the rump.
+      const k =
+        (kind.headScale ?? 1) === 1
+          ? k0
+          : headSwell(k0, kind.headScale!, {
+              pivot: [0, 0.38, 0.1],
+              head: sdf.union(sdf.ellipsoid([0.235, 0.205, 0.2]).at(...HEAD_C), sdf.ellipsoid([0.11, 0.09, 0.12]).at(0, 0.38, 0.4)),
+              body: sdf.union(sdf.ellipsoid([0.19, 0.18, 0.18]).at(0, 0.33, 0.0), sdf.ellipsoid([0.16, 0.11, 0.13]).at(0, 0.42, 0.04), sdf.ellipsoid([0.15, 0.14, 0.14]).at(0, 0.28, -0.14)),
+            });
       // Colors of the variant slots. Shades keep their exact default color and follow their slot.
       const T = {
         fur: k.tint('fur'),
@@ -169,10 +196,11 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const snout = snoutPose(snoutLocal);
       // A bear muzzle: a round block on the front of the face, a little down.
       const ml = kind.muzzleLength ?? 1;
+      const mw = kind.muzzleWidth ?? 1;
       const muzzle =
         ml === 1
           ? sdf.ellipsoid([0.105, 0.08, 0.1]).at(0, 0.385, 0.37)
-          : sdf.ellipsoid([0.105 / Math.sqrt(ml), 0.08 / Math.sqrt(ml), 0.1 * ml]).at(0, 0.385, 0.37 + 0.1 * (ml - 1));
+          : sdf.ellipsoid([(0.105 * mw) / Math.sqrt(ml), (0.08 * mw) / Math.sqrt(ml), 0.1 * ml]).at(0, 0.385 - 0.03 * (mw - 1), 0.37 + 0.1 * (ml - 1));
       const headBase =
         kind.snout === 'bear' ? sdf.smoothUnion(0.05, skull, muzzle) : kind.snout === false ? skull : sdf.smoothUnion(0.04, skull, snout);
 
@@ -224,7 +252,8 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
         );
       const legs = sdf.union(pair(leg(SHOULDER, FKNEE, 'fleg.L', 'fshin.L')), pair(leg(HIP, BKNEE, 'bleg.L', 'bshin.L')));
       // Round paws (bear kinds): a wide pad under each shin, a little forward.
-      const paw = (at: V3, bone: string) => sdf.ellipsoid([0.08, 0.048, 0.092]).at(at[0], 0.048, at[2] + 0.03).bone(bone);
+      const paw = (at: V3, bone: string) =>
+        (kind.flatPaws ? sdf.ellipsoid([0.084, 0.034, 0.1]).at(at[0], 0.034, at[2] + 0.034) : sdf.ellipsoid([0.08, 0.048, 0.092]).at(at[0], 0.048, at[2] + 0.03)).bone(bone);
       const paws = kind.feet === 'paws' ? sdf.union(pair(paw(FKNEE, 'fshin.L')), pair(paw(BKNEE, 'bshin.L'))) : undefined;
       const limbs = paws ? sdf.smoothUnion(0.03, legs, paws) : legs;
       const TAIL_TIP: V3 = [0.02, 0.34, -0.41];
@@ -307,11 +336,20 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const glow = kind.eyeGlow ?? 0.9;
       k.body('eyes', eyes.bone('head'), { color: T.eye, roughness: 0.2, ...(glow > 0 ? { emissive: T.eye, emissiveIntensity: glow } : {}) });
       const pupilAt = out(EYE_R - 0.006);
+      const ps = kind.pupilScale;
+      const front = out(EYE_R);
       const pupils = pair(
-        sdf
-          .ellipsoid([0.026 * es, 0.03 * es, 0.014 * es])
-          .at(pupilAt[0] - 0.004 * es, pupilAt[1], pupilAt[2])
-          .paintWhere(sdf.sphere(0.0065 * es).at(pupilAt[0] + 0.004 * es, pupilAt[1] + 0.01 * es, pupilAt[2] + 0.012 * es), '#ffffff', 0.002),
+        ps
+          ? sdf
+              .sphere(EYE_R + 0.0015)
+              .at(...eyeCenter)
+              .intersect(sdf.sphere(0.03 * es * ps).at(front[0] - 0.004 * es, front[1] + 0.04 * es * (ps - 1), front[2]))
+              .paintWhere(sdf.sphere(0.009 * es * Math.sqrt(ps)).at(front[0] + 0.008 * es, front[1] + 0.016 * es, front[2]), '#ffffff', 0.002)
+              .paintWhere(sdf.sphere(0.004 * es * Math.sqrt(ps)).at(front[0] - 0.014 * es, front[1] - 0.008 * es, front[2]), '#ffffff', 0.0015)
+          : sdf
+              .ellipsoid([0.026 * es, 0.03 * es, 0.014 * es])
+              .at(pupilAt[0] - 0.004 * es, pupilAt[1], pupilAt[2])
+              .paintWhere(sdf.sphere(0.0065 * es).at(pupilAt[0] + 0.004 * es, pupilAt[1] + 0.01 * es, pupilAt[2] + 0.012 * es), '#ffffff', 0.002),
       );
       k.body('pupils', pupils.bone('head'), { color: C.pupil, roughness: 0.15, detail: 0.003 });
 

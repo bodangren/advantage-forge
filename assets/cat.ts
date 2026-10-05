@@ -20,6 +20,9 @@ export default catAsset({
   reference: 'docs/wildlife-mockups/cat_001.jpg',
   // The mockup sits: the rest pose stands (for the walk), and the `sit` clip holds the sitting pose.
   sit: true,
+  // A big head over short legs, with a small cream muzzle.
+  headScale: 1.4,
+  muzzleWidth: 0.75,
   variants: {
     fur: { orange: '#e8913a', grey: '#9a9a9e', brown: '#8a6040', cream: '#ecd6b0' },
     markings: { white: '#fff6ec', cream: '#f4e4c8' },

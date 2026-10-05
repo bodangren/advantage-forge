@@ -7,6 +7,8 @@ Produce and accept the P2 catalog rows in the wildlife family. Select batches fr
 ## Acceptance criteria
 
 - Each source has a stable catalog ID and a recorded visual review.
+- An independent reviewer agent rates each asset (owner decision of 2026-10-05). The bar is 7.0
+  out of 10 (owner, 2026-10-05: "We can drop the rating to 7.0."); it was 7.5 before.
 - Each accepted asset has a textured GLB, a turnaround, and readable sprites.
 - Rigged assets pass clearance checks for every required clip.
 - Builds contain no warnings, and changed sources pass the relevant checks.

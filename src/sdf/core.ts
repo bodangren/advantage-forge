@@ -223,6 +223,33 @@ export class Sdf {
     );
   }
 
+  /**
+   * Warp space: the new shape at p is this shape at `map(p)` (a domain map), for local changes
+   * such as a larger head on the same body. Paint and bone tags follow the map. `lipschitz` bounds
+   * how much `map` can shorten distances (the field is divided by it, so it stays a distance
+   * bound), and `bounds` is the bounding box of the new shape.
+   */
+  warp(map: (x: number, y: number, z: number) => Vec3, lipschitz: number, bounds: Aabb): Sdf {
+    const d = this.dist;
+    const c = this.color;
+    const inv = 1 / Math.max(1, lipschitz);
+    return new Sdf(
+      (x, y, z) => {
+        const q = map(x, y, z);
+        return d(q[0], q[1], q[2]) * inv;
+      },
+      bounds,
+      derived((x, y, z, f) => {
+        const q = map(x, y, z);
+        return c(q[0], q[1], q[2], f);
+      }, c),
+      mapTags(this.tags, (td) => (x, y, z) => {
+        const q = map(x, y, z);
+        return td(q[0], q[1], q[2]) * inv;
+      }),
+    );
+  }
+
   /** Stretch the shape along axes by inserting straight sections of the given half lengths. */
   elongate(hx: number, hy: number, hz: number): Sdf {
     const d = this.dist;

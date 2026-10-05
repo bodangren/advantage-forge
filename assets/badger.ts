@@ -9,10 +9,10 @@ import { scaleAsset } from './parts/scale-asset.js';
  * The long low body of the lizard kind (`assets/parts/lizard-kind.ts`: a trunk on four short thick
  * legs, a head with a snout of any length, rig, and clips) at 0.6 of its size, as a badger: a long
  * grey body low to the ground, a white throat and chest, black legs, a short tail, and a wedge of a
- * head that tapers to a round black nose. The face is white with a wide black stripe from the side
- * of the nose over each eye to the ear, and a white stripe up the middle of the crown; the small
- * brown eyes with a glint sit inside the black stripes; the small round ears are dark with white
- * rims.
+ * head with a long pointed snout and a round black nose. The face is white with a wide black
+ * stripe from the side of the nose through each eye to the ear, and a white stripe up the middle
+ * of the crown; the open brown eyes with a glint sit inside the black stripes; a small smile under
+ * the nose; the small round ears are dark with white rims.
  * Role: a forest and burrow animal; the striped white face reads at 128 px.
  * Palette (60/30/10): grey fur #78766f; a white face, throat, and chest #f2f0ea; black stripes,
  *   ears, and legs #2a2826; a black nose; brown eyes with a white glint.
@@ -32,50 +32,56 @@ export default scaleAsset(
       honey: { skin: 'brown', belly: 'cream', eyes: 'amber' },
     },
     colors: { claw: '#3a3634', nostril: '#1a1416' },
-    snout: 0.12,
-    snoutWidth: 0.058,
+    snout: 0.21,
+    snoutWidth: 0.044,
     bulb: false,
     headOffset: [0, 0.03, 0.04],
-    headScale: 1.42,
+    headScale: 1.6,
     eyes: 'side',
-    eyeScale: 0.55,
+    eyeScale: 0.8,
     eyeAngle: 30,
+    eyeSink: 0.62,
+    pupils: true,
     jaw: false,
     teeth: 0,
     ridges: false,
     tail: 0,
-    legScale: 1.35,
-    drop: 0.03,
+    legScale: 1.1,
+    legSpread: 0.3,
+    drop: -0.02,
     paint(skin, liz) {
       const { HEAD_C } = liz.joints;
       const black = liz.tone('skin', '#2a2826', 0.3);
       const white = liz.tint.belly;
       // The white face: the front of the head, in front of the ears.
       const face = sdf.box([0.5, 0.4, 0.4]).at(0, HEAD_C[1], HEAD_C[2] + 0.18);
-      // The black stripes: seen from the front, a wide band from the side of the nose over each eye to
-      // the ear, pushed through the head along Z (only on the head).
-      const [, hy, hz] = HEAD_C;
+      // The black stripes: a wide band on each side from beside the nose, through the eye, to the
+      // ear (a tube along the head surface; it paints where it crosses the surface). The white
+      // stripe up the middle stays between them.
+      const tip = sdf.raycast(liz.skull, [0, HEAD_C[1] - 0.015, 2], [0, 0, -1])!;
+      const E = liz.eye!.center;
+      const on = (x: number, y: number, z: number) => sdf.surfacePoint(liz.skull, [x, y, z]);
+      const N = on(tip[0] + 0.028, tip[1] + 0.012, tip[2] - 0.035);
+      const R = on(0.62, 0.7, -0.25);
+      const M = on((N[0] + E[0]) / 2, (N[1] + E[1]) / 2 + 0.01, (N[2] + E[2]) / 2);
+      const B = on((E[0] + R[0]) / 2, (E[1] + R[1]) / 2 + 0.01, (E[2] + R[2]) / 2);
       const band = sdf
-        .extrude(
-          profile.polygon(
-            [
-              [0.018, hy - 0.01],
-              [0.06, hy - 0.025],
-              [0.12, hy + 0.02],
-              [0.16, hy + 0.12],
-              [0.09, hy + 0.15],
-              [0.045, hy + 0.07],
-              [0.02, hy + 0.025],
-            ],
-            { smooth: true },
-          ),
-          1,
+        .chain(
+          [
+            [N[0], N[1], N[2], 0.02],
+            [M[0], M[1], M[2], 0.034],
+            [E[0], E[1] + 0.006, E[2], 0.048],
+            [B[0], B[1], B[2], 0.05],
+            [R[0], R[1], R[2], 0.042],
+          ],
+          0.02,
         )
-        .mirror('x')
-        .intersect(sdf.box([0.5, 0.4, 0.34]).at(0, hy, hz + 0.08));
-      // Black legs below the body.
-      const legs = sdf.box([0.2, 0.17, 0.7]).at(0.19, 0.06, -0.02).mirror('x');
-      return skin.paintWhere(face, white, 0.03).paintWhere(band, black, 0.006).paintWhere(legs, black, 0.03);
+        .mirror('x');
+      // A small smile under the nose.
+      const smile = sdf.extrude(profile.arc(0.026, 0.005, 225, 315), 0.12).at(0, tip[1] - 0.012, tip[2] - 0.02);
+      // Black legs below the body (wide enough to cover the inner sides of the legs).
+      const legs = sdf.box([0.22, 0.2, 0.72]).at(0.14, 0.06, -0.02).mirror('x');
+      return skin.paintWhere(face, white, 0.03).paintWhere(band, black, 0.006).paintWhere(smile, black, 0.002).paintWhere(legs, black, 0.012);
     },
     extra(k, liz) {
       const { HEAD_C } = liz.joints;

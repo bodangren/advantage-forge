@@ -1,5 +1,6 @@
-import { noise, sdf } from '../src/index.js';
+import { profile, sdf } from '../src/index.js';
 import { deerAsset } from './parts/deer-kind.js';
+import { curlField } from './parts/curl-field.js';
 import { scaleAsset } from './parts/scale-asset.js';
 
 /**
@@ -15,10 +16,11 @@ import { scaleAsset } from './parts/scale-asset.js';
  *   dark eyes and hooves.
  */
 
+
 export default scaleAsset(
   deerAsset({
     name: 'sheep',
-    description: 'Chibi sheep: a big round cream face with glossy eyes and pink cheeks, ears held out to the sides, a thick lumpy cloud of white wool on its body and a curly wool cap, cream legs, and dark hooves; quadruped rig.',
+    description: 'Chibi sheep: a big round cream face with glossy eyes and pink cheeks, ears held out to the sides, white eyes with black pupils, a small black triangle nose, a coat of neat round white wool curls on its body and over the top and the sides of the head, short cream legs, and dark hooves; quadruped rig.',
     reference: 'docs/wildlife-mockups/sheep_001.jpg',
     variants: {
       fur: { cream: '#f0d8ae', black: '#3a3230', brown: '#8a6040' },
@@ -35,6 +37,11 @@ export default scaleAsset(
     bib: false,
     spots: false,
     antlers: false,
+    eyeStyle: 'white',
+    eyeScale: 1.3,
+    nose: false,
+    legThick: 1.3,
+    legLength: -0.09,
     earTilt: -105,
     earTurn: 25,
     earScale: 0.85,
@@ -45,24 +52,28 @@ export default scaleAsset(
       return fur.paintWhere(blush, deer.tone('fur', '#f0b4a0', 0.3), 0.02);
     },
     extra(k, deer) {
-      const curls = (s: sdf.Shape, a: number) => s.displace(a, (x, y, z) => noise.noise3(x * 30, y * 30, z * 30) + 0.5 * noise.noise3(x * 70, y * 70, z * 70));
-      // The coat: the trunk grown thick, with the neck, in lumps.
+      // A small black triangle nose, point down, on the tip of the muzzle.
+      const nh = deer.faceHit(0, 0.635);
+      const tri = profile.polygon([[-0.024, 0.012], [0.024, 0.012], [0, -0.018]], { smooth: false });
+      k.body('nose', sdf.extrude(tri, 0.016, 0.006).at(nh[0], nh[1], nh[2] + 0.002).bone('head'), { color: '#2a2220', roughness: 0.3, detail: 0.003 });
+      // The coat: the trunk grown thick, with the neck, covered in neat round curls.
       const neck = sdf.capsule([0, 0.41, 0.06], [0, 0.55, 0.1], 0.1).bone('neck');
-      const coat = curls(sdf.smoothUnion(0.05, deer.trunk.round(0.07), neck), 0.014);
+      const coatBase = sdf.smoothUnion(0.05, deer.trunk.round(0.07), neck);
+      const body = curlField(coatBase, sdf.box([2, 2, 2]), [0, 0.42, -0.04], 260, 0.038);
+      const coat = coatBase.round(-0.01).displace(-0.022, body.dome, 2.2);
       k.body('wool', coat, {
         color: k.tint('wool'),
-        roughness: 0.95,
-        detail: 0.005,
-        bump: (x: number, y: number, z: number) => 0.0015 * noise.noise3(x * 160, y * 160, z * 160),
+        roughness: 0.9,
+        detail: 0.004,
+        bump: (x: number, y: number, z: number) => 0.0018 * body.rings(x, y, z),
       });
-      // The cap: a cluster of curls on the crown, in front of the ears.
-      const balls: sdf.Shape[] = [];
-      for (let i = 0; i < 20; i++) {
-        const a = i * 2.4;
-        const r = 0.025 + 0.11 * Math.sqrt(i / 19);
-        balls.push(sdf.sphere(0.052 - 0.012 * Math.sqrt(i / 19)).at(r * Math.cos(a), 0.865 - 0.07 * (r / 0.135) ** 2, 0.16 + 0.75 * r * Math.sin(a)));
-      }
-      k.body('wool-cap', curls(sdf.smoothUnion(0.015, ...balls), 0.008), { color: k.tint('wool'), roughness: 0.95, detail: 0.004, bone: 'head' });
+      // The cap: curls over the top and the sides of the head, framing the face.
+      const capBase = deer.head.round(0.022);
+      const face = sdf.ellipsoid([0.178, 0.165, 0.2]).at(0, 0.635, 0.28);
+      const capKeep = sdf.halfSpace([0, -1, 0], -0.6).subtract(face);
+      const head = curlField(capBase, capKeep, [0, 0.72, 0.12], 160, 0.03);
+      const cap = capBase.round(-0.008).displace(-0.018, head.dome, 2.2).intersect(capKeep.round(0.01));
+      k.body('wool-cap', cap, { color: k.tint('wool'), roughness: 0.9, detail: 0.0035, bone: 'head', bump: (x: number, y: number, z: number) => 0.0015 * head.rings(x, y, z) });
     },
   }),
   0.8,

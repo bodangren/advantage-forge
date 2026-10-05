@@ -122,6 +122,8 @@ export interface BirdKind {
   readonly wingTips?: 'feathers' | 'smooth';
   /** The paddle wing's width as a share (default 1); a slimmer wing is also longer (a falcon's long narrow wings). */
   readonly wingSlim?: number;
+  /** The paddle wing's thickness as a share (default 1): a thicker, rounder wing. */
+  readonly wingThick?: number;
   /** The neck thickness as a share of the default (default 1; about 1.4 merges the head into the body). */
   readonly neckScale?: number;
   /** The size of the round cheeks low on the head as a share of the default (default 1; 0 = a plain round head). */
@@ -164,6 +166,14 @@ export interface BirdKind {
   readonly tailTip?: string;
   /** A fan of tail feathers (default), or none (the kind builds its own tail on the `tail` bone). */
   readonly tail?: 'fan' | false;
+  /**
+   * Where the tail fan sits and points: `lift` raises its root by this share of the body height
+   * (toward the rump), `tilt` turns the feathers up in degrees (default -18: down and back), and
+   * `scale` sizes the fan (default 1).
+   */
+  readonly tailPose?: { readonly lift?: number; readonly tilt?: number; readonly scale?: number };
+  /** False: no feathered thighs; a thin bare upper leg in the leg color shows below the body. */
+  readonly thighs?: boolean;
   /** The slot of the tail fan color (default `wings`). */
   readonly tailSlot?: string;
   /** Extra bones (a serpent tail, a crest). */
@@ -206,7 +216,8 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
   const HIPS_AT: V3 = [0, 0.26 - DROP, -0.02];
   const BODY_C: V3 = [0, 0.16 - DROP + B[1], 0];
   const HEAD_C: V3 = [0, BODY_C[1] + B[1] * 0.78 + HR * 0.62 - (kind.headForward ?? 0) * 0.4 + (kind.headLift ?? 0), 0.03 + (kind.headForward ?? 0)];
-  const TAIL_AT: V3 = [0, BODY_C[1] - B[1] * 0.3, -B[2] * 0.82];
+  const TP = kind.tailPose ?? {};
+  const TAIL_AT: V3 = [0, BODY_C[1] - B[1] * (0.3 - (TP.lift ?? 0)), -B[2] * (0.82 + 0.12 * (TP.lift ?? 0))];
   const WING_ROOT: V3 = [B[0] * 0.72, BODY_C[1] + B[1] * 0.4, -0.03];
   const REST = kind.wingRest ?? 0;
   const WS = 1.12 * (kind.wingScale ?? 1);
@@ -242,7 +253,11 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
         neck: { parent: 'spine', at: NECK_AT },
         head: { parent: 'neck', at: HEAD_AT, tail: [0, HEAD_C[1] + HR, HEAD_C[2]] },
         jaw: { parent: 'head', at: [0, BEAK_Y - HR * 0.15, HEAD_C[2] + HR * 0.75], tail: [0, BEAK_Y - HR * 0.3, HEAD_C[2] + HR * 1.4] },
-        tail: { parent: 'hips', at: TAIL_AT, tail: [0, TAIL_AT[1] - 0.04, TAIL_AT[2] - 0.2] },
+        tail: {
+          parent: 'hips',
+          at: TAIL_AT,
+          tail: TP.tilt === undefined ? [0, TAIL_AT[1] - 0.04, TAIL_AT[2] - 0.2] : [0, TAIL_AT[1] + 0.2 * Math.sin(TP.tilt * DEG), TAIL_AT[2] - 0.2 * Math.cos(TP.tilt * DEG)],
+        },
         'wing.L': { parent: 'spine', at: WING_ROOT, tail: [WING_ROOT[0] + 0.3, WING_ROOT[1] + 0.25, WING_ROOT[2]] },
         'wing.R': { parent: 'spine', at: mx(WING_ROOT), tail: [-WING_ROOT[0] - 0.3, WING_ROOT[1] + 0.25, WING_ROOT[2]] },
         'leg.L': { parent: 'hips', at: HIP },
@@ -260,8 +275,7 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
       const neck = sdf.capsule(NECK_AT, [0, HEAD_C[1] - HR * 0.3, HEAD_C[2]], HR * 0.66 * (kind.neckScale ?? 1));
       const trunk = sdf.smoothUnion(0.08, chest.bone('spine'), belly.bone('hips')).smoothUnion(0.05, neck.bone('neck'));
       const thigh = sdf.cone(HIP, KNEE, 0.068, 0.05).bone('leg.L');
-      const bodyShape = trunk
-        .smoothUnion(0.03, pair(thigh))
+      const bodyShape = (kind.thighs === false ? trunk : trunk.smoothUnion(0.03, pair(thigh)))
         .paintWhere(sdf.ellipsoid([B[0] * 0.62 * BELLY, B[1] * 0.72 * BELLY, B[2] * 0.5]).at(0, BODY_C[1] - B[1] * 0.12, BODY_C[2] + B[2] * 0.62), T.belly, 0.05);
       const bodyFinal = kind.paintBody ? kind.paintBody(bodyShape, { trunk, joints: { BODY_C, HEAD_C, HR, B }, tone, tint: { head: T.head, body: T.body } }) : bodyShape;
       const bodyLook = {
@@ -285,7 +299,8 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
         )
         .intersect(sdf.halfSpace([0, -1, 0], 0))
         .bone('foot.L');
-      k.body('legs', pair(sdf.smoothUnion(0.015, shin, foot)), {
+      const upperLeg = sdf.cone(HIP, KNEE, 0.03, 0.03).bone('leg.L');
+      k.body('legs', pair(kind.thighs === false ? sdf.smoothUnion(0.015, upperLeg, shin, foot) : sdf.smoothUnion(0.015, shin, foot)), {
         color: C.scale,
         roughness: 0.5,
         bump: (_x, y) => 0.001 * Math.max(0, Math.cos(y * 2 * Math.PI * 40)),
@@ -437,9 +452,9 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
           0.01,
           ...[-44, -22, 0, 22, 44].map((a) =>
             sdf
-              .ellipsoid([0.04, 0.012, 0.1])
-              .at(0, 0, -0.09)
-              .rotateX(-18)
+              .ellipsoid([0.04 * (TP.scale ?? 1), 0.012 * (TP.scale ?? 1), 0.1 * (TP.scale ?? 1)])
+              .at(0, 0, -0.09 * (TP.scale ?? 1))
+              .rotateX(TP.tilt ?? -18)
               .rotateY(a)
               .at(...TAIL_AT),
           ),
@@ -492,12 +507,13 @@ export function birdAsset(kind: BirdKind): AssetDefinition {
         const along = (s: sdf.Shape, u: number, v: number) => s.rotateZ(ARM_DEG).at(u * Math.cos(ARM_DEG * DEG) - v * Math.sin(ARM_DEG * DEG), u * Math.sin(ARM_DEG * DEG) + v * Math.cos(ARM_DEG * DEG), 0);
         const SLIM = kind.wingSlim ?? 1;
         const LONG = 1 + (1 - SLIM) * 0.8;
-        let paddle = along(sdf.ellipsoid([0.2 * LONG, 0.115 * SLIM, 0.03]), 0.17 * LONG, -0.04);
+        const THICK = kind.wingThick ?? 1;
+        let paddle = along(sdf.ellipsoid([0.2 * LONG, 0.115 * SLIM, 0.03 * THICK]), 0.17 * LONG, -0.04);
         if (kind.wingBars) for (const u of kind.wingBars.at) paddle = paddle.paintWhere(along(sdf.box([0.022, 0.4, 0.2]), u, 0), kind.wingBars.color, 0.004);
         const tips =
           kind.wingTips === 'smooth'
-            ? along(sdf.ellipsoid([0.085, 0.072 * SLIM, 0.024]), 0.3 * LONG, -0.035)
-            : sdf.smoothUnion(0.01, ...[-0.06, -0.01, 0.04].map((v, i) => along(sdf.ellipsoid([0.075, 0.038, 0.02]).rotateZ(-12 + i * 12), 0.33 * LONG - Math.abs(v) * 0.5, (v - 0.03) * SLIM)));
+            ? along(sdf.ellipsoid([0.085, 0.072 * SLIM, 0.024 * THICK]), 0.3 * LONG, -0.035)
+            : sdf.smoothUnion(0.01, ...[-0.06, -0.01, 0.04].map((v, i) => along(sdf.ellipsoid([0.075, 0.038, 0.02 * THICK]).rotateZ(-12 + i * 12), 0.33 * LONG - Math.abs(v) * 0.5, (v - 0.03) * SLIM)));
         k.body('coverts', pair(wingPose(paddle).bone('wing.L')), { color: T.wings, roughness: 0.85, ...(FB && FON.wings ? { bump: scallops(FB, 0.05 * FC, [0, 0, 0]) } : {}) });
         k.body('flight', pair(wingPose(tips).bone('wing.L')), { color: T.flight, roughness: 0.85 });
       } else {

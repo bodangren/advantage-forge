@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 916,
+    "listed": 918,
     "catalog_matched": 704,
-    "off_catalog": 212
+    "off_catalog": 214
   },
   "asset_sources": [
     {
@@ -13314,6 +13314,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "curl-field",
+      "source_path": "assets/parts/curl-field.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "deer-kind",
       "source_path": "assets/parts/deer-kind.ts",
       "catalog_source_ids": []
@@ -13436,6 +13441,11 @@
     {
       "id": "guardian-shield",
       "source_path": "assets/parts/guardian-shield.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "head-swell",
+      "source_path": "assets/parts/head-swell.ts",
       "catalog_source_ids": []
     },
     {

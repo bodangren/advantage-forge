@@ -192,60 +192,67 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 | crow | 3 | 6.0 | 7.5 | accepted |
 | dolphin | 2 | 6.5 | 7.5 | accepted |
 | fish | 1 | 7.5 | 7.5 | accepted |
+| hare | 5 | 4.5 | 7.5 | accepted |
 | hedgehog | 2 | 6.0 | 7.5 | accepted |
 | owl | 3 | 6.0 | 7.5 | accepted |
 | rabbit | 4 | 6.0 | 7.5 | accepted |
+| stag | 2 | 6.5 | 7.5 | accepted |
 | turtle | 1 | 7.5 | 7.5 | accepted |
-| bear | 2 | 7.0 | 7.0 | rework |
-| chicken | 4 | 6.5 | 7.0 | rework |
-| cow | 1 | 7.0 | 7.0 | rework |
-| donkey | 1 | 7.0 | 7.0 | rework |
-| eel | 3 | 6.0 | 7.0 | rework |
-| falcon | 4 | 5.5 | 7.0 | rework |
-| familiar-owl | 4 | 6.0 | 7.0 | rework |
-| messenger-bird | 4 | 6.0 | 7.0 | rework |
-| mule | 1 | 7.0 | 7.0 | rework |
-| ox | 1 | 7.0 | 7.0 | rework |
-| pigeon | 4 | 5.5 | 7.0 | rework |
-| raven | 4 | 5.5 | 7.0 | rework |
-| riding-horse | 1 | 7.0 | 7.0 | rework |
-| salmon | 3 | 7.0 | 7.0 | rework |
-| seal | 3 | 6.5 | 7.0 | rework |
-| warhorse | 1 | 7.0 | 7.0 | rework |
-| wasp | 4 | 5.0 | 7.0 | rework |
-| yak | 1 | 7.0 | 7.0 | rework |
-| badger | 2 | 6.5 | 6.5 | rework |
-| bee | 4 | 5.5 | 6.5 | rework |
-| boar | 2 | 6.5 | 6.5 | rework |
-| crocodile | 3 | 7.0 | 6.5 | rework |
-| dog | 2 | 6.5 | 6.5 | rework |
-| eagle | 4 | 6.0 | 6.5 | rework |
-| elk | 1 | 6.5 | 6.5 | rework |
-| familiar-raven | 4 | 6.0 | 6.5 | rework |
-| frog | 3 | 5.5 | 6.5 | rework |
-| goat | 1 | 6.5 | 6.5 | rework |
-| hare | 4 | 4.5 | 6.5 | rework |
-| hawk | 4 | 6.0 | 6.5 | rework |
-| moth | 5 | 4.5 | 6.5 | rework |
-| pig | 2 | 6.5 | 6.5 | rework |
-| pony | 1 | 6.5 | 6.5 | rework |
-| rooster | 4 | 5.5 | 6.5 | rework |
-| sparrow | 4 | 5.5 | 6.5 | rework |
-| stag | 1 | 6.5 | 6.5 | rework |
-| trout | 3 | 7.0 | 6.5 | rework |
-| cat | 2 | 6.5 | 6.0 | rework |
-| fox | 2 | 6.0 | 6.0 | rework |
-| moose | 1 | 6.0 | 6.0 | rework |
-| pack-goat | 1 | 6.0 | 6.0 | rework |
-| riding-wolf | 2 | 6.0 | 6.0 | rework |
-| sheep | 1 | 6.0 | 6.0 | rework |
-| squirrel | 4 | 5.5 | 6.0 | rework |
-| wolf | 2 | 6.5 | 6.0 | rework |
-| camel | 1 | 5.5 | 5.5 | rework |
-| familiar-cat | 2 | 6.5 | 5.5 | rework |
+| bear | 3 | 7.0 | 7.0 | accepted |
+| boar | 3 | 6.5 | 7.0 | accepted |
+| cat | 3 | 6.5 | 7.0 | accepted |
+| chicken | 5 | 6.5 | 7.0 | accepted |
+| cow | 1 | 7.0 | 7.0 | accepted |
+| crocodile | 4 | 7.0 | 7.0 | accepted |
+| dog | 3 | 6.5 | 7.0 | accepted |
+| donkey | 1 | 7.0 | 7.0 | accepted |
+| eagle | 5 | 6.0 | 7.0 | accepted |
+| eel | 3 | 6.0 | 7.0 | accepted |
+| falcon | 5 | 5.5 | 7.0 | accepted |
+| familiar-cat | 3 | 6.5 | 7.0 | accepted |
+| familiar-owl | 5 | 6.0 | 7.0 | accepted |
+| goat | 2 | 6.5 | 7.0 | accepted |
+| messenger-bird | 4 | 6.0 | 7.0 | accepted |
+| moose | 2 | 6.0 | 7.0 | accepted |
+| mule | 1 | 7.0 | 7.0 | accepted |
+| ox | 1 | 7.0 | 7.0 | accepted |
+| pig | 3 | 6.5 | 7.0 | accepted |
+| pigeon | 4 | 5.5 | 7.0 | accepted |
+| raven | 4 | 5.5 | 7.0 | accepted |
+| riding-horse | 1 | 7.0 | 7.0 | accepted |
+| salmon | 3 | 7.0 | 7.0 | accepted |
+| seal | 3 | 6.5 | 7.0 | accepted |
+| sparrow | 5 | 5.5 | 7.0 | accepted |
+| trout | 4 | 7.0 | 7.0 | accepted |
+| warhorse | 1 | 7.0 | 7.0 | accepted |
+| wasp | 4 | 5.0 | 7.0 | accepted |
+| yak | 1 | 7.0 | 7.0 | accepted |
+| badger | 3 | 6.5 | 6.5 | rework |
+| bee | 5 | 5.5 | 6.5 | rework |
+| elk | 2 | 6.5 | 6.5 | rework |
+| fox | 3 | 6.0 | 6.5 | rework |
+| frog | 4 | 5.5 | 6.5 | rework |
+| hawk | 5 | 6.0 | 6.5 | rework |
+| moth | 6 | 4.5 | 6.5 | rework |
+| pony | 2 | 6.5 | 6.5 | rework |
+| riding-wolf | 3 | 6.0 | 6.5 | rework |
+| rooster | 5 | 5.5 | 6.5 | rework |
+| sheep | 2 | 6.0 | 6.5 | rework |
+| familiar-raven | 5 | 6.0 | 6.0 | rework |
+| pack-goat | 2 | 6.0 | 6.0 | rework |
+| squirrel | 5 | 5.5 | 6.0 | rework |
+| wolf | 3 | 6.5 | 6.0 | rework |
+| camel | 2 | 5.5 | 5.5 | rework |
 
-Status on 2026-10-05 after 13 review rounds: 11 of 58 reviewed assets are at the bar.
-Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json.
+Bar decision. Owner, 2026-10-05: "We can drop the rating to 7.0. How does that affect the pass
+rate?" The wildlife bar is 7.0 from this date; the table marks 7.0 and higher as accepted. The
+reviewers still rate against the brief, and their ratings stay as they are. Proposal (open,
+waiting for the owner): after three reviews below the bar, record the rating, put the asset on a
+follow-up list, and move on.
+
+Status on 2026-10-05 after 17 review rounds: 42 of 58 reviewed assets are at 7.0 or higher (13 at
+7.5 or higher).
+Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json.
 
 Changes in the latest rounds (all kind options are additive; `mesh-same` or a manual GLB compare
 shows SAME for the other users of each kind):
@@ -262,6 +269,25 @@ shows SAME for the other users of each kind):
   `stillNeck`, `glint`, `oneBody`, `headLift`, `wingSlim`, `irisScale`, and `clay`.
 - The moth's fine fur grooves broke the texture bake (89,000 triangles in thin strands); the
   grooves are now in the normal map (`bump`), and the textured render is clean.
+
+Changes in rounds 14 to 17 (all kind options are additive; `mesh-same` shows SAME for the other
+users of each kind: centaur, horse, kelpie, unicorn, nightmare, cow before its rework; deer, hare;
+butterfly, wasp; dire-wolf, shadow-hound, kitsune, abyssal-beast, chimera, displacer-beast,
+manticore):
+
+- Space warps (`assets/parts/head-swell.ts`, on `Sdf.warp`): `headSwell` grows a head, `stretch`
+  (and `legStretch`) makes legs or a body longer or shorter, and `headShift` moves a head and
+  stretches the neck. Paint and bone tags follow. `headSwellPoint` and `stretchPoint` move
+  rest-pose points the same way, so the clips' ground probes stay on the ground.
+- Horse kind: `legLength`, `bodyLength`, `headScale`, `irisScale`, `smile`, `nostrilScale`,
+  `eyeSink`, `coatBump`, and the eye on `HorseShape`. Wolf kind: `legLength` and `paintMuzzle`.
+  Deer kind: `legThick`, `legLength`, `smile`, `eyeStyle: 'white'`, and `headShift`. Boar kind:
+  `pupilScale`, `legLength`, `flatPaws`, and `muzzleWidth`. Bird kind: `tailPose`, `thighs`, and
+  `wingThick`. Lizard kind: `legSpread`, `eyeSink`, and `pupils`. Insect kind: `bodySize`,
+  `pompom`, and the moth's fluffy `hood` (it replaces the moth-only `strands` ruff).
+- `assets/parts/curl-field.ts`: round curls on a surface (the sheep's wool, the pony's topknot,
+  the moth's hood).
+- The cow keeps no udder (rated G, as in batch 3).
 
 Rework method: one asset at a time from the reviewer's issue list, largest difference first, with
 `./forge render <name> --fast` against the mockup, `./forge check <name>` (`ground ok`), and then

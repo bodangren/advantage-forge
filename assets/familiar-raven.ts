@@ -1,4 +1,4 @@
-import { profile, sdf } from '../src/index.js';
+import { noise, profile, sdf } from '../src/index.js';
 import { birdAsset } from './parts/bird-kind.js';
 import { collar, collarFront, crownTuft } from './parts/bird-extras.js';
 import { scaleAsset } from './parts/scale-asset.js';
@@ -33,13 +33,16 @@ export default scaleAsset(
       sun: { body: 'grey', head: 'grey', wings: 'grey', eyes: 'gold' },
       rose: { body: 'black', head: 'black', wings: 'black', eyes: 'rose' },
     },
-    colors: { belly: '#2c2a36', flight: '#2a2036', scale: '#3e3e46', scaleDark: '#2e2e36', talon: '#18181c', eyeRim: '#141218', mouth: '#2a2c32', pupil: '#0c0c10' },
+    colors: { belly: '#2c2a36', flight: '#26252e', scale: '#3e3e46', scaleDark: '#2e2e36', talon: '#18181c', eyeRim: '#141218', mouth: '#2a2c32', pupil: '#0c0c10' },
     body: [0.22, 0.19, 0.2],
-    head: 0.15,
+    head: 0.165,
     beak: 'short',
-    beakScale: 1.0,
+    beakScale: 1.15,
     beakWidth: 1.2,
-    beakDroop: 14,
+    beakDroop: 34,
+    cheeks: 1,
+    eyeStyle: 'bead',
+    glint: 0.01,
     beakColors: ['#383a42', '#383a42'],
     mouth: false,
     brows: false,
@@ -66,18 +69,33 @@ export default scaleAsset(
         const es = b.eye.scale;
         const e = b.eye.at;
         const { HEAD_C } = b.joints;
-        const R = 0.034 * es;
+        const R = 0.026 * es;
         const n0 = [e[0] - HEAD_C[0], e[1] - HEAD_C[1], e[2] - HEAD_C[2]];
         const nl = Math.hypot(n0[0]!, n0[1]!, n0[2]!) || 1;
         const n = [n0[0]! / nl, n0[1]! / nl, n0[2]! / nl] as const;
-        const c: [number, number, number] = [e[0] - n[0] * R * 0.4, e[1] - n[1] * R * 0.4, e[2] - n[2] * R * 0.4];
+        const c: [number, number, number] = [e[0] - n[0] * R * 0.7, e[1] - n[1] * R * 0.7, e[2] - n[2] * R * 0.7];
         const at = (u: number, v: number, w: number): [number, number, number] => [c[0] + n[0] * R * w + u * R, c[1] + n[1] * R * w + v * R, c[2] + n[2] * R * w];
         const ball = sdf
           .sphere(R)
           .at(...c)
-          .paintWhere(sdf.sphere(R * 0.55).at(...at(-0.05, 0, 0.75)), '#fff6ff', R * 0.35)
+          .paintWhere(sdf.sphere(R * 0.42).at(...at(-0.05, 0, 0.8)), '#fff6ff', R * 0.25)
           .paintWhere(sdf.sphere(R * 0.16).at(...at(0.35, 0.42, 0.85)), '#ffffff', 0.002);
-        k.body('eye-glow', ball.mirror('x').bone('head'), { color: magic, emissive: magic, emissiveIntensity: 2.2, roughness: 0.15, detail: 0.002, textureDensity: 2 });
+        k.body('eye-glow', ball.mirror('x').bone('head'), { color: magic, emissive: magic, emissiveIntensity: 1.5, roughness: 0.15, detail: 0.002, textureDensity: 2 });
+      }
+      // Shaggy feather clumps on the cheeks and the sides of the head: short pointed tufts that
+      // point out and down, so the head reads wide and round.
+      {
+        const { HEAD_C: hc, HR } = b.joints;
+        const tufts: sdf.Shape[] = [];
+        for (let i = 0; i < 9; i++) {
+          const a = ((-60 + i * 15) * Math.PI) / 180; // from the low front to the back of the side
+          const el = ((-30 + 12 * Math.sin(i * 1.7)) * Math.PI) / 180;
+          const d: [number, number, number] = [Math.cos(el) * Math.cos(a) * 0.95, Math.sin(el), Math.cos(el) * Math.sin(-a) * 0.6 + 0.2];
+          const base: [number, number, number] = [hc[0] + d[0] * HR, hc[1] + d[1] * HR, hc[2] + d[2] * HR];
+          const len = HR * (0.4 + 0.12 * noise.random(i, 2, 9));
+          tufts.push(sdf.cone(base, [base[0] + d[0] * len, base[1] + d[1] * len - len * 0.35, base[2] + d[2] * len * 0.5], HR * 0.16, HR * 0.03));
+        }
+        k.body('cheek-tufts', sdf.smoothUnion(0.008, ...tufts).mirror('x').bone('head'), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
       }
       // A soft crest of short round feather lumps on the crown.
       k.body('tuft', crownTuft(b, 0.035, 0.016), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
@@ -85,7 +103,8 @@ export default scaleAsset(
       // round points, in staggered rows that overlap, a little lighter than the body, set into the
       // surface.
       const { BODY_C, B } = b.joints;
-      const leaf = sdf.extrude(profile.polygon([[-0.03, 0.02], [0, 0.026], [0.03, 0.02], [0.027, -0.012], [0.012, -0.034], [0, -0.04], [-0.012, -0.034], [-0.027, -0.012]], { smooth: true }), 0.009, 0.004);
+      // A shaggy feather: broad at the top, with two or three ragged points at the bottom.
+      const leaf = sdf.extrude(profile.polygon([[-0.03, 0.02], [0, 0.026], [0.03, 0.02], [0.028, -0.02], [0.018, -0.03], [0.01, -0.02], [0.002, -0.046], [-0.008, -0.026], [-0.016, -0.038], [-0.027, -0.016]], { smooth: false }), 0.009, 0.003);
       const clumps: sdf.Shape[] = [];
       for (let row = 0; row < 4; row++) {
         const y = BODY_C[1] + B[1] * (0.3 - row * 0.24);
@@ -96,6 +115,8 @@ export default scaleAsset(
           const hit = sdf.raycast(b.trunk, [Math.sin(ang) * 2, y, Math.cos(ang) * 2], [-Math.sin(ang), 0, -Math.cos(ang)]);
           if (!hit || (row < 3 && Math.abs(hit[0] + 0.015) < 0.03)) continue; // the ribbon tails hang here
           const clump = leaf
+            .scale(0.85 + 0.35 * noise.random(row, j, 4))
+            .rotateZ((noise.random(row, j, 5) - 0.5) * 30)
             .rotateX(-6)
             .rotateY(deg)
             .at(hit[0] - Math.sin(ang) * 0.002, hit[1] - 0.006, hit[2] - Math.cos(ang) * 0.002);

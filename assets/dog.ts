@@ -24,6 +24,7 @@ export default scaleAsset(
     reference: 'docs/wildlife-mockups/dog_001.jpg',
     // The mockup sits: the rest pose stands (for the walk), and the `sit` clip holds the sitting pose.
     sit: true,
+    headScale: 1.25,
     variants: {
       fur: { tan: '#d08a4a', black: '#3a3432', white: '#f2ece2', grey: '#9a9894' },
       markings: { white: '#fff6ec', cream: '#f2dcb4', tan: '#d8a46a' },
@@ -35,17 +36,27 @@ export default scaleAsset(
       white: { fur: 'white', markings: 'white', eyes: 'blue', ears: 'tan' },
       grey: { fur: 'grey', markings: 'white', eyes: 'amber', ears: 'black' },
     },
-    colors: { furLight: '#e8b884', furDark: '#fff6ec', eyeRim: '#1a100a', nose: '#1a1214' },
+    // The lower legs keep the fur color (the paws are painted white); a white edge round the eyes.
+    colors: { furLight: '#e8b884', furDark: '#d08a4a', eyeRim: '#fbf8f2', nose: '#1a1214' },
     eyeScale: 1.3,
     snout: 0.045,
     cheekTufts: false,
     brows: false,
     forelock: false,
-    smile: true,
+    // A short open smile: a dark mouth band under the nose, with the tongue out.
+    smile: false,
+    smileArc: [244, 296],
+    fangs: false,
+    teeth: false,
     ruff: 'smooth',
     ears: false,
     claws: false,
     tail: false,
+    paint(fur, t) {
+      // White paws, and a long cream bib from under the collar down the chest to the belly.
+      const bib = sdf.union(sdf.ellipsoid([0.085, 0.13, 0.09]).at(0, 0.24, 0.15), sdf.ellipsoid([0.07, 0.06, 0.16]).at(0, 0.15, 0.0));
+      return fur.paintWhere(sdf.halfSpace([0, 1, 0], 0.05), t.markings, 0.012).paintWhere(bib, t.markings, 0.025);
+    },
     extra(k, w) {
       const ears = k.tint('ears');
       // Floppy ears: flat ovals that hang from the top sides of the head, tipped out.
@@ -54,6 +65,10 @@ export default scaleAsset(
       // The tongue out of the smile, on the jaw.
       const tongue = sdf.ellipsoid([0.026, 0.036, 0.012]).rotateX(-15).at(0.012, 0.36, 0.372);
       k.body('tongue-out', tongue.paintWhere(sdf.box([0.003, 0.06, 0.1]).at(0.012, 0.35, 0.39), '#c84a5a', 0.002), { color: '#ec7a88', roughness: 0.4, detail: 0.003, bone: 'jaw' });
+      // A big round highlight on each eye (upper outer side).
+      const e = w.eye;
+      const shine = sdf.sphere(0.017).scale([1, 1, 0.5]).at(e[0] + 0.014, e[1] + 0.02, e[2] - 0.004).mirror('x');
+      k.body('eye-shine', shine.bone('head'), { color: '#ffffff', roughness: 0.1, detail: 0.002 });
       // Round cream brow marks above the eyes.
       const bh = w.faceHit(w.eye[0] + 0.012, w.eye[1] + 0.068);
       const brow = sdf.ellipsoid([0.03, 0.016, 0.014]).rotateZ(-12).at(bh[0], bh[1], bh[2] - 0.004);

@@ -1,6 +1,7 @@
 import { defineAsset, motion, noise, profile, sdf } from '../../src/index.js';
 import type { AnimationDef, AssetContext, AssetDefinition, BodyOptions, BonePose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
+import { headSwell, headSwellPoint, stretch, stretchPoint } from './head-swell.js';
 
 /**
  * Horse kinds — the horse of `assets/horse.ts` (catalog `wildlife/land/horse`) and the fey horses
@@ -91,6 +92,22 @@ export interface HorseKind {
   readonly forelock?: boolean;
   /** Eye size (default 1). */
   readonly eyeScale?: number;
+  /** How deep the eye balls sit behind the face surface in meters (default 0.02). */
+  readonly eyeSink?: number;
+  /** The fur bump of the coat (default 1; 0 for a smooth, glossy clay coat). */
+  readonly coatBump?: number;
+  /** Size of the iris and the pupil in the eye (default 1; a pony's dark eyes 1.25). */
+  readonly irisScale?: number;
+  /** Nostril size (default 1; a pony's small nostrils 0.6). */
+  readonly nostrilScale?: number;
+  /** False: no painted smile line on the muzzle (default true). */
+  readonly smile?: boolean;
+  /** Longer legs in meters (below 0, shorter): the legs stretch between the hooves and the belly. */
+  readonly legLength?: number;
+  /** A longer body in meters (below 0, shorter): the barrel stretches between the shoulders and the hips. */
+  readonly bodyLength?: number;
+  /** Head size (default 1): the head, the ears, the muzzle, and the mane on the head grow about the head joint. */
+  readonly headScale?: number;
   /** The left ear root (default [0.11, 1.03, 0.25]; a cow's side ears sit lower and wider). */
   readonly earAt?: V3;
   /** Muzzle size (default 1; a cow's wide muzzle 1.15). */
@@ -135,6 +152,8 @@ export interface HorseShape {
   /** The point where a ray from the front (+Z) meets the head (without the muzzle) at (x, y). */
   faceHit(x: number, y: number): readonly [number, number, number];
   readonly joints: { readonly FKNEE: V3; readonly BKNEE: V3; readonly HOOF_DZ: number; readonly HEAD_C: V3 };
+  /** The left eye ball: its center and radius. */
+  readonly eye: { readonly at: V3; readonly r: number };
   readonly tint: { readonly coat: string; readonly coatDark: string; readonly mane: string; readonly eye: string };
   /** A fixed default color that follows a slot (`k.tint(slot, { color, follow })`). */
   tone(slot: string, color: string, follow?: number): string;
@@ -150,7 +169,24 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
     variants: kind.variants,
     ...(kind.presets ? { presets: kind.presets } : {}),
 
-    build(k) {
+    build(k00) {
+      // With `legLength`, `bodyLength`, and `headScale`, every body is warped (legs inside, then
+      // the barrel, then the head, whose zones are in the plain space); `WP` moves rest-pose points
+      // the same way for the ground probes of the clips.
+      const LL = kind.legLength ?? 0;
+      const BL = kind.bodyLength ?? 0;
+      const HS = kind.headScale ?? 1;
+      const kl = LL ? stretch(k00, 1, LL, 0.12, 0.3) : k00;
+      const kb = BL ? stretch(kl, 2, BL, -0.2, 0.0) : kl;
+      const zones = {
+        pivot: HEAD_AT,
+        head: sdf.union(sdf.ellipsoid(SKULL_R).at(...HEAD_C), sdf.ellipsoid(FACE_R).rotateX(-NB_A).at(...FACE_C), sdf.ellipsoid(MUZ_R).at(...MUZ_C)),
+        body: sdf.union(sdf.ellipsoid(CHEST_R).at(...CHEST_C), sdf.ellipsoid(RUMP_R).at(...RUMP_C)),
+        blend: 0.1,
+      };
+      const k = HS !== 1 ? headSwell(kb, HS, zones) : kb;
+      const warps = [HS !== 1 ? headSwellPoint(HS, zones) : null, BL ? stretchPoint(2, BL, -0.2, 0.0) : null, LL ? stretchPoint(1, LL, 0.12, 0.3) : null].filter((f) => f !== null);
+      const WP = (p: V3): V3 => warps.reduce<V3>((q, f) => f(q), p);
       const T = {
         coat: k.tint('coat'),
         coatDark: k.tint('coat', { color: C.coatDark, follow: 1 }),
@@ -219,16 +255,17 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       const ES = kind.eyeScale ?? 1;
       const EYE_R = 0.048 * ES;
       const eh = faceHit(0.1, 0.87);
-      const EC: V3 = [eh[0], eh[1], eh[2] - 0.02];
+      const EC: V3 = [eh[0], eh[1], eh[2] - (kind.eyeSink ?? 0.02)];
       const front = sdf.halfSpace([0, 0, -1], -EC[2]);
       const cyl = (r: number, dx: number, dy: number) => sdf.cylinder(r, 1).rotateX(90).at(EC[0] + dx, EC[1] + dy, 0).intersect(front);
       const shineOff = [0.014 * ES, 0.017 * ES] as const;
+      const IS = kind.irisScale ?? 1;
       const eyes = pair(
         sdf
           .sphere(EYE_R)
           .at(...EC)
-          .paintWhere(cyl(0.037 * ES, -0.005 * ES, -0.002 * ES), T.eye, 0.002)
-          .paintWhere(cyl(0.021 * ES, -0.006 * ES, -0.003 * ES), C.pupil, 0.002)
+          .paintWhere(cyl(0.037 * ES * IS, -0.005 * ES, -0.002 * ES), T.eye, 0.002)
+          .paintWhere(cyl(0.021 * ES * IS, -0.006 * ES, -0.003 * ES), C.pupil, 0.002)
           .paintWhere(sdf.sphere(0.011 * ES).at(EC[0] + shineOff[0], EC[1] + shineOff[1], EC[2] + Math.sqrt(EYE_R ** 2 - shineOff[0] ** 2 - shineOff[1] ** 2)), '#ffffff', 0.002),
       );
       const withHead = kind.head !== false;
@@ -254,6 +291,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         trunk: barrel,
         faceHit,
         joints: { FKNEE, BKNEE, HOOF_DZ, HEAD_C },
+        eye: { at: EC, r: EYE_R },
         tint: { coat: T.coat, coatDark: T.coatDark, mane: T.mane, eye: T.eye },
         tone,
       };
@@ -265,18 +303,17 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         roughness: 0.7,
         detail: 0.006,
         textureDensity: 1.4,
-        bump: (x: number, y: number, z: number) => 0.0005 * noise.fbm(x * 80, y * 30, z * 80, 2),
+        ...(kind.coatBump === 0 ? {} : { bump: (x: number, y: number, z: number) => 0.0005 * (kind.coatBump ?? 1) * noise.fbm(x * 80, y * 30, z * 80, 2) }),
       });
 
       // ------------------------------------------------------------------ muzzle: nostrils and smile
       const muzHit = (x: number, y: number) => sdf.raycast(muzzleShape, [x, y, 2], [0, 0, -1])!;
       const nh = muzHit(0.05, 0.66);
-      const nostrils = pair(sdf.ellipsoid([0.018, 0.024, 0.03]).rotateZ(-20).at(nh[0], nh[1], nh[2]));
+      const NS = kind.nostrilScale ?? 1;
+      const nostrils = pair(sdf.ellipsoid([0.018 * NS, 0.024 * NS, 0.03 * NS]).rotateZ(-20).at(nh[0], nh[1], nh[2]));
       const smile = sdf.extrude(profile.arc(0.075, 0.008, 228, 312), 0.3).at(0.0, 0.665, MUZ_C[2] + 0.05);
-      const muzzle = muzzleShape
-        .smoothSubtract(0.008, nostrils)
-        .paintWhere(nostrils.round(0.007), C.nostril, 0.004)
-        .paintWhere(smile, C.nostril, 0.002);
+      const nosed = muzzleShape.smoothSubtract(0.008 * NS, nostrils).paintWhere(nostrils.round(0.007 * NS), C.nostril, 0.004);
+      const muzzle = kind.smile === false ? nosed : nosed.paintWhere(smile, C.nostril, 0.002);
       if (withHead) k.body('muzzle', muzzle, { color: T.muzzle, roughness: 0.6, detail: 0.005, textureDensity: 2, bone: 'head' });
 
       // ------------------------------------------------------------------ halter
@@ -428,10 +465,10 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         Array.from({ length: n }, (_, i) => [c[0] + r * Math.cos((i / n) * 2 * Math.PI), c[1], c[2] + r * Math.sin((i / n) * 2 * Math.PI)] as V3);
       const hoofSole = (kn: V3): V3[] => [...ring([kn[0], 0, kn[2] + HOOF_DZ], 0.078), ...ring([kn[0], 0.012, kn[2] + HOOF_DZ], 0.086)];
       const LEGS = [
-        { bones: ['hips', 'spine', 'fleg.L', 'fshin.L'], joints: [HIPS_AT, SPINE_AT, SHOULDER, FKNEE], sole: hoofSole(FKNEE) },
-        { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SHOULDER), mx(FKNEE)], sole: hoofSole(mx(FKNEE)) },
-        { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HIP, BKNEE], sole: hoofSole(BKNEE) },
-        { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HIP), mx(BKNEE)], sole: hoofSole(mx(BKNEE)) },
+        { bones: ['hips', 'spine', 'fleg.L', 'fshin.L'], joints: [HIPS_AT, SPINE_AT, SHOULDER, FKNEE].map(WP), sole: hoofSole(FKNEE).map(WP) },
+        { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SHOULDER), mx(FKNEE)].map(WP), sole: hoofSole(mx(FKNEE)).map(WP) },
+        { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HIP, BKNEE].map(WP), sole: hoofSole(BKNEE).map(WP) },
+        { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HIP), mx(BKNEE)].map(WP), sole: hoofSole(mx(BKNEE)).map(WP) },
       ];
       const chains = (pose: Pose, legs: readonly (typeof LEGS)[number][] = LEGS) =>
         legs.map((l) => ({ joints: l.joints, rotations: l.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const)), sole: l.sole }));
@@ -502,8 +539,10 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
         PROBES.push([`fleg.${s}`, ell(m(SHOULDER_C), SHOULDER_R)], [`fshin.${s}`, lower(m(FKNEE))]);
         PROBES.push([`bleg.${s}`, ell(m(THIGH_C), THIGH_R)], [`bshin.${s}`, lower(m(BKNEE))]);
       }
+      const PROBES_W = PROBES.map(([b, pts]) => [b, pts.map(WP)] as const);
+      const CH_W = Object.fromEntries(Object.entries(CH).map(([b, c]) => [b, { bones: c.bones, joints: c.joints.map(WP) }]));
       const groundY = (pose: Pose) =>
-        motion.plant(PROBES.map(([b, pts]) => ({ joints: CH[b]!.joints, rotations: CH[b]!.bones.map((n) => pose[n]?.rotate ?? ([0, 0, 0] as const)), sole: pts })));
+        motion.plant(PROBES_W.map(([b, pts]) => ({ joints: CH_W[b]!.joints, rotations: CH_W[b]!.bones.map((n) => pose[n]?.rotate ?? ([0, 0, 0] as const)), sole: pts })));
 
       // Walk and gallop. `phase` is each leg's offset in the cycle (LEGS order); a leg swings forward
       // while `lift` > 0: the upper leg lifts the knee (`fold`), and the shin folds back (`flex`)
@@ -623,8 +662,8 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
             pose[`bleg.${side}`] = { rotate: [hu - h, 0, 0] };
             pose[`bshin.${side}`] = { rotate: [-hu, 0, 0] };
           }
-          const hoofC: V3 = [BKNEE[0], 0, BKNEE[2] + HOOF_DZ];
-          const at = motion.follow([HIPS_AT, HIP, BKNEE], [pose.hips!.rotate!, pose['bleg.L']!.rotate!, pose['bshin.L']!.rotate!], hoofC);
+          const hoofC: V3 = WP([BKNEE[0], 0, BKNEE[2] + HOOF_DZ]);
+          const at = motion.follow([HIPS_AT, HIP, BKNEE].map(WP), [pose.hips!.rotate!, pose['bleg.L']!.rotate!, pose['bshin.L']!.rotate!], hoofC);
           pose.hips = { ...pose.hips, move: [0, groundY(pose), hoofC[2] - at[2]] };
           return pose;
         },
@@ -672,7 +711,7 @@ export function horseAsset(kind: HorseKind): AssetDefinition {
       // cancels the body's shift and each shin turns back by the same angle, so the hooves stay flat
       // and planted; the hips sink by the height the leaning upper legs lose.
       const DEG = 180 / Math.PI;
-      const UPPER = SHOULDER[1] - FKNEE[1]; // shoulder or hip joint to knee (the same front and back)
+      const UPPER = WP(SHOULDER)[1] - WP(FKNEE)[1]; // shoulder or hip joint to knee (the same front and back)
       animate('hit', {
         duration: 0.45,
         loop: false,

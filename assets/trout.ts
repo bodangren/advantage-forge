@@ -31,18 +31,18 @@ export default scaleAsset(
     },
     spine: [
       [0.195, 0.25, 0.135],
-      [0.19, 0.14, 0.172],
-      [0.18, 0.02, 0.165],
-      [0.168, -0.09, 0.125],
-      [0.168, -0.18, 0.072],
-      [0.18, -0.25, 0.035],
+      [0.19, 0.14, 0.168],
+      [0.182, 0.02, 0.158],
+      [0.172, -0.1, 0.118],
+      [0.17, -0.21, 0.062],
+      [0.178, -0.31, 0.026],
     ],
     width: 0.7,
     belly: [0.11, 0],
     eye: { at: [0.3, 0.235], angle: 30, r: 0.047, rim: '#e8e2c8' },
     swimAmp: 1.7,
     tail: 'fan',
-    tailSize: 1.15,
+    tailSize: 1.4,
     dorsalAt: [0.0, 1.05],
     pectoralAt: [0.1, 0.1],
     pectoralSize: 1.2,
@@ -75,9 +75,9 @@ export default scaleAsset(
       // Full lips round the open pout: a cream lower lip pushed out under the mouth, and an upper lip
       // in the body color over it.
       const [, ny, nz] = fish.nose;
-      const lip = sdf.ellipsoid([0.064, 0.026, 0.038]).at(0, ny - 0.052, nz - 0.012);
+      const lip = sdf.ellipsoid([0.042, 0.017, 0.026]).at(0, ny - 0.054, nz - 0.016);
       k.body('lip', lip.bone('head'), { color: fish.tone('belly', '#f4eedc', 0.5), roughness: 0.6, detail: 0.003 });
-      const upper = sdf.ellipsoid([0.06, 0.022, 0.03]).at(0, ny - 0.006, nz - 0.012);
+      const upper = sdf.ellipsoid([0.04, 0.015, 0.022]).at(0, ny - 0.01, nz - 0.016);
       k.body('upper-lip', upper.bone('head'), { color: fish.tint.body, roughness: 0.6, detail: 0.003 });
     },
   }),

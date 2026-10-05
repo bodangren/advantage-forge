@@ -1,0 +1,143 @@
+{
+  "chicken": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a plump white chicken with a red comb, a red wattle, and yellow feet. It is the same animal as the mockup, but the wings, the legs, and the comb are clearly different.",
+    "strengths": [
+      "The egg-shaped white body and the face match the mockup.",
+      "The red comb, the red wattle, and the yellow beak read at 128 px in all front directions.",
+      "The walk is readable and the feet stay on the ground."
+    ],
+    "issues": [
+      "The wings point out to the sides like arms and have finger-shaped tips. Make the wings thicker and let them hang down along the body, as in the mockup.",
+      "The legs are long and thin, and the feet are small. Make the legs shorter and thicker, and make the toes wider.",
+      "The comb has three small lobes. Make the comb taller, with a row of points from the front to the back.",
+      "The tail is a thin flat plate that shows edge-on from the side. Give the tail volume or make it smaller."
+    ],
+    "next": "Make the wings thick and let them hang down along the body."
+  },
+  "rooster": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 4, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a brown rooster with a red comb and a dark green tail. It is the same animal as the mockup, but the tail, the neck feathers, and the wings are clearly different.",
+    "strengths": [
+      "The brown body, the tan belly, and the orange neck feathers match the mockup palette.",
+      "The red comb and the arched tail read well in the side sprites.",
+      "The walk is readable and the feet stay on the ground."
+    ],
+    "issues": [
+      "The tail is a set of thin flat strands that hang down to the ground. From the front and the back, the tail shows as a thin stick. In the S sprite, it shows as a spike above the head. Make wide, thick sickle feathers that curl back and end at mid height.",
+      "The orange neck feathers make a ruff around the full body. Put the neck feathers on the neck and the shoulders only, and let them flow down from the head.",
+      "The wings hang below the body like panels. Make smaller folded wings on the sides of the body.",
+      "The head is a separate ball with both eyes on the front. Blend the head into the neck feathers and put the eyes on the sides of the head."
+    ],
+    "next": "Rebuild the tail as wide, thick sickle feathers that fan out and curl back."
+  },
+  "eagle": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a chibi eagle with a golden head, a grey collar, and a brown body. It is the same bird as the mockup, but the head feathers and the collar color are clearly different.",
+    "strengths": [
+      "The golden head on the dark body reads at 128 px in every direction.",
+      "The eyes, the beak, and the yellow feet with black talons match the mockup.",
+      "The body color plan and the wing shape match the mockup."
+    ],
+    "issues": [
+      "The head feathers are spikes that point out around the face, like a mane. Make layered, rounded feather tufts on the crown and the back of the head, as in the mockup.",
+      "The collar is a light purple-grey. Make the collar a dark charcoal grey.",
+      "The face has no brows, so the eagle looks surprised. Add a low brow ridge above each eye.",
+      "The tail is a thin flat plate that shows edge-on from the side. Give the tail volume.",
+      "A hard horizontal line separates the head from the body. Blend the head into the collar."
+    ],
+    "next": "Replace the spikes around the face with layered, rounded feather tufts on the crown."
+  },
+  "falcon": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "The model is a slate and cream falcon with yellow eye rings and dark cheek stripes. The face is close to the mockup, but the body is a tall column and not a pear shape.",
+    "strengths": [
+      "The slate hood, the cream face, and the dark stripes from the eyes read at 128 px.",
+      "The low brows give the same worried look as the mockup.",
+      "The wings, the chest dots, and the yellow feet with black talons match the mockup."
+    ],
+    "issues": [
+      "The body is a tall column with straight sides. Make the body a pear shape that is wider at the bottom, and make the head smaller than the body.",
+      "The eyes are larger than in the mockup. Make the eyes smaller.",
+      "The white legs are long and visible. Make the legs shorter so that the feet sit under the belly.",
+      "The tail is a thin flat paddle that looks like a hand in the side sprites. Give the tail volume or make it smaller.",
+      "The back of the neck shows a ledge between the head and the body. Blend the head into the back."
+    ],
+    "next": "Make the body a pear shape that is wider at the bottom."
+  },
+  "familiar-owl": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a white owl with cyan eyes, a cyan ribbon, and a gold star. The face and the expression match the mockup, but the body is taller and the feather texture is weak.",
+    "strengths": [
+      "The stern cyan eyes and the dark beak match the mockup expression.",
+      "The cyan ribbon and the gold star read at 128 px in the front directions.",
+      "The walk is readable and the feet stay on the ground."
+    ],
+    "issues": [
+      "The body is tall and boxy. Make the body rounder and shorter, and blend the head into the body.",
+      "The belly has small, sparse marks. Carve dense teardrop feather marks into the belly and the wings, as in the mockup.",
+      "The ear tufts are sharp and show as one horn in the side view and the side sprites. Make the ear tufts softer and lower.",
+      "The wings have grey stripes that the mockup does not have. Remove the stripes.",
+      "The star sits beside the bow. Hang the star from the bow.",
+      "The back of the head shows stacked horizontal ledges. Smooth the back of the head."
+    ],
+    "next": "Make the body rounder and shorter, and carve dense teardrop feather marks into the belly."
+  },
+  "hawk": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 4, 3.5, 3.5, 3, 4.5, 4, 3.5],
+    "summary": "The model is a brown and cream hawk with a spotted chest and a rusty tail. The body pattern matches the mockup, but the large ringed eyes make the hawk look like an owl.",
+    "strengths": [
+      "The brown hood, the drip collar, and the spotted cream chest match the mockup.",
+      "The small open smile matches the mockup expression.",
+      "The walk is readable and the feet stay on the ground."
+    ],
+    "issues": [
+      "The eyes are very large and have thick brown rings, so the face looks like an owl. Make the eyes smaller, dark, and glossy, as in the mockup.",
+      "The tail is a small flat plate. Make a large rusty tail fan that shows from the front behind the body.",
+      "A cream line shows between the head and the collar at the back and the side of the neck. Close this seam.",
+      "The crest tufts are small. Make the crest tufts larger and point them up and back."
+    ],
+    "next": "Make the eyes smaller, dark, and glossy, without the thick brown rings."
+  },
+  "familiar-raven": {
+    "overall": 6.0,
+    "scores": [2.5, 3, 3, 3.5, 3, 3.5, 3, 4, 4.5, 3, 3.5],
+    "summary": "The model is a black raven with a violet collar and a silver moon pendant. The collar matches the mockup, but the eyes are small and dull, and the body is a tall bell shape.",
+    "strengths": [
+      "The violet collar, the moon pendant, and the ribbon match the mockup.",
+      "The black feathers on the chest and the dark feet match the mockup.",
+      "The walk is readable and the feet stay on the ground."
+    ],
+    "issues": [
+      "The eyes are small, pale pink discs with no pupil and no glow. Make the eyes large and bright magenta, with a white center and a strong glow.",
+      "The body is a tall bell with a smooth lower back. Make the body round and fluffy, with feather tufts on the head.",
+      "The beak is large and wide. Make the beak smaller.",
+      "The tail is a thin flat plate. Give the tail volume and let the tail feathers show below the body from the front."
+    ],
+    "next": "Make the eyes large, bright magenta, and glowing."
+  },
+  "sparrow": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a brown sparrow with a grey cap, a cream face, and a black bib. It is close to the mockup, but the bib, the legs, and the eyes are clearly different.",
+    "strengths": [
+      "The grey cap with a tuft, the cream face, and the brown body match the mockup palette.",
+      "The stern brows match the mockup expression.",
+      "The grey cap and the black bib read at 128 px in the front directions."
+    ],
+    "issues": [
+      "The black bib is large and has a jagged lower edge, so it looks like a beard. Make the bib smaller, with three round lobes, directly below the beak.",
+      "The pink legs are long and thick. Make the legs shorter so that the body sits lower.",
+      "The eyes are larger than in the mockup. Make the eyes smaller.",
+      "The wings have dark stripes that the mockup does not have. Make the wings plain brown.",
+      "The tail is a flat paddle that looks like a hand in the back sprites. Give the tail volume."
+    ],
+    "next": "Make the bib smaller, with three round lobes, directly below the beak."
+  }
+}

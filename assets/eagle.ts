@@ -34,10 +34,10 @@ export default scaleAsset(
     colors: { belly: '#62402a', flight: '#3a2418', eyeRim: '#2a1a12' },
     body: [0.22, 0.18, 0.2],
     head: 0.19,
-    beak: 'hook',
-    beakScale: 0.74,
-    beakWidth: 1.2,
-    beakDroop: 14,
+    beak: 'short',
+    beakScale: 0.9,
+    beakWidth: 1.35,
+    beakDroop: 34,
     cheeks: 0,
     beakColors: ['#f0c030', '#f0c030'],
     mouth: false,
@@ -52,6 +52,7 @@ export default scaleAsset(
     wingOut: 0.1,
     wingScale: 0.66,
     legLength: 0.25,
+    tailPose: { lift: 0.45, tilt: -4, scale: 1.25 },
     wingStyle: 'paddle',
     neckScale: 1.35,
     extra(k, b) {
@@ -73,13 +74,23 @@ export default scaleAsset(
           const base: [number, number, number] = [HEAD_C[0] + d[0] * HR * 0.9, HEAD_C[1] + d[1] * HR * 0.9, HEAD_C[2] + d[2] * HR * 0.9];
           const L = HR * len;
           const tip: [number, number, number] = [base[0] + f[0] * L + d[0] * HR * 0.1, base[1] + f[1] * L + d[1] * HR * 0.1, base[2] + f[2] * L + d[2] * HR * 0.1];
-          locks.push(sdf.cone(base, tip, 0.046, 0.016));
+          locks.push(sdf.cone(base, tip, 0.034, 0.012));
         }
       };
-      ring(-5, -120, 120, 7, 0.55);
-      ring(30, -100, 100, 6, 0.6);
-      ring(62, -70, 70, 5, 0.6);
-      ring(88, -20, 20, 2, 0.5);
+      ring(-5, -120, 120, 9, 0.45);
+      ring(28, -105, 105, 8, 0.48);
+      ring(58, -80, 80, 7, 0.48);
+      ring(84, -30, 30, 3, 0.42);
+      // Spiky feathers round the edge of the face: they point out from the face rim and a little
+      // back, all round except under the beak.
+      const fc: [number, number, number] = [HEAD_C[0], HEAD_C[1], HEAD_C[2] + HR * 0.45];
+      for (let i = 0; i < 13; i++) {
+        const t = ((-35 + (250 * i) / 12) * Math.PI) / 180; // from low right, over the top, to low left
+        const rd: [number, number, number] = [Math.cos(t), Math.sin(t), 0];
+        const base: [number, number, number] = [fc[0] + rd[0] * HR * 0.86, fc[1] + rd[1] * HR * 0.86, fc[2] - HR * 0.12];
+        const L = HR * (0.32 + 0.08 * (i % 2));
+        locks.push(sdf.cone(base, [base[0] + rd[0] * L, base[1] + rd[1] * L, base[2] - HR * 0.12], 0.03, 0.008));
+      }
       k.body('head-spikes', sdf.smoothUnion(0.01, ...locks).bone('head'), { color: b.tint.head, roughness: 0.85, detail: 0.004 });
       k.body('crown', crownTuft(b, 0.07, 0.022), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
       // A dark grey ruff under the head: two rows of overlapping petal feathers that hang down and out.

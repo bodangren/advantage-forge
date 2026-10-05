@@ -25,13 +25,14 @@ const PALM = profile.polygon(
   ],
   { smooth: true },
 );
-const palmPose = (s: sdf.Shape) => s.rotateZ(16).rotateY(-12).at(0.07, 0.84, 0.12);
+const PS = 1.5; // the palm size
+const palmPose = (s: sdf.Shape) => s.scale(PS).rotateZ(10).rotateY(-12).at(0.07, 0.84, 0.12);
 const PALM_TIPS: [number, number, number][] = (
   [[0.3, 0.05], [0.245, 0.13], [0.19, 0.15], [0.135, 0.14]] as const
 ).map(([x, y]) => {
-  const a = (16 * Math.PI) / 180;
+  const a = (10 * Math.PI) / 180;
   const b = (-12 * Math.PI) / 180;
-  const [x1, y1] = [x * Math.cos(a) - y * Math.sin(a), x * Math.sin(a) + y * Math.cos(a)];
+  const [x1, y1] = [PS * (x * Math.cos(a) - y * Math.sin(a)), PS * (x * Math.sin(a) + y * Math.cos(a))];
   return [0.07 + x1 * Math.cos(b), 0.84 + y1, 0.12 - x1 * Math.sin(b)];
 });
 
@@ -54,6 +55,9 @@ export default scaleAsset(
     spots: false,
     bib: false,
     antlers: false,
+    eyeStyle: 'white',
+    smile: false,
+    legThick: 1.4,
     headProbes: [...PALM_TIPS, ...PALM_TIPS.map(([x, y, z]) => [-x, y, z] as const), [0, 0.47, 0.24], [0, 0.6, 0.42]],
     paint(fur, deer) {
       // Pale stockings, and a dark tail (no white flag).
@@ -64,14 +68,17 @@ export default scaleAsset(
     extra(k, deer) {
       const tone = (c: string, f = 0.8) => deer.tone('fur', c, f);
       // The palms on a short beam from the crown.
-      const palm = palmPose(sdf.extrude(PALM, 0.022, 0.01)).smoothUnion(0.015, sdf.capsule([0.04, 0.82, 0.125], [0.1, 0.86, 0.12], 0.026));
+      const palm = palmPose(sdf.extrude(PALM, 0.02, 0.009)).smoothUnion(0.015, sdf.capsule([0.04, 0.82, 0.125], [0.1, 0.86, 0.12], 0.026));
       k.body('antlers', palm.mirror('x'), { color: k.tint('antlers'), roughness: 0.7, detail: 0.004, bone: 'head' });
       // The snout: a long droopy nose over the muzzle, with nostrils and a mouth line.
-      const snout = sdf.smoothUnion(0.03, sdf.ellipsoid([0.115, 0.095, 0.11]).at(0, 0.6, 0.315), sdf.ellipsoid([0.1, 0.08, 0.07]).at(0, 0.585, 0.39));
+      const snout = sdf.smoothUnion(0.03, sdf.ellipsoid([0.135, 0.11, 0.12]).at(0, 0.595, 0.32), sdf.ellipsoid([0.12, 0.095, 0.08]).at(0, 0.58, 0.405));
       const nh = sdf.raycast(snout, [0.045, 0.615, 2], [0, 0, -1])!;
       const nostrils = sdf.ellipsoid([0.016, 0.022, 0.03]).rotateZ(-25).at(nh[0], nh[1], nh[2]).mirror('x');
-      const mouth = sdf.extrude(profile.arc(0.06, 0.007, 235, 305), 0.3).at(0, 0.6, 0.42);
-      k.body('snout', snout.smoothSubtract(0.006, nostrils).paintWhere(nostrils.round(0.006), '#241a14', 0.004).paintWhere(mouth, '#2e2018', 0.002), {
+      // An open grin: a wide half-moon on the lower front of the snout, red inside with a dark edge
+      // and a pink tongue.
+      const grin = sdf.cylinder(1, 0.4).rotateX(90).scale([0.085, 0.05, 1]).at(0, 0.565, 0.4).intersect(sdf.halfSpace([0, 1, 0], 0.565)).intersect(sdf.halfSpace([0, 0, -1], -0.38));
+      const tongue = sdf.cylinder(1, 0.4).rotateX(90).scale([0.045, 0.022, 1]).at(0, 0.522, 0.4).intersect(grin);
+      k.body('snout', snout.smoothSubtract(0.006, nostrils).paintWhere(nostrils.round(0.006), '#241a14', 0.004).paintWhere(grin.round(0.004), '#2a1410', 0.002).paintWhere(grin, '#9a2a24', 0.002).paintWhere(tongue, '#d86a6a', 0.002), {
         color: tone('#7a5a40'),
         roughness: 0.75,
         detail: 0.004,

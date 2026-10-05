@@ -31,14 +31,17 @@ export default scaleAsset(
     },
     colors: { belly: '#f6ead2', flight: '#4a2e1c' },
     body: [0.21, 0.19, 0.2],
-    head: 0.18,
+    head: 0.2,
     beak: 'short',
     beakScale: 0.8,
     mouth: false,
     beakColors: ['#f0c030', '#f0c030'],
     brows: false,
-    eyeStyle: 'bead',
-    eyeScale: 1.45,
+    eyeStyle: 'white',
+    eyesOverPaint: true,
+    irisScale: 1.3,
+    glint: 1.3,
+    eyeScale: 1.25,
     featherBump: 0.004,
     featherOn: { body: false, head: false },
     walkBob: 0.5,
@@ -49,13 +52,13 @@ export default scaleAsset(
     legLength: 0.3,
     wingStyle: 'paddle',
     neckScale: 1.35,
-    cheeks: 0.7,
+    cheeks: 1,
     tail: false,
     paint(plumage, b) {
       const { HEAD_C, HR } = b.joints;
       const cream = b.tone('body', '#f6ead2');
       // A big cream face under the brown cap.
-      const face = sdf.ellipsoid([HR * 0.98, HR * 0.78, HR]).at(0, HEAD_C[1] - HR * 0.32, HEAD_C[2] + HR * 0.55);
+      const face = sdf.ellipsoid([HR * 1.12, HR * 0.9, HR]).at(0, HEAD_C[1] - HR * 0.26, HEAD_C[2] + HR * 0.5);
       // A small dark open smile under the beak, with a pink tongue.
       const smileY = HEAD_C[1] - HR * 0.44;
       const front = sdf.halfSpace([0, 0, -1], -HEAD_C[2]);
@@ -69,11 +72,14 @@ export default scaleAsset(
       const top = HEAD_C[1] - HR * 0.55;
       const bottom = HEAD_C[1] - HR * 1.12;
       const band = sdf.box([1, top - bottom, 1]).at(0, (top + bottom) / 2, 0);
-      const teeth = Array.from({ length: 14 }, (_, i) => {
-        const a = ((i + 0.5) / 14) * 2 * Math.PI;
+      // Points of different lengths and widths, a little off a regular spacing, so the edge looks
+      // like feathers that fall onto the chest; the longest hang at the front.
+      const teeth = Array.from({ length: 11 }, (_, i) => {
+        const a = ((i + 0.5 + (noise.random(i, 3, 1) - 0.5) * 0.5) / 11) * 2 * Math.PI;
         const hit = sdf.raycast(b.trunk, [Math.sin(a) * 2, bottom, HEAD_C[2] + Math.cos(a) * 2], [-Math.sin(a), 0, -Math.cos(a)]);
         const p = hit ?? [0, bottom, 0];
-        return sdf.cone([p[0], bottom + 0.005, p[2]], [p[0], bottom - 0.036, p[2]], 0.028, 0.002);
+        const len = (0.026 + 0.03 * noise.random(i, 5, 2)) * (1 + 0.5 * Math.max(0, Math.cos(a)));
+        return sdf.cone([p[0], bottom + 0.005, p[2]], [p[0] + (noise.random(i, 6, 2) - 0.5) * 0.02, bottom - len, p[2]], 0.026 + 0.012 * noise.random(i, 7, 2), 0.004);
       });
       return body.paintWhere(sdf.union(band, ...teeth), b.tint.head, 0.004);
     },
@@ -84,7 +90,7 @@ export default scaleAsset(
       // A shaggy cap: short soft spikes over the crown, leaning back.
       const { HEAD_C, HR } = b.joints;
       const spikes: sdf.Shape[] = [];
-      for (const [elev, from, to, n] of [[86, 0, 0, 1], [64, -50, 60, 4], [42, -85, 85, 5]] as const) {
+      for (const [elev, from, to, n] of [[86, 0, 0, 1], [62, -50, 60, 4]] as const) {
         for (let i = 0; i < n; i++) {
           const az = ((n === 1 ? 0 : from + ((to - from) * i) / (n - 1)) + (noise.random(elev, i, 3) - 0.5) * 10) * (Math.PI / 180);
           const e = (elev * Math.PI) / 180;
@@ -93,21 +99,19 @@ export default scaleAsset(
           const base: [number, number, number] = [HEAD_C[0] + d[0] * HR * 0.9, HEAD_C[1] + d[1] * HR * 0.9, HEAD_C[2] + d[2] * HR * 0.9];
           const len = HR * (0.26 + 0.1 * noise.random(elev, i, 7));
           const tip: [number, number, number] = [base[0] + d[0] * len * 0.55, base[1] + d[1] * len * 0.55 + len * 0.2, base[2] + d[2] * len * 0.55 - len * 0.6];
-          spikes.push(sdf.cone(base, tip, HR * 0.2, HR * 0.05));
+          spikes.push(sdf.cone(base, tip, HR * 0.15, HR * 0.04));
         }
       }
       k.body('tuft', sdf.smoothUnion(0.012, ...spikes).bone('head'), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
-      // Big glossy black eyes with one shine.
-      domeEyes(k, b, { iris: b.tone('eyes', '#121010'), low: b.tone('eyes', '#3a2a24', 0.7), r: 0.86 });
       // The rusty tail, fanned up behind the body so it shows from the front.
       const fan = sdf.smoothUnion(
         0.01,
         ...[-60, -30, 0, 30, 60].map((a) =>
           sdf
-            .ellipsoid([0.062, 0.016, 0.16])
-            .at(0, 0, -0.15)
-            .rotateY(a)
-            .rotateX(62)
+            .ellipsoid([0.045, 0.014, 0.12])
+            .at(0, 0, -0.11)
+            .rotateY(a * 0.7)
+            .rotateX(40)
             .at(...TAIL_AT),
         ),
       );

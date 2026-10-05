@@ -50,6 +50,21 @@ describe('sdf primitives', () => {
     expect(Math.sign(scaled.dist(1.05, 0, 0))).toBe(-1);
   });
 
+  it('warps space: a shrinking domain map grows the shape, and paint and tags follow', () => {
+    // map(p) = p / 2 doubles the shape about the origin.
+    const s = sphere(0.5).at(1, 0, 0).paint('#ff0000').bone('head');
+    const w = s.warp((x, y, z) => [x / 2, y / 2, z / 2], 1, { min: [0, -1, -1], max: [3, 1, 1] });
+    expect(w.dist(2, 0, 0)).toBeLessThan(0);
+    expect(w.dist(2.95, 0, 0)).toBeLessThan(0);
+    expect(w.dist(3.05, 0, 0)).toBeGreaterThan(0);
+    expect(w.color(3, 0, 0, [0, 0, 0])).toEqual(s.color(1.5, 0, 0, [0, 0, 0]));
+    expect(w.tags[0]!.bone).toBe('head');
+    expect(w.tags[0]!.dist(2, 0, 0)).toBeLessThan(0);
+    // The Lipschitz bound divides the field and keeps the surface.
+    const l = s.warp((x, y, z) => [x / 2, y / 2, z / 2], 2, w.bounds);
+    expect(l.dist(0, 0, 0)).toBeCloseTo(w.dist(0, 0, 0) / 2);
+  });
+
   it('smooth union adds material between shapes', () => {
     const a = sphere(0.5).at(-0.45, 0, 0);
     const b = sphere(0.5).at(0.45, 0, 0);

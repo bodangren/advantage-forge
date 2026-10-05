@@ -1,5 +1,6 @@
 import { defineAsset, motion, noise, profile, sdf } from '../../src/index.js';
 import type { AnimationDef, AssetContext, AssetDefinition, BonePose } from '../../src/index.js';
+import { headSwell, legStretch, stretchPoint } from './head-swell.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 /**
@@ -85,12 +86,21 @@ export interface WolfKind {
   readonly noseScale?: number;
   /** The two lower fangs on the jaw (on by default; off for a tiny closed cat mouth). */
   readonly fangs?: boolean;
+  /** False: no upper teeth in the wide grin (an open, toothless smile). */
+  readonly teeth?: boolean;
   /** The claws (on by default). */
   readonly claws?: boolean;
   /** False for no bushy tail (the kind builds its own tail on the `tail` bone in `extra`). */
   readonly tail?: boolean;
   /** True: a `sit` clip (a held sitting pose on the haunches, as in a sitting mockup); default none. */
   readonly sit?: boolean;
+  /** The head size as a share of the wolf's (default 1): the head, the ears, and the face grow
+   * about the head joint, and the body and the legs keep their size. */
+  readonly headScale?: number;
+  /** Longer legs in meters (below 0, shorter): the shins stretch between the paws and the belly. */
+  readonly legLength?: number;
+  /** Paint on the cream muzzle before the mouth line (a squirrel's fur-colored snout). */
+  paintMuzzle?(muzzle: sdf.Shape, tint: WolfShape['tint']): sdf.Shape;
   /** Paint on the fur (ear tips, markings), with the slot colors. */
   paint?(fur: sdf.Shape, tint: WolfShape['tint'], tone: WolfShape['tone']): sdf.Shape;
   /** Extra bones (a tentacle on `spine`, a smoke plume on `hips`). */
@@ -128,7 +138,23 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
     variants: kind.variants,
     ...(kind.presets ? { presets: kind.presets } : {}),
 
-    build(k) {
+    build(k00) {
+      // Longer or shorter legs (`legLength`): the shins stretch between the paws and the belly; `WP`
+      // moves rest-pose joints the same way for the ground contact of the clips.
+      const LL = kind.legLength ?? 0;
+      const k0 = LL ? legStretch(k00, LL, 0.06, 0.13) : k00;
+      const legOut = LL ? stretchPoint(1, LL, 0.06, 0.13) : null;
+      const WP = (p: V3): V3 => (legOut ? legOut(p) : p);
+      // A larger head (`headScale`): see `head-swell.ts`; the zones are the skull and muzzle, and the
+      // chest and rump.
+      const k =
+        (kind.headScale ?? 1) === 1
+          ? k0
+          : headSwell(k0, kind.headScale!, {
+              pivot: [0, 0.4, 0.14],
+              head: sdf.union(sdf.ellipsoid([0.2, 0.175, 0.17]).at(...HEAD_C), sdf.ellipsoid([0.14, 0.1, 0.14]).at(0, 0.42, 0.3)),
+              body: sdf.union(sdf.ellipsoid([0.15, 0.15, 0.16]).at(0, 0.29, 0.03), sdf.ellipsoid([0.13, 0.13, 0.14]).at(0, 0.26, -0.18)),
+            });
       // The slot colors (see variants): shades of a slot follow it when a game recolors the slot.
       const T = {
         fur: k.tint('fur'),
@@ -297,7 +323,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       // band goes with the lower jaw.
       const [ARC_FROM, ARC_TO] = kind.smileArc ?? [226, 314];
       const grin = sdf.extrude(profile.arc(GRIN_R, kind.smile ? 0.011 : 0.028, ARC_FROM, ARC_TO), 0.4).at(0, GRIN_Y + GRIN_R, 0.3);
-      const muzzleCream = muzzleWide.round(0.004).paintWhere(grin, C.mouth, 0.002);
+      const muzzleBase = muzzleWide.round(0.004);
+      const muzzleCream = (kind.paintMuzzle ? kind.paintMuzzle(muzzleBase, tint) : muzzleBase).paintWhere(grin, C.mouth, 0.002);
       k.body('jawCream', muzzleCream.intersect(jawPart).paintWhere(jawTopPaint(muzzleWide), C.mouth, 0.002), {
         color: T.cream,
         roughness: 0.8,
@@ -376,7 +403,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           return sdf.cone([h[0], h[1] + 0.004, h[2] - 0.004], [h[0], h[1] - 0.022, h[2] + 0.002], 0.011, 0.003);
         }),
       );
-      if (!kind.smile) k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
+      if (!kind.smile && kind.teeth !== false) k.body('teeth', teeth.bone('head'), { color: C.tooth, roughness: 0.3, detail: 0.003 });
       // Two lower fangs on the jaw, 5 mm behind the lip: hidden in the closed grin, they stand up
       // from the jaw when it opens.
       const lowerFangs = sdf.union(
@@ -429,8 +456,9 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       type Rot = readonly [number, number, number];
       type Pose = Record<string, { rotate?: Rot; move?: Rot; scale?: Rot }>;
       const mx = (v: V3): V3 => [-v[0], v[1], v[2]];
-      const HIPS_AT: V3 = [0, 0.27, -0.17];
-      const SPINE_AT: V3 = [0, 0.29, 0.0];
+      const HIPS_AT: V3 = WP([0, 0.27, -0.17]);
+      const SPINE_AT: V3 = WP([0, 0.29, 0.0]);
+      const [SH, FK, HP, BK] = [SHOULDER, FKNEE, HIP, BKNEE].map(WP) as [V3, V3, V3, V3];
       const pawSole = (kn: V3): V3[] => {
         const pts: V3[] = [];
         const c: V3 = [kn[0], 0.036, kn[2] + 0.04]; // the paw ellipsoid (flat bottom at y = 0)
@@ -448,10 +476,10 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         return pts;
       };
       const LEGS = [
-        { bones: ['hips', 'spine', 'fleg.L', 'fshin.L'], joints: [HIPS_AT, SPINE_AT, SHOULDER, FKNEE], sole: pawSole(FKNEE) },
-        { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SHOULDER), mx(FKNEE)], sole: pawSole(mx(FKNEE)) },
-        { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HIP, BKNEE], sole: pawSole(BKNEE) },
-        { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HIP), mx(BKNEE)], sole: pawSole(mx(BKNEE)) },
+        { bones: ['hips', 'spine', 'fleg.L', 'fshin.L'], joints: [HIPS_AT, SPINE_AT, SH, FK], sole: pawSole(FK) },
+        { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SH), mx(FK)], sole: pawSole(mx(FK)) },
+        { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HP, BK], sole: pawSole(BK) },
+        { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HP), mx(BK)], sole: pawSole(mx(BK)) },
       ];
       const chains = (pose: Pose, legs: readonly (typeof LEGS)[number][] = LEGS) =>
         legs.map((l) => ({ joints: l.joints, rotations: l.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const)), sole: l.sole }));
@@ -759,8 +787,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       };
       const swellChains = (pose: Pose, s: number, legs: readonly (typeof LEGS)[number][] = LEGS) =>
         chains(pose, legs.map((l) => swelled(l, s)));
-      const HEEL: V3 = [BKNEE[0], 0, BKNEE[2] + 0.009]; // the back edge of the flat hind sole
-      const FPAW: V3 = [FKNEE[0], 0, FKNEE[2] + 0.04]; // the middle of the front sole
+      const HEEL: V3 = [BK[0], 0, BK[2] + 0.009]; // the back edge of the flat hind sole
+      const FPAW: V3 = [FK[0], 0, FK[2] + 0.04]; // the middle of the front sole
       const pitchX = (v: V3, deg: number, about: V3): V3 => {
         const a = (deg * Math.PI) / 180;
         const y = v[1] - about[1];
@@ -788,13 +816,13 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           for (const side of ['L', 'R']) pose[`fleg.${side}`] = { rotate: [body + chest, 0, 0], scale: inv };
           // The hips move that keeps the front paws in place.
           const front = swelled(LEGS[0]!, s);
-          const d = [0, 1, 2].map((j) => front.joints[3]![j]! - FKNEE[j]!);
+          const d = [0, 1, 2].map((j) => front.joints[3]![j]! - FK[j]!);
           const rots = front.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const));
           const pawZ = motion.follow(front.joints, rots, [FPAW[0] + d[0]!, FPAW[1] + d[1]!, FPAW[2] + d[2]!])[2];
           const move: V3 = [0, motion.plant(swellChains(pose, s, [LEGS[0]!])), FPAW[2] - pawZ];
           // Each hind leg reaches from its posed hip back to the rest heel, in the hips' rest frame.
           const heel = pitchX([HEEL[0], HEEL[1] - move[1], HEEL[2] - move[2]], body, HIPS_AT);
-          const r = motion.reach({ root: HIP, mid: BKNEE, end: HEEL }, heel, BKNEE);
+          const r = motion.reach({ root: HP, mid: BK, end: HEEL }, heel, BK);
           pose['bleg.L'] = { rotate: r.upper };
           pose['bshin.L'] = { rotate: r.lower };
           pose['bleg.R'] = { rotate: [r.upper[0], -r.upper[1], -r.upper[2]] };

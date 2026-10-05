@@ -1,4 +1,4 @@
-import { sdf } from '../src/index.js';
+import { noise, sdf } from '../src/index.js';
 import { scaleAsset } from './parts/scale-asset.js';
 import { wolfAsset } from './parts/wolf-kind.js';
 
@@ -35,49 +35,78 @@ export default scaleAsset(
       arctic: { fur: 'arctic', markings: 'white', eyes: 'auburn' },
     },
     colors: { furLight: '#fff6ec', furDark: '#2a1e1a', earInner: '#fff0e4', eyeRim: '#1a100a', nose: '#1a1214', claw: '#2a1e1a' },
+    headScale: 1.35,
     earScale: 1.25,
     eyeScale: 1.45,
+    noseScale: 0.62,
+    fangs: false,
+    teeth: false,
     pupilScale: 1.3,
     cheekTufts: false,
-    smileArc: [258, 282],
+    smileArc: [263, 277],
     snout: 0.02,
     brows: false,
     forelock: false,
     smile: true,
     ruff: 'smooth',
     tail: false,
-    paint(fur, t) {
-      // Black ear backs and tips, and black socks.
+    paint(fur, t, tone) {
+      // Black ear tips (front and back) and black ear backs behind the ear plane (which leans back
+      // 6 degrees); the cream insides and the orange rims stay. Black socks.
+      const n = Math.hypot(0.105, 1);
+      const backs = sdf.halfSpace([0, -1, 0], -0.64).intersect(sdf.halfSpace([0, 0.105 / n, 1 / n], (0.125 + 0.105 * 0.62) / n));
+      // The cream inside of each ear: the kind's ear hollow (as the kind poses the ear), grown a little.
+      const hollow = sdf
+        .cone([0, 0.02, 0.02], [0, 0.15, 0.02], 0.05, 0.004)
+        .scale([1, 1, 0.55])
+        .round(0.006)
+        .scale(1.25)
+        .rotateZ(-14)
+        .rotateX(-6)
+        .at(0.105, 0.62, 0.14)
+        .mirror('x');
       return fur
-        .paintWhere(sdf.halfSpace([0, -1, 0], -0.79).union(sdf.halfSpace([0, -1, 0], -0.67).intersect(sdf.halfSpace([0, 0, 1], 0.125))), t.furDark, 0.01)
+        .paintWhere(backs, t.furDark, 0.008)
+        .paintWhere(hollow, tone('markings', '#fff0e4', 0.5), 0.004)
+        .paintWhere(sdf.halfSpace([0, -1, 0], -0.775), t.furDark, 0.012)
         .paintWhere(sdf.ellipsoid([0.1, 0.085, 0.09]).at(0.22, 0.45, 0.2).mirror('x'), t.markings, 0.015)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.1), t.furDark, 0.02);
     },
     extra(k, w) {
-      // The very big fluffy tail: thick from the rump, it sweeps back to the fox's left and curls up
-      // behind the body, with a white tip at the top.
-      const TIP: [number, number, number] = [0.2, 0.62, -0.36];
+      // The very big fluffy tail: thick from the rump, it sweeps back and round the fox's left side
+      // and curls forward along the body, with a white tip near the front leg.
+      const TIP: [number, number, number] = [0.22, 0.36, 0.02];
       const tail = sdf
         .chain(
           [
             [0, 0.31, -0.28, 0.05],
-            [0.05, 0.3, -0.4, 0.115],
-            [0.13, 0.36, -0.49, 0.145],
-            [0.19, 0.49, -0.46, 0.125],
+            [0.08, 0.3, -0.4, 0.11],
+            [0.21, 0.32, -0.36, 0.14],
+            [0.28, 0.35, -0.2, 0.13],
+            [0.27, 0.37, -0.06, 0.09],
             [TIP[0], TIP[1], TIP[2], 0.035],
           ],
           0.04,
         )
-        .paintWhere(sdf.sphere(0.13).at(...TIP).intersect(sdf.halfSpace([0, -1, 0], -0.53)), w.tint.markings, 0.025)
+        .paintWhere(sdf.sphere(0.1).at(TIP[0] + 0.03, TIP[1], TIP[2] + 0.02), w.tint.markings, 0.045)
         .bone('tail');
-      k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85 });
+      const fur = (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2);
+      k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85, bump: fur });
       // Soft white fluff on the cheeks: a flare out to each side of the face below the eyes, with a
       // rounded tip.
+      // Built about its own height and flattened there, so it stays at the mouth line.
+      // Two soft points on each side (a long one out and a short one out and down), from wide roots
+      // inside the face, so the fluff blends into the cream cheeks.
       const fluff = sdf
-        .chain([[0.12, 0.43, 0.22, 0.075], [0.22, 0.42, 0.18, 0.055], [0.3, 0.4, 0.13, 0.018]], 0.03)
+        .smoothUnion(
+          0.035,
+          sdf.chain([[0.07, 0.01, 0.2, 0.08], [0.17, 0.0, 0.18, 0.068], [0.27, -0.012, 0.13, 0.024]], 0.035),
+          sdf.chain([[0.1, -0.02, 0.19, 0.06], [0.19, -0.06, 0.15, 0.04], [0.23, -0.095, 0.11, 0.014]], 0.03),
+        )
         .scale([1, 0.85, 1])
+        .at(0, 0.45, 0)
         .mirror('x');
-      k.body('cheek-fluff', fluff.bone('head'), { color: w.tint.markings, roughness: 0.9 });
+      k.body('cheek-fluff', fluff.bone('head'), { color: w.tint.markings, roughness: 0.9, bump: fur });
       // Three short dark lashes at the outer top corner of each eye.
       const e = w.eye;
       const lashes = sdf

@@ -24,11 +24,11 @@ export default scaleAsset(
     variants: {
       fur: { brown: '#8a5434', black: '#3a3230', honey: '#b07a40', grey: '#7a6a5e' },
       skin: { tan: '#e0b886', cream: '#f0dcb4', grey: '#b8b0a4' },
-      eyes: { dark: '#2a1a12', amber: '#8a5a1a', blue: '#3a5a8a' },
+      eyes: { brown: '#6a3a1e', amber: '#8a5a1a', blue: '#3a5a8a' },
     },
     presets: {
       black: { fur: 'black', skin: 'tan', eyes: 'amber' },
-      honey: { fur: 'honey', skin: 'cream', eyes: 'dark' },
+      honey: { fur: 'honey', skin: 'cream', eyes: 'brown' },
       grizzly: { fur: 'grey', skin: 'grey', eyes: 'blue' },
     },
     colors: { furDark: '#5e3620', belly: '#a87048', earInner: '#5e3620', black: '#4a2a18', nostril: '#1a1416', ivoryBase: '#2a1e18' },
@@ -40,22 +40,40 @@ export default scaleAsset(
     snout: 'bear',
     ears: 'round',
     feet: 'paws',
-    eyeScale: 1.2,
+    eyeScale: 1.4,
     eyeInset: 0.018,
     eyeGlow: 0,
-    muzzleLength: 1.3,
+    muzzleLength: 1.55,
+    muzzleWidth: 1.4,
+    legLength: 0.05,
+    flatPaws: true,
     claws: false,
     mouth: false,
     brows: false,
     lids: false,
+    extra(k, boar) {
+      // Soft upper lids in the fur color: a thin cap over the top of each eye, tilted down at the
+      // outer corner.
+      const { center: c, r } = boar.eye;
+      const n = Math.hypot(0.25, 1);
+      const lid = sdf
+        .sphere(r + 0.005)
+        .at(...c)
+        .subtract(sdf.sphere(r + 0.001).at(...c))
+        .intersect(sdf.halfSpace([-0.25 / n, -1 / n, 0], (-(c[1] + r * 0.35) - 0.25 * c[0]) / n));
+      k.body('lids', lid.mirror('x').bone('head'), { color: boar.tint.fur, roughness: 0.6, detail: 0.003 });
+    },
     paint(fur, boar) {
       // Black paws, and a small mouth under the nose: a short line down from the nose that opens
       // into two small curves.
       const nose = boar.faceHit(0, 0.415);
       const MY = nose[1] - 0.05;
-      const line = sdf.box([0.006, 0.03, 0.3]).at(0, MY + 0.016, nose[2]);
-      const curves = sdf.extrude(profile.arc(0.018, 0.006, 200, 340), 0.3).at(0.017, MY + 0.016, nose[2]).mirror('x');
+      const line = sdf.box([0.005, 0.022, 0.3]).at(0, MY + 0.02, nose[2]);
+      const curves = sdf.extrude(profile.arc(0.011, 0.005, 210, 330), 0.3).at(0.0105, MY + 0.02, nose[2]).mirror('x');
+      // The tan of the muzzle wraps under the chin.
+      const chin = sdf.ellipsoid([0.1, 0.05, 0.11]).at(0, 0.31, 0.44);
       return fur
+        .paintWhere(chin, boar.tint.snout, 0.02)
         .paintWhere(sdf.box([0.6, 0.2, 1.2]).at(0, 0, 0), boar.tone('fur', '#1e1816', 0.15), 0.006)
         .paintWhere(sdf.union(line, curves).intersect(sdf.halfSpace([0, 0, -1], -(nose[2] - 0.08))), '#2a1a14', 0.002);
     },

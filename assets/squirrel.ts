@@ -9,10 +9,11 @@ import { wolfAsset } from './parts/wolf-kind.js';
  *
  * The four-legged body of the wolf kind (`assets/parts/wolf-kind.ts`: a big round head on a low
  * horizontal body, rig, and walk and run clips) at 0.5 of the dire wolf's size, as a red squirrel
- * on the run: red-orange fur with a cream muzzle, cheeks, chest, and belly, big round haunches,
- * small pointed ears with soft fans of fur at the tips, big glossy light brown eyes with big
- * round highlights, a short narrow pointed snout with a small black nose and a small smile, and a big round plume of a tail that rises behind the back (on the
- * tail bone, with a gap to the head).
+ * on the run: red-orange fur with cream lips, cheeks, chest, and belly, big round haunches on
+ * short legs, small pointed ears with soft fans of fur at the tips, big glossy dark brown eyes
+ * with big round highlights, a short narrow pointed orange snout with a small black nose and a
+ * small smile, and a big round plume of a tail that rises behind the back (on the tail bone,
+ * with a gap to the head).
  * Role: a forest and park animal; the big round tail reads at 128 px.
  * Palette (60/30/10): red-orange #d06a2a fur and tail; cream #f4e2c4 muzzle, chest, and belly;
  *   dark brown eyes as the accent.
@@ -30,7 +31,7 @@ export default scaleAsset(
     variants: {
       fur: { red: '#d06a2a', grey: '#8a8680', brown: '#8a5a36', black: '#3a3432' },
       markings: { cream: '#f4e2c4', white: '#f6f4f0' },
-      eyes: { brown: '#8a5a2e', dark: '#5a3420' },
+      eyes: { dark: '#3a2214', brown: '#8a5a2e' },
     },
     presets: {
       grey: { fur: 'grey', markings: 'white', eyes: 'brown' },
@@ -38,7 +39,7 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'white', eyes: 'dark' },
     },
     // The lower legs keep the fur color (no dark socks); the lower cheeks and the chest are cream.
-    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#4a2a18', nose: '#1a1214', pupil: '#0e0a08' },
+    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#fbf4ea', nose: '#1a1214', pupil: '#0e0a08' },
     earScale: EAR_SCALE,
     eyeScale: 1.55,
     pupilScale: 1.25,
@@ -54,14 +55,19 @@ export default scaleAsset(
     ruff: 'smooth',
     claws: false,
     tail: false,
+    legLength: -0.03,
+    fangs: false,
+    teeth: false,
+    // The top of the snout keeps the fur color; the lips and the chin are cream.
+    paintMuzzle: (m, t) => m.paintWhere(sdf.halfSpace([0, -1, 0], -0.425), t.fur, 0.01),
     paint(fur, t) {
       // Big round haunches on the hind legs, and the cream belly between the legs.
-      const haunch = sdf.ellipsoid([0.075, 0.11, 0.12]).rotateX(-12).at(0.085, 0.26, -0.2).bone('bleg.L').mirror('x');
+      const haunch = sdf.ellipsoid([0.09, 0.125, 0.135]).rotateX(-12).at(0.088, 0.25, -0.2).bone('bleg.L').mirror('x');
       // The front legs keep the fur color below the cream chest.
       const frontLeg = sdf.capsule([0.1, 0.17, 0.08], [0.105, 0.0, 0.09], 0.062).mirror('x');
       return fur
         .smoothUnion(0.035, haunch)
-        .paintWhere(sdf.ellipsoid([0.075, 0.06, 0.22]).at(0, 0.15, -0.05), t.markings, 0.025)
+        .paintWhere(sdf.ellipsoid([0.075, 0.06, 0.22]).at(0, 0.15, -0.05), t.markings, 0.008)
         .paintWhere(frontLeg, t.fur, 0.02);
     },
     extra(k, w) {
@@ -131,7 +137,7 @@ export default scaleAsset(
         .paintWhere(sdf.sphere(0.16).at(0, 0.32, -0.32), dark, 0.06);
       // Big round highlights on the eyes (upper outer side of each eye).
       const e = w.eye;
-      const shine = sdf.sphere(0.016).scale([1, 1, 0.5]).at(e[0] + 0.016, e[1] + 0.02, e[2] - 0.006).mirror('x');
+      const shine = sdf.sphere(0.016).scale([1, 1, 0.3]).at(e[0] + 0.016, e[1] + 0.02, e[2] - 0.004).mirror('x');
       k.body('eye-shine', shine.bone('head'), { color: '#ffffff', roughness: 0.1, detail: 0.002 });
       k.body('tail-fur', plume.bone('tail'), { color: w.tone('fur', '#e0823c', 1), roughness: 0.9, detail: 0.006, bump: (x, y, z) => 0.003 * noise.noise3(x * 60, y * 20, z * 60) });
     },

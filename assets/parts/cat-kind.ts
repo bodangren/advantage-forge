@@ -38,6 +38,10 @@ export interface CatKind {
   readonly lashes?: boolean;
   /** True: a `sit` clip (see the wolf kind). */
   readonly sit?: boolean;
+  /** The head size as a share of the default (see the wolf kind; default 1). */
+  readonly headScale?: number;
+  /** The muzzle width as a share of the default (see the wolf kind; default 1). */
+  readonly muzzleWidth?: number;
   extra?(k: AssetContext, w: WolfShape): void;
 }
 
@@ -67,6 +71,8 @@ export function catAsset(kind: CatKind): AssetDefinition {
       claws: false,
       tail: false,
       ...(kind.sit ? { sit: true } : {}),
+      ...(kind.headScale ? { headScale: kind.headScale } : {}),
+      ...(kind.muzzleWidth ? { muzzleWidth: kind.muzzleWidth, cheekCream: false } : {}),
       paint(furIn, t, tone) {
         // White paws (only the paws, no stockings).
         const fur = furIn.paintWhere(sdf.halfSpace([0, 1, 0], 0.045), t.markings, 0.012);
@@ -89,18 +95,28 @@ export function catAsset(kind: CatKind): AssetDefinition {
         k.body('whiskers', whiskers, { color: kind.colors?.whisker ?? '#3a2a24', roughness: 0.6, detail: 0.002, bone: 'head' });
         // The long tail: back from the rump, out to the cat's left side, and up in a curl, like a
         // question mark seen from behind.
-        const tail = sdf.chain(
-          [
-            [0, 0.3, -0.28, 0.028],
-            [0.06, 0.29, -0.36, 0.027],
-            [0.14, 0.33, -0.38, 0.026],
-            [0.19, 0.43, -0.33, 0.025],
-            [0.18, 0.53, -0.27, 0.023],
-            [0.12, 0.56, -0.24, 0.021],
-            [CAT_TAIL_TIP[0], CAT_TAIL_TIP[1], CAT_TAIL_TIP[2], 0.019],
-          ],
-          0.03,
-        );
+        // The path is sampled smoothly (Catmull-Rom, four samples per span) with a slow taper, so
+        // the tail is one smooth tube without bumps at the joints.
+        type P4 = [number, number, number, number];
+        const KEY: P4[] = [
+          [0, 0.3, -0.28, 0.028],
+          [0.06, 0.29, -0.36, 0.027],
+          [0.14, 0.33, -0.38, 0.026],
+          [0.19, 0.43, -0.33, 0.025],
+          [0.18, 0.53, -0.27, 0.023],
+          [0.12, 0.56, -0.24, 0.021],
+          [CAT_TAIL_TIP[0], CAT_TAIL_TIP[1], CAT_TAIL_TIP[2], 0.019],
+        ];
+        const path: P4[] = [];
+        for (let i = 0; i + 1 < KEY.length; i++) {
+          const [a, b, c, d] = [KEY[Math.max(0, i - 1)]!, KEY[i]!, KEY[i + 1]!, KEY[Math.min(KEY.length - 1, i + 2)]!];
+          for (let j = 0; j < 4; j++) {
+            const t = j / 4;
+            path.push(b.map((_, m) => 0.5 * (2 * b[m]! + (-a[m]! + c[m]!) * t + (2 * a[m]! - 5 * b[m]! + 4 * c[m]! - d[m]!) * t * t + (-a[m]! + 3 * b[m]! - 3 * c[m]! + d[m]!) * t * t * t)) as P4);
+          }
+        }
+        path.push(KEY[KEY.length - 1]!);
+        const tail = sdf.chain(path, 0.008);
         const tipped = kind.tailTip ? tail.paintWhere(sdf.sphere(0.05).at(...CAT_TAIL_TIP), w.tint.markings, 0.01) : tail;
         k.body('tail-fur', tipped.bone('tail'), { color: w.tint.fur, roughness: 0.85 });
         if (kind.lashes) {

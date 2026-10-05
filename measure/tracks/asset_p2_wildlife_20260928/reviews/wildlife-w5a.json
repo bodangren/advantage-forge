@@ -1,0 +1,154 @@
+{
+  "dog": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is the same brown puppy with dark floppy ears, a red collar, and a gold bell. The mouth, the chest color, and the surface show clear differences from the mockup.",
+    "strengths": [
+      "The dark brown floppy ears have the correct size and shape, and they read in all eight sprites.",
+      "The red collar and the gold bell read at 128 px.",
+      "The sit clip matches the mockup pose: the front legs are straight and the hind legs fold under the body.",
+      "The eyes are large and dark brown with white rims and highlights, and the cream brow spots are present."
+    ],
+    "issues": [
+      "The mouth is a wide, flat black band across the muzzle. The mockup has a curved smile with raised corners. Change the mouth to a curved smile.",
+      "The chest is orange. The mockup has a large cream bib from the chin to the front legs. Paint the cream bib.",
+      "The fur bump is strong on the head and the body. The mockup has a smooth clay surface. Reduce the bump amplitude.",
+      "The front legs are thin and the front paws are small. The mockup paws are large with toe lobes. Make the legs thicker and add toe lobes to the paws.",
+      "The tongue is small and it does not read in the front sprite. Make the tongue larger."
+    ],
+    "next": "Change the flat black mouth band to a curved open smile and paint a large cream chest bib."
+  },
+  "wolf": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 3, 3, 3, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a grey canine pup with pointed ears, but the face is noticeably off. The head is a plain ball with a small round muzzle, and the mockup smile and cheek shape are missing.",
+    "strengths": [
+      "The pointed ears with tan inner color read as a wolf in every view.",
+      "The brown paws and the dark brown tail tip match the mockup colors.",
+      "The model stands on the ground, faces +Z, and the walk clip has a readable leg cycle."
+    ],
+    "issues": [
+      "The face does not match. The mockup has a wide cream lower face and jaw with a broad closed smile. The model has a small round cream muzzle and a flat line mouth. Make the cream area wide across the lower cheeks and the jaw, and curve the mouth into a smile.",
+      "The eyes are dull dark circles with no brows. The mockup eyes have bright highlights and angled brows. Add large highlights and the brow shapes.",
+      "The head is a smooth ball. The mockup head has cheek fluff tufts and a tuft on the brow. Add the cheek tufts at the sides of the head.",
+      "The tail hangs low behind the body. The mockup tail curves up. Raise the tail.",
+      "The legs are short and stubby. The mockup legs are longer and slimmer. Make the legs longer.",
+      "The coat is darker than the blue-grey of the mockup, and the cream chest is small. Make the coat lighter and enlarge the cream chest."
+    ],
+    "next": "Rebuild the lower face as a wide cream jaw with a broad closed smile and add the cheek tufts."
+  },
+  "fox": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 3.5, 3, 3, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is an orange fox with large ears, amber eyes with lashes, black socks, and a big tail, and the sit pose matches. The cheek ruffs look like smooth white horns, and the ear colors and the tail surface differ from the mockup.",
+    "strengths": [
+      "The orange coat, the black socks, and the large tail read in all eight sprites.",
+      "The amber eyes with lashes match the mockup style.",
+      "The sit clip matches the mockup pose: the fox sits upright and the tail lies beside the body."
+    ],
+    "issues": [
+      "The cheek ruffs are smooth white cones that stick out to the sides. They look like horns, not fur. Make them soft pointed fur tufts with the fur bump, and blend them into the face.",
+      "The ear fronts are dark brown on most of the surface. The mockup has cream inner ears, orange edges, and black tips only. Paint the inner ears cream and keep the black on the tips.",
+      "The nose is large and black. The mockup nose is small. Make the nose smaller.",
+      "The tail is a smooth tube with a flat white cap. Add the fur bump and make a soft, tapered white tip.",
+      "In the sit clip, a dark crease line shows across the white chest at the neck. Remove the crease.",
+      "Brown spots show on the cream muzzle in the front view. Clean the muzzle paint."
+    ],
+    "next": "Replace the smooth white cheek cones with soft fur tufts that blend into the face."
+  },
+  "riding-wolf": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a grey wolf mount with a head crest, white and black socks, and a brown saddle with a teal pad. The muzzle shape, the expression, and the body proportion differ clearly from the mockup.",
+    "strengths": [
+      "The saddle with the teal pad, the gold trim, and the pouch reads in the side sprites.",
+      "The white bands and the black paws match the mockup socks.",
+      "The eyes have brows, and the head crest gives the mount a clear silhouette.",
+      "The saddle stays on the back during the walk clip."
+    ],
+    "issues": [
+      "The muzzle is a short round puck. The mockup has a longer pointed muzzle and a wide cream lower face. Make the muzzle longer and widen the cream area on the cheeks.",
+      "The expression differs. The mockup has half-closed confident eyes and a side smirk. The model has wide open eyes and a flat smile. Lower the upper eyelids and raise one corner of the mouth.",
+      "The body is round and the legs are short. The mockup mount is taller and slimmer. Make the legs longer and the body slimmer.",
+      "The saddle is small. The mockup harness has a large teal side pad with a diamond mark and a chest strap. Make the pad larger and add the diamond mark.",
+      "The tail is horizontal. The mockup tail curves up. Raise the tail.",
+      "The crest spikes are smooth and have no fur bump. They look like plastic. Add the fur bump to the crest."
+    ],
+    "next": "Make the muzzle longer with a wide cream lower face and give the face the half-closed eyes and the smirk."
+  },
+  "cat": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 3.5, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is the same orange tabby kitten with green eyes, stripes, whiskers, and a curled tail, and the sit pose matches. The muzzle, the white areas on the head, and a chest crease show clear differences.",
+    "strengths": [
+      "The green eyes, the forehead stripes, and the curled tail read at 128 px.",
+      "The sit clip matches the mockup pose.",
+      "The leg stripes and the white paws match the mockup."
+    ],
+    "issues": [
+      "The white muzzle is a large hard-edged puck. The mockup muzzle is small and soft. Make the muzzle smaller and blend its edge into the face.",
+      "A white band wraps around the lower half of the head in the side view. The mockup cheeks are orange with stripes. Keep the white on the muzzle, the chin, and the chest only.",
+      "In the sit clip, a dark crease line shows across the chest under the chin. Remove the crease.",
+      "The eyes are smaller than the mockup eyes and have one small highlight. Make the eyes larger and add a second highlight.",
+      "The fur bump is strong. The mockup has a smooth clay surface. Reduce the bump amplitude.",
+      "The pink inner ears are faint. Make the inner ear pink stronger."
+    ],
+    "next": "Make the white muzzle smaller and soft, and keep the white off the sides of the head."
+  },
+  "familiar-cat": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a close black cat with large glowing purple eyes, a head spike, and a purple collar, and the sit pose matches. The moon charm is too small to read at 128 px, and the collar has no glow.",
+    "strengths": [
+      "The large purple eyes glow and read in every front-facing sprite.",
+      "The sit clip matches the mockup pose and the head-to-body proportion.",
+      "The small head spike and the curled tail match the mockup."
+    ],
+    "issues": [
+      "The moon charm is small and dim lilac. It does not read at 128 px. Make the charm larger and give it a bright white-lavender glow.",
+      "The collar is thin and dark purple. The mockup collar glows. Make the collar wider and make it emissive.",
+      "The fur bump hides the form of the black body. The mockup has a smooth satin surface with highlights. Reduce the bump and lower the roughness so that highlights show the form in dark scenes.",
+      "The nose is purple-grey. The mockup nose is black. Make the nose black.",
+      "The long white whiskers are not in the mockup, and they add noise in the sprites. Make the whiskers shorter and thinner.",
+      "The purple inner ears are faint. Make the inner ear purple stronger."
+    ],
+    "next": "Make the moon charm larger and bright, so that it reads at 128 px and in dark scenes."
+  },
+  "pig": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3, 2.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is the same round pink pig with large ears, black eyes, a big snout, rosy cheeks, and a curly tail. The skin surface, the mouth, and the color show clear differences from the mockup.",
+    "strengths": [
+      "The snout, the black eyes, and the rosy cheeks read in the front sprites.",
+      "The curly tail reads in the side sprites.",
+      "The grey hooves and the round body match the mockup."
+    ],
+    "issues": [
+      "The skin has a strong rough bump that looks like stucco. The mockup skin is smooth and glossy. Remove the bump and lower the roughness.",
+      "The mouth is small and hides under the snout. The mockup has a large open smile with a pink tongue. Make the mouth wider and show it below the snout.",
+      "The pink is a dull salmon. The mockup pink is lighter and warmer. Make the base color lighter.",
+      "The ears are thin flat plates in the side view. Give the ears thickness and a small forward fold.",
+      "The head merges into the body. The mockup has a large head on a pear-shaped body. Define the head with a small neck crease."
+    ],
+    "next": "Remove the rough skin bump and make the pink skin smooth and glossy."
+  },
+  "boar": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is the same brown boar piglet with a pink snout, cream tusks, a black crest, and cheek spikes. The head and the body merge into one ball, and the crest and the eyes differ clearly from the mockup.",
+    "strengths": [
+      "The pink snout and the cream tusks read at 128 px.",
+      "The black crest, the cheek spikes, and the tufted tail are present.",
+      "The black hooves and the brown coat match the mockup colors."
+    ],
+    "issues": [
+      "The head and the body merge into one ball. The mockup has a large head on a smaller, upright body. Separate the head from the body and make the body smaller.",
+      "The crest is a short dark clump with two prongs. The mockup crest is a swept row of black spikes from the brow to the neck. Extend the crest along the top of the head.",
+      "The eyes are smaller than the mockup eyes. Make the eyes larger.",
+      "The inner ears show no pink. Paint pink inside the ears.",
+      "The fur bump is strong. The mockup has a smooth clay surface. Reduce the bump amplitude.",
+      "The shoulder spikes look like separate black thorns in the side view. Blend the spikes into the coat."
+    ],
+    "next": "Separate a large head from a smaller body, so that the proportion matches the upright chibi mockup."
+  }
+}

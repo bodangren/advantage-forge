@@ -34,9 +34,9 @@ export default scaleAsset(
     },
     colors: { belly: '#6a3a22', flight: '#7a4426', eyeRim: '#2a1a12' },
     body: [0.23, 0.2, 0.22],
-    head: 0.118,
-    headLift: 0.03,
-    headForward: 0.09,
+    head: 0.102,
+    headLift: 0.08,
+    headForward: 0.13,
     beak: 'short',
     beakColors: ['#f0c030', '#f0c030'],
     mouth: false,
@@ -48,16 +48,17 @@ export default scaleAsset(
     walkBob: 0.9,
     stillNeck: true,
     talons: false,
-    wingRest: -128,
-    wingTurn: 55,
+    wingRest: -112,
+    wingTurn: 78,
     wingOut: 0.06,
     wingScale: 0.78,
-    legLength: 0.9,
+    legLength: 1.15,
+    thighs: false,
     wingStyle: 'paddle',
-    neckScale: 1.35,
+    neckScale: 1.05,
     tail: false,
     extra(k, b) {
-      k.body('comb', combAndWattle(b, 1.05), { color: '#e03a2a', roughness: 0.55, detail: 0.004 });
+      k.body('comb', combAndWattle(b, 1.05, 1), { color: '#e03a2a', roughness: 0.55, detail: 0.004 });
       // The sickle tail: broad flat feathers from the rump that arch up high over the back and
       // curve down behind it, each a smooth arc (a quarter circle and more), longer in the middle.
       const t = b.joints.TAIL_AT;
@@ -66,17 +67,17 @@ export default scaleAsset(
         for (let i = 0; i <= 10; i++) {
           const u = i / 10;
           const phi = Math.PI * sweep * u;
-          pts.push([0, R * 1.9 * Math.sin(phi), -R * 0.85 * (1 - Math.cos(phi)), r0 * (1 - 0.7 * u)]);
+          pts.push([0, R * 1.75 * Math.sin(phi), -R * 1.05 * (1 - Math.cos(phi)), r0 * (1 - 0.7 * u)]);
         }
         return sdf.chain(pts, 0.02).scale([0.34, 1, 1]).at(t[0] + x, t[1] + 0.02, t[2] + 0.05);
       };
       const tail = sdf.smoothUnion(
         0.012,
-        sickle(0.2, 0, 0.95, 0.052),
-        sickle(0.17, 0.03, 0.9, 0.048).rotateY(10),
-        sickle(0.17, -0.03, 0.9, 0.048).rotateY(-10),
-        sickle(0.13, 0.055, 0.85, 0.042).rotateY(18),
-        sickle(0.13, -0.055, 0.85, 0.042).rotateY(-18),
+        sickle(0.2, 0, 1.15, 0.052),
+        sickle(0.17, 0.025, 1.12, 0.048).rotateY(5),
+        sickle(0.17, -0.025, 1.12, 0.048).rotateY(-5),
+        sickle(0.13, 0.045, 1.08, 0.042).rotateY(9),
+        sickle(0.13, -0.045, 1.08, 0.042).rotateY(-9),
       ).bone('tail');
       k.body('sickle-tail', tail, { color: b.tone('wings', '#2a4a34', 0.3), roughness: 0.35, metalness: 0.15 });
       // The hackles: one smooth golden cape over the neck and the shoulders, a skin over the body,
@@ -85,15 +86,17 @@ export default scaleAsset(
       const cf = collarFront(b);
       const yTop = HEAD_C[1] + HR * 0.3;
       const yMid = cf[1] + 0.005;
-      const yBot = cf[1] - 0.075;
+      const yBot = cf[1] - 0.1;
       const band = b.trunk
         .round(0.018)
         .intersect(sdf.halfSpace([0, 1, 0], yTop))
         .intersect(sdf.halfSpace([0, -1, 0], -yBot));
-      const N = 16;
+      const N = 18;
       const notches = Array.from({ length: N }, (_, i) => {
         const a = ((i + 0.5) / N) * 360;
-        const tri = profile.polygon([[-0.05, yBot - 0.02], [0.05, yBot - 0.02], [0, yMid]], { smooth: false });
+        // Feathers of two lengths: every other notch reaches higher.
+        const top = yMid + (i % 2 ? 0.02 : -0.005);
+        const tri = profile.polygon([[-0.04, yBot - 0.02], [0.04, yBot - 0.02], [0, top]], { smooth: false });
         return sdf.extrude(tri, 0.5).at(0, 0, 0.25).rotateY(a).at(0, 0, HEAD_C[2] * 0.5);
       });
       const cape = band.smoothSubtract(0.006, sdf.union(...notches)).paintFn((_x, y, _z, base) => {

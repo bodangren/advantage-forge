@@ -33,12 +33,13 @@ export default scaleAsset(
     body: [0.2, 0.21, 0.19],
     head: 0.15,
     beak: 'short',
-    beakScale: 1.0,
-    beakWidth: 1.3,
+    beakScale: 0.75,
+    beakWidth: 1.2,
     beakDroop: 22,
     beakColors: ['#2e2a28', '#2e2a28'],
     mouth: false,
-    brows: false,
+    brows: 'head',
+    browSize: 0.7,
     eyeStyle: 'bead',
     eyesOverPaint: true,
     eyeScale: 0.9,
@@ -50,7 +51,9 @@ export default scaleAsset(
     wingTurn: 42,
     wingOut: 0.08,
     wingScale: 0.56,
-    legLength: 0.85,
+    legLength: 0.6,
+    thighs: false,
+    wingBars: { color: '#4a2c18', at: [0.1, 0.18, 0.26] },
     wingStyle: 'paddle',
     neckScale: 1.55,
     paint(plumage, b) {
@@ -76,7 +79,20 @@ export default scaleAsset(
     paintBody(body, b) {
       // The cream front with a clear edge, so the brown cape reads round it.
       const { BODY_C, B } = b.joints;
-      return body.paintWhere(sdf.ellipsoid([B[0] * 0.66, B[1] * 0.82, B[2] * 0.55]).at(0, BODY_C[1] - B[1] * 0.12, BODY_C[2] + B[2] * 0.6), b.tone('body', '#efe0c4'), 0.012);
+      // The cream reaches up to the bib under the chin.
+      const front = sdf.ellipsoid([B[0] * 0.68, B[1] * 1.05, B[2] * 0.55]).at(0, BODY_C[1] + B[1] * 0.05, BODY_C[2] + B[2] * 0.6);
+      // Dark streaks on the back: short strokes down the back in loose rows.
+      const streaks: sdf.Shape[] = [];
+      for (let row = 0; row < 4; row++) {
+        for (let j = 0; j < 4; j++) {
+          const x = (j - 1.5) * B[0] * 0.32 + (row % 2) * B[0] * 0.12;
+          const y = BODY_C[1] + B[1] * (0.55 - row * 0.32);
+          streaks.push(sdf.ellipsoid([B[0] * 0.05, B[1] * 0.13, 0.3]).rotateZ(x * 60).at(x, y, BODY_C[2] - 0.3));
+        }
+      }
+      return body
+        .paintWhere(front, b.tone('body', '#efe0c4'), 0.012)
+        .paintWhere(sdf.union(...streaks).intersect(sdf.halfSpace([0, 0, 1], BODY_C[2] - B[2] * 0.3)), b.tone('body', '#5a3a22', 0.6), 0.006);
     },
     extra(k, b) {
       // A small tuft of three short crest feathers on the crown, bent back.
@@ -96,8 +112,8 @@ export default scaleAsset(
       // The black bib on the throat below the beak, with three scallops on its lower edge. It
       // stays below the head, on the neck and the upper chest.
       const w = 0.068;
-      const top = HEAD_C[1] - HR * 0.82;
-      const bottom = top - 0.06;
+      const top = HEAD_C[1] - HR * 0.5;
+      const bottom = top - 0.075;
       const outline = profile.polygon(
         [
           [-w, top],

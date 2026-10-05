@@ -38,7 +38,7 @@ export default scaleAsset(
     pear: 0.92,
     head: 0.16,
     beak: 'short',
-    beakScale: 0.46,
+    beakScale: 0.56,
     beakWidth: 1.35,
     beakDroop: 30,
     beakColors: ['#3c3c44', '#3c3c44'],
@@ -47,7 +47,7 @@ export default scaleAsset(
     eyeScale: 1.1,
     lids: 0.45,
     featherBump: 0.0035,
-    featherOn: { body: false, head: false, wings: true },
+    featherOn: { body: false, head: false, wings: false },
     wingBars: { color: '#c4c6cc', at: [0.14, 0.22, 0.3] },
     walkBob: 0.3,
     wingRest: -128,
@@ -55,19 +55,41 @@ export default scaleAsset(
     wingOut: 0.06,
     wingScale: 0.56,
     legLength: 0.2,
+    tailPose: { lift: 0.5, tilt: -4 },
+    wingThick: 1.8,
     wingStyle: 'paddle',
     neckScale: 1.5,
     paintBody(body, b) {
-      // Soft grey shade on the sides and the back, so the big white areas have form.
+      // Soft grey shade low on the sides, so the big white areas have form; the back stays white,
+      // so no paint edge shows where the head meets the body.
       const { BODY_C, B } = b.joints;
       const shade = b.tone('body', '#d6d6dc', 1);
-      const sides = sdf.union(sdf.halfSpace([-1, 0, 0], -B[0] * 0.6), sdf.halfSpace([1, 0, 0], -B[0] * 0.6), sdf.halfSpace([0, 0, 1], BODY_C[2] - B[2] * 0.55));
+      const sides = sdf.union(sdf.halfSpace([-1, 0, 0], -B[0] * 0.6), sdf.halfSpace([1, 0, 0], -B[0] * 0.6)).intersect(sdf.halfSpace([0, 1, 0], BODY_C[1] + B[1] * 0.3));
       return body.paintWhere(sides.intersect(sdf.box([2, 2, 2]).at(0, 1, 0)), shade, 0.06);
     },
     extra(k, b) {
       const magic = b.tint.eye;
       glowEyes(k, b, magic, 2.6, true, 0.45);
-      k.body('tufts', earTufts(b, 0.05, 0.022), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
+      // A white shine on each eye, up and out from the pupil.
+      const e = b.eye.at;
+      const es = b.eye.scale;
+      k.body('eye-shine', sdf.sphere(0.0065 * es).at(e[0] + 0.007 * es, e[1] + 0.008 * es, e[2] + 0.002).mirror('x').bone('head'), { color: '#ffffff', emissive: '#ffffff', emissiveIntensity: 0.6, roughness: 0.2, detail: 0.002 });
+      // Wide ear tufts on the top corners of the head that point out to the sides and up a little.
+      const { HEAD_C: hc, HR } = b.joints;
+      const root = b.topHit(HR * 0.6, hc[2] + HR * 0.05);
+      const tuft = sdf
+        .chain(
+          [
+            [root[0] - HR * 0.1, root[1] - 0.012, root[2], 0.034],
+            [root[0] + HR * 0.18, root[1] + HR * 0.12, root[2] - 0.004, 0.022],
+            [root[0] + HR * 0.42, root[1] + HR * 0.3, root[2] - 0.01, 0.006],
+          ],
+          0.012,
+        )
+        .scale([1, 1, 0.7])
+        .mirror('x')
+        .bone('head');
+      k.body('tufts', tuft, { color: b.tint.head, roughness: 0.85, detail: 0.003 });
       // A thin round cord, not a band.
       k.body('ribbon', collar(b, 0.009), { color: magic, roughness: 0.6, detail: 0.002 });
       // A gold five-pointed star hanging from the front of the ribbon.
@@ -110,15 +132,18 @@ export default scaleAsset(
           const hit = sdf.raycast(b.trunk, [Math.sin(ang) * 2, y, Math.cos(ang) * 2], [-Math.sin(ang), 0, -Math.cos(ang)]);
           if (!hit) continue;
           const sz = 0.5 + 0.45 * noise.random(row, j, 11);
+          // A soft scallop: a small raised crescent that opens upward (a feather edge).
           const drop = sdf
-            .smoothUnion(0.004, sdf.ellipsoid([0.0065, 0.0065, 0.0025]).scale(sz), sdf.cone([0, 0, 0], [0, 0.012 * sz, 0], 0.005 * sz, 0.0012).at(0, 0.001, 0))
+            .ellipsoid([0.011 * sz, 0.0075 * sz, 0.003])
+            .subtract(sdf.ellipsoid([0.009 * sz, 0.007 * sz, 0.01]).at(0, 0.0035 * sz, 0))
+            .round(0.0008)
             .rotateZ(jit * 30)
             .rotateY((ang * 180) / Math.PI)
             .at(hit[0] - Math.sin(ang) * 0.0012, hit[1], hit[2] - Math.cos(ang) * 0.0012);
           marks.push(drop.bone(y > BODY_C[1] ? 'spine' : 'hips'));
         }
       }
-      k.body('marks', sdf.union(...marks), { color: b.tone('body', '#6a6a74', 0.4), roughness: 0.8, detail: 0.002 });
+      k.body('marks', sdf.union(...marks), { color: b.tone('body', '#8a8a94', 0.4), roughness: 0.8, detail: 0.002 });
     },
   }),
   0.44,

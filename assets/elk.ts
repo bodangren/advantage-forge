@@ -1,4 +1,4 @@
-import { noise, sdf } from '../src/index.js';
+import { noise, profile, sdf } from '../src/index.js';
 import { antlerShape, deerAsset } from './parts/deer-kind.js';
 import { scaleAsset } from './parts/scale-asset.js';
 
@@ -16,19 +16,21 @@ import { scaleAsset } from './parts/scale-asset.js';
  *   #ead8b0; black eyes, nose, and hooves.
  */
 
+// Short wide antlers: each beam sweeps out to the side more than up, with a brow tine forward and
+// three tines that rise from the beam.
 const ANTLER = antlerShape(
   [
-    [0.05, 0.835, 0.12, 0.034],
-    [0.11, 0.92, 0.085, 0.031],
-    [0.17, 1.0, 0.04, 0.028],
-    [0.22, 1.08, 0.0, 0.025],
-    [0.25, 1.16, 0.0, 0.02],
+    [0.05, 0.83, 0.12, 0.037],
+    [0.13, 0.895, 0.1, 0.034],
+    [0.21, 0.955, 0.08, 0.031],
+    [0.28, 1.015, 0.07, 0.027],
+    [0.335, 1.075, 0.07, 0.021],
   ],
   [
-    [[0.08, 0.875, 0.1], [0.08, 0.91, 0.2], 0.016],
-    [[0.13, 0.95, 0.07], [0.14, 1.04, 0.13], 0.016],
-    [[0.18, 1.02, 0.03], [0.19, 1.12, 0.08], 0.015],
-    [[0.22, 1.08, 0.0], [0.19, 1.17, 0.03], 0.014],
+    [[0.07, 0.85, 0.12], [0.06, 0.885, 0.21], 0.018],
+    [[0.12, 0.885, 0.103], [0.11, 0.985, 0.14], 0.018],
+    [[0.2, 0.945, 0.083], [0.2, 1.05, 0.1], 0.017],
+    [[0.27, 1.005, 0.072], [0.29, 1.1, 0.08], 0.016],
   ],
 );
 
@@ -51,11 +53,20 @@ export default scaleAsset(
     spots: false,
     bib: false,
     antlers: false,
+    slim: 1.2,
+    smile: false,
+    legThick: 1.25,
     headProbes: ANTLER.tips,
     paint(fur, deer) {
-      return fur.paintWhere(sdf.ellipsoid([0.12, 0.12, 0.07]).at(0, 0.41, -0.29), deer.tone('fur', '#ead8b0', 0.3), 0.02);
+      // A pale rump, and a wide grin across the muzzle under the nose.
+      const grin = sdf.extrude(profile.arc(0.056, 0.009, 214, 326), 0.3).at(0, 0.622, 0.3);
+      return fur.paintWhere(sdf.ellipsoid([0.12, 0.12, 0.07]).at(0, 0.41, -0.29), deer.tone('fur', '#ead8b0', 0.3), 0.02).paintWhere(grin, '#4a2a1e', 0.002);
     },
-    extra(k) {
+    extra(k, deer) {
+      // A large black ball nose on the tip of the muzzle, with a glint.
+      const n = deer.faceHit(0, 0.64);
+      const nose = sdf.sphere(0.04).at(n[0], n[1] + 0.004, n[2] + 0.004).paintWhere(sdf.sphere(0.01).at(n[0] - 0.013, n[1] + 0.024, n[2] + 0.03), '#8a8282', 0.004);
+      k.body('ball-nose', nose.bone('head'), { color: '#1a1416', roughness: 0.2, detail: 0.003 });
       k.body('antlers', ANTLER.shape.mirror('x'), { color: '#4e3424', roughness: 0.7, bone: 'head', detail: 0.004 });
       // The ruff: a shaggy collar under the head, hanging in points over the chest.
       const points = [-0.07, -0.035, 0, 0.035, 0.07].map((x, i) =>
