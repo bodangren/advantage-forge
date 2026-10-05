@@ -1,0 +1,249 @@
+{
+  "bee": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 3.5, 3, 3, 4, 4, 4, 2.5],
+    "summary": "The model is a cute round bee with the correct face. It stands upright on six long spider legs, but the mockup flies with a forward tilt and hanging legs.",
+    "strengths": [
+      "The face matches the mockup: white eyes with black pupils, a small nose, and a closed smile.",
+      "The yellow and black colors read at 128 px in all eight directions.",
+      "The antennae have the ball tips of the mockup."
+    ],
+    "issues": [
+      "The bee stands upright on six long, splayed legs like a spider. The mockup flies with a forward tilt and thin hanging legs. Lift the body and hang the legs below it.",
+      "The fly clip keeps the legs on the ground and the body does not rise. Lift the bee in the fly clip and make the wing beat clear.",
+      "The head and the body are two stacked spheres of equal size. The mockup has a smaller, fuzzy body with black patches. Make the body smaller and add the black patches.",
+      "The fur is only a fine surface noise. The mockup body has a long pom-pom fuzz. Make the fuzz on the body deeper.",
+      "The antennae are long and straight. The mockup antennae are shorter and curved."
+    ],
+    "next": "Change the rest pose and the fly clip to a hover: lift the body, tilt it forward, and hang the legs below it."
+  },
+  "wasp": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4, 4, 3.5],
+    "summary": "The model is a cute wasp with the correct face and a pointed striped abdomen. The abdomen is too long, and the thin straight legs make a stilt stance.",
+    "strengths": [
+      "The face matches the mockup: large black eyes with highlights and a small red smile.",
+      "The pointed, striped abdomen with a stinger makes the wasp different from the round bee at 128 px.",
+      "The fly clip lifts the wasp and the legs hang below it, as in the mockup."
+    ],
+    "issues": [
+      "The abdomen is approximately two times the mockup length. Make it shorter and rounder, and keep the point.",
+      "The six legs are thin and straight, and they stand in one cluster under the thorax. The mockup legs are thick and bent. Make the legs thicker, bend them, and spread them.",
+      "The thorax is plain yellow. The mockup thorax is black with a yellow band. Paint the thorax to match the mockup.",
+      "The antennae end in tight hooks. The mockup antennae curve back in a smooth arc."
+    ],
+    "next": "Make the abdomen shorter and give the legs thicker, bent segments."
+  },
+  "butterfly": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4, 4, 3.5],
+    "summary": "The model is a close 3D version of the mockup butterfly. The face, the curled antennae, and the spotted orange wings match, but the wings are larger and flatter in color.",
+    "strengths": [
+      "The face matches the mockup: a dark cap with a V point, large glossy eyes, pink cheeks, and a small smile.",
+      "The curled antennae and the black wing edges with white spots match the mockup.",
+      "The orange wings read at 128 px in all eight directions.",
+      "The fly clip flaps the wings and moves the body up and down."
+    ],
+    "issues": [
+      "The wings are a flat, matte orange. The mockup wings are glossy and translucent, with a darker amber near the body. Add the gradient and the gloss.",
+      "The wings are approximately 30 percent larger than in the mockup, and the lower wings are as large as the upper wings. Make the lower wings smaller.",
+      "In the side view, the wings show as thin plates, and the lower wing reaches the ground. Angle the wings out a little.",
+      "The arms stay stiff in the fly clip. Add a small arm motion."
+    ],
+    "next": "Give the wings the glossy amber gradient of the mockup and make the lower wings smaller."
+  },
+  "moth": {
+    "overall": 3.0,
+    "scores": [1.5, 2.5, 2, 2.5, 1, 1, 1, 1, 3, 1.5, 2.5],
+    "summary": "The texture on the head, the collar, the body, and the antennae is corrupt. The face is not visible, and grey and black smears replace the warm browns of the mockup.",
+    "strengths": [
+      "The four tan wings with brown spots match the mockup.",
+      "The layout of a round head, a collar, club antennae, and a round body matches the mockup.",
+      "The fly clip flaps the wings."
+    ],
+    "issues": [
+      "The baked texture on the head, the collar, the body, and the antenna clubs shows grey and black smears. Fix the texture or the fur material, and build the asset again.",
+      "The face is not visible. The mockup shows a brown face with large glossy eyes and an open smile. Make the face clear of the fur.",
+      "The collar is a grey, spiky ball that covers the head. The mockup collar is a cream, fluffy ring around the face.",
+      "The body and the antenna clubs are grey. The mockup body and clubs are warm brown."
+    ],
+    "next": "Fix the corrupt texture so that the brown face, the cream collar, and the brown body show."
+  },
+  "trout": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 3, 4, 4, 3],
+    "summary": "The model is a spotted olive trout with the rosy band and the cream belly of the mockup. The body is a short egg, and the mouth is a pair of large closed lips.",
+    "strengths": [
+      "The palette matches the mockup: olive back, black spots, pink blush, rosy band, and cream belly.",
+      "The spots and the band read at 128 px.",
+      "The mouth opens in the swim clip."
+    ],
+    "issues": [
+      "The mouth is a pair of large, protruding, closed lips with a white lower lip. The mockup has a small open pout. Make the lips smaller and open the mouth a little.",
+      "The body is a short, round egg. The mockup body is longer and becomes narrow at the tail. Make the body longer and the tail stalk narrower.",
+      "A dark spot shows at the root of the pectoral fin in the swim clip. Fix the fin root so that no dark dent shows.",
+      "The tail is a round fan. The mockup tail is wider, with a shallow fork."
+    ],
+    "next": "Make the lips smaller and open the mouth a little, as in the mockup."
+  },
+  "salmon": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3, 3.5, 3.5, 3, 4, 4, 3.5],
+    "summary": "The model is a chubby salmon with a pink body, a forked tail, and a friendly face, close to the mockup. The back is a light sage grey, but the mockup back is a dark slate grey.",
+    "strengths": [
+      "The body shape, the face, and the smile are close to the mockup.",
+      "The forked tail and the dorsal fin match the mockup.",
+      "The pink and grey body reads at 128 px.",
+      "The tail sweeps clearly in the swim clip."
+    ],
+    "issues": [
+      "The back is a light grey with a green tint. The mockup back is a dark slate grey. Make the back darker and bluer for a strong contrast with the pink side.",
+      "A dark spot shows at the root of the pectoral fin in the swim clip. Fix the fin root.",
+      "The smile is a thin line. The mockup smile is wider, with gill lines behind it.",
+      "The pectoral fins are small and sit low on the body."
+    ],
+    "next": "Paint the back the dark slate grey of the mockup."
+  },
+  "crocodile": {
+    "overall": 6.5,
+    "scores": [3, 3, 3, 3.5, 4, 3.5, 3.5, 4, 4, 3.5, 3.5],
+    "summary": "The model is a cute green crocodile with large top eyes, teeth, a cream throat, and back spikes. It stands with a high chest on long front legs, but the mockup stands low and level.",
+    "strengths": [
+      "The green and cream colors match the mockup.",
+      "The large top eyes, the teeth, and the red mouth match the mockup.",
+      "The back spikes and the long tail read at 128 px from the side.",
+      "The walk clip moves all four legs clearly."
+    ],
+    "issues": [
+      "The front legs are long and straight, so the chest is high and the back slopes down. The mockup body is low and level on short legs. Make the front legs shorter.",
+      "The snout is short and blunt. The mockup snout is longer and flatter. Make the snout longer.",
+      "The eyes are very large and the head is tall. Make the eyes a little smaller and lower.",
+      "The tail stays straight and stiff in the walk clip. Add a side sway."
+    ],
+    "next": "Make the front legs shorter and lower the chest so that the body is level."
+  },
+  "octopus": {
+    "overall": 8.0,
+    "scores": [4.5, 4.5, 4, 4.5, 3.5, 4, 4, 4.5, 4, 4, 4],
+    "summary": "The model is a very close 3D version of the mockup octopus. The color is a stronger blue violet than the soft lilac of the mockup, and the eyes are a little smaller.",
+    "strengths": [
+      "The round dome with small bumps and the curled arms match the mockup.",
+      "The face matches the mockup: glossy eyes, pink cheeks, and a small smile.",
+      "The walk clip waves the arms with overlap, and the dome moves with them.",
+      "The dome and the arms read at 128 px in all eight directions."
+    ],
+    "issues": [
+      "The purple is more saturated and bluer than the soft lilac of the mockup. Make the color lighter and pinker.",
+      "The eyes are a little smaller than in the mockup. Make them approximately 15 percent larger.",
+      "The arms spread wider than in the mockup. Move the arm tips closer under the dome.",
+      "The dome surface shows a fine, lumpy noise. The mockup dome is smooth, with a few small dots."
+    ],
+    "next": "Change the body color to the soft lilac of the mockup."
+  },
+  "frog": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 3, 4, 4, 3.5],
+    "summary": "The model is a sitting green frog with large lidded eyes, a pale chin, and a cream belly. The head is too wide, the mouth is a broad smile, and the eyelid edges show a dark seam.",
+    "strengths": [
+      "The green and cream colors match the mockup.",
+      "The eyelids give the heavy-lidded look of the mockup.",
+      "The sitting pose with the front legs straight and the hind legs folded matches the mockup.",
+      "The eyes and the pale chin read at 128 px."
+    ],
+    "issues": [
+      "The mouth is a broad smile line. The mockup has a flat, closed mouth above a thick pale lower lip. Remove the smile curve and shape the thick lip.",
+      "The head is wider than the body, and the eyes are far apart. The mockup head is narrower, with the eyes close together on top. Make the head narrower.",
+      "The eyelid edges show a dark, jagged seam in the side and back views. Make the lid edge clean.",
+      "The skin has a lumpy noise. The mockup skin is smooth and glossy."
+    ],
+    "next": "Replace the smile with the flat mouth and the thick pale lower lip of the mockup."
+  },
+  "seal": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4, 4, 3],
+    "summary": "The model is a grey seal pup with the black nose, the whiskers, and the sleepy eyes of the mockup. The body is short and tall, but the mockup body is long and low.",
+    "strengths": [
+      "The round grey head, the black nose, and the whiskers match the mockup.",
+      "The front flippers spread out as in the mockup.",
+      "The round grey shape and the black nose read at 128 px."
+    ],
+    "issues": [
+      "The body is a short, tall hump behind the head. The mockup body is long and low. Make the body longer and lower.",
+      "The tail flippers are small and almost vertical. The mockup tail flippers are large and curve up behind the body. Make them larger and curve them up.",
+      "The brow lines above the eyes make the face look a little cross. The mockup eyes are calm. Make the brow lines softer.",
+      "The swim clip moves only the flippers. Add a wave along the body."
+    ],
+    "next": "Make the body longer and lower, and add larger tail flippers that curve up."
+  },
+  "eel": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4, 4, 4, 3.5],
+    "summary": "The model is a cute green eel with the large head, the side eyes, the crest, and the ribbed cream belly of the mockup. The body is thick, so the S curve is weak, and the green is a cool mint.",
+    "strengths": [
+      "The large head, the black side eyes, the smile, and the crest match the mockup.",
+      "The ribbed cream belly and the spiked tail match the mockup.",
+      "The head and the curve read at 128 px."
+    ],
+    "issues": [
+      "The neck and the body are thick, so the S curve is weak. The mockup neck is thin, and the tail lies on the ground before it curls up. Make the neck and the body thinner.",
+      "The green is a cool mint. The mockup green is a warmer yellow green. Make the green warmer.",
+      "The head is a large dome with the eyes at its edges. The mockup head is smaller relative to the body.",
+      "The walk clip moves only the head and the tail tip. Add a wave along the body."
+    ],
+    "next": "Make the neck and the body thinner so that the S curve reads clearly."
+  },
+  "rabbit": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4, 4, 3],
+    "summary": "The model is a close match of the mockup rabbit: a cream head, long pink ears, a grey body, and a white tail. The eyes are smaller and the head is rounder than in the mockup.",
+    "strengths": [
+      "The palette matches the mockup: cream head, pink inner ears, grey body, and white tail.",
+      "The long upright ears, the pink nose, the whiskers, and the lashes match the mockup.",
+      "The sitting pose matches the mockup.",
+      "The ears and the face read at 128 px."
+    ],
+    "issues": [
+      "The eyes are smaller and lighter than in the mockup. Make them approximately 20 percent larger and darker, with a larger highlight.",
+      "The head is a round ball with a hard edge at the grey neck. The mockup head is an egg shape with full cheeks. Make the lower cheeks wider.",
+      "The hop clip only moves the body up and down. Extend the hind legs in the hop.",
+      "The feet are white with toe lines. The mockup feet are round cream pads."
+    ],
+    "next": "Make the eyes larger and darker, as in the mockup."
+  },
+  "hare": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 3.5, 4, 3.5, 3],
+    "summary": "The model is an orange hare with long black-tipped ears and a cream chest, like the mockup. The eyes are much smaller, the feet are large black discs, and the face shows buck teeth.",
+    "strengths": [
+      "The long upright ears with black tips match the mockup and read at 128 px.",
+      "The orange and cream palette and the dark tail match the mockup.",
+      "The four legs stand on the ground in a neutral pose."
+    ],
+    "issues": [
+      "The eyes are much smaller than in the mockup. The mockup eyes are very large and amber, with large highlights. Make the eyes approximately 50 percent larger.",
+      "The feet are large, flat black discs. The mockup feet are small, tapered black paws. Make the feet smaller and taper them.",
+      "The face shows two buck teeth and a small cream muzzle. The mockup has a small closed mouth and full cream cheeks. Remove the teeth and widen the cream cheeks.",
+      "The hind legs are the same length as the front legs. A hare needs long hind legs. Make the hind legs longer.",
+      "The run clip is a trot. Change it to a bound."
+    ],
+    "next": "Make the eyes much larger, as in the mockup."
+  },
+  "squirrel": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 4, 3.5, 3, 3.5, 4, 3.5, 3],
+    "summary": "The model is an orange squirrel with tufted ears, a cream chest, and a large curled tail that reads at 128 px. The face is far from the mockup, and the run clip is a trot, not the bound of the mockup.",
+    "strengths": [
+      "The large curled tail reads at 128 px in all eight directions.",
+      "The tufted ears and the orange and cream palette match the mockup.",
+      "The rest pose stands on four legs and is neutral."
+    ],
+    "issues": [
+      "The eyes are dark discs with a dark rim and small highlights, and they look like goggles. The mockup eyes are lighter brown with large highlights. Change the eyes to match.",
+      "The muzzle is a wide, flat cream pad with a long straight mouth. The mockup has a short pointed snout and a small smile. Make the muzzle narrow and pointed.",
+      "The run clip is a short trot with a level body. The mockup run is a bound with a stretched body and the front paws at the chest. Change the run to a bound.",
+      "Small white specks show at the mouth corners, and the cream paint spreads onto the front legs. Clean these paint edges.",
+      "The tail is a narrow C curve. The mockup tail is a larger, round plume."
+    ],
+    "next": "Change the face: lighter eyes with large highlights, a narrow pointed snout, and a small smile."
+  }
+}

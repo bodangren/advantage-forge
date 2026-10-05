@@ -75,12 +75,22 @@ export interface WolfKind {
   readonly pupilScale?: number;
   /** The mouth line from and to these angles on the grin circle (default 226 to 314; a cat's small mouth 252 to 288). */
   readonly smileArc?: readonly [number, number];
+  /** A longer muzzle: it reaches this much farther forward (meters, default 0). */
+  readonly snout?: number;
+  /** The muzzle width as a share of the wolf's (default 1): below 1 a narrow, pointed snout. */
+  readonly muzzleWidth?: number;
+  /** False: the cream stays on the muzzle and does not spread over the cheeks to a wide grin. */
+  readonly cheekCream?: boolean;
   /** The size of the nose (default 1). */
   readonly noseScale?: number;
+  /** The two lower fangs on the jaw (on by default; off for a tiny closed cat mouth). */
+  readonly fangs?: boolean;
   /** The claws (on by default). */
   readonly claws?: boolean;
   /** False for no bushy tail (the kind builds its own tail on the `tail` bone in `extra`). */
   readonly tail?: boolean;
+  /** True: a `sit` clip (a held sitting pose on the haunches, as in a sitting mockup); default none. */
+  readonly sit?: boolean;
   /** Paint on the fur (ear tips, markings), with the slot colors. */
   paint?(fur: sdf.Shape, tint: WolfShape['tint'], tone: WolfShape['tone']): sdf.Shape;
   /** Extra bones (a tentacle on `spine`, a smoke plume on `hips`). */
@@ -157,11 +167,12 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
         sdf.ellipsoid([0.2, 0.175, 0.17]).at(...HEAD_C),
         pair(sdf.sphere(0.09).at(0.1, 0.44, 0.22)), // cheeks
       );
-      const MUZZLE: V3 = [0, 0.43, 0.3];
+      const SN = kind.snout ?? 0;
+      const MUZZLE: V3 = [0, 0.43, 0.3 + SN * 0.5];
       const muzzle = sdf.smoothUnion(
         0.03,
-        sdf.ellipsoid([0.14, 0.075, 0.085]).at(...MUZZLE),
-        sdf.ellipsoid([0.06, 0.04, 0.06]).at(0, 0.47, 0.3), // the bridge up to the brows
+        sdf.ellipsoid([0.14 * (kind.muzzleWidth ?? 1), 0.075, 0.085 + SN * 0.5]).at(...MUZZLE),
+        sdf.ellipsoid([0.06, 0.04, 0.06 + SN * 0.5]).at(0, 0.47, 0.3 + SN * 0.5), // the bridge up to the brows
       );
       const headBase = sdf.smoothUnion(0.03, skull, muzzle);
       // The outer bound of the lower jaw (see jawZone below).
@@ -171,7 +182,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       // corners the patch stays inside the jaw bound, so no cream crosses the side of the jaw cut.
       const cheekPatch = pair(sdf.ellipsoid([0.07, 0.035, 0.09]).rotateZ(25).at(0.12, 0.44, 0.26));
       const besideJaw = sdf.halfSpace([0, 1, 0], GRIN_CORNER_Y).subtract(JAW_BOUND.round(-0.006));
-      const muzzleWide = sdf.union(muzzle, headBase.smoothIntersect(0.01, cheekPatch).subtract(besideJaw));
+      const muzzleWide = kind.cheekCream === false ? muzzle : sdf.union(muzzle, headBase.smoothIntersect(0.01, cheekPatch).subtract(besideJaw));
       const faceHit = (x: number, y: number) => sdf.raycast(headBase, [x, y, 2], [0, 0, -1])!;
 
       // Pointed cheek tufts, two on each side, flattened front to back.
@@ -375,7 +386,7 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
           return sdf.cone([h[0], y - 0.012, h[2] - 0.008], [h[0], y + 0.014, h[2] - 0.006], 0.009, 0.0025);
         }),
       );
-      k.body('jawTeeth', lowerFangs, { color: C.tooth, roughness: 0.3, detail: 0.003, bone: 'jaw' });
+      if (kind.fangs !== false) k.body('jawTeeth', lowerFangs, { color: C.tooth, roughness: 0.3, detail: 0.003, bone: 'jaw' });
       const claws = sdf.union(
         ...[FKNEE, BKNEE].flatMap((kn, j) =>
           [-0.03, 0, 0.03].map((x) =>
@@ -514,6 +525,31 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       });
       clip('walk', gait(0.6, 24, [34, 10], [40, 22], 0, 0, 0));
       clip('run', gait(0.36, 36, [50, 14], [54, 26], 0.008, 10, 14));
+      if (kind.sit) {
+        // Sit: the body pitches up about the hips while the hips drop, so the rump rests on the
+        // ground and the front legs stand straight under the chest with the paws where they stood;
+        // the thighs fold forward to the ground and the hind paws come forward beside the front
+        // paws; the neck and the head turn down again, so the eyes look ahead. A held pose that
+        // loops with a slow breath, a small head tilt, and a tail sway.
+        const PITCH = -34;
+        const DROP = 0.135;
+        clip('sit', {
+          duration: 3,
+          pose: (_t, p) => ({
+            hips: { move: [0, -DROP, 0], rotate: [PITCH, 0, 0] },
+            spine: { move: [0, 0.003 * bump(p, 2), 0] },
+            neck: { rotate: [-PITCH * 0.55 + 2 * bump(p), 3 * wave(p, 1, 0.2), 0] },
+            head: { rotate: [-PITCH * 0.4, 0, 4 * wave(p)] },
+            tail: { rotate: [10, 18 * wave(p), 0] },
+            'fleg.L': { rotate: [-PITCH, 0, 0] },
+            'fleg.R': { rotate: [-PITCH, 0, 0] },
+            'bleg.L': { rotate: [-58, 0, -6] },
+            'bleg.R': { rotate: [-58, 0, 6] },
+            'bshin.L': { rotate: [48, 0, 0] },
+            'bshin.R': { rotate: [48, 0, 0] },
+          }),
+        });
+      }
       clip('idle', {
         duration: 2.6,
         pose: (_t, p) => ({

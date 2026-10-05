@@ -9,11 +9,14 @@ import { wolfAsset } from './wolf-kind.js';
  * Cat kinds — the village cat and the familiar cat on the wolf kind (`assets/parts/wolf-kind.ts`)
  * at 0.6 of the dire wolf's size: pointed ears with pink insides, big painted eyes, a small pink
  * nose, whiskers, a smooth chest, no cheek tufts, brows, forelock, or claws, and a long thin tail
- * on the tail bone that curls up at the tip. A kind sets the slots, the stripes, and extras (a
+ * on the tail bone that curls up at the cat's side. A kind sets the slots, the stripes, and extras (a
  * collar and a charm).
  */
 
 type V3 = readonly [number, number, number];
+
+/** The tail tip before the kind's 0.6 scale (a charm on the tail tip goes here). */
+export const CAT_TAIL_TIP: V3 = [0.08, 0.52, -0.22];
 
 export interface CatKind {
   readonly name: string;
@@ -26,8 +29,15 @@ export interface CatKind {
   /** Tabby stripes on the forehead, the back, and the legs, in this color that follows the fur slot (none if left out). */
   readonly stripes?: string;
   readonly eyeGlow?: number;
-  /** The tail tip in the markings color (default true). */
+  /** The tail tip in the markings color (default false). */
   readonly tailTip?: boolean;
+  /** The size of the painted eyes (default 1.45) and of the pupils inside them (default 1.7). */
+  readonly eyeScale?: number;
+  readonly pupilScale?: number;
+  /** Two short dark lashes at the outer top corner of each eye (default false). */
+  readonly lashes?: boolean;
+  /** True: a `sit` clip (see the wolf kind). */
+  readonly sit?: boolean;
   extra?(k: AssetContext, w: WolfShape): void;
 }
 
@@ -41,11 +51,13 @@ export function catAsset(kind: CatKind): AssetDefinition {
       ...(kind.presets ? { presets: kind.presets } : {}),
       // The kind darkens the lower legs to `furDark`; a cat keeps its fur color down to the paws.
       colors: { furLight: '#fff6ec', furDark: Object.values(kind.variants.fur ?? {})[0] as string, earInner: '#f0a8a8', eyeRim: '#1a1a10', nose: '#e88a8a', ...kind.colors },
-      smileArc: [254, 286],
+      // A tiny closed mouth under the nose, with no fangs.
+      smileArc: [263, 277],
+      fangs: false,
       noseScale: 0.6,
       earScale: 0.9,
-      eyeScale: 1.45,
-      pupilScale: 1.7,
+      eyeScale: kind.eyeScale ?? 1.45,
+      pupilScale: kind.pupilScale ?? 1.7,
       ...(kind.eyeGlow ? { eyeGlow: kind.eyeGlow } : {}),
       brows: false,
       forelock: false,
@@ -54,9 +66,10 @@ export function catAsset(kind: CatKind): AssetDefinition {
       ruff: 'smooth',
       claws: false,
       tail: false,
+      ...(kind.sit ? { sit: true } : {}),
       paint(furIn, t, tone) {
-        // White paws.
-        const fur = furIn.paintWhere(sdf.halfSpace([0, 1, 0], 0.07), t.markings, 0.02);
+        // White paws (only the paws, no stockings).
+        const fur = furIn.paintWhere(sdf.halfSpace([0, 1, 0], 0.045), t.markings, 0.012);
         if (!kind.stripes) return fur;
         const color = tone('fur', kind.stripes);
         // Three short stripes on the forehead, bands across the back, and rings on the legs.
@@ -74,20 +87,37 @@ export function catAsset(kind: CatKind): AssetDefinition {
           .union(...[-0.018, 0, 0.018].map((dy, i) => sdf.capsule([0.1, 0.43 + dy, 0.33], wh(dy, (i - 1) * 0.02), 0.0035)))
           .mirror('x');
         k.body('whiskers', whiskers, { color: kind.colors?.whisker ?? '#3a2a24', roughness: 0.6, detail: 0.002, bone: 'head' });
-        // The long tail, up and curling at the tip.
-        const TIP: V3 = [0.02, 0.6, -0.36];
+        // The long tail: back from the rump, out to the cat's left side, and up in a curl, like a
+        // question mark seen from behind.
         const tail = sdf.chain(
           [
             [0, 0.3, -0.28, 0.028],
-            [0, 0.34, -0.38, 0.026],
-            [0, 0.45, -0.43, 0.025],
-            [0.01, 0.56, -0.42, 0.024],
-            [TIP[0], TIP[1], TIP[2], 0.02],
+            [0.06, 0.29, -0.36, 0.027],
+            [0.14, 0.33, -0.38, 0.026],
+            [0.19, 0.43, -0.33, 0.025],
+            [0.18, 0.53, -0.27, 0.023],
+            [0.12, 0.56, -0.24, 0.021],
+            [CAT_TAIL_TIP[0], CAT_TAIL_TIP[1], CAT_TAIL_TIP[2], 0.019],
           ],
-          0.015,
+          0.03,
         );
-        const tipped = kind.tailTip === false ? tail : tail.paintWhere(sdf.sphere(0.05).at(...TIP), w.tint.markings, 0.01);
+        const tipped = kind.tailTip ? tail.paintWhere(sdf.sphere(0.05).at(...CAT_TAIL_TIP), w.tint.markings, 0.01) : tail;
         k.body('tail-fur', tipped.bone('tail'), { color: w.tint.fur, roughness: 0.85 });
+        if (kind.lashes) {
+          // Two short dark lashes at the outer top corner of each eye.
+          const e = w.eye;
+          const r = 0.031 * (kind.eyeScale ?? 1.45) * 1.08;
+          const lashes = sdf
+            .union(
+              ...[30, 52].map((deg) => {
+                const a = (deg * Math.PI) / 180;
+                const base: V3 = [e[0] + Math.cos(a) * r, e[1] + Math.sin(a) * r, e[2] - 0.004];
+                return sdf.cone(base, [base[0] + Math.cos(a) * 0.02, base[1] + Math.sin(a) * 0.018, base[2] - 0.004], 0.005, 0.0015);
+              }),
+            )
+            .mirror('x');
+          k.body('lashes', lashes.bone('head'), { color: '#1a100a', roughness: 0.6, detail: 0.002 });
+        }
         kind.extra?.(k, w);
       },
     }),

@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 78.
-Tracks by status: new: 10; in_progress: 38; completed: 30.
-Tracks by workstream: assets: 31; games: 40; foundation: 7.
+Tracks: 79.
+Tracks by status: new: 10; in_progress: 39; completed: 30.
+Tracks by workstream: assets: 32; games: 40; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -27,6 +27,7 @@ Tracks by workstream: assets: 31; games: 40; foundation: 7.
 | [asset_p3_vehicles_20260928](../tracks/asset_p3_vehicles_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_production_controls_20260928](../tracks/asset_production_controls_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_quality_20260928](../tracks/asset_quality_20260928/) | in_progress | assets | 4/10 | 10 | — |
+| [asset_review_audit_20261005](../tracks/asset_review_audit_20261005/) | in_progress | assets | 4/15 | 10 | — |
 | [asset_scenes_adventure_20260928](../tracks/asset_scenes_adventure_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_scenes_civic_20260928](../tracks/asset_scenes_civic_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |

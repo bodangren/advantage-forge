@@ -1,0 +1,146 @@
+{
+  "rabbit": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a seated chibi rabbit with a cream head, a gray body, pink inner ears, and a white tail puff. It is the same rabbit as the mockup, but the head is a tall egg shape and not the mockup's wide head with full cheeks.",
+    "strengths": [
+      "The tall ears with pink insides and the seated shape read in all eight sprite directions.",
+      "The palette follows the mockup: a light head, a gray body, white paws, and a white tail puff.",
+      "The face has the lashes, the brown eyes, the pink nose, the whiskers, and the small smile of the mockup."
+    ],
+    "issues": [
+      "The head is taller than it is wide. Make the head wider at the cheeks, as in the mockup.",
+      "The head is a warm cream. Change it to the cool gray-white of the mockup.",
+      "The side profile is flat, and the eye sits on the side of a sphere. Add a small muzzle bump at the nose.",
+      "The gray body pinches to a narrow neck with a dark crease under the head. Fill the neck so that the head sits on a round chest.",
+      "The front legs are thin. Make the chest and the front legs fuller, as in the mockup.",
+      "The hop clip moves the body as one rigid block. Add a squash before the jump and an ear lag after the jump."
+    ],
+    "next": "Make the head wider at the cheeks and change the head color to cool gray-white, as in the mockup."
+  },
+  "hare": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 3.5, 3, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a standing chibi hare with large flared ears with black tips, an orange coat, and a cream chest. It is the same animal as the mockup, but the tail, the legs, and the strong orange make it look more like a deer fawn.",
+    "strengths": [
+      "The large flared ears with black tips and cream insides follow the mockup and read in every sprite direction.",
+      "The large eyes and the small black nose give a friendly face that reads at 128 px.",
+      "The walk clip lifts and plants each foot in a clear order, and the legs bend."
+    ],
+    "issues": [
+      "The tail is a flat brown flag that points up, as on a deer. Change it to a small, round, dark puff, as in the mockup.",
+      "The legs are straight thin columns with black tips that look like hooves. Give the hind legs a long bent hock and round black paws.",
+      "The orange is more saturated than the warm tan-orange of the mockup. Move the coat color toward the mockup.",
+      "The eyes are dark brown. Change them to the large amber eyes of the mockup.",
+      "The white patches on the cheeks and the shoulder have blotchy edges. Make the cream chest one clean shape."
+    ],
+    "next": "Change the tail to a round dark puff and give the hind legs a bent hock, so that the model reads as a hare and not as a fawn."
+  },
+  "squirrel": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 3, 3.5, 2.5, 3, 4, 4.5, 3.5, 3],
+    "summary": "The model is a crouched chibi squirrel with a large tail, ear tufts, and a cream belly and muzzle. The colors and the face are near the mockup, but the tail is a tall lumpy slab and not the round, curled, fluffy tail of the mockup.",
+    "strengths": [
+      "The orange coat, the cream belly, and the cream muzzle follow the mockup palette.",
+      "The ear tufts and the paws at the chest read clearly from the front.",
+      "The crouch is a good rest pose for a game animal."
+    ],
+    "issues": [
+      "The tail is a tall flat slab with a lumpy texture that does not look like fur. Shape the tail as a round plume that curls forward at the top, with soft fur strands.",
+      "The tail has the same color and value as the body, so the tail does not separate from the body. Add a darker red base and lighter fluffy edges, as in the mockup.",
+      "The face has no muzzle. Add the short pointed muzzle and the dark nose of the mockup.",
+      "The eyes have a wide white ring, and this gives a startled look. Make the iris larger, as in the mockup.",
+      "The hind feet are long flat slabs on the ground. Make them shorter and rounder.",
+      "The ear tufts are thin dark spikes. Make them soft fluffy tufts, as in the mockup."
+    ],
+    "next": "Rebuild the tail as a round curled plume with fur strands and lighter edges."
+  },
+  "bat": {
+    "overall": 7.5,
+    "scores": [4, 4.5, 4, 4, 4, 3.5, 4, 4.5, 4.5, 4, 3.5],
+    "summary": "The model is a sitting chibi bat with tall ears with orange rims, a cream face mask, spread wings, and paws at the chest. It is very near the mockup in shape and color; the muzzle, the eyes, and the wing position differ a little.",
+    "strengths": [
+      "The silhouette follows the mockup: tall ears with rims, spread wings, a round body, and small orange feet.",
+      "The brown and cream palette follows the mockup, and the cream face mask puts contrast on the face.",
+      "The fly clip moves the wings up and down in a clear beat, and the body bobs."
+    ],
+    "issues": [
+      "The face is flat and the nose is small. Add the short muzzle and the larger black nose of the mockup.",
+      "The eyes are a little small. Make them larger, with a larger dark iris, as in the mockup.",
+      "The smile is short. Make it wider, as in the mockup.",
+      "The wings attach high at the shoulders. Set them lower, near the hips, as in the mockup."
+    ],
+    "next": "Add the short muzzle and the larger nose of the mockup, and make the eyes larger."
+  },
+  "bee": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 2.5, 4, 4, 3.5],
+    "summary": "The model is a chibi bee with a fuzzy yellow head, a body with bands, small clear wings, and six legs. The head and the colors follow the mockup, but the model stands high on splayed legs, and the stinger floats below the body.",
+    "strengths": [
+      "The head follows the mockup: large glossy black eyes, a small smile, and antennae with ball tips.",
+      "The yellow and black bands read clearly in every sprite direction.",
+      "The fly clip tilts the body forward, lifts it off the ground, and lets the legs hang, as in the mockup."
+    ],
+    "issues": [
+      "The stinger floats below the abdomen with a gap. Attach the stinger to the tip of the abdomen.",
+      "In the rest pose, the bee stands high on six long splayed legs, and this looks like a spider. Make the legs shorter and fold them under the body.",
+      "The head and the body are two separate balls in a stack. Join them with a fuzzy yellow collar, as in the mockup.",
+      "The wings are small. Make them larger, as in the mockup."
+    ],
+    "next": "Attach the stinger to the tip of the abdomen, then make the legs shorter and fold them under the body."
+  },
+  "wasp": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 3, 3.5, 3.5, 3, 2.5, 4, 3, 3.5],
+    "summary": "The model is a chibi wasp with a yellow head, a narrow waist, an abdomen with stripes, and clear wings. The parts follow the mockup, but the stinger floats away from the abdomen, the antennae curl into tight spirals, and the model stands on its legs.",
+    "strengths": [
+      "The narrow waist between the thorax and the abdomen is clear in the side view and the back view.",
+      "The black and yellow stripes on the abdomen read at 128 px from the side and the back.",
+      "The fly clip tilts the body and lifts it off the ground."
+    ],
+    "issues": [
+      "The stinger floats behind and below the abdomen with a gap, so the abdomen tip is round. Attach the stinger so that the abdomen ends in a sharp point.",
+      "The antennae curl into tight spirals. Make them long open curves that bend outward, as in the mockup.",
+      "From the front at 128 px, the wasp looks almost the same as the bee. Show more of the pointed abdomen from the front, or change the face, so that the wasp is different from the bee.",
+      "The mouth is black. Paint the mouth red-orange, as in the mockup.",
+      "In the rest pose, the wasp stands high on thin legs. Make the legs thicker and fold them under the body, as in the mockup."
+    ],
+    "next": "Attach the stinger to the abdomen tip so that the abdomen ends in a sharp point."
+  },
+  "butterfly": {
+    "overall": 7.0,
+    "scores": [3.5, 4.5, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4.5, 3],
+    "summary": "The model is a chibi butterfly with a black cap, a cream face, curled antennae, and orange wings with black borders and white dots. The head is very near the mockup, but the wing shape and the wing pattern differ.",
+    "strengths": [
+      "The head follows the mockup: a black cap, a cream face, large glossy eyes, pink cheeks, and a smile.",
+      "The curled antennae and the orange wings with black borders read in every sprite direction.",
+      "The colors have a clear plan: black and cream on the head, bright orange on the wings."
+    ],
+    "issues": [
+      "Each wing has small white dots on the black border. Use one large white dot inside each wing, as in the mockup.",
+      "The wings are pointed teardrops. Make them rounder and broader, as in the mockup.",
+      "Each wing has a gray line through it. Remove the line, because the mockup has no line.",
+      "The fly clip swings the wings forward past the face. Flap the wings up and down at the sides of the body.",
+      "The black cap has a soft gray edge at the back of the head. Make the edge of the cap clean."
+    ],
+    "next": "Change the wing pattern to one large white dot in each wing, and make the wings rounder."
+  },
+  "moth": {
+    "overall": 6.0,
+    "scores": [2.5, 3, 3.5, 3, 3.5, 2.5, 3, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is a chibi moth with a cream collar around a brown face, ball antennae, small wings with eye spots, and a round brown body. The parts follow the mockup, but the collar is a smooth pleated hood and not fluffy fur, and the face is dark and sunken.",
+    "strengths": [
+      "The open happy smile and the large glossy eyes follow the mockup.",
+      "The tan wings with dark eye spots read at 128 px.",
+      "The ball antennae and the round brown body follow the mockup."
+    ],
+    "issues": [
+      "The collar is a large smooth hood with pleats, and it looks like a paper lantern. Make it a ring of spiky fluffy fur around the face, as in the mockup.",
+      "The face is dark brown and sits deep inside the hood. Make the face a lighter tan-brown and bring it forward, as in the mockup.",
+      "The wings are small, round paddles. Make the wings longer and wider so that they pass far beyond the head, as in the mockup.",
+      "In the fly clip, the wings cut through the hood and leave dark streaks. Move the wing roots out of the hood.",
+      "The arms are at the chest. Put the arms out at the sides, as in the mockup."
+    ],
+    "next": "Replace the pleated hood with a ring of spiky fluffy fur, and make the face lighter and further forward."
+  }
+}

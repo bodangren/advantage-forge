@@ -41,6 +41,26 @@ const MOUTH_Z = 0.2; // the tongue root, inside the mouth
 // static sprites show no tongue; the attack scales the `tongue` bone up to full size.
 const TONGUE_REST = 0.08;
 
+// Frog joints (form 'frog', at size 1): a squat body under a wide head with huge lidded eyes on top
+// and a full pale chin; short front legs reach down to the ground, and the back legs fold into
+// round haunches at the sides with the feet out beside them.
+const FROG_DY = -0.065; // the head sits this much lower than on a tall frog
+const FROG = {
+  HIPS: [0, 0.11, -0.02] as V3,
+  CHEST: [0, 0.18, 0] as V3,
+  HEAD: [0, 0.3 + FROG_DY, 0.02] as V3,
+  SHOULDER: [0.075, 0.19, 0.045] as V3,
+  ELBOW: [0.11, 0.11, 0.08] as V3,
+  WRIST: [0.085, 0.035, 0.105] as V3,
+  HIP: [0.09, 0.12, -0.05] as V3,
+  KNEE: [0.19, 0.12, -0.005] as V3,
+  ANKLE: [0.19, 0.035, -0.085] as V3,
+  EYE: [0.088, 0.56 + FROG_DY, 0.035] as V3,
+  EYE_R: 0.09,
+  MOUTH_Y: 0.37 + FROG_DY,
+  MOUTH_Z: 0.12,
+};
+
 /** A toad kind: the slots, the size, the fixed colors, and extra paint, bodies, and poses. */
 export interface ToadKind {
   readonly name: string;
@@ -52,8 +72,14 @@ export interface ToadKind {
   readonly colors?: Partial<typeof TOAD_COLORS>;
   /** The size: 1 is a giant toad about 0.64 m tall to the eyes (default 1). */
   readonly size?: number;
+  /** The width of the dark smile crescent in meters at size 1 (default 0.06; a thin smile line 0.02). */
+  readonly smileWidth?: number;
   /** Warts: small bumps on the back (default true). */
   readonly warts?: boolean;
+  /** The body plan: 'toad' (a squat body with eye bumps and a wide smile, the default) or 'frog' (a
+   * slim upright body, a wide head with huge lidded eyes and a full pale chin, thin front legs, and
+   * round haunches). The frog ignores `smileWidth` and `warts`. */
+  readonly form?: 'toad' | 'frog';
   /** Paint on the skin (spots, stripes), in rest-pose meters at size 1. */
   paint?(skin: sdf.Shape, toad: ToadShape): sdf.Shape;
   /** Extra bodies (a crown, a lily pad), at size 1. */
@@ -90,22 +116,31 @@ export function toadAsset(kind: ToadKind): AssetDefinition {
       const sized = (s: sdf.Shape) => (S === 1 ? s : s.scale(S));
 
       // ------------------------------------------------------------------ skeleton
+      const frog = kind.form === 'frog';
+      const J = frog
+        ? { ...FROG, HEAD_TAIL: [0, 0.5 + FROG_DY, 0.1] as V3, FOOT_TAIL: [0.28, 0.02, 0.05] as V3 }
+        : { HIPS, CHEST, HEAD, SHOULDER, WRIST, HIP, KNEE, ANKLE, MOUTH_Y, MOUTH_Z, HEAD_TAIL: [0, 0.6, 0.12] as V3, FOOT_TAIL: [0.3, 0.02, 0.08] as V3 };
       k.skeleton({
-        hips: { at: at(HIPS) },
-        chest: { parent: 'hips', at: at(CHEST) },
-        head: { parent: 'chest', at: at(HEAD), tail: at([0, 0.6, 0.12]) },
-        tongue: { parent: 'head', at: at([0, MOUTH_Y, MOUTH_Z]), tail: at([0, MOUTH_Y, MOUTH_Z + 0.42]) },
-        'arm.L': { parent: 'chest', at: at(SHOULDER) },
-        'hand.L': { parent: 'arm.L', at: at(WRIST) },
-        'arm.R': { parent: 'chest', at: at(mx(SHOULDER)) },
-        'hand.R': { parent: 'arm.R', at: at(mx(WRIST)) },
-        'thigh.L': { parent: 'hips', at: at(HIP) },
-        'shin.L': { parent: 'thigh.L', at: at(KNEE) },
-        'foot.L': { parent: 'shin.L', at: at(ANKLE), tail: at([0.3, 0.02, 0.08]) },
-        'thigh.R': { parent: 'hips', at: at(mx(HIP)) },
-        'shin.R': { parent: 'thigh.R', at: at(mx(KNEE)) },
-        'foot.R': { parent: 'shin.R', at: at(mx(ANKLE)), tail: at([-0.3, 0.02, 0.08]) },
+        hips: { at: at(J.HIPS) },
+        chest: { parent: 'hips', at: at(J.CHEST) },
+        head: { parent: 'chest', at: at(J.HEAD), tail: at(J.HEAD_TAIL) },
+        tongue: { parent: 'head', at: at([0, J.MOUTH_Y, J.MOUTH_Z]), tail: at([0, J.MOUTH_Y, J.MOUTH_Z + 0.42]) },
+        'arm.L': { parent: 'chest', at: at(J.SHOULDER) },
+        'hand.L': { parent: 'arm.L', at: at(J.WRIST) },
+        'arm.R': { parent: 'chest', at: at(mx(J.SHOULDER)) },
+        'hand.R': { parent: 'arm.R', at: at(mx(J.WRIST)) },
+        'thigh.L': { parent: 'hips', at: at(J.HIP) },
+        'shin.L': { parent: 'thigh.L', at: at(J.KNEE) },
+        'foot.L': { parent: 'shin.L', at: at(J.ANKLE), tail: at(J.FOOT_TAIL) },
+        'thigh.R': { parent: 'hips', at: at(mx(J.HIP)) },
+        'shin.R': { parent: 'thigh.R', at: at(mx(J.KNEE)) },
+        'foot.R': { parent: 'shin.R', at: at(mx(J.ANKLE)), tail: at(mx(J.FOOT_TAIL)) },
       });
+
+      let toad: ToadShape;
+      if (frog) {
+        toad = buildFrog(k, kind, sized, { ...T, tone });
+      } else {
 
       // ------------------------------------------------------------------ body and face
       const body = sdf.smoothUnion(
@@ -115,9 +150,9 @@ export function toadAsset(kind: ToadKind): AssetDefinition {
         // The eye bumps on top of the face.
         pair(sdf.sphere(0.078).at(0.13, 0.55, 0.06)).bone('head'),
       );
-      const toad: ToadShape = { body, tint: { skin: T.skin, belly: T.belly, eye: T.eye }, tone };
+      toad = { body, tint: { skin: T.skin, belly: T.belly, eye: T.eye }, tone };
       // A wide smile: a dark crescent across the front with a pale lip below it.
-      const smile = sdf.extrude(profile.arc(0.26, 0.06, 234, 306), 0.5).at(0, MOUTH_Y + 0.26, 0.2);
+      const smile = sdf.extrude(profile.arc(0.26, kind.smileWidth ?? 0.06, 234, 306), 0.5).at(0, MOUTH_Y + 0.26, 0.2);
       const lip = sdf.extrude(profile.arc(0.26, 0.022, 236, 304), 0.5).at(0, MOUTH_Y + 0.26 - 0.04, 0.2);
       // The pale belly and throat at the front, below the smile.
       const bellyZone = sdf.ellipsoid([0.2, 0.24, 0.3]).at(0, 0.2, 0.15).displace(0.008, (x, y, z) => noise.fbm(x * 12, y * 12, z * 12, 2));
@@ -190,6 +225,7 @@ export function toadAsset(kind: ToadKind): AssetDefinition {
         roughness: 0.55,
         bump: (x, y, z) => 0.0006 * noise.fbm(x * 70, y * 70, z * 70, 2),
       });
+      }
 
       // ------------------------------------------------------------------ tongue (hidden in the mouth)
       const tongue = sdf
@@ -199,7 +235,7 @@ export function toadAsset(kind: ToadKind): AssetDefinition {
           sdf.sphere(0.045).scale([1, 0.75, 1]).at(0, 0.01, 0.4),
         )
         .scale(TONGUE_REST)
-        .at(0, MOUTH_Y, MOUTH_Z);
+        .at(0, J.MOUTH_Y, J.MOUTH_Z);
       k.body('tongue-mesh', sized(tongue.bone('tongue')), { color: C.tongue, roughness: 0.35, detail: 0.002 });
 
       kind.extra?.(k, toad);
@@ -297,4 +333,107 @@ export function toadAsset(kind: ToadKind): AssetDefinition {
       });
     },
   });
+}
+
+/** The frog body plan (form 'frog'): body, face, eyes, lids, and legs on the toad rig, at size 1. */
+function buildFrog(
+  k: AssetContext,
+  kind: ToadKind,
+  sized: (s: sdf.Shape) => sdf.Shape,
+  T: { skin: string; skinDark: string; belly: string; eye: string; tone(slot: string, color: string, follow?: number): string },
+): ToadShape {
+  const F = FROG;
+  const C = { ...TOAD_COLORS, ...kind.colors };
+  // ------------------------------------------------------------------ body and head
+  // A squat body, and on it a wide head: the green upper face over a full pale chin.
+  const DY = FROG_DY;
+  const torso = sdf.smoothUnion(
+    0.05,
+    sdf.ellipsoid([0.14, 0.105, 0.118]).at(0, 0.115, -0.015).bone('hips'),
+    sdf.ellipsoid([0.11, 0.07, 0.095]).at(0, 0.19, 0.005).bone('chest'),
+  );
+  const face = sdf.ellipsoid([0.185, 0.125, 0.165]).at(0, 0.425 + DY, 0.01);
+  // The chin bulges forward under the face as a thick lower lip.
+  const chin = sdf.ellipsoid([0.155, 0.072, 0.135]).at(0, 0.343 + DY, 0.08);
+  // Low mounds under the eyes, so the lids grow out of the head.
+  const mounds = pair(sdf.ellipsoid([0.085, 0.06, 0.08]).at(F.EYE[0], F.EYE[1] - 0.04, F.EYE[2] - 0.01));
+  // Lids: skin over the top and back of each eye, the front edge a little above the pupil; they
+  // grow out of the head, so they are part of the skin.
+  // The lid is a thick cap with a rounded front edge, so its edge stays clean against the eye.
+  const lid = sdf
+    .sphere(F.EYE_R + 0.007)
+    .at(...F.EYE)
+    .smoothIntersect(0.006, sdf.halfSpace([0, -0.9, 0.44], -0.9 * F.EYE[1] + 0.44 * F.EYE[2] - 0.026));
+  const head = sdf.smoothUnion(0.03, sdf.smoothUnion(0.014, face, chin), mounds, pair(lid)).bone('head');
+  const body = sdf.smoothUnion(0.035, torso, head);
+  const toad: ToadShape = { body, tint: { skin: T.skin, belly: T.belly, eye: T.eye }, tone: T.tone };
+
+  // The wide pale chest on the front of the body, the pale chin, and a flat closed mouth: a thin
+  // dark line in the crease between the green face and the thick pale lip, a little up at the ends.
+  const bellyZone = sdf.ellipsoid([0.13, 0.15, 0.2]).at(0, 0.11, 0.09);
+  const SR = 0.9;
+  const smileY = F.MOUTH_Y - 0.012;
+  const mouth = sdf.extrude(profile.arc(SR, 0.011, 262, 278), 0.3).at(0, smileY + SR, 0.12);
+  const jaw = chin.round(0.003).intersect(sdf.halfSpace([0, 0, -1], 0.0));
+  let skin = body.paintWhere(bellyZone, T.belly, 0.012).paintWhere(jaw, T.belly, 0.004);
+  if (kind.paint) skin = kind.paint(skin, toad);
+  skin = skin.paintWhere(mouth, T.tone('skin', C.mouth, 0.5), 0.002);
+  // Smooth, glossy skin (no bump).
+  k.body('skin', sized(skin), { color: T.skin, roughness: 0.3, textureDensity: 1.6 });
+
+  // ------------------------------------------------------------------ eyes and lids
+  // Huge round eyes on top of the head, nearly touching: a slot-colored ball, a big dark pupil that
+  // looks a little up and in, and one shine at the upper right of each pupil (the same side for
+  // both eyes, so the eyes are built one by one and not mirrored).
+  const eyeBall = (side: 1 | -1) => {
+    const c: V3 = [F.EYE[0] * side, F.EYE[1], F.EYE[2]];
+    const r = F.EYE_R;
+    const dir = (x: number, y: number, z: number): V3 => {
+      const l = Math.hypot(x, y, z);
+      return [c[0] + (x / l) * r, c[1] + (y / l) * r, c[2] + (z / l) * r];
+    };
+    const pupil = dir(-0.18 * side, 0.26, 0.95);
+    const shine = dir(-0.18 * side + 0.2, 0.46, 0.86);
+    return sdf
+      .sphere(r)
+      .at(...c)
+      .paintWhere(sdf.sphere(r * 0.46).at(...pupil), C.pupil, 0.002)
+      .paintWhere(sdf.sphere(r * 0.13).at(...shine), '#ffffff', 0.001);
+  };
+  k.body('eyes', sized(sdf.union(eyeBall(1), eyeBall(-1)).bone('head')), { color: T.eye, roughness: 0.1, textureDensity: 2, detail: 0.003 });
+
+  // ------------------------------------------------------------------ legs
+  // Thin front legs straight down to hands of three round fingers on the ground.
+  const W = F.WRIST;
+  const fingers = sdf.union(
+    ...[-35, 5, 45].map((deg) => {
+      const a = (deg * Math.PI) / 180;
+      const tip: V3 = [W[0] + Math.sin(a) * 0.045, 0.013, W[2] + Math.cos(a) * 0.042];
+      return sdf.smoothUnion(0.006, sdf.capsule([W[0], 0.018, W[2]], tip, 0.0105), sdf.sphere(0.0145).at(...tip));
+    }),
+  );
+  const arm = sdf.smoothUnion(
+    0.015,
+    sdf.chain([[F.SHOULDER[0] - 0.01, F.SHOULDER[1] + 0.01, F.SHOULDER[2] - 0.01, 0.046], [...F.SHOULDER, 0.04], [...F.ELBOW, 0.032], [W[0], W[1] - 0.006, W[2], 0.027]], 0.012).bone('arm.L'),
+    fingers.bone('hand.L'),
+  );
+  // Back legs: a round haunch at the side (the thigh forward to the knee), the shin folded back
+  // under it, and a foot of four long toes out beside the haunch.
+  const A = F.ANKLE;
+  const toes = sdf.union(
+    ...[20, 50, 80, 110].map((deg) => {
+      const a = (deg * Math.PI) / 180;
+      const root: V3 = [A[0] + 0.01, 0.02, A[2] + 0.07];
+      const tip: V3 = [root[0] + Math.sin(a) * 0.075, 0.013, root[2] + Math.cos(a) * 0.07];
+      return sdf.smoothUnion(0.006, sdf.capsule(root, tip, 0.011), sdf.sphere(0.0155).at(...tip));
+    }),
+  );
+  const leg = sdf.smoothUnion(
+    0.02,
+    sdf.smoothUnion(0.03, sdf.chain([[...F.HIP, 0.055], [...F.KNEE, 0.05]], 0.02), sdf.ellipsoid([0.062, 0.068, 0.08]).at(0.18, 0.12, -0.035)).bone('thigh.L'),
+    sdf.chain([[F.KNEE[0], F.KNEE[1] - 0.03, F.KNEE[2], 0.04], [...A, 0.03]], 0.02).bone('shin.L'),
+    sdf.smoothUnion(0.02, sdf.ellipsoid([0.032, 0.02, 0.07]).at(A[0] + 0.01, 0.024, A[2] + 0.05), toes).bone('foot.L'),
+  );
+  k.body('legs', sized(pair(sdf.union(arm, leg)).paintWhere(sdf.halfSpace([0, 1, 0], 0.025), T.skinDark, 0.02)), { color: T.skin, roughness: 0.3 });
+  return toad;
 }

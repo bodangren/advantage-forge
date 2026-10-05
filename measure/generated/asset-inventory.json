@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 712,
-    "source_missing": 144,
+    "source_present": 720,
+    "source_missing": 136,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 193,
-        "source_missing": 111
+        "source_present": 201,
+        "source_missing": 103
       },
       "P3": {
         "listed": 48,
@@ -8610,7 +8610,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/crocodile.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8620,7 +8620,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/dolphin.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8630,7 +8630,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/eel.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8640,7 +8640,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/fish.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8670,7 +8670,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/salmon.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8680,7 +8680,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/seal.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8690,7 +8690,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/trout.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     },
     {
@@ -8700,7 +8700,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/turtle.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_wildlife_20260928"
     }
   ],
@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 905,
-    "catalog_matched": 696,
-    "off_catalog": 209
+    "listed": 916,
+    "catalog_matched": 704,
+    "off_catalog": 212
   },
   "asset_sources": [
     {
@@ -10847,6 +10847,13 @@
       ]
     },
     {
+      "id": "crocodile",
+      "source_path": "assets/crocodile.ts",
+      "catalog_source_ids": [
+        "wildlife/water/crocodile"
+      ]
+    },
+    {
       "id": "crossbow",
       "source_path": "assets/crossbow.ts",
       "catalog_source_ids": [
@@ -11100,6 +11107,13 @@
       ]
     },
     {
+      "id": "dolphin",
+      "source_path": "assets/dolphin.ts",
+      "catalog_source_ids": [
+        "wildlife/water/dolphin"
+      ]
+    },
+    {
       "id": "dome-pavilion",
       "source_path": "assets/dome-pavilion.ts",
       "catalog_source_ids": []
@@ -11277,6 +11291,13 @@
       "source_path": "assets/earth-elemental.ts",
       "catalog_source_ids": [
         "monsters/elemental/earth-elemental"
+      ]
+    },
+    {
+      "id": "eel",
+      "source_path": "assets/eel.ts",
+      "catalog_source_ids": [
+        "wildlife/water/eel"
       ]
     },
     {
@@ -11513,6 +11534,13 @@
       "source_path": "assets/firewood.ts",
       "catalog_source_ids": [
         "props/world/firewood"
+      ]
+    },
+    {
+      "id": "fish",
+      "source_path": "assets/fish.ts",
+      "catalog_source_ids": [
+        "wildlife/water/fish"
       ]
     },
     {
@@ -13366,6 +13394,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "fish-kind",
+      "source_path": "assets/parts/fish-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "gladiator-helmet",
       "source_path": "assets/parts/gladiator-helmet.ts",
       "catalog_source_ids": []
@@ -13428,6 +13461,11 @@
     {
       "id": "knight-helm",
       "source_path": "assets/parts/knight-helm.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "lizard-kind",
+      "source_path": "assets/parts/lizard-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -13518,6 +13556,11 @@
     {
       "id": "shield-maiden-shield",
       "source_path": "assets/parts/shield-maiden-shield.ts",
+      "catalog_source_ids": []
+    },
+    {
+      "id": "sitter-kind",
+      "source_path": "assets/parts/sitter-kind.ts",
       "catalog_source_ids": []
     },
     {
@@ -14242,6 +14285,13 @@
       ]
     },
     {
+      "id": "salmon",
+      "source_path": "assets/salmon.ts",
+      "catalog_source_ids": [
+        "wildlife/water/salmon"
+      ]
+    },
+    {
       "id": "samurai-katana",
       "source_path": "assets/samurai-katana.ts",
       "catalog_source_ids": []
@@ -14366,6 +14416,13 @@
       "id": "sea-water",
       "source_path": "assets/sea-water.ts",
       "catalog_source_ids": []
+    },
+    {
+      "id": "seal",
+      "source_path": "assets/seal.ts",
+      "catalog_source_ids": [
+        "wildlife/water/seal"
+      ]
     },
     {
       "id": "selkie",
@@ -15112,10 +15169,24 @@
       ]
     },
     {
+      "id": "trout",
+      "source_path": "assets/trout.ts",
+      "catalog_source_ids": [
+        "wildlife/water/trout"
+      ]
+    },
+    {
       "id": "turnip",
       "source_path": "assets/turnip.ts",
       "catalog_source_ids": [
         "props/food/turnip"
+      ]
+    },
+    {
+      "id": "turtle",
+      "source_path": "assets/turtle.ts",
+      "catalog_source_ids": [
+        "wildlife/water/turtle"
       ]
     },
     {

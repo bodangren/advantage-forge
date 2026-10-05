@@ -1,12 +1,12 @@
 import { profile, sdf } from '../src/index.js';
-import { catAsset } from './parts/cat-kind.js';
+import { CAT_TAIL_TIP, catAsset } from './parts/cat-kind.js';
 
 /**
  * Familiar cat — Chibi Quest wildlife (catalog `wildlife/mounts-and-pets/familiar-cat`), about 0.48
  * m to the ear tips, faces +Z. Target: docs/wildlife-mockups/familiar-cat_001.jpg (made with mmx).
  *
  * The cat kind (`assets/parts/cat-kind.ts`: the dire wolf's body, rig, and clips at 0.6 scale) as a
- * wizard's black familiar: a black coat with a dark grey chest, big glowing violet eyes, violet
+ * wizard's black familiar: a black coat with a dark grey chest, big glowing violet irises with small pupils, violet
  * ear insides, pale whiskers, a purple collar with a glowing crescent moon charm, and a small
  * glowing star at the tail tip.
  * Role: a magic pet that follows the wizard hero (an avatar pet later); the glowing eyes and the
@@ -17,12 +17,14 @@ import { catAsset } from './parts/cat-kind.js';
 
 export default catAsset({
   name: 'familiar-cat',
-  description: 'Chibi familiar cat: a black cat with a big round head, big glowing violet eyes, pale whiskers, a purple collar with a glowing crescent moon charm, and a glowing star on the tip of its long curled tail; quadruped rig.',
+  description: 'Chibi familiar cat: a black cat with a big round head, big glowing violet irises with small pupils, pale whiskers, a purple collar with a glowing crescent moon charm, and a glowing star on the tip of its long curled tail; quadruped rig.',
   reference: 'docs/wildlife-mockups/familiar-cat_001.jpg',
+  // The mockup sits: the rest pose stands (for the walk), and the `sit` clip holds the sitting pose.
+  sit: true,
   variants: {
     fur: { black: '#2a2632', grey: '#6a6670', white: '#ece8f0' },
     markings: { grey: '#4a4452', black: '#1e1a24', silver: '#c8c4d0' },
-    eyes: { violet: '#b070ff', gold: '#f0c040', green: '#60e080', blue: '#60b0ff' },
+    eyes: { violet: '#8a3ae0', gold: '#e0a020', green: '#30c060', blue: '#3a88e8' },
     magic: { violet: '#b070ff', gold: '#f0c040', green: '#60e080', blue: '#60b0ff' },
   },
   presets: {
@@ -31,8 +33,9 @@ export default catAsset({
     green: { fur: 'black', markings: 'grey', eyes: 'green', magic: 'green' },
   },
   colors: { earInner: '#6a4a8a', nose: '#8a6aa0', whisker: '#c8c0d0', eyeRim: '#5a2a9a', furLight: '#3e3848' },
-  eyeGlow: 1.5,
-  tailTip: false,
+  eyeGlow: 1.2,
+  eyeScale: 1.6,
+  pupilScale: 1.05,
   extra(k) {
     const magic = k.tint('magic');
     // The collar: a band over the neck and the chest, lower in front.
@@ -54,7 +57,7 @@ export default catAsset({
       })),
       0.012,
       0.003,
-    ).at(0.02, 0.63, -0.36);
+    ).at(CAT_TAIL_TIP[0], CAT_TAIL_TIP[1], CAT_TAIL_TIP[2] - 0.01);
     k.body('moon-charm', moon, { color: magic, emissive: magic, emissiveIntensity: 1.6, roughness: 0.3, detail: 0.002, bone: 'neck' });
     k.body('tail-star', star, { color: magic, emissive: magic, emissiveIntensity: 1.6, roughness: 0.3, detail: 0.002, bone: 'tail' });
   },

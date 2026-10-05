@@ -154,3 +154,115 @@ targets in the hunting and nature games; the familiars follow the hero (avatar p
   (`mesh-same <asset> --rev <commit> --part assets/parts/<kind>.ts`): 63 of 63 SAME. So every
   later kind option is default-safe, also those that the earlier checks without `--part` did not
   test.
+
+## Batches 6 to 9 (2026-10-05): birds, small animals, insects, and water animals
+
+| Batch | Assets | Base |
+| ---: | --- | --- |
+| 6 | crow, raven, familiar-raven, eagle, hawk, falcon, owl, familiar-owl, pigeon, sparrow, rooster, chicken, messenger-bird | bird kind (`assets/parts/bird-kind.ts`) at a small scale, with `assets/parts/bird-extras.ts` (glowing eyes, ribbons, letter tube) |
+| 7 | rabbit, squirrel, bat | a new sitter kind (`assets/parts/sitter-kind.ts`); the bat kind (`assets/parts/bat-kind.ts`) holds the giant bat |
+| 7 | hare | deer kind with a puff tail, round paws, a bent hock, and an oval bib |
+| 8 | bee, wasp, butterfly, moth | a new insect kind (`assets/parts/insect-kind.ts`) |
+| 9 | fish, trout, salmon, seal, dolphin | a new fish kind (`assets/parts/fish-kind.ts`) |
+| 9 | eel | serpent kind with its own head merged into the neck |
+| 9 | crab | its own round clay-toy body; the giant crab moved to `assets/parts/crab-kind.ts` |
+| 9 | frog | toad kind, new form `'frog'` (the giant toad is unchanged) |
+| 9 | octopus, turtle, crocodile | octopus kind; turtle and a new lizard kind (`assets/parts/lizard-kind.ts`) |
+
+Default safety of kind edits: `mesh-same <asset> --part <kind>` SAME for giant-eagle, roc, and
+cockatrice (bird kind), giant-toad (toad kind), and deer, goat, and sheep (deer kind). The new
+kinds (sitter, insect, fish, lizard, crab, bat) are not committed yet, so `mesh-same` cannot
+compare them; their options are additive with defaults that keep the earlier shape.
+
+## Independent review (owner decision 2026-10-05)
+
+The owner decided that self-evaluation is not acceptable. A separate reviewer agent rates each
+batch from review cards (`scripts/review-cards.py`: mockup, four views, 128 px sprites, and one
+clip strip) with the brief in `measure/tracks/asset_review_audit_20261005/reviewer-brief.md`. The
+reviewer does not see the sources or the earlier ratings. `scripts/record-reviews.py` writes the
+ratings to `docs/character-reviews.json`. The reviewer JSON files are in `reviews/`. The ratings
+in the batch 1 to 5 tables above are the builder's own ratings and are replaced by this table.
+
+| Asset | Reviews | First | Latest | Status |
+| --- | ---: | ---: | ---: | --- |
+| octopus | 3 | 7.0 | 8.0 | accepted |
+| bat | 2 | 4.5 | 7.5 | accepted |
+| butterfly | 4 | 6.0 | 7.5 | accepted |
+| crab | 2 | 6.0 | 7.5 | accepted |
+| crow | 3 | 6.0 | 7.5 | accepted |
+| dolphin | 2 | 6.5 | 7.5 | accepted |
+| fish | 1 | 7.5 | 7.5 | accepted |
+| hedgehog | 2 | 6.0 | 7.5 | accepted |
+| owl | 3 | 6.0 | 7.5 | accepted |
+| rabbit | 4 | 6.0 | 7.5 | accepted |
+| turtle | 1 | 7.5 | 7.5 | accepted |
+| bear | 2 | 7.0 | 7.0 | rework |
+| chicken | 4 | 6.5 | 7.0 | rework |
+| cow | 1 | 7.0 | 7.0 | rework |
+| donkey | 1 | 7.0 | 7.0 | rework |
+| eel | 3 | 6.0 | 7.0 | rework |
+| falcon | 4 | 5.5 | 7.0 | rework |
+| familiar-owl | 4 | 6.0 | 7.0 | rework |
+| messenger-bird | 4 | 6.0 | 7.0 | rework |
+| mule | 1 | 7.0 | 7.0 | rework |
+| ox | 1 | 7.0 | 7.0 | rework |
+| pigeon | 4 | 5.5 | 7.0 | rework |
+| raven | 4 | 5.5 | 7.0 | rework |
+| riding-horse | 1 | 7.0 | 7.0 | rework |
+| salmon | 3 | 7.0 | 7.0 | rework |
+| seal | 3 | 6.5 | 7.0 | rework |
+| warhorse | 1 | 7.0 | 7.0 | rework |
+| wasp | 4 | 5.0 | 7.0 | rework |
+| yak | 1 | 7.0 | 7.0 | rework |
+| badger | 2 | 6.5 | 6.5 | rework |
+| bee | 4 | 5.5 | 6.5 | rework |
+| boar | 2 | 6.5 | 6.5 | rework |
+| crocodile | 3 | 7.0 | 6.5 | rework |
+| dog | 2 | 6.5 | 6.5 | rework |
+| eagle | 4 | 6.0 | 6.5 | rework |
+| elk | 1 | 6.5 | 6.5 | rework |
+| familiar-raven | 4 | 6.0 | 6.5 | rework |
+| frog | 3 | 5.5 | 6.5 | rework |
+| goat | 1 | 6.5 | 6.5 | rework |
+| hare | 4 | 4.5 | 6.5 | rework |
+| hawk | 4 | 6.0 | 6.5 | rework |
+| moth | 5 | 4.5 | 6.5 | rework |
+| pig | 2 | 6.5 | 6.5 | rework |
+| pony | 1 | 6.5 | 6.5 | rework |
+| rooster | 4 | 5.5 | 6.5 | rework |
+| sparrow | 4 | 5.5 | 6.5 | rework |
+| stag | 1 | 6.5 | 6.5 | rework |
+| trout | 3 | 7.0 | 6.5 | rework |
+| cat | 2 | 6.5 | 6.0 | rework |
+| fox | 2 | 6.0 | 6.0 | rework |
+| moose | 1 | 6.0 | 6.0 | rework |
+| pack-goat | 1 | 6.0 | 6.0 | rework |
+| riding-wolf | 2 | 6.0 | 6.0 | rework |
+| sheep | 1 | 6.0 | 6.0 | rework |
+| squirrel | 4 | 5.5 | 6.0 | rework |
+| wolf | 2 | 6.5 | 6.0 | rework |
+| camel | 1 | 5.5 | 5.5 | rework |
+| familiar-cat | 2 | 6.5 | 5.5 | rework |
+
+Status on 2026-10-05 after 13 review rounds: 11 of 58 reviewed assets are at the bar.
+Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json.
+
+Changes in the latest rounds (all kind options are additive; `mesh-same` or a manual GLB compare
+shows SAME for the other users of each kind):
+
+- Owner decision of 2026-10-05: the dog, the fox, the cat, and the familiar cat keep a standing
+  rest pose and get a `sit` clip (wolf kind option `sit`); the review card shows the sit strip,
+  and the reviewer brief judges their pose from it.
+- The hedgehog and the badger moved from the boar kind to the lizard kind (a low body on short
+  legs): the hedgehog has a coat of cone spines raised along the coat normals; the badger has a
+  wedge head. Lizard kind options: `tail: 0` (a round stub) and `tailSway`.
+- Boar kind options: `ears: false`, `hoofStyle: 'round'`, `eyeInset`, `claws: false`, and
+  `mouth: false`. Wolf kind options: `snout`, `fangs`, `muzzleWidth`, `cheekCream`, and `sit`.
+  Deer kind options: `eyeScale` and a `pose` hook (the hare's bound). Bird kind options:
+  `stillNeck`, `glint`, `oneBody`, `headLift`, `wingSlim`, `irisScale`, and `clay`.
+- The moth's fine fur grooves broke the texture bake (89,000 triangles in thin strands); the
+  grooves are now in the normal map (`bump`), and the textured render is clean.
+
+Rework method: one asset at a time from the reviewer's issue list, largest difference first, with
+`./forge render <name> --fast` against the mockup, `./forge check <name>` (`ground ok`), and then
+`forge all` with no `warning:` lines. A fresh reviewer agent rates each reworked batch.

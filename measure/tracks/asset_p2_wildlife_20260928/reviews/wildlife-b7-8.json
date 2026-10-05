@@ -1,0 +1,146 @@
+{
+  "rabbit": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a recognizable chibi rabbit, but it stands on four long legs like a dog. The mockup rabbit sits upright on its haunches with its front paws together.",
+    "strengths": [
+      "The tall ears with pink inner color match the mockup.",
+      "The gray body, light feet, and white pom tail follow the mockup palette.",
+      "The identity reads in all 8 sprite directions."
+    ],
+    "issues": [
+      "The pose is different. Change the rest pose to a seated rabbit on its haunches with the front paws together.",
+      "The legs are too long and the body is dog-like. Make the legs short and the hind legs large and folded.",
+      "The face is different. The eyes are too large and stare, and the eyelashes are missing. Make the eyes smaller, add lashes, and use a small curved smile.",
+      "The head is pure white. The mockup head is a warm cream color. Change the head color to cream.",
+      "The walk clip is a dog trot. Use a hop for the move clip. The rabbit also has a howl clip, which does not fit a rabbit."
+    ],
+    "next": "Rebuild the rest pose as a seated rabbit with short folded hind legs, as in the mockup."
+  },
+  "hare": {
+    "overall": 4.5,
+    "scores": [2, 3, 2.5, 2.5, 3, 3, 3, 4, 4.5, 3.5, 3],
+    "summary": "The model is a stocky brown rabbit with black ear tips. The mockup is a slim, orange, long-legged animal with wide flared ears, so the body plan is wrong.",
+    "strengths": [
+      "The black ear tips are present.",
+      "The cream chest and the orange-ringed eyes follow the mockup.",
+      "The model stands on the ground with a rig and a walk clip."
+    ],
+    "issues": [
+      "The body plan is wrong. Make the body slim and the legs long and thin, as in the mockup.",
+      "The ears are vertical rabbit ears. Make them wide and flared out to the sides, with large dark tips.",
+      "The color is a dull tan-brown. Change it to the saturated orange of the mockup and make the feet black.",
+      "The white pom tail is not in the mockup. Replace it with a small dark tail.",
+      "The model is a recolor of the rabbit. The hare does not have its own silhouette."
+    ],
+    "next": "Rebuild the body with a slim torso and long thin legs with black feet."
+  },
+  "squirrel": {
+    "overall": 5.5,
+    "scores": [2.5, 3.5, 3, 3, 3.5, 2.5, 2.5, 4, 4.5, 4, 3],
+    "summary": "The model is an orange squirrel with ear tufts and a tall tail, but it stands stiffly on four long legs like a dog. The mockup squirrel leaps with a large round curled tail.",
+    "strengths": [
+      "The rust-orange color and the cream chest follow the mockup.",
+      "The ear tufts are present.",
+      "The bushy tail makes the identity clear at 128 px."
+    ],
+    "issues": [
+      "The pose and body are different. Make the body slim with large hind legs, and tuck the front paws at the chest.",
+      "The tail is a narrow, lumpy column. Make it a wide, round curl over the back, as in the mockup.",
+      "The tail surface has noisy lumps that look like a sponge. Use soft fur grooves with a smaller displacement.",
+      "The face is different. Replace the wide line mouth and the dotted muzzle with a small smile, and give the eyes brown irises.",
+      "The legs are too long and straight. Shorten them."
+    ],
+    "next": "Rebuild the tail as a wide round curl with soft fur, and give the body a squirrel crouch with large hind legs."
+  },
+  "bat": {
+    "overall": 4.5,
+    "scores": [2, 3, 3, 2.5, 3, 2.5, 2, 3.5, 4, 3.5, 3],
+    "summary": "The model is a lumpy brown fur ball with wide spread wings and thin legs. The mockup is an upright chibi bat with a large head, a small body, a cream face mask, and low wings.",
+    "strengths": [
+      "The large ears with a tan inner color are present.",
+      "The fly clip has a readable wing flap.",
+      "The wings have a clear membrane shape."
+    ],
+    "issues": [
+      "The body plan is wrong. Separate a large head from a small upright body that sits on two feet.",
+      "The face is different. Add the cream face mask, larger eyes with highlights, a dark nose, and a clear smile.",
+      "The fur has noisy lumps that look like a coconut shell. Use a smooth clay surface.",
+      "The wings spread high and wide. Make them smaller and hold them low at the sides of the body.",
+      "The thin bird legs are not in the mockup. Use short round feet. Add the cream belly."
+    ],
+    "next": "Rebuild the body as a large head on a small upright body with a cream face mask and belly."
+  },
+  "bee": {
+    "overall": 5.5,
+    "scores": [3, 3.5, 3, 3, 3.5, 3, 3.5, 4, 4, 4, 2],
+    "summary": "The head is a good match for the mockup, but the body stands horizontal on six long stilt legs. The mockup bee hovers upright with short dangling legs.",
+    "strengths": [
+      "The fuzzy yellow head, the glossy black eyes, and the smile match the mockup.",
+      "The antennae with ball tips match the mockup.",
+      "The striped abdomen reads as a bee at 128 px."
+    ],
+    "issues": [
+      "The pose is different. Put the body upright under the head in a hover pose.",
+      "The six stilt legs are too long and look like a spider. Make the legs short and let them hang.",
+      "The thorax color is different. The mockup thorax is black fuzz with one yellow band.",
+      "The fly clip stays on the ground. The legs stay planted and the wings barely move. Lift the bee off the ground and make a fast wing flap.",
+      "The model shares its body with the wasp. The two insects look almost the same from the front."
+    ],
+    "next": "Change the rest pose to an upright hover above the ground with short dangling legs."
+  },
+  "wasp": {
+    "overall": 5.0,
+    "scores": [2.5, 3, 2.5, 2.5, 3.5, 3, 3, 4, 4, 3, 2],
+    "summary": "The model is the bee body with a smooth surface and a pointed abdomen. It stands horizontal on six stilt legs, but the mockup wasp hovers upright with curled antennae.",
+    "strengths": [
+      "The yellow and black stripes and the stinger are present.",
+      "The narrow waist shows in the side view.",
+      "The wings are clear and see-through."
+    ],
+    "issues": [
+      "The pose is different. Put the body upright under the head in a hover pose with bent legs.",
+      "The wasp looks almost the same as the bee from the front. Give it its own head shape and a slimmer body.",
+      "The antennae are elbowed. Make them long and curled, as in the mockup.",
+      "The head is too large for the body. Make the head smaller and the abdomen longer.",
+      "The fly clip stays on the ground with planted legs. Lift the wasp off the ground and make a fast wing flap."
+    ],
+    "next": "Change the rest pose to an upright hover with a slim body and curled antennae."
+  },
+  "butterfly": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 3, 4, 3.5, 3.5, 4, 4, 4, 2],
+    "summary": "The head and the wings are a close match for the mockup. The body stands horizontal on six stilt legs with a long abdomen, but the mockup butterfly hovers upright with a small round body.",
+    "strengths": [
+      "The cream face, the black cap, the blush cheeks, and the smile match the mockup.",
+      "The orange wings with black edges and white dots match the mockup palette.",
+      "The face and the wing color read in the sprites."
+    ],
+    "issues": [
+      "The pose is different. Replace the long horizontal abdomen and the stilt legs with a small round body under the head.",
+      "The antenna tips are forked hooks. Make them round spiral curls.",
+      "The wings are too small and too vertical. Make them larger and spread them to the sides.",
+      "The fly clip stays on the ground. Lift the butterfly off the ground and make a large wing flap.",
+      "The small arms of the mockup are missing. Add them at the front of the body."
+    ],
+    "next": "Rebuild the body as a small round upright body that hovers, with the wings spread to the sides."
+  },
+  "moth": {
+    "overall": 4.5,
+    "scores": [2, 3, 2.5, 2.5, 3, 3, 2.5, 4, 4, 3.5, 2],
+    "summary": "The model is a brown insect with a closed smile, feathered antennae, and six stilt legs. The mockup is an upright fluffy moth with a large cream mane around the face and an open happy mouth.",
+    "strengths": [
+      "The brown and beige palette follows the mockup.",
+      "The wings have round spots.",
+      "The model stands on the ground with a rig and clips."
+    ],
+    "issues": [
+      "The cream fur mane around the face is missing. Add a large fluffy mane that frames the face.",
+      "The pose is different. Put a round upright body under the head with small arms, and remove the stilt legs.",
+      "The expression is different. Change the closed smile to an open happy mouth.",
+      "The antennae are long feathered leaves. Make them short with round dark knobs, as in the mockup.",
+      "The fly clip stays on the ground with planted legs. Lift the moth off the ground and flap the wings."
+    ],
+    "next": "Add the large cream mane around the face and change the body to an upright hover."
+  }
+}

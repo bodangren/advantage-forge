@@ -1,0 +1,229 @@
+{
+  "crow": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 3, 3.5],
+    "summary": "The model is a dark slate crow with a crest, scalloped feathers, and a heavy beak. It is near the mockup. The differences are small.",
+    "strengths": [
+      "The silhouette, the body plan, and the stern face agree with the mockup.",
+      "The scalloped feather rows on the chest and the wings agree with the mockup.",
+      "The glossy beak and the matte feathers are different materials."
+    ],
+    "issues": [
+      "The eyes are dark brown. At 128 px they are almost not visible on the dark head. Make the eyes black and add a lighter grey lid ring, as in the mockup.",
+      "The head is smooth. The mockup head has sculpted feather texture. Add shallow feather grooves to the head and the crest.",
+      "The feet are a light lavender grey. The mockup feet are dark grey. Make the feet darker."
+    ],
+    "next": "Make the eyes read at 128 px: black eyes with a lighter grey lid ring."
+  },
+  "raven": {
+    "overall": 6.5,
+    "scores": [3, 3, 3.5, 3, 3.5, 3, 3, 3.5, 4.5, 3.5, 3.5],
+    "summary": "The model is a black raven with purple cheek tufts. It is the same bird as the mockup, but the head, the eyes, and the throat are clearly different.",
+    "strengths": [
+      "The black body and the purple cheek tufts agree with the mockup palette.",
+      "The heavy beak and the frowning brows give an ominous look.",
+      "The purple tufts and the white eyes read at 128 px."
+    ],
+    "issues": [
+      "The eyes are one white band with brown irises. The band continues onto the side of the head. Make two round white eyes with black pupils, as in the mockup.",
+      "The shaggy throat is missing. The chest has neat scallops. Add long pointed throat feathers that hang down the chest.",
+      "The head is a smooth dome. The mockup head is shaggy with a ruffled crest. Add rough feather locks to the head and the crown.",
+      "The silhouette is almost the same as the crow silhouette. Make the body outline rounder and shaggier to make the two birds different."
+    ],
+    "next": "Add the shaggy throat and the shaggy head, and change the eyes to two round white eyes with black pupils."
+  },
+  "familiar-raven": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 2.5, 4, 3, 2.5, 2.5, 4.5, 4, 3],
+    "summary": "The model is a black raven familiar with glowing eyes, a purple collar, and a moon charm. The signature items are present, but the beak, the chest, and the eyes are clearly different from the mockup.",
+    "strengths": [
+      "The glowing magenta eyes and the purple collar read at 128 px in all directions.",
+      "The crescent moon charm and the ribbon tail agree with the mockup.",
+      "The black and purple palette agrees with the mockup."
+    ],
+    "issues": [
+      "The beak hangs down like a large hooked nose. Make a shorter, straight beak with a small hook, as in the mockup.",
+      "The chest has rows of pointed bumps that look like spikes. Replace them with soft layered feathers.",
+      "In the walk and the idle clips, the head moves into the chest. The ribbon tail, the charm, and the collar go into the body. Reduce the head bob or move the collar with the head.",
+      "The eyes are flat pink discs. Make round glowing eyes with a bright white center.",
+      "The head is smooth. The mockup head has soft feather texture."
+    ],
+    "next": "Change the beak to a short straight beak and replace the spike bumps on the chest with layered feathers."
+  },
+  "eagle": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is a chibi eagle with a golden head, a grey ruff, and a brown body. It is the same bird as the mockup, with clear differences on the head.",
+    "strengths": [
+      "The golden head on the dark body reads at 128 px in all directions.",
+      "The grey ruff and the brown body agree with the mockup palette.",
+      "The yellow feet with dark claws agree with the mockup."
+    ],
+    "issues": [
+      "The back and the sides of the head have many loose feather locks. They make a noisy surface. Use fewer, larger locks that radiate from the face, as in the mockup.",
+      "Two feather tufts stand out horizontally from the sides of the head like ears. Remove them or blend them into the mane.",
+      "Large cheek bulges sit on the two sides of the beak. Make the face smoother.",
+      "The beak is a straight cone. Give the beak a small downward hook.",
+      "The wings are almost hidden against the body. The mockup wings stand out from the body."
+    ],
+    "next": "Make the head mane calmer with fewer, larger locks, and remove the side tufts and the cheek bulges."
+  },
+  "hawk": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a chibi hawk with a brown cap, a cream face, a spotted cream chest, and a rusty tail. The body agrees with the mockup, but the mouth changes the face.",
+    "strengths": [
+      "The spotted cream chest and the brown cape with the zigzag edge agree with the mockup.",
+      "The large glossy eyes read at 128 px.",
+      "The walk clip is clean and the feet stay on the ground."
+    ],
+    "issues": [
+      "A large dark red lip sits under the beak. It reads as a tongue or a wattle. Replace it with a small dark open smile, as in the mockup.",
+      "The crown has one tall tuft of three feathers. The mockup has a shaggy cap with many short spikes. Spread shorter spikes over the crown.",
+      "The rusty tail is small in the front and the three-quarter views. Make the tail fan larger so that it shows behind the body.",
+      "The eyes are dark brown. The mockup eyes are black."
+    ],
+    "next": "Replace the red lip with a small dark open smile under the beak."
+  },
+  "falcon": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a chibi falcon with a slate hood, yellow eye rings, dark cheek stripes, and a cream body. It is close to the mockup, with clear differences on the face.",
+    "strengths": [
+      "The slate hood, the yellow eye rings, and the dark cheek stripes read at 128 px.",
+      "The palette agrees with the mockup.",
+      "The walk clip is clean and the feet stay on the ground."
+    ],
+    "issues": [
+      "The hood stops in a straight line above the eyes. In the mockup the hood comes down in a point to the beak. Extend the hood down between the eyes.",
+      "The eyes are flat yellow discs without lids. The face has a blank stare. Add upper lids and a larger highlight.",
+      "Two bulges sit on the two sides of the beak. Make the face smoother.",
+      "The chest marks are round dots. The mockup has short vertical dashes.",
+      "The wings are shorter than the mockup wings. Make the wings longer and narrower."
+    ],
+    "next": "Extend the hood to a point between the eyes and add upper lids to the eyes."
+  },
+  "owl": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "The model is a chibi brown owl with ear tufts, a pale face disc, a heart belly, and spots. It is very near the mockup. The differences are small.",
+    "strengths": [
+      "The ear tufts, the face disc, and the heart belly agree with the mockup.",
+      "The big eyes in the pale face read at 128 px.",
+      "The spots give detail at the edges, and the belly stays calm."
+    ],
+    "issues": [
+      "The irises are a saturated orange without a dark rim. Use a warmer amber and add a dark outer ring, as in the mockup.",
+      "The dark V mark between the eyes is missing. Add it on the forehead.",
+      "A faint circle line shows on each cheek next to the face disc. Remove the seam.",
+      "The wings hang straight down. The mockup wings stand a little out from the body."
+    ],
+    "next": "Change the irises to amber with a dark outer ring, and add the V mark between the eyes."
+  },
+  "familiar-owl": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is a white snowy owl familiar with cyan eyes, a cyan ribbon, and a gold star. The signature items agree with the mockup, but the body and the chest marks are clearly different.",
+    "strengths": [
+      "The cyan eyes with the stern brows agree with the mockup expression.",
+      "The cyan ribbon and the gold star read at 128 px.",
+      "The ear tufts and the dark feet agree with the mockup."
+    ],
+    "issues": [
+      "The body is too wide. The mockup body is narrower. Make the body narrower.",
+      "The chest marks are a regular grid of raised drops. The mockup has small carved feather marks of different sizes. Make the marks smaller, flatter, and less regular.",
+      "The beak is large and pointed. The mockup beak is small and round.",
+      "The wings are plain white. The mockup wings have feather marks.",
+      "The large white areas have almost no shade. Add soft grey shade in the feather layers."
+    ],
+    "next": "Make the body narrower and replace the grid of drops with small carved feather marks."
+  },
+  "pigeon": {
+    "overall": 6.0,
+    "scores": [3, 3, 3, 3, 3.5, 3, 3, 2.5, 4.5, 4, 3],
+    "summary": "The model is a grey pigeon with a green neck band, a purple ruff, orange eyes, and pink feet. It is the same bird as the mockup, but the proportions and the wings are noticeably different.",
+    "strengths": [
+      "The orange eyes, the purple ruff, and the pink feet agree with the mockup.",
+      "The neck colors read at 128 px in all directions."
+    ],
+    "issues": [
+      "In the walk and the idle clips, the grey body comes through the green neck band and the purple ruff. Move the neck band with the head or reduce the head bob.",
+      "The body is too wide and the neck is too short. Make the body an upright egg, and make the head smaller on a visible neck.",
+      "The wings stand away from the body like paddles. The dark wing tips look like hands. Fold the wings against the body.",
+      "The neck sheen is a flat band with hard edges. Blend grey into green and green into purple, as in the mockup.",
+      "The beak is too short. Make a longer beak with the white cere."
+    ],
+    "next": "Fix the neck band so that the body does not come through it in the clips."
+  },
+  "sparrow": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3.5, 3, 3.5, 3, 3, 2.5, 4.5, 4, 3],
+    "summary": "The model is a brown sparrow with a grey cap, a black bib, and pink feet. The colors agree with the mockup, but the face and the bib are noticeably different.",
+    "strengths": [
+      "The grey cap, the black bib, and the brown back read at 128 px.",
+      "The palette agrees with the mockup.",
+      "The pink feet and the short legs agree with the mockup."
+    ],
+    "issues": [
+      "In the walk, the idle, and the attack clips, the bib goes into the body and its shape breaks. Move the bib with the head.",
+      "The face has a surprised look. In the mockup the grey cap comes down in a point between the eyes and gives a stern look. Bring the cap down between the eyes.",
+      "The bib is too large and starts at the beak. It looks like a mustache. Make the bib smaller and put it below the beak.",
+      "The tuft is a tall curled horn. Make a small feather tuft.",
+      "The brown cape on the sides of the body is weak. Add a clear brown edge around the cream belly."
+    ],
+    "next": "Make the bib smaller and attach it to the head so that it does not break in the clips."
+  },
+  "rooster": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3.5, 3.5, 3, 4.5, 4, 3.5],
+    "summary": "The model is a chibi rooster with a red comb, an orange hackle, a brown body, and a green arching tail. It is the same bird as the mockup, with clear differences on the head.",
+    "strengths": [
+      "The big red comb and the arching green tail read at 128 px in all directions.",
+      "The orange hackle with the pointed edge agrees with the mockup.",
+      "The side silhouette agrees with the mockup."
+    ],
+    "issues": [
+      "The head is large and has no neck. The mockup head is smaller on a short neck. Make the head smaller and add a neck.",
+      "The comb is a block without clear lobes. Give the comb four or five round lobes, as in the mockup.",
+      "The two wattle lobes sit side by side and look like a bow tie. Make the wattle hang below the beak.",
+      "In the walk clip, small brown spots of the body come through the hackle. Make the hackle thicker at the chest.",
+      "The wing is small and dark. The mockup wing is large, light brown, and layered."
+    ],
+    "next": "Make the head smaller on a short neck, and give the comb clear round lobes."
+  },
+  "chicken": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a white chibi chicken with a red comb, a red wattle, and yellow feet. It is the same bird as the mockup, with clear differences in the head shape and the wings.",
+    "strengths": [
+      "The red comb on the white head reads at 128 px in all directions.",
+      "The palette agrees with the mockup.",
+      "The clips are clean and the feet stay on the ground."
+    ],
+    "issues": [
+      "The head is a separate ball with a crease at the neck. The mockup head and body make one smooth pear shape. Blend the head into the body.",
+      "The wings are flat paddles that stand away from the body. Give the wings feather tips and attach them along the body.",
+      "The beak is small. Make the beak larger, as in the mockup.",
+      "The eyes have no highlight. Add a small white highlight."
+    ],
+    "next": "Blend the head into the body to make one smooth pear shape."
+  },
+  "messenger-bird": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 2.5, 4.5, 4, 3],
+    "summary": "The model is a cream bird with pink cheeks, a brown strap, and a letter tube. The signature items agree with the mockup, but the strap fails in the clips.",
+    "strengths": [
+      "The letter tube with the red seal reads at 128 px.",
+      "The pink cheeks and the small grey beak agree with the mockup face.",
+      "The cream palette agrees with the mockup."
+    ],
+    "issues": [
+      "In the walk and the attack clips, the head moves into the body and the strap goes into the body. Only the buckle stays visible. Move the strap higher or reduce the head bob.",
+      "The head is a separate ball on the body. From the back the model looks like a snowman. Blend the head into the body.",
+      "The wings are small, dark paddles. The mockup wing is large and layered. Make the wings larger and lighter.",
+      "The tail is brown. The mockup tail is pale cream. Change the tail color.",
+      "The surface has a fuzzy bump texture. The mockup surface is smooth clay."
+    ],
+    "next": "Fix the strap so that it stays visible in every clip."
+  }
+}

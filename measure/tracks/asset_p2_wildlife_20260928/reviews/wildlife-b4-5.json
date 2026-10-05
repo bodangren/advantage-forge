@@ -1,0 +1,198 @@
+{
+  "wolf": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3.5, 3, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A gray chibi wolf on four legs. It is the same animal as the mockup, but the face, the tail, and the paw color have clear differences.",
+    "strengths": [
+      "The gray body, the cream chest, and the tall pointed ears match the mockup.",
+      "The silhouette reads as a wolf from the front, the side, and the back.",
+      "The sprites keep the identity in all 8 directions."
+    ],
+    "issues": [
+      "The face is flat. The mockup has a long cream muzzle that points forward. Make the muzzle longer and fill the lower face with cream.",
+      "The eyes are large brown discs with white rims. The mockup has dark eyes with highlights and a soft brow. Make the irises dark and add highlights.",
+      "The smile is a wide line across the face. The mockup has a small closed smile under the nose. Make the mouth shorter.",
+      "The tail stands up with a cream tip. The mockup tail is bushy, hangs down, and has a darker tip. Lower the tail and make it fuller.",
+      "The paws are gray. The mockup paws are brown. Paint the paws brown.",
+      "The inner ears are gray. The mockup inner ears are brown. Paint the inner ears brown."
+    ],
+    "next": "Rebuild the face with a long cream muzzle, dark eyes with highlights, and a small smile."
+  },
+  "dog": {
+    "overall": 6.5,
+    "scores": [3.5, 4, 4, 4, 4.5, 4, 4, 4, 4.5, 4, 3.5],
+    "summary": "A tan puppy with floppy brown ears, a red collar, and a tongue. The colors and the head match the mockup well, but the dog stands on four legs and the mockup dog sits.",
+    "strengths": [
+      "The palette matches the mockup: tan body, cream muzzle and chest, dark brown ears, red collar.",
+      "The tongue, the white brow spots, the gold bell, and the white tail tip are present.",
+      "The face and the collar read at 128 px in every direction."
+    ],
+    "issues": [
+      "The mockup dog sits on its haunches. The model stands on four legs. This is a different pose (cap 6.5). Add a sit pose or a sit idle clip that matches the mockup.",
+      "The muzzle is flat on the face. The mockup muzzle protrudes. Push the muzzle forward.",
+      "The gold bell is small and low on the collar. Make the bell larger and center it under the chin.",
+      "The body is long for a chibi puppy. Shorten the torso so that the head dominates."
+    ],
+    "next": "Add a sitting rest pose that matches the mockup."
+  },
+  "fox": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 4, 3, 3, 3.5, 4.5, 4, 3.5],
+    "summary": "An orange fox on four legs with white cheeks and dark paws. It is the same animal, but the pose, the face, the cheek ruff, and the tail are noticeably off.",
+    "strengths": [
+      "The orange, white, and dark brown palette matches the mockup.",
+      "The ears have dark tips, as in the mockup.",
+      "The fox reads well in the 128 px sprites."
+    ],
+    "issues": [
+      "The mockup fox sits. The model stands on four legs. This is a different pose (cap 6.5). Add a sitting rest pose.",
+      "The mouth is a wide grin. The mockup has a small neutral mouth. This is a different expression (cap 7.0). Make the mouth small.",
+      "The tail is thin and short. The mockup tail is very large and fluffy and curls around the body. Make the tail about twice as thick and longer.",
+      "The cheek ruff sticks out as sharp white spikes. From the back the head looks like a star. Make the ruff a soft, round fluff.",
+      "The eyes are dark discs with white rims. The mockup eyes are large and red-brown with lashes and highlights. Change the iris color and add lashes."
+    ],
+    "next": "Make the tail large and fluffy and soften the cheek ruff."
+  },
+  "cat": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "An orange tabby cat with large green eyes on four legs. It is the same animal, but the pose, the mouth, and the tail differ from the mockup.",
+    "strengths": [
+      "The large green eyes, the pink nose, and the pink inner ears match the mockup.",
+      "The tabby stripes on the head and the body read clearly.",
+      "The cat reads in all 8 sprite directions."
+    ],
+    "issues": [
+      "The mockup cat sits. The model stands on four legs. This is a different pose (cap 6.5). Add a sitting rest pose.",
+      "The mouth is a wide line with small white fang points at the corners. The mockup has a tiny closed mouth. Make the mouth small and remove the fang points.",
+      "The tail stands straight up with a white tip. The mockup tail curls at the side. Curl the tail and remove the white tip.",
+      "The legs have white stockings and leg stripes. The mockup has only cream paws. Reduce the white to the paws.",
+      "The eyes have no lashes. Add the small lashes from the mockup."
+    ],
+    "next": "Add a sitting rest pose and make the mouth small."
+  },
+  "familiar-cat": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 4, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A black cat with purple eyes and a purple collar with a crescent charm. It is the same character, but the pose, the eyes, and the mouth differ from the mockup.",
+    "strengths": [
+      "The black body with purple accents matches the mockup palette.",
+      "The purple collar with the crescent charm is present and reads at 128 px.",
+      "The star on the tail tip adds a magic accent without noise."
+    ],
+    "issues": [
+      "The mockup cat sits. The model stands on four legs. This is a different pose (cap 6.5). Add a sitting rest pose.",
+      "The eyes are black pupils with a thin purple ring. The mockup eyes are large glowing purple irises. Make the purple iris fill most of the eye and make it glow.",
+      "The mouth is a wide line with two white fang points. The mockup has a tiny closed mouth. This is a different expression (cap 7.0). Make the mouth small and remove the fangs.",
+      "The tail stands straight up. The mockup tail curls at the side. Curl the tail."
+    ],
+    "next": "Make the eyes large glowing purple irises, as in the mockup."
+  },
+  "riding-wolf": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5],
+    "summary": "A gray wolf with a blue and brown saddle. It is the same kind of mount, but the face, the build, and the harness are noticeably off from the mockup.",
+    "strengths": [
+      "The saddle with a blue pad, brown leather, and a ring reads clearly from the side.",
+      "The walk and run clips move the legs with a clear gait.",
+      "The gray and white palette is close to the mockup."
+    ],
+    "issues": [
+      "The face uses large round brown eyes and a wide grin. The mockup has a side glance with a brow and a confident closed smirk. This is a different expression (cap 7.0). Rebuild the eyes and the mouth.",
+      "The body has puppy proportions, the same as the small wolf. The mockup mount is leaner, with a raised head and a gray mane tuft on the head. Add the head tuft and make the neck and legs stronger.",
+      "The cheeks have sharp spikes. From the front and the back the head looks like a star. Make the cheek fur soft and round.",
+      "The paws are white. The mockup paws are black with white bands. Paint the paws.",
+      "The harness is a saddle only. The mockup has a chest strap and a teal pad with an emblem. Add the chest strap and the emblem.",
+      "The card does not show the scale against a 1 m hero. Confirm the mount height and the seat height with a rider."
+    ],
+    "next": "Rebuild the head with the mockup smirk, the brow, and the mane tuft."
+  },
+  "boar": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A brown boar with a pink snout, tusks, and a dark crest. It is the same animal, but the tusks, the head crest, the eyes, and the hooves differ from the mockup.",
+    "strengths": [
+      "The brown body, the pink snout, and the dark crest along the back read clearly.",
+      "The silhouette reads as a boar from every view.",
+      "The sprites keep the snout and the eyes readable."
+    ],
+    "issues": [
+      "The tusks are small and sit at the sides of the snout. The mockup tusks are large and curve up at the cheeks. Make the tusks larger and curve them up.",
+      "The head crest is a row of small spikes. The mockup has one tall dark curved tuft on the head. Add a tall tuft.",
+      "The eyes are plain black. The mockup eyes are large and glossy with green tint and highlights. Add iris color and highlights.",
+      "The hooves are flat black discs. They look like separate pucks under the legs. Shape them as rounded split hooves.",
+      "The mockup has spiky cheek tufts. Add the cheek tufts.",
+      "The tail tuft looks like a star from the back. Make it a small soft tuft."
+    ],
+    "next": "Make the tusks large and curved, and add the tall head tuft."
+  },
+  "bear": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A brown bear cub on four legs with a tan muzzle. It is the same animal as the mockup, but the eyes, the muzzle, and the paws have clear differences.",
+    "strengths": [
+      "The body plan, the round ears, and the tan muzzle match the mockup.",
+      "The big head and the chunky body give good chibi appeal.",
+      "The bear reads clearly at 128 px in every direction."
+    ],
+    "issues": [
+      "The eyes are large black spheres that bulge out of the head outline in the side and three-quarter views. The mockup eyes are small and set into the face. Make the eyes smaller and set them into the head.",
+      "The paws are brown with claws. The mockup paws are black with no claws. Paint the paws black and remove the claws.",
+      "The muzzle is short. The mockup muzzle is longer and points forward. Extend the muzzle.",
+      "The mouth is a wide smile line. The mockup has no visible mouth line. Make the mouth small or remove it."
+    ],
+    "next": "Make the eyes smaller and set them into the head."
+  },
+  "pig": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A pink pig with a big snout, rosy cheeks, and a curly tail. It is the same animal, but the ears and the mouth differ from the mockup.",
+    "strengths": [
+      "The pink palette, the rosy cheeks, and the curly tail match the mockup.",
+      "The large snout reads well in front and at 128 px.",
+      "The round forms suit a friendly farm animal."
+    ],
+    "issues": [
+      "The mouth is a closed smile line. The mockup has an open smile with a tongue. This is a different expression (cap 7.0). Open the mouth and add a tongue.",
+      "The ears are small and stand up. The mockup ears are large and fold forward. Make the ears large and floppy.",
+      "The hooves are flat dark discs. They look like separate pucks. Shape them as small split hooves in gray.",
+      "The body is long. The mockup pig is round and compact. Shorten the torso.",
+      "The eyes are plain black. The mockup eyes have brown irises and highlights. Add iris color and highlights."
+    ],
+    "next": "Make the ears large and floppy, and open the mouth with a tongue."
+  },
+  "badger": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A gray and white badger with a striped face and black legs. It is the same animal, but the body is tall and short and the head is round, so the front view looks like a panda.",
+    "strengths": [
+      "The black and white face stripes, the gray body, and the black legs match the mockup.",
+      "The ears have white rims, as in the mockup.",
+      "The stripes read clearly in the sprites."
+    ],
+    "issues": [
+      "The body is tall and short. The mockup badger is long and low to the ground. Lengthen the body and lower it.",
+      "The head is large and round, and the front view reads as a panda. The mockup head is a wedge that tapers to the nose. Make the head narrower and longer.",
+      "The eyes are large brown discs with white rims. The mockup eyes are small and sit inside the black stripes. Make the eyes small.",
+      "The face stripes are thin. The mockup stripes are wide and cover the eyes. Widen the stripes."
+    ],
+    "next": "Make the body long and low and the head a wedge shape."
+  },
+  "hedgehog": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A cream hedgehog with a brown spine coat. It is the same animal, but the legs are long and the head is round, so it looks like a small bear with a spiny back.",
+    "strengths": [
+      "The cream body and the brown spine coat match the mockup palette.",
+      "The spine coat reads clearly from the back and the side.",
+      "The sprites show the spines in every direction."
+    ],
+    "issues": [
+      "The legs are long and thick. The mockup hedgehog sits low with tiny legs. Shorten the legs to about half.",
+      "The head is round with a short snout, and the front view reads as a bear. The mockup head is a cone that tapers to a pointed nose. Make the head a cone.",
+      "The eyes are large black spheres. The mockup eye is small with a highlight. Make the eyes smaller.",
+      "The spine coat sits on top like a separate shell with a hard edge at the sides. Bring the coat lower over the sides so the body reads as one round mass."
+    ],
+    "next": "Shorten the legs and make the head a pointed cone."
+  }
+}

@@ -9,7 +9,7 @@ import { wolfAsset } from './parts/wolf-kind.js';
  * The dire wolf (`assets/dire-wolf.ts`; body, head, rig, and clips from `assets/parts/wolf-kind.ts`)
  * at 0.72 of its size, as a friendly village dog: floppy dark ears (the kind's pointed ears are
  * off), cream brows, a white muzzle and smooth chest, a happy smile with the tongue out, big dark
- * eyes, white paws, a red collar with a gold tag, and a tail that curls up over the back with a
+ * eyes, white paws, a red collar with a big gold bell under the chin, and a tail that curls up over the back with a
  * white tip; no cheek tufts, forelock, or claws.
  * Role: the hero's companion and a village pet; the floppy ears, the collar, and the tongue read
  *   at 128 px.
@@ -20,8 +20,10 @@ import { wolfAsset } from './parts/wolf-kind.js';
 export default scaleAsset(
   wolfAsset({
     name: 'dog',
-    description: 'Chibi dog: a tan village dog with a big round head, floppy dark ears, big dark eyes, a white muzzle and chest, a happy smile with the tongue out, a red collar with a gold tag, white paws, and a curled tail; quadruped rig.',
+    description: 'Chibi dog: a tan village dog with a big round head, floppy dark ears, big dark eyes, a white muzzle and chest, a happy smile with the tongue out, a red collar with a big gold bell under the chin, white paws, and a curled tail; quadruped rig.',
     reference: 'docs/wildlife-mockups/dog_001.jpg',
+    // The mockup sits: the rest pose stands (for the walk), and the `sit` clip holds the sitting pose.
+    sit: true,
     variants: {
       fur: { tan: '#d08a4a', black: '#3a3432', white: '#f2ece2', grey: '#9a9894' },
       markings: { white: '#fff6ec', cream: '#f2dcb4', tan: '#d8a46a' },
@@ -35,6 +37,7 @@ export default scaleAsset(
     },
     colors: { furLight: '#e8b884', furDark: '#fff6ec', eyeRim: '#1a100a', nose: '#1a1214' },
     eyeScale: 1.3,
+    snout: 0.045,
     cheekTufts: false,
     brows: false,
     forelock: false,
@@ -64,9 +67,14 @@ export default scaleAsset(
       );
       const collar = neckline.round(0.014).smoothSubtract(0.004, neckline.round(-0.008)).smoothIntersect(0.006, sdf.box([0.6, 0.036, 0.6], 0.01).rotateX(29).at(0, 0.35, 0.075));
       k.body('collar', collar, { color: '#c83a32', roughness: 0.55, detail: 0.003, bone: 'neck' });
-      const front = sdf.raycast(collar, [0, 0.27, 2], [0, 0, -1]);
-      const tag = sdf.cylinder(0.022, 0.008, 0.003).rotateX(80).at(0, 0.255, (front?.[2] ?? 0.22) + 0.004);
-      k.body('tag', tag, { color: '#e0b040', roughness: 0.3, metalness: 0.85, detail: 0.003, bone: 'neck' });
+      // A big round gold bell at the front of the collar, under the chin, with a dark slit.
+      const front = sdf.raycast(collar, [0, 0.3, 2], [0, 0, -1]);
+      const bz = (front?.[2] ?? 0.24) + 0.014;
+      const bell = sdf
+        .smoothUnion(0.004, sdf.sphere(0.03).at(0, 0.272, bz), sdf.torus(0.008, 0.003).rotateZ(90).at(0, 0.305, bz - 0.004))
+        .paintWhere(sdf.box([0.004, 0.02, 0.1]).at(0, 0.255, bz), '#5a3a10', 0.002)
+        .paintWhere(sdf.box([0.08, 0.004, 0.1]).at(0, 0.268, bz), '#b08020', 0.002);
+      k.body('tag', bell, { color: '#e0b040', roughness: 0.3, metalness: 0.85, detail: 0.003, bone: 'neck' });
       // The tail curls up over the back, with a white tip.
       const TIP: [number, number, number] = [0, 0.5, -0.27];
       const tail = sdf

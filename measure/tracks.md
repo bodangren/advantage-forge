@@ -90,6 +90,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Produce P2 wildlife**
   *Link: [./tracks/asset_p2_wildlife_20260928/](./tracks/asset_p2_wildlife_20260928/)*
 
+- [~] **Track: Audit self-graded character ratings**
+  *Link: [./tracks/asset_review_audit_20261005/](./tracks/asset_review_audit_20261005/)*
+
 - [ ] **Track: Produce P3 fx-geometry**
   *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
 

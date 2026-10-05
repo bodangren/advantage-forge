@@ -1,0 +1,239 @@
+{
+  "crow": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3, 3, 4, 4.5, 3.5, 3],
+    "summary": "The model is a round slate-black crow with a crest, folded wings, and dark feet. The body plan matches the mockup, but the face and the feather sculpt are clearly different.",
+    "strengths": [
+      "The round black body, the crest, and the beak read as a crow at 128 px.",
+      "The model stands on the ground, faces +Z, and has a rig with walk, fly, idle, attack, hit, and death clips.",
+      "The walk has a small body bob and a tail sway."
+    ],
+    "issues": [
+      "The eyes are small dark rings with a white dot. The mockup has large glossy dark-amber eyes under a heavy brow, which gives a stern look. Make the eyes larger and glossy, and add the brow ridge.",
+      "The beak is long, pointed, and light grey. The mockup beak is short, wide, and dark. Make the beak shorter, wider, and darker.",
+      "The same scallop line pattern covers the full body and the head. The mockup has large sculpted feather clumps on the chest and the wings. Use larger feather shapes on the chest and the wings, and keep the head calm.",
+      "The head is a separate ball on the body. In the mockup the head merges into the body. Blend the neck.",
+      "The wings stay tight on the body. In the mockup the wings stand out a small distance from the body."
+    ],
+    "next": "Replace the ringed eyes with large glossy eyes under a heavy brow, as in the mockup."
+  },
+  "raven": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 3.5, 3, 3, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is a black raven with large white-ringed eyes and purple head tufts. The mockup has a stern frown, a heavy dark beak, and a layered throat ruff, and the model shows none of these clearly.",
+    "strengths": [
+      "The purple tufts give a clear accent at the head and read at 128 px.",
+      "The large white eyes read in the front and three-quarter sprites.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The face has no brow. The mockup has heavy frowning brows over the eyes. Add the brows to get the stern expression.",
+      "The shaggy throat is a row of thin drips on the chest. The drips look like fingers or melted parts. Make a layered throat ruff with one pointed center feather, as in the mockup.",
+      "The beak is a long grey cone. The mockup beak is heavy, dark, and hooked. Make the beak thicker and darker so that it is different from the crow beak.",
+      "The wings have purple tips. The mockup wings are black. Keep purple only on the head tufts.",
+      "The purple tufts sit high on the head like ears. In the mockup they sit at the cheeks beside the eyes.",
+      "At 128 px the throat is not visible. Only the eyes and the tufts make the raven different from the crow."
+    ],
+    "next": "Add the frowning brows and replace the drip throat with a layered ruff."
+  },
+  "familiar-raven": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a black raven with purple eyes and a violet ribbon with a silver moon charm. It matches the mockup in identity and in the main signature details, with clear differences in the eyes and the head.",
+    "strengths": [
+      "The violet ribbon and the silver moon charm match the mockup and read at 128 px from every direction.",
+      "The purple eyes read in the front sprites.",
+      "The black body and the purple accents give a clear value plan."
+    ],
+    "issues": [
+      "The eyes are flat pale lilac discs. The mockup eyes glow in saturated magenta with a bright white center. Make the eyes emissive with a bright center and a darker rim.",
+      "The ribbon has one short tail. The mockup has two hanging tails, and one is long. Add the second tail and make one tail longer.",
+      "The head is a separate ball with a spiky crest. The mockup head is fluffy and merges into the body. Blend the neck and use soft head feathers.",
+      "The beak is long and pointed. The mockup beak is shorter and wider with a small hook.",
+      "The same scallop line pattern covers the full body. The mockup has soft feather clumps on the chest."
+    ],
+    "next": "Make the eyes glow in saturated magenta with a bright center."
+  },
+  "eagle": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 2.5, 3.5, 3, 3, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is a brown eagle with a golden head and a grey collar. The colors match the mockup, but the head crest, the collar, and the beak have different shapes.",
+    "strengths": [
+      "The golden head on the dark brown body reads at 128 px.",
+      "The yellow feet with dark talons match the mockup.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The crest is a ring of upright spikes around the full head. From the back it looks like a crown. The mockup has soft feathers that sweep back from the top of the head. Replace the spike ring with swept-back feather tufts.",
+      "The collar is a ring of grey balls. It looks like a bead necklace. The mockup collar is a layered dark feather ruff. Make overlapping feather shapes.",
+      "The beak is long and curved. The mockup beak is short and triangular. Make the beak shorter.",
+      "Dark scallop lines cross the eye whites. Remove the feather paint from the eyes.",
+      "In the fly clip the wings are thin sticks. Make the wings broad when they open."
+    ],
+    "next": "Replace the spike crown and the bead collar with soft feather tufts and a layered ruff."
+  },
+  "hawk": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 3.5, 3, 3, 4, 4.5, 3.5, 3],
+    "summary": "The model is a brown and cream hawk with a dotted chest and a rusty tail. The body plan matches, but the face is clearly different from the happy face in the mockup.",
+    "strengths": [
+      "The rusty tail, the cream chest, and the brown dots read at 128 px.",
+      "The large yellow feet with dark talons match the mockup.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The eyes are solid black discs. The mockup eyes have a brown iris, a white rim, and highlights. Add the iris and the white rim.",
+      "The mockup has an open smiling mouth under the beak. The model beak is closed in the front view. Open the beak into a smile.",
+      "The brown bib with a zigzag edge across the upper chest is missing. Add the bib between the head and the dotted belly.",
+      "The head has a smooth cap with a small tuft. The mockup has a tousled spiky brown crest. Make the crest larger.",
+      "The wings stay tight on the body. In the mockup the wings lift away from the body.",
+      "Dark scallop lines cover the cream chest. The mockup chest is smooth. Remove most of the lines."
+    ],
+    "next": "Give the eyes a brown iris and a white rim, and open the beak into a smile."
+  },
+  "falcon": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3, 3.5, 3.5, 3, 3, 3.5, 4.5, 4, 3],
+    "summary": "The model is a cream falcon with a blue hood, yellow eye rings, and dark eye stripes. The face design matches the mockup, but the beak, the wings, and the hood color are clearly different.",
+    "strengths": [
+      "The yellow eye rings and the dark eye stripes match the mockup and read at 128 px.",
+      "The hood on the cream body reads from every direction.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The beak is a large black hook with an orange ball at the base. It looks like a parrot beak. The mockup beak is small with a small yellow base. Make the beak much smaller.",
+      "The wings are short. The mockup wings are long and hang almost to the feet. Make the wings longer.",
+      "The hood is a saturated sky blue. The mockup hood is a grey-green slate. Change the hood color.",
+      "Scallop lines cover the full body. The mockup body is smooth clay with a few dark streaks.",
+      "The orange beak base overlaps the eye ring in the three-quarter view."
+    ],
+    "next": "Make the beak small, as in the mockup."
+  },
+  "owl": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 3.5, 3, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "The model is a brown owl with a heart-shaped cream belly, a pale face disc, and ear tufts. The body plan and the main signature details match the mockup, with clear differences at the eyes.",
+    "strengths": [
+      "The heart-shaped belly, the ear tufts, and the face disc match the mockup.",
+      "The big eyes in the pale face disc read at 128 px.",
+      "The head and the body form one egg shape, as in the mockup."
+    ],
+    "issues": [
+      "A dark curved line crosses each pupil. The eyes look half shut. Remove the feather paint from the eyes.",
+      "The iris is brown. The mockup iris is amber orange, which gives focus to the face. Change the iris color.",
+      "The beak is a long hook that hangs down. The mockup beak is short. Make the beak shorter.",
+      "The wings stay tight on the body. In the mockup the wings stand out from the body.",
+      "The model has fewer dark spots on the head and the shoulders than the mockup.",
+      "Scallop lines cover the body. The mockup body is smooth clay."
+    ],
+    "next": "Remove the line through the pupils and make the iris amber orange."
+  },
+  "familiar-owl": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a white owl with cyan eyes, a stern brow, a cyan collar, and a gold star. It matches the mockup in identity and expression, with clear differences in the collar, the marks, and the feet.",
+    "strengths": [
+      "The stern brow over the cyan eyes matches the mockup expression.",
+      "The cyan eyes, the collar, and the gold star read at 128 px.",
+      "The ear tufts and the white body match the mockup."
+    ],
+    "issues": [
+      "The collar is a thick flat band. The mockup has a thin cord with a bow and hanging tails. Make the collar thinner and add the hanging tails.",
+      "The belly marks are grey chevrons in rows. The mockup has dense dark teardrop speckles. Change the marks.",
+      "The beak is a long grey hook. The mockup beak is small, round, and dark. Make the beak smaller.",
+      "The feet are white with dark talons. The mockup feet are dark grey. Change the foot color.",
+      "The eyes are bright but do not glow. Add an emissive glow to the eyes."
+    ],
+    "next": "Make the collar a thin cord with hanging bow tails, and add the dark speckles."
+  },
+  "pigeon": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3, 3, 4, 4.5, 4, 3],
+    "summary": "The model is a grey pigeon with orange eyes, a green and purple neck band, and pink feet. The signature colors match, but the proportions and the neck are clearly different from the mockup.",
+    "strengths": [
+      "The neck sheen, the orange eyes, and the pink feet read at 128 px.",
+      "The pink feet and the orange eye rings match the mockup.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The head is a large ball on a round body. The mockup has a small head and a pear-shaped body with a tapered neck. Make the head smaller and the body wider at the bottom.",
+      "The green sheen is a narrow band at the shoulders. In the mockup the green covers the full neck and throat. Extend the green up to the head.",
+      "The purple ruff is a row of round discs. The mockup ruff has a soft ruffled edge.",
+      "The beak is white-grey from base to tip. The mockup beak has a white base and a dark tip.",
+      "The body is blue-grey with scallop lines. The mockup body is warm grey smooth clay."
+    ],
+    "next": "Make the head small and the body pear-shaped, with the green sheen on the full neck."
+  },
+  "sparrow": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a brown and cream sparrow with a grey cap and a black bib. The colors and the smooth clay surface match the mockup, but the face expression and the beak are different.",
+    "strengths": [
+      "The grey cap and the black bib read at 128 px.",
+      "The smooth clay surface and the cream belly with brown sides match the mockup.",
+      "The pink feet match the mockup."
+    ],
+    "issues": [
+      "The cap edge is straight above the eyes. In the mockup the cap comes down in a V between the eyes and gives a stern look. Bring the cap down in a V to make the brow.",
+      "The beak is a long black cone. The mockup beak is short and stubby. Make the beak shorter.",
+      "The legs are short and brown. The mockup has thin pink legs that show below the body.",
+      "A cream gap separates the beak and the bib. In the mockup the bib starts directly below the beak.",
+      "The crest is three small spikes. The mockup crest is one curl."
+    ],
+    "next": "Bring the grey cap down in a V over the eyes to make the stern brow."
+  },
+  "rooster": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3, 4, 3, 3, 3.5, 4.5, 4, 3],
+    "summary": "The model is a brown rooster with a red comb, golden neck feathers, and a green tail. The signature parts are present, but their shapes are clearly different from the mockup.",
+    "strengths": [
+      "The red comb and the green tail read at 128 px from every direction.",
+      "The red, gold, brown, and green palette matches the mockup.",
+      "The model has a rig and the full set of clips."
+    ],
+    "issues": [
+      "The neck feathers are a ring of separate carrot-shaped spikes. The mockup has a smooth golden cape with pointed tips. Make one cape shape with pointed tips at the bottom edge.",
+      "The tail is a stack of flat angular plates. The mockup tail has several curved sickle feathers that arch up and down. Curve the tail feathers.",
+      "The eyes are large and bulge, and dark scallop lines cross the eye whites. The mockup eye is smaller with a clean white ring. Make the eyes smaller and remove the lines.",
+      "The legs are short. The mockup has long yellow legs.",
+      "The body is upright. The mockup body tilts forward."
+    ],
+    "next": "Replace the carrot spikes with a smooth golden cape and curve the tail into arching sickles."
+  },
+  "chicken": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "The model is a round white chicken with a red comb, a red wattle, and yellow feet. It matches the mockup in identity and face, with clear differences in the wings, the wattle, and the legs.",
+    "strengths": [
+      "The red comb on the white head reads at 128 px from every direction.",
+      "The face with black eyes and a yellow beak matches the mockup.",
+      "The smooth white body matches the clay look of the mockup."
+    ],
+    "issues": [
+      "The wings hang straight down with finger-like tips. They look like arms. The mockup wings stand out from the body with smooth tips. Lift the wings and smooth the tips.",
+      "The wattle is a short bow-tie shape. The mockup wattle has two long lobes that hang down. Make the lobes longer.",
+      "The legs are white feathered stubs. The mockup has thick yellow legs that show below the body.",
+      "A small grey arc mark shows on the left cheek. A dark ring shows at each ankle. Remove these marks.",
+      "The comb is a thin fin in the front view. The mockup comb has three clear lobes."
+    ],
+    "next": "Lift the wings out from the body and give them smooth tips."
+  },
+  "messenger-bird": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a round cream bird with pink cheeks, a brown strap, and a letter tube on the back. It matches the mockup in identity and in the signature tube, with clear differences in color and proportion.",
+    "strengths": [
+      "The tube with the white letter and the red seal reads at 128 px.",
+      "The pink cheeks, the black eyes, and the small grey beak match the mockup face.",
+      "The strap with the buckle and the pink feet match the mockup."
+    ],
+    "issues": [
+      "The body is cream white. The mockup body is pale butter yellow. Change the body color.",
+      "The head merges into one egg shape with the body. The mockup has a large round head on a smaller body. Make a clear head shape.",
+      "The wings are small tan flaps. The mockup has a large brown wing that covers the side of the body. Make the wings larger and browner.",
+      "The tube is dark brown. The mockup tube is light tan with a darker band.",
+      "Pale ridges show at the edges of the cheeks in the front view. Smooth them."
+    ],
+    "next": "Change the body to pale butter yellow and give the bird a clear large head."
+  }
+}

@@ -59,12 +59,20 @@ export interface BoarKind {
   readonly mane?: boolean;
   /** The snout: the pig disc (default), a bear muzzle in the skin slot with a black nose and a short stub tail (no teeth), or none (no mouth or teeth). */
   readonly snout?: 'pig' | 'bear' | false;
-  /** The ears: pointed pig ears (default) or round bear ears. */
-  readonly ears?: 'pig' | 'round';
+  /** The ears: pointed pig ears (default), round bear ears, or none (the kind builds its own in `extra`). */
+  readonly ears?: 'pig' | 'round' | false;
   /** The feet: split hooves (default) or round paws with claws in the ivory slot color. */
   readonly feet?: 'hooves' | 'paws';
+  /** The hooves: flat split discs (default) or 'round' split toes that taper into the leg. */
+  readonly hoofStyle?: 'disc' | 'round';
   /** The size of the eyes as a share of the boar's. */
   readonly eyeScale?: number;
+  /** How much deeper the eyes sit in the head, in meters (default 0): a set-in eye that does not bulge. */
+  readonly eyeInset?: number;
+  /** False: no claws on the paws. */
+  readonly claws?: boolean;
+  /** False: no smile line (the kind paints its own mouth). */
+  readonly mouth?: boolean;
   /** The glow of the eyes (default 0.9; 0 for plain eyes). */
   readonly eyeGlow?: number;
   /** False: no heavy brows over the eyes (a friendly face). */
@@ -178,7 +186,7 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const EYE_R = 0.05 * es;
       // The eyeball center sits a little inside the surface, so the eye bulges out by about half; a
       // bigger eye sits deeper, so it does not stand out of the face in the side view.
-      const inset = 0.022 + Math.max(0, EYE_R - 0.05) * 0.7;
+      const inset = 0.022 + Math.max(0, EYE_R - 0.05) * 0.7 + (kind.eyeInset ?? 0);
       const eyeCenter: V3 = [eyeHit[0] - eyeNormal[0] * inset, eyeHit[1] - eyeNormal[1] * inset, eyeHit[2] - eyeNormal[2] * inset];
       const out = (d: number): V3 => [eyeCenter[0] + eyeNormal[0] * d, eyeCenter[1] + eyeNormal[1] * d, eyeCenter[2] + eyeNormal[2] * d];
 
@@ -245,7 +253,7 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
 
       // ------------------------------------------------------------------ fur
       const trunk = sdf.smoothUnion(0.08, chest.bone('spine'), rump.bone('hips'), headBase.bone('head'));
-      const bodyShape = trunk.smoothUnion(0.035, limbs).smoothUnion(0.02, tail).smoothUnion(0.012, ears.bone('head'));
+      const bodyShape = kind.ears === false ? trunk.smoothUnion(0.035, limbs).smoothUnion(0.02, tail) : trunk.smoothUnion(0.035, limbs).smoothUnion(0.02, tail).smoothUnion(0.012, ears.bone('head'));
       const lidRing = pair(sdf.sphere(EYE_R + 0.012).at(...eyeCenter).intersect(sdf.halfSpace([0, 1, 0], eyeCenter[1] - 0.006)));
       const MOUTH_Y = 0.272;
       const mouth = sdf.extrude(profile.arc(0.16, 0.013, 236, 304), 0.5).at(0, MOUTH_Y + 0.16, 0.3);
@@ -256,7 +264,7 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
       const furBase = kind.lids === false ? furLegs : furLegs.paintWhere(lidRing, T.lid, 0.004);
       // The bear muzzle in the skin slot color: the front of the muzzle, below the eyes.
       const furMuzzle = kind.snout === 'bear' ? furBase.paintWhere(muzzle.round(0.012).intersect(sdf.halfSpace([0, 0, -1], -0.36)), T.snout, 0.012) : furBase;
-      const furMouth = kind.snout === false ? furMuzzle : furMuzzle.paintWhere(mouth, C.mouth, 0.003);
+      const furMouth = kind.snout === false || kind.mouth === false ? furMuzzle : furMuzzle.paintWhere(mouth, C.mouth, 0.003);
       const tone = (slot: string, color: string, follow = 1) => k.tint(slot, { color, follow });
       const boar: BoarShape = { headBase, trunk, faceHit, eye: { center: eyeCenter, r: EYE_R }, tint: T, tone };
       const fur = kind.paint ? kind.paint(furMouth, boar) : furMouth;
@@ -397,12 +405,25 @@ export function boarAsset(kind: BoarKind): AssetDefinition {
           .subtract(sdf.box([0.012, 0.1, 0.08]).at(0, -0.02, 0.06)) // cloven front
           .at(at[0], 0.03, at[2] + 0.014)
           .bone(bone);
-      const hooves = sdf.union(pair(hoof(FKNEE, 'fshin.L')), pair(hoof(BKNEE, 'bshin.L')));
+      // Round hooves: a short taper from the leg into two rounded toes, split at the front.
+      const roundHoof = (at: V3, bone: string) =>
+        sdf
+          .smoothUnion(
+            0.014,
+            sdf.cone([0, 0.08, 0], [0, 0.03, 0.006], 0.064, 0.066),
+            ...[-0.024, 0.024].map((x) => sdf.ellipsoid([0.038, 0.034, 0.056]).at(x, 0.032, 0.024)),
+          )
+          .intersect(sdf.halfSpace([0, -1, 0], 0))
+          .subtract(sdf.box([0.008, 0.1, 0.08]).at(0, 0.02, 0.07))
+          .at(at[0], 0, at[2] + 0.014)
+          .bone(bone);
+      const hoofShape = kind.hoofStyle === 'round' ? roundHoof : hoof;
+      const hooves = sdf.union(pair(hoofShape(FKNEE, 'fshin.L')), pair(hoofShape(BKNEE, 'bshin.L')));
       if (kind.feet === 'paws') {
         // Three short claws on the front of each paw, in the ivory slot color.
         const clawsAt = (at: V3, bone: string) =>
           sdf.union(...[-0.04, 0, 0.04].map((dx) => sdf.cone([at[0] + dx, 0.03, at[2] + 0.1], [at[0] + dx * 1.15, 0.008, at[2] + 0.135], 0.014, 0.004))).bone(bone);
-        k.body('claws', sdf.union(pair(clawsAt(FKNEE, 'fshin.L')), pair(clawsAt(BKNEE, 'bshin.L'))), { color: T.ivory, roughness: 0.35, detail: 0.003 });
+        if (kind.claws !== false) k.body('claws', sdf.union(pair(clawsAt(FKNEE, 'fshin.L')), pair(clawsAt(BKNEE, 'bshin.L'))), { color: T.ivory, roughness: 0.35, detail: 0.003 });
       } else {
         k.body('hooves', hooves, { color: C.black, roughness: 0.35 });
       }

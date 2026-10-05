@@ -1,0 +1,64 @@
+{
+  "rabbit": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 3, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "The model is a sitting chibi rabbit with a large white head, pink inner ears, and a white tail. It is the same animal as the mockup, but the body color and the join between the head and the body are clearly different.",
+    "strengths": [
+      "The round head, the brown eyes with lashes, the pink nose, and the whiskers match the mockup.",
+      "The long upright ears with pink inner color read from every view and in every sprite direction.",
+      "The sitting pose and the white tail puff match the mockup.",
+      "The face reads clearly in the S, SW, and SE sprites."
+    ],
+    "issues": [
+      "The body is mid gray, but the mockup body is the same warm cream as the head. Paint the body, the legs, and the paws in the warm cream of the mockup.",
+      "The head is pure white, but the mockup head is warm cream. Change the head color to the mockup cream.",
+      "The lower edge of the head makes a wide cheek ledge that hangs over the body like a cap. Blend the cheeks into the neck and the chest with a soft join.",
+      "The ears stand almost parallel and are narrow. In the mockup, the ears are wider and open in a V. Make the ears wider and turn them outward a small amount.",
+      "The inner ears are a bright pink. The mockup inner ears are a muted salmon pink. Reduce the saturation of the inner ears.",
+      "The front paws are small white blocks. In the mockup, the paws are round cream ovals with toe lines. Make the paws round and add toe lines.",
+      "The hop clip lifts the full body straight up with little squash and little ear delay. Add a squash before the jump and a short ear delay."
+    ],
+    "next": "Paint the head and the body in the one warm cream color of the mockup, and blend the cheek ledge into the chest."
+  },
+  "hare": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a standing four-legged chibi hare with black-tipped ears, a cream chest, and black feet. It is the same animal as the mockup, but the face pattern and the body build are clearly different.",
+    "strengths": [
+      "The body plan, the orange and cream palette, the black ear tips, and the black feet match the mockup.",
+      "The very large ears give a strong silhouette from the front, the side, and the back.",
+      "The amber eyes with highlights read well at 128 px in the front and three-quarter directions.",
+      "The walk clip moves the legs in turn, and the feet stay on the ground."
+    ],
+    "issues": [
+      "The model has cream rings around the eyes. In the mockup, the cream area is the lower face from below the eyes to the chin, and the eyes have dark rims. Remove the eye rings, paint the lower face cream, and add dark eye rims.",
+      "The body and the legs are thicker than in the mockup. The mockup has a slim body, a longer neck, and thin legs. Make the torso and the legs thinner, and make the neck longer.",
+      "The ears are wide leaf shapes with a soft black tip. In the mockup, the ears are narrower and longer, and the black tips have a sharp edge. Make the ears narrower and give the black tips a sharp edge.",
+      "The muzzle is short and round. The mockup muzzle is a little longer and more pointed. Extend the muzzle forward a small amount.",
+      "The mouth is a closed smile. The mockup shows a small mouth with two small front teeth. Add the two small teeth below the nose.",
+      "The black feet are small round pads. In the mockup, the feet are larger black boots. Make the feet larger.",
+      "A pale patch of the cream chest paint shows on the top of the front leg. Stop the cream paint at the chest."
+    ],
+    "next": "Change the face pattern to a cream lower face with dark eye rims, as in the mockup."
+  },
+  "squirrel": {
+    "overall": 6.0,
+    "scores": [2.5, 4, 4, 3, 4, 3.5, 3, 3.5, 4, 4, 3],
+    "summary": "The model is a red squirrel that sits upright with its paws at the chest and a large curled tail. The mockup squirrel runs on four legs, so the pose is different, and the eyes and the ear tufts also differ.",
+    "strengths": [
+      "The orange and cream palette, the cream belly, and the cream muzzle match the mockup.",
+      "The wide curled tail reads in seven of the eight sprite directions at 128 px.",
+      "The tail has a sculpted fur texture that is similar to the mockup tail.",
+      "The large round head gives good chibi appeal."
+    ],
+    "issues": [
+      "The model sits upright on its hind legs. The mockup runs on four legs with a horizontal body. Change the rest pose to the four-legged running pose of the mockup.",
+      "Dark brown rings surround the eyes and make a mask. The mockup eyes have black pupils with a white rim and no dark ring. Remove the dark rings and use the mockup eye design.",
+      "The ear tufts are flat orange prongs that look like small hands. The mockup tufts are soft fans of hair. Make the tufts as soft fans of fur.",
+      "The tail curls forward and touches the back of the head. In the mockup, the tail rises behind the body with a clear gap to the head. Move the tail back to make a gap.",
+      "The tail grooves are deep and even, and the tail looks like bark from the back. Make the grooves softer and fewer.",
+      "The hop clip moves the full body up and down with little tail delay. Add a tail delay and a squash on landing."
+    ],
+    "next": "Rebuild the rest pose as the four-legged running squirrel of the mockup."
+  }
+}

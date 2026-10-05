@@ -1,0 +1,262 @@
+{
+  "riding-horse": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A brown chibi horse with a bridle, a saddle, and a blue pad. It is close to the mockup, but the eyes and the forelock are different.",
+    "strengths": [
+      "The big head, the short stout legs, and the black hooves match the mockup.",
+      "The bridle, the saddle, the blue pad with yellow trim, and the stirrup read clearly.",
+      "The walk lifts each hoof and bends the knees."
+    ],
+    "issues": [
+      "The eyes are too small and have black pupils. Make them larger with a dark brown iris and dark eyebrows, as in the mockup.",
+      "The mane stands up as a tall crest and falls down the neck in long locks. Make a short black forelock that sweeps over the forehead.",
+      "The mockup has a saddle bag on the flank. Add it.",
+      "The muzzle has a painted smile line that is wider than the mockup mouth. Make the mouth smaller."
+    ],
+    "next": "Enlarge the eyes and give them a brown iris and eyebrows."
+  },
+  "warhorse": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 4, 4, 4.5, 4, 3.5],
+    "summary": "A grey armored chibi horse with a steel face plate, a red plume, a white mane, and a red caparison. It is the same character as the mockup, with clear differences in the armor and the body length.",
+    "strengths": [
+      "The palette matches: grey coat, steel plate, red plume, red and gold cloth, white fetlock fur.",
+      "The white fetlock cuffs and the black hooves match the mockup.",
+      "The steel face plate reads as a different material from the coat."
+    ],
+    "issues": [
+      "The face armor is a narrow center strip. Make a mask that frames the eyes, with cheek plates and a nose band, as in the mockup.",
+      "The body is too long for the head. Shorten the body and the neck to make the mockup's compact chibi shape.",
+      "The emblem is a small yellow star. Use a gold sun on a chest plate with gold trim.",
+      "The mockup has no saddle on top. Remove the saddle or make it smaller under the cloth."
+    ],
+    "next": "Rebuild the face armor as a mask that frames the eyes, with cheek plates."
+  },
+  "pony": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A cream pony with a curly forelock, a brown patch, and brown hooves. It is noticeably less chibi than the mockup, and the face is different.",
+    "strengths": [
+      "The cream coat, the brown back patch, and the brown hooves match the mockup.",
+      "The curly blond forelock is a good match.",
+      "The sprites read as a pony in every direction."
+    ],
+    "issues": [
+      "The eyes are green and medium size. Make them very large and dark brown, with eyelashes and a big highlight.",
+      "The legs are long and the body is long. Shorten the legs and the body to make the round, stubby mockup shape.",
+      "The head is smaller than in the mockup. Make the head larger and rounder.",
+      "The mane hangs down the neck in braids. Make a short, fluffy mane as in the mockup.",
+      "The muzzle has a large pale snout with a smile line. Make a small muzzle with a small pink nose."
+    ],
+    "next": "Make the eyes very large, dark brown, and lashed."
+  },
+  "donkey": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A grey chibi donkey with tall ears, a spiky tuft, blue eyes, and a light muzzle. It is the same character as the mockup, but the head is smaller and the stripes are different.",
+    "strengths": [
+      "The tall ears with dark edges and the spiky black tuft read from every view.",
+      "The blue eyes match the mockup.",
+      "The tufted tail and the black hooves match."
+    ],
+    "issues": [
+      "The head and the ears are smaller in relation to the body than in the mockup. Make the head and the ears larger, and the body shorter.",
+      "The stripes are three short dashes on the haunch. They look like scratch marks. Paint wider dark bands on the upper hind legs.",
+      "The muzzle and the chest are white. Make them warm cream.",
+      "The eyes are smaller than in the mockup and lack the brow shape. Enlarge them and add dark eyebrows."
+    ],
+    "next": "Make the head and ears larger and the body shorter."
+  },
+  "mule": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 4, 4, 4.5, 4, 3.5],
+    "summary": "A brown chibi mule with a tan muzzle, a dark mane, a halter, and a pack saddle. It is the same character as the mockup, but the pack and the legs are different.",
+    "strengths": [
+      "The brown coat, the tan muzzle, and the spiky dark mane match the mockup.",
+      "The halter and the rope read clearly.",
+      "The pack with a red blanket and a bedroll gives the role at 128 px."
+    ],
+    "issues": [
+      "The pack is small. Make a tall load of stacked crates and a bedroll tied with rope, as in the mockup.",
+      "The cream fur cuffs above the hooves are not in the mockup. Remove them or make them a thin band.",
+      "The legs are longer than in the mockup. Shorten them and make the body more barrel-shaped.",
+      "The mockup has a rope coil around the neck. Add it."
+    ],
+    "next": "Make the pack a tall load of stacked crates and a bedroll with rope."
+  },
+  "stag": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "An orange chibi deer with antlers, a white chest, and black hooves. It is the same animal, but the antlers and the eyes are clearly different from the mockup.",
+    "strengths": [
+      "The orange coat, the white chest, and the large pale-lined ears match the mockup.",
+      "The deer reads clearly in every sprite direction.",
+      "The walk is clean, and the hooves lift and land."
+    ],
+    "issues": [
+      "The antlers are tall, narrow, and have few tines. Make wide, thick antlers that spread outward with many tines, as in the mockup.",
+      "The eyes are smaller than in the mockup. Make them very large and glossy, with a big highlight.",
+      "The mockup has a cream spot on the flank. Add it.",
+      "The legs are very thin and the hooves are small. Make the legs a little thicker and the hooves larger."
+    ],
+    "next": "Rebuild the antlers as a wide, thick crown with many tines."
+  },
+  "elk": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "A tan chibi deer with antlers and a dark brown neck ruff. It is the same animal, but the face, the antlers, and the legs are clearly different from the mockup.",
+    "strengths": [
+      "The tan coat and the shaggy dark ruff match the mockup.",
+      "The cream belly and the black hooves match.",
+      "The walk is clean."
+    ],
+    "issues": [
+      "The mouth is a very small smile and the nose is small. Make a wide grin and a large black ball nose, as in the mockup.",
+      "The antlers are tall and narrow. Make them shorter and spread them wider to the sides.",
+      "The legs are very thin. Make them stockier, as in the mockup.",
+      "The model looks like the stag with a new color. Make the head broader and the body heavier to give the elk its own shape."
+    ],
+    "next": "Give the face the wide grin and the large black nose of the mockup."
+  },
+  "moose": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "A dark brown chibi moose with light palm antlers, a hair tuft, a dewlap, and cream lower legs. The face expression and the antler size are different from the mockup.",
+    "strengths": [
+      "The dark brown body, the light palm antlers, and the black tuft match the mockup palette.",
+      "The cream lower legs and the black hooves match.",
+      "The dewlap is a good moose detail."
+    ],
+    "issues": [
+      "The mouth is a closed smile. The mockup has an open grin with a red mouth. Open the mouth and show the red inside.",
+      "The antlers are small and look like large ears. Make them much wider, so they spread far past the sides of the head.",
+      "The eyes are glossy black. Make them white with black pupils, as in the mockup.",
+      "The muzzle is small. Make it larger and more bulbous.",
+      "The legs are thin. Make them stockier."
+    ],
+    "next": "Open the mouth in a wide grin with a red inside."
+  },
+  "goat": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A white chibi goat with golden horns, wide ears, brown eyes, and a brown flank spot. It is the same animal, but the head tuft, the beard, and the legs are clearly different.",
+    "strengths": [
+      "The cream coat, the golden horns, the wide ears, and the brown eyes match the mockup.",
+      "The pink nose and the small smile match.",
+      "The brown flank spot and the black hooves match."
+    ],
+    "issues": [
+      "The head tuft is a round knob. Make a swept forelock that curls forward, as in the mockup.",
+      "The model has a white beard. The mockup has no beard. Remove the beard and add the chest fluff.",
+      "The legs are long and thin. Make them shorter and stockier.",
+      "The horns stand up. Curve them back around the head, as in the mockup."
+    ],
+    "next": "Replace the knob with a swept forelock and remove the beard."
+  },
+  "pack-goat": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 2.5, 3, 3.5, 3.5, 3, 4, 4.5, 3.5, 3.5],
+    "summary": "A grey goat with curled horns and small red and tan bags. The body is slim and smooth, and the mockup goat is stocky and shaggy.",
+    "strengths": [
+      "The ridged, curled horns match the mockup well.",
+      "The grey coat and the red and tan bag colors match.",
+      "The large brown eyes read at 128 px."
+    ],
+    "issues": [
+      "The body is slim and the legs are long and thin, like a deer. Make the body stocky and the legs shorter and thicker.",
+      "The coat is smooth. Add the long shaggy grey hair on the neck, the chest, and the belly.",
+      "The bags are small. Make large saddlebags with brown straps across the chest and the belly.",
+      "The beard is white. Make it grey and shaggy.",
+      "The mockup has a visible smile. Add a mouth."
+    ],
+    "next": "Make the body stocky with short thick legs and a shaggy coat."
+  },
+  "sheep": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3.5, 3, 3, 2.5, 4, 4.5, 4, 3.5],
+    "summary": "A white chibi sheep with a cream face, pink ears, and a woolly body. The wool, the eyes, and the legs are clearly different from the mockup.",
+    "strengths": [
+      "The cream face, the blush, and the small smile read well.",
+      "The woolly round body reads as a sheep in every sprite direction.",
+      "The black hooves match."
+    ],
+    "issues": [
+      "The wool is a rough, crumpled surface with dark specks. Make neat cream spiral curls, as in the mockup.",
+      "The legs are long and thin. Make them very short, so the sheep is a squat column.",
+      "The eyes are glossy black. Make them white with black pupils.",
+      "The nose is a brown oval. Make a small black triangle nose.",
+      "The wool on the head is a small cap. Cover the top and the sides of the head with curls."
+    ],
+    "next": "Replace the rough wool with neat cream spiral curls."
+  },
+  "cow": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A white chibi cow with black spots, gold horns, a pink muzzle, and a collar with a bell. It is the same character as the mockup, with clear differences in the patches and the legs.",
+    "strengths": [
+      "The gold horns, the pink muzzle, and the collar with a gold bell match the mockup.",
+      "The black and white pattern reads at 128 px.",
+      "The tufted tail matches."
+    ],
+    "issues": [
+      "The mockup has a black patch over one eye and the top of the head. Add it.",
+      "The legs are long. Shorten them for the stocky mockup shape.",
+      "The mockup has black spots on the legs and a pink udder. Add them.",
+      "The muzzle has a smile line. The mockup muzzle has only nostrils. Remove the line or make it very small."
+    ],
+    "next": "Add the black patch over one eye and the top of the head."
+  },
+  "ox": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A brown chibi ox with cream horns, a pink muzzle, and a bead collar with a bell. It is the same character as the mockup, with clear differences in the horns and the harness.",
+    "strengths": [
+      "The brown coat, the big eyes, and the cream horns match the mockup.",
+      "The bell gives the farm role.",
+      "The tufted tail and the black hooves match."
+    ],
+    "issues": [
+      "The horns go out to the sides and are thin. Make thicker horns that curve up like a crescent.",
+      "The collar is on the neck. The mockup has a rope around the body with the bell. Move the rope to the chest and the body.",
+      "The muzzle is pink. Make it tan, as in the mockup.",
+      "The legs are long. Make them shorter for the stocky mockup shape."
+    ],
+    "next": "Make the horns thicker and curve them up like a crescent."
+  },
+  "yak": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A shaggy brown chibi yak with cream horns, a fringe, and a tan face. It is the same character as the mockup, but the hair shape is different.",
+    "strengths": [
+      "The cream horns, the fringe over the eyes, and the tan face match the mockup.",
+      "The long hair gives a clear yak silhouette in the sprites.",
+      "The black hooves match."
+    ],
+    "issues": [
+      "The hair hangs as flat, straight strips like a curtain. Make thick, wavy clumps with varied length, as in the mockup.",
+      "The tan lower legs show below the hair. Lengthen the hair so it covers the legs down to the hooves.",
+      "The tail is long like a horse tail. Make a short fluffy tail.",
+      "The muzzle is cream. Make it tan with dark nostrils."
+    ],
+    "next": "Rebuild the hair as thick wavy clumps that cover the legs."
+  },
+  "camel": {
+    "overall": 5.5,
+    "scores": [2, 2.5, 3, 2.5, 3.5, 3.5, 3, 4, 4.5, 3, 3.5],
+    "summary": "A tan chibi animal with lashed eyes, a hair tuft, and a striped blanket. It has no long curved neck and no clear hump, so it reads as a llama or a fawn, not a camel.",
+    "strengths": [
+      "The tan coat, the lashed eyes, and the hair tuft match the mockup.",
+      "The knobby knees are a good camel detail.",
+      "The walk is clean."
+    ],
+    "issues": [
+      "The head sits on a short neck. Make a long neck that curves up from the chest and holds the head forward.",
+      "There is no clear hump. Make a tall hump on the back and put the blanket over it.",
+      "The blanket is flat rainbow stripes. Make a red blanket with colorful rolled trim and tassels, as in the mockup.",
+      "The head is round like a fawn. Make a longer camel head with a large droopy muzzle.",
+      "The feet are pale hooves. Make wide brown pads."
+    ],
+    "next": "Add the long curved neck and a tall hump under the blanket."
+  }
+}

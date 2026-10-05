@@ -1,0 +1,90 @@
+{
+  "crocodile": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4.5, 4, 4, 3.5],
+    "summary": "A green crocodile with a cream belly, big top eyes, an open grin, and back spikes. It is the mockup animal, but the legs are taller and the head is smaller.",
+    "strengths": ["The green and cream palette matches the mockup.", "The long flat snout and the spiked tail read well from the side.", "The sprites read the crocodile in all eight directions."],
+    "issues": ["The legs are too long, so the body stands high. In the mockup, the body is low and the legs are short. Shorten the legs.", "The head is small for the body. Make the head and the eyes larger for chibi appeal.", "The mouth shows a long row of many teeth. The mockup shows a few teeth in a soft grin. Use fewer, larger teeth.", "The back has two rows of thin spikes. The mockup has one row of round spikes."],
+    "next": "Shorten the legs and lower the body so the belly is near the ground."
+  },
+  "crab": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 4, 3.5, 3.5, 4, 4, 3.5, 3.5],
+    "summary": "A red crab with raised claws and a smile. The long spider-like legs, the eyes on stalks, and the cream belly differ clearly from the mockup.",
+    "strengths": ["The red color and the raised claws match the mockup.", "The smile reads at 128 px from the front."],
+    "issues": ["The legs are long and thin with black tips, and they lift the body high. The mockup has short round legs, and the body sits near the ground. Make the legs short and stubby.", "The eyes sit on stalks above the body. In the mockup, the large eyes are on the front of the body. Move the eyes onto the body and make them larger.", "The lower half of the body is cream. The mockup body is red all over. Paint the body red.", "The two small horns on top of the mockup body are missing.", "The claws are tall and thin. The mockup claws are round, short pincers."],
+    "next": "Make the legs short and stubby so the round body sits near the ground."
+  },
+  "frog": {
+    "overall": 5.5,
+    "scores": [2.5, 3, 2.5, 3, 3.5, 3.5, 3, 4, 4, 3.5, 3],
+    "summary": "A wide green frog with a cream belly and a line smile. The mockup frog has huge lidded eyes and a tall upright body, so the face and the silhouette differ clearly.",
+    "strengths": ["The cream belly and the folded hind legs match the mockup.", "The model sits on the ground and the walk clip moves the legs."],
+    "issues": ["The eyes are small and sit on the top edges of the head. The mockup eyes are very large and bulge forward with green lids. Make the eyes about three times larger and add the lids.", "The mouth is a wide black line smile. The mockup has a small closed mouth with a cream chin and lips. Change the mouth to match.", "The body is wide and squat, and the head merges into the body. The mockup body is taller and the head is distinct. Make the body narrower and taller.", "From the side and the back, the model is a lumpy blob. Give the back and the hips a clear form.", "The green is more saturated than the soft yellow-green of the mockup."],
+    "next": "Make the eyes very large with green lids, and change the mouth to the small closed mockup mouth."
+  },
+  "fish": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4.5, 3.5, 4, 4.5, 4, 4, 3],
+    "summary": "A round blue toy fish with a yellow underside, yellow-rimmed eyes, and an open smile. It matches the mockup with small differences in the fins and the body shape.",
+    "strengths": ["The blue and yellow two-tone body matches the mockup.", "The large eyes with yellow rims and the open smile match the mockup face.", "The fish reads clearly at 128 px in all directions."],
+    "issues": ["The body is round and tall. The mockup body is a little longer than it is tall. Stretch the body a little along its length.", "The tail fin is small. Make the tail fin larger and wider like the mockup fan.", "The pectoral fins and the dorsal fin are small. Make them larger.", "The swim clip moves only the tail a small amount. Add a body sway."],
+    "next": "Make the tail fin and the side fins larger."
+  },
+  "trout": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 4, 3],
+    "summary": "An olive trout with dark spots, a pink side stripe, and a cream belly. It is the mockup fish, but the spots, the eyes, and the mouth differ clearly.",
+    "strengths": ["The olive body, the pink stripe, and the cream belly match the mockup palette.", "The side silhouette with the dorsal fin and the fan tail reads well.", "The sprites read the fish in all directions."],
+    "issues": ["The spots are small and grey. The mockup spots are larger and black, with red spots along the pink stripe. Make the spots black and larger, and add red spots.", "The eyes sit on the sides of the head. The mockup eyes bulge from the top of the head. Move the eyes up.", "The mouth is a dark red ring. The mockup mouth is an open pout with a cream lower lip. Change the mouth.", "The swim clip moves only the tail a small amount."],
+    "next": "Make the spots black and larger, and add the red spots on the stripe."
+  },
+  "seal": {
+    "overall": 6.5,
+    "scores": [3, 4, 3, 3.5, 3.5, 3, 3, 4.5, 4, 4, 3],
+    "summary": "A grey seal pup that lies on its belly with whiskers and a black nose. The open sparkly eyes and the longer body differ from the calm, half-lidded mockup face and short body.",
+    "strengths": ["The round head, the black nose, and the whiskers match the mockup.", "The pose on the belly matches the mockup.", "The face reads at 128 px from the front."],
+    "issues": ["The eyes are round, open, and sparkly. The mockup eyes are calm, half-lidded almond shapes. Change the eyes to the mockup shape.", "The small mouth line under the nose is missing. Add it.", "The body is long. The mockup body is short and the head is large. Shorten the body.", "The rear flippers are small and low. The mockup rear flippers rise high behind the body. Raise and enlarge them.", "The front flippers are long and thin. The mockup front flippers are short, wide paddles.", "The grey is cool and light. The mockup grey is warmer and a little darker."],
+    "next": "Change the eyes to calm half-lidded almond shapes and add the mouth line."
+  },
+  "turtle": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4.5, 4, 4, 3.5],
+    "summary": "A light green pond turtle with a big round head, black eyes, a smile, and a dark green plated shell with a cream rim. It matches the mockup with small differences.",
+    "strengths": ["The head, the eyes, and the smile match the mockup.", "The shell plates and the cream rim match the mockup.", "The turtle reads clearly at 128 px, and the walk clip moves the stubby legs."],
+    "issues": ["The neck rises nearly vertical, so the head sits high. The mockup head reaches more forward. Tilt the neck forward.", "The smile is small. The mockup smile is wider and clearer. Widen the smile.", "The shell is a little low. The mockup shell is a taller dome."],
+    "next": "Tilt the neck forward so the head reaches out like the mockup."
+  },
+  "octopus": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 4, 3.5],
+    "summary": "A purple octopus with a round head, sparkly eyes, blush, and curled tentacles. It is the mockup character, but the eyes are smaller and the color is more saturated.",
+    "strengths": ["The round head, the blush, and the smile match the mockup face.", "The curled tentacle tips match the mockup.", "The octopus reads at 128 px in all directions."],
+    "issues": ["The eyes are small. The mockup eyes are very large and sit low on the head. Make the eyes about twice as large.", "The purple is saturated. The mockup is a pale lilac. Make the color lighter and less saturated.", "A tall skirt sits between the head and the tentacles, so the model is tall. The mockup tentacles are short and hug the ground. Shorten the skirt.", "The small raised bumps on the mockup head are flat spots on the model."],
+    "next": "Make the eyes about twice as large and lower them on the head."
+  },
+  "eel": {
+    "overall": 6.0,
+    "scores": [2.5, 3, 2.5, 3, 3.5, 3.5, 3, 3, 3.5, 3.5, 3],
+    "summary": "A green eel with a cream belly that rises from the ground. The ball head on a thin neck, the missing head crest, and the L-shaped body differ clearly from the mockup.",
+    "strengths": ["The green and cream palette matches the mockup.", "The banded cream belly and the spiked tail match the mockup.", "The eel reads at 128 px."],
+    "issues": ["The head is a large ball on a thin neck. A ring sticks out around the neck under the head, and the head looks like a separate part. Blend the head into a thick neck and remove the ring.", "The crest of spines on the head and the upper back is missing. Add the crest from the head down the back.", "The eyes face forward like a frog. The mockup eyes are on the sides of the head. Move the eyes to the sides.", "The body rises straight up and turns at a right angle. The mockup body is an S-curve coil. Bend the body into an S-curve.", "The body is thin. The mockup body is thicker."],
+    "next": "Blend the head into a thick neck, remove the ring, and add the head crest."
+  },
+  "salmon": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4.5, 4, 4, 3],
+    "summary": "A grey and pink salmon with a smile and a gill line. It is the mockup fish, but the eyes are smaller, the top color is lighter, and the body is narrower.",
+    "strengths": ["The two-tone body with the pink lower half matches the mockup.", "The smile and the gill line match the mockup face.", "The fish reads at 128 px in all directions."],
+    "issues": ["The eyes are small. The mockup eyes are large with big highlights. Make the eyes larger.", "The top color is a light blue-grey. The mockup top is a dark slate grey. Make the top darker for more contrast with the pink.", "The body is narrow from the front. The mockup body is chubby and the head is large. Make the body wider and the head larger.", "The fins are smooth. The mockup fins have ridges.", "The swim clip moves only the tail a small amount."],
+    "next": "Make the eyes larger and the top color a darker slate grey."
+  },
+  "dolphin": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4.5, 4, 4, 3],
+    "summary": "A grey dolphin that sits upright with a white belly, big eyes, and a short beak. The head and the body merge into one tall bean shape, and the yellow fin of the mockup is missing.",
+    "strengths": ["The upright sitting pose, the white belly, and the flippers match the mockup.", "The eyes and the smile read at 128 px."],
+    "issues": ["The head and the body are one tall bean shape. The mockup has a large round head on a round body. Make the head a distinct large ball.", "The yellow fin at the back of the mockup is missing. Add it.", "The beak is a ball in the middle of the face. The mockup beak is wider and joins a clear smile. Widen the beak and the smile.", "The tail lies flat. The mockup tail curls up behind the body. Curl the tail up.", "The eyes are dark brown with large sparkles. The mockup eyes are black with one highlight."],
+    "next": "Make the head a distinct large round ball on a round body."
+  }
+}
