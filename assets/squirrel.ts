@@ -31,7 +31,7 @@ export default scaleAsset(
     variants: {
       fur: { red: '#d06a2a', grey: '#8a8680', brown: '#8a5a36', black: '#3a3432' },
       markings: { cream: '#f4e2c4', white: '#f6f4f0' },
-      eyes: { dark: '#3a2214', brown: '#8a5a2e' },
+      eyes: { brown: '#7a4a24', dark: '#3a2214' },
     },
     presets: {
       grey: { fur: 'grey', markings: 'white', eyes: 'brown' },
@@ -39,11 +39,13 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'white', eyes: 'dark' },
     },
     // The lower legs keep the fur color (no dark socks); the lower cheeks and the chest are cream.
-    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#fbf4ea', nose: '#1a1214', pupil: '#0e0a08' },
+    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#24160c', nose: '#1a1214', pupil: '#0e0a08' },
     earScale: EAR_SCALE,
     eyeScale: 1.55,
     pupilScale: 1.25,
-    smileArc: [263, 277],
+    smileArc: [252, 288],
+    headScale: 1.18,
+    furBump: 0,
     snout: 0.03,
     muzzleWidth: 0.62,
     cheekCream: false,
@@ -62,7 +64,7 @@ export default scaleAsset(
     paintMuzzle: (m, t) => m.paintWhere(sdf.halfSpace([0, -1, 0], -0.425), t.fur, 0.01),
     paint(fur, t) {
       // Big round haunches on the hind legs, and the cream belly between the legs.
-      const haunch = sdf.ellipsoid([0.09, 0.125, 0.135]).rotateX(-12).at(0.088, 0.25, -0.2).bone('bleg.L').mirror('x');
+      const haunch = sdf.ellipsoid([0.1, 0.14, 0.15]).rotateX(-12).at(0.09, 0.25, -0.2).bone('bleg.L').mirror('x');
       // The front legs keep the fur color below the cream chest.
       const frontLeg = sdf.capsule([0.1, 0.17, 0.08], [0.105, 0.0, 0.09], 0.062).mirror('x');
       return fur
@@ -115,7 +117,7 @@ export default scaleAsset(
       }
       P.push(KEY[KEY.length - 1]!);
       const core = sdf.chain(P.map((p) => [p[0], p[1], p[2], p[3] * 0.66] as P4), 0.04);
-      const N = 7;
+      const N = 9;
       const locks = Array.from({ length: N }, (_, j) => {
         const pts = P.map((p, i) => {
           const th = (j / N) * 2 * Math.PI + 0.3 + 0.1 * i; // the locks twist a little along the tail
@@ -125,21 +127,21 @@ export default scaleAsset(
           const tz = b[2] - a[2];
           const tl = Math.hypot(ty, tz) || 1;
           const off = p[3] * (0.6 + 0.06 * noise.random(j, i >> 1, 5));
-          return [p[0] + Math.cos(th) * off * 0.85, p[1] - (tz / tl) * Math.sin(th) * off, p[2] + (ty / tl) * Math.sin(th) * off, p[3] * (0.42 + 0.04 * noise.random(j, i >> 1, 9))] as P4;
+          return [p[0] + Math.cos(th) * off * 0.85, p[1] - (tz / tl) * Math.sin(th) * off, p[2] + (ty / tl) * Math.sin(th) * off, p[3] * (0.36 + 0.04 * noise.random(j, i >> 1, 9))] as P4;
         });
-        return sdf.chain(pts, 0.03);
+        return sdf.chain(pts, 0.025);
       });
       const dark = w.tone('fur', '#a8441a', 0.9);
       const plume = sdf
         // A round fill inside the curl, so the plume reads as one full ball from the side.
-        .smoothUnion(0.012, core, ...locks, sdf.ellipsoid([0.14, 0.19, 0.19]).at(0, 0.63, -0.46))
+        .smoothUnion(0.007, core, ...locks, sdf.ellipsoid([0.14, 0.19, 0.19]).at(0, 0.63, -0.46))
         .paintWhere(core.round(0.035), dark, 0.03)
         .paintWhere(sdf.sphere(0.16).at(0, 0.32, -0.32), dark, 0.06);
       // Big round highlights on the eyes (upper outer side of each eye).
       const e = w.eye;
       const shine = sdf.sphere(0.016).scale([1, 1, 0.3]).at(e[0] + 0.016, e[1] + 0.02, e[2] - 0.004).mirror('x');
       k.body('eye-shine', shine.bone('head'), { color: '#ffffff', roughness: 0.1, detail: 0.002 });
-      k.body('tail-fur', plume.bone('tail'), { color: w.tone('fur', '#e0823c', 1), roughness: 0.9, detail: 0.006, bump: (x, y, z) => 0.003 * noise.noise3(x * 60, y * 20, z * 60) });
+      k.body('tail-fur', plume.bone('tail'), { color: w.tone('fur', '#e0823c', 1), roughness: 0.85, detail: 0.005 });
     },
     // The run is a bound: in the air the body stretches, the hind legs reach back, and the front
     // paws fold up to the chest; on landing the front paws reach down and the hind legs swing

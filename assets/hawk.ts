@@ -17,7 +17,7 @@ import { scaleAsset } from './parts/scale-asset.js';
 export default scaleAsset(
   birdAsset({
     name: 'hawk',
-    description: 'Chibi hawk: a squat red-tailed hawk with a big brown head with a shaggy cap of short spikes, a cream face, a yellow beak with a small dark open smile, big glossy black eyes, a cream body with brown spots, brown wings, a big rusty red tail fanned up behind, and short yellow legs; bird rig with wings.',
+    description: 'Chibi hawk: a squat red-tailed hawk with a big brown head with a shaggy crest of spikes that point up and back, a cream face, a yellow beak with a small dark open smile, glossy black bead eyes, a cream body with brown spots, brown wings, a big rusty red tail fanned wide and raised behind, and short yellow legs; bird rig with wings.',
     reference: 'docs/wildlife-mockups/hawk_001.jpg',
     variants: {
       body: { cream: '#f2e2c4', buff: '#e0c89c', pale: '#f6efe2' },
@@ -37,11 +37,10 @@ export default scaleAsset(
     mouth: false,
     beakColors: ['#f0c030', '#f0c030'],
     brows: false,
-    eyeStyle: 'white',
+    eyeStyle: 'bead',
     eyesOverPaint: true,
-    irisScale: 1.3,
     glint: 1.3,
-    eyeScale: 1.25,
+    eyeScale: 1.05,
     featherBump: 0.004,
     featherOn: { body: false, head: false },
     walkBob: 0.5,
@@ -69,7 +68,8 @@ export default scaleAsset(
     paintBody(body, b) {
       // A brown bib over the upper chest and the shoulders with a zigzag lower edge.
       const { HEAD_C, HR } = b.joints;
-      const top = HEAD_C[1] - HR * 0.55;
+      // The bib reaches up under the head, so no cream shows between the head and the bib.
+      const top = HEAD_C[1] - HR * 0.3;
       const bottom = HEAD_C[1] - HR * 1.12;
       const band = sdf.box([1, top - bottom, 1]).at(0, (top + bottom) / 2, 0);
       // Points of different lengths and widths, a little off a regular spacing, so the edge looks
@@ -90,28 +90,28 @@ export default scaleAsset(
       // A shaggy cap: short soft spikes over the crown, leaning back.
       const { HEAD_C, HR } = b.joints;
       const spikes: sdf.Shape[] = [];
-      for (const [elev, from, to, n] of [[86, 0, 0, 1], [62, -50, 60, 4]] as const) {
+      for (const [elev, from, to, n] of [[86, 0, 0, 1], [72, -35, 35, 3], [58, -55, 60, 4]] as const) {
         for (let i = 0; i < n; i++) {
           const az = ((n === 1 ? 0 : from + ((to - from) * i) / (n - 1)) + (noise.random(elev, i, 3) - 0.5) * 10) * (Math.PI / 180);
           const e = (elev * Math.PI) / 180;
           // Azimuth 0 points back (-Z); the face side (|az| > 120 at low rows) stays clear.
           const d: [number, number, number] = [Math.sin(az) * Math.cos(e), Math.sin(e), -Math.cos(az) * Math.cos(e)];
           const base: [number, number, number] = [HEAD_C[0] + d[0] * HR * 0.9, HEAD_C[1] + d[1] * HR * 0.9, HEAD_C[2] + d[2] * HR * 0.9];
-          const len = HR * (0.26 + 0.1 * noise.random(elev, i, 7));
-          const tip: [number, number, number] = [base[0] + d[0] * len * 0.55, base[1] + d[1] * len * 0.55 + len * 0.2, base[2] + d[2] * len * 0.55 - len * 0.6];
-          spikes.push(sdf.cone(base, tip, HR * 0.15, HR * 0.04));
+          const len = HR * (0.42 + 0.14 * noise.random(elev, i, 7));
+          const tip: [number, number, number] = [base[0] + d[0] * len * 0.5, base[1] + d[1] * len * 0.5 + len * 0.45, base[2] + d[2] * len * 0.5 - len * 0.5];
+          spikes.push(sdf.cone(base, tip, HR * 0.17, HR * 0.035));
         }
       }
       k.body('tuft', sdf.smoothUnion(0.012, ...spikes).bone('head'), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
-      // The rusty tail, fanned up behind the body so it shows from the front.
+      // The big rusty tail, fanned wide and raised behind the body so it shows from the front.
       const fan = sdf.smoothUnion(
-        0.01,
-        ...[-60, -30, 0, 30, 60].map((a) =>
+        0.012,
+        ...[-72, -48, -24, 0, 24, 48, 72].map((a) =>
           sdf
-            .ellipsoid([0.045, 0.014, 0.12])
-            .at(0, 0, -0.11)
-            .rotateY(a * 0.7)
-            .rotateX(40)
+            .ellipsoid([0.06, 0.018, 0.17 - Math.abs(a) * 0.0004])
+            .at(0, 0, -0.15)
+            .rotateY(a * 0.75)
+            .rotateX(58)
             .at(...TAIL_AT),
         ),
       );

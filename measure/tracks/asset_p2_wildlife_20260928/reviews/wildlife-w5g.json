@@ -1,0 +1,86 @@
+{
+  "pack-goat": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A gray pack goat with curled horns, a beard, a red blanket, and four bags. It is the same animal as the mockup, but the head, the body length, and the mane are clearly different.",
+    "strengths": [
+      "The ribbed horns curl back and read as the main shape from every view.",
+      "The red blanket and the four bags read in all 8 sprite directions.",
+      "The beard, the smile, and the large eyes give chibi appeal.",
+      "The model stands on the ground, faces +Z, and has a rig and clips."
+    ],
+    "issues": [
+      "The head is a round ball with a short muzzle. It looks like a lamb. Make the muzzle longer and narrower, as in the mockup goat face.",
+      "The eyes are white with black pupils. The mockup eyes have large brown irises. Add a brown iris to each eye.",
+      "The body is short and the neck is vertical. The mockup has a longer body and a neck that leans forward. Make the body longer and move the head lower and forward.",
+      "The mane is a thin dark ridge with lumps. In the back view, it looks like a crease. Make a soft, light gray mane that flows down the neck and the back.",
+      "The bags are a saturated yellow-orange. The mockup bags are a pale tan. Make the bag color paler and less saturated.",
+      "The ears are large and flat. The mockup ears are smaller. Make the ears smaller.",
+      "The legs are one light gray. The mockup lower legs are darker. Add a darker gray to the lower legs."
+    ],
+    "next": "Make the muzzle longer and narrower, so that the head reads as a goat and not as a lamb."
+  },
+  "sheep": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 2.5, 3, 2.5, 3, 4.5, 3.5, 3],
+    "summary": "A lamb with a cream face, big eyes, pink cheeks, and a curly wool coat. The face is close to the mockup, but the wool color and the wool shape are clearly different.",
+    "strengths": [
+      "The face is close to the mockup: big glossy eyes, pink cheeks, a small dark nose, and a smile.",
+      "The ears stand out to the sides and give a clear front silhouette.",
+      "The dark hooves give a clear value accent at the ground.",
+      "The face reads at 128 px in the S, SW, and SE sprites."
+    ],
+    "issues": [
+      "The wool is gray-beige and has almost the same value as the face and the legs. The mockup wool is bright white. Make the wool white, so that the wool cloud has clear contrast with the cream face.",
+      "The wool is a pattern of small, sharp spirals with hard shadows. It looks like a stamped carving and reads as noise. Use fewer, larger, soft curls, as in the mockup.",
+      "A dark hollow shows on the back behind the head in the side view, in the walk strip, and in the W sprite. Fill the hollow with wool.",
+      "The wool covers the head like a hood, and a dark seam shows at the edge of the face. The mockup has wool only on the top and the sides of the head. Remove the seam and show more of the cream head.",
+      "The head is small relative to the body, and a neck shows in the side view. Make the head larger and put it directly on the wool body.",
+      "The wool body is a long box in the side view. Make the wool body a round cloud.",
+      "The mockup has dark eyebrows above the eyes. Add the eyebrows."
+    ],
+    "next": "Make the wool bright white with large soft curls, so that the round wool cloud reads at 128 px."
+  },
+  "camel": {
+    "overall": 5.5,
+    "scores": [2.5, 3, 3, 2.5, 3.5, 3.5, 3.5, 3.5, 4.5, 3.5, 3.5],
+    "summary": "A tan animal with a long neck, big eyes with lashes, and a striped blanket. The back has no readable hump, so the model reads more as a llama than as the mockup camel.",
+    "strengths": [
+      "The large head, the big eyes, the eyelashes, and the wide muzzle are close to the mockup face.",
+      "The red blanket with green, blue, and yellow stripes gives a bright accent that reads at 128 px.",
+      "The tail with a dark tuft matches the mockup.",
+      "The model stands on the ground, faces +Z, and has a rig and clips."
+    ],
+    "issues": [
+      "The back has no readable hump. The blanket is a flat stack of stripes on a flat back. Add a large round hump, as in the mockup, and drape the blanket over it.",
+      "The neck is straight and thin. With the flat back and the fuzzy coat, the model reads as a llama. Give the neck the camel S curve: low at the chest and high at the head.",
+      "The legs are thin and straight, with small hooves. The mockup legs are thick, with round knees and wide pinkish-brown pads. Make the legs thicker, add knees, and make the feet wider.",
+      "The coat is a muted sand color with a fuzzy texture. The mockup coat is a warm peach tan with a smooth clay surface. Make the color warmer and the surface smoother.",
+      "The blanket trim is straight stripes. The mockup trim is a ruffled rope in many colors. Make the trim ruffled.",
+      "The tuft on the head is dark and spiky. The mockup tuft is soft and light brown. Make the tuft softer and lighter.",
+      "The ears are small and round. The mockup ears are larger and pointed. Make the ears larger and pointed."
+    ],
+    "next": "Add a large round hump under the blanket and curve the neck, so that the silhouette reads as a camel."
+  },
+  "elk": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A chibi elk with wide dark antlers, large ears, a dark ruff, and a black nose. It is the same animal as the mockup, with clear differences in the eyes, the legs, and the ruff.",
+    "strengths": [
+      "The wide dark antlers with tines read as the main shape in all 8 sprite directions.",
+      "The dark ruff on the chest gives a strong value accent below the face.",
+      "The large ears with light insides and the black nose match the mockup.",
+      "The model is clean, stands on the ground, faces +Z, and has a rig and clips."
+    ],
+    "issues": [
+      "The eyes are white bulges with heavy upper lids and small black pupils. The look is sleepy. The mockup eyes have brown irises that look up, with a warm, happy look. Add brown irises and remove the heavy lids.",
+      "The smile is a short line. The mockup has a wide grin across the muzzle. Make the smile wider.",
+      "The legs are long and thin, and the body is small. The mockup legs are shorter and thicker. Make the legs shorter and thicker.",
+      "The ruff is a narrow bib. The mockup ruff is a wide collar that extends past the sides of the neck. Make the ruff wider.",
+      "The mockup has a cream patch on the chest below the ruff. The model has no cream patch there. Add the cream chest patch.",
+      "The nose is a large glossy ball. Make the nose smaller.",
+      "The coat is a light orange. The mockup coat is a warmer, darker tan. Make the coat darker."
+    ],
+    "next": "Change the eyes to brown irises that look up, and make the smile wider, so that the face has the warm mockup look."
+  }
+}

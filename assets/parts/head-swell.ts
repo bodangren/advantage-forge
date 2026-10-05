@@ -104,22 +104,38 @@ export function legStretch(k0: AssetContext, d: number, y0: number, y1: number):
  * and the neck blends between them over the gap. Paint and bone tags follow; joints in the head
  * move by `T`, and joints between move part of the way.
  */
-export function headShift(k0: AssetContext, T: V3, z: HeadZones): AssetContext {
+/** The weight of the head at a point for `headShift`: 1 near the head zone, 0 near the body zone. */
+const shiftWeight = (z: HeadZones, head: sdf.Shape, x: number, y: number, w: number) => {
   const K = z.blend ?? 0.06;
-  const moved = z.head.at(T[0], T[1], T[2]);
-  // The weight of the head at a point: 1 near the head zone, 0 near the body zone.
-  const weight = (head: sdf.Shape, x: number, y: number, w: number) => {
-    const t = Math.min(1, Math.max(0, (z.body.dist(x, y, w) - head.dist(x, y, w) + K) / (2 * K)));
-    return t * t * (3 - 2 * t);
-  };
-  const map = (x: number, y: number, w: number): V3 => {
-    const s = weight(moved, x, y, w);
-    return [x - T[0] * s, y - T[1] * s, w - T[2] * s];
-  };
-  const out = (p: V3): [number, number, number] => {
-    const s = weight(z.head, p[0], p[1], p[2]);
+  const t = Math.min(1, Math.max(0, (z.body.dist(x, y, w) - head.dist(x, y, w) + K) / (2 * K)));
+  return t * t * (3 - 2 * t);
+};
+
+/** The point map of `headShift` for rest-pose points (joints, and the ground probes of clips). */
+export function headShiftPoint(T: V3, z: HeadZones): (p: V3) => [number, number, number] {
+  return (p) => {
+    const s = shiftWeight(z, z.head, p[0], p[1], p[2]);
     return [p[0] + T[0] * s, p[1] + T[1] * s, p[2] + T[2] * s];
   };
+}
+
+export function headShift(k0: AssetContext, T: V3, z: HeadZones): AssetContext {
+  const K = z.blend ?? 0.06;
+  // The exact inverse of the point map: the share s where the weight at x - T s is s (bisection;
+  // the weight at x - T s falls as s grows, so there is one such share). A guess from the moved
+  // head zone alone copies bodies just behind the head onto the moved head.
+  const map = (x: number, y: number, w: number): V3 => {
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 14; i++) {
+      const mid = (lo + hi) / 2;
+      if (shiftWeight(z, z.head, x - T[0] * mid, y - T[1] * mid, w - T[2] * mid) > mid) lo = mid;
+      else hi = mid;
+    }
+    const s = (lo + hi) / 2;
+    return [x - T[0] * s, y - T[1] * s, w - T[2] * s];
+  };
+  const out = headShiftPoint(T, z);
   const grow = (b: sdf.Shape['bounds']): sdf.Shape['bounds'] => ({
     min: [0, 1, 2].map((i) => Math.min(b.min[i]!, b.min[i]! + T[i]!)) as unknown as V3,
     max: [0, 1, 2].map((i) => Math.max(b.max[i]!, b.max[i]! + T[i]!)) as unknown as V3,

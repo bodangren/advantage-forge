@@ -1,0 +1,63 @@
+{
+  "riding-lizard": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3, 3.5, 3, 3, 3.5, 4.5, 3.5, 3.5],
+    "summary": "The model is a green, four-legged lizard with orange stripes and a saddle. It is the same animal as the mockup, but the head, the legs, and the saddle have clear differences.",
+    "strengths": [
+      "The green skin, the cream belly, and the orange stripes match the mockup palette.",
+      "The side silhouette with the long tail reads as a lizard mount.",
+      "The saddle and the stripes read in the 128 px sprites.",
+      "The model has walk, run, idle, attack, hit, and death clips. The walk steps all four legs."
+    ],
+    "issues": [
+      "The head does not match the mockup. The snout is a long, flat bill. In the front view, the cream lower jaw reads as a collar around the neck. Make a broad, round snout and paint the lower jaw green.",
+      "The mouth is an open gap. The mockup shows a wide grin with corners that turn up below the eyes. Extend the mouth line back and turn the corners up.",
+      "The front legs are thick columns with the same length as the hind legs. The mockup has shorter front legs with spread toes. Make the front legs shorter and thinner, and spread the toes.",
+      "The saddle is different. The model has a red blanket and a small seat with a horn. The mockup has a brown leather pad with a wide belly strap and a metal buckle. Remove the red blanket and add the strap and the buckle.",
+      "The tail is straight. The mockup tail curves up at the tip. Bend the last third of the tail up.",
+      "The orange stripes on the legs are full rings. The mockup stripes are short marks on the back and the sides. Change the leg rings to short marks. Add the orange ridge bumps along the neck."
+    ],
+    "next": "Rebuild the head with a broad, round snout, a green lower jaw, and a wide grin."
+  },
+  "dragon-mount": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 2.5, 3, 3.5, 3, 3, 3, 4.5, 3.5, 3.5],
+    "summary": "The model is a teal dragon with yellow horns, wings, and a saddle. It is the same animal as the mockup, but the long neck, the long legs, and the face are noticeably off.",
+    "strengths": [
+      "The teal skin, the cream belly plates, and the yellow horns and spikes match the mockup palette.",
+      "The horns and the spine spikes make the silhouette readable from every view.",
+      "The smile matches the friendly expression of the mockup.",
+      "The model has walk, run, idle, attack, hit, and death clips."
+    ],
+    "issues": [
+      "The body is too long. The mockup is a compact baby dragon with a short body, short legs, and an upright chest. The model has a long neck and long column legs. Shorten the neck and the legs, and raise the chest.",
+      "The face has no muzzle. The mockup has a broad, round muzzle with nostrils and full cheeks. The model has a round head with very large eyes on the front. In the side view, the eye is at the tip of the head. Add a broad muzzle and move the eyes back to the sides of the head.",
+      "The horns are straight spikes in a V shape. The mockup horns curve back and out. Bend the horns back.",
+      "The wings are small yellow fins behind the saddle. The mockup wings are larger, with orange-brown membranes and clear ribs. Make the wings larger and paint the membranes orange-brown.",
+      "In the back view, the spine spikes go through the saddle. Remove the spikes under the saddle.",
+      "The ear frills are flat yellow marks on the side of the head. Model them as small fins.",
+      "The saddle has no buckle strap. Add the strap with the metal buckle from the mockup."
+    ],
+    "next": "Shorten the neck and the legs to get the compact, upright body of the mockup."
+  },
+  "gryphon-mount": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 2.5, 3, 4, 3, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is an orange gryphon with a yellow beak, feathered wings, and a blue saddle. The palette matches the mockup, but the long neck, the long legs, and the angry face are noticeably off.",
+    "strengths": [
+      "The palette matches the mockup: an orange body, a yellow beak, yellow lower legs, a blue saddle pad, and a brown chest strap.",
+      "The beak, the wings, and the blue saddle read in the 128 px sprites from every side direction.",
+      "The wings have layered feathers and stand up as in the mockup.",
+      "The model has walk, run, idle, attack, hit, death, fly, and roar clips."
+    ],
+    "issues": [
+      "The neck and the legs are too long and thin. The mockup gryphon is stocky, with a plump chest and short legs. Shorten the neck and the legs, and make the chest and the body wider.",
+      "The face expression is different. The mockup has a confident smile with a closed beak. The model has angry brows and an open beak that hangs down. Close the beak, add a smile line, and make the brows less steep.",
+      "The head does not separate from the neck. The mockup has a round head with a mane of feathers that sweeps back down the neck. Make the head rounder. Replace the spiky top crest with a swept-back mane.",
+      "The tail ends in a spiky ball. The mockup tail ends in a soft, fluffy tuft. Replace the ball with a tuft.",
+      "The toes are round brown beads. The mockup toes are short, curved claws. Change the beads to claws.",
+      "The saddle pad has a yellow border and no rivets. The mockup pad has a brown border and rivets, and the chest strap has a large round blue medallion. Add the brown border, the rivets, and a larger medallion."
+    ],
+    "next": "Shorten the neck and the legs to get the stocky body of the mockup."
+  }
+}

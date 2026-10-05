@@ -7,10 +7,11 @@ import { scaleAsset } from './parts/scale-asset.js';
  * head, faces +Z. Target: docs/wildlife-mockups/camel_001.jpg (made with mmx).
  *
  * The deer of `assets/deer.ts` (body, head, rig, and clips from `assets/parts/deer-kind.ts`) at
- * 1.35 of its size: its long neck and thin legs make a camel. A sandy coat, one big hump under a
- * striped woven blanket with a fringe, a long droopy snout with slit nostrils, long lashes, small
- * round ears, a tuft on the crown, knobby knees, wide pale feet, and a dark-tipped tail; no fawn
- * spots, bib, eye patches, or antlers.
+ * 1.35 of its size: a long low body (`bodyLength`) and a long neck (`headShift`) make a camel. A
+ * sandy coat, one low round hump in the middle of the back under a red blanket with rows of
+ * twisted cords in bright colors and tassels, a long droopy snout with slit nostrils, long lashes,
+ * small round ears, a tuft on the crown, knobby knees, wide brown feet, and a short tail with a dark
+ * tuft; no fawn spots, bib, eye patches, or antlers.
  * Role: the desert traveller's mount and pack animal; the hump and the bright blanket read at
  *   128 px.
  * Palette (60/30/10): sandy coat #d8b07a; a pale snout #e8caa0; a woven blanket in red #c8443a,
@@ -20,10 +21,10 @@ import { scaleAsset } from './parts/scale-asset.js';
 export default scaleAsset(
   deerAsset({
     name: 'camel',
-    description: 'Chibi camel: a big round head with glossy lashed eyes, a long head with a big droopy snout on a long neck that curves up from the chest, small round ears, one tall hump under a red blanket with a rolled rope trim and tassels, a sandy coat, knobby knees, and wide brown feet; quadruped rig.',
+    description: 'Chibi camel: a big round head with glossy lashed eyes, a big droopy snout, a long neck that reaches up and forward from the chest, small round ears, a long low body with one low round hump under a red blanket with twisted cords in bright colors and tassels, a sandy coat, knobby knees, wide brown feet, and a short tail with a dark tuft; quadruped rig.',
     reference: 'docs/wildlife-mockups/camel_001.jpg',
     variants: {
-      fur: { sand: '#d8b07a', brown: '#a87a4e', cream: '#ecdcc0' },
+      fur: { sand: '#e8b87c', brown: '#b07a4c', cream: '#f0dcc0' },
       eyes: { dark: '#2a1a12', brown: '#5a3418' },
       blanket: { red: '#c8443a', blue: '#3a6ab0', green: '#4a9a5a', purple: '#7a4aa0' },
     },
@@ -31,25 +32,30 @@ export default scaleAsset(
       brown: { fur: 'brown', eyes: 'brown', blanket: 'blue' },
       cream: { fur: 'cream', eyes: 'dark', blanket: 'green' },
     },
-    colors: { earInner: '#c89a70', hoof: '#7a5638', cream: '#e8caa0' },
+    colors: { earInner: '#d8a07a', hoof: '#9a6656', cream: '#f2d2a6' },
+    furBump: 0,
     mask: false,
     bib: false,
     spots: false,
     antlers: false,
     nose: false,
-    headShift: [0, 0.14, 0.11],
-    legThick: 1.3,
+    headShift: [0, 0.21, 0.15],
+    bodyZone: sdf.ellipsoid([0.1, 0.13, 0.11]).at(0, 0.5, -0.1),
+    bodyLength: 0.14,
+    legLength: -0.055,
+    tail: 'puff',
+    legThick: 1.6,
     smile: false,
-    earScale: 0.55,
-    earTilt: -60,
+    earScale: 0.8,
+    earWidth: 0.85,
+    earTilt: -48,
     bulk: 0.04,
     headProbes: [[0, 0.56, 0.38], [0, 0.9, 0.16]],
-    paint(fur, deer) {
-      // A dark tip on the tail instead of the white flag.
-      return fur.paintWhere(sdf.sphere(0.08).at(0, 0.51, -0.325), deer.tone('fur', '#7a5a3a', 0.6), 0.01);
+    paint(fur) {
+      return fur;
     },
     extra(k, deer) {
-      const pale = deer.tone('fur', '#e8caa0', 0.5);
+      const pale = deer.tone('fur', '#f2d2a6', 0.5);
       // The snout: long and droopy, with slit nostrils and a split lip.
       // A long head: the snout reaches well forward and droops, big and round at the end.
       const snout = sdf.smoothUnion(0.03, sdf.ellipsoid([0.095, 0.08, 0.11]).at(0, 0.6, 0.31), sdf.ellipsoid([0.092, 0.08, 0.075]).at(0, 0.575, 0.41));
@@ -68,34 +74,64 @@ export default scaleAsset(
       const eL = deer.faceHit(0.086, 0.7);
       const lashes = sdf.union(...[-1, 0, 1].map((i) => sdf.cone([eL[0] + 0.03 + 0.012 * i, eL[1] + 0.045 - 0.004 * Math.abs(i), eL[2] - 0.005], [eL[0] + 0.05 + 0.02 * i, eL[1] + 0.065, eL[2] + 0.02], 0.006, 0.002))).mirror('x');
       const hair = (s: sdf.Shape) => s.displace(0.003, (x, y, z) => noise.fbm(x * 70, y * 30, z * 70, 2));
-      const tuft = hair(sdf.union(...[-1, 0, 1].map((i) => sdf.cone([0.02 * i, 0.86, 0.15], [0.035 * i, 0.92, 0.19], 0.022, 0.007))));
-      k.body('lashes', sdf.union(lashes, tuft), { color: deer.tone('fur', '#5a3a24', 0.5), roughness: 0.8, detail: 0.003, bone: 'head' });
-      // The hump over the middle of the back, and a woven blanket over it with a fringe.
-      const hump = sdf.ellipsoid([0.1, 0.2, 0.13]).at(0, 0.57, -0.08).bone('spine');
+      // A soft knob of hair on the crown: three round lumps.
+      const tuft = sdf.smoothUnion(0.012, ...[-1, 0, 1].map((i) => sdf.sphere(0.024 - 0.003 * Math.abs(i)).at(0.022 * i, 0.885 - 0.006 * Math.abs(i), 0.16 - 0.012 * Math.abs(i))));
+      void hair;
+      k.body('lashes', lashes, { color: deer.tone('fur', '#5a3a24', 0.5), roughness: 0.8, detail: 0.003, bone: 'head' });
+      k.body('tuft', tuft, { color: deer.tone('fur', '#c08a5a', 0.6), roughness: 0.85, detail: 0.003, bone: 'head' });
+      // A low round hump over the middle of the back (the body stretch makes it long), and a red
+      // blanket over it.
+      // The body stretch (`bodyLength`) makes space between z -0.12 and -0.02 2.4 times longer, so
+      // the hump and the blanket are built short in Z here.
+      const HZ = -0.075;
+      const hump = sdf.ellipsoid([0.12, 0.16, 0.055]).at(0, 0.52, HZ).bone('spine');
       const back = sdf.smoothUnion(0.05, deer.trunk, hump);
       k.body('hump', hump, { color: deer.tint.fur, roughness: 0.85, detail: 0.005, bone: 'spine' });
-      // A plain red blanket over the hump, edged with a rolled rope trim in bright colors (yellow,
-      // green, and blue in turn) and tassels that hang from its lower corners.
+      // The base of the neck bulges forward from the chest, so the neck curves forward and then up.
+      const neckBase = sdf.capsule([0, 0.43, 0.12], [0, 0.53, 0.17], 0.07).bone('neck');
+      k.body('neck-base', neckBase, { color: deer.tint.fur, roughness: 0.85, detail: 0.005 });
       const cloth = k.tint('blanket');
-      const blanket = back.round(0.012).smoothIntersect(0.01, sdf.box([0.4, 0.3, 0.2], 0.03).at(0, 0.64, -0.08));
+      // The blanket drapes over the hump and hangs down the sides, its hem in soft folds.
+      const cut = sdf.box([0.4, 0.3, 0.1], 0.02).at(0, 0.6, HZ).displace(0.01, (x, y, z) => (y < 0.5 ? Math.sin(z * 260) : 0));
+      const blanket = back.round(0.012).smoothIntersect(0.01, cut);
       k.body('blanket', blanket, { color: cloth, roughness: 0.85, detail: 0.004, bone: 'spine' });
-      const trimColors = ['#e8b040', '#4a9a5a', '#3a6ab0'].map((c) => rgb(c));
-      const edge = blanket.round(0.012).subtract(blanket.round(0.002)).intersect(sdf.box([0.4, 0.3, 0.2], 0.03).at(0, 0.64, -0.08).subtract(sdf.box([0.4, 0.28, 0.18], 0.025).at(0, 0.66, -0.08)));
-      const trim = edge.round(0.006).paintFn((x, y, z, c) => {
-        const seg = Math.floor((y * 2 + z) / 0.03);
-        return trimColors[((seg % 3) + 3) % 3] ?? c;
-      });
-      k.body('trim', trim, { color: '#e8b040', roughness: 0.8, detail: 0.003, bone: 'spine' });
+      // Loops of twisted cords in bright colors round the hump, each in small ruffles: each loop
+      // follows the blanket surface at one height.
+      const humpSurf = sdf.smoothUnion(0.05, deer.trunk.intersect(sdf.box([0.5, 0.4, 0.22]).at(0, 0.5, -0.09)), hump).round(0.024);
+      const cord = (pts: [number, number, number][], r: number, color: string) =>
+        sdf
+          .chain(pts.map(([x, y, z]) => [x, y, z, r] as [number, number, number, number]), r * 0.6)
+          .paintFn((x, y, z, c) => {
+            const t = 0.82 + 0.18 * Math.sin(z * 260 + y * 260 + x * 120);
+            return [c[0] * t, c[1] * t, c[2] * t];
+          })
+          .paint(color);
+      const loop = (y: number, phase: number) => {
+        const pts: [number, number, number][] = [];
+        for (let i = 0; i <= 32; i++) {
+          const a = (i / 32) * 2 * Math.PI;
+          const yy = y + 0.008 * Math.sin(a * 9 + phase);
+          const hit = sdf.raycast(humpSurf, [Math.cos(a) * 0.5, yy, HZ + Math.sin(a) * 0.5], [-Math.cos(a), 0, -Math.sin(a)]);
+          if (hit) pts.push([hit[0], hit[1], hit[2]]);
+        }
+        return pts;
+      };
+      const cordColors = ['#e8b040', '#3a6ab0', '#4a9a5a', '#e8b040'];
+      const cords = sdf.union(...[0.585, 0.62, 0.65, 0.675].map((y, i) => cord(loop(y, i * 1.3), 0.012 - 0.001 * i, cordColors[i]!)));
+      k.body('trim', cords, { color: '#e8b040', roughness: 0.8, detail: 0.0025, bone: 'spine' });
       const fringe = sdf.union(
-        ...[0.01, -0.17].flatMap((zc) => {
-          const top = sdf.raycast(back.round(0.012), [1, 0.5, zc], [-1, 0, 0]);
-          return top ? [sdf.chain([[top[0] + 0.008, 0.5, top[2], 0.01], [top[0] + 0.012, 0.46, top[2], 0.008], [top[0] + 0.012, 0.43, top[2], 0.013]], 0.006)] : [];
+        ...[HZ + 0.04, HZ - 0.04].flatMap((zc) => {
+          const top = sdf.raycast(humpSurf, [1, 0.47, zc], [-1, 0, 0]);
+          return top ? [sdf.chain([[top[0] + 0.004, 0.465, top[2], 0.01], [top[0] + 0.008, 0.43, top[2], 0.008], [top[0] + 0.008, 0.4, top[2], 0.014]], 0.006)] : [];
         }),
       ).mirror('x');
       k.body('tassels', fringe, { color: '#e8b040', roughness: 0.8, detail: 0.003, bone: 'spine' });
+      // A short tail that points back from the rump, with a dark tuft at the end.
+      const tail = sdf.smoothUnion(0.012, sdf.chain([[0, 0.45, -0.26, 0.022], [0, 0.44, -0.32, 0.017], [0, 0.42, -0.36, 0.014]], 0.01), sdf.ellipsoid([0.026, 0.034, 0.026]).at(0, 0.405, -0.38).paint(deer.tone('fur', '#6a4a30', 0.6)));
+      k.body('tail-hair', tail.bone('tail'), { color: deer.tint.fur, roughness: 0.85, detail: 0.003 });
       // Knobby knees.
       const { FKNEE, BKNEE } = deer.joints;
-      const knees = sdf.union(sdf.sphere(0.036).at(FKNEE[0], FKNEE[1], FKNEE[2] + 0.008).bone('fshin.L'), sdf.sphere(0.034).at(BKNEE[0], BKNEE[1], BKNEE[2] - 0.006).bone('bshin.L')).mirror('x');
+      const knees = sdf.union(sdf.ellipsoid([0.054, 0.04, 0.054]).at(FKNEE[0], FKNEE[1], FKNEE[2] + 0.006).bone('fshin.L'), sdf.ellipsoid([0.052, 0.038, 0.052]).at(BKNEE[0], BKNEE[1], BKNEE[2] - 0.004).bone('bshin.L')).mirror('x');
       k.body('knees', knees, { color: deer.tint.fur, roughness: 0.85, detail: 0.004 });
     },
   }),

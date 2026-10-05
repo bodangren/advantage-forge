@@ -8,14 +8,15 @@ import { wolfAsset } from './parts/wolf-kind.js';
  * the dire wolf mockup).
  *
  * The dire wolf (`assets/dire-wolf.ts`; body, head, rig, and clips from `assets/parts/wolf-kind.ts`)
- * at 1.45 of its size, as a hero's mount: a confident closed smirk, half-lidded dark eyes with a white edge, a
- * swept grey tuft on the head, soft round cheek fur, a grey coat with a darker back, a white muzzle,
- * cheeks, and chest, a bushy tail that hangs down with a white tip, black paws with white bands, and riding tack fitted to the wolf's back (a
+ * at 1.45 of its size, as a hero's mount: a confident closed smile, big open dark eyes with a white
+ * edge, a swept grey tuft on the head, a smooth light grey coat (`furBump: 0`) with a darker back,
+ * long legs, a white muzzle and a cream lower face and chest (painted, so no seam shows at the
+ * cheeks), a bushy tail that hangs down with a white tip, black paws with white bands, and riding tack fitted to the wolf's back (a
  * brown saddle with a pommel and a cantle, side flaps, a large teal pad with a gold trim and a pale
- * diamond mark, a girth, a breast strap, and stirrups).
+ * diamond mark, a girth, a wide breast strap with a large metal ring, and stirrups).
  * Role: a mount for the hero in the rider games and travel scenes; the saddle and the teal pad
  *   read at 128 px.
- * Palette (60/30/10): grey #8a8e96 with a dark back #4e525a; white #f4f2ee; brown leather #6a3c22;
+ * Palette (60/30/10): grey #989ca4 with a dark back #70747c; white #f4f2ee; brown leather #6a3c22;
  *   a teal pad #2a8a8a with gold #e0b040 as the accent.
  */
 
@@ -23,10 +24,10 @@ import { wolfAsset } from './parts/wolf-kind.js';
 export default scaleAsset(
   wolfAsset({
     name: 'riding-wolf',
-    description: 'Chibi riding wolf: a big grey wolf with a confident closed smirk, half-lidded dark eyes with a white edge, a swept grey head tuft, a long white muzzle, a wide white lower face and chest, black paws with white bands, and a brown saddle with stirrups on a large teal pad with a gold trim and a pale diamond mark, a chest strap with a metal ring and blue studs, and side bags; quadruped rig.',
+    description: 'Chibi riding wolf: a big grey wolf with a confident closed smile, big open dark eyes with a white edge, a swept grey head tuft, a smooth light grey coat, long legs, a long white muzzle, a cream lower face and chest, black paws with white bands, and a brown saddle with stirrups on a large teal pad with a gold trim and a pale diamond mark, a wide chest strap with a large metal ring and blue studs, and side bags; quadruped rig.',
     reference: 'docs/wildlife-mockups/riding-wolf_001.jpg',
     variants: {
-      fur: { grey: '#8a8e96', timber: '#7a6a58', black: '#3a3838', white: '#e0e0dc' },
+      fur: { grey: '#989ca4', slate: '#8a8e96', timber: '#7a6a58', black: '#3a3838', white: '#e0e0dc' },
       markings: { white: '#f4f2ee', cream: '#ece2c8' },
       eyes: { brown: '#3a2010', amber: '#7a440c', ice: '#4a6a80' },
       blanket: { teal: '#2a8a8a', blue: '#4a7ac8', red: '#b84a3a', purple: '#7a4aa0' },
@@ -36,7 +37,7 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'white', eyes: 'amber', blanket: 'red' },
       snow: { fur: 'white', markings: 'white', eyes: 'ice', blanket: 'purple' },
     },
-    colors: { furLight: '#e8e8e4', furDark: '#8a8e96', earInner: '#8a6a5a', eyeRim: '#f4f2ee' },
+    colors: { furLight: '#e8e8e4', furDark: '#989ca4', earInner: '#8a6a5a', eyeRim: '#f4f2ee' },
     headScale: 1.25,
     snout: 0.085,
     muzzleWidth: 0.78,
@@ -44,6 +45,9 @@ export default scaleAsset(
     eyeScale: 1.15,
     pupilScale: 1.25,
     cheekTufts: false,
+    cheekCream: false,
+    furBump: 0,
+    legLength: 0.06,
     claws: false,
     fangs: false,
     tail: false,
@@ -53,9 +57,11 @@ export default scaleAsset(
     smile: true,
     ruff: 'smooth',
     paint(fur, t, tone) {
-      // A dark saddle patch on the back, and black paws with a white band above them.
+      // A cream lower face and cheeks (painted, so no seam shows), a dark saddle patch on the back,
+      // and black paws with a white band above them.
       return fur
-        .paintWhere(sdf.ellipsoid([0.1, 0.07, 0.22]).at(0, 0.43, -0.07), tone('fur', '#4e525a'), 0.04)
+        .paintWhere(sdf.ellipsoid([0.2, 0.085, 0.2]).at(0, 0.385, 0.2), t.markings, 0.03)
+        .paintWhere(sdf.ellipsoid([0.1, 0.07, 0.22]).at(0, 0.43, -0.07), tone('fur', '#70747c'), 0.04)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.085), t.markings, 0.008)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.055), tone('fur', '#26262a', 0.3), 0.008);
     },
@@ -72,29 +78,6 @@ export default scaleAsset(
         ].map(([x, y, z, dx, len, r]) => sdf.cone([x!, y! - 0.02, z!], [x! + dx!, y! + len! * 0.8, z! - len!], r!, r! * 0.45)),
       );
       k.body('head-tuft', tuft.bone('head'), { color: w.tone('fur', '#a6aab0', 0.9), roughness: 0.85, detail: 0.004 });
-      // Half-closed upper lids (a calm, confident look): a fur-colored cap over the top of each eye
-      // down to a level line, with a thin dark line along its edge.
-      const e = w.eye;
-      const LR = 0.047;
-      const th = 0;
-      const edgeY = e[1] + 0.024;
-      const lidCap = w.head
-        .round(0.0035)
-        .intersect(sdf.cylinder(LR, 1).rotateX(90).at(e[0], e[1], 0))
-        .intersect(sdf.halfSpace([Math.sin(th), -Math.cos(th), 0], Math.sin(th) * e[0] - Math.cos(th) * edgeY))
-        .intersect(sdf.halfSpace([0, 0, -1], -(e[2] - 0.06)));
-      k.body('lid-caps', lidCap.mirror('x').bone('head'), { color: w.tint.fur, roughness: 0.85, detail: 0.002 });
-      const lid = sdf
-        .chain(
-          [-0.95, -0.5, 0, 0.5, 0.95].map((u, i) => {
-            const x = e[0] + u * LR * 0.92;
-            const p = w.on(w.head, x, edgeY - Math.tan(th) * (x - e[0]), e[2], 0.002);
-            return [p[0], p[1], p[2], 0.0025 + i * 0.0006] as [number, number, number, number];
-          }),
-          0.003,
-        )
-        .mirror('x');
-      k.body('lids', lid.bone('head'), { color: '#2a2a30', roughness: 0.7, detail: 0.002 });
       // The bushy tail hangs down behind, with a white tip.
       const TIP: [number, number, number] = [0, 0.13, -0.5];
       const tail = sdf
@@ -127,12 +110,12 @@ export default scaleAsset(
       // The girth under the belly and the breast strap round the front of the chest.
       const shell = trunk.round(0.007).smoothSubtract(0.003, trunk.round(-0.008));
       const girth = shell.intersect(sdf.box([0.5, 0.2, 0.035], 0.008).at(0, 0.2, SZ + 0.03));
-      const breast = shell.intersect(sdf.box([0.5, 0.05, 0.4], 0.008).rotateX(15).at(0, 0.3, 0.1)).intersect(sdf.box([0.5, 0.5, 0.2]).at(0, 0.3, 0.15));
+      const breast = shell.intersect(sdf.box([0.5, 0.07, 0.4], 0.008).rotateX(15).at(0, 0.3, 0.1)).intersect(sdf.box([0.5, 0.5, 0.2]).at(0, 0.3, 0.15));
       k.body('harness', sdf.union(girth, breast), { color: leather, roughness: 0.55, detail: 0.003 });
       // A metal ring at the front of the breast strap, and blue studs along it.
       const ringAt = sdf.raycast(breast, [0, 0.3, 2], [0, 0, -1]);
       if (ringAt) {
-        const ring = sdf.torus(0.024, 0.0065).rotateX(90).at(ringAt[0], ringAt[1] - 0.004, ringAt[2] + 0.004);
+        const ring = sdf.torus(0.034, 0.009).rotateX(90).at(ringAt[0], ringAt[1] - 0.006, ringAt[2] + 0.006);
         k.body('chest-ring', ring, { color: '#c8c4bc', roughness: 0.3, metalness: 0.85, detail: 0.003, bone: 'spine' });
       }
       const studs = [0.055, 0.1, 0.14].flatMap((sx) => {

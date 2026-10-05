@@ -1,0 +1,150 @@
+{
+  "cow": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a four-legged chibi cow with gold horns, black patches, and a pink muzzle. It is the same animal as the mockup, but the bell, the fur, and the tail are clearly different.",
+    "strengths": [
+      "The gold horns, the pink ears, and the large pink muzzle with nostrils match the mockup.",
+      "The black patches on the head and the body read at 128 px in every direction.",
+      "The walk clip lifts each hoof and keeps the body level."
+    ],
+    "issues": [
+      "The bell hangs under the chin, and the muzzle hides it in the front view. Make the bell larger and move it down onto the chest, as in the mockup.",
+      "The whole body has a rough fur texture. The mockup has smooth clay. Reduce the fur bump on the body and the head.",
+      "The tail points back and down. The mockup tail curls up at the side with a dark tuft. Bend the tail up.",
+      "The eyes are small and sit under heavy brows. The mockup has larger, bright eyes. Increase the eye size and lift the brows.",
+      "The side view shows a long snout and eyes that bulge from the sides of the head. Shorten the snout and set the eyes into the face.",
+      "The hooves are black and tall. The mockup has short dark grey hooves with a split. Add the pink udder and the white head tuft from the mockup."
+    ],
+    "next": "Move a larger bell down onto the chest so that it reads in the front view and at 128 px."
+  },
+  "ox": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3, 3.5, 3, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a dark brown chibi ox with wide cream horns and a rope collar. The horns read well, but the eyes, the color, and the chest patch are clearly different from the mockup.",
+    "strengths": [
+      "The wide cream horns give a clear silhouette in every sprite direction.",
+      "The rope collar matches the mockup.",
+      "The walk clip moves the legs in a readable cycle."
+    ],
+    "issues": [
+      "The eyes are small dots. The mockup eyes are very large and glossy with large highlights. Make the eyes about twice as large.",
+      "The coat is a dark red-brown. The mockup coat is a light caramel tan. Make the coat lighter and warmer.",
+      "The cream chest patch is missing. Add the cream patch below the collar.",
+      "The bell hangs under the muzzle and the front view hides it. Move the bell down onto the chest.",
+      "The muzzle is a dull tan. The mockup muzzle is pink peach. Make the muzzle pinker.",
+      "The whole body has a rough fur texture, and the side view shows a long snout with bulging eyes. Make the surface smoother and the snout shorter."
+    ],
+    "next": "Make the eyes much larger and glossier to match the mockup face."
+  },
+  "fox": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 4, 3, 3, 3.5, 4.5, 3.5, 3.5],
+    "summary": "The model is an orange chibi fox with a big tail and a sit clip that matches the mockup pose. The face is noticeably different: the cheek tufts stick out like wings and the muzzle is a broad white mask.",
+    "strengths": [
+      "The sit clip shows the same seated pose as the mockup, with straight front legs.",
+      "The orange coat, the dark paws, and the large tail read at 128 px.",
+      "The large brown eyes with lashes keep a cute face."
+    ],
+    "issues": [
+      "The white cheek tufts stick out from the sides of the head like separate wings. Blend them into the face as a ruff that flares out below the eyes.",
+      "The muzzle is a broad, smooth white mask with a long mouth line. The mockup has a small muzzle with a small mouth. Make the muzzle smaller and add fur texture to it.",
+      "The ears have grey-white fur inside and only small black tips. The mockup ears have black edges and black backs. Paint the outer ear edges black.",
+      "The eyes have a dark rim that looks like goggles. Remove the dark rim and add large highlights as in the mockup.",
+      "The body has a rough fur texture, but the muzzle is smooth. Use one surface treatment on the whole head.",
+      "The back view shows a dark band across the head between the ears. Limit the black paint to the ears."
+    ],
+    "next": "Blend the cheek tufts into the face and make the white muzzle smaller."
+  },
+  "wolf": {
+    "overall": 6.5,
+    "scores": [3, 4, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is a grey chibi wolf with a cream muzzle and brown paws. It is the same animal, but the face, the tail pose, and the leg length are clearly different from the mockup.",
+    "strengths": [
+      "The cream muzzle, the black nose, and the smile line are present.",
+      "The tall ears and the brown paws read at 128 px.",
+      "The walk clip moves all four legs in a clear cycle."
+    ],
+    "issues": [
+      "Heavy grey brows sit low over the eyes and make the face look stern. The mockup face is open and happy. Remove or lift the brows.",
+      "The head is a round ball. The mockup head has wide cheeks and a wide cream smile area. Widen the cheeks and the cream area.",
+      "The tail points up and back like a flag. The mockup tail hangs low with a dark tuft. Lower the tail.",
+      "The legs are short and thick. The mockup legs are long and slim. Make the legs longer.",
+      "The coat is dark charcoal grey. The mockup coat is a light blue-grey. Make the coat lighter.",
+      "The eyes are smaller than in the mockup, and the cream chest bib is faint. Increase the eye size and paint a clear chest bib."
+    ],
+    "next": "Remove the heavy brows and widen the cheeks so that the face reads as happy, as in the mockup."
+  },
+  "riding-wolf": {
+    "overall": 6.5,
+    "scores": [3, 4, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a grey chibi wolf with a brown saddle and a teal pad. The saddle reads well, but the face has a sleepy, grumpy expression that the mockup does not have.",
+    "strengths": [
+      "The brown saddle, the teal pad, and the bags read at 128 px in every direction.",
+      "The white socks, the black paws, and the head crest match the mockup.",
+      "The tail has a white tip, as in the mockup."
+    ],
+    "issues": [
+      "Heavy half-closed lids make the face look sleepy and grumpy. The mockup has bright, open eyes and a confident smile. Open the eyes and lift the lids.",
+      "The muzzle is a smooth white mask with seams at the cheeks. The mockup has a cream lower face and chest. Paint the lower face cream and remove the seams.",
+      "The legs are short. The mockup legs are long, and the wolf stands proud with the chest out. Make the legs longer and lift the head.",
+      "The coat is a darker grey than the mockup. Make the coat lighter.",
+      "The harness in the mockup has a chest strap with a ring at the front. Make the front strap and the ring larger so that they read."
+    ],
+    "next": "Open the eyes and remove the heavy lids so that the expression matches the confident mockup face."
+  },
+  "badger": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a smooth chibi badger with a striped white face, a grey body, and black legs. It is close to the mockup in the front view, but the side view shows a low, long head.",
+    "strengths": [
+      "The striped white face reads at 128 px in every direction.",
+      "The smooth clay surface and the grey, white, and black value plan match the mockup.",
+      "The large glossy eyes and the small smile give a friendly face."
+    ],
+    "issues": [
+      "The head sits low and points forward in line with the back. The mockup head is raised on the neck. Lift the head and tilt it up.",
+      "The side view shows a long, pointed snout. The mockup snout is shorter and the head is rounder. Shorten the snout.",
+      "The side view shows a hard vertical line between the white head and the grey body. Blend the white cheeks into a cream chest, as in the mockup.",
+      "The black stripes stop near the eyes. In the mockup, the stripes run up over the head to the ears. Extend the stripes to the ears.",
+      "The chest is pure white. The mockup chest is cream. Warm the chest color."
+    ],
+    "next": "Lift the head on the neck and shorten the snout to match the mockup side silhouette."
+  },
+  "moth": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 3, 3.5, 4, 4, 3.5, 3.5],
+    "summary": "The model is a chibi moth with a brown face, knobbed antennae, and dotted wings. The hood covers the whole head like a knit cap, and the wings droop, so the model is clearly different from the mockup.",
+    "strengths": [
+      "The brown face with large glossy eyes and an open smile reads at 128 px from the front.",
+      "The knobbed antennae and the wing dots read in the sprites.",
+      "The fly clip flaps the wings and keeps the body in the air."
+    ],
+    "issues": [
+      "The hood is a closed ball with a scale pattern that looks like knitted wool. The mockup has a fluffy mane of fine spiky strands around the face and a tuft on top. Change the hood to spiky fur strands and open the top of the head.",
+      "The lower wings droop down and almost touch the ground. The mockup wings spread out level. Lift the lower wings.",
+      "The antennae knobs are long ovals on long stalks. The mockup knobs are large round balls on short stalks. Make the knobs rounder and the stalks shorter.",
+      "The small arms and legs are hidden. The mockup shows small arms at the sides and small legs under the belly. Add visible arms and legs.",
+      "The side view shows only the hood and a wing. Bring the face forward so that the eye reads from the side."
+    ],
+    "next": "Change the scaled hood to a fluffy mane of spiky strands that frames the face."
+  },
+  "squirrel": {
+    "overall": 6.5,
+    "scores": [3, 4, 3, 3.5, 4, 3.5, 3, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is an orange chibi squirrel with a large round tail and tufted ears. The tail reads well, but the face and the body plan are clearly different from the mockup.",
+    "strengths": [
+      "The large round tail gives a clear squirrel silhouette at 128 px.",
+      "The tufted ears and the cream chest match the mockup.",
+      "The run clip has a bounding gait that suits the mockup run."
+    ],
+    "issues": [
+      "The eyes have wide white rims and look startled. The mockup eyes are brown with highlights and a soft, happy look. Remove the white rims and add a small smile.",
+      "The body is long, and the legs are straight and thick like a dog. The mockup has a small body, large hind thighs, and front paws held at the chest. Make the hind thighs larger and the front legs thinner.",
+      "The head is small for the body. The mockup head is large. Make the head larger.",
+      "A thin seam line crosses the white cheek fur. Remove the seam.",
+      "The tail surface is a lumpy noise. The mockup tail has carved swirl strands. Add a swirl pattern to the tail."
+    ],
+    "next": "Change the eyes and the mouth to the soft, happy face of the mockup."
+  }
+}

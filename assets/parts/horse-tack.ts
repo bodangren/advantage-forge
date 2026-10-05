@@ -25,15 +25,25 @@ export interface SaddleOptions {
   readonly stirrups?: boolean;
   /** A breast strap round the front of the chest (default true). */
   readonly breast?: boolean;
+  /** The middle of the seat on another kind's back (default `SADDLE_AT`, the horse's). */
+  readonly at?: V3;
 }
 
 /** The middle of the saddle seat on the back of the horse kind. */
 export const SADDLE_AT: V3 = [0, 0.69, -0.09];
 
-export function saddle(k: AssetContext, horse: HorseShape, o: SaddleOptions): void {
+/** Any kind with a trunk that tack fits over (the horse kinds, the lizard kind). */
+export function saddle(k: AssetContext, horse: Pick<HorseShape, 'trunk'>, o: SaddleOptions): void {
   const trunk = horse.trunk;
   const drop = o.drop ?? 0.16;
-  const [, sy, sz] = SADDLE_AT;
+  const [, sy, sz] = o.at ?? SADDLE_AT;
+  // The girth and the breast strap sit below and in front of the seat (the horse's heights when
+  // `at` is not given).
+  const A = o.at;
+  const girthY = A ? A[1] - 0.27 : 0.42;
+  const breastY = A ? A[1] - 0.19 : 0.5;
+  const breastZ = A ? A[2] + 0.21 : 0.12;
+  const breastCutZ = A ? A[2] + 0.29 : 0.2;
   // The blanket: a shell over the back, its corners rounded, with a trim along the edge.
   const cut = (w: V3, at: V3, r: number) => sdf.box([w[0], w[1], w[2]], r).at(at[0], at[1], at[2]);
   const blanketBox: V3 = [0.6, drop + 0.2, 0.36];
@@ -53,13 +63,13 @@ export function saddle(k: AssetContext, horse: HorseShape, o: SaddleOptions): vo
   const flaps = trunk.round(0.022).smoothIntersect(0.008, cut([0.6, 0.17, 0.18], [0, sy - 0.13, sz + 0.02], 0.035));
   k.body('saddle', sdf.smoothUnion(0.02, seat, pommel, cantle).union(flaps), { color: o.leather, roughness: 0.5, detail: 0.004 });
   // The girth under the belly, and the stirrups hanging from the seat.
-  const girth = trunk.round(0.008).intersect(cut([0.6, 0.6, 0.05], [0, 0.42, sz + 0.06], 0.01));
+  const girth = trunk.round(0.008).intersect(cut([0.6, 0.6, 0.05], [0, girthY, sz + 0.06], 0.01));
   // The breast strap: a band round the front of the chest, lower in front, from flap to flap.
   const breast = trunk
     .round(0.008)
     .subtract(trunk.round(-0.01))
-    .intersect(sdf.box([0.6, 0.032, 0.5], 0.008).rotateX(18).at(0, 0.5, 0.12))
-    .intersect(sdf.box([0.6, 0.6, 0.3]).at(0, 0.5, 0.2));
+    .intersect(sdf.box([0.6, 0.032, 0.5], 0.008).rotateX(18).at(0, breastY, breastZ))
+    .intersect(sdf.box([0.6, 0.6, 0.3]).at(0, breastY, breastCutZ));
   k.body('girth', o.breast === false ? girth : girth.union(breast), { color: o.leather, roughness: 0.55, detail: 0.004 });
   if (o.stirrups !== false) {
     const side = sdf.raycast(trunk, [1, sy - 0.14, sz + 0.02], [-1, 0, 0])!;
@@ -69,6 +79,54 @@ export function saddle(k: AssetContext, horse: HorseShape, o: SaddleOptions): vo
     k.body('stirrup-straps', strap.mirror('x'), { color: o.leather, roughness: 0.55, detail: 0.004, bone: 'spine' });
     k.body('stirrups', iron.mirror('x'), { color: o.metal, roughness: 0.35, metalness: 0.8, detail: 0.003, bone: 'spine' });
   }
+}
+
+export interface BackSaddleOptions {
+  /** The blanket cloth color (usually a slot tint). */
+  readonly blanket: string;
+  /** The trim along the blanket edge. */
+  readonly trim: string;
+  /** Saddle leather. */
+  readonly leather: string;
+  /** The buckle metal. */
+  readonly metal: string;
+  /** The middle of the seat along Z (the seat sits on top of the trunk there). */
+  readonly z: number;
+  /** The size of the saddle as a share (default 1: a seat 0.24 m wide and 0.2 m long). */
+  readonly size?: number;
+}
+
+/**
+ * A small riding saddle fitted to any trunk (the lizard kind): a blanket with a trim, a seat with a
+ * low pommel and cantle, side flaps, and a girth under the belly with a buckle on the left. The
+ * heights come from the top of the trunk at the seat, so it fits a sloping back.
+ */
+export function backSaddle(k: AssetContext, body: Pick<HorseShape, 'trunk'>, o: BackSaddleOptions): void {
+  const trunk = body.trunk;
+  const S = o.size ?? 1;
+  const ZC = o.z;
+  const topAt = (z: number) => sdf.raycast(trunk, [0, 4, z], [0, -1, 0])![1];
+  const TY = topAt(ZC);
+  const box = (w: number, h: number, d: number, r: number, y: number, z: number) => sdf.box([w, h * S, d * S], r * S).at(0, y, z);
+  const blanket = trunk.round(0.01 * S).smoothIntersect(0.008 * S, box(2, 0.2, 0.28, 0.04, TY - 0.06 * S, ZC));
+  const inner = box(2, 0.16, 0.24, 0.03, TY - 0.04 * S, ZC);
+  k.body('blanket', blanket.paintWhere(sdf.box([4, 1, 1]).at(0, TY, ZC).subtract(inner), o.trim, 0.003), { color: o.blanket, roughness: 0.85, detail: 0.004 });
+  const seat = trunk.round(0.026 * S).smoothIntersect(0.01 * S, sdf.box([0.24 * S, 0.1 * S, 0.2 * S], 0.03 * S).at(0, TY - 0.01 * S, ZC));
+  const front = ZC + 0.09 * S;
+  const back = ZC - 0.09 * S;
+  const pommel = sdf.ellipsoid([0.045 * S, 0.035 * S, 0.03 * S]).at(0, topAt(front) + 0.022 * S, front).bone('spine');
+  const cantle = sdf.capsule([-0.06 * S, topAt(back) + 0.024 * S, back], [0.06 * S, topAt(back) + 0.024 * S, back], 0.018 * S).bone('hips');
+  const flaps = trunk.round(0.018 * S).smoothIntersect(0.006 * S, box(2, 0.1, 0.14, 0.025, TY - 0.11 * S, ZC));
+  k.body('saddle', sdf.smoothUnion(0.012 * S, seat, pommel, cantle).union(flaps), { color: o.leather, roughness: 0.5, detail: 0.004 });
+  const girth = trunk.round(0.007 * S).intersect(box(2, 3, 0.032, 0.008, TY - 0.2 * S, ZC + 0.02 * S)).intersect(sdf.halfSpace([0, 1, 0], TY - 0.15 * S));
+  k.body('girth', girth, { color: o.leather, roughness: 0.55, detail: 0.003 });
+  const side = sdf.raycast(trunk, [4, TY - 0.17 * S, ZC + 0.02 * S], [-1, 0, 0])!;
+  const buckle = sdf
+    .box([0.012 * S, 0.036 * S, 0.034 * S], 0.004 * S)
+    .subtract(sdf.box([0.03 * S, 0.022 * S, 0.02 * S], 0.002 * S))
+    .at(side[0] + 0.01 * S, TY - 0.17 * S, ZC + 0.02 * S)
+    .bone('spine');
+  k.body('buckle', buckle, { color: o.metal, roughness: 0.3, metalness: 0.85, detail: 0.002 });
 }
 
 export interface PackOptions {

@@ -9,37 +9,38 @@ import { scaleAsset } from './parts/scale-asset.js';
  * (made with mmx).
  *
  * The bird of `assets/parts/bird-kind.ts` at 0.45 of its size, as the crow's shape
- * (`assets/crow.ts`) with a heavier beak: black feathers, glowing violet eyes, a violet ribbon
- * collar with a silver crescent moon charm, and a small crown tuft. The glow and the ribbon follow
- * the `eyes` slot.
+ * (`assets/crow.ts`) with a large hooked beak: soft dark charcoal feathers in round layered
+ * shapes, big folded wings, glowing violet eyes close to the beak with bright white centers, a
+ * small smile at the beak corners, a violet ribbon collar with a silver crescent moon charm, and a
+ * small crown tuft. The glow and the ribbon follow the `eyes` slot.
  * Role: a pet that follows a hero or a witch (avatar pets later); the glowing eyes and the violet
  *   ribbon read at 128 px.
- * Palette (60/30/10): black #24222c body, head, and wings; violet #9a4ae8 eyes and ribbon as the
+ * Palette (60/30/10): dark charcoal #3a3842 body, head, and wings; violet #9a4ae8 eyes and ribbon as the
  *   accent; a silver charm; dark grey beak and feet.
  */
 export default scaleAsset(
   birdAsset({
     name: 'familiar-raven',
-    description: 'Chibi familiar raven: a round black raven with round glowing violet eyes with white centers, a short straight dark beak, soft layered chest feathers, a small crown tuft, a violet ribbon collar with a silver crescent moon charm, and dark grey feet; bird rig with wings.',
+    description: 'Chibi familiar raven: a round dark charcoal raven with round glowing violet eyes with bright white centers close to a large hooked dark beak, a small smile, soft round layered chest feathers, big folded wings, a small crown tuft, a violet ribbon collar with a silver crescent moon charm, and dark grey feet; bird rig with wings.',
     reference: 'docs/wildlife-mockups/familiar-raven_001.jpg',
     variants: {
-      body: { black: '#24222c', midnight: '#22263a', grey: '#4a4852' },
-      head: { black: '#26242e', midnight: '#24283c', grey: '#4e4c56' },
-      wings: { black: '#1e1c26', midnight: '#1c2034', grey: '#3e3c46' },
-      eyes: { violet: '#c41ee8', teal: '#2ac8c0', gold: '#e8b830', rose: '#e04a8a' },
+      body: { charcoal: '#3a3842', black: '#24222c', midnight: '#22263a', grey: '#4a4852' },
+      head: { charcoal: '#3c3a44', black: '#26242e', midnight: '#24283c', grey: '#4e4c56' },
+      wings: { charcoal: '#33313b', black: '#1e1c26', midnight: '#1c2034', grey: '#3e3c46' },
+      eyes: { violet: '#c018e8', teal: '#2ac8c0', gold: '#e8b830', rose: '#e04a8a' },
     },
     presets: {
       moon: { body: 'midnight', head: 'midnight', wings: 'midnight', eyes: 'teal' },
       sun: { body: 'grey', head: 'grey', wings: 'grey', eyes: 'gold' },
       rose: { body: 'black', head: 'black', wings: 'black', eyes: 'rose' },
     },
-    colors: { belly: '#2c2a36', flight: '#26252e', scale: '#3e3e46', scaleDark: '#2e2e36', talon: '#18181c', eyeRim: '#141218', mouth: '#2a2c32', pupil: '#0c0c10' },
-    body: [0.22, 0.19, 0.2],
-    head: 0.165,
-    beak: 'short',
-    beakScale: 1.15,
-    beakWidth: 1.2,
-    beakDroop: 34,
+    colors: { belly: '#3e3c48', flight: '#302e38', scale: '#3e3e46', scaleDark: '#2e2e36', talon: '#18181c', eyeRim: '#141218', mouth: '#2a2c32', pupil: '#0c0c10' },
+    body: [0.235, 0.2, 0.22],
+    head: 0.19,
+    beak: 'hook',
+    beakScale: 0.62,
+    beakWidth: 1.15,
+    beakDroop: 12,
     cheeks: 1,
     eyeStyle: 'bead',
     glint: 0.01,
@@ -48,18 +49,19 @@ export default scaleAsset(
     brows: false,
     eyeScale: 1.0,
     featherBump: 0.0035,
-    featherOn: { body: false, head: true, wings: true },
+    featherOn: { body: false, head: false, wings: false },
     walkBob: 0.5,
     stillNeck: true,
     wingRest: -128,
     wingTurn: 55,
     wingOut: 0.06,
-    wingScale: 0.66,
+    wingScale: 0.8,
     legLength: 0.25,
     wingStyle: 'paddle',
-    neckScale: 1.5,
+    neckScale: 1.2,
+    tailPose: { lift: -0.2, tilt: -25, scale: 1.35 },
     eyeLift: 0.08,
-    eyeSpread: 1.15,
+    eyeSpread: 0.86,
     extra(k, b) {
       // The eyes slot is the magic color: the glowing irises and the ribbon.
       const magic = b.tint.eye;
@@ -69,18 +71,31 @@ export default scaleAsset(
         const es = b.eye.scale;
         const e = b.eye.at;
         const { HEAD_C } = b.joints;
-        const R = 0.026 * es;
+        const R = 0.04 * es;
         const n0 = [e[0] - HEAD_C[0], e[1] - HEAD_C[1], e[2] - HEAD_C[2]];
         const nl = Math.hypot(n0[0]!, n0[1]!, n0[2]!) || 1;
         const n = [n0[0]! / nl, n0[1]! / nl, n0[2]! / nl] as const;
-        const c: [number, number, number] = [e[0] - n[0] * R * 0.7, e[1] - n[1] * R * 0.7, e[2] - n[2] * R * 0.7];
+        const c: [number, number, number] = [e[0] - n[0] * R * 0.55, e[1] - n[1] * R * 0.55, e[2] - n[2] * R * 0.55];
         const at = (u: number, v: number, w: number): [number, number, number] => [c[0] + n[0] * R * w + u * R, c[1] + n[1] * R * w + v * R, c[2] + n[2] * R * w];
         const ball = sdf
           .sphere(R)
           .at(...c)
-          .paintWhere(sdf.sphere(R * 0.42).at(...at(-0.05, 0, 0.8)), '#fff6ff', R * 0.25)
+          .paintWhere(sdf.sphere(R * 0.34).at(...at(-0.05, 0, 0.8)), '#fff0ff', R * 0.2)
           .paintWhere(sdf.sphere(R * 0.16).at(...at(0.35, 0.42, 0.85)), '#ffffff', 0.002);
-        k.body('eye-glow', ball.mirror('x').bone('head'), { color: magic, emissive: magic, emissiveIntensity: 1.5, roughness: 0.15, detail: 0.002, textureDensity: 2 });
+        k.body('eye-glow', ball.mirror('x').bone('head'), { color: magic, emissive: magic, emissiveIntensity: 1.0, roughness: 0.15, detail: 0.002, textureDensity: 2 });
+        // A bright white center that glows on its own.
+        const core = sdf.sphere(R * 0.4).at(...at(-0.05, 0, 0.78));
+        k.body('eye-core', core.mirror('x').bone('head'), { color: '#fff4ff', emissive: '#fff0ff', emissiveIntensity: 1.2, roughness: 0.2, detail: 0.002 });
+        // A small smile at each corner of the beak: a short dark stroke that curves up and out.
+        const sm = [
+          [0.17, -0.42],
+          [0.26, -0.4],
+          [0.33, -0.32],
+        ].map(([u, v]) => {
+          const p = b.faceHit(HEAD_C[0] + u! * b.joints.HR, HEAD_C[1] + v! * b.joints.HR);
+          return [p[0], p[1], p[2] - 0.002, 0.0045] as [number, number, number, number];
+        });
+        k.body('smile', sdf.chain(sm, 0.003).mirror('x').bone('head'), { color: '#141218', roughness: 0.6, detail: 0.002 });
       }
       // Shaggy feather clumps on the cheeks and the sides of the head: short pointed tufts that
       // point out and down, so the head reads wide and round.
@@ -98,13 +113,13 @@ export default scaleAsset(
         k.body('cheek-tufts', sdf.smoothUnion(0.008, ...tufts).mirror('x').bone('head'), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
       }
       // A soft crest of short round feather lumps on the crown.
-      k.body('tuft', crownTuft(b, 0.035, 0.016), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
+      k.body('tuft', crownTuft(b, 0.06, 0.022), { color: b.tint.head, roughness: 0.85, detail: 0.003 });
       // Soft layered feathers on the chest and the sides under the ribbon: broad flat feathers with
       // round points, in staggered rows that overlap, a little lighter than the body, set into the
       // surface.
       const { BODY_C, B } = b.joints;
-      // A shaggy feather: broad at the top, with two or three ragged points at the bottom.
-      const leaf = sdf.extrude(profile.polygon([[-0.03, 0.02], [0, 0.026], [0.03, 0.02], [0.028, -0.02], [0.018, -0.03], [0.01, -0.02], [0.002, -0.046], [-0.008, -0.026], [-0.016, -0.038], [-0.027, -0.016]], { smooth: false }), 0.009, 0.003);
+      // A soft feather: a round-ended flat oval.
+      const leaf = sdf.extrude(profile.polygon([[-0.028, 0.02], [0, 0.026], [0.028, 0.02], [0.03, -0.012], [0.016, -0.034], [0, -0.04], [-0.016, -0.034], [-0.03, -0.012]], { smooth: true }), 0.009, 0.004);
       const clumps: sdf.Shape[] = [];
       for (let row = 0; row < 4; row++) {
         const y = BODY_C[1] + B[1] * (0.3 - row * 0.24);

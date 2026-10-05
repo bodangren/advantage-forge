@@ -2,7 +2,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../../src/index.js';
 import type { AnimationDef, AssetContext, AssetDefinition } from '../../src/index.js';
 import type { BonePose } from '../../src/rig.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
-import { headShift, legStretch } from './head-swell.js';
+import { headShift, headShiftPoint, legStretch, stretch, stretchPoint } from './head-swell.js';
 
 /**
  * Deer kinds — the deer of `assets/deer.ts` (catalog `wildlife/land/deer`) and the animals on its
@@ -70,14 +70,26 @@ export interface DeerKind {
   readonly slim?: number;
   /** The eyes: glossy dark eyes (default) or white eyes with round black pupils. */
   readonly eyeStyle?: 'dark' | 'white';
+  /** The size of the black pupil of white eyes as a share of the default (default 1). */
+  readonly pupil?: number;
+  /** Meters the eyes sink further into the face (default 0): big eyes that stand out less. */
+  readonly eyeSink?: number;
   /** Moves the head by this much (meters) and stretches the neck between (a camel's long neck). */
   readonly headShift?: V3;
+  /** Shapes that stay with the body when `headShift` moves the head (a camel's hump). */
+  readonly bodyZone?: sdf.Shape;
   /** False: no painted smile (the asset paints its own mouth). */
   readonly smile?: boolean;
+  /** The fur bump in the normal map as a share (default 1; 0 = a smooth clay surface). */
+  readonly furBump?: number;
   /** The leg and hoof thickness as a share (default 1): stockier legs. */
   readonly legThick?: number;
   /** Meters added to the legs (below 0: shorter legs); the body and the head move with them. */
   readonly legLength?: number;
+  /** Meters added to the body between the chest and the rump (below 0: shorter); the front legs, the neck, and the head move with the chest. */
+  readonly bodyLength?: number;
+  /** A longer face (a goat): the muzzle reaches `length` meters further forward, `drop` meters lower, at a share `width` of its width (default 1). */
+  readonly muzzle?: { readonly length: number; readonly drop?: number; readonly width?: number };
   /** The size of round paws as a share of the default (default 1). */
   readonly pawSize?: number;
   /** The size of the eyes as a share of the default (default 1). */
@@ -149,16 +161,26 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
   build(k00) {
     // With `legLength`, the legs stretch (or shrink) between the hooves and the belly.
     const kl = kind.legLength ? legStretch(k00, kind.legLength, 0.06, 0.24) : k00;
+    // With `bodyLength`, the back stretches between the chest and the rump.
+    const kb = kind.bodyLength ? stretch(kl, 2, kind.bodyLength, -0.12, -0.02) : kl;
     // With `headShift`, the head moves and the neck stretches (zones: the head and the muzzle; the
     // chest and the rump).
-    const k0 = kind.headShift
-      ? headShift(kl, kind.headShift, {
-          pivot: HEAD_AT,
-          head: sdf.union(sdf.ellipsoid([...HEAD_R]).at(...HEAD_C), sdf.ellipsoid([...MUZZLE_R]).at(...MUZZLE_C)),
-          body: sdf.union(sdf.ellipsoid([0.11, 0.12, 0.135]).at(0, 0.37, 0.03), sdf.ellipsoid([0.11, 0.125, 0.125]).at(0, 0.38, -0.17)),
-          blend: 0.15,
-        })
-      : kl;
+    const zones = {
+      pivot: HEAD_AT,
+      head: sdf.union(sdf.ellipsoid([...HEAD_R]).at(...HEAD_C), sdf.ellipsoid([...MUZZLE_R]).at(...MUZZLE_C)),
+      body: sdf.union(sdf.ellipsoid([0.11, 0.12, 0.135]).at(0, 0.37, 0.03), sdf.ellipsoid([0.11, 0.125, 0.125]).at(0, 0.38, -0.17), ...(kind.bodyZone ? [kind.bodyZone] : [])),
+      blend: 0.15,
+    };
+    const k0 = kind.headShift ? headShift(kb, kind.headShift, zones) : kb;
+    // `WP` moves rest-pose points as the warps move the bodies (the head first, then the body, then
+    // the legs), for the ground contact of the clips.
+    const warps = [
+      kind.headShift ? headShiftPoint(kind.headShift, zones) : null,
+      kind.bodyLength ? stretchPoint(2, kind.bodyLength, -0.12, -0.02) : null,
+      kind.legLength ? stretchPoint(1, kind.legLength, 0.06, 0.24) : null,
+    ].filter((f) => f !== null);
+    const WP = (p: V3): V3 => warps.reduce<V3>((q, f) => f(q), p);
+    const WS = (c: Chain): Chain => (warps.length ? { ...c, joints: c.joints.map(WP), sole: c.sole.map(WP) } : c);
     // With `pose`, every clip takes the kind's bone poses over its own (the context delegates the
     // rest to the caller's).
     const k: AssetContext = kind.pose
@@ -206,9 +228,16 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
       sdf.ellipsoid([...HEAD_R]).at(...HEAD_C),
       pair(sdf.sphere(0.085).at(0.085, 0.64, 0.2)), // full cheeks
     );
-    const muzzle = sdf.ellipsoid([...MUZZLE_R]).at(...MUZZLE_C);
+    // With `muzzle`, a second muzzle further forward and lower makes a long face.
+    const MZ = kind.muzzle;
+    const MZL = MZ?.length ?? 0;
+    const MZD = MZ?.drop ?? 0;
+    const muzzleC: V3 = [0, MUZZLE_C[1] - MZD, MUZZLE_C[2] + MZL];
+    const muzzle = MZ
+      ? sdf.smoothUnion(0.04, sdf.ellipsoid([...MUZZLE_R]).at(...MUZZLE_C), sdf.ellipsoid([MUZZLE_R[0] * (MZ.width ?? 1), MUZZLE_R[1], MUZZLE_R[2]]).at(...muzzleC))
+      : sdf.ellipsoid([...MUZZLE_R]).at(...MUZZLE_C);
     const headBase = sdf.smoothUnion(0.03, skull, muzzle);
-    const chin = sdf.ellipsoid([0.05, 0.032, 0.05]).at(0, 0.575, 0.275);
+    const chin = sdf.ellipsoid([0.05, 0.032, 0.05]).at(0, 0.575 - MZD, 0.275 + MZL);
     const faceHit = (x: number, y: number) => sdf.raycast(headBase, [x, y, 2], [0, 0, -1])!;
 
     // Big leaf ears, cupped toward the front, with pink insides.
@@ -308,16 +337,17 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
       head: headBase,
       trunk: sdf.smoothUnion(0.06, chest.bone('spine'), rump.bone('hips')),
       faceHit,
-      joints: { FKNEE, BKNEE, HIP, SHOULDER, HEAD_C, HEAD_R, MUZZLE_C, EAR_AT, HOOF_DZ },
+      joints: { FKNEE, BKNEE, HIP, SHOULDER, HEAD_C, HEAD_R, MUZZLE_C: muzzleC, EAR_AT, HOOF_DZ },
       tint: { fur: T.fur, eye: T.eye },
       tone: (slot, color, follow = 1) => k.tint(slot, { color, follow }),
     };
     const fur = kind.paint?.(furPainted, deer) ?? furPainted;
+    const FB = 0.0006 * (kind.furBump ?? 1);
     k.body('fur', fur, {
       color: T.fur,
       roughness: 0.85,
       textureDensity: 1.5,
-      bump: (x: number, y: number, z: number) => 0.0006 * noise.fbm(x * 60, y * 25, z * 60, 2),
+      ...(FB ? { bump: (x: number, y: number, z: number) => FB * noise.fbm(x * 60, y * 25, z * 60, 2) } : {}),
     });
 
     // ------------------------------------------------------------------ eyes, nose
@@ -326,10 +356,10 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
     // With `eyeStyle: 'white'`: a white eye with a round black pupil that looks a little in.
     const whiteEyes = kind.eyeStyle === 'white';
     const eyeBase = whiteEyes
-      ? sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.021).at(-0.005, -0.006, 0.027), C.pupil, 0.003)
+      ? sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.021 * (kind.pupil ?? 1)).at(-0.005, -0.006, 0.027), C.pupil, 0.003)
       : sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.029).at(0, 0, 0.027), C.pupil, 0.004);
     const eyeLocal = EYS === 1 ? eyeBase : eyeBase.scale(EYS);
-    const EYE_IN = 0.01;
+    const EYE_IN = 0.01 + (kind.eyeSink ?? 0);
     const eyeAt = (s: sdf.Shape) => s.rotateY(14).at(eL[0], eL[1], eL[2] - EYE_IN);
     k.body('eyes', pair(eyeAt(eyeLocal)).bone('head'), { color: whiteEyes ? '#fbf8f0' : T.eye, roughness: 0.1, detail: 0.003, textureDensity: 2 });
     const shine = pair(
@@ -338,7 +368,7 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
         .at(eL[0], eL[1], eL[2] - EYE_IN),
     );
     k.body('shine', shine.bone('head'), { color: '#ffffff', roughness: 0.2, detail: 0.002 });
-    const noseAt = faceHit(0, 0.635);
+    const noseAt = faceHit(0, 0.635 - MZD);
     if (kind.nose !== false) k.body('nose', sdf.ellipsoid([0.035, 0.026, 0.024]).at(noseAt[0], noseAt[1], noseAt[2] - 0.004).bone('head'), {
       color: C.nose,
       roughness: 0.2,
@@ -435,7 +465,8 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
       { bones: ['hips', 'spine', 'fleg.R', 'fshin.R'], joints: [HIPS_AT, SPINE_AT, mx(SHOULDER), mx(FKNEE)], sole: hoofSole(mx(FKNEE)) },
       { bones: ['hips', 'bleg.L', 'bshin.L'], joints: [HIPS_AT, HIP, BKNEE], sole: hoofSole(BKNEE) },
       { bones: ['hips', 'bleg.R', 'bshin.R'], joints: [HIPS_AT, mx(HIP), mx(BKNEE)], sole: hoofSole(mx(BKNEE)) },
-    ];
+    ].map(WS);
+    const [WSH, WFK, WHP, WBK] = [SHOULDER, FKNEE, HIP, BKNEE].map(WP) as [V3, V3, V3, V3];
     const chains = (pose: Pose, list: readonly Chain[] = LEGS) =>
       list.map((l) => ({ joints: l.joints, rotations: l.bones.map((b) => pose[b]?.rotate ?? ([0, 0, 0] as const)), sole: l.sole }));
     const needY = (pose: Pose, list: readonly Chain[] = LEGS) => motion.plant(chains(pose, list));
@@ -468,8 +499,8 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
     // forward, the upper leg lifts the knee (`fold`) and the shin folds (`toe`): the front shin
     // folds back under the knee (a prancing deer step, negative toe), the hind hoof tips up. The
     // bias sets each knee straight under its shoulder or hip. `hop` adds a bounce between steps.
-    const FBIAS = Math.atan2(FKNEE[2] - SHOULDER[2], SHOULDER[1] - FKNEE[1]) * DEG;
-    const HBIAS = Math.atan2(BKNEE[2] - HIP[2], HIP[1] - BKNEE[1]) * DEG;
+    const FBIAS = Math.atan2(WFK[2] - WSH[2], WSH[1] - WFK[1]) * DEG;
+    const HBIAS = Math.atan2(WBK[2] - WHP[2], WHP[1] - WBK[1]) * DEG;
     type Swing = readonly [fold: number, toe: number];
     const gait = (duration: number, swing: number, front: Swing, hind: Swing, hop: number, headDip: number, tailUp: number, earsBack: number) => ({
       duration,
@@ -537,7 +568,7 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
     };
     const FRONT = LEGS.slice(0, 2);
     const HIND = LEGS.slice(2);
-    const FHOOF: V3 = [FKNEE[0], 0, FKNEE[2] + HOOF_DZ];
+    const FHOOF: V3 = WP([FKNEE[0], 0, FKNEE[2] + HOOF_DZ]);
     k.animation('graze', {
       duration: 3.2,
       loop: false,
@@ -661,7 +692,8 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
     const B = kind.bulk ?? 0;
     const grow = (r: V3): V3 => (B ? [r[0] + B, r[1] + B, r[2] + B] : r);
     const kneeRing = (kn: V3): V3[] => [add(kn, [0.03, 0, 0]), add(kn, [-0.03, 0, 0]), add(kn, [0, 0, 0.03]), add(kn, [0, 0, -0.03])];
-    const PROBES: Chain[] = [
+    // The body probes move with the warps; the leg chains (already moved) follow at the end.
+    const BODY_PROBES: Chain[] = [
       { bones: ['hips'], joints: [HIPS_AT], sole: [...shell(RUMP_C, grow(RUMP_R)), ...shell([0.07, 0.32, -0.18], [0.065, 0.11, 0.09]), ...shell([-0.07, 0.32, -0.18], [0.065, 0.11, 0.09])] },
       { bones: ['hips', 'spine'], joints: [HIPS_AT, SPINE_AT], sole: shell(CHEST_C, grow(CHEST_R)) },
       { bones: ['hips', 'spine', 'neck'], joints: [HIPS_AT, SPINE_AT, NECK_AT], sole: shell([0, 0.51, 0.12], [0.06, 0.1, 0.06]) },
@@ -670,7 +702,8 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
         sole: [
           ...shell(HEAD_C, [HEAD_R[0] + 0.01, HEAD_R[1], HEAD_R[2]], 30),
           ...shell(MUZZLE_C, MUZZLE_R),
-          [0, 0.635, 0.375],
+          ...(MZ ? shell(muzzleC, MUZZLE_R) : []),
+          [0, 0.635 - MZD, 0.375 + MZL],
           ...((kind.antlers === false ? [] : [[0.1, 1.008, 0.11], [-0.1, 1.008, 0.11], [0.032, 0.966, 0.13], [-0.032, 0.966, 0.13], [0.068, 1.02, 0.115], [-0.068, 1.02, 0.115]]) as V3[]),
           ...(kind.headProbes ?? []),
         ],
@@ -678,8 +711,8 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
       { bones: [...HEAD_CHAIN.bones, 'ear.L'], joints: [...HEAD_CHAIN.joints, EAR_AT], sole: earPts },
       { bones: [...HEAD_CHAIN.bones, 'ear.R'], joints: [...HEAD_CHAIN.joints, mx(EAR_AT)], sole: earPts.map(mx) },
       { bones: ['hips', 'tail'], joints: [HIPS_AT, TAIL_AT], sole: [[0, 0.566, -0.32], [0, 0.51, -0.345]] },
-      ...LEGS.map((l) => ({ ...l, sole: [...l.sole, ...kneeRing(l.joints.at(-1)!)] })),
     ];
+    const PROBES: Chain[] = [...BODY_PROBES.map(WS), ...LEGS.map((l) => ({ ...l, sole: [...l.sole, ...kneeRing(l.joints.at(-1)!)] }))];
     k.animation('death', {
       duration: 1.5,
       loop: false,

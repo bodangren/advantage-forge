@@ -198,28 +198,36 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 | rabbit | 4 | 6.0 | 7.5 | accepted |
 | stag | 2 | 6.5 | 7.5 | accepted |
 | turtle | 1 | 7.5 | 7.5 | accepted |
+| badger | 4 | 6.5 | 7.0 | accepted |
 | bear | 3 | 7.0 | 7.0 | accepted |
+| bee | 7 | 5.5 | 7.0 | accepted |
 | boar | 3 | 6.5 | 7.0 | accepted |
 | cat | 3 | 6.5 | 7.0 | accepted |
 | chicken | 5 | 6.5 | 7.0 | accepted |
-| cow | 1 | 7.0 | 7.0 | accepted |
-| crocodile | 4 | 7.0 | 7.0 | accepted |
+| cow | 2 | 7.0 | 7.0 | accepted |
+| crocodile | 5 | 7.0 | 7.0 | accepted |
 | dog | 3 | 6.5 | 7.0 | accepted |
 | donkey | 1 | 7.0 | 7.0 | accepted |
 | eagle | 5 | 6.0 | 7.0 | accepted |
 | eel | 3 | 6.0 | 7.0 | accepted |
+| elk | 3 | 6.5 | 7.0 | accepted |
 | falcon | 5 | 5.5 | 7.0 | accepted |
 | familiar-cat | 3 | 6.5 | 7.0 | accepted |
 | familiar-owl | 5 | 6.0 | 7.0 | accepted |
+| familiar-raven | 7 | 6.0 | 7.0 | accepted |
+| frog | 5 | 5.5 | 7.0 | accepted |
 | goat | 2 | 6.5 | 7.0 | accepted |
+| hawk | 6 | 6.0 | 7.0 | accepted |
 | messenger-bird | 4 | 6.0 | 7.0 | accepted |
 | moose | 2 | 6.0 | 7.0 | accepted |
 | mule | 1 | 7.0 | 7.0 | accepted |
-| ox | 1 | 7.0 | 7.0 | accepted |
+| ox | 3 | 7.0 | 7.0 | accepted |
 | pig | 3 | 6.5 | 7.0 | accepted |
 | pigeon | 4 | 5.5 | 7.0 | accepted |
+| pony | 3 | 6.5 | 7.0 | accepted |
 | raven | 4 | 5.5 | 7.0 | accepted |
 | riding-horse | 1 | 7.0 | 7.0 | accepted |
+| rooster | 6 | 5.5 | 7.0 | accepted |
 | salmon | 3 | 7.0 | 7.0 | accepted |
 | seal | 3 | 6.5 | 7.0 | accepted |
 | sparrow | 5 | 5.5 | 7.0 | accepted |
@@ -227,22 +235,17 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 | warhorse | 1 | 7.0 | 7.0 | accepted |
 | wasp | 4 | 5.0 | 7.0 | accepted |
 | yak | 1 | 7.0 | 7.0 | accepted |
-| badger | 3 | 6.5 | 6.5 | rework |
-| bee | 5 | 5.5 | 6.5 | rework |
-| elk | 2 | 6.5 | 6.5 | rework |
-| fox | 3 | 6.0 | 6.5 | rework |
-| frog | 4 | 5.5 | 6.5 | rework |
-| hawk | 5 | 6.0 | 6.5 | rework |
-| moth | 6 | 4.5 | 6.5 | rework |
-| pony | 2 | 6.5 | 6.5 | rework |
-| riding-wolf | 3 | 6.0 | 6.5 | rework |
-| rooster | 5 | 5.5 | 6.5 | rework |
-| sheep | 2 | 6.0 | 6.5 | rework |
-| familiar-raven | 5 | 6.0 | 6.0 | rework |
-| pack-goat | 2 | 6.0 | 6.0 | rework |
-| squirrel | 5 | 5.5 | 6.0 | rework |
-| wolf | 3 | 6.5 | 6.0 | rework |
-| camel | 2 | 5.5 | 5.5 | rework |
+| fox | 5 | 6.0 | 6.5 | rework |
+| pack-goat | 3 | 6.0 | 6.5 | rework |
+| riding-lizard | 1 | 6.5 | 6.5 | rework |
+| riding-wolf | 5 | 6.0 | 6.5 | rework |
+| sheep | 3 | 6.0 | 6.5 | rework |
+| wolf | 5 | 6.5 | 6.5 | rework |
+| dragon-mount | 1 | 6.0 | 6.0 | rework |
+| gryphon-mount | 1 | 6.0 | 6.0 | rework |
+| squirrel | 7 | 5.5 | 6.0 | rework |
+| camel | 3 | 5.5 | 5.5 | rework |
+| moth | 8 | 4.5 | 4.0 | rework |
 
 Bar decision. Owner, 2026-10-05: "We can drop the rating to 7.0. How does that affect the pass
 rate?" The wildlife bar is 7.0 from this date; the table marks 7.0 and higher as accepted. The
@@ -250,9 +253,17 @@ reviewers still rate against the brief, and their ratings stay as they are. Prop
 waiting for the owner): after three reviews below the bar, record the rating, put the asset on a
 follow-up list, and move on.
 
-Status on 2026-10-05 after 17 review rounds: 42 of 58 reviewed assets are at 7.0 or higher (13 at
-7.5 or higher).
-Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json.
+Status on 2026-10-05 after 21 review rounds and the batch 10 review: 50 of 61 assets are at 7.0
+or higher (13 at 7.5 or higher). Round 21 (wildlife-w5h.json) accepted the ox, the bee, and the
+familiar raven at 7.0. The wolf, the riding wolf, and the fox stayed at 6.5, and the squirrel fell
+to 6.0. The moth fell to 4.0: its new spiky hood had 101,818 triangles and broke the texture bake
+(the bake took 801 s and streaked the whole atlas). Batch 10 (wildlife-b10.json): riding lizard
+6.5, dragon mount 6.0, gryphon mount 6.0.
+Round 20 (wildlife-w5g.json) accepted the elk at 7.0; the pack goat went from 6.0
+to 6.5, and the sheep (6.5) and the camel (5.5) stayed below the bar.
+Rounds 18 and 19 (wildlife-w5e.json, wildlife-w5f.json) accepted cow, badger, pony,
+frog, crocodile, rooster, and hawk at 7.0; the ox fell from 7.0 to 6.5 after its rework.
+Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json, wildlife-w5e.json, wildlife-w5f.json, wildlife-w5g.json, wildlife-w5h.json, wildlife-b10.json.
 
 Changes in the latest rounds (all kind options are additive; `mesh-same` or a manual GLB compare
 shows SAME for the other users of each kind):
@@ -288,6 +299,42 @@ manticore):
 - `assets/parts/curl-field.ts`: round curls on a surface (the sheep's wool, the pony's topknot,
   the moth's hood).
 - The cow keeps no udder (rated G, as in batch 3).
+
+Changes for rounds 20 and 21 (additive kind options; `mesh-same` shows SAME for deer, hare, pony, and the
+other users checked in this round):
+
+- Deer kind: `muzzle` (a long goat face), `bodyLength`, `pupil`, `eyeSink`, and `bodyZone` (shapes
+  that stay with the body when `headShift` moves the head). The clips map their ground probes
+  through every warp (`WP`).
+- `headShift` now inverts its point map exactly (bisection). The old guess copied bodies just
+  behind the head onto the moved head (the camel's blanket and a fin on its neck).
+- `curlField`: an `even` mode (no rows of flat rings) and a `swirl` groove (spiral curls).
+- Wolf kind: `furBump` (0 for a smooth clay coat). Insect kind: `legStyle: 'dangle'`,
+  `maneStyle: 'spiky-hood'`, and `hindWingLift`.
+- Reworked from the round 18 and 19 notes: pack goat, sheep, camel, ox, wolf, riding wolf, fox, bee,
+  familiar raven, squirrel, and moth.
+
+Changes for batch 10 and round 22:
+
+- Batch 10 (dragon mount, riding lizard, gryphon mount; mockups in `docs/wildlife-mockups/`).
+  The dragon mount and the riding lizard use the lizard kind. The griffin moved to a kind factory,
+  `assets/parts/griffin-kind.ts` (`mesh-same griffin`: SAME against the committed standalone
+  source). New griffin kind options for the gryphon mount: `head` (move and scale the head on a
+  longer neck), `beakScale` (per axis), `eyeAt`, `eyeStyle: 'white'`, `friendly` (thin brows),
+  `crestScale`, `ruff`, `tufts`, `wings` (size, turn, root), `flightShade`, `oneCoat` (the head and
+  the wings on the coat slot, so two slots stay free for tack), `talonColor`, and `legLength`.
+- `assets/parts/horse-tack.ts`: `backSaddle` (a blanket with a trim, a seat, a pommel, a cantle,
+  flaps, and a girth fitted to any trunk) and an `at` option on `saddle`. `mesh-same` SAME for the
+  riding horse, the warhorse, and the mule.
+- Deer kind: `furBump` (0 for a smooth clay coat). `mesh-same` SAME for deer, hare, moose, and
+  stag. The goat mesh is the same, but its clips changed: the leg chains of the clips now follow
+  `legLength` (the planted feet match the shorter legs). `./forge check goat` gives `ground ok`;
+  the goat is rebuilt with the camel lane.
+- Insect kind: the `spiky-hood` tufts are fewer and round, with `maxTriangles` 24,000 (the moth's
+  mane went from 101,818 to 23,934 triangles). `mesh-same` SAME for butterfly and wasp.
+- Reworked for round 22: camel (a tall hump made short in Z before the body stretch, ruffled cord
+  loops round the hump, a smooth warm coat, thicker legs, knee rings, pointed ears, a soft crown
+  tuft) and moth (the hood fix and a warmer body).
 
 Rework method: one asset at a time from the reviewer's issue list, largest difference first, with
 `./forge render <name> --fast` against the mockup, `./forge check <name>` (`ground ok`), and then

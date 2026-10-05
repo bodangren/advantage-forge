@@ -99,6 +99,8 @@ export interface WolfKind {
   readonly headScale?: number;
   /** Longer legs in meters (below 0, shorter): the shins stretch between the paws and the belly. */
   readonly legLength?: number;
+  /** The fur bump of the coat as a share (default 1; 0 for a smooth clay coat). */
+  readonly furBump?: number;
   /** Paint on the cream muzzle before the mouth line (a squirrel's fur-colored snout). */
   paintMuzzle?(muzzle: sdf.Shape, tint: WolfShape['tint']): sdf.Shape;
   /** Paint on the fur (ear tips, markings), with the slot colors. */
@@ -302,7 +304,8 @@ export function wolfAsset(kind: WolfKind): AssetDefinition {
       const jawPart = jawZone.round(0.003);
       const roofPaint = (inside: sdf.Shape) => jawPart.intersect(inside);
       const jawTopPaint = (inside: sdf.Shape) => inside.subtract(jawZone.round(-0.003));
-      const furLook = { color: T.fur, roughness: 0.85, textureDensity: 1.5, bump: (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2) };
+      const FB = 0.0008 * (kind.furBump ?? 1);
+      const furLook = { color: T.fur, roughness: 0.85, textureDensity: 1.5, ...(FB ? { bump: (x: number, y: number, z: number) => FB * noise.fbm(x * 60, y * 25, z * 60, 2) } : {}) };
       k.body('fur', fur.subtract(jawZone).paintWhere(roofPaint(headBase.round(-0.004)), C.mouth, 0.002), furLook);
       k.body('jawFur', fur.intersect(jawPart).paintWhere(jawTopPaint(headBase.round(-0.004)), C.mouth, 0.002), { ...furLook, bone: 'jaw' });
       // The dark mouth inside the head (seen when the jaw opens), and the tongue on the jaw. Both

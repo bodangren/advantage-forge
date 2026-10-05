@@ -9,21 +9,22 @@ import { scaleAsset } from './parts/scale-asset.js';
  * The horse of `assets/horse.ts` (body, head, rig, and clips from `assets/parts/horse-kind.ts`) at
  * 1.05 of its size, as a stocky draught ox: a big head (1.3) on a short body with short legs,
  * thick cream horns that curve out and up like a crescent, ears held out to the sides, a very
- * wide tan muzzle with nostrils only (no smile line), heavy brows, a brown coat with a pale belly
- * and chest patch, a twisted rope round the chest with a brass bell at the front, a thin tail
- * with a dark tuft, and black hooves; no mane, halter, blaze, or socks.
+ * wide pink muzzle with nostrils only (no smile line), big glossy eyes, heavy brows, a smooth
+ * caramel coat with a pale belly and a cream chest patch, a twisted rope round the base of the neck
+ * with a brass bell on the chest, a thin tail with a dark tuft, and black hooves; no mane, halter,
+ * blaze, or socks.
  * Role: the farm's strong worker that pulls carts and ploughs; the wide horns read at 128 px.
- * Palette (60/30/10): brown coat #8a5a3a; a tan-pink muzzle #c8907c and a pale belly #e8d0b0; cream
+ * Palette (60/30/10): caramel coat #a8703f; a pink muzzle #e09a84 and a pale belly #e8d0b0; cream
  *   horns #e8dcc0 with dark tips; a brass bell as the accent.
  */
 
 export default scaleAsset(
   horseAsset({
     name: 'ox',
-    description: 'Chibi ox: a stocky ox with a big round head, glossy eyes, thick crescent horns, ears held out to the sides, a wide tan muzzle, a brown coat with a pale belly, a rope round the chest with a brass bell, short legs, and a thin tufted tail; quadruped rig.',
+    description: 'Chibi ox: a stocky ox with a big round head, big glossy eyes, thick crescent horns, ears held out to the sides, a wide pink muzzle, a smooth caramel coat with a pale belly and a cream chest patch, a rope round the neck with a brass bell on the chest, short legs, and a thin tufted tail; quadruped rig.',
     reference: 'docs/wildlife-mockups/ox_001.jpg',
     variants: {
-      coat: { brown: '#8a5a3a', red: '#a0502e', black: '#3a302c', grey: '#a8a49c' },
+      coat: { caramel: '#a8703f', brown: '#8a5a3a', red: '#a0502e', black: '#3a302c', grey: '#a8a49c' },
       mane: { dark: '#3a2a20', black: '#1e1a18', cream: '#e8dcc0' },
       eyes: { brown: '#2a1a12', dark: '#120c0a', hazel: '#6b4a22' },
     },
@@ -32,7 +33,7 @@ export default scaleAsset(
       black: { coat: 'black', mane: 'black', eyes: 'hazel' },
       grey: { coat: 'grey', mane: 'cream', eyes: 'dark' },
     },
-    colors: { muzzle: '#cc9270', coatDark: '#c89080', brow: '#4a2a1a', hoof: '#1e1a18', nostril: '#5a3028' },
+    colors: { muzzle: '#e09a84', coatDark: '#c89080', brow: '#4a2a1a', hoof: '#1e1a18', nostril: '#5a3028' },
     muzzleFollow: 0.4,
     halter: false,
     blaze: false,
@@ -43,16 +44,21 @@ export default scaleAsset(
     earWidth: 1.5,
     ears: 1.0,
     earAt: [0.16, 0.95, 0.23],
-    muzzleScale: 1.3,
+    muzzleScale: 1.2,
+    eyeScale: 1.6,
+    irisScale: 1.2,
+    eyeSink: 0.034,
+    coatBump: 0,
     smile: false,
     headScale: 1.3,
     legLength: -0.09,
     bodyLength: -0.07,
     paint(coat, horse) {
       const pale = horse.tone('coat', '#e8d0b0', 0.3);
-      return coat
-        .paintWhere(sdf.ellipsoid([0.15, 0.09, 0.3]).at(0, 0.33, -0.1), pale, 0.03)
-        .paintWhere(sdf.ellipsoid([0.13, 0.11, 0.08]).at(0, 0.4, 0.27), pale, 0.02);
+      // The cream chest patch: an uneven blob on the front of the chest under the rope.
+      const c = sdf.raycast(horse.trunk, [0, 0.38, 2], [0, 0, -1])!;
+      const patch = sdf.union(sdf.ellipsoid([0.075, 0.07, 0.06]).at(c[0], c[1], c[2]), sdf.ellipsoid([0.05, 0.05, 0.06]).at(c[0] + 0.045, c[1] - 0.04, c[2] - 0.01), sdf.ellipsoid([0.045, 0.045, 0.06]).at(c[0] - 0.05, c[1] + 0.03, c[2] - 0.01));
+      return coat.paintWhere(sdf.ellipsoid([0.15, 0.09, 0.3]).at(0, 0.33, -0.1), pale, 0.03).paintWhere(patch, pale, 0.012);
     },
     extra(k, horse) {
       // Horns: thick at the root, out to the sides, then up and a little in (a crescent).
@@ -78,9 +84,9 @@ export default scaleAsset(
       const loop = Array.from({ length: 25 }, (_, i) => {
         // A ray from inside the chest in a plane tilted 38 degrees (low at the front, high on the withers).
         const a = (i / 24) * 2 * Math.PI;
-        const t = (38 * Math.PI) / 180;
+        const t = (30 * Math.PI) / 180;
         const d: [number, number, number] = [Math.sin(a), -Math.cos(a) * Math.sin(t), Math.cos(a) * Math.cos(t)];
-        const hit = sdf.raycast(body, [d[0] * 2, 0.6 + d[1] * 2, 0.1 + d[2] * 2], [-d[0], -d[1], -d[2]])!;
+        const hit = sdf.raycast(body, [d[0] * 2, 0.56 + d[1] * 2, 0.1 + d[2] * 2], [-d[0], -d[1], -d[2]])!;
         return [hit[0], hit[1], hit[2], 0.022] as [number, number, number, number];
       });
       const rope = sdf.chain(loop, 0.01).displace(0.005, (x, y, z) => Math.sin(Math.atan2(x, z - 0.1) * 30 + y * 60));

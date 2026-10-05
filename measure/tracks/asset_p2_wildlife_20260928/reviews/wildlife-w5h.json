@@ -1,0 +1,159 @@
+{
+  "ox": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A chibi ox on four legs with wide cream horns, a rope collar, and a bell. The front view is close to the mockup, but the face, the coat color, and the belly differ clearly.",
+    "strengths": [
+      "The wide cream horns read in every sprite direction.",
+      "The big head, the round eyes, and the black hooves give chibi appeal.",
+      "The rope collar, the gold bell, and the tail tuft match the mockup.",
+      "The walk alternates the legs and swings the tail."
+    ],
+    "issues": [
+      "The muzzle is too small and too pink. Make it wider, as wide as the head, and use the peach color of the mockup.",
+      "The cream belly patch is missing. Add the cream patch on the chest and the belly.",
+      "The coat is a dark red brown. Make it the lighter tan brown of the mockup.",
+      "The brow bumps above the eyes are missing. Add the two brow bumps.",
+      "In the side view, the muzzle points forward like a pig snout. Make the muzzle shorter and deeper.",
+      "The horns are wider than in the mockup and have a lumpy surface. Make them smooth and add the ring segments."
+    ],
+    "next": "Make the muzzle wide and peach colored, and add the cream belly patch."
+  },
+  "wolf": {
+    "overall": 6.5,
+    "scores": [3, 4, 3, 3.5, 3.5, 3, 3, 4, 4.5, 3.5, 3.5],
+    "summary": "A grey wolf cub on four legs with a cream muzzle and brown paws. The head shape and the cream markings are noticeably different from the mockup.",
+    "strengths": [
+      "The grey coat, the brown paws, and the brown tail tip match the mockup palette.",
+      "The closed smile matches the mockup expression.",
+      "The silhouette reads as a canine from every view.",
+      "The walk has a clear leg cycle and a tail sway."
+    ],
+    "issues": [
+      "The head is a round ball. Make the head wide at the jaw with flat cheeks, as in the mockup.",
+      "The cream area on the face is too small. Extend the cream from cheek to cheek over the lower half of the head.",
+      "The cream chest bib is weak. Add a large cream bib on the chest.",
+      "The ears have no brown inner color. Paint the inner ears warm brown and make the ears wider.",
+      "The brows are missing. Add the brow ridges above the eyes.",
+      "The coat has a blue cast. Use the neutral mid grey of the mockup.",
+      "A small white speck shows at the edge of the left eye. Remove it."
+    ],
+    "next": "Change the head to the wide jaw shape with the large cream lower face."
+  },
+  "riding-wolf": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 4, 4, 4, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A grey wolf mount with a brown saddle, a teal pad, white socks, and black paws. The gear matches the mockup well, but the face has a different expression and shape.",
+    "strengths": [
+      "The saddle, the teal pad with the white diamond, the pouch, and the chest ring match the mockup.",
+      "The teal pad and the saddle read in the side sprites.",
+      "The white socks and the black paws match the mockup.",
+      "The fur crest on the head is present.",
+      "The walk has a clear leg cycle, and the saddle stays on the back."
+    ],
+    "issues": [
+      "The expression is different. The mockup has a sly side glance with eyelids and a smirk. Give the eyes white sclera, black pupils, and upper lids, and change the smile to a smirk.",
+      "The head is a round ball. Add the large white cheek ruffs and the brows, and make the muzzle longer and more pointed.",
+      "The ears are too tall and too pointed. Make them smaller and tilt them out.",
+      "A crease line shows on the top of the muzzle. Smooth the muzzle surface.",
+      "Small brown specks show on the head near the ears. Remove them."
+    ],
+    "next": "Change the eyes and the mouth to the sly side glance and the smirk of the mockup."
+  },
+  "fox": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 4, 3.5, 3, 3.5, 4.5, 4, 3.5],
+    "summary": "A chibi red fox on four legs with big lashed eyes, black ear tips, and a big tail. The eyes match well, but the cheek ruffs, the tail, and the ears differ noticeably.",
+    "strengths": [
+      "The big brown eyes with lashes match the mockup face.",
+      "The orange coat, the white chest, and the dark paws match the mockup palette.",
+      "The fox reads in every sprite direction.",
+      "The sit clip settles the body and moves the tail."
+    ],
+    "issues": [
+      "The cheek ruffs are round white lumps that stick out like ear muffs. Make them flat, wide, pointed fur wedges that continue the white lower face.",
+      "The white color is a band in the middle of the tail. Move the white to the tail tip.",
+      "The tail lies flat behind the body. Curl the tail up beside the body as in the mockup.",
+      "The ears are grey white with small black tips. Make the black tips larger and add the orange rim around the white inner ear.",
+      "A seam line shows around the muzzle. Smooth the muzzle surface.",
+      "In the sit clip, the white tail band turns out of view. Keep the white tip visible."
+    ],
+    "next": "Change the cheek ruffs to flat, pointed fur wedges."
+  },
+  "bee": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 3.5, 4, 4, 4, 3],
+    "summary": "A chibi bee with a round yellow head, a banded fuzzy body, clear wings, and knobbed antennae. It is the same character as the mockup, but the eyes, the head, and the pose differ clearly.",
+    "strengths": [
+      "The yellow and black bands read at 128 px in every direction.",
+      "The knobbed antennae and the smile match the mockup.",
+      "The fuzzy body, the smooth head, the glossy eyes, and the clear wings are different materials that read.",
+      "The model is clean, with no holes and no poke-through."
+    ],
+    "issues": [
+      "The eyes are black with a thin white ring. Give them large white sclera and black pupils that look to the side, as in the mockup.",
+      "The rest pose stands on six splayed legs like a spider. The mockup flies with the legs down and relaxed. Lift the rest pose off the ground and let the legs hang.",
+      "The head is smooth. Add the fuzzy yellow tuft on the top of the head.",
+      "The body is as wide as the head. Make the body smaller than the head.",
+      "The wing beat in the fly clip is small. Increase the wing beat."
+    ],
+    "next": "Change the eyes to white sclera with black side-glance pupils."
+  },
+  "familiar-raven": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A round black raven with glowing violet eyes, a violet ribbon, and a crescent charm. It is the same character as the mockup, but the head, the beak, and the feathers differ clearly.",
+    "strengths": [
+      "The glowing violet eyes and the violet ribbon read at 128 px and give a clear focal accent.",
+      "The crescent charm and the hanging ribbon end match the mockup.",
+      "The chest feathers, the folded wings, and the tail fan support the round body.",
+      "The model is clean and stands on its feet."
+    ],
+    "issues": [
+      "The head is a smooth ball on top of the body. Add the ruffled feather tufts on the crown and the cheeks, and blend the head into the body as one egg form.",
+      "The beak is small, black, and hooked. Make it larger, grey, and wedge shaped as in the mockup.",
+      "The body is wider than the head at the bottom. Make the head as wide as the body.",
+      "In the side view, feather spikes stick out of the seam between the head and the body. Smooth the seam.",
+      "The walk shows little foot motion. Lift the feet more and add a body waddle."
+    ],
+    "next": "Add the feather tufts on the head and blend the head into the body."
+  },
+  "squirrel": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 3.5, 3, 3, 3.5, 4.5, 3.5, 3],
+    "summary": "A chibi red squirrel with ear tufts and a very tall tail. The mockup runs on the hind legs with the front paws at the chest, but the model stands on four legs, and the tail and the eyes differ.",
+    "strengths": [
+      "The tall tail gives a clear squirrel silhouette from the side.",
+      "The ear tufts and the orange coat match the mockup.",
+      "The squirrel reads at 128 px in the side directions."
+    ],
+    "issues": [
+      "The pose is different. The mockup runs on the hind legs and holds the front paws at the chest. Lift the front body and hold the front paws at the chest.",
+      "The tail has deep regular ridges like a pine cone. Make it a round, soft, fluffy tail with flowing fur strands.",
+      "A smooth bulge on the inner side of the tail reads as a separate ball. Remove the bulge.",
+      "Dark rings around the eyes look like a mask. Remove the rings, and give the eyes white sclera and highlights.",
+      "The body and the legs are too short. Make the body longer and the hind legs longer.",
+      "The cream belly is missing, and the cream on the cheek is a grey smear. Add a clean cream belly and a clean cream muzzle."
+    ],
+    "next": "Change the pose to the upright run with the front paws at the chest."
+  },
+  "moth": {
+    "overall": 4.0,
+    "scores": [2, 3, 3, 2.5, 1.5, 2, 1.5, 1.5, 3, 1.5, 3],
+    "summary": "A moth with a fluffy hood, knobbed antennae, and four dotted wings. A broken texture covers the face, the body, and the antennae, so the face and the mockup colors are lost.",
+    "strengths": [
+      "The four orange wings with brown dots match the mockup.",
+      "The body plan matches: a hooded head, a round body, four wings, and two knobbed antennae.",
+      "The fly clip moves the wings."
+    ],
+    "issues": [
+      "The texture is broken. Black and cream streaks cover the face, the body, and the antennae. Rebake the texture and do a check of the UV atlas.",
+      "The face is not readable. The eyes are grey smears and the open smile is missing. Show the big brown eyes and the open smile.",
+      "The hood is grey and spiky like a seed head. Make it a soft cream fluff around the face.",
+      "The body is grey white. Make the body the warm tan of the mockup.",
+      "The antenna knobs are half brown and half cream. Make them solid dark brown.",
+      "The small arms of the mockup are missing. Add the two small arms."
+    ],
+    "next": "Fix the texture bake so that the face, the body, and the antennae show their true colors."
+  }
+}

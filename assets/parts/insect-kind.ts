@@ -65,12 +65,14 @@ export interface InsectKind {
   readonly wings?: 'clear' | 'butterfly' | 'moth';
   /** Moves the wing roots out to the sides and back (meters, default 0), clear of a mane. */
   readonly wingRootOut?: number;
+  /** Turns the hind wings up about their root (degrees; default 0): level moth wings. */
+  readonly hindWingLift?: number;
   /** The wing size (default 1). */
   readonly wingScale?: number;
   /** The limbs: six short legs folded under the body (default) or two small arms at its front. */
   readonly limbs?: 'legs' | 'arms';
-  /** The legs (with `limbs: 'legs'`): short and folded under the body (default), long and thin and spread out to the sides, or long and hanging down. */
-  readonly legStyle?: 'tucked' | 'spread' | 'hang';
+  /** The legs (with `limbs: 'legs'`): short and folded under the body (default), long and thin and spread out to the sides, long and hanging down, or thin and bent, dangling under the body in flight. */
+  readonly legStyle?: 'tucked' | 'spread' | 'hang' | 'dangle';
   /** The mouth: a closed smile (default) or an open happy mouth. */
   readonly mouth?: 'smile' | 'open';
   /** The size of the eyes (default 1). */
@@ -81,8 +83,8 @@ export interface InsectKind {
   readonly restHover?: number;
   /** A fuzzy ring round the neck that joins the head to the body (default false). */
   readonly collar?: boolean;
-  /** The mane: a smooth ring (default) or spiky fluffy fur. */
-  readonly maneStyle?: 'smooth' | 'spiky' | 'hood';
+  /** The mane: a smooth ring (default), spiky fluffy fur, a hood of round tufts over the head and the chest, or a thinner hood of pointed fur strands. */
+  readonly maneStyle?: 'smooth' | 'spiky' | 'hood' | 'spiky-hood';
   /** The eyes: glossy dark balls (default), white balls with a big dark pupil, or dark balls with a colored iris. */
   readonly eyeStyle?: 'dark' | 'white' | 'iris';
   /** The iris color for `eyeStyle: 'iris'`. */
@@ -386,7 +388,7 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
         );
       }
       k.body('antennae', pair(antenna).bone('head'), { color: kind.antennaSlot ? k.tint(kind.antennaSlot) : T.stripes, roughness: 0.5, detail: 0.003 });
-      if (kind.mane && kind.maneStyle === 'hood') {
+      if (kind.mane && (kind.maneStyle === 'hood' || kind.maneStyle === 'spiky-hood')) {
         // A fluffy hood (a moth): a thick soft layer over the top, the sides, and the back of the
         // head that runs down under the chin onto the chest, with a round hole for the face. Round
         // tufts are raised all over it (`curlField`), and fine strand grooves are in the normal map
@@ -394,13 +396,31 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
         const fc: V3 = [HEAD_C[0], HEAD_C[1] - HR * 0.05, HEAD_C[2] + HR * 0.3];
         const bib = sdf.ellipsoid([HR * 0.95, HR * 0.62, HR * 0.72]).at(HEAD_C[0], HEAD_C[1] - HR * 0.92, HEAD_C[2] + HR * 0.12);
         const faceHole = sdf.cylinder(HR * 0.86, 1).rotateX(90).at(0, HEAD_C[1] - HR * 0.05, HEAD_C[2] + 0.5).intersect(sdf.halfSpace([0, 0, -1], -(HEAD_C[2] + HR * 0.15)));
-        const base = sdf.smoothUnion(HR * 0.25, headShape.round(HR * 0.22), bib).smoothSubtract(HR * 0.08, faceHole);
-        const curls = curlField(base, sdf.sphere(4).at(...HEAD_C), [HEAD_C[0], HEAD_C[1] - HR * 0.3, HEAD_C[2]], 190, HR * 0.24);
-        const mane = base.displace(-HR * 0.11, curls.dome, 2);
+        // With 'spiky-hood' the layer is thinner (the face sits nearer the front) and soft tufts stand
+        // out from it: a round-topped tuft at the middle of each cell of a coarse latitude and
+        // longitude grid round the face center, the cells in staggered, swept rows. Sharp or dense
+        // tufts make about 100k triangles and break the bake; keep them few and round.
+        const spikyHood = kind.maneStyle === 'spiky-hood';
+        const base = sdf.smoothUnion(HR * 0.25, headShape.round(spikyHood ? HR * 0.12 : HR * 0.22), bib).smoothSubtract(HR * 0.08, faceHole);
+        const strands = (x: number, y: number, z: number) => {
+          const [dx, dy, dz] = [x - fc[0], y - fc[1], z - fc[2] + HR * 0.3];
+          const r = Math.hypot(dx, dy, dz) || 1;
+          const lat = Math.acos(Math.max(-1, Math.min(1, dy / r))) / (Math.PI / 9);
+          const row = Math.floor(lat);
+          // The rows twist a little, so the tufts look swept.
+          const lon = (Math.atan2(dx, dz) / (2 * Math.PI)) * 22 + (row % 2) * 0.5 + lat * 0.2;
+          const du = lon - Math.floor(lon) - 0.5;
+          const dv = lat - row - 0.5;
+          const h = Math.cos(Math.min(1, 1.6 * Math.hypot(du, dv * 0.85)) * Math.PI * 0.5);
+          return h * h * (0.8 + 0.4 * noise.random(row, Math.floor(lon), 3));
+        };
+        const curls = spikyHood ? null : curlField(base, sdf.sphere(4).at(...HEAD_C), [HEAD_C[0], HEAD_C[1] - HR * 0.3, HEAD_C[2]], 190, HR * 0.24);
+        const mane = curls ? base.displace(-HR * 0.11, curls.dome, 2) : base.displace(-HR * 0.1, strands, 2);
         k.body('mane', mane.bone('head'), {
           color: k.tint(kind.mane),
           roughness: 0.95,
           detail: 0.004,
+          ...(spikyHood ? { maxTriangles: 24000 } : {}),
           bump: (x, y, z) => 0.0015 * (Math.abs(Math.sin(Math.atan2(y - fc[1], x - fc[0]) * 46)) - 0.5) + 0.001 * noise.fbm(x * 40, y * 40, z * 40, 2),
         });
       } else if (kind.mane) {
@@ -445,6 +465,18 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
             const knee = out(0.18 + 0.01 * i, -0.1);
             const foot = out(0.21, -0.25 + 0.015 * i);
             return sdf.union(sdf.chain([[...hip, 0.011] as P4, [...knee, 0.009] as P4, [...foot, 0.008] as P4], 0.004), sdf.sphere(0.014).at(...foot));
+          }),
+        );
+        k.body('legs', pair(legs).bone('leg-set'), { color: C.leg, roughness: 0.5, detail: 0.003 });
+      } else if (limbs === 'legs' && legStyle === 'dangle') {
+        // Six thin legs that dangle under the body in flight: out to a bent knee, then down and a
+        // little back to a small round foot.
+        const legs = sdf.union(
+          ...[0.05, 0, -0.05].map((z, i) => {
+            const hip: V3 = [0.06, BODY_C[1] - 0.07, BODY_C[2] + z];
+            const knee: V3 = [0.14 + 0.01 * i, BODY_C[1] - 0.09, BODY_C[2] + z * 1.8 + 0.025];
+            const foot: V3 = [0.165 + 0.012 * i, BODY_C[1] - 0.19 - 0.012 * (i === 1 ? 1 : 0), BODY_C[2] + z * 2.2 - 0.02];
+            return sdf.union(sdf.chain([[...hip, 0.01] as P4, [...knee, 0.0085] as P4, [...foot, 0.007] as P4], 0.004), sdf.sphere(0.011).at(...foot));
           }),
         );
         k.body('legs', pair(legs).bone('leg-set'), { color: C.leg, roughness: 0.5, detail: 0.003 });
@@ -499,7 +531,7 @@ export function insectAsset(kind: InsectKind): AssetDefinition {
         fore = plate([[0, 0], [0.12, 0.06], [0.26, 0.09], [0.32, 0.03], [0.27, -0.04], [0.12, -0.05], [0.03, -0.03]], 0.012);
         hind = plate([[0, 0], [0.08, 0.0], [0.2, -0.04], [0.22, -0.11], [0.14, -0.15], [0.05, -0.11], [0.01, -0.04]], 0.012);
         forePose = (s) => s.rotateZ(2).rotateY(14).at(...WING_ROOT);
-        hindPose = (s) => s.rotateZ(-14).rotateY(18).at(...WING2_ROOT);
+        hindPose = (s) => s.rotateZ(-14 + (kind.hindWingLift ?? 0)).rotateY(18).at(...WING2_ROOT);
       } else {
         // Small clear wings behind the body, up and back.
         fore = plate([[0, 0], [0.1, 0.05], [0.25, 0.065], [0.31, 0.015], [0.25, -0.05], [0.1, -0.04]], 0.008);

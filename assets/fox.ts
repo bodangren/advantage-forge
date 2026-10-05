@@ -1,4 +1,4 @@
-import { noise, sdf } from '../src/index.js';
+import { sdf } from '../src/index.js';
 import { scaleAsset } from './parts/scale-asset.js';
 import { wolfAsset } from './parts/wolf-kind.js';
 
@@ -34,7 +34,7 @@ export default scaleAsset(
       silver: { fur: 'silver', markings: 'white', eyes: 'gold' },
       arctic: { fur: 'arctic', markings: 'white', eyes: 'auburn' },
     },
-    colors: { furLight: '#fff6ec', furDark: '#2a1e1a', earInner: '#fff0e4', eyeRim: '#1a100a', nose: '#1a1214', claw: '#2a1e1a' },
+    colors: { furLight: '#fff6ec', furDark: '#2a1e1a', earInner: '#fff0e4', eyeRim: '#fff8f0', nose: '#1a1214', claw: '#2a1e1a' },
     headScale: 1.35,
     earScale: 1.25,
     eyeScale: 1.45,
@@ -45,6 +45,8 @@ export default scaleAsset(
     cheekTufts: false,
     smileArc: [263, 277],
     snout: 0.02,
+    muzzleWidth: 0.82,
+    furBump: 0,
     brows: false,
     forelock: false,
     smile: true,
@@ -54,7 +56,9 @@ export default scaleAsset(
       // Black ear tips (front and back) and black ear backs behind the ear plane (which leans back
       // 6 degrees); the cream insides and the orange rims stay. Black socks.
       const n = Math.hypot(0.105, 1);
-      const backs = sdf.halfSpace([0, -1, 0], -0.64).intersect(sdf.halfSpace([0, 0.105 / n, 1 / n], (0.125 + 0.105 * 0.62) / n));
+      // Each zone stays inside a cone round the ear, so no black reaches the head between the ears.
+      const earZone = sdf.cone([0, -0.01, 0], [0, 0.2, 0], 0.08, 0.025).rotateZ(-14).rotateX(-6).at(0.105, 0.62, 0.14).mirror('x');
+      const backs = sdf.halfSpace([0, -1, 0], -0.64).intersect(sdf.halfSpace([0, 0.105 / n, 1 / n], (0.125 + 0.105 * 0.62) / n)).intersect(earZone);
       // The cream inside of each ear: the kind's ear hollow (as the kind poses the ear), grown a little.
       const hollow = sdf
         .cone([0, 0.02, 0.02], [0, 0.15, 0.02], 0.05, 0.004)
@@ -68,7 +72,7 @@ export default scaleAsset(
       return fur
         .paintWhere(backs, t.furDark, 0.008)
         .paintWhere(hollow, tone('markings', '#fff0e4', 0.5), 0.004)
-        .paintWhere(sdf.halfSpace([0, -1, 0], -0.775), t.furDark, 0.012)
+        .paintWhere(sdf.halfSpace([0, -1, 0], -0.75).intersect(earZone), t.furDark, 0.012)
         .paintWhere(sdf.ellipsoid([0.1, 0.085, 0.09]).at(0.22, 0.45, 0.2).mirror('x'), t.markings, 0.015)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.1), t.furDark, 0.02);
     },
@@ -90,8 +94,7 @@ export default scaleAsset(
         )
         .paintWhere(sdf.sphere(0.1).at(TIP[0] + 0.03, TIP[1], TIP[2] + 0.02), w.tint.markings, 0.045)
         .bone('tail');
-      const fur = (x: number, y: number, z: number) => 0.0008 * noise.fbm(x * 60, y * 25, z * 60, 2);
-      k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85, bump: fur });
+      k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85 });
       // Soft white fluff on the cheeks: a flare out to each side of the face below the eyes, with a
       // rounded tip.
       // Built about its own height and flattened there, so it stays at the mouth line.
@@ -100,13 +103,13 @@ export default scaleAsset(
       const fluff = sdf
         .smoothUnion(
           0.035,
-          sdf.chain([[0.07, 0.01, 0.2, 0.08], [0.17, 0.0, 0.18, 0.068], [0.27, -0.012, 0.13, 0.024]], 0.035),
-          sdf.chain([[0.1, -0.02, 0.19, 0.06], [0.19, -0.06, 0.15, 0.04], [0.23, -0.095, 0.11, 0.014]], 0.03),
+          sdf.chain([[0.06, 0.01, 0.19, 0.09], [0.15, 0.0, 0.17, 0.074], [0.235, -0.012, 0.13, 0.028]], 0.04),
+          sdf.chain([[0.09, -0.02, 0.18, 0.068], [0.17, -0.055, 0.14, 0.044], [0.205, -0.085, 0.11, 0.016]], 0.035),
         )
         .scale([1, 0.85, 1])
         .at(0, 0.45, 0)
         .mirror('x');
-      k.body('cheek-fluff', fluff.bone('head'), { color: w.tint.markings, roughness: 0.9, bump: fur });
+      k.body('cheek-fluff', fluff.bone('head'), { color: w.tint.markings, roughness: 0.9 });
       // Three short dark lashes at the outer top corner of each eye.
       const e = w.eye;
       const lashes = sdf
