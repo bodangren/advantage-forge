@@ -18,6 +18,7 @@ import type {
   GameInput,
   GameResults,
   GameTerminalOutcome,
+  LaunchAvatar,
   LayoutRect,
   PracticeInput,
   RendererId,
@@ -60,6 +61,12 @@ export interface SessionOptions {
   hero: string;
   /** Hero id to the color preset the student unlocked (cosmetic; the APK reads it from the profile). */
   looks: Readonly<Record<string, string>>;
+  /**
+   * The student's avatar (docs/avatar-system.md, section 11): the host passes it, a game never
+   * fetches it. A game that shows one hero shows the avatar instead, and keeps `hero` when this is
+   * absent or does not load.
+   */
+  avatar?: LaunchAvatar;
 }
 
 /** What a 3D game receives from the factory. */

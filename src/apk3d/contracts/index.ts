@@ -1,5 +1,6 @@
 /** Contracts of the APK 3D kit: schemas and pure mappings only (imports `zod` and nothing else). */
 export * from './apk.js';
+export * from './avatar.js';
 export * from './briefing.js';
 export * from './story-input.js';
 export * from './manifest.js';

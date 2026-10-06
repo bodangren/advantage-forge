@@ -5,9 +5,9 @@ Status: in progress. The plan records execution state. The specification and
 
 ## Phase 0: Contract and options
 
-- [ ] Task: Copy `launchAvatarSchema` and its enums from the monorepo `game-contracts` (integration 0dac27db2) into `src/apk3d/contracts/`, with a source note. A test parses fixtures taken from the monorepo file.
-- [ ] Task: `SessionOptions.avatar` (optional), passed by the 3D factory and the 2D views; `SESSION_OPTIONS_DEFAULT` has none.
-- [ ] Task: Send the scope to the monorepo session: the launch avatar from the app host, the served pack, and the contract check of `port-kit.mjs`.
+- [x] Task: Copy `launchAvatarSchema` and its enums from the monorepo `game-contracts` (integration 0dac27db2) into `src/apk3d/contracts/`, with a source note. A test parses fixtures taken from the monorepo file. `src/apk3d/contracts/avatar.ts` with `readLaunchAvatar` (the reason with its path). The monorepo has no fixtures for this schema, so `tests/apk3d/avatar-launch.test.ts` (18 tests) checks the class enum against the 15 starter sets, accepts every starter set, and rejects eight broken variants.
+- [x] Task: `SessionOptions.avatar` (optional), passed by the 3D factory and the 2D views; `SESSION_OPTIONS_DEFAULT` has none. The factories pass `options` as one object, so no factory change was needed.
+- [x] Task: Send the scope to the monorepo session: the launch avatar from the app host, the served pack, and the contract check of `port-kit.mjs`. Sent 2026-10-06, with a question: will `launchAvatarSchema` change before the cutover?
 
 ## Phase 1: The avatar actor (kit)
 
