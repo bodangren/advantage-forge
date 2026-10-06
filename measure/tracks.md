@@ -140,6 +140,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Release APK packs and games to the monorepo**
   *Link: [./tracks/apk_pack_release_20261006/](./tracks/apk_pack_release_20261006/)*
 
+- [~] **Track: The avatar in the games**
+  *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
+
 - [ ] **Track: Make monorepo master CI green before the cutover**
   *Link: [./tracks/monorepo_master_ci_20261006/](./tracks/monorepo_master_ci_20261006/)*
 

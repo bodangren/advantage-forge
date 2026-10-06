@@ -30,7 +30,7 @@ See the [baseline evidence](./evidence/baseline-20260928.md).
 
 ## Next work
 
-1. Avatar in the games (owner, 2026-10-06): section 11 of `docs/avatar-system.md`. The [pack release](./tracks/apk_pack_release_20261006/) it waited for is complete.
+1. [Avatar in the games](./tracks/avatar_in_games_20261006/) (owner, 2026-10-06): section 11 of `docs/avatar-system.md`. The [pack release](./tracks/apk_pack_release_20261006/) it waited for is complete.
 2. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); class B is done for P0, P1, and map sources; 32 type errors remain (30 in P2 and P3 sources).
 3. [Platform port](./tracks/game_platform_port_20260928/): the port reaches monorepo `master` with `primary-parity-integration` in the Primary cutover; then the graph refresh (TD-15), the 2D setting re-export (TD-26), and a real touch-device check. [Master CI](./tracks/monorepo_master_ci_20261006/) must be green first.
 4. [2D parity](./tracks/game_2d_parity_20260928/): the 2D views offer the six heroes and their presets that the 2D pack now holds.
