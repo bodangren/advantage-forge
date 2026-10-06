@@ -137,7 +137,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: History: Deliver the six 3D game cartridges**
   *Link: [./tracks/history_six_games_20260928/](./tracks/history_six_games_20260928/)*
 
-- [~] **Track: Release APK packs and games to the monorepo**
+- [x] **Track: Release APK packs and games to the monorepo**
   *Link: [./tracks/apk_pack_release_20261006/](./tracks/apk_pack_release_20261006/)*
 
 - [ ] **Track: Make monorepo master CI green before the cutover**

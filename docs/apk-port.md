@@ -102,6 +102,11 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
   folders, and the 2D parity test into the monorepo branch, then runs both drift checks and the
   tests and type checks of both packages. It commits only when every check passes, and it refuses
   `master` and `main`. The owner merges the branch.
+- Who runs what (owner rule, 2026-10-06): the Forge session works only in this repository. It runs
+  `apk-release.ts` and the read-only `monorepo-sync.ts --check`, then sends the Forge commit and the
+  commands to the monorepo session. The monorepo session runs every write mode of `monorepo-sync.ts`
+  (the port sync, `--commit`, `--push`, and `--skin <checkout>` without `--check`) in its own checkout,
+  and it makes every commit and push there.
 - Forge keeps byte copies of some monorepo-owned modules (`OWNER_COPIES` in `monorepo-sync.ts`):
   `src/apk3d/factory/renderer-setting.ts` copies `advantage-play-kit/src/responsive/renderer.ts`.
   When a checkout has the owner file and the copy differs, the port sync stops and the skin sync
@@ -142,6 +147,12 @@ decides those merges.
   `public/packs/` on its own, because the app commits the avatar pack at `public/packs/avatar/`.
 - **One avatar code copy.** The 3D kit exports `avatar/tint`, `avatar/hair`, `avatar/portrait`, and
   `avatar/starters` (no three.js), so the app's `avatar-kit` can import them instead of hand copies.
+- **Integration (2026-10-06).** The monorepo session fast-forwarded `primary-parity-integration` to
+  lane-f (0dac27db2), so the integration branch carries the port and the skin, and the port reaches
+  `master` in the Primary cutover. The integration branch has the owner file of the 2D setting; the
+  port branch does not. The release branch from now on, and the `port-kit.mjs` mapping of
+  `factory/renderer-setting.ts` to the owner module (TD-26), are the monorepo session's decisions
+  (requested 2026-10-06).
 - **Memory.** The machine runs one heavy job at a time. Each session tells the other before a heavy
   run (a Forge build or the monorepo checks) and after it.
 
