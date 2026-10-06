@@ -1,0 +1,20 @@
+{
+  "track_id": "legacy_games_removal_20261006",
+  "type": "chore",
+  "status": "in_progress",
+  "created_at": "2026-10-06T00:00:00Z",
+  "updated_at": "2026-10-06T00:00:00Z",
+  "description": "Remove the legacy games from the monorepo; only the new Forge games run (owner, 2026-10-06)",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": "None.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "measure/game-roadmap.md",
+    "docs/apk-port.md"
+  ],
+  "dependencies": [
+    "apk_pack_release_20261006"
+  ]
+}

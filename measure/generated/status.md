@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 83.
-Tracks by status: new: 11; in_progress: 40; completed: 32.
-Tracks by workstream: assets: 32; games: 44; foundation: 7.
+Tracks: 84.
+Tracks by status: new: 11; in_progress: 41; completed: 32.
+Tracks by workstream: assets: 32; games: 45; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -83,6 +83,7 @@ Tracks by workstream: assets: 32; games: 44; foundation: 7.
 | [history_forge_engine_20260928](../tracks/history_forge_engine_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_recolors_sprites_20260928](../tracks/history_recolors_sprites_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_six_games_20260928](../tracks/history_six_games_20260928/) | completed | games | 3/3 | — | — |
+| [legacy_games_removal_20261006](../tracks/legacy_games_removal_20261006/) | in_progress | games | 1/5 | 5 | — |
 | [map_variants_randomized_20261003](../tracks/map_variants_randomized_20261003/) | new | assets | 0/15 | 12 | — |
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
