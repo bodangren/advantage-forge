@@ -16,8 +16,8 @@ Status: in progress. The plan records execution state. The specification retains
 
 ## Phase 3: Release
 
-- [ ] Task: F4. `apk-release.ts --skin --commit` gives avatar pack 1.1.0 with the portrait layers; `monorepo-sync.ts --check`.
-- [ ] Task: Send the release commands and the M1 to M4 request to the monorepo session; record its commit and tests.
+- [x] Task: F4. `apk-release.ts --skin --commit` gives avatar pack 1.1.0 with the portrait layers; `monorepo-sync.ts --check`. Release 0a4bbe85 (from 97f4093a): avatar pack 1.0.0 to 1.1.0 (142 items; the three reward pieces have `"source": "reward"` and no price; `portraits.json` has both staffs; the 1.0.0 folder is gone), skin 1.1.1 to 1.2.0 (two item views, 16 hero portraits rebuilt). Port check against `apk3d-games-port` 9759e3534: packs and 29 game folders match; the kit differs in `avatar/pack-version.ts` (new) and `avatar/pack.ts`. Skin check against `primary-parity-integration` 4bba45ea5: 18 skin files and 604 avatar pack files to write, none to remove; the app keeps its `1.0.0` folder.
+- [ ] Task: Send the release commands and the M1 to M4 request to the monorepo session; record its commit and tests. Sent 2026-10-06 with four points to agree: the order (two syncs, M1 to M4, one commit with tests), the app's old `1.0.0` folder, no push, and fallback B. Waiting for its plan.
 - [ ] Task: Close: `docs/avatar-system.md`, `docs/apk-port.md`, the debt registry (TD-24), Measure, the generator, and the doctor.
 
 ## Fallback
