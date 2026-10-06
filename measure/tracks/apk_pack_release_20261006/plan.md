@@ -26,6 +26,17 @@ Status: in progress. The plan records execution state. Linked documents retain d
 - [x] Task: One shared "2D mode (older phones)" setting for the games and the RPG pages (owner, 2026-10-06, after a note on the `lane-f` RPG skin work). The monorepo owner of the setting is `@reading-advantage/advantage-play-kit/responsive` (`renderer.ts`, written in track `primary_rpg_skin_20261006`): key `chibi-quest`, `flat: true`, `?renderer=phaser`. Forge `src/apk3d/factory/renderer-setting.ts` is a byte copy of it, as Forge copies the APK contracts; `savedRendererSetting()` in `select.ts` turns it into the game setting. The Forge host takes its key from it. Tests: `tests/apk3d/renderer-setting.test.ts` (8, five of them the owner module's own cases).
 - [ ] Task: The monorepo game host reads the shared setting when the app passes none (`host/story-game.ts`, monorepo-owned), and the monorepo 3D kit re-exports `advantage-play-kit/responsive` instead of the Forge copy (`port-kit.mjs` `MONOREPO_OWNED`).
 
+## Phase 3b: The RPG skin (owner goal of 2026-10-06: complete the RPG rework with the monorepo agent)
+
+The monorepo track `primary_rpg_skin_20261006` (branch `primary/lane-f-reedy-preview`, worktree `rama-worktrees/lane-f`, peer session `reading-advantage-monorepo-e5`) owns the app pages. Forge owns the skin files, the kit, and the setting copy. Messages to the peer: the division of work, the setting owner, the icon sources, the font question, and the avatar pack.
+
+- [x] Task: `forge render --bg none` gives transparent views with a soft shadow (8f67b5d); no keyed-out grey.
+- [x] Task: `scripts/rpg-skin.ts` rebuilds the 48 Forge files of the app's `public/rpg/` (icons, relics, NPC and boss views and strips, fonts) with a versioned `skin.json`. The sources were matched to the Phase 0 files by pixels; the strips equal row 0 of the `forge all` sheets. `apk-release.ts --skin` builds them in the clean worktree; `monorepo-sync.ts --skin <checkout>` mirrors them without a commit (a341251).
+- [ ] Task: The 26 backdrops join the build when the peer sends the camera queries.
+- [ ] Task: One Thai face for the pages (Mitr) and the game HUD (Mali): the peer or the owner decides.
+- [ ] Task: The full avatar pack (`pack.json`, `catalog.json`, `base/`, `pieces/`, portraits) through the release and the sync, for the Phase 2 composer pages.
+- [ ] Task: The first skin build in the worktree and a delivery to lane-f after the peer agrees.
+
 ## Phase 4: Build and verify
 
 - [ ] Task: Run the release: rebuild the stale 3D models and complete the 2D pack.
