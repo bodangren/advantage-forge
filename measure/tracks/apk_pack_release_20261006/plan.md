@@ -6,6 +6,8 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 - [~] Task: Merge `apk3d-games-port` into monorepo `master` (owner decision of 2026-10-06). 2026-10-06: `origin/master` has not moved since fe6aedc2b (2026-09-25), so the merge is a fast-forward of 54 commits. Checks on the branch head 7088a6c3c: kit 155 tests and type check, games 1,886 tests and type check, `game-contracts` 276 tests and type check, `domain` practice and challenge tests (15) and type check, Primary Advantage game tests (25). The 2D kit `advantage-play-kit` has one failure that also exists on master: the fixture challenge of `student-challenge-catalog-panel.test.tsx` expired on 2026-10-01 (TD-23). The push to `master` and the pull request were blocked by the session's permission classifier ("Merge Without Review"); the owner runs the push.
 
+- [~] Task: Merge route agreed with the monorepo session (owner, 2026-10-06: "merge into the current branch it's working on"; see docs/apk-port.md "Branch plan with the Primary lanes"). The direct push to `master` is dropped. The port merges once into lane-f through `primary/lane-f-apk3d-merge` (11 app-file conflicts, resolutions recorded with rerere), then later releases reach lane-f by `git merge apk3d-games-port`. Two port fixes found during the trial merge: `sync-assets.mjs` deleted the app's committed avatar pack at every predev and prebuild (d4262f1d5, with a test), and the 3D kit now exports the four pure avatar modules so the app's `avatar-kit` can drop its hand copies (11c37a4e7).
+
 ## Phase 1: Contract
 
 - [x] Task: One model list for every output (`MODEL_PACKS` and the vault scene). `packModels()` in `scripts/apk-pack-models.ts`; `demo-models.ts` and `apk2d-sprites.ts` no longer keep their own lists.

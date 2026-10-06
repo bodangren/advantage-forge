@@ -116,6 +116,31 @@ node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f --che
 node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f
 ```
 
+### Branch plan with the Primary lanes (agreed 2026-10-06)
+
+The owner asked the Forge session and the monorepo session (track `primary_rpg_skin_20261006`,
+branch `primary/lane-f-reedy-preview`) to agree one plan. The direct push of the port to `master` is
+dropped: the port reaches `master` with lane-f through `primary-parity-integration`, and the owner
+decides those merges.
+
+- **One-time merge.** Forge prepares `primary/lane-f-apk3d-merge` (worktree
+  `rama-worktrees/lane-f-apk3d-merge`) from the lane-f head and merges `apk3d-games-port` into it. The
+  11 conflicts are all in app files (messages, `package.json`, the lock file, `.gitignore`,
+  `AGENTS.md`, `measure/tracks.md`, and the moved games page). The resolutions are recorded with
+  `git rerere`; the story card patch goes into `games/(catalog)/page.tsx`. The monorepo session
+  reviews the branch and merges it into lane-f.
+- **Ownership by path.** `monorepo-sync.ts` writes only `packages/advantage-play-kit-3d` and
+  `packages/game-cartridges-3d`, on `apk3d-games-port`. Lane-f never edits those two packages, and
+  the port branch never edits app files, `package.json`, or the lock file again. A new Forge release
+  reaches lane-f by `git merge apk3d-games-port`, which cannot conflict.
+- **The app asset copy.** `sync-assets.mjs` (predev, prebuild) replaces each 3D pack folder under
+  `public/packs/` on its own, because the app commits the avatar pack at `public/packs/avatar/`.
+- **One avatar code copy.** The 3D kit exports `avatar/tint`, `avatar/hair`, `avatar/portrait`, and
+  `avatar/starters` (no three.js), so the app's `avatar-kit` can import them instead of hand copies.
+- **Memory.** The machine runs one heavy job at a time. Each session tells the other before a heavy
+  run (a Forge build or the monorepo checks) and after it.
+
+
 ## 1. Packages
 
 | Move | From (this repo) | To (monorepo) | Package name |
