@@ -1,6 +1,6 @@
 # The avatar in the games
 
-Status: in progress (opened again 2026-10-06: TD-27). The plan records execution state. The specification and
+Status: completed (2026-10-06; opened again for TD-27 and closed the same day). The plan records execution state. The specification and
 `docs/avatar-system.md` retain design detail.
 
 ## Phase 0: Contract and options
@@ -51,7 +51,7 @@ The owner rule of 2026-10-06: the avatar is the student's identity, so a student
 
 A read-only check of monorepo integration b1c32c3b2 on 2026-10-06 found that the Phase 5 confirmation was wrong for the 3D games. The two app pages that pass the avatar (`student/games/apk/[cartridgeId]` and `quest/battle`) run the legacy 2D games (`@reading-advantage/game-cartridges`), which do not read it. The Forge 3D games run only on the story page (`/student/games/story`), and the monorepo story host (`advantage-play-kit-3d/src/host/story-game.ts`, monorepo-owned) starts them with `hero: 'knight'` and no `avatar`. The paths are correct: `assetBase` "/" gives `/packs/avatar/<version>/`, and `sync-assets.mjs` keeps `public/packs/avatar/`.
 
-- [ ] Task: The monorepo session adds `avatar` to `StoryGameOptions`, passes it to the 3D and 2D factories, reads the avatar on the story page, and adds a test. Requested 2026-10-06.
-- [ ] Task: A browser check in the app: a student with an avatar (a row with `catalogVersion` 1.0.0) plays one 3D and one 2D game on the story page; the avatar shows and no fallback diagnostic is sent. Requested from the monorepo session 2026-10-06.
-- [ ] Task: Record the monorepo commit and the check; resolve TD-27; close the track.
+- [x] Task: The monorepo session adds `avatar` to `StoryGameOptions`, passes it to the 3D and 2D factories, reads the avatar on the story page, and adds a test. Requested 2026-10-06. Done: integration b8550a502 "fix(primary): pass the avatar to the story games" (`sessionOptionsOf` carries the avatar; `StoryGamesClient` passes it to the host; unit tests pass).
+- [x] Task: A browser check in the app: a student with an avatar (a row with `catalogVersion` 1.0.0) plays one 3D and one 2D game on the story page; the avatar shows and no fallback diagnostic is sent. Requested from the monorepo session 2026-10-06. Done in Chrome on a production build, as `qa-student-a1` (wizard avatar, 1.0.0 rows): Labyrinth in 3D shows the student's figure (silver hair, hat, cape, mage wand), every `/packs/avatar/1.1.0` request returns 200, no `apk3d/*` diagnostic; Labyrinth in 2D shows the figure from the portrait layers, no diagnostic. Forge looked at the three frames. App-side note from the check: a plain `next build` skips the app's `prebuild` step that copies the model packs into `public/packs`, and the games then fail on a missing model.
+- [x] Task: Record the monorepo commit and the check; resolve TD-27; close the track.
 

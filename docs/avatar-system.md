@@ -420,9 +420,10 @@ Built 2026-10-06 (track `avatar_in_games_20261006`):
 - **Release.** `scripts/rpg-skin.ts` renders the portrait layers into the pack after
   `avatar-pack.ts` (about 13 minutes for 223 layers). The monorepo took this work from Forge
   22713b0f in `apk3d-games-port` 9759e3534 and merged it into `primary-parity-integration`. The app
-  grants no hero looks. Open (TD-27): the app runs the Forge 3D games only on the story page, and
-  its story host does not pass the avatar yet, so the games show the knight there. The two pages
-  that pass the avatar run the legacy 2D games, which do not read it.
+  grants no hero looks. The app runs the Forge 3D games on the story page; its story host passes the
+  avatar since integration b8550a502 (TD-27), checked in Chrome on a production build (Labyrinth in
+  3D and 2D). The legacy 2D games of the other pages are being removed (track
+  `legacy_games_removal_20261006`).
 
 ## 12. Acceptance criteria
 
