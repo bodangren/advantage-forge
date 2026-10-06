@@ -20,7 +20,8 @@
  * apps/primary-advantage/public/rpg/, removes the files that the app's previous skin.json listed and
  * the new one does not, and leaves every other file there (the app's own chrome) alone. It also
  * mirrors each version folder of the avatar pack (Forge demo/public/avatar-pack/<version>/) into
- * apps/primary-advantage/public/packs/avatar/<version>/. It does not commit: the owner of that
+ * apps/primary-advantage/public/packs/avatar/<version>/, and removes only stale files under the
+ * entries the Forge pack has (the app's own portraits there stay). It does not commit: the owner of that
  * branch reviews and commits the change.
  *
  * Rules:
@@ -168,7 +169,11 @@ if (value('--skin')) {
     existsSync(join(dir, rel)) ? readdirSync(join(dir, rel)).flatMap((n) => (statSync(join(dir, rel, n)).isDirectory() ? walk(dir, join(rel, n)) : [join(rel, n)])) : [];
   const versions = existsSync(avatarFrom) ? readdirSync(avatarFrom) : [];
   const avatarWrite = versions.flatMap((v) => walk(join(avatarFrom, v)).map((f) => join(v, f))).filter((f) => !same(join(avatarFrom, f), join(avatarApp, f)));
-  const avatarGone = versions.flatMap((v) => walk(join(avatarApp, v)).map((f) => join(v, f))).filter((f) => !existsSync(join(avatarFrom, f)));
+  // Forge owns only the top-level entries its pack has (base/, pieces/, catalog.json, pack.json); the
+  // app keeps its own files beside them, such as the portraits that port-avatar-pack.py writes.
+  const avatarGone = versions
+    .flatMap((v) => walk(join(avatarApp, v)).filter((f) => existsSync(join(avatarFrom, v, f.split('/')[0]!))).map((f) => join(v, f)))
+    .filter((f) => !existsSync(join(avatarFrom, f)));
   console.log(`avatar pack ${versions.join(', ') || '(none in Forge)'} in ${avatarApp}: ${avatarWrite.length} file(s) to write, ${avatarGone.length} to remove`);
   if (has('--check')) process.exit(differ.length || gone.length || avatarWrite.length || avatarGone.length || drift.length ? 1 : 0);
   for (const f of differ) {
