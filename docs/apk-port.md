@@ -102,6 +102,19 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
   folders, and the 2D parity test into the monorepo branch, then runs both drift checks and the
   tests and type checks of both packages. It commits only when every check passes, and it refuses
   `master` and `main`. The owner merges the branch.
+- The Primary Advantage RPG skin is a separate output for the app pages (monorepo track
+  `primary_rpg_skin_20261006`). `apk-release.ts --skin` also runs `scripts/rpg-skin.ts`: icons,
+  relics, item views, hero portraits, NPC and boss views and strips, scene backdrops, and fonts go
+  to `demo/public/rpg/` with a versioned `skin.json`, and the avatar pack goes to
+  `demo/public/avatar-pack/<version>/`. `monorepo-sync.ts --skin <checkout>` writes both into the
+  app (`public/rpg/` and `public/packs/avatar/<version>/`) of the branch that builds the pages, and
+  it does not commit there. A strip is one row of frames; its frame size is its height.
+
+```bash
+node --import tsx scripts/apk-release.ts --skin --commit             # build the stale skin files too
+node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f --check
+node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f
+```
 
 ## 1. Packages
 

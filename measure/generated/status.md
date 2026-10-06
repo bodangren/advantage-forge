@@ -1,11 +1,12 @@
 # Measure status
 
-Tracks: 79.
-Tracks by status: new: 10; in_progress: 39; completed: 30.
-Tracks by workstream: assets: 32; games: 40; foundation: 7.
+Tracks: 80.
+Tracks by status: new: 10; in_progress: 40; completed: 30.
+Tracks by workstream: assets: 32; games: 41; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
+| [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | in_progress | games | 14/23 | 14 | — |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
