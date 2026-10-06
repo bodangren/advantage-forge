@@ -7,7 +7,7 @@
   "description": "The three reward emblems become avatar pieces (reward-only), with a content-based avatar pack version (TD-24)",
   "estimated_tasks": 10,
   "actual_tasks": 10,
-  "deviation_notes": "None in count. The independent review took two rounds (6.5, then 7.5 for both staffs).",
+  "deviation_notes": "None in count. The independent review took two rounds (6.5, then 7.5 for both staffs). The dependency changed from avatar_in_games_20261006 to avatar_system_20261001: the reward pieces need the avatar pack and its release path, not the open TD-27 work (the story page avatar).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
@@ -21,6 +21,6 @@
     "assets/echo-staff.ts"
   ],
   "dependencies": [
-    "avatar_in_games_20261006"
+    "avatar_system_20261001"
   ]
 }
