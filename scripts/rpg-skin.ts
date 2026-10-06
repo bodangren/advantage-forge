@@ -351,7 +351,9 @@ if (staleHeroPaths.length || staleBackdrops.length) {
         const errors = await page.evaluate(() => window.__avatarErrors ?? []);
         if (errors.length) throw new Error(`hero ${e.hero}: ${errors.join('; ')}`);
         await page.waitForTimeout(500);
-        shots.set(path, await page.screenshot({ omitBackground: true }));
+        const shot = await page.screenshot({ omitBackground: true });
+        if ((await sharp(shot).stats()).isOpaque) throw new Error(`hero ${e.hero}: the shot has no transparent background`);
+        shots.set(path, shot);
         await page.close();
         console.log(`shot   hero:${e.hero}`);
       }
@@ -389,8 +391,11 @@ async function silhouette(shot: Buffer, size: number, out: number): Promise<Buff
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><text x="50%" y="${Math.round(size * 0.4)}" text-anchor="middle" ` +
       `font-family="sans-serif" font-weight="700" font-size="${Math.round(size * 0.24)}" fill="#c9ced6" fill-opacity="0.55">?</text></svg>`,
   );
-  const figure = await sharp(fill).composite([{ input: shot, blend: 'dest-in' }]).png().toBuffer();
-  return sharp(figure).composite([{ input: mark, blend: 'atop' }]).resize(out, out).webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer();
+  // The rendered SVG has no alpha channel; dest-in needs one to keep the shot's shape.
+  const figure = await sharp(fill).ensureAlpha().composite([{ input: shot, blend: 'dest-in' }]).png().toBuffer();
+  // Two pipelines: sharp resizes before it composites, whatever the call order.
+  const marked = await sharp(figure).composite([{ input: mark, blend: 'atop' }]).png().toBuffer();
+  return sharp(marked).resize(out, out).webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer();
 }
 
 const files: Record<string, ManifestFile> = {};

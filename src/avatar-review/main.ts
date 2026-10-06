@@ -202,7 +202,8 @@ async function main(): Promise<void> {
   renderer.setSize(innerWidth, innerHeight);
   if (hero) {
     renderer.setClearColor(0x000000, 0);
-    document.body.style.background = 'transparent';
+    // avatar.html paints html and body; both must be clear for a transparent shot.
+    for (const el of [document.documentElement, document.body]) el.style.background = 'transparent';
     for (const id of ['bar', 'labels']) document.getElementById(id)!.style.display = 'none';
   }
   document.body.append(renderer.domElement);
