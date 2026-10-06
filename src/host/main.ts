@@ -14,6 +14,7 @@ import { createCartridgeMounter, createPhaserGameFactory, createThreeGameFactory
 import { createI18n } from '../apk3d/i18n/catalog.js';
 import { Stage3D } from '../apk3d/stage/index.js';
 import { sheetBindings } from '../apk3d/view2d/sheets.js';
+import { demoAnswerAudio, wantsAnswerAudio } from './answer-audio.js';
 import { renderBoss } from './boss-screen.js';
 import { renderBriefing } from './briefing.js';
 import { simulateClassBoss } from './classBoss.js';
@@ -289,7 +290,7 @@ async function go(next: Route, push = true): Promise<void> {
       entry = gameById(next.game) ?? null;
       if (!entry?.load) return go({ name: 'select' });
       cartridge = await entry.load();
-      renderBriefing(el.briefing, cartridge.briefing(i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!), story), story, cartridge.manifest, entry.icon, t);
+      renderBriefing(el.briefing, cartridge.briefing(i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!), story, { answerAudio: wantsAnswerAudio(cartridge.manifest) }), story, cartridge.manifest, entry.icon, t);
       await screens.show(el.briefing, from, 'play');
       break;
     }
@@ -351,6 +352,7 @@ async function startGame(): Promise<void> {
     ...(edition2d ? { edition2d, resolveUrl: (pack: AssetPackManifest, file: { path: string }) => `${BASE}${pack.root.slice(1)}/${file.path}`, avatarRoot: `${BASE}${AVATAR_ROOT}` } : {}),
     seed: randomSeed(),
     sessionMode: 'playing',
+    ...(wantsAnswerAudio(cartridge.manifest) ? { answerAudio: demoAnswerAudio(story) } : {}),
     composition: composition(),
     i18n: i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!),
     audio,
@@ -369,8 +371,10 @@ async function startGame(): Promise<void> {
         return audio.muted;
       },
     },
-    complete: (result, _outcome, evidence) => {
+    complete: (result, _outcome, evidence, answerEvidence) => {
       lastRun = { ...run, result, evidence };
+      // The APK sends this as the completion's `learningEvidence`; the demo keeps it for the QC.
+      if (answerEvidence) diagnostics.push({ level: 'info', code: 'answer-audio/evidence', message: 'Answer audio evidence', details: answerEvidence });
       // 3 stars unlock the chosen hero's next look, and the hero wears it at once. A student with an
       // avatar plays as the avatar (owner rule: it is the student's identity), so no hero look applies.
       if (!PAGE_AVATAR && starsOf(evidence) === 3) {
