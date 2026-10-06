@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { avatarClassIdSchema, launchAvatarSchema, type LaunchAvatar } from '../../src/apk3d/contracts/index.js';
-import { readLaunchAvatar } from '../../src/apk3d/avatar/launch.js';
+import { readLaunchAvatar, starterLaunchAvatar } from '../../src/apk3d/avatar/launch.js';
 import { AVATAR_PACK_VERSION } from '../../src/apk3d/avatar/pack.js';
 import { STARTER_SETS } from '../../src/apk3d/avatar/starters.js';
 
@@ -15,6 +15,12 @@ describe('the launch avatar (copy of game-contracts launchAvatarSchema)', () => 
 
   it.each(STARTER_SETS.map((s) => [s.id, s] as const))('accepts the %s starter set', (_, set) => {
     expect(launchAvatarSchema.parse(launchOf(set))).toEqual(launchOf(set));
+  });
+
+  it('gives the launch avatar of a starter set for a host without a student', () => {
+    expect(starterLaunchAvatar('rogue')).toEqual(launchOf(STARTER_SETS.find((s) => s.id === 'rogue')!));
+    expect(starterLaunchAvatar('pirate')).toBeUndefined();
+    expect(starterLaunchAvatar('')).toBeUndefined();
   });
 
   it('accepts a dye and an empty loadout', () => {

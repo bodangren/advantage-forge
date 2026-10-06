@@ -22,6 +22,8 @@ export default {
       courage: 'Courage',
       story: '📖 Story',
       turn: '{name}’s turn',
+      /** The turn of the place that the student's avatar takes. */
+      yourTurn: 'Your turn',
       again: 'Try this one again',
       ask: {
         word: 'What does this word mean?',

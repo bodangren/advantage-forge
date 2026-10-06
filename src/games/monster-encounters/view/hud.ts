@@ -22,6 +22,8 @@ export class BattleHud {
   private enemies: EnemyState[] = [];
   private readonly t: ScopedI18n['t'];
   private readonly tap = (): void => this.audio.play('tap');
+  /** The party place of the student's avatar: its turn reads "Your turn". */
+  player: HeroId | null = null;
 
   constructor(
     private readonly root: HudRoot,
@@ -111,7 +113,7 @@ export class BattleHud {
   async ask(hero: HeroId, c: Challenge): Promise<Response> {
     const t = this.t;
     const look = HERO_LOOK[hero];
-    const who = `<div class="who"><span class="pill" style="background:${look.color}">${look.emoji} ${esc(t('turn', { name: this.heroName(hero) }))}</span>${c.retry ? `<span>${esc(t('again'))}</span>` : ''}</div>`;
+    const who = `<div class="who"><span class="pill" style="background:${look.color}">${look.emoji} ${esc(hero === this.player ? t('yourTurn') : t('turn', { name: this.heroName(hero) }))}</span>${c.retry ? `<span>${esc(t('again'))}</span>` : ''}</div>`;
     const ask = `<div class="ask">${esc(t(`ask.${c.kind}`))}</div>`;
     const card = this.root.card;
     if (c.kind === 'sentence') {

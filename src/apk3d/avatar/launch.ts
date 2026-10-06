@@ -4,6 +4,8 @@
  */
 import { launchAvatarSchema, type AvatarClassId, type LaunchAvatar } from '../contracts/avatar.js';
 import type { HairForm } from './hair.js';
+import { AVATAR_PACK_VERSION } from './pack.js';
+import { STARTER_SETS } from './starters.js';
 import type { VariantTable } from './tint.js';
 
 /** The hair style worn when the loadout has none (the base hair is the swept style). */
@@ -77,4 +79,14 @@ export function readLaunchAvatar(value: unknown): { avatar: LaunchAvatar } | { e
   const result = launchAvatarSchema.safeParse(value);
   if (result.success) return { avatar: result.data };
   return { error: result.error.issues.map((i) => `${i.path.join('.') || 'avatar'}: ${i.message}`).join('; ') };
+}
+
+/**
+ * The launch avatar of a starter set (every piece in its own colors), for hosts and tests that
+ * have no student: the Forge demo's `?avatar=<class>`. Undefined for an unknown class.
+ */
+export function starterLaunchAvatar(classId: string, catalogVersion: string = AVATAR_PACK_VERSION): LaunchAvatar | undefined {
+  const set = STARTER_SETS.find((s) => s.id === classId);
+  if (!set) return undefined;
+  return launchAvatarSchema.parse({ catalogVersion, classId: set.id, tints: set.tints, pieces: set.pieces.map((itemId) => ({ itemId, dye: null })) });
 }

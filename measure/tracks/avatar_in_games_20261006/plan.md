@@ -17,12 +17,12 @@ Status: in progress. The plan records execution state. The specification and
 
 ## Phase 2: Monster Encounters
 
-- [ ] Task: 3D: the avatar takes the party place of its role. QC shots for a fighter, a caster, and a healer starter set, and for no avatar.
+- [x] Task: 3D: the avatar takes the party place of its role. QC shots for a fighter, a caster, and a healer starter set, and for no avatar. `BattleStage.load` takes the player's body for one place (the actor keeps the place id); the card reads "Your turn" for that place (3D and 2D, new string `hud.yourTurn`). `scripts/apk3d-shot.ts --avatar <class>`: rogue (portrait, knight place), witch (landscape, wizard place), bard (landscape, cleric place), and no avatar (landscape): every run played to the results and the class boss with no diagnostics and no errors. The battle camera shows the party from behind.
 - [ ] Task: 2D: the portrait in the HUD and the role sprite. QC shots.
 
 ## Phase 3: The demo host
 
-- [ ] Task: An avatar choice on the Forge demo host (a starter set and its tints), passed as `SessionOptions.avatar`, so that the games can be checked without the app.
+- [x] Task: An avatar choice on the Forge demo host (a starter set and its tints), passed as `SessionOptions.avatar`, so that the games can be checked without the app. Done as a page parameter, not a screen: `?avatar=<class>` passes that class's starter set (`starterLaunchAvatar`); the demo serves the pack at `avatar-pack/` (`AVATAR_ROOT`).
 
 ## Phase 4: The other games
 

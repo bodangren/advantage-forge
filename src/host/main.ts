@@ -8,6 +8,7 @@
 /// <reference types="vite/client" />
 import { assetPackSchema, CARTRIDGE_3D_RUNTIME_API_VERSION, classBossDamage, modelEditionOf, spritePackRoot, starsOf, validateEdition, type AssetPackManifest, type RuntimeEdition, type RuntimeEdition3D, type StoryInput } from '../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../apk3d/audio/index.js';
+import { starterLaunchAvatar } from '../apk3d/avatar/launch.js';
 import { checkDevice } from '../apk3d/device/gate.js';
 import { createCartridgeMounter, createPhaserGameFactory, createThreeGameFactory, selectRenderer, type Cartridge, type Composition3D, type MountedGame, type RendererSetting } from '../apk3d/factory/index.js';
 import { createI18n } from '../apk3d/i18n/catalog.js';
@@ -30,6 +31,10 @@ import '../apk3d/hud/theme.css';
 import './host.css';
 
 const BASE = import.meta.env.BASE_URL;
+/** The demo serves the avatar pack at demo/public/avatar-pack/<version>/ (the apps at packs/avatar/). */
+const AVATAR_ROOT = 'avatar-pack';
+/** `?avatar=<class>`: that class's starter set as the student's avatar (an app passes the student's own). */
+const PAGE_AVATAR = starterLaunchAvatar(new URLSearchParams(location.search).get('avatar') ?? '');
 const QC = new URLSearchParams(location.search).get('qc') === '1';
 /** `?renderer=phaser` forces 2D for this visit (the QC driver uses it). */
 const FORCE_2D = new URLSearchParams(location.search).get('renderer') === 'phaser';
@@ -73,7 +78,7 @@ installAudioUnlock(audio);
 /** The 3D stage, or null on a device without WebGL2 (the host then runs with 2D games only). */
 const stage = ((): Stage3D | null => {
   try {
-    return new Stage3D(el.canvas, { base: BASE });
+    return new Stage3D(el.canvas, { base: BASE, avatarRoot: AVATAR_ROOT });
   } catch (err) {
     diagnostics.push({ level: 'warning', code: 'apk3d/no-stage', message: String(err) });
     el.canvas.classList.add('off');
@@ -87,7 +92,7 @@ const lobby = stage ? new Lobby(stage) : null;
  */
 const content = new Content(QC && new URLSearchParams(location.search).get('stories') === 'fixtures' ? `${BASE}tests/fixtures/` : BASE);
 const mount = createCartridgeMounter({
-  three: createThreeGameFactory({ base: BASE, gate: () => checkDevice() }),
+  three: createThreeGameFactory({ base: BASE, avatarRoot: AVATAR_ROOT, gate: () => checkDevice() }),
   phaser: createPhaserGameFactory(),
 });
 const screens = new Screens(() => audio.play('whoosh'));
@@ -349,7 +354,7 @@ async function startGame(): Promise<void> {
     composition: composition(),
     i18n: i18n.scope(cartridge.manifest.briefingKey.split('.')[0]!),
     audio,
-    options: { helper: choice.helper, hero: choice.hero, looks: { ...persistence.load().looks, [choice.hero]: choice.look } },
+    options: { helper: choice.helper, hero: choice.hero, looks: { ...persistence.load().looks, [choice.hero]: choice.look }, ...(PAGE_AVATAR ? { avatar: PAGE_AVATAR } : {}) },
     host: {
       openStory: (paragraph) => {
         if (!story) return;

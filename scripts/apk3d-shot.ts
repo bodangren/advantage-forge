@@ -2,12 +2,13 @@
  * QC for the standalone host and its 3D games: plays the whole flow in headless Chromium and
  * saves screenshots of each step, in portrait (a 390 x 844 phone) and landscape (1280 x 720).
  *
- *   node --import tsx scripts/apk3d-shot.ts [portrait|landscape|both] [--game <id>] [--story <id>] [--dist] [--2d]
+ *   node --import tsx scripts/apk3d-shot.ts [portrait|landscape|both] [--game <id>] [--story <id>] [--dist] [--2d] [--avatar <class>]
  *
  * The page opens with `?qc=1` (the device gate then accepts headless Chromium's software
  * renderer). The game bot answers from the story data, with one wrong answer on purpose.
  * `--2d` plays the game's 2D (Phaser) view (`?renderer=phaser`), with real drags on its canvas.
- * Output: out/apk3d-shots/<game>/<layout>[-2d]/NN-<step>.png
+ * `--avatar <class>` passes that class's starter set as the student's avatar (`?avatar=<class>`).
+ * Output: out/apk3d-shots/<game>/<layout>[-2d][-avatar-<class>]/NN-<step>.png
  */
 import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -22,6 +23,7 @@ const arg = (name: string): string | undefined => {
 const GAME = arg('game') ?? 'monster-encounters';
 const STORY = arg('story');
 const TWO_D = process.argv.includes('--2d');
+const AVATAR = arg('avatar');
 
 async function server() {
   const port = 5190 + Math.floor(Math.random() * 200);
@@ -523,7 +525,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
-  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, TWO_D ? `${layout}-2d` : layout);
+  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, `${layout}${TWO_D ? '-2d' : ''}${AVATAR ? `-avatar-${AVATAR}` : ''}`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const { s, url } = await server();
@@ -542,7 +544,7 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
     await page.screenshot({ path: file });
     console.log(`shot   ${file}`);
   };
-  await page.goto(`${url}?qc=1${TWO_D ? '&renderer=phaser' : ''}`, { timeout: 180_000 });
+  await page.goto(`${url}?qc=1${TWO_D ? '&renderer=phaser' : ''}${AVATAR ? `&avatar=${encodeURIComponent(AVATAR)}` : ''}`, { timeout: 180_000 });
   await page.waitForFunction(() => (window as unknown as { __apk3dReady?: boolean }).__apk3dReady === true, undefined, { timeout: 300_000, polling: 500 });
   await page.waitForTimeout(1500);
   if (STORY) await page.click(`[data-story="${STORY}"]`);
