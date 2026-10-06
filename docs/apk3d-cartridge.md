@@ -257,7 +257,8 @@ Import rules, checked by `tests/apk3d/imports.test.ts` (it scans import lines):
 | --- | --- |
 | `src/apk3d/contracts` | `zod` only |
 | `src/apk3d/sim` | `contracts` |
-| `src/apk3d/stage`, `audio` | `contracts`, `sim`, `three` |
+| `src/apk3d/stage` | `contracts`, `sim`, `avatar`, `three` (an actor's body can be the student's avatar, `stage/avatar.ts`) |
+| `src/apk3d/audio` | `contracts`, `sim`, `three` |
 | `src/apk3d/hud` | `contracts`, `sim`, `stage`, `three` (HudRoot anchors labels on the stage frame and uses its Timeline) |
 | `src/apk3d/i18n`, `device` | `contracts` |
 | `src/apk3d/avatar` (the avatar composer, portraits, prices, starter sets) | `contracts`, `three` |

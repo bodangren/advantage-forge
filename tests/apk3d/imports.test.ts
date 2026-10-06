@@ -22,7 +22,7 @@ type ModuleId = string;
 const RULES: Record<string, readonly ModuleId[]> = {
   'apk3d/contracts': ['zod'],
   'apk3d/sim': ['apk3d/contracts'],
-  'apk3d/stage': ['apk3d/contracts', 'apk3d/sim', 'three'],
+  'apk3d/stage': ['apk3d/contracts', 'apk3d/sim', 'apk3d/avatar', 'three'],
   'apk3d/hud': ['apk3d/contracts', 'apk3d/sim', 'apk3d/stage', 'three'],
   'apk3d/audio': ['apk3d/contracts', 'apk3d/sim', 'three'],
   'apk3d/i18n': ['apk3d/contracts'],

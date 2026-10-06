@@ -11,9 +11,9 @@ Status: in progress. The plan records execution state. The specification and
 
 ## Phase 1: The avatar actor (kit)
 
-- [ ] Task: A kit loader for the launch avatar: `catalog.json` of `packs/avatar/<catalogVersion>/`, the base, the pieces with their capped and tucked forms and dyes, cached by file; the current version when the given one is not served.
-- [ ] Task: An `Actor` from a composed avatar (no material clone), with the clip map (`victory` to `cheer`, `death` to `rest`).
-- [ ] Task: The role of a class (fighter, caster, healer) and the fallback with a `warning` diagnostic. Unit tests for the pure parts.
+- [x] Task: A kit loader for the launch avatar: `catalog.json` of `packs/avatar/<catalogVersion>/`, the base, the pieces with their capped and tucked forms and dyes, cached by file; the current version when the given one is not served. `loadAvatarBody` and `playerBody` in `src/apk3d/stage/avatar.ts`; `ModelLoader.json` and `avatarRoot` (default `packs/avatar`; the Forge demo serves `avatar-pack`), set through `StageOptions` and `ThreeFactoryOptions`. The dyes follow the monorepo `avatar-kit` rule (`pieceDyes`).
+- [x] Task: An `Actor` from a composed avatar (no material clone), with the clip map (`victory` to `cheer`, `death` to `rest`). The actor body is a GLB or an `AvatarBody`; the new option `aliases` maps clip names (an own clip wins). The import rules now let `apk3d/stage` import `apk3d/avatar` (section 4 of `docs/apk3d-cartridge.md`).
+- [x] Task: The role of a class (fighter, caster, healer) and the fallback with a `warning` diagnostic. Unit tests for the pure parts. `src/apk3d/avatar/launch.ts` (`CLASS_ROLES`, `roleHero`, `pieceDyes`, `AVATAR_CLIP_ALIASES`); the fallback code is `apk3d/avatar-fallback`. `tests/apk3d/avatar-body.test.ts` (6 tests, an in-memory pack); `tests/apk3d` 23 files, 408 tests pass; the type check of `src/apk3d`, `src/games`, and `src/host` is clean.
 
 ## Phase 2: Monster Encounters
 
