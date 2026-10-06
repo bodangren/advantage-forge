@@ -1,7 +1,7 @@
 /**
  * A copy of the monorepo controller test (advantage-play-kit src/audio/__tests__/
- * answer-choice-controller.test.ts, primary-parity-integration 6e890c307) on the Forge copy of the
- * controller: only the import path differs. A failure here means the copy drifted from the owner.
+ * answer-choice-controller.test.ts, lane-g 677ade328) on the Forge copy of the controller: only the
+ * import path differs. A failure here means the copy drifted from the owner.
  */
 import { describe, expect, it, vi } from 'vitest';
 
@@ -202,6 +202,48 @@ describe('answer choice audio controller', () => {
     expect(controller.getEvidence().replayCounts).toEqual([
       { questionPosition: 0, clipItemPosition: 1, count: 2 },
     ]);
+  });
+
+  it('gives back the replay of a cancelled play at the limit', async () => {
+    let calls = 0;
+    const ports = createPorts({
+      play: (_clip, signal) => (++calls === 3
+        ? new Promise((_resolve, reject) => signal.addEventListener('abort', () => reject(new Error('aborted'))))
+        : Promise.resolve()),
+    });
+    const { controller } = createController(ports);
+    await controller.playChoice(0, 0);
+    await controller.playChoice(0, 0);
+    const playback = controller.playChoice(0, 0);
+    await vi.waitFor(() => expect(controller.getSnapshot().status).toBe('playing'));
+    controller.pause();
+    await playback;
+
+    expect(controller.getChoiceSnapshot(0, 0)).toMatchObject({ status: 'cancelled', replayCount: 1, canConfirm: false });
+    await controller.playChoice(0, 0);
+    expect(controller.confirmChoice(0, 0)).toMatchObject({ completedQuestion: true });
+    expect(controller.getEvidence().replayCounts).toEqual([
+      { questionPosition: 0, clipItemPosition: 0, count: 2 },
+    ]);
+  });
+
+  it('counts no replay for a failed play or a play before the first completed one', async () => {
+    let fail = true;
+    const ports = createPorts({
+      prepare: async (reference) => {
+        if (fail) {
+          fail = false;
+          throw new ListeningAudioControllerError('load-failed', 'Clip failed to load');
+        }
+        return { itemPosition: reference.itemPosition };
+      },
+    });
+    const { controller } = createController(ports, { maxReplaysPerChoice: 0 });
+
+    await expect(controller.playChoice(0, 0)).rejects.toMatchObject({ code: 'load-failed' });
+    await controller.playChoice(0, 0);
+    expect(controller.getChoiceSnapshot(0, 0)).toMatchObject({ playCount: 2, replayCount: 0, canConfirm: true });
+    await expect(controller.playChoice(0, 0)).rejects.toMatchObject({ code: 'replay-limit' });
   });
 
   it('publishes pair states and releases every prepared clip on destroy', async () => {

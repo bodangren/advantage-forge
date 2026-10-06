@@ -4,9 +4,10 @@
  * it as `answerAudio`; a game plays a choice, and submits it only after its clip played to the end.
  *
  * Source: packages/advantage-play-kit/src/audio/contracts.ts (the answer-choice parts) and
- * answer-choice-controller.ts (primary-parity-integration 6e890c307). The monorepo owns both: send a
- * change there first. The port maps this file to a re-export of `@reading-advantage/advantage-play-kit`,
- * and tests/apk3d/answer-choice.test.ts is a copy of the monorepo controller test.
+ * answer-choice-controller.ts (primary-parity-integration 6e890c307, with lane-g 677ade328: only a
+ * completed play uses a replay). The monorepo owns both: send a change there first. The port maps
+ * this file to a re-export of `@reading-advantage/advantage-play-kit`, and
+ * tests/apk3d/answer-choice.test.ts is a copy of the monorepo controller test.
  */
 import {
   MAX_LISTENING_SESSION_ITEMS,
@@ -311,6 +312,7 @@ type ActivePlayback = {
   attemptIndex: number;
   abort: AbortController;
   generation: number;
+  replay: boolean;
 };
 
 const pairKey = (questionPosition: number, clipItemPosition: number): string =>
@@ -436,6 +438,12 @@ export function createAnswerChoiceAudioController<PreparedClip>(
     return pair;
   };
 
+  // Only a completed play uses the replay budget, so a cancelled or failed play never locks a choice.
+  const heard = (questionPosition: number, clipItemPosition: number): boolean =>
+    questions.get(questionPosition)?.selectionAttempts.some((attempt) => (
+      attempt.clipItemPosition === clipItemPosition && attempt.playbackResult === 'completed'
+    )) ?? false;
+
   const canConfirm = (questionPosition: number, clipItemPosition: number): boolean => {
     if (destroyed || activeQuestionPosition !== questionPosition) return false;
     const pair = pairStates.get(pairKey(questionPosition, clipItemPosition));
@@ -528,6 +536,7 @@ export function createAnswerChoiceAudioController<PreparedClip>(
       'cancelled',
     );
     const pair = stateAt(active.questionPosition, active.clipItemPosition);
+    if (active.replay) pair.replayCount -= 1;
     pair.status = 'cancelled';
     pair.submitted = false;
     delete pair.failure;
@@ -626,7 +635,8 @@ export function createAnswerChoiceAudioController<PreparedClip>(
       );
     }
     const pair = stateAt(questionPosition, clipItemPosition);
-    if (pair.replayCount >= maxReplays && pair.playCount > 0) {
+    const replay = heard(questionPosition, clipItemPosition);
+    if (replay && pair.replayCount >= maxReplays) {
       throw new ListeningAudioControllerError('replay-limit', 'Answer audio replay limit was reached');
     }
     cancelActive(false);
@@ -634,8 +644,8 @@ export function createAnswerChoiceAudioController<PreparedClip>(
     const attemptIndex = question.selectionAttempts.length;
     const abort = new AbortController();
     const operationGeneration = ++generation;
-    activePlayback = { questionPosition, clipItemPosition, attemptIndex, abort, generation: operationGeneration };
-    pair.replayCount += pair.playCount > 0 ? 1 : 0;
+    activePlayback = { questionPosition, clipItemPosition, attemptIndex, abort, generation: operationGeneration, replay };
+    pair.replayCount += replay ? 1 : 0;
     pair.playCount += 1;
     pair.status = prepared.has(clipItemPosition) ? 'ready' : 'loading';
     pair.submitted = false;
@@ -676,6 +686,7 @@ export function createAnswerChoiceAudioController<PreparedClip>(
         : 'playback-failed';
       failures.set(pairKey(questionPosition, clipItemPosition), failureCode);
       appendAttempt(questionPosition, clipItemPosition, attemptIndex, 'failed');
+      if (replay) pair.replayCount -= 1;
       pair.status = 'failed';
       pair.failure = { code: failureCode, message: failure.message };
       status = 'failed';
