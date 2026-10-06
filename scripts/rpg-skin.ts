@@ -11,8 +11,9 @@
  *   node --import tsx scripts/rpg-skin.ts --all       build every file
  *
  * `--jobs <n>` (or $RPG_SKIN_JOBS, default 2) sets the number of forge jobs at one time; use 1 when
- * another heavy process holds the memory. A run that stops resumes: the files and the builds it
- * finished are not done again.
+ * another heavy process holds the memory. A run that stops resumes: out/rpg-skin/built.json records
+ * each finished render, strip, scene model, and avatar input with its source revision, and the next
+ * run skips the ones whose output exists and whose revision is the same.
  *
  * Kinds of file (the table `SKIN`):
  * - `view`: a transparent view render (`forge render --bg none`, 512 px), resized, as WebP.
@@ -219,7 +220,7 @@ function forge(args: string[]): void {
 const jobsArg = argv.indexOf('--jobs');
 const JOBS = Math.max(1, Number((jobsArg >= 0 ? argv[jobsArg + 1] : undefined) ?? process.env.RPG_SKIN_JOBS ?? 2) || 1);
 /** Runs forge jobs JOBS at a time (the launcher's build slots also hold the machine limit). */
-async function forgePool(jobs: string[][], label: (args: string[]) => string): Promise<void> {
+async function forgePool(jobs: string[][], label: (args: string[]) => string, done: (args: string[]) => void): Promise<void> {
   let next = 0;
   let failed = 0;
   const worker = async (): Promise<void> => {
@@ -228,6 +229,7 @@ async function forgePool(jobs: string[][], label: (args: string[]) => string): P
       const t = performance.now();
       const code = await new Promise<number>((done) => spawn(join(ROOT, 'forge'), args, { stdio: ['ignore', 'ignore', 'inherit'], env: forgeEnv }).on('close', (c) => done(c ?? 1)));
       if (code !== 0) failed++;
+      else done(args);
       console.log(`${code === 0 ? 'built ' : 'FAILED'} ${label(args).padEnd(28)} (${Math.round((performance.now() - t) / 1000)} s)`);
     }
   };
@@ -250,23 +252,38 @@ for (const p of stale) {
   if (e.kind === 'view') viewWork.set(`${e.asset}|${e.preset ?? ''}`, new Set([...(viewWork.get(`${e.asset}|${e.preset ?? ''}`) ?? []), e.view]));
   if (e.kind === 'strip') stripWork.set(stripKey(e), [...(stripWork.get(stripKey(e)) ?? []), e]);
 }
+const viewPng = (asset: string, preset: string, view: string): string => join(ROOT, 'out', asset, 'views', ...(preset ? ['presets', preset] : []), `${view}.png`);
+const viewDone = (key: string, list: Set<View>): boolean => {
+  const [asset, preset] = key.split('|') as [string, string];
+  return built[`view:${key}`] === sourceRevision(asset, ROOT) && [...list].every((v) => existsSync(viewPng(asset, preset, v)));
+};
 // One job per asset, so two jobs never write the same out/<asset>/.
 await forgePool(
-  [...viewWork].map(([key, list]) => {
-    const [asset, preset] = key.split('|') as [string, string];
-    return ['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref', ...(preset ? ['--preset', preset] : [])];
-  }),
+  [...viewWork]
+    .filter(([key, list]) => !viewDone(key, list))
+    .map(([key, list]) => {
+      const [asset, preset] = key.split('|') as [string, string];
+      return ['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref', ...(preset ? ['--preset', preset] : [])];
+    }),
   (args) => `view:${args[1]}`,
+  (args) => {
+    const preset = args.includes('--preset') ? args[args.indexOf('--preset') + 1]! : '';
+    // The render also builds out/<asset>/<asset>.glb, which a backdrop can use.
+    built[`view:${args[1]}|${preset}`] = built[args[1]!] = sourceRevision(args[1]!, ROOT);
+    saveBuilt();
+  },
 );
-for (const key of viewWork.keys()) built[key.split('|')[0]!] = sourceRevision(key.split('|')[0]!, ROOT);
-saveBuilt();
 // Strips: one sprite run per asset, preset, and cell with all its clips.
 for (const [key, entries] of stripWork) {
   const e = entries[0]!;
+  const rev = sourceRevision(e.asset, ROOT);
+  if (built[`strip:${key}`] === rev && entries.every((x) => existsSync(join(stripDir(x), 'sheet.png')) && existsSync(join(stripDir(x), 'metrics.json')))) continue;
   const into = join(TMP, key.replaceAll('|', '_'));
   rmSync(into, { recursive: true, force: true });
   const clips = [...new Set(entries.map((x) => x.clip))].join(',');
   timed(`strip:${key}`, () => forge(['sprites', e.asset, '--clip', clips, '--dirs', '1', '--into', into, ...(e.preset ? ['--preset', e.preset] : []), ...(e.cell ? ['--size', String(e.cell), '--cell'] : [])]));
+  built[`strip:${key}`] = rev;
+  saveBuilt();
 }
 
 // The avatar pack (hero portraits): rebuild the reduced inputs whose sources changed, then assemble.
@@ -275,11 +292,12 @@ if (staleHeroes || avatarMissing) {
   for (const id of ids) {
     const rev = sourceRevision(id, ROOT);
     if (built[`avatar:${id}`] !== rev) for (const form of ['', '+capped', '+tucked']) rmSync(join(ROOT, 'out', `${id}${form}+reduced`), { recursive: true, force: true });
+    // Every reduced input left now is from the current sources; avatar-pack.ts builds only the missing ones.
+    built[`avatar:${id}`] = rev;
   }
+  saveBuilt();
   const t = performance.now();
   execFileSync('node', ['--import', 'tsx', 'scripts/avatar-pack.ts', '--build'], { cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit'], env: forgeEnv });
-  for (const id of ids) built[`avatar:${id}`] = sourceRevision(id, ROOT);
-  saveBuilt();
   console.log(`built  avatar pack                  (${Math.round((performance.now() - t) / 1000)} s)`);
 }
 
@@ -289,9 +307,14 @@ if (staleBackdrops.length) {
   const assets = [...new Set(staleBackdrops.flatMap(([, e]) => mapAssets((e as Extract<Entry, { kind: 'backdrop' }>).place)))].sort();
   const todo = assets.filter((a) => !existsSync(join(ROOT, 'out', a, `${a}.glb`)) || built[a] !== sourceRevision(a, ROOT));
   console.log(`backdrops: ${assets.length} map assets, ${todo.length} to build`);
-  await forgePool(todo.map((a) => ['build', a]), (args) => `glb:${args[1]}`);
-  for (const a of todo) built[a] = sourceRevision(a, ROOT);
-  saveBuilt();
+  await forgePool(
+    todo.map((a) => ['build', a]),
+    (args) => `glb:${args[1]}`,
+    (args) => {
+      built[args[1]!] = sourceRevision(args[1]!, ROOT);
+      saveBuilt();
+    },
+  );
 }
 
 // Page shots (heroes and backdrops) on a dev server of this checkout.
