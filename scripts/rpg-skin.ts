@@ -10,6 +10,10 @@
  *   node --import tsx scripts/rpg-skin.ts             build the stale files
  *   node --import tsx scripts/rpg-skin.ts --all       build every file
  *
+ * `--jobs <n>` (or $RPG_SKIN_JOBS, default 2) sets the number of forge jobs at one time; use 1 when
+ * another heavy process holds the memory. A run that stops resumes: the files and the builds it
+ * finished are not done again.
+ *
  * Kinds of file (the table `SKIN`):
  * - `view`: a transparent view render (`forge render --bg none`, 512 px), resized, as WebP.
  * - `strip`: a `forge sprites --dirs 1` clip sheet (direction S, 8 frames, elevation 30; the same
@@ -212,7 +216,9 @@ const forgeEnv = { ...process.env, FORGE_WORKERS: process.env.FORGE_WORKERS ?? '
 function forge(args: string[]): void {
   execFileSync(join(ROOT, 'forge'), args, { stdio: ['ignore', 'ignore', 'inherit'], env: forgeEnv });
 }
-/** Runs forge jobs two at a time (the launcher's build slots hold the machine limit). */
+const jobsArg = argv.indexOf('--jobs');
+const JOBS = Math.max(1, Number((jobsArg >= 0 ? argv[jobsArg + 1] : undefined) ?? process.env.RPG_SKIN_JOBS ?? 2) || 1);
+/** Runs forge jobs JOBS at a time (the launcher's build slots also hold the machine limit). */
 async function forgePool(jobs: string[][], label: (args: string[]) => string): Promise<void> {
   let next = 0;
   let failed = 0;
@@ -225,7 +231,7 @@ async function forgePool(jobs: string[][], label: (args: string[]) => string): P
       console.log(`${code === 0 ? 'built ' : 'FAILED'} ${label(args).padEnd(28)} (${Math.round((performance.now() - t) / 1000)} s)`);
     }
   };
-  await Promise.all([worker(), worker()]);
+  await Promise.all(Array.from({ length: JOBS }, worker));
   if (failed) throw new Error(`${failed} forge job(s) failed`);
 }
 const timed = (key: string, run: () => void): void => {

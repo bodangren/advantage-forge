@@ -116,6 +116,7 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
 
 ```bash
 node --import tsx scripts/apk-release.ts --skin --commit             # build the stale skin files too
+RPG_SKIN_JOBS=1 node --import tsx scripts/apk-release.ts --skin --commit   # ... one forge job at a time (low memory)
 node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f --check
 node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f
 ```
