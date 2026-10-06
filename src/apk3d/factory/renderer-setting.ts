@@ -68,3 +68,12 @@ export function saveRendererSetting(setting: RendererSetting, source: RendererSe
     // The choice applies to this visit only.
   }
 }
+
+/**
+ * The view of a page that has a 3D view and a 2D fallback (the RPG pages): 2D when the setting
+ * says so or the device has no WebGL2, else 3D. The same rule as `selectRenderer` for a game that
+ * lists both renderers, without the game factories (so a page bundle stays small).
+ */
+export function pageView(webgl2: boolean, setting: RendererSetting = readRendererSetting()): '2d' | '3d' {
+  return setting === 'phaser' || !webgl2 ? '2d' : '3d';
+}

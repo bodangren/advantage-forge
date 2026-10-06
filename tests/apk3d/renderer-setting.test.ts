@@ -1,6 +1,6 @@
 /** The shared "2D mode (older phones)" setting: one value for the game host and the pages. */
 import { describe, expect, it } from 'vitest';
-import { RENDERER_SETTING_KEY, readRendererSetting, rendererSettingOf, saveRendererSetting, selectRenderer } from '../../src/apk3d/factory/index.js';
+import { RENDERER_SETTING_KEY, pageView, readRendererSetting, rendererSettingOf, saveRendererSetting, selectRenderer } from '../../src/apk3d/factory/index.js';
 
 function memory(initial: Record<string, string> = {}): Pick<Storage, 'getItem' | 'setItem'> & { data: Record<string, string> } {
   const data = { ...initial };
@@ -43,5 +43,11 @@ describe('renderer setting', () => {
     expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'ok' }, 'phaser')?.renderer).toBe('phaser');
     expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'ok' }, 'auto')?.renderer).toBe('three');
     expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'unsupported' }, 'auto')?.renderer).toBe('phaser');
+  });
+
+  it('gives a page view: 2D when forced or without WebGL2', () => {
+    expect(pageView(true, 'auto')).toBe('3d');
+    expect(pageView(true, 'phaser')).toBe('2d');
+    expect(pageView(false, 'auto')).toBe('2d');
   });
 });

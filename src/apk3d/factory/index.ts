@@ -11,6 +11,7 @@ export {
 } from './select.js';
 export {
   RENDERER_SETTING_KEY,
+  pageView,
   readRendererSetting,
   rendererSettingOf,
   saveRendererSetting,
