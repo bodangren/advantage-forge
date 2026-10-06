@@ -18,7 +18,7 @@ Status: in progress. The plan records execution state. The specification and
 ## Phase 2: Monster Encounters
 
 - [x] Task: 3D: the avatar takes the party place of its role. QC shots for a fighter, a caster, and a healer starter set, and for no avatar. `BattleStage.load` takes the player's body for one place (the actor keeps the place id); the card reads "Your turn" for that place (3D and 2D, new string `hud.yourTurn`). `scripts/apk3d-shot.ts --avatar <class>`: rogue (portrait, knight place), witch (landscape, wizard place), bard (landscape, cleric place), and no avatar (landscape): every run played to the results and the class boss with no diagnostics and no errors. The battle camera shows the party from behind.
-- [ ] Task: 2D: the portrait in the HUD and the role sprite. QC shots.
+- [x] Task: 2D: the portrait in the HUD and the role sprite. QC shots. `avatarPortrait` and `portraitIcon` (`src/apk3d/avatar/portrait-of.ts`): the launch avatar's layers with the shop's dye rule, and a round face crop (`PORTRAIT_FACE`, measured on the base layer). `Card2D.pill` takes an optional icon; the "Your turn" pill shows the face, and the body is the role sprite. 2D views get `avatarRoot` (default `/packs/avatar`; the demo passes its own). QC `--2d --avatar rogue` (portrait): the face shows, no diagnostics, no errors. The demo pack has no portrait layers yet (see Phase 5), so this run used a temporary copy of the 2026-10-04 layers from `out/packs/avatar/1.0.0/`, removed after the run.
 
 ## Phase 3: The demo host
 
@@ -31,6 +31,7 @@ Status: in progress. The plan records execution state. The specification and
 
 ## Phase 5: Release and hand-off
 
+- [ ] Task: The release renders the portrait layers (`scripts/avatar-portraits.ts` after `avatar-pack.ts`) into the avatar pack of the demo and the app. The release copied the pack without them; the app has its own copy of the 2026-10-04 layers.
 - [ ] Task: The avatar pack version changes when its content changes (TD-24).
 - [ ] Task: Run the Forge tests and type checks; release with `apk-release.ts`; run `monorepo-sync.ts --check`.
 - [ ] Task: Send the release and the host request to the monorepo session; record its confirmation.

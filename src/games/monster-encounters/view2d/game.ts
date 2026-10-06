@@ -10,6 +10,7 @@ import type * as Phaser from 'phaser';
 import { practiceOf, preloadAssetBindings, toGameResults, type StoryGameEvidence, type StoryInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { roleHero } from '../../../apk3d/avatar/launch.js';
+import { APP_AVATAR_URL, avatarPortrait, portraitIcon } from '../../../apk3d/avatar/portrait-of.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { banner, Card2D, fitGameSize, popup, registerSheetAnimations, StatusBar2D, type CardAction, type Rect } from '../../../apk3d/view2d/index.js';
@@ -85,11 +86,28 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const heroName = (hero: HeroId): string => i18n.t(`heroes.${hero}`);
     /** The party place of the student's avatar: its turn reads "Your turn". */
     const player = options.avatar ? roleHero(options.avatar.classId) : null;
+    /** The student's face in that pill: it loads in the background, and the pill shows it once it is ready. */
+    const FACE = 'avatar-face';
+    const avatar = options.avatar;
+    if (avatar && !scene.textures.exists(FACE)) {
+      avatarPortrait(ctx.avatarRoot ?? APP_AVATAR_URL, avatar)
+        .then(({ pixels }) => {
+          if (!destroyed) scene.textures.addCanvas(FACE, portraitIcon(pixels));
+        })
+        .catch((error: unknown) =>
+          ctx.diagnostic({
+            level: 'warning',
+            code: 'apk3d/avatar-fallback',
+            message: 'The avatar portrait did not load; the card shows no face.',
+            details: { reason: error instanceof Error ? error.message : String(error), classId: avatar.classId, catalogVersion: avatar.catalogVersion },
+          }),
+        );
+    }
 
     async function ask(hero: HeroId, c: Challenge): Promise<Response> {
       const look = HERO_LOOK[hero];
       card.begin();
-      card.pill(`${look.emoji} ${hero === player ? t('yourTurn') : t('turn', { name: heroName(hero) })}`, look.color, c.retry ? t('again') : '');
+      card.pill(`${look.emoji} ${hero === player ? t('yourTurn') : t('turn', { name: heroName(hero) })}`, look.color, c.retry ? t('again') : '', hero === player ? FACE : undefined);
       if (c.kind === 'sentence') {
         card.line(t(`ask.${c.kind}`), 15, '#6a5a8a', { bold: false });
         awaiting = 'order';

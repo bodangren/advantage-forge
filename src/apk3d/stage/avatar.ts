@@ -5,8 +5,7 @@
  * `playerBody`: it gets the avatar, or the fixed hero when there is no avatar or it does not load.
  */
 import { avatarModelOf, composeAvatar, loadoutErrors, type AvatarModel, type AvatarPiece, type ComposedAvatar, type LoadedGltf } from '../avatar/compose.js';
-import { AVATAR_PACK_VERSION } from '../avatar/pack.js';
-import { AVATAR_CLIP_ALIASES, DEFAULT_HAIR, pieceDyes, type AvatarCatalog, type AvatarCatalogItem } from '../avatar/launch.js';
+import { AVATAR_CLIP_ALIASES, DEFAULT_HAIR, fromServedVersion, pieceDyes, type AvatarCatalog, type AvatarCatalogItem } from '../avatar/launch.js';
 import type { APKDiagnosticInput, LaunchAvatar } from '../contracts/index.js';
 import type { GLTF, ModelLoader } from './loader.js';
 
@@ -38,24 +37,13 @@ function modelOf(gltf: GLTF): Promise<AvatarModel> {
   return m;
 }
 
-/** The catalog of the launch version, or of the current version when the launch one is not served. */
-async function catalogOf(loader: ModelLoader, version: string): Promise<{ catalog: AvatarCatalog; version: string }> {
-  const read = async (v: string) => ({ catalog: (await loader.json(`${loader.avatarRoot}/${v}/catalog.json`)) as AvatarCatalog, version: v });
-  try {
-    return await read(version);
-  } catch (error) {
-    if (version === AVATAR_PACK_VERSION) throw error;
-    return read(AVATAR_PACK_VERSION);
-  }
-}
-
 /**
  * Loads the pack files of a launch avatar (the catalog, the base, every worn piece with its capped
  * and tucked forms) and checks that it composes. Throws when a file fails or the loadout is not
  * valid; `playerBody` turns that into the fixed hero.
  */
 export async function loadAvatarBody(loader: ModelLoader, avatar: LaunchAvatar): Promise<AvatarBody> {
-  const { catalog, version } = await catalogOf(loader, avatar.catalogVersion);
+  const { value: catalog, version } = await fromServedVersion(avatar.catalogVersion, async (v) => (await loader.json(`${loader.avatarRoot}/${v}/catalog.json`)) as AvatarCatalog);
   const root = `${loader.avatarRoot}/${version}/`;
   const items = new Map(catalog.items.map((i) => [i.id, i]));
   const model = async (file: string) => modelOf(await loader.load(root + file));

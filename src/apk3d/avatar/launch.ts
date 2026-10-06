@@ -90,3 +90,16 @@ export function starterLaunchAvatar(classId: string, catalogVersion: string = AV
   if (!set) return undefined;
   return launchAvatarSchema.parse({ catalogVersion, classId: set.id, tints: set.tints, pieces: set.pieces.map((itemId) => ({ itemId, dye: null })) });
 }
+
+/**
+ * Reads from the pack of the launch version, or from the current pack when that version is not
+ * served (a profile saved against an older pack). Returns the value and the version it came from.
+ */
+export async function fromServedVersion<T>(version: string, read: (version: string) => Promise<T>): Promise<{ value: T; version: string }> {
+  try {
+    return { value: await read(version), version };
+  } catch (error) {
+    if (version === AVATAR_PACK_VERSION) throw error;
+    return { value: await read(AVATAR_PACK_VERSION), version: AVATAR_PACK_VERSION };
+  }
+}

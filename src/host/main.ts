@@ -348,7 +348,7 @@ async function startGame(): Promise<void> {
     cartridge,
     input: story,
     edition3d,
-    ...(edition2d ? { edition2d, resolveUrl: (pack: AssetPackManifest, file: { path: string }) => `${BASE}${pack.root.slice(1)}/${file.path}` } : {}),
+    ...(edition2d ? { edition2d, resolveUrl: (pack: AssetPackManifest, file: { path: string }) => `${BASE}${pack.root.slice(1)}/${file.path}`, avatarRoot: `${BASE}${AVATAR_ROOT}` } : {}),
     seed: randomSeed(),
     sessionMode: 'playing',
     composition: composition(),

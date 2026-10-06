@@ -126,6 +126,8 @@ export interface Game2DContext extends Omit<CartridgeGameConfigContext, 'input' 
   audio?: AudioBus;
   /** Where pack files load from; pass it to `preloadAssetBindings`. None in the APK. */
   resolveUrl?: AssetUrlResolver;
+  /** The URL folder of the avatar pack versions; none: `/packs/avatar`, as the apps serve it. */
+  avatarRoot?: string;
 }
 
 /** The `options` a 2D view uses when the APK factory mounts it (no hero choice, no helper). */
@@ -233,6 +235,8 @@ export interface PhaserFactoryContext {
   audio?: AudioBus;
   /** Where pack files load from (standalone host); none: `<pack.root>/<file.path>`, as the APK. */
   resolveUrl?: AssetUrlResolver;
+  /** The URL folder of the avatar pack versions (standalone host); none: `/packs/avatar`. */
+  avatarRoot?: string;
 }
 
 /** The Phaser game factory the kit copies from the APK. */
