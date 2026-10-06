@@ -17986,6 +17986,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/shared/challenge.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/shared/griffin.ts",
       "source_present": true
     },
