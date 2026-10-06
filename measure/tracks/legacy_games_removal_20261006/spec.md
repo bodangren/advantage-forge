@@ -23,6 +23,8 @@ route, the quest battle, the teacher challenge pages, the arcade, and the QC pag
 
 Forge works only in this repository. The monorepo session makes every change and commit there.
 
+Out of scope: Tutor Advantage (`../tutor-advantage`), which runs its own copies of the old games. The owner's developer moves it to the new games with Primary Advantage as the model (owner, 2026-10-06). So the Primary Advantage game pages must be a clear model to copy.
+
 ## Requirements
 
 1. No app in the monorepo runs or imports `@reading-advantage/game-cartridges`, and the package is
