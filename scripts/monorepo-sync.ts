@@ -234,7 +234,17 @@ if (!changed.length || !has('--commit')) process.exit(0);
 // ---------------------------------------------------------------- commit and push
 const bumps = Object.entries(after).filter(([id, v]) => before[id] !== v).map(([id, v]) => `${id} ${v}`);
 const subject = `chore(game-cartridges-3d): sync from Forge ${forgeHead} (track_id: ${TRACK})`;
-const body = [`Packs: ${bumps.join(', ') || 'no new version'}.`, 'Copied by Forge scripts/monorepo-sync.ts: port-kit.mjs, port-game.mjs all, the pack mirrors, and the 2D parity test. Drift checks, tests, and type checks of both packages pass.'].join('\n');
+/** Wraps text at 100 characters: the monorepo commitlint rejects longer body lines. */
+const wrap = (text: string): string => text.split(' ').reduce<string[]>((lines, word) => {
+  const last = lines[lines.length - 1];
+  if (last !== undefined && `${last} ${word}`.length <= 100) lines[lines.length - 1] = `${last} ${word}`;
+  else lines.push(word);
+  return lines;
+}, []).join('\n');
+const body = [
+  `Packs: ${bumps.join(', ') || 'no new version'}.`,
+  'Copied by Forge scripts/monorepo-sync.ts: port-kit.mjs, port-game.mjs all, the pack mirrors, and the 2D parity test. Drift checks, tests, and type checks of both packages pass.',
+].map(wrap).join('\n');
 if (!run(MONO, 'git', ['add', '-A', '--', 'packages/advantage-play-kit-3d', 'packages/game-cartridges-3d'])) throw new Error('git add failed');
 if (!run(MONO, 'git', ['commit', '-q', '-m', subject, '-m', body, '--', 'packages/advantage-play-kit-3d', 'packages/game-cartridges-3d'])) throw new Error('git commit failed');
 console.log(`committed ${git(MONO, ['rev-parse', '--short', 'HEAD'])} on ${branch}`);
