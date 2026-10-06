@@ -42,7 +42,7 @@ render options
   --ref / --no-ref     show the asset's reference image above the views (default: on if set)
   --focus x,y,z,r      zoom every view on a sphere (world meters), e.g. the face
   --az 30 --el 10      add one custom view
-  --bg '#aeb3ba'       background color
+  --bg '#aeb3ba'       background color; none = transparent views (the ground shadow stays, semi-transparent)
 
 sprite options
   --size 128  --dirs 8|4|1  --elevation 30  --colors 0 (palette size, 0 = full color)

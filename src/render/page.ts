@@ -316,7 +316,8 @@ async function loadImage(url: string): Promise<HTMLImageElement> {
 async function renderViews(req: ViewsRequest): Promise<{ sheet: string; views: Record<string, string> }> {
   await load(req.glbUrl);
   await applyPreset(req.preset);
-  studio.setBackground(req.background);
+  // 'none': a transparent view (icons for pages); the shadow ground keeps a soft shadow.
+  studio.setBackground(req.background === 'none' ? null : req.background);
   studio.ground.visible = true;
   const cam = studio.perspective;
   const images: Record<string, HTMLCanvasElement> = {};
