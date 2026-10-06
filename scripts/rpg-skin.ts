@@ -4,7 +4,8 @@
  * `/rpg/...` (`apps/primary-advantage/public/rpg/`); this script writes the same tree to
  * `demo/public/rpg/` with a manifest, `skin.json`, and `scripts/monorepo-sync.ts --skin <app dir>`
  * mirrors the listed files into the app. It also copies the avatar pack that the hero portraits
- * come from to `demo/public/avatar-pack/<version>/` (the app serves it at `/packs/avatar/<version>/`).
+ * come from, with its portrait layers (scripts/avatar-portraits.ts, for the 2D games), to
+ * `demo/public/avatar-pack/<version>/` (the app serves it at `/packs/avatar/<version>/`).
  *
  *   node --import tsx scripts/rpg-skin.ts --check     list the stale files, build nothing
  *   node --import tsx scripts/rpg-skin.ts             build the stale files
@@ -174,7 +175,7 @@ const lastCommit = (files: string[]): string => (files.length ? git(['log', '-1'
 const mapAssets = (place: string): string[] => [...new Set([...readFileSync(join(ROOT, 'scenes', 'maps', `${place}.ts`), 'utf8').matchAll(/asset: '([a-z0-9-]+)'/g)].map((m) => m[1]!))].sort();
 /** The pieces of a starter set and the default hair the composer falls back to. */
 const heroPieces = (hero: string): string[] => ['avatar-base', 'avatar-hair-swept', ...(STARTER_SETS.find((s) => s.id === hero)?.pieces ?? [])];
-const AVATAR_CODE = ['src/apk3d/avatar', 'src/avatar-review', 'avatar.html', 'scripts/avatar-pack.ts'];
+const AVATAR_CODE = ['src/apk3d/avatar', 'src/avatar-review', 'avatar.html', 'portrait.html', 'scripts/avatar-pack.ts', 'scripts/avatar-portraits.ts'];
 const SCENE_CODE = ['src/scene', 'hamlet.html', 'scenes/chibi-quest.ts'];
 
 const memo = new Map<string, string>();
@@ -206,7 +207,8 @@ const stale = Object.keys(SKIN).filter((path) => {
 });
 const removed = Object.keys(current?.files ?? {}).filter((p) => !SKIN[p]);
 const staleHeroes = stale.some((p) => SKIN[p]!.kind === 'hero');
-const avatarMissing = !existsSync(join(AVATAR_DEST, 'pack.json'));
+// The 2D games draw the student's portrait from the layers (track avatar_in_games_20261006), so a pack without them is incomplete.
+const avatarMissing = !existsSync(join(AVATAR_DEST, 'pack.json')) || !existsSync(join(AVATAR_DEST, 'portraits.json'));
 console.log(`skin: ${stale.length} stale of ${Object.keys(SKIN).length}${removed.length ? `, ${removed.length} removed` : ''}${staleHeroes || avatarMissing ? ', avatar pack to build' : ''}`);
 for (const p of stale) console.log(`  ${p}`);
 if (argv.includes('--check')) process.exit(0);
@@ -302,6 +304,10 @@ if (staleHeroes || avatarMissing) {
   const t = performance.now();
   execFileSync('node', ['--import', 'tsx', 'scripts/avatar-pack.ts', '--build'], { cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit'], env: forgeEnv });
   console.log(`built  avatar pack                  (${Math.round((performance.now() - t) / 1000)} s)`);
+  // The portrait layers go into the same folder; avatar-pack.ts rewrites it, so they come after.
+  const p = performance.now();
+  execFileSync('node', ['--import', 'tsx', 'scripts/avatar-portraits.ts'], { cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit'], env: forgeEnv });
+  console.log(`built  avatar portraits             (${Math.round((performance.now() - p) / 1000)} s)`);
 }
 
 // Backdrops: build every asset of the stale maps whose GLB is missing or older than its source.
