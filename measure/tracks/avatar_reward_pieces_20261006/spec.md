@@ -11,6 +11,10 @@ The owner approved this plan on 2026-10-06: option A (avatar pieces), with optio
 hides the equip button) as the fallback when the pieces are not ready by 2026-10-13. The cutover
 is 2026-10-14 to 2026-10-20. The monorepo session agreed the split of the work.
 
+The monorepo track for M1 to M4 is `primary_reward_pieces_20261006` (monorepo
+`measure/tracks/primary_reward_pieces_20261006/`, commit 9acc2db23 on `primary-parity-integration`).
+Its phase 0 holds the option B fallback for 2026-10-13.
+
 ## Scope and ownership
 
 | Part | Owner |
