@@ -60,7 +60,9 @@ const FORGE_PATHS = ['src/apk3d', 'src/games', 'demo/public/packs', 'demo/public
 /** Pack mirrors: Forge folder to monorepo folder. */
 const PACKS_MIRROR: [string, string] = [join(FORGE, 'demo/public/packs'), join(GAMES, 'assets/packs')];
 const SPRITES_MIRROR: [string, string] = [join(FORGE, 'demo/public/assets/apk/primary-chibi-2d'), join(GAMES, 'assets/apk/primary-chibi-2d')];
-const MIRRORS: [string, string][] = [PACKS_MIRROR, SPRITES_MIRROR];
+/** The HUD fonts: port-kit.mjs copies only .ts and .css files, and the app serves these at /assets/apk3d/fonts/. */
+const FONTS_MIRROR: [string, string] = [join(FORGE, 'src/apk3d/hud/fonts'), join(KIT, 'assets/fonts')];
+const MIRRORS: [string, string][] = [PACKS_MIRROR, SPRITES_MIRROR, FONTS_MIRROR];
 /** The 2D parity test, rewritten for the package layout (assets/ holds packs/ and apk/). */
 const PARITY: [string, string] = [join(FORGE, 'tests/apk3d/sprite-parity.test.ts'), join(GAMES, 'tests/packs/sprite-parity.test.ts')];
 
@@ -195,7 +197,7 @@ const forgeHead = git(FORGE, ['rev-parse', '--short', 'HEAD']);
 
 const before = versions(PACKS_MIRROR[1], SPRITES_MIRROR[1]);
 const after = versions(PACKS_MIRROR[0], SPRITES_MIRROR[0]);
-const packChanges = MIRRORS.map(([from, to]) => [to.replace(`${GAMES}/`, ''), mirrorDiff(from, to)] as const);
+const packChanges = MIRRORS.map(([from, to]) => [to.replace(`${GAMES}/`, '').replace(`${MONO}/`, ''), mirrorDiff(from, to)] as const);
 const parityChanged = !existsSync(PARITY[1]) || readFileSync(PARITY[1], 'utf8') !== parityText();
 const testsToMigrate = PACK_TESTS.filter((t) => existsSync(t) && migratedTest(readFileSync(t, 'utf8')) !== readFileSync(t, 'utf8'));
 const drift = ownerDrift(MONO);
