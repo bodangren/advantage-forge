@@ -6,7 +6,7 @@ Tracks by workstream: assets: 32; games: 41; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
-| [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | in_progress | games | 17/26 | 14 | — |
+| [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | in_progress | games | 18/27 | 14 | — |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
