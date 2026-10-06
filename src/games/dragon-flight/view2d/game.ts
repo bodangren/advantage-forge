@@ -7,14 +7,15 @@
  * and their meanings wait on tags the student taps (or a swipe, or the keys 1-3 and the arrows).
  */
 import type * as Phaser from 'phaser';
-import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
+import { preloadAssetBindings, toGameResults } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
 import { animationKeyOf, banner, COLORS, depthOf, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, textureKeyOf, WordPanel2D } from '../../../apk3d/view2d/index.js';
-import { createDragonFlight, evidenceOf, scoreOf, type DragonFlightCommand, type DragonFlightEvent, type DragonFlightState } from '../core/index.js';
-import { DRAGON_CLIPS_2D, FILES_2D, LAND_PROPS_2D } from '../manifest.js';
+import { createDragonFlight, evidenceOf, scoreOf, type DragonFlightCommand, type DragonFlightEvent, type DragonFlightState, type DragonFlightInput } from '../core/index.js';
+import { evidenceStoryOf } from '../../shared/challenge.js';
+import { manifest, DRAGON_CLIPS_2D, FILES_2D, LAND_PROPS_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
 import strings from '../strings.en.js';
 import { CHUNK, FOREST, kindOf, rng, VILLAGE } from '../view/land-plan.js';
@@ -54,12 +55,13 @@ interface Gate {
 }
 
 export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, unknown>> {
-  const story = ctx.input as PracticeInput;
+  // A practice input, or a class challenge's APK vocabulary input.
+  const input = ctx.input as DragonFlightInput;
   const t = (ctx.i18n ?? createI18n([strings]).scope('dragonFlight')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
-  const sim = createDragonFlight(story, { seed, helper: options.helper });
+  const sim = createDragonFlight(input, { seed, helper: options.helper });
   const needed = FILES_2D.filter((id) => edition.bindings[id]);
   const [width, height] = fitGameSize();
   const audio = ctx.audio ?? new AudioBus();
@@ -391,7 +393,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       audio.play('victory');
       if (has('dragon-fire.roar')) dragon.play(dragonAnim('roar', 'n'));
       await banner(scene, t('done.title'), t('done.text'), 2.2);
-      const evidence = evidenceOf(sim.state, story, seed, Math.round(performance.now() - startedAt));
+      const evidence = evidenceOf(sim.state, evidenceStoryOf(input, manifest.levels), seed, Math.round(performance.now() - startedAt));
       ctx.complete(toGameResults(evidence, scoreOf(sim.state)), 'victory', evidence);
     }
 

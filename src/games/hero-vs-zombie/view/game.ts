@@ -5,12 +5,14 @@
  * Blast and the dawn. It never decides a rule.
  */
 import * as THREE from 'three';
-import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
+import { toGameResults } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc, hasThai } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
 import { Actor, burst, FollowRig, isAvatarBody, playerBody, Walker } from '../../../apk3d/stage/index.js';
-import { createHeroVsZombie, evidenceOf, scoreOf, type HeroVsZombieCommand, type HeroVsZombieEvent, type HeroVsZombieState } from '../core/index.js';
+import { createHeroVsZombie, evidenceOf, scoreOf, type HeroVsZombieCommand, type HeroVsZombieEvent, type HeroVsZombieState, type HeroVsZombieInput } from '../core/index.js';
+import { manifest } from '../manifest.js';
+import { evidenceStoryOf } from '../../shared/challenge.js';
 import { nextCommand } from '../qc/bot.js';
 import { buildChurchyard, CHURCHYARD_MODELS } from './churchyard.js';
 import './hero-vs-zombie.css';
@@ -18,7 +20,8 @@ import './hero-vs-zombie.css';
 const ORB_COLOR = 0xfff1a8;
 
 export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
-  const story = ctx.input as PracticeInput;
+  // A practice input, or a class challenge's APK vocabulary input.
+  const input = ctx.input as HeroVsZombieInput;
   const stage = ctx.stage;
   const t = ctx.i18n.scope('hud').t;
   const audio = ctx.audio;
@@ -30,7 +33,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     playerBody(stage.loader, ctx.options.avatar, heroId, ctx.diagnostic),
   ]);
   const yard = buildChurchyard(stage);
-  const sim = createHeroVsZombie(story, { seed: ctx.seed, helper: ctx.options.helper });
+  const sim = createHeroVsZombie(input, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the hero
@@ -224,7 +227,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     audio.play('victory');
     hero.play('victory');
     await hud.banner.show(t('done.title'), t('done.text'), 2.2);
-    const evidence = evidenceOf(sim.state, story, ctx.seed, Math.round(performance.now() - startedAt));
+    const evidence = evidenceOf(sim.state, evidenceStoryOf(input, manifest.levels), ctx.seed, Math.round(performance.now() - startedAt));
     ctx.complete(toGameResults(evidence, scoreOf(sim.state)), 'victory', evidence);
   }
 

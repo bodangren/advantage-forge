@@ -90,8 +90,21 @@ export const cartridge3DManifestSchema = runtimeCartridgeManifestSchema.extend({
   device: deviceRequirementsSchema,                           // section 9; the kit default covers most games
   budget: z.object({ firstLoadBytes: z.number().int(), totalBytes: z.number().int() }),
   briefingKey: z.string(),                                    // catalog scope of the briefing text
+  challenge: challengeCapabilitySchema.optional(),            // class challenges (below)
 });
 ```
+
+`challenge` declares the class challenges a game can run (the monorepo `gameChallenge*` tables and
+the class quests), in the shape of the monorepo `CartridgeChallengeCapability`: `version` (the
+comparable revision; bump it when scoring, controls, learning rules, or seeded behavior change),
+`inputMode` (`vocabulary` or `sentence`, the content of the challenge), and `modalities`
+(`reading`, `read-to-select-audio`). A challenge run passes the challenge content as the APK input
+of that mode and the server's seed; the same seed and content give the same run and the same
+results (`tests/games/shared/challenge.test.ts`). A game whose `inputMode` is `practice` names the
+APK input in its evidence with `evidenceStoryOf` (`src/games/shared/challenge.ts`): the id
+`vocabulary` and the game's first level. Hero vs. Zombie, Dragon Flight, and Dragon Rider declare
+`{ version: '2026-10-06.1', inputMode: 'vocabulary', modalities: ['reading'] }` (2026-10-06,
+track `legacy_games_removal_20261006`).
 
 `capabilities` keeps the APK capability ids (`capability:bounded-frame-delta`,
 `capability:single-completion-emission`, `capability:result-accounting`, ...). A 3D cartridge

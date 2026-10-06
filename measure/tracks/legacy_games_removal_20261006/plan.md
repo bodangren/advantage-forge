@@ -10,7 +10,9 @@ Status: in progress. The plan records execution state. The specification retains
 
 ## Phase 2: Forge gaps
 
-- [ ] Task: Build each feature, manifest field, or id map that the monorepo plan gives to Forge; release it through `apk-release.ts` and the read-only sync check.
+- [x] Task: F1. Hero vs. Zombie, Dragon Flight, and Dragon Rider declare a class challenge (owner: start F1, 2026-10-06). `challengeCapabilitySchema` and the optional manifest field `challenge` (`src/apk3d/contracts/manifest.ts`, the monorepo `CartridgeChallengeCapability` shape); each game declares `{ version: '2026-10-06.1', inputMode: 'vocabulary', modalities: ['reading'] }`; the 3D and 2D views take the core's input union and name an APK input in the evidence with `evidenceStoryOf` (`src/games/shared/challenge.ts`: id `vocabulary`, the game's first level). `tests/games/shared/challenge.test.ts` (6 tests): only these three games declare a challenge; the same seed and content give the same snapshot and results; a different seed differs; the evidence parses. `tests/apk3d`, `tests/games`, `tests/host`: 149 files, 2,297 tests pass; the type check is clean. `docs/apk3d-cartridge.md` section 2.1 documents the field.
+- [ ] Task: F2. The read-to-select-audio mode in the same three games, 3D and 2D, with evidence that passes the monorepo `readToSelectAudioEvidenceSchema`; add `read-to-select-audio` to their challenge modalities. Waits for the monorepo answer on the audio content and the player object.
+- [ ] Task: Release each Forge change through the read-only sync check and send it to the monorepo session.
 
 ## Phase 3: Removal (monorepo)
 

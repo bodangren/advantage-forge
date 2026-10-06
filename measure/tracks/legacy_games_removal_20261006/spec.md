@@ -25,6 +25,11 @@ Forge works only in this repository. The monorepo session makes every change and
 
 Out of scope: Tutor Advantage (`../tutor-advantage`), which runs its own copies of the old games. The owner's developer moves it to the new games with Primary Advantage as the model (owner, 2026-10-06). So the Primary Advantage game pages must be a clear model to copy.
 
+## Owner decisions
+
+- 2026-10-06: the Echo Staff cannot be earned until the read-to-select-audio mode (F2) ships. No temporary rule (option 1). The Apprentice Wand and the Graveyard Staff move to the new Hero vs. Zombie (monorepo M2).
+- 2026-10-06: Tutor Advantage is out of scope (see above).
+
 ## Requirements
 
 1. No app in the monorepo runs or imports `@reading-advantage/game-cartridges`, and the package is
