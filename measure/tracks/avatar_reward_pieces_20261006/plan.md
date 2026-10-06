@@ -9,10 +9,10 @@ Status: in progress. The plan records execution state. The specification retains
 
 ## Phase 2: The two staffs
 
-- [ ] Task: Mockups for `graveyard-staff` and `echo-staff` (rated G).
-- [ ] Task: Build both staffs as equipment parts with `equip` blocks; `forge check` on `avatar-base` ends with `result ok`.
-- [ ] Task: Independent review (one reviewer agent, bar 7); fix and review again until both pass.
-- [ ] Task: Add both rows to `docs/avatar-catalog.tsv` as reward pieces.
+- [x] Task: Mockups for `graveyard-staff` and `echo-staff` (rated G). `docs/item-mockups/graveyard-staff-mock.jpg` (a driftwood crook with a mint lantern, a bone charm, and moon charms) and `docs/item-mockups/echo-staff-mock.jpg` (a tuning fork that holds a lilac crystal, with teal rings).
+- [x] Task: Build both staffs as equipment parts with `equip` blocks; `forge check` on `avatar-base` ends with `result ok`. `assets/graveyard-staff.ts` and `assets/echo-staff.ts`: mainhand, `HAND_FIT`, grip at y = 0.47, two-handed, like `staff`. `forge all` has no warnings; `forge check` gives `result ok` and `fit ok` for both. The cast and attack clips put the staff into the shirt and the pants by up to 5 cm, the same as the accepted `staff`.
+- [x] Task: Independent review (one reviewer agent, bar 7); fix and review again until both pass. Round 1 (2026-10-06): both 6.5 (`out/review-cards/reward-staffs/reviews-r1.json`). Graveyard staff: the straight grip let the bent shaft show through, a coach lantern instead of a round globe, thin smooth wood. Echo staff: the head was 15% of the height instead of 40%, thin straight prongs, a small crystal, extra shaft detail, dark metal. Rework: the grip is a shell of the shaft, a round globe in an iron bail, thicker wood with a twisted grain and a scroll curl, a longer grip with ribbon tails and a white moon, a gold bone, a wrapped knot; a fork on a Bezier curve that holds a tall prism crystal, a plain pale steel shaft, a larger ball foot, tilted rings. Round 2 (a new reviewer, `out/review-cards/reward-staffs-r2/reviews.json`): both 7.5, recorded in `docs/character-reviews.json` (group Equipment). Remaining small differences: the graveyard crook tip is a heavy lump, the ribbon is a short cuff, and the worn lantern does not hang down (a rigid piece); the echo prongs show faint ridges and the rings glow less than in the mockup.
+- [x] Task: Add both rows to `docs/avatar-catalog.tsv` as reward pieces. Tier 2, two-handed, `reward` in `override`; `scripts/avatar-price.ts --check` passes. `tests/apk3d/avatar-catalog.test.ts` checks all three reward pieces; `tests/apk3d`: 421 tests pass.
 
 ## Phase 3: Release
 

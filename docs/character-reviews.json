@@ -8408,5 +8408,72 @@
     "next": "Shorten the neck and the legs to get the stocky body of the mockup.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-05T09:53:44.000Z"
+  },
+  "graveyard-staff": {
+    "overall": 7.5,
+    "group": "Equipment",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 3.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A cream driftwood shepherd's crook with a mint lantern, a bone charm, a moon charm, a purple ribbon, and a leather grip. It matches the mockup with small differences only.",
+    "strengths": [
+      "The S-curve of the crook, the driftwood knots, and the knot near the bottom match the mockup.",
+      "The mint lantern at the crook tip is the focal point. The cream wood, the purple ribbon, and the brown leather match the mockup palette.",
+      "The crook, the lantern, and the grip read clearly in six of eight sprite directions.",
+      "The avatar holds the staff at the leather grip, the same as the accepted staff."
+    ],
+    "issues": [
+      "The crook tip is a round, heavy lump. In the mockup, the tip is a thin hook that turns up and holds the lantern ring. Make the crook head thinner and end it in a hook.",
+      "The ribbon is a short purple cuff with a zigzag edge. In the mockup, it is a purple cord wrap with long pointed tails over the leather. Make the tails longer and pointed.",
+      "The white charm at the ribbon is a small fang. In the mockup, it is a silver crescent moon. Change it to a silver crescent.",
+      "The charms hang on a thick black rod, and a tall black cage surrounds the lantern globe. In the mockup, a thin silver chain holds the charms, and a dark bronze frame with a small top ring holds the globe. Make the rod thin and light, and make the frame smaller.",
+      "In the avatar rest pose, the lantern and the charm string point sideways along the shaft. The moon charm comes near the tunic. Angle the string toward the ground in the held pose if the equip rules permit it."
+    ],
+    "next": "Make the crook head thinner and end it in an upturned hook that holds the lantern ring, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-06T11:04:03.000Z"
+  },
+  "echo-staff": {
+    "overall": 7.5,
+    "group": "Equipment",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A steel-blue tuning-fork staff with a lilac crystal between the tines and two teal rings at one side. It matches the mockup with small differences only.",
+    "strengths": [
+      "All mockup parts are present: the fork, the lilac crystal, the two teal rings, the collar rings, the thin shaft, and the ball foot.",
+      "The lilac crystal is the focal point against the calm steel-blue shaft. The palette matches the mockup.",
+      "The crystal and the fork read in all eight sprite directions.",
+      "The avatar holds the staff below the fork, the same as the accepted staff."
+    ],
+    "issues": [
+      "The fork tines show horizontal ridges. In the mockup, the tines are smooth, polished metal. Make the tine surface smooth.",
+      "The tines are tall, thin, and straight. In the mockup, the tines are thicker at the base and curve in at the tips to hold the crystal. Make the tines thicker at the base and curve the tips in.",
+      "The crystal is a long six-sided prism with short points and one flat color. In the mockup, the crystal has a longer top point, a lighter top, and a translucent look. Make the top point longer and lighten the top.",
+      "The teal rings are flat color. In the mockup, the rings glow. Give the rings an emissive glow."
+    ],
+    "next": "Make the tines smooth and thicker at the base, with tips that curve in to hold the crystal, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-06T11:04:03.000Z"
   }
 }

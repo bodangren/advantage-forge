@@ -16,7 +16,7 @@ describe('the avatar catalog', () => {
 
   it('keeps the reward pieces of the app emblems out of the shop and out of the starter sets', () => {
     const rewards = rows.filter((r) => r.override === 'reward').map((r) => r.id);
-    expect(rewards).toContain('apprentice-wand');
+    expect(rewards).toEqual(expect.arrayContaining(['apprentice-wand', 'graveyard-staff', 'echo-staff']));
     for (const set of STARTER_SETS) for (const id of set.pieces) expect(rewards, `${set.id}: ${id}`).not.toContain(id);
   });
 });
