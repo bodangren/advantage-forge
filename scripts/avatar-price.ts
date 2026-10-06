@@ -2,7 +2,9 @@
  * Fills the computed columns of docs/avatar-catalog.tsv: triangles (out/<id>/stats.json), rating
  * (latest review_score in bench/sonnet/log.tsv, 0 or blank = unrated), and price
  * (src/apk3d/avatar/price.ts). The hand-set columns are kept: id, slot, tier, two_handed, status,
- * override. A number in `override` replaces the computed price.
+ * override. A number in `override` replaces the computed price. The word `reward` in `override`
+ * marks a reward piece (the app grants it; the shop does not sell it): its price column reads
+ * `reward`, and the pack catalog gives it `"source": "reward"` and no price.
  *
  *   node --import tsx scripts/avatar-price.ts          # rewrite the table
  *   node --import tsx scripts/avatar-price.ts --check  # exit 1 if the table is out of date
@@ -39,7 +41,7 @@ for (const [id, slot, tier, twoHanded, status, override] of rows) {
   const triangles = readTriangles(id);
   const rating = ratings.get(id) ?? null;
   const computed = avatarPrice({ slot: slot as AvatarSlot, tier: Number(tier), triangles, rating });
-  const price = override ? Number(override) : computed;
+  const price = override === 'reward' ? 'reward' : override ? Number(override) : computed;
   out.push([id, slot, tier, twoHanded, status, override ?? '', triangles ?? '', rating ?? '', price].join('\t'));
 }
 const text = `${out.join('\n')}\n`;

@@ -5,7 +5,11 @@
  * `demo/public/rpg/` with a manifest, `skin.json`, and `scripts/monorepo-sync.ts --skin <app dir>`
  * mirrors the listed files into the app. It also copies the avatar pack that the hero portraits
  * come from, with its portrait layers (scripts/avatar-portraits.ts, for the 2D games), to
- * `demo/public/avatar-pack/<version>/` (the app serves it at `/packs/avatar/<version>/`).
+ * `demo/public/avatar-pack/<version>/` (the app serves it at `/packs/avatar/<version>/`). The pack
+ * is rebuilt when a hero portrait is stale, when it is missing, or when its sources changed (the
+ * catalog table, the base, a catalog piece, the avatar code: `avatar.forgeCommit` in skin.json). A
+ * rebuilt pack that differs from the published one takes a new version (scripts/avatar-version.ts),
+ * and the folder of the earlier version goes.
  *
  *   node --import tsx scripts/rpg-skin.ts --check     list the stale files, build nothing
  *   node --import tsx scripts/rpg-skin.ts             build the stale files
@@ -41,9 +45,10 @@ import { execFileSync, spawn } from 'node:child_process';
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import sharp from 'sharp';
-import { avatarPackPath } from '../src/apk3d/avatar/pack.js';
+import { AVATAR_PACK_VERSION, avatarPackPath } from '../src/apk3d/avatar/pack.js';
 import { STARTER_SETS } from '../src/apk3d/avatar/starters.js';
 import { nextVersion, sourceFiles, sourceRevision } from './apk-pack-models.js';
+import { avatarPackVersion, stampAvatarPack, writeAvatarPackVersion } from './avatar-version.js';
 
 type View = 'front' | 'three-quarter';
 type Entry =
@@ -158,12 +163,16 @@ interface ManifestFile {
 interface Manifest {
   id: 'primary-rpg-skin';
   version: string;
+  /** The published avatar pack: its version and the source revision it was built from. */
+  avatar?: { version: string; forgeCommit: string };
   files: Record<string, ManifestFile>;
 }
 
 const DEST = join(ROOT, 'demo', 'public', 'rpg');
 const MANIFEST = join(DEST, 'skin.json');
-const AVATAR_DEST = join(ROOT, 'demo', 'public', 'avatar-pack', avatarPackPath().split('/').pop()!);
+const AVATAR_ROOT = join(ROOT, 'demo', 'public', 'avatar-pack');
+/** The published avatar pack of the current version. */
+const AVATAR_DEST = join(AVATAR_ROOT, AVATAR_PACK_VERSION);
 const TMP = join(ROOT, 'out', 'rpg-skin');
 /** The source revision of every GLB this script built in out/ (out/<asset>/ and the avatar inputs). */
 const BUILT = join(TMP, 'built.json');
@@ -175,7 +184,8 @@ const lastCommit = (files: string[]): string => (files.length ? git(['log', '-1'
 const mapAssets = (place: string): string[] => [...new Set([...readFileSync(join(ROOT, 'scenes', 'maps', `${place}.ts`), 'utf8').matchAll(/asset: '([a-z0-9-]+)'/g)].map((m) => m[1]!))].sort();
 /** The pieces of a starter set and the default hair the composer falls back to. */
 const heroPieces = (hero: string): string[] => ['avatar-base', 'avatar-hair-swept', ...(STARTER_SETS.find((s) => s.id === hero)?.pieces ?? [])];
-const AVATAR_CODE = ['src/apk3d/avatar', 'src/avatar-review', 'avatar.html', 'portrait.html', 'scripts/avatar-pack.ts', 'scripts/avatar-portraits.ts'];
+/** The avatar code (git pathspecs). The version file is left out: a release writes it, and that must not make the next release stale. */
+const AVATAR_CODE = ['src/apk3d/avatar', ':(exclude)src/apk3d/avatar/pack-version.ts', 'src/avatar-review', 'avatar.html', 'portrait.html', 'scripts/avatar-pack.ts', 'scripts/avatar-portraits.ts'];
 const SCENE_CODE = ['src/scene', 'hamlet.html', 'scenes/chibi-quest.ts'];
 
 const memo = new Map<string, string>();
@@ -209,7 +219,10 @@ const removed = Object.keys(current?.files ?? {}).filter((p) => !SKIN[p]);
 const staleHeroes = stale.some((p) => SKIN[p]!.kind === 'hero');
 // The 2D games draw the student's portrait from the layers (track avatar_in_games_20261006), so a pack without them is incomplete.
 const avatarMissing = !existsSync(join(AVATAR_DEST, 'pack.json')) || !existsSync(join(AVATAR_DEST, 'portraits.json'));
-console.log(`skin: ${stale.length} stale of ${Object.keys(SKIN).length}${removed.length ? `, ${removed.length} removed` : ''}${staleHeroes || avatarMissing ? ', avatar pack to build' : ''}`);
+/** The source revision of the avatar pack: the catalog table, the base and every catalog piece, and the avatar code. */
+const avatarRevision = lastCommit(['docs/avatar-catalog.tsv', ...['avatar-base', ...CATALOG].flatMap((id) => sourceFiles(id, ROOT)), ...AVATAR_CODE]);
+const avatarBuild = staleHeroes || avatarMissing || current?.avatar?.forgeCommit !== avatarRevision;
+console.log(`skin: ${stale.length} stale of ${Object.keys(SKIN).length}${removed.length ? `, ${removed.length} removed` : ''}${avatarBuild ? ', avatar pack to build' : ''}`);
 for (const p of stale) console.log(`  ${p}`);
 if (argv.includes('--check')) process.exit(0);
 
@@ -292,7 +305,7 @@ for (const [key, entries] of stripWork) {
 }
 
 // The avatar pack (hero portraits): rebuild the reduced inputs whose sources changed, then assemble.
-if (staleHeroes || avatarMissing) {
+if (avatarBuild) {
   const ids = ['avatar-base', ...CATALOG];
   for (const id of ids) {
     const rev = sourceRevision(id, ROOT);
@@ -429,10 +442,20 @@ for (const [path, entry] of Object.entries(SKIN)) {
   files[path] = { kind: entry.kind, source: sourceOf(entry), spec: entry, forgeCommit: revision(entry), byteSize: readFileSync(dest).length };
 }
 for (const p of removed) rmSync(join(DEST, p), { force: true });
-if (staleHeroes || avatarMissing) {
-  rmSync(AVATAR_DEST, { recursive: true, force: true });
-  cpSync(join(ROOT, 'out', avatarPackPath()), AVATAR_DEST, { recursive: true });
-  console.log(`avatar pack -> ${AVATAR_DEST.slice(ROOT.length + 1)}`);
+let avatar = current?.avatar;
+if (avatarBuild) {
+  // The pack was built at the current version; a changed pack is published under the next one.
+  const built = join(ROOT, 'out', avatarPackPath());
+  const version = avatarPackVersion(AVATAR_DEST, built, AVATAR_PACK_VERSION);
+  const dest = join(AVATAR_ROOT, version);
+  rmSync(AVATAR_ROOT, { recursive: true, force: true });
+  cpSync(built, dest, { recursive: true });
+  if (version !== AVATAR_PACK_VERSION) {
+    stampAvatarPack(dest, version);
+    writeAvatarPackVersion(version, ROOT);
+  }
+  avatar = { version, forgeCommit: avatarRevision };
+  console.log(`avatar pack ${AVATAR_PACK_VERSION} -> ${version}: ${dest.slice(ROOT.length + 1)}`);
 }
 
 const ids = Object.keys(files).sort();
@@ -440,6 +463,6 @@ const before = Object.keys(current?.files ?? {}).sort();
 const sameIds = before.length === ids.length && before.every((id, i) => id === ids[i]);
 const same = sameIds && ids.every((id) => JSON.stringify(current!.files[id]) === JSON.stringify(files[id]));
 const version = !current ? '1.0.0' : same ? current.version : nextVersion(current.version, sameIds ? 'patch' : 'minor');
-const manifest: Manifest = { id: 'primary-rpg-skin', version, files: Object.fromEntries(ids.map((id) => [id, files[id]!])) };
+const manifest: Manifest = { id: 'primary-rpg-skin', version, ...(avatar ? { avatar } : {}), files: Object.fromEntries(ids.map((id) => [id, files[id]!])) };
 writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 1)}\n`);
 console.log(`skin   ${current?.version ?? '(new)'} -> ${version}, ${ids.length} files, ${(Object.values(files).reduce((s, f) => s + f.byteSize, 0) / 1024 / 1024).toFixed(2)} MB`);

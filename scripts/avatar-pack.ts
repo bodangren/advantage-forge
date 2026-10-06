@@ -48,7 +48,8 @@ interface Row {
   slot: string;
   tier: number;
   twoHanded: boolean;
-  price: number;
+  /** The GP price; null for a reward piece (`reward` in the price column). */
+  price: number | null;
   rating: number | null;
 }
 
@@ -65,7 +66,7 @@ function readyRows(): Row[] {
       slot: at(c, 'slot'),
       tier: Number(at(c, 'tier')),
       twoHanded: at(c, 'two_handed') === '1',
-      price: Number(at(c, 'price')),
+      price: at(c, 'price') === 'reward' ? null : Number(at(c, 'price')),
       rating: at(c, 'rating') ? Number(at(c, 'rating')) : null,
     }));
 }
@@ -262,7 +263,8 @@ async function main(): Promise<void> {
         slot: r.slot,
         tier: r.tier,
         twoHanded: r.twoHanded,
-        price: r.price,
+        // A reward piece is granted by the app, never sold: the app's inventory source word, no price.
+        ...(r.price === null ? { source: 'reward' } : { price: r.price }),
         rating: r.rating,
         equip: model.extras.forgeEquip ?? null,
         dyes: model.extras.forgeVariants ?? null,

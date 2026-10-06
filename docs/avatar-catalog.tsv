@@ -140,7 +140,7 @@ swashbuckler-dagger	mainhand	1	0	ready		794		50
 shield-maiden-axe	mainhand	1	0	ready		1702		50
 spear-warden-javelin	mainhand	1	0	ready		918		50
 mage-wand	mainhand	1	0	ready		1808		50
-apprentice-wand	mainhand	1	0	ready		1142		50
+apprentice-wand	mainhand	1	0	ready	reward	1142		reward
 witch-broom	mainhand	1	0	ready		3418		55
 treasure-hunter-whip	mainhand	1	0	ready		3688		55
 fighter-sword	mainhand	2	0	ready		1276		100

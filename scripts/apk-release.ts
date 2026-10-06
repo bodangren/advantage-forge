@@ -30,7 +30,7 @@ import { SPRITE_PACK_ID, assetPackSchema, modelPackSchema, spritePackRoot, sprit
 import { HERO_MODELS, packModels, sameRevision, sourceRevision } from './apk-pack-models.js';
 
 /** The release outputs, relative to the repository root. */
-export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'demo/public/avatar-pack', 'src/apk3d/contracts/pack-versions.ts'];
+export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'demo/public/avatar-pack', 'src/apk3d/contracts/pack-versions.ts', 'src/apk3d/avatar/pack-version.ts'];
 /** Generated 2D cameras of the baked backgrounds (written by apk2d-pack.ts with --bake). */
 const GENERATED = /^src\/games\/[a-z0-9-]+\/view2d\/projections?\.gen\.ts$/;
 

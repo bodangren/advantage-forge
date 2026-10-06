@@ -201,6 +201,10 @@ price = round5( slotBase x (1 + triangleBonus + ratingBonus) x tierMultiplier )
 - The P0 or P1 priority and the source character are not inputs. The priority records build
   order, not quality or rarity. Equipment does not record a source character.
 - The `override` column of `docs/avatar-catalog.tsv` replaces a computed price for one piece.
+  The word `reward` there marks a reward piece: the app grants it (inventory source `reward`) and
+  the shop does not sell it. Its price column reads `reward`. The three reward emblems of the app
+  are reward pieces: `apprentice-wand`, `graveyard-staff`, and `echo-staff` (track
+  `avatar_reward_pieces_20261006`).
 - `node --import tsx scripts/avatar-price.ts` fills `triangles`, `rating`, and `price`. With
   `--check` it exits 1 when the table is out of date. The code is `src/apk3d/avatar/price.ts`.
 - Result on the 164 priced pieces (the 4 hair styles are free by override): tier 1 costs 20 to 70 GP, tier 2 costs 50 to 130 GP, and tier 3
@@ -233,12 +237,20 @@ takes over when purchases come in.
 | File | Content | Budget |
 | --- | --- | --- |
 | `pack.json` | the model pack manifest (`modelPackSchema`) of every GLB | |
-| `catalog.json` | every `ready` catalog row: price, rating, the resolved equip block (`forgeEquip`), the dye slots, the files | |
+| `catalog.json` | every `ready` catalog row: the price (or `"source": "reward"` and no price for a reward piece), rating, the resolved equip block (`forgeEquip`), the dye slots, the files | |
 | `base/avatar-base.glb` | the base with clips, the tint mask, and the slot table | under 2 MB |
 | `pieces/<id>.glb` | the reduced piece | under 400 KB |
 | `pieces/<id>.capped.glb`, `pieces/<id>.tucked.glb` | the capped and tucked models of a hair style (section 4) | under 400 KB |
 | `portraits/<layer>.webp`, `portraits/<layer>.mask.webp` | the portrait layers, see section 9 | under 48 KB and 24 KB |
 | `portraits.json` | the portrait camera, the draw order, and the files of each layer | |
+
+**Version.** `src/apk3d/avatar/pack-version.ts` holds the current version. `scripts/rpg-skin.ts`
+rebuilds the pack when a hero portrait is stale, when the pack is missing, or when its sources
+changed (the catalog table, the base, a catalog piece, the avatar code). It compares the rebuilt
+pack with the published one (`demo/public/avatar-pack/<version>/`): the same files keep the
+version, changed files take the next patch version, and added or removed items the next minor
+version (`scripts/avatar-version.ts`, debt TD-24). The app serves `/packs/avatar/<version>/`, so a
+browser never keeps old files under a current version.
 
 Tools, in this order:
 
