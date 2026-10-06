@@ -40,7 +40,7 @@ import { nextVersion, sourceFiles, sourceRevision } from './apk-pack-models.js';
 
 type View = 'front' | 'three-quarter';
 type Entry =
-  | { kind: 'view'; asset: string; view: View; size: number }
+  | { kind: 'view'; asset: string; view: View; size: number; preset?: string }
   | { kind: 'strip'; asset: string; clip: string; preset?: string; cell?: number }
   | { kind: 'hero'; hero: string; size: number; turn: number }
   | { kind: 'backdrop'; place: string; query: string; width: number; height: number }
@@ -49,17 +49,33 @@ type Entry =
 const ROOT = process.cwd();
 
 const icon = (asset: string): Entry => ({ kind: 'view', asset, view: 'front', size: 192 });
+/**
+ * One color look per character: every view and every strip of a character uses it, so a student
+ * never sees one boss or NPC in two colorings. `null` is the default look, the one the games show.
+ * A role NPC takes the preset of its role (a shopkeeper is the grocer).
+ */
+const LOOKS: Readonly<Record<string, string | null>> = {
+  'dragon-fire': null,
+  'goblin-king': null,
+  'iron-golem': null,
+  lich: null,
+  blacksmith: null,
+  'quest-giver': 'scribe',
+  shopkeeper: 'grocer',
+  innkeeper: 'hostess',
+  villager: 'weaver',
+};
+const lookOf = (asset: string): { preset?: string } => (LOOKS[asset] ? { preset: LOOKS[asset]! } : {});
 const views = (asset: string, dir: string): Record<string, Entry> => ({
-  [`${dir}/${asset}-front.webp`]: { kind: 'view', asset, view: 'front', size: dir === 'kit/npc' ? 256 : 512 },
-  ...(dir === 'kit/boss' ? { [`${dir}/${asset}-3q.webp`]: { kind: 'view', asset, view: 'three-quarter', size: 512 } as Entry } : {}),
+  [`${dir}/${asset}-front.webp`]: { kind: 'view', asset, view: 'front', size: dir === 'kit/npc' ? 256 : 512, ...lookOf(asset) },
+  ...(dir === 'kit/boss' ? { [`${dir}/${asset}-3q.webp`]: { kind: 'view', asset, view: 'three-quarter', size: 512, ...lookOf(asset) } as Entry } : {}),
 });
-const strips = (asset: string, dir: string, clips: string[], look: { preset?: string | undefined; cell?: number } = {}): Record<string, Entry> =>
-  Object.fromEntries(clips.map((clip) => [`${dir}/${asset}-${clip}-strip.png`, { kind: 'strip', asset, clip, ...(look.preset ? { preset: look.preset } : {}), ...(look.cell ? { cell: look.cell } : {}) } as Entry]));
+const strips = (asset: string, dir: string, clips: string[], cell?: number): Record<string, Entry> =>
+  Object.fromEntries(clips.map((clip) => [`${dir}/${asset}-${clip}-strip.png`, { kind: 'strip', asset, clip, ...lookOf(asset), ...(cell ? { cell } : {}) } as Entry]));
 
-/** The NPCs of the pages and the color preset of each (the blacksmith's matches the Phase 0 files). */
-const NPCS: Readonly<Record<string, string>> = { blacksmith: 'armorer', 'quest-giver': 'scribe', shopkeeper: 'grocer', innkeeper: 'hostess', villager: 'weaver' };
-/** The bosses and the preset of the Phase 0 files (the fire dragon's old preset is now its default look). */
-const BOSSES: Readonly<Record<string, string | undefined>> = { 'dragon-fire': undefined, 'goblin-king': 'cave', 'iron-golem': 'aged', lich: 'blood-lich' };
+/** The NPCs of the pages (idle and talk strips) and the bosses (views and strips at one cell). */
+const NPCS = ['blacksmith', 'quest-giver', 'shopkeeper', 'innkeeper', 'villager'];
+const BOSSES = ['dragon-fire', 'goblin-king', 'iron-golem', 'lich'];
 /** The pages' places: a scene map each (scenes/maps/<place>.ts), shot for desktop and phone. */
 const PLACES = ['guild-hall', 'shrine', 'treasure-vault', 'armory', 'boss-arena', 'arena', 'library', 'clearing', 'wizard-tower', 'archive', 'inn', 'observatory', 'gatehouse'];
 const backdrop = (place: string, phone: boolean): Entry => ({
@@ -103,14 +119,23 @@ export const SKIN: Readonly<Record<string, Entry>> = {
   'kit/relics/shield.webp': icon('kite-shield'),
   ...views('blacksmith', 'kit/npc'),
   ...views('quest-giver', 'kit/npc'),
-  ...Object.assign({}, ...Object.entries(NPCS).map(([npc, preset]) => strips(npc, 'kit/npc', ['idle', 'talk'], { preset }))),
-  ...Object.assign({}, ...Object.entries(BOSSES).map(([b, preset]) => ({ ...views(b, 'kit/boss'), ...strips(b, 'kit/boss', ['idle', 'hit', 'attack', 'death'], { preset, cell: 160 }) }))),
+  ...Object.assign({}, ...NPCS.map((npc) => strips(npc, 'kit/npc', ['idle', 'talk']))),
+  ...Object.assign({}, ...BOSSES.map((b) => ({ ...views(b, 'kit/boss'), ...strips(b, 'kit/boss', ['idle', 'hit', 'attack', 'death'], 160) }))),
   ...Object.fromEntries(STARTER_SETS.map((s) => [`kit/heroes/${s.id}.webp`, { kind: 'hero', hero: s.id, size: 512, turn: -25 } as Entry])),
   ...Object.fromEntries(CATALOG.map((id) => [`items/${id}.webp`, { kind: 'view', asset: id, view: 'front', size: 256 } as Entry])),
   ...Object.fromEntries(PLACES.flatMap((p) => [[`backdrops/${p}-d.webp`, backdrop(p, false)], [`backdrops/${p}-p.webp`, backdrop(p, true)]])),
   'fonts/fredoka-latin.woff2': { kind: 'copy', from: 'src/apk3d/hud/fonts/fredoka-latin.woff2' },
   'fonts/mitr-500-thai.woff2': { kind: 'copy', from: 'src/showcase/battle/fonts/mitr-500-thai.woff2' },
 };
+
+// One look per character: stop before any build if two files of one asset use different looks.
+for (const [asset, looks] of Object.entries(
+  Object.values(SKIN).reduce<Record<string, Set<string>>>((acc, e) => {
+    if (e.kind === 'view' || e.kind === 'strip') (acc[e.asset] ??= new Set()).add(e.preset ?? '(default)');
+    return acc;
+  }, {}),
+))
+  if (looks.size > 1) throw new Error(`${asset} has more than one look in the skin: ${[...looks].join(', ')}`);
 
 interface ManifestFile {
   kind: Entry['kind'];
@@ -210,21 +235,24 @@ const timed = (key: string, run: () => void): void => {
 };
 
 // Views: one render per asset with all its views. A render also builds out/<asset>/<asset>.glb.
-const viewWork = new Map<string, Set<View>>();
+const viewWork = new Map<string, Set<View>>(); // key: asset|preset
 const stripWork = new Map<string, Extract<Entry, { kind: 'strip' }>[]>();
 const stripKey = (e: Extract<Entry, { kind: 'strip' }>): string => [e.asset, e.preset ?? '', e.cell ?? ''].join('|');
 const stripDir = (e: Extract<Entry, { kind: 'strip' }>): string => join(TMP, stripKey(e).replaceAll('|', '_'), ...(e.preset ? ['presets', e.preset] : []), e.clip);
 for (const p of stale) {
   const e = SKIN[p]!;
-  if (e.kind === 'view') viewWork.set(e.asset, new Set([...(viewWork.get(e.asset) ?? []), e.view]));
+  if (e.kind === 'view') viewWork.set(`${e.asset}|${e.preset ?? ''}`, new Set([...(viewWork.get(`${e.asset}|${e.preset ?? ''}`) ?? []), e.view]));
   if (e.kind === 'strip') stripWork.set(stripKey(e), [...(stripWork.get(stripKey(e)) ?? []), e]);
 }
 // One job per asset, so two jobs never write the same out/<asset>/.
 await forgePool(
-  [...viewWork].map(([asset, list]) => ['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref']),
+  [...viewWork].map(([key, list]) => {
+    const [asset, preset] = key.split('|') as [string, string];
+    return ['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref', ...(preset ? ['--preset', preset] : [])];
+  }),
   (args) => `view:${args[1]}`,
 );
-for (const asset of viewWork.keys()) built[asset] = sourceRevision(asset, ROOT);
+for (const key of viewWork.keys()) built[key.split('|')[0]!] = sourceRevision(key.split('|')[0]!, ROOT);
 saveBuilt();
 // Strips: one sprite run per asset, preset, and cell with all its clips.
 for (const [key, entries] of stripWork) {
@@ -317,7 +345,7 @@ for (const [path, entry] of Object.entries(SKIN)) {
     mkdirSync(dirname(dest), { recursive: true });
     if (entry.kind === 'copy') copyFileSync(join(ROOT, entry.from), dest);
     else if (entry.kind === 'view') {
-      const src = join(ROOT, 'out', entry.asset, 'views', `${entry.view}.png`);
+      const src = join(ROOT, 'out', entry.asset, 'views', ...(entry.preset ? ['presets', entry.preset] : []), `${entry.view}.png`);
       writeFileSync(dest, await sharp(src).resize(entry.size, entry.size).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer());
     } else if (entry.kind === 'strip') {
       const dir = stripDir(entry);
