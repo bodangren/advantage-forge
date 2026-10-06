@@ -2,7 +2,7 @@
  * The launch avatar in a game (docs/avatar-system.md, section 11; track avatar_in_games_20261006):
  * the pure rules. `src/apk3d/stage/avatar.ts` loads and composes the avatar.
  */
-import type { AvatarClassId } from '../contracts/avatar.js';
+import { launchAvatarSchema, type AvatarClassId, type LaunchAvatar } from '../contracts/avatar.js';
 import type { HairForm } from './hair.js';
 import type { VariantTable } from './tint.js';
 
@@ -68,3 +68,13 @@ export const roleHero = (classId: AvatarClassId): 'knight' | 'wizard' | 'cleric'
  * plays its own. Content is rated G, so a defeated avatar rests; it does not die.
  */
 export const AVATAR_CLIP_ALIASES: Readonly<Record<string, string>> = { victory: 'cheer', death: 'rest' };
+
+/**
+ * The launch avatar, or the reason it is not valid (each issue with its path). A game keeps its
+ * fixed hero for an invalid avatar and reports the reason as a warning; it never stops for it.
+ */
+export function readLaunchAvatar(value: unknown): { avatar: LaunchAvatar } | { error: string } {
+  const result = launchAvatarSchema.safeParse(value);
+  if (result.success) return { avatar: result.data };
+  return { error: result.error.issues.map((i) => `${i.path.join('.') || 'avatar'}: ${i.message}`).join('; ') };
+}

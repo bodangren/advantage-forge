@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { avatarClassIdSchema, launchAvatarSchema, readLaunchAvatar, type LaunchAvatar } from '../../src/apk3d/contracts/index.js';
+import { avatarClassIdSchema, launchAvatarSchema, type LaunchAvatar } from '../../src/apk3d/contracts/index.js';
+import { readLaunchAvatar } from '../../src/apk3d/avatar/launch.js';
 import { AVATAR_PACK_VERSION } from '../../src/apk3d/avatar/pack.js';
 import { STARTER_SETS } from '../../src/apk3d/avatar/starters.js';
 

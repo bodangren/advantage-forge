@@ -142,7 +142,8 @@ decides those merges.
 - **Ownership by path.** `monorepo-sync.ts` writes only `packages/advantage-play-kit-3d` and
   `packages/game-cartridges-3d`, on `apk3d-games-port`. Lane-f never edits those two packages, and
   the port branch never edits app files, `package.json`, or the lock file again. A new Forge release
-  reaches lane-f by `git merge apk3d-games-port`, which cannot conflict.
+  reaches lane-f by `git merge apk3d-games-port`, which cannot conflict. Since 2026-10-06 it reaches
+  `primary-parity-integration` in the same way (see "Integration").
 - **The app asset copy.** `sync-assets.mjs` (predev, prebuild) replaces each 3D pack folder under
   `public/packs/` on its own, because the app commits the avatar pack at `public/packs/avatar/`.
 - **One avatar code copy.** The 3D kit exports `avatar/tint`, `avatar/hair`, `avatar/portrait`, and
@@ -150,9 +151,17 @@ decides those merges.
 - **Integration (2026-10-06).** The monorepo session fast-forwarded `primary-parity-integration` to
   lane-f (0dac27db2), so the integration branch carries the port and the skin, and the port reaches
   `master` in the Primary cutover. The integration branch has the owner file of the 2D setting; the
-  port branch does not. The release branch from now on, and the `port-kit.mjs` mapping of
-  `factory/renderer-setting.ts` to the owner module (TD-26), are the monorepo session's decisions
-  (requested 2026-10-06).
+  port branch did not. The monorepo session decided (2026-10-06):
+  - Releases stay on `apk3d-games-port` in `../reading-advantage-monorepo-3d` (the default of
+    `monorepo-sync.ts`). The branch was fast-forwarded to the integration head (0dac27db2).
+  - 7704aef7f: the kit's `factory/renderer-setting.ts` re-exports
+    `@reading-advantage/advantage-play-kit/responsive`, and `port-kit.mjs` lists it in
+    `MONOREPO_OWNED` (TD-26 resolved). Forge keeps its byte copy and the `OWNER_COPIES` check.
+  - For each release, the Forge session sends the Forge commit and the exact commands. The
+    monorepo session runs `monorepo-sync.ts` in write mode, runs the kit and game tests and type
+    checks, commits on `apk3d-games-port` with the track id, and merges `apk3d-games-port` into
+    `primary-parity-integration`. The apps take the assets through `sync-assets` (predev,
+    prebuild).
 - **Memory.** The machine runs one heavy job at a time. Each session tells the other before a heavy
   run (a Forge build or the monorepo checks) and after it.
 

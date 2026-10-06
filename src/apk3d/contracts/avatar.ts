@@ -67,17 +67,3 @@ export type AvatarClassId = z.infer<typeof avatarClassIdSchema>;
 export type AvatarTints = z.infer<typeof avatarTintsSchema>;
 export type AvatarLoadoutPiece = z.infer<typeof avatarLoadoutPieceSchema>;
 export type LaunchAvatar = z.infer<typeof launchAvatarSchema>;
-
-// ---------------------------------------------------------------------------------------------
-// Forge additions (not in game-contracts).
-// ---------------------------------------------------------------------------------------------
-
-/**
- * The launch avatar, or the reason it is not valid. A game keeps its fixed hero for an invalid
- * avatar (and reports the reason as a warning); it never stops for it.
- */
-export function readLaunchAvatar(value: unknown): { avatar: LaunchAvatar } | { error: string } {
-  const result = launchAvatarSchema.safeParse(value);
-  if (result.success) return { avatar: result.data };
-  return { error: result.error.issues.map((i) => `${i.path.join('.') || 'avatar'}: ${i.message}`).join('; ') };
-}
