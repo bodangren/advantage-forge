@@ -107,6 +107,11 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
   commands to the monorepo session. The monorepo session runs every write mode of `monorepo-sync.ts`
   (the port sync, `--commit`, `--push`, and `--skin <checkout>` without `--check`) in its own checkout,
   and it makes every commit and push there.
+- A release that adds a kit module the monorepo owns (for example `contracts/avatar.ts`, a
+  re-export of `@reading-advantage/game-contracts` in `MONOREPO_OWNED`) or a new package export
+  fails the sync checks until the monorepo side exists. The recipe is then: the monorepo session
+  runs the sync without `--commit`, finishes the owned files and exports, runs the checks, and
+  commits (first case: the avatar in the games, monorepo 9759e3534, 2026-10-06).
 - Forge keeps byte copies of some monorepo-owned modules (`OWNER_COPIES` in `monorepo-sync.ts`):
   `src/apk3d/factory/renderer-setting.ts` copies `advantage-play-kit/src/responsive/renderer.ts`.
   When a checkout has the owner file and the copy differs, the port sync stops and the skin sync
