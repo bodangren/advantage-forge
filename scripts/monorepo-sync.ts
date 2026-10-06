@@ -11,6 +11,16 @@
  * --track <id> (the monorepo track in the commit subject, default apk3d_games_port_20261003),
  * --skip-tests (copy and check drift only).
  *
+ * The RPG skin (scripts/rpg-skin.ts) goes to the Primary Advantage app of the branch that builds the
+ * skin pages, which is not the port branch:
+ *
+ *   node --import tsx scripts/monorepo-sync.ts --skin <monorepo checkout> [--check]
+ *
+ * It mirrors the files that Forge demo/public/rpg/skin.json lists into
+ * apps/primary-advantage/public/rpg/, removes the files that the app's previous skin.json listed and
+ * the new one does not, and leaves every other file there (the app's own chrome) alone. It does
+ * not commit: the owner of that branch reviews and commits the change.
+ *
  * Rules:
  * - Forge must be clean in the synced paths, so the commit names the Forge commit it carries.
  * - The monorepo checkout must be on a branch other than master or main, and clean in the two
@@ -116,6 +126,29 @@ function versions(packs: string, sprites: string): Record<string, string> {
   const sprite = join(sprites, 'v1', 'pack.json');
   if (existsSync(sprite)) out['primary-chibi-2d'] = (JSON.parse(readFileSync(sprite, 'utf8')) as { version: string }).version;
   return out;
+}
+
+// ---------------------------------------------------------------- the RPG skin
+if (value('--skin')) {
+  const app = join(resolve(value('--skin')!), 'apps', 'primary-advantage', 'public', 'rpg');
+  const from = join(FORGE, 'demo', 'public', 'rpg');
+  if (!existsSync(join(from, 'skin.json'))) throw new Error('no Forge demo/public/rpg/skin.json: run scripts/rpg-skin.ts (or apk-release.ts --skin) first');
+  type Skin = { version: string; files: Record<string, unknown> };
+  const next = JSON.parse(readFileSync(join(from, 'skin.json'), 'utf8')) as Skin;
+  const prev = existsSync(join(app, 'skin.json')) ? (JSON.parse(readFileSync(join(app, 'skin.json'), 'utf8')) as Skin) : undefined;
+  const differ = Object.keys(next.files).filter((f) => !existsSync(join(app, f)) || !readFileSync(join(app, f)).equals(readFileSync(join(from, f))));
+  const gone = Object.keys(prev?.files ?? {}).filter((f) => !(f in next.files) && existsSync(join(app, f)));
+  console.log(`skin ${prev?.version ?? '(none)'} -> ${next.version} in ${app}: ${differ.length} file(s) to write, ${gone.length} to remove`);
+  for (const f of [...differ, ...gone.map((g) => `${g} (remove)`)]) console.log(`  ${f}`);
+  if (has('--check')) process.exit(differ.length || gone.length ? 1 : 0);
+  for (const f of differ) {
+    rmSync(join(app, f), { force: true });
+    cpSync(join(from, f), join(app, f));
+  }
+  for (const f of gone) rmSync(join(app, f), { force: true });
+  cpSync(join(from, 'skin.json'), join(app, 'skin.json'));
+  console.log('written; review and commit them in that checkout');
+  process.exit(0);
 }
 
 // ---------------------------------------------------------------- preflight
