@@ -380,6 +380,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     function listenFirst(): boolean {
       const orb = correctOrbOf(sim.state);
       if (!answer || !orb || sim.state.phase !== 'night') return false;
+      // A take starts the next round in the core at once; the view opens its question a frame later.
+      if (sim.state.round?.position !== answer.position()) return true;
       const look = answer.look(orb.position);
       if (look === 'heard') return false;
       loop.dispatch({ type: 'steer', x: 0, z: 0 });

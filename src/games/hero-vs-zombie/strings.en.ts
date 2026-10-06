@@ -34,7 +34,7 @@ export default {
       findWord: 'Find the English word for',
       listen: 'Listen to orb {index}',
       soundOff: 'Turn the sound on to hear the words.',
-      shield: 'Listen! The zombies wait.',
+      shield: 'Listen!',
       story: '📖 Story',
       move: 'Drag to move',
       blast: 'Blast',

@@ -9,9 +9,11 @@
  * `--2d` plays the game's 2D (Phaser) view (`?renderer=phaser`), with real drags on its canvas.
  * `--avatar <class>` passes that class's starter set as the student's avatar (`?avatar=<class>`).
  * `--first` stops after the first game screen (one shot, then the diagnostics): any game, no QC player.
+ * `--audio` plays the game's answer audio mode (`?audio=1`; with `?qc=1` a clip is a silent half
+ * second) and requires the answer audio evidence in the diagnostics at the end.
  * `--no-pack` blocks every avatar pack request, to check the neutral figure that stands in for an
  * avatar that does not load.
- * Output: out/apk3d-shots/<game>/<layout>[-2d][-avatar-<class>][-no-pack]/NN-<step>.png
+ * Output: out/apk3d-shots/<game>/<layout>[-2d][-audio][-avatar-<class>][-no-pack]/NN-<step>.png
  */
 import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -29,6 +31,7 @@ const TWO_D = process.argv.includes('--2d');
 const AVATAR = arg('avatar');
 const FIRST = process.argv.includes('--first');
 const NO_PACK = process.argv.includes('--no-pack');
+const AUDIO = process.argv.includes('--audio');
 
 async function server() {
   const port = 5190 + Math.floor(Math.random() * 200);
@@ -488,6 +491,11 @@ async function playArena(page: Page, shot: (name: string) => Promise<void>): Pro
     const w = window as any;
     w.__qcBot = setInterval(() => w.__apk3d.game()?.auto(), 150);
   });
+  if (AUDIO) {
+    // The bot plays the right orb from afar first: its clip and the hero's shield show now.
+    await page.waitForTimeout(300);
+    await shot('listen');
+  }
   const started = Date.now();
   let lastStage = -1;
   let firstWord = false;
@@ -530,7 +538,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
-  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, `${layout}${TWO_D ? '-2d' : ''}${AVATAR ? `-avatar-${AVATAR}` : ''}${NO_PACK ? '-no-pack' : ''}`);
+  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, `${layout}${TWO_D ? '-2d' : ''}${AUDIO ? '-audio' : ''}${AVATAR ? `-avatar-${AVATAR}` : ''}${NO_PACK ? '-no-pack' : ''}`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const { s, url } = await server();
@@ -550,7 +558,7 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
     await page.screenshot({ path: file });
     console.log(`shot   ${file}`);
   };
-  await page.goto(`${url}?qc=1${TWO_D ? '&renderer=phaser' : ''}${AVATAR ? `&avatar=${encodeURIComponent(AVATAR)}` : ''}`, { timeout: 180_000 });
+  await page.goto(`${url}?qc=1${TWO_D ? '&renderer=phaser' : ''}${AUDIO ? '&audio=1' : ''}${AVATAR ? `&avatar=${encodeURIComponent(AVATAR)}` : ''}`, { timeout: 180_000 });
   await page.waitForFunction(() => (window as unknown as { __apk3dReady?: boolean }).__apk3dReady === true, undefined, { timeout: 300_000, polling: 500 });
   await page.waitForTimeout(1500);
   if (STORY) await page.click(`[data-story="${STORY}"]`);
@@ -607,6 +615,12 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
   console.log(`errors ${errors.length ? errors.join(' | ') : 'none'}`);
   await browser.close();
   await s.close();
+  if (AUDIO) {
+    const evidence = (diag as { code?: string; details?: { itemCount: number; questions: { selectionAttempts: { submitted: boolean; completedQuestion: boolean }[] }[] } }[]).find((d) => d.code === 'answer-audio/evidence')?.details;
+    if (!evidence) throw new Error('The run gave no answer audio evidence');
+    const attempts = evidence.questions.flatMap((q) => q.selectionAttempts).filter((a) => a.submitted);
+    console.log(`answer audio: ${evidence.questions.length} of ${evidence.itemCount} questions, ${attempts.filter((a) => a.completedQuestion).length} right of ${attempts.length} submitted`);
+  }
 }
 
 const which = process.argv.slice(2).find((a) => a === 'portrait' || a === 'landscape' || a === 'both') ?? 'both';

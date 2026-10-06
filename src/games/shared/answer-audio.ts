@@ -25,6 +25,8 @@ export type ChoiceAction =
 export interface AnswerAudioDriver {
   /** Opens a question: its input position and the clip positions of its choices. */
   question(position: number, choices: readonly number[]): void;
+  /** The open question's input position (a view acts only on the round it shows). */
+  position(): number | undefined;
   /** A touch on a choice: confirms it after its clip played to the end, or else plays it. */
   touch(choice: number): ChoiceAction;
   /** The 🔊 control of a choice: plays it, and never confirms it. */
@@ -65,6 +67,7 @@ export function createAnswerAudioDriver(
       current = position;
       controller.setQuestion(position, choices);
     },
+    position: () => current,
     touch(choice) {
       if (current !== undefined && controller.canConfirmChoice(current, choice)) {
         return { kind: 'confirm', correct: controller.confirmChoice(current, choice).completedQuestion };
