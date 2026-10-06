@@ -3,3 +3,4 @@
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
 - [Metadata](./metadata.json)
+- [Comparison of the old host and the new games](./comparison.md)

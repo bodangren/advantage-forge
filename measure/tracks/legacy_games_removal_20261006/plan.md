@@ -5,6 +5,7 @@ Status: in progress. The plan records execution state. The specification retains
 ## Phase 1: Agreement
 
 - [x] Task: Send the owner direction, the use list (a read-only git grep of integration b8550a502), and five coverage questions to the monorepo session (2026-10-06).
+- [x] Task: Compare the old game host with the new games (owner request, 2026-10-06): [comparison](./comparison.md). Forge gaps: F1 challenge games (small) and F2 answer audio (large) in Hero vs. Zombie, Dragon Flight, and Dragon Rider.
 - [ ] Task: Record the monorepo inventory and plan; agree the split and the order.
 
 ## Phase 2: Forge gaps
