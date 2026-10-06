@@ -219,11 +219,12 @@ for (const p of stale) {
   if (e.kind === 'view') viewWork.set(e.asset, new Set([...(viewWork.get(e.asset) ?? []), e.view]));
   if (e.kind === 'strip') stripWork.set(stripKey(e), [...(stripWork.get(stripKey(e)) ?? []), e]);
 }
-for (const [asset, list] of viewWork)
-  timed(`view:${asset}`, () => {
-    forge(['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref']);
-    built[asset] = revision({ kind: 'view', asset, view: 'front', size: 0 });
-  });
+// One job per asset, so two jobs never write the same out/<asset>/.
+await forgePool(
+  [...viewWork].map(([asset, list]) => ['render', asset, '--bg', 'none', '--views', [...list].join(','), '--size', '512', '--no-ref']),
+  (args) => `view:${args[1]}`,
+);
+for (const asset of viewWork.keys()) built[asset] = sourceRevision(asset, ROOT);
 saveBuilt();
 // Strips: one sprite run per asset, preset, and cell with all its clips.
 for (const [key, entries] of stripWork) {
