@@ -294,7 +294,7 @@ async function go(next: Route, push = true): Promise<void> {
       break;
     }
     case 'results':
-      renderResults(el.results, lastRun!, unlockedNow, (persistence.load().unlocked[choice.hero] ?? []).length >= (PRESETS[choice.hero] ?? []).length, (h) => t(`host.heroes.${h}`), t);
+      renderResults(el.results, lastRun!, unlockedNow, (persistence.load().unlocked[choice.hero] ?? []).length >= (PRESETS[choice.hero] ?? []).length, (h) => t(`host.heroes.${h}`), t, !PAGE_AVATAR);
       if (unlockedNow) {
         audio.play('heal');
         unlockedNow = null;
@@ -371,8 +371,9 @@ async function startGame(): Promise<void> {
     },
     complete: (result, _outcome, evidence) => {
       lastRun = { ...run, result, evidence };
-      // 3 stars unlock the chosen hero's next look, and the hero wears it at once.
-      if (starsOf(evidence) === 3) {
+      // 3 stars unlock the chosen hero's next look, and the hero wears it at once. A student with an
+      // avatar plays as the avatar (owner rule: it is the student's identity), so no hero look applies.
+      if (!PAGE_AVATAR && starsOf(evidence) === 3) {
         const data = persistence.load();
         const open = data.unlocked[choice.hero] ?? [];
         const next = (PRESETS[choice.hero] ?? []).find((p) => !open.includes(p));

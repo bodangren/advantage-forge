@@ -8,12 +8,13 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { animationKeyOf, banner, COLORS, depthOf, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
+import { animationKeyOf, banner, COLORS, depthOf, Figure2D, fitGameSize, popup, recolorTag, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
 import { createSpellweaversRun, evidenceOf, scoreOf, TUNING, type SpellweaversCommand, type SpellweaversEvent, type SpellweaversState } from '../core/index.js';
 import { FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
@@ -52,6 +53,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('spellweaversRun')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'wizard');
+  /** The student's own figure for the runner when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createSpellweaversRun(story, { seed, helper: options.helper });
@@ -148,17 +151,28 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     // ---------------------------------------------------------------- the wizard
     const heroKey = (name: string, dir: string): string => animationKeyOf(edition, `${heroId}.${name}`, `${name}.${dir}`);
     const heroFile = edition.pack.files[`${heroId}.run`] ?? edition.pack.files[`${heroId}.idle`];
-    const hero = scene.add.sprite(0, 0, heroFile ? textureKeyOf(edition, heroFile.id) : '__MISSING').setScale(HERO_SCALE * s);
-    if (heroFile?.origin) hero.setOrigin(heroFile.origin.x, heroFile.origin.y);
+    const heroFigure = figure ? new Figure2D(scene, figure, SPRITE_PPM) : null;
+    const hero = (heroFigure ? heroFigure.sprite : scene.add.sprite(0, 0, heroFile ? textureKeyOf(edition, heroFile.id) : '__MISSING')).setScale(HERO_SCALE * s);
+    if (!heroFigure && heroFile?.origin) hero.setOrigin(heroFile.origin.x, heroFile.origin.y);
     const heroShadow = scene.add.ellipse(0, 0, 1.0 * k, 0.4 * k, 0x1c3010, 0.3);
     let clip = '';
     let busyUntil = 0;
     const heroLoop = (name: string): void => {
+      if (heroFigure) {
+        clip = name;
+        return;
+      }
       if (clip === name || !has(`${heroId}.${name}`)) return;
       clip = name;
       hero.play(heroKey(name, 'n'));
     };
     const heroPlay = (name: string, dir = 'n'): void => {
+      if (heroFigure) {
+        clip = '';
+        busyUntil = performance.now() + 900;
+        void heroFigure.play(name);
+        return;
+      }
       if (!has(`${heroId}.${name}`)) return;
       clip = '';
       busyUntil = performance.now() + 900;
@@ -369,7 +383,9 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       shownX += (steerX - shownX) * (1 - Math.exp(-dt * 6));
       followLand();
       const at = screen(shownX, 0, camZ);
-      hero.setPosition(at.x, at.y).setDepth(depthOf(camZ, 0.05));
+      heroFigure?.face(steerX - shownX);
+      const lift = heroFigure?.update(dt, clip === 'run') ?? { x: 0, y: 0 };
+      hero.setPosition(at.x + lift.x, at.y + lift.y).setDepth(depthOf(camZ, 0.05));
       heroShadow.setPosition(at.x, at.y).setDepth(depthOf(camZ, 0) - 500);
       if (performance.now() >= busyUntil) heroLoop(st.speed > 0.1 && !finished ? 'run' : 'idle');
       const top = panel.bottom + 26;

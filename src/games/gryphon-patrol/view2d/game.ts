@@ -7,12 +7,13 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { animationKeyOf, banner, COLORS, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
+import { animationKeyOf, banner, COLORS, Figure2D, fitGameSize, popup, recolorTag, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
 import { SKY, TUNING, createGryphonPatrol, evidenceOf, scoreOf, type PatrolCommand, type PatrolEvent, type PatrolState } from '../core/index.js';
 import { FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
@@ -37,6 +38,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('gryphonPatrol')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'knight');
+  /** The student's own figure as the rider when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createGryphonPatrol(story, { seed, helper: options.helper });
@@ -92,8 +95,9 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const gryphon = scene.add.sprite(0, 0, gryphonFile ? textureKeyOf(edition, gryphonFile.id) : '__MISSING').setScale(scaleOf('griffin.fly', SIZES.gryphon * 1.3, FRAME.gryphon));
     if (gryphonFile?.origin) gryphon.setOrigin(gryphonFile.origin.x, gryphonFile.origin.y);
     const riderFile = edition.pack.files[`${heroId}.idle`];
-    const rider = scene.add.sprite(0, 0, riderFile ? textureKeyOf(edition, riderFile.id) : '__MISSING').setScale(scaleOf(`${heroId}.idle`, SIZES.rider, FRAME.rider));
-    if (riderFile?.origin) rider.setOrigin(riderFile.origin.x, riderFile.origin.y);
+    const riderFigure = figure ? new Figure2D(scene, figure, SPRITE_PPM) : null;
+    const rider = riderFigure ? riderFigure.sprite.setScale((SIZES.rider * kx) / FRAME.rider) : scene.add.sprite(0, 0, riderFile ? textureKeyOf(edition, riderFile.id) : '__MISSING').setScale(scaleOf(`${heroId}.idle`, SIZES.rider, FRAME.rider));
+    if (!riderFigure && riderFile?.origin) rider.setOrigin(riderFile.origin.x, riderFile.origin.y);
     const dirOf = (facing: number): 'e' | 'w' => (facing > 0 ? 'e' : 'w');
     let gryphonClip = '';
     let busyUntil = 0;
@@ -112,6 +116,12 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     let riderClip = '';
     const riderPlay = (name: 'idle' | 'victory' | 'hit', dir: 'e' | 'w'): void => {
       const key = `${name}.${dir}`;
+      if (riderFigure) {
+        riderFigure.face(dir === 'e' ? 1 : -1);
+        if (name !== 'idle' && riderClip !== key) void riderFigure.play(name);
+        riderClip = key;
+        return;
+      }
       if (riderClip === key || !has(`${heroId}.${name}`)) return;
       riderClip = key;
       rider.play(animationKeyOf(edition, `${heroId}.${name}`, key));
@@ -323,7 +333,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       const dir = dirOf(st.gryphon.facing);
       const at = screen(gx, gy + Math.sin(time / 340) * 0.12);
       gryphon.setPosition(at.x, at.y).setDepth(3000);
-      rider.setPosition(at.x, at.y - SIZES.gryphon * kx * 0.28).setDepth(3001);
+      const lift = riderFigure?.update(dt, false) ?? { x: 0, y: 0 };
+      rider.setPosition(at.x + lift.x, at.y - SIZES.gryphon * kx * 0.28 + lift.y).setDepth(3001);
       if (performance.now() >= busyUntil) gryphonLoop(dir);
       if (!finished) riderPlay('idle', dir);
       // The bats follow the core's loops; the banner floats over each.

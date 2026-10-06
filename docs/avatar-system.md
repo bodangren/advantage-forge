@@ -360,7 +360,47 @@ API (Primary Advantage): `GET /api/v1/avatar`, `POST /api/v1/avatar/loadout`,
 The launch context gains `avatar: { catalogVersion, tints, pieces }`. A 3D game calls
 `composeAvatar` for the player. A 2D game uses the portrait until layered sprites exist. A game
 never fetches the avatar itself; the host passes it. Games that show a fixed hero today switch to
-the avatar as their default and keep the fixed hero as the fallback when no avatar is set.
+the avatar as their default and show the fixed hero only when the session has no avatar.
+
+Owner rule (2026-10-06): the avatar is the student's identity. A student with an avatar always
+appears as that avatar. No game shows a hero in its place, also when a file does not load. A
+stand-in is a neutral grey figure with no face, never a hero.
+
+Built 2026-10-06 (track `avatar_in_games_20261006`):
+
+- **Contract.** `src/apk3d/contracts/avatar.ts` is a copy of the monorepo `launchAvatarSchema`
+  (`game-contracts/src/avatar.ts`): `{ catalogVersion, classId, tints: { skin, hair, eyes, cloth },
+  pieces: [{ itemId, dye }] }`. The host puts it in the session options (`SessionOptions.avatar`).
+- **3D.** `playerBody` (`src/apk3d/stage/avatar.ts`) loads the catalog, the base, and the worn
+  pieces from `<avatarRoot>/<catalogVersion>/` (the current version when that one is not served)
+  and gives a body that composes one avatar per `Actor`. The actor maps the hero clips `victory`
+  to `cheer` and `death` to `rest`. A piece that does not load or fit (a conflict, a missing bone
+  or hair form) is left off: the student keeps the base, the colors, and the other pieces, and the
+  game sends the warning `apk3d/avatar-partial`. When the catalog or the base does not load, the
+  body is a neutral grey figure with simple clips (`neutralAvatarBody`), and the game sends the
+  warning `apk3d/avatar-fallback`. A hero look never applies to an avatar body.
+- **Dyes.** A piece's dye is an option name: each dye slot that has it takes it, every other slot
+  its first option (the rule of the shop, `pieceDyes`).
+- **Party games.** The avatar takes the place of its class role (`CLASS_ROLES`): casters (wizard,
+  witch, druid, shaman) the wizard place, healers (cleric, bard) the cleric place, every other
+  class the knight place. The labels of that place read "Your turn", "Your post", or "You".
+- **2D.** There are no avatar sprite sheets yet. A 2D view shows the student's own figure: the
+  portrait (`portraitFigure` stacks the layers) as one still image at the sprite scale (64 pixels
+  per meter, feet on the ground point), which `Figure2D` (`src/apk3d/view2d/figure.ts`) moves with
+  simple motion under the hero clip names: a breath, a running bob, a lunge, a recoil, a hop, a
+  fall. `Actor2D` takes it with the option `figure`; the rider games use `Figure2D` directly; the
+  battle stage puts it at the role's party place (`partyPlayer2D`). Until the portrait loads, and
+  when it does not load, the figure is a neutral grey silhouette. The role's hero (`shownHero`)
+  gives only the clip names and the effects. Monster Encounters also shows the student's face in
+  the "Your turn" pill (`portraitIcon`).
+- **Rewards.** Hero looks (the 3-star color presets) do not apply to an avatar. The Forge demo
+  host grants and shows no hero look when the page has an avatar. Rewards for avatars are pieces
+  and dyes, granted by the monorepo.
+- **Paths.** The apps serve the pack at `packs/avatar/<version>/` (the 3D default `avatarRoot` under
+  the site root, and `/packs/avatar` for 2D views). The Forge demo serves it at `avatar-pack/`, and
+  `?avatar=<class>` passes that class's starter set.
+- **Release.** `scripts/rpg-skin.ts` renders the portrait layers into the pack after
+  `avatar-pack.ts` (about 13 minutes for 223 layers).
 
 ## 12. Acceptance criteria
 

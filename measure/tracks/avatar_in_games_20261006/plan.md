@@ -29,6 +29,16 @@ Status: in progress. The plan records execution state. The specification and
 - [x] Task: List every game that reads `options.hero` (3D and 2D) and move each to the kit helper. 2026-10-06: 20 one-hero 3D games load `playerBody` with their scene (no hero model with an avatar; riders scale by `bodyHeight`; the builders of Alchemist's Synthesis, Rune Forge Chamber, and Potion Rush and the body helpers of Labyrinth and Realm Carver take the body); the 6 other party games on the battle stage (Archer's Revenge, Castle Defense, Magic Defense, Paladin's Twin Soul, RPG Battle, Rune Match) give the avatar the place of its role, and Castle Defense and RPG Battle label that place "Your post" and "You"; the 20 2D views show the hero of the avatar's role (`shownHero`). A color preset applies only to a fixed hero. `tests/apk3d` and `tests/games`: 144 files, 2,263 tests pass.
 - [ ] Task: QC shots of each changed game with and without an avatar.
 
+## Phase 4b: The identity rule
+
+The owner rule of 2026-10-06: the avatar is the student's identity, so a student with an avatar never appears as a hero. The first Phase 4 build broke it in three places: the 2D views showed the role's hero sprite, a failed avatar fell back to the hero, and the demo host granted hero looks with an avatar.
+
+- [x] Task: 3D fallback. `loadAvatarBody` leaves off a piece that does not load or fit (a slot conflict, a missing bone or hair form) and lists it in `dropped` (warning `apk3d/avatar-partial`); without the default hair style the base keeps its own hair. When the catalog or the base does not load, `playerBody` returns `neutralAvatarBody`: a grey figure with no face and simple clips under the hero clip names (warning `apk3d/avatar-fallback`). Only a session with no avatar loads the hero. `tests/apk3d/avatar-body.test.ts`: 11 tests.
+- [x] Task: 2D figure. `src/apk3d/view2d/figure.ts`: `FigureSource` (an image, its feet point, its scale), `Figure2D` (the still image at the sprite scale with simple motion: a breath, a running bob, a lunge, a recoil, a hop, a fall), and a grey silhouette while the image loads or after it fails. `portraitFigure` and `playerFigure` (`src/apk3d/avatar/portrait-of.ts`) make the source from the portrait layers and start the load when the view is made. `Actor2D` takes the option `figure`. The 15 `Actor2D` views pass it; the 5 rider and runner views (Gryphon Patrol, Griffin Riders' Escape, Griffin Sky Joust, Dragon Rider, Spellweavers' Run) use `Figure2D` directly; `BattleStage2D` puts it at the role's party place (`partyPlayer2D`) in the 7 battle views. Monster Encounters makes its face icon from the same pixels.
+- [x] Task: Hero looks. The demo host grants no hero look and shows no hero-look reward when the page has an avatar. Avatar rewards (pieces, dyes) belong to the monorepo.
+- [ ] Task: QC shots of the 2D figure (one-hero, rider, and battle views) and of the neutral figure.
+- [ ] Task: Tell the monorepo session the owner rule: its host grants hero looks and shows hero choosers.
+
 ## Phase 5: Release and hand-off
 
 - [ ] Task: The release renders the portrait layers (`scripts/avatar-portraits.ts` after `avatar-pack.ts`) into the avatar pack of the demo and the app. The release copied the pack without them; the app has its own copy of the 2026-10-04 layers.

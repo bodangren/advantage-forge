@@ -7,6 +7,9 @@ rule: the host passes the avatar, and a game never fetches it. A 3D game compose
 game uses the portrait until layered sprites exist. A game that shows a fixed hero today uses the
 avatar when the host passes one, and it keeps the fixed hero when the host passes none.
 
+Owner rule (2026-10-06): the avatar is the student's identity. A student with an avatar always
+appears as that avatar, never as a hero. A stand-in is a neutral grey figure with no face.
+
 The owner started this work on 2026-10-06, after the pack release track was complete.
 
 ## Scope and ownership
@@ -42,15 +45,20 @@ the monorepo session applies them.
    `cast`. The heroes have `death` and `victory`. The kit maps `victory` to `cheer` and `death`
    to `rest` (content is rated G). A clip that the avatar does not have falls back as the actor
    does today.
-6. **Fallback.** With no avatar, or when a pack file fails to load, the game shows the fixed hero
-   and sends a `warning` diagnostic. A game never stops for the avatar.
+6. **Fallback.** With no avatar, the game shows the fixed hero. With an avatar, a piece that fails
+   to load or fit is left off (`apk3d/avatar-partial`), and when the catalog or the base fails to
+   load, the game shows a neutral grey figure (`apk3d/avatar-fallback`). Both send a `warning`
+   diagnostic. A game never stops for the avatar, and it never shows a hero for a student with an
+   avatar (owner rule, 2026-10-06).
 7. **Monster Encounters first** (section 13, phase 3). The party has three heroes (knight,
    wizard, cleric). The avatar takes the party place of the role of its class: casters (wizard,
    witch, druid, shaman) take the wizard place, healers (cleric, bard) take the cleric place, and
    the other classes take the knight place. The other two places keep their heroes.
 8. **2D.** The 2D pack has sprites for the knight, the wizard, and the cleric only. Until layered
-   sprites exist, a 2D view shows the avatar portrait (composed from the portrait layers) in its
-   HUD, and the body sprite of the class's role (requirement 7).
+   sprites exist, a 2D view shows the student's own figure: the avatar portrait (composed from the
+   portrait layers) as a still image with simple motion, at the place of the class's role
+   (requirement 7). It shows a neutral grey silhouette while the portrait loads and when it does
+   not load. The role's hero gives only the clip names and effects.
 9. **The other games.** Each game that reads `options.hero` uses the avatar through the same kit
    helper. The game list is in the plan.
 10. **Pack version.** A changed avatar pack gets a new version (debt TD-24), because a game loads
@@ -64,7 +72,8 @@ the monorepo session applies them.
   from the monorepo file).
 - Monster Encounters in 3D shows the avatar in the place of its role, in every clip of a battle,
   for the 15 starter sets. Reviewed by QC shots.
-- Monster Encounters in 2D shows the portrait and the role sprite.
+- Monster Encounters in 2D shows the student's figure at the place of the role and the face in
+  the HUD. No 2D or 3D view shows a hero for a student with an avatar.
 - With no avatar, every game looks the same as before (the QC shots of the fixed hero).
 - `tests/apk3d` and `tests/games` pass, and the type check of `src/apk3d` and `src/games` is
   clean.

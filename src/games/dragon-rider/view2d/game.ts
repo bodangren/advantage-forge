@@ -8,12 +8,13 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { animationKeyOf, banner, COLORS, depthOf, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, textureKeyOf, WordPanel2D } from '../../../apk3d/view2d/index.js';
+import { animationKeyOf, banner, COLORS, depthOf, Figure2D, fitGameSize, popup, recolorTag, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf, WordPanel2D } from '../../../apk3d/view2d/index.js';
 import { createDragonRider, evidenceOf, scoreOf, type DragonRiderCommand, type DragonRiderEvent, type DragonRiderState } from '../core/index.js';
 import { FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
@@ -29,6 +30,8 @@ const DRAGON_SCALE = 1.5;
 const FLOCK_SCALE = 0.6;
 const BOSS_SCALE = 2.2;
 const HERO_PX = 84;
+/** The frame width of a hero sheet in pixels (the student's figure takes the same scale). */
+const HERO_FRAME = 120;
 const CRUISE_Y = 2.4;
 const GATE_Y = 1.35;
 const BOSS_Y = 3.2;
@@ -62,6 +65,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('dragonRider')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'knight');
+  /** The student's own figure as the rider when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createDragonRider(story, { seed });
@@ -168,10 +173,15 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const dragon = dragonSprite(DRAGON_SCALE);
     const dragonShadow = shadowOf(DRAGON_SCALE / 0.8);
     const heroFile = edition.pack.files[`${heroId}.idle`];
-    const hero = scene.add.sprite(0, 0, heroFile ? textureKeyOf(edition, heroFile.id) : '__MISSING');
-    hero.setScale((HERO_PX * s) / Math.max(1, hero.width));
-    if (heroFile?.origin) hero.setOrigin(heroFile.origin.x, heroFile.origin.y);
+    const heroFigure = figure ? new Figure2D(scene, figure, SPRITE_PPM) : null;
+    const hero = heroFigure ? heroFigure.sprite.setScale((HERO_PX * s) / HERO_FRAME) : scene.add.sprite(0, 0, heroFile ? textureKeyOf(edition, heroFile.id) : '__MISSING');
+    if (!heroFigure) hero.setScale((HERO_PX * s) / Math.max(1, hero.width));
+    if (!heroFigure && heroFile?.origin) hero.setOrigin(heroFile.origin.x, heroFile.origin.y);
     const heroPlay = (clip: string): void => {
+      if (heroFigure) {
+        if (clip !== 'idle') void heroFigure.play(clip);
+        return;
+      }
       const id = `${heroId}.${clip}`;
       if (has(id)) hero.play(animationKeyOf(edition, id, `${clip}.n`));
     };
@@ -434,8 +444,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       dragon.setRotation((steerX - shownX) * 0.05);
       dragonShadow.setPosition(foot.x, foot.y).setDepth(depthOf(camZ, 0) - 500);
       const seat = screen(shownX, y + 0.7, camZ);
-      hero.setPosition(seat.x, seat.y).setDepth(depthOf(camZ, y) + 1);
-      if (performance.now() >= heroBusyUntil && has(`${heroId}.idle`) && hero.anims.currentAnim?.key !== animationKeyOf(edition, `${heroId}.idle`, 'idle.n')) heroPlay('idle');
+      heroFigure?.face(steerX - shownX);
+      const lift = heroFigure?.update(dt, false) ?? { x: 0, y: 0 };
+      hero.setPosition(seat.x + lift.x, seat.y + lift.y).setDepth(depthOf(camZ, y) + 1);
+      if (!heroFigure && performance.now() >= heroBusyUntil && has(`${heroId}.idle`) && hero.anims.currentAnim?.key !== animationKeyOf(edition, `${heroId}.idle`, 'idle.n')) heroPlay('idle');
       for (const d of flock) {
         const fy = y + d.home.y + Math.sin(time / 300 + d.home.x) * 0.1;
         const p = screen(shownX + d.home.x, fy, camZ + d.home.z);

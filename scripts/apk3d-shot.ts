@@ -8,7 +8,10 @@
  * renderer). The game bot answers from the story data, with one wrong answer on purpose.
  * `--2d` plays the game's 2D (Phaser) view (`?renderer=phaser`), with real drags on its canvas.
  * `--avatar <class>` passes that class's starter set as the student's avatar (`?avatar=<class>`).
- * Output: out/apk3d-shots/<game>/<layout>[-2d][-avatar-<class>]/NN-<step>.png
+ * `--first` stops after the first game screen (one shot, then the diagnostics): any game, no QC player.
+ * `--no-pack` blocks every avatar pack request, to check the neutral figure that stands in for an
+ * avatar that does not load.
+ * Output: out/apk3d-shots/<game>/<layout>[-2d][-avatar-<class>][-no-pack]/NN-<step>.png
  */
 import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -24,6 +27,8 @@ const GAME = arg('game') ?? 'monster-encounters';
 const STORY = arg('story');
 const TWO_D = process.argv.includes('--2d');
 const AVATAR = arg('avatar');
+const FIRST = process.argv.includes('--first');
+const NO_PACK = process.argv.includes('--no-pack');
 
 async function server() {
   const port = 5190 + Math.floor(Math.random() * 200);
@@ -525,13 +530,14 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
-  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, `${layout}${TWO_D ? '-2d' : ''}${AVATAR ? `-avatar-${AVATAR}` : ''}`);
+  const dir = join(ROOT, 'out', 'apk3d-shots', GAME, `${layout}${TWO_D ? '-2d' : ''}${AVATAR ? `-avatar-${AVATAR}` : ''}${NO_PACK ? '-no-pack' : ''}`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const { s, url } = await server();
   const browser = await chromium.launch({ args: ['--use-angle=gl', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'] });
   const size = layout === 'portrait' ? { width: 390, height: 844 } : { width: 1280, height: 720 };
   const page = await browser.newPage({ viewport: size, deviceScaleFactor: layout === 'portrait' ? 2 : 1, isMobile: layout === 'portrait', hasTouch: layout === 'portrait' });
+  if (NO_PACK) await page.route('**/avatar-pack/**', (route) => route.abort());
   page.setDefaultTimeout(180_000);
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
@@ -568,6 +574,18 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
   await page.waitForTimeout(600);
   await shot('briefing');
   await page.click('[data-start]');
+  if (FIRST) {
+    // The scene is up when the game's test hook answers; then the first frames settle.
+    await page.waitForFunction(() => Boolean((window as unknown as { __apk3d: { game(): unknown } }).__apk3d.game()), undefined, { timeout: 180_000, polling: 250 });
+    await page.waitForTimeout(3000);
+    await shot('first');
+    const first = await page.evaluate(() => (window as unknown as { __apk3d: { diagnostics: unknown[] } }).__apk3d.diagnostics);
+    console.log(`diagnostics ${first.length ? JSON.stringify(first) : 'none'}`);
+    console.log(`errors ${errors.length ? errors.join(' | ') : 'none'}`);
+    await browser.close();
+    await s.close();
+    return;
+  }
   const bot = TWO_D ? BOTS_2D[GAME] : BOTS[GAME];
   if (!bot) throw new Error(`No ${TWO_D ? '2D ' : ''}QC player for ${GAME}`);
   try {

@@ -7,12 +7,13 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { animationKeyOf, banner, COLORS, fitGameSize, popup, recolorTag, registerSheetAnimations, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
+import { animationKeyOf, banner, COLORS, Figure2D, fitGameSize, popup, recolorTag, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
 import { TUNING, createGriffinRidersEscape, evidenceOf, laneX, scoreOf, type EscapeCommand, type EscapeEvent, type EscapeState, type GateInfo } from '../core/index.js';
 import { FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextChoice } from '../qc/bot.js';
@@ -55,6 +56,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('griffinRidersEscape')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'knight');
+  /** The student's own figure as the rider when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createGriffinRidersEscape(story, { seed, helper: options.helper });
@@ -147,8 +150,9 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     if (griffinFile?.origin) griffin.setOrigin(griffinFile.origin.x, griffinFile.origin.y);
     const shadow = scene.add.ellipse(0, 0, 2.2 * kx, 0.9 * kx, 0x1c3010, 0.3);
     const riderFile = edition.pack.files[`${heroId}.idle`];
-    const rider = scene.add.sprite(0, 0, riderFile ? textureKeyOf(edition, riderFile.id) : '__MISSING').setScale(scaleOf(`${heroId}.idle`, SIZES.rider, FRAME.rider));
-    if (riderFile?.origin) rider.setOrigin(riderFile.origin.x, riderFile.origin.y);
+    const riderFigure = figure ? new Figure2D(scene, figure, SPRITE_PPM) : null;
+    const rider = riderFigure ? riderFigure.sprite.setScale((SIZES.rider * kx) / FRAME.rider) : scene.add.sprite(0, 0, riderFile ? textureKeyOf(edition, riderFile.id) : '__MISSING').setScale(scaleOf(`${heroId}.idle`, SIZES.rider, FRAME.rider));
+    if (!riderFigure && riderFile?.origin) rider.setOrigin(riderFile.origin.x, riderFile.origin.y);
     let griffinClip = '';
     let busyUntil = 0;
     const griffinLoop = (): void => {
@@ -165,6 +169,11 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     let riderClip = '';
     const riderPlay = (name: 'idle' | 'victory' | 'hit'): void => {
       const key = `${name}.n`;
+      if (riderFigure) {
+        if (name !== 'idle' && riderClip !== key) void riderFigure.play(name);
+        riderClip = key;
+        return;
+      }
       if (riderClip === key || !has(`${heroId}.${name}`)) return;
       riderClip = key;
       rider.play(animationKeyOf(edition, `${heroId}.${name}`, key));
@@ -377,7 +386,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       const bob = Math.sin(time / 340) * 4;
       griffin.setPosition(W / 2 + gx * kx, anchorY + bob).setDepth(3000);
       shadow.setPosition(griffin.x, anchorY + 0.7 * kx).setDepth(2999);
-      rider.setPosition(griffin.x, anchorY + bob - SIZES.griffin * kx * 0.28).setDepth(3001);
+      const lift = riderFigure?.update(dt, false) ?? { x: 0, y: 0 };
+      rider.setPosition(griffin.x + lift.x, anchorY + bob - SIZES.griffin * kx * 0.28 + lift.y).setDepth(3001);
       if (performance.now() >= busyUntil) griffinLoop();
       if (!finished) riderPlay('idle');
       for (const [id, wave] of waves) {

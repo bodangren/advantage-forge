@@ -6,6 +6,7 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
@@ -48,6 +49,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('abyssalWell')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'wizard');
+  /** The student's own figure for the hero when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createAbyssalWell(story as AbyssalWellInput, { seed, helper: options.helper });
@@ -78,7 +81,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     makeGround(scene, edition);
     const zoom = Math.max(0.5, Math.min(W / 780, (H - 150) / 520));
     const arena = new Arena2D(scene, edition, PROJECTION, GROUND_FILE, { scale: zoom, top: 66 });
-    const hero = new Actor2D(scene, edition, heroId, PROJECTION, { dirs: 8, clips: clips(heroId, HERO_CLIPS_2D), stiffness: 30 }, arena.world);
+    const hero = new Actor2D(scene, edition, heroId, PROJECTION, { dirs: 8, figure, clips: clips(heroId, HERO_CLIPS_2D), stiffness: 30 }, arena.world);
     let angle = laneAngle(sim.state.lane);
     let angleTarget = angle;
     {

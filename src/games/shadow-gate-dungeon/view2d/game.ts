@@ -7,6 +7,7 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
@@ -31,6 +32,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('shadowGateDungeon')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'knight');
+  /** The student's own figure for the hero when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createShadowGate(story, { seed, helper: options.helper });
@@ -58,7 +61,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     scene.cameras.main.setBackgroundColor('#141018');
     const panel = new WordPanel2D(scene, 66);
     const arena = new Arena2D(scene, edition, PROJECTION, BACKGROUND_FILE, { scale: H > W ? 1.3 : 1.1, top: 66 });
-    const hero = new Actor2D(scene, edition, heroId, PROJECTION, { dirs: 8, clips: clips(heroId, HERO_CLIPS_2D), walk: 'run', stiffness: 18 }, arena.world);
+    const hero = new Actor2D(scene, edition, heroId, PROJECTION, { dirs: 8, figure, clips: clips(heroId, HERO_CLIPS_2D), walk: 'run', stiffness: 18 }, arena.world);
     hero.placeAt(HERO_START.x, HERO_START.z);
     hero.face(0, -1);
     arena.follow(HERO_START.x, HERO_START.z, 0, true);

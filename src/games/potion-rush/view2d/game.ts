@@ -11,6 +11,7 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type RuntimeEdition, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
@@ -123,6 +124,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = i18n.scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const hero = shownHero(HEROES_2D, options, 'wizard');
+  /** The student's own figure for the hero when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition: RuntimeEdition = ctx.edition;
   const seed = ctx.seed ?? (Date.now() >>> 1);
   const sim = createPotionRush(story, { seed, helper: options.helper });
@@ -168,7 +171,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const world = scene.add.container(L.x, L.y).setScale(L.scale).setDepth(0);
     world.add(scene.add.image(0, 0, textureKeyOf(edition, BACKGROUND_FILE)).setOrigin(0, 0).setDepth(-1e9));
     const clips = (model: string, list: readonly string[]) => list.filter((c) => edition.bindings[`${model}.${c}`]);
-    const alchemist = new Actor2D(scene, edition, hero, PROJECTION, { dirs: 8, clips: clips(hero, HERO_CLIPS_2D) }, world);
+    const alchemist = new Actor2D(scene, edition, hero, PROJECTION, { dirs: 8, figure, clips: clips(hero, HERO_CLIPS_2D) }, world);
     alchemist.placeAt(LAYOUT.alchemist[0], LAYOUT.alchemist[2]);
     alchemist.face(0.94, 0.34);
 

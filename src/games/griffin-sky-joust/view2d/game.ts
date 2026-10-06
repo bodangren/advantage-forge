@@ -8,12 +8,13 @@
  */
 import type * as Phaser from 'phaser';
 import { shownHero } from '../../../apk3d/avatar/launch.js';
+import { playerFigure } from '../../../apk3d/avatar/portrait-of.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { createFixedStepLoop, createManualClock } from '../../../apk3d/sim/index.js';
-import { animationKeyOf, banner, fitGameSize, popup, registerSheetAnimations, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
+import { animationKeyOf, banner, Figure2D, fitGameSize, popup, registerSheetAnimations, SPRITE_PPM, StatusBar2D, tag, textureKeyOf } from '../../../apk3d/view2d/index.js';
 import { ARENA, TUNING, createGriffinSkyJoust, evidenceOf, isTarget, scoreOf, type JoustCommand, type JoustEvent, type JoustState } from '../core/index.js';
 import { FILES_2D, HEROES_2D } from '../manifest.js';
 import { nextCommand } from '../qc/bot.js';
@@ -24,6 +25,8 @@ import { PromptPanel2D } from './prompt.js';
 const GRIFFIN_PX = 112;
 const RIDER_PX = 96;
 const HERO_PX = 52;
+/** The frame width of a hero sheet in pixels (the student's figure takes the same scale). */
+const HERO_FRAME = 120;
 /** The hero's seat on the griffin's back, in arena pixels from the griffin's center. */
 const SEAT = { x: 0, y: -26 };
 const GROUND_PROPS = ['pine-tree', 'oak-tree', 'rock-cluster', 'bush', 'pine-tree', 'oak-tree', 'bush', 'rock-cluster', 'pine-tree', 'oak-tree'] as const;
@@ -41,6 +44,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const t = (ctx.i18n ?? createI18n([strings]).scope('griffinSkyJoust')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
   const heroId = shownHero(HEROES_2D, options, 'knight');
+  /** The student's own figure as the rider when the session has an avatar (it loads while the pack loads). */
+  const figure = playerFigure(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createGriffinSkyJoust(story, { seed, helper: options.helper });
@@ -103,7 +108,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       if (sprite.anims.currentAnim?.key !== key) sprite.play(key);
     };
     const griffin = spriteOf('griffin.fly', GRIFFIN_PX).setDepth(500);
-    const hero = spriteOf(`${heroId}.idle`, HERO_PX).setDepth(501);
+    const heroFigure = figure ? new Figure2D(scene, figure, SPRITE_PPM) : null;
+    const hero = (heroFigure ? heroFigure.sprite.setScale((HERO_PX * s) / HERO_FRAME) : spriteOf(`${heroId}.idle`, HERO_PX)).setDepth(501);
     let facing: 'e' | 'w' = 'e';
     let heroBusyUntil = 0;
     let griffinBusyUntil = 0;
@@ -205,7 +211,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
           struck.add(ev.riderId);
           burst(sx(ev.x), sy(ev.y), 0xffe27a, 14);
           audio.play('strike');
-          if (has(`${heroId}.victory`)) {
+          if (heroFigure) {
+            void heroFigure.play('victory');
+            heroBusyUntil = performance.now() + 900;
+          } else if (has(`${heroId}.victory`)) {
             hero.play(animationKeyOf(edition, `${heroId}.victory`, 'victory.s'));
             heroBusyUntil = performance.now() + 900;
           }
@@ -220,7 +229,10 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
             griffin.play(animationKeyOf(edition, 'griffin.hit', `hit.${facing}`));
             griffinBusyUntil = performance.now() + 700;
           }
-          if (has(`${heroId}.hit`)) {
+          if (heroFigure) {
+            void heroFigure.play('hit');
+            heroBusyUntil = performance.now() + 700;
+          } else if (has(`${heroId}.hit`)) {
             hero.play(animationKeyOf(edition, `${heroId}.hit`, 'hit.s'));
             heroBusyUntil = performance.now() + 700;
           }
@@ -276,10 +288,12 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       if (Math.abs(st.griffin.vx) > 20) facing = st.griffin.vx > 0 ? 'e' : 'w';
       const bob = Math.sin(time / 260) * 2;
       griffin.setPosition(sx(shown.x), sy(shown.y + bob));
-      hero.setPosition(sx(shown.x + SEAT.x), sy(shown.y + SEAT.y + bob));
+      heroFigure?.face(facing === 'e' ? 1 : -1);
+      const lift = heroFigure?.update(dt, false) ?? { x: 0, y: 0 };
+      hero.setPosition(sx(shown.x + SEAT.x) + lift.x, sy(shown.y + SEAT.y + bob) + lift.y);
       const now = performance.now();
       if (now >= griffinBusyUntil) play(griffin, 'griffin.fly', 'fly', facing);
-      if (now >= heroBusyUntil && has(`${heroId}.idle`)) play(hero, `${heroId}.idle`, 'idle', 's');
+      if (!heroFigure && now >= heroBusyUntil && has(`${heroId}.idle`)) play(hero, `${heroId}.idle`, 'idle', 's');
       const visible = st.restMs > 0 ? Math.floor(time / 200) % 2 === 0 : st.griffin.safeMs > 0 ? Math.floor(time / 120) % 2 === 0 : true;
       griffin.setVisible(visible);
       hero.setVisible(visible);
@@ -334,7 +348,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     drawHud();
     audio.music('joust');
     play(griffin, 'griffin.fly', 'fly', facing);
-    play(hero, `${heroId}.idle`, 'idle', 's');
+    if (!heroFigure) play(hero, `${heroId}.idle`, 'idle', 's');
     loop.start();
   }
 

@@ -9,12 +9,11 @@
 import type * as Phaser from 'phaser';
 import { practiceOf, preloadAssetBindings, toGameResults, type StoryGameEvidence, type StoryInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
-import { roleHero } from '../../../apk3d/avatar/launch.js';
-import { APP_AVATAR_URL, avatarPortrait, portraitIcon } from '../../../apk3d/avatar/portrait-of.js';
+import { portraitIcon } from '../../../apk3d/avatar/portrait-of.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { banner, Card2D, fitGameSize, popup, registerSheetAnimations, StatusBar2D, type CardAction, type Rect } from '../../../apk3d/view2d/index.js';
-import { BattleStage2D } from '../../shared/battle/stage2d.js';
+import { BattleStage2D, partyPlayer2D } from '../../shared/battle/stage2d.js';
 import { createMonsterEncounters, type Challenge, type Feedback, type GameEvent, type HeroId, type QuestResults, type Response } from '../core/index.js';
 import { FILES_2D } from '../manifest.js';
 import strings from '../strings.en.js';
@@ -32,6 +31,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const i18n = ctx.i18n ?? createI18n([strings]).scope('monsterEncounters');
   const t = i18n.scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
+  /** The student in the party when the session has an avatar (the figure loads while the pack loads). */
+  const partyPlayer = partyPlayer2D(ctx);
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const needed = FILES_2D.filter((id) => edition.bindings[id]);
@@ -56,7 +57,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     const battle: Rect = portrait ? { x: 0, y: top, width: W, height: H * 0.6 - top } : { x: 0, y: top, width: W * 0.56, height: H - top };
     const cardArea: Rect = portrait ? { x: 10, y: H * 0.5, width: W - 20, height: H * 0.5 - 10 } : { x: W * 0.56 + 6, y: top, width: W * 0.44 - 16, height: H - top - 8 };
     scene.cameras.main.setBackgroundColor('#0c1118');
-    const stage = new BattleStage2D(scene, edition, PROJECTION, BACKGROUND_FILE, battle);
+    const stage = new BattleStage2D(scene, edition, PROJECTION, BACKGROUND_FILE, battle, partyPlayer);
     const headOf = (id: string, lift = 1.4) => stage.headOf(id, lift);
 
     // ---------------------------------------------------------------- HUD
@@ -85,23 +86,14 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
     // ---------------------------------------------------------------- the card
     const heroName = (hero: HeroId): string => i18n.t(`heroes.${hero}`);
     /** The party place of the student's avatar: its turn reads "Your turn". */
-    const player = options.avatar ? roleHero(options.avatar.classId) : null;
-    /** The student's face in that pill: it loads in the background, and the pill shows it once it is ready. */
+    const player = partyPlayer?.place ?? null;
+    /** The student's face in that pill: it shows once the figure has loaded (none when it did not load). */
     const FACE = 'avatar-face';
-    const avatar = options.avatar;
-    if (avatar && !scene.textures.exists(FACE)) {
-      avatarPortrait(ctx.avatarRoot ?? APP_AVATAR_URL, avatar)
-        .then(({ pixels }) => {
-          if (!destroyed) scene.textures.addCanvas(FACE, portraitIcon(pixels));
-        })
-        .catch((error: unknown) =>
-          ctx.diagnostic({
-            level: 'warning',
-            code: 'apk3d/avatar-fallback',
-            message: 'The avatar portrait did not load; the card shows no face.',
-            details: { reason: error instanceof Error ? error.message : String(error), classId: avatar.classId, catalogVersion: avatar.catalogVersion },
-          }),
-        );
+    if (partyPlayer) {
+      void partyPlayer.figure.ready.then((ok) => {
+        const pixels = partyPlayer.figure.pixels;
+        if (ok && pixels && !destroyed && !scene.textures.exists(FACE)) scene.textures.addCanvas(FACE, portraitIcon(pixels));
+      });
     }
 
     async function ask(hero: HeroId, c: Challenge): Promise<Response> {

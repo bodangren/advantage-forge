@@ -1,7 +1,7 @@
 /**
  * The results of a run, from the game's `GameResults` and evidence (never from game internals):
  * stars from first-try accuracy, the awarded XP (the apps' rule), the student's answers, the
- * items to practice, and the 3-star reward (a new hero look).
+ * items to practice, and the 3-star reward (a new hero look; none for a student with an avatar).
  */
 import { firstTryAccuracy, starsOf, type GameResults, type StoryGameEvidence, type Translate } from '../apk3d/contracts/index.js';
 import { esc } from '../apk3d/hud/index.js';
@@ -15,13 +15,16 @@ export interface Run {
 
 /**
  * `unlockedNow` is the look this run unlocked (3 stars), or null; `heroName` names the hero.
+ * `heroLooks` is false when the student plays as their avatar: the screen then shows no hero look.
  */
-export function renderResults(el: HTMLElement, run: Run, unlockedNow: { hero: string; look: string } | null, allOpen: boolean, heroName: (hero: string) => string, t: Translate): void {
+export function renderResults(el: HTMLElement, run: Run, unlockedNow: { hero: string; look: string } | null, allOpen: boolean, heroName: (hero: string) => string, t: Translate, heroLooks = true): void {
   const stars = starsOf(run.evidence);
   const pct = Math.round(firstTryAccuracy(run.evidence.items) * 100);
   const answers = run.evidence.items.map((i) => `<span class="chip ${i.correctFirstTry ? 'ok' : ''}">${esc(i.label)}</span>`).join('');
   const practice = run.evidence.practice.map((p) => `<span class="chip">${esc(p)}</span>`).join('');
-  const reward = unlockedNow
+  const reward = !heroLooks
+    ? ''
+    : unlockedNow
     ? `<div class="reward">${esc(t('host.results.rewardUnlocked', { hero: heroName(unlockedNow.hero), look: unlockedNow.look }))}</div>`
     : stars === 3 && allOpen
       ? `<div class="reward">${esc(t('host.results.rewardAll'))}</div>`
