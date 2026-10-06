@@ -35,7 +35,7 @@
  * the next minor version. Run it in the clean release worktree (`scripts/apk-release.ts --skin`):
  * it writes out/<asset>/, out/packs/avatar/, and out/rpg-skin/.
  */
-import { execFileSync, spawn, type ChildProcess } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import sharp from 'sharp';
@@ -322,7 +322,13 @@ const staleHeroPaths = stale.filter((p) => SKIN[p]!.kind === 'hero');
 const shots = new Map<string, Buffer>();
 if (staleHeroPaths.length || staleBackdrops.length) {
   const port = Number(process.env.RPG_SKIN_PORT ?? 5299);
-  const server: ChildProcess = spawn(join(ROOT, 'node_modules', '.bin', 'vite'), ['--port', String(port), '--strictPort'], { cwd: ROOT, stdio: 'ignore' });
+  // In-process and without a file watcher: the server only serves this checkout, and watching every
+  // file of demo/public can exhaust the system's inotify watchers (ENOSPC) on a busy machine.
+  const { createServer } = await import('vite');
+  // `server.watch: null` must be set on the merged config: a config merge skips null values.
+  const noWatch = { name: 'rpg-skin-no-watch', config: (c: { server?: { watch?: unknown } }) => void ((c.server ??= {}).watch = null) };
+  const server = await createServer({ root: ROOT, configFile: join(ROOT, 'vite.config.ts'), logLevel: 'error', server: { port, strictPort: true, hmr: false }, plugins: [noWatch] });
+  await server.listen();
   try {
     const base = `http://127.0.0.1:${port}`;
     for (let i = 0; ; i++) {
@@ -363,7 +369,7 @@ if (staleHeroPaths.length || staleBackdrops.length) {
       await browser.close();
     }
   } finally {
-    server.kill();
+    await server.close();
   }
 }
 
