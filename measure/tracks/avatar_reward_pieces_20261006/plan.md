@@ -4,8 +4,8 @@ Status: in progress. The plan records execution state. The specification retains
 
 ## Phase 1: Pack version and reward mark
 
-- [ ] Task: F1. The avatar pack version follows its content (TD-24): one version file, the next patch or minor version in `scripts/rpg-skin.ts`, the old version folder removed, tests.
-- [ ] Task: F2. `"source": "reward"` (no price) for reward rows of `docs/avatar-catalog.tsv` in `catalog.json`; `apprentice-wand` becomes a reward piece; tests.
+- [x] Task: F1. The avatar pack version follows its content (TD-24): one version file, the next patch or minor version in `scripts/rpg-skin.ts`, the old version folder removed, tests. cb7c2d10: `src/apk3d/avatar/pack-version.ts`, `scripts/avatar-version.ts` (`avatarPackVersion`, `stampAvatarPack`, `writeAvatarPackVersion`); rpg-skin rebuilds on a changed source revision (`avatar.forgeCommit` in skin.json; the version file is not avatar code, so a release does not make the next one stale); `apk-release.ts` copies the version file back. `tests/apk3d/avatar-version.test.ts` (5 tests).
+- [x] Task: F2. `"source": "reward"` (no price) for reward rows of `docs/avatar-catalog.tsv` in `catalog.json`; `apprentice-wand` becomes a reward piece; tests. cb7c2d10: `reward` in the `override` column (price column `reward`, `scripts/avatar-price.ts --check` passes); `scripts/avatar-pack.ts` writes `"source": "reward"` and no price. `tests/apk3d/avatar-catalog.test.ts`: every price is a number or `reward`, and no starter set holds a reward piece. `tests/apk3d`: 24 files, 419 tests pass.
 
 ## Phase 2: The two staffs
 
