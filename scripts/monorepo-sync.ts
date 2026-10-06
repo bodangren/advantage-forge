@@ -83,7 +83,7 @@ function parityText(): string {
  * `packs/<id>/1.0.0/...` path becomes `modelPackRoot(id)`. Idempotent; a test that this does not fit
  * fails the checks, and nothing is committed.
  */
-const PACK_TESTS = ['budget', 'pack-bindings', 'pack-loader'].map((t) => join(GAMES, 'tests', 'packs', `${t}.test.ts`));
+const PACK_TESTS = [...['budget', 'pack-bindings', 'pack-loader'].map((t) => join(GAMES, 'tests', 'packs', `${t}.test.ts`)), join(KIT, 'src', '__tests__', 'model-pack.test.ts')];
 function migratedTest(text: string): string {
   let out = text
     .replace(/(import \{[^}]*)\bMODEL_PACK_VERSION\b/, '$1packVersion')
@@ -217,6 +217,8 @@ const checks: [string, boolean][] = [
 if (!has('--skip-tests')) {
   const bin = (name: string): string => join(MONO, 'node_modules', '.bin', name);
   checks.push(['kit tests', run(KIT, bin('vitest'), ['run'])], ['kit types', run(KIT, bin('tsc'), ['--noEmit'])]);
+  // The games import the kit through its package exports, which point at dist/: build it first.
+  checks.push(['kit build', run(KIT, bin('tsc'), ['-p', 'tsconfig.build.json'])]);
   checks.push(['games tests', run(GAMES, bin('vitest'), ['run'])], ['games types', run(GAMES, bin('tsc'), ['--noEmit'])]);
 }
 console.log('\nchecks');
