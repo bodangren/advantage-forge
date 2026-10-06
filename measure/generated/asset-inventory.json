@@ -16204,7 +16204,15 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/avatar/launch.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/avatar/pack.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/avatar/portrait-of.ts",
       "source_present": true
     },
     {
@@ -16225,6 +16233,10 @@
     },
     {
       "source_path": "src/apk3d/contracts/apk.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/contracts/avatar.ts",
       "source_present": true
     },
     {
@@ -16384,6 +16396,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/stage/avatar.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/stage/camera.ts",
       "source_present": true
     },
@@ -16429,6 +16445,10 @@
     },
     {
       "source_path": "src/apk3d/view2d/card2d.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/view2d/figure.ts",
       "source_present": true
     },
     {
