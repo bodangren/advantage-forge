@@ -140,7 +140,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Release APK packs and games to the monorepo**
   *Link: [./tracks/apk_pack_release_20261006/](./tracks/apk_pack_release_20261006/)*
 
-- [~] **Track: The avatar in the games**
+- [x] **Track: The avatar in the games**
   *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
 
 - [~] **Track: Reward pieces on the avatar**

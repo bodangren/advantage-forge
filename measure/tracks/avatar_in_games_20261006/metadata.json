@@ -1,20 +1,24 @@
 {
   "track_id": "avatar_in_games_20261006",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-06T00:00:00Z",
   "updated_at": "2026-10-06T00:00:00Z",
   "description": "The student's avatar replaces the fixed hero in the games (3D: the composed avatar; 2D: the portrait)",
   "estimated_tasks": 15,
-  "actual_tasks": null,
-  "deviation_notes": "None.",
+  "actual_tasks": 21,
+  "deviation_notes": "6 tasks more than the estimate: Phase 4b (the identity rule, owner 2026-10-06) added the partial and neutral 3D fallbacks, the 2D figure in place of the role's hero sprite, the end of hero looks with an avatar, its QC, and the message to the monorepo. The pack version task (TD-24) moved to avatar_reward_pieces_20261006.",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
     "docs/avatar-system.md",
     "src/apk3d/avatar/compose.ts",
     "src/apk3d/factory/types.ts",
-    "src/apk3d/stage/actor.ts"
+    "src/apk3d/stage/actor.ts",
+    "src/apk3d/stage/avatar.ts",
+    "src/apk3d/view2d/figure.ts",
+    "src/apk3d/avatar/portrait-of.ts",
+    "tests/apk3d/avatar-body.test.ts"
   ],
   "dependencies": [
     "avatar_system_20261001",

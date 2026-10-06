@@ -16208,6 +16208,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/apk3d/avatar/pack-version.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/avatar/pack.ts",
       "source_present": true
     },

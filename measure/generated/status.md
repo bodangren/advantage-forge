@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 82.
-Tracks by status: new: 11; in_progress: 40; completed: 31.
-Tracks by workstream: assets: 32; games: 43; foundation: 7.
+Tracks: 83.
+Tracks by status: new: 11; in_progress: 40; completed: 32.
+Tracks by workstream: assets: 32; games: 44; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -34,7 +34,8 @@ Tracks by workstream: assets: 32; games: 43; foundation: 7.
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_world_catchup_20261001](../tracks/asset_world_catchup_20261001/) | completed | assets | 16/16 | 16 | 16 |
-| [avatar_in_games_20261006](../tracks/avatar_in_games_20261006/) | in_progress | games | 19/21 | 15 | — |
+| [avatar_in_games_20261006](../tracks/avatar_in_games_20261006/) | completed | games | 21/21 | 15 | 21 |
+| [avatar_reward_pieces_20261006](../tracks/avatar_reward_pieces_20261006/) | in_progress | games | 2/10 | 10 | — |
 | [avatar_system_20261001](../tracks/avatar_system_20261001/) | completed | games | 20/20 | 12 | 20 |
 | [game_2d_parity_20260928](../tracks/game_2d_parity_20260928/) | new | games | 0/5 | 5 | — |
 | [game_abyssal_well_20260928](../tracks/game_abyssal_well_20260928/) | in_progress | games | 6/8 | 8 | — |
@@ -92,5 +93,5 @@ Tracks by workstream: assets: 32; games: 43; foundation: 7.
 ## Project health
 
 Completed feature tracks with comparable estimates and actuals: 3.
-Recent feature velocity: 18.67 tasks per track.
-Estimate accuracy ratio: 1.58.
+Recent feature velocity: 23.33 tasks per track.
+Estimate accuracy ratio: 1.71.

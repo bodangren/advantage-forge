@@ -396,6 +396,9 @@ Built 2026-10-06 (track `avatar_in_games_20261006`):
 - **Party games.** The avatar takes the place of its class role (`CLASS_ROLES`): casters (wizard,
   witch, druid, shaman) the wizard place, healers (cleric, bard) the cleric place, every other
   class the knight place. The labels of that place read "Your turn", "Your post", or "You".
+- **Companions.** The other party places keep their fixed heroes, and the student also answers
+  their turns ("Knight's turn"). Owner decision 2026-10-06 (tentative): keep the companions. Ask
+  the owner again when a companion question comes up.
 - **2D.** There are no avatar sprite sheets yet. A 2D view shows the student's own figure: the
   portrait (`portraitFigure` stacks the layers) as one still image at the sprite scale (64 pixels
   per meter, feet on the ground point), which `Figure2D` (`src/apk3d/view2d/figure.ts`) moves with
@@ -412,7 +415,10 @@ Built 2026-10-06 (track `avatar_in_games_20261006`):
   the site root, and `/packs/avatar` for 2D views). The Forge demo serves it at `avatar-pack/`, and
   `?avatar=<class>` passes that class's starter set.
 - **Release.** `scripts/rpg-skin.ts` renders the portrait layers into the pack after
-  `avatar-pack.ts` (about 13 minutes for 223 layers).
+  `avatar-pack.ts` (about 13 minutes for 223 layers). The monorepo took this work from Forge
+  22713b0f in `apk3d-games-port` 9759e3534 and merged it into `primary-parity-integration`. The app
+  host passes `options.avatar` on both game pages, grants no hero looks, and needed no change for
+  the identity rule.
 
 ## 12. Acceptance criteria
 
@@ -443,7 +449,8 @@ Phase 1 (this repo, the track above):
 
 Phase 2 (monorepo): tables, domain functions, API, the avatar page, the shop (popularity order), GP grants.
 
-Phase 3: the avatar in Monster Encounters, then the other games. Phase 4: Guild Mode.
+Phase 3: the avatar in Monster Encounters, then the other games (done 2026-10-06, track
+`avatar_in_games_20261006`). Phase 4: Guild Mode.
 
 ## 14. Open questions
 
