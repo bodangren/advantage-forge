@@ -25,6 +25,7 @@ import {
   type MountedThreeGame,
   type MountOptions,
 } from '../../src/apk3d/factory/index.js';
+import { createAnswerChoiceAudioController, type AnswerChoiceAudioController } from '../../src/apk3d/audio/index.js';
 
 const manifest = (renderers: ('three' | 'phaser')[]) =>
   validateCartridge3DManifest({
@@ -514,5 +515,90 @@ describe('createCartridgeMounter', () => {
       /boom/,
     );
     expect(ic.destroy).toHaveBeenCalledOnce();
+  });
+});
+
+describe('createCartridgeMounter with answer audio (the APK runtime duties)', () => {
+  const controller = () =>
+    createAnswerChoiceAudioController({
+      session: {
+        modality: 'read-to-select-audio',
+        promptLocale: 'th-TH',
+        answerLocale: 'en-US',
+        promptField: 'translation',
+        answerField: 'term',
+        scored: true,
+      },
+      clips: [0, 1].map((itemPosition) => ({ itemPosition, url: `speech:${itemPosition}`, mediaType: 'audio/speech' as const })),
+      preparationTimeoutMs: 1_000,
+      preparation: { prepare: async (reference) => reference.itemPosition, release: () => undefined },
+      playback: { play: async () => undefined },
+      ducking: { duck: () => () => undefined },
+    });
+  const mountWith = async (answerAudio: AnswerChoiceAudioController, sessionMode: 'playing' | 'demo' = 'playing') => {
+    const inst = instance();
+    const three = vi.fn(async (_ctx: unknown): Promise<MountedThreeGame> => ({ instance: inst, stage: {} as never, ...inst }));
+    const complete = vi.fn();
+    const diagnostic = vi.fn();
+    const mount = createCartridgeMounter({ three: three as never, phaser: vi.fn() as never });
+    const game = await mount({
+      container: {} as HTMLElement,
+      stage: {} as never,
+      input: [
+        { term: 'river', translation: 'แม่น้ำ' },
+        { term: 'forest', translation: 'ป่า' },
+      ],
+      edition3d,
+      seed: 3,
+      sessionMode,
+      composition: { profile: 'compact', safe: { x: 0, y: 0, width: 390, height: 844 } },
+      i18n: { t: (k: string) => k, scope: () => ({}) } as never,
+      audio: {} as never,
+      options: { helper: false, hero: 'knight', looks: {} },
+      host: {},
+      answerAudio,
+      complete,
+      diagnostic,
+      renderer: 'three',
+      cartridge: cartridge(['three']),
+    });
+    const ctx = three.mock.calls[0]![0] as { answerAudio?: unknown; complete: (r: unknown, o: string, e: unknown) => void };
+    return { game, ctx, complete, diagnostic };
+  };
+  const result = (correctAnswers: number, totalAttempts: number) => ({ accuracy: 0.5, xp: 1, score: 1, correctAnswers, totalAttempts });
+  const story = { kind: 'story-game' };
+
+  it('gives a demo session no controller', async () => {
+    const { ctx } = await mountWith(controller(), 'demo');
+    expect(ctx.answerAudio).toBeUndefined();
+  });
+
+  it('passes pause, mute, and destroy to the controller', async () => {
+    const real = controller();
+    const pause = vi.fn(real.pause);
+    const audio = { ...real, pause };
+    const { game, ctx } = await mountWith(audio);
+    expect(ctx.answerAudio).toBe(audio);
+    game.pause();
+    game.setMuted(true);
+    expect(pause).toHaveBeenCalledOnce();
+    expect(audio.getSnapshot().muted).toBe(true);
+    await game.destroy();
+    expect(audio.getSnapshot().status).toBe('destroyed');
+  });
+
+  it('sends the controller evidence when the counts match, and drops a result that does not match', async () => {
+    const audio = controller();
+    audio.setQuestion(0, [0, 1]);
+    await audio.playChoice(0, 1);
+    audio.confirmChoice(0, 1);
+    await audio.playChoice(0, 0);
+    audio.confirmChoice(0, 0);
+    const { ctx, complete, diagnostic } = await mountWith(audio);
+    ctx.complete(result(1, 1), 'victory', story);
+    expect(complete).not.toHaveBeenCalled();
+    expect(diagnostic).toHaveBeenCalledWith(expect.objectContaining({ level: 'error', code: 'apk3d/invalid-answer-audio-evidence' }));
+    ctx.complete(result(1, 2), 'victory', story);
+    expect(complete).toHaveBeenCalledWith(result(1, 2), 'victory', story, audio.getEvidence());
   });
 });
