@@ -4,6 +4,7 @@
  * loads its pack files and composes one avatar for each actor. A game that shows one hero calls
  * `playerBody`: it gets the avatar, or the fixed hero when there is no avatar or it does not load.
  */
+import * as THREE from 'three';
 import { avatarModelOf, composeAvatar, loadoutErrors, type AvatarModel, type AvatarPiece, type ComposedAvatar, type LoadedGltf } from '../avatar/compose.js';
 import { AVATAR_CLIP_ALIASES, DEFAULT_HAIR, fromServedVersion, pieceDyes, type AvatarCatalog, type AvatarCatalogItem } from '../avatar/launch.js';
 import type { APKDiagnosticInput, LaunchAvatar } from '../contracts/index.js';
@@ -17,6 +18,8 @@ export interface AvatarBody {
   readonly version: string;
   /** Clip names of the base, as the actor knows them (with the hero names of `AVATAR_CLIP_ALIASES`). */
   readonly aliases: Readonly<Record<string, string>>;
+  /** The height of the dressed avatar in its rest pose, in meters (a hat counts). */
+  readonly height: number;
   compose(): ComposedAvatar;
 }
 
@@ -26,6 +29,11 @@ export type ActorBody = GLTF | AvatarBody;
 export const isAvatarBody = (body: ActorBody): body is AvatarBody => (body as AvatarBody).kind === 'avatar';
 
 const models = new WeakMap<GLTF, Promise<AvatarModel>>();
+
+const heightOf = (root: THREE.Object3D): number => new THREE.Box3().setFromObject(root).getSize(new THREE.Vector3()).y || 1;
+
+/** The height of a body in its rest pose, in meters (games scale a rider to its mount with it). */
+export const bodyHeight = (body: ActorBody): number => (isAvatarBody(body) ? body.height : heightOf(body.scene));
 
 /** The avatar model of a loaded GLB, read once (its tint mask loads once). */
 function modelOf(gltf: GLTF): Promise<AvatarModel> {
@@ -64,8 +72,8 @@ export async function loadAvatarBody(loader: ModelLoader, avatar: LaunchAvatar):
   const aliases = Object.fromEntries(Object.entries(AVATAR_CLIP_ALIASES).filter(([from, to]) => !clips.has(from) && clips.has(to)));
   const loadout = { tints: avatar.tints, pieces, defaultHair };
   // Compose once now, so a loadout the composer rejects falls back before the game starts.
-  composeAvatar(base, loadout);
-  return { kind: 'avatar', avatar, version, aliases, compose: () => composeAvatar(base, loadout) };
+  const height = heightOf(composeAvatar(base, loadout).root);
+  return { kind: 'avatar', avatar, version, aliases, height, compose: () => composeAvatar(base, loadout) };
 }
 
 /**

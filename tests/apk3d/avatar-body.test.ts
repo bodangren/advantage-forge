@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { describe, expect, it } from 'vitest';
 import { nodeName } from '../../src/apk3d/avatar/compose.js';
-import { AVATAR_CLIP_ALIASES, CLASS_ROLES, fromServedVersion, pieceDyes, roleHero } from '../../src/apk3d/avatar/launch.js';
+import { AVATAR_CLIP_ALIASES, CLASS_ROLES, fromServedVersion, pieceDyes, roleHero, shownHero } from '../../src/apk3d/avatar/launch.js';
 import { AVATAR_PACK_VERSION } from '../../src/apk3d/avatar/pack.js';
 import type { VariantTable } from '../../src/apk3d/avatar/tint.js';
 import { avatarClassIdSchema, type APKDiagnosticInput, type LaunchAvatar } from '../../src/apk3d/contracts/index.js';
@@ -30,6 +30,15 @@ describe('the launch avatar rules', () => {
     await expect(fromServedVersion(AVATAR_PACK_VERSION, served)).resolves.toEqual({ value: `files of ${AVATAR_PACK_VERSION}`, version: AVATAR_PACK_VERSION });
     await expect(fromServedVersion('0.9.0', served)).resolves.toEqual({ value: `files of ${AVATAR_PACK_VERSION}`, version: AVATAR_PACK_VERSION });
     await expect(fromServedVersion(AVATAR_PACK_VERSION, () => Promise.reject(new Error('offline')))).rejects.toThrow('offline');
+  });
+
+  it('shows the hero of the avatar role in a view that has sprites per hero', () => {
+    const heroes = ['knight', 'wizard', 'cleric'];
+    const avatar = { catalogVersion: AVATAR_PACK_VERSION, classId: 'shaman', tints: { skin: 'tan', hair: 'black', eyes: 'green', cloth: 'moss' }, pieces: [] } as LaunchAvatar;
+    expect(shownHero(heroes, { hero: 'knight', avatar }, 'knight')).toBe('wizard');
+    expect(shownHero(heroes, { hero: 'cleric' }, 'knight')).toBe('cleric');
+    expect(shownHero(heroes, { hero: 'rogue' }, 'wizard')).toBe('wizard');
+    expect(shownHero(['knight'], { hero: 'knight', avatar }, 'knight')).toBe('knight');
   });
 
   it('gives every class a role and a hero place', () => {

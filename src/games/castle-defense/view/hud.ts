@@ -15,6 +15,8 @@ import './castle-defense.css';
 
 export class CastleHud {
   private readonly status: HTMLElement;
+  /** The party place of the student's avatar: its post reads "Your post". */
+  player: string | null = null;
   private readonly pips = new Map<string, HTMLElement>();
   readonly t: ScopedI18n['t'];
 
@@ -110,7 +112,7 @@ export class CastleHud {
   showPosts(posts: readonly Post[], build: (post: number) => void): void {
     const t = this.t;
     const buttons = posts
-      .map((p) => `<button class="opt cd-post" data-post="${p.post}">${esc(t('post', { hero: this.i18n.t(`heroes.${p.hero}`) }))}<small>${esc(p.level > 0 ? t('level', { level: p.level }) : t('empty'))}</small></button>`)
+      .map((p) => `<button class="opt cd-post" data-post="${p.post}">${esc(p.hero === this.player ? t('yourPost') : t('post', { hero: this.i18n.t(`heroes.${p.hero}`) }))}<small>${esc(p.level > 0 ? t('level', { level: p.level }) : t('empty'))}</small></button>`)
       .join('');
     const card = this.root.card;
     card.show(`<div class="ask">${esc(t('placeThe'))}</div><div class="options cd-posts">${buttons}</div>`);

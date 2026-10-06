@@ -9,6 +9,7 @@
 import type * as Phaser from 'phaser';
 import { preloadAssetBindings, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
+import { roleHero } from '../../../apk3d/avatar/launch.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { banner, Card2D, fitGameSize, popup, registerSheetAnimations, StatusBar2D, type Rect } from '../../../apk3d/view2d/index.js';
@@ -37,6 +38,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const i18n = ctx.i18n ?? createI18n([strings]).scope('castleDefense');
   const t = i18n.scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
+  /** The party place of the student's avatar: its label reads "You". */
+  const avatarPlace = options.avatar ? roleHero(options.avatar.classId) : null;
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const needed = FILES_2D.filter((id) => edition.bindings[id]);
@@ -125,7 +128,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
         card.line(t('placeThe'), 20);
         awaiting = 'posts';
         void card
-          .choose(posts.map((p) => ({ id: String(p.post), text: `${t('post', { hero: i18n.t(`heroes.${p.hero}`) })} · ${p.level > 0 ? t('level', { level: p.level }) : t('empty')}` })))
+          .choose(posts.map((p) => ({ id: String(p.post), text: `${p.hero === avatarPlace ? t('yourPost') : t('post', { hero: i18n.t(`heroes.${p.hero}`) })} · ${p.level > 0 ? t('level', { level: p.level }) : t('empty')}` })))
           .then((id) => {
             awaiting = null;
             build(Number(id));

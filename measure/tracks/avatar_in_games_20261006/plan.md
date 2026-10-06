@@ -26,7 +26,7 @@ Status: in progress. The plan records execution state. The specification and
 
 ## Phase 4: The other games
 
-- [ ] Task: List every game that reads `options.hero` (3D and 2D) and move each to the kit helper. Abyssal Well, Alchemist's Synthesis, Archer's Revenge, Astral Mage, Castle Defense, Dragon Rider, Dungeon Liberator, Enchanted Library, Griffin Riders' Escape, Griffin Sky Joust, Gryphon Patrol, Haunted Library, Hero vs Zombie, Labyrinth, Magic Defense, Paladin's Twin Soul, Potion Rush, Realm Carver, RPG Battle, Rune Forge Chamber, Rune Match, Shadow Gate Dungeon, Sorcerer's Ziggurat, Spellweaver's Run, Storm Castle Tower, Village Guardian.
+- [x] Task: List every game that reads `options.hero` (3D and 2D) and move each to the kit helper. 2026-10-06: 20 one-hero 3D games load `playerBody` with their scene (no hero model with an avatar; riders scale by `bodyHeight`; the builders of Alchemist's Synthesis, Rune Forge Chamber, and Potion Rush and the body helpers of Labyrinth and Realm Carver take the body); the 6 other party games on the battle stage (Archer's Revenge, Castle Defense, Magic Defense, Paladin's Twin Soul, RPG Battle, Rune Match) give the avatar the place of its role, and Castle Defense and RPG Battle label that place "Your post" and "You"; the 20 2D views show the hero of the avatar's role (`shownHero`). A color preset applies only to a fixed hero. `tests/apk3d` and `tests/games`: 144 files, 2,263 tests pass.
 - [ ] Task: QC shots of each changed game with and without an avatar.
 
 ## Phase 5: Release and hand-off

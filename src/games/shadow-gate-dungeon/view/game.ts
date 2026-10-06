@@ -9,7 +9,7 @@ import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/inde
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
-import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
+import { Actor, burst, FollowRig, isAvatarBody, playerBody, Walker } from '../../../apk3d/stage/index.js';
 import { createShadowGate, evidenceOf, GATE, HERO_START, rightCrystalsOf, scoreOf, type ShadowGateCommand, type ShadowGateEvent, type ShadowGateState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
 import { buildDungeon, DUNGEON_MODELS, makeCrystal } from './dungeon.js';
@@ -21,16 +21,19 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...DUNGEON_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
+  // The student's avatar (or the fixed hero) loads with the scene; an avatar needs no hero model.
+  const [, heroBody] = await Promise.all([
+    stage.loader.preload([...DUNGEON_MODELS, ...(ctx.options.avatar ? [] : [heroId])].map((n) => stage.loader.modelPath(n))),
+    playerBody(stage.loader, ctx.options.avatar, heroId, ctx.diagnostic),
+  ]);
   const dungeon = buildDungeon(stage);
   const sim = createShadowGate(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the hero
-  const heroGltf = stage.loader.get(stage.loader.modelPath(heroId))!;
-  const hero = new Walker(stage.addActor(new Actor(heroId, heroGltf, stage.timeline)), 'run');
+  const hero = new Walker(stage.addActor(new Actor(heroId, heroBody, stage.timeline)), 'run');
   hero.actor.placeAt(HERO_START.x, 0, HERO_START.z, 180);
-  const look = ctx.options.looks[heroId];
+  const look = isAvatarBody(heroBody) ? undefined : ctx.options.looks[heroId];
   if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
 
   // ---------------------------------------------------------------- camera

@@ -10,7 +10,7 @@ import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/inde
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc, pips, sentenceBar } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
-import { Actor, burst, FollowRig, Walker } from '../../../apk3d/stage/index.js';
+import { Actor, type ActorBody, burst, FollowRig, isAvatarBody, playerBody, Walker } from '../../../apk3d/stage/index.js';
 import { createRealmCarver, evidenceOf, scoreOf, START, type Beacon, type RealmCarverCommand, type RealmCarverEvent, type RealmCarverState } from '../core/index.js';
 import { nextSteer } from '../qc/bot.js';
 import { fitCamera, worldOf } from './geometry.js';
@@ -41,14 +41,18 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...REALM_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
+  // The student's avatar (or the fixed hero) loads with the scene; an avatar needs no hero model.
+  const [, heroBody] = await Promise.all([
+    stage.loader.preload([...REALM_MODELS, ...(ctx.options.avatar ? [] : [heroId])].map((n) => stage.loader.modelPath(n))),
+    playerBody(stage.loader, ctx.options.avatar, heroId, ctx.diagnostic),
+  ]);
   const realm = buildRealm(stage);
   const sim = createRealmCarver(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the hero
-  const body = (kind: string, walk: string, stiffness: number, at: { x: number; z: number }, phase = 0): Body => {
-    const gltf = stage.loader.get(stage.loader.modelPath(kind)) ?? stage.loader.get(stage.loader.modelPath('slime'))!;
+  const body = (kind: string, walk: string, stiffness: number, at: { x: number; z: number }, phase = 0, source?: ActorBody): Body => {
+    const gltf = source ?? stage.loader.get(stage.loader.modelPath(kind)) ?? stage.loader.get(stage.loader.modelPath('slime'))!;
     const actor = stage.addActor(new Actor(kind, gltf, stage.timeline, { phase, scale: CHARACTER_SCALE }));
     actor.placeAt(at.x, 0, at.z, 180);
     return { actor, walker: new Walker(actor, walk, stiffness) };
@@ -62,8 +66,8 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     }
     b.walker.update(dt, x, z);
   };
-  const hero = body(heroId, 'run', 16, worldOf(START));
-  const look = ctx.options.looks[heroId];
+  const hero = body(heroId, 'run', 16, worldOf(START), 0, heroBody);
+  const look = isAvatarBody(heroBody) ? undefined : ctx.options.looks[heroId];
   if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.actor.setMap(tex)).catch(() => undefined);
   // A bright ring under the hero keeps it easy to find in the whole-board view.
   const marker = new THREE.Mesh(new THREE.RingGeometry(0.5, 0.66, 32), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85, depthWrite: false }));

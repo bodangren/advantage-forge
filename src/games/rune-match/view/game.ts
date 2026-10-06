@@ -4,7 +4,9 @@
  * run once to the host (results, outcome, evidence).
  */
 import type { PracticeInput } from '../../../apk3d/contracts/index.js';
+import { roleHero } from '../../../apk3d/avatar/launch.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
+import { playerBody } from '../../../apk3d/stage/index.js';
 import { BattleStage } from '../../shared/battle/stage3d.js';
 import { createRuneMatch, type RuneMatchCommand, type RuneMatchInput } from '../core/index.js';
 import { RuneMatchPlayer, type Presentation, type Sfx } from './driver.js';
@@ -20,8 +22,12 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const hud = new RuneHud(ctx.hud, stage, ctx.i18n, ctx.audio, ctx.host);
   const audio = ctx.audio;
   const portrait = (): boolean => ctx.composition.profile === 'compact';
-  await stage.load(() => undefined);
+  // The student's avatar takes the party place of its class's role; the other two stay heroes.
+  const avatar = ctx.options.avatar;
+  const place = avatar ? roleHero(avatar.classId) : null;
+  await stage.load(() => undefined, avatar && place ? { place, body: playerBody(ctx.stage.loader, avatar, place, ctx.diagnostic) } : undefined);
   for (const hero of PRESET_HEROES) {
+    if (hero === place) continue;
     const look = ctx.options.looks[hero];
     if (look && look !== 'default') void stage.setPreset(hero, look);
   }

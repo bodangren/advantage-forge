@@ -7,6 +7,7 @@
  * flat. At dawn the light warms and the zombies crumble.
  */
 import type * as Phaser from 'phaser';
+import { shownHero } from '../../../apk3d/avatar/launch.js';
 import { preloadAssetBindings, toGameResults, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
@@ -27,7 +28,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const story = ctx.input as PracticeInput;
   const t = (ctx.i18n ?? createI18n([strings]).scope('heroVsZombie')).scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
-  const heroId = (HEROES_2D as readonly string[]).includes(options.hero) ? options.hero : 'knight';
+  const heroId = shownHero(HEROES_2D, options, 'knight');
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const sim = createHeroVsZombie(story, { seed, helper: options.helper });

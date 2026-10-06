@@ -10,7 +10,7 @@ import { toGameResults, type PracticeInput } from '../../../apk3d/contracts/inde
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { attachJoystick, esc, sentenceBar } from '../../../apk3d/hud/index.js';
 import { createFixedStepLoop, type LoopClock } from '../../../apk3d/sim/index.js';
-import { Actor, burst, FollowRig } from '../../../apk3d/stage/index.js';
+import { Actor, burst, FollowRig, isAvatarBody, playerBody } from '../../../apk3d/stage/index.js';
 import {
   createStormCastleTower,
   evidenceOf,
@@ -48,7 +48,11 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'knight';
-  await stage.loader.preload([...TOWER_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
+  // The student's avatar (or the fixed hero) loads with the scene; an avatar needs no hero model.
+  const [, heroBody] = await Promise.all([
+    stage.loader.preload([...TOWER_MODELS, ...(ctx.options.avatar ? [] : [heroId])].map((n) => stage.loader.modelPath(n))),
+    playerBody(stage.loader, ctx.options.avatar, heroId, ctx.diagnostic),
+  ]);
   const sky = buildSky(stage);
   const sim = createStormCastleTower(story, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
@@ -56,11 +60,10 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   let towerId = sim.state.shift[sim.state.tower]?.towerId ?? '';
 
   // ---------------------------------------------------------------- the hero
-  const heroGltf = stage.loader.get(stage.loader.modelPath(heroId))!;
-  const hero = stage.addActor(new Actor(heroId, heroGltf, stage.timeline));
+  const hero = stage.addActor(new Actor(heroId, heroBody, stage.timeline));
   const spot = { x: columnX(sim.state.climber.col), y: rowY(sim.state.climber.row) };
   hero.placeAt(spot.x, spot.y, CLIMBER_Z, 0);
-  const look = ctx.options.looks[heroId];
+  const look = isAvatarBody(heroBody) ? undefined : ctx.options.looks[heroId];
   if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.setMap(tex)).catch(() => undefined);
   let running = false;
   const lantern = new THREE.PointLight(0xffc27a, 6, 7, 1.7);

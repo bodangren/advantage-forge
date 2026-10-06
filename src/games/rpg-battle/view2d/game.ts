@@ -9,6 +9,7 @@
 import type * as Phaser from 'phaser';
 import { preloadAssetBindings, type PracticeInput } from '../../../apk3d/contracts/index.js';
 import { AudioBus, installAudioUnlock } from '../../../apk3d/audio/index.js';
+import { roleHero } from '../../../apk3d/avatar/launch.js';
 import { SESSION_OPTIONS_DEFAULT, type Game2DContext } from '../../../apk3d/factory/index.js';
 import { createI18n } from '../../../apk3d/i18n/catalog.js';
 import { banner, Card2D, fitGameSize, popup, registerSheetAnimations, StatusBar2D, type CardAction, type Rect } from '../../../apk3d/view2d/index.js';
@@ -45,6 +46,8 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
   const i18n = ctx.i18n ?? createI18n([strings]).scope('rpgBattle');
   const t = i18n.scope('hud').t;
   const options = ctx.options ?? SESSION_OPTIONS_DEFAULT;
+  /** The party place of the student's avatar: its label reads "You". */
+  const avatarPlace = options.avatar ? roleHero(options.avatar.classId) : null;
   const edition = ctx.edition;
   const seed = ctx.seed ?? Date.now() >>> 1;
   const needed = FILES_2D.filter((id) => edition.bindings[id]);
@@ -111,7 +114,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
       showQuestion(q, c, answer, back) {
         const look = ACTION_LOOK[c.action];
         card.begin();
-        card.pill(`${look.emoji} ${i18n.t(`actions.${c.action}`)} · ${i18n.t(`heroes.${HERO_OF[c.action]}`)}`, look.color, c.retry ? t('again') : t(c.power === 'power' ? 'power' : 'basic'));
+        card.pill(`${look.emoji} ${i18n.t(`actions.${c.action}`)} · ${i18n.t(`heroes.${HERO_OF[c.action] === avatarPlace ? 'you' : HERO_OF[c.action]}`)}`, look.color, c.retry ? t('again') : t(c.power === 'power' ? 'power' : 'basic'));
         card.line(q.term, 30);
         card.line(t('whichMeaning'), 15, '#6a5a8a', { bold: false });
         awaiting = 'question';

@@ -66,6 +66,16 @@ export const ROLE_HEROES: Readonly<Record<AvatarRole, 'knight' | 'wizard' | 'cle
 export const roleHero = (classId: AvatarClassId): 'knight' | 'wizard' | 'cleric' => ROLE_HEROES[CLASS_ROLES[classId]];
 
 /**
+ * The hero a view shows for the student: the hero of the avatar's role when the session has an
+ * avatar (2D views have sprites per hero, not per avatar), else the chosen hero; `fallback` when
+ * `heroes` (the heroes the view has) does not hold it.
+ */
+export function shownHero(heroes: readonly string[], options: { readonly hero: string; readonly avatar?: LaunchAvatar | undefined }, fallback: string): string {
+  const hero = options.avatar ? roleHero(options.avatar.classId) : options.hero;
+  return heroes.includes(hero) ? hero : fallback;
+}
+
+/**
  * Hero clips that the avatar base names differently: a game asks for the hero clip and the avatar
  * plays its own. Content is rated G, so a defeated avatar rests; it does not die.
  */

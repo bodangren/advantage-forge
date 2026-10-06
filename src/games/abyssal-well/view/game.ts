@@ -8,7 +8,7 @@ import * as THREE from 'three';
 import type { PracticeInput } from '../../../apk3d/contracts/index.js';
 import type { Game3DContext, Game3DInstance } from '../../../apk3d/factory/index.js';
 import { esc, sentenceBar } from '../../../apk3d/hud/index.js';
-import { Actor, burst, FollowRig, projectile } from '../../../apk3d/stage/index.js';
+import { Actor, burst, FollowRig, isAvatarBody, playerBody, projectile } from '../../../apk3d/stage/index.js';
 import {
   angleDelta,
   archerPoint,
@@ -48,14 +48,17 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   const audio = ctx.audio;
   const hud = ctx.hud;
   const heroId = ctx.options.hero || 'wizard';
-  await stage.loader.preload([...WELL_MODELS, heroId].map((n) => stage.loader.modelPath(n)));
+  // The student's avatar (or the fixed hero) loads with the scene; an avatar needs no hero model.
+  const [, heroBody] = await Promise.all([
+    stage.loader.preload([...WELL_MODELS, ...(ctx.options.avatar ? [] : [heroId])].map((n) => stage.loader.modelPath(n))),
+    playerBody(stage.loader, ctx.options.avatar, heroId, ctx.diagnostic),
+  ]);
   const well = buildWell(stage);
   const sim = createAbyssalWell(story as AbyssalWellInput, { seed: ctx.seed, helper: ctx.options.helper });
   const startedAt = performance.now();
 
   // ---------------------------------------------------------------- the archer
-  const heroGltf = stage.loader.get(stage.loader.modelPath(heroId))!;
-  const hero = stage.addActor(new Actor(heroId, heroGltf, stage.timeline));
+  const hero = stage.addActor(new Actor(heroId, heroBody, stage.timeline));
   let angle = laneAngle(sim.state.lane);
   /** The heading toward the well's middle; it grows with the angle, so the archer never spins the long way. */
   const faceCenter = (a: number): number => (a * 180) / Math.PI + 180;
@@ -63,7 +66,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
     const p = archerPoint(angle);
     hero.placeAt(p.x, 0, p.z, faceCenter(angle));
   }
-  const look = ctx.options.looks[heroId];
+  const look = isAvatarBody(heroBody) ? undefined : ctx.options.looks[heroId];
   if (look && look !== 'default') void stage.loader.texture(stage.loader.presetPath(heroId, look)).then((tex) => hero.setMap(tex)).catch(() => undefined);
 
   // ---------------------------------------------------------------- camera
