@@ -34,7 +34,7 @@ import {
   type MeasuredModel,
 } from '../src/apk3d/contracts/model-pack.js';
 import { modelPackSchema, type ModelPack } from '../src/apk3d/contracts/index.js';
-import { nextVersion, packModels, sourceRevision, writePackVersions } from './apk-pack-models.js';
+import { nextVersion, packModels, sameRevision, sourceRevision, writePackVersions } from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const MODELS = join(ROOT, 'demo', 'public', 'models');
@@ -48,6 +48,23 @@ function packFiles(pack: ModelPack): string[] {
 
 /** The source file of a pack file: demo/public/models/<path>. */
 const sourceOf = (path: string): string => join(MODELS, path);
+
+/**
+ * Keeps the current pack's `forgeCommit` text where it names the same commit. Git lengthens its
+ * short hashes as the repository grows (7 to 8 characters on 2026-10-06), which otherwise changes
+ * every entry and bumps every pack without a content change.
+ */
+function keepRevisions(next: ModelPack): ModelPack {
+  const path = join(PACKS, next.id, packVersion(next.id), 'pack.json');
+  if (!existsSync(path)) return next;
+  const old = modelPackSchema.parse(JSON.parse(readFileSync(path, 'utf8')));
+  const kept = structuredClone(next);
+  for (const [id, file] of Object.entries(kept.files)) {
+    const was = old.files[id]?.provenance.forgeCommit;
+    if (was && sameRevision(was, file.provenance.forgeCommit)) file.provenance.forgeCommit = was;
+  }
+  return kept;
+}
 
 /** How a new pack differs from the pack on disk at its current version. */
 function change(next: ModelPack): 'none' | 'patch' | 'minor' | 'new' {
@@ -101,7 +118,7 @@ async function main(): Promise<void> {
 
   const declared = packModels();
   const packs: Record<string, ModelPack> = {};
-  for (const [id, names] of Object.entries(declared)) packs[id] = assembleModelPack(id, await Promise.all(names.map((n) => measure(io, n))));
+  for (const [id, names] of Object.entries(declared)) packs[id] = keepRevisions(assembleModelPack(id, await Promise.all(names.map((n) => measure(io, n)))));
 
   // Versions: bump each changed pack, keep each unchanged one.
   const versions: Record<string, string> = { ...PACK_VERSIONS };
