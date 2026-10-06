@@ -31,6 +31,9 @@
  *   games and their shared code). The packs are mirrored: a removed version folder goes too.
  * - The monorepo pack tests read each pack's own version (a one-time, idempotent edit).
  * - Checks: both drift checks, then the tests and the type checks of both packages.
+ * - Forge keeps byte copies of a few monorepo-owned modules (OWNER_COPIES). Where the checkout has
+ *   the owner file and it differs, the port sync stops and the skin sync warns: copy the owner file
+ *   into Forge first.
  *
  * Release order: `scripts/apk-release.ts --commit` in Forge first (packs from committed sources),
  * then this command.
@@ -60,6 +63,17 @@ const SPRITES_MIRROR: [string, string] = [join(FORGE, 'demo/public/assets/apk/pr
 const MIRRORS: [string, string][] = [PACKS_MIRROR, SPRITES_MIRROR];
 /** The 2D parity test, rewritten for the package layout (assets/ holds packs/ and apk/). */
 const PARITY: [string, string] = [join(FORGE, 'tests/apk3d/sprite-parity.test.ts'), join(GAMES, 'tests/packs/sprite-parity.test.ts')];
+
+/** Forge byte copies of monorepo-owned modules: Forge path, owner path in a monorepo checkout. */
+const OWNER_COPIES: [string, string][] = [
+  ['src/apk3d/factory/renderer-setting.ts', 'packages/advantage-play-kit/src/responsive/renderer.ts'],
+];
+/** The owner copies that differ from the owner file in `checkout` (a missing owner file is not drift). */
+function ownerDrift(checkout: string): string[] {
+  return OWNER_COPIES.filter(([copy, owner]) => existsSync(join(checkout, owner)) && !readFileSync(join(FORGE, copy)).equals(readFileSync(join(checkout, owner)))).map(
+    ([copy, owner]) => `${copy} differs from the owner file ${owner}: copy the owner file into Forge first`,
+  );
+}
 
 const git = (cwd: string, args: string[]): string => execFileSync('git', args, { cwd, encoding: 'utf8' }).trim();
 
@@ -134,6 +148,8 @@ function versions(packs: string, sprites: string): Record<string, string> {
 if (value('--skin')) {
   const app = join(resolve(value('--skin')!), 'apps', 'primary-advantage', 'public', 'rpg');
   const from = join(FORGE, 'demo', 'public', 'rpg');
+  const drift = ownerDrift(resolve(value('--skin')!));
+  for (const d of drift) console.log(`warning: ${d}`);
   if (!existsSync(join(from, 'skin.json'))) throw new Error('no Forge demo/public/rpg/skin.json: run scripts/rpg-skin.ts (or apk-release.ts --skin) first');
   type Skin = { version: string; files: Record<string, unknown> };
   const next = JSON.parse(readFileSync(join(from, 'skin.json'), 'utf8')) as Skin;
@@ -152,7 +168,7 @@ if (value('--skin')) {
   const avatarWrite = versions.flatMap((v) => walk(join(avatarFrom, v)).map((f) => join(v, f))).filter((f) => !same(join(avatarFrom, f), join(avatarApp, f)));
   const avatarGone = versions.flatMap((v) => walk(join(avatarApp, v)).map((f) => join(v, f))).filter((f) => !existsSync(join(avatarFrom, f)));
   console.log(`avatar pack ${versions.join(', ') || '(none in Forge)'} in ${avatarApp}: ${avatarWrite.length} file(s) to write, ${avatarGone.length} to remove`);
-  if (has('--check')) process.exit(differ.length || gone.length || avatarWrite.length || avatarGone.length ? 1 : 0);
+  if (has('--check')) process.exit(differ.length || gone.length || avatarWrite.length || avatarGone.length || drift.length ? 1 : 0);
   for (const f of differ) {
     rmSync(join(app, f), { force: true });
     cpSync(join(from, f), join(app, f));
@@ -182,21 +198,24 @@ const after = versions(PACKS_MIRROR[0], SPRITES_MIRROR[0]);
 const packChanges = MIRRORS.map(([from, to]) => [to.replace(`${GAMES}/`, ''), mirrorDiff(from, to)] as const);
 const parityChanged = !existsSync(PARITY[1]) || readFileSync(PARITY[1], 'utf8') !== parityText();
 const testsToMigrate = PACK_TESTS.filter((t) => existsSync(t) && migratedTest(readFileSync(t, 'utf8')) !== readFileSync(t, 'utf8'));
+const drift = ownerDrift(MONO);
 
 console.log(`forge ${forgeHead} -> monorepo ${branch} (${git(MONO, ['rev-parse', '--short', 'HEAD'])})`);
 for (const [id, v] of Object.entries(after)) if (before[id] !== v) console.log(`  pack ${id}: ${before[id] ?? '(none)'} -> ${v}`);
 for (const [to, diff] of packChanges) console.log(`  ${to}: ${diff.length} file(s) differ`);
 if (parityChanged) console.log('  tests/packs/sprite-parity.test.ts differs');
 for (const t of testsToMigrate) console.log(`  ${t.replace(`${GAMES}/`, '')} reads a fixed pack version`);
+for (const d of drift) console.log(`  ${d}`);
 
 if (has('--check')) {
   const kit = run(KIT, 'node', ['scripts/port-kit.mjs', FORGE, '--check']);
   const games = run(GAMES, 'node', ['scripts/port-game.mjs', FORGE, 'all', '--check']);
-  const inSync = kit && games && packChanges.every(([, d]) => !d.length) && !parityChanged && !testsToMigrate.length;
+  const inSync = kit && games && packChanges.every(([, d]) => !d.length) && !parityChanged && !testsToMigrate.length && !drift.length;
   console.log(`\n${inSync ? 'in sync' : 'out of sync'}${forgeDirty.length ? `; forge has ${forgeDirty.length} uncommitted file(s) in the synced paths` : ''}`);
   process.exit(inSync ? 0 : 1);
 }
 if (forgeDirty.length) throw new Error(`commit these Forge files first (the sync names a Forge commit):\n  ${forgeDirty.join('\n  ')}`);
+if (drift.length) throw new Error(`a Forge copy of a monorepo-owned module is stale:\n  ${drift.join('\n  ')}`);
 if (monoDirty.length) throw new Error(`the monorepo packages have uncommitted changes; commit or move them first:\n  ${monoDirty.join('\n  ')}`);
 
 // ---------------------------------------------------------------- copy

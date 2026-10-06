@@ -102,6 +102,10 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
   folders, and the 2D parity test into the monorepo branch, then runs both drift checks and the
   tests and type checks of both packages. It commits only when every check passes, and it refuses
   `master` and `main`. The owner merges the branch.
+- Forge keeps byte copies of some monorepo-owned modules (`OWNER_COPIES` in `monorepo-sync.ts`):
+  `src/apk3d/factory/renderer-setting.ts` copies `advantage-play-kit/src/responsive/renderer.ts`.
+  When a checkout has the owner file and the copy differs, the port sync stops and the skin sync
+  warns. Copy the owner file into Forge, commit it, and run the sync again.
 - The Primary Advantage RPG skin is a separate output for the app pages (monorepo track
   `primary_rpg_skin_20261006`). `apk-release.ts --skin` also runs `scripts/rpg-skin.ts`: icons,
   relics, item views, hero portraits, NPC and boss views and strips, scene backdrops, and fonts go
