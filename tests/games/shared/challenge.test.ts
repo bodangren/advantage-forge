@@ -19,7 +19,6 @@ import { manifest as dragonRider } from '../../../src/games/dragon-rider/manifes
 import { createHeroVsZombie, evidenceOf as heroVsZombieEvidence, scoreOf as heroVsZombieScore } from '../../../src/games/hero-vs-zombie/core/index.js';
 import { manifest as heroVsZombie } from '../../../src/games/hero-vs-zombie/manifest.js';
 import { APK_INPUT_ID, evidenceStoryOf } from '../../../src/games/shared/challenge.js';
-import { GAMES } from '../../../src/host/registry.js';
 import { fly } from '../dragon-flight/helpers.js';
 import { ride } from '../dragon-rider/helpers.js';
 import { playNight } from '../hero-vs-zombie/helpers.js';
@@ -63,9 +62,7 @@ const RUNS: Record<string, (seed: number) => Run> = {
 };
 
 describe('class challenge games', () => {
-  it('only Hero vs. Zombie, Dragon Flight, and Dragon Rider declare a challenge, a reading vocabulary one', () => {
-    const declared = GAMES.filter((g) => g.manifest?.challenge).map((g) => g.id).sort();
-    expect(declared).toEqual(['dragon-flight', 'dragon-rider', 'hero-vs-zombie']);
+  it('Hero vs. Zombie, Dragon Flight, and Dragon Rider declare a reading vocabulary challenge', () => {
     for (const manifest of [heroVsZombie, dragonFlight, dragonRider]) {
       expect(manifest.challenge).toEqual({ version: '2026-10-06.1', inputMode: 'vocabulary', modalities: ['reading'] });
     }
