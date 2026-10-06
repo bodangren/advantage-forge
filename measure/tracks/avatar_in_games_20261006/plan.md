@@ -41,8 +41,8 @@ The owner rule of 2026-10-06: the avatar is the student's identity, so a student
 
 ## Phase 5: Release and hand-off
 
-- [ ] Task: The release renders the portrait layers (`scripts/avatar-portraits.ts` after `avatar-pack.ts`) into the avatar pack of the demo and the app. The release copied the pack without them; the app has its own copy of the 2026-10-04 layers.
+- [x] Task: The release renders the portrait layers (`scripts/avatar-portraits.ts` after `avatar-pack.ts`) into the avatar pack of the demo and the app. `scripts/rpg-skin.ts` runs it after the pack build (6aab5f32); released in 23a8b0c2 (223 layers).
 - [ ] Task: The avatar pack version changes when its content changes (TD-24).
 - [ ] Task: Run the Forge tests and type checks; release with `apk-release.ts`; run `monorepo-sync.ts --check`.
-- [ ] Task: Send the release and the host request to the monorepo session; record its confirmation.
+- [ ] Task: Send the release and the host request to the monorepo session; record its confirmation. Sent 2026-10-06 for Forge 22713b0f: `monorepo-sync.ts --check` showed the packs in sync, 16 kit and 61 game differences. Requests: map `contracts/avatar.ts` to a re-export of the game-contracts schema, parse a launch avatar fixture in `port-kit --check`, check the served portraits with `--skin <checkout> --check`. The host already passes `options.avatar`. Waiting for the commit ids and test results.
 - [ ] Task: Update `docs/avatar-system.md` (section 11), `docs/apk-port.md`, the debt registry, and Measure; run the generator and the doctor.
