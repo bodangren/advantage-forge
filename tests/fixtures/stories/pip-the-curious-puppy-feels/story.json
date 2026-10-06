@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 1,
+  "id": "pip-the-curious-puppy-feels",
+  "title": "Pip the Curious Puppy Feels",
+  "series": "Origins 2",
+  "lesson": 1,
+  "level": "A0",
+  "genre": "Materials & Science",
+  "paragraphs": [
+    {
+      "text": "This is Pip. Pip is a puppy. Pip is a good puppy. Pip is a happy puppy. Pip is curious. Pip sees a blue blanket. This blanket is big. Pip walks on the blanket. Pip feels the blanket. It is soft. This blanket is soft. Pip likes soft. Pip is very happy.",
+      "translation": "นี่คือปิ๊ป ปิ๊ปเป็นลูกสุนัข ปิ๊ปเป็นลูกสุนัขที่ดี ปิ๊ปเป็นลูกสุนัขที่มีความสุข ปิ๊ปอยากรู้อยากเห็น ปิ๊ปเห็นผ้าห่มสีฟ้า ผ้าห่มนี้ใหญ่ ปิ๊ปเดินบนผ้าห่ม ปิ๊ปรู้สึกถึงผ้าห่ม มันนุ่ม ผ้าห่มนี้มันนุ่ม ปิ๊ปชอบความนุ่ม ปิ๊ปมีความสุขมาก"
+    },
+    {
+      "text": "Pip sees a red rug. This rug is big. Pip walks on the rug. Pip feels the rug. It is rough. This rug is rough. Pip likes rough. Pip sees a yellow ball. This ball is small. Pip feels the ball. It is smooth. This ball is smooth. Pip likes smooth.",
+      "translation": "ปิ๊ปเห็นพรมสีแดง พรมนี้ใหญ่ ปิ๊ปเดินบนพรม ปิ๊ปรู้สึกถึงพรม มันหยาบ พรมนี้มันหยาบ ปิ๊ปชอบความหยาบ ปิ๊ปเห็นลูกบอลสีเหลือง ลูกบอลนี้เล็ก ปิ๊ปรู้สึกถึงลูกบอล มันเรียบ ลูกบอลนี้มันเรียบ ปิ๊ปชอบความเรียบ"
+    },
+    {
+      "text": "Pip feels all things. Pip likes to feel. Pip feels soft things. Pip feels rough things. Pip feels smooth things. This is very good. Pip is a curious puppy. Pip is a good puppy. Pip is very happy. This is fun. My puppy is happy.",
+      "translation": "ปิ๊ปรู้สึกถึงทุกสิ่ง ปิ๊ปชอบที่จะรู้สึก ปิ๊ปรู้สึกถึงสิ่งที่นุ่ม ปิ๊ปรู้สึกถึงสิ่งที่หยาบ ปิ๊ปรู้สึกถึงสิ่งที่เรียบ นี่เป็นสิ่งที่ดีมาก ปิ๊ปเป็นลูกสุนัขที่อยากรู้อยากเห็น ปิ๊ปเป็นลูกสุนัขที่ดี ปิ๊ปมีความสุขมาก นี่คือความสนุก ลูกสุนัขของฉันมีความสุข"
+    }
+  ],
+  "images": [
+    "img-1.webp",
+    "img-2.webp",
+    "img-3.webp"
+  ],
+  "vocabulary": [
+    {
+      "id": "w-puppy",
+      "term": "puppy",
+      "translation": "ลูกสุนัข",
+      "definition": "A young dog."
+    },
+    {
+      "id": "w-blanket",
+      "term": "blanket",
+      "translation": "ผ้าห่ม",
+      "definition": "A large piece of fabric used for warmth."
+    },
+    {
+      "id": "w-soft",
+      "term": "soft",
+      "translation": "นุ่ม",
+      "definition": "Smooth and pleasant to touch; not hard."
+    },
+    {
+      "id": "w-rough",
+      "term": "rough",
+      "translation": "ขรุขระ",
+      "definition": "Having an uneven or irregular surface; not smooth."
+    },
+    {
+      "id": "w-smooth",
+      "term": "smooth",
+      "translation": "เรียบ",
+      "definition": "Having an even and regular surface."
+    },
+    {
+      "id": "w-yellow",
+      "term": "yellow",
+      "translation": "สีเหลือง",
+      "definition": "A bright color like the sun."
+    }
+  ],
+  "sentences": [
+    {
+      "id": "s-1",
+      "text": "Pip sees a blue blanket.",
+      "words": [
+        "Pip",
+        "sees",
+        "a",
+        "blue",
+        "blanket."
+      ],
+      "translation": "ปิ๊ปเห็นผ้าห่มสีฟ้า",
+      "paragraph": 0
+    },
+    {
+      "id": "s-2",
+      "text": "Pip walks on the rug.",
+      "words": [
+        "Pip",
+        "walks",
+        "on",
+        "the",
+        "rug."
+      ],
+      "translation": "ปิ๊ปเดินบนพรม",
+      "paragraph": 1
+    },
+    {
+      "id": "s-3",
+      "text": "This ball is smooth.",
+      "words": [
+        "This",
+        "ball",
+        "is",
+        "smooth."
+      ],
+      "translation": "ลูกบอลนี้มันเรียบ",
+      "paragraph": 1
+    }
+  ],
+  "fills": [
+    {
+      "id": "f-1",
+      "sentence": "Pip is a ___.",
+      "answer": "puppy",
+      "paragraph": 0
+    },
+    {
+      "id": "f-2",
+      "sentence": "Pip is ___.",
+      "answer": "curious",
+      "paragraph": 0
+    },
+    {
+      "id": "f-3",
+      "sentence": "Pip sees a blue ___.",
+      "answer": "blanket",
+      "paragraph": 0
+    },
+    {
+      "id": "f-4",
+      "sentence": "Pip ___ the blanket.",
+      "answer": "feels",
+      "paragraph": 0
+    }
+  ],
+  "questions": [
+    {
+      "id": "q-1",
+      "question": "What is Pip?",
+      "options": [
+        "A cat",
+        "A puppy",
+        "A bird",
+        "A fish"
+      ],
+      "answer": 1
+    },
+    {
+      "id": "q-2",
+      "question": "What color is the blanket?",
+      "options": [
+        "Red",
+        "Yellow",
+        "Blue",
+        "Green"
+      ],
+      "answer": 2,
+      "paragraph": 0
+    },
+    {
+      "id": "q-3",
+      "question": "How does the blanket feel?",
+      "options": [
+        "Rough",
+        "Smooth",
+        "Hard",
+        "Soft"
+      ],
+      "answer": 3,
+      "paragraph": 0
+    },
+    {
+      "id": "q-4",
+      "question": "What color is the rug?",
+      "options": [
+        "Blue",
+        "Red",
+        "Yellow",
+        "White"
+      ],
+      "answer": 1,
+      "paragraph": 1
+    }
+  ],
+  "source": {
+    "file": "primary/origins-2-a0/01-Pip the Curious Puppy Feels _workbook.json",
+    "url": "https://primary.reading-advantage.com/student/read/cmgqx8v6602p3t79btatvfjuw"
+  }
+}

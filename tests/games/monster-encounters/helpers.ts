@@ -18,9 +18,12 @@ export const STORY_IDS = [
   'fun-day-at-the-beach',
   'pips-happy-night',
   'pip-sees-colors',
+  'pip-the-curious-puppy-feels',
   'the-new-student',
   'the-school-garden',
 ];
+/** Packs that keep only a chosen practice set (scripts/apk3d-import.ts `practice`): the sentence count. */
+export const PRACTICE_SENTENCES: Record<string, number> = { 'pip-the-curious-puppy-feels': 3 };
 /** The A1 stories: no images, generated Thai glosses. */
 export const GENERATED_IDS = ['the-new-student', 'the-school-garden'];
 

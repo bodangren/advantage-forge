@@ -81,7 +81,11 @@ const stage = ((): Stage3D | null => {
   }
 })();
 const lobby = stage ? new Lobby(stage) : null;
-const content = new Content(BASE);
+/**
+ * `?qc=1&stories=fixtures` reads the workbook stories of the tests (tests/fixtures/stories) from
+ * the dev server, for QC runs and recordings. They are not published with the demo.
+ */
+const content = new Content(QC && new URLSearchParams(location.search).get('stories') === 'fixtures' ? `${BASE}tests/fixtures/` : BASE);
 const mount = createCartridgeMounter({
   three: createThreeGameFactory({ base: BASE, gate: () => checkDevice() }),
   phaser: createPhaserGameFactory(),

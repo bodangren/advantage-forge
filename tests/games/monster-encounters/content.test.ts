@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parseStoryIndex, parseStoryInput } from '../../../src/apk3d/contracts/index.js';
-import { GENERATED_IDS, STORIES_DIR, STORY_IDS, loadStory, makeStory } from './helpers.js';
+import { GENERATED_IDS, PRACTICE_SENTENCES, STORIES_DIR, STORY_IDS, loadStory, makeStory } from './helpers.js';
 
 describe('imported stories (the Monster Encounters content)', () => {
   it.each(STORY_IDS)('%s parses and has content for every encounter', (id) => {
@@ -12,8 +12,11 @@ describe('imported stories (the Monster Encounters content)', () => {
     expect(pack.paragraphs.length).toBe(3);
     expect(pack.vocabulary.length).toBeGreaterThanOrEqual(5);
     expect(pack.questions.length).toBe(4);
-    expect(pack.sentences.length).toBeGreaterThanOrEqual(6);
-    expect(pack.sentences.length).toBeLessThanOrEqual(12);
+    if (PRACTICE_SENTENCES[id]) expect(pack.sentences.length).toBe(PRACTICE_SENTENCES[id]);
+    else {
+      expect(pack.sentences.length).toBeGreaterThanOrEqual(6);
+      expect(pack.sentences.length).toBeLessThanOrEqual(12);
+    }
     expect(pack.fills.length).toBe(4);
     expect(pack.images.length).toBe(generated ? 0 : 3);
     expect(pack.source.translationsGenerated).toBe(generated ? true : undefined);
@@ -76,7 +79,7 @@ describe('imported stories (the Monster Encounters content)', () => {
     expect(car.images).toEqual(['img-1.webp', 'img-2.webp', 'img-3.webp']);
   });
 
-  it('index.json lists the eight stories with a cover where the story has images', () => {
+  it('index.json lists the nine stories with a cover where the story has images', () => {
     const index = parseStoryIndex(JSON.parse(readFileSync(join(STORIES_DIR, 'index.json'), 'utf8')));
     expect(index.map((e) => e.id)).toEqual(STORY_IDS);
     expect(index[0]).toMatchObject({
@@ -87,13 +90,13 @@ describe('imported stories (the Monster Encounters content)', () => {
       cover: 'img-1.webp',
     });
     expect(index[2]!.cover).toBe('img-1.webp');
-    expect(index[6]).toMatchObject({
+    expect(index[7]).toMatchObject({
       title: 'The New Student',
       level: 'A1',
       series: 'Adventures 1.0',
       lesson: 1,
     });
-    expect(index[6]!.cover).toBeUndefined();
+    expect(index[7]!.cover).toBeUndefined();
   });
 
   it('the A1 stories carry generated Thai glosses for every word', () => {

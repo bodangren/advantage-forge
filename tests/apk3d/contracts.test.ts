@@ -57,6 +57,8 @@ const loadStory = (id: string): StoryInput =>
 
 /** The A1 stories: no images, generated Thai glosses, `reviewed: false`. */
 const GENERATED_IDS = ['the-new-student', 'the-school-garden'];
+/** Packs that keep only a chosen practice set (scripts/apk3d-import.ts `practice`): exact counts. */
+const PRACTICE_IDS: Record<string, { words: number; sentences: number }> = { 'pip-the-curious-puppy-feels': { words: 6, sentences: 3 } };
 
 const manifest = (over: Partial<Cartridge3DManifest> = {}): Cartridge3DManifest =>
   validateCartridge3DManifest({
@@ -104,12 +106,13 @@ const evidence = (items: StoryGameEvidenceItem[]): StoryGameEvidence =>
   });
 
 describe('story input', () => {
-  it('finds the eight real story packs', () => {
+  it('finds the nine real story packs', () => {
     expect(STORY_IDS.sort()).toEqual([
       'fun-day-at-the-beach',
       'pip-and-the-red-car',
       'pip-is-brave',
       'pip-sees-colors',
+      'pip-the-curious-puppy-feels',
       'pips-happy-night',
       'squeaky-the-small-mouse',
       'the-new-student',
@@ -127,8 +130,14 @@ describe('story input', () => {
     expect(story.source.translationsGenerated).toBe(generated ? true : undefined);
     expect(story.images.length).toBe(generated ? 0 : 3);
     expect(story.vocabulary.length).toBeGreaterThan(0);
-    expect(story.sentences.length).toBeGreaterThanOrEqual(6);
-    expect(story.sentences.length).toBeLessThanOrEqual(12);
+    const practice = PRACTICE_IDS[id];
+    if (practice) {
+      expect(story.vocabulary.length).toBe(practice.words);
+      expect(story.sentences.length).toBe(practice.sentences);
+    } else {
+      expect(story.sentences.length).toBeGreaterThanOrEqual(6);
+      expect(story.sentences.length).toBeLessThanOrEqual(12);
+    }
     for (const w of story.vocabulary) {
       expect(w.term.length).toBeGreaterThan(0);
       expect(w.translation.length).toBeGreaterThan(0);
@@ -228,7 +237,7 @@ describe('story index', () => {
     const current = parseStoryIndex(readJson(join(STORIES_DIR, 'index.json')));
     const rebuilt = current.map((e) => toStoryIndexEntry(loadStory(e.id)));
     expect(current).toEqual(rebuilt);
-    expect(current.map((e) => e.level)).toEqual(['A0', 'A0', 'A0', 'A0', 'A0', 'A0', 'A1', 'A1']);
+    expect(current.map((e) => e.level)).toEqual(['A0', 'A0', 'A0', 'A0', 'A0', 'A0', 'A0', 'A1', 'A1']);
   });
 
   it('rejects duplicate ids and a missing reviewed flag', () => {
@@ -359,18 +368,18 @@ describe('manifest', () => {
     expect(isCompatible(manifest({ needs: { fills: story.fills.length + 1 } as never }), story)).toBe(false);
   });
 
-  it('every real story fits Monster Encounters (section 11 step 8) and a sentence game with 6 orders', () => {
+  it('every real story fits Monster Encounters (section 11 step 8) and a sentence game with 6 orders (3 for a practice pack)', () => {
     const monsterEncounters = manifest({
       inputMode: 'story',
       simulation: 'turn',
       levels: ['A0', 'A0+', 'A1'],
       needs: { vocabulary: 4, questions: 1 } as never,
     });
-    const potionRush = manifest({ levels: ['A0', 'A1'], needs: { sentences: 6 } as never });
+    const potionRush = (sentences: number) => manifest({ levels: ['A0', 'A1'], needs: { sentences } as never });
     for (const id of STORY_IDS) {
       const story = loadStory(id);
       expect(isCompatible(monsterEncounters, story), id).toBe(true);
-      expect(isCompatible(potionRush, story), id).toBe(true);
+      expect(isCompatible(potionRush(PRACTICE_IDS[id]?.sentences ?? 6), story), id).toBe(true);
     }
   });
 });

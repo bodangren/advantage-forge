@@ -34,7 +34,17 @@ const IMAGE_WIDTH = 1024;
 const IMAGE_QUALITY = 80;
 
 /** The stories of the demo: id and workbook file (relative to WORKBOOKS), in selector order. */
-export const STORIES: { id: string; file: string }[] = [
+/**
+ * A story's practice set, when only some words and sentences of the workbook should reach the
+ * games (the games take the whole `vocabulary` and `sentences` lists). Words are workbook terms in
+ * this order; sentences are article sentences with the workbook's Thai translation.
+ */
+interface PracticeSet {
+  words: string[];
+  sentences: { text: string; translation: string }[];
+}
+
+export const STORIES: { id: string; file: string; practice?: PracticeSet }[] = [
   // A0, Origins: images, Thai glosses, and translated paragraphs from the workbook generator.
   { id: 'pip-is-brave', file: 'origins-2-a0/12-Pip is Brave _workbook.json' },
   { id: 'squeaky-the-small-mouse', file: 'origins-3.1-a0/14-Squeaky, the Small Mouse _workbook.json' },
@@ -42,6 +52,20 @@ export const STORIES: { id: string; file: string }[] = [
   { id: 'fun-day-at-the-beach', file: 'origins-2-a0/04-Fun Day at the Beach _workbook.json' },
   { id: 'pips-happy-night', file: "origins-3.1-a0/02-Pip's Happy Night _workbook.json" },
   { id: 'pip-sees-colors', file: 'origins-3.1-a0/04-Pip Sees Colors _workbook.json' },
+  // The Primary video series (owner, 2026-10-06, via the advantage-pr session): Origins 2 lesson 1
+  // with the six words and three sentences of the game recordings.
+  {
+    id: 'pip-the-curious-puppy-feels',
+    file: 'origins-2-a0/01-Pip the Curious Puppy Feels _workbook.json',
+    practice: {
+      words: ['puppy', 'blanket', 'soft', 'rough', 'smooth', 'yellow'],
+      sentences: [
+        { text: 'Pip sees a blue blanket.', translation: 'ปิ๊ปเห็นผ้าห่มสีฟ้า' },
+        { text: 'Pip walks on the rug.', translation: 'ปิ๊ปเดินบนพรม' },
+        { text: 'This ball is smooth.', translation: 'ลูกบอลนี้มันเรียบ' },
+      ],
+    },
+  },
   // A1, Adventures: no images and no Thai in the workbook; glosses from THAI_GLOSSES (demo only).
   { id: 'the-new-student', file: 'adventures-1.0-a1/01-The_New_Student_workbook.json' },
   { id: 'the-school-garden', file: 'adventures-1.0-a1/02-The_School_Garden_workbook.json' },
@@ -383,12 +407,30 @@ async function importImage(url: string, target: string): Promise<void> {
     .toFile(target);
 }
 
+// ---------------------------------------------------------------- practice sets
+
+/** Keeps only the practice words and sentences of a story, in the practice order. */
+function withPractice(story: StoryInput, practice: PracticeSet): StoryInput {
+  const vocabulary = practice.words.map((word) => {
+    const v = story.vocabulary.find((x) => x.term.toLowerCase() === word.toLowerCase());
+    if (!v) throw new Error(`${story.id}: practice word "${word}" is not in the workbook vocabulary`);
+    return v;
+  });
+  // Built from the article, not from the extracted list: the extractor keeps only a capped sample.
+  const sentences: StorySentence[] = practice.sentences.map(({ text, translation }, i) => {
+    const paragraph = story.paragraphs.findIndex((p) => p.text.includes(text));
+    if (paragraph < 0) throw new Error(`${story.id}: practice sentence "${text}" is not in the article`);
+    return { id: `s-${i + 1}`, text, words: text.split(' '), translation, paragraph };
+  });
+  return parseStoryInput({ ...story, vocabulary, sentences }, `${story.id} story`);
+}
+
 // ---------------------------------------------------------------- main
 
 async function main(): Promise<void> {
   if (!existsSync(WORKBOOKS)) throw new Error(`workbook folder not found: ${WORKBOOKS} (set DEMO_WORKBOOKS)`);
   const index: StoryIndexEntry[] = [];
-  for (const { id, file } of STORIES) {
+  for (const { id, file, practice } of STORIES) {
     const path = join(WORKBOOKS, file);
     const wb = JSON.parse(readFileSync(path, 'utf8')) as Workbook;
     const dir = join(OUT, id);
@@ -407,7 +449,7 @@ async function main(): Promise<void> {
     }
     if (urls.length === 0) console.warn(`  note: ${id}: the workbook has no article images (plain cover)`);
 
-    const story = buildStory(id, file, wb, urls.length);
+    const story = practice ? withPractice(buildStory(id, file, wb, urls.length), practice) : buildStory(id, file, wb, urls.length);
     writeFileSync(join(dir, 'story.json'), JSON.stringify(story, null, 2) + '\n');
     console.log(
       `  story.json: ${story.level}, ${story.paragraphs.length} paragraphs, ${story.vocabulary.length} words, ` +
