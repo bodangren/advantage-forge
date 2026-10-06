@@ -3,4 +3,4 @@
  * rebuilt pack whose files changed takes the next patch version, and one with added or removed
  * items the next minor version (track avatar_reward_pieces_20261006, debt TD-24).
  */
-export const AVATAR_PACK_VERSION = '1.0.0';
+export const AVATAR_PACK_VERSION = '1.1.0';

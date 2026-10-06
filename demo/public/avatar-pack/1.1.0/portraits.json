@@ -1,5 +1,5 @@
 {
- "version": "1.0.0",
+ "version": "1.1.0",
  "size": 512,
  "camera": {
   "azimuth": -35,
@@ -487,6 +487,10 @@
    "color": "portraits/duelist-rapier.webp",
    "mask": "portraits/duelist-rapier.mask.webp"
   },
+  "echo-staff": {
+   "color": "portraits/echo-staff.webp",
+   "mask": "portraits/echo-staff.mask.webp"
+  },
   "enchanter-scroll": {
    "color": "portraits/enchanter-scroll.webp",
    "mask": "portraits/enchanter-scroll.mask.webp"
@@ -546,6 +550,10 @@
   "gloves": {
    "color": "portraits/gloves.webp",
    "mask": "portraits/gloves.mask.webp"
+  },
+  "graveyard-staff": {
+   "color": "portraits/graveyard-staff.webp",
+   "mask": "portraits/graveyard-staff.mask.webp"
   },
   "great-axe": {
    "color": "portraits/great-axe.webp",
