@@ -1,79 +1,86 @@
 /**
- * The student's "2D mode (older phones)" setting: one value per device that the game host and
- * every page with a 3D view read, so a student who picks 2D once gets 2D everywhere (owner,
- * 2026-10-06; track apk_pack_release_20261006).
- *
- * Format: browser storage of the app origin, key `RENDERER_SETTING_KEY`, a JSON object whose
- * `flat: true` means 2D. The Forge demo host has saved its choices in this object since
- * 2026-09-28, so the other fields of the object stay as they are. `?renderer=phaser` in the page
- * address forces 2D for one visit. The device gate still decides in `'auto'`: a page calls
- * `selectRenderer({ renderers: ['three', 'phaser'] }, checkDevice(...), readRendererSetting())`.
- *
- * Browser storage can be blocked (private windows) or absent (server rendering): every call is
- * safe to fail, and a failure counts as `'auto'`.
+ * The one "2D mode (older phones)" setting of the Advantage Play Kit. The ported 3D games and
+ * the Primary Advantage skin pages read the same value, so a student who picks 2D once gets 2D
+ * everywhere. The setting is the Forge demo's: the JSON under the storage key `chibi-quest`
+ * with `flat: true`. `?renderer=phaser` forces 2D for one visit, and a device without WebGL2
+ * gets 2D.
  */
-import type { RendererSetting } from './select.js';
 
-/** The storage key of the saved setting (the Chibi Quest host object). */
-export const RENDERER_SETTING_KEY = 'chibi-quest';
+/** The storage key the Chibi Quest host saves its choices under (shared with the Forge demo). */
+export const RENDERER_SETTINGS_KEY = "chibi-quest";
 
-/** Where the setting comes from: the page query string and the browser storage. */
-export interface RendererSettingSource {
-  search?: string;
-  storage?: Pick<Storage, 'getItem' | 'setItem'> | null;
+/** A renderer choice. */
+export type Renderer = "2d" | "3d";
+
+/** What the choice reads. */
+export interface RendererInputs {
+  /** The page query string (`?renderer=phaser` forces 2D). */
+  search: string;
+  /** The saved settings JSON, or null. */
+  saved: string | null;
+  /** Whether the device has WebGL2. */
+  webgl2: boolean;
 }
 
-function browser(): Required<RendererSettingSource> {
-  const w = typeof window === 'undefined' ? undefined : window;
-  let storage: Storage | null = null;
+/**
+ * Chooses the renderer from the inputs.
+ * @param inputs The query string, the saved settings, and the WebGL2 check.
+ * @returns "2d" when forced or unsupported, else "3d".
+ */
+export function chooseRenderer({ search, saved, webgl2 }: RendererInputs): Renderer {
+  if (new URLSearchParams(search).get("renderer") === "phaser") return "2d";
   try {
-    storage = w?.localStorage ?? null;
+    const settings = JSON.parse(saved ?? "{}") as { flat?: boolean };
+    if (settings.flat) return "2d";
   } catch {
-    storage = null;
+    // Unreadable settings count as no setting.
   }
-  return { search: w?.location?.search ?? '', storage };
+  return webgl2 ? "3d" : "2d";
 }
 
-/** The setting that a query string and a saved JSON text give. Pure. */
-export function rendererSettingOf(search: string, saved: string | null): RendererSetting {
-  if (new URLSearchParams(search).get('renderer') === 'phaser') return 'phaser';
-  try {
-    const value = JSON.parse(saved ?? '{}') as { flat?: unknown } | null;
-    return value && typeof value === 'object' && value.flat === true ? 'phaser' : 'auto';
-  } catch {
-    return 'auto';
-  }
-}
-
-/** Reads the setting from the page address and the browser storage (`'auto'` on the server). */
-export function readRendererSetting(source: RendererSettingSource = browser()): RendererSetting {
+/**
+ * Reads the inputs from the browser and chooses the renderer. Safe to call on a server: it
+ * answers "2d" there, so a page renders its fallback first and upgrades on the client.
+ * @returns The renderer.
+ */
+export function detectRenderer(): Renderer {
+  if (typeof window === "undefined") return "2d";
   let saved: string | null = null;
   try {
-    saved = source.storage?.getItem(RENDERER_SETTING_KEY) ?? null;
+    saved = window.localStorage.getItem(RENDERER_SETTINGS_KEY);
   } catch {
     saved = null;
   }
-  return rendererSettingOf(source.search ?? '', saved);
+  let webgl2 = false;
+  try {
+    webgl2 = Boolean(document.createElement("canvas").getContext("webgl2"));
+  } catch {
+    webgl2 = false;
+  }
+  return chooseRenderer({ search: window.location.search, saved, webgl2 });
 }
 
-/** Saves the setting (`'phaser'` = 2D mode) and keeps the other fields of the saved object. */
-export function saveRendererSetting(setting: RendererSetting, source: RendererSettingSource = browser()): void {
+/**
+ * Reads the saved "2D mode (older phones)" choice.
+ * @returns True when the student chose 2D.
+ */
+export function readFlatMode(): boolean {
   try {
-    const storage = source.storage;
-    if (!storage) return;
-    const parsed = JSON.parse(storage.getItem(RENDERER_SETTING_KEY) ?? '{}') as unknown;
-    const current = parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : {};
-    storage.setItem(RENDERER_SETTING_KEY, JSON.stringify({ ...current, flat: setting === 'phaser' }));
+    return Boolean((JSON.parse(window.localStorage.getItem(RENDERER_SETTINGS_KEY) ?? "{}") as { flat?: boolean }).flat);
   } catch {
-    // The choice applies to this visit only.
+    return false;
   }
 }
 
 /**
- * The view of a page that has a 3D view and a 2D fallback (the RPG pages): 2D when the setting
- * says so or the device has no WebGL2, else 3D. The same rule as `selectRenderer` for a game that
- * lists both renderers, without the game factories (so a page bundle stays small).
+ * Saves the "2D mode (older phones)" choice beside the other Chibi Quest settings.
+ * @param flat True for 2D.
  */
-export function pageView(webgl2: boolean, setting: RendererSetting = readRendererSetting()): '2d' | '3d' {
-  return setting === 'phaser' || !webgl2 ? '2d' : '3d';
+export function saveFlatMode(flat: boolean): void {
+  try {
+    const current = JSON.parse(window.localStorage.getItem(RENDERER_SETTINGS_KEY) ?? "{}") as Record<string, unknown>;
+    window.localStorage.setItem(RENDERER_SETTINGS_KEY, JSON.stringify({ ...current, flat }));
+  } catch {
+    // Storage can be blocked; the choice applies to this visit only.
+  }
 }

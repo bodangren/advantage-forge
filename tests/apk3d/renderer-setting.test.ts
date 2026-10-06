@@ -1,53 +1,55 @@
-/** The shared "2D mode (older phones)" setting: one value for the game host and the pages. */
-import { describe, expect, it } from 'vitest';
-import { RENDERER_SETTING_KEY, pageView, readRendererSetting, rendererSettingOf, saveRendererSetting, selectRenderer } from '../../src/apk3d/factory/index.js';
+/**
+ * The shared "2D mode (older phones)" setting. The first block is the test of the monorepo module
+ * that owns it (`advantage-play-kit/src/responsive/__tests__/renderer.test.ts`); the Forge file is a
+ * byte copy of that module. The second block tests the game bridge `savedRendererSetting`.
+ */
+import { afterEach, describe, expect, it } from 'vitest';
+import { RENDERER_SETTINGS_KEY, chooseRenderer, readFlatMode, saveFlatMode, savedRendererSetting, selectRenderer } from '../../src/apk3d/factory/index.js';
 
-function memory(initial: Record<string, string> = {}): Pick<Storage, 'getItem' | 'setItem'> & { data: Record<string, string> } {
-  const data = { ...initial };
-  return { data, getItem: (k) => data[k] ?? null, setItem: (k, v) => void (data[k] = v) };
-}
+describe('chooseRenderer (the shared 2D mode setting)', () => {
+  it('picks 3D on a device with WebGL2 and no setting', () => {
+    expect(chooseRenderer({ search: '', saved: null, webgl2: true })).toBe('3d');
+  });
+  it('falls back to 2D without WebGL2', () => {
+    expect(chooseRenderer({ search: '', saved: null, webgl2: false })).toBe('2d');
+  });
+  it('honours the saved flat setting of the Chibi Quest host', () => {
+    expect(chooseRenderer({ search: '', saved: JSON.stringify({ flat: true, looks: {} }), webgl2: true })).toBe('2d');
+    expect(chooseRenderer({ search: '', saved: JSON.stringify({ flat: false }), webgl2: true })).toBe('3d');
+  });
+  it('honours ?renderer=phaser for one visit', () => {
+    expect(chooseRenderer({ search: '?renderer=phaser', saved: null, webgl2: true })).toBe('2d');
+  });
+  it('treats unreadable settings as no setting', () => {
+    expect(chooseRenderer({ search: '', saved: '{not json', webgl2: true })).toBe('3d');
+  });
+});
 
-describe('renderer setting', () => {
-  it('keeps the key and the field that the Forge host and the RPG pages already save', () => {
-    expect(RENDERER_SETTING_KEY).toBe('chibi-quest');
-    expect(rendererSettingOf('', JSON.stringify({ flat: true, hero: 'knight' }))).toBe('phaser');
-    expect(rendererSettingOf('', JSON.stringify({ flat: false }))).toBe('auto');
+describe('savedRendererSetting (the games read the same setting)', () => {
+  const g = globalThis as { window?: unknown };
+  const fake = (search: string, data: Record<string, string>): void => {
+    g.window = { location: { search }, localStorage: { getItem: (k: string) => data[k] ?? null, setItem: (k: string, v: string) => void (data[k] = v) } };
+  };
+  afterEach(() => {
+    delete g.window;
   });
 
+  it('is auto on a server and without a setting', () => {
+    expect(savedRendererSetting()).toBe('auto');
+    fake('', {});
+    expect(savedRendererSetting()).toBe('auto');
+  });
+  it('forces 2D after a page saves 2D mode, and keeps the other saved fields', () => {
+    const data: Record<string, string> = { [RENDERER_SETTINGS_KEY]: JSON.stringify({ hero: 'ranger' }) };
+    fake('', data);
+    saveFlatMode(true);
+    expect(JSON.parse(data[RENDERER_SETTINGS_KEY]!)).toEqual({ hero: 'ranger', flat: true });
+    expect(readFlatMode()).toBe(true);
+    expect(savedRendererSetting()).toBe('phaser');
+    expect(selectRenderer({ renderers: ['three', 'phaser'] }, { status: 'ok' }, savedRendererSetting())?.renderer).toBe('phaser');
+  });
   it('forces 2D for one visit with ?renderer=phaser', () => {
-    expect(rendererSettingOf('?renderer=phaser', null)).toBe('phaser');
-    expect(rendererSettingOf('?renderer=three', JSON.stringify({ flat: true }))).toBe('phaser');
-  });
-
-  it('counts missing, broken, or blocked storage as auto', () => {
-    expect(rendererSettingOf('', null)).toBe('auto');
-    expect(rendererSettingOf('', '{not json')).toBe('auto');
-    expect(rendererSettingOf('', 'null')).toBe('auto');
-    const blocked = { getItem: () => { throw new Error('blocked'); }, setItem: () => { throw new Error('blocked'); } };
-    expect(readRendererSetting({ search: '', storage: blocked })).toBe('auto');
-    expect(() => saveRendererSetting('phaser', { storage: blocked })).not.toThrow();
-    expect(readRendererSetting({ search: '', storage: null })).toBe('auto');
-  });
-
-  it('saves the choice and keeps the other saved fields', () => {
-    const storage = memory({ [RENDERER_SETTING_KEY]: JSON.stringify({ hero: 'ranger', looks: { ranger: 'dusk' } }) });
-    saveRendererSetting('phaser', { storage });
-    expect(JSON.parse(storage.data[RENDERER_SETTING_KEY]!)).toEqual({ hero: 'ranger', looks: { ranger: 'dusk' }, flat: true });
-    expect(readRendererSetting({ search: '', storage })).toBe('phaser');
-    saveRendererSetting('auto', { storage });
-    expect(readRendererSetting({ search: '', storage })).toBe('auto');
-  });
-
-  it('gives a page with both views the same choice as a game', () => {
-    const both = { renderers: ['three', 'phaser'] as const };
-    expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'ok' }, 'phaser')?.renderer).toBe('phaser');
-    expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'ok' }, 'auto')?.renderer).toBe('three');
-    expect(selectRenderer({ renderers: [...both.renderers] }, { status: 'unsupported' }, 'auto')?.renderer).toBe('phaser');
-  });
-
-  it('gives a page view: 2D when forced or without WebGL2', () => {
-    expect(pageView(true, 'auto')).toBe('3d');
-    expect(pageView(true, 'phaser')).toBe('2d');
-    expect(pageView(false, 'auto')).toBe('2d');
+    fake('?renderer=phaser', {});
+    expect(savedRendererSetting()).toBe('phaser');
   });
 });
