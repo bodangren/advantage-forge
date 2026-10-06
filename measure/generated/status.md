@@ -1,12 +1,12 @@
 # Measure status
 
-Tracks: 80.
-Tracks by status: new: 10; in_progress: 40; completed: 30.
-Tracks by workstream: assets: 32; games: 41; foundation: 7.
+Tracks: 81.
+Tracks by status: new: 11; in_progress: 40; completed: 30.
+Tracks by workstream: assets: 32; games: 42; foundation: 7.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
-| [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | in_progress | games | 23/28 | 14 | — |
+| [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | in_progress | games | 24/29 | 14 | — |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
@@ -84,6 +84,7 @@ Tracks by workstream: assets: 32; games: 41; foundation: 7.
 | [map_variants_randomized_20261003](../tracks/map_variants_randomized_20261003/) | new | assets | 0/15 | 12 | — |
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
+| [monorepo_master_ci_20261006](../tracks/monorepo_master_ci_20261006/) | new | games | 0/16 | 16 | — |
 | [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | in_progress | foundation | 14/17 | 17 | 14 |
 | [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/7 | 5 | — |
 
