@@ -56,6 +56,12 @@ export interface SpritesRequest {
   readonly clipInfo?: ClipInfo;
   /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
   readonly preset?: string;
+  /**
+   * One cell for a set of clips: the rest pose and every frame of these clips fit the `size`
+   * cell, so each sheet of the set has the same cell, scale, and pivot (a game that swaps clips
+   * in one frame box). Without it a clip that needs more room gets a bigger cell.
+   */
+  readonly fit?: readonly { readonly clip: string; readonly info?: ClipInfo }[];
 }
 
 /**
@@ -403,7 +409,14 @@ async function renderSprites(req: SpritesRequest): Promise<{
   // asset's ground origin, so that point is the pivot in every cell and every direction.
   const effect = effectMeshes();
   toRest();
+  // With `fit`, the "rest" box that sets the scale is the rest pose and every frame of the set.
   const restBox = posedBox(effect);
+  for (const f of req.fit ?? [])
+    for (const t of sampleTimes(findClip(f.clip), req.frames ?? 8, f.info)) {
+      poseAt(findClip(f.clip), t);
+      restBox.union(posedBox(effect));
+    }
+  if (req.fit?.length) toRest();
   const box = restBox.clone();
   if (clip)
     for (const t of times) {
@@ -419,16 +432,25 @@ async function renderSprites(req: SpritesRequest): Promise<{
   const spanOf = (R: number, h: number) => Math.max(2 * R, h * Math.cos(el) + 2 * R * Math.sin(el)) / (1 - 2 * req.margin);
   const R0 = radius(restBox);
   const h0 = Math.max(restBox.max.y, 0.01);
-  const ppm = req.ppm ?? req.size / spanOf(R0, h0);
+  // A fixed cell seen from one direction (S, the camera on +Z) frames the box as that camera sees
+  // it: a point projects to u = x across and v = y cos(el) - z sin(el) up. Any other request frames
+  // a circle of radius R, so every direction fits the same cell.
+  const front = names.length === 1 && !!req.fit?.length && !req.ppm;
+  const corners = [restBox.min, restBox.max].flatMap((a) => [restBox.min, restBox.max].flatMap((b) => [restBox.min, restBox.max].map((c) => [a.x, b.y, c.z] as const)));
+  const vs = corners.map(([, y, z]) => y * Math.cos(el) - z * Math.sin(el));
+  const frontW = 2 * Math.max(...corners.map(([x]) => Math.abs(x)));
+  const frontV: [number, number] = [Math.min(...vs), Math.max(...vs)];
+  const frontSpan = Math.max(frontW, frontV[1] - frontV[0]) / (1 - 2 * req.margin);
+  const ppm = req.ppm ?? req.size / (front ? frontSpan : spanOf(R0, h0));
   const R = Math.max(R0, radius(box));
   const h = Math.max(h0, box.max.y);
   const fitted = Math.ceil((spanOf(R, h) * ppm) / 4) * 4;
-  const cellPx = req.ppm ? Math.max(8, fitted) : clip ? Math.max(req.size, fitted) : req.size;
+  const cellPx = req.ppm ? Math.max(8, fitted) : clip && !req.fit?.length ? Math.max(req.size, fitted) : req.size;
   const span = cellPx / ppm;
   const spanY = h * Math.cos(el) + 2 * R * Math.sin(el);
   const cam = studio.ortho;
   // The ground contact and the top: the ground line sits at the bottom margin.
-  const bottom = -R * Math.sin(el) - (span - spanY) / 2;
+  const bottom = front ? frontV[0] - (span - (frontV[1] - frontV[0])) / 2 : -R * Math.sin(el) - (span - spanY) / 2;
   cam.left = -span / 2;
   cam.right = span / 2;
   cam.bottom = bottom;

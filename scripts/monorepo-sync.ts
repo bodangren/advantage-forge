@@ -18,8 +18,10 @@
  *
  * It mirrors the files that Forge demo/public/rpg/skin.json lists into
  * apps/primary-advantage/public/rpg/, removes the files that the app's previous skin.json listed and
- * the new one does not, and leaves every other file there (the app's own chrome) alone. It does
- * not commit: the owner of that branch reviews and commits the change.
+ * the new one does not, and leaves every other file there (the app's own chrome) alone. It also
+ * mirrors each version folder of the avatar pack (Forge demo/public/avatar-pack/<version>/) into
+ * apps/primary-advantage/public/packs/avatar/<version>/. It does not commit: the owner of that
+ * branch reviews and commits the change.
  *
  * Rules:
  * - Forge must be clean in the synced paths, so the commit names the Forge commit it carries.
@@ -136,17 +138,32 @@ if (value('--skin')) {
   type Skin = { version: string; files: Record<string, unknown> };
   const next = JSON.parse(readFileSync(join(from, 'skin.json'), 'utf8')) as Skin;
   const prev = existsSync(join(app, 'skin.json')) ? (JSON.parse(readFileSync(join(app, 'skin.json'), 'utf8')) as Skin) : undefined;
-  const differ = Object.keys(next.files).filter((f) => !existsSync(join(app, f)) || !readFileSync(join(app, f)).equals(readFileSync(join(from, f))));
+  const same = (a: string, b: string): boolean => existsSync(b) && readFileSync(a).equals(readFileSync(b));
+  const differ = Object.keys(next.files).filter((f) => !same(join(from, f), join(app, f)));
   const gone = Object.keys(prev?.files ?? {}).filter((f) => !(f in next.files) && existsSync(join(app, f)));
   console.log(`skin ${prev?.version ?? '(none)'} -> ${next.version} in ${app}: ${differ.length} file(s) to write, ${gone.length} to remove`);
   for (const f of [...differ, ...gone.map((g) => `${g} (remove)`)]) console.log(`  ${f}`);
-  if (has('--check')) process.exit(differ.length || gone.length ? 1 : 0);
+  // The avatar pack: every version folder that Forge has, file for file.
+  const avatarFrom = join(FORGE, 'demo', 'public', 'avatar-pack');
+  const avatarApp = join(resolve(value('--skin')!), 'apps', 'primary-advantage', 'public', 'packs', 'avatar');
+  const walk = (dir: string, rel = ''): string[] =>
+    existsSync(join(dir, rel)) ? readdirSync(join(dir, rel)).flatMap((n) => (statSync(join(dir, rel, n)).isDirectory() ? walk(dir, join(rel, n)) : [join(rel, n)])) : [];
+  const versions = existsSync(avatarFrom) ? readdirSync(avatarFrom) : [];
+  const avatarWrite = versions.flatMap((v) => walk(join(avatarFrom, v)).map((f) => join(v, f))).filter((f) => !same(join(avatarFrom, f), join(avatarApp, f)));
+  const avatarGone = versions.flatMap((v) => walk(join(avatarApp, v)).map((f) => join(v, f))).filter((f) => !existsSync(join(avatarFrom, f)));
+  console.log(`avatar pack ${versions.join(', ') || '(none in Forge)'} in ${avatarApp}: ${avatarWrite.length} file(s) to write, ${avatarGone.length} to remove`);
+  if (has('--check')) process.exit(differ.length || gone.length || avatarWrite.length || avatarGone.length ? 1 : 0);
   for (const f of differ) {
     rmSync(join(app, f), { force: true });
     cpSync(join(from, f), join(app, f));
   }
   for (const f of gone) rmSync(join(app, f), { force: true });
   cpSync(join(from, 'skin.json'), join(app, 'skin.json'));
+  for (const f of avatarWrite) {
+    rmSync(join(avatarApp, f), { force: true });
+    cpSync(join(avatarFrom, f), join(avatarApp, f));
+  }
+  for (const f of avatarGone) rmSync(join(avatarApp, f), { force: true });
   console.log('written; review and commit them in that checkout');
   process.exit(0);
 }

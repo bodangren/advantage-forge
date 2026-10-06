@@ -50,6 +50,9 @@ sprite options
   --clip walk|all      animated sprite sheet (rows = directions, columns = frames) and GIF;
                        a comma list (idle,walk,run) renders the clips the asset has
   --ppm 64             fixed pixels per meter (a game sprite set at one scale; the cell fits the asset)
+  --cell               one cell for the listed clips: every frame of every --clip fits the --size
+                       cell, at one scale and one pivot (a game that swaps clips in one frame box);
+                       with --dirs 1 the cell fits the S view only, so the sprite is larger
   --into dir           write the sprites to dir/ instead of out/<asset>/sprites/
 
 animation options
@@ -115,6 +118,7 @@ async function main(): Promise<void> {
       frames: { type: 'string' },
       preset: { type: 'string' },
       ppm: { type: 'string' },
+      cell: { type: 'boolean' },
       into: { type: 'string' },
       wear: { type: 'string' },
       capped: { type: 'boolean' },
@@ -379,6 +383,7 @@ async function main(): Promise<void> {
           ...(values.ppm ? { ppm: num(values.ppm, 64) } : {}),
           ...(clip ? { clip, frames: frameCount, ...(clipInfo(clip) ? { clipInfo: clipInfo(clip)! } : {}) } : {}),
           ...(preset ? { preset } : {}),
+          ...(values.cell && clip ? { fit: wanted(true).map((c) => ({ clip: c, ...(clipInfo(c) ? { info: clipInfo(c)! } : {}) })) } : {}),
         };
         const res = await pg.evaluate((r) => window.forge.renderSprites(r), req);
         // A color preset's sprites go to sprites/presets/<preset>/, in the same layout.

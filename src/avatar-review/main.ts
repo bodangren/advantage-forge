@@ -7,6 +7,9 @@
  *   ?random=30&seed=7                 30 random loadouts from the ready catalog (seeded)
  *   ?bench=30                         30 random loadouts walking; window.__avatarFps (and __avatarLoad) after 5 s
  *   ?portraits                        the same avatars as 2D portraits (portrait layers, no 3D)
+ *   ?hero=knight&turn=20              one starter set alone, turned (degrees, default 0 = facing
+ *                                     front), on a transparent background (the RPG skin hero
+ *                                     portraits, scripts/rpg-skin.ts)
  *
  * The page sets `window.__avatarReady` when every avatar is on the stage, for screenshots.
  */
@@ -64,6 +67,8 @@ const rand = () => {
   return seed / 2 ** 32;
 };
 const pick = <T>(list: readonly T[]): T => list[Math.floor(rand() * list.length)]!;
+/** One starter set alone (the hero portrait shot), or null for the grid. */
+const hero = params.get('hero');
 
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 const models = new Map<string, Promise<AvatarModel>>();
@@ -141,7 +146,9 @@ async function portraits(catalog: Catalog, looks: Look[]): Promise<void> {
 async function main(): Promise<void> {
   const catalog = (await (await fetch(PACK + 'catalog.json')).json()) as Catalog;
   const items = new Map(catalog.items.map((i) => [i.id, i]));
-  const looks: Look[] = randomCount > 0 ? randomLooks(catalog, randomCount) : STARTER_SETS.map((s) => ({ label: s.id, tints: { ...s.tints }, pieces: [...s.pieces] }));
+  const starters = hero ? STARTER_SETS.filter((s) => s.id === hero) : STARTER_SETS;
+  if (hero && starters.length === 0) throw new Error(`no starter set '${hero}'`);
+  const looks: Look[] = randomCount > 0 ? randomLooks(catalog, randomCount) : starters.map((s) => ({ label: s.id, tints: { ...s.tints }, pieces: [...s.pieces] }));
   if (params.has('portraits')) return portraits(catalog, looks);
   const base = await model(catalog.base.file);
   const swept = items.get('avatar-hair-swept')!;
@@ -169,23 +176,28 @@ async function main(): Promise<void> {
   const columns = Math.min(avatars.length, avatars.length > 15 ? 10 : 5);
   const rows = Math.ceil(avatars.length / columns);
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color('#c9ced6');
+  scene.background = hero ? null : new THREE.Color('#c9ced6');
   scene.add(new THREE.HemisphereLight('#ffffff', '#5a5f6a', 1.6));
   const sun = new THREE.DirectionalLight('#ffffff', 2.2);
   sun.position.set(3, 6, 5);
   scene.add(sun);
   avatars.forEach(({ avatar }, i) => {
     avatar.root.position.set(((i % columns) - (columns - 1) / 2) * COLUMN, 0, Math.floor(i / columns) * -ROW);
-    avatar.root.rotation.y = THREE.MathUtils.degToRad(-25);
+    avatar.root.rotation.y = THREE.MathUtils.degToRad(hero ? Number(params.get('turn') ?? 0) : -25);
     scene.add(avatar.root);
     const action = avatar.actions.get(clipName) ?? avatar.actions.get('idle');
     action?.play();
     avatar.mixer.update(frozenAt ?? (bench ? i * 0.07 : 0));
   });
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: !!hero });
   renderer.setPixelRatio(1);
   renderer.setSize(innerWidth, innerHeight);
+  if (hero) {
+    renderer.setClearColor(0x000000, 0);
+    document.body.style.background = 'transparent';
+    for (const id of ['bar', 'labels']) document.getElementById(id)!.style.display = 'none';
+  }
   document.body.append(renderer.domElement);
   // An orthographic view from 28 degrees above that fits the grid in the window.
   const center = new THREE.Vector3(0, 0.5, -((rows - 1) * ROW) / 2);
@@ -195,6 +207,19 @@ async function main(): Promise<void> {
   const camera = new THREE.OrthographicCamera(-halfH * aspect, halfH * aspect, halfH, -halfH, 0.1, 200);
   camera.position.copy(center).add(new THREE.Vector3(0, Math.sin(tilt), Math.cos(tilt)).multiplyScalar(40));
   camera.lookAt(center);
+  if (hero && avatars[0]) {
+    // The hero portrait: the posed avatar fills the frame from 8 degrees above (the Forge front view).
+    scene.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(avatars[0].avatar.root, true);
+    const size = box.getSize(new THREE.Vector3());
+    const mid = box.getCenter(new THREE.Vector3());
+    const look = THREE.MathUtils.degToRad(8);
+    const half = (Math.max(size.x * aspect ** -1, size.y * Math.cos(look) + size.z * Math.sin(look)) / 2) * 1.12;
+    Object.assign(camera, { left: -half * aspect, right: half * aspect, top: half, bottom: -half });
+    camera.updateProjectionMatrix();
+    camera.position.copy(mid).add(new THREE.Vector3(0, Math.sin(look), Math.cos(look)).multiplyScalar(40));
+    camera.lookAt(mid);
+  }
 
   const bar = document.getElementById('bar')!;
   bar.textContent = `${avatars.length} avatars · clip ${clipName}${frozenAt !== null ? ` at ${frozenAt} s` : ''}${errors.length ? ` · ${errors.length} loadout error(s)` : ''}`;

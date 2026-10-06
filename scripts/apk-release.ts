@@ -30,7 +30,7 @@ import { SPRITE_PACK_ID, assetPackSchema, modelPackSchema, spritePackRoot, sprit
 import { HERO_MODELS, packModels, sameRevision, sourceRevision } from './apk-pack-models.js';
 
 /** The release outputs, relative to the repository root. */
-export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'src/apk3d/contracts/pack-versions.ts'];
+export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'demo/public/avatar-pack', 'src/apk3d/contracts/pack-versions.ts'];
 /** Generated 2D cameras of the baked backgrounds (written by apk2d-pack.ts with --bake). */
 const GENERATED = /^src\/games\/[a-z0-9-]+\/view2d\/projections?\.gen\.ts$/;
 
@@ -165,7 +165,8 @@ function outer(): void {
   console.log(`  ${changed.length} changed output files in ${relative(process.cwd(), ROOT) || '.'}`);
   if (!changed.length || !has('--commit')) return;
 
-  const paths = [...OUTPUTS, ...changed.filter((p) => GENERATED.test(p))];
+  // git add fails on a path that neither exists nor is tracked (an output this release did not make).
+  const paths = [...OUTPUTS, ...changed.filter((p) => GENERATED.test(p))].filter((p) => existsSync(join(ROOT, p)) || git(ROOT, ['ls-files', '--', p]) !== '');
   run(ROOT, 'git', ['add', '-A', '--', ...paths]);
   const subject = `chore(apk): release packs from ${head.slice(0, 7)}${bumps.length ? ` (${bumps.map(([id, v]) => `${id} ${v}`).join(', ')})` : ''}`;
   const body = [`3D and 2D rebuilt: ${report.stale3d.join(' ') || 'none'}`, `2D rendered: ${report.stale2d.join(' ') || 'none'}`, 'Built by scripts/apk-release.ts in a clean worktree (track apk_pack_release_20261006).'].join('\n');
