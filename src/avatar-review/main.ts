@@ -10,6 +10,8 @@
  *   ?hero=knight&turn=20              one starter set alone, turned (degrees, default 0 = facing
  *                                     front), on a transparent background (the RPG skin hero
  *                                     portraits, scripts/rpg-skin.ts)
+ *   ?hero=none&turn=-25               the bare base with the default hair, framed the same way (the
+ *                                     skin's "no hero yet" silhouette)
  *
  * The page sets `window.__avatarReady` when every avatar is on the stage, for screenshots.
  */
@@ -147,8 +149,13 @@ async function main(): Promise<void> {
   const catalog = (await (await fetch(PACK + 'catalog.json')).json()) as Catalog;
   const items = new Map(catalog.items.map((i) => [i.id, i]));
   const starters = hero ? STARTER_SETS.filter((s) => s.id === hero) : STARTER_SETS;
-  if (hero && starters.length === 0) throw new Error(`no starter set '${hero}'`);
-  const looks: Look[] = randomCount > 0 ? randomLooks(catalog, randomCount) : starters.map((s) => ({ label: s.id, tints: { ...s.tints }, pieces: [...s.pieces] }));
+  if (hero && hero !== 'none' && starters.length === 0) throw new Error(`no starter set '${hero}'`);
+  const looks: Look[] =
+    randomCount > 0
+      ? randomLooks(catalog, randomCount)
+      : hero === 'none'
+        ? [{ label: 'none', tints: {}, pieces: [] }]
+        : starters.map((s) => ({ label: s.id, tints: { ...s.tints }, pieces: [...s.pieces] }));
   if (params.has('portraits')) return portraits(catalog, looks);
   const base = await model(catalog.base.file);
   const swept = items.get('avatar-hair-swept')!;

@@ -23,7 +23,8 @@
  *   for the S view. A strip's frame size is its height.
  * - `hero`: a starter set (src/apk3d/avatar/starters.ts) composed from the avatar pack on the avatar
  *   review page (`avatar.html?hero=<id>&turn=-25`: turned so the weapon and the shield both read),
- *   on a transparent background, as WebP.
+ *   on a transparent background, as WebP. With `silhouette: <px>` the shot becomes a dark grey
+ *   figure with a soft question mark at that size (hero `none`: the bare base, for "no hero yet").
  * - `backdrop`: a shot of a scene map on the scene page (`hamlet.html?scene=<place>&clean&...`),
  *   as WebP without alpha. Every asset of the map is built (textured) first.
  * - `copy`: a Forge file as it is (fonts).
@@ -47,7 +48,7 @@ type View = 'front' | 'three-quarter';
 type Entry =
   | { kind: 'view'; asset: string; view: View; size: number; preset?: string }
   | { kind: 'strip'; asset: string; clip: string; preset?: string; cell?: number }
-  | { kind: 'hero'; hero: string; size: number; turn: number }
+  | { kind: 'hero'; hero: string; size: number; turn: number; silhouette?: number }
   | { kind: 'backdrop'; place: string; query: string; width: number; height: number }
   | { kind: 'copy'; from: string };
 
@@ -127,6 +128,8 @@ export const SKIN: Readonly<Record<string, Entry>> = {
   ...Object.assign({}, ...NPCS.map((npc) => strips(npc, 'kit/npc', ['idle', 'talk']))),
   ...Object.assign({}, ...BOSSES.map((b) => ({ ...views(b, 'kit/boss'), ...strips(b, 'kit/boss', ['idle', 'hit', 'attack', 'death'], 160) }))),
   ...Object.fromEntries(STARTER_SETS.map((s) => [`kit/heroes/${s.id}.webp`, { kind: 'hero', hero: s.id, size: 512, turn: -25 } as Entry])),
+  // The live dashboard's tile for a student with no hero yet (72 CSS px; 256 covers 3x screens).
+  'kit/heroes/no-hero.webp': { kind: 'hero', hero: 'none', size: 512, turn: -25, silhouette: 256 },
   ...Object.fromEntries(CATALOG.map((id) => [`items/${id}.webp`, { kind: 'view', asset: id, view: 'front', size: 256 } as Entry])),
   ...Object.fromEntries(PLACES.flatMap((p) => [[`backdrops/${p}-d.webp`, backdrop(p, false)], [`backdrops/${p}-p.webp`, backdrop(p, true)]])),
   'fonts/fredoka-latin.woff2': { kind: 'copy', from: 'src/apk3d/hud/fonts/fredoka-latin.woff2' },
@@ -373,6 +376,23 @@ if (staleHeroPaths.length || staleBackdrops.length) {
   }
 }
 
+/**
+ * A shot as a dark grey figure (a soft top-to-bottom gradient in the shot's own shape) with a soft
+ * question mark on the head, resized to `out` px, as WebP.
+ */
+async function silhouette(shot: Buffer, size: number, out: number): Promise<Buffer> {
+  const fill = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">` +
+      `<stop offset="0" stop-color="#5b616b"/><stop offset="1" stop-color="#30343a"/></linearGradient></defs><rect width="100%" height="100%" fill="url(#g)"/></svg>`,
+  );
+  const mark = Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><text x="50%" y="${Math.round(size * 0.4)}" text-anchor="middle" ` +
+      `font-family="sans-serif" font-weight="700" font-size="${Math.round(size * 0.24)}" fill="#c9ced6" fill-opacity="0.55">?</text></svg>`,
+  );
+  const figure = await sharp(fill).composite([{ input: shot, blend: 'dest-in' }]).png().toBuffer();
+  return sharp(figure).composite([{ input: mark, blend: 'atop' }]).resize(out, out).webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer();
+}
+
 const files: Record<string, ManifestFile> = {};
 for (const [path, entry] of Object.entries(SKIN)) {
   const dest = join(DEST, path);
@@ -387,6 +407,8 @@ for (const [path, entry] of Object.entries(SKIN)) {
       const meta = JSON.parse(readFileSync(join(dir, 'metrics.json'), 'utf8')) as { size: number };
       const { width } = await sharp(join(dir, 'sheet.png')).metadata();
       writeFileSync(dest, await sharp(join(dir, 'sheet.png')).extract({ left: 0, top: 0, width: width!, height: meta.size }).png({ compressionLevel: 9 }).toBuffer());
+    } else if (entry.kind === 'hero' && entry.silhouette) {
+      writeFileSync(dest, await silhouette(shots.get(path)!, entry.size, entry.silhouette));
     } else if (entry.kind === 'hero') {
       writeFileSync(dest, await sharp(shots.get(path)!).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer());
     } else {
