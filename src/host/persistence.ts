@@ -3,7 +3,10 @@
  * Only this module touches browser storage (games never persist); in the APK the app backend
  * owns this. Storage can be blocked (private windows), so every call is safe to fail.
  */
-const KEY = 'chibi-quest';
+import { RENDERER_SETTING_KEY } from '../apk3d/factory/index.js';
+
+/** The key of the kit's shared renderer setting: `flat` below is the "2D mode" every page reads. */
+const KEY = RENDERER_SETTING_KEY;
 
 export interface Saved {
   /** Hero id to the chosen color preset. */

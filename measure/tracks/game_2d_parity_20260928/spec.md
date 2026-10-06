@@ -4,6 +4,8 @@
 
 Resolve the documented 2D fallback limits for unlocked looks and the WebGL2-only 3D lobby.
 
+2026-10-06: the 2D pack holds the six heroes and every 3D color preset of each (`<hero>@<preset>.<clip>`, track `apk_pack_release_20261006`). This track makes the 2D views offer them; today the 2D manifests list three heroes (`HEROES_2D`) and the default look.
+
 ## Acceptance criteria
 
 - The 2D fallback follows the agreed behavior for unlocked hero looks.

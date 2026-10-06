@@ -22,7 +22,9 @@ Status: in progress. The plan records execution state. Linked documents retain d
 - [x] Task: The 3D model script and the 2D sprite script read the model list. The 2D script renders `--clip all` for a skinned model and `--preset all` for a hero.
 - [x] Task: The pack generators bump a changed pack's version and keep an unchanged one. `apk2d-pack.ts --check` reproduces the current 2D pack unchanged from the old renders; `apk3d-models.ts --report` bumps only the four packs with stale models. `provenance.forgeCommit` now covers the local files an asset imports (`sourceRevision`).
 - [~] Task: The release command: a clean worktree, stale models only, outputs copied back. `scripts/apk-release.ts` (`--check`, `--commit`, `--models`, `--all`, `--bake`). The first check lists 7 models for 3D and 2D and 60 models for 2D only.
-- [ ] Task: The sync command: kit, games, packs, and pack tests into a monorepo branch, with checks.
+- [~] Task: The sync command: kit, games, packs, and pack tests into a monorepo branch, with checks. `scripts/monorepo-sync.ts` (`--check`, `--commit`, `--push`; it refuses `master` and `main`). It also rewrites the three monorepo pack tests once to read each pack's own version.
+- [x] Task: One shared "2D mode (older phones)" setting for the games and the RPG pages (owner, 2026-10-06, after a note on the `lane-f` RPG skin work). `src/apk3d/factory/renderer-setting.ts`: `readRendererSetting`, `saveRendererSetting`, and `RENDERER_SETTING_KEY` keep the format that the Forge host and `lane-f` `lib/rpg/renderer.ts` already use (`chibi-quest`, `flat: true`); `?renderer=phaser` forces 2D. The Forge host takes its key from the kit. Tests: `tests/apk3d/renderer-setting.test.ts` (5).
+- [ ] Task: The monorepo game host reads the shared setting when the app passes none (`host/story-game.ts`, monorepo-owned).
 
 ## Phase 4: Build and verify
 

@@ -10,6 +10,13 @@ export {
   type RendererSetting,
 } from './select.js';
 export {
+  RENDERER_SETTING_KEY,
+  readRendererSetting,
+  rendererSettingOf,
+  saveRendererSetting,
+  type RendererSettingSource,
+} from './renderer-setting.js';
+export {
   createCartridgeMounter,
   type CartridgeMounterFactories,
   type MountOptions,

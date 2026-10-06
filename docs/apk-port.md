@@ -73,6 +73,36 @@ the Forge contract copies and with `game-contracts` (every story, its practice p
 flashcard input, evidence, and broken variants) and lists every disagreement. Run the check
 before every monorepo commit that touches the kit or the contracts.
 
+### Release flow (2026-10-06)
+
+Track `apk_pack_release_20261006` automates a release from Forge to the monorepo in two commands.
+Run both from the Forge root.
+
+```bash
+node --import tsx scripts/apk-release.ts --check      # list the stale models
+node --import tsx scripts/apk-release.ts --commit     # rebuild them, regenerate the packs, commit the outputs
+node --import tsx scripts/monorepo-sync.ts --check    # report what the monorepo branch lacks
+node --import tsx scripts/monorepo-sync.ts --commit   # copy, check, and commit in the monorepo branch
+node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that branch (never master)
+```
+
+- `apk-release.ts` builds in a clean worktree at HEAD (`../advantage-forge-release`), so the
+  uncommitted work of other sessions never enters a pack. A model is stale when its source
+  revision (the asset file and the local files it imports) differs from the pack's
+  `provenance.forgeCommit`, or when a 2D file of it is missing. Only stale models are rebuilt.
+- One model list (`scripts/apk-pack-models.ts`: `MODEL_PACKS` and the vault scene) drives the 3D
+  runtime models, the 3D packs, the 2D sprites, and the 2D pack. The 2D pack matches the 3D packs
+  one to one: a sheet for every clip of a skinned model, a sheet for every clip of every hero preset
+  (`<model>@<preset>.<clip>`), and one still (`prop.<model>`) for a model without clips.
+- Each pack has its own version (`src/apk3d/contracts/pack-versions.ts`). A pack with changed content
+  gets the next patch version and a pack that adds or removes a model the next minor version. A 3D
+  pack is served at `packs/<id>/<version>/`; the loader reads the table, so the hosts need no change.
+  The 2D pack keeps its root `v1`, because both hosts load that path.
+- `monorepo-sync.ts` copies the kit (`port-kit.mjs`), the games (`port-game.mjs all`), the two pack
+  folders, and the 2D parity test into the monorepo branch, then runs both drift checks and the
+  tests and type checks of both packages. It commits only when every check passes, and it refuses
+  `master` and `main`. The owner merges the branch.
+
 ## 1. Packages
 
 | Move | From (this repo) | To (monorepo) | Package name |

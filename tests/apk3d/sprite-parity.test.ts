@@ -9,11 +9,11 @@ import { describe, expect, it } from 'vitest';
 import { assetPackSchema, modelPackSchema, spritePackRoot, type ModelPack } from '../../src/apk3d/contracts/index.js';
 import { SPRITE_PACK_ID, packVersion, spriteSheetId, spriteStillId } from '../../src/apk3d/contracts/model-pack.js';
 
-const PUBLIC = join(process.cwd(), 'demo', 'public');
-const PACKS = join(PUBLIC, 'packs');
+const PACKS = join(process.cwd(), 'demo', 'public', 'packs');
+const SPRITES = join(process.cwd(), 'demo', 'public', spritePackRoot(SPRITE_PACK_ID).slice(1));
 const ids = existsSync(PACKS) ? readdirSync(PACKS).sort() : [];
 const packs: ModelPack[] = ids.map((id) => modelPackSchema.parse(JSON.parse(readFileSync(join(PACKS, id, packVersion(id), 'pack.json'), 'utf8'))));
-const sprites = assetPackSchema.parse(JSON.parse(readFileSync(join(PUBLIC, spritePackRoot(SPRITE_PACK_ID).slice(1), 'pack.json'), 'utf8')));
+const sprites = assetPackSchema.parse(JSON.parse(readFileSync(join(SPRITES, 'pack.json'), 'utf8')));
 const models = packs.flatMap((p) => Object.values(p.files).map((f) => ({ pack: p.id, file: f })));
 
 /** The 2D files that one 3D model needs. */
@@ -39,8 +39,7 @@ describe('2D sprite pack parity with the 3D packs', () => {
   });
 
   it('stores every file at its recorded size', () => {
-    const root = join(PUBLIC, spritePackRoot(SPRITE_PACK_ID).slice(1));
-    const wrong = Object.values(sprites.files).filter((f) => !existsSync(join(root, f.path)) || statSync(join(root, f.path)).size !== f.byteSize);
+    const wrong = Object.values(sprites.files).filter((f) => !existsSync(join(SPRITES, f.path)) || statSync(join(SPRITES, f.path)).size !== f.byteSize);
     expect(wrong.map((f) => f.id)).toEqual([]);
   });
 });
