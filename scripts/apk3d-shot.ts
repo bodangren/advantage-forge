@@ -29,7 +29,10 @@ async function server() {
     const p = await preview({ configFile: join(ROOT, 'vite.demo.config.ts'), logLevel: 'error', preview: { port, strictPort: false } });
     return { s: { close: () => p.close() }, url: p.resolvedUrls!.local[0]! };
   }
-  const s = await createServer({ configFile: join(ROOT, 'vite.demo.config.ts'), logLevel: 'error', server: { port, strictPort: false, hmr: false } });
+  // No file watcher: QC only serves the pages, and the machine's inotify watchers are shared with
+  // every dev server and session (ENOSPC). A config merge skips null, so a plugin sets it.
+  const noWatch = { name: 'qc-no-watch', config: (c: { server?: { watch?: unknown } }) => void ((c.server ??= {}).watch = null) };
+  const s = await createServer({ configFile: join(ROOT, 'vite.demo.config.ts'), logLevel: 'error', server: { port, strictPort: false, hmr: false }, plugins: [noWatch] });
   await s.listen();
   return { s, url: s.resolvedUrls!.local[0]! };
 }
