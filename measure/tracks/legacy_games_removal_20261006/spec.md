@@ -29,6 +29,7 @@ Out of scope: Tutor Advantage (`../tutor-advantage`), which runs its own copies 
 
 - 2026-10-06: the Echo Staff cannot be earned until the read-to-select-audio mode (F2) ships. No temporary rule (option 1). The Apprentice Wand and the Graveyard Staff move to the new Hero vs. Zombie (monorepo M2).
 - 2026-10-06: Tutor Advantage is out of scope (see above).
+- 2026-10-06: the monorepo plan is approved as proposed. Before the cutover, Primary Advantage runs only the new games; Reading Advantage and Advantage Games move after the cutover, and `game-cartridges` goes then.
 
 ## Requirements
 
