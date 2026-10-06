@@ -53,7 +53,8 @@ the monorepo session applies them.
 7. **Monster Encounters first** (section 13, phase 3). The party has three heroes (knight,
    wizard, cleric). The avatar takes the party place of the role of its class: casters (wizard,
    witch, druid, shaman) take the wizard place, healers (cleric, bard) take the cleric place, and
-   the other classes take the knight place. The other two places keep their heroes.
+   the other classes take the knight place. The other two places keep their heroes. The student
+   answers their turns too ("Knight's turn"). The owner confirmed this on 2026-10-06.
 8. **2D.** The 2D pack has sprites for the knight, the wizard, and the cleric only. Until layered
    sprites exist, a 2D view shows the student's own figure: the avatar portrait (composed from the
    portrait layers) as a still image with simple motion, at the place of the class's role
