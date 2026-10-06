@@ -24,6 +24,10 @@
  * entries the Forge pack has (the app's own portraits there stay). It does not commit: the owner of that
  * branch reviews and commits the change.
  *
+ * Who runs it (owner rule, 2026-10-06): the Forge session runs only `--check` (read-only). The monorepo
+ * session runs every write mode, including `--skin <checkout>`, in its own checkout and makes every
+ * commit and push there.
+ *
  * Rules:
  * - Forge must be clean in the synced paths, so the commit names the Forge commit it carries.
  * - The monorepo checkout must be on a branch other than master or main, and clean in the two
