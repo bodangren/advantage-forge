@@ -3,12 +3,12 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { MODEL_LICENSE, modelPackSchema, type ModelPack } from '../../src/apk3d/contracts/index.js';
-import { GAME_LOADS, MODEL_PACKS, MODEL_PACK_VERSION, gameBudgetErrors, packBudgetErrors } from '../../src/apk3d/contracts/model-pack.js';
+import { GAME_LOADS, MODEL_PACKS, PACK_VERSIONS, SPRITE_PACK_ID, packVersion, gameBudgetErrors, packBudgetErrors } from '../../src/apk3d/contracts/model-pack.js';
 
 const ROOT = join(process.cwd(), 'demo', 'public', 'packs');
 const ids = existsSync(ROOT) ? readdirSync(ROOT).sort() : [];
 const packs: Record<string, ModelPack> = {};
-for (const id of ids) packs[id] = modelPackSchema.parse(JSON.parse(readFileSync(join(ROOT, id, MODEL_PACK_VERSION, 'pack.json'), 'utf8')));
+for (const id of ids) packs[id] = modelPackSchema.parse(JSON.parse(readFileSync(join(ROOT, id, packVersion(id), 'pack.json'), 'utf8')));
 
 describe('generated model packs', () => {
   it('exist for every declared pack and the vault', () => {
@@ -17,14 +17,23 @@ describe('generated model packs', () => {
 
   it.each(ids)('%s: files exist with the recorded size and no hash field', (id) => {
     const pack = packs[id]!;
-    expect(pack.root).toBe(`packs/${id}/${MODEL_PACK_VERSION}`);
+    expect(pack.root).toBe(`packs/${id}/${packVersion(id)}`);
     for (const file of Object.values(pack.files)) {
-      const path = join(ROOT, id, MODEL_PACK_VERSION, file.path);
+      const path = join(ROOT, id, packVersion(id), file.path);
       expect(statSync(path).size, file.path).toBe(file.byteSize);
       expect(file.provenance.license).toBe(MODEL_LICENSE);
       expect(JSON.stringify(file)).not.toMatch(/sha256|hash/i);
-      for (const preset of file.presets) expect(existsSync(join(ROOT, id, MODEL_PACK_VERSION, file.id, `${preset}.webp`))).toBe(true);
+      for (const preset of file.presets) expect(existsSync(join(ROOT, id, packVersion(id), file.id, `${preset}.webp`))).toBe(true);
     }
+  });
+
+  it.each(ids)('%s: one folder, at the version of the version table', (id) => {
+    expect(readdirSync(join(ROOT, id))).toEqual([packVersion(id)]);
+    expect(packs[id]!.version).toBe(packVersion(id));
+  });
+
+  it('lists a version for every pack and for the 2D pack, and no other', () => {
+    expect(Object.keys(PACK_VERSIONS).sort()).toEqual([...ids, SPRITE_PACK_ID].sort());
   });
 
   it('keeps every model in one pack', () => {

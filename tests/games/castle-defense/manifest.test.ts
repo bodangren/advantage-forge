@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { GAME_LOADS, gameBudgetErrors, editionModelIndex, modelEditionOf, MODEL_PACKS, MODEL_PACK_VERSION, modelPackSchema, unboundModelKeys, type ModelPack } from '../../../src/apk3d/contracts/index.js';
+import { GAME_LOADS, gameBudgetErrors, editionModelIndex, modelEditionOf, MODEL_PACKS, packVersion, modelPackSchema, unboundModelKeys, type ModelPack } from '../../../src/apk3d/contracts/index.js';
 import { createI18n } from '../../../src/apk3d/i18n/catalog.js';
 import { briefing } from '../../../src/games/castle-defense/briefing.js';
 import { FILES_2D, MODELS_3D, manifest } from '../../../src/games/castle-defense/manifest.js';
@@ -12,7 +12,7 @@ import { battleFiles2D, HEROES } from '../../../src/games/shared/battle/stage2d.
 import { vaultModels } from '../../../src/games/shared/battle/stage3d.js';
 import { STORY } from './helpers.js';
 
-const readPack = (id: string): ModelPack => modelPackSchema.parse(JSON.parse(readFileSync(join(process.cwd(), 'demo', 'public', 'packs', id, MODEL_PACK_VERSION, 'pack.json'), 'utf8')));
+const readPack = (id: string): ModelPack => modelPackSchema.parse(JSON.parse(readFileSync(join(process.cwd(), 'demo', 'public', 'packs', id, packVersion(id), 'pack.json'), 'utf8')));
 
 describe('manifest', () => {
   it('is a valid story-mode turn game for both renderers', () => {

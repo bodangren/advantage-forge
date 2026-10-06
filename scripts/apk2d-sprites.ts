@@ -1,19 +1,27 @@
 /**
- * Renders the 2D sprite library with the forge: every character and dynamic prop the 2D views
- * use, at the one 2D camera (orthographic, elevation 45, 64 pixels per meter), so sprites line up
- * with the baked backgrounds (scripts/apk2d-bake.ts). Writes
- * out/apk2d/sprites/<model>/<clip>/{sheet.png, metrics.json} (rows = directions,
- * columns = frames) and out/apk2d/sprites/<prop>/{S.png, metrics.json} for props;
- * scripts/apk2d-pack.ts turns them into APK sprite packs.
+ * Renders the 2D sprite library with the forge: every model of the 3D packs
+ * (scripts/apk-pack-models.ts), at the one 2D camera (orthographic, elevation 45, 64 pixels per
+ * meter), so sprites line up with the baked backgrounds (scripts/apk2d-bake.ts). The 2D pack
+ * matches the 3D packs one to one (track apk_pack_release_20261006):
+ *
+ * - a skinned model: a sheet for every clip of its GLB (`--clip all`),
+ *   out/apk2d/sprites/<model>/<clip>/{sheet.png, metrics.json} (rows = directions, columns = frames);
+ * - a hero: also every color preset, out/apk2d/sprites/<model>/presets/<preset>/<clip>/...;
+ * - a model without clips: one still, out/apk2d/sprites/<model>/{S.png, metrics.json}.
+ *
+ * scripts/apk2d-pack.ts turns them into the APK sprite pack. Each forge call is one textured build,
+ * which also leaves out/<model>/<model>.glb for scripts/demo-models.ts.
  *
  *   FORGE_WORKERS=1 node --import tsx scripts/apk2d-sprites.ts [model ...]
  *
- * Heroes get 8 directions (the player reads the hero's facing); everyone else 4, to keep the
- * texture memory small on old phones.
+ * Heroes, mounts, and the fire dragon get 8 directions (the player reads their facing); every
+ * other character 4, to keep the texture memory small on old phones.
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, readdirSync, rmSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { MODEL_PACKS, modelPackSchema, packVersion } from '../src/apk3d/contracts/index.js';
+import { HERO_MODELS, allPackModels, packModels } from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, 'out', 'apk2d', 'sprites');
@@ -21,29 +29,22 @@ export const ELEVATION = 45;
 export const PPM = 64;
 const FRAMES = 6;
 
-interface Job {
-  model: string;
-  clips?: string[];
-  dirs: 1 | 4 | 8;
+/** Models that get 8 directions. */
+const EIGHT = new Set([...HERO_MODELS, ...(MODEL_PACKS.mounts ?? []), 'dragon-fire']);
+
+/** Whether the 3D pack records the model as skinned with clips (undefined: not in a 3D pack yet). */
+function animatedIn3D(model: string): boolean | undefined {
+  for (const [id, names] of Object.entries(packModels())) {
+    if (!names.includes(model)) continue;
+    const path = join(ROOT, 'demo', 'public', 'packs', id, packVersion(id), 'pack.json');
+    if (!existsSync(path)) return undefined;
+    const file = modelPackSchema.parse(JSON.parse(readFileSync(path, 'utf8'))).files[model];
+    return file ? file.skinned && file.clips.length > 0 : undefined;
+  }
+  return undefined;
 }
 
-const HERO = ['idle', 'walk', 'run', 'attack', 'attack2', 'hit', 'victory'];
-const NPC = ['idle', 'walk', 'talk', 'wave', 'salute', 'victory', 'taunt', 'roar'];
-const MONSTER = ['idle', 'walk', 'fly', 'attack', 'hit', 'death', 'rise', 'spit', 'reveal', 'screech', 'roar'];
-
-export const LIBRARY: Job[] = [
-  ...['knight', 'wizard', 'cleric'].map((model) => ({ model, clips: HERO, dirs: 8 as const })),
-  ...['villager', 'farmer', 'innkeeper', 'guard', 'druid', 'orc-warrior', 'goblin-warrior'].map((model) => ({ model, clips: NPC, dirs: 4 as const })),
-  ...['skeleton', 'zombie', 'slime', 'bandit', 'giant-bat', 'mimic'].map((model) => ({ model, clips: MONSTER, dirs: 4 as const })),
-  { model: 'dragon-fire', clips: MONSTER, dirs: 8 },
-  // The mount of the griffin games: only the clips they play.
-  { model: 'griffin', clips: ['fly', 'hit', 'roar', 'attack'], dirs: 8 },
-  ...['bottle', 'mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread', 'cauldron'].map((model) => ({ model, dirs: 1 as const })),
-  // Dragon Flight's land and gates (the 2D view places them in chunks, as the 3D view does).
-  ...['arch', 'oak-tree', 'pine-tree', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'cottage', 'well', 'fence', 'hay-bale'].map((model) => ({ model, dirs: 1 as const })),
-];
-
-/** Keeps only what a pack needs: each clip's sheet and metrics (and a prop's single frame). */
+/** Keeps only what a pack needs: each clip's sheet and metrics (and a still's single frame). */
 function prune(dir: string, still: boolean): void {
   for (const f of readdirSync(dir)) {
     const p = join(dir, f);
@@ -52,15 +53,35 @@ function prune(dir: string, still: boolean): void {
   }
 }
 
-const only = process.argv.slice(2);
-for (const job of LIBRARY.filter((j) => !only.length || only.includes(j.model))) {
-  const into = join(OUT, job.model);
-  rmSync(into, { recursive: true, force: true });
-  const args = ['sprites', job.model, '--dirs', String(job.dirs), '--elevation', String(ELEVATION), '--ppm', String(PPM), '--into', into];
-  if (job.clips) args.push('--clip', job.clips.join(','), '--frames', String(FRAMES));
-  const t = performance.now();
+const clipDirs = (dir: string): string[] => (existsSync(dir) ? readdirSync(dir).filter((f) => f !== 'presets' && statSync(join(dir, f)).isDirectory()) : []);
+
+function forge(model: string, into: string, extra: string[]): void {
+  const args = ['sprites', model, '--elevation', String(ELEVATION), '--ppm', String(PPM), '--into', into, ...extra];
   execFileSync(join(ROOT, 'forge'), args, { stdio: ['ignore', 'ignore', 'inherit'], env: { ...process.env, FORGE_WORKERS: process.env.FORGE_WORKERS ?? '1' } });
-  if (existsSync(into)) prune(into, !job.clips);
-  const clips = existsSync(into) ? readdirSync(into).filter((f) => statSync(join(into, f)).isDirectory()) : [];
-  console.log(`sprites ${job.model.padEnd(16)} ${job.clips ? clips.join(',') : 'still'}  (${Math.round((performance.now() - t) / 1000)} s)`);
+}
+
+const models = allPackModels();
+const only = process.argv.slice(2);
+const unknown = only.filter((n) => !models.includes(n));
+if (unknown.length) throw new Error(`not a pack model: ${unknown.join(', ')} (src/apk3d/contracts/model-pack.ts)`);
+
+for (const model of models.filter((m) => !only.length || only.includes(m))) {
+  const into = join(OUT, model);
+  rmSync(into, { recursive: true, force: true });
+  const t = performance.now();
+  const animated = animatedIn3D(model);
+  if (animated !== false) {
+    const dirs = EIGHT.has(model) ? 8 : 4;
+    forge(model, into, ['--dirs', String(dirs), '--clip', 'all', '--frames', String(FRAMES), ...(HERO_MODELS.includes(model) ? ['--preset', 'all'] : [])]);
+  }
+  // A model without clips (or a new model that turned out to have none): one still.
+  const still = !clipDirs(into).length;
+  if (still) {
+    rmSync(into, { recursive: true, force: true });
+    forge(model, into, ['--dirs', '1']);
+  }
+  if (existsSync(into)) prune(into, still);
+  const presets = existsSync(join(into, 'presets')) ? readdirSync(join(into, 'presets')) : [];
+  const what = still ? 'still' : `${clipDirs(into).join(',')}${presets.length ? `  presets ${presets.join(',')}` : ''}`;
+  console.log(`sprites ${model.padEnd(20)} ${what}  (${Math.round((performance.now() - t) / 1000)} s)`);
 }

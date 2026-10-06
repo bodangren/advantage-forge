@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { editionModelIndex, modelEditionOf, MODEL_PACKS, MODEL_PACK_VERSION, modelPackSchema, unboundModelKeys, type ModelPack } from '../../../src/apk3d/contracts/index.js';
+import { editionModelIndex, modelEditionOf, MODEL_PACKS, packVersion, modelPackSchema, unboundModelKeys, type ModelPack } from '../../../src/apk3d/contracts/index.js';
 import { createI18n } from '../../../src/apk3d/i18n/catalog.js';
 import { briefing } from '../../../src/games/abyssal-well/briefing.js';
 import { CREATURES } from '../../../src/games/abyssal-well/core/index.js';
@@ -11,7 +11,7 @@ import strings from '../../../src/games/abyssal-well/strings.en.js';
 import { WELL_MODELS } from '../../../src/games/abyssal-well/view/well.js';
 import { STORY } from './helpers.js';
 
-const readPack = (id: string): ModelPack => modelPackSchema.parse(JSON.parse(readFileSync(join(process.cwd(), 'demo', 'public', 'packs', id, MODEL_PACK_VERSION, 'pack.json'), 'utf8')));
+const readPack = (id: string): ModelPack => modelPackSchema.parse(JSON.parse(readFileSync(join(process.cwd(), 'demo', 'public', 'packs', id, packVersion(id), 'pack.json'), 'utf8')));
 
 describe('manifest', () => {
   it('is a valid story-mode turn game for both renderers', () => {

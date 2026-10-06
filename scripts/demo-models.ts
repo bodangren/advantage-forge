@@ -2,8 +2,8 @@
  * Web-weight models for the Monster Encounters demo: the full-quality Forge GLBs in out/ become
  * small runtime GLBs in demo/public/models/ (the "runtime model" output a real game needs).
  *
- *   node --import tsx scripts/demo-models.ts            all demo models
- *   node --import tsx scripts/demo-models.ts knight     one model
+ *   node --import tsx scripts/demo-models.ts                all pack models (scripts/apk-pack-models.ts)
+ *   node --import tsx scripts/demo-models.ts knight slime   some models
  *
  * Per model: drop the color-variant extras (the demo swaps preset textures itself), weld and
  * simplify the meshes toward a triangle budget within a shape-error limit, shrink the textures to
@@ -17,7 +17,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, flatten, join as joinMeshes, joinPrimitives, meshopt, prune, simplify, textureCompress, weld } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import sharp from 'sharp';
-import { sunkenVaultPlaces } from '../scenes/sunken-vault.js';
+import { HERO_MODELS, allPackModels } from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, 'out');
@@ -51,22 +51,16 @@ const CHARACTERS: Record<string, number> = {
   // Hero vs. Zombie.
   zombie: 8000,
 };
-/** Heroes whose color presets the demo can unlock. */
-const HEROES = ['knight', 'wizard', 'cleric', 'adventurer', 'ranger', 'paladin'];
+/** Heroes whose color presets the demo can unlock (the `heroes` pack). */
+const HEROES = HERO_MODELS;
 /**
  * Map pieces repeat many times (the vault has about a hundred floor tiles), so they get small
  * budgets and a looser error limit: their surface detail lives in the normal map anyway.
+ * The Potion Rush ingredients ride the conveyor (small); Dragon Flight sees trees from the air
+ * (more triangles).
  */
-/** The Potion Rush shop: the room and the ingredients that ride the conveyor. */
-const SHOP_PROPS = ['counter', 'shelf', 'bottle', 'cauldron', 'fireplace', 'candle-cluster', 'workbench', 'crate', 'barrel', 'sack', 'wood-floor', 'plaster-wall', 'plaster-wall-window', 'plaster-wall-door', 'round-table', 'stool', 'lantern', 'chandelier'];
 const INGREDIENTS = ['mushroom', 'apple', 'pumpkin', 'crystal-cluster', 'bread'];
-/** Dragon Flight: the land under the flight path (seen from the air, so trees get more triangles). */
-const FLIGHT_PROPS = ['grass-ground', 'forest-ground', 'oak-tree', 'pine-tree', 'ancient-oak', 'bush', 'fern', 'wildflowers', 'boulder', 'rock-cluster', 'river-straight', 'cottage', 'barn', 'well', 'fence', 'farm-field', 'hay-bale'];
 const TREES = ['oak-tree', 'pine-tree', 'ancient-oak'];
-/** Devourer Slime: the clearing's extra pieces. */
-const CLEARING_PROPS = ['tree-stump', 'mushroom-cluster'];
-/** Hero vs. Zombie: the night churchyard. */
-const CHURCHYARD_PROPS = ['dead-tree', 'campfire-out', 'tall-grass', 'dirt-ground'];
 
 function propBudget(name: string): number {
   if (INGREDIENTS.includes(name)) return 600;
@@ -190,13 +184,13 @@ async function build(name: string, budget: number, error: number): Promise<void>
 }
 
 async function main(): Promise<void> {
-  const only = process.argv[2];
-  const props = [...new Set([...sunkenVaultPlaces().map((p) => p.asset), ...SHOP_PROPS, ...INGREDIENTS, ...FLIGHT_PROPS, ...CLEARING_PROPS, ...CHURCHYARD_PROPS])].filter((a) => !(a in CHARACTERS) && a !== 'adventurer');
-  const jobs: [string, number, number][] = [
-    ...Object.entries(CHARACTERS).map(([n, b]) => [n, b, CHARACTER_ERROR] as [string, number, number]),
-    ...props.map((p) => [p, propBudget(p), PROP_ERROR] as [string, number, number]),
-  ];
-  for (const [name, budget, error] of jobs) if (!only || only === name) await build(name, budget, error);
+  const only = process.argv.slice(2);
+  const models = allPackModels();
+  const unknown = only.filter((n) => !models.includes(n));
+  if (unknown.length) throw new Error(`not a pack model: ${unknown.join(', ')} (src/apk3d/contracts/model-pack.ts)`);
+  // A character has a triangle budget of its own; every other model is a set piece.
+  const jobs: [string, number, number][] = models.map((n) => (n in CHARACTERS ? [n, CHARACTERS[n]!, CHARACTER_ERROR] : [n, propBudget(n), PROP_ERROR]));
+  for (const [name, budget, error] of jobs) if (!only.length || only.includes(name)) await build(name, budget, error);
 }
 
 void main().catch((e) => {
