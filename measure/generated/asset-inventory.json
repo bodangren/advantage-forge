@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 922,
+    "listed": 924,
     "catalog_matched": 707,
-    "off_catalog": 215
+    "off_catalog": 217
   },
   "asset_sources": [
     {
@@ -11301,6 +11301,11 @@
       ]
     },
     {
+      "id": "echo-staff",
+      "source_path": "assets/echo-staff.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "eel",
       "source_path": "assets/eel.ts",
       "catalog_source_ids": [
@@ -11992,6 +11997,11 @@
       "catalog_source_ids": [
         "props/world/gravestone"
       ]
+    },
+    {
+      "id": "graveyard-staff",
+      "source_path": "assets/graveyard-staff.ts",
+      "catalog_source_ids": []
     },
     {
       "id": "great-axe",
@@ -18423,8 +18433,8 @@
       "source_present": true
     },
     {
-      "id": "1.0",
-      "source_path": "demo/public/avatar-pack/1.0.0/pack.json",
+      "id": "1.1",
+      "source_path": "demo/public/avatar-pack/1.1.0/pack.json",
       "source_present": true
     },
     {

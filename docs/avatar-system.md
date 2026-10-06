@@ -250,7 +250,10 @@ changed (the catalog table, the base, a catalog piece, the avatar code). It comp
 pack with the published one (`demo/public/avatar-pack/<version>/`): the same files keep the
 version, changed files take the next patch version, and added or removed items the next minor
 version (`scripts/avatar-version.ts`, debt TD-24). The app serves `/packs/avatar/<version>/`, so a
-browser never keeps old files under a current version.
+browser never keeps old files under a current version. The first versioned release (0a4bbe85,
+2026-10-06) made 1.1.0 with the two reward staffs. The app reads the version from the synced pack and
+serves only the current folder; profile rows keep their old `catalogVersion`, and the games and the
+portraits use the served version (monorepo b1c32c3b2).
 
 Tools, in this order:
 
@@ -417,8 +420,9 @@ Built 2026-10-06 (track `avatar_in_games_20261006`):
 - **Release.** `scripts/rpg-skin.ts` renders the portrait layers into the pack after
   `avatar-pack.ts` (about 13 minutes for 223 layers). The monorepo took this work from Forge
   22713b0f in `apk3d-games-port` 9759e3534 and merged it into `primary-parity-integration`. The app
-  host passes `options.avatar` on both game pages, grants no hero looks, and needed no change for
-  the identity rule.
+  grants no hero looks. Open (TD-27): the app runs the Forge 3D games only on the story page, and
+  its story host does not pass the avatar yet, so the games show the knight there. The two pages
+  that pass the avatar run the legacy 2D games, which do not read it.
 
 ## 12. Acceptance criteria
 

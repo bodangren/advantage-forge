@@ -1,6 +1,6 @@
 # The avatar in the games
 
-Status: completed (2026-10-06). The plan records execution state. The specification and
+Status: in progress (opened again 2026-10-06: TD-27). The plan records execution state. The specification and
 `docs/avatar-system.md` retain design detail.
 
 ## Phase 0: Contract and options
@@ -46,3 +46,12 @@ The owner rule of 2026-10-06: the avatar is the student's identity, so a student
 - [x] Task: Run the Forge tests and type checks; release with `apk-release.ts`; run `monorepo-sync.ts --check`. Forge tests (146 files, 2,284 tests) and the type check pass. No pack release was needed: the check of Forge 22713b0f showed the packs in sync and only code differences.
 - [x] Task: Send the release and the host request to the monorepo session; record its confirmation. Sent 2026-10-06 for Forge 22713b0f: `monorepo-sync.ts --check` showed the packs in sync, 16 kit and 61 game differences. Requests: map `contracts/avatar.ts` to a re-export of the game-contracts schema, parse a launch avatar fixture in `port-kit --check`, check the served portraits with `--skin <checkout> --check`. The host already passes `options.avatar`. Done: monorepo `apk3d-games-port` 9759e3534 "feat(apk3d): the avatar in the games, from Forge 22713b0f" (98 files), merged into `primary-parity-integration` and local `master`, nothing pushed. Kit: tsc 0, build 0, 163 tests pass; games: tsc 0, 1,980 tests pass; `port-kit --check` matches Forge. `contracts/avatar.ts` is a re-export of game-contracts (`MONOREPO_OWNED`), `port-kit --check` parses five launch avatar fixtures with both copies, and the package exports `./avatar/launch` and `./avatar/portrait-of`. The skin check updated `portraits.json` and the hero portraits in the app.
 - [x] Task: Update `docs/avatar-system.md` (section 11), `docs/apk-port.md`, the debt registry, and Measure; run the generator and the doctor. Section 11 records the identity rule, the partial and neutral fallbacks, the 2D figure, the companions decision, and the monorepo release; section 13 marks phase 3 done. `docs/apk-port.md` has the recipe for a kit module that the monorepo owns. This track adds no debt: the pack version (TD-24) belongs to `avatar_reward_pieces_20261006`, and layered 2D sprites and Guild Mode are later work (spec, "Questions for later").
+
+## Phase 6: The avatar in the app's 3D games (TD-27)
+
+A read-only check of monorepo integration b1c32c3b2 on 2026-10-06 found that the Phase 5 confirmation was wrong for the 3D games. The two app pages that pass the avatar (`student/games/apk/[cartridgeId]` and `quest/battle`) run the legacy 2D games (`@reading-advantage/game-cartridges`), which do not read it. The Forge 3D games run only on the story page (`/student/games/story`), and the monorepo story host (`advantage-play-kit-3d/src/host/story-game.ts`, monorepo-owned) starts them with `hero: 'knight'` and no `avatar`. The paths are correct: `assetBase` "/" gives `/packs/avatar/<version>/`, and `sync-assets.mjs` keeps `public/packs/avatar/`.
+
+- [ ] Task: The monorepo session adds `avatar` to `StoryGameOptions`, passes it to the 3D and 2D factories, reads the avatar on the story page, and adds a test. Requested 2026-10-06.
+- [ ] Task: A browser check in the app: a student with an avatar (a row with `catalogVersion` 1.0.0) plays one 3D and one 2D game on the story page; the avatar shows and no fallback diagnostic is sent. Requested from the monorepo session 2026-10-06.
+- [ ] Task: Record the monorepo commit and the check; resolve TD-27; close the track.
+

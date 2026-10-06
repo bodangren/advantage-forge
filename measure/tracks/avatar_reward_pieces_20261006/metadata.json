@@ -1,20 +1,24 @@
 {
   "track_id": "avatar_reward_pieces_20261006",
   "type": "feature",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-06T00:00:00Z",
   "updated_at": "2026-10-06T00:00:00Z",
   "description": "The three reward emblems become avatar pieces (reward-only), with a content-based avatar pack version (TD-24)",
   "estimated_tasks": 10,
-  "actual_tasks": null,
-  "deviation_notes": "None.",
+  "actual_tasks": 10,
+  "deviation_notes": "None in count. The independent review took two rounds (6.5, then 7.5 for both staffs).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
     "docs/avatar-catalog.tsv",
     "scripts/avatar-pack.ts",
     "scripts/rpg-skin.ts",
-    "src/apk3d/avatar/pack.ts"
+    "src/apk3d/avatar/pack.ts",
+    "src/apk3d/avatar/pack-version.ts",
+    "scripts/avatar-version.ts",
+    "assets/graveyard-staff.ts",
+    "assets/echo-staff.ts"
   ],
   "dependencies": [
     "avatar_in_games_20261006"
