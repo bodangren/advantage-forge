@@ -143,6 +143,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: The avatar in the games**
   *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
 
+- [~] **Track: Reward pieces on the avatar**
+  *Link: [./tracks/avatar_reward_pieces_20261006/](./tracks/avatar_reward_pieces_20261006/)*
+
 - [ ] **Track: Make monorepo master CI green before the cutover**
   *Link: [./tracks/monorepo_master_ci_20261006/](./tracks/monorepo_master_ci_20261006/)*
 
