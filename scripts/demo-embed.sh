@@ -7,5 +7,6 @@ cd "$(dirname "$0")/.."
 TARGET="${1:-../reading-advantage-monorepo/apps/www-reading-advantage/public/experience}"
 node_modules/.bin/vite build --config vite.demo.config.ts
 mkdir -p "$TARGET"
-rsync -a --delete dist-demo/ "$TARGET"/
+# The RPG skin and the avatar pack are app files (Primary Advantage pages); the demo loads neither.
+rsync -a --delete --exclude /rpg/ --exclude /avatar-pack/ dist-demo/ "$TARGET"/
 echo "demo copied to $TARGET ($(du -sh "$TARGET" | cut -f1))"
