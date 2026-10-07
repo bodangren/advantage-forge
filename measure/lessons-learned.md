@@ -20,6 +20,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - Glossy water (roughness below 0.5) turned white in some sprite directions. Use roughness 0.55 for water that the sprite camera sees.
 - An agent ran `git stash` on the shared tree. Every brief forbids stash, reset, restore, and checkout outside the agent's own file.
 - The browser QC at 1280 × 720 passed all 28 games, but the phone QC (390 × 844 and 844 × 390, touch) found covered labels, gate words off screen, and unreadable tiles. Run `qc/run.mjs --phone` and `--phone-landscape` before a game layout counts as checked.
+- The answer audio controller notifies its listeners inside its own calls. A gate view that played a clip from a listener started nested plays, and each play cancelled the one before it. Unit tests passed, but the browser QC run gave more than 200 attempts per question, and the mount dropped the result. Deliver controller changes to a view in a microtask, and test a listener that plays.
 - The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
 
 ## Effective practices
