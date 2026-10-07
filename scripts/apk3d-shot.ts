@@ -414,7 +414,11 @@ async function playPotionRush2D(page: Page, shot: (name: string) => Promise<void
 }
 
 /** Dragon Flight: wait for the first gates (the dragon hovers), then the bot at a person's pace. */
-async function playDragonFlight(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+/**
+ * Gate games (Dragon Flight, Dragon Rider): the bot chooses at each pair of gates; screenshots at
+ * the first gates, while the dragon waits, after a real tap (2D), at three dragons, and at the boss.
+ */
+async function playGates(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
   if (TWO_D) await page.waitForFunction(() => (window as any).__apk3d.renderer() === 'phaser' && (window as any).__apk3d.game()?.state().round, undefined, { timeout: 120_000, polling: 250 });
   else await page.waitForSelector('.gate-tag', { timeout: 120_000 });
   await page.waitForTimeout(1500);
@@ -435,24 +439,43 @@ async function playDragonFlight(page: Page, shot: (name: string) => Promise<void
     if (!tap) throw new Error('No gate tag to tap');
     if (page.viewportSize()!.width < 700) await page.touchscreen.tap(tap.x, tap.y);
     else await page.mouse.click(tap.x, tap.y);
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(AUDIO ? 200 : 400);
+    if (AUDIO) {
+      // Answer audio: the tap steers to the gate; the gate resolves after its clip played.
+      await shot('listen');
+      await page.waitForFunction(() => (window as any).__apk3d.game().state().round?.chosen != null, undefined, { timeout: 5_000, polling: 100 }).catch(() => undefined);
+    }
     const chosen = await page.evaluate(() => (window as any).__apk3d.game().state().round?.chosen ?? null);
     console.log(`tap    ${chosen === null ? 'FAILED' : `gate ${chosen} chosen`}`);
     if (chosen === null) throw new Error('A real tap on a gate tag did not choose the gate');
     await shot('tapped');
+  } else if (AUDIO) {
+    // Answer audio: the bot steers to the right gate; its clip plays while the dragon waits.
+    await page.evaluate(() => (window as any).__apk3d.game().auto());
+    await page.waitForTimeout(200);
+    await shot('listen');
   }
   const shots = new Set<string>();
   const started = Date.now();
+  let completeAt = 0;
   for (;;) {
     const s = await page.evaluate(() => {
-      if (document.querySelector('.results.on')) return { phase: 'results', flock: 0, speed: 0 };
+      if (document.querySelector('.results.on')) return { phase: 'results', flock: 0, fight: false };
       const g = (window as any).__apk3d.game();
+      // The 2D game removes its hook when the host closes it, before the results open.
+      if (!g) return { phase: 'complete', flock: 0, fight: false };
       const st = g.state();
-      if (st.round && st.round.chosen === null && (st.waiting || st.round.gatesAt - st.distance < 30)) g.auto();
-      return { phase: st.phase, flock: st.flock, speed: st.speed };
+      // Dragon Flight counts the distance to the gates from `gatesAt`; Dragon Rider keeps it in `gap`.
+      const ahead = st.round ? (st.round.gatesAt !== undefined ? st.round.gatesAt - st.distance : st.round.gap) : Infinity;
+      if (st.round && st.round.chosen === null && (st.waiting || ahead < 30)) g.auto();
+      const boss = st.phase === 'boss' || st.phase === 'duel';
+      return { phase: boss ? 'boss' : st.phase, flock: st.flock, fight: boss && (st.phase === 'boss' ? st.speed === 0 : st.bossHp < st.bossPower) };
     });
     if (s.phase === 'results') return;
-    for (const [key, when] of [['flock-3', s.flock >= 3], ['boss', s.phase === 'boss'], ['boss-fight', s.phase === 'boss' && s.speed === 0]] as const) {
+    // The core completed but the host shows no results: the completion was dropped (see the diagnostics).
+    if (s.phase === 'complete' && !completeAt) completeAt = Date.now();
+    if (completeAt && Date.now() - completeAt > 60_000) throw new Error('The run completed, but the results did not open in 60 s');
+    for (const [key, when] of [['flock-3', s.flock >= 3], ['boss', s.phase === 'boss'], ['boss-fight', s.fight]] as const) {
       if (when && !shots.has(key)) {
         shots.add(key);
         await page.waitForTimeout(key === 'boss' ? 2500 : 600);
@@ -522,7 +545,8 @@ const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) =
   'dungeon-liberator': playArena,
   'devourer-slime': playArena,
   'hero-vs-zombie': playArena,
-  'dragon-flight': playDragonFlight,
+  'dragon-flight': playGates,
+  'dragon-rider': playGates,
   'monster-encounters': playMonsterEncounters,
   'potion-rush': playPotionRush,
 };
@@ -533,7 +557,8 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
   'hero-vs-zombie': playArena,
   'devourer-slime': playArena,
   'dungeon-liberator': playArena,
-  'dragon-flight': playDragonFlight,
+  'dragon-flight': playGates,
+  'dragon-rider': playGates,
   'monster-encounters': playMonsterEncounters2D,
 };
 
@@ -618,8 +643,12 @@ async function play(layout: 'portrait' | 'landscape'): Promise<void> {
   if (AUDIO) {
     const evidence = (diag as { code?: string; details?: { itemCount: number; questions: { selectionAttempts: { submitted: boolean; completedQuestion: boolean }[] }[] } }[]).find((d) => d.code === 'answer-audio/evidence')?.details;
     if (!evidence) throw new Error('The run gave no answer audio evidence');
-    const attempts = evidence.questions.flatMap((q) => q.selectionAttempts).filter((a) => a.submitted);
-    console.log(`answer audio: ${evidence.questions.length} of ${evidence.itemCount} questions, ${attempts.filter((a) => a.completedQuestion).length} right of ${attempts.length} submitted`);
+    const plays = evidence.questions.flatMap((q) => q.selectionAttempts);
+    const attempts = plays.filter((a) => a.submitted);
+    console.log(`answer audio: ${evidence.questions.length} of ${evidence.itemCount} questions, ${attempts.filter((a) => a.completedQuestion).length} right of ${attempts.length} submitted, ${plays.length} plays`);
+    // The QC clips are silent timers: a clip that could not play is a defect of the view.
+    const failed = (diag as { code?: string }[]).filter((d) => d.code === 'answer-audio/play-failed').length;
+    if (failed) throw new Error(`${failed} answer clips could not play`);
   }
 }
 
