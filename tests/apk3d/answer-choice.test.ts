@@ -1,6 +1,6 @@
 /**
  * A copy of the monorepo controller test (advantage-play-kit src/audio/__tests__/
- * answer-choice-controller.test.ts, lane-g 677ade328) on the Forge copy of the controller: only the
+ * answer-choice-controller.test.ts, lane-g 585bb9431) on the Forge copy of the controller: only the
  * import path differs. A failure here means the copy drifted from the owner.
  */
 import { describe, expect, it, vi } from 'vitest';
@@ -244,6 +244,17 @@ describe('answer choice audio controller', () => {
     await controller.playChoice(0, 0);
     expect(controller.getChoiceSnapshot(0, 0)).toMatchObject({ playCount: 2, replayCount: 0, canConfirm: true });
     await expect(controller.playChoice(0, 0)).rejects.toMatchObject({ code: 'replay-limit' });
+  });
+
+  it('passes a clip segment to the ports and refuses a segment that ends before it starts', async () => {
+    const segmented = clips.map((clip, index) => ({ ...clip, url: '/audios/words/article.mp3', startSeconds: index, endSeconds: index + 0.8 }));
+    const ports = createPorts();
+    const { controller, preparation } = createController(ports, { clips: segmented });
+    await controller.playChoice(0, 2);
+    expect(preparation.prepare).toHaveBeenCalledWith(expect.objectContaining({ itemPosition: 2, startSeconds: 2, endSeconds: 2.8 }), expect.anything());
+
+    expect(() => createController(createPorts(), { clips: [{ ...segmented[0]!, endSeconds: 0 }, ...segmented.slice(1)] }))
+      .toThrow(ListeningAudioControllerError);
   });
 
   it('publishes pair states and releases every prepared clip on destroy', async () => {

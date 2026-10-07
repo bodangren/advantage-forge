@@ -5,7 +5,8 @@
  *
  * Source: packages/advantage-play-kit/src/audio/contracts.ts (the answer-choice parts) and
  * answer-choice-controller.ts (primary-parity-integration 6e890c307, with lane-g 677ade328: only a
- * completed play uses a replay). The monorepo owns both: send a change there first. The port maps
+ * completed play uses a replay, and lane-g 585bb9431: a clip may be a segment of a longer file,
+ * `startSeconds` and `endSeconds`). The monorepo owns both: send a change there first. The port maps
  * this file to a re-export of `@reading-advantage/advantage-play-kit`, and
  * tests/apk3d/answer-choice.test.ts is a copy of the monorepo controller test.
  */
@@ -58,6 +59,10 @@ export interface ListeningAudioClipReference {
   readonly url: string;
   /** Declared audio media type. */
   readonly mediaType: `audio/${string}`;
+  /** Start of the clip inside a longer file, in seconds; absent: the start of the file. */
+  readonly startSeconds?: number;
+  /** End of the clip inside a longer file, in seconds; absent: the end of the file. */
+  readonly endSeconds?: number;
 }
 
 /** Provider-neutral preparation port for one prompt clip. */
@@ -315,6 +320,11 @@ type ActivePlayback = {
   replay: boolean;
 };
 
+/** True when a clip has no segment, or a segment that starts at zero or later and ends after it starts. */
+const validSegment = ({ startSeconds = 0, endSeconds }: ListeningAudioClipReference): boolean =>
+  Number.isFinite(startSeconds) && startSeconds >= 0
+  && (endSeconds === undefined || (Number.isFinite(endSeconds) && endSeconds > startSeconds));
+
 const pairKey = (questionPosition: number, clipItemPosition: number): string =>
   `${questionPosition}:${clipItemPosition}`;
 
@@ -374,7 +384,8 @@ export function createAnswerChoiceAudioController<PreparedClip>(
       || reference.itemPosition >= options.clips.length
       || references.has(reference.itemPosition)
       || !reference.url.trim()
-      || !reference.mediaType.startsWith('audio/')) {
+      || !reference.mediaType.startsWith('audio/')
+      || !validSegment(reference)) {
       throw new ListeningAudioControllerError(
         'invalid-configuration',
         'Answer audio clips must cover unique session item positions',
