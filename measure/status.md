@@ -36,7 +36,8 @@ The merge into monorepo `master` is on 2026-10-11. The monorepo session reported
 - Allowed: bug fixes, tests, browser checks, and the cutover steps of the migration spec.
 - Not allowed: new features, new game modes, new levels, and new assets for new features.
 - The monorepo session syncs only fixes. Split a Forge release that mixes a fix with a feature, or send the fix commits only.
-- The replacement of the ElvGames reward icons is a fix, because of the owner's asset rule.
+- The replacement of the ElvGames reward icons is a fix, because of the owner's asset rule. The monorepo does it alone:
+  Primary gives the reward panels the Forge skin icons in `public/rpg/items/` in place of the ElvGames PNGs. Forge sends no files.
 - The phone check of "Listen to English" (F2) still occurs. The monorepo session tells Forge before it starts.
 
 Forge work on features continues in this repository, but its release to the monorepo waits until after the deployment.
