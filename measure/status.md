@@ -28,6 +28,19 @@ See the [baseline evidence](./evidence/baseline-20260928.md).
 - Later the same day: the port reaches `master` through `primary-parity-integration`, not by a direct push.
 - The Forge session works only in this repository. The monorepo session makes every change, commit, and push in the monorepo.
 
+## Monorepo feature freeze (2026-10-07)
+
+The owner set a feature freeze in the monorepo from 2026-10-07 until the Primary deployment.
+The merge into monorepo `master` is on 2026-10-11. The monorepo session reported the rules:
+
+- Allowed: bug fixes, tests, browser checks, and the cutover steps of the migration spec.
+- Not allowed: new features, new game modes, new levels, and new assets for new features.
+- The monorepo session syncs only fixes. Split a Forge release that mixes a fix with a feature, or send the fix commits only.
+- The replacement of the ElvGames reward icons is a fix, because of the owner's asset rule.
+- The phone check of "Listen to English" (F2) still occurs. The monorepo session tells Forge before it starts.
+
+Forge work on features continues in this repository, but its release to the monorepo waits until after the deployment.
+
 ## Next work
 
 1. [Avatar in the games](./tracks/avatar_in_games_20261006/) (owner, 2026-10-06): section 11 of `docs/avatar-system.md`. The [pack release](./tracks/apk_pack_release_20261006/) it waited for is complete.
