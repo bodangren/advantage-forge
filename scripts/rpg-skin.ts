@@ -151,6 +151,10 @@ for (const [asset, looks] of Object.entries(
 ))
   if (looks.size > 1) throw new Error(`${asset} has more than one look in the skin: ${[...looks].join(', ')}`);
 
+// Files the Primary app names by path (the reward panels, monorepo 15f96ff52): without one, the panel shows a broken image.
+for (const path of ['items/apprentice-wand.webp', 'items/graveyard-staff.webp', 'items/echo-staff.webp'])
+  if (!SKIN[path]) throw new Error(`the Primary reward panels use /rpg/${path}; tell the monorepo session before a rename or removal`);
+
 interface ManifestFile {
   kind: Entry['kind'];
   /** The Forge source: `advantage-forge/assets/<asset>.ts`, the map, the starter set, or the copied file. */
