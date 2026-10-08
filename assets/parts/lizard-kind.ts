@@ -1,6 +1,7 @@
 import { defineAsset, motion, noise, sdf } from '../../src/index.js';
 import type { AssetContext, AssetDefinition } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
+import { stretch } from './head-swell.js';
 
 /**
  * Lizard kinds — chibi four-legged reptiles of the wildlife catalog (crocodile, turtle, and the riding
@@ -85,6 +86,12 @@ export interface LizardKind {
   readonly legScale?: number;
   /** The sideways reach of the knees and the feet from the shoulders and the hips (default 1; 0.3 stands the legs straight under the body). */
   readonly legSpread?: number;
+  /** 'skin': the lower jaw in the skin color, cream only underneath (default: the belly color). */
+  readonly jawColor?: 'skin';
+  /** Meters the tail tip curls up (the last two tail points rise; default 0). */
+  readonly tailCurl?: number;
+  /** Meters added to the trunk between the rump and the chest (below 0: a shorter, more compact body). */
+  readonly bodyLength?: number;
   /** Lowers the body by this much (meters) on shorter legs; the feet stay on the ground (default 0). */
   readonly drop?: number;
   /** Raises the chest, the shoulders, and the front knees by this much (meters; default 0), so the
@@ -92,6 +99,8 @@ export interface LizardKind {
   readonly chestLift?: number;
   /** The size of the cream throat and chest patch as a share of the default (default 1). */
   readonly bellyChest?: number;
+  /** No ridges between these two z values (under a saddle). */
+  readonly ridgeGap?: readonly [number, number];
   /** The size of the back ridges as a share of the default (default 1). */
   readonly ridgeSize?: number;
   /** The default ridge color that follows the skin slot (default '#4a9030'). */
@@ -134,12 +143,20 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
   const TIP_Z = SNOUT_Z + L;
   const MOUTH_Y = SNOUT_Y - 0.052 * hs;
   const JAW: V3 = [0, MOUTH_Y + 0.01, HEAD_C[2] - 0.02];
-  const TAIL: V3[] = [
-    [0, 0.23, -0.24],
-    [0, 0.19, -0.24 - 0.14 * TL],
-    [0, 0.13, -0.24 - 0.27 * TL],
-    [0, 0.07, -0.24 - 0.4 * TL],
-  ];
+  const TC = kind.tailCurl;
+  const TAIL: V3[] = TC
+    ? [
+        [0, 0.23, -0.24],
+        [0, 0.19, -0.24 - 0.14 * TL],
+        [0, 0.13 + TC * 0.35, -0.24 - 0.27 * TL],
+        [0, 0.07 + TC, -0.24 - 0.37 * TL],
+      ]
+    : [
+        [0, 0.23, -0.24],
+        [0, 0.19, -0.24 - 0.14 * TL],
+        [0, 0.13, -0.24 - 0.27 * TL],
+        [0, 0.07, -0.24 - 0.4 * TL],
+      ];
   return defineAsset({
     name: kind.name,
     description: kind.description,
@@ -148,7 +165,9 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
     variants: kind.variants,
     ...(kind.presets ? { presets: kind.presets } : {}),
 
-    build(k0) {
+    build(k00) {
+      // With `bodyLength`, space between the rump and the chest stretches (or shrinks) along Z.
+      const k0 = kind.bodyLength ? stretch(k00, 2, kind.bodyLength, -0.1, 0.04) : k00;
       // With `drop`, every body and bone moves down; the legs are built longer by the same amount
       // below the knee (half above it), so they end on the ground again.
       const D = kind.drop ?? 0;
@@ -285,7 +304,8 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
       if (kind.paint) skin = kind.paint(skin, lizard);
       k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 1.4 });
       const hasJaw = kind.jaw !== false;
-      if (hasJaw) k.body('jaw-skin', jawShape, { color: T.belly, roughness: 0.55 });
+      if (hasJaw && kind.jawColor === 'skin') k.body('jaw-skin', jawShape.paintWhere(sdf.halfSpace([0, 1, 0], MOUTH_Y - 0.04), T.belly, 0.012), { color: T.skin, roughness: 0.55 });
+      else if (hasJaw) k.body('jaw-skin', jawShape, { color: T.belly, roughness: 0.55 });
       // The mouth inside, seen in the open smile.
       if (hasJaw)
         k.body('mouth', sdf.ellipsoid([SW * 0.66, 0.022, L / 2]).at(0, MOUTH_Y - 0.004, SNOUT_Z + L / 2 - 0.05).bone('head'), { color: C.mouth, roughness: 0.6 });
@@ -339,6 +359,7 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
         const n = 13;
         for (let i = 0; i < n; i++) {
           const z = z0 + ((z1 - z0) * i) / (n - 1);
+          if (kind.ridgeGap && z > kind.ridgeGap[0] && z < kind.ridgeGap[1]) continue;
           const bone = z > -0.02 ? 'spine' : z > TAIL[0]![2] ? 'hips' : z > TAIL[1]![2] ? 'tail1' : z > TAIL[2]![2] ? 'tail2' : 'tail3';
           const f = (1 - (0.6 * i) / (n - 1)) * (kind.ridgeSize ?? 1);
           const single = kind.ridgeStyle === 'round';

@@ -60,6 +60,16 @@ export interface GriffinKind {
   readonly head?: { readonly lift: number; readonly forward?: number; readonly scale: number };
   /** The beak size as a share (default 1), or a share per axis, round the beak root. */
   readonly beakScale?: number | V3;
+  /** A wider, rounder chest and rump as a share (default 1): a stocky body. */
+  readonly girth?: number;
+  /** False: no feather crest on the head (default true). */
+  readonly crest?: boolean;
+  /** 'soft': a fluffy tail tuft of round lobes instead of pointed feathers. */
+  readonly tuftStyle?: 'soft';
+  /** 'curved': short curved claws on the toes instead of round talons. */
+  readonly clawStyle?: 'curved';
+  /** True: the beak is closed, with a dark mouth line where the two halves meet. */
+  readonly closedBeak?: boolean;
   /** Longer legs by this many meters (below 0, shorter): the shins stretch between the feet and the knees. */
   readonly legLength?: number;
   /** The toe and talon color (default a dark brown). */
@@ -148,8 +158,9 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
       });
 
       // ------------------------------------------------------------------ body, legs, feet, tail
-      const chest = sdf.ellipsoid([0.15, 0.15, 0.17]).at(0, 0.34, 0.04);
-      const rump = sdf.ellipsoid([0.135, 0.135, 0.15]).at(0, 0.32, -0.2);
+      const G = kind.girth;
+      const chest = G ? sdf.ellipsoid([0.15 * G, 0.15 * (1 + (G - 1) * 0.5), 0.17]).at(0, 0.34, 0.04) : sdf.ellipsoid([0.15, 0.15, 0.17]).at(0, 0.34, 0.04);
+      const rump = G ? sdf.ellipsoid([0.135 * G, 0.135 * (1 + (G - 1) * 0.5), 0.15]).at(0, 0.32, -0.2) : sdf.ellipsoid([0.135, 0.135, 0.15]).at(0, 0.32, -0.2);
       const neck = sdf.ellipsoid([0.115, 0.13, 0.1]).at(0, 0.47, 0.1);
       const leg = (hip: V3, knee: V3, upper: string, lower: string) =>
         sdf.smoothUnion(
@@ -285,10 +296,10 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
       // A moved head: the head part painted and moved, a neck from the body to it, the ruff if any.
       const headNeck = sdf.capsule([0, 0.47, 0.1], hpPoint([0, 0.58, 0.16]), 0.088).bone('neck');
       const plumage =
-        H || CS || kind.ruff === false || kind.tufts === false
+        H || CS || kind.ruff === false || kind.tufts === false || kind.crest === false
           ? sdf.smoothUnion(
               0.04,
-              hp(eyes(sdf.union(skull.bone('head'), crestShape.bone('head'), ...(kind.tufts === false ? [] : [cheekTufts.bone('head')])))),
+              hp(eyes(sdf.union(skull.bone('head'), ...(kind.crest === false ? [] : [crestShape.bone('head')]), ...(kind.tufts === false ? [] : [cheekTufts.bone('head')])))),
               ...(H ? [headNeck] : []),
               ...(kind.ruff === false ? [] : [shade(ruff.bone('neck'))]),
             )
@@ -315,6 +326,15 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
         ),
       );
       const nostril = pair(sdf.sphere(0.011).at(0.027, 0.69, 0.41));
+      // A closed beak: the lower half sits up against the upper half, and a dark line runs where
+      // they meet, curling up a little at the back corners (a smile).
+      const lowerBeak = kind.closedBeak ? sdf.ellipsoid([0.064, 0.03, 0.07]).at(0, 0.6, 0.385) : sdf.ellipsoid([0.062, 0.028, 0.068]).at(0, 0.583, 0.395);
+      const mouthLine = (s: sdf.Shape) =>
+        kind.closedBeak
+          ? s
+              .paintWhere(lowerBeak.round(0.004).subtract(lowerBeak.round(-0.002)).intersect(sdf.halfSpace([0, -1, 0], -0.6)), C.mouth, 0.002)
+              .paintWhere(pair(sdf.capsule([0.06, 0.612, 0.33], [0.07, 0.635, 0.315], 0.0045)), C.mouth, 0.002)
+          : s;
       const browAt = (x: number, y: number): V3 => {
         const h = faceHit(x, y);
         return [h[0], h[1], h[2] - 0.006];
@@ -336,19 +356,18 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
         const thin = pair(
           sdf.chain(
             [
-              [...browOn(EYE_X - 0.042, EYE_Y + 0.058), 0.007],
-              [...browOn(EYE_X - 0.005, EYE_Y + 0.078), 0.009],
-              [...browOn(EYE_X + 0.04, EYE_Y + 0.066), 0.006],
+              [...browOn(EYE_X - 0.04, EYE_Y + 0.068), 0.007],
+              [...browOn(EYE_X - 0.003, EYE_Y + 0.08), 0.009],
+              [...browOn(EYE_X + 0.04, EYE_Y + 0.07), 0.006],
             ],
             0.005,
           ),
         );
-        k.body('beak', hp(bp(upperBeak.subtract(nostril)).bone('head')), { color: C.scale, roughness: 0.4, textureDensity: 1.5 });
+        k.body('beak', hp(bp(mouthLine(upperBeak.subtract(nostril))).bone('head')), { color: C.scale, roughness: 0.4, textureDensity: 1.5 });
         k.body('brows', hp(thin.bone('head')), { color: C.eyeRim, roughness: 0.6, detail: 0.002 });
-      } else k.body('beak', hp(sdf.union(bp(upperBeak.subtract(nostril)), brows).bone('head')), { color: C.scale, roughness: 0.4, textureDensity: 1.5 });
-      const lowerBeak = sdf.ellipsoid([0.062, 0.028, 0.068]).at(0, 0.583, 0.395);
+      } else k.body('beak', hp(sdf.union(bp(mouthLine(upperBeak.subtract(nostril))), brows).bone('head')), { color: C.scale, roughness: 0.4, textureDensity: 1.5 });
       k.body('jawBeak', hp(bp(lowerBeak)), { color: C.scaleDark, roughness: 0.4, bone: 'jaw' });
-      k.body('mouth', hp(bp(sdf.ellipsoid([0.06, 0.026, 0.06]).at(0, 0.6, 0.36)).bone('head')), { color: C.mouth, roughness: 0.6 });
+      if (!kind.closedBeak) k.body('mouth', hp(bp(sdf.ellipsoid([0.06, 0.026, 0.06]).at(0, 0.6, 0.36)).bone('head')), { color: C.mouth, roughness: 0.6 });
 
       // ------------------------------------------------------------------ talons and the tail tuft
       const talons = sdf.union(
@@ -356,16 +375,37 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
           TOES.map((t) => {
             const tip = toeTip(kn, t);
             const out = t[1] > 0 ? 1 : -1;
-            return sdf
-              .ellipsoid([0.03, 0.028, 0.036])
-              .at(tip[0], 0.026, tip[2] + out * 0.022)
-              .intersect(sdf.halfSpace([0, -1, 0], 0))
-              .bone(j === 0 ? 'fshin.L' : 'bshin.L');
+            const claw =
+              kind.clawStyle === 'curved'
+                ? sdf.chain(
+                    [
+                      [tip[0], 0.03, tip[2] + out * 0.008, 0.022],
+                      [tip[0], 0.024, tip[2] + out * 0.034, 0.014],
+                      [tip[0], 0.008, tip[2] + out * 0.05, 0.005],
+                    ],
+                    0.006,
+                  )
+                : sdf.ellipsoid([0.03, 0.028, 0.036]).at(tip[0], 0.026, tip[2] + out * 0.022);
+            return claw.intersect(sdf.halfSpace([0, -1, 0], 0)).bone(j === 0 ? 'fshin.L' : 'bshin.L');
           }),
         ),
       );
       k.body('talons', pair(talons), { color: kind.talonColor ?? C.talon, roughness: 0.35 });
-      const tailTuft = sdf.smoothUnion(
+      const TC: V3 = [TAIL_END[0], TAIL_END[1] + 0.02, TAIL_END[2] - 0.04];
+      const softTuft = sdf
+        .smoothUnion(
+          0.03,
+          sdf.ellipsoid([0.06, 0.07, 0.075]).at(...TC),
+          ...[
+            [0.01, 0.07, -0.08],
+            [0.03, 0.02, -0.11],
+            [-0.02, 0.0, -0.1],
+            [0.02, -0.05, -0.08],
+            [-0.01, 0.06, -0.03],
+          ].map(([dx, dy, dz]) => sdf.capsule([...TC], [TC[0] + dx!, TC[1] + dy!, TC[2] + dz!], 0.032)),
+        )
+        .displace(0.004, (x, y, z) => noise.fbm(x * 40, y * 40, z * 40, 2));
+      const tailTuft = kind.tuftStyle === 'soft' ? softTuft : sdf.smoothUnion(
         0.02,
         sdf.ellipsoid([0.07, 0.08, 0.085]).at(TAIL_END[0], TAIL_END[1] + 0.02, TAIL_END[2] - 0.04),
         ...[

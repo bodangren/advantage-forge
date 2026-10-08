@@ -235,17 +235,17 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 | warhorse | 1 | 7.0 | 7.0 | accepted |
 | wasp | 4 | 5.0 | 7.0 | accepted |
 | yak | 1 | 7.0 | 7.0 | accepted |
-| fox | 5 | 6.0 | 6.5 | rework |
-| pack-goat | 3 | 6.0 | 6.5 | rework |
-| riding-lizard | 1 | 6.5 | 6.5 | rework |
-| riding-wolf | 5 | 6.0 | 6.5 | rework |
-| sheep | 3 | 6.0 | 6.5 | rework |
-| wolf | 5 | 6.5 | 6.5 | rework |
-| dragon-mount | 1 | 6.0 | 6.0 | rework |
-| gryphon-mount | 1 | 6.0 | 6.0 | rework |
-| squirrel | 7 | 5.5 | 6.0 | rework |
-| camel | 3 | 5.5 | 5.5 | rework |
-| moth | 8 | 4.5 | 4.0 | rework |
+| gryphon-mount | 2 | 6.0 | 6.5 | rework |
+| riding-lizard | 2 | 6.5 | 6.5 | rework |
+| dragon-mount | 2 | 6.0 | 6.0 | rework |
+| camel | 4 | 5.5 | 6.5 | follow-up |
+| fox | 6 | 6.0 | 6.5 | follow-up |
+| moth | 9 | 4.5 | 6.5 | follow-up |
+| pack-goat | 4 | 6.0 | 6.5 | follow-up |
+| sheep | 4 | 6.0 | 6.5 | follow-up |
+| wolf | 6 | 6.5 | 6.5 | follow-up |
+| riding-wolf | 6 | 6.0 | 6.0 | follow-up |
+| squirrel | 8 | 5.5 | 6.0 | follow-up |
 
 Bar decision. Owner, 2026-10-05: "We can drop the rating to 7.0. How does that affect the pass
 rate?" The wildlife bar is 7.0 from this date; the table marks 7.0 and higher as accepted. The
@@ -259,6 +259,28 @@ keeps the standing rest pose for the walk, the card shows the matching clip in r
 (`python3 scripts/review-cards.py <dir> squirrel=run`), and the reviewer judges the pose from that
 clip. The reviewer brief has the new exception.
 
+Follow-up list (stop rule). These assets have three or more reviews below the bar. Their latest
+rating is recorded, and the work moves on. The change is the reviewer's `next` from round 22:
+
+| Asset | Below the bar | Next change |
+| --- | ---: | --- |
+| camel | 4 | Replace the tall blanket stack with a flat, ruffled red drape on a low hump. |
+| fox | 6 | Make wide cream cheek tufts in place of the small cheek spikes; remove the muzzle creases. |
+| moth | 9 | Make the hood from soft radial tufts that frame the face, as in the mockup mane. |
+| pack-goat | 4 | Make a broad goat muzzle, long side ears, and large white eyes. |
+| sheep | 4 | Make the wool warm cream with soft raised curls and shallow crevices. |
+| wolf | 6 | Make the muzzle one wide cream jaw that pushes forward. |
+| riding-wolf | 6 | Make a cream lower face, large calm eyes, and a side smile. |
+| squirrel | 8 | Make the run pose upright with the forepaws held at the chest. |
+
+Status on 2026-10-08 after round 22: 50 of 61 assets are at 7.0 or higher (13 at 7.5 or
+higher). Round 22 (wildlife-w5i.json, wildlife-w5j.json, two reviewers) accepted no asset. The
+moth went from 4.0 to 6.5, the camel from 5.5 to 6.5, and the gryphon mount from 6.0 to 6.5; the
+riding wolf fell from 6.5 to 6.0. Eight assets went to the follow-up list. The gryphon mount (6.5),
+the riding lizard (6.5), and the dragon mount (6.0) have two reviews each and can have one more
+rework. The first round 22 build stopped when the machine ran out of memory with two textured
+builds; the rebuild ran one build at a time, with 0 warnings and `ground ok` for all 11.
+
 Status on 2026-10-05 after 21 review rounds and the batch 10 review: 50 of 61 assets are at 7.0
 or higher (13 at 7.5 or higher). Round 21 (wildlife-w5h.json) accepted the ox, the bee, and the
 familiar raven at 7.0. The wolf, the riding wolf, and the fox stayed at 6.5, and the squirrel fell
@@ -269,7 +291,7 @@ Round 20 (wildlife-w5g.json) accepted the elk at 7.0; the pack goat went from 6.
 to 6.5, and the sheep (6.5) and the camel (5.5) stayed below the bar.
 Rounds 18 and 19 (wildlife-w5e.json, wildlife-w5f.json) accepted cow, badger, pony,
 frog, crocodile, rooster, and hawk at 7.0; the ox fell from 7.0 to 6.5 after its rework.
-Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json, wildlife-w5e.json, wildlife-w5f.json, wildlife-w5g.json, wildlife-w5h.json, wildlife-b10.json.
+Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json, wildlife-w5e.json, wildlife-w5f.json, wildlife-w5g.json, wildlife-w5h.json, wildlife-b10.json, wildlife-w5i.json, wildlife-w5j.json.
 
 Changes in the latest rounds (all kind options are additive; `mesh-same` or a manual GLB compare
 shows SAME for the other users of each kind):

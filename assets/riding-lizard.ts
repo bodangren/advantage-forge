@@ -29,7 +29,7 @@ export default scaleAsset(
       skin: { green: '#86ad74', lime: '#8cc06a', teal: '#5aa8a0', sand: '#c8b070', blue: '#6a90c8' },
       belly: { cream: '#eef0d0', pale: '#f4f0e8', yellow: '#f0dc98' },
       eyes: { dark: '#1e1a18', amber: '#8a5a1a' },
-      blanket: { red: '#b8443a', blue: '#3a6ab0', green: '#4a8a4a', purple: '#7a4aa0' },
+      blanket: { leather: '#8a5232', red: '#b8443a', blue: '#3a6ab0', green: '#4a8a4a', purple: '#7a4aa0' },
     },
     presets: {
       reef: { skin: 'teal', belly: 'pale', eyes: 'dark', blanket: 'purple' },
@@ -40,19 +40,21 @@ export default scaleAsset(
     chestLift: 0.08,
     headOffset: [0, 0.17, 0.06],
     headScale: 1.3,
-    snout: 0.16,
-    snoutWidth: 0.08,
+    snout: 0.12,
+    snoutWidth: 0.1,
+    jawColor: 'skin',
     eyes: 'side',
     eyeScale: 1.0,
     eyeAngle: 44,
     eyeSink: 0.55,
-    jawOpen: 8,
+    jawOpen: 6,
     teeth: 0,
     ridges: false,
     legSpread: 0.45,
-    legScale: 1.3,
+    legScale: 1.12,
     bellyChest: 1.4,
     tail: 1.15,
+    tailCurl: 0.26,
     paint(skin, liz) {
       // Orange stripes across the back, the flanks, and the tail (above the cream belly), and on
       // the legs.
@@ -63,8 +65,14 @@ export default scaleAsset(
         ...[0.14, 0.02, -0.1, -0.22, -0.36, -0.5, -0.64].map((z, i) => sdf.box([0.8, 0.8, 0.026 - i * 0.001], 0.006).rotateX(-12).at(0, 0.3, z)),
       );
       const backTop = sdf.union(sdf.ellipsoid([0.2, 0.17, 0.45]).at(0, 0.44, -0.04), sdf.ellipsoid([0.09, 0.12, 0.3]).at(0, 0.24, -0.55));
-      const dashes = sdf.union(...[0.09, 0.19].map((y) => sdf.box([0.8, 0.018, 0.8], 0.005).at(0, y, 0))).intersect(sdf.union(sdf.box([0.2, 0.4, 0.9]).at(0.25, 0.15, -0.05), sdf.box([0.2, 0.4, 0.9]).at(-0.25, 0.15, -0.05)));
-      return skin.paintWhere(bands.intersect(backTop), orange, 0.006).paintWhere(dashes, orange, 0.005);
+      const dashes = sdf
+        .union(...[0.1, 0.17].flatMap((y) => [0.1, -0.15].map((z) => sdf.box([0.2, 0.016, 0.04], 0.006).at(0.26, y, z))))
+        .mirror('x');
+      // A wide grin: the mouth line turns up at each corner, below the eye.
+      const { HEAD_C } = liz.joints;
+      const mouthY = HEAD_C[1] - 0.087;
+      const corner = sdf.capsule([0.06, mouthY - 0.004, HEAD_C[2] + 0.1], [0.075, mouthY + 0.026, HEAD_C[2] + 0.06], 0.006).mirror('x');
+      return skin.paintWhere(bands.intersect(backTop), orange, 0.006).paintWhere(dashes, orange, 0.005).paintWhere(corner, '#7a2a2a', 0.003);
     },
     extra(k, liz) {
       // Small orange bumps on the crown, in a short row.
@@ -74,8 +82,14 @@ export default scaleAsset(
         return top ? sdf.ellipsoid([0.022, 0.016, 0.02]).at(top[0], top[1] + 0.004 - i * 0.002, top[2]) : sdf.sphere(0.001).at(...HEAD_C);
       });
       k.body('crown-bumps', sdf.union(...bumps).bone('head'), { color: liz.tone('skin', '#e8862a', 0.2), roughness: 0.6, detail: 0.003 });
-      // The saddle, fitted to the back.
-      backSaddle(k, liz, { blanket: k.tint('blanket'), trim: '#e0b040', leather: '#6a3c22', metal: '#c8a040', z: -0.07 });
+      // Orange bumps down the back of the neck to the shoulders.
+      const neckBumps = [0.13, 0.09, 0.05].flatMap((z) => {
+        const top = sdf.raycast(liz.trunk, [0, 2, z], [0, -1, 0]);
+        return top ? [sdf.ellipsoid([0.018, 0.013, 0.017]).at(top[0], top[1] + 0.003, top[2])] : [];
+      });
+      if (neckBumps.length) k.body('neck-bumps', sdf.union(...neckBumps).bone('neck'), { color: liz.tone('skin', '#e8862a', 0.2), roughness: 0.6, detail: 0.003 });
+      // A leather saddle pad with a dark trim, fitted to the back, on a wide belly strap.
+      backSaddle(k, liz, { blanket: k.tint('blanket'), trim: '#5a3018', leather: '#6a3c22', metal: '#c8a040', z: -0.07, girthWidth: 2.2 });
     },
   }),
   1.3,

@@ -5,7 +5,7 @@ Generated status and asset counts appear in `measure/generated/`.
 
 | Workstream | Delivered evidence | Current work | Next acceptance step |
 | --- | --- | --- | --- |
-| Assets | Forge pipeline, 735 asset sources, 586 of 856 catalog rows with a source; P0 54/54 and P1 450/450 rows complete with current outputs, and the five P0 maps accepted (2026-10-02) | P2 production continues in the existing order (owner, 2026-10-08): the wildlife round 22 review under the approved stop rule, then the P2 NPCs on the humanoid kind (318565f6) | Every P2 asset reaches the bar with an independent review, or goes on the follow-up list after three reviews below it. |
+| Assets | Forge pipeline, 735 asset sources, 586 of 856 catalog rows with a source; P0 54/54 and P1 450/450 rows complete with current outputs, and the five P0 maps accepted (2026-10-02) | P2 production continues in the existing order (owner, 2026-10-08): wildlife round 22 is reviewed (50 of 61 at the bar, 8 on the follow-up list); next one more rework of three mounts, then the P2 NPCs on the humanoid kind (318565f6) | Every P2 asset reaches the bar with an independent review, or goes on the follow-up list after three reviews below it. |
 | Games | 28 student games with 2D and 3D views, ported to the monorepo; the port and the RPG skin are in `primary-parity-integration` (0dac27db2) | The legacy games removal: F1 and F2 are in the monorepo; the phone check of "Listen to English" is open ([track](./tracks/legacy_games_removal_20261006/)) | The port reaches monorepo `master` in the Primary cutover; master CI must be green first ([track](./tracks/monorepo_master_ci_20261006/)). |
 | Management | Measure migration committed (6b70d6f); indexed tracks, catalog ownership, history, debt, and lessons | Status upkeep | Run the generator and the doctor after each status change. |
 
@@ -54,7 +54,7 @@ Forge work on features continues in this repository, but its release to the mono
 ## Next work
 
 1. [Legacy games removal](./tracks/legacy_games_removal_20261006/): until the deployment, send the monorepo only fixes, for example from the phone check of "Listen to English".
-2. P2 production (owner, 2026-10-08): the [wildlife](./tracks/asset_p2_wildlife_20260928/) round 22 review, then the [P2 NPCs](./tracks/asset_p2_npcs_20260928/). See the P2 status in the [asset roadmap](./asset-roadmap.md).
+2. P2 production (owner, 2026-10-08): the [wildlife](./tracks/asset_p2_wildlife_20260928/) round 22 review is done; one more rework of the gryphon mount, the riding lizard, and the dragon mount (two reviews each), then the [P2 NPCs](./tracks/asset_p2_npcs_20260928/). See the P2 status in the [asset roadmap](./asset-roadmap.md).
 3. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); class B is done for P0, P1, and map sources; 31 type errors remain (30 in P2 and P3 sources).
 4. [Platform port](./tracks/game_platform_port_20260928/): the port reaches monorepo `master` with `primary-parity-integration` in the Primary cutover; then the graph refresh (TD-15), the 2D setting re-export (TD-26), and a real touch-device check. [Master CI](./tracks/monorepo_master_ci_20261006/) must be green first.
 5. [2D parity](./tracks/game_2d_parity_20260928/): the 2D views offer the six heroes and their presets that the 2D pack now holds.

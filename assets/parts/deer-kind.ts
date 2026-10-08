@@ -2,7 +2,7 @@ import { defineAsset, motion, noise, profile, sdf } from '../../src/index.js';
 import type { AnimationDef, AssetContext, AssetDefinition } from '../../src/index.js';
 import type { BonePose } from '../../src/rig.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
-import { headShift, headShiftPoint, legStretch, stretch, stretchPoint } from './head-swell.js';
+import { headShift, headShiftPoint, headSwell, headSwellPoint, legStretch, stretch, stretchPoint } from './head-swell.js';
 
 /**
  * Deer kinds — the deer of `assets/deer.ts` (catalog `wildlife/land/deer`) and the animals on its
@@ -72,6 +72,8 @@ export interface DeerKind {
   readonly eyeStyle?: 'dark' | 'white';
   /** The size of the black pupil of white eyes as a share of the default (default 1). */
   readonly pupil?: number;
+  /** White eyes: an iris of the eyes slot round the pupil, at this share of the default pupil size. */
+  readonly iris?: number;
   /** Meters the eyes sink further into the face (default 0): big eyes that stand out less. */
   readonly eyeSink?: number;
   /** Moves the head by this much (meters) and stretches the neck between (a camel's long neck). */
@@ -80,6 +82,8 @@ export interface DeerKind {
   readonly bodyZone?: sdf.Shape;
   /** False: no painted smile (the asset paints its own mouth). */
   readonly smile?: boolean;
+  /** The head size as a share (default 1): the head grows about its joint, the body keeps its size. */
+  readonly headScale?: number;
   /** The fur bump in the normal map as a share (default 1; 0 = a smooth clay surface). */
   readonly furBump?: number;
   /** The leg and hoof thickness as a share (default 1): stockier legs. */
@@ -171,10 +175,13 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
       body: sdf.union(sdf.ellipsoid([0.11, 0.12, 0.135]).at(0, 0.37, 0.03), sdf.ellipsoid([0.11, 0.125, 0.125]).at(0, 0.38, -0.17), ...(kind.bodyZone ? [kind.bodyZone] : [])),
       blend: 0.15,
     };
-    const k0 = kind.headShift ? headShift(kb, kind.headShift, zones) : kb;
+    const ks = kind.headShift ? headShift(kb, kind.headShift, zones) : kb;
+    // With `headScale`, the head grows about its joint (the outermost warp).
+    const k0 = kind.headScale ? headSwell(ks, kind.headScale, zones) : ks;
     // `WP` moves rest-pose points as the warps move the bodies (the head first, then the body, then
     // the legs), for the ground contact of the clips.
     const warps = [
+      kind.headScale ? headSwellPoint(kind.headScale, zones) : null,
       kind.headShift ? headShiftPoint(kind.headShift, zones) : null,
       kind.bodyLength ? stretchPoint(2, kind.bodyLength, -0.12, -0.02) : null,
       kind.legLength ? stretchPoint(1, kind.legLength, 0.06, 0.24) : null,
@@ -356,7 +363,12 @@ export function deerAsset(kind: DeerKind): AssetDefinition {
     // With `eyeStyle: 'white'`: a white eye with a round black pupil that looks a little in.
     const whiteEyes = kind.eyeStyle === 'white';
     const eyeBase = whiteEyes
-      ? sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.021 * (kind.pupil ?? 1)).at(-0.005, -0.006, 0.027), C.pupil, 0.003)
+      ? kind.iris
+        ? sdf
+            .ellipsoid([0.039, 0.049, 0.027])
+            .paintWhere(sdf.sphere(0.021 * kind.iris).at(-0.005, -0.006, 0.027), T.eye, 0.003)
+            .paintWhere(sdf.sphere(0.021 * (kind.pupil ?? 1)).at(-0.005, -0.006, 0.027), C.pupil, 0.003)
+        : sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.021 * (kind.pupil ?? 1)).at(-0.005, -0.006, 0.027), C.pupil, 0.003)
       : sdf.ellipsoid([0.039, 0.049, 0.027]).paintWhere(sdf.sphere(0.029).at(0, 0, 0.027), C.pupil, 0.004);
     const eyeLocal = EYS === 1 ? eyeBase : eyeBase.scale(EYS);
     const EYE_IN = 0.01 + (kind.eyeSink ?? 0);

@@ -39,7 +39,7 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'white', eyes: 'dark' },
     },
     // The lower legs keep the fur color (no dark socks); the lower cheeks and the chest are cream.
-    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#24160c', nose: '#1a1214', pupil: '#0e0a08' },
+    colors: { furLight: '#f4e2c4', furDark: '#d06a2a', earInner: '#f4d6b8', eyeRim: '#fff8f0', nose: '#1a1214', pupil: '#0e0a08' },
     earScale: EAR_SCALE,
     eyeScale: 1.55,
     pupilScale: 1.25,
@@ -57,7 +57,7 @@ export default scaleAsset(
     ruff: 'smooth',
     claws: false,
     tail: false,
-    legLength: -0.03,
+    legLength: 0.015,
     fangs: false,
     teeth: false,
     // The top of the snout keeps the fur color; the lips and the chin are cream.
@@ -69,7 +69,8 @@ export default scaleAsset(
       const frontLeg = sdf.capsule([0.1, 0.17, 0.08], [0.105, 0.0, 0.09], 0.062).mirror('x');
       return fur
         .smoothUnion(0.035, haunch)
-        .paintWhere(sdf.ellipsoid([0.075, 0.06, 0.22]).at(0, 0.15, -0.05), t.markings, 0.008)
+        .paintWhere(sdf.ellipsoid([0.09, 0.085, 0.24]).at(0, 0.16, -0.04), t.markings, 0.008)
+        .paintWhere(sdf.ellipsoid([0.08, 0.12, 0.08]).at(0, 0.27, 0.15), t.markings, 0.012)
         .paintWhere(frontLeg, t.fur, 0.02);
     },
     extra(k, w) {
@@ -116,8 +117,8 @@ export default scaleAsset(
         }
       }
       P.push(KEY[KEY.length - 1]!);
-      const core = sdf.chain(P.map((p) => [p[0], p[1], p[2], p[3] * 0.66] as P4), 0.04);
-      const N = 9;
+      const core = sdf.chain(P.map((p) => [p[0], p[1], p[2], p[3] * 0.78] as P4), 0.04);
+      const N = 14;
       const locks = Array.from({ length: N }, (_, j) => {
         const pts = P.map((p, i) => {
           const th = (j / N) * 2 * Math.PI + 0.3 + 0.1 * i; // the locks twist a little along the tail
@@ -126,15 +127,16 @@ export default scaleAsset(
           const ty = b[1] - a[1];
           const tz = b[2] - a[2];
           const tl = Math.hypot(ty, tz) || 1;
-          const off = p[3] * (0.6 + 0.06 * noise.random(j, i >> 1, 5));
-          return [p[0] + Math.cos(th) * off * 0.85, p[1] - (tz / tl) * Math.sin(th) * off, p[2] + (ty / tl) * Math.sin(th) * off, p[3] * (0.36 + 0.04 * noise.random(j, i >> 1, 9))] as P4;
+          const off = p[3] * (0.5 + 0.05 * noise.random(j, i >> 1, 5));
+          return [p[0] + Math.cos(th) * off * 0.85, p[1] - (tz / tl) * Math.sin(th) * off, p[2] + (ty / tl) * Math.sin(th) * off, p[3] * (0.42 + 0.04 * noise.random(j, i >> 1, 9))] as P4;
         });
-        return sdf.chain(pts, 0.025);
+        return sdf.chain(pts, 0.03);
       });
       const dark = w.tone('fur', '#a8441a', 0.9);
       const plume = sdf
-        // A round fill inside the curl, so the plume reads as one full ball from the side.
-        .smoothUnion(0.007, core, ...locks, sdf.ellipsoid([0.14, 0.19, 0.19]).at(0, 0.63, -0.46))
+        // Soft, shallow grooves between many locks, with a light fur wave on top.
+        .smoothUnion(0.014, core, ...locks)
+        .displace(0.004, (x, y, z) => noise.fbm(x * 30, y * 50, z * 50, 2))
         .paintWhere(core.round(0.035), dark, 0.03)
         .paintWhere(sdf.sphere(0.16).at(0, 0.32, -0.32), dark, 0.06);
       // Big round highlights on the eyes (upper outer side of each eye).

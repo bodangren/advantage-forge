@@ -1,0 +1,112 @@
+{
+  "camel": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 3, 3, 4, 4.5, 3.5, 3],
+    "summary": "The model is a tan chibi camel with a red and rainbow blanket. It is the same animal as the mockup, but the blanket, the muzzle, and the back line have clear differences.",
+    "strengths": [
+      "The large head, the eyes with lashes, and the pointed ears match the mockup.",
+      "The long neck, the knee rings, the brown hooves, and the tail tuft match the mockup.",
+      "The tan and red palette matches the mockup, and the blanket colors read at 128 px."
+    ],
+    "issues": [
+      "The blanket is a tall stack of rainbow layers. It stands up from the back like a fin. Make a flat red drape with ruffled edges that lies on the back, with the rainbow ruffles in one band at the center.",
+      "The hump does not show. Add a low hump under the blanket so that the back line rises behind the shoulders.",
+      "The muzzle is small and cream. Make a large, round muzzle in the head color with two large nostrils.",
+      "The neck is a straight diagonal. Give the neck the mockup curve: up from the chest, then forward under the head.",
+      "The hair tuft on the head is one tan knob. Make a group of brown curls.",
+      "The walk has small leg swings and no head motion. Increase the stride and add a small head bob."
+    ],
+    "next": "Replace the tall blanket stack with a flat, ruffled red drape on a low hump."
+  },
+  "pack-goat": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 2.5],
+    "summary": "The model is a gray chibi goat with tall tan horns and red and tan pack bags. The horns and the bags match the mockup, but the face and the mane have clear differences.",
+    "strengths": [
+      "The tan bags with red straps and gold rings match the mockup closely.",
+      "The ridged horns curl back and read in every sprite direction.",
+      "The gray body, the beard, and the black hooves match the mockup."
+    ],
+    "issues": [
+      "The face is different. The muzzle is thin and points down like a trunk, and the ears are round. Make a broad, long goat face with a small smile and long ears that hang to the sides.",
+      "The eyes are amber with heavy upper lids, and the goat looks tired. Use large white eyes with black pupils and a happy look, as in the mockup.",
+      "The mane is a smooth, light gray strip from the head to the back. It reads as a tube. Make a short, shaggy mane on the neck and on the back.",
+      "The walk has very small leg swings. Increase the stride and lift the hooves.",
+      "From the front, the horns rise almost vertically. Tilt the horns more to the back."
+    ],
+    "next": "Rebuild the head with a broad goat muzzle, long side ears, and large white eyes."
+  },
+  "riding-wolf": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3.5, 3, 3, 3, 3, 4, 4.5, 3, 3.5],
+    "summary": "The model is a gray chibi wolf with a brown saddle and a teal pad. The body and the paws match the mockup, but the face has a different expression and a different color pattern.",
+    "strengths": [
+      "The large head on a short body gives the mockup chibi proportion.",
+      "The white socks and the black paws match the mockup and read at 128 px.",
+      "The teal pad and the brown leather read as a mount saddle."
+    ],
+    "issues": [
+      "The expression is different. The brows press down on the eyes and the mouth is a flat line, so the wolf looks angry. Make large eyes with a calm upper lid and a side smile, as in the mockup.",
+      "The cream face mask is missing. Paint the lower half of the face, the cheeks, and the chest cream. Keep the gray on the top of the head.",
+      "The muzzle is a white ball that projects from the head, and the cheek tufts look like separate parts. Blend the muzzle into the face and make the cheeks part of the cream mask.",
+      "The saddle sits at the center of the back. Move the harness forward, with the chest strap, the ring, and the side bags, as in the mockup.",
+      "The tail has no white tip. Paint the tip white."
+    ],
+    "next": "Change the face to the mockup: a cream lower face, large calm eyes, and a side smile."
+  },
+  "riding-lizard": {
+    "overall": 6.5,
+    "scores": [3, 3, 3, 3, 3.5, 3, 3, 3.5, 4.5, 3.5, 3.5],
+    "summary": "The model is a green chibi lizard with orange stripes, a cream belly, and a brown saddle. It is the same animal as the mockup, but the stance is tall, and the stripes and the saddle are weak.",
+    "strengths": [
+      "The green, orange, and cream palette matches the mockup.",
+      "The head with the smile and the large eyes on top reads as friendly.",
+      "The walk has a good stride, and the feet stay on the ground."
+    ],
+    "issues": [
+      "The legs are long and straight, and the body stands high like a dog. Make the legs short and bent, with the feet out to the sides, and lower the body.",
+      "The orange stripes are thin and few. Make wide orange bands across the head, the back, the legs, and the tail.",
+      "The saddle is a soft brown pile. Make a clean leather saddle with a stitched edge and one strap with a buckle down the side.",
+      "The smile is almost closed. Open the mouth wider and show the red inside, as in the mockup.",
+      "The chest has no plates. Add the cream plate lines on the chest.",
+      "In the walk, the cream belly paint shows on the inner side of a front leg. Keep the belly paint off the legs."
+    ],
+    "next": "Lower the body on short, bent legs with the feet out to the sides."
+  },
+  "dragon-mount": {
+    "overall": 6.0,
+    "scores": [2.5, 3.5, 3, 3, 3, 3, 3, 3.5, 4.5, 3.5, 3.5],
+    "summary": "The model is a green chibi dragon with yellow horns, orange wings, and a brown saddle. It is the same creature as the mockup, but the body, the neck, and the face are clearly different.",
+    "strengths": [
+      "The yellow horns, the cheek fins, and the yellow tail spikes match the mockup.",
+      "The walk has a good stride, and the wings stay attached.",
+      "The horns and the wings read in every sprite direction."
+    ],
+    "issues": [
+      "The body is long and the neck points forward. Make the body short and compact, and hold the neck upright with the head above the chest.",
+      "The face is different. The snout is long and flat, the eyes sit on the sides, and the smile is a small line. Make a round head with large front eyes, orange irises, and a wide smile.",
+      "The belly plates are faint. Make bold cream plates from the chin to the belly.",
+      "The cream paint bleeds onto the legs as soft patches. Keep the cream on the chest and the belly only.",
+      "The saddle is small and hides under the wing. Make the saddle larger, with a red seat and a buckle strap on the side.",
+      "The wings have a green frame and orange skin. Make the wings smaller, with yellow skin and brown edges, as in the mockup."
+    ],
+    "next": "Shorten the body and lift the neck so that the head sits upright above the chest."
+  },
+  "gryphon-mount": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "The model is an orange chibi gryphon with a yellow beak, raised wings, and a blue saddle. The colors and the harness match the mockup, but the beak, the head, and the expression have clear differences.",
+    "strengths": [
+      "The blue saddle pad, the brown chest strap, and the blue gem match the mockup.",
+      "The orange and yellow palette and the yellow ears match the mockup.",
+      "The raised wings and the tail read in every sprite direction."
+    ],
+    "issues": [
+      "The beak is thin and points down, and the gryphon looks worried. Make a large, round beak with a smile line and a calm, confident brow, as in the mockup.",
+      "The head and the neck are smooth. Add the feather crest on the head and sculpted feathers on the neck.",
+      "The feet have long, sharp talons. Make round brown toe caps, as in the mockup.",
+      "The tail is long and thin with a round ball at the end. Make a short, thick, braided tail with a fan of feathers at the tip."
+    ],
+    "next": "Rebuild the beak as a large, round, smiling beak, and give the brow a confident shape."
+  }
+}

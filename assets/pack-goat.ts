@@ -25,7 +25,7 @@ export default scaleAsset(
     reference: 'docs/wildlife-mockups/pack-goat_001.jpg',
     variants: {
       fur: { grey: '#807b75', brown: '#8a6a4c', white: '#e8e0d0', black: '#3e3834' },
-      eyes: { dark: '#2a1a12', brown: '#5a3418', amber: '#a87a2a' },
+      eyes: { amber: '#a87a2a', dark: '#2a1a12', brown: '#5a3418' },
       pad: { red: '#b0403a', blue: '#4a6aa0', green: '#5a8a4a' },
     },
     presets: {
@@ -41,8 +41,12 @@ export default scaleAsset(
     tail: 'puff',
     eyeStyle: 'white',
     eyeScale: 1.12,
-    pupil: 1.4,
-    muzzle: { length: 0.065, drop: 0.04, width: 0.84 },
+    iris: 1.55,
+    pupil: 0.95,
+    muzzle: { length: 0.1, drop: 0.05, width: 0.72 },
+    headScale: 0.9,
+    headShift: [0, -0.03, 0.07],
+    earScale: 0.75,
     slim: 1.2,
     legThick: 1.25,
     legLength: -0.07,
@@ -55,6 +59,8 @@ export default scaleAsset(
     paint(fur, deer) {
       // A wide smile under the nose that wraps onto the sides of the long muzzle.
       const M = deer.joints.MUZZLE_C;
+      // Darker lower legs.
+      fur = fur.paintWhere(sdf.box([1, 0.2, 1]).at(0, 0.06, 0), deer.tone('fur', '#5e5a55', 1), 0.03);
       return fur.paintWhere(sdf.extrude(profile.arc(0.05, 0.007, 214, 326), 0.12).at(0, M[1] + 0.02, M[2] + 0.04), '#3a2e28', 0.002);
     },
     extra(k, deer) {
@@ -99,7 +105,7 @@ export default scaleAsset(
         });
       k.body('horns', horn.mirror('x'), { color: '#c8a87a', roughness: 0.5, detail: 0.003, bone: 'head' });
       const hair = (s: sdf.Shape) => s.displace(0.0035, (x, y, z) => noise.fbm(x * 60, y * 24, z * 60, 2));
-      const shagColor = deer.tone('fur', '#8a8580', 1);
+      const shagColor = deer.tone('fur', '#aaa59e', 1);
       // A long grey beard: three soft locks that hang from under the chin to a point.
       const M = deer.joints.MUZZLE_C;
       const beard = hair(
@@ -114,14 +120,16 @@ export default scaleAsset(
       // A soft mane: a flat crest of wavy hair that lies along the back of the head and the
       // neck down to the shoulders, and a hairy tail that hangs back from the rump.
       const back = sdf.smoothUnion(0.06, deer.trunk, deer.head);
-      const crest = [0, 0.2, 0.4, 0.6, 0.8, 1].map((t) => {
-        const p = sdf.surfacePoint(back, [0, 0.86 - t * 0.36, 0.06 - t * 0.12 - Math.sin(t * Math.PI) * 0.1], 0.006);
-        return [p[0], p[1], p[2], 0.022 + 0.012 * Math.sin(t * Math.PI)] as [number, number, number, number];
+      // The mane runs on along the top of the back to the middle of the body, flat and wide, in
+      // soft waves.
+      const crest = [0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4].map((t) => {
+        const p = sdf.surfacePoint(back, [0, Math.max(0.5, 0.86 - t * 0.36), 0.06 - t * 0.12 - Math.sin(Math.min(t, 1) * Math.PI) * 0.1], 0.006);
+        return [p[0], p[1], p[2], (0.024 + 0.014 * Math.sin(Math.min(t, 1) * Math.PI)) * (t > 1 ? 1 - (t - 1) * 1.2 : 1)] as [number, number, number, number];
       });
       const mane = sdf
         .chain(crest, 0.02)
-        .scale([0.62, 1, 1])
-        .displace(0.0025, (x, y, z) => Math.sin(y * 55 + z * 30 + Math.abs(x) * 90));
+        .scale([0.95, 1, 1])
+        .displace(0.0035, (x, y, z) => Math.sin(y * 45 + z * 25 + Math.abs(x) * 70));
       k.body('mane', hair(mane.bone('neck')), { color: shagColor, roughness: 0.9, detail: 0.003 });
       const tail = sdf.smoothUnion(
         0.012,
@@ -152,8 +160,8 @@ export default scaleAsset(
         tabs.push(sdf.box([0.012, 0.055, 0.022], 0.005).at(out[0] + 0.002, 0.39, z).bone(bone));
         rings.push(sdf.torus(0.012, 0.0035).rotateZ(90).at(out[0] + 0.008, 0.362, z).bone(bone));
       }
-      k.body('bags', sdf.union(...bags).mirror('x'), { color: '#d0a050', roughness: 0.85, detail: 0.004, bump: (x: number, y: number, z: number) => 0.0004 * noise.fbm(x * 220, y * 220, z * 220, 2) });
-      k.body('flaps', sdf.union(...flaps).mirror('x'), { color: '#c08c40', roughness: 0.85, detail: 0.003 });
+      k.body('bags', sdf.union(...bags).mirror('x'), { color: '#dcc08a', roughness: 0.85, detail: 0.004, bump: (x: number, y: number, z: number) => 0.0004 * noise.fbm(x * 220, y * 220, z * 220, 2) });
+      k.body('flaps', sdf.union(...flaps).mirror('x'), { color: '#c8a46c', roughness: 0.85, detail: 0.003 });
       k.body('tabs', sdf.union(...tabs).mirror('x'), { color: red, roughness: 0.6, detail: 0.003 });
       k.body('rings', sdf.union(...rings).mirror('x'), { color: '#d8b048', roughness: 0.3, metalness: 0.85, detail: 0.002 });
     },

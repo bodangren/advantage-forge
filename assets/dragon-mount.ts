@@ -28,33 +28,35 @@ export default scaleAsset(
       skin: { green: '#6aaa86', blue: '#5a88c0', red: '#c8604a', purple: '#8a6ab0' },
       belly: { cream: '#f2e2b0', pale: '#f0ece0', gold: '#f0d080' },
       eyes: { brown: '#5a2e14', dark: '#1e1a18', gold: '#a8781a' },
-      blanket: { red: '#b8443a', blue: '#3a6ab0', green: '#4a8a4a', purple: '#7a4aa0' },
+      blanket: { maroon: '#8a3a2a', red: '#b8443a', blue: '#3a6ab0', green: '#4a8a4a', purple: '#7a4aa0' },
     },
     presets: {
       sky: { skin: 'blue', belly: 'pale', eyes: 'dark', blanket: 'red' },
       ember: { skin: 'red', belly: 'gold', eyes: 'gold', blanket: 'blue' },
       dusk: { skin: 'purple', belly: 'cream', eyes: 'brown', blanket: 'green' },
     },
-    drop: -0.05,
-    chestLift: 0.12,
-    headOffset: [0, 0.27, 0.05],
-    headScale: 1.5,
-    snout: 0.1,
-    snoutWidth: 0.085,
+    drop: -0.02,
+    bodyLength: -0.07,
+    chestLift: 0.16,
+    headOffset: [0, 0.22, 0.04],
+    headScale: 1.45,
+    snout: 0.15,
+    snoutWidth: 0.11,
     bulb: false,
     eyes: 'side',
-    eyeScale: 0.95,
-    eyeAngle: 38,
+    eyeScale: 0.85,
+    eyeAngle: 52,
     eyeSink: 0.5,
     pupils: true,
     jaw: false,
     teeth: 0,
     ridgeShade: '#f0c050',
     ridgeSize: 1.2,
+    ridgeGap: [-0.26, 0.08],
     legSpread: 0.5,
-    legScale: 1.45,
+    legScale: 1.25,
     bellyChest: 1.7,
-    tail: 0.95,
+    tail: 0.85,
     paint(skin, liz) {
       // Tan plate lines across the cream chest, and a wide smile across the front of the snout.
       const lines = sdf.union(...[0.24, 0.3, 0.36, 0.42, 0.48].map((y) => sdf.box([0.16, 0.008, 0.6], 0.003).at(0, y, 0.25)));
@@ -73,9 +75,9 @@ export default scaleAsset(
       const horn = sdf.chain(
         [
           [r0[0], r0[1] - 0.015, r0[2], 0.042],
-          [r0[0] + 0.06, r0[1] + 0.05, r0[2] - 0.01, 0.033],
-          [r0[0] + 0.1, r0[1] + 0.105, r0[2] - 0.035, 0.022],
-          [r0[0] + 0.095, r0[1] + 0.155, r0[2] - 0.075, 0.009],
+          [r0[0] + 0.045, r0[1] + 0.055, r0[2] - 0.02, 0.032],
+          [r0[0] + 0.07, r0[1] + 0.095, r0[2] - 0.07, 0.021],
+          [r0[0] + 0.075, r0[1] + 0.1, r0[2] - 0.13, 0.008],
         ],
         0.012,
       );
@@ -85,23 +87,29 @@ export default scaleAsset(
       const side = sdf.raycast(liz.skull, [3, HEAD_C[1] + 0.02, HEAD_C[2] - 0.05], [-1, 0, 0])!;
       const fin = sdf
         .extrude(profile.polygon([[0, -0.025], [0.06, -0.015], [0.085, 0.01], [0.055, 0.02], [0.07, 0.04], [0.02, 0.03]], { smooth: true }), 0.012, 0.004)
-        .rotateY(-70)
-        .at(side[0] - 0.01, side[1], side[2]);
+        .rotateY(30)
+        .at(side[0] - 0.012, side[1], side[2]);
       k.body('horns', sdf.union(horn, small, fin).mirror('x').bone('head'), { color: yellow, roughness: 0.5, detail: 0.003 });
-      // Small folded wings on the shoulders: a dark arm along the top edge and a yellow scalloped
-      // membrane under it, folded back along the side and leaning out a little (built in XY with
-      // the wing along +X, then turned so +X points back).
+      // Wings on the shoulders, raised and swept back: a dark arm along the top edge, ribs that fan
+      // from the wrist to the points of the scalloped edge, and an orange-brown membrane between
+      // them (built in XY with the wing along +X, then turned so +X points back and up).
       const back = sdf.raycast(liz.trunk, [0.09, 3, 0.04], [0, -1, 0])!;
-      const wingPose = (s: sdf.Shape) => s.rotateY(90).rotateZ(-18).at(back[0] + 0.02, back[1] - 0.02, back[2]);
+      const W = 1.55;
+      const wingPose = (s: sdf.Shape) => s.scale(W).rotateY(90).rotateZ(-24).rotateX(-16).at(back[0] + 0.02, back[1] - 0.02, back[2]);
+      const WRIST: [number, number] = [0.06, 0.15];
+      const POINTS: [number, number][] = [[0.17, 0.2], [0.21, 0.11], [0.19, 0.03], [0.1, -0.01]];
       const membrane = sdf.extrude(
-        profile.polygon([[0, 0], [0.05, 0.14], [0.14, 0.2], [0.13, 0.13], [0.2, 0.1], [0.14, 0.05], [0.17, 0.0], [0.08, -0.02]], { smooth: true }),
-        0.01,
-        0.004,
+        profile.polygon([[0, 0], [0.04, 0.12], WRIST, [0.17, 0.2], [0.16, 0.14], [0.21, 0.11], [0.165, 0.07], [0.19, 0.03], [0.13, 0.02], [0.1, -0.01]], { smooth: true }),
+        0.008,
+        0.003,
       );
-      const arm = sdf.chain([[0, 0, 0, 0.016], [0.05, 0.14, 0, 0.013], [0.14, 0.2, 0, 0.009]], 0.006);
-      k.body('wing-membranes', wingPose(membrane).mirror('x').bone('spine'), { color: yellow, roughness: 0.55, detail: 0.003 });
+      const arm = sdf.union(
+        sdf.chain([[0, 0, 0, 0.016], [WRIST[0], WRIST[1], 0, 0.012], [0.17, 0.2, 0, 0.006]], 0.006),
+        ...POINTS.slice(1).map(([x, y]) => sdf.cone([WRIST[0], WRIST[1], 0], [x, y, 0], 0.008, 0.004)),
+      );
+      k.body('wing-membranes', wingPose(membrane).mirror('x').bone('spine'), { color: liz.tone('belly', '#d0843e', 0.3), roughness: 0.55, detail: 0.003 });
       k.body('wing-arms', wingPose(arm).mirror('x').bone('spine'), { color: liz.tone('skin', '#4a8a66', 0.8), roughness: 0.6, detail: 0.003 });
-      backSaddle(k, liz, { blanket: k.tint('blanket'), trim: '#e0b040', leather: '#6a3c22', metal: '#c8a040', z: -0.08 });
+      backSaddle(k, liz, { blanket: k.tint('blanket'), trim: '#e0b040', leather: '#6a3c22', metal: '#c8a040', z: -0.135, size: 1.15 });
     },
   }),
   1.35,

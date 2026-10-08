@@ -63,8 +63,8 @@ export default scaleAsset(
       const hollow = sdf
         .cone([0, 0.02, 0.02], [0, 0.15, 0.02], 0.05, 0.004)
         .scale([1, 1, 0.55])
-        .round(0.006)
-        .scale(1.25)
+        .round(0.004)
+        .scale(1.12)
         .rotateZ(-14)
         .rotateX(-6)
         .at(0.105, 0.62, 0.14)
@@ -72,27 +72,27 @@ export default scaleAsset(
       return fur
         .paintWhere(backs, t.furDark, 0.008)
         .paintWhere(hollow, tone('markings', '#fff0e4', 0.5), 0.004)
-        .paintWhere(sdf.halfSpace([0, -1, 0], -0.75).intersect(earZone), t.furDark, 0.012)
+        .paintWhere(sdf.halfSpace([0, -1, 0], -0.715).intersect(earZone), t.furDark, 0.01)
         .paintWhere(sdf.ellipsoid([0.1, 0.085, 0.09]).at(0.22, 0.45, 0.2).mirror('x'), t.markings, 0.015)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.1), t.furDark, 0.02);
     },
     extra(k, w) {
-      // The very big fluffy tail: thick from the rump, it sweeps back and round the fox's left side
-      // and curls forward along the body, with a white tip near the front leg.
-      const TIP: [number, number, number] = [0.22, 0.36, 0.02];
+      // The very big fluffy tail: thick from the rump, it sweeps back and out to the fox's left side
+      // and curls up beside the body, with a white tip at the top.
+      const TIP: [number, number, number] = [0.24, 0.7, -0.17];
       const tail = sdf
         .chain(
           [
             [0, 0.31, -0.28, 0.05],
-            [0.08, 0.3, -0.4, 0.11],
-            [0.21, 0.32, -0.36, 0.14],
-            [0.28, 0.35, -0.2, 0.13],
-            [0.27, 0.37, -0.06, 0.09],
-            [TIP[0], TIP[1], TIP[2], 0.035],
+            [0.07, 0.3, -0.4, 0.1],
+            [0.18, 0.36, -0.43, 0.13],
+            [0.25, 0.48, -0.36, 0.13],
+            [0.26, 0.6, -0.26, 0.1],
+            [TIP[0], TIP[1], TIP[2], 0.04],
           ],
           0.04,
         )
-        .paintWhere(sdf.sphere(0.1).at(TIP[0] + 0.03, TIP[1], TIP[2] + 0.02), w.tint.markings, 0.045)
+        .paintWhere(sdf.sphere(0.11).at(TIP[0] + 0.01, TIP[1] + 0.02, TIP[2] + 0.01).intersect(sdf.halfSpace([0, -1, 0], -0.6)), w.tint.markings, 0.03)
         .bone('tail');
       k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85 });
       // Soft white fluff on the cheeks: a flare out to each side of the face below the eyes, with a
@@ -100,14 +100,15 @@ export default scaleAsset(
       // Built about its own height and flattened there, so it stays at the mouth line.
       // Two soft points on each side (a long one out and a short one out and down), from wide roots
       // inside the face, so the fluff blends into the cream cheeks.
+      // Flat, wide, pointed wedges: thin front to back, so they read as a fur flare and not as balls.
       const fluff = sdf
         .smoothUnion(
-          0.035,
-          sdf.chain([[0.06, 0.01, 0.19, 0.09], [0.15, 0.0, 0.17, 0.074], [0.235, -0.012, 0.13, 0.028]], 0.04),
-          sdf.chain([[0.09, -0.02, 0.18, 0.068], [0.17, -0.055, 0.14, 0.044], [0.205, -0.085, 0.11, 0.016]], 0.035),
+          0.03,
+          sdf.chain([[0.06, 0.01, 0.19, 0.08], [0.16, 0.0, 0.16, 0.06], [0.26, -0.004, 0.12, 0.01]], 0.035),
+          sdf.chain([[0.09, -0.025, 0.18, 0.06], [0.17, -0.06, 0.14, 0.036], [0.215, -0.095, 0.11, 0.008]], 0.03),
         )
-        .scale([1, 0.85, 1])
-        .at(0, 0.45, 0)
+        .scale([1, 0.62, 0.6])
+        .at(0, 0.45, 0.075)
         .mirror('x');
       k.body('cheek-fluff', fluff.bone('head'), { color: w.tint.markings, roughness: 0.9 });
       // Three short dark lashes at the outer top corner of each eye.

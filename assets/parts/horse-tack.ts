@@ -94,6 +94,8 @@ export interface BackSaddleOptions {
   readonly z: number;
   /** The size of the saddle as a share (default 1: a seat 0.24 m wide and 0.2 m long). */
   readonly size?: number;
+  /** The width of the girth and its buckle as a share (default 1: 3.2 cm). */
+  readonly girthWidth?: number;
 }
 
 /**
@@ -118,12 +120,13 @@ export function backSaddle(k: AssetContext, body: Pick<HorseShape, 'trunk'>, o: 
   const cantle = sdf.capsule([-0.06 * S, topAt(back) + 0.024 * S, back], [0.06 * S, topAt(back) + 0.024 * S, back], 0.018 * S).bone('hips');
   const flaps = trunk.round(0.018 * S).smoothIntersect(0.006 * S, box(2, 0.1, 0.14, 0.025, TY - 0.11 * S, ZC));
   k.body('saddle', sdf.smoothUnion(0.012 * S, seat, pommel, cantle).union(flaps), { color: o.leather, roughness: 0.5, detail: 0.004 });
-  const girth = trunk.round(0.007 * S).intersect(box(2, 3, 0.032, 0.008, TY - 0.2 * S, ZC + 0.02 * S)).intersect(sdf.halfSpace([0, 1, 0], TY - 0.15 * S));
+  const GW = o.girthWidth ?? 1;
+  const girth = trunk.round(0.007 * S).intersect(box(2, 3, 0.032 * GW, 0.008, TY - 0.2 * S, ZC + 0.02 * S)).intersect(sdf.halfSpace([0, 1, 0], TY - 0.15 * S));
   k.body('girth', girth, { color: o.leather, roughness: 0.55, detail: 0.003 });
   const side = sdf.raycast(trunk, [4, TY - 0.17 * S, ZC + 0.02 * S], [-1, 0, 0])!;
   const buckle = sdf
-    .box([0.012 * S, 0.036 * S, 0.034 * S], 0.004 * S)
-    .subtract(sdf.box([0.03 * S, 0.022 * S, 0.02 * S], 0.002 * S))
+    .box([0.012 * S, 0.036 * S * GW, 0.034 * S * GW], 0.004 * S)
+    .subtract(sdf.box([0.03 * S, 0.022 * S * GW, 0.02 * S * GW], 0.002 * S))
     .at(side[0] + 0.01 * S, TY - 0.17 * S, ZC + 0.02 * S)
     .bone('spine');
   k.body('buckle', buckle, { color: o.metal, roughness: 0.3, metalness: 0.85, detail: 0.002 });

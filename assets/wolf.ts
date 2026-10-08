@@ -23,7 +23,7 @@ export default scaleAsset(
     description: 'Chibi wolf: a grey forest wolf with a big round head, a wide cream lower face with a broad closed smile, pointed ears with brown insides, big dark eyes with large shines, a cream bib, a smooth blue-grey coat with a darker back, long legs, brown paws, and a bushy tail that hangs low with a dark tip; quadruped rig.',
     reference: 'docs/wildlife-mockups/wolf_001.jpg',
     variants: {
-      fur: { grey: '#86909c', charcoal: '#7e838a', timber: '#7a6a58', black: '#3a3838', white: '#d8d8d4' },
+      fur: { grey: '#8c8c8a', charcoal: '#7e838a', timber: '#7a6a58', black: '#3a3838', white: '#d8d8d4' },
       markings: { cream: '#ece2c8', tan: '#d4b48a', white: '#f6f4ee' },
       eyes: { brown: '#2a160c', amber: '#7a440c', ice: '#4a6a80' },
     },
@@ -32,7 +32,8 @@ export default scaleAsset(
       black: { fur: 'black', markings: 'cream', eyes: 'brown' },
       arctic: { fur: 'white', markings: 'white', eyes: 'ice' },
     },
-    colors: { furLight: '#ddd6c6', furDark: '#6e7680', earInner: '#7a5038', eyeRim: '#f4f0e8' },
+    colors: { furLight: '#ddd6c6', furDark: '#6e6e6c', earInner: '#8a5434', eyeRim: '#f4f0e8' },
+    earScale: 1.08,
     // A big head with a long, tapered snout and a smooth cream lower face; dark eyes without
     // a black rim, so they do not read as a mask.
     headScale: 1.3,
@@ -57,7 +58,7 @@ export default scaleAsset(
       // paws.
       return fur
         .paintWhere(sdf.ellipsoid([0.09, 0.07, 0.2]).at(0, 0.43, -0.07), t.furDark, 0.04)
-        .paintWhere(sdf.ellipsoid([0.085, 0.13, 0.09]).at(0, 0.25, 0.17), t.markings, 0.012)
+        .paintWhere(sdf.ellipsoid([0.11, 0.16, 0.1]).at(0, 0.27, 0.17), t.markings, 0.012)
         .paintWhere(sdf.halfSpace([0, 1, 0], 0.06), tone('fur', '#8a5e40', 0.5), 0.015);
     },
     extra(k, w) {
@@ -87,9 +88,19 @@ export default scaleAsset(
         .bone('tail');
       k.body('tail-fur', tail, { color: w.tint.fur, roughness: 0.85 });
       const e = w.eye;
-      // Large white shines on the eyes, high on the outer side.
-      const shine = sdf.ellipsoid([0.012, 0.014, 0.006]).at(e[0] + 0.016, e[1] + 0.018, e[2] + 0.001);
+      // Large white shines on the eyes, high and a little to the outer side (inside the eye).
+      const shine = sdf.ellipsoid([0.011, 0.013, 0.006]).at(e[0] + 0.008, e[1] + 0.016, e[2] + 0.003);
       k.body('eye-shine', shine.mirror('x').bone('head'), { color: '#ffffff', roughness: 0.1, detail: 0.002 });
+      // Full cream cheeks low on each side of the face, so the head is wide at the jaw.
+      const ch = w.faceHit(e[0] + 0.02, e[1] - 0.06);
+      const cheeks = sdf.ellipsoid([0.058, 0.046, 0.05]).at(ch[0] + 0.012, ch[1], ch[2] - 0.04).mirror('x', 0.02);
+      k.body('cheeks', cheeks.bone('head'), { color: w.tint.markings, roughness: 0.85, detail: 0.004 });
+      // Thin dark brows over the eyes.
+      const b0 = w.faceHit(e[0] - 0.03, e[1] + 0.058);
+      const b1 = w.faceHit(e[0] + 0.0, e[1] + 0.062);
+      const b2 = w.faceHit(e[0] + 0.03, e[1] + 0.055);
+      const brows = sdf.chain([[...b0, 0.007], [...b1, 0.008], [...b2, 0.006]], 0.004).mirror('x');
+      k.body('brows', brows.bone('head'), { color: w.tone('fur', '#4e4e4c', 0.8), roughness: 0.7, detail: 0.002 });
     },
   }),
   0.9,
