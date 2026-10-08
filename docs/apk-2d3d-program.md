@@ -79,8 +79,9 @@ setback is courage or a rest), speed never gives XP, and one evidence item per s
 | 1 | Battle and board: a word decides a hero's action | rune-match (design done, core in progress), rpg-battle, paladins-twin-soul | the Monster Encounters stage, `Card2D` |
 | 2 | Arena: steer a hero, reach words in sentence order | labyrinth-goblin-king, astral-mage, village-guardian, haunted-library, realm-carver, shadow-gate-dungeon | the arena helpers of `src/apk3d/sim`, `Arena2D`, `Joystick2D` |
 | 3 | Flight and run: choose a lane or a gate while the world scrolls | spellweavers-run, griffin-sky-joust, gryphon-patrol, dragon-rider, griffin-riders-escape, magic-defense | the Dragon Flight scroller and land plan |
-| 4 | Aim and shoot: point at the right word | archers-revenge, abyssal-well, castle-defense | a new aim control (drag to aim, release to shoot) |
+| 4 | Aim and shoot: point at the right word | archers-revenge, abyssal-well | a new aim control (drag to aim, release to shoot) |
 | 5 | Build and climb: place or climb words in order | alchemists-synthesis, enchanted-library, rune-forge-chamber, sorcerer-ziggurat, storm-castle-tower | the Potion Rush sorting pattern |
+| 6 | Tower defense: place defenders against waves | castle-defense | a new placement control and wave scheduler |
 
 A family's first game needs a design (Claude), a core (Fable), and both views (Claude); the next
 games of the family need a design and a core, and their views reuse the family's pieces.

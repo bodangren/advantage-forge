@@ -2,7 +2,9 @@
 
 ## Purpose
 
-Design from the aim and shoot family. Define aiming input and defensive outcomes before implementation. The rules core, 3D view, and Phaser view will be ported to the monorepo.
+Design a tower defense game. Define placement input and defensive outcomes before implementation. The rules core, 3D view, and Phaser view will be ported to the monorepo.
+
+Owner decision (2026-10-08): Castle Defense is a tower defense game, in family 6 of `docs/apk-2d3d-program.md`, not in the aim and shoot family. The game built on 2026-10-03 already follows this rule: each built sentence becomes a tower on a wall post (`docs/game-castle-defense-3d.md`).
 
 ## Acceptance criteria
 

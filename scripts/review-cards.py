@@ -5,8 +5,10 @@ Row 1: the mockup (the reference panel of out/<name>/render.png) and the four tu
 Row 2: the 8-direction sprite preview at 128 px, and the three-quarter row of one motion strip
 (sit, then walk, swim, fly, hop, idle, or the first strip found; strips older than the GLB are skipped).
 An asset with a `sit` clip has a sitting mockup and a standing rest pose; the card shows the sit.
+An asset whose mockup shows an action (owner decision of 2026-10-08) names the matching clip with
+`<name>=<clip>`, for example `squirrel=run`; the card shows that strip.
 
-Usage: python3 scripts/review-cards.py <out-dir> <name> [<name> ...]
+Usage: python3 scripts/review-cards.py <out-dir> <name>[=<clip>] [<name>[=<clip>] ...]
 Run `./forge all <name>` first, so the render, the sprites, and the strips are the final ones.
 """
 import os
@@ -17,7 +19,7 @@ from PIL import Image, ImageDraw
 H = 360  # the height of one view panel
 
 
-def card(name: str, out_dir: str) -> str:
+def card(name: str, out_dir: str, pose_clip: str | None = None) -> str:
     render = Image.open(f'out/{name}/render.png').convert('RGB')
     w, h = render.size
     views = render.crop((0, h // 2, w, h))
@@ -41,7 +43,9 @@ def card(name: str, out_dir: str) -> str:
             # A `--fast` build after `forge all` replaces the final GLB and the views (vertex colors).
             print(f'warning: {name}: every clip strip is older than the GLB; run ./forge all {name} again', file=sys.stderr)
         strips = [f for f in strips if os.path.getmtime(f'{anim_dir}/{f}') >= built]
-    for c in ('sit', 'walk', 'swim', 'fly', 'hop', 'idle'):
+    if pose_clip and f'{pose_clip}.png' not in strips:
+        sys.exit(f'{name}: no current strip for the clip {pose_clip}; run ./forge all {name}')
+    for c in ((pose_clip,) if pose_clip else ('sit', 'walk', 'swim', 'fly', 'hop', 'idle')):
         if f'{c}.png' in strips:
             clip = c
             break
@@ -70,7 +74,8 @@ def main() -> None:
     out_dir, names = sys.argv[1], sys.argv[2:]
     os.makedirs(out_dir, exist_ok=True)
     for n in names:
-        print(card(n, out_dir))
+        name, _, clip = n.partition('=')
+        print(card(name, out_dir, clip or None))
 
 
 if __name__ == '__main__':

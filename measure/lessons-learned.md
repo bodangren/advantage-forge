@@ -26,8 +26,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 ## Effective practices
 
 - Build a shared material reference before producing a kit.
-- Derive dimensions from measured character bounds before writing prompts.
-- Derive map pieces from cell edges to prevent wall and corner count errors.
+- Derive dimensions from measured character bounds before writing prompts, and derive map pieces from cell edges to prevent wall and corner count errors.
 - Use fast renders for shape iteration and textured output for final review: run `forge all` last, because a later `--fast` build replaces the final GLB and views (`scripts/review-cards.py` warns). Use bump detail for fine texture when displacement adds unnecessary triangles.
 - Keep heavy builds within the measured machine capacity.
 - Prove a shape-code move with mesh identity per body (`scripts/part-check.mjs`), not a pixel score. Exact pose expressions keep meshes identical; rounded mounts and body splits re-mesh. A kind factory (17 kinds made 80 P2 monsters) takes only default-safe options; `scripts/mesh-same.mjs` proves the older assets identical. For an edit of a kind file, pass `--part assets/parts/<kind>.ts`: without it, both builds import the working kind and the check is empty (found 2026-10-05). Chibi arms are short: solve a held item's pose with `motion.follow`, and choose actions the arms can reach.

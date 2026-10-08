@@ -9625,9 +9625,9 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 924,
+    "listed": 925,
     "catalog_matched": 707,
-    "off_catalog": 217
+    "off_catalog": 218
   },
   "asset_sources": [
     {
@@ -13488,6 +13488,11 @@
       "catalog_source_ids": []
     },
     {
+      "id": "humanoid-kind",
+      "source_path": "assets/parts/humanoid-kind.ts",
+      "catalog_source_ids": []
+    },
+    {
       "id": "imp-kind",
       "source_path": "assets/parts/imp-kind.ts",
       "catalog_source_ids": []
@@ -16190,6 +16195,10 @@
   ],
   "source_files": [
     {
+      "source_path": "src/apk3d/audio/answer-choice.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/apk3d/audio/bus.ts",
       "source_present": true
     },
@@ -16271,6 +16280,10 @@
     },
     {
       "source_path": "src/apk3d/contracts/index.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/apk3d/contracts/listening.ts",
       "source_present": true
     },
     {
@@ -17966,6 +17979,10 @@
       "source_present": true
     },
     {
+      "source_path": "src/games/shared/answer-audio.ts",
+      "source_present": true
+    },
+    {
       "source_path": "src/games/shared/battle/hall.ts",
       "source_present": true
     },
@@ -18227,6 +18244,10 @@
     },
     {
       "source_path": "src/grounding.ts",
+      "source_present": true
+    },
+    {
+      "source_path": "src/host/answer-audio.ts",
       "source_present": true
     },
     {

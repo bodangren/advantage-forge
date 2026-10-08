@@ -53,6 +53,10 @@ Caps:
   Exception (owner decision of 2026-10-05): an animal whose mockup sits keeps a standing rest pose
   for its walk and has a `sit` clip. Its card shows the sit strip in row 2. Judge the pose from
   the sit strip, not from the standing views; the cap does not apply when the sit matches.
+  Exception (owner decision of 2026-10-08): an animal whose mockup shows an action (for example,
+  a running bound) keeps a standing rest pose for its walk. Its card shows the matching clip in
+  row 2 (named in the card title). Judge the pose from that strip; the cap does not apply when
+  the strip matches the mockup.
 - A different face expression (for example, an open mouth with fangs against a closed smile):
   7.0 or less.
 - A visible defect (a hole, a part through another part, a floating part): 7.0 or less.

@@ -249,9 +249,15 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 
 Bar decision. Owner, 2026-10-05: "We can drop the rating to 7.0. How does that affect the pass
 rate?" The wildlife bar is 7.0 from this date; the table marks 7.0 and higher as accepted. The
-reviewers still rate against the brief, and their ratings stay as they are. Proposal (open,
-waiting for the owner): after three reviews below the bar, record the rating, put the asset on a
-follow-up list, and move on.
+reviewers still rate against the brief, and their ratings stay as they are.
+Stop rule (proposal 1, owner approved 2026-10-08): after three reviews below the bar, record the
+rating, put the asset on the follow-up list (below), and move on.
+Action mockups (proposal 2, owner approved 2026-10-08): the squirrel mockup shows a running
+bound, so the pose cap (6.5 or less) applied to the standing rest pose. The `run` clip folds the
+front paws to the chest in the air. The sit exception now extends to action mockups: the asset
+keeps the standing rest pose for the walk, the card shows the matching clip in row 2
+(`python3 scripts/review-cards.py <dir> squirrel=run`), and the reviewer judges the pose from that
+clip. The reviewer brief has the new exception.
 
 Status on 2026-10-05 after 21 review rounds and the batch 10 review: 50 of 61 assets are at 7.0
 or higher (13 at 7.5 or higher). Round 21 (wildlife-w5h.json) accepted the ox, the bee, and the
