@@ -125,7 +125,9 @@ round 2 arms went to 148K.
   grin with upturned corners and thinner arched brows; a cream sock band; the trousers end higher;
   the apron hem rises to 0.168; the hat puff is 0.02 to 0.025 taller. 2 fast renders, 1 cast strip.
 - `./forge check baker`: result ok (closest 4.9 cm). `./forge all baker`: 0 warnings.
-- Review 2 (bench/haiku/review-final2.json, a new reviewer): **7.2, pass**. Open notes: a hard
+- Review 2 (bench/haiku/review-final2.json, a new reviewer): **7.2**. The reviewers used a 7.0 bar
+  from the trial brief, but the standing character bar is 7.5 (owner, 2026-10-02), so the baker is
+  below the bar after two reviews. It gets one more pass under the stop rule. Open notes: a hard
   edge on the back hair, small motion in cast and cheer, two identical loaves.
 - Arm sources moved to bench/haiku/arms/ (evidence only; they are not built).
 

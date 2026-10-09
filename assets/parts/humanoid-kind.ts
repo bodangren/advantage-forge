@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { addPart, defineAsset, mapTint, motion, profile, sdf } from '../../src/index.js';
-import type { AnimationDef, AssetContext, AssetDefinition, Pose } from '../../src/index.js';
+import type { AnimationDef, AssetContext, AssetDefinition, BonePose, Pose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 import { avatarHair } from './avatar-hair.js';
@@ -61,11 +61,31 @@ export interface HumanoidKind {
    * mirrors them). The fist turns with the forearm. The arms keep this pose in every clip and move
    * only with the chest, so an item rigid on `hand.R` stays between the fists.
    */
-  readonly hold?: { readonly elbow: V3; readonly wrist: V3 };
+  readonly hold?: ArmPose;
+  /**
+   * One arm or both in a held rest pose (a raised tankard, a bell, a lantern): the elbow and wrist,
+   * written for the left side (x > 0); the `R` pose is mirrored to the right arm. A posed arm keeps
+   * its pose in every clip and moves only with the chest, and its hand stays level; the other arm
+   * keeps the clip motion. Build sleeves and cuffs for both arms with `h.perArm`.
+   */
+  readonly pose?: { readonly L?: ArmPose; readonly R?: ArmPose };
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
   extra?(k: AssetContext, h: HumanoidShape): void;
+}
+
+/** An arm's rest pose: the elbow and the wrist (left-side coordinates, x > 0). */
+export interface ArmPose {
+  readonly elbow: V3;
+  readonly wrist: V3;
+}
+
+/** An arm's joints in left-side coordinates (x > 0): the elbow, the wrist, and the grip center in the fist. */
+export interface ArmJoints {
+  readonly ELBOW: V3;
+  readonly WRIST: V3;
+  readonly GRIP: V3;
 }
 
 /** The humanoid's shapes and joints that a kind builds on. */
@@ -93,6 +113,14 @@ export interface HumanoidShape {
     readonly HEAD_Y: number;
     readonly EYE: readonly [number, number];
   };
+  /** The joints of each arm in left-side coordinates (x > 0); they differ when a `pose` moves one arm. */
+  readonly arms: { readonly L: ArmJoints; readonly R: ArmJoints };
+  /**
+   * A shape for both arms (sleeves, cuffs, bracers): `build` makes the left one from the left arm's
+   * joints (x > 0, `.L` tags); the right one comes from the right arm's joints, mirrored (`.R` tags).
+   * Without a one-arm `pose` this is `build(arms.L).mirror('x')`.
+   */
+  perArm(build: (j: ArmJoints) => sdf.Shape): sdf.Shape;
   readonly tint: Readonly<Record<string, string>>;
 }
 
@@ -122,35 +150,44 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const SHOULDER = [0.13, 0.385, 0] as const;
       const ELBOW0: V3 = [0.18, 0.332, 0.012];
       const WRIST0: V3 = [0.205, 0.238, 0.03];
-      const ELBOW = kind.hold?.elbow ?? ELBOW0;
-      const WRIST = kind.hold?.wrist ?? WRIST0;
-      // A hold turns the hand by the rotation that takes the hanging forearm to the held one.
-      const handTurn = new THREE.Quaternion().setFromUnitVectors(
-        new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST0), new THREE.Vector3(...ELBOW0)).normalize(),
-        new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST), new THREE.Vector3(...ELBOW)).normalize(),
-      );
-      const handEuler = new THREE.Euler().setFromQuaternion(handTurn, 'ZYX');
+      // The grip center in each fist: the anchor of the mainhand (knife.R) and offhand (knife.L) slots.
+      const GRIP0: V3 = [0.232, 0.172, 0.022];
       const deg = 180 / Math.PI;
-      const toHand = (s: sdf.Shape) =>
-        kind.hold
-          ? s
-              .at(-WRIST0[0], -WRIST0[1], -WRIST0[2])
-              .rotateX(handEuler.x * deg)
-              .rotateY(handEuler.y * deg)
-              .rotateZ(handEuler.z * deg)
-              .at(...WRIST)
-          : s;
-      const toHandPoint = (p: V3): V3 => {
-        const v = new THREE.Vector3(p[0] - WRIST0[0], p[1] - WRIST0[1], p[2] - WRIST0[2]).applyQuaternion(handTurn);
-        return [WRIST[0] + v.x, WRIST[1] + v.y, WRIST[2] + v.z];
+      // A held pose turns the hand by the rotation that takes the hanging forearm to the posed one.
+      const armOf = (pose: ArmPose | undefined) => {
+        const ELBOW = pose?.elbow ?? ELBOW0;
+        const WRIST = pose?.wrist ?? WRIST0;
+        const turn = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST0), new THREE.Vector3(...ELBOW0)).normalize(),
+          new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST), new THREE.Vector3(...ELBOW)).normalize(),
+        );
+        const e = new THREE.Euler().setFromQuaternion(turn, 'ZYX');
+        const toHand = (s: sdf.Shape) =>
+          pose
+            ? s
+                .at(-WRIST0[0], -WRIST0[1], -WRIST0[2])
+                .rotateX(e.x * deg)
+                .rotateY(e.y * deg)
+                .rotateZ(e.z * deg)
+                .at(...WRIST)
+            : s;
+        const point = (p: V3): V3 => {
+          const v = new THREE.Vector3(p[0] - WRIST0[0], p[1] - WRIST0[1], p[2] - WRIST0[2]).applyQuaternion(turn);
+          return [WRIST[0] + v.x, WRIST[1] + v.y, WRIST[2] + v.z];
+        };
+        return { ELBOW, WRIST, GRIP: pose ? point(GRIP0) : GRIP0, toHand };
       };
+      const jointsL = armOf(kind.hold ?? kind.pose?.L);
+      const jointsR = armOf(kind.hold ?? kind.pose?.R);
+      const { ELBOW, WRIST, GRIP } = jointsL;
+      // A one-arm pose builds each arm from its own joints; otherwise the right arm mirrors the left.
+      const oneSided = !kind.hold && kind.pose !== undefined;
+      const perArm = (build: (j: ArmJoints) => sdf.Shape) =>
+        oneSided ? sdf.union(build(jointsL), build(jointsR).mirror('x').intersect(sdf.halfSpace([1, 0, 0], 0))) : pair(build(jointsL));
       const HIP = [0.068, 0.195, 0] as const;
       const ANKLE = [0.098, 0.07, 0] as const;
       const KNEE = [0.083, 0.1325, 0] as const; // the knee: splits the leg (shin.L takes the weight below it)
       const mx = (p: readonly [number, number, number]) => [-p[0], p[1], p[2]] as const;
-      // The grip center in each fist: the anchor of the mainhand (knife.R) and offhand (knife.L) slots.
-      const GRIP0: V3 = [0.232, 0.172, 0.022];
-      const GRIP = kind.hold ? toHandPoint(GRIP0) : GRIP0;
       k.skeleton({
         hips: { at: [0, 0.2, 0] },
         spine: { parent: 'hips', at: [0, 0.26, 0] },
@@ -162,10 +199,10 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         'forearm.L': { parent: 'upperarm.L', at: ELBOW },
         'hand.L': { parent: 'forearm.L', at: WRIST },
         'upperarm.R': { parent: 'chest', at: mx(SHOULDER) },
-        'forearm.R': { parent: 'upperarm.R', at: mx(ELBOW) },
-        'hand.R': { parent: 'forearm.R', at: mx(WRIST) },
+        'forearm.R': { parent: 'upperarm.R', at: mx(jointsR.ELBOW) },
+        'hand.R': { parent: 'forearm.R', at: mx(jointsR.WRIST) },
         'knife.L': { parent: 'hand.L', at: GRIP },
-        'knife.R': { parent: 'hand.R', at: mx(GRIP) },
+        'knife.R': { parent: 'hand.R', at: mx(jointsR.GRIP) },
         'leg.L': { parent: 'hips', at: HIP },
         'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
         'foot.L': { parent: 'shin.L', at: ANKLE },
@@ -196,20 +233,25 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const neck = sdf.capsule([0, 0.42, -0.01], [0, 0.52, -0.01], 0.05).bone('neck');
 
       // Arms: the upper arm under the short sleeve, the bare forearm, and a closed fist that holds a grip.
-      const arm = sdf.smoothUnion(
-        0.02,
-        sdf.cone(SHOULDER, ELBOW, 0.04, 0.036).bone('upperarm.L'),
-        sdf.cone(ELBOW, WRIST, 0.036, 0.032).bone('forearm.L'),
-      );
-      const fist = toHand(
-        sdf.smoothUnion(
-          0.018,
-          sdf.ellipsoid([0.038, 0.043, 0.044]).at(0.212, 0.2, 0.034), // palm and closed fingers
-          sdf.capsule([0.196, 0.18, 0.06], [0.2, 0.2, 0.072], 0.017), // finger roll at the front
-          sdf.cone([0.225, 0.215, 0.055], [0.206, 0.205, 0.078], 0.016, 0.013), // thumb over the fingers
-        ),
-      ).bone('hand.L');
-      const arms = pair(sdf.smoothUnion(0.02, arm, fist));
+      const armShape = (j: typeof jointsL) => {
+        const arm = sdf.smoothUnion(
+          0.02,
+          sdf.cone(SHOULDER, j.ELBOW, 0.04, 0.036).bone('upperarm.L'),
+          sdf.cone(j.ELBOW, j.WRIST, 0.036, 0.032).bone('forearm.L'),
+        );
+        const fist = j
+          .toHand(
+            sdf.smoothUnion(
+              0.018,
+              sdf.ellipsoid([0.038, 0.043, 0.044]).at(0.212, 0.2, 0.034), // palm and closed fingers
+              sdf.capsule([0.196, 0.18, 0.06], [0.2, 0.2, 0.072], 0.017), // finger roll at the front
+              sdf.cone([0.225, 0.215, 0.055], [0.206, 0.205, 0.078], 0.016, 0.013), // thumb over the fingers
+            ),
+          )
+          .bone('hand.L');
+        return sdf.smoothUnion(0.02, arm, fist);
+      };
+      const arms = oneSided ? perArm((j) => armShape(j === jointsL ? jointsL : jointsR)) : pair(armShape(jointsL));
 
       // The hero torso (the chest-armor contract at 1x). Three tagged bands set the skin weights; the
       // union with the whole torso keeps the surface exactly as it is.
@@ -302,6 +344,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         faceZ,
         onFace: at,
         joints: { SHOULDER, ELBOW, WRIST, HIP, KNEE, ANKLE, GRIP, HEAD_Y, EYE },
+        arms: { L: jointsL, R: jointsR },
+        perArm,
         tint: T,
       };
       const skin = kind.paintSkin ? kind.paintSkin(skinBase, shape) : skinBase;
@@ -313,7 +357,10 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
 
       // ------------------------------------------------------------------ undershirt
       // The hero torso with short sleeves to the elbow, a darker collar and hem, and a painted belt.
-      const sleeves = pair(sdf.cone([0.11, 0.405, 0], [0.172, 0.348, 0.01], 0.047, 0.043).bone('upperarm.L'));
+      // The sleeve ends short of the elbow (a posed arm moves the end with its elbow).
+      const sleeveEnd = (j: ArmJoints): V3 =>
+        j.ELBOW === ELBOW0 ? [0.172, 0.348, 0.01] : [j.ELBOW[0] - 0.008, j.ELBOW[1] + 0.016, j.ELBOW[2] - 0.002];
+      const sleeves = perArm((j) => sdf.cone([0.11, 0.405, 0], sleeveEnd(j), 0.047, 0.043).bone('upperarm.L'));
       const collar = sdf.halfSpace([0, -1, 0], -0.452);
       const hem = sdf.halfSpace([0, 1, 0], 0.168);
       const belt = band(0.238, 0.264);
@@ -348,17 +395,37 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       kind.extra?.(k, shape);
 
       // ------------------------------------------------------------------ animation
+      const { wave, bump, keys, reach, orient } = motion;
       // A hold keeps the arms in the rest pose (on the held item) in every clip, and the hands take
-      // back the lean and roll of the spine and the chest, so the held item stays level.
-      const ARM_BONE = /^(upperarm|forearm|hand)\.[LR]$/;
-      const holdPose = (pose: Pose): Pose => {
+      // back the lean and roll of the spine and the chest, so the held item stays level. In the
+      // cheer, the cast, and the attack, both upper arms lift the item forward a little (degrees by
+      // phase): a raise with the hop, a push with the cast, an offer with the attack.
+      const ARM_BONE = /^(upperarm|forearm|hand)\.([LR])$/;
+      const posed = { L: (kind.hold ?? kind.pose?.L) !== undefined, R: (kind.hold ?? kind.pose?.R) !== undefined };
+      const HOLD_LIFT: Record<string, (p: number) => number> = {
+        cheer: (p) => 15 * Math.min(1, Math.max(0, Math.sin(Math.min(1, Math.max(0, (p - 0.25) / 0.55)) * Math.PI))),
+        cast: (p) => 14 * keys(p, [[0, 0], [0.3, 0], [0.52, 1], [0.74, 1], [1, 0]] as const, 'spline'),
+        attack: (p) => 16 * keys(p, [[0, 0], [0.3, 0.15], [0.5, 1], [0.62, 1], [1, 0]] as const, 'spline'),
+      };
+      const holdPose = (pose: Pose, lift: number): Pose => {
         const tilt = (axis: 0 | 2) => -((pose.spine?.rotate?.[axis] ?? 0) + (pose.chest?.rotate?.[axis] ?? 0));
-        const level = { rotate: [tilt(0), 0, tilt(2)] as const };
-        return { ...Object.fromEntries(Object.entries(pose).filter(([b]) => !ARM_BONE.test(b))), 'hand.L': level, 'hand.R': level };
+        const arm = { rotate: [-lift, 0, 0] as const };
+        const level = { rotate: [tilt(0) + lift, 0, tilt(2)] as const };
+        const out: Record<string, BonePose> = Object.fromEntries(
+          Object.entries(pose).filter(([b]) => {
+            const m = ARM_BONE.exec(b);
+            return !m || !posed[m[2] as 'L' | 'R'];
+          }),
+        );
+        for (const side of ['L', 'R'] as const) if (posed[side]) out[`upperarm.${side}`] = arm;
+        for (const side of ['L', 'R'] as const) if (posed[side]) out[`hand.${side}`] = level;
+        return out;
       };
       const animation = (name: string, def: AnimationDef) =>
-        k.animation(name, kind.hold ? { ...def, pose: (t, p) => holdPose(def.pose(t, p)) } : def);
-      const { wave, bump, keys, reach, orient } = motion;
+        k.animation(
+          name,
+          posed.L || posed.R ? { ...def, pose: (t, p) => holdPose(def.pose(t, p), kind.hold ? (HOLD_LIFT[name]?.(p) ?? 0) : 0) } : def,
+        );
       const LEG = 0.19;
       const rad = Math.PI / 180;
       type V3 = readonly [number, number, number];
@@ -426,7 +493,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const armRig = (side: 1 | -1) => {
         const m = (v: V3): V3 => [side === 1 ? -v[0] : v[0], v[1], v[2]];
         const tag = side === 1 ? 'L' : 'R';
-        const chain = { root: m(mx(SHOULDER)), mid: m(mx(ELBOW)), end: m(mx(WRIST)) };
+        const j = side === 1 ? jointsL : jointsR;
+        const chain = { root: m(mx(SHOULDER)), mid: m(mx(j.ELBOW)), end: m(mx(j.WRIST)) };
         const item = { dir: ITEM_DIR, up: m([-1, 0, 0]) };
         const pose = (wrist: V3, pole: V3, aim?: { dir: V3; up: V3 }) => {
           const a = reach(chain, wrist, pole);

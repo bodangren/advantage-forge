@@ -11,7 +11,7 @@ Status: complete. This plan owns execution status. Evidence: bench/haiku/results
 ## Phase 3: Finish
 - [x] Task: Add the `hold` option to assets/parts/humanoid-kind.ts (the avatar base stays the same: A/B build, 0 vertex movement).
 - [x] Task: Improve s1 into assets/baker.ts; forge check result ok; forge all with 0 warnings.
-- [x] Task: Independent reviews: 6.8 (fail), then 7.2 (pass, review-final2.json); docs/character-reviews.json entry.
+- [x] Task: Independent reviews: 6.8, then 7.2 (review-final2.json); docs/character-reviews.json entry. Correction: the trial brief used a 7.0 bar, but the character bar is 7.5, so the baker is below it after two reviews; its third pass belongs to the P2 NPC track.
 - [x] Task: Record the comparison in bench/haiku/results.md and the lessons.
 - [x] Task: Run measure/generate.sh and measure/doctor.sh.
 
