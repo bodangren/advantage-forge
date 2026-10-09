@@ -54,11 +54,13 @@ viewer's left).
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | butcher accepted at 7.5 (review 2); review 1: 7.0, 6.5, 6.0, 6.0, 7.0, 6.5, 6.0, 6.5; review 2: 7.0, 7.0, 6.5, 7.5, 7.0, 7.0, 6.5, 7.0; third pass running |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); review 1: 7.0, 7.0, 6.0, 7.0, 7.0, 7.0, 6.5; second pass running |
-| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | building (musician built) |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | review 1: 6.5, 6.5, 5.5, 7.0, 7.0, 6.5, 7.0, 6.0; second pass running |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | building (beggar, scholar, scribe, shepherd started) |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | briefs and mockups ready |
+| 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness) |
+| 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | briefs and mockups ready (wilderness) |
 
-Still to write: wilderness (14 without a source), court and faction (22), and the fantasy peoples
+Still to write: court and faction (22), and the fantasy peoples
 (9; some may need another body). `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`, and
 `scout` have sources from earlier tracks.
 

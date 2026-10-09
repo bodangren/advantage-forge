@@ -1,0 +1,147 @@
+{
+  "miller": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 4, 3.5, 3],
+    "summary": "A bearded miller with a cream cap, suspenders, and a flour sack. The model is the same character, but the sack, the pose, and the cap differ clearly from the mockup.",
+    "strengths": [
+      "The brown beard, the pink nose, and the open smile read as the mockup face.",
+      "The cream, tan, and brown palette is close to the mockup.",
+      "The cap and the beard read at 128 px in all eight directions."
+    ],
+    "issues": [
+      "The mockup carries a large flour sack on the back, nearly as large as the torso. The model holds a small pouch in one fist. Make the sack large and put it on the back or over the shoulder.",
+      "The mockup waves one hand and keeps the other fist at the belt. The model raises both fists to shoulder height. Lower one arm to the belt.",
+      "The cap has a second cream layer under it at the back. From the side and the back it reads as two stacked caps. Make one soft cap.",
+      "White dots on the cheeks and the beard read as tears or noise. Remove them from the cheeks, or make the flour dust soft and pale.",
+      "The shirt is pure white and the trousers read as a short apron skirt. The mockup has a cream shirt and full khaki trousers with a shoulder strap and a buckle belt.",
+      "The sack and the cap use a coarse waffle texture that reads as knit mesh, not as cloth."
+    ],
+    "next": "Replace the small hand pouch with a large flour sack on the back, held at the neck over one shoulder."
+  },
+  "miner": {
+    "overall": 6.5,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 2.5, 4, 3.5, 3],
+    "summary": "A young miner with a yellow hard hat, a raised hammer, and a blue crystal. The pose and the props match the mockup, but hair pokes through the helmet and the lamp and mouth differ.",
+    "strengths": [
+      "The pose matches: the hammer is up in one fist and the crystal is in the other fist.",
+      "The yellow helmet, the brown suspenders, the belt pouches, and the black boots match the mockup.",
+      "The silhouette reads from every view, and the helmet reads at 128 px."
+    ],
+    "issues": [
+      "Black hair pokes through the helmet shell above the brim on both sides of the front. This is a visible defect. Keep the hair inside the helmet.",
+      "The head lamp is a pale beige pad. The mockup lamp glows bright yellow. Make the lamp lens emissive yellow.",
+      "The mouth has a hard red outline and two small teeth. It reads as lipstick or a smear in the three-quarter view. Make a soft open smile with a row of upper teeth, as in the mockup.",
+      "The crystal is a pale cube held at the waist. The mockup holds a faceted turquoise gem at shoulder height. Raise the crystal and give it facets.",
+      "The sleeves are long. The mockup has rolled sleeves and khaki trousers."
+    ],
+    "next": "Remove the hair that pokes through the helmet, then make the lamp glow."
+  },
+  "musician": {
+    "overall": 5.5,
+    "scores": [2.5, 3, 3.5, 3, 3.5, 3, 2.5, 3, 4, 3, 3],
+    "summary": "A red-haired girl with a green beret, a red vest, and a brown skirt. The outfit matches the mockup, but the fiddle does not read and the playing pose is missing.",
+    "strengths": [
+      "The green beret, the long red hair, the red vest, the brown skirt, and the striped stockings match the mockup palette.",
+      "The face has a calm closed smile and blush, close to the mockup.",
+      "The model stands on the ground and has a full clip set."
+    ],
+    "issues": [
+      "The mockup holds the fiddle under the chin with the bow across it. The model holds a small dark instrument across the waist. It reads as crossed sticks, not as a fiddle, also at 128 px. Put a clear violin body at the left shoulder under the chin and hold the bow in the other fist.",
+      "The feather is a large flat white paddle that stands up from the beret. The mockup has small cream and red leaves at the side of the beret. Make the feathers small and tuck them at the side.",
+      "Bare scalp shows between the beret and the hair at the back of the head in the three-quarter view. Fill the gap with hair.",
+      "The back hair is one flat sheet. The mockup hair has soft waves. Add wave locks.",
+      "The mouth is a thin line. Make the smile a little wider so that the face reads as happy."
+    ],
+    "next": "Model a readable fiddle and hold it under the chin with the bow across it."
+  },
+  "orphan": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4, 4, 3],
+    "summary": "A cheerful street boy with a newsboy cap, a green coat, a scarf, and a paper boat. The model is the same character with a cheerful face, but the scarf color and the boat differ clearly.",
+    "strengths": [
+      "The face reads as hopeful: a wide grin, freckles, and blush.",
+      "The brown newsboy cap, the green coat with buttons, the cream cuffs, and the pocket patch match the mockup.",
+      "The cap, the coat, and the face read at 128 px."
+    ],
+    "issues": [
+      "The scarf has red and white candy stripes. The mockup scarf has brown, cream, and red stripes. Change the scarf colors to the mockup colors.",
+      "The paper boat is small and at the waist. The mockup holds a larger boat up near the shoulder. Make the boat larger and raise the arm.",
+      "The coat is long and hides the trousers. The mockup shows grey rolled trousers below a shorter coat. Shorten the coat.",
+      "The cap has no clear patches and the hair is short. The mockup cap has cream patches and tousled locks under the brim.",
+      "The walk keeps both arms still. Add a small arm swing on the free arm."
+    ],
+    "next": "Change the scarf to the brown, cream, and red stripes of the mockup."
+  },
+  "peddler": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4, 3.5, 3],
+    "summary": "A travelling seller with a purple hat, an orange coat, a big pack, and a gold teapot. The model is the same character, but the hat, the pack goods, and the beard differ clearly.",
+    "strengths": [
+      "The big pack with a wood frame, hanging pots, and ribbons reads as a seller's load from the side and the back.",
+      "The orange coat with cream cuffs, the belt, and the pouches match the mockup.",
+      "The gold item in the outstretched fist is the focal point, as in the mockup."
+    ],
+    "issues": [
+      "The hat is saturated purple with no band. The mockup hat is soft lavender with a tan band, a buckle, and a large brass button. Lower the saturation and add the band.",
+      "The pack is a plain tan slab. The mockup pack has colorful goods on top: a rolled blanket, green sprigs, and a gold jug. Add goods on top of the pack.",
+      "The gold item reads as an oil lamp with a long spout. The mockup holds a round gold pot with a handle. Make the body round and add a top handle.",
+      "The beard is a thin goatee and the nose is small. The mockup has a fuller pointed beard, long moustache tails, and a big red nose.",
+      "The free arm hangs straight. The mockup rests the free fist at the hip."
+    ],
+    "next": "Change the hat to soft lavender with a tan band and a brass button."
+  },
+  "performer": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 4, 4, 4, 3.5, 3, 3.5, 4, 3.5, 3],
+    "summary": "A jester boy with a red and blue hat, a ruff, and a diamond tunic. The costume matches the mockup well, but the juggling does not read.",
+    "strengths": [
+      "The red and blue jester hat with gold bells, the ruff collar, and the diamond tunic match the mockup.",
+      "The green curled shoes and the clear primary colors give a strong festival look.",
+      "The hat silhouette reads at 128 px in every direction."
+    ],
+    "issues": [
+      "The red ball sits on a visible thin stick that grows from the yellow ball. It reads as a lollipop, not as a ball in the air. Remove the stick and put two balls in the air above the hands.",
+      "The mockup holds the arms wide with palms up and the balls near head height. The model holds small balls at the waist in fists. Spread the arms and raise the balls.",
+      "The idle and the walk do not move the balls. Add a juggle clip or a ball arc in the idle.",
+      "The mouth is an open grin with one tooth. The mockup has a closed smile. Close the mouth to a smile.",
+      "The tunic is long and hides most of the red trousers. Shorten the tunic.",
+      "In the side view the red ball covers the nose and reads as a clown nose."
+    ],
+    "next": "Remove the support stick and place two larger balls in the air above wide, raised arms."
+  },
+  "potter": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 4, 3.5, 3.5, 4, 4, 3.5, 3],
+    "summary": "A young potter with a hair bun, a yellow shirt, a brown apron, and a clay jug in both hands. The pose, the face, and the jug match, but the hair mass differs clearly.",
+    "strengths": [
+      "The pose matches: both fists hold a ribbed terracotta jug with a handle in front of the body.",
+      "The face has a calm closed smile and clay smudges on the cheeks, as in the mockup.",
+      "The yellow, brown, and terracotta palette matches the mockup."
+    ],
+    "issues": [
+      "The hair is a large lumpy mass that covers the ears and widens the head. The mockup hair is sleek and swept to one side with the ears visible. Make the hair smaller and smoother and show the ears.",
+      "The apron ends at the hip. The mockup apron reaches the knee. Lengthen the apron.",
+      "The jug is at the waist. The mockup holds it at chest height. Raise the jug a little.",
+      "The trousers are dark blue-grey. The mockup has light grey rolled trousers."
+    ],
+    "next": "Reduce the hair to a sleek swept shape with the ears visible."
+  },
+  "refugee": {
+    "overall": 6.0,
+    "scores": [3, 3.5, 3, 3.5, 3, 3.5, 3, 2.5, 4, 3, 3],
+    "summary": "A child with an orange knit scarf, a patched blue dress, a bundle on a stick, and a lantern. The scarf and dress match, but the hair, the bundle, and the lantern differ clearly.",
+    "strengths": [
+      "The orange knit scarf matches the mockup well.",
+      "The face has a kind closed smile.",
+      "The patched dress and the brown boots follow the mockup."
+    ],
+    "issues": [
+      "Bare scalp shows between the hair locks at the back of the head. This is a visible defect. Fill the back of the head with hair.",
+      "The hair sits far back and leaves a high bare forehead. The mockup has thick dark bangs over the forehead and soft side curls. Add bangs and make the hair darker.",
+      "The bundle is a small lump on a raised stick. At 128 px it reads as a club. Make the bundle a large cloth sack with a rope tie, carried on the shoulder.",
+      "The lantern is dark and does not glow. The mockup lantern glows bright yellow on a short stick. Make the lantern glass emissive.",
+      "The dress is light periwinkle. The mockup dress is grey teal. Change the dress color."
+    ],
+    "next": "Fill the bare scalp at the back and add thick dark bangs over the forehead."
+  }
+}
