@@ -27,7 +27,7 @@ delivers them. It does not wait for the family tracks.
 - FR-3: The avatar pack of the Riven Lands base (`demo/public/avatar-pack/riven-lands/<version>/`) carries the base, the tint mask, the presets, and the ready pieces; `pack-version.ts` versions it per pack.
 - FR-4: The host and every game pick the pack from the launch context (`pack: 'chibi-quest' | 'riven-lands'`, default `chibi-quest`). Every `loader.get(model(...))` call resolves through the pack. No game code names a pack.
 - FR-5: The per-game budgets hold for the Riven Lands packs: 4.0 MB before the first interaction and the total per game (`docs/apk3d-cartridge.md` section 7.3; TD-21 for the first-load model).
-- FR-6: The browser QC (`qc/run.mjs`, `--phone`, `--phone-landscape`) passes all 28 games in the Riven Lands skin in 3D and 2D.
+- FR-6: The browser QC (`qc/run.mjs`, `--phone`, `--phone-landscape`) passes all 28 games in the Riven Lands skin in 3D and 2D. If `game_typing_duel_20261009` is complete when this track starts, the QC includes it too.
 - FR-7: `scripts/apk-release.ts` and `scripts/monorepo-sync.ts` take the pack and release the Riven Lands packs to the monorepo for Reading Advantage (`apps/reading-advantage`). The monorepo session makes every monorepo change (owner rule of 2026-10-06). `docs/apk-port.md` records each difference.
 - FR-8: The first game ships alone as the proof before the other 27. Proposal: Labyrinth (11 models, the game of the avatar check in the app). The owner confirms the first game.
 

@@ -61,6 +61,12 @@ The 3D model pack generator was missing at the audit. Games loaded 87 simplified
 | Sorcerer Ziggurat | build | [game_sorcerer_ziggurat_20260928](./tracks/game_sorcerer_ziggurat_20260928/) | Built locally on 2026-10-03: rules core, QC bot, 3D view, Phaser view, passing tests, and a headless browser check in 3D and 2D (software GL, no errors, no legacy model requests). Ported into the monorepo package `game-cartridges-3d` on branch `apk3d-games-port` (local, not pushed). Phone QC 2026-10-04. Open: a real touch-device check and the pull request (owner). |
 | Storm Castle Tower | build | [game_storm_castle_tower_20260928](./tracks/game_storm_castle_tower_20260928/) | Built locally on 2026-10-03: rules core, QC bot, 3D view, Phaser view, passing tests, and a headless browser check in 3D and 2D (software GL, no errors, no legacy model requests). Ported into the monorepo package `game-cartridges-3d` on branch `apk3d-games-port` (local, not pushed). Phone QC 2026-10-04. Open: a real touch-device check and the pull request (owner). |
 
+## New games
+
+| Game | Family | Measure track | Status |
+| --- | --- | --- | --- |
+| Typing Duel (working title) | Type and strike: the student types the word (new family 7) | [game_typing_duel_20261009](./tracks/game_typing_duel_20261009/) | New (owner, 2026-10-09): the first game where the student produces the word; keyboard and touch (letter tiles); separate from Magic Defense. The monorepo port waits for the end of the feature freeze. |
+
 ## Family order
 
 1. Battle and board uses the Monster Encounters stage and Card2D.

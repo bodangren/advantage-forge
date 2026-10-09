@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 102.
-Tracks by status: new: 28; in_progress: 40; completed: 34.
-Tracks by workstream: assets: 48; games: 46; foundation: 8.
+Tracks: 103.
+Tracks by status: new: 29; in_progress: 40; completed: 34.
+Tracks by workstream: assets: 48; games: 47; foundation: 8.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -72,6 +72,7 @@ Tracks by workstream: assets: 48; games: 46; foundation: 8.
 | [game_spellweavers_run_20260928](../tracks/game_spellweavers_run_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_storm_castle_tower_20260928](../tracks/game_storm_castle_tower_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_thai_localization_20260928](../tracks/game_thai_localization_20260928/) | new | games | 0/5 | 5 | — |
+| [game_typing_duel_20261009](../tracks/game_typing_duel_20261009/) | new | games | 0/15 | 15 | — |
 | [game_village_guardian_20260928](../tracks/game_village_guardian_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [history_animation_clearance_20260928](../tracks/history_animation_clearance_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_apk3d_platform_20260928](../tracks/history_apk3d_platform_20260928/) | completed | games | 3/3 | — | — |

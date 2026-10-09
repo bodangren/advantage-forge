@@ -1,0 +1,22 @@
+{
+  "track_id": "game_typing_duel_20261009",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-09T13:43:51Z",
+  "updated_at": "2026-10-09T13:43:51Z",
+  "description": "Typing Duel: a typing game for saved words and sentences (keyboard and touch)",
+  "estimated_tasks": 15,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-09 on the owner's request: a new typing game, separate from Magic Defense, for keyboard and touch. Typing Duel is a working title.",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "docs/apk-2d3d-program.md",
+    "measure/tracks/game_flashcard_input_20261004/spec.md"
+  ],
+  "dependencies": [
+    "game_platform_port_20260928",
+    "game_flashcard_input_20261004",
+    "avatar_in_games_20261006"
+  ]
+}

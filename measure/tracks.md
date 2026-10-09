@@ -263,6 +263,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Village Guardian as a dual renderer game**
   *Link: [./tracks/game_village_guardian_20260928/](./tracks/game_village_guardian_20260928/)*
 
+- [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
+  *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
+
 ## Riven Lands pack
 
 Execution order. The overview, the decisions, and the dependencies are in [riven-lands-roadmap.md](./riven-lands-roadmap.md).
