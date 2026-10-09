@@ -54,8 +54,9 @@ Forge work on features continues in this repository, but its release to the mono
 ## Riven Lands decisions (2026-10-09)
 
 The owner answered the open questions of `docs/pack-layout.md`: the game set first, a base about 1.6 m and 5 heads tall,
-the same bone, clip, and socket names, and one track per family. Sixteen `riven_*` tracks exist with status `new`
-([roadmap](./riven-lands-roadmap.md)). Build work starts after the Primary cutover is complete.
+the same bone, clip, and socket names, and one track per family. Later the same day the owner added one game set track
+(231 assets: the game rows and the avatar pieces) that comes before the game skin and every family track. Seventeen
+`riven_*` tracks exist with status `new` ([roadmap](./riven-lands-roadmap.md)). Build work starts after the Primary cutover is complete.
 
 ## Next work
 
@@ -64,7 +65,7 @@ the same bone, clip, and socket names, and one track per family. Sixteen `riven_
 3. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); class B is done for P0, P1, and map sources; 31 type errors remain (30 in P2 and P3 sources).
 4. [Platform port](./tracks/game_platform_port_20260928/): the port reaches monorepo `master` with `primary-parity-integration` in the Primary cutover; then the graph refresh (TD-15), the 2D setting re-export (TD-26), and a real touch-device check. [Master CI](./tracks/monorepo_master_ci_20261006/) must be green first.
 5. [2D parity](./tracks/game_2d_parity_20260928/): the 2D views offer the six heroes and their presets that the 2D pack now holds.
-6. [Riven Lands](./riven-lands-roadmap.md): after the cutover, start with the [pack layout](./tracks/riven_pack_layout_20261009/) and the [base character](./tracks/riven_base_character_20261009/).
+6. [Riven Lands](./riven-lands-roadmap.md): after the cutover, start with the [pack layout](./tracks/riven_pack_layout_20261009/), the [base character](./tracks/riven_base_character_20261009/), the [game set](./tracks/riven_game_set_20261009/), and the [game skin](./tracks/riven_game_skin_20261009/).
 
 ## Navigation
 

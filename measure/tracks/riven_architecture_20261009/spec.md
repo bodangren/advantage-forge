@@ -2,16 +2,16 @@
 
 ## Purpose
 
-Build the Riven Lands treatment of every catalog row in the architecture family (100 rows: 6 P0, 94 P1).
-Batch 1 is the rows the 28 games load. Later batches follow the catalog priority.
+Build the Riven Lands treatment of the architecture rows outside the game set: 82 catalog rows (5 P0, 77 P1).
 The Chibi Quest counterpart is `asset_p1_architecture_20260928`.
 
 ## Owner decisions (2026-10-09)
 
 - Scope order: the game set first, then the rest of the catalog by family.
+- Game set: one track, `riven_game_set_20261009`, builds every asset that the 28 games and the avatar pack load (89 game rows, 142 avatar pieces, and the sunken vault). It comes after the base character and before the game skin and every family track. The family tracks build only the rows outside the game set.
 - Base figure: about 1.6 m tall and 5 heads tall. Not chibi.
 - Skeleton: the same bone, clip, and socket names as Chibi Quest. Only joint positions and proportions change.
-- Track split: foundation tracks plus one production track per catalog family.
+- Track split: foundation tracks, the game set, and one production track per catalog family.
 - Build work starts after the Primary Advantage cutover is complete. Track creation and planning may start now.
 
 ## Art direction
@@ -28,14 +28,9 @@ proportions and the surface treatment change (`docs/pack-layout.md`, `docs/hamle
 
 ## Family notes
 
-Ground tiles stay 0.3 m slabs with the top at y = 0. Seven game models are kit pieces without a catalog row (cell-bars, floor, floor-cracked, plaster-wall-door, plaster-wall-window, wall, walkway). The hamlet components (`docs/hamlet-mockups/components.tsv`) have a Riven Lands concept map.
+The game set (`riven_game_set_20261009`) builds the 25 game rows of this family: altar, arch, barn, cottage, dirt-ground, door, farm-field, fence, forest-ground, gate, grass-ground, pillar, plaster-wall, river-straight, stairs, wall-corner, well, wood-floor, cell-bars, floor, floor-cracked, plaster-wall-door, plaster-wall-window, wall, walkway. This track builds the other 82 catalog rows and reuses the kinds and parts that the game set ported.
 
-## Batches
-
-| Batch | Rows | Source of the list |
-| --- | --- | --- |
-| 1: the game set | 25: altar, arch, barn, cottage, dirt-ground, door, farm-field, fence, forest-ground, gate, grass-ground, pillar, plaster-wall, river-straight, stairs, wall-corner, well, wood-floor, cell-bars (kit piece, no catalog row), floor (kit piece, no catalog row), floor-cracked (kit piece, no catalog row), plaster-wall-door (kit piece, no catalog row), plaster-wall-window (kit piece, no catalog row), wall (kit piece, no catalog row), walkway (kit piece, no catalog row) | `src/games/*/manifest.ts` (`MODELS_3D`) and `demo/public/assets/apk/primary-chibi-2d/v1/pack.json` |
-| 2: the rest of the catalog | 100 rows in total (6 P0, 94 P1); batch 1 rows are not repeated | `docs/fantasy-world-asset-catalog.tsv`, family `architecture`, in P0, P1, P2, P3 order |
+Ground tiles stay 0.3 m slabs with the top at y = 0. The game set builds 25 pieces, 7 of them kit pieces with no catalog row. The hamlet components (`docs/hamlet-mockups/components.tsv`) have a Riven Lands concept map.
 
 ## Functional requirements
 
@@ -51,7 +46,7 @@ Ground tiles stay 0.3 m slabs with the top at y = 0. Seven game models are kit p
 - Ratings and notes go in `packs/riven-lands/reviews.json`, not in `docs/character-reviews.json`.
 - Builds have no `warning:` lines; each source passes the per-asset type check; textured builds run one at a time (the machine holds 7.1 GiB).
 - The plan records evidence (render, review card, rating) and remaining limits for each batch.
-- Each builder agent builds one asset and one narrow step per run (the lesson of 2026-09-27), with a triangle budget.
+- Each builder agent builds one asset and one narrow step per run, with a triangle budget.
 
 ## Sources
 
@@ -61,5 +56,6 @@ Ground tiles stay 0.3 m slabs with the top at y = 0. Seven game models are kit p
 
 ## Out of scope
 
+- The game rows and the avatar pieces (`riven_game_set_20261009`).
 - Chibi Quest sources stay unchanged. A fix found during a port goes to the Chibi Quest family track.
 - Delivery to the games and the packs (`riven_game_skin_20261009`).

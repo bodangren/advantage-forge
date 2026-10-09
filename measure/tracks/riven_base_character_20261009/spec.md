@@ -51,6 +51,6 @@ proportions and the surface treatment change (`docs/pack-layout.md`, `docs/hamle
 
 ## Out of scope
 
-- The other heroes, enemies, and NPCs. Their family tracks own them.
+- The other heroes, enemies, and NPCs. The game set (`riven_game_set_20261009`) and the family tracks own them.
 - The avatar pack build and its release (riven_game_skin_20261009).
 - Guild Mode, GP prices, and the shop for Reading Advantage. A later progression track owns them.

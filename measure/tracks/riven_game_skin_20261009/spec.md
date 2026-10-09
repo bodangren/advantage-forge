@@ -8,29 +8,17 @@ three.js view, and one Phaser view. The pack changes only the models, the sprite
 ## Owner decisions (2026-10-09)
 
 - Scope order: the game set first, then the rest of the catalog by family.
+- Game set: one track, `riven_game_set_20261009`, builds every asset that the 28 games and the avatar pack load (89 game rows, 142 avatar pieces, and the sunken vault). It comes after the base character and before the game skin and every family track. The family tracks build only the rows outside the game set.
 - Base figure: about 1.6 m tall and 5 heads tall. Not chibi.
 - Skeleton: the same bone, clip, and socket names as Chibi Quest. Only joint positions and proportions change.
-- Track split: foundation tracks plus one production track per catalog family.
+- Track split: foundation tracks, the game set, and one production track per catalog family.
 - Build work starts after the Primary Advantage cutover is complete. Track creation and planning may start now.
 
-## The game set (batch 1 of every family)
+## Inputs
 
-The 28 game manifests (`src/games/*/manifest.ts`, `MODELS_3D`) load 86 Forge models: 68 catalog rows and 18
-kit pieces without a catalog row. The 2D pack `primary-chibi-2d` holds 24 actors (15 characters with presets,
-`background`, `prop`, and the rest). The avatar pack holds the base and 142 ready pieces.
-The family tracks build these rows in their batch 1; this track packages and delivers them.
-
-| Family | Game rows | Track |
-| --- | ---: | --- |
-| heroes | 7 | `riven_heroes_20261009` |
-| enemies | 5 | `riven_enemies_20261009` |
-| monsters | 5 | `riven_monsters_20261009` |
-| npcs | 4 | `riven_npcs_20261009` |
-| equipment | 1 (plus the avatar pieces in batch 2) | `riven_equipment_20261009` |
-| props | 27 | `riven_props_20261009` |
-| architecture | 25 | `riven_architecture_20261009` |
-| nature | 15 | `riven_nature_20261009` |
-| scenes | the sunken vault stage | `riven_scenes_20261009` |
+Every asset comes from `riven_game_set_20261009`: the game rows that the 28 game manifests load, the 2D actors and their
+presets, the 142 avatar pieces, and the sunken vault. The base comes from `riven_base_character_20261009`. This track packages and
+delivers them. It does not wait for the family tracks.
 
 ## Functional requirements
 
@@ -58,4 +46,4 @@ The family tracks build these rows in their batch 1; this track packages and del
 ## Out of scope
 
 - The Reading Advantage app route, the launch context on the server, and the Reading Advantage progression (XP, GP, Guild Mode). The monorepo and a later progression track own them.
-- Building the assets. The family tracks own them.
+- Building the assets (`riven_game_set_20261009`).

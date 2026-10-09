@@ -263,83 +263,57 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Rewrite Village Guardian as a dual renderer game**
   *Link: [./tracks/game_village_guardian_20260928/](./tracks/game_village_guardian_20260928/)*
 
+## Riven Lands pack
 
----
+Execution order. The overview, the decisions, and the dependencies are in [riven-lands-roadmap.md](./riven-lands-roadmap.md).
 
 - [ ] **Track: Riven Lands pack layout stage 1: packs/riven-lands and the --pack option**
   *Link: [./tracks/riven_pack_layout_20261009/](./tracks/riven_pack_layout_20261009/)*
 
----
-
 - [ ] **Track: Riven Lands base character, fit contract, and porting recipe**
   *Link: [./tracks/riven_base_character_20261009/](./tracks/riven_base_character_20261009/)*
 
----
+- [ ] **Track: Riven Lands game set: 89 game rows, 142 avatar pieces, and the sunken vault, before any other production**
+  *Link: [./tracks/riven_game_set_20261009/](./tracks/riven_game_set_20261009/)*
 
 - [ ] **Track: Riven Lands game skin: model packs, the 2D pack, the avatar pack, and the pack in the launch context**
   *Link: [./tracks/riven_game_skin_20261009/](./tracks/riven_game_skin_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands scenes: the hamlet, the sunken vault, and the five P0 maps**
-  *Link: [./tracks/riven_scenes_20261009/](./tracks/riven_scenes_20261009/)*
-
----
-
-- [ ] **Track: Riven Lands heroes: 51 catalog rows, the game set first**
+- [ ] **Track: Riven Lands heroes: 44 catalog rows outside the game set**
   *Link: [./tracks/riven_heroes_20261009/](./tracks/riven_heroes_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands enemies: 69 catalog rows, the game set first**
+- [ ] **Track: Riven Lands enemies: 64 catalog rows outside the game set**
   *Link: [./tracks/riven_enemies_20261009/](./tracks/riven_enemies_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands monsters: 84 catalog rows, the game set first**
+- [ ] **Track: Riven Lands monsters: 79 catalog rows outside the game set**
   *Link: [./tracks/riven_monsters_20261009/](./tracks/riven_monsters_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands NPCs: 114 catalog rows, the game set first**
+- [ ] **Track: Riven Lands NPCs: 110 catalog rows outside the game set**
   *Link: [./tracks/riven_npcs_20261009/](./tracks/riven_npcs_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands wildlife: 63 catalog rows, in catalog order**
-  *Link: [./tracks/riven_wildlife_20261009/](./tracks/riven_wildlife_20261009/)*
-
----
-
-- [ ] **Track: Riven Lands equipment: 100 catalog rows, the game set first**
+- [ ] **Track: Riven Lands equipment: 27 catalog rows outside the game set**
   *Link: [./tracks/riven_equipment_20261009/](./tracks/riven_equipment_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands props: 121 catalog rows, the game set first**
+- [ ] **Track: Riven Lands props: 101 catalog rows outside the game set**
   *Link: [./tracks/riven_props_20261009/](./tracks/riven_props_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands architecture: 100 catalog rows, the game set first**
+- [ ] **Track: Riven Lands architecture: 82 catalog rows outside the game set**
   *Link: [./tracks/riven_architecture_20261009/](./tracks/riven_architecture_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands nature: 47 catalog rows, the game set first**
+- [ ] **Track: Riven Lands nature: 36 catalog rows outside the game set**
   *Link: [./tracks/riven_nature_20261009/](./tracks/riven_nature_20261009/)*
 
----
+- [ ] **Track: Riven Lands scenes: the hamlet and the five P0 maps**
+  *Link: [./tracks/riven_scenes_20261009/](./tracks/riven_scenes_20261009/)*
 
-- [ ] **Track: Riven Lands items: 59 catalog rows, in catalog order**
+- [ ] **Track: Riven Lands wildlife: 63 catalog rows outside the game set**
+  *Link: [./tracks/riven_wildlife_20261009/](./tracks/riven_wildlife_20261009/)*
+
+- [ ] **Track: Riven Lands items: 59 catalog rows outside the game set**
   *Link: [./tracks/riven_items_20261009/](./tracks/riven_items_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands vehicles: 15 catalog rows, in catalog order**
+- [ ] **Track: Riven Lands vehicles: 15 catalog rows outside the game set**
   *Link: [./tracks/riven_vehicles_20261009/](./tracks/riven_vehicles_20261009/)*
 
----
-
-- [ ] **Track: Riven Lands effects geometry: 33 catalog rows, in catalog order**
+- [ ] **Track: Riven Lands effects geometry: 33 catalog rows outside the game set**
   *Link: [./tracks/riven_fx_geometry_20261009/](./tracks/riven_fx_geometry_20261009/)*

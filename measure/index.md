@@ -10,7 +10,7 @@ Start here for project status, planning, and working memory.
 - [Tracks Directory](./tracks/): specifications, plans, metadata, and evidence.
 - [Asset Roadmap](./asset-roadmap.md): production priorities and acceptance gaps.
 - [Game Roadmap](./game-roadmap.md): platform phases and individual game tracks.
-- [Riven Lands Roadmap](./riven-lands-roadmap.md): the second asset pack, its owner decisions, and its 16 tracks.
+- [Riven Lands Roadmap](./riven-lands-roadmap.md): the second asset pack, its owner decisions, and its 17 tracks.
 - [Scope Map](./scope-map.tsv): ownership for every catalog target and scene blueprint.
 - [Plan Crosswalk](./plan-crosswalk.md): the owning tracks for existing plans.
 - [Rework History](./history.md): the retrospective and commit ledger.

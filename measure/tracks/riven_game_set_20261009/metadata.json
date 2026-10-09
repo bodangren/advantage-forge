@@ -1,0 +1,23 @@
+{
+  "track_id": "riven_game_set_20261009",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-09T13:29:12Z",
+  "updated_at": "2026-10-09T13:29:12Z",
+  "description": "Riven Lands game set: 89 game rows, 142 avatar pieces, and the sunken vault, before any other production",
+  "estimated_tasks": 21,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-09 from the owner decisions in measure/riven-lands-roadmap.md. Build work waits for the Primary Advantage cutover. The owner added this track on 2026-10-09 so that the game set comes first.",
+  "workstream": "assets",
+  "retrospective": false,
+  "pack": "riven-lands",
+  "evidence": [
+    "src/games/",
+    "docs/avatar-catalog.tsv",
+    "docs/pack-layout.md",
+    "measure/riven-lands-roadmap.md"
+  ],
+  "dependencies": [
+    "riven_base_character_20261009"
+  ]
+}

@@ -2,16 +2,16 @@
 
 ## Purpose
 
-Build the Riven Lands treatment of every catalog row in the equipment family (100 rows: 7 P0, 93 P1).
-Batch 1 is the rows the 28 games load. Later batches follow the catalog priority.
+Build the Riven Lands treatment of the equipment rows outside the game set: 27 catalog rows (1 P0, 26 P1).
 The Chibi Quest counterpart is `asset_p1_equipment_20260928`.
 
 ## Owner decisions (2026-10-09)
 
 - Scope order: the game set first, then the rest of the catalog by family.
+- Game set: one track, `riven_game_set_20261009`, builds every asset that the 28 games and the avatar pack load (89 game rows, 142 avatar pieces, and the sunken vault). It comes after the base character and before the game skin and every family track. The family tracks build only the rows outside the game set.
 - Base figure: about 1.6 m tall and 5 heads tall. Not chibi.
 - Skeleton: the same bone, clip, and socket names as Chibi Quest. Only joint positions and proportions change.
-- Track split: foundation tracks plus one production track per catalog family.
+- Track split: foundation tracks, the game set, and one production track per catalog family.
 - Build work starts after the Primary Advantage cutover is complete. Track creation and planning may start now.
 
 ## Art direction
@@ -28,15 +28,9 @@ proportions and the surface treatment change (`docs/pack-layout.md`, `docs/hamle
 
 ## Family notes
 
-Every piece is a scaled fit of the Riven Lands base (`packs/riven-lands/fit.md`), so the avatar composer can dress the base with it. The avatar catalog lists 142 ready pieces (72 mainhand, 26 offhand, 25 head, 5 chest, 4 hair, 3 back, 3 hands, 2 feet, 1 shoulders, 1 waist). The game set loads only the lantern; the avatar pieces form batch 2.
+The game set (`riven_game_set_20261009`) builds the 1 game rows of this family and the 142 avatar pieces: lantern. This track builds the other 27 catalog rows and reuses the kinds and parts that the game set ported.
 
-## Batches
-
-| Batch | Rows | Source of the list |
-| --- | --- | --- |
-| 1: the game set | 1: lantern | `src/games/*/manifest.ts` (`MODELS_3D`) and `demo/public/assets/apk/primary-chibi-2d/v1/pack.json` |
-| 2: the avatar pieces | the 142 ready rows of `docs/avatar-catalog.tsv`, fitted to the Riven Lands base | `docs/avatar-catalog.tsv` |
-| 3: the rest of the catalog | 100 rows in total (7 P0, 93 P1); batch 1 rows are not repeated | `docs/fantasy-world-asset-catalog.tsv`, family `equipment`, in P0, P1, P2, P3 order |
+The game set builds the lantern and the 142 ready avatar pieces, 72 of which are equipment catalog rows. Every piece of this track is still a scaled fit of the Riven Lands base (`packs/riven-lands/fit.md`).
 
 ## Functional requirements
 
@@ -45,7 +39,7 @@ Every piece is a scaled fit of the Riven Lands base (`packs/riven-lands/fit.md`)
 - FR-3: Each accepted asset has a textured GLB, a turnaround (`render.png`), and sprites at 128 px in 8 directions that read in `sprites/preview.png`.
 - FR-4: World assets keep the footprint, the pivot, and the interaction points of the Chibi Quest source, so the shared scene layouts and game places stay valid.
 - FR-5: Ground tiles stay 0.3 m slabs with the top at y = 0.
-- FR-7: Every piece declares an `equip` block and fits the Riven Lands base (`packs/riven-lands/fit.md`); `./forge check <piece> --pack riven-lands` passes show-through, gap, floor, and clip clearance.
+- FR-6: Every piece declares an `equip` block and fits the Riven Lands base (`packs/riven-lands/fit.md`); `./forge check <piece> --pack riven-lands` passes show-through, gap, floor, and clip clearance.
 
 ## Acceptance criteria
 
@@ -53,7 +47,7 @@ Every piece is a scaled fit of the Riven Lands base (`packs/riven-lands/fit.md`)
 - Ratings and notes go in `packs/riven-lands/reviews.json`, not in `docs/character-reviews.json`.
 - Builds have no `warning:` lines; each source passes the per-asset type check; textured builds run one at a time (the machine holds 7.1 GiB).
 - The plan records evidence (render, review card, rating) and remaining limits for each batch.
-- Each builder agent builds one asset and one narrow step per run (the lesson of 2026-09-27), with a triangle budget.
+- Each builder agent builds one asset and one narrow step per run, with a triangle budget.
 
 ## Sources
 
@@ -63,5 +57,6 @@ Every piece is a scaled fit of the Riven Lands base (`packs/riven-lands/fit.md`)
 
 ## Out of scope
 
+- The game rows and the avatar pieces (`riven_game_set_20261009`).
 - Chibi Quest sources stay unchanged. A fix found during a port goes to the Chibi Quest family track.
 - Delivery to the games and the packs (`riven_game_skin_20261009`).

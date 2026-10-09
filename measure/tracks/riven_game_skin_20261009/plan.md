@@ -1,6 +1,6 @@
 # Riven Lands game skin delivery
 
-Status: new. Start gate: the Primary Advantage cutover is complete (cutover 2026-10-14 to 16, last date 2026-10-20; `docs/pack-layout.md`). Owner decisions of 2026-10-09 are in `measure/riven-lands-roadmap.md`. Depends on `riven_base_character_20261009` and the batch 1 of the family tracks. This plan owns execution status.
+Status: new. Start gate: the Primary Advantage cutover is complete (cutover 2026-10-14 to 16, last date 2026-10-20; `docs/pack-layout.md`). Owner decisions of 2026-10-09 are in `measure/riven-lands-roadmap.md`. Depends on `riven_base_character_20261009` and `riven_game_set_20261009`. Phase 1 and the code tasks of Phases 2 and 3 can start with the first accepted game set rows. This plan owns execution status.
 
 ## Phase 1: Contract
 

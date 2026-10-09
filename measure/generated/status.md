@@ -1,8 +1,8 @@
 # Measure status
 
-Tracks: 101.
-Tracks by status: new: 27; in_progress: 40; completed: 34.
-Tracks by workstream: assets: 47; games: 46; foundation: 8.
+Tracks: 102.
+Tracks by status: new: 28; in_progress: 40; completed: 34.
+Tracks by workstream: assets: 48; games: 46; foundation: 8.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
@@ -90,22 +90,23 @@ Tracks by workstream: assets: 47; games: 46; foundation: 8.
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
 | [monorepo_master_ci_20261006](../tracks/monorepo_master_ci_20261006/) | new | games | 0/16 | 16 | — |
 | [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | in_progress | foundation | 14/17 | 17 | 14 |
-| [riven_architecture_20261009](../tracks/riven_architecture_20261009/) | new | assets | 0/14 | 14 | — |
+| [riven_architecture_20261009](../tracks/riven_architecture_20261009/) | new | assets | 0/9 | 9 | — |
 | [riven_base_character_20261009](../tracks/riven_base_character_20261009/) | new | assets | 0/15 | 15 | — |
-| [riven_enemies_20261009](../tracks/riven_enemies_20261009/) | new | assets | 0/14 | 14 | — |
-| [riven_equipment_20261009](../tracks/riven_equipment_20261009/) | new | assets | 0/18 | 18 | — |
-| [riven_fx_geometry_20261009](../tracks/riven_fx_geometry_20261009/) | new | assets | 0/10 | 10 | — |
+| [riven_enemies_20261009](../tracks/riven_enemies_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_equipment_20261009](../tracks/riven_equipment_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_fx_geometry_20261009](../tracks/riven_fx_geometry_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_game_set_20261009](../tracks/riven_game_set_20261009/) | new | assets | 0/21 | 21 | — |
 | [riven_game_skin_20261009](../tracks/riven_game_skin_20261009/) | new | games | 0/14 | 14 | — |
-| [riven_heroes_20261009](../tracks/riven_heroes_20261009/) | new | assets | 0/14 | 14 | — |
-| [riven_items_20261009](../tracks/riven_items_20261009/) | new | assets | 0/10 | 10 | — |
-| [riven_monsters_20261009](../tracks/riven_monsters_20261009/) | new | assets | 0/14 | 14 | — |
-| [riven_nature_20261009](../tracks/riven_nature_20261009/) | new | assets | 0/14 | 14 | — |
-| [riven_npcs_20261009](../tracks/riven_npcs_20261009/) | new | assets | 0/14 | 14 | — |
+| [riven_heroes_20261009](../tracks/riven_heroes_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_items_20261009](../tracks/riven_items_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_monsters_20261009](../tracks/riven_monsters_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_nature_20261009](../tracks/riven_nature_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_npcs_20261009](../tracks/riven_npcs_20261009/) | new | assets | 0/9 | 9 | — |
 | [riven_pack_layout_20261009](../tracks/riven_pack_layout_20261009/) | new | foundation | 0/11 | 11 | — |
-| [riven_props_20261009](../tracks/riven_props_20261009/) | new | assets | 0/14 | 14 | — |
-| [riven_scenes_20261009](../tracks/riven_scenes_20261009/) | new | assets | 0/9 | 9 | — |
-| [riven_vehicles_20261009](../tracks/riven_vehicles_20261009/) | new | assets | 0/10 | 10 | — |
-| [riven_wildlife_20261009](../tracks/riven_wildlife_20261009/) | new | assets | 0/10 | 10 | — |
+| [riven_props_20261009](../tracks/riven_props_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_scenes_20261009](../tracks/riven_scenes_20261009/) | new | assets | 0/8 | 8 | — |
+| [riven_vehicles_20261009](../tracks/riven_vehicles_20261009/) | new | assets | 0/9 | 9 | — |
+| [riven_wildlife_20261009](../tracks/riven_wildlife_20261009/) | new | assets | 0/9 | 9 | — |
 | [showcase_battle_teaser_20260930](../tracks/showcase_battle_teaser_20260930/) | in_progress | assets | 6/7 | 5 | — |
 
 ## Project health

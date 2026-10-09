@@ -3,15 +3,16 @@
 ## Purpose
 
 Assemble the Riven Lands treatment of the accepted Chibi Quest scenes: the hamlet (the one Riven Lands concept
-map), the sunken vault (the stage of the battle games), and the five P0 maps (blacksmith shop, forest, tavern,
-village, dungeon). The shared layout, the map positions, and the interaction points stay the same.
+map) and the five P0 maps (blacksmith shop, forest, tavern, village, dungeon). The shared layout, the map
+positions, and the interaction points stay the same. The sunken vault is part of `riven_game_set_20261009`.
 
 ## Owner decisions (2026-10-09)
 
 - Scope order: the game set first, then the rest of the catalog by family.
+- Game set: one track, `riven_game_set_20261009`, builds every asset that the 28 games and the avatar pack load (89 game rows, 142 avatar pieces, and the sunken vault). It comes after the base character and before the game skin and every family track. The family tracks build only the rows outside the game set.
 - Base figure: about 1.6 m tall and 5 heads tall. Not chibi.
 - Skeleton: the same bone, clip, and socket names as Chibi Quest. Only joint positions and proportions change.
-- Track split: foundation tracks plus one production track per catalog family.
+- Track split: foundation tracks, the game set, and one production track per catalog family.
 - Build work starts after the Primary Advantage cutover is complete. Track creation and planning may start now.
 
 ## Art direction
@@ -28,11 +29,10 @@ proportions and the surface treatment change (`docs/pack-layout.md`, `docs/hamle
 
 ## Functional requirements
 
-- FR-1: `packs/riven-lands/scenes/` holds one scene source per Chibi Quest scene with the same file name (`chibi-quest.ts` becomes `hamlet.ts` in both packs only if the owner approves the rename; otherwise keep the name).
+- FR-1: `packs/riven-lands/scenes/` holds one scene source per Chibi Quest scene with the same file name (`chibi-quest.ts` keeps its name unless the owner approves a rename).
 - FR-2: The hamlet scene places the 26 component IDs of `docs/hamlet-mockups/components.tsv` in the Riven Lands treatment and matches `docs/hamlet-mockups/riven-lands-v2.png` in an overhead and a three-quarter render.
-- FR-3: The sunken vault scene keeps `vault-places.ts` unchanged (the battle stage reads it; TD-03), so the places match in both packs.
-- FR-4: Each scene has an mmx mockup in the Riven Lands language before assembly, except the hamlet, which has one.
-- FR-5: Each scene reaches the map bar of 7.5 in an independent review.
+- FR-3: Each P0 map has an mmx mockup in the Riven Lands language before assembly.
+- FR-4: Each scene reaches the map bar of 7.5 in an independent review.
 
 ## Acceptance criteria
 
@@ -42,5 +42,6 @@ proportions and the surface treatment change (`docs/pack-layout.md`, `docs/hamle
 
 ## Out of scope
 
+- The sunken vault (`riven_game_set_20261009`).
 - The 94 P2 scene blueprints. A later track selects them by game demand.
 - New map layouts. The layout is shared.
