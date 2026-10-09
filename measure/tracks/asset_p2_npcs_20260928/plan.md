@@ -50,7 +50,7 @@ viewer's left).
 | Batch | NPCs | Status |
 | --- | --- | --- |
 | 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
-| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | review 1: 7.0, 6.5, 6.5, 7.0, 7.0, 7.0, 7.0, 6.5; second pass running |
+| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer 6.5, 6.5, carpenter 7.0, 7.0, fisher 7.0, 7.0, gardener 6.5, 7.0: third pass running |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | building (5 of 8 built) |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | building (glassblower built) |
