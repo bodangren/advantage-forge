@@ -1,4 +1,6 @@
 import { sdf } from '../src/index.js';
+
+type V3 = readonly [number, number, number];
 import { griffinAsset } from './parts/griffin-kind.js';
 import { backSaddle } from './parts/horse-tack.js';
 import { scaleAsset } from './parts/scale-asset.js';
@@ -10,9 +12,11 @@ import { scaleAsset } from './parts/scale-asset.js';
  *
  * The griffin of `assets/parts/griffin-kind.ts` (body, legs, eagle feet, tail, wings, rig, and
  * clips) at 1.3 of its size, as a mount: one golden-brown coat on the head, the neck, the body,
- * and the wings; a smaller head on a longer neck with a big round yellow beak, big white eyes with
- * dark pupils, thin dark brows, a small crest, and small yellow ear curls; small raised wings swept
- * back; a blue saddle pad with a gold trim and a brown seat (`backSaddle` in
+ * and the wings; a smaller head on a longer neck with a big round yellow bill (a short round hook
+ * and a smile line), big white eyes with dark pupils, bold dark brows that rise outward (a confident
+ * look), a soft crest of three round feathers, small yellow ear curls, and rows of raised feather
+ * tips all round the neck; small raised wings swept back; short brown toe caps; a braided tail with
+ * a tassel of wavy strands; a blue saddle pad with a gold trim and a brown seat (`backSaddle` in
  * `assets/parts/horse-tack.ts`) and a brown breast strap with a blue gem medallion.
  * Role: a hero's mount for the rider and sky games (Gryphon Patrol, Griffin Riders Escape); the
  *   beak, the eyes, the wings, and the blue saddle read at 128 px.
@@ -22,7 +26,7 @@ import { scaleAsset } from './parts/scale-asset.js';
 export default scaleAsset(
   griffinAsset({
     name: 'gryphon-mount',
-    description: 'Chibi gryphon mount: a friendly golden-brown gryphon with a big round yellow beak, big white eyes with dark pupils, thin dark brows, a small crest, small yellow ear curls, a longer neck, small raised wings, yellow shins with brown toes, a lion tail with a tuft, a blue saddle pad with a gold trim and a brown seat, and a brown breast strap with a blue gem medallion; quadruped rig with wings.',
+    description: 'Chibi gryphon mount: a friendly golden-brown gryphon with a big round yellow bill with a smile line, big white eyes with dark pupils, bold confident brows, a soft feather crest, small yellow ear curls, a longer neck with sculpted feathers, small raised wings, yellow shins with short brown toe caps, a braided tail with a tassel, a blue saddle pad with a gold trim and a brown seat, and a brown breast strap with a blue gem medallion; quadruped rig with wings.',
     reference: 'docs/wildlife-mockups/gryphon-mount_001.jpg',
     variants: {
       coat: { golden: '#d98c3c', chestnut: '#b86a34', cream: '#e2b87a', grey: '#a8998a' },
@@ -38,12 +42,15 @@ export default scaleAsset(
     oneCoat: { plumage: 0.04, wings: 0 },
     flightShade: 0.08,
     head: { lift: 0.05, forward: 0.03, scale: 0.8 },
-    beakScale: [1.3, 0.92, 1.4],
+    beakStyle: 'bill',
+    beakScale: [1, 1, 1.15],
+    browStyle: 'bold',
     closedBeak: true,
     girth: 1.18,
     crest: false,
-    tuftStyle: 'soft',
-    clawStyle: 'curved',
+    tuftStyle: 'fan',
+    tailStyle: 'braid',
+    clawStyle: 'cap',
     eyeAt: [0.1, 0.735],
     ruff: false,
     tufts: false,
@@ -62,22 +69,52 @@ export default scaleAsset(
           .at(top[0], top[1] - 0.008, top[2]);
       };
       k.body('ear-curls', ear(0.1).mirror('x').bone('head'), { color: '#efc341', roughness: 0.45, detail: 0.003 });
-      // A mane of soft feathers that sweeps back from the crown and down the back of the neck: three
-      // rows of tapered lobes on the head and neck surface, the middle row the longest. (The neck
-      // capsule is the kind's neck to the moved head.)
-      const neckShape = sdf.capsule([0, 0.47, 0.1], [0, 0.654, 0.194], 0.088);
+      // Feathers: rows of short, raised feather tips all round the neck, each pointing down the
+      // neck, the rows offset by half a feather (the sculpted neck of the mockup); and a soft crest
+      // of three round feathers that curl back from the top of the head. (The neck capsule is the
+      // kind's neck to the moved head.)
+      const NA: V3 = [0, 0.47, 0.1];
+      const NB: V3 = [0, 0.654, 0.194];
+      const neckShape = sdf.capsule([...NA], [...NB], 0.088);
       const surf = sdf.union(g.skull, neckShape, g.trunk);
-      const onTop = (x: number, z: number) => sdf.raycast(surf, [x, 3, z], [0, -1, 0])!;
-      const onBack = (x: number, y: number) => sdf.raycast(surf, [x, y, -0.04 - 3], [0, 0, 1])!;
-      const lobes = [0, 0.045, -0.045].flatMap((x, row) => {
-        const pts = [onTop(x, 0.2), onTop(x, 0.13), onBack(x, 0.8), onBack(x, 0.72), onBack(x, 0.64), onBack(x, 0.56)].slice(row ? 1 : 0, row ? 5 : 6);
-        return pts.map((p, i) => {
-          const q = pts[i + 1] ?? [p[0], p[1] - 0.07, p[2] - 0.02];
-          return sdf.cone([p[0], p[1] - 0.006, p[2] + 0.004], [q[0], q[1] + 0.004, q[2] - 0.006], 0.03 - 0.002 * i, 0.012);
-        });
+      const axis = (t: number): V3 => [0, NA[1] + (NB[1] - NA[1]) * t, NA[2] + (NB[2] - NA[2]) * t];
+      const fwd: V3 = [0, -0.455, 0.89];
+      const onNeck = (t: number, deg: number): V3 => {
+        const a = (deg * Math.PI) / 180;
+        const d: V3 = [Math.sin(a), Math.cos(a) * fwd[1], Math.cos(a) * fwd[2]];
+        const c = axis(t);
+        return sdf.raycast(surf, [c[0] + d[0], c[1] + d[1], c[2] + d[2]], [-d[0], -d[1], -d[2]])!;
+      };
+      const featherTip = (t: number, deg: number, len: number) => {
+        const p = onNeck(t, deg);
+        const q = onNeck(t - len, deg);
+        const a = (deg * Math.PI) / 180;
+        const out: V3 = [Math.sin(a) * 0.004, Math.cos(a) * fwd[1] * 0.004, Math.cos(a) * fwd[2] * 0.004];
+        return sdf.cone([p[0] - out[0], p[1] - out[1], p[2] - out[2]], [q[0] + out[0], q[1] + out[1], q[2] + out[2]], 0.03, 0.019);
+      };
+      const rows = [0.92, 0.77, 0.62, 0.47, 0.32, 0.17].flatMap((t, row) =>
+        Array.from({ length: 14 }, (_, i) => featherTip(t, (i + (row % 2) * 0.5) * (360 / 14), 0.18)),
+      );
+      const crestRoot = (x: number, z: number) => sdf.raycast(g.skull, [x, 3, z], [0, -1, 0])!;
+      const crest = [
+        [0, 0.15, 0.05, 0.036],
+        [0.038, 0.13, 0.04, 0.03],
+        [-0.038, 0.13, 0.04, 0.03],
+      ].map(([x, z, len, r]) => {
+        const p = crestRoot(x!, z!);
+        return sdf
+          .chain(
+            [
+              [p[0], p[1] - 0.02, p[2], r!],
+              [p[0] * 1.2, p[1] + len! * 0.6, p[2] - len! * 0.6, r! * 0.9],
+              [p[0] * 1.4, p[1] + len! * 0.5, p[2] - len! * 1.6, r! * 0.7],
+            ],
+            0.012,
+          )
+          .scale([0.8, 1, 1]);
       });
-      const mane = sdf.smoothUnion(0.012, ...lobes);
-      k.body('mane', mane.bone('neck'), { color: k.tint('coat', -0.06), roughness: 0.85, detail: 0.004 });
+      const mane = sdf.smoothUnion(0.006, sdf.union(...rows).bone('neck'), sdf.smoothUnion(0.012, ...crest).bone('head'));
+      k.body('mane', mane, { color: k.tint('coat', -0.04), roughness: 0.85, detail: 0.004 });
       // The saddle on the back, behind the wings, with a brown border and brass rivets.
       backSaddle(k, g, { blanket: k.tint('blanket'), trim: '#6a3c22', leather: '#6a3c22', metal: '#c8a040', z: -0.17, size: 1.3 });
       const TY = sdf.raycast(g.trunk, [0, 4, -0.17], [0, -1, 0])![1];

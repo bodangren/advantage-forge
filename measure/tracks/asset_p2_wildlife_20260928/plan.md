@@ -235,9 +235,9 @@ in the batch 1 to 5 tables above are the builder's own ratings and are replaced 
 | warhorse | 1 | 7.0 | 7.0 | accepted |
 | wasp | 4 | 5.0 | 7.0 | accepted |
 | yak | 1 | 7.0 | 7.0 | accepted |
-| gryphon-mount | 2 | 6.0 | 6.5 | rework |
-| riding-lizard | 2 | 6.5 | 6.5 | rework |
-| dragon-mount | 2 | 6.0 | 6.0 | rework |
+| gryphon-mount | 2 | 6.0 | 7.0 | accepted |
+| riding-lizard | 2 | 6.5 | 7.0 | accepted |
+| dragon-mount | 3 | 6.0 | 6.0 | follow-up |
 | camel | 4 | 5.5 | 6.5 | follow-up |
 | fox | 6 | 6.0 | 6.5 | follow-up |
 | moth | 9 | 4.5 | 6.5 | follow-up |
@@ -272,6 +272,13 @@ rating is recorded, and the work moves on. The change is the reviewer's `next` f
 | wolf | 6 | Make the muzzle one wide cream jaw that pushes forward. |
 | riding-wolf | 6 | Make a cream lower face, large calm eyes, and a side smile. |
 | squirrel | 8 | Make the run pose upright with the forepaws held at the chest. |
+| dragon-mount | 3 | Make the back of the head and the neck round (a flat cut shows); set the eyes into the face; widen the belly plates; add a fly clip. |
+
+Status on 2026-10-09 after round 23 (wildlife-w5k.json, one reviewer): the gryphon mount (6.5 to
+7.0) and the riding lizard (6.5 to 7.0) reached the bar and are accepted. The dragon mount stayed at
+6.0 after three reviews below the bar, so it went to the follow-up list. 52 of 61 assets are at 7.0
+or higher; 9 are on the follow-up list. Open notes: the gryphon face frowns and its neck is short; the
+lizard eyes are too large.
 
 Status on 2026-10-08 after round 22: 50 of 61 assets are at 7.0 or higher (13 at 7.5 or
 higher). Round 22 (wildlife-w5i.json, wildlife-w5j.json, two reviewers) accepted no asset. The
@@ -291,7 +298,7 @@ Round 20 (wildlife-w5g.json) accepted the elk at 7.0; the pack goat went from 6.
 to 6.5, and the sheep (6.5) and the camel (5.5) stayed below the bar.
 Rounds 18 and 19 (wildlife-w5e.json, wildlife-w5f.json) accepted cow, badger, pony,
 frog, crocodile, rooster, and hawk at 7.0; the ox fell from 7.0 to 6.5 after its rework.
-Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json, wildlife-w5e.json, wildlife-w5f.json, wildlife-w5g.json, wildlife-w5h.json, wildlife-b10.json, wildlife-w5i.json, wildlife-w5j.json.
+Review files in time order: wildlife-b1-3.json, wildlife-b4-5.json, wildlife-b6.json, wildlife-b6-r2.json, wildlife-b7-8.json, wildlife-b78-r2.json, wildlife-b9.json, wildlife-b89-r2.json, wildlife-b78-r3.json, wildlife-b6-r3.json, wildlife-r4.json, wildlife-b6-r4.json, wildlife-w4.json, wildlife-w5a.json, wildlife-w5b.json, wildlife-w5c.json, wildlife-w5d.json, wildlife-w5e.json, wildlife-w5f.json, wildlife-w5g.json, wildlife-w5h.json, wildlife-b10.json, wildlife-w5i.json, wildlife-w5j.json, wildlife-w5k.json.
 
 Changes in the latest rounds (all kind options are additive; `mesh-same` or a manual GLB compare
 shows SAME for the other users of each kind):
@@ -363,6 +370,29 @@ Changes for batch 10 and round 22:
 - Reworked for round 22: camel (a tall hump made short in Z before the body stretch, ruffled cord
   loops round the hump, a smooth warm coat, thicker legs, knee rings, pointed ears, a soft crown
   tuft) and moth (the hood fix and a warmer body).
+
+Changes for round 23 (the third review of the three mounts with two reviews below the bar; all
+kind options are additive, and `mesh-same` shows SAME for griffin, badger, crocodile, hedgehog,
+and turtle):
+
+- Griffin kind: `beakStyle: 'bill'` (a big round bill with a short round hook over a full lower
+  bill, and a smile corner), `browStyle: 'bold'` (thick brows that rise from a low inner end),
+  `clawStyle: 'cap'` (round caps over the toe ends), `tailStyle: 'braid'` (two twisted strands),
+  and `tuftStyle: 'fan'` (a tassel of thin, wavy strands).
+- Gryphon mount: the bill, the bold brows, a soft crest of three round feathers, rows of raised
+  feather tips all round the neck (in place of the ridged mane), brown toe caps, and the braided
+  tail with a tassel. The mockup decides the two points where rounds 10 and 22 disagreed: short
+  brown toes with round tips, and a low soft crest.
+- Lizard kind: `bellyOffLegs` (no belly color on the legs), `eyeWhites` (white eyes with an iris
+  round the pupil, looking half to the front), `eyeLift`, `snoutHeight`, and `skullScale`.
+- Riding lizard: a low body on short bent legs with the feet out to the sides (no `drop` and no
+  `legSpread`), wide orange bands on the head, the back, the legs, and the tail, plate lines on
+  the cream chest, a wider open mouth with a red tongue on the jaw bone, and a clean leather saddle
+  (one pad with a stitch line, and a strap over it with a brass buckle on each side).
+- Dragon mount: a shorter body (`bodyLength` -0.13), a lower chest, an upright neck with the head
+  above the chest, a tall round skull with a round muzzle, white eyes with orange irises high on
+  the face, a wide smile, raised cream plates from the chin down the chest, smaller raised wings
+  with yellow membranes and brown edges, and a big leather saddle with a red seat and buckle straps.
 
 Rework method: one asset at a time from the reviewer's issue list, largest difference first, with
 `./forge render <name> --fast` against the mockup, `./forge check <name>` (`ground ok`), and then

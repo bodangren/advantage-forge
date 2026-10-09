@@ -1,0 +1,63 @@
+{
+  "gryphon-mount": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is an orange gryphon mount with a yellow beak, raised wings, a braided tail, and a blue saddle. It is the same character as the mockup, but the face frowns and the neck is short and thick.",
+    "strengths": [
+      "The palette matches the mockup: an orange body, a yellow beak, yellow legs with brown toes, and blue gems on the strap.",
+      "All signature details are present: the crest, the yellow ear, the raised wings, the braided tail, and the blue saddle.",
+      "At 128 px, the beak, the eyes, the wings, and the blue saddle read in the side and three-quarter directions.",
+      "The rig has idle, walk, run, fly, roar, attack, hit, and death clips. The feet stay on the ground in the walk."
+    ],
+    "issues": [
+      "The face frowns. The brows are low and the corners of the beak turn down. The mockup smiles. Turn the corners of the beak up and raise the inner ends of the brows.",
+      "The neck is short and thick because a large ruff of shingle feathers covers it. The mockup has a long, slim neck with smooth feather lines. Make the ruff smaller and make the neck longer and thinner.",
+      "A brown seat and a brown bag cover a large part of the blue saddle. The mockup shows only a blue shield-shaped pad with a gold rim and rivets. Remove the bag or make it smaller, and add the gold rim.",
+      "The ruff hides the brown breast strap. The mockup shows the strap across the chest. Move the strap down so that it shows below the ruff.",
+      "The tail tuft spreads into thin points like fingers. The mockup has a full, soft tuft. Make the tuft thicker and rounder.",
+      "The wings stay still in the walk. Add a small wing movement to the walk."
+    ],
+    "next": "Change the face to a smile: turn the corners of the beak up and raise the inner ends of the brows."
+  },
+  "riding-lizard": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "The model is a green riding lizard with orange stripes, a cream belly, and a brown saddle. It is the same animal as the mockup, but the head is round and the eyes are much larger.",
+    "strengths": [
+      "The palette matches the mockup: soft green skin, orange stripes, a cream belly and jaw, and a brown leather saddle.",
+      "The four-leg stance and the head height above the saddle are close to the mockup.",
+      "At 128 px, the saddle, the stripes on the tail and the legs, and the happy face read in most directions.",
+      "The rig has idle, walk, run, attack, hit, and death clips. The legs and the tail move in the walk, and the feet stay on the ground."
+    ],
+    "issues": [
+      "The head is round and the eyes are approximately two times too large. The mockup has a box-shaped snout with two nostrils and small bead eyes. Make the snout longer and flatter, add the nostrils, and make the eyes smaller.",
+      "The mouth opens too wide and shows a large pink tongue. The mockup shows a wide grin with a narrow red gap. Close the jaw partially.",
+      "The stripes are small, square marks. The mockup has longer, curved bars on the side of the head, the neck, and the back. Make the stripes longer and curve them around the body.",
+      "The feet are short and have small white claws. The mockup has spread toes with dark claws. Make the toes longer and make the claws dark.",
+      "The saddle has a box shape with flat sides. The mockup saddle is round and has a vertical strap with a buckle. Make the saddle edges round.",
+      "The tail is almost straight. The mockup tail curves up at the tip. Curve the end of the tail up."
+    ],
+    "next": "Change the head: make the snout longer and box-shaped, add the nostrils, and make the eyes smaller."
+  },
+  "dragon-mount": {
+    "overall": 6.0,
+    "scores": [3, 3, 3, 3, 3.5, 3.5, 3, 2.5, 3.5, 3.5, 2.5],
+    "summary": "The model is a green baby dragon with gold horns, a cream belly, small wings, and a brown saddle. The identity matches the mockup, but the face is noticeably different and a flat cut shows on the back of the head and the neck.",
+    "strengths": [
+      "The gold horns, the small spikes between the horns, and the gold ear fins match the mockup. They read clearly at 128 px.",
+      "The brown saddle with a red seat and the gold tail spikes match the mockup.",
+      "The large head and the short legs give a chibi shape."
+    ],
+    "issues": [
+      "A flat cut shows on the back of the head and the neck. It is a straight vertical edge in the side view and a flat oval in the back view. It also shows in all walk and run frames and in the N, E, and W sprites. Make the back of the head and the neck round.",
+      "The face is different from the mockup. The eyes bulge above the head, and the snout hangs down. The mockup has eyes set into the face, a broad round snout with large nostrils, round cheeks, and a wide smile. Set the eyes into the face, lift the snout, and make it broader.",
+      "The belly plates are narrow rings with dark gaps between them. The mockup has wide, smooth cream plates from the chin to the belly. Make the plates wider, remove the dark gaps, and continue the plates down the belly.",
+      "The wings are small, dark, and narrow. They look like dry leaves and read badly at 128 px. The mockup has larger tan membranes with brown edges. Make the wings larger and use a light tan membrane.",
+      "The body sits low, and the hind legs fold under it. The walk and the run move only the front legs. The mockup stands on four legs. Lift the hind part of the body and move all four legs in the walk and the run.",
+      "The tail lies on the ground. The mockup tail curves up behind the body. Curve the tail up.",
+      "The green is darker and more saturated than the light jade green of the mockup. Make the green lighter.",
+      "The model is a mount for the sky games, but it has no fly clip. Add a fly clip with wing strokes."
+    ],
+    "next": "Make the back of the head and the neck round to remove the flat cut. Then set the eyes into the face and make the snout broad and round."
+  }
+}

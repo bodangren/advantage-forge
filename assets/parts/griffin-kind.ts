@@ -60,14 +60,20 @@ export interface GriffinKind {
   readonly head?: { readonly lift: number; readonly forward?: number; readonly scale: number };
   /** The beak size as a share (default 1), or a share per axis, round the beak root. */
   readonly beakScale?: number | V3;
+  /** 'bill': a big round bill (a wide root, a full upper bill, a short round hook) over a full lower bill. */
+  readonly beakStyle?: 'bill';
+  /** 'bold' (with `friendly`): thick brows that rise from a low inner end (a confident look). */
+  readonly browStyle?: 'bold';
   /** A wider, rounder chest and rump as a share (default 1): a stocky body. */
   readonly girth?: number;
   /** False: no feather crest on the head (default true). */
   readonly crest?: boolean;
-  /** 'soft': a fluffy tail tuft of round lobes instead of pointed feathers. */
-  readonly tuftStyle?: 'soft';
-  /** 'curved': short curved claws on the toes instead of round talons. */
-  readonly clawStyle?: 'curved';
+  /** 'soft': a fluffy tail tuft of round lobes; 'fan': a fan of tapered strands; default pointed feathers. */
+  readonly tuftStyle?: 'soft' | 'fan';
+  /** 'curved': short curved claws on the toes; 'cap': round caps over the toe ends; default round talons. */
+  readonly clawStyle?: 'curved' | 'cap';
+  /** 'braid': a thicker tail of two twisted strands (a braided rope). */
+  readonly tailStyle?: 'braid';
   /** True: the beak is closed, with a dark mouth line where the two halves meet. */
   readonly closedBeak?: boolean;
   /** Longer legs by this many meters (below 0, shorter): the shins stretch between the feet and the knees. */
@@ -183,15 +189,48 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
           .bone(bone);
       const feet = sdf.union(pair(foot(FKNEE, 'fshin.L')), pair(foot(BKNEE, 'bshin.L')));
       const TAIL_END: V3 = [0.05, 0.53, -0.56];
-      const tail = sdf.chain(
-        [
-          [0, 0.33, -0.32, 0.034],
-          [0.015, 0.37, -0.44, 0.03],
-          [0.035, 0.45, -0.53, 0.026],
-          [TAIL_END[0], TAIL_END[1], TAIL_END[2], 0.022],
-        ],
-        0.02,
-      );
+      const TAIL_PTS: readonly (readonly [number, number, number, number])[] = [
+        [0, 0.33, -0.32, 0.034],
+        [0.015, 0.37, -0.44, 0.03],
+        [0.035, 0.45, -0.53, 0.026],
+        [TAIL_END[0], TAIL_END[1], TAIL_END[2], 0.022],
+      ];
+      // 'braid': two strands twist round the tail path (one turn per 9 cm), thicker than the plain tail.
+      const braid = () => {
+        const path: V3[] = [];
+        for (let i = 0; i < TAIL_PTS.length - 1; i++)
+          for (let j = 0; j < 8; j++) {
+            const a = TAIL_PTS[i]!;
+            const b = TAIL_PTS[i + 1]!;
+            const u = j / 8;
+            path.push([a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u]);
+          }
+        path.push(TAIL_END);
+        let len = 0;
+        const strand = (phase: number) =>
+          sdf.chain(
+            path.map((p, i) => {
+              const q = path[Math.min(i + 1, path.length - 1)]!;
+              const o = path[Math.max(i - 1, 0)]!;
+              const d: V3 = [q[0] - o[0], q[1] - o[1], q[2] - o[2]];
+              const dl = Math.hypot(...d);
+              const t: V3 = [d[0] / dl, d[1] / dl, d[2] / dl];
+              // A frame round the path: side = x across the tail, up = t x side.
+              const side: V3 = [1, 0, 0];
+              const up: V3 = [t[1] * side[2] - t[2] * side[1], t[2] * side[0] - t[0] * side[2], t[0] * side[1] - t[1] * side[0]];
+              if (i > 0) len += Math.hypot(p[0] - path[i - 1]![0], p[1] - path[i - 1]![1], p[2] - path[i - 1]![2]);
+              const a = (len / 0.09) * 2 * Math.PI + phase;
+              const r = 0.024 - 0.008 * (i / (path.length - 1));
+              const off = r * 0.6;
+              return [p[0] + (Math.cos(a) * side[0] + Math.sin(a) * up[0]) * off, p[1] + (Math.cos(a) * side[1] + Math.sin(a) * up[1]) * off, p[2] + (Math.cos(a) * side[2] + Math.sin(a) * up[2]) * off, r] as const;
+            }),
+            0.01,
+          );
+        const a = strand(0);
+        len = 0;
+        return sdf.smoothUnion(0.006, a, strand(Math.PI));
+      };
+      const tail = kind.tailStyle === 'braid' ? braid() : sdf.chain(TAIL_PTS, 0.02);
       const trunk = sdf.smoothUnion(0.07, chest.bone('spine'), rump.bone('hips'), neck.bone('neck'));
       const coat = trunk
         .smoothUnion(0.03, legs)
@@ -312,28 +351,44 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
       });
 
       // ------------------------------------------------------------------ beak and brows
-      const upperBeak = sdf.smoothUnion(
-        0.02,
-        sdf.ellipsoid([0.095, 0.07, 0.08]).at(0, 0.645, 0.34),
-        sdf.chain(
-          [
-            [0, 0.66, 0.37, 0.062],
-            [0, 0.648, 0.45, 0.044],
-            [0, 0.6, 0.495, 0.025],
-            [0, 0.545, 0.485, 0.008],
-          ],
-          0.015,
-        ),
-      );
-      const nostril = pair(sdf.sphere(0.011).at(0.027, 0.69, 0.41));
+      const bill = kind.beakStyle === 'bill';
+      const upperBeak = bill
+        ? sdf.smoothUnion(
+            0.04,
+            sdf.ellipsoid([0.125, 0.075, 0.09]).at(0, 0.645, 0.34),
+            sdf.ellipsoid([0.1, 0.07, 0.1]).at(0, 0.65, 0.44),
+            sdf.ellipsoid([0.066, 0.064, 0.05]).at(0, 0.6, 0.512),
+          )
+        : sdf.smoothUnion(
+            0.02,
+            sdf.ellipsoid([0.095, 0.07, 0.08]).at(0, 0.645, 0.34),
+            sdf.chain(
+              [
+                [0, 0.66, 0.37, 0.062],
+                [0, 0.648, 0.45, 0.044],
+                [0, 0.6, 0.495, 0.025],
+                [0, 0.545, 0.485, 0.008],
+              ],
+              0.015,
+            ),
+          );
+      const nostrilAt = bill ? sdf.raycast(upperBeak, [0.032, 2, 0.47], [0, -1, 0])! : null;
+      const nostril = pair(nostrilAt ? sdf.sphere(0.011).at(nostrilAt[0], nostrilAt[1] - 0.003, nostrilAt[2]) : sdf.sphere(0.011).at(0.027, 0.69, 0.41));
       // A closed beak: the lower half sits up against the upper half, and a dark line runs where
       // they meet, curling up a little at the back corners (a smile).
-      const lowerBeak = kind.closedBeak ? sdf.ellipsoid([0.064, 0.03, 0.07]).at(0, 0.6, 0.385) : sdf.ellipsoid([0.062, 0.028, 0.068]).at(0, 0.583, 0.395);
+      const lowerBeak = bill
+        ? sdf.smoothUnion(0.02, sdf.ellipsoid([0.1, 0.038, 0.085]).at(0, 0.585, 0.385), sdf.ellipsoid([0.068, 0.034, 0.06]).at(0, 0.58, 0.455))
+        : kind.closedBeak
+          ? sdf.ellipsoid([0.064, 0.03, 0.07]).at(0, 0.6, 0.385)
+          : sdf.ellipsoid([0.062, 0.028, 0.068]).at(0, 0.583, 0.395);
+      // The bill's smile corner: a short stroke up the side of the bill root, between two points on it.
+      const sideHit = (y: number, z: number) => sdf.raycast(upperBeak, [1, y, z], [-1, 0, 0])!;
+      const corner = bill ? sdf.capsule(sideHit(0.6, 0.355), sideHit(0.632, 0.318), 0.005) : sdf.capsule([0.06, 0.612, 0.33], [0.07, 0.635, 0.315], 0.0045);
       const mouthLine = (s: sdf.Shape) =>
         kind.closedBeak
           ? s
-              .paintWhere(lowerBeak.round(0.004).subtract(lowerBeak.round(-0.002)).intersect(sdf.halfSpace([0, -1, 0], -0.6)), C.mouth, 0.002)
-              .paintWhere(pair(sdf.capsule([0.06, 0.612, 0.33], [0.07, 0.635, 0.315], 0.0045)), C.mouth, 0.002)
+              .paintWhere(lowerBeak.round(0.004).subtract(lowerBeak.round(-0.002)).intersect(sdf.halfSpace([0, -1, 0], bill ? -0.59 : -0.6)), C.mouth, 0.002)
+              .paintWhere(pair(corner), C.mouth, 0.002)
           : s;
       const browAt = (x: number, y: number): V3 => {
         const h = faceHit(x, y);
@@ -353,13 +408,20 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
       if (kind.friendly) {
         // Thin dark brows arched over the eyes, half out of the feathers.
         const browOn = (x: number, y: number): V3 => faceHit(x, y) as V3;
+        // 'bold': thicker, and the inner end sits low over the eye, so the brow rises outward.
         const thin = pair(
           sdf.chain(
-            [
-              [...browOn(EYE_X - 0.04, EYE_Y + 0.068), 0.007],
-              [...browOn(EYE_X - 0.003, EYE_Y + 0.08), 0.009],
-              [...browOn(EYE_X + 0.04, EYE_Y + 0.07), 0.006],
-            ],
+            kind.browStyle === 'bold'
+              ? [
+                  [...browOn(EYE_X - 0.045, EYE_Y + 0.064), 0.011],
+                  [...browOn(EYE_X - 0.005, EYE_Y + 0.075), 0.013],
+                  [...browOn(EYE_X + 0.042, EYE_Y + 0.07), 0.008],
+                ]
+              : [
+                  [...browOn(EYE_X - 0.04, EYE_Y + 0.068), 0.007],
+                  [...browOn(EYE_X - 0.003, EYE_Y + 0.08), 0.009],
+                  [...browOn(EYE_X + 0.04, EYE_Y + 0.07), 0.006],
+                ],
             0.005,
           ),
         );
@@ -376,7 +438,13 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
             const tip = toeTip(kn, t);
             const out = t[1] > 0 ? 1 : -1;
             const claw =
-              kind.clawStyle === 'curved'
+              kind.clawStyle === 'cap'
+                ? sdf.smoothUnion(
+                    0.01,
+                    sdf.ellipsoid([0.036, 0.034, 0.04]).at(tip[0], 0.03, tip[2] + out * 0.004),
+                    sdf.ellipsoid([0.033, 0.026, 0.034]).at(tip[0], 0.024, tip[2] + out * 0.026),
+                  )
+                : kind.clawStyle === 'curved'
                 ? sdf.chain(
                     [
                       [tip[0], 0.03, tip[2] + out * 0.008, 0.022],
@@ -405,7 +473,33 @@ export function griffinAsset(kind: GriffinKind): AssetDefinition {
           ].map(([dx, dy, dz]) => sdf.capsule([...TC], [TC[0] + dx!, TC[1] + dy!, TC[2] + dz!], 0.032)),
         )
         .displace(0.004, (x, y, z) => noise.fbm(x * 40, y * 40, z * 40, 2));
-      const tailTuft = kind.tuftStyle === 'soft' ? softTuft : sdf.smoothUnion(
+      // 'fan': a tassel of thin, wavy strands from a small knot at the tail end, spread back in a
+      // cone that is wider up and down than across (a horse-tail tassel).
+      const knot: V3 = [TAIL_END[0], TAIL_END[1], TAIL_END[2] - 0.015];
+      const fanTuft = sdf.smoothUnion(
+        0.008,
+        sdf.ellipsoid([0.028, 0.032, 0.034]).at(...knot),
+        ...Array.from({ length: 19 }, (_, i) => {
+          const a = i * 2.39996; // the golden angle spreads the strands evenly over the cone
+          const ring = Math.sqrt((i + 0.5) / 19);
+          const len = 0.17 + 0.03 * Math.cos(i * 1.7);
+          const dx = Math.cos(a) * ring * 0.35;
+          const dy = Math.sin(a) * ring * 0.5 - 0.15;
+          const dir: V3 = [dx, dy, -1];
+          const dl = Math.hypot(...dir);
+          const at = (u: number, wave: number): V3 => [knot[0] + (dir[0] / dl) * len * u + wave, knot[1] + (dir[1] / dl) * len * u + wave * 0.6, knot[2] + (dir[2] / dl) * len * u];
+          const w = 0.012 * (i % 2 ? 1 : -1);
+          return sdf.chain(
+            [
+              [...at(0, 0), 0.02],
+              [...at(0.5, w), 0.016],
+              [...at(1, -w * 0.5), 0.008],
+            ],
+            0.01,
+          );
+        }),
+      );
+      const tailTuft = kind.tuftStyle === 'fan' ? fanTuft : kind.tuftStyle === 'soft' ? softTuft : sdf.smoothUnion(
         0.02,
         sdf.ellipsoid([0.07, 0.08, 0.085]).at(TAIL_END[0], TAIL_END[1] + 0.02, TAIL_END[2] - 0.04),
         ...[

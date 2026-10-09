@@ -8298,7 +8298,42 @@
     "reviewedAt": "2026-10-05T06:48:25.000Z"
   },
   "riding-lizard": {
-    "overall": 6.5,
+    "overall": 7.0,
+    "group": "Wildlife",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "The model is a green riding lizard with orange stripes, a cream belly, and a brown saddle. It is the same animal as the mockup, but the head is round and the eyes are much larger.",
+    "strengths": [
+      "The palette matches the mockup: soft green skin, orange stripes, a cream belly and jaw, and a brown leather saddle.",
+      "The four-leg stance and the head height above the saddle are close to the mockup.",
+      "At 128 px, the saddle, the stripes on the tail and the legs, and the happy face read in most directions.",
+      "The rig has idle, walk, run, attack, hit, and death clips. The legs and the tail move in the walk, and the feet stay on the ground."
+    ],
+    "issues": [
+      "The head is round and the eyes are approximately two times too large. The mockup has a box-shaped snout with two nostrils and small bead eyes. Make the snout longer and flatter, add the nostrils, and make the eyes smaller.",
+      "The mouth opens too wide and shows a large pink tongue. The mockup shows a wide grin with a narrow red gap. Close the jaw partially.",
+      "The stripes are small, square marks. The mockup has longer, curved bars on the side of the head, the neck, and the back. Make the stripes longer and curve them around the body.",
+      "The feet are short and have small white claws. The mockup has spread toes with dark claws. Make the toes longer and make the claws dark.",
+      "The saddle has a box shape with flat sides. The mockup saddle is round and has a vertical strap with a buckle. Make the saddle edges round.",
+      "The tail is almost straight. The mockup tail curves up at the tip. Curve the end of the tail up."
+    ],
+    "next": "Change the head: make the snout longer and box-shaped, add the nostrils, and make the eyes smaller.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-08T23:34:04.000Z"
+  },
+  "dragon-mount": {
+    "overall": 6.0,
     "group": "Wildlife",
     "scores": {
       "mockup": 3,
@@ -8306,96 +8341,67 @@
       "proportion": 3,
       "shape": 3,
       "color": 3.5,
-      "materials": 3,
+      "materials": 3.5,
       "detail": 3,
-      "technical": 3.5,
-      "gameReady": 4.5,
+      "technical": 2.5,
+      "gameReady": 3.5,
       "sprite": 3.5,
-      "motion": 3.5
+      "motion": 2.5
     },
-    "summary": "The model is a green chibi lizard with orange stripes, a cream belly, and a brown saddle. It is the same animal as the mockup, but the stance is tall, and the stripes and the saddle are weak.",
+    "summary": "The model is a green baby dragon with gold horns, a cream belly, small wings, and a brown saddle. The identity matches the mockup, but the face is noticeably different and a flat cut shows on the back of the head and the neck.",
     "strengths": [
-      "The green, orange, and cream palette matches the mockup.",
-      "The head with the smile and the large eyes on top reads as friendly.",
-      "The walk has a good stride, and the feet stay on the ground."
+      "The gold horns, the small spikes between the horns, and the gold ear fins match the mockup. They read clearly at 128 px.",
+      "The brown saddle with a red seat and the gold tail spikes match the mockup.",
+      "The large head and the short legs give a chibi shape."
     ],
     "issues": [
-      "The legs are long and straight, and the body stands high like a dog. Make the legs short and bent, with the feet out to the sides, and lower the body.",
-      "The orange stripes are thin and few. Make wide orange bands across the head, the back, the legs, and the tail.",
-      "The saddle is a soft brown pile. Make a clean leather saddle with a stitched edge and one strap with a buckle down the side.",
-      "The smile is almost closed. Open the mouth wider and show the red inside, as in the mockup.",
-      "The chest has no plates. Add the cream plate lines on the chest.",
-      "In the walk, the cream belly paint shows on the inner side of a front leg. Keep the belly paint off the legs."
+      "A flat cut shows on the back of the head and the neck. It is a straight vertical edge in the side view and a flat oval in the back view. It also shows in all walk and run frames and in the N, E, and W sprites. Make the back of the head and the neck round.",
+      "The face is different from the mockup. The eyes bulge above the head, and the snout hangs down. The mockup has eyes set into the face, a broad round snout with large nostrils, round cheeks, and a wide smile. Set the eyes into the face, lift the snout, and make it broader.",
+      "The belly plates are narrow rings with dark gaps between them. The mockup has wide, smooth cream plates from the chin to the belly. Make the plates wider, remove the dark gaps, and continue the plates down the belly.",
+      "The wings are small, dark, and narrow. They look like dry leaves and read badly at 128 px. The mockup has larger tan membranes with brown edges. Make the wings larger and use a light tan membrane.",
+      "The body sits low, and the hind legs fold under it. The walk and the run move only the front legs. The mockup stands on four legs. Lift the hind part of the body and move all four legs in the walk and the run.",
+      "The tail lies on the ground. The mockup tail curves up behind the body. Curve the tail up.",
+      "The green is darker and more saturated than the light jade green of the mockup. Make the green lighter.",
+      "The model is a mount for the sky games, but it has no fly clip. Add a fly clip with wing strokes."
     ],
-    "next": "Lower the body on short, bent legs with the feet out to the sides.",
+    "next": "Make the back of the head and the neck round to remove the flat cut. Then set the eyes into the face and make the snout broad and round.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-08T14:18:08.000Z"
-  },
-  "dragon-mount": {
-    "overall": 6.0,
-    "group": "Wildlife",
-    "scores": {
-      "mockup": 2.5,
-      "silhouette": 3.5,
-      "proportion": 3,
-      "shape": 3,
-      "color": 3,
-      "materials": 3,
-      "detail": 3,
-      "technical": 3.5,
-      "gameReady": 4.5,
-      "sprite": 3.5,
-      "motion": 3.5
-    },
-    "summary": "The model is a green chibi dragon with yellow horns, orange wings, and a brown saddle. It is the same creature as the mockup, but the body, the neck, and the face are clearly different.",
-    "strengths": [
-      "The yellow horns, the cheek fins, and the yellow tail spikes match the mockup.",
-      "The walk has a good stride, and the wings stay attached.",
-      "The horns and the wings read in every sprite direction."
-    ],
-    "issues": [
-      "The body is long and the neck points forward. Make the body short and compact, and hold the neck upright with the head above the chest.",
-      "The face is different. The snout is long and flat, the eyes sit on the sides, and the smile is a small line. Make a round head with large front eyes, orange irises, and a wide smile.",
-      "The belly plates are faint. Make bold cream plates from the chin to the belly.",
-      "The cream paint bleeds onto the legs as soft patches. Keep the cream on the chest and the belly only.",
-      "The saddle is small and hides under the wing. Make the saddle larger, with a red seat and a buckle strap on the side.",
-      "The wings have a green frame and orange skin. Make the wings smaller, with yellow skin and brown edges, as in the mockup."
-    ],
-    "next": "Shorten the body and lift the neck so that the head sits upright above the chest.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-08T14:18:08.000Z"
+    "reviewedAt": "2026-10-08T23:34:04.000Z"
   },
   "gryphon-mount": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "Wildlife",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3,
-      "shape": 3.5,
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
       "color": 4,
       "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3.5,
+      "sprite": 4,
       "motion": 3.5
     },
-    "summary": "The model is an orange chibi gryphon with a yellow beak, raised wings, and a blue saddle. The colors and the harness match the mockup, but the beak, the head, and the expression have clear differences.",
+    "summary": "The model is an orange gryphon mount with a yellow beak, raised wings, a braided tail, and a blue saddle. It is the same character as the mockup, but the face frowns and the neck is short and thick.",
     "strengths": [
-      "The blue saddle pad, the brown chest strap, and the blue gem match the mockup.",
-      "The orange and yellow palette and the yellow ears match the mockup.",
-      "The raised wings and the tail read in every sprite direction."
+      "The palette matches the mockup: an orange body, a yellow beak, yellow legs with brown toes, and blue gems on the strap.",
+      "All signature details are present: the crest, the yellow ear, the raised wings, the braided tail, and the blue saddle.",
+      "At 128 px, the beak, the eyes, the wings, and the blue saddle read in the side and three-quarter directions.",
+      "The rig has idle, walk, run, fly, roar, attack, hit, and death clips. The feet stay on the ground in the walk."
     ],
     "issues": [
-      "The beak is thin and points down, and the gryphon looks worried. Make a large, round beak with a smile line and a calm, confident brow, as in the mockup.",
-      "The head and the neck are smooth. Add the feather crest on the head and sculpted feathers on the neck.",
-      "The feet have long, sharp talons. Make round brown toe caps, as in the mockup.",
-      "The tail is long and thin with a round ball at the end. Make a short, thick, braided tail with a fan of feathers at the tip."
+      "The face frowns. The brows are low and the corners of the beak turn down. The mockup smiles. Turn the corners of the beak up and raise the inner ends of the brows.",
+      "The neck is short and thick because a large ruff of shingle feathers covers it. The mockup has a long, slim neck with smooth feather lines. Make the ruff smaller and make the neck longer and thinner.",
+      "A brown seat and a brown bag cover a large part of the blue saddle. The mockup shows only a blue shield-shaped pad with a gold rim and rivets. Remove the bag or make it smaller, and add the gold rim.",
+      "The ruff hides the brown breast strap. The mockup shows the strap across the chest. Move the strap down so that it shows below the ruff.",
+      "The tail tuft spreads into thin points like fingers. The mockup has a full, soft tuft. Make the tuft thicker and rounder.",
+      "The wings stay still in the walk. Add a small wing movement to the walk."
     ],
-    "next": "Rebuild the beak as a large, round, smiling beak, and give the brow a confident shape.",
+    "next": "Change the face to a smile: turn the corners of the beak up and raise the inner ends of the brows.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-08T14:18:08.000Z"
+    "reviewedAt": "2026-10-08T23:34:04.000Z"
   },
   "graveyard-staff": {
     "overall": 7.5,

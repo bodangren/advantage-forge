@@ -26,6 +26,10 @@ const LIZARD_COLORS = {
 };
 
 type V3 = readonly [number, number, number];
+const norm = (v: V3): V3 => {
+  const l = Math.hypot(v[0], v[1], v[2]);
+  return [v[0] / l, v[1] / l, v[2] / l];
+};
 type P4 = [number, number, number, number];
 const pair = (s: sdf.Shape) => s.mirror('x');
 const add = (a: V3, b: V3): V3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
@@ -52,6 +56,10 @@ export interface LizardKind {
   readonly snout?: number;
   /** The snout half width (default 0.07). */
   readonly snoutWidth?: number;
+  /** The snout half height before the head size (default 0.058). */
+  readonly snoutHeight?: number;
+  /** The skull size per axis as a share (default 1, 1, 1): above 1 in Y for a taller, rounder dome. */
+  readonly skullScale?: V3;
   /** A round bulb at the tip of the snout with the nostrils on top (default true). */
   readonly bulb?: boolean;
   /** Moves the head, the neck, and the jaw (default none). */
@@ -68,6 +76,10 @@ export interface LizardKind {
   readonly eyeSink?: number;
   /** With side eyes: a dark pupil on the front of each eye (default false: one color with glints). */
   readonly pupils?: boolean;
+  /** With side eyes and pupils: a white eye with an iris in the eyes slot round the pupil, looking half to the front. */
+  readonly eyeWhites?: boolean;
+  /** With side eyes: meters the eyes sit higher on the head (default 0). */
+  readonly eyeLift?: number;
   /** A lower jaw in the belly color with a mouth behind it (default true); without it the kind paints a smile. */
   readonly jaw?: boolean;
   /** The jaw opening at rest in degrees (default 3). */
@@ -99,6 +111,8 @@ export interface LizardKind {
   readonly chestLift?: number;
   /** The size of the cream throat and chest patch as a share of the default (default 1). */
   readonly bellyChest?: number;
+  /** True: no belly color on the legs (the chest patch stops where the legs join). */
+  readonly bellyOffLegs?: boolean;
   /** No ridges between these two z values (under a saddle). */
   readonly ridgeGap?: readonly [number, number];
   /** The size of the back ridges as a share of the default (default 1). */
@@ -244,10 +258,11 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
       // ------------------------------------------------------------------ head: skull, snout, jaw
       const bulbOn = (kind.bulb ?? true) && L > 0.1;
       const bulbC: V3 = [0, SNOUT_Y + 0.022, TIP_Z - 0.04];
-      const snout = sdf.ellipsoid([SW, 0.058 * hs, L / 2 + 0.04]).at(0, SNOUT_Y, SNOUT_Z + L / 2 - 0.02);
+      const snout = sdf.ellipsoid([SW, (kind.snoutHeight ?? 0.058) * hs, L / 2 + 0.04]).at(0, SNOUT_Y, SNOUT_Z + L / 2 - 0.02);
+      const SK = kind.skullScale ?? [1, 1, 1];
       const skull = sdf.smoothUnion(
         0.04,
-        sdf.ellipsoid([0.125 * hs, 0.105 * hs, 0.115 * hs]).at(...HEAD_C),
+        sdf.ellipsoid([0.125 * hs * SK[0], 0.105 * hs * SK[1], 0.115 * hs * SK[2]]).at(...HEAD_C),
         bulbOn ? snout.smoothUnion(0.03, sdf.ellipsoid([SW * 1.2, 0.058, 0.06]).at(...bulbC)) : snout,
       );
       const eyesTop = (kind.eyes ?? 'top') === 'top';
@@ -284,7 +299,7 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
           const n = 0.96 + 0.04 * noise.fbm(x * 16, y * 16, z * 16, 2);
           return [base[0] * n, base[1] * n, base[2] * n];
         })
-        .paintWhere(bellyZone, T.belly, 0.025);
+        .paintWhere(kind.bellyOffLegs ? bellyZone.subtract(legs.round(0.012)) : bellyZone, T.belly, 0.025);
       // The nostrils on top of the snout tip.
       const nostril = bulbOn
         ? pair(sdf.sphere(0.014).at(0.028, bulbC[1] + 0.05, bulbC[2] + 0.02))
@@ -295,7 +310,7 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
         const r = 0.042 * es;
         const a = ((kind.eyeAngle ?? 40) * Math.PI) / 180;
         const dir: V3 = [Math.sin(a), 0, Math.cos(a)];
-        const h = sdf.raycast(skull, add(add(HEAD_C, [0, 0.02 * hs, 0]), [dir[0], 0, dir[2]]), [-dir[0], 0, -dir[2]])!;
+        const h = sdf.raycast(skull, add(add(HEAD_C, [0, 0.02 * hs + (kind.eyeLift ?? 0), 0]), [dir[0], 0, dir[2]]), [-dir[0], 0, -dir[2]])!;
         const sink = kind.eyeSink ?? 0.45;
         const center: V3 = [h[0] - dir[0] * r * sink, h[1], h[2] - dir[2] * r * sink];
         return { r, dir, center };
@@ -327,10 +342,15 @@ export function lizardAsset(kind: LizardKind): AssetDefinition {
           .sphere(ER)
           .scale([1, 1.1, 0.8])
           .at(...c);
-        const eye = (kind.pupils ? ball.paintWhere(sdf.sphere(ER * 0.5).at(c[0] + dir[0] * ER, c[1], c[2] + dir[2] * ER * 0.8), C.pupil, 0.002) : ball)
+        const white = kind.pupils && kind.eyeWhites;
+        // With white eyes, the iris and the pupil look halfway between the eye's own direction and +Z.
+        const look: V3 = white ? norm([dir[0] * 0.5, 0, dir[2] * 0.5 + 0.5]) : dir;
+        const front = (f: number): V3 => [c[0] + look[0] * ER * f, c[1], c[2] + look[2] * ER * 0.8 * f];
+        const iris = white ? ball.paintWhere(sdf.sphere(ER * 0.72).at(...front(0.85)), T.eye, 0.002) : ball;
+        const eye = (kind.pupils ? iris.paintWhere(sdf.sphere(ER * 0.5).at(...front(1)), C.pupil, 0.002) : iris)
           .paintWhere(sdf.sphere(ER * 0.26).at(c[0] + dir[0] * ER * 0.7, c[1] + ER * 0.42, c[2] + dir[2] * ER * 0.7), '#ffffff', 0.002)
           .paintWhere(sdf.sphere(ER * 0.12).at(c[0] + dir[0] * ER * 0.85 - ER * 0.2, c[1] - ER * 0.3, c[2] + dir[2] * ER * 0.85), '#ffffff', 0.002);
-        k.body('eyes', pair(eye).bone('head'), { color: T.eye, roughness: 0.12, detail: 0.003 });
+        k.body('eyes', pair(eye).bone('head'), { color: kind.pupils && kind.eyeWhites ? C.eyeWhite : T.eye, roughness: 0.12, detail: 0.003 });
       }
 
       // ------------------------------------------------------------------ teeth, ridges, claws
