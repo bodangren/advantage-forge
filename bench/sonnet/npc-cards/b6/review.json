@@ -1,0 +1,142 @@
+{
+  "beggar": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4, 4.5, 3, 3.5],
+    "summary": "A kind old beggar with a gray beard, a patched brown coat, a tin cup, and a cane. The hat, the coat, and the cane are clearly different from the mockup.",
+    "strengths": [
+      "The gray beard, the mustache, and the large nose read clearly and give a kind old face.",
+      "The rope belt and the green and blue patches show the patched coat of the role.",
+      "The cup arm points forward, so the begging action reads in the 3D views."
+    ],
+    "issues": [
+      "The hat is a wide flat dish with a low crown. It is about two times the head width and hides the face in most sprite directions. Change it to the mockup felt hat: a taller crown and a narrower, slightly turned brim.",
+      "The coat is one brown tunic with brown sleeves. The mockup has a fuzzy brown open vest over teal-green sleeves and a dark brown inner vest. Add the teal sleeves and the open vest.",
+      "The cane is a short, twisted tan shape in the same color as the rope belt. It reads as rope. Change it to a straight dark brown wooden stick that touches the ground.",
+      "The cup is at waist height. In the mockup the cup is up at shoulder height. Raise the cup arm.",
+      "The ears are small. The mockup has large round ears. Make the ears larger."
+    ],
+    "next": "Replace the dish hat with a felt hat that has a taller crown and a narrower brim, so that the face shows in the sprites."
+  },
+  "scholar": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 3.5, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A cheerful young scholar with round glasses, a square cap with a gold tassel, a side bun, a blue gown, and an open book. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The square cap, the gold tassel, the side bun, and the round glasses give a clear silhouette in every view.",
+      "The open smile and the glasses read in the 128 px sprites.",
+      "The maroon front panel and the gold trim on the gown follow the mockup."
+    ],
+    "issues": [
+      "The book is at belly height and is smaller than the mockup book. In the mockup the book is large and at chest height, just under the chin. Raise the book and make it larger.",
+      "The book cover has diagonal stripes that look like wood grain. Make it a smooth red-orange leather cover.",
+      "The gown is a saturated royal blue with narrow sleeves. The mockup gown is a dark slate blue with wide open sleeves. Darken the gown and widen the sleeve ends.",
+      "The skin is darker than the medium tan skin of the mockup. Use the mockup skin as the default and keep the dark skin as a preset."
+    ],
+    "next": "Raise the book to chest height and make it larger with a smooth red leather cover."
+  },
+  "scribe": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "A young scribe with freckles, a scroll board, a quill, a crossbody strap, and an ink bottle. The hair and the clothing are clearly different from the mockup.",
+    "strengths": [
+      "The face has freckles and a calm closed smile, as in the mockup.",
+      "The scroll board with written lines, the strap, and the black ink bottle at the hip are clear signature details.",
+      "The scroll board reads in the sprites from most directions."
+    ],
+    "issues": [
+      "The hair is a thick chestnut cap with drip-shaped locks on all sides. The mockup hair is dark brown and swept to one side with a parted forelock. Change the hair to a dark brown side-swept shape.",
+      "The clothing is one tan tunic with a small cream panel. The mockup has a dark brown open coat over a cream shirt and dark green pants. Darken the coat and show the cream shirt and the pants.",
+      "The quill is short. The role and the mockup show a long white quill. Make the quill about two times longer.",
+      "The scarf has the same tan color as the tunic and does not read. Give the scarf a darker brown color and more volume."
+    ],
+    "next": "Change the hair to a dark brown side-swept shape like the mockup."
+  },
+  "shepherd": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 3, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A cheerful shepherd girl with braids, a straw hat, a vest, a blue skirt, and a curled crook. The crook and the colors are clearly different from the mockup.",
+    "strengths": [
+      "The wide hat with a ribbon bow, the braids, and the curled crook give a clear silhouette in every view and in the sprites.",
+      "The face has a gentle closed smile and lashes, as in the mockup.",
+      "The vest buttons, the lace panel, and the white socks follow the mockup costume."
+    ],
+    "issues": [
+      "The crook is a twisted tan shape that reads as rope, and it leans at about 25 degrees. The mockup crook is a smooth dark brown wooden staff that stands vertical next to the body. Change it to smooth dark wood and hold it upright.",
+      "The ribbon and the skirt are saturated royal blue and sky blue. The mockup uses a soft teal ribbon and a sage-teal skirt. Change both colors to the muted teal family.",
+      "The scarf has a net-mesh texture and the skirt has a woven basket texture. Use a soft knit texture for the scarf and plain cloth for the skirt.",
+      "The braids hang in front of the shoulders. In the mockup the braid ends stand out to the sides with teal ties. Move the braid ends outward."
+    ],
+    "next": "Change the crook to a smooth dark brown wooden staff that stands vertical."
+  },
+  "stablekeeper": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "A sturdy bearded stablekeeper with a red bandana, a brown apron, a horseshoe, and a brush. The hair and the brush are clearly different from the mockup.",
+    "strengths": [
+      "The black beard, the heavy eyebrows, and the open grin give the cheerful face of the mockup.",
+      "Both raised arms hold a tool, so the pose follows the mockup.",
+      "The cream shirt, the brown bib with black buttons, and the black boots follow the mockup palette."
+    ],
+    "issues": [
+      "The hair is a tall cloud of round curls. The mockup hair is a smooth black swept wave with a quiff. Change the hair to the smooth swept shape and lower its height.",
+      "The brush is a flat wooden paddle with grooves, and it reads as a paddle. The mockup brush has an oval head with visible bristles. Add an oval bristle head.",
+      "The red bandana shows only as a thin band under the beard. The mockup has a large red triangle on the chest. Make the triangle larger below the beard.",
+      "The horseshoe is small. Make it about 1.5 times larger.",
+      "The model has a knee apron over dark pants. The mockup has brown bib overalls with brown legs. Change the pants to brown."
+    ],
+    "next": "Change the hair to the smooth black swept shape of the mockup."
+  },
+  "storyteller": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 4, 3, 3, 3.5, 3, 3, 4.5, 4, 3.5],
+    "summary": "An old storyteller with white hair, gold glasses, a patchwork coat, an open book, and a toy dragon. The patchwork garment, the palette, and the hair are clearly different from the mockup, and the back of the hair has a defect.",
+    "strengths": [
+      "The round gold glasses, the white eyebrows, and the gold earrings follow the mockup and read in the sprites.",
+      "The open book faces the viewer and reads clearly as a storybook.",
+      "The green toy dragon is a clear signature detail."
+    ],
+    "issues": [
+      "The patchwork is a boxy coat with sleeves in saturated orange, pink, green, and yellow squares. The mockup shawl drapes long from the shoulders in muted olive, mustard, and terracotta, with fringe. Change it to a draped shawl in the muted palette.",
+      "The back of the hair has a flat cut plane, and a dark gap shows between the coils of the bun. Close the gap and round the back of the hair.",
+      "The bun is a tall white puff with a red flower. The mockup has a defined bun with a coral wrap. Make the bun a clear knot with a coral wrap.",
+      "The skin is dark brown. The mockup skin is light peach. Use the mockup skin as the default and keep the dark skin as a preset.",
+      "The book cover is bright blue. The mockup cover is brown. Change the cover to brown."
+    ],
+    "next": "Change the patchwork coat to a long draped shawl in the muted mockup palette."
+  },
+  "student": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A cheerful red-haired student with freckles, a green cap, a blue jacket and tie, a satchel, and a slate with a star. The lower body, the slate pose, and the colors are clearly different from the mockup.",
+    "strengths": [
+      "The green flat cap, the red hair, and the freckles give a clear identity in every view and in the sprites.",
+      "The slate with a white star reads clearly in the 3D views and in the sprites.",
+      "The open grin is cheerful and fits the role."
+    ],
+    "issues": [
+      "The shorts are wide and long. They read as a skirt and hide the legs. The mockup has short cuffed shorts with bare knees. Shorten and narrow the shorts.",
+      "The socks show as thin bluish-gray rings that look like metal. Make them thick gray knit socks.",
+      "The slate is at shoulder height and is small. In the mockup the arm is raised high and the slate is at head height. Raise the arm and make the slate larger.",
+      "The jacket and the tie are saturated royal blue. The mockup uses a dark navy-charcoal color. Darken them.",
+      "The satchel is small and hides behind the arm. Make it larger at the hip."
+    ],
+    "next": "Shorten the shorts above the knee and show the legs and the knit socks."
+  },
+  "tailor": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A friendly tailor with a black bob, a red bow, a yellow measuring tape, a teal blouse, a dark pinafore, scissors, and a spool. The scissors and the hair are clearly different from the mockup.",
+    "strengths": [
+      "The yellow measuring tape around the neck, the teal puffed sleeves, and the dark pinafore follow the mockup.",
+      "The red bow and the black bob give a clear head shape in the sprites.",
+      "The pincushion on the wrist is a good extra detail for the role."
+    ],
+    "issues": [
+      "The scissors are small with short blades, and they read as pliers. The mockup scissors are large, with long blades about the length of the forearm. Make the blades about three times longer.",
+      "The hair has straight blunt bangs, and the back is a ring of large tube rolls. The mockup is a smooth bob with side-swept bangs. Smooth the back and sweep the bangs to one side.",
+      "The spool is small and hangs below the fist on the thread. In the mockup a large red spool sits in the hand. Make the spool larger and put it in the fist.",
+      "The skirt reaches the shoes and hides the legs. The mockup skirt stops at the knee. Shorten the skirt."
+    ],
+    "next": "Make the scissors large with long blades, as in the mockup."
+  }
+}

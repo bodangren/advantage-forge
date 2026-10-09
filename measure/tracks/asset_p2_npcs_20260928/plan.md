@@ -55,7 +55,7 @@ viewer's left).
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); third pass running for gravedigger, jeweler, lumberjack, magistrate, mason |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); third pass running for miller, miner, musician, orphan, peddler, refugee |
-| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | built: beggar, scribe, shepherd, stablekeeper, storyteller; building: scholar, student, tailor |
+| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); review 1 for the others: 6.5, 7.0, 7.0, 7.0, 6.5, 7.0, 7.0; second pass running |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | building |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness); archaeologist building |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | briefs and mockups ready (wilderness) |
