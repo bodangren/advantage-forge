@@ -56,7 +56,7 @@ viewer's left).
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); review 1 for the others: 6.5, 7.0, 7.0, 7.0, 6.5, 7.0, 7.0; second pass running |
-| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | building |
+| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | traveler and undertaker accepted at 7.5 (review 1); second pass (serial Sonnet builder) for tanner, tax-collector, teacher, watch-captain, weaver |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness); archaeologist building |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | briefs and mockups ready (wilderness) |
 | 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | briefs and mockups ready (court and faction) |

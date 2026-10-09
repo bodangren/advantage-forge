@@ -33,3 +33,4 @@ speed. Improve this method with the lessons of each agent run.
 | r1, r2 | With that change, each reviewer used 6 calls and 0.37M tokens for five or six NPCs. | Review first every NPC with a fresh build; send a builder only with a review fix list or for a stale build. |
 | t2, r2 | The refugee builder followed its own reading of the mockup for the stick, not the fix list, and the reviewer marked it down again. | The builder does every numbered fix and names any conflict in its report. |
 | setup | The orchestrator setup used 2.35M tokens (about 20 calls at 100K context). | Use three orchestrator calls for each run: one Bash for record, commit, log, and next prompt; one Agent call; one short message. |
+| b1 | The Sonnet builder for the stale teacher source made no edits and only rebuilt it. | Rebuild stale sources with `rebuild.sh` (no agent); the reviewer then writes the fix list for the builder. |

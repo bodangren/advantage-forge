@@ -1,0 +1,128 @@
+{
+  "tanner": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A cheerful tanner boy with a leather apron and a rolled hide in both hands. The role reads, but the head wrap, the hair color, the skin tone, and the hide pose differ clearly from the mockup.",
+    "strengths": [
+      "The dark leather apron with straps, the cream shirt, and the brown boots match the mockup palette.",
+      "The rolled hide with ties is in both hands and reads as the signature prop in every view.",
+      "The closed smile and the large eyes read as cheerful at 128 px."
+    ],
+    "issues": [
+      "The orange bandana covers the full crown like a cap. Make it a band with a knot on top, and show dark hair above it.",
+      "The hair is medium brown. The mockup hair is dark brown, almost black. Make the hair darker.",
+      "The skin is light peach. The mockup skin is a warm tan. Make the skin warmer and darker.",
+      "The model holds the hide flat and horizontal. The mockup holds it diagonal and upright against the chest.",
+      "The arms are thin and the sleeves are full. Roll up the sleeves and show thicker forearms for the strong trait.",
+      "From the back, the hair hangs in loose strands with a vertical strip. Make the back of the head a clean shape."
+    ],
+    "next": "Change the orange cap into a tied bandana band over dark hair."
+  },
+  "tax-collector": {
+    "overall": 7.0,
+    "scores": [3.5, 4.5, 4, 4, 3.5, 4, 4, 4, 4.5, 4, 3.5],
+    "summary": "A prim tax collector in a top hat and tailcoat, with a raised coin box and an open ledger. The silhouette and the pose match the mockup, but the hair color, the added glasses, and the prop colors differ clearly.",
+    "strengths": [
+      "The top hat, the tailcoat, the pinstripe vest, and the tie give a strong silhouette that matches the mockup.",
+      "The curled mustache and the round spectacles make a fussy, funny face that suits the role.",
+      "The raised hand and the low ledger hand follow the mockup pose."
+    ],
+    "issues": [
+      "The hair and the mustache are brown. The mockup hair and mustache are black. Make them black.",
+      "The model adds round gold spectacles that the mockup does not show. Remove them or make them smaller so the eyes read as in the mockup.",
+      "The coin box is dark and the ledger has a red cover. The mockup props are gold. Make the props gold to give the focal accent.",
+      "The ledger is small and low at the hip. Make it larger and raise it toward the chest as in the mockup.",
+      "The coat is dark blue-gray. The mockup coat is black. Make the coat darker for more contrast with the vest."
+    ],
+    "next": "Make the hair and the mustache black and make the coin box and the ledger gold."
+  },
+  "teacher": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 4, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A teacher in a mustard cardigan with glasses, a blue bow, a raised pointer, and a red apple. The props and the clothes match the mockup, but the hair shape differs clearly.",
+    "strengths": [
+      "The mustard knit cardigan, the blue bow, the white collar, and the brown skirt match the mockup palette.",
+      "The raised pointer and the red apple are in the correct hands and read in every sprite direction.",
+      "The large round glasses and the small smile give a kind face."
+    ],
+    "issues": [
+      "The hair is a tall, lumpy mass with a rough surface. The mockup hair is a smooth, wavy bob with bangs. Make the hair lower and smooth, and add bangs.",
+      "From the back and the side, the hair texture is noisy. Reduce the hair displacement so the hair has calm areas.",
+      "The hair sits low on the forehead and makes the face look small. Show more forehead and a rounder face, as in the mockup.",
+      "The braid hangs on the opposite side from the mockup. Move the braid to the pointer side.",
+      "The skirt is dark brown. The mockup skirt is a warm rust color. Make the skirt warmer."
+    ],
+    "next": "Rebuild the hair as a smooth wavy bob with bangs and a side braid."
+  },
+  "traveler": {
+    "overall": 7.5,
+    "scores": [4, 4.5, 4, 4, 4, 4, 4, 4, 4.5, 4.5, 3.5],
+    "summary": "An eager young traveler with a wide feathered hat, a big backpack with a bedroll, and an open map. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The wide brown hat, the big backpack, and the red bedroll give a clear silhouette from every view.",
+      "The open map with lines and a red cross reads as the signature prop at 128 px.",
+      "The open smile and the large eyes read as eager, as in the mockup."
+    ],
+    "issues": [
+      "The feather is a thick red tube with a round end. Make it a flat, tapered plume so it reads as a feather.",
+      "The hair is straight and hangs to the neck at the back. The mockup hair is short and curly. Add curls and make the back shorter.",
+      "The backpack is smaller than in the mockup. Make it taller so it rises above the shoulder.",
+      "The jacket is a closed green top. The mockup shows an open green coat over a brown tunic. Open the coat at the front."
+    ],
+    "next": "Replace the red tube with a tapered feather plume."
+  },
+  "undertaker": {
+    "overall": 7.5,
+    "scores": [4, 4.5, 4, 4, 3.5, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A calm undertaker in a tall top hat, a gray scarf, and a long dark coat, with a white lily and a small lantern. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The tall top hat, the long coat with silver buttons, and the hanging scarf match the mockup silhouette.",
+      "The white lily on a green stem reads in the front views and in the sprites.",
+      "The small closed smile and the soft brows give a calm, kind face."
+    ],
+    "issues": [
+      "The lantern glow is weak and pale. The mockup lantern glows a strong cyan. Make the lantern glass brighter and more saturated.",
+      "The hat band is light gray and draws attention away from the face. Make the band dark, as in the mockup.",
+      "The lantern hangs at shoe level. Raise it to knee level so it reads in the sprites.",
+      "From the back, the hair hangs as separate dark locks under the hat. Join the locks into one clean shape."
+    ],
+    "next": "Make the lantern glass glow a strong cyan."
+  },
+  "watch-captain": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A watch captain in a plumed helmet, chain mail, and a blue tabard with a castle emblem. The armor reads, but the lantern pose and the mouth differ from the mockup.",
+    "strengths": [
+      "The red plume, the silver helmet, and the blue tabard give a clear guard identity in every sprite direction.",
+      "The gold castle emblem and the belt buckle put an accent at the chest.",
+      "The chain mail and the shoulder plates read as separate materials."
+    ],
+    "issues": [
+      "The model holds the lantern low at the hip. The mockup holds the lantern up at shoulder height. Raise the lantern arm.",
+      "The lantern has no glow. Make the lantern glass glow a warm orange, as in the mockup.",
+      "The mouth is open and shows teeth. The mockup shows a closed, confident smile. Close the mouth.",
+      "The skin is dark brown. The mockup skin is a warm tan. Make the skin lighter to match the mockup.",
+      "The helmet is a round dome with a hammered surface. The mockup helmet is smooth with a brim. Make the surface smooth and add the brim.",
+      "In the side view, the mace shaft crosses in front of the leg. Check the clearance in the walk clip."
+    ],
+    "next": "Raise the lantern arm to shoulder height and make the lantern glow."
+  },
+  "weaver": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A weaver with a hair bun and knitting needles, a rainbow scarf, a lavender dress, and a basket of yarn. The parts match the mockup, but the hair paint, the brows, and the body shape differ clearly.",
+    "strengths": [
+      "The bun with two needles, the rainbow scarf, and the basket give a clear silhouette in every sprite direction.",
+      "The lavender dress, the cream apron, and the wicker basket match the mockup palette.",
+      "The braided ring and the colored band around the bun are good details from the back."
+    ],
+    "issues": [
+      "White streaks on the hair look like gray hair or tape. Remove the streaks and use a soft sheen.",
+      "The brows slope down to the center and make the face look stern. Raise the inner ends of the brows for a cheerful face.",
+      "The body is the standard slim base. The mockup weaver is plump. Make the body and the cheeks rounder.",
+      "The needles are long and thin, like antennae. Make them shorter and thicker, as in the mockup.",
+      "The basket is small and has few yarn colors. Make the basket larger and add green and purple yarn balls."
+    ],
+    "next": "Remove the white hair streaks and raise the inner brows."
+  }
+}
