@@ -1,0 +1,87 @@
+{
+  "reviewer": "independent reviewer, round 1, 2026-10-09",
+  "basis": "brief-baker.md, mockup baker_001.jpg, the seven cards, plus 9 extra images: s1 front, h2 front, cheer strips of h1 h2 h3 h4 h5 h6 s1. forge check values from results.md.",
+  "common_cap": "No arm holds the tray in the hands. The arms stay in the kind's rest pose. In cheer, cast, and attack the hands leave the tray and the tray floats (or, in h5, tears). The brief requires a two-hand hold, so the 6.5 cap for a broken pose applies to every arm.",
+  "ranking": ["s1", "h6", "h1", "h4", "h2", "h3", "h5"],
+  "arms": {
+    "s1": {
+      "rating": 6.5,
+      "defects": [
+        "Broken hold: the tray is on the spine and the arms hang in the rest pose; in cheer, cast, and attack both hands leave the tray (cap 6.5). forge check found no held item, so the tool did not test tray clearance.",
+        "The cream cuffs are oversized and cover the fists, so the hands read as oven mitts; the mockup shows skin hands with a thin rolled cuff.",
+        "The hair tuft is a small blob that is weak at 128 px, and the back of the head shows a brown band over bald skin; the sesame seeds and the rimmed box tray (the brief asks for a flat peel) are minor."
+      ],
+      "fixability": "small",
+      "note": "Best match to the mockup: the only puffy multi-lobe mushroom hat, the only open laughing smile with teeth that reads at 128 px, a full bib apron with straps that cross at the back, hair under the hat at the sides and back, no blue base trim, and clean deformation in every clip. Without the hold cap it is near 7.0. The hold fix is a base-level change that every arm needs."
+    },
+    "h6": {
+      "rating": 5.5,
+      "defects": [
+        "Broken hold: the tray is rigid on the chest and the hands leave it in cheer (cap 6.5); the header says the tray is skinned to both hands, but the code binds it to the chest.",
+        "The hat is a tall narrow cylinder with a rounded top that reads as a knit beanie, not a mushroom chef hat; the hair tuft sits on the hat band and reads as a badge.",
+        "The base closed small smile does not read at 128 px; the head is bald at the sides and back; the blue base trim shows at the neck and hem; the apron skirt is a flat slab off the legs."
+      ],
+      "fixability": "medium",
+      "note": "Clean deformation in all clips and a correct palette. The hat, the smile, the hair, and the blue trim all need work in addition to the hold."
+    },
+    "h1": {
+      "rating": 5.0,
+      "defects": [
+        "Broken deformation: in cheer the apron skirt stretches up from the tray to the chin as a large cream sheet; the tray on the hips floats free of the hands (cap 6.5).",
+        "The base closed small smile does not read at 128 px, and the head is bald at the sides and back.",
+        "The hat top is one smooth dome without puff lobes; the blue base trim shows at the neck and hem; the apron skirt stands off the legs as a flat slab in the side view."
+      ],
+      "fixability": "medium",
+      "note": "Second-best static silhouette (a tall hat and the tuft correctly under the band), but the apron weights need a rework, and the smile and hair need new work."
+    },
+    "h4": {
+      "rating": 5.0,
+      "defects": [
+        "The hat is short and wide like a beret or a muffin top, and the large brown tuft sits on top of the hat, so the head reads as a muffin, not a chef hat.",
+        "Broken hold: the tray is rigid on the chest and the hands leave it in cheer; an apron flap folds out beside the tray in cheer (cap 6.5).",
+        "The small open red mouth reads weakly at 128 px; the head is bald at the sides and back."
+      ],
+      "fixability": "medium",
+      "note": "The body, the apron, and the tray are acceptable. The hat and the tuft need a rebuild, which is the first silhouette read."
+    },
+    "h2": {
+      "rating": 4.5,
+      "defects": [
+        "The mouth is a closed red-lipstick shape, not a wide open smile; it reads as make-up on a child NPC.",
+        "Broken deformation: in cheer the apron bib lifts off and flies forward over the tray as a flat cream sheet; the tray floats free of the hands (cap 6.5).",
+        "The hair tuft is a brown blob on the forehead under the band and reads as a mark on the skin; the hat is short with one plain dome; the long tunic hides the trousers and socks."
+      ],
+      "fixability": "large",
+      "note": "The face paint, the apron weights, the tuft, and the hat all need rework."
+    },
+    "h3": {
+      "rating": 4.0,
+      "defects": [
+        "The sesame loaf reads as a lidded pot or jar with a knob, so the tray of bread does not read.",
+        "Broken deformation: in cheer the apron bib tears open and shows black holes; the tray floats free of the hands (cap 6.5).",
+        "The hat is short, and the tuft sits on the hat front as a decoration; the base closed smile does not read; the head is bald; the blue base trim shows."
+      ],
+      "fixability": "large",
+      "note": "The loaves, the apron, the hat, and the face all need rework."
+    },
+    "h5": {
+      "rating": 3.0,
+      "defects": [
+        "Broken rig: the tray is cut in two halves skinned to the two hands; in cheer the halves tilt apart and pass through the face, and the loaves stretch. forge check FAIL (tray 6.2 cm into the head).",
+        "The apron skirt is a rigid cream box that reaches the feet and covers the legs in front and in the sprites.",
+        "The hat is a wide flat pancake, not a tall puffy hat; cream bands sit mid-sleeve instead of at the wrists; the base closed smile does not read; the head is bald; the blue base trim shows."
+      ],
+      "fixability": "large",
+      "note": "It fails the required clearance check, and the tray, the apron, and the hat need a rebuild."
+    }
+  },
+  "best_base": "s1",
+  "why": "s1 is the only arm whose silhouette (the puffy mushroom hat, the bib apron, the tray of loaves) and face (an open smile) already match the mockup, with no deformation breaks in any clip. Its remaining defects are the shared hold problem, which every arm needs, plus two small local fixes (the cuffs and the tuft). Every other arm needs the hold fix plus a rebuild of the hat, the smile, or the apron weights.",
+  "fix_list": [
+    "Give the arms a two-hand hold in every clip: bent elbows, fists on the tray rim at the waist. extra runs before the kind adds its clips, so add a hold or clip-override option to humanoid-kind.ts, or wrap build to change the arm bones in k.animation. In cheer, lift the tray with both hands or bounce the body with the arms kept in the hold. Then run ./forge check baker-s1 with the tray as a held item and confirm result ok and 0.04 m clearance.",
+    "Shrink the cream cuffs to a thin rolled band at the wrist so the skin fists show.",
+    "Make the hair tuft larger and curled (two or three locks, as in the mockup) so it reads at 128 px, and extend the hair under the hat down to the nape so the back view shows no bald skin.",
+    "Make the sesame seeds larger and lighter so one loaf reads as sesame at 128 px; optionally lower the tray rim toward a flat peel.",
+    "Run ./forge all baker-s1 and confirm the hat, the apron, the tray with loaves, and the smile read in sprites/preview.png."
+  ]
+}

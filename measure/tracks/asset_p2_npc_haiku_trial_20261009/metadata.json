@@ -1,15 +1,22 @@
 {
   "track_id": "asset_p2_npc_haiku_trial_20261009",
   "type": "chore",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-09T19:00:00Z",
-  "updated_at": "2026-10-09T19:00:00Z",
+  "updated_at": "2026-10-09T20:30:00Z",
   "description": "Compare six parallel Haiku 5.5 agents, one Sonnet high agent, and the orchestrator on one NPC (baker)",
   "estimated_tasks": 6,
-  "actual_tasks": null,
-  "deviation_notes": "",
+  "actual_tasks": 9,
+  "deviation_notes": "Round 2 added for a fair model test (same agent setup). Two final reviews: 6.8 then 7.2. Related track: asset_p2_npcs_20260928 (the baker is its first accepted row).",
   "workstream": "assets",
   "retrospective": false,
-  "evidence": ["bench/haiku/brief-baker.md", "bench/haiku/results.md"],
-  "dependencies": ["asset_p2_npcs_20260928"]
+  "evidence": [
+    "bench/haiku/brief-baker.md",
+    "bench/haiku/results.md",
+    "bench/haiku/review-r1.json",
+    "bench/haiku/review-r2.json",
+    "bench/haiku/review-final2.json",
+    "assets/baker.ts"
+  ],
+  "dependencies": []
 }

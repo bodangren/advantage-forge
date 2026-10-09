@@ -87,6 +87,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Produce P2 npcs**
   *Link: [./tracks/asset_p2_npcs_20260928/](./tracks/asset_p2_npcs_20260928/)*
 
+- [x] **Track: P2 NPC Haiku trial (baker)**
+  *Link: [./tracks/asset_p2_npc_haiku_trial_20261009/](./tracks/asset_p2_npc_haiku_trial_20261009/)*
+
 - [~] **Track: Produce P2 wildlife**
   *Link: [./tracks/asset_p2_wildlife_20260928/](./tracks/asset_p2_wildlife_20260928/)*
 

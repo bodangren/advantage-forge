@@ -16,6 +16,7 @@ Status: new. This plan owns execution status. Source documents retain design det
 
 - [ ] Task: Build missing sources and review existing sources in the batch.
 - [ ] Task: Run forge all for each accepted source after visual correction.
+- Note (2026-10-09): `baker` accepted at 7.2 in the [Haiku trial](../asset_p2_npc_haiku_trial_20261009/). NPCs that carry an item in both hands can use the humanoid kind's `hold` option.
 
 ## Phase 4: Documentation and verification
 

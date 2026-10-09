@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 723,
-    "source_missing": 133,
+    "source_present": 724,
+    "source_missing": 132,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -18,8 +18,8 @@
       },
       "P2": {
         "listed": 304,
-        "source_present": 204,
-        "source_missing": 100
+        "source_present": 205,
+        "source_missing": 99
       },
       "P3": {
         "listed": 48,
@@ -5940,7 +5940,7 @@
       "priority": "P2",
       "kind": "character",
       "source_path": "assets/baker.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p2_npcs_20260928"
     },
     {
@@ -9625,8 +9625,8 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 925,
-    "catalog_matched": 707,
+    "listed": 926,
+    "catalog_matched": 708,
     "off_catalog": 218
   },
   "asset_sources": [
@@ -9906,6 +9906,13 @@
       "source_path": "assets/badger.ts",
       "catalog_source_ids": [
         "wildlife/land/badger"
+      ]
+    },
+    {
+      "id": "baker",
+      "source_path": "assets/baker.ts",
+      "catalog_source_ids": [
+        "npcs/settlement/baker"
       ]
     },
     {

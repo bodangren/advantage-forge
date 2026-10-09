@@ -1,0 +1,16 @@
+{
+  "asset": "baker",
+  "rating": 7.2,
+  "pass": true,
+  "defects": [
+    "Hair: the back and side views show a hard-edged dark brown slab under the hat band (a wide band in the back view, a flat rectangle behind the ear in the side view). The front tuft is one smooth brown lump, not curled locks. No hair shows at the temples, but the mockup shows hair there.",
+    "Clips: cast and cheer are almost the same as idle. They have a low amplitude, no hop, and no clear head or body beat, so they do not read as separate actions at sprite size. Attack is only a small torso twist.",
+    "Tray and apron: the two loaves are identical orange domes. They have no lighter #e0a850 top, and only a few white dots show the sesame. The tray is narrower than the long board in the mockup. The apron skirt panel is short and the tray hides most of it in the front view; the mockup shows it to the knees. The shirt neck is a flat brown square with no collar."
+  ],
+  "fix_list": [
+    "Optional: replace the hair slab with a soft rounded hair cap under the hat, add small locks at the temples, and model the front tuft as two or three curled locks.",
+    "Optional: give cheer a hop (hips up 0.03 m, tray lifts with the arms) and a head tilt, and give cast a clear lean and head beat, so each clip reads differently from idle.",
+    "Optional: paint a lighter top on each loaf, make one loaf darker with clear sesame seeds, widen the tray, and lengthen the apron skirt to the knees."
+  ],
+  "note": "Pass at the 7.0 bar. The silhouette is strong in all 8 sprite directions: the chef hat, the apron straps, and the tray with loaves read clearly at 128 px. Proportions and the palette match the mockup and the brief. The face reads: the brows, the rosy cheeks, and the open smile with teeth show in the front and three-quarter views. The small dark mouth corners look like fangs at 128 px, but the smile still reads. The tray stays level and attached to both hands in every clip, and no clip shows a broken pose, so the pose cap does not apply. The fix list is optional because the asset passes."
+}

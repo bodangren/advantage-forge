@@ -8469,5 +8469,22 @@
     "next": "Make the tines smooth and thicker at the base, with tips that curve in to hold the crystal, as in the mockup.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-06T11:04:03.000Z"
+  },
+  "baker": {
+    "overall": 7.2,
+    "group": "NPCs",
+    "summary": "A P2 settlement NPC on the humanoid kind with the new two-hand hold: a puffy white chef hat with a brown curled tuft, an open smile, a brown shirt with cream cuffs, a cream bib apron, dark short trousers with cream socks, and a wooden tray with two golden loaves held level in both hands in every clip. Source: arm s1 of the Haiku trial (bench/haiku/results.md), finished by the orchestrator. Independent review: bench/haiku/review-final2.json. The forge check shows result ok, and the build has no warnings.",
+    "strengths": [
+      "The chef hat, the apron straps, and the tray with loaves read in all 8 sprite directions at 128 px.",
+      "The palette matches the brief, and the face reads: brows, rosy cheeks, and an open smile with teeth.",
+      "The tray stays level and between both hands in every clip."
+    ],
+    "issues": [
+      "A hard-edged hair slab shows under the hat in the back and side views; the tuft is one smooth lump, and the temples show no hair.",
+      "Cast and cheer look almost the same as idle, and attack is only a small torso twist.",
+      "The two loaves look the same, the sesame barely shows, the tray is narrow, and the shirt has no collar."
+    ],
+    "next": "Soften the hair cap and add temple locks, give cheer a hop and cast a lean, and vary the loaves.",
+    "reviewedAt": "2026-10-09T11:56:43+00:00"
   }
 }

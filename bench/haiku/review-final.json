@@ -1,0 +1,17 @@
+{
+  "asset": "baker",
+  "rating": 6.8,
+  "pass": false,
+  "defects": [
+    "The smile does not read at 128 px, and the brief requires it. The mouth is a small narrow opening under heavy, straight, low brows. At 512 px the face looks calm or stern, not like the mockup's cheerful wide grin. In the S sprite the mouth is a small dark mark that can look like a moustache.",
+    "The tray is not level in every clip, and the brief requires it. In cast (t=0.51 to 0.77, side and three-quarter) the tray tilts nose-down by about 15 to 20 degrees, and the loaves stay fixed on the slope. The cheer and attack clips also show a small tilt. The clips are restrained: the walk has a short stride with almost no body bob, and the cheer is only a small rise.",
+    "The lower costume does not match the brief. The cream socks are missing. The dark trousers show only as a thin strip between the apron and the large tan shoes, so the legs read as stubs. Smaller differences: the side hair is a hard-edged flat brown patch behind the ear, the hat is shorter and smoother than the tall pleated toque in the mockup, and the top of the bib shows a dark brown band where the mockup has a cream collar."
+  ],
+  "fix_list": [
+    "Make the smile wider (about 1.5x) with upturned corners and a darker mouth interior. Curve and raise the brows a little. Check that the smile reads in sprites/S.png and SE.png at 128 px.",
+    "In cast, and in cheer and attack, rotate the tray grip bone against the forearm motion so that the tray stays level. Verify the side strips of all eight clips.",
+    "Add cream sock bands above the shoes. Show the dark trousers between the apron hem and the socks, as in the mockup.",
+    "Optional, after the bar: give the side hair a soft rounded volume, add two or three pleat lobes to the hat top, and make the collar cream."
+  ],
+  "note": "The silhouette is good: the hat, the apron with straps, and the tray with two golden loaves read in all eight sprite directions. Proportions fit the chibi base, and the palette matches the brief. The pose is not broken, so the 6.5 cap does not apply. The face reads (eyes, blush), so the 7.0 face cap does not apply. The rating is below the bar because the asset misses two explicit brief requirements: the smile at 128 px and the level tray in every clip. Fixes 1 to 3 are small and will take the asset to 7.0 or above."
+}

@@ -1,5 +1,6 @@
+import * as THREE from 'three';
 import { addPart, defineAsset, mapTint, motion, profile, sdf } from '../../src/index.js';
-import type { AssetContext, AssetDefinition } from '../../src/index.js';
+import type { AnimationDef, AssetContext, AssetDefinition, Pose } from '../../src/index.js';
 import type { VariantPresets, VariantSlots } from '../../src/variants.js';
 
 import { avatarHair } from './avatar-hair.js';
@@ -55,6 +56,12 @@ export interface HumanoidKind {
   readonly pants?: string | false;
   /** The shoe color, or false for none (default brown). */
   readonly shoes?: string | false;
+  /**
+   * A two-hand hold (a tray, a basket): the left elbow and wrist of the rest pose (the right arm
+   * mirrors them). The fist turns with the forearm. The arms keep this pose in every clip and move
+   * only with the chest, so an item rigid on `hand.R` stays between the fists.
+   */
+  readonly hold?: { readonly elbow: V3; readonly wrist: V3 };
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -113,14 +120,37 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
 
       // ------------------------------------------------------------------ skeleton (the rogue's)
       const SHOULDER = [0.13, 0.385, 0] as const;
-      const ELBOW = [0.18, 0.332, 0.012] as const;
-      const WRIST = [0.205, 0.238, 0.03] as const;
+      const ELBOW0: V3 = [0.18, 0.332, 0.012];
+      const WRIST0: V3 = [0.205, 0.238, 0.03];
+      const ELBOW = kind.hold?.elbow ?? ELBOW0;
+      const WRIST = kind.hold?.wrist ?? WRIST0;
+      // A hold turns the hand by the rotation that takes the hanging forearm to the held one.
+      const handTurn = new THREE.Quaternion().setFromUnitVectors(
+        new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST0), new THREE.Vector3(...ELBOW0)).normalize(),
+        new THREE.Vector3().subVectors(new THREE.Vector3(...WRIST), new THREE.Vector3(...ELBOW)).normalize(),
+      );
+      const handEuler = new THREE.Euler().setFromQuaternion(handTurn, 'ZYX');
+      const deg = 180 / Math.PI;
+      const toHand = (s: sdf.Shape) =>
+        kind.hold
+          ? s
+              .at(-WRIST0[0], -WRIST0[1], -WRIST0[2])
+              .rotateX(handEuler.x * deg)
+              .rotateY(handEuler.y * deg)
+              .rotateZ(handEuler.z * deg)
+              .at(...WRIST)
+          : s;
+      const toHandPoint = (p: V3): V3 => {
+        const v = new THREE.Vector3(p[0] - WRIST0[0], p[1] - WRIST0[1], p[2] - WRIST0[2]).applyQuaternion(handTurn);
+        return [WRIST[0] + v.x, WRIST[1] + v.y, WRIST[2] + v.z];
+      };
       const HIP = [0.068, 0.195, 0] as const;
       const ANKLE = [0.098, 0.07, 0] as const;
       const KNEE = [0.083, 0.1325, 0] as const; // the knee: splits the leg (shin.L takes the weight below it)
       const mx = (p: readonly [number, number, number]) => [-p[0], p[1], p[2]] as const;
       // The grip center in each fist: the anchor of the mainhand (knife.R) and offhand (knife.L) slots.
-      const GRIP = [0.232, 0.172, 0.022] as const;
+      const GRIP0: V3 = [0.232, 0.172, 0.022];
+      const GRIP = kind.hold ? toHandPoint(GRIP0) : GRIP0;
       k.skeleton({
         hips: { at: [0, 0.2, 0] },
         spine: { parent: 'hips', at: [0, 0.26, 0] },
@@ -171,14 +201,14 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         sdf.cone(SHOULDER, ELBOW, 0.04, 0.036).bone('upperarm.L'),
         sdf.cone(ELBOW, WRIST, 0.036, 0.032).bone('forearm.L'),
       );
-      const fist = sdf
-        .smoothUnion(
+      const fist = toHand(
+        sdf.smoothUnion(
           0.018,
           sdf.ellipsoid([0.038, 0.043, 0.044]).at(0.212, 0.2, 0.034), // palm and closed fingers
           sdf.capsule([0.196, 0.18, 0.06], [0.2, 0.2, 0.072], 0.017), // finger roll at the front
           sdf.cone([0.225, 0.215, 0.055], [0.206, 0.205, 0.078], 0.016, 0.013), // thumb over the fingers
-        )
-        .bone('hand.L');
+        ),
+      ).bone('hand.L');
       const arms = pair(sdf.smoothUnion(0.02, arm, fist));
 
       // The hero torso (the chest-armor contract at 1x). Three tagged bands set the skin weights; the
@@ -318,12 +348,22 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       kind.extra?.(k, shape);
 
       // ------------------------------------------------------------------ animation
+      // A hold keeps the arms in the rest pose (on the held item) in every clip, and the hands take
+      // back the lean and roll of the spine and the chest, so the held item stays level.
+      const ARM_BONE = /^(upperarm|forearm|hand)\.[LR]$/;
+      const holdPose = (pose: Pose): Pose => {
+        const tilt = (axis: 0 | 2) => -((pose.spine?.rotate?.[axis] ?? 0) + (pose.chest?.rotate?.[axis] ?? 0));
+        const level = { rotate: [tilt(0), 0, tilt(2)] as const };
+        return { ...Object.fromEntries(Object.entries(pose).filter(([b]) => !ARM_BONE.test(b))), 'hand.L': level, 'hand.R': level };
+      };
+      const animation = (name: string, def: AnimationDef) =>
+        k.animation(name, kind.hold ? { ...def, pose: (t, p) => holdPose(def.pose(t, p)) } : def);
       const { wave, bump, keys, reach, orient } = motion;
       const LEG = 0.19;
       const rad = Math.PI / 180;
       type V3 = readonly [number, number, number];
 
-      k.animation('idle', {
+      animation('idle', {
         duration: 2.4,
         pose: (_t, p) => ({
           hips: { move: [0, -0.003 * bump(p), 0] },
@@ -374,8 +414,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           };
         },
       });
-      k.animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006, 6));
-      k.animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03, 22));
+      animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006, 6));
+      animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03, 22));
 
       // One arm from a wrist target and an elbow pole, both in the chest's rest frame. Keys are
       // written for the right arm (x < 0); `m` mirrors them for the left arm.
@@ -428,7 +468,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // The mainhand (right) fist winds out and back at the side, the torso coils to the right, then
       // unwinds and sweeps the fist across the front at chest height to the left, and returns. A held
       // weapon on `knife.R` follows the fist; the path stays in front of the body and below the chin.
-      k.animation('attack', {
+      animation('attack', {
         duration: 0.7,
         loop: false,
         pose: (_t, p) => {
@@ -487,7 +527,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
 
       // ------------------------------------------------------------------ hit: a blow from the front (the rogue's)
       const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
-      k.animation('hit', {
+      animation('hit', {
         duration: 0.4,
         loop: false,
         pose: (_t, p) => {
@@ -523,7 +563,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // A loose crouch with the knees bent, the back rounded, the head down, and the arms hanging
       // forward; slow deep breaths lift the chest and the shoulders. Loops.
       const restLegs = crouch(26);
-      k.animation('rest', {
+      animation('rest', {
         duration: 3.2,
         pose: (_t, p) => {
           const breath = bump(p);
@@ -549,7 +589,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // A dip, a hop with both fists pumped up beside the cheeks, a landing that gives in the knees.
       // Loops. The wrists stay well outside the cheeks (x 0.31), so held items stay clear of the head.
       const UP: V3 = [-0.31, 0.5, 0.05];
-      k.animation('cheer', {
+      animation('cheer', {
         duration: 0.8,
         pose: (_t, p) => {
           const bend = keys(p, [[0, 0.6], [0.18, 1], [0.32, 0], [0.7, 0], [0.84, 0.8], [1, 0.6]] as const, 'spline');
@@ -579,7 +619,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // a lean (the release), hold a beat, and return. A wand or a focus on either hand points ahead.
       const GATHER: V3 = [-0.11, 0.31, 0.09];
       const PUSH: V3 = [-0.08, 0.37, 0.155];
-      k.animation('cast', {
+      animation('cast', {
         duration: 0.9,
         loop: false,
         pose: (_t, p) => {

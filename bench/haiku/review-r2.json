@@ -1,0 +1,76 @@
+{
+  "arms": {
+    "s1": {
+      "rating": 6.5,
+      "defects": [
+        "Broken clip: in cheer the two hands leave the tray and the tray stays in the air at the waist. The tray is not held on the hand bones. The cap of 6.5 applies.",
+        "The lower body below the tray is weak: the apron skirt panel stops near the hips (the brief asks for knee length), and the cream socks and dark trousers do not show at 128 px. The tray is a box with a raised rim, not the flat peel of the brief.",
+        "The sesame seeds on the left loaf are almost invisible. The hair at the back of the head is a flat brown strip that reads as a headband."
+      ],
+      "fixability": "small",
+      "note": "The best static model of the set: the only puffy chef hat with a top wider than the band, a low band with a curl at the front, and the only wide open smile with rosy cheeks. The wide bib apron and the crossed back straps read well. Without the clip defect, the static model is about 7.1. To reach 7.0, keep both hands on the tray in cheer, cast, attack, and hit, extend the apron skirt, and add sesame seeds."
+    },
+    "f4": {
+      "rating": 6.3,
+      "defects": [
+        "Broken clip: in cheer the hands leave the tray and the tray stays in the air at the waist. The cap of 6.5 applies.",
+        "The face keeps the base mouth with two small fangs, not a wide open smile. A tall bald forehead shows between the hat band and the brows, and the back of the head is bald skin.",
+        "The hat is a tall plain cylinder with a round top and no puffy overhang, so it reads as a tall cap more than a chef hat. The hair tuft is one round brown ball on the bald forehead."
+      ],
+      "fixability": "medium",
+      "note": "The tray and the large sesame loaves read best of all arms at 128 px. The bib, the skirt panel, and the cream socks all show. The hat shape, the hat height, the hair, the mouth, and the tray hold all need work."
+    },
+    "f1": {
+      "rating": 6.1,
+      "defects": [
+        "Broken clip: in cheer the hands leave the tray and the tray stays in the air at the waist. The cap of 6.5 applies.",
+        "The hat is too short and too narrow: the mushroom top is narrower than the head and sits on a thick rolled band, so it reads as a beret. A tall bald forehead and a bald back of the head show under it.",
+        "The face keeps the base mouth with fangs, not a wide open smile. The hair tuft is three small brown balls on the band that read as beads."
+      ],
+      "fixability": "medium",
+      "note": "The apron bib, the skirt panel, the peel, and the sesame loaves are correct. The hat needs a full rebuild at about twice the size, and the hair, the mouth, and the tray hold need work."
+    },
+    "f6": {
+      "rating": 5.8,
+      "defects": [
+        "Broken clip: in cheer the hands leave the tray and the tray stays in the air at the waist. The cap of 6.5 applies.",
+        "The hat has a tall straight band like a sailor cap and a lopsided dome top. The hair tuft is a large dark brown wedge on the band that reads as a leaf, not hair.",
+        "The peel is too wide: it extends past the body on the two sides and shows in the back view. The two loaves are small and far apart at the ends. The scalp is bald and the mouth is the base mouth with fangs."
+      ],
+      "fixability": "medium",
+      "note": "The bib apron reads well. The hat, the hair, the tray width, the loaf size, the mouth, and the tray hold all need work."
+    },
+    "f3": {
+      "rating": 5.3,
+      "defects": [
+        "The apron is broken: there is no bib, the two straps are thin rigid sticks bound to the hands (they rise with the arms in cheer), and the skirt panel is a flat stiff board below the tray.",
+        "The loaves are too small to read at 128 px, and the tray stays in the air at the waist in cheer. The cap of 6.5 applies.",
+        "The scalp is bald under the hat, and the face keeps the base mouth with fangs, not a wide open smile."
+      ],
+      "fixability": "large",
+      "note": "The hat has a good tall mushroom silhouette, the second best after s1. But the apron needs a full rebuild, the loaves need to grow, and the tray hold needs work."
+    },
+    "f2": {
+      "rating": 4.8,
+      "defects": [
+        "Broken clip: the tray is bound to one hand. In cheer it turns up to vertical and goes through the face in every frame. This breaks the 0.04 m face clearance of the brief.",
+        "The hat is a plain dome like a shower cap with no chef hat puff. A brown band with ragged edges shows under it at the sides and the back.",
+        "The tray hides the bib, so the apron reads only as two straps and a skirt. The slatted tray and the two loaves touch at the center. The mouth is the base mouth with fangs."
+      ],
+      "fixability": "medium",
+      "note": "The static front view is acceptable, but the cheer clip is a severe failure. The tray binding, the hat, and the hair band need work."
+    },
+    "f5": {
+      "rating": 4.3,
+      "defects": [
+        "Broken clip: the tray is bound to one hand. In cheer it turns up to vertical and goes through the face in every frame.",
+        "The hat is a low round dome with no band, so it reads as a helmet or a bowl, not a chef hat. The hair tuft is a large brown blob on the hat, not on the forehead, and it reads as a stain.",
+        "The tray hides the bib. The skirt panel has a dotted seam that reads as noise at 128 px. The scalp is bald and the mouth is the base mouth with fangs."
+      ],
+      "fixability": "large",
+      "note": "The silhouette fails the first check: the hat does not read as a chef hat. The hat, the hair, the tray binding, and the apron need a rebuild."
+    }
+  },
+  "best_base": "s1",
+  "why": "s1 is the only arm with the correct puffy chef hat silhouette, a low hat band, and the wide open smile of the brief. Its bib apron and tray read well at 128 px. Its main defect is the tray that stays in the air when the hands rise in cheer, and f1, f4, f6, and f3 have the same defect. That fix plus a longer apron skirt and visible sesame seeds brings it to the bar. Every other arm also needs a new hat, a new mouth, or a new apron."
+}
