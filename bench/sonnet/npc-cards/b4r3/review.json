@@ -1,0 +1,91 @@
+{
+  "gravedigger": {
+    "overall": 7.5,
+    "scores": [4, 4, 3.5, 4, 3.5, 4, 4, 4, 4, 4, 3],
+    "summary": "The model is the old gravedigger with a flat cap, a gray beard, a green scarf, a lantern, and a spade. It matches the mockup with small differences in coat value, cap size, and mouth.",
+    "strengths": [
+      "The gray beard, the pink nose, and the bushy brows match the mockup and read at 128 px.",
+      "The lantern and the spade are in the correct hands and read in every sprite direction.",
+      "The green scarf, the brown sleeve patches, the belt, and the brown boots follow the mockup."
+    ],
+    "issues": [
+      "The coat is a light, clean gray. The mockup coat is a dark, weathered gray-brown. Make the coat darker and add wear to it.",
+      "The flat cap is too large and too puffy for the head. Make the cap smaller and flatter, as in the mockup.",
+      "The beard hides the mouth, so the gentle smile of the mockup does not show. Add a small smile line under the mustache.",
+      "The lantern glass is pale. The mockup lantern has a warm yellow glow. Make the lantern glass brighter and warmer.",
+      "In walk, the body and the arms move very little. This is a known base limit."
+    ],
+    "next": "Make the coat a darker, weathered gray-brown so that the value plan and the mood match the mockup."
+  },
+  "jeweler": {
+    "overall": 6.5,
+    "scores": [3, 3, 3, 3.5, 4, 4, 4, 4, 4, 3.5, 3],
+    "summary": "The model is the jeweler with a gold monocle, a purple vest, a magnifier with a blue gem, and a red ring box. The props match the mockup, but the mouth and the hair are different.",
+    "strengths": [
+      "The gold monocle, the magnifier with the blue gem, and the red ring box match the mockup and read at 128 px.",
+      "The purple vest with the gold chains, the white shirt, the gold buckle, and the black shoes follow the mockup palette.",
+      "The props are in the correct hands and the curled mustache matches the mockup."
+    ],
+    "issues": [
+      "The mouth is open and red, with white pointed teeth. It reads as a fanged grin. The mockup has a closed, friendly smile. Change the mouth to a closed smile under the mustache.",
+      "The hair is a tall block with deep ridges. It reads as a knit cap or a helmet in every view and in the sprites. Make the hair lower and smoother, swept back, as in the mockup.",
+      "The beard comes to a point under the chin. The mockup beard is short and full along the jaw. Make the beard shorter and rounder.",
+      "In walk, the arms stay still. This is a known base limit."
+    ],
+    "next": "Change the mouth to a closed, friendly smile under the mustache."
+  },
+  "lumberjack": {
+    "overall": 8.0,
+    "scores": [4.5, 4.5, 4, 4.5, 4.5, 4, 4, 4.5, 4, 4.5, 3],
+    "summary": "The model is the lumberjack with a knit cap, a brown beard, a red plaid shirt, suspenders, and an axe across the shoulders. It is very close to the mockup.",
+    "strengths": [
+      "The pose matches the mockup: the fists rest on the hips and the axe lies across the shoulders behind the neck.",
+      "The red and black plaid, the brown suspenders, the gray knit cap, and the brown beard match the mockup palette.",
+      "The axe, the cap, and the red shirt read in every sprite direction."
+    ],
+    "issues": [
+      "The body is less broad than the burly mockup. Make the chest and the shoulders wider to show the big, strong build.",
+      "The mouth is wide open. The mockup smile shows less of the mouth. Close the mouth a little.",
+      "The belt buckle is silver. The mockup buckle is brass. Change the buckle color to brass.",
+      "In walk, the arms stay on the hips and the body moves little."
+    ],
+    "next": "Make the chest and the shoulders wider so that the big, strong build of the mockup reads."
+  },
+  "mason": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4, 4, 3],
+    "summary": "The model is the young mason with a tan flat cap, curly ginger hair, freckles, an apron, a stone block, and a trowel. It is the same character, but the smile and the trowel are weaker than in the mockup.",
+    "strengths": [
+      "The tan flat cap, the freckles, the tan apron with brown straps, and the gray boots match the mockup.",
+      "The stone block has a rough stone surface and reads at 128 px.",
+      "The cap and the apron make the role clear in every sprite direction."
+    ],
+    "issues": [
+      "The mouth is a small, calm smile. The mockup has a wide, cheerful smile. Make the smile wider and lift the corners of the mouth.",
+      "The trowel is a small blade that the fist almost hides. Make the trowel blade larger and show the handle, as in the mockup.",
+      "The shirt is a bright sky blue with no collar. The mockup shirt is a muted blue-gray with a collar and rolled sleeves. Make the shirt color less saturated and add a collar.",
+      "The hair curls are separate round lumps in a band under the cap. Blend the curls into a softer mass.",
+      "At the back, the shirt hangs below the apron belt like a long skirt. Shorten the shirt at the back.",
+      "In walk, the arms stay still. This is a known base limit."
+    ],
+    "next": "Make the smile wider so that the cheerful expression of the mockup reads."
+  },
+  "magistrate": {
+    "overall": 8.0,
+    "scores": [4.5, 4.5, 4, 4.5, 4, 4, 4, 4, 4, 4.5, 3],
+    "summary": "The model is the magistrate with a white curled wig, round black glasses, a black robe, a white collar band, a gavel, and a law book. It is very close to the mockup.",
+    "strengths": [
+      "The white curled wig, the round black glasses, and the orange brows match the mockup and read at 128 px.",
+      "The black robe, the red vest, the red collar, and the white collar band follow the mockup palette.",
+      "The gavel and the law book are in the correct hands."
+    ],
+    "issues": [
+      "The white collar band is a small lump. The mockup band has layered folds that hang down the chest. Make the collar band longer, with folds.",
+      "The gavel is small and hard to see beside the robe. Make the gavel head larger.",
+      "The robe is glossy black. The mockup robe is a matte dark gray with wide lapels. Make the robe less glossy and add lapels.",
+      "The wig is narrower at the sides than in the mockup. Add curls at the sides of the wig.",
+      "In walk, the arms stay still and the body moves little. This is a known base limit."
+    ],
+    "next": "Make the collar band longer, with layered folds, as in the mockup."
+  }
+}

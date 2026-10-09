@@ -9284,71 +9284,69 @@
     "reviewedAt": "2026-10-09T20:55:49.000Z"
   },
   "gravedigger": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
+      "mockup": 4,
       "silhouette": 4,
-      "proportion": 4,
-      "shape": 3.5,
+      "proportion": 3.5,
+      "shape": 4,
       "color": 3.5,
-      "materials": 3.5,
-      "detail": 3.5,
+      "materials": 4,
+      "detail": 4,
       "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "A kind old cemetery keeper with a flat cap, a green scarf, a muddy gray coat, a lantern, and a spade. The character is the same, but the short beard and the tall spade are clear differences.",
+    "summary": "The model is the old gravedigger with a flat cap, a gray beard, a green scarf, a lantern, and a spade. It matches the mockup with small differences in coat value, cap size, and mouth.",
     "strengths": [
-      "The flat cap, the green scarf, the mud stains, and the pink nose match the mockup.",
-      "The face is gentle and friendly. The character is not scary.",
-      "The lantern and the spade read in the sprites from most directions."
+      "The gray beard, the pink nose, and the bushy brows match the mockup and read at 128 px.",
+      "The lantern and the spade are in the correct hands and read in every sprite direction.",
+      "The green scarf, the brown sleeve patches, the belt, and the brown boots follow the mockup."
     ],
     "issues": [
-      "The beard covers only the chin. Make it a long, full beard that falls onto the chest and covers the top of the scarf, as in the mockup.",
-      "The spade handle goes above the cap. Shorten it so that the top is at shoulder height, and make it a plain wooden shaft without knobs.",
-      "The lantern glow is weak. Make the glass a bright yellow with more emission.",
-      "The coat is short and looks like a skirt. Make it a longer open coat with lapels, pockets, and a visible belt buckle.",
-      "The mud stains on the boots and the coat look like camouflage. Make them fewer and darker.",
-      "The walk moves only the legs. The arms and the tools stay fixed."
+      "The coat is a light, clean gray. The mockup coat is a dark, weathered gray-brown. Make the coat darker and add wear to it.",
+      "The flat cap is too large and too puffy for the head. Make the cap smaller and flatter, as in the mockup.",
+      "The beard hides the mouth, so the gentle smile of the mockup does not show. Add a small smile line under the mustache.",
+      "The lantern glass is pale. The mockup lantern has a warm yellow glow. Make the lantern glass brighter and warmer.",
+      "In walk, the body and the arms move very little. This is a known base limit."
     ],
-    "next": "Make the beard long and full so that it falls onto the chest, as in the mockup.",
+    "next": "Make the coat a darker, weathered gray-brown so that the value plan and the mood match the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:55:49.000Z"
+    "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "jeweler": {
     "overall": 6.5,
     "group": "NPCs",
     "scores": {
       "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
+      "silhouette": 3,
+      "proportion": 3,
       "shape": 3.5,
       "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3.5,
-      "gameReady": 4.5,
+      "technical": 4,
+      "gameReady": 4,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A jeweler with a monocle, a black beard, a purple vest, a gem on a handle, and a ring box. The props and the clothes match, but the face and the hair are noticeably off.",
+    "summary": "The model is the jeweler with a gold monocle, a purple vest, a magnifier with a blue gem, and a red ring box. The props match the mockup, but the mouth and the hair are different.",
     "strengths": [
-      "The purple vest with gold chains, the white sleeves, the gold buckle, and the glossy black shoes match the mockup.",
-      "The gem on the gold handle, the red ring box with the ring, and the gold monocle read well.",
-      "The materials are clear: gold metal, faceted gem, velvet box, and glossy shoes."
+      "The gold monocle, the magnifier with the blue gem, and the red ring box match the mockup and read at 128 px.",
+      "The purple vest with the gold chains, the white shirt, the gold buckle, and the black shoes follow the mockup palette.",
+      "The props are in the correct hands and the curled mustache matches the mockup."
     ],
     "issues": [
-      "The mouth is not visible. The mockup shows a big open smile with teeth under the curled mustache. Add the open smile.",
-      "The hair is a tall block with ridges, like a helmet. Make it a swept-back pompadour with volume at the sides, as in the mockup.",
-      "From the side, the face skin has a hard straight edge against the beard and the hair. Blend the sideburn and the beard into the face.",
-      "The nose is small. Make it a large round pink nose, as in the mockup.",
-      "The walk moves only the legs. The arms and the props stay fixed."
+      "The mouth is open and red, with white pointed teeth. It reads as a fanged grin. The mockup has a closed, friendly smile. Change the mouth to a closed smile under the mustache.",
+      "The hair is a tall block with deep ridges. It reads as a knit cap or a helmet in every view and in the sprites. Make the hair lower and smoother, swept back, as in the mockup.",
+      "The beard comes to a point under the chin. The mockup beard is short and full along the jaw. Make the beard shorter and rounder.",
+      "In walk, the arms stay still. This is a known base limit."
     ],
-    "next": "Add the open smile with teeth under the mustache so that the expression matches the mockup.",
+    "next": "Change the mouth to a closed, friendly smile under the mustache.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:55:49.000Z"
+    "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "librarian": {
     "overall": 7.5,
@@ -9384,71 +9382,69 @@
     "reviewedAt": "2026-10-09T20:55:49.000Z"
   },
   "lumberjack": {
-    "overall": 7.0,
+    "overall": 8.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 4,
-      "color": 3.5,
-      "materials": 3.5,
-      "detail": 3.5,
-      "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 4,
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4.5,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4.5,
+      "gameReady": 4,
+      "sprite": 4.5,
       "motion": 3
     },
-    "summary": "A bearded lumberjack in a gray beanie and a plaid shirt with an axe on the shoulder and hands on the hips. The character is the same, but the sleeves and the arms are clearly different from the mockup.",
+    "summary": "The model is the lumberjack with a knit cap, a brown beard, a red plaid shirt, suspenders, and an axe across the shoulders. It is very close to the mockup.",
     "strengths": [
-      "The gray knit beanie, the bushy brown beard, and the happy smile match the mockup.",
-      "The axe on the shoulder and the hands on the hips give a strong silhouette in the front view and in the sprites.",
-      "The red and black plaid, the suspenders, and the belt buckle read clearly."
+      "The pose matches the mockup: the fists rest on the hips and the axe lies across the shoulders behind the neck.",
+      "The red and black plaid, the brown suspenders, the gray knit cap, and the brown beard match the mockup palette.",
+      "The axe, the cap, and the red shirt read in every sprite direction."
     ],
     "issues": [
-      "The sleeves are plain red and go down to the fists. Make short plaid sleeves rolled up above bare, strong forearms, as in the mockup.",
-      "The arms are not muscular enough. Make the forearms and the upper arms larger to show the defining strength.",
-      "The trousers look like a short skirt. Make them gray trousers with visible legs down to the boot cuffs.",
-      "The nose is small. Make it a large round pink nose, as in the mockup.",
-      "The axe handle goes down across the back. Make it go horizontally behind the neck, as in the mockup."
+      "The body is less broad than the burly mockup. Make the chest and the shoulders wider to show the big, strong build.",
+      "The mouth is wide open. The mockup smile shows less of the mouth. Close the mouth a little.",
+      "The belt buckle is silver. The mockup buckle is brass. Change the buckle color to brass.",
+      "In walk, the arms stay on the hips and the body moves little."
     ],
-    "next": "Give the shirt short plaid rolled sleeves and show large bare forearms.",
+    "next": "Make the chest and the shoulders wider so that the big, strong build of the mockup reads.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:55:49.000Z"
+    "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "magistrate": {
-    "overall": 6.5,
+    "overall": 8.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3,
-      "color": 3.5,
-      "materials": 3.5,
-      "detail": 3.5,
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4.5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
       "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
+      "gameReady": 4,
+      "sprite": 4.5,
       "motion": 3
     },
-    "summary": "A judge with white hair, round black glasses, a black robe, a gavel, and a book. The identity reads, but the hair and the face are noticeably off.",
+    "summary": "The model is the magistrate with a white curled wig, round black glasses, a black robe, a white collar band, a gavel, and a law book. It is very close to the mockup.",
     "strengths": [
-      "The round black glasses, the white jabot, the black robe, the gavel, and the book make the role clear.",
-      "The character reads in the sprites from every direction.",
-      "The robe, the book, and the gavel have clean shapes with no poke-through."
+      "The white curled wig, the round black glasses, and the orange brows match the mockup and read at 128 px.",
+      "The black robe, the red vest, the red collar, and the white collar band follow the mockup palette.",
+      "The gavel and the law book are in the correct hands."
     ],
     "issues": [
-      "The mouth is not visible. The mockup shows a gentle closed smile. Add the smile.",
-      "The hair locks point out to the sides like horns. Make round, soft waves that sit close to the head, as in the mockup.",
-      "The robe has a red sash at the waist. Remove the sash and show a red waistcoat under an open black robe.",
-      "The red collar is small. Make the red hood collar large around the neck, as in the mockup.",
-      "The fists are white. Make them skin color with white cuffs.",
-      "The eyebrows are faint. Make them orange and thick, as in the mockup."
+      "The white collar band is a small lump. The mockup band has layered folds that hang down the chest. Make the collar band longer, with folds.",
+      "The gavel is small and hard to see beside the robe. Make the gavel head larger.",
+      "The robe is glossy black. The mockup robe is a matte dark gray with wide lapels. Make the robe less glossy and add lapels.",
+      "The wig is narrower at the sides than in the mockup. Add curls at the sides of the wig.",
+      "In walk, the arms stay still and the body moves little. This is a known base limit."
     ],
-    "next": "Add the gentle smile and make the hair round soft waves that sit close to the head.",
+    "next": "Make the collar band longer, with layered folds, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:55:49.000Z"
+    "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "mason": {
     "overall": 7.0,
@@ -9456,32 +9452,33 @@
     "scores": {
       "mockup": 3.5,
       "silhouette": 4,
-      "proportion": 4,
+      "proportion": 3.5,
       "shape": 4,
       "color": 3.5,
       "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "A young mason with a tan cap, freckles, a blue shirt, a tan apron, a trowel, and a stone block. The character is the same, but the trowel and some colors are clearly different.",
+    "summary": "The model is the young mason with a tan flat cap, curly ginger hair, freckles, an apron, a stone block, and a trowel. It is the same character, but the smile and the trowel are weaker than in the mockup.",
     "strengths": [
-      "The tan cap, the freckles, and the friendly smile match the mockup.",
-      "The stone block has a good rough texture and reads clearly in the sprites.",
-      "The apron with brown straps and belt, the tan trousers, and the gray boots match the mockup."
+      "The tan flat cap, the freckles, the tan apron with brown straps, and the gray boots match the mockup.",
+      "The stone block has a rough stone surface and reads at 128 px.",
+      "The cap and the apron make the role clear in every sprite direction."
     ],
     "issues": [
-      "The trowel is a small diamond blade. Make it a large flat trowel blade, larger than the hand, as in the mockup.",
-      "The hair is orange red. Make it a golden caramel color with curls, as in the mockup.",
-      "The sleeves go down to the fists. Roll the sleeves up above bare forearms, as in the mockup.",
-      "The nose is small. Make it a round pink nose, as in the mockup.",
-      "The hair strands under the cap look like they melt down at the back. Make clean curls."
+      "The mouth is a small, calm smile. The mockup has a wide, cheerful smile. Make the smile wider and lift the corners of the mouth.",
+      "The trowel is a small blade that the fist almost hides. Make the trowel blade larger and show the handle, as in the mockup.",
+      "The shirt is a bright sky blue with no collar. The mockup shirt is a muted blue-gray with a collar and rolled sleeves. Make the shirt color less saturated and add a collar.",
+      "The hair curls are separate round lumps in a band under the cap. Blend the curls into a softer mass.",
+      "At the back, the shirt hangs below the apron belt like a long skirt. Shorten the shirt at the back.",
+      "In walk, the arms stay still. This is a known base limit."
     ],
-    "next": "Make the trowel a large flat blade so that the role reads at 128 px.",
+    "next": "Make the smile wider so that the cheerful expression of the mockup reads.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:55:49.000Z"
+    "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "midwife": {
     "overall": 7.5,

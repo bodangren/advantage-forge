@@ -53,7 +53,7 @@ viewer's left).
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | done: apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer and gardener accepted at 7.5 (review 3); carpenter and fisher on the follow-up list |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
-| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); third pass running for gravedigger, jeweler, lumberjack, magistrate, mason |
+| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); third pass running for miller, miner, musician, orphan, peddler, refugee |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); review 1 for the others: 6.5, 7.0, 7.0, 7.0, 6.5, 7.0, 7.0; second pass running |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | building |
@@ -97,3 +97,5 @@ strip (the card default), because the shared idle clip has little motion (motion
 | courier | 6.5, 7.0, 7.0 | the hair is a ring of tight curls (the mockup has wavy locks); small letters and pack; the feather has saw teeth |
 | elder | 6.0, 6.5, 7.0 | the hood is a big round ball (the mockup has a peak); narrow sleeves; sandal straps go through the sole |
 | forager | 6.5, 7.0, 7.0 | a sharp V crease between the eyes reads as a frown; the mushroom, basket, and hood are small |
+| jeweler | 6.0, 6.5, 6.5 | the open red mouth with white pointed teeth reads as a fanged grin (the mockup smile is closed); the tall ridged hair reads as a cap |
+| mason | 6.5, 7.0, 7.0 | the smile is small and calm (the mockup smile is wide); the trowel is very small |
