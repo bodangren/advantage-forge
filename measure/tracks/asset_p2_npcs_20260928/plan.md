@@ -52,15 +52,20 @@ viewer's left).
 | 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer 6.5, 6.5, carpenter 7.0, 7.0, fisher 7.0, 7.0, gardener 6.5, 7.0: third pass running |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
-| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | building (5 of 8 built) |
-| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | building (glassblower built) |
-| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | briefs and mockups ready |
-| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | briefs and mockups ready |
+| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | butcher accepted at 7.5 (review 2); review 1: 7.0, 6.5, 6.0, 6.0, 7.0, 6.5, 6.0, 6.5; review 2: 7.0, 7.0, 6.5, 7.5, 7.0, 7.0, 6.5, 7.0; third pass running |
+| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | built except the midwife; review 1 after the midwife |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | building (musician built) |
+| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | building (beggar, scholar, scribe, shepherd started) |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | briefs and mockups ready |
 
 Still to write: wilderness (14 without a source), court and faction (22), and the fantasy peoples
 (9; some may need another body). `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`, and
 `scout` have sources from earlier tracks.
+
+Clip clearance (2026-10-10): `./forge check` passes at a contact limit of 0.3 cm, but in the shared
+attack clip the free arm swings held items close to the head (armorer shield 0.0 cm before its arm
+was posed, mason trowel 0.1 cm, gravedigger cuff 0.8 cm, musician bow 0.8 cm, jeweler gem 1.7 cm).
+A posed arm (`pose`) keeps the item still in every clip and is the fix that worked (armorer).
 
 Review evidence: `bench/sonnet/npc-cards/<batch>/review.json` (cards are local PNGs, not committed).
 Reviewers see review cards with the idle strip for batches 1 and 2; later batches show the walk

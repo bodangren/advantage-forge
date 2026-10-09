@@ -1,0 +1,153 @@
+{
+  "acolyte": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 4, 3.5, 4.5, 4, 3.5],
+    "summary": "A young acolyte in a cream robe with a gold scapular, a rope belt, sandals, and a candle dish. The outfit and the prop match the mockup, but the hair shape is clearly different.",
+    "strengths": [
+      "The gold scapular panel with the sun emblem, the brown belt, and the sandals match the mockup.",
+      "The candle dish with the lit candle is at the correct hand and height.",
+      "The face reads well: closed smile, soft brows, ears, and blush.",
+      "The walk keeps the candle arm steady and swings the free arm."
+    ],
+    "issues": [
+      "The hair has upright spikes on the crown that look like small horns. The mockup has a soft fringe that sweeps to one side with loose curls. Remove the spikes and add a side-swept wave over the forehead.",
+      "The fringe is a flat straight band across the forehead. Give it a side part and one curl, as in the mockup.",
+      "The collar is low and shows a gray rectangular notch at the throat. Add the rolled high collar of the mockup and close the notch.",
+      "The robe ends at mid-shin and has little flare. Make the robe longer and wider at the hem.",
+      "The back of the hair ends in drip-shaped lobes. Smooth these lobes into soft locks."
+    ],
+    "next": "Replace the crown spikes with a soft side-swept fringe and curls."
+  },
+  "banker": {
+    "overall": 7.0,
+    "scores": [4, 3.5, 4, 4, 4, 4, 3.5, 3, 4.5, 4, 3.5],
+    "summary": "A banker with round black glasses, a bow tie, a green vest with a gold chain and badge, and a ledger. The costume matches the mockup, but the glasses cut into the face and the quill is weak.",
+    "strengths": [
+      "The round black glasses, bow tie, gold chain, gold badge, and gold buttons match the mockup.",
+      "The green vest over the white shirt gives a clear value plan with gold accents.",
+      "The black pompadour hair and heavy brows read well at 128 px.",
+      "The ledger has gold corner guards and page edges from the side."
+    ],
+    "issues": [
+      "The glasses rims and temple arms cut into the face. In the three-quarter view the near rim breaks at the cheek and the temple shows as broken dashes. Move the glasses forward and make the temples follow the side of the head above the skin.",
+      "The quill is a small white lump in the fist. Make the quill larger, with a clear feather vane and a dark nib.",
+      "The ledger reads as a flat brown case from the front. Show the cream page edges and a spine at the front so it reads as a book.",
+      "The nose is small. The mockup has a large round nose. Make the nose larger.",
+      "The gray trousers are very short. Make the legs a little longer so that the trousers show under the vest."
+    ],
+    "next": "Fit the glasses so that no rim or temple passes into the face."
+  },
+  "beekeeper": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 3.5, 3, 3, 2.5, 4, 3.5, 3],
+    "summary": "A blond beekeeper in a pale suit with a wide hat, a side veil, a bee, yellow gloves, and a honey pot. The identity reads, but the veil has visible defects and the gloves and boots differ from the mockup.",
+    "strengths": [
+      "The wide hat with the band and the small bee on top match the mockup.",
+      "The face reads well: blond fringe, side locks, large eyes, and a closed smile.",
+      "The honey pot with the dipper and honey drips gives a clear prop.",
+      "The pose with the pot raised to one side matches the mockup."
+    ],
+    "issues": [
+      "At the back, the veil is an opaque cream panel and the hair pokes through it with streaky white edges. Make the back veil the same thin mesh as the sides and keep the hair inside it.",
+      "In the walk side view, a dark gray patch shows on the lower leg from t=0.56 to t=0.79. Close the gap in the suit leg at the knee bend.",
+      "The ear shows through the side veil as a pale disc. Cover the ear with hair or make it read as skin through the veil.",
+      "The gloves are large yellow blocks. Make them smaller gauntlets with a cuff, as in the mockup.",
+      "The suit has strong diagonal streaks in its shading. Reduce the wrinkle noise so that the suit reads as soft cloth.",
+      "The boots are low shoes. Make tall brown boots, as in the mockup.",
+      "The honey pot sits beside the glove. Put the fist under the pot so that it reads as held."
+    ],
+    "next": "Make the back veil a thin mesh and keep the hair inside it."
+  },
+  "butcher": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A market butcher with a tan cap and red brim, a handlebar mustache, a red and white striped apron, and a string of sausages. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The tan cap with the red band and brim and the black handlebar mustache match the mockup and read at 128 px.",
+      "The red and white striped apron with red straps gives a strong focal pattern.",
+      "The raised sausage hand and the fist on the hip match the mockup pose.",
+      "The silhouette reads from every view, and the walk plants the feet."
+    ],
+    "issues": [
+      "The sausage string is short: a few links in one loop. The mockup has a long string of many small links in two loops. Make the string longer with more, smaller links.",
+      "The shirt has long full sleeves. The mockup has short rolled sleeves that show the forearms. Roll the sleeves up.",
+      "No mouth shows under the mustache. Add the small closed smile of the mockup.",
+      "The cap is a tall round bun and sits straight. The mockup cap is flatter and tilts a little. Lower the crown and tilt it.",
+      "The hair at the side shows small loose black blobs near the ear. Merge them into the hair mass."
+    ],
+    "next": "Make the sausage string longer with more, smaller links."
+  },
+  "candle-maker": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 4, 4, 4.5, 4, 3.5],
+    "summary": "A candle maker in a rust dress and a cream apron with wax drips, who holds a tall candle and a short candle. The costume and props match the mockup, but the bun shape is clearly different.",
+    "strengths": [
+      "The cream apron with wax drips at the hem matches the mockup and supports the role.",
+      "The tall candle with the rope wrap and the short candle are in the correct hands.",
+      "The face reads well: lashes, large eyes, blush, and a closed smile.",
+      "The rust and cream palette matches the mockup."
+    ],
+    "issues": [
+      "The bun is a tall pointed cone with a hooked tip. It reads as a brown witch hat. The mockup has a round coiled bun with one loose curl. Make the bun round and coiled.",
+      "The dress reaches the ankles. The mockup skirt ends at the shin and shows the legs and boots. Make the skirt shorter.",
+      "The candles are thin. The mockup candles are thick with large wax drips. Make both candles thicker.",
+      "The flames are flat orange. The mockup flames glow pale yellow. Make the flames lighter and brighter."
+    ],
+    "next": "Replace the pointed bun with a round coiled bun."
+  },
+  "courier": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 3, 4.5, 4, 3.5],
+    "summary": "A young courier with a green beret and white feather, a red cape, crossed straps, a backpack with letters, and an envelope. The design matches the mockup, but the hair pokes through the beret.",
+    "strengths": [
+      "The green beret with the white feather, the red cape, and the crossed straps with gold buckles match the mockup.",
+      "The backpack with a stack of letters supports the role.",
+      "The pose with one fist on the strap and one hand raised with a letter matches the mockup.",
+      "The silhouette and the face read in the sprites."
+    ],
+    "issues": [
+      "The hair pokes through the beret. Brown strands smear across the beret band, and small brown specks show on the beret crown. Keep the hair inside the beret and let only the fringe hang below the band.",
+      "The courier holds one small envelope. The mockup holds two large letters. Make the letters larger and add a second letter.",
+      "The fringe ends in thin drip-shaped strands. Give it the soft wavy locks of the mockup.",
+      "The shirt is almost white. The mockup shirt is a warm cream-tan. Make the shirt color warmer."
+    ],
+    "next": "Keep the hair inside the beret so that no strand or speck shows on it."
+  },
+  "elder": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 2, 4.5, 3.5, 3.5],
+    "summary": "A hooded village elder with a white beard, heavy white brows, a brown robe, a green rope belt, sandals, and a crooked staff. The identity matches the mockup, but the head pokes through the hood.",
+    "strengths": [
+      "The white beard, mustache, and heavy brows read well at 128 px.",
+      "The crooked staff with gold rings is tall and clear in every view.",
+      "The green rope belt with the knot and the sandals match the mockup.",
+      "The walk carries the staff with the hand."
+    ],
+    "issues": [
+      "The ear and part of the face poke through the side of the hood, and a dark patch shows through the hood. Clip the head and hair to the inside of the hood.",
+      "White specks from the brows show on the hood near the face. Clip the brows to the hood opening.",
+      "The hood has a pointed onion tip and fits the head tightly. The mockup hood is soft and deep, with a dark opening and gray hair inside. Round the hood top and make the opening deeper.",
+      "The nose is small. The mockup has a large round nose. Make the nose larger.",
+      "The beard is shorter and smoother than the long wavy beard of the mockup. Make the beard longer and add waves."
+    ],
+    "next": "Clip the ear, face, and hair to the inside of the hood."
+  },
+  "forager": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 4, 3.5, 4.5, 3.5, 3.5],
+    "summary": "A forager girl in a green hooded cape with braids, a red spotted mushroom, and a basket of berries. The costume and props match the mockup, but the hood is too large and lumpy.",
+    "strengths": [
+      "The red mushroom with white spots and the woven basket with berries and leaves match the mockup.",
+      "The braids with red ties, the cape bow, the cream shirt, the brown skirt, and the boots match the mockup.",
+      "The green, brown, and red palette is coherent, and the mushroom gives a clear accent.",
+      "The face reads in the front and three-quarter views."
+    ],
+    "issues": [
+      "The hood is too tall and lumpy. Its edges hang past the shoulders, and from the side it hides the whole face. Make the hood rounder and smoother, and open its edge so that the face shows from the side.",
+      "The fringe is parted in the center. The mockup has a fringe that sweeps to one side. Sweep the fringe to one side.",
+      "In the side view, a brown hair tuft sticks out in front of the hood edge. Keep the fringe inside the hood opening.",
+      "In the west and east sprites, only the green hood shows. Open the hood edge so that the face shows in these directions."
+    ],
+    "next": "Make the hood smaller, rounder, and smoother so that the face shows from the side."
+  }
+}
