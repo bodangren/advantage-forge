@@ -1,0 +1,4 @@
+run	phase	role	model	agent	npcs	result	lesson
+t1	trial	builder	opus	aea40dcbfb3e297b8	peddler	built; check ok; 62,694 tris; waits for review	A numbered fix list with start coordinates kept the run to 23 calls.
+t2	trial	builder	opus	a62de272c2d92f79e	refugee	built; check ok; 47,804 tris; waits for review	Same prompt shape; 18 calls, context about 49K per call.
+r1	serial	reviewer	opus	aa1390290603901d8	gravedigger,jeweler,lumberjack,mason,magistrate	round 3: gravedigger 7.5, lumberjack 8.0, magistrate 8.0 accepted; jeweler 6.5 and mason 7.0 to follow-up	Parallel card reads and a two-image limit: 6 calls and 0.37M for five NPCs (the batch 6 reviewer used 3.0M for eight).

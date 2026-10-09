@@ -1,0 +1,10 @@
+{
+  "serialStart": "2026-10-09T23:15:00Z",
+  "orchestrator": [
+    { "session": "649697a1-bd40-486c-b2aa-07ff10df5423", "since": "2026-10-09T23:15:00Z" }
+  ],
+  "baselines": [
+    { "method": "Overnight 2026-10-09: 20 to 28 parallel Sonnet builders, Opus reviewers, Opus orchestrator", "tokens": 520000000, "npcs": 16, "unit": "accepted NPC" },
+    { "method": "Own Opus passes in a 360K orchestrator context (musician, orphan)", "tokens": 8420000, "npcs": 2, "unit": "pass" }
+  ]
+}
