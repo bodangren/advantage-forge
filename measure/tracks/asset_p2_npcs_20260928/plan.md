@@ -53,7 +53,7 @@ viewer's left).
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer 6.5, 6.5, carpenter 7.0, 7.0, fisher 7.0, 7.0, gardener 6.5, 7.0: third pass running |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | butcher accepted at 7.5 (review 2); review 1: 7.0, 6.5, 6.0, 6.0, 7.0, 6.5, 6.0, 6.5; review 2: 7.0, 7.0, 6.5, 7.5, 7.0, 7.0, 6.5, 7.0; third pass running |
-| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | built except the midwife; review 1 after the midwife |
+| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); review 1: 7.0, 7.0, 6.0, 7.0, 7.0, 7.0, 6.5; second pass running |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | building (musician built) |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | building (beggar, scholar, scribe, shepherd started) |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | briefs and mockups ready |

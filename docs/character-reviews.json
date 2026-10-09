@@ -9240,5 +9240,272 @@
     "next": "Make the hood smaller, rounder, and smoother so that the face shows from the side.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-09T18:17:43.000Z"
+  },
+  "glassblower": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A young glassblower with goggles, a leather apron, a blowpipe, and a vase. The character is the same as the mockup, but the vase, the hair color, and a slit in the hair are clear differences.",
+    "strengths": [
+      "The gold goggles on the head, the brown apron with a buckle, and the teal shirt with light cuffs match the mockup.",
+      "The orange glass bubble on the blowpipe is a clear accent and reads in every sprite direction.",
+      "The face has a friendly smile and reads at 128 px."
+    ],
+    "issues": [
+      "The vase is small, blue, and held at the hip. The mockup holds a large teal vase up at chest height. Make the vase larger and teal, and raise the left arm.",
+      "A dark slit crosses the back of the hair. Put the goggle strap on the hair surface or fill the slit.",
+      "The hair is dark red-brown. The mockup hair is bright orange. Make the hair lighter and more orange.",
+      "The blowpipe is a straight rod. The mockup pipe ends in a curved hose that drops behind the arm. Add the curved hose.",
+      "The arms hang low. The mockup raises both props to chest height. Lift both arms.",
+      "In the walk, the arms stay fixed and the steps are small. Add arm swing and a longer step."
+    ],
+    "next": "Fill the slit in the back of the hair, and make the vase a large teal vase at chest height.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "gravedigger": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3,
+      "materials": 3.5,
+      "detail": 3,
+      "technical": 3.5,
+      "gameReady": 4,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A gentle old gravedigger with a flat cap, a long white beard, a lantern, and a spade. The identity reads, but the lantern has no glow and the coat is different from the mockup.",
+    "strengths": [
+      "The large grey flat cap, the thick grey brows, the pink nose, and the white beard match the mockup.",
+      "The face is kind and not scary.",
+      "The mud patches on the coat and the green scarf at the back add good detail."
+    ],
+    "issues": [
+      "The lantern is small and dark. The mockup lantern glows bright yellow-orange and is the focal accent. Make the lantern larger and give its glass an emissive glow.",
+      "The coat reads as a closed grey smock. The mockup has an open coat with a tan shirt, a belt with a buckle, and brown trousers. Open the coat front and show the shirt, the belt, and the trousers.",
+      "The long beard covers the scarf at the front. The mockup shows a thick green scarf around the neck under a shorter beard. Shorten the beard and show the scarf at the front.",
+      "The spade blade is light steel. The mockup blade is dark iron. Make the blade dark.",
+      "The left fist touches the side of the spade handle and does not close around it. Move the handle into the fist.",
+      "In the walk, the arms and the spade stay fixed and the steps are small. Add arm swing and a longer step."
+    ],
+    "next": "Make the lantern larger and give it a bright emissive glow.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "jeweler": {
+    "overall": 6.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 2.5,
+      "silhouette": 3,
+      "proportion": 3,
+      "shape": 3,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 2.5,
+      "motion": 3
+    },
+    "summary": "A jeweler with a monocle, a purple vest, a gem on a handle, and a ring box. The costume matches, but the face and the head silhouette are noticeably off.",
+    "strengths": [
+      "The purple vest with gold chains, the white shirt, the black trousers, and the shiny black shoes match the mockup.",
+      "The gold monocle on the left eye reads well.",
+      "The props are in the correct hands."
+    ],
+    "issues": [
+      "The beard covers the cheeks up to the lower eyelids and has a hard, stepped edge. The face reads as a dark mask. The mockup beard is a thin band along the jaw. Make the beard a narrow jaw band and remove the stepped edge.",
+      "The mouth is hidden under the mustache and the goatee. The mockup shows a wide open smile under a curled mustache. Show the open smile.",
+      "The hair is a tall, round, dark mass that surrounds the face. The mockup has a swept pompadour with short sides and visible ears. Reduce the hair at the sides and shape a pompadour.",
+      "The gem on the handle is small and reads as a hand mirror. The mockup gem is large and faceted. Make the gem larger and add facets.",
+      "The ring box is small and low at the hip. Make the ring box larger and raise it.",
+      "At 128 px the face is dark and the expression does not read."
+    ],
+    "next": "Change the beard to a thin jaw band and show the open smile.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "librarian": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "An old librarian with grey hair in a bun, glasses, a green skirt, and a stack of books in both hands. The character is the same, but the coat, the glasses, and the book colors are clear differences.",
+    "strengths": [
+      "The grey hair with a bun and the warm smile match the mockup.",
+      "Both fists hold the book stack at the sides, and the pose reads well.",
+      "The gold necklace and the green skirt match the mockup."
+    ],
+    "issues": [
+      "The jacket is a short blue checked cardigan. The mockup has a long, open sage-green coat to the knees. Change the jacket to a long sage-green coat.",
+      "The glasses are gold, flat-topped frames. The mockup glasses are large, round, and dark. Make large round dark frames.",
+      "The books are bright red, blue, green, and brown blocks without page edges. The mockup books are warm brown, red, orange, and yellow with cream page edges. Change the book colors and add page edges.",
+      "In the walk, the arms stay fixed and the steps are small. Add a small body sway and a longer step."
+    ],
+    "next": "Change the jacket to a long, open sage-green coat.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "lumberjack": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 3,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A bearded lumberjack with a grey beanie, a plaid shirt, suspenders, and an axe on the shoulder. The identity reads, but the build, the pose, and the clothes are clear differences.",
+    "strengths": [
+      "The grey ribbed beanie, the full brown beard, and the open smile match the mockup.",
+      "The red and black plaid shirt with brown suspenders and a belt buckle reads well.",
+      "The axe rests on the shoulder without a hand, as in the mockup."
+    ],
+    "issues": [
+      "The body has the standard base build, and the fists hang near the belt. The mockup is a broad, burly man with the elbows out and the hands on the hips. Widen the shoulders and the chest, and push the elbows out.",
+      "The sleeves are long and red. The mockup has short rolled sleeves and bare forearms. Roll the sleeves and show the forearms.",
+      "The axe blade is small and sits behind the cheek. The mockup blade is large and stands beside the head. Make the blade larger.",
+      "The trousers are blue. The mockup trousers are grey. Change the trousers to grey.",
+      "A small orange line shows on the axe head where the handle end comes through. Hide the handle end inside the axe head.",
+      "In the walk, the arms stay fixed and the steps are small. Add a heavier step with a body sway."
+    ],
+    "next": "Make the build burly and set a clear hands-on-hips pose with the elbows out.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "magistrate": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 2.5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "An old magistrate with a white wig, round glasses, a black robe, a gavel, and a book. The character reads, but slits in the wig and thin gold glasses are clear differences.",
+    "strengths": [
+      "The black robe over a red front, the white neck bands, and the gavel and book make the role clear.",
+      "The tall white hair gives a strong silhouette in every view.",
+      "The face has a calm, small smile like the mockup."
+    ],
+    "issues": [
+      "Two dark slits cut into the crown of the wig. They show in the front, side, and three-quarter views. Fill the slits.",
+      "The glasses are thin gold frames. The mockup glasses are thick, round, and black, and they define the face. Make the frames thick and black.",
+      "The temple arms of the glasses show as small gold dots on the cheek in the side view. Put the temple arms on the skin surface.",
+      "The hair is a formal wig with side curls. The mockup hair is swept up in loose waves. Shape loose swept waves on the top.",
+      "The neck has two flat white bands. The mockup has a ruffled white cravat and a red collar. Add the ruffled cravat and the red collar.",
+      "The book is light brown with gold stripes. The mockup book is plain dark brown. Make the book darker."
+    ],
+    "next": "Fill the two slits in the crown of the wig.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "mason": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3,
+      "color": 3,
+      "materials": 3,
+      "detail": 3,
+      "technical": 3.5,
+      "gameReady": 4,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A young mason with a cap, an apron, a trowel, and a stone block. The character is recognizable, but the cap, the freckles, the trowel, and the block pose differ clearly from the mockup.",
+    "strengths": [
+      "The smile and the friendly face read well.",
+      "The stone block has a good rough texture.",
+      "The apron straps, the belt, and the grey boots match the mockup."
+    ],
+    "issues": [
+      "The cap and the hair have the same beige color, so the cap does not read as a cap. The mockup has a khaki cap with a front brim over ginger curls. Make the hair ginger and give the cap a front brim.",
+      "The freckles show as white spots on the cheeks. The mockup freckles are small brown dots. Paint the freckles brown.",
+      "The trowel is a thin, straight blade and reads as a knife. The mockup trowel has a wide, pointed, flat blade. Make a wide trowel blade.",
+      "The stone block is held at the hip. The mockup holds the block up at shoulder height. Raise the left arm.",
+      "The apron is grey and the shirt is bright blue. The mockup apron is beige canvas and the shirt is grey-blue. Change the apron to beige and the shirt to grey-blue.",
+      "In the walk, the arms stay fixed and the steps are small. Add arm swing and a longer step."
+    ],
+    "next": "Make the hair ginger and give the cap a front brim, so that the cap and the hair separate.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
+  },
+  "midwife": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A kind village midwife with a white headscarf, a blue dress, a white apron, a satchel, and a basket, who waves. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The open smile, the large brown eyes, and the rosy cheeks give the kind expression of the mockup.",
+      "The waving hand, the blue dress, the white apron, and the crossbody satchel strap match the mockup.",
+      "The basket shows a pink blanket, white cloth, and green herbs, and the basket swings in the walk."
+    ],
+    "issues": [
+      "The basket is small and hangs low at the knee. The mockup holds a larger basket against the hip. Raise the basket and make it larger.",
+      "From the back, the headscarf is a large plain white mass. The mockup scarf has folds. Add folds and a knot at the back.",
+      "The satchel is small. Make the satchel larger."
+    ],
+    "next": "Raise the basket to the hip and make it larger.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T18:46:47.000Z"
   }
 }
