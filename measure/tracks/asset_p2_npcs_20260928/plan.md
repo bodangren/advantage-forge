@@ -52,7 +52,7 @@ viewer's left).
 | 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | done: apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer and gardener accepted at 7.5 (review 3); carpenter and fisher on the follow-up list |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
-| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | butcher accepted at 7.5 (review 2); review 1: 7.0, 6.5, 6.0, 6.0, 7.0, 6.5, 6.0, 6.5; review 2: 7.0, 7.0, 6.5, 7.5, 7.0, 7.0, 6.5, 7.0; third pass running |
+| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); review 1: 7.0, 7.0, 6.0, 7.0, 7.0, 7.0, 6.5; second pass running |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | review 1: 6.5, 6.5, 5.5, 7.0, 7.0, 6.5, 7.0, 6.0; second pass running |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | building (beggar, scholar, scribe, shepherd started) |
@@ -84,3 +84,9 @@ strip (the card default), because the shared idle clip has little motion (motion
 | town-crier | 6.0, 6.5, 7.0 | the shout is a small oval; the bell is at shoulder height, not head height; the front lock under the brim is missing |
 | carpenter | 7.0, 7.0, 7.0 | the reviewer sees the saw pointing down with the blade edge-on from the front (the agent posed it 42 degrees up); no teeth, faceted streaks; the hair is a tall smooth mass |
 | fisher | 7.0, 7.0, 7.0 | no black fringe under the hat; the large coat lapels are missing; four buttons in two rows where the mockup has two in one row |
+| acolyte | 7.0, 7.0, 7.0 | the hair is one smooth swept slab (a helmet); long sleeves where the mockup has bare forearms |
+| banker | 6.5, 7.0, 7.0 | the quill reads as a gray spoon and its vane goes into the sleeve cuff (defect cap 7.0) |
+| beekeeper | 6.0, 6.5, 6.5 | hair locks go through the veil (dotted patches at the side and back); a dark patch on the suit at the hip in walk; narrow brim, short boots |
+| courier | 6.5, 7.0, 7.0 | the hair is a ring of tight curls (the mockup has wavy locks); small letters and pack; the feather has saw teeth |
+| elder | 6.0, 6.5, 7.0 | the hood is a big round ball (the mockup has a peak); narrow sleeves; sandal straps go through the sole |
+| forager | 6.5, 7.0, 7.0 | a sharp V crease between the eyes reads as a frown; the mushroom, basket, and hood are small |
