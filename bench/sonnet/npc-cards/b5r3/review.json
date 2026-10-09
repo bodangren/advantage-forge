@@ -1,0 +1,102 @@
+{
+  "miller": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A round miller in a cream cap, a cream shirt with brown suspenders, tan trousers, and a flour sack on the back. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The palette matches the mockup: cream cap and shirt, brown beard and suspenders, tan trousers, brown boots.",
+      "The belt buckle, the suspenders, and the wheat mark on the sack give the role clear detail.",
+      "The cap, the beard, and the sack identify the miller in all 8 sprite directions."
+    ],
+    "issues": [
+      "The sack hangs low on the back and the hand on that side is at the hip. In the mockup, the hand holds the sack neck on top of the shoulder. Lift the sack onto the shoulder and put the fist at its neck.",
+      "The cap is tall and puffy, like a baker's hat. The mockup cap is a soft, low cloth cap with folds. Make the cap lower and softer.",
+      "The beard is large and has a braided pattern. The mockup beard is shorter and curly. Make the beard smaller and use a curl texture.",
+      "The model shows no flour dust. Paint a light flour dust on the smock, the trousers, and the beard."
+    ],
+    "next": "Lift the sack onto the shoulder with the fist at its neck, as in the mockup."
+  },
+  "miner": {
+    "overall": 7.0,
+    "scores": [4, 4.5, 4, 4, 3.5, 4, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "A sturdy miner in a yellow helmet, a navy shirt, and a brown leather vest, with a hammer and a blue crystal. The model is the same character, but the lamp and the mouth show clear differences.",
+    "strengths": [
+      "The silhouette matches the mockup: helmet, raised hammer, raised crystal, tool belt with pouches.",
+      "The navy shirt, the brown vest, and the yellow helmet give a clear value plan.",
+      "The helmet, the hammer, and the crystal read in all 8 sprite directions."
+    ],
+    "issues": [
+      "The helmet lamp is a dull olive disk. In the mockup, the lamp glows bright yellow. Make the lamp lens emissive and bright.",
+      "The open mouth is small in the front view. In the three-quarter view, the red mouth paint wraps onto the cheek and reads as a grimace. Make the grin wider and keep the mouth paint on the front of the face.",
+      "The fringe is a row of messy dark locks. The mockup hair is neat and swept to one side. Make the fringe smoother.",
+      "The crystal is light ice-blue. The mockup crystal is teal. Make the crystal color more teal."
+    ],
+    "next": "Make the helmet lamp glow bright yellow and correct the mouth paint in the three-quarter view."
+  },
+  "musician": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 4, 3.5, 3, 3.5, 4, 3.5, 3],
+    "summary": "A young musician with red hair, a green beret, a striped red vest, a brown skirt, and striped stockings. The costume matches, but the playing pose and the fiddle are noticeably off.",
+    "strengths": [
+      "The costume colors match the mockup: green beret, red and gold vest, cream blouse, brown skirt, red and white stockings.",
+      "The closed smile, the large eyes, and the blush give a joyful face.",
+      "The beret and the red hair identify the character in the sprites."
+    ],
+    "issues": [
+      "The model holds the fiddle flat across the chest at waist height. In the mockup, the fiddle sits on the left shoulder under the chin and the bow crosses it. Put the fiddle under the chin and angle the bow across the strings.",
+      "The fiddle is very small, and the bow is parallel to it. It reads as a stick or a slingshot, also at 128 px. Make the fiddle body larger, with a clear waist and a scroll.",
+      "The hair hangs in thick drips that end in blobs, most clearly in the back view. The mockup hair is long and wavy and reaches below the shoulders. Make long, smooth waves.",
+      "The feathers on the beret are white. The mockup feather is red-brown. Change the feather color."
+    ],
+    "next": "Pose the fiddle under the chin with the bow across it, and make the fiddle body large enough to read."
+  },
+  "orphan": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 3.5, 4, 4, 4, 4.5, 4, 3],
+    "summary": "A cheeky town kid in a patched brown cap, a green coat, and a striped scarf, with a paper boat held up. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The patched cap, the long scarf, and the paper boat give the role clear signature details.",
+      "The freckles, the blush, and the open smile give a cheeky face that reads at 128 px.",
+      "The coat patches and the elbow patches support the orphan role."
+    ],
+    "issues": [
+      "The scarf has red and white stripes. The mockup scarf has cream, brown, and orange stripes. Change the scarf colors.",
+      "The coat is a bright grass green and fits the body. The mockup coat is a darker olive green and looks too big. Darken the coat and make the sleeves and hem larger.",
+      "The smile is small, with two pointed teeth. The mockup grin is wide and shows a row of teeth. Make the grin wider."
+    ],
+    "next": "Change the scarf to cream, brown, and orange stripes, and darken the coat to olive green."
+  },
+  "peddler": {
+    "overall": 7.5,
+    "scores": [4, 4.5, 4, 4.5, 4, 4, 4, 4, 4.5, 4, 3],
+    "summary": "A traveling peddler in a purple hat and an orange coat, with a large backpack of pots and a gold teapot held out. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The silhouette reads from every view: floppy hat, held-out teapot, tall backpack.",
+      "The purple, orange, and gold palette matches the mockup, and the gold teapot is the focal accent.",
+      "The pots, the bedroll, and the ribbons on the backpack give the role clear detail."
+    ],
+    "issues": [
+      "The mustache hides the mouth. In the mockup, an open, chatty smile shows under the mustache. Show the mouth under the mustache.",
+      "The beard is long and thin. The mockup beard is shorter and wider. Make the beard shorter and wider.",
+      "The backpack is a tall wicker box that rises above the hat. The mockup pack is lower and rounder. Make the pack lower.",
+      "The hair at the sides of the head hangs in drips under the hat brim. Make the side hair smooth."
+    ],
+    "next": "Show an open, chatty smile under the mustache."
+  },
+  "refugee": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "A hopeful young traveler in a teal patched dress and an orange knitted shawl, with a bundle on a stick and a lantern. The model is the same character, but the bundle and the hair show clear differences.",
+    "strengths": [
+      "The palette matches the mockup: orange shawl, teal patched dress, brown hair and boots, green eyes.",
+      "The gentle smile and the soft brows give a kind, hopeful face.",
+      "The warm lantern is a clear accent and reads in the sprites."
+    ],
+    "issues": [
+      "The bundle hangs at hip height on a stick that points out to the side. In the mockup, the stick rests on the shoulder and the bundle hangs on the back. Put the stick on the shoulder.",
+      "The hair is large and lumpy and covers the back to the waist. The mockup hair is a short wavy bob. Make the hair shorter and smoother.",
+      "The lantern has a pale see-through sphere around it that reads as a bubble. Make the glow smaller and softer, or remove the sphere."
+    ],
+    "next": "Put the bundle stick on the shoulder so that the bundle hangs on the back, as in the mockup."
+  }
+}

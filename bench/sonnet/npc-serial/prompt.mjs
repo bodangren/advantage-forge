@@ -30,6 +30,7 @@ function build(name, note) {
     if (reviewed) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
       r.issues.forEach((issue, i) => lines.push(`${i + 1}. ${issue}`));
+      lines.push('Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.');
     } else {
       lines.push('Then complete the brief: match the mockup in silhouette, then proportions, then color, then details.');
     }

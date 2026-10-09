@@ -54,7 +54,7 @@ viewer's left).
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list |
-| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); third pass running for miller, miner, musician, orphan, peddler, refugee |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); review 1 for the others: 6.5, 7.0, 7.0, 7.0, 6.5, 7.0, 7.0; second pass running |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | building |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness); archaeologist building |
@@ -99,3 +99,6 @@ strip (the card default), because the shared idle clip has little motion (motion
 | forager | 6.5, 7.0, 7.0 | a sharp V crease between the eyes reads as a frown; the mushroom, basket, and hood are small |
 | jeweler | 6.0, 6.5, 6.5 | the open red mouth with white pointed teeth reads as a fanged grin (the mockup smile is closed); the tall ridged hair reads as a cap |
 | mason | 6.5, 7.0, 7.0 | the smile is small and calm (the mockup smile is wide); the trowel is very small |
+| miner | 6.5, 6.5, 7.0 | the helmet lamp does not glow; in the three-quarter view the mouth paint wraps onto the cheek and reads as a grimace |
+| musician | 5.5, 6.0, 6.5 | the fiddle is flat across the chest, not under the chin (pose cap 6.5); the fiddle is small and reads as a stick at 128 px |
+| refugee | 6.0, 6.5, 7.0 | the bundle stick points out at hip height and is not on the shoulder; the hair is long and lumpy, not a short wavy bob |

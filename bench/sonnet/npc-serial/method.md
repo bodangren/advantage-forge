@@ -30,3 +30,6 @@ speed. Improve this method with the lessons of each agent run.
 | own passes | My own passes re-read a 360K orchestrator context on each call: 4.2M tokens for each NPC. | Agents do the work; the orchestrator only writes prompts, logs, and commits. |
 | t1, t2 | A numbered fix list with start values (pose coordinates, sizes) and a "render first" step kept Opus builders at 18 to 23 calls and 1.0M to 1.4M tokens. | The prompt script copies the review issues as a numbered list. |
 | batch 6 review | The reviewer opened each front view and cropped images with PIL: 34 calls and 3.0M tokens for eight NPCs. | The reviewer reads all cards in one parallel step and opens at most two extra images. |
+| r1, r2 | With that change, each reviewer used 6 calls and 0.37M tokens for five or six NPCs. | Review first every NPC with a fresh build; send a builder only with a review fix list or for a stale build. |
+| t2, r2 | The refugee builder followed its own reading of the mockup for the stick, not the fix list, and the reviewer marked it down again. | The builder does every numbered fix and names any conflict in its report. |
+| setup | The orchestrator setup used 2.35M tokens (about 20 calls at 100K context). | Use three orchestrator calls for each run: one Bash for record, commit, log, and next prompt; one Agent call; one short message. |
