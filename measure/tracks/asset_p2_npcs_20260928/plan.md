@@ -49,7 +49,7 @@ viewer's left).
 
 | Batch | NPCs | Status |
 | --- | --- | --- |
-| 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | review 1: 7.0, 6.5, 7.0, 6.0, 6.0, 6.5; review 2: 6.5, 6.5, 7.0, 6.5, 7.0, 7.0; third pass running |
+| 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | review 1: 7.0, 6.5, 6.5, 7.0, 7.0, 7.0, 7.0, 6.5; second pass running |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | building (5 of 8 built) |
@@ -71,3 +71,7 @@ strip (the card default), because the shared idle clip has little motion (motion
 | Asset | Ratings | Largest open issues |
 | --- | --- | --- |
 | baker | 6.8, 7.2, 7.0 | the hat is low with one lumpy puff; in the rest clip the chin goes into the apron bib; sharp mouth corners read as fangs at 128 px |
+| bartender | 7.0, 6.5, 7.0 | the thick handlebar mustache covers the mouth (no smile shows); the mug is low; the foam is small |
+| merchant | 6.5, 6.5, 7.0 | the coat is short and flares at the hip (the mockup coat is long and open, with green sleeves); the sash tails look like fingers; the side hair is a tube |
+| mayor | 7.0, 7.0, 7.0 | no open grin, and the brows slope down (stern); the nose is too small; the coat is closed below the waist |
+| town-crier | 6.0, 6.5, 7.0 | the shout is a small oval; the bell is at shoulder height, not head height; the front lock under the brim is missing |

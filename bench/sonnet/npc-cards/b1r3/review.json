@@ -1,0 +1,109 @@
+{
+  "bartender": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4.5, 3.5, 4, 4.5, 5, 4.5, 3.5],
+    "summary": "A tavern keeper with a foaming mug, a shoulder towel, a green vest, and a cream apron. The costume and the props match the mockup, but a large mustache hides the smile, so the face reads neutral (expression cap 7.0).",
+    "strengths": [
+      "The green vest with gold buttons, the cream rolled sleeves, and the cream apron match the mockup palette.",
+      "The foaming mug with gold bands and the towel over the shoulder read at 128 px in the front directions.",
+      "The chibi proportions and the silhouette are clean, and the model stands on the ground with all clips."
+    ],
+    "issues": [
+      "The mustache is a thick handlebar. Its ends reach the eyes, and it covers the mouth. The mockup has a small mustache and a visible closed smile. Make the mustache thinner and shorter, and add a smile under it.",
+      "The mug is at chest height and far from the body. The mockup raises the mug to shoulder height next to the face. Raise the forearm.",
+      "The foam is a small cap on the mug. The mockup foam is large and flows over the rim. Make the foam larger and let it drip over the rim.",
+      "The hair is a tall, round pompadour. The mockup hair is a lower wave with fuller sides above the ears. Lower the top and add volume at the sides.",
+      "The walk is readable but stiff. The body has little up and down motion."
+    ],
+    "next": "Make the mustache smaller and show a closed smile under it, as in the mockup."
+  },
+  "merchant": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3.5, 4, 5, 4.5, 3.5],
+    "summary": "A bearded market trader in a maroon beret, a green coat, and an orange sash, with a pouch of coins. The head and the pouch match the mockup well, but the coat, the sleeves, and the sash differ clearly.",
+    "strengths": [
+      "The maroon beret, the full black beard, and the open talking mouth match the mockup.",
+      "The pouch with gold coins and a gold tie reads as the focal prop.",
+      "The beret and the beard read in all 8 sprite directions."
+    ],
+    "issues": [
+      "The coat is short and flares into a skirt at the hip, and the arms are cream from shoulder to wrist. The mockup coat is long, open at the front, and reaches the knees, with green sleeves and large cream cuffs. Lengthen the coat, open the front, and add green sleeves.",
+      "The sash is a thick ring around the waist, and the knot tails hang like a bunch of fingers. The mockup sash is a soft folded wrap with a flat knot. Flatten the sash and make two wide cloth tails.",
+      "The side hair is a thick black tube from the beret to the beard. From the side, the tube crosses in front of the ear like a strap. Make the side hair thinner and blend it into the beard.",
+      "The lapels and the gold trim on the coat front are small. The mockup has dark blue lapels and gold edges down the full front. Enlarge the lapels and extend the trim.",
+      "The eyebrows are thin. The mockup has thick, black, arched brows. Make the brows thicker."
+    ],
+    "next": "Lengthen the coat to the knees with an open front and give it green sleeves, as in the mockup."
+  },
+  "mayor": {
+    "overall": 7.0,
+    "scores": [3.5, 4.5, 4, 4, 4.5, 4, 4, 4.5, 5, 4.5, 3.5],
+    "summary": "An old mayor in a tall top hat and a maroon long coat, with a gold chain and a scroll. The costume matches the mockup closely, but the face has no clear grin and the nose is small (expression cap 7.0).",
+    "strengths": [
+      "The top hat with a red band gives a strong silhouette in every direction.",
+      "The maroon coat with a tall collar, the gold chain and medallion, the white jabot, and the scroll with a red tie match the mockup.",
+      "The grey hair, the grey mustache, and the pink nose read at 128 px."
+    ],
+    "issues": [
+      "The face has no clear smile. The mockup shows a wide, open, happy grin with teeth. The model shows only a pale crescent under the mustache, and the brows slope down to the center, so the face reads stern. Add an open smile and raise the inner ends of the brows.",
+      "The nose is round and pink but small. In the mockup, the nose is the largest feature on the face. Make the nose about 1.5 times larger.",
+      "The coat front is closed below the waist and hides the trousers. The mockup coat is open and shows dark grey trousers. Open the coat front below the waistcoat.",
+      "The free hand hangs as a fist at the hip. The mockup makes a welcome gesture with that arm. Bring the forearm forward and out.",
+      "The walk is readable but stiff. The long coat stays rigid."
+    ],
+    "next": "Add an open, happy grin under the mustache and raise the inner ends of the brows."
+  },
+  "town-crier": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4.5, 4, 4, 4.5, 5, 4, 3.5],
+    "summary": "A town crier in a blue tricorn and a blue long coat with gold trim, with a hand bell and a notice. The costume matches the mockup, but the shout and the raised bell are clearly weaker.",
+    "strengths": [
+      "The blue coat with gold trim, the gold buttons, the white cuffs, the black belt, and the buckled shoes match the mockup.",
+      "The tricorn with a gold edge gives a strong silhouette.",
+      "The green eyes and the open mouth keep the shouting idea."
+    ],
+    "issues": [
+      "The mouth is a small open oval. The mockup shout is a very large open mouth that fills the lower face. Make the mouth about two times larger, with top teeth and a tongue.",
+      "The bell arm is at shoulder height with the elbow bent. In the mockup, the arm is up and out, and the bell is at head height. Raise the upper arm.",
+      "The front hair lock is missing. The mockup has a large brown lock that comes out under the brim over the forehead. Add the lock.",
+      "The breeches are cream white, and the white cravat does not show. The mockup breeches are tan, and a cravat sits at the neck. Make the breeches tan and add the cravat.",
+      "At 128 px from the back and the sides, the wide hat covers most of the figure. The face shows only in the south directions."
+    ],
+    "next": "Make the shouting mouth much larger and raise the bell to head height, as in the mockup."
+  },
+  "herbalist": {
+    "overall": 7.5,
+    "scores": [4, 4, 4.5, 4.5, 4, 3.5, 4, 4.5, 5, 4.5, 3.5],
+    "summary": "A young village herbalist in a green headscarf, a green dress, and a scarf, with a braid and a basket of herbs. The model matches the mockup with small differences in the basket pose, the flowers, and the satchel.",
+    "strengths": [
+      "The soft closed smile, the center-parted brown hair, and the braid with a gold band match the mockup.",
+      "The olive dress, the dark green scarf, the brown laced bodice, and the brown boots match the palette.",
+      "The face reads at 128 px in the south, south-west, and south-east directions."
+    ],
+    "issues": [
+      "The basket is in the center front, held with both hands. In the mockup, she holds it at her left hip on the forearm. Move the basket to her left side.",
+      "The basket shows mostly green leaves with small flower dots. In the mockup, large pink and yellow flowers are the focal accent. Make the flowers larger and add more.",
+      "The satchel is small and on her left hip. In the mockup, it is larger and on her right hip. Move the satchel and make it larger.",
+      "The side hair lock in front of the ear ends in a sharp point. From the side, it reads like a drip. Round the end.",
+      "The headscarf is a dark, tight cap. The mockup headscarf is a lighter grey-green cloth that hangs lower at the back. Make it lighter and let it hang lower."
+    ],
+    "next": "Move the basket to her left hip and fill it with larger pink and yellow flowers."
+  },
+  "weaponsmith": {
+    "overall": 7.5,
+    "scores": [4, 4.5, 4.5, 4.5, 4, 4, 4, 4.5, 5, 4.5, 3.5],
+    "summary": "A red-haired young smith in a riveted leather apron and large gloves, with a raised sword. The model matches the mockup with small differences in the cheek marks, the hair sides, and the sword.",
+    "strengths": [
+      "The spiky red hair, the red brows, and the confident closed smile match the mockup.",
+      "The riveted brown apron, the belt with a buckle, the hanging tongs, and the large gloves match.",
+      "The sword and the red hair read in all 8 sprite directions."
+    ],
+    "issues": [
+      "The cheek marks are dark grey smudges low on the jaw. The mockup has small red marks high on the cheeks, below the eyes. Move the marks up and make them red.",
+      "The hair is a large mass that covers the sides and the back, and the spikes point back. The mockup has short sides and spikes that stand up on top. Make the sides shorter and point the spikes up.",
+      "The sword is a thin, all-silver blade with a ball pommel. The mockup sword has a wider blade and a wooden grip below the fist. Make the blade wider and add the wooden grip.",
+      "The walk is readable but stiff. The sword arm stays fixed, and the tongs hang down to the boot."
+    ],
+    "next": "Move the cheek marks up below the eyes and make them red, as in the mockup."
+  }
+}
