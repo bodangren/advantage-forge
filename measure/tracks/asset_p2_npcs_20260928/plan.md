@@ -54,15 +54,22 @@ viewer's left).
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); third pass running for gravedigger, jeweler, lumberjack, magistrate, mason |
-| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | review 1: 6.5, 6.5, 5.5, 7.0, 7.0, 6.5, 7.0, 6.0; second pass running |
-| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | building (beggar, scholar, scribe, shepherd started) |
-| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | briefs and mockups ready |
-| 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness) |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | review 1: 6.5, 6.5, 5.5, 7.0, 7.0, 6.5, 7.0, 6.0; second pass done for musician, orphan, peddler, potter, refugee; running for miller, miner, performer |
+| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | built: beggar, scribe, shepherd, stablekeeper, storyteller; building: scholar, student, tailor |
+| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | building |
+| 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | briefs and mockups ready (wilderness); archaeologist building |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | briefs and mockups ready (wilderness) |
+| 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | briefs and mockups ready (court and faction) |
+| 11 | king, queen, prince, princess, lady, lord, noble, leader | briefs and mockups ready (court and faction) |
+| 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | briefs and mockups ready (court and faction) |
+| 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | briefs and mockups ready (fantasy peoples) |
 
-Still to write: court and faction (22), and the fantasy peoples
-(9; some may need another body). `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`, and
-`scout` have sources from earlier tracks.
+Every catalog NPC row now has a brief. `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`,
+and `scout` have sources from earlier tracks. Batch 13 bases: the dwarf, elf, fae, gnome,
+halfling, and merfolk citizens are the humanoid kind (the small peoples through `scaleAsset`); the goblin
+citizen is the goblin kind; the orc and lizardfolk citizens start from copies of
+`orc-warrior` and `kobold-warrior`. The merfolk mockup shows two bare feet, scaled shorts, and a
+tail at the back, so the merfolk citizen is the humanoid kind too.
 
 Clip clearance (2026-10-10): `./forge check` passes at a contact limit of 0.3 cm, but in the shared
 attack clip the free arm swings held items close to the head (armorer shield 0.0 cm before its arm
