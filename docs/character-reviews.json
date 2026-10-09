@@ -8543,38 +8543,39 @@
     "reviewedAt": "2026-10-09T17:25:17.000Z"
   },
   "armorer": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
       "color": 3.5,
       "materials": 4,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3.5,
+      "sprite": 4,
       "motion": 3.5
     },
-    "summary": "A bearded armorer with chain mail sleeves, a leather tunic, a round shield, and a hammer. The outfit matches the mockup, but the hair is a large round lumpy mass that changes the head silhouette in every view.",
+    "summary": "A stocky bearded armorer with a chainmail shirt, a leather apron with crossed straps, a round shield, and a hammer. The model matches the mockup with small differences only.",
     "strengths": [
-      "The chain mail sleeves read clearly as metal rings, and the leather and the steel are distinct materials.",
-      "The full beard, the round nose, and the open grin match the friendly mockup face.",
-      "The shield and the hammer stay in the fists and read in the 128 px sprites."
+      "All signature details are present: the curly hair, the full beard, the chainmail shirt, the crossed straps, the belt buckle, the bracers, the shield, and the hammer.",
+      "The open smile with teeth matches the mockup expression.",
+      "The chainmail, the leather, the wood, and the steel each read as a different material.",
+      "The shield and the beard make the character easy to identify in all eight sprite directions."
     ],
     "issues": [
-      "The hair is a large round mass of lumps that covers the whole skull and the ears. The mockup has short swept-back wavy hair and visible ears. Replace the mass with a short swept top and show the ears.",
-      "The hair and the beard join into one lumpy ring around the face. The back view shows a hard hair edge above bare skin. Make short sideburns and end the hair at the nape.",
-      "The shield is small and turns edge-on to the front. The mockup shield is about torso height and faces forward. Make the shield larger and turn its face to the front.",
-      "The buckle sits in the middle of the chest panel. The mockup has a belt across the hips with the buckle and pouches. Move the buckle to a hip belt.",
-      "The trousers are brown. The mockup trousers are dark grey-green with leather cuffs on the boots.",
-      "The brows are thin lines. The mockup has thick bushy brows."
+      "The trousers are brown, the same value as the apron. The mockup trousers are dark olive grey. Paint the trousers dark olive grey to separate the legs from the apron.",
+      "The apron hem flares out from the waist like a ring at the back and the side. Bring the hem closer to the body.",
+      "The shield rim is thin. The mockup shows a thick steel rim. Make the rim wider and darker steel.",
+      "The boots have no leather cuffs, and the belt has no pouches. Add the ankle cuffs and the pouches at the hips.",
+      "The hair is a lumpy cap with a noisy surface. The mockup hair has clear, separate curls. Shape the hair into larger curl locks.",
+      "The walk is stiff. The shield arm and the hammer arm almost do not move."
     ],
-    "next": "Replace the lumpy hair mass with short swept-back wavy hair and show the ears.",
+    "next": "Paint the trousers dark olive grey and add the boot cuffs so that the lower body matches the mockup value plan.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T17:25:17.000Z"
+    "reviewedAt": "2026-10-09T19:21:49.000Z"
   },
   "brewer": {
     "overall": 7.5,
@@ -8615,32 +8616,34 @@
     "scores": {
       "mockup": 3.5,
       "silhouette": 3.5,
-      "proportion": 3.5,
+      "proportion": 4,
       "shape": 3.5,
       "color": 4,
       "materials": 3.5,
-      "detail": 4,
+      "detail": 3.5,
       "technical": 3.5,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3.5
     },
-    "summary": "A young carpenter with a red bandana, a blue shirt, tan overalls with a tool belt, and a hand saw. The face and the outfit match the mockup, but the hair top and the saw angle clearly differ.",
+    "summary": "A young carpenter with a red headband, a blue shirt, tan overalls, a tool belt, and a saw. It is the same character as the mockup, but the saw and the hair show clear differences.",
     "strengths": [
-      "The face, with thick brows and a closed smile, matches the mockup.",
-      "The tool belt with a hammer, a ruler, and a pouch is a good focal detail.",
-      "The red bandana, the blue shirt, and the tan overalls give a clear color read at 128 px."
+      "The red headband, the blue shirt, and the tan overalls match the mockup palette.",
+      "The tool belt has a hammer, a yellow ruler, and a pouch, and the belt gives detail at the waist.",
+      "The closed, friendly smile matches the mockup expression.",
+      "The headband knot with tails reads at the back of the head."
     ],
     "issues": [
-      "The hair top is a pile of thin brown spikes that stand up like antlers in the back view. The mockup has full swept locks that curl over the bandana. Make the locks thicker and sweep them to one side.",
-      "The saw blade points forward and down. The mockup holds the blade forward and up at about 30 degrees. Rotate the saw up.",
-      "The saw blade shows faceted, noisy shading and rough stair-step teeth. Make the blade a clean flat plate with a fine row of teeth.",
-      "The bandana knot and tails sit at the back of the head. The mockup shows the red tails at the side, below the ear.",
-      "The ears are small. The mockup has large ears."
+      "The saw points down and to the front, and the front view shows the blade almost edge-on. The mockup holds the saw up and to the front. Bend the arm and turn the saw so that the blade points up and shows its flat side.",
+      "The saw blade has no teeth, and the blade shading shows faceted streaks. Add a row of teeth on one edge and make the blade surface smooth.",
+      "The hair is a tall, smooth mass on top of the head. The mockup hair has swept locks with a curl at the front and at the side. Shape the hair into separate swept locks.",
+      "The shirt has no collar, and the overall bib has no buttons. Add the collar and the two bib buttons.",
+      "The ear is small. The mockup ear is large. Make the ear larger.",
+      "The pencil in the hair is very small and does not read. Make the pencil longer and brighter."
     ],
-    "next": "Rebuild the hair top as thick swept locks that curl over the bandana.",
+    "next": "Turn the saw so that the blade points up and to the front with visible teeth, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T17:25:17.000Z"
+    "reviewedAt": "2026-10-09T19:21:49.000Z"
   },
   "cobbler": {
     "overall": 7.5,
@@ -8711,10 +8714,45 @@
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
-      "silhouette": 4,
-      "proportion": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
       "shape": 4,
       "color": 4.5,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A young fisher in a yellow rain hat and a yellow raincoat, with a navy knit collar, green boots, a fish, and a rod. It is the same character as the mockup, but the hair fringe and the coat lapels are missing.",
+    "strengths": [
+      "The yellow hat and coat with the navy collar give a strong color plan that matches the mockup.",
+      "The wide hat and the tall rod make a silhouette that reads from every view.",
+      "The fish and the rod read in all eight sprite directions, and the face reads at 128 px.",
+      "The knit collar, the rubber boots, the metal fish, and the wood rod each read as a different material."
+    ],
+    "issues": [
+      "The forehead has no hair fringe. The hair shows only at the sides as two black blocks. The mockup has a thick black fringe with tufts under the hat. Add the fringe so that it frames the face.",
+      "The coat has no lapels. Only two small collar points show. Add the large lapels from the mockup.",
+      "The coat has four buttons in two rows. The mockup has two buttons in one row. Change the coat to one row of two buttons.",
+      "The pocket flaps are only faint paint. Model the pocket flaps as raised shapes.",
+      "The fist holds the fish at its side. The mockup hand wraps around the fish body. Move the fish into the fist.",
+      "The walk is stiff. The arms with the fish and the rod almost do not move."
+    ],
+    "next": "Add the black hair fringe under the hat brim so that the face matches the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T19:21:49.000Z"
+  },
+  "gardener": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3.5,
       "materials": 4,
       "detail": 4,
       "technical": 4,
@@ -8722,56 +8760,24 @@
       "sprite": 3.5,
       "motion": 3.5
     },
-    "summary": "A young fisher in a yellow rain hat and raincoat with a navy knit scarf, who holds a fish and a fishing rod. The outfit matches the mockup well, but the face, the fringe, and the arm pose clearly differ.",
+    "summary": "An old gardener with a wide hat, a white beard, a big round nose, a yellow plaid shirt, green overalls, and a green watering can. The model matches the mockup with small differences only.",
     "strengths": [
-      "The yellow coat, the navy ribbed scarf, and the green boots match the mockup palette.",
-      "The knit ribs and the metal buttons read as distinct materials.",
-      "The fish and the rod with a red and white float read clearly."
+      "The face reads as the mockup: white bushy brows, a big round nose, a white moustache and beard, and an open smile.",
+      "The wide hat with the green band gives a strong silhouette from every view.",
+      "The watering can and the trowel at the hip support the gardener role.",
+      "The straw, the cloth, the beard, and the painted can each read as a different material."
     ],
     "issues": [
-      "The brows slant down to the center and give a stern look. The mockup has calm arched brows and a wide happy smile. Make the brows level and arched, and widen the smile.",
-      "The fringe is a row of thick separate black strands that cross the brows. The mockup has a soft messy fringe of joined locks. Join the strands into soft tufts above the brows.",
-      "Both arms stand out stiffly from the body. The mockup bends the elbows and holds the fish and the rod close to the body. Bend the elbows and bring the fists in.",
-      "The back of the head shows bare skin below a thin band of hair. Extend the hair down to the nape.",
-      "The hat crown is a tall round dome. The mockup crown is lower. From above, the hat hides most of the face in the 128 px sprites."
+      "The hat is pale straw yellow with a weave texture. The mockup hat is darker tan felt with a pinched crown. Darken the hat to tan and pinch the crown.",
+      "At 128 px the hat hides most of the face in all directions except south. Only the nose and the beard show. Make the face read better under the brim, for example with a smaller brim tilt to the back.",
+      "The plaid lines on the shirt are faint. The mockup plaid has strong dark lines. Darken the plaid lines.",
+      "The overall bib is a lighter green than the trousers and reads as a separate apron. Use one dark green for the bib and the trousers.",
+      "The watering can is small and hangs near the ground. The mockup can is larger. Make the can larger.",
+      "The ears are small. The mockup ears are large and pink. Make the ears larger."
     ],
-    "next": "Make the brows level and arched and widen the smile, so that the face is friendly as in the mockup.",
+    "next": "Darken the hat to tan felt and pinch the crown so that the largest form matches the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T17:25:17.000Z"
-  },
-  "gardener": {
-    "overall": 7.0,
-    "group": "NPCs",
-    "scores": {
-      "mockup": 3.5,
-      "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3.5,
-      "materials": 4,
-      "detail": 3.5,
-      "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
-      "motion": 3.5
-    },
-    "summary": "An old gardener with a white beard, a straw hat with a green band, a yellow plaid shirt, green overalls, and a watering can. The model is the same character, but the nose, the mustache, and the hat clearly differ from the mockup.",
-    "strengths": [
-      "The white beard, the bushy brows, and the plaid shirt match the mockup.",
-      "The green watering can stays in the fist and reads in every sprite.",
-      "The straw weave, the plaid cloth, and the glossy can read as distinct materials."
-    ],
-    "issues": [
-      "The nose is a small red ball. The mockup nose is a large bulbous pink-orange nose and is the focal point of the face. Make the nose about twice as large and pink-orange.",
-      "The mustache is a thin white line. The mockup has a thick mustache that curls up at the ends. Make the mustache thicker.",
-      "The hat is yellow straw with a narrow brim. The mockup hat is tan felt with a much wider brim. Widen the brim and use a tan felt color.",
-      "The skin is pale. The mockup face is ruddy with warm pink tones and visible red ears.",
-      "The overalls flare like a skirt and hide the legs. The mockup shows straight trouser legs.",
-      "The mockup has a metal tool on the hip. The model does not have it."
-    ],
-    "next": "Make the nose large, round, and pink-orange, and make the mustache thicker.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T17:25:17.000Z"
+    "reviewedAt": "2026-10-09T19:21:49.000Z"
   },
   "bartender": {
     "overall": 7.0,

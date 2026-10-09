@@ -50,7 +50,7 @@ viewer's left).
 | Batch | NPCs | Status |
 | --- | --- | --- |
 | 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
-| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer 6.5, 6.5, carpenter 7.0, 7.0, fisher 7.0, 7.0, gardener 6.5, 7.0: third pass running |
+| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | done: apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer and gardener accepted at 7.5 (review 3); carpenter and fisher on the follow-up list |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | butcher accepted at 7.5 (review 2); review 1: 7.0, 6.5, 6.0, 6.0, 7.0, 6.5, 6.0, 6.5; review 2: 7.0, 7.0, 6.5, 7.5, 7.0, 7.0, 6.5, 7.0; third pass running |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); review 1: 7.0, 7.0, 6.0, 7.0, 7.0, 7.0, 6.5; second pass running |
@@ -80,3 +80,5 @@ strip (the card default), because the shared idle clip has little motion (motion
 | merchant | 6.5, 6.5, 7.0 | the coat is short and flares at the hip (the mockup coat is long and open, with green sleeves); the sash tails look like fingers; the side hair is a tube |
 | mayor | 7.0, 7.0, 7.0 | no open grin, and the brows slope down (stern); the nose is too small; the coat is closed below the waist |
 | town-crier | 6.0, 6.5, 7.0 | the shout is a small oval; the bell is at shoulder height, not head height; the front lock under the brim is missing |
+| carpenter | 7.0, 7.0, 7.0 | the reviewer sees the saw pointing down with the blade edge-on from the front (the agent posed it 42 degrees up); no teeth, faceted streaks; the hair is a tall smooth mass |
+| fisher | 7.0, 7.0, 7.0 | no black fringe under the hat; the large coat lapels are missing; four buttons in two rows where the mockup has two in one row |
