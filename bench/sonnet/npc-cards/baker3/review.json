@@ -1,0 +1,26 @@
+{
+  "baker": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 4, 3.5, 4.5, 4, 3.5],
+    "summary": "The model is the mockup baker boy with a chef hat, a cream apron, and a bread board in two hands. It is the same character, but the hat, the ears, and the mouth show clear differences, and the rest clip has a chin intersection.",
+    "strengths": [
+      "The palette matches the mockup: a cream hat and apron, a brown shirt, dark brown trousers, cream sock cuffs, and tan shoes.",
+      "The hat, the apron, and the bread board make the identity clear in all eight sprite directions. The face reads in the S, SW, and SE sprites.",
+      "The bread board stays in the two hands in all eight clips. The cheer hop, the hit recoil, and the attack push read clearly.",
+      "The bread reads as bread: one dark bun with seeds and one golden bun on a wood board.",
+      "The curly forelock on the hat band, the white wrist cuffs, and the apron straps match the mockup."
+    ],
+    "issues": [
+      "The chef hat is too low and has one lumpy puff. The mockup hat is taller than the head and has two or three large pleated lobes. Make the hat about 20 percent taller and shape clear lobes with folds between them.",
+      "In the rest clip, the head bends forward and the chin goes into the apron bib. The bib edge cuts the mouth in the three-quarter view. Decrease the head bend, or move the chin in front of the bib.",
+      "The mockup has large ears that stand out from the head. The model ears are small, and the side hair hides them in the front view. Make the ears larger and turn them out.",
+      "The mouth corners are sharp, and at sprite size the teeth read as fangs. The mockup shows a soft wide grin with two front teeth. Round the mouth corners into a soft U shape.",
+      "The model adds dark side hair at the temples and a full hair cap at the back. The mockup shows almost no hair below the hat band. Reduce the side hair so that the ears and the cheeks read.",
+      "The mockup shows a wood board or basket on the back. The model back is empty. Add the back item, or record that the design removes it.",
+      "The mockup shirt has a white collar above the bib. The model has no collar. Add a small white collar.",
+      "The winged eyelashes make the face look older than the mockup boy. Use plain lash lines.",
+      "The cast clip and the idle clip show little movement, and they look almost the same. The walk and the run keep the upper body still. Add a body bob and a small tray sway."
+    ],
+    "next": "Make the chef hat taller than the head, with two or three pleated lobes. Also fix the chin intersection in the rest clip, because the defect cap keeps the rating at 7.0 until you fix it."
+  }
+}

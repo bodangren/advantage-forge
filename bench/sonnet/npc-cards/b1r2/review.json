@@ -1,0 +1,118 @@
+{
+  "bartender": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A mustached bartender with a foamy mug, a green vest, and a cream apron. The costume matches the mockup, but the hair and the face are clearly different.",
+    "strengths": [
+      "The cream shirt, the green vest with gold buttons, the cream apron, and the brown boots match the mockup.",
+      "The wooden mug has gold bands and white foam. The mug reads in every sprite direction.",
+      "The extended mug arm gives a clear front and three-quarter silhouette."
+    ],
+    "issues": [
+      "The hair is a lumpy cap with a swoop on top and locks that hang over the forehead. It reads as a hat. Change it to the swept, wavy pompadour of the mockup.",
+      "The hair is a medium chestnut. Make it the very dark brown of the mockup.",
+      "The mustache is a thin handlebar line, and it hides the mouth. Make the mustache thick and bushy, and show the closed smile under it.",
+      "The mug is at chest height and the hand holds the handle. Raise the mug to shoulder height and hold it by the body, as in the mockup.",
+      "The towel on the shoulder is a narrow strap. Make it a folded cloth that hangs over the shoulder.",
+      "The vest is a bright green. Make it the dark olive of the mockup.",
+      "The eye line continues onto the temple. In the side view it reads as a glasses arm."
+    ],
+    "next": "Rebuild the hair as a dark, swept pompadour and show the smile under a bushy mustache."
+  },
+  "merchant": {
+    "overall": 6.5,
+    "scores": [3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 3.5, 2.5, 4.5, 4, 3],
+    "summary": "A bearded merchant with a maroon hat, an orange sash, and a coin pouch. The face matches the mockup, but a skin gap between the hat and the hair is a visible defect.",
+    "strengths": [
+      "The large black beard, the thick eyebrows, and the open smiling mouth match the mockup.",
+      "The coin pouch has gold coins and gold ties, and it reads at 128 px.",
+      "The maroon hat, the orange sash, and the cream sleeves give a clear color plan."
+    ],
+    "issues": [
+      "A strip of skin shows between the hat and the hair in the side and back views. Close the gap so that the hair meets the hat.",
+      "The hair on the side of the head is a black stripe across the temple, and the back hair has two lumps at the bottom. Make the side hair a short, even sideburn and smooth the back.",
+      "The hat is a tall, round puff. Make it a flatter, slouched beret that tilts to one side, as in the mockup.",
+      "The coat is a long skirt that hides the legs. Shorten it so that the brown trousers and the boot cuffs show.",
+      "The pouch is low at the hip. Extend the arm forward and hold the pouch at chest height.",
+      "The coat is a pale mint. Make it the darker sage green of the mockup and add the gold trim along the open front.",
+      "The sash is a smooth band. Add the knot and the hanging tails."
+    ],
+    "next": "Close the skin gap between the hat and the hair."
+  },
+  "mayor": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "A mayor with a top hat, a big pink nose, a gold chain, and a scroll. He is clearly the mockup character, but the coat and the pose have clear differences.",
+    "strengths": [
+      "The black top hat with the red band, the large pink nose, and the grey eyebrows and side hair match the mockup.",
+      "The gold chain with a medallion, the white jabot, and the scroll with a red ribbon are all present.",
+      "The burgundy coat with the high collar and the white cuffs reads in every sprite direction."
+    ],
+    "issues": [
+      "The coat is closed and long, like a robe. Open the coat front to show the cream waistcoat, the gold buttons, and the dark grey trousers.",
+      "The right arm hangs at the side. Raise the right hand to the side with an open palm, as in the mockup.",
+      "The mustache is thin and very pale. Make it thicker, grey, and curled at the ends.",
+      "The smile is small. Make the mouth a wide smile with visible teeth.",
+      "The ears are small. Make them large, as in the mockup.",
+      "The grey hair has a lavender tint. Use a neutral grey."
+    ],
+    "next": "Open the coat front to show the cream waistcoat and the dark trousers."
+  },
+  "town-crier": {
+    "overall": 6.5,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 3.5, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "A town crier in a blue coat and a blue tricorn who shouts with a raised bell. The colors and the face match, but the hat shape and the bell are clearly different.",
+    "strengths": [
+      "The open shouting mouth and the green eyes match the mockup.",
+      "The blue coat with gold trim, the gold buttons, the cream shirt, and the black belt with a gold buckle match the mockup.",
+      "The tricorn and the raised arm read well in the 128 px sprites."
+    ],
+    "issues": [
+      "The tricorn is a flat, boxy tray with straight vertical panels. Make the brim curve up softly into three rounded corners, as in the mockup.",
+      "The hat brim and the gold trim show faceted shading streaks. Smooth the brim mesh.",
+      "The bell is a trumpet shape and reads as a horn. Make it a domed handbell with a short top handle.",
+      "The coat is closed to the knee and hides the legs. Open the lower coat to show the cream breeches and the white stockings.",
+      "The brown fringe does not show under the hat. Add the hair locks at the forehead and the sides.",
+      "The scroll is a flat sheet with lines. Make it a rolled parchment."
+    ],
+    "next": "Rebuild the tricorn with a soft, curved, upturned brim."
+  },
+  "herbalist": {
+    "overall": 7.0,
+    "scores": [4, 3.5, 4, 4, 3.5, 3.5, 4, 4, 4.5, 3.5, 3],
+    "summary": "A young herbalist with a green headscarf, a braid, a laced green dress, and a basket of flowers. She matches the mockup well, but the basket pose and the headscarf are clearly different.",
+    "strengths": [
+      "The soft smile, the rosy cheeks, and the brown braid over the right shoulder match the mockup.",
+      "The green scarf, the laced brown bodice panel, the satchel, and the boots are all present.",
+      "The palette matches the mockup."
+    ],
+    "issues": [
+      "The basket hangs low at the side in one hand. Hold the basket in front of the body with both hands, as in the mockup.",
+      "The headscarf is a hard, smooth dome. Add soft cloth folds and let it sit lower at the back of the head.",
+      "The hair shows only as a band across the forehead. Add the long side locks that frame the face.",
+      "The headscarf, the scarf, and the dress have one green value. From the back the sprites read as one green mass. Make the headscarf and the scarf darker than the dress.",
+      "The basket has few leaves. Add more green leaves above the rim.",
+      "The hair edge at the temple has a stepped cut in the side view."
+    ],
+    "next": "Hold the basket in front of the body with both hands."
+  },
+  "weaponsmith": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 4, 4, 4.5, 4.5, 3],
+    "summary": "A red-haired weaponsmith with a leather apron, big gloves, and a raised sword. The character reads well, but the sword is clearly different from the mockup.",
+    "strengths": [
+      "The spiky flame-red hair, the thick red eyebrows, and the smile match the mockup.",
+      "The grey shirt, the riveted leather apron, the belt, the large gloves, and the boots match the mockup.",
+      "The character reads clearly in all eight 128 px sprite directions."
+    ],
+    "issues": [
+      "The sword blade is a thin rod with a small gold crossguard. Make it a broad longsword with a fuller and a heavy silver crossguard with round ends.",
+      "The sword hand is at shoulder height. Lower the hand to waist height and keep the blade upright, as in the mockup.",
+      "The hair spikes are only on top, and the sides and back are a smooth cap. Add spikes and locks at the sides and the back.",
+      "The ears are small. Make them large, as in the mockup.",
+      "The apron rivets are brass. Make them silver.",
+      "A hammer hangs at the belt. The mockup shows silver tongs on the belt."
+    ],
+    "next": "Replace the thin blade with a broad longsword that has a heavy silver crossguard."
+  }
+}

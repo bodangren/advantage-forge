@@ -12,10 +12,10 @@ import { humanoidAsset } from './parts/humanoid-kind.js';
  *   of a warm brown and cream body.
  * Shape language: round and soft (puffed hat, loaves, round shoes), with the flat tray as the one hard form.
  * Palette (60/30/10): cream #f3ead6 / #e8dcc0 (hat, cuffs, socks, apron); brown #8a5a3a (shirt),
- *   #4a3428 (trousers); golden loaves #c88a3a with #e0a850 tops; hair tuft #5a301d.
+ *   #4a3428 (trousers); a dark bun #9a5a26 with sesame, a light loaf #d89a48 with scores; hair tuft #5a301d.
  * Value plan: the white hat over the light face is the focal point; the brown shirt and trousers
  *   frame the cream apron; the golden loaves are the accent.
- * Bodies: skin (open smile), hat, tuft, shirt, cuffs, apron, pants, socks, shoes, tray, loaves.
+ * Bodies: skin (open smile), hat, tuft, hair, shirt, cream, apron, pants, shoes, tray, bun, loaf.
  * Rig: the humanoid kind's skeleton and clips with a two-hand `hold`: the elbows bent and the fists
  *   on the tray rims in the rest pose and in every clip. The tray and the loaves are rigid on `hand.R`.
  */
@@ -34,8 +34,11 @@ const C = {
   pants: '#4a3428',
   shoe: '#c89a6a',
   tray: '#9a6a3a',
-  loaf: '#c88a3a',
-  loafTop: '#e0a850',
+  bun: '#9a5a26',
+  bunTop: '#b8763a',
+  loaf: '#d89a48',
+  loafTop: '#eebc66',
+  score: '#a8682e',
   seed: '#fbf3dc',
   mouth: '#8a2e2a',
   tongue: '#d8706a',
@@ -118,26 +121,35 @@ export default humanoidAsset({
     const hat = hatPose(sdf.smoothUnion(0.03, cap, band, puff)).bone('head');
     k.body('hat', hat, { color: C.cream, roughness: 0.9, detail: 0.005, bump: (x, y, z) => 0.003 * Math.sin(x * 60 + z * 40) * Math.cos(y * 50) });
 
-    // The hair tuft at the front, under the band: a few thick curls.
+    // The hair tuft at the front, under the band: a soft base and three curled locks.
+    const curl = (x0: number, s: number) =>
+      sdf.chain(
+        [
+          [x0, 0.088, 0.172, 0.022],
+          [x0 + 0.012 * s, 0.114, 0.19, 0.019],
+          [x0 + 0.028 * s, 0.11, 0.206, 0.016],
+          [x0 + 0.032 * s, 0.09, 0.202, 0.012],
+        ],
+        0.01,
+      );
     const tuft = hatPose(
-      sdf.smoothUnion(
-        0.014,
-        sdf.sphere(0.032).at(-0.03, 0.09, 0.178),
-        sdf.sphere(0.034).at(0.014, 0.098, 0.182),
-        sdf.sphere(0.027).at(0.052, 0.084, 0.17),
-        sdf.sphere(0.024).at(-0.006, 0.122, 0.168),
-      ),
+      sdf.smoothUnion(0.012, sdf.ellipsoid([0.06, 0.03, 0.03]).at(0.004, 0.09, 0.168), curl(-0.04, -1), curl(0.004, 1), curl(0.044, 1)),
     ).bone('head');
     const hairColor = k.tint('hair');
     k.body('tuft', tuft, { color: hairColor, roughness: 0.6, detail: 0.004 });
 
-    // The hair at the back and sides, under the hat.
-    const hairBack = hatPose(
-      sdf
-        .ellipsoid([0.212, 0.206, 0.196])
-        .smoothIntersect(0.02, sdf.halfSpace([0, -1, 0], 0.07))
-        .smoothIntersect(0.03, sdf.halfSpace([0, 0, 1], -0.03)),
-    ).bone('head');
+    // The hair under the hat: a soft cap at the back that ends in a row of rounded lock tips at the
+    // nape, and short locks at the temples beside the face.
+    const hairShell = sdf.ellipsoid([0.214, 0.208, 0.198]);
+    const tips = sdf.union(
+      ...[-70, -45, -22, 0, 22, 45, 70].map((a) => sdf.sphere(0.025).at(0.18 * Math.sin((a * Math.PI) / 180), -0.068, -0.167 * Math.cos((a * Math.PI) / 180))),
+    );
+    const back = hairShell.smoothIntersect(0.02, sdf.halfSpace([0, -1, 0], 0.06)).smoothIntersect(0.03, sdf.halfSpace([0, 0, 1], -0.02));
+    const temples = hairShell
+      .smoothIntersect(0.015, sdf.halfSpace([0, -1, 0], 0.02))
+      .smoothIntersect(0.015, sdf.halfSpace([-1, 0, 0], -0.15).mirror('x'))
+      .smoothIntersect(0.015, sdf.halfSpace([0, 0, 1], 0.11));
+    const hairBack = hatPose(sdf.smoothUnion(0.015, back, tips, temples)).bone('head');
     k.body('hair', hairBack, { color: hairColor, roughness: 0.6, detail: 0.005 });
 
     // ------------------------------------------------------------------ shirt: long sleeves
@@ -229,27 +241,41 @@ export default humanoidAsset({
       .bone('hand.R');
     k.body('tray', trayShape, { color: C.tray, roughness: 0.75, detail: 0.004, bump: (x, y, z) => 0.002 * Math.sin(z * 90 + Math.sin(x * 20)) });
 
-    const base = ty - 0.01; // the loaves rest on the board, inside the rim
-    const loaf1 = sdf.smoothUnion(0.02, sdf.ellipsoid([0.08, 0.06, 0.075]).at(-0.075, base + 0.045, tz), sdf.ellipsoid([0.064, 0.04, 0.06]).at(-0.075, base + 0.075, tz));
-    const loaf2 = sdf.smoothUnion(0.02, sdf.ellipsoid([0.075, 0.048, 0.068]).at(0.085, base + 0.035, tz + 0.01), sdf.ellipsoid([0.058, 0.03, 0.052]).at(0.085, base + 0.058, tz + 0.01));
-    const top = sdf.halfSpace([0, -1, 0], -(base + 0.06));
-    // Sesame seeds on the big loaf (the one on the viewer's left): small light ovals on its crown.
+    // Two different breads on the board: a dark round bun with sesame seeds (the viewer's left) and
+    // a light golden loaf with three scores (the viewer's right).
+    const base = ty - 0.01; // the breads rest on the board, inside the rim
+    const bunAt = [-0.075, base, tz] as const;
+    const bun = sdf.smoothUnion(0.02, sdf.ellipsoid([0.08, 0.06, 0.075]).at(bunAt[0], base + 0.045, tz), sdf.ellipsoid([0.064, 0.04, 0.06]).at(bunAt[0], base + 0.075, tz));
     const seeds = sdf.union(
       ...[
-        [-0.1, 0.1, -0.02],
-        [-0.075, 0.112, -0.03],
-        [-0.05, 0.105, -0.01],
-        [-0.09, 0.108, 0.02],
-        [-0.062, 0.11, 0.025],
-        [-0.11, 0.092, 0.005],
-        [-0.04, 0.095, 0.03],
-      ].map(([x, y, z]) => sdf.sphere(0.011).at(x!, base + y!, tz + z!)),
+        [0, 0.116, 0],
+        [-0.025, 0.112, -0.022],
+        [0.024, 0.112, -0.018],
+        [-0.03, 0.11, 0.02],
+        [0.028, 0.11, 0.024],
+        [0.002, 0.112, 0.034],
+        [0.0, 0.112, -0.036],
+        [-0.045, 0.098, 0.0],
+        [0.045, 0.098, 0.004],
+        [-0.012, 0.114, 0.012],
+      ].map(([x, y, z]) => sdf.ellipsoid([0.013, 0.012, 0.009]).at(bunAt[0] + x!, base + y!, tz + z!)),
     );
-    const loaves = sdf
-      .union(loaf1, loaf2)
+    const bunTop = sdf.halfSpace([0, -1, 0], -(base + 0.075));
+    const breadBun = bun
       .bone('hand.R')
-      .paintWhere(top.intersect(sdf.box([1, 1, 1]).at(0, base, tz)), C.loafTop, 0.015)
+      .paintWhere(bunTop.intersect(sdf.box([0.3, 0.3, 0.3]).at(bunAt[0], base + 0.1, tz)), C.bunTop, 0.02)
       .paintWhere(seeds, C.seed, 0.002);
-    k.body('loaves', loaves, { color: C.loaf, roughness: 0.8, detail: 0.004 });
+    k.body('bun', breadBun, { color: C.bun, roughness: 0.75, detail: 0.004 });
+
+    const loafAt = [0.085, base, tz + 0.01] as const;
+    const loaf = sdf.smoothUnion(0.02, sdf.ellipsoid([0.075, 0.048, 0.068]).at(loafAt[0], base + 0.035, loafAt[2]), sdf.ellipsoid([0.058, 0.03, 0.052]).at(loafAt[0], base + 0.058, loafAt[2]));
+    const scores = sdf.union(
+      ...[-0.026, 0, 0.026].map((dx) => sdf.box([0.008, 0.2, 0.07], 0.003).rotateY(-25).at(loafAt[0] + dx, base + 0.1, loafAt[2])),
+    );
+    const breadLoaf = loaf
+      .bone('hand.R')
+      .paintWhere(sdf.halfSpace([0, -1, 0], -(base + 0.06)).intersect(sdf.box([0.3, 0.3, 0.3]).at(loafAt[0], base + 0.1, loafAt[2])), C.loafTop, 0.015)
+      .paintWhere(scores.intersect(sdf.halfSpace([0, -1, 0], -(base + 0.068))), C.score, 0.003);
+    k.body('loaf', breadLoaf, { color: C.loaf, roughness: 0.8, detail: 0.004 });
   },
 });

@@ -1,0 +1,120 @@
+{
+  "bartender": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A mustached bartender with a green vest, a cream apron, and a foaming mug. The identity matches the mockup, but the mug pose, the towel, and the vest color show clear differences.",
+    "strengths": [
+      "The mustache, the green vest with gold buttons, the cream apron, and the brown boots match the mockup.",
+      "The foaming mug reads as the role prop in all eight sprite directions.",
+      "The face reads at 128 px in the S, SW, and SE sprites.",
+      "The model is clean and attached. It stands on the ground and faces +Z."
+    ],
+    "issues": [
+      "The mockup raises the mug to shoulder height in a toast. The model holds the mug low at the hip. Raise the mug arm to the chest or shoulder.",
+      "The mockup has a tan striped towel over the right shoulder, on the mug side. The model has a white towel with red stripes over the left shoulder. Move the towel to the right shoulder and make it tan with brown stripes.",
+      "The mockup vest is a dark olive green with two columns of gold buttons. The model vest is a brighter mid green with one column of three buttons. Darken the vest and use two button columns.",
+      "The mockup hair has a high swept wave on top. The model hair is flatter with a side part. Add volume to the top of the hair.",
+      "The mug is smaller and lighter than the dark mug in the mockup. Make the mug larger and darker.",
+      "The mockup skin is a warm tan. The model skin is paler. The mockup apron is longer and reaches the knees."
+    ],
+    "next": "Raise the mug to the shoulder in a toast pose, as in the mockup."
+  },
+  "merchant": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 3.5, 4.5, 4, 3.5],
+    "summary": "A bearded merchant with a maroon beret, an orange sash, and a pot of coins. The beard and the beret carry the identity, but the coat, the beret size, and the coin prop differ clearly from the mockup.",
+    "strengths": [
+      "The large black beard and mustache match the mockup and read in every sprite direction.",
+      "The maroon beret, the orange sash, and the brown boots match the mockup.",
+      "The face reads at 128 px in the S sprite."
+    ],
+    "issues": [
+      "The mockup coat is a long sage green coat to the knees with gold trim and dark blue lapels. The model has a short bright teal jacket with a yellow hem band at the hip. Lengthen the coat to the knees, change the teal to sage green, and add the gold trim and the blue lapels.",
+      "The mockup extends a cloth coin pouch forward in the left hand. The model holds a clay pot of coins low at the hip. Change the pot to a cloth pouch with a tie and raise the arm forward.",
+      "The model beret is much larger and flatter than the mockup beret. It sits level and high, like a pancake. Make the beret smaller and tilt it to one side.",
+      "The mockup has a cream scarf at the neck. The model shows a white shirt front. Add the cream neck scarf.",
+      "The mockup mouth is open in a talking smile. The model mouth is a small dark gap under the mustache. Make the open smile larger.",
+      "The mockup body is stocky with a round belly. The model body is compact and flat. Add a belly.",
+      "From the back, the hair ends at the nape with a jagged edge, and the edge between the sash and the jacket is wavy. Clean these edges."
+    ],
+    "next": "Replace the short teal jacket with the long sage green coat with gold trim, as in the mockup."
+  },
+  "mayor": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 4, 4, 4.5, 3.5, 3.5],
+    "summary": "A gray-haired mayor with a tall top hat, a burgundy coat, and a gold chain of office. The identity matches the mockup well, but the coat length and the scroll pose differ clearly.",
+    "strengths": [
+      "The black top hat with the red band matches the mockup and reads in every view and sprite direction.",
+      "The burgundy coat with gold buttons, the cream waistcoat, the white jabot, and the gold chain with a medallion match the mockup palette.",
+      "The gray hair tufts, the gray mustache, and the round pink nose give an older, friendly face.",
+      "The model is clean and attached. It stands on the ground and faces +Z."
+    ],
+    "issues": [
+      "The mockup coat is a long frock coat to the shins with flared tails. The model coat ends at the upper thigh. Lengthen the coat to the shins.",
+      "The mockup holds the scroll upright at the chest and gestures with the other open hand. The model holds the scroll flat and low at the hip. Raise the scroll to the chest.",
+      "The mockup has a high upturned collar that frames the face. The model has no raised collar. Add the high collar.",
+      "The mockup nose is large and bulbous, and the mustache is a wide gray handlebar. The model nose and mustache are smaller. Enlarge the nose and the mustache.",
+      "At 128 px the hat brim shades the face, and the mustache reads weakly. Make the mustache lighter or larger."
+    ],
+    "next": "Lengthen the burgundy coat to the shins with flared tails, as in the mockup."
+  },
+  "town-crier": {
+    "overall": 6.0,
+    "scores": [3, 3, 3, 3, 3, 3.5, 3.5, 3, 4.5, 3.5, 3.5],
+    "summary": "A town crier in a blue coat with a hand bell and a sheet of news. The coat and the props match the role, but the hat, the bell pose, and the shout differ noticeably from the mockup.",
+    "strengths": [
+      "The royal blue coat with gold trim and buttons, the white cuffs, the black belt with a gold buckle, and the buckled black shoes match the mockup.",
+      "The brass bell and the paper sheet read as the role props.",
+      "The face reads at 128 px in the S and SE sprites."
+    ],
+    "issues": [
+      "The mockup hat is a compact blue tricorn with a thin gold edge. The model hat has a round crown and a very wide, thin brim that extends far past the shoulders. From the side and the back it reads as a wide-brim hat, not a tricorn. Make the brim narrower and fold it into three corners.",
+      "The top surface of the brim is tan with blue blotches. The mockup brim is blue. Paint the brim blue and keep gold only on the edge.",
+      "The mockup raises the bell high in the left hand. The model holds the bell low at the hip. Raise the bell arm above the shoulder.",
+      "The mockup shouts with a wide open mouth and wide eyes. The model has a smaller open smile. Make the mouth larger and rounder to show a shout.",
+      "The mockup coat is long and reaches the knees. The model coat ends at the hip. Lengthen the coat.",
+      "The mockup eyes are green. The model eyes are brown. Change the default eye color to green.",
+      "From the N and NE sprite directions the wide brim hides the head and the body."
+    ],
+    "next": "Replace the wide flat brim with a compact blue tricorn with a thin gold edge."
+  },
+  "herbalist": {
+    "overall": 6.0,
+    "scores": [3, 3, 3, 3, 3, 3.5, 3.5, 4, 4.5, 3.5, 3.5],
+    "summary": "A young herbalist in green with a wicker basket of flowers. The basket and the green palette match the role, but the dress, the headwear, and the braid differ noticeably, and the girl reads less clearly as a girl.",
+    "strengths": [
+      "The wicker basket with pink and yellow flowers matches the mockup and has a clear wicker material.",
+      "The green neck scarf, the small brown satchel, the brown hair, and the brown boots match the mockup.",
+      "The closed smile matches the mockup expression.",
+      "The model is clean and attached. It stands on the ground and faces +Z."
+    ],
+    "issues": [
+      "The mockup wears a long olive dress that reaches below the knee. The model wears a short green tunic to the hip with a wide brown corset belt. Lengthen the garment into a dress below the knee and make the laced bodice small, under the scarf.",
+      "The mockup wears a dark olive kerchief tied over the hair. The model wears a bright green knit cap with a hanging tail, which reads as an elf cap. Change the cap to a smooth kerchief.",
+      "The mockup braid hangs over the right shoulder in front and shows braid segments. The model hair is one smooth thick lock behind the back that reaches below the hips. Move the braid to the front of the shoulder and add segments.",
+      "The model eyebrows are thick and dark. With the cap and the tunic, the face reads as a boy. Make the eyebrows thinner and lighter.",
+      "The mockup palette is a muted olive green. The model uses a saturated mid green and a mint hem. Mute the greens toward olive.",
+      "The mockup carries the basket in front at the waist. The model holds the basket low at the side by the handle."
+    ],
+    "next": "Change the short tunic and corset to the long olive dress of the mockup."
+  },
+  "weaponsmith": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 4, 4, 3.5, 4, 4.5, 4, 3.5],
+    "summary": "A red-haired weaponsmith in a riveted leather apron with big gauntlets and a sword. The outfit and the colors match the mockup well, but the sword pose and the hair shape differ clearly.",
+    "strengths": [
+      "The brown riveted leather apron with a belt, the gray shirt, the large leather gauntlets, and the boots match the mockup.",
+      "The red-orange hair gives a strong focal color and reads in every sprite direction.",
+      "Leather, metal, and cloth read as different materials.",
+      "The model is clean and attached. It stands on the ground and faces +Z."
+    ],
+    "issues": [
+      "The mockup raises a long sword upright in the right hand. The model holds a shorter sword low at the hip, and the blade points forward and down. In the front view only the hilt shows. Raise the sword upright beside the head.",
+      "The mockup blade is about as long as the body. The model blade is about half that length. Lengthen the blade and widen the crossguard.",
+      "The mockup hair is flame-like tufts that sweep up and back. The model hair is a ring of equal cones, like a crown. Make the tufts curve back and vary their size.",
+      "The mockup eyebrows are red-orange. The model eyebrows are dark brown. Paint the eyebrows the hair color.",
+      "The mockup has red marks on the cheeks. The model has dark gray soot smudges. This is a small difference."
+    ],
+    "next": "Raise the sword upright beside the head and lengthen the blade, as in the mockup."
+  }
+}

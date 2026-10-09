@@ -37,7 +37,11 @@ recorded in `docs/character-reviews.json`. Builds queue on one `flock` (machine 
 Base: `humanoidAsset` (assets/parts/humanoid-kind.ts). Options added on 2026-10-09: `hold` (both
 hands on a held item in every clip, level, with a lift in cheer, cast, and attack) and `pose` (one
 or both arms in a held rest pose, kept in every clip; `h.arms`, `h.perArm`). Without them the
-avatar base and the baker build identical (A/B mesh, animation, and node comparison).
+avatar base and the baker build identical (A/B mesh, animation, and node comparison). Also on
+2026-10-09: `lashes: false` (no winged lashes, for men, boys, and elders; the avatar base is
+identical in the A/B), and the lid and lash paint now stop where the face turns into the temple
+(a reviewer saw the old streak as a glasses arm in the side view; an intended change to every
+humanoid face).
 Mockups pick hands freely: the data rows follow each mockup (the character's right hand is on the
 viewer's left).
 
@@ -45,6 +49,25 @@ viewer's left).
 
 | Batch | NPCs | Status |
 | --- | --- | --- |
-| 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | built 2026-10-09, in review |
-| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | building |
-| trial | baker (7.2 after two reviews) | third pass built |
+| 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | review 1: 7.0, 6.5, 7.0, 6.0, 6.0, 6.5; review 2: 6.5, 6.5, 7.0, 6.5, 7.0, 7.0; third pass running |
+| 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | review 1: 7.0, 6.5, 6.5, 7.0, 7.0, 7.0, 7.0, 6.5; second pass running |
+| trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
+| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | building (5 of 8 built) |
+| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | building (glassblower built) |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | briefs and mockups ready |
+| 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | briefs and mockups ready |
+| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | briefs and mockups ready |
+
+Still to write: wilderness (14 without a source), court and faction (22), and the fantasy peoples
+(9; some may need another body). `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`, and
+`scout` have sources from earlier tracks.
+
+Review evidence: `bench/sonnet/npc-cards/<batch>/review.json` (cards are local PNGs, not committed).
+Reviewers see review cards with the idle strip for batches 1 and 2; later batches show the walk
+strip (the card default), because the shared idle clip has little motion (motion 3 to 3.5).
+
+## Follow-up list (three reviews below the bar)
+
+| Asset | Ratings | Largest open issues |
+| --- | --- | --- |
+| baker | 6.8, 7.2, 7.0 | the hat is low with one lumpy puff; in the rest clip the chin goes into the apron bib; sharp mouth corners read as fangs at 128 px |

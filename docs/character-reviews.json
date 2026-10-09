@@ -8471,20 +8471,522 @@
     "reviewedAt": "2026-10-06T11:04:03.000Z"
   },
   "baker": {
-    "overall": 7.2,
+    "overall": 7.0,
     "group": "NPCs",
-    "summary": "A P2 settlement NPC on the humanoid kind with the new two-hand hold: a puffy white chef hat with a brown curled tuft, an open smile, a brown shirt with cream cuffs, a cream bib apron, dark short trousers with cream socks, and a wooden tray with two golden loaves held level in both hands in every clip. Source: arm s1 of the Haiku trial (bench/haiku/results.md), finished by the orchestrator. Independent review: bench/haiku/review-final2.json. The forge check shows result ok, and the build has no warnings.",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "The model is the mockup baker boy with a chef hat, a cream apron, and a bread board in two hands. It is the same character, but the hat, the ears, and the mouth show clear differences, and the rest clip has a chin intersection.",
     "strengths": [
-      "The chef hat, the apron straps, and the tray with loaves read in all 8 sprite directions at 128 px.",
-      "The palette matches the brief, and the face reads: brows, rosy cheeks, and an open smile with teeth.",
-      "The tray stays level and between both hands in every clip."
+      "The palette matches the mockup: a cream hat and apron, a brown shirt, dark brown trousers, cream sock cuffs, and tan shoes.",
+      "The hat, the apron, and the bread board make the identity clear in all eight sprite directions. The face reads in the S, SW, and SE sprites.",
+      "The bread board stays in the two hands in all eight clips. The cheer hop, the hit recoil, and the attack push read clearly.",
+      "The bread reads as bread: one dark bun with seeds and one golden bun on a wood board.",
+      "The curly forelock on the hat band, the white wrist cuffs, and the apron straps match the mockup."
     ],
     "issues": [
-      "A hard-edged hair slab shows under the hat in the back and side views; the tuft is one smooth lump, and the temples show no hair.",
-      "Cast and cheer look almost the same as idle, and attack is only a small torso twist.",
-      "The two loaves look the same, the sesame barely shows, the tray is narrow, and the shirt has no collar."
+      "The chef hat is too low and has one lumpy puff. The mockup hat is taller than the head and has two or three large pleated lobes. Make the hat about 20 percent taller and shape clear lobes with folds between them.",
+      "In the rest clip, the head bends forward and the chin goes into the apron bib. The bib edge cuts the mouth in the three-quarter view. Decrease the head bend, or move the chin in front of the bib.",
+      "The mockup has large ears that stand out from the head. The model ears are small, and the side hair hides them in the front view. Make the ears larger and turn them out.",
+      "The mouth corners are sharp, and at sprite size the teeth read as fangs. The mockup shows a soft wide grin with two front teeth. Round the mouth corners into a soft U shape.",
+      "The model adds dark side hair at the temples and a full hair cap at the back. The mockup shows almost no hair below the hat band. Reduce the side hair so that the ears and the cheeks read.",
+      "The mockup shows a wood board or basket on the back. The model back is empty. Add the back item, or record that the design removes it.",
+      "The mockup shirt has a white collar above the bib. The model has no collar. Add a small white collar.",
+      "The winged eyelashes make the face look older than the mockup boy. Use plain lash lines.",
+      "The cast clip and the idle clip show little movement, and they look almost the same. The walk and the run keep the upper body still. Add a body bob and a small tray sway."
     ],
-    "next": "Soften the hair cap and add temple locks, give cheer a hop and cast a lean, and vary the loaves.",
-    "reviewedAt": "2026-10-09T11:56:43+00:00"
+    "next": "Make the chef hat taller than the head, with two or three pleated lobes. Also fix the chin intersection in the rest clip, because the defect cap keeps the rating at 7.0 until you fix it.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T13:27:11.000Z"
+  },
+  "apothecary": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "An old apothecary woman with a bun, gold round glasses, a purple dress, and a cream apron. She holds a round bottle low and a flask high. The character is clear, but the hair color, the dress length, and the age cues differ from the mockup.",
+    "strengths": [
+      "The gold round glasses, the bun, and the cream apron match the mockup. They are clear at 128 px.",
+      "The pose with one bottle low and one flask high follows the mockup.",
+      "The bottles look like glass with colored liquid."
+    ],
+    "issues": [
+      "The hair is pale lavender. The mockup hair is mid gray. Change the hair to a neutral gray with darker gray shadows.",
+      "The dress is a straight robe that stops at the shoes. The mockup dress is a flared skirt that stops at the knee and shows the legs. Shorten and flare the skirt.",
+      "The face looks young. The mockup has bushy gray brows, a large round nose, and small wrinkle lines. Add these age cues.",
+      "The round bottle is small and at the waist. The mockup holds a large bottle at chest height. Make the bottle larger and raise the hand.",
+      "The plume on the raised flask looks like a bone with knobs. Make it a soft, curling plume of smoke.",
+      "The dress is a saturated plum color. The mockup dress is a muted mauve. Decrease the saturation.",
+      "The apron has three colored vials in one pocket. The mockup has two pockets with one green-capped vial each. This difference is small."
+    ],
+    "next": "Change the hair to gray and make the skirt a flared, knee-length skirt that shows the legs.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "armorer": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 3.5,
+      "proportion": 3,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 4,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3.5
+    },
+    "summary": "A bearded armorer with chain mail sleeves, a leather tabard, a round shield, and a hammer. The outfit matches, but the hair, the belt, and the hammer size are clearly different from the mockup.",
+    "strengths": [
+      "The chain mail sleeves have a clear metal texture.",
+      "The round shield has a wood face, a silver rim, rivets, and a boss, as in the mockup.",
+      "The open smile in the full beard matches the mockup expression."
+    ],
+    "issues": [
+      "The hair is a smooth, round cap that looks like a fur hat or a helmet. The mockup has thick, curly locks with volume on top. Model separate curly locks.",
+      "The eye size is the house style, but the long, curved upper lashes give the broad, bearded man a feminine look. Remove the lashes or make them short.",
+      "The wide leather belt with the square silver buckle and the side pouches is missing. Add the belt at the waist.",
+      "The hammer is small. In the front view its head points at the viewer. The mockup hammer has a large silver head that is held out to the side. Make the head larger and show its profile.",
+      "The shield is smaller than in the mockup. Make it larger so that it covers the side of the body.",
+      "The face has no visible nose. The mockup has a large round nose. Add a nose.",
+      "The trousers are brown. The mockup trousers are dark olive gray with leather cuffs on the boots."
+    ],
+    "next": "Replace the cap of hair with curly locks and add the wide belt with the silver buckle.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "brewer": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A ginger brewer in a brown flat cap with a hop cone, who holds a small keg in both hands. The props and the colors match, but the chubby face and the suspenders of the mockup are lost.",
+    "strengths": [
+      "The flat cap with the hop cone, the ginger hair, and the keg give a clear brewer identity.",
+      "The keg is in both hands at the waist, as in the mockup.",
+      "The open smile matches the mockup expression."
+    ],
+    "issues": [
+      "The face is the slim base face. The mockup face is round and chubby, with a large round nose, strong red cheeks, and large ears. Make the face rounder and add the nose and the cheeks.",
+      "The torso has a brown vest. The mockup has brown suspenders with metal buttons over a cream shirt. Replace the vest with suspenders.",
+      "The hop cone on the cap is a smooth green lump. Model it as a cone of overlapping scales with small leaves.",
+      "The body is slim. The mockup body is short and wide. Make the torso wider and rounder.",
+      "The trousers are brown. The mockup shorts are khaki. Change the trouser color.",
+      "The keg wood is light orange with dark hoops. The mockup keg is darker brown with silver hoops.",
+      "The hands touch the ends of the keg but do not grip it as in the mockup."
+    ],
+    "next": "Rebuild the face as a round, chubby face with a large nose and strong red cheeks.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "carpenter": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A young carpenter with a red headband, a blue shirt, tan overalls, and a tool belt, who holds a handsaw. The outfit matches the mockup well, but the saw hangs down and the mockup holds it up.",
+    "strengths": [
+      "The red headband, the blue shirt, the tan overalls, and the brown straps match the mockup palette.",
+      "The tool belt with the hammer, the yellow ruler, and the pouch puts detail at the waist.",
+      "The closed smile matches the mockup expression."
+    ],
+    "issues": [
+      "The saw hangs down at the side with the tip near the ground. In the mockup the hand holds the saw up and forward at approximately 30 degrees. Raise the saw to the mockup angle.",
+      "In the walk clip the saw tip comes down to the ground line. Keep the saw clear of the ground.",
+      "The hair is one smooth swept shape. The mockup hair has separate, tousled locks. Add separate locks on top.",
+      "The yellow pencil in the headband is missing. Add it. The headband tails are at the back, and in the mockup they hang at the side of the head.",
+      "In the front view the saw blade is a thin gray strip. Make the blade wider so that it is clear at 128 px."
+    ],
+    "next": "Raise the saw to the mockup angle, up and forward from the hand.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "cobbler": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "An old bald cobbler with white side hair, a white mustache, and a brown apron, who holds up a shoe and a hammer. The pose and the palette match, but the shoe is not clear and the model adds glasses.",
+    "strengths": [
+      "The bald head, the white side hair, the bushy white brows, and the mustache match the mockup.",
+      "Both arms are up and show the shoe and the hammer, as in the mockup.",
+      "The brown apron with brass buttons over the cream shirt matches the mockup palette."
+    ],
+    "issues": [
+      "The shoe is a red half disc with a dark sole. It does not look like a shoe. Model a toe, a heel, a sole, and laces, as in the mockup.",
+      "The model wears round glasses. The mockup has no glasses. Remove the glasses.",
+      "The mouth is a small, round, open shape under the mustache, and it looks surprised. The mockup shows a smile. Change the mouth to a smile.",
+      "The nose is small. The mockup has a large round nose. Make the nose larger.",
+      "The side hair is a white tuft. The mockup side hair is a curl in a spiral. Add the curl.",
+      "The trousers are short and dark green. The mockup trousers are wide and olive. The quilted apron texture is also different from the smooth leather in the mockup."
+    ],
+    "next": "Rebuild the red shoe with a clear toe, heel, sole, and laces.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "cook": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "A young cook in a white chef hat and jacket, who holds a copper pot and raises a wooden spoon. The identity is clear, but the bow tie, the hair, and the low pot are different from the mockup.",
+    "strengths": [
+      "The white hat, the white jacket, and the white apron with a red accent at the neck give a clear cook identity.",
+      "The copper pot with handles and the raised wooden spoon match the mockup props.",
+      "The closed smile with red lips matches the mockup expression."
+    ],
+    "issues": [
+      "The pot hangs low at the knee. In the mockup the pot is at the waist against the hip. Raise the pot to the waist.",
+      "The neck has a red bow tie. The mockup has a red neckerchief with loose ends. Replace the bow tie with a neckerchief.",
+      "The hair is a short, smooth bob. The mockup hair is wavy and falls in curls to the shoulders. Add wavy locks below the hat.",
+      "The steam is a thick gray tube that looks like a bent pipe. Make it thin and translucent, or remove it.",
+      "A dark line shows between the hat brim and the hair in the front and three-quarter views. Close the gap or make the brim white.",
+      "The jacket buttons are gold, and the mockup buttons are white. The trousers are almost black, and the mockup trousers are gray."
+    ],
+    "next": "Raise the pot to the waist against the hip, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "fisher": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 3.5
+    },
+    "summary": "A young fisher in a yellow rain hat, a yellow coat, and green boots, who holds a fish and a fishing rod. The silhouette and the palette match, but the bulky navy scarf of the mockup is missing.",
+    "strengths": [
+      "The yellow hat, the yellow coat, and the green boots give a strong silhouette in all eight sprite directions.",
+      "The fish and the rod with a line and a float are clear.",
+      "The closed smile matches the mockup expression."
+    ],
+    "issues": [
+      "The bulky navy knit scarf at the neck is missing. Only a small navy V shows. Add a thick, ribbed navy scarf around the neck.",
+      "Little hair shows below the hat. The mockup shows thick, tousled black hair at the front and the sides. Add hair volume below the brim.",
+      "The coat has brown toggle buttons. The mockup coat has round silver buttons. Change the buttons.",
+      "The fish is small and at the waist. The mockup holds the fish at chest height. Make the fish larger and raise it.",
+      "The rod is light brown with a reel and a red float. The mockup rod is a dark brown stick with a white tip. This difference is small."
+    ],
+    "next": "Add the thick navy knit scarf around the neck.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "gardener": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3.5
+    },
+    "summary": "An old gardener with a white beard, a wide hat, a yellow shirt, and green overalls, who holds a watering can. The outfit is close, but the stern face and the small can are different from the mockup.",
+    "strengths": [
+      "The white beard and the wide hat with a green band give a clear silhouette in all views.",
+      "The yellow shirt and the green overalls follow the mockup palette.",
+      "In the walk clip the can moves with the arm."
+    ],
+    "issues": [
+      "The white brows slope down to the center, so the face looks stern. The mockup face is cheerful, with raised brows and a smile. Raise the brows and show a smiling mouth.",
+      "The nose is small. The mockup has a large, red, round nose and red cheeks. Add the large nose.",
+      "The watering can is small and hangs at the feet. In the front view it is a small green block. Make the can larger and hold it at the hip with the spout to the side.",
+      "The hat is straw yellow with a round crown. The mockup hat is tan felt with a pinched crown. Change the hat color and shape.",
+      "The plaid on the shirt is faint. Add dark plaid lines.",
+      "The overalls are bright green with a quilted texture. The mockup overalls are smooth olive green.",
+      "The metal tool that hangs at the side in the mockup is missing."
+    ],
+    "next": "Change the face to a cheerful face: raise the brows, add a smile, and add the large red nose.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:07:16.000Z"
+  },
+  "bartender": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A mustached bartender with a foamy mug, a green vest, and a cream apron. The costume matches the mockup, but the hair and the face are clearly different.",
+    "strengths": [
+      "The cream shirt, the green vest with gold buttons, the cream apron, and the brown boots match the mockup.",
+      "The wooden mug has gold bands and white foam. The mug reads in every sprite direction.",
+      "The extended mug arm gives a clear front and three-quarter silhouette."
+    ],
+    "issues": [
+      "The hair is a lumpy cap with a swoop on top and locks that hang over the forehead. It reads as a hat. Change it to the swept, wavy pompadour of the mockup.",
+      "The hair is a medium chestnut. Make it the very dark brown of the mockup.",
+      "The mustache is a thin handlebar line, and it hides the mouth. Make the mustache thick and bushy, and show the closed smile under it.",
+      "The mug is at chest height and the hand holds the handle. Raise the mug to shoulder height and hold it by the body, as in the mockup.",
+      "The towel on the shoulder is a narrow strap. Make it a folded cloth that hangs over the shoulder.",
+      "The vest is a bright green. Make it the dark olive of the mockup.",
+      "The eye line continues onto the temple. In the side view it reads as a glasses arm."
+    ],
+    "next": "Rebuild the hair as a dark, swept pompadour and show the smile under a bushy mustache.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
+  },
+  "merchant": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 2.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A bearded merchant with a maroon hat, an orange sash, and a coin pouch. The face matches the mockup, but a skin gap between the hat and the hair is a visible defect.",
+    "strengths": [
+      "The large black beard, the thick eyebrows, and the open smiling mouth match the mockup.",
+      "The coin pouch has gold coins and gold ties, and it reads at 128 px.",
+      "The maroon hat, the orange sash, and the cream sleeves give a clear color plan."
+    ],
+    "issues": [
+      "A strip of skin shows between the hat and the hair in the side and back views. Close the gap so that the hair meets the hat.",
+      "The hair on the side of the head is a black stripe across the temple, and the back hair has two lumps at the bottom. Make the side hair a short, even sideburn and smooth the back.",
+      "The hat is a tall, round puff. Make it a flatter, slouched beret that tilts to one side, as in the mockup.",
+      "The coat is a long skirt that hides the legs. Shorten it so that the brown trousers and the boot cuffs show.",
+      "The pouch is low at the hip. Extend the arm forward and hold the pouch at chest height.",
+      "The coat is a pale mint. Make it the darker sage green of the mockup and add the gold trim along the open front.",
+      "The sash is a smooth band. Add the knot and the hanging tails."
+    ],
+    "next": "Close the skin gap between the hat and the hair.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
+  },
+  "mayor": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A mayor with a top hat, a big pink nose, a gold chain, and a scroll. He is clearly the mockup character, but the coat and the pose have clear differences.",
+    "strengths": [
+      "The black top hat with the red band, the large pink nose, and the grey eyebrows and side hair match the mockup.",
+      "The gold chain with a medallion, the white jabot, and the scroll with a red ribbon are all present.",
+      "The burgundy coat with the high collar and the white cuffs reads in every sprite direction."
+    ],
+    "issues": [
+      "The coat is closed and long, like a robe. Open the coat front to show the cream waistcoat, the gold buttons, and the dark grey trousers.",
+      "The right arm hangs at the side. Raise the right hand to the side with an open palm, as in the mockup.",
+      "The mustache is thin and very pale. Make it thicker, grey, and curled at the ends.",
+      "The smile is small. Make the mouth a wide smile with visible teeth.",
+      "The ears are small. Make them large, as in the mockup.",
+      "The grey hair has a lavender tint. Use a neutral grey."
+    ],
+    "next": "Open the coat front to show the cream waistcoat and the dark trousers.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
+  },
+  "town-crier": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A town crier in a blue coat and a blue tricorn who shouts with a raised bell. The colors and the face match, but the hat shape and the bell are clearly different.",
+    "strengths": [
+      "The open shouting mouth and the green eyes match the mockup.",
+      "The blue coat with gold trim, the gold buttons, the cream shirt, and the black belt with a gold buckle match the mockup.",
+      "The tricorn and the raised arm read well in the 128 px sprites."
+    ],
+    "issues": [
+      "The tricorn is a flat, boxy tray with straight vertical panels. Make the brim curve up softly into three rounded corners, as in the mockup.",
+      "The hat brim and the gold trim show faceted shading streaks. Smooth the brim mesh.",
+      "The bell is a trumpet shape and reads as a horn. Make it a domed handbell with a short top handle.",
+      "The coat is closed to the knee and hides the legs. Open the lower coat to show the cream breeches and the white stockings.",
+      "The brown fringe does not show under the hat. Add the hair locks at the forehead and the sides.",
+      "The scroll is a flat sheet with lines. Make it a rolled parchment."
+    ],
+    "next": "Rebuild the tricorn with a soft, curved, upturned brim.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
+  },
+  "herbalist": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 3.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A young herbalist with a green headscarf, a braid, a laced green dress, and a basket of flowers. She matches the mockup well, but the basket pose and the headscarf are clearly different.",
+    "strengths": [
+      "The soft smile, the rosy cheeks, and the brown braid over the right shoulder match the mockup.",
+      "The green scarf, the laced brown bodice panel, the satchel, and the boots are all present.",
+      "The palette matches the mockup."
+    ],
+    "issues": [
+      "The basket hangs low at the side in one hand. Hold the basket in front of the body with both hands, as in the mockup.",
+      "The headscarf is a hard, smooth dome. Add soft cloth folds and let it sit lower at the back of the head.",
+      "The hair shows only as a band across the forehead. Add the long side locks that frame the face.",
+      "The headscarf, the scarf, and the dress have one green value. From the back the sprites read as one green mass. Make the headscarf and the scarf darker than the dress.",
+      "The basket has few leaves. Add more green leaves above the rim.",
+      "The hair edge at the temple has a stepped cut in the side view."
+    ],
+    "next": "Hold the basket in front of the body with both hands.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
+  },
+  "weaponsmith": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 3
+    },
+    "summary": "A red-haired weaponsmith with a leather apron, big gloves, and a raised sword. The character reads well, but the sword is clearly different from the mockup.",
+    "strengths": [
+      "The spiky flame-red hair, the thick red eyebrows, and the smile match the mockup.",
+      "The grey shirt, the riveted leather apron, the belt, the large gloves, and the boots match the mockup.",
+      "The character reads clearly in all eight 128 px sprite directions."
+    ],
+    "issues": [
+      "The sword blade is a thin rod with a small gold crossguard. Make it a broad longsword with a fuller and a heavy silver crossguard with round ends.",
+      "The sword hand is at shoulder height. Lower the hand to waist height and keep the blade upright, as in the mockup.",
+      "The hair spikes are only on top, and the sides and back are a smooth cap. Add spikes and locks at the sides and the back.",
+      "The ears are small. Make them large, as in the mockup.",
+      "The apron rivets are brass. Make them silver.",
+      "A hammer hangs at the belt. The mockup shows silver tongs on the belt."
+    ],
+    "next": "Replace the thin blade with a broad longsword that has a heavy silver crossguard.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-09T15:27:18.000Z"
   }
 }

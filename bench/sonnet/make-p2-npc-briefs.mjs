@@ -19,10 +19,12 @@ const HOLD = `Two-hand hold: set \`hold: { elbow, wrist }\` on the kind (see ass
 const IN_HAND = (side, item) =>
   `${side === 'R' ? 'Right' : 'Left'} hand (the viewer's ${side === 'R' ? 'left' : 'right'} in the mockup): ${item}. Make it a body with the body option \`bone: 'knife.${side}'\` (the fist's grip bone; read the \`GRIP\` and \`ITEM_DIR\` notes in the kind: at rest a held item points forward and 20 degrees up). Build it in the rest pose at the ${side === 'R' ? 'right fist (x < 0)' : 'left fist (x > 0)'}.`;
 
-// Start values for a one-arm pose (left-side coordinates; the kind mirrors R). Tested on 2026-10-09.
+// Start values for a one-arm pose (left-side coordinates; the kind mirrors R). 'up' and 'out' were
+// tested on 2026-10-09 (check ok, the item 3.9 cm from the head); 'hip' is a first guess.
 const POSES = {
   up: { elbow: [0.2, 0.34, 0.02], wrist: [0.25, 0.42, 0.07], text: 'raised beside the head' },
   out: { elbow: [0.17, 0.335, 0.05], wrist: [0.2, 0.33, 0.15], text: 'held out in front at chest height' },
+  hip: { elbow: [0.2, 0.31, -0.03], wrist: [0.15, 0.25, 0.04], text: 'on the hip (elbow out)' },
 };
 const POSE = (n) => {
   const sides = ['R', 'L'].filter((s) => n[`up${s}`]);
@@ -34,6 +36,7 @@ const POSE = (n) => {
 
 function brief(n) {
   const hands = [n.right && IN_HAND('R', n.right), n.left && IN_HAND('L', n.left)].filter(Boolean);
+  if (n.shoulder) hands.push(`On the shoulder: ${n.shoulder}.`);
   const held = n.hold
     ? `${HOLD} The item: ${n.hold}.`
     : hands.length
@@ -58,8 +61,8 @@ Construction rules (from the baker and the P1 characters):
 - A hat brim is at least 1.5x the crown radius. Put a hat on the head with a local pose helper and tag it \`.bone('head')\`.
 - Clothes: grow the torso (\`h.torso.round(t)\`), cut with \`h.band\` or half-spaces, and tag with \`h.weighted\`. Sleeves follow \`h.joints\` (SHOULDER, ELBOW, WRIST). Skirts and coat tails end above the knee joint (y 0.13) unless the mockup shows a long robe; a long robe needs leg clearance in walk and run.
 - Held items are 0.03 m thick or more. Flames and glows: a full-brightness base color with emissive 0.5 to 0.7. Mid greens render lime: use darker greens.
-- Face: the kind's face. Change the expression in \`paintSkin\` when the mockup shows a different one (the baker paints a grin and arched brows over the defaults). A beard or a mustache is its own body on the head bone.
-- Keep the kind's clips. Check the cheer and attack strips: nothing may pass through the head or tear.
+- Face: the kind's face. Change the expression in \`paintSkin\` when the mockup shows a different one (the baker paints a grin and arched brows over the defaults). Give a grin round corners and one white tooth band in the middle: sharp dark mouth corners read as fangs at 128 px. A beard or a mustache is its own body on the head bone. For men, boys, and elders whose mockup shows no lashes, set \`lashes: false\` on the kind (the default face paints winged lashes). A bigger or rounder nose is its own small body on the head bone in the skin tint (\`k.tint('skin')\`).
+- Keep the kind's clips. Check the cheer, attack, and rest strips (\`./forge animate ${n.name} --fast --clip rest\`): nothing may pass through the head or tear. In rest the head bows forward: a bib, a collar, a scarf, or a beard must clear the chin.
 
 Checks: \`./forge check ${n.name}\` ends with \`result ok\` (or "no held items to check" when the hands are empty) and \`ground ok\`; no \`warning:\` lines; under 65,000 triangles.
 Builds: run every forge command as \`FORGE_WORKERS=2 flock /tmp/forge-build.lock ./forge ...\` (the machine has little memory; the lock queues the builds of all agents; wait for it).

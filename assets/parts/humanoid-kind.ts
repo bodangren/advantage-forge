@@ -69,6 +69,8 @@ export interface HumanoidKind {
    * keeps the clip motion. Build sleeves and cuffs for both arms with `h.perArm`.
    */
   readonly pose?: { readonly L?: ArmPose; readonly R?: ArmPose };
+  /** False: no winged lashes at the outer eye corners (for older or boyish faces). Default true. */
+  readonly lashes?: boolean;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -296,19 +298,26 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const iris = pair(at(sdf.ellipsoid([0.035, 0.042, 0.07]), EYE[0], EYE[1] - 0.006));
       const irisLow = iris.intersect(sdf.halfSpace([0, 1, 0], EYE[1] - 0.02));
       const pupil = pair(at(sdf.ellipsoid([0.027, 0.03, 0.07]), EYE[0], EYE[1] + 0.004));
-      const lid = pair(sdf.extrude(profile.arc(0.05, 0.011, 18, 165), 0.3).at(EYE[0], EYE[1] - 0.004, 0.1));
+      // The lid and the lash end where the face turns into the temple: a stencil along Z would
+      // otherwise paint a streak back along the side of the head (it read as a glasses arm).
+      const front = (s: sdf.Shape, x: number, y: number) => s.intersect(sdf.halfSpace([0, 0, -1], 0.008 - faceZ(x, y)));
+      const lid = pair(front(sdf.extrude(profile.arc(0.05, 0.011, 18, 165), 0.3).at(EYE[0], EYE[1] - 0.004, 0.1), EYE[0] + 0.048, EYE[1] + 0.012));
       const lash = pair(
-        sdf
-          .extrude(
-            profile.polygon([
-              [0, 0],
-              [0.022, 0.016],
-              [0.026, 0.01],
-              [0.004, -0.008],
-            ]),
-            0.3,
-          )
-          .at(EYE[0] + 0.043, EYE[1] + 0.012, 0.1),
+        front(
+          sdf
+            .extrude(
+              profile.polygon([
+                [0, 0],
+                [0.022, 0.016],
+                [0.026, 0.01],
+                [0.004, -0.008],
+              ]),
+              0.3,
+            )
+            .at(EYE[0] + 0.043, EYE[1] + 0.012, 0.1),
+          EYE[0] + 0.069,
+          EYE[1] + 0.025,
+        ),
       );
       // Both highlights sit up and to the +X side: one light for the whole face.
       const shine = sdf.union(
@@ -321,7 +330,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const smile = sdf.extrude(profile.arc(0.07, 0.01, 241, 299), 0.3).at(0, 0.53 + 0.07, 0.1);
       const blush = pair(at(sdf.sphere(0.032), 0.135, 0.56));
 
-      const skinBase = sdf
+      const lidded = sdf
         .smoothUnion(0.03, head, neck)
         .smoothUnion(0.012, nose, ears)
         .union(arms, bodySkin, legs)
@@ -331,8 +340,9 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         .paintWhere(iris, T.iris)
         .paintWhere(irisLow, T.irisLow, 0.012)
         .paintWhere(pupil, C.pupil)
-        .paintWhere(lid, C.lid)
-        .paintWhere(lash, C.lid)
+        .paintWhere(lid, C.lid);
+      // The winged lashes (the hero face); `lashes: false` leaves them off (older or boyish faces).
+      const skinBase = (kind.lashes === false ? lidded : lidded.paintWhere(lash, C.lid))
         .paintWhere(shine, '#ffffff')
         .paintWhere(brows, T.brow)
         .paintWhere(smile, T.mouth);
