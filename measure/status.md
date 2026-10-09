@@ -51,6 +51,12 @@ Forge work on features continues in this repository, but its release to the mono
 - Castle Defense is a tower defense game (family 6 of `docs/apk-2d3d-program.md`).
 - Open question: the Echo Staff. The monorepo rule (`getEligibleRpgRewards`) gives it only for a perfect "Listen to English" run of Hero vs. Zombie. Dragon Flight and Dragon Rider have the same mode, but their runs cannot earn it. A change is a monorepo domain change, so it waits until after the deployment.
 
+## Riven Lands decisions (2026-10-09)
+
+The owner answered the open questions of `docs/pack-layout.md`: the game set first, a base about 1.6 m and 5 heads tall,
+the same bone, clip, and socket names, and one track per family. Sixteen `riven_*` tracks exist with status `new`
+([roadmap](./riven-lands-roadmap.md)). Build work starts after the Primary cutover is complete.
+
 ## Next work
 
 1. [Legacy games removal](./tracks/legacy_games_removal_20261006/): until the deployment, send the monorepo only fixes, for example from the phone check of "Listen to English".
@@ -58,12 +64,14 @@ Forge work on features continues in this repository, but its release to the mono
 3. [Restore asset quality gates](./tracks/asset_quality_20260928/): class A is done (451ce00); class B is done for P0, P1, and map sources; 31 type errors remain (30 in P2 and P3 sources).
 4. [Platform port](./tracks/game_platform_port_20260928/): the port reaches monorepo `master` with `primary-parity-integration` in the Primary cutover; then the graph refresh (TD-15), the 2D setting re-export (TD-26), and a real touch-device check. [Master CI](./tracks/monorepo_master_ci_20261006/) must be green first.
 5. [2D parity](./tracks/game_2d_parity_20260928/): the 2D views offer the six heroes and their presets that the 2D pack now holds.
+6. [Riven Lands](./riven-lands-roadmap.md): after the cutover, start with the [pack layout](./tracks/riven_pack_layout_20261009/) and the [base character](./tracks/riven_base_character_20261009/).
 
 ## Navigation
 
 - [Generated status](./generated/status.md) lists current task and track counts.
 - [Asset roadmap](./asset-roadmap.md) explains production and acceptance priorities.
 - [Game roadmap](./game-roadmap.md) maps every game to its track.
+- [Riven Lands roadmap](./riven-lands-roadmap.md) orders the second pack's tracks.
 - [Tracks registry](./tracks.md) resolves all specifications and plans.
 - [Tech debt](./tech-debt.md) records known deficiencies and exit conditions.
 - [Lessons learned](./lessons-learned.md) records reusable decisions and failure prevention.

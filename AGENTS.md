@@ -91,6 +91,7 @@ Active track families:
 | Games | `game_*_port_*` (six initial), `game_*` (23 legacy rewrites) | Rune Match and Labyrinth are in progress |
 | Showcase | `showcase_battle_teaser_*` | The 45 second Chibi Quest teaser |
 | Avatars | `avatar_system_20261001` | Avatar base, equipment fit, pack, composer, GP price |
+| Riven Lands pack | `riven_*` | The second pack for Reading Advantage: pack layout, base, one track per family, scenes, game skin ([roadmap](measure/riven-lands-roadmap.md)) |
 
 Assets have priorities: P0 is the first production set and P1 is the next. Priority records build
 order, not quality. Reviews use a rating out of 10 with a bar of 7.

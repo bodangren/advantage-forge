@@ -1,0 +1,32 @@
+{
+  "track_id": "riven_game_skin_20261009",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-09T12:00:00Z",
+  "updated_at": "2026-10-09T12:00:00Z",
+  "description": "Riven Lands game skin: model packs, the 2D pack, the avatar pack, and the pack in the launch context",
+  "estimated_tasks": 14,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-09 from the owner decisions in measure/riven-lands-roadmap.md. Build work waits for the Primary Advantage cutover.",
+  "workstream": "games",
+  "retrospective": false,
+  "pack": "riven-lands",
+  "evidence": [
+    "docs/apk3d-cartridge.md",
+    "docs/apk-port.md",
+    "docs/pack-layout.md",
+    "measure/riven-lands-roadmap.md"
+  ],
+  "dependencies": [
+    "riven_base_character_20261009",
+    "riven_heroes_20261009",
+    "riven_enemies_20261009",
+    "riven_monsters_20261009",
+    "riven_npcs_20261009",
+    "riven_equipment_20261009",
+    "riven_props_20261009",
+    "riven_architecture_20261009",
+    "riven_nature_20261009",
+    "riven_scenes_20261009"
+  ]
+}

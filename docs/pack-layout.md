@@ -106,6 +106,18 @@ needs a pack key (or one file per pack) so the same ID has a Chibi Quest status 
 3. Port the goblin warrior from its turnaround as the first rigged character.
 4. Review with the same rubric and bar.
 
+## Owner answers of 2026-10-09
+
+The owner answered questions 2 to 4 on 2026-10-09; the tracks are in `measure/riven-lands-roadmap.md`.
+
+| Question | Answer |
+| --- | --- |
+| 2. Base character | About 1.6 m tall and 5 heads tall. Not chibi. Track `riven_base_character_20261009`. |
+| 3. Skeleton names | The same bone, clip, and socket names. Only joint positions and proportions change. |
+| 4. First batch | The game set (the rows the 28 games load, the 2D actors, the base, the avatar pieces), then the catalog by family. The hamlet is the first scene. |
+| 5. First game | Open. Proposal: Labyrinth. Track `riven_game_skin_20261009` asks. |
+| 1. Stage 2 | Open. Stage 1 is track `riven_pack_layout_20261009`. |
+
 ## Open questions for the owner (answer when Riven Lands starts)
 
 1. Stage 1 is approved (2026-10-02) and deferred. Stage 2 needs a later decision.

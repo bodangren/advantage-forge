@@ -1,0 +1,21 @@
+{
+  "track_id": "riven_pack_layout_20261009",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-09T12:00:00Z",
+  "updated_at": "2026-10-09T12:00:00Z",
+  "description": "Riven Lands pack layout stage 1: packs/riven-lands and the --pack option",
+  "estimated_tasks": 11,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-09 from the owner decisions in measure/riven-lands-roadmap.md. Build work waits for the Primary Advantage cutover.",
+  "workstream": "foundation",
+  "retrospective": false,
+  "pack": "riven-lands",
+  "evidence": [
+    "docs/pack-layout.md",
+    "measure/riven-lands-roadmap.md"
+  ],
+  "dependencies": [
+    "repo_rename_advantage_forge_20261002"
+  ]
+}

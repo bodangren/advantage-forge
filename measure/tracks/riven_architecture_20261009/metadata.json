@@ -1,0 +1,22 @@
+{
+  "track_id": "riven_architecture_20261009",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-09T12:00:00Z",
+  "updated_at": "2026-10-09T12:00:00Z",
+  "description": "Riven Lands architecture: 100 catalog rows, the game set first",
+  "estimated_tasks": 14,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-09 from the owner decisions in measure/riven-lands-roadmap.md. Build work waits for the Primary Advantage cutover.",
+  "workstream": "assets",
+  "retrospective": false,
+  "pack": "riven-lands",
+  "evidence": [
+    "docs/fantasy-world-asset-catalog.tsv",
+    "measure/tracks/asset_p1_architecture_20260928/plan.md",
+    "measure/riven-lands-roadmap.md"
+  ],
+  "dependencies": [
+    "riven_pack_layout_20261009"
+  ]
+}
