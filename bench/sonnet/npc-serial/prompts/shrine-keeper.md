@@ -6,10 +6,13 @@ The brief is bench/sonnet/briefs/shrine-keeper.md. The mockup is docs/npc-mockup
 The source assets/shrine-keeper.ts exists. First look at out/shrine-keeper/render.png to see the current state.
 
 An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
-1. The wand is short and gold, with two bells. The mockup staff is a long, rustic wooden staff with a crossbar. Make the wand longer and use a wood color. Keep the small bells.
-2. The hair is black, with stiff, lumpy locks that point up, mostly at the back. The mockup hair is a soft, dark brown mop. Make the locks softer and lower, and use a dark brown.
-3. The pants are sky blue and puffy. The mockup pants are sage teal and straight to the ankle. Make the pants straight and move the color toward the sage teal of the mockup.
+1. The hair is mid brown. The mockup hair is near black. Change the hair color to a dark charcoal black.
+2. The hair is a round puffy cap. The mockup hair has a swept, spiky fringe with loose tufts. Shape the fringe into separate locks.
+3. The back of the hair has two large lumps. They do not read as a bun. Make one clear bun or remove the lumps.
+4. The sleeves are narrower than the wide robe sleeves in the mockup. Make the sleeve ends wider and longer.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Third pass. The mockup hair is near black: add a near-black hair option first (keep the others). Make a spiky swept fringe and remove the two large lumps at the back of the hair.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.

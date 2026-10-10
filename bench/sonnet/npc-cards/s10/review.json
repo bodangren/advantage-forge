@@ -1,0 +1,93 @@
+{
+  "ambassador": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a smiling ambassador in a teal and gold robe with a sealed scroll. It matches the mockup with small differences in the hair, the collar, and the scroll.",
+    "strengths": [
+      "The teal robe, the gold trim, the orange belt, and the red medallion match the mockup palette.",
+      "The face reads at 128 px: large eyes, blush, a small smile, and gold hoop earrings.",
+      "The bun and the flared sleeves give a clear silhouette from every view."
+    ],
+    "issues": [
+      "The bun is too large and has two stacked lobes. Make one smaller bun and add the gold pin on top.",
+      "The hair surface is lumpy. Make it smooth and add swept strand grooves toward the bun.",
+      "The robe has a straight gold band down the front. The mockup has a crossed wrap collar with gold trim. Change the band to a wrap collar.",
+      "The scroll is small, and the hand holds it at the shoulder. Make the scroll larger and lower it to chest height.",
+      "In the walk, the robe hides most of the leg motion, and the scroll arm stays still (base limit)."
+    ],
+    "next": "Make the bun smaller with one lobe and a gold pin, and smooth the hair surface."
+  },
+  "commander": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 4, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "The model is a bearded commander in a blue tunic, steel pauldrons, and a blue cape, with a rolled map. It is the same character, but the hair and the map differ clearly from the mockup.",
+    "strengths": [
+      "The blue tunic, the steel pauldrons, the brown strap and belt, and the blue cape match the mockup.",
+      "The black beard and the thick brows give a strong face that reads at 128 px.",
+      "The cape gives a clear silhouette from the side and the back."
+    ],
+    "issues": [
+      "The hair has tall, sharp spikes that look like a crown of horns. The mockup has short, messy tufts. Make the spikes shorter and softer.",
+      "The map is a plain cream cylinder. Give it a curled outer edge and a tan parchment color with one or two dark lines.",
+      "The brows angle down toward the nose, so the face looks stern. Raise the inner ends of the brows for a kind look.",
+      "The lower edge of the hair at the back has a row of round bumps. Make it one smooth edge.",
+      "The boots have steel toe caps. The mockup has plain brown boots. Remove the caps."
+    ],
+    "next": "Make the hair spikes short and soft, like the messy tufts in the mockup."
+  },
+  "shrine-keeper": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "The model is a gentle young shrine keeper in white and pale blue robes, with a bell staff and a bowl of glowing water. It matches the mockup with small differences.",
+    "strengths": [
+      "The white robe, the pale blue sash bow and trousers, and the sandals match the mockup.",
+      "The bowl has blue glowing water and a steam wisp, so the focal point reads.",
+      "The face reads in every sprite direction: large eyes, blush, and a soft smile.",
+      "The staff with a crossbar and small gold bells shows the role clearly."
+    ],
+    "issues": [
+      "The sleeve on the staff arm is a round ball. Make it a long, wide sleeve that hangs down, like the sleeve on the bowl arm.",
+      "Two hair tufts on top curl up like horns. Make the top hair soft and messy, with a fringe over the brow.",
+      "The trousers are narrow. The mockup has wide pale blue hakama trousers. Make the trouser legs wider.",
+      "The feet have white socks. The mockup shows bare feet in the sandals. Paint the feet skin color.",
+      "In the walk, the staff arm stays still (base limit)."
+    ],
+    "next": "Change the round staff-arm sleeve to a long, wide sleeve that hangs down."
+  },
+  "diplomat": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3, 3.5, 3.5, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is a friendly young diplomat in a cream and green coat, with an olive branch and a scroll. It is the same character, but the hair color and the hair shape differ clearly from the mockup.",
+    "strengths": [
+      "The cream coat, the dark green collar, the green bow, the green cuffs, and the gold buttons match the mockup.",
+      "The olive branch has clear green leaves and reads at 128 px.",
+      "The brown boots and the double row of buttons give a clean, calm detail plan."
+    ],
+    "issues": [
+      "The hair is a light caramel color, near the skin value. The mockup hair is dark brown. Make the hair dark brown, so the face has a clear frame.",
+      "The hair has rows of lumpy ridges, most visible from the back. Make a smooth side-parted shape with volume on top, as in the mockup.",
+      "The scroll is small, and the hand holds it low. Make the scroll larger and raise it to shoulder height.",
+      "The smile is small. The mockup has a wide smile. Make the mouth wider.",
+      "A dark, ragged edge shows at the back collar under the hair. Close the gap between the hair and the collar."
+    ],
+    "next": "Make the hair dark brown with a smooth side-parted shape."
+  },
+  "general": {
+    "overall": 6.5,
+    "scores": [3, 4, 3.5, 3.5, 4, 4, 4, 4, 4.5, 3.5, 3],
+    "summary": "The model is a general in a red coat with gold epaulettes, a blue sash, and a plumed bicorne hat. The costume matches the mockup, but the face reads as a young boy and not as a kind old man.",
+    "strengths": [
+      "The red coat, the gold epaulettes, the blue sash, the white front, and the black boots match the mockup palette.",
+      "The wide black hat with a white plume gives a strong silhouette from every view.",
+      "The gray side hair and the gray braid at the back show age from the side and the back."
+    ],
+    "issues": [
+      "The face reads as a young boy. The brows are dark brown and the face has no age lines. Add white bushy eyebrows, soft cheek lines, and larger ears.",
+      "The mouth is a small smile. The mockup has a wide, warm smile. Make the smile wider.",
+      "The telescope is a thin gold rod with a round end, so it looks like a baton. Make a thicker brass tube with steps and a dark lens at the end.",
+      "The hat badge is a gold disc with a mark. The mockup has a red star on the badge. Paint a red star on it.",
+      "The coat has no black collar at the neck. Add the black collar from the mockup."
+    ],
+    "next": "Add white bushy eyebrows and a wide smile, so the face reads as a kind old man."
+  }
+}

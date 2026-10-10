@@ -3,9 +3,18 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/ambassador.md. The mockup is docs/npc-mockups/ambassador_001.jpg.
 
-Build the new asset assets/ambassador.ts from the brief.
+The source assets/ambassador.ts exists. First look at out/ambassador/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
+1. The sleeves are narrow with large gold puffed cuffs. The mockup has wide hanging sleeves, the main shape of the graceful silhouette. Make wide open sleeves with gold edges.
+2. The robe ends at the shin and flares out. The mockup robe is long and reaches the shoes. Make the robe longer and straighter.
+3. The scroll is small and the hand holds it forward at the waist. The mockup holds a large scroll up at shoulder height. Make the scroll larger and raise the arm.
+4. The skin is much darker than the warm medium brown skin in the mockup. Use the mockup skin tone for the default preset.
+5. The belt is gold. The mockup has a red-orange sash with a gold medallion. Change the sash color.
+6. The hair has a rough braided texture. The mockup hair is smooth and swept back. Smooth the hair surface.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

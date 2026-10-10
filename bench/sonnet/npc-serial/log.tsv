@@ -49,3 +49,9 @@ b34	serial	builder	sonnet	a731eb0719ef32df1	ambassador	new build; check ok; 39,3
 b35	serial	builder	sonnet	a5eae5de570938d1c	commander	new build; check ok; 54,124 tris; self 6.5	Six images viewed for a new build.
 b36	serial	builder	sonnet	a76520da71ddd0043	court-wizard	new build; check ok; 52,162 tris; self 7	No animation strips viewed (new rule followed).
 r12	serial	reviewer	opus	a925b77b5d9f67ded	shrine-keeper,trapper,ambassador,commander,court-wizard	court-wizard 8.0 (review 1) and trapper 7.5 (review 2) accepted; ambassador 6.5, commander 7.0, shrine-keeper 7.0 to a rework pass	A new serial build reached 8.0 on the first review.
+b37	serial	builder	sonnet	a3d9fef1c529c7d5e	ambassador	second pass; six fixes; check ok; 34,628 tris; skin slot now has six options (the build accepts it)	The skin slot has more than four options; the build gives no error, so the four-option note is a guide only.
+b38	serial	builder	sonnet	afadff592f27e23eb	commander	second pass; four fixes; check ok; 56,014 tris	Two renders, then the textured render check.
+b39	serial	builder	sonnet	ab61263e1eabd423c	shrine-keeper	third pass; near-black hair option first, spiky fringe, no back lumps; check ok; 43,710 tris	The builder named a size conflict (sleeve radius vs visible fists).
+b40	serial	builder	sonnet	aa6e7366791db63c4	diplomat	new build; check ok; 46,910 tris; self 7	Three renders for a new build.
+b41	serial	builder	sonnet	a6da71e895e47dce5	general	new build; check ok; 52,419 tris	Three renders for a new build.
+r13	serial	reviewer	opus	a32bba05e5e075158	ambassador,commander,shrine-keeper,diplomat,general	ambassador 7.5 (review 2) and shrine-keeper 7.5 (review 3) accepted; commander 7.0 to a third pass; diplomat 7.0 and general 6.5 to a second pass	Second and third passes with concrete notes keep reaching the bar about half the time.
