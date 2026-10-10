@@ -24,7 +24,7 @@ import type { ArmJoints } from './parts/humanoid-kind.js';
 const C = {
   hat: '#ece0c4',
   hatBand: '#9a8260',
-  veil: '#f6f1ea',
+  veil: '#e8d49c',
   seam: '#c8bea8',
   glove: '#e0b040',
   boot: '#6b4226',
@@ -46,10 +46,11 @@ export default humanoidAsset({
     skin: { fair: '#f2c7a4', light: '#e8b48e', tan: '#d49a72', brown: '#8a5a3e', deep: '#5e3b28' },
     hair: { blond: '#d8b060', brown: '#5a301d', black: '#231a17', auburn: '#8e3b1c', silver: '#b8b4c4', teal: '#2f6f6a' },
     eyes: { brown: '#6e4020', blue: '#2f6aa8', green: '#3d7a35', hazel: '#8a6a2a', violet: '#6a4a9a' },
-    cloth: { cream: '#e8e0cc', sand: '#d8c090', blush: '#e2bcae', mist: '#bcc6c4' },
+    // Review 4: a warm tan cream first (the suit read as near white).
+    cloth: { tan: '#e6d2ac', cream: '#e8e0cc', sand: '#d8c090', blush: '#e2bcae' },
   },
   presets: {
-    meadow: { skin: 'fair', hair: 'blond', eyes: 'brown', cloth: 'cream' },
+    meadow: { skin: 'fair', hair: 'blond', eyes: 'brown', cloth: 'tan' },
     clover: { skin: 'tan', hair: 'auburn', eyes: 'green', cloth: 'sand' },
   },
   hair: false,
@@ -86,13 +87,14 @@ export default humanoidAsset({
             [0.165, 0.24],
             [0.208, 0.19],
             [0.222, 0.14],
+            // Review 3: a much wider brim (the hat leads the silhouette), its edge turned up a little.
             [0.226, 0.115],
-            [0.29, 0.1],
-            [0.345, 0.104],
-            [0.372, 0.122],
-            [0.376, 0.108],
-            [0.35, 0.082],
-            [0.29, 0.07],
+            [0.3, 0.1],
+            [0.385, 0.108],
+            [0.425, 0.13],
+            [0.43, 0.116],
+            [0.395, 0.086],
+            [0.3, 0.07],
             [0.2, 0.074],
             [0, 0.06],
           ],
@@ -109,51 +111,42 @@ export default humanoidAsset({
       bump: (x, y, z) => 0.0025 * Math.sin(x * 70 + z * 50) * Math.cos(y * 60 + x * 20),
     });
 
-    // The veil: soft tulle that hangs from the brim over the hair, in gentle folds, with a scalloped
-    // hem. The front is open (pushed back).
+    // The veil: a thin honey net pushed back around the crown, from under the brim to the temples, in
+    // gentle folds with a soft scalloped hem. The front is wide open, clear of the cheeks (review 4).
+    // A thin shell meshed with holes (the dotted patches of review 3), so the shell is 2 cm thick.
     const veilOuter = sdf.revolve(
       profile.polygon(
         [
           [0, 0.12],
           [0.31, 0.12],
           [0.33, 0.09],
-          [0.315, 0],
-          [0.285, -0.07],
-          [0.265, -0.14],
-          [0, -0.14],
+          [0.322, 0.03],
+          [0.305, -0.02],
+          [0.298, -0.035],
+          [0, -0.035],
         ],
         { smooth: true, samples: 6 },
       ),
     );
-    const veilInner = sdf.revolve(
-      profile.polygon(
-        [
-          [0, 0.13],
-          [0.298, 0.13],
-          [0.318, 0.09],
-          [0.303, 0],
-          [0.273, -0.07],
-          [0.253, -0.15],
-          [0, -0.15],
-        ],
-        { smooth: true, samples: 6 },
-      ),
-    );
-    const frontOpen = sdf.box([0.4, 0.7, 0.5], 0.06).at(0, 0, 0.3);
+    const frontOpen = sdf.box([0.52, 0.7, 0.5], 0.06).at(0, 0, 0.3);
     const hem = sdf
       .box([0.9, 0.4, 0.9])
-      .displace(0.02, (x, y, z) => Math.sin(Math.atan2(x, z) * 9) + 0.5 * Math.sin(Math.atan2(x, z) * 17))
-      .at(0, -0.14 + 0.2, 0);
+      .displace(0.008, (x, y, z) => Math.sin(Math.atan2(x, z) * 9))
+      .at(0, -0.035 + 0.2, 0);
+    // An even 2 cm shell (a thinner one meshed with holes), open at the top under the brim.
     const veil = veilOuter
-      .subtract(veilInner)
+      .subtract(veilOuter.round(-0.02))
+      .intersect(sdf.halfSpace([0, 1, 0], 0.09))
       .subtract(frontOpen)
       .intersect(hem)
-      .displace(0.007, (x, y, z) => Math.sin(Math.atan2(x, z) * 7 + y * 9) * Math.min(1, Math.max(0, 0.1 - y) * 8));
+      .displace(0.004, (x, y, z) => Math.sin(Math.atan2(x, z) * 7 + y * 9) * Math.min(1, Math.max(0, 0.1 - y) * 8));
     k.body('veil', hatPose(veil).bone('head'), {
       color: C.veil,
       roughness: 0.95,
       opacity: 0.5,
       detail: 0.0055,
+      // A triangle budget: the folded shell's distance field is not exact, so the surface-error check rejects every reduction.
+      maxTriangles: 9000,
     });
 
     // The bee on the crown, on the viewer's left: a striped body, a head, and two wings, sunk into the crown.
@@ -236,7 +229,8 @@ export default humanoidAsset({
       sdf.cone(KNEE, [ANKLE[0], 0.102, 0.002], 0.064, 0.07).bone('shin.L'),
       sdf.sphere(0.068).at(...KNEE).bone('shin.L'), // a knee ball: it keeps the leg closed at every bend
     );
-    const pelvis = sdf.ellipsoid([0.134, 0.082, 0.1]).at(0, 0.178, 0).bone('hips');
+    // A full seat: it closes the hip side when the legs swing in walk (review 3: a dark gap there).
+    const pelvis = sdf.ellipsoid([0.15, 0.1, 0.115]).at(0, 0.182, 0).bone('hips');
     const zip = sdf.box([0.007, 0.5, 0.4]).at(0, 0.3, 0.2);
     const suit = sdf
       .smoothUnion(0.035, h.weighted(h.torso.round(0.011)), sleeve, pelvis, pair(leg))
@@ -249,12 +243,11 @@ export default humanoidAsset({
       bump: (x, y, z) => 0.0007 * noise.fbm(x * 30, y * 30, z * 30, 2),
     });
 
-    // The neck band, the elastic cuffs, and the gathered leg hems, in the darker cream.
+    // The neck band and the elastic cuffs, in the darker cream (the leg hems are inside the tall boots).
     const collar = sdf.torus(0.06, 0.019).at(0, 0.452, -0.012).bone('chest');
     const cuff = h.perArm((j) => sdf.cone(lerp(j.ELBOW, j.WRIST, 0.66), lerp(j.ELBOW, j.WRIST, 0.86), 0.046, 0.048).round(0.002).bone('forearm.L'));
-    const hemBand = pair(sdf.torus(0.068, 0.011).at(ANKLE[0], 0.104, 0.002).bone('shin.L'));
     const zipPull = sdf.box([0.018, 0.03, 0.012], 0.004).at(0, 0.425, 0.092).bone('chest');
-    k.body('seams', sdf.union(collar, cuff, hemBand, zipPull), { color: C.seam, roughness: 0.9, detail: 0.004 });
+    k.body('seams', sdf.union(collar, cuff, zipPull), { color: C.seam, roughness: 0.9, detail: 0.004 });
 
     // ------------------------------------------------------------------ yellow gloves: a flared cuff, a palm, finger bumps, a thumb
     // The glove follows the kind's fist: a point in the fist's rest frame turns with the posed forearm.
@@ -289,10 +282,11 @@ export default humanoidAsset({
     k.body('gloves', glove, { color: C.glove, roughness: 0.55, detail: 0.004 });
 
     // ------------------------------------------------------------------ tall brown boots
-    const shoe = sdf.smoothUnion(0.025, sdf.ellipsoid([0.058, 0.044, 0.1]).at(0, 0.04, 0.04), sdf.sphere(0.052).at(0, 0.052, -0.005));
-    // The shaft follows the shin (not the ankle), so it never turns out of the suit leg when the foot flexes.
-    const shaft = sdf.cylinder(0.055, 0.1, 0.014).at(0, 0.07, 0.0);
-    const rim = sdf.torus(0.052, 0.009).at(0, 0.116, 0);
+    const shoe = sdf.smoothUnion(0.025, sdf.ellipsoid([0.064, 0.047, 0.106]).at(0, 0.042, 0.04), sdf.sphere(0.058).at(0, 0.055, -0.005));
+    // Review 3: tall boots. The shaft covers the baggy suit leg up to just below the knee and follows
+    // the shin (not the ankle), so it never turns out of the suit leg when the foot flexes.
+    const shaft = sdf.cylinder(0.075, 0.105, 0.014).at(0, 0.07, 0.0);
+    const rim = sdf.torus(0.074, 0.01).at(0, 0.12, 0);
     const sole = shoe.round(0.004).intersect(sdf.halfSpace([0, 1, 0], 0.016)).intersect(sdf.halfSpace([0, -1, 0], 0));
     const bootAt = (b: sdf.Shape) => b.rotateY(12).at(ANKLE[0], 0, 0);
     const footPart = bootAt(sdf.union(shoe.intersect(sdf.halfSpace([0, -1, 0], 0)), sole.paint(C.bootSole))).bone('foot.L');
@@ -305,7 +299,8 @@ export default humanoidAsset({
     // dripping from under the lid, and a wooden dipper that comes out of the lid.
     // The pot stands on the fist: its base sits just inside the top of the glove's palm.
     const fc = fistFrame(h.arms.R)(0.212, 0.202, 0.034);
-    const potPose = (s: sdf.Shape) => s.scale(1.15).rotateZ(8).at(-fc[0] - 0.09, fc[1] + 0.012, fc[2] + 0.05);
+    // Review 3: a larger pot, near the size of the mockup jar; the fist holds its side.
+    const potPose = (s: sdf.Shape) => s.scale(1.5).rotateZ(8).at(-fc[0] - 0.12, fc[1] - 0.025, fc[2] + 0.05);
     const potBody = sdf.revolve(
       profile.polygon(
         [

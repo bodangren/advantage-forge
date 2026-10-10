@@ -52,7 +52,7 @@ viewer's left).
 | 1 | bartender, merchant, mayor, town-crier, herbalist, weaponsmith | done: herbalist 7.5 and weaponsmith 7.5 accepted (review 3); the other four on the follow-up list |
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | done: apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer and gardener accepted at 7.5 (review 3); carpenter and fisher on the follow-up list |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
-| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
+| 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list; beekeeper accepted at 7.0 after two orchestrator passes (review s23) |
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list; jeweler accepted at 7.0 after an orchestrator pass (review s22) |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list; musician accepted at 7.0 after an orchestrator pass (review s22) |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); scribe, storyteller, student, tailor, shepherd accepted at 7.5 (review 2); beggar accepted at 7.5 (review 3); stablekeeper on the follow-up list |
@@ -87,8 +87,7 @@ acolyte, bartender, carpenter, cartographer, commander, courier, elder, fisher, 
 
 ## Follow-up list (three reviews below the bar)
 
-On 2026-10-10 the owner asked for orchestrator passes on the last five; four were accepted in review s22.
+On 2026-10-10 the owner asked for orchestrator passes on the last five: four were accepted in review s22 and the beekeeper in review s23. The list is now empty: all 99 catalog NPCs are accepted.
 
 | Asset | Ratings | Largest open issues |
 | --- | --- | --- |
-| beekeeper | 6.0, 6.5, 6.5, 6.5 | review s22 (orchestrator pass, owner request): critical, the solid veil cut the left cheek; a fifth pass made a short see-through net (the dotted patches were mesh holes in a thin shell) |

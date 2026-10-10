@@ -9046,39 +9046,40 @@
     "reviewedAt": "2026-10-09T20:29:45.000Z"
   },
   "beekeeper": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3,
+      "mockup": 3.5,
+      "silhouette": 4,
       "proportion": 3.5,
-      "shape": 3.5,
+      "shape": 4,
       "color": 3.5,
-      "materials": 3,
+      "materials": 3.5,
       "detail": 3.5,
-      "technical": 2.5,
-      "gameReady": 4,
-      "sprite": 3,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is the same cheerful beekeeper with a wide hat, a bee, yellow gloves, brown boots, and a honey pot with a dipper. The veil is an opaque cream drum that hangs to the shoulders, and it hides the hair and changes the head silhouette.",
+    "summary": "A cheerful blonde beekeeper with a wide cream hat, a bee on the crown, a short net veil, a cream suit, yellow gloves, and a honey pot with a dipper. It is the same character as the mockup, but the hair, the veil, and the pot have clear differences.",
     "strengths": [
-      "The face reads well: large brown eyes, blush, and a small closed smile match the mockup.",
-      "The wide cream hat with a brown band and a bee on top matches the mockup.",
-      "The yellow gloves hold the honey pot firmly, and the dipper adds a clear role prop.",
-      "The brown boots and the cream suit give the correct palette."
+      "The wide cream hat with the bee on the crown is the signature shape. It reads from every view and in every sprite direction.",
+      "The face reads well. The brown eyes, the blush, and the closed smile match the mockup expression.",
+      "The yellow gloves, the brown boots, and the cream suit match the mockup palette.",
+      "The translucent veil reads as a net material.",
+      "The model is clean. The hair stays under the brim and inside the veil, and the pot touches the glove."
     ],
     "issues": [
-      "The veil is a solid, opaque cream cylinder under the brim. The mockup shows a see-through net that is pushed back over the hair. Make the veil a thin, light net that sits up around the crown.",
-      "The veil side panel cuts into the left cheek, and the lower edge of the veil is ragged. Move the panel away from the face and smooth the edge.",
-      "The veil hides almost all of the blonde hair. The mockup shows full, wavy blonde hair at the sides and back. Show more hair.",
-      "A dark patch shows under the veil at the back of the neck in the side and back views.",
-      "The suit is near white. The mockup suit is a warm tan cream. Warm the suit color.",
-      "From the side and the back, the hat and the veil make one large block. At 128 px the hat covers most of the sprite in the north directions."
+      "The hair is a short bob under the brim. The mockup has large, wavy blonde hair that extends out to the shoulders. Add volume and waves at the sides and the back.",
+      "The veil is a short band from the brim to eye level. In the mockup, the net lies on the brim and hangs to the shoulders. Make the veil longer and softer, and gather a part of it on the brim.",
+      "The pot is small and orange, with no clear neck or rim. The mockup pot is larger and brown, with a jar shape. Make the pot larger and browner, give it a neck and a rim, and make the dipper shorter.",
+      "The suit reads as a short smock above the boots. The mockup shows a full coverall with cuffs and legs that go into the boots. Show more of the suit legs above the boot tops.",
+      "The free arm hangs down at the side. In the mockup, the free arm points out from the body. Move the free arm out a little.",
+      "In the walk, the pot arm stays still (a known base limit) and the body has little bob. The walk is readable but stiff."
     ],
-    "next": "Replace the opaque veil drum with a light net that is pushed back around the hat crown, and show the blonde hair below it.",
+    "next": "Give the hair the large, wavy volume of the mockup at the sides and the back below the brim, and widen the veil so that the hair stays inside it.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T13:41:30.000Z"
+    "reviewedAt": "2026-10-10T13:48:57.000Z"
   },
   "butcher": {
     "overall": 7.5,

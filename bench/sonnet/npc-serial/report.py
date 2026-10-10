@@ -107,7 +107,7 @@ def status_of(n, reviews, follow, tracked, rounds):
 
 
 GROUPS = [
-    ('accepted', 'Accepted (bar 7.5)'),
+    ('accepted', 'Accepted (bar 7.0)'),
     ('waits for review', 'Built, waits for an independent review'),
     ('needs rework', 'Reviewed below the bar, waits for a builder pass'),
     ('in work', 'Source exists, the build is old or missing'),

@@ -1,0 +1,25 @@
+{
+  "beekeeper": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 3.5, 3.5, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "A cheerful blonde beekeeper with a wide cream hat, a bee on the crown, a short net veil, a cream suit, yellow gloves, and a honey pot with a dipper. It is the same character as the mockup, but the hair, the veil, and the pot have clear differences.",
+    "strengths": [
+      "The wide cream hat with the bee on the crown is the signature shape. It reads from every view and in every sprite direction.",
+      "The face reads well. The brown eyes, the blush, and the closed smile match the mockup expression.",
+      "The yellow gloves, the brown boots, and the cream suit match the mockup palette.",
+      "The translucent veil reads as a net material.",
+      "The model is clean. The hair stays under the brim and inside the veil, and the pot touches the glove."
+    ],
+    "issues": [
+      "The hair is a short bob under the brim. The mockup has large, wavy blonde hair that extends out to the shoulders. Add volume and waves at the sides and the back.",
+      "The veil is a short band from the brim to eye level. In the mockup, the net lies on the brim and hangs to the shoulders. Make the veil longer and softer, and gather a part of it on the brim.",
+      "The pot is small and orange, with no clear neck or rim. The mockup pot is larger and brown, with a jar shape. Make the pot larger and browner, give it a neck and a rim, and make the dipper shorter.",
+      "The suit reads as a short smock above the boots. The mockup shows a full coverall with cuffs and legs that go into the boots. Show more of the suit legs above the boot tops.",
+      "The free arm hangs down at the side. In the mockup, the free arm points out from the body. Move the free arm out a little.",
+      "In the walk, the pot arm stays still (a known base limit) and the body has little bob. The walk is readable but stiff."
+    ],
+    "next": "Give the hair the large, wavy volume of the mockup at the sides and the back below the brim, and widen the veil so that the hair stays inside it.",
+    "critical": false,
+    "criticalReason": ""
+  }
+}
