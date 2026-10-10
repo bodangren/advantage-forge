@@ -32,7 +32,8 @@ function build(name, note) {
     } else if (reviewed) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
       // The still posed arm in walk is a known base limit; a builder cannot fix it.
-      const fixable = r.issues.filter((s) => !/known (base )?limit|(arm|arms) (stays?|is|are|remains?) (still|static|frozen)/i.test(s));
+      const baseLimit = (s) => /known (base )?limit/i.test(s) || (/walk/i.test(s) && /\b(still|stiff|static|frozen|small steps)\b/i.test(s));
+      const fixable = r.issues.filter((s) => !baseLimit(s));
       fixable.forEach((issue, i) => lines.push(`${i + 1}. ${issue}`));
       lines.push('Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.');
     } else {

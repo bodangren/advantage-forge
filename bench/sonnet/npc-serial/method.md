@@ -43,3 +43,5 @@ speed. Improve this method with the lessons of each agent run.
 | r7 | Two reviewers asked for opposite cartographer hair (s1: full hair crest; s4: bald crown with side hair). | When reviews disagree, the queue note tells the builder to match the mockup and to describe it in the report. |
 | b13 | The ferryman builder replaced a cloth color option instead of adding one. | The prompt says to keep every variant option and put a new default first. |
 | b13, b16 | The ferryman builder fixed a type error after `./forge all`, so the build was older than the source. | The typecheck and the check run before the final `./forge all`, and nothing is edited after it. |
+| b25 | The base-limit filter missed a "stiff walk" issue, and the hermit builder wrapped `build` to add walk motion. | The filter drops every walk issue about still or stiff motion. |
+| r10 | Third passes reached the bar in 3 of 10 cases. The reviewers moved between issues (teacher hair: helmet, then dripping ridges; nomad coat: too short, then flares like a skirt). | No change to the stop rule (owner rule). A third pass costs about 0.5M; the follow-up list keeps the open issues. |

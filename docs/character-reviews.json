@@ -10097,33 +10097,33 @@
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
-      "silhouette": 3.5,
-      "proportion": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
       "shape": 3.5,
       "color": 4,
       "materials": 3.5,
-      "detail": 4,
+      "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A teacher with round glasses, a mustard cardigan, a blue bow, a rust skirt, a raised pointer, and a red apple. The props and clothes match, but the hair differs clearly from the mockup.",
+    "summary": "The model is the cheerful teacher with glasses, a mustard cardigan, a blue bow, a pointer, and a red apple. The outfit and face match the mockup, but the hair has a clearly different shape and texture.",
     "strengths": [
-      "The pointer, the red apple, the round glasses, and the blue bow match the mockup and read at 128 px.",
-      "The mustard cardigan, the white blouse, and the rust skirt follow the mockup palette.",
-      "The side braid on the correct side is present."
+      "The round glasses, the large brown eyes, the smile, and the pink cheeks read as the mockup face.",
+      "The mustard cardigan, the white collar, the blue bow, and the brown skirt match the mockup palette.",
+      "The raised pointer and the red apple read clearly in the 128 px sprites."
     ],
     "issues": [
-      "The hair is one large smooth round mass high above the forehead. From the back it looks like a helmet. The mockup hair is soft, wavy, and near the shoulders, with side bangs. Rebuild the hair as wavy locks with bangs and a lower crown.",
-      "The bare high forehead and thin eyebrows make the face look older than the young, cheerful mockup face. Add bangs to frame the face.",
-      "The cardigan has a check pattern. The mockup cardigan is plain mustard knit. Remove the check pattern.",
-      "The side braid is thin and short. Make it thicker and longer.",
-      "The walk is stiff. Both posed arms stay still."
+      "The hair is a lumpy mass with dripping ridges. The mockup hair is smooth and wavy, with side-swept bangs. Make the hair surface smooth and add the bangs across the forehead.",
+      "From the back, the hair reads as thick dreadlocks to the shoulders. Shape the back of the hair as one smooth wavy volume.",
+      "The side braid hangs on the pointer side (viewer's left). In the mockup, the braid hangs on the apple side (viewer's right). Move the braid to the other side.",
+      "The pointer is thicker than the thin mockup stick. Make the pointer thinner.",
+      "In the walk, the arms stay still and the body moves very little. This is a known base limit."
     ],
-    "next": "Rebuild the hair as soft wavy shoulder-length locks with side bangs.",
+    "next": "Rebuild the hair as a smooth wavy bob with side-swept bangs.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T01:05:30.000Z"
+    "reviewedAt": "2026-10-10T03:21:36.000Z"
   },
   "traveler": {
     "overall": 7.5,
@@ -10328,32 +10328,32 @@
     "scores": {
       "mockup": 3.5,
       "silhouette": 3.5,
-      "proportion": 3.5,
+      "proportion": 4,
       "shape": 3.5,
       "color": 4,
-      "materials": 4,
+      "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "An old cartographer with round black spectacles, a white beard, a green coat, brass dividers, and a bundle of rolled maps. The costume and props match, but the hair is a large white cloud and the mockup has a bald crown with a tuft.",
+    "summary": "The model is the old cartographer with round glasses, a white beard, a green coat, raised dividers, and a bundle of maps. The face and the props match, but the coat, the dividers, and the head have clear differences.",
     "strengths": [
-      "The round black spectacles read clearly in every view and in every 128 px sprite direction.",
-      "The dark green coat with gold buttons, the brown vest, and the belt match the mockup.",
-      "The brass dividers and the tied map bundle are clear and match the role."
+      "The round black glasses, the white beard, and the bald head read clearly in every view and at 128 px.",
+      "The green coat, the brown vest with gold buttons, and the tied map bundle match the mockup palette.",
+      "The raised arm with the dividers gives a strong, readable silhouette."
     ],
     "issues": [
-      "The hair is a large white cloud that covers the top and the back of the head. The mockup has a bald crown with a small tuft on top and white hair only at the sides. Remove the top mass and add a bald crown with a tuft.",
-      "The hair surface is lumpy and looks like a cauliflower in the side and back views. Shape the side hair into smooth locks.",
-      "The dividers are at shoulder height. The mockup holds the dividers up above the head. Raise the arm.",
-      "The nose is small and the spectacles hide it. The mockup nose is large and round. Make the nose larger.",
-      "The walk is stiff. The steps are small and the raised arm stays still."
+      "The green coat flares to the knees like a robe. In the mockup, the jacket stops at the hips and shows the belt, the buckle, and brown trousers. Shorten the coat and show the belt and the trousers.",
+      "The dividers are thin and small, like a fork. The mockup dividers are large and broad brass. Make the dividers larger and wider.",
+      "The head has no white quiff on top, and the nose is small. The mockup has a tall white quiff and a large red nose. Add the quiff and make the nose larger and redder.",
+      "From the back, a flat skin-colored block shows under the hair ring. Round the back of the head below the hair.",
+      "The walk shows almost no visible leg motion under the long coat."
     ],
-    "next": "Replace the white hair cloud with a bald crown, a small tuft on top, and white hair at the sides, as in the mockup.",
+    "next": "Shorten the coat to the hips and show the belt and the brown trousers.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T01:40:02.000Z"
+    "reviewedAt": "2026-10-10T03:21:36.000Z"
   },
   "dockworker": {
     "overall": 8.0,
@@ -10394,31 +10394,31 @@
       "mockup": 3.5,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 4,
+      "shape": 3.5,
       "color": 3.5,
-      "materials": 4,
+      "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A cheerful young desert wanderer with brass goggles, a cream scarf, an orange coat, a bedroll, and a staff with a bell. The main props match, but the hair style and the bedroll color are clearly different from the mockup.",
+    "summary": "The model is the young desert wanderer with goggles, a cream scarf, an orange coat, a bedroll, and a staff with a bell. The face and the staff match, but the coat, the bedroll, and the skin tone have clear differences.",
     "strengths": [
-      "The brass goggles with blue lenses, the cream scarf, and the orange coat with a belt match the mockup.",
-      "The tall staff with a crook and a bell gives a strong silhouette in every view and every sprite direction.",
-      "The face is young and friendly, with a small closed smile, and it reads at 128 px."
+      "The goggles on the curly hair, the smile, and the pink cheeks read as a cheerful young traveler.",
+      "The crook staff with the brass bell matches the mockup and reads clearly in every sprite direction.",
+      "The cream scarf and the orange coat with the brown belt match the mockup palette."
     ],
     "issues": [
-      "The hair is thick rope locks with gold bands. The mockup hair is soft, wavy, shoulder-length curls without bands. Change the locks to wavy curls and remove the gold bands.",
-      "The bedroll is a red disk with a cream spiral. The mockup bedroll is tan with a brown rim. Change the bedroll to tan, so that the red does not pull focus.",
-      "The staff leans out at a wide angle and the hand holds it low. The mockup holds the staff upright at chest height.",
-      "The coat has a quilted diamond pattern and ends above the knee. The mockup coat is smooth and ends at the knee.",
-      "The walk is stiff. The steps are small and the staff arm stays still."
+      "The coat is short, closed, and flares like a skirt. In the mockup, the long coat hangs open to the calves and shows beige trousers. Make the coat longer and open, and show the beige trousers.",
+      "The bedroll is a flat disc with a gold face. From the back and the side, it reads as a shield or a drum. Make it a rolled cloth cylinder with straps.",
+      "The skin is darker than the warm brown skin in the mockup. Make the skin tone lighter.",
+      "The hair is a short mop. The mockup hair is longer and falls to the shoulders. Make the hair longer at the sides.",
+      "In the walk, the arms stay still and the body moves very little. This is a known base limit."
     ],
-    "next": "Change the hair to soft, wavy, shoulder-length curls without gold bands, as in the mockup.",
+    "next": "Make the coat long and open over beige trousers, and make the bedroll a rolled cylinder.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T01:40:02.000Z"
+    "reviewedAt": "2026-10-10T03:21:36.000Z"
   },
   "caravan-driver": {
     "overall": 7.5,
@@ -10458,34 +10458,34 @@
     "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
+      "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 4,
+      "shape": 3.5,
       "color": 4,
       "materials": 3.5,
       "detail": 3.5,
-      "technical": 4,
+      "technical": 3,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A kind old hermit with a long white beard, elf ears, a brown robe, a gnarled stick, and a bowl of red berries. The identity matches the mockup, but the hood shape and the nose are clearly different.",
+    "summary": "The model is the kind old hermit with pointed ears, a long white beard, a brown hooded robe, a gnarled stick, and a bowl of berries. It is close to the mockup, but the white hair tuft goes through the top of the hood.",
     "strengths": [
-      "The long white beard, the white eyebrows, and the elf ears match the mockup and read from the front.",
-      "The robe colors match the mockup: brown robe, tan hem, green sash, rope belt, and pouch.",
-      "The gnarled dark stick and the red berry bowl are clear signature props.",
-      "The 128 px sprites keep the beard, the stick, and the berries in every direction."
+      "The pointed ears, the bushy white eyebrows, the round nose, and the long beard match the mockup face.",
+      "The gnarled stick and the bowl of red berries read clearly in every view and at 128 px.",
+      "The brown robe with the green sash, the rope belt, the pouch, the patches, and the sandals match the mockup."
     ],
     "issues": [
-      "The hood is a tight cap with a tall bent point at the back. From the side and the back it reads as a gnome hat. Make a soft hood that frames the face and falls to the shoulders, as in the mockup.",
-      "The nose is small and the mustache hides it. Make the large round nose of the mockup, because it is a main trait of the face.",
-      "The berry bowl is at the waist. Lift the bowl to chest height and move it forward, as in the mockup.",
-      "The walk is stiff. The robe hides the legs and the upper body has little bob."
+      "The white hair tuft sits on top of the hood dome and goes through the fabric. In the mockup, the tuft rises from the forehead at the open front of the hood. Move the tuft to the front hairline, inside the hood opening.",
+      "The hood is a tight round dome like a cap. The mockup hood is soft, frames the face, and drapes onto the shoulders. Give the hood a front rim and let it fall onto the shoulders.",
+      "The beard hides the mouth, so the smile does not show. The mockup shows a smile under the mustache. Add a small smiling mouth under the mustache.",
+      "The stance is narrow and the robe sleeves are tight. The mockup has a wide stance and wide sleeves. Widen the sleeves at the wrists.",
+      "In the walk, the arms stay still and the body moves very little. This is a known base limit."
     ],
-    "next": "Replace the pointed cap with a soft hood that frames the face and falls to the shoulders.",
+    "next": "Move the white tuft out of the hood dome to the front hairline.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T02:16:41.000Z"
+    "reviewedAt": "2026-10-10T03:21:36.000Z"
   },
   "archaeologist": {
     "overall": 7.5,
@@ -10587,37 +10587,37 @@
     "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "ranger-guide": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
+      "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
       "color": 4,
       "materials": 3.5,
       "detail": 4,
-      "technical": 3,
+      "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A young ranger guide in a green hooded cloak, with a braid, a brass compass, a staff, and a bow and quiver on the back. The identity matches the mockup, but a visible defect at the cloak hem caps the rating.",
+    "summary": "The model is the confident young ranger guide in a green hood and cloak, with a brass compass, a staff, a longbow, and a quiver. It matches the mockup with small differences only.",
     "strengths": [
-      "The green hood, the front braid, and the raised brass compass match the mockup.",
-      "The bow and the quiver on the back read in the side view, the back view, and the sprites.",
-      "The face is friendly and confident, with rosy cheeks.",
-      "The leather straps, the belt, and the boots give clear material contrast."
+      "The green hood, the brown hair with bangs, and the smiling face read as the mockup character.",
+      "The brass compass in the raised hand is a clear focal accent against the green cloak.",
+      "The longbow and the quiver on the back give a clear role read from the back and in the sprites."
     ],
     "issues": [
-      "Thin dark ring lines show inside the cloak hem around the legs in the front view. Remove or close the thin shell that makes these lines.",
-      "The lower garment is cream and short. The mockup has brown trousers into the boots. Change it to brown trousers.",
-      "The mouth is open. The mockup has a closed smile. Close the mouth.",
-      "The walk is stiff and the staff arm does not move."
+      "The hood is a round dome with a lumpy surface. The mockup hood is smooth, with a soft peak at the back. Make the hood surface smooth and give it a soft peak.",
+      "The braid is a chain of round balls. Shape the braid as woven, overlapping segments.",
+      "The cloak is shorter than the mockup cloak, which falls to the calves. Make the cloak longer.",
+      "The eyebrows are thick and dark. The mockup eyebrows are thin and arched. Make the eyebrows thinner.",
+      "In the walk, the arms stay still and the body moves very little. This is a known base limit."
     ],
-    "next": "Remove the dark ring lines inside the cloak hem.",
+    "next": "Make the hood smooth with a soft peak, and shape the braid as woven segments.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T02:16:41.000Z"
+    "reviewedAt": "2026-10-10T03:21:36.000Z"
   },
   "ruin-keeper": {
     "overall": 7.0,

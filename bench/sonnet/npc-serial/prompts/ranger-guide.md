@@ -6,14 +6,12 @@ The brief is bench/sonnet/briefs/ranger-guide.md. The mockup is docs/npc-mockups
 The source assets/ranger-guide.ts exists. First look at out/ranger-guide/render.png to see the current state.
 
 An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
-1. The long cloak is missing. The model has a short green capelet on the chest. The mockup cloak falls to the knees. Add a long cloak at the back and the sides.
-2. The hood is a hard round dome. From the back it reads as a large green ball. Make the hood soft and join it to the cloak.
-3. The hair is light caramel. The mockup hair is dark brown. Make the hair darker.
-4. The mouth is open with teeth. The mockup shows a closed, confident smile. Change the mouth to a closed smile.
-5. The compass is a small gold cup in the fist. The mockup shows a round, flat compass. Make the compass a larger flat disc with a visible face.
+1. Thin dark ring lines show inside the cloak hem around the legs in the front view. Remove or close the thin shell that makes these lines.
+2. The lower garment is cream and short. The mockup has brown trousers into the boots. Change it to brown trousers.
+3. The mouth is open. The mockup has a closed smile. Close the mouth.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
 
-`./forge check ranger-guide` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+Third pass. First remove the thin dark ring lines inside the cloak hem around the legs (a visible defect): look at a `--focus` render of the hem. Then soften the hood into a peak at the back.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
@@ -26,6 +24,6 @@ Rules:
 - The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.
 - Run every forge command as `FORGE_WORKERS=2 flock /tmp/forge-build.lock ./forge ...`.
 - Edit only assets/ranger-guide.ts. Never run git.
-- Keep every color option in `variants` (owner rule). To change a default, put the new option first and keep the old one.
-- Run `./forge check ranger-guide` before the final `./forge all ranger-guide`. Run no forge command after `./forge all`: a `--fast` build overwrites the textured GLB. Then run the typecheck from your agent rules.
+- Keep every color option in `variants` (owner rule). To change a default, put the new option first and keep the old one; drop an old option only when the slot already has four.
+- Run the typecheck from your agent rules and `./forge check ranger-guide` before the final `./forge all ranger-guide`. Edit nothing and run no forge command after `./forge all`: a later edit makes the build old, and a `--fast` build overwrites the textured GLB.
 - Report in three lines: triangles and warnings, the check result, and what remains.
