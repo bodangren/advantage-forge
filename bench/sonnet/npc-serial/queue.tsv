@@ -1,0 +1,18 @@
+archaeologist	`./forge check archaeologist` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+tanner	
+tax-collector	
+teacher	
+weaver	
+beggar	
+cartographer	
+dockworker	
+stablekeeper	`./forge check stablekeeper` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+nomad	`./forge check nomad` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+hermit	`./forge check hermit` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+ferryman	`./forge check ferryman` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+chieftain	`./forge check chieftain` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+ranger-guide	`./forge check ranger-guide` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+watch-captain	
+riverboat-captain	
+caravan-driver	`./forge check caravan-driver` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
+ruin-keeper	The build prints one `warning:` line now. Fix its cause.

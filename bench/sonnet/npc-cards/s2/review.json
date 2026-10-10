@@ -1,0 +1,176 @@
+{
+  "stablekeeper": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "A sturdy stablekeeper with a black beard, a brown apron, a horseshoe, and a brush. The costume and the props match the mockup, but the hair and the mouth are clearly different.",
+    "strengths": [
+      "The cream shirt, the brown apron with suspenders, and the dark boots match the mockup.",
+      "The horseshoe and the brush are raised in the two fists, as in the mockup.",
+      "The red bandana gives a warm accent near the face."
+    ],
+    "issues": [
+      "The hair is a large round dark mass. It is much taller and wider than the swept, wavy hair in the mockup. Make the hair smaller and give it swept waves.",
+      "The mouth is a small open oval with teeth. In the three-quarter view it reads as surprise, not as the broad grin of the mockup. Widen the mouth into a broad smile.",
+      "The eyebrows are thin. The mockup has thick black eyebrows. Make the eyebrows thicker.",
+      "The red bandana is a thin collar. The mockup shows a knotted triangle on the chest. Add a triangle with a knot.",
+      "The horse brush reads as a wooden spoon. Add visible bristles on the face of the brush."
+    ],
+    "next": "Make the hair smaller with swept waves, so the head shape matches the mockup."
+  },
+  "nomad": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A young desert wanderer with goggles, an orange coat, a bedroll, and a staff with a bell. All the signature items are present, but the coat is short and the silhouette loses the long coat of the mockup.",
+    "strengths": [
+      "The gold goggles with blue lenses on the curly hair match the mockup and read at 128 px.",
+      "The curled staff with the bell is clear in every view.",
+      "The orange and cream palette matches the mockup."
+    ],
+    "issues": [
+      "The orange coat ends at the hips. The mockup coat is long and reaches the knees. Make the coat longer and let it flare at the hem.",
+      "The mouth is open with teeth. The mockup shows a closed soft smile. Change the mouth to a closed smile.",
+      "The waist has a cream band. The mockup has a brown leather belt with a buckle. Change the band to a brown belt.",
+      "The scarf is a short fur collar. The mockup scarf wraps the neck and hangs down. Add hanging scarf ends.",
+      "The bedroll is on the back. The mockup holds a round roll at the hip. This difference is small."
+    ],
+    "next": "Make the coat reach the knees, so the long coat silhouette of the mockup returns."
+  },
+  "caravan-driver": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3, 3.5, 4.5, 3, 3],
+    "summary": "A bearded caravan driver with a wide hat, a blue shirt, a long vest, a rope, and a flask. The outfit plan is close, but the face, the skin color, and the held props differ clearly from the mockup.",
+    "strengths": [
+      "The wide sun hat and the long vest over the blue shirt give the correct silhouette.",
+      "The rope coil and the flask are both present.",
+      "The black beard and mustache match the mockup."
+    ],
+    "issues": [
+      "The mouth is an open grimace with teeth. In the three-quarter view it reads as worry. The mockup shows a smile under the mustache. Change the mouth to a smile.",
+      "The skin is dark brown. The mockup skin is light tan. Change the default skin to the mockup tone.",
+      "The arms hang down and hold the rope and the flask at the hips. The mockup holds both in front of the body. Raise the forearms to waist and chest height.",
+      "The red neckerchief is missing, and the red is on a waist sash. The mockup has a red neckerchief and a brown belt. Move the red to the neck.",
+      "The hat is pale cream. The mockup hat is warm ochre tan. Make the hat darker and warmer.",
+      "A flat flap hangs from the back of the hat. It reads as a board in the side and back views. Remove the flap."
+    ],
+    "next": "Change the face to a smile under the mustache with the light tan skin of the mockup."
+  },
+  "hermit": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "A kind old hermit with a white beard, a brown hood, a gnarled stick, and a bowl of red berries. The face and the props match the mockup, but the hood is a hard dome and the ears are small.",
+    "strengths": [
+      "The white beard, the white eyebrows, and the round nose read as a kind old man.",
+      "The bowl of red berries is the color accent and reads at 128 px.",
+      "The green sash, the rope belt, the pouch, and the sandals match the mockup."
+    ],
+    "issues": [
+      "The hood is a hard round dome with a knob. From the back and the side it reads as a ball or an acorn. The mockup hood is soft cloth that falls onto the shoulders. Make the hood soft and let it fall to the shoulders.",
+      "The ears are small. The mockup has large pointed ears that stand out from the hood. Make the ears larger.",
+      "The mustache hides the mouth. The mockup shows a soft smile under the mustache. Show a small smile."
+    ],
+    "next": "Change the hood to soft cloth that falls onto the shoulders."
+  },
+  "archaeologist": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 3.5, 3],
+    "summary": "A young archaeologist in a pith helmet with a magnifying glass, a clay tablet, and a satchel. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The pith helmet with the brown band, the khaki shirt with pockets, and the cross strap match the mockup.",
+      "The raised magnifying glass and the clay tablet read clearly in every view.",
+      "The auburn hair and the blush give a warm, curious face."
+    ],
+    "issues": [
+      "The mouth is a small open smile. The mockup shows a wide open grin. Widen the mouth to show more excitement.",
+      "The back hair hangs as separate straight strands. The mockup hair is short and curly. Make the back hair into curls.",
+      "The satchel is a boxy shape with a woven pattern. The mockup satchel is smooth leather with a flap. Make the satchel smooth leather.",
+      "The wide helmet hides the face in the north and side sprites. This is a small difference."
+    ],
+    "next": "Widen the mouth into the open grin of the mockup."
+  },
+  "ferryman": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 3, 3.5, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "A calm old ferryman with a straw hat, a gray beard, a long pole, and a lantern. The figure matches the mockup, but the lantern, the shirt color, and the hat brim differ clearly.",
+    "strengths": [
+      "The gray curly hair, the bushy eyebrows, and the beard read as a calm old man.",
+      "The long pole gives a clear silhouette in every view and in the sprites.",
+      "The rope belt, the dark trousers, and the sandals match the mockup."
+    ],
+    "issues": [
+      "The lantern is small and pale and does not glow. The mockup lantern is large and orange and glows. Make the lantern larger and give it an orange glow.",
+      "The shirt is light blue. The mockup shirt is dark teal green. Change the shirt to dark teal green.",
+      "The hat brim is narrower than the mockup brim. The mockup hat is a wide flat cone. Widen the brim and make the straw a little darker.",
+      "The mustache is small. The mockup has a large mustache that curls out over the beard. Make the mustache larger."
+    ],
+    "next": "Make the lantern larger with an orange glow, so it becomes the warm focal accent of the mockup."
+  },
+  "chieftain": {
+    "overall": 7.0,
+    "scores": [4, 3.5, 4, 4, 4, 4, 3.5, 4, 4.5, 4, 3],
+    "summary": "A highland chieftain with red braids, a gold circlet, a fur-trimmed green cloak, and a staff. The face, the hair, and the cloak match the mockup, but the bronze sun on the staff is much too small.",
+    "strengths": [
+      "The red braids, the gold circlet, and the closed kind smile match the mockup.",
+      "The green cloak with white fur trim reads clearly from the side and the back.",
+      "The face reads in the 128 px sprites."
+    ],
+    "issues": [
+      "The bronze sun on the staff is a small ring. The mockup sun is a large disc with rays, about the size of the head. Make the sun about three times larger.",
+      "The tunic is bright orange. The mockup tunic is dark red brown. Make the tunic darker.",
+      "The belt buckle is small. The mockup has a large round gold buckle. Make the buckle larger and round.",
+      "The staff is wavy along its full length. The mockup staff is straighter with a carved head. This difference is small."
+    ],
+    "next": "Make the bronze sun on the staff about three times larger, with clear rays."
+  },
+  "ranger-guide": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 4, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A young ranger guide in a green hood with a braid, a compass, a staff, and a longbow on her back. The identity reads, but the long cloak of the mockup is missing.",
+    "strengths": [
+      "The longbow and the quiver on the back are present and read in the back view.",
+      "The braid over the shoulder and the brown vest with straps match the mockup.",
+      "The compass is held out in front of the body, as in the mockup."
+    ],
+    "issues": [
+      "The long cloak is missing. The model has a short green capelet on the chest. The mockup cloak falls to the knees. Add a long cloak at the back and the sides.",
+      "The hood is a hard round dome. From the back it reads as a large green ball. Make the hood soft and join it to the cloak.",
+      "The hair is light caramel. The mockup hair is dark brown. Make the hair darker.",
+      "The mouth is open with teeth. The mockup shows a closed, confident smile. Change the mouth to a closed smile.",
+      "The compass is a small gold cup in the fist. The mockup shows a round, flat compass. Make the compass a larger flat disc with a visible face."
+    ],
+    "next": "Add a long green cloak that falls to the knees and joins the hood."
+  },
+  "ruin-keeper": {
+    "overall": 6.5,
+    "scores": [3, 3, 3.5, 3, 3, 3, 3, 2.5, 4.5, 3.5, 3],
+    "summary": "A quiet ruin keeper in a gray hood with a key ring and a lantern. White hair pokes through the hood, and the hood, the glasses, and the cloak color differ clearly from the mockup.",
+    "strengths": [
+      "The closed smile and the green eyes give a kind face, as in the mockup.",
+      "The ring of keys and the lantern are both present.",
+      "The brown robe under the gray cloak matches the mockup layers."
+    ],
+    "issues": [
+      "White hair pokes through the hood on the top and the sides. The side and three-quarter views show it. Shrink the hair or cut it with the inside of the hood.",
+      "The hood is a round knit cap with a knob. The mockup hood is soft cloth with a point that falls onto the shoulders. Change the hood to a soft cloth hood.",
+      "The model wears round glasses. The mockup has no glasses. Remove the glasses.",
+      "The cloak is plain gray with a thin green edge. The mockup cloak is gray green with moss tones. Add a green moss tint to the cloak.",
+      "The key ring is small. The mockup ring is large and held up near the face. Make the ring larger."
+    ],
+    "next": "Remove the hair poke-through and change the hood to a soft cloth hood that falls onto the shoulders."
+  },
+  "shepherd": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "A cheerful shepherd girl with braids, a straw hat, a teal skirt, and a tall curled crook. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The straw hat with the teal band and bow, the braids, and the teal skirt match the mockup palette.",
+      "The tall curled crook gives a clear silhouette in every view and in the sprites.",
+      "The closed smile and the blush give the gentle face of the mockup."
+    ],
+    "issues": [
+      "The crook touches only the outer side of the fist. The hand does not close around the shaft. Move the crook into the fist.",
+      "The hat brim is narrower than the mockup brim. Widen the brim by about one quarter.",
+      "The scarf is a short fur collar. The mockup scarf is a soft knit scarf with hanging ends. Add the hanging ends."
+    ],
+    "next": "Move the crook shaft into the fist, so the hand clearly holds it."
+  }
+}

@@ -27,7 +27,9 @@ function build(name, note) {
   } else {
     if (stale) lines.push(`The source ${src} exists, but an earlier pass stopped before it finished. First run \`./forge render ${name} --fast\` and look at out/${name}/render.png to see the current state.`);
     else lines.push(`The source ${src} exists. First look at out/${name}/render.png to see the current state.`);
-    if (reviewed) {
+    if (reviewed && r.overall >= 7.5) {
+      lines.push('', `An independent reviewer rated it ${r.overall}/10, at the bar. Keep the look: change only what the note below needs.`);
+    } else if (reviewed) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
       r.issues.forEach((issue, i) => lines.push(`${i + 1}. ${issue}`));
       lines.push('Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.');
