@@ -6,13 +6,14 @@ The brief is bench/sonnet/briefs/lady.md. The mockup is docs/npc-mockups/lady_00
 The source assets/lady.ts exists. First look at out/lady/render.png to see the current state.
 
 An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
-1. In the walk, a dark green shoe pushes through the front of the skirt (t=0.11, t=0.22, t=0.67). Keep the feet inside the skirt during the walk.
-2. The purse is pink. The mockup purse is green and cream. Change the purse color.
-3. The gown is narrower than in the mockup. The mockup gown is very full. Make the skirt wider at the hem.
-4. The fan is small. The mockup fan is larger. Make the fan larger.
+1. The skirt is a stiff pyramid with sharp corners at the hem. Make a round bell skirt with soft folds, as in the mockup.
+2. The small green purse sits at the skirt hem, away from the hand, and looks dropped. Put the purse in the left fist at hip height.
+3. The back of the skirt is flat and wide in the back view. Give the back of the skirt a round, full volume.
+4. The mockup shows a pearl necklace. Add a short pearl necklace above the lace collar.
+5. In the walk clip, the skirt hides all leg motion and the body only bobs. Add a small sway to the skirt hem.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
 
-An earlier pass stopped in the middle (a network error), so the source may hold part of the fixes. Fix 1 is a clip defect: after the fix, view out/lady/anim/walk.png once (run `./forge animate lady --fast --clip walk`) to confirm that no shoe pushes through the skirt.
+Third pass. Make the skirt a round bell: one `sdf.revolve` of a smooth profile (`profile.polygon(..., { smooth: true })`) with a round hem and no corners. Put the purse in the left fist.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.

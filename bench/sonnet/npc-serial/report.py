@@ -15,7 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 PROJ = os.path.expanduser('~/.claude/projects/-home-daniebo-Desktop-advantage-forge')
 PLAN = os.path.join(ROOT, 'measure/tracks/asset_p2_npcs_20260928/plan.md')
 OUT = os.path.join(ROOT, 'out/npc-report.html')
-BAR = 7.5
+BAR = 7.0  # NPC bar (owner rule 2026-10-10): 7.0 unless the model has a critical error
 FIELDS = (('input', 'input_tokens'), ('cacheWrite', 'cache_creation_input_tokens'),
           ('cacheRead', 'cache_read_input_tokens'), ('output', 'output_tokens'))
 

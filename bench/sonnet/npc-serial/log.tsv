@@ -86,3 +86,5 @@ b65	serial	builder	sonnet	a469fab550d3902fc	noble	second pass; turned-up hat bri
 b66	serial	builder	sonnet	acbeb39f51f907a30	leader	new build; check ok; 44,660 tris; self 6.5	Six renders for a new build.
 b67	serial	builder	sonnet	a591e95fcf7703e6d	masked-agent	new build; check ok; 45,814 tris; self 7	A sphere stencil on the mirrored arm did not paint the right hand; a box stencil did.
 r18	serial	reviewer	opus	a4d7c429fca0f6835	lady,lord,noble,leader,masked-agent	none accepted; lady, lord, noble 7.0 to a third pass; leader 7.0 and masked-agent 6.5 to a second pass	Hair is the most common largest issue (coils, spikes, drips, slabs).
+b68	serial	builder	sonnet	a041517f9834f983f	lady	third pass; round revolve skirt, purse in fist, bustle; check ok; 58,192 tris; purse overlaps the skirt in cast	The revolve note gave a round skirt.
+c1	serial	reviewer	opus	af42e2ab18ced534c	acolyte,bartender,carpenter,cartographer,commander,courier,elder,fisher,forager,guild-master,leader,banker,hermit,baker	critical check: 11 accepted at 7.0; banker and hermit critical; baker needs its rest clip	A yes-or-no critical check of 14 cards cost one reviewer run.

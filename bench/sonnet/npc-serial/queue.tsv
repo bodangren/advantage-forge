@@ -1,7 +1,5 @@
-lady	Third pass. Make the skirt a round bell: one `sdf.revolve` of a smooth profile (`profile.polygon(..., { smooth: true })`) with a round hem and no corners. Put the purse in the left fist.
-lord	Third pass. Swept-back wavy hair, as in the mockup. Make the hair one smooth hair shell over the skull with three or four broad waves (offset the skull and displace it gently); no thin locks, coils, or spikes.
-noble	Third pass. Make the plume one curved feather: a thin shaft with one smooth tapered vane, no lobes. Show cream breeches below the coat hem. Make the smile symmetric and soft.
-leader	Make the default hair full grey (put that option first, keep the others). Make the hair one smooth hair shell over the skull with three or four broad waves (offset the skull and displace it gently); no thin locks, coils, or spikes.
+banker	Fix only the critical error: in the front view, the quill vane goes into the side of the sleeve cuff. Move or shorten the quill so that it stays clear of the cuff in every view and clip.
+hermit	Fix only the critical error: the white hair tuft comes through the top of the hood. Keep all hair inside the hood (intersect the hair with the inside of the hood) or remove the tuft.
 masked-agent	
 spy	
 rebel	

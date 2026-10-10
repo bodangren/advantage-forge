@@ -26,7 +26,7 @@ Status: in progress (2026-10-09, owner goal: complete the P2 NPCs with Sonnet su
 
 ## Acceptance checks (all batches)
 
-Bar 7.5/10 (characters, owner 2026-10-02). Stop rule (owner 2026-10-08): after three reviews below
+Bar 7.0/10 for NPCs (owner 2026-10-10): an NPC at 7.0 is accepted unless the model has a critical error, such as hair through a head covering or an accessory that points the wrong way (the earlier bar was the 7.5 character bar of 2026-10-02). Stop rule (owner 2026-10-08): after three reviews below
 the bar, record the rating and put the asset on the follow-up list. Each NPC has a mockup in
 `docs/npc-mockups/<name>_001.jpg` (mmx, clay-toy chibi style with the kind's big eyes), a brief in
 `bench/sonnet/briefs/<name>.md` from `bench/sonnet/make-p2-npc-briefs.mjs`, one `forge-sonnet-high`
@@ -80,23 +80,21 @@ Review evidence: `bench/sonnet/npc-cards/<batch>/review.json` (cards are local P
 Reviewers see review cards with the idle strip for batches 1 and 2; later batches show the walk
 strip (the card default), because the shared idle clip has little motion (motion 3 to 3.5).
 
+## Accepted at 7.0 (owner rule of 2026-10-10)
+
+A critical-error check (no new rating) found no critical error in these NPCs, so they are accepted at their last rating of 7.0:
+acolyte, bartender, carpenter, cartographer, commander, courier, elder, fisher, forager, guild-master, leader (check c1).
+
 ## Follow-up list (three reviews below the bar)
 
 | Asset | Ratings | Largest open issues |
 | --- | --- | --- |
 | baker | 6.8, 7.2, 7.0 | the hat is low with one lumpy puff; in the rest clip the chin goes into the apron bib; sharp mouth corners read as fangs at 128 px |
-| bartender | 7.0, 6.5, 7.0 | the thick handlebar mustache covers the mouth (no smile shows); the mug is low; the foam is small |
 | merchant | 6.5, 6.5, 7.0 | the coat is short and flares at the hip (the mockup coat is long and open, with green sleeves); the sash tails look like fingers; the side hair is a tube |
 | mayor | 7.0, 7.0, 7.0 | no open grin, and the brows slope down (stern); the nose is too small; the coat is closed below the waist |
 | town-crier | 6.0, 6.5, 7.0 | the shout is a small oval; the bell is at shoulder height, not head height; the front lock under the brim is missing |
-| carpenter | 7.0, 7.0, 7.0 | the reviewer sees the saw pointing down with the blade edge-on from the front (the agent posed it 42 degrees up); no teeth, faceted streaks; the hair is a tall smooth mass |
-| fisher | 7.0, 7.0, 7.0 | no black fringe under the hat; the large coat lapels are missing; four buttons in two rows where the mockup has two in one row |
-| acolyte | 7.0, 7.0, 7.0 | the hair is one smooth swept slab (a helmet); long sleeves where the mockup has bare forearms |
 | banker | 6.5, 7.0, 7.0 | the quill reads as a gray spoon and its vane goes into the sleeve cuff (defect cap 7.0) |
 | beekeeper | 6.0, 6.5, 6.5 | hair locks go through the veil (dotted patches at the side and back); a dark patch on the suit at the hip in walk; narrow brim, short boots |
-| courier | 6.5, 7.0, 7.0 | the hair is a ring of tight curls (the mockup has wavy locks); small letters and pack; the feather has saw teeth |
-| elder | 6.0, 6.5, 7.0 | the hood is a big round ball (the mockup has a peak); narrow sleeves; sandal straps go through the sole |
-| forager | 6.5, 7.0, 7.0 | a sharp V crease between the eyes reads as a frown; the mushroom, basket, and hood are small |
 | jeweler | 6.0, 6.5, 6.5 | the open red mouth with white pointed teeth reads as a fanged grin (the mockup smile is closed); the tall ridged hair reads as a cap |
 | mason | 6.5, 7.0, 7.0 | the smile is small and calm (the mockup smile is wide); the trowel is very small |
 | miner | 6.5, 6.5, 7.0 | the helmet lamp does not glow; in the three-quarter view the mouth paint wraps onto the cheek and reads as a grimace |
@@ -105,11 +103,8 @@ strip (the card default), because the shared idle clip has little motion (motion
 | stablekeeper | 7.0, 7.0, 7.0 | the beard covers the cheeks up to the eyes, so the lower face is a black mass (the mockup has a short jaw beard and a visible grin) |
 | tanner | 7.0, 6.5, 7.0 | the kerchief reads as a knitted beanie with a hair tuft through the top (an acorn from the back at 128 px); the rolled hide is small and flat at the waist |
 | teacher | 7.0, 7.0, 7.0 | the hair is a lumpy mass with dripping ridges (the mockup has a smooth wavy bob with side-swept bangs) |
-| cartographer | 7.0, 7.0, 7.0 | the green coat flares to the knees like a robe (the mockup jacket stops at the hips and shows the belt and trousers) |
 | nomad | 7.0, 7.0, 7.0 | the coat is short, closed, and flares like a skirt (the mockup coat is long and open); the bedroll reads as a gold disc |
 | hermit | 7.0, 7.0, 7.0 | the white hair tuft sits on top of the hood and goes through the fabric (defect cap 7.0) |
 | riverboat-captain | 6.5, 7.0, 6.5 | the brows slant down and the mouth is a flat dark rectangle, so he looks angry (expression cap 7.0); the nose reads as a clown nose |
 | ruin-keeper | 6.5, 7.0, 7.0 | the hood is too large with a tall bent point; the back view is one large gray mass |
-| commander | 7.0, 7.0, 7.0 | the raised inner brows look worried (the mockup has a calm, kind smile; expression cap); the beard is a box with hard edges across the cheeks |
 | general | 6.5, 7.0, 6.5 | the telescope reads as a striped stick; the smile is a small flat line; the coat is short with no cream breeches or tall boots |
-| guild-master | 6.5, 6.5, 7.0 | the coin purse is small and light brown (the mockup has a large dark sack); the coat stops at the hips (the mockup coat reaches the knees) |

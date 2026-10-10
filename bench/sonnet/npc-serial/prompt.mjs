@@ -29,7 +29,7 @@ function build(name, note) {
   } else {
     if (stale) lines.push(`The source ${src} exists, but an earlier pass stopped before it finished. First run \`./forge render ${name} --fast\` and look at out/${name}/render.png to see the current state.`);
     else lines.push(`The source ${src} exists. First look at out/${name}/render.png to see the current state.`);
-    if (reviewed && r.overall >= 7.5) {
+    if (reviewed && r.overall >= 7.0) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10, at the bar. Keep the look: change only what the note below needs.`);
     } else if (reviewed) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
@@ -71,7 +71,8 @@ function review(dir, names) {
   };
   const lines = [`# Review task: ${dir}`, '',
     'Work in /home/daniebo/Desktop/advantage-forge. Read measure/tracks/asset_review_audit_20261005/reviewer-brief.md and follow it exactly.',
-    `You review a batch of ${names.length} P2 NPC characters (bar 7.5). Do not edit any file except the output JSON. Never run git.`, '',
+    `You review a batch of ${names.length} P2 NPC characters. Do not edit any file except the output JSON. Never run git.`, '',
+    'Bar (owner rule 2026-10-10): an NPC at 7.0 or above is accepted unless the model has a critical error. In each JSON entry, add `"critical": true|false` and `"criticalReason": "<one sentence or empty>"`. Critical errors: hair or another part through a head covering or another part, an accessory or held item that points the wrong way, a floating part, a held item that does not touch the hand, a hole. Style differences from the mockup (hair shape, color, size, expression, proportions) are not critical.', '',
     `Cards dir: ${dir} (${names.map((n) => n + '.png').join(', ')}). Each mockup is also at docs/npc-mockups/<name>_001.jpg.`, '',
     'Roles (one line each):', ...names.map(role), '',
     'All NPCs are seen in 3D village and town scenes and as 128 px sprites. Rated G.', '',

@@ -1,0 +1,16 @@
+{
+  "acolyte": {"critical": false, "reason": "The card shows no poke-through, floating part, or hole; the candle dish sits in the hand, and the listed issues are style differences."},
+  "baker": {"critical": false, "reason": "The views and the cheer clip show the chin clear of the bib; the rest-clip contact is not visible on the card, so check that clip."},
+  "banker": {"critical": true, "reason": "In the front view, the quill vane goes into the side of the sleeve cuff, so one part goes through another part."},
+  "bartender": {"critical": false, "reason": "The mug touches the hand and no part goes through another part; the mustache, foam, and hair issues are style differences."},
+  "carpenter": {"critical": false, "reason": "The saw handle is in the hand and the saw points forward, which is a pose difference; the other issues are missing small details."},
+  "cartographer": {"critical": false, "reason": "The dividers and the scrolls touch the hands; the flat area at the back of the head is a shape issue, not a hole or a poke-through."},
+  "commander": {"critical": false, "reason": "The horn is in the hand and the scabbard tip only touches the ground; the face, beard, and hair issues are style differences."},
+  "courier": {"critical": false, "reason": "The beret covers the hair correctly and the letters touch the hand; the listed issues are size and style differences."},
+  "elder": {"critical": false, "reason": "The hand touches the staff and the hood covers the head correctly; the hood shape and the small sandal straps are shape issues."},
+  "fisher": {"critical": false, "reason": "The fish touches the side of the fist and the hair stays under the hat; the fringe, lapels, and buttons are style differences."},
+  "forager": {"critical": false, "reason": "The mushroom and the basket touch the hands and the hair stays inside the hood; the listed issues are style and size differences."},
+  "guild-master": {"critical": false, "reason": "The key and the purse touch the hands and no part goes through another part; the listed issues are size, color, and shape differences."},
+  "hermit": {"critical": true, "reason": "The white hair tuft comes through the top of the hood, which is the owner example of hair through a head covering."},
+  "leader": {"critical": false, "reason": "The pole is in the hand and the flag points correctly; the hair color, the back spike, and the teeth are style differences."}
+}
