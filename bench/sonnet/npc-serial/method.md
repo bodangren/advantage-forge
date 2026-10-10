@@ -54,3 +54,4 @@ speed. Improve this method with the lessons of each agent run.
 | b74 | The spy builder saw hair poke through the hood rim and did not fix it. | The prompt lists the critical errors and says to fix every one before the final build. |
 | b78, b79 | Two builders raised a pole foot after the ground check failed: the rest and run clips lower the chest by 6 to 7 cm. | The prompt puts a held pole foot about 0.06 m above the ground. |
 | r22 | The goblin builder described the bell as a mouth-down dome but did not see that the fist held the wrong end; the reviewer marked it critical. | The prompt asks for a `--focus` check of each held item: the fist grips the handle, and the item points the way the mockup shows. |
+| owner | The report page lagged eight NPCs behind: the orchestrator ran `report.py` only at review time. | The orchestrator runs `report.py` in the same command that logs each run. |

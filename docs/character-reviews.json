@@ -11716,40 +11716,40 @@
     "reviewedAt": "2026-10-10T12:16:36.000Z"
   },
   "lizardfolk-citizen": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
       "mockup": 3,
       "silhouette": 3.5,
-      "proportion": 3,
+      "proportion": 3.5,
       "shape": 3.5,
-      "color": 3.5,
+      "color": 3,
       "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
-      "gameReady": 4,
+      "gameReady": 4.5,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is a green lizardfolk with a teal headband, a shell necklace, a cream vest, and a pink spiral shell in a raised hand. It is the same character as the mockup, but the face, the body proportions, and the crest are noticeably different.",
+    "summary": "The model is a friendly green lizardfolk trader with an orange crest, a teal headband, a shell necklace, and a raised spiral shell. It is the same character as the mockup, but the mouth, the torso colors, and the crest show clear differences.",
     "strengths": [
-      "The raised spiral shell and the open waving hand match the mockup pose and read well at 128 px.",
-      "The yellow eyes, the pink blush, and the white shell necklace match the mockup.",
-      "The long tail and the teal headband give a clear silhouette from the side and the back.",
-      "The shell sits on the hand, and all parts are attached."
+      "The large yellow eyes, the pink cheeks, and the orange crest give a friendly lizard identity.",
+      "The raised spiral shell and the waving claw hand match the mockup pose and make a clear silhouette.",
+      "The scale skin, the knitted collar, the leather belt, and the shell beads are different materials, and each material reads.",
+      "The shell sits on the hand, the feet stand on the ground, and the walk moves the legs and the tail with planted steps."
     ],
     "issues": [
-      "The face does not show the warm closed smile of the mockup. The mouth is a flat line with small teeth, and the brow ridges make the eyes look stern. Add a wide curved smile and lift the brows.",
-      "The body is tall and narrow on long straight legs. The mockup is short and squat, with a round belly and wide bent legs. Make the torso shorter and rounder and the legs shorter.",
-      "The crest is a hard orange block that looks like a brick from the side. The mockup has a soft fan of tapered spines. Change the crest to a fan of 3 to 5 tapered spines.",
-      "The mockup has a rope collar, a teal neckerchief, and cream belly plates. The model has a knit cream vest and no collar. Add the rope collar and show the belly plates.",
-      "The snout is short and flat. The mockup has a longer, rounded snout. Make the snout longer.",
-      "The scale pattern covers the full body and the face with the same strong cracks. The mockup skin is smooth. Make the scale bump weaker, mainly on the face.",
-      "The walk keeps both arms still, and the legs move only a small distance. The motion is stiff."
+      "The mouth is a flat, neutral line with a heavy lower jaw. The mockup shows a wide closed smile. Curve the mouth corners up into a smile.",
+      "The teal vest with the pointed front is missing from the torso. The torso is tan and brown only. Add the teal vest over the shoulders and the chest, as in the mockup.",
+      "The crest is a narrow fan of sharp spikes. The mockup crest is a soft row of rounded fins that sweeps back. Make the crest fins rounder and angle them back.",
+      "The shell is pink and white with a tight swirl, and it reads as a candy. The mockup shell is cream with a pink center and a thick spiral rim. Make the shell cream and give it a seashell rim and opening.",
+      "The tail is thin and short. The mockup tail is thick and curls out to the side. Make the tail thicker at the base and longer.",
+      "The head is a box with a wide crocodile snout. The mockup head is round with a short snout. Round the head and shorten the snout.",
+      "In walk, the arms stay still. This is a known base limit."
     ],
-    "next": "Change the face to a wide closed smile with relaxed brows.",
+    "next": "Change the flat mouth into a wide closed smile, because the face expression sets the 7.0 cap.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T12:37:01.000Z"
+    "reviewedAt": "2026-10-10T12:46:24.000Z"
   },
   "merfolk-citizen": {
     "overall": 7.0,

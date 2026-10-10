@@ -1,0 +1,25 @@
+{
+  "lizardfolk-citizen": {
+    "overall": 7.0,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "The model is a friendly green lizardfolk trader with an orange crest, a teal headband, a shell necklace, and a raised spiral shell. It is the same character as the mockup, but the mouth, the torso colors, and the crest show clear differences.",
+    "strengths": [
+      "The large yellow eyes, the pink cheeks, and the orange crest give a friendly lizard identity.",
+      "The raised spiral shell and the waving claw hand match the mockup pose and make a clear silhouette.",
+      "The scale skin, the knitted collar, the leather belt, and the shell beads are different materials, and each material reads.",
+      "The shell sits on the hand, the feet stand on the ground, and the walk moves the legs and the tail with planted steps."
+    ],
+    "issues": [
+      "The mouth is a flat, neutral line with a heavy lower jaw. The mockup shows a wide closed smile. Curve the mouth corners up into a smile.",
+      "The teal vest with the pointed front is missing from the torso. The torso is tan and brown only. Add the teal vest over the shoulders and the chest, as in the mockup.",
+      "The crest is a narrow fan of sharp spikes. The mockup crest is a soft row of rounded fins that sweeps back. Make the crest fins rounder and angle them back.",
+      "The shell is pink and white with a tight swirl, and it reads as a candy. The mockup shell is cream with a pink center and a thick spiral rim. Make the shell cream and give it a seashell rim and opening.",
+      "The tail is thin and short. The mockup tail is thick and curls out to the side. Make the tail thicker at the base and longer.",
+      "The head is a box with a wide crocodile snout. The mockup head is round with a short snout. Round the head and shorten the snout.",
+      "In walk, the arms stay still. This is a known base limit."
+    ],
+    "next": "Change the flat mouth into a wide closed smile, because the face expression sets the 7.0 cap.",
+    "critical": false,
+    "criticalReason": ""
+  }
+}
