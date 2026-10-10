@@ -1,11 +1,8 @@
-riverboat-captain	
-caravan-driver	`./forge check caravan-driver` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
-ruin-keeper	The build prints one `warning:` line now. Fix its cause.
-tanner	Third pass. Hold the rolled hide across the chest in both fists: make it a horizontal roll centered on x = 0 and use the kind `hold` option, so the two mirrored fists both grip it. Keep every hair strand under the headband.
-tax-collector	Third pass. Make the ledger an open brown leather book with cream pages (two page blocks and a spine), not a flat card.
 teacher	Third pass. Break the hair into soft wavy locks that end near the shoulders (a `sdf.chain` lock per strand, blended with a small smoothUnion), with side bangs; the back must not read as one smooth helmet.
 cartographer	Third pass. Two reviews disagreed about the hair. Look closely at the mockup and match its hair shape exactly (crown, tuft, and side hair); in the report, describe the mockup hair in one line.
 nomad	Third pass. Make the hair soft wavy curls (no rope locks, no gold bands) and the bedroll tan, as in the mockup.
 hermit	Third pass. The hood must be a soft cloth hood that frames the face and falls onto the shoulders, with NO point (a tall bent point reads as a gnome hat from the side and the back).
 ranger-guide	Third pass. First remove the thin dark ring lines inside the cloak hem around the legs (a visible defect): look at a `--focus` render of the hem. Then soften the hood into a peak at the back.
 watch-captain	Third pass. Make the default skin the medium brown of the mockup (put that option first, keep the others). Attach the cheek guards to the helmet brim so they do not float at the temples (a visible defect); check them in a `--views side --focus` render.
+riverboat-captain	Third pass. Make the jacket a long open coat (to the knees) over a black vest, as in the mockup. Hold the spyglass out at chest height and make it longer, about 0.2 m.
+ruin-keeper	Third pass. Make the hood soft and draped, with folds and a green lining at the face opening. No bun and no ball shape on top (it reads as a beanie pom-pom).

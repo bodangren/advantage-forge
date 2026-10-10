@@ -10026,70 +10026,71 @@
     "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "tanner": {
-    "overall": 6.5,
-    "group": "NPCs",
-    "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3,
-      "materials": 3.5,
-      "detail": 3.5,
-      "technical": 3,
-      "gameReady": 4.5,
-      "sprite": 3.5,
-      "motion": 3
-    },
-    "summary": "A tanner with an orange headband, dark curly hair, a cream shirt, a dark leather apron, and a rolled hide. The character is the same, but the hide pose, the shirt color, and the headband differ clearly from the mockup.",
-    "strengths": [
-      "The orange headband, the dark brown apron with straps, and the rolled hide give the role a clear identity.",
-      "The face reads as cheerful with a small closed smile and warm skin, as in the mockup.",
-      "The leather apron, the hide roll, and the boots use distinct brown values."
-    ],
-    "issues": [
-      "One fist holds the hide roll low at the hip and the other arm hangs down. The mockup holds the roll up at the chest. Raise the roll to chest height and put both fists on it.",
-      "Hair strands cross the orange headband on all sides and look like hair through the band. Put the band fully over the hair, or cut the hair at the band.",
-      "The shirt is cream-white with large puffy sleeves. The mockup shirt is tan with short sleeves. Change the shirt to tan.",
-      "The strong body is not shown. The arms and shoulders are the same as the base. Make the shoulders and forearms larger.",
-      "The headband knot is a small bow on top. The mockup knot sits at the side with loose tails."
-    ],
-    "next": "Raise the hide roll to the chest and hold it in both fists.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T01:05:30.000Z"
-  },
-  "tax-collector": {
     "overall": 7.0,
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
-      "silhouette": 4,
+      "silhouette": 3.5,
       "proportion": 3.5,
-      "shape": 4,
+      "shape": 3.5,
       "color": 4,
       "materials": 3.5,
       "detail": 3.5,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A cheerful tanner with an orange head scarf, dark hair, a cream shirt, a brown leather apron, and a rolled hide. The palette and the face match, but the scarf and the hide pose show clear differences.",
+    "strengths": [
+      "The face is warm and cheerful, with big brown eyes, a smile, and blush.",
+      "The orange scarf, the cream shirt, and the brown apron follow the mockup palette.",
+      "The apron straps cross on the back and the apron ties at the waist."
+    ],
+    "issues": [
+      "The scarf reads as a knitted beanie with a lumpy knot on the side. A dark hair tuft comes through the top, and the head looks like an acorn from the back and at 128 px. Make a tied bandana with a knot and two tails on top, and keep the hair under it.",
+      "The rolled hide is small and lies flat at the waist. The mockup holds a larger hide upright across the chest. Enlarge the roll and raise it to the chest.",
+      "The apron is thin and plain. The mockup has a thick leather apron with a wide belt and side straps. Make the apron thicker and add the wide belt.",
+      "The body is not strong. Widen the shoulders and the arms a little.",
+      "In the walk, the arms stay still (known base limit)."
+    ],
+    "next": "Replace the beanie shape with a tied bandana and remove the hair tuft from the top.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T02:48:28.000Z"
+  },
+  "tax-collector": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A prim tax collector with a tall black hat, a large black mustache, a pinstripe vest, a black coat, a gold coin box, and a ledger. The character is the same, but the ledger and the coat tails differ clearly from the mockup.",
+    "summary": "A prim tax collector with a black top hat, a curled mustache, a pinstripe tailcoat and vest, a gold coin box, and an open ledger. The model matches the mockup with small differences only.",
     "strengths": [
-      "The tall hat and the large mustache give a strong silhouette that reads in every sprite direction.",
-      "The gold coin box raised in one fist is a clear accent against the black suit.",
-      "The pinstripe vest, the tie, and the polished black shoes follow the mockup."
+      "The top hat with the maroon band and the long tailcoat give a clear silhouette from every view.",
+      "The curled black mustache is the focal point and reads at 128 px.",
+      "The pinstripe coat, the gray vest, the tie, and the glossy shoes copy the mockup.",
+      "The gold coin box and the open ledger match the role and give two accents."
     ],
     "issues": [
-      "The ledger is a flat cream card with lines and a gold rim. It looks like a sign. The mockup ledger is an open brown leather book with pages. Make an open book with a brown cover.",
-      "The coat stops at the hips at the back. The mockup tailcoat has long tails to the knees. Add two coat tails at the back.",
-      "The face has no nose and the mustache hides the mouth, so the fussy, funny expression is weak. Add a round nose and raise one eyebrow.",
-      "The coat is plain black. The mockup coat and trousers have pinstripes too.",
-      "The walk is stiff. Both posed arms stay still."
+      "The hair is a thick black mass at the back and the sides and looks like a wig. The mockup shows short hair at the sides only. Reduce the hair to short side tufts.",
+      "The face is calm. The mockup shows wide eyes and a big happy grin. Show a small open smile under the mustache.",
+      "The nose is small. The mockup has a large round nose. Enlarge the nose.",
+      "The coin box is at shoulder height. The mockup raises the coin hand near the head. Raise the arm a little.",
+      "In the walk, the posed arms stay still (known base limit)."
     ],
-    "next": "Replace the flat card with an open brown leather ledger.",
+    "next": "Reduce the hair to short side tufts and show a small open smile under the mustache.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T01:05:30.000Z"
+    "reviewedAt": "2026-10-10T02:48:28.000Z"
   },
   "teacher": {
     "overall": 7.0,
@@ -10288,13 +10289,13 @@
     "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "riverboat-captain": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
+      "mockup": 3.5,
       "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 3.5,
+      "proportion": 4,
+      "shape": 4,
       "color": 3.5,
       "materials": 3.5,
       "detail": 3.5,
@@ -10303,23 +10304,23 @@
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "An old riverboat captain with a white beard, a navy cap with an anchor, a navy coat, and a brass spyglass. The outfit matches the mockup, but the face reads stern, not jolly.",
+    "summary": "A round riverboat captain with a navy anchor cap, a full white beard, an open grin, gold buttons, and a white belt. The identity matches the mockup, but the coat and the spyglass pose show clear differences.",
     "strengths": [
-      "The navy cap with the gold anchor and the black visor match the mockup.",
-      "The double row of gold buttons and the white belt with a gold buckle match the mockup.",
-      "The white beard and mustache frame the face well."
+      "The navy cap with the gold anchor, the white beard, and the white eyebrows read at once.",
+      "The open grin and the rosy cheeks give the jolly expression of the mockup.",
+      "The white belt with the gold buckle and the double row of gold buttons match the mockup.",
+      "The free fist sits on the hip as in the mockup."
     ],
     "issues": [
-      "The eyebrows slant down to the center and the mouth is a small grimace. The face reads angry. The mockup has raised brows and a wide, laughing smile. Raise the brows and open a wide smile.",
-      "The irises are pink-red. Make them a normal brown or blue.",
-      "The spyglass points down at a low angle and looks like a baton. Hold it out forward at chest height.",
-      "The body is not very round. The mockup captain has a large, round belly.",
-      "The hand on the hip does not read. Bend the elbow out and put the fist on the hip.",
-      "In walk, the arms stay still (known base limit)."
+      "The jacket is closed and navy at the center. The mockup has a long open coat with lapels over a black vest. Add the open coat flaps to the hips and a black vest at the center.",
+      "The spyglass is short and thin and points sideways at hip height. The mockup holds a large brass spyglass out at chest height. Raise the arm and make the spyglass longer and thicker.",
+      "The nose is small and pale. The mockup has a large round red nose. Enlarge the nose and paint it red.",
+      "The red corners of the mouth hang below the mustache and look like drops. Close the mouth corners into one grin shape.",
+      "In the walk, the arms stay still (known base limit)."
     ],
-    "next": "Change the face to raised brows and a wide, laughing smile.",
+    "next": "Open the coat over a black vest and let the coat flaps hang to the hips.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:31:22.000Z"
+    "reviewedAt": "2026-10-10T02:48:28.000Z"
   },
   "cartographer": {
     "overall": 7.0,
@@ -10420,38 +10421,38 @@
     "reviewedAt": "2026-10-10T01:40:02.000Z"
   },
   "caravan-driver": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3,
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3.5,
       "materials": 3.5,
-      "detail": 3,
-      "technical": 3.5,
+      "detail": 3.5,
+      "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3,
+      "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A bearded caravan driver with a wide hat, a blue shirt, a long vest, a rope, and a flask. The outfit plan is close, but the face, the skin color, and the held props differ clearly from the mockup.",
+    "summary": "A cheerful caravan driver with a wide tan sun hat, a black beard, a red bandana, a blue shirt, and a long vest, with a rope coil and a flask. The model matches the mockup with small differences only.",
     "strengths": [
-      "The wide sun hat and the long vest over the blue shirt give the correct silhouette.",
-      "The rope coil and the flask are both present.",
-      "The black beard and mustache match the mockup."
+      "The wide sun hat gives a strong silhouette from every view and at 128 px.",
+      "The black beard, the big brown eyes, and the smile give the cheerful face of the mockup.",
+      "The red bandana, the blue shirt, the brown belt, and the brown boots follow the mockup palette.",
+      "The rope coil and the round flask are in the correct hands."
     ],
     "issues": [
-      "The mouth is an open grimace with teeth. In the three-quarter view it reads as worry. The mockup shows a smile under the mustache. Change the mouth to a smile.",
-      "The skin is dark brown. The mockup skin is light tan. Change the default skin to the mockup tone.",
-      "The arms hang down and hold the rope and the flask at the hips. The mockup holds both in front of the body. Raise the forearms to waist and chest height.",
-      "The red neckerchief is missing, and the red is on a waist sash. The mockup has a red neckerchief and a brown belt. Move the red to the neck.",
-      "The hat is pale cream. The mockup hat is warm ochre tan. Make the hat darker and warmer.",
-      "A flat flap hangs from the back of the hat. It reads as a board in the side and back views. Remove the flap."
+      "The vest is a plain pale cream. The mockup vest is a warmer tan with chest pockets and a cross strap. Darken the vest, add two pockets, and add the strap.",
+      "The rope coil is small. The mockup coil is about the size of the flask. Enlarge the coil.",
+      "From the side, the beard is a flat black block on the jaw. Give the beard a rounded edge and some strand detail.",
+      "The back hair shows as hard vertical stripes under the hat. Soften the strands.",
+      "In the walk, both arms stay still (known base limit)."
     ],
-    "next": "Change the face to a smile under the mustache with the light tan skin of the mockup.",
+    "next": "Make the vest a warmer tan with pockets and a cross strap.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
+    "reviewedAt": "2026-10-10T02:48:28.000Z"
   },
   "hermit": {
     "overall": 7.0,
@@ -10619,36 +10620,37 @@
     "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "ruin-keeper": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3,
-      "proportion": 3.5,
-      "shape": 3,
-      "color": 3,
-      "materials": 3,
-      "detail": 3,
-      "technical": 2.5,
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
       "gameReady": 4.5,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A quiet ruin keeper in a gray hood with a key ring and a lantern. White hair pokes through the hood, and the hood, the glasses, and the cloak color differ clearly from the mockup.",
+    "summary": "A kind ruin keeper with green eyes, gray hair, a gray hooded cloak with moss patches, a key ring, and a glowing lantern. The face and the props match, but the hood is a clear difference.",
     "strengths": [
-      "The closed smile and the green eyes give a kind face, as in the mockup.",
-      "The ring of keys and the lantern are both present.",
-      "The brown robe under the gray cloak matches the mockup layers."
+      "The face is kind and calm, with green eyes, a small smile, and blush, as in the mockup.",
+      "The lantern glows at the low hand and gives a warm accent.",
+      "The brown tunic under the open cloak and the green edge of the cloak follow the mockup.",
+      "The raised key ring and the low lantern copy the mockup pose."
     ],
     "issues": [
-      "White hair pokes through the hood on the top and the sides. The side and three-quarter views show it. Shrink the hair or cut it with the inside of the hood.",
-      "The hood is a round knit cap with a knob. The mockup hood is soft cloth with a point that falls onto the shoulders. Change the hood to a soft cloth hood.",
-      "The model wears round glasses. The mockup has no glasses. Remove the glasses.",
-      "The cloak is plain gray with a thin green edge. The mockup cloak is gray green with moss tones. Add a green moss tint to the cloak.",
-      "The key ring is small. The mockup ring is large and held up near the face. Make the ring larger."
+      "The hood is a tight round dome, and the hair bun on top looks like a pom-pom on a beanie. The mockup hood is soft and draped, with a peak and a wide green lining around the face. Make the hood looser, add folds, and show the lining.",
+      "From the side and the back, the hood and the cloak form one smooth gray sack. Let the hood fall onto the shoulders as a separate cape layer.",
+      "The cloak is plain gray with dark green stains. The mockup cloak is gray-green with moss at the edges. Shift the cloak color toward green and keep the moss at the hems.",
+      "The key ring is a ring of dark knobs with small keys. The mockup shows a large chain ring with clear keys. Make the keys larger and separate.",
+      "In the walk, the posed arms stay still (known base limit)."
     ],
-    "next": "Remove the hair poke-through and change the hood to a soft cloth hood that falls onto the shoulders.",
+    "next": "Rebuild the hood as a soft draped hood with a green lining that falls onto the shoulders.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
+    "reviewedAt": "2026-10-10T02:48:28.000Z"
   }
 }
