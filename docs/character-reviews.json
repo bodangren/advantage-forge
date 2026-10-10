@@ -10189,38 +10189,38 @@
     "reviewedAt": "2026-10-09T23:38:05.000Z"
   },
   "watch-captain": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 3.5,
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4,
       "color": 3.5,
-      "materials": 3.5,
-      "detail": 3.5,
-      "technical": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 3,
       "gameReady": 4.5,
       "sprite": 4,
-      "motion": 3.5
+      "motion": 3
     },
-    "summary": "A watch captain in a plumed helmet, chain mail, and a blue tabard with a castle emblem. The armor reads, but the lantern pose and the mouth differ from the mockup.",
+    "summary": "A friendly watch captain with a steel kettle helmet, a red plume, a blue tabard, a raised lantern, and a mace. The pose and the silhouette match the mockup, but the skin, the hair, and the cheek guards are clearly different.",
     "strengths": [
-      "The red plume, the silver helmet, and the blue tabard give a clear guard identity in every sprite direction.",
-      "The gold castle emblem and the belt buckle put an accent at the chest.",
-      "The chain mail and the shoulder plates read as separate materials."
+      "The kettle helmet with the red plume gives a strong silhouette and reads in every sprite.",
+      "The raised lantern pose matches the mockup.",
+      "The blue tabard with a gold emblem, the mail sleeves, and the steel pauldrons read as a town guard.",
+      "The face has a friendly smile and reads at 128 px from the front."
     ],
     "issues": [
-      "The model holds the lantern low at the hip. The mockup holds the lantern up at shoulder height. Raise the lantern arm.",
-      "The lantern has no glow. Make the lantern glass glow a warm orange, as in the mockup.",
-      "The mouth is open and shows teeth. The mockup shows a closed, confident smile. Close the mouth.",
-      "The skin is dark brown. The mockup skin is a warm tan. Make the skin lighter to match the mockup.",
-      "The helmet is a round dome with a hammered surface. The mockup helmet is smooth with a brim. Make the surface smooth and add the brim.",
-      "In the side view, the mace shaft crosses in front of the leg. Check the clearance in the walk clip."
+      "The skin is light peach. The mockup has medium brown skin. Change the default skin to match the mockup.",
+      "The cheek guards are flat plates that float at the temples below the brim. Attach them to the helmet brim and let them hang down along the cheeks.",
+      "The hair is short and curly. The mockup has hair to the shoulders under the helmet. Lengthen the hair.",
+      "The lantern is small and the glow is weak. Make the lantern larger with a bright amber glow, because it is the focal prop.",
+      "The walk is stiff and the lantern arm does not move."
     ],
-    "next": "Raise the lantern arm to shoulder height and make the lantern glow.",
+    "next": "Change the default skin to the medium brown of the mockup and attach the cheek guards to the helmet.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T23:38:05.000Z"
+    "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "weaver": {
     "overall": 7.5,
@@ -10458,31 +10458,33 @@
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
-      "silhouette": 3.5,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
+      "shape": 4,
       "color": 4,
       "materials": 3.5,
-      "detail": 4,
+      "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A kind old hermit with a white beard, a brown hood, a gnarled stick, and a bowl of red berries. The face and the props match the mockup, but the hood is a hard dome and the ears are small.",
+    "summary": "A kind old hermit with a long white beard, elf ears, a brown robe, a gnarled stick, and a bowl of red berries. The identity matches the mockup, but the hood shape and the nose are clearly different.",
     "strengths": [
-      "The white beard, the white eyebrows, and the round nose read as a kind old man.",
-      "The bowl of red berries is the color accent and reads at 128 px.",
-      "The green sash, the rope belt, the pouch, and the sandals match the mockup."
+      "The long white beard, the white eyebrows, and the elf ears match the mockup and read from the front.",
+      "The robe colors match the mockup: brown robe, tan hem, green sash, rope belt, and pouch.",
+      "The gnarled dark stick and the red berry bowl are clear signature props.",
+      "The 128 px sprites keep the beard, the stick, and the berries in every direction."
     ],
     "issues": [
-      "The hood is a hard round dome with a knob. From the back and the side it reads as a ball or an acorn. The mockup hood is soft cloth that falls onto the shoulders. Make the hood soft and let it fall to the shoulders.",
-      "The ears are small. The mockup has large pointed ears that stand out from the hood. Make the ears larger.",
-      "The mustache hides the mouth. The mockup shows a soft smile under the mustache. Show a small smile."
+      "The hood is a tight cap with a tall bent point at the back. From the side and the back it reads as a gnome hat. Make a soft hood that frames the face and falls to the shoulders, as in the mockup.",
+      "The nose is small and the mustache hides it. Make the large round nose of the mockup, because it is a main trait of the face.",
+      "The berry bowl is at the waist. Lift the bowl to chest height and move it forward, as in the mockup.",
+      "The walk is stiff. The robe hides the legs and the upper body has little bob."
     ],
-    "next": "Change the hood to soft cloth that falls onto the shoulders.",
+    "next": "Replace the pointed cap with a soft hood that frames the face and falls to the shoulders.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
+    "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "archaeologist": {
     "overall": 7.5,
@@ -10518,101 +10520,103 @@
     "reviewedAt": "2026-10-10T01:05:30.000Z"
   },
   "ferryman": {
-    "overall": 7.0,
-    "group": "NPCs",
-    "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
-      "proportion": 4,
-      "shape": 3.5,
-      "color": 3,
-      "materials": 3.5,
-      "detail": 3.5,
-      "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
-      "motion": 3
-    },
-    "summary": "A calm old ferryman with a straw hat, a gray beard, a long pole, and a lantern. The figure matches the mockup, but the lantern, the shirt color, and the hat brim differ clearly.",
-    "strengths": [
-      "The gray curly hair, the bushy eyebrows, and the beard read as a calm old man.",
-      "The long pole gives a clear silhouette in every view and in the sprites.",
-      "The rope belt, the dark trousers, and the sandals match the mockup."
-    ],
-    "issues": [
-      "The lantern is small and pale and does not glow. The mockup lantern is large and orange and glows. Make the lantern larger and give it an orange glow.",
-      "The shirt is light blue. The mockup shirt is dark teal green. Change the shirt to dark teal green.",
-      "The hat brim is narrower than the mockup brim. The mockup hat is a wide flat cone. Widen the brim and make the straw a little darker.",
-      "The mustache is small. The mockup has a large mustache that curls out over the beard. Make the mustache larger."
-    ],
-    "next": "Make the lantern larger with an orange glow, so it becomes the warm focal accent of the mockup.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
-  },
-  "chieftain": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
       "mockup": 4,
-      "silhouette": 3.5,
+      "silhouette": 4.5,
       "proportion": 4,
       "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A highland chieftain with red braids, a gold circlet, a fur-trimmed green cloak, and a staff. The face, the hair, and the cloak match the mockup, but the bronze sun on the staff is much too small.",
+    "summary": "A calm old ferryman with a wide straw hat, a gray beard, a teal shirt, a long pole, and an orange lantern. The model matches the mockup with small differences only.",
     "strengths": [
-      "The red braids, the gold circlet, and the closed kind smile match the mockup.",
-      "The green cloak with white fur trim reads clearly from the side and the back.",
-      "The face reads in the 128 px sprites."
+      "The wide conical straw hat gives a strong silhouette from every view and in every sprite.",
+      "The teal shirt, the brown belt, the sandals, and the low orange lantern match the mockup.",
+      "The long pole fits the ferryman role and the fist holds it.",
+      "The face is calm and friendly, and the curly hair and beard read under the hat."
     ],
     "issues": [
-      "The bronze sun on the staff is a small ring. The mockup sun is a large disc with rays, about the size of the head. Make the sun about three times larger.",
-      "The tunic is bright orange. The mockup tunic is dark red brown. Make the tunic darker.",
-      "The belt buckle is small. The mockup has a large round gold buckle. Make the buckle larger and round.",
-      "The staff is wavy along its full length. The mockup staff is straighter with a carved head. This difference is small."
+      "The hair and the beard are cool gray. The mockup has warm gray-brown hair and a longer, fuller beard. Warm the color and lengthen the beard to the chest.",
+      "The nose is small. Make the nose larger and rounder, as in the mockup.",
+      "The trousers are dark navy and long. The mockup has brown knee-length shorts. Change the color to brown and shorten them.",
+      "The walk is stiff and the pole arm does not move."
     ],
-    "next": "Make the bronze sun on the staff about three times larger, with clear rays.",
+    "next": "Make the beard longer and fuller and change the hair and beard to warm gray-brown.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
+    "reviewedAt": "2026-10-10T02:16:41.000Z"
+  },
+  "chieftain": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4.5,
+      "shape": 4,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A young highland chieftain with red braids, a gold circlet, a fur-trimmed green cloak, and a sun staff. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The red hair, the two braids, and the gold circlet match the mockup.",
+      "The face has a closed smile and rosy cheeks, and it reads as proud and kind.",
+      "The bronze sun staff is a clear focal accent and reads in every sprite.",
+      "The color plan matches the mockup: red-brown tunic with gold trim, green cloak, and cream fur."
+    ],
+    "issues": [
+      "The cloak flares into a wide bell that touches the ground. From the side and the back it is larger than in the mockup. Make the cloak narrower and stop it at the calf.",
+      "The boots are plain brown. Add the cream fur cuffs of the mockup.",
+      "The staff wood is light and twisted. The mockup staff is darker carved wood. Darken the wood.",
+      "The walk is stiff. The cloak hides the legs and the staff arm does not move."
+    ],
+    "next": "Make the cloak narrower and shorter so that the side and back silhouette matches the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "ranger-guide": {
     "overall": 7.0,
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
-      "silhouette": 3.5,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
-      "color": 3.5,
+      "shape": 4,
+      "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
-      "technical": 4,
+      "detail": 4,
+      "technical": 3,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A young ranger guide in a green hood with a braid, a compass, a staff, and a longbow on her back. The identity reads, but the long cloak of the mockup is missing.",
+    "summary": "A young ranger guide in a green hooded cloak, with a braid, a brass compass, a staff, and a bow and quiver on the back. The identity matches the mockup, but a visible defect at the cloak hem caps the rating.",
     "strengths": [
-      "The longbow and the quiver on the back are present and read in the back view.",
-      "The braid over the shoulder and the brown vest with straps match the mockup.",
-      "The compass is held out in front of the body, as in the mockup."
+      "The green hood, the front braid, and the raised brass compass match the mockup.",
+      "The bow and the quiver on the back read in the side view, the back view, and the sprites.",
+      "The face is friendly and confident, with rosy cheeks.",
+      "The leather straps, the belt, and the boots give clear material contrast."
     ],
     "issues": [
-      "The long cloak is missing. The model has a short green capelet on the chest. The mockup cloak falls to the knees. Add a long cloak at the back and the sides.",
-      "The hood is a hard round dome. From the back it reads as a large green ball. Make the hood soft and join it to the cloak.",
-      "The hair is light caramel. The mockup hair is dark brown. Make the hair darker.",
-      "The mouth is open with teeth. The mockup shows a closed, confident smile. Change the mouth to a closed smile.",
-      "The compass is a small gold cup in the fist. The mockup shows a round, flat compass. Make the compass a larger flat disc with a visible face."
+      "Thin dark ring lines show inside the cloak hem around the legs in the front view. Remove or close the thin shell that makes these lines.",
+      "The lower garment is cream and short. The mockup has brown trousers into the boots. Change it to brown trousers.",
+      "The mouth is open. The mockup has a closed smile. Close the mouth.",
+      "The walk is stiff and the staff arm does not move."
     ],
-    "next": "Add a long green cloak that falls to the knees and joins the hood.",
+    "next": "Remove the dark ring lines inside the cloak hem.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T00:35:47.000Z"
+    "reviewedAt": "2026-10-10T02:16:41.000Z"
   },
   "ruin-keeper": {
     "overall": 6.5,

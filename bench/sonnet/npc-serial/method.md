@@ -41,3 +41,5 @@ speed. Improve this method with the lessons of each agent run.
 | b8 | The fix list held a base limit (the still posed arm in walk), which no builder can fix. | `prompt.mjs` drops issues about the still arm from the fix list. |
 | b11 | The nomad builder viewed one render, before a large pose change, and reported a shape it had not seen. | The prompt asks for one render after the last edit. |
 | r7 | Two reviewers asked for opposite cartographer hair (s1: full hair crest; s4: bald crown with side hair). | When reviews disagree, the queue note tells the builder to match the mockup and to describe it in the report. |
+| b13 | The ferryman builder replaced a cloth color option instead of adding one. | The prompt says to keep every variant option and put a new default first. |
+| b13, b16 | The ferryman builder fixed a type error after `./forge all`, so the build was older than the source. | The typecheck and the check run before the final `./forge all`, and nothing is edited after it. |
