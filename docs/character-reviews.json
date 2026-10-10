@@ -11648,37 +11648,39 @@
     "reviewedAt": "2026-10-10T11:32:40.000Z"
   },
   "goblin-citizen": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
+      "mockup": 3.5,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
       "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
-      "technical": 2.5,
+      "detail": 4,
+      "technical": 4,
       "gameReady": 4,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is a friendly goblin trader with large ears, a vest, a red sash, striped trousers, and a brass bell. It is the same character as the mockup, but the bell is upside down in the fist, the arm is low, and the backpack is small.",
+    "summary": "The model is a friendly green goblin trader with a big sack, a cap, a vest, striped pants, and a brass bell. It is the same character as the mockup, with clear differences in the head covering and the face.",
     "strengths": [
-      "The large green ears, the face, and the friendly smile read well in every view and at 128 px.",
-      "The costume colors match the mockup: cream shirt, brown vest with gold buttons, red sash, purple striped trousers, red shoes.",
-      "The model stands on the ground and the walk clip is clean."
+      "The costume colors match the mockup: orange scarf, brown vest, cream shirt, red sash, purple striped pants, and red pointed shoes.",
+      "The big sack with scrolls, pots, a lantern, and a tin reads as a junk trader from the side and the back.",
+      "The bell hangs from the fist with the mouth down, as in the mockup.",
+      "The large ears and the sack make a clear silhouette in all 8 sprite directions, and the face reads in the front sprites."
     ],
     "issues": [
-      "The bell is upside down relative to the grip. The crown and its knob point up, and the fist holds a short stem below the bell mouth. Put the handle in the fist and hang the bell below it, mouth down.",
-      "The arm holds the bell at chest height. The mockup holds the bell up at head height. Raise the arm.",
-      "The backpack is a small box with two pots. The mockup and the role show a huge sack of odds and ends. Make the pack larger than the torso and add more items.",
-      "The head covering is a yellow pointed cap. The mockup shows an orange bandana with a knot. Change the cap to a wrapped orange bandana.",
-      "The neck scarf is a plain yellow ring. The mockup shows an orange scarf with a hanging end. Add the hanging end and use orange."
+      "The face has an open mouth with one fang. The mockup has a closed wide smile. Close the mouth into a wide smile.",
+      "The head covering is a smooth orange cap. The mockup has a yellow cloth wrap with folds and a knot. Change the cap to a yellow wrap with a knot.",
+      "The nose is a small button. The mockup has a long, large goblin nose. Make the nose longer and larger.",
+      "No straps show on the chest. The mockup shows brown straps over the vest. Add two straps from the sack over the shoulders.",
+      "The bell is at cheek height. The mockup holds the bell up near the top of the head. Lift the bell arm higher.",
+      "The walk keeps the bell arm still, and the legs move only a small distance. The motion is stiff."
     ],
-    "next": "Turn the bell so that the fist holds the handle and the bell hangs below it, and raise the arm to head height.",
+    "next": "Close the mouth into a wide smile and change the cap to a yellow cloth wrap with a knot.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T12:16:36.000Z"
+    "reviewedAt": "2026-10-10T12:37:01.000Z"
   },
   "orc-citizen": {
     "overall": 7.0,
@@ -11721,30 +11723,33 @@
       "silhouette": 3.5,
       "proportion": 3,
       "shape": 3.5,
-      "color": 4,
-      "materials": 4,
+      "color": 3.5,
+      "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is a green lizardfolk trader with a teal headband, a shell necklace, a knit vest, a leather wrap, and a long tail. It is the same character, but the head is small and shaped like a crocodile, so the face is noticeably different from the round chibi mockup.",
+    "summary": "The model is a green lizardfolk with a teal headband, a shell necklace, a cream vest, and a pink spiral shell in a raised hand. It is the same character as the mockup, but the face, the body proportions, and the crest are noticeably different.",
     "strengths": [
-      "The scale texture, the knit vest, and the leather wrap are clearly different materials.",
-      "The long tail and the clawed feet give a clear lizard silhouette from the side and in the sprites.",
-      "The shell necklace and the teal headband show the river trader role."
+      "The raised spiral shell and the open waving hand match the mockup pose and read well at 128 px.",
+      "The yellow eyes, the pink blush, and the white shell necklace match the mockup.",
+      "The long tail and the teal headband give a clear silhouette from the side and the back.",
+      "The shell sits on the hand, and all parts are attached."
     ],
     "issues": [
-      "The head is small for the body, and the long wide snout with high eyes reads as a crocodile. The mockup has a large round head with a short rounded snout. Enlarge the head and shorten and round the snout.",
-      "The spiral shell is small and flat, and it reads as a pink candy. The mockup and the role show a big spiral seashell. Make the shell larger and give it depth and a shell opening.",
-      "The torso is long and the arms are long. The mockup body is short and squat. Shorten the torso.",
-      "The crest is thin and reads as a stick from the side. Make the crest wider at the base.",
-      "The free arm hangs down. The mockup waves this hand. Raise the free arm to wave height."
+      "The face does not show the warm closed smile of the mockup. The mouth is a flat line with small teeth, and the brow ridges make the eyes look stern. Add a wide curved smile and lift the brows.",
+      "The body is tall and narrow on long straight legs. The mockup is short and squat, with a round belly and wide bent legs. Make the torso shorter and rounder and the legs shorter.",
+      "The crest is a hard orange block that looks like a brick from the side. The mockup has a soft fan of tapered spines. Change the crest to a fan of 3 to 5 tapered spines.",
+      "The mockup has a rope collar, a teal neckerchief, and cream belly plates. The model has a knit cream vest and no collar. Add the rope collar and show the belly plates.",
+      "The snout is short and flat. The mockup has a longer, rounded snout. Make the snout longer.",
+      "The scale pattern covers the full body and the face with the same strong cracks. The mockup skin is smooth. Make the scale bump weaker, mainly on the face.",
+      "The walk keeps both arms still, and the legs move only a small distance. The motion is stiff."
     ],
-    "next": "Enlarge the head and change the snout to a short rounded chibi snout.",
+    "next": "Change the face to a wide closed smile with relaxed brows.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T12:16:36.000Z"
+    "reviewedAt": "2026-10-10T12:37:01.000Z"
   },
   "merfolk-citizen": {
     "overall": 7.0,

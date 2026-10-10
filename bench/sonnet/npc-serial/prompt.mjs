@@ -32,7 +32,7 @@ function build(name, note) {
     if (reviewed && r.overall >= 7.0) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10, at the bar. Keep the look: change only what the note below needs.`);
     } else if (reviewed) {
-      lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
+      lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.0). Fix these issues, largest first:`);
       // The still posed arm in walk is a known base limit; a builder cannot fix it.
       const baseLimit = (s) => /known (base )?limit/i.test(s) || (/walk/i.test(s) && /\b(still|stiff|static|frozen|small steps)\b/i.test(s));
       const fixable = r.issues.filter((s) => !baseLimit(s));
@@ -50,7 +50,7 @@ function build(name, note) {
     '- For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.',
     '- Do not read the source again after an edit.',
     '- View one render after your last edit, before the final check, so the report describes the final shape.',
-    '- Critical errors block acceptance (owner rule): hair or a part through a head covering or another part, a held item that points the wrong way or does not touch the hand, a floating part, a hole. Fix every critical error that you see before the final build.',
+    '- Critical errors block acceptance (owner rule): hair or a part through a head covering or another part, a held item that points the wrong way or does not touch the hand, a floating part, a hole. Fix every critical error that you see before the final build. For each held item, check in a `--focus` render that the fist grips the handle and that the item points the way the mockup shows it.',
     '- A held pole, spear, or staff: put its foot about 0.06 m above the ground. The rest and run clips lower the chest by 6 to 7 cm, and a lower foot fails the ground check.',
     '', 'Rules:',
     `- \`./forge check ${name}\` ends with \`result ok\` and \`ground ok\`.`,
