@@ -61,7 +61,7 @@ viewer's left).
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list |
 | 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); inquisitor accepted at 8.0 (review 2); commander, general, guild-master on the follow-up list |
 | 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen, prince, princess accepted at 7.5 (review 2); lady accepted at 7.5 (review 4); lord, noble, leader accepted at 7.0 (owner rule) |
-| 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | masked-agent (review 2) and rebel (review 1) accepted at 7.0; spy 6.5 with a critical error (hair through the hood) in the queue; regent, royal-guard, soldier, veteran in the queue (new builds) |
+| 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | masked-agent (review 2) and rebel (review 1) accepted at 7.0; spy (second pass, hair inside the hood) and regent accepted at 7.5, royal-guard, soldier, and veteran accepted at 7.0 (review s17, no critical error) |
 | 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | in the serial builder queue (new builds) |
 
 Every catalog NPC row now has a brief. `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`,

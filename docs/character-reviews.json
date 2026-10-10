@@ -11287,37 +11287,37 @@
     "reviewedAt": "2026-10-10T09:44:34.000Z"
   },
   "spy": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
       "materials": 3.5,
       "detail": 3.5,
-      "technical": 2.5,
-      "gameReady": 4.5,
-      "sprite": 3.5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is a young spy in a dark green hood and cloak, with a brass spyglass raised in one fist and a folded note in the other. Hair tips come through the hood, and the open mouth with a fang tooth is different from the closed smile in the mockup.",
+    "summary": "A young spy in a dark green hood and cape, with a raised gold spyglass and a folded note. The model matches the mockup with small differences only.",
     "strengths": [
-      "The brown leather vest with straps, buckles, and pouches matches the mockup.",
-      "The brass spyglass and the folded note with a red seal are present and the fists hold them.",
-      "The green, brown, and grey palette matches the mockup, and the face reads in the front sprites."
+      "The green hood, the long cape, the brown leather vest with straps, and the brown boots match the mockup.",
+      "The raised spyglass arm and the note in the other hand match the mockup pose.",
+      "The face reads as playful and cheeky, and it reads in the 128 px sprites."
     ],
     "issues": [
-      "Dark hair tips come through the outer surface of the hood on the character's left side. They show in the front, three-quarter, and side views. Keep all hair inside the hood.",
-      "The mouth is open with a small fang-like tooth. The mockup shows a closed smile. Change the mouth to a closed smile.",
-      "The hood is a smooth round dome with a small tip. The mockup hood is soft and loose, with messy hair that spills out. Make the hood looser and let more hair show at the front.",
-      "The cloak back is one smooth green bell. Add folds and a hem line so the back reads as cloth.",
-      "The mockup cloak is darker and more muted. The model green is a little bright."
+      "The spyglass is short and wide at the top, so it reads as a bell or a seal stamp. Make it longer, with two or three tube segments.",
+      "The hair is dark brown. The mockup hair is near black. Make the hair darker.",
+      "The hood has a small knob on the top. The mockup hood is smooth. Remove the knob.",
+      "The vest has fewer pouches than the mockup, and the belt pouches are small.",
+      "The walk is stiff, and the raised arm stays still (a known base limit)."
     ],
-    "next": "Remove the hair tips that come through the hood, then change the mouth to a closed smile.",
+    "next": "Make the spyglass a longer brass tube with segments, so that it reads as a spyglass at 128 px.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T09:44:34.000Z"
+    "reviewedAt": "2026-10-10T10:34:02.000Z"
   },
   "rebel": {
     "overall": 7.0,
@@ -11351,5 +11351,137 @@
     "next": "Make the flag pole long, from the ground to above the head, with the red flag hanging from the top.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-10T09:44:34.000Z"
+  },
+  "regent": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "An old regent in a plum robe with gold trim, round gold glasses, a gold chain with a key, a gold seal, and a scroll. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The plum robe with gold trim at the hem and the cuffs, and the gold chain with the key, match the mockup.",
+      "The round gold glasses and the kind face read well in front, side, and sprites.",
+      "The gold seal and the scroll are in the correct hands and touch the fists."
+    ],
+    "issues": [
+      "The hair is a tall pointed swirl of curls in near white. The mockup hair is a gray, combed-back bun. Make the bun lower and the hair gray.",
+      "The ears are small. The mockup ears are large. Make the ears larger.",
+      "The high collar is weak. Add a clear raised collar or cowl at the neck.",
+      "The scroll is at an angle. The mockup scroll is upright.",
+      "The walk is stiff, and the posed arm stays still (a known base limit)."
+    ],
+    "next": "Change the hair to a lower, gray, combed-back bun.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T10:34:02.000Z"
+  },
+  "royal-guard": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A royal guard in a red and gold uniform, a silver helmet with a red plume, a mustache, and an upright halberd. It is the same character as the mockup, with clear differences in the legs and the helmet.",
+    "strengths": [
+      "The silver helmet with the red plume and the gold emblem reads in every view and in the sprites.",
+      "The halberd is upright, the axe blade points out, and the shaft touches the fist.",
+      "The mustache and the red coat with gold buttons and a black belt match the mockup."
+    ],
+    "issues": [
+      "The white trousers are missing. The red coat continues to the black boots. Add white trousers between the coat and the boots.",
+      "The cheek guards are large round discs and read as ear muffs. Make them narrow flaps along the cheeks.",
+      "The gold epaulettes are not in the mockup. Make them smaller or red.",
+      "The halberd shaft is light brown. The mockup shaft is dark.",
+      "The walk is stiff, and the posed arm stays still (a known base limit)."
+    ],
+    "next": "Add white trousers and make the red coat shorter, so that the mockup red, white, and black value plan reads.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T10:34:02.000Z"
+  },
+  "soldier": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A young soldier in a blue tabard with a castle emblem over chain mail, with a silver helmet, an upright spear, and a round shield. It is the same character as the mockup, with clear differences in the shield and the helmet.",
+    "strengths": [
+      "The blue tabard with the white castle emblem, the chain mail sleeves, and the brown belt match the mockup.",
+      "The spear is upright and touches the fist, and the shield is on the other arm.",
+      "The braid at the back and the young face read in the sprites."
+    ],
+    "issues": [
+      "The shield has a blue and white target pattern. The mockup shield is light blue with a silver rim and a gold star boss. Change the shield paint.",
+      "The helmet surface has a rough ripple texture. The mockup helmet is smooth plate. Remove the ripple from the helmet.",
+      "The smile is weak. The mockup face is more cheerful. Make the smile wider.",
+      "The mockup has tall leather leg wraps. The model has short boots.",
+      "The walk is stiff, and the posed arm stays still (a known base limit)."
+    ],
+    "next": "Paint the shield light blue with a silver rim and a gold star boss, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T10:34:02.000Z"
+  },
+  "veteran": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A bald old veteran with a gray mustache, a blue coat, a cane, and an old helmet at his hip. It is the same character as the mockup, but the model looks clean and new where the mockup looks grizzled and worn.",
+    "strengths": [
+      "The bald head, the gray side hair, the large gray mustache, and the big nose read in every view and in the sprites.",
+      "The cane touches the fist and reaches the ground. The helmet brim touches the other fist.",
+      "The helmet has vent slots and a spike, as in the mockup."
+    ],
+    "issues": [
+      "The helmet is bright silver. The mockup helmet is dark, old bronze. Make the helmet dark and dull.",
+      "The coat is a clean, bright blue. The mockup coat is a worn teal blue. Add wear, darker seams, and a duller color.",
+      "The dark trousers are missing. The coat continues to the boots. Show dark trousers above the boots.",
+      "The gold epaulettes and the red medal are not in the mockup. They are small additions.",
+      "The walk is stiff, and the posed arm stays still (a known base limit)."
+    ],
+    "next": "Make the helmet dark bronze and the coat a worn, duller teal blue, so that the model reads as an old veteran.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T10:34:02.000Z"
   }
 }

@@ -51,6 +51,7 @@ function build(name, note) {
     '- Do not read the source again after an edit.',
     '- View one render after your last edit, before the final check, so the report describes the final shape.',
     '- Critical errors block acceptance (owner rule): hair or a part through a head covering or another part, a held item that points the wrong way or does not touch the hand, a floating part, a hole. Fix every critical error that you see before the final build.',
+    '- A held pole, spear, or staff: put its foot about 0.06 m above the ground. The rest and run clips lower the chest by 6 to 7 cm, and a lower foot fails the ground check.',
     '', 'Rules:',
     `- \`./forge check ${name}\` ends with \`result ok\` and \`ground ok\`.`,
     '- The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.',
