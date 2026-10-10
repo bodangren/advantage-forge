@@ -50,6 +50,7 @@ function build(name, note) {
     '- For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.',
     '- Do not read the source again after an edit.',
     '- View one render after your last edit, before the final check, so the report describes the final shape.',
+    '- Critical errors block acceptance (owner rule): hair or a part through a head covering or another part, a held item that points the wrong way or does not touch the hand, a floating part, a hole. Fix every critical error that you see before the final build.',
     '', 'Rules:',
     `- \`./forge check ${name}\` ends with \`result ok\` and \`ground ok\`.`,
     '- The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.',

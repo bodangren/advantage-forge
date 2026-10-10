@@ -11121,38 +11121,38 @@
     "reviewedAt": "2026-10-10T07:54:12.000Z"
   },
   "lady": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
+      "shape": 4,
       "color": 4,
       "materials": 3.5,
-      "detail": 4,
-      "technical": 3.5,
-      "gameReady": 4,
+      "detail": 3.5,
+      "technical": 4.5,
+      "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is the court lady with the red bun, the pearl tiara, the green gown, and the raised fan. The skirt shape is a clear difference from the round bell gown in the mockup.",
+    "summary": "The model is the court lady from the mockup: red hair in a high bun with a pearl band, a sage green gown with a cream front panel, a flower fan, and a small green purse. The differences are small: a narrower skirt, a raised fan, and less lace.",
     "strengths": [
-      "The red hair bun with the pearl tiara matches the mockup closely.",
-      "The face reads well: warm brown eyes, blush, and a small closed smile.",
-      "The sage green gown, the cream front panel, and the lace collar match the mockup palette.",
-      "The raised fan with pink flowers reads in every sprite direction."
+      "The red bun, the pearl hair band, and the pearl earrings match the mockup and read from every view.",
+      "The sage green and cream palette matches the mockup, and the red hair gives a clear focal accent.",
+      "The face has a closed friendly smile, and it reads in the front sprites.",
+      "All signature items are present: the fan with pink flowers, the small green purse, and the puff sleeves."
     ],
     "issues": [
-      "The skirt is a stiff pyramid with sharp corners at the hem. Make a round bell skirt with soft folds, as in the mockup.",
-      "The small green purse sits at the skirt hem, away from the hand, and looks dropped. Put the purse in the left fist at hip height.",
-      "The back of the skirt is flat and wide in the back view. Give the back of the skirt a round, full volume.",
-      "The mockup shows a pearl necklace. Add a short pearl necklace above the lace collar.",
-      "In the walk clip, the skirt hides all leg motion and the body only bobs. Add a small sway to the skirt hem."
+      "The skirt is narrower and plainer than the full ball gown in the mockup. Make the skirt wider at the hem and add soft folds.",
+      "The fan is raised beside the shoulder. The mockup holds the open fan in front of the chest. The role text permits the raised fan, but a lower fan is closer to the mockup.",
+      "The cream front panel has only a few dots. The mockup shows lace rows and a lace bodice. Add lace bands on the panel.",
+      "The collar is a white ruff. The mockup shows a lace collar and a pearl necklace. Add the pearl necklace.",
+      "The hair is a dome of waves that covers much of the forehead. The mockup shows a smooth front with loose side locks."
     ],
-    "next": "Change the pyramid skirt to a round bell skirt with soft folds.",
+    "next": "Make the skirt wider and fuller at the hem, with lace rows on the cream front panel.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T08:47:59.000Z"
+    "reviewedAt": "2026-10-10T09:44:34.000Z"
   },
   "lord": {
     "overall": 7.0,
@@ -11254,37 +11254,102 @@
     "reviewedAt": "2026-10-10T08:47:59.000Z"
   },
   "masked-agent": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
+      "mockup": 3.5,
       "silhouette": 3.5,
       "proportion": 3.5,
       "shape": 3.5,
       "color": 4,
       "materials": 3.5,
       "detail": 3.5,
-      "technical": 3,
-      "gameReady": 4,
+      "technical": 4,
+      "gameReady": 4.5,
       "sprite": 3.5,
-      "motion": 3.5
+      "motion": 3
     },
-    "summary": "The model is the hooded agent with a purple hood, a dark coat, a white half mask, and a sealed letter. The mask reads as goggles and shows a skin spot, so the face is the largest difference.",
+    "summary": "The model is a friendly masked agent in a purple cloak and a white half mask, with one fist at the chin and a sealed letter in the other hand. It is the same character as the mockup, but the hood shape and the missing long hair are clear differences.",
     "strengths": [
-      "The deep purple hood and capelet and the dark grey double-breasted coat match the mockup palette.",
-      "The sealed letter with the purple wax seal reads clearly in the hand and in the sprites.",
-      "The friendly smile keeps the character playful and never scary.",
-      "The black fringe under the hood matches the mockup."
+      "The white half mask with a gold rim and the dark grey double-breasted coat with silver buttons match the mockup.",
+      "The pose matches the mockup: one fist at the chin and the sealed letter with a purple seal held out.",
+      "The purple and dark grey palette matches the mockup, and the white mask is a clear focal point."
     ],
     "issues": [
-      "A skin-colored spot shows through the center of the mask above the eyes. Close the mask surface so that it is fully white.",
-      "The mask is a narrow band with round eye holes and gold rims, and it reads as goggles. Make a broader half mask that covers the nose bridge, as in the mockup.",
-      "The hood is a large round dome, and the cloak stops at the knees. Give the hood a soft point and make the cloak long to the ankles.",
-      "The free hand hangs at the side. Raise the free hand to the chin, as in the mockup.",
-      "The back view and the back sprites show only a plain purple shape. Add folds and a hem edge to the back of the cloak."
+      "The hood is tall with a pointed tip, like a gnome hat. The mockup hood is soft and rounded and falls around the face. Make the hood lower and rounder.",
+      "The long black hair that falls from the hood in the mockup is missing. The model shows only short bangs. Add long locks at the sides of the face.",
+      "The cloak back is one heavy lumpy mass. In the back sprites the character is only a purple shape. Add clear folds and a hem line to the cloak.",
+      "The legs are short and stubby. The mockup shows longer dark trousers and boots.",
+      "The fist at the chin touches the face edge. Check that the fist does not enter the mask or the chin in the clips."
     ],
-    "next": "Close the skin spot in the mask and extend the mask over the nose bridge.",
+    "next": "Change the hood to a soft rounded hood and add long hair locks at the sides of the face.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T08:47:59.000Z"
+    "reviewedAt": "2026-10-10T09:44:34.000Z"
+  },
+  "spy": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 2.5,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "The model is a young spy in a dark green hood and cloak, with a brass spyglass raised in one fist and a folded note in the other. Hair tips come through the hood, and the open mouth with a fang tooth is different from the closed smile in the mockup.",
+    "strengths": [
+      "The brown leather vest with straps, buckles, and pouches matches the mockup.",
+      "The brass spyglass and the folded note with a red seal are present and the fists hold them.",
+      "The green, brown, and grey palette matches the mockup, and the face reads in the front sprites."
+    ],
+    "issues": [
+      "Dark hair tips come through the outer surface of the hood on the character's left side. They show in the front, three-quarter, and side views. Keep all hair inside the hood.",
+      "The mouth is open with a small fang-like tooth. The mockup shows a closed smile. Change the mouth to a closed smile.",
+      "The hood is a smooth round dome with a small tip. The mockup hood is soft and loose, with messy hair that spills out. Make the hood looser and let more hair show at the front.",
+      "The cloak back is one smooth green bell. Add folds and a hem line so the back reads as cloth.",
+      "The mockup cloak is darker and more muted. The model green is a little bright."
+    ],
+    "next": "Remove the hair tips that come through the hood, then change the mouth to a closed smile.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T09:44:34.000Z"
+  },
+  "rebel": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The model is a young rebel scout with a red headband, a red neckerchief, a green jacket, a rolled red flag, and a slingshot. It is the same character as the mockup, but the flag pole is short and the jacket and trousers lose the patched, ragged look.",
+    "strengths": [
+      "The red headband with tails, the red neckerchief, and the dark topknot match the mockup and read in every sprite direction.",
+      "The face has a closed hopeful smile and strong brows, as in the mockup.",
+      "The red accents at the head, neck, and flag give a clear focal plan against the green jacket."
+    ],
+    "issues": [
+      "The flag pole is short and ends at the fist. The mockup pole is long and reaches the ground, with a gold spear tip. Make the pole long so the flag is the main silhouette shape.",
+      "The flag is a rolled red and gold tube with a red curved tail. The mockup shows a red flag that hangs from the pole. Make the cloth hang from the top of the pole.",
+      "The jacket has clean vertical stripes. The mockup jacket is olive with patches. Add two or three patches with stitches.",
+      "The brown trousers with a ragged hem in the mockup are missing. The model shows short legs with cream cuffs. Add brown trousers with a ragged hem.",
+      "The slingshot hangs low at the hip. The mockup holds the slingshot up and out to the side."
+    ],
+    "next": "Make the flag pole long, from the ground to above the head, with the red flag hanging from the top.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T09:44:34.000Z"
   }
 }

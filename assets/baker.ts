@@ -168,7 +168,7 @@ export default humanoidAsset({
     // ------------------------------------------------------------------ apron: bib, straps, skirt panel
     const shell = h.torso.round(0.012).subtract(h.torso.round(-0.003));
     const front = (x: number, y0: number, y1: number) => sdf.box([2 * x, y1 - y0, 0.4], 0.01).at(0, (y0 + y1) / 2, 0.2);
-    const bib = shell.intersect(front(0.082, 0.255, 0.415));
+    const bib = shell.intersect(front(0.082, 0.255, 0.385));
     const strap = shell
       .intersect(sdf.box([0.034, 0.5, 0.6]).at(0.074, 0.39, 0))
       .intersect(sdf.halfSpace([0, -1, 0], -0.3))

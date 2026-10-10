@@ -1,0 +1,18 @@
+{
+  "banker": {
+    "critical": false,
+    "reason": "The quill stays in the fist below the sleeve cuff with the nib down, and the book touches the other hand; no part goes through another part."
+  },
+  "hermit": {
+    "critical": false,
+    "reason": "No hair tuft comes through the hood in any view; the ears come out at the hood sides as in the mockup, and the hands touch the staff and the bowl."
+  },
+  "tanner": {
+    "critical": false,
+    "reason": "No hair comes through the scarf; the hair shows only below the scarf edge, and both fists hold the leather roll."
+  },
+  "baker": {
+    "critical": false,
+    "reason": "In the rest clip the chin comes down to the top edge of the bib but stays in front of it in the side and three-quarter strips, and both hands touch the tray."
+  }
+}

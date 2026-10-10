@@ -51,3 +51,4 @@ speed. Improve this method with the lessons of each agent run.
 | b62 | An interrupted pass left a build newer than the review, and `prompt.mjs` then dropped the fix list. | A builder prompt always uses the latest review. |
 | r18 | Hair is the most common largest issue across reviews: rope coils, spikes, drips, slabs, and helmets. | Hair notes ask for one smooth hair shell over the skull with three or four broad waves, and no thin locks or coils. |
 | owner | Owner rule 2026-10-10: NPCs are accepted at 7.0 unless the model has a critical error. | Reviewers add a `critical` flag; one critical-error check (no new rating) covers the 27 NPCs that already have 7.0. |
+| b74 | The spy builder saw hair poke through the hood rim and did not fix it. | The prompt lists the critical errors and says to fix every one before the final build. |

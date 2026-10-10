@@ -259,8 +259,8 @@ export default humanoidAsset({
     const vane = sdf
       .smoothUnion(
         0.008,
-        sdf.ellipsoid([0.042, 0.008, 0.11]).at(0.024, 0, 0.065).rotateY(-6),
-        sdf.ellipsoid([0.032, 0.008, 0.09]).at(-0.02, 0, 0.055).rotateY(5),
+        sdf.ellipsoid([0.03, 0.008, 0.09]).at(-0.006, 0, 0.065).rotateY(-6),
+        sdf.ellipsoid([0.03, 0.008, 0.085]).at(-0.03, 0, 0.055).rotateY(5),
       )
       .paintWhere(sdf.box([0.5, 1, 0.1]).at(0, 0, 0.17), C.quillShade, 0.02);
     const quill = sdf

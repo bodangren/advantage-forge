@@ -60,9 +60,9 @@ viewer's left).
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | archaeologist accepted at 7.5 (review 2, after a check fix); dockworker 8.0, ferryman 7.5, chieftain 7.5, caravan-driver 7.5 accepted (review 2); cartographer and hermit on the follow-up list |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list |
 | 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); inquisitor accepted at 8.0 (review 2); commander, general, guild-master on the follow-up list |
-| 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen, prince, princess accepted at 7.5 (review 2); lord, noble, leader accepted at 7.0 (owner rule); lady (third pass) waits for review |
-| 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | masked-agent 6.5 (review 1) in the queue; spy, rebel, regent, royal-guard, soldier, veteran in the queue (new builds) |
-| 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | briefs and mockups ready (fantasy peoples) |
+| 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen, prince, princess accepted at 7.5 (review 2); lady accepted at 7.5 (review 4); lord, noble, leader accepted at 7.0 (owner rule) |
+| 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | masked-agent (review 2) and rebel (review 1) accepted at 7.0; spy 6.5 with a critical error (hair through the hood) in the queue; regent, royal-guard, soldier, veteran in the queue (new builds) |
+| 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | in the serial builder queue (new builds) |
 
 Every catalog NPC row now has a brief. `cultist`, `priest`, `healer`, `hunter`, `pilgrim`, `sailor`,
 and `scout` have sources from earlier tracks. Batch 13 bases: the dwarf, elf, fae, gnome,
@@ -83,18 +83,14 @@ strip (the card default), because the shared idle clip has little motion (motion
 ## Accepted at 7.0 (owner rule of 2026-10-10)
 
 A critical-error check (no new rating) found no critical error in these NPCs, so they are accepted at their last rating of 7.0:
-acolyte, bartender, carpenter, cartographer, commander, courier, elder, fisher, forager, guild-master, leader (check c1); lord, mason, mayor, merchant, miner, noble, nomad, refugee, ruin-keeper, stablekeeper, teacher, town-crier (check c2).
+acolyte, bartender, carpenter, cartographer, commander, courier, elder, fisher, forager, guild-master, leader (check c1); lord, mason, mayor, merchant, miner, noble, nomad, refugee, ruin-keeper, stablekeeper, teacher, town-crier (check c2); banker, hermit, tanner, baker after a critical-error fix (review s16, part B).
 
 ## Follow-up list (three reviews below the bar)
 
 | Asset | Ratings | Largest open issues |
 | --- | --- | --- |
-| baker | 6.8, 7.2, 7.0 | the hat is low with one lumpy puff; in the rest clip the chin goes into the apron bib; sharp mouth corners read as fangs at 128 px |
-| banker | 6.5, 7.0, 7.0 | the quill reads as a gray spoon and its vane goes into the sleeve cuff (defect cap 7.0) |
 | beekeeper | 6.0, 6.5, 6.5 | hair locks go through the veil (dotted patches at the side and back); a dark patch on the suit at the hip in walk; narrow brim, short boots |
 | jeweler | 6.0, 6.5, 6.5 | the open red mouth with white pointed teeth reads as a fanged grin (the mockup smile is closed); the tall ridged hair reads as a cap |
 | musician | 5.5, 6.0, 6.5 | the fiddle is flat across the chest, not under the chin (pose cap 6.5); the fiddle is small and reads as a stick at 128 px |
-| tanner | 7.0, 6.5, 7.0 | the kerchief reads as a knitted beanie with a hair tuft through the top (an acorn from the back at 128 px); the rolled hide is small and flat at the waist |
-| hermit | 7.0, 7.0, 7.0 | the white hair tuft sits on top of the hood and goes through the fabric (defect cap 7.0) |
 | riverboat-captain | 6.5, 7.0, 6.5 | the brows slant down and the mouth is a flat dark rectangle, so he looks angry (expression cap 7.0); the nose reads as a clown nose |
 | general | 6.5, 7.0, 6.5 | the telescope reads as a striped stick; the smile is a small flat line; the coat is short with no cream breeches or tall boots |

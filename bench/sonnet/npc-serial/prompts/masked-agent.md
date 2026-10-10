@@ -3,9 +3,17 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/masked-agent.md. The mockup is docs/npc-mockups/masked-agent_001.jpg.
 
-Build the new asset assets/masked-agent.ts from the brief.
+The source assets/masked-agent.ts exists. First look at out/masked-agent/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
+1. A skin-colored spot shows through the center of the mask above the eyes. Close the mask surface so that it is fully white.
+2. The mask is a narrow band with round eye holes and gold rims, and it reads as goggles. Make a broader half mask that covers the nose bridge, as in the mockup.
+3. The hood is a large round dome, and the cloak stops at the knees. Give the hood a soft point and make the cloak long to the ankles.
+4. The free hand hangs at the side. Raise the free hand to the chin, as in the mockup.
+5. The back view and the back sprites show only a plain purple shape. Add folds and a hem edge to the back of the cloak.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.
