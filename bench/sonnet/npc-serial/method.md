@@ -38,3 +38,6 @@ speed. Improve this method with the lessons of each agent run.
 | orchestrator | After the setup, the orchestrator still uses about 0.15M tokens for each call (its context is about 130K). The orchestrator now costs more than the agents. | Keep orchestrator calls to the minimum. A new session with a small context costs less for each call. |
 | b4 | A `--fast` command after `./forge all` overwrote the textured GLB, and the builder ran `./forge all` twice. | The prompt orders the check before `./forge all` and forbids forge commands after it. |
 | r6 | Tanner fell from 7.0 to 6.5: the builder did not find how to hold the hide in both fists and used one fist. | When a fix needs a kind feature, the queue note names the method. |
+| b8 | The fix list held a base limit (the still posed arm in walk), which no builder can fix. | `prompt.mjs` drops issues about the still arm from the fix list. |
+| b11 | The nomad builder viewed one render, before a large pose change, and reported a shape it had not seen. | The prompt asks for one render after the last edit. |
+| r7 | Two reviewers asked for opposite cartographer hair (s1: full hair crest; s4: bald crown with side hair). | When reviews disagree, the queue note tells the builder to match the mockup and to describe it in the report. |

@@ -31,7 +31,9 @@ function build(name, note) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10, at the bar. Keep the look: change only what the note below needs.`);
     } else if (reviewed) {
       lines.push('', `An independent reviewer rated it ${r.overall}/10 (bar 7.5). Fix these issues, largest first:`);
-      r.issues.forEach((issue, i) => lines.push(`${i + 1}. ${issue}`));
+      // The still posed arm in walk is a known base limit; a builder cannot fix it.
+      const fixable = r.issues.filter((s) => !/known (base )?limit|(arm|arms) (stays?|is|are|remains?) (still|static|frozen)/i.test(s));
+      fixable.forEach((issue, i) => lines.push(`${i + 1}. ${issue}`));
       lines.push('Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.');
     } else {
       lines.push('Then complete the brief: match the mockup in silhouette, then proportions, then color, then details.');
@@ -42,6 +44,7 @@ function build(name, note) {
     '- Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.',
     '- For a small fix, render with `--views` or `--focus` instead of all views.',
     '- Do not read the source again after an edit.',
+    '- View one render after your last edit, before the final check, so the report describes the final shape.',
     '', 'Rules:',
     `- \`./forge check ${name}\` ends with \`result ok\` and \`ground ok\`.`,
     '- The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.',

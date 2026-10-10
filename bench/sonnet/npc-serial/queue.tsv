@@ -1,8 +1,3 @@
-beggar	
-cartographer	
-dockworker	
-stablekeeper	`./forge check stablekeeper` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
-nomad	`./forge check nomad` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
 hermit	`./forge check hermit` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
 ferryman	`./forge check ferryman` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
 chieftain	`./forge check chieftain` fails now. Run it first and fix every item it lists, so that it ends with `result ok` and `ground ok`.
@@ -14,3 +9,5 @@ ruin-keeper	The build prints one `warning:` line now. Fix its cause.
 tanner	Third pass. Hold the rolled hide across the chest in both fists: make it a horizontal roll centered on x = 0 and use the kind `hold` option, so the two mirrored fists both grip it. Keep every hair strand under the headband.
 tax-collector	Third pass. Make the ledger an open brown leather book with cream pages (two page blocks and a spine), not a flat card.
 teacher	Third pass. Break the hair into soft wavy locks that end near the shoulders (a `sdf.chain` lock per strand, blended with a small smoothUnion), with side bangs; the back must not read as one smooth helmet.
+cartographer	Third pass. Two reviews disagreed about the hair. Look closely at the mockup and match its hair shape exactly (crown, tuft, and side hair); in the report, describe the mockup hair in one line.
+nomad	Third pass. Make the hair soft wavy curls (no rope locks, no gold bands) and the bedroll tan, as in the mockup.

@@ -1,0 +1,92 @@
+{
+  "beggar": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 4, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "A kind old beggar with a gray beard, a big pink nose, a patched vest, a rope belt, a tin cup, and a walking stick. The model matches the mockup with small differences. The hat shape is the largest difference.",
+    "strengths": [
+      "The gray beard, the large pink nose, the big ears, and the gentle smile give a hopeful, kind face.",
+      "The patched brown vest, the rope belt, and the teal plaid sleeves match the mockup palette.",
+      "The tin cup held out in front and the walking stick on the other side match the mockup pose."
+    ],
+    "issues": [
+      "The hat is a wide, low mushroom shape with a drooping brim. The mockup hat has a taller crown with a band and a brim that turns up. Make the crown taller and the brim narrower.",
+      "At 128 px the wide brim hides most of the face in the top-down sprites. The eyes read only in the S, SW, and SE directions. A narrower brim shows more of the face.",
+      "The vest is a plain tabard with a ragged hem. The mockup coat has fuzzy, ragged edges along the front opening and more patches. Add the fuzzy edge on the front opening.",
+      "The walk is stiff. The stick stays in one position and the steps are small.",
+      "A small dark mark sits on the top of the hat crown. Remove it or make it a clear patch."
+    ],
+    "next": "Rebuild the hat with a taller crown, a hat band, and a narrower brim that turns up, so that the face shows more at 128 px."
+  },
+  "cartographer": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 4, 3.5, 4, 4.5, 4, 3],
+    "summary": "An old cartographer with round black spectacles, a white beard, a green coat, brass dividers, and a bundle of rolled maps. The costume and props match, but the hair is a large white cloud and the mockup has a bald crown with a tuft.",
+    "strengths": [
+      "The round black spectacles read clearly in every view and in every 128 px sprite direction.",
+      "The dark green coat with gold buttons, the brown vest, and the belt match the mockup.",
+      "The brass dividers and the tied map bundle are clear and match the role."
+    ],
+    "issues": [
+      "The hair is a large white cloud that covers the top and the back of the head. The mockup has a bald crown with a small tuft on top and white hair only at the sides. Remove the top mass and add a bald crown with a tuft.",
+      "The hair surface is lumpy and looks like a cauliflower in the side and back views. Shape the side hair into smooth locks.",
+      "The dividers are at shoulder height. The mockup holds the dividers up above the head. Raise the arm.",
+      "The nose is small and the spectacles hide it. The mockup nose is large and round. Make the nose larger.",
+      "The walk is stiff. The steps are small and the raised arm stays still."
+    ],
+    "next": "Replace the white hair cloud with a bald crown, a small tuft on top, and white hair at the sides, as in the mockup."
+  },
+  "dockworker": {
+    "overall": 8.0,
+    "scores": [4.5, 4, 3.5, 4, 4.5, 4, 4, 4, 4.5, 4.5, 3],
+    "summary": "A cheerful dockworker with a red knit cap, a brown beard, a striped shirt, suspenders, and a wooden crate in both arms. The model is very close to the mockup; only small details differ.",
+    "strengths": [
+      "The red knit cap with the fold, the blue and white striped shirt, and the brown suspenders match the mockup.",
+      "The open grin with teeth and the brown beard give a cheerful face that reads at 128 px.",
+      "The wooden crate held in both arms is the clear focal point, and the red cap reads in every sprite direction."
+    ],
+    "issues": [
+      "The body uses the standard base width. The mockup shows a big, broad man. Make the chest and shoulders wider to show the big trait.",
+      "The rope coils are small knots at the lower corners of the crate. The mockup ropes are long loops that hang from the hands to the knees. Make the loops longer.",
+      "The nose is small. The mockup nose is large, round, and red.",
+      "The walk is stiff. The steps are small. The arms stay still, which is correct for a carried crate."
+    ],
+    "next": "Widen the chest and the shoulders so that the dockworker reads as big, as in the mockup."
+  },
+  "stablekeeper": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 4, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "A sturdy stablekeeper with curly black hair, a red neck bandana, a cream shirt, a brown apron, a horseshoe, and a horse brush. The costume and props match, but the beard is much larger than in the mockup and changes the face.",
+    "strengths": [
+      "The red neck bandana is a clear accent at the focal point and matches the mockup.",
+      "The horseshoe and the horse brush held up in the two hands match the mockup pose and read at 128 px.",
+      "The cream shirt, the brown bib apron with buttons, and the black boots match the mockup."
+    ],
+    "issues": [
+      "The beard is too large. It covers the cheeks up to the eyes and makes the lower face a black mass. The mockup has a short beard along the jaw, with visible cheeks and a big grin. Cut the beard back to the jaw line.",
+      "The thick brows and the large beard make the face look stern. The mockup face is cheerful. Lift the brows and show the cheeks.",
+      "The sleeves go to the wrists. The mockup rolls the sleeves up and shows the forearms.",
+      "The apron is a light tan-brown. The mockup apron is a darker red-brown leather.",
+      "In the W and E sprites the raised brush covers the face.",
+      "The walk is stiff. The steps are small and the raised arms stay still."
+    ],
+    "next": "Cut the beard back to a short jaw-line beard so that the cheeks and the grin show, as in the mockup."
+  },
+  "nomad": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 3.5, 4, 3.5, 4, 4.5, 4, 3],
+    "summary": "A cheerful young desert wanderer with brass goggles, a cream scarf, an orange coat, a bedroll, and a staff with a bell. The main props match, but the hair style and the bedroll color are clearly different from the mockup.",
+    "strengths": [
+      "The brass goggles with blue lenses, the cream scarf, and the orange coat with a belt match the mockup.",
+      "The tall staff with a crook and a bell gives a strong silhouette in every view and every sprite direction.",
+      "The face is young and friendly, with a small closed smile, and it reads at 128 px."
+    ],
+    "issues": [
+      "The hair is thick rope locks with gold bands. The mockup hair is soft, wavy, shoulder-length curls without bands. Change the locks to wavy curls and remove the gold bands.",
+      "The bedroll is a red disk with a cream spiral. The mockup bedroll is tan with a brown rim. Change the bedroll to tan, so that the red does not pull focus.",
+      "The staff leans out at a wide angle and the hand holds it low. The mockup holds the staff upright at chest height.",
+      "The coat has a quilted diamond pattern and ends above the knee. The mockup coat is smooth and ends at the knee.",
+      "The walk is stiff. The steps are small and the staff arm stays still."
+    ],
+    "next": "Change the hair to soft, wavy, shoulder-length curls without gold bands, as in the mockup."
+  }
+}
