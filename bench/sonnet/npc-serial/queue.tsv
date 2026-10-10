@@ -1,5 +1,7 @@
 banker	Fix only the critical error: in the front view, the quill vane goes into the side of the sleeve cuff. Move or shorten the quill so that it stays clear of the cuff in every view and clip.
 hermit	Fix only the critical error: the white hair tuft comes through the top of the hood. Keep all hair inside the hood (intersect the hair with the inside of the hood) or remove the tuft.
+tanner	Fix only the critical error: a dark hair tuft comes through the top of the orange scarf (side and back views). Keep all hair under the scarf, or remove the tuft.
+baker	Fix only the critical error: in the rest clip from t = 0.80 the head bows and the chin goes into the apron bib. Lower the bib top or keep the chin clear of it. After the fix, view out/baker/anim/rest.png once (run `./forge animate baker --fast --clip rest`, then the final `./forge all baker`).
 masked-agent	
 spy	
 rebel	

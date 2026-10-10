@@ -1,0 +1,16 @@
+{
+  "lord": {"critical": false, "reason": "The hand holds the goblet, the cape and the fur attach to the body, and the hair, ruff, beard, and cape color issues are style differences."},
+  "mason": {"critical": false, "reason": "The hands hold the brick and the trowel, the hair stays under the cap, and the smile, trowel size, shirt, curls, and shirt length are style differences."},
+  "mayor": {"critical": false, "reason": "The hand holds the scroll, the hair stays under the top hat, and the smile, nose, coat front, and free-arm pose are style differences."},
+  "merchant": {"critical": false, "reason": "The hand holds the pouch, the side hair is a sideburn that joins the beard, and the coat, sash, lapels, and brows are style differences."},
+  "miner": {"critical": false, "reason": "The hands hold the hammer and the crystal, the hair stays under the helmet, and the lamp, mouth, fringe, and crystal color are style differences."},
+  "noble": {"critical": false, "reason": "The hand holds the cane, the plume points up from the hat in the correct direction, and the plume shape, coat, brows, and hair are style differences."},
+  "nomad": {"critical": false, "reason": "The hand holds the staff, the bedroll attaches to the body, and the coat, bedroll shape, skin tone, and hair length are style differences."},
+  "refugee": {"critical": false, "reason": "The hand holds the stick and the bundle hangs from its end, so the hip carry, the hair, and the lantern glow are pose and style differences."},
+  "ruin-keeper": {"critical": false, "reason": "The hands hold the key ring and the lantern, the hair stays inside the hood opening, and the hood size, hair, and cloak length are style differences."},
+  "stablekeeper": {"critical": false, "reason": "The hands hold the horseshoe and the brush, nothing pokes through, and the beard, brows, sleeves, and apron color are style differences."},
+  "tanner": {"critical": true, "reason": "A dark hair tuft comes through the top of the orange scarf in the side, back, and sprite views, which is hair through a head covering."},
+  "teacher": {"critical": false, "reason": "The hands hold the pointer and the apple, the glasses sit on the face, and the hair surface, braid side, and pointer thickness are style differences."},
+  "town-crier": {"critical": false, "reason": "The hands hold the bell and the scroll, the hair stays under the hat, and the mouth, arm height, hair lock, and breeches are style differences."},
+  "baker": {"critical": true, "reason": "In the rest clip from t=0.80, the head drops and the white bib covers the face directly below the mouth, so the chin goes through the bib."}
+}
