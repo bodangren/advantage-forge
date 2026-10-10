@@ -55,3 +55,9 @@ b39	serial	builder	sonnet	ab61263e1eabd423c	shrine-keeper	third pass; near-black
 b40	serial	builder	sonnet	aa6e7366791db63c4	diplomat	new build; check ok; 46,910 tris; self 7	Three renders for a new build.
 b41	serial	builder	sonnet	a6da71e895e47dce5	general	new build; check ok; 52,419 tris	Three renders for a new build.
 r13	serial	reviewer	opus	a32bba05e5e075158	ambassador,commander,shrine-keeper,diplomat,general	ambassador 7.5 (review 2) and shrine-keeper 7.5 (review 3) accepted; commander 7.0 to a third pass; diplomat 7.0 and general 6.5 to a second pass	Second and third passes with concrete notes keep reaching the bar about half the time.
+b42	serial	builder	sonnet	a59ad5895ad21b9cc	commander	third pass; short tufts under 3 cm, tan map; check ok; 50,328 tris	A numeric limit in the note (3 cm) gave a clear result.
+b43	serial	builder	sonnet	a92c4e1db5cf48a43	diplomat	second pass; dark brown hair default, larger scroll, wide smile; check ok; 45,222 tris	Four of five fixes; the builder named the one it could not close.
+b44	serial	builder	sonnet	afe96c7d7d00132cf	general	second pass; white brows, grin, stepped telescope, red star, black collar; check ok; 56,397 tris	Six renders, at the image limit.
+b45	serial	builder	sonnet	a7efba599b369e4e8	guild-master	new build; check ok; 50,212 tris; self 7	Six renders for a new build.
+b46	serial	builder	sonnet	abeabad78272cfb83	guild-member	new build; check ok; 48,688 tris	Four images for a new build.
+r14	serial	reviewer	opus	ac1b099253e6680b6	commander,diplomat,general,guild-master,guild-member	diplomat 7.5 (review 2) and guild-member 7.5 (review 1) accepted; commander 7.0 to follow-up (review 3); general 7.0 to a third pass; guild-master 6.5 to a second pass	The commander brows were raised by a fix-list item, and the next review called them worried. Reviewer drift again.

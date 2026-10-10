@@ -3,9 +3,17 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/general.md. The mockup is docs/npc-mockups/general_001.jpg.
 
-Build the new asset assets/general.ts from the brief.
+The source assets/general.ts exists. First look at out/general/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
+1. The face reads as a young boy. The brows are dark brown and the face has no age lines. Add white bushy eyebrows, soft cheek lines, and larger ears.
+2. The mouth is a small smile. The mockup has a wide, warm smile. Make the smile wider.
+3. The telescope is a thin gold rod with a round end, so it looks like a baton. Make a thicker brass tube with steps and a dark lens at the end.
+4. The hat badge is a gold disc with a mark. The mockup has a red star on the badge. Paint a red star on it.
+5. The coat has no black collar at the neck. Add the black collar from the mockup.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

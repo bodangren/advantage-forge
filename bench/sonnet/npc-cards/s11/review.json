@@ -1,0 +1,90 @@
+{
+  "commander": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 4, 3.5, 3.5, 4, 3.5, 3],
+    "summary": "The model is a bearded army commander with a blue cape, steel pauldrons, and a rolled map. The costume matches the mockup well, but the face looks worried and the beard is a box with hard edges.",
+    "strengths": [
+      "The blue cape, the steel pauldrons, the steel forearms, the diagonal strap, and the belt match the mockup.",
+      "The rolled map in the raised hand reads as the quest item.",
+      "The cape gives a clear silhouette from the side and the back, also in the sprites."
+    ],
+    "issues": [
+      "The expression is different. The inner ends of the brows go up, and the face looks worried. The mockup has a calm, kind smile. Lower the inner brow ends and give the mouth a wide smile.",
+      "The beard is a box with a straight top edge across the cheeks and hard corners at the sides of the face. Round the top edge and blend the beard into the cheeks.",
+      "The hair is a short, tight cap. The mockup has taller, spiky, messy hair. Add volume and spikes on top.",
+      "The scabbard tip touches the ground behind the right foot in the side and back views. Make the scabbard shorter or tilt it back.",
+      "The mockup holds a dagger in the lowered hand. The model has an empty fist. Add the dagger to the fist."
+    ],
+    "next": "Change the brows and the mouth to a calm, kind smile, and blend the top edge of the beard into the face."
+  },
+  "diplomat": {
+    "overall": 7.5,
+    "scores": [4, 4, 3.5, 4, 4.5, 3.5, 4, 4, 4, 4, 3],
+    "summary": "The model is a young diplomat in a cream coat with green trim, with an olive branch and a scroll. It matches the mockup closely in color and costume; the hair and the scroll are simpler.",
+    "strengths": [
+      "The cream coat, the green collar and cuffs, the green cravat, and the gold buttons match the mockup palette.",
+      "The raised olive branch reads clearly in every view and in the sprites.",
+      "The face is friendly, with blush and a smile."
+    ],
+    "issues": [
+      "The hair is a smooth block with hard edges at the sides and the back. The mockup has neat combed hair with a side part and a wave. Add the side part and soften the edges.",
+      "The scroll is a plain tube. The mockup shows open, curled sheets of paper. Add a partly open sheet to the scroll.",
+      "The ears are small. The mockup has large, round ears. Make the ears larger.",
+      "The mockup shows brown trousers below the coat. The model shows pale legs there. Change the trouser color to brown.",
+      "The mouth is open. The mockup has a closed smile. This difference is small."
+    ],
+    "next": "Rebuild the hair with a side part and a soft wave, so that it does not read as a helmet."
+  },
+  "general": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4.5, 3.5, 3.5, 4, 4, 4, 3],
+    "summary": "The model is an old general in a red coat with gold epaulettes, a blue sash, and a plumed black hat. The costume is close to the mockup, but the telescope reads as a lumpy gold club.",
+    "strengths": [
+      "The red coat, the gold epaulettes, the blue sash, the gold hem trim, and the black boots match the mockup palette.",
+      "The black hat with the red star and the white plume gives a strong silhouette in every view and at 128 px.",
+      "The white brows and the grey hair show the age of the general."
+    ],
+    "issues": [
+      "The telescope is a chain of gold bulbs and reads as a club or a rattle. Make it a straight, tapered brass tube with dark rings and a dark lens end, as in the mockup.",
+      "The nose is long and pointed, and the mouth is a wide open shape. The mockup has a round nose and a closed, kind smile. Make the nose round and close the mouth in a smile.",
+      "The hat has wide side points. The mockup hat is rounder, with a front brim. This difference is small because the role asks for a bicorne."
+    ],
+    "next": "Replace the gold bulbs with a straight brass telescope with dark rings and a lens."
+  },
+  "guild-master": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 4, 3, 3.5, 4, 3.5, 3],
+    "summary": "The model is a bald guild master in a fur-trimmed brown coat with a gold vest, a key, and a coin purse. The costume reads, but the hair, the beard, the body shape, and the purse are clearly different from the mockup.",
+    "strengths": [
+      "The brown coat with the thick cream fur trim reads well, and the fur texture is clear.",
+      "The raised brass key and the open grin give the jolly mood of the mockup.",
+      "The gold vest and the black shoes with silver buckles match the mockup."
+    ],
+    "issues": [
+      "The side hair is two large curled blocks that look like ram horns or ear muffs. The mockup has smaller bushy curls that join the beard. Make the side hair smaller and blend it into the beard.",
+      "The beard is a thin chin strap, and the mustache ends curl up to the lower eyelids. The mockup has a full, bushy beard and a mustache that curls out to the sides. Make the beard full and turn the mustache ends outward, below the eyes.",
+      "The body is not plump. The coat is a straight box with no belly. Add a large round belly under the vest.",
+      "The coin purse hangs at foot level, near the ground. The mockup holds the purse at hip height. Raise the purse to the fist.",
+      "The gold medallion is on the gold vest, and the two parts merge. Make the vest a warmer yellow and add a dark chain, as in the mockup.",
+      "The face is pale, with a pink forehead. The mockup has a red, ruddy face. Add warm red to the cheeks and the nose."
+    ],
+    "next": "Rebuild the side hair and the beard as one full, bushy brown mass, as in the mockup."
+  },
+  "guild-member": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3],
+    "summary": "The model is a young ginger crafter in a brown apron with a guild badge, with a small banner and a wrapped package. It matches the mockup closely; the hair texture and some colors are different.",
+    "strengths": [
+      "The orange hair, the brown apron with the round badge, the belt pouches, and the boots match the mockup.",
+      "The raised banner and the package read clearly in every view and in the sprites.",
+      "The face is eager and friendly, with blush and a smile."
+    ],
+    "issues": [
+      "The hair is a mass of thin, rope-like curls that hang like drips at the back. The mockup has soft, swept waves. Make larger, smoother locks.",
+      "The shirt is navy blue. The mockup shirt is dark grey. Change the shirt to dark grey or slate.",
+      "The banner is royal blue with a gold star. The mockup flag is plain slate blue with a gold finial. This difference is small.",
+      "Add the freckles and the red nose tip of the mockup."
+    ],
+    "next": "Rebuild the hair as larger, smooth, swept locks."
+  }
+}

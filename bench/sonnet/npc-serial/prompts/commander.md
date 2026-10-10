@@ -6,11 +6,14 @@ The brief is bench/sonnet/briefs/commander.md. The mockup is docs/npc-mockups/co
 The source assets/commander.ts exists. First look at out/commander/render.png to see the current state.
 
 An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
-1. The beard is a flat black slab with grey speckle noise. From the side it looks like a mask. Give the beard a rounded volume, a dark brown-black color, and fewer speckles.
-2. The hair is a ring of even spikes and reads as a crown. The mockup hair is messy and swept, with loose tufts. Make the spikes uneven and swept back.
-3. The map is a thin cylinder with tan and cream stripes. It reads as a stick or a bone. Make a wider paper roll with a curled edge.
-4. The eyebrows are thin and brown, but the hair and beard are black. The mockup has thick black brows. Make the brows thick and dark.
+1. The hair has tall, sharp spikes that look like a crown of horns. The mockup has short, messy tufts. Make the spikes shorter and softer.
+2. The map is a plain cream cylinder. Give it a curled outer edge and a tan parchment color with one or two dark lines.
+3. The brows angle down toward the nose, so the face looks stern. Raise the inner ends of the brows for a kind look.
+4. The lower edge of the hair at the back has a row of round bumps. Make it one smooth edge.
+5. The boots have steel toe caps. The mockup has plain brown boots. Remove the caps.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Third pass. Replace the tall sharp spikes with short messy tufts, as in the mockup: no tuft tip more than 3 cm above the skull.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.

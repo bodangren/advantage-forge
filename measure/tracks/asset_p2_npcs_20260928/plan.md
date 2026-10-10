@@ -59,8 +59,8 @@ viewer's left).
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | traveler and undertaker accepted at 7.5 (review 1); weaver accepted at 7.5 (review 2); tax-collector and watch-captain accepted at 7.5 (review 3); tanner and teacher on the follow-up list |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | archaeologist accepted at 7.5 (review 2, after a check fix); dockworker 8.0, ferryman 7.5, chieftain 7.5, caravan-driver 7.5 accepted (review 2); cartographer and hermit on the follow-up list |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list |
-| 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador accepted at 7.5 (review 2); commander 7.0 (review 2) in the queue for a third pass; diplomat 7.0 and general 6.5 (review 1) in the queue; guild-master, guild-member, inquisitor in the queue (new builds) |
-| 11 | king, queen, prince, princess, lady, lord, noble, leader | briefs and mockups ready (court and faction) |
+| 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); commander on the follow-up list; general 7.0 (review 2) in the queue for a third pass; guild-master 6.5 (review 1) and inquisitor (new) in the queue |
+| 11 | king, queen, prince, princess, lady, lord, noble, leader | in the serial builder queue (new builds) |
 | 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | briefs and mockups ready (court and faction) |
 | 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | briefs and mockups ready (fantasy peoples) |
 
@@ -110,3 +110,4 @@ strip (the card default), because the shared idle clip has little motion (motion
 | hermit | 7.0, 7.0, 7.0 | the white hair tuft sits on top of the hood and goes through the fabric (defect cap 7.0) |
 | riverboat-captain | 6.5, 7.0, 6.5 | the brows slant down and the mouth is a flat dark rectangle, so he looks angry (expression cap 7.0); the nose reads as a clown nose |
 | ruin-keeper | 6.5, 7.0, 7.0 | the hood is too large with a tall bent point; the back view is one large gray mass |
+| commander | 7.0, 7.0, 7.0 | the raised inner brows look worried (the mockup has a calm, kind smile; expression cap); the beard is a box with hard edges across the cheeks |
