@@ -1,0 +1,81 @@
+{
+  "goblin-citizen": {
+    "overall": 6.5,
+    "scores": [3, 4, 4, 4, 4, 3.5, 3.5, 2.5, 4, 4, 3],
+    "summary": "The model is a friendly goblin trader with large ears, a vest, a red sash, striped trousers, and a brass bell. It is the same character as the mockup, but the bell is upside down in the fist, the arm is low, and the backpack is small.",
+    "strengths": [
+      "The large green ears, the face, and the friendly smile read well in every view and at 128 px.",
+      "The costume colors match the mockup: cream shirt, brown vest with gold buttons, red sash, purple striped trousers, red shoes.",
+      "The model stands on the ground and the walk clip is clean."
+    ],
+    "issues": [
+      "The bell is upside down relative to the grip. The crown and its knob point up, and the fist holds a short stem below the bell mouth. Put the handle in the fist and hang the bell below it, mouth down.",
+      "The arm holds the bell at chest height. The mockup holds the bell up at head height. Raise the arm.",
+      "The backpack is a small box with two pots. The mockup and the role show a huge sack of odds and ends. Make the pack larger than the torso and add more items.",
+      "The head covering is a yellow pointed cap. The mockup shows an orange bandana with a knot. Change the cap to a wrapped orange bandana.",
+      "The neck scarf is a plain yellow ring. The mockup shows an orange scarf with a hanging end. Add the hanging end and use orange."
+    ],
+    "next": "Turn the bell so that the fist holds the handle and the bell hangs below it, and raise the arm to head height.",
+    "critical": true,
+    "criticalReason": "The held bell points the wrong way: its crown points up and the fist holds the mouth end, not the handle."
+  },
+  "orc-citizen": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 3.5, 3.5, 4, 4, 3.5, 3],
+    "summary": "The model is a big, gentle orc farmer in a plaid shirt and overalls, with a straw hat and a basket of vegetables. It is the same character as the mockup, with one clear difference in the hat.",
+    "strengths": [
+      "The red plaid shirt, the blue overalls, the rolled light-blue cuffs, and the brown boots match the mockup well.",
+      "The raised fist and the basket on the other arm match the mockup pose.",
+      "The broad body and the soft face give a gentle, friendly read."
+    ],
+    "issues": [
+      "The hat is a shallow smooth cone with red bands. The mockup shows a wide round woven straw hat with a crown. Give the hat a crown, a round brim, and a woven texture.",
+      "The basket hangs low in the hand. The mockup carries the basket in the crook of the arm at hip height. Raise the basket to the elbow.",
+      "The smile is small with two lower tusks. The mockup shows a wide open grin. Widen the mouth.",
+      "From the high sprite angles the flat hat hides most of the face. A hat with a crown and a tilt shows more of the face.",
+      "The vegetables are normal size. The role says giant vegetables. Make one pumpkin or cabbage larger."
+    ],
+    "next": "Change the hat to a wide round woven straw hat with a crown.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "lizardfolk-citizen": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 4, 4, 3.5, 4, 4, 3.5, 3],
+    "summary": "The model is a green lizardfolk trader with a teal headband, a shell necklace, a knit vest, a leather wrap, and a long tail. It is the same character, but the head is small and shaped like a crocodile, so the face is noticeably different from the round chibi mockup.",
+    "strengths": [
+      "The scale texture, the knit vest, and the leather wrap are clearly different materials.",
+      "The long tail and the clawed feet give a clear lizard silhouette from the side and in the sprites.",
+      "The shell necklace and the teal headband show the river trader role."
+    ],
+    "issues": [
+      "The head is small for the body, and the long wide snout with high eyes reads as a crocodile. The mockup has a large round head with a short rounded snout. Enlarge the head and shorten and round the snout.",
+      "The spiral shell is small and flat, and it reads as a pink candy. The mockup and the role show a big spiral seashell. Make the shell larger and give it depth and a shell opening.",
+      "The torso is long and the arms are long. The mockup body is short and squat. Shorten the torso.",
+      "The crest is thin and reads as a stick from the side. Make the crest wider at the base.",
+      "The free arm hangs down. The mockup waves this hand. Raise the free arm to wave height."
+    ],
+    "next": "Enlarge the head and change the snout to a short rounded chibi snout.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "merfolk-citizen": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 4, 3.5, 3, 3.5, 4, 4, 3],
+    "summary": "The model is a cheerful merfolk boy with teal hair, a teal shirt, scaled shorts, a rope belt with a starfish, and a teal fish tail. It is the same character as the mockup, with clear differences in the hair, the pearl, and the shirt front.",
+    "strengths": [
+      "The fish tail with its large fin, the scaled shorts, and the rope belt with the starfish match the mockup well.",
+      "The open happy smile and the raised arm with the pearl match the mockup.",
+      "The teal and orange colors match the mockup palette, and the identity reads at 128 px."
+    ],
+    "issues": [
+      "The hair is a mass of long spikes that point up and out like seaweed. The mockup shows soft wavy hair. Make the locks shorter and rounder.",
+      "The pearl is a plain white ball with no glow. The role says glowing pearl, and the mockup shows a bright light. Make the pearl emissive with a warm glow.",
+      "The shirt front has a slot that shows skin from the chest to the belt, with an orange bead and a tan drop in it. It reads as a cut in the shirt. Close the slot and hang the pendant on the shirt.",
+      "The shirt is wide and boxy. The mockup shirt is shorter and looser at the hem. Shorten the hem."
+    ],
+    "next": "Change the hair to soft wavy locks and make the pearl glow.",
+    "critical": false,
+    "criticalReason": ""
+  }
+}
