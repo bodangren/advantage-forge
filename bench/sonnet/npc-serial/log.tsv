@@ -61,3 +61,9 @@ b44	serial	builder	sonnet	afe96c7d7d00132cf	general	second pass; white brows, gr
 b45	serial	builder	sonnet	a7efba599b369e4e8	guild-master	new build; check ok; 50,212 tris; self 7	Six renders for a new build.
 b46	serial	builder	sonnet	abeabad78272cfb83	guild-member	new build; check ok; 48,688 tris	Four images for a new build.
 r14	serial	reviewer	opus	ac1b099253e6680b6	commander,diplomat,general,guild-master,guild-member	diplomat 7.5 (review 2) and guild-member 7.5 (review 1) accepted; commander 7.0 to follow-up (review 3); general 7.0 to a third pass; guild-master 6.5 to a second pass	The commander brows were raised by a fix-list item, and the next review called them worried. Reviewer drift again.
+b47	serial	builder	sonnet	a3944939a52ee3a26	general	third pass; straight brass telescope, round nose, closed smile; check ok; 55,601 tris	A numeric note (0.22 m tube) again gave a clear change.
+b48	serial	builder	sonnet	ad479b8f81d0b98c0	guild-master	second pass; six fixes; check ok; 61,508 tris	The builder checked the textured render, as the prompt now asks.
+b49	serial	builder	sonnet	a34e357ae21309218	inquisitor	new build; check ok; 53,376 tris; self 7	Five renders for a new build.
+b50	serial	builder	sonnet	a687e09ea3861793e	king	new build; check ok; 55,878 tris; self 7.5	Five images incl. the sprite preview.
+b51	serial	builder	sonnet	a51ff89ab40399f7b	queen	new build; check ok; 53,132 tris	Four renders for a new build.
+r15	serial	reviewer	opus	ae1be6c66fd79c76b	general,guild-master,inquisitor,king,queen	king 7.5 accepted (review 1); general 6.5 to follow-up (review 3); guild-master 6.5 to a third pass; inquisitor 7.0 and queen 7.0 to a second pass	The general telescope fix (dark rings) read as stripes to the next reviewer.

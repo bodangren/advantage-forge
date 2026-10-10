@@ -1,0 +1,97 @@
+{
+  "general": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3, 4, 3.5, 3.5, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is the old general in a red coat with gold epaulettes, a blue sash, and a plumed black hat. It is the same character, but the hat, the telescope, the coat length, and the smile differ clearly from the mockup.",
+    "strengths": [
+      "The red coat, the gold epaulettes, the blue sash, the white front with gold buttons, and the black collar match the mockup palette.",
+      "The gray hair with the queue at the back and the bushy white eyebrows read as an old officer.",
+      "The black hat with the gold star badge and the white plume reads in every sprite direction."
+    ],
+    "issues": [
+      "The telescope has black and gold stripes and a green lens, so it reads as a striped baton. Make it a brass tube with one dark grip band and a wide eyepiece, as in the mockup.",
+      "The mouth is a small, flat line under the nose. The mockup has a broad closed smile. Make the smile wider and turn the corners up.",
+      "The coat stops at the hips and the legs are black only. The mockup has long coat tails to the knees, cream breeches, and tall black boots. Lengthen the coat tails and add the cream breeches above the boots.",
+      "The hat is a wide, flat cap with bulging sides. The mockup hat is a taller, rounded shako with a short front brim. Make the crown of the hat taller and narrower.",
+      "The ears are small. The mockup has large, round ears. Make the ears larger.",
+      "A small blue piece of the sash shows on the back of the coat near the right hem. Keep the sash end on the coat surface.",
+      "In the walk strip the frames change very little. The telescope arm stays still (known base limit)."
+    ],
+    "next": "Change the telescope to a brass tube with one dark band and make the smile wider."
+  },
+  "guild-master": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3, 3.5, 3.5, 3.5, 3.5, 3.5, 4.5, 3.5, 3],
+    "summary": "The model is a bald, bearded guild master in a brown coat with cream fur trim, with a key and a coin purse. The face and the laugh match, but the body is not plump and the key and the chain of office are weak.",
+    "strengths": [
+      "The open laugh with teeth, the red nose, and the brown mustache and beard match the mockup expression.",
+      "The cream fur trim on the cuffs, the hem, and the coat front reads clearly.",
+      "The raised key hand and the low purse hand follow the mockup pose."
+    ],
+    "issues": [
+      "The body is narrow and the bald head is much wider than the coat. The mockup is a plump man with a big round belly. Make the belly and the coat wider and rounder.",
+      "The big gold medallion of the chain of office does not show. The chest shows a gold panel. Add a large round gold medallion on the belly, on a thick gold chain.",
+      "The key is a small ring on a short rod and the bit does not show. Make the key larger, with a decorative bow and a clear bit.",
+      "The side whiskers are two brown blocks. In the side and back views they look attached to the head like handles. Shape them as curls that join the beard.",
+      "The forehead has a pink patch on peach skin. The mockup has an even, ruddy skin on the whole head. Use one even, warm skin tone with blush on the cheeks.",
+      "The brown coat has a fuzzy surface like the fur trim. The mockup coat is smooth. Make the coat smooth so that the fur trim stands out.",
+      "In the walk strip the frames change very little. The key arm stays still (known base limit)."
+    ],
+    "next": "Make the body plump with a round belly and add the large gold medallion on the chain."
+  },
+  "inquisitor": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 3, 3.5, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "The model is the gray-robed official with the wide-brim hat, the glasses, a lantern, and a red book of laws. It is the same character, but the goatee, the lantern, and the color plan differ clearly from the mockup.",
+    "strengths": [
+      "The gray wide-brim hat with the white band and the eye badge matches the mockup closely and reads in every sprite direction.",
+      "The black glasses and the gray mustache give a stern but fair face.",
+      "The thick red book is clear in the sprites."
+    ],
+    "issues": [
+      "The goatee is a round gray ball on the chin. The mockup has a pointed goatee. Shape the goatee as a short point below the mouth.",
+      "The lantern is small and silver and it has no light. The mockup lantern is larger and glows warm yellow. Make the lantern larger and give the glass a warm emissive glow.",
+      "The body is gray from the hat to the hem. The mockup has a beige vest and a white shirt under the coat. Paint the vest beige to give a warm accent at the chest.",
+      "The nose is small. The mockup has a large round nose. Make the nose larger.",
+      "In the walk strip the frames change very little. The arms stay still (known base limit)."
+    ],
+    "next": "Give the lantern a warm glow at a larger size and change the goatee ball to a pointed goatee."
+  },
+  "king": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 4, 4, 4, 4.5, 4, 3],
+    "summary": "The model is the old king with the gold crown, the white beard, the red robe, and the spotted ermine cape, with a scepter and an orb. It matches the mockup with small differences in the crown size, the nose, and the scepter top.",
+    "strengths": [
+      "The white ermine cape with black spots, the red robe with gold trim, and the black belt with the gold buckle match the mockup.",
+      "The scepter and the orb are in the correct hands and the arms hold them out as in the mockup.",
+      "The crown and the cape make a clear silhouette in every view and in every sprite direction."
+    ],
+    "issues": [
+      "The nose is a small ball. The mockup has a large, round, pink nose that is the main trait of the face. Make the nose larger.",
+      "The crown is larger and taller than the mockup crown. Make the crown band lower and the points shorter.",
+      "The eyebrows angle down to the center, so the face looks a little stern. Lift the inner ends of the eyebrows to give a jolly look.",
+      "The scepter top is a small red gem. The mockup has a large gold ball and a red ornament. Add the large gold ball below the red top.",
+      "The ear shows a gray disc in the side view. Paint the inner ear in a skin tone.",
+      "In the walk strip the cape hides the legs and the frames change very little."
+    ],
+    "next": "Make the nose larger and lift the inner ends of the eyebrows for a jolly face."
+  },
+  "queen": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 3.5, 4, 4, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "The model is the queen with long brown hair, a purple gown, an ermine cape, and a gold scepter. The face and the gown match, but the crown and the free arm differ clearly from the mockup.",
+    "strengths": [
+      "The kind smile and the long wavy brown hair match the mockup face.",
+      "The purple gown with the gold hem and the white ermine cape with black spots match the mockup palette.",
+      "The long hair and the cape make a clear silhouette from the side and the back."
+    ],
+    "issues": [
+      "The crown is very large, with seven blunt, rounded points. It dominates the head and the sprites. The mockup crown is small, with sharp points and a purple gem at the front. Make the crown smaller with sharp points and a clear purple gem.",
+      "The free arm points out to the side with a fist. The mockup holds the hands together in front of the waist. Bring the free arm in toward the waist.",
+      "The scepter top is a star, so it reads as a magic wand. The mockup has an ornate gold top. Change the star to a small crown or a gold flower shape.",
+      "The skin is lighter than the warm brown skin of the mockup. Use a warmer, darker skin tone.",
+      "In the walk strip the gown hides the legs and the frames change very little. The scepter arm stays still (known base limit)."
+    ],
+    "next": "Make the crown smaller with sharp points and a purple gem at the front."
+  }
+}
