@@ -43,3 +43,9 @@ b29	serial	builder	sonnet	a7538d99f5bc63d29	ruin-keeper	third pass; draped hood 
 b30	serial	builder	sonnet	a09c2ce59cd8c8860	shrine-keeper	new build; check ok; 42,040 tris	First new build in the serial method.
 b31	serial	builder	sonnet	aa00cdc55a00c4852	trapper	new build; check ok; 49,660 tris; self 7	Second new build; it followed the mockup over the brief for the raised hand and named it.
 r11	serial	reviewer	opus	a708638bb229b5875	watch-captain,riverboat-captain,ruin-keeper,shrine-keeper,trapper	watch-captain 7.5 accepted (review 3); riverboat-captain 6.5 and ruin-keeper 7.0 to follow-up; new shrine-keeper 7.0 and trapper 6.5 to a second pass	New serial builds start at 6.5 to 7.0, like the overnight builds.
+b32	serial	builder	sonnet	ad3e0f13ed0bab4a3	shrine-keeper	second pass; long wooden wand, dark hair, straight sage pants; check ok; 41,898 tris	The variant rule worked (new defaults first, old kept up to four).
+b33	serial	builder	sonnet	aea2163b594dbb7b4	trapper	second pass; longer darker coat, no hat ears, neck-wrap scarf; check ok; 48,034 tris	A rework pass after a new build costs a quarter of the new build.
+b34	serial	builder	sonnet	a731eb0719ef32df1	ambassador	new build; check ok; 39,340 tris; self 6.5	New build under the limit-not-target line.
+b35	serial	builder	sonnet	a5eae5de570938d1c	commander	new build; check ok; 54,124 tris; self 6.5	Six images viewed for a new build.
+b36	serial	builder	sonnet	a76520da71ddd0043	court-wizard	new build; check ok; 52,162 tris; self 7	No animation strips viewed (new rule followed).
+r12	serial	reviewer	opus	a925b77b5d9f67ded	shrine-keeper,trapper,ambassador,commander,court-wizard	court-wizard 8.0 (review 1) and trapper 7.5 (review 2) accepted; ambassador 6.5, commander 7.0, shrine-keeper 7.0 to a rework pass	A new serial build reached 8.0 on the first review.

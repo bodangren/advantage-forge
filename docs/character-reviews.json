@@ -10663,64 +10663,167 @@
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 4,
+      "color": 3.5,
       "materials": 3.5,
-      "detail": 4,
+      "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is a gentle young shrine keeper in a white robe with a pale blue sash, with a bell wand held up and a bowl of glowing water held out. The pose, the robe, and the face match the mockup, but the wand, the hair, and the pants show clear differences.",
+    "summary": "A young shrine keeper in a white robe, a pale teal sash, and pale teal trousers, with a bell staff and a stone bowl of glowing water. The body, clothes, and props match the mockup, but the hair is brown and has a different shape.",
     "strengths": [
-      "The pose matches the mockup: the wand is up in one hand and the bowl is out in the other hand.",
-      "The face is gentle and smiling, as the role asks.",
-      "The white robe with wide sleeves, the knotted sash, and the sandals match the mockup.",
-      "The blue glow and the wisp above the bowl give a clear focal accent."
+      "The white robe, the large sash bow, the pale teal trousers, and the sandals match the mockup palette.",
+      "The stone bowl has glowing blue water and a steam wisp. It is a clear accent at the hand.",
+      "The staff has gold bells. It reads as a bell wand and fits the role.",
+      "The face has a soft smile and blush and reads as gentle."
     ],
     "issues": [
-      "The wand is short and gold, with two bells. The mockup staff is a long, rustic wooden staff with a crossbar. Make the wand longer and use a wood color. Keep the small bells.",
-      "The hair is black, with stiff, lumpy locks that point up, mostly at the back. The mockup hair is a soft, dark brown mop. Make the locks softer and lower, and use a dark brown.",
-      "The pants are sky blue and puffy. The mockup pants are sage teal and straight to the ankle. Make the pants straight and move the color toward the sage teal of the mockup.",
-      "In the walk clip, the body moves very little. The posed wand arm stays still (a known base limit)."
+      "The hair is mid brown. The mockup hair is near black. Change the hair color to a dark charcoal black.",
+      "The hair is a round puffy cap. The mockup hair has a swept, spiky fringe with loose tufts. Shape the fringe into separate locks.",
+      "The back of the hair has two large lumps. They do not read as a bun. Make one clear bun or remove the lumps.",
+      "The sleeves are narrower than the wide robe sleeves in the mockup. Make the sleeve ends wider and longer.",
+      "The walk clip moves the legs only a little. The staff arm and the bowl arm stay still (a known base limit)."
     ],
-    "next": "Make the wand a long wooden staff with small bells, to match the mockup.",
+    "next": "Change the hair to dark charcoal black with a spiky swept fringe.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T03:59:43.000Z"
+    "reviewedAt": "2026-10-10T04:38:11.000Z"
   },
   "trapper": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3,
-      "materials": 3,
-      "detail": 3,
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is a friendly bearded trapper with a lantern held up and a rope coil held low. The pose and the face read, but the coat is short and pale, the hat has bear ears, and the scarf shows as a bib.",
+    "summary": "A friendly bearded trapper in a brown hat and a fringed buckskin coat, with a red plaid scarf, a rope coil, and a lantern. It matches the mockup with small differences in the hat, the coat trim, and the coat color.",
     "strengths": [
-      "The pose matches the mockup: the lantern is up in one hand and the rope coil is down in the other hand.",
-      "The face is friendly, with a beard, a mustache, and a small smile.",
-      "The red plaid gives a clear warm accent on the chest.",
-      "The rope over the shoulder and the fringe at the hem show the trapper role."
+      "The hat, the beard, the plaid scarf, the fringed coat, the rope, and the lantern give a clear woodland trapper read.",
+      "The lantern has a warm glow. It is a good accent against the brown coat.",
+      "The rope, the leather, the plaid cloth, and the lantern metal read as different materials.",
+      "The pose matches the mockup: rope in one hand and the lantern held out in the other hand."
     ],
     "issues": [
-      "The coat is short and pale tan, with a lumpy surface. The mockup coat is a long, mid-brown buckskin coat to the knees, with beige fur cuffs. Make the coat longer, darker, and smoother.",
-      "The hat has two round bear ears. The mockup hat is a plain brimmed felt hat. Remove the ears.",
-      "The plaid shows as a flat square bib on the chest. The mockup has a red plaid scarf around the neck, with ends that hang down. Make the plaid a scarf around the neck.",
-      "The beard is thinner than the mockup beard. Make the beard fuller and bushier.",
-      "The back hair under the hat has uneven drip shapes. Make the back hair one smooth mass.",
-      "In the walk clip, the body moves very little. The posed lantern arm stays still (a known base limit)."
+      "The coat has no fur collar and no fur cuffs. The mockup has fluffy fur trim. Add fur at the collar and the cuffs.",
+      "The hat crown is a smooth dome. The mockup hat has a pinched crown and a softer brim. Add a dent to the crown.",
+      "The coat is lighter tan than the mockup brown coat, and the belt under the coat is missing. Darken the coat a little and add the belt.",
+      "The rope does not go over the shoulder as in the mockup. Add a rope loop across the shoulder.",
+      "In the sprites from above, the hat brim hides most of the face. The walk clip moves the legs only, and the arms stay still (a known base limit)."
     ],
-    "next": "Make the coat a long, smooth, mid-brown buckskin coat to match the mockup.",
+    "next": "Add fur trim at the coat collar and the cuffs.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T03:59:43.000Z"
+    "reviewedAt": "2026-10-10T04:38:11.000Z"
+  },
+  "ambassador": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 3,
+      "proportion": 3.5,
+      "shape": 3,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A smiling ambassador with a high bun, gold earrings, and a teal robe with gold trim, holding a small sealed scroll. The palette and the head match, but the robe silhouette, the scroll pose, and the skin tone are noticeably different from the mockup.",
+    "strengths": [
+      "The high bun with the gold pin and the gold hoop earrings match the mockup.",
+      "The teal robe with gold edge trim and the round medallion at the belt match the mockup palette.",
+      "The face has a warm smile and blush and reads as friendly.",
+      "The model stands on the ground and the walk clip runs."
+    ],
+    "issues": [
+      "The sleeves are narrow with large gold puffed cuffs. The mockup has wide hanging sleeves, the main shape of the graceful silhouette. Make wide open sleeves with gold edges.",
+      "The robe ends at the shin and flares out. The mockup robe is long and reaches the shoes. Make the robe longer and straighter.",
+      "The scroll is small and the hand holds it forward at the waist. The mockup holds a large scroll up at shoulder height. Make the scroll larger and raise the arm.",
+      "The skin is much darker than the warm medium brown skin in the mockup. Use the mockup skin tone for the default preset.",
+      "The belt is gold. The mockup has a red-orange sash with a gold medallion. Change the sash color.",
+      "The hair has a rough braided texture. The mockup hair is smooth and swept back. Smooth the hair surface."
+    ],
+    "next": "Replace the narrow sleeves and puffed cuffs with wide hanging sleeves, and make the robe longer.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T04:38:11.000Z"
+  },
+  "commander": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 4,
+      "detail": 3,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A bearded army commander in a quilted blue tunic, steel pauldrons and arms, a brown cross strap, and a blue cape, holding a rolled map. The outfit matches the mockup well, but the hair, the beard, and the map show clear differences.",
+    "strengths": [
+      "The steel pauldrons and arm plates, the blue tunic, the cross strap, the belt buckle, and the blue cape match the mockup.",
+      "Steel, cloth, and leather read as different materials.",
+      "The open smile in the beard matches the open smile in the mockup.",
+      "The blue cape gives a clear shape from the side and the back."
+    ],
+    "issues": [
+      "The beard is a flat black slab with grey speckle noise. From the side it looks like a mask. Give the beard a rounded volume, a dark brown-black color, and fewer speckles.",
+      "The hair is a ring of even spikes and reads as a crown. The mockup hair is messy and swept, with loose tufts. Make the spikes uneven and swept back.",
+      "The map is a thin cylinder with tan and cream stripes. It reads as a stick or a bone. Make a wider paper roll with a curled edge.",
+      "The eyebrows are thin and brown, but the hair and beard are black. The mockup has thick black brows. Make the brows thick and dark.",
+      "The other hand does not hold the sword hilt as in the mockup. The walk clip moves the legs only, and the arms stay still (a known base limit)."
+    ],
+    "next": "Rebuild the beard as a rounded dark brown-black volume without speckle noise.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T04:38:11.000Z"
+  },
+  "court-wizard": {
+    "overall": 8.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4.5,
+      "shape": 4.5,
+      "color": 4.5,
+      "materials": 4,
+      "detail": 4.5,
+      "technical": 4.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "An old court wizard in a purple star robe and a tall star hat, with a full white beard, a crystal staff, and a glowing orb. It is very close to the mockup; only small details differ.",
+    "strengths": [
+      "The purple hat with gold stars, the white beard and brows, and the purple robe with gold stars and moons match the mockup.",
+      "The staff with the gold collar and the blue crystal, and the blue orb, are clear accents against the purple.",
+      "The face reads as kind and twinkly.",
+      "The silhouette reads in every view and in every sprite direction."
+    ],
+    "issues": [
+      "The model has small round glasses. The mockup has no glasses. Remove the glasses or keep them as a variant.",
+      "The staff crystal is smaller and has less glow than the mockup crystal. Make the crystal larger and brighter.",
+      "The hat brim is narrower than the wide brim in the mockup. Make the brim wider.",
+      "The sleeves are narrower than the wide robe sleeves in the mockup.",
+      "The walk clip moves the legs only. The staff arm and the orb arm stay still (a known base limit)."
+    ],
+    "next": "Make the staff crystal larger and brighter, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T04:38:11.000Z"
   }
 }
