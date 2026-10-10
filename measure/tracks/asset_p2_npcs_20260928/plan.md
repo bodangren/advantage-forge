@@ -53,13 +53,13 @@ viewer's left).
 | 2 | apothecary, armorer, brewer, carpenter, cobbler, cook, fisher, gardener | done: apothecary, brewer, cobbler, cook accepted at 7.5 (review 2); armorer and gardener accepted at 7.5 (review 3); carpenter and fisher on the follow-up list |
 | trial | baker | follow-up list: 6.8, 7.2, 7.0 after three reviews (stop rule) |
 | 3 | acolyte, banker, beekeeper, butcher, candle-maker, courier, elder, forager | done: butcher accepted at 7.5 (review 2), candle-maker accepted at 7.5 (review 3); six on the follow-up list |
-| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list |
-| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list |
+| 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list; jeweler accepted at 7.0 after an orchestrator pass (review s22) |
+| 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list; musician accepted at 7.0 after an orchestrator pass (review s22) |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); scribe, storyteller, student, tailor, shepherd accepted at 7.5 (review 2); beggar accepted at 7.5 (review 3); stablekeeper on the follow-up list |
 | 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | traveler and undertaker accepted at 7.5 (review 1); weaver accepted at 7.5 (review 2); tax-collector and watch-captain accepted at 7.5 (review 3); tanner and teacher on the follow-up list |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | archaeologist accepted at 7.5 (review 2, after a check fix); dockworker 8.0, ferryman 7.5, chieftain 7.5, caravan-driver 7.5 accepted (review 2); cartographer and hermit on the follow-up list |
-| 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list |
-| 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); inquisitor accepted at 8.0 (review 2); commander, general, guild-master on the follow-up list |
+| 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list; riverboat-captain accepted at 7.5 after an orchestrator pass (review s22) |
+| 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); inquisitor accepted at 8.0 (review 2); commander, general, guild-master on the follow-up list; general accepted at 7.5 after an orchestrator pass (review s22) |
 | 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen, prince, princess accepted at 7.5 (review 2); lady accepted at 7.5 (review 4); lord, noble, leader accepted at 7.0 (owner rule) |
 | 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | masked-agent (review 2) and rebel (review 1) accepted at 7.0; spy (second pass, hair inside the hood) and regent accepted at 7.5, royal-guard, soldier, and veteran accepted at 7.0 (review s17, no critical error) |
 | 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | halfling-citizen accepted at 7.5; dwarf, elf, fae, and gnome citizens accepted at 7.0 (review s18, no critical error); orc and merfolk citizens accepted at 7.0 (review s19); goblin-citizen accepted at 7.0 after a critical-error fix (review s20, bell held by the handle); lizardfolk-citizen accepted at 7.0 after a third pass (review s21, no critical error) |
@@ -87,10 +87,8 @@ acolyte, bartender, carpenter, cartographer, commander, courier, elder, fisher, 
 
 ## Follow-up list (three reviews below the bar)
 
+On 2026-10-10 the owner asked for orchestrator passes on the last five; four were accepted in review s22.
+
 | Asset | Ratings | Largest open issues |
 | --- | --- | --- |
-| beekeeper | 6.0, 6.5, 6.5 | hair locks go through the veil (dotted patches at the side and back); a dark patch on the suit at the hip in walk; narrow brim, short boots |
-| jeweler | 6.0, 6.5, 6.5 | the open red mouth with white pointed teeth reads as a fanged grin (the mockup smile is closed); the tall ridged hair reads as a cap |
-| musician | 5.5, 6.0, 6.5 | the fiddle is flat across the chest, not under the chin (pose cap 6.5); the fiddle is small and reads as a stick at 128 px |
-| riverboat-captain | 6.5, 7.0, 6.5 | the brows slant down and the mouth is a flat dark rectangle, so he looks angry (expression cap 7.0); the nose reads as a clown nose |
-| general | 6.5, 7.0, 6.5 | the telescope reads as a striped stick; the smile is a small flat line; the coat is short with no cream breeches or tall boots |
+| beekeeper | 6.0, 6.5, 6.5, 6.5 | review s22 (orchestrator pass, owner request): critical, the solid veil cut the left cheek; a fifth pass made a short see-through net (the dotted patches were mesh holes in a thin shell) |

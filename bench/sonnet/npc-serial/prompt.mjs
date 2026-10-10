@@ -52,6 +52,7 @@ function build(name, note) {
     '- View one render after your last edit, before the final check, so the report describes the final shape.',
     '- Critical errors block acceptance (owner rule): hair or a part through a head covering or another part, a held item that points the wrong way or does not touch the hand, a floating part, a hole. Fix every critical error that you see before the final build. For each held item, check in a `--focus` render that the fist grips the handle and that the item points the way the mockup shows it.',
     '- A held pole, spear, or staff: put its foot about 0.06 m above the ground. The rest and run clips lower the chest by 6 to 7 cm, and a lower foot fails the ground check.',
+    '- A see-through or thin shell (veil, net, cape, sail): make it 2 cm thick or more. A thinner shell meshes with holes that show as dotted patches.',
     '', 'Rules:',
     `- \`./forge check ${name}\` ends with \`result ok\` and \`ground ok\`.`,
     '- The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.',

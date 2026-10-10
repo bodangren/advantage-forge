@@ -9049,35 +9049,36 @@
     "overall": 6.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
+      "mockup": 3,
+      "silhouette": 3,
       "proportion": 3.5,
-      "shape": 4,
-      "color": 4,
-      "materials": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3,
       "detail": 3.5,
       "technical": 2.5,
       "gameReady": 4,
-      "sprite": 3.5,
+      "sprite": 3,
       "motion": 3
     },
-    "summary": "A beekeeper in a cream suit with a bee hat, a veil, yellow gloves, and a honey pot. The identity reads, but hair goes through the veil, and the hat brim and the boots differ from the mockup.",
+    "summary": "The model is the same cheerful beekeeper with a wide hat, a bee, yellow gloves, brown boots, and a honey pot with a dipper. The veil is an opaque cream drum that hangs to the shoulders, and it hides the hair and changes the head silhouette.",
     "strengths": [
-      "The bee on the hat, the yellow gloves, and the cream suit match the mockup.",
-      "The honey pot with drips and a dipper reads clearly as honey.",
-      "The smiling face with blush reads well from the front."
+      "The face reads well: large brown eyes, blush, and a small closed smile match the mockup.",
+      "The wide cream hat with a brown band and a bee on top matches the mockup.",
+      "The yellow gloves hold the honey pot firmly, and the dipper adds a clear role prop.",
+      "The brown boots and the cream suit give the correct palette."
     ],
     "issues": [
-      "Hair locks go through the veil. The side and back views show broken, dotted hair patches and a pale ear shape behind the veil. Keep the hair inside the veil and fix the see-through sort order.",
-      "In the walk side view (t=0.56 to 0.67), a dark patch shows on the suit at the hip behind the glove. Close the gap in the suit.",
-      "The hat brim is narrow. Make the brim much wider, as in the mockup, so that the hat is the main shape of the silhouette.",
-      "The veil is a clear side curtain. Make a honey-colored mesh that drapes over the brim and frames the face.",
-      "The shoes are short. Make tall brown boots.",
-      "The honey pot is small. Make it larger, near the size of the mockup jar."
+      "The veil is a solid, opaque cream cylinder under the brim. The mockup shows a see-through net that is pushed back over the hair. Make the veil a thin, light net that sits up around the crown.",
+      "The veil side panel cuts into the left cheek, and the lower edge of the veil is ragged. Move the panel away from the face and smooth the edge.",
+      "The veil hides almost all of the blonde hair. The mockup shows full, wavy blonde hair at the sides and back. Show more hair.",
+      "A dark patch shows under the veil at the back of the neck in the side and back views.",
+      "The suit is near white. The mockup suit is a warm tan cream. Warm the suit color.",
+      "From the side and the back, the hat and the veil make one large block. At 128 px the hat covers most of the sprite in the north directions."
     ],
-    "next": "Fix the hair and the veil so that no hair goes through the veil.",
+    "next": "Replace the opaque veil drum with a light net that is pushed back around the hat crown, and show the blonde hair below it.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T20:29:45.000Z"
+    "reviewedAt": "2026-10-10T13:41:30.000Z"
   },
   "butcher": {
     "overall": 7.5,
@@ -9317,13 +9318,13 @@
     "reviewedAt": "2026-10-09T23:27:24.000Z"
   },
   "jeweler": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3,
-      "proportion": 3,
-      "shape": 3.5,
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 4,
       "color": 4,
       "materials": 4,
       "detail": 4,
@@ -9332,21 +9333,23 @@
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is the jeweler with a gold monocle, a purple vest, a magnifier with a blue gem, and a red ring box. The props match the mockup, but the mouth and the hair are different.",
+    "summary": "The model is the same bearded jeweler with a gold monocle, a purple vest with gold chains, a magnifying glass with a blue gem, and an open red ring box. The expression is a thin closed smile, and the mockup shows a wide open grin.",
     "strengths": [
-      "The gold monocle, the magnifier with the blue gem, and the red ring box match the mockup and read at 128 px.",
-      "The purple vest with the gold chains, the white shirt, the gold buckle, and the black shoes follow the mockup palette.",
-      "The props are in the correct hands and the curled mustache matches the mockup."
+      "The gold monocle on the left eye, the magnifier with a blue gem, and the open ring box with a ring match the mockup.",
+      "The purple vest with gold chains, the white shirt, the belt with a gold buckle, and the black shoes match the mockup palette.",
+      "Both held items touch the fists and point the correct way.",
+      "The silhouette reads from every view, and the magnifier makes the role clear at 128 px."
     ],
     "issues": [
-      "The mouth is open and red, with white pointed teeth. It reads as a fanged grin. The mockup has a closed, friendly smile. Change the mouth to a closed smile under the mustache.",
-      "The hair is a tall block with deep ridges. It reads as a knit cap or a helmet in every view and in the sprites. Make the hair lower and smoother, swept back, as in the mockup.",
-      "The beard comes to a point under the chin. The mockup beard is short and full along the jaw. Make the beard shorter and rounder.",
-      "In walk, the arms stay still. This is a known base limit."
+      "The mouth is a thin closed smile. The mockup shows a wide, delighted open smile with teeth. Open the mouth under the mustache.",
+      "The beard is thick and covers most of the lower face. The mockup beard is shorter and trimmed along the jaw. Make the beard thinner so the smile shows.",
+      "The nose is a large pink bulb, and the mustache curls sit on its sides. Make the nose smaller and set the mustache below it.",
+      "The hair is a tall, glossy helmet. The mockup hair is a combed-back pompadour with softer volume and grey sides. Lower the hair and reduce the gloss.",
+      "The vest has a quilted pattern. The mockup vest is plain velvet."
     ],
-    "next": "Change the mouth to a closed, friendly smile under the mustache.",
+    "next": "Open the mouth into a wide grin and thin the beard so the delighted expression of the mockup reads.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T23:27:24.000Z"
+    "reviewedAt": "2026-10-10T13:41:30.000Z"
   },
   "librarian": {
     "overall": 7.5,
@@ -9576,36 +9579,37 @@
     "reviewedAt": "2026-10-09T23:30:16.000Z"
   },
   "musician": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3,
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
       "color": 4,
       "materials": 3.5,
-      "detail": 3,
-      "technical": 3.5,
+      "detail": 3.5,
+      "technical": 4,
       "gameReady": 4,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A young musician with red hair, a green beret, a striped red vest, a brown skirt, and striped stockings. The costume matches, but the playing pose and the fiddle are noticeably off.",
+    "summary": "The model is the same joyful red-haired street musician with a green feathered beret, a red striped vest, a brown skirt, striped socks, and a wooden fiddle. The fiddle is held across the chest, and the mockup shows it under the chin on the shoulder.",
     "strengths": [
-      "The costume colors match the mockup: green beret, red and gold vest, cream blouse, brown skirt, red and white stockings.",
-      "The closed smile, the large eyes, and the blush give a joyful face.",
-      "The beret and the red hair identify the character in the sprites."
+      "The face reads well: large brown eyes, blush, and a closed smile match the mockup.",
+      "The green beret with feathers, the red vest with gold stripes, the brown skirt, the red and white socks, and the brown boots match the mockup palette.",
+      "The bow and the fiddle stay in the hands and point the correct way.",
+      "The hair stays below the beret in every view."
     ],
     "issues": [
-      "The model holds the fiddle flat across the chest at waist height. In the mockup, the fiddle sits on the left shoulder under the chin and the bow crosses it. Put the fiddle under the chin and angle the bow across the strings.",
-      "The fiddle is very small, and the bow is parallel to it. It reads as a stick or a slingshot, also at 128 px. Make the fiddle body larger, with a clear waist and a scroll.",
-      "The hair hangs in thick drips that end in blobs, most clearly in the back view. The mockup hair is long and wavy and reaches below the shoulders. Make long, smooth waves.",
-      "The feathers on the beret are white. The mockup feather is red-brown. Change the feather color."
+      "The fiddle is horizontal at chest height. The mockup shows the fiddle on the left shoulder under the chin. Raise the fiddle to the shoulder and tilt it down.",
+      "The hair is shoulder length and chunky. The mockup hair is long and wavy to the waist. Make the hair longer with more waves.",
+      "In the three-quarter view the long fiddle neck and the straight bow look like a crossbow. A fiddle at the shoulder makes the instrument read better.",
+      "The feathers are orange and white. The mockup feathers are cream and tan."
     ],
-    "next": "Pose the fiddle under the chin with the bow across it, and make the fiddle body large enough to read.",
+    "next": "Raise the fiddle to the left shoulder under the chin, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T23:30:16.000Z"
+    "reviewedAt": "2026-10-10T13:41:30.000Z"
   },
   "orphan": {
     "overall": 7.5,
@@ -10290,39 +10294,37 @@
     "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "riverboat-captain": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
+      "mockup": 4,
       "silhouette": 4,
-      "proportion": 4,
+      "proportion": 3.5,
       "shape": 4,
       "color": 4,
-      "materials": 3,
-      "detail": 3.5,
+      "materials": 3.5,
+      "detail": 4,
       "technical": 4,
-      "gameReady": 4.5,
-      "sprite": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is a round riverboat captain with a navy cap, a white beard, and a brass spyglass, with one fist on the hip. The body, the costume, and the pose match the mockup, but the face looks stern and the mockup face is jolly.",
+    "summary": "The model is the jolly riverboat captain of the mockup: a navy cap with an anchor, a white beard, an open grin, a navy coat with gold buttons, a white belt, a brass spyglass, and one hand on the hip. The body is less round than the mockup.",
     "strengths": [
-      "The pose matches the mockup: the spyglass is held out and one fist is on the hip.",
-      "The navy coat over the black vest with gold buttons, and the white belt with the gold buckle, match the mockup.",
-      "The round belly and the wide cap give a clear silhouette from every view.",
-      "The gold anchor on the cap and the brass spyglass are good accents."
+      "The open grin with teeth, the white beard, and the white eyebrows match the mockup expression.",
+      "The navy cap with a gold anchor and a black visor matches the mockup.",
+      "The spyglass sits in the fist and points out, and the other fist sits on the hip as in the mockup.",
+      "The navy, black, white, and gold palette matches the mockup, and the identity reads in all 8 sprite directions."
     ],
     "issues": [
-      "The face expression is different. The white brows slant down to the center and the mouth is a flat dark rectangle, so the captain looks angry. The mockup shows a wide, happy smile. Arch the brows up and curve the mouth up into a wide smile.",
-      "The nose is a smooth, bright red ball and looks like a clown nose. The mockup nose is large and skin pink with a soft red tint. Use a skin color with a red tint and a less round shape.",
-      "The mustache is a flat white band across the face. The mockup mustache is full and curls up above the smile. Give the mustache volume and curl its ends up.",
-      "The coat and the cap have a strong fuzzy surface noise. The mockup cloth is smooth. Decrease the surface bump on the coat and the cap.",
-      "The cap is tall and puffy. The mockup cap is flatter, with a clear black visor. Make the cap crown lower.",
-      "In the walk clip, the body moves very little. The posed spyglass arm stays still (a known base limit)."
+      "The body is only a little round. The mockup shows a wide pot belly and broad shoulders. Make the belly and the coat wider.",
+      "The coat is short. The mockup coat is long and open to the thighs. Make the coat longer.",
+      "The nose is small and pink. The mockup nose is large and red. Make the nose larger and redder.",
+      "The trousers are black. The mockup trousers are dark grey."
     ],
-    "next": "Change the face to a jolly smile: arch the brows up and curve the mouth up into a wide open smile.",
+    "next": "Make the belly and the coat wider so the round, jolly body of the mockup reads.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T03:59:43.000Z"
+    "reviewedAt": "2026-10-10T13:41:30.000Z"
   },
   "cartographer": {
     "overall": 7.0,
@@ -10857,39 +10859,37 @@
     "reviewedAt": "2026-10-10T05:50:59.000Z"
   },
   "general": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
       "proportion": 3.5,
-      "shape": 3,
+      "shape": 4,
       "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
-      "technical": 3.5,
-      "gameReady": 4.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "The model is the old general in a red coat with gold epaulettes, a blue sash, and a plumed black hat. It is the same character, but the hat, the telescope, the coat length, and the smile differ clearly from the mockup.",
+    "summary": "The model is the kind old general of the mockup: a black dome hat with a star and a white plume, grey hair, large ears, a red coat with gold epaulettes, a blue sash, and a brass telescope. The hat is taller than the mockup hat, and the coat is shorter.",
     "strengths": [
-      "The red coat, the gold epaulettes, the blue sash, the white front with gold buttons, and the black collar match the mockup palette.",
-      "The gray hair with the queue at the back and the bushy white eyebrows read as an old officer.",
-      "The black hat with the gold star badge and the white plume reads in every sprite direction."
+      "The closed smile, the grey eyebrows, and the large ears match the mockup face.",
+      "The red coat, the gold epaulettes, the blue sash, the cream waistcoat with gold buttons, and the black boots match the mockup palette.",
+      "The telescope sits in the fist and points out to the side, as in the mockup.",
+      "The hat with the star and the plume makes the identity clear in every sprite direction."
     ],
     "issues": [
-      "The telescope has black and gold stripes and a green lens, so it reads as a striped baton. Make it a brass tube with one dark grip band and a wide eyepiece, as in the mockup.",
-      "The mouth is a small, flat line under the nose. The mockup has a broad closed smile. Make the smile wider and turn the corners up.",
-      "The coat stops at the hips and the legs are black only. The mockup has long coat tails to the knees, cream breeches, and tall black boots. Lengthen the coat tails and add the cream breeches above the boots.",
-      "The hat is a wide, flat cap with bulging sides. The mockup hat is a taller, rounded shako with a short front brim. Make the crown of the hat taller and narrower.",
-      "The ears are small. The mockup has large, round ears. Make the ears larger.",
-      "A small blue piece of the sash shows on the back of the coat near the right hem. Keep the sash end on the coat surface.",
-      "In the walk strip the frames change very little. The telescope arm stays still (known base limit)."
+      "The hat is tall and large, like a helmet. The mockup hat is a lower dome. Make the hat lower.",
+      "The coat ends at the hips. The mockup coat is long, to the knees, with red lapels. Make the coat longer.",
+      "The nose is small. The mockup nose is large and round. Make the nose larger.",
+      "The large hat puts the face in shade at 128 px in the side directions."
     ],
-    "next": "Change the telescope to a brass tube with one dark band and make the smile wider.",
+    "next": "Make the hat lower and the coat longer, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T06:34:35.000Z"
+    "reviewedAt": "2026-10-10T13:41:30.000Z"
   },
   "guild-master": {
     "overall": 7.0,
