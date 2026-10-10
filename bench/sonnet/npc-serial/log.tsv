@@ -103,3 +103,9 @@ b78	serial	builder	sonnet	a9be549fe16cf5f0c	royal-guard	new build; 43,672 tris; 
 b79	serial	builder	sonnet	af27cd97d6e2a880c	soldier	new build; 42,680 tris; check ok; spear foot raised to 0.045 m; short plain tabard, smooth helmet	Two builders (royal-guard, soldier) spent calls raising a pole foot after the ground check failed.
 b80	serial	builder	sonnet	a39515eb0923c1159	veteran	new build; 36,916 tris; check ok; kind eyes, smooth coat, scalloped fringe from behind	-
 r20	serial	reviewer	opus	a3ab4f371e6400be9	spy, regent, royal-guard, soldier, veteran	all five accepted (spy 7.5, regent 7.5, others 7.0); no critical error	The pole-foot rule held: no ground-check issue in the reviews.
+b81	serial	builder	sonnet	a64689270607696b1	dwarf-citizen	new build; 56,794 tris; check ok; short beard (cast clip fist), hammer forward from hip, plain cap	-
+b82	serial	builder	sonnet	a56aa3c1cf1530169	elf-citizen	new build; 43,420 tris; check ok; bell 1.5 cm from head in rest, tube sleeves, crest reads as two horns	-
+b83	serial	builder	sonnet	ac52e79c9a640de33	fae-citizen	new build; 57,298 tris; check ok; wings opaque in textured render, wing root may read detached, daisy upright	-
+b84	serial	builder	sonnet	a7ba004315e4dd561	gnome-citizen	new build; 48,608 tris; check ok; pale goggle lenses, left hand hangs, beard hides belt	-
+b85	serial	builder	sonnet	a6af62046fda5b89f	halfling-citizen	new build; 58,732 tris; check ok; swept hair not ringlets, pie tilted, sleeves hide fists	-
+r21	serial	reviewer	opus	a9b72ada866009b76	dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen	all five accepted (halfling 7.5, others 7.0); no critical error	New builds on the humanoid kind reach 7.0 in one pass; a second pass is not needed under the 7.0 bar.

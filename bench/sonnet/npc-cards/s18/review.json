@@ -1,0 +1,100 @@
+{
+  "dwarf-citizen": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 4, 4, 3.5, 3.5, 3.5, 4.5, 4, 3],
+    "summary": "The model is a stocky dwarf with a brown cap, a large red braided beard, a green tunic, and a blue gem. It is the same character as the mockup, but the hammer pose is a clear difference.",
+    "strengths": [
+      "The large red braided beard is the focal point and reads in every view and in the sprites.",
+      "The raised blue gem gives a strong color accent against the red beard and the green tunic.",
+      "The brown belt with the gold buckle and studs, the green tunic, and the brown boots follow the mockup palette."
+    ],
+    "issues": [
+      "The hammer hand hangs at the hip and the hammer is small. The mockup holds a large hammer up next to the face. Raise the right arm and make the hammer larger.",
+      "The mustache is small. The mockup has a large swept mustache above a wide open grin. Make the mustache larger and the grin wider.",
+      "The gold ornaments sit as loose lines on the top of the cap. The mockup puts gold swirls on the front of the cap. Move the ornaments to the front band.",
+      "The side braids touch the outer edge of the eyes in the three-quarter view. Move the braids a little outward."
+    ],
+    "next": "Raise the right arm and hold a larger hammer up, as in the mockup.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "elf-citizen": {
+    "overall": 7.0,
+    "scores": [3, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 4, 4.5, 3.5, 3],
+    "summary": "The model is an elf girl with pointed ears, blond hair, a green dress, and a blue bell flower on a stem. It is the same character as the mockup, with clear differences in the hair and the glow of the flower.",
+    "strengths": [
+      "The pointed ears and the blue bell flower on a green stem read in the views and in the sprites.",
+      "The bell opens downward like a lantern, as in the mockup, and the stem goes through the fist.",
+      "The face is friendly and the smile reads at 128 px."
+    ],
+    "issues": [
+      "Three cream spikes stand up on the top of the head and the back hair is a block with vertical ridges. The mockup has smooth long silver-blond hair with a small leaf ornament. Replace the spikes with a leaf ornament and make the back hair smooth and long.",
+      "The bell flower has no glow. The role and the mockup show a glowing cyan bell. Add an emissive glow to the bell.",
+      "The hair color is yellow-cream. The mockup hair is silver-blond. Make the hair cooler and lighter.",
+      "The sleeves are narrow and the belt is thin. The mockup has wide robe sleeves and a rope belt with leaves. Widen the sleeves and add the rope belt.",
+      "The eyebrows are dark brown against blond hair. Make the eyebrows lighter."
+    ],
+    "next": "Replace the head spikes with a leaf ornament and make the long hair smooth and silver-blond.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "fae-citizen": {
+    "overall": 7.0,
+    "scores": [3, 4, 4, 3.5, 4, 3, 3.5, 3, 4.5, 3.5, 3],
+    "summary": "The model is a small fae girl with lavender hair, a flower crown, pink butterfly wings, a petal skirt, and a daisy. It is the same character as the mockup, but the daisy pose and the wing mount are clear differences.",
+    "strengths": [
+      "The lavender hair, the flower crown, and the pink petal skirt match the mockup palette and read in the sprites.",
+      "The face is cheerful and the smile reads at 128 px.",
+      "The wings give a clear silhouette in the back and three-quarter views."
+    ],
+    "issues": [
+      "The daisy is small and stands up in one raised fist like a wand. The mockup holds a big daisy across the body with both hands, and the role asks for a parasol. Make the daisy larger and hold it like a parasol.",
+      "The wings stand about 0.1 m behind the back on a thin pink rod. The rod shows in the side view, and the edge-on wings look like a ladder in the E and W sprites. Attach the wings directly to the upper back and remove the rod.",
+      "The wings are opaque pink. The mockup wings are translucent. Lower the wing opacity.",
+      "The pointed ears are inside the hair and only a small tip shows through the hair in the side view. Move the ears out of the hair, as in the mockup.",
+      "The legs are covered and the feet have green boots. The mockup shows bare legs with small green slippers. Show the legs and make the shoes smaller."
+    ],
+    "next": "Make the daisy larger and hold it across the body like a parasol, and attach the wings directly to the back.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "gnome-citizen": {
+    "overall": 7.0,
+    "scores": [3.5, 4.5, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "The model is a small gnome with a tall red pointed hat, goggles, a white beard, a blue coat, and a brass gadget. It is the same character as the mockup, with clear differences in the belt, the beard, and the wrench pose.",
+    "strengths": [
+      "The tall red hat with the goggles gives a strong silhouette in every view and in the sprites.",
+      "The brass gadget in the raised fist is the color accent at the focal point.",
+      "The white beard and the red hat give a clear value plan."
+    ],
+    "issues": [
+      "The wrench hand hangs at the hip. The mockup holds the wrench up in the second hand. Raise the left arm and show the wrench.",
+      "The wide brown belt with the gold buckle and the pouches is not on the model. Add the belt and the pouches over the coat.",
+      "The beard is narrow and short and the nose is a small pink ball. The mockup has a wide long beard and a large round nose. Make the beard wider and longer and the nose larger.",
+      "The hat tip has no gold star. Add the small star on the tip.",
+      "The goggle lenses are light blue. The mockup lenses are dark. Make the lenses darker."
+    ],
+    "next": "Add the wide brown belt with the pouches and raise the wrench hand.",
+    "critical": false,
+    "criticalReason": ""
+  },
+  "halfling-citizen": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "The model is a plump halfling girl with curly hair, pointed ears, a mustard vest, a green skirt, big bare feet, and a berry pie in both hands. It matches the mockup with small differences only.",
+    "strengths": [
+      "The pie in both hands at the chest matches the mockup pose and is the focal point.",
+      "The white blouse, the mustard vest, and the green skirt follow the mockup palette.",
+      "The bare feet with fur at the ankles and the pointed ears read in the views and in the sprites."
+    ],
+    "issues": [
+      "The hair is dark brown and has a top bun. The mockup hair is copper with loose curls and a green bow. Make the hair copper and lower the bun.",
+      "The bare feet are of normal size. The mockup feet are big. Make the feet larger.",
+      "The vest has no scalloped hem and no purple buttons. Add the scalloped hem and the buttons.",
+      "The eyebrows are dark and heavy. Make the eyebrows thinner."
+    ],
+    "next": "Make the hair copper with loose curls and a green bow, as in the mockup.",
+    "critical": false,
+    "criticalReason": ""
+  }
+}
