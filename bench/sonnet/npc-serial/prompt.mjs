@@ -47,7 +47,7 @@ function build(name, note) {
     '- The build prints no `warning:` lines. The asset has fewer than 65,000 triangles.',
     '- Run every forge command as `FORGE_WORKERS=2 flock /tmp/forge-build.lock ./forge ...`.',
     `- Edit only ${src}. Never run git.`,
-    `- Finish with one \`./forge all ${name}\`, then the typecheck from your agent rules.`,
+    `- Run \`./forge check ${name}\` before the final \`./forge all ${name}\`. Run no forge command after \`./forge all\`: a \`--fast\` build overwrites the textured GLB. Then run the typecheck from your agent rules.`,
     '- Report in three lines: triangles and warnings, the check result, and what remains.', '');
   const out = `bench/sonnet/npc-serial/prompts/${name}.md`;
   writeFileSync(at(out), lines.join('\n'));

@@ -1,0 +1,92 @@
+{
+  "archaeologist": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 3.5, 3],
+    "summary": "A young archaeologist with a cream sun helmet, red curly hair, a khaki shirt, a satchel, a raised magnifying glass, and a clay tablet. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The sun helmet with the brown band, the red curls, and the raised gold magnifying glass give a clear identity from every view.",
+      "The open smile with teeth and the large eyes read as curious and excited, as in the mockup.",
+      "The khaki shirt with pockets, the crossbody strap, the belt buckle, and the satchel follow the mockup closely."
+    ],
+    "issues": [
+      "The shirt hem goes down to the boots, so the khaki shorts and the knees are not visible. Show short khaki shorts above the boots.",
+      "The clay tablet is pink-orange with a scratched mark. The mockup tablet is light beige clay with dot marks. Make the tablet lighter and add dots.",
+      "The satchel has a woven texture and looks like a basket. Make it smooth brown leather with a flap.",
+      "At the back, the hair hangs in long thin locks below the helmet. The mockup hair is short curls. Shorten the back locks.",
+      "The walk is stiff. The body moves little and both posed arms stay still."
+    ],
+    "next": "Show short khaki shorts between the shirt hem and the boots."
+  },
+  "tanner": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3, 3.5, 3.5, 3, 4.5, 3.5, 3],
+    "summary": "A tanner with an orange headband, dark curly hair, a cream shirt, a dark leather apron, and a rolled hide. The character is the same, but the hide pose, the shirt color, and the headband differ clearly from the mockup.",
+    "strengths": [
+      "The orange headband, the dark brown apron with straps, and the rolled hide give the role a clear identity.",
+      "The face reads as cheerful with a small closed smile and warm skin, as in the mockup.",
+      "The leather apron, the hide roll, and the boots use distinct brown values."
+    ],
+    "issues": [
+      "One fist holds the hide roll low at the hip and the other arm hangs down. The mockup holds the roll up at the chest. Raise the roll to chest height and put both fists on it.",
+      "Hair strands cross the orange headband on all sides and look like hair through the band. Put the band fully over the hair, or cut the hair at the band.",
+      "The shirt is cream-white with large puffy sleeves. The mockup shirt is tan with short sleeves. Change the shirt to tan.",
+      "The strong body is not shown. The arms and shoulders are the same as the base. Make the shoulders and forearms larger.",
+      "The headband knot is a small bow on top. The mockup knot sits at the side with loose tails."
+    ],
+    "next": "Raise the hide roll to the chest and hold it in both fists."
+  },
+  "tax-collector": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 3.5, 4, 4, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A prim tax collector with a tall black hat, a large black mustache, a pinstripe vest, a black coat, a gold coin box, and a ledger. The character is the same, but the ledger and the coat tails differ clearly from the mockup.",
+    "strengths": [
+      "The tall hat and the large mustache give a strong silhouette that reads in every sprite direction.",
+      "The gold coin box raised in one fist is a clear accent against the black suit.",
+      "The pinstripe vest, the tie, and the polished black shoes follow the mockup."
+    ],
+    "issues": [
+      "The ledger is a flat cream card with lines and a gold rim. It looks like a sign. The mockup ledger is an open brown leather book with pages. Make an open book with a brown cover.",
+      "The coat stops at the hips at the back. The mockup tailcoat has long tails to the knees. Add two coat tails at the back.",
+      "The face has no nose and the mustache hides the mouth, so the fussy, funny expression is weak. Add a round nose and raise one eyebrow.",
+      "The coat is plain black. The mockup coat and trousers have pinstripes too.",
+      "The walk is stiff. Both posed arms stay still."
+    ],
+    "next": "Replace the flat card with an open brown leather ledger."
+  },
+  "teacher": {
+    "overall": 7.0,
+    "scores": [3.5, 3.5, 3.5, 3.5, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "A teacher with round glasses, a mustard cardigan, a blue bow, a rust skirt, a raised pointer, and a red apple. The props and clothes match, but the hair differs clearly from the mockup.",
+    "strengths": [
+      "The pointer, the red apple, the round glasses, and the blue bow match the mockup and read at 128 px.",
+      "The mustard cardigan, the white blouse, and the rust skirt follow the mockup palette.",
+      "The side braid on the correct side is present."
+    ],
+    "issues": [
+      "The hair is one large smooth round mass high above the forehead. From the back it looks like a helmet. The mockup hair is soft, wavy, and near the shoulders, with side bangs. Rebuild the hair as wavy locks with bangs and a lower crown.",
+      "The bare high forehead and thin eyebrows make the face look older than the young, cheerful mockup face. Add bangs to frame the face.",
+      "The cardigan has a check pattern. The mockup cardigan is plain mustard knit. Remove the check pattern.",
+      "The side braid is thin and short. Make it thicker and longer.",
+      "The walk is stiff. Both posed arms stay still."
+    ],
+    "next": "Rebuild the hair as soft wavy shoulder-length locks with side bangs."
+  },
+  "weaver": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "A cheerful weaver with a hair bun and two knitting needles, a rainbow scarf, a purple dress, and a basket of yarn balls in both hands. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The bun with two knitting needles gives a unique silhouette in every view.",
+      "The basket of colorful yarn balls in both fists and the rainbow scarf put the color accent at the focal point.",
+      "The soft smile and the round pink cheeks read as cheerful and kind."
+    ],
+    "issues": [
+      "The apron is a small plain cream panel. The mockup apron is large, covers the front of the skirt, and has a brown stitched hem. Make the apron larger and add the stitched hem.",
+      "The hair is a short messy cap. The mockup has side bangs and locks that frame the face. Add the side locks.",
+      "The dress has a quilted check texture. The mockup dress is smooth. Remove the check texture.",
+      "The plump body is not shown. The body is the same as the base. Make the waist and hips rounder.",
+      "The walk is stiff. Both arms stay still on the basket."
+    ],
+    "next": "Make the apron larger and add the brown stitched hem."
+  }
+}
