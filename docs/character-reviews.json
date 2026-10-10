@@ -9768,37 +9768,38 @@
     "reviewedAt": "2026-10-09T23:30:16.000Z"
   },
   "beggar": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
+      "mockup": 3.5,
       "silhouette": 3.5,
       "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3,
+      "shape": 3,
+      "color": 3.5,
       "materials": 3.5,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3,
-      "motion": 3.5
+      "sprite": 3.5,
+      "motion": 3
     },
-    "summary": "A kind old beggar with a gray beard, a patched brown coat, a tin cup, and a cane. The hat, the coat, and the cane are clearly different from the mockup.",
+    "summary": "An old beggar with a gray beard, a brown hat, a rope belt, a cup, and a walking stick. It is the same character as the mockup, but the hat, the coat, and the cup have clear differences.",
     "strengths": [
-      "The gray beard, the mustache, and the large nose read clearly and give a kind old face.",
-      "The rope belt and the green and blue patches show the patched coat of the role.",
-      "The cup arm points forward, so the begging action reads in the 3D views."
+      "The gray beard, the mustache, and the curly gray hair match the mockup.",
+      "The rope belt, the blue patches, and the teal sleeves match the mockup palette.",
+      "The cup and the walking stick are in the correct hands."
     ],
     "issues": [
-      "The hat is a wide flat dish with a low crown. It is about two times the head width and hides the face in most sprite directions. Change it to the mockup felt hat: a taller crown and a narrower, slightly turned brim.",
-      "The coat is one brown tunic with brown sleeves. The mockup has a fuzzy brown open vest over teal-green sleeves and a dark brown inner vest. Add the teal sleeves and the open vest.",
-      "The cane is a short, twisted tan shape in the same color as the rope belt. It reads as rope. Change it to a straight dark brown wooden stick that touches the ground.",
-      "The cup is at waist height. In the mockup the cup is up at shoulder height. Raise the cup arm.",
-      "The ears are small. The mockup has large round ears. Make the ears larger."
+      "The hat is a hard round dome with a stiff brim. It looks like a metal helmet. Make a soft, floppy hat with a dented crown and a wavy brim.",
+      "The coat is a short knit vest to the hips. Make a long, ragged brown coat to the knees with visible patches.",
+      "The cup is small, silver, and clean. It looks like a glass. Make a larger, dark, dented tin cup.",
+      "The nose is small. The mockup has a large, round pink nose that is a focal point of the face.",
+      "The mustache hides the mouth, so the gentle smile does not read. Show a small smile under the mustache.",
+      "In walk, the cup arm stays still (known base limit)."
     ],
-    "next": "Replace the dish hat with a felt hat that has a taller crown and a narrower brim, so that the face shows in the sprites.",
+    "next": "Replace the helmet-shaped hat with a soft, floppy, dented hat.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T22:02:41.000Z"
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "scholar": {
     "overall": 7.5,
@@ -9833,36 +9834,36 @@
     "reviewedAt": "2026-10-09T22:02:41.000Z"
   },
   "scribe": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
-      "color": 3.5,
+      "shape": 4,
+      "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3.5,
-      "motion": 3.5
+      "sprite": 4,
+      "motion": 3
     },
-    "summary": "A young scribe with freckles, a scroll board, a quill, a crossbody strap, and an ink bottle. The hair and the clothing are clearly different from the mockup.",
+    "summary": "A young scribe with brown hair, a brown jacket, a scroll board, a white quill, and an ink bottle. It matches the mockup with small differences only.",
     "strengths": [
-      "The face has freckles and a calm closed smile, as in the mockup.",
-      "The scroll board with written lines, the strap, and the black ink bottle at the hip are clear signature details.",
-      "The scroll board reads in the sprites from most directions."
+      "The scroll board, the long white quill, the ink bottle, and the cross strap all match the mockup.",
+      "The brown jacket, the dark scarf, the green shorts, and the brown boots match the mockup palette.",
+      "The face reads as calm and focused with a small smile."
     ],
     "issues": [
-      "The hair is a thick chestnut cap with drip-shaped locks on all sides. The mockup hair is dark brown and swept to one side with a parted forelock. Change the hair to a dark brown side-swept shape.",
-      "The clothing is one tan tunic with a small cream panel. The mockup has a dark brown open coat over a cream shirt and dark green pants. Darken the coat and show the cream shirt and the pants.",
-      "The quill is short. The role and the mockup show a long white quill. Make the quill about two times longer.",
-      "The scarf has the same tan color as the tunic and does not read. Give the scarf a darker brown color and more volume."
+      "The hair is a lumpy mop with a round mass at the back. Make a smooth, side-swept fringe like the mockup.",
+      "The jacket stops at the hips. The mockup coat is longer and hangs to the thighs.",
+      "The quill points forward and down. In the mockup, the quill points up.",
+      "In walk, the arms stay still (known base limit)."
     ],
-    "next": "Change the hair to a dark brown side-swept shape like the mockup.",
+    "next": "Reshape the hair into a smooth, side-swept fringe.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T22:02:41.000Z"
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "shepherd": {
     "overall": 7.0,
@@ -9930,102 +9931,100 @@
     "reviewedAt": "2026-10-09T22:02:41.000Z"
   },
   "storyteller": {
-    "overall": 6.5,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 4,
-      "shape": 3,
-      "color": 3,
-      "materials": 3.5,
-      "detail": 3,
-      "technical": 3,
-      "gameReady": 4.5,
-      "sprite": 4,
-      "motion": 3.5
-    },
-    "summary": "An old storyteller with white hair, gold glasses, a patchwork coat, an open book, and a toy dragon. The patchwork garment, the palette, and the hair are clearly different from the mockup, and the back of the hair has a defect.",
-    "strengths": [
-      "The round gold glasses, the white eyebrows, and the gold earrings follow the mockup and read in the sprites.",
-      "The open book faces the viewer and reads clearly as a storybook.",
-      "The green toy dragon is a clear signature detail."
-    ],
-    "issues": [
-      "The patchwork is a boxy coat with sleeves in saturated orange, pink, green, and yellow squares. The mockup shawl drapes long from the shoulders in muted olive, mustard, and terracotta, with fringe. Change it to a draped shawl in the muted palette.",
-      "The back of the hair has a flat cut plane, and a dark gap shows between the coils of the bun. Close the gap and round the back of the hair.",
-      "The bun is a tall white puff with a red flower. The mockup has a defined bun with a coral wrap. Make the bun a clear knot with a coral wrap.",
-      "The skin is dark brown. The mockup skin is light peach. Use the mockup skin as the default and keep the dark skin as a preset.",
-      "The book cover is bright blue. The mockup cover is brown. Change the cover to brown."
-    ],
-    "next": "Change the patchwork coat to a long draped shawl in the muted mockup palette.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T22:02:41.000Z"
-  },
-  "student": {
-    "overall": 7.0,
-    "group": "NPCs",
-    "scores": {
-      "mockup": 3.5,
+      "mockup": 4,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
-      "color": 3.5,
+      "shape": 4,
+      "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
-      "motion": 3.5
+      "motion": 3
     },
-    "summary": "A cheerful red-haired student with freckles, a green cap, a blue jacket and tie, a satchel, and a slate with a star. The lower body, the slate pose, and the colors are clearly different from the mockup.",
+    "summary": "A cheerful old storyteller with a white bun, gold round glasses, a patchwork shawl, an open book, and a green toy dragon. It matches the mockup with small differences only.",
     "strengths": [
-      "The green flat cap, the red hair, and the freckles give a clear identity in every view and in the sprites.",
-      "The slate with a white star reads clearly in the 3D views and in the sprites.",
-      "The open grin is cheerful and fits the role."
+      "The white bun with the red wrap, the gold round glasses, and the earrings match the mockup.",
+      "The open book and the green toy dragon read clearly in the views and in the sprites.",
+      "The patchwork shawl with fringes gives a warm, cheerful color plan."
     ],
     "issues": [
-      "The shorts are wide and long. They read as a skirt and hide the legs. The mockup has short cuffed shorts with bare knees. Shorten and narrow the shorts.",
-      "The socks show as thin bluish-gray rings that look like metal. Make them thick gray knit socks.",
-      "The slate is at shoulder height and is small. In the mockup the arm is raised high and the slate is at head height. Raise the arm and make the slate larger.",
-      "The jacket and the tie are saturated royal blue. The mockup uses a dark navy-charcoal color. Darken them.",
-      "The satchel is small and hides behind the arm. Make it larger at the hip."
+      "The shawl is a round poncho that covers the full body. The mockup shawl drapes long at the sides and shows more of the dress.",
+      "The dress is purple. The mockup dress is a muted maroon.",
+      "The bun is lumpy and looks like a cauliflower from the back. Make a smoother, neater bun.",
+      "In walk, the arms stay still (known base limit)."
     ],
-    "next": "Shorten the shorts above the knee and show the legs and the knit socks.",
+    "next": "Make the shawl drape long at the sides and show more of a maroon dress.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T22:02:41.000Z"
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
-  "tailor": {
-    "overall": 7.0,
+  "student": {
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 3.5,
+      "mockup": 4,
+      "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
-      "color": 4,
+      "shape": 4,
+      "color": 3.5,
       "materials": 3.5,
-      "detail": 3.5,
-      "technical": 3.5,
+      "detail": 4,
+      "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
-      "motion": 3.5
+      "motion": 3
     },
-    "summary": "A friendly tailor with a black bob, a red bow, a yellow measuring tape, a teal blouse, a dark pinafore, scissors, and a spool. The scissors and the hair are clearly different from the mockup.",
+    "summary": "A cheerful young student with red hair, freckles, a green flat cap, a satchel, and a raised slate with a chalk star. It matches the mockup with small differences only.",
     "strengths": [
-      "The yellow measuring tape around the neck, the teal puffed sleeves, and the dark pinafore follow the mockup.",
-      "The red bow and the black bob give a clear head shape in the sprites.",
-      "The pincushion on the wrist is a good extra detail for the role."
+      "The green flat cap, the red hair, and the freckles match the mockup.",
+      "The raised slate with the chalk star is the focal point and reads at 128 px.",
+      "The satchel, the tie, the shorts, and the gray socks match the mockup."
     ],
     "issues": [
-      "The scissors are small with short blades, and they read as pliers. The mockup scissors are large, with long blades about the length of the forearm. Make the blades about three times longer.",
-      "The hair has straight blunt bangs, and the back is a ring of large tube rolls. The mockup is a smooth bob with side-swept bangs. Smooth the back and sweep the bangs to one side.",
-      "The spool is small and hangs below the fist on the thread. In the mockup a large red spool sits in the hand. Make the spool larger and put it in the fist.",
-      "The skirt reaches the shoes and hides the legs. The mockup skirt stops at the knee. Shorten the skirt."
+      "The shorts flare wide and show no gap between the legs. They look like a skirt. Split the shorts into two legs.",
+      "The jacket is dark navy. The mockup jacket is a lighter slate gray-blue.",
+      "The free hand is a fist at the side. The mockup hand is open and waves (known base limit).",
+      "In walk, the slate arm stays still (known base limit)."
     ],
-    "next": "Make the scissors large with long blades, as in the mockup.",
+    "next": "Split the shorts into two clear legs so they do not read as a skirt.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-09T22:02:41.000Z"
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
+  },
+  "tailor": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A friendly young tailor with a black bob, a red bow, a yellow measuring tape, big silver scissors, and a spool of red thread. It matches the mockup with small differences only.",
+    "strengths": [
+      "The big silver scissors and the red spool with a loose thread read clearly in every view.",
+      "The black bob with the red bow, the teal blouse, and the yellow tape match the mockup.",
+      "The pin cushion on the wrist is a good role detail."
+    ],
+    "issues": [
+      "The skirt is dark gray and stops above the knees. The mockup dress is black and longer.",
+      "The mouth is open with two small front teeth. The mockup has a softer, closed smile.",
+      "The mockup has a small dot on the forehead. The model does not show it.",
+      "In walk, the arms stay still (known base limit)."
+    ],
+    "next": "Make the skirt black and longer, like the mockup dress.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "tanner": {
     "overall": 7.0,
@@ -10257,5 +10256,137 @@
     "next": "Remove the white hair streaks and raise the inner brows.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-09T23:38:05.000Z"
+  },
+  "prospector": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "A cheerful old prospector with a bushy gray beard, a wide brown hat, a red shirt, suspenders, and a gold pan. It matches the mockup with small differences only.",
+    "strengths": [
+      "The wide hat, the bushy gray beard, the red shirt, and the suspenders match the mockup.",
+      "The gold pan is held out in the correct hand.",
+      "The belt tool and the blue work pants give good role detail."
+    ],
+    "issues": [
+      "The pan is light silver-gray and the nuggets are small and dull olive-yellow. Make a darker pan with larger, bright, shiny gold nuggets.",
+      "The hat is stiff and smooth. The mockup hat has a pinched crown and a soft, wavy brim.",
+      "The free hand is a fist. The mockup hand is open and waves (known base limit).",
+      "At 128 px, the hat hides the face in most directions."
+    ],
+    "next": "Make the nuggets larger and bright gold so the pan reads as treasure.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
+  },
+  "riverboat-captain": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 4,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "An old riverboat captain with a white beard, a navy cap with an anchor, a navy coat, and a brass spyglass. The outfit matches the mockup, but the face reads stern, not jolly.",
+    "strengths": [
+      "The navy cap with the gold anchor and the black visor match the mockup.",
+      "The double row of gold buttons and the white belt with a gold buckle match the mockup.",
+      "The white beard and mustache frame the face well."
+    ],
+    "issues": [
+      "The eyebrows slant down to the center and the mouth is a small grimace. The face reads angry. The mockup has raised brows and a wide, laughing smile. Raise the brows and open a wide smile.",
+      "The irises are pink-red. Make them a normal brown or blue.",
+      "The spyglass points down at a low angle and looks like a baton. Hold it out forward at chest height.",
+      "The body is not very round. The mockup captain has a large, round belly.",
+      "The hand on the hip does not read. Bend the elbow out and put the fist on the hip.",
+      "In walk, the arms stay still (known base limit)."
+    ],
+    "next": "Change the face to raised brows and a wide, laughing smile.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
+  },
+  "cartographer": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "An old cartographer with a white beard, round glasses, a green coat, brass dividers, and rolled maps. It is the same character as the mockup, but the hair and the glasses have clear differences.",
+    "strengths": [
+      "The raised brass dividers and the bundle of rolled maps read clearly.",
+      "The green coat with gold buttons and the brown vest match the mockup.",
+      "The kind face with round glasses reads at 128 px."
+    ],
+    "issues": [
+      "The head is bald with a small white puff on top. The mockup has full white hair swept up into a crest. Cover the top of the head with swept-back white hair.",
+      "The glasses are gold. The mockup glasses are black.",
+      "The maps are pale cream. The mockup maps are tan parchment.",
+      "The white hair at the back is a lumpy band.",
+      "In walk, the arms stay still (known base limit)."
+    ],
+    "next": "Replace the bald dome and puff with full, swept-up white hair.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
+  },
+  "dockworker": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 3,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 3.5,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "A cheerful dockworker with a red knit cap, a brown beard, a striped shirt, suspenders, and a wooden crate. The front matches the mockup, but the body is not big.",
+    "strengths": [
+      "The red knit cap, the brown beard, the striped shirt, and the suspenders match the mockup.",
+      "The wooden crate held in both arms is the clear focal point.",
+      "The color plan matches the mockup palette."
+    ],
+    "issues": [
+      "The body is the standard size. The mockup dockworker is big, with wide shoulders and a thick torso. Make the shoulders and the torso wider.",
+      "The rope is one small yellow ring. It looks like metal. Make loose rope coils that hang from the hands.",
+      "From the side, the beard reads as a dark round patch on the cheek. Blend it into the jaw and the hair.",
+      "The fists go into the sides of the crate.",
+      "In walk, the arms stay still (known base limit)."
+    ],
+    "next": "Make the shoulders and the torso wider so the dockworker reads as big.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T00:31:22.000Z"
   }
 }

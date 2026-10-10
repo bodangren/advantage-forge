@@ -98,7 +98,8 @@ def status_of(n, reviews, follow, tracked, rounds):
         return 'accepted'
     if src is None:
         return 'not started'
-    if glb is None or glb < src:
+    sprites = mtime(os.path.join(ROOT, f'out/{n}/sprites/preview.png'))
+    if glb is None or glb < src or sprites is None or sprites < src:
         return 'in work'
     if rating is None or (rev and glb > rev.timestamp()):
         return 'waits for review'
