@@ -56,9 +56,9 @@ viewer's left).
 | 4 | glassblower, gravedigger, jeweler, librarian, lumberjack, magistrate, mason, midwife | midwife accepted at 7.5 (review 1); glassblower and librarian accepted at 7.5 (review 2); lumberjack 8.0, magistrate 8.0, and gravedigger 7.5 accepted (review 3); jeweler and mason on the follow-up list |
 | 5 | miller, miner, musician, orphan, peddler, performer, potter, refugee | performer and potter accepted at 7.5 (review 2); miller, orphan, and peddler accepted at 7.5 (review 3); miner, musician, and refugee on the follow-up list |
 | 6 | beggar, scholar, scribe, shepherd, stablekeeper, storyteller, student, tailor | scholar accepted at 7.5 (review 1); scribe, storyteller, student, tailor, shepherd accepted at 7.5 (review 2); beggar accepted at 7.5 (review 3); stablekeeper on the follow-up list |
-| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | traveler and undertaker accepted at 7.5 (review 1); weaver accepted at 7.5 (review 2); tax-collector accepted at 7.5 (review 3); tanner and teacher on the follow-up list; watch-captain 7.0 (review 2) in the queue for a third pass |
+| 7 | tanner, tax-collector, teacher, traveler, undertaker, watch-captain, weaver | traveler and undertaker accepted at 7.5 (review 1); weaver accepted at 7.5 (review 2); tax-collector and watch-captain accepted at 7.5 (review 3); tanner and teacher on the follow-up list |
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | archaeologist accepted at 7.5 (review 2, after a check fix); dockworker 8.0, ferryman 7.5, chieftain 7.5, caravan-driver 7.5 accepted (review 2); cartographer and hermit on the follow-up list |
-| 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide accepted at 7.5 (review 3); nomad on the follow-up list; riverboat-captain and ruin-keeper 7.0 (review 2) in the queue for a third pass; shrine-keeper and trapper not started |
+| 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide accepted at 7.5 (review 3); nomad, riverboat-captain, ruin-keeper on the follow-up list; shrine-keeper 7.0 and trapper 6.5 (review 1, new serial builds) in the queue |
 | 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | briefs and mockups ready (court and faction) |
 | 11 | king, queen, prince, princess, lady, lord, noble, leader | briefs and mockups ready (court and faction) |
 | 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | briefs and mockups ready (court and faction) |
@@ -108,3 +108,5 @@ strip (the card default), because the shared idle clip has little motion (motion
 | cartographer | 7.0, 7.0, 7.0 | the green coat flares to the knees like a robe (the mockup jacket stops at the hips and shows the belt and trousers) |
 | nomad | 7.0, 7.0, 7.0 | the coat is short, closed, and flares like a skirt (the mockup coat is long and open); the bedroll reads as a gold disc |
 | hermit | 7.0, 7.0, 7.0 | the white hair tuft sits on top of the hood and goes through the fabric (defect cap 7.0) |
+| riverboat-captain | 6.5, 7.0, 6.5 | the brows slant down and the mouth is a flat dark rectangle, so he looks angry (expression cap 7.0); the nose reads as a clown nose |
+| ruin-keeper | 6.5, 7.0, 7.0 | the hood is too large with a tall bent point; the back view is one large gray mass |

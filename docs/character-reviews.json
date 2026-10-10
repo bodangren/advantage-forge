@@ -10190,38 +10190,39 @@
     "reviewedAt": "2026-10-09T23:38:05.000Z"
   },
   "watch-captain": {
-    "overall": 7.0,
+    "overall": 7.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 4.5,
+      "mockup": 4,
+      "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 3.5,
+      "color": 4,
       "materials": 4,
       "detail": 4,
-      "technical": 3,
+      "technical": 4,
       "gameReady": 4.5,
       "sprite": 4,
       "motion": 3
     },
-    "summary": "A friendly watch captain with a steel kettle helmet, a red plume, a blue tabard, a raised lantern, and a mace. The pose and the silhouette match the mockup, but the skin, the hair, and the cheek guards are clearly different.",
+    "summary": "The model is a friendly watch captain in a steel helmet with a red plume, a blue tabard, and a raised lantern. It matches the mockup closely, with small differences in the tunic color, the shoulders, the hair, and the mace.",
     "strengths": [
-      "The kettle helmet with the red plume gives a strong silhouette and reads in every sprite.",
-      "The raised lantern pose matches the mockup.",
-      "The blue tabard with a gold emblem, the mail sleeves, and the steel pauldrons read as a town guard.",
-      "The face has a friendly smile and reads at 128 px from the front."
+      "The steel helmet with the brim, the cheek guards, and the red plume matches the mockup and reads in every sprite direction.",
+      "The pose matches the mockup: the lantern is up in one hand and the mace points down in the other hand.",
+      "The blue tabard with the gold castle emblem gives a clear focal point on the chest.",
+      "Steel, chain mail, cloth, and leather read as different materials.",
+      "The face is proud and friendly, with a clear smile."
     ],
     "issues": [
-      "The skin is light peach. The mockup has medium brown skin. Change the default skin to match the mockup.",
-      "The cheek guards are flat plates that float at the temples below the brim. Attach them to the helmet brim and let them hang down along the cheeks.",
-      "The hair is short and curly. The mockup has hair to the shoulders under the helmet. Lengthen the hair.",
-      "The lantern is small and the glow is weak. Make the lantern larger with a bright amber glow, because it is the focal prop.",
-      "The walk is stiff and the lantern arm does not move."
+      "The tabard is a bright, saturated blue. The mockup tunic is a dark slate blue with a small gold emblem. Keep the blue that the role asks for, but make it darker and less saturated.",
+      "The shoulders show chain mail sleeves. The mockup shows steel shoulder plates over dark sleeves. Add steel shoulder plates.",
+      "The mace has a long wooden handle. The mockup mace is short and gold. Make the handle shorter and use the gold color.",
+      "The hair is short and curly. The mockup hair is longer at the sides of the face. Add longer side locks under the cheek guards.",
+      "In the walk clip, the body moves very little. The posed lantern arm stays still (a known base limit)."
     ],
-    "next": "Change the default skin to the medium brown of the mockup and attach the cheek guards to the helmet.",
+    "next": "Make the tabard a darker slate blue to match the mockup palette.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T02:16:41.000Z"
+    "reviewedAt": "2026-10-10T03:59:43.000Z"
   },
   "weaver": {
     "overall": 7.5,
@@ -10289,38 +10290,39 @@
     "reviewedAt": "2026-10-10T00:31:22.000Z"
   },
   "riverboat-captain": {
-    "overall": 7.0,
+    "overall": 6.5,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
+      "mockup": 3,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
-      "color": 3.5,
-      "materials": 3.5,
+      "color": 4,
+      "materials": 3,
       "detail": 3.5,
       "technical": 4,
       "gameReady": 4.5,
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A round riverboat captain with a navy anchor cap, a full white beard, an open grin, gold buttons, and a white belt. The identity matches the mockup, but the coat and the spyglass pose show clear differences.",
+    "summary": "The model is a round riverboat captain with a navy cap, a white beard, and a brass spyglass, with one fist on the hip. The body, the costume, and the pose match the mockup, but the face looks stern and the mockup face is jolly.",
     "strengths": [
-      "The navy cap with the gold anchor, the white beard, and the white eyebrows read at once.",
-      "The open grin and the rosy cheeks give the jolly expression of the mockup.",
-      "The white belt with the gold buckle and the double row of gold buttons match the mockup.",
-      "The free fist sits on the hip as in the mockup."
+      "The pose matches the mockup: the spyglass is held out and one fist is on the hip.",
+      "The navy coat over the black vest with gold buttons, and the white belt with the gold buckle, match the mockup.",
+      "The round belly and the wide cap give a clear silhouette from every view.",
+      "The gold anchor on the cap and the brass spyglass are good accents."
     ],
     "issues": [
-      "The jacket is closed and navy at the center. The mockup has a long open coat with lapels over a black vest. Add the open coat flaps to the hips and a black vest at the center.",
-      "The spyglass is short and thin and points sideways at hip height. The mockup holds a large brass spyglass out at chest height. Raise the arm and make the spyglass longer and thicker.",
-      "The nose is small and pale. The mockup has a large round red nose. Enlarge the nose and paint it red.",
-      "The red corners of the mouth hang below the mustache and look like drops. Close the mouth corners into one grin shape.",
-      "In the walk, the arms stay still (known base limit)."
+      "The face expression is different. The white brows slant down to the center and the mouth is a flat dark rectangle, so the captain looks angry. The mockup shows a wide, happy smile. Arch the brows up and curve the mouth up into a wide smile.",
+      "The nose is a smooth, bright red ball and looks like a clown nose. The mockup nose is large and skin pink with a soft red tint. Use a skin color with a red tint and a less round shape.",
+      "The mustache is a flat white band across the face. The mockup mustache is full and curls up above the smile. Give the mustache volume and curl its ends up.",
+      "The coat and the cap have a strong fuzzy surface noise. The mockup cloth is smooth. Decrease the surface bump on the coat and the cap.",
+      "The cap is tall and puffy. The mockup cap is flatter, with a clear black visor. Make the cap crown lower.",
+      "In the walk clip, the body moves very little. The posed spyglass arm stays still (a known base limit)."
     ],
-    "next": "Open the coat over a black vest and let the coat flaps hang to the hips.",
+    "next": "Change the face to a jolly smile: arch the brows up and curve the mouth up into a wide open smile.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T02:48:28.000Z"
+    "reviewedAt": "2026-10-10T03:59:43.000Z"
   },
   "cartographer": {
     "overall": 7.0,
@@ -10626,7 +10628,7 @@
       "mockup": 3.5,
       "silhouette": 3.5,
       "proportion": 4,
-      "shape": 3.5,
+      "shape": 4,
       "color": 3.5,
       "materials": 3.5,
       "detail": 3.5,
@@ -10635,22 +10637,90 @@
       "sprite": 3.5,
       "motion": 3
     },
-    "summary": "A kind ruin keeper with green eyes, gray hair, a gray hooded cloak with moss patches, a key ring, and a glowing lantern. The face and the props match, but the hood is a clear difference.",
+    "summary": "The model is a kind ruin keeper in a mossy gray-green hooded cloak, with a ring of iron keys held up and a lantern held low. The pose, the colors, and the kind face match the mockup, but the hood is much larger and more pointed.",
     "strengths": [
-      "The face is kind and calm, with green eyes, a small smile, and blush, as in the mockup.",
-      "The lantern glows at the low hand and gives a warm accent.",
-      "The brown tunic under the open cloak and the green edge of the cloak follow the mockup.",
-      "The raised key ring and the low lantern copy the mockup pose."
+      "The pose matches the mockup: the key ring is up next to the face and the lantern hangs low in the other hand.",
+      "The face is kind and calm, with green eyes and a small smile, as the role asks.",
+      "The gray-green cloak with the dark green trim and the moss stains on the hem matches the role.",
+      "The warm glow of the lantern gives a good accent against the cool cloak."
     ],
     "issues": [
-      "The hood is a tight round dome, and the hair bun on top looks like a pom-pom on a beanie. The mockup hood is soft and draped, with a peak and a wide green lining around the face. Make the hood looser, add folds, and show the lining.",
-      "From the side and the back, the hood and the cloak form one smooth gray sack. Let the hood fall onto the shoulders as a separate cape layer.",
-      "The cloak is plain gray with dark green stains. The mockup cloak is gray-green with moss at the edges. Shift the cloak color toward green and keep the moss at the hems.",
-      "The key ring is a ring of dark knobs with small keys. The mockup shows a large chain ring with clear keys. Make the keys larger and separate.",
-      "In the walk, the posed arms stay still (known base limit)."
+      "The hood is too large and has a tall point that bends back. The mockup hood is rounder and closer to the head. Make the hood smaller and the point shorter, so that the back view is not one large gray mass.",
+      "The gray hair shows as a flat striped band across the forehead. The mockup shows soft white-gray curls at the front and the top of the head. Give the front hair curls and volume.",
+      "The front of the cloak is a short capelet. The mockup cloak hangs open to the knees and shows a dark green lining. Make the front edges of the cloak longer.",
+      "The hood fills most of the 128 px sprite, so the face is small in the front directions.",
+      "In the walk clip, the body moves very little. The posed key arm stays still (a known base limit)."
     ],
-    "next": "Rebuild the hood as a soft draped hood with a green lining that falls onto the shoulders.",
+    "next": "Make the hood smaller and rounder, with a short point, to match the mockup silhouette.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T02:48:28.000Z"
+    "reviewedAt": "2026-10-10T03:59:43.000Z"
+  },
+  "shrine-keeper": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The model is a gentle young shrine keeper in a white robe with a pale blue sash, with a bell wand held up and a bowl of glowing water held out. The pose, the robe, and the face match the mockup, but the wand, the hair, and the pants show clear differences.",
+    "strengths": [
+      "The pose matches the mockup: the wand is up in one hand and the bowl is out in the other hand.",
+      "The face is gentle and smiling, as the role asks.",
+      "The white robe with wide sleeves, the knotted sash, and the sandals match the mockup.",
+      "The blue glow and the wisp above the bowl give a clear focal accent."
+    ],
+    "issues": [
+      "The wand is short and gold, with two bells. The mockup staff is a long, rustic wooden staff with a crossbar. Make the wand longer and use a wood color. Keep the small bells.",
+      "The hair is black, with stiff, lumpy locks that point up, mostly at the back. The mockup hair is a soft, dark brown mop. Make the locks softer and lower, and use a dark brown.",
+      "The pants are sky blue and puffy. The mockup pants are sage teal and straight to the ankle. Make the pants straight and move the color toward the sage teal of the mockup.",
+      "In the walk clip, the body moves very little. The posed wand arm stays still (a known base limit)."
+    ],
+    "next": "Make the wand a long wooden staff with small bells, to match the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T03:59:43.000Z"
+  },
+  "trapper": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 3,
+      "materials": 3,
+      "detail": 3,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 3.5,
+      "motion": 3
+    },
+    "summary": "The model is a friendly bearded trapper with a lantern held up and a rope coil held low. The pose and the face read, but the coat is short and pale, the hat has bear ears, and the scarf shows as a bib.",
+    "strengths": [
+      "The pose matches the mockup: the lantern is up in one hand and the rope coil is down in the other hand.",
+      "The face is friendly, with a beard, a mustache, and a small smile.",
+      "The red plaid gives a clear warm accent on the chest.",
+      "The rope over the shoulder and the fringe at the hem show the trapper role."
+    ],
+    "issues": [
+      "The coat is short and pale tan, with a lumpy surface. The mockup coat is a long, mid-brown buckskin coat to the knees, with beige fur cuffs. Make the coat longer, darker, and smoother.",
+      "The hat has two round bear ears. The mockup hat is a plain brimmed felt hat. Remove the ears.",
+      "The plaid shows as a flat square bib on the chest. The mockup has a red plaid scarf around the neck, with ends that hang down. Make the plaid a scarf around the neck.",
+      "The beard is thinner than the mockup beard. Make the beard fuller and bushier.",
+      "The back hair under the hat has uneven drip shapes. Make the back hair one smooth mass.",
+      "In the walk clip, the body moves very little. The posed lantern arm stays still (a known base limit)."
+    ],
+    "next": "Make the coat a long, smooth, mid-brown buckskin coat to match the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T03:59:43.000Z"
   }
 }

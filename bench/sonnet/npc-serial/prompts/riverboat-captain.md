@@ -5,13 +5,14 @@ The brief is bench/sonnet/briefs/riverboat-captain.md. The mockup is docs/npc-mo
 
 The source assets/riverboat-captain.ts exists. First look at out/riverboat-captain/render.png to see the current state.
 
-An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
-1. The eyebrows slant down to the center and the mouth is a small grimace. The face reads angry. The mockup has raised brows and a wide, laughing smile. Raise the brows and open a wide smile.
-2. The irises are pink-red. Make them a normal brown or blue.
-3. The spyglass points down at a low angle and looks like a baton. Hold it out forward at chest height.
-4. The body is not very round. The mockup captain has a large, round belly.
-5. The hand on the hip does not read. Bend the elbow out and put the fist on the hip.
+An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
+1. The jacket is closed and navy at the center. The mockup has a long open coat with lapels over a black vest. Add the open coat flaps to the hips and a black vest at the center.
+2. The spyglass is short and thin and points sideways at hip height. The mockup holds a large brass spyglass out at chest height. Raise the arm and make the spyglass longer and thicker.
+3. The nose is small and pale. The mockup has a large round red nose. Enlarge the nose and paint it red.
+4. The red corners of the mouth hang below the mustache and look like drops. Close the mouth corners into one grin shape.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Third pass. Make the jacket a long open coat (to the knees) over a black vest, as in the mockup. Hold the spyglass out at chest height and make it longer, about 0.2 m.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
