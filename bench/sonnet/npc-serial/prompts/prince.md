@@ -3,9 +3,17 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/prince.md. The mockup is docs/npc-mockups/prince_001.jpg.
 
-Build the new asset assets/prince.ts from the brief.
+The source assets/prince.ts exists. First look at out/prince/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
+1. The mouth is open and shows two front teeth. The mockup has a closed, gentle smile. Change the mouth to a closed smile.
+2. The legs are brown boots up to the tunic. The mockup has beige trousers above the boots. Add beige trousers and make the boots shorter.
+3. The crown is wide and covers most of the hair. Make the crown a little smaller so that more hair shows.
+4. The hair is a smooth band with ridges. The mockup hair is curly and golden orange. Add curls at the fringe and the sides.
+5. Each ear shows a dark dot. Remove the dot or blend it into the ear.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

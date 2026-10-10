@@ -1,0 +1,88 @@
+{
+  "prince": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 4, 4.5, 4, 3],
+    "summary": "A young prince with a gold crown, a blue tunic, a red cape, and a raised short sword. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The pose matches the mockup: the sword hand is up and the other fist is on the hip.",
+      "The palette matches the mockup: blue tunic, gold emblem, brown belt, red cape, and brown boots.",
+      "The crown and the red cape read in all 8 sprite directions."
+    ],
+    "issues": [
+      "The hair fringe is a row of round ring curls. The mockup has loose, swept curls. Make the fringe curls softer and less regular.",
+      "The crown has a tall center point with a small red gem. The mockup has a large oval red gem at the center. Make the gem larger.",
+      "The sword blade is thin. The mockup blade is wider. Make the blade wider.",
+      "The walk is stiff. The cape and the sword arm do not move."
+    ],
+    "next": "Change the fringe from ring curls to loose swept curls."
+  },
+  "princess": {
+    "overall": 7.5,
+    "scores": [4, 4, 4, 4, 3.5, 3.5, 3.5, 4, 4.5, 4, 3],
+    "summary": "A young princess with two curly hair puffs, a gold tiara, a pink gown, and a flower bouquet. The model matches the mockup with small differences only.",
+    "strengths": [
+      "The face matches the mockup: large brown eyes, the forehead dot, and an open smile.",
+      "The two hair puffs and the tiara with a pink gem give a strong silhouette.",
+      "The bouquet of white and yellow flowers with a pink ribbon matches the mockup."
+    ],
+    "issues": [
+      "The gown is a bright pink. The mockup gown is a softer rose and peach pink. Make the pink softer and warmer.",
+      "The skirt is a plain bell with one yellow hem. The mockup skirt has layered ruffles. Add a second ruffle layer at the hem.",
+      "The hair puffs are larger and higher than in the mockup. Make the puffs a little smaller and lower.",
+      "The free arm hangs down. The mockup shows an open hand gesture. This is a base limit."
+    ],
+    "next": "Change the gown color to the softer rose pink of the mockup."
+  },
+  "lady": {
+    "overall": 7.0,
+    "scores": [4, 4, 4, 4, 4, 3.5, 4, 2.5, 4, 4, 2.5],
+    "summary": "An elegant court lady with a copper bun, a pearl band, a sage green gown, a lace collar, and a fan. The model is close to the mockup, but a shoe pushes through the skirt in the walk.",
+    "strengths": [
+      "The copper hair bun with the pearl band matches the mockup.",
+      "The sage green gown, the cream front panel, and the lace collar read clearly.",
+      "The face is friendly and reads in the front sprite directions."
+    ],
+    "issues": [
+      "In the walk, a dark green shoe pushes through the front of the skirt (t=0.11, t=0.22, t=0.67). Keep the feet inside the skirt during the walk.",
+      "The purse is pink. The mockup purse is green and cream. Change the purse color.",
+      "The gown is narrower than in the mockup. The mockup gown is very full. Make the skirt wider at the hem.",
+      "The fan is small. The mockup fan is larger. Make the fan larger."
+    ],
+    "next": "Stop the shoe from pushing through the skirt in the walk."
+  },
+  "lord": {
+    "overall": 6.5,
+    "scores": [3, 3.5, 3.5, 3.5, 3.5, 3.5, 3, 3.5, 4, 3.5, 3],
+    "summary": "A lord with a mustache, a dark blue doublet, a red cape, and a silver goblet. The model is the same character, but the face, the hair, and the fur trim are clearly different from the mockup.",
+    "strengths": [
+      "The dark blue doublet with silver buttons, the belt, and the white ruff match the mockup.",
+      "The raised silver goblet reads in the views and in the sprites.",
+      "The curled mustache and the pink round nose match the mockup."
+    ],
+    "issues": [
+      "The face reads as stern. The brows angle down at the center and the mouth is a small grin. The mockup has raised brows and a wide laugh. Raise the brows and open the mouth.",
+      "The hair is a large mop of long curly locks. The mockup hair is short and swept back. Make the hair short and swept back.",
+      "The fur trim is only lumps at the cape corners and the shoulders. The mockup has fur along the cape edges. Put a fur band along the cape edges.",
+      "The beard is a pointed goatee. The mockup has a short full beard on the jaw."
+    ],
+    "next": "Change the face to a cheerful laugh with raised brows."
+  },
+  "noble": {
+    "overall": 7.0,
+    "scores": [3.5, 4, 4, 3.5, 3.5, 3.5, 3.5, 4, 4, 3.5, 3],
+    "summary": "A young noble with a wide teal hat, a white feather, a teal coat, and a cane. The model is the same character, but the hat, the coat, and the cane pose are clearly different from the mockup.",
+    "strengths": [
+      "The wide teal hat with a white feather gives a strong silhouette from every view.",
+      "The face is friendly and matches the mockup.",
+      "The brown wavy hair and the white cuffs match the mockup."
+    ],
+    "issues": [
+      "The hat is flat with yellow stripes and reads as a boater. The mockup hat has a turned brim and a dark teal band. Remove the yellow edge and turn up the brim.",
+      "The feather is a white lump. Shape it as a long curved plume.",
+      "The coat stops at the hips and has gold edges. The mockup coat goes to the knees with plain teal lapels. Make the coat longer.",
+      "The cane hangs at the side and has a ball top. The mockup noble leans on a cane with a curved handle. Put a curved handle on the cane and angle it out.",
+      "The jabot is a flat white shape. The mockup jabot is frilly."
+    ],
+    "next": "Change the hat to a cavalier hat with a turned brim and a long feather plume."
+  }
+}

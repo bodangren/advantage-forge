@@ -1,6 +1,4 @@
-prince	
-princess	
-lady	
+lady	Fix 1 is a clip defect: after the fix, view out/lady/anim/walk.png once (run `./forge animate lady --fast --clip walk`) to confirm that no shoe pushes through the skirt.
 lord	
 noble	
 leader	

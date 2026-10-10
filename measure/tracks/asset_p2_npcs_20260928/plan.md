@@ -60,7 +60,7 @@ viewer's left).
 | 8 | archaeologist, caravan-driver, cartographer, chieftain, dockworker, ferryman, hermit | archaeologist accepted at 7.5 (review 2, after a check fix); dockworker 8.0, ferryman 7.5, chieftain 7.5, caravan-driver 7.5 accepted (review 2); cartographer and hermit on the follow-up list |
 | 9 | nomad, prospector, ranger-guide, riverboat-captain, ruin-keeper, shrine-keeper, trapper | prospector accepted at 7.5 (review 1); ranger-guide and shrine-keeper accepted at 7.5 (review 3); trapper accepted at 7.5 (review 2); nomad, riverboat-captain, ruin-keeper on the follow-up list |
 | 10 | ambassador, commander, court-wizard, diplomat, general, guild-master, guild-member, inquisitor | court-wizard accepted at 8.0 (review 1); ambassador and diplomat accepted at 7.5 (review 2); guild-member accepted at 7.5 (review 1); inquisitor accepted at 8.0 (review 2); commander, general, guild-master on the follow-up list |
-| 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen accepted at 7.5 (review 2); prince 7.0 and princess 7.0 (review 1) in the queue; lady, lord, noble, leader in the queue (new builds) |
+| 11 | king, queen, prince, princess, lady, lord, noble, leader | king accepted at 7.5 (review 1); queen, prince, princess accepted at 7.5 (review 2); lady 7.0, lord 6.5, noble 7.0 (review 1) in the queue; leader in the queue (new build) |
 | 12 | masked-agent, spy, rebel, regent, royal-guard, soldier, veteran | in the serial builder queue (new builds) |
 | 13 | dwarf-citizen, elf-citizen, fae-citizen, gnome-citizen, halfling-citizen, goblin-citizen, orc-citizen, lizardfolk-citizen, merfolk-citizen | briefs and mockups ready (fantasy peoples) |
 

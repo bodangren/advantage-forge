@@ -73,3 +73,9 @@ b54	serial	builder	sonnet	a67ac279d81867313	queen	second pass; smaller sharp cro
 b55	serial	builder	sonnet	a96578c2091a3a61f	prince	new build; check ok; 50,504 tris; self 7	Five renders for a new build.
 b56	serial	builder	sonnet	a6353a568dcf3ab8a	princess	new build; check ok; 55,146 tris	Three renders for a new build.
 r16	serial	reviewer	opus	a915ccc7b2df85a32	guild-master,inquisitor,queen,prince,princess	inquisitor 8.0 and queen 7.5 accepted (review 2); guild-master 7.0 to follow-up (review 3); prince 7.0 and princess 7.0 to a second pass	Second passes on new builds reach the bar often (inquisitor 7.0 to 8.0).
+b57	serial	builder	sonnet	ae9fbdd65289edbab	prince	second pass; closed smile, beige trousers, smaller crown, curls; check ok; 54,312 tris	Five fixes in one pass.
+b58	serial	builder	sonnet	a1ec7a116246f7f67	princess	second pass; bell skirt with ruffle, bare legs, pink shoes, forehead dot; check ok; 53,924 tris	The builder named one unasked change (sash body removed).
+b59	serial	builder	sonnet	a54e62746b0a297fe	lady	new build; check ok; 52,274 tris; self 7	Three renders for a new build.
+b60	serial	builder	sonnet	a49b424b095de1c0f	lord	new build; check ok; 56,552 tris; self 7; goblet floats beside the fist	The builder saw the floating goblet but did not fix it within the budget.
+b61	serial	builder	sonnet	a7be9c1c7beaccfee	noble	new build; check ok; 49,720 tris; self 6	The attack clip forced a short cane; the builder named it.
+r17	serial	reviewer	opus	a920417db8fe5a036	prince,princess,lady,lord,noble	prince and princess 7.5 accepted (review 2); lady 7.0 (walk defect), lord 6.5, noble 7.0 to a second pass	A skirt defect showed only in the walk strip, which builders do not view.
