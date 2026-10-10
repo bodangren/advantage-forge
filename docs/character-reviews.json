@@ -10892,39 +10892,37 @@
     "reviewedAt": "2026-10-10T06:34:35.000Z"
   },
   "guild-master": {
-    "overall": 6.5,
+    "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3,
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
       "shape": 3.5,
       "color": 3.5,
       "materials": 3.5,
       "detail": 3.5,
-      "technical": 3.5,
+      "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3.5,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is a bald, bearded guild master in a brown coat with cream fur trim, with a key and a coin purse. The face and the laugh match, but the body is not plump and the key and the chain of office are weak.",
+    "summary": "The model is a plump, bald guild master with a brown fur-trimmed coat, a gold chain, a raised brass key, and a coin purse. It is the same character as the mockup, but the purse, the coat length, and the skin color show clear differences.",
     "strengths": [
-      "The open laugh with teeth, the red nose, and the brown mustache and beard match the mockup expression.",
-      "The cream fur trim on the cuffs, the hem, and the coat front reads clearly.",
-      "The raised key hand and the low purse hand follow the mockup pose."
+      "The brass key, the gold chain, and the large medallion read clearly at the focal point.",
+      "The bald head, the curled side hair, and the full beard give a strong, jolly identity.",
+      "The cream fur trim on the collar, the cuffs, and the hem matches the mockup coat."
     ],
     "issues": [
-      "The body is narrow and the bald head is much wider than the coat. The mockup is a plump man with a big round belly. Make the belly and the coat wider and rounder.",
-      "The big gold medallion of the chain of office does not show. The chest shows a gold panel. Add a large round gold medallion on the belly, on a thick gold chain.",
-      "The key is a small ring on a short rod and the bit does not show. Make the key larger, with a decorative bow and a clear bit.",
-      "The side whiskers are two brown blocks. In the side and back views they look attached to the head like handles. Shape them as curls that join the beard.",
-      "The forehead has a pink patch on peach skin. The mockup has an even, ruddy skin on the whole head. Use one even, warm skin tone with blush on the cheeks.",
-      "The brown coat has a fuzzy surface like the fur trim. The mockup coat is smooth. Make the coat smooth so that the fur trim stands out.",
-      "In the walk strip the frames change very little. The key arm stays still (known base limit)."
+      "The coin purse is small and light brown. The mockup purse is a large, dark brown sack. Make the purse approximately three times larger and darker.",
+      "The coat stops at the hips. The mockup coat is long and reaches the knees. Extend the coat and the fur hem toward the boots.",
+      "The skin is pale peach. The mockup skin is ruddy red. Make the face and the hands warmer and redder.",
+      "The mustache merges into the beard, and the eyebrows are thin. The mockup has a large, separate mustache with curled ends and bushy eyebrows. Shape a separate mustache and thicker eyebrows.",
+      "The beard is wide and covers the top of the gold chain. From the side, the beard reads as a flat brown block. Make the beard narrower at the sides."
     ],
-    "next": "Make the body plump with a round belly and add the large gold medallion on the chain.",
+    "next": "Make the coin purse a large, dark brown sack, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T06:34:35.000Z"
+    "reviewedAt": "2026-10-10T07:14:12.000Z"
   },
   "guild-member": {
     "overall": 7.5,
@@ -10959,37 +10957,37 @@
     "reviewedAt": "2026-10-10T05:50:59.000Z"
   },
   "inquisitor": {
-    "overall": 7.0,
+    "overall": 8.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 3.5,
-      "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3,
-      "materials": 3.5,
-      "detail": 3.5,
-      "technical": 4,
+      "mockup": 4.5,
+      "silhouette": 4.5,
+      "proportion": 4,
+      "shape": 4.5,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4.5,
       "gameReady": 4.5,
-      "sprite": 3.5,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is the gray-robed official with the wide-brim hat, the glasses, a lantern, and a red book of laws. It is the same character, but the goatee, the lantern, and the color plan differ clearly from the mockup.",
+    "summary": "The model is a strict but fair official in a gray coat and a gray hat with a white band, with glasses, a lantern, and a red book. It is very close to the mockup. Only small details differ.",
     "strengths": [
-      "The gray wide-brim hat with the white band and the eye badge matches the mockup closely and reads in every sprite direction.",
-      "The black glasses and the gray mustache give a stern but fair face.",
-      "The thick red book is clear in the sprites."
+      "The hat with the white band and the eye emblem matches the mockup and gives a strong silhouette.",
+      "The black glasses, the gray mustache, and the goatee make the face read as strict but kind.",
+      "The glowing lantern gives a warm accent against the gray coat."
     ],
     "issues": [
-      "The goatee is a round gray ball on the chin. The mockup has a pointed goatee. Shape the goatee as a short point below the mouth.",
-      "The lantern is small and silver and it has no light. The mockup lantern is larger and glows warm yellow. Make the lantern larger and give the glass a warm emissive glow.",
-      "The body is gray from the hat to the hem. The mockup has a beige vest and a white shirt under the coat. Paint the vest beige to give a warm accent at the chest.",
-      "The nose is small. The mockup has a large round nose. Make the nose larger.",
-      "In the walk strip the frames change very little. The arms stay still (known base limit)."
+      "The nose is small. The mockup has a large, round nose. Make the nose larger and rounder.",
+      "The book has gold corner caps. The mockup book is plain dark red. Remove the gold corners or make them dark red.",
+      "The book hangs low at the hip. The mockup holds the book upright near the waist. Lift the book a little.",
+      "The coat is a little shorter than the mockup coat, which reaches the knees.",
+      "The gray hair under the back of the hat brim is lumpy. Make the hair below the brim smoother."
     ],
-    "next": "Give the lantern a warm glow at a larger size and change the goatee ball to a pointed goatee.",
+    "next": "Make the nose larger and rounder, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T06:34:35.000Z"
+    "reviewedAt": "2026-10-10T07:14:12.000Z"
   },
   "king": {
     "overall": 7.5,
@@ -11026,36 +11024,101 @@
     "reviewedAt": "2026-10-10T06:34:35.000Z"
   },
   "queen": {
+    "overall": 7.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 4,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 4,
+      "materials": 4,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The model is a gracious queen with long brown hair, a gold crown, a purple gown, an ermine cape, and a gold scepter. It matches the mockup with small differences only.",
+    "strengths": [
+      "The closed smile, the brown eyes, and the warm skin match the kind face of the mockup.",
+      "The ermine cape with black spots and the purple gown with the gold hem read clearly in every view.",
+      "The crown, the purple gem, and the scepter give a clear gold accent."
+    ],
+    "issues": [
+      "The hair has less volume and fewer waves than the mockup. From the back, the hair reads as a flat slab with vertical ridges. Add large waves and volume at the sides.",
+      "The crown points are sharp cones on a thin band. The mockup crown has rounded points with gems. Make the points softer and add small gems.",
+      "The hands are apart. The mockup holds the hands together at the waist and the scepter at an angle. Move the free fist toward the scepter hand.",
+      "The cape surface is lumpy. Reduce the surface displacement so that the fur reads soft and even.",
+      "The gown hem has plain gold stripes. The mockup hem has a gold scroll pattern."
+    ],
+    "next": "Give the hair more volume and large waves, as in the mockup.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T07:14:12.000Z"
+  },
+  "prince": {
     "overall": 7.0,
     "group": "NPCs",
     "scores": {
       "mockup": 3.5,
       "silhouette": 4,
-      "proportion": 3.5,
-      "shape": 3.5,
+      "proportion": 4,
+      "shape": 4,
       "color": 4,
       "materials": 4,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4.5,
-      "sprite": 3.5,
+      "sprite": 4,
       "motion": 3
     },
-    "summary": "The model is the queen with long brown hair, a purple gown, an ermine cape, and a gold scepter. The face and the gown match, but the crown and the free arm differ clearly from the mockup.",
+    "summary": "The model is a cheerful young prince with a gold crown, blond hair, a blue tunic, a red cape, and a raised short sword. It is the same character as the mockup, but the mouth and the legs show clear differences.",
     "strengths": [
-      "The kind smile and the long wavy brown hair match the mockup face.",
-      "The purple gown with the gold hem and the white ermine cape with black spots match the mockup palette.",
-      "The long hair and the cape make a clear silhouette from the side and the back."
+      "The blue tunic with the gold trim, the gold emblem, and the brown belt matches the mockup.",
+      "The raised sword and the red cape give a clear, brave silhouette from the front.",
+      "The red gem on the crown gives an accent at the focal point."
     ],
     "issues": [
-      "The crown is very large, with seven blunt, rounded points. It dominates the head and the sprites. The mockup crown is small, with sharp points and a purple gem at the front. Make the crown smaller with sharp points and a clear purple gem.",
-      "The free arm points out to the side with a fist. The mockup holds the hands together in front of the waist. Bring the free arm in toward the waist.",
-      "The scepter top is a star, so it reads as a magic wand. The mockup has an ornate gold top. Change the star to a small crown or a gold flower shape.",
-      "The skin is lighter than the warm brown skin of the mockup. Use a warmer, darker skin tone.",
-      "In the walk strip the gown hides the legs and the frames change very little. The scepter arm stays still (known base limit)."
+      "The mouth is open and shows two front teeth. The mockup has a closed, gentle smile. Change the mouth to a closed smile.",
+      "The legs are brown boots up to the tunic. The mockup has beige trousers above the boots. Add beige trousers and make the boots shorter.",
+      "The crown is wide and covers most of the hair. Make the crown a little smaller so that more hair shows.",
+      "The hair is a smooth band with ridges. The mockup hair is curly and golden orange. Add curls at the fringe and the sides.",
+      "Each ear shows a dark dot. Remove the dot or blend it into the ear."
     ],
-    "next": "Make the crown smaller with sharp points and a purple gem at the front.",
+    "next": "Change the mouth to a closed smile, as in the mockup.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T06:34:35.000Z"
+    "reviewedAt": "2026-10-10T07:14:12.000Z"
+  },
+  "princess": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4.5,
+      "proportion": 4.5,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4.5,
+      "sprite": 4.5,
+      "motion": 3
+    },
+    "summary": "The model is a kind young princess with two curly hair puffs, a gold tiara, a pink gown, and a bouquet. It is the same character as the mockup, but the skirt shape and the leg color show clear differences.",
+    "strengths": [
+      "The two curly hair puffs, the pink hair ties, and the tiara give a strong silhouette in every view.",
+      "The wide smile, the brown eyes, and the blush match the friendly face of the mockup.",
+      "The bouquet of white and yellow flowers with the pink ribbon reads clearly at 128 px."
+    ],
+    "issues": [
+      "The skirt is a straight drum with a flat gold disc at the hem. From the side, a flat shelf shows at the waist. Make a flared bell skirt with a ruffled gold edge.",
+      "The legs are pink from the skirt to the ground. The mockup shows bare brown legs with small pink shoes. Show skin on the legs and keep pink only on the shoes.",
+      "The left wrist has a gold bracelet that the mockup does not show. Remove it or make it smaller.",
+      "The small dot on the forehead in the mockup is missing."
+    ],
+    "next": "Change the skirt to a flared bell with a ruffled gold edge.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T07:14:12.000Z"
   }
 }

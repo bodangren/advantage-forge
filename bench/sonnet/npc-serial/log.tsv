@@ -67,3 +67,9 @@ b49	serial	builder	sonnet	a34e357ae21309218	inquisitor	new build; check ok; 53,3
 b50	serial	builder	sonnet	a687e09ea3861793e	king	new build; check ok; 55,878 tris; self 7.5	Five images incl. the sprite preview.
 b51	serial	builder	sonnet	a51ff89ab40399f7b	queen	new build; check ok; 53,132 tris	Four renders for a new build.
 r15	serial	reviewer	opus	ae1be6c66fd79c76b	general,guild-master,inquisitor,king,queen	king 7.5 accepted (review 1); general 6.5 to follow-up (review 3); guild-master 6.5 to a third pass; inquisitor 7.0 and queen 7.0 to a second pass	The general telescope fix (dark rings) read as stripes to the next reviewer.
+b52	serial	builder	sonnet	a0ff5c9eefcaf9e04	guild-master	third pass; plump body 1.25x, big medallion, larger key; check ok; 55,768 tris	The numeric scale note worked.
+b53	serial	builder	sonnet	a6880e61a1e5db627	inquisitor	second pass; pointed goatee, larger warm lantern, beige vest, larger nose; check ok; 54,008 tris	Two renders, a cheap pass.
+b54	serial	builder	sonnet	a67ac279d81867313	queen	second pass; smaller sharp crown with purple gem, fist at waist, caramel skin first; check ok; 49,964 tris	The report named a wrong path (Desktop/alder); the edit was in this repository. Check report paths against git status.
+b55	serial	builder	sonnet	a96578c2091a3a61f	prince	new build; check ok; 50,504 tris; self 7	Five renders for a new build.
+b56	serial	builder	sonnet	a6353a568dcf3ab8a	princess	new build; check ok; 55,146 tris	Three renders for a new build.
+r16	serial	reviewer	opus	a915ccc7b2df85a32	guild-master,inquisitor,queen,prince,princess	inquisitor 8.0 and queen 7.5 accepted (review 2); guild-master 7.0 to follow-up (review 3); prince 7.0 and princess 7.0 to a second pass	Second passes on new builds reach the bar often (inquisitor 7.0 to 8.0).

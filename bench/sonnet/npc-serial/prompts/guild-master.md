@@ -6,13 +6,15 @@ The brief is bench/sonnet/briefs/guild-master.md. The mockup is docs/npc-mockups
 The source assets/guild-master.ts exists. First look at out/guild-master/render.png to see the current state.
 
 An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
-1. The side hair is two large curled blocks that look like ram horns or ear muffs. The mockup has smaller bushy curls that join the beard. Make the side hair smaller and blend it into the beard.
-2. The beard is a thin chin strap, and the mustache ends curl up to the lower eyelids. The mockup has a full, bushy beard and a mustache that curls out to the sides. Make the beard full and turn the mustache ends outward, below the eyes.
-3. The body is not plump. The coat is a straight box with no belly. Add a large round belly under the vest.
-4. The coin purse hangs at foot level, near the ground. The mockup holds the purse at hip height. Raise the purse to the fist.
-5. The gold medallion is on the gold vest, and the two parts merge. Make the vest a warmer yellow and add a dark chain, as in the mockup.
-6. The face is pale, with a pink forehead. The mockup has a red, ruddy face. Add warm red to the cheeks and the nose.
+1. The body is narrow and the bald head is much wider than the coat. The mockup is a plump man with a big round belly. Make the belly and the coat wider and rounder.
+2. The big gold medallion of the chain of office does not show. The chest shows a gold panel. Add a large round gold medallion on the belly, on a thick gold chain.
+3. The key is a small ring on a short rod and the bit does not show. Make the key larger, with a decorative bow and a clear bit.
+4. The side whiskers are two brown blocks. In the side and back views they look attached to the head like handles. Shape them as curls that join the beard.
+5. The forehead has a pink patch on peach skin. The mockup has an even, ruddy skin on the whole head. Use one even, warm skin tone with blush on the cheeks.
+6. The brown coat has a fuzzy surface like the fur trim. The mockup coat is smooth. Make the coat smooth so that the fur trim stands out.
 Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Third pass. The body must be plump: make the torso, coat, and waistcoat about 1.25 times wider and deeper at the belly, so the coat is wider than the head. Show the big gold medallion below the beard, and make the key 1.5 times larger.
 
 Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.

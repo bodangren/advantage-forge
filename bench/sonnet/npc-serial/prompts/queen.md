@@ -3,9 +3,16 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/queen.md. The mockup is docs/npc-mockups/queen_001.jpg.
 
-Build the new asset assets/queen.ts from the brief.
+The source assets/queen.ts exists. First look at out/queen/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
+1. The crown is very large, with seven blunt, rounded points. It dominates the head and the sprites. The mockup crown is small, with sharp points and a purple gem at the front. Make the crown smaller with sharp points and a clear purple gem.
+2. The free arm points out to the side with a fist. The mockup holds the hands together in front of the waist. Bring the free arm in toward the waist.
+3. The scepter top is a star, so it reads as a magic wand. The mockup has an ornate gold top. Change the star to a small crown or a gold flower shape.
+4. The skin is lighter than the warm brown skin of the mockup. Use a warmer, darker skin tone.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

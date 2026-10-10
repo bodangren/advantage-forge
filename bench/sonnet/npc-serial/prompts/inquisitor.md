@@ -3,9 +3,16 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/inquisitor.md. The mockup is docs/npc-mockups/inquisitor_001.jpg.
 
-Build the new asset assets/inquisitor.ts from the brief.
+The source assets/inquisitor.ts exists. First look at out/inquisitor/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
+1. The goatee is a round gray ball on the chin. The mockup has a pointed goatee. Shape the goatee as a short point below the mouth.
+2. The lantern is small and silver and it has no light. The mockup lantern is larger and glows warm yellow. Make the lantern larger and give the glass a warm emissive glow.
+3. The body is gray from the hat to the hem. The mockup has a beige vest and a white shirt under the coat. Paint the vest beige to give a warm accent at the chest.
+4. The nose is small. The mockup has a large round nose. Make the nose larger.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.
