@@ -1,7 +1,7 @@
-lady	Fix 1 is a clip defect: after the fix, view out/lady/anim/walk.png once (run `./forge animate lady --fast --clip walk`) to confirm that no shoe pushes through the skirt.
-lord	
-noble	
-leader	
+lady	Third pass. Make the skirt a round bell: one `sdf.revolve` of a smooth profile (`profile.polygon(..., { smooth: true })`) with a round hem and no corners. Put the purse in the left fist.
+lord	Third pass. Swept-back wavy hair, as in the mockup. Make the hair one smooth hair shell over the skull with three or four broad waves (offset the skull and displace it gently); no thin locks, coils, or spikes.
+noble	Third pass. Make the plume one curved feather: a thin shaft with one smooth tapered vane, no lobes. Show cream breeches below the coat hem. Make the smile symmetric and soft.
+leader	Make the default hair full grey (put that option first, keep the others). Make the hair one smooth hair shell over the skull with three or four broad waves (offset the skull and displace it gently); no thin locks, coils, or spikes.
 masked-agent	
 spy	
 rebel	

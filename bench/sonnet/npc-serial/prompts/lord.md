@@ -3,9 +3,16 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/lord.md. The mockup is docs/npc-mockups/lord_001.jpg.
 
-Build the new asset assets/lord.ts from the brief.
+The source assets/lord.ts exists. First look at out/lord/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 6.5/10 (bar 7.5). Fix these issues, largest first:
+1. The face reads as stern. The brows angle down at the center and the mouth is a small grin. The mockup has raised brows and a wide laugh. Raise the brows and open the mouth.
+2. The hair is a large mop of long curly locks. The mockup hair is short and swept back. Make the hair short and swept back.
+3. The fur trim is only lumps at the cape corners and the shoulders. The mockup has fur along the cape edges. Put a fur band along the cape edges.
+4. The beard is a pointed goatee. The mockup has a short full beard on the jaw.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

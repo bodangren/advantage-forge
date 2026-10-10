@@ -3,9 +3,18 @@
 Work in /home/daniebo/Desktop/advantage-forge.
 The brief is bench/sonnet/briefs/lady.md. The mockup is docs/npc-mockups/lady_001.jpg.
 
-Build the new asset assets/lady.ts from the brief.
+The source assets/lady.ts exists. First look at out/lady/render.png to see the current state.
 
-Budget: about 35 tool calls and 8 images (a new build).
+An independent reviewer rated it 7/10 (bar 7.5). Fix these issues, largest first:
+1. In the walk, a dark green shoe pushes through the front of the skirt (t=0.11, t=0.22, t=0.67). Keep the feet inside the skirt during the walk.
+2. The purse is pink. The mockup purse is green and cream. Change the purse color.
+3. The gown is narrower than in the mockup. The mockup gown is very full. Make the skirt wider at the hem.
+4. The fan is small. The mockup fan is larger. Make the fan larger.
+Do every numbered fix. If a fix seems to conflict with the mockup, do the fix and name the conflict in the report.
+
+An earlier pass stopped in the middle (a network error), so the source may hold part of the fixes. Fix 1 is a clip defect: after the fix, view out/lady/anim/walk.png once (run `./forge animate lady --fast --clip walk`) to confirm that no shoe pushes through the skirt.
+
+Budget: about 25 tool calls and 6 images.
 - Read the brief, the mockup, and the source once. Read a kind file (assets/parts/*-kind.ts) only when an option is unclear, and read only the lines you need.
 - The budget is a limit, not a target: stop when the brief or the fix list is done.
 - For a small fix, render with `--views` or `--focus` instead of all views. Do not view animation strips; `./forge check` covers the clips.

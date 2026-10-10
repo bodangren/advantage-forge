@@ -19,7 +19,9 @@ function build(name, note) {
   const r = reviews[name];
   const glb = mtime(`out/${name}/${name}.glb`);
   const stale = existsSync(at(src)) && (glb === null || glb < mtime(src));
-  const reviewed = r && (!glb || Date.parse(r.reviewedAt) >= glb);
+  // A builder prompt always follows a review, so the latest review applies (an interrupted pass may
+  // leave a build that is newer than the review).
+  const reviewed = Boolean(r);
   const lines = [`# Builder task: ${name}`, '', 'Work in /home/daniebo/Desktop/advantage-forge.',
     `The brief is bench/sonnet/briefs/${name}.md. The mockup is docs/npc-mockups/${name}_001.jpg.`, ''];
   if (!existsSync(at(src))) {

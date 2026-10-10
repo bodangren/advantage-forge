@@ -79,3 +79,10 @@ b59	serial	builder	sonnet	a54e62746b0a297fe	lady	new build; check ok; 52,274 tri
 b60	serial	builder	sonnet	a49b424b095de1c0f	lord	new build; check ok; 56,552 tris; self 7; goblet floats beside the fist	The builder saw the floating goblet but did not fix it within the budget.
 b61	serial	builder	sonnet	a7be9c1c7beaccfee	noble	new build; check ok; 49,720 tris; self 6	The attack clip forced a short cane; the builder named it.
 r17	serial	reviewer	opus	a920417db8fe5a036	prince,princess,lady,lord,noble	prince and princess 7.5 accepted (review 2); lady 7.0 (walk defect), lord 6.5, noble 7.0 to a second pass	A skirt defect showed only in the walk strip, which builders do not view.
+b62	serial	builder	sonnet	a801530eefb8d319a	lady	stopped by a network error (EAI_AGAIN); restarted	A network error stops an agent; the prompt script detects the old build and says to render first.
+b63	serial	builder	sonnet	a3801650cf48a32ff	lady	second pass (restart); wider skirt, walk strip clean, green purse, larger fan; check ok; 53,412 tris	The one-strip allowance confirmed the clip fix.
+b64	serial	builder	sonnet	a2b67c6666df05e74	lord	second pass; raised brows, open laugh, short beard and hair, fur cape edges; check ok; 56,356 tris	Four fixes in one pass.
+b65	serial	builder	sonnet	a469fab550d3902fc	noble	second pass; turned-up hat brim, long plume, plain lapels, crook cane, ruffled jabot; check ok; 52,122 tris	Five fixes; the builder named three conflicts with brief and mockup.
+b66	serial	builder	sonnet	acbeb39f51f907a30	leader	new build; check ok; 44,660 tris; self 6.5	Six renders for a new build.
+b67	serial	builder	sonnet	a591e95fcf7703e6d	masked-agent	new build; check ok; 45,814 tris; self 7	A sphere stencil on the mirrored arm did not paint the right hand; a box stencil did.
+r18	serial	reviewer	opus	a4d7c429fca0f6835	lady,lord,noble,leader,masked-agent	none accepted; lady, lord, noble 7.0 to a third pass; leader 7.0 and masked-agent 6.5 to a second pass	Hair is the most common largest issue (coils, spikes, drips, slabs).

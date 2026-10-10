@@ -11124,65 +11124,68 @@
     "overall": 7.0,
     "group": "NPCs",
     "scores": {
-      "mockup": 4,
+      "mockup": 3.5,
+      "silhouette": 3.5,
+      "proportion": 4,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 3.5,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3
+    },
+    "summary": "The model is the court lady with the red bun, the pearl tiara, the green gown, and the raised fan. The skirt shape is a clear difference from the round bell gown in the mockup.",
+    "strengths": [
+      "The red hair bun with the pearl tiara matches the mockup closely.",
+      "The face reads well: warm brown eyes, blush, and a small closed smile.",
+      "The sage green gown, the cream front panel, and the lace collar match the mockup palette.",
+      "The raised fan with pink flowers reads in every sprite direction."
+    ],
+    "issues": [
+      "The skirt is a stiff pyramid with sharp corners at the hem. Make a round bell skirt with soft folds, as in the mockup.",
+      "The small green purse sits at the skirt hem, away from the hand, and looks dropped. Put the purse in the left fist at hip height.",
+      "The back of the skirt is flat and wide in the back view. Give the back of the skirt a round, full volume.",
+      "The mockup shows a pearl necklace. Add a short pearl necklace above the lace collar.",
+      "In the walk clip, the skirt hides all leg motion and the body only bobs. Add a small sway to the skirt hem."
+    ],
+    "next": "Change the pyramid skirt to a round bell skirt with soft folds.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T08:47:59.000Z"
+  },
+  "lord": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
       "silhouette": 4,
       "proportion": 4,
       "shape": 4,
       "color": 4,
-      "materials": 3.5,
+      "materials": 4,
       "detail": 4,
-      "technical": 2.5,
+      "technical": 4,
       "gameReady": 4,
       "sprite": 4,
-      "motion": 2.5
+      "motion": 3.5
     },
-    "summary": "An elegant court lady with a copper bun, a pearl band, a sage green gown, a lace collar, and a fan. The model is close to the mockup, but a shoe pushes through the skirt in the walk.",
+    "summary": "The model is the cheerful lord with a beard, a navy doublet, a fur-lined cape, and a raised silver goblet. The hair texture and the small ruff are clear differences from the mockup.",
     "strengths": [
-      "The copper hair bun with the pearl band matches the mockup.",
-      "The sage green gown, the cream front panel, and the lace collar read clearly.",
-      "The face is friendly and reads in the front sprite directions."
+      "The open, laughing smile and the curled mustache match the mockup expression.",
+      "The navy doublet with silver buttons and the belt buckle match the mockup.",
+      "The raised goblet gives a clear, proud pose that reads in the sprites.",
+      "The fur lining and the cape cloth read as different materials."
     ],
     "issues": [
-      "In the walk, a dark green shoe pushes through the front of the skirt (t=0.11, t=0.22, t=0.67). Keep the feet inside the skirt during the walk.",
-      "The purse is pink. The mockup purse is green and cream. Change the purse color.",
-      "The gown is narrower than in the mockup. The mockup gown is very full. Make the skirt wider at the hem.",
-      "The fan is small. The mockup fan is larger. Make the fan larger."
+      "The hair is a mass of rope-like coils that read as dreadlocks. Make swept-back wavy hair with one side curl, as in the mockup.",
+      "The white ruff collar is small, and the beard hides it. Make a large white ruff that shows above the doublet.",
+      "The beard is long and covers the upper chest. Make the beard shorter so that the ruff and the top buttons show.",
+      "The cape is dark maroon. Use the brighter red of the mockup and keep the fur at the cape edges."
     ],
-    "next": "Stop the shoe from pushing through the skirt in the walk.",
+    "next": "Change the coiled hair to swept-back wavy hair with one side curl.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T07:54:12.000Z"
-  },
-  "lord": {
-    "overall": 6.5,
-    "group": "NPCs",
-    "scores": {
-      "mockup": 3,
-      "silhouette": 3.5,
-      "proportion": 3.5,
-      "shape": 3.5,
-      "color": 3.5,
-      "materials": 3.5,
-      "detail": 3,
-      "technical": 3.5,
-      "gameReady": 4,
-      "sprite": 3.5,
-      "motion": 3
-    },
-    "summary": "A lord with a mustache, a dark blue doublet, a red cape, and a silver goblet. The model is the same character, but the face, the hair, and the fur trim are clearly different from the mockup.",
-    "strengths": [
-      "The dark blue doublet with silver buttons, the belt, and the white ruff match the mockup.",
-      "The raised silver goblet reads in the views and in the sprites.",
-      "The curled mustache and the pink round nose match the mockup."
-    ],
-    "issues": [
-      "The face reads as stern. The brows angle down at the center and the mouth is a small grin. The mockup has raised brows and a wide laugh. Raise the brows and open the mouth.",
-      "The hair is a large mop of long curly locks. The mockup hair is short and swept back. Make the hair short and swept back.",
-      "The fur trim is only lumps at the cape corners and the shoulders. The mockup has fur along the cape edges. Put a fur band along the cape edges.",
-      "The beard is a pointed goatee. The mockup has a short full beard on the jaw."
-    ],
-    "next": "Change the face to a cheerful laugh with raised brows.",
-    "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T07:54:12.000Z"
+    "reviewedAt": "2026-10-10T08:47:59.000Z"
   },
   "noble": {
     "overall": 7.0,
@@ -11191,30 +11194,97 @@
       "mockup": 3.5,
       "silhouette": 4,
       "proportion": 4,
-      "shape": 3.5,
-      "color": 3.5,
+      "shape": 4,
+      "color": 4,
       "materials": 3.5,
-      "detail": 3.5,
+      "detail": 4,
       "technical": 4,
       "gameReady": 4,
-      "sprite": 3.5,
-      "motion": 3
+      "sprite": 4,
+      "motion": 3.5
     },
-    "summary": "A young noble with a wide teal hat, a white feather, a teal coat, and a cane. The model is the same character, but the hat, the coat, and the cane pose are clearly different from the mockup.",
+    "summary": "The model is the young noble with a teal wide-brim hat, a white plume, a teal coat, a gold waistcoat, and a cane. The plume shape, the face, and the hidden breeches are clear differences from the mockup.",
     "strengths": [
-      "The wide teal hat with a white feather gives a strong silhouette from every view.",
-      "The face is friendly and matches the mockup.",
-      "The brown wavy hair and the white cuffs match the mockup."
+      "The teal hat and coat, the gold waistcoat, and the white jabot match the mockup palette.",
+      "The black cane with the crook handle and the gold bands matches the mockup.",
+      "The wide hat brim gives a strong silhouette in every view and in the sprites.",
+      "The white cuffs give clear accents at the hands."
     ],
     "issues": [
-      "The hat is flat with yellow stripes and reads as a boater. The mockup hat has a turned brim and a dark teal band. Remove the yellow edge and turn up the brim.",
-      "The feather is a white lump. Shape it as a long curved plume.",
-      "The coat stops at the hips and has gold edges. The mockup coat goes to the knees with plain teal lapels. Make the coat longer.",
-      "The cane hangs at the side and has a ball top. The mockup noble leans on a cane with a curved handle. Put a curved handle on the cane and angle it out.",
-      "The jabot is a flat white shape. The mockup jabot is frilly."
+      "The plume is a flat white shape with finger-like lobes, and it reads as a glove in the front view. Make a soft, curved feather that bends back over the brim.",
+      "The coat covers the legs down to the shoes, so the cream breeches of the mockup do not show. Open the coat front below the waist and add cream breeches.",
+      "The heavy dark brows and the side smirk make the face sharper than the soft smile in the mockup. Use thinner brows and a centered smile.",
+      "The hair is short and dark brown. Use the longer auburn waves of the mockup that show under the brim."
     ],
-    "next": "Change the hat to a cavalier hat with a turned brim and a long feather plume.",
+    "next": "Change the glove-like plume to a soft, curved feather.",
     "reviewer": "independent-agent",
-    "reviewedAt": "2026-10-10T07:54:12.000Z"
+    "reviewedAt": "2026-10-10T08:47:59.000Z"
+  },
+  "leader": {
+    "overall": 7.0,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3.5,
+      "silhouette": 4,
+      "proportion": 4,
+      "shape": 4,
+      "color": 3.5,
+      "materials": 3.5,
+      "detail": 4,
+      "technical": 4,
+      "gameReady": 4,
+      "sprite": 4,
+      "motion": 3.5
+    },
+    "summary": "The model is the town leader with a red coat, a green sash, a raised fist, and a tall green banner. The black and white spiky hair is a clear difference from the grey hair in the mockup.",
+    "strengths": [
+      "The red coat with gold buttons and the green sash with gold edges match the mockup.",
+      "The tall banner and the raised fist give a clear rallying pose.",
+      "The warm open grin reads in the front and three-quarter sprites.",
+      "The banner gives a strong silhouette in every view."
+    ],
+    "issues": [
+      "The hair is black with white spiky tufts on top. Make full grey hair with darker grey streaks, as in the mockup.",
+      "A large grey spike points down at the back of the head. Make the back hair a smooth, layered mass.",
+      "Two upper teeth show at the corners of the mouth and can read as small fangs. Make one even row of upper teeth.",
+      "The banner pole is light gold. Use the darker wood brown of the mockup pole."
+    ],
+    "next": "Change the hair to full grey hair with darker grey streaks.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T08:47:59.000Z"
+  },
+  "masked-agent": {
+    "overall": 6.5,
+    "group": "NPCs",
+    "scores": {
+      "mockup": 3,
+      "silhouette": 3.5,
+      "proportion": 3.5,
+      "shape": 3.5,
+      "color": 4,
+      "materials": 3.5,
+      "detail": 3.5,
+      "technical": 3,
+      "gameReady": 4,
+      "sprite": 3.5,
+      "motion": 3.5
+    },
+    "summary": "The model is the hooded agent with a purple hood, a dark coat, a white half mask, and a sealed letter. The mask reads as goggles and shows a skin spot, so the face is the largest difference.",
+    "strengths": [
+      "The deep purple hood and capelet and the dark grey double-breasted coat match the mockup palette.",
+      "The sealed letter with the purple wax seal reads clearly in the hand and in the sprites.",
+      "The friendly smile keeps the character playful and never scary.",
+      "The black fringe under the hood matches the mockup."
+    ],
+    "issues": [
+      "A skin-colored spot shows through the center of the mask above the eyes. Close the mask surface so that it is fully white.",
+      "The mask is a narrow band with round eye holes and gold rims, and it reads as goggles. Make a broader half mask that covers the nose bridge, as in the mockup.",
+      "The hood is a large round dome, and the cloak stops at the knees. Give the hood a soft point and make the cloak long to the ankles.",
+      "The free hand hangs at the side. Raise the free hand to the chin, as in the mockup.",
+      "The back view and the back sprites show only a plain purple shape. Add folds and a hem edge to the back of the cloak."
+    ],
+    "next": "Close the skin spot in the mask and extend the mask over the nose bridge.",
+    "reviewer": "independent-agent",
+    "reviewedAt": "2026-10-10T08:47:59.000Z"
   }
 }

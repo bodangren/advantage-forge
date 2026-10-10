@@ -48,3 +48,5 @@ speed. Improve this method with the lessons of each agent run.
 | b28 | The textured render showed a paint defect (red mouth corners) that the fast render did not, and the no-edit rule blocked the fix. | One more fix and `./forge all` is allowed for a defect that only the textured render shows. |
 | b30, b31 | New builds cost 1.15M (19 calls) and 2.17M (27 calls, five images and an animation strip, context up to 107K). | Keep the new-build budget at 35 calls but say that the budget is a limit, not a target; view no animation strip (the check covers clips). |
 | r17 | The lady shoe goes through the skirt only in the walk; builders do not view strips, and the check does not test cloth. | For a clip defect, the queue note allows one look at that strip after the fix. |
+| b62 | An interrupted pass left a build newer than the review, and `prompt.mjs` then dropped the fix list. | A builder prompt always uses the latest review. |
+| r18 | Hair is the most common largest issue across reviews: rope coils, spikes, drips, slabs, and helmets. | Hair notes ask for one smooth hair shell over the skull with three or four broad waves, and no thin locks or coils. |
