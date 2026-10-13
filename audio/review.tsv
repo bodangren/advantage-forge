@@ -1,0 +1,532 @@
+date	id	take	file	decision	source	source_file	start	end
+2026-10-13 13:56	ui/tap	1	ui/tap-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click1.wav		
+2026-10-13 13:56	ui/tap	2	ui/tap-2.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click2.wav		
+2026-10-13 13:56	ui/tap	3	ui/tap-3.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click3.wav		
+2026-10-13 13:56	ui/select	1	ui/select-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/select_001.ogg		
+2026-10-13 13:56	ui/select	2	ui/select-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/select_002.ogg		
+2026-10-13 13:56	ui/confirm	1	ui/confirm-1.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/confirmation_001.ogg		
+2026-10-13 13:56	ui/confirm	2	ui/confirm-2.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/confirmation_002.ogg		
+2026-10-13 13:56	ui/back	1	ui/back-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/back_002.ogg		
+2026-10-13 13:56	ui/back	2	ui/back-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/back_003.ogg		
+2026-10-13 13:56	ui/deny	1	ui/deny-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/error_001.ogg		
+2026-10-13 13:56	ui/deny	2	ui/deny-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/error_002.ogg		
+2026-10-13 13:56	ui/toggle	1	ui/toggle-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch1.wav		
+2026-10-13 13:56	ui/menu-open	1	ui/menu-open-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/open_001.ogg		
+2026-10-13 13:56	ui/menu-open	2	ui/menu-open-2.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/open_002.ogg		
+2026-10-13 13:56	ui/menu-close	1	ui/menu-close-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/close_001.ogg		
+2026-10-13 13:56	ui/popup	1	ui/popup-1.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/open_003.ogg		
+2026-10-13 13:56	ui/popup	2	ui/popup-2.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/open_004.ogg		
+2026-10-13 13:56	ui/notify	1	ui/notify-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/question_001.ogg		
+2026-10-13 13:56	ui/notify	2	ui/notify-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/question_002.ogg		
+2026-10-13 13:56	ui/page-turn	1	ui/page-turn-1.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.1.ogg		
+2026-10-13 13:56	ui/page-turn	2	ui/page-turn-2.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.2.ogg		
+2026-10-13 13:56	ui/page-turn	3	ui/page-turn-3.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.3.ogg		
+2026-10-13 13:56	ui/tab	1	ui/tab-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click4.wav		
+2026-10-13 13:56	ui/hover	1	ui/hover-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/rollover1.wav		
+2026-10-13 13:56	ui/countdown-tick	1	ui/countdown-tick-1.mp3	approve	tick-and-tock	tick.wav		
+2026-10-13 13:56	ui/countdown-tick	2	ui/countdown-tick-2.mp3	approve	tick-and-tock	tick2.wav		
+2026-10-13 13:56	ui/time-warning	1	ui/time-warning-1.mp3	approve	bell-dingschimes	bell_ding1.wav		
+2026-10-13 13:56	ui/time-up	1	ui/time-up-1.mp3	approve	bell-dingschimes	bell_ding4.wav		
+2026-10-13 13:56	ui/typing-key	1	ui/typing-key-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/mouseclick1.wav		
+2026-10-13 13:56	ui/typing-key	2	ui/typing-key-2.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/mouserelease1.wav		
+2026-10-13 13:56	ui/typing-key	3	ui/typing-key-3.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click5.wav		
+2026-10-13 13:56	ui/typing-key	4	ui/typing-key-4.mp3	reject	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click2.wav		
+2026-10-13 13:56	ui/typing-error	1	ui/typing-error-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/error_006.ogg		
+2026-10-13 13:56	ui/typing-error	2	ui/typing-error-2.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/error_007.ogg		
+2026-10-13 13:56	ui/drag	1	ui/drag-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/pluck_001.ogg		
+2026-10-13 13:56	ui/drag	2	ui/drag-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/pluck_002.ogg		
+2026-10-13 13:56	ui/drop	1	ui/drop-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/drop_001.ogg		
+2026-10-13 13:56	ui/drop	2	ui/drop-2.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/drop_002.ogg		
+2026-10-13 13:56	ui/swap	1	ui/swap-1.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch2.wav		
+2026-10-13 13:56	ui/swap	2	ui/swap-2.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch3.wav		
+2026-10-13 13:56	ui/shuffle	1	ui/shuffle-1.mp3	approve	interface-sounds	kenney_interfaceSounds/Audio/scroll_003.ogg		
+2026-10-13 13:56	answer/correct	1	answer/correct-1.mp3	approve	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-positive.ogg		
+2026-10-13 13:56	answer/correct	2	answer/correct-2.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT01.ogg		
+2026-10-13 13:56	answer/correct	3	answer/correct-3.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT02.ogg		
+2026-10-13 13:56	answer/wrong	1	answer/wrong-1.mp3	approve	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-neutral.ogg		
+2026-10-13 13:56	answer/wrong	2	answer/wrong-2.mp3	approve	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-reverse.ogg		
+2026-10-13 13:56	answer/wrong	3	answer/wrong-3.mp3	reject	interface-sounds	kenney_interfaceSounds/Audio/error_004.ogg		
+2026-10-13 13:56	answer/streak	1	answer/streak-1.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_NES/jingles_NES01.ogg		
+2026-10-13 13:56	answer/streak	2	answer/streak-2.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_NES/jingles_NES02.ogg		
+2026-10-13 13:56	answer/streak	3	answer/streak-3.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_PIZZA/jingles_PIZZA01.ogg		
+2026-10-13 13:56	answer/word-complete	1	answer/word-complete-1.mp3	approve	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-save.ogg		
+2026-10-13 13:56	answer/word-complete	2	answer/word-complete-2.mp3	reject	bell-dingschimes	bell_ding2.wav		
+2026-10-13 13:56	answer/perfect	1	answer/perfect-1.mp3	approve	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-levelup.ogg		
+2026-10-13 13:56	reward/coin	1	reward/coin-1.mp3	approve	12-coin-sound-effects	coins_-_starninjas/coin.1.ogg		
+2026-10-13 13:56	reward/coin	2	reward/coin-2.mp3	approve	12-coin-sound-effects	coins_-_starninjas/coin.5.ogg		
+2026-10-13 13:56	reward/coin	3	reward/coin-3.mp3	approve	12-coin-sound-effects	coins_-_starninjas/coin.11.ogg		
+2026-10-13 13:56	reward/coins-many	1	reward/coins-many-1.mp3	approve	coin-drop	coin_drop.ogg		
+2026-10-13 13:56	reward/coins-many	2	reward/coins-many-2.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/FX02.aif	0	2.11
+2026-10-13 13:56	reward/coin-purse	1	reward/coin-purse-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin2.wav		
+2026-10-13 13:56	reward/coin-purse	2	reward/coin-purse-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin.wav		
+2026-10-13 13:56	reward/gem	1	reward/gem-1.mp3	approve	gem-collect-sfx	gem-gather-stereo.wav		
+2026-10-13 13:56	reward/gem	2	reward/gem-2.mp3	approve	gem-collect-sfx	gem-gather-mono-files/gem-gather-orig.wav		
+2026-10-13 13:56	reward/xp-tick	1	reward/xp-tick-1.mp3	approve	up-3x	up/up/upshort.wav		
+2026-10-13 13:56	reward/xp-fill	1	reward/xp-fill-1.mp3	approve	power-up-sound-effects	power_up_sound_v1_0.ogg		
+2026-10-13 13:56	reward/level-up	1	reward/level-up-1.mp3	approve	up-3x	up/up/upmid.wav		
+2026-10-13 13:56	reward/level-up	2	reward/level-up-2.mp3	approve	up-3x	up/up/uplong.wav		
+2026-10-13 13:56	reward/gp-earned	1	reward/gp-earned-1.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Coin01.aif		
+2026-10-13 13:56	reward/gp-earned	2	reward/gp-earned-2.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/FX01.aif		
+2026-10-13 13:56	reward/purchase	1	reward/purchase-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin3.wav		
+2026-10-13 13:56	reward/purchase	2	reward/purchase-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin.wav		
+2026-10-13 13:56	reward/equip	1	reward/equip-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/chainmail1.wav		
+2026-10-13 13:56	reward/equip	2	reward/equip-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/armor-light.wav		
+2026-10-13 13:56	reward/unlock	1	reward/unlock-1.mp3	approve	achievement	achievement.wav		
+2026-10-13 13:56	reward/unlock	2	reward/unlock-2.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise04.aif		
+2026-10-13 13:56	reward/star	1	reward/star-1.mp3	approve	positive-sound	positive_0.ogg		
+2026-10-13 13:56	reward/star	2	reward/star-2.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise02.aif		
+2026-10-13 13:56	reward/star	3	reward/star-3.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise03.aif		
+2026-10-13 13:56	reward/badge	1	reward/badge-1.mp3	approve	power-up-sound-effects	power_up_sound_v3_0.ogg		
+2026-10-13 13:56	reward/chest-open	1	reward/chest-open-1.mp3	approve	open-chest-sfx	open chest_0.wav		
+2026-10-13 13:56	reward/quest-accept	1	reward/quest-accept-1.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise01.aif		
+2026-10-13 13:56	reward/quest-complete	1	reward/quest-complete-1.mp3	approve	power-up-sound-effects	power_up_sound_v2_0.ogg		
+2026-10-13 13:56	reward/daily	1	reward/daily-1.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise06.aif		
+2026-10-13 13:56	reward/boss-defeated	1	reward/boss-defeated-1.mp3	approve	hyper-ultra-fanfare	sboe.wav		
+2026-10-13 13:56	reward/victory	1	reward/victory-1.mp3	approve	win-sound-effect	Win sound.wav		
+2026-10-13 13:56	reward/victory	2	reward/victory-2.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Upper01.aif	0.08	2.06
+2026-10-13 13:56	reward/victory	3	reward/victory-3.mp3	reject	level-up-power-up-coin-get-13-sounds	SoundPack01/FX02.aif	0.5	2.6
+2026-10-13 13:56	reward/round-lost	1	reward/round-lost-1.mp3	approve	level-up-power-up-coin-get-13-sounds	SoundPack01/Downer01.aif		
+2026-10-13 13:56	battle/swing-light	1	battle/swing-light-1.mp3	approve	swishes-sound-pack	swishes/swishes/swish-1.wav		
+2026-10-13 13:56	battle/swing-light	2	battle/swing-light-2.mp3	approve	swishes-sound-pack	swishes/swishes/swish-2.wav		
+2026-10-13 13:56	battle/swing-light	3	battle/swing-light-3.mp3	approve	swishes-sound-pack	swishes/swishes/swish-10.wav		
+2026-10-13 13:56	battle/swing-light	4	battle/swing-light-4.mp3	approve	swishes-sound-pack	swishes/swishes/swish-11.wav		
+2026-10-13 13:56	battle/swing-heavy	1	battle/swing-heavy-1.mp3	reject	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Axe Swing.wav	0.30	1.15
+2026-10-13 13:56	battle/swing-heavy	2	battle/swing-heavy-2.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Sabre Swing.wav	3.25	3.95
+2026-10-13 13:56	battle/swing-heavy	3	battle/swing-heavy-3.mp3	reject	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Axe Swing.wav	1.35	1.95
+2026-10-13 13:56	battle/hit-blunt	1	battle/hit-blunt-1.mp3	reject	10-impactshield-blocks	impact_-_starninjas/impact.2.ogg		
+2026-10-13 13:56	battle/hit-blunt	2	battle/hit-blunt-2.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.6.ogg		
+2026-10-13 13:56	battle/hit-blunt	3	battle/hit-blunt-3.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.7.ogg		
+2026-10-13 13:56	battle/hit-blunt	4	battle/hit-blunt-4.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.8.ogg		
+2026-10-13 13:56	battle/hit-metal	1	battle/hit-metal-1.mp3	approve	20-sword-sound-effects-attacks-and-clashes	sword_clash_-_starninjas_0/sword_clash.2.ogg		
+2026-10-13 13:56	battle/hit-metal	2	battle/hit-metal-2.mp3	approve	20-sword-sound-effects-attacks-and-clashes	sword_clash_-_starninjas_0/sword_clash.5.ogg		
+2026-10-13 13:56	battle/hit-metal	3	battle/hit-metal-3.mp3	approve	20-sword-sound-effects-attacks-and-clashes	sword_clash_-_starninjas_0/sword_clash.10.ogg		
+2026-10-13 13:56	battle/hit-armor	1	battle/hit-armor-1.mp3	approve	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Axe Blade and Haft.wav	1.56	1.78
+2026-10-13 13:56	battle/hit-armor	2	battle/hit-armor-2.mp3	approve	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Axe Blade and Haft.wav	2.23	2.43
+2026-10-13 13:56	battle/block-shield	1	battle/block-shield-1.mp3	approve	20-sword-sound-effects-attacks-and-clashes	sword_clash_-_starninjas_0/sword_clash.4.ogg		
+2026-10-13 13:56	battle/block-shield	2	battle/block-shield-2.mp3	approve	20-sword-sound-effects-attacks-and-clashes	sword_clash_-_starninjas_0/sword_clash.8.ogg		
+2026-10-13 13:56	battle/block-shield	3	battle/block-shield-3.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.9.ogg		
+2026-10-13 13:56	battle/miss	1	battle/miss-1.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Dagger Swing.wav	1.00	1.78
+2026-10-13 13:56	battle/miss	2	battle/miss-2.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Dagger Swing.wav	2.18	2.81
+2026-10-13 13:56	battle/critical	1	battle/critical-1.mp3	approve	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Sabre Katana Blade on Blade.wav	0.44	0.66
+2026-10-13 13:56	battle/critical	2	battle/critical-2.mp3	approve	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Sabre Katana Blade on Blade.wav	1.80	2.02
+2026-10-13 13:56	battle/club	1	battle/club-1.mp3	approve	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Spear Haft.wav	1.19	1.44
+2026-10-13 13:56	battle/club	2	battle/club-2.mp3	reject	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Dagger Blade.wav	0.70	0.92
+2026-10-13 13:56	battle/unsheathe	1	battle/unsheathe-1.mp3	approve	fantasy-weapons-and-apparel-sfx-library	weapons-apparel/sfx/knife-unsheathe-01.wav	0	1.2
+2026-10-13 13:56	battle/unsheathe	2	battle/unsheathe-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/battle/sword-unsheathe2.wav	0.00	0.37
+2026-10-13 13:56	battle/unsheathe	3	battle/unsheathe-3.mp3	approve	fantasy-weapons-and-apparel-sfx-library	weapons-apparel/sfx/knife-unsheathe-01.wav	0.15	1.45
+2026-10-13 13:56	battle/bow-draw	1	battle/bow-draw-1.mp3	reject	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/English Longbow Draw.wav	0.01	1.5
+2026-10-13 13:56	battle/bow-draw	2	battle/bow-draw-2.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Scythian Recurve Draw.wav	0.0	1.5
+2026-10-13 13:56	battle/bow-release	1	battle/bow-release-1.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/English Longbow Shoot.wav	1.10	1.65
+2026-10-13 13:56	battle/bow-release	2	battle/bow-release-2.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Scythian Recurve Shoot.wav	0.20	0.36
+2026-10-13 13:56	battle/bow-release	3	battle/bow-release-3.mp3	approve	battle-sound-effects	battle_sound_effects_0/battle_sound_effects/Bow.wav	0.10	0.32
+2026-10-13 13:56	battle/arrow-fly	1	battle/arrow-fly-1.mp3	approve	fantasy-weapons-and-apparel-sfx-library	weapons-apparel/sfx/arrow-feathers-01.wav		
+2026-10-13 13:56	battle/arrow-fly	2	battle/arrow-fly-2.mp3	approve	fantasy-weapons-and-apparel-sfx-library	weapons-apparel/sfx/arrow-feathers-02.wav		
+2026-10-13 13:56	battle/crossbow	1	battle/crossbow-1.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Shoot.wav	0.30	0.47
+2026-10-13 13:56	battle/crossbow	2	battle/crossbow-2.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Lever Trigger.wav	0.13	1.5
+2026-10-13 13:56	battle/throw	1	battle/throw-1.mp3	approve	various-sound-effects-0	snd_throw1.wav		
+2026-10-13 13:56	battle/explosion-small	1	battle/explosion-small-1.mp3	approve	explosions-4	explosion2.ogg		
+2026-10-13 13:56	battle/explosion-small	2	battle/explosion-small-2.mp3	approve	explosions-4	explosions4.ogg		
+2026-10-13 13:56	battle/explosion-big	1	battle/explosion-big-1.mp3	approve	explosions-4	explosion1_0.ogg	0	3.2
+2026-10-13 13:56	battle/explosion-big	2	battle/explosion-big-2.mp3	approve	explosions-4	explosion3.ogg	0	1.6
+2026-10-13 13:56	battle/enemy-appear	1	battle/enemy-appear-1.mp3	approve	magic-spell-sfx	magical_2.ogg		
+2026-10-13 13:56	battle/enemy-appear	2	battle/enemy-appear-2.mp3	reject	magic-spell-sfx	magical_1_0.ogg	0	1.2
+2026-10-13 13:56	battle/enemy-vanish	1	battle/enemy-vanish-1.mp3	approve	teleport-spell	teleport.wav		
+2026-10-13 13:56	battle/enemy-vanish	2	battle/enemy-vanish-2.mp3	reject	magic-spell-sfx	magical_5.ogg		
+2026-10-13 13:56	battle/enemy-vanish	3	battle/enemy-vanish-3.mp3	approve	various-sound-effects-0	pop.wav		
+2026-10-13 13:56	battle/hero-hurt	1	battle/hero-hurt-1.mp3	approve	metal-impact-sounds	thud2.wav		
+2026-10-13 13:56	battle/hero-hurt	2	battle/hero-hurt-2.mp3	approve	metal-impact-sounds	thud3.wav		
+2026-10-13 13:56	battle/hero-hurt	3	battle/hero-hurt-3.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.10.ogg		
+2026-10-13 13:56	battle/hero-knocked-out	1	battle/hero-knocked-out-1.mp3	approve	metal-impact-sounds	thud2.wav	0	0.6
+2026-10-13 13:56	battle/start	1	battle/start-1.mp3	approve	classic-fanfare-lick	fanfare_3.ogg		
+2026-10-13 13:56	battle/start	2	battle/start-2.mp3	approve	their-coming-generic-horn-sound	theircoming_0.ogg	0	4
+2026-10-13 13:56	battle/turn	1	battle/turn-1.mp3	approve	bell-dingschimes	bell_ding2.wav	0	0.9
+2026-10-13 13:56	battle/shield-up	1	battle/shield-up-1.mp3	approve	metal-impact-sounds	clink1_0.wav		
+2026-10-13 13:56	battle/shield-up	2	battle/shield-up-2.mp3	approve	metal-impact-sounds	clink2.wav		
+2026-10-13 13:56	battle/tower-build	1	battle/tower-build-1.mp3	approve	blacksmiths-hammer	blacksmithhammer.wav		
+2026-10-13 13:56	battle/tower-build	2	battle/tower-build-2.mp3	approve	blacksmiths-hammer	blacksmithhammer_0.mp3		
+2026-10-13 13:56	battle/war-horn	1	battle/war-horn-1.mp3	approve	their-coming-generic-horn-sound	theircoming3_0.ogg	0	4
+2026-10-13 13:56	battle/war-drum	1	battle/war-drum-1.mp3	approve	horde-war-drums-loop	horde_war_drums_by_william_hector.wav	0	4
+2026-10-13 13:56	battle/crash	1	battle/crash-1.mp3	approve	crash-collision	qubodup-crash.ogg		
+2026-10-13 13:56	battle/crash	2	battle/crash-2.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.5.ogg		
+2026-10-13 13:56	magic/charge	1	magic/charge-1.mp3	approve	magic-spell-sfx	magical_4.ogg		
+2026-10-13 13:56	magic/charge	2	magic/charge-2.mp3	approve	magic-spell-sfx	magical_5.ogg		
+2026-10-13 13:56	magic/cast	1	magic/cast-1.mp3	approve	magic-spell-sfx	magical_2.ogg		
+2026-10-13 13:56	magic/cast	2	magic/cast-2.mp3	approve	magic-spell-sfx	magical_1_0.ogg	0	1.45
+2026-10-13 13:56	magic/cast	3	magic/cast-3.mp3	approve	magic-spell-sfx	magical_3.ogg	0	1.45
+2026-10-13 13:56	magic/fire-cast	1	magic/fire-cast-1.mp3	approve	fireball-1	105016__julien-matthey__jm-fx-fireball-01.wav	0	1.5
+2026-10-13 13:56	magic/fire-impact	1	magic/fire-impact-1.mp3	approve	explosions-4	explosion3.ogg		
+2026-10-13 13:56	magic/ice-cast	1	magic/ice-cast-1.mp3	approve	ice-spells	icespells/coldsnap.wav	0	1.16
+2026-10-13 13:56	magic/ice-cast	2	magic/ice-cast-2.mp3	approve	ice-spells	icespells/ice.wav	0	0.72
+2026-10-13 13:56	magic/ice-shatter	1	magic/ice-shatter-1.mp3	approve	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta.ogg	0	0.47
+2026-10-13 13:56	magic/ice-shatter	2	magic/ice-shatter-2.mp3	approve	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta33.ogg	0.01	1.10
+2026-10-13 13:56	magic/lightning	1	magic/lightning-1.mp3	approve	spell-sounds	electricspell.ogg	16.27	17.72
+2026-10-13 13:56	magic/lightning	2	magic/lightning-2.mp3	approve	spell-sounds	electricspell.ogg	11.30	12.77
+2026-10-13 13:56	magic/lightning	3	magic/lightning-3.mp3	approve	spell-sounds	electricspell2.ogg	3.24	4.70
+2026-10-13 13:56	magic/heal	1	magic/heal-1.mp3	approve	cure-magic	curemagic/Cure1.wav		
+2026-10-13 13:56	magic/heal	2	magic/heal-2.mp3	approve	cure-magic	curemagic/Cure2.wav		
+2026-10-13 13:56	magic/heal	3	magic/heal-3.mp3	approve	cure-magic	curemagic/Cure3.wav		
+2026-10-13 13:56	magic/blessing	1	magic/blessing-1.mp3	approve	spell-sounds	healing.ogg	14.41	15.67
+2026-10-13 13:56	magic/blessing	2	magic/blessing-2.mp3	approve	spell-sounds	healing.ogg	19.92	21.53
+2026-10-13 13:56	magic/buff	1	magic/buff-1.mp3	approve	cure-magic	curemagic/Cure5.wav		
+2026-10-13 13:56	magic/buff	2	magic/buff-2.mp3	approve	magic-words-healing-sound-effect	health_restore.wav	0	1.45
+2026-10-13 13:56	magic/curse	1	magic/curse-1.mp3	approve	3-dark-magic-spells	dark_magic/dark_magic/fout-01.flac		
+2026-10-13 13:56	magic/curse	2	magic/curse-2.mp3	approve	3-dark-magic-spells	dark_magic/dark_magic/fout-03.flac	0	2.46
+2026-10-13 13:56	magic/poison	1	magic/poison-1.mp3	approve	bubble-sound-effects	bubbles-single1.wav		
+2026-10-13 13:56	magic/wind	1	magic/wind-1.mp3	approve	wind-whoosh-loop	wind woosh loop.ogg	0	1.5
+2026-10-13 13:56	magic/earth	1	magic/earth-1.mp3	approve	earth-element-magic-spell	Earth Element Magic Spell_3.ogg		
+2026-10-13 13:56	magic/water	1	magic/water-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble2.wav		
+2026-10-13 13:56	magic/water	2	magic/water-2.mp3	approve	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-01.flac		
+2026-10-13 13:56	magic/arcane	1	magic/arcane-1.mp3	approve	magic-spell-sfx	magical_6_0.ogg		
+2026-10-13 13:56	magic/arcane	2	magic/arcane-2.mp3	reject	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/battle/magic1.wav		
+2026-10-13 13:56	magic/arcane	3	magic/arcane-3.mp3	approve	magic-spell-sfx	magical_7_0.ogg	0	1.45
+2026-10-13 13:56	magic/barrier	1	magic/barrier-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/battle/spell.wav		
+2026-10-13 13:56	magic/barrier	2	magic/barrier-2.mp3	approve	magic-spell-sfx	magical_1_0.ogg		
+2026-10-13 13:56	magic/teleport	1	magic/teleport-1.mp3	approve	teleport-spell	teleport.wav	0.07	1.37
+2026-10-13 13:56	magic/teleport	2	magic/teleport-2.mp3	approve	spell-sounds	teleport.ogg	2.68	4.34
+2026-10-13 13:56	magic/sparkle	1	magic/sparkle-1.mp3	approve	spell-sounds	teleport.ogg	0.69	1.88
+2026-10-13 13:56	magic/sparkle	2	magic/sparkle-2.mp3	approve	cure-magic	curemagic/Cure7.wav		
+2026-10-13 13:56	magic/sparkle	3	magic/sparkle-3.mp3	approve	magic-words-healing-sound-effect	magic_words.wav	0	1.45
+2026-10-13 13:56	magic/light	1	magic/light-1.mp3	approve	cure-magic	curemagic/Cure6.wav		
+2026-10-13 13:56	magic/light	2	magic/light-2.mp3	approve	cure-magic	curemagic/Cure8.wav		
+2026-10-13 13:56	magic/dispel	1	magic/dispel-1.mp3	approve	cure-magic	curemagic/Cure4.wav		
+2026-10-13 13:56	magic/dark-bolt	1	magic/dark-bolt-1.mp3	approve	3-dark-magic-spells	dark_magic/dark_magic/fout-02.flac	0	1.00
+2026-10-13 13:56	magic/dark-bolt	2	magic/dark-bolt-2.mp3	approve	3-dark-magic-spells	dark_magic/dark_magic/fout-02.flac		
+2026-10-13 13:56	magic/potion-brew	1	magic/potion-brew-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble.wav		
+2026-10-13 13:56	magic/potion-brew	2	magic/potion-brew-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble3.wav		
+2026-10-13 13:56	hero/footstep-stone	1	hero/footstep-stone-1.mp3	approve	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL1.flac		
+2026-10-13 13:56	hero/footstep-stone	2	hero/footstep-stone-2.mp3	approve	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR2.flac		
+2026-10-13 13:56	hero/footstep-wood	1	hero/footstep-wood-1.mp3	approve	steps-in-wood-floor	steps in wood floor.wav	0.01	0.50
+2026-10-13 13:56	hero/footstep-snow	1	hero/footstep-snow-1.mp3	approve	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-01.flac		
+2026-10-13 13:56	hero/footstep-snow	2	hero/footstep-snow-2.mp3	approve	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-03.flac		
+2026-10-13 13:56	hero/footstep-armored	1	hero/footstep-armored-1.mp3	approve	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal.ogg		
+2026-10-13 13:56	hero/footstep-armored	2	hero/footstep-armored-2.mp3	approve	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal (3).ogg		
+2026-10-13 13:56	enemy/goblin-chatter	1	enemy/goblin-chatter-1.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-1.wav		
+2026-10-13 13:56	enemy/goblin-chatter	2	enemy/goblin-chatter-2.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-8.wav		
+2026-10-13 13:56	enemy/goblin-chatter	3	enemy/goblin-chatter-3.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-10.wav		
+2026-10-13 13:56	enemy/goblin-attack	1	enemy/goblin-attack-1.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-3.wav		
+2026-10-13 13:56	enemy/goblin-attack	2	enemy/goblin-attack-2.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-4.wav		
+2026-10-13 13:56	enemy/goblin-hurt	1	enemy/goblin-hurt-1.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-5.wav		
+2026-10-13 13:56	enemy/goblin-hurt	2	enemy/goblin-hurt-2.mp3	approve	goblins-sound-pack	goblins_0/goblins/goblin-6.wav		
+2026-10-13 13:56	enemy/evil-laugh	1	enemy/evil-laugh-1.mp3	approve	sinister-laugh	evil laugh3.mp3		
+2026-10-13 13:56	enemy/evil-laugh	2	enemy/evil-laugh-2.mp3	approve	evil-laughter	qubodupevillaughter.flac	0	3.00
+2026-10-13 13:56	enemy/evil-laugh	3	enemy/evil-laugh-3.mp3	approve	sinister-laugh	evil_laugh3-filtered.ogg		
+2026-10-13 13:56	enemy/skeleton-rattle	1	enemy/skeleton-rattle-1.mp3	approve	skeletonsfxshortpack	skeleton1sfx_0.wav	0.14	1.5
+2026-10-13 13:56	enemy/skeleton-collapse	1	enemy/skeleton-collapse-1.mp3	approve	skeletonsfxshortpack	skeleton2sfx_0.wav	0.14	1.74
+2026-10-13 13:56	enemy/zombie-groan	1	enemy/zombie-groan-1.mp3	approve	zombies-sound-pack	zombies/zombies/zombie-1.wav		
+2026-10-13 13:56	enemy/zombie-groan	2	enemy/zombie-groan-2.mp3	approve	zombies-sound-pack	zombies/zombies/zombie-10.wav		
+2026-10-13 13:56	enemy/zombie-groan	3	enemy/zombie-groan-3.mp3	approve	zombies-sound-pack	zombies/zombies/zombie-12.wav		
+2026-10-13 13:56	enemy/ghost-wail	1	enemy/ghost-wail-1.mp3	approve	ghost	ghost.wav	0.06	2.50
+2026-10-13 13:56	enemy/ghost-whisper	1	enemy/ghost-whisper-1.mp3	approve	ghost-breath	ghostbreath.flac	0.05	3.30
+2026-10-13 13:56	enemy/construct-step	1	enemy/construct-step-1.mp3	approve	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL3.flac		
+2026-10-13 13:56	enemy/stone-grind	1	enemy/stone-grind-1.mp3	approve	stone-rock-or-wood-moved-sound	stone_rock_or_wood_moved.mp3	0.02	0.44
+2026-10-13 13:56	enemy/metal-clank	1	enemy/metal-clank-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalPot1.ogg	0.09	1.03
+2026-10-13 13:56	enemy/construct-break	1	enemy/construct-break-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalPot2.ogg		
+2026-10-13 13:56	monster/slime-squish	1	monster/slime-squish-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime2.wav	0.01	0.27
+2026-10-13 13:56	monster/slime-splat	1	monster/slime-splat-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime6.wav	0.00	0.32
+2026-10-13 13:56	monster/beast-growl	1	monster/beast-growl-1.mp3	approve	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Beast Growl 2.wav		
+2026-10-13 13:56	monster/beast-roar	1	monster/beast-roar-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_03.ogg	0.03	0.39
+2026-10-13 13:56	monster/wing-flap	1	monster/wing-flap-1.mp3	approve	dragon-flap-0	dragonflap.wav	0.0	1.45
+2026-10-13 13:56	monster/dragon-roar	1	monster/dragon-roar-1.mp3	approve	cc0-deep-monster-roar	monster_roar.wav	0.12	5.76
+2026-10-13 13:56	monster/dragon-breath	1	monster/dragon-breath-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/breath.ogg	0.02	0.42
+2026-10-13 13:56	ambience/forest-day	1	ambience/forest-day-1.mp3	approve	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 3.wav		
+2026-10-13 13:56	ambience/forest-day	2	ambience/forest-day-2.mp3	approve	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 4.wav		
+2026-10-13 13:56	ambience/meadow	1	ambience/meadow-1.mp3	approve	amb-outside-1	amb_outdoor1_loop.wav		
+2026-10-13 13:56	ambience/village	1	ambience/village-1.mp3	approve	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 1.wav		
+2026-10-13 13:56	ambience/tavern	1	ambience/tavern-1.mp3	approve	crowd-shoutingspeaking-ambience	crowd_shouting_0.ogg		
+2026-10-13 13:56	ambience/cave	1	ambience/cave-1.mp3	approve	dripping-water-loop	atmosbasement.mp3_.flac		
+2026-10-13 13:56	ambience/dungeon	1	ambience/dungeon-1.mp3	approve	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	10	50
+2026-10-13 13:56	ambience/rain	1	ambience/rain-1.mp3	approve	amb-rain-loop-1	amb_rain_loop_1.wav	0	40
+2026-10-13 13:56	ambience/storm	1	ambience/storm-1.mp3	approve	rain-long-thunder	rain-thunder.ogg	0	44
+2026-10-13 13:56	ambience/wind	1	ambience/wind-1.mp3	approve	mild-wind-background-noise	wind background noise 2.wav	5	40
+2026-10-13 13:56	ambience/wind	2	ambience/wind-2.mp3	approve	wind1	wind1.wav	0	40
+2026-10-13 13:56	ambience/desert	1	ambience/desert-1.mp3	approve	wind1	wind3.wav	0	40
+2026-10-13 13:56	ambience/swamp	1	ambience/swamp-1.mp3	approve	swamp-environment-audio	swamp.ogg	0	40
+2026-10-13 13:56	ambience/campfire	1	ambience/campfire-1.mp3	approve	fireplace-sound-loop	fire.wav	0	29
+2026-10-13 13:56	ambience/sky	1	ambience/sky-1.mp3	approve	wind1	wind2.wav	0	40
+2026-10-13 13:56	ambience/watermill	1	ambience/watermill-1.mp3	reject	water-drops	water drops.mp3	0	40
+2026-10-13 13:56	world/door-open	1	world/door-open-1.mp3	approve	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen01.ogg		
+2026-10-13 13:56	world/door-open	2	world/door-open-2.mp3	approve	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen02.ogg		
+2026-10-13 13:56	world/door-close	1	world/door-close-1.mp3	approve	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose01.ogg		
+2026-10-13 13:56	world/door-close	2	world/door-close-2.mp3	approve	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose02.ogg		
+2026-10-13 13:56	world/door-locked	1	world/door-locked-1.mp3	approve	door-lock-sounds	DoorLockSounds/DoorLockSounds/LockedDoorHandleJiggle.ogg		
+2026-10-13 13:56	world/gate-open	1	world/gate-open-1.mp3	approve	creaky-door-hinge-spooky	creaky_door_hinge.wav	0	1.4
+2026-10-13 13:56	world/gate-open	2	world/gate-open-2.mp3	approve	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorOpen.ogg		1.4
+2026-10-13 13:56	world/chest-open	1	world/chest-open-1.mp3	approve	open-chest-sfx	open chest_0.wav	0	1.45
+2026-10-13 13:56	world/unlock	1	world/unlock-1.mp3	reject	trying-to-unlock-sound	trying_to_unlock.mp3	0.02	0.64
+2026-10-13 13:56	world/unlock	2	world/unlock-2.mp3	approve	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorLock.ogg		
+2026-10-13 13:56	world/lockpick	1	world/lockpick-1.mp3	approve	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.ogg		
+2026-10-13 13:56	world/lever	1	world/lever-1.mp3	approve	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.10.ogg		
+2026-10-13 13:56	world/switch	1	world/switch-1.mp3	approve	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.2.ogg		
+2026-10-13 13:56	world/switch	2	world/switch-2.mp3	approve	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch16.wav		
+2026-10-13 13:56	world/trap-spikes	1	world/trap-spikes-1.mp3	approve	metal-impact-sounds	clink3.wav		
+2026-10-13 13:56	world/trap-snap	1	world/trap-snap-1.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Lever Trigger.wav		1.0
+2026-10-13 13:56	world/pit-fall	1	world/pit-fall-1.mp3	approve	various-sound-effects-0	fall_0.wav		
+2026-10-13 13:56	world/stone-move	1	world/stone-move-1.mp3	approve	stone-rock-or-wood-moved-sound	stone_rock_or_wood_moved.mp3		
+2026-10-13 13:56	world/rubble	1	world/rubble-1.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood21.mp3.flac	0.03	3.5
+2026-10-13 13:56	world/rubble	2	world/rubble-2.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood23.mp3.flac	0.03	2.4
+2026-10-13 13:56	world/crate-break	1	world/crate-break-1.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood16.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/crate-break	2	world/crate-break-2.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood17.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/crate-break	3	world/crate-break-3.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood18.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/pot-break	1	world/pot-break-1.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood22.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/pot-break	2	world/pot-break-2.mp3	approve	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood19.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/pot-break	3	world/pot-break-3.mp3	reject	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood20.mp3.flac	0.03	1.4
+2026-10-13 13:56	world/glass-break	1	world/glass-break-1.mp3	approve	glass-break	glass_breaking.wav		
+2026-10-13 13:56	world/glass-break	2	world/glass-break-2.mp3	approve	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta.ogg	0.03	1.4
+2026-10-13 13:56	world/bell	1	world/bell-1.mp3	approve	bell-dingschimes	bell_ding3.wav		
+2026-10-13 13:56	world/bell	2	world/bell-2.mp3	approve	pleasing-bell-sound-effect	pleasing-bell.wav		
+2026-10-13 13:56	world/torch-ignite	1	world/torch-ignite-1.mp3	approve	flare-ignition	ignition.flac		
+2026-10-13 13:56	world/book-open	1	world/book-open-1.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.5.ogg		
+2026-10-13 13:56	world/book-open	2	world/book-open-2.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.6.ogg		
+2026-10-13 13:56	world/scroll	1	world/scroll-1.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.4.ogg		
+2026-10-13 13:56	world/scroll	2	world/scroll-2.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.7.ogg		
+2026-10-13 13:56	item/drop	1	item/drop-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/dropLeather.ogg		
+2026-10-13 13:56	item/potion-drink	1	item/potion-drink-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bottle.wav		
+2026-10-13 13:56	music/title	1	music/title-1.mp3	approve	laugos-journey	laugos_journey.mp3		
+2026-10-13 13:56	music/town	1	music/town-1.mp3	approve	2-whimsical-rpg-themes	RPG town.flac		
+2026-10-13 13:56	music/explore	1	music/explore-1.mp3	approve	2-whimsical-rpg-themes	RPG Overworld.flac		
+2026-10-13 13:56	music/dungeon	1	music/dungeon-1.mp3	approve	jrpg-end-dungeon	end_dungeon_0.mp3	0	120
+2026-10-13 13:56	music/battle	1	music/battle-1.mp3	approve	battle-theme-a	battleThemeA.mp3		
+2026-10-13 13:56	music/boss	1	music/boss-1.mp3	approve	heavy-boss-battle-1	heavy_boss_battle_1_bpm200.mp3		
+2026-10-13 13:56	music/calm	1	music/calm-1.mp3	approve	calming-rpg-town-theme	CalmTownTheme_0.mp3		
+2026-10-13	ambience/cave	2	ambience/cave-2.mp3	drop	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	5	45
+2026-10-13	ambience/snow	1	ambience/snow-1.mp3	drop	mild-wind-background-noise	wind background noise 2.wav		
+2026-10-13	vehicle/sail	1	vehicle/sail-1.mp3	drop	mild-wind-background-noise	wind background noise 2.wav	0	30
+2026-10-13	ambience/castle	1	ambience/castle-1.mp3	drop	mild-wind-background-noise	wind background noise 2.wav	0	44.51
+2026-10-13	vehicle/airship	1	vehicle/airship-1.mp3	drop	wind1	wind1.wav	0	20
+2026-10-13	ambience/windmill	1	ambience/windmill-1.mp3	drop	wind1	wind1.wav	0	45
+2026-10-13	vehicle/carpet	1	vehicle/carpet-1.mp3	drop	wind1	wind2.wav	0	20
+2026-10-13	ambience/fireplace	1	ambience/fireplace-1.mp3	drop	fireplace-sound-loop	fire.wav		
+2026-10-13	ambience/smithy	1	ambience/smithy-1.mp3	drop	fireplace-sound-loop	fire.wav	0	29.26
+2026-10-13	answer/word-complete	3	answer/word-complete-3.mp3	drop	bell-dingschimes	bell_ding2.wav	0.07	0.97
+2026-10-13	world/crystal-touch	1	world/crystal-touch-1.mp3	drop	bell-dingschimes	bell_ding2.wav	0.07	1.21
+2026-10-13	item/craft-success	2	item/craft-success-2.mp3	drop	blacksmiths-hammer	blacksmithhammer.wav	0	0.44
+2026-10-13	npc/anvil	1	npc/anvil-1.mp3	drop	blacksmiths-hammer	blacksmithhammer.wav	0.00	0.44
+2026-10-13	npc/mug-clink	1	npc/mug-clink-1.mp3	drop	metal-impact-sounds	clink2.wav	0.01	0.17
+2026-10-13	battle/bow-draw	3	battle/bow-draw-3.mp3	drop	battle-sound-effects	battle_sound_effects_0/battle_sound_effects/Bow.wav		
+2026-10-13	battle/war-drum	2	battle/war-drum-2.mp3	drop	horde-war-drums-loop	horde_war_drums_by_william_hector.wav	0.00	0.60
+2026-10-13	npc/hand-drum	1	npc/hand-drum-1.mp3	drop	horde-war-drums-loop	horde_war_drums_by_william_hector.wav	0.00	1.50
+2026-10-13	battle/war-horn	2	battle/war-horn-2.mp3	drop	their-coming-generic-horn-sound	theircoming3_0.ogg	0	3.9
+2026-10-13	battle/hit-blunt	5	battle/hit-blunt-5.mp3	drop	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Spear Haft.wav	1.21	1.42
+2026-10-13	battle/club	3	battle/club-3.mp3	drop	medieval-sound-effects-weapon-impacts	medieval_sfx_weapon_on_weapon_1_of_2/Mace Axe Blade and Haft.wav	1.58	1.75
+2026-10-13	battle/enemy-vanish	4	battle/enemy-vanish-4.mp3	drop	cugzilia-ii-prototype-sound-effects	cugzilia_ii_prototype_sound_effects/bubbly poof.wav	0	1.45
+2026-10-13	monster/reptile-hiss	1	monster/reptile-hiss-1.mp3	drop	alien-sounds-0	alien_hiss.mp3		
+2026-10-13	monster/shadow-whoosh	1	monster/shadow-whoosh-1.mp3	drop	air-whoosh	whoosh2_0.wav	0.3	3.8
+2026-10-13	world/water-splash	1	world/water-splash-1.mp3	drop	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-01.flac	0.01	1.03
+2026-10-13	hero/footstep-water	1	hero/footstep-water-1.mp3	drop	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-01.flac	0.01	0.60
+2026-10-13	hero/cheer	1	hero/cheer-1.mp3	drop	cheers-0	cheers_1.ogg	0	1.4
+2026-10-13	world/chains	1	world/chains-1.mp3	drop	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/chainmail2.wav	0.01	0.40
+2026-10-13	item/liquid-pour	1	item/liquid-pour-1.mp3	drop	teapot-sounds	pour_tea.wav	2.4	3.8
+2026-10-13	item/craft-success	1	item/craft-success-1.mp3	drop	win-sound-effect	Win sound.wav	0	1.82
+2026-10-13	monster/frost-breath	1	monster/frost-breath-1.mp3	drop	ice-spells	icespells/ice.wav	0	0.67
+2026-10-13	monster/ice-crackle	1	monster/ice-crackle-1.mp3	drop	ice-spells	icespells/ice.wav		
+2026-10-13	world/bubbles	1	world/bubbles-1.mp3	drop	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble3.wav	0.04	0.60
+2026-10-13	magic/fizzle	1	magic/fizzle-1.mp3	drop	3-dark-magic-spells	dark_magic/dark_magic/fout-03.flac	0.02	1.45
+2026-10-13	magic/arcane	4	magic/arcane-4.mp3	drop	magic-spell-sfx	magical_1_0.ogg	0.02	1.40
+2026-10-13	magic/rune	1	magic/rune-1.mp3	drop	magic-spell-sfx	magical_1_0.ogg	0.02	1.45
+2026-10-13	world/portal-open	1	world/portal-open-1.mp3	drop	magic-spell-sfx	magical_3.ogg		
+2026-10-13	monster/fire-roar	1	monster/fire-roar-1.mp3	drop	fireball-1	105016__julien-matthey__jm-fx-fireball-01.wav		
+2026-10-13	monster/slime-splat	2	monster/slime-splat-2.mp3	drop	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime6.wav		
+2026-10-13	monster/wing-flap	3	monster/wing-flap-3.mp3	drop	dragon-flap-0	dragonflap.wav	0	1.4
+2026-10-13	wildlife/bird-flutter	1	wildlife/bird-flutter-1.mp3	drop	large-wings-flap	wings_flap_large/wings_flap_large.ogg	0.00	0.52
+2026-10-13	wildlife/bird-flutter	2	wildlife/bird-flutter-2.mp3	drop	large-wings-flap	wings_flap_large/wings_flap_large.ogg	1.05	1.57
+2026-10-13	music/dungeon	2	music/dungeon-2.mp3	drop	jrpg-end-dungeon	end_dungeon_0.mp3		
+2026-10-13	npc/mug-clink	2	npc/mug-clink-2.mp3	drop	metal-impact-sounds	clink3.wav	0.01	0.19
+2026-10-13	npc/coins-count	1	npc/coins-count-1.mp3	drop	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin2.wav	0.00	0.84
+2026-10-13	npc/shrine-bell	1	npc/shrine-bell-1.mp3	drop	bell-dingschimes	bell_ding4.wav	0.02	1.27
+2026-10-13	npc/axe-chop	1	npc/axe-chop-1.mp3	drop	tree-chop-fall-thud	chop-tree-fall.ogg	0.02	0.9
+2026-10-13	npc/hand-bell	1	npc/hand-bell-1.mp3	drop	bell-dingschimes	bell_ding3.wav	0.05	1.30
+2026-10-13	world/notice-board	1	world/notice-board-1.mp3	drop	10-book-page-flips	book_flips_-_starninjas/book_flip.1.ogg	0.25	0.60
+2026-10-13	ui/confirm	4	ui/confirm-4.mp3	drop	bell-dingschimes	bell_ding1.wav	0.03	0.82
+2026-10-13	wildlife/fish-splash	1	wildlife/fish-splash-1.mp3	drop	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-04.flac		
+2026-10-13 22:00	ui/confirm	3	ui/confirm-3.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/wood-small.wav		
+2026-10-13 22:00	ui/menu-open	3	ui/menu-open-3.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/bookOpen.ogg		
+2026-10-13 22:00	ui/popup	3	ui/popup-3.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.8.ogg		
+2026-10-13 22:00	ui/popup	4	ui/popup-4.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.9.ogg		
+2026-10-13 22:00	ui/typing-key	5	ui/typing-key-5.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/metal-small2.wav		
+2026-10-13 22:00	ui/typing-error	3	ui/typing-error-3.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalLatch.ogg		
+2026-10-13 22:00	answer/wrong	4	answer/wrong-4.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/cloth-heavy.wav		
+2026-10-13 22:00	reward/gem	3	reward/gem-3.mp3	approve	gem-collect-sfx	gem-gather-stereo-reverb.wav		
+2026-10-13 22:00	reward/xp-tick	2	reward/xp-tick-2.mp3	approve	12-coin-sound-effects	coins_-_starninjas/coin.10.ogg		
+2026-10-13 22:00	reward/guild-hit	1	reward/guild-hit-1.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.1.ogg		
+2026-10-13 22:00	reward/guild-hit	2	reward/guild-hit-2.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.3.ogg		
+2026-10-13 22:00	reward/guild-hit	3	reward/guild-hit-3.mp3	approve	10-impactshield-blocks	impact_-_starninjas/impact.4.ogg		
+2026-10-13 22:00	reward/victory	4	reward/victory-4.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT05.ogg	0.00	0.59
+2026-10-13 22:00	reward/round-lost	2	reward/round-lost-2.mp3	approve	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_SAX/jingles_SAX03.ogg		
+2026-10-13 22:00	battle/swing-heavy	4	battle/swing-heavy-4.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Axe Swing.wav	0.37	1.08
+2026-10-13 22:00	battle/punch	1	battle/punch-1.mp3	approve	37-hitspunches	independent_nu_ljudbank-hits_and_punches/hits/hit01.mp3.flac		
+2026-10-13 22:00	battle/spear-thrust	1	battle/spear-thrust-1.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_2_of_2/Spear Swing.wav	0	1.5
+2026-10-13 22:00	battle/sheathe	1	battle/sheathe-1.mp3	approve	fantasy-weapons-and-apparel-sfx-library	weapons-apparel/sfx/knife-sheathe-01.wav		
+2026-10-13 22:00	battle/arrow-hit	1	battle/arrow-hit-1.mp3	reject	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood01.mp3.flac	0.03	1.2
+2026-10-13 22:00	battle/sling	1	battle/sling-1.mp3	approve	swishes-sound-pack	swishes/swishes/swish-3.wav		
+2026-10-13 22:00	battle/enemy-appear	3	battle/enemy-appear-3.mp3	approve	cugzilia-ii-prototype-sound-effects	cugzilia_ii_prototype_sound_effects/bubbly poof.wav	0.00	1.40
+2026-10-13 22:00	battle/stun	1	battle/stun-1.mp3	approve	joessoundcollection2022	stun.wav		
+2026-10-13 22:00	battle/boulder	1	battle/boulder-1.mp3	approve	moving-boulder	boulder_drop_0.ogg		
+2026-10-13 22:00	magic/thunder	1	magic/thunder-1.mp3	approve	rain-long-thunder	rain-thunder.ogg	21.9	25.5
+2026-10-13 22:00	magic/summon	1	magic/summon-1.mp3	approve	monster-spawn-rune-summon-sound-obscure	incarnatewav.wav		
+2026-10-13 22:00	hero/footstep-grass	1	hero/footstep-grass-1.mp3	approve	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL1.ogg		
+2026-10-13 22:00	hero/footstep-dirt	1	hero/footstep-dirt-1.mp3	approve	different-steps-on-wood-stone-leaves-gravel-and-mud	[kdd]DifferentSteps_0/gravel.ogg		
+2026-10-13 22:00	hero/jump	1	hero/jump-1.mp3	approve	jump-landing	Jump 1.wav		
+2026-10-13 22:00	hero/land	1	hero/land-1.mp3	approve	jump-landing-sound	jumpland.wav	0.00	0.27
+2026-10-13 22:00	hero/dodge	1	hero/dodge-1.mp3	approve	air-whoosh	whoosh2_0.wav	0.00	0.60
+2026-10-13 22:00	hero/attack-shout	1	hero/attack-shout-1.mp3	approve	male-gruntyelling-sounds	yelling sounds/yelling sounds/1yell1.wav		
+2026-10-13 22:00	hero/effort	1	hero/effort-1.mp3	approve	male-gruntyelling-sounds	yelling sounds/yelling sounds/3grunt1.wav		
+2026-10-13 22:00	hero/hurt-voice	1	hero/hurt-voice-1.mp3	approve	hurt-sound-effects	hurt_02.mp3		
+2026-10-13 22:00	hero/cloth-move	1	hero/cloth-move-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth3.ogg		
+2026-10-13 22:00	npc/laugh	1	npc/laugh-1.mp3	approve	tiny-creatures-sounds	laugh.ogg	0.20	1.52
+2026-10-13 22:00	npc/child-laugh	1	npc/child-laugh-1.mp3	reject	group-giggling	group_giggling.ogg	0.05	1.50
+2026-10-13 22:00	npc/crowd-cheer	1	npc/crowd-cheer-1.mp3	reject	cheers-0	cheers_1.ogg	0.12	1.77
+2026-10-13 22:00	npc/shop-bell	1	npc/shop-bell-1.mp3	reject	doorbell-ring	doorbell-old-tring.ogg	0.08	1.45
+2026-10-13 22:00	npc/saw	1	npc/saw-1.mp3	approve	saw-or-wood-impact	saw_-_starninjas_0.ogg	0.24	1.7
+2026-10-13 22:00	npc/hammer-wood	1	npc/hammer-wood-1.mp3	approve	fast-hammer-sfx	craft_0.ogg	0.00	0.72
+2026-10-13 22:00	npc/hammer-wood	2	npc/hammer-wood-2.mp3	approve	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_wood_hit_01.ogg	0.00	0.25
+2026-10-13 22:00	npc/pickaxe	1	npc/pickaxe-1.mp3	approve	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_rock_breaking_01.ogg	0.01	0.44
+2026-10-13 22:00	npc/quill	1	npc/quill-1.mp3	approve	pencil-sounds	pencil/ogg/pencil_write.ogg		
+2026-10-13 22:00	npc/pour	1	npc/pour-1.mp3	approve	teapot-sounds	pour_tea.wav	2.24	3.70
+2026-10-13 22:00	npc/pour	2	npc/pour-2.mp3	reject	teapot-sounds	water_to_teapot.wav	3.05	4.50
+2026-10-13 22:00	npc/flute	1	npc/flute-1.mp3	approve	flute-drums-music-tag	flute_drum_music_tag.mp3	0.00	1.50
+2026-10-13 22:00	npc/dig	1	npc/dig-1.mp3	approve	digging-underground	dig_underground_1.mp3	0.12	1.50
+2026-10-13 22:00	npc/fishing	1	npc/fishing-1.mp3	approve	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-02.flac		
+2026-10-13 22:00	enemy/orc-grunt	1	enemy/orc-grunt-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_01.ogg	0.06	0.70
+2026-10-13 22:00	enemy/orc-grunt	2	enemy/orc-grunt-2.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_02.ogg	0.02	0.53
+2026-10-13 22:00	enemy/orc-grunt	3	enemy/orc-grunt-3.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_03.ogg	0.08	0.54
+2026-10-13 22:00	enemy/orc-roar	1	enemy/orc-roar-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_02.ogg	0.02	0.64
+2026-10-13 22:00	enemy/orc-roar	2	enemy/orc-roar-2.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_01.ogg	0.05	0.32
+2026-10-13 22:00	enemy/orc-hurt	1	enemy/orc-hurt-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/hurt_01.ogg		
+2026-10-13 22:00	enemy/bandit-shout	1	enemy/bandit-shout-1.mp3	approve	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Spirit Shout.wav	0.02	1.26
+2026-10-13 22:00	enemy/bandit-hurt	1	enemy/bandit-hurt-1.mp3	approve	hurt-sound-effects	hurt_01_0.mp3		
+2026-10-13 22:00	enemy/skeleton-rattle	2	enemy/skeleton-rattle-2.mp3	approve	bones-rattle	bones_rattle/0.ogg		
+2026-10-13 22:00	enemy/skeleton-rattle	3	enemy/skeleton-rattle-3.mp3	approve	bones-rattle	bones_rattle/1.ogg		
+2026-10-13 22:00	enemy/ghost-whisper	2	enemy/ghost-whisper-2.mp3	approve	ghostly-humming	ghostly_humming.ogg	0.57	4.5
+2026-10-13 22:00	enemy/vampire-hiss	1	enemy/vampire-hiss-1.mp3	approve	alien-sounds-0	alien_hiss.mp3	0	0.25
+2026-10-13 22:00	enemy/metal-clank	2	enemy/metal-clank-2.mp3	approve	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/metal1.aif		
+2026-10-13 22:00	enemy/metal-clank	3	enemy/metal-clank-3.mp3	approve	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/metal2.aif		
+2026-10-13 22:00	enemy/clockwork	1	enemy/clockwork-1.mp3	approve	clock-wind-sounds	multiwind1.wav	0	0.95
+2026-10-13 22:00	monster/slime-squish	2	monster/slime-squish-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime1.wav		
+2026-10-13 22:00	monster/slime-squish	3	monster/slime-squish-3.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime3.wav		
+2026-10-13 22:00	monster/slime-squish	4	monster/slime-squish-4.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime4.wav		
+2026-10-13 22:00	monster/beast-growl	2	monster/beast-growl-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr1.wav		
+2026-10-13 22:00	monster/beast-growl	3	monster/beast-growl-3.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr2.wav		
+2026-10-13 22:00	monster/beast-roar	2	monster/beast-roar-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr5.wav		
+2026-10-13 22:00	monster/beast-roar	3	monster/beast-roar-3.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr11.wav		
+2026-10-13 22:00	monster/beast-snarl	1	monster/beast-snarl-1.mp3	approve	monster-snarls	monster-snarl-attack.ogg	0.07	1.22
+2026-10-13 22:00	monster/beast-snarl	2	monster/beast-snarl-2.mp3	approve	monster-snarls	monsters-snarls-3_0.ogg	9.47	10.95
+2026-10-13 22:00	monster/reptile-hiss	2	monster/reptile-hiss-2.mp3	approve	steam-release-sounds	steam_hisses/steam hisses - Marker #1.wav	0	1.2
+2026-10-13 22:00	monster/reptile-hiss	3	monster/reptile-hiss-3.mp3	approve	steam-release-sounds	steam_hisses/steam hisses - Marker #2.wav	0	1.2
+2026-10-13 22:00	monster/bird-screech	1	monster/bird-screech-1.mp3	approve	bat-screeches	bat/ogg/bat_02.ogg		
+2026-10-13 22:00	monster/bird-screech	2	monster/bird-screech-2.mp3	approve	evil-screech-1	evil_screech_1.ogg	1.93	2.91
+2026-10-13 22:00	monster/wing-flap	2	monster/wing-flap-2.mp3	approve	large-wings-flap	wings_flap_large/wings_flap_large.ogg	0	1.5
+2026-10-13 22:00	monster/dragon-roar	2	monster/dragon-roar-2.mp3	approve	steampunk-fantasy-voices	Dragon_See_001_0.wav		
+2026-10-13 22:00	monster/dragon-roar	3	monster/dragon-roar-3.mp3	approve	steampunk-fantasy-voices	Dragon_See_002_0.wav		
+2026-10-13 22:00	monster/dragon-breath	2	monster/dragon-breath-2.mp3	reject	fire-crackling	fire-1.wav		
+2026-10-13 22:00	monster/insect-chitter	1	monster/insect-chitter-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_01.ogg		
+2026-10-13 22:00	monster/insect-chitter	2	monster/insect-chitter-2.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_02.ogg		
+2026-10-13 22:00	monster/insect-chitter	3	monster/insect-chitter-3.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_03.ogg		
+2026-10-13 22:00	monster/insect-skitter	1	monster/insect-skitter-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_04.ogg		
+2026-10-13 22:00	monster/insect-skitter	2	monster/insect-skitter-2.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/alien_05.ogg		
+2026-10-13 22:00	monster/rat-squeak	1	monster/rat-squeak-1.mp3	approve	mouse-imitation	mouse-2_0.ogg	0.00	0.92
+2026-10-13 22:00	monster/bat-screech	1	monster/bat-screech-1.mp3	approve	bat-screeches	bat/ogg/bat_01.ogg		
+2026-10-13 22:00	monster/mimic-chomp	1	monster/mimic-chomp-1.mp3	approve	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 1.wav		
+2026-10-13 22:00	monster/mimic-chomp	2	monster/mimic-chomp-2.mp3	approve	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 2.wav		
+2026-10-13 22:00	monster/bite	1	monster/bite-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small.wav		
+2026-10-13 22:00	monster/bite	2	monster/bite-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small2.wav		
+2026-10-13 22:00	monster/bite	3	monster/bite-3.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small3.wav		
+2026-10-13 22:00	monster/demon-growl	1	monster/demon-growl-1.mp3	approve	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Demon Growl.wav	0	3.5
+2026-10-13 22:00	monster/demon-growl	2	monster/demon-growl-2.mp3	reject	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Beast Growl 4.wav		
+2026-10-13 22:00	monster/eldritch-drone	1	monster/eldritch-drone-1.mp3	approve	ghostly-humming	ghostly_humming.ogg	10.54	18.42
+2026-10-13 22:00	monster/tentacle-slap	1	monster/tentacle-slap-1.mp3	approve	thwack-sounds	thwack-1.0/Vorbis/thwack-08.oga		
+2026-10-13 22:00	monster/tentacle-slap	2	monster/tentacle-slap-2.mp3	approve	thwack-sounds	thwack-1.0/Vorbis/thwack-09.oga		
+2026-10-13 22:00	monster/crab-clack	1	monster/crab-clack-1.mp3	approve	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.3.ogg		
+2026-10-13 22:00	monster/toad-croak	1	monster/toad-croak-1.mp3	approve	frog-croaks	croak_04.mp3		
+2026-10-13 22:00	monster/toad-croak	2	monster/toad-croak-2.mp3	approve	frog-croaks	croak_02.mp3		
+2026-10-13 22:00	monster/water-surge	1	monster/water-surge-1.mp3	approve	water-waves	wave_02_cc0-11505__transitking__wavesound.flac		
+2026-10-13 22:00	monster/wind-howl	1	monster/wind-howl-1.mp3	reject	80-cc0-creature-sfx	80-CC0-creature-SFX_0/howl.ogg		
+2026-10-13 22:00	monster/rock-rumble	1	monster/rock-rumble-1.mp3	approve	underwater-or-space-engine-rumble	deep_rumble.ogg	4	8
+2026-10-13 22:00	monster/tree-creak	1	monster/tree-creak-1.mp3	approve	tree-creaking	tree_creak_0.ogg	0.04	3.9
+2026-10-13 22:00	monster/giant-bellow	1	monster/giant-bellow-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/giant/giant2.wav		
+2026-10-13 22:00	monster/spit	1	monster/spit-1.mp3	approve	80-cc0-creature-sfx	80-CC0-creature-SFX_0/spit_01.ogg		
+2026-10-13 22:00	wildlife/songbird	1	wildlife/songbird-1.mp3	approve	bird-chirping-sounds	birdchirping071414_0.mp3	0.74	1.27
+2026-10-13 22:00	wildlife/songbird	2	wildlife/songbird-2.mp3	approve	forest-bird-sounds	forest_birds/Forest Birds/Forest Birds 6.wav	0	1.4
+2026-10-13 22:00	wildlife/crow	1	wildlife/crow-1.mp3	approve	crow	crow_0.ogg		
+2026-10-13 22:00	wildlife/bat	1	wildlife/bat-1.mp3	approve	bat-screeches	bat/flac/bat_01.flac	0.03	1.27
+2026-10-13 22:00	wildlife/wolf-growl	1	wildlife/wolf-growl-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/misc/wolfman.wav		
+2026-10-13 22:00	wildlife/dog-bark	1	wildlife/dog-bark-1.mp3	reject	random-sounds-samples	dog barking.ogg	1.06	2.2
+2026-10-13 22:00	wildlife/cat-meow	1	wildlife/cat-meow-1.mp3	approve	meow	Meow.ogg		
+2026-10-13 22:00	wildlife/bear	1	wildlife/bear-1.mp3	approve	bear-growls	bear/ogg/bear_01.ogg		
+2026-10-13 22:00	wildlife/boar	1	wildlife/boar-1.mp3	approve	boar-0	boar_0.ogg		
+2026-10-13 22:00	wildlife/hooves-walk	1	wildlife/hooves-walk-1.mp3	approve	horse-trotting	Trot.ogg	0.07	12.38
+2026-10-13 22:00	wildlife/donkey	1	wildlife/donkey-1.mp3	approve	donkey-bray	donkey_bray_-_starninjas_0.ogg		
+2026-10-13 22:00	wildlife/sheep	1	wildlife/sheep-1.mp3	approve	sheep-baa	sheep_baa_0.ogg		
+2026-10-13 22:00	wildlife/camel	1	wildlife/camel-1.mp3	approve	camel-groan	camel/ogg/camel_01.ogg		
+2026-10-13 22:00	wildlife/frog	1	wildlife/frog-1.mp3	approve	frog-croaks	croak_01_0.mp3		
+2026-10-13 22:00	wildlife/frog	2	wildlife/frog-2.mp3	approve	frog-croaks	croak_03.mp3		
+2026-10-13 22:00	wildlife/fish-splash	2	wildlife/fish-splash-2.mp3	approve	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-06.flac		
+2026-10-13 22:00	ambience/forest-night	1	ambience/forest-night-1.mp3	approve	cricket-sounds	cricketsounds090613.wav	0	36
+2026-10-13 22:00	ambience/dungeon	2	ambience/dungeon-2.mp3	approve	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	50	90
+2026-10-13 22:00	ambience/crypt	1	ambience/crypt-1.mp3	approve	4-atmospheric-ghostly-loops	independent_nu_ljudbank-atmosphere_moody/atmosmoody/atmoseerie01.mp3.flac		
+2026-10-13 22:00	ambience/underwater	1	ambience/underwater-1.mp3	approve	underwater-or-space-engine-rumble	deep_rumble.ogg	0	40
+2026-10-13 22:00	world/unlock	3	world/unlock-3.mp3	approve	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.wav		
+2026-10-13 22:00	world/pot-break	4	world/pot-break-4.mp3	approve	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_breaking_02.ogg		
+2026-10-13 22:00	world/bridge-creak	1	world/bridge-creak-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/creak2.ogg	0.01	0.70
+2026-10-13 22:00	world/well-bucket	1	world/well-bucket-1.mp3	approve	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-04.flac	0.01	1.32
+2026-10-13 22:00	world/grass-rustle	1	world/grass-rustle-1.mp3	approve	20-rustles-dry-leaves	qubodup-rustle/rustle/rustle05.flac		
+2026-10-13 22:00	world/tree-fall	1	world/tree-fall-1.mp3	approve	tree-chop-fall-thud	chop-tree-fall.ogg		
+2026-10-13 22:00	world/winch	1	world/winch-1.mp3	approve	chain-winch-sounds	winch/winch - Marker 2.wav		
+2026-10-13 22:00	item/pickup	1	item/pickup-1.mp3	approve	item-pickup-key	key-176034.mp3		
+2026-10-13 22:00	item/pickup	2	item/pickup-2.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/beads.wav		
+2026-10-13 22:00	item/pickup	3	item/pickup-3.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/bookClose.ogg		
+2026-10-13 22:00	item/drop	2	item/drop-2.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth1.ogg		
+2026-10-13 22:00	item/potion-drink	2	item/potion-drink-2.mp3	reject	liquid-bottle-drink-set	qubodup-bottle-and-drink-sounds/qubodup-bottle-and-drink-sounds/swallow-02.flac		
+2026-10-13 22:00	item/potion-drink	3	item/potion-drink-3.mp3	approve	liquid-bottle-drink-set	qubodup-bottle-and-drink-sounds/qubodup-bottle-and-drink-sounds/swallow-03.flac		
+2026-10-13 22:00	item/uncork	1	item/uncork-1.mp3	approve	fantasy-accessory-sfx-library	accessory/sfx/bottle-glass-uncork-01.wav		
+2026-10-13 22:00	item/uncork	2	item/uncork-2.mp3	approve	fantasy-accessory-sfx-library	accessory/sfx/bottle-clay-uncork-01.wav		
+2026-10-13 22:00	item/liquid-pour	2	item/liquid-pour-2.mp3	approve	teapot-sounds	pour_tea.wav	3.8	5.2
+2026-10-13 22:00	item/eat	1	item/eat-1.mp3	approve	7-eating-crunches	crunch_-_tito/crunch.1.ogg		
+2026-10-13 22:00	item/eat	2	item/eat-2.mp3	approve	7-eating-crunches	crunch_-_tito/crunch.2.ogg		
+2026-10-13 22:00	item/eat	3	item/eat-3.mp3	approve	7-eating-crunches	crunch_-_tito/crunch.3.ogg		
+2026-10-13 22:00	item/bag	1	item/bag-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/handleSmallLeather2.ogg	0.05	0.26
+2026-10-13 22:00	item/leather	1	item/leather-1.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/handleSmallLeather.ogg		
+2026-10-13 22:00	item/leather	2	item/leather-2.mp3	reject	50-rpg-sound-effects	RPGsounds_Kenney/OGG/creak1.ogg		
+2026-10-13 22:00	item/chainmail	1	item/chainmail-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/chainmail2.wav		
+2026-10-13 22:00	item/plate	1	item/plate-1.mp3	approve	metal-impact-sounds	bing1.wav		
+2026-10-13 22:00	item/metal-small	1	item/metal-small-1.mp3	approve	metal-impact-sounds	bong1.wav	0	1.2
+2026-10-13 22:00	item/wood-small	1	item/wood-small-1.mp3	approve	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/wood1.aif		
+2026-10-13 22:00	item/stone-small	1	item/stone-small-1.mp3	approve	various-sound-effects-0	small_rock_impact.wav		
+2026-10-13 22:00	item/paper	1	item/paper-1.mp3	approve	10-book-page-flips	book_flips_-_starninjas/book_flip.10.ogg		
+2026-10-13 22:00	item/key-jingle	1	item/key-jingle-1.mp3	approve	fantasy-accessory-sfx-library	accessory/sfx/keys-rattle-01.wav		
+2026-10-13 22:00	item/craft-fail	1	item/craft-fail-1.mp3	approve	mechanical-sounds	lightclunk1.wav		
+2026-10-13 22:00	item/beads	1	item/beads-1.mp3	approve	mechanical-sounds	rattle1.wav		
+2026-10-13 22:00	vehicle/balloon	1	vehicle/balloon-1.mp3	approve	balloon-sounds	balloon_inflate_0.ogg		1.5
+2026-10-13 22:00	music/title	2	music/title-2.mp3	approve	title-theme-0	am_title_theme_loop_0.mp3		
+2026-10-13 22:00	music/town	2	music/town-2.mp3	approve	peaceful-town	peacful_town.ogg		
+2026-10-13 22:00	music/explore	2	music/explore-2.mp3	reject	heat-adventure	heat_adventure_bpm135.mp3		
+2026-10-13 22:00	music/battle	2	music/battle-2.mp3	approve	battle-theme-b-for-rpg	battleThemeB.mp3		
+2026-10-13 22:00	music/boss	2	music/boss-2.mp3	approve	space-boss-battle	space_boss_battle_bpm175.mp3		
+2026-10-13 22:00	music/calm	2	music/calm-2.mp3	approve	peaceful-theme	peaceful-theme.ogg		
+2026-10-13 22:00	music/shop	1	music/shop-1.mp3	approve	item-shop	Item Shop_0.mp3		
+2026-10-13 22:00	music/tavern	1	music/tavern-1.mp3	approve	medieval-the-old-tower-inn	The_Old_Tower_Inn.mp3		
+2026-10-13 22:00	music/haunted	1	music/haunted-1.mp3	approve	mystery-style-3	mysterystyle3_0.ogg		
+2026-10-13 22:00	music/sky	1	music/sky-1.mp3	approve	blue-meadow-in-green-sky	BMGS_0.ogg		
+2026-10-13 22:00	music/sea	1	music/sea-1.mp3	approve	7-seas-under-the-moon	7_seas_under_the_moon.mp3		
+2026-10-13 22:00	music/victory-jingle	1	music/victory-jingle-1.mp3	reject	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_SAX/jingles_SAX02.ogg		
+2026-10-13 22:00	music/victory-jingle	2	music/victory-jingle-2.mp3	reject	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_STEEL/jingles_STEEL02.ogg		
+2026-10-13 22:00	music/defeat-jingle	1	music/defeat-jingle-1.mp3	reject	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_SAX/jingles_SAX01.ogg		
+2026-10-13 22:00	music/defeat-jingle	2	music/defeat-jingle-2.mp3	reject	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_PIZZA/jingles_PIZZA05.ogg		
+2026-10-13	music/sea	1	music/sea-1.mp3	drop	7-seas-under-the-moon	7_seas_under_the_moon.mp3		
+2026-10-14	music/explore	3	music/explore-3.mp3	approve	7-seas-under-the-moon	7_seas_under_the_moon.mp3		
+2026-10-13	npc/pour	3	npc/pour-3.mp3	drop	teapot-sounds	teapot/teapot/pour_tea.wav	2.24	3.74
+2026-10-13 22:14	battle/arrow-hit	2	battle/arrow-hit-2.mp3	reject	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood02.mp3.flac	0.13	1.45
+2026-10-13 22:14	battle/arrow-hit	3	battle/arrow-hit-3.mp3	approve	wood-wobbling-rattling	qubodup-wobble/qubodup-wobble/qubodup-wobble2.wav		
+2026-10-13 22:14	monster/bird-screech	3	monster/bird-screech-3.mp3	approve	crow-caw	crow_caw.wav		
+2026-10-13 22:14	monster/bat-screech	2	monster/bat-screech-2.mp3	approve	bat-screeches	bat/ogg/bat_03.ogg		
+2026-10-13 22:14	monster/wind-howl	2	monster/wind-howl-2.mp3	approve	short-wind-sound	short wind sound.wav		
+2026-10-13 22:14	wildlife/dog-bark	2	wildlife/dog-bark-2.mp3	approve	dog-barking-mono	dog_barking_mono.wav	0	0.77
+2026-10-13 22:14	item/cloth	1	item/cloth-1.mp3	approve	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/cloth.wav		
+2026-10-13 22:14	item/cloth	2	item/cloth-2.mp3	approve	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth2.ogg		
+2026-10-13 22:14	music/sea	2	music/sea-2.mp3	approve	merchants-and-sea-salt	merchants_and_sea_salt.wav		
+2026-10-13 22:14	music/victory-jingle	3	music/victory-jingle-3.mp3	approve	victory-fanfare	fanfare1.mp3	0	5.6
+2026-10-13 22:14	music/victory-jingle	4	music/victory-jingle-4.mp3	reject	icy-level-up	Icy Level Up.mp3		
+2026-10-13 22:14	music/defeat-jingle	3	music/defeat-jingle-3.mp3	approve	game-over-theme-ii	Game Over Theme II/Game Over Theme II/Game Over II ~ v1.ogg		
+2026-10-13 22:22	battle/arrow-hit	4	battle/arrow-hit-4.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Bolt Approach.wav	0.80	1.55
+2026-10-13 22:22	battle/arrow-hit	5	battle/arrow-hit-5.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Scythian Recurve Arrow Approach.wav	3.38	3.98
+2026-10-13 22:22	music/victory-jingle	5	music/victory-jingle-5.mp3	approve	victory-fanfare-short	Heavy_ConceptB.wav		
+2026-10-13	battle/war-drum-loop	1	battle/war-drum-loop-1.mp3	drop	horde-war-drums-loop	horde_war_drums_by_william_hector.wav		

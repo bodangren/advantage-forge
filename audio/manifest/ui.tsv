@@ -1,0 +1,41 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+ui/tap	1	ui/tap-1.mp3	0.09	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click1.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/tap	2	ui/tap-2.mp3	0.06	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click2.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/tap	3	ui/tap-3.mp3	0.09	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click3.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/select	1	ui/select-1.mp3	0.04	interface-sounds	kenney_interfaceSounds/Audio/select_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/select	2	ui/select-2.mp3	0.04	interface-sounds	kenney_interfaceSounds/Audio/select_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/back	1	ui/back-1.mp3	0.09	interface-sounds	kenney_interfaceSounds/Audio/back_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/back	2	ui/back-2.mp3	0.09	interface-sounds	kenney_interfaceSounds/Audio/back_003.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/deny	1	ui/deny-1.mp3	0.16	interface-sounds	kenney_interfaceSounds/Audio/error_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/deny	2	ui/deny-2.mp3	0.17	interface-sounds	kenney_interfaceSounds/Audio/error_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/toggle	1	ui/toggle-1.mp3	0.17	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch1.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/menu-open	1	ui/menu-open-1.mp3	0.15	interface-sounds	kenney_interfaceSounds/Audio/open_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/menu-close	1	ui/menu-close-1.mp3	0.15	interface-sounds	kenney_interfaceSounds/Audio/close_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/notify	1	ui/notify-1.mp3	0.49	interface-sounds	kenney_interfaceSounds/Audio/question_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/notify	2	ui/notify-2.mp3	0.33	interface-sounds	kenney_interfaceSounds/Audio/question_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/page-turn	1	ui/page-turn-1.mp3	0.56	10-book-page-flips	book_flips_-_starninjas/book_flip.1.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	
+ui/page-turn	2	ui/page-turn-2.mp3	0.94	10-book-page-flips	book_flips_-_starninjas/book_flip.2.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	
+ui/page-turn	3	ui/page-turn-3.mp3	1.07	10-book-page-flips	book_flips_-_starninjas/book_flip.3.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	
+ui/tab	1	ui/tab-1.mp3	0.04	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click4.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/hover	1	ui/hover-1.mp3	0.22	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/rollover1.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/countdown-tick	1	ui/countdown-tick-1.mp3	0.29	tick-and-tock	tick.wav			cemkalyoncu	CC0	https://opengameart.org/content/tick-and-tock	
+ui/countdown-tick	2	ui/countdown-tick-2.mp3	0.12	tick-and-tock	tick2.wav			cemkalyoncu	CC0	https://opengameart.org/content/tick-and-tock	
+ui/time-warning	1	ui/time-warning-1.mp3	0.97	bell-dingschimes	bell_ding1.wav			PWL	CC0	https://opengameart.org/content/bell-dingschimes	
+ui/time-up	1	ui/time-up-1.mp3	1.36	bell-dingschimes	bell_ding4.wav			PWL	CC0	https://opengameart.org/content/bell-dingschimes	
+ui/typing-error	1	ui/typing-error-1.mp3	0.26	interface-sounds	kenney_interfaceSounds/Audio/error_006.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/drag	1	ui/drag-1.mp3	0.10	interface-sounds	kenney_interfaceSounds/Audio/pluck_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/drag	2	ui/drag-2.mp3	0.15	interface-sounds	kenney_interfaceSounds/Audio/pluck_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/drop	1	ui/drop-1.mp3	0.13	interface-sounds	kenney_interfaceSounds/Audio/drop_001.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/drop	2	ui/drop-2.mp3	0.14	interface-sounds	kenney_interfaceSounds/Audio/drop_002.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/swap	1	ui/swap-1.mp3	0.19	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch2.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/swap	2	ui/swap-2.mp3	0.20	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch3.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/shuffle	1	ui/shuffle-1.mp3	1.00	interface-sounds	kenney_interfaceSounds/Audio/scroll_003.ogg			Kenney	CC0	https://opengameart.org/content/interface-sounds	
+ui/typing-key	1	ui/typing-key-1.mp3	0.06	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/mouseclick1.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/typing-key	2	ui/typing-key-2.mp3	0.07	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/mouserelease1.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/typing-key	3	ui/typing-key-3.mp3	0.03	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/click5.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
+ui/confirm	3	ui/confirm-3.mp3	0.24	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/wood-small.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
+ui/menu-open	3	ui/menu-open-3.mp3	0.15	50-rpg-sound-effects	RPGsounds_Kenney/OGG/bookOpen.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	
+ui/popup	3	ui/popup-3.mp3	0.60	10-book-page-flips	book_flips_-_starninjas/book_flip.8.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	
+ui/typing-key	5	ui/typing-key-5.mp3	0.20	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/metal-small2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
+ui/typing-error	3	ui/typing-error-3.mp3	0.21	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalLatch.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	
+ui/popup	4	ui/popup-4.mp3	0.89	10-book-page-flips	book_flips_-_starninjas/book_flip.9.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	

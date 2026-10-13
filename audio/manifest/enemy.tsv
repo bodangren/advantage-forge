@@ -1,0 +1,39 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+enemy/skeleton-rattle	1	enemy/skeleton-rattle-1.mp3	1.36	skeletonsfxshortpack	skeleton1sfx_0.wav	0.14	1.5	Colodical	CC0	https://opengameart.org/content/skeletonsfxshortpack	Bone rattle from skeleton pack
+enemy/skeleton-collapse	1	enemy/skeleton-collapse-1.mp3	1.60	skeletonsfxshortpack	skeleton2sfx_0.wav	0.14	1.74	Colodical	CC0	https://opengameart.org/content/skeletonsfxshortpack	Bones clatter from skeleton pack
+enemy/ghost-wail	1	enemy/ghost-wail-1.mp3	2.44	ghost	ghost.wav	0.06	2.50	Ogrebane	CC0	https://opengameart.org/content/ghost	Ghost wail, soft
+enemy/ghost-whisper	1	enemy/ghost-whisper-1.mp3	3.25	ghost-breath	ghostbreath.flac	0.05	3.30	qubodup	CC0	https://opengameart.org/content/ghost-breath	Ghost breath, soft
+enemy/stone-grind	1	enemy/stone-grind-1.mp3	0.42	stone-rock-or-wood-moved-sound	stone_rock_or_wood_moved.mp3	0.02	0.44	pauliuw	CC0	https://opengameart.org/content/stone-rock-or-wood-moved-sound	Stone moved
+enemy/zombie-groan	1	enemy/zombie-groan-1.mp3	0.81	zombies-sound-pack	zombies/zombies/zombie-1.wav			artisticdude	CC0	https://opengameart.org/content/zombies-sound-pack	Zombie groan, short
+enemy/zombie-groan	2	enemy/zombie-groan-2.mp3	0.65	zombies-sound-pack	zombies/zombies/zombie-10.wav			artisticdude	CC0	https://opengameart.org/content/zombies-sound-pack	Zombie groan, short
+enemy/zombie-groan	3	enemy/zombie-groan-3.mp3	0.77	zombies-sound-pack	zombies/zombies/zombie-12.wav			artisticdude	CC0	https://opengameart.org/content/zombies-sound-pack	Zombie groan, short
+enemy/metal-clank	1	enemy/metal-clank-1.mp3	0.95	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalPot1.ogg	0.09	1.03	Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	metal pot clank, short and soft
+enemy/construct-break	1	enemy/construct-break-1.mp3	0.68	50-rpg-sound-effects	RPGsounds_Kenney/OGG/metalPot2.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	metal pot knock, breaking-toy feel
+enemy/construct-step	1	enemy/construct-step-1.mp3	0.33	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL3.flac			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	catalog license CC0; the text names the source only as the CC0 origin, no attribution required
+enemy/goblin-chatter	1	enemy/goblin-chatter-1.mp3	0.20	goblins-sound-pack	goblins_0/goblins/goblin-1.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-chatter	2	enemy/goblin-chatter-2.mp3	0.18	goblins-sound-pack	goblins_0/goblins/goblin-8.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-chatter	3	enemy/goblin-chatter-3.mp3	0.18	goblins-sound-pack	goblins_0/goblins/goblin-10.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-attack	1	enemy/goblin-attack-1.mp3	0.94	goblins-sound-pack	goblins_0/goblins/goblin-3.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-attack	2	enemy/goblin-attack-2.mp3	0.51	goblins-sound-pack	goblins_0/goblins/goblin-4.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-hurt	1	enemy/goblin-hurt-1.mp3	0.28	goblins-sound-pack	goblins_0/goblins/goblin-5.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/goblin-hurt	2	enemy/goblin-hurt-2.mp3	0.24	goblins-sound-pack	goblins_0/goblins/goblin-6.wav			artisticdude	CC0	https://opengameart.org/content/goblins-sound-pack	goblin clip, non-verbal
+enemy/evil-laugh	1	enemy/evil-laugh-1.mp3	2.18	sinister-laugh	evil laugh3.mp3			WeaponGuy	CC0	https://opengameart.org/content/sinister-laugh	villain laugh, non-verbal
+enemy/evil-laugh	2	enemy/evil-laugh-2.mp3	3.00	evil-laughter	qubodupevillaughter.flac	0	3.00	qubodup	CC0	https://opengameart.org/content/evil-laughter	villain laugh, non-verbal
+enemy/evil-laugh	3	enemy/evil-laugh-3.mp3	2.22	sinister-laugh	evil_laugh3-filtered.ogg			WeaponGuy	CC0	https://opengameart.org/content/sinister-laugh	villain laugh, non-verbal
+enemy/vampire-hiss	1	enemy/vampire-hiss-1.mp3	0.25	alien-sounds-0	alien_hiss.mp3	0	0.25	EZduzziteh	CC0	https://opengameart.org/content/alien-sounds-0	CC0 alien hiss, short
+enemy/orc-grunt	1	enemy/orc-grunt-1.mp3	0.64	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_01.ogg	0.06	0.70	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 creature grunt, no words
+enemy/orc-roar	1	enemy/orc-roar-1.mp3	0.62	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_02.ogg	0.02	0.64	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 creature roar, no words
+enemy/orc-grunt	2	enemy/orc-grunt-2.mp3	0.51	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_02.ogg	0.02	0.53	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 creature grunt, no words
+enemy/orc-grunt	3	enemy/orc-grunt-3.mp3	0.46	80-cc0-creature-sfx	80-CC0-creature-SFX_0/grunt_03.ogg	0.08	0.54	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 creature grunt, no words
+enemy/bandit-shout	1	enemy/bandit-shout-1.mp3	1.24	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Spirit Shout.wav	0.02	1.26	pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds	CC0 monster spirit shout, no words
+enemy/chant	-										Only chant candidate is named creepy, risking the not-frightening rule; not used.
+enemy/orc-roar	2	enemy/orc-roar-2.mp3	0.27	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_01.ogg	0.05	0.32	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 creature roar, no words
+enemy/bandit-shout	-										Only non-verbal shout found is one take; crowd and steampunk clips may contain words, so not used.
+enemy/skeleton-rattle	2	enemy/skeleton-rattle-2.mp3	0.14	bones-rattle	bones_rattle/0.ogg			congusbongus	CC0	https://opengameart.org/content/bones-rattle	Entry bones-rattle lists license CC0, no attribution condition; source note only
+enemy/skeleton-rattle	3	enemy/skeleton-rattle-3.mp3	0.11	bones-rattle	bones_rattle/1.ogg			congusbongus	CC0	https://opengameart.org/content/bones-rattle	Entry bones-rattle lists license CC0, no attribution condition
+enemy/clockwork	1	enemy/clockwork-1.mp3	0.95	clock-wind-sounds	multiwind1.wav	0	0.95	BMacZero	CC0	https://opengameart.org/content/clock-wind-sounds	
+enemy/metal-clank	2	enemy/metal-clank-2.mp3	0.27	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/metal1.aif			Ogrebane	CC0	https://opengameart.org/content/wood-and-metal-sound-effects-volume-2	
+enemy/metal-clank	3	enemy/metal-clank-3.mp3	0.29	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/metal2.aif			Ogrebane	CC0	https://opengameart.org/content/wood-and-metal-sound-effects-volume-2	
+enemy/ghost-whisper	2	enemy/ghost-whisper-2.mp3	3.93	ghostly-humming	ghostly_humming.ogg	0.57	4.5	Nocturnal_Vanguard	CC0	https://opengameart.org/content/ghostly-humming	
+enemy/orc-hurt	1	enemy/orc-hurt-1.mp3	0.42	80-cc0-creature-sfx	80-CC0-creature-SFX_0/hurt_01.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	CC0 80 creature SFX, hurt grunt
+enemy/bandit-hurt	1	enemy/bandit-hurt-1.mp3	0.26	hurt-sound-effects	hurt_01_0.mp3			EZduzziteh	CC0	https://opengameart.org/content/hurt-sound-effects	CC0 hurt sound effects, short grunt

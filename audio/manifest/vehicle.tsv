@@ -1,0 +1,8 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+vehicle/balloon	1	vehicle/balloon-1.mp3	1.50	balloon-sounds	balloon_inflate_0.ogg		1.5	AntumDeluge	CC0	https://opengameart.org/content/balloon-sounds	Balloon inflate, cut to 1.5 s
+vehicle/cart	-										No CC0 cart loop found in fetched sources
+vehicle/rowboat	-										No CC0 rowboat loop found in fetched sources
+vehicle/sleigh-bells	-										No CC0 sleigh bell sound found in search
+vehicle/sail	-										same sound as ambience/wind#1; the game can reuse that file
+vehicle/airship	-										same sound as ambience/wind#2; the game can reuse that file
+vehicle/carpet	-										same sound as ambience/sky#1; the game can reuse that file

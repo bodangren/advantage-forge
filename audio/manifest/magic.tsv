@@ -1,0 +1,49 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+magic/cast	1	magic/cast-1.mp3	1.38	magic-spell-sfx	magical_2.ogg			JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	
+magic/charge	1	magic/charge-1.mp3	1.78	magic-spell-sfx	magical_4.ogg			JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	
+magic/charge	2	magic/charge-2.mp3	1.44	magic-spell-sfx	magical_5.ogg			JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	
+magic/arcane	1	magic/arcane-1.mp3	1.11	magic-spell-sfx	magical_6_0.ogg			JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	
+magic/heal	1	magic/heal-1.mp3	0.81	cure-magic	curemagic/Cure1.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/heal	2	magic/heal-2.mp3	0.90	cure-magic	curemagic/Cure2.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/heal	3	magic/heal-3.mp3	0.81	cure-magic	curemagic/Cure3.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/sparkle	1	magic/sparkle-1.mp3	1.19	spell-sounds	teleport.ogg	0.69	1.88	HaelDB	CC0	https://opengameart.org/content/spell-sounds	
+magic/sparkle	2	magic/sparkle-2.mp3	1.29	cure-magic	curemagic/Cure7.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/light	1	magic/light-1.mp3	1.17	cure-magic	curemagic/Cure6.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/light	2	magic/light-2.mp3	0.84	cure-magic	curemagic/Cure8.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/dispel	1	magic/dispel-1.mp3	0.91	cure-magic	curemagic/Cure4.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/ice-cast	1	magic/ice-cast-1.mp3	1.15	ice-spells	icespells/coldsnap.wav	0	1.16	bart	CC0	https://opengameart.org/content/ice-spells	
+magic/ice-cast	2	magic/ice-cast-2.mp3	0.72	ice-spells	icespells/ice.wav	0	0.72	bart	CC0	https://opengameart.org/content/ice-spells	
+magic/ice-shatter	1	magic/ice-shatter-1.mp3	0.47	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta.ogg	0	0.47	IgnasD	CC0	https://opengameart.org/content/ice-breakingshattering	
+magic/ice-shatter	2	magic/ice-shatter-2.mp3	1.08	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta33.ogg	0.01	1.10	IgnasD	CC0	https://opengameart.org/content/ice-breakingshattering	
+magic/potion-brew	1	magic/potion-brew-1.mp3	0.38	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
+magic/potion-brew	2	magic/potion-brew-2.mp3	0.63	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
+magic/barrier	1	magic/barrier-1.mp3	2.52	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/battle/spell.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	3.25 s, the only barrier candidate
+magic/curse	1	magic/curse-1.mp3	2.84	3-dark-magic-spells	dark_magic/dark_magic/fout-01.flac			qubodup	CC0	https://opengameart.org/content/3-dark-magic-spells	
+magic/curse	2	magic/curse-2.mp3	2.46	3-dark-magic-spells	dark_magic/dark_magic/fout-03.flac	0	2.46	qubodup	CC0	https://opengameart.org/content/3-dark-magic-spells	
+magic/dark-bolt	1	magic/dark-bolt-1.mp3	1.00	3-dark-magic-spells	dark_magic/dark_magic/fout-02.flac	0	1.00	qubodup	CC0	https://opengameart.org/content/3-dark-magic-spells	
+magic/teleport	1	magic/teleport-1.mp3	1.30	teleport-spell	teleport.wav	0.07	1.37	Ogrebane	CC0	https://opengameart.org/content/teleport-spell	
+magic/teleport	2	magic/teleport-2.mp3	1.65	spell-sounds	teleport.ogg	2.68	4.34	HaelDB	CC0	https://opengameart.org/content/spell-sounds	
+magic/blessing	1	magic/blessing-1.mp3	1.26	spell-sounds	healing.ogg	14.41	15.67	HaelDB	CC0	https://opengameart.org/content/spell-sounds	
+magic/blessing	2	magic/blessing-2.mp3	1.61	spell-sounds	healing.ogg	19.92	21.53	HaelDB	CC0	https://opengameart.org/content/spell-sounds	
+magic/buff	1	magic/buff-1.mp3	1.07	cure-magic	curemagic/Cure5.wav			Someoneman	CC0	https://opengameart.org/content/cure-magic	
+magic/water	1	magic/water-1.mp3	0.37	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bubble2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
+magic/cast	2	magic/cast-2.mp3	1.44	magic-spell-sfx	magical_1_0.ogg	0	1.45	JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	cut to 1.45 s to meet the short length
+magic/cast	3	magic/cast-3.mp3	1.45	magic-spell-sfx	magical_3.ogg	0	1.45	JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	cut to 1.45 s to meet the short length
+magic/arcane	3	magic/arcane-3.mp3	1.45	magic-spell-sfx	magical_7_0.ogg	0	1.45	JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	cut to 1.45 s to meet the short length
+magic/sparkle	3	magic/sparkle-3.mp3	1.45	magic-words-healing-sound-effect	magic_words.wav	0	1.45	Spring Spring	CC0	https://opengameart.org/content/magic-words-healing-sound-effect	cut to 1.45 s to meet the short length
+magic/buff	2	magic/buff-2.mp3	1.45	magic-words-healing-sound-effect	health_restore.wav	0	1.45	Spring Spring	CC0	https://opengameart.org/content/magic-words-healing-sound-effect	cut to 1.45 s to meet the short length
+magic/lightning	1	magic/lightning-1.mp3	1.44	spell-sounds	electricspell.ogg	16.27	17.72	HaelDB	CC0	https://opengameart.org/content/spell-sounds	cut from a 4.4 s crackle span
+magic/lightning	2	magic/lightning-2.mp3	1.46	spell-sounds	electricspell.ogg	11.30	12.77	HaelDB	CC0	https://opengameart.org/content/spell-sounds	cut from a 4.2 s crackle span
+magic/lightning	3	magic/lightning-3.mp3	1.45	spell-sounds	electricspell2.ogg	3.24	4.70	HaelDB	CC0	https://opengameart.org/content/spell-sounds	cut from a long span
+magic/fire-impact	1	magic/fire-impact-1.mp3	1.35	explosions-4	explosion3.ogg			EZduzziteh	CC0	https://opengameart.org/content/explosions-4	fire blast, 1.69 s
+magic/poison	1	magic/poison-1.mp3	0.31	bubble-sound-effects	bubbles-single1.wav			BMacZero	CC0	https://opengameart.org/content/bubble-sound-effects	single bubble pop, 0.32 s
+magic/earth	1	magic/earth-1.mp3	1.82	earth-element-magic-spell	Earth Element Magic Spell_3.ogg			qubodup	CC0	https://opengameart.org/content/earth-element-magic-spell	earth magic spell, 1.89 s
+magic/water	2	magic/water-2.mp3	1.11	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-01.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	short water splash, 1.12 s
+magic/dark-bolt	2	magic/dark-bolt-2.mp3	1.06	3-dark-magic-spells	dark_magic/dark_magic/fout-02.flac			qubodup	CC0	https://opengameart.org/content/3-dark-magic-spells	dark spell, 1.22 s
+magic/wind	1	magic/wind-1.mp3	1.50	wind-whoosh-loop	wind woosh loop.ogg	0	1.5	SketchMan3	CC0	https://opengameart.org/content/wind-whoosh-loop	cut of wind whoosh loop, 1.5 s
+magic/fire-cast	1	magic/fire-cast-1.mp3	1.43	fireball-1	105016__julien-matthey__jm-fx-fireball-01.wav	0	1.5	diligentcircle	CC0	https://opengameart.org/content/fireball-1	OGA lists CC0; description names a freesound source only, no attribution text required
+magic/barrier	2	magic/barrier-2.mp3	1.59	magic-spell-sfx	magical_1_0.ogg			JaggedStone	CC0	https://opengameart.org/content/magic-spell-sfx	magic chime, weak name match
+magic/thunder	1	magic/thunder-1.mp3	3.60	rain-long-thunder	rain-thunder.ogg	21.9	25.5	WuxiaScrub	CC0	https://opengameart.org/content/rain-long-thunder	Single thunder crash with rain tail from rain-long-thunder; cut at 21.9-25.5 s
+magic/summon	1	magic/summon-1.mp3	11.92	monster-spawn-rune-summon-sound-obscure	incarnatewav.wav			DaGameKnower	CC0	https://opengameart.org/content/monster-spawn-rune-summon-sound-obscure	
+magic/fizzle	-										same sound as magic/curse#2; the game can reuse that file
+magic/rune	-										same sound as magic/cast#2; the game can reuse that file

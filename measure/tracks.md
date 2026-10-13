@@ -123,6 +123,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Chibi Quest battle teaser videos (16:9 and 9:16)**
   *Link: [./tracks/showcase_battle_teaser_20260930/](./tracks/showcase_battle_teaser_20260930/)*
 
+- [~] **Track: Sound library: CC0 sound effects and music for the asset catalog and the games**
+  *Link: [./tracks/audio_sfx_library_20261013/](./tracks/audio_sfx_library_20261013/)*
+
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**

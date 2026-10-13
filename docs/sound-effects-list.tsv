@@ -1,0 +1,357 @@
+id	description	used_by	takes	length	priority
+ui/tap	Soft button tap or click	game:tap; every menu and HUD button	3	short	P0
+ui/select	Select an answer, card, or item	game:pick; answer choices; shop items	2	short	P0
+ui/confirm	Confirm or accept	menus; shop purchase dialog	2	short	P0
+ui/back	Back, cancel, or close	menus	2	short	P1
+ui/deny	Action not allowed (gentle buzz or thud)	game:reject; locked items	2	short	P0
+ui/toggle	Switch on or off	settings; sound toggle	1	short	P1
+ui/menu-open	Panel or menu opens (soft whoosh)	menus; inventory	2	short	P1
+ui/menu-close	Panel or menu closes	menus; inventory	1	short	P1
+ui/popup	Card or popup appears	game briefings; rewards	2	short	P1
+ui/notify	Notification ping	Guild Mode messages	2	short	P1
+ui/page-turn	Book page turn	game:page; enchanted-library; haunted-library; props/furniture/lectern	3	short	P0
+ui/tab	Tab switch	menus	1	short	P2
+ui/hover	Very soft tick on hover or focus	desktop menus	1	short	P2
+ui/countdown-tick	Countdown or timer tick	game timers; potion-rush	2	short	P0
+ui/time-warning	Time almost up (fast ticks or small bell)	game timers	1	medium	P1
+ui/time-up	Time is up (bell or gong)	game timers	1	medium	P1
+ui/typing-key	Keyboard key press	game_typing_duel	4	short	P1
+ui/typing-error	Wrong key	game_typing_duel	2	short	P1
+ui/drag	Pick up a tile or card to drag	rune-match; alchemists-synthesis	2	short	P0
+ui/drop	Drop a tile or card	rune-match; alchemists-synthesis	2	short	P0
+ui/swap	Two tiles swap places	game:swap; rune-match	2	short	P0
+ui/shuffle	Shuffle tiles or cards	rune-match	1	short	P2
+answer/correct	Correct answer chime (bright, rewarding)	game:correct; every reading game	3	short	P0
+answer/wrong	Wrong answer (gentle, never harsh)	game:wrong; every reading game	3	short	P0
+answer/streak	Answer streak step (rising chimes)	potion-rush combo; spellweavers-run	3	short	P0
+answer/word-complete	Word or sentence complete	game_typing_duel; flashcard input	2	short	P1
+answer/perfect	Perfect round	game results	1	medium	P1
+reward/coin	Pick up one coin	game:coins; game:collect; items/quest-and-treasure/gold-coin	3	short	P0
+reward/coins-many	Shower of coins	GP payout; props/world/coin-pile; props/world/treasure-pile	2	medium	P0
+reward/coin-purse	Coin purse jingle	items/quest-and-treasure/coin-purse	2	short	P1
+reward/gem	Gem pick up (crystal chime)	items/crafting/gem-ruby; gem-emerald; gem-sapphire	3	short	P1
+reward/xp-tick	XP counter tick	XP bar	2	short	P0
+reward/xp-fill	XP bar fills (rising sweep)	XP bar	1	medium	P0
+reward/level-up	Level up fanfare (short)	player progression	2	medium	P0
+reward/gp-earned	GP earned (coins and chime)	Chibi Quest GP	2	medium	P0
+reward/purchase	Shop purchase complete	avatar shop	2	short	P0
+reward/equip	Equip a new item (flourish)	avatar equipment	2	short	P0
+reward/unlock	Item or cosmetic unlock (magic sparkle)	avatar rewards; game:claim	2	medium	P0
+reward/star	Earn one star of three	game results	3	short	P0
+reward/badge	Achievement badge	progression	1	medium	P1
+reward/chest-open	Treasure chest opens with a reward sparkle	props/containers/treasure-chest; game:open	2	medium	P0
+reward/quest-accept	Quest accepted	npcs/settlement/quest-giver	1	short	P1
+reward/quest-complete	Quest complete	quests	1	medium	P1
+reward/daily	Daily reward claim	progression	1	medium	P2
+reward/boss-defeated	Guild boss defeated (big fanfare)	Guild Mode	1	long	P0
+reward/guild-hit	The class deals damage to the guild boss	Guild Mode; game:join	2	short	P1
+reward/victory	Victory fanfare	game:victory; every game	3	medium	P0
+reward/round-lost	Round lost (gentle, encouraging)	game results	2	medium	P0
+battle/swing-light	Light weapon swing (sword, dagger)	equipment/melee-weapons/short-sword; dagger; rapier; long-sword; game:whoosh	4	short	P0
+battle/swing-heavy	Heavy weapon swing (axe, hammer, greatsword)	equipment/melee-weapons/great-axe; maul; warhammer; greatsword	3	short	P1
+battle/hit-blunt	Bloodless impact thud	fx-geometry/combat/impact-burst; bloodless-hit-spark; game:hit; game:strike; game:thud	4	short	P0
+battle/hit-metal	Metal weapon clash (clang)	fx-geometry/combat/sword-trail; game:clang; game:clank	3	short	P0
+battle/hit-armor	Hit on armor	equipment/armor/plate-armor; animated-armor	2	short	P1
+battle/block-shield	Shield block (wood or metal)	fx-geometry/combat/shield-hit; equipment/armor/kite-shield; round-shield; buckler	3	short	P0
+battle/miss	Attack misses (swish)	every battle	2	short	P1
+battle/critical	Critical hit (big impact and ring)	every battle	2	short	P1
+battle/punch	Punch or kick (cartoon)	heroes/martial/monk; brawlers	3	short	P2
+battle/club	Club or staff bonk	equipment/melee-weapons/club; quarterstaff	2	short	P1
+battle/spear-thrust	Spear or pike thrust	equipment/melee-weapons/spear; pike; trident; halberd	2	short	P2
+battle/whip	Whip crack	equipment/melee-weapons/whip	1	short	P2
+battle/unsheathe	Draw a sword	equipment/accessories/scabbard; heroes	3	short	P1
+battle/sheathe	Put a sword away	equipment/accessories/scabbard	1	short	P2
+battle/bow-draw	Bow string draw	equipment/ranged-weapons/longbow; shortbow; archers-revenge	2	short	P0
+battle/bow-release	Arrow release (string twang)	game:arrow; game:shoot; archers-revenge	3	short	P0
+battle/arrow-fly	Arrow flies past	fx-geometry/combat/arrow-trail	2	short	P1
+battle/arrow-hit	Arrow hits wood or a target	archers-revenge; castle-defense	3	short	P0
+battle/crossbow	Crossbow shot	equipment/ranged-weapons/crossbow; heavy-crossbow	2	short	P1
+battle/sling	Sling throw	equipment/ranged-weapons/sling	1	short	P2
+battle/throw	Throw a knife, axe, or javelin	equipment/ranged-weapons/throwing-knife; throwing-axe; javelin	2	short	P2
+battle/explosion-small	Small explosion or pop	game:boom	2	short	P0
+battle/explosion-big	Big explosion	castle-defense; magic impacts	2	medium	P1
+battle/enemy-appear	Enemy appears (poof or magic)	game:spawn; every battle	2	short	P0
+battle/enemy-vanish	Enemy defeated and vanishes in a poof (no gore)	game:defeat; every battle	3	short	P0
+battle/hero-hurt	Hero takes damage (soft thump)	every battle; heroes	3	short	P0
+battle/hero-knocked-out	Hero falls down (soft, not scary)	every battle	1	medium	P1
+battle/start	Battle starts (horn or drum)	rpg-battle; monster-encounters	2	medium	P0
+battle/turn	Next turn cue	rpg-battle	1	short	P1
+battle/stun	Stunned (dizzy chime)	every battle	1	short	P2
+battle/shield-up	Raise a shield or guard	game:shield; rune-match	2	short	P0
+battle/tower-build	A tower or barricade is built	game:tower; castle-defense	2	short	P0
+battle/war-horn	War horn signal	equipment/tools/horn; castle-defense waves	2	medium	P1
+battle/war-drum	War drum hits	equipment/tools/drum; battle start	2	medium	P1
+battle/war-drum-loop	War drums that repeat under a battle (owner, round 1: the war drum clip loops well)	equipment/tools/drum; battle start	1	loop	P1
+battle/boulder	A boulder falls or hits the ground	castle-defense; game:rumble	2	medium	P1
+battle/crash	Wood and stone break together	game:crash; castle-defense	2	short	P0
+magic/charge	Spell charges up	heroes/magic; every caster	2	medium	P0
+magic/cast	Spell release (generic)	game:cast; heroes/magic	3	short	P0
+magic/fizzle	Spell fails (fizzle)	game:fizzle; game:fizz	2	short	P0
+magic/fire-cast	Fire spell (whoosh)	fx-geometry/magic/fireball; heroes/magic/elementalist	2	short	P0
+magic/fire-impact	Fireball explodes	fx-geometry/magic/fireball	2	short	P1
+magic/ice-cast	Ice shard or freeze spell	fx-geometry/magic/ice-shard	2	short	P1
+magic/ice-shatter	Ice shatters	game:shatter	2	short	P0
+magic/lightning	Lightning zap	fx-geometry/magic/lightning-bolt; game:bolt; game:storm	3	short	P0
+magic/thunder	Thunder crash	storm-castle-tower; game:storm	2	medium	P0
+magic/heal	Healing chime	fx-geometry/magic/healing-orb; game:heal; heroes/support/healer	3	medium	P0
+magic/blessing	Holy blessing (choir shimmer)	fx-geometry/magic/blessing-rays; heroes/magic/cleric; heroes/martial/paladin	2	medium	P1
+magic/buff	Power up	items/consumables/strength-potion; speed-potion	2	short	P1
+magic/curse	Dark curse	fx-geometry/magic/curse-cloud; heroes/magic/warlock	2	medium	P1
+magic/poison	Poison hiss or bubble	fx-geometry/magic/poison-cloud; items/consumables/poison-bottle	2	short	P1
+magic/wind	Wind gust spell	monsters/elemental/air-elemental; druid	2	short	P1
+magic/earth	Earth rumble or rock spike	monsters/elemental/earth-elemental; shaman	2	medium	P1
+magic/water	Water splash spell	monsters/elemental/water-elemental	2	short	P1
+magic/arcane	Arcane bolt or mana orb	fx-geometry/magic/mana-orb; equipment/magic-weapons/wand; staff	3	short	P0
+magic/barrier	Magic barrier or ward (hum)	fx-geometry/magic/magical-barrier; game:ward	2	medium	P0
+magic/rune	A rune activates	fx-geometry/magic/rune-burst; props/world/magic-rune; rune-forge-chamber; game:aura	2	short	P0
+magic/teleport	Teleport or portal whoosh	fx-geometry/magic/teleport-portal	2	medium	P1
+magic/summon	Summoning swell	fx-geometry/magic/summoning-circle; heroes/magic/summoner	2	long	P1
+magic/sparkle	Magic sparkle or twinkle	fairies; potions; game:chime; game:ding	3	short	P0
+magic/light	Light spell or glow	fx-geometry/magic/glow-orb; game:light	2	short	P0
+magic/dispel	Magic fades away	every caster	1	short	P2
+magic/dark-bolt	Shadow bolt	heroes/magic/necromancer; enemies/humanoid/dark-mage	2	short	P1
+magic/potion-brew	Cauldron brew bubbles and pops	props/craft-and-trade/cauldron; alchemists-synthesis; potion-rush; game:plop	2	medium	P0
+hero/footstep-grass	Footsteps on grass	every hero; avatar	4	short	P1
+hero/footstep-stone	Footsteps on stone	every hero; dungeons; castles	4	short	P1
+hero/footstep-wood	Footsteps on a wood floor	every hero; taverns; ships	4	short	P1
+hero/footstep-dirt	Footsteps on dirt or gravel	every hero; roads	4	short	P2
+hero/footstep-snow	Footsteps in snow	every hero; snow scenes	4	short	P2
+hero/footstep-water	Footsteps in shallow water	every hero; puddles; rivers	3	short	P2
+hero/footstep-armored	Armored footsteps (clank)	heroes/martial/knight; paladin; guardian	3	short	P2
+hero/jump	Jump	game:hop; platform games	2	short	P1
+hero/land	Land after a jump	game:bump; platform games	2	short	P1
+hero/dodge	Dodge roll or dash	heroes/martial/rogue; assassin; duelist	2	short	P2
+hero/attack-shout	Short attack shout ("hah!"), no words	heroes/martial	4	short	P1
+hero/effort	Light effort grunt	every hero	3	short	P2
+hero/hurt-voice	Mild hurt voice ("oof")	every hero	4	short	P1
+hero/cheer	Victory cheer ("yeah!")	every hero; results	3	short	P1
+hero/cast-voice	Spell incantation murmur, no real words	heroes/magic	2	short	P2
+hero/armor-move	Armor jingle while moving (chainmail)	equipment/armor/chainmail; scale-armor	2	short	P2
+hero/cloth-move	Cloak or robe swoosh	equipment/armor/cloak; cape; mage-robe	2	short	P2
+hero/lute	Lute strum (bard ability)	heroes/support/bard; equipment/tools/lute	2	medium	P1
+hero/whistle	Whistle to call a beast	heroes/martial/beast-rider; hunter	1	short	P2
+npc/greet	Friendly greeting murmur ("hm? hello"), no words	every NPC	4	short	P1
+npc/hmm	Thinking ("hmm")	npcs/settlement/quest-giver; scholar	2	short	P2
+npc/laugh	Friendly laugh	every NPC	3	short	P1
+npc/gasp	Surprised gasp	every NPC	2	short	P2
+npc/child-laugh	Child giggle	npcs/settlement/orphan; student	1	short	P2
+npc/old-mumble	Old person mumble	npcs/settlement/elder; npcs/wilderness/hermit	1	short	P2
+npc/crowd-cheer	Crowd cheers	festivals; victory; Guild Mode	2	medium	P1
+npc/crowd-gasp	Crowd gasps	festivals	1	short	P2
+npc/hand-bell	Hand bell ring	npcs/settlement/town-crier	1	short	P1
+npc/shop-bell	Shop door bell	npcs/settlement/shopkeeper; avatar shop	1	short	P1
+npc/anvil	Hammer on an anvil	npcs/settlement/blacksmith; armorer; weaponsmith; props/craft-and-trade/anvil	3	short	P1
+npc/bellows	Forge bellows and fire	props/craft-and-trade/bellows; forge	1	medium	P2
+npc/grindstone	Grinding wheel sharpens a blade	props/craft-and-trade/grinding-wheel	1	medium	P2
+npc/saw	Sawing wood	npcs/settlement/carpenter; props/craft-and-trade/saw	1	medium	P2
+npc/hammer-wood	Hammering nails	npcs/settlement/carpenter; props/craft-and-trade/workbench	2	short	P2
+npc/axe-chop	Axe chops wood	npcs/settlement/lumberjack; props/craft-and-trade/axe	3	short	P1
+npc/pickaxe	Pickaxe hits rock	npcs/settlement/miner; npcs/wilderness/prospector; items/crafting/iron-ore	3	short	P1
+npc/loom	Loom or spinning wheel	npcs/settlement/weaver; props/craft-and-trade/loom; spinning-wheel	1	medium	P2
+npc/quill	Quill writes on paper	npcs/settlement/scribe; librarian	1	medium	P2
+npc/pour	Pour a drink	npcs/settlement/bartender; brewer; game:pour	2	short	P0
+npc/mug-clink	Mugs clink together	npcs/settlement/bartender; props/food/tankard; tavern	2	short	P1
+npc/coins-count	Count coins	npcs/settlement/banker; tax-collector; merchant	1	short	P2
+npc/broom	Sweep a floor	npcs/settlement/villager	1	medium	P2
+npc/flute	Short flute melody	npcs/settlement/musician; shepherd; equipment/tools/flute	1	medium	P2
+npc/hand-drum	Hand drum	npcs/settlement/performer	1	short	P2
+npc/shrine-bell	Temple or shrine bell	npcs/settlement/priest; npcs/wilderness/shrine-keeper	1	long	P1
+npc/dig	Shovel digs	npcs/settlement/gravedigger; gardener; npcs/wilderness/archaeologist	2	short	P2
+npc/fishing	Cast a line and splash	npcs/settlement/fisher; props/craft-and-trade/fishing-rod	1	medium	P2
+enemy/goblin-chatter	Goblin chatter or cackle	enemies/humanoid/goblin-warrior; goblin-archer; goblin-shaman; goblin-king; kobold-*; npcs/fantasy-peoples/goblin-citizen	3	short	P0
+enemy/goblin-attack	Goblin attack yell	enemies/humanoid/goblin-*; kobold-*	2	short	P1
+enemy/goblin-hurt	Goblin hurt squeak	enemies/humanoid/goblin-*; kobold-*	2	short	P1
+enemy/orc-grunt	Orc, ogre, or troll grunt	enemies/humanoid/orc-*; ogre-brute; troll-guard; gnoll-*; minotaur-guard	3	short	P0
+enemy/orc-roar	Orc war roar	enemies/humanoid/orc-warlord; ogre-brute	2	medium	P1
+enemy/orc-hurt	Orc hurt grunt	enemies/humanoid/orc-*; ogre-brute; troll-guard	2	short	P1
+enemy/bandit-shout	Bandit taunt or shout ("hey!"), no words	enemies/humanoid/bandit; brigand; raider; pirate; highwayman; mercenary	3	short	P1
+enemy/bandit-hurt	Bandit hurt grunt	enemies/humanoid/bandit; brigand; raider; pirate	2	short	P1
+enemy/evil-laugh	Villain laugh	enemies/humanoid/dark-mage; warlock; witch; necromancer; cult-leader; enemies/undead/lich; vampire-lord	3	medium	P1
+enemy/chant	Dark chant, no real words	enemies/humanoid/cultist; evil-priest	1	long	P2
+enemy/skeleton-rattle	Bone rattle	enemies/undead/skeleton; skeleton-archer; skeleton-knight; skeleton-mage; bone-golem	3	short	P0
+enemy/skeleton-collapse	Bones clatter to the ground	enemies/undead/skeleton-*	2	medium	P1
+enemy/zombie-groan	Zombie groan (silly, not scary)	enemies/undead/zombie; zombie-soldier; ghoul; mummy; plague-bearer; hero-vs-zombie; game:groan	3	medium	P0
+enemy/ghost-wail	Ghost wail ("ooo")	enemies/undead/ghost; banshee; specter; wraith; poltergeist; wight; game:wail	3	medium	P0
+enemy/ghost-whisper	Ghostly whisper or breath	enemies/undead/ghost; specter; haunted-library	2	medium	P2
+enemy/vampire-hiss	Hiss	enemies/undead/vampire; revenant	2	short	P2
+enemy/construct-step	Heavy stone or metal footstep	enemies/construct/*-golem; living-statue; monsters/giant-and-ancient/colossal-golem	3	short	P1
+enemy/stone-grind	Stone grinds as it moves	enemies/construct/stone-golem; living-statue; gargoyle	2	medium	P1
+enemy/metal-clank	Armor or metal clank	enemies/construct/animated-armor; animated-weapon; iron-golem; enemies/undead/death-knight	3	short	P1
+enemy/clockwork	Gears whir and tick	enemies/construct/clockwork-sentry; clockwork-soldier	2	medium	P2
+enemy/construct-break	A golem crumbles	enemies/construct/*; game:crumble	2	medium	P1
+monster/slime-squish	Slime squish or bounce	monsters/small/slime; green-slime; fire-slime; ice-slime; poison-slime; devourer-slime; game:boing	4	short	P0
+monster/slime-splat	Slime splat when defeated	monsters/small/*-slime; devourer-slime	2	short	P0
+monster/beast-growl	Beast growl	monsters/beast/dire-wolf; dire-bear; owlbear; giant-boar; displacer-beast; monsters/abyssal-and-cosmic/shadow-hound	3	medium	P0
+monster/beast-roar	Big beast roar	monsters/beast/manticore; chimera; owlbear; game:roar	3	medium	P0
+monster/beast-snarl	Beast snarl when it attacks	monsters/beast/*	2	short	P1
+monster/reptile-hiss	Reptile hiss	monsters/beast/basilisk; giant-lizard; giant-snake; sea-serpent; monsters/dragon/lindworm	3	short	P1
+monster/bird-screech	Big bird screech	monsters/beast/griffin; hippogriff; roc; giant-eagle; cockatrice; griffin-riders-escape; griffin-sky-joust; gryphon-patrol	3	medium	P0
+monster/wing-flap	Big wings flap	monsters/beast/griffin; monsters/dragon/*; wyvern; game:flap	3	short	P0
+monster/dragon-roar	Dragon roar	monsters/dragon/*; drake; wyvern; monsters/beast/hydra; dragon-flight; dragon-rider	3	long	P0
+monster/dragon-breath	Dragon fire breath	monsters/dragon/dragon-fire; dragon-ancient	2	medium	P0
+monster/frost-breath	Dragon ice breath	monsters/dragon/dragon-ice	1	medium	P2
+monster/insect-chitter	Insect chitter or click	monsters/small/giant-spider; scorpion; centipede; cave-worm; monsters/giant-and-ancient/giant-spider-queen	3	short	P1
+monster/insect-skitter	Many legs skitter	monsters/small/giant-spider; centipede	2	medium	P2
+monster/rat-squeak	Rat squeak	monsters/small/giant-rat; gremlin; game:eek	3	short	P1
+monster/bat-screech	Bat screech	monsters/small/giant-bat	2	short	P1
+monster/mimic-chomp	Chest chomp	monsters/small/mimic; game:munch	2	short	P1
+monster/bite	Bite snap	monsters/beast/*; giant-toad	3	short	P1
+monster/demon-growl	Deep demon growl (not too scary)	monsters/abyssal-and-cosmic/demon; horned-demon; imp-lord; abyssal-beast	2	medium	P1
+monster/eldritch-drone	Strange warbling drone	monsters/abyssal-and-cosmic/eldritch-eye; eldritch-horror; void-tentacle	2	long	P2
+monster/tentacle-slap	Wet tentacle slap	monsters/beast/kraken; monsters/abyssal-and-cosmic/void-tentacle	2	short	P2
+monster/crab-clack	Claws clack	monsters/beast/giant-crab	2	short	P2
+monster/toad-croak	Big croak	monsters/beast/giant-toad	2	short	P2
+monster/fire-roar	Roaring flame	monsters/elemental/fire-elemental; magma-elemental	2	medium	P1
+monster/water-surge	Water surge and splash	monsters/elemental/water-elemental	2	medium	P2
+monster/wind-howl	Howling wind gust	monsters/elemental/air-elemental; storm-elemental	2	medium	P2
+monster/rock-rumble	Rock rumble	monsters/elemental/earth-elemental	2	medium	P2
+monster/ice-crackle	Ice crackle	monsters/elemental/ice-elemental; monsters/small/ice-slime	2	medium	P2
+monster/crystal-chime	Crystal resonance	monsters/elemental/crystal-elemental; enemies/construct/crystal-golem	2	medium	P2
+monster/shadow-whoosh	Shadow whoosh or whisper	monsters/elemental/shadow-elemental; monsters/dragon/dragon-shadow	2	medium	P2
+monster/fey-giggle	Fairy giggle or twinkle	monsters/fey-and-spirit/fairy-sprite; will-o-wisp; monsters/small/pixie-swarm	3	short	P1
+monster/tree-creak	Wood creaks or groans	monsters/fey-and-spirit/treant; monsters/giant-and-ancient/ancient-treant; enemies/construct/wood-golem; game:creak	3	medium	P1
+monster/magic-horse	Magic horse whinny	monsters/fey-and-spirit/unicorn; nightmare; kelpie; centaur	2	medium	P2
+monster/giant-step	Giant footstep (the ground shakes)	monsters/giant-and-ancient/*; game:thud	3	short	P1
+monster/giant-bellow	Giant bellow	monsters/giant-and-ancient/hill-giant; cyclops; fire-giant; frost-giant	2	medium	P2
+monster/spit	Spit (acid or slime)	game:spit; monsters/small/poison-slime	2	short	P0
+wildlife/songbird	Small bird chirp	wildlife/air/sparrow; forests	3	short	P1
+wildlife/crow	Crow or raven caw	wildlife/air/crow; raven; wildlife/mounts-and-pets/familiar-raven	3	short	P1
+wildlife/owl	Owl hoot	wildlife/air/owl; wildlife/mounts-and-pets/familiar-owl	2	medium	P1
+wildlife/hawk	Hawk or eagle cry	wildlife/air/hawk; eagle; falcon; wildlife/mounts-and-pets/messenger-bird	2	medium	P1
+wildlife/pigeon	Pigeon coo	wildlife/air/pigeon	1	short	P2
+wildlife/bird-flutter	Small wings flutter	wildlife/air/*	2	short	P2
+wildlife/bat	Bat squeak and flutter	wildlife/air/bat	1	short	P2
+wildlife/bee	Bee buzz	wildlife/air/bee; wasp; npcs/settlement/beekeeper	2	loop	P2
+wildlife/wolf-howl	Wolf howl	wildlife/land/wolf; wildlife/mounts-and-pets/riding-wolf	2	long	P1
+wildlife/wolf-growl	Wolf growl or bark	wildlife/land/wolf	2	short	P1
+wildlife/dog-bark	Dog bark	wildlife/land/dog	3	short	P1
+wildlife/cat-meow	Cat meow	wildlife/land/cat; wildlife/mounts-and-pets/familiar-cat	2	short	P1
+wildlife/bear	Bear growl	wildlife/land/bear	2	medium	P1
+wildlife/boar	Boar or pig grunt	wildlife/land/boar; pig	2	short	P1
+wildlife/fox	Fox yip	wildlife/land/fox	1	short	P2
+wildlife/deer	Deer, stag, or elk call	wildlife/land/deer; stag; elk; moose	2	medium	P2
+wildlife/horse-whinny	Horse whinny	wildlife/land/horse; wildlife/mounts-and-pets/pony; riding-horse; warhorse	3	medium	P1
+wildlife/horse-snort	Horse snort	wildlife/land/horse	2	short	P2
+wildlife/hooves-walk	Hooves walk on a road	wildlife/land/horse; donkey; wildlife/mounts-and-pets/mule	2	loop	P1
+wildlife/hooves-gallop	Hooves gallop	wildlife/mounts-and-pets/warhorse; riding-horse	2	loop	P1
+wildlife/donkey	Donkey bray	wildlife/land/donkey; wildlife/mounts-and-pets/mule	1	medium	P2
+wildlife/cow	Cow moo	wildlife/land/cow; ox; yak	2	medium	P2
+wildlife/sheep	Sheep baa	wildlife/land/sheep	2	short	P2
+wildlife/goat	Goat bleat	wildlife/land/goat; wildlife/mounts-and-pets/pack-goat	2	short	P2
+wildlife/chicken	Chicken cluck	wildlife/land/chicken	2	short	P2
+wildlife/rooster	Rooster crow	wildlife/land/rooster	1	medium	P2
+wildlife/squirrel	Squirrel chatter	wildlife/land/squirrel	1	short	P2
+wildlife/small-critter	Small animal rustles or hops in grass	wildlife/land/rabbit; hare; hedgehog; badger	2	short	P2
+wildlife/camel	Camel grunt	wildlife/land/camel	1	medium	P2
+wildlife/frog	Frog croak	wildlife/water/frog	2	short	P1
+wildlife/crocodile	Crocodile hiss or snap	wildlife/water/crocodile; wildlife/mounts-and-pets/riding-lizard	1	short	P2
+wildlife/seal	Seal bark	wildlife/water/seal	1	short	P2
+wildlife/dolphin	Dolphin clicks	wildlife/water/dolphin	1	short	P2
+wildlife/fish-splash	A fish jumps and splashes	wildlife/water/fish; salmon; trout; eel	2	short	P2
+ambience/forest-day	Forest by day: birds and leaves	nature/trees; forest scenes; bench/trials/forest-env	2	loop	P0
+ambience/forest-night	Forest by night: crickets and owls	forest scenes	1	loop	P1
+ambience/meadow	Open field: soft wind and birds	hamlet scene; farms	1	loop	P1
+ambience/village	Village by day: distant voices and animals	hamlet scene; bench/trials/village-env	1	loop	P0
+ambience/market	Market crowd	architecture/structure/market-tent; shop-stall	1	loop	P1
+ambience/tavern	Tavern: crowd, mugs, and fire	bench/trials/tavern-env	1	loop	P0
+ambience/smithy	Smithy: hammering and fire	bench/trials/blacksmith-env	1	loop	P1
+ambience/castle	Castle hall: echo and distant footsteps	castle-defense; storm-castle-tower	1	loop	P1
+ambience/library	Quiet library: clock and pages	enchanted-library; haunted-library	1	loop	P0
+ambience/cave	Cave: drips and low air	nature/terrain/cave-mouth; labyrinth	2	loop	P0
+ambience/dungeon	Dungeon: low drone, drips, chains	bench/trials/dungeon-env; dungeon-liberator; shadow-gate-dungeon	2	loop	P0
+ambience/crypt	Haunted crypt (spooky, kid-safe)	architecture/structure/crypt-chapel; haunted-library	1	loop	P1
+ambience/river	Stream or river	architecture/landscape-parts river parts; watermill	1	loop	P1
+ambience/waterfall	Waterfall	fx-geometry/environment/waterfall-splash	1	loop	P2
+ambience/ocean	Waves on a shore	architecture/structure/dock; pier	1	loop	P1
+ambience/ship	Ship deck: creaks and waves	vehicles/water/*	1	loop	P2
+ambience/rain	Rain	fx-geometry/environment/rain-drop	1	loop	P1
+ambience/storm	Thunderstorm	storm-castle-tower	1	loop	P0
+ambience/wind	Wind on mountains or plains	dragon-flight; griffin games	2	loop	P0
+ambience/snow	Cold wind or blizzard	snow scenes; fx-geometry/environment/snowflake	1	loop	P2
+ambience/desert	Desert wind	nature/terrain/sand-dune	1	loop	P2
+ambience/swamp	Swamp: frogs and bubbles	swamp scenes	1	loop	P2
+ambience/lava	Lava bubbles	nature/terrain/lava-rock; fx-geometry/environment/lava-bubble	1	loop	P2
+ambience/campfire	Campfire crackle	props/world/campfire; watchfire	1	loop	P1
+ambience/fireplace	Fireplace crackle	props/furniture/fireplace	1	loop	P2
+ambience/magic-hum	Magic portal or crystal hum	props/world/portal; magic-crystal; abyssal-well; sorcerer-ziggurat	2	loop	P1
+ambience/sky	High sky wind for flight	dragon-flight; griffin-sky-joust; gryphon-patrol; vehicles/air/*	1	loop	P0
+ambience/underwater	Muffled underwater sound	merfolk scenes	1	loop	P2
+ambience/windmill	Windmill creaks	architecture/structure/windmill	1	loop	P2
+ambience/watermill	Water wheel turns	architecture/structure/watermill	1	loop	P2
+world/door-open	Wooden door opens (creak)	architecture/building-parts door; game:open; game:creak	3	medium	P0
+world/door-close	Door closes	architecture/building-parts door	2	short	P1
+world/door-locked	Locked door rattles	architecture/building-parts door	1	short	P2
+world/gate-open	Iron gate or portcullis opens	architecture/structure/gate; wall-gate; dungeon-liberator	2	long	P1
+world/chest-open	Wooden chest opens	props/containers/chest; locked-chest	2	short	P0
+world/unlock	A key turns in a lock	items/quest-and-treasure/key-*; ancient-key; dungeon-liberator	3	short	P0
+world/lockpick	Lockpick clicks	equipment/tools/lockpick	1	medium	P2
+world/lever	Pull a lever	props/world/lever	2	short	P1
+world/switch	Switch or pressure plate click	props/world/switch; pressure-plate	2	short	P1
+world/trap-spikes	Spike trap springs	props/world/spike-trap	1	short	P1
+world/trap-snap	Bear trap snaps shut	props/world/bear-trap	1	short	P2
+world/pit-fall	Fall into a pit (whistle and thump)	props/world/pit-trap	1	medium	P2
+world/stone-move	Heavy stone slides	props/world/statue; sarcophagus; obelisk; labyrinth	2	medium	P1
+world/rubble	Rubble falls	architecture/structure/ruin-column; game:crumble	2	medium	P1
+world/crate-break	Wooden crate or barrel breaks	props/containers/crate; barrel	3	short	P1
+world/pot-break	Pot, jar, or urn breaks	props/containers/pot; jar; urn	3	short	P1
+world/glass-break	Glass or vial breaks	props/containers/vial; bottle	2	short	P1
+world/bell	Bell ring	game:bell; game:ding; architecture/structure/tower	2	medium	P0
+world/gong	Gong	temples; battle start	1	long	P2
+world/torch-ignite	A torch lights	props/furniture/torch; wall-sconce; brazier	2	short	P1
+world/candle-out	Blow out a candle	props/furniture/candle; candelabra	1	short	P2
+world/book-open	A book opens	equipment/magic-weapons/grimoire; tome; spellbook; props/furniture/bookshelf	2	short	P1
+world/scroll	A scroll unrolls	items/quest-and-treasure/magic-scroll; ancient-scroll; treasure-map	2	short	P1
+world/rope	Rope creaks or pulls	props/craft-and-trade/rope-coil; architecture/structure/well	1	medium	P2
+world/chains	Chains rattle	props/world/chains; cage; gibbet	2	medium	P1
+world/ladder	Climb a ladder	architecture/structure/ladder	1	medium	P2
+world/bridge-creak	Wooden bridge creaks	architecture/structure/bridge; pier	1	medium	P2
+world/well-bucket	A bucket drops into a well and splashes	architecture/structure/well; props/containers/bucket	1	medium	P2
+world/water-splash	An object falls into water	nature/terrain/pond; puddle; game:plop	3	short	P0
+world/bubbles	Bubbling liquid	props/craft-and-trade/cauldron; alchemy-apparatus	2	medium	P1
+world/fountain	Fountain	architecture/structure/fountain	1	loop	P2
+world/portal-open	A portal opens	props/world/portal; architecture/structure/portal-frame	1	long	P1
+world/crystal-touch	Touch a magic crystal	props/world/magic-crystal; nature/terrain/crystal-cluster	2	short	P1
+world/grass-rustle	Bush or tall grass rustles	nature/plants/bush; bramble; tall-grass	2	short	P2
+world/tree-fall	A tree falls	nature/terrain/fallen-tree; npcs/settlement/lumberjack	1	long	P2
+world/winch	A wooden lift or winch turns	architecture/structure/elevator-platform	1	long	P2
+world/notice-board	Pin a paper to a board	props/world/notice-board	1	short	P2
+item/pickup	Pick up an item	every item; game:collect	3	short	P0
+item/drop	Put an item down	every item	2	short	P2
+item/potion-drink	Drink a potion (gulp)	items/consumables/*-potion; elixir; game:gulp	3	short	P0
+item/uncork	A cork pops out	items/consumables/*-potion; props/containers/vial	2	short	P1
+item/liquid-pour	Pour a liquid	props/craft-and-trade/alchemy-apparatus; distillation-flask; game:pour	2	short	P0
+item/eat	Eat food (munch or crunch)	props/food/*; items/consumables/bread-ration; ration; game:munch	3	short	P0
+item/bag	Open a backpack or bag	equipment/accessories/backpack; satchel; inventory	2	short	P1
+item/cloth	Cloth item or equip cloth	equipment/armor/cloth-robe; cloak; cape; items/crafting/cloth	2	short	P1
+item/leather	Leather creaks	equipment/armor/leather-armor; studded-leather; boots; belt	2	short	P1
+item/chainmail	Chainmail jingles	equipment/armor/chainmail; scale-armor	2	short	P1
+item/plate	Plate armor clanks	equipment/armor/plate-armor; steel-helmet; gauntlets	2	short	P1
+item/metal-small	Small metal item (ring, buckle, key)	equipment/accessories/ring; amulet; bracelet	3	short	P1
+item/wood-small	Small wood item	items/crafting/plank; wood-log; equipment/magic-weapons/staff	2	short	P2
+item/stone-small	Ore or stone pick up	items/crafting/iron-ore; copper-ore; gold-ore; silver-ore; coal	2	short	P2
+item/paper	Paper, letter, or map	items/quest-and-treasure/letter-sealed; quest-document; map-fragment	2	short	P1
+item/key-jingle	Keys jingle	items/quest-and-treasure/key-*	1	short	P2
+item/craft-success	Craft complete (hammer and chime)	rune-forge-chamber; alchemists-synthesis	2	medium	P0
+item/craft-fail	Craft fails (puff)	rune-forge-chamber; alchemists-synthesis	1	short	P1
+item/beads	Beads or a necklace	equipment/accessories/necklace; pendant	1	short	P2
+vehicle/cart	Wagon wheels on a road	vehicles/land/*	1	loop	P2
+vehicle/rowboat	Oars row in water	vehicles/water/rowboat	1	loop	P2
+vehicle/sail	Sail flaps and rigging creaks	vehicles/water/longship; merchant-ship; pirate-ship	1	loop	P2
+vehicle/airship	Airship propeller hum	vehicles/air/airship	1	loop	P2
+vehicle/balloon	Balloon burner whoosh	vehicles/air/balloon-basket	1	short	P2
+vehicle/carpet	Flying carpet magic whoosh	vehicles/air/flying-carpet	1	loop	P2
+vehicle/sleigh-bells	Sleigh bells	vehicles/land/sleigh	1	loop	P2
+music/title	Title or menu theme	game selector; launcher	2	music	P1
+music/town	Town or village theme	hamlet scene; village games	2	music	P1
+music/explore	Forest or field exploration	exploration games	2	music	P1
+music/dungeon	Dungeon or cave theme	dungeon-liberator; shadow-gate-dungeon; labyrinth	2	music	P1
+music/battle	Normal battle theme	AudioBus mood battle; rpg-battle; monster-encounters	3	music	P0
+music/boss	Boss battle theme	AudioBus mood boss; Guild Mode	2	music	P0
+music/calm	Calm theme for reading and puzzles	AudioBus mood calm; enchanted-library; potion-rush	3	music	P0
+music/shop	Shop theme	avatar shop	1	music	P1
+music/tavern	Tavern theme	tavern scenes	1	music	P2
+music/haunted	Spooky but kid-safe theme	haunted-library	1	music	P1
+music/sky	Flight and adventure theme	dragon-flight; griffin games	1	music	P1
+music/sea	Sea or port theme	ship scenes	1	music	P2
+music/victory-jingle	Short victory jingle (5 to 10 s)	game results	2	long	P0
+music/defeat-jingle	Short gentle jingle for a lost round	game results	1	long	P1

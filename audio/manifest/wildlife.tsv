@@ -1,0 +1,37 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+wildlife/bat	1	wildlife/bat-1.mp3	1.24	bat-screeches	bat/flac/bat_01.flac	0.03	1.27	AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	Bat screech, one call
+wildlife/songbird	1	wildlife/songbird-1.mp3	0.53	bird-chirping-sounds	birdchirping071414_0.mp3	0.74	1.27	syncopika	CC0	https://opengameart.org/content/bird-chirping-sounds	Songbird chirp, one call
+wildlife/crow	1	wildlife/crow-1.mp3	0.60	crow	crow_0.ogg			fvcalderan	CC0	https://opengameart.org/content/crow	Crow call, one call
+wildlife/owl	-										No CC0 owl hoot found in searches owl, hoot, night; fetched packs have none
+wildlife/hawk	-										No CC0 hawk or eagle cry found; searches hawk, eagle, screech returned none usable
+wildlife/pigeon	-										No CC0 pigeon or dove coo found; searches pigeon, dove, coo returned none
+wildlife/bee	-										No CC0 bee buzz loop found; rpg bee is 0.5 s; searches bee, buzz, insect found none 8-90 s
+wildlife/songbird	2	wildlife/songbird-2.mp3	1.40	forest-bird-sounds	forest_birds/Forest Birds/Forest Birds 6.wav	0	1.4	pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	Forest songbird chirp, trimmed
+wildlife/bear	1	wildlife/bear-1.mp3	1.06	bear-growls	bear/ogg/bear_01.ogg			AntumDeluge	CC0	https://opengameart.org/content/bear-growls	CC0 bear growl
+wildlife/boar	1	wildlife/boar-1.mp3	0.45	boar-0	boar_0.ogg			fvcalderan	CC0	https://opengameart.org/content/boar-0	CC0 boar call
+wildlife/cat-meow	1	wildlife/cat-meow-1.mp3	0.51	meow	Meow.ogg			IgnasD	CC0	https://opengameart.org/content/meow	CC0 cat meow
+wildlife/camel	1	wildlife/camel-1.mp3	3.34	camel-groan	camel/ogg/camel_01.ogg			AntumDeluge	CC0	https://opengameart.org/content/camel-groan	CC0 camel groan
+wildlife/sheep	1	wildlife/sheep-1.mp3	0.86	sheep-baa	sheep_baa_0.ogg			AntumDeluge	CC0	https://opengameart.org/content/sheep-baa	CC0 sheep baa, single call
+wildlife/donkey	1	wildlife/donkey-1.mp3	1.80	donkey-bray	donkey_bray_-_starninjas_0.ogg			StarNinjas	CC0	https://opengameart.org/content/donkey-bray	CC0 donkey bray, single call
+wildlife/wolf-growl	1	wildlife/wolf-growl-1.mp3	0.36	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/misc/wolfman.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	CC0 RPG pack wolf man growl
+wildlife/hooves-walk	1	wildlife/hooves-walk-1.mp3	11.08	horse-trotting	Trot.ogg	0.07	12.38	EZduzziteh	CC0	https://opengameart.org/content/horse-trotting	CC0 horse trot on a road; trot, not walk, closest CC0 match
+wildlife/fox	-										No CC0 fox yip found in search for fox; 4 fetch limit reached
+wildlife/deer	-										No CC0 deer, stag, or elk call found in search; 4 fetch limit reached
+wildlife/squirrel	-										No CC0 squirrel chatter found in search; 4 fetch limit reached
+wildlife/small-critter	-										No CC0 small animal rustle found in search; 4 fetch limit reached
+wildlife/frog	1	wildlife/frog-1.mp3	0.89	frog-croaks	croak_01_0.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	Frog croak, 1 s
+wildlife/frog	2	wildlife/frog-2.mp3	1.13	frog-croaks	croak_03.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	Frog croak, 1.26 s
+wildlife/fish-splash	2	wildlife/fish-splash-2.mp3	1.16	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-06.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	Water splash, 1.16 s
+wildlife/crocodile	-										No CC0 crocodile sound found in search
+wildlife/seal	-										No CC0 seal sound found in search
+wildlife/dolphin	-										No CC0 dolphin sound found in search
+wildlife/bird-flutter	-										same sound as monster/wing-flap#2; the game can reuse that file
+wildlife/dog-bark	2	wildlife/dog-bark-2.mp3	0.77	dog-barking-mono	dog_barking_mono.wav	0	0.77	HaelDB	CC0	https://opengameart.org/content/dog-barking-mono	
+wildlife/horse-whinny	-										no real horse whinny found
+wildlife/horse-snort	-										no horse snort found
+wildlife/hooves-gallop	-										no gallop found, only a trot loop
+wildlife/cow	-										no adult cow moo found
+wildlife/goat	-										no goat bleat found
+wildlife/chicken	-										no chicken cluck found
+wildlife/rooster	-										no rooster crow found, only crows
+wildlife/wolf-howl	-										no real wolf howl found, probe failed

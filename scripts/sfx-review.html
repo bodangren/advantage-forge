@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chibi Quest Sound Review</title>
+<style>
+:root { --bg: #f4f6f4; --card: #fff; --ink: #1a211e; --muted: #5f6b66; --line: #d6ddd9; --ok: #1d7639; --ok-bg: #e2f2e6; --no: #ad2a20; --no-bg: #fbe4e1; }
+@media (prefers-color-scheme: dark) { :root { --bg: #131816; --card: #1b2220; --ink: #e5ebe8; --muted: #9aa8a2; --line: #2d3734; --ok: #73d394; --ok-bg: #18301f; --no: #ff8b80; --no-bg: #3a1c19; } }
+body { margin: 0; padding: 16px 16px 90px; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, sans-serif; }
+main { max-width: 860px; margin: 0 auto; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 17px; margin: 26px 0 8px; }
+.muted { color: var(--muted); font-size: 13px; }
+.row { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin: 8px 0; }
+.row b { font-family: ui-monospace, monospace; font-size: 14px; }
+.take { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px; margin-top: 6px; border-radius: 6px; }
+.take audio { height: 36px; flex: 1 1 260px; min-width: 0; }
+.take.approve { background: var(--ok-bg); }
+.take.reject { background: var(--no-bg); }
+.take .src { flex-basis: 100%; font-size: 12px; color: var(--muted); }
+button { font: 600 14px system-ui, sans-serif; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+button.on.ok { background: var(--ok); color: #fff; border-color: var(--ok); }
+button.on.no { background: var(--no); color: #fff; border-color: var(--no); }
+input.note { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); font: 14px system-ui, sans-serif; }
+.missing { color: var(--no); font-size: 13px; }
+footer { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 10px 16px; }
+footer div { max-width: 860px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+footer button { background: var(--ok); color: #fff; border-color: var(--ok); }
+#msg { font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Chibi Quest Sound Review</h1>
+  <p class="muted">Play each take. Press Approve or Reject. Add a note to a row if you want a different sound. Press Submit at the bottom when you are done; rejected takes are removed and searched again.</p>
+  <label class="muted"><input type="checkbox" id="hide"> Hide takes I already decided</label>
+  <div id="list"><p class="muted">Loading…</p></div>
+</main>
+<footer><div><button id="submit">Submit</button><span id="count" class="muted"></span><span id="msg"></span></div></footer>
+<script>
+const KEY = 'sfx-review-v2';
+let data = { rows: [], sig: '' };
+let store = { d: {}, notes: {} };
+try { store = { d: {}, notes: {}, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch {}
+const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch {} };
+const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const dec = (t) => store.d[t.k] || t.r || '';
+
+function render() {
+  const hide = document.getElementById('hide').checked;
+  let html = '';
+  let cat = '';
+  for (const r of data.rows) {
+    const c = r.id.split('/')[0];
+    const takes = r.takes.filter((t) => !hide || !dec(t));
+    if (hide && r.takes.length && !takes.length) continue;
+    if (c !== cat) { html += `<h2>${esc(c)}</h2>`; cat = c; }
+    html += `<div class="row"><b>${esc(r.id)}</b> ${esc(r.p)} · ${esc(r.d)} <span class="muted">(${r.takes.length}/${r.w} takes)</span>`;
+    if (!r.takes.length) html += `<div class="missing">No take yet${r.miss ? ': ' + esc(r.miss) : ''}</div>`;
+    for (const t of takes) {
+      const d = dec(t);
+      html += `<div class="take ${d}" data-k="${esc(t.k)}"><audio controls preload="none" src="${esc(t.f)}"></audio>
+        <button class="ok ${d === 'approve' ? 'on' : ''}" data-d="approve">Approve</button><button class="no ${d === 'reject' ? 'on' : ''}" data-d="reject">Reject</button>
+        <span class="src">#${t.n} · ${esc(t.s)} s · ${esc(t.src)} by ${esc(t.a)}${t.note ? ' · ' + esc(t.note) : ''}</span></div>`;
+    }
+    html += `<input class="note" data-id="${esc(r.id)}" placeholder="Note (optional)" value="${esc(store.notes[r.id] || '')}"></div>`;
+  }
+  document.getElementById('list').innerHTML = html;
+  count();
+}
+
+function count() {
+  const all = data.rows.flatMap((r) => r.takes);
+  const ok = all.filter((t) => dec(t) === 'approve').length;
+  const no = all.filter((t) => dec(t) === 'reject').length;
+  document.getElementById('count').textContent = `${ok} approved · ${no} rejected · ${all.length - ok - no} not decided`;
+}
+
+document.getElementById('list').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-d]');
+  if (!b) return;
+  const el = b.closest('.take');
+  const k = el.dataset.k;
+  store.d[k] = store.d[k] === b.dataset.d ? '' : b.dataset.d;
+  keep();
+  const d = store.d[k];
+  el.className = 'take ' + d;
+  el.querySelector('.ok').classList.toggle('on', d === 'approve');
+  el.querySelector('.no').classList.toggle('on', d === 'reject');
+  count();
+});
+document.getElementById('list').addEventListener('input', (e) => {
+  if (!e.target.matches('input.note')) return;
+  store.notes[e.target.dataset.id] = e.target.value;
+  keep();
+});
+// Only one sound plays at a time.
+document.getElementById('list').addEventListener('play', (e) => {
+  document.querySelectorAll('audio').forEach((a) => { if (a !== e.target) a.pause(); });
+}, true);
+document.getElementById('hide').addEventListener('change', render);
+
+document.getElementById('submit').addEventListener('click', async () => {
+  const msg = document.getElementById('msg');
+  const decisions = data.rows.flatMap((r) => r.takes.map((t) => ({ id: r.id, take: t.n, file: t.k, decision: store.d[t.k] }))).filter((x) => x.decision);
+  const notes = Object.fromEntries(Object.entries(store.notes).filter(([, v]) => v && v.trim()));
+  msg.textContent = 'Sending…';
+  try {
+    const res = await fetch('review', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ submitted_at: new Date().toISOString(), decisions, notes }) });
+    if (!res.ok) throw new Error(await res.text());
+    const r = await res.json();
+    store = { d: {}, notes: {} };
+    keep();
+    msg.textContent = `Sent: ${r.approved} approved, ${r.dropped} rejected and removed, ${r.notes} notes.`;
+    await load(true);
+  } catch (err) {
+    msg.textContent = 'Sending failed: ' + (err.message || err);
+  }
+});
+
+async function load(force) {
+  try {
+    const d = await (await fetch('data.json', { cache: 'no-store' })).json();
+    if (force || d.sig !== data.sig) { data = d; render(); }
+  } catch (err) {
+    document.getElementById('msg').textContent = 'The review server does not answer: ' + (err.message || err);
+  }
+}
+// New takes appear without a reload, but never while a sound plays or a note is being typed.
+setInterval(() => {
+  const playing = [...document.querySelectorAll('audio')].some((a) => !a.paused);
+  if (!playing && !document.activeElement?.matches('input.note')) load(false);
+}, 15000);
+load(true);
+</script>
+</body>
+</html>

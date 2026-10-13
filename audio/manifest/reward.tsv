@@ -1,0 +1,41 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+reward/coin	1	reward/coin-1.mp3	0.23	12-coin-sound-effects	coins_-_starninjas/coin.1.ogg			StarNinjas	CC0	https://opengameart.org/content/12-coin-sound-effects	12 Coin Sound Effects, CC0 per pack; short coin clink
+reward/coin	2	reward/coin-2.mp3	0.39	12-coin-sound-effects	coins_-_starninjas/coin.5.ogg			StarNinjas	CC0	https://opengameart.org/content/12-coin-sound-effects	same pack, variation
+reward/coin	3	reward/coin-3.mp3	0.37	12-coin-sound-effects	coins_-_starninjas/coin.11.ogg			StarNinjas	CC0	https://opengameart.org/content/12-coin-sound-effects	same pack, variation
+reward/coins-many	1	reward/coins-many-1.mp3	0.55	coin-drop	coin_drop.ogg			Vinrax	CC0	https://opengameart.org/content/coin-drop	Coin Drop by Vinrax, 1.4 s coin spill
+reward/coin-purse	1	reward/coin-purse-1.mp3	0.89	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack artisticdude CC0, coin toss
+reward/coin-purse	2	reward/coin-purse-2.mp3	0.60	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack, coin toss
+reward/purchase	1	reward/purchase-1.mp3	0.30	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack coin toss, short
+reward/purchase	2	reward/purchase-2.mp3	0.60	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/coin.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack coin toss
+reward/equip	1	reward/equip-1.mp3	0.41	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/chainmail1.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack, armor clink as equip
+reward/equip	2	reward/equip-2.mp3	0.36	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/armor-light.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack, light armor
+reward/gem	1	reward/gem-1.mp3	0.18	gem-collect-sfx	gem-gather-stereo.wav			Bobjt	CC0	https://opengameart.org/content/gem-collect-sfx	Gem collect SFX by Bobjt, CC0, stereo gather
+reward/gem	2	reward/gem-2.mp3	0.18	gem-collect-sfx	gem-gather-mono-files/gem-gather-orig.wav			Bobjt	CC0	https://opengameart.org/content/gem-collect-sfx	Gem collect SFX by Bobjt, CC0, mono gather
+reward/chest-open	1	reward/chest-open-1.mp3	2.11	open-chest-sfx	open chest_0.wav			Oiboo	CC0	https://opengameart.org/content/open-chest-sfx	open chest SFX by Oiboo, CC0
+reward/level-up	1	reward/level-up-1.mp3	1.42	up-3x	up/up/upmid.wav			qubodup	CC0	https://opengameart.org/content/up-3x	Up (3x) by qubodup, CC0
+reward/level-up	2	reward/level-up-2.mp3	2.01	up-3x	up/up/uplong.wav			qubodup	CC0	https://opengameart.org/content/up-3x	Up (3x) by qubodup, CC0, long
+reward/xp-tick	1	reward/xp-tick-1.mp3	0.72	up-3x	up/up/upshort.wav			qubodup	CC0	https://opengameart.org/content/up-3x	Up (3x) by qubodup, CC0, short
+reward/victory	1	reward/victory-1.mp3	2.02	win-sound-effect	Win sound.wav			Listener	CC0	https://opengameart.org/content/win-sound-effect	Win sound effect by Listener, CC0
+reward/boss-defeated	1	reward/boss-defeated-1.mp3	4.66	hyper-ultra-fanfare	sboe.wav			Zane Little Music	CC0	https://opengameart.org/content/hyper-ultra-fanfare	Hyper-Ultra-Fanfare by Zane Little Music, CC0
+reward/xp-fill	1	reward/xp-fill-1.mp3	1.35	power-up-sound-effects	power_up_sound_v1_0.ogg			Spring Spring	CC0	https://opengameart.org/content/power-up-sound-effects	power-up sweep, rising, friendly
+reward/gp-earned	1	reward/gp-earned-1.mp3	1.14	level-up-power-up-coin-get-13-sounds	SoundPack01/Coin01.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	coin pickup
+reward/unlock	1	reward/unlock-1.mp3	1.07	achievement	achievement.wav			mdkieran	CC0	https://opengameart.org/content/achievement	achievement chime
+reward/star	1	reward/star-1.mp3	1.29	positive-sound	positive_0.ogg			EZduzziteh	CC0	https://opengameart.org/content/positive-sound	positive chime for one star
+reward/quest-accept	1	reward/quest-accept-1.mp3	0.68	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise01.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	short rising chime
+reward/quest-complete	1	reward/quest-complete-1.mp3	1.10	power-up-sound-effects	power_up_sound_v2_0.ogg			Spring Spring	CC0	https://opengameart.org/content/power-up-sound-effects	power-up sweep
+reward/badge	1	reward/badge-1.mp3	0.98	power-up-sound-effects	power_up_sound_v3_0.ogg			Spring Spring	CC0	https://opengameart.org/content/power-up-sound-effects	power-up sweep
+reward/round-lost	1	reward/round-lost-1.mp3	0.64	level-up-power-up-coin-get-13-sounds	SoundPack01/Downer01.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	gentle falling tone
+reward/daily	1	reward/daily-1.mp3	1.36	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise06.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	rising claim sound
+reward/star	2	reward/star-2.mp3	0.69	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise02.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	short rising chime
+reward/star	3	reward/star-3.mp3	0.80	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise03.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	short rising chime
+reward/gp-earned	2	reward/gp-earned-2.mp3	1.04	level-up-power-up-coin-get-13-sounds	SoundPack01/FX01.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	coin and chime
+reward/unlock	2	reward/unlock-2.mp3	1.99	level-up-power-up-coin-get-13-sounds	SoundPack01/Rise04.aif			wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	rising sparkle
+reward/coins-many	2	reward/coins-many-2.mp3	2.11	level-up-power-up-coin-get-13-sounds	SoundPack01/FX02.aif	0	2.11	wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	coin sweep, trimmed
+reward/victory	2	reward/victory-2.mp3	1.98	level-up-power-up-coin-get-13-sounds	SoundPack01/Upper01.aif	0.08	2.06	wobbleboxx	CC0	https://opengameart.org/content/level-up-power-up-coin-get-13-sounds	upward fanfare, trimmed
+reward/victory	4	reward/victory-4.mp3	0.59	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT05.ogg	0.00	0.59	Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+reward/round-lost	2	reward/round-lost-2.mp3	1.08	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_SAX/jingles_SAX03.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	Gentle sax jingle, Kenney CC0, rising phrase; encouraging, not a fail buzz
+reward/xp-tick	2	reward/xp-tick-2.mp3	0.33	12-coin-sound-effects	coins_-_starninjas/coin.10.ogg			StarNinjas	CC0	https://opengameart.org/content/12-coin-sound-effects	Single coin tick, CC0 coin pack, short and bright
+reward/gem	3	reward/gem-3.mp3	0.63	gem-collect-sfx	gem-gather-stereo-reverb.wav			Bobjt	CC0	https://opengameart.org/content/gem-collect-sfx	Gem gather with light reverb, CC0, crystal pick-up
+reward/guild-hit	1	reward/guild-hit-1.mp3	0.70	10-impactshield-blocks	impact_-_starninjas/impact.1.ogg			StarNinjas	CC0	https://opengameart.org/content/10-impactshield-blocks	Impact hit, CC0, short thud for boss damage, not sci-fi
+reward/guild-hit	2	reward/guild-hit-2.mp3	0.52	10-impactshield-blocks	impact_-_starninjas/impact.3.ogg			StarNinjas	CC0	https://opengameart.org/content/10-impactshield-blocks	Impact hit, CC0, short thud for boss damage, not sci-fi
+reward/guild-hit	3	reward/guild-hit-3.mp3	0.35	10-impactshield-blocks	impact_-_starninjas/impact.4.ogg			StarNinjas	CC0	https://opengameart.org/content/10-impactshield-blocks	Impact hit, CC0, short thud for boss damage, not sci-fi

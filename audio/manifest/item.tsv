@@ -1,0 +1,28 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+item/cloth	1	item/cloth-1.mp3	0.35	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/cloth.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	cloth, RPG Sound Pack (CC0)
+item/leather	1	item/leather-1.mp3	0.24	50-rpg-sound-effects	RPGsounds_Kenney/OGG/handleSmallLeather.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	leather, Kenney 50 RPG sound effects (CC0)
+item/drop	1	item/drop-1.mp3	0.32	50-rpg-sound-effects	RPGsounds_Kenney/OGG/dropLeather.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	drop, Kenney 50 RPG sound effects (CC0)
+item/chainmail	1	item/chainmail-1.mp3	0.44	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/chainmail2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	chainmail, RPG Sound Pack (CC0)
+item/potion-drink	1	item/potion-drink-1.mp3	0.38	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/bottle.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	bottle, RPG Sound Pack (CC0)
+item/uncork	1	item/uncork-1.mp3	0.47	fantasy-accessory-sfx-library	accessory/sfx/bottle-glass-uncork-01.wav			Vehicle	CC0	https://opengameart.org/content/fantasy-accessory-sfx-library	glass bottle cork pops
+item/eat	1	item/eat-1.mp3	0.70	7-eating-crunches	crunch_-_tito/crunch.1.ogg			StarNinjas	CC0	https://opengameart.org/content/7-eating-crunches	light crunch
+item/uncork	2	item/uncork-2.mp3	0.28	fantasy-accessory-sfx-library	accessory/sfx/bottle-clay-uncork-01.wav			Vehicle	CC0	https://opengameart.org/content/fantasy-accessory-sfx-library	clay bottle cork pops
+item/eat	2	item/eat-2.mp3	0.85	7-eating-crunches	crunch_-_tito/crunch.2.ogg			StarNinjas	CC0	https://opengameart.org/content/7-eating-crunches	crunch
+item/eat	3	item/eat-3.mp3	0.47	7-eating-crunches	crunch_-_tito/crunch.3.ogg			StarNinjas	CC0	https://opengameart.org/content/7-eating-crunches	crunch
+item/pickup	1	item/pickup-1.mp3	0.51	item-pickup-key	key-176034.mp3			Musheran	CC0	https://opengameart.org/content/item-pickup-key	small item pickup chime
+item/potion-drink	3	item/potion-drink-3.mp3	0.46	liquid-bottle-drink-set	qubodup-bottle-and-drink-sounds/qubodup-bottle-and-drink-sounds/swallow-03.flac			qubodup	CC0	https://opengameart.org/content/liquid-bottle-drink-set	gulp
+item/drop	2	item/drop-2.mp3	0.60	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth1.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	item set down
+item/pickup	2	item/pickup-2.mp3	0.31	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/beads.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	small item pickup
+item/cloth	2	item/cloth-2.mp3	0.37	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth2.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	cloth item
+item/pickup	3	item/pickup-3.mp3	0.20	50-rpg-sound-effects	RPGsounds_Kenney/OGG/bookClose.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	small item pickup
+item/liquid-pour	2	item/liquid-pour-2.mp3	1.40	teapot-sounds	pour_tea.wav	3.8	5.2	liltechdude	CC0	https://opengameart.org/content/teapot-sounds	liquid pour, second part
+item/key-jingle	1	item/key-jingle-1.mp3	1.36	fantasy-accessory-sfx-library	accessory/sfx/keys-rattle-01.wav			Vehicle	CC0	https://opengameart.org/content/fantasy-accessory-sfx-library	Keys rattle
+item/wood-small	1	item/wood-small-1.mp3	0.37	wood-and-metal-sound-effects-volume-2	wood_and_metal_vol.2_0/wood_and_metal_vol.2/wood1.aif			Ogrebane	CC0	https://opengameart.org/content/wood-and-metal-sound-effects-volume-2	Small wood knock
+item/stone-small	1	item/stone-small-1.mp3	0.10	various-sound-effects-0	small_rock_impact.wav			Spring Spring	CC0	https://opengameart.org/content/various-sound-effects-0	Small rock impact
+item/plate	1	item/plate-1.mp3	0.63	metal-impact-sounds	bing1.wav			BMacZero	CC0	https://opengameart.org/content/metal-impact-sounds	Metal ring, plate clank
+item/metal-small	1	item/metal-small-1.mp3	1.20	metal-impact-sounds	bong1.wav	0	1.2	BMacZero	CC0	https://opengameart.org/content/metal-impact-sounds	Small metal bong
+item/paper	1	item/paper-1.mp3	0.87	10-book-page-flips	book_flips_-_starninjas/book_flip.10.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	Book page flip, paper
+item/bag	1	item/bag-1.mp3	0.21	50-rpg-sound-effects	RPGsounds_Kenney/OGG/handleSmallLeather2.ogg	0.05	0.26	Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	CC0 Kenney RPG leather handle
+item/craft-fail	1	item/craft-fail-1.mp3	0.37	mechanical-sounds	lightclunk1.wav			BMacZero	CC0	https://opengameart.org/content/mechanical-sounds	CC0 light clunk, failed craft
+item/beads	1	item/beads-1.mp3	0.77	mechanical-sounds	rattle1.wav			BMacZero	CC0	https://opengameart.org/content/mechanical-sounds	CC0 rattle, beads stand-in
+item/craft-success	-										same sound as reward/victory#1; the game can reuse that file

@@ -1,0 +1,12 @@
+id	take	file	seconds	source	source_file	start	end	author	license	url	note
+answer/correct	1	answer/correct-1.mp3	0.29	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-positive.ogg			qubodup	CC0	https://opengameart.org/content/6-user-interface-ding-clicks	
+answer/correct	2	answer/correct-2.mp3	0.50	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT01.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+answer/correct	3	answer/correct-3.mp3	0.51	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_HIT/jingles_HIT02.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+answer/wrong	1	answer/wrong-1.mp3	0.21	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-neutral.ogg			qubodup	CC0	https://opengameart.org/content/6-user-interface-ding-clicks	
+answer/wrong	2	answer/wrong-2.mp3	0.10	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-reverse.ogg			qubodup	CC0	https://opengameart.org/content/6-user-interface-ding-clicks	
+answer/streak	1	answer/streak-1.mp3	0.37	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_NES/jingles_NES01.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+answer/streak	2	answer/streak-2.mp3	0.37	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_NES/jingles_NES02.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+answer/streak	3	answer/streak-3.mp3	1.00	85-short-music-jingles	jingleSounds_Kenney/OGG/jingles_PIZZA/jingles_PIZZA01.ogg			Kenney	CC0	https://opengameart.org/content/85-short-music-jingles	
+answer/word-complete	1	answer/word-complete-1.mp3	0.61	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-save.ogg			qubodup	CC0	https://opengameart.org/content/6-user-interface-ding-clicks	
+answer/perfect	1	answer/perfect-1.mp3	1.08	6-user-interface-ding-clicks	dingclicks/dingClicks/dingCling-levelup.ogg			qubodup	CC0	https://opengameart.org/content/6-user-interface-ding-clicks	
+answer/wrong	4	answer/wrong-4.mp3	0.30	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/inventory/cloth-heavy.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	

@@ -1,0 +1,14 @@
+date	id	note
+2026-10-13 13:56	ui/confirm	Sounds like a computer, not appropriate for RPG
+2026-10-13 13:56	ui/menu-open	Computer sound
+2026-10-13 13:56	ui/popup	Computer sound
+2026-10-13 13:56	battle/war-drum	looping?
+2026-10-13 13:56	ambience/watermill	Water drops, not a waterfall
+2026-10-13 22:00	npc/child-laugh	Evil
+2026-10-13 22:00	npc/crowd-cheer	"Cheers" like toasting
+2026-10-13 22:00	npc/shop-bell	more like a phone ringing
+2026-10-13 22:00	monster/dragon-breath	campfire
+2026-10-13 22:00	monster/wind-howl	animal howl
+2026-10-13 22:00	wildlife/dog-bark	silence
+2026-10-13 22:00	music/explore	Rock
+2026-10-13 22:00	music/sea	Also use for explore (better for that if you can replace this)
