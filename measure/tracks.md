@@ -129,6 +129,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Sound library sources: ElvGames packs, CC-BY sites, and credits**
   *Link: [./tracks/audio_sources_expand_20261014/](./tracks/audio_sources_expand_20261014/)*
 
+- [ ] **Track: Sound in the games: library takes for the game events**
+  *Link: [./tracks/audio_game_integration_20261014/](./tracks/audio_game_integration_20261014/)*
+
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**

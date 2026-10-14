@@ -27,5 +27,5 @@ Status: in progress. The plan records execution state. `docs/sound-library.md` r
 - [x] Task: Make a review-page skill from the working sound review page. Owner decision 2026-10-14: add audio to the existing `live-review` skill instead of a new skill. `~/.claude/skills/live-review/` now has `"kind": "audio"` checks (players, Approve and Reject, no comment needed for a Reject), audio files with range requests under `/files/`, and `files_root`. The sound library keeps its own page (`scripts/sfx-review.html`) for the many takes of a round.
 - [x] Task: Record the size of `audio/` and the owner's decision on music in git. Size 2026-10-14: 33 MB (music 21 MB, effects 11 MB, source catalog 1.2 MB). Owner decision 2026-10-14: commit all, music included.
 - [x] Task: Owner note on `battle/war-drum` ("looping?" = the clip loops well): new row `battle/war-drum-loop` (loop, P1) with the full source loop; new take option `--seamless` keeps a source loop unfolded (manifest column `loop`).
-- [ ] Task: Record the follow-up track for game integration (event mapping, format, preload budget).
+- [x] Task: Record the follow-up track for game integration (event mapping, format, preload budget): `audio_game_integration_20261014` (new).
 - [ ] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`; close the track.

@@ -1,0 +1,19 @@
+{
+  "track_id": "audio_game_integration_20261014",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-10-14T00:00:00Z",
+  "updated_at": "2026-10-14T00:00:00Z",
+  "description": "Sound in the games: play approved library takes for the game events, with the synthesized sounds as the fallback",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": "Recorded 2026-10-14 as the follow-up of audio_sfx_library_20261013 (its plan task: event mapping, format, preload budget).",
+  "workstream": "games",
+  "retrospective": false,
+  "evidence": [
+    "src/apk3d/audio/bus.ts",
+    "docs/sound-effects-list.tsv",
+    "audio/CREDITS.md"
+  ],
+  "dependencies": ["audio_sfx_library_20261013", "audio_sources_expand_20261014"]
+}
