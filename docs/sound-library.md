@@ -1,14 +1,29 @@
 # Sound library
 
-The sound library holds recorded CC0 sounds for the Chibi Quest assets and the games. The track is
-`measure/tracks/audio_sfx_library_20261013/`.
+The sound library holds recorded sounds for the Chibi Quest assets and the games. The tracks are
+`measure/tracks/audio_sfx_library_20261013/` (the list, the tool, the CC0 takes) and
+`measure/tracks/audio_sources_expand_20261014/` (more sites, more licenses, the credits).
+
+## Licenses
+
+The owner permits these licenses (2026-10-14): CC0, public domain, CC-BY 3.0 and 4.0, OGA-BY 3.0 and
+4.0, and the ElvGames license of the bought packs. NC, ND, SA, GPL, and personal-use licenses are
+not permitted, because the Advantage apps are paid products. Every take records its license and
+author in the manifest. `credits` writes `audio/CREDITS.md`: the lines for a credits screen, then
+every take by license. Run it after each review round.
+
+The ElvGames packs (`~/Desktop/Asset Packs/`, or `$ASSET_PACKS`) are bought. Their terms permit
+commercial use and changes, ask for the credit "ElvGames & Pegonthetrack", and ask that a changed
+asset is stated as modified. They do not permit use on training or generative AI: the tool gives no
+audio to an AI model.
 
 ## Files
 
 | Path | Content | In git |
 | --- | --- | --- |
 | `docs/sound-effects-list.tsv` | The wanted sounds: one row for each sound | yes |
-| `audio/sources/oga-cc0.json` | The source catalog: 1521 CC0 entries of OpenGameArt (metadata) | yes |
+| `audio/sources/*.json` | The source catalogs (metadata), one for each site: `oga-cc0.json` (1521 CC0 entries of OpenGameArt), `oga-by.json`, `elvgames.json`, `commons.json`, `soundbible.json` | yes |
+| `audio/CREDITS.md` | The credits, written by `credits` | yes |
 | `audio/<category>/<name>-<n>.mp3` | The takes | yes (music: owner decision) |
 | `audio/manifest/<category>.tsv` | One row for each take: source, file, span, author, license | yes |
 | `out/audio-source/<slug>/` | Raw downloads, unpacked | no |
@@ -37,6 +52,11 @@ the owlbear, and the shadow hound.
 
 ```bash
 node scripts/sfx-library.mjs search growl beast            # rank catalog entries (sound effects)
+node scripts/sfx-library.mjs search magic --site elvgames  # only one site's entries
+node scripts/sfx-library.mjs find soundbible rooster       # live search of a site (commons, soundbible, opengameart);
+                                                           # adds the hits with a permitted license to its catalog
+node scripts/sfx-library.mjs elvgames                      # the ElvGames catalog from the zip files
+node scripts/sfx-library.mjs credits                       # audio/CREDITS.md
 node scripts/sfx-library.mjs search battle --music         # rank music entries
 node scripts/sfx-library.mjs entry goblins-sound-pack      # license, description, files
 node scripts/sfx-library.mjs fetch goblins-sound-pack      # download, unpack, list audio files
@@ -70,9 +90,10 @@ A take is processed the same way every time:
 | music | 20 to 300 | -18 dBFS |
 
 The tool refuses a take that is outside its class, a span that another take (of any row) uses, more than
-`takes + 2` takes for a row, and an entry without CC0. When an entry description names attribution
-or a third-party source (for example freesound.org), the tool stops until the agent reads the
-description and repeats the take with `--checked` and a `--note`. The span check compares the
+`takes + 2` takes for a row, and an entry without a permitted license. When the description of a CC0
+entry names attribution or a third-party source (for example freesound.org), or the description of
+an attribution entry names another source or a license that is not permitted, the tool stops until
+the agent reads the description and repeats the take with `--checked` and a `--note`. The span check compares the
 file name without its extension, so a second path or a second format of one file is the same sound.
 
 ## Content rules

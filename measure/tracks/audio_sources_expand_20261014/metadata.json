@@ -1,0 +1,21 @@
+{
+  "track_id": "audio_sources_expand_20261014",
+  "type": "feature",
+  "status": "in_progress",
+  "created_at": "2026-10-14T00:00:00Z",
+  "updated_at": "2026-10-14T00:00:00Z",
+  "description": "Sound library sources: the paid ElvGames sound packs, CC-BY sounds from more sites, and a credits file",
+  "estimated_tasks": 10,
+  "actual_tasks": null,
+  "deviation_notes": "Created 2026-10-14 on the owner's request after review round 4 of audio_sfx_library_20261013: expand to more sites and less open licenses to get more choices, and use the ElvGames sound packs that the owner bought.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "scripts/sfx-library.mjs",
+    "audio/sources",
+    "audio/manifest",
+    "audio/CREDITS.md",
+    "docs/sound-library.md"
+  ],
+  "dependencies": ["audio_sfx_library_20261013"]
+}

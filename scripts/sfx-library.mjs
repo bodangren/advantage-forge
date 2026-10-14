@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 // Sound library tool (docs/sound-library.md). The wanted sounds are rows of
-// docs/sound-effects-list.tsv; every take comes from a CC0 entry of OpenGameArt.
+// docs/sound-effects-list.tsv; every take comes from a catalog entry of audio/sources/ with a
+// license that the owner permits (CC0, CC-BY, OGA-BY, the bought ElvGames packs).
 //
-//   node scripts/sfx-library.mjs catalog                   # cached pages -> audio/sources/oga-cc0.json
-//   node scripts/sfx-library.mjs search <words...> [--music] [--limit n]
+//   node scripts/sfx-library.mjs catalog                   # cached pages -> audio/sources/oga-cc0.json, oga-by.json
+//   node scripts/sfx-library.mjs elvgames                  # the ElvGames zip files -> audio/sources/elvgames.json
+//   node scripts/sfx-library.mjs find <site> <words...>    # live search of commons, soundbible, or opengameart; adds the hits with a permitted license
+//   node scripts/sfx-library.mjs search <words...> [--music] [--limit n] [--site opengameart|elvgames]
 //   node scripts/sfx-library.mjs entry <slug>              # title, author, license, description, files
 //   node scripts/sfx-library.mjs fetch <slug> [--max-mb n] # download, unpack, list audio files
 //   node scripts/sfx-library.mjs files <slug> [filter]     # audio files of a fetched entry
@@ -17,6 +20,7 @@
 //   node scripts/sfx-library.mjs page                      # out/audio-review/index.html
 //   node scripts/sfx-library.mjs review [--port 4178]      # local review page for the owner (approve, reject, submit)
 //   node scripts/sfx-library.mjs apply-review <review.json> # drop rejected takes, record approvals and notes
+//   node scripts/sfx-library.mjs credits                   # audio/CREDITS.md from the manifests
 //
 // Raw downloads stay in out/audio-source/<slug>/ (not in git). A take is cut, trimmed, leveled,
 // and encoded to MP3 in audio/<category>/<name>-<n>.mp3, with one manifest row in
@@ -24,6 +28,7 @@
 import { createWriteStream, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, renameSync, rmSync, statfsSync, unlinkSync, writeFileSync, appendFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { createServer } from 'node:http';
+import { homedir } from 'node:os';
 import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { Readable } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
@@ -32,7 +37,11 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LIST = join(ROOT, 'docs/sound-effects-list.tsv');
 const LIB = join(ROOT, 'audio');
-const CATALOG = join(LIB, 'sources/oga-cc0.json');
+const SOURCES = join(LIB, 'sources');
+const CATALOG = join(SOURCES, 'oga-cc0.json');
+const CREDITS = join(LIB, 'CREDITS.md');
+/** The folder of the bought asset packs (the ElvGames zip files). */
+const ASSET_PACKS = process.env.ASSET_PACKS ?? join(homedir(), 'Desktop', 'Asset Packs');
 const MANIFESTS = join(LIB, 'manifest');
 const SRC = join(ROOT, 'out/audio-source');
 const PAGES = join(SRC, 'pages');
@@ -49,7 +58,18 @@ const LEVEL = { short: -16, medium: -16, long: -17, loop: -26, music: -18 };
 const PEAK = 10 ** (-1 / 20);
 const AUDIO_EXT = new Set(['.wav', '.ogg', '.oga', '.mp3', '.flac', '.aif', '.aiff', '.m4a', '.opus', '.webm', '.wma', '.mod', '.xm', '.it', '.s3m']);
 const ARCHIVE_EXT = /\.(zip|rar|7z|tar|tgz|tar\.gz|tar\.bz2|tar\.xz)$/i;
+/** The licenses the owner permits (2026-10-14), best first. Not permitted: NC, ND, SA, GPL, personal use. */
+const PERMITTED = ['CC0', 'Public domain', 'CC-BY 4.0', 'CC-BY 3.0', 'OGA-BY 4.0', 'OGA-BY 3.0', 'ElvGames'];
+/** Licenses that need no credit line. */
+const NO_CREDIT = new Set(['CC0', 'Public domain']);
+const USER_AGENT = 'AdvantageForgeSoundLibrary/1.0 (https://github.com/bodangren/advantage-forge)';
+const licenseOf = (e) => PERMITTED.find((l) => e.licenses.includes(l)) ?? null;
+/** A CC0 entry whose description names attribution or another source needs a check before a take. */
 const LICENSE_FLAG = /freesound\.org|cc-by|cc by\b|creative commons attribution|attribution required|must credit/i;
+/** An attribution entry is checked only for third-party sources and the licenses that are not permitted. */
+const THIRD_PARTY = /freesound\.org|non-?commercial|\bby-nc|share-?alike|\bby-sa/i;
+const flagOf = (e) => (NO_CREDIT.has(licenseOf(e)) ? LICENSE_FLAG : THIRD_PARTY);
+const pageUrl = (e) => e.url ?? 'https://opengameart.org/content/' + e.slug;
 const MIN_FREE_GB = 4;
 
 const argv = process.argv.slice(2);
@@ -85,10 +105,15 @@ function rowOf(id) {
 }
 
 let catalogCache = null;
+/** All catalog files of audio/sources/ (one for each site), as one list of entries. */
 function catalog() {
   if (!catalogCache) {
     if (!existsSync(CATALOG)) fail('no catalog; run: node scripts/sfx-library.mjs catalog');
-    catalogCache = JSON.parse(readFileSync(CATALOG, 'utf8'));
+    const entries = readdirSync(SOURCES)
+      .filter((f) => f.endsWith('.json'))
+      .sort()
+      .flatMap((f) => JSON.parse(readFileSync(join(SOURCES, f), 'utf8')).entries.map((e) => ({ site: 'opengameart', ...e })));
+    catalogCache = { entries };
   }
   return catalogCache;
 }
@@ -169,19 +194,69 @@ async function buildCatalog() {
   for (const [slug, from] of slugs) {
     try {
       const e = parsePage(slug, await getPage(slug));
-      if (!e.licenses.includes('CC0')) failed.push(`${slug}: not CC0 (${e.licenses.join(', ')})`);
+      if (!licenseOf(e)) failed.push(`${slug}: no permitted license (${e.licenses.join(', ')})`);
       else entries.push({ ...e, lists: from });
     } catch (err) {
       failed.push(`${slug}: ${err}`);
     }
   }
   entries.sort((a, b) => a.slug.localeCompare(b.slug));
-  mkdirSync(dirname(CATALOG), { recursive: true });
-  const out = { source: 'https://opengameart.org (CC0 entries)', built: new Date().toISOString().slice(0, 10), entries };
-  writeFileSync(CATALOG, JSON.stringify(out, null, 0).replace(/\},\{"slug"/g, '},\n{"slug"') + '\n');
-  const music = entries.filter((e) => e.type === 'music').length;
-  console.log(`catalog: ${entries.length} entries (${entries.length - music} sfx, ${music} music) -> ${relative(ROOT, CATALOG)}`);
+  const built = new Date().toISOString().slice(0, 10);
+  const cc0 = entries.filter((e) => licenseOf(e) === 'CC0');
+  writeCatalog(CATALOG, { source: 'https://opengameart.org (CC0 entries)', built, entries: cc0 });
+  writeCatalog(join(SOURCES, 'oga-by.json'), { source: 'https://opengameart.org (CC-BY and OGA-BY entries)', built, entries: entries.filter((e) => licenseOf(e) !== 'CC0') });
   for (const f of failed) console.log('skipped ' + f);
+}
+
+function writeCatalog(path, out) {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, JSON.stringify(out, null, 0).replace(/\},\{"slug"/g, '},\n{"slug"') + '\n');
+  const music = out.entries.filter((e) => e.type === 'music').length;
+  console.log(`catalog: ${out.entries.length} entries (${out.entries.length - music} sfx, ${music} music) -> ${relative(ROOT, path)}`);
+}
+
+/** The ElvGames packs: the sound effects of each zip file in ASSET_PACKS, WAV files only (each sound is also MP3 and OGG). */
+const ELVGAMES = [
+  { zip: 'Sound Effects.zip', root: 'Sound Effects/' },
+  { zip: 'Platformer World.zip', root: 'Platformer World/Platformer World/', only: 'Sound Effects/' },
+];
+
+function buildElvCatalog() {
+  const entries = [];
+  for (const pack of ELVGAMES) {
+    const zip = join(ASSET_PACKS, pack.zip);
+    if (!existsSync(zip)) fail(`${pack.zip} is not in ${ASSET_PACKS} (set ASSET_PACKS)`);
+    const listing = run('unzip', ['-l', zip]).stdout.toString().split('\n');
+    const groups = new Map();
+    for (const line of listing) {
+      const m = /^\s*(\d+)\s+\S+\s+\S+\s+(.+)$/.exec(line);
+      if (!m || !m[2].startsWith(pack.root) || !m[2].includes('/WAV/') || extname(m[2]).toLowerCase() !== '.wav') continue;
+      const rest = m[2].slice(pack.root.length);
+      if (pack.only && !rest.startsWith(pack.only)) continue;
+      const folder = pack.only ? pack.only : rest.split('/')[0] + '/';
+      if (!groups.has(folder)) groups.set(folder, []);
+      groups.get(folder).push({ name: m[2], url: null, bytes: Number(m[1]) });
+    }
+    for (const [folder, files] of groups) {
+      const name = pack.only ? basename(pack.zip, '.zip') : folder.slice(0, -1).replace(/ - Universal Sound Effects$/, '');
+      entries.push({
+        slug: 'elvgames-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+        site: 'elvgames',
+        title: name,
+        author: 'ElvGames & Pegonthetrack',
+        date: '',
+        type: 'sfx',
+        licenses: ['ElvGames'],
+        tags: name.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2),
+        description: 'A bought ElvGames pack (license: https://elvgames.itch.io/terms): commercial use and changes permitted; credit ElvGames & Pegonthetrack and state that the sound is modified.',
+        files,
+        url: 'https://elvgames.itch.io',
+        local: { zip: pack.zip, prefix: pack.root + folder },
+      });
+    }
+  }
+  entries.sort((a, b) => a.slug.localeCompare(b.slug));
+  writeCatalog(join(SOURCES, 'elvgames.json'), { source: 'ElvGames packs bought by the owner (local zip files)', built: new Date().toISOString().slice(0, 10), entries });
 }
 
 // ---------- search and entries ----------
@@ -193,12 +268,12 @@ function fetchedFiles(slug) {
 
 function search(words) {
   const terms = words.map((w) => w.toLowerCase()).filter(Boolean);
-  if (!terms.length) fail('usage: search <words...> [--music] [--limit n]');
+  if (!terms.length) fail('usage: search <words...> [--music] [--limit n] [--site opengameart|elvgames]');
   const type = flags.music ? 'music' : 'sfx';
   const limit = Number(flags.limit ?? 8);
   const scored = [];
   for (const e of catalog().entries) {
-    if (e.type !== type) continue;
+    if (e.type !== type || (flags.site && e.site !== flags.site)) continue;
     const title = e.title.toLowerCase();
     const tags = e.tags.map((t) => t.toLowerCase());
     const desc = e.description.toLowerCase();
@@ -223,27 +298,164 @@ function search(words) {
     if (hits) scored.push({ e, score: score * hits, matched: [...matched].slice(0, 4) });
   }
   scored.sort((a, b) => b.score - a.score);
-  for (const { e, matched } of scored.slice(0, limit)) {
-    const mb = e.files.reduce((s, f) => s + (f.bytes ?? 0), 0) / 1e6;
-    const got = fetchedFiles(e.slug) ? ' [fetched]' : '';
-    console.log(`${e.slug}${got} | ${mb.toFixed(1)} MB | ${e.title.slice(0, 50)} | ${e.tags.slice(0, 5).join(', ')}`);
-    if (matched.length) console.log(`    files: ${matched.join(' ; ')}`);
-  }
+  for (const { e, matched } of scored.slice(0, limit)) printEntry(e, matched);
   if (!scored.length) console.log('no match');
+}
+
+function printEntry(e, matched = []) {
+  const mb = e.files.reduce((s, f) => s + (f.bytes ?? 0), 0) / 1e6;
+  const got = fetchedFiles(e.slug) ? ' [fetched]' : '';
+  const lic = licenseOf(e) === 'CC0' ? '' : ` | ${licenseOf(e)}`;
+  console.log(`${e.slug}${got} | ${mb.toFixed(1)} MB | ${e.title.slice(0, 50)} | ${e.tags.slice(0, 5).join(', ')}${lic}`);
+  if (matched.length) console.log(`    files: ${matched.join(' ; ')}`);
 }
 
 function showEntry(slug) {
   const e = entryOf(slug);
   const mb = e.files.reduce((s, f) => s + (f.bytes ?? 0), 0) / 1e6;
   console.log(`${e.title} (${e.type}) by ${e.author}, ${e.date}`);
-  console.log(`https://opengameart.org/content/${e.slug}`);
-  console.log(`licenses: ${e.licenses.join(', ')}`);
+  console.log(pageUrl(e));
+  console.log(`licenses: ${e.licenses.join(', ')} (a take uses ${licenseOf(e) ?? 'none: not permitted'})`);
   console.log(`tags: ${e.tags.join(', ')}`);
-  if (LICENSE_FLAG.test(e.description)) console.log('LICENSE NOTE: the description mentions attribution or another source; read it before a take (--checked).');
+  if (flagOf(e).test(e.description)) console.log('LICENSE NOTE: the description names another source or license; read it before a take (--checked).');
   console.log(`description: ${e.description}`);
   console.log(`files (${mb.toFixed(1)} MB):`);
   for (const f of e.files) console.log(`  ${f.name}  ${((f.bytes ?? 0) / 1e6).toFixed(2)} MB`);
   if (fetchedFiles(slug)) console.log(`fetched: yes (files ${slug})`);
+}
+
+// ---------- other sites ----------
+
+/** Adds entries to a site's catalog file (an entry with the same slug is replaced). */
+function addEntries(file, source, found) {
+  const path = join(SOURCES, file);
+  const old = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')).entries : [];
+  const slugs = new Set(found.map((e) => e.slug));
+  const entries = [...old.filter((e) => !slugs.has(e.slug)), ...found].sort((a, b) => a.slug.localeCompare(b.slug));
+  mkdirSync(SOURCES, { recursive: true });
+  writeFileSync(path, JSON.stringify({ source, built: new Date().toISOString().slice(0, 10), entries }, null, 0).replace(/\},\{"slug"/g, '},\n{"slug"') + '\n');
+  catalogCache = null;
+}
+
+const slugOf = (prefix, text) => prefix + '-' + text.toLowerCase().replace(/\.[a-z0-9]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80);
+const plain = (html) => decode(String(html ?? '').replace(/<[^>]+>/g, ' '));
+
+/** Wikimedia Commons: audio files, the license from the file's metadata. */
+async function findCommons(words) {
+  const LICENSES = { CC0: 'CC0', 'Public domain': 'Public domain', 'CC BY 4.0': 'CC-BY 4.0', 'CC BY 3.0': 'CC-BY 3.0' };
+  const q = new URLSearchParams({ action: 'query', generator: 'search', gsrnamespace: '6', gsrsearch: `filetype:audio ${words.join(' ')}`, gsrlimit: '30', prop: 'imageinfo', iiprop: 'url|size|mime|extmetadata', iiextmetadatafilter: 'LicenseShortName|Artist|ImageDescription', format: 'json' });
+  const res = await fetchRetry('https://commons.wikimedia.org/w/api.php?' + q, 60000);
+  const pages = Object.values((await res.json()).query?.pages ?? {}).sort((a, b) => a.index - b.index);
+  const found = [];
+  let skipped = 0;
+  for (const p of pages) {
+    const ii = p.imageinfo?.[0];
+    const meta = ii?.extmetadata ?? {};
+    const license = LICENSES[meta.LicenseShortName?.value];
+    if (!ii || !license) {
+      skipped++;
+      continue;
+    }
+    const name = p.title.replace(/^File:/, '');
+    // Pronunciation recordings (Lingua Libre, "En-us-word.ogg") are spoken words, which the content rules exclude.
+    if (/^LL-Q|^[A-Za-z]{2,3}-[A-Za-z]{2}-|^[A-Za-z]{2}-[^ ]+\.(ogg|wav|mp3|flac)$/.test(name)) {
+      skipped++;
+      continue;
+    }
+    found.push({
+      slug: slugOf('commons', name),
+      site: 'commons',
+      title: name.replace(/\.[a-z0-9]+$/i, ''),
+      author: plain(meta.Artist?.value).slice(0, 120) || 'unknown',
+      date: '',
+      type: 'sfx',
+      licenses: [license],
+      tags: [],
+      description: plain(meta.ImageDescription?.value).slice(0, 600),
+      files: [{ name, url: ii.url, bytes: ii.size ?? null }],
+      url: ii.descriptionurl ?? 'https://commons.wikimedia.org/wiki/' + encodeURIComponent(p.title),
+    });
+  }
+  addEntries('commons.json', 'Wikimedia Commons audio files (CC0, public domain, CC BY 3.0 and 4.0)', found);
+  return { found, skipped };
+}
+
+/** SoundBible: the search page lists sound pages; each page names its license and author. */
+async function findSoundBible(words) {
+  const LICENSES = { 'Attribution 3.0': 'CC-BY 3.0', 'Public Domain': 'Public domain' };
+  const page = async (path) => {
+    const file = join(SRC, 'pages-soundbible', path.replace(/[^A-Za-z0-9.-]+/g, '_'));
+    if (existsSync(file)) return readFileSync(file, 'utf8');
+    const html = await (await fetchRetry('https://soundbible.com/' + path, 60000)).text();
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, html);
+    return html;
+  };
+  const list = await page('search.php?q=' + encodeURIComponent(words.join(' ')));
+  const links = [...new Set([...list.matchAll(/href='(\d+)-([^']+)\.html'/g)].map((m) => `${m[1]}-${m[2]}.html`))].slice(0, 12);
+  const found = [];
+  let skipped = 0;
+  for (const link of links) {
+    const html = await page(link);
+    const id = link.split('-')[0];
+    const license = LICENSES[plain((/License<\/h5>\s*<p>([\s\S]*?)<\/p>/.exec(html) ?? [])[1])];
+    if (!license) {
+      skipped++;
+      continue;
+    }
+    const title = link.slice(id.length + 1, -5).replace(/-/g, ' ');
+    found.push({
+      slug: slugOf('soundbible', link.slice(0, -5)),
+      site: 'soundbible',
+      title,
+      author: plain((/<meta name="author" content="([^"]*)"/.exec(html) ?? [])[1]) || 'unknown',
+      date: '',
+      type: 'sfx',
+      licenses: [license],
+      tags: [],
+      description: plain((/<meta name="description" content="([^"]*)"/.exec(html) ?? [])[1]).slice(0, 600),
+      files: [{ name: title.replace(/ /g, '_') + '.wav', url: `https://soundbible.com/grab.php?id=${id}&type=wav`, save: title.replace(/ /g, '_') + '.wav', bytes: null }],
+      url: 'https://soundbible.com/' + link,
+    });
+  }
+  addEntries('soundbible.json', 'SoundBible sounds (Attribution 3.0 and public domain)', found);
+  return { found, skipped };
+}
+
+/** OpenGameArt: the keyword search for sound effects (or music), every entry page parsed; permitted licenses only. */
+async function findOpenGameArt(words) {
+  const type = flags.music ? '12' : '13';
+  const q = `keys=${encodeURIComponent(words.join(' '))}&field_art_type_tid%5B%5D=${type}&sort_by=count&sort_order=DESC&items_per_page=48`;
+  const html = await (await fetchRetry('https://opengameart.org/art-search-advanced?' + q, 120000)).text();
+  const slugs = [...new Set([...html.matchAll(/<span class="art-preview-title"><a href="\/content\/([^"]+)"/g)].map((m) => m[1]))].slice(0, 24);
+  const known = new Set(catalog().entries.map((e) => e.slug));
+  const found = [];
+  let skipped = 0;
+  for (const slug of slugs) {
+    if (known.has(slug)) continue;
+    const e = parsePage(slug, await getPage(slug));
+    if (!licenseOf(e)) {
+      skipped++;
+      continue;
+    }
+    found.push({ ...e, lists: ['find'] });
+    // The list keeps the entry when `catalog` builds the OpenGameArt catalog files again.
+    mkdirSync(join(SRC, 'lists'), { recursive: true });
+    appendFileSync(join(SRC, 'lists', 'find.tsv'), `/content/${slug}\t${e.title}\n`);
+  }
+  const cc0 = found.filter((e) => licenseOf(e) === 'CC0');
+  const by = found.filter((e) => licenseOf(e) !== 'CC0');
+  if (cc0.length) addEntries(basename(CATALOG), 'https://opengameart.org (CC0 entries)', cc0);
+  if (by.length) addEntries('oga-by.json', 'https://opengameart.org (CC-BY and OGA-BY entries)', by);
+  return { found, skipped, known: slugs.filter((x) => known.has(x)).length };
+}
+
+async function find(site, words) {
+  const finders = { commons: findCommons, soundbible: findSoundBible, opengameart: findOpenGameArt };
+  if (!finders[site] || !words.length) fail('usage: find <commons|soundbible|opengameart> <words...> [--music]');
+  const { found, skipped, known } = await finders[site](words);
+  for (const e of found) printEntry(e);
+  console.log(`${found.length} new entries with a permitted license${skipped ? `, ${skipped} skipped (license not permitted)` : ''}${known ? `, ${known} already in the catalog (use search)` : ''}`);
 }
 
 // ---------- download and unpack ----------
@@ -254,7 +466,7 @@ async function fetchRetry(url, timeoutMs) {
     const ctl = new AbortController();
     const timer = setTimeout(() => ctl.abort(), timeoutMs);
     try {
-      const res = await fetch(url, { signal: ctl.signal });
+      const res = await fetch(url, { signal: ctl.signal, headers: { 'user-agent': USER_AGENT } });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return Object.assign(res, { clear: () => clearTimeout(timer) });
     } catch (err) {
@@ -378,21 +590,10 @@ async function fetchEntry(slug) {
     }
   }
   writeFileSync(join(lock, 'pid'), String(process.pid));
+  const dl = join(dir, '_dl');
   try {
-    const dl = join(dir, '_dl');
-    mkdirSync(dl, { recursive: true });
-    // Four downloads at a time; a file kept from an earlier, interrupted fetch is not downloaded again.
-    const queue = e.files.map((f) => join(dl, basename(decodeURIComponent(new URL(f.url).pathname)))).map((dest, i) => ({ url: e.files[i].url, dest }));
-    const worker = async () => {
-      for (let job = queue.shift(); job; job = queue.shift()) {
-        const done = join(dir, basename(job.dest));
-        if (!ARCHIVE_EXT.test(job.dest) && existsSync(done)) continue;
-        if (!existsSync(job.dest)) await download(job.url, job.dest);
-        if (ARCHIVE_EXT.test(job.dest)) unpack(job.dest, join(dir, basename(job.dest).replace(ARCHIVE_EXT, '')));
-        else renameSync(job.dest, done);
-      }
-    };
-    await Promise.all([worker(), worker(), worker(), worker()]);
+    if (e.local) unpackLocal(e, dir);
+    else await downloadEntry(e, dir, dl);
     const base = realpathSync(dir);
     clean(dir, base);
     // One level of archives inside archives.
@@ -412,6 +613,31 @@ async function fetchEntry(slug) {
     rmSync(lock, { recursive: true, force: true });
   }
   listFiles(slug, '');
+}
+
+async function downloadEntry(e, dir, dl) {
+  mkdirSync(dl, { recursive: true });
+  // Four downloads at a time; a file kept from an earlier, interrupted fetch is not downloaded again.
+  // `save` names a file whose URL does not end in its name (a download script).
+  const queue = e.files.map((f) => ({ url: f.url, dest: join(dl, f.save ?? basename(decodeURIComponent(new URL(f.url).pathname))) }));
+  const worker = async () => {
+    for (let job = queue.shift(); job; job = queue.shift()) {
+      const done = join(dir, basename(job.dest));
+      if (!ARCHIVE_EXT.test(job.dest) && existsSync(done)) continue;
+      if (!existsSync(job.dest)) await download(job.url, job.dest);
+      if (ARCHIVE_EXT.test(job.dest)) unpack(job.dest, join(dir, basename(job.dest).replace(ARCHIVE_EXT, '')));
+      else renameSync(job.dest, done);
+    }
+  };
+  await Promise.all([worker(), worker(), worker(), worker()]);
+}
+
+/** Unpacks the files of a local entry (a folder of a bought zip file in ASSET_PACKS). */
+function unpackLocal(e, dir) {
+  const zip = join(ASSET_PACKS, e.local.zip);
+  if (!existsSync(zip)) fail(`${e.local.zip} is not in ${ASSET_PACKS} (set ASSET_PACKS)`);
+  const r = run('unzip', ['-qq', '-o', zip, ...e.files.map((f) => f.name), '-d', dir]);
+  if (r.status !== 0) fail(`unzip of ${e.local.zip} exited ${r.status}: ${r.stderr.toString().slice(0, 300)}`);
 }
 
 function listFiles(slug, filter) {
@@ -644,9 +870,10 @@ function take(id, file) {
   const row = rowOf(id);
   const { path, slug, rel } = resolveSource(file);
   const e = entryOf(slug);
-  if (!e.licenses.includes('CC0')) fail(`${slug} is not CC0`);
-  if (LICENSE_FLAG.test(e.description) && !flags.checked)
-    fail(`the description of ${slug} mentions attribution or another source. Read it (entry ${slug}); if the file is CC0, repeat with --checked and say why in --note`);
+  const license = licenseOf(e);
+  if (!license) fail(`${slug} has no permitted license (${e.licenses.join(', ')})`);
+  if (flagOf(e).test(e.description) && !flags.checked)
+    fail(`the description of ${slug} names another source or license. Read it (entry ${slug}); if the file is ${license}, repeat with --checked and say why in --note`);
   const mpath = manifestPath(id);
   const rows = readManifest(mpath);
   const mine = rows.filter((r) => r.id === id && r.take !== '-');
@@ -698,8 +925,8 @@ function take(id, file) {
     start: flags.start ?? '',
     end: flags.end ?? '',
     author: e.author,
-    license: 'CC0',
-    url: 'https://opengameart.org/content/' + slug,
+    license,
+    url: pageUrl(e),
     note: flags.note ?? '',
     loop: flags.seamless ? 'source' : '',
   };
@@ -778,7 +1005,7 @@ h1{font-size:20px;margin:0 0 4px}h2{font-size:16px;margin:28px 0 8px;border-bott
 nav a{margin-right:10px;color:inherit}.row{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0}
 .id{font-weight:600}.meta{color:var(--muted);font-size:12px}.takes{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 .take{font-size:12px;color:var(--muted)}.take audio{display:block;height:32px;max-width:100%}.miss{color:var(--miss);font-size:12px}
-</style></head><body><h1>Sound library review</h1><p class="meta">${filled} of ${rows.length} rows have at least one take. Every take is CC0 from OpenGameArt. Built ${new Date().toISOString().slice(0, 16).replace('T', ' ')}.</p><nav>${cats.map((c) => `<a href="#${c}">${c}</a>`).join('')}</nav>`;
+</style></head><body><h1>Sound library review</h1><p class="meta">${filled} of ${rows.length} rows have at least one take. Each take names its license; audio/CREDITS.md lists them. Built ${new Date().toISOString().slice(0, 16).replace('T', ' ')}.</p><nav>${cats.map((c) => `<a href="#${c}">${c}</a>`).join('')}</nav>`;
   for (const c of cats) {
     html += `<h2 id="${c}">${c}</h2>`;
     for (const r of rows.filter((x) => x.id.startsWith(c + '/'))) {
@@ -786,7 +1013,7 @@ nav a{margin-right:10px;color:inherit}.row{background:var(--card);border:1px sol
       const m = man.find((x) => x.id === r.id && x.take === '-');
       html += `<div class="row"><span class="id">${esc(r.id)}</span> <span class="meta">${r.priority} · ${r.length} · ${takes.length}/${r.takes} · ${esc(r.description)}</span><div class="takes">`;
       for (const t of takes)
-        html += `<div class="take"><audio controls preload="none" src="../../audio/${esc(t.file)}"></audio>#${t.take} ${t.seconds} s · <a href="${esc(t.url)}">${esc(t.source)}</a> (${esc(t.author)})${t.note ? ' · ' + esc(t.note) : ''}</div>`;
+        html += `<div class="take"><audio controls preload="none" src="../../audio/${esc(t.file)}"></audio>#${t.take} ${t.seconds} s · <a href="${esc(t.url)}">${esc(t.source)}</a> (${esc(t.author)}${t.license === 'CC0' ? '' : ', ' + esc(t.license)})${t.note ? ' · ' + esc(t.note) : ''}</div>`;
       if (!takes.length && m) html += `<span class="miss">missing: ${esc(m.note)}</span>`;
       html += '</div></div>';
     }
@@ -861,7 +1088,7 @@ function reviewData() {
     const takes = man
       .filter((m) => m.id === r.id && m.take !== '-')
       .sort((x, y) => Number(x.take) - Number(y.take))
-      .map((m) => ({ k: m.file, n: Number(m.take), s: m.seconds, src: m.source, a: m.author, url: m.url, note: m.note || undefined, r: approvedFiles.has(m.file) ? 'approve' : undefined, f: 'audio/' + m.file }));
+      .map((m) => ({ k: m.file, n: Number(m.take), s: m.seconds, src: m.source, a: m.author, lic: m.license === 'CC0' ? undefined : m.license, url: m.url, note: m.note || undefined, r: approvedFiles.has(m.file) ? 'approve' : undefined, f: 'audio/' + m.file }));
     return { id: r.id, d: r.description, u: r.used_by, p: r.priority, l: r.length, w: r.takes, miss: miss?.note, takes };
   });
   const sig = String(rows.reduce((n, r) => n + r.takes.length * 31 + (r.miss ? 7 : 0), 0)) + ':' + approvedFiles.size + ':' + man.length;
@@ -946,11 +1173,61 @@ function renumber(prefix) {
   }
 }
 
+// ---------- credits ----------
+
+/**
+ * Writes audio/CREDITS.md from the manifests: the lines for a credits screen (every attribution
+ * source and the ElvGames packs), then every take by license. Every take is modified by the tool.
+ */
+function credits() {
+  const takes = allManifest().filter((r) => r.take !== '-');
+  const bySlug = new Map(catalog().entries.map((e) => [e.slug, e]));
+  const title = (r) => bySlug.get(r.source)?.title ?? r.source;
+  const cell = (v) => String(v ?? '').replace(/\|/g, '\\|');
+  const of = (pred) => takes.filter(pred).sort((a, b) => a.file.localeCompare(b.file));
+  const attribution = of((r) => !NO_CREDIT.has(r.license) && r.license !== 'ElvGames');
+  const elv = of((r) => r.license === 'ElvGames');
+  const cc0 = of((r) => NO_CREDIT.has(r.license));
+  const sources = [...new Map(attribution.map((r) => [r.source, r])).values()].sort((a, b) => title(a).localeCompare(title(b)));
+  const out = [
+    '# Sound credits',
+    '',
+    'This file lists the source of every sound in `audio/`. `node scripts/sfx-library.mjs credits` writes it',
+    'from the manifests; do not edit it by hand.',
+    '',
+    'Every file is modified: the tool cut it from the source, removed the quiet start and end, leveled it,',
+    'and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the source already loops).',
+    '',
+    '## Lines for a credits screen',
+    '',
+  ];
+  if (elv.length) out.push('- Sound effects by ElvGames & Pegonthetrack (https://elvgames.itch.io), modified.');
+  for (const r of sources) out.push(`- "${title(r)}" by ${r.author}, ${r.license}, ${r.url}, modified.`);
+  if (!elv.length && !sources.length) out.push('No take needs a credit: every take is CC0.');
+  out.push('', `## Attribution licenses (${attribution.length} files)`, '', '| File | Source | Author | License |', '| --- | --- | --- | --- |');
+  for (const r of attribution) out.push(`| ${cell(r.file)} | [${cell(title(r))}](${r.url}) | ${cell(r.author)} | ${r.license} |`);
+  out.push('', `## ElvGames (${elv.length} files)`, '', 'Bought by the owner; license: https://elvgames.itch.io/terms.', '', '| File | Pack | Source file |', '| --- | --- | --- |');
+  for (const r of elv) out.push(`| ${cell(r.file)} | ${cell(title(r))} | ${cell(basename(r.source_file))} |`);
+  out.push('', `## CC0 and public domain (${cc0.length} files)`, '', 'No attribution needed; listed with thanks.', '', '| File | Source | Author |', '| --- | --- | --- |');
+  for (const r of cc0) out.push(`| ${cell(r.file)} | [${cell(title(r))}](${r.url}) | ${cell(r.author)} |`);
+  writeFileSync(CREDITS, out.join('\n') + '\n');
+  console.log(`wrote ${relative(ROOT, CREDITS)}: ${attribution.length} attribution, ${elv.length} ElvGames, ${cc0.length} CC0 takes`);
+}
+
 // ---------- main ----------
 
 switch (cmd) {
   case 'catalog':
     await buildCatalog();
+    break;
+  case 'elvgames':
+    buildElvCatalog();
+    break;
+  case 'find':
+    await find(args[0], args.slice(1));
+    break;
+  case 'credits':
+    credits();
     break;
   case 'search':
     search(args);

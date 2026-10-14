@@ -62,7 +62,7 @@ function render() {
       const d = dec(t);
       html += `<div class="take ${d}" data-k="${esc(t.k)}"><audio controls preload="none" src="${esc(t.f)}"></audio>
         <button class="ok ${d === 'approve' ? 'on' : ''}" data-d="approve">Approve</button><button class="no ${d === 'reject' ? 'on' : ''}" data-d="reject">Reject</button>
-        <span class="src">#${t.n} · ${esc(t.s)} s · ${esc(t.src)} by ${esc(t.a)}${t.note ? ' · ' + esc(t.note) : ''}</span></div>`;
+        <span class="src">#${t.n} · ${esc(t.s)} s · ${esc(t.src)} by ${esc(t.a)}${t.lic ? ' · ' + esc(t.lic) : ''}${t.note ? ' · ' + esc(t.note) : ''}</span></div>`;
     }
     html += `<input class="note" data-id="${esc(r.id)}" placeholder="Note (optional)" value="${esc(store.notes[r.id] || '')}"></div>`;
   }
