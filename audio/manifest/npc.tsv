@@ -9,11 +9,7 @@ npc/hammer-wood	1	npc/hammer-wood-1.mp3	0.72	fast-hammer-sfx	craft_0.ogg	0.00	0.
 npc/hammer-wood	2	npc/hammer-wood-2.mp3	0.16	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_wood_hit_01.ogg	0.00	0.25	rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	wood hit, CC0 75-cc0 pack	
 npc/quill	1	npc/quill-1.mp3	1.39	pencil-sounds	pencil/ogg/pencil_write.ogg			AntumDeluge	CC0	https://opengameart.org/content/pencil-sounds	CC0 pencil write, quill stand-in	
 npc/fishing	1	npc/fishing-1.mp3	0.41	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-02.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	CC0 water splash; no cast sound found	
-npc/anvil	-										same sound as battle/tower-build#1; the game can reuse that file	
 npc/hand-drum	-										same sound as battle/war-drum#1; the game can reuse that file	
-npc/mug-clink	-										same sound as world/trap-spikes#1; the game can reuse that file	
-npc/shrine-bell	-										same sound as ui/time-up#1; the game can reuse that file	
-npc/hand-bell	-										same sound as world/bell#1; the game can reuse that file	
 npc/greet	-										greeting pack has spoken words in Russian and English; no non-verbal greeting found	
 npc/crowd-gasp	-										no crowd gasp found; crowd-shouting ambience unclear	
 npc/bellows	-										no bellows or forge-fire sound in two searches (round 3)	
@@ -29,3 +25,7 @@ npc/hmm	1	npc/hmm-1.mp3	0.69	soundbible-1966-thought	Thought.wav	0.35	1.04	Mike 
 npc/gasp	1	npc/gasp-1.mp3	0.67	soundbible-127-inhaling-loudly	Inhaling_Loudly.wav	0.00	0.67	Mike Koenig	CC-BY 3.0	https://soundbible.com/127-Inhaling-Loudly.html	Sharp loud inhale, gasp-like	
 npc/old-mumble	1	npc/old-mumble-1.mp3	1.00	soundbible-665-clear-throat	Clear_Throat.wav	0.11	1.11	Mike Koenig	CC-BY 3.0	https://soundbible.com/665-Clear-Throat.html	Throat clear, old person sound (closest available)	
 npc/hmm	2	npc/hmm-2.mp3	0.51	soundbible-1966-thought	Thought.wav	1.86	2.37	Mike Koenig	Public domain	https://soundbible.com/1966-Thought.html	Thinking sound, second hum	
+npc/shrine-bell	2	npc/shrine-bell-2.mp3	4.97	soundbible-1531-temple-bell	Temple_Bell.wav	0	4.97	Mike Koenig	CC-BY 3.0	https://soundbible.com/1531-Temple-Bell.html	Temple bell, 5 s, SoundBible CC-BY 3.0	
+npc/mug-clink	3	npc/mug-clink-3.mp3	0.26	100-cc0-sfx	100-CC0-SFX_0/glass_01.ogg	0	0.26	rubberduck	CC0	https://opengameart.org/content/100-cc0-sfx	Glass clink, 0.26 s, CC0	
+npc/hand-bell	2	npc/hand-bell-2.mp3	0.43	100-cc0-sfx	100-CC0-SFX_0/bell_02.ogg	0	0.53	rubberduck	CC0	https://opengameart.org/content/100-cc0-sfx	Small bell, 0.5 s, CC0	
+npc/anvil	2	npc/anvil-2.mp3	0.84	commons-wws-blacksmith8217sanvil	WWS_Blacksmith8217sanvil.ogg	2.32	3.16	Work With Sounds / La Fonderie	CC-BY 4.0	https://commons.wikimedia.org/wiki/File:WWS_Blacksmith8217sanvil.ogg	Metal strike, 0.8 s, Commons CC-BY 4.0	

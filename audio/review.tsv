@@ -530,3 +530,7 @@ date	id	take	file	decision	source	source_file	start	end
 2026-10-13 22:22	battle/arrow-hit	5	battle/arrow-hit-5.mp3	approve	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Scythian Recurve Arrow Approach.wav	3.38	3.98
 2026-10-13 22:22	music/victory-jingle	5	music/victory-jingle-5.mp3	approve	victory-fanfare-short	Heavy_ConceptB.wav		
 2026-10-13	battle/war-drum-loop	1	battle/war-drum-loop-1.mp3	drop	horde-war-drums-loop	horde_war_drums_by_william_hector.wav		
+2026-10-14	monster/fire-roar	2	monster/fire-roar-2.mp3	drop	80-cc0-rpg-sfx	80-CC0-RPG-SFX_0/creature_roar_03.ogg	0	1.16
+2026-10-14	hero/whistle	1	hero/whistle-1.mp3	drop	commons-wolf-whistle	Wolf_whistle.ogg	1.10	2.11
+2026-10-14	world/ladder	1	world/ladder-1.mp3	drop	8-bit-sound-effects-library	8-Bit Sound Library/8-Bit Sound Library/Wav/Climb_Rope_Loop_00.wav	0	1.09
+2026-10-14	ambience/magic-hum	1	ambience/magic-hum-1.mp3	drop	ghostly-humming	ghostly_humming.ogg	0	40

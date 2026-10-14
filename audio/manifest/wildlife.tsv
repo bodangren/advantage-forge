@@ -11,7 +11,6 @@ wildlife/sheep	1	wildlife/sheep-1.mp3	0.86	sheep-baa	sheep_baa_0.ogg			AntumDelu
 wildlife/donkey	1	wildlife/donkey-1.mp3	1.80	donkey-bray	donkey_bray_-_starninjas_0.ogg			StarNinjas	CC0	https://opengameart.org/content/donkey-bray	CC0 donkey bray, single call	
 wildlife/wolf-growl	1	wildlife/wolf-growl-1.mp3	0.36	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/misc/wolfman.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	CC0 RPG pack wolf man growl	
 wildlife/hooves-walk	1	wildlife/hooves-walk-1.mp3	11.08	horse-trotting	Trot.ogg	0.07	12.38	EZduzziteh	CC0	https://opengameart.org/content/horse-trotting	CC0 horse trot on a road; trot, not walk, closest CC0 match	
-wildlife/deer	-										No CC0 deer, stag, or elk call found in search; 4 fetch limit reached	
 wildlife/frog	1	wildlife/frog-1.mp3	0.89	frog-croaks	croak_01_0.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	Frog croak, 1 s	
 wildlife/frog	2	wildlife/frog-2.mp3	1.13	frog-croaks	croak_03.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	Frog croak, 1.26 s	
 wildlife/fish-splash	2	wildlife/fish-splash-2.mp3	1.16	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-06.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	Water splash, 1.16 s	
@@ -35,3 +34,4 @@ wildlife/fox	1	wildlife/fox-1.mp3	1.49	soundbible-977-coyote-call	Coyote_Call.wa
 wildlife/pigeon	1	wildlife/pigeon-1.mp3	1.50	commons-dove-cooing	Dove_cooing.ogg	0.97	2.47	mary905	Public domain	https://commons.wikimedia.org/wiki/File:Dove_cooing.ogg	Dove coo, pigeon stand-in, public domain Commons	
 wildlife/squirrel	1	wildlife/squirrel-1.mp3	1.45	soundbible-921-squirrel	Squirrel.wav	0.05	1.5	Mike Koenig	Public domain	https://soundbible.com/921-Squirrel.html	Ground squirrel call, Denali recording, public domain SoundBible	
 wildlife/small-critter	1	wildlife/small-critter-1.mp3	1.50	grasshopper	grasshopper/grasshopper.ogg	0	1.5	AntumDeluge	CC0	https://opengameart.org/content/grasshopper	Grasshopper chirp, insect, CC0 OpenGameArt	
+wildlife/deer	1	wildlife/deer-1.mp3	3.00	soundbible-957-elk	Elk.wav	1	4	Mike Koenig	Public domain	https://soundbible.com/957-Elk.html	Elk call, unverified by ear	

@@ -39,14 +39,14 @@ world/well-bucket	1	world/well-bucket-1.mp3	0.84	6-short-water-splashes	ezwa-wat
 world/grass-rustle	1	world/grass-rustle-1.mp3	0.99	20-rustles-dry-leaves	qubodup-rustle/rustle/rustle05.flac			qubodup	CC0	https://opengameart.org/content/20-rustles-dry-leaves	dry leaves rustle, 1 s	
 world/tree-fall	1	world/tree-fall-1.mp3	2.15	tree-chop-fall-thud	chop-tree-fall.ogg			kheetor	CC0	https://opengameart.org/content/tree-chop-fall-thud	tree chop and fall thud	
 world/winch	1	world/winch-1.mp3	1.91	chain-winch-sounds	winch/winch - Marker 2.wav			bart	CC0	https://opengameart.org/content/chain-winch-sounds	winch turns	
-world/fountain	-										no CC0 water loop of 20-60 s found in library	
-world/gong	-										no gong sound found in library search	
 world/candle-out	-										no candle-out sound found in library search	
-world/ladder	-										no ladder climb sound found; 8-bit platformer match unsuitable	
 world/rope	-										no rope sound found; propeller and creak matches unsuitable	
-world/crystal-touch	-										same sound as battle/turn#1; the game can reuse that file	
-world/chains	-										same sound as item/chainmail#1; the game can reuse that file	
 world/portal-open	-										same sound as magic/cast#3; the game can reuse that file	
 world/notice-board	-										same sound as ui/page-turn#1; the game can reuse that file	
 world/water-splash	2	world/water-splash-2.mp3	1.11	elvgames-user-interface-pack-2	Sound Effects/User Interface Pack 2 - Universal Sound Effects/WAV/UI2_Splash_1.wav	0.06	1.17	ElvGames & Pegonthetrack	ElvGames	https://elvgames.itch.io		
 world/bubbles	2	world/bubbles-2.mp3	2.44	soundbible-1148-bubbling	Bubbling.wav	0.00	2.44	Mike Koenig	CC-BY 3.0	https://soundbible.com/1148-Bubbling.html		
+world/fountain	1	world/fountain-1.mp3	48.50	commons-fountain-in-toulouse	Fountain_in_toulouse.ogg	5	55	aldor	Public domain	https://commons.wikimedia.org/wiki/File:Fountain_in_toulouse.ogg	Fountain water, steady splash loop	
+world/chains	2	world/chains-2.mp3	4.00	soundbible-1101-large-chains	Large_Chains.wav	0	4	Mike Koenig	CC-BY 3.0	https://soundbible.com/1101-Large-Chains.html	Large chains rattle, first 4 s, SoundBible CC-BY 3.0	
+world/crystal-touch	2	world/crystal-touch-2.mp3	1.40	soundbible-125-crystal-glass	Crystal_Glass.wav	5.0	6.4	Mike Koenig	CC-BY 3.0	https://soundbible.com/125-Crystal-Glass.html	Crystal glass tone, 1.4 s, SoundBible CC-BY 3.0	
+world/gong	1	world/gong-1.mp3	5.96	soundbible-2062-metal-gong-1	Metal_Gong_1.wav	0.07	6.03	Mike Koenig	CC-BY 3.0	https://soundbible.com/2062-Metal-Gong-1.html	Metal gong struck once, long ring	
+world/ladder	-										no ladder climb sound; the 8-bit rope climb does not fit the style (dropped 2026-10-14)	

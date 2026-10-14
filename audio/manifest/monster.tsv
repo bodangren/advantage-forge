@@ -51,10 +51,10 @@ monster/crab-clack	1	monster/crab-clack-1.mp3	0.27	10-clicks-and-switches	10_cli
 monster/shadow-whoosh	-										same sound as hero/dodge#1; the game can reuse that file	
 monster/frost-breath	-										same sound as magic/ice-cast#2; the game can reuse that file	
 monster/ice-crackle	-										same sound as magic/ice-cast#2; the game can reuse that file	
-monster/fire-roar	-										same sound as magic/fire-cast#1; the game can reuse that file	
-monster/crystal-chime	-										no fit after two searches	
 monster/giant-step	-										no fit after two searches	
-monster/magic-horse	-										no horse or magic horse whinny found after two searches	
 monster/wind-howl	2	monster/wind-howl-2.mp3	2.34	short-wind-sound	short wind sound.wav			remaxim	CC0	https://opengameart.org/content/short-wind-sound	orchestrator: a single wind gust; round 2 asked for wind, not an animal	
 monster/fey-giggle	1	monster/fey-giggle-1.mp3	0.70	soundbible-791-giggle	Giggle.wav	0.06	0.76	Mike Koenig	CC-BY 3.0	https://soundbible.com/791-Giggle.html		
 monster/fey-giggle	2	monster/fey-giggle-2.mp3	1.29	soundbible-1123-kid-giggle-2	Kid_Giggle_2.wav	0.18	1.47	Mike Koenig	CC-BY 3.0	https://soundbible.com/1123-Kid-Giggle-2.html	Kid giggle, playful	
+monster/magic-horse	1	monster/magic-horse-1.mp3	2.18	zebra-whinny	zebra_0.ogg	0.01	2.19	AntumDeluge	CC-BY 4.0	https://opengameart.org/content/zebra-whinny	Equine whinny (zebra), short; closest equine call without a horse take	
+monster/crystal-chime	1	monster/crystal-chime-1.mp3	4.00	soundbible-125-crystal-glass	Crystal_Glass.wav	0	4	Mike Koenig	CC-BY 3.0	https://soundbible.com/125-Crystal-Glass.html	Wet-finger crystal glass tone, cut to 4 s	
+monster/fire-roar	-										same sound as magic/fire-cast#1; the game can reuse that file (creature_roar_03 is an animal roar, not a flame; dropped 2026-10-14)	

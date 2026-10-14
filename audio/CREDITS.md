@@ -17,6 +17,7 @@ and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the sou
 - "Cascade de Syratu" by Arie m den toom, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:Cascade_de_Syratu.ogg, modified.
 - "Clear Throat" by Mike Koenig, CC-BY 3.0, https://soundbible.com/665-Clear-Throat.html, modified.
 - "Cow Moo" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1778-Cow-Moo.html, modified.
+- "Crystal Glass" by Mike Koenig, CC-BY 3.0, https://soundbible.com/125-Crystal-Glass.html, modified.
 - "Fizzle" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1308-Fizzle.html, modified.
 - "Giggle" by Mike Koenig, CC-BY 3.0, https://soundbible.com/791-Giggle.html, modified.
 - "Goat Bah" by Mike Koenig, CC-BY 3.0, https://soundbible.com/619-Goat-Bah.html, modified.
@@ -25,13 +26,20 @@ and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the sou
 - "Inhaling Loudly" by Mike Koenig, CC-BY 3.0, https://soundbible.com/127-Inhaling-Loudly.html, modified.
 - "Kid Giggle 2" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1123-Kid-Giggle-2.html, modified.
 - "Kid Laugh" by Mike Koenig, CC-BY 3.0, https://soundbible.com/2026-Kid-Laugh.html, modified.
+- "Large Chains" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1101-Large-Chains.html, modified.
+- "Metal Gong 1" by Mike Koenig, CC-BY 3.0, https://soundbible.com/2062-Metal-Gong-1.html, modified.
 - "Mystic Chanting 1" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1671-Mystic-Chanting-1.html, modified.
 - "Oceanwavescrushing" by Luftrum, CC-BY 3.0, https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg, modified.
 - "Rooster Crowing" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1134-Rooster-Crowing.html, modified.
 - "Seal Call Zoo" by Mike Koenig, CC-BY 3.0, https://soundbible.com/142-Seal-Call-Zoo.html, modified.
+- "Temple Bell" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1531-Temple-Bell.html, modified.
 - "Underwater sound of a river" by Thomas Bresson, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3, modified.
+- "Whip Crack" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1375-Whip-Crack.html, modified.
+- "WWS Blacksmith8217sanvil" by Work With Sounds / La Fonderie, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:WWS_Blacksmith8217sanvil.ogg, modified.
+- "WWS FloatingmillwaterwheeltheBabimill" by Work With Sounds / Technical Museum of Slovenia, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:WWS_FloatingmillwaterwheeltheBabimill.ogg, modified.
+- "Zebra Whinny" by AntumDeluge, CC-BY 4.0, https://opengameart.org/content/zebra-whinny, modified.
 
-## Attribution licenses (21 files)
+## Attribution licenses (30 files)
 
 | File | Source | Author | License |
 | --- | --- | --- | --- |
@@ -39,15 +47,21 @@ and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the sou
 | ambience/ocean-2.mp3 | [Oceanwavescrushing](https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg) | Luftrum | CC-BY 3.0 |
 | ambience/river-1.mp3 | [Underwater sound of a river](https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3) | Thomas Bresson | CC-BY 4.0 |
 | ambience/waterfall-1.mp3 | [Cascade de Syratu](https://commons.wikimedia.org/wiki/File:Cascade_de_Syratu.ogg) | Arie m den toom | CC-BY 4.0 |
+| ambience/watermill-2.mp3 | [WWS FloatingmillwaterwheeltheBabimill](https://commons.wikimedia.org/wiki/File:WWS_FloatingmillwaterwheeltheBabimill.ogg) | Work With Sounds / Technical Museum of Slovenia | CC-BY 4.0 |
+| battle/whip-1.mp3 | [Whip Crack](https://soundbible.com/1375-Whip-Crack.html) | Mike Koenig | CC-BY 3.0 |
 | hero/cast-voice-1.mp3 | [Mystic Chanting 1](https://soundbible.com/1671-Mystic-Chanting-1.html) | Mike Koenig | CC-BY 3.0 |
 | magic/fizzle-2.mp3 | [Fizzle](https://soundbible.com/1308-Fizzle.html) | Mike Koenig | CC-BY 3.0 |
+| monster/crystal-chime-1.mp3 | [Crystal Glass](https://soundbible.com/125-Crystal-Glass.html) | Mike Koenig | CC-BY 3.0 |
 | monster/fey-giggle-1.mp3 | [Giggle](https://soundbible.com/791-Giggle.html) | Mike Koenig | CC-BY 3.0 |
 | monster/fey-giggle-2.mp3 | [Kid Giggle 2](https://soundbible.com/1123-Kid-Giggle-2.html) | Mike Koenig | CC-BY 3.0 |
+| monster/magic-horse-1.mp3 | [Zebra Whinny](https://opengameart.org/content/zebra-whinny) | AntumDeluge | CC-BY 4.0 |
+| npc/anvil-2.mp3 | [WWS Blacksmith8217sanvil](https://commons.wikimedia.org/wiki/File:WWS_Blacksmith8217sanvil.ogg) | Work With Sounds / La Fonderie | CC-BY 4.0 |
 | npc/broom-1.mp3 | [Broom Sweeping](https://soundbible.com/2104-Broom-Sweeping.html) | Mike Koenig | CC-BY 3.0 |
 | npc/child-laugh-2.mp3 | [Kid Laugh](https://soundbible.com/2026-Kid-Laugh.html) | Mike Koenig | CC-BY 3.0 |
 | npc/crowd-cheer-2.mp3 | [5 Sec Crowd Cheer](https://soundbible.com/1700-5-Sec-Crowd-Cheer.html) | Mike Koenig | CC-BY 3.0 |
 | npc/gasp-1.mp3 | [Inhaling Loudly](https://soundbible.com/127-Inhaling-Loudly.html) | Mike Koenig | CC-BY 3.0 |
 | npc/old-mumble-1.mp3 | [Clear Throat](https://soundbible.com/665-Clear-Throat.html) | Mike Koenig | CC-BY 3.0 |
+| npc/shrine-bell-2.mp3 | [Temple Bell](https://soundbible.com/1531-Temple-Bell.html) | Mike Koenig | CC-BY 3.0 |
 | wildlife/bee-1.mp3 | [Bee Buzzing Sound - Animal Sounds](https://commons.wikimedia.org/wiki/File:Bee_Buzzing_Sound_-_Animal_Sounds.opus) | Free Sounds Library User Spanac | CC-BY 3.0 |
 | wildlife/cow-1.mp3 | [Cow Moo](https://soundbible.com/1778-Cow-Moo.html) | Mike Koenig | CC-BY 3.0 |
 | wildlife/goat-1.mp3 | [Goat Bah](https://soundbible.com/619-Goat-Bah.html) | Mike Koenig | CC-BY 3.0 |
@@ -56,6 +70,9 @@ and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the sou
 | wildlife/rooster-1.mp3 | [Rooster Crowing](https://soundbible.com/1134-Rooster-Crowing.html) | Mike Koenig | CC-BY 3.0 |
 | wildlife/seal-1.mp3 | [Seal Call Zoo](https://soundbible.com/142-Seal-Call-Zoo.html) | Mike Koenig | CC-BY 3.0 |
 | world/bubbles-2.mp3 | [Bubbling](https://soundbible.com/1148-Bubbling.html) | Mike Koenig | CC-BY 3.0 |
+| world/chains-2.mp3 | [Large Chains](https://soundbible.com/1101-Large-Chains.html) | Mike Koenig | CC-BY 3.0 |
+| world/crystal-touch-2.mp3 | [Crystal Glass](https://soundbible.com/125-Crystal-Glass.html) | Mike Koenig | CC-BY 3.0 |
+| world/gong-1.mp3 | [Metal Gong 1](https://soundbible.com/2062-Metal-Gong-1.html) | Mike Koenig | CC-BY 3.0 |
 
 ## ElvGames (9 files)
 
@@ -73,7 +90,7 @@ Bought by the owner; license: https://elvgames.itch.io/terms.
 | ui/confirm-5.mp3 | User Interface Pack 2 | UI2_Accept_1.wav |
 | world/water-splash-2.mp3 | User Interface Pack 2 | UI2_Splash_1.wav |
 
-## CC0 and public domain (455 files)
+## CC0 and public domain (463 files)
 
 No attribution needed; listed with thanks.
 
@@ -88,6 +105,8 @@ No attribution needed; listed with thanks.
 | ambience/forest-day-1.mp3 | [Forest bird sounds](https://opengameart.org/content/forest-bird-sounds) | pauliuw |
 | ambience/forest-day-2.mp3 | [Forest bird sounds](https://opengameart.org/content/forest-bird-sounds) | pauliuw |
 | ambience/forest-night-1.mp3 | [cricket sounds](https://opengameart.org/content/cricket-sounds) | syncopika |
+| ambience/lava-1.mp3 | [Water bubbles chortling](https://commons.wikimedia.org/wiki/File:Water_bubbles_chortling.ogg) | stephan |
+| ambience/market-1.mp3 | [Flea market in the rain](https://commons.wikimedia.org/wiki/File:Flea_market_in_the_rain.ogg) | stephan |
 | ambience/meadow-1.mp3 | [AMB Outside 1](https://opengameart.org/content/amb-outside-1) | Kresiek The Furry |
 | ambience/ocean-1.mp3 | [Ocean Waves on a Tropical Beach](https://commons.wikimedia.org/wiki/File:Ocean_Waves_on_a_Tropical_Beach.ogg) | Jarrod stanley |
 | ambience/rain-1.mp3 | [AMB Rain Loop 1](https://opengameart.org/content/amb-rain-loop-1) | Kresiek The Furry |
@@ -232,6 +251,7 @@ No attribution needed; listed with thanks.
 | hero/hurt-voice-1.mp3 | [Hurt Sound Effects](https://opengameart.org/content/hurt-sound-effects) | EZduzziteh |
 | hero/jump-1.mp3 | [Jump Landing](https://opengameart.org/content/jump-landing) | Macro |
 | hero/land-1.mp3 | [Jump Landing Sound](https://opengameart.org/content/jump-landing-sound) | qubodup |
+| hero/lute-1.mp3 | [Guitar](https://opengameart.org/content/guitar-0) | AntumDeluge |
 | item/bag-1.mp3 | [50 RPG sound effects](https://opengameart.org/content/50-rpg-sound-effects) | Kenney |
 | item/beads-1.mp3 | [Mechanical Sounds](https://opengameart.org/content/mechanical-sounds) | BMacZero |
 | item/chainmail-1.mp3 | [RPG Sound Pack](https://opengameart.org/content/rpg-sound-pack) | artisticdude |
@@ -381,9 +401,11 @@ No attribution needed; listed with thanks.
 | npc/flute-1.mp3 | [Flute & Drums Music Tag](https://opengameart.org/content/flute-drums-music-tag) | NicholasJudy567 |
 | npc/hammer-wood-1.mp3 | [Fast Hammer SFX](https://opengameart.org/content/fast-hammer-sfx) | themightyglider |
 | npc/hammer-wood-2.mp3 | [75 CC0 breaking / falling / hit sfx](https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx) | rubberduck |
+| npc/hand-bell-2.mp3 | [100 CC0 SFX](https://opengameart.org/content/100-cc0-sfx) | rubberduck |
 | npc/hmm-1.mp3 | [Thought](https://soundbible.com/1966-Thought.html) | Mike Koenig |
 | npc/hmm-2.mp3 | [Thought](https://soundbible.com/1966-Thought.html) | Mike Koenig |
 | npc/laugh-1.mp3 | [Tiny creatures sounds](https://opengameart.org/content/tiny-creatures-sounds) | fvcalderan |
+| npc/mug-clink-3.mp3 | [100 CC0 SFX](https://opengameart.org/content/100-cc0-sfx) | rubberduck |
 | npc/pickaxe-1.mp3 | [75 CC0 breaking / falling / hit sfx](https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx) | rubberduck |
 | npc/pour-1.mp3 | [teapot sounds](https://opengameart.org/content/teapot-sounds) | liltechdude |
 | npc/quill-1.mp3 | [Pencil Sounds](https://opengameart.org/content/pencil-sounds) | AntumDeluge |
@@ -469,6 +491,7 @@ No attribution needed; listed with thanks.
 | ui/typing-key-3.mp3 | [51 UI sound effects (buttons, switches and clicks)](https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks) | Kenney |
 | ui/typing-key-5.mp3 | [RPG Sound Pack](https://opengameart.org/content/rpg-sound-pack) | artisticdude |
 | vehicle/balloon-1.mp3 | [Balloon Sounds](https://opengameart.org/content/balloon-sounds) | AntumDeluge |
+| vehicle/sail-2.mp3 | [wind1](https://opengameart.org/content/wind1) | Luke.RUSTLTD |
 | wildlife/bat-1.mp3 | [Bat Screeches](https://opengameart.org/content/bat-screeches) | AntumDeluge |
 | wildlife/bear-1.mp3 | [Bear Growls](https://opengameart.org/content/bear-growls) | AntumDeluge |
 | wildlife/boar-1.mp3 | [Boar](https://opengameart.org/content/boar-0) | fvcalderan |
@@ -477,6 +500,7 @@ No attribution needed; listed with thanks.
 | wildlife/chicken-1.mp3 | [Chicken](https://soundbible.com/871-Chicken.html) | Mike Koenig |
 | wildlife/crocodile-1.mp3 | [Alligator Hissing](https://soundbible.com/233-Alligator-Hissing.html) | Mike Koenig |
 | wildlife/crow-1.mp3 | [Crow](https://opengameart.org/content/crow) | fvcalderan |
+| wildlife/deer-1.mp3 | [Elk](https://soundbible.com/957-Elk.html) | Mike Koenig |
 | wildlife/dog-bark-2.mp3 | [Dog barking mono](https://opengameart.org/content/dog-barking-mono) | HaelDB |
 | wildlife/dolphin-1.mp3 | [Orca](https://soundbible.com/865-Orca.html) | Mike Koenig |
 | wildlife/donkey-1.mp3 | [Donkey Bray](https://opengameart.org/content/donkey-bray) | StarNinjas |
@@ -508,6 +532,7 @@ No attribution needed; listed with thanks.
 | world/door-locked-1.mp3 | [Door Lock Sounds](https://opengameart.org/content/door-lock-sounds) | Cough-E |
 | world/door-open-1.mp3 | [Door Open, Door Close Set](https://opengameart.org/content/door-open-door-close-set) | qubodup |
 | world/door-open-2.mp3 | [Door Open, Door Close Set](https://opengameart.org/content/door-open-door-close-set) | qubodup |
+| world/fountain-1.mp3 | [Fountain in toulouse](https://commons.wikimedia.org/wiki/File:Fountain_in_toulouse.ogg) | aldor |
 | world/gate-open-1.mp3 | [Creaky Door Hinge Spooky](https://opengameart.org/content/creaky-door-hinge-spooky) | w.forster.1@gmail.com |
 | world/gate-open-2.mp3 | [Door Lock Sounds](https://opengameart.org/content/door-lock-sounds) | Cough-E |
 | world/glass-break-1.mp3 | [Glass Break](https://opengameart.org/content/glass-break) | TinyWorlds |

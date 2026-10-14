@@ -18,14 +18,10 @@ ambience/crypt	1	ambience/crypt-1.mp3	18.51	4-atmospheric-ghostly-loops	independ
 ambience/dungeon	2	ambience/dungeon-2.mp3	38.50	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	50	90	JaggedStone	CC0	https://opengameart.org/content/loopable-dungeon-ambience	Dungeon ambience: low drone, drips	
 ambience/forest-night	1	ambience/forest-night-1.mp3	34.50	cricket-sounds	cricketsounds090613.wav	0	36	syncopika	CC0	https://opengameart.org/content/cricket-sounds	Night crickets loop, no owls	
 ambience/underwater	1	ambience/underwater-1.mp3	38.50	underwater-or-space-engine-rumble	deep_rumble.ogg	0	40	gmason	CC0	https://opengameart.org/content/underwater-or-space-engine-rumble	Deep underwater rumble loop, calm drone	
-ambience/lava	-										No CC0 lava or magma entry found in search	
-ambience/magic-hum	-										ghostly-humming (66 s) has 12 separate sounds with gaps; not steady	
 ambience/ship	-										only space-ship and sinking files; no wooden ship loop	
-ambience/market	-										crowd file is already used by ambience/tavern; no other market loop	
 ambience/snow	-										same sound as ambience/wind#1; the game can reuse that file	
 ambience/fireplace	-										same sound as ambience/campfire#1; the game can reuse that file	
 ambience/smithy	-										same sound as ambience/campfire#1; the game can reuse that file	
-ambience/watermill	-										no watermill wheel loop found after two searches	
 ambience/windmill	-										same sound as ambience/wind#2; the game can reuse that file (second search 2026-10-14: no windmill loop)	
 ambience/castle	-										same sound as ambience/wind#1; the game can reuse that file (second search 2026-10-14: no castle hall loop)	
 ambience/river	1	ambience/river-1.mp3	31.87	commons-underwater-sound-of-a-river	Underwater_sound_of_a_river.mp3			Thomas Bresson	CC-BY 4.0	https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3		
@@ -34,3 +30,7 @@ ambience/river	2	ambience/river-2.mp3	16.39	commons-shallow-small-river-with-sto
 ambience/ocean	1	ambience/ocean-1.mp3	43.50	commons-ocean-waves-on-a-tropical-beach	Ocean_Waves_on_a_Tropical_Beach.ogg	60	105	Jarrod stanley	CC0	https://commons.wikimedia.org/wiki/File:Ocean_Waves_on_a_Tropical_Beach.ogg	Waves on a beach, 45 s span	
 ambience/ocean	2	ambience/ocean-2.mp3	43.50	commons-oceanwavescrushing	Oceanwavescrushing.ogg	10	55	Luftrum	CC-BY 3.0	https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg	Waves on stones at a fjord shore, 45 s span	
 ambience/library	1	ambience/library-1.mp3	43.50	commons-20121112-tu-delft-library-quiet-study-room-general-ambience-soundcloud-el-mar	20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg	202	247	el_mar	CC-BY 3.0	https://commons.wikimedia.org/wiki/File:20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg	Quiet university library room: ventilation hum, soft keyboard clicks far away; calm 45 s span with no cough	
+ambience/lava	1	ambience/lava-1.mp3	48.50	commons-water-bubbles-chortling	Water_bubbles_chortling.ogg	0	50	stephan	Public domain	https://commons.wikimedia.org/wiki/File:Water_bubbles_chortling.ogg	Bubbling liquid, steady loop	
+ambience/watermill	2	ambience/watermill-2.mp3	68.50	commons-wws-floatingmillwaterwheelthebabimill	WWS_FloatingmillwaterwheeltheBabimill.ogg	5	75	Work With Sounds / Technical Museum of Slovenia	CC-BY 4.0	https://commons.wikimedia.org/wiki/File:WWS_FloatingmillwaterwheeltheBabimill.ogg	Mill water wheel turning, steady loop	
+ambience/market	1	ambience/market-1.mp3	28.49	commons-flea-market-in-the-rain	Flea_market_in_the_rain.ogg	30	60	stephan	Public domain	https://commons.wikimedia.org/wiki/File:Flea_market_in_the_rain.ogg	Market crowd murmur in the rain	
+ambience/magic-hum	-										ghostly-humming (66 s) has 12 separate sounds with gaps and is tagged spooky; not steady (dropped again 2026-10-14)	
