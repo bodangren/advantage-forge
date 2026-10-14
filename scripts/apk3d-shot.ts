@@ -541,6 +541,40 @@ async function playArena(page: Page, shot: (name: string) => Promise<void>): Pro
   await page.evaluate(() => clearInterval((window as any).__qcBot));
 }
 
+/** Enchanted Library: the bot walks to the right books; shots of each round's books and of the end banner. */
+async function playLibrary(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForFunction(() => Boolean((window as any).__apk3d.game()), undefined, { timeout: 180_000, polling: 250 });
+  await page.waitForTimeout(2500);
+  await shot('round-1');
+  await page.evaluate(() => {
+    const w = window as any;
+    w.__qcBot = setInterval(() => w.__apk3d.game()?.auto(), 150);
+  });
+  const started = Date.now();
+  let lastRound = 0;
+  let banner = false;
+  for (;;) {
+    const s = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return null;
+      const st = (window as any).__apk3d.game()?.state();
+      return st ? { round: st.round as number, phase: st.phase as string } : null;
+    });
+    if (!s) break;
+    if (s.phase === 'complete' && !banner) {
+      banner = true;
+      await page.waitForTimeout(500);
+      await shot('end-banner');
+    } else if (s.round !== lastRound && s.round <= 2) {
+      lastRound = s.round;
+      await page.waitForTimeout(1200);
+      await shot(`round-${s.round + 1}`);
+    }
+    if (Date.now() - started > 15 * 60_000) throw new Error('Enchanted Library did not end in 15 minutes');
+    await page.waitForTimeout(250);
+  }
+  await page.evaluate(() => clearInterval((window as any).__qcBot));
+}
+
 const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
   'dungeon-liberator': playArena,
   'devourer-slime': playArena,
@@ -549,6 +583,7 @@ const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) =
   'dragon-rider': playGates,
   'monster-encounters': playMonsterEncounters,
   'potion-rush': playPotionRush,
+  'enchanted-library': playLibrary,
 };
 
 /** The 2D (Phaser) players, for `--2d`. */
@@ -560,6 +595,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
   'dragon-flight': playGates,
   'dragon-rider': playGates,
   'monster-encounters': playMonsterEncounters2D,
+  'enchanted-library': playLibrary,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {

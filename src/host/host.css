@@ -895,6 +895,63 @@
   background: rgba(255, 244, 208, 0.6);
   font-size: 15px;
 }
+/* A wide screen shows the briefing in two columns, so it fits a desktop window without a scroll
+   bar (owner test, 2026-10-14): the goal and the steps left; the words, controls, tip, and buttons
+   right. An absent subtitle or tip leaves an empty row of no height. */
+@media (min-width: 900px) {
+  .panel.briefing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'title title'
+      'subtitle subtitle'
+      'goal words'
+      'goal chips'
+      'steps controls'
+      'steps tip'
+      'steps actions';
+    grid-template-rows: repeat(8, auto);
+    column-gap: 24px;
+    max-width: 960px;
+  }
+  .panel.briefing .eyebrow {
+    grid-area: eyebrow;
+  }
+  .panel.briefing h2 {
+    grid-area: title;
+  }
+  .panel.briefing .subtitle {
+    grid-area: subtitle;
+  }
+  .panel.briefing .goal {
+    grid-area: goal;
+    align-self: start;
+  }
+  .panel.briefing .steps {
+    grid-area: steps;
+  }
+  .panel.briefing .controls {
+    grid-area: controls;
+    align-self: start;
+  }
+  .panel.briefing h3 {
+    grid-area: words;
+    margin-top: 12px;
+  }
+  .panel.briefing .chips {
+    grid-area: chips;
+    align-self: start;
+  }
+  .panel.briefing .tip {
+    grid-area: tip;
+    align-self: start;
+  }
+  .panel.briefing .actions {
+    grid-area: actions;
+    align-self: end;
+  }
+}
 .panel .center {
   text-align: center;
   margin: 4px 0;

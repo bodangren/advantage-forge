@@ -22,6 +22,10 @@ Status: in progress. The plan records execution state. Linked documents retain d
 - [~] Task: Verify touch input, learning evidence, accessibility, strings, and screenshots. Emulated phone check on 2026-10-04: `qc/run.mjs --phone` and `--phone-landscape` (390 × 844 and 844 × 390, touch events, two device pixels per CSS pixel) in 3D and 2D: after the fixes, 112 of 112 runs passed with no page errors, no diagnostics, and no legacy model requests. The layout defects that the first run found are fixed in Forge `bc930b5` and the monorepo `11a203aad` (labels move apart, stay under the top panels and inside the screen, Thai labels keep whole words; `docs/apk3d-cartridge.md` section 9.1). Learning evidence and strings: the package rules, replay, bot, and i18n scan tests. Open: a real touch-device check (platform port spec, open decision 6).
 - [ ] Task: Record the release pull request and update the family design notes. Waits for the owner: the push and the pull request (platform port spec, open decision 1).
 
+## Owner test fixes (2026-10-14)
+
+- [x] Task: Fix the four defects of the owner's manual test in Primary (reported by the monorepo session). The word tags stand on their own books and are smaller (17 px), so they do not cover the books behind them. The prompt card and the last tags go away before the end banner. Helper mode marks the right book only after a wrong book in the round (`hintBookOf`, rules test). An exit control during play belongs to the host page: the monorepo host draws it. The standalone briefing shows two columns at 900 px and wider, so all 29 briefings fit at 1279 x 560 without a scroll bar. QC: `scripts/apk3d-shot.ts` has a player for this game; 3D and 2D shots in portrait and landscape, no errors or diagnostics.
+
 ## Result (2026-10-03)
 
 Built locally on 2026-10-03: rules core, QC bot, 3D view, Phaser view, passing tests, and a headless browser check in 3D and 2D (software GL, no errors, no legacy model requests). Ported into the monorepo package `game-cartridges-3d` on branch `apk3d-games-port` (local, not pushed). Open: a real touch-device check and layout tuning.
