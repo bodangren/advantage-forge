@@ -17,7 +17,8 @@ hero/hurt-voice	1	hero/hurt-voice-1.mp3	0.25	hurt-sound-effects	hurt_02.mp3			EZ
 hero/cloth-move	1	hero/cloth-move-1.mp3	0.47	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth3.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	CC0 Kenney cloth	
 hero/lute	-										no lute in the library; guitar pluck is not a lute	
 hero/whistle	-										no beast-call whistle; steam and whistle packs do not fit	
-hero/cast-voice	-										no clean non-verbal spell voice found	
 hero/armor-move	-										no second chain file found; chainmail2 span already used	
 hero/footstep-water	-										same sound as magic/water#2; the game can reuse that file	
-hero/cheer	-										no non-verbal cheer of one hero found; npc/crowd-cheer#2 is a crowd, not one voice	
+hero/cheer	2	hero/cheer-2.mp3	1.00	female-warrior-cheer	weirdwarriornosieslol.mp3	0.38	1.38	SkyRae	CC0	https://opengameart.org/content/female-warrior-cheer	Female warrior cheer, short voice shout (verify non-verbal)	
+hero/cast-voice	1	hero/cast-voice-1.mp3	1.50	soundbible-1671-mystic-chanting-1	Mystic_Chanting_1.wav	0.05	1.55	Mike Koenig	CC-BY 3.0	https://soundbible.com/1671-Mystic-Chanting-1.html	Mystic chanting (verify no words)	
+hero/cheer	3	hero/cheer-3.mp3	1.02	female-warrior-cheer	weirdwarriornosieslol.mp3	1.71	2.73	SkyRae	CC0	https://opengameart.org/content/female-warrior-cheer	Female warrior cheer, second shout (verify non-verbal)	
