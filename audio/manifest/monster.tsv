@@ -1,59 +1,59 @@
-id	take	file	seconds	source	source_file	start	end	author	license	url	note
-monster/slime-squish	1	monster/slime-squish-1.mp3	0.26	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime2.wav	0.01	0.27	artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
-monster/slime-splat	1	monster/slime-splat-1.mp3	0.32	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime6.wav	0.00	0.32	artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	
-monster/beast-growl	1	monster/beast-growl-1.mp3	2.28	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Beast Growl 2.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds	
-monster/beast-roar	1	monster/beast-roar-1.mp3	0.36	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_03.ogg	0.03	0.39	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	
-monster/dragon-roar	1	monster/dragon-roar-1.mp3	5.64	cc0-deep-monster-roar	monster_roar.wav	0.12	5.76	trazzz123	CC0	https://opengameart.org/content/cc0-deep-monster-roar	
-monster/dragon-breath	1	monster/dragon-breath-1.mp3	0.40	80-cc0-creature-sfx	80-CC0-creature-SFX_0/breath.ogg	0.02	0.42	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	generic breath, not clearly fire
-monster/wing-flap	1	monster/wing-flap-1.mp3	1.41	dragon-flap-0	dragonflap.wav	0.0	1.45	VishwaJai	CC0	https://opengameart.org/content/dragon-flap-0	
-monster/spit	1	monster/spit-1.mp3	0.38	80-cc0-creature-sfx	80-CC0-creature-SFX_0/spit_01.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	80 CC0 creature SFX, spit_01, short wet spit
-monster/bird-screech	1	monster/bird-screech-1.mp3	1.75	bat-screeches	bat/ogg/bat_02.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	Bat screech used as a stand-in for a big bird screech; CC0 bat-screeches pack
-monster/insect-chitter	1	monster/insect-chitter-1.mp3	0.24	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_01.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_01
-monster/insect-chitter	2	monster/insect-chitter-2.mp3	0.38	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_02.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_02
-monster/insect-chitter	3	monster/insect-chitter-3.mp3	0.35	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_03.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_03
-monster/insect-skitter	1	monster/insect-skitter-1.mp3	0.34	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_04.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_04, many small legs
-monster/bite	1	monster/bite-1.mp3	0.36	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small
-monster/bite	2	monster/bite-2.mp3	0.35	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small2
-monster/bite	3	monster/bite-3.mp3	0.45	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small3
-monster/bird-screech	2	monster/bird-screech-2.mp3	0.98	evil-screech-1	evil_screech_1.ogg	1.93	2.91	Nocturnal_Vanguard	CC0	https://opengameart.org/content/evil-screech-1	Screech from CC0 evil-screech-1; cackle removed by cut
-monster/bird-screech	3	monster/bird-screech-3.mp3	0.55	crow-caw	crow_caw.wav			zeroisnotnull	CC0	https://opengameart.org/content/crow-caw	Crow caw as a bird call; short cut from CC0 crow-caw
-monster/bat-screech	1	monster/bat-screech-1.mp3	1.31	bat-screeches	bat/ogg/bat_01.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	
-monster/beast-snarl	1	monster/beast-snarl-1.mp3	1.16	monster-snarls	monster-snarl-attack.ogg	0.07	1.22	Darsycho	CC0	https://opengameart.org/content/monster-snarls	Monster snarl from CC0 monster-snarls pack
-monster/beast-snarl	2	monster/beast-snarl-2.mp3	1.48	monster-snarls	monsters-snarls-3_0.ogg	9.47	10.95	Darsycho	CC0	https://opengameart.org/content/monster-snarls	Monster snarl cut from CC0 monster-snarls pack, file 3
-monster/bat-screech	2	monster/bat-screech-2.mp3	1.24	bat-screeches	bat/ogg/bat_03.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	
-monster/toad-croak	1	monster/toad-croak-1.mp3	0.51	frog-croaks	croak_04.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	
-monster/toad-croak	2	monster/toad-croak-2.mp3	0.19	frog-croaks	croak_02.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks	
-monster/tentacle-slap	1	monster/tentacle-slap-1.mp3	0.56	thwack-sounds	thwack-1.0/Vorbis/thwack-08.oga			AntumDeluge	CC0	https://opengameart.org/content/thwack-sounds	
-monster/tentacle-slap	2	monster/tentacle-slap-2.mp3	0.46	thwack-sounds	thwack-1.0/Vorbis/thwack-09.oga			AntumDeluge	CC0	https://opengameart.org/content/thwack-sounds	
-monster/demon-growl	1	monster/demon-growl-1.mp3	3.50	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Demon Growl.wav	0	3.5	pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds	
-monster/slime-squish	2	monster/slime-squish-2.mp3	0.19	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime1.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 1
-monster/slime-squish	3	monster/slime-squish-3.mp3	0.23	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 3
-monster/slime-squish	4	monster/slime-squish-4.mp3	0.18	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime4.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 4
-monster/beast-growl	2	monster/beast-growl-2.mp3	0.37	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr1.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 1
-monster/beast-growl	3	monster/beast-growl-3.mp3	0.39	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 2
-monster/beast-roar	2	monster/beast-roar-2.mp3	0.83	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr5.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 5
-monster/beast-roar	3	monster/beast-roar-3.mp3	0.67	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr11.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 11
-monster/mimic-chomp	1	monster/mimic-chomp-1.mp3	0.56	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 1.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds	
-monster/mimic-chomp	2	monster/mimic-chomp-2.mp3	0.60	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 2.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds	
-monster/wing-flap	2	monster/wing-flap-2.mp3	1.50	large-wings-flap	wings_flap_large/wings_flap_large.ogg	0	1.5	AntumDeluge	CC0	https://opengameart.org/content/large-wings-flap	Large wing flap, CC0 wings pack, cut 0-1.5 s
-monster/dragon-roar	2	monster/dragon-roar-2.mp3	3.20	steampunk-fantasy-voices	Dragon_See_001_0.wav			xathien	CC0	https://opengameart.org/content/steampunk-fantasy-voices	Dragon call, CC0 steampunk voices pack
-monster/dragon-roar	3	monster/dragon-roar-3.mp3	3.26	steampunk-fantasy-voices	Dragon_See_002_0.wav			xathien	CC0	https://opengameart.org/content/steampunk-fantasy-voices	Dragon call, CC0 steampunk voices pack, file 2
-monster/insect-skitter	2	monster/insect-skitter-2.mp3	0.36	80-cc0-creature-sfx	80-CC0-creature-SFX_0/alien_05.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	
-monster/reptile-hiss	2	monster/reptile-hiss-2.mp3	0.89	steam-release-sounds	steam_hisses/steam hisses - Marker #1.wav	0	1.2	bart	CC0	https://opengameart.org/content/steam-release-sounds	Steam hiss, CC0 steam release pack, cut 0-1.2 s
-monster/reptile-hiss	3	monster/reptile-hiss-3.mp3	0.90	steam-release-sounds	steam_hisses/steam hisses - Marker #2.wav	0	1.2	bart	CC0	https://opengameart.org/content/steam-release-sounds	Steam hiss, CC0 steam release pack, file 2, cut 0-1.2 s
-monster/water-surge	1	monster/water-surge-1.mp3	3.02	water-waves	wave_02_cc0-11505__transitking__wavesound.flac			qubodup	CC0	https://opengameart.org/content/water-waves	Catalog license CC0; description only names the Freesound source, no attribution text required
-monster/rock-rumble	1	monster/rock-rumble-1.mp3	4.00	underwater-or-space-engine-rumble	deep_rumble.ogg	4	8	gmason	CC0	https://opengameart.org/content/underwater-or-space-engine-rumble	Catalog license CC0; description only names the source, no attribution text required
-monster/rat-squeak	1	monster/rat-squeak-1.mp3	0.92	mouse-imitation	mouse-2_0.ogg	0.00	0.92	AntumDeluge	CC0	https://opengameart.org/content/mouse-imitation	Mouse imitation squeak, CC0
-monster/tree-creak	1	monster/tree-creak-1.mp3	3.85	tree-creaking	tree_creak_0.ogg	0.04	3.9	AntumDeluge	CC0	https://opengameart.org/content/tree-creaking	Tree creaking, CC0, cut to 3.9 s
-monster/giant-bellow	1	monster/giant-bellow-1.mp3	0.64	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/giant/giant2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack giant voice, CC0
-monster/eldritch-drone	1	monster/eldritch-drone-1.mp3	7.88	ghostly-humming	ghostly_humming.ogg	10.54	18.42	Nocturnal_Vanguard	CC0	https://opengameart.org/content/ghostly-humming	Ghostly humming, CC0
-monster/crab-clack	1	monster/crab-clack-1.mp3	0.27	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.3.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	Click set, CC0
-monster/shadow-whoosh	-										same sound as hero/dodge#1; the game can reuse that file
-monster/frost-breath	-										same sound as magic/ice-cast#2; the game can reuse that file
-monster/ice-crackle	-										same sound as magic/ice-cast#2; the game can reuse that file
-monster/fire-roar	-										same sound as magic/fire-cast#1; the game can reuse that file
-monster/fey-giggle	-										group-giggling is human group; no clear fairy giggle found
-monster/crystal-chime	-										no fit after two searches
-monster/giant-step	-										no fit after two searches
-monster/magic-horse	-										no horse or magic horse whinny found after two searches
-monster/wind-howl	2	monster/wind-howl-2.mp3	2.34	short-wind-sound	short wind sound.wav			remaxim	CC0	https://opengameart.org/content/short-wind-sound	orchestrator: a single wind gust; round 2 asked for wind, not an animal
+id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
+monster/slime-squish	1	monster/slime-squish-1.mp3	0.26	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime2.wav	0.01	0.27	artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack		
+monster/slime-splat	1	monster/slime-splat-1.mp3	0.32	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime6.wav	0.00	0.32	artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack		
+monster/beast-growl	1	monster/beast-growl-1.mp3	2.28	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Beast Growl 2.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds		
+monster/beast-roar	1	monster/beast-roar-1.mp3	0.36	80-cc0-creature-sfx	80-CC0-creature-SFX_0/roar_03.ogg	0.03	0.39	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx		
+monster/dragon-roar	1	monster/dragon-roar-1.mp3	5.64	cc0-deep-monster-roar	monster_roar.wav	0.12	5.76	trazzz123	CC0	https://opengameart.org/content/cc0-deep-monster-roar		
+monster/dragon-breath	1	monster/dragon-breath-1.mp3	0.40	80-cc0-creature-sfx	80-CC0-creature-SFX_0/breath.ogg	0.02	0.42	rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	generic breath, not clearly fire	
+monster/wing-flap	1	monster/wing-flap-1.mp3	1.41	dragon-flap-0	dragonflap.wav	0.0	1.45	VishwaJai	CC0	https://opengameart.org/content/dragon-flap-0		
+monster/spit	1	monster/spit-1.mp3	0.38	80-cc0-creature-sfx	80-CC0-creature-SFX_0/spit_01.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	80 CC0 creature SFX, spit_01, short wet spit	
+monster/bird-screech	1	monster/bird-screech-1.mp3	1.75	bat-screeches	bat/ogg/bat_02.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	Bat screech used as a stand-in for a big bird screech; CC0 bat-screeches pack	
+monster/insect-chitter	1	monster/insect-chitter-1.mp3	0.24	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_01.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_01	
+monster/insect-chitter	2	monster/insect-chitter-2.mp3	0.38	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_02.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_02	
+monster/insect-chitter	3	monster/insect-chitter-3.mp3	0.35	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_03.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_03	
+monster/insect-skitter	1	monster/insect-skitter-1.mp3	0.34	80-cc0-creature-sfx	80-CC0-creature-SFX_0/bug_04.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx	creature pack bug_04, many small legs	
+monster/bite	1	monster/bite-1.mp3	0.36	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small	
+monster/bite	2	monster/bite-2.mp3	0.35	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small2	
+monster/bite	3	monster/bite-3.mp3	0.45	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/beetle/bite-small3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack NPC/beetle bite-small3	
+monster/bird-screech	2	monster/bird-screech-2.mp3	0.98	evil-screech-1	evil_screech_1.ogg	1.93	2.91	Nocturnal_Vanguard	CC0	https://opengameart.org/content/evil-screech-1	Screech from CC0 evil-screech-1; cackle removed by cut	
+monster/bird-screech	3	monster/bird-screech-3.mp3	0.55	crow-caw	crow_caw.wav			zeroisnotnull	CC0	https://opengameart.org/content/crow-caw	Crow caw as a bird call; short cut from CC0 crow-caw	
+monster/bat-screech	1	monster/bat-screech-1.mp3	1.31	bat-screeches	bat/ogg/bat_01.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches		
+monster/beast-snarl	1	monster/beast-snarl-1.mp3	1.16	monster-snarls	monster-snarl-attack.ogg	0.07	1.22	Darsycho	CC0	https://opengameart.org/content/monster-snarls	Monster snarl from CC0 monster-snarls pack	
+monster/beast-snarl	2	monster/beast-snarl-2.mp3	1.48	monster-snarls	monsters-snarls-3_0.ogg	9.47	10.95	Darsycho	CC0	https://opengameart.org/content/monster-snarls	Monster snarl cut from CC0 monster-snarls pack, file 3	
+monster/bat-screech	2	monster/bat-screech-2.mp3	1.24	bat-screeches	bat/ogg/bat_03.ogg			AntumDeluge	CC0	https://opengameart.org/content/bat-screeches		
+monster/toad-croak	1	monster/toad-croak-1.mp3	0.51	frog-croaks	croak_04.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks		
+monster/toad-croak	2	monster/toad-croak-2.mp3	0.19	frog-croaks	croak_02.mp3			EZduzziteh	CC0	https://opengameart.org/content/frog-croaks		
+monster/tentacle-slap	1	monster/tentacle-slap-1.mp3	0.56	thwack-sounds	thwack-1.0/Vorbis/thwack-08.oga			AntumDeluge	CC0	https://opengameart.org/content/thwack-sounds		
+monster/tentacle-slap	2	monster/tentacle-slap-2.mp3	0.46	thwack-sounds	thwack-1.0/Vorbis/thwack-09.oga			AntumDeluge	CC0	https://opengameart.org/content/thwack-sounds		
+monster/demon-growl	1	monster/demon-growl-1.mp3	3.50	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Demon Growl.wav	0	3.5	pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds		
+monster/slime-squish	2	monster/slime-squish-2.mp3	0.19	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime1.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 1	
+monster/slime-squish	3	monster/slime-squish-3.mp3	0.23	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime3.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 3	
+monster/slime-squish	4	monster/slime-squish-4.mp3	0.18	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/slime/slime4.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack slime 4	
+monster/beast-growl	2	monster/beast-growl-2.mp3	0.37	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr1.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 1	
+monster/beast-growl	3	monster/beast-growl-3.mp3	0.39	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 2	
+monster/beast-roar	2	monster/beast-roar-2.mp3	0.83	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr5.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 5	
+monster/beast-roar	3	monster/beast-roar-3.mp3	0.67	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/gutteral beast/mnstr11.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	Sound from CC0 RPG Sound Pack beast 11	
+monster/mimic-chomp	1	monster/mimic-chomp-1.mp3	0.56	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 1.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds		
+monster/mimic-chomp	2	monster/mimic-chomp-2.mp3	0.60	monster-or-beast-sounds	monsters_or_beasts/Monsters or Beasts/Yucky Beast 2.wav			pauliuw	CC0	https://opengameart.org/content/monster-or-beast-sounds		
+monster/wing-flap	2	monster/wing-flap-2.mp3	1.50	large-wings-flap	wings_flap_large/wings_flap_large.ogg	0	1.5	AntumDeluge	CC0	https://opengameart.org/content/large-wings-flap	Large wing flap, CC0 wings pack, cut 0-1.5 s	
+monster/dragon-roar	2	monster/dragon-roar-2.mp3	3.20	steampunk-fantasy-voices	Dragon_See_001_0.wav			xathien	CC0	https://opengameart.org/content/steampunk-fantasy-voices	Dragon call, CC0 steampunk voices pack	
+monster/dragon-roar	3	monster/dragon-roar-3.mp3	3.26	steampunk-fantasy-voices	Dragon_See_002_0.wav			xathien	CC0	https://opengameart.org/content/steampunk-fantasy-voices	Dragon call, CC0 steampunk voices pack, file 2	
+monster/insect-skitter	2	monster/insect-skitter-2.mp3	0.36	80-cc0-creature-sfx	80-CC0-creature-SFX_0/alien_05.ogg			rubberduck	CC0	https://opengameart.org/content/80-cc0-creature-sfx		
+monster/reptile-hiss	2	monster/reptile-hiss-2.mp3	0.89	steam-release-sounds	steam_hisses/steam hisses - Marker #1.wav	0	1.2	bart	CC0	https://opengameart.org/content/steam-release-sounds	Steam hiss, CC0 steam release pack, cut 0-1.2 s	
+monster/reptile-hiss	3	monster/reptile-hiss-3.mp3	0.90	steam-release-sounds	steam_hisses/steam hisses - Marker #2.wav	0	1.2	bart	CC0	https://opengameart.org/content/steam-release-sounds	Steam hiss, CC0 steam release pack, file 2, cut 0-1.2 s	
+monster/water-surge	1	monster/water-surge-1.mp3	3.02	water-waves	wave_02_cc0-11505__transitking__wavesound.flac			qubodup	CC0	https://opengameart.org/content/water-waves	Catalog license CC0; description only names the Freesound source, no attribution text required	
+monster/rock-rumble	1	monster/rock-rumble-1.mp3	4.00	underwater-or-space-engine-rumble	deep_rumble.ogg	4	8	gmason	CC0	https://opengameart.org/content/underwater-or-space-engine-rumble	Catalog license CC0; description only names the source, no attribution text required	
+monster/rat-squeak	1	monster/rat-squeak-1.mp3	0.92	mouse-imitation	mouse-2_0.ogg	0.00	0.92	AntumDeluge	CC0	https://opengameart.org/content/mouse-imitation	Mouse imitation squeak, CC0	
+monster/tree-creak	1	monster/tree-creak-1.mp3	3.85	tree-creaking	tree_creak_0.ogg	0.04	3.9	AntumDeluge	CC0	https://opengameart.org/content/tree-creaking	Tree creaking, CC0, cut to 3.9 s	
+monster/giant-bellow	1	monster/giant-bellow-1.mp3	0.64	rpg-sound-pack	rpg_sound_pack/RPG Sound Pack/NPC/giant/giant2.wav			artisticdude	CC0	https://opengameart.org/content/rpg-sound-pack	RPG Sound Pack giant voice, CC0	
+monster/eldritch-drone	1	monster/eldritch-drone-1.mp3	7.88	ghostly-humming	ghostly_humming.ogg	10.54	18.42	Nocturnal_Vanguard	CC0	https://opengameart.org/content/ghostly-humming	Ghostly humming, CC0	
+monster/crab-clack	1	monster/crab-clack-1.mp3	0.27	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.3.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	Click set, CC0	
+monster/shadow-whoosh	-										same sound as hero/dodge#1; the game can reuse that file	
+monster/frost-breath	-										same sound as magic/ice-cast#2; the game can reuse that file	
+monster/ice-crackle	-										same sound as magic/ice-cast#2; the game can reuse that file	
+monster/fire-roar	-										same sound as magic/fire-cast#1; the game can reuse that file	
+monster/crystal-chime	-										no fit after two searches	
+monster/giant-step	-										no fit after two searches	
+monster/magic-horse	-										no horse or magic horse whinny found after two searches	
+monster/wind-howl	2	monster/wind-howl-2.mp3	2.34	short-wind-sound	short wind sound.wav			remaxim	CC0	https://opengameart.org/content/short-wind-sound	orchestrator: a single wind gust; round 2 asked for wind, not an animal	
+monster/fey-giggle	1	monster/fey-giggle-1.mp3	0.70	soundbible-791-giggle	Giggle.wav	0.06	0.76	Mike Koenig	CC-BY 3.0	https://soundbible.com/791-Giggle.html		

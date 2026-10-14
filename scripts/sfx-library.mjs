@@ -329,11 +329,15 @@ function showEntry(slug) {
 /** Adds entries to a site's catalog file (an entry with the same slug is replaced). */
 function addEntries(file, source, found) {
   const path = join(SOURCES, file);
-  const old = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')).entries : [];
-  const slugs = new Set(found.map((e) => e.slug));
-  const entries = [...old.filter((e) => !slugs.has(e.slug)), ...found].sort((a, b) => a.slug.localeCompare(b.slug));
   mkdirSync(SOURCES, { recursive: true });
-  writeFileSync(path, JSON.stringify({ source, built: new Date().toISOString().slice(0, 10), entries }, null, 0).replace(/\},\{"slug"/g, '},\n{"slug"') + '\n');
+  // Agents search at the same time: the lock keeps one write from dropping the entries of another.
+  withLock(path, () => {
+    const old = existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')).entries : [];
+    const slugs = new Set(found.map((e) => e.slug));
+    const entries = [...old.filter((e) => !slugs.has(e.slug)), ...found].sort((a, b) => a.slug.localeCompare(b.slug));
+    writeFileSync(path + '.tmp', JSON.stringify({ source, built: new Date().toISOString().slice(0, 10), entries }, null, 0).replace(/\},\{"slug"/g, '},\n{"slug"') + '\n');
+    renameSync(path + '.tmp', path);
+  });
   catalogCache = null;
 }
 
@@ -393,10 +397,13 @@ async function findSoundBible(words) {
   };
   const list = await page('search.php?q=' + encodeURIComponent(words.join(' ')));
   const links = [...new Set([...list.matchAll(/href='(\d+)-([^']+)\.html'/g)].map((m) => `${m[1]}-${m[2]}.html`))].slice(0, 12);
+  // Four pages at a time: one page takes about 3 s.
+  const pages = [];
+  for (let i = 0; i < links.length; i += 4) pages.push(...(await Promise.all(links.slice(i, i + 4).map(page))));
   const found = [];
   let skipped = 0;
-  for (const link of links) {
-    const html = await page(link);
+  for (const [i, link] of links.entries()) {
+    const html = pages[i];
     const id = link.split('-')[0];
     const license = LICENSES[plain((/License<\/h5>\s*<p>([\s\S]*?)<\/p>/.exec(html) ?? [])[1])];
     if (!license) {
@@ -464,7 +471,8 @@ async function fetchRetry(url, timeoutMs) {
   let last;
   for (let attempt = 0; attempt < 4; attempt++) {
     const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), timeoutMs);
+    // unref: a finished request must not keep the process alive until the timeout.
+    const timer = setTimeout(() => ctl.abort(), timeoutMs).unref();
     try {
       const res = await fetch(url, { signal: ctl.signal, headers: { 'user-agent': USER_AGENT } });
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -841,8 +849,13 @@ function writeManifest(path, rows) {
 
 /** Runs fn while holding the manifest lock of a category (agents of one category may run at the same time). */
 function withManifest(id, fn) {
-  const lock = manifestPath(id) + '.lock';
   mkdirSync(MANIFESTS, { recursive: true });
+  return withLock(manifestPath(id), () => fn(readManifest(manifestPath(id))));
+}
+
+/** Runs fn while holding the lock of a file that several agents write (a lock directory beside it). */
+function withLock(path, fn) {
+  const lock = path + '.lock';
   for (let i = 0; ; i++) {
     try {
       mkdirSync(lock);
@@ -853,7 +866,7 @@ function withManifest(id, fn) {
     }
   }
   try {
-    return fn(readManifest(manifestPath(id)));
+    return fn();
   } finally {
     rmSync(lock, { recursive: true, force: true });
   }

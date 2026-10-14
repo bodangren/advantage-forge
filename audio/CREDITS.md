@@ -8,22 +8,51 @@ and encoded it as MP3 (a loop also gets a cross-fade at the seam, unless the sou
 
 ## Lines for a credits screen
 
+- Sound effects by ElvGames & Pegonthetrack (https://elvgames.itch.io), modified.
+- "20121112 TU Delft Library, quiet study room - general ambience - SoundCloud - el mar" by el_mar, CC-BY 3.0, https://commons.wikimedia.org/wiki/File:20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg, modified.
+- "5 Sec Crowd Cheer" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1700-5-Sec-Crowd-Cheer.html, modified.
+- "Bubbling" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1148-Bubbling.html, modified.
+- "Cascade de Syratu" by Arie m den toom, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:Cascade_de_Syratu.ogg, modified.
+- "Cow Moo" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1778-Cow-Moo.html, modified.
+- "Fizzle" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1308-Fizzle.html, modified.
+- "Giggle" by Mike Koenig, CC-BY 3.0, https://soundbible.com/791-Giggle.html, modified.
+- "Goat Bah" by Mike Koenig, CC-BY 3.0, https://soundbible.com/619-Goat-Bah.html, modified.
+- "Hawk Call 2x" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1481-Hawk-Call-2x.html, modified.
+- "Horse Neigh" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1296-Horse-Neigh.html, modified.
+- "Kid Laugh" by Mike Koenig, CC-BY 3.0, https://soundbible.com/2026-Kid-Laugh.html, modified.
+- "Oceanwavescrushing" by Luftrum, CC-BY 3.0, https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg, modified.
 - "Rooster Crowing" by Mike Koenig, CC-BY 3.0, https://soundbible.com/1134-Rooster-Crowing.html, modified.
+- "Underwater sound of a river" by Thomas Bresson, CC-BY 4.0, https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3, modified.
 
-## Attribution licenses (1 files)
+## Attribution licenses (14 files)
 
 | File | Source | Author | License |
 | --- | --- | --- | --- |
+| ambience/library-1.mp3 | [20121112 TU Delft Library, quiet study room - general ambience - SoundCloud - el mar](https://commons.wikimedia.org/wiki/File:20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg) | el_mar | CC-BY 3.0 |
+| ambience/ocean-2.mp3 | [Oceanwavescrushing](https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg) | Luftrum | CC-BY 3.0 |
+| ambience/river-1.mp3 | [Underwater sound of a river](https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3) | Thomas Bresson | CC-BY 4.0 |
+| ambience/waterfall-1.mp3 | [Cascade de Syratu](https://commons.wikimedia.org/wiki/File:Cascade_de_Syratu.ogg) | Arie m den toom | CC-BY 4.0 |
+| magic/fizzle-2.mp3 | [Fizzle](https://soundbible.com/1308-Fizzle.html) | Mike Koenig | CC-BY 3.0 |
+| monster/fey-giggle-1.mp3 | [Giggle](https://soundbible.com/791-Giggle.html) | Mike Koenig | CC-BY 3.0 |
+| npc/child-laugh-2.mp3 | [Kid Laugh](https://soundbible.com/2026-Kid-Laugh.html) | Mike Koenig | CC-BY 3.0 |
+| npc/crowd-cheer-2.mp3 | [5 Sec Crowd Cheer](https://soundbible.com/1700-5-Sec-Crowd-Cheer.html) | Mike Koenig | CC-BY 3.0 |
+| wildlife/cow-1.mp3 | [Cow Moo](https://soundbible.com/1778-Cow-Moo.html) | Mike Koenig | CC-BY 3.0 |
+| wildlife/goat-1.mp3 | [Goat Bah](https://soundbible.com/619-Goat-Bah.html) | Mike Koenig | CC-BY 3.0 |
+| wildlife/hawk-1.mp3 | [Hawk Call 2x](https://soundbible.com/1481-Hawk-Call-2x.html) | Mike Koenig | CC-BY 3.0 |
+| wildlife/horse-whinny-1.mp3 | [Horse Neigh](https://soundbible.com/1296-Horse-Neigh.html) | Mike Koenig | CC-BY 3.0 |
 | wildlife/rooster-1.mp3 | [Rooster Crowing](https://soundbible.com/1134-Rooster-Crowing.html) | Mike Koenig | CC-BY 3.0 |
+| world/bubbles-2.mp3 | [Bubbling](https://soundbible.com/1148-Bubbling.html) | Mike Koenig | CC-BY 3.0 |
 
-## ElvGames (0 files)
+## ElvGames (2 files)
 
 Bought by the owner; license: https://elvgames.itch.io/terms.
 
 | File | Pack | Source file |
 | --- | --- | --- |
+| magic/rune-2.mp3 | Sci-Fi User Interface Sounds | SciFi_UI_Activate_1.wav |
+| world/water-splash-2.mp3 | User Interface Pack 2 | UI2_Splash_1.wav |
 
-## CC0 and public domain (439 files)
+## CC0 and public domain (444 files)
 
 No attribution needed; listed with thanks.
 
@@ -39,7 +68,9 @@ No attribution needed; listed with thanks.
 | ambience/forest-day-2.mp3 | [Forest bird sounds](https://opengameart.org/content/forest-bird-sounds) | pauliuw |
 | ambience/forest-night-1.mp3 | [cricket sounds](https://opengameart.org/content/cricket-sounds) | syncopika |
 | ambience/meadow-1.mp3 | [AMB Outside 1](https://opengameart.org/content/amb-outside-1) | Kresiek The Furry |
+| ambience/ocean-1.mp3 | [Ocean Waves on a Tropical Beach](https://commons.wikimedia.org/wiki/File:Ocean_Waves_on_a_Tropical_Beach.ogg) | Jarrod stanley |
 | ambience/rain-1.mp3 | [AMB Rain Loop 1](https://opengameart.org/content/amb-rain-loop-1) | Kresiek The Furry |
+| ambience/river-2.mp3 | [Shallow small river with stony riverbed](https://commons.wikimedia.org/wiki/File:Shallow_small_river_with_stony_riverbed.ogg) | stephan |
 | ambience/sky-1.mp3 | [wind1](https://opengameart.org/content/wind1) | Luke.RUSTLTD |
 | ambience/storm-1.mp3 | [Rain + Long Thunder](https://opengameart.org/content/rain-long-thunder) | WuxiaScrub |
 | ambience/swamp-1.mp3 | [Swamp Environment Audio](https://opengameart.org/content/swamp-environment-audio) | LokiF |
@@ -417,6 +448,7 @@ No attribution needed; listed with thanks.
 | wildlife/boar-1.mp3 | [Boar](https://opengameart.org/content/boar-0) | fvcalderan |
 | wildlife/camel-1.mp3 | [Camel Groan](https://opengameart.org/content/camel-groan) | AntumDeluge |
 | wildlife/cat-meow-1.mp3 | [Meow](https://opengameart.org/content/meow) | IgnasD |
+| wildlife/chicken-1.mp3 | [Chicken](https://soundbible.com/871-Chicken.html) | Mike Koenig |
 | wildlife/crow-1.mp3 | [Crow](https://opengameart.org/content/crow) | fvcalderan |
 | wildlife/dog-bark-2.mp3 | [Dog barking mono](https://opengameart.org/content/dog-barking-mono) | HaelDB |
 | wildlife/donkey-1.mp3 | [Donkey Bray](https://opengameart.org/content/donkey-bray) | StarNinjas |
@@ -424,10 +456,12 @@ No attribution needed; listed with thanks.
 | wildlife/frog-1.mp3 | [Frog Croaks](https://opengameart.org/content/frog-croaks) | EZduzziteh |
 | wildlife/frog-2.mp3 | [Frog Croaks](https://opengameart.org/content/frog-croaks) | EZduzziteh |
 | wildlife/hooves-walk-1.mp3 | [Horse Trotting](https://opengameart.org/content/horse-trotting) | EZduzziteh |
+| wildlife/owl-1.mp3 | [Spotted Owl Call](https://soundbible.com/1010-Spotted-Owl-Call.html) | Mike Koenig |
 | wildlife/sheep-1.mp3 | [Sheep Baa](https://opengameart.org/content/sheep-baa) | AntumDeluge |
 | wildlife/songbird-1.mp3 | [Bird chirping sounds](https://opengameart.org/content/bird-chirping-sounds) | syncopika |
 | wildlife/songbird-2.mp3 | [Forest bird sounds](https://opengameart.org/content/forest-bird-sounds) | pauliuw |
 | wildlife/wolf-growl-1.mp3 | [RPG Sound Pack](https://opengameart.org/content/rpg-sound-pack) | artisticdude |
+| wildlife/wolf-howl-1.mp3 | [Wolf howls](https://commons.wikimedia.org/wiki/File:Wolf_howls.ogg) | unknown |
 | world/bell-1.mp3 | [Bell dings/chimes](https://opengameart.org/content/bell-dingschimes) | PWL |
 | world/bell-2.mp3 | [Pleasing Bell Sound Effect](https://opengameart.org/content/pleasing-bell-sound-effect) | Spring Spring |
 | world/book-open-1.mp3 | [10 Book Page Flips](https://opengameart.org/content/10-book-page-flips) | StarNinjas |

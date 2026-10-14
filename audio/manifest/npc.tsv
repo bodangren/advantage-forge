@@ -1,30 +1,30 @@
-id	take	file	seconds	source	source_file	start	end	author	license	url	note
-npc/pour	1	npc/pour-1.mp3	1.46	teapot-sounds	pour_tea.wav	2.24	3.70	liltechdude	CC0	https://opengameart.org/content/teapot-sounds	Teapot pour
-npc/flute	1	npc/flute-1.mp3	1.50	flute-drums-music-tag	flute_drum_music_tag.mp3	0.00	1.50	NicholasJudy567	CC0	https://opengameart.org/content/flute-drums-music-tag	Flute opening
-npc/dig	1	npc/dig-1.mp3	1.38	digging-underground	dig_underground_1.mp3	0.12	1.50	Almitory	CC0	https://opengameart.org/content/digging-underground	Underground dig
-npc/broom	-										Searched broom and sweep: no CC0 match found
-npc/laugh	1	npc/laugh-1.mp3	1.32	tiny-creatures-sounds	laugh.ogg	0.20	1.52	fvcalderan	CC0	https://opengameart.org/content/tiny-creatures-sounds	Tiny creature laugh, no words
-npc/pickaxe	1	npc/pickaxe-1.mp3	0.43	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_rock_breaking_01.ogg	0.01	0.44	rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	CC0 rock breaking, one hit
-npc/saw	1	npc/saw-1.mp3	1.46	saw-or-wood-impact	saw_-_starninjas_0.ogg	0.24	1.7	StarNinjas	CC0	https://opengameart.org/content/saw-or-wood-impact	CC0 saw cut, first stroke
-npc/hammer-wood	1	npc/hammer-wood-1.mp3	0.72	fast-hammer-sfx	craft_0.ogg	0.00	0.72	themightyglider	CC0	https://opengameart.org/content/fast-hammer-sfx	wood hammer strike, CC0 fast-hammer-sfx
-npc/hammer-wood	2	npc/hammer-wood-2.mp3	0.16	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_wood_hit_01.ogg	0.00	0.25	rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	wood hit, CC0 75-cc0 pack
-npc/quill	1	npc/quill-1.mp3	1.39	pencil-sounds	pencil/ogg/pencil_write.ogg			AntumDeluge	CC0	https://opengameart.org/content/pencil-sounds	CC0 pencil write, quill stand-in
-npc/fishing	1	npc/fishing-1.mp3	0.41	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-02.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	CC0 water splash; no cast sound found
-npc/anvil	-										same sound as battle/tower-build#1; the game can reuse that file
-npc/hand-drum	-										same sound as battle/war-drum#1; the game can reuse that file
-npc/mug-clink	-										same sound as world/trap-spikes#1; the game can reuse that file
-npc/coins-count	-										same sound as reward/coin-purse#1; the game can reuse that file
-npc/shrine-bell	-										same sound as ui/time-up#1; the game can reuse that file
-npc/axe-chop	-										same sound as world/tree-fall#1; the game can reuse that file
-npc/hand-bell	-										same sound as world/bell#1; the game can reuse that file
-npc/greet	-										greeting pack has spoken words in Russian and English; no non-verbal greeting found
-npc/hmm	-										only ghostly-humming found; tagged spooky and scary
-npc/gasp	-										only ghost-breath found; tagged horror and scream
-npc/child-laugh	-										no child giggle with clear happy tone; group-giggling and children-voices unverified
-npc/old-mumble	-										no old-person mumble found; only old-man-cough
-npc/crowd-cheer	-										cheers-0 is a toast-style Cheers; crowd search gave no crowd cheer
-npc/crowd-gasp	-										no crowd gasp found; crowd-shouting ambience unclear
-npc/bellows	-										no bellows or forge-fire sound in two searches (round 3)
-npc/grindstone	-										only candidate is general-household-sound-effects (1738 MB, too large to fetch)
-npc/loom	-										only candidate spinning-wheel-0 names a freesound source with an unchecked license
-npc/shop-bell	-										same sound as world/bell#1; the game can reuse that file (no shop door bell in the catalog)
+id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
+npc/pour	1	npc/pour-1.mp3	1.46	teapot-sounds	pour_tea.wav	2.24	3.70	liltechdude	CC0	https://opengameart.org/content/teapot-sounds	Teapot pour	
+npc/flute	1	npc/flute-1.mp3	1.50	flute-drums-music-tag	flute_drum_music_tag.mp3	0.00	1.50	NicholasJudy567	CC0	https://opengameart.org/content/flute-drums-music-tag	Flute opening	
+npc/dig	1	npc/dig-1.mp3	1.38	digging-underground	dig_underground_1.mp3	0.12	1.50	Almitory	CC0	https://opengameart.org/content/digging-underground	Underground dig	
+npc/broom	-										Searched broom and sweep: no CC0 match found	
+npc/laugh	1	npc/laugh-1.mp3	1.32	tiny-creatures-sounds	laugh.ogg	0.20	1.52	fvcalderan	CC0	https://opengameart.org/content/tiny-creatures-sounds	Tiny creature laugh, no words	
+npc/pickaxe	1	npc/pickaxe-1.mp3	0.43	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_rock_breaking_01.ogg	0.01	0.44	rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	CC0 rock breaking, one hit	
+npc/saw	1	npc/saw-1.mp3	1.46	saw-or-wood-impact	saw_-_starninjas_0.ogg	0.24	1.7	StarNinjas	CC0	https://opengameart.org/content/saw-or-wood-impact	CC0 saw cut, first stroke	
+npc/hammer-wood	1	npc/hammer-wood-1.mp3	0.72	fast-hammer-sfx	craft_0.ogg	0.00	0.72	themightyglider	CC0	https://opengameart.org/content/fast-hammer-sfx	wood hammer strike, CC0 fast-hammer-sfx	
+npc/hammer-wood	2	npc/hammer-wood-2.mp3	0.16	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_wood_hit_01.ogg	0.00	0.25	rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	wood hit, CC0 75-cc0 pack	
+npc/quill	1	npc/quill-1.mp3	1.39	pencil-sounds	pencil/ogg/pencil_write.ogg			AntumDeluge	CC0	https://opengameart.org/content/pencil-sounds	CC0 pencil write, quill stand-in	
+npc/fishing	1	npc/fishing-1.mp3	0.41	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-02.flac			qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	CC0 water splash; no cast sound found	
+npc/anvil	-										same sound as battle/tower-build#1; the game can reuse that file	
+npc/hand-drum	-										same sound as battle/war-drum#1; the game can reuse that file	
+npc/mug-clink	-										same sound as world/trap-spikes#1; the game can reuse that file	
+npc/coins-count	-										same sound as reward/coin-purse#1; the game can reuse that file	
+npc/shrine-bell	-										same sound as ui/time-up#1; the game can reuse that file	
+npc/axe-chop	-										same sound as world/tree-fall#1; the game can reuse that file	
+npc/hand-bell	-										same sound as world/bell#1; the game can reuse that file	
+npc/greet	-										greeting pack has spoken words in Russian and English; no non-verbal greeting found	
+npc/hmm	-										only ghostly-humming found; tagged spooky and scary	
+npc/gasp	-										only ghost-breath found; tagged horror and scream	
+npc/old-mumble	-										no old-person mumble found; only old-man-cough	
+npc/crowd-gasp	-										no crowd gasp found; crowd-shouting ambience unclear	
+npc/bellows	-										no bellows or forge-fire sound in two searches (round 3)	
+npc/grindstone	-										only candidate is general-household-sound-effects (1738 MB, too large to fetch)	
+npc/loom	-										only candidate spinning-wheel-0 names a freesound source with an unchecked license	
+npc/shop-bell	-										same sound as world/bell#1; the game can reuse that file (no shop door bell in the catalog)	
+npc/child-laugh	2	npc/child-laugh-2.mp3	1.40	soundbible-2026-kid-laugh	Kid_Laugh.wav	0.05	1.45	Mike Koenig	CC-BY 3.0	https://soundbible.com/2026-Kid-Laugh.html		
+npc/crowd-cheer	2	npc/crowd-cheer-2.mp3	3.80	soundbible-1700-5-sec-crowd-cheer	5_Sec_Crowd_Cheer.wav	0.10	3.90	Mike Koenig	CC-BY 3.0	https://soundbible.com/1700-5-Sec-Crowd-Cheer.html		

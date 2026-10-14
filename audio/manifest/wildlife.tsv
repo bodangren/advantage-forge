@@ -2,8 +2,6 @@ id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
 wildlife/bat	1	wildlife/bat-1.mp3	1.24	bat-screeches	bat/flac/bat_01.flac	0.03	1.27	AntumDeluge	CC0	https://opengameart.org/content/bat-screeches	Bat screech, one call	
 wildlife/songbird	1	wildlife/songbird-1.mp3	0.53	bird-chirping-sounds	birdchirping071414_0.mp3	0.74	1.27	syncopika	CC0	https://opengameart.org/content/bird-chirping-sounds	Songbird chirp, one call	
 wildlife/crow	1	wildlife/crow-1.mp3	0.60	crow	crow_0.ogg			fvcalderan	CC0	https://opengameart.org/content/crow	Crow call, one call	
-wildlife/owl	-										No CC0 owl hoot found in searches owl, hoot, night; fetched packs have none	
-wildlife/hawk	-										No CC0 hawk or eagle cry found; searches hawk, eagle, screech returned none usable	
 wildlife/pigeon	-										No CC0 pigeon or dove coo found; searches pigeon, dove, coo returned none	
 wildlife/bee	-										No CC0 bee buzz loop found; rpg bee is 0.5 s; searches bee, buzz, insect found none 8-90 s	
 wildlife/songbird	2	wildlife/songbird-2.mp3	1.40	forest-bird-sounds	forest_birds/Forest Birds/Forest Birds 6.wav	0	1.4	pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	Forest songbird chirp, trimmed	
@@ -27,11 +25,13 @@ wildlife/seal	-										No CC0 seal sound found in search
 wildlife/dolphin	-										No CC0 dolphin sound found in search	
 wildlife/bird-flutter	-										same sound as monster/wing-flap#2; the game can reuse that file	
 wildlife/dog-bark	2	wildlife/dog-bark-2.mp3	0.77	dog-barking-mono	dog_barking_mono.wav	0	0.77	HaelDB	CC0	https://opengameart.org/content/dog-barking-mono		
-wildlife/horse-whinny	-										no real horse whinny found	
 wildlife/horse-snort	-										no horse snort found	
-wildlife/hooves-gallop	-										no gallop found, only a trot loop	
-wildlife/cow	-										no adult cow moo found	
-wildlife/goat	-										no goat bleat found	
-wildlife/chicken	-										no chicken cluck found	
-wildlife/wolf-howl	-										no real wolf howl found, probe failed	
 wildlife/rooster	1	wildlife/rooster-1.mp3	2.48	soundbible-1134-rooster-crowing	Rooster_Crowing.wav			Mike Koenig	CC-BY 3.0	https://soundbible.com/1134-Rooster-Crowing.html	orchestrator: tool test of a SoundBible take	
+wildlife/cow	1	wildlife/cow-1.mp3	3.64	soundbible-1778-cow-moo	Cow_Moo.wav			Mike Koenig	CC-BY 3.0	https://soundbible.com/1778-Cow-Moo.html		
+wildlife/horse-whinny	1	wildlife/horse-whinny-1.mp3	1.32	soundbible-1296-horse-neigh	Horse_Neigh.wav	0.01	1.33	Mike Koenig	CC-BY 3.0	https://soundbible.com/1296-Horse-Neigh.html		
+wildlife/hawk	1	wildlife/hawk-1.mp3	1.39	soundbible-1481-hawk-call-2x	Hawk_Call_2x.wav	0.08	1.47	Mike Koenig	CC-BY 3.0	https://soundbible.com/1481-Hawk-Call-2x.html		
+wildlife/owl	1	wildlife/owl-1.mp3	3.81	soundbible-1010-spotted-owl-call	Spotted_Owl_Call.wav	0.19	4.0	Mike Koenig	Public domain	https://soundbible.com/1010-Spotted-Owl-Call.html		
+wildlife/chicken	1	wildlife/chicken-1.mp3	1.43	soundbible-871-chicken	Chicken.wav	0.07	1.5	Mike Koenig	Public domain	https://soundbible.com/871-Chicken.html		
+wildlife/goat	1	wildlife/goat-1.mp3	0.86	soundbible-619-goat-bah	Goat_Bah.wav			Mike Koenig	CC-BY 3.0	https://soundbible.com/619-Goat-Bah.html	SoundBible goat bah, CC-BY 3.0, 0.91 s real goat	
+wildlife/wolf-howl	1	wildlife/wolf-howl-1.mp3	10.20	commons-wolf-howls	Wolf_howls.ogg	3.4	13.6	unknown	Public domain	https://commons.wikimedia.org/wiki/File:Wolf_howls.ogg	Wolf pack howl, 10 s span between two quiet points	
+wildlife/hooves-gallop	-										SoundBible galloping-horse is 4.6 s, under the 8 s loop minimum; no longer gallop found (2026-10-14)	

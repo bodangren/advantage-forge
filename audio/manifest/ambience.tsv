@@ -1,34 +1,36 @@
-id	take	file	seconds	source	source_file	start	end	author	license	url	note
-ambience/forest-day	1	ambience/forest-day-1.mp3	53.67	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 3.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 forest birds, raw field recording, 55 s
-ambience/forest-day	2	ambience/forest-day-2.mp3	40.71	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 4.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 forest birds, raw field recording, 42 s
-ambience/meadow	1	ambience/meadow-1.mp3	28.37	amb-outside-1	amb_outdoor1_loop.wav			Kresiek The Furry	CC0	https://opengameart.org/content/amb-outside-1	CC0 outdoor ambience loop, 30 s
-ambience/cave	1	ambience/cave-1.mp3	18.56	dripping-water-loop	atmosbasement.mp3_.flac			qubodup	CC0	https://opengameart.org/content/dripping-water-loop	CC0 dripping water loop, 20 s
-ambience/tavern	1	ambience/tavern-1.mp3	25.88	crowd-shoutingspeaking-ambience	crowd_shouting_0.ogg			StarNinjas	CC0	https://opengameart.org/content/crowd-shoutingspeaking-ambience	CC0 crowd ambience, 27 s; check for shouting words
-ambience/village	1	ambience/village-1.mp3	25.01	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 1.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 bird field recording, 26 s; no voices or animals in set
-ambience/dungeon	1	ambience/dungeon-1.mp3	38.50	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	10	50	JaggedStone	CC0	https://opengameart.org/content/loopable-dungeon-ambience	Low dungeon drone, drips; CC0
-ambience/storm	1	ambience/storm-1.mp3	42.50	rain-long-thunder	rain-thunder.ogg	0	44	WuxiaScrub	CC0	https://opengameart.org/content/rain-long-thunder	Rain and distant thunder; CC0
-ambience/wind	1	ambience/wind-1.mp3	33.50	mild-wind-background-noise	wind background noise 2.wav	5	40	Bashar3A	CC0	https://opengameart.org/content/mild-wind-background-noise	Steady mild wind; CC0
-ambience/wind	2	ambience/wind-2.mp3	38.50	wind1	wind1.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	Open wind over plains; CC0
-ambience/rain	1	ambience/rain-1.mp3	38.50	amb-rain-loop-1	amb_rain_loop_1.wav	0	40	Kresiek The Furry	CC0	https://opengameart.org/content/amb-rain-loop-1	Steady rain loop; CC0
-ambience/sky	1	ambience/sky-1.mp3	38.50	wind1	wind2.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	CC0 wind, OpenGameArt wind1 pack, steady high wind
-ambience/campfire	1	ambience/campfire-1.mp3	27.50	fireplace-sound-loop	fire.wav	0	29	PagDev	CC0	https://opengameart.org/content/fireplace-sound-loop	CC0 fire loop, fireplace-sound-loop pack
-ambience/desert	1	ambience/desert-1.mp3	38.50	wind1	wind3.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	CC0 wind, OpenGameArt wind1 pack, open wind over sand
-ambience/swamp	1	ambience/swamp-1.mp3	38.50	swamp-environment-audio	swamp.ogg	0	40	LokiF	CC0	https://opengameart.org/content/swamp-environment-audio	CC0 swamp ambience, swamp-environment-audio pack
-ambience/crypt	1	ambience/crypt-1.mp3	18.51	4-atmospheric-ghostly-loops	independent_nu_ljudbank-atmosphere_moody/atmosmoody/atmoseerie01.mp3.flac			qubodup	CC0	https://opengameart.org/content/4-atmospheric-ghostly-loops	Mysterious eerie atmosphere, no horror
-ambience/dungeon	2	ambience/dungeon-2.mp3	38.50	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	50	90	JaggedStone	CC0	https://opengameart.org/content/loopable-dungeon-ambience	Dungeon ambience: low drone, drips
-ambience/forest-night	1	ambience/forest-night-1.mp3	34.50	cricket-sounds	cricketsounds090613.wav	0	36	syncopika	CC0	https://opengameart.org/content/cricket-sounds	Night crickets loop, no owls
-ambience/underwater	1	ambience/underwater-1.mp3	38.50	underwater-or-space-engine-rumble	deep_rumble.ogg	0	40	gmason	CC0	https://opengameart.org/content/underwater-or-space-engine-rumble	Deep underwater rumble loop, calm drone
-ambience/library	-										No CC0 room tone or library entry found; ticking-clock is 8 s only
-ambience/lava	-										No CC0 lava or magma entry found in search
-ambience/magic-hum	-										ghostly-humming (66 s) has 12 separate sounds with gaps; not steady
-ambience/ocean	-										fetched ocean files are 2-4 s; sea pack fetch timed out
-ambience/river	-										no river file of 15 s or more; sea pack fetch timed out
-ambience/waterfall	-										no waterfall loop found in search
-ambience/ship	-										only space-ship and sinking files; no wooden ship loop
-ambience/market	-										crowd file is already used by ambience/tavern; no other market loop
-ambience/snow	-										same sound as ambience/wind#1; the game can reuse that file
-ambience/fireplace	-										same sound as ambience/campfire#1; the game can reuse that file
-ambience/smithy	-										same sound as ambience/campfire#1; the game can reuse that file
-ambience/watermill	-										no watermill wheel loop found after two searches
-ambience/windmill	-										same sound as ambience/wind#2; the game can reuse that file (second search 2026-10-14: no windmill loop)
-ambience/castle	-										same sound as ambience/wind#1; the game can reuse that file (second search 2026-10-14: no castle hall loop)
+id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
+ambience/forest-day	1	ambience/forest-day-1.mp3	53.67	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 3.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 forest birds, raw field recording, 55 s	
+ambience/forest-day	2	ambience/forest-day-2.mp3	40.71	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 4.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 forest birds, raw field recording, 42 s	
+ambience/meadow	1	ambience/meadow-1.mp3	28.37	amb-outside-1	amb_outdoor1_loop.wav			Kresiek The Furry	CC0	https://opengameart.org/content/amb-outside-1	CC0 outdoor ambience loop, 30 s	
+ambience/cave	1	ambience/cave-1.mp3	18.56	dripping-water-loop	atmosbasement.mp3_.flac			qubodup	CC0	https://opengameart.org/content/dripping-water-loop	CC0 dripping water loop, 20 s	
+ambience/tavern	1	ambience/tavern-1.mp3	25.88	crowd-shoutingspeaking-ambience	crowd_shouting_0.ogg			StarNinjas	CC0	https://opengameart.org/content/crowd-shoutingspeaking-ambience	CC0 crowd ambience, 27 s; check for shouting words	
+ambience/village	1	ambience/village-1.mp3	25.01	forest-bird-sounds	forest_birds/Forest Birds/Raw/Forest 1.wav			pauliuw	CC0	https://opengameart.org/content/forest-bird-sounds	CC0 bird field recording, 26 s; no voices or animals in set	
+ambience/dungeon	1	ambience/dungeon-1.mp3	38.50	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	10	50	JaggedStone	CC0	https://opengameart.org/content/loopable-dungeon-ambience	Low dungeon drone, drips; CC0	
+ambience/storm	1	ambience/storm-1.mp3	42.50	rain-long-thunder	rain-thunder.ogg	0	44	WuxiaScrub	CC0	https://opengameart.org/content/rain-long-thunder	Rain and distant thunder; CC0	
+ambience/wind	1	ambience/wind-1.mp3	33.50	mild-wind-background-noise	wind background noise 2.wav	5	40	Bashar3A	CC0	https://opengameart.org/content/mild-wind-background-noise	Steady mild wind; CC0	
+ambience/wind	2	ambience/wind-2.mp3	38.50	wind1	wind1.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	Open wind over plains; CC0	
+ambience/rain	1	ambience/rain-1.mp3	38.50	amb-rain-loop-1	amb_rain_loop_1.wav	0	40	Kresiek The Furry	CC0	https://opengameart.org/content/amb-rain-loop-1	Steady rain loop; CC0	
+ambience/sky	1	ambience/sky-1.mp3	38.50	wind1	wind2.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	CC0 wind, OpenGameArt wind1 pack, steady high wind	
+ambience/campfire	1	ambience/campfire-1.mp3	27.50	fireplace-sound-loop	fire.wav	0	29	PagDev	CC0	https://opengameart.org/content/fireplace-sound-loop	CC0 fire loop, fireplace-sound-loop pack	
+ambience/desert	1	ambience/desert-1.mp3	38.50	wind1	wind3.wav	0	40	Luke.RUSTLTD	CC0	https://opengameart.org/content/wind1	CC0 wind, OpenGameArt wind1 pack, open wind over sand	
+ambience/swamp	1	ambience/swamp-1.mp3	38.50	swamp-environment-audio	swamp.ogg	0	40	LokiF	CC0	https://opengameart.org/content/swamp-environment-audio	CC0 swamp ambience, swamp-environment-audio pack	
+ambience/crypt	1	ambience/crypt-1.mp3	18.51	4-atmospheric-ghostly-loops	independent_nu_ljudbank-atmosphere_moody/atmosmoody/atmoseerie01.mp3.flac			qubodup	CC0	https://opengameart.org/content/4-atmospheric-ghostly-loops	Mysterious eerie atmosphere, no horror	
+ambience/dungeon	2	ambience/dungeon-2.mp3	38.50	loopable-dungeon-ambience	dungeon_ambient_1_0.ogg	50	90	JaggedStone	CC0	https://opengameart.org/content/loopable-dungeon-ambience	Dungeon ambience: low drone, drips	
+ambience/forest-night	1	ambience/forest-night-1.mp3	34.50	cricket-sounds	cricketsounds090613.wav	0	36	syncopika	CC0	https://opengameart.org/content/cricket-sounds	Night crickets loop, no owls	
+ambience/underwater	1	ambience/underwater-1.mp3	38.50	underwater-or-space-engine-rumble	deep_rumble.ogg	0	40	gmason	CC0	https://opengameart.org/content/underwater-or-space-engine-rumble	Deep underwater rumble loop, calm drone	
+ambience/lava	-										No CC0 lava or magma entry found in search	
+ambience/magic-hum	-										ghostly-humming (66 s) has 12 separate sounds with gaps; not steady	
+ambience/ship	-										only space-ship and sinking files; no wooden ship loop	
+ambience/market	-										crowd file is already used by ambience/tavern; no other market loop	
+ambience/snow	-										same sound as ambience/wind#1; the game can reuse that file	
+ambience/fireplace	-										same sound as ambience/campfire#1; the game can reuse that file	
+ambience/smithy	-										same sound as ambience/campfire#1; the game can reuse that file	
+ambience/watermill	-										no watermill wheel loop found after two searches	
+ambience/windmill	-										same sound as ambience/wind#2; the game can reuse that file (second search 2026-10-14: no windmill loop)	
+ambience/castle	-										same sound as ambience/wind#1; the game can reuse that file (second search 2026-10-14: no castle hall loop)	
+ambience/river	1	ambience/river-1.mp3	31.87	commons-underwater-sound-of-a-river	Underwater_sound_of_a_river.mp3			Thomas Bresson	CC-BY 4.0	https://commons.wikimedia.org/wiki/File:Underwater_sound_of_a_river.mp3		
+ambience/waterfall	1	ambience/waterfall-1.mp3	14.92	commons-cascade-de-syratu	Cascade_de_Syratu.ogg			Arie m den toom	CC-BY 4.0	https://commons.wikimedia.org/wiki/File:Cascade_de_Syratu.ogg		
+ambience/river	2	ambience/river-2.mp3	16.39	commons-shallow-small-river-with-stony-riverbed	Shallow_small_river_with_stony_riverbed.ogg			stephan	Public domain	https://commons.wikimedia.org/wiki/File:Shallow_small_river_with_stony_riverbed.ogg	Small stony river from a bridge, 18 s	
+ambience/ocean	1	ambience/ocean-1.mp3	43.50	commons-ocean-waves-on-a-tropical-beach	Ocean_Waves_on_a_Tropical_Beach.ogg	60	105	Jarrod stanley	CC0	https://commons.wikimedia.org/wiki/File:Ocean_Waves_on_a_Tropical_Beach.ogg	Waves on a beach, 45 s span	
+ambience/ocean	2	ambience/ocean-2.mp3	43.50	commons-oceanwavescrushing	Oceanwavescrushing.ogg	10	55	Luftrum	CC-BY 3.0	https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg	Waves on stones at a fjord shore, 45 s span	
+ambience/library	1	ambience/library-1.mp3	43.50	commons-20121112-tu-delft-library-quiet-study-room-general-ambience-soundcloud-el-mar	20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg	202	247	el_mar	CC-BY 3.0	https://commons.wikimedia.org/wiki/File:20121112_TU_Delft_Library,_quiet_study_room_-_general_ambience_-_SoundCloud_-_el_mar.ogg	Quiet university library room: ventilation hum, soft keyboard clicks far away; calm 45 s span with no cough	

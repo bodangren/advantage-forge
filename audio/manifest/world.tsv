@@ -1,52 +1,52 @@
-id	take	file	seconds	source	source_file	start	end	author	license	url	note
-world/door-open	1	world/door-open-1.mp3	0.70	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen01.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	CC0 qubodup DoorSet, wooden door open
-world/chest-open	1	world/chest-open-1.mp3	1.45	open-chest-sfx	open chest_0.wav	0	1.45	Oiboo	CC0	https://opengameart.org/content/open-chest-sfx	CC0 open chest SFX, first 1.45 s
-world/door-close	1	world/door-close-1.mp3	0.89	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose01.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	CC0 qubodup DoorSet, wooden door close
-world/gate-open	1	world/gate-open-1.mp3	1.40	creaky-door-hinge-spooky	creaky_door_hinge.wav	0	1.4	w.forster.1@gmail.com	CC0	https://opengameart.org/content/creaky-door-hinge-spooky	CC0 creaky hinge, cut to 1.4 s
-world/switch	1	world/switch-1.mp3	0.42	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.2.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	CC0 10 Clicks and Switches
-world/lever	1	world/lever-1.mp3	0.59	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.10.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	CC0 10 Clicks and Switches
-world/door-locked	1	world/door-locked-1.mp3	0.80	door-lock-sounds	DoorLockSounds/DoorLockSounds/LockedDoorHandleJiggle.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	
-world/lockpick	1	world/lockpick-1.mp3	0.50	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	
-world/pit-fall	1	world/pit-fall-1.mp3	1.76	various-sound-effects-0	fall_0.wav			Spring Spring	CC0	https://opengameart.org/content/various-sound-effects-0	
-world/trap-snap	1	world/trap-snap-1.mp3	1.00	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Lever Trigger.wav		1.0	MedicineStorm	CC0	https://opengameart.org/content/medieval-sound-effects-weapon-textures	
-world/trap-spikes	1	world/trap-spikes-1.mp3	0.26	metal-impact-sounds	clink3.wav			BMacZero	CC0	https://opengameart.org/content/metal-impact-sounds	
-world/door-open	2	world/door-open-2.mp3	0.53	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen02.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	
-world/door-close	2	world/door-close-2.mp3	0.56	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose02.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	
-world/unlock	2	world/unlock-2.mp3	0.29	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorLock.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	
-world/gate-open	2	world/gate-open-2.mp3	0.51	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorOpen.ogg		1.4	Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	
-world/switch	2	world/switch-2.mp3	0.21	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch16.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks	
-world/bell	1	world/bell-1.mp3	1.36	bell-dingschimes	bell_ding3.wav			PWL	CC0	https://opengameart.org/content/bell-dingschimes	CC0 bell ding from bell-dingschimes
-world/bell	2	world/bell-2.mp3	0.62	pleasing-bell-sound-effect	pleasing-bell.wav			Spring Spring	CC0	https://opengameart.org/content/pleasing-bell-sound-effect	CC0 pleasing bell
-world/stone-move	1	world/stone-move-1.mp3	0.44	stone-rock-or-wood-moved-sound	stone_rock_or_wood_moved.mp3			pauliuw	CC0	https://opengameart.org/content/stone-rock-or-wood-moved-sound	CC0 stone moved
-world/glass-break	1	world/glass-break-1.mp3	1.04	glass-break	glass_breaking.wav			TinyWorlds	CC0	https://opengameart.org/content/glass-break	CC0 glass break
-world/torch-ignite	1	world/torch-ignite-1.mp3	1.17	flare-ignition	ignition.flac			qubodup	CC0	https://opengameart.org/content/flare-ignition	CC0 flare ignition
-world/scroll	1	world/scroll-1.mp3	0.65	10-book-page-flips	book_flips_-_starninjas/book_flip.4.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 page flip for scroll
-world/rubble	1	world/rubble-1.mp3	3.35	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood21.mp3.flac	0.03	3.5	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crash as rubble
-world/crate-break	1	world/crate-break-1.mp3	1.37	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood16.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack
-world/pot-break	1	world/pot-break-1.mp3	1.33	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood22.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack
-world/book-open	1	world/book-open-1.mp3	0.68	10-book-page-flips	book_flips_-_starninjas/book_flip.5.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 book page flip
-world/rubble	2	world/rubble-2.mp3	1.00	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood23.mp3.flac	0.03	2.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crash as rubble
-world/crate-break	2	world/crate-break-2.mp3	1.21	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood17.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack
-world/crate-break	3	world/crate-break-3.mp3	1.29	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood18.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack
-world/pot-break	2	world/pot-break-2.mp3	1.24	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood19.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack
-world/glass-break	2	world/glass-break-2.mp3	0.46	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta.ogg	0.03	1.4	IgnasD	CC0	https://opengameart.org/content/ice-breakingshattering	CC0 ice shatter as glass
-world/book-open	2	world/book-open-2.mp3	0.56	10-book-page-flips	book_flips_-_starninjas/book_flip.6.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 book page flip
-world/scroll	2	world/scroll-2.mp3	0.94	10-book-page-flips	book_flips_-_starninjas/book_flip.7.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 page flip for scroll
-world/unlock	3	world/unlock-3.mp3	0.50	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.wav			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	lock turns
-world/pot-break	4	world/pot-break-4.mp3	0.30	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_breaking_02.ogg			rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	pot breaks
-world/bridge-creak	1	world/bridge-creak-1.mp3	0.69	50-rpg-sound-effects	RPGsounds_Kenney/OGG/creak2.ogg	0.01	0.70	Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	Wood creak
-world/well-bucket	1	world/well-bucket-1.mp3	0.84	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-04.flac	0.01	1.32	qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	Water plop from a bucket
-world/grass-rustle	1	world/grass-rustle-1.mp3	0.99	20-rustles-dry-leaves	qubodup-rustle/rustle/rustle05.flac			qubodup	CC0	https://opengameart.org/content/20-rustles-dry-leaves	dry leaves rustle, 1 s
-world/tree-fall	1	world/tree-fall-1.mp3	2.15	tree-chop-fall-thud	chop-tree-fall.ogg			kheetor	CC0	https://opengameart.org/content/tree-chop-fall-thud	tree chop and fall thud
-world/winch	1	world/winch-1.mp3	1.91	chain-winch-sounds	winch/winch - Marker 2.wav			bart	CC0	https://opengameart.org/content/chain-winch-sounds	winch turns
-world/fountain	-										no CC0 water loop of 20-60 s found in library
-world/gong	-										no gong sound found in library search
-world/candle-out	-										no candle-out sound found in library search
-world/ladder	-										no ladder climb sound found; 8-bit platformer match unsuitable
-world/rope	-										no rope sound found; propeller and creak matches unsuitable
-world/crystal-touch	-										same sound as battle/turn#1; the game can reuse that file
-world/water-splash	-										same sound as magic/water#2; the game can reuse that file
-world/chains	-										same sound as item/chainmail#1; the game can reuse that file
-world/bubbles	-										same sound as magic/potion-brew#2; the game can reuse that file
-world/portal-open	-										same sound as magic/cast#3; the game can reuse that file
-world/notice-board	-										same sound as ui/page-turn#1; the game can reuse that file
+id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
+world/door-open	1	world/door-open-1.mp3	0.70	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen01.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	CC0 qubodup DoorSet, wooden door open	
+world/chest-open	1	world/chest-open-1.mp3	1.45	open-chest-sfx	open chest_0.wav	0	1.45	Oiboo	CC0	https://opengameart.org/content/open-chest-sfx	CC0 open chest SFX, first 1.45 s	
+world/door-close	1	world/door-close-1.mp3	0.89	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose01.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set	CC0 qubodup DoorSet, wooden door close	
+world/gate-open	1	world/gate-open-1.mp3	1.40	creaky-door-hinge-spooky	creaky_door_hinge.wav	0	1.4	w.forster.1@gmail.com	CC0	https://opengameart.org/content/creaky-door-hinge-spooky	CC0 creaky hinge, cut to 1.4 s	
+world/switch	1	world/switch-1.mp3	0.42	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.2.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	CC0 10 Clicks and Switches	
+world/lever	1	world/lever-1.mp3	0.59	10-clicks-and-switches	10_clicks_and_switches/10 Clicks and Switches/click.10.ogg			StarNinjas	CC0	https://opengameart.org/content/10-clicks-and-switches	CC0 10 Clicks and Switches	
+world/door-locked	1	world/door-locked-1.mp3	0.80	door-lock-sounds	DoorLockSounds/DoorLockSounds/LockedDoorHandleJiggle.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds		
+world/lockpick	1	world/lockpick-1.mp3	0.50	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds		
+world/pit-fall	1	world/pit-fall-1.mp3	1.76	various-sound-effects-0	fall_0.wav			Spring Spring	CC0	https://opengameart.org/content/various-sound-effects-0		
+world/trap-snap	1	world/trap-snap-1.mp3	1.00	medieval-sound-effects-weapon-textures	medieval_sfx_textures_1_of_2/Crossbow Lever Trigger.wav		1.0	MedicineStorm	CC0	https://opengameart.org/content/medieval-sound-effects-weapon-textures		
+world/trap-spikes	1	world/trap-spikes-1.mp3	0.26	metal-impact-sounds	clink3.wav			BMacZero	CC0	https://opengameart.org/content/metal-impact-sounds		
+world/door-open	2	world/door-open-2.mp3	0.53	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorOpen02.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set		
+world/door-close	2	world/door-close-2.mp3	0.56	door-open-door-close-set	qubodup-DoorSet/qubodup-DoorSet/ogg/qubodup-DoorClose02.ogg			qubodup	CC0	https://opengameart.org/content/door-open-door-close-set		
+world/unlock	2	world/unlock-2.mp3	0.29	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorLock.ogg			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds		
+world/gate-open	2	world/gate-open-2.mp3	0.51	door-lock-sounds	DoorLockSounds/DoorLockSounds/DoorOpen.ogg		1.4	Cough-E	CC0	https://opengameart.org/content/door-lock-sounds		
+world/switch	2	world/switch-2.mp3	0.21	51-ui-sound-effects-buttons-switches-and-clicks	UI_SFX_Set/switch16.wav			Kenney	CC0	https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks		
+world/bell	1	world/bell-1.mp3	1.36	bell-dingschimes	bell_ding3.wav			PWL	CC0	https://opengameart.org/content/bell-dingschimes	CC0 bell ding from bell-dingschimes	
+world/bell	2	world/bell-2.mp3	0.62	pleasing-bell-sound-effect	pleasing-bell.wav			Spring Spring	CC0	https://opengameart.org/content/pleasing-bell-sound-effect	CC0 pleasing bell	
+world/stone-move	1	world/stone-move-1.mp3	0.44	stone-rock-or-wood-moved-sound	stone_rock_or_wood_moved.mp3			pauliuw	CC0	https://opengameart.org/content/stone-rock-or-wood-moved-sound	CC0 stone moved	
+world/glass-break	1	world/glass-break-1.mp3	1.04	glass-break	glass_breaking.wav			TinyWorlds	CC0	https://opengameart.org/content/glass-break	CC0 glass break	
+world/torch-ignite	1	world/torch-ignite-1.mp3	1.17	flare-ignition	ignition.flac			qubodup	CC0	https://opengameart.org/content/flare-ignition	CC0 flare ignition	
+world/scroll	1	world/scroll-1.mp3	0.65	10-book-page-flips	book_flips_-_starninjas/book_flip.4.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 page flip for scroll	
+world/rubble	1	world/rubble-1.mp3	3.35	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood21.mp3.flac	0.03	3.5	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crash as rubble	
+world/crate-break	1	world/crate-break-1.mp3	1.37	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood16.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack	
+world/pot-break	1	world/pot-break-1.mp3	1.33	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood22.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack	
+world/book-open	1	world/book-open-1.mp3	0.68	10-book-page-flips	book_flips_-_starninjas/book_flip.5.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 book page flip	
+world/rubble	2	world/rubble-2.mp3	1.00	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood23.mp3.flac	0.03	2.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crash as rubble	
+world/crate-break	2	world/crate-break-2.mp3	1.21	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood17.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack	
+world/crate-break	3	world/crate-break-3.mp3	1.29	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood18.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack	
+world/pot-break	2	world/pot-break-2.mp3	1.24	35-wooden-crackshitsdestructions	independent_nu_ljudbank-wood_crack_hit_destruction/wood_impact/impactwood19.mp3.flac	0.03	1.4	qubodup	CC0	https://opengameart.org/content/35-wooden-crackshitsdestructions	CC0 wood crack	
+world/glass-break	2	world/glass-break-2.mp3	0.46	ice-breakingshattering	IceShatters_0/IceShatters/LedasLuzta.ogg	0.03	1.4	IgnasD	CC0	https://opengameart.org/content/ice-breakingshattering	CC0 ice shatter as glass	
+world/book-open	2	world/book-open-2.mp3	0.56	10-book-page-flips	book_flips_-_starninjas/book_flip.6.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 book page flip	
+world/scroll	2	world/scroll-2.mp3	0.94	10-book-page-flips	book_flips_-_starninjas/book_flip.7.ogg			StarNinjas	CC0	https://opengameart.org/content/10-book-page-flips	CC0 page flip for scroll	
+world/unlock	3	world/unlock-3.mp3	0.50	door-lock-sounds	DoorLockSounds/DoorLockSounds/UnlockDoor.wav			Cough-E	CC0	https://opengameart.org/content/door-lock-sounds	lock turns	
+world/pot-break	4	world/pot-break-4.mp3	0.30	75-cc0-breaking-falling-hit-sfx	sfx_breaking_and_falling/bfh1_breaking_02.ogg			rubberduck	CC0	https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx	pot breaks	
+world/bridge-creak	1	world/bridge-creak-1.mp3	0.69	50-rpg-sound-effects	RPGsounds_Kenney/OGG/creak2.ogg	0.01	0.70	Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	Wood creak	
+world/well-bucket	1	world/well-bucket-1.mp3	0.84	6-short-water-splashes	ezwa-water_splash/ezwa-water_splash/water_splash-04.flac	0.01	1.32	qubodup	CC0	https://opengameart.org/content/6-short-water-splashes	Water plop from a bucket	
+world/grass-rustle	1	world/grass-rustle-1.mp3	0.99	20-rustles-dry-leaves	qubodup-rustle/rustle/rustle05.flac			qubodup	CC0	https://opengameart.org/content/20-rustles-dry-leaves	dry leaves rustle, 1 s	
+world/tree-fall	1	world/tree-fall-1.mp3	2.15	tree-chop-fall-thud	chop-tree-fall.ogg			kheetor	CC0	https://opengameart.org/content/tree-chop-fall-thud	tree chop and fall thud	
+world/winch	1	world/winch-1.mp3	1.91	chain-winch-sounds	winch/winch - Marker 2.wav			bart	CC0	https://opengameart.org/content/chain-winch-sounds	winch turns	
+world/fountain	-										no CC0 water loop of 20-60 s found in library	
+world/gong	-										no gong sound found in library search	
+world/candle-out	-										no candle-out sound found in library search	
+world/ladder	-										no ladder climb sound found; 8-bit platformer match unsuitable	
+world/rope	-										no rope sound found; propeller and creak matches unsuitable	
+world/crystal-touch	-										same sound as battle/turn#1; the game can reuse that file	
+world/chains	-										same sound as item/chainmail#1; the game can reuse that file	
+world/portal-open	-										same sound as magic/cast#3; the game can reuse that file	
+world/notice-board	-										same sound as ui/page-turn#1; the game can reuse that file	
+world/water-splash	2	world/water-splash-2.mp3	1.11	elvgames-user-interface-pack-2	Sound Effects/User Interface Pack 2 - Universal Sound Effects/WAV/UI2_Splash_1.wav	0.06	1.17	ElvGames & Pegonthetrack	ElvGames	https://elvgames.itch.io		
+world/bubbles	2	world/bubbles-2.mp3	2.44	soundbible-1148-bubbling	Bubbling.wav	0.00	2.44	Mike Koenig	CC-BY 3.0	https://soundbible.com/1148-Bubbling.html		

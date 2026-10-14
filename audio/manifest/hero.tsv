@@ -1,23 +1,23 @@
-id	take	file	seconds	source	source_file	start	end	author	license	url	note
-hero/footstep-snow	1	hero/footstep-snow-1.mp3	0.44	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-01.flac			qubodup	CC0	https://opengameart.org/content/4-dry-snow-steps	qubodup dry snow, CC0
-hero/footstep-snow	2	hero/footstep-snow-2.mp3	0.51	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-03.flac			qubodup	CC0	https://opengameart.org/content/4-dry-snow-steps	qubodup dry snow, CC0
-hero/footstep-armored	1	hero/footstep-armored-1.mp3	0.25	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal.ogg			HaelDB	CC0	https://opengameart.org/content/footsteps-leather-cloth-armor	metal steps pack, CC0
-hero/footstep-armored	2	hero/footstep-armored-2.mp3	0.26	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal (3).ogg			HaelDB	CC0	https://opengameart.org/content/footsteps-leather-cloth-armor	metal steps pack, CC0
-hero/footstep-stone	1	hero/footstep-stone-1.mp3	0.37	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL1.flac			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	Entry listed as CC0 with qubodup author; description says steps come from Fantozzi freesound pack under CC0. Attribution text is source credit only.
-hero/footstep-stone	2	hero/footstep-stone-2.mp3	0.32	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR2.flac			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	Entry listed as CC0 with qubodup author; description says steps come from Fantozzi freesound pack under CC0. Attribution text is source credit only.
-hero/footstep-wood	1	hero/footstep-wood-1.mp3	0.49	steps-in-wood-floor	steps in wood floor.wav	0.01	0.50	mikeask	CC0	https://opengameart.org/content/steps-in-wood-floor	
-hero/footstep-grass	1	hero/footstep-grass-1.mp3	0.44	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL1.ogg			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	CC0 per catalog (qubodup, Fantozzi pack); one grass/sand step
-hero/footstep-dirt	1	hero/footstep-dirt-1.mp3	0.70	different-steps-on-wood-stone-leaves-gravel-and-mud	[kdd]DifferentSteps_0/gravel.ogg			TinyWorlds	CC0	https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud	Search lists CC0 entry; one gravel step, whole file
-hero/jump	1	hero/jump-1.mp3	0.59	jump-landing	Jump 1.wav			Macro	CC0	https://opengameart.org/content/jump-landing	CC0 per catalog (Macro, Jump Landing); one jump, whole file
-hero/land	1	hero/land-1.mp3	0.27	jump-landing-sound	jumpland.wav	0.00	0.27	qubodup	CC0	https://opengameart.org/content/jump-landing-sound	CC0 per catalog (qubodup, Jump Landing Sound); one landing
-hero/dodge	1	hero/dodge-1.mp3	0.60	air-whoosh	whoosh2_0.wav	0.00	0.60	pyranostudios	CC0	https://opengameart.org/content/air-whoosh	CC0 per catalog (pyranostudios, Air whoosh); one short whoosh cut from loop
-hero/attack-shout	1	hero/attack-shout-1.mp3	0.48	male-gruntyelling-sounds	yelling sounds/yelling sounds/1yell1.wav			HaelDB	CC0	https://opengameart.org/content/male-gruntyelling-sounds	CC0 male yell, no words expected
-hero/effort	1	hero/effort-1.mp3	0.40	male-gruntyelling-sounds	yelling sounds/yelling sounds/3grunt1.wav			HaelDB	CC0	https://opengameart.org/content/male-gruntyelling-sounds	CC0 male grunt
-hero/hurt-voice	1	hero/hurt-voice-1.mp3	0.25	hurt-sound-effects	hurt_02.mp3			EZduzziteh	CC0	https://opengameart.org/content/hurt-sound-effects	CC0 short hurt voice
-hero/cloth-move	1	hero/cloth-move-1.mp3	0.47	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth3.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	CC0 Kenney cloth
-hero/lute	-										no lute in the library; guitar pluck is not a lute
-hero/whistle	-										no beast-call whistle; steam and whistle packs do not fit
-hero/cast-voice	-										no clean non-verbal spell voice found
-hero/armor-move	-										no second chain file found; chainmail2 span already used
-hero/footstep-water	-										same sound as magic/water#2; the game can reuse that file
-hero/cheer	-										same sound as npc/crowd-cheer#1; the game can reuse that file
+id	take	file	seconds	source	source_file	start	end	author	license	url	note	loop
+hero/footstep-snow	1	hero/footstep-snow-1.mp3	0.44	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-01.flac			qubodup	CC0	https://opengameart.org/content/4-dry-snow-steps	qubodup dry snow, CC0	
+hero/footstep-snow	2	hero/footstep-snow-2.mp3	0.51	4-dry-snow-steps	qubodup-snow_steps_dry_0/qubodup-snow_steps_dry/snow_step_dry-03.flac			qubodup	CC0	https://opengameart.org/content/4-dry-snow-steps	qubodup dry snow, CC0	
+hero/footstep-armored	1	hero/footstep-armored-1.mp3	0.25	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal.ogg			HaelDB	CC0	https://opengameart.org/content/footsteps-leather-cloth-armor	metal steps pack, CC0	
+hero/footstep-armored	2	hero/footstep-armored-2.mp3	0.26	footsteps-leather-cloth-armor	footsteps/footsteps/step_metal (3).ogg			HaelDB	CC0	https://opengameart.org/content/footsteps-leather-cloth-armor	metal steps pack, CC0	
+hero/footstep-stone	1	hero/footstep-stone-1.mp3	0.37	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneL1.flac			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	Entry listed as CC0 with qubodup author; description says steps come from Fantozzi freesound pack under CC0. Attribution text is source credit only.	
+hero/footstep-stone	2	hero/footstep-stone-2.mp3	0.32	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/flac/Fantozzi-StoneR2.flac			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	Entry listed as CC0 with qubodup author; description says steps come from Fantozzi freesound pack under CC0. Attribution text is source credit only.	
+hero/footstep-wood	1	hero/footstep-wood-1.mp3	0.49	steps-in-wood-floor	steps in wood floor.wav	0.01	0.50	mikeask	CC0	https://opengameart.org/content/steps-in-wood-floor		
+hero/footstep-grass	1	hero/footstep-grass-1.mp3	0.44	fantozzis-footsteps-grasssand-stone	Fantozzi-footsteps/Fantozzi-footsteps/ogg/Fantozzi-SandL1.ogg			qubodup	CC0	https://opengameart.org/content/fantozzis-footsteps-grasssand-stone	CC0 per catalog (qubodup, Fantozzi pack); one grass/sand step	
+hero/footstep-dirt	1	hero/footstep-dirt-1.mp3	0.70	different-steps-on-wood-stone-leaves-gravel-and-mud	[kdd]DifferentSteps_0/gravel.ogg			TinyWorlds	CC0	https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud	Search lists CC0 entry; one gravel step, whole file	
+hero/jump	1	hero/jump-1.mp3	0.59	jump-landing	Jump 1.wav			Macro	CC0	https://opengameart.org/content/jump-landing	CC0 per catalog (Macro, Jump Landing); one jump, whole file	
+hero/land	1	hero/land-1.mp3	0.27	jump-landing-sound	jumpland.wav	0.00	0.27	qubodup	CC0	https://opengameart.org/content/jump-landing-sound	CC0 per catalog (qubodup, Jump Landing Sound); one landing	
+hero/dodge	1	hero/dodge-1.mp3	0.60	air-whoosh	whoosh2_0.wav	0.00	0.60	pyranostudios	CC0	https://opengameart.org/content/air-whoosh	CC0 per catalog (pyranostudios, Air whoosh); one short whoosh cut from loop	
+hero/attack-shout	1	hero/attack-shout-1.mp3	0.48	male-gruntyelling-sounds	yelling sounds/yelling sounds/1yell1.wav			HaelDB	CC0	https://opengameart.org/content/male-gruntyelling-sounds	CC0 male yell, no words expected	
+hero/effort	1	hero/effort-1.mp3	0.40	male-gruntyelling-sounds	yelling sounds/yelling sounds/3grunt1.wav			HaelDB	CC0	https://opengameart.org/content/male-gruntyelling-sounds	CC0 male grunt	
+hero/hurt-voice	1	hero/hurt-voice-1.mp3	0.25	hurt-sound-effects	hurt_02.mp3			EZduzziteh	CC0	https://opengameart.org/content/hurt-sound-effects	CC0 short hurt voice	
+hero/cloth-move	1	hero/cloth-move-1.mp3	0.47	50-rpg-sound-effects	RPGsounds_Kenney/OGG/cloth3.ogg			Kenney	CC0	https://opengameart.org/content/50-rpg-sound-effects	CC0 Kenney cloth	
+hero/lute	-										no lute in the library; guitar pluck is not a lute	
+hero/whistle	-										no beast-call whistle; steam and whistle packs do not fit	
+hero/cast-voice	-										no clean non-verbal spell voice found	
+hero/armor-move	-										no second chain file found; chainmail2 span already used	
+hero/footstep-water	-										same sound as magic/water#2; the game can reuse that file	
+hero/cheer	-										no non-verbal cheer of one hero found; npc/crowd-cheer#2 is a crowd, not one voice	
