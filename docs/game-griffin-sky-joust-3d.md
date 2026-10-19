@@ -50,6 +50,15 @@ rider of; `attempts` = wrong strikes + 1. A bump from the side is no miss.
 - 2D (`view2d/`): the same arena in Phaser with the griffin and giant-bat sheets (east and
   west rows) and the hero sprite on the griffin.
 - Helper mode: slower riders (60 instead of 90 px/s) and the rider with the next word pulses.
+- Sizes (owner fix, 2026-10-20): the griffin's body fills about its hit circle (radius 24 px) and
+  its wings and tail reach past it; a bat fills about its circle (28 px). Before, both views drew
+  them at about half that size, smaller than their circles: the griffin looked very small and the
+  word tags covered the bats. The hit circles and every other rule stayed the same: larger circles
+  made the QC bot twice as slow over 40 seeds, because the band of riders got too crowded to dive
+  through. 3D: griffin scale 1.0, bats 1.2, hero 0.68, trees 0.7 of their model. 2D: the fliers
+  use the middle of the drawn body as their origin (the sheets' origin is the ground point), and a
+  word hangs just above its bat. The kit's 2D tag spread counts a tag's drop shadow, so stacked
+  words never touch.
 
 ## 6. Models
 

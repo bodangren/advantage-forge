@@ -575,6 +575,81 @@ async function playLibrary(page: Page, shot: (name: string) => Promise<void>): P
   await page.evaluate(() => clearInterval((window as any).__qcBot));
 }
 
+/**
+ * Griffin Sky-Joust: the game's own bot plays (`auto` on the test hook, 15 times a second). Shots at
+ * the first riders, close to two strikes (the griffin over a rider, inside its reach), after each
+ * sentence (to sentence 3), and at the end. Every 250 ms the word tags are checked for overlaps:
+ * the `.rider-tag` boxes in 3D, the 2D hook's `tags()` boxes in 2D.
+ */
+async function playJoust(page: Page, shot: (name: string) => Promise<void>): Promise<void> {
+  await page.waitForFunction(() => ((window as any).__apk3d.game()?.state().riders.length ?? 0) > 0, undefined, { timeout: 180_000, polling: 250 });
+  await page.waitForTimeout(1500);
+  await shot('riders');
+  await page.evaluate(() => {
+    const w = window as any;
+    w.__qcBot = setInterval(() => w.__apk3d.game()?.auto(), 66);
+  });
+  for (const name of ['strike-a', 'strike-b']) {
+    const near = await page
+      .waitForFunction(
+        () => {
+          const st = (window as any).__apk3d.game()?.state();
+          return !!st && st.riders.some((r: any) => Math.hypot(r.x - st.griffin.x, r.y - st.griffin.y) < r.radius + st.griffin.radius + 20 && st.griffin.y < r.y - 10);
+        },
+        undefined,
+        { timeout: 90_000, polling: 'raf' },
+      )
+      .then(() => true)
+      .catch(() => false);
+    if (near) await shot(name);
+    await page.waitForTimeout(1500);
+  }
+  const started = Date.now();
+  let lastSentence = 0;
+  let samples = 0;
+  let overlapped = 0;
+  for (;;) {
+    const s = await page.evaluate(() => {
+      if (document.querySelector('.results.on')) return null;
+      const g = (window as any).__apk3d.game();
+      const st = g?.state();
+      if (!st) return null;
+      type Box = { l: number; r: number; t: number; b: number };
+      const boxes: Box[] =
+        typeof g.tags === 'function'
+          ? g.tags().map((b: any) => ({ l: b.x - b.w / 2, r: b.x + b.w / 2, t: b.y - b.h / 2, b: b.y + b.h / 2 }))
+          : [...document.querySelectorAll('.rider-tag')].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0).map((r) => ({ l: r.left, r: r.right, t: r.top, b: r.bottom }));
+      // Two tags touch when their boxes (with the 4 px drop shadow of a 2D tag) come closer than 2 px.
+      const shadow = typeof g.tags === 'function' ? 4 : 0;
+      let pairs = 0;
+      for (let i = 0; i < boxes.length; i++)
+        for (let j = i + 1; j < boxes.length; j++) {
+          const a = boxes[i]!;
+          const c = boxes[j]!;
+          if (Math.min(a.r, c.r) - Math.max(a.l, c.l) > -2 && Math.min(a.b + shadow, c.b + shadow) - Math.max(a.t, c.t) > -2) pairs++;
+        }
+      return { sentence: st.sentence as number, phase: st.phase as string, pairs };
+    });
+    if (!s) break;
+    samples++;
+    if (s.pairs > 0) overlapped++;
+    if (s.phase === 'complete') {
+      await page.waitForTimeout(500);
+      await shot('end');
+      break;
+    }
+    if (s.sentence !== lastSentence && s.sentence <= 2) {
+      lastSentence = s.sentence;
+      await page.waitForTimeout(1200);
+      await shot(`sentence-${s.sentence + 1}`);
+    }
+    if (Date.now() - started > 8 * 60_000) throw new Error('Griffin Sky-Joust did not end in 8 minutes');
+    await page.waitForTimeout(250);
+  }
+  await page.evaluate(() => clearInterval((window as any).__qcBot));
+  console.log(`tags   ${samples} samples, ${overlapped} with two word tags touching or overlapping`);
+}
+
 const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) => Promise<void>> = {
   'dungeon-liberator': playArena,
   'devourer-slime': playArena,
@@ -584,6 +659,7 @@ const BOTS: Record<string, (page: Page, shot: (name: string) => Promise<void>) =
   'monster-encounters': playMonsterEncounters,
   'potion-rush': playPotionRush,
   'enchanted-library': playLibrary,
+  'griffin-sky-joust': playJoust,
 };
 
 /** The 2D (Phaser) players, for `--2d`. */
@@ -596,6 +672,7 @@ const BOTS_2D: Record<string, (page: Page, shot: (name: string) => Promise<void>
   'dragon-rider': playGates,
   'monster-encounters': playMonsterEncounters2D,
   'enchanted-library': playLibrary,
+  'griffin-sky-joust': playJoust,
 };
 
 async function play(layout: 'portrait' | 'landscape'): Promise<void> {
