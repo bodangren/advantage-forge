@@ -14,7 +14,8 @@ scope, and the open decisions. `docs/apk-port.md` ("Release flow") will retain t
 
 - [ ] Task: Test the handoff generator with git fixtures: the last synced Forge commit from a
   monorepo log, the commit range in the synced paths, the commit classes, the affected games from
-  changed game folders, models (`GAME_LOADS`), and kit files, and the byte-identical model list.
+  changed game folders, models (`GAME_LOADS`), and kit files, the byte-identical model list, and
+  the served pack URLs of the QC request.
 - [ ] Task: Test that a release with byte-identical outputs changes no pack version and no pack
   file, and that the model is not stale at the next `apk-release.ts --check`.
 

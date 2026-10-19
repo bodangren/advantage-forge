@@ -44,6 +44,11 @@ On 2026-10-20 the owner asked for this track.
    picked the QC games by hand.
 5. **A sync carries every Forge commit.** `monorepo-sync.ts` copies the Forge HEAD of the synced
    paths. During a freeze, a feature commit in Forge goes in with the next fix.
+6. **No check of the served packs.** On 2026-10-20 the monorepo rebuild of port 3005 ran `next build`
+   without the app prebuild step (`pnpm sync:3d-assets`). The app still served mounts 1.0.1 and
+   dungeon-monsters 1.0.1, so the new pack paths gave 404. The 3D games showed "device not
+   supported" (the monorepo host shows the device gate for every start error), and the re-checks
+   G1 and G2 failed. The monorepo session fixed its script.
 
 ## Scope
 
@@ -52,7 +57,10 @@ On 2026-10-20 the owner asked for this track.
    with their class (`fix`, `feat`, `chore`, `docs` from the subject). It summarizes the
    `monorepo-sync.ts --check` result and the pack versions (old and new). It lists the models with
    changed bytes and the models that are only rebuilt. It names the affected games and the QC
-   request, and the exact commands for the monorepo session. It writes
+   request, and the exact commands for the monorepo session. The QC request starts with the served
+   packs: after the app rebuild, each new pack URL (`/packs/<id>/<version>/pack.json`, and the 2D
+   `pack.json` with its new version) answers 200. A 404 means that the app build skipped
+   `sync:3d-assets`. It writes
    `out/monorepo-sync/handoff-<forge-sha>.md` and prints the text.
 2. **Delivery**: a Forge skill (`.claude/skills/monorepo-sync/`) for the Forge session: commit, run
    the release under the heavy lock, make the handoff, send it with `SendMessage` to the monorepo
