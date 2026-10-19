@@ -59,9 +59,16 @@ gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") r
 
 ## Phase 4: Monorepo side (monorepo session)
 
-- [ ] Task: The monorepo session writes its receiving steps (sync, checks, commit, merge into the
-  target branch, answer with the monorepo commit, checks after the app rebuild). Record its commit
-  or document path here.
+- [x] Task: The monorepo session writes its receiving steps (sync, checks, commit, merge into the
+  target branch, answer with the monorepo commit, checks after the app rebuild). Done 2026-10-20:
+  monorepo `924fe0767` on `primary-parity-integration`, `docs/runbooks/forge-sync-receiving.md`.
+  Its steps: read the handoff (during a freeze, fix and release commits only; a feature needs the
+  owner's go); bring the port branch up to the target with `--ff-only`; run
+  `monorepo-sync.ts --commit [--forge-commit <sha>]` from the Forge root under the heavy lock; merge
+  into the target with `--ff-only` and build the kit and games `dist`; answer Forge with the commit
+  and the gate results; after the app rebuild, check each new pack URL (200), the 2D pack version,
+  and the handoff games in 3D (headed Chrome) and 2D (`?renderer=phaser`). It records that a plain
+  `next build` skips `sync:3d-assets`.
 
 ## Phase 5: Verification
 
