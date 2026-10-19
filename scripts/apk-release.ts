@@ -27,7 +27,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { SPRITE_PACK_ID, assetPackSchema, modelPackSchema, spritePackRoot, spriteSheetId, spriteStillId, type ModelPack } from '../src/apk3d/contracts/index.js';
-import { HERO_MODELS, packModels, sameRevision, sourceRevision } from './apk-pack-models.js';
+import { PRESET_MODELS, packModels, sameRevision, sourceRevision } from './apk-pack-models.js';
 
 /** The release outputs, relative to the repository root. */
 export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'demo/public/avatar-pack', 'src/apk3d/contracts/pack-versions.ts', 'src/apk3d/avatar/pack-version.ts'];
@@ -80,7 +80,7 @@ function stale(root: string): { stale3d: string[]; stale2d: string[] } {
         continue;
       }
       const want = file.skinned && file.clips.length ? [undefined, ...file.presets].flatMap((p) => file.clips.map((c) => spriteSheetId(name, c, p))) : [spriteStillId(name)];
-      if (HERO_MODELS.includes(name) && !file.presets.length) stale3d.push(name);
+      if (PRESET_MODELS.includes(name) && !file.presets.length) stale3d.push(name);
       else if (!sprites || want.some((w) => !sprites.files[w])) stale2d.push(name);
     }
   }

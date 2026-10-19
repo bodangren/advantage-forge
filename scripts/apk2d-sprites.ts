@@ -6,7 +6,8 @@
  *
  * - a skinned model: a sheet for every clip of its GLB (`--clip all`),
  *   out/apk2d/sprites/<model>/<clip>/{sheet.png, metrics.json} (rows = directions, columns = frames);
- * - a hero: also every color preset, out/apk2d/sprites/<model>/presets/<preset>/<clip>/...;
+ * - a model with presets (`PRESET_MODELS`: the heroes and the ghost): also every color preset,
+ *   out/apk2d/sprites/<model>/presets/<preset>/<clip>/...;
  * - a model without clips: one still, out/apk2d/sprites/<model>/{S.png, metrics.json}.
  *
  * scripts/apk2d-pack.ts turns them into the APK sprite pack. Each forge call is one textured build,
@@ -21,7 +22,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { MODEL_PACKS, modelPackSchema, packVersion } from '../src/apk3d/contracts/index.js';
-import { HERO_MODELS, allPackModels, packModels } from './apk-pack-models.js';
+import { HERO_MODELS, PRESET_MODELS, allPackModels, packModels } from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, 'out', 'apk2d', 'sprites');
@@ -72,7 +73,7 @@ for (const model of models.filter((m) => !only.length || only.includes(m))) {
   const animated = animatedIn3D(model);
   if (animated !== false) {
     const dirs = EIGHT.has(model) ? 8 : 4;
-    forge(model, into, ['--dirs', String(dirs), '--clip', 'all', '--frames', String(FRAMES), ...(HERO_MODELS.includes(model) ? ['--preset', 'all'] : [])]);
+    forge(model, into, ['--dirs', String(dirs), '--clip', 'all', '--frames', String(FRAMES), ...(PRESET_MODELS.includes(model) ? ['--preset', 'all'] : [])]);
   }
   // A model without clips (or a new model that turned out to have none): one still.
   const still = !clipDirs(into).length;

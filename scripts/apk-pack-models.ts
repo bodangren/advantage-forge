@@ -30,8 +30,11 @@ export function allPackModels(): string[] {
   return [...new Set(Object.values(packModels()).flat())].sort();
 }
 
-/** The heroes: their color presets go into both the 3D and the 2D pack. */
+/** The heroes. */
 export const HERO_MODELS: readonly string[] = MODEL_PACKS.heroes ?? [];
+
+/** The models whose color presets go into both the 3D and the 2D pack: the heroes, and the ghost (the Enchanted Library spirits). */
+export const PRESET_MODELS: readonly string[] = [...HERO_MODELS, 'ghost'];
 
 /** The source files of one asset: its file and every local file it imports under `assets/`. */
 export function sourceFiles(name: string, root: string = process.cwd()): string[] {

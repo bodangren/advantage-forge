@@ -7,8 +7,8 @@
  *
  * Per model: drop the color-variant extras (the demo swaps preset textures itself), weld and
  * simplify the meshes toward a triangle budget within a shape-error limit, shrink the textures to
- * 512 px WebP, and compress the geometry with Meshopt. The heroes' preset atlases are exported
- * beside them at the same size (demo/public/models/<hero>/<preset>.webp).
+ * 512 px WebP, and compress the geometry with Meshopt. The preset atlases of the heroes and the
+ * ghost (`PRESET_MODELS`) are exported beside them at the same size (demo/public/models/<model>/<preset>.webp).
  */
 import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -17,7 +17,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, flatten, join as joinMeshes, joinPrimitives, meshopt, prune, simplify, textureCompress, weld } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
 import sharp from 'sharp';
-import { HERO_MODELS, allPackModels } from './apk-pack-models.js';
+import { PRESET_MODELS, allPackModels } from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, 'out');
@@ -50,9 +50,9 @@ const CHARACTERS: Record<string, number> = {
   bandit: 8000,
   // Hero vs. Zombie.
   zombie: 8000,
+  // The Enchanted Library spirits: a simple, smooth form.
+  ghost: 8000,
 };
-/** Heroes whose color presets the demo can unlock (the `heroes` pack). */
-const HEROES = HERO_MODELS;
 /**
  * Map pieces repeat many times (the vault has about a hundred floor tiles), so they get small
  * budgets and a looser error limit: their surface detail lives in the normal map anyway.
@@ -171,7 +171,7 @@ async function build(name: string, budget: number, error: number): Promise<void>
   const kb = Math.round(statSync(dest).size / 1024);
   const full = Math.round(statSync(src).size / 1024);
   console.log(`model  ${name.padEnd(16)} ${String(before).padStart(6)} -> ${String(triangles(doc)).padStart(6)} tris  ${String(full).padStart(6)} -> ${String(kb).padStart(5)} KB`);
-  if (HEROES.includes(name)) {
+  if (PRESET_MODELS.includes(name)) {
     const tex = join(OUT, name, 'textures');
     const presets = readdirSync(tex).filter((f) => /^baseColor\.[\w-]+\.png$/.test(f));
     mkdirSync(join(DEST, name), { recursive: true });

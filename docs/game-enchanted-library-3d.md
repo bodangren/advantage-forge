@@ -36,6 +36,7 @@ wrong book, `solved` = cleared. Spirits never count. Score = 100 per right book 
 ## Models
 
 3D (`HALL_MODELS` in `view/hall.ts` plus the heroes): wood-floor, plaster-wall, plaster-wall-window, shelf,
-candle-cluster, chandelier, lantern, skeleton (the spirits, drawn see-through). Packs `heroes`, `dungeon-monsters`,
-`potion-shop`. The books are built in code. 2D: `primary-chibi-2d` hero and skeleton sprites; the hall and the
+candle-cluster, chandelier, lantern, ghost (the spirits, 80% opaque; they take the ghost's looks in turn: default,
+wisp, phantom, shade). Packs `heroes`, `dungeon-monsters`, `potion-shop`. The books are built in code. 2D:
+`primary-chibi-2d` hero and ghost sprites (`ghost.<clip>` and `ghost@<preset>.<clip>`); the hall and the
 books are drawn (`view2d/ground.ts`), so no bake is needed.
