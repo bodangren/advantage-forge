@@ -26,6 +26,12 @@ Status: in progress. The plan records execution state. Linked documents retain d
 
 - [x] Task: Fix the four defects of the owner's manual test in Primary (reported by the monorepo session). The word tags stand on their own books and are smaller (17 px), so they do not cover the books behind them. The prompt card and the last tags go away before the end banner. Helper mode marks the right book only after a wrong book in the round (`hintBookOf`, rules test). An exit control during play belongs to the host page: the monorepo host draws it. The standalone briefing shows two columns at 900 px and wider, so all 29 briefings fit at 1279 x 560 without a scroll bar. QC: `scripts/apk3d-shot.ts` has a player for this game; 3D and 2D shots in portrait and landscape, no errors or diagnostics.
 
+## Owner fix: ghost spirits (2026-10-19)
+
+- [x] Task: Replace the spirit model. The owner found that the spirits did not look like ghosts: they were the skeleton warrior (helmet, sword, shield), tinted blue and 62% opaque. They are now the `ghost` asset (rating 8.5) at 80% opacity. Each new spirit takes the next look (default, wisp, phantom, shade) in 3D and 2D. Forge `74f60a22`: the ghost joins the `dungeon-monsters` pack (budget 8000 triangles), and `PRESET_MODELS` (the heroes and the ghost) puts its presets into both packs.
+- [x] Task: Release the packs from `74f60a22`: dungeon-monsters 1.1.0 (the ghost: 7998 triangles, 234 KB, presets phantom, shade, wisp), mounts 1.0.2 (the griffin GLB is byte-identical; only its source commit changed), primary-chibi-2d 1.2.0 (+24 ghost sheets). The 3D view also draws the ghost 1.2 times larger and brighter (color factor 1.45), because the warm, dim hall made it grey and small. QC: `scripts/apk3d-shot.ts landscape --game enchanted-library` in 3D and 2D, no errors and no diagnostics; 492 APK and game tests pass.
+- [ ] Task: The monorepo session syncs the game and the packs (`scripts/monorepo-sync.ts`) and records its commit here. It decides if the change is a freeze fix.
+
 ## Result (2026-10-03)
 
 Built locally on 2026-10-03: rules core, QC bot, 3D view, Phaser view, passing tests, and a headless browser check in 3D and 2D (software GL, no errors, no legacy model requests). Ported into the monorepo package `game-cartridges-3d` on branch `apk3d-games-port` (local, not pushed). Open: a real touch-device check and layout tuning.

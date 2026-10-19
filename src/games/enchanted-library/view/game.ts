@@ -25,11 +25,16 @@ import { nextCommand } from '../qc/bot.js';
 import { buildBook, buildHall, HALL_MODELS, type BookView } from './hall.js';
 import './enchanted-library.css';
 
-/** A spirit is the ghost, a little see-through. It keeps depth writes, so its eyes stay in front of its head. */
+/**
+ * A spirit is the ghost, a little see-through and brighter than the warm, dim hall would light it
+ * (the color factor scales every look's map; the dark eyes stay dark). It keeps depth writes, so its
+ * eyes stay in front of its head.
+ */
 function ghostify(actor: Actor): void {
   for (const m of actor.materials) {
     m.transparent = true;
     m.opacity = 0.8;
+    m.color.setScalar(1.45);
   }
 }
 
@@ -165,7 +170,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
   function addSpirit(id: string, x: number, z: number): void {
     const g = stage.loader.get(stage.loader.modelPath(SPIRIT_MODEL));
     if (!g) return;
-    const actor = stage.addActor(new Actor(SPIRIT_MODEL, g, stage.timeline, { phase: id.length * 0.37 }));
+    const actor = stage.addActor(new Actor(SPIRIT_MODEL, g, stage.timeline, { phase: id.length * 0.37, scale: 1.2 }));
     const look = SPIRIT_LOOKS[spiritCount++ % SPIRIT_LOOKS.length]!;
     if (look !== 'default') void stage.loader.texture(stage.loader.presetPath(SPIRIT_MODEL, look)).then((tex) => actor.setMap(tex)).catch(() => undefined);
     ghostify(actor);
