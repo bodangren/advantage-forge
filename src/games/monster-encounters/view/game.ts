@@ -158,7 +158,7 @@ export async function createGame(ctx: Game3DContext): Promise<Game3DInstance> {
           await hud.banner('rest', '', '', 2.4);
           break;
         case 'xp':
-          // XP is the apps' rule, computed once for the results; no running XP in play.
+          // A game never shows XP: the server awards it, and the host end card shows it.
           break;
         case 'encounterCleared':
           await pending;

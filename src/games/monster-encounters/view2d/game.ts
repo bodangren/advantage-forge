@@ -239,7 +239,7 @@ export function createGameConfig(ctx: Game2DContext): Readonly<Record<string, un
             await banner(scene, t('rest.title'), t('rest.text'), 2.4);
             break;
           case 'xp':
-            // XP is the apps' rule, computed once for the results; no running XP in play.
+            // A game never shows XP: the server awards it, and the host end card shows it.
             break;
           case 'encounterCleared':
             await pending;

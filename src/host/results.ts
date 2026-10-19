@@ -1,7 +1,8 @@
 /**
  * The results of a run, from the game's `GameResults` and evidence (never from game internals):
- * stars from first-try accuracy, the awarded XP (the apps' rule), the student's answers, the
- * items to practice, and the 3-star reward (a new hero look; none for a student with an avatar).
+ * stars from first-try accuracy, a local XP number (the demo has no server; the app end card shows
+ * the XP that the server awards), the student's answers, the items to practice, and the 3-star
+ * reward (a new hero look; none for a student with an avatar).
  */
 import { firstTryAccuracy, starsOf, type GameResults, type StoryGameEvidence, type Translate } from '../apk3d/contracts/index.js';
 import { esc } from '../apk3d/hud/index.js';

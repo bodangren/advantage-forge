@@ -428,7 +428,13 @@ and is short (Monster Encounters repeats items; Potion Rush ends when the senten
 | `correctAnswers` | count of correct responses in the run |
 | `totalAttempts` | count of all responses |
 | `accuracy` | `correctAnswers / totalAttempts`, 0 when no attempts |
-| `xp` | the apps' rule, copied exactly: `calculateXP = floor(correctAnswers * accuracy)` (`reading-advantage/lib/games/xp.ts`, `advantage-games/src/lib/xp.ts`). The results screen shows "+N XP", as the apps do (owner decision). Speed never changes `xp` |
+| `xp` | the old app rule `calculateXP = floor(correctAnswers * accuracy)`. It is not the awarded XP: the server rule `calculateGameXP` (monorepo `packages/domain/src/games/xp.ts`) decides it, and the server refuses a client `xp`. The results screen shows "+N XP" (owner decision); in the app, N is the `xpEarned` that the server returns, and the card shows a saving text until then (fix of 2026-10-20). Only the standalone Forge demo shows this field |
+
+**Rule: a cartridge never shows XP.** Only the host end card shows XP, with the number that the
+server awards. A game view or a game catalog has no "XP" text and never reads `xp`. The guard
+tests: Forge `tests/games/shared/xp-display.test.ts` (copied into the monorepo games package by
+`port-game.mjs`) and the monorepo kit test `src/__tests__/results.test.ts` (the end card shows the
+awarded XP, never `result.xp`). `scripts/monorepo-sync.ts` runs both before it commits a sync.
 | `score` | the game's own points, integer, shown in the HUD during play (Potion Rush: coins and tips; Monster Encounters: damage). Speed may add to `score` (tips); the apps do not use `score` for XP |
 
 ### 6.2 Outcome
