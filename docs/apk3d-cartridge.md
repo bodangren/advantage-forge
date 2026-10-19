@@ -627,6 +627,7 @@ prevents them for every game:
 | A Thai word broke inside the word in a narrow label | A label with the class `th` keeps one line (`.anchored.th`). |
 | A long 2D status line ran under the meters | `StatusBar2D.set` shrinks the value text into the room left of the right text. |
 | Rune Match tiles cut words on a phone | The board measures each word (`--em`) and the tile width (`--tile`); the CSS fits the font. The portrait card may take 76 % of the screen. |
+| Rune Match tiles cut long words at every size (owner test, 19 October 2026) | The board measures a tile only after the tile is in the page: a detached tile has no computed font, so the canvas measured in a 10 px default font and no word shrank. The fit measures again after each font load. A label with a space takes two lines when one line would shrink (`--lines`); a word without a space stays on one line and shrinks, also in Thai. |
 | A portrait game had no room on a phone on its side | `createCartridgeMounter` covers a game whose manifest says `portrait` on a screen in landscape that is 500 px high or less: a phone and a turn arrow, no words. The game pauses under the cover and resumes when the student turns the device. Rune Match, Potion Rush, Alchemist's Synthesis, and Rune Forge Chamber say `portrait`. |
 
 ## 10. Simulation and testing (decision i)
