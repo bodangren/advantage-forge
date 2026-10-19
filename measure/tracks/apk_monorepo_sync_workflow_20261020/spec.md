@@ -72,8 +72,8 @@ On 2026-10-20 the owner asked for this track.
    owning tracks. `--status` lists the Forge commits that the monorepo has not received.
 4. **Unchanged packs keep their version**: a rebuild with byte-identical outputs changes no pack
    file. The release remembers the checked source revision, so the model is not stale again.
-5. **Sync from a named Forge commit**: `monorepo-sync.ts --forge-commit <sha>` copies from a clean
-   worktree at that commit, so a fix sync can leave out later feature commits.
+5. **Sync from a named Forge commit**: `monorepo-sync.ts --forge-commit <sha>` copies the synced
+   paths of that commit (extracted from git), so a fix sync can leave out later feature commits.
 6. **The monorepo side**: the monorepo session's receiving steps (sync, checks, commit, merge into
    integration, answer with the commit). The monorepo session owns and writes that procedure.
 
@@ -83,12 +83,16 @@ On 2026-10-20 the owner asked for this track.
 - The RPG skin sync (`--skin`). Its handoff can use the same format later.
 - Changes to the monorepo's own scripts (`port-kit.mjs`, `port-game.mjs`).
 
-## Open decisions (proposals)
+## Owner decisions (2026-10-20)
 
-1. Delivery: the message carries the full handoff, and the file stays in Forge `out/`. Proposal:
-   yes. A copy in a shared folder is not necessary.
-2. Byte-identical rebuild: no version bump, no pack file change (scope 4). Proposal: yes.
-3. Ledger location: `measure/monorepo-syncs.md` in Forge. The monorepo keeps its own record.
+The owner accepted the three proposals: "use your proposals for the open decisions and start the
+track".
+
+1. Delivery: the message carries the full handoff, and the file stays in Forge `out/`. There is no
+   copy in a shared folder.
+2. A byte-identical rebuild changes no pack version and no pack file (scope 4). Only the 3D packs
+   need this change: the 2D pack already compares file bytes.
+3. The ledger is `measure/monorepo-syncs.md` in Forge. The monorepo keeps its own record.
 
 ## Acceptance
 

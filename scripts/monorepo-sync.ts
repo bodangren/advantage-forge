@@ -9,7 +9,13 @@
  *
  * Options: --monorepo <dir> (default ../reading-advantage-monorepo-3d or $MONOREPO_WORKTREE),
  * --track <id> (the monorepo track in the commit subject, default apk3d_games_port_20261003),
- * --skip-tests (copy and check drift only).
+ * --skip-tests (copy and check drift only), --forge-commit <sha> (copy the synced paths of that Forge
+ * commit, extracted from git into a temporary folder, not the files of this checkout).
+ *
+ * A fix-only sync during a freeze (track apk_monorepo_sync_workflow_20261020): commit the fixes on
+ * top of the last synced Forge commit (a branch in its own worktree, `git cherry-pick`), then sync
+ * that commit with --forge-commit. The sync prints a note when the Forge commit does not contain the
+ * last synced one. `scripts/monorepo-handoff.ts` writes the request to the monorepo session.
  *
  * The RPG skin (scripts/rpg-skin.ts) goes to the Primary Advantage app of the branch that builds the
  * skin pages, which is not the port branch:
@@ -44,8 +50,10 @@
  * then this command.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
-import { cpSync, existsSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
+import { FORGE_PATHS, SYNC_SUBJECT, defaultMonorepo } from './monorepo-paths.js';
 
 const argv = process.argv.slice(2);
 const has = (flag: string): boolean => argv.includes(flag);
@@ -54,14 +62,32 @@ const value = (flag: string): string | undefined => {
   return i >= 0 ? argv[i + 1] : undefined;
 };
 
-const FORGE = process.cwd();
-const MONO = resolve(value('--monorepo') ?? process.env.MONOREPO_WORKTREE ?? join(FORGE, '..', 'reading-advantage-monorepo-3d'));
+/** The Forge commit of `--forge-commit`, in full. */
+const FORGE_REV = value('--forge-commit') ? execFileSync('git', ['rev-parse', '--verify', `${value('--forge-commit')}^{commit}`], { encoding: 'utf8' }).trim() : undefined;
+
+/**
+ * The synced Forge paths at `rev`, extracted from git into a temporary folder (about 50 MB; a full
+ * worktree takes about 600 MB), with the inputs of the port checks: `package.json` (the ES module
+ * type), the stories (port-kit.mjs parses them as contract fixtures), and a link to this checkout's
+ * node_modules. The folder goes when the command ends.
+ */
+function forgeAt(rev: string): string {
+  const dir = mkdtempSync(join(tmpdir(), 'forge-sync-'));
+  process.on('exit', () => rmSync(dir, { recursive: true, force: true }));
+  const inputs = ['forge', 'package.json', 'demo/public/stories', ...FORGE_PATHS];
+  const paths = inputs.filter((p) => execFileSync('git', ['ls-tree', '--name-only', rev, '--', p], { encoding: 'utf8' }).trim());
+  execFileSync('tar', ['-x', '-C', dir], { input: execFileSync('git', ['archive', rev, '--', ...paths], { maxBuffer: 1 << 30 }) });
+  symlinkSync(join(process.cwd(), 'node_modules'), join(dir, 'node_modules'), 'dir');
+  console.log(`forge ${rev.slice(0, 8)} extracted to ${dir}`);
+  return dir;
+}
+
+const FORGE = FORGE_REV ? forgeAt(FORGE_REV) : process.cwd();
+const MONO = resolve(value('--monorepo') ?? defaultMonorepo(process.cwd()));
 const TRACK = value('--track') ?? 'apk3d_games_port_20261003';
 const KIT = join(MONO, 'packages', 'advantage-play-kit-3d');
 const GAMES = join(MONO, 'packages', 'game-cartridges-3d');
 
-/** Forge paths that a sync carries (they must be committed). */
-const FORGE_PATHS = ['src/apk3d', 'src/games', 'demo/public/packs', 'demo/public/assets/apk', 'tests/apk3d/sprite-parity.test.ts'];
 /** Pack mirrors: Forge folder to monorepo folder. */
 const PACKS_MIRROR: [string, string] = [join(FORGE, 'demo/public/packs'), join(GAMES, 'assets/packs')];
 const SPRITES_MIRROR: [string, string] = [join(FORGE, 'demo/public/assets/apk/primary-chibi-2d'), join(GAMES, 'assets/apk/primary-chibi-2d')];
@@ -200,9 +226,12 @@ if (!existsSync(join(FORGE, 'forge'))) throw new Error('run scripts/monorepo-syn
 if (!existsSync(KIT) || !existsSync(GAMES)) throw new Error(`${MONO} has no advantage-play-kit-3d or game-cartridges-3d package`);
 const branch = git(MONO, ['branch', '--show-current']);
 if (!branch || ['master', 'main'].includes(branch)) throw new Error(`the monorepo checkout is on "${branch || 'a detached HEAD'}"; sync into a branch, never master or main`);
-const forgeDirty = git(FORGE, ['status', '--porcelain', '--', ...FORGE_PATHS]).split('\n').filter(Boolean);
+const forgeDirty = FORGE_REV ? [] : git(FORGE, ['status', '--porcelain', '--', ...FORGE_PATHS]).split('\n').filter(Boolean);
 const monoDirty = git(MONO, ['status', '--porcelain', '--', 'packages/advantage-play-kit-3d', 'packages/game-cartridges-3d']).split('\n').filter(Boolean);
-const forgeHead = git(FORGE, ['rev-parse', '--short', 'HEAD']);
+const forgeHead = git(process.cwd(), ['rev-parse', '--short', FORGE_REV ?? 'HEAD']);
+const lastSync = git(MONO, ['log', '-n', '300', '--format=%s', 'HEAD']).split('\n').map((s) => SYNC_SUBJECT.exec(s)?.[1]).find(Boolean);
+if (lastSync && spawnSync('git', ['merge-base', '--is-ancestor', lastSync, FORGE_REV ?? 'HEAD']).status !== 0)
+  console.log(`note: Forge ${forgeHead} does not contain the last synced Forge commit ${lastSync}; this sync can remove changes that the monorepo has`);
 
 const before = versions(PACKS_MIRROR[1], SPRITES_MIRROR[1]);
 const after = versions(PACKS_MIRROR[0], SPRITES_MIRROR[0]);

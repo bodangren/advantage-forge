@@ -10,7 +10,10 @@
  * Versions (track apk_pack_release_20261006): a pack whose files or manifest change gets the next
  * patch version, a pack that adds or removes a model the next minor version, and the version
  * table src/apk3d/contracts/pack-versions.ts follows. An unchanged pack keeps its version and its
- * folder. A pack folder holds one version only: the old version folder goes.
+ * folder: a model rebuilt to the same bytes keeps its old entry. In a release (APK_RELEASE=1, set by
+ * apk-release.ts, which rebuilt every model whose source changed), out/apk-release-checked.json
+ * records the new source revision, so the model is not stale again. A pack folder holds one version
+ * only: the old version folder goes.
  *
  * The output is deterministic: no timestamp, no hash. A file is identified by pack id, version,
  * and path; `provenance.forgeCommit` is the last commit of its source files (the asset and the
@@ -34,7 +37,17 @@ import {
   type MeasuredModel,
 } from '../src/apk3d/contracts/model-pack.js';
 import { modelPackSchema, type ModelPack } from '../src/apk3d/contracts/index.js';
-import { nextVersion, packModels, sameRevision, sourceRevision, writePackVersions } from './apk-pack-models.js';
+import {
+  identicalRebuild,
+  nextVersion,
+  packModels,
+  readChecked,
+  sameRevision,
+  sourceRevision,
+  writeChecked,
+  writePackVersions,
+  type CheckedRevision,
+} from './apk-pack-models.js';
 
 const ROOT = process.cwd();
 const MODELS = join(ROOT, 'demo', 'public', 'models');
@@ -53,15 +66,27 @@ const sourceOf = (path: string): string => join(MODELS, path);
  * Keeps the current pack's `forgeCommit` text where it names the same commit. Git lengthens its
  * short hashes as the repository grows (7 to 8 characters on 2026-10-06), which otherwise changes
  * every entry and bumps every pack without a content change.
+ *
+ * A rebuild to the same bytes keeps the old entry too (the griffin of 2026-10-19 changed no byte
+ * but moved mounts to 1.0.2), and `checked` records the new source revision for the stale check.
  */
-function keepRevisions(next: ModelPack): ModelPack {
-  const path = join(PACKS, next.id, packVersion(next.id), 'pack.json');
-  if (!existsSync(path)) return next;
-  const old = modelPackSchema.parse(JSON.parse(readFileSync(path, 'utf8')));
+function keepRevisions(next: ModelPack, checked: Record<string, CheckedRevision>): ModelPack {
+  const dir = join(PACKS, next.id, packVersion(next.id));
+  if (!existsSync(join(dir, 'pack.json'))) return next;
+  const old = modelPackSchema.parse(JSON.parse(readFileSync(join(dir, 'pack.json'), 'utf8')));
   const kept = structuredClone(next);
+  const sameBytes = (f: string): boolean => existsSync(join(dir, f)) && readFileSync(join(dir, f)).equals(readFileSync(sourceOf(f)));
   for (const [id, file] of Object.entries(kept.files)) {
-    const was = old.files[id]?.provenance.forgeCommit;
-    if (was && sameRevision(was, file.provenance.forgeCommit)) file.provenance.forgeCommit = was;
+    const was = old.files[id];
+    const now = file.provenance.forgeCommit;
+    if (!was || sameRevision(was.provenance.forgeCommit, now)) {
+      if (was) file.provenance.forgeCommit = was.provenance.forgeCommit;
+      continue;
+    }
+    if (!identicalRebuild(was, file, sameBytes)) continue;
+    file.provenance.forgeCommit = was.provenance.forgeCommit;
+    checked[id] = { source: now, kept: was.provenance.forgeCommit };
+    console.log(`same   ${id}: rebuilt from ${now} with the same bytes; the pack keeps ${was.provenance.forgeCommit}`);
   }
   return kept;
 }
@@ -118,7 +143,8 @@ async function main(): Promise<void> {
 
   const declared = packModels();
   const packs: Record<string, ModelPack> = {};
-  for (const [id, names] of Object.entries(declared)) packs[id] = keepRevisions(assembleModelPack(id, await Promise.all(names.map((n) => measure(io, n)))));
+  const checked = readChecked(ROOT);
+  for (const [id, names] of Object.entries(declared)) packs[id] = keepRevisions(assembleModelPack(id, await Promise.all(names.map((n) => measure(io, n)))), checked);
 
   // Versions: bump each changed pack, keep each unchanged one.
   const versions: Record<string, string> = { ...PACK_VERSIONS };
@@ -150,6 +176,8 @@ async function main(): Promise<void> {
   }
   for (const b of bumps) console.log(`version ${b}`);
   if (REPORT) return;
+  // Only a release rebuilt every model whose source changed, so only a release may say "checked".
+  if (process.env.APK_RELEASE === '1') writeChecked(checked, ROOT);
 
   // Packs that no declaration names any more leave the folder.
   for (const id of existsSync(PACKS) ? readdirSync(PACKS) : []) if (!(id in packs)) rmSync(join(PACKS, id), { recursive: true, force: true });

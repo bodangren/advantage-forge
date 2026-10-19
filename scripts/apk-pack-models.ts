@@ -9,13 +9,17 @@
  * - `sourceRevision(name)`: the last commit of an asset source and of every local file it imports
  *   under `assets/` (kind factories, part modules). A pack records it as `provenance.forgeCommit`;
  *   `apk-release.ts` rebuilds a model when the two differ.
+ * - `identicalRebuild` and the checked revisions (track apk_monorepo_sync_workflow_20261020): a
+ *   rebuild with the same bytes keeps the pack entry, so its pack keeps its version, and the release
+ *   remembers that the new source revision was checked, so the model is not stale again.
  * - `nextVersion` and `writePackVersions`: the version table `src/apk3d/contracts/pack-versions.ts`.
  */
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, normalize } from 'node:path';
 import { sunkenVaultPlaces } from '../scenes/sunken-vault.js';
 import { MODEL_PACKS, VAULT_PACK } from '../src/apk3d/contracts/model-pack.js';
+import type { ModelAssetFile } from '../src/apk3d/contracts/model-asset.js';
 
 /** Every pack and its models, in claim order: a model listed twice stays in the first pack. */
 export function packModels(): Record<string, string[]> {
@@ -62,6 +66,52 @@ export function sourceRevision(name: string, root: string = process.cwd()): stri
 /** Two short hashes name the same commit when one starts with the other. */
 export function sameRevision(a: string | undefined, b: string | undefined): boolean {
   return !!a && !!b && (a.startsWith(b) || b.startsWith(a));
+}
+
+/** The files of one pack entry, relative to the pack root: the model and its preset textures. */
+export function entryFiles(file: Pick<ModelAssetFile, 'id' | 'path' | 'presets'>): string[] {
+  return [file.path, ...file.presets.map((p) => `${file.id}/${p}.webp`)];
+}
+
+/** JSON with sorted keys, so two entries compare by content and not by key order. */
+const canonical = (value: unknown): string =>
+  JSON.stringify(value, (_k, v: unknown) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b))) : v));
+
+/**
+ * A rebuild is identical when the new entry differs from the pack entry only in
+ * `provenance.forgeCommit` and each of its files has the same bytes (`sameBytes(path)`). The pack then
+ * keeps the old entry: the old commit built the same file.
+ */
+export function identicalRebuild(old: ModelAssetFile, next: ModelAssetFile, sameBytes: (path: string) => boolean): boolean {
+  const strip = (f: ModelAssetFile): unknown => ({ ...f, provenance: { ...f.provenance, forgeCommit: '' } });
+  return canonical(strip(old)) === canonical(strip(next)) && entryFiles(next).every(sameBytes);
+}
+
+/** A source revision that rebuilt a model to the same bytes, and the pack revision that it kept. */
+export interface CheckedRevision {
+  source: string;
+  kept: string;
+}
+
+const CHECKED_FILE = join('out', 'apk-release-checked.json');
+
+/** The checked revisions by model (the release worktree keeps out/ between releases). */
+export function readChecked(root: string = process.cwd()): Record<string, CheckedRevision> {
+  const path = join(root, CHECKED_FILE);
+  return existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')) as Record<string, CheckedRevision>) : {};
+}
+
+export function writeChecked(checked: Readonly<Record<string, CheckedRevision>>, root: string = process.cwd()): void {
+  mkdirSync(join(root, 'out'), { recursive: true });
+  writeFileSync(join(root, CHECKED_FILE), `${JSON.stringify(checked, null, 2)}\n`);
+}
+
+/**
+ * A pack entry is fresh when its `forgeCommit` names the source revision, or when that source
+ * revision was checked and rebuilt to the same bytes as the entry.
+ */
+export function packEntryFresh(entry: string | undefined, source: string, checked: CheckedRevision | undefined): boolean {
+  return sameRevision(entry, source) || (!!checked && sameRevision(checked.source, source) && sameRevision(checked.kept, entry));
 }
 
 /** The next version: a patch for changed content, a minor for an added or removed model. */

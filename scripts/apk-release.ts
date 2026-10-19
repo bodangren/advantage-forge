@@ -14,7 +14,9 @@
  * out/ folder between releases. A model is stale when:
  *
  * - its 3D pack entry or its runtime GLB is missing, or its source revision (the asset file and the
- *   local files it imports) differs from the entry's `forgeCommit`: rebuild the 3D model and the 2D files;
+ *   local files it imports) differs from the entry's `forgeCommit` and was not checked before
+ *   (out/apk-release-checked.json: a rebuild to the same bytes keeps the entry): rebuild the 3D
+ *   model and the 2D files;
  * - a 2D file of it is missing (tests/apk3d/sprite-parity.test.ts): render the 2D files.
  *
  * Steps in the worktree: apk2d-sprites.ts (one textured build per stale model; it also leaves
@@ -22,12 +24,16 @@
  * apk2d-pack.ts (each bumps the version of a changed pack), then the pack and game manifest tests.
  * The outputs (`OUTPUTS`, and the generated 2D cameras after --bake) are then copied back to this
  * checkout; --commit commits them by explicit paths.
+ *
+ * A release that builds waits for the machine's shared heavy lock (scripts/heavy-lock.ts); a call
+ * that a caller wrapped in `flock` on that lock runs at once. `--check` takes no lock.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { SPRITE_PACK_ID, assetPackSchema, modelPackSchema, spritePackRoot, spriteSheetId, spriteStillId, type ModelPack } from '../src/apk3d/contracts/index.js';
-import { PRESET_MODELS, packModels, sameRevision, sourceRevision } from './apk-pack-models.js';
+import { PRESET_MODELS, packEntryFresh, packModels, readChecked, sourceRevision } from './apk-pack-models.js';
+import { holdHeavyLock } from './heavy-lock.js';
 
 /** The release outputs, relative to the repository root. */
 export const OUTPUTS = ['demo/public/models', 'demo/public/packs', 'demo/public/assets/apk/primary-chibi-2d', 'demo/public/rpg', 'demo/public/avatar-pack', 'src/apk3d/contracts/pack-versions.ts', 'src/apk3d/avatar/pack-version.ts'];
@@ -70,12 +76,13 @@ function stale(root: string): { stale3d: string[]; stale2d: string[] } {
   const sprites = existsSync(spritePath) ? assetPackSchema.parse(JSON.parse(readFileSync(spritePath, 'utf8'))) : undefined;
   const stale3d: string[] = [];
   const stale2d: string[] = [];
+  const checked = readChecked(root);
   for (const [id, names] of Object.entries(packModels())) {
     const path = join(root, 'demo/public/packs', id, versions[id] ?? '1.0.0', 'pack.json');
     const pack: ModelPack | undefined = existsSync(path) ? modelPackSchema.parse(JSON.parse(readFileSync(path, 'utf8'))) : undefined;
     for (const name of names) {
       const file = pack?.files[name];
-      if (!file || !existsSync(join(root, 'demo/public/models', `${name}.glb`)) || !sameRevision(file.provenance.forgeCommit, sourceRevision(name, root))) {
+      if (!file || !existsSync(join(root, 'demo/public/models', `${name}.glb`)) || !packEntryFresh(file.provenance.forgeCommit, sourceRevision(name, root), checked[name])) {
         stale3d.push(name);
         continue;
       }
@@ -105,7 +112,7 @@ function inner(): void {
   rmSync(join(ROOT, 'out/apk2d/sprites'), { recursive: true, force: true });
   if (render.length) run(ROOT, 'node', ['--import', 'tsx', 'scripts/apk2d-sprites.ts', ...render], { FORGE_WORKERS: process.env.FORGE_WORKERS ?? '2' });
   if (stale3d.length) run(ROOT, 'node', ['--import', 'tsx', 'scripts/demo-models.ts', ...stale3d]);
-  run(ROOT, 'node', ['--import', 'tsx', 'scripts/apk3d-models.ts']);
+  run(ROOT, 'node', ['--import', 'tsx', 'scripts/apk3d-models.ts'], { APK_RELEASE: '1' });
   if (has('--bake')) run(ROOT, 'node', ['--import', 'tsx', 'scripts/apk2d-bake.ts']);
   else rmSync(join(ROOT, 'out/apk2d/backgrounds'), { recursive: true, force: true });
   run(ROOT, 'node', ['--import', 'tsx', 'scripts/apk2d-pack.ts']);
@@ -123,6 +130,8 @@ function changedOutputs(root: string): string[] {
 }
 
 function outer(): void {
+  // A build is a heavy job: wait for the machine's shared lock (scripts/heavy-lock.ts).
+  if (!has('--check')) holdHeavyLock();
   const dirty = changedOutputs(ROOT);
   if (dirty.length && !has('--check')) throw new Error(`uncommitted release outputs in this checkout; commit or restore them first:\n  ${dirty.join('\n  ')}`);
   const head = git(ROOT, ['rev-parse', 'HEAD']);

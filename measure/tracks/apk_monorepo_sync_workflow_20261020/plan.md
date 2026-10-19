@@ -1,40 +1,67 @@
 # Monorepo sync workflow: handoff, delivery, and record of Forge changes
 
-Status: new. The plan records execution state. The [specification](./spec.md) records the gaps, the
-scope, and the open decisions. `docs/apk-port.md` ("Release flow") will retain the workflow.
+Status: in progress. The plan records execution state. The [specification](./spec.md) records the
+gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") retains the workflow.
 
 ## Phase 1: Design and agreement
 
-- [ ] Task: Write the workflow in `docs/apk-port.md` ("Release flow"): the steps, who runs each
-  step, the handoff format, the ledger, the freeze rule, and the heavy lock.
-- [ ] Task: Agree the handoff format and the receiving steps with the monorepo session. Record its
-  answer and the open decisions of the specification here.
+- [x] Task: Write the workflow in `docs/apk-port.md` ("Release flow", new section "Sync workflow"):
+  the steps, who runs each step, the handoff format, the ledger, the freeze rule, and the heavy lock.
+- [x] Task: Agree the handoff format and the receiving steps with the monorepo session. Its answer
+  (2026-10-20): it agrees to the format and the receiving steps 1-5. (a) The merge target is
+  `primary-parity-integration` until the owner merges it into master after the cutover; after that
+  the owner decides, so the target is the handoff parameter `--target` and is not fixed in the
+  script. (b) The app keeps the asset base "/": it serves `/packs/<id>/<version>/` and
+  `/assets/apk/primary-chibi-2d/v1/`, and its Docker build runs `pnpm build` (prebuild
+  `sync:3d-assets`). Its rebuild script now runs `sync:3d-assets` before `next build`. The owner
+  decisions are in the specification.
 
 ## Phase 2: Tests
 
-- [ ] Task: Test the handoff generator with git fixtures: the last synced Forge commit from a
-  monorepo log, the commit range in the synced paths, the commit classes, the affected games from
-  changed game folders, models (`GAME_LOADS`), and kit files, the byte-identical model list, and
-  the served pack URLs of the QC request.
-- [ ] Task: Test that a release with byte-identical outputs changes no pack version and no pack
-  file, and that the model is not stale at the next `apk-release.ts --check`.
+- [x] Task: Test the handoff rules (`tests/apk3d/monorepo-handoff.test.ts`): the last sync from a
+  monorepo log, the commit classes, the track ids, the git tree reader, the 3D pack comparison (same
+  bytes under a new version, new, removed, changed models and preset textures), the 2D comparison
+  (sheets, props, backgrounds), the affected games (game files, a model through a game's models,
+  packs, and heroes, a 2D background), the pack line of a sync commit body, and the handoff text
+  (the feature warning, `--forge-commit`, the target branch, the pack URLs). Replay on real history:
+  `--branch ce5a63131 --forge-commit d3624720` (the ghost release) reports the griffin as "same
+  bytes" and asks for no griffin game check.
+- [x] Task: Test the identical-rebuild rule with the real griffin entry of `mounts`: a rebuild that
+  changes only `forgeCommit` keeps the entry, so the manifest text and the version stay; a changed
+  file, triangle count, or clip list is not identical; a checked source revision makes the old entry
+  fresh for that revision only. The heavy lock parser reads holders from `/proc/locks` and skips a
+  waiting lock. 14 tests pass.
 
 ## Phase 3: Implementation
 
-- [ ] Task: Write `scripts/monorepo-handoff.ts` (read-only): the handoff text and
-  `out/monorepo-sync/handoff-<forge-sha>.md`.
-- [ ] Task: Add `--status` (the Forge commits that the monorepo has not received) and
-  `--record <monorepo-sha>` (check the subject, add a row to `measure/monorepo-syncs.md`).
-- [ ] Task: Change `apk-release.ts`: take the heavy lock itself, keep the pack files of a
-  byte-identical rebuild, and remember the checked source revision.
-- [ ] Task: Add `monorepo-sync.ts --forge-commit <sha>` (copy from a clean worktree at that commit).
-- [ ] Task: Write the Forge skill `.claude/skills/monorepo-sync/SKILL.md`: commit, release, handoff,
-  `SendMessage` to the monorepo session, wait, record.
+- [x] Task: Write `scripts/monorepo-handoff.ts` (read-only in the monorepo): the handoff text and
+  `out/monorepo-sync/handoff-<forge-sha>.md`. It needs `--target`. It lists only the games of the
+  monorepo package; a changed Forge game outside it (Monster Encounters) shows as "not synced".
+  Shared paths and patterns are in `scripts/monorepo-paths.ts`.
+- [x] Task: Add `--status` and `--record [<monorepo-sha>]`. Without a sha, `--record` adds every sync
+  commit of the port branch that the ledger lacks: `measure/monorepo-syncs.md` starts with the 10
+  syncs from 2026-10-06 to 2026-10-19 (`e31a4e349` to `7d343fb95`).
+- [x] Task: Change the release. `apk-release.ts` takes the heavy lock itself (`scripts/heavy-lock.ts`:
+  it runs again under `flock` unless an ancestor process holds the lock, so a call that a caller
+  wrapped in flock does not wait for itself; tested wrapped, not wrapped, and blocked).
+  `apk3d-models.ts` keeps the pack entry of a model that rebuilds to the same bytes. In a release
+  (`APK_RELEASE=1`), it records the new source revision in `out/apk-release-checked.json`, and the
+  stale check of `apk-release.ts` reads it. A manual run writes no checked revision, because it did
+  not rebuild the changed models. The 2D pack already compared file bytes.
+- [x] Task: Add `monorepo-sync.ts --forge-commit <sha>`. It extracts the synced paths of that commit
+  from git into a temporary folder (about 50 MB; a worktree takes about 600 MB, and the disk had
+  7.9 GB free), with `package.json`, the stories, and a link to `node_modules` for the port checks.
+  `--check --forge-commit d3624720` reports "in sync". The sync prints a note when the Forge commit
+  does not contain the last synced one. `FORGE_PATHS` now includes `tests/games`, which
+  `port-game.mjs` copies: before, an uncommitted Forge game test could enter a sync.
+- [x] Task: Write the Forge skill `.claude/skills/monorepo-sync/SKILL.md`: commit, release, Forge
+  checks, handoff, `SendMessage` to the monorepo session, record, and the fix-only sync.
 
 ## Phase 4: Monorepo side (monorepo session)
 
-- [ ] Task: The monorepo session writes its receiving steps (sync, checks, commit, merge into
-  integration, answer with the monorepo commit). Record its commit or document path here.
+- [ ] Task: The monorepo session writes its receiving steps (sync, checks, commit, merge into the
+  target branch, answer with the monorepo commit, checks after the app rebuild). Record its commit
+  or document path here.
 
 ## Phase 5: Verification
 

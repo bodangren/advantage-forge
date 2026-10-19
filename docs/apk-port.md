@@ -131,6 +131,47 @@ node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f --che
 node --import tsx scripts/monorepo-sync.ts --skin ../rama-worktrees/lane-f
 ```
 
+### Sync workflow (2026-10-20)
+
+Track `apk_monorepo_sync_workflow_20261020` adds the steps between the release and the monorepo
+commit. The Forge skill `.claude/skills/monorepo-sync/` runs them; the monorepo session agreed to
+the format and the receiving steps on 2026-10-20.
+
+```bash
+node --import tsx scripts/monorepo-handoff.ts --target <branch>   # the request to the monorepo session
+node --import tsx scripts/monorepo-handoff.ts --status            # the Forge commits that the monorepo lacks
+node --import tsx scripts/monorepo-handoff.ts --record <sha>      # record the monorepo sync commit
+```
+
+1. Forge commits the change and, when a model or a pack changed, runs `apk-release.ts --commit`.
+   A release that builds waits for the shared heavy lock
+   (`~/Desktop/primary-parity-progress/heavy.lock`, `scripts/heavy-lock.ts`). A model that rebuilds
+   to the same bytes keeps its pack entry, so its pack keeps its version (the griffin of 2026-10-19
+   moved mounts to 1.0.2 without a changed byte).
+2. Forge writes the handoff (`out/monorepo-sync/handoff-<sha>.md`) and sends its full text to the
+   monorepo session. The handoff reads the git trees of both repositories and has:
+   - the Forge commits since the last sync in the synced paths, with their class (fix, feature,
+     release, other), and a warning for a feature commit;
+   - the kit and game files that change, and the Forge games that the package does not have;
+   - each 3D pack's versions with the models that changed bytes, are new or removed, or have the
+     same bytes, and the changed 2D sheets;
+   - the games to check and why (game files, a changed model through `GAME_LOADS`, a 2D
+     background), and a smoke check when kit or shared game code changed;
+   - the commands, the merge into the target branch (`--target`: the owner decides it), and the
+     checks after the app rebuild: each new pack URL answers 200, then the games in 3D and 2D.
+3. The monorepo session decides the freeze class, runs `monorepo-sync.ts --commit` under the lock,
+   merges the port branch into the target branch, and answers with its commit.
+4. Forge runs `--record <sha>`: the ledger `measure/monorepo-syncs.md` gets a row, and the owning
+   track plans get the monorepo commit.
+5. After the app rebuild (with `sync:3d-assets`), the monorepo session runs the checks and sends the
+   result. On 2026-10-20 a rebuild without `sync:3d-assets` served the old packs; the 3D games then
+   showed "device not supported".
+
+A fix-only sync during a freeze: commit the fixes on top of the last synced Forge commit (a
+worktree, `git cherry-pick`), and sync that commit with `--forge-commit <sha>`. `monorepo-sync.ts`
+then copies the synced paths of that commit, extracted from git into a temporary folder, not the
+files of this checkout. The synced paths include `tests/games`, which `port-game.mjs` copies.
+
 ### Branch plan with the Primary lanes (agreed 2026-10-06)
 
 The owner asked the Forge session and the monorepo session (track `primary_rpg_skin_20261006`,
