@@ -78,4 +78,10 @@ gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") r
   heavy.lock from 17:30 Bangkok until its message "cutover done", and to start this sync after that
   message. The owner decided that the Sky-Joust look fix `431faf51` waits for this sync too. The
   Monorepo session names the target branch in its "cutover done" message.
+  2026-10-20 (Bangkok 18:00): the Monorepo session reported "cutover done" (Primary production on
+  revision 00132-qeq since 16:21 Bangkok) and named the target `primary-parity-integration`.
+  `apk-release.ts --check` at 1296b76e: no stale model, no pack release. Handoff
+  `out/monorepo-sync/handoff-1296b76e.md` (2 fix commits, kit `contracts/results.ts` and
+  `view2d/hud2d.ts`, 3 Sky-Joust files, the XP guard test; no pack change) sent, with notes on the
+  2D tag check in other games. Open: the monorepo commit, `--record`, and the app checks.
 - [ ] Task: Run `./measure/doctor.sh` and close the track.
