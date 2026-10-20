@@ -152,7 +152,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Release APK packs and games to the monorepo**
   *Link: [./tracks/apk_pack_release_20261006/](./tracks/apk_pack_release_20261006/)*
 
-- [~] **Track: Monorepo sync workflow: handoff, delivery, and record of Forge changes**
+- [x] **Track: Monorepo sync workflow: handoff, delivery, and record of Forge changes**
   *Link: [./tracks/apk_monorepo_sync_workflow_20261020/](./tracks/apk_monorepo_sync_workflow_20261020/)*
 
 - [x] **Track: The avatar in the games**

@@ -1,6 +1,6 @@
 # Monorepo sync workflow: handoff, delivery, and record of Forge changes
 
-Status: in progress. The plan records execution state. The [specification](./spec.md) records the
+Status: completed (2026-10-20). The plan records execution state. The [specification](./spec.md) records the
 gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") retains the workflow.
 
 ## Phase 1: Design and agreement
@@ -72,7 +72,7 @@ gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") r
 
 ## Phase 5: Verification
 
-- [ ] Task: Use the workflow for the first sync after the Primary cutover (it carries the XP guard
+- [x] Task: Use the workflow for the first sync after the Primary cutover (it carries the XP guard
   `a70e1ebf`). Record the handoff, the monorepo commit, and the ledger row here.
   The cutover runs on 2026-10-20 from 18:00 Bangkok. The Monorepo session asked Forge to take no
   heavy.lock from 17:30 Bangkok until its message "cutover done", and to start this sync after that
@@ -83,5 +83,12 @@ gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") r
   `apk-release.ts --check` at 1296b76e: no stale model, no pack release. Handoff
   `out/monorepo-sync/handoff-1296b76e.md` (2 fix commits, kit `contracts/results.ts` and
   `view2d/hud2d.ts`, 3 Sky-Joust files, the XP guard test; no pack change) sent, with notes on the
-  2D tag check in other games. Open: the monorepo commit, `--record`, and the app checks.
-- [ ] Task: Run `./measure/doctor.sh` and close the track.
+  2D tag check in other games. The monorepo session answered: monorepo `0c220e663` "sync from
+  Forge afc8b890" on `apk3d-games-port` (afc8b890 = 1296b76e plus this plan); gate 7 of 7 passed
+  (port-kit, port-game, kit tests, kit types, kit build, games tests 128 files and 2011 tests,
+  games types); 6 files, no new pack version; fast-forwarded into `primary-parity-integration`, both
+  package `dist` builds pass. `monorepo-handoff.ts --record 0c220e663` added the ledger row
+  (2026-10-20, 2 commits, no pack, `game_griffin_sky_joust_20260928`,
+  `game_xp_end_card_20261020`). The browser checks after the next app rebuild belong to those two
+  tracks (skill step 7).
+- [x] Task: Run `./measure/doctor.sh` and close the track. Closed 2026-10-20.

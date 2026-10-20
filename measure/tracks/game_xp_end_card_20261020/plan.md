@@ -25,3 +25,7 @@ finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the ru
   monorepo records it in `run2/FIX-LIST.md` (line 23) and its `measure/tech-debt.md`.
 - [ ] Task: Sync Forge after the cutover (`scripts/monorepo-sync.ts`) and record the monorepo
   commit here. Close the track when the end card and the server XP agree in a manual check.
+  2026-10-20: synced in monorepo `0c220e663` "sync from Forge afc8b890" (fast-forwarded into
+  `primary-parity-integration`). The sync gate passed (7 of 7) with the guard
+  `tests/shared/xp-display.test.ts` in the games tests. The monorepo session started the host part
+  the same day. Open: the host change and the manual check.

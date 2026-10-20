@@ -18,3 +18,4 @@ before. The monorepo keeps its own record.
 | 2026-10-14 | `36db6c8d7` | `23a0404b` | 2 | - | primary-parity-integration | `game_enchanted_library_20260928` |
 | 2026-10-19 | `ce5a63131` | `84898702` | 1 | - | primary-parity-integration | `game_rune_match_20260928` |
 | 2026-10-19 | `7d343fb95` | `d3624720` | 3 | dungeon-monsters 1.1.0, mounts 1.0.2, primary-chibi-2d 1.2.0 | primary-parity-integration | `game_enchanted_library_20260928` |
+| 2026-10-20 | `0c220e663` | `afc8b890` | 2 | - | primary-parity-integration | `game_griffin_sky_joust_20260928`, `game_xp_end_card_20261020` |
