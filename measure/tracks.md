@@ -278,7 +278,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Typing Duel: a typing game for saved words and sentences (keyboard and touch)**
   *Link: [./tracks/game_typing_duel_20261009/](./tracks/game_typing_duel_20261009/)*
 
-- [~] **Track: Game XP: the end card shows the XP that the server awards, and no game shows XP**
+- [x] **Track: Game XP: the end card shows the XP that the server awards, and no game shows XP**
   *Link: [./tracks/game_xp_end_card_20261020/](./tracks/game_xp_end_card_20261020/)*
 
 ## Riven Lands pack

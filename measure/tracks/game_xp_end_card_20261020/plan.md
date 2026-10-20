@@ -1,6 +1,6 @@
 # Game XP: the end card shows the XP that the server awards
 
-Status: in progress. The plan records execution state. The [specification](./spec.md) records the
+Status: completed (2026-10-20). The plan records execution state. The [specification](./spec.md) records the
 finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the rule.
 
 ## Phase 1: Forge part (before the cutover)
@@ -28,7 +28,7 @@ finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the ru
   never `result.xp`. `host/story-game.ts`: `onComplete` may return `Promise<number | undefined>`.
   The app returns the save promise, and the header XP gem updates at once. The kit test
   `src/__tests__/results.test.ts` passes (xp 99, awarded 10, "+10 XP").
-- [ ] Task: Sync Forge after the cutover (`scripts/monorepo-sync.ts`) and record the monorepo
+- [x] Task: Sync Forge after the cutover (`scripts/monorepo-sync.ts`) and record the monorepo
   commit here. Close the track when the end card and the server XP agree in a manual check.
   2026-10-20: synced in monorepo `0c220e663` "sync from Forge afc8b890" (fast-forwarded into
   `primary-parity-integration`). The sync gate passed (7 of 7) with the guard
@@ -36,3 +36,11 @@ finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the ru
   the same day. Open: the manual check. The monorepo session adds it to its browser checks after
   the next app rebuild: one game played in the app, and the end card XP equals the saved
   `xpEarned` and the header gem change.
+  Manual check passed (monorepo session, 2026-10-20, port 3005 rebuilt on integration `888d99935`
+  with sync `0c220e663`, the host fix `a316ea73a`, and the load-error screen `7f5a31e39`; headed
+  Chrome, real GPU): Enchanted Library played to the end. The server saved `xpEarned` 10; the card
+  showed the saving text first, then "+10 XP"; the header gem went from 101 to 111 with no reload;
+  0 console errors. The rules differ for this run: the card shows 75% on the first try, so the old
+  rule gives 6. Evidence: `~/Desktop/primary-parity-progress/run2/post-cutover/xp-check.json`,
+  `FOR-FORGE-checks-20261020.md`, and `captures/run2-20261019/post-cutover/XP-*.png` (checked in
+  Forge). Track closed.
