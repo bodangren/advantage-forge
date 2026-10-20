@@ -165,7 +165,9 @@ node --import tsx scripts/monorepo-handoff.ts --record <sha>      # record the m
    track plans get the monorepo commit.
 5. After the app rebuild (with `sync:3d-assets`), the monorepo session runs the checks and sends the
    result. On 2026-10-20 a rebuild without `sync:3d-assets` served the old packs; the 3D games then
-   showed "device not supported".
+   showed "device not supported". Since monorepo `7f5a31e39` (2026-10-20) the host shows a
+   load-error screen for a start error such as a pack 404 (`host/gate-screen.ts`
+   `renderLoadError`, monorepo-owned); the device gate shows only for a device that fails the check.
 
 A fix-only sync during a freeze: commit the fixes on top of the last synced Forge commit (a
 worktree, `git cherry-pick`), and sync that commit with `--forge-commit <sha>`. `monorepo-sync.ts`
