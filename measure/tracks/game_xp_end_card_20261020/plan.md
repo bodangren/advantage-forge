@@ -19,13 +19,20 @@ finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the ru
 
 ## Phase 2: Monorepo part (after the cutover, monorepo session)
 
-- [ ] Task: The monorepo host gives the saved `xpEarned` to the end card. The card shows a saving
+- [x] Task: The monorepo host gives the saved `xpEarned` to the end card. The card shows a saving
   text until then and never reads `result.xp`. The monorepo writes the kit test
   `src/__tests__/results.test.ts` (a result with `xp: 99` and an award of 10 shows "+10 XP"). The
   monorepo records it in `run2/FIX-LIST.md` (line 23) and its `measure/tech-debt.md`.
+  Done 2026-10-20: monorepo `a316ea73a` on `primary-parity-integration`. Kit `host/results.ts`:
+  the card shows the saving text, then the server `xpEarned` ("+N XP") or "XP not saved.", and
+  never `result.xp`. `host/story-game.ts`: `onComplete` may return `Promise<number | undefined>`.
+  The app returns the save promise, and the header XP gem updates at once. The kit test
+  `src/__tests__/results.test.ts` passes (xp 99, awarded 10, "+10 XP").
 - [ ] Task: Sync Forge after the cutover (`scripts/monorepo-sync.ts`) and record the monorepo
   commit here. Close the track when the end card and the server XP agree in a manual check.
   2026-10-20: synced in monorepo `0c220e663` "sync from Forge afc8b890" (fast-forwarded into
   `primary-parity-integration`). The sync gate passed (7 of 7) with the guard
   `tests/shared/xp-display.test.ts` in the games tests. The monorepo session started the host part
-  the same day. Open: the host change and the manual check.
+  the same day. Open: the manual check. The monorepo session adds it to its browser checks after
+  the next app rebuild: one game played in the app, and the end card XP equals the saved
+  `xpEarned` and the header gem change.
