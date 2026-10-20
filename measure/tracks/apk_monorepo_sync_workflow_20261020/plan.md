@@ -74,4 +74,8 @@ gaps, the scope, and the owner decisions. `docs/apk-port.md` ("Sync workflow") r
 
 - [ ] Task: Use the workflow for the first sync after the Primary cutover (it carries the XP guard
   `a70e1ebf`). Record the handoff, the monorepo commit, and the ledger row here.
+  The cutover runs on 2026-10-20 from 18:00 Bangkok. The Monorepo session asked Forge to take no
+  heavy.lock from 17:30 Bangkok until its message "cutover done", and to start this sync after that
+  message. The owner decided that the Sky-Joust look fix `431faf51` waits for this sync too. The
+  Monorepo session names the target branch in its "cutover done" message.
 - [ ] Task: Run `./measure/doctor.sh` and close the track.
