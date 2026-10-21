@@ -158,6 +158,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Avatar pack and RPG skin: an identical rebuild keeps its version**
   *Link: [./tracks/apk_skin_identical_rebuild_20261021/](./tracks/apk_skin_identical_rebuild_20261021/)*
 
+- [~] **Track: Game page dev server: serve the test story fixtures**
+  *Link: [./tracks/qc_story_fixture_serve_20261021/](./tracks/qc_story_fixture_serve_20261021/)*
+
 - [x] **Track: The avatar in the games**
   *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
 
