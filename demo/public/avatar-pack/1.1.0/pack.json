@@ -1,7 +1,7 @@
 {
  "id": "avatar",
- "version": "1.1.1",
- "root": "packs/avatar/1.1.1",
+ "version": "1.1.0",
+ "root": "packs/avatar/1.1.0",
  "files": {
   "avatar-base": {
    "id": "avatar-base",
@@ -26,7 +26,7 @@
    "provenance": {
     "source": "advantage-forge/assets/avatar-base.ts",
     "license": "AGPL-3.0-or-later",
-    "forgeCommit": "318565f6",
+    "forgeCommit": "f4de18b3",
     "tool": "scripts/avatar-pack.ts"
    }
   },
