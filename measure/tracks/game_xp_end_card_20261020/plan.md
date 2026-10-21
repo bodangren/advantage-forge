@@ -1,6 +1,6 @@
 # Game XP: the end card shows the XP that the server awards
 
-Status: completed (2026-10-20). The plan records execution state. The [specification](./spec.md) records the
+Status: completed (2026-10-20); not in production yet (see "Release state"). The plan records execution state. The [specification](./spec.md) records the
 finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the rule.
 
 ## Phase 1: Forge part (before the cutover)
@@ -44,3 +44,12 @@ finding and the decision; `docs/apk3d-cartridge.md` (section 6.1) retains the ru
   rule gives 6. Evidence: `~/Desktop/primary-parity-progress/run2/post-cutover/xp-check.json`,
   `FOR-FORGE-checks-20261020.md`, and `captures/run2-20261019/post-cutover/XP-*.png` (checked in
   Forge). Track closed.
+
+## Release state (2026-10-21)
+
+The fix is in the monorepo branch `primary-parity-integration` only. Monorepo `master` (`beb904102`,
+the cutover merge) does not contain the sync `0c220e663` or the host fix `a316ea73a`. Primary
+production runs revision 00132-qeq since 16:21 Bangkok on 2026-10-20, which is before these
+commits. Students see the old end card XP until the owner merges `primary-parity-integration` into
+`master` and deploys a new revision. The track acceptance (the guard test, the kit test, and the
+sync gate) is met. The merge and the deployment belong to the owner and the monorepo session.
