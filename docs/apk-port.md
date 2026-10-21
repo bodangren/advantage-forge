@@ -123,6 +123,15 @@ node --import tsx scripts/monorepo-sync.ts --commit --push   # ... and push that
   `demo/public/avatar-pack/<version>/`. `monorepo-sync.ts --skin <checkout>` writes both into the
   app (`public/rpg/` and `public/packs/avatar/<version>/`) of the branch that builds the pages, and
   it does not commit there. A strip is one row of frames; its frame size is its height.
+- An identical rebuild of the skin keeps its version (track `apk_skin_identical_rebuild_20261021`;
+  the release `01fa8cce` of 2026-10-21 raised the avatar pack to 1.1.1 and the skin to 1.2.1 with no
+  changed content, and was reverted). A rebuilt avatar pack that differs only in `forgeCommit`
+  values stays published as it is. A stale hero portrait is not shot again when the pack is the same
+  and the avatar code has no commit after its entry: a new shot of the same inputs differs only in
+  render noise. Any other stale file with the same bytes keeps its entry. A kept entry records its
+  new source revision in `out/rpg-skin/checked.json` of the release worktree. A new avatar pack
+  version changes the kit file `src/apk3d/avatar/pack-version.ts`, so the skin sync must go in the
+  same delivery as the port sync, or the app asks for a pack folder that it does not have (404).
 
 ```bash
 node --import tsx scripts/apk-release.ts --skin --commit             # build the stale skin files too
@@ -157,8 +166,12 @@ node --import tsx scripts/monorepo-handoff.ts --record <sha>      # record the m
      same bytes, and the changed 2D sheets;
    - the games to check and why (game files, a changed model through `GAME_LOADS`, a 2D
      background), and a smoke check when kit or shared game code changed;
-   - the commands, the merge into the target branch (`--target`: the owner decides it), and the
-     checks after the app rebuild: each new pack URL answers 200, then the games in 3D and 2D.
+   - the RPG skin and the avatar pack against the app of the target branch: the versions, the files
+     that the skin sync writes or removes, and a warning when the kit asks for an avatar pack
+     version that the app does not have;
+   - the commands, the merge into the target branch (`--target`: the owner decides it), the skin
+     sync when the skin or the avatar pack differs, and the checks after the app rebuild: each new
+     pack URL answers 200, then the games in 3D and 2D.
 3. The monorepo session decides the freeze class, runs `monorepo-sync.ts --commit` under the lock,
    merges the port branch into the target branch, and answers with its commit.
 4. Forge runs `--record <sha>`: the ledger `measure/monorepo-syncs.md` gets a row, and the owning

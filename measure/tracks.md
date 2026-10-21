@@ -155,6 +155,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [x] **Track: Monorepo sync workflow: handoff, delivery, and record of Forge changes**
   *Link: [./tracks/apk_monorepo_sync_workflow_20261020/](./tracks/apk_monorepo_sync_workflow_20261020/)*
 
+- [~] **Track: Avatar pack and RPG skin: an identical rebuild keeps its version**
+  *Link: [./tracks/apk_skin_identical_rebuild_20261021/](./tracks/apk_skin_identical_rebuild_20261021/)*
+
 - [x] **Track: The avatar in the games**
   *Link: [./tracks/avatar_in_games_20261006/](./tracks/avatar_in_games_20261006/)*
 

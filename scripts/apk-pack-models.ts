@@ -95,15 +95,18 @@ export interface CheckedRevision {
 
 const CHECKED_FILE = join('out', 'apk-release-checked.json');
 
-/** The checked revisions by model (the release worktree keeps out/ between releases). */
-export function readChecked(root: string = process.cwd()): Record<string, CheckedRevision> {
-  const path = join(root, CHECKED_FILE);
+/**
+ * The checked revisions by model (the release worktree keeps out/ between releases). `file` is
+ * relative to `root`; scripts/rpg-skin.ts keeps its own in out/rpg-skin/checked.json.
+ */
+export function readChecked(root: string = process.cwd(), file: string = CHECKED_FILE): Record<string, CheckedRevision> {
+  const path = join(root, file);
   return existsSync(path) ? (JSON.parse(readFileSync(path, 'utf8')) as Record<string, CheckedRevision>) : {};
 }
 
-export function writeChecked(checked: Readonly<Record<string, CheckedRevision>>, root: string = process.cwd()): void {
-  mkdirSync(join(root, 'out'), { recursive: true });
-  writeFileSync(join(root, CHECKED_FILE), `${JSON.stringify(checked, null, 2)}\n`);
+export function writeChecked(checked: Readonly<Record<string, CheckedRevision>>, root: string = process.cwd(), file: string = CHECKED_FILE): void {
+  mkdirSync(dirname(join(root, file)), { recursive: true });
+  writeFileSync(join(root, file), `${JSON.stringify(checked, null, 2)}\n`);
 }
 
 /**

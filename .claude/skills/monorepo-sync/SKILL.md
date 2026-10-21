@@ -17,7 +17,9 @@ go in during a feature freeze. The owner decides the target branch.
 2. **Release the packs when a model or a pack changed.** Run
    `node --import tsx scripts/apk-release.ts --check`. When it lists stale models, run
    `node --import tsx scripts/apk-release.ts --commit` in the background. It takes the shared heavy
-   lock itself. A rebuild to the same bytes changes no pack version.
+   lock itself. A rebuild to the same bytes changes no pack version. Add `--skin` when a skin source
+   changed (an icon, an item view, a hero piece, a scene map); an identical skin rebuild also keeps
+   the skin and avatar pack versions.
 3. **Check the changed games in Forge.** Run `scripts/apk3d-shot.ts` in 3D and with `--2d` under
    `flock ~/Desktop/primary-parity-progress/heavy.lock`. Look at the screenshots.
 4. **Make the handoff.** Run
@@ -27,6 +29,9 @@ go in during a feature freeze. The owner decides the target branch.
    - A feature commit in the range during a freeze needs the owner, or a fix-only sync (below).
    - "Same bytes" models changed no file: their games need no check.
    - "Not synced" games are Forge games that the monorepo package does not have.
+   - An "RPG skin" or "Avatar pack" line with files to write adds the skin sync step. A line "The
+     kit asks for avatar pack <version>" means that the port sync alone breaks the avatars (404):
+     the skin sync must go in the same delivery.
 5. **Send the handoff.** Find the monorepo session with `ListAgents`, and send the full handoff
    text with `SendMessage`. Make the first line "Forge sync request: <sha> ...". Do not poll: its
    answer arrives as a message.

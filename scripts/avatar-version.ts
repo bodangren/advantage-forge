@@ -6,6 +6,9 @@
  * (demo/public/avatar-pack/<version>/), and publishes it:
  *
  * - every file the same: the same version;
+ * - only `forgeCommit` values in the JSON files differ (a rebuild from a newer commit that made the
+ *   same pack; track apk_skin_identical_rebuild_20261021): the same version, and the published
+ *   folder stays as it is;
  * - the same items (catalog ids) with changed files: the next patch version;
  * - items added or removed: the next minor version.
  *
@@ -36,20 +39,50 @@ const itemIds = (dir: string): string[] => {
   return (JSON.parse(readFileSync(file, 'utf8')) as { items: { id: string }[] }).items.map((i) => i.id).sort();
 };
 
+/** JSON text without its `forgeCommit` values (the source revision that built the file). */
+const withoutProvenance = (text: string): string =>
+  JSON.stringify(JSON.parse(text, (key, value: unknown) => (key === 'forgeCommit' ? undefined : value)));
+
+/** Two files of a pack are the same, or differ only in `forgeCommit` values (JSON files). */
+function sameFile(a: string, b: string): 'same' | 'provenance' | 'changed' {
+  const x = readFileSync(a);
+  const y = readFileSync(b);
+  if (x.equals(y)) return 'same';
+  if (!a.endsWith('.json')) return 'changed';
+  try {
+    return withoutProvenance(x.toString('utf8')) === withoutProvenance(y.toString('utf8')) ? 'provenance' : 'changed';
+  } catch {
+    return 'changed';
+  }
+}
+
 /**
- * The version for a pack built at `version` in `built`, against the published pack in `published`
- * (built at the same version). No published pack: the same version.
+ * How a pack built in `built` compares with the published pack in `published` (built at the same
+ * version): `new` (nothing published), `same` (every file the same), `provenance` (only
+ * `forgeCommit` values differ), `patch` (the same items, changed files), or `minor` (items added or
+ * removed).
  */
-export function avatarPackVersion(published: string, built: string, version: string): string {
-  if (!existsSync(join(published, 'catalog.json'))) return version;
+export function compareAvatarPack(published: string, built: string): 'new' | 'same' | 'provenance' | 'patch' | 'minor' {
+  if (!existsSync(join(published, 'catalog.json'))) return 'new';
   const a = filesOf(published);
   const b = filesOf(built);
-  const same = a.length === b.length && a.every((f, i) => f === b[i] && readFileSync(join(published, f)).equals(readFileSync(join(built, b[i]!))));
-  if (same) return version;
+  if (a.length === b.length && a.every((f, i) => f === b[i])) {
+    const files = a.map((f) => sameFile(join(published, f), join(built, f)));
+    if (files.every((r) => r === 'same')) return 'same';
+    if (files.every((r) => r !== 'changed')) return 'provenance';
+  }
   const before = itemIds(published);
   const after = itemIds(built);
-  const sameItems = before.length === after.length && before.every((id, i) => id === after[i]);
-  return nextVersion(version, sameItems ? 'patch' : 'minor');
+  return before.length === after.length && before.every((id, i) => id === after[i]) ? 'patch' : 'minor';
+}
+
+/**
+ * The version for a pack built at `version` in `built`, against the published pack in `published`
+ * (built at the same version). No published pack, or the same pack: the same version.
+ */
+export function avatarPackVersion(published: string, built: string, version: string): string {
+  const change = compareAvatarPack(published, built);
+  return change === 'patch' || change === 'minor' ? nextVersion(version, change) : version;
 }
 
 /** Writes `version` into the manifests of a pack folder (the JSON layout of avatar-pack.ts and avatar-portraits.ts). */

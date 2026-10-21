@@ -17,6 +17,11 @@
  * commit needs the owner during a freeze), what changes in the monorepo (kit and game files, each
  * pack's version and the models with changed bytes), the games to check and why, the commands for
  * the monorepo session, and the checks after the app rebuild. The ledger is measure/monorepo-syncs.md.
+ *
+ * The RPG skin and the avatar pack do not go with the port sync: `monorepo-sync.ts --skin <checkout>`
+ * writes them into the app. The handoff compares them with the app of the target branch (track
+ * apk_skin_identical_rebuild_20261021), adds the skin sync step when they differ, and warns when the
+ * kit asks for an avatar pack version that the app does not have (every avatar load would answer 404).
  */
 import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -28,6 +33,9 @@ import { HEAVY_LOCK } from './heavy-lock.js';
 import { FORGE_PATHS, PACK_DIRS, PORT_BRANCH, SYNC_SUBJECT, defaultMonorepo } from './monorepo-paths.js';
 
 // ---------------------------------------------------------------- rules (pure, tested)
+
+/** The app folders that `monorepo-sync.ts --skin` writes, below the monorepo root. */
+export const APP_PUBLIC = 'apps/primary-advantage/public';
 
 export type CommitClass = 'fix' | 'feature' | 'release' | 'other';
 
@@ -175,11 +183,89 @@ export interface Handoff {
   games: Map<string, string[]>;
   smoke: string[];
   packUrls: string[];
+  /** The RPG skin and the avatar pack against the app of the target branch (no target branch: undefined). */
+  skin?: SkinChange | undefined;
   tracks: string[];
   check?: string;
 }
 
+/** The RPG skin and the avatar pack: the app of the target branch against Forge. */
+export interface SkinChange {
+  /** The skin version (`skin.json`) in the app and in Forge. */
+  app?: string | undefined;
+  forge?: string | undefined;
+  /** The skin files (with `skin.json`) that the skin sync writes, and the ones it removes. */
+  write: number;
+  remove: number;
+  /** The avatar pack versions in the app and in Forge, and the avatar files that the skin sync writes. */
+  avatarApp: string[];
+  avatarForge: string[];
+  avatarWrite: number;
+  /** The avatar pack version that the Forge kit asks for (`AVATAR_PACK_VERSION`). */
+  kitAvatar?: string | undefined;
+}
+
+/** One side of the skin compare: the `skin.json` text and the trees (path to blob) of the skin and the avatar pack folders. */
+export interface SkinSide {
+  skin?: string | undefined;
+  rpg: Map<string, string>;
+  avatar: Map<string, string>;
+}
+
+const skinManifest = (text: string | undefined): { version: string; files: Record<string, unknown> } | undefined => {
+  try {
+    return text ? (JSON.parse(text) as { version: string; files: Record<string, unknown> }) : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+/**
+ * What `monorepo-sync.ts --skin` would change in the app, from the git trees of both sides. A file
+ * with another blob counts unless `sameContent` says that the content is the same: the app keeps
+ * some JSON files in another format (its own tool writes `portraits.json` without spaces).
+ */
+export function skinChange(
+  app: SkinSide,
+  forge: SkinSide & { kit?: string | undefined },
+  sameContent: (path: string, appBlob: string, forgeBlob: string) => boolean = () => false,
+): SkinChange {
+  const a = skinManifest(app.skin);
+  const f = skinManifest(forge.skin);
+  const listed = f ? ['skin.json', ...Object.keys(f.files)] : [];
+  const versions = (tree: Map<string, string>): string[] => [...new Set([...tree.keys()].map((p) => p.split('/')[0]!))].sort();
+  const differs = (path: string, appBlob: string | undefined, forgeBlob: string): boolean => appBlob !== forgeBlob && (!appBlob || !sameContent(path, appBlob, forgeBlob));
+  return {
+    app: a?.version,
+    forge: f?.version,
+    write: listed.filter((p) => forge.rpg.has(p) && differs(p, app.rpg.get(p), forge.rpg.get(p)!)).length,
+    remove: a && f ? Object.keys(a.files).filter((p) => !(p in f.files)).length : 0,
+    avatarApp: versions(app.avatar),
+    avatarForge: versions(forge.avatar),
+    avatarWrite: [...forge.avatar].filter(([p, blob]) => differs(p, app.avatar.get(p), blob)).length,
+    kitAvatar: forge.kit,
+  };
+}
+
+/** The skin sync has work: a skin or avatar file to write or remove. */
+export const skinSyncNeeded = (s: SkinChange | undefined): boolean => !!s && (s.write > 0 || s.remove > 0 || s.avatarWrite > 0);
+
 const list = (xs: readonly string[]): string => (xs.length ? xs.join(', ') : 'none');
+
+function skinLines(h: Handoff): string[] {
+  const s = h.skin;
+  if (!s) return [`- RPG skin and avatar pack: not compared (no branch \`${h.target}\` in the monorepo).`];
+  const lines = skinSyncNeeded(s)
+    ? [
+        `- RPG skin: app ${s.app ?? '(none)'} -> Forge ${s.forge ?? '(none)'}. Files to write: ${s.write}. Files to remove: ${s.remove}.`,
+        `- Avatar pack: app ${list(s.avatarApp)} -> Forge ${list(s.avatarForge)}. Files to write: ${s.avatarWrite}.`,
+        '- The port sync does not carry the skin and the avatar pack. The skin sync step below does.',
+      ]
+    : [`- RPG skin and avatar pack: no change (app skin ${s.app ?? '(none)'}, avatar pack ${list(s.avatarApp)} on \`${h.target}\`).`];
+  if (s.kitAvatar && !s.avatarApp.includes(s.kitAvatar))
+    lines.push(`- **The kit asks for avatar pack ${s.kitAvatar}, and the app on \`${h.target}\` does not have it.** Run the skin sync in the same delivery, before the app rebuild. Without it, every avatar load answers 404.`);
+  return lines;
+}
 
 /** The handoff message: a request to the monorepo session. */
 export function handoffText(h: Handoff): string {
@@ -215,6 +301,7 @@ export function handoffText(h: Handoff): string {
     h.sprites.models.length || h.sprites.from !== h.sprites.to
       ? `- 2D pack \`primary-chibi-2d\`: ${h.sprites.from ?? '(new)'} -> ${h.sprites.to ?? '(removed)'}. ${(['changed', 'new', 'removed'] as const).map((s) => `${s[0]!.toUpperCase()}${s.slice(1)}: ${list(h.sprites.models.filter((m) => m.status === s).map((m) => m.model))}`).join('. ')}.`
       : '- 2D pack: no change.',
+    ...skinLines(h),
     '',
     '## Games to check',
     '',
@@ -223,11 +310,18 @@ export function handoffText(h: Handoff): string {
     '',
     '## Steps for the monorepo session',
     '',
-    '1. Decide if the change can go in now (the classes above).',
-    `2. From the Forge root: \`flock ${HEAVY_LOCK} node --import tsx scripts/monorepo-sync.ts ${syncArgs}\``,
-    `3. Merge \`${h.branch}\` into \`${h.target}\`.`,
-    '4. Answer the Forge session with the monorepo commit and the check results.',
-    '5. Rebuild the app with its prebuild step (`pnpm build`, or `pnpm sync:3d-assets` before `next build`).',
+    ...[
+      'Decide if the change can go in now (the classes above).',
+      `From the Forge root: \`flock ${HEAVY_LOCK} node --import tsx scripts/monorepo-sync.ts ${syncArgs}\``,
+      `Merge \`${h.branch}\` into \`${h.target}\`.`,
+      ...(skinSyncNeeded(h.skin)
+        ? [
+            `The skin sync, from the Forge root into a checkout of \`${h.target}\` (it reads the Forge files at HEAD): \`node --import tsx scripts/monorepo-sync.ts --skin <checkout> --check\`, then the same command without \`--check\`. Commit the app files (\`${APP_PUBLIC}/rpg/\` and \`${APP_PUBLIC}/packs/avatar/\`).`,
+          ]
+        : []),
+      'Answer the Forge session with the monorepo commit and the check results.',
+      'Rebuild the app with its prebuild step (`pnpm build`, or `pnpm sync:3d-assets` before `next build`).',
+    ].map((step, i) => `${i + 1}. ${step}`),
     '',
     '## Checks after the app rebuild',
     '',
@@ -345,9 +439,38 @@ function handoff(mono: string, branch: string): void {
   const shared = gameSrc.includes('shared');
   const games = new Map([...affectedGames([...gameFiles.keys()].filter((g) => g !== 'shared'), models, GAME_LOADS, packModels)].filter(([g]) => monoGames.has(g)));
   const smoke = [...(kitFiles.length ? ['kit code'] : []), ...(shared ? ['shared game code'] : [])];
+  // The skin and the avatar pack against the app of the target branch, which the skin sync writes.
+  const show = (cwd: string, ref: string, path: string): string | undefined => {
+    const r = spawnSync('git', ['show', `${ref}:${path}`], { cwd, encoding: 'utf8', maxBuffer: 1 << 28 });
+    return r.status === 0 ? r.stdout : undefined;
+  };
+  const skin = gitOk(mono, ['rev-parse', '--verify', '--quiet', `${target}^{commit}`])
+    ? skinChange(
+        { skin: show(mono, target, `${APP_PUBLIC}/rpg/skin.json`), rpg: tree(mono, target, `${APP_PUBLIC}/rpg`), avatar: tree(mono, target, `${APP_PUBLIC}/packs/avatar`) },
+        {
+          skin: show(FORGE, forge, 'demo/public/rpg/skin.json'),
+          rpg: tree(FORGE, forge, 'demo/public/rpg'),
+          avatar: tree(FORGE, forge, 'demo/public/avatar-pack'),
+          kit: /AVATAR_PACK_VERSION = '([^']+)'/.exec(show(FORGE, forge, 'src/apk3d/avatar/pack-version.ts') ?? '')?.[1],
+        },
+        // A JSON file in another format is the same content (the app writes portraits.json without spaces).
+        (path, appBlob, forgeBlob) => {
+          if (!path.endsWith('.json')) return false;
+          try {
+            const parse = (cwd: string, blob: string): string => JSON.stringify(JSON.parse(git(cwd, ['cat-file', '-p', blob])));
+            return parse(mono, appBlob) === parse(FORGE, forgeBlob);
+          } catch {
+            return false;
+          }
+        },
+      )
+    : undefined;
+
   const packUrls = [
     ...packs.filter((p) => p.to).map((p) => `${modelPackRoot(p.id, p.to)}/pack.json`),
     ...(sprites.from !== sprites.to && sprites.to ? [`${spritePackRoot(SPRITE_PACK_ID).slice(1)}/pack.json (version ${sprites.to})`] : []),
+    ...(skin && skin.avatarWrite && skin.kitAvatar ? [`packs/avatar/${skin.kitAvatar}/pack.json`] : []),
+    ...(skin && skin.write ? [`rpg/skin.json (version ${skin.forge ?? '?'})`] : []),
   ];
 
   let check: string | undefined;
@@ -374,6 +497,7 @@ function handoff(mono: string, branch: string): void {
     games,
     smoke,
     packUrls,
+    skin,
     tracks: tracksOf(commits.map((c) => c.sha)),
     ...(check ? { check } : {}),
   });

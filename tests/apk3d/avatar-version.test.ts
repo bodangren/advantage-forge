@@ -2,7 +2,7 @@ import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } f
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { avatarPackVersion, stampAvatarPack, writeAvatarPackVersion } from '../../scripts/avatar-version.js';
+import { avatarPackVersion, compareAvatarPack, stampAvatarPack, writeAvatarPackVersion } from '../../scripts/avatar-version.js';
 
 const dirs: string[] = [];
 afterEach(() => {
@@ -32,6 +32,28 @@ describe('the avatar pack version', () => {
     expect(avatarPackVersion(pack(['wand', 'staff']), pack(['wand', 'staff'], 'glb2'), '1.0.0')).toBe('1.0.1');
     expect(avatarPackVersion(pack(['wand', 'staff']), pack(['wand', 'staff', 'echo-staff']), '1.0.1')).toBe('1.1.0');
     expect(avatarPackVersion(pack(['wand', 'staff']), pack(['wand']), '1.2.3')).toBe('1.3.0');
+  });
+
+  it('keeps the version when only forgeCommit values differ (track apk_skin_identical_rebuild_20261021)', () => {
+    const withBase = (dir: string, forgeCommit: string): string => {
+      const file = join(dir, 'pack.json');
+      const json = JSON.parse(readFileSync(file, 'utf8')) as Record<string, unknown>;
+      writeFileSync(file, `${JSON.stringify({ ...json, base: { file: 'base.glb', forgeCommit } }, null, 1)}\n`);
+      return dir;
+    };
+    // The 01fa8cce case: the same pieces, only the base forgeCommit of pack.json changed.
+    const published = withBase(pack(['wand', 'staff']), 'f4de18b3');
+    const rebuilt = withBase(pack(['wand', 'staff']), '318565f6');
+    expect(compareAvatarPack(published, rebuilt)).toBe('provenance');
+    expect(avatarPackVersion(published, rebuilt, '1.1.0')).toBe('1.1.0');
+    expect(compareAvatarPack(published, withBase(pack(['wand', 'staff']), 'f4de18b3'))).toBe('same');
+    // A changed value next to the forgeCommit, or a changed piece, is a change.
+    const priced = withBase(pack(['wand', 'staff']), '318565f6');
+    writeFileSync(join(priced, 'catalog.json'), json({ version: '1.0.0', items: [{ id: 'wand', price: 60 }, { id: 'staff', price: 50 }] }));
+    expect(compareAvatarPack(published, priced)).toBe('patch');
+    expect(compareAvatarPack(published, withBase(pack(['wand', 'staff'], 'glb2'), '318565f6'))).toBe('patch');
+    expect(compareAvatarPack(published, withBase(pack(['wand']), '318565f6'))).toBe('minor');
+    expect(compareAvatarPack(join(tmpdir(), 'no-such-avatar-pack'), rebuilt)).toBe('new');
   });
 
   it('keeps the version when nothing is published yet', () => {

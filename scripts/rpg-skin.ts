@@ -40,15 +40,24 @@
  * for a backdrop. A changed skin gets the next patch version and a skin with added or removed files
  * the next minor version. Run it in the clean release worktree (`scripts/apk-release.ts --skin`):
  * it writes out/<asset>/, out/packs/avatar/, and out/rpg-skin/.
+ *
+ * An identical rebuild keeps its version (track apk_skin_identical_rebuild_20261021):
+ * - a rebuilt avatar pack that differs from the published one only in `forgeCommit` values is the
+ *   same pack: the published folder and its version stay;
+ * - a stale hero portrait keeps its file without a new shot when the pack is the same and the avatar
+ *   code has no commit after its entry (a new shot differs only in render noise; `--all` shoots it);
+ * - any other stale file that comes out with the same bytes and the same table row keeps its entry.
+ * A kept entry records its new source revision in out/rpg-skin/checked.json (the `CheckedRevision`
+ * of the model packs), so the next check does not list it as stale.
  */
-import { execFileSync, spawn } from 'node:child_process';
-import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { execFileSync, spawn, spawnSync } from 'node:child_process';
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import sharp from 'sharp';
 import { AVATAR_PACK_VERSION, avatarPackPath } from '../src/apk3d/avatar/pack.js';
 import { STARTER_SETS } from '../src/apk3d/avatar/starters.js';
-import { nextVersion, sourceFiles, sourceRevision } from './apk-pack-models.js';
-import { avatarPackVersion, stampAvatarPack, writeAvatarPackVersion } from './avatar-version.js';
+import { nextVersion, packEntryFresh, readChecked, sameRevision, sourceFiles, sourceRevision, writeChecked } from './apk-pack-models.js';
+import { compareAvatarPack, stampAvatarPack, writeAvatarPackVersion } from './avatar-version.js';
 
 type View = 'front' | 'three-quarter';
 type Entry =
@@ -180,8 +189,13 @@ const AVATAR_DEST = join(AVATAR_ROOT, AVATAR_PACK_VERSION);
 const TMP = join(ROOT, 'out', 'rpg-skin');
 /** The source revision of every GLB this script built in out/ (out/<asset>/ and the avatar inputs). */
 const BUILT = join(TMP, 'built.json');
+/** The source revisions that rebuilt a file (or the avatar pack, key `AVATAR_KEY`) to the same content, relative to ROOT. */
+const CHECKED_FILE = join('out', 'rpg-skin', 'checked.json');
+const AVATAR_KEY = '@avatar-pack';
+const checked = readChecked(ROOT, CHECKED_FILE);
 const argv = process.argv.slice(2);
 const git = (args: string[]): string => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
+const gitOk = (args: string[]): boolean => spawnSync('git', args, { cwd: ROOT }).status === 0;
 const lastCommit = (files: string[]): string => (files.length ? git(['log', '-1', '--format=%h', '--', ...files]) : '') || git(['rev-parse', '--short', 'HEAD']);
 
 /** The assets a scene map places. */
@@ -217,7 +231,7 @@ const stale = Object.keys(SKIN).filter((path) => {
   if (argv.includes('--all')) return true;
   const old = current?.files[path];
   const entry = SKIN[path]!;
-  return !old || !existsSync(join(DEST, path)) || JSON.stringify(old.spec) !== JSON.stringify(entry) || old.forgeCommit !== revision(entry);
+  return !old || !existsSync(join(DEST, path)) || JSON.stringify(old.spec) !== JSON.stringify(entry) || !packEntryFresh(old.forgeCommit, revision(entry), checked[path]);
 });
 const removed = Object.keys(current?.files ?? {}).filter((p) => !SKIN[p]);
 const staleHeroes = stale.some((p) => SKIN[p]!.kind === 'hero');
@@ -225,7 +239,7 @@ const staleHeroes = stale.some((p) => SKIN[p]!.kind === 'hero');
 const avatarMissing = !existsSync(join(AVATAR_DEST, 'pack.json')) || !existsSync(join(AVATAR_DEST, 'portraits.json'));
 /** The source revision of the avatar pack: the catalog table, the base and every catalog piece, and the avatar code. */
 const avatarRevision = lastCommit(['docs/avatar-catalog.tsv', ...['avatar-base', ...CATALOG].flatMap((id) => sourceFiles(id, ROOT)), ...AVATAR_CODE]);
-const avatarBuild = staleHeroes || avatarMissing || current?.avatar?.forgeCommit !== avatarRevision;
+const avatarBuild = staleHeroes || avatarMissing || !packEntryFresh(current?.avatar?.forgeCommit, avatarRevision, checked[AVATAR_KEY]);
 console.log(`skin: ${stale.length} stale of ${Object.keys(SKIN).length}${removed.length ? `, ${removed.length} removed` : ''}${avatarBuild ? ', avatar pack to build' : ''}`);
 for (const p of stale) console.log(`  ${p}`);
 if (argv.includes('--check')) process.exit(0);
@@ -326,6 +340,23 @@ if (avatarBuild) {
   execFileSync('node', ['--import', 'tsx', 'scripts/avatar-portraits.ts'], { cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit'], env: forgeEnv });
   console.log(`built  avatar portraits             (${Math.round((performance.now() - p) / 1000)} s)`);
 }
+/** How the rebuilt pack compares with the published one; the same pack stays published as it is. */
+const packChange = avatarBuild ? compareAvatarPack(AVATAR_DEST, join(ROOT, 'out', avatarPackPath())) : undefined;
+const packKept = !!current?.avatar && (packChange === 'same' || packChange === 'provenance');
+/** The avatar code has no commit after `rev` (the source revision of a hero portrait's entry). */
+const avatarCodeSince = (rev: string): boolean => gitOk(['merge-base', '--is-ancestor', lastCommit(AVATAR_CODE), rev]);
+const packIds = new Set(['avatar-base', ...CATALOG]);
+// A stale hero portrait whose shot inputs are the same (the same pack, no avatar code commit since
+// its entry) keeps its file: a new shot of the same inputs differs only in render noise.
+const keptHeroes = new Set(
+  argv.includes('--all') || !packKept
+    ? []
+    : stale.filter((p) => {
+        const e = SKIN[p]!;
+        const old = current?.files[p];
+        return e.kind === 'hero' && !!old && existsSync(join(DEST, p)) && JSON.stringify(old.spec) === JSON.stringify(e) && heroPieces(e.hero).every((id) => packIds.has(id)) && avatarCodeSince(old.forgeCommit);
+      }),
+);
 
 // Backdrops: build every asset of the stale maps whose GLB is missing or older than its source.
 const staleBackdrops = stale.map((p) => [p, SKIN[p]!] as const).filter(([, e]) => e.kind === 'backdrop');
@@ -344,7 +375,7 @@ if (staleBackdrops.length) {
 }
 
 // Page shots (heroes and backdrops) on a dev server of this checkout.
-const staleHeroPaths = stale.filter((p) => SKIN[p]!.kind === 'hero');
+const staleHeroPaths = stale.filter((p) => SKIN[p]!.kind === 'hero' && !keptHeroes.has(p));
 const shots = new Map<string, Buffer>();
 if (staleHeroPaths.length || staleBackdrops.length) {
   const port = Number(process.env.RPG_SKIN_PORT ?? 5299);
@@ -421,36 +452,56 @@ async function silhouette(shot: Buffer, size: number, out: number): Promise<Buff
   return sharp(marked).resize(out, out).webp({ quality: 90, alphaQuality: 100, effort: 6 }).toBuffer();
 }
 
+/** The bytes of a stale skin file, from its render, sheet, shot, or source. */
+async function skinFile(path: string, entry: Entry): Promise<Buffer> {
+  if (entry.kind === 'copy') return readFileSync(join(ROOT, entry.from));
+  if (entry.kind === 'view') {
+    const src = join(ROOT, 'out', entry.asset, 'views', ...(entry.preset ? ['presets', entry.preset] : []), `${entry.view}.png`);
+    return sharp(src).resize(entry.size, entry.size).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer();
+  }
+  if (entry.kind === 'strip') {
+    const dir = stripDir(entry);
+    const meta = JSON.parse(readFileSync(join(dir, 'metrics.json'), 'utf8')) as { size: number };
+    const { width } = await sharp(join(dir, 'sheet.png')).metadata();
+    return sharp(join(dir, 'sheet.png')).extract({ left: 0, top: 0, width: width!, height: meta.size }).png({ compressionLevel: 9 }).toBuffer();
+  }
+  if (entry.kind === 'hero' && entry.silhouette) return silhouette(shots.get(path)!, entry.size, entry.silhouette);
+  if (entry.kind === 'hero') return sharp(shots.get(path)!).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer();
+  return sharp(shots.get(path)!).removeAlpha().webp({ quality: 78, effort: 6 }).toBuffer();
+}
+
 const files: Record<string, ManifestFile> = {};
+let keptFiles = 0;
 for (const [path, entry] of Object.entries(SKIN)) {
   const dest = join(DEST, path);
-  if (stale.includes(path)) {
-    mkdirSync(dirname(dest), { recursive: true });
-    if (entry.kind === 'copy') copyFileSync(join(ROOT, entry.from), dest);
-    else if (entry.kind === 'view') {
-      const src = join(ROOT, 'out', entry.asset, 'views', ...(entry.preset ? ['presets', entry.preset] : []), `${entry.view}.png`);
-      writeFileSync(dest, await sharp(src).resize(entry.size, entry.size).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer());
-    } else if (entry.kind === 'strip') {
-      const dir = stripDir(entry);
-      const meta = JSON.parse(readFileSync(join(dir, 'metrics.json'), 'utf8')) as { size: number };
-      const { width } = await sharp(join(dir, 'sheet.png')).metadata();
-      writeFileSync(dest, await sharp(join(dir, 'sheet.png')).extract({ left: 0, top: 0, width: width!, height: meta.size }).png({ compressionLevel: 9 }).toBuffer());
-    } else if (entry.kind === 'hero' && entry.silhouette) {
-      writeFileSync(dest, await silhouette(shots.get(path)!, entry.size, entry.silhouette));
-    } else if (entry.kind === 'hero') {
-      writeFileSync(dest, await sharp(shots.get(path)!).webp({ quality: 88, alphaQuality: 100, effort: 6 }).toBuffer());
-    } else {
-      writeFileSync(dest, await sharp(shots.get(path)!).removeAlpha().webp({ quality: 78, effort: 6 }).toBuffer());
-    }
+  const old = current?.files[path];
+  if (!stale.includes(path)) {
+    files[path] = old!;
+    continue;
   }
-  files[path] = { kind: entry.kind, source: sourceOf(entry), spec: entry, forgeCommit: revision(entry), byteSize: readFileSync(dest).length };
+  const rev = revision(entry);
+  const data = keptHeroes.has(path) ? undefined : await skinFile(path, entry);
+  if (old && (!data || (JSON.stringify(old.spec) === JSON.stringify(entry) && existsSync(dest) && readFileSync(dest).equals(data)))) {
+    // The old entry stays: this revision makes the same file.
+    files[path] = old;
+    if (!sameRevision(old.forgeCommit, rev)) checked[path] = { source: rev, kept: old.forgeCommit };
+    keptFiles++;
+    continue;
+  }
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, data!);
+  files[path] = { kind: entry.kind, source: sourceOf(entry), spec: entry, forgeCommit: rev, byteSize: data!.length };
 }
+if (keptFiles) console.log(`kept   ${keptFiles} stale file(s) with the same content (${keptHeroes.size} hero portrait(s) not shot again)`);
 for (const p of removed) rmSync(join(DEST, p), { force: true });
 let avatar = current?.avatar;
-if (avatarBuild) {
+if (avatarBuild && packKept) {
+  if (!sameRevision(avatar!.forgeCommit, avatarRevision)) checked[AVATAR_KEY] = { source: avatarRevision, kept: avatar!.forgeCommit };
+  console.log(`avatar pack ${AVATAR_PACK_VERSION}: the rebuild is the same pack (${packChange}), the published folder stays`);
+} else if (avatarBuild) {
   // The pack was built at the current version; a changed pack is published under the next one.
   const built = join(ROOT, 'out', avatarPackPath());
-  const version = avatarPackVersion(AVATAR_DEST, built, AVATAR_PACK_VERSION);
+  const version = packChange === 'patch' || packChange === 'minor' ? nextVersion(AVATAR_PACK_VERSION, packChange) : AVATAR_PACK_VERSION;
   const dest = join(AVATAR_ROOT, version);
   rmSync(AVATAR_ROOT, { recursive: true, force: true });
   cpSync(built, dest, { recursive: true });
@@ -469,4 +520,5 @@ const same = sameIds && ids.every((id) => JSON.stringify(current!.files[id]) ===
 const version = !current ? '1.0.0' : same ? current.version : nextVersion(current.version, sameIds ? 'patch' : 'minor');
 const manifest: Manifest = { id: 'primary-rpg-skin', version, ...(avatar ? { avatar } : {}), files: Object.fromEntries(ids.map((id) => [id, files[id]!])) };
 writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 1)}\n`);
+writeChecked(checked, ROOT, CHECKED_FILE);
 console.log(`skin   ${current?.version ?? '(new)'} -> ${version}, ${ids.length} files, ${(Object.values(files).reduce((s, f) => s + f.byteSize, 0) / 1024 / 1024).toFixed(2)} MB`);

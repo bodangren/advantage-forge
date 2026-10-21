@@ -17,6 +17,7 @@ import {
   packChanges3d,
   packsOf,
   parseTree,
+  skinChange,
   spriteChanges,
   trackIds,
   type Handoff,
@@ -126,6 +127,66 @@ describe('handoff rules', () => {
     expect(text).toContain('Not synced (Forge games that the monorepo package does not have): monster-encounters.');
     expect(text).toContain('`packs/mounts/1.0.2/pack.json`');
     expect(text).toContain('- 2D pack: no change.');
+  });
+});
+
+describe('the RPG skin and the avatar pack in the handoff (track apk_skin_identical_rebuild_20261021)', () => {
+  const skinJson = (version: string, files: string[]): string => JSON.stringify({ id: 'primary-rpg-skin', version, files: Object.fromEntries(files.map((f) => [f, {}])) });
+  const app = { skin: skinJson('1.2.0', ['kit/heroes/knight.webp', 'kit/old.webp']), rpg: tree({ 'skin.json': 's1', 'kit/heroes/knight.webp': 'k1', 'kit/old.webp': 'o1' }), avatar: tree({ '1.1.0/pack.json': 'p1', '1.1.0/pieces/wand.glb': 'w1' }) };
+  const base: Handoff = {
+    forge: '5091f982',
+    date: '2026-10-21',
+    branch: 'apk3d-games-port',
+    target: 'primary-parity-integration',
+    last: { mono: '0c220e663', forge: 'afc8b890' },
+    forgeCommitOption: false,
+    commits: [],
+    kitFiles: [],
+    gameFiles: new Map(),
+    forgeOnly: [],
+    testFiles: 0,
+    packs: [],
+    sprites: { from: '1.2.0', to: '1.2.0', models: [] },
+    games: new Map(),
+    smoke: [],
+    packUrls: [],
+    tracks: [],
+  };
+
+  it('sees no change when the app has the Forge files', () => {
+    const s = skinChange(app, { skin: skinJson('1.2.0', ['kit/heroes/knight.webp', 'kit/old.webp']), rpg: app.rpg, avatar: app.avatar, kit: '1.1.0' });
+    expect(s).toMatchObject({ app: '1.2.0', forge: '1.2.0', write: 0, remove: 0, avatarApp: ['1.1.0'], avatarForge: ['1.1.0'], avatarWrite: 0 });
+    const text = handoffText({ ...base, skin: s });
+    expect(text).toContain('- RPG skin and avatar pack: no change (app skin 1.2.0, avatar pack 1.1.0 on `primary-parity-integration`).');
+    expect(text).not.toContain('--skin <checkout>');
+    expect(text).not.toContain('does not have it');
+  });
+
+  it('counts the files to write and remove, adds the skin sync step, and warns about a missing avatar pack version', () => {
+    // The 01fa8cce case: a new avatar pack version and a kit that asks for it.
+    const s = skinChange(app, {
+      skin: skinJson('1.2.1', ['kit/heroes/knight.webp']),
+      rpg: tree({ 'skin.json': 's2', 'kit/heroes/knight.webp': 'k2' }),
+      avatar: tree({ '1.1.1/pack.json': 'p2', '1.1.1/pieces/wand.glb': 'w1' }),
+      kit: '1.1.1',
+    });
+    expect(s).toMatchObject({ forge: '1.2.1', write: 2, remove: 1, avatarForge: ['1.1.1'], avatarWrite: 2, kitAvatar: '1.1.1' });
+    const text = handoffText({ ...base, skin: s });
+    expect(text).toContain('- RPG skin: app 1.2.0 -> Forge 1.2.1. Files to write: 2. Files to remove: 1.');
+    expect(text).toContain('- Avatar pack: app 1.1.0 -> Forge 1.1.1. Files to write: 2.');
+    expect(text).toContain('**The kit asks for avatar pack 1.1.1, and the app on `primary-parity-integration` does not have it.**');
+    expect(text).toContain('4. The skin sync, from the Forge root into a checkout of `primary-parity-integration`');
+    expect(text).toContain('6. Rebuild the app');
+  });
+
+  it('does not count a JSON file that has the same content in another format', () => {
+    const forge = { skin: skinJson('1.2.0', ['kit/heroes/knight.webp', 'kit/old.webp']), rpg: app.rpg, avatar: tree({ '1.1.0/pack.json': 'p9', '1.1.0/pieces/wand.glb': 'w1' }), kit: '1.1.0' };
+    expect(skinChange(app, forge).avatarWrite).toBe(1);
+    expect(skinChange(app, forge, (path, a, b) => path === '1.1.0/pack.json' && a === 'p1' && b === 'p9').avatarWrite).toBe(0);
+  });
+
+  it('says when the target branch is missing', () => {
+    expect(handoffText(base)).toContain('- RPG skin and avatar pack: not compared (no branch `primary-parity-integration` in the monorepo).');
   });
 });
 
