@@ -21,5 +21,10 @@ finding and the rule.
   default). A recording opens the game with `window.__apk3d.go({ name: 'play', game, story })`
   after the reader, or with the selector clicks of `scripts/apk3d-shot.ts`. Open: the bot play
   check. The system stopped it because the machine had low memory (0.8 GB available).
-- [ ] Task: Answer the advantage-pr session (wave 3 method), run `./measure/doctor.sh`, and close
-  the track.
+- [x] Task: Answer the advantage-pr session (wave 3 method). Sent 2026-10-21: the game page server
+  is `vite.demo.config.ts` (not `pnpm dev`), Forge 7f7a44ab or later, the reader step and `go()`,
+  `&avatar=<class>` (no hero stand-in), `auto()` in 22 games, the QC bot modules of the six other
+  games (not checked in a browser), Monster Encounters has no card (not in the app), headed Chrome
+  for 3D video, and the CC-BY sounds.
+- [ ] Task: Run the bot play check when memory is free, run `./measure/doctor.sh`, and close the
+  track.
