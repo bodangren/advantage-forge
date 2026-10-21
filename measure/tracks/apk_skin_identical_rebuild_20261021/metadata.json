@@ -1,19 +1,21 @@
 {
   "track_id": "apk_skin_identical_rebuild_20261021",
   "type": "bug",
-  "status": "in_progress",
+  "status": "completed",
   "created_at": "2026-10-21T03:00:00Z",
-  "updated_at": "2026-10-21T03:00:00Z",
+  "updated_at": "2026-10-21T10:30:00Z",
   "description": "Avatar pack and RPG skin: an identical rebuild keeps its version",
   "estimated_tasks": 7,
-  "actual_tasks": 1,
+  "actual_tasks": 7,
   "deviation_notes": "Created 2026-10-21 after the no-op skin release 01fa8cce (reverted in 5091f982, owner decision).",
   "workstream": "games",
   "retrospective": false,
   "evidence": [
     "scripts/rpg-skin.ts",
     "scripts/avatar-version.ts",
-    "scripts/monorepo-handoff.ts"
+    "scripts/monorepo-handoff.ts",
+    "tests/apk3d/avatar-version.test.ts",
+    "tests/apk3d/monorepo-handoff.test.ts"
   ],
   "dependencies": [
     "apk_monorepo_sync_workflow_20261020"

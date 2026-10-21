@@ -1,6 +1,6 @@
 # Avatar pack and RPG skin: an identical rebuild keeps its version
 
-Status: in progress. The plan records execution state. The [specification](./spec.md) records the
+Status: completed (2026-10-21). The plan records execution state. The [specification](./spec.md) records the
 finding, the decision, and the rules.
 
 ## Phase 1: Revert
@@ -36,5 +36,13 @@ finding, the decision, and the rules.
 
 ## Phase 3: Verification
 
-- [ ] Task: A release run with `--skin` changes no output file, and the skin check lists 0 stale files.
-- [ ] Task: Run `./measure/doctor.sh` and close the track.
+- [x] Task: A release run with `--skin` changes no output file, and the skin check lists 0 stale files.
+  `RPG_SKIN_JOBS=1 apk-release.ts --skin` at `36d7f772` (it waited for the heavy lock of the PR
+  recordings): the avatar pack was assembled again (22 s) with its portrait layers (664 s) and
+  compared as "provenance", so `avatar-pack/1.1.0/` stayed; the 16 hero portraits were kept without
+  a shot; the two clearing backdrops were shot again and had the same bytes; "kept 18 stale file(s)
+  with the same content", "skin 1.2.0 -> 1.2.0", "0 changed output files". The next
+  `apk-release.ts --check`: "skin: 0 stale of 244", no avatar pack to build.
+  `out/rpg-skin/checked.json` in the release worktree has 19 entries (18 files and `@avatar-pack`).
+- [x] Task: Run `./measure/doctor.sh` and close the track. Closed 2026-10-21. The monorepo receives
+  nothing from this track: the avatar pack stays 1.1.0 and the skin 1.2.0.
