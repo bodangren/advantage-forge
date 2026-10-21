@@ -132,6 +132,9 @@ This registry gives each historical, current, and planned work item one Measure 
 - [ ] **Track: Sound in the games: library takes for the game events**
   *Link: [./tracks/audio_game_integration_20261014/](./tracks/audio_game_integration_20261014/)*
 
+- [~] **Track: Chibi Sprouts, release 1 art**
+  *Link: [./tracks/asset_chibi_sprouts_r1_20261022/](./tracks/asset_chibi_sprouts_r1_20261022/)*
+
 ## Games
 
 - [x] **Track: Player avatar system: base, equipment fit, pack, composer**
