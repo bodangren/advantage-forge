@@ -13,3 +13,5 @@ b1r3	base	builder	sonnet-high	a86dce2e1141ba014	sprout-base	done: leg 1.05, tors
 r5	base	reviewer	opus	a15847d8a0202f101	sprout-base	7.5 accepted; small: trouser colour near the shirt, stiff upper body in walk	-
 b2r3	pip	builder	sonnet-high	a5c254cc5d7f9e396	sprout-pip	done: muzzle 0.62, head 50%, eyes flat, fluffy tail; 34,312 tris	bib not viewed after the last edit
 r6	pip	reviewer	opus	a68e282a7bf18a21e	sprout-pip	7.0 third review, stop rule; follow-up: crown spikes, ear colour, bib, paws	reviewers moved between ear issues (wings, paddles, colour) across three reviews
+b3	children	builder	sonnet-high	aaf40cb9f5df467e7	nan, pat, may	done: 22.7k/25.3k/26.3k tris, check ok; self 6.5 each	may skirt reduction warning fixed with a second all; no walk strips for pat and may
+r7	children	reviewer	opus	ac51c81646c27127b	nan, pat, may	nan 7.5 accepted; pat 7.0 (bear low, one hand); may 7.0 (lumpy ponytail, no pleats)	-

@@ -11863,5 +11863,42 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-22",
     "reviewer": "opus r6 (third review; r2 6.5, r4 7.0); follow-up list"
+  },
+  "sprout-nan": {
+    "overall": 7.5,
+    "scores": [
+      4,
+      4,
+      4,
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      4.5,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "A chibi girl on the age-5 base with two hair bunches, an orange star T-shirt, red shorts, and white shoes. All four cast-sheet items are present in the correct colors, and only the shoes are too plain.",
+    "strengths": [
+      "The two hair bunches with red ties give a clear cutout from the front and the back.",
+      "The orange T-shirt has one white star at the chest, as the cast sheet shows.",
+      "The red shorts and the white shoes have the cast-sheet colors.",
+      "The T-shirt and the shorts follow the body. No part goes through another part.",
+      "The sprites keep the bunches and the orange T-shirt in all eight directions."
+    ],
+    "issues": [
+      "The white sneakers are plain round shapes. Add a sole line and a lace detail so that they read as sneakers.",
+      "The hair is a smooth cap with no strand grooves. Add two or three soft grooves to the fringe and the bunches.",
+      "The orange T-shirt and the red shorts are close in value. Make the shorts a little darker to separate them.",
+      "The walk is readable but stiff, with short steps and little body bounce."
+    ],
+    "next": "Give the white shoes a sneaker sole and a lace detail.",
+    "notes": "Not rated: the shared base face has heavy brown eyebrows that look older than age 5. Nan has no painting. Pat's painting served as a style guide only.",
+    "critical": false,
+    "criticalReason": "",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-22",
+    "reviewer": "opus r7"
   }
 }

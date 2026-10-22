@@ -109,7 +109,8 @@ for (const file of walk(dir)) {
         if (drop > 0.25) dark++;
       }
     // A halo darkens the whole outline; a few pixels beside a real dark detail are not a halo.
-    if (dark > 0.01 * edge) problems.push(`dark halo on ${dark} of ${edge} edge pixels (worst drop ${(worst * 100).toFixed(0)} %)`);
+    // A halo covers most edge pixels; dark detail at the outline (ear undersides, a mouth) covers a few percent.
+    if (dark > 0.1 * edge) problems.push(`dark halo on ${dark} of ${edge} edge pixels (worst drop ${(worst * 100).toFixed(0)} %)`);
     const exempt = /hop|jump|stretch/.test(file.split('/').pop());
     if (!exempt && foot && Math.abs(low - foot.row) > 4) problems.push(`lowest opaque row ${low}, foot row ${foot.row}`);
     note = `${w}x${h} soft ${soft} edge ${edge} worstDrop ${(worst * 100).toFixed(0)}% rows ${high}..${low} cols ${left}..${right}`;
