@@ -86,6 +86,12 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   85 s song at 24 fps, fixes F5 and F7; (D) in-scene stills per line, 2 to 3 days, 1 to 2 s per
   still, fixes F7 only. Engine: three.js in headless Chromium, software GL, one Chrome at 0.8 to
   1.5 GB RSS. Weeks 2 to 7 are on hold until S27 and S26 (cast size: 13 or the cap of 8).
+  Storytime recommended C. Input format for C (sent 2026-10-23): Workbooks' spec.json unchanged
+  (`../Workbooks/video/storytime-song/public/l2/w01/spec.json`: lines with start, end, actors,
+  gesture text, word times) plus a stage.json from Storytime (marks in rug metres with yaw,
+  camera keys in seconds with az/el/dist/tx/tz, optional moves and a portrait camera list).
+  Output: song.mp4 1920x1080 at 24 fps without sound, song-phone.mp4 on request, optional JPEG
+  frames. Workbooks muxes the audio and overlays lyrics and the inset.
   Follow-ups after F5: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
   128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
 
