@@ -32,13 +32,268 @@ const C = {
   sole: '#4a2c1c',
 };
 
-const HEAD_Y = 0.675;
-const HEAD = [0.205, 0.2, 0.19] as const;
-const EYE = [0.105, 0.628] as const; // x (each side), y
 const pair = (s: sdf.Shape) => s.mirror('x');
 
 
 type V3 = readonly [number, number, number];
+type V2 = readonly [number, number];
+
+/**
+ * Every proportion number of the humanoid kind (meters, character frame, left side x > 0), so that a
+ * kind can build the same figure at another age. `HERO` holds the numbers of the Chibi Quest hero
+ * and the avatar base; the kind builds from the table, and a literal in the build code follows
+ * from a table value. `AGE5` is the Chibi Sprouts body: the same head and face, a shorter torso,
+ * shorter arms and legs.
+ */
+export interface HumanoidProportions {
+  /** The head center and the skull ellipsoid radii (the hair, the face, and the cap line follow). */
+  readonly headY: number;
+  readonly head: V3;
+  /** The eye: x (each side) and y. */
+  readonly eye: V2;
+  /** Face features: positions on the head (the face paint stencils are written around `eye`). */
+  readonly face: {
+    readonly cheekAt: V3;
+    readonly cheekR: number;
+    readonly chinSize: V3;
+    readonly chinAt: V3;
+    readonly noseY: number;
+    readonly earAt: V3;
+    readonly browY: number;
+    readonly smileY: number;
+    readonly blushY: number;
+  };
+  readonly neck: { readonly y0: number; readonly y1: number; readonly r: number };
+  /** Bone joints of the spine, the neck, the head, and the cloak. */
+  readonly bones: { readonly hips: V3; readonly spine: V3; readonly chest: V3; readonly neck: V3; readonly head: V3; readonly cloak: V3 };
+  readonly shoulder: V3;
+  readonly elbow: V3;
+  readonly wrist: V3;
+  readonly grip: V3;
+  readonly hip: V3;
+  readonly knee: V3;
+  readonly ankle: V3;
+  /** Meters of the parent's weight that a knee takes above its joint. */
+  readonly split: number;
+  /** Limb radii: the upper arm, the forearm, the thigh, and the shin (start and end). */
+  readonly limb: { readonly upper: V2; readonly fore: V2; readonly thigh: number; readonly shin: number };
+  readonly fist: {
+    readonly palmSize: V3;
+    readonly palmAt: V3;
+    readonly rollA: V3;
+    readonly rollB: V3;
+    readonly rollR: number;
+    readonly thumbA: V3;
+    readonly thumbB: V3;
+    readonly thumbR: V2;
+  };
+  /** The torso: the revolve profile (radius, height) and the three skin-weight bands (y0, y1). */
+  readonly torso: { readonly profile: readonly V2[]; readonly hips: V2; readonly spine: V2; readonly chest: V2 };
+  readonly foot: { readonly size: V3; readonly y: number; readonly z: number };
+  readonly shirt: { readonly sleeveStart: V3; readonly sleeveEnd: V3; readonly sleeveR: V2; readonly collarY: number; readonly hemY: number; readonly belt: V2 };
+  readonly pants: { readonly thighR: number; readonly shinR: V2; readonly cuff: V3; readonly hipsSize: V3; readonly hipsY: number };
+  readonly shoe: { readonly cylinder: readonly [number, number, number]; readonly cylinderY: number; readonly toeSize: V3; readonly toeAt: V3; readonly soleTop: number; readonly scale: number };
+  readonly clips: {
+    /** The hips-to-ground leg length of the hit clip. */
+    readonly leg: number;
+    /** The factor of every step, lift, bob, and hop in meters. */
+    readonly stride: number;
+    /** The factor of the knee lift and the bob in meters (default: `stride`). */
+    readonly lift?: number;
+    /** Degrees of extra forearm swing in walk and run (default 0). */
+    readonly foreSwing?: number;
+    readonly heelZ: number;
+    readonly toeZ: number;
+    /** Maps an arm target (right-arm side x < 0, chest frame) to this body's reach. */
+    readonly reach: (p: V3) => V3;
+  };
+}
+
+/** The Chibi Quest hero (the rogue's numbers): the default. */
+export const HERO: HumanoidProportions = {
+  headY: 0.675,
+  head: [0.205, 0.2, 0.19],
+  eye: [0.105, 0.628],
+  face: {
+    cheekAt: [0.095, 0.575, 0.072],
+    cheekR: 0.1,
+    chinSize: [0.11, 0.055, 0.085],
+    chinAt: [0, 0.53, 0.058],
+    noseY: 0.566,
+    earAt: [0.2, 0.61, -0.01],
+    browY: 0.722,
+    smileY: 0.53,
+    blushY: 0.56,
+  },
+  neck: { y0: 0.42, y1: 0.52, r: 0.05 },
+  bones: { hips: [0, 0.2, 0], spine: [0, 0.26, 0], chest: [0, 0.33, 0], neck: [0, 0.43, -0.01], head: [0, 0.48, -0.01], cloak: [0, 0.41, -0.13] },
+  shoulder: [0.13, 0.385, 0],
+  elbow: [0.18, 0.332, 0.012],
+  wrist: [0.205, 0.238, 0.03],
+  grip: [0.232, 0.172, 0.022],
+  hip: [0.068, 0.195, 0],
+  knee: [0.083, 0.1325, 0],
+  ankle: [0.098, 0.07, 0],
+  split: 0.015,
+  limb: { upper: [0.04, 0.036], fore: [0.036, 0.032], thigh: 0.04, shin: 0.034 },
+  fist: {
+    palmSize: [0.038, 0.043, 0.044],
+    palmAt: [0.212, 0.2, 0.034],
+    rollA: [0.196, 0.18, 0.06],
+    rollB: [0.2, 0.2, 0.072],
+    rollR: 0.017,
+    thumbA: [0.225, 0.215, 0.055],
+    thumbB: [0.206, 0.205, 0.078],
+    thumbR: [0.016, 0.013],
+  },
+  torso: {
+    profile: [
+      [0, 0.47],
+      [0.07, 0.465],
+      [0.105, 0.44],
+      [0.125, 0.4],
+      [0.13, 0.34],
+      [0.124, 0.29],
+      [0.13, 0.25],
+      [0.138, 0.2],
+      [0.14, 0.165],
+      [0.132, 0.152],
+      [0, 0.152],
+    ],
+    hips: [0.1, 0.235],
+    spine: [0.215, 0.33],
+    chest: [0.31, 0.5],
+  },
+  foot: { size: [0.034, 0.03, 0.06], y: 0.04, z: 0.035 },
+  shirt: { sleeveStart: [0.11, 0.405, 0], sleeveEnd: [0.172, 0.348, 0.01], sleeveR: [0.047, 0.043], collarY: 0.452, hemY: 0.168, belt: [0.238, 0.264] },
+  pants: { thighR: 0.05, shinR: [0.047, 0.043], cuff: [0.098, 0.085, 0.002], hipsSize: [0.118, 0.052, 0.088], hipsY: 0.2 },
+  shoe: { cylinder: [0.05, 0.07, 0.018], cylinderY: 0.06, toeSize: [0.056, 0.05, 0.098], toeAt: [0, 0.048, 0.045], soleTop: 0.016, scale: 1 },
+  clips: { leg: 0.19, stride: 1, heelZ: -0.045, toeZ: 0.11, reach: (p) => p },
+};
+
+/**
+ * The age-5 factors: leg length, torso scale (an upright copy of the hero torso), arm length, limb
+ * thickness, the shoe size (a share of the leg factor), the forearm turn in degrees (inward about Z,
+ * forward about X), the lift and bob factor of the clips, and the extra forearm swing in degrees.
+ */
+const FIVE = { leg: 1.05, torso: 0.84, arm: 0.8, thick: 0.92, shoe: 0.72, turn: [-8, -10], lift: 1, foreSwing: 8 } as const;
+
+function scaled(
+  h: HumanoidProportions,
+  f: { leg: number; torso: number; arm: number; thick: number; shoe: number; turn: readonly [number, number]; lift: number; foreSwing: number },
+): HumanoidProportions {
+  const [bottom, top] = [h.torso.profile.at(-1)![1], h.torso.profile[0]![1]];
+  /** Leg-zone height, and torso-zone height (continuous at the torso bottom). */
+  const L = (y: number) => y * f.leg;
+  const Tt = (y: number) => L(bottom) + (y - bottom) * f.torso;
+  const dy = Tt(top) - top; // the head moves down with the neck
+  const D = (y: number) => y + dy;
+  const t3 = (p: V3): V3 => [p[0] * f.torso, Tt(p[1]), p[2] * f.torso];
+  const S: V3 = [h.shoulder[0] * f.torso, Tt(h.shoulder[1]), h.shoulder[2]];
+  /** An arm point: scaled about the shoulder. */
+  const A = (p: V3): V3 => [S[0] + (p[0] - h.shoulder[0]) * f.arm, S[1] + (p[1] - h.shoulder[1]) * f.arm, S[2] + (p[2] - h.shoulder[2]) * f.arm];
+  /** The forearm turn: the hand-side points rotate about the scaled elbow (a deeper rest bend). */
+  const E = A(h.elbow);
+  const [tz, tx] = [f.turn[0] * (Math.PI / 180), f.turn[1] * (Math.PI / 180)];
+  const F = (p: V3): V3 => {
+    const q = A(p);
+    const [x, y, z] = [q[0] - E[0], q[1] - E[1], q[2] - E[2]];
+    const [x1, y1] = [x * Math.cos(tz) - y * Math.sin(tz), x * Math.sin(tz) + y * Math.cos(tz)];
+    return [E[0] + x1, E[1] + y1 * Math.cos(tx) - z * Math.sin(tx), E[2] + y1 * Math.sin(tx) + z * Math.cos(tx)];
+  };
+  const a3 = (v: V3, k: number): V3 => [v[0] * k, v[1] * k, v[2] * k];
+  const lg3 = (p: V3): V3 => [p[0] * f.torso, L(p[1]), p[2] * f.leg];
+  const r = f.thick;
+  const ar = f.arm * f.thick;
+  const fi = h.fist;
+  return {
+    headY: D(h.headY),
+    head: h.head,
+    eye: [h.eye[0], D(h.eye[1])],
+    face: {
+      cheekAt: [h.face.cheekAt[0], D(h.face.cheekAt[1]), h.face.cheekAt[2]],
+      cheekR: h.face.cheekR,
+      chinSize: h.face.chinSize,
+      chinAt: [h.face.chinAt[0], D(h.face.chinAt[1]), h.face.chinAt[2]],
+      noseY: D(h.face.noseY),
+      earAt: [h.face.earAt[0], D(h.face.earAt[1]), h.face.earAt[2]],
+      browY: D(h.face.browY),
+      smileY: D(h.face.smileY),
+      blushY: D(h.face.blushY),
+    },
+    neck: { y0: Tt(h.neck.y0), y1: D(h.neck.y1), r: h.neck.r },
+    bones: {
+      hips: t3(h.bones.hips),
+      spine: t3(h.bones.spine),
+      chest: t3(h.bones.chest),
+      neck: t3(h.bones.neck),
+      head: [h.bones.head[0], D(h.bones.head[1]), h.bones.head[2]],
+      cloak: t3(h.bones.cloak),
+    },
+    shoulder: S,
+    elbow: E,
+    wrist: F(h.wrist),
+    grip: F(h.grip),
+    hip: lg3(h.hip),
+    knee: lg3(h.knee),
+    ankle: lg3(h.ankle),
+    split: h.split * f.leg,
+    limb: {
+      upper: [h.limb.upper[0] * ar, h.limb.upper[1] * ar],
+      fore: [h.limb.fore[0] * ar, h.limb.fore[1] * ar],
+      thigh: h.limb.thigh * r,
+      shin: h.limb.shin * r,
+    },
+    fist: {
+      palmSize: a3(fi.palmSize, f.arm),
+      palmAt: F(fi.palmAt),
+      rollA: F(fi.rollA),
+      rollB: F(fi.rollB),
+      rollR: fi.rollR * f.arm,
+      thumbA: F(fi.thumbA),
+      thumbB: F(fi.thumbB),
+      thumbR: [fi.thumbR[0] * f.arm, fi.thumbR[1] * f.arm],
+    },
+    torso: {
+      profile: h.torso.profile.map(([x, y]): V2 => [x * f.torso, Tt(y)]),
+      hips: [Tt(h.torso.hips[0]), Tt(h.torso.hips[1])],
+      spine: [Tt(h.torso.spine[0]), Tt(h.torso.spine[1])],
+      chest: [Tt(h.torso.chest[0]), Tt(h.torso.chest[1])],
+    },
+    foot: { size: a3(h.foot.size, f.leg * f.shoe * 1.15), y: L(h.foot.y), z: h.foot.z * f.leg * f.shoe * 1.15 },
+    shirt: {
+      sleeveStart: t3(h.shirt.sleeveStart),
+      sleeveEnd: A(h.shirt.sleeveEnd),
+      sleeveR: [h.shirt.sleeveR[0] * ar, h.shirt.sleeveR[1] * ar],
+      collarY: Tt(h.shirt.collarY),
+      hemY: Tt(h.shirt.hemY),
+      belt: [Tt(h.shirt.belt[0]), Tt(h.shirt.belt[0]) + (h.shirt.belt[1] - h.shirt.belt[0])],
+    },
+    pants: {
+      thighR: h.pants.thighR * r,
+      shinR: [h.pants.shinR[0] * r, h.pants.shinR[1] * r],
+      cuff: lg3(h.pants.cuff),
+      hipsSize: [h.pants.hipsSize[0] * f.torso, h.pants.hipsSize[1] * f.torso, h.pants.hipsSize[2] * f.torso],
+      hipsY: Tt(h.pants.hipsY),
+    },
+    shoe: { ...h.shoe, scale: f.leg * f.shoe },
+    clips: {
+      leg: h.clips.leg * f.leg,
+      stride: f.leg,
+      lift: f.lift,
+      foreSwing: f.foreSwing,
+      heelZ: h.clips.heelZ * f.leg,
+      toeZ: h.clips.toeZ * f.leg,
+      reach: (p) => {
+        const q = A([-p[0], p[1], p[2]]);
+        return [-q[0], q[1], q[2]];
+      },
+    },
+  };
+}
+
+/** The Chibi Sprouts age-5 body: the same head and face on a shorter torso, shorter arms, and shorter legs. */
+export const AGE5: HumanoidProportions = scaled(HERO, FIVE);
 
 /** A humanoid kind: the slots and the looks. */
 export interface HumanoidKind {
@@ -71,6 +326,8 @@ export interface HumanoidKind {
   readonly pose?: { readonly L?: ArmPose; readonly R?: ArmPose };
   /** False: no winged lashes at the outer eye corners (for older or boyish faces). Default true. */
   readonly lashes?: boolean;
+  /** The body proportions (default `HERO`, the Chibi Quest hero; `AGE5` is the Chibi Sprouts child). */
+  readonly proportions?: HumanoidProportions;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -136,6 +393,10 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
     ...(kind.presets ? { presets: kind.presets } : {}),
 
     build(k) {
+      const P = kind.proportions ?? HERO;
+      const HEAD_Y = P.headY;
+      const HEAD = P.head;
+      const EYE = P.eye;
       // The slot colors: shades of a slot follow it when a game recolors the slot (as in the rogue).
       const T = {
         iris: k.tint('eyes'),
@@ -149,11 +410,11 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       };
 
       // ------------------------------------------------------------------ skeleton (the rogue's)
-      const SHOULDER = [0.13, 0.385, 0] as const;
-      const ELBOW0: V3 = [0.18, 0.332, 0.012];
-      const WRIST0: V3 = [0.205, 0.238, 0.03];
+      const SHOULDER = P.shoulder;
+      const ELBOW0: V3 = P.elbow;
+      const WRIST0: V3 = P.wrist;
       // The grip center in each fist: the anchor of the mainhand (knife.R) and offhand (knife.L) slots.
-      const GRIP0: V3 = [0.232, 0.172, 0.022];
+      const GRIP0: V3 = P.grip;
       const deg = 180 / Math.PI;
       // A held pose turns the hand by the rotation that takes the hanging forearm to the posed one.
       const armOf = (pose: ArmPose | undefined) => {
@@ -186,17 +447,17 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const oneSided = !kind.hold && kind.pose !== undefined;
       const perArm = (build: (j: ArmJoints) => sdf.Shape) =>
         oneSided ? sdf.union(build(jointsL), build(jointsR).mirror('x').intersect(sdf.halfSpace([1, 0, 0], 0))) : pair(build(jointsL));
-      const HIP = [0.068, 0.195, 0] as const;
-      const ANKLE = [0.098, 0.07, 0] as const;
-      const KNEE = [0.083, 0.1325, 0] as const; // the knee: splits the leg (shin.L takes the weight below it)
+      const HIP = P.hip;
+      const ANKLE = P.ankle;
+      const KNEE = P.knee; // the knee: splits the leg (shin.L takes the weight below it)
       const mx = (p: readonly [number, number, number]) => [-p[0], p[1], p[2]] as const;
       k.skeleton({
-        hips: { at: [0, 0.2, 0] },
-        spine: { parent: 'hips', at: [0, 0.26, 0] },
-        chest: { parent: 'spine', at: [0, 0.33, 0] },
-        neck: { parent: 'chest', at: [0, 0.43, -0.01] },
-        head: { parent: 'neck', at: [0, 0.48, -0.01] },
-        cloak: { parent: 'chest', at: [0, 0.41, -0.13] },
+        hips: { at: P.bones.hips },
+        spine: { parent: 'hips', at: P.bones.spine },
+        chest: { parent: 'spine', at: P.bones.chest },
+        neck: { parent: 'chest', at: P.bones.neck },
+        head: { parent: 'neck', at: P.bones.head },
+        cloak: { parent: 'chest', at: P.bones.cloak },
         'upperarm.L': { parent: 'chest', at: SHOULDER },
         'forearm.L': { parent: 'upperarm.L', at: ELBOW },
         'hand.L': { parent: 'forearm.L', at: WRIST },
@@ -206,10 +467,10 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         'knife.L': { parent: 'hand.L', at: GRIP },
         'knife.R': { parent: 'hand.R', at: mx(jointsR.GRIP) },
         'leg.L': { parent: 'hips', at: HIP },
-        'shin.L': { parent: 'leg.L', at: KNEE, split: 0.015 },
+        'shin.L': { parent: 'leg.L', at: KNEE, split: P.split },
         'foot.L': { parent: 'shin.L', at: ANKLE },
         'leg.R': { parent: 'hips', at: mx(HIP) },
-        'shin.R': { parent: 'leg.R', at: mx(KNEE), split: 0.015 },
+        'shin.R': { parent: 'leg.R', at: mx(KNEE), split: P.split },
         'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
       });
 
@@ -218,36 +479,36 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         .smoothUnion(
           0.06,
           sdf.ellipsoid(HEAD).at(0, HEAD_Y, 0),
-          pair(sdf.sphere(0.1).at(0.095, 0.575, 0.072)), // round cheeks
-          sdf.ellipsoid([0.11, 0.055, 0.085]).at(0, 0.53, 0.058), // soft chin
+          pair(sdf.sphere(P.face.cheekR).at(...P.face.cheekAt)), // round cheeks
+          sdf.ellipsoid(P.face.chinSize).at(...P.face.chinAt), // soft chin
         )
         .bone('head');
       const faceZ = (x: number, y: number) => sdf.raycast(head, [x, y, 1], [0, 0, -1])![2];
-      const nose = sdf.ellipsoid([0.02, 0.016, 0.015]).at(0, 0.566, faceZ(0, 0.566) - 0.004).bone('head');
+      const nose = sdf.ellipsoid([0.02, 0.016, 0.015]).at(0, P.face.noseY, faceZ(0, P.face.noseY) - 0.004).bone('head');
       const ears = pair(
         sdf
           .ellipsoid([0.026, 0.044, 0.032])
           .subtract(sdf.sphere(0.017).at(0.016, 0, 0.006))
           .rotateY(-12)
-          .at(0.2, 0.61, -0.01)
+          .at(...P.face.earAt)
           .bone('head'),
       );
-      const neck = sdf.capsule([0, 0.42, -0.01], [0, 0.52, -0.01], 0.05).bone('neck');
+      const neck = sdf.capsule([0, P.neck.y0, -0.01], [0, P.neck.y1, -0.01], P.neck.r).bone('neck');
 
       // Arms: the upper arm under the short sleeve, the bare forearm, and a closed fist that holds a grip.
       const armShape = (j: typeof jointsL) => {
         const arm = sdf.smoothUnion(
           0.02,
-          sdf.cone(SHOULDER, j.ELBOW, 0.04, 0.036).bone('upperarm.L'),
-          sdf.cone(j.ELBOW, j.WRIST, 0.036, 0.032).bone('forearm.L'),
+          sdf.cone(SHOULDER, j.ELBOW, ...P.limb.upper).bone('upperarm.L'),
+          sdf.cone(j.ELBOW, j.WRIST, ...P.limb.fore).bone('forearm.L'),
         );
         const fist = j
           .toHand(
             sdf.smoothUnion(
               0.018,
-              sdf.ellipsoid([0.038, 0.043, 0.044]).at(0.212, 0.2, 0.034), // palm and closed fingers
-              sdf.capsule([0.196, 0.18, 0.06], [0.2, 0.2, 0.072], 0.017), // finger roll at the front
-              sdf.cone([0.225, 0.215, 0.055], [0.206, 0.205, 0.078], 0.016, 0.013), // thumb over the fingers
+              sdf.ellipsoid(P.fist.palmSize).at(...P.fist.palmAt), // palm and closed fingers
+              sdf.capsule(P.fist.rollA, P.fist.rollB, P.fist.rollR), // finger roll at the front
+              sdf.cone(P.fist.thumbA, P.fist.thumbB, ...P.fist.thumbR), // thumb over the fingers
             ),
           )
           .bone('hand.L');
@@ -260,34 +521,22 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const torso = sdf
         .revolve(
           profile.polygon(
-            [
-              [0, 0.47],
-              [0.07, 0.465],
-              [0.105, 0.44],
-              [0.125, 0.4],
-              [0.13, 0.34],
-              [0.124, 0.29],
-              [0.13, 0.25],
-              [0.138, 0.2],
-              [0.14, 0.165],
-              [0.132, 0.152],
-              [0, 0.152],
-            ],
+            P.torso.profile.map(([x, y]): [number, number] => [x, y]),
             { smooth: true, samples: 8 },
           ),
         )
         .scale([1, 1, 0.78]);
       const band = (y0: number, y1: number) => sdf.box([0.6, y1 - y0, 0.6]).at(0, (y0 + y1) / 2, 0);
       const weighted = (s: sdf.Shape) =>
-        sdf.union(s, s.intersect(band(0.1, 0.235)).bone('hips'), s.intersect(band(0.215, 0.33)).bone('spine'), s.intersect(band(0.31, 0.5)).bone('chest'));
+        sdf.union(s, s.intersect(band(...P.torso.hips)).bone('hips'), s.intersect(band(...P.torso.spine)).bone('spine'), s.intersect(band(...P.torso.chest)).bone('chest'));
       const bodySkin = weighted(torso.round(-0.008));
 
       // Legs: thigh and shin inside the trousers, a foot inside each shoe.
       const leg = sdf.smoothUnion(
         0.015,
-        sdf.capsule(HIP, KNEE, 0.04).bone('leg.L'),
-        sdf.capsule(KNEE, ANKLE, 0.034).bone('shin.L'),
-        sdf.ellipsoid([0.034, 0.03, 0.06]).at(ANKLE[0], 0.04, 0.035).bone('foot.L'),
+        sdf.capsule(HIP, KNEE, P.limb.thigh).bone('leg.L'),
+        sdf.capsule(KNEE, ANKLE, P.limb.shin).bone('shin.L'),
+        sdf.ellipsoid(P.foot.size).at(ANKLE[0], P.foot.y, P.foot.z).bone('foot.L'),
       );
       const legs = pair(leg);
 
@@ -326,9 +575,9 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           at(sdf.sphere(0.006), x - 0.014, EYE[1] - 0.022),
         ]),
       );
-      const brows = pair(sdf.extrude(profile.arc(0.1, 0.022, 58, 122), 0.3).at(0.1, 0.722 - 0.1, 0.1));
-      const smile = sdf.extrude(profile.arc(0.07, 0.01, 241, 299), 0.3).at(0, 0.53 + 0.07, 0.1);
-      const blush = pair(at(sdf.sphere(0.032), 0.135, 0.56));
+      const brows = pair(sdf.extrude(profile.arc(0.1, 0.022, 58, 122), 0.3).at(0.1, P.face.browY - 0.1, 0.1));
+      const smile = sdf.extrude(profile.arc(0.07, 0.01, 241, 299), 0.3).at(0, P.face.smileY + 0.07, 0.1);
+      const blush = pair(at(sdf.sphere(0.032), 0.135, P.face.blushY));
 
       const lidded = sdf
         .smoothUnion(0.03, head, neck)
@@ -363,17 +612,17 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
 
       // ------------------------------------------------------------------ hair (the default style)
       if (kind.hair !== false)
-        addPart(k, avatarHair(kind.hair ?? 'swept', mapTint(k), { capped: k.worn?.capHair ?? false, tucked: k.worn?.tuckHair ?? false }), { pose: (s) => s.at(0, HEAD_Y, 0) });
+        addPart(k, avatarHair(kind.hair ?? 'swept', mapTint(k), { capped: k.worn?.capHair ?? false, tucked: k.worn?.tuckHair ?? false, head: { size: HEAD } }), { pose: (s) => s.at(0, HEAD_Y, 0) });
 
       // ------------------------------------------------------------------ undershirt
       // The hero torso with short sleeves to the elbow, a darker collar and hem, and a painted belt.
       // The sleeve ends short of the elbow (a posed arm moves the end with its elbow).
       const sleeveEnd = (j: ArmJoints): V3 =>
-        j.ELBOW === ELBOW0 ? [0.172, 0.348, 0.01] : [j.ELBOW[0] - 0.008, j.ELBOW[1] + 0.016, j.ELBOW[2] - 0.002];
-      const sleeves = perArm((j) => sdf.cone([0.11, 0.405, 0], sleeveEnd(j), 0.047, 0.043).bone('upperarm.L'));
-      const collar = sdf.halfSpace([0, -1, 0], -0.452);
-      const hem = sdf.halfSpace([0, 1, 0], 0.168);
-      const belt = band(0.238, 0.264);
+        j.ELBOW === ELBOW0 ? P.shirt.sleeveEnd : [j.ELBOW[0] - 0.008, j.ELBOW[1] + 0.016, j.ELBOW[2] - 0.002];
+      const sleeves = perArm((j) => sdf.cone(P.shirt.sleeveStart, sleeveEnd(j), ...P.shirt.sleeveR).bone('upperarm.L'));
+      const collar = sdf.halfSpace([0, -1, 0], -P.shirt.collarY);
+      const hem = sdf.halfSpace([0, 1, 0], P.shirt.hemY);
+      const belt = band(...P.shirt.belt);
       const shirt = sdf
         .smoothUnion(0.012, weighted(torso), sleeves)
         .paintWhere(collar, T.trim, 0.003)
@@ -384,10 +633,10 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // ------------------------------------------------------------------ trousers
       const trouserLeg = sdf.smoothUnion(
         0.012,
-        sdf.capsule(HIP, KNEE, 0.05).bone('leg.L'),
-        sdf.cone(KNEE, [ANKLE[0], 0.085, 0.002], 0.047, 0.043).bone('shin.L'),
+        sdf.capsule(HIP, KNEE, P.pants.thighR).bone('leg.L'),
+        sdf.cone(KNEE, P.pants.cuff, ...P.pants.shinR).bone('shin.L'),
       );
-      const pants = sdf.smoothUnion(0.03, sdf.ellipsoid([0.118, 0.052, 0.088]).at(0, 0.2, 0).bone('hips'), pair(trouserLeg));
+      const pants = sdf.smoothUnion(0.03, sdf.ellipsoid(P.pants.hipsSize).at(0, P.pants.hipsY, 0).bone('hips'), pair(trouserLeg));
       if (kind.pants !== false) k.body('pants', pants, { color: kind.pants ?? C.pants, roughness: 0.85 });
 
       // ------------------------------------------------------------------ shoes
@@ -395,12 +644,13 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       const shoeFoot = sdf
         .smoothUnion(
           0.03,
-          sdf.cylinder(0.05, 0.07, 0.018).at(0, 0.06, 0),
-          sdf.ellipsoid([0.056, 0.05, 0.098]).at(0, 0.048, 0.045),
+          sdf.cylinder(...P.shoe.cylinder).at(0, P.shoe.cylinderY, 0),
+          sdf.ellipsoid(P.shoe.toeSize).at(...P.shoe.toeAt),
         )
         .intersect(sdf.halfSpace([0, -1, 0], 0));
-      const sole = shoeFoot.round(0.004).intersect(sdf.halfSpace([0, 1, 0], 0.016)).intersect(sdf.halfSpace([0, -1, 0], 0));
-      const shoe = sdf.union(shoeFoot, sole.paint(C.sole)).rotateY(12).at(ANKLE[0], 0, 0).bone('foot.L');
+      const sole = shoeFoot.round(0.004).intersect(sdf.halfSpace([0, 1, 0], P.shoe.soleTop)).intersect(sdf.halfSpace([0, -1, 0], 0));
+      const turned = sdf.union(shoeFoot, sole.paint(C.sole)).rotateY(12);
+      const shoe = (P.shoe.scale === 1 ? turned : turned.scale(P.shoe.scale)).at(ANKLE[0], 0, 0).bone('foot.L');
       if (kind.shoes !== false) k.body('shoes', pair(shoe), { color: kind.shoes ?? C.shoe, roughness: 0.6 });
       kind.extra?.(k, shape);
 
@@ -436,7 +686,11 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           name,
           posed.L || posed.R ? { ...def, pose: (t, p) => holdPose(def.pose(t, p), kind.hold ? (HOLD_LIFT[name]?.(p) ?? 0) : 0) } : def,
         );
-      const LEG = 0.19;
+      const LEG = P.clips.leg;
+      const K = P.clips.stride;
+      const KL = P.clips.lift ?? K;
+      const FORE = P.clips.foreSwing ?? 0;
+      const tg = P.clips.reach;
       const rad = Math.PI / 180;
       type V3 = readonly [number, number, number];
 
@@ -470,9 +724,9 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
             duty,
             bob: hop,
             roll: 10,
-            heel: [ANKLE[0], 0, -0.045],
-            toe: [ANKLE[0], 0, 0.11],
-            hips: { at: [0, 0.2, 0], rotate: hipsTurn },
+            heel: [ANKLE[0], 0, P.clips.heelZ],
+            toe: [ANKLE[0], 0, P.clips.toeZ],
+            hips: { at: P.bones.hips, rotate: hipsTurn },
           });
           return {
             ...legs.pose,
@@ -483,16 +737,16 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
             cloak: { rotate: [flow + 4 * wave(p, 2, 0.15), 0, 3 * s] as const },
             'upperarm.L': { rotate: [armSwing * s, 0, 6] as const },
             'upperarm.R': { rotate: [-armSwing * s, 0, -6] as const },
-            'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s), 0, 0] as const },
-            'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s), 0, 0] as const },
+            'forearm.L': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s) - FORE * wave(p, 1, 0.25), 0, 0] as const },
+            'forearm.R': { rotate: [-armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s) + FORE * wave(p, 1, 0.25), 0, 0] as const },
             // The wrists take back most of the arm swing, so a held weapon or shield stays steady.
             'hand.L': { rotate: [-0.8 * (armSwing * s - armSwing * 0.5 - armSwing * 0.4 * Math.max(0, -s)), 0, 0] as const },
             'hand.R': { rotate: [-0.8 * (-armSwing * s - armSwing * 0.5 - armSwing * 0.4 * Math.max(0, s)), 0, 0] as const },
           };
         },
       });
-      animation('walk', stride(0.9, 0.1, 0.025, 0.6, 28, 3, 0.006, 6));
-      animation('run', stride(0.56, 0.15, 0.045, 0.4, 50, 12, 0.03, 22));
+      animation('walk', stride(0.9, 0.1 * K, 0.025 * KL, 0.6, 28, 3, 0.006 * KL, 6));
+      animation('run', stride(0.56, 0.15 * K, 0.045 * KL, 0.4, 50, 12, 0.03 * KL, 22));
 
       // One arm from a wrist target and an elbow pole, both in the chest's rest frame. Keys are
       // written for the right arm (x < 0); `m` mirrors them for the left arm.
@@ -514,7 +768,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
             [`hand.${tag}`]: { rotate: aim ? orient([a.upper, a.lower], item, { dir: m(aim.dir), up: m(aim.up) }) : ([0, 0, 0] as V3) },
           };
         };
-        return { m, chain, pose, item, rest: m([-0.58, 0.6, -0.015]) };
+        return { m, chain, pose, item, rest: m(tg([-0.58, 0.6, -0.015])) };
       };
       const norm = (v: V3): V3 => {
         const l = Math.hypot(...v);
@@ -552,20 +806,20 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         pose: (_t, p) => {
           const wrist = keys(p, [
             [0, armR.chain.end],
-            [0.25, [-0.26, 0.34, -0.05]], // wound out and back at the side
-            [0.33, [-0.27, 0.345, -0.05]],
-            [0.43, [-0.16, 0.35, 0.13]], // in front, chest high
-            [0.52, [0.0, 0.32, 0.15]], // across the front
-            [0.6, [0.05, 0.3, 0.12]], // follow-through
-            [0.8, [-0.15, 0.27, 0.07]],
+            [0.25, tg([-0.26, 0.34, -0.05])], // wound out and back at the side
+            [0.33, tg([-0.27, 0.345, -0.05])],
+            [0.43, tg([-0.16, 0.35, 0.13])], // in front, chest high
+            [0.52, tg([0.0, 0.32, 0.15])], // across the front
+            [0.6, tg([0.05, 0.3, 0.12])], // follow-through
+            [0.8, tg([-0.15, 0.27, 0.07])],
             [1, armR.chain.end],
           ] as [number, V3][], 'spline');
           const pole = keys(p, [
             [0, armR.rest],
-            [0.25, [-0.6, 0.25, -0.3]], // elbow out and back
-            [0.33, [-0.6, 0.25, -0.3]],
-            [0.45, [-0.55, 0.45, -0.05]], // elbow out to the side for the sweep
-            [0.6, [-0.4, 0.3, 0.1]],
+            [0.25, tg([-0.6, 0.25, -0.3])], // elbow out and back
+            [0.33, tg([-0.6, 0.25, -0.3])],
+            [0.45, tg([-0.55, 0.45, -0.05])], // elbow out to the side for the sweep
+            [0.6, tg([-0.4, 0.3, 0.1])],
             [1, armR.rest],
           ] as [number, V3][]);
           // The blade: up and back over the right shoulder in the wind-up, then a flat sweep out in
@@ -614,7 +868,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           const step = keys(p, [[0.04, 0], [0.24, 1], [0.58, 1], [0.9, 0]] as const);
           const lift = bump(clamp01((p - 0.04) / 0.2)) + bump(clamp01((p - 0.58) / 0.32));
           const lag = keys(p, [[0, 0], [0.12, 0.3], [0.28, 1], [0.5, -0.45], [0.74, 0.15], [1, 0]] as const, 'spline');
-          const back = 0.03 * step;
+          const back = 0.03 * K * step;
           const lean = Math.asin(back / LEG) / rad; // the left foot stays planted as the hips move back
           return {
             hips: { move: [0, -motion.legDrop(LEG, lean), -back], rotate: [0, 5 * h, 0] },
@@ -666,7 +920,7 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // ------------------------------------------------------------------ cheer: fists up and a hop
       // A dip, a hop with both fists pumped up beside the cheeks, a landing that gives in the knees.
       // Loops. The wrists stay well outside the cheeks (x 0.31), so held items stay clear of the head.
-      const UP: V3 = [-0.31, 0.5, 0.05];
+      const UP: V3 = tg([-0.31, 0.5, 0.05]);
       animation('cheer', {
         duration: 0.8,
         pose: (_t, p) => {
@@ -677,11 +931,11 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
           // A held item rises with the fist: up and a little out, the flat outward, so a crossguard
           // or a shield rim spans front to back beside the head and never toward the cheek.
           const aim = { dir: norm(keys(up, [[0, AIM_REST.dir], [1, [-0.45, 0.88, 0.12]]] as [number, V3][])), up: AIM_REST.up };
-          const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UP]] as [number, V3][]), keys(up, [[0, armR.rest], [1, [-0.7, 0.1, 0.2]]] as [number, V3][]), aim);
-          const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UP)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m([-0.7, 0.1, 0.2])]] as [number, V3][]), aim);
+          const pumpR = armR.pose(keys(up, [[0, armR.chain.end], [1, UP]] as [number, V3][]), keys(up, [[0, armR.rest], [1, tg([-0.7, 0.1, 0.2])]] as [number, V3][]), aim);
+          const pumpL = armL.pose(keys(up, [[0, armL.chain.end], [1, armL.m(UP)]] as [number, V3][]), keys(up, [[0, armL.rest], [1, armL.m(tg([-0.7, 0.1, 0.2]))]] as [number, V3][]), aim);
           return {
             ...legs.bones,
-            hips: { move: [0, 0.05 * air - legs.drop, 0] },
+            hips: { move: [0, 0.05 * K * air - legs.drop, 0] },
             spine: { rotate: [4 * bend - 4 * air, 0, 0] },
             chest: { rotate: [-3 * air, 0, 0] },
             head: { rotate: [-8 * air, 0, 0] },
@@ -695,15 +949,15 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       // ------------------------------------------------------------------ cast: draw in, then push forward
       // Both fists come in to the chest (the gather), then thrust forward together at chest height with
       // a lean (the release), hold a beat, and return. A wand or a focus on either hand points ahead.
-      const GATHER: V3 = [-0.11, 0.31, 0.09];
-      const PUSH: V3 = [-0.08, 0.37, 0.155];
+      const GATHER: V3 = tg([-0.11, 0.31, 0.09]);
+      const PUSH: V3 = tg([-0.08, 0.37, 0.155]);
       animation('cast', {
         duration: 0.9,
         loop: false,
         pose: (_t, p) => {
           const wrist = (a: typeof armR) =>
             keys(p, [[0, a.chain.end], [0.3, a.m(GATHER)], [0.42, a.m(GATHER)], [0.52, a.m(PUSH)], [0.74, a.m(PUSH)], [1, a.chain.end]] as [number, V3][], 'spline');
-          const pole = (a: typeof armR) => keys(p, [[0, a.rest], [0.3, a.m([-0.6, -0.2, -0.3])], [0.52, a.m([-0.7, -0.3, 0.1])], [1, a.rest]] as [number, V3][]);
+          const pole = (a: typeof armR) => keys(p, [[0, a.rest], [0.3, a.m(tg([-0.6, -0.2, -0.3]))], [0.52, a.m(tg([-0.7, -0.3, 0.1]))], [1, a.rest]] as [number, V3][]);
           const lean = keys(p, [[0, 0], [0.3, -5], [0.42, -6], [0.52, 9], [0.74, 8], [1, 0]] as const);
           // Held items point ahead and a little up through the gather and the push.
           const ahead = keys(p, [[0, 0], [0.3, 1], [0.74, 1], [1, 0]] as const);

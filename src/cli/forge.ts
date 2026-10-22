@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import type {
   AnimationRequest,
   ClipInfo,
+  CutoutsRequest,
   InspectRequest,
   SpritesRequest,
   ViewSpec,
@@ -17,6 +18,7 @@ import type * as ClipCheck from '../clip-check.js';
 import type * as Equip from '../equip.js';
 import type * as EquipCheck from '../equip-check.js';
 import { OUT_DIR, ROOT, assetPath, listAssets } from '../pipeline.js';
+import { encodePngRgba } from '../png.js';
 import { REDUCED_ERROR_SCALE, REDUCED_TEXTURE_SIZE } from '../asset.js';
 
 const HELP = `forge — build and look at 3D assets
@@ -26,6 +28,8 @@ const HELP = `forge — build and look at 3D assets
   pnpm forge render  <asset> [options]  GLB + turnaround sheet to look at
   pnpm forge sprites <asset> [options]  GLB + pixel-art sprite frames (add --clip for animated sheets)
   pnpm forge animate <asset> [options]  GLB + animation review strips and GIFs
+  pnpm forge cutout  <asset> --out <dir> [options]
+                                        transparent cut-out PNGs for a 2D compositor (see cutout options)
   pnpm forge all     <asset>            render + sprites + every animation (strips and sprite sheets)
   pnpm forge inspect <asset>            numbers instead of pictures: visibility per part, silhouette,
                                         values, colors, ground contact, floating parts
@@ -54,6 +58,16 @@ sprite options
                        cell, at one scale and one pivot (a game that swaps clips in one frame box);
                        with --dirs 1 the cell fits the S view only, so the sprite is larger
   --into dir           write the sprites to dir/ instead of out/<asset>/sprites/
+
+cutout options
+  --out dir            delivery folder: <dir>/<asset>/<view>.png and <dir>/manifest.json (required)
+  --views front,three-quarter,side   named views (default: those three)
+  --ppm 900            pixels per meter at the standing plane x = 0, z = 0 (one scale for every asset)
+  --canvas 1024x1200   canvas size; the ground origin lands at column width / 2, row height - margin
+  --el 0               camera elevation in degrees (default 0: feet stay on the foot row)
+  --margin 16          pixels between the ground origin and the bottom edge (and the top limit)
+  --clip walk --at 0.3 pose of a clip at a time in seconds; --stem walk-03 names the file
+  --ss 3               supersample factor (straight alpha, soft edges, no shadow, no background)
 
 animation options
   --clip walk          one clip (default: all clips)
@@ -118,6 +132,10 @@ async function main(): Promise<void> {
       frames: { type: 'string' },
       preset: { type: 'string' },
       ppm: { type: 'string' },
+      out: { type: 'string' },
+      canvas: { type: 'string' },
+      stem: { type: 'string' },
+      at: { type: 'string' },
       cell: { type: 'boolean' },
       into: { type: 'string' },
       wear: { type: 'string' },
@@ -136,9 +154,10 @@ async function main(): Promise<void> {
     for (const a of listAssets()) console.log(a);
     return;
   }
-  if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check'].includes(command))
+  if (!['build', 'render', 'sprites', 'animate', 'all', 'inspect', 'check', 'cutout'].includes(command))
     throw new Error(`Unknown command '${command}'.\n${HELP}`);
   if (!name) throw new Error(`Usage: pnpm forge ${command} <asset>`);
+  if (command === 'cutout' && !values.out) throw new Error('Usage: ./forge cutout <asset> --out <dir> [options]');
   const file = assetPath(name);
   const wear = values.wear ? values.wear.split(',').map((w) => w.trim()).filter(Boolean) : [];
   if (wear.length > 0 && command === 'check') throw new Error('check takes no --wear: run `forge check <piece>` for each piece.');
@@ -340,6 +359,64 @@ async function main(): Promise<void> {
           writePng(join(out, sheetFile), res.sheet);
           console.log(`render   ${rel(join(out, sheetFile))}  (${Math.round(performance.now() - t1)} ms)`);
         }
+      }
+      const clipInfoOf = (clip: string): ClipInfo | undefined => {
+        const c = result.root.animations.find((a) => a.name === clip);
+        const u = c?.userData as { loop?: boolean; dig?: number } | undefined;
+        return u ? { loop: u.loop ?? true, dig: u.dig ?? 0 } : undefined;
+      };
+      if (command === 'cutout') {
+        const t1 = performance.now();
+        const [cw, ch] = (values.canvas ?? '1024x1200').split('x').map((v) => Math.round(Number(v)));
+        if (!cw || !ch || cw < 16 || ch < 16) throw new Error(`--canvas needs WIDTHxHEIGHT, got '${values.canvas}'.`);
+        const ppm = num(values.ppm, 900);
+        const margin = num(values.margin, 16);
+        const clipName = values.clip && values.clip !== 'all' ? values.clip : undefined;
+        if (values.clip === 'all' || values.clip?.includes(',')) throw new Error('--clip takes one clip name for a cut-out.');
+        const at = num(values.at, 0);
+        const stem = values.stem ?? (clipName ? `${clipName}-${at}` : undefined);
+        const viewNames = (values.views ?? (stem ? 'front' : 'front,three-quarter,side')).split(',').map((v) => v.trim()).filter(Boolean);
+        const views = viewNames.map((v) => {
+          const spec = NAMED_VIEWS[v];
+          if (!spec) throw new Error(`Unknown view '${v}'. Views: ${Object.keys(NAMED_VIEWS).join(', ')}.`);
+          // Elevation 0 (or --el): the feet stay on the foot row; a look-down shifts toes below it.
+          return { name: v, azimuth: spec.azimuth, elevation: values.el !== undefined ? num(values.el, 0) : 0 };
+        });
+        const root = resolve(values.out!);
+        const manifestPath = join(root, 'manifest.json');
+        let manifest: { ppm?: number; canvas?: number[]; footPoint?: unknown; files?: Record<string, boolean>; [k: string]: unknown } = {};
+        try {
+          manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+        } catch {
+          /* no manifest yet */
+        }
+        if (manifest.ppm !== undefined && (manifest.ppm !== ppm || manifest.canvas?.[0] !== cw || manifest.canvas?.[1] !== ch))
+          throw new Error(`${rel(manifestPath)} has ppm ${manifest.ppm} and canvas ${manifest.canvas?.join('x')}: one folder keeps one scale. Use the same options or a new folder.`);
+        const req: CutoutsRequest = {
+          glbUrl: `/__forge/asset.glb?t=${Date.now()}`,
+          views,
+          ppm,
+          width: cw,
+          height: ch,
+          margin,
+          supersample: num(values.ss, 3),
+          ...(clipName ? { clip: clipName, at, ...(clipInfoOf(clipName) ? { clipInfo: clipInfoOf(clipName)! } : {}) } : {}),
+          ...(values.preset && values.preset !== 'all' ? { preset: values.preset } : {}),
+        };
+        const res = await page.evaluate((r) => window.forge.renderCutouts(r), req);
+        const dir = join(root, outName);
+        mkdirSync(dir, { recursive: true });
+        const files = manifest.files ?? {};
+        for (const [view, b64] of Object.entries(res.views)) {
+          const fileStem = stem ? (views.length > 1 ? `${stem}-${view}` : stem) : view;
+          writeFileSync(join(dir, `${fileStem}.png`), encodePngRgba(cw, ch, Buffer.from(b64, 'base64')));
+          files[`${outName}/${fileStem}`] = true;
+          console.log(`cutout   ${rel(join(dir, `${fileStem}.png`))}`);
+        }
+        manifest = { ...manifest, ppm, canvas: [cw, ch], footPoint: { col: cw / 2, row: ch - margin }, files };
+        writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+        console.log(`cutout   ${rel(manifestPath)}  (${ppm} px/m, ${cw}x${ch}, ss ${res.supersample}, ${Math.round(performance.now() - t1)} ms)`);
+        return;
       }
       const clips = await page.evaluate(
         (u) => window.forge.listClips(u),

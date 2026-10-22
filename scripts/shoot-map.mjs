@@ -1,6 +1,7 @@
 // Shoot views of a sample map. Needs a dev server (node_modules/.bin/vite --port 5199).
 //   node scripts/shoot-map.mjs <outdir> <name>=<query> ...
 //   example: node scripts/shoot-map.mjs /tmp/shots 'top=scene=forest&clean&az=0&el=88&dist=36&tx=0&tz=0'
+// FORGE_SHOT_SIZE=1920x1080 sets the viewport and screenshot size (1:1).
 // FORGE_SHOT_BASE overrides the page URL. Each view gets two attempts; the status line is printed.
 import { chromium } from 'playwright';
 const base = process.env.FORGE_SHOT_BASE ?? 'http://127.0.0.1:5199/hamlet.html';
@@ -8,7 +9,8 @@ const [outdir, ...specs] = process.argv.slice(2);
 const browser = await chromium.launch({
   args: ['--use-angle=gl', '--enable-gpu', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'],
 });
-const page = await browser.newPage({ viewport: { width: 1500, height: 950 } });
+const [shotW, shotH] = (process.env.FORGE_SHOT_SIZE ?? '1500x950').split('x').map(Number);
+const page = await browser.newPage({ viewport: { width: shotW, height: shotH }, deviceScaleFactor: 1 });
 page.setDefaultTimeout(240000);
 page.on('console', (msg) => { if (msg.type() === 'error') console.log('page error:', msg.text()); });
 for (const spec of specs) {

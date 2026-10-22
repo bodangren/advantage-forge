@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { GIFEncoder, applyPalette as gifPalette, quantize } from 'gifenc';
 import { Studio } from './studio.js';
+import { resolveStraight } from './cutout.js';
 import {
   applyPalette,
   buildPalette,
@@ -29,6 +30,23 @@ export interface ViewsRequest {
   readonly referenceUrl?: string;
   readonly title?: string;
   /** A color preset of the asset (its `presets`): the tinted materials take its slot colors. */
+  readonly preset?: string;
+}
+
+export interface CutoutsRequest {
+  readonly glbUrl: string;
+  readonly views: readonly { readonly name: string; readonly azimuth: number; readonly elevation: number }[];
+  /** Pixels per meter at the standing plane x = 0, z = 0. */
+  readonly ppm: number;
+  readonly width: number;
+  readonly height: number;
+  /** The ground point (0, 0, 0) lands at row height - margin. */
+  readonly margin: number;
+  readonly supersample: number;
+  readonly clip?: string;
+  /** Seconds into the clip. */
+  readonly at?: number;
+  readonly clipInfo?: ClipInfo;
   readonly preset?: string;
 }
 
@@ -766,6 +784,92 @@ async function inspectAsset(req: InspectRequest): Promise<{ views: ViewInspectio
 }
 
 /** Names and durations of the clips in a GLB. */
+/** Camera distance of a cut-out: fixed, so the perspective strength never depends on the asset. */
+const CUTOUT_DISTANCE = 6;
+
+/**
+ * Transparent cut-out renders for a 2D compositor. The scale is fixed by `ppm`, never by the asset:
+ * the camera looks at the ground origin from a fixed distance, its field of view follows the
+ * canvas height and `ppm`, and a view offset puts the origin at (width / 2, height - margin).
+ * Pixels come from the premultiplied WebGL buffer at `supersample` x the canvas size and resolve
+ * to straight alpha (see cutout.ts). Returns raw RGBA as base64 for each view.
+ */
+async function renderCutouts(req: CutoutsRequest): Promise<{ views: Record<string, string>; supersample: number }> {
+  await load(req.glbUrl);
+  await applyPreset(req.preset);
+  studio.setBackground(null);
+  studio.ground.visible = false;
+  const clip = req.clip ? findClip(req.clip) : null;
+  floorClip(clip ? req.clipInfo : undefined);
+  if (clip) poseAt(clip, req.at ?? 0);
+  else toRest();
+  const gl = studio.renderer.getContext();
+  const maxSize = Math.min(gl.getParameter(gl.MAX_RENDERBUFFER_SIZE) as number, gl.getParameter(gl.MAX_TEXTURE_SIZE) as number);
+  let ss = Math.max(1, Math.floor(req.supersample));
+  while (ss > 1 && Math.max(req.width, req.height) * ss > maxSize) ss--;
+
+  const cam = studio.perspective;
+  cam.fov = THREE.MathUtils.radToDeg(2 * Math.atan(req.height / (2 * req.ppm * CUTOUT_DISTANCE)));
+  cam.near = CUTOUT_DISTANCE / 50;
+  cam.far = CUTOUT_DISTANCE * 10;
+  cam.aspect = req.width / req.height;
+  // The origin projects to the middle of the full frame; the window moves it to the foot point.
+  cam.setViewOffset(req.width, req.height, 0, req.margin - req.height / 2, req.width, req.height);
+  cam.updateProjectionMatrix();
+  const origin = new THREE.Vector3();
+  const lightCenter = studio.center;
+  const meshes: THREE.Mesh[] = [];
+  current!.scene.traverse((o) => {
+    if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh);
+  });
+  for (const m of meshes) if ((m as THREE.SkinnedMesh).isSkinnedMesh) (m as THREE.SkinnedMesh).skeleton.update();
+
+  const views: Record<string, string> = {};
+  const v = new THREE.Vector3();
+  for (const view of req.views) {
+    studio.aim(cam, origin, CUTOUT_DISTANCE, view.azimuth, view.elevation);
+    studio.placeLights(cam, lightCenter, Math.max(studio.radius, 0.1));
+    cam.updateMatrixWorld(true);
+    // Fit check on the projected vertices: the needed canvas size when the asset does not fit.
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (const m of meshes) {
+      const pos = m.geometry.getAttribute('position');
+      for (let i = 0; i < pos.count; i++) {
+        m.getVertexPosition(i, v).applyMatrix4(m.matrixWorld).project(cam);
+        const px = ((v.x + 1) / 2) * req.width;
+        const py = ((1 - v.y) / 2) * req.height;
+        if (px < minX) minX = px;
+        if (px > maxX) maxX = px;
+        if (py < minY) minY = py;
+        if (py > maxY) maxY = py;
+      }
+    }
+    const footRow = req.height - req.margin;
+    const needH = Math.ceil(footRow - minY + req.margin);
+    const needW = 2 * Math.ceil(Math.max(req.width / 2 - minX, maxX - req.width / 2));
+    if (minY < 0 || minX < 0 || maxX > req.width)
+      throw new Error(
+        `The view '${view.name}' does not fit the ${req.width}x${req.height} canvas at ${req.ppm} px/m: ` +
+          `needed canvas height ${Math.max(needH, req.height)} (at least) and width ${Math.max(needW, req.width)} ` +
+          `with margin ${req.margin}.`,
+      );
+    studio.render(cam, req.width * ss, req.height * ss);
+    const buf = new Uint8Array(req.width * ss * req.height * ss * 4);
+    gl.readPixels(0, 0, req.width * ss, req.height * ss, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+    const rgba = resolveStraight(buf, req.width, req.height, ss, true);
+    let bin = '';
+    for (let i = 0; i < rgba.length; i += 0x8000) bin += String.fromCharCode(...rgba.subarray(i, i + 0x8000));
+    views[view.name] = btoa(bin);
+  }
+  cam.clearViewOffset();
+  cam.fov = 30;
+  cam.updateProjectionMatrix();
+  return { views, supersample: ss };
+}
+
 async function listClips(glbUrl: string): Promise<{ name: string; duration: number }[]> {
   await load(glbUrl);
   return current!.clips.map((c) => ({ name: c.name, duration: c.duration }));
@@ -775,6 +879,7 @@ declare global {
   interface Window {
     forge: {
       renderViews: typeof renderViews;
+      renderCutouts: typeof renderCutouts;
       renderSprites: typeof renderSprites;
       renderAnimation: typeof renderAnimation;
       listClips: typeof listClips;
@@ -784,4 +889,4 @@ declare global {
   }
 }
 
-window.forge = { renderViews, renderSprites, renderAnimation, listClips, inspectAsset, ready: true };
+window.forge = { renderViews, renderCutouts, renderSprites, renderAnimation, listClips, inspectAsset, ready: true };

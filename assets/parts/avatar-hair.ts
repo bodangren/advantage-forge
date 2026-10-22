@@ -22,8 +22,11 @@ export type AvatarHairStyle = 'swept' | 'short' | 'long' | 'ponytail';
 export const AVATAR_HAIR_STYLES: readonly AvatarHairStyle[] = ['swept', 'short', 'long', 'ponytail'];
 
 const LOCK_LINE = '#3a1e12';
-const HEAD_Y = 0.675;
-const HEAD = [0.205, 0.2, 0.19] as const;
+/** The hero head (center y, skull radii): every style is written for it, and the default of `head`. */
+export const HERO_HEAD = { y: 0.675, size: [0.205, 0.2, 0.19] } as const;
+const HEAD_Y = HERO_HEAD.y;
+/** The skull radii of the style being built (set for the duration of one `avatarHair` call). */
+let HEAD: readonly [number, number, number] = HERO_HEAD.size;
 const pair = (s: sdf.Shape) => s.mirror('x');
 const local = (s: sdf.Shape) => s.at(0, -HEAD_Y, 0);
 
@@ -195,11 +198,22 @@ export interface AvatarHairOptions {
   readonly capped?: boolean;
   /** The tucked form, the cap without locks, under a head piece that covers the nape or the cheeks. */
   readonly tucked?: boolean;
+  /**
+   * The host's skull radii (default the hero's). The hair frame is centered on the head, so the
+   * host places the part at its own head center (`addPart` pose `at(0, headY, 0)`).
+   */
+  readonly head?: { readonly size?: readonly [number, number, number] };
 }
 
 export function avatarHair(style: AvatarHairStyle, tint: PartTint, options: AvatarHairOptions = {}): Part {
   const lines = tint('hair', { color: LOCK_LINE, follow: 1 });
-  const shape = options.tucked ? capped() : (options.capped ? CAPPED : STYLES)[style]();
+  HEAD = options.head?.size ?? HERO_HEAD.size;
+  let shape: sdf.Shape;
+  try {
+    shape = options.tucked ? capped() : (options.capped ? CAPPED : STYLES)[style]();
+  } finally {
+    HEAD = HERO_HEAD.size;
+  }
   return {
     name: `avatar-hair-${style}`,
     bodies: [

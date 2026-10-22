@@ -1,0 +1,14 @@
+run	phase	role	model	agent	items	result	lesson
+b6	scene	builder	sonnet	a45994f10ad57fb1b	classroom, rug	done: classroom.png 1920x1080, rug.png 1024x600 at 450 ppm (redo at the cast ppm)	dark window panes, half-timber walls; vite needs the no-watcher config (ENOSPC)
+t1	tools	builder	sonnet	aa05a5cfd6278fde9	forge cutout, cutout-check, cutout.test	done: 7 files result ok, 4/4 tests	ran git stash/pop against the brief; reverted all tracked edits for minutes; prompts must say "never run git, not even stash"
+b1	base	builder	sonnet-high	af945305f8ca73480	sprout-base + AGE5 option + contract test	done: 21,106 tris, mesh-same SAME x3, check ok; self-score 7 (not recorded)	viewed only the cheer strip
+r1	base	reviewer	opus	adf73c456a7d80ff9	sprout-base	7.0 (bar 7.5): legs too short, boots large, stiff arms, no walk bob	-
+b2	pip	builder	sonnet-high	ae45e7e688e8e7ae3	sprout-pip	done: 28,876 tris, check ok; self-score 6.5 (not recorded)	collar hidden under the head, plain head
+r2	pip	reviewer	opus	a5643c50949e7d927	sprout-pip	6.5 (bar 7.5): wing ears, flat mouth, mustard fur, stubby legs	-
+b1r2	base	builder	sonnet-high	aa4dd8ba40c757f50	sprout-base	done: legs 0.92, shoe 0.78, forearm turn, bob 1.0; 21,328 tris; mesh-same avatar-base SAME	-
+r3	base	reviewer	opus	af0d7c7106754a24f	sprout-base	7.0 (bar 7.5): legs still short, boots long; motion 3.5	face and back hair are the shared head (by design)
+b2r2	pip	builder	sonnet-high	a5954bbfaed46df5e	sprout-pip	done: flap ears, smile, fur hue 27, legs +0.03, tag; 32,448 tris; self 7	-
+r4	pip	reviewer	opus	a4d75cdfd47e8de8f	sprout-pip	7.0 (bar 7.5): muzzle too wide hides collar, head 60% of height, eye beads in side view, smooth tail	-
+b1r3	base	builder	sonnet-high	a86dce2e1141ba014	sprout-base	done: leg 1.05, torso 0.84, shoe 0.72, foot inside shoe; 0.86 m, hip 23.8%; mesh-same SAME	test line 21 assumed a lower ankle; fixed by the orchestrator
+r5	base	reviewer	opus	a15847d8a0202f101	sprout-base	7.5 accepted; small: trouser colour near the shirt, stiff upper body in walk	-
+b2r3	pip	builder	sonnet-high	a5c254cc5d7f9e396	sprout-pip	done: muzzle 0.62, head 50%, eyes flat, fluffy tail; 34,312 tris	bib not viewed after the last edit

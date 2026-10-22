@@ -17,7 +17,7 @@ import './hamlet.css';
 // Lighting groups for the new maps are set here by the orchestrator, not by map agents.
 const NEW_MAPS = import.meta.glob('../../scenes/maps/*.ts') as Record<string, () => Promise<{ places: () => Place[] }>>;
 const NEW_DARK = new Set(['crypt', 'crystal-cave', 'labyrinth', 'mine', 'boss-arena', 'treasure-vault', 'catacombs', 'tomb', 'sewer', 'ice-cave', 'lava-cave', 'mausoleum', 'prison', 'cave', 'underground-city']);
-const NEW_INTERIOR = new Set(['library', 'alchemy-lab', 'inn', 'arcane-sanctum', 'wizard-tower', 'throne-room', 'portal-chamber', 'apothecary', 'armory', 'temple', 'guild-hall', 'bakery', 'general-store', 'warehouse', 'school', 'cathedral', 'archive', 'bank', 'bathhouse', 'courthouse', 'theater']);
+const NEW_INTERIOR = new Set(['library', 'alchemy-lab', 'inn', 'arcane-sanctum', 'wizard-tower', 'throne-room', 'portal-chamber', 'apothecary', 'armory', 'temple', 'guild-hall', 'bakery', 'general-store', 'warehouse', 'school', 'cathedral', 'archive', 'bank', 'bathhouse', 'courthouse', 'theater', 'classroom']);
 
 const FLAT = new Set([
   'grass-ground',
@@ -41,6 +41,8 @@ const dark = sceneName === 'dungeon' || sceneName === 'vault' || NEW_DARK.has(sc
 // Interior cutaways (roof off, two or three walls standing): a warm room light from the camera
 // side, so the standing walls face the light, on a dark backdrop as in the mockups.
 const interior = sceneName === 'tavern' || sceneName === 'blacksmith' || NEW_INTERIOR.has(sceneName);
+// Bright daylight rooms: light backdrop, no fog, stronger fill.
+const bright = sceneName === 'classroom';
 const clean = params.has('clean');
 
 const root = document.createElement('div');
@@ -77,9 +79,9 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-const backdrop = dark ? '#0e141d' : interior ? '#16110d' : '#cfe6f4';
+const backdrop = dark ? '#0e141d' : bright ? '#f4ead8' : interior ? '#16110d' : '#cfe6f4';
 scene.background = new THREE.Color(backdrop);
-scene.fog = new THREE.Fog(backdrop, dark ? 34 : 42, dark ? 80 : 78);
+if (!bright) scene.fog = new THREE.Fog(backdrop, dark ? 34 : 42, dark ? 80 : 78);
 
 const camera = new THREE.PerspectiveCamera(32, 1, 0.4, 180);
 const controls = new OrbitControls(camera, canvas);
@@ -92,11 +94,11 @@ scene.add(
   dark
     ? new THREE.HemisphereLight(0xa9c2ec, 0x1a2433, 0.9)
     : interior
-      ? new THREE.HemisphereLight(0xffe4c4, 0x4a3524, 0.9)
+      ? new THREE.HemisphereLight(0xfff0dc, bright ? 0xc9a77c : 0x4a3524, bright ? 1.6 : 0.9)
       : new THREE.HemisphereLight(0xd7ecff, 0x6d8f45, 0.62),
 );
 const sun = new THREE.DirectionalLight(dark ? 0xffe2b8 : interior ? 0xffd9a8 : 0xfff3df, dark ? 2.2 : interior ? 2.6 : 2.7);
-sun.position.set(...((dark ? [-5, 46, -3] : interior ? [14, 30, 20] : [-22, 32, -14]) as [number, number, number]));
+sun.position.set(...((dark ? [-5, 46, -3] : bright ? [0, 30, 22] : interior ? [14, 30, 20] : [-22, 32, -14]) as [number, number, number]));
 sun.castShadow = true;
 sun.shadow.mapSize.set(4096, 4096);
 sun.shadow.camera.left = -26;

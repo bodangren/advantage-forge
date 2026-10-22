@@ -11783,5 +11783,47 @@
     "next": "Change the hair to soft wavy locks and make the pearl glow.",
     "reviewer": "independent-agent",
     "reviewedAt": "2026-10-10T12:16:36.000Z"
+  },
+  "sprout-base": {
+    "overall": 7.5,
+    "scores": [
+      3,
+      4,
+      4,
+      4,
+      3.5,
+      3.5,
+      4,
+      4,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "A chibi child with the shared avatar-base head, face, and hair on a small, soft body, in a blue tunic, a brown belt, gray-blue trousers, and brown shoes. The body now reads as a young child with real legs, and the remaining body differences are small.",
+    "strengths": [
+      "The large head on the small, round body gives a clear young-child read and strong chibi appeal.",
+      "The legs are now longer. A clear length of trouser leg shows between the tunic hem and the shoes, so the lower body reads as legs and not as a stub.",
+      "The shoes are smaller and match the size of the legs in the front and back views.",
+      "The head sits on the collar with no gap in the front, side, and back views.",
+      "The arms have a small elbow bend at rest, and the hands turn slightly toward the body.",
+      "The tunic, the sleeves, the belt, and the trousers fit the body closely. No part goes through another part.",
+      "In the walk, the elbows bend in the arm swing, the fists stay clear of the body, and the feet stay on the ground.",
+      "The face and the eyes read at 128 px in the S, SW, and SE sprites, and the figure is clear in all eight directions.",
+      "The model stands on the ground, faces +Z, and has a rig with a walk clip."
+    ],
+    "issues": [
+      "The walk is still stiff in the upper body. The torso and the head stay rigid, and the vertical bob is small. Make the bob larger, add a small torso twist against the hip swing, and add a small head delay.",
+      "The trousers are close in value and hue to the tunic, so the outfit reads as one blue mass in the back view and in the 128 px sprites. Make the trousers darker or warmer, so that the legs separate from the tunic.",
+      "The legs are straight tubes from the hem to the shoes, with no knee or ankle shape. Add a small taper at the ankle, so that the trouser cuff reads above the shoe.",
+      "In the side view, the shoes extend far in front of the leg. Make the toe slightly shorter.",
+      "The left sleeve cuff shows a small step in the three-quarter view. Make the cuff edge smooth.",
+      "Shared head, kept by design and not rated here: the heavy, low brows, the flicks at the outer eye corners, and the small closed smile read older than five years. The back hair is a smooth bowl with shallow grooves and reads as a helmet in the back view and in the N, NE, and NW sprites."
+    ],
+    "next": "Make the walk less stiff: add a larger vertical bob, a small torso twist against the hip swing, and a small head delay.",
+    "critical": false,
+    "criticalReason": "No critical model error. No part goes through another part, no part floats, and the head sits on the neck.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-22",
+    "reviewer": "opus r5 (third review; r1 7.0, r3 7.0)"
   }
 }
