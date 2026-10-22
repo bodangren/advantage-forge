@@ -1,12 +1,15 @@
 # Measure status
 
-Tracks: 103.
-Tracks by status: new: 29; in_progress: 40; completed: 34.
-Tracks by workstream: assets: 48; games: 47; foundation: 8.
+Tracks: 111.
+Tracks by status: new: 30; in_progress: 43; completed: 38.
+Tracks by workstream: assets: 51; games: 52; foundation: 8.
 
 | Track | Status | Workstream | Plan tasks | Estimate | Actual |
 | --- | --- | --- | ---: | ---: | ---: |
+| [apk_monorepo_sync_workflow_20261020](../tracks/apk_monorepo_sync_workflow_20261020/) | completed | games | 12/12 | 13 | 12 |
 | [apk_pack_release_20261006](../tracks/apk_pack_release_20261006/) | completed | games | 29/29 | 14 | 29 |
+| [apk_skin_identical_rebuild_20261021](../tracks/apk_skin_identical_rebuild_20261021/) | completed | games | 7/7 | 7 | 7 |
+| [asset_chibi_sprouts_r1_20261022](../tracks/asset_chibi_sprouts_r1_20261022/) | in_progress | assets | 12/19 | 22 | 12 |
 | [asset_companion_backlog_20260928](../tracks/asset_companion_backlog_20260928/) | new | assets | 0/5 | 5 | — |
 | [asset_delivery_20260928](../tracks/asset_delivery_20260928/) | new | assets | 0/7 | 7 | — |
 | [asset_engine_backlog_20260928](../tracks/asset_engine_backlog_20260928/) | new | assets | 0/5 | 5 | — |
@@ -23,7 +26,7 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [asset_p2_items_20260928](../tracks/asset_p2_items_20260928/) | completed | assets | 9/9 | 9 | 9 |
 | [asset_p2_monsters_20260928](../tracks/asset_p2_monsters_20260928/) | completed | assets | 19/19 | 9 | 9 |
 | [asset_p2_npc_haiku_trial_20261009](../tracks/asset_p2_npc_haiku_trial_20261009/) | completed | assets | 9/9 | 6 | 9 |
-| [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 0/9 | 9 | — |
+| [asset_p2_npcs_20260928](../tracks/asset_p2_npcs_20260928/) | new | assets | 3/9 | 9 | — |
 | [asset_p2_wildlife_20260928](../tracks/asset_p2_wildlife_20260928/) | in_progress | assets | 4/9 | 9 | — |
 | [asset_p3_fx_geometry_20260928](../tracks/asset_p3_fx_geometry_20260928/) | new | assets | 0/9 | 9 | — |
 | [asset_p3_vehicles_20260928](../tracks/asset_p3_vehicles_20260928/) | completed | assets | 9/9 | 9 | 9 |
@@ -35,6 +38,9 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [asset_scenes_settlements_20260928](../tracks/asset_scenes_settlements_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_scenes_wilderness_20260928](../tracks/asset_scenes_wilderness_20260928/) | in_progress | assets | 0/9 | 9 | — |
 | [asset_world_catchup_20261001](../tracks/asset_world_catchup_20261001/) | completed | assets | 16/16 | 16 | 16 |
+| [audio_game_integration_20261014](../tracks/audio_game_integration_20261014/) | new | games | 0/5 | 5 | — |
+| [audio_sfx_library_20261013](../tracks/audio_sfx_library_20261013/) | in_progress | assets | 18/19 | 12 | — |
+| [audio_sources_expand_20261014](../tracks/audio_sources_expand_20261014/) | in_progress | assets | 7/11 | 10 | — |
 | [avatar_in_games_20261006](../tracks/avatar_in_games_20261006/) | completed | games | 24/24 | 15 | 24 |
 | [avatar_reward_pieces_20261006](../tracks/avatar_reward_pieces_20261006/) | completed | games | 10/10 | 10 | 10 |
 | [avatar_system_20261001](../tracks/avatar_system_20261001/) | completed | games | 20/20 | 12 | 20 |
@@ -48,11 +54,11 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [game_dragon_flight_port_20260928](../tracks/game_dragon_flight_port_20260928/) | in_progress | games | 4/6 | 6 | — |
 | [game_dragon_rider_20260928](../tracks/game_dragon_rider_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_dungeon_liberator_port_20260928](../tracks/game_dungeon_liberator_port_20260928/) | in_progress | games | 4/6 | 6 | — |
-| [game_enchanted_library_20260928](../tracks/game_enchanted_library_20260928/) | in_progress | games | 6/8 | 8 | — |
+| [game_enchanted_library_20260928](../tracks/game_enchanted_library_20260928/) | in_progress | games | 10/12 | 8 | — |
 | [game_flashcard_input_20261004](../tracks/game_flashcard_input_20261004/) | completed | games | 14/14 | 14 | 14 |
 | [game_griffin_mount_20261004](../tracks/game_griffin_mount_20261004/) | completed | games | 7/7 | 7 | 7 |
 | [game_griffin_riders_escape_20260928](../tracks/game_griffin_riders_escape_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_griffin_sky_joust_20260928](../tracks/game_griffin_sky_joust_20260928/) | in_progress | games | 6/8 | 8 | — |
+| [game_griffin_sky_joust_20260928](../tracks/game_griffin_sky_joust_20260928/) | in_progress | games | 11/14 | 8 | — |
 | [game_gryphon_patrol_20260928](../tracks/game_gryphon_patrol_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_haunted_library_20260928](../tracks/game_haunted_library_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_hero_vs_zombie_port_20260928](../tracks/game_hero_vs_zombie_port_20260928/) | in_progress | games | 4/6 | 6 | — |
@@ -66,7 +72,7 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [game_realm_carver_20260928](../tracks/game_realm_carver_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_rpg_battle_20260928](../tracks/game_rpg_battle_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_rune_forge_chamber_20260928](../tracks/game_rune_forge_chamber_20260928/) | in_progress | games | 6/8 | 8 | — |
-| [game_rune_match_20260928](../tracks/game_rune_match_20260928/) | in_progress | games | 7/9 | 7 | — |
+| [game_rune_match_20260928](../tracks/game_rune_match_20260928/) | in_progress | games | 8/10 | 7 | — |
 | [game_shadow_gate_dungeon_20260928](../tracks/game_shadow_gate_dungeon_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_sorcerer_ziggurat_20260928](../tracks/game_sorcerer_ziggurat_20260928/) | in_progress | games | 6/8 | 8 | — |
 | [game_spellweavers_run_20260928](../tracks/game_spellweavers_run_20260928/) | in_progress | games | 6/8 | 8 | — |
@@ -74,6 +80,7 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [game_thai_localization_20260928](../tracks/game_thai_localization_20260928/) | new | games | 0/5 | 5 | — |
 | [game_typing_duel_20261009](../tracks/game_typing_duel_20261009/) | new | games | 0/15 | 15 | — |
 | [game_village_guardian_20260928](../tracks/game_village_guardian_20260928/) | in_progress | games | 6/8 | 8 | — |
+| [game_xp_end_card_20261020](../tracks/game_xp_end_card_20261020/) | completed | games | 5/5 | 4 | 5 |
 | [history_animation_clearance_20260928](../tracks/history_animation_clearance_20260928/) | completed | foundation | 3/3 | — | — |
 | [history_apk3d_platform_20260928](../tracks/history_apk3d_platform_20260928/) | completed | games | 3/3 | — | — |
 | [history_asset_catalog_20260928](../tracks/history_asset_catalog_20260928/) | completed | assets | 3/3 | — | — |
@@ -90,6 +97,7 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 | [measure_dependency_launcher_20260928](../tracks/measure_dependency_launcher_20260928/) | in_progress | foundation | 1/6 | 6 | — |
 | [measure_migration_20260928](../tracks/measure_migration_20260928/) | completed | foundation | 9/9 | 9 | 9 |
 | [monorepo_master_ci_20261006](../tracks/monorepo_master_ci_20261006/) | new | games | 0/16 | 16 | — |
+| [qc_story_fixture_serve_20261021](../tracks/qc_story_fixture_serve_20261021/) | completed | games | 5/5 | 3 | 4 |
 | [repo_rename_advantage_forge_20261002](../tracks/repo_rename_advantage_forge_20261002/) | in_progress | foundation | 14/17 | 17 | 14 |
 | [riven_architecture_20261009](../tracks/riven_architecture_20261009/) | new | assets | 0/9 | 9 | — |
 | [riven_base_character_20261009](../tracks/riven_base_character_20261009/) | new | assets | 0/15 | 15 | — |
@@ -113,5 +121,5 @@ Tracks by workstream: assets: 48; games: 47; foundation: 8.
 ## Project health
 
 Completed feature tracks with comparable estimates and actuals: 3.
-Recent feature velocity: 21.00 tasks per track.
-Estimate accuracy ratio: 1.56.
+Recent feature velocity: 21.67 tasks per track.
+Estimate accuracy ratio: 1.53.

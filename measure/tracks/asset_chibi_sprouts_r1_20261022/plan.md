@@ -57,15 +57,20 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   in the side view), a clearer smile at 128 px, a visible sole band. Reviews: `bench/sonnet/sprouts/cards/b3*`, `b4*`.
   Debt: two builders wrapped `k.animation` for per-character motion (Ben's removed; May's ponytail
   swing kept); the kind needs an extra-pose hook for a character's own bones.
-- [ ] Task: `sprout-adventurer` (lantern or map, no sword) and the week 1 gesture key frames:
-  clap (apart, together), wave (left, right), nod (up, down), point to self, point forward, hands
-  out, and idle, on one canvas with the feet at one point; review.
+- [x] Task: `sprout-adventurer` 7.5 (third review) with the shared gesture module
+  `assets/parts/sprout-gestures.ts` (clips `gesture-<slug>`, key frames at 0.5 and 1.0 s); ten key
+  frames in `out/chibi-sprouts/r1/week1/gestures/adventurer/` (2026-10-23). Limit: the wave hand
+  reaches the jaw, not the eye (the age-5 arm reach).
 - [x] Task: Classroom scene `scenes/maps/classroom.ts` (generator `scripts/design-classroom.mjs`,
   `bright` interior mode in `src/scene/main.ts`, `FORGE_SHOT_SIZE` in `scripts/shoot-map.mjs`);
   `out/chibi-sprouts/r1/week1/scenes/classroom.png` and `rug.png` (450 px/m) (2026-10-22). Look
   check items: dark window panes, half-timber walls.
-- [ ] Task: Deliver to `out/chibi-sprouts/r1/week1/` with the manifest; tell Storytime the path,
-  the file names, and the date; wait for the owner's look check.
+- [x] Task: Delivered 2026-10-23: `out/chibi-sprouts/r1/week1/manifest.json`, 8 cast x 2 views
+  (plus Pip's sit), 10 gesture frames, classroom and rug, `cast-sheet.png` and `gesture-sheet.png`;
+  `scripts/cutout-check.mjs` result ok on cast and gestures; Storytime and Workbooks told.
+- [ ] Task: The owner's look check (the sheets above), then S26 on the cast beyond 8. Follow-ups
+  after the look check: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
+  128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
 
 ## Phase 4: The rest of the inventory (after the look check)
 
