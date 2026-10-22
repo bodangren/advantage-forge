@@ -68,6 +68,10 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
 - [x] Task: Delivered 2026-10-23: `out/chibi-sprouts/r1/week1/manifest.json`, 8 cast x 2 views
   (plus Pip's sit), 10 gesture frames, classroom and rug, `cast-sheet.png` and `gesture-sheet.png`;
   `scripts/cutout-check.mjs` result ok on cast and gestures; Storytime and Workbooks told.
+  Workbooks (2026-10-23, commit 7213f4e): the set works in the compositor with no change to the
+  canvas, the scale, or the foot point; the week 1 test video is rendered (actors at 556 screen
+  px/m, from the rug in classroom.png; the gesture inset box is x 222 to 799, y 240 to 1183).
+  Storytime: the set is on the owner's page as F1 to F4.
 - [ ] Task: The owner's look check (the sheets above), then S26 on the cast beyond 8. Follow-ups
   after the look check: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
   128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
