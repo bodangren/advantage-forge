@@ -12097,5 +12097,49 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-23",
     "reviewer": "opus r12 (third review; r8 7.0, r10 7.0); follow-up list"
+  },
+  "sprout-adventurer": {
+    "overall": 7.5,
+    "scores": [
+      4,
+      4,
+      4,
+      3.5,
+      4,
+      3.5,
+      3.5,
+      4,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "The model is the Chibi Quest adventurer at age 5 on the shared age-5 base. All identity items of the mockup are present, and the remaining differences are small; the hair is lower and flatter than the tousled hair in the mockup.",
+    "strengths": [
+      "The hair now has side-swept, pointed locks that lie along the skull. The drips and the paddle tips are gone, and the hair reads as tousled brown hair.",
+      "The teal band is clear. No hair drip covers the band, and the dark seam at the top edge of the band is gone.",
+      "The red neckerchief is larger and has a round knot under the chin and a hanging point with folds. It is the color accent next to the face.",
+      "The identity colors match the mockup: a teal band, a red neckerchief, a cream shirt, grey-green short trousers, and brown shoes.",
+      "The brass lantern hangs at the left hip. It stays on the left side in all views and in every clip frame, so the figure is unmirrored.",
+      "The model has no sword and no pack, as the brief requires. The model stands on the ground and faces +Z.",
+      "In the gesture-clap clip, the hands meet at chest height, below the neckerchief and in front of the body. Nothing enters the head or the torso.",
+      "The 128 px sprites keep the identity in every direction. The teal band, the band tails, the brown hair, and the red neckerchief read, and the face reads in the S, SW, and SE directions."
+    ],
+    "issues": [
+      "The hair above the band is low and flat, like a layer of flat strips on the crown. The mockup hair has more height and one lock that falls over the front of the band. Lift the top locks for more volume and let one fringe lock fall across the band.",
+      "The band is a smooth, uniform ring with the same thickness all around. The mockup bandana is cloth with folds and a knot. Add one or two shallow folds and a small knot where the tails leave the band.",
+      "The belt pouch does not read in the front, three-quarter, or side views. A small dark shape shows at the right hip only when the arm moves in the clap strip. Make the pouch larger, or move it forward so that the arm does not hide it.",
+      "The right hand at rest still has one stiff finger that points down and out in the front and three-quarter views. Relax the hand into a loose fist.",
+      "In the gesture-clap clip, the cream hands have low contrast against the cream shirt, and the body motion is small. The head moves only a little between claps. Add a slightly larger bounce or lean on each clap.",
+      "In the back view, the band tails lie flat on the back hair in a V shape. Lift the tail ends a little away from the hair.",
+      "The belt buckle is silver. The mockup buckle is brass. Change the buckle to brass to match the lantern.",
+      "Note only (by design): the head and the face are the shared age-5 avatar parts. The open smile shows a flat white tooth band.",
+      "Note only (not rated): the wave hand stays at jaw level because the age-5 arm cannot reach the eye without entering the head."
+    ],
+    "next": "Lift the top hair locks for more height and let one fringe lock fall across the front of the band, as in the mockup.",
+    "critical": false,
+    "criticalReason": "No critical error. The model has no weapon and no text. The clap hands are visible at chest height, no part goes through another part, and the figure stays unmirrored.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r15 (third review; r13 7.0, r14 7.0)"
   }
 }
