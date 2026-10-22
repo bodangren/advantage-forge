@@ -51,8 +51,12 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   Rated 7.0, on the follow-up list: replace the two crown spikes with one soft cream tuft; ears
   golden with dark tips only; a larger chest bib; round paws (2026-10-22). Ships in week 1 for the
   owner's look check.
-- [ ] Task: Nan, Pat, May, Sam, Mia, and Ben at age 5 on `sprout-base` (hair, clothes, and colours
-  from the Workbooks cast sheet; Nan from inventory section 2); review in one batch.
+- [x] Task: Nan 7.5, Sam 7.5, Mia 7.5 (first review), Pat 7.5 (second), May 7.5 (third, after a
+  waist clash) on `sprout-base`; cut-outs in `out/chibi-sprouts/r1/week1/cast/` (2026-10-23). Ben 7.0 after three
+  reviews (stop rule), on the follow-up list: soft fluffy hair instead of clay-like locks (two point up
+  in the side view), a clearer smile at 128 px, a visible sole band. Reviews: `bench/sonnet/sprouts/cards/b3*`, `b4*`.
+  Debt: two builders wrapped `k.animation` for per-character motion (Ben's removed; May's ponytail
+  swing kept); the kind needs an extra-pose hook for a character's own bones.
 - [ ] Task: `sprout-adventurer` (lantern or map, no sword) and the week 1 gesture key frames:
   clap (apart, together), wave (left, right), nod (up, down), point to self, point forward, hands
   out, and idle, on one canvas with the feet at one point; review.

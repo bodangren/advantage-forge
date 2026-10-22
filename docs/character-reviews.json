@@ -12056,5 +12056,46 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-23",
     "reviewer": "opus r11 (third review; r7 7.0, r9 7.0 critical)"
+  },
+  "sprout-ben": {
+    "overall": 7.0,
+    "scores": [
+      3.5,
+      3.5,
+      4,
+      3.5,
+      4,
+      3.5,
+      3.5,
+      4,
+      4.5,
+      3.5,
+      3.5
+    ],
+    "summary": "The model is Ben at age 5 on the sprout base: thick light-brown hair over the forehead, a plain mid-blue T-shirt, straight blue jeans, grey sneakers, and an open smile. It is the same character as the cast sheet. The hair locks now taper, but they read as thick drips and spikes, not as soft fluffy hair.",
+    "strengths": [
+      "The jeans are now straight. They have an open hem on the shoe and no gathered cuff, as in the painting.",
+      "The smile is now wide and open with a white tooth band. In the front view, the face reads as happy.",
+      "The hair has no round curl balls now. The outline breaks into tapered locks at the fringe, at the crown, and above the ears.",
+      "The fringe falls to the eyebrows, and the hair volume covers the full head, as in the painting.",
+      "The plain mid-blue T-shirt with short sleeves matches the painting. It follows the body and the arms. The shirt and the jeans have a clear value step.",
+      "No part goes through another part, and no part floats. The model stands on the ground, faces +Z, and has a rig with a walk clip.",
+      "The identity reads in all eight sprite directions: the brown hair, the blue shirt, the darker jeans, and the grey shoes."
+    ],
+    "issues": [
+      "The hair locks are thick tapered drips with round ends, and the top surface still has lumps. The hair looks like melted clay, not soft fluffy hair. Two locks at the top back of the crown point up and back like horns in the side view. Make the locks thinner and longer, and sweep them in one direction. End each lock in a soft point. Make the top surface smooth between the locks. Fold the two horn locks down into the hair mass.",
+      "The white tooth paint goes past the two mouth corners as small downward points. In the three-quarter view, one point reads as a small fang. At 128 px, the mouth reads as a pale band, and the S sprite does not clearly smile. Keep the tooth band inside the mouth opening. Turn the mouth corners up.",
+      "The jeans are a saturated cobalt blue with no fade. The painting shows a softer denim blue with lighter areas at the thighs and the knees. Make the denim a little less saturated, and add a light fade at the thighs and the knees.",
+      "The jeans waist is wider than the shirt hem, so a dark blue band shows below the shirt at the hips. Make the jeans waist narrower, or let the shirt hem cover it.",
+      "The sneakers are small grey domes. The sole band is faint, and at 128 px the shoes read as grey feet. Make the white sole band thicker and brighter.",
+      "The hair colour is still a little orange. The painting shows a chestnut light brown with lighter highlights. Make the hair colour a little less saturated."
+    ],
+    "next": "Make the hair locks thinner and longer, sweep them in one direction, and fold the two horn locks at the top back of the crown into the hair mass.",
+    "notes": "Not rated: the shared base face has heavy eyebrows. In the S sprite, the eyebrows angle down at the centre, so the face looks stern. The back hair has thorn-shaped locks that point out from the dome. The walk is the shared base clip; the motion score is recorded but did not change the overall rating. This third build fixed the jogger shape of the jeans and opened the smile. The round curl balls are gone.",
+    "critical": false,
+    "criticalReason": "No critical error. All design elements are present: the thick light-brown hair over the forehead, the plain mid-blue T-shirt, the blue jeans, the grey sneakers, and the smile. The drip shape of the hair locks and the tooth paint at the mouth corners are clear differences, but no element is missing or wrong. No part goes through another part, and the model has no text or letters.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r12 (third review; r8 7.0, r10 7.0); follow-up list"
   }
 }
