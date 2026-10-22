@@ -13,8 +13,11 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   independent reviewer rates each batch; the builder never rates its own work. Bar 7.5 for
   characters.
 - Textured builds and renders run one at a time under `heavy.lock`.
-- Storytime (cross-session name `Storytime`) is the contact. Send a short note at each finished
-  stage, with no daily reports.
+- Contacts: `Storytime [17cf32]` and `Workbooks [bfc01e]` (cross-session names). At the start,
+  message both once with the delivery folder. When the week 1 set is complete, send both the
+  manifest path. Otherwise send short notes at finished stages only, with no daily reports.
+- The cast beyond 8 is the owner's item S26 on the Storytime approval page; he answers after the
+  week 1 look check. Do not ask him again.
 
 ## Phase 1: Design and contract
 
