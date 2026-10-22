@@ -11900,5 +11900,82 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-22",
     "reviewer": "opus r7"
+  },
+  "sprout-sam": {
+    "overall": 7.5,
+    "scores": [
+      4,
+      3.5,
+      4,
+      4,
+      4,
+      3.5,
+      3.5,
+      4.5,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "The model is Sam at age 5 on the sprout base: short dark-brown hair, a red T-shirt with two white stripes, blue shorts, and blue sneakers. It matches the cast sheet, and the differences are small: the hair texture, the shorts color, and the thin shoe soles.",
+    "strengths": [
+      "The red T-shirt has exactly two white stripes across the chest. The stripes go around the body and read in the front, side, and back views.",
+      "The hair color is a dark brown that matches the painting, and the hair is short and neat with a side sweep.",
+      "The open laugh with the open eyes matches the painting.",
+      "The red shirt is the focal accent. The stripes read at 128 px in all eight directions.",
+      "The T-shirt and the shorts follow the body. No part goes through another part, and no part floats.",
+      "The model stands on the ground, faces +Z, and has a rig with a walk clip. In the walk, the arms swing and the feet stay planted."
+    ],
+    "issues": [
+      "The hair is a smooth, helmet-like cap with a hard edge at the temples. The painting shows short hair with soft locks at the fringe and the crown. Add two or three soft fringe locks and a small break in the outline at the crown. Keep the hair short and neat.",
+      "The shorts are dark navy and very short. The shirt hides most of them, so they read as a dark band. The painting shows mid-blue denim shorts to the knee. Make the shorts a lighter denim blue and a little longer.",
+      "The white soles of the sneakers are a very thin line. They do not read at 128 px. Make the white sole band thicker so that the shoes read as sneakers.",
+      "The walk is stiff in the upper body. The torso and the head stay rigid. Add a small torso turn and a small vertical bob."
+    ],
+    "next": "Make the shorts a lighter denim blue and a little longer, and give the hair two or three soft fringe locks.",
+    "notes": "Not rated: the shared base face has heavy eyebrows that look older than age 5. The shared back hair is a smooth dome.",
+    "critical": false,
+    "criticalReason": "No critical error. All design elements are present: the hair, the red T-shirt with two white stripes, the blue shorts, the blue sneakers with white soles, and the laugh. No part goes through another part, and the model has no text or letters.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r8"
+  },
+  "sprout-mia": {
+    "overall": 7.5,
+    "scores": [
+      3.5,
+      3.5,
+      4,
+      3.5,
+      4,
+      4,
+      4,
+      4.5,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "The model is Mia at age 5 on the sprout base: shoulder-length light-brown hair with a pink bow on her left, a pink T-shirt, blue denim overalls, and white sneakers. The clothes match the cast sheet closely, but the hair has no waves and the bow is small.",
+    "strengths": [
+      "The overalls match the painting: a bib with buttons, straps over the shoulders, seam lines, and long legs with rolled cuffs.",
+      "The pink T-shirt, the blue overalls, the light-brown hair, and the white sneakers match the painting palette.",
+      "The pink bow sits on the side of the head (+X) and reads as a pink accent at 128 px in most directions.",
+      "The hair is the correct length and color. It frames the face and ends at the shoulders.",
+      "The open laugh matches the painting.",
+      "The clothes follow the body. The ear sits at the hair edge and reads as hair behind the ear. No part goes through another part.",
+      "The model stands on the ground, faces +Z, and has a rig with a walk clip. In the walk, the arms swing and the feet stay planted."
+    ],
+    "issues": [
+      "The hair is smooth and has no waves. The painting shows wavy hair with loose locks near the face. Add two or three soft wave ridges, make the lower edge at the shoulders wavy, and add one loose lock on each side of the face.",
+      "The bow is small and lies flat against the head. The painting shows a large bow with two ribbon tails. Make the bow about 1.5 times larger and add two short ribbon tails.",
+      "The fringe is a full, straight fringe to the eyebrows. The painting shows a fringe that sweeps to one side. Sweep the fringe a little to one side.",
+      "The walk is stiff in the upper body. The torso and the head stay rigid. Add a small torso turn and a small vertical bob."
+    ],
+    "next": "Add soft waves to the hair surface and to the lower edge at the shoulders.",
+    "notes": "Not rated: the shared base face has heavy eyebrows that look older than age 5. The back hair flares into a wide, heavy bell shape in the side and back views.",
+    "critical": false,
+    "criticalReason": "No critical error. All design elements are present: the hair, the pink bow, the pink T-shirt, the overalls with a bib, straps, and long legs, the white sneakers, and the laugh. The hair has no waves, but this is a difference in texture, not a missing element. No part goes through another part, and the model has no text or letters.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r8"
   }
 }
