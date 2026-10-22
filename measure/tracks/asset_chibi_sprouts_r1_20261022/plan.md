@@ -82,6 +82,12 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
 
 ## Phase 4: The rest of the inventory (after the look check)
 
+Note (Workbooks, 2026-10-23): the phone cut of the week 1 song video is portrait (9:16). Workbooks
+uses the week 1 set unchanged: classroom.png full width at 16:9 in the top band, cast fronts at the
+landscape scale rule, the Adventurer gesture frames about 900 px tall in the bottom part of a
+1920 px frame. A portrait classroom render (1080x1920) is a candidate for the Phase 4 scene work;
+Workbooks does not wait for it.
+
 - [ ] Task: The owner confirms the cast beyond 8 (Lily, Mom, Dad, Grandma, Grandpa, Tom) and the
   cost.
 - [ ] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
