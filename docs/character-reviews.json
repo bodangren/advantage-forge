@@ -12016,5 +12016,45 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-23",
     "reviewer": "opus r9 (second review; r7 7.0)"
+  },
+  "sprout-may": {
+    "overall": 7.5,
+    "scores": [
+      4,
+      4,
+      4,
+      3.5,
+      4,
+      3.5,
+      3.5,
+      4,
+      4.5,
+      4,
+      3
+    ],
+    "summary": "A chibi girl on the age-5 base with a high black ponytail, a yellow star clip, a yellow T-shirt, a short blue skirt, white socks, and white shoes. The waist is now clean, and only the skirt length, the pleats, the ponytail length, and the shoe detail differ from the painting.",
+    "strengths": [
+      "The T-shirt hem is smooth and straight, and it covers the top of the skirt. No pleat goes through the T-shirt in the front, three-quarter, side, or back views.",
+      "The legs now show a band of skin between the skirt hem and the white socks. The legs no longer read as white boots.",
+      "The ponytail now shows at the side of the head in the front view, on the same side as in the painting.",
+      "The high ponytail and the star clip give a strong cutout from the side and the back. The star clip reads in all eight sprite directions.",
+      "The yellow T-shirt, the blue skirt, and the white socks and shoes have the painting colors.",
+      "At 128 px, the yellow T-shirt, the blue skirt, and the black ponytail read in every direction. The face reads in the front directions."
+    ],
+    "issues": [
+      "The skirt is a narrow band with rounded waves at the hem, and it reads as a short ruffle skirt. The painting shows a longer, flared skirt with crisp pleats. Make the skirt longer and wider at the hem, with straight pleat folds from the waist to the hem.",
+      "The ponytail ends at the shoulder and hangs beside the shoulder in the back view. The painting shows the ponytail down the back to the waist. Make the ponytail longer and let it fall behind the shoulder.",
+      "The shoes are plain white rounded shapes. The painting shows sneakers with a gray sole and laces. Add a gray sole line and a lace panel on the top of each shoe.",
+      "The socks have a thick rolled cuff, and the band of bare skin above them is short. The painting shows thin ankle socks. Make the sock cuff thinner and lower.",
+      "The skirt is a strong royal blue. The painting shows a softer denim blue. Make the skirt blue a little softer.",
+      "The walk is readable but stiff, and the walk strip shows no clear ponytail swing. Add a small follow-through swing to the ponytail."
+    ],
+    "next": "Make the skirt longer and more flared, with straight, crisp pleat folds from the waist to the hem.",
+    "notes": "I checked the waist first. The T-shirt hem is clean at full size in the front and back views, and on the card in the three-quarter and side views. Not rated: the shared base face has heavy brown eyebrows that look older than age 5. The back hair is a large smooth dome from the base. The waving arm in the painting is a cast-sheet pose, not a rest pose.",
+    "critical": false,
+    "criticalReason": "",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r11 (third review; r7 7.0, r9 7.0 critical)"
   }
 }

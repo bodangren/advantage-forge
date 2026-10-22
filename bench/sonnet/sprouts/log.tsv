@@ -19,3 +19,7 @@ b4	children	builder	sonnet-high	a7ed084decbd167aa	sam, mia, ben	done: 19.2k/22.2
 r8	children	reviewer	opus	aad7a0acaf84594c0	sam, mia, ben	sam 7.5, mia 7.5 accepted; ben 7.0 (hair not fluffy, shirt and jeans one value)	-
 b3r2	children	builder	sonnet-high	ab06c574f46a58b6e	pat, may	done: pat two-hand bear hold, tufts, pockets; may chain ponytail on cloak bone, pleats; self 7.5/7.0	no ponytail bone in the kind; skirt reduction warning needed a second all
 r9	children	reviewer	opus	a5fc35acf7cd6595a	pat, may	pat 7.5 accepted; may 7.0 critical: pleat tops through the shirt hem; socks read as boots	-
+b4r2	children	builder	sonnet-high	a79eba76a7b94eb2a	ben	done: hair mounds and tufts, shirt lighter, jeans darker; self 7.5	builder wrapped k.animation to patch the walk; the orchestrator removed it (walk issues are base limits)
+r10	children	reviewer	opus	acf5744c190c79464	ben	7.0 (bar 7.5): hair reads curly (round balls), jogger cuffs, small closed smile	-
+b3r3	children	builder	sonnet-high	a1e8f98a738d4b09a	may	done: hem clean, pleats, ankle socks, ponytail at crown; self 7.5	ponytail swing via a k.animation wrapper on the cloak bone (debt: the kind needs an extra-pose hook)
+r11	children	reviewer	opus	af63d11fb3ba35ad0	may	7.5 accepted; waist clean; skirt still reads as a ruffle	-
