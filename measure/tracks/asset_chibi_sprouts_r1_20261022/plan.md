@@ -47,7 +47,10 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
 - [x] Task: `sprout-base` built and accepted at 7.5 after three passes and three independent
   reviews (7.0, 7.0, 7.5; `bench/sonnet/sprouts/cards/b1*/review.json`, 2026-10-22). Open notes:
   stiff upper body in the walk; the shared avatar face reads older than five.
-- [ ] Task: `sprout-pip` on the dog base, with the series bible look; front and three-quarter.
+- [x] Task: `sprout-pip` built; three passes, three reviews (6.5, 7.0, 7.0): the stop rule applies.
+  Rated 7.0, on the follow-up list: replace the two crown spikes with one soft cream tuft; ears
+  golden with dark tips only; a larger chest bib; round paws (2026-10-22). Ships in week 1 for the
+  owner's look check.
 - [ ] Task: Nan, Pat, May, Sam, Mia, and Ben at age 5 on `sprout-base` (hair, clothes, and colours
   from the Workbooks cast sheet; Nan from inventory section 2); review in one batch.
 - [ ] Task: `sprout-adventurer` (lantern or map, no sword) and the week 1 gesture key frames:

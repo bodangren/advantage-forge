@@ -11825,5 +11825,43 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-22",
     "reviewer": "opus r5 (third review; r1 7.0, r3 7.0)"
+  },
+  "sprout-pip": {
+    "overall": 7.0,
+    "scores": [
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      3.5,
+      4,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "The model is a chibi puppy with all the design elements of the cast sheet: golden fur, a cream forehead stripe and muzzle, floppy ears, large eyes, a black nose, an open smile, a fluffy tail, and a red collar with a gold tag. The model is the same character as the mockup, but the head shape, the chest, and the paws show clear differences.",
+    "strengths": [
+      "All the design elements are present: the forehead stripe, the cream muzzle, the black nose, the floppy ears, the fluffy tail with a cream tip, and the red collar with one round gold tag.",
+      "The large dark-brown eyes with white highlights and the open mouth with a pink tongue give a happy, friendly face.",
+      "The red collar and the gold tag show in the front, side, and back views and give a clear accent below the face.",
+      "The sit clip matches the sitting pose of the story picture: the hind legs fold, the front legs stay straight, and the head stays up.",
+      "The 128 px sprites keep the face, the stripe, and the collar in the front directions."
+    ],
+    "issues": [
+      "Two sharp spikes on the crown show in the side, back, three-quarter, and sit views. They look like small pointed ears or horns on a soft puppy. Replace them with one low, soft cream tuft.",
+      "The ears are large, flat, round paddles in one dark brown. In the side view, the ear covers the side of the head like a disc. Make the ears narrower and softer, use the golden fur color, and make only the tips darker.",
+      "The cream chest is a small patch under the collar. The mockup has a large cream bib from the collar down between the front legs. Make the cream area larger and longer.",
+      "The legs are straight tubes with flat cream bands at the bottom. The mockup has large round paws. Give each foot a round paw shape with a cream color.",
+      "The fur is a more saturated orange than the soft golden tan of the mockup. The fur bump on the tail is lumpy. Make the fur color lighter and warmer, and make the tail bump smoother.",
+      "The tongue hangs below the lower jaw as a pink lump in the three-quarter and side views. Thin pale lines show on the cheeks next to the muzzle. Keep the tongue inside the smile and remove the cheek lines."
+    ],
+    "next": "Change the head silhouette: replace the two crown spikes with one soft cream tuft, and make the ears narrower golden flaps with dark tips only.",
+    "critical": false,
+    "criticalReason": "No design element is missing: the collar, the tag, the forehead stripe, and the floppy ears are present. No part goes through another part. The two crown spikes are fur tufts, not ears, but they look pointed and are the first issue to fix.",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-22",
+    "reviewer": "opus r6 (third review; r2 6.5, r4 7.0); follow-up list"
   }
 }

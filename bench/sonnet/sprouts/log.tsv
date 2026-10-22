@@ -12,3 +12,4 @@ r4	pip	reviewer	opus	a4d75cdfd47e8de8f	sprout-pip	7.0 (bar 7.5): muzzle too wide
 b1r3	base	builder	sonnet-high	a86dce2e1141ba014	sprout-base	done: leg 1.05, torso 0.84, shoe 0.72, foot inside shoe; 0.86 m, hip 23.8%; mesh-same SAME	test line 21 assumed a lower ankle; fixed by the orchestrator
 r5	base	reviewer	opus	a15847d8a0202f101	sprout-base	7.5 accepted; small: trouser colour near the shirt, stiff upper body in walk	-
 b2r3	pip	builder	sonnet-high	a5c254cc5d7f9e396	sprout-pip	done: muzzle 0.62, head 50%, eyes flat, fluffy tail; 34,312 tris	bib not viewed after the last edit
+r6	pip	reviewer	opus	a68e282a7bf18a21e	sprout-pip	7.0 third review, stop rule; follow-up: crown spikes, ear colour, bib, paws	reviewers moved between ear issues (wings, paddles, colour) across three reviews
