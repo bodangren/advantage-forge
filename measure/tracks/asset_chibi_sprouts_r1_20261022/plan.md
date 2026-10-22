@@ -72,8 +72,12 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   canvas, the scale, or the foot point; the week 1 test video is rendered (actors at 556 screen
   px/m, from the rug in classroom.png; the gesture inset box is x 222 to 799, y 240 to 1183).
   Storytime: the set is on the owner's page as F1 to F4.
-- [ ] Task: The owner's look check (the sheets above), then S26 on the cast beyond 8. Follow-ups
-  after the look check: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
+- [x] Task: The owner's look check. Passed 2026-10-23 04:51 (via Storytime): F1 cast sheet, F2
+  Pip and Ben close up, F3 gesture sheet, F4 classroom and rug, no comments. The age-5 base and
+  the cast style are approved.
+- [ ] Task: Two gates before weeks 2 to 7: F5, the owner's pass on the week 1 test video
+  (Workbooks 7213f4e), and S26 on the cast beyond 8 (13 or the cap of 8). Storytime relays both.
+  Follow-ups after F5: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
   128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
 
 ## Phase 4: The rest of the inventory (after the look check)
