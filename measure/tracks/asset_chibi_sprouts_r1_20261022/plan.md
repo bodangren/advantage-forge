@@ -75,8 +75,17 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
 - [x] Task: The owner's look check. Passed 2026-10-23 04:51 (via Storytime): F1 cast sheet, F2
   Pip and Ben close up, F3 gesture sheet, F4 classroom and rug, no comments. The age-5 base and
   the cast style are approved.
-- [ ] Task: Two gates before weeks 2 to 7: F5, the owner's pass on the week 1 test video
-  (Workbooks 7213f4e), and S26 on the cast beyond 8 (13 or the cap of 8). Storytime relays both.
+- [x] Task: F5, the owner's pass on the week 1 test video (2026-10-23 04:55, via Storytime). Pass
+  on the video plan, with two comments: the video is not engaging because the static assets do
+  not move much ("We should rethink static assets"), and F7: the characters do not appear on the
+  rug but in front of a screen ("We really should rethink our entire model").
+- [ ] Task: S27, the owner's decision on the delivery model (Storytime page). My costs sent
+  2026-10-23: (B) alpha PNG loops per gesture, 3 to 4 days (a --frames cut-out option, hop clip,
+  a face rig for sing-mouth and blink), 3 to 4 min per loop; (C) full in-scene video renders from
+  a timeline tool on the scene page plus the showcase recorder, 3 to 4 days, 15 to 30 min per
+  85 s song at 24 fps, fixes F5 and F7; (D) in-scene stills per line, 2 to 3 days, 1 to 2 s per
+  still, fixes F7 only. Engine: three.js in headless Chromium, software GL, one Chrome at 0.8 to
+  1.5 GB RSS. Weeks 2 to 7 are on hold until S27 and S26 (cast size: 13 or the cap of 8).
   Follow-ups after F5: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
   128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
 
