@@ -11,6 +11,49 @@
 - Workbooks renders and edits the song videos in a 2D compositor. Forge delivers assets only.
 - Art is due 2026-11-15. Storytime Advantage releases on 2026-12-01.
 
+## Changes after the start (2026-10-22, from Storytime)
+
+These changes replace the items, the frame sequence format, and the order below where they differ.
+
+- Delivery folder: `out/chibi-sprouts/r1/` in Forge. Workbooks reads it and copies what it uses.
+  Forge never writes into the Workbooks repo.
+- Render-only delivery (inventory section 0, decision with Daniel): the videos are cut-out
+  animation by the Workbooks compositor. Forge delivers transparent PNG renders and no animation
+  clips or frame sequences. Source: `forge-inventory.md` (monorepo `9255c2711`).
+- Cast: the Pip-world cast drawn at age 5, with one design for each name in all weeks: Pip, Nan,
+  Pat, May, Sam, Mia, Ben, Lily, Mom, Dad, Grandma, Grandpa, and Tom (about eight). Their looks are
+  in the Workbooks cast sheet `~/Desktop/Workbooks/docs/content-plans/character-sheets/cast.json`
+  (the sheet ages differ, but the songs draw the children at about five). One Sprout, the
+  Adventurer, does the gestures in an inset. The inventory does not use the Wizard, the Druid, or
+  the Knight.
+- Pip follows the series bible: golden-brown fur, cream chest and muzzle, a cream forehead stripe,
+  floppy ears with darker tips, and a red collar with a small round gold tag. The workbook story
+  picture is not the reference.
+- Gesture key frames: a moving gesture has 2 key frames, a hold has 1, and a whole-body gesture
+  has 1. 20 gestures are in use (inventory section 3).
+- Scenes and props: inventory sections 4 and 5 (30 props and animals, with the colour and state
+  that each prompt fixes). Week 7 is provisional.
+- No letters, words, or numbers in any render.
+- Order: the owner asked for one test music video first, week 1 "Hello, I Am Pip", and then a look
+  check before the rest. The week 1 set has about 20 renders:
+  - Pip, front and three-quarter;
+  - Nan, Pat, May, Sam, Mia, and Ben at age 5;
+  - the Adventurer Sprout in six gestures: clap (apart, together), wave (left, right), nod (up,
+    down), point to self, point forward, hands out, and one idle pose;
+  - the classroom scene and a rug.
+- Week 1 format (Workbooks compositor):
+  1. Cast: one full-body PNG each, front or three-quarter, straight alpha, all at one scale (the
+     children the same pixel height, Pip in proportion), at least 900 px tall, feet on the bottom
+     edge or the foot point in the manifest.
+  2. Gesture frames: one canvas size, feet at the same point, unmirrored.
+  3. Classroom: 1920 x 1080, opaque, no people; the rug in it or as a separate PNG; the floor
+     area for the feet at about y 700 to 850.
+  4. A JSON manifest: cast name to file, gesture to frames, scene id to file.
+- Cost note: S18 approved a cast of at most 8. The week 1 set has 8 characters (Pip, Nan, five
+  classmates, the Adventurer). The full inventory has 13 and the Sprout. The owner must confirm
+  the larger cast after the look check. The children are variants of one age-5 base (hair,
+  clothes, colours), so each costs less than a full hero build.
+
 ## Art rules
 
 - Chibi Sprouts is the kindergarten sibling of Chibi Quest: the same chibi style and the same
