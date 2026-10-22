@@ -11977,5 +11977,44 @@
     "group": "Sprouts",
     "reviewedAt": "2026-10-23",
     "reviewer": "opus r8"
+  },
+  "sprout-pat": {
+    "overall": 7.5,
+    "scores": [
+      4,
+      4,
+      4,
+      3.5,
+      4,
+      3.5,
+      4,
+      4,
+      4.5,
+      4,
+      3.5
+    ],
+    "summary": "A chibi boy on the age-5 base with all five cast-sheet items in the correct colors. He now holds the teddy bear in front of the chest with both hands, and only the hair shape and the bear height differ from the painting.",
+    "strengths": [
+      "Both hands hold the bear in front of the body. The bear is the focal point in the front and three-quarter views.",
+      "The green T-shirt, the brown shorts, and the brown sandals have the painting colors.",
+      "The sandals have clear straps and a dark sole. They read as sandals from every view.",
+      "The shorts have a side pocket that reads in the side view.",
+      "The hands touch the bear and no part goes through another part.",
+      "At 128 px the bear reads as a brown shape at the chest in the front directions."
+    ],
+    "issues": [
+      "The new tufts are round knobs on top of a smooth cap, and the forehead has no fringe. The painting shows short, pointed, messy tufts that also fall over the forehead. Make the tufts pointed and add two or three fringe tufts.",
+      "The bear sits a little low, with its feet over the shorts. The painting shows the bear higher at the chest, with both forearms under it. Move the bear up by about one bear head.",
+      "The bear surface has a check pattern that reads as woven cloth. Use a soft fur bump in place of the check pattern.",
+      "The side pockets are small and do not read from the front. Make the pocket flaps a little larger.",
+      "The walk is readable but stiff, with short steps and little body bounce."
+    ],
+    "next": "Make the hair tufts pointed and add a short messy fringe over the forehead.",
+    "notes": "Not rated: the shared base face has a closed smile, and the painting shows an open grin with teeth. The base eyebrows are heavy for age 5. The back hair is a large smooth dome.",
+    "critical": false,
+    "criticalReason": "",
+    "group": "Sprouts",
+    "reviewedAt": "2026-10-23",
+    "reviewer": "opus r9 (second review; r7 7.0)"
   }
 }
