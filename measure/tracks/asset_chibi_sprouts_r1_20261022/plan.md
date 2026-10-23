@@ -115,8 +115,22 @@ Contract and commands: `docs/storytime-song.md`.
   later), then cut 2 with Storytime's framing fix (the back row moves in to x ±1.2, ±0.6, 0: Ben
   was cut by the right edge in the singles on Nan at 17.5 s and 33 s), then the portrait cut (F9, on hold:
   Workbooks keeps the 16:9 video as a band) and stage.json for weeks 2 to 7.
-- [ ] Task: After the pass: sing-mouth and blink (a face rig on the kind, 1 to 2 days), the hop
-  clip, a side sun for longer contact shadows if the owner wants them.
+- [x] Task: Tonight's order (owner, 2026-10-23 night, via Storytime: develop Storytime as far as
+  possible until 05:00). Cut 2 of week 1 (back row at x ±1.2, ±0.6, 0; `song-cut2.mp4`, 10 min).
+  The singing face: kind option `sing` (open mouth on a `mouth` bone, eyelids on an `eyelids`
+  bone, hidden 3 cm inside the head at rest; the page moves them per word and per blink;
+  `SING_OUT` 0.046 / 0.038 m; commits 46342fe9, 0a425ef7). Seven Sprouts rebuilt twice. Cut 3
+  of week 1 with the singing face (`song-cut3.mp4`). Render script
+  `bench/sonnet/sprouts/render-week.sh <week> <cut>`.
+- [ ] Task: 13 new gesture clips for weeks 2 to 6 (point up, reach, count fingers, sway, look,
+  hop, stretch up, eat, hug self, bow, listen, stamp, march): builder prompt
+  `bench/sonnet/sprouts/prompts/b7-gestures-2.md`, reviewer `r16-gestures-2.md`, bar 7.5, the
+  count is a pumped fist (closed hands). Then cut 1 of weeks 2, 3, 5, 6 from Storytime's drafts
+  (`~/Desktop/primary-parity-progress/storytime-stage/l2/w0N/stage.json`, all in the classroom).
+- [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
+  the eight. Do not build before the owner's answer; do not ask him.
+- [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
+  Pip if he wants it, the portrait cut (F9).
 
 ## Phase 5: The rest of the inventory (after the look check)
 
