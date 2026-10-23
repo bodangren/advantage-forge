@@ -135,6 +135,10 @@ Contract and commands: `docs/storytime-song.md`.
   (`~/Desktop/primary-parity-progress/storytime-stage/l2/w0N/stage.json`, all in the classroom):
   `out/chibi-sprouts/r1/week{2,3,5,6}/song/song-cut1.mp4` + sheets, 5 to 6 min each (2026-10-24
   00:21). Notes to Storytime: Pip hidden behind Pat in week 2; the week 5 solo needs a closer camera.
+  Both applied in the stage files; cut 2 of weeks 2 and 5 rendered 00:38 (`song-cut2.mp4`). The
+  stage file now takes `sun` (high or side) and `dog` (howl or quiet) for the owner's C3 and C4;
+  side-sun comparison stills in `out/chibi-sprouts/r1/week1/song/sun-side/` (Ben's hair shades
+  his eyes with the side sun).
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
