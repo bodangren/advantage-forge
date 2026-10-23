@@ -32,6 +32,7 @@ export default humanoidAsset({
   description: 'May, a five-year-old girl: large dark-brown eyes, long straight black hair in a high ponytail with a yellow star clip, a yellow T-shirt, a blue pleated skirt, white socks, and white sneakers.',
   reference: 'docs/sprout-mockups/may.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

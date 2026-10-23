@@ -46,6 +46,7 @@ export default humanoidAsset({
   description: 'Ben, a five-year-old boy: large dark-brown eyes, tousled light-brown hair in pointed locks, a wide open smile, a blue T-shirt, blue jeans, and grey sneakers with white soles.',
   reference: 'docs/sprout-mockups/ben.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

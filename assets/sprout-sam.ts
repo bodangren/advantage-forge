@@ -48,6 +48,7 @@ export default humanoidAsset({
   description: 'Sam, a five-year-old boy: large dark-brown eyes, short dark-brown hair, an open laugh, a red T-shirt with two white stripes, blue denim shorts, and blue sneakers with white soles.',
   reference: 'docs/sprout-mockups/sam.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

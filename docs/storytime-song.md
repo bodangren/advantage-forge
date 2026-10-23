@@ -41,6 +41,17 @@ Rules (`src/song/timeline.ts`):
 - Moves: the actor walks at 0.45 m/s with the `walk` clip, turns toward the target, and returns
   to the mark's yaw and the line clip on arrival.
 - Clips cross-fade over 0.22 s.
+- Singing: each actor's `sings` are the word times of its lines (`segments[].words`, or the line
+  span without them). The mouth opens in 60 ms at a word, closes over 90 ms at its end, and pulses
+  about 3.5 times a second on words longer than 0.45 s. Eyes blink for 0.14 s about every 3.4 s,
+  offset per actor.
+
+The singing face is the kind option `sing: true` (`assets/parts/humanoid-kind.ts`): an open-mouth
+body (dark, with a tongue) rigid on a `mouth` bone and skin-coloured eyelids rigid on an
+`eyelids` bone, both children of `head`. At rest they sit 3 cm inside the head (`SING_DEPTH`),
+so every other render shows the painted face; the song page moves the bones out by `SING_OUT`
+(`src/song/timeline.ts`) after the mixer, since no clip poses them. The seven Sprout humanoids
+set it; Pip (a dog) sings with the howl clip.
 
 ## Commands
 
@@ -56,8 +67,10 @@ flock $L node --import tsx scripts/song-record.ts record $SPEC $STAGE --out $OUT
 ```
 
 Output: `song.mp4` 1920x1080, H.264 yuv420p, no sound, video t = song t, length = `duration`.
-`--from s --to s` records a part; `--frames` keeps the JPEG frames. Every run appends the
-timeline, the page notes, and the timing to `render.txt`.
+`--name song-cut2` names a cut (`song-cut2.mp4`, `song-cut2-sheet.png`); `--from s --to s`
+records a part; `--frames` keeps the JPEG frames. Every run appends the timeline, the page
+notes, and the timing to `render.txt`. Never import an asset or kind module into the page: it
+pulls the Node build code into the browser and the page never becomes ready.
 
 The page is `song.html` (`src/song/main.ts`): the scene page's bright interior lighting, the
 room from `scenes/maps/<scene>.ts`, the actors as skinned clones with an animation mixer, and

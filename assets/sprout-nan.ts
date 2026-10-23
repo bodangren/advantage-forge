@@ -31,6 +31,7 @@ export default humanoidAsset({
   description: 'Nan, a five-year-old girl: large dark-brown eyes, short black hair in two small red-banded bunches, an orange T-shirt with a white star, red shorts, and white sneakers with grey soles.',
   reference: 'docs/sprout-mockups/pat.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

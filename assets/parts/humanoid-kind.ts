@@ -292,6 +292,9 @@ function scaled(
   };
 }
 
+/** How far inside the head the singing-face bodies rest (metres); the song page moves them out by `SING_OUT` (src/song/timeline.ts). */
+export const SING_DEPTH = 0.03;
+
 /** The Chibi Sprouts age-5 body: the same head and face on a shorter torso, shorter arms, and shorter legs. */
 export const AGE5: HumanoidProportions = scaled(HERO, FIVE);
 
@@ -328,6 +331,13 @@ export interface HumanoidKind {
   readonly lashes?: boolean;
   /** The body proportions (default `HERO`, the Chibi Quest hero; `AGE5` is the Chibi Sprouts child). */
   readonly proportions?: HumanoidProportions;
+  /**
+   * A singing face for the Storytime song page: an open-mouth body rigid on a `mouth` bone and
+   * eyelids rigid on an `eyelids` bone, both children of `head`. At rest they sit 3 cm inside the
+   * head (hidden); the song page moves the bones forward per word (`mouth`) and per blink
+   * (`eyelids`). No clip poses them, so every other render shows the painted face only.
+   */
+  readonly sing?: boolean;
   /** Paint on the skin body after the face paint (a beard shadow, freckles, age lines). */
   paintSkin?(skin: sdf.Shape, h: HumanoidShape): sdf.Shape;
   /** Extra bodies: clothes, hats, tools. */
@@ -472,6 +482,8 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
         'leg.R': { parent: 'hips', at: mx(HIP) },
         'shin.R': { parent: 'leg.R', at: mx(KNEE), split: P.split },
         'foot.R': { parent: 'shin.R', at: mx(ANKLE) },
+        // The singing face (`sing`): the bones sit at the head centre depth; their bodies are placed in world space.
+        ...(kind.sing ? { mouth: { parent: 'head', at: [0, P.face.smileY, 0] as V3 }, eyelids: { parent: 'head', at: [0, P.eye[1], 0] as V3 } } : {}),
       });
 
       // ------------------------------------------------------------------ head and face (the rogue's)
@@ -609,6 +621,21 @@ export function humanoidAsset(kind: HumanoidKind): AssetDefinition {
       };
       const skin = kind.paintSkin ? kind.paintSkin(skinBase, shape) : skinBase;
       k.body('skin', skin, { color: T.skin, roughness: 0.55, textureDensity: 2 });
+
+      // ------------------------------------------------------------------ the singing face (`sing`)
+      // The open mouth (a dark flat ellipsoid with a tongue) hangs below the painted smile, which
+      // becomes the upper lip; the eyelids are skin-colored discs over the eyes. Both start 3 cm
+      // inside the head (`SING_DEPTH`) and the song page moves their bones out along +Z.
+      if (kind.sing) {
+        const mY = P.face.smileY - 0.016;
+        const mouthOpen = sdf
+          .ellipsoid([0.04, 0.027, 0.012])
+          .at(0, mY, faceZ(0, mY) - SING_DEPTH)
+          .union(sdf.sphere(0.012).at(0, mY - 0.014, faceZ(0, mY) - SING_DEPTH + 0.004).paint('#c9605a'));
+        k.body('mouth-open', mouthOpen, { color: '#4e2522', roughness: 0.7, detail: 0.003, bone: 'mouth' });
+        const eyelids = pair(sdf.ellipsoid([0.058, 0.06, 0.012]).at(EYE[0], EYE[1], faceZ(EYE[0], EYE[1]) - SING_DEPTH));
+        k.body('eyelid-skin', eyelids, { color: T.skin, roughness: 0.55, bone: 'eyelids' });
+      }
 
       // ------------------------------------------------------------------ hair (the default style)
       if (kind.hair !== false)

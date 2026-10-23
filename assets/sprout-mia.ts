@@ -48,6 +48,7 @@ export default humanoidAsset({
   description: 'Mia, a five-year-old girl: large dark-brown eyes, an open laugh, shoulder-length wavy light-brown hair with a pink bow on her left side, a pink T-shirt, long blue denim overalls, and white sneakers.',
   reference: 'docs/sprout-mockups/mia.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

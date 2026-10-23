@@ -13,7 +13,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import type { Place } from '../../scenes/chibi-quest.js';
-import { cameraAt, cameraWorld, mixAt, placeAt, RUG, type ActorTrack, type Timeline } from './timeline.js';
+import { blinkAt, cameraAt, cameraWorld, mixAt, mouthAt, placeAt, RUG, SING_OUT, type ActorTrack, type Timeline } from './timeline.js';
 import '../scene/hamlet.css';
 
 const MAPS = import.meta.glob('../../scenes/maps/*.ts') as Record<string, () => Promise<{ places: () => Place[] }>>;
@@ -124,6 +124,10 @@ interface Live {
   mixer: THREE.AnimationMixer;
   actions: Map<string, THREE.AnimationAction>;
   durations: Map<string, number>;
+  /** The singing face bones (`sing: true` on the kind) and their rest z. */
+  mouth: { bone: THREE.Object3D; z: number } | null;
+  eyelids: { bone: THREE.Object3D; z: number } | null;
+  seed: number;
 }
 const lives: Live[] = [];
 const actorGroup = new THREE.Group();
@@ -153,8 +157,16 @@ async function makeActor(track: ActorTrack): Promise<string[]> {
     durations.set(clip.name, clip.duration);
   }
   const missing = [...new Set(track.cues.map((c) => c.clip))].filter((c) => !actions.has(c));
-  lives.push({ track, root, mixer, actions, durations });
-  return missing.map((c) => `${track.id} (${track.asset}) has no clip "${c}": idle`);
+  const faceBone = (name: string): { bone: THREE.Object3D; z: number } | null => {
+    const bone = model.getObjectByName(name);
+    return bone ? { bone, z: bone.position.z } : null;
+  };
+  const mouth = faceBone('mouth');
+  const eyelids = faceBone('eyelids');
+  lives.push({ track, root, mixer, actions, durations, mouth, eyelids, seed: lives.length + 1 });
+  const notes = missing.map((c) => `${track.id} (${track.asset}) has no clip "${c}": idle`);
+  if (!mouth && track.sings.length) notes.push(`${track.id} (${track.asset}) has no mouth bone: the mouth stays painted`);
+  return notes;
 }
 
 function poseActor(live: Live, t: number): void {
@@ -178,6 +190,13 @@ function poseActor(live: Live, t: number): void {
   play(mix.clip, mix.start, mix.w);
   if (mix.prev) play(mix.prev.clip, mix.prev.start, 1 - mix.w);
   live.mixer.update(0);
+  // The singing face: no clip poses these bones, so the page sets them after the mixer.
+  if (live.mouth) {
+    const open = mouthAt(live.track.sings, t);
+    live.mouth.bone.position.z = live.mouth.z + SING_OUT * open;
+    live.mouth.bone.scale.set(1, 0.3 + 0.7 * open, 1);
+  }
+  if (live.eyelids) live.eyelids.bone.position.z = live.eyelids.z + SING_OUT * blinkAt(live.seed, t);
 }
 
 // ---------------------------------------------------------------- the timeline

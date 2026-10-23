@@ -23,6 +23,7 @@ export default scaleAsset(
     description: 'Pat, a five-year-old boy: large dark-brown eyes, short black hair, a green T-shirt, brown shorts with pockets, brown sandals, and a small brown teddy bear held in the crook of his left arm.',
     reference: 'docs/sprout-mockups/pat.jpg',
     proportions: { ...AGE5, clips: { ...AGE5.clips, stride: 1.25, lift: 1.2 } },
+    sing: true,
     hair: false,
     undershirt: false,
     pants: false,

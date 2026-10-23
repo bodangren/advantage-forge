@@ -9,6 +9,11 @@
  * Camera keys use the same space for `tx`, `tz` (`ty` optional, default `TARGET_Y`).
  */
 
+export interface SpecWord {
+  text?: string;
+  start: number;
+  end: number;
+}
 export interface SpecLine {
   text: string;
   gesture?: string;
@@ -16,6 +21,8 @@ export interface SpecLine {
   end: number;
   actors?: string[];
   scene?: string;
+  /** Word times from the song (Workbooks' karaoke timing). */
+  segments?: { start: number; end: number; words?: SpecWord[] }[];
 }
 export interface Spec {
   title?: string;
@@ -61,11 +68,17 @@ export interface PathKey {
   z: number;
   yaw: number;
 }
+export interface Sing {
+  start: number;
+  end: number;
+}
 export interface ActorTrack {
   id: string;
   asset: string;
   path: PathKey[];
   cues: Cue[];
+  /** The words this actor sings (the mouth opens on each); from the line span when a line has no word times. */
+  sings: Sing[];
 }
 export interface Timeline {
   duration: number;
@@ -112,6 +125,8 @@ const SAME_LINE_GAP = 0.3; // s, no idle between two lines of one singer closer 
 const DEFAULT_CAMERA: CameraKey = { at: 0, az: 0, el: 12, dist: 4.8, tx: 0, tz: 0 };
 
 export const IDLE = 'idle';
+/** How far the song page moves the singing-face bones out of the head (metres): `SING_DEPTH` (0.03) in humanoid-kind.ts plus 4 mm. */
+export const SING_OUT = 0.034;
 
 export function clipFor(asset: string, gesture: string | undefined): { clip: string; warning?: string } {
   const key = (gesture ?? '').trim().toLowerCase();
@@ -168,6 +183,11 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
       if (!next || next.start - line.end >= SAME_LINE_GAP) cues.push({ t: line.end, clip: IDLE });
     });
     cues.sort(byTime);
+    const sings: Sing[] = mine.flatMap((line) => {
+      const words = (line.segments ?? []).flatMap((seg) => seg.words ?? []).filter((w) => w.end > w.start);
+      return words.length ? words.map((w) => ({ start: w.start, end: w.end })) : [{ start: line.start, end: line.end }];
+    });
+    sings.sort((a, b) => a.start - b.start);
 
     // Moves: walk from the current place to the target at the walk speed, then resume the line clip.
     const moves = (stage.moves ?? []).filter((m) => m.actor === id).sort((a, b) => a.at - b.at);
@@ -184,7 +204,7 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
       cues.push({ t: move.at, clip: move.clip ?? 'walk' }, { t: move.at + dur, clip: after });
       cues.sort(byTime);
     }
-    return { id, asset, path, cues };
+    return { id, asset, path, cues, sings };
   });
 
   const camera = [...(stage.camera?.length ? stage.camera : [DEFAULT_CAMERA])].sort((a, b) => a.at - b.at);
@@ -262,6 +282,29 @@ export function mixAt(cues: readonly Cue[], t: number): { clip: string; start: n
   const w = i > 0 ? smooth(clamp01((t - cur.t) / BLEND)) : 1;
   const prev = i > 0 && w < 1 ? cues[i - 1]! : undefined;
   return { clip: cur.clip, start: cur.t, w, ...(prev && prev.clip !== cur.clip ? { prev: { clip: prev.clip, start: prev.t } } : {}) };
+}
+
+/**
+ * How open the mouth is at t (0 closed, 1 open): it opens in 60 ms at each word, closes over 90 ms
+ * at the word end, and pulses on long words (about 3.5 beats a second, as syllables).
+ */
+export function mouthAt(sings: readonly Sing[], t: number): number {
+  for (const w of sings) {
+    if (t < w.start - 0.03) break;
+    if (t > w.end + 0.09) continue;
+    const open = smooth(clamp01((t - w.start + 0.03) / 0.06)) * smooth(clamp01((w.end + 0.09 - t) / 0.09));
+    const pulse = w.end - w.start > 0.45 ? 0.7 + 0.3 * Math.abs(Math.cos(Math.PI * 3.5 * (t - w.start))) : 1;
+    return open * pulse;
+  }
+  return 0;
+}
+
+/** How closed the eyes are at t (0 open, 1 shut): a 0.14 s blink about every 3.4 s, offset per actor. */
+export function blinkAt(seed: number, t: number): number {
+  const period = 3.4 + 0.7 * ((seed * 7919) % 11) / 11;
+  const phase = ((t + seed * 1.37) % period) / period;
+  const u = phase * period;
+  return u < 0.14 ? Math.sin((Math.PI * u) / 0.14) : 0;
 }
 
 /** A short text report of a timeline for the render log. */

@@ -96,6 +96,7 @@ export default humanoidAsset({
     'The Chibi Quest adventurer at age 5: tousled chestnut hair under a teal bandana, a red neckerchief, a cream shirt, grey-green shorts, a small brass lantern at the hip, free hands, and the week 1 gesture clips.',
   reference: 'docs/hero-mockups/adventurer_001.jpg',
   proportions: AGE5,
+  sing: true,
   hair: false,
   undershirt: false,
   pants: false,

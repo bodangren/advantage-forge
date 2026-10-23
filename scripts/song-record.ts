@@ -53,12 +53,14 @@ interface Opts {
   frames: boolean;
   at: number[];
   count: number;
+  /** The output stem: <name>.mp4, <name>-phone.mp4, <name>-sheet.png (default "song", sheet.png). */
+  name: string;
 }
 
 function parseArgs(argv: string[]): { command: string; spec: string; stage: string; opts: Opts } {
   const [command, spec, stage, ...rest] = argv;
   if (!command || !spec || !stage) throw new Error('Usage: song-record.ts record|stills|sheet <spec.json> <stage.json> --out <dir> [options]');
-  const opts: Opts = { out: '', fps: 24, from: 0, to: null, portrait: false, frames: false, at: [], count: 12 };
+  const opts: Opts = { out: '', fps: 24, from: 0, to: null, portrait: false, frames: false, at: [], count: 12, name: 'song' };
   for (let i = 0; i < rest.length; i++) {
     const a = rest[i]!;
     const v = (): string => rest[++i] ?? '';
@@ -70,6 +72,7 @@ function parseArgs(argv: string[]): { command: string; spec: string; stage: stri
     else if (a === '--frames') opts.frames = true;
     else if (a === '--at') opts.at = v().split(',').map(Number);
     else if (a === '--count') opts.count = Number(v());
+    else if (a === '--name') opts.name = v();
     else throw new Error(`Unknown option ${a}`);
   }
   if (!opts.out) throw new Error('--out <dir> is required');
@@ -154,7 +157,7 @@ async function main(): Promise<void> {
       const inputs = files.flatMap((f) => ['-i', f]);
       const scale = opts.portrait ? 'scale=-1:480' : 'scale=480:-1';
       const filter = `${files.map((_, i) => `[${i}:v]${scale}[v${i}]`).join(';')};${files.map((_, i) => `[v${i}]`).join('')}concat=n=${files.length}:v=1:a=0,tile=${cols}x${rows}:padding=4:color=white[out]`;
-      const sheet = join(opts.out, 'sheet.png');
+      const sheet = join(opts.out, opts.name === 'song' ? 'sheet.png' : `${opts.name}-sheet.png`);
       await done(ffmpeg([...inputs, '-filter_complex', filter, '-map', '[out]', sheet]));
       note(`sheet ${rows}x${cols} ${sheet}`);
     }
@@ -162,7 +165,7 @@ async function main(): Promise<void> {
     const from = opts.from;
     const to = opts.to ?? tl.duration;
     const n = Math.round((to - from) * opts.fps);
-    const video = join(opts.out, opts.portrait ? 'song-phone.mp4' : 'song.mp4');
+    const video = join(opts.out, opts.portrait ? `${opts.name}-phone.mp4` : `${opts.name}.mp4`);
     if (opts.frames) mkdirSync(join(opts.out, 'frames'), { recursive: true });
     const ff = ffmpeg(
       ['-f', 'image2pipe', '-framerate', String(opts.fps), '-c:v', 'mjpeg', '-i', '-',

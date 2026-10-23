@@ -1,10 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { buildTimeline, cameraAt, cameraWorld, clipFor, mixAt, placeAt, RUG, TARGET_Y, WALK_SPEED, type Spec, type Stage } from '../src/song/timeline.js';
+import { blinkAt, buildTimeline, cameraAt, cameraWorld, clipFor, mixAt, mouthAt, placeAt, RUG, TARGET_Y, WALK_SPEED, type Spec, type Stage } from '../src/song/timeline.js';
 
 const spec: Spec = {
   duration: 30,
   lines: [
-    { text: 'Hello, I am Pip', gesture: 'point to self', start: 10, end: 13, actors: ['Pip'] },
+    {
+      text: 'Hello, I am Pip',
+      gesture: 'point to self',
+      start: 10,
+      end: 13,
+      actors: ['Pip'],
+      segments: [{ start: 10, end: 13, words: [{ text: 'Hello,', start: 10, end: 10.4 }, { text: 'I', start: 10.6, end: 10.7 }, { text: 'am', start: 10.7, end: 10.9 }, { text: 'Pip', start: 11, end: 12 }] }],
+    },
     { text: 'Hello, I am Nan', gesture: 'point to self', start: 13.1, end: 16, actors: ['Nan'] },
     { text: 'Wave, wave', gesture: 'wave', start: 16, end: 19, actors: ['Nan'] },
     { text: 'Hello class', gesture: 'spin', start: 20, end: 24, actors: ['Pat', 'Nan'] },
@@ -67,6 +74,37 @@ describe('buildTimeline', () => {
     expect(mid.x).toBeCloseTo(0.55);
     expect(mid.z).toBeCloseTo(0);
     expect(((mid.yaw % 360) + 360) % 360).toBeCloseTo(180);
+  });
+});
+
+describe('singing', () => {
+  const tl = buildTimeline(spec, stage);
+
+  it('takes the word times of a line, or the line span without them', () => {
+    expect(tl.actors[0]!.sings).toEqual([
+      { start: 10, end: 10.4 },
+      { start: 10.6, end: 10.7 },
+      { start: 10.7, end: 10.9 },
+      { start: 11, end: 12 },
+    ]);
+    expect(tl.actors[1]!.sings[0]).toEqual({ start: 13.1, end: 16 });
+  });
+
+  it('opens the mouth on a word and closes it between words', () => {
+    const sings = tl.actors[0]!.sings;
+    expect(mouthAt(sings, 5)).toBe(0);
+    expect(mouthAt(sings, 10.2)).toBeGreaterThan(0.9);
+    expect(mouthAt(sings, 10.52)).toBe(0);
+    expect(mouthAt(sings, 11.5)).toBeGreaterThan(0.6);
+    expect(mouthAt(sings, 12.3)).toBe(0);
+  });
+
+  it('blinks for 0.14 s and keeps the eyes open otherwise', () => {
+    const shut = Array.from({ length: 400 }, (_, i) => blinkAt(1, i / 100)).filter((v) => v > 0).length;
+    expect(shut).toBeGreaterThan(8);
+    expect(shut).toBeLessThan(40);
+    const peak = Math.max(...Array.from({ length: 400 }, (_, i) => blinkAt(1, i / 100)));
+    expect(peak).toBeGreaterThan(0.95);
   });
 });
 
