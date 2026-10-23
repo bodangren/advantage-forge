@@ -105,6 +105,19 @@ order, not quality. Reviews use a rating out of 10 with a bar of 7.
 - Trial tools must write only inside their trial directory. Check isolation before a batch.
 - Keep heavy builds within machine capacity: two textured build slots for the whole machine.
 - Record a game port and a local game as separate completions.
+- Clean up after a merge (owner rule, 2026-10-23). Each worktree and each branch other than
+  `master` has one of two ends: it merges into `master`, in whole or in part, or it is deprecated
+  and pruned.
+  - After a merge, remove the worktree in the same turn: `git worktree remove <path>`, then
+    `git worktree prune`.
+  - Delete the merged branch with `git branch -d <branch>`. Delete its remote branch too.
+  - When the owner accepts the work, delete its temporary outputs: `out/<asset>/sprites`, review
+    frames, and `bench/runs`. Keep `out/<asset>/<asset>.glb` (the pack and RPG skin scripts read
+    it), `out/packs/`, `out/apk2d/`, and the delivery folders.
+  - If a permission check blocks a delete, give the owner the path and the command. Do not ask
+    another session to do it.
+  - Before a work session ends, run `git worktree list` and `git branch -a`. Report each item
+    other than `master`, with its plan.
 - Full lessons are in [measure/lessons-learned.md](measure/lessons-learned.md). Open debt is in
   [measure/tech-debt.md](measure/tech-debt.md).
 
