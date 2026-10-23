@@ -1,5 +1,6 @@
 import { sdf } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
+import { sproutGestures } from './parts/sprout-gestures.js';
 import { scaleAsset } from './parts/scale-asset.js';
 
 /**
@@ -140,6 +141,9 @@ export default scaleAsset(
         sdf.sphere(0.0045).at(-0.013, 0.073, 0.035),
       );
       k.body('teddy-face', bearAt(features), { color: C.dark, roughness: 0.5, detail: 0.002 });
+
+      // ---------------------------------------------------------------- the week 1 gestures (option C: every singer plays them)
+      sproutGestures(k, h);
     },
   }),
   0.96,

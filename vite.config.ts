@@ -82,7 +82,7 @@ export default defineConfig({
   ...(process.env.FORGE_VITE_CACHE ? { cacheDir: process.env.FORGE_VITE_CACHE } : {}),
   // Scan only the app pages for dependencies. The default scans every *.html under the root,
   // which includes the trial workspaces under bench/runs and takes minutes.
-  optimizeDeps: { entries: ['index.html', 'render.html', 'hamlet.html', 'showcase.html'] },
+  optimizeDeps: { entries: ['index.html', 'render.html', 'hamlet.html', 'showcase.html', 'song.html'] },
   server: {
     host: '127.0.0.1',
     watch: {
@@ -90,5 +90,5 @@ export default defineConfig({
       ignored: ['**/bench/**', '**/out/**'],
     },
   },
-  build: { rollupOptions: { input: ['index.html', 'render.html', 'hamlet.html', 'showcase.html'] } },
+  build: { rollupOptions: { input: ['index.html', 'render.html', 'hamlet.html', 'showcase.html', 'song.html'] } },
 });

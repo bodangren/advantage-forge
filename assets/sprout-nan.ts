@@ -1,5 +1,6 @@
 import { profile, sdf } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
+import { sproutGestures } from './parts/sprout-gestures.js';
 
 /**
  * Nan, a five-year-old girl of Chibi Sprouts: about 0.9 m with the bunches, faces +Z. No picture
@@ -102,5 +103,8 @@ export default humanoidAsset({
       .at(ANKLE[0], 0, 0)
       .bone('foot.L');
     k.body('shoes', pair(sneaker), { color: C.shoe, roughness: 0.6 });
+
+    // ---------------------------------------------------------------- the week 1 gestures (option C: every singer plays them)
+    sproutGestures(k, h);
   },
 });

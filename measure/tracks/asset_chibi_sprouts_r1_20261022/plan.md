@@ -95,7 +95,26 @@ after the start" wins where it differs from the rest. Art is due 2026-11-15.
   Follow-ups after F5: Pip (crown spikes, ear colour, bib, paws), Ben (fluffy hair, smile at
   128 px, sole band), the classroom window panes, the stiff base walk, the kind extra-pose hook.
 
-## Phase 4: The rest of the inventory (after the look check)
+## Phase 4: In-scene song renders (option C, approved 2026-10-23 15:30)
+
+The owner approved S27: full in-scene renders. Forge renders the silent song video with the cast
+on the classroom rug; Workbooks muxes the audio and overlays lyrics, the inset, and the screens.
+Contract and commands: `docs/storytime-song.md`.
+
+- [x] Task: The timeline tool: `src/song/timeline.ts` (pure: spec.json + stage.json to actor
+  paths, clip cues, camera keys; `tests/song-timeline.test.ts`, 9 tests), `song.html` +
+  `src/song/main.ts` (the classroom with the scene page's lighting, skinned actors, a mixer,
+  `__song.load/seek`), `scripts/song-record.ts` (sheet, stills, record to H.264 through ffmpeg).
+  The six children got the gesture clips (`sproutGestures` in `extra`) and were rebuilt (2026-10-23).
+- [x] Task: Test cut 1 of week 1 ("Hello, I Am Pip", 78.4 s): `out/chibi-sprouts/r1/week1/song/`
+  sheet.png (12 stills) and song.mp4 (1920x1080, 24 fps, no sound). Storytime's stage.json: Pip
+  and Nan front, five children in a row behind, 31 camera keys, yaw 0.
+- [ ] Task: The owner's pass on test cut 1 (Storytime relays), then the portrait cut (F9, on hold:
+  Workbooks keeps the 16:9 video as a band) and stage.json for weeks 2 to 7.
+- [ ] Task: After the pass: sing-mouth and blink (a face rig on the kind, 1 to 2 days), the hop
+  clip, a side sun for longer contact shadows if the owner wants them.
+
+## Phase 5: The rest of the inventory (after the look check)
 
 Note (Workbooks, 2026-10-23): the phone cut of the week 1 song video is portrait (9:16). Workbooks
 uses the week 1 set unchanged: classroom.png full width at 16:9 in the top band, cast fronts at the
@@ -110,7 +129,7 @@ Workbooks does not wait for it.
 - [ ] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
 
-## Phase 5: Delivery and close
+## Phase 6: Delivery and close
 
 - [ ] Task: Deliver the files and the manifest; record the paths here; tell Storytime.
 - [ ] Task: Run `./measure/generate.sh` and `./measure/doctor.sh`, and close the track.

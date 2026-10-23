@@ -1,5 +1,6 @@
 import { profile, sdf } from '../src/index.js';
 import { AGE5, humanoidAsset } from './parts/humanoid-kind.js';
+import { sproutGestures } from './parts/sprout-gestures.js';
 
 /**
  * Ben, a five-year-old boy of Chibi Sprouts, faces +Z. Target: docs/sprout-mockups/ben.jpg (the
@@ -141,5 +142,8 @@ export default humanoidAsset({
       .at(ANKLE[0], 0, 0)
       .bone('foot.L');
     k.body('shoes', pair(sneaker), { color: C.shoe, roughness: 0.6 });
+
+    // ---------------------------------------------------------------- the week 1 gestures (option C: every singer plays them)
+    sproutGestures(k, h);
   },
 });
