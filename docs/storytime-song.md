@@ -50,8 +50,11 @@ The singing face is the kind option `sing: true` (`assets/parts/humanoid-kind.ts
 body (dark, with a tongue) rigid on a `mouth` bone and skin-coloured eyelids rigid on an
 `eyelids` bone, both children of `head`. At rest they sit 3 cm inside the head (`SING_DEPTH`),
 so every other render shows the painted face; the song page moves the bones out by `SING_OUT`
-(`src/song/timeline.ts`) after the mixer, since no clip poses them. The seven Sprout humanoids
-set it; Pip (a dog) sings with the howl clip.
+(`src/song/timeline.ts`: 0.046 m for the mouth, 0.038 m for the eyelids, since the real face
+sits about 1 cm outside the head ellipsoid at the mouth) after the mixer, since no clip poses
+them. `--query mouthOut=0.05&lidOut=0.04` on the recorder overrides the travel for tuning. The
+seven Sprout humanoids set it; Pip (a dog) sings with the howl clip. The chibi head is 0.41 m
+wide, so the 8 cm mouth reads as about a fifth of the face.
 
 ## Commands
 

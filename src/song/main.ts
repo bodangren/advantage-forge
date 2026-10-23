@@ -21,6 +21,9 @@ const FLAT = new Set(['floor', 'floor-cracked', 'wood-floor', 'rug']);
 
 const params = new URLSearchParams(location.search);
 const portrait = params.has('portrait');
+/** `?mouthOut=0.05&lidOut=0.04` override the face-bone travel for tuning (the recorder's --query). */
+const mouthOut = Number(params.get('mouthOut') ?? SING_OUT.mouth);
+const lidOut = Number(params.get('lidOut') ?? SING_OUT.eyelids);
 
 const root = document.createElement('div');
 root.className = 'hamlet';
@@ -193,10 +196,10 @@ function poseActor(live: Live, t: number): void {
   // The singing face: no clip poses these bones, so the page sets them after the mixer.
   if (live.mouth) {
     const open = mouthAt(live.track.sings, t);
-    live.mouth.bone.position.z = live.mouth.z + SING_OUT * open;
+    live.mouth.bone.position.z = live.mouth.z + mouthOut * open;
     live.mouth.bone.scale.set(1, 0.3 + 0.7 * open, 1);
   }
-  if (live.eyelids) live.eyelids.bone.position.z = live.eyelids.z + SING_OUT * blinkAt(live.seed, t);
+  if (live.eyelids) live.eyelids.bone.position.z = live.eyelids.z + lidOut * blinkAt(live.seed, t);
 }
 
 // ---------------------------------------------------------------- the timeline

@@ -125,8 +125,12 @@ const SAME_LINE_GAP = 0.3; // s, no idle between two lines of one singer closer 
 const DEFAULT_CAMERA: CameraKey = { at: 0, az: 0, el: 12, dist: 4.8, tx: 0, tz: 0 };
 
 export const IDLE = 'idle';
-/** How far the song page moves the singing-face bones out of the head (metres): `SING_DEPTH` (0.03) in humanoid-kind.ts plus 4 mm. */
-export const SING_OUT = 0.034;
+/**
+ * How far the song page moves the singing-face bones out of the head (metres). The bodies rest
+ * `SING_DEPTH` (0.03, humanoid-kind.ts) inside the head ellipsoid; the real face (cheeks, chin)
+ * sits about 1 cm further out at the mouth, so the mouth travels further than the eyelids.
+ */
+export const SING_OUT = { mouth: 0.046, eyelids: 0.038 } as const;
 
 export function clipFor(asset: string, gesture: string | undefined): { clip: string; warning?: string } {
   const key = (gesture ?? '').trim().toLowerCase();

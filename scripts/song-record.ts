@@ -55,12 +55,14 @@ interface Opts {
   count: number;
   /** The output stem: <name>.mp4, <name>-phone.mp4, <name>-sheet.png (default "song", sheet.png). */
   name: string;
+  /** Extra page query for tuning, e.g. "mouthOut=0.05". */
+  query: string;
 }
 
 function parseArgs(argv: string[]): { command: string; spec: string; stage: string; opts: Opts } {
   const [command, spec, stage, ...rest] = argv;
   if (!command || !spec || !stage) throw new Error('Usage: song-record.ts record|stills|sheet <spec.json> <stage.json> --out <dir> [options]');
-  const opts: Opts = { out: '', fps: 24, from: 0, to: null, portrait: false, frames: false, at: [], count: 12, name: 'song' };
+  const opts: Opts = { out: '', fps: 24, from: 0, to: null, portrait: false, frames: false, at: [], count: 12, name: 'song', query: '' };
   for (let i = 0; i < rest.length; i++) {
     const a = rest[i]!;
     const v = (): string => rest[++i] ?? '';
@@ -73,13 +75,14 @@ function parseArgs(argv: string[]): { command: string; spec: string; stage: stri
     else if (a === '--at') opts.at = v().split(',').map(Number);
     else if (a === '--count') opts.count = Number(v());
     else if (a === '--name') opts.name = v();
+    else if (a === '--query') opts.query = v();
     else throw new Error(`Unknown option ${a}`);
   }
   if (!opts.out) throw new Error('--out <dir> is required');
   return { command, spec, stage, opts };
 }
 
-async function openPage(portrait: boolean): Promise<{ page: Page; close: () => Promise<void> }> {
+async function openPage(portrait: boolean, query = ''): Promise<{ page: Page; close: () => Promise<void> }> {
   const server = await createServer({
     root: ROOT,
     configFile: false,
@@ -98,7 +101,8 @@ async function openPage(portrait: boolean): Promise<{ page: Page; close: () => P
   page.on('console', (m) => {
     if (m.type() === 'error' || m.type() === 'warning') console.error(`[page] ${m.text()}`);
   });
-  await page.goto(`${url}song.html${portrait ? '?portrait' : ''}`, { timeout: 180_000 });
+  const q = [portrait ? 'portrait' : '', query].filter(Boolean).join('&');
+  await page.goto(`${url}song.html${q ? `?${q}` : ''}`, { timeout: 180_000 });
   await page.waitForFunction(() => window.__song?.ready === true, undefined, { timeout: 600_000, polling: 500 });
   return {
     page,
@@ -132,7 +136,7 @@ async function main(): Promise<void> {
   note(describe(tl));
 
   const t0 = performance.now();
-  const { page, close } = await openPage(opts.portrait);
+  const { page, close } = await openPage(opts.portrait, opts.query);
   const notes = await page.evaluate((data) => window.__song!.load(data), tl);
   for (const n of notes) note(`page: ${n}`);
   note(`page ready in ${Math.round((performance.now() - t0) / 1000)} s`);
