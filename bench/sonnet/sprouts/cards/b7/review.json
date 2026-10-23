@@ -1,0 +1,80 @@
+{
+  "clips": {
+    "point-up": {
+      "rating": 5.5,
+      "critical": false,
+      "notes": "At 1.0 s the elbow is bent and the forearm goes up along the cheek. The fist goes behind the temple in the front view. The pose reads as 'hand on head' or 'scratch head', not 'point up'. No index finger shows. The head tilt back is weak. The start and the end are idle. No clip-through is visible."
+    },
+    "reach": {
+      "rating": 5.0,
+      "critical": false,
+      "notes": "At 1.0 s the two fists are under the chin, and the jaw hides their tops in the front and side views. The pose reads as 'chin on fists' (a cute pose), not as a reach forward and up. The fists touch the underside of the jaw. A shallow intersection is possible but not confirmed. The forward lean is small."
+    },
+    "count-fingers": {
+      "rating": 5.0,
+      "critical": false,
+      "notes": "At 1.0 s the right arm is out to the side at shoulder height with a flat hand, palm up. It reads as 'ta-da' or 'here it is', not as counting. The hand is far from the head. The three 0.03 m pumps are too small to see at video size. The motion is smooth and the loop is clean."
+    },
+    "sway": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "The sway is clear and smooth. The head travels about 0.12 m from side to side as a sine curve, with left-right-left over the loop. The arms stay relaxed. The loop joins cleanly. The motion is calm but easy to copy."
+    },
+    "look": {
+      "rating": 6.0,
+      "critical": false,
+      "notes": "The head turn reads well: left at 1.0 s and right at 1.5 s. The hand is at cheek height beside the jaw, not above the brow, so it reads as a wave and not as a visor. At 1.5 s the fist is near the cheek (contact, no clear clip-through). Without the head turn, this pose is the same as listen and point-up."
+    },
+    "hop": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "The airborne pose reads as a jump: the feet are about 0.065 m off the floor and the arms go out. The body stops in the air from 0.6 to 1.0 s and from 1.55 to 1.7 s, so it floats. The first hop is 0.7 s in the air and the second is 0.5 s. The knees look straight in the air. The feet stay on or above the floor."
+    },
+    "stretch-up": {
+      "rating": 5.5,
+      "critical": false,
+      "notes": "At 1.0 s the forearms go up along the sides of the jaw and the fists go behind the cheeks in the front view. The side view shows the fists outside the head below the ears (contact, not inside). The pose reads as 'hands over ears' or 'oh no', not as a stretch. The tiptoe does not show."
+    },
+    "eat": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "The fist comes to the chin corner at 0.5 s and 1.25 s, and this reads as eating. At 1.0 s, which is the named hold, the fist is down at the chest between the two bites (the brief times conflict). The fist stops below the mouth. No clip-through."
+    },
+    "hug-self": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "The arms cross high on the chest and the fists are at the front of the opposite shoulders. With the smile and the small rock it reads as a self-hug. The forearms stack without a visible intersection. Without the rock it can read as 'arms folded'."
+    },
+    "bow": {
+      "rating": 8.0,
+      "critical": false,
+      "notes": "A clear, deep bow with a smooth bend, a hold to 1.3 s, and a clean return. The arms bend forward with the fists near the knees, not straight down as the brief says. The fists come near the thighs but do not go in. The best clip of the set."
+    },
+    "listen": {
+      "rating": 6.0,
+      "critical": false,
+      "notes": "The head tilt is clear. The fist is out to the side at mouth height with a gap from the cheek, not cupped behind the ear. The pose reads as a wave or 'hi'. It looks almost the same as look and count-fingers."
+    },
+    "stamp": {
+      "rating": 5.5,
+      "critical": false,
+      "notes": "The right foot lifts only about 0.03 m (the spec is 0.08 m). It goes up in 0.3 s and down in 0.25 s, so it reads as a small weight shift, not a hard stamp. The hip drop does not show. The arms out 20 deg show. The feet stay on or above the floor."
+    },
+    "march": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "The side view reads as a march: a knee comes up and the arms swing. In the front view the foot moves forward more than up, so the knee lift is hard to see and the march looks like a shuffle. There is no forward travel. The loop is clean, and the feet stay on the floor (the lower foot pixels come from the forward swing)."
+    }
+  },
+  "overall": 6.2,
+  "fixes": [
+    "point-up, look, listen, count-fingers, and eat all put a right fist near the jaw, so they look the same; give each clip its own silhouette from the arm direction, the head, the spine, and the finger.",
+    "point-up: straighten the elbow and angle the arm 45 to 60 deg out so the full arm and fist clear the head outline in the front view; show the index finger up; tilt the head and eyes up 20 deg.",
+    "stretch-up: use straight arms in a wide V with the fists clear of the head, a visible tiptoe (0.03 m), and a back stretch; the fists behind the cheeks read as 'hands over ears'.",
+    "reach: put straight arms forward at shoulder height with the fists apart and clear of the chin, a 15 deg lean, and a tiptoe; the fists under the chin read as 'chin on fists' and touch the jaw.",
+    "count-fingers: put the fist beside the cheek with a visible index finger, and make each count a clear 0.05 m pump or a finger flick; the flat hand at the shoulder reads as 'ta-da'.",
+    "stamp: lift the knee so the foot rises 0.08 m, then bring it down fast (about 0.08 s) with a hip drop and a small body bounce.",
+    "hop: remove the hover in the air (0.6 to 1.0 s); use one arc per hop with the top at the hold time, the same air time for both hops, and bent knees in the air.",
+    "listen and look: lean the spine and tilt the head 20 to 25 deg toward the hand so the ear or the brow comes to the fist; march: lift the knee 60 to 70 deg so the foot rises in the front view; eat: put one bite at 1.0 s."
+  ]
+}

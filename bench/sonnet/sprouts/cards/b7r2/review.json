@@ -1,0 +1,79 @@
+{
+  "clips": {
+    "point-up": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "Fix 1 is done in part. The right arm goes up and out, and the fist is now outside the head outline at cheek height. The head tilts toward the arm, and the arm holds from 0.8 to 1.3 s. The pose reads as 'hand up' (a raised hand in class). This is near 'point up', but it is not a clear point. No index finger shows at video size, and the elbow shows a small bend. The silhouette is different from all of the other 12 clips. It is near the static frame of the week 1 wave."
+    },
+    "reach": {
+      "rating": 6.0,
+      "critical": false,
+      "notes": "Fix 3 is done in the side view: the arms go forward and up, and the spine leans. In the front view, the fists are at the corners of the jaw, close to the face. That reads as 'excited fists' and is near the old 'chin on fists' pose. The fists are in front of the face, with no clip-through. Of the two-arms-up pair, this is the weaker pose: in the front view it is a narrow form of stretch-up."
+    },
+    "count-fingers": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "Fix 4 is done: the fist is beside the jaw, the left hand is on the hip, there are three pumps, and the body bobs and nods. The silhouette is now distinct. The pose reads as a 'yes, yes, yes' fist pump, not as counting, because no finger shows. The motion is clean, and the start and the end are idle."
+    },
+    "sway": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "This clip did not change. A smooth, clear sway: the head travels about 0.12 m, the arms are relaxed, and the loop is clean."
+    },
+    "look": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "Fix 5 is done. The arms go out straight to the sides, and the whole body turns one way at 0.5 s and the other way at 1.2 s, with the head in front of the turn. No hand is near the face, and the silhouette is distinct. The arms-out shape also reads as 'airplane' or 'twist', so the 'look' read comes only from the head. The arms drop to idle in about 0.2 s at 1.7 to 1.9 s, which is a little fast."
+    },
+    "hop": {
+      "rating": 8.0,
+      "critical": false,
+      "notes": "Fix 8 is done. Each hop is a clean arc with no stop in the air: take-off at 0.3 s, the top at 0.5 s (about 0.067 m), landing at 0.7 s, and a second hop from 1.2 to 1.6 s. The feet land exactly on the floor line, the arms swing, and the landings bend. The clip reads at a glance."
+    },
+    "stretch-up": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "Fix 2 is done. The arms make a wide V, and the fists are at ear height, clear of the head outline. The arms rise from 0.3 to 0.8 s, hold from 0.8 to 1.3 s, and go back by 1.7 s. The pose reads as 'stretch up' or 'hooray'. The tiptoe is too small to see."
+    },
+    "eat": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "Fix 7 is done. The right fist comes to the chin at 0.5 s and 1.2 s, the head lowers, and small chew nods follow. The fist touches the chin with no visible clip-through. The pose reads as eating or nibbling, but it can also read as 'thinking'. The hanging left arm and the head drop make it different from count-fingers."
+    },
+    "hug-self": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "This clip did not change. The arms cross high on the chest with the fists at the opposite shoulders. The small rock makes it read as a self-hug."
+    },
+    "bow": {
+      "rating": 8.0,
+      "critical": false,
+      "notes": "This clip did not change. A clear, deep bow with a hold and a clean return. The fists come near the knees but do not go in."
+    },
+    "listen": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "Fix 6 is done. The head makes a large tilt to the right toward the fist at the jaw, the spine rolls, and the left arm goes out. The silhouette is distinct from count-fingers and point-up. It reads as 'tilt the head to listen', but a little weakly, because the fist is at the jaw, not at the ear. The fist touches the jaw with no clear clip-through."
+    },
+    "stamp": {
+      "rating": 6.0,
+      "critical": false,
+      "notes": "Fix 9 works for the read: the lift is visible and the fast down-stroke reads as a stamp. MESH DEFECT at each lift (0.3 s and 1.1 s): the right thigh comes through the shorts, a jagged blue flap sticks out at the hip, and the shin comes through the top of the shoe (the edge is torn). This defect is not in the critical list, but it is easy to see at 900 px. The shoe also moves forward and back during the lift and the down-stroke. The front view shows it about 0.02 m lower at 0.15, 0.35, and 1.15 s. This is most likely forward motion, not a sink, but forge check ground must confirm it."
+    },
+    "march": {
+      "rating": 6.0,
+      "critical": false,
+      "notes": "Fix 10 works for the read. The shoe now rises clearly in the front view, and the arms swing, so the clip reads as a march. MESH DEFECT at every knee lift (0.25, 0.75, 1.25, 1.75 s): the thigh comes through the shorts, a jagged flap sticks out at the hip, and the shin comes through the shoe top. In the side view the foot kicks forward with the toe pointed down, so the step looks more like a kick than a knee-up. Before each lift the foot moves forward along the floor (0.10 to 0.15 s)."
+    }
+  },
+  "overall": 7.0,
+  "fixes": [
+    "march, stamp: the large knee lift tears the mesh. The thigh comes through the shorts, a jagged flap sticks out at the hip, and the shin comes through the shoe top. Keep the foot level during the lift. Lower the thigh lift until the shorts hold, or fix the shorts and shoe skin weights in sprout-sam (that is outside this edit scope).",
+    "reach: in the front view the fists sit at the jaw corners and look like 'excited fists'. Angle the arms 40 deg out so the fists clear the jaw line, add a bigger lean and a visible rise on the toes, or yaw the body about 20 deg so the forward arms show.",
+    "count-fingers: the pose reads as a fist pump, not counting. If the rig allows, show the index finger, or flick one more finger on each count. If not, accept the fist pump with the bob.",
+    "point-up: show the index finger at video size, straighten the elbow fully, and add an upward eye or head look. Now it reads as 'hand up', not 'point up'.",
+    "look: the arms-out shape reads as 'airplane'. Bring one fist to the brow edge as a visor, or lower the arms to 40 deg below horizontal. Slow the arm return at 1.7 to 1.9 s to about 0.35 s.",
+    "listen and eat: the fist sits at the jaw in both clips. Keep the head motion as the main signal: listen tilts sideways into the fist, and eat drops forward to the chin. Do not make them closer to each other.",
+    "stamp: confirm with forge check that the right shoe stays on the floor at 0.15, 0.35, and 1.15 s (in the front view the shoe moves 0.02 m forward at those frames)."
+  ]
+}

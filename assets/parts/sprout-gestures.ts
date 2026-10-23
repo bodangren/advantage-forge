@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { motion, sdf } from '../../src/index.js';
 import type { AssetContext, Pose } from '../../src/index.js';
+import { AGE5 } from './humanoid-kind.js';
 import type { HumanoidShape } from './humanoid-kind.js';
 
 /**
@@ -78,8 +79,8 @@ interface Goal {
 }
 
 export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
-  const { SHOULDER, ELBOW, WRIST, GRIP } = h.joints;
-  const { keys, bump, reach, orient } = motion;
+  const { SHOULDER, ELBOW, WRIST, GRIP, HIP, KNEE, ANKLE } = h.joints;
+  const { keys, bump, reach, orient, wave } = motion;
 
   const arm = (side: 1 | -1) => {
     const m = (v: V3): V3 => (side === 1 ? [-v[0], v[1], v[2]] : v);
@@ -224,4 +225,240 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     return both(outGoal, f);
   });
 
+  // ================================================================== week 2 to 6 gestures (13 clips)
+  // Times below are seconds (the clip is 2 s); `ks` turns the phase into seconds and eases through the keys.
+  const ks = (p: number, list: readonly (readonly [number, number])[], mode: 'smooth' | 'linear' = 'smooth') => keys(p * DEFAULT_DURATION, list, mode);
+  const HIPS_AT = AGE5.bones.hips;
+
+  // Arms from a fist-center point: `fist` (right-arm coordinates) is where the fist center should be.
+  const fistGoal = (point: V3, d: V3, hint: V3, pole: V3): Goal => ({ wrist: R.wristFor(point, d, hint), d, hint, pole });
+  const fistGoalL = (point: V3, d: V3, hint: V3, pole: V3): Goal => ({ wrist: L.wristFor(point, d, hint), d, hint, pole });
+  /** An arm raised `deg` degrees from vertical (outward), as long as the reach allows. */
+  const armUpGoal = (deg: number, hint: V3, pole: V3, z = 0.0): Goal => {
+    const len = REACH * 0.985;
+    return { wrist: [-(SX + len * Math.sin(deg * RAD)), SY + len * Math.cos(deg * RAD), z], d: dFor(deg), hint, pole };
+  };
+
+  // Legs from foot targets: each foot is a thigh swing `a` and a knee bend `b` (degrees) from the rest leg, a
+  // `ride` share of the hips' rise (a foot in the air rides with the hips), and a sole pitch (+ is toe down).
+  interface Foot {
+    readonly a?: number;
+    readonly b?: number;
+    readonly ride?: number;
+    readonly pitch?: number;
+    readonly lift?: number;
+  }
+  const THIGH = Math.hypot(HIP[1] - KNEE[1], HIP[2] - KNEE[2]);
+  const SHIN = Math.hypot(KNEE[1] - ANKLE[1], KNEE[2] - ANKLE[2]);
+  const LEG_LENGTH = HIP[1] - ANKLE[1];
+  /** The ankle of a leg swung forward by `a` with the knee bent by `b`, relative to the hip (y, z). */
+  const legFk = (a: number, b: number): { y: number; z: number } => ({
+    y: -(THIGH * Math.cos(a * RAD) + SHIN * Math.cos((a - b) * RAD)),
+    z: THIGH * Math.sin(a * RAD) + SHIN * Math.sin((a - b) * RAD),
+  });
+  const FK0 = legFk(0, 0);
+  const legsPose = (hips: { move?: V3; rotate?: V3 }, left: Foot = {}, right: Foot = {}): Pose => {
+    const move: V3 = hips.move ?? [0, 0, 0];
+    const rotate: V3 = hips.rotate ?? [0, 0, 0];
+    const out: Record<string, { rotate: V3 }> = {};
+    for (const [side, sx, f] of [['L', 1, left], ['R', -1, right]] as const) {
+      const ride = f.ride ?? 0;
+      const q = legFk(f.a ?? 0, f.b ?? 0);
+      const ankle: V3 = [sx * ANKLE[0] + ride * move[0], ANKLE[1] + ride * move[1] + q.y - FK0.y + (f.lift ?? 0), ANKLE[2] + ride * move[2] + q.z - FK0.z];
+      const r = motion.legTo(side, { hip: HIP, knee: KNEE, ankle: ANKLE }, ankle, { hips: { at: HIPS_AT, move, rotate }, pitch: f.pitch ?? 0 });
+      out[`leg.${side}`] = { rotate: r.leg };
+      out[`shin.${side}`] = { rotate: r.shin };
+      out[`foot.${side}`] = { rotate: r.foot };
+    }
+    return { hips: { move, rotate }, ...out };
+  };
+  /** The thigh swing that lifts the foot by `rise` meters with a knee bend of `b` degrees. */
+  const swingFor = (rise: number, b: number): number => {
+    let lo = 0;
+    let hi = 80;
+    for (let i = 0; i < 40; i++) {
+      const mid = (lo + hi) / 2;
+      if (legFk(mid, b).y - FK0.y >= rise) hi = mid;
+      else lo = mid;
+    }
+    return (lo + hi) / 2;
+  };
+  const arms = (l: V3, r: V3, fl: V3 = [0, 0, 0], fr: V3 = [0, 0, 0]): Pose => ({
+    'upperarm.L': { rotate: l },
+    'upperarm.R': { rotate: r },
+    'forearm.L': { rotate: fl },
+    'forearm.R': { rotate: fr },
+  });
+
+  // ------------------------------------------------------------------ point-up: one straight arm up and out, the finger up
+  // The fist cannot go above the head (the reach is 0.138 m), so the arm is a straight line 50 degrees out from vertical, clear of the head outline.
+  const UP_DEG = 50;
+  const upGoal = armUpGoal(UP_DEG, [0, 1, 0], [-0.4, 0.2, -0.1]);
+  clip('gesture-point-up', (p) => {
+    const f = ks(p, [[0, 0], [0.3, 0], [0.8, 1], [1.3, 1], [2, 0]]);
+    return { ...R.pose({ ...upGoal, d: dFor(UP_DEG), hint: [0, 1, 0] }, f), head: { rotate: [-12 * f, 0, 12 * f] } };
+  });
+
+  // ------------------------------------------------------------------ reach: both straight arms forward and up, a lean and a tiptoe
+  const REACH_UP = 15;
+  const REACH_OUT = 10;
+  const reachDir: V3 = [-Math.sin(REACH_OUT * RAD) * Math.cos(REACH_UP * RAD), Math.sin(REACH_UP * RAD), Math.cos(REACH_OUT * RAD) * Math.cos(REACH_UP * RAD)];
+  const reachGoal: Goal = {
+    wrist: [-SX + REACH * 0.985 * reachDir[0], SY + REACH * 0.985 * reachDir[1], REACH * 0.985 * reachDir[2]],
+    d: reachDir,
+    hint: [0, 1, 0],
+    pole: [-0.3, 0.2, 0.0],
+  };
+  clip('gesture-reach', (p) => {
+    const f = ks(p, [[0, 0], [0.7, 1], [1.3, 1], [2, 0]]);
+    const toe = ks(p, [[0, 0], [0.7, 1], [1.3, 1], [2, 0]]);
+    const lean = ks(p, [[0, 0], [0.6, 16], [1.0, 18], [1.4, 16], [2, 0]]);
+    const foot: Foot = { pitch: 7 * toe, lift: 0.015 * toe };
+    return {
+      ...both(reachGoal, f),
+      ...legsPose({ move: [0, 0.015 * toe, 0] }, foot, foot),
+      spine: { rotate: [lean, 0, 0] },
+      head: { rotate: [-lean + 5 * f, 0, 0] },
+    };
+  });
+
+  // ------------------------------------------------------------------ count-fingers: the right fist at the jaw, the left fist on the hip, the whole body bobs with each count
+  const COUNT_AT: V3 = [-0.16, 0.43, 0.13];
+  const HIP_FIST: V3 = [-0.14, 0.21, 0.03];
+  const hipGoal = fistGoal(HIP_FIST, [0.5, -1, 0.2], [0, 0, 1], [-0.55, 0.28, -0.12]);
+  clip('gesture-count-fingers', (p) => {
+    const f = ks(p, [[0, 0], [0.3, 1], [1.45, 1], [1.9, 0], [2, 0]]);
+    const pump = ks(p, [[0, 0], [0.35, 0], [0.5, 0.04], [0.68, 0], [0.85, 0.04], [1.02, 0], [1.2, 0.04], [1.38, 0], [2, 0]]);
+    const b = pump / 0.04;
+    const goal = fistGoal([COUNT_AT[0], COUNT_AT[1] + pump, COUNT_AT[2]], [0.2, 1, 0], [0, 0, 1], [-0.45, 0.3, -0.05]);
+    return {
+      ...R.pose(goal, f),
+      ...L.pose(hipGoal, f),
+      ...legsPose({ move: [0, -0.012 * b, 0] }),
+      head: { rotate: [8 * b, 0, 0] },
+    };
+  });
+
+  // ------------------------------------------------------------------ sway: hips and spine roll to +X, the head counter-rolls
+  clip('gesture-sway', (p) => {
+    const s = ks(p, [[0, 0], [0.5, -1], [1.0, 1], [1.5, -1], [2, 0]]);
+    const roll = 4 * s;
+    const swing = 4 * wave(p, 2);
+    return {
+      ...legsPose({ rotate: [0, 0, -roll] }),
+      spine: { rotate: [0, 0, -roll] },
+      head: { rotate: [0, 0, 4 * s] },
+      ...arms([swing, 0, 0], [-swing, 0, 0]),
+    };
+  });
+
+  // ------------------------------------------------------------------ look: both arms out like balancing, the body turns left and right, the head leads
+  const lookGoal = armUpGoal(110, [0, 0, 1], [-0.3, 0.1, -0.1], 0.0);
+  clip('gesture-look', (p) => {
+    const f = ks(p, [[0, 0], [0.4, 1], [1.6, 1], [2, 0]]);
+    const yaw = ks(p, [[0, 0], [0.5, 30], [1.2, -30], [1.8, 0], [2, 0]]);
+    const lean = ks(p, [[0, 0], [0.3, 5], [1.5, 5], [2, 0]]);
+    return { ...both(lookGoal, f), spine: { rotate: [lean, yaw, 0] }, head: { rotate: [-0.5 * lean, yaw / 3, 0] } };
+  });
+
+  // ------------------------------------------------------------------ hop: two arcs (take-off 0.3 and 1.2 s, apex 0.5 and 1.4 s), the knees bend on the landing
+  clip('gesture-hop', (p) => {
+    const t = p * DEFAULT_DURATION;
+    const arc = (t0: number) => {
+      const u = (t - t0) / 0.4;
+      return u > 0 && u < 1 ? 4 * u * (1 - u) : 0;
+    };
+    const air = Math.max(arc(0.3), arc(1.2));
+    const flying = (t > 0.3 && t < 0.7) || (t > 1.2 && t < 1.6) ? 1 : 0;
+    const pre = motion.legDrop(LEG_LENGTH, 18);
+    const land = motion.legDrop(LEG_LENGTH, 25);
+    const crouch = ks(p, [[0, 0], [0.15, -pre], [0.3, 0], [0.7, 0], [0.8, -land], [0.95, 0], [1.05, -pre], [1.2, 0], [1.6, 0], [1.7, -land], [1.85, 0], [2, 0]]);
+    const tuck: Foot = { a: 6 * air, b: 25 * air, ride: flying, pitch: 15 * air };
+    const swing = ks(p, [[0, 0], [0.15, 10], [0.3, -20], [0.5, -60], [0.7, -30], [0.85, 5], [1.05, 10], [1.2, -20], [1.4, -60], [1.6, -30], [1.8, 5], [2, 0]]);
+    return {
+      ...legsPose({ move: [0, 0.06 * air + crouch, 0] }, tuck, tuck),
+      ...arms([swing, 0, 8 * air], [swing, 0, -8 * air], [-0.25 * Math.abs(swing), 0, 0], [-0.25 * Math.abs(swing), 0, 0]),
+      head: { rotate: [-4 * air, 0, 0] },
+    };
+  });
+
+  // ------------------------------------------------------------------ stretch-up: both straight arms in a wide V, a tiptoe, the head back
+  const VEE_DEG = 55;
+  const veeGoal = armUpGoal(VEE_DEG, [0, 1, 0], [-0.4, 0.2, -0.1]);
+  const TOE_PITCH = 7; // degrees toe down: the heel rises 0.015 m over the 0.12 m foot
+  clip('gesture-stretch-up', (p) => {
+    const f = ks(p, [[0, 0], [0.8, 1], [1.3, 1], [1.9, 0], [2, 0]]);
+    const toe = ks(p, [[0, 0], [0.6, 1], [1.4, 1], [1.9, 0], [2, 0]]);
+    const foot: Foot = { pitch: TOE_PITCH * toe, lift: 0.015 * toe };
+    return { ...both({ ...veeGoal, d: dFor(VEE_DEG), hint: [0, 1, 0] }, f), ...legsPose({ move: [0, 0.015 * toe, 0] }, foot, foot), head: { rotate: [-10 * f, 0, 0] } };
+  });
+
+  // ------------------------------------------------------------------ eat: the head lowers to meet the fist at the chin, twice, a chew nod after each
+  const EAT_AT: V3 = [-0.06, 0.45, 0.16];
+  const eatGoal = fistGoal(EAT_AT, [0.5, 0.8, 0.2], [0, 0.3, 1], [-0.5, 0.3, -0.1]);
+  clip('gesture-eat', (p) => {
+    const f = ks(p, [[0, 0], [0.5, 1], [0.85, 0.3], [1.2, 1], [1.45, 1], [2, 0]]);
+    const down = ks(p, [[0, 0], [0.5, 15], [0.85, 4], [1.2, 15], [1.45, 15], [2, 0]]);
+    const chew = ks(p, [[0, 0], [0.5, 0], [0.58, 5], [0.66, 0], [0.74, 5], [0.82, 0], [1.2, 0], [1.28, 5], [1.36, 0], [1.44, 5], [1.52, 0], [2, 0]]);
+    return { ...R.pose(eatGoal, f), head: { rotate: [down + chew, 0, 0] } };
+  });
+
+  // ------------------------------------------------------------------ hug-self: the arms cross the chest, a small squeeze rock
+  const hugR = fistGoal([0.035, 0.33, 0.165], [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
+  const hugL = fistGoalL([0.035, 0.3, 0.14], [0.9, 0.3, 0.2], [0, 1, 0.4], [-0.3, 0.0, 0.1]);
+  clip('gesture-hug-self', (p) => {
+    const f = ks(p, [[0, 0], [0.8, 1], [1.3, 1], [1.9, 0], [2, 0]]);
+    const rock = ks(p, [[0, 0], [1.0, 0], [1.1, -3], [1.2, 3], [1.3, 0], [2, 0]]);
+    return { ...R.pose(hugR, f), ...L.pose(hugL, f), spine: { rotate: [0, 0, rock] }, head: { rotate: [0, 0, 6 * f] } };
+  });
+
+  // ------------------------------------------------------------------ bow: the spine bends over, the arms hang straight down
+  clip('gesture-bow', (p) => {
+    const b = ks(p, [[0, 0], [0.4, 0], [1.0, 1], [1.3, 1], [2, 0]]);
+    return {
+      ...legsPose({ move: [0, 0, -0.03 * b] }),
+      spine: { rotate: [35 * b, 0, 0] },
+      head: { rotate: [15 * b, 0, 0] },
+      ...arms([-35 * b, 0, 0], [-35 * b, 0, 0]),
+    };
+  });
+
+  // ------------------------------------------------------------------ listen: the head tilts 25 degrees into the fist at the cheek, the spine rolls, the left arm out
+  const listenGoal = fistGoal([-0.2, 0.4, 0.05], [0.3, 1, 0], [0, 0, 1], [-0.45, 0.2, -0.1]);
+  clip('gesture-listen', (p) => {
+    const f = ks(p, [[0, 0], [0.8, 1], [1.4, 1], [2, 0]]);
+    const tilt = ks(p, [[0, 0], [0.4, 0], [0.8, 1], [1.4, 1], [2, 0]]);
+    return {
+      ...R.pose(listenGoal, f),
+      'upperarm.L': { rotate: [0, 0, 30 * f] },
+      spine: { rotate: [0, 0, 8 * tilt] },
+      head: { rotate: [0, 0, 25 * tilt] },
+    };
+  });
+
+  // ------------------------------------------------------------------ stamp: the right foot lifts 0.08 m (0.25 s) and drops fast (0.1 s), twice, the hips drop on each hit
+  clip('gesture-stamp', (p) => {
+    const lift = ks(p, [[0, 0], [0.05, 0], [0.3, 1], [0.4, 0], [0.85, 0], [1.1, 1], [1.2, 0], [2, 0]]);
+    const hit = ks(p, [[0, 0], [0.4, 0], [0.45, 1], [0.6, 0], [1.2, 0], [1.25, 1], [1.4, 0], [2, 0]]);
+    const out = ks(p, [[0, 0], [0.2, 1], [1.3, 1], [1.7, 0], [2, 0]]);
+    const a = swingFor(0.05, 35);
+    const foot: Foot = { a: a * lift, b: 35 * lift, ride: lift, pitch: 4 * lift };
+    return {
+      ...legsPose({ move: [0.008 * lift, -0.015 * hit, 0] }, {}, foot),
+      ...arms([0, 0, 20 * out], [0, 0, -20 * out]),
+    };
+  });
+
+  // ------------------------------------------------------------------ march: on the spot, four high knees, the opposite arm swings 45 degrees
+  clip('gesture-march', (p) => {
+    const lUp = ks(p, [[0, 0], [0.25, 1], [0.5, 0], [0.75, 0], [1.25, 1], [1.5, 0], [2, 0]]);
+    const rUp = ks(p, [[0, 0], [0.5, 0], [0.75, 1], [1.0, 0], [1.5, 0], [1.75, 1], [2, 0]]);
+    const s = lUp - rUp; // +1: the left knee is up and the right arm is forward
+    const bob = ks(p, [[0, 0], [0.12, -0.012], [0.25, 0], [0.37, -0.012], [0.5, 0], [0.62, -0.012], [0.75, 0], [0.87, -0.012], [1.0, 0], [1.12, -0.012], [1.25, 0], [1.37, -0.012], [1.5, 0], [1.62, -0.012], [1.75, 0], [1.87, -0.012], [2, 0]]);
+    const step = (u: number): Foot => ({ a: 40 * u, b: 35 * u, ride: u, pitch: 6 * u });
+    return {
+      ...legsPose({ move: [0, bob, 0] }, step(lUp), step(rUp)),
+      ...arms([45 * s, 0, 0], [-45 * s, 0, 0], [-20 * Math.max(0, -s), 0, 0], [-20 * Math.max(0, s), 0, 0]),
+    };
+  });
 }
