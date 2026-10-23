@@ -232,8 +232,13 @@ function seek(t: number): void {
   renderer.render(scene, camera);
 }
 
+/** The sun of the bright interior set (`high`), or a sun from the camera's left (`side`) for long shadows on the rug. */
+const SUN = { high: [0, 30, 22], side: [-14, 26, 19] } as const;
+
 async function load(tl: Timeline): Promise<string[]> {
   const notes: string[] = [];
+  const s = SUN[tl.sun ?? 'high'];
+  sun.position.set(s[0], s[1], s[2]);
   const missingRoom = await buildRoom(tl.scene);
   if (missingRoom.length) notes.push(`room pieces missing: ${missingRoom.join(', ')}`);
   for (const live of lives) actorGroup.remove(live.root);

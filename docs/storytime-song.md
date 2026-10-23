@@ -23,6 +23,11 @@ overlays the lyrics, the inset, and the screens.
 }
 ```
 
+Two optional switches: `"sun": "high"` (the classroom.png light, short contact shadows; the
+default) or `"side"` (from the camera's left, long shadows on the rug, some hair shadow on the
+faces), and `"dog": "howl"` (Pip sings with the howl clip; the default) or `"quiet"` (idle, a sit
+on a nod).
+
 Stage space is the rug: x to the right, z toward the camera, the rug centre is (0, 0), yaw 0
 faces the camera. The classroom map puts the rug at world (0, 0, 3). Camera keys use the same
 space for `tx` and `tz`; `ty` (default 0.4 m) and `fov` (default 32) are optional. A key holds

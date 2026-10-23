@@ -56,6 +56,14 @@ describe('buildTimeline', () => {
     expect(tl.warnings.some((w) => w.includes('spin'))).toBe(true);
   });
 
+  it('takes the sun and the quiet dog from the stage', () => {
+    expect(tl.sun).toBe('high');
+    const quiet = buildTimeline(spec, { ...stage, sun: 'side', dog: 'quiet' });
+    expect(quiet.sun).toBe('side');
+    expect(quiet.actors[0]!.cues[1]).toEqual({ t: 10, clip: 'idle' });
+    expect(clipFor('sprout-pip', 'nod', 'quiet').clip).toBe('sit');
+  });
+
   it('refuses an actor without an asset', () => {
     expect(() => buildTimeline({ duration: 1, lines: [{ text: 'x', start: 0, end: 1, actors: ['Lily'] }] }, {})).toThrow(/Lily/);
   });

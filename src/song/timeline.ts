@@ -56,6 +56,10 @@ export interface Stage {
   camera?: CameraKey[];
   cameraPortrait?: CameraKey[];
   moves?: Move[];
+  /** The sun: `high` (the classroom.png light, short contact shadows) or `side` (from the camera's left, long shadows on the rug). */
+  sun?: 'high' | 'side';
+  /** Pip's singing: `howl` (head up, mouth open) or `quiet` (idle with a sit on a nod). */
+  dog?: 'howl' | 'quiet';
 }
 
 export interface Cue {
@@ -83,6 +87,7 @@ export interface ActorTrack {
 export interface Timeline {
   duration: number;
   scene: string;
+  sun: 'high' | 'side';
   actors: ActorTrack[];
   camera: CameraKey[];
   cameraPortrait: CameraKey[];
@@ -146,9 +151,9 @@ export const IDLE = 'idle';
  */
 export const SING_OUT = { mouth: 0.046, eyelids: 0.038 } as const;
 
-export function clipFor(asset: string, gesture: string | undefined): { clip: string; warning?: string } {
+export function clipFor(asset: string, gesture: string | undefined, dog: 'howl' | 'quiet' = 'howl'): { clip: string; warning?: string } {
   const key = (gesture ?? '').trim().toLowerCase();
-  if (DOGS.has(asset)) return { clip: DOG_GESTURES[key] ?? DOG_SING };
+  if (DOGS.has(asset)) return { clip: DOG_GESTURES[key] ?? (dog === 'quiet' ? IDLE : DOG_SING) };
   if (!key) return { clip: GESTURES.idle! };
   const clip = GESTURES[key];
   if (clip) return { clip };
@@ -194,7 +199,7 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
     const cues: Cue[] = [{ t: 0, clip: IDLE }];
     const mine = lines.filter((line) => (line.actors ?? []).includes(id));
     mine.forEach((line, i) => {
-      const { clip, warning } = clipFor(asset, line.gesture);
+      const { clip, warning } = clipFor(asset, line.gesture, stage.dog ?? 'howl');
       if (warning) warnings.push(`line "${line.text}": ${warning}`);
       cues.push({ t: line.start, clip });
       const next = mine[i + 1];
@@ -228,7 +233,7 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
   const camera = [...(stage.camera?.length ? stage.camera : [DEFAULT_CAMERA])].sort((a, b) => a.at - b.at);
   const cameraPortrait = [...(stage.cameraPortrait?.length ? stage.cameraPortrait : camera)].sort((a, b) => a.at - b.at);
   const scene = stage.scene ?? lines.find((l) => l.scene)?.scene ?? 'classroom';
-  return { duration: spec.duration, scene, actors, camera, cameraPortrait, warnings };
+  return { duration: spec.duration, scene, sun: stage.sun ?? 'high', actors, camera, cameraPortrait, warnings };
 }
 
 export const smooth = (x: number): number => x * x * (3 - 2 * x);
@@ -328,5 +333,5 @@ export function blinkAt(seed: number, t: number): number {
 /** A short text report of a timeline for the render log. */
 export function describe(tl: Timeline): string {
   const rows = tl.actors.map((a) => `${a.id} (${a.asset}): at ${a.path[0]!.x},${a.path[0]!.z} yaw ${a.path[0]!.yaw}; ${a.cues.length - 1} cues`);
-  return [`scene ${tl.scene}, ${tl.duration.toFixed(2)} s, ${tl.camera.length} camera keys, ${tl.cameraPortrait.length} portrait keys`, ...rows, ...tl.warnings.map((w) => `warning: ${w}`)].join('\n');
+  return [`scene ${tl.scene}, sun ${tl.sun}, ${tl.duration.toFixed(2)} s, ${tl.camera.length} camera keys, ${tl.cameraPortrait.length} portrait keys`, ...rows, ...tl.warnings.map((w) => `warning: ${w}`)].join('\n');
 }
