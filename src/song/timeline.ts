@@ -109,6 +109,20 @@ export const GESTURES: Record<string, string> = {
   nod: 'gesture-nod',
   'hands out': 'gesture-hands-out',
   idle: 'gesture-idle',
+  // Weeks 2 to 6 (bench/sonnet/sprouts/prompts/b7-gestures-2.md).
+  'point up': 'gesture-point-up',
+  reach: 'gesture-reach',
+  'count fingers': 'gesture-count-fingers',
+  sway: 'gesture-sway',
+  look: 'gesture-look',
+  hop: 'gesture-hop',
+  'stretch up': 'gesture-stretch-up',
+  eat: 'gesture-eat',
+  'hug self': 'gesture-hug-self',
+  bow: 'gesture-bow',
+  listen: 'gesture-listen',
+  stamp: 'gesture-stamp',
+  march: 'gesture-march',
 };
 /** Pip is a dog: he sings his lines with the howl clip and sits for a nod. */
 const DOG_GESTURES: Record<string, string> = { nod: 'sit' };
