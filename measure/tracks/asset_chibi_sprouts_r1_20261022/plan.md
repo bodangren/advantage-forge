@@ -112,7 +112,8 @@ Contract and commands: `docs/storytime-song.md`.
   1881 frames in 344 s (0.18 s per frame), 1 GB RSS. Pointer sent to Storytime 2026-10-23 17:00.
 - [ ] Task: The owner's pass on test cut 1 (Storytime relays; page items C1 the scene cut, C2 the
   contact sheet, C3 the sun high or side, C4 Pip's howl or a quieter Pip, C5 the face rig now or
-  later), then the portrait cut (F9, on hold:
+  later), then cut 2 with Storytime's framing fix (the back row moves in to x ±1.2, ±0.6, 0: Ben
+  was cut by the right edge in the singles on Nan at 17.5 s and 33 s), then the portrait cut (F9, on hold:
   Workbooks keeps the 16:9 video as a band) and stage.json for weeks 2 to 7.
 - [ ] Task: After the pass: sing-mouth and blink (a face rig on the kind, 1 to 2 days), the hop
   clip, a side sun for longer contact shadows if the owner wants them.
