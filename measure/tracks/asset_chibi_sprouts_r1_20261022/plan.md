@@ -107,8 +107,9 @@ Contract and commands: `docs/storytime-song.md`.
   `__song.load/seek`), `scripts/song-record.ts` (sheet, stills, record to H.264 through ffmpeg).
   The six children got the gesture clips (`sproutGestures` in `extra`) and were rebuilt (2026-10-23).
 - [x] Task: Test cut 1 of week 1 ("Hello, I Am Pip", 78.4 s): `out/chibi-sprouts/r1/week1/song/`
-  sheet.png (12 stills) and song.mp4 (1920x1080, 24 fps, no sound). Storytime's stage.json: Pip
-  and Nan front, five children in a row behind, 31 camera keys, yaw 0.
+  sheet.png (12 stills) and song.mp4 (1920x1080, 24 fps, no sound, 35 MB). Storytime's stage.json:
+  Pip and Nan front, five children in a row behind, 31 camera keys, yaw 0. Cost: page load 46 s,
+  1881 frames in 344 s (0.18 s per frame), 1 GB RSS. Pointer sent to Storytime 2026-10-23 17:00.
 - [ ] Task: The owner's pass on test cut 1 (Storytime relays), then the portrait cut (F9, on hold:
   Workbooks keeps the 16:9 video as a band) and stage.json for weeks 2 to 7.
 - [ ] Task: After the pass: sing-mouth and blink (a face rig on the kind, 1 to 2 days), the hop

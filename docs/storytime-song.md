@@ -65,5 +65,5 @@ room from `scenes/maps/<scene>.ts`, the actors as skinned clones with an animati
 clips (`sproutGestures(k, h)` in the asset's `extra`); the GLBs come from `out/<asset>/`.
 
 Cost (2012 quad-core, software GL, under the lock): the page loads in about 45 s with 7 actors;
-a still takes 1 to 2 s; the week 1 song (78 s, 1881 frames at 24 fps) renders in about 20 min at
+a still takes 1 to 2 s; the week 1 song (78 s, 1881 frames at 24 fps) renders in about 6 min at
 1 GB RSS.
