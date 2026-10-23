@@ -1,0 +1,80 @@
+{
+  "clips": {
+    "point-up": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. The straight arm goes up and out, and the fist is outside the head outline at cheek height. The head tilts toward the arm. It reads as 'hand up' more than 'point up', because no index finger shows at video size."
+    },
+    "reach": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "Fix 2 is done. The arms go forward at chest height, the spine leans forward, and the head looks at the hands. The side view reads clearly as a reach, and the clip is now distinct from stretch-up. In the front view the arms are foreshortened, and the two fists are close together in front of the chest, so the pose reads as 'paws up' or 'holding something'. There is no clip-through."
+    },
+    "count-fingers": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. It is distinct: the fist is at the jaw, the left hand is on the hip, there are three pumps, and the body bobs. It reads as a fist pump, not as counting, because no finger shows."
+    },
+    "sway": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "This clip did not change. A smooth, clear sway with a clean loop."
+    },
+    "look": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. The arms go out to the sides, the whole body turns both ways, and the head is in front of the turn. The shape is distinct, but it also reads as 'airplane'. The arms drop to idle a little fast at 1.7 to 1.9 s."
+    },
+    "hop": {
+      "rating": 8.0,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. It has two clean arcs, about 0.067 m high, with no stop in the air. The landings are exactly on the floor."
+    },
+    "stretch-up": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. A wide V with the fists clear of the head, a hold from 0.8 to 1.3 s, and a clean return."
+    },
+    "eat": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. The fist comes to the chin twice, the head drops, and chew nods follow. It reads as eating, but it can also read as 'thinking'."
+    },
+    "hug-self": {
+      "rating": 7.5,
+      "critical": false,
+      "notes": "This clip did not change. The arms cross high on the chest, and the small rock makes it read as a self-hug."
+    },
+    "bow": {
+      "rating": 8.0,
+      "critical": false,
+      "notes": "This clip did not change. A clear, deep bow with a hold and a clean return."
+    },
+    "listen": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "This clip did not change from pass 2. A large head tilt into the fist at the jaw, a spine roll, and the left arm out make it distinct. The 'listen' read is a little weak, because the fist is at the jaw and not at the ear."
+    },
+    "stamp": {
+      "rating": 7.0,
+      "critical": false,
+      "notes": "Fix 1 is done in part. The lift and the fast down-stroke read as a stamp. The thigh no longer tears the shorts leg. At each peak (about 0.25 to 0.35 s and 1.05 to 1.15 s), a V-shaped skin wedge cuts into the shoe top, about one third of the shoe height deep. A small blue spike also shows at the waistband on the right hip. At video size both are visible if a viewer looks at the feet, but each lasts only about 0.15 s, so they are minor. In the front view the shoe shows about 0.02 m lower at 0.15, 0.35, 0.95 and 1.15 s. This is most likely forward foot motion; it needs the 'ground ok' result from forge check."
+    },
+    "march": {
+      "rating": 6.5,
+      "critical": false,
+      "notes": "Fix 1 is done. There is no poke-through at any lift (0.2 to 1.75 s), and the shorts and the shoes stay clean. But the lift is now small. In the front view the feet almost stay on the floor, because the foot moves forward more than up. The march reads mostly from the arm swing and the hip bob, and from the side it is a small step. The loop is clean."
+    }
+  },
+  "overall": 7.2,
+  "fixes": [
+    "sprout-sam asset (outside this clip file): fix the skin weights of the shorts leg and the shoe cuff, so a knee lift above 35 deg does not tear the mesh. Then restore the march lift (knee 60 deg) and the stamp lift (0.08 m).",
+    "stamp: a skin wedge in the shoe top and a small blue spike at the waistband show at each peak (0.25 to 0.35 s, 1.05 to 1.15 s). They are visible at video size if a viewer looks, and they last about 0.15 s each.",
+    "march: in the front view the feet hardly leave the floor, so the march reads from the arms and the hip bob only. After the weights fix, raise the knee so the shoe clearly rises.",
+    "reach: in the front view the arms are foreshortened and the fists close together read as 'paws up'. Turn the body about 20 deg, or spread the fists wider, so the forward arms show.",
+    "count-fingers and point-up: no finger shows at video size, so they read as 'fist pump' and 'hand up'. Make the index finger larger, or accept the present reads.",
+    "look: the arms-out shape reads as 'airplane'. Slow the arm return at 1.7 to 1.9 s to about 0.35 s.",
+    "listen and eat: both put the fist at the jaw. The head motion (a sideways tilt, a forward drop) is the only difference, so keep it large.",
+    "stamp: confirm 'ground ok' with forge check. In the front view the right shoe shows about 0.02 m lower at 0.15, 0.35, 0.95 and 1.15 s."
+  ]
+}

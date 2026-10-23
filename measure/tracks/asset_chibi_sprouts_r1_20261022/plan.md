@@ -122,10 +122,16 @@ Contract and commands: `docs/storytime-song.md`.
   `SING_OUT` 0.046 / 0.038 m; commits 46342fe9, 0a425ef7). Seven Sprouts rebuilt twice. Cut 3
   of week 1 with the singing face (`song-cut3.mp4`). Render script
   `bench/sonnet/sprouts/render-week.sh <week> <cut>`.
-- [ ] Task: 13 new gesture clips for weeks 2 to 6 (point up, reach, count fingers, sway, look,
-  hop, stretch up, eat, hug self, bow, listen, stamp, march): builder prompt
-  `bench/sonnet/sprouts/prompts/b7-gestures-2.md`, reviewer `r16-gestures-2.md`, bar 7.5, the
-  count is a pumped fist (closed hands). Then cut 1 of weeks 2, 3, 5, 6 from Storytime's drafts
+- [x] Task: 13 new gesture clips for weeks 2 to 6 (point up, reach, count fingers, sway, look,
+  hop, stretch up, eat, hug self, bow, listen, stamp, march) on the shared module (0bb18f6e):
+  three builder passes (b7, b7r2, b7r3) and three Opus reviews (6.2, 7.0, 7.2; stop rule). At the
+  bar: hop 8.0, bow 8.0, stretch-up, sway, hug-self 7.5. Under it: point-up, look, listen, eat,
+  stamp 7.0; reach, count-fingers, march 6.5. The chibi arm (0.138 m) never clears the head, so
+  every gesture is a whole-body silhouette. Follow-up list (debt): fix the shorts-leg and shoe-cuff
+  skin weights on the age-5 base, then restore the taller march and stamp lifts (the stamp shows
+  a shoe notch for 0.15 s at the peaks); reach reads as "paws up" in the front view; point-up has
+  no visible finger at video size; count-fingers reads as a fist pump; look reads as "airplane".
+- [ ] Task: Cut 1 of weeks 2, 3, 5, 6 from Storytime's drafts
   (`~/Desktop/primary-parity-progress/storytime-stage/l2/w0N/stage.json`, all in the classroom).
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
