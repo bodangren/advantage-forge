@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Gesture key frames of the Adventurer for weeks 2 to 7 (set 2 + turn) at the week 1 scale,
 # into out/chibi-sprouts/r1/week2-7/gestures/adventurer/ with a manifest.json in the Workbooks shape.
-# The last frame of a gesture is the beat frame. Clip keys are in seconds of a 2 s clip.
+# The last frame of a gesture is the beat frame. The *-picture slugs are held poses for the 64 px song-line pictures only. Clip keys are in seconds of a 2 s clip.
 cd "$(dirname "$0")/../../.."
 L=~/Desktop/primary-parity-progress/heavy.lock
 OUT=out/chibi-sprouts/r1/week2-7/gestures
@@ -29,6 +29,9 @@ march gesture-march 0.25 march-left
 march gesture-march 0.75 march-right
 turn gesture-turn 0.73 turn-side
 turn gesture-turn 0.95 turn-back
+march-picture picture-march 1.0 march-picture
+stamp-picture picture-stamp 1.0 stamp-picture
+sway-picture picture-sway 1.0 sway-picture
 "
 only="${1:-}"   # optional: one slug to (re)render
 echo "$FRAMES" | while read -r slug clip at stem; do

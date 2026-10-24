@@ -475,4 +475,31 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
       ...arms([0, 0, 60 * f], [0, 0, -60 * f], [0, 0, 10 * f], [0, 0, -10 * f]),
     };
   });
+
+  // ------------------------------------------------------------------ picture poses (Workbooks, 2026-10-24): one held pose each for the
+  // 64 px song-line pictures, a square crop from the head to below the belt. Not for the videos: the beat frames above stay.
+  // picture-march: the left thigh past level (direct bone angles; the short chibi thigh must rise beside the belt to show), the right arm forward and out, the left arm back.
+  clip('picture-march', () => ({
+    ...legsPose({ move: [0, -0.006, 0] }),
+    'leg.L': { rotate: [-100, 0, 0] },
+    'shin.L': { rotate: [95, 0, 0] },
+    ...arms([35, 0, 5], [-80, 0, -45], [0, 0, 0], [-10, 0, 0]),
+    head: { rotate: [-4, 0, 0] },
+  }));
+  // picture-stamp: the right thigh level, both fists down by the sides, the hips dropped, the head down.
+  clip('picture-stamp', () => ({
+    ...legsPose({ move: [0.006, -0.012, 0] }),
+    'leg.R': { rotate: [-95, 0, 0] },
+    'shin.R': { rotate: [95, 0, 0] },
+    ...arms([0, 0, 12], [0, 0, -12], [-15, 0, 0], [-15, 0, 0]),
+    spine: { rotate: [8, 0, 0] },
+    head: { rotate: [10, 0, 0] },
+  }));
+  // picture-sway: the body leans about 15 degrees to +X with both arms up in a V.
+  clip('picture-sway', () => ({
+    ...both({ ...veeGoal, d: dFor(VEE_DEG), hint: [0, 1, 0] }, 1),
+    ...legsPose({ rotate: [0, 0, -12] }),
+    spine: { rotate: [0, 0, -12] },
+    head: { rotate: [0, 0, 0] },
+  }));
 }

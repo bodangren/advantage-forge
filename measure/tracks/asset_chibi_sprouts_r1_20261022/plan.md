@@ -169,6 +169,9 @@ Contract and commands: `docs/storytime-song.md`.
   (`bench/sonnet/sprouts/cutout-gestures-w2-7.sh`). Handoff note:
   `~/Desktop/primary-parity-progress/forge-gestures-w2-7-20261024.md`. `gesture-turn` has no
   independent review yet. `reach` stands on tiptoe (lowest opaque row 1174), flagged by the check.
+  Workbooks used the set in its commit bc025fb (45 song-line pictures) and asked for three held
+  picture poses that read in a 64 px head-to-belt crop: `picture-march`, `picture-stamp`,
+  `picture-sway` (clips for pictures only), delivered as `*-picture.png` with extra manifest keys.
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
