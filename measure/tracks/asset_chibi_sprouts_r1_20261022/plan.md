@@ -158,8 +158,8 @@ Contract and commands: `docs/storytime-song.md`.
   180 keeps lit faces. Not built (pictures for now): duck, kite, ball, grape, sun, cloud, easel.
 - [x] Task: Full renders on contract v2 (2026-10-24): week 2 cut 3 (09:16), week 3 cut 2 (11:38,
   re-rendered 11:54 after Storytime moved the board pictures in front of the board face and set a
-  closer classroom camera), week 6 cut 2 (11:48; a re-render from Storytime's lake camera fix is
-  queued). Paths `out/chibi-sprouts/r1/week{2,3,6}/song/song-cut<N>.mp4` with `-sheet.png`.
+  closer classroom camera), week 6 cut 2 (11:48; re-rendered 12:30 after Storytime's lake camera fix, which
+  framed the cast close and took the boulder out). Paths `out/chibi-sprouts/r1/week{2,3,6}/song/song-cut<N>.mp4` with `-sheet.png`.
   Storytime muxed the song audio and put weeks 2, 3, 6 on the owner's page (C1W2, C1W3, C1W6).
   A 74 s song renders in about 6 minutes (0.20 s per frame) after a page load of 8 to 60 s.
 - [x] Task: Adventurer gesture stills for weeks 2 to 7 (Workbooks request through the Forge
