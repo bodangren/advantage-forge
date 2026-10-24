@@ -139,6 +139,23 @@ Contract and commands: `docs/storytime-song.md`.
   stage file now takes `sun` (high or side) and `dog` (howl or quiet) for the owner's C3 and C4;
   side-sun comparison stills in `out/chibi-sprouts/r1/week1/song/sun-side/` (Ben's hair shades
   his eyes with the side sun).
+- [ ] Task: The owner's notes on cut 2 (2026-10-24 04:48, via Storytime): week 5 PASS ("a body
+  and the context is there"); weeks 2, 3, 6 FAIL for one cause: the objects the song names are
+  not in the picture (the apple, the sky, the animals, the numbers), and one sustained take feels
+  lifeless. Stage contract v2 (`~/Desktop/primary-parity-progress/forge-stage-contract-v2-20261024.md`,
+  `docs/storytime-song.md`): `sets` keyed by the spec's scene names (map, light, sun, marks,
+  camera, props, pictures), hard `cuts` (default: every line whose scene changes), `props`
+  (built Forge assets at x/z, count, or held on a hand bone), `pictures` (image cards from files
+  next to the stage file, served at `/stage/`). The page keeps every room loaded and switches
+  per shot; outdoor maps get the scene page's outdoor light. v1 stage files stay valid.
+  Storytime accepted the contract and rewrote the week 2, 3, 6 stage files on it (06:50, with
+  stand-in PNG cards for the duck, kite, ball, grape, sun, cloud, numbers). Stills per set:
+  `out/chibi-sprouts/r1/week{2,3,6}/song/v2/v2-sheet.png`. Found and fixed from the stills: the
+  meadow's rug origin stands in a flower bed (now `MAP_ORIGINS`: a clear stage and camera
+  corridor per map, `origin` and `heading` per set); Pip has no hand bone (a held prop falls
+  back to `jaw`, then `head`; `bone` names one); the GLTF loader strips dots from bone names
+  (`hand.R` is `handR` in the page); the outdoor sun offset is in stage space so a set facing
+  180 keeps lit faces. Not built (pictures for now): duck, kite, ball, grape, sun, cloud, easel.
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter

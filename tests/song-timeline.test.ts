@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { blinkAt, buildTimeline, cameraAt, cameraWorld, clipFor, mixAt, mouthAt, placeAt, RUG, TARGET_Y, WALK_SPEED, type Spec, type Stage } from '../src/song/timeline.js';
+import { blinkAt, buildTimeline, cameraAt, cameraWorld, clipFor, mixAt, mouthAt, placeAt, RUG, shotAt, TARGET_Y, WALK_SPEED, type Spec, type Stage } from '../src/song/timeline.js';
 
 const spec: Spec = {
   duration: 30,
@@ -82,6 +82,93 @@ describe('buildTimeline', () => {
     expect(mid.x).toBeCloseTo(0.55);
     expect(mid.z).toBeCloseTo(0);
     expect(((mid.yaw % 360) + 360) % 360).toBeCloseTo(180);
+  });
+});
+
+describe('sets and cuts', () => {
+  const scenes: Spec = {
+    duration: 40,
+    lines: [
+      { text: 'sun', start: 2, end: 6, scene: 'sky', actors: ['Nan'] },
+      { text: 'kites', start: 8, end: 12, scene: 'sky', actors: ['Nan'] },
+      { text: 'count', start: 14, end: 18, scene: 'classroom', actors: ['Pat'] },
+      { text: 'apples', start: 20, end: 24, scene: 'park', actors: ['Pip'] },
+    ],
+  };
+
+  it('is one shot on the top-level stage without sets', () => {
+    const tl = buildTimeline(scenes, stage);
+    expect(tl.shots.map((s) => [s.set, s.from, s.to, s.map, s.light])).toEqual([['sky', 0, 40, 'classroom', 'interior']]);
+    expect(tl.maps).toEqual(['classroom']);
+    expect(tl.warnings).toEqual([]);
+    expect(tl.camera).toEqual(stage.camera);
+  });
+
+  const sets: Stage = {
+    ...stage,
+    sets: {
+      sky: { map: 'meadow', camera: [{ at: 0, az: 0, el: -25, dist: 3, tx: 0, tz: 0, ty: 2.2 }] },
+      park: { map: 'meadow', sun: 'side', marks: { Pip: { x: 0.3, z: 0.2, yaw: 30 } }, props: [{ asset: 'apple-tree', x: -1.8, z: -1.6 }, { asset: 'pigeon', x: 0.5, z: 0, count: 3, spacing: 0.3, from: 10, to: 23 }, { asset: 'apple', held: 'Pip', from: 21 }], pictures: [{ file: 'pictures/sun.png', x: 1, y: 3, z: -3, w: 0.9, to: 50 }] },
+    },
+  };
+
+  it('cuts at every line whose scene changes and starts at 0', () => {
+    const tl = buildTimeline(scenes, sets);
+    expect(tl.shots.map((s) => [s.set, s.from, s.to, s.map, s.light])).toEqual([
+      ['sky', 0, 14, 'meadow', 'outdoor'],
+      ['classroom', 14, 20, 'classroom', 'interior'],
+      ['park', 20, 40, 'meadow', 'outdoor'],
+    ]);
+    expect(tl.maps).toEqual(['meadow', 'classroom']);
+    expect(tl.shots[0]!.camera[0]!.ty).toBe(2.2);
+    expect(tl.shots[1]!.camera).toEqual(stage.camera);
+    expect(tl.shots[2]!.sun).toBe('side');
+    expect(tl.warnings.some((w) => w.includes('no set "classroom"'))).toBe(true);
+    expect(shotAt(tl, 13.99).set).toBe('sky');
+    expect(shotAt(tl, 14).set).toBe('classroom');
+  });
+
+  it('takes explicit cuts over the spec scenes', () => {
+    const tl = buildTimeline(scenes, { ...sets, cuts: [{ at: 5, set: 'park' }] });
+    expect(tl.shots.map((s) => [s.set, s.from, s.to])).toEqual([
+      ['park', 0, 40],
+    ]);
+  });
+
+  it('jumps an actor to the set mark at a cut, with no walk or turn', () => {
+    const tl = buildTimeline(scenes, sets);
+    const pip = tl.actors.find((a) => a.id === 'Pip')!;
+    expect(pip.path).toEqual([
+      { t: 0, x: -0.55, z: 0.45, yaw: 0 },
+      { t: 14, x: -0.55, z: 0.45, yaw: 0, jump: true },
+      { t: 20, x: 0.3, z: 0.2, yaw: 30, jump: true },
+    ]);
+    expect(placeAt(pip.path, 19.9)).toEqual({ x: -0.55, z: 0.45, yaw: 0 });
+    expect(placeAt(pip.path, 20)).toEqual({ x: 0.3, z: 0.2, yaw: 30 });
+    expect(placeAt(pip.path, 20.05).yaw).toBe(30);
+  });
+
+  it('applies a move inside its shot and ends at the shot mark yaw', () => {
+    const tl = buildTimeline(scenes, { ...sets, moves: [{ actor: 'Pip', at: 22, to: { x: 0.3, z: -0.25 } }] });
+    const pip = tl.actors.find((a) => a.id === 'Pip')!;
+    expect(pip.path.map((k) => k.t)).toEqual([0, 14, 20, 22, 23]);
+    expect(pip.path[4]).toMatchObject({ x: 0.3, z: -0.25, yaw: 30 });
+    expect(pip.cues.filter((c) => c.clip === 'walk')).toEqual([{ t: 22, clip: 'walk' }]);
+  });
+
+  it('expands props by count, clamps them to the shot, and binds a held prop', () => {
+    const tl = buildTimeline(scenes, sets);
+    const park = tl.shots[2]!;
+    expect(park.props.map((p) => [p.asset, p.x, p.from, p.to])).toEqual([
+      ['apple-tree', -1.8, 20, 40],
+      ['pigeon', 0.5, 20, 23],
+      ['pigeon', 0.8, 20, 23],
+      ['pigeon', 1.1, 20, 23],
+      ['apple', 0, 21, 40],
+    ]);
+    expect(park.props[4]!.held).toEqual({ actor: 'Pip', hand: 'R', offset: [0, 0, 0], rotate: [0, 0, 0] });
+    expect(park.pictures).toEqual([{ file: 'pictures/sun.png', x: 1, y: 3, z: -3, w: 0.9, yaw: 0, from: 20, to: 40, card: false, unlit: false }]);
+    expect(tl.shots[0]!.props).toEqual([]);
   });
 });
 

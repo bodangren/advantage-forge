@@ -10,11 +10,12 @@
  *   (1080x1920) with --portrait; --frames also keeps JPEG frames in <dir>/frames/.
  * stills: <dir>/still-<t>.png.  sheet: <count> stills at even times, tiled into <dir>/sheet.png.
  * Every run appends to <dir>/render.txt (timeline, page notes, timing).
+ * The page server serves out/ at /out/ and the stage file's folder at /stage/ (pictures).
  * Heavy: run under `flock ~/Desktop/primary-parity-progress/heavy.lock`, one at a time.
  */
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, statSync, appendFileSync, writeFileSync } from 'node:fs';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { dirname, extname, join, normalize, resolve, sep } from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { chromium, type Page } from 'playwright';
 import { createServer, type Plugin } from 'vite';
@@ -22,17 +23,24 @@ import { buildTimeline, describe, type Spec, type Stage, type Timeline } from '.
 
 const ROOT = process.cwd();
 const OUT = join(ROOT, 'out');
-const TYPES: Record<string, string> = { '.glb': 'model/gltf-binary', '.png': 'image/png', '.json': 'application/json' };
+const TYPES: Record<string, string> = { '.glb': 'model/gltf-binary', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.json': 'application/json' };
 
-function serveOut(): Plugin {
+/** Serves `/out/` from the repo outputs and `/stage/` from the stage file's folder (pictures). */
+function serveFiles(stageDir: string): Plugin {
+  const roots: [string, string][] = [
+    ['/out/', OUT],
+    ['/stage/', stageDir],
+  ];
   return {
-    name: 'song-out',
+    name: 'song-files',
     configureServer(s) {
       s.middlewares.use((req, res, next) => {
         const url = new URL(req.url ?? '/', 'http://x');
-        if (!url.pathname.startsWith('/out/')) return next();
-        const file = normalize(join(OUT, decodeURIComponent(url.pathname.slice(5))));
-        if (!file.startsWith(OUT + sep) || !existsSync(file) || !statSync(file).isFile()) {
+        const hit = roots.find(([prefix]) => url.pathname.startsWith(prefix));
+        if (!hit) return next();
+        const [prefix, dir] = hit;
+        const file = normalize(join(dir, decodeURIComponent(url.pathname.slice(prefix.length))));
+        if (!file.startsWith(dir + sep) || !existsSync(file) || !statSync(file).isFile()) {
           res.statusCode = 404;
           res.end('missing');
           return;
@@ -82,12 +90,12 @@ function parseArgs(argv: string[]): { command: string; spec: string; stage: stri
   return { command, spec, stage, opts };
 }
 
-async function openPage(portrait: boolean, query = ''): Promise<{ page: Page; close: () => Promise<void> }> {
+async function openPage(portrait: boolean, query: string, stageDir: string): Promise<{ page: Page; close: () => Promise<void> }> {
   const server = await createServer({
     root: ROOT,
     configFile: false,
     logLevel: 'error',
-    plugins: [serveOut()],
+    plugins: [serveFiles(stageDir)],
     server: { port: 5900 + Math.floor(Math.random() * 300), strictPort: false, hmr: false, watch: null },
   });
   await server.listen();
@@ -136,7 +144,7 @@ async function main(): Promise<void> {
   note(describe(tl));
 
   const t0 = performance.now();
-  const { page, close } = await openPage(opts.portrait, opts.query);
+  const { page, close } = await openPage(opts.portrait, opts.query, dirname(resolve(stagePath)));
   const notes = await page.evaluate((data) => window.__song!.load(data), tl);
   for (const n of notes) note(`page: ${n}`);
   note(`page ready in ${Math.round((performance.now() - t0) / 1000)} s`);

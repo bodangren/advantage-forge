@@ -50,12 +50,75 @@ export interface Move {
   to: { x: number; z: number };
   clip?: string;
 }
+/** A Forge asset placed in a set for a time span, or held by an actor. */
+export interface Prop {
+  asset: string;
+  x?: number;
+  z?: number;
+  y?: number;
+  yaw?: number;
+  scale?: number;
+  from?: number;
+  to?: number;
+  /** A clip to loop (default `idle` when the GLB has one). */
+  clip?: string;
+  /** n copies in a row along x from `x`, `spacing` metres apart (default 0.4). */
+  count?: number;
+  spacing?: number;
+  /** The actor who holds it on the `hand` bone (`R` default); `offset` metres and `rotate` degrees adjust the grip. */
+  held?: string;
+  hand?: 'L' | 'R';
+  /** The bone that holds it (default `hand.<hand>`; a dog gets `jaw`, then `head`). */
+  bone?: string;
+  offset?: [number, number, number];
+  rotate?: [number, number, number];
+}
+/** A flat card with an image file (relative to the stage file) in a set for a time span. */
+export interface Picture {
+  file: string;
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+  h?: number;
+  yaw?: number;
+  from?: number;
+  to?: number;
+  /** A white card with a dark border behind the image. */
+  card?: boolean;
+  /** Flat colours, no scene light (a sun in the sky). */
+  unlit?: boolean;
+}
+/** One set: the picture for a scene name of the spec (a room, marks, camera, props, pictures). */
+export interface SetDef {
+  map?: string;
+  /** Where the stage (0, 0) sits in the map (world x, z) and the stage heading (degrees): `MAP_ORIGINS` by default. */
+  origin?: [number, number];
+  heading?: number;
+  light?: 'interior' | 'outdoor';
+  sun?: 'high' | 'side';
+  marks?: Record<string, Mark>;
+  camera?: CameraKey[];
+  cameraPortrait?: CameraKey[];
+  props?: Prop[];
+  pictures?: Picture[];
+}
+export interface Cut {
+  at: number;
+  set: string;
+}
 export interface Stage {
   scene?: string;
   marks?: Record<string, Mark>;
   camera?: CameraKey[];
   cameraPortrait?: CameraKey[];
   moves?: Move[];
+  props?: Prop[];
+  pictures?: Picture[];
+  /** Sets keyed by the spec's scene names; the top-level stage serves a scene name without one. */
+  sets?: Record<string, SetDef>;
+  /** Hard cuts between sets; default: one at every line whose scene differs from the line before. */
+  cuts?: Cut[];
   /** The sun: `high` (the classroom.png light, short contact shadows) or `side` (from the camera's left, long shadows on the rug). */
   sun?: 'high' | 'side';
   /** Pip's singing: `howl` (head up, mouth open) or `quiet` (idle with a sit on a nod). */
@@ -71,6 +134,49 @@ export interface PathKey {
   x: number;
   z: number;
   yaw: number;
+  /** A cut: the actor is here from t with no walk or turn into this key. */
+  jump?: boolean;
+}
+export interface PropTrack {
+  asset: string;
+  x: number;
+  z: number;
+  y: number;
+  yaw: number;
+  scale: number;
+  from: number;
+  to: number;
+  clip?: string;
+  held?: { actor: string; hand: 'L' | 'R'; bone?: string; offset: [number, number, number]; rotate: [number, number, number] };
+}
+export interface PictureTrack {
+  file: string;
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+  h?: number;
+  yaw: number;
+  from: number;
+  to: number;
+  card: boolean;
+  unlit: boolean;
+}
+/** One shot of the song: a set in force from `from` to `to`. */
+export interface Shot {
+  set: string;
+  from: number;
+  to: number;
+  map: string;
+  /** The stage (0, 0, 0) in world metres and the stage heading in degrees (stage +z turned about +y). */
+  origin: [number, number, number];
+  heading: number;
+  light: 'interior' | 'outdoor';
+  sun: 'high' | 'side';
+  camera: CameraKey[];
+  cameraPortrait: CameraKey[];
+  props: PropTrack[];
+  pictures: PictureTrack[];
 }
 export interface Sing {
   start: number;
@@ -91,6 +197,10 @@ export interface Timeline {
   actors: ActorTrack[];
   camera: CameraKey[];
   cameraPortrait: CameraKey[];
+  /** The shots in song order; `scene`, `sun`, `camera`, `cameraPortrait` above are the first shot's. */
+  shots: Shot[];
+  /** Every map the page must load, in order of first use. */
+  maps: string[];
   warnings: string[];
 }
 
@@ -135,6 +245,17 @@ const DOG_SING = 'howl';
 const DOGS = new Set(['sprout-pip']);
 
 export const RUG: readonly [number, number, number] = [0, 0, 3];
+/**
+ * Where the stage sits in each map and which way it faces: a clear 4 m floor for the cast and a
+ * clear 5.5 m corridor for the camera (`bench/sonnet/sprouts/map-scan` in the plan). Other maps
+ * use the rug origin and heading 0; a set's `origin` and `heading` override.
+ */
+export const MAP_ORIGINS: Record<string, { origin: [number, number, number]; heading: number }> = {
+  classroom: { origin: [RUG[0], RUG[1], RUG[2]], heading: 0 },
+  meadow: { origin: [7, 0, 5], heading: 180 },
+  grassland: { origin: [0, 0, 0], heading: 180 },
+  'lake-shore': { origin: [-4, 0, 4], heading: 45 }, // a tight stage (1.5 m) with the water behind the cast
+};
 export const TARGET_Y = 0.4;
 export const DEFAULT_FOV = 32;
 export const WALK_SPEED = 0.45; // m/s, the age-5 walk
@@ -190,10 +311,91 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
   const unmarked = ids.filter((id) => !marks[id]);
   const rowX = (i: number): number => (i - (unmarked.length - 1) / 2) * ROW_SPACING;
 
+  // Sets and cuts: the top-level stage is the set for a scene name without one.
+  const top: SetDef = {};
+  if (stage.scene) top.map = stage.scene;
+  if (stage.sun) top.sun = stage.sun;
+  if (stage.marks) top.marks = stage.marks;
+  if (stage.camera) top.camera = stage.camera;
+  if (stage.cameraPortrait) top.cameraPortrait = stage.cameraPortrait;
+  if (stage.props) top.props = stage.props;
+  if (stage.pictures) top.pictures = stage.pictures;
+  const sets = stage.sets ?? {};
+  const setFor = (name: string): SetDef => {
+    const def = sets[name];
+    if (def) return def;
+    if (Object.keys(sets).length && !warnings.includes(`no set "${name}": the top-level stage serves it`)) warnings.push(`no set "${name}": the top-level stage serves it`);
+    return top;
+  };
+  let cuts: Cut[] = stage.cuts ? [...stage.cuts].sort((a, b) => a.at - b.at) : [];
+  if (!stage.cuts) {
+    let prev: string | undefined;
+    for (const line of lines) {
+      if (line.scene && line.scene !== prev) cuts.push({ at: line.start, set: line.scene });
+      if (line.scene) prev = line.scene;
+    }
+  }
+  if (!cuts.length) cuts = [{ at: 0, set: stage.scene ?? 'classroom' }];
+  if (cuts[0]!.at > 0) cuts.unshift({ at: 0, set: cuts[0]!.set });
+  // Consecutive cuts on the same set def (two scene names on the top-level stage) are one shot.
+  const resolved: { name: string; def: SetDef; at: number }[] = [];
+  for (const cut of cuts) {
+    const def = setFor(cut.set);
+    const last = resolved[resolved.length - 1];
+    if (last && last.def === def) continue;
+    resolved.push({ name: cut.set, def, at: cut.at });
+  }
+  const defaultCamera = stage.camera?.length ? stage.camera : [DEFAULT_CAMERA];
+  const shots: Shot[] = resolved.map(({ name, def, at }, i) => {
+    const from = at;
+    const to = resolved[i + 1]?.at ?? spec.duration;
+    const map = def.map ?? stage.scene ?? 'classroom';
+    const camera = [...(def.camera?.length ? def.camera : defaultCamera)].sort((a, b) => a.at - b.at);
+    const portraitKeys = def.cameraPortrait?.length ? def.cameraPortrait : camera;
+    const span = <T extends { from?: number; to?: number }>(p: T): { from: number; to: number } => ({ from: Math.max(from, p.from ?? from), to: Math.min(to, p.to ?? to) });
+    const props: PropTrack[] = (def.props ?? []).flatMap((p) => {
+      const { from: f, to: e } = span(p);
+      if (e <= f) return [];
+      const base: PropTrack = { asset: p.asset, x: p.x ?? 0, z: p.z ?? 0, y: p.y ?? 0, yaw: p.yaw ?? 0, scale: p.scale ?? 1, from: f, to: e, ...(p.clip ? { clip: p.clip } : {}) };
+      if (p.held) {
+        if (!ids.includes(p.held)) warnings.push(`prop ${p.asset}: no actor "${p.held}" holds it; placed on the ground`);
+        else base.held = { actor: p.held, hand: p.hand ?? 'R', ...(p.bone ? { bone: p.bone } : {}), offset: p.offset ?? [0, 0, 0], rotate: p.rotate ?? [0, 0, 0] };
+      }
+      const n = Math.max(1, Math.round(p.count ?? 1));
+      return Array.from({ length: n }, (_, k) => ({ ...base, x: base.x + k * (p.spacing ?? 0.4) }));
+    });
+    const pictures: PictureTrack[] = (def.pictures ?? []).flatMap((p) => {
+      const { from: f, to: e } = span(p);
+      if (e <= f) return [];
+      return [{ file: p.file, x: p.x, y: p.y, z: p.z, w: p.w, ...(p.h ? { h: p.h } : {}), yaw: p.yaw ?? 0, from: f, to: e, card: p.card ?? false, unlit: p.unlit ?? false }];
+    });
+    const frame = MAP_ORIGINS[map] ?? { origin: [RUG[0], RUG[1], RUG[2]], heading: 0 };
+    return {
+      set: name,
+      from,
+      to,
+      map,
+      origin: def.origin ? [def.origin[0], frame.origin[1], def.origin[1]] : frame.origin,
+      heading: def.heading ?? frame.heading,
+      light: def.light ?? (INTERIOR.has(map) ? 'interior' : 'outdoor'),
+      sun: def.sun ?? stage.sun ?? 'high',
+      camera,
+      cameraPortrait: [...portraitKeys].sort((a, b) => a.at - b.at),
+      props,
+      pictures,
+    };
+  });
+  const maps = [...new Set(shots.map((s) => s.map))];
+
   const actors: ActorTrack[] = ids.map((id) => {
     const asset = CAST[id]!;
-    const mark = marks[id] ?? { x: rowX(unmarked.indexOf(id)), z: 0, yaw: 0 };
-    const path: PathKey[] = [{ t: 0, x: mark.x, z: mark.z, yaw: mark.yaw ?? 0 }];
+    const rowMark: Mark = { x: rowX(unmarked.indexOf(id)), z: 0, yaw: 0 };
+    const markIn = (def: SetDef): Mark => def.marks?.[id] ?? marks[id] ?? rowMark;
+    const path: PathKey[] = [];
+    resolved.forEach(({ def, at }, i) => {
+      const mark = markIn(def);
+      path.push({ t: at, x: mark.x, z: mark.z, yaw: mark.yaw ?? 0, ...(i > 0 ? { jump: true } : {}) });
+    });
 
     // Line cues: the gesture clip from the line start, idle from the line end.
     const cues: Cue[] = [{ t: 0, clip: IDLE }];
@@ -213,27 +415,45 @@ export function buildTimeline(spec: Spec, stage: Stage): Timeline {
     sings.sort((a, b) => a.start - b.start);
 
     // Moves: walk from the current place to the target at the walk speed, then resume the line clip.
+    // A move belongs to the shot in force at its time; the walk ends at the shot's mark yaw.
     const moves = (stage.moves ?? []).filter((m) => m.actor === id).sort((a, b) => a.at - b.at);
+    let busyUntil = 0;
     for (const move of moves) {
-      const from = path[path.length - 1]!;
+      const shotIndex = Math.max(0, resolved.findIndex((r, i) => move.at >= r.at && (i + 1 >= resolved.length || move.at < resolved[i + 1]!.at)));
+      const cutAt = resolved[shotIndex + 1]?.at ?? spec.duration;
+      let i = path.length - 1;
+      while (i > 0 && path[i]!.t > move.at) i--;
+      const from = path[i]!;
       const dx = move.to.x - from.x;
       const dz = move.to.z - from.z;
       const dist = Math.hypot(dx, dz);
       const dur = Math.max(0.1, dist / WALK_SPEED);
-      if (move.at < from.t) warnings.push(`${id}: a move at ${move.at}s starts before the previous move ends (${from.t.toFixed(2)}s)`);
+      if (move.at < busyUntil) warnings.push(`${id}: a move at ${move.at}s starts before the previous move ends (${busyUntil.toFixed(2)}s)`);
+      if (move.at + dur > cutAt) warnings.push(`${id}: the move at ${move.at}s runs past the cut at ${cutAt.toFixed(2)}s`);
+      busyUntil = move.at + dur;
       const yaw = dist > 1e-6 ? (Math.atan2(dx, dz) * 180) / Math.PI : from.yaw;
-      path.push({ t: move.at, x: from.x, z: from.z, yaw }, { t: move.at + dur, x: move.to.x, z: move.to.z, yaw: marks[id]?.yaw ?? 0 });
+      const restYaw = markIn(resolved[shotIndex]!.def).yaw ?? 0;
+      path.splice(i + 1, 0, { t: move.at, x: from.x, z: from.z, yaw }, { t: move.at + dur, x: move.to.x, z: move.to.z, yaw: restYaw });
       const after = activeClip(cues, move.at + dur);
       cues.push({ t: move.at, clip: move.clip ?? 'walk' }, { t: move.at + dur, clip: after });
       cues.sort(byTime);
     }
+    path.sort(byTime);
     return { id, asset, path, cues, sings };
   });
 
-  const camera = [...(stage.camera?.length ? stage.camera : [DEFAULT_CAMERA])].sort((a, b) => a.at - b.at);
-  const cameraPortrait = [...(stage.cameraPortrait?.length ? stage.cameraPortrait : camera)].sort((a, b) => a.at - b.at);
-  const scene = stage.scene ?? lines.find((l) => l.scene)?.scene ?? 'classroom';
-  return { duration: spec.duration, scene, sun: stage.sun ?? 'high', actors, camera, cameraPortrait, warnings };
+  const first = shots[0]!;
+  return { duration: spec.duration, scene: first.map, sun: first.sun, actors, camera: first.camera, cameraPortrait: first.cameraPortrait, shots, maps, warnings };
+}
+
+/** Maps lit as a bright interior; every other map is outdoors (sky backdrop). */
+const INTERIOR = new Set(['classroom', 'tavern', 'blacksmith', 'library', 'inn', 'bakery', 'general-store', 'guild-hall', 'archive', 'apothecary', 'alchemy-lab']);
+
+/** The shot in force at t (the last shot that starts at or before t). */
+export function shotAt(tl: Pick<Timeline, 'shots'>, t: number): Shot {
+  let shot = tl.shots[0]!;
+  for (const s of tl.shots) if (s.from <= t) shot = s;
+  return shot;
 }
 
 export const smooth = (x: number): number => x * x * (3 - 2 * x);
@@ -262,11 +482,25 @@ export function cameraAt(keys: readonly CameraKey[], t: number): Required<Camera
   };
 }
 
+/** A stage frame: where stage (0, 0) sits in the world and which way stage +z points. */
+export interface Frame {
+  origin: readonly [number, number, number];
+  heading: number;
+}
+const RUG_FRAME: Frame = { origin: RUG, heading: 0 };
+
+/** Stage (x, z) in world metres for a frame. */
+export function toWorld(frame: Frame, x: number, z: number): [number, number] {
+  const h = (frame.heading * Math.PI) / 180;
+  return [frame.origin[0] + x * Math.cos(h) + z * Math.sin(h), frame.origin[2] - x * Math.sin(h) + z * Math.cos(h)];
+}
+
 /** The camera as world coordinates: the eye and the target. */
-export function cameraWorld(c: Required<CameraKey>): { eye: [number, number, number]; target: [number, number, number]; fov: number } {
-  const az = (c.az * Math.PI) / 180;
+export function cameraWorld(c: Required<CameraKey>, frame: Frame = RUG_FRAME): { eye: [number, number, number]; target: [number, number, number]; fov: number } {
+  const az = ((c.az + frame.heading) * Math.PI) / 180;
   const el = (c.el * Math.PI) / 180;
-  const target: [number, number, number] = [RUG[0] + c.tx, RUG[1] + c.ty, RUG[2] + c.tz];
+  const [wx, wz] = toWorld(frame, c.tx, c.tz);
+  const target: [number, number, number] = [wx, frame.origin[1] + c.ty, wz];
   const eye: [number, number, number] = [
     target[0] + c.dist * Math.sin(az) * Math.cos(el),
     target[1] + c.dist * Math.sin(el),
@@ -282,11 +516,11 @@ export function placeAt(path: readonly PathKey[], t: number): { x: number; z: nu
   const a = path[i]!;
   const b = path[i + 1];
   let yaw = a.yaw;
-  if (i > 0) {
+  if (i > 0 && !a.jump) {
     const prev = path[i - 1]!;
     yaw = lerpYaw(prev.yaw, a.yaw, smooth(clamp01((t - (a.t - 0.18)) / 0.36)));
   }
-  if (!b || t <= a.t) return { x: a.x, z: a.z, yaw };
+  if (!b || t <= a.t || b.jump) return { x: a.x, z: a.z, yaw };
   const u = (t - a.t) / (b.t - a.t);
   if (b.yaw !== a.yaw) yaw = lerpYaw(yaw, b.yaw, smooth(clamp01((t - (b.t - 0.18)) / 0.36)));
   return { x: lerp(a.x, b.x, u), z: lerp(a.z, b.z, u), yaw };
@@ -333,5 +567,11 @@ export function blinkAt(seed: number, t: number): number {
 /** A short text report of a timeline for the render log. */
 export function describe(tl: Timeline): string {
   const rows = tl.actors.map((a) => `${a.id} (${a.asset}): at ${a.path[0]!.x},${a.path[0]!.z} yaw ${a.path[0]!.yaw}; ${a.cues.length - 1} cues`);
-  return [`scene ${tl.scene}, sun ${tl.sun}, ${tl.duration.toFixed(2)} s, ${tl.camera.length} camera keys, ${tl.cameraPortrait.length} portrait keys`, ...rows, ...tl.warnings.map((w) => `warning: ${w}`)].join('\n');
+  const shots = tl.shots.map(
+    (s) =>
+      `shot ${s.set} ${s.from.toFixed(2)}-${s.to.toFixed(2)} s: map ${s.map} at ${s.origin[0]},${s.origin[2]} heading ${s.heading}, ${s.light} light, sun ${s.sun}, ${s.camera.length} camera keys` +
+      (s.props.length ? `, props ${s.props.map((p) => `${p.asset}${p.held ? `@${p.held.actor}` : ''} ${p.from.toFixed(1)}-${p.to.toFixed(1)}`).join(', ')}` : '') +
+      (s.pictures.length ? `, pictures ${s.pictures.map((p) => `${p.file} ${p.from.toFixed(1)}-${p.to.toFixed(1)}`).join(', ')}` : ''),
+  );
+  return [`scene ${tl.scene}, sun ${tl.sun}, ${tl.duration.toFixed(2)} s, ${tl.shots.length} shots, maps ${tl.maps.join(' ')}`, ...shots, ...rows, ...tl.warnings.map((w) => `warning: ${w}`)].join('\n');
 }
