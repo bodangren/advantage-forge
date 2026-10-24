@@ -14,8 +14,8 @@ Status: in progress (2026-10-24, fireball pilot in production). This plan owns e
 
 ## Phase 3: Production
 
-- [~] Task: Build missing sources and review existing sources in the batch. (Fireball owner: K3.1 Pro implementation worker. Assigned paths: `assets/fireball.ts` and `out/fireball/`.)
-- [ ] Task: Run forge all for each accepted source after visual correction.
+- [x] Task: Build missing sources and review existing sources in the batch. (Fireball built by K3.1 Pro; primary visual review complete) 90fe632
+- [~] Task: Run forge all for each accepted source after visual correction. (Final fireball export exists. Owner acceptance is pending.)
 
 ## Phase 4: Documentation and verification
 

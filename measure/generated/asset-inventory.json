@@ -3,8 +3,8 @@
   "catalog_note": "Catalog source presence does not show render, review, or acceptance status.",
   "catalog_coverage": {
     "listed": 856,
-    "source_present": 724,
-    "source_missing": 132,
+    "source_present": 725,
+    "source_missing": 131,
     "by_priority": {
       "P0": {
         "listed": 54,
@@ -23,8 +23,8 @@
       },
       "P3": {
         "listed": 48,
-        "source_present": 15,
-        "source_missing": 33
+        "source_present": 16,
+        "source_missing": 32
       }
     },
     "source_filename_collisions": [
@@ -3060,7 +3060,7 @@
       "priority": "P3",
       "kind": "effect",
       "source_path": "assets/fireball.ts",
-      "source_present": false,
+      "source_present": true,
       "track_id": "asset_p3_fx_geometry_20260928"
     },
     {
@@ -9625,8 +9625,8 @@
     }
   ],
   "asset_source_coverage": {
-    "listed": 926,
-    "catalog_matched": 708,
+    "listed": 927,
+    "catalog_matched": 709,
     "off_catalog": 218
   },
   "asset_sources": [
@@ -11539,6 +11539,13 @@
       "source_path": "assets/fire-slime.ts",
       "catalog_source_ids": [
         "monsters/small/fire-slime"
+      ]
+    },
+    {
+      "id": "fireball",
+      "source_path": "assets/fireball.ts",
+      "catalog_source_ids": [
+        "fx-geometry/magic/fireball"
       ]
     },
     {
