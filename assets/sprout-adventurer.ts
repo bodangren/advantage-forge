@@ -18,7 +18,7 @@ import { sproutGestures, sproutIndexFinger } from './parts/sprout-gestures.js';
  *   neckerchief is the strongest accent under it.
  * Bodies: skin (open grin), finger, hair, bandana, shirt, shorts, scarf, belt, steel (buckle),
  *   shoes, lantern-frame, lantern-light.
- * Rig: the humanoid kind's skeleton at age 5 (`AGE5`) and its clips, plus the seven gesture clips
+ * Rig: the humanoid kind's skeleton at age 5 (`AGE5`) and its clips, plus the gesture clips (sets 1 and 2, and turn)
  *   (`assets/parts/sprout-gestures.ts`). Hands: the kind's closed fists; the right fist has a short
  *   index finger (tag `hand.R`, in every clip) for the pointing gestures. The lantern is rigid on `hips`.
  */

@@ -156,6 +156,19 @@ Contract and commands: `docs/storytime-song.md`.
   back to `jaw`, then `head`; `bone` names one); the GLTF loader strips dots from bone names
   (`hand.R` is `handR` in the page); the outdoor sun offset is in stage space so a set facing
   180 keeps lit faces. Not built (pictures for now): duck, kite, ball, grape, sun, cloud, easel.
+- [x] Task: Full renders on contract v2 (2026-10-24): week 2 cut 3 (09:16), week 3 cut 2 (11:38,
+  re-rendered 11:54 after Storytime moved the board pictures in front of the board face and set a
+  closer classroom camera), week 6 cut 2 (11:48; a re-render from Storytime's lake camera fix is
+  queued). Paths `out/chibi-sprouts/r1/week{2,3,6}/song/song-cut<N>.mp4` with `-sheet.png`.
+  Storytime muxed the song audio and put weeks 2, 3, 6 on the owner's page (C1W2, C1W3, C1W6).
+  A 74 s song renders in about 6 minutes (0.20 s per frame) after a page load of 8 to 60 s.
+- [x] Task: Adventurer gesture stills for weeks 2 to 7 (Workbooks request through the Forge
+  session, 2026-10-24; the owner's order of 2026-10-23 item 3 covers it): 22 frames of 14 gestures
+  (set 2 plus the new `gesture-turn`, a spin for week 7 "Is it a top?") at the week 1 scale in
+  `out/chibi-sprouts/r1/week2-7/gestures/` with a manifest in the Workbooks shape
+  (`bench/sonnet/sprouts/cutout-gestures-w2-7.sh`). Handoff note:
+  `~/Desktop/primary-parity-progress/forge-gestures-w2-7-20261024.md`. `gesture-turn` has no
+  independent review yet. `reach` stands on tiptoe (lowest opaque row 1174), flagged by the check.
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
@@ -172,7 +185,8 @@ Workbooks does not wait for it.
 - [ ] Task: The owner confirms the cast beyond 8 (Lily, Mom, Dad, Grandma, Grandpa, Tom) and the
   cost.
 - [ ] Task: The remaining cast (an adult base for Mom, Dad, Grandma, Grandpa; Tom at about eight).
-- [ ] Task: The remaining gesture key frames (20 gestures in use, inventory section 3).
+- [x] Task: The remaining gesture key frames (20 gestures in use, inventory section 3): the
+  week 2 to 7 set above covers set 2 and `turn`; only the week 4 family cast gestures wait for S26.
 - [ ] Task: Scenes (inventory section 4) and the 30 props and animals (section 5): fit-check reused
   assets, build the new ones, and review in batches. Week 7 waits for its new song.
 

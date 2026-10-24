@@ -461,4 +461,18 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
       ...arms([45 * s, 0, 0], [-45 * s, 0, 0], [-20 * Math.max(0, -s), 0, 0], [-20 * Math.max(0, s), 0, 0]),
     };
   });
+
+  // ------------------------------------------------------------------ turn: one spin on the spot like a top, the arms out, the head leads the spin
+  // The hips turn the whole body (no leg targets, so the feet turn with the hips); a small dip at the start and the end.
+  clip('gesture-turn', (p) => {
+    const f = ks(p, [[0, 0], [0.3, 1], [1.7, 1], [2, 0]]);
+    const yaw = ks(p, [[0, 0], [0.25, 0], [1.65, 360], [2, 360]]);
+    const lead = ks(p, [[0, 0], [0.25, 0], [0.5, 25], [1.4, 25], [1.65, 0], [2, 0]]);
+    const dip = ks(p, [[0, 0], [0.25, -0.012], [0.5, 0], [1.4, 0], [1.65, -0.012], [1.9, 0], [2, 0]]);
+    return {
+      hips: { move: [0, dip, 0], rotate: [0, yaw, 0] },
+      head: { rotate: [0, lead, -4 * f] },
+      ...arms([0, 0, 60 * f], [0, 0, -60 * f], [0, 0, 10 * f], [0, 0, -10 * f]),
+    };
+  });
 }
