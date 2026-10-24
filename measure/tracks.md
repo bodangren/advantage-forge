@@ -96,7 +96,7 @@ This registry gives each historical, current, and planned work item one Measure 
 - [~] **Track: Audit self-graded character ratings**
   *Link: [./tracks/asset_review_audit_20261005/](./tracks/asset_review_audit_20261005/)*
 
-- [ ] **Track: Produce P3 fx-geometry**
+- [~] **Track: Produce P3 fx-geometry**
   *Link: [./tracks/asset_p3_fx_geometry_20260928/](./tracks/asset_p3_fx_geometry_20260928/)*
 
 - [x] **Track: Produce P3 vehicles**
