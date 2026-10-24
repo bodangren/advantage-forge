@@ -2,12 +2,12 @@
 
 Status: in progress (2026-10-24, fireball pilot in production). This plan owns execution status. Source documents retain design details.
 
-## Phase 1: Contract and scope
+## Phase 1: Contract and scope [checkpoint: bf0eccd]
 
 - [x] Task: Select a bounded batch from the scope map. (Fireball only, 2026-10-24.)
 - [x] Task: Record scale, palette, rig, clips, and game uses before generation. (See the fireball contract.)
 
-## Phase 2: Acceptance checks
+## Phase 2: Acceptance checks [checkpoint: bf0eccd]
 
 - [x] Task: Define silhouette, material, sprite, and clearance checks for the batch. (See the fireball contract.)
 - [x] Task: Confirm shared dimensions against the kit reference before launching trials. (The owner selected the 0.4 m core contract on 2026-10-24. No established kit effect dimensions exist.)
