@@ -172,6 +172,13 @@ Contract and commands: `docs/storytime-song.md`.
   Workbooks used the set in its commit bc025fb (45 song-line pictures) and asked for three held
   picture poses that read in a 64 px head-to-belt crop: `picture-march`, `picture-stamp`,
   `picture-sway` (clips for pictures only), delivered as `*-picture.png` with extra manifest keys.
+- [ ] Task: STOP (owner, 2026-10-24 17:38): Daniel failed C1W2 (week 2 cut 3): cuts not on the
+  beat, no opening scene, the sky set reads as a small sun on a blue background, props appear
+  before the line names them, the animation does not match the tempo. No song render until he
+  passes an option from Storytime's re-evaluation. Forge engine facts for it:
+  `out/chibi-sprouts/forge-engine-facts-20261024.md` (beat grid from the spec bpm, measured
+  100/95/100 bpm; opening shot; real sky and props to build; hybrid 2D backgrounds; render
+  time 4.5 to 5 min per song minute).
 - [ ] Task: Week 4 (Lily, Tom, Mom, Dad, Grandma, Grandpa) waits for S26: six characters beyond
   the eight. Do not build before the owner's answer; do not ask him.
 - [ ] Task: After the owner's C1 to C5 answers: a side sun if he wants longer shadows, a quieter
