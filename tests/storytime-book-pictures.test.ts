@@ -25,6 +25,7 @@ type CaptureOperations = {
   seek(at: number): Promise<void>;
   screenshot(): Promise<Buffer>;
   cameraState(): Promise<unknown>;
+  liveCameraState(): Promise<unknown>;
   lineArt(): Promise<Buffer>;
 };
 async function capturePairForTest(operations: CaptureOperations, input: unknown) {
@@ -287,6 +288,7 @@ async function twinFixture(options: { line?: Buffer; version?: number; color?: B
   const style = {
     verdict: 'pass', checkedBy: 'Daniel', relayedBy: 'Test PM relay', checkedAt: CLOCK().toISOString(),
     evidenceClass: 'owner-passed',
+    lineArtTechnique: evidence.lineArtTechnique, lineArtFormatVersion: evidence.lineArtFormatVersion,
     sampleFiles: [{ file, sha256: digest(color) }, { file: lineArtFile, sha256: digest(line) }],
   };
   await put(path.join(space.repoRoot, stage.file), stage.bytes);
@@ -1078,9 +1080,13 @@ describe('Storytime picture contract', () => {
           return Buffer.from(storyPng);
         },
         cameraState: async () => {
-          events.push('camera'); reads++;
-          if (mode === 'missing') return undefined;
-          return { ...structuredClone(camera), fov: mode === 'drift' && reads === 2 ? 60 : camera.fov };
+          events.push('camera');
+          return mode === 'missing' ? undefined : structuredClone(camera);
+        },
+        liveCameraState: async () => {
+          events.push('live-camera'); reads++;
+          return { ...structuredClone(camera), fov: mode === 'drift' && reads === 2 ? 60 : camera.fov,
+            projectionMatrix: Array.from({ length: 16 }, (_, index) => index % 5 === 0 ? 1 : 0) };
         },
         lineArt: async () => { events.push('lineart'); return Buffer.from(linePng); },
       };
@@ -1089,7 +1095,7 @@ describe('Storytime picture contract', () => {
       const run = capturePairForTest(operations, input);
       if (mode === 'valid') {
         const pair = await run;
-        expect(events).toEqual([`seek:${at}`, 'color', 'camera', 'lineart', 'camera', `seek:${at}`, 'color']);
+        expect(events).toEqual([`seek:${at}`, 'color', 'camera', 'live-camera', 'lineart', 'live-camera', `seek:${at}`, 'color']);
         expect(pair.camera).toEqual(camera);
         expect(pair.color).toEqual(storyPng); expect(pair.lineArt).toEqual(linePng);
       } else {
@@ -1161,7 +1167,7 @@ describe('Storytime picture contract', () => {
 });
 
 describe('Model review parser regressions', () => {
-  // Exact bytes from calibration/bad-one-sun-minimax.txt. The tests read no live output file.
+  // Exact bytes from the first MiniMax call acd4f807. The tests read no live output file.
   const realMmxFail = "{\n  \"content\": \"```json\\n{\\n  \\\"verdict\\\": \\\"FAIL\\\",\\n  \\\"reason\\\": \\\"The source text asks 'How many suns? One sun!', but there is no sun visible in the image.\\\",\\n  \\\"observedCounts\\\": {\\n    \\\"suns\\\": 0\\n  },\\n  \\\"issues\\\": [\\n    \\\"Missing required object: sun (0 observed, expected 1)\\\"\\n  ]\\n}\\n```\",\n  \"base_resp\": {\n    \"status_code\": 0,\n    \"status_msg\": \"success\"\n  }\n}\n";
   // This PASS is synthetic. It tests the same envelope shape, not a live model result.
   const passReview = { verdict: 'PASS', reason: 'One sun is visible.', observedCounts: { suns: 1 }, issues: [] };
@@ -1216,6 +1222,407 @@ describe('Model review parser regressions', () => {
     for (const review of invalidReviews) {
       const raw = JSON.stringify(review);
       expect(parseModelReview(raw).verdict, raw).toBe('fail');
+    }
+  });
+});
+
+describe('Review A remediation', () => {
+  const technique = 'song-page-form-edges-viewdepth-1bit-v2';
+  const nanText = 'Hello, I am Nan.';
+  const nanPrompt = 'Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers.';
+  const rawPass = JSON.stringify({ verdict: 'PASS', reason: 'Synthetic review.', observedCounts: { subject: 1 }, issues: [] });
+  const calibrationTarget = pictureSeams.calibrationTarget;
+  const gate = pictureSeams.assertCalibrationReady as unknown as
+    (outputRoot: string, workbooksRoot: string, repoRoot: string) => Promise<void>;
+  type CaptureInput = Parameters<typeof pictureSeams.captureBookStill>[0];
+  type FakePage = Awaited<ReturnType<typeof fakePage>>;
+
+  async function fakePage(notes: string[] = [], publishedFovOffset = 0) {
+    const THREE = await import('three');
+    const camera = new THREE.PerspectiveCamera(45, 4 / 3, 0.2, 120);
+    camera.position.set(0, 1, 5);
+    const published = { ...structuredClone(CAMERA), aspect: camera.aspect, near: camera.near, far: camera.far,
+      fov: camera.fov + publishedFovOffset };
+    const events: string[] = [];
+    let loaded: unknown;
+    const browserWindow: {
+      __song?: unknown;
+      __bookStill?: { camera: typeof camera; cameraState: typeof published; scene: object; renderer: object };
+    } = {};
+    const load = vi.fn((timeline: unknown) => {
+      events.push('load'); loaded = timeline; delete browserWindow.__bookStill; return notes;
+    });
+    const seek = vi.fn((at: number) => {
+      events.push(`seek:${at}`);
+      if (!loaded) throw new Error('seek before load');
+      browserWindow.__bookStill = { camera, cameraState: structuredClone(published), scene: {}, renderer: {} };
+    });
+    browserWindow.__song = { load, seek, ready: true, portrait: false };
+    const page = {
+      evaluate: async <T, A>(fn: (arg: A) => T | Promise<T>, arg?: A): Promise<T> => {
+        // Execute the real page callback. A canned evaluate result would hide the wiring defect.
+        const saved = Object.getOwnPropertyDescriptor(globalThis, 'window');
+        Object.defineProperty(globalThis, 'window', { configurable: true, writable: true, value: browserWindow });
+        try { return await fn(arg as A); }
+        finally {
+          if (saved) Object.defineProperty(globalThis, 'window', saved);
+          else Reflect.deleteProperty(globalThis, 'window');
+        }
+      },
+      screenshot: vi.fn(async () => { events.push('color'); return Buffer.from(storyPng); }),
+    };
+    const close = vi.fn(async () => {});
+    const open = vi.fn(async () => ({ page, pageErrors: [], close }));
+    const lineArt = vi.fn(async () => { events.push('lineart'); return Buffer.from(linePng); });
+    return { page, open, close, lineArt, camera, published, events, load, seek, loaded: () => loaded };
+  }
+  function captureInput(repoRoot: string): CaptureInput {
+    return { repoRoot, job: job(), stage: stageFile(repoRoot), timeline: buildBookStillTimeline(stageSource()),
+      size: { width: 3000, height: 2250 } };
+  }
+  function loadTimeline(page: FakePage['page'], timeline: CaptureInput['timeline']) {
+    const load = (pictureSeams as unknown as {
+      loadBookTimeline(page: FakePage['page'], timeline: CaptureInput['timeline']): Promise<void>;
+    }).loadBookTimeline;
+    expect(load, 'The shared loadBookTimeline seam exists.').toBeTypeOf('function');
+    return load(page, timeline);
+  }
+  function productionCapture(input: CaptureInput, fake: FakePage) {
+    // Require the shared seam before the production call can reach a mocked browser opener.
+    expect((pictureSeams as unknown as Record<string, unknown>).loadBookTimeline).toBeTypeOf('function');
+    const capture = pictureSeams.captureBookStill as unknown as
+      (input: CaptureInput, deps: { open: FakePage['open']; lineArt: FakePage['lineArt'] }) => Promise<ReturnType<typeof capturePacket>>;
+    return capture(input, { open: fake.open, lineArt: fake.lineArt });
+  }
+  async function calibrationFixture() {
+    const space = await sandbox();
+    const workbooksRoot = await copyPackages(space.repoRoot);
+    const fixtureJobs = buildStorytimeJobs({ workbooksRoot });
+    for (const id of ['bad-one-sun', 'good-nan'] as const) {
+      const target = calibrationTarget(id, workbooksRoot, space.repoRoot);
+      const bytes = Buffer.from(`Synthetic calibration source: ${id}`);
+      await put(target.file, bytes);
+      for (const provider of ['minimax', 'kimi'] as const) {
+        await json(path.join(space.outputRoot, `calibration/${id}-${provider}.json`), {
+          ...modelReview({ ...fixtureJobs[0]!, id }, 1, provider), file: target.file,
+          sourceText: id === 'good-nan' ? nanText : target.sourceText,
+          sourcePrompt: id === 'good-nan' ? nanPrompt : target.sourcePrompt,
+          verdict: id === 'bad-one-sun' ? 'fail' : 'pass', fileSha256: digest(bytes), rawOutput: rawPass,
+        });
+      }
+    }
+    return { ...space, workbooksRoot, fixtureJobs };
+  }
+  async function ledger(outputRoot: string): Promise<Record<string, unknown>[]> {
+    const file = path.join(outputRoot, 'cost-ledger.jsonl');
+    return existsSync(file) ? (await readFile(file, 'utf8')).trim().split('\n').filter(Boolean).map((line) => JSON.parse(line)) : [];
+  }
+  async function snapshot(directory: string) {
+    return Promise.all((await tree(directory)).map(async (file) => [path.relative(directory, file), digest(await readFile(file))]));
+  }
+  async function kimiFixture(calibration = false) {
+    const space = await calibrationFixture();
+    await json(path.join(space.outputRoot, 'jobs.json'), space.fixtureJobs);
+    await put(path.join(space.outputRoot, candidateRelativePath(space.fixtureJobs[0]!, 1)), storyPng);
+    const raw = path.join(space.outputRoot, 'candidates/synthetic-kimi.txt');
+    await put(raw, rawPass);
+    const targetArgs = calibration ? ['--calibration', 'good-nan'] : ['--job', space.fixtureJobs[0]!.id, '--version', '1'];
+    const args = ['precheck-kimi', '--out', space.outputRoot, '--workbooks', space.workbooksRoot, '--paid'];
+    const deps = { repoRoot: space.repoRoot, log: vi.fn() };
+    await runStorytimeCli([...args, ...targetArgs, '--begin'], deps);
+    const callId = String((await ledger(space.outputRoot))[0]!.callId);
+    return { ...space, args, targetArgs, deps, raw, callId };
+  }
+
+  it('T61: the production capture loads the timeline before its first seek', async () => {
+    // Falsification: seek precedes load, either image is absent, or the capture-path label is absent.
+    const space = await sandbox();
+    const fake = await fakePage();
+    const input = captureInput(space.repoRoot);
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const before = await snapshot(space.outputRoot);
+    const pair = await productionCapture(input, fake);
+    expect(fake.loaded()).toEqual(input.timeline);
+    expect(fake.load).toHaveBeenCalledOnce();
+    expect(fake.events[0]).toBe('load');
+    expect(fake.events.indexOf(`seek:${input.stage.at}`)).toBeGreaterThan(fake.events.indexOf('load'));
+    expect(pair.color).toEqual(storyPng); expect(pair.lineArt).toEqual(linePng);
+    expect(fake.open).toHaveBeenCalledOnce(); expect(fake.close).toHaveBeenCalledOnce();
+    expect(log.mock.calls.flat().join('\n')).toContain('capture path: captureBookStill');
+    expect(await snapshot(space.outputRoot)).toEqual(before);
+  });
+
+  it('T62: the shared loader accepts no notes and rejects a note before any seek', async () => {
+    // Falsification: a note passes, load runs twice, or the production capture seeks after a note.
+    const space = await sandbox();
+    const input = captureInput(space.repoRoot);
+    const empty = await fakePage();
+    await loadTimeline(empty.page, input.timeline);
+    expect(empty.load).toHaveBeenCalledExactlyOnceWith(input.timeline);
+    expect(empty.seek).not.toHaveBeenCalled();
+    const note = 'Missing actor: synthetic-Nan';
+    const noted = await fakePage([note]);
+    await expect(loadTimeline(noted.page, input.timeline)).rejects.toThrow(note);
+    expect(noted.load).toHaveBeenCalledOnce(); expect(noted.seek).not.toHaveBeenCalled();
+    const capture = await fakePage([note]);
+    await expect(productionCapture(input, capture)).rejects.toThrow(note);
+    expect(capture.seek).not.toHaveBeenCalled(); expect(capture.page.screenshot).not.toHaveBeenCalled();
+    expect(capture.lineArt).not.toHaveBeenCalled(); expect(capture.close).toHaveBeenCalledOnce();
+    expect(await tree(space.outputRoot)).toEqual([]);
+  });
+
+  it('T63: live camera reads detect fov and projection drift and retain the published evidence', async () => {
+    // Falsification: a published-copy comparison hides drift, or a live state replaces the evidence camera.
+    const space = await sandbox();
+    const input = captureInput(space.repoRoot);
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    const unchanged = await fakePage();
+    expect((await productionCapture(input, unchanged)).camera).toEqual(unchanged.published);
+    for (const field of ['fov', 'projectionMatrix'] as const) {
+      const fake = await fakePage();
+      fake.lineArt.mockImplementation(async () => {
+        if (field === 'fov') fake.camera.fov += 1;
+        else fake.camera.projectionMatrix.elements[8]! += 0.125;
+        return Buffer.from(linePng);
+      });
+      await expect(productionCapture(input, fake)).rejects.toThrow(new RegExp(`drift.*${field}|${field}.*drift`, 'i'));
+      expect(fake.page.screenshot).toHaveBeenCalledOnce();
+      expect(fake.close).toHaveBeenCalledOnce();
+    }
+    const mismatch = await fakePage([], 1);
+    await expect(productionCapture(input, mismatch)).rejects.toThrow(/drift.*fov|fov.*drift/i);
+    expect(mismatch.lineArt).not.toHaveBeenCalled();
+    expect(await tree(space.outputRoot)).toEqual([]);
+  });
+
+  it('T64: one style look covers other twins of the same technique and validates the sample bytes', async () => {
+    // Falsification: a non-sample twin fails, a different technique passes, or a bad sample hash leaves a usable look.
+    const sample = await twinFixture();
+    const selected = jobs.slice(0, 3);
+    for (const [index, current] of selected.entries()) {
+      if (index === 0) continue;
+      const stage = stageFile(sample.repoRoot, current);
+      const file = candidateRelativePath(current, 1), lineArtFile = linePath(current, 1);
+      await put(path.join(sample.repoRoot, stage.file), stage.bytes);
+      await put(path.join(sample.outputRoot, file), storyPng);
+      await put(path.join(sample.outputRoot, lineArtFile), linePng);
+      await json(path.join(sample.outputRoot, `renders/${current.id}-v1.json`), {
+        ...sample.evidence, jobId: current.id, stageFile: stage.file, stageSha256: stage.sha256,
+        file, colorFile: file, lineArtFile,
+        lineArtTechnique: index === 2 ? 'synthetic-other-technique' : sample.evidence.lineArtTechnique,
+      });
+      for (const provider of ['minimax', 'kimi'] as const) {
+        await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-${provider}.json`), modelReview(current, 1, provider));
+      }
+      await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-person.json`), personReview(current, 1));
+      await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-lineart-person.json`), {
+        ...personReview(current, 1, linePng), file: lineArtFile,
+      });
+    }
+    const states = async () => (await buildManifest(selected, sample.outputRoot, sample.repoRoot)).jobs
+      .map((item) => (item.candidates[0] as CandidateManifest & { lineArt: LineArtView }).lineArt.status);
+    expect.soft(await states()).toEqual(['ready', 'ready', 'pending']);
+    const thirdEvidenceFile = path.join(sample.outputRoot, `renders/${selected[2]!.id}-v1.json`);
+    const thirdEvidence = JSON.parse(await readFile(thirdEvidenceFile, 'utf8'));
+    await json(thirdEvidenceFile, { ...thirdEvidence, lineArtTechnique: sample.evidence.lineArtTechnique,
+      lineArtFormatVersion: 'synthetic-other-format' });
+    expect.soft(await states()).toEqual(['ready', 'ready', 'pending']);
+    await json(thirdEvidenceFile, thirdEvidence);
+    await json(path.join(sample.outputRoot, sample.styleFile), { ...sample.style,
+      sampleFiles: sample.style.sampleFiles.map((item) => ({ ...item, sha256: digest('different sample bytes') })) });
+    expect(await states()).toEqual(['failed', 'failed', 'failed']);
+  });
+
+  it('T65: calibration rejects a stale rubric, a changed hash, and the old good-nan text', async () => {
+    // Falsification: a changed log opens the gate, or the four current synthetic logs fail the gate.
+    const space = await calibrationFixture();
+    await expect(gate(space.outputRoot, space.workbooksRoot, space.repoRoot)).resolves.toBeUndefined();
+    for (const id of ['bad-one-sun', 'good-nan']) for (const provider of ['minimax', 'kimi']) {
+      const file = path.join(space.outputRoot, `calibration/${id}-${provider}.json`);
+      const correct = JSON.parse(await readFile(file, 'utf8'));
+      for (const change of [{ rubricVersion: 'storytime-picture-v1' }, { fileSha256: digest('other bytes') },
+        { sourceText: 'Owner-approved Nan character picture.' }, { sourcePrompt: 'Old source prompt.' }]) {
+        await json(file, { ...correct, ...change });
+        const result = await gate(space.outputRoot, space.workbooksRoot, space.repoRoot).then(() => 'accepted', () => 'refused');
+        expect.soft(result, `${id}/${provider}: ${JSON.stringify(change)}`).toBe('refused');
+        await json(file, correct);
+      }
+    }
+  });
+
+  it('T66: good-nan uses the neutral Workbooks character text', () => {
+    // Falsification: an approval word remains, or the fixed description differs from the page prompt.
+    const target = calibrationTarget('good-nan', WORKBOOKS, root);
+    expect.soft(target.sourceText).toBe(nanText);
+    expect.soft(target.sourcePrompt).toBe(nanPrompt);
+    expect.soft(`${target.sourceText}\n${target.sourcePrompt}`).not.toMatch(/approv|owner/i);
+    const page5 = jobs.find((item) => item.id === 'w01-readalong-p05')!;
+    const realPackage = readFileSync(page5.sourcePackage, 'utf8');
+    expect(realPackage).toContain(nanPrompt.slice(0, -1));
+    expect(page5.sourcePrompt).toContain(nanPrompt.slice(0, -1));
+  });
+
+  it('T67: Kimi failure records close one call and refuse invalid or duplicate records without writes', async () => {
+    // Falsification: a failure writes a review, or a refused record changes any output byte.
+    const good = await kimiFixture();
+    const before = await snapshot(good.outputRoot);
+    const failureArgs = ['--record', good.callId, '--failed', '--reason', 'reviewer session hung'];
+    const result = await runStorytimeCli([...good.args, ...failureArgs], good.deps).then(() => 'recorded', (error: Error) => error.message);
+    expect.soft(result).toBe('recorded');
+    const entries = await ledger(good.outputRoot);
+    expect.soft(entries).toHaveLength(2);
+    expect.soft(entries[1]).toMatchObject({ event: 'after-call', callId: good.callId, status: 'failure', reason: 'reviewer session hung' });
+    expect.soft((await snapshot(good.outputRoot)).filter(([file]) => file !== 'cost-ledger.jsonl'))
+      .toEqual(before.filter(([file]) => file !== 'cost-ledger.jsonl'));
+
+    for (const mode of ['no-begin', 'duplicate-failure', 'duplicate-success', 'failed-with-raw', 'empty-reason',
+      'calibration-mismatch', 'job-mismatch', 'version-mismatch'] as const) {
+      const f = await kimiFixture(mode === 'calibration-mismatch');
+      // Seed an after-call independently. Both record modes must reject it.
+      if (mode.startsWith('duplicate')) {
+        const prior = (await ledger(f.outputRoot))[0]!;
+        await put(path.join(f.outputRoot, 'cost-ledger.jsonl'), `${JSON.stringify(prior)}\n${JSON.stringify({
+          ...prior, event: 'after-call', status: mode === 'duplicate-failure' ? 'failure' : 'success', reason: 'Synthetic prior record.',
+        })}\n`);
+      }
+      const recordId = mode === 'no-begin' ? 'unknown-call' : f.callId;
+      let extra = ['--record', recordId, '--failed', '--reason', 'reviewer session hung'];
+      if (mode === 'failed-with-raw') extra.push('--raw', f.raw);
+      if (mode === 'empty-reason') extra = ['--record', recordId, '--failed', '--reason', ''];
+      if (mode === 'calibration-mismatch') extra.push('--calibration', 'bad-one-sun');
+      if (mode === 'job-mismatch') extra.push('--job', f.fixtureJobs[1]!.id);
+      if (mode === 'version-mismatch') extra.push('--version', '2');
+      const saved = await snapshot(f.outputRoot);
+      const refused = await runStorytimeCli([...f.args, ...extra], f.deps).then(() => false, () => true);
+      expect.soft(refused, mode).toBe(true);
+      expect.soft(await snapshot(f.outputRoot), mode).toEqual(saved);
+      if (mode.startsWith('duplicate') || mode.endsWith('mismatch') || mode === 'no-begin') {
+        const target = mode === 'calibration-mismatch' ? ['--calibration', 'bad-one-sun']
+          : mode === 'job-mismatch' ? ['--job', f.fixtureJobs[1]!.id]
+            : mode === 'version-mismatch' ? ['--version', '2'] : [];
+        const rawRefused = await runStorytimeCli([...f.args, '--record', recordId, '--raw', f.raw, ...target], f.deps).then(() => false, () => true);
+        expect.soft(rawRefused, `${mode}: raw mode`).toBe(true);
+        expect.soft(await snapshot(f.outputRoot), `${mode}: raw mode`).toEqual(saved);
+      }
+    }
+  });
+
+  it('T68: provider logs label declared models and preserve a reported MiniMax model', async () => {
+    // Falsification: a model lacks its source label, or a reported model remains declared.
+    for (const reported of [false, true]) {
+      const space = await sandbox();
+      await put(path.join(space.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+      const output = reported ? JSON.stringify({ ...JSON.parse(rawPass), model: 'synthetic-reported-vision' }) : rawPass;
+      const result = await precheckMiniMax({ ...space, jobs: [job()], jobId: job().id, version: 1,
+        paid: true, dryRun: false, runner: async () => ({ stdout: output, stderr: '' }) });
+      expect(result.status).toBe('pass');
+      const first = (await ledger(space.outputRoot))[0]!;
+      expect.soft(first).toMatchObject({ event: 'before-call', model: pictureSeams.MINIMAX_VISION_MODEL, modelSource: 'declared' });
+      const review = JSON.parse(await readFile(path.join(space.outputRoot, `reviews/${job().id}-v1-minimax.json`), 'utf8'));
+      expect.soft(review).toMatchObject({ modelSource: reported ? 'reported' : 'declared',
+        model: reported ? 'synthetic-reported-vision' : first.model });
+    }
+    const kimi = await kimiFixture();
+    await runStorytimeCli([...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps);
+    const review = JSON.parse(await readFile(path.join(kimi.outputRoot, `reviews/${kimi.fixtureJobs[0]!.id}-v1-kimi.json`), 'utf8'));
+    expect.soft(review).toMatchObject({ modelSource: 'declared', model: pictureSeams.KIMI_REVIEW_MODEL });
+    expect.soft((await ledger(kimi.outputRoot))[0]).toMatchObject({ modelSource: 'declared' });
+  });
+
+  it('T69: repeated MiniMax calls keep separate callId raw files and bind each review', async () => {
+    // Falsification: a later call changes the first raw file, or a review lacks its call identity.
+    const space = await sandbox();
+    await planned(space.repoRoot, space.outputRoot);
+    await put(path.join(space.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+    const outputs = [rawPass, `${rawPass}\n`];
+    const saved = new Map<string, Buffer>();
+    for (const output of outputs) {
+      const code = await runStorytimeCli(['precheck-minimax', '--out', space.outputRoot, '--job', job().id,
+        '--version', '1', '--paid'], { repoRoot: space.repoRoot, log: vi.fn(),
+        runner: async () => ({ stdout: output, stderr: '' }) });
+      expect(code).toBe(0);
+      const entries = await ledger(space.outputRoot);
+      const callId = String(entries.filter((item) => item.event === 'before-call').at(-1)!.callId);
+      const review = JSON.parse(await readFile(path.join(space.outputRoot, `reviews/${job().id}-v1-minimax.json`), 'utf8'));
+      expect.soft(review.callId).toBe(callId);
+      expect.soft(review.rawFile).toEqual(expect.stringMatching(/^raw\//));
+      if (typeof review.rawFile === 'string') {
+        expect.soft(path.basename(review.rawFile)).toContain(callId);
+        const file = path.resolve(space.outputRoot, review.rawFile);
+        expect(await readFile(file, 'utf8')).toBe(output); saved.set(file, Buffer.from(output));
+      }
+      for (const [file, bytes] of saved) expect(await readFile(file)).toEqual(bytes);
+    }
+    const rawFiles = (await tree(space.outputRoot)).filter((file) => path.relative(space.outputRoot, file).startsWith('raw/'));
+    expect(rawFiles).toHaveLength(2);
+    expect(saved.size).toBe(2);
+  });
+
+  it('T71: render evidence and smoke evidence name the view-distance technique', async () => {
+    // Falsification: the exported ID or either evidence record names another technique.
+    expect.soft(pictureSeams.LINEART_TECHNIQUE).toBe(technique);
+    const space = await calibrationFixture();
+    const current = space.fixtureJobs[0]!;
+    await json(path.join(space.outputRoot, 'jobs.json'), space.fixtureJobs);
+    const stage = stageFile(space.repoRoot, current);
+    await put(path.join(space.repoRoot, stage.file), stage.bytes);
+    await renderTwins({ jobs: [current], ...space, dryRun: false, capture: async () => capturePacket(), readStage: async () => stage });
+    const evidence = JSON.parse(await readFile(path.join(space.outputRoot, `renders/${current.id}-v1.json`), 'utf8'));
+    expect.soft(evidence.lineArtTechnique).toBe(technique);
+    const packet = { ...smokeCaptureForTest(), fixtureLineArt: await smokePicture('ring') };
+    await runStorytimeCli(['lineart-smoke', '--out', space.outputRoot, '--job', current.id], {
+      repoRoot: space.repoRoot, log: vi.fn(), now: CLOCK, readStage: async () => stage,
+      capture: (async () => packet) as unknown as CliCapture,
+    });
+    const file = (await tree(space.outputRoot)).find((item) => path.basename(item) === 'smoke.json')!;
+    expect(JSON.parse(await readFile(file, 'utf8')).lineArtTechnique).toBe(technique);
+  });
+
+  it('T72: a completed newest version prints the next version and an explicit v2 needs no v1', async () => {
+    // Falsification: a skip writes bytes or lacks the hint, or an explicit v2 writes or requires v1.
+    const space = await calibrationFixture();
+    const current = space.fixtureJobs[0]!;
+    await json(path.join(space.outputRoot, 'jobs.json'), space.fixtureJobs);
+    await put(path.join(space.repoRoot, stageRelativePath(current, 1)), JSON.stringify(stageSource(current, 1)));
+    const capture = vi.fn(async () => capturePacket());
+    const log = vi.fn();
+    const args = ['render', '--out', space.outputRoot, '--workbooks', space.workbooksRoot, '--job', current.id];
+    const deps = { repoRoot: space.repoRoot, capture: capture as unknown as CliCapture, log };
+    await runStorytimeCli(args, deps);
+    const before = await snapshot(space.outputRoot);
+    capture.mockClear(); log.mockClear();
+    expect(await runStorytimeCli(args, deps)).toBe(0);
+    expect(capture).not.toHaveBeenCalled();
+    expect(await snapshot(space.outputRoot)).toEqual(before);
+    expect.soft(log.mock.calls.flat().join('\n')).toContain('skipped');
+    expect.soft(log.mock.calls.flat().join('\n')).toContain('next free version: v2');
+
+    const explicit = await calibrationFixture();
+    const secondJob = explicit.fixtureJobs[0]!;
+    await json(path.join(explicit.outputRoot, 'jobs.json'), explicit.fixtureJobs);
+    await put(path.join(explicit.repoRoot, stageRelativePath(secondJob, 2)), JSON.stringify(stageSource(secondJob, 2)));
+    expect(await runStorytimeCli(['render', '--out', explicit.outputRoot, '--workbooks', explicit.workbooksRoot,
+      '--job', secondJob.id, '--version', '2'], { ...deps, repoRoot: explicit.repoRoot })).toBe(0);
+    expect(existsSync(path.join(explicit.outputRoot, candidateRelativePath(secondJob, 2)))).toBe(true);
+    expect(existsSync(path.join(explicit.outputRoot, linePath(secondJob, 2)))).toBe(true);
+    expect(existsSync(path.join(explicit.outputRoot, candidateRelativePath(secondJob, 1)))).toBe(false);
+    expect(existsSync(path.join(explicit.outputRoot, linePath(secondJob, 1)))).toBe(false);
+  });
+
+  it('T73: the smoke depth-step check needs border ink on at least 90 percent of the declared rows', async () => {
+    // Falsification: absent border ink passes, a complete border fails, or its labeled row count is absent.
+    // This adapter fixes only the metadata shape. It does not select the live fixture plane placement.
+    const fixture = { ...SMOKE_FIXTURE, depthStep: { column: 230, rowStart: 80, rowEnd: 179 } };
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    for (const rows of [100, 90, 89, 0]) {
+      const { data } = await sharp(await smokePicture('ring')).greyscale().raw().toBuffer({ resolveWithObject: true });
+      for (let row = 0; row < rows; row++) data[(fixture.depthStep.rowStart + row) * fixture.width + fixture.depthStep.column + 2] = 0;
+      log.mockClear();
+      const result = await pictureSeams.checkLineArtSmoke(await greyPng(data, fixture.width, fixture.height), fixture);
+      expect.soft(result.valid, `Border rows: ${rows}/100`).toBe(rows >= 90);
+      const label = log.mock.calls.flat().join('\n').match(/fixture depth step rows:\s*([0-9]+)\/([0-9]+)/);
+      expect.soft(label, `Border rows: ${rows}/100`).not.toBeNull();
+      if (label) expect.soft([Number(label[1]), Number(label[2])]).toEqual([rows, 100]);
     }
   });
 });

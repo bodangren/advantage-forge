@@ -155,4 +155,50 @@ describe('Line-art scene pass', () => {
     expect(Array.from(result.data.slice(0, 8))).toEqual(Array(8).fill(0));
     expect(Array.from(result.data.slice(-8))).toEqual(Array(8).fill(255));
   });
+
+  it('T70: view distance and relative depth gaps produce same-normal border ink', async () => {
+    // Falsification: packed-depth gaps replace relative distance, a small gap makes ink, or a depth border has no ink.
+    const pass = await import('../src/storytime/line-art-pass.js');
+    const { viewDistance, isDepthEdge } = pass as typeof pass & {
+      viewDistance(depth: number, near: number, far: number): number;
+      isDepthEdge(distanceA: number, distanceB: number): boolean;
+    };
+    expect(viewDistance, 'The viewDistance seam exists.').toBeTypeOf('function');
+    expect(isDepthEdge, 'The isDepthEdge seam exists.').toBeTypeOf('function');
+    const near = 0.2, far = 120;
+    // This independent perspective equation does not use the product conversion.
+    const depth = (z: number) => far * (z - near) / (z * (far - near));
+    for (const z of [0.5, 4, 40]) {
+      expect(Math.abs(viewDistance(depth(z), near, far) - z) / z).toBeLessThanOrEqual(0.001);
+    }
+    for (const [a, b] of [[4, 4.3], [40, 43]]) {
+      expect(isDepthEdge(a!, b!)).toBe(true); expect(isDepthEdge(b!, a!)).toBe(true);
+    }
+    for (const [a, b] of [[4, 4.02], [40, 40.2], [4, 4]]) {
+      expect(isDepthEdge(a!, b!)).toBe(false); expect(isDepthEdge(b!, a!)).toBe(false);
+    }
+    // Integer base-256 digits encode RGBADepthPacking independently of the product unpacker.
+    const packed = (value: number) => {
+      const integer = Math.floor(value * 4294967296);
+      return [integer % 256, Math.floor(integer / 256) % 256,
+        Math.floor(integer / 65536) % 256, Math.floor(integer / 16777216) % 256];
+    };
+    for (const [left, right, edge] of [[4, 4.3, true], [40, 43, true], [4, 4.02, false], [40, 40.2, false]] as const) {
+      const f = fixture();
+      f.camera.near = near; f.camera.far = far; f.camera.updateProjectionMatrix();
+      f.renderer.readRenderTargetPixels = (_target, _x, _y, width, height, pixels) => {
+        const depthPass = f.scene.overrideMaterial?.type === 'MeshDepthMaterial';
+        for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+          const bytes = depthPass ? packed(depth(x < width / 2 ? left : right)) : [128, 128, 255, 255];
+          pixels.set(bytes, (y * width + x) * 4);
+        }
+      };
+      const result = pass.renderLineArtPass(f.three, f.parts, { width: 12, height: 10 });
+      for (let y = 0; y < 10; y++) {
+        const border = [...result.data.slice(y * 12 + 4, y * 12 + 8)];
+        expect(border.includes(0), `Depth border at ${left}/${right}, row ${y}`).toBe(edge);
+      }
+      expect([...result.data.slice(0, 4)]).toEqual([255, 255, 255, 255]);
+    }
+  });
 });
