@@ -59,7 +59,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The Red type fix `5cbb3407` (test line 433, type-only) unblocked the type gate. The real
   line-art capture pass needs the engine hook task before a live render (see the Green log).
-- [~] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
+- [x] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
   an additive hook: after each `seek`, publish `window.__bookStill` with the scene, camera,
   renderer, and camera state. Do not change song rendering, timing, or `window.__song`. Replace
   the wireframe pass with a form-edge pass that restores the camera and the renderer. Pass T42 to
@@ -69,6 +69,29 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
   T42–T44 and T46–T51 failed for missing seams, hook calls, or the smoke command.
   All 41 earlier picture tests and all 19 timeline tests passed. The run had no test syntax or timeout errors.
+  Green evidence: `fc2cc6a8`; exit code `0`; `Tests  69 passed (69)`; no skip. Same command.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31` (outside the owned
+  paths; see known_failures). Compiler output:
+  `measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t3.log`.
+  T45 checks: `git diff --name-only 1d39b8fd -- src/song` prints exactly `src/song/main.ts` and
+  `src/song/still-hook.ts`; `removed song lines: 0`; `git diff --quiet 1d39b8fd --
+  src/song/timeline.ts tests/song-timeline.test.ts` exit `0`.
+  Technique: depth and normal discontinuity pass (MeshNormalMaterial plus MeshDepthMaterial
+  RGBADepthPacking into render targets, thresholded to 1 bit). The page's `three` namespace
+  travels on `window.__bookStill.three`; the page loads the pass through the vite dev server.
+  The pass restores the camera, renderer, clear color, background, and override material, and
+  disposes its two render targets and two materials. `captureStillPair` reads the camera state
+  before the pass, seeks the same time again, and fails on a camera drift or a pixel difference.
+  Bounded smoke run (T52), once: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scripts/storytime-book-pictures.ts lineart-smoke --job w01-readalong-p05'`;
+  exit code `0`; output `out/storytime/l2/unit1/smoke/lineart-2026-10-25T19-27-40-335Z/`;
+  labels `hook before seek: absent`; `hook after seek: present`;
+  `window.__song keys: load,portrait,ready,seek`; `camera state drift: 0`;
+  `color repeat identical: yes`; `stage ink share: 2.05%`; `fixture interior ink: 0.00%`;
+  `fixture ring rays: 360/360`. The pictures show outlines and form edges, not a mesh net.
+  Orchestrator deviation used: one Nan window scene file
+  `docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json` (`5e90526d`), from existing approved
+  pieces only: map `classroom`, actor `Nan` (sprout-nan), pose clip `wave`, prop `pot`.
+  No paid call and no heavy render outside the one smoke run.
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
 
