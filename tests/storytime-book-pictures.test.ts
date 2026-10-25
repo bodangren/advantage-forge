@@ -17,6 +17,60 @@ import {
 } from '../src/storytime/book-pictures.js';
 // Keep this import: the compiler reaches the command wrapper through this test.
 import { runStorytimeBookPictures } from '../scripts/storytime-book-pictures.js';
+import * as pictureSeams from '../src/storytime/book-pictures.js';
+
+// These adapters isolate unspecified driver methods and packet fields from the assertions.
+// Green may adapt these mappings to its driver. The event order and failure checks stay fixed.
+type CaptureOperations = {
+  seek(at: number): Promise<void>;
+  screenshot(): Promise<Buffer>;
+  cameraState(): Promise<unknown>;
+  lineArt(): Promise<Buffer>;
+};
+async function capturePairForTest(operations: CaptureOperations, input: unknown) {
+  const seam = (pictureSeams as unknown as {
+    captureStillPair(driver: CaptureOperations, input: unknown): Promise<{ color: Buffer; lineArt: Buffer; camera: unknown }>;
+  }).captureStillPair;
+  expect(seam, 'The captureStillPair seam exists.').toBeTypeOf('function');
+  return seam(operations, input);
+}
+const SMOKE_FIXTURE = { width: 256, height: 256, center: [128, 128], radius: 80 };
+async function smokePicture(kind: 'ring' | 'net' | 'gap') {
+  const { width, height, center, radius } = SMOKE_FIXTURE;
+  const pixels = Buffer.alloc(width * height, 255);
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const dx = x - center[0]!, dy = y - center[1]!;
+    const distance = Math.hypot(dx, dy);
+    const degrees = (Math.atan2(dy, dx) * 180 / Math.PI + 360) % 360;
+    const gap = kind === 'gap' && degrees < 30;
+    if ((Math.abs(distance - radius) <= 2 && !gap)
+      || (kind === 'net' && distance < radius * 0.8 && (x % 8 === 0 || y % 8 === 0))) pixels[y * width + x] = 0;
+  }
+  return greyPng(pixels, width, height);
+}
+async function smokeCheckForTest(png: Buffer) {
+  const seam = (pictureSeams as unknown as {
+    checkLineArtSmoke(png: Buffer, fixture: typeof SMOKE_FIXTURE): unknown;
+  }).checkLineArtSmoke;
+  expect(seam, 'The checkLineArtSmoke seam exists.').toBeTypeOf('function');
+  // A check can throw or return a verdict. This adapter does not fix that return shape.
+  try {
+    const result = await seam(png, SMOKE_FIXTURE);
+    if (typeof result === 'boolean') return result;
+    if (result && typeof result === 'object') {
+      if ('valid' in result) return result.valid === true;
+      if ('errors' in result && Array.isArray(result.errors)) return result.errors.length === 0;
+    }
+    if (result === undefined) return true;
+    throw new Error('Adapt the smoke verdict adapter to the implemented return shape.');
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith('Adapt the smoke')) throw error;
+    return false;
+  }
+}
+function smokeCaptureForTest() {
+  return { ...capturePacket(), fixtureLineArt: undefined as Buffer | undefined, fixture: SMOKE_FIXTURE };
+}
 
 const forbidden = vi.hoisted(() => {
   const guard = (name: string) => vi.fn(() => { throw new Error(`Forbidden real operation: ${name}`); });
@@ -1002,4 +1056,106 @@ describe('Storytime picture contract', () => {
     expect((await sharp(path.join(space.outputRoot, linePath(job(), 1))).metadata()).width).toBe(3000);
     expect((await tree(path.join(space.repoRoot, 'docs'))).length).toBe(1);
   }, 30000);
+
+  it('T49: capture order binds the first camera read and rejects drift, changed pixels, and a missing hook', async () => {
+    // Falsification: the order differs, the evidence uses a later state, or a bad capture succeeds.
+    for (const mode of ['valid', 'drift', 'pixels', 'missing'] as const) {
+      const space = await sandbox();
+      const before = await tree(space.outputRoot);
+      const events: string[] = [];
+      let reads = 0, screenshots = 0;
+      const camera = { ...structuredClone(CAMERA), aspect: 4 / 3, near: 0.2, far: 120 };
+      const at = 0.625;
+      const operations: CaptureOperations = {
+        seek: async (time) => { events.push(`seek:${time}`); },
+        screenshot: async () => {
+          events.push('color'); screenshots++;
+          if (mode === 'pixels' && screenshots === 2) {
+            const { data, info } = await sharp(storyPng).raw().toBuffer({ resolveWithObject: true });
+            data[0] = data[0] === 0 ? 255 : 0;
+            return sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } }).png().toBuffer();
+          }
+          return Buffer.from(storyPng);
+        },
+        cameraState: async () => {
+          events.push('camera'); reads++;
+          if (mode === 'missing') return undefined;
+          return { ...structuredClone(camera), fov: mode === 'drift' && reads === 2 ? 60 : camera.fov };
+        },
+        lineArt: async () => { events.push('lineart'); return Buffer.from(linePng); },
+      };
+      const input = { ...space, job: job(), stage: { ...stageFile(space.repoRoot), at },
+        timeline: buildBookStillTimeline(stageSource()), size: { width: 3000, height: 2250 } };
+      const run = capturePairForTest(operations, input);
+      if (mode === 'valid') {
+        const pair = await run;
+        expect(events).toEqual([`seek:${at}`, 'color', 'camera', 'lineart', 'camera', `seek:${at}`, 'color']);
+        expect(pair.camera).toEqual(camera);
+        expect(pair.color).toEqual(storyPng); expect(pair.lineArt).toEqual(linePng);
+      } else {
+        await expect(run).rejects.toThrow(mode === 'missing' ? /hook|camera/i : mode === 'drift' ? /camera|drift/i : /color|pixel|identical/i);
+        if (mode === 'missing') expect(events).not.toContain('lineart');
+      }
+      expect(await tree(space.outputRoot)).toEqual(before);
+    }
+  });
+
+  it('T50: smoke checks accept a full ring and reject interior mesh lines and a 30-degree gap', async () => {
+    // Falsification: a mesh net or gapped ring passes, a full ring fails, or a labeled value is missing.
+    const output = vi.spyOn(console, 'log').mockImplementation(() => {});
+    for (const kind of ['ring', 'net', 'gap'] as const) {
+      output.mockClear();
+      const accepted = await smokeCheckForTest(await smokePicture(kind));
+      const lines = output.mock.calls.flat().map(String).join('\n');
+      const ink = lines.match(/fixture interior ink:\s*([0-9]+(?:\.[0-9]+)?)%/);
+      const rays = lines.match(/fixture ring rays:\s*([0-9]+)\/360/);
+      expect(ink, `${kind}: labeled interior percentage`).not.toBeNull();
+      expect(rays, `${kind}: labeled ray count`).not.toBeNull();
+      const inkPercent = Number(ink![1]), rayCount = Number(rays![1]);
+      if (kind === 'net') expect(inkPercent).toBeGreaterThan(1);
+      else expect(inkPercent).toBeLessThanOrEqual(1);
+      if (kind === 'gap') expect(rayCount).toBeLessThan(342);
+      else expect(rayCount).toBeGreaterThanOrEqual(342);
+      expect(accepted, kind).toBe(kind === 'ring');
+    }
+  });
+
+  it('T51: smoke capture stays isolated, leaves v1 available, and has a capture-free dry run', async () => {
+    // Falsification: smoke affects candidates, evidence, manifests, versions, or a dry run captures.
+    const space = await sandbox();
+    await planned(space.repoRoot, space.outputRoot);
+    const stage = stageFile(space.repoRoot);
+    await put(path.join(space.repoRoot, stage.file), stage.bytes);
+    const packet = smokeCaptureForTest();
+    packet.fixtureLineArt = await smokePicture('ring');
+    const capture = vi.fn(async () => packet);
+    const deps = { repoRoot: space.repoRoot, log: vi.fn(), now: CLOCK, capture: capture as unknown as CliCapture,
+      readStage: async () => stage };
+    const args = ['lineart-smoke', '--out', space.outputRoot, '--job', job().id];
+    const before = await tree(space.outputRoot);
+    const hashes = new Map(await Promise.all(before.map(async (file) => [file, digest(await readFile(file))] as const)));
+    expect(await runStorytimeCli([...args, '--dry-run'], deps)).toBe(0);
+    expect(capture).not.toHaveBeenCalled();
+    expect(await tree(space.outputRoot)).toEqual(before);
+    expect(await runStorytimeCli(args, deps)).toBe(0);
+    expect(capture).toHaveBeenCalledOnce();
+    const created = (await tree(space.outputRoot)).filter((file) => !before.includes(file));
+    expect(created).toHaveLength(4);
+    expect(created.map((file) => path.basename(file)).sort()).toEqual(['color.png', 'fixture-lineart.png', 'lineart.png', 'smoke.json']);
+    for (const file of created) expect(path.relative(space.outputRoot, file)).toMatch(/^smoke\/lineart-[^/]+\/[^/]+$/);
+    expect(new Set(created.map((file) => path.dirname(file))).size).toBe(1);
+    for (const [file, hash] of hashes) expect(digest(await readFile(file))).toBe(hash);
+    const manifest = await buildManifest([job()], space.outputRoot, space.repoRoot);
+    expect(manifest.jobs[0]!.candidates).toEqual([]);
+    expect(JSON.stringify(manifest)).not.toContain('smoke/');
+    expect(existsSync(path.join(space.outputRoot, 'manifest.json'))).toBe(false);
+    expect(existsSync(path.join(space.outputRoot, 'cost-ledger.jsonl'))).toBe(false);
+    await seedCalibration(space.outputRoot);
+    expect(await runStorytimeCli(['render', '--out', space.outputRoot, '--job', job().id], deps)).toBe(0);
+    expect(capture).toHaveBeenCalledTimes(2);
+    expect(existsSync(path.join(space.outputRoot, candidateRelativePath(job(), 1)))).toBe(true);
+    expect(existsSync(path.join(space.outputRoot, linePath(job(), 1)))).toBe(true);
+    expect(existsSync(path.join(space.outputRoot, candidateRelativePath(job(), 2)))).toBe(false);
+    expect(existsSync(path.join(space.outputRoot, linePath(job(), 2)))).toBe(false);
+  });
 });
