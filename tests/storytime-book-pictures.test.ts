@@ -236,17 +236,31 @@ async function planned(repoRoot: string, outputRoot: string, workbooksRoot = WOR
   expect(code).toBe(0);
   return JSON.parse(await readFile(path.join(outputRoot, 'jobs.json'), 'utf8')) as StorytimeJob[];
 }
-async function seedCalibration(outputRoot: string) {
+async function seedCalibration(outputRoot: string, repoRoot: string, workbooksRoot = path.join(repoRoot, 'Workbooks')) {
   // Synthetic logs isolate render tests. These files are not live provider evidence.
-  for (const id of ['bad-one-sun', 'good-nan']) {
+  for (const id of ['bad-one-sun', 'good-nan'] as const) {
+    const target = pictureSeams.calibrationTarget(id, workbooksRoot, repoRoot);
+    const sourceText = id === 'good-nan' ? 'Hello, I am Nan.' : 'How many suns? One sun!';
+    const sourcePrompt = id === 'good-nan'
+      ? 'Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers.'
+      : 'The picture must show exactly one sun. The picture must agree with the source text.';
+    // Both roots belong to this test. The helper never writes a live calibration source.
+    if (!path.resolve(repoRoot).startsWith(`${path.resolve(root)}${path.sep}`)
+      || !path.resolve(workbooksRoot).startsWith(`${path.resolve(root)}${path.sep}`)) {
+      throw new Error('Calibration fixture sources require temporary roots.');
+    }
+    await put(target.file, storyPng);
     for (const provider of ['minimax', 'kimi'] as const) {
       await json(path.join(outputRoot, `calibration/${id}-${provider}.json`), {
         ...modelReview({ ...job(), id }, 1, provider),
+        file: target.file, sourceText, sourcePrompt, rubricVersion: PICTURE_RUBRIC_VERSION,
+        fileSha256: digest(storyPng),
         verdict: id === 'bad-one-sun' ? 'fail' : 'pass',
         rawOutput: `Synthetic ${id} fixture`,
       });
     }
   }
+  return { repoRoot, workbooksRoot };
 }
 
 function binaryPixels(width = 3000, height = 2250, share = 0.05): Buffer {
@@ -391,10 +405,10 @@ describe('Storytime picture contract', () => {
     const { repoRoot, outputRoot } = await sandbox();
     const v1 = path.join(outputRoot, candidateRelativePath(job(), 1));
     await put(v1, storyPng);
-    await seedCalibration(outputRoot);
+    const calibrationRoots = await seedCalibration(outputRoot, repoRoot);
     const before = digest(await readFile(v1));
     const capture = vi.fn(async () => capturePacket());
-    const result = await renderTwins({ jobs: [job()], repoRoot, outputRoot, version: 2, dryRun: false,
+    const result = await renderTwins({ jobs: [job()], ...calibrationRoots, outputRoot, version: 2, dryRun: false,
       capture, readStage: async ({ job: current, version }) => stageFile(repoRoot, current, version) })
       .then((value) => ({ value, error: undefined }), (error: unknown) => ({ value: undefined, error }));
     if (result.value) {
@@ -634,10 +648,10 @@ describe('Storytime picture contract', () => {
     await planned(repoRoot, outputRoot);
     const capture = vi.fn(async () => capturePacket());
     const readStage = vi.fn(async ({ job: current, version }: { job: StorytimeJob; version: number }) => stageFile(repoRoot, current, version));
-    const render = () => runStorytimeCli(['render', '--out', outputRoot, '--job', job().id], { repoRoot, capture: capture as unknown as CliCapture, readStage, log: vi.fn() });
+    const render = () => runStorytimeCli(['render', '--out', outputRoot, '--workbooks', path.join(repoRoot, 'Workbooks'), '--job', job().id], { repoRoot, capture: capture as unknown as CliCapture, readStage, log: vi.fn() });
     await expect(render()).rejects.toThrow(/calibrat/i);
     expect(capture).not.toHaveBeenCalled();
-    await seedCalibration(outputRoot);
+    await seedCalibration(outputRoot, repoRoot);
     const badLog = path.join(outputRoot, 'calibration/bad-one-sun-kimi.json');
     const log = JSON.parse(await readFile(badLog, 'utf8'));
     await json(badLog, { ...log, verdict: 'pass' });
@@ -714,10 +728,10 @@ describe('Storytime picture contract', () => {
 
   it('T26: one capture binds both written twins to one stage, time, and camera', async () => {
     const { repoRoot, outputRoot } = await sandbox();
-    await seedCalibration(outputRoot);
+    const calibrationRoots = await seedCalibration(outputRoot, repoRoot);
     const capture = vi.fn(async () => capturePacket());
     const stage = stageFile(repoRoot);
-    await renderTwins({ jobs: [job()], repoRoot, outputRoot, version: 1, dryRun: false,
+    await renderTwins({ jobs: [job()], ...calibrationRoots, outputRoot, version: 1, dryRun: false,
       capture, readStage: async () => stage });
     expect(capture).toHaveBeenCalledOnce();
     const colorFile = candidateRelativePath(job(), 1);
@@ -735,9 +749,9 @@ describe('Storytime picture contract', () => {
     expect(evidence.lineArtTechnique).toEqual(expect.any(String));
     expect(evidence.lineArtTechnique.length).toBeGreaterThan(0);
     const rejected = await sandbox();
-    await seedCalibration(rejected.outputRoot);
+    const rejectedCalibrationRoots = await seedCalibration(rejected.outputRoot, rejected.repoRoot);
     const brokenCapture = vi.fn(async () => { throw new Error('Test line-art pass failed'); });
-    await expect(renderTwins({ jobs: [job()], ...rejected, dryRun: false, capture: brokenCapture,
+    await expect(renderTwins({ jobs: [job()], ...rejected, ...rejectedCalibrationRoots, dryRun: false, capture: brokenCapture,
       readStage: async () => stageFile(rejected.repoRoot) })).rejects.toThrow('Test line-art pass failed');
     expect(brokenCapture).toHaveBeenCalledOnce();
     expect((await tree(rejected.outputRoot)).some((file) => file.endsWith('.png'))).toBe(false);
@@ -847,12 +861,12 @@ describe('Storytime picture contract', () => {
 
   it('T34: changed twins write v2 together and preserve both v1 hashes', async () => {
     const fixture = await twinFixture();
-    await seedCalibration(fixture.outputRoot);
+    const calibrationRoots = await seedCalibration(fixture.outputRoot, fixture.repoRoot);
     const oldColor = digest(await readFile(path.join(fixture.outputRoot, fixture.file)));
     const oldLine = digest(await readFile(path.join(fixture.outputRoot, fixture.lineArtFile)));
     const newLine = await greyPng(binaryPixels(3000, 2250, 0.06));
     const capture = vi.fn(async () => capturePacket(storyPng, newLine));
-    await renderTwins({ jobs: [job()], repoRoot: fixture.repoRoot, outputRoot: fixture.outputRoot,
+    await renderTwins({ jobs: [job()], ...calibrationRoots, outputRoot: fixture.outputRoot,
       version: 2, dryRun: false, capture,
       readStage: async ({ version }) => stageFile(fixture.repoRoot, job(), version) });
     expect(capture).toHaveBeenCalledOnce();
@@ -860,7 +874,7 @@ describe('Storytime picture contract', () => {
     expect(digest(await readFile(path.join(fixture.outputRoot, linePath(job(), 2))))).toBe(digest(newLine));
     expect(digest(await readFile(path.join(fixture.outputRoot, fixture.file)))).toBe(oldColor);
     expect(digest(await readFile(path.join(fixture.outputRoot, fixture.lineArtFile)))).toBe(oldLine);
-    const retry = await renderTwins({ jobs: [job()], repoRoot: fixture.repoRoot, outputRoot: fixture.outputRoot,
+    const retry = await renderTwins({ jobs: [job()], ...calibrationRoots, outputRoot: fixture.outputRoot,
       version: 1, dryRun: false, capture, readStage: async () => fixture.stage })
       .then(() => 'kept', () => 'refused');
     expect(['kept', 'refused']).toContain(retry);
@@ -1006,19 +1020,19 @@ describe('Storytime picture contract', () => {
 
   it('T40: a missing or failed line-art pass writes neither twin nor evidence', async () => {
     const valid = await sandbox();
-    await seedCalibration(valid.outputRoot);
-    await renderTwins({ jobs: [job()], ...valid, dryRun: false, capture: async () => capturePacket(),
+    const calibrationRoots = await seedCalibration(valid.outputRoot, valid.repoRoot);
+    await renderTwins({ jobs: [job()], ...valid, ...calibrationRoots, dryRun: false, capture: async () => capturePacket(),
       readStage: async () => stageFile(valid.repoRoot) });
     expect(existsSync(path.join(valid.outputRoot, candidateRelativePath(job(), 1)))).toBe(true);
     expect(existsSync(path.join(valid.outputRoot, linePath()))).toBe(true);
     for (const mode of ['missing', 'throw']) {
       const space = await sandbox();
-      await seedCalibration(space.outputRoot);
+      const calibrationRoots = await seedCalibration(space.outputRoot, space.repoRoot);
       const capture = vi.fn(async () => {
         if (mode === 'throw') throw new Error('Test line-art pass failed');
         return { color: storyPng, camera: CAMERA };
       });
-      await expect(renderTwins({ jobs: [job()], ...space, dryRun: false, capture,
+      await expect(renderTwins({ jobs: [job()], ...space, ...calibrationRoots, dryRun: false, capture,
         readStage: async () => stageFile(space.repoRoot) })).rejects.toThrow(/line.?art|twin|image/i);
       expect(capture).toHaveBeenCalledOnce();
       expect(existsSync(path.join(space.outputRoot, candidateRelativePath(job(), 1)))).toBe(false);
@@ -1029,7 +1043,7 @@ describe('Storytime picture contract', () => {
 
   it('T41: a size parameter writes a new twin version from unchanged stage bytes and camera', async () => {
     const space = await sandbox();
-    await seedCalibration(space.outputRoot);
+    const calibrationRoots = await seedCalibration(space.outputRoot, space.repoRoot);
     const stage = stageFile(space.repoRoot);
     await put(path.join(space.repoRoot, stage.file), stage.bytes);
     const originalHash = digest(stage.bytes);
@@ -1039,7 +1053,7 @@ describe('Storytime picture contract', () => {
       const color = await sharp(storyPng).resize(size.width, size.height).png().toBuffer();
       const line = await greyPng(binaryPixels(size.width, size.height), size.width, size.height);
       const capture = vi.fn(async () => capturePacket(color, line));
-      await renderTwins({ jobs: [job()], ...space, version: index + 1, ...size, dryRun: false, capture,
+      await renderTwins({ jobs: [job()], ...space, ...calibrationRoots, version: index + 1, ...size, dryRun: false, capture,
         readStage: async () => stage });
       expect(capture).toHaveBeenCalledOnce();
       const evidence = JSON.parse(await readFile(path.join(space.outputRoot, `renders/${job().id}-v${index + 1}.json`), 'utf8'));
@@ -1156,8 +1170,8 @@ describe('Storytime picture contract', () => {
     expect(JSON.stringify(manifest)).not.toContain('smoke/');
     expect(existsSync(path.join(space.outputRoot, 'manifest.json'))).toBe(false);
     expect(existsSync(path.join(space.outputRoot, 'cost-ledger.jsonl'))).toBe(false);
-    await seedCalibration(space.outputRoot);
-    expect(await runStorytimeCli(['render', '--out', space.outputRoot, '--job', job().id], deps)).toBe(0);
+    const calibrationRoots = await seedCalibration(space.outputRoot, space.repoRoot);
+    expect(await runStorytimeCli(['render', '--out', space.outputRoot, '--workbooks', calibrationRoots.workbooksRoot, '--job', job().id], deps)).toBe(0);
     expect(capture).toHaveBeenCalledTimes(2);
     expect(existsSync(path.join(space.outputRoot, candidateRelativePath(job(), 1)))).toBe(true);
     expect(existsSync(path.join(space.outputRoot, linePath(job(), 1)))).toBe(true);
