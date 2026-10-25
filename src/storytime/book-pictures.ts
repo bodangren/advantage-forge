@@ -13,7 +13,7 @@ import { buildTimeline, type Spec, type Stage, type Timeline } from '../song/tim
 export const PICTURE_RUBRIC_VERSION = 'storytime-picture-v2';
 export const RENDERER_ID = 'forge-song-timeline-book-still-v1';
 export const LINEART_FORMAT_VERSION = 'storytime-lineart-provisional-v1';
-export const LINEART_TECHNIQUE = 'song-page-scene-render-pass-1bit-v1';
+export const LINEART_TECHNIQUE = 'song-page-form-edges-viewdepth-1bit-v2';
 export const BATCH_HASH_ALGORITHM =
   'SHA-256 of UTF-8 JSON.stringify([{file,sha256}]) with entries sorted by file and no whitespace';
 export const PICTURE_SIZES = {
@@ -113,6 +113,11 @@ export interface ModelReview {
   file: string;
   provider: ModelProvider;
   model: string;
+  /** `declared` when the pipeline names the model, `reported` when the provider output names it. */
+  modelSource?: 'declared' | 'reported' | undefined;
+  /** The paid call that made this log, and its raw output file under `raw/`. */
+  callId?: string | undefined;
+  rawFile?: string | undefined;
   price: PriceRecord;
   rubricVersion: string;
   sourceText: string;
@@ -222,6 +227,8 @@ export interface PaidCallDetails {
   operation: 'vision-describe' | 'kimi-native-image';
   provider: ModelProvider;
   model: string;
+  /** A before-call entry is always `declared` (RA-N6). */
+  modelSource?: 'declared' | 'reported';
   purpose: string;
   jobId: string;
   version: number;
@@ -242,6 +249,8 @@ export interface AfterCallLedgerEntry extends PaidCallDetails {
   recordedAt: string;
   status: 'success' | 'failure';
   error?: string;
+  /** The failure reason of a `--failed` record; a failed call has no raw answer. */
+  reason?: string;
 }
 
 export type LedgerEntry = BeforeCallLedgerEntry | AfterCallLedgerEntry;
@@ -309,6 +318,9 @@ const ModelReviewSchema = ReviewIdentitySchema.extend({
   kind: z.literal('model-pre-check'),
   provider: z.enum(MODEL_PROVIDERS),
   model: z.string().min(1),
+  modelSource: z.enum(['declared', 'reported']).optional(),
+  callId: z.string().min(1).optional(),
+  rawFile: z.string().min(1).optional(),
   price: PriceSchema,
   rubricVersion: z.string().min(1),
   verdict: z.enum(['pass', 'fail']),
@@ -835,9 +847,10 @@ export function calibrationTarget(
     jobId: id,
     version: 1,
     file: path.resolve(repoRoot, 'out/chibi-sprouts/r1/week1/cast/sprout-nan/front.png'),
-    sourceText: 'Owner-approved Nan character picture.',
+    // The neutral Workbooks character text (w01.json p05), with no approval words (RA-N2).
+    sourceText: 'Hello, I am Nan.',
     sourcePrompt:
-      'The owner-approved Forge 3D Nan cutout shows Nan with the approved character look on a plain background.',
+      'Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers.',
   };
 }
 
@@ -854,12 +867,30 @@ const CALIBRATION_EXPECTED_VERDICTS: Record<CalibrationId, ReviewVerdict> = {
   'good-nan': 'pass',
 };
 
-/** A production render stops until all four calibration logs hold their expected verdicts. */
-export async function assertCalibrationReady(outputRoot: string): Promise<void> {
+/**
+ * A production render stops until all four calibration logs hold their expected verdicts against
+ * the current rubric version, the current source file hash, and the current source text and prompt
+ * (RA-N3). A rubric or text change invalidates the earlier calibration logs.
+ */
+export async function assertCalibrationReady(
+  outputRoot: string,
+  workbooksRoot: string = DEFAULT_WORKBOOKS,
+  repoRoot: string = FORGE_ROOT,
+): Promise<void> {
   for (const [id, expected] of Object.entries(CALIBRATION_EXPECTED_VERDICTS) as [
     CalibrationId,
     ReviewVerdict,
   ][]) {
+    const target = calibrationTarget(id, workbooksRoot, repoRoot);
+    let sourceSha256: string;
+    try {
+      sourceSha256 = sha256(await readFile(target.file));
+    } catch {
+      throw new Error(
+        `Calibration must pass before production renders: ${id} has no readable calibration source file ` +
+          `${target.file}. Run the calibration pre-checks first.`,
+      );
+    }
     for (const provider of MODEL_PROVIDERS) {
       const raw = await readJsonIfExists(
         resolveOutputPath(outputRoot, `calibration/${id}-${provider}.json`),
@@ -867,10 +898,24 @@ export async function assertCalibrationReady(outputRoot: string): Promise<void> 
       const item = record(raw);
       const verdict = typeof item?.verdict === 'string' ? item.verdict.toLowerCase() : undefined;
       const rawOutput = typeof item?.rawOutput === 'string' ? item.rawOutput : '';
-      if (verdict !== expected || !rawOutput.length) {
+      const refuse = (detail: string): never => {
         throw new Error(
-          `Calibration must pass before production renders: ${id} (${provider}) needs verdict ${expected} with raw output. Run the calibration pre-checks first.`,
+          `Calibration must pass before production renders: ${id} (${provider}) needs verdict ${expected} ` +
+            `with raw output, rubric ${PICTURE_RUBRIC_VERSION}, the current source file hash, and the current ` +
+            `source text and prompt. ${detail}`,
         );
+      };
+      if (verdict !== expected || !rawOutput.length) {
+        refuse('The verdict or raw output is missing or wrong. Run the calibration pre-checks first.');
+      }
+      if (item?.rubricVersion !== PICTURE_RUBRIC_VERSION) {
+        refuse(`The log rubricVersion is ${JSON.stringify(item?.rubricVersion ?? null)}.`);
+      }
+      if (item?.fileSha256 !== sourceSha256) {
+        refuse('The log fileSha256 does not match the calibration source file.');
+      }
+      if (item?.sourceText !== target.sourceText || item?.sourcePrompt !== target.sourcePrompt) {
+        refuse('The log sourceText or sourcePrompt does not match the current calibration target.');
       }
     }
   }
@@ -1724,6 +1769,8 @@ interface LineArtTwinInput {
   lineBytes: Buffer | undefined;
   linePersonRaw: unknown;
   styleRaw: unknown;
+  /** false when a style look sample file is missing or its SHA-256 differs from the file bytes. */
+  styleSampleFilesValid?: boolean;
   evidenceFile: string;
 }
 
@@ -1817,6 +1864,7 @@ async function evaluateLineArtTwin(input: LineArtTwinInput): Promise<LineArtMani
   }
   const styleErrors: string[] = [];
   let styleMissing = false;
+  let stylePending = false;
   if (input.styleRaw === undefined) {
     styleMissing = true;
   } else {
@@ -1830,19 +1878,34 @@ async function evaluateLineArtTwin(input: LineArtTwinInput): Promise<LineArtMani
       if (typeof style.checkedBy !== 'string' || !style.checkedBy) {
         styleErrors.push('line-art style look has no named checkedBy');
       }
-      const samples = Array.isArray(style.sampleFiles) ? style.sampleFiles : [];
-      const bound = samples.some(
-        (sample) =>
-          isRecord(sample) && sample.file === file && (!structural.sha256 || sample.sha256 === structural.sha256),
-      );
-      if (!bound) styleErrors.push('line-art style look does not list the twin file with its SHA-256');
+      if (input.styleSampleFilesValid === false) {
+        styleErrors.push('line-art style look sample files do not match their SHA-256 values');
+      }
+      // The look binds to one technique and one format version, not to one file (RA-B2): the
+      // sample files are only the evidence of the look. A twin of another technique or format
+      // version stays pending until a new style look passes.
+      const technique = typeof raw?.lineArtTechnique === 'string' ? raw.lineArtTechnique : undefined;
+      const formatVersion = typeof raw?.lineArtFormatVersion === 'string' ? raw.lineArtFormatVersion : undefined;
+      const lookTechnique = typeof style.lineArtTechnique === 'string' ? style.lineArtTechnique : undefined;
+      const lookFormatVersion = typeof style.lineArtFormatVersion === 'string' ? style.lineArtFormatVersion : undefined;
+      if (
+        technique === undefined ||
+        formatVersion === undefined ||
+        lookTechnique === undefined ||
+        lookFormatVersion === undefined ||
+        technique !== lookTechnique ||
+        formatVersion !== lookFormatVersion
+      ) {
+        stylePending = true;
+      }
     }
   }
   const hardFailures = [...errors, ...personErrors, ...styleErrors];
   let status: LineArtManifest['status'];
   if (structural.errors.length || hardFailures.length) status = 'failed';
-  else if (missingEvidence || personMissing || styleMissing || colorStatus !== 'ready') status = 'pending';
-  else status = 'ready';
+  else if (missingEvidence || personMissing || styleMissing || stylePending || colorStatus !== 'ready') {
+    status = 'pending';
+  } else status = 'ready';
   return {
     file,
     ...(structural.sha256 ? { fileSha256: structural.sha256 } : {}),
@@ -1882,6 +1945,7 @@ export async function buildManifest(
       const style = await readJsonIfExists(
         resolveOutputPath(outputRoot, 'reviews/lineart-style-look.json'),
       );
+      const styleSampleFilesValid = await styleLookSampleFilesValid(outputRoot, style);
       const render = await readJsonIfExists(
         resolveOutputPath(outputRoot, renderEvidenceRelativePath(job, version)),
       );
@@ -1921,6 +1985,7 @@ export async function buildManifest(
             lineBytes,
             linePersonRaw: linePerson,
             styleRaw: style,
+            styleSampleFilesValid,
             evidenceFile,
           })
         : undefined;
@@ -1928,6 +1993,24 @@ export async function buildManifest(
     }
   }
   return assembleManifest(jobs, candidates);
+}
+
+/**
+ * The sample files of a style look are only the evidence of the look (RA-B2). Each entry must name
+ * an existing file whose SHA-256 equals the recorded value; one wrong sample invalidates the whole
+ * look for every twin.
+ */
+async function styleLookSampleFilesValid(outputRoot: string, style: unknown): Promise<boolean> {
+  const look = record(style);
+  if (!look) return true;
+  const samples = Array.isArray(look.sampleFiles) ? look.sampleFiles : [];
+  for (const sample of samples) {
+    const item = record(sample);
+    if (!item || typeof item.file !== 'string' || typeof item.sha256 !== 'string') return false;
+    const bytes = await readBufferIfExists(resolveOutputPath(outputRoot, item.file));
+    if (!bytes || sha256(bytes) !== item.sha256) return false;
+  }
+  return true;
 }
 
 async function appendLedgerEntry(outputRoot: string, entry: LedgerEntry): Promise<void> {
@@ -2019,11 +2102,14 @@ const BOOK_STILL_HOOK_ERROR =
   'The line-art render pass is a pass of the same three.js scene, so it needs the engine hook task ' +
   'before a live book render; see the track contract "Line-art twins" and the test strategy section 8.';
 
-/** The page driver of `captureStillPair`: one seek, one color still, one camera state, one pass. */
+/** The page driver of `captureStillPair`: one seek, one color still, one live camera check, one pass. */
 export interface BookStillDriver {
   seek(at: number): Promise<void>;
   screenshot(): Promise<Buffer>;
+  /** The published camera state copy of the color still; the evidence camera (read 1). */
   cameraState(): Promise<unknown>;
+  /** The live hook camera: position, fov, aspect, near, far, and the 16 projection elements. */
+  liveCameraState(): Promise<unknown>;
   lineArt(): Promise<Buffer>;
 }
 
@@ -2041,15 +2127,44 @@ export interface BookStillPair {
   camera: unknown;
 }
 
-function sameCameraState(a: unknown, b: unknown): boolean {
-  return JSON.stringify(a) === JSON.stringify(b);
+/** The camera fields that read 1 (the published copy) must share with read 2 (the live camera). */
+const PUBLISHED_CAMERA_FIELDS = ['position', 'fov', 'aspect', 'near', 'far'] as const;
+
+/** The first published/live field that differs, or undefined when read 1 matches read 2. */
+function publishedCameraDrift(published: unknown, live: unknown): string | undefined {
+  const copy = record(published);
+  const liveRecord = record(live);
+  if (!copy || !liveRecord) return 'state';
+  for (const field of PUBLISHED_CAMERA_FIELDS) {
+    // The published copy may carry fewer fields than the live read; the shared fields must match.
+    if (copy[field] === undefined) continue;
+    if (JSON.stringify(copy[field]) !== JSON.stringify(liveRecord[field])) return field;
+  }
+  return undefined;
+}
+
+/** The first field that differs between the two live camera reads, or undefined when they match. */
+function liveCameraDrift(before: unknown, after: unknown): string | undefined {
+  const beforeRecord = record(before);
+  const afterRecord = record(after);
+  if (!beforeRecord || !afterRecord) return 'state';
+  for (const field of Object.keys(beforeRecord)) {
+    if (JSON.stringify(beforeRecord[field]) !== JSON.stringify(afterRecord[field])) return field;
+  }
+  for (const field of Object.keys(afterRecord)) {
+    if (!(field in beforeRecord) && afterRecord[field] !== undefined) return field;
+  }
+  return undefined;
 }
 
 /**
- * The capture order of one render run: seek, color screenshot, camera state read, line-art pass,
- * second camera state read, seek of the same time again, second color screenshot. The evidence
- * camera is the first read. A camera drift, a pixel difference between the two color screenshots,
- * or a missing hook throws and the caller writes nothing.
+ * The capture order of one render run: seek, color screenshot, published camera state read, live
+ * camera read, line-art pass, second live camera read, seek of the same time again, second color
+ * screenshot. The evidence camera is the published copy (read 1). Read 2 and read 3 compute the
+ * state from the live hook camera (RA-N1): read 2 must match read 1 in position, fov, aspect,
+ * near, and far; read 3 must match read 2 in every field. A camera drift, a pixel
+ * difference between the two color screenshots, or a missing hook throws and the caller writes
+ * nothing. A second read of the published copy is never a drift check.
  */
 export async function captureStillPair(
   driver: BookStillDriver,
@@ -2063,10 +2178,24 @@ export async function captureStillPair(
   if (camera === undefined || camera === null) {
     throw new Error(BOOK_STILL_HOOK_ERROR);
   }
+  const cameraBeforePass = await driver.liveCameraState();
+  if (cameraBeforePass === undefined || cameraBeforePass === null) {
+    throw new Error(BOOK_STILL_HOOK_ERROR);
+  }
+  const beforeDrift = publishedCameraDrift(camera, cameraBeforePass);
+  if (beforeDrift) {
+    throw new Error(
+      `Camera state drift in ${beforeDrift} between the published copy and the live camera; nothing is written.`,
+    );
+  }
+  log('camera drift source: live');
   const lineArt = await driver.lineArt();
-  const cameraAfterPass = await driver.cameraState();
-  if (!sameCameraState(camera, cameraAfterPass)) {
-    throw new Error('Camera state drift between the color still and the line-art pass; nothing is written.');
+  const cameraAfterPass = await driver.liveCameraState();
+  const afterDrift = liveCameraDrift(cameraBeforePass, cameraAfterPass);
+  if (afterDrift) {
+    throw new Error(
+      `Camera state drift in ${afterDrift} between the live camera reads around the line-art pass; nothing is written.`,
+    );
   }
   log('camera state drift: 0');
   await driver.seek(at);
@@ -2135,7 +2264,12 @@ async function openBookPage(input: BookCaptureInput): Promise<OpenedBookPage> {
   }
 }
 
-function pageDriver(page: Page, size: { width: number; height: number }, pageErrors: string[]): BookStillDriver {
+function pageDriver(
+  page: Page,
+  size: { width: number; height: number },
+  pageErrors: string[],
+  lineArt?: () => Promise<Buffer>,
+): BookStillDriver {
   return {
     seek: (at) => page.evaluate((time) => window.__song!.seek(time), at),
     screenshot: async () => {
@@ -2143,8 +2277,39 @@ function pageDriver(page: Page, size: { width: number; height: number }, pageErr
       return page.screenshot({ type: 'png' });
     },
     cameraState: () => page.evaluate(() => window.__bookStill?.cameraState ?? null),
-    lineArt: () => runPageLineArtPass(page, size, pageErrors),
+    liveCameraState: () =>
+      page.evaluate(() => {
+        const camera = window.__bookStill?.camera as
+          | {
+              position: { x: number; y: number; z: number };
+              fov: number;
+              aspect: number;
+              near: number;
+              far: number;
+              projectionMatrix: { elements: ArrayLike<number> };
+            }
+          | undefined;
+        if (!camera) return null;
+        return {
+          position: [camera.position.x, camera.position.y, camera.position.z],
+          fov: camera.fov,
+          aspect: camera.aspect,
+          near: camera.near,
+          far: camera.far,
+          projectionMatrix: Array.from(camera.projectionMatrix.elements),
+        };
+      }),
+    lineArt: lineArt ?? (() => runPageLineArtPass(page, size, pageErrors)),
   };
+}
+
+/**
+ * The shared load step of the production capture and the smoke capture (RA-B1): one `__song.load`
+ * call, then the page notes check, before the first seek.
+ */
+export async function loadBookTimeline(page: Page, timeline: Timeline): Promise<void> {
+  const notes = await page.evaluate((value) => window.__song!.load(value), timeline);
+  assertPageNotes((notes ?? []) as string[]);
 }
 
 /** Runs the form-edge pass in the page against the hooked scene, camera, and renderer. */
@@ -2198,9 +2363,15 @@ export interface LineArtSmokeFixture {
   width: number;
   height: number;
   /** The projected sphere center in pixels. */
-  center: [number, number];
+  center: number[];
   /** The projected sphere silhouette radius in pixels. */
   radius: number;
+  /**
+   * The border column and visible row range of the smoke depth-step planes: two front-facing
+   * planes with the same normal, at 4.0 m and 4.3 m from the camera; the nearer plane covers the
+   * left half of the further plane. The border is a pure relative view-distance edge.
+   */
+  depthStep?: { column: number; rowStart: number; rowEnd: number };
 }
 
 /** One smoke capture: the stage still pair plus one fixture pass in the same page. */
@@ -2234,6 +2405,20 @@ async function runFixturePass(page: Page): Promise<{ png: Buffer; fixture: LineA
     );
     box.position.set(0.55, 0.7, -2.4);
     scene.add(box);
+    // Depth-step planes to the right of the sphere: the nearer plane at 4.0 m covers the left half
+    // of the further plane at 4.3 m. Their border column is a pure relative view-distance edge.
+    const nearPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.2, 3.0),
+      new THREE.MeshBasicMaterial({ color: '#aaaaaa' }),
+    );
+    nearPlane.position.set(1.25, -0.95, 0);
+    scene.add(nearPlane);
+    const farPlane = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.6, 3.0),
+      new THREE.MeshBasicMaterial({ color: '#888888' }),
+    );
+    farPlane.position.set(1.45, -0.95, -0.3);
+    scene.add(farPlane);
     const result = renderLineArtPass(
       THREE,
       { scene, camera, renderer: hook.renderer as import('three').WebGLRenderer },
@@ -2248,6 +2433,12 @@ async function runFixturePass(page: Page): Promise<{ png: Buffer; fixture: LineA
     const angularRadius = Math.asin(1 / distance);
     const radius =
       (Math.tan(angularRadius) / Math.tan((camera.fov * Math.PI) / 360)) * (passSize.height / 2);
+    // The declared depth-step border: the projected right edge of the nearer plane, and the row
+    // range where the border is visible with a margin against the plane edges.
+    const borderTop = new THREE.Vector3(1.35, 0.55, 0).project(camera);
+    const column = Math.round((borderTop.x * 0.5 + 0.5) * passSize.width);
+    const topRow = Math.round((-borderTop.y * 0.5 + 0.5) * passSize.height);
+    const depthStep = { column, rowStart: topRow + 8, rowEnd: passSize.height - 10 };
     const canvas = document.createElement('canvas');
     canvas.width = result.width;
     canvas.height = result.height;
@@ -2263,7 +2454,13 @@ async function runFixturePass(page: Page): Promise<{ png: Buffer; fixture: LineA
     }
     context.putImageData(image, 0, 0);
     return {
-      fixture: { width: passSize.width, height: passSize.height, center, radius },
+      fixture: {
+        width: passSize.width,
+        height: passSize.height,
+        center,
+        radius,
+        depthStep,
+      },
       dataUrl: canvas.toDataURL('image/png'),
     };
   }, LINEART_SMOKE_FIXTURE_SIZE);
@@ -2297,7 +2494,8 @@ export async function checkLineArtSmoke(
     if (x < 0 || y < 0 || x >= info.width || y >= info.height) return false;
     return data[y * info.width + x]! < 128;
   };
-  const [centerX, centerY] = fixture.center;
+  const centerX = fixture.center[0]!;
+  const centerY = fixture.center[1]!;
   const reach = fixture.radius * 0.8;
   let interior = 0;
   let interiorCount = 0;
@@ -2332,29 +2530,68 @@ export async function checkLineArtSmoke(
   if (rays < 342) {
     errors.push(`fixture ring rays ${rays}/360 are below 342.`);
   }
+  if (fixture.depthStep) {
+    const { column, rowStart, rowEnd } = fixture.depthStep;
+    const total = rowEnd - rowStart + 1;
+    let inkRows = 0;
+    for (let y = rowStart; y <= rowEnd; y += 1) {
+      let hit = false;
+      for (let x = column - 2; x <= column + 4 && !hit; x += 1) if (dark(x, y)) hit = true;
+      if (hit) inkRows += 1;
+    }
+    console.log(`fixture depth step rows: ${inkRows}/${total}`);
+    const share = total > 0 ? inkRows / total : 0;
+    if (share < 0.9) {
+      errors.push(`fixture depth step rows ${inkRows}/${total} are below 90 percent.`);
+    }
+  }
   return { valid: errors.length === 0, errors };
 }
 
-export async function captureBookStill(input: BookCaptureInput): Promise<BookCapturePacket> {
-  const opened = await openBookPage(input);
+/** Injectable seams of `captureBookStill`: the page opener and the in-page line-art pass. */
+export interface BookStillCaptureDeps {
+  open?: (input: BookCaptureInput) => Promise<OpenedBookPage>;
+  lineArt?: () => Promise<Buffer>;
+}
+
+/**
+ * The shared production capture body (RA-B1): load the timeline, check the page notes, then one
+ * seek gives both twins. Both `captureBookStill` and the smoke capture run this path, so the
+ * `capture path: captureBookStill` label names the real wiring.
+ */
+async function captureBookStillOnPage(
+  input: BookCaptureInput,
+  opened: OpenedBookPage,
+  deps: BookStillCaptureDeps,
+  log: (message: string) => void,
+): Promise<BookCapturePacket> {
+  log('capture path: captureBookStill');
+  await loadBookTimeline(opened.page, input.timeline);
+  const size = input.size ?? PICTURE_SIZES[input.job.size];
+  const pair = await captureStillPair(pageDriver(opened.page, size, opened.pageErrors, deps.lineArt), {
+    stage: input.stage,
+    log,
+  });
+  return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera };
+}
+
+export async function captureBookStill(
+  input: BookCaptureInput,
+  deps: BookStillCaptureDeps = {},
+): Promise<BookCapturePacket> {
+  const opened = await (deps.open ?? openBookPage)(input);
   try {
-    const size = input.size ?? PICTURE_SIZES[input.job.size];
-    const pair = await captureStillPair(pageDriver(opened.page, size, opened.pageErrors), {
-      stage: input.stage,
-      log: console.log,
-    });
-    return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera };
+    return await captureBookStillOnPage(input, opened, deps, console.log);
   } finally {
     await opened.close();
   }
 }
 
-/** The bounded smoke capture of one still (T52): labels, pair order, fixture pass, ink ranges. */
+/** The bounded smoke capture of one still (T52, T74): production path, labels, fixture pass. */
 export async function captureBookStillSmoke(input: BookCaptureInput): Promise<BookSmokePacket> {
-  const opened = await openBookPage(input);
   const log = console.log;
+  const opened = await openBookPage(input);
   try {
-    const size = input.size ?? PICTURE_SIZES[input.job.size];
     const hookBefore = await opened.page.evaluate(() => window.__bookStill === undefined);
     log(`hook before seek: ${hookBefore ? 'absent' : 'present'}`);
     if (!hookBefore) throw new Error('The book still hook is already present before the first seek.');
@@ -2363,16 +2600,8 @@ export async function captureBookStillSmoke(input: BookCaptureInput): Promise<Bo
     if (songKeys !== 'load,portrait,ready,seek') {
       throw new Error(`window.__song has unexpected keys: ${songKeys}`);
     }
-    const notes = await opened.page.evaluate((timeline) => window.__song!.load(timeline), input.timeline);
-    assertPageNotes(notes);
-    await opened.page.evaluate((at) => window.__song!.seek(at), input.stage.at);
-    const hookAfter = await opened.page.evaluate(() => window.__bookStill !== undefined);
-    log(`hook after seek: ${hookAfter ? 'present' : 'absent'}`);
-    if (!hookAfter) throw new Error('The book still hook is absent after the seek.');
-    const pair = await captureStillPair(pageDriver(opened.page, size, opened.pageErrors), {
-      stage: input.stage,
-      log,
-    });
+    const pair = await captureBookStillOnPage(input, opened, {}, log);
+    if (!pair.lineArt) throw new Error('The smoke capture returned no line-art twin.');
     const fixturePass = await runFixturePass(opened.page);
     const inkShare = await inkSharePercent(pair.lineArt);
     log(`stage ink share: ${inkShare.toFixed(2)}%`);
@@ -2402,6 +2631,8 @@ export interface RenderCandidateResult {
   at: number;
   width: number;
   height: number;
+  /** On `skipped`: the next free version of the job (Review C note). */
+  nextVersion?: number;
 }
 
 function toCapturePacket(value: BookCaptureOutput): BookCapturePacket {
@@ -2421,6 +2652,8 @@ export async function renderCandidates(options: {
   dryRun: boolean;
   capture?: BookCapture;
   readStage?: BookStageReader;
+  /** Root of the Workbooks content packages, for the calibration source files. */
+  workbooksRoot?: string;
 }): Promise<RenderCandidateResult[]> {
   if (options.version !== undefined) assertVersion(options.version);
   if (options.width !== undefined || options.height !== undefined) {
@@ -2436,7 +2669,13 @@ export async function renderCandidates(options: {
     options.readStage ??
     ((input: { job: StorytimeJob; version: number; repoRoot: string }) =>
       readBookStage(input.repoRoot, input.job, input.version));
-  if (!options.dryRun) await assertCalibrationReady(options.outputRoot);
+  if (!options.dryRun) {
+    await assertCalibrationReady(
+      options.outputRoot,
+      options.workbooksRoot ?? DEFAULT_WORKBOOKS,
+      repoRoot,
+    );
+  }
   const results: RenderCandidateResult[] = [];
   for (const job of jobs) {
     const existingVersions = await discoverCandidateVersions(options.outputRoot, job);
@@ -2470,7 +2709,11 @@ export async function renderCandidates(options: {
           throw new Error(`${job.id}: stage hash changed for v${version}; use a new version.`);
         }
       }
-      results.push({ ...result, status: 'skipped' });
+      results.push({
+        ...result,
+        status: 'skipped',
+        nextVersion: Math.max(...existingVersions, version) + 1,
+      });
       continue;
     }
     if (existingVersions.includes(version) || oldEvidence !== undefined) {
@@ -2607,6 +2850,7 @@ export async function precheckMiniMax(options: {
     operation: 'vision-describe',
     provider: 'minimax',
     model: MINIMAX_VISION_MODEL,
+    modelSource: 'declared',
     purpose: `MiniMax pre-check ${target.jobId} v${target.version}`,
     jobId: target.jobId,
     version: target.version,
@@ -2618,23 +2862,31 @@ export async function precheckMiniMax(options: {
     if (!structural.valid) throw new Error(`${target.jobId}: ${structural.errors.join(' ')}`);
   }
   const runner = options.runner ?? runProviderProcess;
+  let paidCallId: string | undefined;
   const result = await runPaidCall({
     paid: options.paid,
     dryRun: options.dryRun,
     details,
     appendLedger: (entry) => appendLedgerEntry(options.outputRoot, entry),
-    call: async () => runner('mmx', args),
+    call: async (callId) => {
+      paidCallId = callId;
+      return runner('mmx', args);
+    },
   });
   if (result === undefined) return { status: 'dry-run', args };
   const rawOutput = result.stdout || result.stderr;
   const parsed = parseModelReview(rawOutput);
+  // Keep the model the provider reported when it reports one (RA-N6); otherwise the declared value.
+  const reported = reportedModel(rawOutput);
   const review: ModelReview = {
     kind: 'model-pre-check',
     jobId: target.jobId,
     version: target.version,
     file: target.file,
     provider: 'minimax',
-    model: MINIMAX_VISION_MODEL,
+    model: reported ?? MINIMAX_VISION_MODEL,
+    modelSource: reported ? 'reported' : 'declared',
+    ...(paidCallId ? { callId: paidCallId } : {}),
     price: details.price,
     rubricVersion: PICTURE_RUBRIC_VERSION,
     sourceText: target.sourceText,
@@ -2648,11 +2900,30 @@ export async function precheckMiniMax(options: {
     checkedAt: new Date().toISOString(),
     fileSha256: sha256(imageBytes!),
   };
-  const rawFile = resolveOutputPath(options.outputRoot, `${reviewBase}.txt`);
+  // Each call writes its raw output under raw/ with the callId in the name; no overwrite (RA-N9).
+  const rawRelative = paidCallId
+    ? `raw/${target.jobId}-v${target.version}-minimax-${paidCallId}.txt`
+    : `${reviewBase}.txt`;
+  const rawFile = resolveOutputPath(options.outputRoot, rawRelative);
   await mkdir(path.dirname(rawFile), { recursive: true });
-  await writeFile(rawFile, rawOutput, 'utf8');
-  await writeJson(options.outputRoot, `${reviewBase}.json`, review);
-  return { status: review.verdict, review, args };
+  await writeFile(rawFile, rawOutput, { encoding: 'utf8', flag: 'wx' });
+  await writeJson(options.outputRoot, `${reviewBase}.json`, { ...review, rawFile: rawRelative });
+  return { status: review.verdict, review: { ...review, rawFile: rawRelative }, args };
+}
+
+/** The model name that the provider raw output reports, if any (RA-N6). */
+function reportedModel(rawOutput: string): string | undefined {
+  try {
+    const parsed = record(JSON.parse(rawOutput) as unknown);
+    if (typeof parsed?.model === 'string' && parsed.model) return parsed.model;
+    const content = typeof parsed?.content === 'string' ? parsed.content : '';
+    if (!content) return undefined;
+    const fenced = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+    const inner = record(JSON.parse((fenced ? fenced[1]! : content).trim()) as unknown);
+    return typeof inner?.model === 'string' && inner.model ? inner.model : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function readLedgerEntries(outputRoot: string): Promise<LedgerEntry[]> {
@@ -2723,6 +2994,8 @@ function kimiTarget(options: {
  * `--begin` writes the before-call ledger entry and the review prompt, then prints the callId.
  * `--record <callId> --raw <file>` writes the after-call entry and the Kimi log from the
  * independent reviewer's raw native-image output, with the raw text unchanged.
+ * `--record <callId> --failed --reason <text>` writes the after-call entry with status failure and
+ * the reason; it writes no log and no raw file. A refused record writes nothing (RA-N4).
  */
 export async function precheckKimi(options: {
   outputRoot: string;
@@ -2735,19 +3008,33 @@ export async function precheckKimi(options: {
   begin: boolean;
   record?: string;
   raw?: string;
+  failed?: boolean;
+  reason?: string;
   paid: boolean;
   dryRun: boolean;
   now?: () => Date;
   newCallId?: () => string;
   log?: (message: string) => void;
 }): Promise<
-  { status: 'dry-run'; prompt: string } | { status: 'begun'; callId: string } | { status: ReviewVerdict; review: ModelReview }
+  | { status: 'dry-run'; prompt: string }
+  | { status: 'begun'; callId: string }
+  | { status: 'failed'; callId: string; reason: string }
+  | { status: ReviewVerdict; review: ModelReview }
 > {
   if (!options.paid && !options.dryRun) {
     throw new Error('Provider execution requires --paid. Use --dry-run to inspect the call.');
   }
   if (options.begin === Boolean(options.record)) {
     throw new Error('precheck-kimi needs exactly one of --begin or --record <callId>.');
+  }
+  if (options.failed && !options.record) {
+    throw new Error('precheck-kimi --failed needs --record <callId>.');
+  }
+  if (options.failed && options.raw) {
+    throw new Error('--failed refuses --raw: a failed call has no raw answer.');
+  }
+  if (options.failed && (options.reason === undefined || options.reason.trim().length === 0)) {
+    throw new Error('precheck-kimi --failed needs a non-empty --reason.');
   }
   const repoRoot = path.resolve(options.repoRoot ?? FORGE_ROOT);
   const workbooksRoot = path.resolve(options.workbooksRoot ?? DEFAULT_WORKBOOKS);
@@ -2764,6 +3051,7 @@ export async function precheckKimi(options: {
     operation: 'kimi-native-image',
     provider: 'kimi',
     model: KIMI_REVIEW_MODEL,
+    modelSource: 'declared',
     purpose: 'Kimi pre-check',
     jobId: options.jobId ?? options.calibration ?? 'unknown',
     version: options.version ?? 1,
@@ -2807,7 +3095,6 @@ export async function precheckKimi(options: {
     return { status: 'begun', callId };
   }
   const record = options.record!;
-  if (!options.raw) throw new Error('--record needs --raw <file> with the reviewer raw output.');
   const ledger = await readLedgerEntries(options.outputRoot);
   const begin = ledger.find((entry) => entry.event === 'before-call' && entry.callId === record);
   if (!begin) {
@@ -2815,6 +3102,48 @@ export async function precheckKimi(options: {
       `No matching before-call ledger entry for callId ${record}. Run precheck-kimi --begin first.`,
     );
   }
+  // All refusals happen before any write: a refused record leaves the output tree unchanged.
+  if (ledger.some((entry) => entry.event === 'after-call' && entry.callId === record)) {
+    throw new Error(
+      `Call ${record} already has an after-call ledger entry; a call records at most one after-call.`,
+    );
+  }
+  if (options.calibration !== undefined && options.calibration !== begin.jobId) {
+    throw new Error(
+      `--calibration ${options.calibration} does not match the begin entry for callId ${record} (${begin.jobId}).`,
+    );
+  }
+  if (options.jobId !== undefined && options.jobId !== begin.jobId) {
+    throw new Error(
+      `--job ${options.jobId} does not match the begin entry for callId ${record} (${begin.jobId}).`,
+    );
+  }
+  if (options.version !== undefined && options.version !== begin.version) {
+    throw new Error(
+      `--version ${options.version} does not match the begin entry for callId ${record} (v${begin.version}).`,
+    );
+  }
+  const recordDetails = {
+    ...details,
+    purpose: begin.purpose,
+    ...(begin.file ? { file: begin.file } : {}),
+    jobId: begin.jobId,
+    version: begin.version,
+  };
+  if (options.failed) {
+    const reason = options.reason!;
+    await appendLedgerEntry(options.outputRoot, {
+      ...recordDetails,
+      event: 'after-call',
+      callId: record,
+      recordedAt: (options.now ?? (() => new Date()))().toISOString(),
+      status: 'failure',
+      reason,
+    });
+    options.log?.(`${begin.jobId}: FAILURE — ${reason}`);
+    return { status: 'failed', callId: record, reason };
+  }
+  if (!options.raw) throw new Error('--record needs --raw <file> with the reviewer raw output.');
   let sourceText = '';
   let sourcePrompt = '';
   if (options.calibration) {
@@ -2838,6 +3167,8 @@ export async function precheckKimi(options: {
   const reviewBase = options.calibration
     ? `calibration/${options.calibration}-kimi`
     : `reviews/${begin.jobId}-v${begin.version}-kimi`;
+  // The raw answer is kept under raw/ with the callId in the file name; the source file stays.
+  const rawRelative = `raw/${begin.jobId}-v${begin.version}-kimi-${record}.txt`;
   const review: ModelReview = {
     kind: 'model-pre-check',
     jobId: begin.jobId,
@@ -2845,6 +3176,9 @@ export async function precheckKimi(options: {
     file: begin.file,
     provider: 'kimi',
     model: KIMI_REVIEW_MODEL,
+    modelSource: 'declared',
+    callId: record,
+    rawFile: rawRelative,
     price: priceForProvider('kimi'),
     rubricVersion: PICTURE_RUBRIC_VERSION,
     sourceText,
@@ -2861,12 +3195,11 @@ export async function precheckKimi(options: {
   const reviewFile = resolveOutputPath(options.outputRoot, `${reviewBase}.json`);
   await mkdir(path.dirname(reviewFile), { recursive: true });
   await writeFile(reviewFile, `${JSON.stringify(review, null, 2)}\n`, 'utf8');
+  const rawCopy = resolveOutputPath(options.outputRoot, rawRelative);
+  await mkdir(path.dirname(rawCopy), { recursive: true });
+  await writeFile(rawCopy, rawOutput, { encoding: 'utf8', flag: 'wx' });
   await appendLedgerEntry(options.outputRoot, {
-    ...details,
-    purpose: begin.purpose,
-    ...(begin.file ? { file: begin.file } : {}),
-    jobId: begin.jobId,
-    version: begin.version,
+    ...recordDetails,
     event: 'after-call',
     callId: record,
     recordedAt: new Date().toISOString(),
@@ -2975,6 +3308,8 @@ interface CliOptions {
   begin: boolean;
   record?: string;
   raw?: string;
+  failed: boolean;
+  reason?: string;
 }
 
 function parseWeek(value: string): number {
@@ -2993,9 +3328,10 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
       'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, or verify.',
     );
   }
-  const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false };
+  const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false, failed: false };
   const valueFlags = new Set([
     '--week', '--job', '--version', '--out', '--workbooks', '--calibration', '--output', '--record', '--raw',
+    '--reason',
   ]);
   for (let index = 0; index < args.length; index += 1) {
     const argument = args[index]!;
@@ -3003,6 +3339,7 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
     else if (argument === '--dry-run') options.dryRun = true;
     else if (argument === '--release') options.release = true;
     else if (argument === '--begin') options.begin = true;
+    else if (argument === '--failed') options.failed = true;
     else if (valueFlags.has(argument)) {
       const value = args[index + 1];
       if (!value || value.startsWith('--')) throw new Error(`${argument} requires a value.`);
@@ -3016,6 +3353,7 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
       else if (argument === '--workbooks') options.workbooks = value;
       else if (argument === '--record') options.record = value;
       else if (argument === '--raw') options.raw = value;
+      else if (argument === '--reason') options.reason = value;
       else if (argument === '--output') {
         if (value !== 'color' && value !== 'lineart') throw new Error(`Invalid output kind: ${value}`);
         options.output = value;
@@ -3077,6 +3415,7 @@ export async function runStorytimeCli(
       jobs,
       outputRoot,
       repoRoot,
+      workbooksRoot,
       ...selection,
       ...(options.version === undefined ? {} : { version: options.version }),
       dryRun: options.dryRun,
@@ -3086,7 +3425,8 @@ export async function runStorytimeCli(
     for (const result of results) {
       log(
         `${result.jobId} v${result.version}: ${result.status}; stage ${result.stageSha256}; file ${result.file}` +
-          `${result.lineArtFile ? `; lineart ${result.lineArtFile}` : ''}`,
+          `${result.lineArtFile ? `; lineart ${result.lineArtFile}` : ''}` +
+          `${result.nextVersion === undefined ? '' : `; next free version: v${result.nextVersion}`}`,
       );
     }
     return 0;
@@ -3126,6 +3466,7 @@ export async function runStorytimeCli(
       throw new Error('The smoke capture returned no fixture pass.');
     }
     // All checks run before any write: a failed check leaves the output tree unchanged.
+    log(`lineart technique: ${LINEART_TECHNIQUE}`);
     const fixtureCheck = await checkLineArtSmoke(fixtureLineArt, fixture);
     if (!fixtureCheck.valid) {
       throw new Error(`Line-art smoke fixture failed: ${fixtureCheck.errors.join(' ')}`);
@@ -3197,6 +3538,8 @@ export async function runStorytimeCli(
       begin: options.begin,
       ...(options.record === undefined ? {} : { record: options.record }),
       ...(options.raw === undefined ? {} : { raw: options.raw }),
+      ...(options.failed ? { failed: true } : {}),
+      ...(options.reason === undefined ? {} : { reason: options.reason }),
       paid: options.paid,
       dryRun: options.dryRun,
       log,
@@ -3206,6 +3549,7 @@ export async function runStorytimeCli(
       return 0;
     }
     if (result.status === 'begun') return 0;
+    if (result.status === 'failed') return 0;
     return result.status === 'pass' ? 0 : 2;
   }
   if (command === 'manifest') {    const jobs = await loadJobs(outputRoot);

@@ -3,8 +3,9 @@ import type * as THREE from 'three';
 /**
  * Form-edge line-art pass over a live three.js scene. It renders the scene twice into render
  * targets with override materials — view-space normals (MeshNormalMaterial) and packed depth
- * (MeshDepthMaterial with RGBADepthPacking) — then thresholds depth and normal discontinuities
- * between neighboring pixels into a 1-bit picture, top row first.
+ * (MeshDepthMaterial with RGBADepthPacking) — then thresholds normal discontinuities and relative
+ * view-distance gaps between neighboring pixels into a 1-bit picture, top row first. Each packed
+ * depth sample is converted to the distance from the camera before the comparison.
  *
  * Both renders are depth-tested renders of the same scene, so a line behind a closer surface
  * never shows. A smooth surface has no interior discontinuity, so triangle edges never show.
@@ -30,8 +31,24 @@ export interface LineArtPassResult {
 
 /** Neighbor normals with a smaller dot are a form edge (about 30 degrees). */
 const NORMAL_EDGE_DOT = 0.86;
-/** Neighbor depths with a bigger gap are an occlusion or crease edge. */
-const DEPTH_EDGE_DELTA = 0.02;
+/**
+ * Neighbor view distances with a bigger relative gap are an occlusion or crease edge. The limit
+ * is relative to the nearer distance: 4.0 m against 4.3 m (7.5 percent) is an edge, 4.0 m against
+ * 4.02 m (0.5 percent) is not. This pass uses 2 percent.
+ */
+export const DEPTH_EDGE_RELATIVE_GAP = 0.02;
+
+/** The view distance of a packed perspective depth sample between the camera near and far planes. */
+export function viewDistance(depth: number, near: number, far: number): number {
+  return (far * near) / (far - depth * (far - near));
+}
+
+/** Two neighbor view distances with a relative gap above the limit are a depth edge. */
+export function isDepthEdge(distanceA: number, distanceB: number): boolean {
+  const nearer = Math.min(Math.abs(distanceA), Math.abs(distanceB));
+  if (nearer === 0) return distanceA !== distanceB;
+  return Math.abs(distanceA - distanceB) / nearer > DEPTH_EDGE_RELATIVE_GAP;
+}
 
 export function renderLineArtPass(
   three: typeof THREE,
@@ -65,7 +82,11 @@ export function renderLineArtPass(
     scene.overrideMaterial = depthMaterial;
     renderer.render(scene, camera);
     const depths = readPixels(renderer, depthTarget, size);
-    return { width: size.width, height: size.height, data: edgeData(normals, depths, size) };
+    return {
+      width: size.width,
+      height: size.height,
+      data: edgeData(normals, depths, size, camera.near, camera.far),
+    };
   } finally {
     for (let index = 0; index < savedProjection.length; index += 1) {
       camera.projectionMatrix.elements[index] = savedProjection[index]!;
@@ -104,7 +125,13 @@ function unpackDepth(pixels: Uint8Array, index: number): number {
   );
 }
 
-function edgeData(normals: Uint8Array, depths: Uint8Array, size: LineArtPassSize): Uint8Array {
+function edgeData(
+  normals: Uint8Array,
+  depths: Uint8Array,
+  size: LineArtPassSize,
+  near: number,
+  far: number,
+): Uint8Array {
   const { width, height } = size;
   const data = new Uint8Array(width * height).fill(255);
   const mark = (webglIndex: number) => {
@@ -121,7 +148,9 @@ function edgeData(normals: Uint8Array, depths: Uint8Array, size: LineArtPassSize
     ];
   };
   const edgeBetween = (a: number, b: number): boolean => {
-    if (Math.abs(unpackDepth(depths, a) - unpackDepth(depths, b)) > DEPTH_EDGE_DELTA) return true;
+    if (isDepthEdge(viewDistance(unpackDepth(depths, a), near, far), viewDistance(unpackDepth(depths, b), near, far))) {
+      return true;
+    }
     const [ax, ay, az] = normalAt(a);
     const [bx, by, bz] = normalAt(b);
     const squaredLength = (ax * ax + ay * ay + az * az) * (bx * bx + by * by + bz * bz);
