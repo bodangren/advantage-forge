@@ -428,7 +428,7 @@ describe('Storytime picture contract', () => {
       purpose: 'Test only', jobId: job().id, version: 1,
       price: { basis: 'Test plan', marginalCashUsd: 0, note: 'No paid call.' } };
     const { repoRoot, outputRoot } = await sandbox();
-    const runner = vi.fn(async () => ({ stdout: '', stderr: '' }));
+    const runner = vi.fn(async (_command: string, _args: string[]) => ({ stdout: '', stderr: '' }));
     const appendLedger = vi.fn();
     const call = vi.fn(async () => runner('mmx', []));
     await expect(runPaidCall({ paid: false, dryRun: false, details, call, appendLedger })).rejects.toThrow(/--paid/);
