@@ -958,41 +958,48 @@ export function parseModelReview(rawOutput: string): {
     observedCounts: {},
     issues: ['The model output did not match the review contract.'],
   };
-  if (/\bFAIL\b/i.test(rawOutput) && !/\bPASS\b/i.test(rawOutput)) {
-    return { ...unclear, reason: 'The model reported FAIL without the required structure.' };
-  }
   for (const value of jsonObjects(rawOutput).reverse()) {
     const item = record(value);
-    if (!item || typeof item.verdict !== 'string') continue;
-    const verdict = item.verdict.toUpperCase();
-    if (verdict === 'FAIL') {
+    if (!item) continue;
+    if (typeof item.verdict === 'string') {
+      const verdict = item.verdict.toUpperCase();
+      if (verdict === 'FAIL') {
+        const counts = CountsSchema.safeParse(item.observedCounts);
+        return {
+          verdict: 'fail',
+          reason: typeof item.reason === 'string' && item.reason ? item.reason : 'The model reported FAIL.',
+          observedCounts: counts.success ? counts.data : {},
+          issues: Array.isArray(item.issues)
+            ? item.issues.filter((issue): issue is string => typeof issue === 'string')
+            : [],
+        };
+      }
+      if (verdict !== 'PASS' || /\bFAIL\b/i.test(rawOutput)) return unclear;
       const counts = CountsSchema.safeParse(item.observedCounts);
+      if (
+        typeof item.reason !== 'string' ||
+        !item.reason ||
+        !counts.success ||
+        !Array.isArray(item.issues) ||
+        item.issues.some((issue) => typeof issue !== 'string')
+      ) {
+        return unclear;
+      }
       return {
-        verdict: 'fail',
-        reason: typeof item.reason === 'string' && item.reason ? item.reason : 'The model reported FAIL.',
-        observedCounts: counts.success ? counts.data : {},
-        issues: Array.isArray(item.issues)
-          ? item.issues.filter((issue): issue is string => typeof issue === 'string')
-          : [],
+        verdict: 'pass',
+        reason: item.reason,
+        observedCounts: counts.data,
+        issues: item.issues as string[],
       };
     }
-    if (verdict !== 'PASS' || /\bFAIL\b/i.test(rawOutput)) return unclear;
-    const counts = CountsSchema.safeParse(item.observedCounts);
-    if (
-      typeof item.reason !== 'string' ||
-      !item.reason ||
-      !counts.success ||
-      !Array.isArray(item.issues) ||
-      item.issues.some((issue) => typeof issue !== 'string')
-    ) {
-      return unclear;
+    const base = record(item.base_resp);
+    if (typeof item.content === 'string' && base) {
+      const statusCode = base.status_code;
+      if (typeof statusCode === 'number' && statusCode !== 0) {
+        return { ...unclear, reason: `The provider reported status ${statusCode}.` };
+      }
+      return parseModelReview(item.content);
     }
-    return {
-      verdict: 'pass',
-      reason: item.reason,
-      observedCounts: counts.data,
-      issues: item.issues as string[],
-    };
   }
   return unclear;
 }
