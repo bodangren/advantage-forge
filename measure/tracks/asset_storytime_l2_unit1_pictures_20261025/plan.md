@@ -41,9 +41,13 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 
 ## Phase 2: Tests and calibrated model pre-checks
 
-- [~] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest
+- [x] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest
   validation, layout, line-art twins, and output isolation. Record the red result.
-- [ ] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
+  Evidence: `01c01bdf`; exit code `1`; `Tests  24 failed | 17 passed (41)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  The final run had no timeout failures. T3 and T21 passed against the untracked draft.
+  The PM's heavy-run rule replaces the separate preflight and lock steps for this gate.
+- [~] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
   render run. Pass the focused tests and type checks. Keep `src/song/` unchanged. Make no paid
   calls and run no heavy render during this task.
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
