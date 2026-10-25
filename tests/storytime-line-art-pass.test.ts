@@ -177,11 +177,15 @@ describe('Line-art scene pass', () => {
     for (const [a, b] of [[4, 4.02], [40, 40.2], [4, 4]]) {
       expect(isDepthEdge(a!, b!)).toBe(false); expect(isDepthEdge(b!, a!)).toBe(false);
     }
-    // Integer base-256 digits encode RGBADepthPacking independently of the product unpacker.
+    // The mock bytes follow the real three 0.185.1 packDepthToRGBA
+    // (node_modules/three/src/renderers/shaders/ShaderChunk/packing.glsl.js, lines 10-30).
+    // R holds the most significant byte, A the smallest fraction. The mock stays independent of
+    // the product unpacker.
     const packed = (value: number) => {
-      const integer = Math.floor(value * 4294967296);
-      return [integer % 256, Math.floor(integer / 256) % 256,
-        Math.floor(integer / 65536) % 256, Math.floor(integer / 16777216) % 256];
+      const scaled = value * 16777216; // PackFactors.a
+      const integer = Math.floor(scaled);
+      return [Math.floor(integer / 65536), Math.floor(integer / 256) % 256, integer % 256,
+        Math.round((scaled - integer) * 255)];
     };
     for (const [left, right, edge] of [[4, 4.3, true], [40, 43, true], [4, 4.02, false], [40, 40.2, false]] as const) {
       const f = fixture();
@@ -200,5 +204,71 @@ describe('Line-art scene pass', () => {
       }
       expect([...result.data.slice(0, 4)]).toEqual([255, 255, 255, 255]);
     }
+  });
+
+  it('T76: the depth bytes of three 0.185.1 decode to the packed view distance', async () => {
+    // Falsification: a little-endian decode, a byte order swap, or a missing seam passes this test.
+    const pass = await import('../src/storytime/line-art-pass.js');
+    const { viewDistance, isDepthEdge, unpackDepth } = pass as typeof pass & {
+      viewDistance(depth: number, near: number, far: number): number;
+      isDepthEdge(distanceA: number, distanceB: number): boolean;
+      unpackDepth(bytes: [number, number, number, number]): number;
+    };
+    expect(unpackDepth, 'The unpackDepth seam exists.').toBeTypeOf('function');
+    expect(viewDistance, 'The viewDistance seam exists.').toBeTypeOf('function');
+    expect(isDepthEdge, 'The isDepthEdge seam exists.').toBeTypeOf('function');
+
+    // Port of three 0.185.1 packDepthToRGBA
+    // (node_modules/three/src/renderers/shaders/ShaderChunk/packing.glsl.js, lines 10-30).
+    // GLSL modf(x, i) sets i to the truncated part and returns the fraction.
+    // The shader writes a float color, and a Uint8 read-back stores round(clamp(value, 0, 1) * 255).
+    const modf = (x: number) => {
+      const integer = Math.trunc(x);
+      return { fraction: x - integer, integer };
+    };
+    const packUpscale = 256 / 255;
+    const inv255 = 1 / 255;
+    const shiftRight8 = 1 / 256;
+    const packFactorsA = 256 * 256 * 256;
+    const toByte = (channel: number) => Math.round(Math.min(Math.max(channel, 0), 1) * 255);
+    const packDepthToRgba = (value: number): [number, number, number, number] => {
+      if (value <= 0) return [0, 0, 0, 0];
+      if (value >= 1) return [255, 255, 255, 255];
+      const af = modf(value * packFactorsA);
+      const bf = modf(af.integer * shiftRight8);
+      const gf = modf(bf.integer * shiftRight8);
+      return [
+        toByte(gf.integer * inv255),
+        toByte(gf.fraction * packUpscale),
+        toByte(bf.fraction * packUpscale),
+        toByte(af.fraction),
+      ];
+    };
+
+    // The round trip proves that the product decode inverts the three.js pack.
+    for (const value of [0.1, 0.25, 0.5, 0.75, 0.97695392370224, 0.999]) {
+      const packed = packDepthToRgba(value);
+      expect(Math.abs(unpackDepth(packed) - value), `Depth ${value} from ${packed.join(',')}`)
+        .toBeLessThanOrEqual(1e-6);
+    }
+
+    // Real GPU bytes from the smoke diagnostic run. The values are copied from
+    // out/storytime/l2/unit1/smoke/diag-2026-10-25T23-00-20-478Z/diag.json.
+    // The fixture camera near and far are 0.1 m and 50 m.
+    // The near plane probe at pixel [230, 128] reads [250, 25, 167, 0] and the far plane probe at
+    // pixel [252, 128] reads [250, 140, 49, 0]. The same file records 4.0000 m and 4.3000 m.
+    const near = 0.1, far = 50;
+    const nearPlaneBytes: [number, number, number, number] = [250, 25, 167, 0];
+    const farPlaneBytes: [number, number, number, number] = [250, 140, 49, 0];
+    const nearPlaneDistance = viewDistance(unpackDepth(nearPlaneBytes), near, far);
+    const farPlaneDistance = viewDistance(unpackDepth(farPlaneBytes), near, far);
+    expect(Math.abs(nearPlaneDistance - 4.0), 'The near plane byte set gives 4.0 m.')
+      .toBeLessThanOrEqual(0.01);
+    expect(Math.abs(farPlaneDistance - 4.3), 'The far plane byte set gives 4.3 m.')
+      .toBeLessThanOrEqual(0.01);
+    expect(isDepthEdge(nearPlaneDistance, farPlaneDistance), 'The two planes are a depth edge.')
+      .toBe(true);
+    expect(isDepthEdge(farPlaneDistance, nearPlaneDistance), 'The two planes are a depth edge.')
+      .toBe(true);
   });
 });
