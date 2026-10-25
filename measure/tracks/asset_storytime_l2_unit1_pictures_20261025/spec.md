@@ -110,7 +110,9 @@ line-art size, color depth, and line weight for the cut-and-fold page. Until the
     human gates explicitly.
 14. **FR-14 Line-art output.** Produce one line-art picture for each reader page. Make it in the
     same render run as its color twin, from the same stage file, still time, and camera. Use a
-    render pass of the 3D scene, not only a filter of the color picture.
+    render pass of the 3D scene, not only a filter of the color picture. The lines show
+    silhouettes and form edges, never mesh triangle edges. The song engine gets one additive
+    still hook for this pass.
 15. **FR-15 Line-art sample.** Render the Nan window page in color and line art first. Report
     both paths to the PM for Daniel's look. Continue the pipeline while the look is pending.
 16. **FR-16 Line-art release.** A line-art picture is ready only with structural checks, a ready

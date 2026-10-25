@@ -8,6 +8,10 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - `render`: render missing candidates sequentially from versioned scene files. Require the current
   source hash to match `jobs.json`. One render of a reader page writes the color twin and the
   line-art twin together. `--dry-run` prints both planned paths and renders nothing.
+- `lineart-smoke --job <id>`: one bounded smoke run for Phase 2 task 3. It writes one still and one
+  fixture pass under `smoke/lineart-<UTC stamp>/` and prints labeled checks. It writes no
+  candidate, version, evidence, manifest entry, or ledger line. `manifest` and `verify` ignore
+  `smoke/`.
 - `precheck-minimax --paid`: run the MiniMax VLM on one candidate or calibration picture.
 - `precheck-kimi --begin` and `precheck-kimi --record <callId> --raw <file>`: write the before-call ledger entry and the review prompt, then write the after-call entry and the Kimi log from the reviewer's raw native-image output.
 - `manifest`: rebuild the manifest from jobs, pictures, and review logs.
@@ -79,18 +83,30 @@ provisional until Workbooks picture specification v1 (due 2026-10-28).
 
 - The line-art twin comes from the same render run as its color twin. The run uses the same stage
   file bytes, the same still time, and the same camera. One page load and one seek give both twins.
-- The line art is a render pass of the same three.js scene. Examples: normal and depth edges, a
-  material-ID edge pass, or an outline pass. A threshold then makes the picture 1-bit.
+- The line art is a render pass of the same three.js scene. A threshold then makes the picture
+  1-bit. The lines show silhouettes and form edges. Examples: depth and normal discontinuities, a
+  material-ID edge pass, or an inverted-hull outline.
+- Hidden edges stay hidden. A line behind a closer surface does not show.
+- Mesh triangle edges never show. A smooth surface has no lines inside its silhouette. A wireframe
+  material, a `WireframeGeometry`, and a line object without the depth test are not allowed.
 - A filter of the color PNG alone is not allowed. It loses the scene geometry. A filter of the
   color picture can add painted features, such as eyes and mouths, to the scene-pass edges.
 - The color twin keeps the song engine's look. The book page does not copy scene-building code
   from `src/song/main.ts`.
-- The preferred design keeps `src/song/` unchanged. A book-still page or module under
-  `src/storytime/` reuses `src/song/timeline.ts` and the song page module. It gets the scene and
-  camera without an edit to song-engine files.
-- If the pass needs a change in `src/song/main.ts` or another song-engine file, the implementer
-  stops and reports. That change gets its own task, `tests/song-timeline.test.ts` in its gate,
-  and a PM note.
+- The engine hook: `src/song/main.ts` publishes `window.__bookStill` at the end of each `seek`,
+  after the frame render. It holds the scene, the camera, the renderer, and a value copy of the
+  camera state. `load` clears it. The hook is additive. It changes no song rendering, no timing,
+  and no part of `window.__song`. Phase 2 task 3 owns it, with `tests/song-timeline.test.ts` in
+  its gate and a PM note. Any other song-engine change stops the implementer for a new task.
+- The recorded camera state is the state of the color still. The capture reads it after the seek
+  and before the line-art pass.
+- The pass restores everything that it changes: the camera aspect and projection matrix, the
+  renderer size and pixel ratio, the render target, the clear color and alpha, the scene
+  background, the override material, and object visibility and materials. It disposes each render
+  target and material that it makes.
+- After the pass, the capture reads the camera state again, seeks the same time again, and takes a
+  second color screenshot. A camera state drift or a pixel difference between the two color
+  screenshots fails the run.
 - A failure in the line-art pass writes neither twin. A color twin never exists without its
   line-art twin for a reader page.
 
@@ -210,4 +226,5 @@ calibration blocks production until the rubric or provider call is corrected.
 - Line-art names never match the Workbooks color pattern, and color names never match the
   line-art pattern.
 - The render evidence binds both twins to one stage hash, one time, and one camera.
+- The line-art pass uses no wireframe material and restores the camera and the renderer.
 - `--release` fails on a missing, unbound, failed, or unreviewed line-art twin of a reader page.

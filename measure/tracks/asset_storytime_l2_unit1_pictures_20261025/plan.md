@@ -59,6 +59,12 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The Red type fix `5cbb3407` (test line 433, type-only) unblocked the type gate. The real
   line-art capture pass needs the engine hook task before a live render (see the Green log).
+- [ ] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
+  an additive hook: after each `seek`, publish `window.__bookStill` with the scene, camera,
+  renderer, and camera state. Do not change song rendering, timing, or `window.__song`. Replace
+  the wireframe pass with a form-edge pass that restores the camera and the renderer. Pass T42 to
+  T51 and `tests/song-timeline.test.ts`. Send the PM note first. Make no paid calls and run no
+  heavy render, except the one bounded smoke run (T52) under `smoke/`. It writes no book version.
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
 
@@ -154,3 +160,6 @@ so every picture gate applies again.
   the color renders also go into A3 teacher PDFs, so keep every stage file and camera for a
   larger render after spec v1. Facts changed: color renders are also an A3 teacher print
   deliverable; final print size waits for Workbooks spec v1 (due 2026-10-28).
+- 2026-10-26: PM note for the engine hook task: the book stills need an additive hook in the song
+  engine (`src/song/main.ts`). Song rendering and timing stay the same. `tests/song-timeline.test.ts`
+  is in the gate. Song renders stay paused. Facts changed: none.
