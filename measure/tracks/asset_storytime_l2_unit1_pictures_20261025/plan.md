@@ -59,12 +59,16 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The Red type fix `5cbb3407` (test line 433, type-only) unblocked the type gate. The real
   line-art capture pass needs the engine hook task before a live render (see the Green log).
-- [ ] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
+- [~] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
   an additive hook: after each `seek`, publish `window.__bookStill` with the scene, camera,
   renderer, and camera state. Do not change song rendering, timing, or `window.__song`. Replace
   the wireframe pass with a form-edge pass that restores the camera and the renderer. Pass T42 to
   T51 and `tests/song-timeline.test.ts`. Send the PM note first. Make no paid calls and run no
   heavy render, except the one bounded smoke run (T52) under `smoke/`. It writes no book version.
+  Red evidence: `54889801`; exit code `1`; `Tests  9 failed | 60 passed (69)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  T42–T44 and T46–T51 failed for missing seams, hook calls, or the smoke command.
+  All 41 earlier picture tests and all 19 timeline tests passed. The run had no test syntax or timeout errors.
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
 
