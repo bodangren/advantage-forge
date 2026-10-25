@@ -12,6 +12,11 @@ of seven weeks. Each week has one eight-page read-along and one eight-page decod
 Week 1 contains "Hello!" and "Nan Can Nod". Its pictures are due 2026-11-01. Weeks 2 to 7 and
 the Level 2 cover render are due 2026-11-15.
 
+Each reader page has two outputs: a color picture and a black-and-white line-art picture. The
+color picture serves the app read-along and the song videos. The line-art picture serves a
+printed workbook with "build your own" readers. Both outputs come from the same 3D scene and
+camera. The line-art format is provisional until Workbooks picture specification v1.
+
 ## Decisions and boundaries
 
 - Daniel selected Forge 3D renders on 2026-10-25: "We can use the same style for the entire
@@ -20,6 +25,23 @@ the Level 2 cover render are due 2026-11-15.
   seems like a good idea!"
 - The same approved cast and look serves the books and future song videos. Do not substitute a
   different character look.
+- Daniel added print line art on 2026-10-25 (PM relay, about 21:10 ICT). His words:
+
+  > We should have a workbook with the writing parts and "build your own" readers like Reading
+  > A-Z does. That means B&W (probably line drawings) pages of the book organized to slice out,
+  > fold, and staple.
+
+- The PM instructions for that change: make the line art from the same 3D scenes and cameras as
+  the color renders. Do not stop the color renders. Render the Nan window page in both versions
+  first. Report the two file paths to the PM for Daniel's look. Continue while the sample waits.
+- Daniel added a teacher print on 2026-10-25 (PM relay, about 21:25 ICT). His words:
+
+  > yes, right for the student, but we can produce color pdfs for the teachers to printo on A3
+  > and lead class with.
+
+- The PM meaning: the color renders are also a print deliverable for A3 teacher PDFs. A3 at
+  300 ppi is about 4961 x 3508 pixels, so 3000 x 2250 can be too small. Workbooks sets the final
+  size in specification v1 by 2026-10-28. Nothing else changes.
 - Missing poses and additional assets go through the PM. Do not improvise a substitute.
 - Decision S19 assigns cover layout and text to Workbooks. Forge supplies the cover render only.
 - The delivery root is `out/storytime/l2/unit1/`.
@@ -37,6 +59,26 @@ Workbooks supplied this specification on 2026-10-25. The full picture list follo
 - No bleed. Workbooks converts the pictures to CMYK.
 - Filenames: `l2-w01-<use>-<what-it-shows>-v1.png`.
 - One `manifest.json` with SHA-256 per batch.
+
+### Render size and the A3 teacher print
+
+- Render size is a parameter of the render. The stage file does not contain it.
+- Stage files and cameras are kept and versioned. A later render at a larger size needs no new
+  scene work and no extra cost.
+- A3 (about 1.414:1) has a different ratio from the 4:3 story page. A render at the A3 ratio
+  changes the framing. The final size and ratio wait for specification v1.
+
+### Interim line-art format (provisional)
+
+This format is provisional. Workbooks sends picture specification v1 by 2026-10-28 with the
+line-art size, color depth, and line weight for the cut-and-fold page. Until then:
+
+- Line art has the same pixel size as its color twin: 3000 x 2250 for a story page.
+- Pure black lines on white. No grey fill. Every pixel is black (0) or white (255).
+- Opaque PNG. No letters or numbers. No bleed.
+- A provisional filename that does not match the Workbooks color pattern. The contract defines it.
+- Line art is required for the 112 reader pages. The cover and small pictures have no line art
+  unless specification v1 asks for it.
 
 ## Functional Requirements
 
@@ -66,6 +108,16 @@ Workbooks supplied this specification on 2026-10-25. The full picture list follo
     calm for the title. Keep layout and text out of scope.
 13. **FR-13 Progress report.** Report when week 1 pictures and checks are ready. Record remaining
     human gates explicitly.
+14. **FR-14 Line-art output.** Produce one line-art picture for each reader page. Make it in the
+    same render run as its color twin, from the same stage file, still time, and camera. Use a
+    render pass of the 3D scene, not only a filter of the color picture.
+15. **FR-15 Line-art sample.** Render the Nan window page in color and line art first. Report
+    both paths to the PM for Daniel's look. Continue the pipeline while the look is pending.
+16. **FR-16 Line-art release.** A line-art picture is ready only with structural checks, a ready
+    color twin, a passing person look, and Daniel's passing style look. A model result is not
+    acceptance.
+17. **FR-17 Specification v1.** Reconcile the line-art format with Workbooks picture
+    specification v1. Record each rename, resize, or new render.
 
 ## Non-Functional Requirements
 
@@ -89,10 +141,15 @@ Workbooks supplied this specification on 2026-10-25. The full picture list follo
 - Raw model outputs and the paid-call ledger accompany the pictures.
 - Daniel or his named reviewer records an object count and verdict for every picture.
 - A contact sheet and the manifest support the progress report.
+- Sixteen versioned line-art PNG files exist, one for each color picture.
+- Each line-art file passes the interim or v1 line-art format checks and binds to its color twin.
+- Daniel's look at the Nan window sample is recorded through the PM.
+- Daniel or his named reviewer records a look and verdict for every line-art picture.
 
 ### Track completion
 
 - All 112 page pictures and the Level 2 cover render meet the same gates.
+- All 112 line-art pictures meet the line-art gates and the specification v1 format.
 - The final Workbooks picture list is reconciled with this track.
 - The manifest has no unresolved failed or missing release candidate.
 - The plan, metadata, registry, and generated facts reflect the delivered state.
@@ -103,4 +160,7 @@ Workbooks supplied this specification on 2026-10-25. The full picture list follo
 - Song, video, animation, audio, phoneme, and word-time production.
 - Book text editing, Thai editing, app development, and bucket uploads.
 - Final cover layout, cover typography, PDF generation, and print deployment.
+- Workbook layout, the writing parts, page imposition, slicing, folding, stapling, and the
+  workbook PDF. Workbooks owns them. Forge supplies the line-art pictures only.
+- The teacher color PDF and its A3 layout. Workbooks owns them. Forge supplies the color renders.
 - Unapproved cast changes, substitute styles, and improvised poses.

@@ -36,29 +36,39 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - Daniel selected Forge 3D renders for one character look across books and videos.
 - The renderer is now local Forge. MiniMax image generation is removed.
 - Daniel made the heavy pre-flight check and shared heavy lock mandatory.
+- Daniel added print line art. Each reader page gets a color output and a line-art output from the
+  same scene and camera. The line-art format is provisional until Workbooks picture spec v1.
 
 ## Phase 2: Tests and calibrated model pre-checks
 
 - [~] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest
-  validation, layout, and output isolation. Record the red result.
-- [ ] Task: Implement the minimal picture pipeline and pass the focused tests and type checks.
-  Make no paid calls and run no heavy render during this task.
+  validation, layout, line-art twins, and output isolation. Record the red result.
+- [ ] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
+  render run. Pass the focused tests and type checks. Keep `src/song/` unchanged. Make no paid
+  calls and run no heavy render during this task.
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
 
 ## Phase 3: Week 1 pictures
 
+- [ ] Task: Render the Nan window sample in color and line art. Run the pre-flight check and the
+  heavy lock first. Report both file paths and SHA-256 values to the PM for Daniel's look. When
+  the report is sent and the look is pending, mark this task `[b] deferred:daniel-lineart-look`.
+  Continue with the next tasks while it waits. Record the look in the style look record.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
-- [ ] Task: Render the 16 week 1 candidates as versioned PNG files. Run the pre-flight check and
-  heavy lock for each batch. Keep all source prompts, stage files, and package hashes.
-- [ ] Task: Run automated checks and both model pre-checks on every candidate. Correct each failed
-  picture under a new version and repeat the checks. Attach the raw model outputs.
-- [ ] Task: Send the count review to the PM. The PM routes it to Daniel or his named reviewer.
-  Record the person, time, counts, and verdict for all 16 pictures. Do not label model results
-  acceptance.
-- [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. Report the output
-  path and every remaining gate to the PM for routing.
+- [ ] Task: Render the 16 week 1 pages as 16 color and 16 line-art versioned PNG files, one twin
+  pair per render run. Run the pre-flight check and heavy lock for each batch. Keep all source
+  prompts, stage files, and package hashes.
+- [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
+  every color candidate. Correct each failed picture under a new twin version and repeat the
+  checks. Attach the raw model outputs.
+- [ ] Task: Send the count review and the line-art look to the PM. The PM routes them to Daniel or
+  his named reviewer. Record the person, time, counts, and verdict for all 16 color and 16
+  line-art pictures. Do not label model results acceptance.
+- [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. Apply picture
+  spec v1 to the line art if it arrived. Otherwise label the line art provisional. Report the
+  output path and every remaining gate to the PM for routing.
 
 ## Phase 4: Remaining pictures and cover
 
@@ -68,6 +78,14 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   and person-count gates to all 96 pictures.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
+
+Line-art note for Phase 4: weeks 2 to 7 get 96 line-art twins with the same line-art gates. The
+reconciliation task also applies picture spec v1 to the line art. It records each rename,
+resize, or new render, and it updates the line-art format version.
+
+A3 note for Phase 4: if spec v1 sets a larger print size or the A3 ratio, render the color and
+line-art twins again from the kept stage files as new versions. A new ratio changes the framing,
+so every picture gate applies again.
 
 ## Phase 5: Documentation and verification
 
@@ -111,3 +129,15 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - 2026-10-25: Daniel required the heavy lock and live pre-flight check. This session acknowledged
   both rules. No heavy work ran outside the lock. Facts changed: heavy-job controls only.
 - 2026-10-25: The PM relayed Daniel's approval of the week 1 asset request. Daniel's words: "If they need more poses, we can request them. If we need additional assets, we can create them. One character look for both books and videos seems like a good idea!" The PM said GO for the full list in the one character look. Cast rules: Teacher Kim and the nurse are staff at a Thai school; describe hair and clothes only, never skin or ethnicity; no white Western teacher look. Local renders need no other word. A paid API needs the tool and cost sent to the PM before spending. Facts changed: week 1 asset list approved.
+- 2026-10-25 (about 21:10 ICT): The PM relayed Daniel's words: "We should have a workbook with the
+  writing parts and "build your own" readers like Reading A-Z does. That means B&W (probably line
+  drawings) pages of the book organized to slice out, fold, and staple." The PM asked for line art
+  from the same 3D scenes and cameras, with the color renders kept. The PM asked for a Nan window
+  sample in both versions first, and gave an interim format until Workbooks spec v1. Facts
+  changed: each reader page gets a color and a line-art output; line-art format provisional until
+  Workbooks spec v1 (due 2026-10-28).
+- 2026-10-25 (about 21:25 ICT): The PM relayed Daniel's words: "yes, right for the student, but we
+  can produce color pdfs for the teachers to printo on A3 and lead class with." The PM meaning:
+  the color renders also go into A3 teacher PDFs, so keep every stage file and camera for a
+  larger render after spec v1. Facts changed: color renders are also an A3 teacher print
+  deliverable; final print size waits for Workbooks spec v1 (due 2026-10-28).
