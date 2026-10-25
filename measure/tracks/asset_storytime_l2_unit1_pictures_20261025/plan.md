@@ -121,7 +121,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `2026-10-25T20:17:24.145Z`, and after-call `1086bc64` at `2026-10-25T20:17:27.242Z`
   (Review A RA-N5). Later paid calls run one at a time.
   A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
-- [ ] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
+- [~] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
   `5ffdbf6e` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json`).
   Fix RA-B1: `captureBookStill` loads the timeline and checks the page notes before the first
   seek, through one step that the smoke capture shares. Fix RA-B2: the style look binds to the
@@ -131,6 +131,11 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Make no paid calls. Run no heavy render, except one bounded smoke run (T74). The smoke run is
   necessary: it is the only live proof of RA-B1 and RA-N7 before the Nan sample. It takes its
   stage pair through the production `captureBookStill` path and writes no book version.
+  Red evidence: `b60dec4f`; exit code `1`; "Tests  14 failed | 75 passed (89)".
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  T61 to T73 failed for missing seams or the Review A defects. No new test passed.
+  Earlier tests: 75 passed. T49 failed because its amended order requires two live camera reads.
+  The run had no syntax, transform, package, timeout, or preflight error. Task 6 remains pending.
 - [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
