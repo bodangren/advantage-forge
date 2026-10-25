@@ -20,9 +20,9 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 
 ## Phase 1: Contract and controls
 
-- [~] Task: Record the owner order, scope, dates, output contract, providers, prices, and human
-  gates. Evidence class: automated planning record.
-- [ ] Task: Define the source extraction, versioned picture, review-log, ledger, and manifest
+- [x] Task: Record the owner order, scope, dates, output contract, providers, prices, and human
+  gates. Evidence class: automated planning record. 2fdce9d
+- [~] Task: Define the source extraction, versioned picture, review-log, ledger, and manifest
   contracts. Include the known bad and owner-approved calibration pictures.
 
 ## Phase 2: Tests and calibrated model pre-checks
