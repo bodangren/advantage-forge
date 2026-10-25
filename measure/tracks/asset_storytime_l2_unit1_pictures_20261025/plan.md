@@ -92,7 +92,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json` (`5e90526d`), from existing approved
   pieces only: map `classroom`, actor `Nan` (sprout-nan), pose clip `wave`, prop `pot`.
   No paid call and no heavy render outside the one smoke run.
-- [~] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
+- [x] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
   The first live MiniMax call found the parser defect. The parser discarded structured FAIL fields and rejected an mmx PASS envelope.
   Regression tests: `52923de3`; exit code `1`; `Tests  2 failed | 74 passed (76)`.
@@ -100,6 +100,21 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   T54 and T55 failed for the expected parser defects. All 69 earlier tests passed. T56 to T60 passed.
   The embedded FAIL fixture matches all 379 bytes of the live raw output. The PASS fixture is synthetic.
   The calibration calls run again after the fix.
+  Parser fix commit `bfa8126c`; gate `Tests  76 passed (76)`; `owned tsc errors: 0` (baseline 31).
+  Verdicts: `bad-one-sun-minimax: fail` (no sun visible, `observedCounts {"sun": 0}`),
+  `bad-one-sun-kimi: fail` (one child, no suns), `good-nan-minimax: pass` (`observedCounts {"Nan character": 1}`),
+  `good-nan-kimi: pass` (one readable Nan character, age-safe, no unwanted text).
+  Ledger counts: `before-call entries: 6`, `after-call entries: 5`; the four final logs each pair with a before-call
+  earlier than its `checkedAt`. `rubricVersion: storytime-picture-v2` in all four logs; each `fileSha256` matches the source picture.
+  `assertCalibrationReady` accepts `out/storytime/l2/unit1`.
+  Calibration folder: `out/storytime/l2/unit1/calibration/` with raw outputs under `raw/`.
+  Deviations: (a) the orchestrator dispatched the Kimi reviewers, because a Green subagent cannot
+  spawn one, and each reviewer wrote its own raw file; (b) the hung reviewer session
+  `ses_e8b730946ffe0qHu3XC1RLopTl` left before-call entry `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0`
+  without an after-call entry, because the CLI cannot record a failed call without a raw answer;
+  (c) the first MiniMax `bad-one-sun` call ran before the parser fix, and its log was replaced by
+  the second call.
+  A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
 
 ## Phase 3: Week 1 pictures
 
