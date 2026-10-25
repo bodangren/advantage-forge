@@ -44,6 +44,9 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - [x] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest
   validation, layout, line-art twins, and output isolation. Record the red result.
   Evidence: `01c01bdf`; exit code `1`; `Tests  24 failed | 17 passed (41)`.
+  Type-only test fix: `5cbb3407` types the T13 runner parameters. No assertion or falsification condition changed.
+  Type check: `tsc exit: 2`; owned test errors: `0`; Storytime source errors: `7`; total compiler errors: `38`.
+  Green owns the source errors. Compiler output: `/tmp/opencode/red-tsc-db79a72.log`. No vitest run accompanied this fix.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The final run had no timeout failures. T3 and T21 passed against the untracked draft.
   The PM's heavy-run rule replaces the separate preflight and lock steps for this gate.
