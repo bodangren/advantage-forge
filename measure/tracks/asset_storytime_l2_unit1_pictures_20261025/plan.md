@@ -18,7 +18,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - The initial MiniMax quota check reports 94% for the interval and 89% for the week.
 - MiniMax video caps are 3 per day and 21 per week. This track makes no video calls.
 
-## Phase 1: Contract and controls
+## Phase 1: Contract and controls [checkpoint: 3ea5fca]
 
 - [x] Task: Record the owner order, scope, dates, output contract, providers, prices, and human
   gates. Evidence class: automated planning record. 2fdce9d
