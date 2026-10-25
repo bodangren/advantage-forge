@@ -1159,3 +1159,63 @@ describe('Storytime picture contract', () => {
     expect(existsSync(path.join(space.outputRoot, linePath(job(), 2)))).toBe(false);
   });
 });
+
+describe('Model review parser regressions', () => {
+  // Exact bytes from calibration/bad-one-sun-minimax.txt. The tests read no live output file.
+  const realMmxFail = "{\n  \"content\": \"```json\\n{\\n  \\\"verdict\\\": \\\"FAIL\\\",\\n  \\\"reason\\\": \\\"The source text asks 'How many suns? One sun!', but there is no sun visible in the image.\\\",\\n  \\\"observedCounts\\\": {\\n    \\\"suns\\\": 0\\n  },\\n  \\\"issues\\\": [\\n    \\\"Missing required object: sun (0 observed, expected 1)\\\"\\n  ]\\n}\\n```\",\n  \"base_resp\": {\n    \"status_code\": 0,\n    \"status_msg\": \"success\"\n  }\n}\n";
+  // This PASS is synthetic. It tests the same envelope shape, not a live model result.
+  const passReview = { verdict: 'PASS', reason: 'One sun is visible.', observedCounts: { suns: 1 }, issues: [] };
+  const fencedPass = '```json\n' + JSON.stringify(passReview, null, 2) + '\n```';
+  const passEnvelope = { ...JSON.parse(realMmxFail), content: fencedPass };
+
+  it('T54: the real mmx FAIL envelope preserves the model reason, counts, and issue', () => {
+    // Falsification: the parser replaces any structured FAIL field with a fallback value.
+    expect(parseModelReview(realMmxFail)).toEqual({
+      verdict: 'fail',
+      reason: "The source text asks 'How many suns? One sun!', but there is no sun visible in the image.",
+      observedCounts: { suns: 0 },
+      issues: ['Missing required object: sun (0 observed, expected 1)'],
+    });
+  });
+
+  it('T55: a structured PASS inside the mmx envelope preserves its counts', () => {
+    // Falsification: the parser rejects the successful envelope or loses a structured field.
+    expect(parseModelReview(JSON.stringify(passEnvelope))).toEqual({ ...passReview, verdict: 'pass' });
+  });
+
+  it('T56: a plain fenced JSON PASS preserves the review fields', () => {
+    // Falsification: the parser rejects a chat review solely because it has a JSON fence.
+    expect(parseModelReview(fencedPass)).toEqual({ ...passReview, verdict: 'pass' });
+  });
+
+  it('T57: a non-zero provider status rejects an enclosed PASS', () => {
+    // Falsification: the parser accepts the content while ignoring the provider error status.
+    const failedEnvelope = { ...passEnvelope, base_resp: { status_code: 1000, status_msg: 'Synthetic provider error' } };
+    expect(parseModelReview(JSON.stringify(failedEnvelope)).verdict).toBe('fail');
+  });
+
+  it('T58: unstructured FAIL text remains a failure', () => {
+    // Falsification: the parser accepts a failure that has no structured review.
+    expect(parseModelReview('FAIL: no sun is visible.').verdict).toBe('fail');
+  });
+
+  it('T59: unstructured PASS text cannot pass', () => {
+    // Falsification: the parser accepts a PASS word without a structured review.
+    expect(parseModelReview('PASS: one sun is visible.').verdict).toBe('fail');
+  });
+
+  it('T60: a PASS object needs valid counts and issues', () => {
+    // Falsification: missing fields, invalid counts, or invalid issues pass validation.
+    const { observedCounts: _counts, ...withoutCounts } = passReview;
+    const { issues: _issues, ...withoutIssues } = passReview;
+    const invalidReviews = [
+      withoutCounts, withoutIssues,
+      ...[null, { suns: '1' }, { suns: 0.5 }, { suns: -1 }].map((observedCounts) => ({ ...passReview, observedCounts })),
+      ...[null, 'none', [1]].map((issues) => ({ ...passReview, issues })),
+    ];
+    for (const review of invalidReviews) {
+      const raw = JSON.stringify(review);
+      expect(parseModelReview(raw).verdict, raw).toBe('fail');
+    }
+  });
+});
