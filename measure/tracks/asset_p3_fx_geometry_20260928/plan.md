@@ -1,6 +1,6 @@
 # Produce P3 fx-geometry
 
-Status: in progress (2026-10-24, fireball pilot in production). This plan owns execution status. Source documents retain design details.
+Status: in progress (2026-10-25, fireball revision after owner rejection). This plan owns execution status. Source documents retain design details.
 
 ## Phase 1: Contract and scope [checkpoint: bf0eccd]
 
@@ -15,7 +15,7 @@ Status: in progress (2026-10-24, fireball pilot in production). This plan owns e
 ## Phase 3: Production
 
 - [x] Task: Build missing sources and review existing sources in the batch. (Fireball built by K3.1 Pro; primary visual review complete) 90fe632
-- [~] Task: Run forge all for each accepted source after visual correction. (Final fireball export exists. Owner acceptance is pending.)
+- [~] Task: Run forge all for each accepted source after visual correction. (Owner rejected the first fireball on 2026-10-25. Opus owns `assets/fireball.ts` and `out/fireball/`. Acceptance remains pending.)
 
 ## Phase 4: Documentation and verification
 
