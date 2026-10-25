@@ -163,6 +163,14 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   only; the remaining suspects need a browser to separate. Next Green needs a new orchestrator
   dispatch: one diagnostic browser run or smoke run 3 after the fixture fix. The stage still,
   color and line-art pictures were not written and are not available for review.
+  Depth decode Red evidence: test commit `ba4f0401`; exit code `1`; "Tests  2 failed | 88 passed (90)".
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  Smoke run 2 failure label: `fixture depth step rows: 0/159`. The pass printed no depth edge row.
+  Cause: `unpackDepth` in `src/storytime/line-art-pass.ts` decodes RGBA as little-endian. three 0.185.1 `packDepthToRGBA` writes big-endian.
+  Evidence: the near plane bytes [250,25,167,0] decode to 4.0000 m. The far plane bytes [250,140,49,0] decode to 4.3000 m. The current decode gives about 0.1003 m and 0.1001 m.
+  T76 fails because the `unpackDepth` seam is missing. T70 fails because the current decode reads the bytes in the wrong order.
+  Red model: the table model openai/gpt-6.1-sol reached its usage limit. The orchestrator used minimax-cn-coding-plan/MiniMax-M3 for this step.
+  Technique ID stays song-page-form-edges-viewdepth-1bit-v2 (orchestrator decision): no output carries v2 evidence.
 - [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
