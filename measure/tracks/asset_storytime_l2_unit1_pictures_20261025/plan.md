@@ -92,8 +92,14 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json` (`5e90526d`), from existing approved
   pieces only: map `classroom`, actor `Nan` (sprout-nan), pose clip `wave`, prop `pot`.
   No paid call and no heavy render outside the one smoke run.
-- [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
+- [~] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
+  The first live MiniMax call found the parser defect. The parser discarded structured FAIL fields and rejected an mmx PASS envelope.
+  Regression tests: `52923de3`; exit code `1`; `Tests  2 failed | 74 passed (76)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  T54 and T55 failed for the expected parser defects. All 69 earlier tests passed. T56 to T60 passed.
+  The embedded FAIL fixture matches all 379 bytes of the live raw output. The PASS fixture is synthetic.
+  The calibration calls run again after the fix.
 
 ## Phase 3: Week 1 pictures
 
