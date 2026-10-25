@@ -41,8 +41,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 
 ## Phase 2: Tests and calibrated model pre-checks
 
-- [x] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest
-  validation, layout, line-art twins, and output isolation. Record the red result.
+- [x] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest validation, layout, line-art twins, and output isolation. Commit `01c01bdf`.
+  Record the red result.
   Evidence: `01c01bdf`; exit code `1`; `Tests  24 failed | 17 passed (41)`.
   Type-only test fix: `5cbb3407` types the T13 runner parameters. No assertion or falsification condition changed.
   Type check: `tsc exit: 2`; owned test errors: `0`; Storytime source errors: `7`; total compiler errors: `38`.
@@ -50,8 +50,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The final run had no timeout failures. T3 and T21 passed against the untracked draft.
   The PM's heavy-run rule replaces the separate preflight and lock steps for this gate.
-- [x] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
-  render run. Pass the focused tests and type checks. Keep `src/song/` unchanged. Make no paid
+- [x] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one render run. Commit `fafa82dc`.
+  Pass the focused tests and type checks. Keep `src/song/` unchanged. Make no paid
   calls and run no heavy render during this task.
   Evidence: `fafa82dc`; exit code `0`; `Tests  41 passed (41)`;
   `owned tsc errors: 0`; `baseline tsc errors: 31` (outside the owned paths; see known_failures);
@@ -59,7 +59,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The Red type fix `5cbb3407` (test line 433, type-only) unblocked the type gate. The real
   line-art capture pass needs the engine hook task before a live render (see the Green log).
-- [x] Task: Add the still engine hook and correct the line-art pass. In `src/song/main.ts`, add
+- [x] Task: Add the still engine hook and correct the line-art pass. Commit `fc2cc6a8`.
+  In `src/song/main.ts`, add
   an additive hook: after each `seek`, publish `window.__bookStill` with the scene, camera,
   renderer, and camera state. Do not change song rendering, timing, or `window.__song`. Replace
   the wireframe pass with a form-edge pass that restores the camera and the renderer. Pass T42 to
@@ -92,7 +93,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v1.json` (`5e90526d`), from existing approved
   pieces only: map `classroom`, actor `Nan` (sprout-nan), pose clip `wave`, prop `pot`.
   No paid call and no heavy render outside the one smoke run.
-- [x] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
+- [x] Task: Calibrate the picture rubric with MiniMax and Kimi. Commit `bfa8126c`.
+  Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
   The first live MiniMax call found the parser defect. The parser discarded structured FAIL fields and rejected an mmx PASS envelope.
   Regression tests: `52923de3`; exit code `1`; `Tests  2 failed | 74 passed (76)`.
