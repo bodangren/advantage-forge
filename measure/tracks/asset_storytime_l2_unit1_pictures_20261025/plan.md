@@ -115,13 +115,41 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `ses_e8b730946ffe0qHu3XC1RLopTl` left before-call entry `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0`
   without an after-call entry, because the CLI cannot record a failed call without a raw answer;
   (c) the first MiniMax `bad-one-sun` call ran before the parser fix, and its log was replaced by
-  the second call.
+  the second call; (d) the two Kimi calls ran at the same time, against the rule of one paid call
+  at a time. Before-call `4192765b` (`bad-one-sun`) at `2026-10-25T20:15:31.415Z`, before-call
+  `1086bc64` (`good-nan`) at `2026-10-25T20:15:33.668Z`, after-call `4192765b` at
+  `2026-10-25T20:17:24.145Z`, and after-call `1086bc64` at `2026-10-25T20:17:27.242Z`
+  (Review A RA-N5). Later paid calls run one at a time.
   A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
+- [ ] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
+  `5ffdbf6e` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json`).
+  Fix RA-B1: `captureBookStill` loads the timeline and checks the page notes before the first
+  seek, through one step that the smoke capture shares. Fix RA-B2: the style look binds to the
+  approved line-art technique and format version, not to one file. Also fix RA-N1, RA-N3, the
+  RA-N4 code, RA-N6, RA-N7, RA-N8, RA-N9, and the Review C `--version` hint. Pass T61 to T73 and
+  every earlier test. Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  Make no paid calls. Run no heavy render, except one bounded smoke run (T74). The smoke run is
+  necessary: it is the only live proof of RA-B1 and RA-N7 before the Nan sample. It takes its
+  stage pair through the production `captureBookStill` path and writes no book version.
+- [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
+  `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
+  --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
+  first on MiniMax, then on Kimi, one paid call at a time. Check the quota before each call. The
+  orchestrator dispatches the Kimi reviewer (deviation (a)). Compare deviation (d) with the
+  ledger. Quote the T75 labels. If a `good-nan` verdict is not `pass`, mark this task `[b]` and
+  report to the PM.
 
 ## Phase 3: Week 1 pictures
 
-- [ ] Task: Render the Nan window sample in color and line art. Run the pre-flight check and the
-  heavy lock first. Report both file paths and SHA-256 values to the PM for Daniel's look. When
+- [ ] Task: Render the Nan window sample in color and line art. First write
+  `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
+  In v2, Nan faces the camera (yaw from -30 to 30 degrees), and the window is beside or behind her.
+  A `fern` prop gives the small green plant. The `pot` prop shows red flowers, so v2 does not use
+  it. The window panes must show as panes, not as black areas. Use existing approved items only.
+  Record in the sample report that no existing item shows the plant in a pot. Render with
+  `render --job w01-readalong-p05 --version 2` through `heavy-run.sh`. If the sample shows Nan
+  from behind, black panes, or no plant, write v3 and render again. Keep v2.
+  Report both file paths and SHA-256 values to the PM for Daniel's look. When
   the report is sent and the look is pending, mark this task `[b] deferred:daniel-lineart-look`.
   Continue with the next tasks while it waits. Record the look in the style look record.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for

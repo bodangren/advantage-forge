@@ -3,7 +3,8 @@
 Revision: written at `9667438f` for "Phase 2: Tests and calibrated model pre-checks" (P2).
 Amended at `b63755bc` for the line-art twins and the A3 teacher print (Daniel's PM relays of
 2026-10-25, about 21:10 and 21:25 ICT). Amended at `f271dce6` for the still engine hook task,
-after the section 8 guardrail fired in Green.
+after the section 8 guardrail fired in Green. Amended at `5ffdbf6e` for the Review A remediation
+(Phase 2 tasks 5 and 6).
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -39,7 +40,8 @@ stopped at 20:46 on 2026-10-25. Their state is unknown, and they have no Red or 
   Section 4 gives the rule for those tests.
 - The draft source predates the line-art change. It has no line-art twin. Green must add it.
 - The draft source contains a placeholder model name `mmx-vision-default`. A review log must
-  record the model that the provider reports, or label the value as declared (A5).
+  record the model that the provider reports, or label the value as declared (A5). Review A found
+  this rule broken (RA-N6). Task 5 adds `modelSource` (T68).
 
 ## 3. Heavy-job and gate command rules
 
@@ -99,10 +101,17 @@ bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node --import tsx scri
 Green takes `<nan-window-job-id>` from `jobs.json` and quotes it in the plan note. Any later change
 in `src/song/` keeps `tests/song-timeline.test.ts` in the vitest command.
 
+Phase 2 task 5 uses the same `LINEART_SMOKE_COMMAND` once more, with `--job w01-readalong-p05`
+(smoke run 2, T74). After task 5, `lineart-smoke` takes its stage pair from `captureBookStill`.
+
+Phase 2 task 5 keeps `ENGINE_HOOK_TEST_COMMAND` as its Red and Green gate. Its tests go into the
+three existing test files, so the command needs no new file.
+
 ## 4. Phase 2 gates
 
-Risk class: **high**. Task 3 changes the shared song engine. Task 4 makes paid calls. Task 1 and
-task 2 define the release gate, the
+Risk class: **high**. Task 3 changes the shared song engine. Task 4 makes paid calls. Task 5
+repairs the production capture path and the release rule for line art. Task 6 makes two paid
+calls and changes the ledger. Task 1 and task 2 define the release gate, the
 output isolation, and the heavy-job order. A defect there allows a false release later.
 
 ### Task 1: Red
@@ -236,11 +245,92 @@ Task 4 is an operation, not a code task. It is the first live proof of the provi
   failed rounds and report to the PM.
 - A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
 
+### Task 5: Review A remediation gate
+
+Risk class: **high**. RA-B1 stops every live render. RA-B2 fails 15 of the 16 week 1 line-art
+twins after Daniel's look. The other findings weaken the drift check, the calibration gate, the
+ledger, and the evidence trail.
+
+Required seams. Red tests these names. Green implements them:
+
+- `captureBookStill(input, deps?)` in `src/storytime/book-pictures.ts`. `deps.open` replaces the
+  page opener and returns `{ page, pageErrors, close }`. `deps.lineArt` replaces the page line-art
+  pass. Without `deps`, the capture uses the production opener and pass.
+- `loadBookTimeline(page, timeline)` in `src/storytime/book-pictures.ts`: one `__song.load` call,
+  then `assertPageNotes`. `captureBookStill` and `captureBookStillSmoke` both call it.
+- The page driver gets `liveCameraState()`. It reads the live `window.__bookStill.camera` fields
+  that the contract names. `cameraState()` still reads the published copy.
+- `assertCalibrationReady(outputRoot, workbooksRoot, repoRoot = FORGE_ROOT)`, with the argument
+  order of `calibrationTarget`.
+- `viewDistance(depth, near, far)` and `isDepthEdge(distanceA, distanceB)` in
+  `src/storytime/line-art-pass.ts`. `renderLineArtPass` uses both for its depth edges.
+- `LINEART_TECHNIQUE = 'song-page-form-edges-viewdepth-1bit-v2'`.
+- `precheck-kimi --record <callId> --failed --reason <text>` in the CLI and in `precheckKimi`.
+
+Red:
+
+- Command: `ENGINE_HOOK_TEST_COMMAND`. Red starts after the Codex quota reset at 05:24 local time.
+- Valid Red: vitest exits non-zero. T61 to T73 fail or fail to load. T65 may fail only for the
+  new checks. The 76 earlier tests pass, or the Red log names each exception.
+- Red amends T49 for the live reads and the T35 and T36 style-look fixtures with
+  `lineArtTechnique` and `lineArtFormatVersion`. No other earlier assertion changes.
+- Red corrects the T54 comment. The fixture holds the first raw output of call `acd4f807`, not
+  the current `calibration/bad-one-sun-minimax.txt`. The fixture bytes do not change.
+- Red commits only `tests/storytime-book-pictures.test.ts` and
+  `tests/storytime-line-art-pass.test.ts`.
+
+Green gate:
+
+- `ENGINE_HOOK_TEST_COMMAND` exits 0 with a labeled `Tests  <N> passed (<N>)` line. `N` is equal to
+  the Red count. No test is skipped.
+- The type check prints `owned tsc errors: 0`, and the total `error TS` count is 31 or less.
+- `git diff --quiet 5ffdbf6e -- src/song` exits 0. Task 5 changes nothing in `src/song/`.
+- `PICTURE_RUBRIC_VERSION` stays `storytime-picture-v2`, and the rubric text stays the same. A
+  rubric change needs four new calibration calls, so Green stops and reports instead.
+- Green commits explicit paths only: `src/storytime/book-pictures.ts`,
+  `src/storytime/line-art-pass.ts`, and `scripts/storytime-book-pictures.ts`.
+- Green makes no paid call. Green runs no heavy render except smoke run 2.
+- After Green, `assertCalibrationReady` rejects the real root, because the old `good-nan` logs
+  have the old text. This is the expected state until task 6.
+
+Smoke run 2 (T74). The decision: it is necessary. Unit fakes cannot prove that the production
+path loads the timeline in Chrome, or that the new depth rule draws edges on real buffers.
+
+- It runs once, after the Green unit gate, with `LINEART_SMOKE_COMMAND` and
+  `--job w01-readalong-p05`. One `heavy-run.sh` call, one Chrome launch, and one stage still.
+- The stage pair comes from `captureBookStill` with its production opener and pass. That is the
+  function that `render` uses. `capture path: captureBookStill` proves it.
+- The fixture pass can use a second page load in the same Chrome session. The fixture scene keeps
+  the T52 sphere and box. It adds two front-facing planes with the same normal, at 4.0 m and
+  4.3 m from the camera. The nearer plane covers the left half of the further plane.
+  `smoke.json` records the border column and the row range.
+- The T52 output, candidate, ledger, and dispatch bounds apply. A third smoke run needs a new
+  orchestrator dispatch.
+
+### Task 6: Review A operations gate (live provider proof)
+
+Risk class: **medium**. Two paid calls at about zero marginal cash cost, and one ledger change.
+
+- Executor: a Green-role subagent. The orchestrator dispatches the Kimi reviewer (deviation (a)).
+- Order: (1) the failure record for `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` with the reason
+  `reviewer session ses_e8b730946ffe0qHu3XC1RLopTl hung; no raw answer`; (2) MiniMax `good-nan`;
+  (3) Kimi `good-nan`.
+- One paid call at a time. The Kimi `--begin` runs only after the MiniMax `after-call` entry.
+- Check the provider quota before each call. Stop on exhaustion or a provider cap.
+- Run each paid command with `--dry-run` first.
+- Gate evidence: the T75 labels in the plan note, and deviation (d) checked against the ledger.
+- A `good-nan` verdict other than `pass` marks task 6 `[b]`. Correct the rubric under a new
+  `rubricVersion`, then run all four calls again. Report to the PM before the new round.
+
 ### Phase 2 closeout gate
 
 - Run `ENGINE_HOOK_TEST_COMMAND` and the type check again on the final commit.
-- The task 3 and task 4 evidence above is complete. The adversarial mutations from the Red log ran, and
-  each mutation made at least one test fail.
+- The task 3 to task 6 evidence above is complete. The adversarial mutations from the Red logs
+  ran, and each mutation made at least one test fail. The Red logs are `mid-red-00481c5.log`,
+  `mid-red-fa4692c.log`, `mid-red-835d9c0.log`, and the task 5 Red log.
+- Mutations for task 5: put `seek` before `load` in `captureBookStill`; read the published copy for
+  read 3; compare packed depth with 0.02; bind the style look to `sampleFiles` only; remove the
+  `rubricVersion` check; allow a second `after-call` for one `callId`.
 - `git status --short -- src/storytime scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts`
   prints nothing.
 - Run `./measure/generate.sh` after the plan status changes (A10).
@@ -273,7 +363,7 @@ makes it fail. Tests use temporary roots from `mkdtemp`. Tests never write to th
 | T19 | The newest ready version is selected: `v1` ready and `v2` pending selects `v1`; a later ready `v3` selects `v3`. | a pending or older version is selected. |
 | T20 | The batch SHA-256 equals an independent computation in the test: SHA-256 of the canonical JSON array of `{file, sha256}` sorted by file. Input order does not change it. One changed byte changes it. The manifest records the algorithm. | the test uses the product helper as its own oracle, or order changes the hash. |
 | T21 | A contact sheet leaves every candidate PNG byte-identical and writes only under the output root. | a candidate hash changes. |
-| T22 | A real `render` refuses to start without four calibration logs with the expected verdicts. | a render starts before calibration passes ("A failed calibration blocks production"). |
+| T22 | A real `render` refuses to start without four calibration logs that pass every gate check in the contract "Calibration": verdict, raw output, `rubricVersion`, `fileSha256`, and source text. T65 holds the cases that Review A asked for (RA-N3). | a render starts before calibration passes ("A failed calibration blocks production"), or a stale or changed log opens the gate. |
 | T23 | The CLI rejects song, video, and unknown commands. A book still timeline has no singing tracks and no page notes. | a song or video command runs, or a sing track remains. |
 | T24 | MiniMax arguments are an array with native image input (`vision describe --image <file>`). The prompt holds the source text and the rubric version. No shell string is built. | the image is passed as text, or a shell string is used. |
 | T25 | `precheck-kimi --begin` writes `before-call`, and `--record` writes `after-call` and the log with the file SHA-256 and the raw text unchanged. A record without a matching begin is refused. The contract amendment for this command landed in `b63755bc`. | a log is written without a prior `before-call`, or the raw text changes. |
@@ -313,11 +403,37 @@ which need no WebGL. T45 is a gate row. T52 and T53 need the live proof.
 | T46 | `tests/storytime-line-art-pass.test.ts`: after `renderLineArtPass`, these equal their values before the pass: `camera.aspect`, the camera projection matrix, the renderer size and pixel ratio, the render target, the clear color and alpha, `scene.background`, `scene.overrideMaterial`, and the `visible` and `material` values of every object. Each created target and material is disposed. The same holds when the fake `render` throws. | any value differs after a pass or after a throw, or a created resource is not disposed. |
 | T47 | `tests/storytime-line-art-pass.test.ts`: at each `render` call, the fake renderer records the override material, every visible material, and every geometry. No material has `wireframe: true`. No geometry is a `WireframeGeometry`. Each line object that the pass adds has `depthTest: true`. A mutation that sets `wireframe: true` on any pass material makes this test fail. | the `wireframe: true` mutation passes, or a line object without the depth test passes. |
 | T48 | `tests/storytime-line-art-pass.test.ts`: the result has the requested width and height, `width * height` bytes, and only 0 and 255. A fake target whose bottom WebGL row is dark gives a black top row in the result. | the size or byte count differs, a grey byte exists, or the rows are upside down. |
-| T49 | `tests/storytime-book-pictures.test.ts`: `captureStillPair` with a fake driver runs this order: seek, color screenshot, read the camera state, line-art pass, read the camera state again, seek the same time, second color screenshot. The evidence camera is the first read. A camera drift, a pixel difference between the two color screenshots, or a missing hook after the seek throws and writes nothing. | the order differs, the evidence camera comes from the second read, or a drift or difference passes. |
+| T49 | `tests/storytime-book-pictures.test.ts`: `captureStillPair` with a fake driver runs this order: seek, color screenshot, read the published copy (`cameraState`), read the live camera (`liveCameraState`), line-art pass, read the live camera again, seek the same time, second color screenshot. The evidence camera is the published copy. A live drift, a published copy that differs from the first live read, a pixel difference between the two color screenshots, or a missing hook after the seek throws and writes nothing (amended for RA-N1). | the order differs, the evidence camera comes from a live read, the drift check reads the published copy, or a drift or difference passes. |
 | T50 | `tests/storytime-book-pictures.test.ts`: `checkLineArtSmoke` on synthetic fixture pictures. A ring outline passes. A mesh net inside the disc fails with `fixture interior ink` above `1.00%`. A ring with a 30-degree gap fails with `fixture ring rays` below `342/360`. The check prints both labeled values. | the mesh net passes, the gapped ring passes, the full ring fails, or a label is missing. |
 | T51 | `tests/storytime-book-pictures.test.ts`: `lineart-smoke` with an injected capture writes only under `smoke/lineart-<UTC stamp>/`. It writes no candidate, evidence, manifest entry, or ledger line. `manifest` ignores `smoke/`, and the next `render` still writes `v1`. `--dry-run` calls no capture. | a smoke file appears in the manifest, a version number moves, or a dry run captures. |
-| T52 | Live, Phase 2 task 3 smoke run. The output prints `hook before seek: absent`, `hook after seek: present`, `window.__song keys: load,portrait,ready,seek`, `camera state drift: 0`, `color repeat identical: yes`, `fixture interior ink: <x>%` with `x <= 1.00`, `fixture ring rays: <n>/360` with `n >= 342`, and `stage ink share: <x>%` from 0.5 to 25. | a label is missing, a value is out of range, or the page throws. |
-| T53 | Live, Phase 3 task 1 Nan sample. The render log prints `camera state drift: 0` and `color repeat identical: yes`. The line art passes T28 to T32 on the real bytes. The evidence camera equals the camera state read before the pass. | a label is missing or differs, or a format check fails on the real file. |
+| T52 | Live, Phase 2 task 3 smoke run. The output prints `hook before seek: absent`, `hook after seek: present`, `window.__song keys: load,portrait,ready,seek`, `camera state drift: 0`, `color repeat identical: yes`, `fixture interior ink: <x>%` with `x <= 1.00`, `fixture ring rays: <n>/360` with `n >= 342`, and `stage ink share: <x>%` from 0.5 to 25. Review A (RA-N1) found that `camera state drift: 0` in this run was true by construction, because both reads returned the published copy. T74 replaces it as the live drift proof. The smoke also used `captureBookStillSmoke`, not the production capture (RA-B1). The other labels stand. | a label is missing, a value is out of range, or the page throws. |
+| T53 | Live, Phase 3 task 1 Nan sample from the v2 stage. The render log prints `capture path: captureBookStill`, `camera drift source: live`, `camera state drift: 0`, `color repeat identical: yes`, and `lineart technique: song-page-form-edges-viewdepth-1bit-v2`. The line art passes T28 to T32 on the real bytes. The evidence camera equals the camera state read before the pass. | a label is missing or differs, or a format check fails on the real file. |
+
+Review A remediation tests (Phase 2 task 5). Rows T61 to T73 run without a browser. They use fake
+pages, fake renderers, fake runners, and temporary roots. T74 and T75 need the live proof.
+
+The fake page for T61 to T63 runs each `evaluate` function against a fake `window`. Its
+`__song.load` stores the timeline and returns notes. Its `__song.seek` throws `seek before load`
+when no timeline is stored, because `src/song/main.ts` returns early then. A seek after a load
+publishes `__bookStill` with a live fake camera and a value copy. The fake records the call order.
+
+| ID | Behavior and test file | Falsification condition (the test fails if ...) |
+| --- | --- | --- |
+| T61 | `tests/storytime-book-pictures.test.ts` (RA-B1): `captureBookStill(input, { open, lineArt })` with the fake page and a fake line-art pass. The capture calls `__song.load` with `input.timeline` before the first `seek`. It returns both images and logs `capture path: captureBookStill`. | the fake records a `seek` before `load`, the capture throws, or the label is missing. |
+| T62 | `tests/storytime-book-pictures.test.ts` (RA-B1): `loadBookTimeline(page, timeline)` calls `__song.load` once and accepts an empty note list. A list with one note throws and names the note. `captureBookStill` with a fake `load` that returns one note throws before any `seek` and returns no picture. | a note passes, a `seek` runs after a note, or `load` runs twice. |
+| T63 | `tests/storytime-book-pictures.test.ts` (RA-N1): `captureBookStill` with the fake page. The fake line-art pass changes the live camera `fov` by 1 and leaves the published copy. The capture throws a drift error that names `fov`. One changed projection element gives the same result. A published copy whose `fov` differs from the live camera before the pass also throws. A run with no change passes, and its evidence camera equals the published copy. | a driver that reads the published copy twice passes a drift case, or the evidence camera comes from a live read. |
+| T64 | `tests/storytime-book-pictures.test.ts` (RA-B2): a manifest with a sample twin and a second reader twin. All other items pass for both. The style look lists only the sample file and has the sample's technique and format version. The second twin is `ready`. A third twin with another `lineArtTechnique` is `pending`. A record whose `sampleFiles` SHA-256 differs from the sample bytes makes all three twins `failed`. | the second twin is not `ready`, the third twin is `ready`, or the changed record leaves a twin `ready` or `pending`. |
+| T65 | `tests/storytime-book-pictures.test.ts` (RA-N3): `assertCalibrationReady(outputRoot, workbooksRoot, repoRoot)` with fixture source files and four correct logs resolves. Each change below throws, one at a time: `rubricVersion: storytime-picture-v1`; a `fileSha256` of other bytes; a `good-nan` `sourceText` of `Owner-approved Nan character picture.`. | a changed log opens the gate, or the correct set throws. |
+| T66 | `tests/storytime-book-pictures.test.ts` (RA-N2): `calibrationTarget('good-nan', ...)` has `sourceText` `Hello, I am Nan.` and the exact contract `sourcePrompt`. Neither value matches `/approv\|owner/i`. The `sourcePrompt` without its final period is a substring of the real `w01.json` page 5 image prompt, read read-only. | an approval word remains, or the description differs from the Workbooks text. |
+| T67 | `tests/storytime-book-pictures.test.ts` (RA-N4): after `--begin`, `--record <callId> --failed --reason "reviewer session hung"` appends one `after-call` entry with `status: failure` and the reason. It writes no log and no raw file. These cases are refused, and the ledger stays byte-identical: no begin; a second record for one `callId` in either mode; `--failed` with `--raw`; an empty reason; a `--calibration` or `--job` value that differs from the begin entry. | a refused case appends a line or writes a file, or the failure record writes a log. |
+| T68 | `tests/storytime-book-pictures.test.ts` (RA-N6): a MiniMax `before-call` entry and log record the declared model with `modelSource: declared`. A fake MiniMax output that names a model gives `modelSource: reported` and that model in the log. A Kimi log has `modelSource: declared`. | a log or entry has a model with no `modelSource`, or a reported model is labeled declared. |
+| T69 | `tests/storytime-book-pictures.test.ts` (RA-N9): two `precheck-minimax --paid` calls on one target with a fake runner write two raw files under `raw/`. Each name contains its `callId`. The first raw file stays byte-identical. Each log names its `callId` and `rawFile`. | the second call changes or removes the first raw file, or a log lacks `callId` or `rawFile`. |
+| T70 | `tests/storytime-line-art-pass.test.ts` (RA-N7): the test computes the depth independently as `far * (z - near) / (z * (far - near))`, with near 0.2 and far 120. `viewDistance(depth, near, far)` returns 0.5, 4.0, and 40 m within 0.1 percent. `isDepthEdge(4.0, 4.3)` and `isDepthEdge(40, 43)` are true. `isDepthEdge(4.0, 4.02)` and `isDepthEdge(40, 40.2)` are false. In `renderLineArtPass` with fake targets, two regions with the same normal at 4.0 m and 4.3 m give ink on their border. | the absolute 0.02 rule on packed depth passes, a 0.5 percent gap gives an edge, or the border has no ink. |
+| T71 | `tests/storytime-book-pictures.test.ts` (RA-N8): `LINEART_TECHNIQUE` is `song-page-form-edges-viewdepth-1bit-v2`. A render with an injected capture records that value in the render evidence. `lineart-smoke` with an injected capture records it in `smoke.json`. | the ID stays `song-page-scene-render-pass-1bit-v1`, or a record has another value. |
+| T72 | `tests/storytime-book-pictures.test.ts` (Review C note): `render` without `--version`, when the newest version is complete, reports `skipped`, prints `next free version: v2`, and writes no file. `render --version 2` with a `-v2` stage file and no `v1` candidate writes `v2` twins. | the skip prints no hint or writes a file, or the `v2` render refuses or writes `v1`. |
+| T73 | `tests/storytime-book-pictures.test.ts` (RA-N7 smoke check): `checkLineArtSmoke` on a synthetic depth-step picture with a recorded border column and row range. Ink on the border, within 2 pixels, in at least 90 percent of the rows passes. A picture with no border ink fails. The check prints `fixture depth step rows: <n>/<m>`. | the picture with no border ink passes, the full border fails, or the label is missing. |
+| T74 | Live, Phase 2 task 5 smoke run 2. The output prints `capture path: captureBookStill`, `camera drift source: live`, `camera state drift: 0`, `color repeat identical: yes`, `lineart technique: song-page-form-edges-viewdepth-1bit-v2`, `stage ink share: <x>%` from 0.5 to 25, `fixture interior ink: <x>%` with `x <= 1.00`, `fixture ring rays: <n>/360` with `n >= 342`, and `fixture depth step rows: <n>/<m>` with `n/m >= 0.90`. | a label is missing, a value is out of range, or the page throws. |
+| T75 | Live, Phase 2 task 6 operations. The plan quotes: `9d0bddf7 after-call: failure`; `before-call entries: 8`; `after-call entries: 8`; `open before-calls: 0`; `good-nan-minimax: pass`; `good-nan-kimi: pass`. Both new logs have `sourceText: Hello, I am Nan.`, a `modelSource`, `rubricVersion: storytime-picture-v2`, and a raw file with the `callId` in its name. The Kimi `before-call` comes after the MiniMax `after-call`. `assertCalibrationReady` accepts `out/storytime/l2/unit1`. | a label is missing or differs, the two calls overlap in time, or the gate rejects the root. |
 
 Fixtures and mocks:
 
@@ -346,6 +462,8 @@ The primary agent is now a read-only Measure orchestrator. It must not write art
 4. The executor saves the raw text unchanged in the scratch path.
 5. The executor runs `precheck-kimi --record <callId> --raw <file>`. The command writes the
    `after-call` entry and the log with the file SHA-256.
+6. If the reviewer gives no raw answer, the executor runs `precheck-kimi --record <callId>
+   --failed --reason <text>`. The command writes a `failure` entry and no log (T67).
 
 T25 is in scope for Red. Kimi pre-checks apply to color candidates only.
 
@@ -361,14 +479,19 @@ pre-checks, (5) person counts and line-art looks, (6) delivery.
 
 - Red and Green: use `RED_TEST_COMMAND` and `GREEN_TEST_COMMAND` for any pipeline change. A new
   asset uses the Forge asset loop and `./forge check`, not this test file.
-- Task 1 (Nan window sample) is the first live render proof for both twins. It uses existing
-  approved items only. Run the preflight, then render the one job under the lock. Then run
+- Task 1 (Nan window sample) is the first live render proof for both twins. Phase 2 tasks 5 and 6
+  must be complete first. The sample uses the v2 stage (RA-P3-1) and existing approved items only.
+  Render it with `render --job w01-readalong-p05 --version 2` through `heavy-run.sh`. Then run
   `verify --job <id>` on the real files. Live proof passes only if all items below are true:
   - the color file passes the color structural checks (size, opaque, 8-bit, sRGB);
   - the line-art file passes T28 to T32 on real bytes, with the ink share printed as a value;
   - one evidence record binds both files with one stage hash, one time, and one camera;
   - the render log has the T53 labels `camera state drift: 0` and `color repeat identical: yes`;
-  - the plan note quotes both paths and both SHA-256 values, and the report goes to the PM.
+  - the plan note quotes both paths and both SHA-256 values, and the report goes to the PM;
+  - the plan note states that the color picture shows Nan's face and white star, the window panes,
+    and the fern. It also states that no existing item shows the plant in a pot.
+- The style look record for the sample has `lineArtTechnique` and `lineArtFormatVersion` from the
+  sample evidence (contract "Line-art review and release").
 - Task 1 becomes `[b] deferred:daniel-lineart-look` after the report goes to the PM. Continue
   with task 2 and later tasks while it waits. No line-art twin becomes `ready` before the style
   look record passes. If Daniel rejects the look, color work continues. The line-art pass gets a
@@ -435,6 +558,8 @@ Guardrails:
   and the renderer (T46, T47).
 - `playwright` and `vite` load lazily inside the capture function only.
 - Provider processes start with an argument array. No shell string.
+- Phase 2 task 5 changes nothing in `src/song/`. The live camera reads use the existing hook
+  fields `camera` and `cameraState`.
 - Phase 2 changes `src/song/` only in task 3, inside the T45 limits. Phase 2 does not change
   `scripts/song-record.ts`, `scripts/heavy-lock.ts`, the
   preflight script, Workbooks, or the monorepo. An engine change for stills needs its own task,
@@ -448,7 +573,12 @@ Changed-contract risks:
   check this. `window.__bookStill` is a new page global that song videos ignore.
 - `scripts/heavy-lock.ts` and the preflight are shared with the monorepo. Do not change them.
 - Workbooks reads `manifest.json`. A field change after week 1 delivery needs a PM notice.
-- A `rubricVersion` change makes earlier calibration invalid. Calibrate again.
+- A `rubricVersion` change makes earlier calibration invalid. Calibrate again. The render gate
+  enforces this from task 5 (T65).
+- The style look record gains `lineArtTechnique` and `lineArtFormatVersion`. Workbooks does not read
+  it. A new technique ID needs a new style look from Daniel.
+- The ledger gains `modelSource` and the failure record mode. Readers of the ledger must accept a
+  `failure` entry without a log.
 - A source package change makes `jobs.json` invalid. Plan again and keep the old pictures.
 - The `mmx vision describe` argument shape can change with the CLI. Run `mmx vision --help`
   (no paid call) before task 4.
@@ -466,8 +596,9 @@ Changed-contract risks:
 | --- | --- | --- | --- |
 | A2 consent-blind publish gate | P2, P3, P4 | The release gate requires a person log with a named `checkedBy` and a person evidence class (T17). Line art also requires a person look and Daniel's style look (T36). | A model-only candidate or a line-art twin without the style look becomes `ready`. |
 | A3 digit-only count | P2 to P5 | Exact labeled counts: `112`, `16` per week, `Tests  N passed (N)`, `owned tsc errors: 0`, ledger counts, the labeled ink share (T1, T14, T32). | A test passes on any digit or a count above 0. |
-| A4 vacuous pass | P2 to P4 | Empty selections fail (T18, T37). An all-white line-art page fails (T32). A mesh net that passes the format checks fails T47 and T50. A vitest run with 0 tests fails. Red needs `n >= 1` failures. | An empty manifest, an empty page, or an empty run passes. |
-| A5 false claim | P2 to P5 | Plan notes quote the command, exit code, and labeled values. The model name is reported or labeled as declared. | A plan claim disagrees with the quoted output. |
+| A4 vacuous pass | P2 to P4 | Empty selections fail (T18, T37). An all-white line-art page fails (T32). A mesh net that passes the format checks fails T47 and T50. A vitest run with 0 tests fails. Red needs `n >= 1` failures. The drift check reads the live camera, so a drift can fail it (T63, T74). A depth step with no ink fails (T70, T73). | An empty manifest, an empty page, an empty run, a drift check that compares a copy with itself, or a depth rule that never fires passes. |
+| A5 false claim | P2 to P5 | Plan notes quote the command, exit code, and labeled values. The model name is reported or labeled as declared (T68). Deviation (d) records the parallel Kimi calls. Raw outputs keep one file per call (T69). The smoke label names the capture path (T74). | A plan claim disagrees with the quoted output, a log has a model without `modelSource`, or a raw output is lost. |
+| A2 consent-blind publish gate (style look) | P2, P3 | The style look binds to the technique and format version. A twin with another technique stays `pending` (T64). | A twin with another technique becomes `ready` on the old look. |
 | A6 registry overstatement | P3 to P5 | `tracks.md` and metadata use evidence classes. A model pass is "model pre-check". | Registry text says "accepted" with no person log. |
 | A7 over-broad filter | P2 | The parser excludes no words (T14). The owned-error grep matches path prefixes, not words. No `vitest -t` filter hides a failing test. The binary check has no tolerance (T29). | "FAIL: no sun" parses as a pass, a filter drops a real error, or a pixel of 254 counts as white. |
 | A9 archived track paths | P2, P5 | Tests reference no `measure/tracks/` path. | `grep -n 'measure/tracks/' tests/storytime-book-pictures.test.ts` prints a line. |
@@ -477,7 +608,8 @@ A1 and A8 are retired. Project candidates for a future `measure/anti-patterns.md
 pass treated as acceptance; (S2) a preflight hold read as a Red failure; (S3) a version overwrite;
 (S4) a glob loader that reads `w08`; (S5) a twin output made in a separate run, which can drift
 from its color twin; (S6) a render pass that meets the format checks but draws mesh triangle
-edges.
+edges; (S7) a smoke path that is not the production path, so the smoke passes and every render
+fails; (S8) an approval word in a calibration prompt, so the model repeats the label.
 
 ## 10. Reviews and evidence classes
 
@@ -485,15 +617,22 @@ edges.
 | --- | --- | --- | --- | --- |
 | Review B (security) | Applies: output path escape, symlinks, process arguments, no API keys in raw output or ledger, Workbooks read-only. The capture page server listens on localhost only and serves only the stage file and repository assets. The `window.__bookStill` hook holds no secret and exists only in the local song page. | Applies: raw outputs and ledger contain no keys. | Applies, same as P3. | Not applicable. |
 | Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. | Applies: the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
-| Adversarial testing | Required: release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
+| Adversarial testing | Required: the task 5 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
 | UX browser review | Not applicable: no UI. The task 3 smoke run is a live render proof, not a UI review. | Not applicable: model pre-checks, person counts, line-art looks, and Daniel's style look review the pictures. | Not applicable. | Not applicable. |
+
+Review result format: the orchestrator gate reads `blocking_findings` and `nonblocking_findings` as
+arrays of non-empty strings. Each string starts with the finding ID, the severity, and the
+location. Review A at `5ffdbf6e` used objects. The next reviews use strings. Other fields can
+stay objects.
 
 Evidence classes:
 
 - **Automated (artifact and logic):** the vitest suite with injected dependencies. It proves logic
   and file contracts. It proves no real render and no real provider call.
 - **Live behavior:** Phase 2 task 3 proves the hook and the pass in one bounded smoke run (T52).
-  Phase 2 task 4 proves the real provider path. The Phase 3 Nan sample proves
+  Phase 2 task 4 proves the real provider path. Phase 2 task 5 proves the production capture path
+  in smoke run 2 (T74). Phase 2 task 6 proves the failure record and the neutral `good-nan` text
+  (T75). The Phase 3 Nan sample proves
   the real capture, the line-art pass, both formats, and the twin binding under the lock.
 - **Model pre-check:** MiniMax and Kimi logs on color candidates. Never acceptance.
 - **Person-checked or owner-passed:** person logs and line-art looks from Daniel or his named
@@ -516,3 +655,6 @@ Evidence classes:
 4. No Red edit or commit happens before the amendment commit lands.
 5. The engine hook amendment (`docs(measure): add Storytime still engine hook task`) lands after
    `f271dce6`. It is doc-only and in-phase. `phase_base_sha` stays `1d39b8fd`.
+6. The Review A remediation amendment (`docs(measure): plan Storytime Phase 2 review
+   remediation`) lands after `5ffdbf6e`. It is doc-only and in-phase. `phase_base_sha` stays
+   `1d39b8fd`. The task 5 Red diffs from the amendment commit.

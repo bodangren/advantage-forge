@@ -8,12 +8,26 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - `render`: render missing candidates sequentially from versioned scene files. Require the current
   source hash to match `jobs.json`. One render of a reader page writes the color twin and the
   line-art twin together. `--dry-run` prints both planned paths and renders nothing.
+- `render` usage note: the candidate version is the stage version. Without `--version`, `render`
+  uses the newest existing version. If that version is complete, it reports `skipped` and prints
+  `next free version: vN`. To make a new version, write the stage file `<job-id>-vN.json` and pass
+  `--version N`.
 - `lineart-smoke --job <id>`: one bounded smoke run for Phase 2 task 3. It writes one still and one
   fixture pass under `smoke/lineart-<UTC stamp>/` and prints labeled checks. It writes no
   candidate, version, evidence, manifest entry, or ledger line. `manifest` and `verify` ignore
   `smoke/`.
-- `precheck-minimax --paid`: run the MiniMax VLM on one candidate or calibration picture.
-- `precheck-kimi --begin` and `precheck-kimi --record <callId> --raw <file>`: write the before-call ledger entry and the review prompt, then write the after-call entry and the Kimi log from the reviewer's raw native-image output.
+- `precheck-minimax --paid`: run the MiniMax VLM on one candidate or calibration picture. Each call
+  writes its raw output to a new file under `raw/` with the `callId` in the name, as the Kimi raw
+  files do. A call never overwrites an earlier raw file.
+- `precheck-kimi --begin`: write the before-call ledger entry and the review prompt.
+- `precheck-kimi --record <callId> --raw <file>`: write the after-call entry with `status: success`
+  and the Kimi log from the reviewer's raw native-image output.
+- `precheck-kimi --record <callId> --failed --reason <text>`: write the after-call entry with
+  `status: failure` and the reason. It writes no log and no raw file. `--failed` with `--raw` is
+  refused. An empty reason is refused.
+- Both record modes refuse a `callId` with no before-call entry and a `callId` that already has an
+  after-call entry. They also refuse a `--calibration`, `--job`, or `--version` value that differs
+  from the before-call entry. A refused record writes nothing.
 - `manifest`: rebuild the manifest from jobs, pictures, and review logs.
 - `sheet`: make a labelled contact sheet for human review. Labels stay out of book pictures. A
   reader page shows its color twin and its line-art twin side by side.
@@ -83,12 +97,22 @@ provisional until Workbooks picture specification v1 (due 2026-10-28).
 
 - The line-art twin comes from the same render run as its color twin. The run uses the same stage
   file bytes, the same still time, and the same camera. One page load and one seek give both twins.
+- The render capture `captureBookStill` opens the page and calls `window.__song.load(timeline)`. It
+  checks the returned page notes with `assertPageNotes`. Only then does it seek. `render` uses
+  `captureBookStill` by default. The smoke capture uses the same load step.
 - The line art is a render pass of the same three.js scene. A threshold then makes the picture
   1-bit. The lines show silhouettes and form edges. Examples: depth and normal discontinuities, a
   material-ID edge pass, or an inverted-hull outline.
 - Hidden edges stay hidden. A line behind a closer surface does not show.
 - Mesh triangle edges never show. A smooth surface has no lines inside its silhouette. A wireframe
   material, a `WireframeGeometry`, and a line object without the depth test are not allowed.
+- A depth edge uses the view distance, not the packed depth value. The pass converts each depth
+  sample to the distance from the camera with the camera `near` and `far` values. It compares two
+  neighbor samples by the relative gap `|a - b| / min(a, b)`.
+- A relative gap of 7.5 percent (4.0 m and 4.3 m) is a depth edge. A relative gap of 0.5 percent
+  (4.0 m and 4.02 m) is not a depth edge. The implementer sets the limit between these values.
+- `lineArtTechnique` names one technique. A change to the pass, a threshold, or the depth rule needs
+  a new ID. The view-distance pass is `song-page-form-edges-viewdepth-1bit-v2`. The ID `song-page-scene-render-pass-1bit-v1` names only the passes before it.
 - A filter of the color PNG alone is not allowed. It loses the scene geometry. A filter of the
   color picture can add painted features, such as eyes and mouths, to the scene-pass edges.
 - The color twin keeps the song engine's look. The book page does not copy scene-building code
@@ -104,9 +128,15 @@ provisional until Workbooks picture specification v1 (due 2026-10-28).
   renderer size and pixel ratio, the render target, the clear color and alpha, the scene
   background, the override material, and object visibility and materials. It disposes each render
   target and material that it makes.
-- After the pass, the capture reads the camera state again, seeks the same time again, and takes a
-  second color screenshot. A camera state drift or a pixel difference between the two color
-  screenshots fails the run.
+- The capture reads the camera three times. Read 1, after the seek, is the published copy
+  `window.__bookStill.cameraState`. Read 1 is the evidence camera.
+- Read 2, before the pass, and read 3, after the pass, read the live `window.__bookStill.camera`:
+  position, field of view, aspect, near, far, and the 16 projection matrix elements.
+- Read 1 must equal read 2 in position, field of view, aspect, near, and far. Read 3 must equal
+  read 2 in every field. Any difference is a camera drift. A second read of the published copy is
+  never a drift check.
+- After read 3, the capture seeks the same time again and takes a second color screenshot. A camera
+  drift or a pixel difference between the two color screenshots fails the run.
 - A failure in the line-art pass writes neither twin. A color twin never exists without its
   line-art twin for a reader page.
 
@@ -151,7 +181,18 @@ different value is not a twin.
   is visible as lines.
 - One style look record lives at `reviews/lineart-style-look.json`. It records Daniel's look at
   the Nan window sample, relayed by the PM: `verdict`, `checkedBy`, `relayedBy`, `checkedAt`,
-  `sampleFiles` with SHA-256, and `evidenceClass: owner-passed`.
+  `sampleFiles` with SHA-256, `lineArtTechnique`, `lineArtFormatVersion`, and
+  `evidenceClass: owner-passed`. The technique and format values come from the sample's render
+  evidence.
+- The style look applies to one technique and one format version, not to one file. The sample
+  files are only the evidence of the look.
+- The style look passes for a twin when all of these are true: the record has `verdict: pass` and
+  `evidenceClass: owner-passed`; each `sampleFiles` SHA-256 equals the SHA-256 of that sample
+  file; and the twin's render evidence has the record's `lineArtTechnique` and
+  `lineArtFormatVersion`.
+- A twin with another technique or format version stays `pending` until a new style look passes.
+  A missing sample file or a different sample SHA-256 makes the style look invalid. Then every
+  twin that uses the look is `failed`.
 - A line-art twin is `ready` only when it passes the format checks, its render evidence binds it to
   its color twin, the color twin is `ready`, its person look passes, and the style look passes.
   Missing evidence keeps it `pending`. A failed check or look makes it `failed`.
@@ -159,21 +200,30 @@ different value is not a twin.
 ## Paid-call ledger
 
 `cost-ledger.jsonl` is the only cost ledger. A `before-call` entry precedes every paid provider
-call. It contains `callId`, `recordedAt`, `operation`, `provider`, `model`, `purpose`, `jobId`,
-`version`, and `price`. The price records the existing-plan basis and the zero marginal cash
-estimate. An `after-call` entry with the same `callId` records success or failure. A failed call
-remains in the ledger. Local Forge renders have no paid-call entry.
+call. It contains `callId`, `recordedAt`, `operation`, `provider`, `model`, `modelSource`,
+`purpose`, `jobId`, `version`, and `price`. The price records the existing-plan basis and the zero
+marginal cash estimate. An `after-call` entry with the same `callId` records success or failure.
+A failed call remains in the ledger. Local Forge renders have no paid-call entry.
+
+- Each `callId` has one `after-call` entry at most. A failed call without a raw answer gets its
+  entry from the `precheck-kimi --failed` mode or from the MiniMax runner.
+- Paid calls run one at a time. A `before-call` entry comes after the `after-call` entry of the
+  call before it.
+- `modelSource` is `declared` when the model value comes from this pipeline. It is `reported` when
+  the provider output names the model. A `before-call` entry is always `declared`.
 
 ## Model pre-check logs
 
 One review log lives at `reviews/<job-id>-vN-<provider>.json`. It contains:
 
-- `kind: model-pre-check`, `jobId`, `version`, `file`, `provider`, and `model`.
+- `kind: model-pre-check`, `jobId`, `version`, `file`, `provider`, `model`, and `modelSource`.
+- `callId` and `rawFile`: the call that made the log and its raw output file under `raw/`.
 - `price`, `rubricVersion`, `sourceText`, `sourcePrompt`, and `time: still`.
 - `verdict: pass | fail`, `reason`, `observedCounts`, `issues`, and `rawOutput`.
 - `checkedAt` and the output file's SHA-256.
 
-MiniMax writes its log through the CLI. The task executor writes the Kimi log through `precheck-kimi --record` from the independent reviewer's raw native-image output. The orchestrator stays read-only. The reviewer does not edit the candidate or the pipeline.
+A new call on the same target replaces the log. Earlier raw files stay, and the ledger keeps every
+call. MiniMax writes its log through the CLI. The task executor writes the Kimi log through `precheck-kimi --record` from the independent reviewer's raw native-image output. The orchestrator stays read-only. The reviewer does not edit the candidate or the pipeline.
 
 ## Person count logs
 
@@ -206,8 +256,24 @@ Calibration uses the same rubric and both providers before book production:
 1. `bad-one-sun`: the known bad gesture thumbnail must fail against "How many suns? One sun!".
 2. `good-nan`: the owner-approved Nan cutout must pass against its character contract.
 
+The call text of `good-nan` has no approval words. `sourceText` is `Hello, I am Nan.`. The
+`sourcePrompt` is the character part of the Workbooks image prompt for `w01-readalong-p05`
+(`../Workbooks/content/storytime/l2/w01.json`), without the scene part:
+
+`Nan, a five-year-old girl with large dark-brown eyes, short black hair in two small bunches, an orange T-shirt with a white star, red shorts, and white sneakers.`
+
 Calibration logs live in `calibration/` and use the same review fields and ledger. A failed
 calibration blocks production until the rubric or provider call is corrected.
+
+The render gate (`assertCalibrationReady`) checks each of the four logs:
+
+- the expected verdict and a non-empty `rawOutput`;
+- `rubricVersion` equal to `PICTURE_RUBRIC_VERSION`;
+- `fileSha256` equal to the SHA-256 of the calibration source file;
+- `sourceText` and `sourcePrompt` equal to the current calibration target.
+
+One failed check blocks every render. After the `good-nan` text change, the old `good-nan` logs
+block the render until `good-nan` runs again on both providers.
 
 ## Automated checks
 
@@ -227,4 +293,8 @@ calibration blocks production until the rubric or provider call is corrected.
   line-art pattern.
 - The render evidence binds both twins to one stage hash, one time, and one camera.
 - The line-art pass uses no wireframe material and restores the camera and the renderer.
+- `captureBookStill` loads the timeline before the first seek. The live camera reads detect drift.
+- A depth edge uses the relative view-distance gap. The render evidence names the technique ID.
+- A line-art twin outside the sample becomes `ready` with the sample's technique and format version.
+- The calibration gate checks the rubric version, the file hash, and the source text.
 - `--release` fails on a missing, unbound, failed, or unreviewed line-art twin of a reader page.
