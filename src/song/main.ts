@@ -15,6 +15,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone as skeletonClone } from 'three/addons/utils/SkeletonUtils.js';
 import type { Place } from '../../scenes/chibi-quest.js';
 import { blinkAt, cameraAt, cameraWorld, mixAt, mouthAt, placeAt, shotAt, SING_OUT, toWorld, type ActorTrack, type PictureTrack, type PropTrack, type Shot, type Timeline } from './timeline.js';
+import { clearBookStill, publishBookStill } from './still-hook.js';
 import '../scene/hamlet.css';
 
 const MAPS = import.meta.glob('../../scenes/maps/*.ts') as Record<string, () => Promise<{ places: () => Place[] }>>;
@@ -393,9 +394,11 @@ function seek(t: number): void {
   for (const p of props) poseProp(p, shot, t);
   for (const p of pictures) p.object.visible = p.shot === shot && t >= p.track.from && t < p.track.to;
   renderer.render(scene, camera);
+  publishBookStill(window, { scene, camera, renderer, lookTarget: look, three: THREE });
 }
 
 async function load(tl: Timeline): Promise<string[]> {
+  clearBookStill(window);
   const notes: string[] = [];
   for (const name of tl.maps) {
     const missingRoom = await buildRoom(name);

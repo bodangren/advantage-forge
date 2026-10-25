@@ -4,7 +4,7 @@ import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { appendFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path, { posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { Browser } from 'playwright';
+import type { Browser, Page } from 'playwright';
 import type { Plugin } from 'vite';
 import sharp, { type OverlayOptions } from 'sharp';
 import { z } from 'zod';
@@ -1991,12 +1991,17 @@ function serveBookFiles(repoRoot: string, stageDirectory: string): Plugin {
 
 declare global {
   interface Window {
-    /** The song page has no scene hook yet; the engine-hook task must add it (contract "Line-art twins"). */
+    /**
+     * Published by src/song/still-hook.ts at the end of every song seek, and cleared on load.
+     * The storytime capture reads it for the line-art twin pass.
+     */
     __bookStill?: {
       scene: unknown;
       camera: unknown;
       renderer: unknown;
-      /** The camera state after the seek: position, target, and field of view. */
+      /** The page's three module namespace, for the in-page line-art pass. */
+      three?: unknown;
+      /** The camera state of the color still: position, target, fov, aspect, near, far. */
       cameraState?: unknown;
     };
   }
@@ -2007,7 +2012,72 @@ const BOOK_STILL_HOOK_ERROR =
   'The line-art render pass is a pass of the same three.js scene, so it needs the engine hook task ' +
   'before a live book render; see the track contract "Line-art twins" and the test strategy section 8.';
 
-export async function captureBookStill(input: BookCaptureInput): Promise<BookCapturePacket> {
+/** The page driver of `captureStillPair`: one seek, one color still, one camera state, one pass. */
+export interface BookStillDriver {
+  seek(at: number): Promise<void>;
+  screenshot(): Promise<Buffer>;
+  cameraState(): Promise<unknown>;
+  lineArt(): Promise<Buffer>;
+}
+
+export interface BookStillPairInput {
+  /** The still time; both seeks use the same value. */
+  stage?: { at?: number };
+  /** Optional labeled progress lines; the unit tests run without a logger. */
+  log?: (message: string) => void;
+}
+
+export interface BookStillPair {
+  color: Buffer;
+  lineArt: Buffer;
+  /** The camera state read before the line-art pass, bound to the color still. */
+  camera: unknown;
+}
+
+function sameCameraState(a: unknown, b: unknown): boolean {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+/**
+ * The capture order of one render run: seek, color screenshot, camera state read, line-art pass,
+ * second camera state read, seek of the same time again, second color screenshot. The evidence
+ * camera is the first read. A camera drift, a pixel difference between the two color screenshots,
+ * or a missing hook throws and the caller writes nothing.
+ */
+export async function captureStillPair(
+  driver: BookStillDriver,
+  input: BookStillPairInput = {},
+): Promise<BookStillPair> {
+  const at = input.stage?.at ?? 0;
+  const log = input.log ?? (() => {});
+  await driver.seek(at);
+  const color = await driver.screenshot();
+  const camera = await driver.cameraState();
+  if (camera === undefined || camera === null) {
+    throw new Error(BOOK_STILL_HOOK_ERROR);
+  }
+  const lineArt = await driver.lineArt();
+  const cameraAfterPass = await driver.cameraState();
+  if (!sameCameraState(camera, cameraAfterPass)) {
+    throw new Error('Camera state drift between the color still and the line-art pass; nothing is written.');
+  }
+  log('camera state drift: 0');
+  await driver.seek(at);
+  const colorRepeat = await driver.screenshot();
+  if (!color.equals(colorRepeat)) {
+    throw new Error('The color still is not pixel-identical on the repeat seek; the page is not deterministic.');
+  }
+  log('color repeat identical: yes');
+  return { color, lineArt, camera };
+}
+
+interface OpenedBookPage {
+  page: Page;
+  pageErrors: string[];
+  close: () => Promise<void>;
+}
+
+async function openBookPage(input: BookCaptureInput): Promise<OpenedBookPage> {
   const { chromium } = await import('playwright');
   const { createServer } = await import('vite');
   const size = input.size ?? PICTURE_SIZES[input.job.size];
@@ -2043,73 +2113,274 @@ export async function captureBookStill(input: BookCaptureInput): Promise<BookCap
       timeout: 600_000,
       polling: 500,
     });
-    const notes = await page.evaluate((timeline) => window.__song!.load(timeline), input.timeline);
-    assertPageNotes(notes);
-    await page.evaluate((at) => window.__song!.seek(at), input.stage.at);
-    if (pageErrors.length) throw new Error(`Book page errors: ${pageErrors.join('; ')}`);
-    const color = await page.screenshot({ type: 'png' });
-    const hookReady = await page.evaluate(() => Boolean(window.__bookStill?.scene && window.__bookStill?.camera && window.__bookStill?.renderer));
-    if (!hookReady) throw new Error(BOOK_STILL_HOOK_ERROR);
-    // The line-art pass runs in the page against the same scene and camera as the color still.
-    const lineArtDataUrl = await page.evaluate(async (passSize) => {
-      const hook = window.__bookStill!;
-      const THREE = await import('three');
-      const scene = hook.scene as import('three').Scene;
-      const camera = hook.camera as import('three').PerspectiveCamera;
-      const renderer = hook.renderer as import('three').WebGLRenderer;
-      const target = new THREE.WebGLRenderTarget(passSize.width, passSize.height);
-      const previousTarget = renderer.getRenderTarget();
-      const previousBackground = scene.background;
-      const previousOverride = scene.overrideMaterial;
-      const previousSize = new THREE.Vector2();
-      renderer.getSize(previousSize);
-      try {
-        scene.background = new THREE.Color('#ffffff');
-        scene.overrideMaterial = new THREE.MeshBasicMaterial({ wireframe: true, color: '#000000' });
-        camera.aspect = passSize.width / passSize.height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(passSize.width, passSize.height, false);
-        renderer.setRenderTarget(target);
-        renderer.render(scene, camera);
-        const pixels = new Uint8Array(passSize.width * passSize.height * 4);
-        renderer.readRenderTargetPixels(target, 0, 0, passSize.width, passSize.height, pixels);
-        // Threshold to 1 bit, flip the WebGL row order, and pack one grey channel.
-        const canvas = document.createElement('canvas');
-        canvas.width = passSize.width;
-        canvas.height = passSize.height;
-        const context = canvas.getContext('2d')!;
-        const image = context.createImageData(passSize.width, passSize.height);
-        for (let y = 0; y < passSize.height; y += 1) {
-          const sourceRow = passSize.height - 1 - y;
-          for (let x = 0; x < passSize.width; x += 1) {
-            const value = pixels[(sourceRow * passSize.width + x) * 4]! < 128 ? 0 : 255;
-            const offset = (y * passSize.width + x) * 4;
-            image.data[offset] = value;
-            image.data[offset + 1] = value;
-            image.data[offset + 2] = value;
-            image.data[offset + 3] = 255;
-          }
-        }
-        context.putImageData(image, 0, 0);
-        return canvas.toDataURL('image/png');
-      } finally {
-        renderer.setRenderTarget(previousTarget);
-        renderer.setSize(previousSize.x, previousSize.y, false);
-        scene.background = previousBackground;
-        scene.overrideMaterial = previousOverride;
-      }
-    }, size);
-    const lineArt = await sharp(
-      Buffer.from(lineArtDataUrl.replace(/^data:image\/png;base64,/, ''), 'base64'),
-    )
-      .toColourspace('b-w')
-      .png()
-      .toBuffer();
-    const cameraState = await page.evaluate(() => window.__bookStill?.cameraState ?? null);
-    return { color: Buffer.from(color), lineArt, camera: cameraState };
-  } finally {
+    return {
+      page,
+      pageErrors,
+      close: async () => {
+        if (browser) await browser.close();
+        await server.close();
+      },
+    };
+  } catch (error) {
     if (browser) await browser.close();
     await server.close();
+    throw error;
+  }
+}
+
+function pageDriver(page: Page, size: { width: number; height: number }, pageErrors: string[]): BookStillDriver {
+  return {
+    seek: (at) => page.evaluate((time) => window.__song!.seek(time), at),
+    screenshot: async () => {
+      if (pageErrors.length) throw new Error(`Book page errors: ${pageErrors.join('; ')}`);
+      return page.screenshot({ type: 'png' });
+    },
+    cameraState: () => page.evaluate(() => window.__bookStill?.cameraState ?? null),
+    lineArt: () => runPageLineArtPass(page, size, pageErrors),
+  };
+}
+
+/** Runs the form-edge pass in the page against the hooked scene, camera, and renderer. */
+async function runPageLineArtPass(
+  page: Page,
+  size: { width: number; height: number },
+  pageErrors: string[],
+): Promise<Buffer> {
+  const dataUrl = await page.evaluate(async (passSize) => {
+    const hook = window.__bookStill;
+    if (!hook?.three || !hook.scene || !hook.camera || !hook.renderer) {
+      throw new Error('The book still hook has no scene, camera, renderer, or three namespace.');
+    }
+    const passModuleUrl = '/src/storytime/line-art-pass.ts';
+    const { renderLineArtPass } = (await import(passModuleUrl)) as typeof import('../storytime/line-art-pass.js');
+    const result = renderLineArtPass(
+      hook.three as typeof import('three'),
+      {
+        scene: hook.scene as import('three').Scene,
+        camera: hook.camera as import('three').PerspectiveCamera,
+        renderer: hook.renderer as import('three').WebGLRenderer,
+      },
+      passSize,
+    );    const canvas = document.createElement('canvas');
+    canvas.width = result.width;
+    canvas.height = result.height;
+    const context = canvas.getContext('2d')!;
+    const image = context.createImageData(result.width, result.height);
+    for (let index = 0; index < result.data.length; index += 1) {
+      const value = result.data[index]!;
+      const offset = index * 4;
+      image.data[offset] = value;
+      image.data[offset + 1] = value;
+      image.data[offset + 2] = value;
+      image.data[offset + 3] = 255;
+    }
+    context.putImageData(image, 0, 0);
+    return canvas.toDataURL('image/png');
+  }, size);
+  if (pageErrors.length) throw new Error(`Book page errors: ${pageErrors.join('; ')}`);
+  return sharp(Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64'))
+    .toColourspace('b-w')
+    .png()
+    .toBuffer();
+}
+
+/** The fixture scene of the bounded smoke run: a smooth sphere over a box behind it. */
+const LINEART_SMOKE_FIXTURE_SIZE = { width: 256, height: 256 };
+
+export interface LineArtSmokeFixture {
+  width: number;
+  height: number;
+  /** The projected sphere center in pixels. */
+  center: [number, number];
+  /** The projected sphere silhouette radius in pixels. */
+  radius: number;
+}
+
+/** One smoke capture: the stage still pair plus one fixture pass in the same page. */
+export interface BookSmokePacket extends BookCapturePacket {
+  fixtureLineArt?: Buffer;
+  fixture?: LineArtSmokeFixture;
+}
+
+/** Runs the fixture pass in the page: sphere at the image center, one box edge behind it. */
+async function runFixturePass(page: Page): Promise<{ png: Buffer; fixture: LineArtSmokeFixture }> {
+  const payload = await page.evaluate(async (passSize) => {
+    const hook = window.__bookStill;
+    if (!hook?.three || !hook.renderer) {
+      throw new Error('The book still hook has no renderer or three namespace for the fixture pass.');
+    }
+    const THREE = hook.three as typeof import('three');
+    const passModuleUrl = '/src/storytime/line-art-pass.ts';
+    const { renderLineArtPass } = (await import(passModuleUrl)) as typeof import('../storytime/line-art-pass.js');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, passSize.width / passSize.height, 0.1, 50);
+    camera.position.set(0, 0, 4);
+    camera.lookAt(0, 0, 0);
+    const sphere = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 100, 50),
+      new THREE.MeshBasicMaterial({ color: '#cccccc' }),
+    );
+    scene.add(sphere);
+    const box = new THREE.Mesh(
+      new THREE.BoxGeometry(3.6, 3.6, 1.2),
+      new THREE.MeshBasicMaterial({ color: '#999999' }),
+    );
+    box.position.set(0.55, 0.7, -2.4);
+    scene.add(box);
+    const result = renderLineArtPass(
+      THREE,
+      { scene, camera, renderer: hook.renderer as import('three').WebGLRenderer },
+      passSize,
+    );
+    const centerVector = new THREE.Vector3(0, 0, 0).project(camera);
+    const center: [number, number] = [
+      (centerVector.x * 0.5 + 0.5) * passSize.width,
+      (-centerVector.y * 0.5 + 0.5) * passSize.height,
+    ];
+    const distance = camera.position.length();
+    const angularRadius = Math.asin(1 / distance);
+    const radius =
+      (Math.tan(angularRadius) / Math.tan((camera.fov * Math.PI) / 360)) * (passSize.height / 2);
+    const canvas = document.createElement('canvas');
+    canvas.width = result.width;
+    canvas.height = result.height;
+    const context = canvas.getContext('2d')!;
+    const image = context.createImageData(result.width, result.height);
+    for (let index = 0; index < result.data.length; index += 1) {
+      const value = result.data[index]!;
+      const offset = index * 4;
+      image.data[offset] = value;
+      image.data[offset + 1] = value;
+      image.data[offset + 2] = value;
+      image.data[offset + 3] = 255;
+    }
+    context.putImageData(image, 0, 0);
+    return {
+      fixture: { width: passSize.width, height: passSize.height, center, radius },
+      dataUrl: canvas.toDataURL('image/png'),
+    };
+  }, LINEART_SMOKE_FIXTURE_SIZE);
+  const png = await sharp(
+    Buffer.from(payload.dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64'),
+  )
+    .toColourspace('b-w')
+    .png()
+    .toBuffer();
+  return { png, fixture: payload.fixture };
+}
+
+async function inkSharePercent(png: Buffer): Promise<number> {
+  const { data } = await sharp(png).greyscale().raw().toBuffer({ resolveWithObject: true });
+  let ink = 0;
+  for (const value of data) if (value < 128) ink += 1;
+  return (ink / data.length) * 100;
+}
+
+/**
+ * The smoke check of a fixture line-art picture. It prints both labeled values and accepts a
+ * complete ring silhouette around the declared sphere: no mesh net inside the disc, and at least
+ * 342 of 360 degree directions with ink on the ring.
+ */
+export async function checkLineArtSmoke(
+  png: Buffer,
+  fixture: LineArtSmokeFixture,
+): Promise<{ valid: boolean; errors: string[] }> {
+  const { data, info } = await sharp(png).greyscale().raw().toBuffer({ resolveWithObject: true });
+  const dark = (x: number, y: number): boolean => {
+    if (x < 0 || y < 0 || x >= info.width || y >= info.height) return false;
+    return data[y * info.width + x]! < 128;
+  };
+  const [centerX, centerY] = fixture.center;
+  const reach = fixture.radius * 0.8;
+  let interior = 0;
+  let interiorCount = 0;
+  for (let y = Math.floor(centerY - reach); y <= Math.ceil(centerY + reach); y += 1) {
+    for (let x = Math.floor(centerX - reach); x <= Math.ceil(centerX + reach); x += 1) {
+      const dx = x - centerX;
+      const dy = y - centerY;
+      if (dx * dx + dy * dy > reach * reach) continue;
+      interiorCount += 1;
+      if (dark(x, y)) interior += 1;
+    }
+  }
+  const interiorInk = interiorCount ? (interior / interiorCount) * 100 : 100;
+  console.log(`fixture interior ink: ${interiorInk.toFixed(2)}%`);
+  const tolerance = Math.max(2, fixture.radius * 0.02);
+  let rays = 0;
+  for (let degree = 0; degree < 360; degree += 1) {
+    const angle = (degree * Math.PI) / 180;
+    const directionX = Math.cos(angle);
+    const directionY = Math.sin(angle);
+    let hit = false;
+    for (let r = fixture.radius - tolerance; r <= fixture.radius + tolerance && !hit; r += 0.5) {
+      if (dark(Math.round(centerX + directionX * r), Math.round(centerY + directionY * r))) hit = true;
+    }
+    if (hit) rays += 1;
+  }
+  console.log(`fixture ring rays: ${rays}/360`);
+  const errors: string[] = [];
+  if (interiorInk > 1.0) {
+    errors.push(`fixture interior ink ${interiorInk.toFixed(2)}% is above 1.00%.`);
+  }
+  if (rays < 342) {
+    errors.push(`fixture ring rays ${rays}/360 are below 342.`);
+  }
+  return { valid: errors.length === 0, errors };
+}
+
+export async function captureBookStill(input: BookCaptureInput): Promise<BookCapturePacket> {
+  const opened = await openBookPage(input);
+  try {
+    const size = input.size ?? PICTURE_SIZES[input.job.size];
+    const pair = await captureStillPair(pageDriver(opened.page, size, opened.pageErrors), {
+      stage: input.stage,
+      log: console.log,
+    });
+    return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera };
+  } finally {
+    await opened.close();
+  }
+}
+
+/** The bounded smoke capture of one still (T52): labels, pair order, fixture pass, ink ranges. */
+export async function captureBookStillSmoke(input: BookCaptureInput): Promise<BookSmokePacket> {
+  const opened = await openBookPage(input);
+  const log = console.log;
+  try {
+    const size = input.size ?? PICTURE_SIZES[input.job.size];
+    const hookBefore = await opened.page.evaluate(() => window.__bookStill === undefined);
+    log(`hook before seek: ${hookBefore ? 'absent' : 'present'}`);
+    if (!hookBefore) throw new Error('The book still hook is already present before the first seek.');
+    const songKeys = await opened.page.evaluate(() => Object.keys(window.__song ?? {}).sort().join(','));
+    log(`window.__song keys: ${songKeys}`);
+    if (songKeys !== 'load,portrait,ready,seek') {
+      throw new Error(`window.__song has unexpected keys: ${songKeys}`);
+    }
+    const notes = await opened.page.evaluate((timeline) => window.__song!.load(timeline), input.timeline);
+    assertPageNotes(notes);
+    await opened.page.evaluate((at) => window.__song!.seek(at), input.stage.at);
+    const hookAfter = await opened.page.evaluate(() => window.__bookStill !== undefined);
+    log(`hook after seek: ${hookAfter ? 'present' : 'absent'}`);
+    if (!hookAfter) throw new Error('The book still hook is absent after the seek.');
+    const pair = await captureStillPair(pageDriver(opened.page, size, opened.pageErrors), {
+      stage: input.stage,
+      log,
+    });
+    const fixturePass = await runFixturePass(opened.page);
+    const inkShare = await inkSharePercent(pair.lineArt);
+    log(`stage ink share: ${inkShare.toFixed(2)}%`);
+    if (inkShare < 0.5 || inkShare > 25) {
+      throw new Error(`Stage ink share ${inkShare.toFixed(2)}% is outside 0.5 to 25.`);
+    }
+    return {
+      color: pair.color,
+      lineArt: pair.lineArt,
+      camera: pair.camera,
+      fixtureLineArt: fixturePass.png,
+      fixture: fixturePass.fixture,
+    };
+  } finally {
+    await opened.close();
   }
 }
 
@@ -2709,9 +2980,11 @@ function parseCli(argv: string[]): { command: string; options: CliOptions } {
   const [command, ...args] = argv;
   if (
     !command ||
-    !['plan', 'render', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify'].includes(command)
+    !['plan', 'render', 'lineart-smoke', 'precheck-minimax', 'precheck-kimi', 'manifest', 'sheet', 'verify'].includes(command)
   ) {
-    throw new Error('Use plan, render, precheck-minimax, precheck-kimi, manifest, sheet, or verify.');
+    throw new Error(
+      'Use plan, render, lineart-smoke, precheck-minimax, precheck-kimi, manifest, sheet, or verify.',
+    );
   }
   const options: CliOptions = { paid: false, dryRun: false, release: false, begin: false };
   const valueFlags = new Set([
@@ -2771,6 +3044,7 @@ export async function runStorytimeCli(
     capture?: BookCapture;
     readStage?: BookStageReader;
     log?: (message: string) => void;
+    now?: () => Date;
   } = {},
 ): Promise<number> {
   const { command, options } = parseCli(argv);
@@ -2808,6 +3082,78 @@ export async function runStorytimeCli(
           `${result.lineArtFile ? `; lineart ${result.lineArtFile}` : ''}`,
       );
     }
+    return 0;
+  }
+  if (command === 'lineart-smoke') {
+    const jobs = await loadJobs(outputRoot);
+    const selected = selectedJobs(jobs, selection);
+    if (selected.length !== 1) {
+      throw new Error('lineart-smoke needs exactly one job; pass --job <id>.');
+    }
+    const smokeJob = selected[0]!;
+    const readStage =
+      dependencies.readStage ??
+      ((input: { job: StorytimeJob; version: number; repoRoot: string }) =>
+        readBookStage(input.repoRoot, input.job, input.version));
+    const stage = await readStage({ job: smokeJob, version: 1, repoRoot });
+    const timeline = buildBookStillTimeline(stage.source);
+    const size = PICTURE_SIZES[smokeJob.size];
+    const now = dependencies.now ?? (() => new Date());
+    const directory = `smoke/lineart-${now().toISOString().replace(/[:.]/g, '-')}`;
+    const smokeDirectory = path.join(outputRoot, directory);
+    if (options.dryRun) {
+      log(`lineart-smoke: would write color.png, lineart.png, fixture-lineart.png, and smoke.json under ${smokeDirectory}; no capture.`);
+      return 0;
+    }
+    const capture = dependencies.capture ?? captureBookStillSmoke;
+    const packet = await capture({ job: smokeJob, stage, timeline, repoRoot, size });
+    if (Buffer.isBuffer(packet)) {
+      throw new Error('The smoke capture returned a color-only draft; a smoke run needs the twin packet.');
+    }
+    const smokePacket = packet as BookSmokePacket;
+    const smokeLineArt = smokePacket.lineArt;
+    const fixtureLineArt = smokePacket.fixtureLineArt;
+    const fixture = smokePacket.fixture;
+    if (!smokeLineArt) throw new Error('The smoke capture returned no line-art twin.');
+    if (!fixtureLineArt || !fixture) {
+      throw new Error('The smoke capture returned no fixture pass.');
+    }
+    // All checks run before any write: a failed check leaves the output tree unchanged.
+    const fixtureCheck = await checkLineArtSmoke(fixtureLineArt, fixture);
+    if (!fixtureCheck.valid) {
+      throw new Error(`Line-art smoke fixture failed: ${fixtureCheck.errors.join(' ')}`);
+    }
+    const stageInkShare = await inkSharePercent(smokeLineArt);
+    log(`stage ink share: ${stageInkShare.toFixed(2)}%`);
+    await mkdir(smokeDirectory, { recursive: true });
+    const smokeFiles: Array<[string, Buffer | string]> = [
+      ['color.png', smokePacket.color],
+      ['lineart.png', smokeLineArt],
+      ['fixture-lineart.png', fixtureLineArt],
+      [
+        'smoke.json',
+        JSON.stringify(
+          {
+            jobId: smokeJob.id,
+            at: stage.at,
+            width: size.width,
+            height: size.height,
+            stageFile: stage.file,
+            stageSha256: stage.sha256,
+            camera: smokePacket.camera,
+            fixture,
+            renderer: RENDERER_ID,
+            lineArtTechnique: LINEART_TECHNIQUE,
+          },
+          null,
+          2,
+        ),
+      ],
+    ];
+    for (const [name, bytes] of smokeFiles) {
+      await writeFile(path.join(smokeDirectory, name), bytes);
+    }
+    log(`lineart-smoke: wrote ${smokeFiles.length} files under ${smokeDirectory}; wrote no book version.`);
     return 0;
   }
   if (command === 'precheck-minimax') {
