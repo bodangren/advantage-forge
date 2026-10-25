@@ -50,9 +50,15 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
   The final run had no timeout failures. T3 and T21 passed against the untracked draft.
   The PM's heavy-run rule replaces the separate preflight and lock steps for this gate.
-- [~] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
+- [x] Task: Implement the minimal picture pipeline with color and line-art twin outputs from one
   render run. Pass the focused tests and type checks. Keep `src/song/` unchanged. Make no paid
   calls and run no heavy render during this task.
+  Evidence: `fafa82dc`; exit code `0`; `Tests  41 passed (41)`;
+  `owned tsc errors: 0`; `baseline tsc errors: 31` (outside the owned paths; see known_failures);
+  `git diff --quiet 1d39b8fda457e12d8e7332e7de65d2046ddda78e -- src/song` exit `0`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  The Red type fix `5cbb3407` (test line 433, type-only) unblocked the type gate. The real
+  line-art capture pass needs the engine hook task before a live render (see the Green log).
 - [ ] Task: Calibrate the picture rubric with MiniMax and Kimi. Fail the known bad "One sun"
   thumbnail and pass the owner-approved Nan cutout. Save raw outputs and the prior-call ledger.
 
