@@ -131,7 +131,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Make no paid calls. Run no heavy render, except one bounded smoke run (T74). The smoke run is
   necessary: it is the only live proof of RA-B1 and RA-N7 before the Nan sample. It takes its
   stage pair through the production `captureBookStill` path and writes no book version.
-  Red evidence: `b60dec4f`; exit code `1`; "Tests  14 failed | 75 passed (89)".
+  Red evidence: `a310683d` (tests `b60dec4f`); exit code `1`; "Tests  14 failed | 75 passed (89)".
+  The authorized fixture amendment writes temporary calibration sources and passes their roots. Assertions and the T54 bytes remain unchanged.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
   T61 to T73 failed for missing seams or the Review A defects. No new test passed.
   Earlier tests: 75 passed. T49 failed because its amended order requires two live camera reads.
