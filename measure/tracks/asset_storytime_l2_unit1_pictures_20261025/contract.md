@@ -8,6 +8,7 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - `render`: render missing candidates sequentially from versioned scene files. Require the current
   source hash to match `jobs.json`.
 - `precheck-minimax --paid`: run the MiniMax VLM on one candidate or calibration picture.
+- `precheck-kimi --begin` and `precheck-kimi --record <callId> --raw <file>`: write the before-call ledger entry and the review prompt, then write the after-call entry and the Kimi log from the reviewer's raw native-image output.
 - `manifest`: rebuild the manifest from jobs, pictures, and review logs.
 - `sheet`: make a labelled contact sheet for human review. Labels stay out of book pictures.
 - `verify`: check file structure and review evidence. `--release` requires both model passes and
@@ -75,8 +76,7 @@ One review log lives at `reviews/<job-id>-vN-<provider>.json`. It contains:
 - `verdict: pass | fail`, `reason`, `observedCounts`, `issues`, and `rawOutput`.
 - `checkedAt` and the output file's SHA-256.
 
-MiniMax writes its log through the CLI. The primary agent writes the Kimi log from the independent
-reviewer's native-image result. The reviewer does not edit the candidate or the pipeline.
+MiniMax writes its log through the CLI. The task executor writes the Kimi log through `precheck-kimi --record` from the independent reviewer's raw native-image output. The orchestrator stays read-only. The reviewer does not edit the candidate or the pipeline.
 
 ## Person count logs
 

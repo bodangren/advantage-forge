@@ -110,3 +110,4 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Facts changed: picture style, dimensions, filenames, and batch hashing.
 - 2026-10-25: Daniel required the heavy lock and live pre-flight check. This session acknowledged
   both rules. No heavy work ran outside the lock. Facts changed: heavy-job controls only.
+- 2026-10-25: The PM relayed Daniel's approval of the week 1 asset request. Daniel's words: "If they need more poses, we can request them. If we need additional assets, we can create them. One character look for both books and videos seems like a good idea!" The PM said GO for the full list in the one character look. Cast rules: Teacher Kim and the nurse are staff at a Thai school; describe hair and clothes only, never skin or ethnicity; no white Western teacher look. Local renders need no other word. A paid API needs the tool and cost sent to the PM before spending. Facts changed: week 1 asset list approved.
