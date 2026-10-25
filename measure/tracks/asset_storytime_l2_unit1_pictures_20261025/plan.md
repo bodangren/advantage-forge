@@ -137,6 +137,32 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   T61 to T73 failed for missing seams or the Review A defects. No new test passed.
   Earlier tests: 75 passed. T49 failed because its amended order requires two live camera reads.
   The run had no syntax, transform, package, timeout, or preflight error. Task 6 remains pending.
+  Green implementation commit `94712d9b` (`src/storytime/book-pictures.ts`,
+  `src/storytime/line-art-pass.ts`; `scripts/storytime-book-pictures.ts` needed no change).
+  Unit gate: exit 0; "Tests  89 passed (89)"; no skip. `git diff --quiet 1d39b8fd --
+  src/song/timeline.ts tests/song-timeline.test.ts` and `git diff --quiet d05527ad -- src/song`
+  both exit 0. Type check: `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t5.log`). The chosen
+  relative view-distance depth limit is 2 percent (`DEPTH_EDGE_RELATIVE_GAP = 0.02`, between the
+  contract's 0.5 and 7.5 percent bounds). RA-B1, RA-B2, RA-N1, RA-N3, RA-N4 code, RA-N6, RA-N7,
+  RA-N8, RA-N9, and the Review C hint are in.
+  Smoke run 2 (T74) FAILED; the task stays `[~]`. One run, one Chrome launch, exit code `1`,
+  output tree unchanged (all checks ran before any write). Printed labels:
+  `hook before seek: absent`; `window.__song keys: load,portrait,ready,seek`;
+  `capture path: captureBookStill`; `camera drift source: live`; `camera state drift: 0`;
+  `color repeat identical: yes`; `stage ink share: 2.05%`;
+  `lineart technique: song-page-form-edges-viewdepth-1bit-v2`; `fixture interior ink: 0.00%`;
+  `fixture ring rays: 360/360`; `fixture depth step rows: 0/159`; then
+  `Line-art smoke fixture failed: fixture depth step rows 0/159 are below 90 percent.`
+  All labels are in range except the new depth-step check: no row of the declared 159 had ink in
+  the declared border band. Diagnosis so far, without a second browser run: the smoke printed the
+  metadata as computed, so the declared column and rows match the projection math; a pure-math
+  check of the same geometry gives the near/far plane border at columns 246/247 with a 7.5 percent
+  relative view-distance gap (above the 2 percent limit), and unit test T70 passes the same packed
+  depth chain. The live render produced no border ink, so the defect is in the live-render path
+  only; the remaining suspects need a browser to separate. Next Green needs a new orchestrator
+  dispatch: one diagnostic browser run or smoke run 3 after the fixture fix. The stage still,
+  color and line-art pictures were not written and are not available for review.
 - [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
