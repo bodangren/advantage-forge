@@ -289,6 +289,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   printed `live files scanned: 15` and `live credential findings: 0` over `cost-ledger.jsonl` and
   `calibration/`, `raw/`, `candidates/`, and `reviews/`; `assertCalibrationReady` accepted
   `out/storytime/l2/unit1` (exit `0`). No live credential was found, so no `[b] deferred:pm` applies.
+  Type-only amendment: `844fb72677592b09a8c0219b0225ea777cd6090e`; `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`; unit exit `0`; `Tests  99 passed (99)`; no assertion change. Commands: `heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'` and the task 7 unit command above. Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log` and `mid-red-vitest-245f8c1-retry.log` in the same directory. The first unit attempt exceeded the 120-second command timeout; the retry passed. Task 7 stays `[~]`.
 
 ## Phase 3: Week 1 pictures
 
