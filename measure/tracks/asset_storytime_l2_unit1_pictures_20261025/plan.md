@@ -186,13 +186,42 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   to 159/159. The stage color and line-art pictures show the same tavern scene, and the line-art
   page has clean form edges plus depth edges on the floor borders. All task 5 gates pass.
   Task 6 remains pending.
-- [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
+- [x] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
   first on MiniMax, then on Kimi, one paid call at a time. Check the quota before each call. The
   orchestrator dispatches the Kimi reviewer (deviation (a)). Compare deviation (d) with the
   ledger. Quote the T75 labels. If a `good-nan` verdict is not `pass`, mark this task `[b]` and
   report to the PM.
+  Evidence (2026-10-26, Green session, GLM): part 1 gate fix commit `af58470f` added the task 5
+  commit SHA to the task 5 line. Failure record: `precheck-kimi --calibration bad-one-sun
+  --record 9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0 --failed --reason <text> --paid`; exit code `0`;
+  the CLI needs `--paid` for every precheck-kimi call, and a `--failed` record makes no provider
+  call and writes no log or raw file. The late raw file
+  `out/storytime/l2/unit1/calibration/raw/bad-one-sun-kimi-9d0bddf7.txt` appeared at 08:06 ICT,
+  after the hung call; it stays unused and unchanged. MiniMax `good-nan` (RA-N2, neutral text
+  `Hello, I am Nan.`): `--dry-run` first, then `--paid`; exit code `0`; quota at call time
+  MiniMax 0% (5h) and 2% (week), with no provider cap reported. Kimi `--begin`:
+  `--dry-run` first, then `--paid`, only after the MiniMax after-call entry. Deviation (a): the
+  orchestrator dispatched the Kimi reviewer on model `kimi-code-plan-cn/k3.1-pro`, session
+  `ses_e89b236c3ffe9J1m4HPPB9jLVM`; it wrote one raw line to
+  `out/storytime/l2/unit1/calibration/raw/good-nan-kimi-7e33f6e2.txt`; then
+  `precheck-kimi --calibration good-nan --record 7e33f6e2-022f-421d-8fbd-97536abbae77 --raw
+  <file> --paid` exited `0`, with no raw file edit. Logs:
+  `out/storytime/l2/unit1/calibration/good-nan-minimax.json` (callId `ae8f1ff1`,
+  `checkedAt 2026-10-26T03:39:56.057Z`, model `mmx-vision-default`, `modelSource: declared`) and
+  `out/storytime/l2/unit1/calibration/good-nan-kimi.json` (callId `7e33f6e2`,
+  `checkedAt 2026-10-26T03:44:05.862Z`, model `kimi-k3.1-pro`, `modelSource: declared`). Both
+  logs hold `sourceText: Hello, I am Nan.`, `rubricVersion: storytime-picture-v2`, and a raw
+  file with the callId in its name. T75 labels: `9d0bddf7 after-call: failure`;
+  `before-call entries: 8`; `after-call entries: 8`; `open before-calls: 0`;
+  `good-nan-minimax: pass`; `good-nan-kimi: pass`. The Kimi before-call
+  (2026-10-26T03:40:44.828Z) is later than the MiniMax after-call (2026-10-26T03:39:56.047Z).
+  `assertCalibrationReady('out/storytime/l2/unit1')` accepts the root (exit 0). Deviation (d)
+  check: the ledger agrees with the four plan timestamps (`4192765b` before 20:15:31.415Z and
+  after 20:17:24.145Z; `1086bc64` before 20:15:33.668Z and after 20:17:27.242Z); the ledger shows
+  the two 2026-10-25 Kimi calls overlapped, and every later paid call ran one at a time. No
+  vitest, tsc, Chrome, or render ran in task 6; the role gate runs outside the task.
 
 ## Phase 3: Week 1 pictures
 
