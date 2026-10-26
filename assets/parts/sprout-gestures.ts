@@ -185,7 +185,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   const noseDirection = unit([0.95, 0.1, 0.3]);
   const noseD = unit([-0.180690382, 0.3215428253, 0.9294951304]);
   const noseHint: V3 = [0.9835336445, 0.0556668679, 0.1719382735];
-  const NOSE_AT: V3 = [-0.1470573952, 0.4674940943, 0.1500582448];
+  const NOSE_AT: V3 = [-0.1470573952, 0.494, 0.132];
   const noseGrip: V3 = [
     NOSE_AT[0] - noseDirection[0] * FINGER_LENGTH,
     NOSE_AT[1] - noseDirection[1] * FINGER_LENGTH,
@@ -198,7 +198,7 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
     return {
       ...R.pose(noseGoal, f),
       hips: { move: [0, -0.006 * laugh, 0] },
-      head: { rotate: [34 * f, -45 * f, 0] },
+      head: { rotate: [8 * f, -45 * f, 0], move: [0, -0.045 * f, 0] },
     };
   });
 
