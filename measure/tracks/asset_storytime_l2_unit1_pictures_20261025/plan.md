@@ -403,7 +403,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `unresolved full SHAs: 0`. No paid call. One heavy render (smoke run 6). `src/song/`, the
   rubric text, and `PICTURE_RUBRIC_VERSION` are unchanged.
 
-- [ ] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
+- [~] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
   Task 9 closes RB3-01 and RA4-01 from the reviews at `cf5743b7`. Review C passed with nonblocking RC4-1.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 9, and T96 to T103.
   One shared function walks every decoded JSON object from the answer, including every key and string value at any depth.
@@ -430,6 +430,35 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   RA3-N1 also stays a closeout item: refresh `metadata.json actual_tasks` and generated facts after status changes.
   Immediately after this strategy commit, capture the immutable task 9 Red base with `git rev-parse HEAD`.
   Capture it before any Red edit. Keep the existing immutable Phase 2 baseline unchanged.
+  Red evidence (2026-10-27, Red session, MiniMax-M3): test commit
+  `a190019472ef25313e19e201f7fc574dacf2cfc0`; exit code `1`; `Tests  8 failed | 105 passed (113)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The run had no package, syntax, transform, timeout, or preflight error. No lock wait line.
+  T96 failed because the escaped top-level `model` credential is not inspected. Both providers write the review,
+  the raw copy, and a success entry, and the result log names the answer.
+  T97 failed because the escaped `model` in a plain and a fenced `content` envelope is not inspected.
+  T98 failed because `CountsSchema` discards the malformed count key before the check. Neither provider refuses.
+  T99 failed because an unknown field at depth 2 and at depth 12 is not inspected as a key or as a string value.
+  T100 failed because an unknown array holds an unchecked string element and an unchecked object key.
+  T101 failed because the shared seam `decodedAnswerFindings` does not exist. The safe provider behavior holds.
+  The raw bytes, the models, and the parser verdicts stay unchanged.
+  T102 failed because the shared seam `decodedAnswerFindings` is absent. The provider paths do not refuse a
+  credential in an unselected object, a nonzero-status envelope, or an embedded JSON string.
+  T103 failed because both decoded refusals end with `nothing is written.` instead of
+  `the raw answer is refused; no review or raw copy is written.` The two providers use different endings.
+  All 105 earlier tests passed. Earlier-test exceptions: none. Every earlier assertion is unchanged.
+  The test file adds one describe block with eight tests. T1 to T95 keep their text.
+  Safe-control note: the provider-level safe controls of T101 pass at Red. Their adversarial mutations are
+  mutation 7 and mutation 8. T101 fails only on the missing shared seam.
+  An earlier attempt of the same command failed T99 and T101 on the 5000 ms test timeout. The strategy rejects a
+  timeout failure as Red evidence. Both tests now carry a 120000 ms limit. The earlier log is kept at
+  `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t9-r2-timeout.log`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t9.log`.
+  Vitest output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t9-r2.log`.
+  Red model deviation: the strategy names `openai/gpt-6.1-sol#high`. This role ran
+  `minimax-cn-coding-plan/MiniMax-M3#high`. The eight tests follow the strategy rows for T96 to T103.
+  Task 9 stays `[~]`.
 
 ## Phase 3: Week 1 pictures
 
