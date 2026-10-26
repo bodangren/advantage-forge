@@ -1,7 +1,7 @@
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
 import { existsSync, lstatSync, readFileSync, realpathSync, statSync } from 'node:fs';
-import { appendFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { appendFile, lstat, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import path, { posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Browser, Page } from 'playwright';
@@ -921,12 +921,12 @@ export async function assertCalibrationReady(
   }
 }
 
-/** The redaction limit of RB-04: provider error text is cut to 500 characters. */
-const REDACTED_ERROR_MAX_CHARS = 500;
+/** The redaction limit of RB-04 and RB2-01: provider error text is cut to 500 characters. */
+export const REDACTED_ERROR_MAX_CHARS = 500;
 /** The `--raw` size limit of RB-04. */
 const RAW_ANSWER_MAX_BYTES = 65_536;
-/** The failure reason limit of RB-04. */
-const FAILURE_REASON_MAX_BYTES = 500;
+/** The failure reason limit of RB-04 and RA3-02: 500 characters, whatever their UTF-8 size. */
+const FAILURE_REASON_MAX_CHARS = 500;
 
 /** The credential patterns of RB-04. A finding names the pattern; it never holds matched text. */
 const CREDENTIAL_PATTERNS: Array<{ name: string; regex: RegExp }> = [
@@ -1052,7 +1052,10 @@ export async function runPaidCall<T>(options: {
       // RB-04: provider error text is redacted and cut to 500 characters before persistence.
       error: redactSecrets(errorText(error)).slice(0, REDACTED_ERROR_MAX_CHARS),
     });
-    throw error;
+    // RB2-01: the propagated error follows the ledger redaction and length limit, so a
+    // provider credential never reaches a caller message or the final CLI error log.
+    const sanitized = redactSecrets(errorText(error)).slice(0, REDACTED_ERROR_MAX_CHARS);
+    throw new Error(sanitized.length > 0 ? sanitized : 'The provider call failed; the error text is redacted.');
   }
 }
 
@@ -1138,6 +1141,22 @@ export function parseModelReview(rawOutput: string): {
     }
   }
   return unclear;
+}
+
+/**
+ * The credential findings across the decoded review fields of RB2-02: the reason, every issue
+ * string, and every count key. A JSON Unicode escape hides a credential from the raw-byte scan,
+ * so the decoded fields need their own check before any write (RB2-02).
+ */
+export function decodedReviewFindings(review: {
+  reason: string;
+  observedCounts: Record<string, number>;
+  issues: string[];
+}): string[] {
+  const findings = secretFindings(review.reason);
+  for (const issue of review.issues) findings.push(...secretFindings(issue));
+  for (const key of Object.keys(review.observedCounts)) findings.push(...secretFindings(key));
+  return findings;
 }
 
 async function rawPixels(png: Buffer): Promise<{ data: Buffer; width: number; height: number; channels: number }> {
@@ -2205,7 +2224,9 @@ function checkedModelFile(allowlist: BookFileAllowlist, relative: string): strin
   if (!inside(allowlist.outRoot, real, true) || inside(allowlist.storytimeRoot, real, true)) {
     return undefined;
   }
-  return candidate;
+  // RB2-04: return the checked real path, so the server reads the validated target and a
+  // concurrent symlink replacement cannot change it after validation.
+  return real;
 }
 
 /**
@@ -2250,7 +2271,10 @@ export function resolveBookFile(
     }
     // A stage picture must stay physically inside the stage directory (no symlink escape).
     if (!inside(allowlist.stageRoot, real, true)) return undefined;
-    return candidate;
+    // RB2-04 and RA3-01: a stage root inside the protected evidence tree is refused, and the
+    // server returns the checked real path, so it reads the validated target.
+    if (inside(allowlist.storytimeRoot, real, true)) return undefined;
+    return real;
   }
   return undefined;
 }
@@ -2367,7 +2391,20 @@ export function bookServerConfig(input: BookCaptureInput): InlineConfig {
       strictPort: false,
       hmr: false,
       watch: null,
-      fs: { strict: true, deny: ['out/storytime/**'] },
+      fs: {
+        strict: true,
+        // RB2-03: the four Vite credential defaults stay, and the Storytime deny rule uses the
+        // absolute real path, because installed Vite matches slash patterns against absolute
+        // filesystem paths. The relative entry stays for readability and older matching.
+        deny: [
+          '.env',
+          '.env.*',
+          '*.{crt,pem}',
+          '**/.git/**',
+          'out/storytime/**',
+          `${allowlist.storytimeRoot}/**`,
+        ],
+      },
     },
   };
 }
@@ -2891,9 +2928,88 @@ export async function captureBookStill(
   }
 }
 
+/**
+ * The live middleware probe of smoke run 6 (T92): synthetic protected files and one allowlisted
+ * stage control go through the real Vite middleware stack over HTTP. No real credential file is
+ * used; every synthetic byte is generated here. A failed probe throws, so the smoke run fails
+ * before it writes anything.
+ */
+async function runMiddlewareProbe(log: (message: string) => void): Promise<void> {
+  const { createServer } = await import('vite');
+  const { tmpdir } = await import('node:os');
+  const { get } = await import('node:http');
+  const probeRoot = await mkdtemp(path.join(tmpdir(), 'storytime-probe-'));
+  let server: Awaited<ReturnType<typeof createServer>> | undefined;
+  try {
+    const secretBytes = Buffer.from('SYNTHETIC probe secret bytes\n');
+    const controlBytes = Buffer.from('SYNTHETIC stage control bytes\n');
+    await mkdir(path.join(probeRoot, '.git'), { recursive: true });
+    await writeFile(path.join(probeRoot, '.env'), secretBytes);
+    await writeFile(path.join(probeRoot, 'key.pem'), secretBytes);
+    await writeFile(path.join(probeRoot, '.git', 'config'), secretBytes);
+    const evidence = path.join(probeRoot, 'out/storytime/l2/unit1/evidence.txt');
+    await mkdir(path.dirname(evidence), { recursive: true });
+    await writeFile(evidence, secretBytes);
+    const control = path.join(probeRoot, 'docs/stage/sign.png');
+    await mkdir(path.dirname(control), { recursive: true });
+    await writeFile(control, controlBytes);
+    const probeTimeline = {
+      shots: [{ pictures: [{ file: 'sign.png', x: 0, y: 0, z: 0, w: 1 }] }],
+    } as unknown as BookCaptureInput['timeline'];
+    const probeInput: BookCaptureInput = {
+      job: { id: 'middleware-probe', size: 'small' } as unknown as StorytimeJob,
+      stage: {
+        absoluteFile: path.join(probeRoot, 'docs/stage/probe-v1.json'),
+      } as unknown as BookStageFile,
+      timeline: probeTimeline,
+      repoRoot: probeRoot,
+      size: { width: 64, height: 64 },
+    };
+    server = await createServer(bookServerConfig(probeInput));
+    await server.listen();
+    const base = server.resolvedUrls?.local[0];
+    if (!base) throw new Error('The middleware probe server did not report a local URL.');
+    const requestProbe = (requestPath: string) =>
+      new Promise<{ status: number; body: Buffer }>((resolve, reject) => {
+        get(new URL(requestPath, base), (res) => {
+          const chunks: Buffer[] = [];
+          res.on('data', (chunk) => chunks.push(chunk as Buffer));
+          res.on('end', () => resolve({ status: res.statusCode ?? 0, body: Buffer.concat(chunks) }));
+        }).on('error', reject);
+      });
+    let exposed = 0;
+    const protectedProbes: Array<[string, string]> = [
+      ['.env', '/.env'],
+      ['pem', '/key.pem'],
+      ['git config', '/.git/config'],
+      ['storytime', '/out/storytime/l2/unit1/evidence.txt'],
+    ];
+    for (const [label, requestPath] of protectedProbes) {
+      const response = await requestProbe(requestPath);
+      const refused =
+        (response.status === 403 || response.status === 404) && !response.body.includes(secretBytes);
+      if (!refused) exposed += 1;
+      log(`middleware probe ${label}: ${refused ? 'refused' : `status ${response.status}`}`);
+    }
+    const controlResponse = await requestProbe('/stage/sign.png');
+    const served = controlResponse.status === 200 && controlResponse.body.equals(controlBytes);
+    if (!served) exposed += 1;
+    log(`middleware probe stage control: ${served ? 'served' : 'failed'}`);
+    log(`middleware probe synthetic bytes exposed: ${exposed}`);
+    if (exposed > 0) {
+      throw new Error('The middleware probe exposed synthetic protected bytes; the smoke run fails.');
+    }
+  } finally {
+    if (server) await server.close();
+    await rm(probeRoot, { recursive: true, force: true });
+  }
+}
+
 /** The bounded smoke capture of one still (T52, T74): production path, labels, fixture pass. */
 export async function captureBookStillSmoke(input: BookCaptureInput): Promise<BookSmokePacket> {
   const log = console.log;
+  // T92: the real Vite middleware probe runs first, before any Chrome launch or write.
+  await runMiddlewareProbe(log);
   const opened = await openBookPage(input);
   try {
     reportBookFileTraffic(opened, log);
@@ -3185,6 +3301,15 @@ export async function precheckMiniMax(options: {
             'the raw answer is refused and nothing is written.',
         );
       }
+      // RB2-02: the decoded review fields pass the credential check before any write. A JSON
+      // Unicode escape hides a credential from the raw-byte scan.
+      const decodedFindings = decodedReviewFindings(parseModelReview(result.stdout || result.stderr));
+      if (decodedFindings.length > 0) {
+        throw new Error(
+          `The decoded review matched credential pattern ${decodedFindings[0]}; ` +
+            'the raw answer is refused and nothing is written.',
+        );
+      }
       return result;
     },
   });
@@ -3454,9 +3579,10 @@ export async function precheckKimi(options: {
         `The failure reason matched credential pattern ${reasonFindings[0]}; nothing is written.`,
       );
     }
-    if (Buffer.byteLength(reason, 'utf8') > FAILURE_REASON_MAX_BYTES) {
+    // RA3-02: the limit counts characters, so a 500-character multibyte reason is accepted.
+    if (reason.length > FAILURE_REASON_MAX_CHARS) {
       throw new Error(
-        `The failure reason is longer than ${FAILURE_REASON_MAX_BYTES} bytes; nothing is written.`,
+        `The failure reason is longer than ${FAILURE_REASON_MAX_CHARS} characters; nothing is written.`,
       );
     }
     await appendLedgerEntry(options.outputRoot, {
@@ -3498,6 +3624,14 @@ export async function precheckKimi(options: {
     );
   }
   const parsed = parseModelReview(rawOutput);
+  // RB2-02: the decoded review fields pass the credential check before any write, so a refused
+  // record leaves the ledger, the review tree, and the raw copy byte-identical.
+  const decodedFindings = decodedReviewFindings(parsed);
+  if (decodedFindings.length > 0) {
+    throw new Error(
+      `The decoded review matched credential pattern ${decodedFindings[0]}; nothing is written.`,
+    );
+  }
   const reviewBase = options.calibration
     ? `calibration/${options.calibration}-kimi`
     : `reviews/${begin.jobId}-v${begin.version}-kimi`;
