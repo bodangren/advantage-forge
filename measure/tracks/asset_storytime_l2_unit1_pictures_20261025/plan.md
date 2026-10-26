@@ -403,6 +403,34 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `unresolved full SHAs: 0`. No paid call. One heavy render (smoke run 6). `src/song/`, the
   rubric text, and `PICTURE_RUBRIC_VERSION` are unchanged.
 
+- [ ] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
+  Task 9 closes RB3-01 and RA4-01 from the reviews at `cf5743b7`. Review C passed with nonblocking RC4-1.
+  Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 9, and T96 to T103.
+  One shared function walks every decoded JSON object from the answer, including every key and string value at any depth.
+  It includes unknown fields, arrays, model envelopes, and JSON objects decoded from `content` strings.
+  It calls `secretFindings` before schema validation, field selection, or fallback can discard data.
+  MiniMax calls it inside the paid callback, before the success entry. Kimi calls it before any record write.
+  Both paths check before a raw copy, review write, or result log. A MiniMax refusal records only the sanitized failure.
+  A Kimi refusal leaves the begin ledger and source raw file unchanged. Safe raw bytes stay byte-identical.
+  Safe MiniMax reported models stay unchanged. Kimi keeps its declared model and `modelSource` behavior.
+  Pass T96 to T103 and every earlier test. Keep T1 to T95 unchanged.
+  Cover escaped credentials in both model envelopes, malformed count keys, nested unknown fields, and unknown arrays for both providers.
+  Include safe controls for both envelopes. Refuse credentials in unselected objects and nonzero-status envelopes before fallback.
+  Align both decoded-refusal message endings for RC4-1. Distinguish the MiniMax failure entry from forbidden evidence writes.
+  Use `ENGINE_HOOK_TEST_COMMAND` for Red, Green, adversarial testing, and closeout. Run `TASK9_TYPECHECK_COMMAND` after Green and at closeout.
+  Run each declared mutation separately. The named-fields-only mutation must fail the new tests.
+  No new live smoke run is necessary. This task changes no server, capture code, renderer, or browser path.
+  Injected runners and temporary roots test the complete changed provider paths. Smoke run 6 remains the server and capture evidence.
+  Make no paid call and run no render. Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  Red model: `openai/gpt-6.1-sol#high`. Green model: `volcengine-agent-plan/glm-5.3-flash#high`.
+  Strategy deviation: GPT-6.1 Sol replaces Claude at the same tier because Claude reached 80 percent of its 7-day quota.
+  Reviews A, B, and C run again on the task 9 HEAD. Review C may use a short delta check.
+  Security review, UX/API review, and adversarial testing apply. Browser review does not apply because this task changes no UI.
+  RA4-N1 stays a closeout item: correct the stale task 8 Green handoff. Keep immutable review reports unchanged.
+  RA3-N1 also stays a closeout item: refresh `metadata.json actual_tasks` and generated facts after status changes.
+  Immediately after this strategy commit, capture the immutable task 9 Red base with `git rev-parse HEAD`.
+  Capture it before any Red edit. Keep the existing immutable Phase 2 baseline unchanged.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write

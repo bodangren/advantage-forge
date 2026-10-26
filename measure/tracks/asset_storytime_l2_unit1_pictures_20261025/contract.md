@@ -289,10 +289,17 @@ block the render until `good-nan` runs again on both providers.
 - The Vite deny list retains `.env`, `.env.*`, `*.{crt,pem}`, and `**/.git/**`. It adds
   `<absolute-repoRoot>/out/storytime/**`. A relative Storytime pattern does not satisfy this rule.
 - No raw answer, review log, ledger entry, failure reason, thrown error, or CLI error log holds a
-  credential. A raw answer or failure reason with a credential is refused before any write. Decoded
-  review reasons, issues, and count keys pass the credential check before any success entry, review
-  write, raw copy, or log. Provider error text is redacted and cut to 500 characters. The thrown
-  provider error and final CLI error log follow the same redaction and length limit.
+  credential. A raw answer or failure reason with a credential is refused before evidence writes.
+- One shared function checks every decoded key and string value of every JSON object that the provider answer yields.
+  It traverses every depth, unknown fields, arrays, model envelopes, and objects decoded from embedded JSON strings, including `content`.
+  It calls `secretFindings` before schema validation, field selection, or fallback can discard data.
+  Both providers check before a success entry, review write, raw copy, or result log.
+  MiniMax checks inside the paid callback and may append only its sanitized failure entry after refusal.
+  Kimi checks before any record write. A refused record leaves the begin ledger and source raw file unchanged.
+- Both decoded-refusal messages name only the pattern. Both use this suffix: `the raw answer is refused; no review or raw copy is written.`
+- Provider error text is redacted and cut to 500 characters.
+  The thrown provider error and final CLI error log follow the same redaction and length limit.
+- Safe reported MiniMax models stay unchanged. Kimi keeps its declared model and `modelSource` behavior.
 - A safe raw answer is kept byte for byte. A `--raw` file must be a regular file of at most 65,536
   bytes, in UTF-8 with no NUL byte. A symlink is refused. A failure reason has 500 characters at most.
 

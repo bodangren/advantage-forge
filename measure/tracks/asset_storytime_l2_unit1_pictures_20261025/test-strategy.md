@@ -6,6 +6,7 @@ Amended at `b63755bc` for the line-art twins and the A3 teacher print (Daniel's 
 after the section 8 guardrail fired in Green. Amended at `5ffdbf6e` for the Review A remediation
 (Phase 2 tasks 5 and 6). Amended at `c2353433` for the Review B security remediation (Phase 2
 task 7). Amended from `84c8ffdb` for the second security remediation (Phase 2 task 8).
+Amended from `cf5743b7` for the decoded-value remediation (Phase 2 task 9).
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -17,6 +18,9 @@ gates. This file owns test commands, gates, fixtures, and review applicability.
 - Gap: `measure/anti-patterns.md` does not exist in this repository. This strategy uses the
   starter catalog `~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md`.
   A1 and A8 are retired there. Section 9 lists project candidates for a future local catalog.
+- Task 9 rechecked this gap and read the canonical catalog. No local catalog was available.
+- Task 9 inspected `jsonObjects`, `parseModelReview`, `decodedReviewFindings`, `reportedModel`, `runPaidCall`, and both provider paths.
+  `build-graph` is available, but `graph.db` is absent. Direct source inspection supplied the symbol context without a graph scan.
 - Fact: `../Workbooks/content/storytime/l2/` holds `w01.json` to `w08.json`. This track reads
   `w01` to `w07` only. The `w08` file is a real trap for a glob-based loader.
 - Fact: `out/` is git-ignored. Pictures, logs, the ledger, and the manifest are not in git. The
@@ -123,6 +127,20 @@ bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh printf '%s\n' '$(printf RB
 ```
 
 This call uses the argument form of `heavy-run.sh`. It starts no vitest, tsc, Chrome, or render.
+
+### TASK9_TYPECHECK_COMMAND
+
+```sh
+L=measure/runs/asset_storytime_l2_unit1_pictures_20261025/task9-tsc.log
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json' > "$L" 2>&1
+code=$?
+echo "tsc exit: $code"
+echo "owned tsc errors: $(grep -cE '^(src/storytime/|src/song/main\.ts|src/song/still-hook\.ts|scripts/storytime-book-pictures\.ts|tests/storytime-book-pictures\.test\.ts|tests/song-still-hook\.test\.ts|tests/storytime-line-art-pass\.test\.ts|tests/song-timeline\.test\.ts)' "$L")"
+echo "total tsc errors: $(grep -c 'error TS' "$L")"
+```
+
+Preserve each compiler log before the next gate. Inspect every compiler error, not only the counts.
+Require zero owned errors and at most 31 total errors. A nonzero exit without compiler diagnostics is a tool failure.
 
 ## 4. Phase 2 gates
 
@@ -536,6 +554,81 @@ Re-review on the task 8 HEAD:
 - Adversarial testing is required, with the task 8 mutations in the closeout gate.
 - Browser review is not applicable. No UI changes. Smoke run 6 is a render and middleware proof.
 
+### Task 9: Decoded-value remediation gate
+
+Risk class: **high**. RB3-01 persists a decoded model credential. RA4-01 discards malformed count keys before the check.
+Three review rounds found separate unchecked fields. A named-field list cannot close this defect class.
+
+Required design:
+
+- Add `decodedAnswerFindings(rawOutput: string): string[]` in `src/storytime/book-pictures.ts` as the shared behavior seam.
+- Use one walker for every decoded object that the answer yields, not only the selected review object.
+- Walk every object key and string value at every depth. Traverse arrays and unknown fields without a field allowlist.
+- Decode embedded JSON objects in strings, including plain or fenced `content`, through the same object extraction rules.
+  Scan each resulting object before any schema validation, field selection, early verdict return, or fallback.
+- Apply `secretFindings` to each decoded key and string value. Return pattern names only, never matched text.
+- Preserve the raw-byte credential check. The decoded check supplements it and changes no safe raw bytes.
+- MiniMax calls this seam inside `runPaidCall`'s callback, before it returns and records success.
+- Kimi calls this seam before any record write. A refusal leaves the begin ledger and source raw file byte-identical.
+- Both paths check before a raw copy, review write, or result log. MiniMax may append its sanitized failure entry.
+- Preserve safe reported MiniMax models from both envelopes. Preserve Kimi's declared model and `modelSource` behavior.
+- Keep existing parser behavior for safe malformed or unclear answers. Do not turn a safe FAIL response into a credential refusal.
+- Retain `decodedReviewFindings` for existing callers, if needed. Production acceptance must not depend on that named-field check.
+- Align the decoded-refusal message suffix for RC4-1: `the raw answer is refused; no review or raw copy is written.`
+  Name only the matched pattern. The suffix permits the sanitized MiniMax failure entry and claims no broader write exclusion.
+
+Red gate:
+
+- Model: `openai/gpt-6.1-sol#high`. Command: `ENGINE_HOOK_TEST_COMMAND`.
+- Add T96 to T103 in `tests/storytime-book-pictures.test.ts`. Keep T1 to T95 unchanged, including fixtures and assertions.
+- Require behavioral failures in T96 to T100 for both providers, or a missing shared seam in T102.
+  The 105 existing tests must pass. Record each exception with its cause.
+- A safe control may pass at Red. Name its adversarial mutation in the Red log.
+- Reject package, syntax, transform, timeout, and preflight failures as Red evidence.
+- Keep process, Vite, and browser mocks active. Tests start no real provider, process, server, or browser.
+- Commit only the assigned test and plan paths. Record the exact command, exit code, and labeled summary.
+
+Green gate:
+
+- Model: `volcengine-agent-plan/glm-5.3-flash#high`.
+- Rerun `ENGINE_HOOK_TEST_COMMAND` before implementation. Confirm the recorded Red failures.
+- Require exit 0 afterward. Require `Tests  <N> passed (<N>)` with the committed Red test count and no skipped tests.
+- Run `TASK9_TYPECHECK_COMMAND`. Require `owned tsc errors: 0` and `total tsc errors` no greater than 31.
+- Run `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts` and require exit 0.
+- Keep the server, capture code, rubric text, `PICTURE_RUBRIC_VERSION`, and earlier tests unchanged.
+- Limit implementation to `src/storytime/book-pictures.ts`. Report a need for another source path before changing it.
+- Make no paid call. Run no render, Vite server, or browser.
+
+Live proof decision: no new smoke run is necessary for task 9.
+The changed path decodes provider text and controls evidence writes. Injected runners exercise that complete path against real temporary files.
+Task 9 changes no server, capture code, renderer, or browser path. Smoke run 6 remains the live server and capture evidence.
+These tests prove provider-boundary behavior with synthetic inputs. They do not prove a new live provider call or a render.
+
+Task 9 closeout gate:
+
+- Run `ENGINE_HOOK_TEST_COMMAND` and `TASK9_TYPECHECK_COMMAND` again on the final task 9 HEAD.
+- Execute each mutation below separately under the focused command. Require its named new test to fail.
+- Restore only the mutation's assigned source edits between runs. Require the unchanged implementation to pass again.
+- Require Reviews A, B, and C on the same task 9 HEAD. Each review reads the three `review-*-cf5743b.json` reports.
+- Review A applies to traversal completeness, schema order, production calls, earlier-test preservation, and evidence truthfulness.
+- Review B applies to every decoded credential path and write boundary. Security review is required.
+- Review C applies to refusal timing, message parity, safe model preservation, and byte preservation. A short delta check is sufficient.
+- Adversarial testing is required. Browser review does not apply because no UI changes.
+- Correct RA4-N1's stale task 8 Green handoff during phase closeout. Keep immutable review reports unchanged.
+- Refresh `metadata.json actual_tasks` and generated facts during phase closeout, not in this strategy role.
+
+Task 9 mutations, with the tests that must fail:
+
+1. Restore task 8's named-fields-only check over `reason`, `issues`, and valid count keys (T96 to T100, T102).
+2. Walk only the selected review object, or only the first decoded object (T102).
+3. Check only after `CountsSchema` or a verdict fallback discards data (T98, T102).
+4. Skip keys, nested unknown objects, arrays, or embedded `content` decoding, one mutation per omission (T98, T99, T100, T97).
+5. Move the MiniMax check after the paid callback returns (T96 to T100: a success entry appears).
+6. Move the Kimi check after its first write (T96 to T100: the ledger or evidence changes).
+7. Trim safe raw text or replace safe reported models with the declared model (T101).
+8. Refuse every JSON answer, or return an empty finding list (T101, or T96 to T100).
+9. Use different decoded-refusal suffixes for the providers, or include matched text (T103).
+
 ### Phase 2 closeout gate
 
 - Run `ENGINE_HOOK_TEST_COMMAND` and the type check again on the final commit.
@@ -575,6 +668,9 @@ Re-review on the task 8 HEAD:
   10. Trim or normalize safe raw bytes (T82, T89, T90).
   11. Restore an invalid full SHA in an operative artifact (T95).
 - Reviews A, B, and C pass on the final HEAD.
+- Task 9 also passes its closeout gate, T96 to T103, and every declared mutation.
+- Correct RA4-N1 in `jr-green-77a7ace.log`: remove the stale pre-amendment HEAD and T95 count from its handoff.
+  Quote the final operative SHA scan result. Do not change immutable review findings.
 - `git status --short -- src/storytime scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts`
   prints nothing.
 - Run `./measure/generate.sh` after the plan status changes (A10).
@@ -728,6 +824,30 @@ Keep every T1 to T87 assertion unchanged.
 | T94 | RA3-02 and RC3-1: after `--begin`, a Kimi failure reason of 500 non-ASCII characters appends one failure entry. A reason of 501 non-ASCII characters is refused with the ledger byte-identical and no log. Use a multibyte character whose UTF-8 size exceeds one byte. | the 500-character reason is refused, the 501-character reason is written, or either case logs or writes at the wrong time. |
 | T95 | Documentation gate: every operative full 40-character Git ID in the section 4 artifact set resolves with `git rev-parse --verify`. Print `operative full SHAs checked: <n>` with `n >= 1` and `unresolved full SHAs: 0`. Immutable review quotations are excluded. | any operative full SHA does not resolve, the scan has no input, or either label is missing. |
 
+Decoded-value remediation tests (Phase 2 task 9). Keep T1 to T95 unchanged.
+T96 to T103 use the existing test file, fake runners, fixed clocks, captured logs, and temporary output roots.
+Each provider case uses a fresh root. Credentials contain or encode `SYNTHETIC` and exist only at runtime.
+Create Unicode escapes at runtime so the raw-byte scan misses the credential while the decoded check must find it.
+Use the supported `content` envelope with `base_resp.status_code: 0`. Keep the top-level control as a valid review object.
+For multiple-object cases, place the credential in the earlier object, then the later object, in separate fixtures.
+
+For every refused MiniMax case, require one before-call and one sanitized failure after-call, with no success entry.
+For every refused Kimi record, require the begin ledger and source raw file to remain byte-identical.
+Both paths must produce no review, raw copy, success log, or matched text in errors and logs.
+Scan every output file, not only the expected review path. Exclude only the deliberate external Kimi input fixture from credential searches.
+Compare that input fixture with its original bytes separately.
+
+| ID | Behavior | Falsification condition |
+| --- | --- | --- |
+| T96 | Both providers refuse an escaped credential in top-level `model`, beside a valid PASS review. Assert every refusal invariant above. | A provider records success, writes evidence, exposes matched text, or does not refuse. |
+| T97 | Both providers refuse an escaped `model` inside an envelope's JSON `content` string. Cover plain and fenced inner JSON. | An inner model bypasses the check or any refusal invariant fails. |
+| T98 | Both providers refuse an escaped key in malformed `observedCounts`. Use FAIL with a non-integer value and PASS with invalid counts. | Schema fallback removes the key before inspection, or either answer reaches persistence. |
+| T99 | Both providers refuse unknown fields at depth two or greater. Test an escaped credential as a key and as a string value. | A depth limit or field allowlist hides either credential, or a refusal invariant fails. |
+| T100 | Both providers refuse an escaped string array element inside an unknown nested field. Include an object element with a credential key. | Array traversal skips an element or key, or a refusal invariant fails. |
+| T101 | Both providers accept safe controls for top-level and `content` envelopes. Include escaped Unicode, nested unknown fields, arrays, CRLF, and trailing spaces. MiniMax keeps each safe reported model; Kimi keeps its declared model. Safe malformed counts retain the existing FAIL or unclear result. | A safe answer is refused, raw bytes change, a model changes, or safe parser behavior changes. |
+| T102 | The shared seam scans multiple decoded objects, including an unselected object and a nonzero-status envelope. Test every value kind and safe empty structures. Verify both provider paths refuse a hidden credential before fallback. | A selected-object check, early return, nonzero-status fallback, or missing shared call bypasses inspection; safe empty structures produce findings. |
+| T103 | Both providers use the task 9 decoded-refusal suffix and name only the pattern. Capture thrown errors and the final CLI error boundary. | Message endings differ, matched text escapes, or the error claims that MiniMax writes no failure entry. |
+
 Fixtures and mocks:
 
 - Read the real Workbooks packages read-only for T1 and T3. Copy them to a temporary root for
@@ -744,6 +864,7 @@ Fixtures and mocks:
 - Task 8 builds JSON Unicode escapes at runtime. It never embeds a decoded synthetic credential in
   a fixture file. The T88 entry uses an injected `errorLog`. The T92 probe uses a temporary Vite root
   and real HTTP requests. Only T92 starts a real server.
+- Task 9 reuses these provider seams with runtime escapes and temporary roots. It starts no real server or provider.
 
 ## 6. Kimi pre-check owner and mechanism
 
@@ -864,6 +985,8 @@ Guardrails:
   (T81 to T83).
 - From task 8, decoded review fields pass the same credential check before persistence or logging.
   Provider exceptions and final CLI errors use the same redaction boundary (T88 to T90).
+- From task 9, one shared walker checks every decoded key and string value before schema validation or fallback.
+  Both provider paths call it before success or persistence. A named-field list cannot satisfy this guardrail (T96 to T102).
 - From task 8, the server reads only the checked real path. Vite keeps its default credential deny
   entries and adds the absolute Storytime entry (T91 to T93).
 - Phase 2 task 5 changes nothing in `src/song/`. The live camera reads use the existing hook
@@ -914,6 +1037,8 @@ Changed-contract risks:
   not a hard-coded checkout path.
 - Task 8: a checked real path removes candidate symlink traversal. It does not prove protection
   against replacement of the real target after the check. No race resistance is claimed.
+- Task 9: unknown fields and malformed objects can now cause credential refusals. Safe models and raw bytes keep their existing behavior.
+  The decoded-refusal suffix changes for both providers. Review C checks parity without changing flags, schemas, or exit semantics.
 
 ## 9. Anti-pattern coverage
 
@@ -939,6 +1064,16 @@ Changed-contract risks:
 | A7 over-broad filter (task 8) | P2 | Preserve safe raw bytes in T89 and T90. Accept 500 non-ASCII characters in T94. Preserve safe diagnostics in T88. | The decoded scan changes safe bytes, the Unicode boundary uses bytes, or redaction removes all diagnostics. |
 | A9 archived track paths (task 8) | P2 | Keep T95 outside vitest. Unit tests reference no `measure/tracks/` path. | A product test embeds the current track path and breaks after archival. |
 | A10 generated-facts drift (task 8) | P2 | Refresh `actual_tasks` and generated facts during closeout, after task status changes. | `metadata.json` or generated facts disagree with the completed plan. |
+| A3 digit-only count (task 9) | P2 | Parse the labeled vitest total and compiler counts as integers. Require the committed test count and zero owned errors. | A date, arbitrary digit, missing label, or empty run satisfies a gate. |
+| A4 vacuous pass (task 9) | P2 | Pair every refusal with safe envelope controls. Inspect every output file and exact ledger events (T96 to T102). | Refusing every answer, scanning no files, or persisting before refusal passes. |
+| A5 false claim (task 9) | P2 | Quote actual gate results and failed mutations. Keep RA4-N1 open until closeout corrects its handoff. | The plan claims closure with a failed review, surviving mutation, or stale handoff. |
+| A6 registry overstatement (task 9) | P2 | Keep security completion claims pending until Reviews A, B, and C and the adversarial gate pass. | A completion claim precedes those results. |
+| A7 over-broad filter (task 9) | P2 | Traverse every key and string without schema filtering. Preserve safe bytes and models (T96 to T102). | A named-field list, fallback, or unknown-field omission passes; a safe answer changes or fails. |
+| A9 archived track paths (task 9) | P2 | Keep tests independent of Measure paths. Run provenance checks outside vitest. | A unit test gains a track path dependency. |
+| A10 generated-facts drift (task 9) | P2 | Refresh metadata and generated facts at phase closeout after status changes. | Managed facts disagree with the completed plan. |
+
+Task 9 applicability: A1 and A8 remain retired. A2 does not apply to this delta: it adds no publication or consent transition.
+Earlier release and person-review guards stay unchanged. Task 9 does not convert a model pre-check into acceptance.
 
 A1 and A8 are retired. Project candidates for a future `measure/anti-patterns.md`: (S1) a model
 pass treated as acceptance; (S2) a preflight hold read as a Red failure; (S3) a version overwrite;
@@ -957,6 +1092,9 @@ quoting, so `$(...)` runs.
 | Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. From task 7: the calibration refusal in `verify --release`, the `--raw` and `--reason` refusals, and the wrapper invocation. From task 8: final CLI errors, decoded-field refusal timing, and the Unicode reason limit. Review C runs on the task 8 HEAD. | Applies: the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
 | Adversarial testing | Required: the task 5, task 7, and task 8 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
 | UX browser review | Not applicable: no UI. The smoke runs are live render proofs. Smoke run 6 also proves middleware refusal, not browser UX. | Not applicable: model pre-checks, person counts, line-art looks, and Daniel's style look review the pictures. | Not applicable. | Not applicable. |
+
+Task 9 requires Reviews A, B, and C on its final HEAD. Its section 4 applicability supplements this table.
+Task 9 requires adversarial testing but no browser review or new smoke run.
 
 Review result format: the orchestrator gate reads `blocking_findings` and `nonblocking_findings` as
 arrays of non-empty strings. Each string starts with the finding ID, the severity, and the
@@ -985,6 +1123,8 @@ Evidence classes:
 - Failures in other suites and baseline tsc errors are known and outside this track. Record them
   in `known_failures`. They do not block a focused gate. Do not fix them here.
 - No test in this track is intentionally red after Red. A red test after Green blocks the phase.
+- Task 9 retains these rules. Intentionally red aggregate suites remain outside the focused command and stay explicitly recorded as known failures.
+  Do not suppress a task 9 failure with a test filter, skip, or baseline exception.
 
 ## 12. phase_base_sha capture point
 
@@ -1008,3 +1148,8 @@ Evidence classes:
    stays `1d39b8fd`. Immediately after the strategy commit lands, the orchestrator runs
    `git rev-parse HEAD` and captures that commit SHA as the immutable task 8 Red base. This capture
    happens before any Red edit or commit. The task 8 Red diffs from that captured commit.
+9. The decoded-value strategy commit lands before task 9 Red starts. Immediately afterward, the orchestrator runs `git rev-parse HEAD`.
+   Record that committed value as the immutable task 9 Red base. Do not use the pre-strategy `role_base_sha` as this base.
+   The immutable Phase 2 `phase_base_sha` remains the existing committed-strategy baseline `1d39b8fd`.
+   If the orchestrator opens a separate phase run, capture its `phase_base_sha` immediately after this strategy commit instead.
+   Capture either new base before any Red edit or commit. This strategy embeds no new pre-commit SHA as that base.
