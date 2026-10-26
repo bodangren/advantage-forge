@@ -227,7 +227,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `c1706332`) and `calibration/bad-one-sun-kimi.json` (call `4192765b`) have no `modelSource`,
   `callId`, or `rawFile`. Ledger entries 1 to 11 have no `modelSource`. These records are older
   than the task 5 fields. The calibration gate does not read these fields. The records stay unchanged.
-- [~] Task: Correct the Review B security findings and Review A RA2-N1. Review B failed Phase 2 at
+- [~] Task: Correct the Review B security findings and Review A RA2-N1. Commit `597013bd` (remediation)
+  and `c9ae988b` (file-server labels). Review B failed Phase 2 at
   `c2353433` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.json`).
   Risk class: high. Gates, seams, and tests: `test-strategy.md` section 4, task 7.
   RB-01: the render wrapper calls `heavy-run.sh` in its argument form, with no `-c` shell string.
@@ -259,6 +260,35 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Final output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t7.log`.
   `./measure/generate.sh --check` exited `1`: `status.md` and `asset-inventory.json` are stale. Existing generated changes remain unchanged.
   Green owns implementation, the type check, T87, smoke run 4 (T86), and the generated facts. Task 7 stays `[~]`.
+  Green reran the Red command first: exit `1`, `Tests  9 failed | 90 passed (99)`, T77 to T85 failed
+  as expected. Green implemented RB-01 to RB-05 and RA2-N1 in `src/storytime/book-pictures.ts` and
+  `scripts/storytime-book-pictures.ts`. Unit gate: exit `0`, `Tests  99 passed (99)`, no skip
+  (run again after the label commit with the same result). Type check:
+  `owned tsc errors: 1`, `baseline tsc errors: 32`. The one owned error is
+  `tests/storytime-book-pictures.test.ts(470,21)` TS2352, inside the committed Red test T77: the
+  cast `(...) as typeof spawnSync` does not overlap the real `spawnSync` return type (`stdout: null`
+  is not a Buffer). A standalone compile proves the error is intrinsic to the Red test, not to the
+  Green code. Green may not edit a committed Red test, so `owned tsc errors: 0` needs a Mid Red
+  retry or an authorized no-assertion amendment (cast through `unknown`). All Green implementation
+  files type-check clean. Smoke run 4 (T86): exit `0`; labels `hook before seek: absent`;
+  `window.__song keys: load,portrait,ready,seek`; `capture path: captureBookStill`;
+  `camera drift source: live`; `camera state drift: 0`; `color repeat identical: yes`;
+  `stage ink share: 2.12%`; `fixture interior ink: 0.00%`; `fixture ring rays: 360/360`;
+  `fixture depth step rows: 159/159`; `lineart-smoke: wrote 4 files under
+  out/storytime/l2/unit1/smoke/lineart-2026-10-26T04-59-55-631Z; wrote no book version.`
+  Color PNG SHA-256 `37a3acc55ace6e70373c82194a19a7becdef395409007233f9141b3d3a0d307d`, byte-identical
+  to smoke run 3 `color.png`. Green viewed the color and line-art PNGs: the color picture shows Nan
+  from behind in an orange shirt and red shorts, waving beside two stools, a table, a full bookcase,
+  a shuttered window, a fern, and a red-flower pot; the line-art picture draws the same scene as a
+  clean one-bit form-edge outline with every model present (Nan, table, stools, bookcase, window,
+  plant). T86 is not complete: the run output lacks `book files served: <n>` and
+  `book file requests refused: 0`, because the label printing was missing from the implementation.
+  Commit `c9ae988b` adds the labels; a fifth smoke run needs a new orchestrator dispatch to prove
+  `book files served` 2 or more and `book file requests refused: 0`. T87 gate row: the argument probe
+  printed the literal `$(printf RB_SUBSTITUTION_EXECUTED)` (argument probe: literal); the live scan
+  printed `live files scanned: 15` and `live credential findings: 0` over `cost-ledger.jsonl` and
+  `calibration/`, `raw/`, `candidates/`, and `reviews/`; `assertCalibrationReady` accepted
+  `out/storytime/l2/unit1` (exit `0`). No live credential was found, so no `[b] deferred:pm` applies.
 
 ## Phase 3: Week 1 pictures
 
