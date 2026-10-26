@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import type { spawnSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { copyFile, lstat, mkdir, mkdtemp, readdir, readFile, readlink, rm, stat, symlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -18,6 +18,7 @@ import {
 } from '../src/storytime/book-pictures.js';
 // Keep this import: the compiler reaches the command wrapper through this test.
 import { runStorytimeBookPictures } from '../scripts/storytime-book-pictures.js';
+import * as wrapperSeams from '../scripts/storytime-book-pictures.js';
 import * as pictureSeams from '../src/storytime/book-pictures.js';
 
 // These adapters isolate unspecified driver methods and packet fields from the assertions.
@@ -802,6 +803,279 @@ describe('Review B security remediation', () => {
       await json(path.join(fixture.outputRoot, fixture.styleFile), style);
       expect.soft(await fixture.states()).toEqual(['failed', 'failed', 'failed']);
     }
+  });
+});
+
+// Task 8 helpers. The JSON escape form is built at run time. No decoded credential enters a file.
+type EntryDependencies = {
+  pipeline?: (argv: string[]) => Promise<number>;
+  errorLog?: (message: string) => void;
+};
+type EntryFunction = (argv: string[], dependencies: EntryDependencies) => Promise<number>;
+function entrySeam(): EntryFunction | undefined {
+  return (wrapperSeams as unknown as { runStorytimeBookPicturesEntry?: EntryFunction })
+    .runStorytimeBookPicturesEntry;
+}
+/** The JSON `\u` escape form of a value. The decoded text holds the value. */
+function unicodeEscaped(value: string): string {
+  return [...value]
+    .map((character) => `\\u${(character.codePointAt(0) ?? 0).toString(16).padStart(4, '0')}`)
+    .join('');
+}
+async function refusedBy(action: () => Promise<unknown>): Promise<boolean> {
+  try {
+    await action();
+    return false;
+  } catch {
+    return true;
+  }
+}
+
+describe('Second security remediation', () => {
+  afterEach(() => { vi.unstubAllEnvs(); });
+
+  it('T88: the propagated provider error and the final CLI error carry no credential', async () => {
+    const values = syntheticCredentials();
+    const providerError =
+      `mmx exited with 1: provider unavailable. ${values.join(' | ')} ${'detail line '.repeat(60)}`;
+    const space = await sandbox();
+    const entries: LedgerEntry[] = [];
+    const details: PaidCallDetails = {
+      operation: 'vision-describe', provider: 'minimax', model: 'synthetic-model',
+      purpose: 'Synthetic propagated error test', jobId: job().id, version: 1,
+      price: { basis: 'Test fixture', marginalCashUsd: 0, note: 'No paid call.' },
+    };
+    let thrown: unknown;
+    try {
+      await runPaidCall({
+        paid: true, dryRun: false, details, now: CLOCK,
+        newCallId: () => 'synthetic-propagated-call',
+        call: async () => { throw new Error(providerError); },
+        appendLedger: async (entry) => { entries.push(entry); },
+      });
+    } catch (error) { thrown = error; }
+    expect.soft(thrown, 'The paid call rejects.').toBeInstanceOf(Error);
+    const propagated = thrown instanceof Error ? thrown.message : String(thrown);
+    for (const value of values) {
+      expect.soft(propagated, 'The propagated error holds no credential.').not.toContain(value);
+    }
+    expect.soft(propagated.length, 'The propagated error has 500 characters at most.')
+      .toBeLessThanOrEqual(500);
+    expect.soft(propagated, 'The propagated error keeps safe text.').toContain('provider unavailable');
+    expect.soft(entries).toHaveLength(2);
+    expect.soft(entries[1]).toMatchObject({ event: 'after-call', status: 'failure' });
+    const ledgerError = String((entries[1] as unknown as { error?: string }).error ?? '');
+    for (const value of values) {
+      expect.soft(ledgerError, 'The ledger error holds no credential.').not.toContain(value);
+    }
+    expect.soft(ledgerError.length, 'The ledger error has 500 characters at most.')
+      .toBeLessThanOrEqual(500);
+    await assertNoSyntheticValues([space.outputRoot], values);
+    const entry = entrySeam();
+    expect.soft(entry, 'The runStorytimeBookPicturesEntry seam exists.').toBeTypeOf('function');
+    if (typeof entry === 'function') {
+      const logged: string[] = [];
+      const code = await entry(['render', '--job', job().id], {
+        pipeline: async () => { throw new Error(providerError); },
+        errorLog: (message: string) => { logged.push(message); },
+      });
+      expect.soft(code, 'The entry returns the exit code 1.').toBe(1);
+      expect.soft(logged.length, 'The entry logs one message.').toBe(1);
+      const finalMessage = logged[0] ?? '';
+      for (const value of values) {
+        expect.soft(finalMessage, 'The final CLI message holds no credential.').not.toContain(value);
+      }
+      expect.soft(finalMessage.length, 'The final CLI message has 500 characters at most.')
+        .toBeLessThanOrEqual(500);
+      expect.soft(finalMessage, 'The final CLI message keeps safe text.')
+        .toContain('provider unavailable');
+    }
+  });
+
+  it('T89: the MiniMax decoded review fields pass the credential check before any write', async () => {
+    const values = syntheticCredentials();
+    const apiKey = values[0]!;
+    const escaped = unicodeEscaped(apiKey);
+    const payloads: Array<{ label: string; text: string }> = [
+      { label: 'reason',
+        text: `{"verdict":"PASS","reason":"The key ${escaped} is present.","observedCounts":{"subject":1},"issues":[]}` },
+      { label: 'issue',
+        text: `{"verdict":"PASS","reason":"The picture is clear.","observedCounts":{"subject":1},"issues":["The key ${escaped} is present."]}` },
+      { label: 'count key',
+        text: `{"verdict":"PASS","reason":"The picture is clear.","observedCounts":{"${escaped}":1},"issues":[]}` },
+    ];
+    for (const item of payloads) {
+      expect.soft(item.text.includes(apiKey), `${item.label}: the raw bytes hold no credential.`).toBe(false);
+      const mini = await sandbox();
+      await put(path.join(mini.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+      const refused = await refusedBy(() => precheckMiniMax({
+        ...mini, jobs: [job()], jobId: job().id, version: 1, paid: true, dryRun: false,
+        runner: async () => ({ stdout: item.text, stderr: '' }),
+      }));
+      expect.soft(refused, `${item.label}: the review is refused.`).toBe(true);
+      const entries = await securityLedger(mini.outputRoot);
+      const successes = entries.filter((entry) => entry.event === 'after-call' && entry.status === 'success');
+      expect.soft(successes.length, `${item.label}: no success entry.`).toBe(0);
+      const failures = entries.filter((entry) => entry.event === 'after-call' && entry.status === 'failure');
+      expect.soft(failures.length, `${item.label}: one failure entry.`).toBe(1);
+      const failureError = String((failures[0] as unknown as { error?: string } | undefined)?.error ?? '');
+      expect.soft(failureError, `${item.label}: the failure names the pattern.`).toMatch(/api-key/);
+      expect.soft(failureError, `${item.label}: the failure holds no credential.`).not.toContain(apiKey);
+      const files = (await tree(mini.outputRoot)).map((file) => path.relative(mini.outputRoot, file));
+      expect.soft(files.some((file) => file.startsWith('raw/')), `${item.label}: no raw copy.`).toBe(false);
+      expect.soft(files.some((file) => file.endsWith('-minimax.json')), `${item.label}: no review write.`)
+        .toBe(false);
+      await assertNoSyntheticValues([mini.outputRoot], values);
+    }
+    const safeReason = `The picture shows Nan ${unicodeEscaped('หนา')}.`;
+    const safe = `{"verdict":"PASS","reason":"${safeReason}","observedCounts":{"subject":1},"issues":[]}`;
+    const mini = await sandbox();
+    await put(path.join(mini.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+    const result = await precheckMiniMax({
+      ...mini, jobs: [job()], jobId: job().id, version: 1, paid: true, dryRun: false,
+      runner: async () => ({ stdout: safe, stderr: '' }),
+    });
+    expect(result.status).toBe('pass');
+    if (result.status === 'dry-run') throw new Error('The synthetic runner must run.');
+    expect(Buffer.from(result.review.rawOutput)).toEqual(Buffer.from(safe));
+    expect(result.review.reason).toBe('The picture shows Nan หนา.');
+    expect(await readFile(path.join(mini.outputRoot, result.review.rawFile!))).toEqual(Buffer.from(safe));
+    await assertNoSyntheticValues([mini.outputRoot], values);
+  });
+
+  it('T90: the Kimi decoded review fields pass the credential check before any write', async () => {
+    const values = syntheticCredentials();
+    const apiKey = values[0]!;
+    const escaped = unicodeEscaped(apiKey);
+    const payloads: Array<{ label: string; text: string }> = [
+      { label: 'reason',
+        text: `{"verdict":"PASS","reason":"The key ${escaped} is present.","observedCounts":{"subject":1},"issues":[]}` },
+      { label: 'issue',
+        text: `{"verdict":"PASS","reason":"The picture is clear.","observedCounts":{"subject":1},"issues":["The key ${escaped} is present."]}` },
+      { label: 'count key',
+        text: `{"verdict":"PASS","reason":"The picture is clear.","observedCounts":{"${escaped}":1},"issues":[]}` },
+    ];
+    for (const item of payloads) {
+      const kimi = await securityKimiFixture();
+      await put(kimi.raw, item.text);
+      const before = await fileSnapshot(kimi.outputRoot);
+      const refused = await refusedBy(() => runStorytimeCli(
+        [...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps,
+      ));
+      expect.soft(refused, `${item.label}: the record is refused.`).toBe(true);
+      expect.soft(await fileSnapshot(kimi.outputRoot), `${item.label}: the ledger stays byte-identical.`)
+        .toEqual(before);
+      for (const call of kimi.deps.log.mock.calls) {
+        expect.soft(String(call[0]), `${item.label}: the log holds no credential.`).not.toContain(apiKey);
+      }
+      await assertNoSyntheticValues([kimi.outputRoot], values);
+    }
+    const safeReason = `The picture shows Nan ${unicodeEscaped('หนา')}.`;
+    const safe = `{"verdict":"PASS","reason":"${safeReason}","observedCounts":{"subject":1},"issues":[]}`;
+    const kimi = await securityKimiFixture();
+    await put(kimi.raw, safe);
+    expect(await runStorytimeCli([...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps)).toBe(0);
+    const review = JSON.parse(
+      await readFile(path.join(kimi.outputRoot, `reviews/${job().id}-v1-kimi.json`), 'utf8'),
+    );
+    expect(review.rawOutput).toBe(safe);
+    expect(review.reason).toBe('The picture shows Nan หนา.');
+    expect(await readFile(path.join(kimi.outputRoot, review.rawFile))).toEqual(Buffer.from(safe));
+    await assertNoSyntheticValues([kimi.outputRoot], values);
+  });
+
+  it('T91: the server configuration keeps the Vite credential defaults and the absolute Storytime rule', async () => {
+    const space = await sandbox();
+    const input: CaptureInput = {
+      repoRoot: space.repoRoot, job: job(), stage: stageFile(space.repoRoot),
+      timeline: buildBookStillTimeline(stageSource()), size: { width: 3000, height: 2250 },
+    };
+    const config = await securitySeam('bookServerConfig')(input);
+    const deny = config.server.fs?.deny ?? [];
+    for (const rule of ['.env', '.env.*', '*.{crt,pem}', '**/.git/**']) {
+      expect.soft(deny, `The deny rule ${rule} stays.`).toContain(rule);
+    }
+    const absoluteRules = [
+      `${path.resolve(space.repoRoot, 'out/storytime')}/**`,
+      `${realpathSync(path.join(space.repoRoot, 'out/storytime'))}/**`,
+    ];
+    expect.soft(absoluteRules.some((rule) => deny.includes(rule)), 'The absolute Storytime rule stays.')
+      .toBe(true);
+    expect.soft(deny, 'The relative Storytime rule may stay.').toContain('out/storytime/**');
+    expect.soft(config.server.host, 'The loopback host stays.').toBe('127.0.0.1');
+    expect.soft(config.server.fs?.strict, 'The strict file mode stays.').toBe(true);
+    const plugins = config.plugins.filter((plugin) => plugin.name === 'storytime-book-files');
+    expect.soft(plugins, 'The protected file plugin stays.').toHaveLength(1);
+  });
+
+  it('T93: the server returns and reads the checked real path and refuses a protected stage target', async () => {
+    const allow = securitySeam('bookFileAllowlist');
+    const resolve = securitySeam('resolveBookFile');
+    const serve = securitySeam('serveBookFiles');
+    const space = await sandbox();
+    const modelTarget = path.join(space.repoRoot, 'out/models/target.glb');
+    await put(modelTarget, 'SYNTHETIC model target bytes');
+    await mkdir(path.join(space.repoRoot, 'out/hero'), { recursive: true });
+    await symlink(modelTarget, path.join(space.repoRoot, 'out/hero/hero.glb'));
+    const stageDirectory = path.join(space.repoRoot, 'docs/stage');
+    const stageTarget = path.join(stageDirectory, 'target.png');
+    await put(stageTarget, 'SYNTHETIC stage target bytes');
+    await symlink(stageTarget, path.join(stageDirectory, 'sign.png'));
+    const source = stageSource();
+    source.stage.sets = { classroom: { pictures: [{ file: 'sign.png', x: 0, y: 1, z: 0, w: 1 }] } };
+    const timeline = buildBookStillTimeline(source);
+    const allowlist = await allow({ repoRoot: space.repoRoot, stageDirectory, timeline });
+    expect.soft(await resolve(allowlist, '/out/hero/hero.glb'), 'The model path is the real path.')
+      .toBe(realpathSync(modelTarget));
+    expect.soft(await resolve(allowlist, '/stage/sign.png'), 'The stage path is the real path.')
+      .toBe(realpathSync(stageTarget));
+    const request = await middlewareDriver(serve(allowlist));
+    const modelResponse = await request('/out/hero/hero.glb');
+    expect.soft(modelResponse.res.statusCode, 'The model file is served.').toBe(200);
+    expect.soft(modelResponse.body.toString(), 'The model bytes are the target bytes.')
+      .toBe('SYNTHETIC model target bytes');
+    const stageResponse = await request('/stage/sign.png');
+    expect.soft(stageResponse.res.statusCode, 'The stage file is served.').toBe(200);
+    expect.soft(stageResponse.body.toString(), 'The stage bytes are the target bytes.')
+      .toBe('SYNTHETIC stage target bytes');
+    const protectedStage = path.join(space.repoRoot, 'out/storytime/l2/unit1/stage');
+    await put(path.join(protectedStage, 'sign.png'), 'SYNTHETIC private evidence');
+    const protectedAllowlist = await allow({
+      repoRoot: space.repoRoot, stageDirectory: protectedStage, timeline,
+    });
+    expect.soft(await resolve(protectedAllowlist, '/stage/sign.png'),
+      'The protected stage target is refused.').toBeUndefined();
+    const protectedRequest = await middlewareDriver(serve(protectedAllowlist));
+    const protectedResponse = await protectedRequest('/stage/sign.png');
+    expect.soft(protectedResponse.res.statusCode, 'The protected stage target gets 404.').toBe(404);
+    expect.soft(protectedResponse.next, 'The protected stage target calls no next.').not.toHaveBeenCalled();
+    expect.soft(protectedResponse.body.toString(), 'The protected stage target sends no evidence.')
+      .not.toContain('SYNTHETIC private evidence');
+  });
+
+  it('T94: the Kimi failure reason limit counts characters', async () => {
+    const kimi = await securityKimiFixture();
+    const reason = 'ก'.repeat(500);
+    expect(Buffer.byteLength(reason, 'utf8')).toBeGreaterThan(500);
+    let code: number | undefined;
+    let error: unknown;
+    try {
+      code = await runStorytimeCli(
+        [...kimi.args, '--record', kimi.callId, '--failed', '--reason', reason], kimi.deps,
+      );
+    } catch (caught) { error = caught; }
+    expect.soft(error, 'The 500-character reason is accepted.').toBeUndefined();
+    expect.soft(code, 'The 500-character reason returns 0.').toBe(0);
+    const entries = await securityLedger(kimi.outputRoot);
+    expect.soft(entries.length, 'The ledger holds the begin and the failure entry.').toBe(2);
+    expect.soft(entries[1]).toMatchObject({ event: 'after-call', status: 'failure', reason });
+    const long = await securityKimiFixture();
+    const before = await fileSnapshot(long.outputRoot);
+    const refused = await refusedBy(() => runStorytimeCli(
+      [...long.args, '--record', long.callId, '--failed', '--reason', 'ก'.repeat(501)], long.deps,
+    ));
+    expect.soft(refused, 'The 501-character reason is refused.').toBe(true);
+    expect.soft(await fileSnapshot(long.outputRoot), 'The refused reason writes nothing.').toEqual(before);
   });
 });
 
