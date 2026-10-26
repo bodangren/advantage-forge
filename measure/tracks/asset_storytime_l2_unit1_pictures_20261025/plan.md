@@ -310,7 +310,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   and T87 all pass on HEAD `0196627e`.
   Type-only amendment: `844fb72677592b09a8c0219b0225ea777cd6090e`; `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`; unit exit `0`; `Tests  99 passed (99)`; no assertion change. Commands: `heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'` and the task 7 unit command above. Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log` and `mid-red-vitest-245f8c1-retry.log` in the same directory. The first unit attempt exceeded the 120-second command timeout; the retry passed. Task 7 stays `[~]`.
 
-- [ ] Task: Correct the second Review B and third Review A findings. Risk class: high.
+- [~] Task: Correct the second Review B and third Review A findings. Risk class: high.
   Review B failed Phase 2 at `84c8ffdb` with RB2-01 to RB2-04. Review A failed with RA3-01 to
   RA3-03. Review C passed with nonblocking RC3-1. Gates, seams, and tests: `test-strategy.md`
   section 4, task 8.
@@ -333,6 +333,30 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   RA3-N1: `metadata.json actual_tasks` remains a closeout item. Refresh it when Phase 2 closes.
   Reviews A, B, and C run again on the task 8 HEAD. Adversarial testing is required. Browser review
   is not applicable because no UI changes.
+  Red evidence (2026-10-26, Red session, MiniMax-M3): test commit
+  `c33e0b9b59de32036ae66f4725bf89112527dce1`; exit code `1`; `Tests  6 failed | 99 passed (105)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The run had no syntax, transform, package, timeout, or preflight error. No lock wait line.
+  T88 failed because `runPaidCall` rethrows the original provider error and the
+  `runStorytimeBookPicturesEntry` seam is absent. T89 failed because the decoded `reason`,
+  `issues`, and count key reach a success entry, a raw copy, and a review write. T90 failed
+  because the Kimi record writes a review, a raw copy, and a success entry, and its log holds
+  the decoded credential. T91 failed because the deny list holds only `out/storytime/**`. T93
+  failed because both branches return the candidate path and a protected stage target serves
+  200 with evidence bytes. T94 failed because the 500-character reason is refused by the UTF-8
+  byte limit. The safe escaped Unicode controls in T89 and T90 pass.
+  All 99 earlier tests passed. Earlier-test exceptions: none. Every earlier assertion is
+  unchanged. The test file adds one `node:fs` import and one module import. No assertion
+  changed.
+  Type check: `tsc exit: 2`; `owned test file errors: 0`; `baseline tsc errors: 31`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t8.log`.
+  Vitest output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t8.log`.
+  Red scope deviation: the strategy assigns Red the correction of the invalid full SHA in
+  `mid-red-245f8c1.log`. This role owns only the test file and this plan. The correction stays
+  open for the orchestrator or Green. The invalid value is the 40-character SHA quoted on line
+  24 of `mid-red-245f8c1.log`. The valid value is
+  `245f8c1ae97d660eb475b87f92fd9951306dbc93`.
+  T92 and T95 stay with Green. Task 8 stays `[~]`.
 
 ## Phase 3: Week 1 pictures
 
