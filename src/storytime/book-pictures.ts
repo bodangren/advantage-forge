@@ -1,11 +1,11 @@
 import { spawn } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
-import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
-import { appendFile, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { existsSync, lstatSync, readFileSync, realpathSync, statSync } from 'node:fs';
+import { appendFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path, { posix } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Browser, Page } from 'playwright';
-import type { Plugin } from 'vite';
+import type { InlineConfig, Plugin } from 'vite';
 import sharp, { type OverlayOptions } from 'sharp';
 import { z } from 'zod';
 import { buildTimeline, type Spec, type Stage, type Timeline } from '../song/timeline.js';
@@ -921,6 +921,96 @@ export async function assertCalibrationReady(
   }
 }
 
+/** The redaction limit of RB-04: provider error text is cut to 500 characters. */
+const REDACTED_ERROR_MAX_CHARS = 500;
+/** The `--raw` size limit of RB-04. */
+const RAW_ANSWER_MAX_BYTES = 65_536;
+/** The failure reason limit of RB-04. */
+const FAILURE_REASON_MAX_BYTES = 500;
+
+/** The credential patterns of RB-04. A finding names the pattern; it never holds matched text. */
+const CREDENTIAL_PATTERNS: Array<{ name: string; regex: RegExp }> = [
+  {
+    name: 'private-key-block',
+    regex: /-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?(?:-----END [A-Z ]*PRIVATE KEY-----|$)/g,
+  },
+  { name: 'api-key-prefix', regex: /\bsk-[A-Za-z0-9_-]{20,}/g },
+  { name: 'bearer-token', regex: /\bBearer\s+[A-Za-z0-9._~+/=-]{16,}/gi },
+  { name: 'aws-access-key', regex: /\bAKIA[0-9A-Z]{16}\b/g },
+  { name: 'api-key-assignment', regex: /\bapi[_-]?key\s*=\s*[A-Za-z0-9._~+/=-]{8,}/gi },
+  { name: 'jwt-token', regex: /\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}/g },
+];
+
+const ENV_SECRET_SUFFIX = /(KEY|TOKEN|SECRET|PASSWORD)$/;
+
+/** The environment rules of RB-04: the exact value of every KEY, TOKEN, SECRET, or PASSWORD variable. */
+function envCredentialPatterns(env: NodeJS.ProcessEnv): Array<{ name: string; regex: RegExp }> {
+  const rules: Array<{ name: string; regex: RegExp }> = [];
+  for (const [name, value] of Object.entries(env)) {
+    if (!name || !ENV_SECRET_SUFFIX.test(name)) continue;
+    if (typeof value !== 'string' || value.length < 8) continue;
+    rules.push({ name: `env:${name}`, regex: new RegExp(escapeRegExp(value), 'g') });
+  }
+  return rules;
+}
+
+/** The credential pattern names that match the text (RB-04). A name never holds matched text. */
+export function secretFindings(text: string, env: NodeJS.ProcessEnv = process.env): string[] {
+  const findings: string[] = [];
+  for (const rule of [...CREDENTIAL_PATTERNS, ...envCredentialPatterns(env)]) {
+    rule.regex.lastIndex = 0;
+    if (rule.regex.test(text)) findings.push(rule.name);
+  }
+  return findings;
+}
+
+/** The text with every credential match replaced by `[redacted:<pattern>]` (RB-04). */
+export function redactSecrets(text: string, env: NodeJS.ProcessEnv = process.env): string {
+  let redacted = text;
+  for (const rule of [...CREDENTIAL_PATTERNS, ...envCredentialPatterns(env)]) {
+    rule.regex.lastIndex = 0;
+    redacted = redacted.replace(rule.regex, `[redacted:${rule.name}]`);
+  }
+  return redacted;
+}
+
+/**
+ * Reads a Kimi raw answer with the `--raw` limits of RB-04: an existing regular file (no
+ * symbolic link), at most 65,536 bytes, valid UTF-8, and no NUL byte. A safe answer returns
+ * byte for byte, with no trim and no line-end change.
+ */
+export async function readRawAnswer(file: string): Promise<string> {
+  const info = await lstat(file).catch(() => undefined);
+  if (!info || info.isSymbolicLink() || !info.isFile()) {
+    throw new Error(
+      `The raw answer must be an existing regular file, not a symbolic link or directory: ${file}`,
+    );
+  }
+  const bytes = await readFile(file);
+  if (bytes.byteLength > RAW_ANSWER_MAX_BYTES) {
+    throw new Error(
+      `The raw answer is ${bytes.byteLength} bytes; the limit is ${RAW_ANSWER_MAX_BYTES} bytes.`,
+    );
+  }
+  if (bytes.includes(0)) throw new Error('The raw answer contains a NUL byte; it is refused.');
+  return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
+}
+
+/**
+ * One exclusive output write (RB-03): the path resolves through `resolveOutputPath`, and the
+ * file is created with flag `wx`, so an existing file or file symbolic link is never followed
+ * or overwritten.
+ */
+export async function writeOutputFile(
+  outputRoot: string,
+  relativeFile: string,
+  bytes: Buffer | string,
+): Promise<void> {
+  const file = resolveOutputPath(outputRoot, relativeFile);
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(file, bytes, { encoding: 'utf8', flag: 'wx' });
+}
+
 export async function runPaidCall<T>(options: {
   paid: boolean;
   dryRun: boolean;
@@ -959,7 +1049,8 @@ export async function runPaidCall<T>(options: {
       callId,
       recordedAt: now().toISOString(),
       status: 'failure',
-      error: errorText(error),
+      // RB-04: provider error text is redacted and cut to 500 characters before persistence.
+      error: redactSecrets(errorText(error)).slice(0, REDACTED_ERROR_MAX_CHARS),
     });
     throw error;
   }
@@ -2003,7 +2094,9 @@ export async function buildManifest(
 async function styleLookSampleFilesValid(outputRoot: string, style: unknown): Promise<boolean> {
   const look = record(style);
   if (!look) return true;
-  const samples = Array.isArray(look.sampleFiles) ? look.sampleFiles : [];
+  // RA2-N1: a style look with an empty or absent sampleFiles list is invalid.
+  const samples = look.sampleFiles;
+  if (!Array.isArray(samples) || samples.length === 0) return false;
   for (const sample of samples) {
     const item = record(sample);
     if (!item || typeof item.file !== 'string' || typeof item.sha256 !== 'string') return false;
@@ -2053,28 +2146,200 @@ async function loadJobs(outputRoot: string): Promise<StorytimeJob[]> {
   return jobs;
 }
 
-function serveBookFiles(repoRoot: string, stageDirectory: string): Plugin {
-  const roots: Array<[string, string]> = [
-    ['/out/', path.join(repoRoot, 'out')],
-    ['/stage/', stageDirectory],
-  ];
+/** The model file rule of RB-02: `out/<name>/<name>.glb` with a lowercase slug name. */
+const BOOK_MODEL_FILE_PATTERN = /^([a-z0-9]+(?:-[a-z0-9]+)*)\/\1\.glb$/;
+
+/**
+ * The served files of the capture server (RB-02): the allowlisted `out/<name>/<name>.glb` models
+ * and the stage pictures that the loaded timeline names. The storytime output tree, which holds
+ * the ledger, raw answers, calibration logs, and candidates, is never served.
+ */
+export interface BookFileAllowlist {
+  /** The real path of `<repoRoot>/out`. */
+  outRoot: string;
+  /** The real path of `<repoRoot>/out/storytime`; every file at or below it is refused. */
+  storytimeRoot: string;
+  /** The resolved stage directory that holds the timeline pictures. */
+  stageDirectory: string;
+  /** The real path of the stage directory when it exists. */
+  stageRoot: string;
+  /** The picture files that the timeline names, relative to the stage directory. */
+  stageFiles: Set<string>;
+}
+
+export function bookFileAllowlist(input: {
+  repoRoot: string;
+  stageDirectory: string;
+  timeline: BookCaptureInput['timeline'];
+}): BookFileAllowlist {
+  const outRoot = realpathSync(path.join(path.resolve(input.repoRoot), 'out'));
+  const storytimeRoot = realpathSync(path.join(outRoot, 'storytime'));
+  const stageDirectory = path.resolve(input.stageDirectory);
+  let stageRoot = stageDirectory;
+  try {
+    stageRoot = realpathSync(stageDirectory);
+  } catch {
+    // A missing stage directory serves nothing.
+  }
+  const stageFiles = new Set<string>();
+  for (const shot of input.timeline.shots) {
+    for (const picture of shot.pictures) {
+      if (picture.file && !picture.file.split('/').includes('..')) stageFiles.add(picture.file);
+    }
+  }
+  return { outRoot, storytimeRoot, stageDirectory, stageRoot, stageFiles };
+}
+
+/** The allowlisted `out/<name>/<name>.glb` file for one path below the out root, or undefined. */
+function checkedModelFile(allowlist: BookFileAllowlist, relative: string): string | undefined {
+  if (!BOOK_MODEL_FILE_PATTERN.test(relative)) return undefined;
+  const candidate = path.join(allowlist.outRoot, relative);
+  let real: string;
+  try {
+    if (!statSync(candidate).isFile()) return undefined;
+    real = realpathSync(candidate);
+  } catch {
+    return undefined;
+  }
+  // The physical file must stay inside out/ and outside the storytime output tree (RB-02).
+  if (!inside(allowlist.outRoot, real, true) || inside(allowlist.storytimeRoot, real, true)) {
+    return undefined;
+  }
+  return candidate;
+}
+
+/**
+ * The checked real path of one server request path, or undefined for a refusal (RB-02). The
+ * request path is decoded and normalized before the prefix match; a decode error is a refusal.
+ */
+export function resolveBookFile(
+  allowlist: BookFileAllowlist,
+  requestPath: string,
+): string | undefined {
+  let pathname = requestPath;
+  const cut = pathname.search(/[?#]/);
+  if (cut >= 0) pathname = pathname.slice(0, cut);
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    return undefined;
+  }
+  if (decoded.includes('\0') || decoded.split('/').includes('..')) return undefined;
+  if (decoded.startsWith('/out/')) {
+    return checkedModelFile(allowlist, decoded.slice('/out/'.length));
+  }
+  if (decoded.startsWith('/@fs/')) {
+    const rest = decoded.slice('/@fs/'.length);
+    if (!path.isAbsolute(rest)) return undefined;
+    const relative = path.relative(allowlist.outRoot, path.resolve(rest));
+    if (relative.startsWith('..') || path.isAbsolute(relative)) return undefined;
+    return checkedModelFile(allowlist, relative);
+  }
+  if (decoded.startsWith('/stage/')) {
+    const relative = decoded.slice('/stage/'.length);
+    // Only a picture that the loaded timeline names is served (RB-02).
+    if (!allowlist.stageFiles.has(relative)) return undefined;
+    const candidate = path.join(allowlist.stageDirectory, relative);
+    let real: string;
+    try {
+      if (!statSync(candidate).isFile()) return undefined;
+      real = realpathSync(candidate);
+    } catch {
+      return undefined;
+    }
+    // A stage picture must stay physically inside the stage directory (no symlink escape).
+    if (!inside(allowlist.stageRoot, real, true)) return undefined;
+    return candidate;
+  }
+  return undefined;
+}
+
+function serverRequestPath(rawUrl: string): string | undefined {
+  try {
+    return new URL(rawUrl, 'http://localhost').pathname;
+  } catch {
+    return undefined;
+  }
+}
+
+function bookServerPrefix(value: string): boolean {
+  return /^\/(out|stage)\//.test(value) || value.startsWith('/@fs/');
+}
+
+/**
+ * The vite plugin of the capture server (RB-02): one middleware serves allowlisted files and
+ * refuses every other `/out/`, `/stage/`, and `/@fs/` request with 404 and no `next()` call.
+ * `stats()` reports the served and refused request counts.
+ */
+export function serveBookFiles(
+  allowlist: BookFileAllowlist,
+): Plugin & { stats(): { served: number; refused: number } } {
+  let served = 0;
+  let refused = 0;
   return {
     name: 'storytime-book-files',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        const url = new URL(req.url ?? '/', 'http://localhost');
-        const hit = roots.find(([prefix]) => url.pathname.startsWith(prefix));
-        if (!hit) return next();
-        const [prefix, directory] = hit;
-        const file = path.resolve(directory, decodeURIComponent(url.pathname.slice(prefix.length)));
-        if (!inside(directory, file, false) || !existsSync(file) || !statSync(file).isFile()) {
+        const raw = req.url ?? '/';
+        const pathname = serverRequestPath(raw) ?? raw;
+        let decoded: string | undefined;
+        try {
+          decoded = decodeURIComponent(pathname);
+        } catch {
+          decoded = undefined;
+        }
+        if (!bookServerPrefix(pathname) && (decoded === undefined || !bookServerPrefix(decoded))) {
+          next();
+          return;
+        }
+        const file = resolveBookFile(allowlist, pathname);
+        if (!file) {
+          refused += 1;
           res.statusCode = 404;
           res.end('missing');
           return;
         }
-        res.setHeader('content-type', FILE_TYPES[path.extname(file)] ?? 'application/octet-stream');
-        res.end(readFileSync(file));
+        try {
+          const bytes = readFileSync(file);
+          served += 1;
+          res.setHeader('content-type', FILE_TYPES[path.extname(file)] ?? 'application/octet-stream');
+          res.end(bytes);
+        } catch {
+          refused += 1;
+          res.statusCode = 404;
+          res.end('missing');
+        }
       });
+    },
+    stats() {
+      return { served, refused };
+    },
+  };
+}
+
+/**
+ * The vite server configuration of the production capture (RB-02): loopback host, strict file
+ * serving, a deny entry for the storytime output tree, and the protected file plugin.
+ */
+export function bookServerConfig(input: BookCaptureInput): InlineConfig {
+  const allowlist = bookFileAllowlist({
+    repoRoot: input.repoRoot,
+    stageDirectory: path.dirname(input.stage.absoluteFile),
+    timeline: input.timeline,
+  });
+  return {
+    root: input.repoRoot,
+    configFile: false,
+    logLevel: 'error',
+    plugins: [serveBookFiles(allowlist)],
+    server: {
+      host: '127.0.0.1',
+      port: 5900 + Math.floor(Math.random() * 300),
+      strictPort: false,
+      hmr: false,
+      watch: null,
+      fs: { strict: true, deny: ['out/storytime/**'] },
     },
   };
 }
@@ -2217,18 +2482,7 @@ async function openBookPage(input: BookCaptureInput): Promise<OpenedBookPage> {
   const { chromium } = await import('playwright');
   const { createServer } = await import('vite');
   const size = input.size ?? PICTURE_SIZES[input.job.size];
-  const server = await createServer({
-    root: input.repoRoot,
-    configFile: false,
-    logLevel: 'error',
-    plugins: [serveBookFiles(input.repoRoot, path.dirname(input.stage.absoluteFile))],
-    server: {
-      port: 5900 + Math.floor(Math.random() * 300),
-      strictPort: false,
-      hmr: false,
-      watch: null,
-    },
-  });
+  const server = await createServer(bookServerConfig(input));
   let browser: Browser | undefined;
   try {
     await server.listen();
@@ -2870,7 +3124,16 @@ export async function precheckMiniMax(options: {
     appendLedger: (entry) => appendLedgerEntry(options.outputRoot, entry),
     call: async (callId) => {
       paidCallId = callId;
-      return runner('mmx', args);
+      const result = await runner('mmx', args);
+      // RB-04: the raw answer is refused inside the paid call, before any write.
+      const findings = secretFindings(result.stdout || result.stderr);
+      if (findings.length > 0) {
+        throw new Error(
+          `The provider output matched credential pattern ${findings[0]}; ` +
+            'the raw answer is refused and nothing is written.',
+        );
+      }
+      return result;
     },
   });
   if (result === undefined) return { status: 'dry-run', args };
@@ -3132,6 +3395,18 @@ export async function precheckKimi(options: {
   };
   if (options.failed) {
     const reason = options.reason!;
+    // RB-04: a credential reason or a long reason is refused before any write.
+    const reasonFindings = secretFindings(reason);
+    if (reasonFindings.length > 0) {
+      throw new Error(
+        `The failure reason matched credential pattern ${reasonFindings[0]}; nothing is written.`,
+      );
+    }
+    if (Buffer.byteLength(reason, 'utf8') > FAILURE_REASON_MAX_BYTES) {
+      throw new Error(
+        `The failure reason is longer than ${FAILURE_REASON_MAX_BYTES} bytes; nothing is written.`,
+      );
+    }
     await appendLedgerEntry(options.outputRoot, {
       ...recordDetails,
       event: 'after-call',
@@ -3162,7 +3437,14 @@ export async function precheckKimi(options: {
   }
   const imageFile = path.isAbsolute(begin.file) ? begin.file : resolveOutputPath(options.outputRoot, begin.file);
   const imageBytes = await readFile(imageFile);
-  const rawOutput = await readFile(options.raw, 'utf8');
+  // RB-04: the raw answer goes through the `--raw` limits and the credential check before any write.
+  const rawOutput = await readRawAnswer(options.raw);
+  const rawFindings = secretFindings(rawOutput);
+  if (rawFindings.length > 0) {
+    throw new Error(
+      `The raw answer matched credential pattern ${rawFindings[0]}; nothing is written.`,
+    );
+  }
   const parsed = parseModelReview(rawOutput);
   const reviewBase = options.calibration
     ? `calibration/${options.calibration}-kimi`
@@ -3385,6 +3667,8 @@ export async function runStorytimeCli(
   argv: string[],
   dependencies: {
     repoRoot?: string;
+    /** Root of the Workbooks content packages; the release gate revalidates calibration against it. */
+    workbooksRoot?: string;
     runner?: ProviderRunner;
     capture?: BookCapture;
     readStage?: BookStageReader;
@@ -3395,7 +3679,11 @@ export async function runStorytimeCli(
   const { command, options } = parseCli(argv);
   const repoRoot = path.resolve(dependencies.repoRoot ?? FORGE_ROOT);
   const outputRoot = resolveOutputRoot(repoRoot, options.out);
-  const workbooksRoot = path.resolve(repoRoot, options.workbooks ?? DEFAULT_WORKBOOKS);
+  const workbooksRoot = options.workbooks
+    ? path.resolve(repoRoot, options.workbooks)
+    : dependencies.workbooksRoot
+      ? path.resolve(dependencies.workbooksRoot)
+      : DEFAULT_WORKBOOKS;
   const log = dependencies.log ?? console.log;
   const selection = {
     ...(options.week === undefined ? {} : { week: options.week }),
@@ -3446,10 +3734,12 @@ export async function runStorytimeCli(
     const timeline = buildBookStillTimeline(stage.source);
     const size = PICTURE_SIZES[smokeJob.size];
     const now = dependencies.now ?? (() => new Date());
-    const directory = `smoke/lineart-${now().toISOString().replace(/[:.]/g, '-')}`;
-    const smokeDirectory = path.join(outputRoot, directory);
+    const stamp = `lineart-${now().toISOString().replace(/[:.]/g, '-')}`;
+    // RB-03: smoke/ and the stamp directory resolve through resolveOutputPath.
+    const smokeDirectory = resolveOutputPath(outputRoot, 'smoke');
+    const stampDirectory = resolveOutputPath(outputRoot, `smoke/${stamp}`);
     if (options.dryRun) {
-      log(`lineart-smoke: would write color.png, lineart.png, fixture-lineart.png, and smoke.json under ${smokeDirectory}; no capture.`);
+      log(`lineart-smoke: would write color.png, lineart.png, fixture-lineart.png, and smoke.json under ${stampDirectory}; no capture.`);
       return 0;
     }
     const capture = dependencies.capture ?? captureBookStillSmoke;
@@ -3473,7 +3763,22 @@ export async function runStorytimeCli(
     }
     const stageInkShare = await inkSharePercent(smokeLineArt);
     log(`stage ink share: ${stageInkShare.toFixed(2)}%`);
-    await mkdir(smokeDirectory, { recursive: true });
+    // RB-03: every path check runs before the first write; each directory is created exclusively.
+    const outputReal = realpathSync(outputRoot);
+    if (existsSync(smokeDirectory)) {
+      const smokeStat = lstatSync(smokeDirectory);
+      if (smokeStat.isSymbolicLink() || !smokeStat.isDirectory()) {
+        throw new Error(
+          `The smoke directory must be a real directory inside the output root: ${smokeDirectory}`,
+        );
+      }
+      if (!inside(outputReal, realpathSync(smokeDirectory), true)) {
+        throw new Error(`The smoke directory escapes the output root: ${smokeDirectory}`);
+      }
+    } else {
+      await mkdir(smokeDirectory);
+    }
+    await mkdir(stampDirectory);
     const smokeFiles: Array<[string, Buffer | string]> = [
       ['color.png', smokePacket.color],
       ['lineart.png', smokeLineArt],
@@ -3499,9 +3804,9 @@ export async function runStorytimeCli(
       ],
     ];
     for (const [name, bytes] of smokeFiles) {
-      await writeFile(path.join(smokeDirectory, name), bytes);
+      await writeOutputFile(outputRoot, `smoke/${stamp}/${name}`, bytes);
     }
-    log(`lineart-smoke: wrote ${smokeFiles.length} files under ${smokeDirectory}; wrote no book version.`);
+    log(`lineart-smoke: wrote ${smokeFiles.length} files under ${stampDirectory}; wrote no book version.`);
     return 0;
   }
   if (command === 'precheck-minimax') {
@@ -3571,6 +3876,8 @@ export async function runStorytimeCli(
   }
   const jobs = await loadJobs(outputRoot);
   assertSourceHashes(jobs);
+  // RB-05: a release check revalidates the current calibration evidence before the manifest check.
+  if (options.release) await assertCalibrationReady(outputRoot, workbooksRoot, repoRoot);
   const manifest = await buildManifest(jobs, outputRoot, repoRoot);
   const failures = verifyManifest(manifest, {
     release: options.release,

@@ -12,6 +12,8 @@ export interface StorytimeWrapperDependencies {
   preflight?: () => number | Promise<number>;
   holdLock?: () => void;
   pipeline?: (argv: string[]) => Promise<number>;
+  /** The `spawnSync` seam of the heavy-run call; tests inject it, production defaults to `spawnSync`. */
+  spawn?: typeof spawnSync;
 }
 
 export async function runStorytimeBookPictures(
@@ -34,11 +36,15 @@ export async function runStorytimeBookPictures(
   }
   // The PM's one heavy command: heavy-run.sh takes the lock, runs the pre-flight inside the
   // lock with retries, and then runs this command. Never wrap it in a plain flock.
+  // RB-01: the argument form. Each CLI argument stays one array element, so bash never
+  // expands command substitutions in a render argument. The inner marker travels in `env`.
   const script = fileURLToPath(import.meta.url);
-  const inner = `${INNER_MARKER}=1 ${JSON.stringify(process.execPath)} --import tsx ${JSON.stringify(script)} ${argv
-    .map((argument) => JSON.stringify(argument))
-    .join(' ')}`;
-  const result = spawnSync('bash', [HEAVY_RUN, '-c', inner], { stdio: 'inherit' });
+  const spawnSyncFn = dependencies.spawn ?? spawnSync;
+  const result = spawnSyncFn(
+    'bash',
+    [HEAVY_RUN, process.execPath, '--import', 'tsx', script, ...argv],
+    { stdio: 'inherit', env: { ...process.env, [INNER_MARKER]: '1' } },
+  );
   return result.status ?? 1;
 }
 
