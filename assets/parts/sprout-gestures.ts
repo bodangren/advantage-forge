@@ -5,8 +5,9 @@ import { AGE5 } from './humanoid-kind.js';
 import type { HumanoidShape } from './humanoid-kind.js';
 
 /**
- * Sprout gestures: the seven week 1 gesture clips of Chibi Sprouts on the humanoid kind's skeleton
- * (`gesture-idle`, `-clap`, `-wave`, `-nod`, `-point-to-self`, `-point-forward`, `-hands-out`).
+ * Sprout gestures: the nine week 1 gesture clips of Chibi Sprouts on the humanoid kind's skeleton
+ * (`gesture-idle`, `-clap`, `-wave`, `-nod`, `-touch-nose`, `-touch-neck`, `-point-to-self`,
+ * `-point-forward`, `-hands-out`).
  * A Sprout adds them in `extra` with `sproutGestures(k, h)`. Every clip is 2 s, loops, and starts
  * and ends in the idle stance. The Workbooks compositor reads key frames at fixed times, so each
  * clip holds its named pose exactly at these times (it eases into and out of the key):
@@ -177,6 +178,42 @@ export function sproutGestures(k: AssetContext, h: HumanoidShape): void {
   clip('gesture-nod', (p) => {
     const tilt = keys(p, [[0, 0], [0.25, -12], [0.5, 15], [0.8, 0], [1, 0]] as const);
     return { head: { rotate: [tilt, 0, 0] } };
+  });
+
+  // ------------------------------------------------------------------ touch nose: the right mitten's narrow edge at the nose, a happy laugh
+  // The horizontal mitten stays beside the nose and above the mouth. A whole-body bounce keeps the contact.
+  const noseDirection = unit([0.95, 0.1, 0.3]);
+  const noseD = unit([-0.180690382, 0.3215428253, 0.9294951304]);
+  const noseHint: V3 = [0.9835336445, 0.0556668679, 0.1719382735];
+  const NOSE_AT: V3 = [-0.1470573952, 0.4674940943, 0.1500582448];
+  const noseGrip: V3 = [
+    NOSE_AT[0] - noseDirection[0] * FINGER_LENGTH,
+    NOSE_AT[1] - noseDirection[1] * FINGER_LENGTH,
+    NOSE_AT[2] - noseDirection[2] * FINGER_LENGTH,
+  ];
+  const noseGoal: Goal = { wrist: R.wristFor(noseGrip, noseD, noseHint), d: noseD, hint: noseHint, pole: [-0.45, 0.3, -0.08] };
+  clip('gesture-touch-nose', (p) => {
+    const f = ks(p, [[0, 0], [0.65, 1], [1.35, 1], [2, 0]]);
+    const laugh = ks(p, [[0, 0], [0.65, 0], [0.82, 1], [1, 0], [1.18, 1], [1.35, 0], [2, 0]]);
+    return {
+      ...R.pose(noseGoal, f),
+      hips: { move: [0, -0.006 * laugh, 0] },
+      head: { rotate: [34 * f, -45 * f, 0] },
+    };
+  });
+
+  // ------------------------------------------------------------------ touch neck: chin lifted, both fists at the front of the neck
+  const NECK_AT: V3 = [-0.058, 0.452, 0.063];
+  const neckD: V3 = [0.5, 0.75, 0.25];
+  const neckHint: V3 = [0, 0, 1];
+  const neckGoal: Goal = { wrist: R.wristFor(NECK_AT, neckD, neckHint), d: neckD, hint: neckHint, pole: [-0.4, 0.25, -0.1] };
+  clip('gesture-touch-neck', (p) => {
+    const f = ks(p, [[0, 0], [0.65, 1], [1.35, 1], [2, 0]]);
+    return {
+      ...both(neckGoal, f),
+      chest: { rotate: [-3 * f, 0, 0] },
+      head: { rotate: [-16 * f, 0, 0] },
+    };
   });
 
   // ------------------------------------------------------------------ point to self: the right hand on the chest, the elbow out
