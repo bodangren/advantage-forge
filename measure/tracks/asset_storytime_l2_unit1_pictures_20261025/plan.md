@@ -186,7 +186,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   to 159/159. The stage color and line-art pictures show the same tavern scene, and the line-art
   page has clean form edges plus depth edges on the floor borders. All task 5 gates pass.
   Task 6 remains pending.
-- [x] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
+- [x] Task: Run the Review A ledger and calibration operations. Commit `011dbbb9`. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
   first on MiniMax, then on Kimi, one paid call at a time. Check the quota before each call. The
