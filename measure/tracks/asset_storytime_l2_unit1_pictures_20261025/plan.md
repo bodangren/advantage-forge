@@ -310,7 +310,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   and T87 all pass on HEAD `0196627e`.
   Type-only amendment: `844fb72677592b09a8c0219b0225ea777cd6090e`; `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`; unit exit `0`; `Tests  99 passed (99)`; no assertion change. Commands: `heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'` and the task 7 unit command above. Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log` and `mid-red-vitest-245f8c1-retry.log` in the same directory. The first unit attempt exceeded the 120-second command timeout; the retry passed. Task 7 stays `[~]`.
 
-- [~] Task: Correct the second Review B and third Review A findings. Risk class: high.
+- [x] Task: Correct the second Review B and third Review A findings. Commit `c166c8e1`. Risk class: high.
   Review B failed Phase 2 at `84c8ffdb` with RB2-01 to RB2-04. Review A failed with RA3-01 to
   RA3-03. Review C passed with nonblocking RC3-1. Gates, seams, and tests: `test-strategy.md`
   section 4, task 8.
@@ -357,6 +357,51 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   24 of `mid-red-245f8c1.log`. The valid value is
   `245f8c1ae97d660eb475b87f92fd9951306dbc93`.
   T92 and T95 stay with Green. Task 8 stays `[~]`.
+  Green evidence (2026-10-26, Green session, GLM). Green reran the Red command first: exit `1`;
+  `Tests  6 failed | 99 passed (105)`; T88 to T91, T93, and T94 failed for the reviewed defects
+  and missing seams. Implementation commit `c166c8e1` (`src/storytime/book-pictures.ts`,
+  `scripts/storytime-book-pictures.ts`): RB2-01 adds `runStorytimeBookPicturesEntry(argv,
+  { pipeline, errorLog })` as the final CLI boundary; production binds `console.error`; the
+  propagated provider error and the final logged error take `redactSecrets` and the
+  500-character limit. RB2-02 adds `decodedReviewFindings` over the decoded `reason`, `issues`,
+  and count keys; the MiniMax call refuses inside the paid call and the Kimi record refuses
+  before any write, so safe raw bytes stay byte-identical. RB2-03 keeps the four Vite defaults
+  (`.env`, `.env.*`, `*.{crt,pem}`, `**/.git/**`) and adds the absolute
+  `<real repoRoot>/out/storytime/**` deny rule beside the relative one. RB2-04 and RA3-01:
+  `checkedModelFile` and the stage branch of `resolveBookFile` return the checked real path, and
+  the stage branch refuses a target inside the Storytime evidence tree. RA3-02: the Kimi failure
+  reason limit counts 500 characters, so the 500-character multibyte reason is accepted and 501
+  is refused. Smoke run 6 (T92) also prints the middleware probe labels; the probe builds a
+  temporary Vite root with synthetic `.env`, `key.pem`, `.git/config`, and Storytime evidence,
+  one allowlisted stage control, and one `createServer(bookServerConfig(...))` server over HTTP.
+  Unit gate: exit `0`; `Tests  105 passed (105)`; no skip. Command: `bash
+  ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts
+  tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t8.log`).
+  Smoke run 6 (T92): exit `0`; one run; output
+  `out/storytime/l2/unit1/smoke/lineart-2026-10-26T06-58-43-705Z`. Probe labels:
+  `middleware probe .env: refused`; `middleware probe pem: refused`;
+  `middleware probe git config: refused`; `middleware probe storytime: refused`;
+  `middleware probe stage control: served`; `middleware probe synthetic bytes exposed: 0`.
+  Capture labels: `hook before seek: absent`; `window.__song keys: load,portrait,ready,seek`;
+  `capture path: captureBookStill`; `camera drift source: live`; `camera state drift: 0`;
+  `color repeat identical: yes`; `stage ink share: 2.12%`; `book files served: 15`;
+  `book file requests refused: 0`; `lineart technique: song-page-form-edges-viewdepth-1bit-v2`;
+  `fixture interior ink: 0.00%`; `fixture ring rays: 360/360`;
+  `fixture depth step rows: 159/159`; `lineart-smoke: wrote 4 files under
+  out/storytime/l2/unit1/smoke/lineart-2026-10-26T06-58-43-705Z; wrote no book version.`
+  Green viewed both PNGs: the color picture shows Nan from behind in an orange shirt and red
+  shorts, waving beside two stools, a table, a full bookcase, a shuttered window, a fern, and a
+  red-flower pot; the line-art picture draws the same scene as a clean one-bit form-edge outline.
+  Every scene model is present (Nan, table, stools, bookcase, window, plant, pot).
+  RA3-03: the invalid full SHA quotation became the short form `245f8c1a` in
+  `measure/runs/asset_storytime_l2_unit1_pictures_20261025/jr-green-ec83581.log` line 71 and
+  `mid-red-245f8c1.log` line 24; nothing else changed in those logs; `git rev-parse --verify
+  245f8c1a^{commit}` resolves to the valid commit. T95 gate: `operative full SHAs checked: 14`;
+  `unresolved full SHAs: 0`. No paid call. One heavy render (smoke run 6). `src/song/`, the
+  rubric text, and `PICTURE_RUBRIC_VERSION` are unchanged.
 
 ## Phase 3: Week 1 pictures
 
