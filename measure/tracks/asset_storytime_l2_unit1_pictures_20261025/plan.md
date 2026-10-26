@@ -403,8 +403,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `unresolved full SHAs: 0`. No paid call. One heavy render (smoke run 6). `src/song/`, the
   rubric text, and `PICTURE_RUBRIC_VERSION` are unchanged.
 
-- [x] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
-  Commit `e9d8132b`.
+- [x] Task: Check every decoded key and string value before provider evidence writes. Commit `e9d8132b`. Risk class: high.
   Task 9 closes RB3-01 and RA4-01 from the reviews at `cf5743b7`. Review C passed with nonblocking RC4-1.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 9, and T96 to T103.
   One shared function walks every decoded JSON object from the answer, including every key and string value at any depth.
