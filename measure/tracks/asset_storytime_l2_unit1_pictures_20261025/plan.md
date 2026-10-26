@@ -509,6 +509,41 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Task 9 is complete on HEAD `e9d8132b`: RB3-01 and RA4-01 are closed. RA4-N1 and RA3-N1 stay
   closeout items.
 
+- [ ] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
+  Task 10 closes RB4-01 from the reviews at `53cc3ada`.
+  It also closes RC5-1, RC5-2, RC5-4, and RA5-02 on the same walker.
+  It moves the Kimi check before schema parsing and corrects the comment for RA5-03.
+  RC5-3 stays out of scope. Closeout may record it as tech debt.
+  Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 10, and T104 to T115.
+  One shared walker checks every decoded JSON value before schema parsing, selection, status fallback, or any write.
+  It decodes string layers that parse as JSON, at any number of layers.
+  It checks root arrays, array elements, and objects.
+  It uses an explicit worklist. It has no call-stack limit and no depth limit.
+  A hostile depth returns the normal refusal or a safe result. It does not raise `RangeError`.
+  The walker builds credential rules once per call. It visits each decoded value once.
+  A 65,536-byte hostile answer finishes within the task 10 time bound.
+  Both providers use this walker. MiniMax calls it inside the paid callback, before the success entry.
+  Kimi calls it before `parseModelReview` and before any record write.
+  The Kimi comment must match that order. The check reads the raw answer, not the schema result.
+  Do not export `decodedReviewFindings`. Delete it when no caller remains.
+  Safe raw bytes stay byte-identical. Safe reported models stay unchanged.
+  Pass T104 to T115 and every earlier test. Keep T1 to T103 unchanged.
+  Cover the three Review B source cases for both providers.
+  Include a third string layer, a deep credential, a deep safe answer, and the two time fixtures.
+  Use `ENGINE_HOOK_TEST_COMMAND` for Red, Green, adversarial testing, and closeout.
+  Run `TASK10_TYPECHECK_COMMAND` after Green and at closeout.
+  Run each declared mutation separately. Each mutation omits one path and fails one named test.
+  No new live smoke run is necessary. This task changes no server, capture code, renderer, or browser path.
+  Injected runners and temporary roots test the changed provider paths. Smoke run 6 remains the server evidence.
+  Make no paid call and run no render. Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  The table default for Red is `volcengine-agent-plan/deepseek-v4-pro#high`.
+  The orchestrator picks the Red route with `ra-quota`. This task names no Green model.
+  Reviews A, B, and C run again on the task 10 HEAD. Review C may use a short delta check.
+  Security review, UX/API review, and adversarial testing apply. Browser review does not apply because this task changes no UI.
+  RA4-N1 and RA3-N1 stay closeout items. RC5-3 is a tech-debt candidate, not a task 10 test.
+  Capture the task 10 Red base immediately after this strategy commit.
+  Run `git rev-parse HEAD` before any Red edit. Keep the Phase 2 baseline `1d39b8fd` unchanged.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write

@@ -7,6 +7,7 @@ after the section 8 guardrail fired in Green. Amended at `5ffdbf6e` for the Revi
 (Phase 2 tasks 5 and 6). Amended at `c2353433` for the Review B security remediation (Phase 2
 task 7). Amended from `84c8ffdb` for the second security remediation (Phase 2 task 8).
 Amended from `cf5743b7` for the decoded-value remediation (Phase 2 task 9).
+Amended from `53cc3ada` for the decoded-layer remediation (Phase 2 task 10).
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -21,6 +22,12 @@ gates. This file owns test commands, gates, fixtures, and review applicability.
 - Task 9 rechecked this gap and read the canonical catalog. No local catalog was available.
 - Task 9 inspected `jsonObjects`, `parseModelReview`, `decodedReviewFindings`, `reportedModel`, `runPaidCall`, and both provider paths.
   `build-graph` is available, but `graph.db` is absent. Direct source inspection supplied the symbol context without a graph scan.
+- Task 10 rechecked the catalog gap. No local catalog was available.
+- Task 10 read plan tasks 8 and 9, contract.md security rules, and the three review JSON files at `53cc3ada`.
+- Task 10 inspected `jsonObjects`, `decodedAnswerFindings`, `decodedReviewFindings`, `secretFindings`, `envCredentialPatterns`, `precheckMiniMax`, and `precheckKimi`.
+  `build-graph` is on PATH. `graph.db` is absent. No graph scan ran.
+- Task 10 ran one local node probe. It was not a heavy job. It made no paid call, render, or smoke run.
+  A rebuild of 1200 rules across 5426 keys took 6629 ms. One scan of that shape took 271 ms.
 - Fact: `../Workbooks/content/storytime/l2/` holds `w01.json` to `w08.json`. This track reads
   `w01` to `w07` only. The `w08` file is a real trap for a glob-based loader.
 - Fact: `out/` is git-ignored. Pictures, logs, the ledger, and the manifest are not in git. The
@@ -142,6 +149,20 @@ echo "total tsc errors: $(grep -c 'error TS' "$L")"
 Preserve each compiler log before the next gate. Inspect every compiler error, not only the counts.
 Require zero owned errors and at most 31 total errors. A nonzero exit without compiler diagnostics is a tool failure.
 
+### TASK10_TYPECHECK_COMMAND
+
+```sh
+L=measure/runs/asset_storytime_l2_unit1_pictures_20261025/task10-tsc.log
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json' > "$L" 2>&1
+code=$?
+echo "tsc exit: $code"
+echo "owned tsc errors: $(grep -cE '^(src/storytime/|src/song/main\.ts|src/song/still-hook\.ts|scripts/storytime-book-pictures\.ts|tests/storytime-book-pictures\.test\.ts|tests/song-still-hook\.test\.ts|tests/storytime-line-art-pass\.test\.ts|tests/song-timeline\.test\.ts)' "$L")"
+echo "total tsc errors: $(grep -c 'error TS' "$L")"
+```
+
+Task 10 uses this renamed copy. It must not overwrite `task9-tsc.log`.
+Require zero owned errors and at most 31 total errors. A nonzero exit without compiler diagnostics is a tool failure.
+
 ## 4. Phase 2 gates
 
 Risk class: **high**. Task 3 changes the shared song engine. Task 4 makes paid calls. Task 5
@@ -151,6 +172,7 @@ wrapper, the capture server, the smoke writer, the provider evidence, and the re
 closes three high security findings and the real-path, character-limit, and provenance findings.
 Task 1 and task 2 define the release gate, the
 output isolation, and the heavy-job order. A defect there allows a false release later.
+Task 10 closes a high finding that can persist an encoded credential.
 
 ### Task 1: Red
 
@@ -629,6 +651,132 @@ Task 9 mutations, with the tests that must fail:
 8. Refuse every JSON answer, or return an empty finding list (T101, or T96 to T100).
 9. Use different decoded-refusal suffixes for the providers, or include matched text (T103).
 
+### Task 10: Decoded-layer remediation gate
+
+Risk class: **high**. RB4-01 persists an encoded credential before any evidence write.
+The walker reads only brace objects. It misses JSON string layers, root arrays, and scalar array elements.
+RC5-1 and RC5-2 sit on that same walker. A depth limit is still forbidden.
+
+Required design:
+
+- Keep `decodedAnswerFindings(rawOutput: string)` as the shared behavior seam.
+- Check every decoded JSON value before schema parsing, selection, status fallback, or any write.
+- If the whole answer parses as JSON, walk that root value. A root value may be an object, an array, or a string.
+- If the whole answer does not parse, keep the existing prose and fence extraction. T96 to T103 must stay green.
+- When the root parse succeeds, do not scan that same text again. Visit each decoded value once.
+- On each string, parse it when it is valid JSON. Walk the result. Repeat for every later string layer.
+- Walk every array element, including scalar strings. Walk every object key and value. Use no field allowlist.
+- Use an explicit worklist. Do not recurse on the call stack. Do not add a depth ceiling.
+- A hostile depth returns findings or a safe empty result. It must not raise `RangeError`.
+- Build the credential rule list once per call. Do not rebuild it on each key or string.
+- Apply those rules to each decoded key and string. Return pattern names only.
+- Preserve the raw-byte credential check. Do not change safe raw bytes.
+- MiniMax calls the seam inside the paid callback, before it records success.
+- Kimi calls the seam before `parseModelReview` and before any record write.
+- The Kimi comment must match that order. It must state that the check reads the raw answer.
+- Both paths check before a raw copy, review write, or result log. MiniMax may append its sanitized failure entry.
+- A Kimi refusal leaves the begin ledger and the source raw file byte-identical.
+- Preserve safe reported MiniMax models. Preserve Kimi's declared model and `modelSource`.
+- Keep the decoded-refusal suffix from task 9. Do not change the raw-byte refusal text. RC5-3 is out of scope.
+- Do not export `decodedReviewFindings`.
+- Delete that function when no caller remains. Production acceptance must not call it.
+- Do not add a MiniMax answer-size limit. The 65,536-byte bound is a test bound, not a new product limit.
+- Limit implementation to `src/storytime/book-pictures.ts`. Report another source path before changing it.
+
+Red gate:
+
+- The table default is `volcengine-agent-plan/deepseek-v4-pro#high`. The orchestrator picks the route with `ra-quota`.
+- This strategy names no Green model.
+- Command: `ENGINE_HOOK_TEST_COMMAND`.
+- Add T104 to T115 in `tests/storytime-book-pictures.test.ts`. Keep T1 to T103 unchanged.
+- Require T104 to T110 to fail for both providers.
+- Require the stated seam failure in T111, T113, T114, and T115.
+- The 113 existing tests must pass. Record each exception with its cause.
+- T112 may pass at Red. Name its adversarial mutations in the Red log.
+- Reject package, syntax, transform, timeout, and preflight failures as Red evidence.
+- A time row is valid Red only when its labeled duration exceeds 2000. A pass under 2000 is not valid Red for that row.
+- Keep process, Vite, and browser mocks active. Tests start no real provider, process, server, or browser.
+- Commit only the assigned test and plan paths. Record the exact command, exit code, and labeled summary.
+
+Expected Red failures:
+
+- T104 fails because the extra string layer keeps escaped braces. Both providers persist the answer and record success.
+- T105 fails for the same reason at the third string layer.
+- T106 fails because a root array is not a brace object. The sibling credential is not checked.
+- T107 fails because the array string yields only the empty object. The credential element is lost.
+- T108 fails because the encoded credential is not checked before fallback can discard it.
+- T109 fails with `RangeError: Maximum call stack size exceeded`. The error has no pattern name and no suffix.
+- T110 fails with the same `RangeError` on a safe deep answer.
+- T111 fails because `decoded scan ms` is greater than 2000. Review C measured 14.3 s at depth 400.
+- T113 fails because `decodedReviewFindings` is still exported.
+- T114 fails because `precheckKimi` calls `parseModelReview` before `decodedAnswerFindings`.
+- T115 fails because `rule scan ms` is greater than 2000. The local probe measured 6629 ms for the rule rebuild alone.
+- T112 may pass. Its safe answers do not contain a decoded credential.
+
+Green gate:
+
+- The orchestrator picks the Green route. This strategy names no Green model.
+- Rerun `ENGINE_HOOK_TEST_COMMAND` before implementation. Confirm the recorded Red failures.
+- Require exit 0 afterward. Require `Tests  <N> passed (<N>)` with the committed Red test count and no skipped tests.
+- Run `TASK10_TYPECHECK_COMMAND`.
+- Require `owned tsc errors: 0`.
+- Require `total tsc errors` no greater than 31.
+- Run `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts`.
+- Require exit 0.
+- Keep the server, capture code, rubric text, `PICTURE_RUBRIC_VERSION`, and earlier tests unchanged.
+- Make no paid call. Run no render, Vite server, or browser.
+
+Live proof decision: no new smoke run is necessary for task 10.
+The changed path decodes provider text and controls evidence writes.
+Injected runners exercise that path against real temporary files.
+Task 10 changes no server, capture code, renderer, or browser path.
+Smoke run 6 remains the live server and capture evidence.
+These tests prove provider-boundary behavior with synthetic inputs.
+They do not prove a new live provider call or a render.
+
+Task 10 closeout gate:
+
+- Run `ENGINE_HOOK_TEST_COMMAND` again on the final task 10 HEAD.
+- Run `TASK10_TYPECHECK_COMMAND` again on that same HEAD.
+- Execute each mutation below separately.
+- Use this command for each product mutation:
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+```
+- Restore only that mutation before the next run. Require the unchanged implementation to pass again.
+- Require Reviews A, B, and C on the same task 10 HEAD.
+- Each review reads `review-a-53cc3ad.json`, `review-b-53cc3ad.json`, and `review-c-53cc3ad.json`.
+- Review A applies to layer coverage, call order, mutation isolation, the dead export, and evidence truthfulness.
+- Review B applies to every decoded credential path and write boundary. Security review is required.
+- Review C applies to refusal text, the deep-answer result, the export change, and the time bound. A short delta check is sufficient.
+- Adversarial testing is required. Browser review does not apply because no UI changes.
+- Keep RA4-N1 and RA3-N1 as closeout items. Do not close them in this task.
+- Record RC5-3 as a tech-debt candidate. Do not change the raw-byte refusal text here.
+
+Task 10 mutations, with the one named test that must fail:
+
+1. Do not parse JSON string layers (T104). The same single change also fails T105, T107, T108, and T109. Record those failures. Do not add a second omission.
+2. Parse only one string layer (T105).
+3. Do not walk a root array (T106).
+4. Walk array objects and skip scalar array elements (T107).
+5. Pass the schema result, or skip the check when status fallback returns unclear (T108).
+6. Restore direct recursion (T110). The same change also fails T109. Record both.
+7. Add a depth ceiling below 4000 and return no finding past it (T109). T110 must still pass.
+8. Catch `RangeError` and return no findings (T109).
+9. Re-extract nested objects from the raw text and from every string (T111).
+10. Build credential rules inside the per-key loop (T115).
+11. Export `decodedReviewFindings` again (T113).
+12. Call `parseModelReview` before the Kimi decoded check, while the check still reads the raw answer (T114).
+13. Restore a Kimi comment that contradicts the call order (T114).
+14. Trim safe raw bytes, or replace safe reported models with the declared model (T112).
+15. Refuse every JSON string, including a safe string layer (T112).
+16. Refuse every root array, including a safe review array (T112).
+17. Catch every walker error and refuse every answer (T112).
+
+Each mutation changes one path. Do not restate it by limiting a second path.
+RA5-01 stays closed only when that isolation holds.
+
 ### Phase 2 closeout gate
 
 - Run `ENGINE_HOOK_TEST_COMMAND` and the type check again on the final commit.
@@ -669,6 +817,8 @@ Task 9 mutations, with the tests that must fail:
   11. Restore an invalid full SHA in an operative artifact (T95).
 - Reviews A, B, and C pass on the final HEAD.
 - Task 9 also passes its closeout gate, T96 to T103, and every declared mutation.
+- Task 10 also passes its closeout gate, T104 to T115, and every declared mutation.
+- Record RC5-3 as a tech-debt candidate. Do not treat that note as a closed finding.
 - Correct RA4-N1 in `jr-green-77a7ace.log`: remove the stale pre-amendment HEAD and T95 count from its handoff.
   Quote the final operative SHA scan result. Do not change immutable review findings.
 - `git status --short -- src/storytime scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts`
@@ -848,6 +998,51 @@ Compare that input fixture with its original bytes separately.
 | T102 | The shared seam scans multiple decoded objects, including an unselected object and a nonzero-status envelope. Test every value kind and safe empty structures. Verify both provider paths refuse a hidden credential before fallback. | A selected-object check, early return, nonzero-status fallback, or missing shared call bypasses inspection; safe empty structures produce findings. |
 | T103 | Both providers use the task 9 decoded-refusal suffix and name only the pattern. Capture thrown errors and the final CLI error boundary. | Message endings differ, matched text escapes, or the error claims that MiniMax writes no failure entry. |
 
+Decoded-layer remediation tests (Phase 2 task 10). Keep T1 to T103 unchanged.
+T104 to T110 and T112 use fake runners, fixed clocks, captured logs, and temporary output roots.
+T111 and T115 call the shared seam only. T113 reads the module export. T114 reads the source file.
+T113 and T114 are not live behavior tests.
+Each provider case uses a fresh root. Build the credential at runtime as `sk-` plus `SYNTHETIC` repeated four times.
+Build Unicode escapes at runtime. Do not store a decoded credential in a fixture file.
+Use the Review B constructions below. Keep the task 9 refusal invariants for every refused provider case.
+Give T109, T110, T111, and T115 a 120000 ms test limit. Build deep JSON text in a loop. Do not recurse in the test helper.
+
+Review B constructions:
+
+```js
+const secret = 'sk-' + 'SYNTHETIC'.repeat(4);
+const escaped = Array.from(secret, (c) => String.fromCharCode(92) + 'u' + c.charCodeAt(0).toString(16).padStart(4, '0')).join('');
+const safe = { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] };
+const hiddenObject = JSON.stringify({ value: secret }).replaceAll(secret, escaped);
+const case1 = JSON.stringify({ ...safe, unknown: JSON.stringify(hiddenObject) });
+const case2 = JSON.stringify({ ...safe, unknown: JSON.stringify([secret, {}]).replaceAll(secret, escaped) });
+const case3 = JSON.stringify([safe, secret]).replaceAll(secret, escaped);
+```
+
+T105 wraps `hiddenObject` in one more `JSON.stringify` before it is placed in `unknown`.
+T108 uses a nonzero-status envelope. Its `content` string is `JSON.stringify` of the case 2 array text.
+T111 is valid nested JSON at depth 400, padded to 65,536 UTF-8 bytes, with no credential and no NUL.
+T115 is one wide JSON object of 65,536 UTF-8 bytes. It adds 1200 env names `TASK10_SECRET_<n>` whose values are `sek` + 8 hex digits + `SYNTHETICVALUE`.
+Restore those env names in a `finally` block.
+Print `decoded scan ms: <n>` for T111.
+Print `rule scan ms: <n>` for T115.
+Parse each labeled integer.
+
+| ID | Behavior | Falsification condition |
+| --- | --- | --- |
+| T104 | Both providers refuse Review B case 1. The extra string layer hides the escaped credential. Assert every task 9 refusal invariant. | A provider records success, writes evidence, or does not refuse. |
+| T105 | Both providers refuse three string layers. One layer is not enough. | A one-layer decode accepts the answer, or a refusal invariant fails. |
+| T106 | Both providers refuse Review B case 3. The walker checks the root array and the sibling string. | Object extraction accepts the array, or a refusal invariant fails. |
+| T107 | Both providers refuse Review B case 2. The walker checks the scalar array element. | The empty object hides the credential, or a refusal invariant fails. |
+| T108 | Both providers refuse a nonzero-status envelope whose only credential is inside a string-layer array. The check reads the raw answer. | Status fallback discards the credential, or a refusal invariant fails. |
+| T109 | Both providers refuse an escaped credential at object depth 4000. The result uses the task 9 suffix. The call does not raise `RangeError`. | The call throws, the suffix is missing, or the deep credential is accepted. |
+| T110 | A safe object at depth 4000 does not throw. Both providers keep the existing parser result and the raw bytes. | The call throws, a safe answer is refused, or raw bytes change. |
+| T111 | The seam scans a 65,536-byte nested answer at depth 400 within 2000 ms. It returns no finding and does not throw. This is a walker test, not a live provider test. | `decoded scan ms` is missing, over 2000, or the call throws or returns a finding. |
+| T112 | Both providers accept safe string layers, a safe root array, a safe encoded array, and escaped Unicode that is not a credential. Raw bytes and reported models stay unchanged. | A safe answer is refused, raw bytes change, or a model changes. |
+| T113 | `decodedReviewFindings` is not an export. This is an artifact test, not live behavior. | The name is exported. |
+| T114 | In `precheckKimi` and `precheckMiniMax`, the decoded check runs before `parseModelReview`. The Kimi comment matches that order and says the check reads the raw answer. This is a documentation test, not live behavior. | The Kimi call order is reversed, or the comment contradicts the code. |
+| T115 | The seam scans the wide 65,536-byte answer with 1200 injected secrets within 2000 ms. Rules are built once. This is a walker test, not a live provider test. | `rule scan ms` is missing or over 2000, or the test leaves injected env names behind. |
+
 Fixtures and mocks:
 
 - Read the real Workbooks packages read-only for T1 and T3. Copy them to a temporary root for
@@ -865,6 +1060,7 @@ Fixtures and mocks:
   a fixture file. The T88 entry uses an injected `errorLog`. The T92 probe uses a temporary Vite root
   and real HTTP requests. Only T92 starts a real server.
 - Task 9 reuses these provider seams with runtime escapes and temporary roots. It starts no real server or provider.
+- Task 10 reuses those seams. It starts no real server or provider. T111 and T115 call the seam only. T113 and T114 read source or exports.
 
 ## 6. Kimi pre-check owner and mechanism
 
@@ -987,6 +1183,8 @@ Guardrails:
   Provider exceptions and final CLI errors use the same redaction boundary (T88 to T90).
 - From task 9, one shared walker checks every decoded key and string value before schema validation or fallback.
   Both provider paths call it before success or persistence. A named-field list cannot satisfy this guardrail (T96 to T102).
+- From task 10, the walker also checks JSON string layers, root arrays, and scalar array elements (T104 to T108).
+  It uses a worklist and builds credential rules once (T109 to T111, T115). It does not export `decodedReviewFindings` (T113).
 - From task 8, the server reads only the checked real path. Vite keeps its default credential deny
   entries and adds the absolute Storytime entry (T91 to T93).
 - Phase 2 task 5 changes nothing in `src/song/`. The live camera reads use the existing hook
@@ -1039,6 +1237,10 @@ Changed-contract risks:
   against replacement of the real target after the check. No race resistance is claimed.
 - Task 9: unknown fields and malformed objects can now cause credential refusals. Safe models and raw bytes keep their existing behavior.
   The decoded-refusal suffix changes for both providers. Review C checks parity without changing flags, schemas, or exit semantics.
+- Task 10: a JSON string can now cause a credential refusal. Safe string layers and safe arrays must still pass (T112).
+  The Kimi check moves before schema parsing. Flags, exit codes, and evidence shapes stay unchanged.
+  RC5-3 stays open. Do not treat the raw-byte refusal text as changed.
+  A 65,536-byte time bound does not add a MiniMax size limit.
 
 ## 9. Anti-pattern coverage
 
@@ -1071,6 +1273,16 @@ Changed-contract risks:
 | A7 over-broad filter (task 9) | P2 | Traverse every key and string without schema filtering. Preserve safe bytes and models (T96 to T102). | A named-field list, fallback, or unknown-field omission passes; a safe answer changes or fails. |
 | A9 archived track paths (task 9) | P2 | Keep tests independent of Measure paths. Run provenance checks outside vitest. | A unit test gains a track path dependency. |
 | A10 generated-facts drift (task 9) | P2 | Refresh metadata and generated facts at phase closeout after status changes. | Managed facts disagree with the completed plan. |
+| A3 digit-only count (task 10) | P2 | Parse `decoded scan ms` and `rule scan ms` as labeled integers. Parse the vitest total the same way. | A date, an arbitrary digit, or a missing label satisfies the time bound. |
+| A4 vacuous pass (task 10) | P2 | Pair each refusal with a safe control (T110, T112). T111 and T115 must call the seam and print a duration. | An empty finding list, a skipped seam call, or a refused safe answer passes. |
+| A5 false claim (task 10) | P2 | Quote the Red failures and the mutation results. Do not claim RB4-01 is closed before those gates pass. | The plan claims closure while a named test or review fails. |
+| A6 registry overstatement (task 10) | P2 | Keep security completion claims pending until Reviews A, B, and C and the adversarial gate pass. | A completion claim precedes those results. |
+| A7 over-broad filter (task 10) | P2 | Decode JSON strings without refusing safe Unicode or safe arrays (T112). Do not change safe raw bytes. | Every string layer is refused, or a safe byte changes. |
+| A9 archived track paths (task 10) | P2 | T114 reads `src/storytime/book-pictures.ts` only. Tests still reference no `measure/tracks/` path. | A unit test gains a track path dependency. |
+| A10 generated-facts drift (task 10) | P2 | Refresh metadata and generated facts at phase closeout, after the task 10 status change. | Managed facts disagree with the completed plan. |
+
+Task 10 applicability: A1 and A8 remain retired. A2 does not apply to this delta. It adds no publication or consent transition.
+Earlier release and person-review guards stay unchanged. Task 10 does not convert a model pre-check into acceptance.
 
 Task 9 applicability: A1 and A8 remain retired. A2 does not apply to this delta: it adds no publication or consent transition.
 Earlier release and person-review guards stay unchanged. Task 9 does not convert a model pre-check into acceptance.
@@ -1096,6 +1308,10 @@ quoting, so `$(...)` runs.
 Task 9 requires Reviews A, B, and C on its final HEAD. Its section 4 applicability supplements this table.
 Task 9 requires adversarial testing but no browser review or new smoke run.
 
+Task 10 requires Reviews A, B, and C on its final HEAD. Security review applies to the decoded credential paths.
+UX/API review applies to the refusal result, the export removal, and the Kimi call order. A short delta check is sufficient.
+Adversarial testing applies. Use the task 10 mutations. Browser review does not apply. This task changes no UI.
+
 Review result format: the orchestrator gate reads `blocking_findings` and `nonblocking_findings` as
 arrays of non-empty strings. Each string starts with the finding ID, the severity, and the
 location. Review A at `5ffdbf6e` used objects. The next reviews use strings. Other fields can
@@ -1111,7 +1327,10 @@ Evidence classes:
   (T75). Phase 2 task 7 proves the capture server allowlist and the guarded smoke writer in smoke
   run 4 (T86), and the wrapper argument form and the live credential scan in T87. Phase 2 task 8
   proves the real Vite middleware refusals and the production capture in smoke run 6 (T92). T95 is
-  documentation proof, not live behavior proof. The Phase 3 Nan sample proves
+  documentation proof, not live behavior proof. Phase 2 task 10 adds no live proof.
+  T104 to T110 and T112 are injected provider-boundary tests. T111 and T115 are seam timing tests.
+  T113 is an export artifact test. T114 is a documentation test. None of them calls a live provider or a browser.
+  The Phase 3 Nan sample proves
   the real capture, the line-art pass, both formats, and the twin binding under the lock.
 - **Model pre-check:** MiniMax and Kimi logs on color candidates. Never acceptance.
 - **Person-checked or owner-passed:** person logs and line-art looks from Daniel or his named
@@ -1125,6 +1344,9 @@ Evidence classes:
 - No test in this track is intentionally red after Red. A red test after Green blocks the phase.
 - Task 9 retains these rules. Intentionally red aggregate suites remain outside the focused command and stay explicitly recorded as known failures.
   Do not suppress a task 9 failure with a test filter, skip, or baseline exception.
+- Task 10 retains these rules. A red T104 to T115 result after Green blocks the phase.
+  Do not suppress a task 10 failure with a test filter, skip, or baseline exception.
+  Baseline tsc errors outside the owned paths stay known failures. They do not block the focused gate.
 
 ## 12. phase_base_sha capture point
 
@@ -1153,3 +1375,8 @@ Evidence classes:
    The immutable Phase 2 `phase_base_sha` remains the existing committed-strategy baseline `1d39b8fd`.
    If the orchestrator opens a separate phase run, capture its `phase_base_sha` immediately after this strategy commit instead.
    Capture either new base before any Red edit or commit. This strategy embeds no new pre-commit SHA as that base.
+10. The decoded-layer strategy commit lands before task 10 Red starts. Immediately afterward, the orchestrator runs `git rev-parse HEAD`.
+    Record that committed value as the immutable task 10 Red base. Do not use `53cc3ada` or any earlier SHA as this base.
+    The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
+    If the orchestrator opens a separate phase run for task 10, capture that `phase_base_sha` immediately after this strategy commit.
+    Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.
