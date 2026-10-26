@@ -227,7 +227,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `c1706332`) and `calibration/bad-one-sun-kimi.json` (call `4192765b`) have no `modelSource`,
   `callId`, or `rawFile`. Ledger entries 1 to 11 have no `modelSource`. These records are older
   than the task 5 fields. The calibration gate does not read these fields. The records stay unchanged.
-- [~] Task: Correct the Review B security findings and Review A RA2-N1. Commit `597013bd` (remediation)
+- [x] Task: Correct the Review B security findings and Review A RA2-N1. Commit `597013bd` (remediation)
   and `c9ae988b` (file-server labels). Review B failed Phase 2 at
   `c2353433` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.json`).
   Risk class: high. Gates, seams, and tests: `test-strategy.md` section 4, task 7.
@@ -289,6 +289,25 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   printed `live files scanned: 15` and `live credential findings: 0` over `cost-ledger.jsonl` and
   `calibration/`, `raw/`, `candidates/`, and `reviews/`; `assertCalibrationReady` accepted
   `out/storytime/l2/unit1` (exit `0`). No live credential was found, so no `[b] deferred:pm` applies.
+  Amendment and smoke run 5: Red amended the T77 cast with the authorized no-assertion change
+  `as unknown as typeof spawnSync` (commit `844fb726`, plan `0196627e`); the type check on that HEAD
+  then printed `owned tsc errors: 0` and `baseline tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t7b.log`). The unit gate and
+  T87 stayed valid. Smoke run 5 (T86, authorized dispatch): exit `0`; all T74 labels in range again
+  (`hook before seek: absent`; `window.__song keys: load,portrait,ready,seek`;
+  `capture path: captureBookStill`; `camera drift source: live`; `camera state drift: 0`;
+  `color repeat identical: yes`; `stage ink share: 2.12%`; `fixture interior ink: 0.00%`;
+  `fixture ring rays: 360/360`; `fixture depth step rows: 159/159`); the new labels printed
+  `book files served: 15` and `book file requests refused: 0`; and the run printed
+  `lineart-smoke: wrote 4 files under out/storytime/l2/unit1/smoke/lineart-2026-10-26T05-22-09-300Z;
+  wrote no book version.` The color PNG SHA-256 is again
+  `37a3acc55ace6e70373c82194a19a7becdef395409007233f9141b3d3a0d307d`, byte-identical to smoke runs 3
+  and 4. Green viewed both PNGs: the color picture shows Nan from behind in an orange shirt and red
+  shorts, waving beside two stools, a table, a full bookcase, a shuttered window, a fern, and a
+  red-flower pot; the line-art picture draws the same scene as a clean one-bit form-edge outline.
+  Every scene model is present (Nan, table, stools, bookcase, window, plant). T86 passes. Task 7 is
+  complete: RB-01 to RB-05 and RA2-N1 are implemented, and the unit gate, type check, smoke run 5,
+  and T87 all pass on HEAD `0196627e`.
   Type-only amendment: `844fb72677592b09a8c0219b0225ea777cd6090e`; `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`; unit exit `0`; `Tests  99 passed (99)`; no assertion change. Commands: `heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'` and the task 7 unit command above. Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log` and `mid-red-vitest-245f8c1-retry.log` in the same directory. The first unit attempt exceeded the 120-second command timeout; the retry passed. Task 7 stays `[~]`.
 
 ## Phase 3: Week 1 pictures
