@@ -1159,6 +1159,40 @@ export function decodedReviewFindings(review: {
   return findings;
 }
 
+/**
+ * RB3-01: the credential findings across every decoded key and string value of the provider
+ * answer. One walker covers every JSON object that `jsonObjects` extracts from the raw text,
+ * including unknown fields, arrays, and model envelopes, at every depth. A schema, a field
+ * selection, or a status fallback runs later and cannot discard data before this check. Each
+ * string value also goes through the same object extraction, so an embedded JSON object,
+ * including plain or fenced `content`, is decoded and scanned. Every finding names a pattern;
+ * no finding holds matched text.
+ */
+export function decodedAnswerFindings(rawOutput: string): string[] {
+  const findings: string[] = [];
+  const visited = new Set<unknown>();
+  const walk = (value: unknown): void => {
+    if (typeof value === 'string') {
+      findings.push(...secretFindings(value));
+      for (const inner of jsonObjects(value)) walk(inner);
+      return;
+    }
+    if (typeof value !== 'object' || value === null) return;
+    if (visited.has(value)) return;
+    visited.add(value);
+    if (Array.isArray(value)) {
+      for (const item of value) walk(item);
+      return;
+    }
+    for (const [key, inner] of Object.entries(value)) {
+      findings.push(...secretFindings(key));
+      walk(inner);
+    }
+  };
+  for (const value of jsonObjects(rawOutput)) walk(value);
+  return findings;
+}
+
 async function rawPixels(png: Buffer): Promise<{ data: Buffer; width: number; height: number; channels: number }> {
   const { data, info } = await sharp(png).raw().toBuffer({ resolveWithObject: true });
   return { data, width: info.width, height: info.height, channels: info.channels };
@@ -3301,13 +3335,14 @@ export async function precheckMiniMax(options: {
             'the raw answer is refused and nothing is written.',
         );
       }
-      // RB2-02: the decoded review fields pass the credential check before any write. A JSON
-      // Unicode escape hides a credential from the raw-byte scan.
-      const decodedFindings = decodedReviewFindings(parseModelReview(result.stdout || result.stderr));
+      // RB3-01: every decoded key and string value of the answer passes the credential check
+      // before any write, before the schema, the field selection, or a status fallback can
+      // discard data. A JSON Unicode escape hides a credential from the raw-byte scan.
+      const decodedFindings = decodedAnswerFindings(result.stdout || result.stderr);
       if (decodedFindings.length > 0) {
         throw new Error(
-          `The decoded review matched credential pattern ${decodedFindings[0]}; ` +
-            'the raw answer is refused and nothing is written.',
+          `The decoded answer matched credential pattern ${decodedFindings[0]}; ` +
+            'the raw answer is refused; no review or raw copy is written.',
         );
       }
       return result;
@@ -3624,12 +3659,14 @@ export async function precheckKimi(options: {
     );
   }
   const parsed = parseModelReview(rawOutput);
-  // RB2-02: the decoded review fields pass the credential check before any write, so a refused
-  // record leaves the ledger, the review tree, and the raw copy byte-identical.
-  const decodedFindings = decodedReviewFindings(parsed);
+  // RB3-01: every decoded key and string value of the answer passes the credential check
+  // before any record write, so a refused record leaves the ledger, the review tree, and the
+  // raw copy byte-identical. The schema and the fallback run after this check.
+  const decodedFindings = decodedAnswerFindings(rawOutput);
   if (decodedFindings.length > 0) {
     throw new Error(
-      `The decoded review matched credential pattern ${decodedFindings[0]}; nothing is written.`,
+      `The decoded answer matched credential pattern ${decodedFindings[0]}; ` +
+        'the raw answer is refused; no review or raw copy is written.',
     );
   }
   const reviewBase = options.calibration
