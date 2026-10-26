@@ -2267,6 +2267,13 @@ function bookServerPrefix(value: string): boolean {
   return /^\/(out|stage)\//.test(value) || value.startsWith('/@fs/');
 }
 
+/** The served and refused request counts of the capture server, with a refusal hook. */
+export interface BookFileServerReport {
+  stats(): { served: number; refused: number };
+  /** Registers a handler that receives each refused request path. */
+  onRefused(handler: (requestPath: string) => void): void;
+}
+
 /**
  * The vite plugin of the capture server (RB-02): one middleware serves allowlisted files and
  * refuses every other `/out/`, `/stage/`, and `/@fs/` request with 404 and no `next()` call.
@@ -2274,9 +2281,10 @@ function bookServerPrefix(value: string): boolean {
  */
 export function serveBookFiles(
   allowlist: BookFileAllowlist,
-): Plugin & { stats(): { served: number; refused: number } } {
+): Plugin & BookFileServerReport {
   let served = 0;
   let refused = 0;
+  const refusedHandlers: Array<(requestPath: string) => void> = [];
   return {
     name: 'storytime-book-files',
     configureServer(server) {
@@ -2295,6 +2303,7 @@ export function serveBookFiles(
         }
         const file = resolveBookFile(allowlist, pathname);
         if (!file) {
+          for (const handler of refusedHandlers) handler(pathname);
           refused += 1;
           res.statusCode = 404;
           res.end('missing');
@@ -2306,6 +2315,7 @@ export function serveBookFiles(
           res.setHeader('content-type', FILE_TYPES[path.extname(file)] ?? 'application/octet-stream');
           res.end(bytes);
         } catch {
+          for (const handler of refusedHandlers) handler(pathname);
           refused += 1;
           res.statusCode = 404;
           res.end('missing');
@@ -2315,7 +2325,25 @@ export function serveBookFiles(
     stats() {
       return { served, refused };
     },
+    onRefused(handler) {
+      refusedHandlers.push(handler);
+    },
   };
+}
+
+/** The protected file plugin inside one capture server configuration, if present. */
+function bookFilePluginOf(config: InlineConfig): (Plugin & BookFileServerReport) | undefined {
+  for (const plugin of config.plugins ?? []) {
+    if (
+      plugin &&
+      typeof plugin === 'object' &&
+      'name' in plugin &&
+      (plugin as { name?: unknown }).name === 'storytime-book-files'
+    ) {
+      return plugin as Plugin & BookFileServerReport;
+    }
+  }
+  return undefined;
 }
 
 /**
@@ -2475,14 +2503,33 @@ export async function captureStillPair(
 interface OpenedBookPage {
   page: Page;
   pageErrors: string[];
+  /** The protected file plugin of the capture server; undefined only with an injected opener. */
+  bookFiles: BookFileServerReport | undefined;
   close: () => Promise<void>;
+}
+
+/** Prints the RB-02 file-server observability of one capture: each refused path, then the counts. */
+function reportBookFileTraffic(
+  opened: OpenedBookPage,
+  log: (message: string) => void,
+): void {
+  opened.bookFiles?.onRefused((requestPath) => log(`book file refused: ${requestPath}`));
+}
+
+function logBookFileCounts(opened: OpenedBookPage, log: (message: string) => void): void {
+  const stats = opened.bookFiles?.stats();
+  if (!stats) return;
+  log(`book files served: ${stats.served}`);
+  log(`book file requests refused: ${stats.refused}`);
 }
 
 async function openBookPage(input: BookCaptureInput): Promise<OpenedBookPage> {
   const { chromium } = await import('playwright');
   const { createServer } = await import('vite');
   const size = input.size ?? PICTURE_SIZES[input.job.size];
-  const server = await createServer(bookServerConfig(input));
+  const config = bookServerConfig(input);
+  const bookFiles = bookFilePluginOf(config);
+  const server = await createServer(config);
   let browser: Browser | undefined;
   try {
     await server.listen();
@@ -2506,6 +2553,7 @@ async function openBookPage(input: BookCaptureInput): Promise<OpenedBookPage> {
     return {
       page,
       pageErrors,
+      bookFiles,
       close: async () => {
         if (browser) await browser.close();
         await server.close();
@@ -2835,8 +2883,10 @@ export async function captureBookStill(
 ): Promise<BookCapturePacket> {
   const opened = await (deps.open ?? openBookPage)(input);
   try {
+    reportBookFileTraffic(opened, console.log);
     return await captureBookStillOnPage(input, opened, deps, console.log);
   } finally {
+    logBookFileCounts(opened, console.log);
     await opened.close();
   }
 }
@@ -2846,6 +2896,7 @@ export async function captureBookStillSmoke(input: BookCaptureInput): Promise<Bo
   const log = console.log;
   const opened = await openBookPage(input);
   try {
+    reportBookFileTraffic(opened, log);
     const hookBefore = await opened.page.evaluate(() => window.__bookStill === undefined);
     log(`hook before seek: ${hookBefore ? 'absent' : 'present'}`);
     if (!hookBefore) throw new Error('The book still hook is already present before the first seek.');
@@ -2870,6 +2921,7 @@ export async function captureBookStillSmoke(input: BookCaptureInput): Promise<Bo
       fixture: fixturePass.fixture,
     };
   } finally {
+    logBookFileCounts(opened, log);
     await opened.close();
   }
 }
