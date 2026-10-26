@@ -114,14 +114,17 @@ function readPixels(
   return pixels;
 }
 
-/** Inverse of three's RGBADepthPacking (packDepthToRGBA with the 256/255 upscale). */
-function unpackDepth(pixels: Uint8Array, index: number): number {
-  const base = index * 4;
+/**
+ * Inverse of three 0.185.1 `packDepthToRGBA`. The shader writes the most significant byte to R and
+ * the smallest fraction to A, so the RGBA tuple is big-endian: R/256 + G/65536 + B/16777216 +
+ * A/255/16777216. The alpha term is below 1.5e-8 and kept for exactness.
+ */
+export function unpackDepth(bytes: readonly [number, number, number, number]): number {
   return (
-    pixels[base]! / 4294967296 +
-    pixels[base + 1]! / 16777216 +
-    pixels[base + 2]! / 65536 +
-    pixels[base + 3]! / 256
+    bytes[0]! / 256 +
+    bytes[1]! / 65536 +
+    bytes[2]! / 16777216 +
+    bytes[3]! / 255 / 16777216
   );
 }
 
@@ -147,8 +150,17 @@ function edgeData(
       (normals[base + 2]! / 255) * 2 - 1,
     ];
   };
+  const depthBytes: [number, number, number, number] = [0, 0, 0, 0];
+  const depthAt = (index: number): number => {
+    const base = index * 4;
+    depthBytes[0] = depths[base]!;
+    depthBytes[1] = depths[base + 1]!;
+    depthBytes[2] = depths[base + 2]!;
+    depthBytes[3] = depths[base + 3]!;
+    return unpackDepth(depthBytes);
+  };
   const edgeBetween = (a: number, b: number): boolean => {
-    if (isDepthEdge(viewDistance(unpackDepth(depths, a), near, far), viewDistance(unpackDepth(depths, b), near, far))) {
+    if (isDepthEdge(viewDistance(depthAt(a), near, far), viewDistance(depthAt(b), near, far))) {
       return true;
     }
     const [ax, ay, az] = normalAt(a);
