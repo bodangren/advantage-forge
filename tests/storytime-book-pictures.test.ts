@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
+import type { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
-import { copyFile, mkdir, mkdtemp, readdir, readFile, rm, symlink, writeFile } from 'node:fs/promises';
+import { copyFile, lstat, mkdir, mkdtemp, readdir, readFile, readlink, rm, stat, symlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
@@ -81,13 +82,17 @@ const forbidden = vi.hoisted(() => {
     fork: guard('fork'), launch: guard('chromium.launch'), createServer: guard('createServer'),
   };
 });
+const viteConfigCalls = vi.hoisted(() => [] as unknown[]);
 vi.mock('node:child_process', () => ({
   spawn: forbidden.spawn, spawnSync: forbidden.spawnSync, exec: forbidden.exec,
   execSync: forbidden.execSync, execFile: forbidden.execFile,
   execFileSync: forbidden.execFileSync, fork: forbidden.fork,
 }));
 vi.mock('playwright', () => ({ chromium: { launch: forbidden.launch } }));
-vi.mock('vite', () => ({ createServer: forbidden.createServer }));
+vi.mock('vite', () => ({ createServer: (config: unknown) => {
+  viteConfigCalls.push(config);
+  return forbidden.createServer();
+} }));
 
 // Fixture decoding and filesystem checks have no five-second performance contract.
 vi.setConfig({ testTimeout: 30000, hookTimeout: 30000 });
@@ -334,6 +339,471 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 afterAll(async () => { if (root) await rm(root, { recursive: true, force: true }); });
+
+// These adapters give missing exports an assertion failure instead of a module load failure.
+type Awaitable<T> = T | Promise<T>;
+type CaptureInput = Parameters<typeof pictureSeams.captureBookStill>[0];
+type FileMiddleware = (req: { url: string }, res: {
+  statusCode: number; setHeader: (name: string, value: string) => void;
+  end: (bytes?: string | Uint8Array) => void;
+}, next: () => void) => Awaitable<void>;
+type BookFilePlugin = {
+  name: string;
+  configureServer(server: { middlewares: { use: (middleware: FileMiddleware) => void } }): Awaitable<unknown>;
+  stats(): { served: number; refused: number };
+};
+type BookConfig = {
+  server: { host?: string; fs?: { strict?: boolean; deny?: string[] } };
+  plugins: BookFilePlugin[];
+};
+type SecuritySeams = {
+  bookFileAllowlist(input: { repoRoot: string; stageDirectory: string; timeline: CaptureInput['timeline'] }): Awaitable<unknown>;
+  resolveBookFile(allowlist: unknown, requestPath: string): Awaitable<string | undefined>;
+  serveBookFiles(allowlist: unknown): BookFilePlugin;
+  bookServerConfig(input: CaptureInput): Awaitable<BookConfig>;
+  writeOutputFile(outputRoot: string, relativeFile: string, bytes: Buffer | string): Awaitable<void>;
+  secretFindings(text: string, env?: NodeJS.ProcessEnv): string[];
+  redactSecrets(text: string, env?: NodeJS.ProcessEnv): string;
+  readRawAnswer(file: string): Awaitable<string>;
+};
+function securitySeam<K extends keyof SecuritySeams>(name: K): SecuritySeams[K] {
+  const seam = (pictureSeams as unknown as SecuritySeams)[name];
+  expect(seam, `The ${name} seam exists.`).toBeTypeOf('function');
+  return seam;
+}
+async function middlewareDriver(plugin: BookFilePlugin) {
+  const handlers: FileMiddleware[] = [];
+  await plugin.configureServer({ middlewares: { use: (handler) => { handlers.push(handler); } } });
+  expect(handlers).toHaveLength(1);
+  return async (url: string) => {
+    const next = vi.fn();
+    const chunks: Buffer[] = [];
+    const res = { statusCode: 200, setHeader: vi.fn(), end: vi.fn((bytes?: string | Uint8Array) => {
+      if (bytes !== undefined) chunks.push(Buffer.from(bytes));
+    }) };
+    await handlers[0]!({ url }, res, next);
+    return { res, next, body: Buffer.concat(chunks) };
+  };
+}
+async function fileSnapshot(directory: string) {
+  return Promise.all((await tree(directory)).map(async (file) => {
+    const state = (await lstat(file)).isSymbolicLink() ? `symlink:${await readlink(file)}` : digest(await readFile(file));
+    return [path.relative(directory, file), state] as const;
+  }));
+}
+async function securityLedger(outputRoot: string): Promise<Record<string, unknown>[]> {
+  const file = path.join(outputRoot, 'cost-ledger.jsonl');
+  return existsSync(file) ? (await readFile(file, 'utf8')).trim().split('\n').filter(Boolean).map((line) => JSON.parse(line)) : [];
+}
+function syntheticCredentials() {
+  const marker = ['SYN', 'THETIC'].join('');
+  const jwt = ['{"alg":"none"}', JSON.stringify({ sub: marker }), marker]
+    .map((value) => Buffer.from(value).toString('base64url')).join('.');
+  const values = [
+    `sk-${marker}${'0'.repeat(20)}`,
+    `Authorization: Bearer ${marker}BEARER${'0'.repeat(13)}`,
+    `-----BEGIN PRIVATE KEY-----\n${marker}\n-----END PRIVATE KEY-----`,
+    `AKIA0000${marker}000`, `api_key=${marker}-api-key-000000`, jwt,
+    `plainvalue-${marker}-0001`,
+  ];
+  vi.stubEnv('STORYTIME_SYNTHETIC_API_KEY', values.at(-1)!);
+  return values;
+}
+async function assertNoSyntheticValues(directories: string[], values: string[]) {
+  for (const directory of directories) for (const file of await tree(directory)) {
+    // The outside directory gets its own scan. A directory symlink is not a file.
+    if ((await stat(file)).isDirectory()) continue;
+    const bytes = await readFile(file);
+    for (const [index, value] of values.entries()) {
+      expect.soft(bytes.includes(Buffer.from(value)), `${path.relative(directory, file)}: synthetic fixture ${index}`).toBe(false);
+    }
+  }
+}
+async function securityKimiFixture() {
+  const space = await sandbox();
+  const outside = await mkdtemp(path.join(root, 'outside-'));
+  await planned(space.repoRoot, space.outputRoot);
+  await put(path.join(space.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+  const args = ['precheck-kimi', '--out', space.outputRoot, '--paid'];
+  const deps = { repoRoot: space.repoRoot, log: vi.fn() };
+  await runStorytimeCli([...args, '--job', job().id, '--version', '1', '--begin'], deps);
+  const callId = String((await securityLedger(space.outputRoot))[0]!.callId);
+  const raw = path.join(outside, 'answer.txt');
+  return { ...space, outside, args, deps, callId, raw };
+}
+async function styleManifestFixture() {
+  const sample = await twinFixture();
+  const selected = jobs.slice(0, 3);
+  for (const [index, current] of selected.entries()) {
+    if (index === 0) continue;
+    const stage = stageFile(sample.repoRoot, current);
+    const file = candidateRelativePath(current, 1), lineArtFile = linePath(current, 1);
+    await put(path.join(sample.repoRoot, stage.file), stage.bytes);
+    await put(path.join(sample.outputRoot, file), storyPng);
+    await put(path.join(sample.outputRoot, lineArtFile), linePng);
+    await json(path.join(sample.outputRoot, `renders/${current.id}-v1.json`), {
+      ...sample.evidence, jobId: current.id, stageFile: stage.file, stageSha256: stage.sha256,
+      file, colorFile: file, lineArtFile,
+      lineArtTechnique: index === 2 ? 'synthetic-other-technique' : sample.evidence.lineArtTechnique,
+    });
+    for (const provider of ['minimax', 'kimi'] as const) {
+      await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-${provider}.json`), modelReview(current, 1, provider));
+    }
+    await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-person.json`), personReview(current, 1));
+    await json(path.join(sample.outputRoot, `reviews/${current.id}-v1-lineart-person.json`), {
+      ...personReview(current, 1, linePng), file: lineArtFile,
+    });
+  }
+  const states = async () => (await buildManifest(selected, sample.outputRoot, sample.repoRoot)).jobs
+    .map((item) => (item.candidates[0] as CandidateManifest & { lineArt: LineArtView }).lineArt.status);
+  return { ...sample, states };
+}
+
+describe('Review B security remediation', () => {
+  afterEach(() => { vi.unstubAllEnvs(); });
+
+  it('T77: the render wrapper preserves argv and the hold code without a shell string', async () => {
+    vi.stubEnv('STORYTIME_BOOK_PICTURES_INNER', undefined);
+    const argv = ['render', '--job', '$(printf RB_SUBSTITUTION_EXECUTED)'];
+    for (const status of [0, 75]) {
+      const calls: Parameters<typeof spawnSync>[] = [];
+      const spawn = ((...args: Parameters<typeof spawnSync>) => {
+        calls.push(args);
+        return { status, signal: null, pid: 0, output: [], stdout: null, stderr: null };
+      }) as typeof spawnSync;
+      // HEAD has no spawn dependency. Keep its guarded fallback from creating a second failure in T12.
+      let code: number | undefined;
+      let error: unknown;
+      try { code = await runStorytimeBookPictures(argv, { spawn } as Parameters<typeof runStorytimeBookPictures>[1]); }
+      catch (caught) { error = caught; }
+      finally { forbidden.spawnSync.mockClear(); }
+      expect(error, 'The wrapper uses the injected spawn.').toBeUndefined();
+      expect(code).toBe(status);
+      expect(calls).toHaveLength(1);
+      const [command, args, options] = calls[0]!;
+      expect(command).toBe('bash');
+      expect(args![0]).toBe('/home/daniebo/Desktop/advantage-pr/scripts/jobs/heavy-run.sh');
+      expect(args).not.toContain('-c');
+      expect(args!.slice(-3)).toEqual(argv);
+      expect(options?.env?.STORYTIME_BOOK_PICTURES_INNER).toBe('1');
+      expect(options?.shell ?? false).toBe(false);
+    }
+  });
+
+  it('T78: the file server allows named files and refuses physical escapes without next', async () => {
+    const allow = securitySeam('bookFileAllowlist');
+    const resolve = securitySeam('resolveBookFile');
+    const serve = securitySeam('serveBookFiles');
+    const space = await sandbox();
+    const outside = await mkdtemp(path.join(root, 'outside-'));
+    const outsideBytes = Buffer.from('SYNTHETIC outside file sentinel');
+    await put(path.join(outside, 'ghost.glb'), outsideBytes);
+    await put(path.join(outside, 'evil.glb'), outsideBytes);
+    await mkdir(path.join(space.repoRoot, 'out/ghost'));
+    await symlink(path.join(outside, 'ghost.glb'), path.join(space.repoRoot, 'out/ghost/ghost.glb'));
+    await symlink(outside, path.join(space.repoRoot, 'out/evil'));
+    const hero = path.join(space.repoRoot, 'out/hero/hero.glb');
+    const stageDirectory = path.join(space.repoRoot, 'docs/stage');
+    const sign = path.join(stageDirectory, 'sign.png');
+    await put(hero, 'SYNTHETIC hero GLB');
+    await put(sign, 'SYNTHETIC sign bytes');
+    await put(path.join(stageDirectory, 'other.png'), 'SYNTHETIC unnamed picture');
+    await put(path.join(space.repoRoot, 'out/hero/hero.json'), 'SYNTHETIC wrong extension');
+    const protectedPaths = ['l2/unit1/cost-ledger.jsonl', 'l2/unit1/raw/answer.txt',
+      'l2/unit1/calibration/log.json', 'l2/unit1/candidates/prompt.txt', 'storytime.glb'];
+    for (const relative of protectedPaths) await put(path.join(space.repoRoot, 'out/storytime', relative), 'SYNTHETIC private evidence');
+    const source = stageSource();
+    source.stage.sets = { classroom: { pictures: [{ file: 'sign.png', x: 0, y: 1, z: 0, w: 1 }] } };
+    const timeline = buildBookStillTimeline(source);
+    expect(timeline.shots.flatMap((shot) => shot.pictures.map((picture) => picture.file))).toContain('sign.png');
+    const allowlist = await allow({ repoRoot: space.repoRoot, stageDirectory, timeline });
+    const plugin = serve(allowlist);
+    expect(plugin.name).toBe('storytime-book-files');
+    const request = await middlewareDriver(plugin);
+    for (const [url, file] of [['/out/hero/hero.glb', hero], ['/stage/sign.png', sign]]) {
+      expect(await resolve(allowlist, url!)).toBe(file);
+      const response = await request(url!);
+      expect(response.res.statusCode).toBe(200);
+      expect(response.body).toEqual(await readFile(file!));
+      expect(response.next).not.toHaveBeenCalled();
+      expect(response.res.end).toHaveBeenCalledOnce();
+    }
+    const ledger = path.join(space.outputRoot, 'cost-ledger.jsonl');
+    const refused = ['/out/ghost/ghost.glb', '/out/evil/evil.glb',
+      ...protectedPaths.map((relative) => `/out/storytime/${relative}`),
+      '/out/hero/../storytime/l2/unit1/cost-ledger.jsonl',
+      '/out/hero/%2e%2e/storytime/l2/unit1/cost-ledger.jsonl',
+      `/@fs/${ledger}`, '/stage/other.png', '/out/hero/hero.json',
+      '/%6fut/storytime/l2/unit1/cost-ledger.jsonl', '/out/%ZZ/hero.glb'];
+    for (const url of refused) {
+      expect.soft(await resolve(allowlist, url), url).toBeUndefined();
+      const response = await request(url);
+      expect.soft(response.res.statusCode, url).toBe(404);
+      expect.soft(response.next, url).not.toHaveBeenCalled();
+      expect.soft(response.res.end, url).toHaveBeenCalledOnce();
+      expect.soft(response.body.includes(outsideBytes), url).toBe(false);
+      expect.soft(response.body.toString(), url).not.toContain('SYNTHETIC private evidence');
+    }
+    await rm(sign);
+    await symlink(path.join(outside, 'ghost.glb'), sign);
+    expect.soft(await resolve(allowlist, '/stage/sign.png')).toBeUndefined();
+    const escapedSign = await request('/stage/sign.png');
+    expect.soft(escapedSign.res.statusCode).toBe(404);
+    expect.soft(escapedSign.next).not.toHaveBeenCalled();
+    expect.soft(escapedSign.body.includes(outsideBytes)).toBe(false);
+    const unrelated = await request('/src/song/main.ts');
+    expect(unrelated.next).toHaveBeenCalledOnce();
+    expect(unrelated.res.end).not.toHaveBeenCalled();
+    expect(plugin.stats()).toEqual({ served: 2, refused: refused.length + 1 });
+  });
+
+  it('T79: the production opener uses the loopback server and the protected file plugin', async () => {
+    securitySeam('bookServerConfig');
+    const space = await sandbox();
+    const input: CaptureInput = { repoRoot: space.repoRoot, job: job(), stage: stageFile(space.repoRoot),
+      timeline: buildBookStillTimeline(stageSource()), size: { width: 3000, height: 2250 } };
+    await put(path.join(space.outputRoot, 'cost-ledger.jsonl'), 'SYNTHETIC private ledger');
+    viteConfigCalls.length = 0;
+    try { await expect(pictureSeams.captureBookStill(input)).rejects.toThrow('Forbidden real operation: createServer'); }
+    finally {
+      // The vite mock throws before any server starts. All other guards remain active.
+      expect(forbidden.createServer).toHaveBeenCalledOnce();
+      forbidden.createServer.mockClear();
+    }
+    expect(viteConfigCalls).toHaveLength(1);
+    const config = viteConfigCalls[0] as BookConfig;
+    expect(config.server.host).toBe('127.0.0.1');
+    expect(config.server.fs?.strict).toBe(true);
+    expect(config.server.fs?.deny).toContain('out/storytime/**');
+    const plugins = config.plugins.filter((plugin) => plugin.name === 'storytime-book-files');
+    expect(plugins).toHaveLength(1);
+    const request = await middlewareDriver(plugins[0]!);
+    const response = await request('/out/storytime/l2/unit1/cost-ledger.jsonl');
+    expect(response.res.statusCode).toBe(404);
+    expect(response.next).not.toHaveBeenCalled();
+    expect(response.body.toString()).not.toContain('SYNTHETIC private ledger');
+  });
+
+  it('T80: exclusive output writes and the smoke writer refuse existing paths and symlink escapes', async () => {
+    const write = securitySeam('writeOutputFile');
+    const values = syntheticCredentials();
+    const space = await sandbox();
+    const outside = await mkdtemp(path.join(root, 'outside-'));
+    const target = path.join(outside, 'unchanged.txt');
+    await put(target, 'SYNTHETIC outside sentinel');
+    await write(space.outputRoot, 'new.txt', Buffer.from('SYNTHETIC new bytes'));
+    expect(await readFile(path.join(space.outputRoot, 'new.txt'), 'utf8')).toBe('SYNTHETIC new bytes');
+    await expect(Promise.resolve().then(() => write(space.outputRoot, 'new.txt', 'replacement'))).rejects.toThrow();
+    expect(await readFile(path.join(space.outputRoot, 'new.txt'), 'utf8')).toBe('SYNTHETIC new bytes');
+    await symlink(target, path.join(space.outputRoot, 'linked.txt'));
+    const saved = await fileSnapshot(outside);
+    await expect(Promise.resolve().then(() => write(space.outputRoot, 'linked.txt', 'replacement'))).rejects.toThrow();
+    expect(await fileSnapshot(outside)).toEqual(saved);
+    const stamp = `lineart-${CLOCK().toISOString().replace(/[:.]/g, '-')}`;
+    const packet = { ...smokeCaptureForTest(), fixtureLineArt: await smokePicture('ring') };
+    for (const mode of ['directory-link', 'file-link', 'clean'] as const) {
+      const fixture = await sandbox();
+      await planned(fixture.repoRoot, fixture.outputRoot);
+      if (mode === 'directory-link') await symlink(outside, path.join(fixture.outputRoot, 'smoke'));
+      if (mode === 'file-link') {
+        await mkdir(path.join(fixture.outputRoot, 'smoke', stamp), { recursive: true });
+        await symlink(target, path.join(fixture.outputRoot, 'smoke', stamp, 'color.png'));
+      }
+      const before = await fileSnapshot(fixture.outputRoot);
+      const action = runStorytimeCli(['lineart-smoke', '--out', fixture.outputRoot, '--job', job().id], {
+        repoRoot: fixture.repoRoot, log: vi.fn(), now: CLOCK,
+        readStage: async () => stageFile(fixture.repoRoot), capture: (async () => packet) as unknown as CliCapture,
+      });
+      if (mode === 'clean') {
+        expect(await action).toBe(0);
+        const added = (await tree(fixture.outputRoot)).filter((file) => !before.some(([relative]) => path.join(fixture.outputRoot, relative) === file));
+        expect(added.map((file) => path.relative(fixture.outputRoot, file))).toEqual(
+          ['color.png', 'fixture-lineart.png', 'lineart.png', 'smoke.json'].map((name) => `smoke/${stamp}/${name}`));
+      } else {
+        await expect(action, mode).rejects.toThrow();
+        expect(await fileSnapshot(fixture.outputRoot), mode).toEqual(before);
+      }
+      expect(await fileSnapshot(outside), mode).toEqual(saved);
+      await assertNoSyntheticValues([fixture.outputRoot, outside], values);
+    }
+  });
+
+  it('T81: credential findings name patterns and provider failures persist only bounded redacted text', async () => {
+    const findings = securitySeam('secretFindings');
+    const redact = securitySeam('redactSecrets');
+    const values = syntheticCredentials();
+    for (const [index, value] of values.entries()) {
+      const found = findings(value);
+      expect.soft(found.length, `Synthetic fixture ${index}`).toBeGreaterThan(0);
+      for (const pattern of found) {
+        expect.soft(pattern).toEqual(expect.any(String));
+        expect.soft(pattern.length).toBeGreaterThan(0);
+        expect.soft(pattern).not.toContain(value);
+      }
+      expect.soft(redact(value), `Synthetic fixture ${index}`).not.toContain(value);
+      expect.soft(redact(value)).toContain('[redacted:');
+    }
+    const errorText = `mmx exited with 1: ${values.join('\n')} ${'SYNTHETIC detail '.repeat(80)}`;
+    const space = await sandbox();
+    const outside = await mkdtemp(path.join(root, 'outside-'));
+    const entries: LedgerEntry[] = [];
+    const details: PaidCallDetails = { operation: 'vision-describe', provider: 'minimax', model: 'synthetic-model',
+      purpose: 'Synthetic failure test', jobId: job().id, version: 1,
+      price: { basis: 'Test fixture', marginalCashUsd: 0, note: 'No paid call.' } };
+    await expect(runPaidCall({ paid: true, dryRun: false, details, now: CLOCK,
+      newCallId: () => 'synthetic-error-call', call: async () => { throw new Error(errorText); },
+      appendLedger: async (entry) => {
+        entries.push(entry);
+        await put(path.join(space.outputRoot, 'cost-ledger.jsonl'), entries.map((item) => JSON.stringify(item)).join('\n'));
+      },
+    })).rejects.toThrow();
+    expect(entries).toHaveLength(2);
+    expect(entries[1]).toMatchObject({ event: 'after-call', status: 'failure' });
+    const error = (entries[1] as unknown as { error: string }).error;
+    expect(error).toContain('[redacted:');
+    expect(error.length).toBeLessThanOrEqual(500);
+    for (const value of values) expect.soft(error).not.toContain(value);
+    const mini = await sandbox();
+    await put(path.join(mini.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+    await expect(precheckMiniMax({ ...mini, jobs: [job()], jobId: job().id, version: 1,
+      paid: true, dryRun: false, runner: async () => { throw new Error(errorText); } })).rejects.toThrow();
+    const failures = (await securityLedger(mini.outputRoot)).filter((entry) => entry.event === 'after-call');
+    expect(failures).toHaveLength(1);
+    expect(failures[0]).toMatchObject({ status: 'failure', error: expect.stringContaining('[redacted:') });
+    expect(String(failures[0]!.error).length).toBeLessThanOrEqual(500);
+    await assertNoSyntheticValues([space.outputRoot, mini.outputRoot, outside], values);
+  });
+
+  it('T82: raw answers reject credentials and unsafe files and preserve safe bytes', async () => {
+    const findings = securitySeam('secretFindings');
+    const readRaw = securitySeam('readRawAnswer');
+    const values = syntheticCredentials();
+    for (const [index, value] of values.entries()) {
+      const mini = await sandbox();
+      const outside = await mkdtemp(path.join(root, 'outside-'));
+      await put(path.join(mini.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+      const action = precheckMiniMax({ ...mini, jobs: [job()], jobId: job().id, version: 1,
+        paid: true, dryRun: false, runner: async () => ({ stdout: value, stderr: '' }) });
+      await expect(action, `MiniMax synthetic fixture ${index}`).rejects.toThrow();
+      const after = (await securityLedger(mini.outputRoot)).filter((entry) => entry.event === 'after-call');
+      expect.soft(after).toHaveLength(1);
+      expect.soft(after[0]).toMatchObject({ status: 'failure' });
+      const reason = String(after[0]?.error ?? '');
+      expect.soft(findings(value).some((pattern) => reason.includes(pattern))).toBe(true);
+      expect.soft((await tree(mini.outputRoot)).map((file) => path.relative(mini.outputRoot, file)))
+        .toEqual([candidateRelativePath(job(), 1), 'cost-ledger.jsonl'].sort());
+      await assertNoSyntheticValues([mini.outputRoot, outside], values);
+
+      const kimi = await securityKimiFixture();
+      // Input is outside the output tree. Remove it before scanning the outside directory.
+      await put(kimi.raw, value);
+      const before = await fileSnapshot(kimi.outputRoot);
+      await expect(runStorytimeCli([...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps),
+        `Kimi synthetic fixture ${index}`).rejects.toThrow();
+      expect(await fileSnapshot(kimi.outputRoot)).toEqual(before);
+      await rm(kimi.raw);
+      await assertNoSyntheticValues([kimi.outputRoot, kimi.outside], values);
+    }
+    for (const mode of ['symlink', 'directory', 'oversize', 'nul', 'invalid-utf8'] as const) {
+      const kimi = await securityKimiFixture();
+      if (mode === 'symlink') {
+        const safe = path.join(kimi.outside, 'safe.txt');
+        await put(safe, '{"verdict":"PASS","reason":"Synthetic safe text.","observedCounts":{},"issues":[]}');
+        await symlink(safe, kimi.raw);
+      } else if (mode === 'directory') await mkdir(kimi.raw);
+      else await put(kimi.raw, mode === 'oversize' ? Buffer.alloc(65537, 65)
+        : mode === 'nul' ? Buffer.from('SYNTHETIC\0answer') : Buffer.from([0xc3, 0x28]));
+      const before = await fileSnapshot(kimi.outputRoot);
+      await expect(Promise.resolve().then(() => readRaw(kimi.raw)), mode).rejects.toThrow();
+      await expect(runStorytimeCli([...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps), mode).rejects.toThrow();
+      expect(await fileSnapshot(kimi.outputRoot), mode).toEqual(before);
+      await assertNoSyntheticValues([kimi.outputRoot, kimi.outside], values);
+    }
+    const boundary = await securityKimiFixture();
+    const pass = JSON.stringify({ verdict: 'PASS', reason: 'Synthetic safe answer.', observedCounts: { subject: 1 }, issues: [] });
+    const boundaryBytes = Buffer.from(pass.padEnd(65536, ' '));
+    await put(boundary.raw, boundaryBytes);
+    expect(Buffer.byteLength(await readRaw(boundary.raw))).toBe(65536);
+    expect(await runStorytimeCli([...boundary.args, '--record', boundary.callId, '--raw', boundary.raw], boundary.deps)).toBe(0);
+    const boundaryReview = JSON.parse(await readFile(path.join(boundary.outputRoot, `reviews/${job().id}-v1-kimi.json`), 'utf8'));
+    expect(Buffer.from(boundaryReview.rawOutput)).toEqual(boundaryBytes);
+    expect(await readFile(path.join(boundary.outputRoot, boundaryReview.rawFile))).toEqual(boundaryBytes);
+    await assertNoSyntheticValues([boundary.outputRoot, boundary.outside], values);
+
+    const mini = await sandbox();
+    await put(path.join(mini.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+    // These bytes duplicate the unchanged T54 fixture from call acd4f807.
+    const rawFailOutput = "{\n  \"content\": \"```json\\n{\\n  \\\"verdict\\\": \\\"FAIL\\\",\\n  \\\"reason\\\": \\\"The source text asks 'How many suns? One sun!', but there is no sun visible in the image.\\\",\\n  \\\"observedCounts\\\": {\\n    \\\"suns\\\": 0\\n  },\\n  \\\"issues\\\": [\\n    \\\"Missing required object: sun (0 observed, expected 1)\\\"\\n  ]\\n}\\n```\",\n  \"base_resp\": {\n    \"status_code\": 0,\n    \"status_msg\": \"success\"\n  }\n}\n";
+    const miniResult = await precheckMiniMax({ ...mini, jobs: [job()], jobId: job().id, version: 1,
+      paid: true, dryRun: false, runner: async () => ({ stdout: rawFailOutput, stderr: '' }) });
+    expect(miniResult.status).toBe('fail');
+    if (miniResult.status === 'dry-run') throw new Error('The synthetic runner must run.');
+    expect(Buffer.from(miniResult.review.rawOutput)).toEqual(Buffer.from(rawFailOutput));
+    expect(await readFile(path.join(mini.outputRoot, miniResult.review.rawFile!))).toEqual(Buffer.from(rawFailOutput));
+    const kimi = await securityKimiFixture();
+    const crlf = `  ${pass}\r\n  \r\n`;
+    await put(kimi.raw, crlf);
+    expect(await readRaw(kimi.raw)).toBe(crlf);
+    expect(await runStorytimeCli([...kimi.args, '--record', kimi.callId, '--raw', kimi.raw], kimi.deps)).toBe(0);
+    const review = JSON.parse(await readFile(path.join(kimi.outputRoot, `reviews/${job().id}-v1-kimi.json`), 'utf8'));
+    expect(review.rawOutput).toBe(crlf);
+    expect(await readFile(path.join(kimi.outputRoot, review.rawFile))).toEqual(Buffer.from(crlf));
+    await assertNoSyntheticValues([mini.outputRoot, kimi.outputRoot, kimi.outside], values);
+  });
+
+  it('T83: Kimi refuses credential reasons and long reasons before any write', async () => {
+    const values = syntheticCredentials();
+    for (const [index, reason] of [...values, 'S'.repeat(501)].entries()) {
+      const kimi = await securityKimiFixture();
+      const before = await fileSnapshot(kimi.outputRoot);
+      await expect(runStorytimeCli([...kimi.args, '--record', kimi.callId, '--failed', '--reason', reason], kimi.deps),
+        `Refused reason ${index}`).rejects.toThrow();
+      expect(await fileSnapshot(kimi.outputRoot)).toEqual(before);
+      await assertNoSyntheticValues([kimi.outputRoot, kimi.outside], values);
+    }
+    const plain = await securityKimiFixture();
+    expect(await runStorytimeCli([...plain.args, '--record', plain.callId, '--failed', '--reason', 'reviewer session hung'], plain.deps)).toBe(0);
+    const entries = await securityLedger(plain.outputRoot);
+    expect(entries).toHaveLength(2);
+    expect(entries[1]).toMatchObject({ event: 'after-call', status: 'failure', reason: 'reviewer session hung' });
+    await assertNoSyntheticValues([plain.outputRoot, plain.outside], values);
+  });
+
+  it('T84: release rechecks calibration while plain verification does not', async () => {
+    const fixture = await twinFixture();
+    const calibrationRoots = await seedCalibration(fixture.outputRoot, fixture.repoRoot);
+    await json(path.join(fixture.outputRoot, 'jobs.json'), jobs);
+    const args = ['verify', '--out', fixture.outputRoot, '--job', job().id];
+    const deps = { ...calibrationRoots, log: vi.fn() };
+    expect(await runStorytimeCli([...args, '--release'], deps)).toBe(0);
+    const file = path.join(fixture.outputRoot, 'calibration/good-nan-minimax.json');
+    const bytes = await readFile(file);
+    const log = JSON.parse(bytes.toString('utf8'));
+    const sourceFile = pictureSeams.calibrationTarget('good-nan', calibrationRoots.workbooksRoot, fixture.repoRoot).file;
+    const sourceBytes = await readFile(sourceFile);
+    for (const mode of ['missing', 'stale-rubric', 'changed-source']) {
+      if (mode === 'missing') await rm(file);
+      if (mode === 'stale-rubric') await json(file, { ...log, rubricVersion: 'storytime-picture-v1' });
+      if (mode === 'changed-source') {
+        const changed = Buffer.from(sourceBytes); changed[0] = changed[0]! ^ 1;
+        await put(sourceFile, changed);
+      }
+      await expect(runStorytimeCli([...args, '--release'], deps), mode).rejects.toThrow(/calibrat/i);
+      expect(await runStorytimeCli(args, deps), mode).toBe(0);
+      await put(file, bytes); await put(sourceFile, sourceBytes);
+    }
+  });
+
+  it('T85: an empty or absent style sample list fails every twin', async () => {
+    const fixture = await styleManifestFixture();
+    expect(await fixture.states()).toEqual(['ready', 'ready', 'pending']);
+    const { sampleFiles: _sampleFiles, ...withoutSamples } = fixture.style;
+    for (const style of [{ ...fixture.style, sampleFiles: [] }, withoutSamples]) {
+      await json(path.join(fixture.outputRoot, fixture.styleFile), style);
+      expect.soft(await fixture.states()).toEqual(['failed', 'failed', 'failed']);
+    }
+  });
+});
 
 describe('Storytime picture contract', () => {
   it('T1: extracts exactly 112 jobs, 16 per week, and 8 per book kind', () => {
@@ -935,9 +1405,10 @@ describe('Storytime picture contract', () => {
 
   it('T37: release checks both twins unless an output filter limits the selection', async () => {
     const fixture = await twinFixture();
+    const calibrationRoots = await seedCalibration(fixture.outputRoot, fixture.repoRoot);
     await json(path.join(fixture.outputRoot, 'jobs.json'), jobs);
     const args = ['verify', '--release', '--out', fixture.outputRoot, '--job', job().id];
-    const deps = { repoRoot: fixture.repoRoot, log: vi.fn() };
+    const deps = { ...calibrationRoots, log: vi.fn() };
     expect(await runStorytimeCli(args, deps)).toBe(0);
     await rm(path.join(fixture.outputRoot, fixture.personFile));
     await expect(runStorytimeCli(args, deps)).rejects.toThrow(/line.?art|twin/i);
