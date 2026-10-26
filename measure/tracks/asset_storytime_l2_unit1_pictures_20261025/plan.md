@@ -121,7 +121,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `2026-10-25T20:17:24.145Z`, and after-call `1086bc64` at `2026-10-25T20:17:27.242Z`
   (Review A RA-N5). Later paid calls run one at a time.
   A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
-- [x] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
+- [x] Task: Correct the Review A findings in the picture pipeline code. Commit `f192bf48`. Review A failed Phase 2 at
   `5ffdbf6e` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json`).
   Fix RA-B1: `captureBookStill` loads the timeline and checks the page notes before the first
   seek, through one step that the smoke capture shares. Fix RA-B2: the style look binds to the
