@@ -310,6 +310,30 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   and T87 all pass on HEAD `0196627e`.
   Type-only amendment: `844fb72677592b09a8c0219b0225ea777cd6090e`; `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`; unit exit `0`; `Tests  99 passed (99)`; no assertion change. Commands: `heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'` and the task 7 unit command above. Logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t7.log` and `mid-red-vitest-245f8c1-retry.log` in the same directory. The first unit attempt exceeded the 120-second command timeout; the retry passed. Task 7 stays `[~]`.
 
+- [ ] Task: Correct the second Review B and third Review A findings. Risk class: high.
+  Review B failed Phase 2 at `84c8ffdb` with RB2-01 to RB2-04. Review A failed with RA3-01 to
+  RA3-03. Review C passed with nonblocking RC3-1. Gates, seams, and tests: `test-strategy.md`
+  section 4, task 8.
+  RB2-01: sanitize the propagated provider error and the final CLI error log. Test provider stderr
+  with a synthetic credential. RB2-02: check decoded review reasons, issues, and count keys before
+  any success entry, review write, or log. Cover MiniMax and Kimi JSON Unicode escapes. Keep safe
+  raw bytes byte-identical. RB2-03: retain the Vite credential deny entries. Add an absolute
+  Storytime deny rule. RB2-04 and RA3-01: return and read the checked real path. Apply the
+  protected-tree exclusion to stage reads. RA3-02 and RC3-1: allow 500 characters and refuse 501.
+  Cover non-ASCII boundary reasons. Pass T88 to T95 and every earlier test. Keep T1 to T87 unchanged.
+  Smoke run 6 (T92) is necessary. Unit mocks cannot prove the complete Vite middleware path. Use
+  one bounded `LINEART_SMOKE_COMMAND` run. Probe synthetic `.env`, `.pem`, and `.git/config` files
+  through the real middleware stack. Repeat every T86 label. Make no paid call. Run no other render.
+  Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  Red model: `minimax-cn-coding-plan/MiniMax-M3#high` (substitute; Codex 5-hour quota at 83 percent).
+  Green model: `volcengine-agent-plan/glm-5.3-flash#high`.
+  RA3-03: Red corrects the invalid full SHA quotation in `mid-red-245f8c1.log` to a short form.
+  Green corrects the same quotation in `jr-green-ec83581.log`. T95 checks operative full SHAs.
+  Immutable review reports may retain the invalid value as finding evidence.
+  RA3-N1: `metadata.json actual_tasks` remains a closeout item. Refresh it when Phase 2 closes.
+  Reviews A, B, and C run again on the task 8 HEAD. Adversarial testing is required. Browser review
+  is not applicable because no UI changes.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write

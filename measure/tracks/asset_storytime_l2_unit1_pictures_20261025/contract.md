@@ -283,11 +283,16 @@ block the render until `good-nan` runs again on both providers.
 - The capture server listens on `127.0.0.1`. Under `/out/` it serves only `out/<name>/<name>.glb`
   Forge asset files. Under `/stage/` it serves only the picture files that the loaded timeline names.
 - Before a read, the real path of the file must be inside the real `out/` or stage directory. It
-  must be outside the real `out/storytime/` tree. The server never serves the ledger, `raw/`,
-  `calibration/`, `candidates/`, or `reviews/`.
-- No raw answer, review log, ledger entry, or failure reason holds a credential. A raw answer or a
-  failure reason with a credential is refused before any write. Provider error text is redacted
-  and cut to 500 characters.
+  must be outside the real `out/storytime/` tree. This exclusion applies to model and stage reads.
+  The server returns and reads the checked real path, not the request candidate. The server never
+  serves the ledger, `raw/`, `calibration/`, `candidates/`, or `reviews/`.
+- The Vite deny list retains `.env`, `.env.*`, `*.{crt,pem}`, and `**/.git/**`. It adds
+  `<absolute-repoRoot>/out/storytime/**`. A relative Storytime pattern does not satisfy this rule.
+- No raw answer, review log, ledger entry, failure reason, thrown error, or CLI error log holds a
+  credential. A raw answer or failure reason with a credential is refused before any write. Decoded
+  review reasons, issues, and count keys pass the credential check before any success entry, review
+  write, raw copy, or log. Provider error text is redacted and cut to 500 characters. The thrown
+  provider error and final CLI error log follow the same redaction and length limit.
 - A safe raw answer is kept byte for byte. A `--raw` file must be a regular file of at most 65,536
   bytes, in UTF-8 with no NUL byte. A symlink is refused. A failure reason has 500 characters at most.
 

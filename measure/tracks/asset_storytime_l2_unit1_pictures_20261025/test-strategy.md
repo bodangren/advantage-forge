@@ -5,7 +5,7 @@ Amended at `b63755bc` for the line-art twins and the A3 teacher print (Daniel's 
 2026-10-25, about 21:10 and 21:25 ICT). Amended at `f271dce6` for the still engine hook task,
 after the section 8 guardrail fired in Green. Amended at `5ffdbf6e` for the Review A remediation
 (Phase 2 tasks 5 and 6). Amended at `c2353433` for the Review B security remediation (Phase 2
-task 7).
+task 7). Amended from `84c8ffdb` for the second security remediation (Phase 2 task 8).
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -112,6 +112,10 @@ Phase 2 task 7 also keeps `ENGINE_HOOK_TEST_COMMAND` as its Red and Green gate. 
 `tests/storytime-book-pictures.test.ts`. Smoke run 4 (T86) uses `LINEART_SMOKE_COMMAND` once, with
 `--job w01-readalong-p05`.
 
+Phase 2 task 8 keeps `ENGINE_HOOK_TEST_COMMAND`. Its tests also go into
+`tests/storytime-book-pictures.test.ts`. Smoke run 6 (T92) uses `LINEART_SMOKE_COMMAND` once, with
+`--job w01-readalong-p05`. T95 is a documentation gate, not a vitest row.
+
 ### ARGUMENT_PROBE_COMMAND (Phase 2 task 7 gate row T87, once)
 
 ```sh
@@ -125,7 +129,9 @@ This call uses the argument form of `heavy-run.sh`. It starts no vitest, tsc, Ch
 Risk class: **high**. Task 3 changes the shared song engine. Task 4 makes paid calls. Task 5
 repairs the production capture path and the release rule for line art. Task 6 makes two paid
 calls and changes the ledger. Task 7 closes four high and one medium security finding in the
-wrapper, the capture server, the smoke writer, the provider evidence, and the release gate. Task 1 and task 2 define the release gate, the
+wrapper, the capture server, the smoke writer, the provider evidence, and the release gate. Task 8
+closes three high security findings and the real-path, character-limit, and provenance findings.
+Task 1 and task 2 define the release gate, the
 output isolation, and the heavy-job order. A defect there allows a false release later.
 
 ### Task 1: Red
@@ -441,12 +447,102 @@ Re-review on the task 7 HEAD:
 - Adversarial testing is required, with the task 7 mutations in the closeout gate.
 - Browser review is not applicable. No UI changes. Smoke run 4 is a live render proof.
 
+### Task 8: Second security remediation gate
+
+Risk class: **high**. RB2-01 to RB2-03 can expose credentials. RB2-04 and RA3-01 weaken the file
+boundary. RA3-02 rejects valid Unicode reasons. RA3-03 weakens evidence provenance.
+
+Required decisions. The strategy fixes them. Red and Green do not change them:
+
+- RB2-01: `runPaidCall` rethrows a redacted error, not the original provider error. The final CLI
+  rejection handler redacts again and limits the message to 500 characters. Both layers preserve
+  safe diagnostic text.
+- RB2-02: check decoded `reason`, every `issues` string, and every `observedCounts` key. Run the
+  check after JSON decoding and before any success entry, review write, raw copy, or log. Apply it
+  to MiniMax and Kimi. A refusal writes only the sanitized failure record that the provider path
+  already requires. Safe raw bytes stay byte-identical.
+- RB2-03: `server.fs.deny` retains `.env`, `.env.*`, `*.{crt,pem}`, and `**/.git/**`. Add
+  `<absolute-repoRoot>/out/storytime/**`. Compute the absolute entry from `repoRoot`. The relative
+  `out/storytime/**` entry alone does not satisfy this rule. T79 may retain it.
+- RB2-04 and RA3-01: `resolveBookFile` returns the checked real path for model and stage files.
+  `serveBookFiles` reads that returned path. Stage files also exclude the real Storytime tree.
+- RA3-02 and RC3-1: the Kimi failure reason limit counts characters, not UTF-8 bytes. A reason of
+  500 non-ASCII characters passes. A reason of 501 non-ASCII characters fails before any write.
+- RA3-03: Red shortens the invalid full SHA in `mid-red-245f8c1.log`. Green shortens it in
+  `jr-green-ec83581.log`. Keep each corrected full SHA. Review reports stay immutable.
+
+Required seams. Red tests these names. Green implements them:
+
+- `runStorytimeBookPicturesEntry(argv, dependencies)` in `scripts/storytime-book-pictures.ts`.
+  Dependencies include `pipeline` and `errorLog`. The production entry calls it with `console.error`.
+  It returns the exit code and handles a rejected pipeline through the final sanitizing boundary.
+- Existing `runPaidCall`, `precheckMiniMax`, `precheckKimi`, `parseModelReview`, `bookServerConfig`,
+  `resolveBookFile`, and `serveBookFiles` remain the behavior seams. No new test file is necessary.
+
+Red:
+
+- Command: `ENGINE_HOOK_TEST_COMMAND`. Red model: `minimax-cn-coding-plan/MiniMax-M3#high`.
+- Valid Red: vitest exits non-zero. T88 to T91, T93, and T94 fail or fail to load. The 99 earlier
+  tests pass, or the Red log names each exception with its cause.
+- Red adds no `.skip(`, `.todo(`, or `.only(`. Tests start no process, browser, server, or provider.
+- Synthetic credentials exist only at runtime. Each value contains or encodes `SYNTHETIC`.
+- Red writes no real credential and reads no real credential file.
+- The Red log names one source mutation for each new test that passes against the current source.
+- Red commits only `tests/storytime-book-pictures.test.ts` and its corrected `mid-red-245f8c1.log`.
+- Red shortens only the invalid full SHA quotation. Red preserves the finding and the corrected SHA.
+
+Green gate:
+
+- Green model: `volcengine-agent-plan/glm-5.3-flash#high`.
+- `ENGINE_HOOK_TEST_COMMAND` exits 0 with a labeled `Tests  <N> passed (<N>)` line. `N` is equal to
+  the Red count. No test is skipped.
+- The type check prints `owned tsc errors: 0`, and the total `error TS` count is 31 or less.
+- `git diff --quiet 84c8ffdb -- src/song` exits 0. `PICTURE_RUBRIC_VERSION` stays
+  `storytime-picture-v2`, and the rubric text stays the same.
+- Green passes T92 and T95. The plan note quotes their labeled values.
+- Green commits explicit paths only: `src/storytime/book-pictures.ts`,
+  `scripts/storytime-book-pictures.ts`, and its corrected `jr-green-ec83581.log`.
+- Green makes no paid call. Green runs no heavy render except smoke run 6.
+- Green changes no earlier test, review report, or unrelated file.
+
+Smoke run 6 (T92). The decision: it is necessary. T79 and T91 inspect configuration through a
+mock. They cannot prove Vite default static refusal or middleware ordering. The probe uses the real
+Vite middleware stack. It does not rely on a mock or a direct plugin call.
+
+- Run once after the Green unit gate with `LINEART_SMOKE_COMMAND` and `--job w01-readalong-p05`.
+- Use one `heavy-run.sh` call, one Chrome launch, one stage still, and one temporary probe server.
+- Repeat every T86 label and range. Write the same four smoke files and no book version.
+- Build a temporary Vite root with synthetic `.env`, `key.pem`, `.git/config`, and Storytime evidence.
+  Include one allowlisted stage picture as the positive control. Use no real credential file.
+- Start that server through `createServer(bookServerConfig(...))`. Request each file over HTTP.
+- Require refusal of every protected file. Require the stage control bytes. Require no synthetic
+  protected bytes in any response. Print the T92 labels from section 5.
+- A failed smoke returns to Green with the labeled values. Another run needs a new orchestrator dispatch.
+
+T95 documentation gate:
+
+- Scan `plan.md`, `jr-green-ec83581.log`, `mid-red-245f8c1.log`, and new task 8 role logs.
+  Match full 40-character hexadecimal Git IDs, not 64-character file hashes.
+- Run `git rev-parse --verify <sha>^{commit}` for each matched ID. Require every ID to resolve.
+- Print `operative full SHAs checked: <n>` with `n >= 1`, and `unresolved full SHAs: 0`.
+- Immutable review JSON and log files may quote the invalid SHA as finding evidence. They are not
+  operative references. This exception does not permit a new invalid operative SHA.
+
+Re-review on the task 8 HEAD:
+
+- Review A, Review B, and Review C run again. Each review reads the earlier review JSON files.
+- Review B is applicable: provider errors, decoded evidence, server deny rules, and real-path reads.
+- Review C is applicable: final CLI errors, refusal timing, and the Unicode reason limit.
+- Adversarial testing is required, with the task 8 mutations in the closeout gate.
+- Browser review is not applicable. No UI changes. Smoke run 6 is a render and middleware proof.
+
 ### Phase 2 closeout gate
 
 - Run `ENGINE_HOOK_TEST_COMMAND` and the type check again on the final commit.
-- The task 3 to task 7 evidence above is complete. The adversarial mutations from the Red logs
+- The task 3 to task 8 evidence above is complete. The adversarial mutations from the Red logs
   ran, and each mutation made at least one test fail. The Red logs are `mid-red-00481c5.log`,
-  `mid-red-fa4692c.log`, `mid-red-835d9c0.log`, the task 5 Red log, and the task 7 Red log.
+  `mid-red-fa4692c.log`, `mid-red-835d9c0.log`, the task 5 Red log, the task 7 Red log, and the
+  task 8 Red log.
 - Mutations for task 5: put `seek` before `load` in `captureBookStill`; read the published copy for
   read 3; compare packed depth with 0.02; bind the style look to `sampleFiles` only; remove the
   `rubricVersion` check; allow a second `after-call` for one `callId`.
@@ -466,10 +562,23 @@ Re-review on the task 7 HEAD:
   13. Remove the regular-file or size check in `readRawAnswer` (T82 case c).
   14. Remove `assertCalibrationReady` from `verify --release` (T84).
   15. Return `true` for an empty `sampleFiles` list (T85).
+- Mutations for task 8, one at a time, each with the test that must fail:
+  1. Rethrow the original provider error from `runPaidCall` (T88).
+  2. Print the original rejection at the final CLI boundary (T88).
+  3. Check only raw MiniMax bytes, not decoded fields (T89).
+  4. Omit the decoded check for `reason`, `issues`, or a count key (T89, T90).
+  5. Write a success entry before the decoded check (T89, T90).
+  6. Remove a Vite default deny entry or replace the absolute Storytime pattern with the relative one (T91, T92).
+  7. Return the candidate path from the model or stage branch (T93).
+  8. Remove the Storytime exclusion from stage reads (T93).
+  9. Restore the UTF-8 byte limit for Kimi reasons (T94).
+  10. Trim or normalize safe raw bytes (T82, T89, T90).
+  11. Restore an invalid full SHA in an operative artifact (T95).
 - Reviews A, B, and C pass on the final HEAD.
 - `git status --short -- src/storytime scripts/storytime-book-pictures.ts tests/storytime-book-pictures.test.ts`
   prints nothing.
 - Run `./measure/generate.sh` after the plan status changes (A10).
+- Refresh `metadata.json actual_tasks` during closeout (RA3-N1). Do not mark it complete in task 8.
 
 ## 5. Required tests and falsification conditions
 
@@ -603,6 +712,22 @@ directory. It searches each file for each synthetic value.
 | T86 | Live, Phase 2 task 7 smoke run 4. The output prints all T74 labels in their ranges, `book files served: <n>` with `n >= 2`, `book file requests refused: 0`, and `lineart-smoke: wrote 4 files under <path>`. The plan quotes the SHA-256 of `color.png` and compares it with smoke run 3 `color.png`. If the values differ, Green views both pictures and records that Nan and the pot are visible. | a label is missing, a value is out of range, a request is refused, or the page throws. |
 | T87 | Gate row, no new test. (a) `ARGUMENT_PROBE_COMMAND` prints the literal text `$(printf RB_SUBSTITUTION_EXECUTED)`; the plan quotes `argument probe: literal`. (b) A read-only `node --import tsx` command calls `secretFindings` on `cost-ledger.jsonl` and on each file under `calibration/`, `raw/`, `candidates/`, and `reviews/` of `out/storytime/l2/unit1/`. It prints `live files scanned: <n>` with `n >= 15` and `live credential findings: 0`. (c) `assertCalibrationReady('out/storytime/l2/unit1')` still accepts the root. | the probe prints `RB_SUBSTITUTION_EXECUTED` without the `$(printf ` text, a live file matches, fewer than 15 files are scanned, or the gate rejects the root. |
 
+Second security remediation tests (Phase 2 task 8). Rows T88 to T91, T93, and T94 go into
+`tests/storytime-book-pictures.test.ts`. They use temporary roots and injected dependencies. They
+start no process, browser, server, or provider. T92 is live proof. T95 is a documentation gate.
+Keep every T1 to T87 assertion unchanged.
+
+| ID | Behavior and test file | Falsification condition (the test fails if ...) |
+| --- | --- | --- |
+| T88 | RB2-01: a fake provider rejects with stderr containing every synthetic credential. `runPaidCall` writes its sanitized failure entry and rejects with a sanitized error of at most 500 characters. `runStorytimeBookPicturesEntry` with a rejected injected pipeline captures `errorLog`, returns 1, and logs no credential. Its message has at most 500 characters. Safe diagnostic text survives both boundaries. | the original error escapes, the final log contains a credential, either message exceeds 500 characters, or safe diagnostic text disappears. |
+| T89 | RB2-02 MiniMax: separate raw JSON responses hide the synthetic API key with `\u` escapes in `reason`, one `issues` string, and one `observedCounts` key. Each case refuses before a success entry, review write, raw copy, or success log. The failure entry names only the pattern. A safe JSON response with an escaped non-ASCII character keeps its raw file byte-identical and its decoded review text. | any escaped credential reaches a success entry, file, or log; a raw file is written for a refused review; or safe raw bytes change. |
+| T90 | RB2-02 Kimi: after `--begin`, separate `--raw` JSON inputs hide the synthetic API key with `\u` escapes in the same three decoded fields. Each record refuses with the ledger byte-identical, no review or raw copy, and no credential in captured logs. A safe escaped Unicode response keeps its raw copy byte-identical. | a success entry or file appears, the begin ledger changes, a log exposes a credential, or safe raw bytes change. |
+| T91 | RB2-03 configuration: `bookServerConfig` has all four Vite defaults `.env`, `.env.*`, `*.{crt,pem}`, and `**/.git/**`. It also has `<absolute-repoRoot>/out/storytime/**`, computed independently from the temporary `repoRoot`. T79 may retain the relative entry. Loopback, strict mode, and the plugin remain. | a default is absent, the absolute Storytime entry is absent or wrong, or an earlier protection disappears. |
+| T92 | Live smoke run 6: every T86 label passes. Through the real Vite stack, print `middleware probe .env: refused`, `middleware probe pem: refused`, `middleware probe git config: refused`, `middleware probe storytime: refused`, `middleware probe stage control: served`, and `middleware probe synthetic bytes exposed: 0`. Each refusal has HTTP status 403 or 404. The stage control returns its exact bytes. | any protected request returns 200 or synthetic bytes, the control fails, a label is missing, or any T86 label fails. |
+| T93 | RB2-04 and RA3-01: an in-root model symlink resolves to its checked target. An in-root stage symlink also resolves to its checked target. `resolveBookFile` returns those real paths, not the candidates, and the middleware reads their bytes. A timeline-named stage picture whose target is Storytime evidence gets 404 with no `next` call and no evidence bytes. Cover both a file symlink and a stage root inside the protected tree. | a returned path is the candidate, a read follows the candidate, a protected stage target is served, or an allowed in-root symlink fails. |
+| T94 | RA3-02 and RC3-1: after `--begin`, a Kimi failure reason of 500 non-ASCII characters appends one failure entry. A reason of 501 non-ASCII characters is refused with the ledger byte-identical and no log. Use a multibyte character whose UTF-8 size exceeds one byte. | the 500-character reason is refused, the 501-character reason is written, or either case logs or writes at the wrong time. |
+| T95 | Documentation gate: every operative full 40-character Git ID in the section 4 artifact set resolves with `git rev-parse --verify`. Print `operative full SHAs checked: <n>` with `n >= 1` and `unresolved full SHAs: 0`. Immutable review quotations are excluded. | any operative full SHA does not resolve, the scan has no input, or either label is missing. |
+
 Fixtures and mocks:
 
 - Read the real Workbooks packages read-only for T1 and T3. Copy them to a temporary root for
@@ -616,6 +741,9 @@ Fixtures and mocks:
   writer. No unit test runs the real preflight, the lock, a provider, Chrome, or vite.
 - Use a fixed clock or compare event order. Do not depend on wall time.
 - Tests reference no `measure/tracks/` path (A9).
+- Task 8 builds JSON Unicode escapes at runtime. It never embeds a decoded synthetic credential in
+  a fixture file. The T88 entry uses an injected `errorLog`. The T92 probe uses a temporary Vite root
+  and real HTTP requests. Only T92 starts a real server.
 
 ## 6. Kimi pre-check owner and mechanism
 
@@ -734,6 +862,10 @@ Guardrails:
   Storytime output tree is never served (T78, T79).
 - From task 7, no provider text and no operator reason enters a file before the credential check
   (T81 to T83).
+- From task 8, decoded review fields pass the same credential check before persistence or logging.
+  Provider exceptions and final CLI errors use the same redaction boundary (T88 to T90).
+- From task 8, the server reads only the checked real path. Vite keeps its default credential deny
+  entries and adds the absolute Storytime entry (T91 to T93).
 - Phase 2 task 5 changes nothing in `src/song/`. The live camera reads use the existing hook
   fields `camera` and `cameraState`.
 - Phase 2 changes `src/song/` only in task 3, inside the T45 limits. Phase 2 does not change
@@ -774,6 +906,14 @@ Changed-contract risks:
   a new paid call is necessary. The T82 safe-answer cases and the T87 live scan limit this risk.
 - Task 7: the ledger `error` field is now redacted and has 500 characters at most. Ledger readers
   must not expect the full provider error text.
+- Task 8: thrown provider errors and final CLI errors are also redacted and bounded. CLI callers
+  must not expect original provider stderr.
+- Task 8: decoded credential refusal can reject an answer whose raw bytes passed the earlier scan.
+  The safe escaped Unicode controls limit false refusals.
+- Task 8: the absolute Storytime deny entry depends on `repoRoot`. Tests must use a temporary root,
+  not a hard-coded checkout path.
+- Task 8: a checked real path removes candidate symlink traversal. It does not prove protection
+  against replacement of the real target after the check. No race resistance is claimed.
 
 ## 9. Anti-pattern coverage
 
@@ -792,6 +932,13 @@ Changed-contract risks:
 | A4 vacuous pass (task 7) | P2 | The tree check reads every file for each synthetic value, not one chosen file (T81 to T83). Each refused request has a 404 and no `next` call (T78). Smoke run 4 requires `book file requests refused: 0`, so a missing GLB cannot pass silently (T86). The live scan needs 15 files or more (T87). | A secret persists in a file that the test does not read, a refused request reaches vite, a scene renders without an asset, or a scan of zero files passes. |
 | A5 false claim (task 7) | P2 | A finding names the pattern, never the matched text. The redacted ledger `error` keeps the failure record (T81). The plan quotes the T86 and T87 labels. | A finding or a log holds a credential, or a failure leaves no `after-call` entry. |
 | A7 over-broad filter (task 7) | P2 | The safe raw answers stay byte-identical (T82 case d). The 65,536-byte boundary file is accepted (T82 case c). Plain reasons still append (T83). | The credential check refuses a safe answer, changes a byte, or refuses a plain reason. |
+| A3 digit-only count (task 8) | P2 | Parse the labeled test total, six T92 probe labels, and both T95 SHA counts. Require zero exposed bytes and zero unresolved SHAs. | Any digit satisfies a label, a probe label disappears, or an empty SHA scan passes. |
+| A4 vacuous pass (task 8) | P2 | T92 includes an allowlisted stage control and real protected responses. T93 includes allowed in-root symlinks. T89 and T90 include safe escaped Unicode controls. | Every request is refused, every symlink fails, or safe inputs fail while the security cases pass. |
+| A5 false claim (task 8) | P2 | T88 tests the final CLI log, not only the ledger. T95 resolves operative SHAs. The plan quotes actual T92 and T95 labels. | A plan claims a safe CLI while raw stderr escapes, or an operative SHA does not resolve. |
+| A6 registry overstatement (task 8) | P2 | Keep task 8 open until Reviews A, B, and C pass and all mutations fail their named tests. | The track claims remediation while a review or adversarial gate fails. |
+| A7 over-broad filter (task 8) | P2 | Preserve safe raw bytes in T89 and T90. Accept 500 non-ASCII characters in T94. Preserve safe diagnostics in T88. | The decoded scan changes safe bytes, the Unicode boundary uses bytes, or redaction removes all diagnostics. |
+| A9 archived track paths (task 8) | P2 | Keep T95 outside vitest. Unit tests reference no `measure/tracks/` path. | A product test embeds the current track path and breaks after archival. |
+| A10 generated-facts drift (task 8) | P2 | Refresh `actual_tasks` and generated facts during closeout, after task status changes. | `metadata.json` or generated facts disagree with the completed plan. |
 
 A1 and A8 are retired. Project candidates for a future `measure/anti-patterns.md`: (S1) a model
 pass treated as acceptance; (S2) a preflight hold read as a Red failure; (S3) a version overwrite;
@@ -806,10 +953,10 @@ quoting, so `$(...)` runs.
 
 | Review | P2 | P3 | P4 | P5 |
 | --- | --- | --- | --- | --- |
-| Review B (security) | Applies: output path escape, symlinks, process arguments, no API keys in raw output or ledger, Workbooks read-only. The capture page server listens on localhost only and serves only the stage file and repository assets. The `window.__bookStill` hook holds no secret and exists only in the local song page. Review B failed at `c2353433` (RB-01 to RB-05). Task 7 corrects the findings, and Review B runs again on the task 7 HEAD with T77 to T87. | Applies: raw outputs and ledger contain no keys. | Applies, same as P3. | Not applicable. |
-| Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. From task 7: the calibration refusal in `verify --release`, the `--raw` and `--reason` refusals, and the wrapper invocation. | Applies: the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
-| Adversarial testing | Required: the task 5 and task 7 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
-| UX browser review | Not applicable: no UI. The task 3 smoke run is a live render proof, not a UI review. | Not applicable: model pre-checks, person counts, line-art looks, and Daniel's style look review the pictures. | Not applicable. | Not applicable. |
+| Review B (security) | Applies: output path escape, symlinks, process arguments, no API keys in raw output or ledger, Workbooks read-only. The capture page server listens on localhost only and serves only the stage file and repository assets. The `window.__bookStill` hook holds no secret and exists only in the local song page. Review B failed at `c2353433` (RB-01 to RB-05). Task 7 corrects the findings. Review B failed again at `84c8ffdb` (RB2-01 to RB2-04). Task 8 requires Review B on its HEAD with T88 to T95. | Applies: raw outputs and ledger contain no keys. | Applies, same as P3. | Not applicable. |
+| Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. From task 7: the calibration refusal in `verify --release`, the `--raw` and `--reason` refusals, and the wrapper invocation. From task 8: final CLI errors, decoded-field refusal timing, and the Unicode reason limit. Review C runs on the task 8 HEAD. | Applies: the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
+| Adversarial testing | Required: the task 5, task 7, and task 8 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
+| UX browser review | Not applicable: no UI. The smoke runs are live render proofs. Smoke run 6 also proves middleware refusal, not browser UX. | Not applicable: model pre-checks, person counts, line-art looks, and Daniel's style look review the pictures. | Not applicable. | Not applicable. |
 
 Review result format: the orchestrator gate reads `blocking_findings` and `nonblocking_findings` as
 arrays of non-empty strings. Each string starts with the finding ID, the severity, and the
@@ -824,8 +971,9 @@ Evidence classes:
   Phase 2 task 4 proves the real provider path. Phase 2 task 5 proves the production capture path
   in smoke run 2 (T74). Phase 2 task 6 proves the failure record and the neutral `good-nan` text
   (T75). Phase 2 task 7 proves the capture server allowlist and the guarded smoke writer in smoke
-  run 4 (T86), and the wrapper argument form and the live credential scan in T87. The Phase 3 Nan
-  sample proves
+  run 4 (T86), and the wrapper argument form and the live credential scan in T87. Phase 2 task 8
+  proves the real Vite middleware refusals and the production capture in smoke run 6 (T92). T95 is
+  documentation proof, not live behavior proof. The Phase 3 Nan sample proves
   the real capture, the line-art pass, both formats, and the twin binding under the lock.
 - **Model pre-check:** MiniMax and Kimi logs on color candidates. Never acceptance.
 - **Person-checked or owner-passed:** person logs and line-art looks from Daniel or his named
@@ -855,3 +1003,8 @@ Evidence classes:
    remediation`) lands after `c2353433`. It is doc-only and in-phase. `phase_base_sha` stays
    `1d39b8fd`. The orchestrator captures the amendment commit SHA as the task 7 Red base, after
    the commit lands. The task 7 Red diffs from that commit. No Red edit happens before it lands.
+8. The second security remediation amendment (`docs(measure): plan Storytime Phase 2 second
+   security remediation`) lands after `84c8ffdb`. It is doc-only and in-phase. `phase_base_sha`
+   stays `1d39b8fd`. Immediately after the strategy commit lands, the orchestrator runs
+   `git rev-parse HEAD` and captures that commit SHA as the immutable task 8 Red base. This capture
+   happens before any Red edit or commit. The task 8 Red diffs from that captured commit.
