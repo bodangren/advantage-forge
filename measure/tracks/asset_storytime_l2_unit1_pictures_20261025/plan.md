@@ -227,7 +227,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `c1706332`) and `calibration/bad-one-sun-kimi.json` (call `4192765b`) have no `modelSource`,
   `callId`, or `rawFile`. Ledger entries 1 to 11 have no `modelSource`. These records are older
   than the task 5 fields. The calibration gate does not read these fields. The records stay unchanged.
-- [ ] Task: Correct the Review B security findings and Review A RA2-N1. Review B failed Phase 2 at
+- [~] Task: Correct the Review B security findings and Review A RA2-N1. Review B failed Phase 2 at
   `c2353433` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.json`).
   Risk class: high. Gates, seams, and tests: `test-strategy.md` section 4, task 7.
   RB-01: the render wrapper calls `heavy-run.sh` in its argument form, with no `-c` shell string.
@@ -244,6 +244,21 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   server of the live capture, and the unit tests mock vite and Chrome. It writes no book version.
   Red model: `openai/gpt-6.1-sol#high`. Green model: `volcengine-agent-plan/glm-5.3-flash#high`.
   Reviews A, B, and C run again on the task 7 HEAD.
+  Red evidence: test commit `de097bc653e8d3616f5aec4ffaff736f6d15952f`; exit code `1`; `Tests  9 failed | 90 passed (99)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The final run failed T77 to T85 for the expected missing seams or reviewed defects. No new test passed.
+  T77 reached the guarded fallback because the wrapper ignores the injected `spawn`.
+  T78 lacks `bookFileAllowlist`; T79 lacks `bookServerConfig`; T80 lacks `writeOutputFile`.
+  T81 and T82 lack `secretFindings`. T83 accepts a synthetic credential reason.
+  T84 accepts release after a calibration log disappears. T85 accepts both empty and absent `sampleFiles`.
+  All 90 earlier tests passed. Earlier-test exceptions: none. All 339 earlier assertion lines remain unchanged and in order.
+  Authorized amendments: T37 gains calibration logs, temporary sources, and `workbooksRoot`; the Vite mock records its configuration before throwing.
+  The duplicate T54 fixture retains all 379 bytes. The tests use runtime synthetic credentials and temporary symlinks only.
+  Both Red runs printed the same test summary. Neither run had a syntax, transform, package, timeout, or preflight error.
+  Lock wait over 600 seconds: none. No process, browser, provider, or server started from a unit test.
+  Final output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t7.log`.
+  `./measure/generate.sh --check` exited `1`: `status.md` and `asset-inventory.json` are stale. Existing generated changes remain unchanged.
+  Green owns implementation, the type check, T87, smoke run 4 (T86), and the generated facts. Task 7 stays `[~]`.
 
 ## Phase 3: Week 1 pictures
 
