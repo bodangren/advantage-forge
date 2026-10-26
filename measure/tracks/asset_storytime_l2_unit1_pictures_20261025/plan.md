@@ -403,7 +403,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `unresolved full SHAs: 0`. No paid call. One heavy render (smoke run 6). `src/song/`, the
   rubric text, and `PICTURE_RUBRIC_VERSION` are unchanged.
 
-- [~] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
+- [x] Task: Check every decoded key and string value before provider evidence writes. Risk class: high.
+  Commit `e9d8132b`.
   Task 9 closes RB3-01 and RA4-01 from the reviews at `cf5743b7`. Review C passed with nonblocking RC4-1.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 9, and T96 to T103.
   One shared function walks every decoded JSON object from the answer, including every key and string value at any depth.
@@ -459,6 +460,55 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Red model deviation: the strategy names `openai/gpt-6.1-sol#high`. This role ran
   `minimax-cn-coding-plan/MiniMax-M3#high`. The eight tests follow the strategy rows for T96 to T103.
   Task 9 stays `[~]`.
+  Green evidence (2026-10-27, Green session, GLM): Green reran the Red command first: exit `1`;
+  `Tests  8 failed | 105 passed (113)`; T96 to T103 failed for the reviewed defects and the
+  missing seam. Implementation commit `e9d8132b` (`src/storytime/book-pictures.ts` only;
+  `scripts/storytime-book-pictures.ts` needed no change): the shared seam
+  `decodedAnswerFindings(rawOutput)` walks every JSON object that the answer yields, every
+  key and string value at every depth, arrays, unknown fields, and model envelopes, and it
+  decodes embedded JSON objects inside string values, including plain and fenced `content`,
+  through the same `jsonObjects` extraction. MiniMax calls the seam inside the paid callback,
+  before the success entry. Kimi calls the seam before any record write. Both decoded
+  refusals end with `the raw answer is refused; no review or raw copy is written.` and name
+  only the pattern. Safe raw bytes, safe reported MiniMax models, and the Kimi declared model
+  stay unchanged. `decodedReviewFindings` stays exported for its existing callers, and
+  production acceptance no longer depends on it. No paid call, no render, no new smoke run.
+  Unit gate: exit `0`; `Tests  113 passed (113)`; no skip. Command: `bash
+  ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts
+  tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `baseline tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t9.log`).
+  `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts` exit `0`.
+  T1 to T95, `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
+  Adversarial gate: all nine declared mutations ran one at a time under the focused command
+  (`bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
+  tests/storytime-book-pictures.test.ts --maxWorkers=1'`), and Green reverted each one before
+  the next run. Every mutation failed its named test: mutation 1 (named-fields-only check)
+  failed T96 to T100 and T102 (`6 failed | 80 passed (86)`); mutation 2 (first decoded object
+  only) failed T102 (`1 failed | 85 passed`); mutation 3 (check after the schema or fallback)
+  failed T96 to T100 and T102 (`6 failed | 80 passed`); mutation 4 skip keys failed T98
+  (`5 failed | 81 passed`); mutation 4 skip nested unknown objects passed all 86 tests in its
+  recursion-only form, because the direct `jsonObjects` extraction re-supplies every nested
+  object from the raw text, so that omission cannot hide a nested credential; the restated
+  form of the T99 falsification (one parsed answer object, nested unknown objects skipped)
+  failed T99 (`6 failed | 80 passed`); mutation 4 skip arrays failed T100
+  (`3 failed | 83 passed`); mutation 4 skip embedded `content` decoding failed T97
+  (`2 failed | 84 passed`); mutation 5 (MiniMax check after the paid callback) failed T96 to
+  T100, T102, and T103 (`8 failed | 78 passed`); mutation 6 (Kimi check after the first
+  write) failed T96 to T100, T102, and T103 (`8 failed | 78 passed`); mutation 7 (safe
+  reported models replaced with the declared model) failed T101 and T68
+  (`2 failed | 84 passed`); mutation 8 (refuse every JSON answer) failed T101 and the earlier
+  provider tests (`8 failed | 78 passed`); mutation 9 (a different Kimi suffix) failed T103
+  (`1 failed | 85 passed`). The unchanged implementation passed the full gate again after the
+  last revert: exit `0`; `Tests  113 passed (113)`. One `heavy-run: lock wait over 600 s` line
+  appeared during mutation 7, because other agents held the heavy lock; heavy-run retried and
+  finished, and the first mutation 7 attempt restarted after a tool timeout. The lock wait is
+  not a test failure. Green model deviation: the strategy names
+  `volcengine-agent-plan/glm-5.3-flash#high`; this Green run used
+  `volcengine-agent-plan/glm-latest#high`, after the planned model reached its 5-hour quota.
+  Task 9 is complete on HEAD `e9d8132b`: RB3-01 and RA4-01 are closed. RA4-N1 and RA3-N1 stay
+  closeout items.
 
 ## Phase 3: Week 1 pictures
 
