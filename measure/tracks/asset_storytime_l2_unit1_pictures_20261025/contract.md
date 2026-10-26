@@ -34,7 +34,8 @@ Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
 - `verify`: check file structure and review evidence. `--release` requires both model passes and
   a passing person count for every selected color candidate. For a reader page, `--release` also
   requires a ready line-art twin. `--output color` or `--output lineart` limits the check to one
-  output kind. An empty selection always fails.
+  output kind. An empty selection always fails. `--release` first runs the calibration gate
+  (`assertCalibrationReady`). Missing, stale, or changed calibration fails the release.
 
 Every paid command also has a dry-run mode. Dry runs make no provider call and write no ledger
 entry. The output root must stay inside the Forge `out/` directory.
@@ -191,8 +192,8 @@ different value is not a twin.
   file; and the twin's render evidence has the record's `lineArtTechnique` and
   `lineArtFormatVersion`.
 - A twin with another technique or format version stays `pending` until a new style look passes.
-  A missing sample file or a different sample SHA-256 makes the style look invalid. Then every
-  twin that uses the look is `failed`.
+  An empty or absent `sampleFiles` list, a missing sample file, or a different sample SHA-256
+  makes the style look invalid. Then every twin that uses the look is `failed`.
 - A line-art twin is `ready` only when it passes the format checks, its render evidence binds it to
   its color twin, the color twin is `ready`, its person look passes, and the style look passes.
   Missing evidence keeps it `pending`. A failed check or look makes it `failed`.
@@ -274,6 +275,21 @@ The render gate (`assertCalibrationReady`) checks each of the four logs:
 
 One failed check blocks every render. After the `good-nan` text change, the old `good-nan` logs
 block the render until `good-nan` runs again on both providers.
+
+## Security rules
+
+- The render wrapper starts `heavy-run.sh` in its argument form. Each CLI argument is one array
+  element. No code builds a shell string from a CLI argument.
+- The capture server listens on `127.0.0.1`. Under `/out/` it serves only `out/<name>/<name>.glb`
+  Forge asset files. Under `/stage/` it serves only the picture files that the loaded timeline names.
+- Before a read, the real path of the file must be inside the real `out/` or stage directory. It
+  must be outside the real `out/storytime/` tree. The server never serves the ledger, `raw/`,
+  `calibration/`, `candidates/`, or `reviews/`.
+- No raw answer, review log, ledger entry, or failure reason holds a credential. A raw answer or a
+  failure reason with a credential is refused before any write. Provider error text is redacted
+  and cut to 500 characters.
+- A safe raw answer is kept byte for byte. A `--raw` file must be a regular file of at most 65,536
+  bytes, in UTF-8 with no NUL byte. A symlink is refused. A failure reason has 500 characters at most.
 
 ## Automated checks
 

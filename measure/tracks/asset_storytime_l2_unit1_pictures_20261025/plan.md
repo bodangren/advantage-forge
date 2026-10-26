@@ -20,7 +20,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - MiniMax VLM uses the existing subscription at about zero marginal cash cost.
 - Moonshot Kimi K3.1 Pro uses the existing OpenCode plan at about zero marginal cash cost.
 - The provider CLIs do not report a per-call cash price. Record that fact instead of inventing one.
-- The initial MiniMax quota check reports 94% for the interval and 89% for the week.
+- The initial MiniMax quota check reports 94% remaining for the interval and 89% remaining for the
+  week. `mmx quota show` reports remaining percentages (Review A RA2-N4).
 - MiniMax video caps are 3 per day and 21 per week. This track makes no video calls.
 
 ## Phase 1: Contract and controls [checkpoint: 3ea5fca]
@@ -183,7 +184,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `fixture interior ink: 0.00%`; `fixture ring rays: 360/360`; `fixture depth step rows: 159/159`.
   Output: `out/storytime/l2/unit1/smoke/lineart-2026-10-26T03-28-07-662Z` (color.png, lineart.png,
   fixture-lineart.png, smoke.json; wrote no book version). The depth-step check moved from 0/159
-  to 159/159. The stage color and line-art pictures show the same tavern scene, and the line-art
+  to 159/159. The stage color and line-art pictures show the same `classroom` scene, and the line-art
   page has clean form edges plus depth edges on the floor borders. All task 5 gates pass.
   Task 6 remains pending.
 - [x] Task: Run the Review A ledger and calibration operations. Commit `011dbbb9`. Record the orphan before-call
@@ -201,7 +202,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `out/storytime/l2/unit1/calibration/raw/bad-one-sun-kimi-9d0bddf7.txt` appeared at 08:06 ICT,
   after the hung call; it stays unused and unchanged. MiniMax `good-nan` (RA-N2, neutral text
   `Hello, I am Nan.`): `--dry-run` first, then `--paid`; exit code `0`; quota at call time
-  MiniMax 0% (5h) and 2% (week), with no provider cap reported. Kimi `--begin`:
+  MiniMax 0% used (5h) and 2% used (week), with no provider cap reported. Kimi `--begin`:
   `--dry-run` first, then `--paid`, only after the MiniMax after-call entry. Deviation (a): the
   orchestrator dispatched the Kimi reviewer on model `kimi-code-plan-cn/k3.1-pro`, session
   `ses_e89b236c3ffe9J1m4HPPB9jLVM`; it wrote one raw line to
@@ -222,6 +223,27 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   after 20:17:24.145Z; `1086bc64` before 20:15:33.668Z and after 20:17:27.242Z); the ledger shows
   the two 2026-10-25 Kimi calls overlapped, and every later paid call ran one at a time. No
   vitest, tsc, Chrome, or render ran in task 6; the role gate runs outside the task.
+  Pre-remediation records (Review A RA2-N3): `calibration/bad-one-sun-minimax.json` (call
+  `c1706332`) and `calibration/bad-one-sun-kimi.json` (call `4192765b`) have no `modelSource`,
+  `callId`, or `rawFile`. Ledger entries 1 to 11 have no `modelSource`. These records are older
+  than the task 5 fields. The calibration gate does not read these fields. The records stay unchanged.
+- [ ] Task: Correct the Review B security findings and Review A RA2-N1. Review B failed Phase 2 at
+  `c2353433` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-b-c235343.json`).
+  Risk class: high. Gates, seams, and tests: `test-strategy.md` section 4, task 7.
+  RB-01: the render wrapper calls `heavy-run.sh` in its argument form, with no `-c` shell string.
+  RB-02: the capture server serves only allowlisted files after a `realpath` containment check.
+  It refuses the Storytime output tree, which holds the ledger, `raw/`, `calibration/`, and `candidates/`.
+  RB-03: `lineart-smoke` writes through `resolveOutputPath`, with exclusive creation of each directory and file.
+  RB-04: a credential check refuses a raw answer or a failure reason before any write. It redacts
+  provider error text. Safe raw answers stay byte-identical. `--raw` input has a size and type limit.
+  RB-05: `verify --release` runs `assertCalibrationReady`.
+  RA2-N1: a style look with an empty or absent `sampleFiles` list is invalid.
+  Pass T77 to T85 and every earlier test. Then pass the T87 gate row and smoke run 4 (T86).
+  Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged. Make no paid calls.
+  Run no heavy render, except smoke run 4. Smoke run 4 is necessary: RB-02 changes the only file
+  server of the live capture, and the unit tests mock vite and Chrome. It writes no book version.
+  Red model: `openai/gpt-6.1-sol#high`. Green model: `volcengine-agent-plan/glm-5.3-flash#high`.
+  Reviews A, B, and C run again on the task 7 HEAD.
 
 ## Phase 3: Week 1 pictures
 
@@ -233,6 +255,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Record in the sample report that no existing item shows the plant in a pot. Render with
   `render --job w01-readalong-p05 --version 2` through `heavy-run.sh`. If the sample shows Nan
   from behind, black panes, or no plant, write v3 and render again. Keep v2.
+  The sample report names Review A RA2-N2 for Daniel's style look: in the smoke run 3 line art,
+  adjacent bookcase books merge into one outline with no spine lines. A page that counts books can fail the person look.
   Report both file paths and SHA-256 values to the PM for Daniel's look. When
   the report is sent and the look is pending, mark this task `[b] deferred:daniel-lineart-look`.
   Continue with the next tasks while it waits. Record the look in the style look record.
