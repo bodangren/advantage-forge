@@ -1925,6 +1925,261 @@ describe('Storytime picture contract', () => {
   });
 });
 
+describe('Decoded answer security remediation', () => {
+  type Provider = 'minimax' | 'kimi';
+  const providers: Provider[] = ['minimax', 'kimi'];
+  const suffix = 'the raw answer is refused; no review or raw copy is written.';
+  const safeReview = { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] };
+  const safeModel = 'SYNTHETIC-safe-reported-model';
+
+  afterEach(() => { vi.unstubAllEnvs(); vi.useRealTimers(); });
+
+  function escapedJson(value: unknown, credential: string): string {
+    return JSON.stringify(value).replaceAll(credential, unicodeEscaped(credential));
+  }
+  /**
+   * The safe controls of T101 and T102: a safe top-level review, a safe plain envelope, a safe
+   * fenced envelope, a safe FAIL with an invalid count, and a safe PASS with an invalid count.
+   */
+  function safeControls(): string[] {
+    const safe = JSON.stringify({ ...safeReview, reason: 'Nan หนา is visible.', model: safeModel,
+      unknown: { nested: { empty: {}, list: [null, false, 4, [], {}, 'safe text'] } } })
+      .replaceAll('หนา', unicodeEscaped('หนา'));
+    return [safe, envelope(safe), envelope(`\x60\x60\x60json\r\n${safe}\r\n\x60\x60\x60`),
+      JSON.stringify({ ...safeReview, verdict: 'FAIL', observedCounts: { subject: 1.5 }, model: safeModel }),
+      JSON.stringify({ ...safeReview, observedCounts: { subject: 'one' }, model: safeModel })];
+  }
+  function envelope(content: string, status = 0): string {
+    return JSON.stringify({ content, base_resp: { status_code: status, status_msg: 'Synthetic status' } });
+  }
+  function answerFindings(raw: string): string[] {
+    const seam = (pictureSeams as unknown as {
+      decodedAnswerFindings?: (rawOutput: string) => string[];
+    }).decodedAnswerFindings;
+    expect(seam, 'The shared decodedAnswerFindings seam exists.').toBeTypeOf('function');
+    return seam!(raw);
+  }
+  async function providerRun(provider: Provider, raw: string) {
+    // Fake only Date. File operations and test timeouts retain real timers.
+    vi.useRealTimers();
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(CLOCK());
+    const space = await sandbox();
+    await planned(space.repoRoot, space.outputRoot);
+    await put(path.join(space.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+    const log = vi.fn();
+    const deps = { repoRoot: space.repoRoot, log, now: CLOCK,
+      runner: vi.fn(async () => ({ stdout: raw, stderr: '' })) };
+    const args = [`precheck-${provider}`, '--out', space.outputRoot, '--paid'];
+    let callId = '';
+    let input: string | undefined;
+    if (provider === 'kimi') {
+      await runStorytimeCli([...args, '--job', job().id, '--version', '1', '--begin'], deps);
+      callId = String((await securityLedger(space.outputRoot))[0]!.callId);
+      // The external input is inside this test's temporary repository, outside the output root.
+      input = path.join(space.repoRoot, 'input/answer.txt');
+      await put(input, raw);
+    }
+    const ledgerFile = path.join(space.outputRoot, 'cost-ledger.jsonl');
+    const beforeLedger = existsSync(ledgerFile) ? await readFile(ledgerFile) : undefined;
+    const before = await fileSnapshot(space.outputRoot);
+    log.mockClear();
+    const consoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+    let error: unknown;
+    let code: number | undefined;
+    try {
+      code = await runStorytimeCli(provider === 'kimi'
+        ? [...args, '--record', callId, '--raw', input!]
+        : [...args, '--job', job().id, '--version', '1'], deps);
+    } catch (caught) { error = caught; }
+    const logs = [...log.mock.calls, ...consoleLog.mock.calls, ...consoleError.mock.calls].flat().map(String);
+    consoleLog.mockRestore(); consoleError.mockRestore();
+    return { ...space, provider, raw, input, beforeLedger, before, error, code, logs, deps,
+      entries: await securityLedger(space.outputRoot) };
+  }
+  async function assertRefused(provider: Provider, raw: string, values: string[], label: string) {
+    const key = values[0]!;
+    expect.soft(raw, `${label}: the raw scan cannot see the credential.`).not.toContain(key);
+    expect.soft(securitySeam('secretFindings')(raw), `${label}: the raw scan has no findings.`).toEqual([]);
+    const run = await providerRun(provider, raw);
+    const context = `${label}/${provider}`;
+    expect.soft(run.error, `${context}: the answer is refused.`).toBeInstanceOf(Error);
+    const message = run.error instanceof Error ? run.error.message : '';
+    expect.soft(message, `${context}: the error names only the pattern.`).toMatch(/api-key-prefix/);
+    expect.soft(message.length, `${context}: the error is bounded.`).toBeLessThanOrEqual(500);
+    for (const text of [message, ...run.logs]) for (const value of values) {
+      expect.soft(text, `${context}: errors and logs contain no matched text.`).not.toContain(value);
+    }
+    expect.soft(run.logs, `${context}: no result log is written.`).toEqual([]);
+    const beforeCalls = run.entries.filter((entry) => entry.event === 'before-call');
+    const afterCalls = run.entries.filter((entry) => entry.event === 'after-call');
+    expect.soft(beforeCalls, `${context}: exactly one before-call.`).toHaveLength(1);
+    expect.soft(run.entries.filter((entry) => entry.status === 'success'), `${context}: no success entry.`).toEqual([]);
+    if (provider === 'minimax') {
+      expect.soft(run.deps.runner, `${context}: the fake runner runs once.`).toHaveBeenCalledOnce();
+      expect.soft(run.entries, `${context}: exactly two ledger entries.`).toHaveLength(2);
+      expect.soft(afterCalls, `${context}: exactly one failure after-call.`).toHaveLength(1);
+      expect.soft(afterCalls[0], `${context}: the failure matches the call.`).toMatchObject({
+        status: 'failure', callId: beforeCalls[0]?.callId,
+      });
+      const failure = String(afterCalls[0]?.error ?? '');
+      expect.soft(failure, `${context}: the failure names the pattern.`).toMatch(/api-key-prefix/);
+      expect.soft(failure.length, `${context}: the failure is bounded.`).toBeLessThanOrEqual(500);
+      // The ledger holds the failure entry. Every other file keeps its bytes.
+      const beforeFiles = run.before.filter(([file]) => file !== 'cost-ledger.jsonl');
+      const afterFiles = (await fileSnapshot(run.outputRoot)).filter(([file]) => file !== 'cost-ledger.jsonl');
+      expect.soft(afterFiles, `${context}: only the ledger can change.`).toEqual(beforeFiles);
+    } else {
+      expect.soft(run.deps.runner, `${context}: Kimi starts no provider.`).not.toHaveBeenCalled();
+      expect.soft(afterCalls, `${context}: no after-call is appended.`).toEqual([]);
+      expect.soft(await readFile(path.join(run.outputRoot, 'cost-ledger.jsonl')),
+        `${context}: the begin ledger stays byte-identical.`).toEqual(run.beforeLedger);
+      expect.soft(await fileSnapshot(run.outputRoot), `${context}: every output stays byte-identical.`).toEqual(run.before);
+      expect.soft(await readFile(run.input!), `${context}: the source raw file stays byte-identical.`).toEqual(Buffer.from(raw));
+    }
+    const files = await tree(run.outputRoot);
+    expect.soft(files.length, `${context}: the file scan has input.`).toBeGreaterThan(0);
+    expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(run.outputRoot, file))),
+      `${context}: no review or raw copy exists.`).toEqual([]);
+    // Scan every output file. Only the deliberate external input lies outside this scan.
+    await assertNoSyntheticValues([run.outputRoot], values);
+    return run;
+  }
+  async function refuseBoth(raw: string, values: string[], label: string) {
+    for (const provider of providers) await assertRefused(provider, raw, values, label);
+  }
+
+  it('T96: both providers refuse an escaped top-level model before evidence writes', async () => {
+    const values = syntheticCredentials();
+    await refuseBoth(escapedJson({ ...safeReview, model: values[0] }, values[0]!), values, 'top-level model');
+  }, 120000);
+
+  it('T97: both providers inspect plain and fenced content models', async () => {
+    const values = syntheticCredentials();
+    const inner = escapedJson({ ...safeReview, model: values[0] }, values[0]!);
+    for (const content of [inner, `\x60\x60\x60json\n${inner}\n\x60\x60\x60`]) {
+      await refuseBoth(envelope(content), values, content === inner ? 'plain content' : 'fenced content');
+    }
+  }, 120000);
+
+  it('T98: malformed FAIL and PASS count keys are inspected before schema fallback', async () => {
+    const values = syntheticCredentials();
+    for (const verdict of ['FAIL', 'PASS']) {
+      const raw = escapedJson({ ...safeReview, verdict, observedCounts: { [values[0]!]: 1.5 } }, values[0]!);
+      await refuseBoth(raw, values, `${verdict}: malformed count key`);
+    }
+  }, 120000);
+
+  it('T99: unknown fields retain credential keys and strings at every depth', async () => {
+    const values = syntheticCredentials();
+    for (const depth of [2, 12]) for (const kind of ['key', 'value']) {
+      let unknown: unknown = kind === 'key' ? { [values[0]!]: null } : values[0];
+      for (let level = 0; level < depth; level++) unknown = { nested: unknown };
+      await refuseBoth(escapedJson({ ...safeReview, unknown }, values[0]!), values, `${kind} at depth ${depth}`);
+    }
+  }, 120000);
+
+  it('T100: unknown arrays retain string elements and object keys', async () => {
+    const values = syntheticCredentials();
+    for (const element of [values[0], { [values[0]!]: false }]) {
+      const raw = escapedJson({ ...safeReview, unknown: { nested: [null, 3, true, [], {}, element] } }, values[0]!);
+      await refuseBoth(raw, values, typeof element === 'string' ? 'array string' : 'array object key');
+    }
+  }, 120000);
+
+  it('T101: safe controls preserve raw bytes, models, and malformed parser results', async () => {
+    const values = syntheticCredentials();
+    for (const control of safeControls()) for (const provider of providers) {
+      const raw = `${control}\r\n  `;
+      const run = await providerRun(provider, raw);
+      const expected = parseModelReview(raw);
+      expect.soft(run.error, `${provider}: the safe answer is accepted.`).toBeUndefined();
+      expect.soft(run.code, `${provider}: the parser verdict determines the exit.`).toBe(expected.verdict === 'pass' ? 0 : 2);
+      const review = JSON.parse(await readFile(path.join(run.outputRoot, `reviews/${job().id}-v1-${provider}.json`), 'utf8'));
+      expect.soft(review, `${provider}: decoded fields retain parser behavior.`).toMatchObject(expected);
+      expect.soft(review.model, `${provider}: the correct model survives.`)
+        .toBe(provider === 'minimax' ? safeModel : pictureSeams.KIMI_REVIEW_MODEL);
+      expect.soft(review.modelSource).toBe(provider === 'minimax' ? 'reported' : 'declared');
+      expect.soft(Buffer.from(review.rawOutput), `${provider}: review raw bytes stay identical.`).toEqual(Buffer.from(raw));
+      expect.soft(await readFile(path.join(run.outputRoot, review.rawFile)), `${provider}: raw copy stays identical.`).toEqual(Buffer.from(raw));
+      if (run.input) expect.soft(await readFile(run.input)).toEqual(Buffer.from(raw));
+      expect.soft(run.entries.map((entry) => entry.event)).toEqual(['before-call', 'after-call']);
+      expect.soft(run.entries[1]?.status).toBe('success');
+      await assertNoSyntheticValues([run.outputRoot], values);
+    }
+    // The shared walker must exist and must hold no finding for a safe answer.
+    for (const control of safeControls()) {
+      expect(answerFindings(control), 'A safe control holds no finding in the shared walker.').toEqual([]);
+    }
+  }, 120000);
+
+  it('T102: the shared walker inspects every object before selection and status fallback', async () => {
+    const values = syntheticCredentials();
+    const key = values[0]!;
+    const hidden = escapedJson({ unknown: { nested: [{ [key]: [null, true, 0, key] }] } }, key);
+    const valid = JSON.stringify(safeReview);
+    const cases = [
+      { label: 'unselected earlier object', raw: `${hidden}\n${valid}` },
+      { label: 'unselected later object', raw: `${valid}\n${hidden}` },
+      { label: 'nonzero status envelope', raw: envelope(hidden, 1000) },
+      { label: 'embedded unknown JSON string', raw: JSON.stringify({ ...safeReview, unknown: { text: hidden } }) },
+    ];
+    // Exercise provider wiring even when the new export does not exist at Red.
+    for (const item of cases) await refuseBoth(item.raw, values, item.label);
+    for (const item of cases) {
+      const findings = answerFindings(item.raw);
+      expect(findings, item.label).toContain('api-key-prefix');
+      for (const finding of findings) {
+        const patterns = values.flatMap((value) => securitySeam('secretFindings')(value));
+        expect(patterns, 'Findings name only known patterns.').toContain(finding);
+        for (const value of values) expect(finding).not.toContain(value);
+      }
+    }
+    const valueKinds = { nil: null, bool: true, integer: 4, decimal: 0.5, string: 'safe', object: {}, array: [] };
+    for (const value of [null, true, 4, 0.5, 'safe', {}, [], valueKinds, [null, true, 4, {}, []]]) {
+      expect(answerFindings(JSON.stringify({ value })), 'Safe value kinds have no findings.').toEqual([]);
+    }
+    // The safe controls of T101 hold no finding in the shared walker either.
+    for (const control of safeControls()) {
+      expect(answerFindings(control), 'A safe control holds no finding.').toEqual([]);
+    }
+    for (const value of values) {
+      const raw = JSON.stringify({ deep: { value } }).replace(JSON.stringify(value), `"${unicodeEscaped(value)}"`);
+      const findings = answerFindings(raw);
+      expect(findings.length, 'Every credential value yields a pattern.').toBeGreaterThan(0);
+      for (const finding of findings) for (const credential of values) expect(finding).not.toContain(credential);
+    }
+  }, 120000);
+
+  it('T103: decoded refusal messages share the exact suffix through the final CLI boundary', async () => {
+    const values = syntheticCredentials();
+    // This field already triggers the old check, so suffix failures remain independent of new traversal.
+    const raw = escapedJson({ ...safeReview, reason: values[0] }, values[0]!);
+    const entry = entrySeam();
+    expect(entry, 'The final CLI boundary exists.').toBeTypeOf('function');
+    const messages: string[] = [];
+    for (const provider of providers) {
+      const run = await assertRefused(provider, raw, values, 'decoded message');
+      const message = run.error instanceof Error ? run.error.message : '';
+      messages.push(message);
+      expect.soft(message.endsWith(suffix), `${provider}: the thrown message has the exact suffix.`).toBe(true);
+      expect.soft(message, `${provider}: the message claims no broader write exclusion.`).not.toMatch(/nothing is written/);
+      const logged: string[] = [];
+      expect.soft(await entry!([], { pipeline: async () => { throw run.error; }, errorLog: (text) => { logged.push(text); } })).toBe(1);
+      expect.soft(logged).toHaveLength(1);
+      expect.soft(logged[0]?.endsWith(suffix), `${provider}: the final CLI keeps the suffix.`).toBe(true);
+      expect.soft(logged[0]?.length ?? Infinity).toBeLessThanOrEqual(500);
+      for (const text of [message, ...logged]) {
+        expect.soft(text).toMatch(/api-key-prefix/);
+        for (const value of values) expect.soft(text).not.toContain(value);
+      }
+    }
+    // Both providers end with the same suffix. The prefix before it stays free.
+    expect.soft(messages[0]?.slice(-suffix.length)).toBe(messages[1]?.slice(-suffix.length));
+  }, 120000);
+});
+
 describe('Model review parser regressions', () => {
   // Exact bytes from the first MiniMax call acd4f807. The tests read no live output file.
   const realMmxFail = "{\n  \"content\": \"```json\\n{\\n  \\\"verdict\\\": \\\"FAIL\\\",\\n  \\\"reason\\\": \\\"The source text asks 'How many suns? One sun!', but there is no sun visible in the image.\\\",\\n  \\\"observedCounts\\\": {\\n    \\\"suns\\\": 0\\n  },\\n  \\\"issues\\\": [\\n    \\\"Missing required object: sun (0 observed, expected 1)\\\"\\n  ]\\n}\\n```\",\n  \"base_resp\": {\n    \"status_code\": 0,\n    \"status_msg\": \"success\"\n  }\n}\n";
