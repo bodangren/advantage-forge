@@ -470,7 +470,7 @@ describe('Review B security remediation', () => {
       const spawn = ((...args: Parameters<typeof spawnSync>) => {
         calls.push(args);
         return { status, signal: null, pid: 0, output: [], stdout: null, stderr: null };
-      }) as typeof spawnSync;
+      }) as unknown as typeof spawnSync;
       // HEAD has no spawn dependency. Keep its guarded fallback from creating a second failure in T12.
       let code: number | undefined;
       let error: unknown;
