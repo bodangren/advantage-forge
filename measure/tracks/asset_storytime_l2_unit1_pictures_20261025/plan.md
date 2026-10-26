@@ -121,7 +121,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   `2026-10-25T20:17:24.145Z`, and after-call `1086bc64` at `2026-10-25T20:17:27.242Z`
   (Review A RA-N5). Later paid calls run one at a time.
   A calibration pass calibrates the model pre-check only. It is not acceptance of any picture.
-- [~] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
+- [x] Task: Correct the Review A findings in the picture pipeline code. Review A failed Phase 2 at
   `5ffdbf6e` (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/review-a-5ffdbf6.json`).
   Fix RA-B1: `captureBookStill` loads the timeline and checks the page notes before the first
   seek, through one step that the smoke capture shares. Fix RA-B2: the style look binds to the
@@ -171,6 +171,21 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   T76 fails because the `unpackDepth` seam is missing. T70 fails because the current decode reads the bytes in the wrong order.
   Red model: the table model openai/gpt-6.1-sol reached its usage limit. The orchestrator used minimax-cn-coding-plan/MiniMax-M3 for this step.
   Technique ID stays song-page-form-edges-viewdepth-1bit-v2 (orchestrator decision): no output carries v2 evidence.
+  Depth decode Green implementation commit `f192bf48` (`src/storytime/line-art-pass.ts` only;
+  `src/storytime/book-pictures.ts` and `scripts/storytime-book-pictures.ts` needed no change).
+  Unit gate: exit 0; "Tests  90 passed (90)"; no skip. Type check: `tsc exit: 2`;
+  `owned tsc errors: 0`; `baseline tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-tsc-t5-depth.log`).
+  Smoke run 3 (T74) PASSED; exit code 0. Printed labels: `hook before seek: absent`;
+  `window.__song keys: load,portrait,ready,seek`; `capture path: captureBookStill`;
+  `camera drift source: live`; `camera state drift: 0`; `color repeat identical: yes`;
+  `stage ink share: 2.12%`; `lineart technique: song-page-form-edges-viewdepth-1bit-v2`;
+  `fixture interior ink: 0.00%`; `fixture ring rays: 360/360`; `fixture depth step rows: 159/159`.
+  Output: `out/storytime/l2/unit1/smoke/lineart-2026-10-26T03-28-07-662Z` (color.png, lineart.png,
+  fixture-lineart.png, smoke.json; wrote no book version). The depth-step check moved from 0/159
+  to 159/159. The stage color and line-art pictures show the same tavern scene, and the line-art
+  page has clean form edges plus depth edges on the floor borders. All task 5 gates pass.
+  Task 6 remains pending.
 - [ ] Task: Run the Review A ledger and calibration operations. Record the orphan before-call
   `9d0bddf7-d2ea-4bdb-a672-56c308e3f6d0` as failed with `precheck-kimi --record <callId>
   --failed --reason <text>`. Then run `good-nan` again with the neutral Workbooks Nan text (RA-N2):
