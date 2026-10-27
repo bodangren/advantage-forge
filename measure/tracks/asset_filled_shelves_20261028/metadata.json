@@ -1,0 +1,17 @@
+{
+  "track_id": "asset_filled_shelves_20261028",
+  "type": "bug",
+  "status": "new",
+  "created_at": "2026-10-27T23:34:18Z",
+  "updated_at": "2026-10-27T23:34:18Z",
+  "description": "Fill every empty shelf in the five games and the seven scene maps that place the empty shelf asset, and repair the floating items in the inn, school, and archive maps",
+  "estimated_tasks": 12,
+  "actual_tasks": null,
+  "deviation_notes": "Created from Daniel's PM relay of 2026-10-28. The classroom was filled earlier in the one-off lane (commit e4e5c593) and stays unchanged. No session writes in the monorepo; the PM hands the commit to the monorepo session for the cartridge sync. The registry entry and the generator run are closeout items because another session owns measure/tracks.md and measure/generated/*.",
+  "workstream": "assets",
+  "retrospective": false,
+  "evidence": [
+    "out/chibi-sprouts/r1/week1/scenes/classroom-v2.png"
+  ],
+  "dependencies": []
+}
