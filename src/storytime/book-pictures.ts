@@ -1144,52 +1144,64 @@ export function parseModelReview(rawOutput: string): {
 }
 
 /**
- * The credential findings across the decoded review fields of RB2-02: the reason, every issue
- * string, and every count key. A JSON Unicode escape hides a credential from the raw-byte scan,
- * so the decoded fields need their own check before any write (RB2-02).
- */
-export function decodedReviewFindings(review: {
-  reason: string;
-  observedCounts: Record<string, number>;
-  issues: string[];
-}): string[] {
-  const findings = secretFindings(review.reason);
-  for (const issue of review.issues) findings.push(...secretFindings(issue));
-  for (const key of Object.keys(review.observedCounts)) findings.push(...secretFindings(key));
-  return findings;
-}
-
-/**
- * RB3-01: the credential findings across every decoded key and string value of the provider
- * answer. One walker covers every JSON object that `jsonObjects` extracts from the raw text,
- * including unknown fields, arrays, and model envelopes, at every depth. A schema, a field
- * selection, or a status fallback runs later and cannot discard data before this check. Each
- * string value also goes through the same object extraction, so an embedded JSON object,
- * including plain or fenced `content`, is decoded and scanned. Every finding names a pattern;
- * no finding holds matched text.
+ * RB4-01: the credential findings across every decoded JSON value of the provider answer,
+ * before schema parsing, selection, status fallback, or any write. One shared walker covers
+ * both providers. When the whole answer parses as JSON, the walker walks that root value,
+ * which may be an object, an array, or a string, and scans that text only once. Otherwise it
+ * keeps the prose and fence extraction of task 9 through `jsonObjects`. On each decoded
+ * string, it parses valid JSON and walks the result, at any number of string layers. It
+ * walks every array element, including scalar strings, and every object key and value, with
+ * no field allowlist. RC5-1: an explicit worklist replaces call-stack recursion, so a
+ * hostile depth returns findings or a safe empty result and never raises `RangeError`, with
+ * no depth ceiling. RC5-2: the walker builds the credential rules once per call and visits
+ * each decoded value once. Every finding names a pattern; no finding holds matched text.
  */
 export function decodedAnswerFindings(rawOutput: string): string[] {
   const findings: string[] = [];
-  const visited = new Set<unknown>();
-  const walk = (value: unknown): void => {
-    if (typeof value === 'string') {
-      findings.push(...secretFindings(value));
-      for (const inner of jsonObjects(value)) walk(inner);
-      return;
-    }
-    if (typeof value !== 'object' || value === null) return;
-    if (visited.has(value)) return;
-    visited.add(value);
-    if (Array.isArray(value)) {
-      for (const item of value) walk(item);
-      return;
-    }
-    for (const [key, inner] of Object.entries(value)) {
-      findings.push(...secretFindings(key));
-      walk(inner);
+  const rules: Array<{ name: string; regex: RegExp }> = [
+    ...CREDENTIAL_PATTERNS,
+    ...envCredentialPatterns(process.env),
+  ];
+  const scan = (text: string): void => {
+    for (const rule of rules) {
+      rule.regex.lastIndex = 0;
+      if (rule.regex.test(text)) findings.push(rule.name);
     }
   };
-  for (const value of jsonObjects(rawOutput)) walk(value);
+  const worklist: unknown[] = [];
+  try {
+    worklist.push(JSON.parse(rawOutput) as unknown);
+  } catch {
+    // The whole answer is prose or holds several JSON documents. The task 9 extraction stays.
+    for (const value of jsonObjects(rawOutput)) worklist.push(value);
+  }
+  const visited = new Set<object>();
+  while (worklist.length > 0) {
+    const value = worklist.pop()!;
+    if (typeof value === 'string') {
+      scan(value);
+      // Decode the next string layer. A parsed layer contributes its decoded value; each
+      // parse shortens the text, so layers terminate. A string that is not JSON keeps the
+      // task 9 prose and fence extraction, so a fenced or embedded object is still decoded.
+      try {
+        worklist.push(JSON.parse(value) as unknown);
+      } catch {
+        for (const inner of jsonObjects(value)) worklist.push(inner);
+      }
+      continue;
+    }
+    if (typeof value !== 'object' || value === null) continue;
+    if (visited.has(value)) continue;
+    visited.add(value);
+    if (Array.isArray(value)) {
+      for (const item of value) worklist.push(item);
+      continue;
+    }
+    for (const [key, inner] of Object.entries(value)) {
+      scan(key);
+      worklist.push(inner);
+    }
+  }
   return findings;
 }
 
@@ -3658,10 +3670,10 @@ export async function precheckKimi(options: {
       `The raw answer matched credential pattern ${rawFindings[0]}; nothing is written.`,
     );
   }
-  const parsed = parseModelReview(rawOutput);
-  // RB3-01: every decoded key and string value of the answer passes the credential check
-  // before any record write, so a refused record leaves the ledger, the review tree, and the
-  // raw copy byte-identical. The schema and the fallback run after this check.
+  // RB4-01: every decoded key and string value of the answer passes the credential check
+  // before any record write, and before the schema parse or the status fallback can discard
+  // data. The check reads the raw answer, not the schema result, so a refused record leaves
+  // the ledger, the review tree, and the raw copy byte-identical.
   const decodedFindings = decodedAnswerFindings(rawOutput);
   if (decodedFindings.length > 0) {
     throw new Error(
@@ -3669,6 +3681,7 @@ export async function precheckKimi(options: {
         'the raw answer is refused; no review or raw copy is written.',
     );
   }
+  const parsed = parseModelReview(rawOutput);
   const reviewBase = options.calibration
     ? `calibration/${options.calibration}-kimi`
     : `reviews/${begin.jobId}-v${begin.version}-kimi`;
