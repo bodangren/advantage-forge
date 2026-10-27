@@ -509,7 +509,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Task 9 is complete on HEAD `e9d8132b`: RB3-01 and RA4-01 are closed. RA4-N1 and RA3-N1 stay
   closeout items.
 
-- [ ] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
+- [~] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
   Task 10 closes RB4-01 from the reviews at `53cc3ada`.
   It also closes RC5-1, RC5-2, RC5-4, and RA5-02 on the same walker.
   It moves the Kimi check before schema parsing and corrects the comment for RA5-03.
@@ -543,6 +543,41 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   RA4-N1 and RA3-N1 stay closeout items. RC5-3 is a tech-debt candidate, not a task 10 test.
   Capture the task 10 Red base immediately after this strategy commit.
   Run `git rev-parse HEAD` before any Red edit. Keep the Phase 2 baseline `1d39b8fd` unchanged.
+  Red base: `62c4ef6fee3aad167fe344df58f3dd4a4ed46b27`. The task 10 strategy commit.
+  Red evidence (2026-10-27, Red session, MiniMax-M3): test commit
+  `5a46415eb0b25db2d4fb9e76b9224bcae7fb40fa`; exit code `1`; `Tests  11 failed | 114 passed (125)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The gate duration was 248.20 s. The run had no package, syntax, transform, timeout, or preflight error.
+  One `heavy-run: lock wait over 600 s` line appeared while another agent held the shared lock.
+  All 113 earlier tests passed. T112 passed. Earlier-test exceptions: none.
+  T104 failed because the extra string layer keeps escaped braces. Both providers persist the answer and record success.
+  T105 failed for the same reason at the third string layer.
+  T106 failed because a root array is not a brace object. The sibling credential is not checked.
+  T107 failed because the array string yields only the empty object. The credential element is lost.
+  T108 failed because the encoded credential is not checked before the status fallback discards it.
+  T109 failed because the call raises `RangeError: Maximum call stack size exceeded`. The error has no pattern name and no suffix.
+  T110 failed with the same RangeError on a safe deep answer. No review file is written.
+  T111 failed because `decoded scan ms: 20042` exceeds 2000. The scan did not finish inside the 20000 ms test limit.
+  T113 failed because `decodedReviewFindings` is still exported.
+  T114 failed because `precheckKimi` calls `parseModelReview` before `decodedAnswerFindings`. The Kimi comment does not state that the check reads the raw answer.
+  T115 failed because `rule scan ms: 15274` exceeds 2000.
+  Hostile-scan harness: T109, T110, T111, and T115 run their scan in a worker thread. The test owns the wall-clock limit. The limit is 20000 ms for the seam scans and 30000 ms for the provider calls.
+  The worker stack is 1 MB. The worker stack then matches the test process stack, so the current recursive walker reaches the same depth limit.
+  Without the worker, the current walker blocked the event loop for 27 minutes and the 120000 ms vitest limit never fired.
+  The first full gate run was stopped by the orchestrator after 27 minutes of blocked CPU. It is not Red evidence.
+  An earlier full gate run finished with a T109 timeout failure. The strategy rejects a timeout failure as Red evidence.
+  Focused hostile command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T109|T110|T111|T115"'`;
+  exit code `1`; `Tests  4 failed | 94 skipped (98)`; duration 50.69 s.
+  Test design deviation: the env names of T115 are `TASK10_SECRET_<n>_KEY`. The env rule pattern needs a name that ends in KEY, TOKEN, SECRET, or PASSWORD.
+  Without that suffix the 1200 rules do not exist, the scan stays fast, and the row cannot fail at Red.
+  Test design deviation: the four hostile rows run in a worker thread. The strategy names the seam call, the provider call, and the time bound. The harness change keeps those checks and gives each one a limit that the test owns.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t10.log`.
+  Vitest output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10.log`.
+  Focused hostile output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t10-hostile.log`.
+  Red model deviation: the strategy names `volcengine-agent-plan/deepseek-v4-pro#high`, and `ra-quota pick red` printed the same route.
+  This role ran `minimax-cn-coding-plan/MiniMax-M3#high`, because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
 ## Phase 3: Week 1 pictures
 
