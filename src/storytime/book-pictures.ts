@@ -487,35 +487,25 @@ function record(value: unknown): Record<string, unknown> | undefined {
 
 function jsonObjects(text: string): unknown[] {
   const values: unknown[] = [];
-  for (let start = 0; start < text.length; start += 1) {
-    if (text[start] !== '{') continue;
-    let depth = 0;
-    let quoted = false;
-    let escaped = false;
-    for (let index = start; index < text.length; index += 1) {
-      const character = text[index];
-      if (escaped) {
-        escaped = false;
-        continue;
-      }
-      if (character === '\\' && quoted) {
-        escaped = true;
-        continue;
-      }
-      if (character === '"') {
-        quoted = !quoted;
-        continue;
-      }
-      if (quoted) continue;
-      if (character === '{') depth += 1;
-      if (character === '}') depth -= 1;
-      if (depth !== 0) continue;
-      try {
-        values.push(JSON.parse(text.slice(start, index + 1)));
-      } catch {
-        // A later brace can start the provider JSON object.
-      }
-      break;
+  let start = -1;
+  let depth = 0;
+  let quoted = false;
+  let escaped = false;
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (quoted) {
+      if (escaped) escaped = false;
+      else if (character === '\\') escaped = true;
+      else if (character === '"') quoted = false;
+      continue;
+    }
+    if (character === '"') quoted = true;
+    else if (character === '{') {
+      if (depth === 0) start = index;
+      depth += 1;
+    } else if (character === '}' && depth > 0 && --depth === 0 && start >= 0) {
+      try { values.push(JSON.parse(text.slice(start, index + 1))); } catch { /* Keep scanning later objects. */ }
+      start = -1;
     }
   }
   return values;
@@ -957,11 +947,18 @@ function envCredentialPatterns(env: NodeJS.ProcessEnv): Array<{ name: string; re
 /** The credential pattern names that match the text (RB-04). A name never holds matched text. */
 export function secretFindings(text: string, env: NodeJS.ProcessEnv = process.env): string[] {
   const findings: string[] = [];
-  for (const rule of [...CREDENTIAL_PATTERNS, ...envCredentialPatterns(env)]) {
+  for (const rule of credentialRules(env)) {
     rule.regex.lastIndex = 0;
     if (rule.regex.test(text)) findings.push(rule.name);
   }
   return findings;
+}
+
+function credentialRules(env: NodeJS.ProcessEnv): Array<{ name: string; regex: RegExp }> {
+  return [...CREDENTIAL_PATTERNS, ...envCredentialPatterns(env)].map((rule) => ({
+    ...rule,
+    name: rule.name.length > 32 ? `${rule.name.slice(0, 32)}…` : rule.name,
+  }));
 }
 
 /** The text with every credential match replaced by `[redacted:<pattern>]` (RB-04). */
@@ -1158,48 +1155,39 @@ export function parseModelReview(rawOutput: string): {
  */
 export function decodedAnswerFindings(rawOutput: string): string[] {
   const findings: string[] = [];
-  const rules: Array<{ name: string; regex: RegExp }> = [
-    ...CREDENTIAL_PATTERNS,
-    ...envCredentialPatterns(process.env),
-  ];
+  const rules = credentialRules(process.env);
   const scan = (text: string): void => {
     for (const rule of rules) {
       rule.regex.lastIndex = 0;
       if (rule.regex.test(text)) findings.push(rule.name);
     }
   };
-  const worklist: unknown[] = [];
-  try {
-    worklist.push(JSON.parse(rawOutput) as unknown);
-  } catch {
-    // The whole answer is prose or holds several JSON documents. The task 9 extraction stays.
-    for (const value of jsonObjects(rawOutput)) worklist.push(value);
-  }
-  const visited = new Set<object>();
-  while (worklist.length > 0) {
-    const value = worklist.pop()!;
-    if (typeof value === 'string') {
-      scan(value);
-      // Decode the next string layer. A parsed layer contributes its decoded value; each
-      // parse shortens the text, so layers terminate. A string that is not JSON keeps the
-      // task 9 prose and fence extraction, so a fenced or embedded object is still decoded.
-      try {
-        worklist.push(JSON.parse(value) as unknown);
-      } catch {
-        for (const inner of jsonObjects(value)) worklist.push(inner);
+  const layers = [rawOutput];
+  const seen = new Set<string>();
+  while (layers.length > 0) {
+    const text = layers.pop()!;
+    if (seen.has(text)) continue;
+    seen.add(text);
+    scan(text);
+    let quoted = false;
+    let escaped = false;
+    let tokenStart = -1;
+    for (let index = 0; index < text.length; index += 1) {
+      const character = text[index];
+      if (!quoted) {
+        if (character === '"') { quoted = true; tokenStart = index; escaped = false; }
+        continue;
       }
-      continue;
-    }
-    if (typeof value !== 'object' || value === null) continue;
-    if (visited.has(value)) continue;
-    visited.add(value);
-    if (Array.isArray(value)) {
-      for (const item of value) worklist.push(item);
-      continue;
-    }
-    for (const [key, inner] of Object.entries(value)) {
-      scan(key);
-      worklist.push(inner);
+      if (escaped) { escaped = false; continue; }
+      if (character === '\\') { escaped = true; continue; }
+      if (character !== '"') continue;
+      const token = text.slice(tokenStart, index + 1);
+      try {
+        const decoded: unknown = JSON.parse(token);
+        if (typeof decoded === 'string' && decoded !== text) layers.push(decoded);
+      } catch { /* Malformed text still yields every complete JSON string token. */ }
+      quoted = false;
+      tokenStart = -1;
     }
   }
   return findings;
@@ -3347,9 +3335,7 @@ export async function precheckMiniMax(options: {
             'the raw answer is refused and nothing is written.',
         );
       }
-      // RB3-01: every decoded key and string value of the answer passes the credential check
-      // before any write, before the schema, the field selection, or a status fallback can
-      // discard data. A JSON Unicode escape hides a credential from the raw-byte scan.
+      // The decoded credential check reads every JSON string token in the raw answer before any write.
       const decodedFindings = decodedAnswerFindings(result.stdout || result.stderr);
       if (decodedFindings.length > 0) {
         throw new Error(
@@ -3670,9 +3656,8 @@ export async function precheckKimi(options: {
       `The raw answer matched credential pattern ${rawFindings[0]}; nothing is written.`,
     );
   }
-  // RB4-01: every decoded key and string value of the answer passes the credential check
-  // before any record write, and before the schema parse or the status fallback can discard
-  // data. The check reads the raw answer, not the schema result, so a refused record leaves
+  // The decoded credential check reads every JSON string token in the raw answer before any write.
+  // It runs before the schema parse or status fallback can discard data, so a refused record leaves
   // the ledger, the review tree, and the raw copy byte-identical.
   const decodedFindings = decodedAnswerFindings(rawOutput);
   if (decodedFindings.length > 0) {
