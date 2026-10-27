@@ -509,7 +509,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Task 9 is complete on HEAD `e9d8132b`: RB3-01 and RA4-01 are closed. RA4-N1 and RA3-N1 stay
   closeout items.
 
-- [x] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
+- [x] Task: Check every decoded JSON value before provider evidence writes. Commit `b2a02238`. Risk class: high.
   Implementation commit: `b2a02238a8f217b175b70fd38c737f0593eed16a`.
   Task 10 closes RB4-01 from the reviews at `53cc3ada`.
   It also closes RC5-1, RC5-2, RC5-4, and RA5-02 on the same walker.
