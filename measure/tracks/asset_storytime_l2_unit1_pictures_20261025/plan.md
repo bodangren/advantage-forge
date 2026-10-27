@@ -509,7 +509,8 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Task 9 is complete on HEAD `e9d8132b`: RB3-01 and RA4-01 are closed. RA4-N1 and RA3-N1 stay
   closeout items.
 
-- [~] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
+- [x] Task: Check every decoded JSON value before provider evidence writes. Risk class: high.
+  Implementation commit: `b2a02238a8f217b175b70fd38c737f0593eed16a`.
   Task 10 closes RB4-01 from the reviews at `53cc3ada`.
   It also closes RC5-1, RC5-2, RC5-4, and RA5-02 on the same walker.
   It moves the Kimi check before schema parsing and corrects the comment for RA5-03.
@@ -578,6 +579,66 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Red model deviation: the strategy names `volcengine-agent-plan/deepseek-v4-pro#high`, and `ra-quota pick red` printed the same route.
   This role ran `minimax-cn-coding-plan/MiniMax-M3#high`, because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
+  Green evidence (2026-10-27, Green session, GLM):
+  - Implementation commit `b2a02238a8f217b175b70fd38c737f0593eed16a`; one path:
+    `src/storytime/book-pictures.ts`. Role base `425f5a94`; phase base `1d39b8fd` unchanged.
+  - Red rerun before the edit: exit `1`; `Tests  11 failed | 114 passed (125)`; the 11 failures
+    match the Red log. Log: `green-vitest-t10-pre.log`.
+  - Green gate (`ENGINE_HOOK_TEST_COMMAND` with `timeout -k 30 900`): exit `0`;
+    `Tests  125 passed (125)`; no skipped test; duration 155.31 s. Log: `green-vitest-t10.log`.
+  - Focused hostile rows (`-t "T109|T110|T111|T115"`): exit `0`; `4 passed | 94 skipped (98)`;
+    duration 10.23 s. Log: `green-vitest-t10-hostile.log`. The default reporter prints no
+    console output for passing tests, so the labeled `decoded scan ms` and `rule scan ms`
+    values are not in the logs. In-process probes measured T111 at 3 to 6 ms and T115 at
+    239 ms; depth 4000 took 10 to 21 ms.
+  - Type check (`TASK10_TYPECHECK_COMMAND`): `tsc exit: 2`; `owned tsc errors: 0`;
+    `total tsc errors: 31` (the baseline; all 31 sit in `assets/*.ts` and
+    `tests/part.test.ts`, none owned). Log: `task10-tsc.log`.
+  - `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts`: exit `0`.
+  - Final 4-file gate on `b2a02238`: exit `0`; `Tests  125 passed (125)`; duration 163.92 s.
+    Log: `green-vitest-t10-final.log`.
+  - Mutations. Command per mutation: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+    'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts
+    --maxWorkers=1'`. Each run wrote `green-mutation-t10-<n>.log`; the file was restored and
+    `git diff --quiet HEAD -- src/storytime/book-pictures.ts` was clean before the next run.
+    | # | Mutation | Exit | Failed tests |
+    | --- | --- | --- | --- |
+    | 1 | No JSON string-layer parse | 1 | T104; T105, T107, T108. T109 did not co-fail (deviation below). |
+    | 2 | One string layer only | 1 | T105; T108 |
+    | 3 | Root array not walked | 1 | T106 only |
+    | 4 | Scalar array elements skipped | 1 | T107; T106, T100, T108 |
+    | 5 | Schema result passed to the Kimi check | 1 | T108; T100, T102, T104, T105, T106, T107, T109 |
+    | 6 | Direct recursion restored | 1 | T110; T109 |
+    | 7 | Depth ceiling 3500 | 1 | T109 only; T110 passed |
+    | 8 | Catch RangeError, return no findings | 1 | T109 only; T110 passed |
+    | 9 | Re-extract from raw text and every string | 0 | none; T111 passed (test gap below) |
+    | 10 | Rules rebuilt inside the per-key loop | 1 | T115; `rule scan ms: 8330` |
+    | 11 | `decodedReviewFindings` exported again | 1 | T113 only |
+    | 12 | Kimi parse before the decoded check | 1 | T114 only |
+    | 13 | Contradicting Kimi comment | 1 | T114 only |
+    | 14 | Declared model replaces the reported model | 1 | T112; T101 |
+    | 15 | Refuse every JSON string | 1 | T112; T101, T102, T104, T105, T107, T108, T110 |
+    | 16 | Refuse every root array | 1 | T112; T106 |
+    | 17 | Catch every walker error, refuse every answer | 0 | none; T112 passed (test gap below) |
+  - Deviations:
+    - Mutation 1: the strategy names T109 as a co-failure. T109 did not fail. Its
+      credential is decoded by the root `JSON.parse`, not by a string layer, so the
+      string-layer omission cannot hide it. T109 keeps coverage through mutations 6, 7,
+      and 8.
+    - Mutation 8: combined with mutation 6's recursion, because the committed worklist
+      walker cannot raise `RangeError`. The catch returned no findings, and T109 failed.
+    - Mutation 9 (test gap): T111 passed. With the rules built once per call, re-extraction
+      from the raw text and every string measured 877 ms on the T111 answer, under the
+      2000 ms bound. The Red-era 20 s cost came from the per-string environment rule
+      rebuild, which mutation 10 covers (`rule scan ms: 8330`).
+    - Mutation 17 (test gap): T112 passed. The worklist walker raises no error on safe
+      answers, so a catch cannot fire and cannot refuse anything. T110 requires exactly
+      that; the mutation's premise contradicts T110.
+    - Mutation 16 co-failure cause: the `root-array` finding lands before the credential
+      finding, so the refusal message names the wrong pattern in T106.
+  - Findings closed: RB4-01, RA5-02, RA5-03, RC5-1, RC5-2, RC5-4. RC5-3 stays out of scope.
+  - No paid call, no render, no Vite server, no browser. No test file changed. Run logs
+    under `measure/runs/` stay uncommitted.
 
 ## Phase 3: Week 1 pictures
 
