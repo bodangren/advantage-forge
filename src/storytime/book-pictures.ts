@@ -1141,56 +1141,126 @@ export function parseModelReview(rawOutput: string): {
 }
 
 /**
- * RB4-01: the credential findings across every decoded JSON value of the provider answer,
- * before schema parsing, selection, status fallback, or any write. One shared walker covers
- * both providers. When the whole answer parses as JSON, the walker walks that root value,
- * which may be an object, an array, or a string, and scans that text only once. Otherwise it
- * keeps the prose and fence extraction of task 9 through `jsonObjects`. On each decoded
- * string, it parses valid JSON and walks the result, at any number of string layers. It
- * walks every array element, including scalar strings, and every object key and value, with
- * no field allowlist. RC5-1: an explicit worklist replaces call-stack recursion, so a
- * hostile depth returns findings or a safe empty result and never raises `RangeError`, with
- * no depth ceiling. RC5-2: the walker builds the credential rules once per call and visits
- * each decoded value once. Every finding names a pattern; no finding holds matched text.
+ * RB4-01 and task 12: the credential findings across the raw answer text and every decoded
+ * quote segment of the provider answer, before schema parsing, selection, status fallback,
+ * or any write. One shared walker covers both providers, and one rule builder serves the raw
+ * scan and the decoded scan; both read the environment at call time (RC6-2). The raw text is
+ * a candidate, so a credential in prose without a quote is found there. Each text splits at
+ * every unescaped double quote into the head, every segment between two consecutive
+ * unescaped quotes, and the tail; the tail may end in a lone backslash. Every decoded
+ * segment is a candidate. A decoded segment that holds a quote is split and decoded again as
+ * the next layer; a decoded segment without a quote is a candidate only and is not decoded
+ * again. The tolerant decoder resolves each valid JSON escape, including `\uXXXX` and
+ * surrogate pairs, and keeps each invalid escape, each lone backslash, and each raw control
+ * character as literal text. It never drops a segment and never throws. The scan needs no
+ * valid JSON, so a malformed, truncated, duplicated, or fenced text yields the same
+ * candidates as a valid text. Each layer is linear in its length, and no path decodes a
+ * whole layer text without segment boundaries. RC5-1: an explicit worklist replaces
+ * call-stack recursion, so a hostile depth returns findings or a safe empty result and never
+ * raises `RangeError`. `JSON.parse` stays for the review schema only. Every finding names a
+ * pattern; no finding holds matched text.
  */
 export function decodedAnswerFindings(rawOutput: string): string[] {
   const findings: string[] = [];
   const rules = credentialRules(process.env);
+  const seen = new Set<string>();
   const scan = (text: string): void => {
+    if (seen.has(text)) return;
+    seen.add(text);
     for (const rule of rules) {
       rule.regex.lastIndex = 0;
       if (rule.regex.test(text)) findings.push(rule.name);
     }
   };
   const layers = [rawOutput];
-  const seen = new Set<string>();
   while (layers.length > 0) {
     const text = layers.pop()!;
-    if (seen.has(text)) continue;
-    seen.add(text);
     scan(text);
-    let quoted = false;
+    // Split at every unescaped double quote. The backslash flag toggles per character, so
+    // `\\"` keeps the quote unescaped and a lone trailing backslash stays inside the tail.
+    let start = 0;
     let escaped = false;
-    let tokenStart = -1;
-    for (let index = 0; index < text.length; index += 1) {
+    for (let index = 0; index <= text.length; index += 1) {
       const character = text[index];
-      if (!quoted) {
-        if (character === '"') { quoted = true; tokenStart = index; escaped = false; }
-        continue;
+      if (index < text.length) {
+        if (escaped) { escaped = false; continue; }
+        if (character === '\\') { escaped = true; continue; }
+        if (character !== '"') continue;
       }
-      if (escaped) { escaped = false; continue; }
-      if (character === '\\') { escaped = true; continue; }
-      if (character !== '"') continue;
-      const token = text.slice(tokenStart, index + 1);
-      try {
-        const decoded: unknown = JSON.parse(token);
-        if (typeof decoded === 'string' && decoded !== text) layers.push(decoded);
-      } catch { /* Malformed text still yields every complete JSON string token. */ }
-      quoted = false;
-      tokenStart = -1;
+      const segment = text.slice(start, index);
+      start = index + 1;
+      const decoded = tolerantDecode(segment);
+      if (decoded === segment) continue;
+      if (decoded.includes('"')) layers.push(decoded);
+      else scan(decoded);
     }
   }
   return findings;
+}
+
+const UNICODE_HEX = /^[0-9a-fA-F]{4}$/;
+
+/**
+ * The tolerant JSON string decoder of task 12. It resolves each valid JSON escape, including
+ * `\uXXXX` and surrogate pairs. It keeps each invalid escape sequence, each lone backslash,
+ * and each raw control character as literal text. It never drops a segment and never throws.
+ */
+function tolerantDecode(segment: string): string {
+  if (!segment.includes('\\')) return segment;
+  const parts: string[] = [];
+  let index = 0;
+  while (index < segment.length) {
+    const character = segment[index]!;
+    if (character !== '\\') {
+      parts.push(character);
+      index += 1;
+      continue;
+    }
+    const next = segment[index + 1];
+    if (next === 'u') {
+      const hex = segment.slice(index + 2, index + 6);
+      if (UNICODE_HEX.test(hex)) {
+        let code = Number.parseInt(hex, 16);
+        index += 6;
+        // A high surrogate joins a following `\uXXXX` low surrogate into one code point.
+        if (code >= 0xd800 && code <= 0xdbff && segment[index] === '\\' && segment[index + 1] === 'u') {
+          const lowHex = segment.slice(index + 2, index + 6);
+          const low = UNICODE_HEX.test(lowHex) ? Number.parseInt(lowHex, 16) : -1;
+          if (low >= 0xdc00 && low <= 0xdfff) {
+            code = 0x10000 + ((code - 0xd800) << 10) + (low - 0xdc00);
+            index += 6;
+          }
+        }
+        parts.push(String.fromCodePoint(code));
+      } else {
+        // An invalid `\u` escape stays as literal text.
+        parts.push('\\');
+        index += 1;
+      }
+      continue;
+    }
+    if (next === undefined) {
+      // A lone trailing backslash stays as literal text.
+      parts.push('\\');
+      break;
+    }
+    switch (next) {
+      case '"': parts.push('"'); index += 2; continue;
+      case '\\': parts.push('\\'); index += 2; continue;
+      case '/': parts.push('/'); index += 2; continue;
+      case 'b': parts.push('\b'); index += 2; continue;
+      case 'f': parts.push('\f'); index += 2; continue;
+      case 'n': parts.push('\n'); index += 2; continue;
+      case 'r': parts.push('\r'); index += 2; continue;
+      case 't': parts.push('\t'); index += 2; continue;
+      default:
+        // An invalid escape stays as literal text, so `\q` keeps both characters.
+        parts.push('\\');
+        index += 1;
+        continue;
+    }
+  }
+  return parts.join('');
 }
 
 async function rawPixels(png: Buffer): Promise<{ data: Buffer; width: number; height: number; channels: number }> {
