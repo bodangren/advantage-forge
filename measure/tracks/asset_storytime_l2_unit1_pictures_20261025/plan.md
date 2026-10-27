@@ -640,12 +640,11 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   - No paid call, no render, no Vite server, no browser. No test file changed. Run logs
     under `measure/runs/` stay uncommitted.
 
-- [~] Task: Check every JSON string token of the provider answer before any evidence write. Risk class: high.
+- [x] Task: Check every JSON string token of the provider answer before any evidence write. Risk class: high. Commit `820f35c4`.
   Task 11 closes RB5-01, RB5-02, RB5-03, and RB5-04 from the reviews at `3f604b62`.
   It also closes RA6-03, RC6-1, and RC6-2 when the change stays in the same file and function.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 11, and T116 to T128.
-  Daniel must pick design A, design B, or design C. Design B is the default until he answers.
-  The last note of this task gives the change for design A.
+  Daniel selected design B: “Accept B” (Google Tasks, 15:52-15:53 ICT, 2026-10-27).
   One shared scan reads the raw answer text. It does not depend on `JSON.parse` success.
   The scan covers every JSON string token of the text, at every decoded layer. It also scans the text itself.
   A JSON string token is a maximal run of characters between two unescaped double quotes.
@@ -683,6 +682,35 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Red expectation: exit `1`; the hostile rows fail; the 125 earlier tests pass.
   Green expectation: exit `0`; `Tests  <N> passed (<N>)`; no skip.
   Type check expectation: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  Green implementation: `820f35c4cb3cab1e30fb561d70833c03a8da593a`; one shared credential-rule builder serves the raw and decoded scans.
+  The linear scan checks raw text and each JSON string token across decoded layers. It does not require valid JSON.
+  It keeps provider refusal and write order unchanged. It bounds long pattern names so the shared suffix stays inside 500 characters.
+  Pre-edit four-file gate: exit `1`; `Tests  11 failed | 127 passed (138)`. Log: `green-vitest-t11-pre.log`.
+  Four-file Green gate: exit `0`; `Tests  138 passed (138)`; no skips. Log: `green-vitest-t11.log`.
+  Typecheck: exit `2`; owned errors `0`; total errors `31`. The errors remain in baseline assets and `tests/part.test.ts`. Log: `task11-tsc.log`.
+  Final four-file gate: exit `0`; `Tests  138 passed (138)`; no skips. Log: `green-vitest-t11-final.log`.
+  `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts` exited `0`. The committed Red test file stayed unchanged.
+  Mutation table. Each run used the task 11 mutation command. Each mutated source file was restored, and the clean check passed.
+
+  | Mutation | Named test | Result | Other failures or notes |
+  | --- | --- | --- | --- |
+  | 1. Parsed root only | T116 | Failed; 9 failed, 102 passed (111) | T117-T120, T122, T124, T127, T128 also failed. Used the task 10 decoded walker from commit `167680a1` and removed the token scan. |
+  | 2. First document only | T117 | Failed; 6 failed, 105 passed (111) | T116, T122, T127, T128 also failed. The mutation limited scanning to the first newline-delimited document. |
+  | 3. JSON.parse candidate set | T118 | Failed; 4 failed, 107 passed (111) | T119, T127, T128 also failed. Stringifying the parsed candidate discarded earlier duplicate fields. |
+  | 4. Values only | T119 | Failed; 8 failed, 103 passed (111) | T100 also failed because the mutation skipped all object keys. |
+  | 5. Parse-success gate | T120 | Failed; 7 failed, 104 passed (111) | T116, T117, T122, T127, T128 also failed. |
+  | 6. Per-brace rescan | T121 | Failed; 1 failed, 110 passed (111) | `malformed scan ms: 2518`; the test bound is 2000 ms. |
+  | 7. No name cut | T124 | Failed; 1 failed, 110 passed (111) |  |
+  | 8. Module-load rule snapshot | T125 | Failed; 2 failed, 109 passed (111) | T102 also failed. |
+  | 9. Stale MiniMax comment label | T126 | Failed; 1 failed, 110 passed (111) |  |
+  | 10. Refuse every fence or array | T123 | Failed; 9 failed, 102 passed (111) | T101, T102, T106, and T112 also failed. |
+  | 11. MiniMax scan after callback | T127 | Failed; 24 failed, 87 passed (111) | T116-T120, T122, T124, and T126 also failed. The mutation moved both raw and decoded checks after the callback. |
+  | 12. Kimi scan after first write | T128 | Failed; 24 failed, 87 passed (111) | T119, T120, T122, T124, and T126 also failed. |
+
+  Mutation deviations: mutations 2-5 used direct lexical-scan equivalents because the implementation has no JSON candidate walker.
+  Mutation 11 moved the checks after the paid callback. Mutation 12 placed the decoded check after the first review-file write.
+  Mutation gaps: none. Every named test failed. Mutation logs: `green-mutation-t11-1.log` through `green-mutation-t11-12.log`.
+  Mutation command exits were `1` for all twelve runs. No `lock wait over 600 s`, exit `75`, exit `124`, or exit `137` appeared.
   Mutation list, with the one named test that must fail:
     1. Read only the parsed root value. Remove the lexical token pass. (T116)
     2. Read only the first top-level document of the text. (T117)
