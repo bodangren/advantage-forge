@@ -775,7 +775,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
-- [ ] Task: Close the malformed-string class of the credential scan. Risk class: high.
+- [~] Task: Close the malformed-string class of the credential scan. Risk class: high.
   Task 12 closes RB6-01, RB6-02, and RB6-03 from the Review B report at `bb4e11f0`.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 12, and T129 to T138.
   Daniel chose design B on 2026-10-27. Design B stays. Do not plan design A and do not plan a waiver.
@@ -833,6 +833,45 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
     4. Do not split and decode a decoded layer that holds a quote. (T134)
     5. Decode the whole layer text and use the decoded text as the next layer. (T137)
   Each mutation changes one path. Green records every other failing test.
+  Red base: `e8d605ab0c4f211e380af3a7a3684d869cf5bc02`. The task 12 Red base, captured right after the strategy commit.
+  Red evidence (2026-10-28, Red session, MiniMax-M3): test commit `0cd4b024`; exit code `1`;
+  `Tests  7 failed | 141 passed (148)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The gate duration was 506.35 s. The run had no package, syntax, transform, timeout, or preflight error.
+  All 138 earlier tests passed. Earlier-test exceptions: none.
+  T129 failed because the scan drops a token with no closing quote. The unterminated tail is never decoded. Both providers write the review, the raw copy, and a success entry.
+  T130 failed because the scan stops at the last complete token. The trailing lone backslash leaves the credential inside an unterminated tail.
+  T131 failed because `JSON.parse` throws on the raw line feed and the whole token is dropped. The MiniMax envelope form fails for the same reason.
+  T132 failed because `JSON.parse` throws on the invalid escape and the whole token is dropped.
+  T133 failed because one stray prose quote shifts the quote pairing. The escaped credential falls between two tokens, and the last quote opens an unterminated tail.
+  T134 failed because the generated corpus holds cases the current scan misses. `generated cases: 240`; `generated findings: 98`; `generated twin findings: 0`.
+  T135 failed because the sampled generated cases are not refused. `sample cases: 12`; `sample refusals: 6`.
+  T136, T137, and T138 passed at Red. T136 and T137 name mutation 5. T138 names mutation 3.
+  Focused hostile command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T129|T13[0-8]"'`;
+  exit code `1`; `Tests  7 failed | 3 passed | 111 skipped (121)`; duration 54.58 s.
+  Hostile-scan harness: every new row runs its scan or its provider call in the worker thread. The test owns the wall-clock limit.
+  The limit is 30000 ms for a provider row, 60000 ms for a generator or chain row, and 120000 ms for the wide cost row.
+  The worker stack is 1 MB. A harness timeout is not Red evidence. No row timed out.
+  Harness change: the worker gained a `corpus` mode for T134 and T138. The `seam`, `rules`, `minimax`, and `kimi` modes stay unchanged. T1 to T128 stay unchanged.
+  Generator: the seed is 20261025, the case count is 240, and the step is a small linear congruential step inside the test file. The generator adds no dependency.
+  The piece list, the draw order, and the case count stay fixed. A second run with the same seed yields the same cases.
+  Generator shape counts: object 27, unterminated 31, backslash 28, control 32, invalid-escape 31, array 28, duplicate-key 30, key 33. The layer counts are 67, 62, 61, and 50 for 0 to 3 layers.
+  Wide row deviation: the strategy names about 21,800 distinct short strings. The 65,536-byte budget holds 9,543 distinct short strings, which give 19,086 quote segments. The row prints `wide tokens: 9543`. The bound stays 60000 ms.
+  Chain row deviation: the strategy names about 113 layers. The escaped nesting doubles the backslashes, so a 65,536-byte answer holds 14 layers. The row prints `chain levels: 14`. The bound stays 20000 ms.
+  The chain answer holds the Review B fold encoding of a quote pair at its innermost level.
+  Cost labels at the Red HEAD: `wide scan ms: 1442`; `chain scan ms: 641`. Both rows pass their bound. The labels print on the console of the row.
+  Cost label command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 --reporter=verbose -t "T136|T137"'`; exit code `0`; `Tests  2 passed | 119 skipped (121)`; duration 6.72 s.
+  Twin row: the twin of a text keeps every byte but the credential bytes. The seam yields no finding for any of the 245 twins. `twin cases: 245`; `twin findings: 0`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  The 31 errors sit in `assets/*.ts` and `tests/part.test.ts`. None sits in `tests/storytime-book-pictures.test.ts`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t12.log`.
+  Vitest output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12.log`.
+  Focused hostile output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12-focused.log`.
+  Cost label output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t12-labels.log`.
+  Lock note: two `heavy-run: lock wait over 600 s` lines appeared. Another agent held the shared lock. The first gate attempt was stopped with its waiter. The gate run was repeated on the final test state.
+  Red model deviation: the strategy names `volcengine-agent-plan/deepseek-v4-pro#high`. This role ran `minimax-cn-coding-plan/MiniMax-M3#high`,
+  because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
 ## Phase 3: Week 1 pictures
 
