@@ -2225,12 +2225,23 @@ describe('Decoded answer security remediation', () => {
 import { parentPort, workerData } from 'node:worker_threads';
 import { readFileSync } from 'node:fs';
 
-const report = { ok: false, ms: 0, findings: [], status: null, error: null };
+const report = { ok: false, ms: 0, findings: [], status: null, error: null,
+  plain: [], decoded: [], plainSecond: [], decodedSecond: [] };
 const started = Date.now();
 try {
   const book = await import(workerData.modulePath);
   if (workerData.mode === 'seam') {
     report.findings = book.decodedAnswerFindings(readFileSync(workerData.rawFile, 'utf8'));
+    report.ok = true;
+  } else if (workerData.mode === 'rules') {
+    // T125: both credential paths read the environment at call time. The second value is
+    // stubbed after the first call, so a module-load snapshot loses it.
+    process.env[workerData.envName] = workerData.firstValue;
+    report.plain = book.secretFindings(workerData.plainText);
+    report.decoded = book.decodedAnswerFindings(workerData.decodedText);
+    process.env[workerData.envName] = workerData.secondValue;
+    report.plainSecond = book.secretFindings(workerData.plainSecondText);
+    report.decodedSecond = book.decodedAnswerFindings(workerData.decodedSecondText);
     report.ok = true;
   } else {
     const raw = readFileSync(workerData.rawFile, 'utf8');
@@ -2263,6 +2274,7 @@ parentPort.postMessage(report);
     type HostileReport = {
       ok: boolean; ms: number; findings: string[]; status: string | null;
       error: { name: string; message: string } | null;
+      plain: string[]; decoded: string[]; plainSecond: string[]; decodedSecond: string[];
     };
     /** Runs one hostile scan in a worker. The test owns the wall-clock limit. */
     async function runHostile(workerData: Record<string, unknown>, limitMs: number) {
@@ -2542,6 +2554,367 @@ parentPort.postMessage(report);
       expect(Object.keys(process.env).filter((name) => name.startsWith('TASK10_SECRET_')),
         'The injected env names are gone.').toEqual([]);
     }, 120000);
+
+    describe('JSON string token remediation', () => {
+      // Task 11. Every hostile row scans the raw answer text of a provider answer.
+      // The credential is built at run time. No fixture file holds a decoded credential.
+      const TOKEN_SUFFIX = suffix;
+      const TOKEN_PROVIDER_LIMIT_MS = 30000;
+      const TOKEN_MALFORMED_LIMIT_MS = 60000;
+
+      /** The Review B credential of task 11. */
+      function tokenSecret(): string { return `sk-${'SYNTHETIC'.repeat(4)}`; }
+      /** The JSON escape form of a value. The decoded text holds the value. */
+      function tokenEscaped(value: string): string { return unicodeEscaped(value); }
+      /**
+       * The Review B constructions of task 11. Each raw text holds the escaped credential
+       * only. The plain credential never appears in the raw text. T119 and T122 hold two forms
+       * each. The first form puts the credential in the last duplicate key. A duplicate key
+       * name survives `JSON.parse`, so that form is already refused at this HEAD. The second
+       * form hides the credential: T119 puts it in a key of an earlier duplicate value, and
+       * T122 puts it in the malformed tail behind the fence.
+       */
+      function tokenRaws(): Record<string, string> {
+        const secret = tokenSecret();
+        const escaped = tokenEscaped(secret);
+        const safe = reviewBSafe();
+        return {
+          fencedRootArray:
+            '```json\n' + JSON.stringify([safe, secret]).replaceAll(secret, escaped) + '\n```',
+          safeThenRootArray:
+            JSON.stringify(safe) + '\n' + JSON.stringify([secret]).replaceAll(secret, escaped),
+          earlierDuplicateValue:
+            '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},' +
+            '"issues":[],"unknown":"' + escaped + '","unknown":"safe"}',
+          duplicateKey:
+            '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},' +
+            '"issues":[],' + '"' + escaped + '":1,"' + escaped + '":2}',
+          earlierDuplicateKey:
+            '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},' +
+            '"issues":[],"nested":{"' + escaped + '":1},"nested":{"subject":2}}',
+          malformedUnknownField:
+            JSON.stringify(safe).slice(0, -1) + ',"unknown":"' + escaped + '",}',
+          fenceDuplicateKeyTail:
+            '```json\n' + '{"verdict":"PASS","reason":"The subject is visible.",' +
+            '"observedCounts":{"subject":1},"issues":[],' + '"' + escaped + '":1,"' + escaped + '":2}' +
+            '\n```' + '\n' + '{"note":"' + escaped + '",',
+          fenceTailCredential:
+            '```json\n' + '{"verdict":"PASS","reason":"The subject is visible.",' +
+            '"observedCounts":{"subject":1},"issues":[],"unknown":1,"unknown":2}' +
+            '\n```' + '\n' + '{"note":"' + escaped + '",',
+        };
+      }
+      /** Runs one provider call in the worker harness. The test owns the wall-clock limit. */
+      async function tokenRun(provider: Provider, raw: string) {
+        const space = await providerWorkspace(provider, raw);
+        const run = await runHostile({
+          mode: provider, outputRoot: space.space.outputRoot, repoRoot: space.space.repoRoot,
+          jobs, workbooksRoot: WORKBOOKS, jobId: job().id, version: 1,
+          rawFile: space.rawFile, callId: space.callId,
+        }, TOKEN_PROVIDER_LIMIT_MS);
+        return { space, run };
+      }
+      /** The refusal invariants of task 11. Each artifact is checked by name. */
+      async function expectTokenRefusal(provider: Provider, raw: string, label: string) {
+        const secret = tokenSecret();
+        const { space, run } = await tokenRun(provider, raw);
+        const context = `${label}/${provider}`;
+        const message = run.report?.error?.message ?? '';
+        expect.soft(run.timedOut, `${context}: the call finishes inside ${TOKEN_PROVIDER_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.error?.name ?? '', `${context}: the refusal is not a RangeError.`)
+          .not.toBe('RangeError');
+        expect.soft(message, `${context}: the refusal names only the pattern.`).toMatch(/api-key-prefix/);
+        expect.soft(message, `${context}: the refusal holds no matched text.`).not.toContain(secret);
+        expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the refusal has the task 10 suffix.`)
+          .toBe(true);
+        const entries = await securityLedger(space.space.outputRoot);
+        expect.soft(entries.filter((entry) => entry.status === 'success'), `${context}: no success entry.`)
+          .toEqual([]);
+        const files = await tree(space.space.outputRoot);
+        expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(space.space.outputRoot, file))),
+          `${context}: no review or raw copy exists.`).toEqual([]);
+        if (provider === 'kimi') {
+          expect.soft(await fileSnapshot(space.space.outputRoot), `${context}: every output stays byte-identical.`)
+            .toEqual(space.before);
+          expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+            .toEqual(Buffer.from(raw));
+        }
+        await assertNoSyntheticValues([space.space.outputRoot], [secret]);
+      }
+
+      it('T116: both providers refuse Review B case 1, the fenced root array', async () => {
+        const raw = tokenRaws().fencedRootArray!;
+        for (const provider of providers) await expectTokenRefusal(provider, raw, 'fenced root array');
+      }, 120000);
+
+      it('T117: both providers refuse Review B case 2, a safe review then a root array', async () => {
+        const raw = tokenRaws().safeThenRootArray!;
+        for (const provider of providers) await expectTokenRefusal(provider, raw, 'safe review then root array');
+      }, 120000);
+
+      it('T118: both providers refuse Review B case 3, the earlier duplicate value', async () => {
+        const raw = tokenRaws().earlierDuplicateValue!;
+        for (const provider of providers) await expectTokenRefusal(provider, raw, 'earlier duplicate value');
+      }, 120000);
+
+      it('T119: both providers refuse Review B case 4, the duplicate key', async () => {
+        const raws = tokenRaws();
+        const cases: Array<[string, string]> = [
+          ['duplicate key', raws.duplicateKey!],
+          ['duplicate key in an earlier duplicate value', raws.earlierDuplicateKey!],
+        ];
+        for (const [label, raw] of cases) for (const provider of providers) {
+          await expectTokenRefusal(provider, raw, label);
+        }
+      }, 120000);
+
+      it('T120: both providers refuse Review B case 5, the malformed unknown field', async () => {
+        const raw = tokenRaws().malformedUnknownField!;
+        for (const provider of providers) await expectTokenRefusal(provider, raw, 'malformed unknown field');
+      }, 120000);
+
+      it('T121: the seam scans 65,536 unmatched opening braces within 2000 ms', async () => {
+        const raw = '{'.repeat(65536);
+        const directory = await mkdtemp(path.join(root, 'hostile-'));
+        const rawFile = path.join(directory, 'answer.json');
+        await put(rawFile, raw);
+        const run = await runHostile({ mode: 'seam', rawFile }, TOKEN_MALFORMED_LIMIT_MS);
+        const measured = run.report?.ms ?? run.elapsed;
+        const printed = `malformed scan ms: ${measured}`;
+        console.log(printed);
+        const parsed = Number(/^malformed scan ms:\s*([0-9]+)$/.exec(printed)?.[1] ?? '');
+        expect.soft(run.timedOut,
+          `malformed scan ms: ${run.elapsed} exceeds the test limit ${TOKEN_MALFORMED_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.findings ?? [], 'The malformed text holds no finding.').toEqual([]);
+        expect.soft(parsed, 'The labeled duration is an integer.').toBe(measured);
+        expect.soft(parsed, printed).toBeLessThanOrEqual(2000);
+      }, 120000);
+
+      it('T122: both providers refuse the fence, the duplicate key, and the malformed tail', async () => {
+        const raws = tokenRaws();
+        const cases: Array<[string, string]> = [
+          ['fence, duplicate key, and malformed tail', raws.fenceDuplicateKeyTail!],
+          ['fence and malformed tail with the credential', raws.fenceTailCredential!],
+        ];
+        for (const [label, raw] of cases) for (const provider of providers) {
+          await expectTokenRefusal(provider, raw, label);
+        }
+      }, 120000);
+
+      it('T123: both providers accept the safe answers and keep the bytes, the models, and the writes', async () => {
+        const secret = tokenSecret();
+        const safeModel = 'SYNTHETIC-safe-reported-model';
+        const controls = [
+          {
+            label: 'safe fenced array',
+            raw: '```json\n' + JSON.stringify([reviewBSafe()]) + '\n```',
+            model: pictureSeams.MINIMAX_VISION_MODEL, source: 'declared',
+          },
+          {
+            label: 'safe duplicate keys',
+            raw: '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},' +
+              '"issues":[],"model":"' + safeModel + '","unknown":"safe text","unknown":"second safe text"}',
+            model: safeModel, source: 'reported',
+          },
+          {
+            label: 'safe malformed answer',
+            raw: JSON.stringify(reviewBSafe()).slice(0, -1) + ',"note":"safe text"',
+            model: pictureSeams.MINIMAX_VISION_MODEL, source: 'declared',
+          },
+          {
+            label: 'escaped Unicode',
+            raw: JSON.stringify({ ...reviewBSafe(), note: 'หนา' }).replaceAll('หนา', tokenEscaped('หนา')),
+            model: pictureSeams.MINIMAX_VISION_MODEL, source: 'declared',
+          },
+        ];
+        for (const control of controls) for (const provider of providers) {
+          const { space, run } = await tokenRun(provider, control.raw);
+          const context = `${control.label}/${provider}`;
+          const expected = parseModelReview(control.raw);
+          expect.soft(run.timedOut, `${context}: the call finishes inside ${TOKEN_PROVIDER_LIMIT_MS} ms.`)
+            .toBe(false);
+          expect.soft(run.report?.error ?? null, `${context}: the safe answer is accepted.`).toBeNull();
+          expect.soft(run.report?.status ?? null, `${context}: the parser verdict is the status.`)
+            .toBe(expected.verdict);
+          const reviewFile = path.join(space.space.outputRoot, `reviews/${job().id}-v1-${provider}.json`);
+          expect.soft(existsSync(reviewFile), `${context}: the review file exists.`).toBe(true);
+          if (!existsSync(reviewFile)) continue;
+          const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+          expect.soft(review, `${context}: the parser result is unchanged.`).toMatchObject(expected);
+          expect.soft(review.model, `${context}: the model stays unchanged.`)
+            .toBe(provider === 'minimax' ? control.model : pictureSeams.KIMI_REVIEW_MODEL);
+          expect.soft(review.modelSource, `${context}: the model source stays unchanged.`)
+            .toBe(provider === 'minimax' ? control.source : 'declared');
+          expect.soft(Buffer.from(review.rawOutput), `${context}: the review raw bytes stay identical.`)
+            .toEqual(Buffer.from(control.raw));
+          expect.soft(await readFile(path.join(space.space.outputRoot, review.rawFile)),
+            `${context}: the raw copy stays identical.`).toEqual(Buffer.from(control.raw));
+          if (provider === 'kimi') {
+            expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays identical.`)
+              .toEqual(Buffer.from(control.raw));
+          }
+          await assertNoSyntheticValues([space.space.outputRoot], [secret]);
+        }
+      }, 120000);
+
+      it('T124: the long pattern name is cut and the task 10 suffix stays in every message', async () => {
+        const name = `TASK11_LONG_${'A'.repeat(400)}_KEY`;
+        const value = 'sek-long-SYNTHETIC-0001';
+        const pattern = `env:${name}`;
+        const raw = JSON.stringify({ ...reviewBSafe(), unknown: value })
+          .replaceAll(value, tokenEscaped(value));
+        process.env[name] = value;
+        try {
+          const { space, run } = await tokenRun('minimax', raw);
+          const context = 'long pattern name/minimax';
+          expect.soft(run.timedOut, `${context}: the call finishes inside ${TOKEN_PROVIDER_LIMIT_MS} ms.`)
+            .toBe(false);
+          const message = run.report?.error?.message ?? '';
+          expect.soft(message, `${context}: the refusal names the pattern.`).toMatch(/env:TASK11_LONG_/);
+          expect.soft(message, `${context}: the refusal holds no matched value.`).not.toContain(value);
+          expect.soft(message.length, `${context}: the refusal has 500 characters at most.`)
+            .toBeLessThanOrEqual(500);
+          expect.soft(message.endsWith(TOKEN_SUFFIX), `${context}: the refusal keeps the task 10 suffix.`)
+            .toBe(true);
+          expect.soft(message, `${context}: the refusal holds the first 32 characters of the pattern name.`)
+            .toContain(pattern.slice(0, 32));
+          const entries = await securityLedger(space.space.outputRoot);
+          const failures = entries.filter((entry) => entry.status === 'failure');
+          expect.soft(failures, `${context}: one failure entry.`).toHaveLength(1);
+          const ledgerError = String(failures[0]?.error ?? '');
+          expect.soft(ledgerError, `${context}: the ledger error holds no matched value.`).not.toContain(value);
+          expect.soft(ledgerError.length, `${context}: the ledger error has 500 characters at most.`)
+            .toBeLessThanOrEqual(500);
+          expect.soft(ledgerError.endsWith(TOKEN_SUFFIX), `${context}: the ledger error keeps the task 10 suffix.`)
+            .toBe(true);
+          expect.soft(ledgerError, `${context}: the ledger error holds the first 32 characters of the pattern name.`)
+            .toContain(pattern.slice(0, 32));
+          const entry = entrySeam();
+          expect.soft(entry, 'The runStorytimeBookPicturesEntry seam exists.').toBeTypeOf('function');
+          if (typeof entry === 'function') {
+            const logged: string[] = [];
+            const code = await entry(['render', '--job', job().id], {
+              pipeline: async () => { throw new Error(message); },
+              errorLog: (text: string) => { logged.push(text); },
+            });
+            expect.soft(code, `${context}: the entry returns the exit code 1.`).toBe(1);
+            expect.soft(logged.length, `${context}: the entry logs one message.`).toBe(1);
+            const finalMessage = logged[0] ?? '';
+            expect.soft(finalMessage, `${context}: the CLI error holds no matched value.`).not.toContain(value);
+            expect.soft(finalMessage.length, `${context}: the CLI error has 500 characters at most.`)
+              .toBeLessThanOrEqual(500);
+            expect.soft(finalMessage.endsWith(TOKEN_SUFFIX), `${context}: the CLI error keeps the task 10 suffix.`)
+              .toBe(true);
+            expect.soft(finalMessage, `${context}: the CLI error holds the first 32 characters of the pattern name.`)
+              .toContain(pattern.slice(0, 32));
+          }
+          const kimi = await tokenRun('kimi', raw);
+          const kimiMessage = kimi.run.report?.error?.message ?? '';
+          expect.soft(kimiMessage, 'long pattern name/kimi: the refusal names the pattern.')
+            .toMatch(/env:TASK11_LONG_/);
+          expect.soft(kimiMessage.length, 'long pattern name/kimi: the refusal has 500 characters at most.')
+            .toBeLessThanOrEqual(500);
+          expect.soft(kimiMessage.endsWith(TOKEN_SUFFIX), 'long pattern name/kimi: the refusal keeps the task 10 suffix.')
+            .toBe(true);
+          expect.soft(kimiMessage, 'long pattern name/kimi: the refusal holds the first 32 characters of the pattern name.')
+            .toContain(pattern.slice(0, 32));
+        } finally {
+          delete process.env[name];
+        }
+        expect(Object.keys(process.env).filter((entry) => entry.startsWith('TASK11_LONG_')),
+          'The injected env name is gone.').toEqual([]);
+      }, 120000);
+
+      it('T125: one rule builder serves the raw path and the decoded path', async () => {
+        const name = 'TASK11_SHARED_KEY';
+        const first = 'sek-shared-SYNTHETIC-0001';
+        const second = 'sek-shared-SYNTHETIC-0002';
+        process.env[name] = first;
+        try {
+          const run = await runHostile({
+            mode: 'rules', envName: name, firstValue: first, secondValue: second,
+            plainText: `The answer holds ${first}.`,
+            decodedText: JSON.stringify({ unknown: first }).replaceAll(first, tokenEscaped(first)),
+            plainSecondText: `The answer holds ${second}.`,
+            decodedSecondText: JSON.stringify({ unknown: second }).replaceAll(second, tokenEscaped(second)),
+          }, TOKEN_PROVIDER_LIMIT_MS);
+          expect.soft(run.timedOut, 'The rule scan finishes inside the test limit.').toBe(false);
+          expect.soft(run.report?.error ?? null, 'The rule scan raises no error.').toBeNull();
+          expect.soft(run.report?.plain ?? [], 'The raw path finds the first value.').toContain(`env:${name}`);
+          expect.soft(run.report?.decoded ?? [], 'The decoded path finds the escaped first value.')
+            .toContain(`env:${name}`);
+          expect.soft(run.report?.plainSecond ?? [], 'The raw path finds the second value.').toContain(`env:${name}`);
+          expect.soft(run.report?.decodedSecond ?? [], 'The decoded path finds the escaped second value.')
+            .toContain(`env:${name}`);
+        } finally {
+          delete process.env[name];
+        }
+        expect(Object.keys(process.env).filter((entry) => entry.startsWith('TASK11_SHARED_')),
+          'The injected env name is gone.').toEqual([]);
+      }, 120000);
+
+      it('T126: the decoded-check comments name the raw answer, the order, and the current finding', () => {
+        const source = readFileSync(path.resolve(import.meta.dirname, '../src/storytime/book-pictures.ts'), 'utf8');
+        const minimax = commentAbove(functionRegion(source, 'precheckMiniMax'), 'decodedAnswerFindings(');
+        expect.soft(minimax, 'The MiniMax decoded check has a comment.').not.toContain('RB3-01');
+        expect.soft(minimax, 'The MiniMax comment states that the check reads the raw answer.')
+          .toMatch(/raw\s+(answer|output|bytes|text|response|provider)/i);
+        expect.soft(minimax, 'The MiniMax comment states that the check runs before any write.')
+          .toMatch(/before\s+(any|every|a|the)\s+(record\s+)?write/i);
+        const kimi = commentAbove(functionRegion(source, 'precheckKimi'), 'decodedAnswerFindings(');
+        expect.soft(kimi, 'The Kimi decoded check has a comment.').not.toContain('RB3-01');
+        expect.soft(kimi, 'The Kimi comment states that the check reads the raw answer.')
+          .toMatch(/raw\s+(answer|output|bytes|text|response|provider)/i);
+        expect.soft(kimi, 'The Kimi comment states that the check runs before any write.')
+          .toMatch(/before\s+(any|every|a|the)\s+(record\s+)?write/i);
+      });
+
+      it('T127: the MiniMax path writes no evidence for every refused construction', async () => {
+        const secret = tokenSecret();
+        for (const [label, raw] of Object.entries(tokenRaws())) {
+          const { space, run } = await tokenRun('minimax', raw);
+          const context = `MiniMax write boundary/${label}`;
+          expect.soft(run.timedOut, `${context}: the call finishes inside ${TOKEN_PROVIDER_LIMIT_MS} ms.`)
+            .toBe(false);
+          const entries = await securityLedger(space.space.outputRoot);
+          const beforeCalls = entries.filter((entry) => entry.event === 'before-call');
+          const afterCalls = entries.filter((entry) => entry.event === 'after-call');
+          expect.soft(beforeCalls, `${context}: exactly one before-call.`).toHaveLength(1);
+          expect.soft(afterCalls, `${context}: exactly one after-call.`).toHaveLength(1);
+          expect.soft(afterCalls[0], `${context}: the after-call is a failure.`).toMatchObject({ status: 'failure' });
+          const failure = String(afterCalls[0]?.error ?? '');
+          expect.soft(failure, `${context}: the failure holds no matched value.`).not.toContain(secret);
+          expect.soft(failure.length, `${context}: the failure has 500 characters at most.`)
+            .toBeLessThanOrEqual(500);
+          expect.soft(entries.filter((entry) => entry.status === 'success'), `${context}: no success entry.`)
+            .toEqual([]);
+          const files = await tree(space.space.outputRoot);
+          expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(space.space.outputRoot, file))),
+            `${context}: no review or raw copy exists.`).toEqual([]);
+          await assertNoSyntheticValues([space.space.outputRoot], [secret]);
+        }
+      }, 120000);
+
+      it('T128: the Kimi path writes no evidence for every refused construction', async () => {
+        const secret = tokenSecret();
+        for (const [label, raw] of Object.entries(tokenRaws())) {
+          const { space, run } = await tokenRun('kimi', raw);
+          const context = `Kimi write boundary/${label}`;
+          expect.soft(run.timedOut, `${context}: the call finishes inside ${TOKEN_PROVIDER_LIMIT_MS} ms.`)
+            .toBe(false);
+          expect.soft(await fileSnapshot(space.space.outputRoot), `${context}: every output stays byte-identical.`)
+            .toEqual(space.before);
+          expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+            .toEqual(Buffer.from(raw));
+          const files = await tree(space.space.outputRoot);
+          expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(space.space.outputRoot, file))),
+            `${context}: no review or raw copy exists.`).toEqual([]);
+          await assertNoSyntheticValues([space.space.outputRoot], [secret]);
+        }
+      }, 120000);
+    });
   });
 });
 
