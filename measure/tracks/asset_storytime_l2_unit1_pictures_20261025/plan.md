@@ -640,7 +640,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   - No paid call, no render, no Vite server, no browser. No test file changed. Run logs
     under `measure/runs/` stay uncommitted.
 
-- [ ] Task: Check every JSON string token of the provider answer before any evidence write. Risk class: high.
+- [~] Task: Check every JSON string token of the provider answer before any evidence write. Risk class: high.
   Task 11 closes RB5-01, RB5-02, RB5-03, and RB5-04 from the reviews at `3f604b62`.
   It also closes RA6-03, RC6-1, and RC6-2 when the change stays in the same file and function.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 11, and T116 to T128.
@@ -704,6 +704,48 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   The shared suffix changes. The raw copy ban becomes universal. A duplicate-key rule needs a parser that keeps every key.
   T121 keeps its time bound. T123 keeps one safe row for a strict single-object answer. T124 to T128 stay unchanged.
   The amendment is one row-set replacement and one contract amendment.
+  Red base: `2ba7acec4b97c8b5e61c9b468efe7ab426748d0c`. The task 11 strategy commit.
+  Red evidence (2026-10-27, Red session, MiniMax-M3): test commit `496c6622`; exit code `1`;
+  `Tests  11 failed | 127 passed (138)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  The gate duration was 301.19 s. The run had no package, syntax, transform, timeout, or preflight error.
+  All 125 earlier tests passed. Earlier-test exceptions: none.
+  T116 failed because the fence extraction returns no root array. The escaped scalar element is never checked. Both providers write the answer and record success.
+  T117 failed because the scan reads the first document only. The second document holds the credential.
+  T118 failed because `JSON.parse` keeps the last duplicate value. The earlier value is never checked.
+  T119 failed because `JSON.parse` keeps the last duplicate value. The credential key of the earlier duplicate is never checked.
+  T120 failed because the parse error sends the answer to the extraction path. The escaped value is never checked.
+  T121 failed because `malformed scan ms: 16651` exceeds 2000. The brace rescan is quadratic. The worker finished inside the 60000 ms limit.
+  T122 failed because the fence and the malformed tail hide the credential. The tail never reaches the scan.
+  T124 failed because a long pattern name pushes the shared suffix past the 500-character cut. The thrown error, the ledger error, and the CLI error log lose the task 10 suffix.
+  T126 failed because the MiniMax comment still holds the stale `RB3-01` label and does not state that the check reads the raw answer.
+  T127 failed because the MiniMax path writes a review file, a raw copy, and a success entry for the constructions that the scan does not refuse.
+  T128 failed because the Kimi path writes a review file and a raw copy and changes the ledger for the constructions that the scan does not refuse.
+  T123 and T125 passed at Red. T123 holds no credential. T125 finds the same rule name in both paths at this HEAD.
+  Focused hostile command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T11[6-9]|T12[0-8]"'`;
+  exit code `1`; `Tests  11 failed | 2 passed | 98 skipped (111)`; duration 63.24 s.
+  Hostile-scan harness: T116 to T120, T122, T123, T124, T125, T127, and T128 run their scan or their provider call in the worker thread.
+  The test owns the wall-clock limit. The limit is 20000 ms for a seam row, 60000 ms for the malformed time row, and 30000 ms for a provider row.
+  The worker stack is 1 MB. A harness timeout is not Red evidence. No row timed out.
+  Harness change: the worker gained a `rules` mode for T125. The `seam`, `minimax`, and `kimi` modes stay unchanged. T1 to T115 stay unchanged.
+  Test design deviation: T119 and T122 hold two constructions each. The strategy construction puts the credential in the last duplicate key.
+  A duplicate key name survives `JSON.parse`, so the RB4-01 key scan finds that key and the form is already refused at this HEAD.
+  The second construction hides the credential. T119 puts it in a key of an earlier duplicate value. T122 puts it in the malformed tail behind the fence.
+  The rows fail at Red on that second form. A probe of `decodedAnswerFindings` confirms both forms.
+  Review finding note: RB5-02 names an earlier duplicate key. A duplicate key name survives `JSON.parse`, so the key always reaches the scan.
+  Only an earlier duplicate value hides a credential. T118 covers the value form.
+  Test design deviation: the first focused run failed T124 and T125 because the rows double-escaped the value. The rows now build the escape form the task 10 rows use.
+  Logs: `red-vitest-t11-hostile-attempt1.log`, `red-vitest-t11-hostile-attempt2.log`, `red-vitest-t11-hostile-attempt3.log`.
+  Lock note: one `heavy-run: lock wait over 600 s` line appeared in the focused run while another agent held the shared lock.
+  One gate run was stopped while it waited for the same lock, because the tightened rows changed the test file. The gate run was repeated on the final test state.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  The 31 errors sit in `assets/*.ts` and `tests/part.test.ts`. None sits in `tests/storytime-book-pictures.test.ts`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-tsc-t11.log`.
+  Vitest output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t11.log`.
+  Focused hostile output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-vitest-t11-hostile.log`.
+  Red model deviation: the strategy names `volcengine-agent-plan/deepseek-v4-pro#high`. This role ran `minimax-cn-coding-plan/MiniMax-M3#high`,
+  because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
 ## Phase 3: Week 1 pictures
 
