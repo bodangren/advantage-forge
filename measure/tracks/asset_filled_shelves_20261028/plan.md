@@ -63,6 +63,56 @@ Status: new (2026-10-28). The [specification](./spec.md) owns the scope and the 
 Roles: Red writes the check and records the failing run. Green fills the shelves and the maps and
 runs the check again. The render task belongs to Green and reports to Review.
 
+### Decisions (2026-10-28)
+
+1. Libraries: use `bookcase` within the set-piece budget (200,000 bytes; game total 6,000,000). If it
+   does not fit after a reduced build, fall back to `shelf` with `tome` and `spellbook` props on its
+   boards. Green records the chosen path here.
+2. No lit candle on a library or classroom bookcase: use `bookcase` or the fallback, not `bookshelf`.
+3. The check: the maps export `places()`, so the check imports and evaluates them. The five game views
+   run their placement code with a recording stub, because a text parse cannot expand the loops that
+   place the shelves. The stub needs no WebGL. It records the model name, the position, the scale, and
+   the yaw of every placement. The limit: the stub proves the placement numbers, not the mesh content
+   of a model. The render proves the mesh content.
+4. Bathhouse: jars and baskets. A towel asset is a follow-up and stays out of scope.
+5. Hand-off branch: the PM names it. The default is `primary-parity-integration`, the target of the
+   last ledger entry of `measure/monorepo-syncs.md` (monorepo `0c220e663`).
+6. Order: commit, then the pack release, then the hand-off.
+
+Further decisions of the strategy role (2026-10-28):
+
+- The support rule uses a tolerance of 0.01 m. The filled maps place items 0.0025 m above a board top.
+- The library views place no `shelf` and no `bookshelf`. The classroom map keeps its `bookcase`.
+- The pre-existing `bookshelf` placements with a lit candle stay a frozen count table. They are a
+  follow-up for the owner.
+- The `potion-rush` 2D background is a bake of its 3D set, so the track re-bakes it before the pack
+  release.
+
+### Gate commands
+
+Every command runs as one call of `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c '<command>'`
+with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
+
+- `RED_TEST_COMMAND`: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+  node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'`
+- `GREEN_TEST_COMMAND`: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+  node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts
+  tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts
+  tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts
+  tests/games/rune-forge-chamber/manifest.test.ts --maxWorkers=1'`
+- `TYPE_CHECK_COMMAND`: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+  node node_modules/typescript/bin/tsc --noEmit'`
+- Type check baseline rule: the command exits 2 with 31 errors outside the owned paths today. Green
+  records the owned error count, which must be 0, and the total, which must not exceed 31.
+- Render of a game view: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600
+  node --import tsx scripts/apk3d-shot.ts both --game enchanted-library'`
+- Render of a map: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'FORGE_SHOT_SIZE=1920x1080
+  timeout -k 30 600 node scripts/shoot-map.mjs out/filled-shelves bathhouse=scene=bathhouse'`
+- Re-bake of the potion rush 2D background: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c
+  'timeout -k 30 900 node --import tsx scripts/apk2d-bake.ts potion-rush'`
+- The full strategy, the test rows F1 to F11, the mutations M1 to M5, and the review gates live in
+  [test-strategy.md](./test-strategy.md).
+
 - [ ] Task: Write the failing shelf check (Red).
   Owned path: `tests/games/filled-shelves.test.ts` (new file).
   The test lists every `shelf` placement in `scenes/maps/*.ts` and in the five game views with its
