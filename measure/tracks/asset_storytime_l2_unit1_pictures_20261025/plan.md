@@ -775,6 +775,65 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
+- [ ] Task: Close the malformed-string class of the credential scan. Risk class: high.
+  Task 12 closes RB6-01, RB6-02, and RB6-03 from the Review B report at `bb4e11f0`.
+  Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 12, and T129 to T138.
+  Daniel chose design B on 2026-10-27. Design B stays. Do not plan design A and do not plan a waiver.
+  The contract stays. The raw copies stay. No contract change is needed.
+  The input class is a closure, not a shape list. Start from the raw answer text.
+  A text splits at every unescaped double quote into the head, the segments between two consecutive unescaped quotes, and the tail.
+  Every segment decodes with the tolerant decoder. The tolerant decoder resolves each valid JSON escape, including `\uXXXX` and surrogate pairs.
+  The tolerant decoder keeps each invalid escape sequence, each lone backslash, and each raw control character as literal text.
+  The tolerant decoder never drops a segment and never throws.
+  Every decoded segment is a candidate. A decoded segment that holds a quote is split and decoded again.
+  A decoded segment without a quote is a candidate only. Do not decode it again.
+  The raw text is a candidate. A credential in prose without a quote is found there.
+  The scan needs no valid JSON. A malformed, truncated, duplicated, or fenced text yields the same candidates as a valid text.
+  The scan is linear per layer. No path decodes a whole text without segment boundaries.
+  One rule builder serves the raw scan and the decoded scan. Both read the environment at call time.
+  `JSON.parse` stays for the review schema only. It never gates the credential check.
+  MiniMax calls the scan inside the paid callback, before the success entry.
+  Kimi calls the scan before `parseModelReview` and before any record write.
+  Both providers refuse before a raw copy, a review write, or a result log.
+  A MiniMax refusal appends only its sanitized failure entry. A Kimi refusal leaves the begin ledger and the source raw file unchanged.
+  The task 10 refusal suffix stays byte-identical. The task 9 raw-byte refusal text stays unchanged.
+  Pass T129 to T138 and every earlier test. Keep T1 to T128 unchanged.
+  T129 to T133 cover the five Review B source cases for both providers.
+  T134 runs the seeded generator at the seam. T135 runs a fixed sample through both providers.
+  T136 is the wide cost row. T137 is the chain cost row. T138 is the safe-twin row.
+  Every hostile row runs in the worker thread with a test-owned wall clock.
+  The generator is deterministic. It uses a fixed seed and a fixed case count. It adds no dependency.
+  Use `ENGINE_HOOK_TEST_COMMAND` for Red, Green, adversarial testing, and closeout.
+  Run `TASK12_TYPECHECK_COMMAND` after Green and at closeout.
+  Run each declared mutation separately. Each mutation omits one path and fails one named test.
+  No new live smoke run is necessary. This task changes no server, capture code, renderer, or browser path.
+  Make no paid call and run no render. Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  The table default for Red is `volcengine-agent-plan/deepseek-v4-pro#high`. The orchestrator picks the Red route with `ra-quota`.
+  Reviews A, B, and C run again on the task 12 HEAD. Review C may use a short delta check.
+  Security review, UX/API review, and adversarial testing apply. Browser review does not apply because this task changes no UI.
+  PM limit (22:49 ICT, 2026-10-27): task 12 is the last remediation round for the malformed-string class.
+  If the task 12 Review B finds new items in the same class, no task 13 opens.
+  The items become recorded residual risk, and the PM takes the decision to Daniel.
+  A finding outside this class follows the normal path.
+  Named residual risk, out of class, recorded, and not tested: base64, percent encoding, HTML entities, a credential split across two separate strings or across prose and a string, single-quoted strings, a credential encoded twice inside one string token, and other transforms.
+  Review B audits task 12 against the named class only.
+  Capture the task 12 Red base immediately after this strategy commit. Run `git rev-parse HEAD` before any Red edit.
+  Keep the Phase 2 baseline `1d39b8fd` unchanged. Do not use `bb4e11f0` as the Red base.
+  Red gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  Green gate command: the same command.
+  Mutation command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Type check command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Red expectation: exit `1`; T129 to T135 fail; T136 to T138 may pass; the earlier tests pass.
+  Green expectation: exit `0`; `Tests  <N> passed (<N>)`; no skip.
+  Type check expectation: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  Mutation list, with the one named test that must fail:
+    1. Drop the head and the tail segments. (T129)
+    2. Decode a segment with `JSON.parse` and drop the segment when the parse throws. (T131)
+    3. Pair the quotes left to right in one parity. (T133)
+    4. Do not split and decode a decoded layer that holds a quote. (T134)
+    5. Decode the whole layer text and use the decoded text as the next layer. (T137)
+  Each mutation changes one path. Green records every other failing test.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write
