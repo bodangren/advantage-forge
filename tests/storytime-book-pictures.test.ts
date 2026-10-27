@@ -2226,7 +2226,7 @@ import { parentPort, workerData } from 'node:worker_threads';
 import { readFileSync } from 'node:fs';
 
 const report = { ok: false, ms: 0, findings: [], status: null, error: null,
-  plain: [], decoded: [], plainSecond: [], decodedSecond: [] };
+  plain: [], decoded: [], plainSecond: [], decodedSecond: [], findingSets: [] };
 const started = Date.now();
 try {
   const book = await import(workerData.modulePath);
@@ -2242,6 +2242,10 @@ try {
     process.env[workerData.envName] = workerData.secondValue;
     report.plainSecond = book.secretFindings(workerData.plainSecondText);
     report.decodedSecond = book.decodedAnswerFindings(workerData.decodedSecondText);
+    report.ok = true;
+  } else if (workerData.mode === 'corpus') {
+    // Task 12: one finding set per text of a seeded corpus.
+    report.findingSets = (workerData.texts ?? []).map((text) => book.decodedAnswerFindings(text));
     report.ok = true;
   } else {
     const raw = readFileSync(workerData.rawFile, 'utf8');
@@ -2275,6 +2279,7 @@ parentPort.postMessage(report);
       ok: boolean; ms: number; findings: string[]; status: string | null;
       error: { name: string; message: string } | null;
       plain: string[]; decoded: string[]; plainSecond: string[]; decodedSecond: string[];
+      findingSets: string[][];
     };
     /** Runs one hostile scan in a worker. The test owns the wall-clock limit. */
     async function runHostile(workerData: Record<string, unknown>, limitMs: number) {
@@ -2914,6 +2919,409 @@ parentPort.postMessage(report);
           await assertNoSyntheticValues([space.space.outputRoot], [secret]);
         }
       }, 120000);
+    });
+
+    describe('Malformed string remediation', () => {
+      // Task 12. The credential is built at run time. No fixture file holds a decoded credential.
+      // Every hostile row runs in the worker harness. The test owns the wall-clock limit.
+      const MALFORMED_SUFFIX = suffix;
+      const MALFORMED_PROVIDER_LIMIT_MS = 30000;
+      const MALFORMED_GENERATOR_LIMIT_MS = 60000;
+      const MALFORMED_CHAIN_LIMIT_MS = 60000;
+      const MALFORMED_WIDE_LIMIT_MS = 120000;
+      const GENERATOR_SEED = 20261025;
+      const GENERATOR_CASES = 240;
+      const SAMPLE_INDEXES = [0, 2, 5, 9, 14, 20, 27, 35, 44, 54, 65, 77];
+      const SCAN_BYTES = 65536;
+      const CHAIN_LEVELS = 113;
+      const CHAIN_FOLD = 116;
+
+      /** The Review B credential of task 12. */
+      function malformedSecret(): string { return `sk-${'SYNTHETIC'.repeat(4)}`; }
+      /** The JSON escape form of a value. The decoded text holds the value. */
+      function malformedEscaped(value: string): string { return unicodeEscaped(value); }
+      /** The safe review text of the fixtures. */
+      function malformedSafe(): string { return JSON.stringify(reviewBSafe()); }
+
+      /**
+       * The five Review B constructions of task 12. Each text holds the escaped credential
+       * only. The plain credential never appears in the raw text.
+       */
+      function malformedRaws(): Array<{ label: string; raw: string }> {
+        const secret = malformedSecret();
+        const escaped = malformedEscaped(secret);
+        const safe = malformedSafe();
+        return [
+          { label: 'unterminated token', raw: safe + '\n{"note":"' + escaped },
+          { label: 'trailing backslash', raw: safe + '\n"' + escaped + '\\' },
+          { label: 'raw control character', raw: safe + '\n{"note":"' + escaped + '\nmore"}' },
+          { label: 'invalid escape', raw: safe + '\n{"note":"' + escaped + '\\q"}' },
+          { label: 'stray prose quote', raw: safe + '\nThe pole is 5" tall. '
+            + JSON.stringify({ note: secret }).replaceAll(secret, escaped) },
+        ];
+      }
+
+      /** The safe twin of a text. The twin keeps every byte but the credential bytes. */
+      function malformedTwin(raw: string): string {
+        return raw.replaceAll(malformedEscaped(malformedSecret()), '');
+      }
+
+      /** The fixed piece list of the generated corpus. The order and the seed stay fixed. */
+      const GENERATOR_SHAPES = ['object', 'unterminated', 'backslash', 'control', 'invalid-escape',
+        'array', 'duplicate-key', 'key'] as const;
+      const GENERATOR_HEADS = ['safe', 'fenced', 'duplicate'] as const;
+      const GENERATOR_PROSE = ['The subject is visible.', 'The pole is 5" tall.',
+        'The frame is 6" wide and 3" tall.', 'A "quoted" note follows.', 'The answer ends here.'] as const;
+      type GeneratedParams = { shape: string; head: string; prose: string; layers: number };
+
+      /** A small linear congruential step. The generator adds no dependency. */
+      function lcg(seed: number): () => number {
+        let state = seed >>> 0;
+        return () => {
+          state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+          return state / 4294967296;
+        };
+      }
+      /** The pieces of one generated case. The draws stay in a fixed order. */
+      function drawParams(draw: () => number): GeneratedParams {
+        return {
+          shape: GENERATOR_SHAPES[Math.floor(draw() * GENERATOR_SHAPES.length)]!,
+          head: GENERATOR_HEADS[Math.floor(draw() * GENERATOR_HEADS.length)]!,
+          prose: GENERATOR_PROSE[Math.floor(draw() * GENERATOR_PROSE.length)]!,
+          layers: Math.floor(draw() * 4),
+        };
+      }
+      /**
+       * One generated text. The credential sits in a JSON string segment. The text may hold
+       * stray quotes, an unterminated tail, a trailing backslash, a raw control character, an
+       * invalid escape, a fence, a duplicate key, an array, and 0 to 3 extra string layers.
+       */
+      function buildGenerated(params: GeneratedParams, credential: string): string {
+        let inner = '{"note":"' + credential + '"}';
+        if (params.shape === 'unterminated') inner = '{"note":"' + credential;
+        else if (params.shape === 'backslash') inner = '{"note":"' + credential + '\\';
+        else if (params.shape === 'control') inner = '{"note":"' + credential + '\nmore"}';
+        else if (params.shape === 'invalid-escape') inner = '{"note":"' + credential + '\\q"}';
+        else if (params.shape === 'array') inner = '["' + credential + '"]';
+        else if (params.shape === 'duplicate-key') inner = '{"note":"' + credential + '","note":"safe"}';
+        else if (params.shape === 'key') inner = '{"' + credential + '":1}';
+        for (let level = 0; level < params.layers; level += 1) inner = JSON.stringify(inner);
+        let head = malformedSafe();
+        if (params.head === 'fenced') head = '```json\n' + head + '\n```';
+        else if (params.head === 'duplicate') head = head.slice(0, -1) + ',"note":"safe","note":"safe text"}';
+        return head + '\n' + params.prose + '\n' + inner;
+      }
+      /** The seeded corpus. Every case has one safe twin. The twin keeps every other byte. */
+      function generatedCorpus(): Array<{ shape: string; text: string; twin: string }> {
+        const draw = lcg(GENERATOR_SEED);
+        const cases: Array<{ shape: string; text: string; twin: string }> = [];
+        for (let index = 0; index < GENERATOR_CASES; index += 1) {
+          const params = drawParams(draw);
+          cases.push({
+            shape: params.shape,
+            text: buildGenerated(params, malformedEscaped(malformedSecret())),
+            twin: buildGenerated(params, ''),
+          });
+        }
+        return cases;
+      }
+
+      /** A wide answer of the byte budget. It holds many distinct short strings. */
+      function wideAnswer(totalBytes: number): { text: string; tokens: number } {
+        const values: string[] = [];
+        let size = 2;
+        let index = 0;
+        for (;;) {
+          const value = `w${index.toString(36)}`;
+          const cost = value.length + 3;
+          if (size + cost > totalBytes - 64) break;
+          values.push(value);
+          size += cost;
+          index += 1;
+        }
+        const prefix = `[${values.map((value) => `"${value}"`).join(',')},`;
+        const pad = totalBytes - Buffer.byteLength(prefix, 'utf8') - 3;
+        return { text: `${prefix}"${'x'.repeat(pad)}"]`, tokens: values.length };
+      }
+
+      /**
+       * The Review B cost note: the shortest m-fold quote encoding is `\u005c` plus (m-2) times
+       * `u005c` plus `u0022`, which is 5m+1 characters. A 65,536-byte answer holds about 113
+       * layers of that encoding.
+       */
+      function foldQuote(depth: number): string {
+        return depth <= 1 ? '"' : '\\u005c' + 'u005c'.repeat(depth - 2) + 'u0022';
+      }
+      /** One more level of the chain. The level below sits inside one escaped quote pair. */
+      function wrapChainLevel(text: string): string {
+        return '"' + text.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+      }
+      /** A chain of nested quote segments. The scan visits every level of the chain. */
+      function chainText(levels: number, filler: string): string {
+        let text = '"' + foldQuote(CHAIN_FOLD) + filler + '"';
+        for (let level = 1; level < levels; level += 1) text = wrapChainLevel(text);
+        return text;
+      }
+      /** The chain answer of the byte budget. The level count follows the byte budget. */
+      function chainAnswer(totalBytes: number): { text: string; levels: number } {
+        let levels = 1;
+        let text = chainText(levels, '');
+        while (levels < CHAIN_LEVELS) {
+          const next = chainText(levels + 1, '');
+          if (Buffer.byteLength(next, 'utf8') > totalBytes - 4096) break;
+          text = next;
+          levels += 1;
+        }
+        const filler = totalBytes - Buffer.byteLength(text, 'utf8');
+        return { text: chainText(levels, 'x'.repeat(filler)), levels };
+      }
+
+      /** Runs one provider call in the worker harness. The test owns the wall-clock limit. */
+      async function malformedRun(provider: Provider, raw: string) {
+        const space = await providerWorkspace(provider, raw);
+        const run = await runHostile({
+          mode: provider, outputRoot: space.space.outputRoot, repoRoot: space.space.repoRoot,
+          jobs, workbooksRoot: WORKBOOKS, jobId: job().id, version: 1,
+          rawFile: space.rawFile, callId: space.callId,
+        }, MALFORMED_PROVIDER_LIMIT_MS);
+        return { space, run };
+      }
+      /** The refusal invariants of task 12. Each artifact is checked by name. */
+      async function expectMalformedRefusal(provider: Provider, raw: string, label: string) {
+        const secret = malformedSecret();
+        const { space, run } = await malformedRun(provider, raw);
+        const context = `${label}/${provider}`;
+        const message = run.report?.error?.message ?? '';
+        expect.soft(run.timedOut, `${context}: the call finishes inside ${MALFORMED_PROVIDER_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.error?.name ?? '', `${context}: the refusal is not a RangeError.`)
+          .not.toBe('RangeError');
+        expect.soft(message, `${context}: the refusal names only the pattern.`).toMatch(/api-key-prefix/);
+        expect.soft(message, `${context}: the refusal holds no matched text.`).not.toContain(secret);
+        expect.soft(message.endsWith(MALFORMED_SUFFIX), `${context}: the refusal has the task 10 suffix.`)
+          .toBe(true);
+        const entries = await securityLedger(space.space.outputRoot);
+        expect.soft(entries.filter((entry) => entry.status === 'success'), `${context}: no success entry.`)
+          .toEqual([]);
+        const files = await tree(space.space.outputRoot);
+        expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(space.space.outputRoot, file))),
+          `${context}: no review or raw copy exists.`).toEqual([]);
+        if (provider === 'kimi') {
+          expect.soft(await fileSnapshot(space.space.outputRoot), `${context}: every output stays byte-identical.`)
+            .toEqual(space.before);
+          expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+            .toEqual(Buffer.from(raw));
+        }
+        await assertNoSyntheticValues([space.space.outputRoot], [secret]);
+        return /api-key-prefix/.test(message);
+      }
+
+      it('T129: both providers refuse the unterminated token', async () => {
+        const raw = malformedRaws()[0]!.raw;
+        console.log('unterminated token refused');
+        for (const provider of providers) await expectMalformedRefusal(provider, raw, 'unterminated token');
+      }, 120000);
+
+      it('T130: both providers refuse the trailing backslash', async () => {
+        const raw = malformedRaws()[1]!.raw;
+        console.log('trailing backslash refused');
+        for (const provider of providers) await expectMalformedRefusal(provider, raw, 'trailing backslash');
+      }, 120000);
+
+      it('T131: both providers refuse the raw control character and the MiniMax envelope', async () => {
+        const raw = malformedRaws()[2]!.raw;
+        console.log('raw control character refused');
+        for (const provider of providers) {
+          await expectMalformedRefusal(provider, raw, 'raw control character');
+        }
+        const envelopeRaw = JSON.stringify({ content: raw, base_resp: { status_code: 0 } });
+        await expectMalformedRefusal('minimax', envelopeRaw, 'raw control character in the MiniMax envelope');
+      }, 180000);
+
+      it('T132: both providers refuse the invalid escape', async () => {
+        const raw = malformedRaws()[3]!.raw;
+        console.log('invalid escape refused');
+        for (const provider of providers) await expectMalformedRefusal(provider, raw, 'invalid escape');
+      }, 120000);
+
+      it('T133: both providers refuse the stray prose quote', async () => {
+        const raw = malformedRaws()[4]!.raw;
+        console.log('stray prose quote refused');
+        for (const provider of providers) await expectMalformedRefusal(provider, raw, 'stray prose quote');
+      }, 120000);
+
+      it('T134: the seeded generator finds every credential case and no twin', async () => {
+        const corpus = generatedCorpus();
+        const texts = [...corpus.map((item) => item.text), ...corpus.map((item) => item.twin)];
+        const run = await runHostile({ mode: 'corpus', texts }, MALFORMED_GENERATOR_LIMIT_MS);
+        expect.soft(run.timedOut, `The corpus scan finishes inside ${MALFORMED_GENERATOR_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.ok ?? false, 'The worker ran the seam for every text.').toBe(true);
+        const sets = run.report?.findingSets ?? [];
+        expect.soft(sets.length, 'The worker returns one finding set per text.').toBe(texts.length);
+        let findings = 0;
+        const missed: string[] = [];
+        corpus.forEach((item, index) => {
+          if ((sets[index] ?? []).length > 0) findings += 1;
+          else missed.push(`${index}:${item.shape}`);
+        });
+        let twinFindings = 0;
+        corpus.forEach((item, index) => {
+          if ((sets[corpus.length + index] ?? []).length > 0) twinFindings += 1;
+        });
+        const casesPrinted = `generated cases: ${corpus.length}`;
+        const findingsPrinted = `generated findings: ${findings}`;
+        const twinPrinted = `generated twin findings: ${twinFindings}`;
+        console.log(casesPrinted);
+        console.log(findingsPrinted);
+        console.log(twinPrinted);
+        for (const item of missed.slice(0, 24)) console.log(`missed case: ${item}`);
+        const parsedCases = Number(/^generated cases:\s*([0-9]+)$/.exec(casesPrinted)?.[1] ?? '');
+        const parsedFindings = Number(/^generated findings:\s*([0-9]+)$/.exec(findingsPrinted)?.[1] ?? '');
+        expect.soft(parsedCases, 'The labeled case count is an integer.').toBe(corpus.length);
+        expect.soft(parsedFindings, 'The labeled finding count is an integer.').toBe(findings);
+        expect.soft(parsedCases, casesPrinted).toBe(GENERATOR_CASES);
+        expect.soft(parsedFindings, findingsPrinted).toBe(GENERATOR_CASES);
+        expect.soft(twinFindings, twinPrinted).toBe(0);
+      }, 180000);
+
+      it('T135: both providers refuse the sampled generated cases', async () => {
+        const corpus = generatedCorpus();
+        const cases = SAMPLE_INDEXES.map((index) => corpus[index]!);
+        let refusals = 0;
+        for (const [position, item] of cases.entries()) {
+          for (const provider of providers) {
+            const refused = await expectMalformedRefusal(provider, item.text,
+              `sample case ${SAMPLE_INDEXES[position]} shape ${item.shape}`);
+            if (refused) refusals += 1;
+            else console.log(`sample case: ${SAMPLE_INDEXES[position]} shape: ${item.shape} provider: ${provider}`);
+          }
+        }
+        const casesPrinted = `sample cases: ${cases.length}`;
+        const refusalsPrinted = `sample refusals: ${refusals}`;
+        console.log(casesPrinted);
+        console.log(refusalsPrinted);
+        const parsedCases = Number(/^sample cases:\s*([0-9]+)$/.exec(casesPrinted)?.[1] ?? '');
+        const parsedRefusals = Number(/^sample refusals:\s*([0-9]+)$/.exec(refusalsPrinted)?.[1] ?? '');
+        expect.soft(parsedCases, 'The labeled case count is an integer.').toBe(cases.length);
+        expect.soft(parsedRefusals, 'The labeled refusal count is an integer.').toBe(refusals);
+        expect.soft(parsedCases, casesPrinted).toBe(SAMPLE_INDEXES.length);
+        expect.soft(parsedRefusals, refusalsPrinted).toBe(SAMPLE_INDEXES.length * providers.length);
+      }, 300000);
+
+      it('T136: the seam scans the wide answer with the T115 rules within the labeled bound', async () => {
+        const names: string[] = [];
+        try {
+          for (let index = 0; index < 1200; index += 1) {
+            const name = `TASK10_SECRET_${index}_KEY`;
+            process.env[name] = `sek${index.toString(16).padStart(8, '0')}SYNTHETICVALUE`;
+            names.push(name);
+          }
+          const wide = wideAnswer(SCAN_BYTES);
+          expect.soft(Buffer.byteLength(wide.text, 'utf8'), 'The answer has 65,536 bytes.').toBe(SCAN_BYTES);
+          const directory = await mkdtemp(path.join(root, 'hostile-'));
+          const rawFile = path.join(directory, 'answer.json');
+          await put(rawFile, wide.text);
+          const run = await runHostile({ mode: 'seam', rawFile }, MALFORMED_WIDE_LIMIT_MS);
+          const measured = run.report?.ms ?? run.elapsed;
+          const printed = `wide scan ms: ${measured}`;
+          console.log(printed);
+          console.log(`wide tokens: ${wide.tokens}`);
+          const parsed = Number(/^wide scan ms:\s*([0-9]+)$/.exec(printed)?.[1] ?? '');
+          expect.soft(run.timedOut,
+            `wide scan ms: ${run.elapsed} exceeds the test limit ${MALFORMED_WIDE_LIMIT_MS} ms.`).toBe(false);
+          expect.soft(run.report?.ok ?? false, 'The worker ran the seam.').toBe(true);
+          expect.soft(run.report?.findings ?? [], 'The safe wide answer holds no finding.').toEqual([]);
+          expect.soft(parsed, 'The labeled duration is an integer.').toBe(measured);
+          expect.soft(parsed, printed).toBeLessThanOrEqual(60000);
+        } finally {
+          for (const name of names) delete process.env[name];
+        }
+        expect(Object.keys(process.env).filter((name) => name.startsWith('TASK10_SECRET_')),
+          'The injected env names are gone.').toEqual([]);
+      }, 180000);
+
+      it('T137: the seam scans the chain answer within the labeled bound', async () => {
+        const chain = chainAnswer(SCAN_BYTES);
+        expect.soft(Buffer.byteLength(chain.text, 'utf8'), 'The answer has 65,536 bytes.').toBe(SCAN_BYTES);
+        console.log(`chain levels: ${chain.levels}`);
+        const directory = await mkdtemp(path.join(root, 'hostile-'));
+        const rawFile = path.join(directory, 'answer.json');
+        await put(rawFile, chain.text);
+        const run = await runHostile({ mode: 'seam', rawFile }, MALFORMED_CHAIN_LIMIT_MS);
+        const measured = run.report?.ms ?? run.elapsed;
+        const printed = `chain scan ms: ${measured}`;
+        console.log(printed);
+        const parsed = Number(/^chain scan ms:\s*([0-9]+)$/.exec(printed)?.[1] ?? '');
+        expect.soft(run.timedOut,
+          `chain scan ms: ${run.elapsed} exceeds the test limit ${MALFORMED_CHAIN_LIMIT_MS} ms.`).toBe(false);
+        expect.soft(run.report?.ok ?? false, 'The worker ran the seam.').toBe(true);
+        expect.soft(run.report?.findings ?? [], 'The safe chain answer holds no finding.').toEqual([]);
+        expect.soft(parsed, 'The labeled duration is an integer.').toBe(measured);
+        expect.soft(parsed, printed).toBeLessThanOrEqual(20000);
+      }, 120000);
+
+      it('T138: the safe twins yield no finding and both providers accept them', async () => {
+        const corpus = generatedCorpus();
+        const twins: Array<{ label: string; twin: string }> = [
+          ...malformedRaws().map((item) => ({ label: item.label, twin: malformedTwin(item.raw) })),
+          ...corpus.map((item, index) => ({ label: `generated ${index}:${item.shape}`, twin: item.twin })),
+        ];
+        const run = await runHostile({ mode: 'corpus', texts: twins.map((item) => item.twin) },
+          MALFORMED_GENERATOR_LIMIT_MS);
+        expect.soft(run.timedOut, `The twin scan finishes inside ${MALFORMED_GENERATOR_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.ok ?? false, 'The worker ran the seam for every twin.').toBe(true);
+        const sets = run.report?.findingSets ?? [];
+        expect.soft(sets.length, 'The worker returns one finding set per twin.').toBe(twins.length);
+        let twinFindings = 0;
+        twins.forEach((item, index) => {
+          if ((sets[index] ?? []).length > 0) {
+            twinFindings += 1;
+            console.log(`twin finding: ${index}:${item.label}`);
+          }
+        });
+        const casesPrinted = `twin cases: ${twins.length}`;
+        const findingsPrinted = `twin findings: ${twinFindings}`;
+        console.log(casesPrinted);
+        console.log(findingsPrinted);
+        const parsedCases = Number(/^twin cases:\s*([0-9]+)$/.exec(casesPrinted)?.[1] ?? '');
+        const parsedFindings = Number(/^twin findings:\s*([0-9]+)$/.exec(findingsPrinted)?.[1] ?? '');
+        expect.soft(parsedCases, 'The labeled case count is an integer.').toBe(twins.length);
+        expect.soft(parsedFindings, 'The labeled finding count is an integer.').toBe(twinFindings);
+        expect.soft(parsedCases, casesPrinted).toBe(malformedRaws().length + GENERATOR_CASES);
+        expect.soft(parsedFindings, findingsPrinted).toBe(0);
+        for (const index of [0, 1, 2, 3, 4]) {
+          const twin = twins[index]!.twin;
+          for (const provider of providers) {
+            const { space, run: providerResult } = await malformedRun(provider, twin);
+            const context = `twin ${index} ${twins[index]!.label}/${provider}`;
+            expect.soft(providerResult.timedOut,
+              `${context}: the call finishes inside ${MALFORMED_PROVIDER_LIMIT_MS} ms.`).toBe(false);
+            expect.soft(providerResult.report?.error ?? null, `${context}: the twin is accepted.`)
+              .toBeNull();
+            const expected = parseModelReview(twin);
+            expect.soft(providerResult.report?.status ?? null, `${context}: the parser verdict is the status.`)
+              .toBe(expected.verdict);
+            const reviewFile = path.join(space.space.outputRoot, `reviews/${job().id}-v1-${provider}.json`);
+            expect.soft(existsSync(reviewFile), `${context}: the review file exists.`).toBe(true);
+            if (!existsSync(reviewFile)) continue;
+            const written = JSON.parse(await readFile(reviewFile, 'utf8'));
+            expect.soft(written, `${context}: the parser result is unchanged.`).toMatchObject(expected);
+            expect.soft(written.model, `${context}: the model stays unchanged.`)
+              .toBe(provider === 'minimax' ? pictureSeams.MINIMAX_VISION_MODEL : pictureSeams.KIMI_REVIEW_MODEL);
+            expect.soft(Buffer.from(written.rawOutput), `${context}: the review raw bytes stay identical.`)
+              .toEqual(Buffer.from(twin));
+            expect.soft(await readFile(path.join(space.space.outputRoot, written.rawFile)),
+              `${context}: the raw copy stays identical.`).toEqual(Buffer.from(twin));
+            if (provider === 'kimi') {
+              expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+                .toEqual(Buffer.from(twin));
+            }
+            await assertNoSyntheticValues([space.space.outputRoot], [malformedSecret()]);
+          }
+        }
+      }, 300000);
     });
   });
 });
