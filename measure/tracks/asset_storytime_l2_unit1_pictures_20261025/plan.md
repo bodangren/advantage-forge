@@ -851,3 +851,13 @@ so every picture gate applies again.
 - 2026-10-26: PM note for the engine hook task: the book stills need an additive hook in the song
   engine (`src/song/main.ts`). Song rendering and timing stay the same. `tests/song-timeline.test.ts`
   is in the gate. Song renders stay paused. Facts changed: none.
+- 2026-10-27 15:52-15:53 ICT: Daniel selected Design B. His words: “Accept B”. Design B scans
+  every JSON string token in the raw provider answer at each decoded layer, without requiring
+  valid JSON. Facts changed: task 11 design decision.
+- 2026-10-27: Green task 11 implementation commit `820f35c4`. The pre-edit four-file gate exited 1
+  with 11 failures and 127 passes. The post-change gate exited 0 with 138 passes and no skips.
+  The typecheck exited 2 with 31 known errors and no owned errors. The final four-file gate exited
+  0 with 138 passes. `measure/doctor.sh` exited 1 on unrelated dirty project state. The twelve
+  strategy mutations remain unrun, so task 11 remains `[~]`. Logs are in
+  `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. Facts changed: implementation
+  commit and recorded owner decision.
