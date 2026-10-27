@@ -8,6 +8,7 @@ after the section 8 guardrail fired in Green. Amended at `5ffdbf6e` for the Revi
 task 7). Amended from `84c8ffdb` for the second security remediation (Phase 2 task 8).
 Amended from `cf5743b7` for the decoded-value remediation (Phase 2 task 9).
 Amended from `53cc3ada` for the decoded-layer remediation (Phase 2 task 10).
+Amended from `3f604b62` for the token-layer remediation (Phase 2 task 11).
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -28,6 +29,13 @@ gates. This file owns test commands, gates, fixtures, and review applicability.
   `build-graph` is on PATH. `graph.db` is absent. No graph scan ran.
 - Task 10 ran one local node probe. It was not a heavy job. It made no paid call, render, or smoke run.
   A rebuild of 1200 rules across 5426 keys took 6629 ms. One scan of that shape took 271 ms.
+- Task 11 rechecked the catalog gap. No local `measure/anti-patterns.md` was available.
+  The strategy uses the canonical catalog at `~/.agents/skills/measure-orchestrator/references/anti-pattern-catalog.md`.
+- Task 11 read plan task 10, contract.md security rules, the three review JSON files at `3f604b62`,
+  the task 10 Green log `jr-green-3f604b62.log`, and the lessons entry on synchronous CPU work.
+- Task 11 inspected `jsonObjects`, `decodedAnswerFindings`, `secretFindings`, `redactSecrets`,
+  `envCredentialPatterns`, `CREDENTIAL_PATTERNS`, `runPaidCall`, and both provider paths.
+  `build-graph` is on PATH. `graph.db` is absent. No graph scan ran.
 - Fact: `../Workbooks/content/storytime/l2/` holds `w01.json` to `w08.json`. This track reads
   `w01` to `w07` only. The `w08` file is a real trap for a glob-based loader.
 - Fact: `out/` is git-ignored. Pictures, logs, the ledger, and the manifest are not in git. The
@@ -161,6 +169,20 @@ echo "total tsc errors: $(grep -c 'error TS' "$L")"
 ```
 
 Task 10 uses this renamed copy. It must not overwrite `task9-tsc.log`.
+Require zero owned errors and at most 31 total errors. A nonzero exit without compiler diagnostics is a tool failure.
+
+### TASK11_TYPECHECK_COMMAND
+
+```sh
+L=measure/runs/asset_storytime_l2_unit1_pictures_20261025/task11-tsc.log
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json' > "$L" 2>&1
+code=$?
+echo "tsc exit: $code"
+echo "owned tsc errors: $(grep -cE '^(src/storytime/|src/song/main\.ts|src/song/still-hook\.ts|scripts/storytime-book-pictures\.ts|tests/storytime-book-pictures\.test\.ts|tests/song-still-hook\.test\.ts|tests/storytime-line-art-pass\.test\.ts|tests/song-timeline\.test\.ts)' "$L")"
+echo "total tsc errors: $(grep -c 'error TS' "$L")"
+```
+
+Task 11 uses this renamed copy. It must not overwrite `task10-tsc.log`.
 Require zero owned errors and at most 31 total errors. A nonzero exit without compiler diagnostics is a tool failure.
 
 ## 4. Phase 2 gates
@@ -777,6 +799,166 @@ Task 10 mutations, with the one named test that must fail:
 Each mutation changes one path. Do not restate it by limiting a second path.
 RA5-01 stays closed only when that isolation holds.
 
+### Task 11: Token-layer remediation gate
+
+Risk class: **high**. RB5-01, RB5-02, and RB5-03 persist an encoded credential before any
+evidence write. RB5-04 makes the malformed-text path quadratic. RC6-1, RC6-2, and RA6-03 sit on
+the same file and function.
+
+Owner decision: Daniel must pick design A, design B, or design C. Design B is the default until
+he answers. The design A note at the end of this block gives the change.
+
+Required design:
+
+- Keep `decodedAnswerFindings(rawOutput: string)` as the shared behavior seam.
+- The credential check must not depend on `JSON.parse` success. `JSON.parse` stays for the review
+  schema only. It never gates the credential check.
+- The input class is every JSON string token of the raw text, at every decoded layer, plus the
+  raw text itself. A list of shapes cannot describe this class.
+- A JSON string token is a maximal run of characters between two unescaped `"` delimiters. A
+  delimiter that never closes ends the token at the end of the text.
+- The decoded form of a token resolves the JSON escape sequences: `\"`, `\\`, `\/`, `\b`, `\f`,
+  `\n`, `\r`, `\t`, `\uXXXX`, and a surrogate pair.
+- The decoded form of a token is a text of the next layer. The same rule applies to it. Each layer
+  is shorter than the text below it, so the layers end.
+- The raw text is a candidate at every layer. A credential in prose without a quote is found there.
+- An object key is a string token. A key is checked like a value.
+- The scan needs no valid JSON. A malformed, truncated, or duplicated text yields the same tokens
+  as a valid text.
+- The scan is linear in the text length per layer. No path restarts a scan at an opening brace.
+- The scan uses no call-stack recursion and no depth ceiling.
+- One rule builder serves the raw scan and the decoded scan. Both read the environment at call time.
+- A finding names a pattern only. The matched text never enters a finding.
+- A long pattern name is cut so that the shared suffix stays inside the 500-character cut.
+- Keep the task 10 refusal suffix byte-identical:
+  `the raw answer is refused; no review or raw copy is written.`
+- Keep the task 9 raw-byte refusal text. RC5-3 stays out of scope.
+- MiniMax calls the scan inside the paid callback, before the success entry.
+- Kimi calls the scan before `parseModelReview` and before any record write.
+- Both providers refuse before a raw copy, a review write, or a result log.
+- A MiniMax refusal appends only its sanitized failure entry. A Kimi refusal leaves the begin
+  ledger and the source raw file unchanged.
+- Do not export `decodedReviewFindings`. Do not export the token scan unless a caller needs it.
+- Do not add a MiniMax answer-size limit. The 65,536-byte bound is a test bound.
+- Limit implementation to `src/storytime/book-pictures.ts`. Report another source path before
+  changing it.
+
+Red gate:
+
+- The table default is `volcengine-agent-plan/deepseek-v4-pro#high`. The orchestrator picks the
+  route with `ra-quota`.
+- Command: `ENGINE_HOOK_TEST_COMMAND` with `timeout -k 30 900`.
+- Add T116 to T128 in `tests/storytime-book-pictures.test.ts`. Keep T1 to T115 unchanged.
+- Require T116 to T120, T122, and T126 to fail for both providers.
+- Require T121 to fail on its labeled bound.
+- T123 and T125 may pass at Red. Name their adversarial mutations in the Red log.
+- The 125 existing tests must pass. Record each exception with its cause.
+- A time row is valid Red only when its labeled duration is above 2000 and below the test-owned
+  wall clock. A harness timeout is not valid Red evidence.
+- Reject package, syntax, transform, timeout, and preflight failures as Red evidence.
+- Keep process, Vite, and browser mocks active. Tests start no real provider, process, server, or
+  browser.
+- Commit only the assigned test and plan paths. Record the exact command, exit code, and labeled
+  summary.
+
+Expected Red failures:
+
+- T116 fails because the fence extraction returns no root array. The escaped scalar element is
+  never checked.
+- T117 fails because the scan reads the first document only. The second document holds the
+  credential.
+- T118 fails because `JSON.parse` keeps the last duplicate value. The earlier value is never
+  checked.
+- T119 fails because `JSON.parse` keeps the last duplicate key. The credential key is never
+  checked.
+- T120 fails because the parse error sends the answer to the extraction path. The escaped value is
+  never checked.
+- T121 fails because `malformed scan ms` is above 2000. The brace rescan is quadratic.
+- T122 fails because the fence, the duplicate key, and the malformed tail hide the credential.
+- T124 fails because a long pattern name pushes the shared suffix past the 500-character cut.
+- T126 fails because the MiniMax comment still holds the stale `RB3-01` label.
+- T123 may pass. Its safe answers hold no credential.
+- T125 may pass. Both paths use the same rule set at this HEAD.
+
+Green gate:
+
+- The orchestrator picks the Green route. This strategy names no Green model.
+- Rerun `ENGINE_HOOK_TEST_COMMAND` before implementation. Confirm the recorded Red failures.
+- Require exit 0 afterward. Require `Tests  <N> passed (<N>)` with the committed Red test count
+  and no skipped tests.
+- Run `TASK11_TYPECHECK_COMMAND`.
+- Require `owned tsc errors: 0`.
+- Require `total tsc errors` no greater than 31.
+- Run `git diff --quiet cf5743b7 -- src/song src/storytime/line-art-pass.ts`.
+- Require exit 0.
+- Keep the server, capture code, rubric text, `PICTURE_RUBRIC_VERSION`, and earlier tests
+  unchanged.
+- Make no paid call. Run no render, Vite server, or browser.
+
+Live proof decision: no new smoke run is necessary for task 11.
+The changed path decodes provider text and controls evidence writes.
+Injected runners exercise that path against real temporary files.
+Task 11 changes no server, capture code, renderer, or browser path.
+Smoke run 6 remains the live server and capture evidence.
+These tests prove provider-boundary behavior with synthetic inputs.
+They do not prove a new live provider call or a render.
+
+Task 11 closeout gate:
+
+- Run `ENGINE_HOOK_TEST_COMMAND` again on the final task 11 HEAD.
+- Run `TASK11_TYPECHECK_COMMAND` again on that same HEAD.
+- Execute each mutation below separately.
+- Use this command for each product mutation:
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+```
+
+- Restore only that mutation before the next run. Require the unchanged implementation to pass
+  again.
+- Require Reviews A, B, and C on the same task 11 HEAD.
+- Each review reads the `review-a-3f604b6.json`, `review-b-3f604b6.json`, and
+  `review-c-3f604b6.json` reports.
+- Review A applies to the input class, the comment label, the mutation isolation, and evidence
+  truthfulness.
+- Review B applies to every decoded credential path and write boundary. Security review is
+  required.
+- Review C applies to the refusal text, the 500-character cut, the rule sharing, and the time
+  bound. A short delta check is sufficient.
+- Adversarial testing is required. Browser review does not apply because no UI changes.
+- Keep mutations 9 and 17 open for adversarial testing. The new time row may close mutation 9 as
+  a side effect. Green records the result either way.
+- Keep RA4-N1 and RA3-N1 as closeout items. Do not close them in this task.
+- Record RC5-3 as a tech-debt candidate. Do not change the raw-byte refusal text here.
+
+Task 11 mutations, with the one named test that must fail:
+
+1. Read only the parsed root value. Remove the lexical token pass (T116). The same change also
+   fails T117 to T120 and T122. Record those failures. Do not add a second omission.
+2. Read only the first top-level document of the text (T117).
+3. Build the candidate set from `JSON.parse` output, so an earlier duplicate value and an earlier
+   duplicate key are lost (T118). The same change also fails T119 and T122.
+4. Check string values only. Skip object keys (T119). The same change also fails T122.
+5. Run the credential scan only when `JSON.parse` succeeds (T120). The same change also fails
+   T122.
+6. Keep a rescan from every unmatched opening brace in the malformed-text path (T121).
+7. Do not cut a long pattern name, so the shared suffix leaves the 500-character cut (T124).
+8. Give the decoded path its own rule list from a module-load snapshot (T125).
+9. Restore the stale `RB3-01` label in the MiniMax comment (T126).
+10. Refuse every fenced or array answer, including a safe one (T123).
+11. Run the MiniMax scan after the paid callback returns (T127).
+12. Run the Kimi scan after the first record write (T128).
+
+Each mutation changes one path. Do not restate it by limiting a second path.
+
+Design A note: Daniel's design A accepts one strict JSON object, refuses duplicate keys, and
+refuses every other answer with no raw copy. Under design A, T116 to T120 keep their
+constructions, but the expected result changes from a credential refusal to a contract refusal.
+The shared suffix changes. The raw copy ban becomes universal. A duplicate-key rule needs a
+parser that keeps every key. T121 keeps its time bound. T123 keeps one safe row for a strict
+single-object answer. T124 to T128 stay unchanged. The amendment is one row-set replacement and
+one contract amendment.
+
 ### Phase 2 closeout gate
 
 - Run `ENGINE_HOOK_TEST_COMMAND` and the type check again on the final commit.
@@ -1043,6 +1225,64 @@ Parse each labeled integer.
 | T114 | In `precheckKimi` and `precheckMiniMax`, the decoded check runs before `parseModelReview`. The Kimi comment matches that order and says the check reads the raw answer. This is a documentation test, not live behavior. | The Kimi call order is reversed, or the comment contradicts the code. |
 | T115 | The seam scans the wide 65,536-byte answer with 1200 injected secrets within 2000 ms. Rules are built once. This is a walker test, not a live provider test. | `rule scan ms` is missing or over 2000, or the test leaves injected env names behind. |
 
+Decoded-token remediation tests (Phase 2 task 11). Keep T1 to T115 unchanged.
+T116 to T128 go into `tests/storytime-book-pictures.test.ts`. They use the existing worker
+harness, fake runners, fixed clocks, captured logs, and temporary output roots.
+Every new row runs its scan or its provider call in the worker harness. The test owns the
+wall-clock limit.
+The limit is 20000 ms for a seam row, 60000 ms for the malformed time row, and 30000 ms for a
+provider row. T121 uses the 60000 ms limit. The harness may gain a mode. The limits stay
+test-owned.
+Every row builds its credential at runtime. No fixture file holds a decoded credential.
+Build Unicode escapes at runtime. Do not store a decoded credential in a fixture file.
+The harness keeps its worker stack at 1 MB.
+
+Review B constructions, one per row:
+
+```js
+const secret = 'sk-' + 'SYNTHETIC'.repeat(4);
+const escaped = Array.from(secret, (c) => String.fromCharCode(92) + 'u' + c.charCodeAt(0).toString(16).padStart(4, '0')).join('');
+const safe = { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] };
+```
+
+T116 uses `const raw = '```json\n' + JSON.stringify([safe, secret]).replaceAll(secret, escaped) + '\n```';`.
+T117 uses `const raw = JSON.stringify(safe) + '\n' + JSON.stringify([secret]).replaceAll(secret, escaped);`.
+T118 uses `const raw = '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},"issues":[],"unknown":"' + escaped + '","unknown":"safe"}';`.
+T119 uses `const raw = '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},"issues":[],' + '"' + escaped + '":1,"' + escaped + '":2}';`.
+T120 uses `const text = JSON.stringify(safe); const raw = text.slice(0, -1) + ',"unknown":"' + escaped + '",}';`.
+T121 uses `const raw = '{'.repeat(65536);`.
+T122 uses one answer with a fence, a duplicate key, and a malformed tail:
+
+```js
+const fenced = '```json\n' + '{"verdict":"PASS","reason":"The subject is visible.","observedCounts":{"subject":1},"issues":[],"' + escaped + '":1,"' + escaped + '":2}\n```';
+const raw = fenced + '\n' + '{"note":"' + escaped + '",';
+```
+
+T121 prints `malformed scan ms: <n>` and parses the labeled integer.
+T121 measures the same way as T111 and T115, so the labels stay comparable.
+T121 injects no env name. The labeled duration covers the malformed text scan.
+T124 stubs an env name `TASK11_LONG_` plus 400 `A` characters plus `_KEY` with the value
+`sek-long-SYNTHETIC-0001`. The env name ends in `KEY`, so the environment rule exists.
+T124 restores that env name in a `finally` block.
+T125 stubs an env name `TASK11_SHARED_KEY` with the value `sek-shared-SYNTHETIC-0001`.
+T125 restores that env name in a `finally` block.
+
+| ID | Behavior | Falsification condition |
+| --- | --- | --- |
+| T116 | Both providers refuse Review B case 1. The fenced root array holds a safe review and an escaped scalar credential. The refusal names only a pattern and ends with the task 10 suffix. No review, raw copy, or success entry appears. The Kimi begin ledger and the source raw file stay byte-identical. | A provider records success, writes evidence, exposes the matched text, or does not refuse. |
+| T117 | Both providers refuse Review B case 2. A safe review is followed by an escaped root array. | The second document is skipped, or a refusal invariant fails. |
+| T118 | Both providers refuse Review B case 3. The escaped credential sits in an earlier duplicate value. | The last duplicate value wins and the earlier value is skipped, or a refusal invariant fails. |
+| T119 | Both providers refuse Review B case 4. The escaped credential sits in a duplicate key. | A key is skipped, or a refusal invariant fails. |
+| T120 | Both providers refuse Review B case 5. A parse error must not bypass the credential check. | A parse error skips the check, or a refusal invariant fails. |
+| T121 | The seam scans 65,536 unmatched opening braces within 2000 ms. It returns no finding and does not throw. The row prints `malformed scan ms: <n>`. This is a walker test, not a live provider test. | `malformed scan ms` is missing or above 2000, the call throws, or the worker passes its wall clock. |
+| T122 | Both providers refuse one answer with a fence, a duplicate key, and a malformed tail. | Any part hides the credential, or a refusal invariant fails. |
+| T123 | Both providers accept the safe answers: a safe fenced array, safe duplicate keys, a safe malformed answer, and escaped Unicode that is not a credential. The raw bytes stay byte-identical. The reported MiniMax model stays unchanged. The PASS verdict stays PASS. The Kimi declared model and `modelSource` stay unchanged. The safe answer still writes its review file and its raw copy. | A safe answer is refused, raw bytes change, a model changes, a verdict changes, or a write is missing. |
+| T124 | The long env pattern name is cut. The thrown error, the MiniMax ledger `error`, and the final CLI error log each end with the task 10 suffix, each stay at 500 characters at most, each hold the first 32 characters of the pattern name, and none holds the value. | The suffix is missing, a message runs past 500 characters, the name prefix is missing, or the value appears. |
+| T125 | One rule builder serves both paths. `secretFindings` and `decodedAnswerFindings` return the same pattern name for the same plain value. The decoded scan finds the escaped form of the same value. A second value stubbed after the first call appears in both results. | The two paths return different names, one path misses a value, or a module-load snapshot keeps an old value. |
+| T126 | The MiniMax decoded-check comment in `src/storytime/book-pictures.ts` holds no `RB3-01` text. It states that the check reads the raw answer and runs before any write. The Kimi comment states the same. This is a documentation test, not live behavior. | A stale label remains, or a comment drops the raw-answer statement or the order statement. |
+| T127 | MiniMax write boundary. For every refused construction of T116 to T120 and T122, the output root holds no review file, no raw copy, and no success log. The ledger holds one before-call and one sanitized failure after-call. A scan of every file under the root finds no credential value. | Any file holds the value, a success entry appears, a review or raw copy exists, or the failure entry is missing. |
+| T128 | Kimi write boundary. For every refused construction of T116 to T120 and T122, the begin ledger and the source raw file stay byte-identical. The output root holds no review and no raw copy. A scan of every file under the root finds no credential value. The Kimi record runs in the worker harness. The begin entry and the byte comparison stay in the test process. | The ledger changes, the source raw file changes, a review or raw copy exists, or a file holds the value. |
+
 Fixtures and mocks:
 
 - Read the real Workbooks packages read-only for T1 and T3. Copy them to a temporary root for
@@ -1061,6 +1301,9 @@ Fixtures and mocks:
   and real HTTP requests. Only T92 starts a real server.
 - Task 9 reuses these provider seams with runtime escapes and temporary roots. It starts no real server or provider.
 - Task 10 reuses those seams. It starts no real server or provider. T111 and T115 call the seam only. T113 and T114 read source or exports.
+- Task 11 reuses those seams and the worker harness. It starts no real server or provider.
+  T121, T124, and T125 call the seam or a rule path only. T126 reads the owned source file.
+  Every new row runs in the worker harness with a test-owned wall clock.
 
 ## 6. Kimi pre-check owner and mechanism
 
@@ -1185,6 +1428,11 @@ Guardrails:
   Both provider paths call it before success or persistence. A named-field list cannot satisfy this guardrail (T96 to T102).
 - From task 10, the walker also checks JSON string layers, root arrays, and scalar array elements (T104 to T108).
   It uses a worklist and builds credential rules once (T109 to T111, T115). It does not export `decodedReviewFindings` (T113).
+- From task 11, the credential check covers every JSON string token of the raw answer at every decoded layer. It does not depend on `JSON.parse` success (T116 to T122).
+- From task 11, the scan is linear per layer and has no per-brace rescan (T121).
+- From task 11, one rule builder serves the raw scan and the decoded scan (T125).
+- From task 11, a long pattern name is cut and the shared suffix stays (T124).
+- From task 11, the MiniMax comment names the current finding and states the order (T126).
 - From task 8, the server reads only the checked real path. Vite keeps its default credential deny
   entries and adds the absolute Storytime entry (T91 to T93).
 - Phase 2 task 5 changes nothing in `src/song/`. The live camera reads use the existing hook
@@ -1241,6 +1489,11 @@ Changed-contract risks:
   The Kimi check moves before schema parsing. Flags, exit codes, and evidence shapes stay unchanged.
   RC5-3 stays open. Do not treat the raw-byte refusal text as changed.
   A 65,536-byte time bound does not add a MiniMax size limit.
+- Task 11: the credential check now reads text that no JSON parser accepts. A safe malformed answer keeps its earlier parser result (T123).
+- Task 11: a refusal message cuts a long pattern name. The name stays a prefix of the earlier name. A reader must not parse the full name.
+- Task 11: the decoded check no longer depends on `JSON.parse`. A safe answer that no parser accepts still produces the earlier review result.
+- Task 11: the layer count of the decoded scan has no limit. A text with many nested quoting levels costs one pass per layer.
+  No row covers that cost yet. The acceptance role measures it and opens a follow-up task when the cost passes the task bound.
 
 ## 9. Anti-pattern coverage
 
@@ -1280,6 +1533,20 @@ Changed-contract risks:
 | A7 over-broad filter (task 10) | P2 | Decode JSON strings without refusing safe Unicode or safe arrays (T112). Do not change safe raw bytes. | Every string layer is refused, or a safe byte changes. |
 | A9 archived track paths (task 10) | P2 | T114 reads `src/storytime/book-pictures.ts` only. Tests still reference no `measure/tracks/` path. | A unit test gains a track path dependency. |
 | A10 generated-facts drift (task 10) | P2 | Refresh metadata and generated facts at phase closeout, after the task 10 status change. | Managed facts disagree with the completed plan. |
+| A3 digit-only count (task 11) | P2 | Parse `malformed scan ms` as a labeled integer. Parse the vitest total and the compiler counts the same way. Require the committed test count and zero owned errors. | A date, an arbitrary digit, or a missing label satisfies the time bound. |
+| A4 vacuous pass (task 11) | P2 | Pair every refusal row with the safe controls of T123. T127 and T128 read every file under the output root. T121 must print a labeled duration and must call the seam. | An empty finding list, a skipped scan, a refused safe answer, or a scan of zero files passes. |
+| A5 false claim (task 11) | P2 | Quote the Red failures and the mutation results. Do not claim RB5-01 closed before the reviews and the adversarial gate pass. | The plan claims closure while a named test or a review fails. |
+| A6 registry overstatement (task 11) | P2 | Keep the security completion claim pending until Reviews A, B, and C and the adversarial gate pass. | A completion claim precedes those results. |
+| A7 over-broad filter (task 11) | P2 | The safe controls of T123 keep the raw bytes, the reported model, the PASS verdict, and the write order. The token scan must not refuse a safe answer. | A safe answer is refused, a safe byte changes, a verdict changes, or a write is missing. |
+| A9 archived track paths (task 11) | P2 | T126 reads `src/storytime/book-pictures.ts` only. Tests still reference no `measure/tracks/` path. | A unit test gains a track path dependency. |
+| A10 generated-facts drift (task 11) | P2 | Refresh metadata and generated facts at phase closeout, after the task 11 status change. | Managed facts disagree with the completed plan. |
+
+Task 11 applicability: A1 and A8 remain retired. A2 does not apply to this delta. It adds no publication or consent transition.
+Earlier release and person-review guards stay unchanged. Task 11 does not convert a model pre-check into acceptance.
+The task 11 defense per anti-pattern class: A3 uses a labeled integer parse of `malformed scan ms`.
+A4 uses safe controls and a tree-wide file scan. A5 uses quoted gate results.
+A6 keeps the closure claim pending. A7 uses the safe controls of T123.
+A9 keeps the source read inside the owned path. A10 refreshes the generated facts at closeout.
 
 Task 10 applicability: A1 and A8 remain retired. A2 does not apply to this delta. It adds no publication or consent transition.
 Earlier release and person-review guards stay unchanged. Task 10 does not convert a model pre-check into acceptance.
@@ -1311,6 +1578,13 @@ Task 9 requires adversarial testing but no browser review or new smoke run.
 Task 10 requires Reviews A, B, and C on its final HEAD. Security review applies to the decoded credential paths.
 UX/API review applies to the refusal result, the export removal, and the Kimi call order. A short delta check is sufficient.
 Adversarial testing applies. Use the task 10 mutations. Browser review does not apply. This task changes no UI.
+
+Task 11 requires Reviews A, B, and C on its final HEAD. Security review applies to every decoded
+credential path and to both write boundaries.
+UX/API review applies to the refusal text, the 500-character cut, the shared rule builder, and the
+comment label. A short delta check is sufficient.
+Adversarial testing applies. Use the task 11 mutations. Browser review does not apply. This task
+changes no UI.
 
 Review result format: the orchestrator gate reads `blocking_findings` and `nonblocking_findings` as
 arrays of non-empty strings. Each string starts with the finding ID, the severity, and the
@@ -1347,6 +1621,9 @@ Evidence classes:
 - Task 10 retains these rules. A red T104 to T115 result after Green blocks the phase.
   Do not suppress a task 10 failure with a test filter, skip, or baseline exception.
   Baseline tsc errors outside the owned paths stay known failures. They do not block the focused gate.
+- Task 11 retains these rules. A red T116 to T128 result after Green blocks the phase.
+  Do not suppress a task 11 failure with a test filter, skip, or baseline exception.
+  The aggregate suite stays outside the focused command and stays a recorded known failure.
 
 ## 12. phase_base_sha capture point
 
@@ -1379,4 +1656,9 @@ Evidence classes:
     Record that committed value as the immutable task 10 Red base. Do not use `53cc3ada` or any earlier SHA as this base.
     The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
     If the orchestrator opens a separate phase run for task 10, capture that `phase_base_sha` immediately after this strategy commit.
+    Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.
+11. The token-layer strategy commit lands before task 11 Red starts. Immediately afterward, the orchestrator runs `git rev-parse HEAD`.
+    Record that committed value as the immutable task 11 Red base. Do not use `3f604b62` or any earlier SHA as this base.
+    The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
+    If the orchestrator opens a separate phase run for task 11, capture that `phase_base_sha` immediately after this strategy commit.
     Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.

@@ -640,6 +640,71 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   - No paid call, no render, no Vite server, no browser. No test file changed. Run logs
     under `measure/runs/` stay uncommitted.
 
+- [ ] Task: Check every JSON string token of the provider answer before any evidence write. Risk class: high.
+  Task 11 closes RB5-01, RB5-02, RB5-03, and RB5-04 from the reviews at `3f604b62`.
+  It also closes RA6-03, RC6-1, and RC6-2 when the change stays in the same file and function.
+  Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 11, and T116 to T128.
+  Daniel must pick design A, design B, or design C. Design B is the default until he answers.
+  The last note of this task gives the change for design A.
+  One shared scan reads the raw answer text. It does not depend on `JSON.parse` success.
+  The scan covers every JSON string token of the text, at every decoded layer. It also scans the text itself.
+  A JSON string token is a maximal run of characters between two unescaped double quotes.
+  Its decoded form resolves the JSON escape sequences. Each decoded form is a text of the next layer.
+  The scan needs no valid JSON. A malformed, truncated, or duplicated text yields the same tokens as a valid text.
+  The scan is linear in the text length per layer. No path restarts a scan at an opening brace.
+  The scan uses no call-stack recursion and no depth ceiling.
+  One rule builder serves the raw scan and the decoded scan. Both read the environment at call time.
+  A long pattern name is cut. The shared suffix stays. The message stays at 500 characters at most.
+  The MiniMax comment names the current finding. It must not keep the stale `RB3-01` label.
+  `JSON.parse` stays for the review schema only. It never gates the credential check.
+  The task 10 refusal suffix stays byte-identical. The task 9 raw-byte refusal text stays unchanged.
+  MiniMax calls the scan inside the paid callback, before the success entry.
+  Kimi calls the scan before `parseModelReview` and before any record write.
+  Both providers refuse before a raw copy, a review write, or a result log.
+  A MiniMax refusal appends only its sanitized failure entry. A Kimi refusal leaves the begin ledger and the source raw file unchanged.
+  Pass T116 to T128 and every earlier test. Keep T1 to T115 unchanged.
+  Cover every Review B source case for both providers. Cover the mixed row, the malformed time row, and the long-name row.
+  Every hostile row runs in a worker thread with a test-owned wall-clock limit.
+  Use `ENGINE_HOOK_TEST_COMMAND` for Red, Green, adversarial testing, and closeout.
+  Run `TASK11_TYPECHECK_COMMAND` after Green and at closeout.
+  Run each declared mutation separately. Each mutation omits one path and fails one named test.
+  No new live smoke run is necessary. This task changes no server, capture code, renderer, or browser path.
+  Make no paid call and run no render. Keep `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` unchanged.
+  The table default for Red is `volcengine-agent-plan/deepseek-v4-pro#high`. The orchestrator picks the Red route with `ra-quota`.
+  Reviews A, B, and C run again on the task 11 HEAD. Review C may use a short delta check.
+  Security review, UX/API review, and adversarial testing apply. Browser review does not apply because this task changes no UI.
+  Mutations 9 and 17 stay with adversarial testing. The new time row may close mutation 9 as a side effect.
+  Capture the task 11 Red base immediately after this strategy commit. Run `git rev-parse HEAD` before any Red edit.
+  Keep the Phase 2 baseline `1d39b8fd` unchanged. Do not use `3f604b62` as the Red base.
+  Red gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`.
+  Green gate command: the same command.
+  Mutation command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Type check command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Red expectation: exit `1`; the hostile rows fail; the 125 earlier tests pass.
+  Green expectation: exit `0`; `Tests  <N> passed (<N>)`; no skip.
+  Type check expectation: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  Mutation list, with the one named test that must fail:
+    1. Read only the parsed root value. Remove the lexical token pass. (T116)
+    2. Read only the first top-level document of the text. (T117)
+    3. Build the candidate set from `JSON.parse`, so an earlier duplicate value and key are lost. (T118)
+    4. Check string values only. Skip object keys. (T119)
+    5. Run the credential scan only when `JSON.parse` succeeds. (T120)
+    6. Keep a rescan from every unmatched opening brace. (T121)
+    7. Do not cut a long pattern name. (T124)
+    8. Give the decoded path its own rule list from a module-load snapshot. (T125)
+    9. Restore the stale `RB3-01` label in the MiniMax comment. (T126)
+    10. Refuse every fenced or array answer, including a safe one. (T123)
+    11. Run the MiniMax scan after the paid callback returns. (T127)
+    12. Run the Kimi scan after the first record write. (T128)
+  Each mutation changes one path. Green records every other failing test.
+  Open risk: the cost of many nested string layers. No row covers it yet.
+  The acceptance role measures that cost and opens a follow-up task when the cost passes the task bound.
+  Note for design A: design A accepts one strict JSON object, refuses duplicate keys, and refuses every other answer with no raw copy.
+  Under design A, T116 to T120 keep their constructions, but the expected result changes from a credential refusal to a contract refusal.
+  The shared suffix changes. The raw copy ban becomes universal. A duplicate-key rule needs a parser that keeps every key.
+  T121 keeps its time bound. T123 keeps one safe row for a strict single-object answer. T124 to T128 stay unchanged.
+  The amendment is one row-set replacement and one contract amendment.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write
