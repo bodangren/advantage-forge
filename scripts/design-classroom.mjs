@@ -31,10 +31,12 @@ for (const z of [-3, -1, 1, 3, 5]) {
   put('plaster-wall', 6, z, { yaw: -90, y: 3.0 });
 }
 
-// Back wall: bookshelves in the corners, a window between
+// Back wall: bookshelves in the corners, a full bookcase between the windows.
+// The bookcase spans z -0.215..0.235 around its origin, so z -3.68 puts its back
+// panel at z -3.895, the same depth as the corner bookshelves.
 put('bookshelf', -5.1, -3.72);
 put('bookshelf', 5.1, -3.72);
-put('shelf', -1.2, -3.9, { y: 0.0 });
+put('bookcase', -1.2, -3.68);
 put('basket', 1.3, -3.6, { scale: 0.9 });
 put('crate', 0.6, -3.65, { scale: 0.9 });
 

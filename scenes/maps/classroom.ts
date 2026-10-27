@@ -88,7 +88,7 @@ export function places(): Place[] {
   { asset: 'plaster-wall', at: [6, 3, 5], yaw: -90 },
   { asset: 'bookshelf', at: [-5.1, 0, -3.72] },
   { asset: 'bookshelf', at: [5.1, 0, -3.72] },
-  { asset: 'shelf', at: [-1.2, 0, -3.9] },
+  { asset: 'bookcase', at: [-1.2, 0, -3.68] },
   { asset: 'basket', at: [1.3, 0, -3.6], scale: 0.9 },
   { asset: 'crate', at: [0.6, 0, -3.65], scale: 0.9 },
   { asset: 'table', at: [-4.6, 0, -1.2], scale: 1.3 },
