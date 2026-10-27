@@ -3,6 +3,7 @@ import type { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { copyFile, lstat, mkdir, mkdtemp, readdir, readFile, readlink, rm, stat, symlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { Worker } from 'node:worker_threads';
 import sharp from 'sharp';
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { GESTURES } from '../src/song/timeline.js';
@@ -2178,6 +2179,370 @@ describe('Decoded answer security remediation', () => {
     // Both providers end with the same suffix. The prefix before it stays free.
     expect.soft(messages[0]?.slice(-suffix.length)).toBe(messages[1]?.slice(-suffix.length));
   }, 120000);
+
+  describe('Decoded layer remediation', () => {
+    // The credential is built at runtime. No fixture file holds a decoded credential.
+    function reviewBSecret(): string { return `sk-${'SYNTHETIC'.repeat(4)}`; }
+    function reviewBSafe() {
+      return { verdict: 'PASS', reason: 'The subject is visible.', observedCounts: { subject: 1 }, issues: [] };
+    }
+    /** The JSON text of a value. The credential keeps its Unicode escapes inside the text. */
+    function reviewBText(value: unknown, credential: string): string {
+      return JSON.stringify(value).replaceAll(credential, unicodeEscaped(credential));
+    }
+    /** A nested JSON text of a known depth. The leaf is a JSON value text. */
+    function deepJson(depth: number, leaf: string): string {
+      return `${'{"a":'.repeat(depth)}${leaf}${'}'.repeat(depth)}`;
+    }
+    /** A nested JSON text of a known depth and a known byte size. */
+    function paddedDeepJson(depth: number, totalBytes: number): string {
+      const open = '{"a":'.repeat(depth);
+      const close = '}'.repeat(depth);
+      return `${open}"${'x'.repeat(totalBytes - open.length - close.length - 2)}"${close}`;
+    }
+    /** The source text of one exported function. The region ends at the next export. */
+    function functionRegion(source: string, name: string): string {
+      const start = source.indexOf(`export async function ${name}`);
+      expect(start, `The ${name} function exists.`).toBeGreaterThan(-1);
+      const next = source.indexOf('\nexport ', start + 1);
+      return next === -1 ? source.slice(start) : source.slice(start, next);
+    }
+    /** The comment lines that stand directly above a line of a source region. */
+    function commentAbove(region: string, needle: string): string {
+      const lines = region.split('\n');
+      const index = lines.findIndex((line) => line.includes(needle));
+      expect(index, `The ${needle} call exists.`).toBeGreaterThan(-1);
+      const comment: string[] = [];
+      for (let at = index - 1; at >= 0 && lines[at]!.trim().startsWith('//'); at -= 1) {
+        comment.unshift(lines[at]!);
+      }
+      return comment.join(' ');
+    }
+
+    // The hostile scans run in a worker thread. The current walker blocks the event loop,
+    // and a long scan would then run past the test limit without any report.
+    const HOSTILE_WORKER = `
+import { parentPort, workerData } from 'node:worker_threads';
+import { readFileSync } from 'node:fs';
+
+const report = { ok: false, ms: 0, findings: [], status: null, error: null };
+const started = Date.now();
+try {
+  const book = await import(workerData.modulePath);
+  if (workerData.mode === 'seam') {
+    report.findings = book.decodedAnswerFindings(readFileSync(workerData.rawFile, 'utf8'));
+    report.ok = true;
+  } else {
+    const raw = readFileSync(workerData.rawFile, 'utf8');
+    const shared = {
+      outputRoot: workerData.outputRoot, repoRoot: workerData.repoRoot, jobs: workerData.jobs,
+      workbooksRoot: workerData.workbooksRoot, jobId: workerData.jobId, version: workerData.version,
+      paid: true, dryRun: false,
+    };
+    if (workerData.mode === 'minimax') {
+      const runner = async () => ({ stdout: raw, stderr: '' });
+      const result = await book.precheckMiniMax({ ...shared, runner });
+      report.status = result.status;
+    } else {
+      const log = () => {};
+      const result = await book.precheckKimi({ ...shared, begin: false, record: workerData.callId, raw: workerData.rawFile, log });
+      report.status = result.status;
+    }
+    report.ok = true;
+  }
+} catch (error) {
+  report.ok = false;
+  report.error = { name: error && error.name ? error.name : '', message: error && error.message ? error.message : '' };
+}
+report.ms = Date.now() - started;
+parentPort.postMessage(report);
+`;
+    const HOSTILE_MODULE = path.resolve(import.meta.dirname, '../src/storytime/book-pictures.ts');
+    const HOSTILE_LIMIT_MS = 20000;
+    const PROVIDER_LIMIT_MS = 30000;
+    type HostileReport = {
+      ok: boolean; ms: number; findings: string[]; status: string | null;
+      error: { name: string; message: string } | null;
+    };
+    /** Runs one hostile scan in a worker. The test owns the wall-clock limit. */
+    async function runHostile(workerData: Record<string, unknown>, limitMs: number) {
+      vi.useRealTimers();
+      const directory = await mkdtemp(path.join(root, 'hostile-'));
+      const scriptFile = path.join(directory, 'hostile.mjs');
+      await put(scriptFile, HOSTILE_WORKER);
+      const started = performance.now();
+      const worker = new Worker(scriptFile, {
+        execArgv: ['--import', 'tsx'],
+        // The worker stack matches the test process stack. A larger worker stack lets the
+        // current recursive walker pass depth 4000 and run for minutes.
+        resourceLimits: { stackSizeMb: 1 },
+        workerData: { ...workerData, modulePath: HOSTILE_MODULE },
+      });
+      let timedOut = false;
+      const timer = setTimeout(() => { timedOut = true; void worker.terminate(); }, limitMs);
+      let report: HostileReport | undefined;
+      try {
+        report = await new Promise<HostileReport | undefined>((resolve) => {
+          worker.on('message', (message) => { resolve(message as HostileReport); });
+          worker.on('error', () => { resolve(undefined); });
+          worker.on('exit', () => { resolve(undefined); });
+        });
+      } finally {
+        clearTimeout(timer);
+        await worker.terminate();
+      }
+      return { report, elapsed: Math.round(performance.now() - started), timedOut };
+    }
+    /** A provider workspace with the candidate, the raw answer, and the Kimi begin entry. */
+    async function providerWorkspace(provider: Provider, raw: string) {
+      const space = await sandbox();
+      await planned(space.repoRoot, space.outputRoot);
+      await put(path.join(space.outputRoot, candidateRelativePath(job(), 1)), storyPng);
+      const rawFile = path.join(space.repoRoot, 'input/answer.txt');
+      await put(rawFile, raw);
+      let callId = '';
+      if (provider === 'kimi') {
+        const deps = { repoRoot: space.repoRoot, log: vi.fn(), now: CLOCK };
+        await runStorytimeCli(['precheck-kimi', '--out', space.outputRoot, '--paid',
+          '--job', job().id, '--version', '1', '--begin'], deps);
+        callId = String((await securityLedger(space.outputRoot))[0]!.callId);
+      }
+      const before = await fileSnapshot(space.outputRoot);
+      return { space, rawFile, callId, before };
+    }
+
+    it('T104: both providers refuse Review B case 1 with an extra string layer', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const hidden = reviewBText({ value: credential }, credential);
+      const raw = JSON.stringify({ ...reviewBSafe(), unknown: JSON.stringify(hidden) });
+      await refuseBoth(raw, values, 'Review B case 1');
+    }, 120000);
+
+    it('T105: both providers refuse three string layers', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const hidden = reviewBText({ value: credential }, credential);
+      const raw = JSON.stringify({ ...reviewBSafe(), unknown: JSON.stringify(JSON.stringify(hidden)) });
+      await refuseBoth(raw, values, 'Review B case 1 with a second string layer');
+    }, 120000);
+
+    it('T106: both providers refuse Review B case 3 with a root array', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const raw = JSON.stringify([reviewBSafe(), credential]).replaceAll(credential, unicodeEscaped(credential));
+      await refuseBoth(raw, values, 'Review B case 3');
+    }, 120000);
+
+    it('T107: both providers refuse Review B case 2 with a scalar array element', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const raw = JSON.stringify({
+        ...reviewBSafe(), unknown: JSON.stringify([credential, {}]).replaceAll(credential, unicodeEscaped(credential)),
+      });
+      await refuseBoth(raw, values, 'Review B case 2');
+    }, 120000);
+
+    it('T108: both providers refuse a nonzero-status envelope with a string-layer array', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const arrayText = JSON.stringify([credential, {}]).replaceAll(credential, unicodeEscaped(credential));
+      const raw = envelope(JSON.stringify(arrayText), 1000);
+      await refuseBoth(raw, values, 'nonzero status with a string-layer array');
+    }, 120000);
+
+    it('T109: both providers refuse an escaped credential at object depth 4000 without a RangeError', async () => {
+      const credential = reviewBSecret();
+      const values = [credential];
+      const raw = deepJson(4000, `"${unicodeEscaped(credential)}"`);
+      for (const provider of providers) {
+        const space = await providerWorkspace(provider, raw);
+        const context = `deep credential/${provider}`;
+        const run = await runHostile({
+          mode: provider, outputRoot: space.space.outputRoot, repoRoot: space.space.repoRoot,
+          jobs, workbooksRoot: WORKBOOKS, jobId: job().id, version: 1,
+          rawFile: space.rawFile, callId: space.callId,
+        }, PROVIDER_LIMIT_MS);
+        // The message and the flags carry every check. An error object never reaches an assertion.
+        const message = run.report?.error?.message ?? '';
+        expect.soft(run.timedOut, `${context}: the call must finish within ${PROVIDER_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.error?.name ?? '', `${context}: the refusal is not a RangeError.`)
+          .not.toBe('RangeError');
+        expect.soft(message, `${context}: the error names only the pattern.`).toMatch(/api-key-prefix/);
+        expect.soft(message.endsWith(suffix), `${context}: the message has the task 9 suffix.`).toBe(true);
+        expect.soft(message, `${context}: the message names no stack overflow.`)
+          .not.toMatch(/Maximum call stack size exceeded/);
+        const entries = await securityLedger(space.space.outputRoot);
+        expect.soft(entries.filter((entry) => entry.status === 'success'), `${context}: no success entry.`)
+          .toEqual([]);
+        const files = await tree(space.space.outputRoot);
+        expect.soft(files.filter((file) => /^(raw|reviews)\//.test(path.relative(space.space.outputRoot, file))),
+          `${context}: no review or raw copy exists.`).toEqual([]);
+        if (provider === 'kimi') {
+          expect.soft(await fileSnapshot(space.space.outputRoot), `${context}: every output stays byte-identical.`)
+            .toEqual(space.before);
+          expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+            .toEqual(Buffer.from(raw));
+        }
+        await assertNoSyntheticValues([space.space.outputRoot], values);
+      }
+    }, 120000);
+
+    it('T110: a safe object at depth 4000 keeps the parser result and the raw bytes', async () => {
+      const raw = JSON.stringify({ ...reviewBSafe(), unknown: deepJson(4000, '"safe text"') });
+      const expected = parseModelReview(raw);
+      for (const provider of providers) {
+        const space = await providerWorkspace(provider, raw);
+        const context = `safe deep answer/${provider}`;
+        const run = await runHostile({
+          mode: provider, outputRoot: space.space.outputRoot, repoRoot: space.space.repoRoot,
+          jobs, workbooksRoot: WORKBOOKS, jobId: job().id, version: 1,
+          rawFile: space.rawFile, callId: space.callId,
+        }, PROVIDER_LIMIT_MS);
+        expect.soft(run.timedOut, `${context}: the call must finish within ${PROVIDER_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.error ?? null, `${context}: the safe deep answer is accepted.`).toBeNull();
+        expect.soft(run.report?.error?.name ?? '', `${context}: the call raises no RangeError.`)
+          .not.toBe('RangeError');
+        const reviewFile = path.join(space.space.outputRoot, `reviews/${job().id}-v1-${provider}.json`);
+        expect.soft(existsSync(reviewFile), `${context}: the review file exists.`).toBe(true);
+        if (!existsSync(reviewFile)) continue;
+        const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+        expect.soft(review, `${context}: the parser result is unchanged.`).toMatchObject(expected);
+        expect.soft(review.model, `${context}: the declared model survives.`)
+          .toBe(provider === 'minimax' ? pictureSeams.MINIMAX_VISION_MODEL : pictureSeams.KIMI_REVIEW_MODEL);
+        expect.soft(review.modelSource, `${context}: the model source is declared.`).toBe('declared');
+        expect.soft(Buffer.from(review.rawOutput), `${context}: the review raw bytes stay identical.`)
+          .toEqual(Buffer.from(raw));
+        expect.soft(await readFile(path.join(space.space.outputRoot, review.rawFile)),
+          `${context}: the raw copy stays identical.`).toEqual(Buffer.from(raw));
+        expect.soft(await readFile(space.rawFile), `${context}: the source raw file stays byte-identical.`)
+          .toEqual(Buffer.from(raw));
+      }
+    }, 120000);
+
+    it('T111: the seam scans a 65,536-byte answer at depth 400 within 2000 ms', async () => {
+      const raw = paddedDeepJson(400, 65536);
+      expect.soft(Buffer.byteLength(raw, 'utf8'), 'The answer has 65,536 bytes.').toBe(65536);
+      const directory = await mkdtemp(path.join(root, 'hostile-'));
+      const rawFile = path.join(directory, 'answer.json');
+      await put(rawFile, raw);
+      const run = await runHostile({ mode: 'seam', rawFile }, HOSTILE_LIMIT_MS);
+      const measured = run.report?.ms ?? run.elapsed;
+      console.log(`decoded scan ms: ${measured}`);
+      expect.soft(run.timedOut, `decoded scan ms: ${run.elapsed} exceeds the test limit ${HOSTILE_LIMIT_MS} ms.`)
+        .toBe(false);
+      expect.soft(run.report?.findings ?? [], 'A safe deep answer holds no finding.').toEqual([]);
+      expect.soft(measured, `decoded scan ms: ${measured}`).toBeLessThanOrEqual(2000);
+    }, 120000);
+
+    it('T112: both providers accept safe string layers, a safe root array, and safe encoded arrays', async () => {
+      const values = syntheticCredentials();
+      const safeModel = 'SYNTHETIC-safe-reported-model';
+      const controls = [
+        {
+          label: 'safe string layer',
+          raw: JSON.stringify({ ...reviewBSafe(), model: safeModel, unknown: JSON.stringify(JSON.stringify({ note: 'safe text' })) }),
+          model: safeModel, source: 'reported',
+        },
+        {
+          label: 'safe root array',
+          raw: JSON.stringify([{ ...reviewBSafe(), model: safeModel }]),
+          model: pictureSeams.MINIMAX_VISION_MODEL, source: 'declared',
+        },
+        {
+          label: 'safe encoded array',
+          raw: JSON.stringify({ ...reviewBSafe(), model: safeModel, unknown: JSON.stringify([{ note: 'safe text' }, 'safe text']) }),
+          model: safeModel, source: 'reported',
+        },
+        {
+          label: 'escaped Unicode',
+          raw: JSON.stringify({ ...reviewBSafe(), model: safeModel, note: unicodeEscaped('หนา') }),
+          model: safeModel, source: 'reported',
+        },
+      ];
+      for (const control of controls) for (const provider of providers) {
+        const run = await providerRun(provider, control.raw);
+        const context = `${control.label}/${provider}`;
+        expect.soft(run.error, `${context}: the safe answer is accepted.`).toBeUndefined();
+        expect.soft(run.code, `${context}: the parser verdict determines the exit.`)
+          .toBe(parseModelReview(control.raw).verdict === 'pass' ? 0 : 2);
+        const reviewFile = path.join(run.outputRoot, `reviews/${job().id}-v1-${provider}.json`);
+        expect.soft(existsSync(reviewFile), `${context}: the review file exists.`).toBe(true);
+        if (!existsSync(reviewFile)) continue;
+        const review = JSON.parse(await readFile(reviewFile, 'utf8'));
+        expect.soft(review, `${context}: decoded fields retain parser behavior.`)
+          .toMatchObject(parseModelReview(control.raw));
+        expect.soft(review.model, `${context}: the model stays unchanged.`)
+          .toBe(provider === 'minimax' ? control.model : pictureSeams.KIMI_REVIEW_MODEL);
+        expect.soft(review.modelSource, `${context}: the model source stays unchanged.`)
+          .toBe(provider === 'minimax' ? control.source : 'declared');
+        expect.soft(Buffer.from(review.rawOutput), `${context}: the review raw bytes stay identical.`)
+          .toEqual(Buffer.from(control.raw));
+        expect.soft(await readFile(path.join(run.outputRoot, review.rawFile)), `${context}: the raw copy stays identical.`)
+          .toEqual(Buffer.from(control.raw));
+        if (run.input) expect.soft(await readFile(run.input), `${context}: the source raw file stays identical.`)
+          .toEqual(Buffer.from(control.raw));
+        await assertNoSyntheticValues([run.outputRoot], values);
+      }
+    }, 120000);
+
+    it('T113: the decodedReviewFindings export is gone', () => {
+      expect(Object.keys(pictureSeams), 'decodedReviewFindings is not exported.').not.toContain('decodedReviewFindings');
+      expect('decodedReviewFindings' in pictureSeams, 'decodedReviewFindings is not a module member.').toBe(false);
+    });
+
+    it('T114: the decoded check runs before parseModelReview and the Kimi comment matches', () => {
+      const source = readFileSync(path.resolve(import.meta.dirname, '../src/storytime/book-pictures.ts'), 'utf8');
+      for (const name of ['precheckMiniMax', 'precheckKimi']) {
+        const region = functionRegion(source, name);
+        const check = region.indexOf('decodedAnswerFindings(');
+        const parse = region.indexOf('parseModelReview(');
+        expect(check, `${name}: the decoded check exists.`).toBeGreaterThan(-1);
+        expect(parse, `${name}: the schema parse exists.`).toBeGreaterThan(-1);
+        expect(check, `${name}: the decoded check runs before the schema parse.`).toBeLessThan(parse);
+      }
+      const comment = commentAbove(functionRegion(source, 'precheckKimi'), 'decodedAnswerFindings(');
+      expect(comment.length, 'The Kimi decoded check has a comment.').toBeGreaterThan(0);
+      expect(comment, 'The Kimi comment states that the check reads the raw answer.')
+        .toMatch(/raw\s+(answer|output|bytes|text|response|provider)/i);
+    });
+
+    it('T115: the seam scans a wide answer with 1200 injected secrets within 2000 ms', async () => {
+      const names: string[] = [];
+      const values: string[] = [];
+      try {
+        for (let index = 0; index < 1200; index += 1) {
+          const name = `TASK10_SECRET_${index}_KEY`;
+          const value = `sek${index.toString(16).padStart(8, '0')}SYNTHETICVALUE`;
+          process.env[name] = value;
+          names.push(name);
+          values.push(value);
+        }
+        const entries = names.map((name, index) => `"${name}":"${values[index]}"`);
+        const entriesText = entries.join(',');
+        const pad = 65536 - `{${entriesText},"pad":""}`.length;
+        const raw = `{${entriesText},"pad":"${'x'.repeat(pad)}"}`;
+        expect.soft(Buffer.byteLength(raw, 'utf8'), 'The answer has 65,536 bytes.').toBe(65536);
+        const directory = await mkdtemp(path.join(root, 'hostile-'));
+        const rawFile = path.join(directory, 'answer.json');
+        await put(rawFile, raw);
+        const run = await runHostile({ mode: 'seam', rawFile }, HOSTILE_LIMIT_MS);
+        const measured = run.report?.ms ?? run.elapsed;
+        console.log(`rule scan ms: ${measured}`);
+        expect.soft(run.timedOut, `rule scan ms: ${run.elapsed} exceeds the test limit ${HOSTILE_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(new Set(run.report?.findings ?? []).size, 'Every injected secret yields one rule name.')
+          .toBe(1200);
+        expect.soft(measured, `rule scan ms: ${measured}`).toBeLessThanOrEqual(2000);
+      } finally {
+        for (const name of names) delete process.env[name];
+      }
+      expect(Object.keys(process.env).filter((name) => name.startsWith('TASK10_SECRET_')),
+        'The injected env names are gone.').toEqual([]);
+    }, 120000);
+  });
 });
 
 describe('Model review parser regressions', () => {
