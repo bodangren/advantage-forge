@@ -23,6 +23,7 @@ Keep this working memory within 50 lines. Evidence links retain the detailed his
 - The browser QC at 1280 × 720 passed all 28 games, but the phone QC (390 × 844 and 844 × 390, touch) found covered labels, gate words off screen, and unreadable tiles. Run `qc/run.mjs --phone` and `--phone-landscape` before a game layout counts as checked.
 - The answer audio controller notifies its listeners inside its own calls. A gate view that played a clip from a listener started nested plays, and each play cancelled the one before it. Unit tests passed, but the browser QC run gave more than 200 attempts per question, and the mount dropped the result. Deliver controller changes to a view in a microtask, and test a listener that plays.
 - The forge tint mask is an image that no material uses. In the avatar pack, lossless WebP (no `exact`), a full `prune()`, and a lookup in `textures` each lost it. Keep it PNG, prune only nodes and meshes, read it from `images`, and check the packed GLB.
+- Synchronous CPU work blocks the event loop, so the vitest test timeout cannot stop it. A recursive credential scan on a hostile deep answer held one CPU for 27 minutes inside a single test while its 120000 ms limit never fired. Move hostile scans into a worker thread with a test-owned wall clock, or keep the scan loop-free of call-stack recursion (found 2026-10-27).
 
 ## Effective practices
 
