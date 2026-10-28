@@ -954,6 +954,50 @@ verified picture list v3 hashes, the specification v1 sizes, the Red and Green s
 machine limits, the shared-asset check, the task gates, the review applicability, the new test
 rows T142 to T151, and the closeout gate for 30 jobs.
 
+- [~] Task: Pin picture specification v1 and list v3 in the pipeline (T142 to T151). Red test commit `6c55fac1`.
+  The Nan sample at 4000 x 3000 pixels needs this change first.
+  Evidence: `6c55fac1`; exit code `1`; `Tests  10 failed | 124 passed (134)`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  The ten new rows fail and the 124 earlier rows pass. The failing rows and their reasons:
+  - T142: the pipeline has no picture list loader. The loader must read `pictures.json`
+    read-only, give 192 rows, give 30 week 1 rows (16 of class A, 2 of class B, 12 of class C),
+    and record the SHA-256 of the list file.
+  - T143: the sizes are the specification v0 sizes, 3000 x 2250 for class A and 3600 x 2700 for
+    class B. Specification v1 gives 4000 x 3000 for class A and class B, and 1500 x 1500 for
+    class C.
+  - T144: the line-art file name is the specification v0 name `lineart/<name>-lineart.png`.
+    Specification v1 gives `<color name>-line-v1.png` beside the color file.
+  - T145: the pipeline has no cover, check-row, or practice-line rows, and it gives a line-art
+    twin to reader pages only. Every row of the list needs a color file and a line-art file.
+  - T146: the line-art check has no 12 px line rule. A 6 px line and an 11 px line pass today,
+    and the check prints no measured width.
+  - T147: the pipeline has no list loader, so no run reads the list yet. The SHA-256 of
+    `pictures.json` and of `pictures.md` must stay the same before and after a run.
+  - T148: the pipeline has no list loader. It refuses neither a broken file name nor a changed
+    list file.
+  - T149: the pipeline checks no list row. A class B row runs the calm top 30 percent check and
+    a class C row runs the white-corner check.
+  - T150: the pipeline has no week 1 selection of 30 rows, so the color batch hash and the
+    line-art batch hash are one hash.
+  - T151: the render command prints no `render peak rss mb: <n>` label. The number must come
+    from the capture process.
+  Type check: `tsc exit: 2`; owned test errors: `0`; total compiler errors: `31`.
+  Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Compiler output: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-tsc.log`.
+  One type-only fix: the first type check found one owned error, `TS2339` on the `readStage`
+  property of the CLI dependency type. The fix wraps that type in `NonNullable`. No assertion and
+  no falsification condition changed. No vitest run followed the fix.
+  Deviation: the quota tool routed Red to `minimax-cn-coding-plan/MiniMax-M3#high`. The role
+  table names `openai/gpt-6.1-sol#high`. Green runs on another family, so Red and Green stay
+  apart.
+  Two vitest runs ran through `heavy-run.sh`. The first run found broken assertion receivers in
+  the new rows. The second run is the evidence. The first run changed no assertion of the earlier
+  rows.
+  `phase_base_sha`: `15a7bf0b2a59b8137a05805666df6736dc256167`. The Red work started at
+  `3419926fd2c54df1aa03234bba561dfe6fc5196e`, the commit of the other track
+  `asset_filled_shelves_20261028`.
+  No file under `src/`, `scripts/`, or `contract.md` changed. The test file is the only Red file.
+
 - [ ] Task: Render the Nan window sample in color and line art. First write
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
   In v2, Nan faces the camera (yaw from -30 to 30 degrees), and the window is beside or behind her.
