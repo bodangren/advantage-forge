@@ -113,7 +113,7 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
 - The full strategy, the test rows F1 to F11, the mutations M1 to M5, and the review gates live in
   [test-strategy.md](./test-strategy.md).
 
-- [ ] Task: Write the failing shelf check (Red).
+- [~] Task: Write the failing shelf check (Red). Test commit `e4e94d76`.
   Owned path: `tests/games/filled-shelves.test.ts` (new file).
   The test lists every `shelf` placement in `scenes/maps/*.ts` and in the five game views with its
   item count. It uses the audit rule: an item stands on a case when its x and z fall inside the
@@ -125,6 +125,46 @@ with a `timeout -k 30` inside and vitest with `--maxWorkers=1`.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'node_modules/.bin/vitest run
   tests/games/filled-shelves.test.ts --maxWorkers=1'`.
   Commit the test alone, by its explicit path. Do not fix any shelf in this task.
+
+  Red evidence (measure-mid-red, 2026-10-28):
+
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'`.
+    Result: exit 1. Summary: `Tests 6 failed | 2 passed (8)`.
+  - F1 (map empty shelves): 7 empties. Bathhouse 4 (rows 91-94) and warehouse 3 (rows 141, 142, 145).
+  - F2 (view empty shelves): 18 empties. Enchanted-library 8 (rows 85-92), haunted-library 8
+    (rows 9-10, 26-27, 43-44, 60-61), rune-forge-chamber 2 (rows 52-53).
+  - F3 (floating view items): 24 bottles. Potion-rush 12 (rows 45-50, 52-57) and
+    alchemists-synthesis 12 (rows 52-57, 59-64), all at y 0.52 or 1.02.
+  - F4 (floating map items): 7. Inn 2 (bottle row 150, mug row 151) and school 5 (jar row 48,
+    orb row 62, apple row 144, mug row 145, scroll row 146).
+  - F5 (items inside a case): 2. Archive candle row 169 and guild-hall barrel row 160.
+  - F7 (libraries use bookcase): 16 `shelf` placements (enchanted-library 8, haunted-library 8)
+    and no `bookcase`.
+  - F6 passes: alchemy-lab 2, apothecary 3, bakery 1, general-store 5 shelves with no empty.
+  - F8 passes: the frozen table holds (below).
+  - Frozen count table: 19 `shelf` in 7 maps (alchemy-lab 2, apothecary 3, bakery 1, bathhouse 4,
+    general-store 5, inn 1, warehouse 3). 44 `bookshelf` in 12 maps (apothecary 2, archive 11,
+    bank 2, classroom 2, courthouse 2, guild-hall 5, library 6, observatory 3, prison 1, school 3,
+    warehouse 1, wizard-tower 6). The strategy text said 37 in 10 maps; the live count is 44 in 12.
+  - `isStructural()` exclusions: suffix /^(floor|ground|road|path|river|water|wall|window|door|gate|
+    arch|column|pillar|stairs|ladder|bridge|dock|pier|roof|chimney|ceiling|fence|railing|walkway|
+    plank|beam)$/; prefix /^(wall|door|window|gate|arch|column|pillar|stairs|ladder|bridge|roof|
+    chimney|ceiling|fence|railing|walkway|ruin|cliff|boulder|cave|tunnel|street|trail|hill|mountain|
+    pond|puddle|snowbank|sand-dune)/; and a named set. The mounted light fixtures in the named set
+    are: chandelier, candle-cluster, lantern, torch-sconce, wall-sconce, torch, candelabra, brazier,
+    fireplace, campfire, campfire-out, watchfire. The lone `candle` stays an item (the archive
+    candle is the R3 target).
+  - Type check: command `heavy-run.sh -c 'timeout -k 30 600 node node_modules/typescript/bin/tsc
+    --noEmit'` exits 2. Owned errors (filled-shelves.test.ts): 0. Total: 31. One owned error at a
+    first run (rest-spread type at line 134) was fixed by typing the stub add rest as
+    `THREE.Object3D[]`; the check logic did not change.
+  - Deviations: (1) an earlier direct `vitest run` outside heavy-run.sh broke the machine rule; it
+    is not gate evidence. (2) The strategy table said 37 bookshelf in 10 maps; the live count is 44
+    in 12. (3) Extra findings stay in scope for Green: school apple, mug, scroll; inn bottle and
+    mug; guild-hall barrel. (4) The fixture list above is read from the test. (5) A prior Red
+    session stalled with no output for 4 hours; this session restarted and finished.
+
 - [ ] Task: Fill the two library games (Green).
   Owned paths: `src/games/enchanted-library/view/hall.ts`,
   `src/games/enchanted-library/manifest.ts`, `src/games/haunted-library/view/library.ts`,
