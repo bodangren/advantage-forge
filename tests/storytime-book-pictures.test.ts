@@ -3975,3 +3975,442 @@ describe('Review A remediation', () => {
     }
   });
 });
+// ---------------------------------------------------------------------------
+// Phase 3: picture specification v1 (rows T142 to T151)
+// ---------------------------------------------------------------------------
+// The picture list of Workbooks version 3 is the source of the week 1 rows.
+// The pipeline must expose three seams for the rows of specification v1:
+//
+// 1. loadPictureList(options) reads <printRoot>/pictures.json read-only.
+//    The options are { printRoot, workbooksRoot, expectedSha256? }.
+//    It returns { file, sha256, rows }. The rows keep the fields of the list.
+//    It refuses a row whose fileName breaks ^l2-w\d{2}-[a-z-]+-v\d+\.png$.
+//    It refuses a file whose SHA-256 differs from expectedSha256.
+// 2. planPictureRow(row) returns the output plan of one row:
+//    { colorFile, lineArtFile, width, height }.
+//    The color file equals row.fileName. The line-art file equals
+//    row.lineArtFileName and sits beside the color file. The width and the
+//    height come from the size class of the row.
+// 3. inspectPictureRow(png, row) runs the size class checks of the row and
+//    returns { valid, errors }.
+//
+// The line-art check must also reject a line thinner than 12 px and must print
+// the measured width. The render command must print "render peak rss mb: <n>"
+// after each job, and the number must come from the capture process.
+
+const PRINT_ROOT = path.join(WORKBOOKS, 'content/storytime/l2/print');
+const LIST_FILE = path.join(PRINT_ROOT, 'pictures.json');
+const LIST_MARKDOWN_FILE = path.join(PRINT_ROOT, 'pictures.md');
+const LIST_SHA256 = 'c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b';
+const LIST_MARKDOWN_SHA256 = 'e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848';
+const LIST_FILE_PATTERN = /^l2-w\d{2}-[a-z-]+-v\d+\.png$/;
+const CLASS_PIXELS = {
+  A: { width: 4000, height: 3000 },
+  B: { width: 4000, height: 3000 },
+  C: { width: 1500, height: 1500 },
+} as const;
+
+type PictureListRow = {
+  id: string;
+  week: number;
+  use: string;
+  sizeClass: keyof typeof CLASS_PIXELS;
+  fileName: string;
+  lineArtFileName: string;
+  width: number;
+  height: number;
+};
+type PictureList = { file: string; sha256: string; rows: PictureListRow[] };
+type PictureListOptions = { printRoot: string; workbooksRoot: string; expectedSha256?: string };
+type PictureRowPlan = { colorFile: string; lineArtFile: string; width: number; height: number };
+type PictureRowCheck = { valid: boolean; errors: string[] };
+type PictureListSeams = {
+  loadPictureList(options: PictureListOptions): PictureList;
+  planPictureRow(row: PictureListRow): PictureRowPlan;
+  inspectPictureRow(png: Buffer, row: PictureListRow): PictureRowCheck;
+};
+type CliDependencies = NonNullable<Parameters<typeof runStorytimeCli>[1]>;
+type CliReadStage = NonNullable<CliDependencies['readStage']>;
+
+function listSeam<K extends keyof PictureListSeams>(name: K): PictureListSeams[K] | undefined {
+  const seam = (pictureSeams as unknown as Record<string, unknown>)[name];
+  return typeof seam === 'function' ? (seam as PictureListSeams[K]) : undefined;
+}
+
+// The rows of the list file itself. The test reads the file read-only.
+function rawRows(): PictureListRow[] {
+  const parsed = JSON.parse(readFileSync(LIST_FILE, 'utf8')) as Array<
+    Omit<PictureListRow, 'sizeClass'> & { sizeClass: string }
+  >;
+  return parsed.map((row) => ({
+    ...row,
+    sizeClass: row.sizeClass as PictureListRow['sizeClass'],
+  }));
+}
+
+async function loadList(options: PictureListOptions): Promise<PictureList | undefined> {
+  const seam = listSeam('loadPictureList');
+  expect.soft(seam, 'The pipeline exposes the picture list loader.').toBeTypeOf('function');
+  if (!seam) return undefined;
+  return seam(options);
+}
+
+async function loadStatus(options: PictureListOptions): Promise<'accepted' | 'refused' | 'missing'> {
+  const seam = listSeam('loadPictureList');
+  if (!seam) {
+    expect.soft(seam, 'The pipeline exposes the picture list loader.').toBeTypeOf('function');
+    return 'missing';
+  }
+  try {
+    seam(options);
+    return 'accepted';
+  } catch {
+    return 'refused';
+  }
+}
+
+// The plan of one row. Without the specification v1 seam the plan keeps the
+// sizes, the line-art name, and the twin rule of specification v0.
+function plannedRow(row: PictureListRow): PictureRowPlan {
+  const seam = listSeam('planPictureRow');
+  if (seam) return seam(row);
+  const colorFile = row.fileName;
+  const lineArtFile = row.use === 'story-page'
+    ? path.posix.join(
+      path.posix.dirname(colorFile),
+      'lineart',
+      `${path.posix.basename(colorFile, '.png')}-lineart.png`,
+    )
+    : '';
+  const key = row.sizeClass === 'A' ? 'story' : row.sizeClass === 'B' ? 'cover' : 'small';
+  const table = pictureSeams.PICTURE_SIZES as unknown as Record<string, { width: number; height: number }>;
+  return { colorFile, lineArtFile, width: table[key]!.width, height: table[key]!.height };
+}
+
+function rowCheck(row: PictureListRow, png: Buffer): 'valid' | 'invalid' | 'missing' {
+  const seam = listSeam('inspectPictureRow');
+  if (!seam) {
+    expect.soft(seam, 'The pipeline checks a picture row of the list.').toBeTypeOf('function');
+    return 'missing';
+  }
+  try {
+    return seam(png, row).valid ? 'valid' : 'invalid';
+  } catch {
+    return 'invalid';
+  }
+}
+
+function useCounts(rows: PictureListRow[]) {
+  return {
+    'story-page': rows.filter((row) => row.use === 'story-page').length,
+    'cover': rows.filter((row) => row.use === 'cover').length,
+    'check-row': rows.filter((row) => row.use === 'check-row').length,
+    'practice-line': rows.filter((row) => row.use === 'practice-line').length,
+  };
+}
+
+async function pictureAt(width: number, height: number, focalTop = false, background = '#ffffff') {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+    `<rect width="100%" height="100%" fill="${background}"/>` +
+    `<circle cx="${width / 2}" cy="${height * (focalTop ? 0.15 : 0.65)}" r="${height * 0.12}" fill="#456a86"/></svg>`;
+  return sharp(Buffer.from(svg)).flatten({ background: '#ffffff' }).toColourspace('srgb').png().toBuffer();
+}
+
+// A line-art fixture with one vertical line of a given pixel width.
+async function lineFixture(lineWidth: number, width = 400, height = 400) {
+  const pixels = Buffer.alloc(width * height, 255);
+  for (let y = 100; y < 300; y += 1) {
+    for (let x = 190; x < 190 + lineWidth; x += 1) pixels[y * width + x] = 0;
+  }
+  return greyPng(pixels, width, height);
+}
+
+describe('Phase 3 picture specification v1', () => {
+  it('T142: the picture list loader reads pictures.json read-only and records its SHA-256', async () => {
+    const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
+    if (!list) return;
+    expect.soft({ 'List rows': list.rows.length }).toEqual({ 'List rows': 192 });
+    const week1 = list.rows.filter((row) => row.week === 1);
+    expect.soft({ 'Week 1 rows': week1.length }).toEqual({ 'Week 1 rows': 30 });
+    expect.soft({ 'Week 1 class A rows': week1.filter((row) => row.sizeClass === 'A').length })
+      .toEqual({ 'Week 1 class A rows': 16 });
+    expect.soft({ 'Week 1 class B rows': week1.filter((row) => row.sizeClass === 'B').length })
+      .toEqual({ 'Week 1 class B rows': 2 });
+    expect.soft({ 'Week 1 class C rows': week1.filter((row) => row.sizeClass === 'C').length })
+      .toEqual({ 'Week 1 class C rows': 12 });
+    expect.soft({ 'List SHA-256': list.sha256 }).toEqual({ 'List SHA-256': LIST_SHA256 });
+    expect.soft({ 'List file': path.basename(list.file) }).toEqual({ 'List file': 'pictures.json' });
+  }, 60000);
+
+  it('T143: the size class of a row gives the pixel size of specification v1', async () => {
+    expect.soft({ 'Class A pixels': pictureSeams.PICTURE_SIZES.story })
+      .toEqual({ 'Class A pixels': CLASS_PIXELS.A });
+    expect.soft({ 'Class B pixels': pictureSeams.PICTURE_SIZES.cover })
+      .toEqual({ 'Class B pixels': CLASS_PIXELS.B });
+    expect.soft({ 'Class C pixels': pictureSeams.PICTURE_SIZES.small })
+      .toEqual({ 'Class C pixels': CLASS_PIXELS.C });
+    for (const sizeClass of ['A', 'B', 'C'] as const) {
+      const row = rawRows().find((item) => item.sizeClass === sizeClass)!;
+      const plan = plannedRow(row);
+      expect.soft({ [`Class ${sizeClass} row pixels`]: { width: plan.width, height: plan.height } })
+        .toEqual({ [`Class ${sizeClass} row pixels`]: CLASS_PIXELS[sizeClass] });
+      expect.soft({ [`Class ${sizeClass} list pixels`]: { width: row.width, height: row.height } })
+        .toEqual({ [`Class ${sizeClass} list pixels`]: CLASS_PIXELS[sizeClass] });
+    }
+  }, 60000);
+
+  it('T144: the color and the line-art file names of a row come from the list', async () => {
+    const rows = rawRows().filter((item) => item.week === 1);
+    const wrongColor: string[] = [];
+    const wrongLineArt: string[] = [];
+    const wrongSuffix: string[] = [];
+    const wrongDirectory: string[] = [];
+    const inLineArtDirectory: string[] = [];
+    for (const row of rows) {
+      const plan = plannedRow(row);
+      if (plan.colorFile !== row.fileName) wrongColor.push(`${row.id}: ${plan.colorFile}`);
+      if (plan.lineArtFile !== row.lineArtFileName) wrongLineArt.push(`${row.id}: ${plan.lineArtFile}`);
+      if (!plan.lineArtFile.endsWith('-line-v1.png')) wrongSuffix.push(`${row.id}: ${plan.lineArtFile}`);
+      if (path.posix.dirname(plan.lineArtFile) !== path.posix.dirname(plan.colorFile)) {
+        wrongDirectory.push(`${row.id}: ${plan.lineArtFile}`);
+      }
+      if (plan.lineArtFile.includes('/lineart/')) inLineArtDirectory.push(`${row.id}: ${plan.lineArtFile}`);
+    }
+    expect.soft({ 'Rows with a color file that differs from the list': wrongColor })
+      .toEqual({ 'Rows with a color file that differs from the list': [] });
+    expect.soft({ 'Rows with a line-art file that differs from the list': wrongLineArt })
+      .toEqual({ 'Rows with a line-art file that differs from the list': [] });
+    expect.soft({ 'Rows whose line-art file does not end in -line-v1.png': wrongSuffix })
+      .toEqual({ 'Rows whose line-art file does not end in -line-v1.png': [] });
+    expect.soft({ 'Rows whose line-art file is not beside the color file': wrongDirectory })
+      .toEqual({ 'Rows whose line-art file is not beside the color file': [] });
+    expect.soft({ 'Rows whose line-art file sits in a lineart directory': inLineArtDirectory })
+      .toEqual({ 'Rows whose line-art file sits in a lineart directory': [] });
+  }, 60000);
+
+  it('T145: every week 1 row of the list gets a color file and a line-art twin', async () => {
+    const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
+    const pipelineRows = (list?.rows ?? []).filter((row) => row.week === 1);
+    expect.soft({ 'Week 1 pipeline rows': pipelineRows.length }).toEqual({ 'Week 1 pipeline rows': 30 });
+    expect.soft({ 'Week 1 use counts': useCounts(pipelineRows) }).toEqual({
+      'Week 1 use counts': { 'story-page': 16, 'cover': 2, 'check-row': 9, 'practice-line': 3 },
+    });
+    const withoutColor: string[] = [];
+    const withoutTwin: string[] = [];
+    for (const row of rawRows().filter((item) => item.week === 1)) {
+      const plan = plannedRow(row);
+      if (typeof plan.colorFile !== 'string' || plan.colorFile.length === 0) withoutColor.push(row.id);
+      if (typeof plan.lineArtFile !== 'string' || plan.lineArtFile.length === 0) withoutTwin.push(row.id);
+    }
+    expect.soft({ 'Week 1 rows without a color file': withoutColor })
+      .toEqual({ 'Week 1 rows without a color file': [] });
+    expect.soft({ 'Week 1 rows without a line-art twin': withoutTwin })
+      .toEqual({ 'Week 1 rows without a line-art twin': [] });
+  }, 60000);
+
+  it('T146: the line-art check rejects a line thinner than 12 px and prints the measured width', async () => {
+    const directory = await mkdtemp(path.join(root, 'line-width-'));
+    try {
+      for (const [label, lineWidth] of Object.entries({ thin: 6, near: 11, exact: 12 })) {
+        const file = path.join(directory, `${label}.png`);
+        await writeFile(file, await lineFixture(lineWidth));
+        expect(existsSync(file), `The ${label} fixture exists.`).toBe(true);
+      }
+      const thin = await readFile(path.join(directory, 'thin.png'));
+      const near = await readFile(path.join(directory, 'near.png'));
+      const exact = await readFile(path.join(directory, 'exact.png'));
+      const expected = { width: 400, height: 400 };
+      const thinCheck = await pictureSeams.inspectLineArtPng(thin, expected);
+      const nearCheck = await pictureSeams.inspectLineArtPng(near, expected);
+      const printed: string[] = [];
+      const spy = vi.spyOn(console, 'log').mockImplementation((...args: unknown[]) => {
+        printed.push(args.map((value) => String(value)).join(' '));
+      });
+      const exactCheck = await pictureSeams.inspectLineArtPng(exact, expected).finally(() => spy.mockRestore());
+      expect.soft(thinCheck.valid, 'A 6 px line passes the line-art check.').toBe(false);
+      expect.soft(nearCheck.valid, 'An 11 px line passes the line-art check.').toBe(false);
+      expect.soft(exactCheck.valid, 'A 12 px line fails the line-art check.').toBe(false);
+      const measuredLine = printed.find((line) => /width/i.test(line) && /[0-9]/.test(line)) ?? '';
+      expect.soft(measuredLine, 'The check prints the measured width.').toMatch(/width[^\n]*?([0-9]+)/i);
+      const measured = Number(/width[^\n]*?([0-9]+)/i.exec(measuredLine ?? '')?.[1] ?? '');
+      expect.soft(measured, 'The measured width is the width of the fixture line.').toBe(12);
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 120000);
+
+  it('T147: the pipeline never writes to the Workbooks tree', async () => {
+    const before = {
+      list: digest(readFileSync(LIST_FILE)),
+      markdown: digest(readFileSync(LIST_MARKDOWN_FILE)),
+    };
+    const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
+    const { repoRoot, outputRoot } = await sandbox();
+    await planned(repoRoot, outputRoot);
+    const after = {
+      list: digest(readFileSync(LIST_FILE)),
+      markdown: digest(readFileSync(LIST_MARKDOWN_FILE)),
+    };
+    expect.soft({ 'The pictures.json digest': after.list }).toEqual({ 'The pictures.json digest': before.list });
+    expect.soft({ 'The pictures.md digest': after.markdown })
+      .toEqual({ 'The pictures.md digest': before.markdown });
+    expect.soft({ 'The list SHA-256': list?.sha256 }).toEqual({ 'The list SHA-256': LIST_SHA256 });
+    expect.soft({ 'The pictures.md SHA-256': digest(readFileSync(LIST_MARKDOWN_FILE)) })
+      .toEqual({ 'The pictures.md SHA-256': LIST_MARKDOWN_SHA256 });
+  }, 60000);
+
+  it('T148: the pipeline refuses a broken file name and a changed list file', async () => {
+    const directory = await mkdtemp(path.join(root, 'print-'));
+    try {
+      const printRoot = path.join(directory, 'print');
+      await mkdir(printRoot, { recursive: true });
+      const listFile = path.join(printRoot, 'pictures.json');
+      await copyFile(LIST_FILE, listFile);
+      await copyFile(LIST_MARKDOWN_FILE, path.join(printRoot, 'pictures.md'));
+      const clean = JSON.parse(await readFile(LIST_FILE, 'utf8')) as Array<Record<string, unknown>>;
+      const broken = clean.map((row) => ({ ...row }));
+      broken[0]!.fileName = 'l2-w01-Broken_Name-v1.png';
+      expect.soft(LIST_FILE_PATTERN.test(String(broken[0]!.fileName)),
+        'The broken name breaks the file name pattern.').toBe(false);
+      await writeFile(listFile, JSON.stringify(broken, null, 2));
+      expect.soft(await loadStatus({ printRoot, workbooksRoot: WORKBOOKS }),
+        'The pipeline accepts a list with a broken file name.').toBe('refused');
+      const brokenRow = { ...rawRows()[0]!, fileName: 'l2-w01-Broken_Name-v1.png' };
+      const planSeam = listSeam('planPictureRow');
+      let planStatus: 'planned' | 'refused' | 'missing' = 'missing';
+      if (planSeam) {
+        try {
+          planSeam(brokenRow);
+          planStatus = 'planned';
+        } catch {
+          planStatus = 'refused';
+        }
+      } else {
+        expect.soft(planSeam, 'The pipeline plans a picture row of the list.').toBeTypeOf('function');
+      }
+      expect.soft(planStatus, 'The pipeline plans a row with a broken file name.').toBe('refused');
+      await writeFile(listFile, JSON.stringify(clean, null, 2));
+      expect.soft(await loadStatus({ printRoot, workbooksRoot: WORKBOOKS }),
+        'The pipeline refuses the clean list.').toBe('accepted');
+      const recorded = (await loadList({ printRoot, workbooksRoot: WORKBOOKS }))?.sha256;
+      await writeFile(listFile, `${JSON.stringify(clean, null, 2)}\n`);
+      const changed = await loadStatus({
+        printRoot, workbooksRoot: WORKBOOKS, ...(recorded ? { expectedSha256: recorded } : {}),
+      });
+      expect.soft(changed, 'The pipeline accepts a list file whose SHA-256 changed.').toBe('refused');
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 60000);
+
+  it('T149: a class B row runs the calm top check and a class C row runs the white-corner check', async () => {
+    const directory = await mkdtemp(path.join(root, 'class-checks-'));
+    try {
+      const rows = rawRows().filter((row) => row.week === 1);
+      const coverRow = rows.find((row) => row.sizeClass === 'B')!;
+      const checkRow = rows.find((row) => row.use === 'check-row')!;
+      const calm = path.join(directory, 'calm.png');
+      const busy = path.join(directory, 'busy.png');
+      const white = path.join(directory, 'white.png');
+      const dark = path.join(directory, 'dark.png');
+      await writeFile(calm, await pictureAt(CLASS_PIXELS.B.width, CLASS_PIXELS.B.height));
+      await writeFile(busy, await pictureAt(CLASS_PIXELS.B.width, CLASS_PIXELS.B.height, true));
+      await writeFile(white, await pictureAt(CLASS_PIXELS.C.width, CLASS_PIXELS.C.height));
+      await writeFile(dark, await pictureAt(CLASS_PIXELS.C.width, CLASS_PIXELS.C.height, false, '#000000'));
+      expect.soft(rowCheck(coverRow, await readFile(calm)), 'The calm class B row fails its check.').toBe('valid');
+      expect.soft(rowCheck(coverRow, await readFile(busy)), 'The busy class B row passes its check.').toBe('invalid');
+      expect.soft(rowCheck(checkRow, await readFile(white)), 'The white class C row fails its check.').toBe('valid');
+      expect.soft(rowCheck(checkRow, await readFile(dark)), 'The dark corner class C row passes its check.')
+        .toBe('invalid');
+    } finally {
+      await rm(directory, { recursive: true, force: true });
+    }
+  }, 120000);
+
+  it('T150: the week 1 selection holds 30 rows and the two batch hashes move apart', async () => {
+    const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
+    const rows = (list?.rows ?? []).filter((row) => row.week === 1);
+    expect.soft({ 'Week 1 rows': rows.length }).toEqual({ 'Week 1 rows': 30 });
+    const colorFiles = rows.map((row) => {
+      const plan = plannedRow(row);
+      return { file: plan.colorFile, sha256: digest(`${row.id}-color`) };
+    });
+    const lineFiles = rows.map((row) => {
+      const plan = plannedRow(row);
+      return { file: plan.lineArtFile, sha256: digest(`${row.id}-line`) };
+    });
+    expect.soft({ 'Week 1 color files': new Set(colorFiles.map((file) => file.file)).size })
+      .toEqual({ 'Week 1 color files': 30 });
+    expect.soft({ 'Week 1 line-art files': new Set(lineFiles.map((file) => file.file)).size })
+      .toEqual({ 'Week 1 line-art files': 30 });
+    const colorHash = batchSha256(colorFiles);
+    const lineHash = batchSha256(lineFiles);
+    expect.soft(colorHash === lineHash, 'The color batch hash equals the line-art batch hash.').toBe(false);
+    const changed = colorFiles.map((file, index) => (index === 0 ? { ...file, sha256: digest('changed') } : file));
+    expect.soft(batchSha256(changed) === colorHash, 'A changed color file keeps the color batch hash.').toBe(false);
+    expect.soft(batchSha256(lineFiles) !== lineHash, 'A changed color file moves the line-art batch hash.').toBe(false);
+  }, 60000);
+
+  it('T151: the render command prints the peak memory of the capture process', async () => {
+    const { repoRoot, outputRoot } = await sandbox();
+    const calibrationRoots = await seedCalibration(outputRoot, repoRoot);
+    await planned(repoRoot, outputRoot);
+    const plannedJobs = JSON.parse(await readFile(path.join(outputRoot, 'jobs.json'), 'utf8')) as StorytimeJob[];
+    const messages: string[] = [];
+    const consoleLines: string[] = [];
+    const capture = vi.fn(async (input: { size: { width: number; height: number } }) => {
+      const packet = {
+        color: await pictureAt(input.size.width, input.size.height),
+        lineArt: await greyPng(binaryPixels(input.size.width, input.size.height, 0.05)),
+        camera: structuredClone(CAMERA),
+        peakRssMb: 1234,
+      };
+      return packet;
+    });
+    const readStage = vi.fn(async ({ job, version }: { job: StorytimeJob; version: number }) => {
+      const source = {
+        jobId: job.id, version, at: 0.5,
+        spec: {
+          title: 'Test page', duration: 2,
+          lines: [{ text: 'Hello.', start: 0, end: 1, actors: ['Pat'], gesture: 'wave' }],
+        },
+        stage: {
+          scene: 'classroom', dog: 'quiet', marks: { Pat: { x: 0, z: 0, yaw: 0 } },
+          camera: [{ at: 0, az: 0, el: 12, dist: 4.8, tx: 0, tz: 0 }],
+        },
+      };
+      const file = `docs/storytime/l2-unit1/w01/${job.id}-v${version}.json`;
+      return {
+        file,
+        absoluteFile: path.join(repoRoot, file),
+        sha256: digest(JSON.stringify(source)),
+        at: 0.5,
+        source,
+        bytes: Buffer.from(JSON.stringify(source)),
+      };
+    });
+    const spy = vi.spyOn(console, 'log').mockImplementation((...args: unknown[]) => {
+      consoleLines.push(args.map((value) => String(value)).join(' '));
+    });
+    let code = -1;
+    try {
+      code = await runStorytimeCli(['render', '--out', outputRoot, '--job', plannedJobs[0]!.id], {
+        repoRoot,
+        workbooksRoot: calibrationRoots.workbooksRoot,
+        capture: capture as unknown as CliCapture,
+        readStage: readStage as unknown as CliReadStage,
+        log: (message: string) => messages.push(message),
+      });
+    } finally {
+      spy.mockRestore();
+    }
+    expect.soft(code, 'The render command exits with code 0.').toBe(0);
+    const labelled = [...messages, ...consoleLines]
+      .map((line) => /render peak rss mb:\s*([0-9]+)/i.exec(line))
+      .find(Boolean);
+    expect.soft(labelled?.[0] ?? 'no label', 'The render command prints the peak memory label.')
+      .toMatch(/render peak rss mb:\s*[0-9]+/i);
+    expect.soft(Number(labelled?.[1] ?? Number.NaN), 'The reported peak memory comes from the capture process.')
+      .toBe(1234);
+  }, 300000);
+});
