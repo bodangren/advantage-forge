@@ -948,6 +948,12 @@ Closeout carries these items:
 
 ## Phase 3: Week 1 pictures
 
+Strategy note: the Phase 3 test strategy is in
+[test-strategy.md](./test-strategy.md) section 7, "Phase 3: Week 1 pictures". It holds the
+verified picture list v3 hashes, the specification v1 sizes, the Red and Green split, the
+machine limits, the shared-asset check, the task gates, the review applicability, the new test
+rows T142 to T151, and the closeout gate for 30 jobs.
+
 - [ ] Task: Render the Nan window sample in color and line art. First write
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
   In v2, Nan faces the camera (yaw from -30 to 30 degrees), and the window is beside or behind her.

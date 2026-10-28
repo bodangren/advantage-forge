@@ -10,6 +10,9 @@ Amended from `cf5743b7` for the decoded-value remediation (Phase 2 task 9).
 Amended from `53cc3ada` for the decoded-layer remediation (Phase 2 task 10).
 Amended from `3f604b62` for the token-layer remediation (Phase 2 task 11).
 Amended from `bb4e11f0` for the malformed-string remediation (Phase 2 task 12).
+Amended for "Phase 3: Week 1 pictures" (P3) after the plan amendments `010dcc16` and `0d620a43`.
+The amendment covers picture list v3, picture specification v1, 30 week 1 rows, 60 week 1 files,
+the 2026-11-02 date, the machine limits, the shared-asset check, and the classroom map record.
 The [specification](./spec.md), [plan](./plan.md), and [contract](./contract.md) own scope and
 gates. This file owns test commands, gates, fixtures, and review applicability.
 
@@ -1582,50 +1585,335 @@ T25 is in scope for Red. Kimi pre-checks apply to color candidates only.
 
 ### Phase 3: Week 1 pictures
 
-Risk class: **high**. Phase 3 has the first real renders, the first real line-art pass, new
-assets, three human gates, and the 2026-11-01 date.
+Risk class: **critical**. Phase 3 has 30 render runs at up to 4000 x 3000 pixels on a 7.1 GiB
+machine, a changed output contract, a drifting shared asset, and two human gates. The date is
+2026-11-02.
 
-Plan task order: (1) Nan window sample, (2) assets, (3) 16 twin renders, (4) checks and model
-pre-checks, (5) person counts and line-art looks, (6) delivery.
+Plan task order: (1) Nan window sample, (2) assets, (3) 30 twin renders, (4) checks and model
+pre-checks, (5) count review and line-art looks, (6) delivery.
 
-- Red and Green: use `RED_TEST_COMMAND` and `GREEN_TEST_COMMAND` for any pipeline change. A new
-  asset uses the Forge asset loop and `./forge check`, not this test file.
-- Task 1 (Nan window sample) is the first live render proof for both twins. Phase 2 tasks 5 and 6
-  must be complete first. The sample uses the v2 stage (RA-P3-1) and existing approved items only.
-  Render it with `render --job w01-readalong-p05 --version 2` through `heavy-run.sh`. Then run
-  `verify --job <id>` on the real files. Live proof passes only if all items below are true:
-  - the color file passes the color structural checks (size, opaque, 8-bit, sRGB);
-  - the line-art file passes T28 to T32 on real bytes, with the ink share printed as a value;
+#### 3.1 Facts this section fixes
+
+Read-only sources and their values, checked on 2026-10-28:
+
+| Fact | Value |
+| --- | --- |
+| Picture list v3 | `/home/daniebo/Desktop/Workbooks/content/storytime/l2/print/pictures.json` |
+| SHA-256 of `pictures.json` | `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b` |
+| SHA-256 of `pictures.md` | `e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848` |
+| Workbooks commit of list v3 | `078917f1` |
+| Workbooks commit of specification v1 | `a9178413`, dated 2026-10-27 |
+
+The check commands and their expected output:
+
+```sh
+P=/home/daniebo/Desktop/Workbooks/content/storytime/l2/print
+sha256sum "$P/pictures.json" "$P/pictures.md"
+node -e 'const d=require(process.argv[1]);const w=d.filter(r=>r.week===1);console.log("rows",d.length,"week1",w.length,"A",w.filter(r=>r.sizeClass==="A").length,"B",w.filter(r=>r.sizeClass==="B").length,"C",w.filter(r=>r.sizeClass==="C").length)' "$P/pictures.json"
+```
+
+Expected output: `rows 192 week1 30 A 16 B 2 C 12`. The check fails when a hash differs, when the
+row count is not 192, or when a week 1 class count differs.
+
+The facts:
+
+- Week 1 has 30 rows of list v3: 16 of class A, 2 of class B, and 12 of class C.
+- Week 1 output is 30 color files and 30 line-art files. One twin pair comes from one render run.
+- Week 1 is due 2026-11-02. Weeks 2 to 7 hold 162 rows and 324 files. They are due 2026-11-16
+  and belong to Phase 4.
+- Class A and class B render at 4000 x 3000 pixels. Class C renders at 1500 x 1500 pixels.
+- The line art has the size of its color twin. It is grayscale with black closed outlines of
+  12 px or more. Its file name ends in `-line-v1.png`. Every row has one twin.
+- Specification v1 arrived on 2026-10-27. The line art is not provisional.
+- The two class B rows of week 1 are the reader covers. Forge renders the B pictures. Workbooks
+  keeps the layout and the text.
+- Picture list v4 is pending before 2026-11-16. It adds a week 8 review and the Benchmark 1 rows
+  for moon, mango, ostrich, and drum. Phase 3 makes no picture for those words.
+
+#### 3.2 The output contract gap (Phase 3 Red and Green work)
+
+The pipeline still holds the specification v0 contract. Phase 3 changes it.
+
+| Item | Today | Specification v1 |
+| --- | --- | --- |
+| Class A size | `PICTURE_SIZES.story` = 3000 x 2250 | 4000 x 3000 |
+| Class B size | `PICTURE_SIZES.cover` = 3600 x 2700 | 4000 x 3000 |
+| Class C size | `PICTURE_SIZES.small` = 1500 x 1500 | 1500 x 1500 |
+| Line-art name | `<directory>/lineart/<name>-lineart.png` | `<color name>-line-v1.png` beside the color file |
+| Twin rows | reader jobs only | every row |
+| Job rows | 112 package jobs | 192 list rows, including cover, check-row, and practice-line |
+| Line width | no limit | at least 12 px |
+| `contract.md` | provisional format text | specification v1 text |
+
+The gap is required Phase 3 work. Red adds failing tests that pin specification v1. Green
+changes the pipeline and amends `contract.md`.
+
+Owned paths for the Phase 3 Red and Green work:
+
+- Red and Green: `tests/storytime-book-pictures.test.ts`.
+- Green: `src/storytime/book-pictures.ts` and `scripts/storytime-book-pictures.ts`.
+- Green: `measure/tracks/asset_storytime_l2_unit1_pictures_20261025/contract.md`.
+- Green: the row names come from the list. The pipeline derives no slug for a list row.
+
+The orchestrator reports the contract gap to the PM in the Phase 3 handoff.
+
+#### 3.3 Red and Green split
+
+Three work kinds run in Phase 3.
+
+1. **Pipeline code change.** Red writes the failing rows T142 to T151. Green implements them.
+   The gate is `RED_TEST_COMMAND` then `GREEN_TEST_COMMAND`.
+2. **Asset work.** A missing cast member, prop, or pose uses the Forge asset loop and
+   `./forge check`. It has no vitest row.
+3. **Production run.** A render, a pre-check, a manifest, a sheet, and a verify run use the CLI
+   through `heavy-run.sh`. It has no new test row.
+
+The Phase 3 RED_TEST_COMMAND and GREEN_TEST_COMMAND are the same command. The orchestrator
+passes them to the Red and Green roles as environment variables.
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'
+```
+
+The check fails when the exit code is not 0, when the run has 0 tests, or when a T142 to T151
+row fails. The vitest total must be parsed as a labeled integer.
+
+The Green type check follows the Green gate. It uses its own log file.
+
+```sh
+L=measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase3-tsc.log
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json' > "$L" 2>&1
+code=$?
+echo "tsc exit: $code"
+echo "owned tsc errors: $(grep -cE '^(src/storytime/|scripts/storytime-book-pictures\.ts|tests/storytime-book-pictures\.test\.ts)' "$L")"
+echo "total tsc errors: $(grep -c 'error TS' "$L")"
+```
+
+The check requires zero owned errors and at most 31 total errors.
+
+#### 3.4 Machine limits
+
+- The machine has 7.1 GiB of memory and 4 cores.
+- Every render, test, type check, and build runs as one command through `heavy-run.sh`.
+  Never nest `heavy-run.sh` inside another `heavy-run.sh` call.
+- Every command inside `heavy-run.sh` carries `timeout -k 30 <s>`.
+- `heavy-run.sh` stops a job after 5400 s and returns exit 124. A planned longer job sets
+  `HEAVY_RUN_TIMEOUT_S` and gives the reason in the plan note.
+- Exit 75 means hold. The executor retries the same batch later. A hold is not a failure.
+- Plan each batch so it ends well inside 5400 s. A week 1 batch of 4 render runs ends inside
+  1200 s. A batch that would pass 3600 s splits into two batches.
+- Memory risk: a 4000 x 3000 render holds the color frame, the line-art pass targets, the depth
+  texture, and the decoded PNG at once. The color frame alone takes 48 MB. The pass targets and
+  the decode add more. One run can push the browser under the headroom bound.
+- The memory check runs before each batch:
+
+```sh
+free -m | awk '$1=="Mem:" {print "available MB: " $7}'
+```
+
+The check fails when the printed value is under 1200. The preflight stops the batch on the same
+bound.
+
+- The render check runs after each job. The render log prints `render peak rss mb: <n>`. The
+  check fails when `n` is over 4200. A failing job runs alone in the next batch.
+
+#### 3.5 Shared asset drift
+
+- The classroom and the other stages read shared GLBs from `out/<asset>/<asset>.glb`.
+- Another track lowered `assets/bookcase.ts` to texture 512 and detail 0.012 and rebuilt
+  `out/bookcase/bookcase.glb`. That track restored the file to texture 1024 and detail 0.006.
+  The stat file read 512 during the drift window and reads 1024 now.
+- A render that reads a stale GLB produces a picture that no longer matches the approved build.
+- The pre-render check records the source-build stats of every shared set piece a batch uses.
+  The record holds the asset name, the SHA-256 of `out/<asset>/<asset>.glb`, and the source-build
+  values from `out/<asset>/stats.json`. The record file is
+  `out/storytime/l2/unit1/batches/<batch>-assets.json`.
+- The check command:
+
+```sh
+node -e 'const s=require("./out/bookcase/stats.json");console.log("bookcase texture size:",s.texture.size)'
+```
+
+The expected output is `bookcase texture size: 1024`. The check fails when the value differs from
+the approved build. The approved bookcase build has texture size 1024 and detail 0.006.
+
+- RA2-N2 stays a named risk for the line-art look. In smoke run 3 the adjacent bookcase books
+  merged into one outline with no spine lines. A page that counts books can fail the person
+  look. The Nan sample report names this risk to Daniel.
+
+#### 3.6 The classroom map version
+
+- `out/chibi-sprouts/r1/week1/scenes/classroom-v2.png` does not replace `classroom.png` until
+  Daniel decides.
+- Phase 3 renders read the stage files. They do not read these PNG files. The PNG files are
+  reference renders for human review.
+- The map itself is the generated code `scenes/maps/classroom.ts`. A render loads the shared GLBs
+  of that map.
+- A render proves its classroom map version with three records: the stage file path and its
+  SHA-256 in the render evidence, the SHA-256 of `scenes/maps/classroom.ts` in the batch asset
+  record, and the SHA-256 of each shared GLB in the same record.
+- A render whose stage file names `stage.scene: classroom` used the classroom map. A map change
+  needs a new stage file version and a new render version.
+
+#### 3.7 Task gates
+
+**Task 1, Nan window sample. Risk class: medium.**
+
+- The stage file `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json` is written first. The
+  v1 stage file stays unchanged (Review A RA-P3-1).
+- The sample renders at the class A size of specification v1, 4000 x 3000 pixels, from the v2
+  stage, with `render --job w01-readalong-p05 --version 2`. Keep v1.
+- The render command:
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 node --import tsx scripts/storytime-book-pictures.ts render --job w01-readalong-p05 --version 2'
+```
+
+- The green gate runs `verify --job w01-readalong-p05` without `--release`. It exits 0.
+- The closeout proof needs all of these:
+  - the color file passes the structural checks of its size class;
+  - the line-art file passes T28 to T32 and T146 on the real bytes;
   - one evidence record binds both files with one stage hash, one time, and one camera;
-  - the render log has the T53 labels `camera state drift: 0` and `color repeat identical: yes`;
+  - the render log has the T53 labels and the T142 labels;
   - the plan note quotes both paths and both SHA-256 values, and the report goes to the PM;
-  - the plan note states that the color picture shows Nan's face and white star, the window panes,
-    and the fern. It also states that no existing item shows the plant in a pot.
-- The style look record for the sample has `lineArtTechnique` and `lineArtFormatVersion` from the
-  sample evidence (contract "Line-art review and release").
-- Task 1 becomes `[b] deferred:daniel-lineart-look` after the report goes to the PM. Continue
-  with task 2 and later tasks while it waits. No line-art twin becomes `ready` before the style
-  look record passes. If Daniel rejects the look, color work continues. The line-art pass gets a
-  new technique version, and the sample runs again.
-- Task 2 (assets): the PM approval of the week 1 asset list is recorded in `b63755bc`. No deferral
-  applies now. Cast rules from that entry apply: describe hair and clothes only.
-- Task 3: 16 color and 16 line-art files, one twin pair per render run. Preflight and lock per batch.
-- Task 4: automated checks on all 32 files, two model pre-checks per color candidate, one paid call
-  at a time, Kimi after a quota check. A failed picture gets a new twin version. Old files stay.
-- Task 5 becomes `[b] deferred:daniel-or-named-reviewer` when the count review and the line-art
-  look go to the PM. It stays blocked until 16 color person logs and 16 line-art person looks
-  exist. If they are missing on 2026-10-31, report to the PM.
-- Task 6: apply picture spec v1 to the line art if it arrived. Else label the line art provisional.
-- Closeout gate: `verify --release --week 1` exits 0 and prints
-  `Verification passed for 16 jobs with release evidence`. If the style look is still pending,
-  `verify --release --week 1 --output color` must exit 0, and the plan records the line-art gate
-  as open. An independent `sha256sum` matches each manifest file hash. The ledger has equal
-  `before-call` and `after-call` counts.
+  - the plan note states that the picture shows the face, the window panes, and the fern, and
+    that no existing item shows the plant in a pot.
+- The style look record has `lineArtTechnique` and `lineArtFormatVersion` from the sample
+  evidence.
+- The task becomes `[b] deferred:daniel-lineart-look` after the report goes to the PM. The
+  executor continues with task 2 and later tasks. No line-art twin becomes `ready` before the
+  style look record passes. A rejected look starts a new technique version and a new sample.
+
+**Task 2, missing cast, props, and poses. Risk class: medium.**
+
+- The PM approval of the week 1 asset list is recorded in `b63755bc`. Cast rules from that entry
+  apply. Describe hair and clothes only.
+- The loop is `./forge render <name> --fast`, `./forge inspect <name> --fast`, `./forge all
+  <name>`, and `./forge check <name>`.
+- Each Forge build is one heavy job:
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 ./forge all <name>'
+```
+
+- The green gate is `./forge check <name>` inside `heavy-run.sh`. It prints `result ok`.
+- The closeout proof needs a human review with a rating and no `warning:` line in the build log.
+
+**Task 3, the 30 twin renders. Risk class: critical.**
+
+- Each batch holds 4 rows. Each batch is one `heavy-run.sh` call.
+- The batch writes its asset stat record before the first render.
+- Each render run writes one twin pair. The color file and the line-art file come from the same
+  run, the same stage file, the same still time, and the same camera.
+- The batch command:
+
+```sh
+bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node --import tsx scripts/storytime-book-pictures.ts render --week 1 --version 1'
+```
+
+- The green gate runs `manifest` and then `verify --week 1` without `--release`. It exits 0.
+- The closeout proof needs 30 color files and 30 line-art files, the batch asset records, and a
+  `render peak rss mb` value under 4200 for every job.
+
+**Task 4, automated checks and model pre-checks. Risk class: high.**
+
+- The automated checks cover all 60 files.
+- Both providers run on every color candidate. MiniMax and Kimi each write a review log.
+- One paid call runs at a time. A `before-call` entry comes after the `after-call` entry of the
+  call before it.
+- A quota check runs before each batch:
+
+```sh
+/home/daniebo/.local/bin/ra-quota status
+mmx quota show
+```
+
+- The batch stops when the quota output shows no room. A stop is not a picture failure.
+- The raw model outputs are attached. Each raw file name holds its `callId`.
+- A failed picture gets a new twin version. The old files stay.
+- Model results are never acceptance. The manifest keeps the evidence class `model-pre-check`.
+
+**Task 5, count review and line-art look. Risk class: high.**
+
+- The PM routes the count review and the line-art look to Daniel or his named reviewer.
+- The task becomes `[b] deferred:daniel-or-named-reviewer` when the reviews go to the PM.
+- The task stays blocked until 30 color person logs and 30 line-art person looks exist.
+- Report a missing log to the PM on 2026-10-31.
+
+**Task 6, delivery. Risk class: medium.**
+
+- The manifest lists the 30 color files and the 30 line-art files with their SHA-256 values.
+- The contact sheet shows each twin pair side by side. It leaves every candidate byte-identical.
+- The ledger and the review logs travel with the manifest.
+- The plan records the output path and every open gate for the PM.
+
+#### 3.8 Human gates
+
+- The line-art look belongs to Daniel. The PM relays it.
+- The count review belongs to Daniel or his named reviewer. The PM routes it.
+- A model pre-check never replaces either gate. A person log needs a named `checkedBy` and the
+  evidence class `owner-passed` or `person-checked`.
+- A line-art twin becomes `ready` only with the format checks, a bound color twin, a passing
+  person look, and a passing style look with the evidence class `owner-passed`.
+- The two deferral markers stay. `[b] deferred:daniel-lineart-look` covers the style look.
+  `[b] deferred:daniel-or-named-reviewer` covers the count review. Both cover 30 color files and
+  30 line-art files.
+
+#### 3.9 Phase 3 closeout gate
+
+- `verify --release --week 1` exits 0 and prints
+  `Verification passed for 30 jobs with release evidence.`
+- The exact text must match. A count other than 30 fails the gate.
+- If the style look is still pending, `verify --release --week 1 --output color` must exit 0, and
+  the plan records the line-art gate as open. The plan does not claim the line art is ready.
+- An independent `sha256sum` matches each manifest file hash. The check reads the manifest and
+  the file, and it computes the hash outside the pipeline.
+- The ledger has equal `before-call` and `after-call` counts. The check parses both labels and
+  compares two integers.
+- Every row of week 1 has a color file, a line-art file, a person log, and two model logs.
+- `./measure/generate.sh` runs after the plan status changes.
+
+#### 3.10 Review applicability
+
+| Review | Phase 3 | Reason |
+| --- | --- | --- |
+| Review A (correctness) | Applies | The list loader, the size classes, the file names, and the twin rule change the output contract. A row can lose its twin or its size. |
+| Review B (security) | Applies | The list is read only. The ledger, the raw model outputs, and the review logs must hold no credential. |
+| Review C (UX and API) | Applies | The CLI gains list-driven names and a new release gate. The error text names the failing row. |
+| Adversarial testing | Required | Change one byte of a list row, one line-art pixel to 128, and one manifest hash. Each change must fail a named check. |
+| UX browser review | Does not apply | The output is picture files. The human review is the count review and the line-art look. The browser shows no new UI. |
+
+#### 3.11 New test rows for Phase 3
+
+Rows T1 to T141 stay unchanged. The Phase 3 rows go into
+`tests/storytime-book-pictures.test.ts`.
+
+| ID | Behavior | Falsification condition (the test fails if ...) |
+| --- | --- | --- |
+| T142 | The picture list loader reads `pictures.json` read-only. It gives 192 rows. Week 1 gives 30 rows: 16 of class A, 2 of class B, and 12 of class C. The loader records the SHA-256 of the list file. | a count differs, the loader reads another week, or a byte of the list file changes. |
+| T143 | The size class of a row gives the pixel size. Class A gives 4000 x 3000, class B gives 4000 x 3000, and class C gives 1500 x 1500. The row width and height equal the class size. | 3000 x 2250 or 3600 x 2700 passes, or a row width differs from its class. |
+| T144 | The color file name of a row equals the list `fileName`. The line-art file name equals the list `lineArtFileName`, ends in `-line-v1.png`, and sits beside the color file. | a `-lineart.png` name passes, a name in a `lineart/` directory passes, or a name differs from the list. |
+| T145 | Every row of week 1 gets a color file and a line-art file. The 30 rows hold 16 story pages, 2 covers, 9 check rows, and 3 practice lines. A cover row, a check-row row, and a practice-line row each get a twin. | any row has no twin, or a row count differs from 30. |
+| T146 | The line-art check rejects a line thinner than 12 px. A fixture with a 6 px line fails. A fixture with a 12 px line passes. The check prints the measured width. | a 6 px line passes, a 12 px line fails, or the check uses a tolerance. |
+| T147 | The pipeline never writes to the Workbooks tree. The SHA-256 of `pictures.json` and of `pictures.md` is the same before and after a run. | a byte of either file changes. |
+| T148 | The pipeline refuses a row whose file name breaks the pattern `^l2-w\d{2}-[a-z-]+-v\d+\.png$`. It refuses a list file whose SHA-256 differs from the recorded one. | a broken name or a changed list file is accepted. |
+| T149 | A class B row runs the calm top 30 percent check. A class C row runs the white-corner check. The calm fixture passes and the busy fixture fails. | a busy cover passes, a dark-corner class C picture passes, or both fixtures get one result. |
+| T150 | The week 1 selection holds 30 rows. The manifest lists 30 color files and 30 line-art files. The color batch hash and the line-art batch hash differ when one file changes. | the selection holds 16 rows, a file is missing, or one batch hash moves with the other. |
+| T151 | The render command prints `render peak rss mb: <n>` after each job, as a labeled integer. The value comes from the capture process. | the label is missing, the value is not an integer, or the value comes from another process. |
+
+#### 3.12 phase_base_sha capture point
+
+1. The Phase 3 strategy commit lands first.
+2. Immediately after that commit, the orchestrator runs `git rev-parse HEAD` and records that
+   committed value as the immutable Phase 3 `phase_base_sha`.
+3. The orchestrator captures the value before any Red edit or commit.
+4. This strategy embeds no SHA for that base. It names none.
+5. The Phase 2 `phase_base_sha` stays `1d39b8fd`. The Phase 3 base is a new value.
 
 ### Phase 4: Remaining pictures and cover
 
 Risk class: **medium**. The gates exist after Phase 3. The cover calm-region check and the volume
-of 96 pictures are the new risks.
+of 162 rows are the new risks.
 
 - Task 1 becomes `[b] deferred:workbooks-via-pm` at Phase 4 start if the final picture list (due
   2026-10-28) is missing.
@@ -1633,14 +1921,14 @@ of 96 pictures are the new risks.
   line-art rule (size, color depth, line weight). A rename changes only names and records the old
   name. A format change needs a new `lineArtFormatVersion` and a new twin render.
 - Use `RED_TEST_COMMAND` for a size or crop change from the final list. Record each resize or crop.
-- Weeks 2 to 7 get 96 line-art twins with the same line-art gates.
+- Weeks 2 to 7 get 162 line-art twins with the same line-art gates.
 - If spec v1 sets a larger print size or the A3 ratio (about 1.414:1), render the pages again from
   the kept stage files as new versions (T41). A new ratio changes the framing, so all picture
   gates apply again to each new version.
 - Person counts and line-art looks become `[b] deferred:daniel-or-named-reviewer` when they are
   the only missing evidence.
-- Treat `verify` and `sheet` on more than 16 pictures as heavy. Run them under the preflight and the lock.
-- Closeout gate: `verify --release` for 112 pages, their 112 line-art twins, and the cover exits 0.
+- Treat `verify` and `sheet` on more than 30 pictures as heavy. Run them under the preflight and the lock.
+- Closeout gate: `verify --release` for 192 rows, their 192 line-art twins, and the cover exits 0.
   The manifest has no `failed` or missing release candidate.
 
 ### Phase 5: Documentation and verification
@@ -1795,6 +2083,26 @@ Changed-contract risks:
 | A7 over-broad filter (task 11) | P2 | The safe controls of T123 keep the raw bytes, the reported model, the PASS verdict, and the write order. The token scan must not refuse a safe answer. | A safe answer is refused, a safe byte changes, a verdict changes, or a write is missing. |
 | A9 archived track paths (task 11) | P2 | T126 reads `src/storytime/book-pictures.ts` only. Tests still reference no `measure/tracks/` path. | A unit test gains a track path dependency. |
 | A10 generated-facts drift (task 11) | P2 | Refresh metadata and generated facts at phase closeout, after the task 11 status change. | Managed facts disagree with the completed plan. |
+| A2 consent-blind publish gate (phase 3) | P3 | The release gate needs a person log with a named `checkedBy` and a person evidence class (T17). Every week 1 row needs a color person log and a line-art person look (T145, T150). The style look needs `evidenceClass: owner-passed` (T36). | A row without a person log becomes `ready`, or a model log stands in for a person. |
+| A3 digit-only count (phase 3) | P3 | Parse labeled integers only: `rows 192 week1 30 A 16 B 2 C 12`, `render peak rss mb: <n>`, `available MB: <n>`, `bookcase texture size: 1024`, `Verification passed for 30 jobs with release evidence.`, the ledger counts, and the vitest total. | A date, an arbitrary digit, or a missing label satisfies a count or a bound. |
+| A4 vacuous pass (phase 3) | P3 | Every week 1 row has a color file and a line-art file (T145, T150). The list loader returns 30 rows, not zero (T142). A 6 px line fails and a 12 px line passes (T146). A batch with no asset record fails the shared-asset check. | An empty selection, an empty row set, a thin line, or a batch with no asset record passes. |
+| A5 false claim (phase 3) | P3 | Plan notes quote the command, the exit code, and the labeled values. The closeout text must read 30 jobs. A model result stays a pre-check. | The plan claims 30 files while the manifest lists fewer, or a pre-check is called acceptance. |
+| A6 registry overstatement (phase 3) | P3 | Keep the week 1 completion claim pending until the count review and the line-art look pass. The registry and the metadata use evidence classes. | Registry text says the week 1 pictures are accepted with no person log. |
+| A7 over-broad filter (phase 3) | P3 | The owned-error grep matches path prefixes, not words. The binary line-art check has no tolerance (T29). The size check compares exact pixel pairs. | A filter drops a real error, a pixel of 254 counts as white, or 3000 x 2250 counts as class A. |
+| A9 archived track paths (phase 3) | P3 | The new tests read `src/storytime/book-pictures.ts` and the read-only Workbooks list. They reference no `measure/tracks/` path. | A unit test gains a track path dependency. |
+| A10 generated-facts drift (phase 3) | P3 | Run `./measure/generate.sh` after each Phase 3 plan status change. Run `./measure/doctor.sh` at Phase 5. | `doctor.sh` reports stale generated facts. |
+
+Task 13 applicability for Phase 3: A1 and A8 remain retired. A2 applies because a release gate
+turns a row from pending to ready. A3 applies because Phase 3 adds file counts, pixel sizes, and
+two memory labels. A4 applies because a row can hold no file. A5 applies because the closeout
+count changes from 16 jobs to 30 jobs. A6 applies because the week 1 delivery claim waits for
+two human gates. A7 applies because the size and line checks use exact values. A9 does not apply
+to the new rows because they read no Measure path. A10 applies at the phase closeout.
+
+Phase 3 project candidates for a future `measure/anti-patterns.md`: (S11) a shared GLB that
+changed after the batch asset record was written, so a render uses a stale set piece; (S12) a
+line-art name under `lineart/` that the Workbooks list does not name, so the print track finds no
+file; (S13) a class C row that gets no twin, so a word card has no printable version.
 
 Task 11 applicability: A1 and A8 remain retired. A2 does not apply to this delta. It adds no publication or consent transition.
 Earlier release and person-review guards stay unchanged. Task 11 does not convert a model pre-check into acceptance.
@@ -1822,10 +2130,10 @@ quoting, so `$(...)` runs.
 
 | Review | P2 | P3 | P4 | P5 |
 | --- | --- | --- | --- | --- |
-| Review B (security) | Applies: output path escape, symlinks, process arguments, no API keys in raw output or ledger, Workbooks read-only. The capture page server listens on localhost only and serves only the stage file and repository assets. The `window.__bookStill` hook holds no secret and exists only in the local song page. Review B failed at `c2353433` (RB-01 to RB-05). Task 7 corrects the findings. Review B failed again at `84c8ffdb` (RB2-01 to RB2-04). Task 8 requires Review B on its HEAD with T88 to T95. | Applies: raw outputs and ledger contain no keys. | Applies, same as P3. | Not applicable. |
-| Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. From task 7: the calibration refusal in `verify --release`, the `--raw` and `--reason` refusals, and the wrapper invocation. From task 8: final CLI errors, decoded-field refusal timing, and the Unicode reason limit. Review C runs on the task 8 HEAD. | Applies: the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
-| Adversarial testing | Required: the task 5, task 7, and task 8 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: tamper a file and expect a hash failure. Change one line-art pixel to 128 and expect a failure. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
-| UX browser review | Not applicable: no UI. The smoke runs are live render proofs. Smoke run 6 also proves middleware refusal, not browser UX. | Not applicable: model pre-checks, person counts, line-art looks, and Daniel's style look review the pictures. | Not applicable. | Not applicable. |
+| Review B (security) | Applies: output path escape, symlinks, process arguments, no API keys in raw output or ledger, Workbooks read-only. The capture page server listens on localhost only and serves only the stage file and repository assets. The `window.__bookStill` hook holds no secret and exists only in the local song page. Review B failed at `c2353433` (RB-01 to RB-05). Task 7 corrects the findings. Review B failed again at `84c8ffdb` (RB2-01 to RB2-04). Task 8 requires Review B on its HEAD with T88 to T95. | Applies: the picture list is read only, the raw model outputs and the ledger hold no key, and the batch asset records hold no path outside `out/`. Review B runs on the Phase 3 Green HEAD with T142 to T151. | Applies, same as P3. | Not applicable. |
+| Review C (UX and API) | Applies: CLI commands, flags, exit codes (`2` for a pre-check fail), `--output`, the provisional line-art name, the `window.__bookStill` shape, the `lineart-smoke` command, and the manifest schema with output kinds that Workbooks reads. From task 7: the calibration refusal in `verify --release`, the `--raw` and `--reason` refusals, and the wrapper invocation. From task 8: final CLI errors, decoded-field refusal timing, and the Unicode reason limit. Review C runs on the task 8 HEAD. | Applies: the list-driven file names, the `-line-v1.png` sibling name, the new size classes, the error text that names a failing row, the manifest and contact sheet handoff, and the sample report to the PM. | Applies: final list and spec v1 reconciliation. | Not applicable. |
+| Adversarial testing | Required: the task 5, task 7, and task 8 mutations in the closeout gate, release gate bypass, version overwrite, path escape, `w08`, ledger order, hold handling, a grey pixel, a twin mismatch, a lone color file, a name collision, a `wireframe: true` mutation, a removed restore line, a camera read after the pass, and the Red mutation list. | Required: change one byte of a list row, one line-art pixel to 128, one manifest hash, one shared-asset stat, and one line-art name. Each change must fail a named check. The twin pair must come from one render run. | Recommended on the cover check and the spec v1 rename. | Not applicable. |
+| UX browser review | Not applicable: no UI. The smoke runs are live render proofs. Smoke run 6 also proves middleware refusal, not browser UX. | Not applicable: the output is picture files. The model pre-checks, the count review, the line-art looks, and Daniel's style look review the pictures. The browser shows no new UI. | Not applicable. | Not applicable. |
 
 Task 9 requires Reviews A, B, and C on its final HEAD. Its section 4 applicability supplements this table.
 Task 9 requires adversarial testing but no browser review or new smoke run.
@@ -1879,6 +2187,10 @@ Evidence classes:
 - Task 11 retains these rules. A red T116 to T128 result after Green blocks the phase.
   Do not suppress a task 11 failure with a test filter, skip, or baseline exception.
   The aggregate suite stays outside the focused command and stays a recorded known failure.
+- Phase 3 retains these rules. A red T142 to T151 result after Green blocks the phase.
+  Do not suppress a Phase 3 failure with a test filter, skip, or baseline exception.
+  The Phase 3 rows stay in `tests/storytime-book-pictures.test.ts`, so the focused command runs
+  one file. The rows T1 to T141 keep their Phase 2 evidence and their green result.
 
 ## 12. phase_base_sha capture point
 
@@ -1917,3 +2229,8 @@ Evidence classes:
     The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
     If the orchestrator opens a separate phase run for task 11, capture that `phase_base_sha` immediately after this strategy commit.
     Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.
+12. The Phase 3 strategy commit lands before the Phase 3 Red starts. Immediately afterward, the orchestrator runs `git rev-parse HEAD`.
+     Record that committed value as the immutable Phase 3 `phase_base_sha`. Do not use `455d2c1d` or any earlier SHA as this base.
+     The immutable Phase 2 `phase_base_sha` remains `1d39b8fd`.
+     Capture the new base before any Red edit or commit. This strategy embeds no SHA for that base.
+     Section 3.12 holds the same rule for the Phase 3 base.
