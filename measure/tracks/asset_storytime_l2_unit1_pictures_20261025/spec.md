@@ -7,15 +7,17 @@ Daniel's order of 2026-10-25 resumes Storytime release 1 picture work. The order
 
 The source packages are `Workbooks/content/storytime/l2/w01.json` through `w07.json`.
 Forge reads those files without changing them. The source holds 112 book pages: 16 pages in each
-of seven weeks. Each week has one eight-page read-along and one eight-page decodable.
+of seven weeks. Each week has one eight-page read-along and one eight-page decodable. The
+Workbooks picture list is version 3. It holds 192 rows for weeks 1 to 7.
 
-Week 1 contains "Hello!" and "Nan Can Nod". Its pictures are due 2026-11-01. Weeks 2 to 7 and
-the Level 2 cover render are due 2026-11-15.
+Week 1 contains "Hello!" and "Nan Can Nod". Its pictures are due 2026-11-02. Weeks 2 to 7 and
+the Level 2 cover render are due 2026-11-16.
 
 Each reader page has two outputs: a color picture and a black-and-white line-art picture. The
 color picture serves the app read-along and the song videos. The line-art picture serves a
 printed workbook with "build your own" readers. Both outputs come from the same 3D scene and
-camera. The line-art format is provisional until Workbooks picture specification v1.
+camera. Workbooks picture specification v1 arrived on 2026-10-25. It fixes the picture sizes and
+the line-art format.
 
 ## Decisions and boundaries
 
@@ -48,37 +50,88 @@ camera. The line-art format is provisional until Workbooks picture specification
 - Forge writes only inside this repository. No Workbooks or monorepo file changes are allowed.
 - No bucket upload, deployment, public release, deletion, song render, or video render is allowed.
 
-## Picture specification v0
+## Picture specification v1
 
-Workbooks supplied this specification on 2026-10-25. The full picture list follows by 2026-10-28.
+History: picture specification v0 of 2026-10-25 set 3000 x 2250 story pages, 3600 x 2700 covers,
+and 1500 x 1500 small pictures. Version 1 replaces it.
 
-- Story pages: 3000 x 2250 pixels, 4:3.
-- Covers: 3600 x 2700 pixels, 4:3. Keep the top 30 percent calm for the title.
-- Small pictures: 1500 x 1500 pixels on white.
-- PNG, 8-bit sRGB, opaque, with no letters or numbers in the picture.
-- No bleed. Workbooks converts the pictures to CMYK.
-- Filenames: `l2-w01-<use>-<what-it-shows>-v1.png`.
-- One `manifest.json` with SHA-256 per batch.
+Workbooks supplied specification v1 on 2026-10-25. Requirement FR-9 of the print track
+`storytime_print_r1_20261025` holds it.
+
+### Size classes
+
+| Class | Use | Pixels | Aspect | Background | Composition |
+|---|---|---|---|---|---|
+| A | Reader story pages (112) | 4000 x 3000 | 4:3 landscape | The scene, opaque | Every named object, face, and hand in the central 90 percent. Workbooks can cut 5 percent at each edge. |
+| B | Reader covers (14) | 4000 x 3000 | 4:3 landscape | The scene, opaque | One in-scene render with the cast in place. The top 30 percent stays calm. |
+| C | Check rows, practice lines, cards | 1500 x 1500 | 1:1 | White `#FFFFFF` | One object, or one person who does the action, centered, about 80 percent of the frame. |
+
+The size class follows the use of the row. A story page is class A. A cover is class B. A check
+row and a practice line are class C.
+
+Class A and class B give about 378 ppi in the A3 picture box (269 mm wide). That is above the
+300 ppi target.
+
+### Color rules
+
+- PNG, 8-bit, sRGB, opaque, with no alpha channel and no CMYK.
+- No letters, words, or numbers in the picture.
+- Every picture shows the objects in the counts that the text says.
+- The cast is the Forge cast at age 5.
+- Each batch has a `manifest.json` with the file name and the picture-list id. It also holds the
+  SHA-256 and the pixel size.
+- Workbooks converts the pictures to CMYK in `make-pdfx.ts`.
+- The pictures sit in frames on white pages. They need no bleed.
+
+### File names
+
+- Every row of the picture list names a color file and a line-art file.
+- The color file name matches `^l2-w\d{2}-[a-z-]+-v\d+\.png$`.
+- The line-art file name is the color file name with `-line` before the version.
+- Example: `l2-w01-story-page-a-nest-line-v1.png`.
+- The ids and the file names stay unique across the weeks.
+
+### Line-art rules
+
+- Every row of the picture list has two outputs.
+- The line-art file has the same pixel size as the color file of its row.
+- The line art is a PNG, 8-bit, grayscale, with an opaque white `#FFFFFF` background.
+- The line art holds black outlines only, with no gray fill or shading. Anti-aliased edges are
+  allowed.
+- The outlines are closed, so a child can color the picture.
+- No line is thinner than 12 px.
+- The line art holds no letters, words, or numbers.
+- The line art shows the same scene, cast, and object counts as the color render of the row.
+- The line-art file name ends in `-line-v1.png`.
 
 ### Render size and the A3 teacher print
 
 - Render size is a parameter of the render. The stage file does not contain it.
 - Stage files and cameras are kept and versioned. A later render at a larger size needs no new
   scene work and no extra cost.
-- A3 (about 1.414:1) has a different ratio from the 4:3 story page. A render at the A3 ratio
-  changes the framing. The final size and ratio wait for specification v1.
+- Specification v1 keeps 4:3 for class A and class B. A3 (about 1.414:1) has a different ratio.
+  A render at the A3 ratio changes the framing. A later size or ratio needs a new render, and
+  every picture gate applies again.
 
-### Interim line-art format (provisional)
+### Picture list version 3
 
-This format is provisional. Workbooks sends picture specification v1 by 2026-10-28 with the
-line-art size, color depth, and line weight for the cut-and-fold page. Until then:
+The picture list is `Workbooks/content/storytime/l2/print/pictures.json` at list version 3.
+Workbooks commit 078917f1 supplied it. The list has 192 rows.
 
-- Line art has the same pixel size as its color twin: 3000 x 2250 for a story page.
-- Pure black lines on white. No grey fill. Every pixel is black (0) or white (255).
-- Opaque PNG. No letters or numbers. No bleed.
-- A provisional filename that does not match the Workbooks color pattern. The contract defines it.
-- Line art is required for the 112 reader pages. The cover and small pictures have no line art
-  unless specification v1 asks for it.
+- Week 1 has 30 rows: 16 of class A, 2 of class B, and 12 of class C.
+- Weeks 2 to 7 have 27 rows each: 16 of class A, 2 of class B, and 9 of class C. That is 162 rows.
+- The 12 class C rows of week 1 hold the check rows and the practice lines.
+- The list holds 112 story pages and 14 reader covers. It also holds 63 check rows and 3 practice
+  lines.
+- Every row has a color file and a line-art file. The list names 384 files.
+- The week 1 rows of version 3 equal the week 1 rows of version 2.
+- Version 3 changed four ids in weeks 2 and 6. The suffix moved from `-a` to `-b`.
+
+### Ownership of the class B rows
+
+The class B rows are the 14 reader covers. The Workbooks covers track `storytime_covers_20261027`
+lists them as out of scope. The print track owns them as reader pages. Forge renders the B
+pictures. Workbooks keeps the layout and the text.
 
 ## Functional Requirements
 
@@ -137,22 +190,27 @@ line-art size, color depth, and line weight for the cut-and-fold page. Until the
 
 ### Week 1 milestone
 
-- Sixteen versioned PNG files exist for "Hello!" and "Nan Can Nod".
-- Every picture meets the story-page size and format contract.
+- Thirty versioned color PNG files exist for the 30 week 1 rows of picture list version 3.
+- The rows are 16 of size class A, 2 of size class B, and 12 of size class C.
+- Every picture meets the pixel size and the format contract of its size class.
 - Automated file, layout, and manifest checks pass.
 - Both model providers pass every release candidate after successful calibration.
 - Raw model outputs and the paid-call ledger accompany the pictures.
 - Daniel or his named reviewer records an object count and verdict for every picture.
 - A contact sheet and the manifest support the progress report.
-- Sixteen versioned line-art PNG files exist, one for each color picture.
-- Each line-art file passes the interim or v1 line-art format checks and binds to its color twin.
+- Thirty versioned line-art PNG files exist, one for each color picture.
+- Each line-art file passes the specification v1 line-art format checks and binds to its color
+  twin.
 - Daniel's look at the Nan window sample is recorded through the PM.
 - Daniel or his named reviewer records a look and verdict for every line-art picture.
 
 ### Track completion
 
-- All 112 page pictures and the Level 2 cover render meet the same gates.
-- All 112 line-art pictures meet the line-art gates and the specification v1 format.
+- All 30 color files of week 1 and all 30 line-art files of week 1 meet the same gates.
+- All 162 color files of weeks 2 to 7 and all 162 line-art files of weeks 2 to 7 meet the same
+  gates.
+- All 192 line-art files meet the line-art gates and the specification v1 format.
+- The Level 2 cover render meets the same gates.
 - The final Workbooks picture list is reconciled with this track.
 - The manifest has no unresolved failed or missing release candidate.
 - The plan, metadata, registry, and generated facts reflect the delivered state.

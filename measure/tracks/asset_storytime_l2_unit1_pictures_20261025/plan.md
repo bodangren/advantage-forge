@@ -1,7 +1,7 @@
 # Storytime Level 2 unit 1 book pictures
 
-Status: in progress (started 2026-10-25). Week 1 is due 2026-11-01. Weeks 2 to 7 and the cover
-render are due 2026-11-15. The [specification](./spec.md) owns the scope and acceptance gates.
+Status: in progress (started 2026-10-25). Week 1 is due 2026-11-02. Weeks 2 to 7 and the cover
+render are due 2026-11-16. The [specification](./spec.md) owns the scope and acceptance gates.
 
 ## Method and ownership
 
@@ -40,7 +40,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
 - Daniel added print line art. Each reader page gets a color output and a line-art output from the
   same scene and camera. The line-art format is provisional until Workbooks picture spec v1.
 
-## Phase 2: Tests and calibrated model pre-checks
+## Phase 2: Tests and calibrated model pre-checks [checkpoint: 061694f]
 
 - [x] Task: Add failing tests for source counts, scene contracts, descriptive versions, manifest validation, layout, line-art twins, and output isolation. Commit `01c01bdf`.
   Record the red result.
@@ -930,6 +930,22 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   selected MiniMax. MiniMax wrote the task 12 Red tests. GLM wrote the task 12 Green implementation.
   No paid call, render, build, server, browser, network call, or production change occurred.
 
+### Phase 2 acceptance
+
+The phase acceptance result is
+`measure/runs/asset_storytime_l2_unit1_pictures_20261025/phase-acceptance-061694f.json`. Its status
+is `pass` and it holds no blocking finding. An independent phase-gate run at `061694f` exited 0
+with `Tests  151 passed (151)`.
+
+Closeout carries these items:
+
+- RA4-N1: correct the stale task 8 Green handoff.
+- RA3-N1: refresh `metadata.json` `actual_tasks` and the generated facts.
+- RC5-3: record as a tech-debt candidate. It is the raw-byte refusal text.
+- RB7-01: record as a tech-debt candidate. It is the word boundary of the `api-key-prefix` rule.
+- The named residual-risk list: keep the out-of-class transform list, including a credential
+  encoded twice inside one string token.
+
 ## Phase 3: Week 1 pictures
 
 - [ ] Task: Render the Nan window sample in color and line art. First write
@@ -945,37 +961,53 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Report both file paths and SHA-256 values to the PM for Daniel's look. When
   the report is sent and the look is pending, mark this task `[b] deferred:daniel-lineart-look`.
   Continue with the next tasks while it waits. Record the look in the style look record.
+  The sample renders at the size class A pixel size of specification v1, 4000 x 3000 pixels.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
-- [ ] Task: Render the 16 week 1 pages as 16 color and 16 line-art versioned PNG files, one twin
-  pair per render run. Run the pre-flight check and heavy lock for each batch. Keep all source
-  prompts, stage files, and package hashes.
+- [ ] Task: Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
+  versioned PNG files, one twin pair per render run. The rows come from
+  `Workbooks/content/storytime/l2/print/pictures.json`. The rows are 16 of size class A, 2 of size
+  class B, and 12 of size class C. Use the version 1 file names and the version 1 pixel sizes of
+  each row. Class A and class B render at 4000 x 3000 pixels. Class C renders at 1500 x 1500
+  pixels. The class B rows are the two week 1 reader covers. The Workbooks covers track excludes
+  them. Forge renders the B pictures and Workbooks keeps the layout and the text. Run the
+  pre-flight check and heavy lock for each batch. Keep all source prompts, stage files, and
+  package hashes.
 - [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
 - [ ] Task: Send the count review and the line-art look to the PM. The PM routes them to Daniel or
-  his named reviewer. Record the person, time, counts, and verdict for all 16 color and 16
+  his named reviewer. Record the person, time, counts, and verdict for all 30 color and 30
   line-art pictures. Do not label model results acceptance.
-- [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. Apply picture
-  spec v1 to the line art if it arrived. Otherwise label the line art provisional. Report the
-  output path and every remaining gate to the PM for routing.
+- [ ] Task: Deliver the week 1 manifest, contact sheet, review logs, and ledger. The manifest
+  lists the 30 color and 30 line-art files. Apply picture specification v1 to the line art.
+  Specification v1 has arrived, so the line art is not provisional. Report the output path and
+  every remaining gate to the PM for routing.
 
 ## Phase 4: Remaining pictures and cover
 
-- [ ] Task: Reconcile the final Workbooks picture list and size specification. Preserve picture
-  content and document any resize or crop.
-- [ ] Task: Produce weeks 2 to 7 after the week 1 review. Apply the same automated, two-model,
-  and person-count gates to all 96 pictures.
+- [ ] Task: Reconcile the final Workbooks picture list and size specification. Picture list
+  version 4 is pending and comes before 2026-11-16. Version 4 adds a week 8 review and the
+  Benchmark 1 rows for the words moon, mango, ostrich, and drum. Make no picture for those
+  words until version 4 arrives. Version 3 changed four ids in weeks 2 and 6. The suffix moved
+  from `-a` to `-b`. Reconcile those four ids. Preserve picture content and document any resize
+  or crop.
+- [ ] Task: Produce weeks 2 to 7 after the week 1 review. The weeks hold 162 rows. They need 324
+  files, one color file and one line-art file per row. Apply the same automated, two-model, and
+  person-count gates to all 162 pictures.
 - [ ] Task: Produce the Level 2 cover render under S19. Apply the same review gates. Keep the top
   30 percent calm and keep cover layout and text with Workbooks.
 
-Line-art note for Phase 4: weeks 2 to 7 get 96 line-art twins with the same line-art gates. The
-reconciliation task also applies picture spec v1 to the line art. It records each rename,
-resize, or new render, and it updates the line-art format version.
+Line-art note for Phase 4: weeks 2 to 7 get 162 line-art twins with the same line-art gates. The
+reconciliation task also applies picture specification v1 to the line art. Specification v1 has
+arrived, so the line art is not provisional. The task records each rename, resize, or new render,
+and it updates the line-art format version.
 
-A3 note for Phase 4: if spec v1 sets a larger print size or the A3 ratio, render the color and
-line-art twins again from the kept stage files as new versions. A new ratio changes the framing,
-so every picture gate applies again.
+A3 note for Phase 4: specification v1 sets size class A and class B to 4000 x 3000 pixels, 4:3
+landscape. That is about 378 ppi in the A3 picture box (269 mm wide). It meets the 300 ppi target.
+If a later list sets a larger print size or the A3 ratio, render the color and line-art twins
+again from the kept stage files as new versions. A new ratio changes the framing, so every picture
+gate applies again.
 
 ## Phase 5: Documentation and verification
 
