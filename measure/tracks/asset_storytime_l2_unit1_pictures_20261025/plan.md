@@ -1025,7 +1025,8 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   Red/Green independence. Logs: `green-p3-vitest.log`, `green-p3-tsc.log` in the same run
   directory.
 
-- [ ] Task: Render the Nan window sample in color and line art. First write
+- [b] deferred:daniel-lineart-look Task: Render the Nan window sample in color and line art. Sample stage
+  commit `4c7d217f`. First write
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
   In v2, Nan faces the camera (yaw from -30 to 30 degrees), and the window is beside or behind her.
   A `fern` prop gives the small green plant. The `pot` prop shows red flowers, so v2 does not use
@@ -1039,6 +1040,37 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   the report is sent and the look is pending, mark this task `[b] deferred:daniel-lineart-look`.
   Continue with the next tasks while it waits. Record the look in the style look record.
   The sample renders at the size class A pixel size of specification v1, 4000 x 3000 pixels.
+  Sample evidence (2026-10-28, Green session, GLM). The render needed one implementation fix
+  first: commit `3a5ef00d` flattens the captured line-art canvas over white, because the page
+  pass kept the canvas alpha and produced a 2-channel grey+alpha PNG, which the line-art checks
+  refuse; the contract requires one opaque 8-bit grey channel.
+  Render command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800
+  node --import tsx scripts/storytime-book-pictures.ts render --job w01-readalong-p05 --version 2'`;
+  exit code `0`. Verify command (no `--release`): same wrapper,
+  `verify --job w01-readalong-p05`; exit code `0`; `Verification passed for 1 jobs.` The render
+  log holds the T53 labels (`capture path: captureBookStill`; `camera drift source: live`;
+  `camera state drift: 0`; `color repeat identical: yes`; `lineart technique` is in the evidence)
+  and the T142 labels (`render peak rss mb: 484`; the line-art check prints
+  `Line-art line width: 261 px (minimum 12 px)` and
+  `Line-art ink coverage: 2.06% (247011 of 12000000 pixels black)`); `book files served: 15`;
+  `book file requests refused: 0`. Files (4000 x 3000, one twin pair from one render run):
+  color `out/storytime/l2/unit1/w01/readalong/l2-w01-readalong-nan-v2.png`, SHA-256
+  `ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b`; line art
+  `out/storytime/l2/unit1/w01/readalong/lineart/l2-w01-readalong-nan-v2-lineart.png`, SHA-256
+  `0b5e37a7a9b072eb982c83f60f83cd0e76fe47f1a16e7c3fb4b9ba2b209888bf`. What the picture shows
+  (Green viewed both files): the color picture shows Nan from the front — her face with eyes and
+  smile and the white star on the orange T-shirt are visible — waving in the classroom, with the
+  shuttered window behind her, the fern on the floor beside her, two stools, the table, and the
+  bookcases. The line art draws the same scene as clean one-bit outlines; the window panes show
+  as four white panes with the cross frame, not as black areas, and the fern shows. The line art
+  has no painted face features and no shirt star: the form-edge pass draws geometry edges only.
+  This is a named item for Daniel's line-art look, beside the RA2-N2 risk: in the sample line
+  art the adjacent bookcase books still merge into one outline with few spine lines, so a page
+  that counts books can fail the person look. No plant-in-pot item exists: the `pot` asset shows
+  red flowers, and no existing approved item shows the plant in a pot, so the sample uses the
+  `fern` prop on its soil mound. No v3 was needed: Nan faces the camera, the panes show as
+  panes, and the plant shows. The task goes to the PM for Daniel's line-art look and stays
+  `[b] deferred:daniel-lineart-look` until the style look record passes.
 - [ ] Task: Build and independently review the PM-approved missing cast, props, and poses for
   week 1. Use the Forge asset workflow and preserve the approved character look.
 - [ ] Task: Render the 30 week 1 rows of picture list version 3 as 30 color and 30 line-art
