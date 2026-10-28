@@ -29,7 +29,7 @@ share as backgrounds. The background mockups come later, from this list.
 | 4 | Garden | Low garden beds with rows of green seedlings, a water jar, a small shed, a low fence, a fruit tree | Early morning, sun from the right, soft warm light, long soft shadows | none | 1 (week 4 also shows a garden) |
 | 5 | Playground | A slide in yellow and red, two swings, a sandbox, a ladder, a soft blue rubber floor | Midday, sun high from the front, clear light, short shadows | none | 2 |
 | 6 | Small shop (Thai corner shop) | Wood shelves with jars and packets, a counter with a scale, crates of fruit, a hanging bulb, a blue curtain | Morning, sun from the open door, warm light, one bright band on the floor | `scenes/maps/general-store.ts` (closest) | none in Unit 1 |
-| 7 | Farm | Soft green field rows, a red barn, a hay stack, a water wheel, a wooden fence, a water buffalo | Late afternoon, sun from the left, warm golden light, long soft shadows | `scenes/maps/mill.ts` (closest) | none in Unit 1 |
+| 7 | Farm | Green rice paddy rows, a raised wooden farmhouse on stilts, a hay stack, a low wooden fence, a water buffalo | Late afternoon, sun from the left, warm golden light, long soft shadows | `scenes/maps/mill.ts` (closest) | none in Unit 1 |
 | 8 | Meadow with a pond | Tall soft grass, a low wooden fence, one small tree, an oval pond with pale blue water, yellow wildflowers | Mid-morning, sun from the front left, warm white light, soft short shadows | `scenes/maps/grassland.ts` (closest) | 6 |
 | 9 | Kitchen | Wood counter, a stove, a round window, a rice cooker, a fruit basket, hanging pots, checked floor tiles | Midday, sun through the round window, warm light, one soft round patch on the counter | `scenes/maps/bakery.ts` (closest) | 3 and 6 (prompts only) |
 | 10 | Bedroom | A low bed with a soft blue blanket, a small shelf with books, a toy box, a window with light curtains, a rug | Early evening, sun through the window, warm dim light, long soft shadows | `scenes/maps/inn.ts` (closest) | none in Unit 1 |
@@ -67,8 +67,11 @@ This section holds the plan for the first batch. The batch covers 6 places:
 
 Each place gets 2 to 3 candidates. The MiniMax image tool makes them under the quota rules:
 
-- `mmx quota show` runs before the batch. The batch stops on quota exhaustion or a provider cap.
-- One paid call runs at a time.
-- The batch makes no video call. The video quota stays untouched.
+- The batch uses the MiniMax `general` pool that `mmx quota show` reports.
+- Read `mmx quota show` and `ra-quota` before each batch.
+- Start a batch only when more than 30 % of the 5-hour window is left.
+- Stop when the 5-hour use passes 70 %.
+- Run a large batch only after 22:00 ICT, with a cap per batch.
+- One paid call runs at a time. The batch makes no video call.
 
 The PNG files stay out of git until Daniel accepts them.
