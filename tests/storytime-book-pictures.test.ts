@@ -3076,6 +3076,38 @@ parentPort.postMessage(report);
         return { text: chainText(levels, 'x'.repeat(filler)), levels };
       }
 
+      /** The Review B fold encoding. It maps a backslash and a quote to Unicode escapes. */
+      function foldEncoding(text: string): string {
+        return text.replace(/\\/g, '\\u005c').replace(/"/g, '\\u0022');
+      }
+      /** One fold chain with a known level count. The filler sits at the deepest level. */
+      function foldChainAtLevels(levels: number, payload: string, filler: string): string {
+        let text = '"' + payload + filler + '"';
+        for (let level = 1; level < levels; level += 1) text = '"' + foldEncoding(text) + '"';
+        return text;
+      }
+      /** A fold chain of the byte budget. The safe twin keeps the same level count. */
+      function foldChainAnswer(totalBytes: number, payload: string, levels: number) {
+        const text = foldChainAtLevels(levels, payload, '');
+        const filler = totalBytes - Buffer.byteLength(text, 'utf8');
+        expect.soft(filler, 'The fold chain leaves room for its filler.').toBeGreaterThanOrEqual(0);
+        return { text: foldChainAtLevels(levels, payload, 'x'.repeat(filler)), levels };
+      }
+
+      const ESCAPED_WIDE_TOKENS = 5572;
+      /** A wide answer whose every string token holds exactly one JSON escape. */
+      function escapedWideAnswer(totalBytes: number, firstToken: string) {
+        const tokens = [firstToken];
+        for (let index = 1; index < ESCAPED_WIDE_TOKENS - 1; index += 1) {
+          tokens.push(`w${index.toString(36)}\\n`);
+        }
+        const prefix = `[${tokens.map((token) => `"${token}"`).join(',')}`;
+        const emptyTail = ',"\\n"]';
+        const pad = totalBytes - Buffer.byteLength(prefix + emptyTail, 'utf8');
+        expect.soft(pad, 'The escaped wide answer leaves room for its filler.').toBeGreaterThanOrEqual(0);
+        return { text: `${prefix},"${'x'.repeat(pad)}\\n"]`, tokens: tokens.length + 1 };
+      }
+
       /** Runs one provider call in the worker harness. The test owns the wall-clock limit. */
       async function malformedRun(provider: Provider, raw: string) {
         const space = await providerWorkspace(provider, raw);
@@ -3322,6 +3354,163 @@ parentPort.postMessage(report);
           }
         }
       }, 300000);
+
+      it('T139: the seam finds the deepest credential in the 66-level fold chain', async () => {
+        const secret = malformedSecret();
+        const hostile = foldChainAnswer(SCAN_BYTES, malformedEscaped(secret), 66);
+        const twin = foldChainAnswer(SCAN_BYTES, '', hostile.levels);
+        expect.soft(hostile.levels, 'The byte budget holds the Review B depth.').toBe(66);
+        expect.soft(Buffer.byteLength(hostile.text, 'utf8'), 'The hostile chain has 65,536 bytes.')
+          .toBe(SCAN_BYTES);
+        expect.soft(Buffer.byteLength(twin.text, 'utf8'), 'The safe chain has 65,536 bytes.')
+          .toBe(SCAN_BYTES);
+        const directory = await mkdtemp(path.join(root, 'hostile-'));
+        const rawFile = path.join(directory, 'fold-chain.json');
+        const twinFile = path.join(directory, 'fold-chain-twin.json');
+        await put(rawFile, hostile.text);
+        await put(twinFile, twin.text);
+        const run = await runHostile({ mode: 'seam', rawFile }, MALFORMED_CHAIN_LIMIT_MS);
+        const twinRun = await runHostile({ mode: 'seam', rawFile: twinFile }, MALFORMED_CHAIN_LIMIT_MS);
+        const measured = run.report?.ms ?? run.elapsed;
+        const twinMeasured = twinRun.report?.ms ?? twinRun.elapsed;
+        const levelsPrinted = `fold chain levels: ${hostile.levels}`;
+        const printed = `fold chain scan ms: ${measured}`;
+        const twinPrinted = `fold chain twin scan ms: ${twinMeasured}`;
+        console.log(levelsPrinted);
+        console.log(printed);
+        console.log(twinPrinted);
+        const parsedLevels = Number(/^fold chain levels:\s*([0-9]+)$/.exec(levelsPrinted)?.[1] ?? '');
+        const parsed = Number(/^fold chain scan ms:\s*([0-9]+)$/.exec(printed)?.[1] ?? '');
+        const twinParsed = Number(/^fold chain twin scan ms:\s*([0-9]+)$/.exec(twinPrinted)?.[1] ?? '');
+        expect.soft(run.timedOut, `The fold chain finishes inside ${MALFORMED_CHAIN_LIMIT_MS} ms.`).toBe(false);
+        expect.soft(twinRun.timedOut, `The safe fold chain finishes inside ${MALFORMED_CHAIN_LIMIT_MS} ms.`)
+          .toBe(false);
+        expect.soft(run.report?.ok ?? false, 'The worker scanned the fold chain.').toBe(true);
+        expect.soft(twinRun.report?.ok ?? false, 'The worker scanned the safe fold chain.').toBe(true);
+        expect.soft(run.report?.findings ?? [], 'The deepest decoded credential yields a finding.')
+          .toContain('api-key-prefix');
+        expect.soft(twinRun.report?.findings ?? [], 'The safe fold chain yields no finding.').toEqual([]);
+        expect.soft(parsedLevels, levelsPrinted).toBe(66);
+        expect.soft(parsed, 'The fold chain duration is a labeled integer.').toBe(measured);
+        expect.soft(twinParsed, 'The safe fold chain duration is a labeled integer.').toBe(twinMeasured);
+        expect.soft(parsed, printed).toBeLessThanOrEqual(20000);
+        expect.soft(twinParsed, twinPrinted).toBeLessThanOrEqual(20000);
+      }, 180000);
+
+      it('T140: the seam scans 5,572 escaped tokens within the wide bound', async () => {
+        const names: string[] = [];
+        try {
+          for (let index = 0; index < 1200; index += 1) {
+            const name = `AT2_WIDE_${index}_KEY`;
+            process.env[name] = `sek${index.toString(16).padStart(8, '0')}SYNTHETICVALUE`;
+            names.push(name);
+          }
+          const secret = malformedSecret();
+          const escapedCredential = secret.slice(0, -1) + '\\u0043';
+          const hostile = escapedWideAnswer(SCAN_BYTES, escapedCredential);
+          const twin = escapedWideAnswer(SCAN_BYTES, 'w0\\n');
+          expect.soft(hostile.tokens, 'The hostile answer has the Review B token count.')
+            .toBe(ESCAPED_WIDE_TOKENS);
+          expect.soft(twin.tokens, 'The safe answer has the Review B token count.').toBe(ESCAPED_WIDE_TOKENS);
+          expect.soft(Buffer.byteLength(hostile.text, 'utf8'), 'The hostile wide answer has 65,536 bytes.')
+            .toBe(SCAN_BYTES);
+          expect.soft(Buffer.byteLength(twin.text, 'utf8'), 'The safe wide answer has 65,536 bytes.')
+            .toBe(SCAN_BYTES);
+          const directory = await mkdtemp(path.join(root, 'hostile-'));
+          const rawFile = path.join(directory, 'escaped-wide.json');
+          const twinFile = path.join(directory, 'escaped-wide-twin.json');
+          await put(rawFile, hostile.text);
+          await put(twinFile, twin.text);
+          const run = await runHostile({ mode: 'seam', rawFile }, MALFORMED_WIDE_LIMIT_MS);
+          const twinRun = await runHostile({ mode: 'seam', rawFile: twinFile }, MALFORMED_WIDE_LIMIT_MS);
+          const measured = run.report?.ms ?? run.elapsed;
+          const twinMeasured = twinRun.report?.ms ?? twinRun.elapsed;
+          const tokensPrinted = `escaped wide tokens: ${hostile.tokens}`;
+          const printed = `escaped wide scan ms: ${measured}`;
+          const twinPrinted = `escaped wide twin scan ms: ${twinMeasured}`;
+          console.log(tokensPrinted);
+          console.log(printed);
+          console.log(twinPrinted);
+          const parsedTokens = Number(/^escaped wide tokens:\s*([0-9]+)$/.exec(tokensPrinted)?.[1] ?? '');
+          const parsed = Number(/^escaped wide scan ms:\s*([0-9]+)$/.exec(printed)?.[1] ?? '');
+          const twinParsed = Number(/^escaped wide twin scan ms:\s*([0-9]+)$/.exec(twinPrinted)?.[1] ?? '');
+          expect.soft(run.timedOut, `The escaped wide scan finishes inside ${MALFORMED_WIDE_LIMIT_MS} ms.`)
+            .toBe(false);
+          expect.soft(twinRun.timedOut, `The safe wide scan finishes inside ${MALFORMED_WIDE_LIMIT_MS} ms.`)
+            .toBe(false);
+          expect.soft(run.report?.ok ?? false, 'The worker scanned the escaped wide answer.').toBe(true);
+          expect.soft(twinRun.report?.ok ?? false, 'The worker scanned the safe wide answer.').toBe(true);
+          expect.soft(run.report?.findings ?? [], 'The one-escape credential yields a finding.')
+            .toContain('api-key-prefix');
+          expect.soft(twinRun.report?.findings ?? [], 'The safe escaped wide answer yields no finding.').toEqual([]);
+          expect.soft(parsedTokens, tokensPrinted).toBe(ESCAPED_WIDE_TOKENS);
+          expect.soft(parsed, 'The escaped wide duration is a labeled integer.').toBe(measured);
+          expect.soft(twinParsed, 'The safe wide duration is a labeled integer.').toBe(twinMeasured);
+          expect.soft(parsed, printed).toBeLessThanOrEqual(60000);
+          expect.soft(twinParsed, twinPrinted).toBeLessThanOrEqual(60000);
+        } finally {
+          for (const name of names) delete process.env[name];
+        }
+        expect(Object.keys(process.env).filter((name) => name.startsWith('AT2_WIDE_')),
+          'The injected wide env names are gone.').toEqual([]);
+      }, 300000);
+
+      it('T141: the decoder preserves every single-character escape kind', async () => {
+        const cases = [
+          { label: 'quote', value: 'SYNTHETIC"QUOTEVALUE' },
+          { label: 'reverse solidus', value: 'SYNTHETIC\\REVERSEVALUE' },
+          { label: 'solidus', value: 'SYNTHETIC/SOLIDUSVALUE' },
+          { label: 'backspace', value: 'SYNTHETIC\bBACKSPACEVALUE' },
+          { label: 'form feed', value: 'SYNTHETIC\fFORMFEEDVALUE' },
+          { label: 'line feed', value: 'SYNTHETIC\nLINEFEEDVALUE' },
+          { label: 'carriage return', value: 'SYNTHETIC\rCARRIAGEVALUE' },
+          { label: 'tab', value: 'SYNTHETIC\tTABVALUE' },
+        ];
+        const names: string[] = [];
+        try {
+          const texts = cases.map((item, index) => {
+            const name = `AT2_ESCAPE_${index}_KEY`;
+            names.push(name);
+            process.env[name] = item.value;
+            let encoded = JSON.stringify(item.value);
+            if (item.label === 'solidus') encoded = encoded.replace('/', '\\/');
+            return `{"note":${encoded}}`;
+          });
+          const twins = texts.map((text) => text.replace('SYNTHETIC', 'XYNTHETIC'));
+          const run = await runHostile({ mode: 'corpus', texts: [...texts, ...twins] },
+            MALFORMED_GENERATOR_LIMIT_MS);
+          expect.soft(run.timedOut, `The escape corpus finishes inside ${MALFORMED_GENERATOR_LIMIT_MS} ms.`)
+            .toBe(false);
+          expect.soft(run.report?.ok ?? false, 'The worker scanned every escape case.').toBe(true);
+          const sets = run.report?.findingSets ?? [];
+          expect.soft(sets.length, 'The worker returns one finding set per text.').toBe(texts.length + twins.length);
+          let findings = 0;
+          cases.forEach((item, index) => {
+            if ((sets[index] ?? []).includes(`env:${names[index]}`)) findings += 1;
+            else console.log(`missed escape kind: ${item.label}`);
+          });
+          let twinFindings = 0;
+          twins.forEach((text, index) => {
+            if ((sets[texts.length + index] ?? []).length > 0) twinFindings += 1;
+          });
+          const casesPrinted = `decoder escape cases: ${cases.length}`;
+          const findingsPrinted = `decoder escape findings: ${findings}`;
+          const twinsPrinted = `decoder escape twin findings: ${twinFindings}`;
+          console.log(casesPrinted);
+          console.log(findingsPrinted);
+          console.log(twinsPrinted);
+          const parsedCases = Number(/^decoder escape cases:\s*([0-9]+)$/.exec(casesPrinted)?.[1] ?? '');
+          const parsedFindings = Number(/^decoder escape findings:\s*([0-9]+)$/.exec(findingsPrinted)?.[1] ?? '');
+          const parsedTwins = Number(/^decoder escape twin findings:\s*([0-9]+)$/.exec(twinsPrinted)?.[1] ?? '');
+          expect.soft(parsedCases, casesPrinted).toBe(cases.length);
+          expect.soft(parsedFindings, findingsPrinted).toBe(cases.length);
+          expect.soft(parsedTwins, twinsPrinted).toBe(0);
+        } finally {
+          for (const name of names) delete process.env[name];
+        }
+        expect(Object.keys(process.env).filter((name) => name.startsWith('AT2_ESCAPE_')),
+          'The injected escape env names are gone.').toEqual([]);
+      }, 120000);
     });
   });
 });
