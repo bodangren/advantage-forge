@@ -4125,6 +4125,18 @@ async function lineFixture(lineWidth: number, width = 400, height = 400) {
   return greyPng(pixels, width, height);
 }
 
+async function mixedLineFixture(width = 400, height = 400) {
+  const rectangles = Array.from({ length: 8 }, (_, index) => {
+    const x = 20 + (index % 4) * 58;
+    const y = 20 + Math.floor(index / 4) * 86;
+    return `<rect x="${x}" y="${y}" width="38" height="54" fill="none" stroke="#000" stroke-width="4"/>`;
+  }).join('');
+  const block = `<rect x="300" y="200" width="50" height="50" fill="#000"/>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+    `<rect width="100%" height="100%" fill="#fff"/>${rectangles}${block}</svg>`;
+  return sharp(Buffer.from(svg)).greyscale().png().toBuffer();
+}
+
 describe('Phase 3 picture specification v1', () => {
   it('T142: the picture list loader reads pictures.json read-only and records its SHA-256', async () => {
     const list = await loadList({ printRoot: PRINT_ROOT, workbooksRoot: WORKBOOKS });
@@ -4219,6 +4231,7 @@ describe('Phase 3 picture specification v1', () => {
       const thin = await readFile(path.join(directory, 'thin.png'));
       const near = await readFile(path.join(directory, 'near.png'));
       const exact = await readFile(path.join(directory, 'exact.png'));
+      const mixed = await mixedLineFixture();
       const expected = { width: 400, height: 400 };
       const thinCheck = await pictureSeams.inspectLineArtPng(thin, expected);
       const nearCheck = await pictureSeams.inspectLineArtPng(near, expected);
@@ -4226,14 +4239,20 @@ describe('Phase 3 picture specification v1', () => {
       const spy = vi.spyOn(console, 'log').mockImplementation((...args: unknown[]) => {
         printed.push(args.map((value) => String(value)).join(' '));
       });
-      const exactCheck = await pictureSeams.inspectLineArtPng(exact, expected).finally(() => spy.mockRestore());
+      const exactCheck = await pictureSeams.inspectLineArtPng(exact, expected);
+      const mixedCheck = await pictureSeams.inspectLineArtPng(mixed, expected);
+      spy.mockRestore();
       expect.soft(thinCheck.valid, 'A 6 px line passes the line-art check.').toBe(false);
       expect.soft(nearCheck.valid, 'An 11 px line passes the line-art check.').toBe(false);
-      expect.soft(exactCheck.valid, 'A 12 px line fails the line-art check.').toBe(false);
+      expect.soft(exactCheck.valid, 'A 12 px line fails the line-art check.').toBe(true);
       const measuredLine = printed.find((line) => /width/i.test(line) && /[0-9]/.test(line)) ?? '';
       expect.soft(measuredLine, 'The check prints the measured width.').toMatch(/width[^\n]*?([0-9]+)/i);
       const measured = Number(/width[^\n]*?([0-9]+)/i.exec(measuredLine ?? '')?.[1] ?? '');
       expect.soft(measured, 'The measured width is the width of the fixture line.').toBe(12);
+      const mixedLine = printed.find((line) => /width/i.test(line) && /[0-9]/.test(line) && line !== measuredLine) ?? '';
+      const mixedWidth = Number(/width[^\n]*?([0-9]+)/i.exec(mixedLine)?.[1] ?? '');
+      expect.soft(mixedCheck.valid, 'A solid block makes the mixed line-art fixture pass.').toBe(false);
+      expect.soft(mixedWidth, 'The measured width follows the typical outline, not the solid block.').toBe(4);
     } finally {
       await rm(directory, { recursive: true, force: true });
     }
