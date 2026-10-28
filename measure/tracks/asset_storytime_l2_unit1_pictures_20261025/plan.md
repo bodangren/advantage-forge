@@ -775,7 +775,7 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
-- [~] Task: Close the malformed-string class of the credential scan. Risk class: high.
+- [x] Task: Close the malformed-string class of the credential scan. Commit `64073051`. Risk class: high.
   Task 12 closes RB6-01, RB6-02, and RB6-03 from the Review B report at `bb4e11f0`.
   Gates, seams, fixtures, and falsification conditions: `test-strategy.md` section 4, task 12, and T129 to T138.
   Daniel chose design B on 2026-10-27. Design B stays. Do not plan design A and do not plan a waiver.
@@ -871,6 +871,43 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   Lock note: two `heavy-run: lock wait over 600 s` lines appeared. Another agent held the shared lock. The first gate attempt was stopped with its waiter. The gate run was repeated on the final test state.
   Red model deviation: the strategy names `volcengine-agent-plan/deepseek-v4-pro#high`. This role ran `minimax-cn-coding-plan/MiniMax-M3#high`,
   because the orchestrator keeps Red in this track on MiniMax-M3 and leaves DeepSeek free for acceptance.
+  No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
+  Green evidence (2026-10-28, Green session): implementation commit `64073051`,
+  `fix(storytime): scan every quote segment with a tolerant decoder`. Only `src/storytime/book-pictures.ts` changed.
+  Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node_modules/.bin/vitest run tests/song-still-hook.test.ts tests/storytime-line-art-pass.test.ts tests/storytime-book-pictures.test.ts tests/song-timeline.test.ts --maxWorkers=1'`;
+  exit code `0`; `Tests  148 passed (148)`; no skip; duration 285.81 s. Output: `green-vitest-t12.log`.
+  Focused hostile command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T129|T13[0-8]"'`;
+  exit code `0`; `Tests  10 passed | 111 skipped (121)`; duration 63.35 s. Output: `green-vitest-t12-focused.log`.
+  Cost labels at the Green HEAD: `wide scan ms: 473` (Red 1442; bound 60000 ms); `chain scan ms: 351` (Red 641; bound 20000 ms).
+  The labels also print `wide tokens: 9543` and `chain levels: 14`. Both bounds hold.
+  Label command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 --reporter=verbose -t "T136|T137"'`;
+  exit code `0`; `Tests  2 passed | 119 skipped (121)`. Output: `green-vitest-t12-labels.log`.
+  Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`.
+  The 31 errors sit in `assets/*.ts` and `tests/part.test.ts`. None sits in `tests/storytime-book-pictures.test.ts` or `src/storytime/`.
+  Compiler output: `green-tsc-t12.log`.
+  Mutation command (each, one at a time): `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Each mutation exited `1`. Each named test failed. After each run the file was restored with
+  `git checkout -- src/storytime/book-pictures.ts`, and `git diff --exit-code` on that file confirmed a clean tree.
+    1. Drop the head and the tail segments. T129 failed. `Tests  4 failed | 117 passed (121)`.
+       Other failures: T130, T134, T135. Output: `green-mutation-t12-1.log`.
+    2. Decode a segment with `JSON.parse` and drop it when the parse throws. T131 failed.
+       `Tests  5 failed | 116 passed (121)`. Other failures: T130, T132, T134, T135.
+       Output: `green-mutation-t12-2.log`.
+    3. Pair the quotes left to right in one parity. T133 failed. `Tests  10 failed | 111 passed (121)`.
+       Other failures: T97, T102, T104, T105, T107, T108, T131, T134, T135.
+       Output: `green-mutation-t12-3.log`.
+    4. Do not split and decode a decoded layer that holds a quote. T134 failed.
+       `Tests  9 failed | 112 passed (121)`. Other failures: T97, T102, T104, T105, T107, T108, T131, T135.
+       Output: `green-mutation-t12-4.log`.
+    5. Decode the whole layer text and use it as the next layer. T137 failed
+       (`chain scan ms: 60057` against the 60000 ms bound). `Tests  1 failed | 120 passed (121)`.
+       No other failure. Output: `green-mutation-t12-5.log`.
+  Green deviations: the coding-plan 5-hour quota stopped the session once; the orchestrator resumed it.
+  The quota tool routed Green to MiniMax-M3, the Red family of this phase; the orchestrator kept the role on
+  `volcengine-agent-plan/glm-5.3-flash#high` to hold Red/Green independence.
+  A `heavy-run: lock wait over 600 s` line appeared during the gate wait, during each mutation wait, and
+  during the label run; other agents held the shared lock. Mutation durations include those waits.
+  Mutation 2 attempt 1 returned exit 75 (`hold — avail 1110 MB (min 1200), load 11.62 (max 8)`); the retry ran.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
 
 ## Phase 3: Week 1 pictures
