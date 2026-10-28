@@ -110,7 +110,7 @@ put('shield-maiden-shield', 4.5, -4.88, { y: 1.45, scale: 0.9 });
 put('wall-sconce', 2.0, -4.88, { y: 1.1 });
 
 // --- edge dressing (west & south) ---
-put('barrel', -6.5, 3.3, { scale: 0.9 }); put('barrel', -6.4, 4.2, { scale: 0.8 });
+put('barrel', -7.25, 3.3, { scale: 0.9 }); put('barrel', -6.4, 4.2, { scale: 0.8 });
 put('crate', -5.6, 4.6, { yaw: 15 }); put('crate', -5.0, 4.7, { yaw: -10 });
 put('crate', -5.3, 4.65, { y: 0.41, scale: 0.8, yaw: 30 });
 put('sack', -4.2, 4.6); put('sack', -3.8, 4.4, { yaw: 60 });

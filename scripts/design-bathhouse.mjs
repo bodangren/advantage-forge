@@ -40,10 +40,14 @@ for (const [x, z] of [[-1.8, -5.5], [1.8, -5.5], [-4.6, 5.5], [4.6, 5.5]]) put('
 put('fountain', 0, -4.9);
 put('statue', -5.3, -5.1); put('statue', 5.3, -5.1, { yaw: 0 });
 
-// Zone 1 NW: massage corner (table, stool, shelf of towels, braziers)
+// Zone 1 NW: massage corner (table, stool, shelves of jars and baskets, braziers)
 put('bed', -5.2, -4, { yaw: 90 });
 put('stool', -3.7, -4.3); put('stool', -6.3, -2.2);
 put('shelf', -6.5, -5.4); put('shelf', -3.2, -5.6); put('shelf', 3.4, -5.6); put('shelf', 6.4, -5.4);
+for (const [x, z] of [[-6.5, -5.4], [-3.2, -5.6], [3.4, -5.6], [6.4, -5.4]]) {
+  put('jar', x - 0.25, z + 0.15, { y: 0.475 });
+  put('basket', x + 0.2, z + 0.15, { y: 0.475 });
+}
 put('brazier', -6.3, -3.2); put('brazier', 6.3, -3.2); put('brazier', -6.3, 3.2); put('brazier', 6.3, 3.2);
 // Zone 2 W/E: benches and buckets for bathers
 for (const z of [-1.6, 0.8, 3.2]) put('bench', -6.4, z, { yaw: 90 });

@@ -85,7 +85,7 @@ for (const z of [-3.4, -2.2, -1.0, 0.2, 1.4, 3.0, 4.2]) for (const dz of [-0.2, 
 for (const x of [2.6, 3.7]) for (const dx of [-0.2, 0.15]) put('scroll', x + dx, -1.7, { y: 1.667 });
 for (const x of [-5.4, -4.4, -3.4]) put('scroll', x, -4.3, { y: 0.0, yaw: 15 * x });
 for (let i = 0; i < 12; i++) put('map-fragment', -2 + (i % 4) * 0.5, -0.4 + Math.floor(i / 4) * 0.6, { yaw: i * 37 });
-for (const [x, z] of [[-6.5, -1.6], [-6.5, 2.4], [-6.5, 4.6], [6.5, -4.4], [6.4, 1.8]]) put('candle', x, z);
+for (const [x, z] of [[-6.5, -1.6], [-6.5, 2.4], [-5.7, 4.6], [6.5, -4.4], [6.4, 1.8]]) put('candle', x, z);
 
 const fmt = (p) => {
   const n = (v) => (Number.isInteger(v) ? String(v) : String(+v.toFixed(2)));

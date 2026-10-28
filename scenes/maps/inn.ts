@@ -152,8 +152,8 @@ export function places(): Place[] {
     {asset: 'barrel', at: [-4.6, 0, -4.4]},
     {asset: 'sack', at: [-5.4, 0, -3.6]},
     {asset: 'shelf', at: [1.6, 0, -4.7]},
-    {asset: 'bottle', at: [1.2, 1, -4.7]},
-    {asset: 'mug', at: [1.9, 1, -4.7]},
+    {asset: 'bottle', at: [1.2, 0.802, -4.55]},
+    {asset: 'mug', at: [1.9, 0.802, -4.55]},
     {asset: 'wood-log', at: [-3.9, 0, -4.5]},
   ];
 }

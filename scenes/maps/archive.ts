@@ -171,7 +171,7 @@ export function places(): Place[] {
   { asset: 'map-fragment', at: [-0.5, 0, 0.8], yaw: 407 },
   { asset: 'candle', at: [-6.5, 0, -1.6] },
   { asset: 'candle', at: [-6.5, 0, 2.4] },
-  { asset: 'candle', at: [-6.5, 0, 4.6] },
+  { asset: 'candle', at: [-5.7, 0, 4.6] },
   { asset: 'candle', at: [6.5, 0, -4.4] },
   { asset: 'candle', at: [6.4, 0, 1.8] },
   ];

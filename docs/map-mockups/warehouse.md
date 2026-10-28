@@ -8,10 +8,10 @@ Centre-north: loft ladder. A clear aisle runs from the door east along z = 0 and
 
 | piece | count |
 |---|---|
-| crate | 99 |
+| crate | 102 |
 | barrel | 42 |
 | wood-floor | 30 |
-| sack | 11 |
+| sack | 14 |
 | timber-wall | 10 |
 | lantern | 4 |
 | shelf | 3 |
@@ -29,4 +29,4 @@ Centre-north: loft ladder. A clear aisle runs from the door east along z = 0 and
 | stool | 1 |
 | bookshelf | 1 |
 
-Total: 216
+Total: 222
