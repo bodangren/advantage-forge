@@ -997,6 +997,33 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `3419926fd2c54df1aa03234bba561dfe6fc5196e`, the commit of the other track
   `asset_filled_shelves_20261028`.
   No file under `src/`, `scripts/`, or `contract.md` changed. The test file is the only Red file.
+  Green evidence (2026-10-28, Green session, GLM): implementation commit `70cb6e37`
+  (`src/storytime/book-pictures.ts`, `contract.md`). The pipeline exposes `loadPictureList`
+  (read-only, records the SHA-256, refuses a broken file name and a changed list file),
+  `planPictureRow` (list names, class pixel sizes, a twin for every row, no derived slug), and
+  `inspectPictureRow` (class size checks, class B calm top, class C white corners, synchronous).
+  `PICTURE_SIZES` moves to specification v1 (A and B 4000 x 3000, C 1500 x 1500); the checks keep
+  the v0 sizes as accepted legacy sizes, so candidates that earlier phases rendered keep their
+  evidence (T15, T26, and T41 force this tolerance). `inspectLineArtPng` rejects a line thinner
+  than 12 px and prints the measured width. The capture packet carries `peakRssMb` and the render
+  log prints `render peak rss mb: <n>` per job. `contract.md` carries the specification v1
+  amendment with the v0 text marked replaced on 2026-10-28.
+  Gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600
+  node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
+  Final result: exit code `1`; `Tests  1 failed | 133 passed (134)`. All T1 to T141 rows pass.
+  T142 to T145 and T147 to T151 pass. T146 fails on one assertion only: its third row
+  `expect.soft(exactCheck.valid, 'A 12 px line fails the line-art check.').toBe(false)` demands
+  that a 12 px line be rejected. That contradicts the test strategy row T146 ("A fixture with a
+  12 px line passes"; falsification "the test fails if ... a 12 px line fails"), the row's own
+  label, and specification v1 (outlines of 12 px or more). The implementation keeps the
+  specification rule; a 12 px line passes and a 6 px or 11 px line fails. Green may not edit a
+  committed Red test, so the row needs a Mid Red retry of that one assertion. The task stays
+  `[~]`. Type check: `tsc exit: 2`; `owned tsc errors: 0`; `total tsc errors: 31`
+  (`measure/runs/asset_storytime_l2_unit1_pictures_20261025/green-p3-tsc.log`).
+  Green model deviation: the quota tool routed Green to MiniMax again (the Red family of this
+  phase); the orchestrator kept this role on `volcengine-agent-plan/glm-5.3-flash#high` to hold
+  Red/Green independence. Logs: `green-p3-vitest.log`, `green-p3-tsc.log` in the same run
+  directory.
 
 - [ ] Task: Render the Nan window sample in color and line art. First write
   `docs/storytime/l2-unit1/w01/w01-readalong-p05-v2.json`. Keep v1 unchanged (Review A RA-P3-1).
