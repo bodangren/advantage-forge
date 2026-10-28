@@ -1076,3 +1076,8 @@ gate applies again.
   strategy mutations remain unrun, so task 11 remains `[~]`. Logs are in
   `measure/runs/asset_storytime_l2_unit1_pictures_20261025/`. Facts changed: implementation
   commit and recorded owner decision.
+- 2026-10-28: The PM amended this plan and the specification for picture specification v1 and
+  picture list version 3. Week 1 is due 2026-11-02. Weeks 2 to 7 and the cover are due
+  2026-11-16. Week 1 holds 30 color and 30 line-art files. Weeks 2 to 7 hold 162 rows and 324
+  files. Facts changed: due dates, week 1 file count, weeks 2 to 7 file count, and the picture
+  sizes of classes A, B, and C.

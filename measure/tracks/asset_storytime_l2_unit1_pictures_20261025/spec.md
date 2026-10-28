@@ -16,7 +16,7 @@ the Level 2 cover render are due 2026-11-16.
 Each reader page has two outputs: a color picture and a black-and-white line-art picture. The
 color picture serves the app read-along and the song videos. The line-art picture serves a
 printed workbook with "build your own" readers. Both outputs come from the same 3D scene and
-camera. Workbooks picture specification v1 arrived on 2026-10-25. It fixes the picture sizes and
+camera. Workbooks picture specification v1 arrived on 2026-10-27. It fixes the picture sizes and
 the line-art format.
 
 ## Decisions and boundaries
@@ -43,7 +43,8 @@ the line-art format.
 
 - The PM meaning: the color renders are also a print deliverable for A3 teacher PDFs. A3 at
   300 ppi is about 4961 x 3508 pixels, so 3000 x 2250 can be too small. Workbooks sets the final
-  size in specification v1 by 2026-10-28. Nothing else changes.
+  size in specification v1 by 2026-10-28. Nothing else changes. Specification v1 arrived on
+  2026-10-27 in Workbooks commit a9178413.
 - Missing poses and additional assets go through the PM. Do not improvise a substitute.
 - Decision S19 assigns cover layout and text to Workbooks. Forge supplies the cover render only.
 - The delivery root is `out/storytime/l2/unit1/`.
@@ -55,8 +56,8 @@ the line-art format.
 History: picture specification v0 of 2026-10-25 set 3000 x 2250 story pages, 3600 x 2700 covers,
 and 1500 x 1500 small pictures. Version 1 replaces it.
 
-Workbooks supplied specification v1 on 2026-10-25. Requirement FR-9 of the print track
-`storytime_print_r1_20261025` holds it.
+Workbooks supplied specification v1 on 2026-10-27. Workbooks commit a9178413 holds its current
+text. Requirement FR-9 of the print track `storytime_print_r1_20261025` holds the rules.
 
 ### Size classes
 
@@ -161,9 +162,9 @@ pictures. Workbooks keeps the layout and the text.
     calm for the title. Keep layout and text out of scope.
 13. **FR-13 Progress report.** Report when week 1 pictures and checks are ready. Record remaining
     human gates explicitly.
-14. **FR-14 Line-art output.** Produce one line-art picture for each reader page. Make it in the
-    same render run as its color twin, from the same stage file, still time, and camera. Use a
-    render pass of the 3D scene, not only a filter of the color picture. The lines show
+14. **FR-14 Line-art output.** Produce one line-art picture for each row of the picture list. Make
+    it in the same render run as its color twin, from the same stage file, still time, and camera.
+    Use a render pass of the 3D scene, not only a filter of the color picture. The lines show
     silhouettes and form edges, never mesh triangle edges. The song engine gets one additive
     still hook for this pass.
     Daniel's style look applies to the approved line-art technique and format version.
