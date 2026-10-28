@@ -909,6 +909,26 @@ render are due 2026-11-15. The [specification](./spec.md) owns the scope and acc
   during the label run; other agents held the shared lock. Mutation durations include those waits.
   Mutation 2 attempt 1 returned exit 75 (`hold — avail 1110 MB (min 1200), load 11.62 (max 8)`); the retry ran.
   No paid call, no render, and no smoke run. `src/song/`, the rubric text, and `PICTURE_RUBRIC_VERSION` stay unchanged.
+  Adversarial evidence (2026-10-28): test commit `4b14343d3ba67707bc4a1884f62006a603bbe2a3`.
+  T139 finds the escaped credential at level 66 of the 65,536-byte fold chain. Its safe twin yields no finding.
+  Both scans stay below 20000 ms. T140 scans 5,572 string tokens that each hold one escape.
+  The hostile row finds its credential, its safe twin yields no finding, and both scans stay below 60000 ms.
+  T141 kills a decoder mutation that drops any one of the eight single-character escape kinds.
+  It checks eight hostile cases and eight safe twins. Every hostile case yields its named environment finding.
+  Every safe twin yields no finding. All rows use the worker harness and labeled integers.
+  Focused command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1 -t "T139|T140|T141"'`.
+  Final focused result: exit `0`; `Tests 3 passed | 121 skipped (124)`.
+  Phase gate: exit `0`; `Tests 151 passed (151)`; duration 262.44 s.
+  Type check: exit `2`; owned errors `0`; total errors `31`.
+  Task 12 mutations 1 to 5 each have a named failing test in the Green logs. No declared mutation survives.
+  Task 10 mutation 9 no longer applies. `decodedAnswerFindings` has no nested-object extraction path at
+  `src/storytime/book-pictures.ts:1163-1197`.
+  Task 10 mutation 17 no longer applies. The iterative scan has no JSON parse walker, and the tolerant decoder
+  keeps malformed text without a parse-error channel at `src/storytime/book-pictures.ts:1208-1263`.
+  No implementation defect was found. No residual-risk item was added. No Green routing is needed.
+  Adversarial model deviation: this role ran `volcengine-agent-plan/kimi-k3.1-pro#high` after the quota route
+  selected MiniMax. MiniMax wrote the task 12 Red tests. GLM wrote the task 12 Green implementation.
+  No paid call, render, build, server, browser, network call, or production change occurred.
 
 ## Phase 3: Week 1 pictures
 
