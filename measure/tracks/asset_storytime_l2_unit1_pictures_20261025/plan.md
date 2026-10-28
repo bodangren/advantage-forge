@@ -954,7 +954,7 @@ verified picture list v3 hashes, the specification v1 sizes, the Red and Green s
 machine limits, the shared-asset check, the task gates, the review applicability, the new test
 rows T142 to T151, and the closeout gate for 30 jobs.
 
-- [~] Task: Pin picture specification v1 and list v3 in the pipeline (T142 to T151). Red test commit `6c55fac1`.
+- [~] Task: Pin picture specification v1 and list v3 in the pipeline (T142 to T151). Red test commits `6c55fac1`, `d7031d18`.
   The Nan sample at 4000 x 3000 pixels needs this change first.
   Evidence: `6c55fac1`; exit code `1`; `Tests  10 failed | 124 passed (134)`.
   Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 3600 node_modules/.bin/vitest run tests/storytime-book-pictures.test.ts --maxWorkers=1'`.
@@ -996,6 +996,19 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   `phase_base_sha`: `15a7bf0b2a59b8137a05805666df6736dc256167`. The Red work started at
   `3419926fd2c54df1aa03234bba561dfe6fc5196e`, the commit of the other track
   `asset_filled_shelves_20261028`.
+  Mid Red retry for T146: `d7031d18`. The retry changed only T146 and its fixture helper.
+  It changed the 12 px expectation to pass. It added eight 4 px outlined rectangles and one
+  solid 50 px block. The test command ran once through `heavy-run.sh` and exited `1`.
+  Summary: `Tests  1 failed | 133 passed (134)`. T146 failure:
+  `The measured width follows the typical outline, not the solid block.: expected +0 to be 4`.
+  The mixed fixture was rejected as required; its measured-width assertion failed. The other
+  133 cases passed. The retry type check exited `2`; owned errors: `0`; total errors: `31`.
+  Type check command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 node node_modules/typescript/bin/tsc --noEmit -p tsconfig.json'`.
+  Evidence logs: `measure/runs/asset_storytime_l2_unit1_pictures_20261025/red-p3-t146-vitest.log`
+  and `red-p3-t146-tsc.log`.
+  Model route deviation on retry: `ra-quota pick red` routed the role to
+  `openai/gpt-6-luna#high`. Earlier Red runs used MiniMax-M3. Green uses GLM, so role
+  independence holds.
   No file under `src/`, `scripts/`, or `contract.md` changed. The test file is the only Red file.
   Green evidence (2026-10-28, Green session, GLM): implementation commit `70cb6e37`
   (`src/storytime/book-pictures.ts`, `contract.md`). The pipeline exposes `loadPictureList`
