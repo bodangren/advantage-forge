@@ -8,6 +8,7 @@ import type { Browser, Page } from 'playwright';
 import type { InlineConfig, Plugin } from 'vite';
 import sharp, { type OverlayOptions } from 'sharp';
 import { z } from 'zod';
+import { inflateSync } from 'node:zlib';
 import { buildTimeline, type Spec, type Stage, type Timeline } from '../song/timeline.js';
 
 export const PICTURE_RUBRIC_VERSION = 'storytime-picture-v2';
@@ -17,11 +18,23 @@ export const LINEART_TECHNIQUE = 'song-page-form-edges-viewdepth-1bit-v2';
 export const BATCH_HASH_ALGORITHM =
   'SHA-256 of UTF-8 JSON.stringify([{file,sha256}]) with entries sorted by file and no whitespace';
 export const PICTURE_SIZES = {
+  story: { width: 4000, height: 3000 },
+  cover: { width: 4000, height: 3000 },
+  small: { width: 1500, height: 1500 },
+} as const;
+/**
+ * Specification v0 pixel sizes (replaced 2026-10-28 by specification v1, Workbooks commit
+ * a9178413). New renders use specification v1 sizes. The structural checks still accept these
+ * legacy sizes, so candidates that earlier phases rendered at v0 keep their evidence.
+ */
+export const LEGACY_PICTURE_SIZES = {
   story: { width: 3000, height: 2250 },
   cover: { width: 3600, height: 2700 },
   small: { width: 1500, height: 1500 },
 } as const;
 export const MINIMAX_VISION_MODEL = 'mmx-vision-default';
+/** Specification v1: a closed black outline is at least 12 px thick. */
+export const MIN_LINE_ART_LINE_WIDTH_PX = 12;
 
 const FORGE_ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const DEFAULT_OUTPUT = 'out/storytime/l2/unit1';
@@ -285,6 +298,8 @@ export interface BookCapturePacket {
   lineArt?: Buffer;
   camera: unknown;
   warnings?: string[];
+  /** Peak resident memory of the capture process in MB (specification v1 label). */
+  peakRssMb?: number;
 }
 
 /**
@@ -1268,9 +1283,7 @@ async function rawPixels(png: Buffer): Promise<{ data: Buffer; width: number; he
   return { data, width: info.width, height: info.height, channels: info.channels };
 }
 
-async function hasWhiteCorners(png: Buffer, width: number, height: number): Promise<boolean> {
-  const { data, channels } = await rawPixels(png);
-  if (channels !== 3) return false;
+function whiteCornersOnRaw(data: Buffer, width: number, height: number): boolean {
   const points = [
     [0, 0],
     [width - 1, 0],
@@ -1278,20 +1291,24 @@ async function hasWhiteCorners(png: Buffer, width: number, height: number): Prom
     [width - 1, height - 1],
   ];
   return points.every(([x, y]) => {
-    const index = (y! * width + x!) * channels;
+    const index = (y! * width + x!) * 3;
     return data[index]! >= 250 && data[index + 1]! >= 250 && data[index + 2]! >= 250;
   });
 }
 
-/** A calm top region differs from its own dominant colour on at most two percent of its pixels. */
-async function hasCalmTopRegion(png: Buffer, width: number, height: number): Promise<boolean> {
+async function hasWhiteCorners(png: Buffer, width: number, height: number): Promise<boolean> {
   const { data, channels } = await rawPixels(png);
   if (channels !== 3) return false;
+  return whiteCornersOnRaw(data, width, height);
+}
+
+/** A calm top region differs from its own dominant colour on at most two percent of its pixels. */
+function calmTopOnRaw(data: Buffer, width: number, height: number): boolean {
   const regionHeight = Math.round(height * 0.3);
   const buckets = new Map<number, { count: number; r: number; g: number; b: number }>();
   for (let y = 0; y < regionHeight; y += 1) {
     for (let x = 0; x < width; x += 1) {
-      const index = (y * width + x) * channels;
+      const index = (y * width + x) * 3;
       const r = data[index]!;
       const g = data[index + 1]!;
       const b = data[index + 2]!;
@@ -1312,7 +1329,7 @@ async function hasCalmTopRegion(png: Buffer, width: number, height: number): Pro
   let total = 0;
   for (let y = 0; y < regionHeight; y += 1) {
     for (let x = 0; x < width; x += 1) {
-      const index = (y * width + x) * channels;
+      const index = (y * width + x) * 3;
       const spread = Math.max(
         Math.abs(data[index]! - mean[0]!),
         Math.abs(data[index + 1]! - mean[1]!),
@@ -1325,10 +1342,16 @@ async function hasCalmTopRegion(png: Buffer, width: number, height: number): Pro
   return focal / total <= 0.02;
 }
 
+async function hasCalmTopRegion(png: Buffer, width: number, height: number): Promise<boolean> {
+  const { data, channels } = await rawPixels(png);
+  if (channels !== 3) return false;
+  return calmTopOnRaw(data, width, height);
+}
+
 async function inspectPng(
   png: Buffer,
   expected: { width: number; height: number },
-  checks: { smallCorners?: boolean; calmTop?: boolean },
+  checks: { smallCorners?: boolean; calmTop?: boolean; accept?: Array<{ width: number; height: number }> },
 ): Promise<PictureStructuralCheck> {
   const fileSha256 = sha256(png);
   try {
@@ -1336,7 +1359,11 @@ async function inspectPng(
     const [metadata, stats] = await Promise.all([image.metadata(), image.stats()]);
     const errors: string[] = [];
     if (metadata.format !== 'png') errors.push('Candidate must be a PNG file.');
-    if (metadata.width !== expected.width || metadata.height !== expected.height) {
+    const accepted = [expected, ...(checks.accept ?? [])];
+    const dimensionsAccepted = accepted.some(
+      (size) => metadata.width === size.width && metadata.height === size.height,
+    );
+    if (!dimensionsAccepted) {
       errors.push(`Candidate must be ${expected.width} x ${expected.height} pixels.`);
     }
     if (metadata.channels !== 3 || metadata.hasAlpha || !stats.isOpaque) {
@@ -1353,19 +1380,21 @@ async function inspectPng(
     if (stats.entropy <= 0) errors.push('Candidate must be non-empty.');
     if (
       checks.smallCorners &&
-      metadata.width === expected.width &&
-      metadata.height === expected.height &&
+      dimensionsAccepted &&
+      metadata.width &&
+      metadata.height &&
       metadata.channels === 3 &&
-      !(await hasWhiteCorners(png, expected.width, expected.height))
+      !(await hasWhiteCorners(png, metadata.width, metadata.height))
     ) {
       errors.push('Small picture background corners must be white.');
     }
     if (
       checks.calmTop &&
-      metadata.width === expected.width &&
-      metadata.height === expected.height &&
+      dimensionsAccepted &&
+      metadata.width &&
+      metadata.height &&
       metadata.channels === 3 &&
-      !(await hasCalmTopRegion(png, expected.width, expected.height))
+      !(await hasCalmTopRegion(png, metadata.width, metadata.height))
     ) {
       errors.push('Cover top 30 percent must stay calm for the title.');
     }
@@ -1383,10 +1412,288 @@ async function inspectPng(
 
 export async function inspectCandidatePng(png: Buffer, size: PictureSize): Promise<PictureStructuralCheck> {
   const expected = PICTURE_SIZES[size];
+  const legacy = LEGACY_PICTURE_SIZES[size];
   return inspectPng(png, expected, {
     ...(size === 'small' ? { smallCorners: true } : {}),
     ...(size === 'cover' ? { calmTop: true } : {}),
+    ...(legacy && (legacy.width !== expected.width || legacy.height !== expected.height)
+      ? { accept: [legacy] }
+      : {}),
   });
+}
+
+// ---------------------------------------------------------------------------
+// Picture list v3 and specification v1 rows (Phase 3)
+// ---------------------------------------------------------------------------
+
+/** The Workbooks file-name pattern of one picture row color file. */
+export const PICTURE_ROW_FILE_NAME_PATTERN = /^l2-w\d{2}-[a-z-]+-v\d+\.png$/;
+const PICTURE_LIST_FILE_NAME = 'pictures.json';
+const PICTURE_SIZE_CLASS_KEY: Record<string, PictureSize | undefined> = {
+  A: 'story',
+  B: 'cover',
+  C: 'small',
+};
+
+/** One row of the Workbooks picture list. The rows keep every field of the list. */
+export interface PictureListRow {
+  id: string;
+  week: number;
+  use: string;
+  sizeClass: 'A' | 'B' | 'C';
+  fileName: string;
+  lineArtFileName: string;
+  width: number;
+  height: number;
+}
+
+export interface PictureList {
+  /** The absolute path of the list file that the rows came from. */
+  file: string;
+  /** The SHA-256 of the list file bytes. */
+  sha256: string;
+  rows: PictureListRow[];
+}
+
+export interface PictureListOptions {
+  printRoot: string;
+  workbooksRoot: string;
+  /** Refuse the list when its SHA-256 differs from this recorded value. */
+  expectedSha256?: string;
+}
+
+const PictureListRowSchema = z
+  .object({
+    id: z.string().min(1),
+    week: z.number().int().positive(),
+    use: z.string().min(1),
+    sizeClass: z.enum(['A', 'B', 'C']),
+    fileName: z.string().regex(PICTURE_ROW_FILE_NAME_PATTERN),
+    lineArtFileName: z.string().min(1),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  })
+  .passthrough();
+
+function parsePictureListRow(value: unknown): PictureListRow {
+  const parsed = PictureListRowSchema.safeParse(value);
+  if (parsed.success) return parsed.data as PictureListRow;
+  const id = typeof (value as { id?: unknown })?.id === 'string' ? (value as { id: string }).id : 'unknown';
+  const issue = parsed.error.issues[0];
+  const where = issue ? issue.path.join('.') : 'row';
+  throw new Error(`The picture list row ${id} is invalid at ${where}: ${issue?.message ?? 'invalid row'}.`);
+}
+
+/**
+ * Reads the Workbooks picture list read-only. The function never writes under the Workbooks
+ * tree. It records the SHA-256 of the list file and refuses a broken file name or a changed
+ * list file.
+ */
+export function loadPictureList(options: PictureListOptions): PictureList {
+  const file = path.join(path.resolve(options.printRoot), PICTURE_LIST_FILE_NAME);
+  const bytes = readFileSync(file);
+  const sha256Value = sha256(bytes);
+  if (options.expectedSha256 !== undefined && options.expectedSha256 !== sha256Value) {
+    throw new Error(
+      `The picture list changed: expected SHA-256 ${options.expectedSha256}, measured ${sha256Value}.`,
+    );
+  }
+  const parsed: unknown = JSON.parse(bytes.toString('utf8'));
+  if (!Array.isArray(parsed)) {
+    throw new Error(`The picture list ${file} must be a JSON array of rows.`);
+  }
+  return { file, sha256: sha256Value, rows: parsed.map(parsePictureListRow) };
+}
+
+/** The output plan of one picture list row: the two file names and the class pixel size. */
+export interface PictureRowPlan {
+  colorFile: string;
+  lineArtFile: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Plans one row of the picture list. The file names come from the list; the pipeline derives no
+ * slug. Every row gets a line-art twin, including cover, check-row, and practice-line rows.
+ */
+export function planPictureRow(row: PictureListRow): PictureRowPlan {
+  if (!PICTURE_ROW_FILE_NAME_PATTERN.test(row.fileName)) {
+    throw new Error(
+      `The picture row ${row.id} has a file name that breaks the pattern ` +
+        `${PICTURE_ROW_FILE_NAME_PATTERN.source}: ${row.fileName}`,
+    );
+  }
+  if (typeof row.lineArtFileName !== 'string' || row.lineArtFileName.length === 0) {
+    throw new Error(`The picture row ${row.id} has no line-art file name; every row needs a twin.`);
+  }
+  const sizeKey = PICTURE_SIZE_CLASS_KEY[row.sizeClass];
+  const size = sizeKey ? PICTURE_SIZES[sizeKey] : undefined;
+  if (!size) {
+    throw new Error(`The picture row ${row.id} has an unknown size class: ${String(row.sizeClass)}.`);
+  }
+  return { colorFile: row.fileName, lineArtFile: row.lineArtFileName, width: size.width, height: size.height };
+}
+
+export interface PictureRowCheck {
+  valid: boolean;
+  errors: string[];
+}
+
+function paethPredictor(a: number, b: number, c: number): number {
+  const p = a + b - c;
+  const pa = Math.abs(p - a);
+  const pb = Math.abs(p - b);
+  const pc = Math.abs(p - c);
+  return pa <= pb && pa <= pc ? a : pb <= pc ? b : c;
+}
+
+interface DecodedPngRgb {
+  width: number;
+  height: number;
+  /** One opaque RGB triple per pixel. */
+  data: Buffer;
+}
+
+/**
+ * Decodes a PNG to opaque RGB without sharp, so the row check stays synchronous. Supports the
+ * 8-bit non-interlaced color types 0, 2, 3, 4, and 6; alpha flattens over white.
+ */
+function decodePngRgbSync(png: Buffer): DecodedPngRgb {
+  const signature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  if (png.length < 33 || !png.subarray(0, 8).equals(signature)) {
+    throw new Error('The file is not a PNG file.');
+  }
+  let width = 0;
+  let height = 0;
+  let bitDepth = 0;
+  let colorType = 0;
+  let interlace = 0;
+  const palette: Buffer[] = [];
+  const idat: Buffer[] = [];
+  let offset = 8;
+  while (offset + 8 <= png.length) {
+    const length = png.readUInt32BE(offset);
+    const type = png.toString('ascii', offset + 4, offset + 8);
+    const dataStart = offset + 8;
+    const data = png.subarray(dataStart, dataStart + length);
+    if (type === 'IHDR') {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      bitDepth = data[8]!;
+      colorType = data[9]!;
+      interlace = data[12]!;
+    } else if (type === 'PLTE') {
+      for (let index = 0; index + 2 < length + 1; index += 3) {
+        palette.push(data.subarray(index, index + 3));
+      }
+    } else if (type === 'IDAT') {
+      idat.push(data);
+    } else if (type === 'IEND') {
+      break;
+    }
+    offset = dataStart + length + 4;
+  }
+  if (bitDepth !== 8 || interlace !== 0) {
+    throw new Error('The PNG encoding is not 8-bit non-interlaced.');
+  }
+  const channels =
+    colorType === 0 || colorType === 3 ? 1 : colorType === 2 ? 3 : colorType === 4 ? 2 : colorType === 6 ? 4 : 0;
+  if (!channels || !width || !height) {
+    throw new Error(`The PNG color type ${colorType} is not supported.`);
+  }
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = width * channels;
+  if (raw.length < (stride + 1) * height) {
+    throw new Error('The PNG pixel data is truncated.');
+  }
+  const pixels = Buffer.alloc(stride * height);
+  for (let y = 0; y < height; y += 1) {
+    const filter = raw[y * (stride + 1)]!;
+    const rowStart = y * stride;
+    const source = y * (stride + 1) + 1;
+    for (let x = 0; x < stride; x += 1) {
+      const value = raw[source + x]!;
+      const left = x >= channels ? pixels[rowStart + x - channels]! : 0;
+      const up = y > 0 ? pixels[rowStart - stride + x]! : 0;
+      const upLeft = y > 0 && x >= channels ? pixels[rowStart - stride + x - channels]! : 0;
+      let decoded: number;
+      switch (filter) {
+        case 0: decoded = value; break;
+        case 1: decoded = value + left; break;
+        case 2: decoded = value + up; break;
+        case 3: decoded = value + ((left + up) >> 1); break;
+        case 4: decoded = value + paethPredictor(left, up, upLeft); break;
+        default: throw new Error(`Unknown PNG row filter: ${filter}.`);
+      }
+      pixels[rowStart + x] = decoded & 0xff;
+    }
+  }
+  const rgb = Buffer.alloc(width * height * 3);
+  for (let index = 0; index < width * height; index += 1) {
+    let red: number;
+    let green: number;
+    let blue: number;
+    if (colorType === 0) {
+      red = green = blue = pixels[index]!;
+    } else if (colorType === 4) {
+      const grey = pixels[index * 2]!;
+      const alpha = pixels[index * 2 + 1]! / 255;
+      red = green = blue = Math.round(grey * alpha + 255 * (1 - alpha));
+    } else if (colorType === 3) {
+      const color = palette[pixels[index]!];
+      if (!color) throw new Error('The PNG palette index is out of range.');
+      red = color[0]!;
+      green = color[1]!;
+      blue = color[2]!;
+    } else {
+      red = pixels[index * 3]!;
+      green = pixels[index * 3 + 1]!;
+      blue = pixels[index * 3 + 2]!;
+      if (colorType === 6) {
+        const alpha = pixels[index * 3 + 3]! / 255;
+        const keep = alpha;
+        const background = 255 * (1 - alpha);
+        red = Math.round(red * keep + background);
+        green = Math.round(green * keep + background);
+        blue = Math.round(blue * keep + background);
+      }
+    }
+    rgb[index * 3] = red;
+    rgb[index * 3 + 1] = green;
+    rgb[index * 3 + 2] = blue;
+  }
+  return { width, height, data: rgb };
+}
+
+/**
+ * The size class checks of one picture list row (synchronous seam). A class B row runs the calm
+ * top 30 percent check. A class C row runs the white-corner check. Every row checks the class
+ * pixel size of specification v1.
+ */
+export function inspectPictureRow(png: Buffer, row: PictureListRow): PictureRowCheck {
+  const sizeKey = PICTURE_SIZE_CLASS_KEY[row.sizeClass];
+  const expected = sizeKey ? PICTURE_SIZES[sizeKey] : undefined;
+  if (!expected) {
+    return { valid: false, errors: [`Unknown size class: ${String(row.sizeClass)}.`] };
+  }
+  let image: DecodedPngRgb;
+  try {
+    image = decodePngRgbSync(png);
+  } catch (error) {
+    return { valid: false, errors: [`Invalid PNG: ${errorText(error)}`] };
+  }
+  const errors: string[] = [];
+  if (image.width !== expected.width || image.height !== expected.height) {
+    errors.push(`The row picture must be ${expected.width} x ${expected.height} pixels.`);
+  }
+  if (row.sizeClass === 'C' && !whiteCornersOnRaw(image.data, image.width, image.height)) {
+    errors.push('Class C picture background corners must be white.');
+  }
+  if (row.sizeClass === 'B' && !calmTopOnRaw(image.data, image.width, image.height)) {
+    errors.push('Class B cover top 30 percent must stay calm for the title.');
+  }
+  return { valid: errors.length === 0, errors };
 }
 
 /**
@@ -1397,13 +1704,17 @@ export async function inspectCandidatePng(png: Buffer, size: PictureSize): Promi
 export async function inspectLineArtPng(
   png: Buffer,
   expected: { width: number; height: number },
+  accept?: Array<{ width: number; height: number }>,
 ): Promise<PictureStructuralCheck> {
   const fileSha256 = sha256(png);
   try {
     const metadata = await sharp(png).metadata();
     const errors: string[] = [];
     if (metadata.format !== 'png') errors.push('Line-art twin must be a PNG file.');
-    if (metadata.width !== expected.width || metadata.height !== expected.height) {
+    const dimensionsAccepted =
+      (metadata.width === expected.width && metadata.height === expected.height) ||
+      (accept ?? []).some((size) => metadata.width === size.width && metadata.height === size.height);
+    if (!dimensionsAccepted) {
       errors.push(`Line-art twin must match its color twin at ${expected.width} x ${expected.height} pixels.`);
     }
     if (metadata.channels !== 1 || metadata.hasAlpha) {
@@ -1449,6 +1760,42 @@ export async function inspectLineArtPng(
         }
         if (edgeWhite / edgeTotal < 0.9) {
           errors.push('Line-art twin edge frame must be at least 90 percent white.');
+        }
+        // Specification v1: the closed black outlines are at least 12 px thick. The measured
+        // stroke width is the smaller of the longest horizontal and the longest vertical
+        // black run, so a thin stroke fails in either direction.
+        let maxRunX = 0;
+        let maxRunY = 0;
+        for (let y = 0; y < height; y += 1) {
+          let run = 0;
+          for (let x = 0; x < width; x += 1) {
+            if (data[y * width + x] === 0) run += 1;
+            else {
+              if (run > maxRunX) maxRunX = run;
+              run = 0;
+            }
+          }
+          if (run > maxRunX) maxRunX = run;
+        }
+        for (let x = 0; x < width; x += 1) {
+          let run = 0;
+          for (let y = 0; y < height; y += 1) {
+            if (data[y * width + x] === 0) run += 1;
+            else {
+              if (run > maxRunY) maxRunY = run;
+              run = 0;
+            }
+          }
+          if (run > maxRunY) maxRunY = run;
+        }
+        const measuredLineWidth = Math.min(maxRunX, maxRunY);
+        console.log(
+          `Line-art line width: ${measuredLineWidth} px (minimum ${MIN_LINE_ART_LINE_WIDTH_PX} px).`,
+        );
+        if (measuredLineWidth < MIN_LINE_ART_LINE_WIDTH_PX) {
+          errors.push(
+            `Line-art twin lines must be at least ${MIN_LINE_ART_LINE_WIDTH_PX} px thick; measured ${measuredLineWidth} px.`,
+          );
         }
         const share = (black / total) * 100;
         console.log(`Line-art ink coverage: ${share.toFixed(2)}% (${black} of ${total} pixels black).`);
@@ -2997,6 +3344,11 @@ export interface BookStillCaptureDeps {
   lineArt?: () => Promise<Buffer>;
 }
 
+/** The peak resident memory of this capture process, rounded to whole MB. */
+function capturePeakRssMb(): number {
+  return Math.round(process.resourceUsage().maxRSS / 1024);
+}
+
 /**
  * The shared production capture body (RA-B1): load the timeline, check the page notes, then one
  * seek gives both twins. Both `captureBookStill` and the smoke capture run this path, so the
@@ -3015,7 +3367,7 @@ async function captureBookStillOnPage(
     stage: input.stage,
     log,
   });
-  return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera };
+  return { color: pair.color, lineArt: pair.lineArt, camera: pair.camera, peakRssMb: capturePeakRssMb() };
 }
 
 export async function captureBookStill(
@@ -3137,6 +3489,7 @@ export async function captureBookStillSmoke(input: BookCaptureInput): Promise<Bo
       color: pair.color,
       lineArt: pair.lineArt,
       camera: pair.camera,
+      ...(pair.peakRssMb === undefined ? {} : { peakRssMb: pair.peakRssMb }),
       fixtureLineArt: fixturePass.png,
       fixture: fixturePass.fixture,
     };
@@ -3157,6 +3510,8 @@ export interface RenderCandidateResult {
   at: number;
   width: number;
   height: number;
+  /** Peak resident memory of the capture process in MB, from the capture packet. */
+  peakRssMb?: number;
   /** On `skipped`: the next free version of the job (Review C note). */
   nextVersion?: number;
 }
@@ -3269,14 +3624,23 @@ export async function renderCandidates(options: {
       .toColourspace('srgb')
       .png()
       .toBuffer();
+    const legacy = LEGACY_PICTURE_SIZES[job.size];
     const structural = await inspectPng(png, { width, height }, {
       ...(job.size === 'small' ? { smallCorners: true } : {}),
       ...(job.size === 'cover' ? { calmTop: true } : {}),
+      ...(legacy && (legacy.width !== width || legacy.height !== height) ? { accept: [legacy] } : {}),
     });
     if (!structural.valid) throw new Error(`${job.id}: ${structural.errors.join(' ')}`);
+    // The evidence records the actual capture size; a v0-size capture keeps its v0 evidence.
+    const actualWidth = structural.width ?? width;
+    const actualHeight = structural.height ?? height;
     let linePng: Buffer | undefined;
     if (twin && packet.lineArt) {
-      const lineStructural = await inspectLineArtPng(packet.lineArt, { width, height });
+      const lineStructural = await inspectLineArtPng(
+        packet.lineArt,
+        { width: actualWidth, height: actualHeight },
+        legacy && (legacy.width !== actualWidth || legacy.height !== actualHeight) ? [legacy] : undefined,
+      );
       if (!lineStructural.valid) {
         throw new Error(`${job.id}: line-art twin failed: ${lineStructural.errors.join(' ')}`);
       }
@@ -3302,8 +3666,8 @@ export async function renderCandidates(options: {
             lineArtTechnique: LINEART_TECHNIQUE,
           }
         : {}),
-      width,
-      height,
+      width: actualWidth,
+      height: actualHeight,
     };
     await mkdir(path.dirname(absoluteFile), { recursive: true });
     await writeFile(absoluteFile, png, { flag: 'wx' });
@@ -3313,7 +3677,13 @@ export async function renderCandidates(options: {
       await writeFile(absoluteLineFile, linePng, { flag: 'wx' });
     }
     await writeJson(options.outputRoot, evidencePath, evidence, true);
-    results.push({ ...result, status: 'rendered' });
+    results.push({
+      ...result,
+      status: 'rendered',
+      width: actualWidth,
+      height: actualHeight,
+      ...(packet.peakRssMb === undefined ? {} : { peakRssMb: packet.peakRssMb }),
+    });
   }
   return results;
 }
@@ -4005,6 +4375,7 @@ export async function runStorytimeCli(
       log(
         `${result.jobId} v${result.version}: ${result.status}; stage ${result.stageSha256}; file ${result.file}` +
           `${result.lineArtFile ? `; lineart ${result.lineArtFile}` : ''}` +
+          `${result.peakRssMb === undefined ? '' : `; render peak rss mb: ${result.peakRssMb}`}` +
           `${result.nextVersion === undefined ? '' : `; next free version: v${result.nextVersion}`}`,
       );
     }

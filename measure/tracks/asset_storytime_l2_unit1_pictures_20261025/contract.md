@@ -1,5 +1,35 @@
 # Picture pipeline contract
 
+## Picture specification v1 (2026-10-28)
+
+Workbooks picture specification v1 arrived on 2026-10-27 (Workbooks commit `a9178413`). Picture
+list version 3 is the source of the week 1 rows (Workbooks commit `078917f1`):
+
+- List file: `Workbooks/content/storytime/l2/print/pictures.json`, SHA-256
+  `c3e23cfdace136c7ed602b3aefee83383241833537ba56f0257668eb1e2c686b`, 192 rows.
+- List notes: `Workbooks/content/storytime/l2/print/pictures.md`, SHA-256
+  `e97d649f8de5597494730ee17c8785a1ebe36ee2f7f7c0897701d5422929f848`.
+- The list is read only. No pipeline command writes under the Workbooks tree.
+
+Specification v1 rules, pinned by rows T142 to T151:
+
+- Size class A (story pages) and class B (covers): 4000 x 3000 pixels, 4:3.
+- Size class C (small pictures, check rows, practice lines): 1500 x 1500 pixels.
+- File names come from the list: the color file is the row `fileName`; the line-art file is the
+  row `lineArtFileName`, ends in `-line-v1.png`, and sits beside the color file. The pipeline
+  derives no slug for a list row.
+- Every row of the list gets one color file and one line-art twin, including cover, check-row,
+  and practice-line rows. One twin pair comes from one render run.
+- The line art is grayscale with black closed outlines of 12 px or more. The check prints the
+  measured line width as a labeled value and rejects a thinner line.
+- A class B row runs the calm top 30 percent check. A class C row runs the white-corner check.
+- The render command prints `render peak rss mb: <n>` after each job; the number comes from the
+  capture process. The batch check fails a job over 4200 MB.
+- New renders use the specification v1 sizes. The structural checks still accept the
+  specification v0 sizes (story 3000 x 2250, cover 3600 x 2700), so candidates that earlier
+  phases rendered keep their evidence. The v0 names and v0 sizes below are replaced on
+  2026-10-28 and stay here as history.
+
 ## Commands
 
 Use `node --import tsx scripts/storytime-book-pictures.ts <command>`.
@@ -80,19 +110,26 @@ SHA-256 for each candidate.
 A story candidate is `<directory>/l2-wNN-<use>-<slug>-vN.png`. Versions start at 1 and increase
 after every change. A retry never overwrites an earlier picture.
 
-- Story pages: 3000 x 2250, 4:3.
-- Covers: 3600 x 2700, 4:3, with a calm top 30 percent.
+- Story pages: 3000 x 2250, 4:3. (Specification v0. Replaced 2026-10-28: class A renders at
+  4000 x 3000; see "Picture specification v1".)
+- Covers: 3600 x 2700, 4:3, with a calm top 30 percent. (Specification v0. Replaced 2026-10-28:
+  class B renders at 4000 x 3000 with the same calm top rule.)
 - Small pictures: 1500 x 1500 on white.
 - Every file is an opaque 8-bit sRGB PNG. There is no bleed.
 - No picture contains words, letters, numbers, signatures, or watermarks.
 
 Provider review scratch stays under `candidates/<job-id>/vN/`.
 
-## Line-art twins (provisional format)
+## Line-art twins (provisional format; replaced by specification v1, 2026-10-28)
 
 Each reader page (`readalong` and `decodable`) has a line-art twin for print. The cover and small
 pictures have no line-art twin unless picture specification v1 asks for one. The format below is
 provisional until Workbooks picture specification v1 (due 2026-10-28).
+
+Specification v1 (2026-10-28) replaces the twin rule and the file names: every list row, including
+cover, check-row, and practice-line rows, gets a line-art twin named by the list
+(`lineArtFileName`, ending `-line-v1.png`, beside the color file), and the outlines are at least
+12 px thick. The technique, evidence, and review rules below stay in force.
 
 ### Source and technique
 
@@ -148,6 +185,10 @@ A line-art twin is `<directory>/lineart/l2-wNN-<use>-<slug>-vN-lineart.png`. The
 keeps the name outside the Workbooks color pattern. The rename to the specification v1 name
 changes only the name. The manifest records the old name and the new name.
 
+Specification v1 (2026-10-28) replaces this name for list rows: the line-art file name is the
+list row's `lineArtFileName`, ends in `-line-v1.png`, and sits beside the color file. The
+`<directory>/lineart/` name above stays the name of the package-job path.
+
 A twin version is one render run. A change to either twin makes a new version of both twins. A
 retry never overwrites an earlier line-art picture.
 
@@ -160,6 +201,8 @@ retry never overwrites an earlier line-art picture.
   edge frame 2 percent wide are white.
 - Ink coverage: the black-pixel share is at least 0.5 percent and at most 25 percent. The check
   prints the measured share as a labeled value. An empty page and a flooded page fail.
+- Specification v1 (2026-10-28) adds the line rule: the closed black outlines are at least 12 px
+  thick. The check prints the measured line width as a labeled value and rejects a thinner line.
 - No words, letters, numbers, signatures, or watermarks. There is no bleed.
 - The 90, 0.5, and 25 percent limits are provisional. A change to a limit needs a contract change
   and a new `lineArtFormatVersion`. Specification v1 replaces these limits where it differs.
@@ -309,7 +352,9 @@ block the render until `good-nan` runs again on both providers.
 - Filenames follow the Workbooks pattern and describe the subject.
 - Output paths cannot escape the Forge `out/` directory.
 - A source hash or scene hash change stops rendering.
-- Story PNG files are 3000 x 2250, opaque, 8-bit sRGB, and non-empty.
+- Story PNG files are 3000 x 2250, opaque, 8-bit sRGB, and non-empty. (Specification v0 size;
+  replaced 2026-10-28. New renders are 4000 x 3000 for class A and class B, 1500 x 1500 for
+  class C. The checks still accept the v0 sizes for earlier candidates.)
 - The cover's top 30 percent has no focal actor or prop.
 - `--release` fails on missing files, missing model providers, failed verdicts, or missing person
   counts.
