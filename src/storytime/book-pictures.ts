@@ -3140,7 +3140,10 @@ async function runPageLineArtPass(
     return canvas.toDataURL('image/png');
   }, size);
   if (pageErrors.length) throw new Error(`Book page errors: ${pageErrors.join('; ')}`);
+  // The canvas PNG carries an alpha channel. Flatten it over white first, so the twin is one
+  // opaque 8-bit grey channel with no alpha, as the contract and the line-art checks require.
   return sharp(Buffer.from(dataUrl.replace(/^data:image\/png;base64,/, ''), 'base64'))
+    .flatten({ background: '#ffffff' })
     .toColourspace('b-w')
     .png()
     .toBuffer();
