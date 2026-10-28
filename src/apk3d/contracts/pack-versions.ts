@@ -11,6 +11,7 @@ export const PACK_VERSIONS: Readonly<Record<string, string>> = {
   'flight-land': '1.0.0',
   folk: '1.0.1',
   heroes: '1.0.1',
+  'library-furniture': '1.0.0',
   mounts: '1.0.2',
   'outdoor-props': '1.0.0',
   'potion-shop': '1.0.0',

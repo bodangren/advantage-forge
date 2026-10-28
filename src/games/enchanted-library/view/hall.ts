@@ -10,7 +10,7 @@ import { HALL, HERO_START } from '../core/index.js';
 
 /** Every model the hall names (scenery and the spirits); the heroes come from the session. */
 export const HALL_MODELS = [
-  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'shelf', 'candle-cluster', 'chandelier', 'lantern', 'ghost',
+  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'bookcase', 'candle-cluster', 'chandelier', 'lantern', 'ghost',
 ];
 
 /** The cover colors of the books, by slot. */
@@ -50,10 +50,10 @@ export function buildHall(stage: Stage3D): Hall {
   // The plaster back wall (2x scale: 4 m wide, 3 m tall) with a window now and then.
   for (let i = -2; i <= 2; i++) place(i % 2 ? 'plaster-wall' : 'plaster-wall-window', i * 4, 0, HALL.minZ - 1.6, 2);
   // Shelves against the back wall and the side edges.
-  for (const x of [-6.4, -3.4, 3.4, 6.4]) place('shelf', x, 0, HALL.minZ - 1.2, 1.6);
+  for (const x of [-6.4, -3.4, 3.4, 6.4]) place('bookcase', x, 0, HALL.minZ - 1.2, 1);
   for (const z of [-2.4, 0.4]) {
-    place('shelf', HALL.minX - 1.1, 0, z, 1.5, 90);
-    place('shelf', HALL.maxX + 1.1, 0, z, 1.5, -90);
+    place('bookcase', HALL.minX - 1.1, 0, z, 1, 90);
+    place('bookcase', HALL.maxX + 1.1, 0, z, 1, -90);
   }
   for (const [x, z] of [[-4.8, -3.2], [4.8, -3.2], [-5.4, 3.4], [5.4, 3.4]] as const) place('candle-cluster', x, 0, z, 1.3, x * 40);
   place('lantern', -2, 0, HALL.minZ - 0.5, 0.9);

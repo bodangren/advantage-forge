@@ -20,9 +20,9 @@ const wood = (x: number, y: number, z: number) => mixRgb(WALNUT, DARK, 0.15 + 0.
 export default defineAsset({
   name: 'bookcase',
   description: 'A tall walnut bookcase with a crown moulding, four shelves of colorful books, and a scroll rack at the bottom.',
-  detail: 0.006,
+  detail: 0.012,
   reference: 'docs/item-mockups/bookcase-mock.jpg',
-  texture: { size: 1024 },
+  texture: { size: 512 },
 
   build(k) {
     const parts = [

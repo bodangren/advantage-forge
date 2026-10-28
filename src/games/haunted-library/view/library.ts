@@ -10,7 +10,7 @@ import { FLOOR_COUNT, FLOOR_HEIGHT, TUNING } from '../core/index.js';
 
 /** Every model the library names: scenery, doors, and the haunts (ghosts are skeletons, bats are giant bats). */
 export const LIBRARY_MODELS = [
-  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'shelf', 'door', 'torch-sconce', 'candle-cluster', 'chandelier', 'lantern',
+  'wood-floor', 'plaster-wall', 'plaster-wall-window', 'bookcase', 'door', 'torch-sconce', 'candle-cluster', 'chandelier', 'lantern',
   'skeleton', 'giant-bat',
 ];
 
@@ -64,7 +64,7 @@ export function buildLibrary(stage: Stage3D): Library {
     // The floor boards (2 m tiles), the plaster back wall (2x scale: 4 m wide, 3 m tall), shelves, sconces, a chandelier.
     for (let x = -5; x <= 5; x += 2) place('wood-floor', x, y - 0.08, 0);
     ['plaster-wall', f % 2 ? 'plaster-wall' : 'plaster-wall-window', 'plaster-wall'].forEach((name, i) => place(name, (i - 1) * 4, y, -1.05, 2));
-    for (const x of [-3.6, 3.6]) place('shelf', x + (f % 2 ? 0.3 : -0.3), y, -1.0, 1.6);
+    for (const x of [-3.6, 3.6]) place('bookcase', x + (f % 2 ? 0.3 : -0.3), y, -1.0, 1);
     for (const x of [-1.9, 1.9]) place('torch-sconce', x, y + 1.5, -0.98, 1);
     place('candle-cluster', f % 2 ? 0.9 : -0.9, y + 0.0, -0.8, 1.4);
     place('chandelier', 0, y + 2.45, 0.1, 1.1);

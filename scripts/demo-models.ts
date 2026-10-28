@@ -153,7 +153,7 @@ async function build(name: string, budget: number, error: number): Promise<void>
     if (ext.extensionName === 'KHR_materials_variants') ext.dispose();
   const before = triangles(doc);
   const ratio = Math.min(1, budget / Math.max(1, before));
-  const tex = SMALL_TEXTURE.includes(name) ? 384 : TEXTURE_SIZE;
+  const tex = name === 'bookcase' ? 256 : SMALL_TEXTURE.includes(name) ? 384 : TEXTURE_SIZE;
   await doc.transform(dedup());
   mergeSkinned(doc);
   await doc.transform(
@@ -189,7 +189,7 @@ async function main(): Promise<void> {
   const unknown = only.filter((n) => !models.includes(n));
   if (unknown.length) throw new Error(`not a pack model: ${unknown.join(', ')} (src/apk3d/contracts/model-pack.ts)`);
   // A character has a triangle budget of its own; every other model is a set piece.
-  const jobs: [string, number, number][] = models.map((n) => (n in CHARACTERS ? [n, CHARACTERS[n]!, CHARACTER_ERROR] : [n, propBudget(n), PROP_ERROR]));
+  const jobs: [string, number, number][] = models.map((n) => (n in CHARACTERS ? [n, CHARACTERS[n]!, CHARACTER_ERROR] : [n, propBudget(n), n === 'bookcase' ? 0.08 : PROP_ERROR]));
   for (const [name, budget, error] of jobs) if (!only.length || only.includes(name)) await build(name, budget, error);
 }
 

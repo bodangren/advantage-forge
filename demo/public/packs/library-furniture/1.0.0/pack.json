@@ -1,0 +1,26 @@
+{
+ "id": "library-furniture",
+ "version": "1.0.0",
+ "root": "packs/library-furniture/1.0.0",
+ "files": {
+  "bookcase": {
+   "id": "bookcase",
+   "path": "bookcase.glb",
+   "kind": "model",
+   "format": "glb",
+   "byteSize": 160392,
+   "triangles": 14518,
+   "textureSize": 256,
+   "skinned": false,
+   "clips": [],
+   "presets": [],
+   "provenance": {
+    "source": "advantage-forge/assets/bookcase.ts",
+    "license": "AGPL-3.0-or-later",
+    "forgeCommit": "8ee89f8b",
+    "tool": "scripts/apk3d-models.ts"
+   }
+  }
+ },
+ "byteSize": 160392
+}
