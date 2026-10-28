@@ -61,8 +61,8 @@ put('rope-coil', -3.4, 0, 1.2);
 put('shelf', FW + 0.15, 0, -2.9, { yaw: 90 });
 put('shelf', FW + 0.15, 0, 4.2, { yaw: 90 });
 for (const z of [-2.9, 4.2]) {
-  put('crate', FW + 0.15, 0.475, z - 0.2, { yaw: 90, scale: 0.65 });
-  put('sack', FW + 0.15, 0.475, z + 0.2, { scale: 0.7 });
+  put('crate', FW + 0.3, 0.475, z - 0.2, { yaw: 90, scale: 0.65 });
+  put('sack', FW + 0.3, 0.475, z + 0.2, { scale: 0.7 });
 }
 put('hay-bale', -4.8, 0, 3.9, { yaw: 10 });
 // ZONE D: loft ladder corner and ledger desk
