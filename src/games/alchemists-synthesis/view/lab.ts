@@ -67,7 +67,7 @@ export function buildLab(stage: Stage3D, hero: string, body?: ActorBody): Lab {
   // The back wall: shelves of bottles, a counter, and the fireplace.
   for (const x of [-2.4, 2.4]) {
     place(stage, 'shelf', [x, 0, -3.5]);
-    for (const [dx, y] of [[-0.45, 0.52], [-0.1, 0.52], [0.3, 0.52], [-0.3, 1.02], [0.15, 1.02], [0.45, 1.02]] as [number, number][]) place(stage, 'bottle', [x + dx, y, -3.35]);
+    for (const [dx, y] of [[-0.45, 0.4725], [-0.1, 0.4725], [0.3, 0.4725], [-0.3, 0.8025], [0.15, 0.8025], [0.45, 0.8025]] as [number, number][]) place(stage, 'bottle', [x + dx, y, -3.35]);
   }
   place(stage, 'fireplace', [0, 0, -3.55]);
   place(stage, 'counter', [-4.1, 0, -2.9], 90);
