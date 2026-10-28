@@ -76,6 +76,32 @@ const CHARACTER_ERROR = 0.008;
 const TEXTURE_SIZE = 512;
 /** Customers, patrols, and the far field are small on screen: 384 px keeps a game under its byte budget (section 7.3). */
 const SMALL_TEXTURE = ['farmer', 'villager', 'innkeeper', 'guard', 'druid', 'orc-warrior', 'goblin-warrior', 'bandit', 'farm-field'];
+/**
+ * The library bookcase carries four rows of books. Its full build is heavy, and the bevels of the
+ * books block the plain simplifier, so the bookcase runtime file needs a triangle budget, a shape
+ * error, and a texture size of its own to stay inside the set-piece byte limit of 200,000 bytes.
+ */
+const BOOKCASE = { budget: 8000, error: 0.02, texture: 128 };
+/**
+ * The books of the bookcase are separate bodies with many bevels, so the plain simplifier stops at
+ * 61,282 triangles. The permissive pass of Meshopt drops them to the budget with a shape error
+ * under a millimetre, so the bookcase alone uses it.
+ */
+const permissiveSimplifier = {
+  ...MeshoptSimplifier,
+  simplify: (
+    indices: Uint32Array,
+    positions: Float32Array,
+    stride: number,
+    target: number,
+    error: number,
+    flags?: string[],
+  ): [Uint32Array, number] =>
+    MeshoptSimplifier.simplify(indices, positions, stride, target, error, [
+      ...((flags ?? []) as ('LockBorder' | 'Sparse' | 'Prune' | 'Permissive')[]),
+      'Permissive',
+    ]),
+};
 
 function triangles(doc: Document): number {
   let n = 0;
@@ -153,14 +179,19 @@ async function build(name: string, budget: number, error: number): Promise<void>
     if (ext.extensionName === 'KHR_materials_variants') ext.dispose();
   const before = triangles(doc);
   const ratio = Math.min(1, budget / Math.max(1, before));
-  const tex = name === 'bookcase' ? 256 : SMALL_TEXTURE.includes(name) ? 384 : TEXTURE_SIZE;
+  const tex = name === 'bookcase' ? BOOKCASE.texture : SMALL_TEXTURE.includes(name) ? 384 : TEXTURE_SIZE;
   await doc.transform(dedup());
   mergeSkinned(doc);
   await doc.transform(
     flatten(),
     joinMeshes({ keepNamed: false }),
     weld(),
-    simplify({ simplifier: MeshoptSimplifier, ratio, error, lockBorder: false }),
+    simplify({
+      simplifier: name === 'bookcase' ? permissiveSimplifier : MeshoptSimplifier,
+      ratio,
+      error,
+      lockBorder: false,
+    }),
     prune(),
     textureCompress({ encoder: sharp, targetFormat: 'webp', resize: [tex, tex], quality: 82 }),
     meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
@@ -189,7 +220,7 @@ async function main(): Promise<void> {
   const unknown = only.filter((n) => !models.includes(n));
   if (unknown.length) throw new Error(`not a pack model: ${unknown.join(', ')} (src/apk3d/contracts/model-pack.ts)`);
   // A character has a triangle budget of its own; every other model is a set piece.
-  const jobs: [string, number, number][] = models.map((n) => (n in CHARACTERS ? [n, CHARACTERS[n]!, CHARACTER_ERROR] : [n, propBudget(n), n === 'bookcase' ? 0.08 : PROP_ERROR]));
+  const jobs: [string, number, number][] = models.map((n) => (n in CHARACTERS ? [n, CHARACTERS[n]!, CHARACTER_ERROR] : n === 'bookcase' ? [n, BOOKCASE.budget, BOOKCASE.error] : [n, propBudget(n), PROP_ERROR]));
   for (const [name, budget, error] of jobs) if (!only.length || only.includes(name)) await build(name, budget, error);
 }
 
