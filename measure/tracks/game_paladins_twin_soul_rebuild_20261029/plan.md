@@ -177,6 +177,41 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     The closeout steward owns those changes. The generator remains deferred to that owner, as this plan requires.
     The strategy's Phase 1 live gate passed in Node. This result does not clear the doctor errors or verify either renderer.
   - No task moved to `[b]`. Phase 2 still waits for Daniel's look selection.
+- [x] Task: Close Review A findings RA-PT-1 and RA-PT-4 (Red). Test commit: `cb6609a6`.
+  Owned path: `tests/games/paladins-twin-soul/rules.test.ts`. No other test file changed.
+  - Evidence (2026-10-30, measure-mid-red r2, model `deepseek/deepseek-flash#high`).
+    Phase base: `4007148a8794c33992c218f84a2f99e6aacef6fe`. Role base: `45d96193c254dda63bb870f800cce912531c5596`.
+    No file in `src/` changed. The change adds 18 lines and removes 1 line.
+  - RA-PT-1 (blocking): the T4 lone-captor row at `rules.test.ts:265` had an unbounded
+    `while (wrongShade(sim))` loop. The row now has a limit of 10 wrong strikes for a five-shade
+    wave. When the limit is reached, the row throws an error that names M9.
+  - RA-PT-4 (low): the T2 victory row at `rules.test.ts:195` had an unbounded
+    `while (last.state.phase === 'playing')` loop. The row now has a limit of
+    `SHORT_STORY.vocabulary.length + 5` right strikes. When the limit is reached, the row throws an
+    error that names the phase.
+  - Probe: `probe/sim-mutant.ts` copies the rules core with the M9 fault (`shade.fallen = false`).
+    `probe/index-mutant.ts` is the core barrel with that copy. `probe/vitest.config.ts` aliases the
+    core index of the tests to the copy. `probe/vitest-control.config.ts` keeps the alias pattern
+    and points it at the real core. These files are not committed. Log: `probe-run-r2.log`.
+  - Probe command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run --config measure/runs/game_paladins_twin_soul_rebuild_20261029/probe/vitest.config.ts --maxWorkers=1'`.
+    Exit code: 1. Not 124. Tests failed: 16. Tests passed: 137. Tests total: 153. Duration: 4.01 s.
+    The lock line `lock wait over 600 s` appeared once. The tests then ran.
+    Failing rows: T2 (1), T3 (2), T4 standing-dive (5 seeds), T4 lone-captor (5 seeds),
+    T7 (1), T13 (1), and T9 driver (1). The T4 lone-captor row stops inside the bounded loop in
+    1 to 2 ms. It does not hang.
+  - Control command: the same command with `probe/vitest-control.config.ts`.
+    Exit code: 0. Tests failed: 0. Tests passed: 153. Duration: 3.53 s.
+    The control shows that the 16 failures come from the M9 copy.
+  - Real suite command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
+    Exit code: 0. Tests failed: 0. Tests passed: 153. Test files passed: 5. Duration: 3.76 s.
+  - Review A owner for the next step: Green runs M9 against the full rules suite.
+- [~] Task: Rerun M9 against the full rules suite on the bounded loops and the gates (Green).
+  Owned path: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-runner.py`.
+  Remove the `-t 'T3|T13'` scope from M9, so M9 runs the whole rules file. Run M9 against the full
+  rules suite. Record the exit code, the failing rows, and the duration. Run `GREEN_TEST_COMMAND`
+  and `TYPE_CHECK_COMMAND` again.
 
 ## Phase 2: Views
 
