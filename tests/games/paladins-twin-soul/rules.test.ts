@@ -192,7 +192,17 @@ describe('T2 right strike', () => {
     const last = create(6, false, SHORT_STORY);
     send(last, { type: 'start' });
     let events: Ev[] = [];
-    while (last.state.phase === 'playing') events = strike(last, captorOf(last).id);
+    const strikeLimit = SHORT_STORY.vocabulary.length + 5;
+    let strikes = 0;
+    while (last.state.phase === 'playing' && strikes < strikeLimit) {
+      events = strike(last, captorOf(last).id);
+      strikes += 1;
+    }
+    if (last.state.phase !== 'victory') {
+      throw new Error(
+        `T2: the run stayed in phase "${last.state.phase}" after ${strikeLimit} right strikes; expected victory`,
+      );
+    }
     expect(types(events)).toEqual(['boltFired', 'soulFreed', 'shadesScattered', 'victory']);
     expect(last.state.twins).toBe(SHORT_STORY.vocabulary.length);
     expect(last.state.score).toBe(100 * SHORT_STORY.vocabulary.length);
@@ -262,7 +272,14 @@ describe('T4 the dive (assumption Q1: a seeded standing shade dives, the captor 
     const captor = captorOf(sim).id;
     const faded = new Set<string>();
     const divers: string[] = [];
+    // A five-shade wave: four decoys fade, then only the captor stands. Ten strikes is a safe limit.
+    const strikeLimit = 10;
     while (wrongShade(sim)) {
+      if (divers.length >= strikeLimit) {
+        throw new Error(
+          `T4: a wrong shade still stands after ${strikeLimit} wrong strikes; the faded shade did not stay out (M9)`,
+        );
+      }
       const struck = wrongShade(sim)!;
       faded.add(struck);
       const dive = ofType(strike(sim, struck), 'shadeDived')[0];
