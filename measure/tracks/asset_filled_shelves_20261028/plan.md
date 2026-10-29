@@ -687,6 +687,11 @@ Deviations of round 2:
   - Guild-hall render: `out/filled-shelves/guild-hall-close.png`, mtime `10-30_01:35`, SHA-256 `d8864331d2cbe0deb92efe231a947aa898bf5b693d1ba64a09083f70c80ad81a`. Look: (1) the barrel at [-6.05, 0, 2.6] clears the bookshelf front; (2) it clears the banner stand; (3) the nearby crates remain to the left and do not block the bookcase.
   - Haunted-library render: `out/apk3d-shots/haunted-library/landscape/05-first.png`, SHA-256 `236ee52a1989e60414bc62854c9197719ba8758b06b9135ae56cc849dc9b7b81`. Look: (1) bookcases sit behind the arch backs; (2) the arch openings and door glow sightline are clear; (3) book spines remain visible across the three floors.
   - Deviation: Red round 3 stopped at the 17:15 ICT restart before it wrote its `MEASURE_AGENT_RESULT` log. The orchestrator verified the two Red commits and confirmed the targeted Red command failed as expected. No Green lock wait exceeded 600 s.
+  - [x] Task: Remediate Review C round 3 finding RC-FS-8 (Green). Commit `0f99a1d57ddadbaa285c5af1942800600eb3a91e`.
+    Owned path: `scripts/design-guild-hall.mjs`. The generator diff changes only the first west barrel x from -6.4 to -6.05.
+    `node scripts/design-guild-hall.mjs` exited 0 and reported `169 places; missing glb: none`.
+    `git diff --exit-code -- scenes/maps/guild-hall.ts` exited 0 with no output after generation.
+    GREEN_TEST_COMMAND exited 0: 7 test files passed and 142 tests passed.
 
 ## Phase 2: The hand-off
 
