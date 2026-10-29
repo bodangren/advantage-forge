@@ -1232,6 +1232,74 @@ rows T142 to T151, and the closeout gate for 30 jobs.
   them. Forge renders the B pictures and Workbooks keeps the layout and the text. Run the
   pre-flight check and heavy lock for each batch. Keep all source prompts, stage files, and
   package hashes.
+  Render evidence (2026-10-29, Green session, Opus). The PM approved the gap list on 2026-10-29.
+  Pipeline commit `603745f9` adds `render --row <id>` and `verify --row <id>`. The list is read
+  only, and a changed list stops the run. Each row writes the color file and the line art side
+  by side in `out/storytime/l2/unit1/w01/rows/` with the specification v1 names and the class
+  pixel size. Every check runs before any write. A row writes its evidence to `renders/rows/`.
+  The same commit gives line-art pass v4 (`song-page-form-paint-edges-viewdepth-scaled-1bit-v4`).
+  v4 keeps 14 px outlines on every print size, so class C at 1500 px also meets 12 px. It also
+  compares paint over 4 px, so a thin smile on a close face stays.
+  Deviation: `src/song/timeline.ts` and `src/song/main.ts` changed. The stage option
+  `"backdrop": "white"` hides the room and clears to plain white, because class C needs white
+  corners. A white unlit card gives about 242 after the neutral tone mapping. The song tests pass.
+  Stage commit `a1ff1505` (`docs/storytime/l2-unit1/w01/rows/`). Gates after the code change:
+  `Tests  134 passed (134)`, exit `0` (`green-p3-r5-vitest.log`). The line-art pass, row, and
+  song tests: `Tests  32 passed (32)`, exit `0` (`green-p3-r5-rows-vitest.log`). Type check:
+  owned errors `0` after one fix (two `TS2339` errors on `PictureListRow.text` and `.prompt`).
+  The total is `134`, up from `31`: the new errors are in other sessions' paths
+  (`tests/games/castle-defense/`, `tests/games/magic-defense/`, `assets/rowboat.ts`,
+  `assets/airship.ts`). Log: `green-p3-r5-tsc.log`.
+  Verify: `verify --row <id>` exit `0` on all 9 rows, 10 row versions passed
+  (`green-p3-r5-verify.log`). Peak memory 487 to 886 MB per render. Files (color; line art):
+  - `story-page-hello-i-am-nan` v1, technique v3, 15 px:
+    `l2-w01-story-page-hello-i-am-nan-v1.png`
+    `ee46aa71e8a0691ba4acad9b61ee8e8e1206406f66b144b26bc11329f0a1825b`;
+    `-line-v1.png` `79880e818390327f59f5bf0a003d43894a5e31bf7f92381ebbe92496f3fb32c4`.
+    The same bytes as the Nan sample v3. A v2 under technique v4 failed the 90 percent white edge
+    check (floor-plank lines at the edges) and wrote nothing.
+  - `story-page-nan-can-nod` v1, technique v3, 22 px: color
+    `a913d8d3bc4f451a64a438e9b1b84213f2501218568b851ad0b0ce16fef8be52`; line art
+    `46cb21d99186ac933edf2ca7b33a4774ce53a02b01a10c5c07e55c7bd73e513c`. Superseded: the line
+    art lost the smile.
+  - `story-page-nan-can-nod` v2, technique v4, 24 px: color
+    `f76ee8c52ffbe329dc4b8bbe5bef244157ebe5ae5255b9e4aca3903f249b43ef`; line art
+    `3350428f8eaf30ddf2813e0335a2eb44d1f5193c4a71f7e304af3076225e539f`. Nan smiles beside
+    Pip on white. Eyes, brows, smile, and star show in both files. Pip sits, seen from the front.
+  - `cover-nan-can-nod` v2, technique v4, 25 px: color
+    `486f8b91a155eed2376e714d1227140ee5995f0f4d7ac8ac5c9ea28187631fb0`; line art
+    `ff8669a057952f8a8f48dcb0d0b3f57774ebf012300df30f57d813414c254710`. Nan and Pip stand on
+    a grass patch with a bush, flowers, and a small apple tree. The top stays white. The figures
+    are small, and the grass tile seams show as lines. v1 on the grassland map failed the calm
+    top check and wrote nothing.
+  - `check-row-cat` v1, v4, 29 px: color
+    `8e88485e8e5142b78a3a7bf6a463fa758885361659d6fdc7992b9ee289cb2117`; line art
+    `d0d48b4af2d3a1af9da51c63e0a82ce3eb9517cdaa6109efb236b5894947f061`. An orange tabby cat;
+    the cat reads in both files.
+  - `check-row-fish` v1, v4, 24 px: color
+    `35d3b6c925d4ae2c2ff89bd2fdd89c8bc66f8a4da49c73b4d45a2b407e6323da`; line art
+    `6392b980a185a4ac8783d2129476b5e41ca93698b28c67fe18df0d12bf4d7959`. A side view of a round
+    fish; it reads in both files.
+  - `check-row-dog` v1, v4, 26 px: color
+    `3a3510a5ae637417a317b2cf4ffa37569310b5f90cba034700cd84d57bbc17db`; line art
+    `3045544818f30b4ad0b30f94e5902efbab84e84b05bf2766567b4f7978cebbfa`. A brown and cream
+    puppy; it reads in both files.
+  - `check-row-hat` v1, v4, 22 px: color
+    `a700c6573c75fb1fd082371414588256740f8d4e2ef841134a69a513d666a4e2`; line art
+    `721f9115ee45b179f9e36bc38f245c0acfbba64c305d89b5a7ae3732a8f1d7a0`. A khaki bucket hat
+    from the front. It reads weakly: a dome with a brim. Correction: a v2 from a higher angle.
+  - `check-row-nose` v1, v4, 25 px: color
+    `d89f517da8c1e5799d48dc0a7fb115b4586454437f6c808ee4cb7536b8ecfd92`; line art
+    `30a35af70ec1b192f4797da2de1675bb9b3bae77e6e8c8de91ad662d0192ec4b`. Nan's face close up.
+    Defect: the nose has no line in the line art; it is a soft bump with no edge.
+  - `practice-line-nose` v1, v4, 25 px: color
+    `f215ab6c17fc056f25d18acb2906e6f79a7391ffd171fad9c7d09d34132d147e`; line art
+    `d5bfb2b12018495ca4ccb90c0ca8a955337d0b7ac53a5bfd584a5c33581de4f5`. Nan's face at 30
+    degrees. The same defect: no nose line.
+  Open corrections: the two nose rows need a v2 that gives the nose a line (a side view, or a
+  painted nose line from the asset build). The hat row needs a v2 from a higher angle.
+  Rows done with no open defect: 6 of 30. Rows rendered with a defect: 3. Rows not rendered: 21
+  (blocked on missing items).
 - [ ] Task: Run automated checks on every color and line-art file and both model pre-checks on
   every color candidate. Correct each failed picture under a new twin version and repeat the
   checks. Attach the raw model outputs.
