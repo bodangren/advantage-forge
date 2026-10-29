@@ -28,6 +28,7 @@ import {
   wordsOf,
   type MagicDefenseCommand,
   type MagicDefenseEvent,
+  type MagicDefenseSimulation,
 } from '../../../src/games/magic-defense/core/index.js';
 import { nextCommand } from '../../../src/games/magic-defense/qc/bot.js';
 import {
@@ -324,7 +325,13 @@ describe('the run', () => {
     const sim = create(5);
     sim.dispatch({ type: 'start' });
     const hit = structuredClone(active(sim));
-    while (hasWrong(sim)) castWrong(sim);
+    // The loop has a limit. A wrong word that never shuts must fail the row fast, not hang the gate.
+    let wrongCasts = 0;
+    while (hasWrong(sim)) {
+      if (wrongCasts >= 50) throw new Error('the row did not shut every wrong word in 50 casts');
+      castWrong(sim);
+      wrongCasts += 1;
+    }
     expect(active(sim).wordId).toBe(hit.wordId);
     const round = sim.state.round!;
     expect(round.choices.filter((c) => c.blocked)).toHaveLength(round.choices.length - 1);
@@ -357,6 +364,86 @@ describe('the run', () => {
       expectThrown(before, events, sim);
       expectHeld(sim, { full: true });
     }
+  });
+
+  it('H17: the castle that takes the place of a fallen castle comes from a fixed seeded order', () => {
+    /**
+     * One fall of the active castle. The meaning takes the place of another castle. The displaced
+     * word goes back to the unheld words.
+     */
+    const fall = (sim: MagicDefenseSimulation): { fallen: number; taken: number } => {
+      const missile = structuredClone(active(sim));
+      const standing = sim.state.castles.flatMap((h, i) => (h > 0 ? [i] : []));
+      expect(
+        byCastle(missilesOf(sim)).map((m) => m.castle),
+        'every standing castle holds a missile before the fall',
+      ).toEqual(standing);
+      const before = heldCopy(sim);
+      sim.state.castles[missile.castle] = 1;
+      const events = sim.dispatch({ type: 'cast', choice: wrongChoice(sim) });
+      expect(ofType(events, 'castleHit')).toHaveLength(1);
+      expect(sim.state.castles[missile.castle], 'the castle of the missile falls').toBe(0);
+
+      const now = active(sim);
+      expect(now.wordId, 'the meaning stays active').toBe(missile.wordId);
+      expect(now.prompt, 'the meaning keeps its Thai word').toBe(missile.prompt);
+      expect(now.castle, 'the meaning takes the place of another castle').not.toBe(missile.castle);
+      expect(sim.state.castles[now.castle], 'the castle that takes the place stands').toBeGreaterThan(0);
+      expect(missilesOf(sim).some((m) => m.castle === missile.castle), 'the fallen castle holds no missile').toBe(false);
+
+      const displaced = before.find((m) => m.castle === now.castle);
+      expect(displaced, 'the castle that takes the place held a missile before the fall').toBeDefined();
+      expect(
+        missilesOf(sim).some((m) => m.wordId === displaced!.wordId),
+        'the displaced word goes back to the unheld words',
+      ).toBe(false);
+      expect(sim.state.targets.find((t) => t.id === displaced!.wordId)).toMatchObject({ solved: false });
+      expectHeld(sim, { full: true });
+      return { fallen: missile.castle, taken: now.castle };
+    };
+
+    /** Two falls in one run. The storm between the falls gives three standing castles again. */
+    const scenario = (seed: number): { fallen: number; taken: number }[] => {
+      const sim = create(seed);
+      sim.dispatch({ type: 'start' });
+      const obs = [fall(sim)];
+      sim.state.mana = sim.state.maxMana;
+      expect(types(sim.dispatch({ type: 'storm' }))[0]).toBe('stormCast');
+      obs.push(fall(sim));
+      return obs;
+    };
+
+    /** Every order of the castles. */
+    const orders = (items: number[]): number[][] =>
+      items.length <= 1
+        ? [items]
+        : items.flatMap((item, i) => orders([...items.slice(0, i), ...items.slice(i + 1)]).map((rest) => [item, ...rest]));
+
+    const castles = Array.from({ length: TUNING.castles }, (_, i) => i);
+    const perSeed = SEEDS.map((seed) => ({ seed, obs: scenario(seed), again: scenario(seed) }));
+    const orderSets: string[] = [];
+    const taken = new Map<number, Set<number>>();
+
+    for (const { seed, obs, again } of perSeed) {
+      expect(obs, `seed ${seed} made two falls`).toHaveLength(2);
+      expect(again, `seed ${seed} takes the same place again`).toEqual(obs);
+      const fits = orders(castles).filter((order) => obs.every((o) => order.find((c) => c !== o.fallen) === o.taken));
+      expect(fits.length, `seed ${seed}: the falls follow one fixed castle order`).toBeGreaterThan(0);
+      orderSets.push(JSON.stringify(fits));
+      for (const o of obs) {
+        const set = taken.get(o.fallen) ?? new Set<number>();
+        set.add(o.taken);
+        taken.set(o.fallen, set);
+      }
+    }
+
+    expect(taken.size, 'the row saw a fall on every castle').toBe(TUNING.castles);
+    const summary = [...taken].map(([castle, set]) => `${castle}->${[...set].sort().join('/')}`).join(' ');
+    expect(
+      [...taken.values()].filter((set) => set.size > 1).length,
+      `the castle that takes the place depends on the seed (${summary})`,
+    ).toBeGreaterThan(0);
+    expect(new Set(orderSets).size, 'the castle order differs between seeds').toBeGreaterThan(1);
   });
 
   it('H9: a fallen castle holds no missile until the rest; the rest restores every castle and fills every free place', () => {
