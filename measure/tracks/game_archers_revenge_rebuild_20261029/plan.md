@@ -55,7 +55,7 @@ records the failing run. Green changes the core and the bot and runs the tests a
 The old views stay on the battle stage in this phase. Green makes only the smallest view edits that
 keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
 
-- [ ] Task: Write the failing aim and arc tests (Red).
+- [x] Task: Write the failing aim and arc tests (Red). Test commit: `8315f77d`.
   Owned paths: `tests/games/archers-revenge/rules.test.ts`, `replay.test.ts`, `bot.test.ts`,
   `driver.test.ts`, and `helpers.ts` in that folder.
   Test these rows: `fire(angle, power)` replaces `fire(lane)`; the core rejects a value outside its
@@ -67,6 +67,47 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   the bot plays a full run to `victory`; the driver plays every new core event.
   Run `RED_TEST_COMMAND`. Record the command, the exit code, and the number of failures.
   Commit the tests alone, by explicit paths.
+
+  Red evidence (2026-10-29, `measure-mid-red`, Anthropic). Phase base: `e51413ef`. Role base: `9c0b400e`.
+
+  - Command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/archers-revenge --maxWorkers=1'`.
+  - Exit code: 1. Lock wait: below 600 s. Duration: 4.68 s.
+  - Labeled counts: `Test Files  4 failed | 1 passed (5)` and `Tests  114 failed | 17 passed (131)`.
+  - Every failure is an `AssertionError`. The run has no file-level error and no `TypeError`.
+  - Failing rows: R1 to R16. Each test of these rows fails. The first failed assertions name a
+    missing contract part: `core export shotOf`, `core export layoutOf`, `core export SIN_DEG`,
+    `TUNING.aim`, `state.layout`, `a core file defines SIN_DEG`, a lane command that is not
+    rejected, a bound pair that is rejected, and `ARCHERS_REVENGE_EVENT_TYPES` without `missed`.
+  - R5 part B: the fresh import under the throwing `Math` stubs works at HEAD. The bot run reaches
+    `victory`. The test then fails on the missing `layoutOf` export.
+  - Passing tests (17): R17 (the core boundary guard), the 5 content rows, `start shows the first
+    formation`, `commands after the victory do nothing`, `an empty input is a won run`, 2 replay
+    rows (same seed, deep snapshot), `ignores a shot after the end`, and the 5 manifest rows.
+  - Type check: `TYPE_CHECK_COMMAND` gave exit 2. Total errors: 136. Owned errors: 0 in
+    `src/games/archers-revenge/` and 0 in `tests/games/archers-revenge/`. The 31 baseline errors did
+    not change. Other sessions added 105 errors: `tests/games/castle-defense/` 68,
+    `tests/games/magic-defense/` 35, and `src/storytime/book-pictures.ts` 2.
+  - Owner assumptions in the test names: Q1 in R9, Q2 in R11, and Q3 in R8.
+  - Contract choices of Red. The types are in `tests/games/archers-revenge/helpers.ts`
+    (`AimCore`, `Layout`, `Contact`, `Shot`, `MissedEvent`):
+    - `layoutOf(lanes)` returns `{ lanes, width, groundY, hills, towers, targets }`. A box is
+      `{ x0, y0, x1, y1 }`, with +y up. A hill box and every point with `y <= groundY` are
+      `ground`. A point with `x >= width` is `edge`.
+    - `shotOf(layout, blockedLanes, angle, power)` returns `{ points, contact }`. The contact is
+      `{ kind, index, x, y }`. `index` is the lane for `target` and `shut`, and the tower index
+      for `tower`. The last point is the contact point.
+    - `pathOf(layout, angle, power)` returns the points. A shut target keeps its box, so the
+      path needs no lane list.
+    - `missed` is `{ type, angle, power, kind, x, y }`. `shot` adds `angle` and `power`.
+    - `TUNING.aim` is `{ minAngle: 0, maxAngle: 80, minPower: 10, maxPower: 100 }`. `TUNING.arc`
+      is `{ origin: { x, y }, gravity, dt, maxSpeed, maxSteps }`.
+    - The `Presentation.showRound` callback is `fire(angle, power)`. `player.fire(angle, power)`
+      replaces `player.fire(lane)`.
+  - Scratch check (a copy in `/tmp`, not committed): a minimal implementation of this contract
+    passed 130 of 131 tests in 14 s. The 1 failure was the manifest pack test, because the
+    copy had no `demo/` folder. On that copy, the mutations M1, M2, M3, M6, M7, M9, M10, M11,
+    M12, M13, M14, M17, and M18 each failed the row that section 5 of the strategy names.
 - [ ] Task: Add the aim command, the arc, and the hit test to the core (Green).
   Owned path: `src/games/archers-revenge/core/`.
   Change `fire(lane)` to `fire(angle, power)`. Add the path function with the fixed sine table, the
