@@ -1,0 +1,36 @@
+MEASURE_AGENT_RESULT
+role: measure-adversarial-testing
+track: asset_filled_shelves_20261028
+phase: P1
+audited_head: 35be26a9904019ba581540326d4e54ada85b886e
+current_head: fe23329a9231acf002288f3f7476d00bd1ea5e9d
+status: fail
+summary: Two survivors found and both now killed by committed tests. M1 (one bottle removed) passes F2. M5 (MODEL_PACKS source emptied) passes all 59 pack-binding tests because F9 reads built pack.json files. M2, M3, M4, M6, M7, M8, M9, and control probe M5b fail their named rows. Blocking finding for Green: the M5 source-vs-artifact gap.
+mutations:
+- M1 (F2): exit 0, SURVIVED. Shelf keeps 7 items. New ADV M1 row fails under it (7 per shelf, 10 bottles).
+- M2 (F3): exit 1, KILLED. Bottle at y 0.52 floats over the shelf.
+- M3 (F4): exit 1, KILLED. School jar at y 1.02 floats over the cabinet.
+- M4 (F7): exit 1, KILLED. Enchanted-library places 4 shelf.
+- M5 (F9): exit 0, SURVIVED. 59 pack-binding tests pass; F9 reads built packs, not the source. New ADV M5 row fails under it (both library games unbound in source).
+- M5b (F9 control): exit 1, KILLED. Built pack without bookcase fails both library edition-binds rows.
+- M6 (F1): exit 1, KILLED. Bathhouse shelf 1 holds 0 items.
+- M7 (clearance): exit 1, KILLED. Scale-1 jar top passes the next board bottom.
+- M8 (block row): exit 1, KILLED. Barrel at [-6.4, 0, 2.6] enters the bookshelf.
+- M9 (door row): exit 1, KILLED. Eight bookcases at z -0.75 enter the door band.
+blocking_findings:
+- M5 source-vs-artifact gap (owner Green): promote the ADV M5 row into the Red check or record that apk-release.ts --check owns the link.
+nonblocking_findings:
+- M1 weak mutation: F2 matches FR-1; the ADV M1 row is extra hardness.
+- Phase 2 carries: sprite parity, pack release, re-bake, hand-off.
+commits:
+- fe23329a test(filled-shelves): harden against the M1 and M5 survivors (tests/games/filled-shelves.adversarial.test.ts only)
+artifacts:
+- measure/runs/asset_filled_shelves_20261028/adversarial-testing-35be26a.json
+- measure/runs/asset_filled_shelves_20261028/adversarial-testing-35be26a.log
+gate_numbers:
+- baseline Red check: 16 passed (16), exit 0
+- final gate (8 files): 144 passed (144), exit 0
+- tsc: exit 2, 31 total errors (baseline 31), 0 owned errors
+- restore proof: git diff --exit-code exit 0 on every touched path after every fault
+handoff: none
+END_MEASURE_AGENT_RESULT
