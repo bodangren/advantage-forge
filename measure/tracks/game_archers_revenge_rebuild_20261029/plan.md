@@ -108,20 +108,99 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     passed 130 of 131 tests in 14 s. The 1 failure was the manifest pack test, because the
     copy had no `demo/` folder. On that copy, the mutations M1, M2, M3, M6, M7, M9, M10, M11,
     M12, M13, M14, M17, and M18 each failed the row that section 5 of the strategy names.
-- [~] Task: Add the aim command, the arc, and the hit test to the core (Green).
+- [x] Task: Add the aim command, the arc, and the hit test to the core (Green). Implementation: `cc5f8750a0ace49e77072d503eeecb804a38248e`.
   Owned path: `src/games/archers-revenge/core/`.
   Change `fire(lane)` to `fire(angle, power)`. Add the path function with the fixed sine table, the
   target and tower places, and the hit test. Keep the evidence. Update the event order note at the
   top of `core/sim.ts`.
-- [ ] Task: Update the QC bot for the new core (Green).
+- [x] Task: Update the QC bot for the new core (Green). Implementation: `cc5f8750a0ace49e77072d503eeecb804a38248e`.
   Owned path: `src/games/archers-revenge/qc/bot.ts`.
   The bot searches the angle and power steps with the core path function. It fires the first pair
   that hits the right target.
-- [ ] Task: Keep the old views compiling and run the gates (Green).
+- [x] Task: Keep the old views compiling and run the gates (Green). Implementation: `cc5f8750a0ace49e77072d503eeecb804a38248e`.
   Owned paths: `src/games/archers-revenge/view/driver.ts`, and the smallest edits in `view/` and
   `view2d/` that the type check needs.
   Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND`. Record the exit codes, the test counts, the
   owned errors, and the total errors.
+
+### Green evidence (2026-10-29)
+
+- Role: `measure-jr-green`, OpenAI. No coder delegation occurred.
+- Immutable phase base: `e51413ef454bb1ee02c368f867ef4ba64f535a12`.
+  Role base: `e13b835bd351d4dfbb672b2347a9bcbda12d14b2`.
+- Red commit `8315f77d3f6746e37980bec636ccab63b95afa63` is inside `phase_base_sha..HEAD`.
+  The five committed Red files remain byte-identical to that commit.
+- The first Red rerun waited for the heavy lock. It printed `lock wait over 600 s`.
+  The shell tool stopped the wait after 1000000 ms. Vitest did not start, and no command exit was captured.
+  The orchestrator then directed Green to use the committed Red evidence and implement before another test run.
+  That evidence records exit 1, `Test Files  4 failed | 1 passed (5)`, and `Tests  114 failed | 17 passed (131)`.
+- `GREEN_TEST_COMMAND`:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/archers-revenge --maxWorkers=1'`.
+  First run: exit 0; `Test Files  6 passed (6)`; `Tests  134 passed (134)`; duration 12.69 s.
+  Final run: exit 0; `Test Files  6 passed (6)`; `Tests  134 passed (134)`; duration 14.76 s.
+  Logs: `measure/runs/game_archers_revenge_rebuild_20261029/green-tests-1.log` and `green-tests-final.log` in that directory.
+- The first Green run and the final batch each printed `lock wait over 600 s`.
+  The wrapper continued waiting and later ran both jobs. Neither attempt exited 75 or 201, so no retry occurred.
+  The final batch used one outer lock. Every nested test and compiler command also used `heavy-run.sh`.
+- `TYPE_CHECK_COMMAND`:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node node_modules/typescript/bin/tsc --noEmit'`.
+  Exit 2. Owned errors: 0 in the source and 0 in the tests. Total errors: 31, equal to the strategy baseline.
+  Unrelated errors: `assets/airship.ts` 7, `assets/rowboat.ts` 8, `assets/plank.ts` 6,
+  `assets/mushroom-cap.ts` 3, `assets/waterskin.ts` 3, `assets/longship.ts` 1,
+  `assets/merchant-cart.ts` 1, `assets/wool.ts` 1, and `tests/part.test.ts` 1.
+  Log: `measure/runs/game_archers_revenge_rebuild_20261029/green-typecheck.log`.
+- New production files: `core/aim.ts` and `core/tuning.ts` under the owned game path.
+  New implementation test: `tests/games/archers-revenge/aim-green.test.ts`.
+  Its three guards cover signed zero, one distinct term, and copied cache results.
+- `shotOf` owns the arc and segment contacts. `pathOf` calls it directly.
+  The bot caches the first hitting pair per lane and layout in ascending angle and power order.
+  Both old views use that same search to convert a lane tap into an aim command.
+  The driver calls `Presentation.missed`. The old views play its sound and wait; Phase 2 owns the arc animation.
+- Mutation command:
+  `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 900 python3 measure/runs/game_archers_revenge_rebuild_20261029/run-green-mutations.py'`.
+  The runner used an isolated copy under `/tmp/opencode/archers-green/mutation-scratch`.
+  Control: exit 0; `Test Files  6 passed (6)`; `Tests  134 passed (134)`.
+  Runner: exit 0. Each mutation exited 1 on its assigned row. No collection failure occurred.
+  Each `mutations/M*.log` records the diff, command, exit code, and restored SHA-256.
+  Separate `M*.diff` files and `results.json` remain in the same evidence directory.
+  A byte comparison confirmed that every scratch source file returned to the Green baseline.
+
+| Mutation | Failing row | Exit | Labeled result |
+| --- | --- | --- | --- |
+| M1 | R5 A and B | 1 | Tests 2 failed |
+| M2 | R5 B | 1 | Tests 1 failed |
+| M3 | R2 | 1 | Tests 2 failed |
+| M4 | R2 | 1 | Tests 1 failed |
+| M5 | R2 | 1 | Tests 14 failed |
+| M6 | R4 | 1 | Tests 2 failed |
+| M7 | R4 | 1 | Tests 2 failed |
+| M8 | R4 | 1 | Tests 2 failed |
+| M9 | R7 | 1 | Tests 2 failed |
+| M10 | R7 | 1 | Tests 2 failed |
+| M11 | R8 and R16 | 1 | Tests 2 failed |
+| M12 | R8 | 1 | Tests 4 failed |
+| M13 | R9 | 1 | Tests 1 failed |
+| M14 | R11 | 1 | Tests 2 failed |
+| M15 | R12 | 1 | Tests 1 failed |
+| M16 | R13 and R14 | 1 | Tests 3 failed |
+| M17 | R14 | 1 | Tests 1 failed |
+| M18 | R15 | 1 | Tests 1 failed |
+| M19 | R17 | 1 | Tests 1 failed |
+
+- Graph: the repository has no `graph.db` or tracked graph artifact.
+  Under the heavy lock, `build-graph init /tmp/opencode/archers-green/graph.db` and `build-graph update` covered all 11 changed TypeScript files.
+  Exit 0. Output: `Updated 11 files (0 → 84 nodes, 0 → 109 edges)`.
+  Log: `measure/runs/game_archers_revenge_rebuild_20261029/green-graph.log`.
+- Doctor command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'bash measure/doctor.sh'`.
+  Exit 1. It reports four missing rebuild links in `measure/tracks.md` and 52 lines in `measure/lessons-learned.md`.
+  It also reports stale `measure/generated/architecture.json`, `status.md`, and `asset-inventory.json`.
+  These paths are outside Green ownership. The registry and generator remain closeout work, as this plan requires.
+  Log: `measure/runs/game_archers_revenge_rebuild_20261029/green-doctor.log`.
+  The documented P1 gates pass; this record does not claim a passing doctor or a passing aggregate type check.
+  The final batch exited 1 because doctor failed. Its test, mutation, and graph commands exited 0.
+- Anti-pattern review: no Red test, filter, registry, supervisor, shared battle file, or policy file changed.
+  `measure/anti-patterns.md` is absent. The review used the strategy catalog and the canonical starter catalog.
+- No task changed to `[b]`. Phase 2 still waits for Daniel's look decision. No closeout metadata changed.
 
 ## Phase 2: Views
 
