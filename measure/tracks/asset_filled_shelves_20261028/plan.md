@@ -637,7 +637,7 @@ Deviations of round 2:
    this round were still uncommitted.
 9. No run of this round waited over 600 s for the lock.
 
-- [~] Task: Remediate Review A round 4 findings (round 3). Test commit `0e9af0f7`.
+- [x] Task: Remediate Review A round 4 findings (round 3). Source commit `929f20aeb5fbe8167b6a5f0e1af9a02d16f2f8ca`; test commit `0e9af0f7`.
   Owned path: `tests/games/filled-shelves.test.ts` (Red) and the Green source paths in the plan.
   Review A round 4 (`review-a-cd11315.json`) closed the round-2 work and found two new placement
   defects and two test gaps. Cover four findings. Red owns the table and the two new rules (done in
@@ -676,6 +676,16 @@ Deviations of round 2:
     bookshelf and bookcase collisions in archive, bank, library, and warehouse sit outside this
     track's scope. (3) RA-FS-18 changes only the five named entries; the rest stay as measured or
     over-conservative (sack depth 0.35 stays above the measured 0.32).
+
+  Green evidence (round 3):
+
+  - Targeted Red command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/filled-shelves.test.ts --maxWorkers=1'`. Exit 1; `Tests 2 failed | 14 passed (16)`. The failures name the guild-hall barrel overlap and eight haunted-library door-band overlaps.
+  - Source commit `929f20aeb5fbe8167b6a5f0e1af9a02d16f2f8ca` moves only the guild-hall barrel to x -6.05 and the eight haunted-library bookcases to z -0.95.
+  - Green gate: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node_modules/.bin/vitest run tests/games/filled-shelves.test.ts tests/apk3d/pack-bindings.test.ts tests/apk3d/budget.test.ts tests/games/enchanted-library/manifest.test.ts tests/games/haunted-library/manifest.test.ts tests/games/alchemists-synthesis/manifest.test.ts tests/games/rune-forge-chamber/manifest.test.ts --maxWorkers=1'`. Exit 0; 7 test files passed, 142 tests passed. The two round-3 rows pass.
+  - Type check: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node node_modules/typescript/bin/tsc --noEmit'`. Exit 2; 31 total errors and 0 owned errors. The total is not above the baseline 31.
+  - Guild-hall render: `out/filled-shelves/guild-hall-close.png`, SHA-256 `e71eff35a4f3193841a5f75e05f3da07f390f412f1e84fb8cf9e51062d0c1495`. Look: (1) the moved barrel clears the bookshelf front; (2) the barrel is separate from the banner stand; (3) nearby crates remain on the left without blocking the bookcase.
+  - Haunted-library render: `out/apk3d-shots/haunted-library/landscape/05-first.png`, SHA-256 `236ee52a1989e60414bc62854c9197719ba8758b06b9135ae56cc849dc9b7b81`. Look: (1) bookcases sit behind the arch backs; (2) the arch openings and door glow sightline are clear; (3) book spines remain visible across the three floors.
+  - Deviation: Red round 3 stopped at the 17:15 ICT restart before it wrote its `MEASURE_AGENT_RESULT` log. The orchestrator verified the two Red commits and confirmed the targeted Red command failed as expected. No Green lock wait exceeded 600 s.
 
 ## Phase 2: The hand-off
 
