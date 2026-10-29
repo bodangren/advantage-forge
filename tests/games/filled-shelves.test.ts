@@ -22,6 +22,15 @@
  *    a vial.
  *  - RA-FS-14: remove the always-true `shelf counts` assertion.
  *
+ * Round 3 (Review A round 4):
+ *  - RA-FS-15/17: give a bookshelf and a bookcase their measured centred footprint and
+ *    fail when a floor prop footprint enters it. The guild-hall barrel at
+ *    [-6.4, 0, 2.6] must fail.
+ *  - RA-FS-16: fail when a haunted-library bookcase enters the door depth band
+ *    (DEPTH.door and the door bounds at its scale).
+ *  - RA-FS-18: correct the five under-measured item table entries from the stats.json
+ *    bounds (sack height, basket depth, vial height, apple height, mug height).
+ *
  * No WebGL, no network, no file write. The maps export `places()`; the five game views
  * run their build functions against a recording stub.
  */
@@ -30,7 +39,7 @@ import { describe, expect, it } from 'vitest';
 import { Timeline } from '../../src/apk3d/stage/timeline.js';
 import type { GLTF, Stage3D } from '../../src/apk3d/stage/index.js';
 import { buildHall } from '../../src/games/enchanted-library/view/hall.js';
-import { buildLibrary } from '../../src/games/haunted-library/view/library.js';
+import { buildLibrary, DEPTH, DOOR_SCALE } from '../../src/games/haunted-library/view/library.js';
 import { buildShop } from '../../src/games/potion-rush/view/shop.js';
 import { buildLab } from '../../src/games/alchemists-synthesis/view/lab.js';
 import { buildForge } from '../../src/games/rune-forge-chamber/view/forge.js';
@@ -86,6 +95,22 @@ interface ItemPlace {
   index: number;
 }
 
+interface BlockCase {
+  asset: 'bookcase' | 'bookshelf';
+  x: number;
+  z: number;
+  yawRad: number;
+  scale: number;
+  label: string;
+  index: number;
+}
+
+interface BlockIssue {
+  item: ItemPlace;
+  block: BlockCase;
+  detail: string;
+}
+
 function toLocal(dx: number, dz: number, rad: number): { x: number; z: number } {
   const c = Math.cos(rad);
   const s = Math.sin(rad);
@@ -129,10 +154,32 @@ function isStructural(asset: string): boolean {
 // Item sizes in metres at scale 1, from the asset design notes. The clearance and depth
 // rules only apply to item kinds that rest on an in-scope shelf board.
 const ITEM_HEIGHT: Record<string, number> = {
-  bottle: 0.22, vial: 0.12, jar: 0.45, basket: 0.47, crate: 0.41, sack: 0.4, bread: 0.17, apple: 0.12, mug: 0.115,
+  bottle: 0.22, vial: 0.132, jar: 0.45, basket: 0.47, crate: 0.41, sack: 0.437, bread: 0.17, apple: 0.133, mug: 0.124,
 };
 const ITEM_DEPTH: Record<string, number> = {
-  bottle: 0.07, vial: 0.066, jar: 0.264, basket: 0.4, crate: 0.44, sack: 0.35, bread: 0.25, apple: 0.12, mug: 0.091,
+  bottle: 0.07, vial: 0.066, jar: 0.264, basket: 0.415, crate: 0.44, sack: 0.35, bread: 0.25, apple: 0.12, mug: 0.091,
+};
+
+// Measured case footprints, read from out/<asset>/stats.json. A bookshelf or a bookcase
+// is centred on its origin (unlike a shelf, whose back face sits at the origin).
+const BOOKSHELF_HALF_W = 0.5; // bookshelf size 1.0 wide
+const BOOKSHELF_MIN_Z = -0.175;
+const BOOKSHELF_MAX_Z = 0.193; // size 0.368 deep
+const BOOKCASE_HALF_W = 0.64; // bookcase size 1.28 wide
+const BOOKCASE_MIN_Z = -0.215;
+const BOOKCASE_MAX_Z = 0.235; // size 0.45 deep
+
+// The haunted-library door depth band. DEPTH.door and DOOR_SCALE come from library.ts;
+// the door mesh z bounds (min z -0.13, max z 0.205) come from out/door/stats.json.
+const DOOR_MIN_Z = -0.13;
+
+// Floor prop footprint radius (half of the larger x or z extent) at scale 1, from
+// out/<asset>/stats.json. Used only to keep solid props out of a bookshelf or bookcase.
+const FLOOR_RADIUS: Record<string, number> = {
+  barrel: 0.341, // x and z extent 0.681 (round)
+  crate: 0.27, // 0.54 x 0.444
+  sack: 0.178, // 0.355 x 0.32
+  chest: 0.383, // 0.765 x 0.527
 };
 
 // The shelves that this track owns and must fix. Pre-existing shelves (apothecary,
@@ -296,16 +343,22 @@ interface Audit {
   depthIssues: DepthIssue[];
   /** Items on an in-scope shelf whose kind has no height or depth entry. */
   coverageIssues: string[];
+  /** Every bookcase and bookshelf placement, in row order. */
+  blocks: BlockCase[];
+  /** Floor props whose footprint enters a bookcase or bookshelf footprint. */
+  blockIssues: BlockIssue[];
 }
 
 function audit(rows: P[], label: string): Audit {
   const shelves: CasePlace[] = [];
   const cabinets: CasePlace[] = [];
+  const blocks: BlockCase[] = [];
   const items: ItemPlace[] = [];
   rows.forEach((r, index) => {
     const [x, y, z] = r.at;
     if (r.asset === 'shelf') shelves.push({ kind: 'shelf', x, z, yawRad: (r.yaw ?? 0) * DEG, scale: r.scale ?? 1, label, index });
     else if (r.asset === 'cabinet') cabinets.push({ kind: 'cabinet', x, z, yawRad: (r.yaw ?? 0) * DEG, scale: r.scale ?? 1, label, index });
+    else if (r.asset === 'bookcase' || r.asset === 'bookshelf') blocks.push({ asset: r.asset, x, z, yawRad: (r.yaw ?? 0) * DEG, scale: r.scale ?? 1, label, index });
     else if (!CASE_ASSETS.has(r.asset) && !isStructural(r.asset)) items.push({ asset: r.asset, x, y, z, scale: r.scale ?? 1, label, index });
   });
 
@@ -378,8 +431,27 @@ function audit(rows: P[], label: string): Audit {
     }
   }
 
+  // RA-FS-15/17: no solid floor prop footprint enters a bookshelf or bookcase footprint.
+  // The footprint is a circle of radius FLOOR_RADIUS[asset] against the centred rectangle.
+  const blockIssues: BlockIssue[] = [];
+  for (const b of blocks) {
+    const hw = b.asset === 'bookcase' ? BOOKCASE_HALF_W : BOOKSHELF_HALF_W;
+    const minZ = b.asset === 'bookcase' ? BOOKCASE_MIN_Z : BOOKSHELF_MIN_Z;
+    const maxZ = b.asset === 'bookcase' ? BOOKCASE_MAX_Z : BOOKSHELF_MAX_Z;
+    for (const it of items) {
+      if (it.y > TOL) continue; // a prop that stands on the floor
+      const r = (FLOOR_RADIUS[it.asset] ?? 0) * it.scale;
+      if (r <= 0) continue; // no measured footprint
+      const local = toLocal(it.x - b.x, it.z - b.z, b.yawRad);
+      const cx = Math.max(-hw * b.scale, Math.min(hw * b.scale, local.x));
+      const cz = Math.max(minZ * b.scale, Math.min(maxZ * b.scale, local.z));
+      const gap = Math.hypot(local.x - cx, local.z - cz) - r;
+      if (gap <= TOL) blockIssues.push({ item: it, block: b, detail: `radius ${fmt(r)} overlaps by ${fmt(-gap)}` });
+    }
+  }
+
   const emptyShelves = shelves.filter((s) => (onShelf.get(s.index) ?? []).length === 0);
-  return { shelves, cabinets, items, onShelf, emptyShelves, floats, inside, clearanceIssues, depthIssues, coverageIssues };
+  return { shelves, cabinets, items, onShelf, emptyShelves, floats, inside, clearanceIssues, depthIssues, coverageIssues, blocks, blockIssues };
 }
 
 function describeCase(c: CasePlace): string {
@@ -463,6 +535,20 @@ function restingKinds(a: Audit): Set<string> {
   for (const held of a.onShelf.values()) {
     for (const it of held) out.add(it.asset);
   }
+  return out;
+}
+
+/** RA-FS-16: the haunted-library bookcases must sit behind the door depth band. */
+function hauntedDoorIssues(rows: P[]): string[] {
+  const bandBack = DEPTH.door + DOOR_MIN_Z * DOOR_SCALE;
+  const out: string[] = [];
+  rows.forEach((r, index) => {
+    if (r.asset !== 'bookcase') return;
+    const front = r.at[2] + BOOKCASE_MAX_Z * (r.scale ?? 1);
+    if (front > bandBack + TOL) {
+      out.push(`row ${index} bookcase at [${fmt(r.at[0])}, ${fmt(r.at[1])}, ${fmt(r.at[2])}]: front ${fmt(front)} enters the door band (back ${fmt(bandBack)})`);
+    }
+  });
   return out;
 }
 
@@ -597,5 +683,18 @@ describe('filled-shelves check (Red)', () => {
       if (missing.length > 0) problems.push(`${place}: missing ${missing.join(', ')}`);
     }
     expect(problems, `missing required item kinds:\n${problems.join('\n')}`).toEqual([]);
+  });
+
+  it('no floor prop footprint enters a bookshelf or bookcase (RA-FS-15/17)', () => {
+    const gh = MAP_AUDITS.find((m) => m.name === 'guild-hall')!;
+    const issues = gh.a.blockIssues;
+    const msg = issues.map((f) => `${describeItem(f.item)} enters the ${f.block.label} ${f.block.asset} at [${fmt(f.block.x)}, 0, ${fmt(f.block.z)}]: ${f.detail}`).join('\n');
+    expect(issues.length, `floor props inside a bookshelf or bookcase:\n${msg}`).toBe(0);
+  });
+
+  it('the haunted-library bookcases clear the door depth band (RA-FS-16)', () => {
+    const hv = VIEW_AUDITS.find((v) => v.name === 'haunted-library')!;
+    const issues = hauntedDoorIssues(hv.rows);
+    expect(issues, `bookcases in the door band:\n${issues.join('\n')}`).toEqual([]);
   });
 });
