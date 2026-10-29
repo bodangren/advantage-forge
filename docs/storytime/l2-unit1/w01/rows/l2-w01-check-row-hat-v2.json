@@ -1,0 +1,45 @@
+{
+  "jobId": "l2-w01-check-row-hat",
+  "version": 2,
+  "at": 0.5,
+  "spec": {
+    "title": "hat",
+    "duration": 2,
+    "lines": [
+      {
+        "text": "hat",
+        "start": 0,
+        "end": 2,
+        "actors": []
+      }
+    ]
+  },
+  "stage": {
+    "scene": "classroom",
+    "backdrop": "white",
+    "sun": "high",
+    "props": [
+      {
+        "asset": "explorer-hat",
+        "x": 0,
+        "z": 0,
+        "y": 0,
+        "yaw": 0,
+        "scale": 1,
+        "from": 0,
+        "to": 2
+      }
+    ],
+    "camera": [
+      {
+        "at": 0,
+        "az": 20,
+        "el": 40,
+        "dist": 1.5,
+        "tx": 0,
+        "ty": 0.05,
+        "tz": 0
+      }
+    ]
+  }
+}
