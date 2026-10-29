@@ -116,20 +116,80 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
   - The test names mark the defaults Q1 (S3), Q2 (P2), Q3 (L1, P3), and Q4 (W4) as assumptions.
   - Deviation: the task did not get the `[~]` mark before the work started. The test commit and this
     record came in one session.
-- [~] Task: Add the path, the spots, and the wave in steps to the core (Green).
+- [x] Task: Add the path, the spots, and the wave in steps to the core (Green). Commit: `bcf48f6c4f37549d013f4c9139830e51d9a8b3c6`.
   Owned path: `src/games/castle-defense/core/`.
   Keep the sentence building and the evidence. Replace the hero posts and the volleys with the
   path, the spots with a range, and the wave in steps. Update the event order note at the top of
   `core/sim.ts`.
-- [ ] Task: Update the QC bot for the new core (Green).
+- [x] Task: Update the QC bot for the new core (Green). Commit: `bcf48f6c4f37549d013f4c9139830e51d9a8b3c6`.
   Owned path: `src/games/castle-defense/qc/bot.ts`.
   The bot picks the right words. Then it picks the spot that covers the most path steps, with the
   lowest index on a tie.
-- [ ] Task: Keep the old views compiling and run the gates (Green).
+- [x] Task: Keep the old views compiling and run the gates (Green). Commit: `bcf48f6c4f37549d013f4c9139830e51d9a8b3c6`.
   Owned paths: `src/games/castle-defense/view/driver.ts`, and the smallest edits in `view/` and
   `view2d/` that the type check needs.
   Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND`. Record the exit codes, the test counts, the
   owned errors, and the total errors.
+  - Green evidence (2026-10-29, role `measure-jr-green`).
+    Phase base: `dde11f04c1fee76aafe7b1a3093d0bb9a1c73a60`.
+    Role base: `222428c81b5e50f014aa0869ec203519fbc32f82`.
+    The Red test commit `957d72af` is inside the phase range. Green changed no Red test.
+    The implementation commit holds eight source files only.
+  - Core: the state holds a path of six steps and six spots. Each spot has a range of path steps.
+    The wave moves the attackers one step at a time. Each built spot shoots the front attacker in
+    its range. A breach costs one heart. A rest at zero hearts returns the hearts.
+    The event order note at the top of `core/sim.ts` names `waveStep` and `attackerThrough`.
+    The state has no `posts`. The core exports no `POSTS` and no `keeperOf`.
+  - Bot: the bot picks the right words. Then it picks the spot with the most path steps in range.
+    The lowest spot index wins a tie.
+  - Driver: the driver calls `showSpots`, `hideSpots`, `towerBuilt`, `waveStep`, and `through`.
+    The driver plays every new core event. The old views keep the battle stage in Phase 1.
+  - Green command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300
+    node_modules/.bin/vitest run tests/games/castle-defense --maxWorkers=1'`.
+    Exit code: 0. `Test Files 5 passed (5)`. `Tests 90 passed (90)`. Failed: 0.
+    Log: `measure/runs/game_castle_defense_rebuild_20261029/green-vitest-r2.log`.
+  - Type command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node
+    node_modules/typescript/bin/tsc --noEmit'`.
+    Exit code: 2. Total errors: 31. The strategy baseline is 31. Owned errors: 0, in the source
+    path and in the test path of this track.
+    Log: `measure/runs/game_castle_defense_rebuild_20261029/green-tsc-r2.log`.
+    The error files match the baseline: `assets/airship.ts` 7, `assets/rowboat.ts` 8,
+    `assets/plank.ts` 6, `assets/mushroom-cap.ts` 3, `assets/waterskin.ts` 3, `assets/longship.ts` 1,
+    `assets/merchant-cart.ts` 1, `assets/wool.ts` 1, and `tests/part.test.ts` 1.
+    The baseline belongs to asset debt TD-01. No file outside this track received a fix from Green.
+  - Shared gate command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30
+    300 node_modules/.bin/vitest run tests/games/shared/battle.test.ts
+    tests/apk3d/pack-bindings.test.ts --maxWorkers=1'`.
+    Exit code: 0. `Test Files 2 passed (2)`. `Tests 60 passed (60)`. Failed: 0.
+    Log: `measure/runs/game_castle_defense_rebuild_20261029/green-shared-battle-r2.log`.
+  - Mutation command: `bash /tmp/opencode/castle-mutation-gate.sh <id>`. Each run applied the
+    mutation to `src/games/castle-defense/` and used `heavy-run.sh` for the test command.
+    M1 to M8 each exited 1. No mutation survived.
+    M1 killed W1 and F1. `Tests 11 failed | 79 passed (90)`.
+    M2 killed W2. `Tests 9 failed | 81 passed (90)`.
+    M3 killed W3. `Tests 1 failed | 89 passed (90)`.
+    M4 killed W4. `Tests 1 failed | 89 passed (90)`.
+    M5 killed W5. `Tests 4 failed | 86 passed (90)`.
+    M6 killed W6. `Tests 63 failed | 27 passed (90)`.
+    M7 killed W7. `Tests 2 failed | 88 passed (90)`.
+    M8 killed W8. `Tests 2 failed | 88 passed (90)`.
+    Logs: `measure/runs/game_castle_defense_rebuild_20261029/mutation-M1.log` through
+    `mutation-M8.log` in the same folder. Each log holds the diff, the command, and the exit code.
+    The first M8 run was interrupted. The second M8 run finished with exit code 1.
+    Green then restored `core/sim.ts` from the baseline copy. `diff -ru` exited 0.
+  - Doctor command: `bash measure/doctor.sh`. Exit code: 1. Findings: 15.
+    Six track metadata records still say `new` while their plans hold started tasks. This track is
+    one of the six. The finding was already in the tree before Green started.
+    Five tracks lack a registry link, and this track is one of the five.
+    `measure/lessons-learned.md` has 52 lines. The limit is 50.
+    Three generated files are stale: `architecture.json`, `status.md`, and `asset-inventory.json`.
+    Green did not edit the metadata, the registry, the memory file, or the generated facts.
+    The closeout steward owns those paths. The live gate of Phase 1 passed in Node.
+  - No task moved to `[b]`. No Red retry is needed. Phase 2 still waits for the look selection of
+    Daniel.
+  - Model deviation: the Red role ran on `claude-code/claude-opus-5-5[1m]#high`. The first Green ran
+    on `openai/gpt-6.1-sol#high` and stopped when Daniel restarted OpenCode at 17:15 ICT. This Green
+    run used `minimax-cn-coding-plan/MiniMax-M3.1-Flash`. The Ark plans were over quota.
 
 ## Phase 2: Views
 
