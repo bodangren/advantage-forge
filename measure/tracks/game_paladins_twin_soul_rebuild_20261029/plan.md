@@ -92,18 +92,91 @@ keep the type check clean. No sync goes to the monorepo before Phase 2 ends.
     The rise from 31 comes from the Red tests of other sessions:
     `tests/games/castle-defense/` (51, track `game_castle_defense_rebuild_20261029`) and
     `tests/games/magic-defense/helpers.ts` (6, track `game_magic_defense_rebuild_20261029`).
-- [~] Task: Remove the battle monsters and add the dive to the core (Green).
+- [x] Task: Remove the battle monsters and add the dive to the core (Green). Commit: `527be9bc7ef628658f6be3d6444a6a19b062aad1`.
   Owned path: `src/games/paladins-twin-soul/core/`.
   Keep the waves, the shades, the captor, and the soul count. Remove the monsters and the hero turn
   order. Add the shade kinds and the dive. Update the event order note at the top of `core/sim.ts`.
-- [ ] Task: Update the QC bot for the new core (Green).
+- [x] Task: Update the QC bot for the new core (Green). Commit: `527be9bc7ef628658f6be3d6444a6a19b062aad1`.
   Owned path: `src/games/paladins-twin-soul/qc/bot.ts`.
   The bot strikes the captor of each wave from the state alone.
-- [ ] Task: Keep the old views compiling and run the gates (Green).
+- [x] Task: Keep the old views compiling and run the gates (Green). Commit: `527be9bc7ef628658f6be3d6444a6a19b062aad1`.
   Owned paths: `src/games/paladins-twin-soul/view/driver.ts`, and the smallest edits in `view/` and
   `view2d/` that the type check needs.
   Run `GREEN_TEST_COMMAND` and `TYPE_CHECK_COMMAND`. Record the exit codes, the test counts, the
   owned errors, and the total errors.
+  - Green stopped on 2026-10-29 for a Mid Red retry. At this stop, no Green task was complete.
+    The immutable test `driver.test.ts:138` removed seven characters from `faded:<shade>`.
+    The prefix `faded:` has six characters. The assertion therefore compares different shade ids.
+  - Red rerun exit: 1. Failed: 126. Passed: 27. Total: 153.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-red-rerun.log`.
+  - Green attempt exit: 1. Failed: 1. Passed: 152. Total: 153.
+    Failure: expected `w1s2` to equal `1s2` at `driver.test.ts:138`.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-vitest.log`.
+    The implementation stayed uncommitted. The Red tests stayed unchanged.
+    The type check and later gates did not run after this failure.
+  - Mid Red corrected the prefix assertion in `e13b835b`. Green inspected this commit.
+    It changes only the prefix lengths in `driver.test.ts:138`.
+  - The next Green attempt stopped with `lock wait over 600 s`.
+    The shell tool stopped the foreground call after 1200 s. The tests did not start.
+    The lock holder ran the Guild Vale language-acts tests in `advantage-mmorpg`.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-vitest-fixed-red.log`.
+    No Paladin test process remained. The implementation stayed uncommitted.
+    At this stop, the type check, mutations, and later gates remained pending.
+  - The orchestrator authorized continued lock waits on 2026-10-29.
+    Green resumed the gates through `heavy-run.sh`, with separate logs for each attempt.
+  - Final Green evidence (2026-10-29, measure-jr-green).
+    Phase base: `4007148a8794c33992c218f84a2f99e6aacef6fe`.
+    Role base: `5e8582e0efaa941b38c6b57f6cf73ec19d96c702`.
+    Red commits `f823e87b` and `e13b835b` are inside the phase range.
+    Green changed no Red test. The implementation commit contains nine source files only.
+  - Core: the balanced kind list and the dive use the run RNG.
+    A wrong strike fades one shade, draws a standing diver, and reduces courage by one.
+    The diver keeps its place. The captor stays in the draw. The event order note matches these events.
+  - Bot: `nextStrike` reads the target id from the state and selects the standing captor.
+    Driver: each accepted strike plays the bolt first. The driver plays the fade and the dive in event order.
+    Each `ask` shade has only `id`, `term`, and `kind`. The driver calls `captured()` without an argument.
+    The views retain the old stage in Phase 1. Phase 2 adds the scene and the bolt and dive animations.
+  - Green command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 300 node_modules/.bin/vitest run tests/games/paladins-twin-soul --maxWorkers=1'`.
+    Exit code: 0. Passed: 153. Failed: 0. Test files passed: 5.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-resume-vitest-1.log`.
+    The log records `lock wait over 600 s`. Green continued waiting under the orchestrator's instruction.
+  - Type command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 node node_modules/typescript/bin/tsc --noEmit'`.
+    Exit code: 2. Total errors: 99. Owned errors: 0, in both the source and test paths.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-tsc-1.log`.
+    The Castle Defense track owns 68 errors in `tests/games/castle-defense/`.
+    Counts: `driver.test.ts` 17, `bot.test.ts` 3, `replay.test.ts` 3, `rules.test.ts` 41, and `helpers.ts` 4.
+    The remaining 31 errors match the strategy baseline.
+    Baseline paths: `assets/airship.ts` 7, `assets/rowboat.ts` 8, `assets/plank.ts` 6, and `assets/mushroom-cap.ts` 3.
+    Other baseline paths: `assets/waterskin.ts` 3, `assets/longship.ts` 1, `assets/merchant-cart.ts` 1, `assets/wool.ts` 1, and `tests/part.test.ts` 1.
+    The baseline belongs to asset debt TD-01. No external source or test received a fix from Green.
+  - Mutation command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 1800 python3 /tmp/opencode/paladin-green-mutations.py'`.
+    Exit code: 0. Mutations run: 45. Mutations killed: 45. Survivors: 0.
+    The runner used an isolated source copy at `/tmp/opencode/paladin-p1-mutations`.
+    It copied the Red tests without edits. Each mutation changed one source file, then restored that file.
+    Each targeted command used `heavy-run.sh`. Each mutation exited 1 with failed test rows.
+    M44 failed the bot rows with `Error: Missing currentTargetId`. No test suite failed to load.
+    Logs: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-mutation-M01.log` through `green-mutation-M45.log` in the same folder.
+    Each log contains the diff, the command, the exit code, and `Restored: True`.
+    Summary: `green-mutations-summary.json`. Runner copy: `green-mutation-runner.py`.
+    Run log: `green-mutation-python3-1.log`. These files share the same run folder.
+    The isolated baseline and restored suite each exited 0 with 153 passed and 0 failed.
+    Logs: `green-mutation-baseline.log` and `green-mutation-restored.log` in the same folder.
+    The first launcher exited 127 because `python` does not exist. No mutation ran in that attempt.
+    Log: `green-mutation-run-1.log`. The retry used `python3`.
+  - Static evidence: the core search found no forbidden name. `git diff --check` exited 0.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-static.log`.
+    Core imports use only local rules, APK contracts, and the seeded simulation helpers.
+    The shared phase range contains commits from other sessions. The implementation commit touches only the assigned source paths.
+    Log: `green-shared-phase-paths.log` in the same run folder. No graph database exists, so graph-aware work was skipped.
+  - Doctor command: `bash ~/Desktop/advantage-pr/scripts/jobs/heavy-run.sh -c 'timeout -k 30 600 bash measure/doctor.sh'`.
+    Exit code: 1. Errors: 15.
+    Log: `measure/runs/game_paladins_twin_soul_rebuild_20261029/green-doctor-1.log`.
+    Six track metadata records still say `new`. Five tracks lack registry links, including this track.
+    The memory file exceeds its line limit. Three generated files are stale.
+    Green did not edit metadata, the registry, the memory file, or generated facts.
+    The closeout steward owns those changes. The generator remains deferred to that owner, as this plan requires.
+    The strategy's Phase 1 live gate passed in Node. This result does not clear the doctor errors or verify either renderer.
+  - No task moved to `[b]`. Phase 2 still waits for Daniel's look selection.
 
 ## Phase 2: Views
 
